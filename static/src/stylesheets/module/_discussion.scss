@@ -463,7 +463,7 @@ $avatarPadding: $gs-gutter / 2;
     font-weight: bold;
 
     .d-comment__gu-icon svg {
-        fill: $black;
+        fill: $brightness-7;
     }
 }
 
@@ -1044,7 +1044,7 @@ $comment-recommend-button-size: 19px;
 
 .d-top-comment__bubble {
     @include fs-textSans(4);
-    color: $black;
+    color: $brightness-7;
     box-sizing: border-box;
     padding: $gs-baseline ($gs-baseline * 4 / 3);
     position: relative;
@@ -1268,7 +1268,7 @@ $comment-recommend-button-size: 19px;
     position: relative;
     z-index: 2;
     .d-comment-box--top-level &::placeholder {
-        color: $black;
+        color: $brightness-7;
         font-weight: bold;
     }
     .d-comment-box--top-level.d-comment-box--expanded &::placeholder {
@@ -1322,7 +1322,7 @@ $comment-recommend-button-size: 19px;
 .d-comment-box__reply-to,
 .d-comment-box__cancel {
     @include fs-textSans(1);
-    color: $black;
+    color: $brightness-7;
 }
 .d-comment-box__hide-preview,
 .d-comment-box__preview {
@@ -1545,7 +1545,7 @@ $comment-recommend-button-size: 19px;
     display: block;
     background-color: transparent;
     border: 1px solid $brightness-86;
-    color: $black;
+    color: $brightness-7;
     padding: $gs-baseline/2 $gs-gutter;
     border-radius: 18px;
     margin: $gs-baseline 0;

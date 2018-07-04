@@ -2,7 +2,7 @@ $tls-warning-rule: darken($nav-faded, 20%);
 
 .tls-warning {
     background-color: $nav-faded;
-    color: $black;
+    color: $brightness-7;
     border-bottom: 1px solid $tls-warning-rule;
 
     .gs-container {
@@ -23,7 +23,7 @@ $tls-warning-rule: darken($nav-faded, 20%);
         vertical-align: middle;
 
         circle {
-            fill: $black;
+            fill: $brightness-7;
         }
 
         path {
@@ -57,7 +57,7 @@ $tls-warning-rule: darken($nav-faded, 20%);
 }
 
 .tls-warning__browser-link {
-    color: $black;
+    color: $brightness-7;
     display: block;
     position: relative;
     font-size: 0;

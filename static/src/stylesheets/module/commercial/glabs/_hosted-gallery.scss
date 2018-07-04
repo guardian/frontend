@@ -472,7 +472,7 @@ $wideHeight: #{map-get($mq-breakpoints, wide) * 3/5 + $headerHeight + $footerHei
 }
 
 .hosted-gallery__caption-text {
-    background: $black;
+    background: $brightness-7;
     color: #ffffff;
     position: absolute;
     bottom: 100%;
@@ -555,7 +555,7 @@ $progressColor: #ffffff;
     &:before {
         content: '';
         position: absolute;
-        background-image: radial-gradient(center center, ellipse cover, $black 0%, transparent 50%);
+        background-image: radial-gradient(center center, ellipse cover, $brightness-7 0%, transparent 50%);
         pointer-events: none;
         opacity: .5;
         width: 200%;
@@ -646,7 +646,7 @@ $progressColor: #ffffff;
 }
 
 .hosted-gallery__lower-bar {
-    background: $black;
+    background: $brightness-7;
     z-index: 1;
     position: relative;
     width: $approxGalleryWidth;

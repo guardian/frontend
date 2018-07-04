@@ -3,7 +3,7 @@ $pillars: (
         cardBackground: $brightness-97,
         lines: $news-main,
         kicker: $news-main,
-        headline: $black,
+        headline: $brightness-7,
         featureHeadline: $news-dark,
         byline: $news-main,
         commentCount: $brightness-60,
@@ -17,7 +17,7 @@ $pillars: (
         cardBackground: $brightness-97,
         lines: $opinion-main,
         kicker: $opinion-main,
-        headline: $black,
+        headline: $brightness-7,
         featureHeadline: $opinion-dark,
         byline: $opinion-main,
         commentCount: $brightness-46,
@@ -31,7 +31,7 @@ $pillars: (
         cardBackground: $brightness-97,
         lines: $sport-main,
         kicker: $sport-main,
-        headline: $black,
+        headline: $brightness-7,
         featureHeadline: $sport-dark,
         byline: $sport-main,
         commentCount: $brightness-60,
@@ -45,7 +45,7 @@ $pillars: (
         cardBackground: $brightness-97,
         lines: $culture-main,
         kicker: $culture-main,
-        headline: $black,
+        headline: $brightness-7,
         featureHeadline: $culture-dark,
         byline: $culture-main,
         commentCount: $brightness-60,
@@ -59,7 +59,7 @@ $pillars: (
         cardBackground: $brightness-97,
         lines: $lifestyle-main,
         kicker: $lifestyle-main,
-        headline: $black,
+        headline: $brightness-7,
         featureHeadline: $lifestyle-dark,
         byline: $lifestyle-main,
         commentCount: $brightness-60,
@@ -175,7 +175,7 @@ $pillars: (
     }
 
     &.fc-item--type-immersive.fc-item--has-boosted-title:not(.fc-item--pillar-special-report) .fc-item__standfirst {
-        color: $black;
+        color: $brightness-7;
     }
 
     &.fc-item--type-immersive.fc-item--has-boosted-title .inline-icon
@@ -366,7 +366,7 @@ $pillars: (
 
         .youtube-media-atom__play-button.vjs-control-text {
             .inline-play svg {
-                fill: $black;
+                fill: $brightness-7;
             }
         }
     }

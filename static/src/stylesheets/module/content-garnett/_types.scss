@@ -3,7 +3,7 @@ $quote-mark: 35px;
 
 .content {
     padding-bottom: 0;
-    color: $black;
+    color: $brightness-7;
 }
 
 .content--liveblog,
@@ -199,7 +199,7 @@ $quote-mark: 35px;
         &:focus,
         &:hover {
             svg {
-                fill: $white;
+                fill: $brightness-100;
             }
         }
     }
@@ -301,7 +301,7 @@ $quote-mark: 35px;
         display: inline;
 
         svg {
-            stroke: $black;
+            stroke: $brightness-7;
             fill: transparent;
             height: 1.2em;
             width: 1.2em;
@@ -310,7 +310,7 @@ $quote-mark: 35px;
 
     .inline-star.star__item--golden {
         svg {
-            fill: $black;
+            fill: $brightness-7;
             stroke: none;
         }
     }
@@ -321,7 +321,7 @@ $quote-mark: 35px;
         font-size: 17px;
         line-height: 22px;
         border-top: 0;
-        color: $black;
+        color: $brightness-7;
         padding-top: 2px;
         margin-bottom: $gs-baseline;
         max-width: 80%;
@@ -646,7 +646,7 @@ $quote-mark: 35px;
     .content__labels {
         .content__label__link {
             @include mq(leftCol) {
-                color: $black;
+                color: $brightness-7;
             }
         }
     }
@@ -726,12 +726,12 @@ $quote-mark: 35px;
         }
 
         .content__headline--interview-wrapper {
-            background-color: $black;
+            background-color: $brightness-7;
             display: inline;
             position: relative;
             z-index: 10;
             color: #ffffff;
-            box-shadow: $gs-baseline / 2 0 0 $black, -$gs-baseline / 2 0 0 $black;
+            box-shadow: $gs-baseline / 2 0 0 $brightness-7,-$gs-baseline / 2 0 0 $brightness-7;
             box-decoration-break: clone;
             padding-bottom: $gs-baseline / 2;
         }
@@ -744,7 +744,7 @@ $quote-mark: 35px;
         font-weight: 500;
         background-color: $highlight-main;
         box-shadow: $gs-baseline / 2 0 0 $highlight-main, -$gs-baseline / 2 0 0 $highlight-main;
-        color: $black;
+        color: $brightness-7;
         margin-bottom: $gs-baseline;
         padding-bottom: $gs-baseline / 4;
         position: relative;
@@ -788,11 +788,11 @@ $quote-mark: 35px;
         padding-bottom: $gs-baseline/2;
 
         .rich-link {
-            background-color: $white;
+            background-color: $brightness-100;
         }
 
         .rich-link.tone-media--item {
-            background-color: $black;
+            background-color: $brightness-7;
         }
 
         .element-pullquote,
@@ -802,7 +802,7 @@ $quote-mark: 35px;
         }
 
         .element-pullquote blockquote p.pullquote-paragraph {
-            color: $black;
+            color: $brightness-7;
         }
 
     }
@@ -918,7 +918,7 @@ $quote-mark: 35px;
 
 .content--media:not(.paid-content) {
     &.content--media {
-        background-color: $black;
+        background-color: $brightness-7;
     }
 
     .content__main {
@@ -932,7 +932,7 @@ $quote-mark: 35px;
     }
 
     .content__headline {
-        color: $white;
+        color: $brightness-100;
         padding-bottom: $gs-baseline*3;
     }
 
@@ -1270,7 +1270,7 @@ $quote-mark: 35px;
 // *************** Interactive elements ***************
 .interactive.element--showcase,
 .interactive.element--supporting {
-    background: $white;
+    background: $brightness-100;
 }
 
 .paid-content {

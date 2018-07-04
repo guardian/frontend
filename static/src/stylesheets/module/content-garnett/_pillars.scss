@@ -100,7 +100,7 @@
 
     .meta__extras--crossword {
         .social-icon {
-            background: $white;
+            background: $brightness-100;
             border: 1px solid $brightness-86;
 
             &:hover {
@@ -113,7 +113,7 @@
             fill: $kickerColor;
 
             &:hover {
-                fill: $white;
+                fill: $brightness-100;
             }
         }
     }
@@ -167,12 +167,12 @@
 
     .d-show-more-replies__button {
         border: 1px solid $brightness-86;
-        background: $white;
+        background: $brightness-100;
 
         &:focus,
         &:hover {
             border: 1px solid darken($brightness-86, 20%);
-            background: $white;
+            background: $brightness-100;
         }
     }
 
@@ -190,7 +190,7 @@
         &:focus,
         &:hover {
             svg {
-                fill: $white;
+                fill: $brightness-100;
             }
         }
     }
@@ -339,7 +339,7 @@
     @include colorPalatte($special-report-dark, $special-report-dark, $highlight-main);
 
     .youtube-media-atom__play-button .inline-icon svg {
-        fill: $black;
+        fill: $brightness-7;
     }
 }
 

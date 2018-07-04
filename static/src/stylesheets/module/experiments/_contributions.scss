@@ -7,7 +7,7 @@
 
 .giraffe__heading {
     @include fs-header(5);
-    color: $black;
+    color: $brightness-7;
     display: inline;
 }
 
@@ -27,7 +27,7 @@
         #ffffff
     );
     @include button-hover-colour(
-        mix($green-bold, $black, 60%)
+        mix($green-bold, $brightness-7,60%)
     );
     margin-top: $gs-baseline;
 }

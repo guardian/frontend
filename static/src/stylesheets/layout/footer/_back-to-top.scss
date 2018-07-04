@@ -12,7 +12,7 @@
 
 .back-to-top__text {
     display: inline-block;
-    color: $black;
+    color: $brightness-7;
     line-height: 42px;
     padding-right: $gs-gutter / 2;
 }
@@ -22,7 +22,7 @@
     float: right;
     margin-top: -($gs-baseline / 2);
     border-radius: 100%;
-    background-color: $black;
+    background-color: $brightness-7;
     cursor: pointer;
     height: $veggie-burger-medium;
     min-width: $veggie-burger-medium;

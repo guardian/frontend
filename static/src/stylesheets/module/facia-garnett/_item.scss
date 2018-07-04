@@ -459,7 +459,7 @@ $block-height: 58px;
             }
 
             svg {
-                stroke: $black;
+                stroke: $brightness-7;
                 fill: transparent;
                 height: .75em;
                 width: .75em;
@@ -472,7 +472,7 @@ $block-height: 58px;
 
             &.star__item--golden {
                 svg {
-                    fill: $black;
+                    fill: $brightness-7;
                     stroke: none;
                 }
             }
@@ -496,7 +496,7 @@ $block-height: 58px;
             width: .65em;
 
             svg {
-                stroke: $black;
+                stroke: $brightness-7;
                 fill: transparent;
                 height: .75em;
                 width: .75em;

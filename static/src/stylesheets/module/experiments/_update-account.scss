@@ -1,6 +1,6 @@
 .site-message--membership-action-required {
-    color: $white;
-    background: $black;
+    color: $brightness-100;
+    background: $brightness-7;
     &:after {
         @include multiline(3, $brightness-20, top);
         content: '';
@@ -10,7 +10,7 @@
         width: 100%;
     }
     a {
-        color: $white;
+        color: $brightness-100;
         font-weight: 900;
         text-decoration: underline;
     }

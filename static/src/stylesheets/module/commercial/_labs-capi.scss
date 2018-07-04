@@ -119,11 +119,11 @@
     position: relative;
 
     .dumathoin__header {
-        background: $paidfor-bold;
+        background: $labs-main;
     }
 
     .inline-icon__svg {
-        fill: $paidfor-bold;
+        fill: $labs-main;
     }
 
     .adverts__logo {
@@ -143,19 +143,19 @@
     }
 
     .button {
-        @include button-colour($paidfor-bold, null);
+        @include button-colour($labs-main, null);
 
         &:hover,
         &:focus,
         &:active {
-            @include button-colour(darken($paidfor-bold, 5%), null);
+            @include button-colour(darken($labs-main, 5%), null);
         }
     }
 }
 
 .dumathoin-more__button {
-    background: $paidfor-bold;
-    border-color: $paidfor-bold;
+    background: $labs-main;
+    border-color: $labs-main;
 
     .inline-icon__svg {
         fill: $brightness-46;
@@ -175,7 +175,7 @@
     .dumathoin-more__button {
         background: none;
         border-color: $brightness-86;
-        color: $black;
+        color: $brightness-7;
     }
 }
 
@@ -291,7 +291,7 @@
 .vergadain--paidfor {
     @include f-textSans;
     background: $brightness-97;
-    border-top-color: $paidfor-bold;
+    border-top-color: $labs-main;
     width: 100%;
 
     &:hover,
@@ -337,7 +337,7 @@
 
         &:hover,
         &:focus {
-            background: darken($black, 7.5%);
+            background: darken($brightness-7,7.5%);
         }
 
         .advert__title {
@@ -374,15 +374,15 @@
         }
     }
     .fc-item__container:before {
-        background-color: $paidfor-bold !important;
+        background-color: $labs-main !important;
     }
     .inline-icon__svg {
-        fill: $paidfor-bold !important;
+        fill: $labs-main !important;
     }
     .fc-item__title {
         @include f-textSans;
         font-weight: 600;
-        color: $black;
+        color: $brightness-7;
     }
 
     .fc-item__link,
@@ -393,7 +393,7 @@
     }
 
     .fc-item__kicker {
-        color: $paidfor-bold;
+        color: $labs-main;
     }
 
     .fc-item__content {
@@ -455,7 +455,7 @@
 
     .badge__sponsor-name {
         @include f-textSans;
-        color: $black;
+        color: $brightness-7;
     }
 
     .inline-icon__svg {

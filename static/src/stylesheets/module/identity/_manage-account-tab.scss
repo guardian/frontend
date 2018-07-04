@@ -333,7 +333,7 @@
 ========================================================================== */
 .manage-account-header {
     @include fs-header(3);
-    color: $black;
+    color: $brightness-7;
 }
 
 .manage-account-headerWrapper {
@@ -386,7 +386,7 @@ $modal-close-size: $gs-gutter * 1.75;
     left: 0;
     right: 0;
     bottom: 0;
-    background: $black;
+    background: $brightness-7;
     opacity: .95;
     z-index: 9;
 }
@@ -412,7 +412,7 @@ $modal-close-size: $gs-gutter * 1.75;
 .identity-modal__closer {
     width: $modal-close-size;
     height: $modal-close-size;
-    color: $black;
+    color: $brightness-7;
     border: 1px solid currentColor;
     border-radius: 100%;
     display: block;

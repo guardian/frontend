@@ -11,7 +11,7 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
 .gallery-lightbox {
     display: none;
     position: fixed;
-    background-color: lighten($black, 2.5%);
+    background-color: lighten($brightness-7,2.5%);
     overflow: hidden;
     z-index: $zindex-lightbox;
 }
@@ -86,7 +86,7 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
     height: 100%;
     position: relative;
     z-index: 3;
-    background-color: lighten($black, 2.5%);
+    background-color: lighten($brightness-7,2.5%);
     vertical-align: top;
 
     box-sizing: border-box;
@@ -101,7 +101,7 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
 }
 
 .gallery-lightbox__item--endslate {
-    background-color: $black;
+    background-color: $brightness-7;
 }
 
 .gallery-lightbox__img-container {
@@ -151,7 +151,7 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
     width: 100%;
     bottom: 0;
     border-top: 1px solid $brightness-20;
-    background-color: $black;
+    background-color: $brightness-7;
     padding: $gs-gutter/2;
     padding-bottom: $gs-gutter;
     display: none;
@@ -232,7 +232,7 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
         width: $gallery-lightbox-sidebar-width;
         z-index: 6; // above content
         border-left: 1px solid $brightness-20;
-        background: $black;
+        background: $brightness-7;
     }
 }
 

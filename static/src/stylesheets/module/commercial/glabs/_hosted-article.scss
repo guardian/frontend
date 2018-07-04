@@ -228,7 +228,7 @@
                 font-size: 30px;
                 line-height: 31px;
                 padding: $gs-baseline + $iconHeight 0 0 $gs-gutter * .5;
-                color: $black;
+                color: $brightness-7;
                 position: relative;
                 @include mq(leftCol) {
                     font-size: 38px;

@@ -50,7 +50,7 @@
     }
 
     .fc-container__header__title {
-        color: $black;
+        color: $brightness-7;
 
         .fc-container__header__link {
             color: $guardian-brand;
@@ -106,14 +106,14 @@
             background-color: $brightness-93;
 
             .u-faux-block-link__overlay {
-                color: $black;
+                color: $brightness-7;
             }
         }
 
         .fc-item__standfirst,
         .fc-item__kicker,
         .fc-item__link:visited {
-            color: $black;
+            color: $brightness-7;
         }
     }
 
@@ -123,17 +123,17 @@
     }
 
     .headline-list__item:before {
-        background-color: $black;
+        background-color: $brightness-7;
     }
 
     .headline-list__count,
     .headline-list__link:hover .headline-list__count {
-        color: $black;
+        color: $brightness-7;
     }
 
     .fc-item__title .inline-video-icon,
     .fc-item__title .inline-camera {
-        fill: $black;
+        fill: $brightness-7;
     }
 
     .fc-slice__item+.fc-slice__item:before {
@@ -143,7 +143,7 @@
     .fc-item__container {
         &:before {
             display: block;
-            background: $paidfor-bold;
+            background: $labs-main;
         }
     }
 
@@ -152,7 +152,7 @@
     }
 
     .tone-news--item .fc-item__kicker {
-        color: $black;
+        color: $brightness-7;
     }
 
     .fc-item__kicker:after {
@@ -168,7 +168,7 @@
     }
 
     &.tonal--tone-media .tonal__standfirst a {
-        color: $black;
+        color: $brightness-7;
     }
 
     &.tonal--tone-media .tonal__standfirst {
@@ -180,7 +180,7 @@
 
     &.tonal--tone-media {
         .submeta__section-labels .submeta__link {
-            color: $black;
+            color: $brightness-7;
         }
     }
 

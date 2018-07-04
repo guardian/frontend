@@ -252,7 +252,7 @@
         &:hover,
         &:active,
         &:focus {
-            color: $black;
+            color: $brightness-7;
         }
     }
 
@@ -695,7 +695,7 @@
 }
 
 .paid-content {
-    color: $black;
+    color: $brightness-7;
 
 
     .content__standfirst,
@@ -713,11 +713,11 @@
     .element.element-pullquote {
         .pullquote-paragraph {
             font-family: $f-sans-serif-text;
-            color: $paidfor-bold;
+            color: $labs-main;
         }
     }
     a.in-body-link--immersive {
-        color: $paidfor-bold;
+        color: $labs-main;
     }
 
     &.content--article,
@@ -726,7 +726,7 @@
         background-color: $brightness-86;
 
         .caption :not(caption--main) {
-            color: $black;
+            color: $brightness-7;
         }
     }
 
@@ -748,28 +748,28 @@
         padding: $gs-baseline 0 $gs-baseline*2;
 
         .content__standfirst {
-            color: $black;
+            color: $brightness-7;
         }
     }
 
     .tone-media--item {
-        color: $black;
+        color: $brightness-7;
 
         .rich-link__container:before {
-            background-color: $paidfor-bold
+            background-color: $labs-main
         }
 
         .rich-link__standfirst {
-            color: $black;
+            color: $brightness-7;
             font-family: $f-sans-serif-text;
         }
 
         .rich-link__kicker, .rich-link__read-more-text {
-            color: $paidfor-dark;
+            color: $labs-dark;
         }
 
         .rich-link__arrow-icon {
-            fill: $paidfor-dark;
+            fill: $labs-dark;
         }
     }
 
@@ -799,7 +799,7 @@
         font-weight: 400;
 
         .content__label__link {
-            color: $black;
+            color: $brightness-7;
         }
     }
 
@@ -819,7 +819,7 @@
         .content__headline,
         .from-content-api,
         .tonal__main .tone-colour {
-            color: $black;
+            color: $brightness-7;
 
             .inline-icon {
                 fill: $brightness-46;
@@ -851,7 +851,7 @@
 
         .tonal__main--tone-media .sharecount__value,
         .tonal__main--tone-media .commentcount2__value {
-            color: $black;
+            color: $brightness-7;
         }
 
         .byline,
@@ -868,7 +868,7 @@
             .tone-colour {
                 color: $brightness-46;
                 &:hover {
-                    color: $black;
+                    color: $brightness-7;
                 }
             }
         }
@@ -884,7 +884,7 @@
         }
 
         .button--tone-media {
-            color: $black;
+            color: $brightness-7;
             background-color: $brightness-93;
             border-color: $brightness-93;
 
@@ -934,7 +934,7 @@
         }
 
         .vjs-volume-bar:before {
-            background-color: $black;
+            background-color: $brightness-7;
         }
 
         .end-slate-container--video {
@@ -1002,7 +1002,7 @@
 
     &.content--media--audio {
         .content__headline:before {
-            @include icon(volume-high-black, $with-width: false);
+            @include icon(volume-high-brightness-7,$with-width: false);
         }
     }
 

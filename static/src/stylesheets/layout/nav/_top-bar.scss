@@ -1,6 +1,6 @@
 .top-bar__item {
     @include fs-textSans(2);
-    color: $black;
+    color: $brightness-7;
     float: left;
     line-height: 1.2;
     position: relative;
@@ -108,7 +108,7 @@
     transform-origin: top center;
 
     &:before {
-        background: $black;
+        background: $brightness-7;
         border-radius: 50%;
         bottom: 0;
         content: '';

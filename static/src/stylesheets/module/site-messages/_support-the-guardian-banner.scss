@@ -23,7 +23,7 @@
         display: none;
         position: absolute;
         svg {
-            fill: $black;
+            fill: $brightness-7;
         }
 
         // Because this roundel "jumps" from the right to left
@@ -36,7 +36,7 @@
 
     .site-message__close-btn {
         display: inline-block;
-        border-color: $black;
+        border-color: $brightness-7;
     }
 
     .site-message__inner {
@@ -52,7 +52,7 @@
 }
 
 .support-the-guardian-banner__text {
-    color: $black;
+    color: $brightness-7;
 
     font-size: 17px;
     line-height: 22px;
@@ -105,8 +105,8 @@
     font-size: 14px;
     line-height: 36px;
 
-    background-color: $black;
-    border-color: $black;
+    background-color: $brightness-7;
+    border-color: $brightness-7;
 
     .inline-icon {
         float: right;
@@ -172,16 +172,16 @@
     padding: 2px 0 0;
 
     background: transparent;
-    border: 1px solid rgba($black, .3);
-    color: $black;
+    border: 1px solid rgba($brightness-7, .3);
+    color: $brightness-7;
 
     svg {
-        fill: $black;
+        fill: $brightness-7;
     }
 
     &:hover,
     &:focus,
     &:active {
-        border-color: $black;
+        border-color: $brightness-7;
     }
 }

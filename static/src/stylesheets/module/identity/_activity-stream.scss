@@ -155,7 +155,7 @@
 
     .activity-stream__witness-meta-inner {
         margin: 0 $gs-gutter;
-        color: $black;
+        color: $brightness-7;
     }
 }
 .activity-stream__witness-content {
@@ -175,7 +175,7 @@
 .activity-stream__witness-title {
     @include fs-textSans(4);
     margin-bottom: $gs-baseline/4;
-    color: $black;
+    color: $brightness-7;
 }
 .activity-stream__witness-description {
     @include fs-textSans(2);

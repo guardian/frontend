@@ -126,7 +126,7 @@ $weather-large-size: 50px;
             display: block;
             width: 6px;
             height: 6px;
-            border: 2px solid $black;
+            border: 2px solid $brightness-7;
             border-top: 0;
             border-right: 0;
             transform: translateY(0) rotate(-45deg);
@@ -262,7 +262,7 @@ $weather-large-size: 50px;
 }
 
 .weather__close-icon:hover {
-    fill: $black;
+    fill: $brightness-7;
 }
 
 .forecast {

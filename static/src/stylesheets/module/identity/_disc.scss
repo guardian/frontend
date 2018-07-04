@@ -77,7 +77,7 @@ $disc-avatar-size: 44px;
     blockquote {
         margin: $gs-baseline $gs-gutter;
         padding-left: $gs-gutter/2;
-        border-left: 3px solid transparentize($black, .75);
+        border-left: 3px solid transparentize($brightness-7,.75);
     }
 }
 .disc-comment__view-discussion {

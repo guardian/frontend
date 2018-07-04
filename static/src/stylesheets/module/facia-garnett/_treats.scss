@@ -29,7 +29,7 @@
     @include ellipsis();
     @include button-colour(
         #ffffff,
-        $black,
+        $brightness-7,
         $brightness-86
     );
     @include button-hover-colour(
@@ -61,7 +61,7 @@
     &:hover,
     &:focus,
     &:active {
-        color: $black;
+        color: $brightness-7;
         text-decoration: none;
     }
 }
@@ -85,7 +85,7 @@
     &:focus,
     &:active {
         .treats__treat {
-            color: $black;
+            color: $brightness-7;
             border-color: darken($brightness-86, 10%);
         }
     }

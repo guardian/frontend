@@ -51,7 +51,7 @@ article .submeta__links,
 
 .submeta__link {
     @include trailing-slash-link;
-    color: $black;
+    color: $brightness-7;
 
     .submeta__keywords & {
         @include fs-textSans(4);

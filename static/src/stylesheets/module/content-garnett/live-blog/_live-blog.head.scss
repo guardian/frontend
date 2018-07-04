@@ -160,7 +160,7 @@ $block-padding-left: gs-span(1) + $gs-gutter;
     time {
         display: inline-block;
         margin-bottom: $gs-baseline/2;
-        color: $black;
+        color: $brightness-7;
     }
 }
 
@@ -218,7 +218,7 @@ $block-padding-left: gs-span(1) + $gs-gutter;
 }
 
 .block-time__link {
-    color: $black;
+    color: $brightness-7;
 }
 
 .updated-time {
@@ -349,7 +349,7 @@ $block-padding-left: gs-span(1) + $gs-gutter;
     .liveblog-block-byline__name {
         @include fs-bodyCopy(2);
         display: inline;
-        color: $black;
+        color: $brightness-7;
     }
 
     .block-elements {
@@ -644,7 +644,7 @@ $timeline-width: 15px;
     &:hover,
     &:visited,
     &:active {
-        color: $black;
+        color: $brightness-7;
         text-decoration: none;
     }
 
@@ -669,7 +669,7 @@ $timeline-width: 15px;
             background-color: $brightness-46;
         }
         &.live-blog__key-event--selected:before {
-            background-color: $black;
+            background-color: $brightness-7;
         }
 
         .timeline__item:first-child &:before,
@@ -691,7 +691,7 @@ $timeline-width: 15px;
     font-weight: bold;
 
     time {
-        color: $black;
+        color: $brightness-7;
     }
 
     .block-time__absolute,
@@ -710,7 +710,7 @@ $timeline-width: 15px;
     @include fs-textSans(3);
     display: table-cell;
     border-color: $brightness-97;
-    color: $black;
+    color: $brightness-7;
 
     @include mq(desktop) {
         display: inline;
@@ -778,7 +778,7 @@ $timeline-width: 15px;
         }
         .player-card__position {
             @include fs-textSans(2);
-            color: $black;
+            color: $brightness-7;
             font-weight: 700;
         }
     }
@@ -879,7 +879,7 @@ $pillars: (
             color: $sport-dark;
         }
         .content__headline {
-            color: $black;
+            color: $brightness-7;
             padding-left: 0;
 
             @include mq(phablet) {
@@ -950,7 +950,7 @@ $pillars: (
 
         .content__head,
         .content__standfirst {
-            color: $black;
+            color: $brightness-7;
         }
 
         .content__label__link {
@@ -958,7 +958,7 @@ $pillars: (
         }
 
         .content__header {
-            background: $white;
+            background: $brightness-100;
         }
 
         .tonal__standfirst {
@@ -990,7 +990,7 @@ $pillars: (
 
     .content__labels {
         .content__label__link {
-            color: $black;
+            color: $brightness-7;
         }
     }
 }

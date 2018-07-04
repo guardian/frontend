@@ -43,11 +43,11 @@
     .fc-item__kicker:after,
     .rich-link__kicker:after,
     .fc-sublink__kicker:after {
-        color: mix($c-headline, $black, 40%);
+        color: mix($c-headline, $brightness-7,40%);
     }
 
     .fc-item__kicker--dreamsnap {
-        background-color: mix(#000000, $black, 10%);
+        background-color: mix(#000000, $brightness-7,10%);
     }
 
     .fc-item__standfirst,
@@ -64,7 +64,7 @@
 
     @include sublink-style(analysis, comment, letters, dead, news) {
         .fc-sublink__kicker {
-            color: $black;
+            color: $brightness-7;
         }
     }
 }

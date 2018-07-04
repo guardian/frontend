@@ -12,7 +12,7 @@
             display: inline;
 
             svg {
-                stroke: $black;
+                stroke: $brightness-7;
                 fill: transparent;
                 height: .8em;
                 width: .8em;
@@ -21,7 +21,7 @@
 
         .inline-star.star__item--golden {
             svg {
-                fill: $black;
+                fill: $brightness-7;
                 stroke: none;
             }
         }

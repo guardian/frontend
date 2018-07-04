@@ -60,7 +60,7 @@
     &:hover,
     &:focus,
     &:active {
-        color: $black;
+        color: $brightness-7;
         text-decoration: none;
     }
 }
@@ -84,7 +84,7 @@
     &:focus,
     &:active {
         .treats__treat {
-            color: $black;
+            color: $brightness-7;
             border-color: darken($brightness-86, 10%);
         }
     }

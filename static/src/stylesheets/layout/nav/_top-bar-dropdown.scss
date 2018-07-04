@@ -5,7 +5,7 @@
     }
 
     & ~ .top-bar__item--dropdown {
-        color: $black;
+        color: $brightness-7;
 
         &:hover {
             color: $brightness-20;
@@ -42,7 +42,7 @@
 
 .dropdown-menu__title {
     @include fs-textSans(4);
-    color: $black;
+    color: $brightness-7;
     cursor: pointer;
     display: block;
     letter-spacing: .01rem;
@@ -55,7 +55,7 @@
 
     &:hover,
     &:focus {
-        color: $black;
+        color: $brightness-7;
         background-color: $brightness-93;
         text-decoration: none;
     }
@@ -89,7 +89,7 @@
             height: .8em;
             width: .8em;
             g {
-                fill: $black;
+                fill: $brightness-7;
                 @supports(fill: currentColor) {
                     fill: currentColor;
                 }

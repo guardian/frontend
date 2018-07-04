@@ -192,7 +192,7 @@ $control-offset: 36 + $gs-gutter/2;
     .brand-bar__item--action:hover {
         display: block;
         white-space: nowrap;
-        color: $black;
+        color: $brightness-7;
         line-height: $gs-baseline * 3;
     }
 
@@ -312,16 +312,16 @@ $control-offset: 36 + $gs-gutter/2;
     }
 
     .ad-slot--dark & {
-        background: $black;
-        border-color: $black;
+        background: $brightness-7;
+        border-color: $brightness-7;
         color: $brightness-86;
         .popup__group-header {
             color: $brightness-86;
         }
         .popup__item--option {
-            border-top-color: $black;
+            border-top-color: $brightness-7;
             > button:hover {
-                background: $black;
+                background: $brightness-7;
             }
         }
     }

@@ -1,7 +1,7 @@
 .newsletters-heading {
     @include fs-header(5);
     font-size: 40px;
-    color: $black;
+    color: $brightness-7;
     padding-top: $gs-baseline;
 
     @include mq($from: tablet) {
@@ -119,21 +119,21 @@
     }
 
     .newsletter-card__lozenge--preview {
-        border-color: $black;
-        color: $black;
+        border-color: $brightness-7;
+        color: $brightness-7;
         background-color: transparent;
         float: right;
 
         &:hover,
         &:focus,
         &:active {
-            border-color: $black;
+            border-color: $brightness-7;
             background-color: rgba(0, 0, 0, .1)
         }
     }
 
     .inline-arrow-right {
-        fill: $black;
+        fill: $brightness-7;
         position: absolute;
         height: $gs-baseline;
         line-height: $gs-baseline;
@@ -142,13 +142,13 @@
 
 .newsletter-card__signup {
     .newsletter-card__lozenge {
-        border-color: $black;
-        background-color: $black;
+        border-color: $brightness-7;
+        background-color: $brightness-7;
 
         &:hover,
         &:focus {
-            border-color: lighten($black, 30%);
-            background-color: lighten($black, 30%);
+            border-color: lighten($brightness-7,30%);
+            background-color: lighten($brightness-7,30%);
         }
     }
 }
@@ -183,14 +183,14 @@
 
     .signup-confirmation--success {
         @include fs-textSans(3);
-        color: $black;
+        color: $brightness-7;
         display: inline;
     }
 
     .inline-icon {
         background-color: $brightness-86;
         border-radius: 1000px;
-        fill: $black;
+        fill: $brightness-7;
         height: $gs-baseline * 3;
         left: 0;
         width: $gs-baseline * 3;
@@ -223,7 +223,7 @@
 
 .newsletters-category__heading {
     @include fs-header(5);
-    color: $black;
+    color: $brightness-7;
     position: relative;
     margin: ($gs-baseline / 2) 0 $gs-baseline;
 

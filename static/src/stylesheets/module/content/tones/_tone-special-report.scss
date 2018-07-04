@@ -20,7 +20,7 @@
     &.content--interactive {
         .content__headline {
             font-weight: normal;
-            color: $black;
+            color: $brightness-7;
         }
 
         .content__series-label__link {
@@ -43,7 +43,7 @@
 
     &.content--media:not(.content--gallery) {
         .tonal__standfirst {
-            background-color: $black;
+            background-color: $brightness-7;
         }
 
         a.tone-colour {
@@ -56,7 +56,7 @@
     }
 
     &.tonal--tone-media {
-        background-color: $black;
+        background-color: $brightness-7;
     }
 
     .immersive-main-media__headline-container--dark {
@@ -69,7 +69,7 @@
 .gallery__main-content {
     .tonal--tone-special-report {
         &.content {
-            background-color: $black;
+            background-color: $brightness-7;
 
             .tonal__head {
                 background-color: lighten($brightness-46, 5%);
@@ -130,6 +130,6 @@
     }
 
     .gallery__most-popular {
-        background-color: $black;
+        background-color: $brightness-7;
     }
 }

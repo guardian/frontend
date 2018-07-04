@@ -93,7 +93,7 @@ $container-color: #ffffff;
 .bb-link,
 .ct-link {
     text-decoration: none;
-    color: $black;
+    color: $brightness-7;
 }
 
 // td
@@ -222,7 +222,7 @@ $email-tones: (
     }
 
     .ct__inner {
-        border-top-color: $paidfor-bold;
+        border-top-color: $labs-main;
         background-color: $brightness-86;
     }
 
@@ -267,16 +267,16 @@ $email-tones: (
 
 // tone overrides for PaidFor content
 .tone-branded {
-    border-top-color: $paidfor-bold;
+    border-top-color: $labs-main;
     background-color: $brightness-97;
 
     .trail-text a {
-        color: $black;
+        color: $brightness-7;
         font-family: Helvetica, Arial, sans-serif;
     }
 
     .headline a {
-        color: $black;
+        color: $brightness-7;
         font-family: Helvetica, Arial, sans-serif;
     }
 }

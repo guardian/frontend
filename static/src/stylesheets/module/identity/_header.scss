@@ -6,7 +6,7 @@ $gutter: 5px;
     @include clearfix;
     background-color: $nav-faded;
     padding: ($gutter/2) 0 0;
-    color: $black;
+    color: $brightness-7;
     height: $slim-nav-height + 1px;
     overflow: visible;
     position: relative;

@@ -1,5 +1,5 @@
 .veggie-burger {
-    background-color: $black;
+    background-color: $brightness-7;
     color: #ffffff;
     cursor: pointer;
     display: block;
@@ -39,7 +39,7 @@
     }
 
     .new-header--open.new-header--slim & {
-        background-color: $black;
+        background-color: $brightness-7;
     }
 }
 

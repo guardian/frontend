@@ -93,7 +93,7 @@
 
     &.active {
         background-color: $highlight-main;
-        color: $black;
+        color: $brightness-7;
     }
 }
 
@@ -166,15 +166,15 @@
 a[href].contributions__contribute.contributions__contribute--epic {
     margin-top: 0;
     background-color: $highlight-main;
-    color: $black;
+    color: $brightness-7;
 
     svg path {
-        fill: $black;
+        fill: $brightness-7;
     }
 
     &:hover {
         background-color: #b3a000;
-        color: $black;
+        color: $brightness-7;
     }
 
     &:after {
@@ -193,7 +193,7 @@ a[href].contributions__contribute.contributions__contribute--epic {
     }
 
     &.active {
-        background-color: $black;
+        background-color: $brightness-7;
         color: $brightness-93;
     }
 }
@@ -260,8 +260,8 @@ a[href].contributions__contribute.contributions__contribute--epic {
 }
 
 .contributions__epic_border {
-    border-top: 8px solid $black;
-    border-left: 1px solid $black;
+    border-top: 8px solid $brightness-7;
+    border-left: 1px solid $brightness-7;
     padding-left: 10px;
     padding-right: 10px;
 }

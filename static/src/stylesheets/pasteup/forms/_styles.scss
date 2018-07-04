@@ -158,7 +158,7 @@
     border: 1px solid $brightness-86;
     box-shadow: none;
     box-sizing: border-box;
-    color: $black;
+    color: $brightness-7;
     display: inline-block;
     font-family: $f-sans-serif-text;
     padding: 8px 8px 7px;
@@ -213,7 +213,7 @@
     }
 
     &:active {
-        background: $black;
+        background: $brightness-7;
     }
 }
 

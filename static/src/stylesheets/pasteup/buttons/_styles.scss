@@ -63,7 +63,7 @@
 .button--secondary {
     @include button-colour(
         $brightness-97,
-        $black
+        $brightness-7
     );
 
     @include button-hover-colour(
@@ -74,7 +74,7 @@
 .button--tertiary {
     @include button-colour(
         transparent,
-        $black,
+        $brightness-7,
         $brightness-86
     );
 
@@ -97,13 +97,13 @@
 
 .button--tone-media-variant {
     @include button-colour(
-        $black,
+        $brightness-7,
         $brightness-86,
         $brightness-46
     );
 
     @include button-hover-colour(
-        $black,
+        $brightness-7,
         $brightness-86
     );
 }
@@ -183,7 +183,7 @@
 .button--tone-live {
     @include button-colour(
         $brightness-93,
-        $black
+        $brightness-7
     );
 
     @include button-hover-colour(
@@ -194,7 +194,7 @@
 .button--tone-live-variant {
     @include button-colour(
         $brightness-97,
-        $black,
+        $brightness-7,
         $brightness-86
     );
 

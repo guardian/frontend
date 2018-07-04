@@ -263,7 +263,7 @@
     .badge--alt {
         margin-top: 0;
         margin-bottom: $gs-baseline;
-        border-top: 1px dotted $black;
+        border-top: 1px dotted $brightness-7;
 
         @include mq(desktop) {
             position: absolute;

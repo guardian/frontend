@@ -6,7 +6,7 @@
         @if (lightness($color) < 50) {
             color: #ffffff;
         } @else {
-            color: $black;
+            color: $brightness-7;
         }
     }
     &:not(.is-updating, .is-disabled):hover {
@@ -30,7 +30,7 @@
     $padding-vertical: ($height - get-line-height(textSans, $font-size))/2;
     $padding-horizontal: $gs-gutter * .9;
     @include fs-textSans($font-size);
-    @include identity-button($black)
+    @include identity-button($brightness-7)
     height: $height;
     border-radius: 100px;
     border: 0;
@@ -157,16 +157,16 @@
 }
 
 %manage-account__button--light {
-    color: $black;
+    color: $brightness-7;
     background-color: transparent;
     text-decoration: underline;
     @supports (box-shadow: 0 0 0 red) {
         text-decoration: none;
-        box-shadow: inset 0 0 0 1px lighten($black, 75%);
+        box-shadow: inset 0 0 0 1px lighten($brightness-7,75%);
     }
     &:hover, &:focus, &:active {
         background-color: transparent!important;
-        color: $black;
-        box-shadow: inset 0 0 0 1px $black;
+        color: $brightness-7;
+        box-shadow: inset 0 0 0 1px $brightness-7;
     }
 }

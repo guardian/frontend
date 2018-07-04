@@ -22,7 +22,7 @@
     // Make it look like the body copy
     @include fs-bodyCopy(2);
     margin: ($gs-baseline/3)*4 0 0;
-    color: $black;
+    color: $brightness-7;
 
     &:before {
         display: none; // Hide the "camera" icon

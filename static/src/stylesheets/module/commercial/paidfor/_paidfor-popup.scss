@@ -1,5 +1,5 @@
 .popup--paidfor {
-    background: $black;
+    background: $brightness-7;
     box-shadow: none;
     left: 100%;
     top: 100%;
@@ -19,7 +19,7 @@
     &::before {
         content: '';
         border: solid transparent;
-        border-bottom-color: $black;
+        border-bottom-color: $brightness-7;
         border-style: solid;
         border-width: 6px;
         height: 0;
@@ -40,7 +40,7 @@
 }
 
 .popup--paidfor__link {
-    color: $paidfor-bold;
+    color: $labs-main;
     font-size: get-font-size(textSans, 2);
     line-height: .8;
     display: block;
@@ -48,7 +48,7 @@
     svg {
         display: inline-block;
         vertical-align: middle;
-        fill: $paidfor-bold;
+        fill: $labs-main;
         height: 20px;
         width: 20px;
     }

@@ -77,7 +77,7 @@
 
 .email-sub__text-input {
     border: 1px solid $form-primary-colour;
-    color: $black;
+    color: $brightness-7;
     height: 3em;
     outline: none;
     padding: .667em 1.25em;
@@ -137,7 +137,7 @@
     .inline-icon {
         background-color: $brightness-86;
         border-radius: 1000px;
-        fill: $black;
+        fill: $brightness-7;
         height: $icon-size;
         left: 0;
         position: absolute;
@@ -204,15 +204,15 @@
     padding: 0 $gs-gutter;
 
     .email-sub__submit-button {
-        background-color: lighten($black, 5%);
-        border-color: lighten($black, 5%);
+        background-color: lighten($brightness-7,5%);
+        border-color: lighten($brightness-7,5%);
         margin-bottom: $gs-baseline;
 
         &:hover,
         &:focus,
         &:active {
-            background-color: $black;
-            border-color: $black;
+            background-color: $brightness-7;
+            border-color: $brightness-7;
         }
     }
 
@@ -312,7 +312,7 @@
     .email-sub__submit-button {
         background-color: $brightness-86;
         border-color: $brightness-86;
-        color: $black;
+        color: $brightness-7;
     }
 
     .email-sub__message {
@@ -331,14 +331,14 @@
     .email-sub__submit-button {
         background-color: $brightness-86;
         border-color: $brightness-86;
-        color: $black;
+        color: $brightness-7;
     }
 }
 
 .email-sub--plaintone {
     .email-sub__message__headline,
     .email-sub__message__description {
-        color: $black;
+        color: $brightness-7;
     }
 }
 

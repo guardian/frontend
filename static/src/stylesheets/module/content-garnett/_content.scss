@@ -301,7 +301,7 @@
 .content__standfirst {
     @include fs-headline(2);
     margin-bottom: $gs-baseline/2;
-    color: $black;
+    color: $brightness-7;
 
     @include mq(tablet) {
         @include font-size(18px, 22px);
@@ -975,7 +975,7 @@
     }
 }
 .paid-content {
-    color: $black;
+    color: $brightness-7;
     .content__head {
         display: block;
         margin-left: 0;
@@ -998,33 +998,33 @@
         fill: $brightness-20;
     }
     a {
-        color: $black;
+        color: $brightness-7;
     }
     .u-underline {
         border-color: $brightness-60;
         &:hover,
         &:focus {
-            border-color: mix($black, $black, 50%);
+            border-color: mix($brightness-7,$brightness-7,50%);
         }
         &:active {
-            border-color: $black;
+            border-color: $brightness-7;
         }
     }
     .element.element-pullquote {
         .pullquote-paragraph {
             font-family: $f-sans-serif-text;
-            color: $paidfor-bold;
+            color: $labs-main;
         }
     }
     a.in-body-link--immersive {
-        color: $paidfor-bold;
+        color: $labs-main;
     }
     &.content--article,
     &.content--interactive,
     &.tonal--tone-media {
         background-color: $brightness-86;
         .caption :not(caption--main) {
-            color: $black;
+            color: $brightness-7;
         }
     }
     &.content {
@@ -1041,20 +1041,20 @@
         min-height: $gs-baseline*8;
         padding: $gs-baseline 0 $gs-baseline*2;
         .content__standfirst {
-            color: $black;
+            color: $brightness-7;
         }
     }
     .tone-media--item {
-        color: $black;
+        color: $brightness-7;
         .rich-link__container:before {
-            background-color: $paidfor-bold
+            background-color: $labs-main
         }
         .rich-link__kicker,
         .rich-link__read-more-text {
-            color: $paidfor-dark;
+            color: $labs-dark;
         }
         .rich-link__arrow-icon {
-            fill: $paidfor-dark;
+            fill: $labs-dark;
         }
     }
     .tone-news--item.rich-link {
@@ -1078,7 +1078,7 @@
         @include f-textSans;
         font-weight: 400;
         .content__section-label__link {
-            color: $black;
+            color: $brightness-7;
         }
     }
     .meta__extras {
@@ -1089,7 +1089,7 @@
         .content__headline,
         .from-content-api,
         .tonal__main .tone-colour {
-            color: $black;
+            color: $brightness-7;
             .inline-icon {
                 fill: $brightness-46;
             }
@@ -1115,7 +1115,7 @@
         }
         .tonal__main--tone-media .sharecount__value,
         .tonal__main--tone-media .commentcount2__value {
-            color: $black;
+            color: $brightness-7;
         }
         .byline,
         .content__dateline,
@@ -1130,7 +1130,7 @@
             .tone-colour {
                 color: $brightness-46;
                 &:hover {
-                    color: $black;
+                    color: $brightness-7;
                 }
             }
         }
@@ -1163,7 +1163,7 @@
             }
         }
         .vjs-volume-bar:before {
-            background-color: $black;
+            background-color: $brightness-7;
         }
         .end-slate-container--video {
             background-color: $brightness-86;
@@ -1207,7 +1207,7 @@
     }
     &.content--media--audio {
         .content__headline:before {
-            @include icon(volume-high-black, $with-width: false);
+            @include icon(volume-high-brightness-7,$with-width: false);
         }
     }
     .fc-item__title svg {

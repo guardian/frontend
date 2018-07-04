@@ -210,20 +210,20 @@
                 background: darken($brightness-86, 7%);
             }
             &:before {
-                background-color: $paidfor-bold;
+                background-color: $labs-main;
             }
             .rich-link__header,
             .rich-link__read-more-text {
                 @include f-textSans;
-                color: $black;
+                color: $brightness-7;
             }
             .rich-link__arrow-icon {
-                fill: $paidfor-bold;
+                fill: $labs-main;
             }
         }
     }
     .rich-link__title {
-        color: $black;
+        color: $brightness-7;
     }
 }
 .rich-link__branding {

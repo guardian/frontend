@@ -157,7 +157,7 @@ $ima-controls-height: 70px;
     width: 100%;
     z-index: 4;
     left: 0;
-    background-color: rgba($black, .8);
+    background-color: rgba($brightness-7, .8);
     color: #ffffff;
     font-weight: bold;
     height: $vjs-control-height;
@@ -605,7 +605,7 @@ $ima-controls-height: 70px;
     box-sizing: border-box;
     width: 100%;
     height: gs-height(1) + $gs-baseline;
-    color: $black;
+    color: $brightness-7;
     padding: $gs-baseline/3 $gs-gutter/2 0;
     border: 1px solid $brightness-86;
     outline: none;
@@ -726,7 +726,7 @@ $ima-controls-height: 70px;
     right: 8px;
     // width so text goes over two lines
     width: 140px;
-    background-color: rgba($black, .8);
+    background-color: rgba($brightness-7, .8);
     color: #ffffff;
     text-align: left;
 
@@ -908,7 +908,7 @@ $ima-controls-height: 70px;
 
 .podcast-meta {
     text-align: left;
-    border-top: 1px solid $black;
+    border-top: 1px solid $brightness-7;
     margin-top: $gs-baseline/2;
     padding: $gs-baseline/2 $gs-gutter/2;
 }

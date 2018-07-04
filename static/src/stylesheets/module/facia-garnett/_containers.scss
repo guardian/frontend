@@ -49,11 +49,11 @@
 .fc-container {
     .button--primary {
         @include button-colour(
-            $black,
+            $brightness-7,
             #ffffff
         );
         @include button-hover-colour(
-            darken($black, 10%)
+            darken($brightness-7, 10%)
         );
     }
 }

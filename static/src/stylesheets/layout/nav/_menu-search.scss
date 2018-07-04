@@ -36,13 +36,13 @@
     width: 100%;
 
     &::placeholder {
-        color: $black;
+        color: $brightness-7;
     }
 
     &:focus {
         background-color: #ffffff;
         box-shadow: 0 0 0 1px rgba(0, 0, 0, .1);
-        color: $black;
+        color: $brightness-7;
         outline: none;
         padding-right: $gs-gutter * 2;
         transition: background-color 500ms;
@@ -85,7 +85,7 @@
 
     &:before,
     &:after {
-        border: 2px solid $black;
+        border: 2px solid $brightness-7;
         border-left: 0;
         border-top: 0;
         content: '';
@@ -121,7 +121,7 @@
 
     &:hover,
     &:active {
-        border-color: $black;
+        border-color: $brightness-7;
     }
 
     &:focus {

@@ -73,7 +73,7 @@ $checkbox-size: $gs-gutter / 1.25;
 
 .manage-account__switch {
     @include fs-textSans(4);
-    @include identity-switch($black)
+    @include identity-switch($brightness-7)
     line-height: 1.333;
     overflow: visible;
     position: relative;
@@ -82,10 +82,10 @@ $checkbox-size: $gs-gutter / 1.25;
 
     &:hover, &:focus {
         .manage-account__switch-checkbox {
-            border-color: $black;
+            border-color: $brightness-7;
         }
         input + .manage-account__switch-checkbox {
-            box-shadow: 0 0 0 1px #ffffff, 0 0 0 2px $black;
+            box-shadow: 0 0 0 1px #ffffff, 0 0 0 2px $brightness-7;
         }
     }
 
@@ -105,7 +105,7 @@ $checkbox-size: $gs-gutter / 1.25;
         top: 0;
         left: 0;
         right: 0;
-        background-color: $black;
+        background-color: $brightness-7;
         height: 2px;
         transform-origin: center;
         opacity: 0;

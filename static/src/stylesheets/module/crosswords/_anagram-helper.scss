@@ -118,7 +118,7 @@
 }
 
 .crossword__anagram-helper__cell--with-space {
-    border-right: 1px solid $black;
+    border-right: 1px solid $brightness-7;
 }
 
 .crossword__anagram-helper__cell--with-hyphen::after {
@@ -165,6 +165,6 @@
         position: relative;
         top: 2px;
         left: 3px;
-        fill: $black;
+        fill: $brightness-7;
     }
 }

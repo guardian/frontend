@@ -1,12 +1,12 @@
 $video-width-desktop: 700px;
 
 .fc-container--video {
-    background-color: darken($black, 7%);
+    background-color: darken($brightness-7, 7%);
     padding-bottom: 0;
     margin-bottom: $gs-baseline;
 
     .gs-container {
-        background-color: $black;
+        background-color: $brightness-7;
     }
 
     .fc-container__inner {
@@ -72,7 +72,7 @@ $video-width-desktop: 700px;
         &:hover {
             border-color: #ffffff;
             background-color: #ffffff;
-            color: $black;
+            color: $brightness-7;
         }
     }
     @include mq($until: desktop) {
@@ -111,7 +111,7 @@ $video-width-desktop: 700px;
     position: relative;
     overflow: hidden;
     @include mq(desktop, leftCol) {
-        background-color: darken($black, 5%);
+        background-color: darken($brightness-7, 5%);
 
         .has-page-skin & {
             background-color: transparent;
@@ -149,7 +149,7 @@ $video-width-desktop: 700px;
     }
 
     .video-playlist__item {
-        background-color: $black;
+        background-color: $brightness-7;
     }
 }
 
@@ -169,7 +169,7 @@ $video-width-desktop: 700px;
             background-color: $highlight-main;
 
             svg {
-                fill: $black;
+                fill: $brightness-7;
             }
         }
     }
@@ -246,7 +246,7 @@ $video-width-desktop: 700px;
 }
 
 .youtube-media-atom__play-button {
-    background-color: $black;
+    background-color: $brightness-7;
     border-radius: 50%;
     color: transparent;
 }
@@ -256,7 +256,7 @@ $video-width-desktop: 700px;
     display: inline-block;
     vertical-align: top;
     width: 70%;
-    background-color: $black;
+    background-color: $brightness-7;
     margin-left: $gs-gutter / 2;
     margin-bottom: $gs-baseline;
     @include mq(mobileLandscape) {
