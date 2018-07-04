@@ -19,37 +19,37 @@ trait Store extends Logging with Dates {
   def getSwitches: Option[String] = S3.get(switchesKey)
   def getSwitchesWithLastModified: Option[(String, DateTime)] = S3.getWithLastModified(switchesKey)
   def getSwitchesLastModified: Option[DateTime] = S3.getLastModified(switchesKey)
-  def putSwitches(config: String) { S3.putPublic(switchesKey, config, "text/plain") }
+  def putSwitches(config: String): Unit = { S3.putPublic(switchesKey, config, "text/plain") }
 
   def getTopStories: Option[String] = S3.get(topStoriesKey)
-  def putTopStories(config: String) { S3.putPublic(topStoriesKey, config, "application/json") }
+  def putTopStories(config: String): Unit = { S3.putPublic(topStoriesKey, config, "application/json") }
 
-  def putInlineMerchandisingSponsorships(keywordsJson: String) {
+  def putInlineMerchandisingSponsorships(keywordsJson: String): Unit = {
     S3.putPublic(dfpInlineMerchandisingTagsDataKey, keywordsJson, defaultJsonEncoding)
   }
-  def putHighMerchandisingSponsorships(keywordsJson: String) {
+  def putHighMerchandisingSponsorships(keywordsJson: String): Unit = {
     S3.putPublic(dfpHighMerchandisingTagsDataKey, keywordsJson, defaultJsonEncoding)
   }
-  def putDfpPageSkinAdUnits(adUnitJson: String) {
+  def putDfpPageSkinAdUnits(adUnitJson: String): Unit = {
     S3.putPublic(dfpPageSkinnedAdUnitsKey, adUnitJson, defaultJsonEncoding )
   }
-  def putDfpLineItemsReport(everything: String) {
+  def putDfpLineItemsReport(everything: String): Unit = {
     S3.putPublic(dfpLineItemsKey, everything, defaultJsonEncoding)
   }
   def putDfpAdUnitList(filename: String, adUnits: String): Unit = {
     S3.putPublic(filename, adUnits, "text/plain")
   }
-  def putTopAboveNavSlotTakeovers(takeovers: String) {
+  def putTopAboveNavSlotTakeovers(takeovers: String): Unit = {
     S3.putPublic(topAboveNavSlotTakeoversKey, takeovers, defaultJsonEncoding)
   }
-  def putDfpTemplateCreatives(creatives: String) {
+  def putDfpTemplateCreatives(creatives: String): Unit = {
     S3.putPublic(dfpTemplateCreativesKey, creatives, defaultJsonEncoding)
   }
   def putDfpCustomTargetingKeyValues(keyValues: String): Unit ={
     S3.putPublic(dfpCustomTargetingKey, keyValues, defaultJsonEncoding )
   }
-  def putNonRefreshableLineItemIds(lineItemIds: String): Unit = {
-    S3.putPublic(dfpNonRefreshableLineItemIdsKey, lineItemIds, defaultJsonEncoding)
+  def putNonRefreshableLineItemIds(lineItemIds: Seq[Long]): Unit = {
+    S3.putPublic(dfpNonRefreshableLineItemIdsKey, Json.stringify(toJson(lineItemIds)), defaultJsonEncoding)
   }
 
   val now: String = DateTime.now().toHttpDateTimeString
