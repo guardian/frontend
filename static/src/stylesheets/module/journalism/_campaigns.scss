@@ -122,13 +122,18 @@ article.content--pillar-opinion {
     }
     .form_submit {
         button {
+            color: $garnett-neutral-5;
             background-color: $opinion-garnett-feature;
         }
     }
     .campaign--snippet__handle {
+        color: $garnett-neutral-5;
         background-color: $garnett-neutral-1;
         &:hover, :active {
             background-color: $opinion-garnett-feature;
+            .icon {
+                fill: $garnett-neutral-5;
+            }
         }
     }
 }
@@ -143,13 +148,21 @@ article.content--pillar-arts {
     }
     .form_submit {
         button {
+            color: $garnett-neutral-5;
             background-color: $culture-garnett-feature;
+            .icon {
+                fill: $garnett-neutral-5;
+            }
         }
     }
     .campaign--snippet__handle {
+        color: $garnett-neutral-5;
         background-color: $garnett-neutral-1;
         &:hover, :active {
             background-color: $culture-garnett-feature;
+            .icon {
+                fill: $garnett-neutral-5;
+            }
         }
     }
 }
@@ -164,13 +177,18 @@ article.content--pillar-lifestyle {
     }
     .form_submit {
         button {
+            color: $garnett-neutral-5;
             background-color: $lifestyle-garnett-main-1;
         }
     }
     .campaign--snippet__handle {
+        color: $garnett-neutral-5;
         background-color: $garnett-neutral-1;
         &:hover, :active {
             background-color: $lifestyle-garnett-main-1;
+            .icon {
+                fill: $garnett-neutral-5;
+            }
         }
     }
 }
