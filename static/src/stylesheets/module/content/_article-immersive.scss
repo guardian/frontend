@@ -230,7 +230,7 @@
     /* Header
     ========================================================================== */
 
-    .content__series-label__link {
+    .content__label__link {
         color: #ffffff;
     }
 
@@ -256,7 +256,7 @@
         margin: 0;
         padding-top: $gs-baseline / 2;
 
-        .content__section-label__link--advertisement {
+        .content__label__link {
             color: $paid-article-brand;
         }
     }

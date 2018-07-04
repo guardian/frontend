@@ -6,7 +6,7 @@
     .tone-colour,
     a.tone-colour,
     .submeta a,
-    .content__series-label__link {
+    .content__label__link {
         color: $dark;
     }
 
@@ -37,7 +37,7 @@
     a.tone-colour,
     .submeta a,
     a.u-underline,
-    .content__series-label__link {
+    .content__label__link {
         color: $bright;
     }
 
@@ -92,7 +92,7 @@
     @include PillarColourOne($story-package-garnett, $story-package-garnett);
     background-color: #eff1f2;
 
-    .content__series-label__link {
+    .content__label__link {
         background-color: $news-garnett-highlight;
         padding: ($gs-baseline / 4) ($gs-gutter / 4);
     }

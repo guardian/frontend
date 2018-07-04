@@ -18,7 +18,10 @@ declare type ConsentPayload = {
 const shouldTrack = (): boolean => {
     // gather analytics from 0.1% (1 in 1000) of page views
     const inSample = getRandomIntInclusive(1, 1000) === 1;
-    return config.switches.pageViewAnalytics && (inSample || config.page.isDev);
+    return (
+        config.switches.commercialPageViewAnalytics &&
+        (inSample || config.page.isDev)
+    );
 };
 
 const buildPayload = (
