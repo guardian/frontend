@@ -8,27 +8,27 @@ export const acquisitionsBannerControlTemplate = (
     params: EngagementBannerTemplateParams
 ) =>
     `
-    <div class="support-the-guardian-banner__close">
-        <div class="support-the-guardian-banner__roundel">
+    <div class="engagement-banner__close">
+        <div class="engagement-banner__roundel">
             ${marque36icon.markup}
         </div>
-        <button class="button support-the-guardian-banner__close-button js-site-message-close" data-link-name="hide release message">
+        <button class="button engagement-banner__close-button js-site-message-close" data-link-name="hide release message">
             <span class="u-h">Close</span>
             ${closeCentralIcon.markup}
         </button>
     </div>
-    <div class="support-the-guardian-banner__container">
-        <div class="support-the-guardian-banner__text">
+    <div class="engagement-banner__container">
+        <div class="engagement-banner__text">
             ${params.messageText}${params.ctaText}
         </div>
-        <div class="support-the-guardian-banner__cta">
-            <button class="button support-the-guardian-banner__button" href="${
+        <div class="engagement-banner__cta">
+            <button class="button engagement-banner__button" href="${
                 params.linkUrl
             }">
                 ${params.buttonCaption}${arrowWhiteRight.markup}
             </button>
             <img
-                class="support-the-guardian-banner__payment-logos"
+                class="engagement-banner__payment-logos"
                 src="${config.get(
                     'images.acquisitions.paypal-and-credit-card'
                 )}"

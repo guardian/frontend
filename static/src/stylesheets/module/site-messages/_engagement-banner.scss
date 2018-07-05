@@ -1,8 +1,8 @@
-.site-message--support-the-guardian-banner {
+.site-message--engagement-banner {
     background-color: $highlight-main;
     max-height: 80%;
 
-    // we have our own close button - see .support-the-guardian-banner__close-button
+    // we have our own close button - see .engagement-banner__close-button
     .site-message__close {
         display: none;
     }
@@ -28,7 +28,7 @@
 
         // Because this roundel "jumps" from the right to left
         // at leftCol width, we display this one and hide the other
-        // one at this point. See also: .support-the-guardian-banner__roundel
+        // one at this point. See also: .engagement-banner__roundel
         @include mq(leftCol) {
             display: block;
         }
@@ -51,7 +51,7 @@
     }
 }
 
-.support-the-guardian-banner__text {
+.engagement-banner__text {
     color: $brightness-7;
 
     font-size: 17px;
@@ -66,17 +66,17 @@
     }
 }
 
-.support-the-guardian-banner__highlight {
+.engagement-banner__highlight {
     font-weight: bold;
     background-color: #ffffff;
     padding: 1px;
 }
 
-.support-the-guardian-banner__container {
+.engagement-banner__container {
     position: relative;
 }
 
-.support-the-guardian-banner__text {
+.engagement-banner__text {
     @include banner-copy-alignment;
 
     color: $brightness-7;
@@ -85,7 +85,7 @@
     line-height: 22px;
 }
 
-.support-the-guardian-banner__cta {
+.engagement-banner__cta {
     margin-top: $gs-baseline;
 
     @include mq(desktop) {
@@ -94,7 +94,7 @@
     }
 }
 
-.support-the-guardian-banner__button {
+.engagement-banner__button {
     display: inline-block;
     vertical-align: middle;
 
@@ -124,7 +124,7 @@
     }
 }
 
-.support-the-guardian-banner__payment-logos {
+.engagement-banner__payment-logos {
     display: inline-block;
     vertical-align: middle;
 
@@ -137,7 +137,7 @@
     }
 }
 
-.support-the-guardian-banner__close {
+.engagement-banner__close {
     float: right;
 
     // we want the close button above the link overlay
@@ -149,8 +149,8 @@
     font-size: 0;
 }
 
-.support-the-guardian-banner__close-button,
-.support-the-guardian-banner__roundel {
+.engagement-banner__close-button,
+.engagement-banner__roundel {
     display: inline-block;
     vertical-align: middle;
 
@@ -158,7 +158,7 @@
     width: 36px;
 }
 
-.support-the-guardian-banner__roundel {
+.engagement-banner__roundel {
     // Because this roundel "jumps" from the right to left
     // at leftCol width, we hide this one and display the other
     // one at this point. See also: .site-message__roundel
@@ -167,7 +167,7 @@
     }
 }
 
-.support-the-guardian-banner__close-button {
+.engagement-banner__close-button {
     // for some reason, it's more centered with this 2px on top
     padding: 2px 0 0;
 

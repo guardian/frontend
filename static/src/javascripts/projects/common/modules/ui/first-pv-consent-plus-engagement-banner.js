@@ -6,8 +6,8 @@ import { acquisitionsBannerControlTemplate } from 'common/modules/commercial/tem
 import { engagementBannerParams } from 'common/modules/commercial/membership-engagement-banner-parameters';
 import { addTrackingCodesToUrl } from 'common/modules/commercial/acquisitions-ophan';
 import {
-    messageCode as supportTheGuardianMessageCode,
-    canShow as canShowSupportTheGuardianBanner,
+    messageCode as engagementMessageCode,
+    canShow as canShowEngagementBanner,
 } from 'common/modules/commercial/membership-engagement-banner';
 import {
     track as trackFirstPvConsent,
@@ -20,7 +20,7 @@ import {
 } from 'common/modules/ui/first-pv-consent-banner';
 import marque36icon from 'svgs/icon/marque-36.svg';
 
-const messageCode: string = 'first-pv-consent-plus-support-the-guardian';
+const messageCode: string = 'first-pv-consent-plus-engagement-banner';
 
 const bannerParams: EngagementBannerParams = engagementBannerParams(
     geolocationGetSync()
@@ -39,7 +39,7 @@ const bannerTemplateParams: EngagementBannerTemplateParams = {
 
 const bannerHtml = `
     <div class="site-message js-site-message js-double-site-message site-message--banner site-message--double-banner" tabindex="-1" role="dialog" aria-label="welcome" aria-describedby="site-message__message" data-component="AcquisitionsEngagementBannerStylingTweaks_control">
-        <div class="js-support-the-guardian-site-message site-message--support-the-guardian-banner">
+        <div class="js-engagement-banner-site-message site-message--engagement-banner">
             <div class="gs-container">
                 <div class="site-message__inner js-site-message-inner">
                     <div class="site-message__roundel">
@@ -114,17 +114,17 @@ class SubMessage extends Message {
     }
 }
 
-const firstPvConsentPlusSupportTheGuardianMessage = new Message(messageCode);
+const firstPvConsentPlusEngagementMessage = new Message(messageCode);
 
 const firstPvConsentMessage = new SubMessage(
     firstPvConsentMessageCode,
     '.js-first-pv-consent-site-message',
-    firstPvConsentPlusSupportTheGuardianMessage
+    firstPvConsentPlusEngagementMessage
 );
-const supportTheGuardianMessage = new SubMessage(
-    supportTheGuardianMessageCode,
-    '.js-support-the-guardian-site-message',
-    firstPvConsentPlusSupportTheGuardianMessage
+const engagementMessage = new SubMessage(
+    engagementMessageCode,
+    '.js-engagement-banner-site-message',
+    firstPvConsentPlusEngagementMessage
 );
 
 const show = (): void => {
@@ -133,21 +133,21 @@ const show = (): void => {
         document.body.insertAdjacentHTML('beforeend', bannerHtml);
     }
     bindFirstPvConsentClickHandlers(firstPvConsentMessage);
-    supportTheGuardianMessage.bindCloseHandler();
+    engagementMessage.bindCloseHandler();
 };
 
-const firstPvConsentPlusSupportTheGuardianBanner: Banner = {
+const firstPvConsentPlusEngagementBanner: Banner = {
     id: messageCode,
     canShow: () =>
         canShowFirstPvConsent() &&
-        canShowSupportTheGuardianBanner() &&
+        canShowEngagementBanner() &&
         Promise.resolve(
             !(
                 firstPvConsentMessage.isRemembered() ||
-                supportTheGuardianMessage.isRemembered()
+                engagementMessage.isRemembered()
             )
         ),
     show,
 };
 
-export { firstPvConsentPlusSupportTheGuardianBanner };
+export { firstPvConsentPlusEngagementBanner };

@@ -147,8 +147,7 @@ const showBanner = (params: EngagementBannerParams): void => {
         siteMessageCloseBtn: 'hide',
         siteMessageComponentName: params.campaignCode,
         trackDisplay: true,
-        cssModifierClass:
-            params.bannerModifierClass || 'support-the-guardian-banner',
+        cssModifierClass: params.bannerModifierClass || 'engagement-banner',
     }).show(renderedBanner);
 
     if (messageShown) {

@@ -285,7 +285,7 @@ describe('Membership engagement banner', () => {
                 membershipEngagementBanner.show();
 
                 expect(FakeMessage.mock.calls[0][1].cssModifierClass).toBe(
-                    'support-the-guardian-banner'
+                    'engagement-banner'
                 );
             }));
     });
@@ -298,8 +298,7 @@ describe('Membership engagement banner', () => {
                 linkUrl: 'fake-link-url',
                 buttonCaption: 'fake-button-caption',
             }));
-            fakeConfig.get
-                .mockImplementationOnce(() => true)
+            fakeConfig.get.mockImplementationOnce(() => true);
             fakeConstructQuery.mockImplementationOnce(
                 () => 'fake-query-parameters'
             );
@@ -323,7 +322,7 @@ describe('Membership engagement banner', () => {
                 membershipEngagementBanner.show();
 
                 expect(FakeMessage.prototype.show.mock.calls[0][0]).toMatch(
-                    /support-the-guardian-banner/
+                    /engagement-banner/
                 );
             }));
 
@@ -348,6 +347,5 @@ describe('Membership engagement banner', () => {
                     /fake-button-caption/
                 );
             }));
-
     });
 });

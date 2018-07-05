@@ -33,7 +33,7 @@ import { initAccessibilityPreferences } from 'common/modules/ui/accessibility-pr
 import { initClickstream } from 'common/modules/ui/clickstream';
 import { init as initDropdowns } from 'common/modules/ui/dropdowns';
 import { fauxBlockLink } from 'common/modules/ui/faux-block-link';
-import { firstPvConsentPlusSupportTheGuardianBanner } from 'common/modules/ui/first-pv-consent-plus-support-the-guardian-banner';
+import { firstPvConsentPlusEngagementBanner } from 'common/modules/ui/first-pv-consent-plus-engagement-banner';
 import { firstPvConsentBanner } from 'common/modules/ui/first-pv-consent-banner';
 import { init as initRelativeDates } from 'common/modules/ui/relativedates';
 import { smartAppBanner } from 'common/modules/ui/smartAppBanner';
@@ -268,7 +268,7 @@ const initialiseEmail = (): void => {
 const initialiseBanner = (): void => {
     // ordered by priority
     const bannerList = [
-        firstPvConsentPlusSupportTheGuardianBanner,
+        firstPvConsentPlusEngagementBanner,
         firstPvConsentBanner,
         breakingNews,
         membershipBanner,
