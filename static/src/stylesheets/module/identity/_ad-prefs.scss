@@ -1,7 +1,7 @@
 .identity-ad-prefs-area {
 
     .u-underline {
-        color: $garnett-neutral-1;
+        color: $brightness-7;
     }
 
     .gs-container {
@@ -9,7 +9,7 @@
     }
     &:not(:last-child) {
         .gs-container {
-            border-bottom: 1px solid $garnett-neutral-4;
+            border-bottom: 1px solid $brightness-86;
         }
     }
 
@@ -100,7 +100,7 @@
 }
 
 .identity-ad-prefs-manager__flash {
-    color: $status-positive-garnett;
+    color: $green-bold;
     font-weight: bold;
     opacity: 0;
     transition: .1s;
@@ -122,7 +122,7 @@
         @include fs-textSans(5);
         border-radius: $gs-baseline * 1.75;
         display: flex;
-        background: $news-garnett-highlight;
+        background: $highlight-main;
         padding: $gs-baseline ($gs-gutter / 1.5) $gs-baseline $left-padding;
         min-height: $gs-baseline * 1.5;
         align-items: center;

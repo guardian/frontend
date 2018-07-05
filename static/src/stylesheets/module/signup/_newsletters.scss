@@ -1,7 +1,7 @@
 .newsletters-heading {
     @include fs-header(5);
     font-size: 40px;
-    color: $neutral-1;
+    color: $brightness-7;
     padding-top: $gs-baseline;
 
     @include mq($from: tablet) {
@@ -38,8 +38,8 @@
 
 .newsletter-card {
     margin-bottom: $gs-baseline;
-    border-top: 1px solid $neutral-3;
-    background-color: $comment-support-2;
+    border-top: 1px solid $brightness-86;
+    background-color: $brightness-93;
     padding: $gs-baseline / 2 $gs-gutter / 2 $gs-baseline;
     box-sizing: border-box;
     width: 100%;
@@ -84,7 +84,7 @@
     .newsletter-card__text-input {
         @include fs-textSans(2);
         border-radius: 1000px 0 0 1000px;
-        border: 1px solid $neutral-3;
+        border: 1px solid $brightness-86;
         border-right: 0;
         float: left;
         padding-left: $gs-baseline;
@@ -95,8 +95,8 @@
     .newsletter-card__lozenge {
         @include fs-textSans(2);
         color: #ffffff;
-        border: 1px solid $news-main-1;
-        background-color: $news-main-1;
+        border: 1px solid $sport-dark;
+        background-color: $sport-dark;
         border-radius: 1000px;
         border-width: 1px;
         height: 3em;
@@ -106,8 +106,8 @@
 
         &:hover,
         &:focus {
-            border-color: darken($news-main-1, 10%);
-            background-color: darken($news-main-1, 10%);
+            border-color: darken($sport-dark, 10%);
+            background-color: darken($sport-dark, 10%);
         }
     }
 
@@ -119,21 +119,21 @@
     }
 
     .newsletter-card__lozenge--preview {
-        border-color: $garnett-neutral-1;
-        color: $garnett-neutral-1;
+        border-color: $brightness-7;
+        color: $brightness-7;
         background-color: transparent;
         float: right;
 
         &:hover,
         &:focus,
         &:active {
-            border-color: $garnett-neutral-1;
+            border-color: $brightness-7;
             background-color: rgba(0, 0, 0, .1)
         }
     }
 
     .inline-arrow-right {
-        fill: $garnett-neutral-1;
+        fill: $brightness-7;
         position: absolute;
         height: $gs-baseline;
         line-height: $gs-baseline;
@@ -142,13 +142,13 @@
 
 .newsletter-card__signup {
     .newsletter-card__lozenge {
-        border-color: $garnett-neutral-1;
-        background-color: $garnett-neutral-1;
+        border-color: $brightness-7;
+        background-color: $brightness-7;
 
         &:hover,
         &:focus {
-            border-color: lighten($garnett-neutral-1, 30%);
-            background-color: lighten($garnett-neutral-1, 30%);
+            border-color: lighten($brightness-7, 30%);
+            background-color: lighten($brightness-7, 30%);
         }
     }
 }
@@ -163,11 +163,11 @@
 
 .newsletter-card__frequency {
     @include fs-textSans(1);
-    color: $neutral-2;
+    color: $brightness-46;
     padding-bottom: $gs-baseline / 2;
 
     .inline-icon {
-        fill: $neutral-3;
+        fill: $brightness-86;
     }
 }
 
@@ -183,14 +183,14 @@
 
     .signup-confirmation--success {
         @include fs-textSans(3);
-        color: $neutral-1;
+        color: $brightness-7;
         display: inline;
     }
 
     .inline-icon {
-        background-color: $neutral-3;
+        background-color: $brightness-86;
         border-radius: 1000px;
-        fill: $neutral-1;
+        fill: $brightness-7;
         height: $gs-baseline * 3;
         left: 0;
         width: $gs-baseline * 3;
@@ -211,7 +211,7 @@
 }
 
 .newsletters-category {
-    border-top: 1px solid $garnett-neutral-4;
+    border-top: 1px solid $brightness-86;
     margin-top: $gs-baseline * 2;
 
     @include mq(tablet) {
@@ -223,7 +223,7 @@
 
 .newsletters-category__heading {
     @include fs-header(5);
-    color: $neutral-1;
+    color: $brightness-7;
     position: relative;
     margin: ($gs-baseline / 2) 0 $gs-baseline;
 

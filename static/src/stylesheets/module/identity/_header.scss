@@ -4,9 +4,9 @@ $gutter: 5px;
 
 .identity-header {
     @include clearfix;
-    background-color: $nav-background-colour;
+    background-color: $nav-faded;
     padding: ($gutter/2) 0 0;
-    color: $nav-primary-colour;
+    color: $brightness-7;
     height: $slim-nav-height + 1px;
     overflow: visible;
     position: relative;
@@ -21,7 +21,7 @@ $gutter: 5px;
         height: 1px;
         display: block;
         z-index: 0;
-        background: $rule;
+        background: $nav-dark;
     }
 
     .identity-dropdown {
@@ -141,7 +141,7 @@ label[for=identity-header-account-menu-fallback]:focus {
     &:focus,
     label[for=identity-header-account-menu-fallback]:focus & {
         outline: 0;
-        color: $nav-secondary-colour;
+        color: $brightness-20;
         &:after {
             transform: translateY(0px) rotate(45deg);
         }

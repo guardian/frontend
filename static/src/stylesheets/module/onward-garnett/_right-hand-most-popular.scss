@@ -3,7 +3,7 @@
 }
 
 .right-most-popular__heading {
-    @include multiline(4, $garnett-neutral-4, top);
+    @include multiline(4, $brightness-86, top);
     border-top: 0;
     padding-top: $gs-baseline*1.2;
     padding-bottom: $gs-baseline/1.5;
@@ -13,7 +13,7 @@
     clear: left;
     padding-top: $gs-baseline/3;
     margin-bottom: $gs-baseline;
-    border-top: 1px solid $neutral-4;
+    border-top: 1px solid $brightness-86;
 
     &:first-child {
         padding-top: 0;
@@ -24,19 +24,19 @@
 .right-most-popular-item__headline {
     @include fs-headline(2);
     @include text-clamp(4);
-    color: $garnett-neutral-1;
+    color: $brightness-7;
     margin-bottom: 0;
 }
 
 .right-most-popular__kicker {
-    color: $news-garnett-main-1;
+    color: $news-main;
 }
 
 .right-most-popular__byline {
     @include fs-headline(2);
     font-style: italic;
 }
-@each $pillar, $palette in (news: $news-garnett-feature, opinion: $opinion-garnett-main-1, sport: $sport-garnett-main-1, arts: $culture-garnett-main-1, lifestyle: $lifestyle-garnett-main-1) {
+@each $pillar, $palette in (news: $news-dark, opinion: $opinion-main, sport: $sport-main, arts: $culture-main, lifestyle: $lifestyle-main) {
     .right-most-popular__byline--#{$pillar} {
         color: $palette;
     }
@@ -47,7 +47,7 @@
     &:focus,
     &:hover {
         .right-most-popular-item__headline {
-            color: $neutral-1;
+            color: $brightness-7;
             text-decoration: underline;
         }
     }
@@ -55,7 +55,7 @@
     &:active,
     &:visited {
         .right-most-popular-item__headline {
-            color: $neutral-2;
+            color: $brightness-46;
         }
     }
 }

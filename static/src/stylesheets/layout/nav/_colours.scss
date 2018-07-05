@@ -29,95 +29,95 @@
 }
 
 .pillar-scheme--News {
-    @include PillarColourOne($news-garnett-main-1);
+    @include PillarColourOne($news-main);
 }
 
 .pillar-scheme--Opinion {
-    @include PillarColourOne($opinion-garnett-main-1);
+    @include PillarColourOne($opinion-main);
 }
 
 .pillar-scheme--Sport {
-    @include PillarColourOne($sport-garnett-main-1);
+    @include PillarColourOne($sport-main);
 }
 
 .pillar-scheme--Culture {
-    @include PillarColourOne($culture-garnett-main-1);
+    @include PillarColourOne($culture-main);
 }
 
 .pillar-scheme--Lifestyle {
-    @include PillarColourOne($lifestyle-garnett-main-1);
+    @include PillarColourOne($lifestyle-main);
 }
 
 .menu-group {
     .menu-item:first-child > .menu-group .menu-item__title:hover,
     .menu-item:first-child > .menu-group .menu-item__title:focus,
     .menu-item__title--News {
-        color: $news-garnett-main-1;
+        color: $news-main;
     }
 
     .menu-item:nth-child(2) > .menu-group .menu-item__title:hover,
     .menu-item:nth-child(2) > .menu-group .menu-item__title:focus,
     .menu-item__title--Opinion {
-        color: $opinion-garnett-main-1;
+        color: $opinion-main;
     }
 
     .menu-item:nth-child(3) > .menu-group .menu-item__title:hover,
     .menu-item:nth-child(3) > .menu-group .menu-item__title:focus,
     .menu-item__title--Sport {
-        color: $sport-garnett-main-1;
+        color: $sport-main;
     }
 
     .menu-item:nth-child(4) > .menu-group .menu-item__title:hover,
     .menu-item:nth-child(4) > .menu-group .menu-item__title:focus,
     .menu-item__title--Culture {
-        color: $culture-garnett-main-1;
+        color: $culture-main;
     }
 
     .menu-item:nth-child(5) > .menu-group .menu-item__title:hover,
     .menu-item:nth-child(5) > .menu-group .menu-item__title:focus,
     .menu-item__title--Lifestyle {
-        color: $lifestyle-garnett-main-1;
+        color: $lifestyle-main;
     }
 }
 
 .pillar-link {
     &.pillar-link--News {
-        color: $news-garnett-main-1;
+        color: $news-main;
 
         &:after {
-            border-color: $news-garnett-feature;
+            border-color: $news-dark;
         }
     }
 
     &.pillar-link--Opinion {
-        color: $opinion-garnett-main-1;
+        color: $opinion-main;
 
         &:after {
-            border-color: $opinion-garnett-feature;
+            border-color: $opinion-dark;
         }
     }
 
     &.pillar-link--Sport {
-        color: $sport-garnett-main-1;
+        color: $sport-main;
 
         &:after {
-            border-color: $sport-garnett-feature;
+            border-color: $sport-dark;
         }
     }
 
     &.pillar-link--Culture {
-        color: $culture-garnett-main-1;
+        color: $culture-main;
 
         &:after {
-            border-color: $culture-garnett-feature;
+            border-color: $culture-dark;
         }
     }
 
     &.pillar-link--Lifestyle {
-        color: $lifestyle-garnett-main-1;
+        color: $lifestyle-main;
 
         &:after {
-            border-color: $lifestyle-garnett-feature;
+            border-color: $lifestyle-dark;
         }
     }
 }

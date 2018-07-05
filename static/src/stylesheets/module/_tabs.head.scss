@@ -47,7 +47,7 @@ category: Common
     overflow: hidden;
     z-index: 2;
     width: 100%;
-    background: lighten($neutral-6, 5%);
+    background: lighten($brightness-93, 5%);
     table-layout: fixed;
     grid-template-columns: repeat(auto-fit, minmax(40%, 1fr));
     grid-column-gap: 2px;
@@ -65,8 +65,8 @@ category: Common
 
 .tabs__tab {
     margin: 0;
-    border-bottom: 1px solid $neutral-5;
-    border-top: 3px solid $neutral-6;
+    border-bottom: 1px solid $brightness-86;
+    border-top: 3px solid $brightness-93;
     float: left;
     width: 50%;
 
@@ -98,7 +98,7 @@ category: Common
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
-        background: $neutral-6;
+        background: $brightness-93;
 
         @include mq($until: tablet) {
             font-size: 14px;
@@ -128,7 +128,7 @@ category: Common
     z-index: 1;
 
     @include mq(tablet) {
-        border-top: 1px solid $neutral-5;
+        border-top: 1px solid $brightness-86;
     }
 }
 

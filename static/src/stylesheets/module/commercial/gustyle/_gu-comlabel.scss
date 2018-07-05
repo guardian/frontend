@@ -1,5 +1,5 @@
 .gu-comlabel {
-    color: $neutral-1;
+    color: $brightness-7;
 
     .gu-comlabel__btn {
         @include f-textSans;
@@ -12,14 +12,14 @@
         padding: 9px 7px 1px;
         border-radius: 100%;
         z-index: $zindex-modal;
-        background-color: $gustyle-tone;
+        background-color: #fedd79;
         border: 0;
         font-weight: bold;
         text-transform: uppercase;
 
         &.is-active:before {
             top: 32px;
-            border-bottom-color: $gustyle-tone;
+            border-bottom-color: #fedd79;
             margin-left: -6px;
         }
 
@@ -46,7 +46,7 @@
     svg {
         width: 13px;
         height: 13px;
-        fill: $neutral-1;
+        fill: $brightness-7;
         vertical-align: middle;
     }
 }

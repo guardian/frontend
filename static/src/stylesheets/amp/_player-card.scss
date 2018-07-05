@@ -1,8 +1,8 @@
 .player-card {
     padding: $gs-baseline $gs-gutter/2;
-    background: $neutral-8;
-    border-top: 1px solid $sport-mid;
-    color: $neutral-1;
+    background: $brightness-97;
+    border-top: 1px solid $sport-dark;
+    color: $brightness-7;
 }
 
 .player-card__player {
@@ -48,7 +48,7 @@
 .player-card__position {
     font-size: 14px;
     line-height: 22px;
-    color: $sport-mid;
+    color: $sport-dark;
 }
 
 .player-card__stat-name {
@@ -58,7 +58,7 @@
 }
 
 .player-card__stat-value {
-    border-top: 1px solid $neutral-3;
+    border-top: 1px solid $brightness-86;
     font-weight: bold;
     padding-left: 85%;
     text-align: right;

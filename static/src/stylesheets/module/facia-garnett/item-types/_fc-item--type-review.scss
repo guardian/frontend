@@ -1,7 +1,7 @@
 .fc-item--type-review {
     .fc-item__header {
         .stars {
-            background-color: $news-garnett-highlight;
+            background-color: $highlight-main;
             display: inline-block;
             line-height: 0;
             padding: calc((#{$gs-baseline} / 2) - 2px);
@@ -12,7 +12,7 @@
             display: inline;
 
             svg {
-                stroke: $garnett-neutral-1;
+                stroke: $brightness-7;
                 fill: transparent;
                 height: .8em;
                 width: .8em;
@@ -21,7 +21,7 @@
 
         .inline-star.star__item--golden {
             svg {
-                fill: $garnett-neutral-1;
+                fill: $brightness-7;
                 stroke: none;
             }
         }

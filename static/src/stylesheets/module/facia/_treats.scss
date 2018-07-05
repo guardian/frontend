@@ -31,12 +31,12 @@
     @include ellipsis();
     @include button-colour(
         #ffffff,
-        $news-default,
-        $news-accent
+        $sport-dark,
+        $sport-bright
     );
     @include button-hover-colour(
         #ffffff,
-        darken($neutral-3, 10%)
+        darken($brightness-86, 10%)
     );
     box-sizing: border-box;
     display: inline-block;
@@ -60,7 +60,7 @@
     &:hover,
     &:focus,
     &:active {
-        color: $neutral-1;
+        color: $brightness-7;
         text-decoration: none;
     }
 }
@@ -84,8 +84,8 @@
     &:focus,
     &:active {
         .treats__treat {
-            color: $neutral-1;
-            border-color: darken($neutral-3, 10%);
+            color: $brightness-7;
+            border-color: darken($brightness-86, 10%);
         }
     }
 }

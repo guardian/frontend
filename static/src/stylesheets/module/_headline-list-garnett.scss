@@ -13,7 +13,7 @@
         display: block;
         width: 100%;
         height: 1px;
-        background-color: $neutral-4;
+        background-color: $brightness-86;
     }
 
     &:first-child:before {
@@ -37,7 +37,7 @@
     @include font($f-serif-headline, 500, 44px);
     float: left;
     width: gs-span(1);
-    color: $garnett-neutral-1;
+    color: $brightness-7;
     letter-spacing: -.5px;
     font-variant-numeric: lining-nums;
 
@@ -50,7 +50,7 @@
     @include fs-headline(2);
     display: block;
     overflow: hidden;
-    color: $garnett-neutral-1;
+    color: $brightness-7;
     font-weight: 400;
 
     .headline-list__text {
@@ -65,17 +65,17 @@
     .inline-numbers {
         float: left;
         margin-top: $gs-baseline / 4;
-        fill: $garnett-neutral-1;
+        fill: $brightness-7;
     }
 
     .inline-icon {
-        fill: $neutral-2;
+        fill: $brightness-46;
     }
 
     .inline-camera,
     .inline-volume-high,
     .inline-video-icon {
-        fill: $media-default;
+        fill: $highlight-main;
     }
 
     .inline-video-icon svg {
@@ -86,7 +86,7 @@
     &:visited {
         .headline-list__body,
         .fc-item__link {
-            color: $garnett-neutral-1;
+            color: $brightness-7;
         }
     }
 
@@ -99,7 +99,7 @@
         }
 
         .headline-list__count {
-            color: $neutral-3;
+            color: $brightness-86;
         }
     }
 
@@ -111,7 +111,7 @@
 
 .headline-list__body {
     .fc-item__link & {
-        color: $garnett-neutral-1;
+        color: $brightness-7;
     }
 }
 
