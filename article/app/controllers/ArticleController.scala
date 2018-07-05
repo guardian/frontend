@@ -1,12 +1,9 @@
 package controllers
 
-import java.lang.System.currentTimeMillis
-
 import com.gu.contentapi.client.model.v1.{ItemResponse, Content => ApiContent}
 import common._
 import conf.switches.Switches
 import contentapi.ContentApiClient
-import model.LiveBlogHelpers._
 import model.{PageWithStoryPackage, _}
 import pages.{ArticleEmailHtmlPage, ArticleHtmlPage, MinuteHtmlPage}
 import play.api.libs.json.Json
@@ -20,8 +17,7 @@ import scala.concurrent.Future
 case class ArticlePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
 case class MinutePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
 
-class ArticleController(contentApiClient: ContentApiClient, val controllerComponents: ControllerComponents, ws: WSClient)(implicit context: ApplicationContext) extends BaseController
-    with RendersItemResponse with Logging with ImplicitControllerExecutionContext {
+class ArticleController(contentApiClient: ContentApiClient, val controllerComponents: ControllerComponents, ws: WSClient)(implicit context: ApplicationContext) extends BaseController with RendersItemResponse with Logging with ImplicitControllerExecutionContext {
 
   private def isSupported(c: ApiContent) = c.isArticle || c.isLiveBlog || c.isSudoku
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
@@ -30,6 +26,33 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
   private def noAMP(renderPage: => Result)(implicit  request: RequestHeader): Result = {
     if (request.isAmp) NotFound
     else renderPage
+  }
+
+  def renderJson(path: String): Action[AnyContent] = {
+    println("Rendering article json")
+    Action.async { implicit request =>
+      mapModel(path, if (request.isGuuiJson) Some(ArticleBlocks) else None) {
+        render(path, _)
+      }
+    }
+  }
+
+  def renderArticle(path: String): Action[AnyContent] = {
+    Action.async { implicit request =>
+      println("Rendering article")
+      mapModel(path, range = Some(ArticleBlocks)) {
+        render(path, _)
+      }
+    }
+  }
+
+  def renderEmail(path: String): Action[AnyContent] = {
+    Action.async { implicit request =>
+      println("Rendering email")
+      mapModel(path, range = Some(ArticleBlocks)) {
+        render(path, _)
+      }
+    }
   }
 
   private def render(path: String, page: PageWithStoryPackage)(implicit request: RequestHeader) = page match {
@@ -56,34 +79,6 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
 
       val jsonResponse = () => List(("html", views.html.fragments.articleBody(article))) ++ contentFieldsJson
       renderFormat(htmlResponse, jsonResponse, article)
-  }
-
-  def renderJson(path: String): Action[AnyContent] = {
-    Action.async { implicit request =>
-      mapModel(path, if (request.isGuuiJson) Some(ArticleBlocks) else None) {
-        render(path, _)
-      }
-    }
-  }
-
-  def timedFuture[T](future: Future[T], metric: TimingMetric): Future[T] = {
-      val start = currentTimeMillis
-      future.onComplete(_ => metric.recordDuration(currentTimeMillis - start))
-      future
-  }
-
-  def renderArticle(path: String): Action[AnyContent] = {
-
-    Action.async { implicit request =>
-
-      timedFuture(
-        mapModel(path, range = if (request.isEmail) Some(ArticleBlocks) else None) {
-          render(path, _)
-        },
-        ArticleRenderingMetrics.LocalRenderingMetric
-      )
-
-    }
   }
 
   // range: None means the url didn't include /live/, Some(...) means it did.  Canonical just means no url parameter
@@ -126,13 +121,6 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
     val content: Either[PageWithStoryPackage, Result] = supportedContentResult.left.flatMap {
       case minute: Article if minute.isTheMinute =>
         Left(MinutePage(minute, StoryPackages(minute, response)))
-        // Enable an email format for 'Minute' content (which are actually composed as a LiveBlog), without changing the non-email display of the page
-      case liveBlog: Article if liveBlog.isLiveBlog && request.isEmail =>
-        Left(MinutePage(liveBlog, StoryPackages(liveBlog, response)))
-      case liveBlog: Article if liveBlog.isLiveBlog =>
-        range.map {
-          createLiveBlogModel(liveBlog, response, _)
-        }.getOrElse(Right(NotFound))
       case article: Article =>
         Left(ArticlePage(article, StoryPackages(article, response)))
     }
@@ -140,7 +128,6 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
     content
 
   }
-
 
 }
 

@@ -1,7 +1,7 @@
 package controllers
 
 import com.gu.contentapi.client.model.v1.{ItemResponse, Content => ApiContent}
-import common.`package`.{convertApiExceptions => _, renderFormat => _, _}
+import common.`package`.{convertApiExceptions => _, renderFormat => _}
 import common._
 import conf.switches.Switches
 import contentapi.ContentApiClient
@@ -11,7 +11,7 @@ import model.ParseBlockId.{InvalidFormat, ParsedBlockId}
 import model.liveblog.BodyBlock
 import model.{ApplicationContext, Canonical, _}
 import org.joda.time.DateTime
-import pages.{ArticleEmailHtmlPage, ArticleHtmlPage, LiveBlogHtmlPage}
+import pages.{ArticleEmailHtmlPage, LiveBlogHtmlPage, MinuteHtmlPage}
 import play.api.libs.functional.syntax._
 import play.api.libs.json._
 import play.api.libs.ws.WSClient
@@ -19,7 +19,6 @@ import play.api.mvc._
 import views.support.RenderOtherStatus
 
 import scala.concurrent.Future
-
 import common.RichRequestHeader
 
 class LiveBlogController(contentApiClient: ContentApiClient, val controllerComponents: ControllerComponents, ws: WSClient)(implicit context: ApplicationContext) extends BaseController with RendersItemResponse with Logging with ImplicitControllerExecutionContext {
@@ -28,8 +27,14 @@ class LiveBlogController(contentApiClient: ContentApiClient, val controllerCompo
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
   override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = mapModel(path, Some(Canonical))(render(path, _))
 
+  private def noAMP(renderPage: => Result)(implicit  request: RequestHeader): Result = {
+    if (request.isAmp) NotFound
+    else renderPage
+  }
+
   def renderLiveBlogEmail(path: String): Action[AnyContent] =
     Action.async { implicit request =>
+      println("Rendering live blog email")
       mapModel(path, range = Some(ArticleBlocks)) {
         render(path, _)
       }
@@ -38,6 +43,8 @@ class LiveBlogController(contentApiClient: ContentApiClient, val controllerCompo
   def renderLiveBlog(path: String, page: Option[String] = None, format: Option[String] = None): Action[AnyContent] =
 
       Action.async { implicit request =>
+
+        println("Rendering live blog")
 
         def renderWithRange(range: BlockRange) =
           mapModel(path, range = Some(range)) {
@@ -53,6 +60,8 @@ class LiveBlogController(contentApiClient: ContentApiClient, val controllerCompo
 
   def renderLiveBlogJson(path: String, lastUpdate: Option[String], rendered: Option[Boolean], isLivePage: Option[Boolean]): Action[AnyContent] = {
     Action.async { implicit request =>
+
+      println("Rendering live blog json")
 
       def renderWithRange(range: BlockRange) =
         mapModel(path, Some(range)) { model =>
@@ -92,6 +101,7 @@ class LiveBlogController(contentApiClient: ContentApiClient, val controllerCompo
   }
 
   implicit val dateToTimestampWrites = play.api.libs.json.JodaWrites.JodaDateTimeNumberWrites
+
   case class TextBlock(
                         id: String,
                         title: Option[String],
@@ -124,9 +134,18 @@ class LiveBlogController(contentApiClient: ContentApiClient, val controllerCompo
 
   }
 
-
   private def render(path: String, page: PageWithStoryPackage)(implicit request: RequestHeader) = page match {
 
+    case minute: MinutePage =>
+      noAMP {
+        val htmlResponse = () => {
+          if (request.isEmail) ArticleEmailHtmlPage.html(minute)
+          else MinuteHtmlPage.html(minute)
+        }
+
+        val jsonResponse = () => views.html.fragments.minuteBody(minute)
+        renderFormat(htmlResponse, jsonResponse, minute, Switches.all)
+      }
     case blog: LiveBlogPage =>
       val htmlResponse = () => {
         if (request.isAmp) views.html.liveBlogAMP(blog)
@@ -135,22 +154,9 @@ class LiveBlogController(contentApiClient: ContentApiClient, val controllerCompo
       val jsonResponse = () => views.html.liveblog.liveBlogBody(blog)
       renderFormat(htmlResponse, jsonResponse, blog, Switches.all)
 
-    case article: ArticlePage =>
-
-      val htmlResponse = () => {
-        if (request.isEmail) ArticleEmailHtmlPage.html(article)
-        else if (request.isAmp) views.html.articleAMP(article)
-        else ArticleHtmlPage.html(article)
-      }
-
-      val contentFieldsJson = if (request.isGuuiJson) List("contentFields" -> Json.toJson(ContentFields(article.article))) else List()
-
-      val jsonResponse = () => List(("html", views.html.fragments.articleBody(article))) ++ contentFieldsJson
-      renderFormat(htmlResponse, jsonResponse, article)
-
   }
 
-  def mapModel(path: String, range: Option[BlockRange] = None)(render: PageWithStoryPackage => Result)(implicit request: RequestHeader): Future[Result] = {
+  private def mapModel(path: String, range: Option[BlockRange] = None)(render: PageWithStoryPackage => Result)(implicit request: RequestHeader): Future[Result] = {
     lookup(path, range) map responseToModelOrResult(range) recover convertApiExceptions map {
       case Left(model) => render(model)
       case Right(other) => RenderOtherStatus(other)
@@ -175,20 +181,20 @@ class LiveBlogController(contentApiClient: ContentApiClient, val controllerCompo
 
   }
 
-  def responseToModelOrResult(range: Option[BlockRange])(response: ItemResponse)(implicit request: RequestHeader): Either[PageWithStoryPackage, Result] = {
+  private def responseToModelOrResult(range: Option[BlockRange])(response: ItemResponse)(implicit request: RequestHeader): Either[PageWithStoryPackage, Result] = {
 
     val supportedContent = response.content.filter(isSupported).map(Content(_))
     val supportedContentResult = ModelOrResult(supportedContent, response)
 
     val content: Either[PageWithStoryPackage, Result] = supportedContentResult.left.flatMap {
+      case minute: Article if minute.isTheMinute =>
+        Left(MinutePage(minute, StoryPackages(minute, response)))
       case liveBlog: Article if liveBlog.isLiveBlog && request.isEmail =>
         Left(MinutePage(liveBlog, StoryPackages(liveBlog, response)))
       case liveBlog: Article if liveBlog.isLiveBlog =>
         range.map {
           createLiveBlogModel(liveBlog, response, _)
         }.getOrElse(Right(NotFound))
-      case article: Article =>
-        Left(ArticlePage(article, StoryPackages(article, response)))
     }
 
     content
