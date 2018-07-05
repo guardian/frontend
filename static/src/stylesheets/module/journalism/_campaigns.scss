@@ -15,7 +15,7 @@
     }
 
     &[open] {
-        background: $garnett-neutral-8;
+        background: $brightness-93;
     }
 
     p {
@@ -28,56 +28,56 @@
 }
 
 .speech-bubble {
-    color: $garnett-neutral-1;
-    background-color: $news-garnett-highlight;
+    color: $brightness-7;
+    background-color: $highlight-main;
     &::after {
-        color: $garnett-neutral-1;
-        background-color: $news-garnett-highlight;
+        color: $brightness-7;
+        background-color: $highlight-main;
     }
 }
 
 .campaign--snippet .form_submit button {
-    color: $garnett-neutral-1;
-    background-color: $news-garnett-highlight;
+    color: $brightness-7;
+    background-color: $highlight-main;
 }
 
 .campaign--snippet__handle {
-    color: $garnett-neutral-5;
-    background-color: $garnett-neutral-1;
+    color: $brightness-100;
+    background-color: $brightness-7;
 
     &:hover, :active {
-        color: $garnett-neutral-1;
-        background-color: $news-garnett-highlight;
+        color: $brightness-7;
+        background-color: $highlight-main;
         .icon {
-            fill: $garnett-neutral-1;
+            fill: $brightness-7;
         }
     }
 }
 
 .content--pillar-news {
     .speech-bubble {
-        color: $garnett-neutral-5;
-        background-color: $news-garnett-main-1;
+        color: $brightness-100;
+        background-color: $news-main;
         &::after {
-            color: $garnett-neutral-5;
-            background-color: $news-garnett-main-1;
+            color: $brightness-100;
+            background-color: $news-main;
         }
     }
 
     .content--pillar-news .campaign--snippet .form_submit button {
-        color: $garnett-neutral-5;
-        background-color: $news-garnett-main-1;
+        color: $brightness-100;
+        background-color: $news-main;
     }
 
     .campaign--snippet__handle {
-        color: $garnett-neutral-5;
-        background-color: $garnett-neutral-1;
+        color: $brightness-100;
+        background-color: $brightness-7;
 
         &:hover, :active {
-            color: $garnett-neutral-5;
-            background-color: $news-garnett-main-1;
+            color: $brightness-100;
+            background-color: $news-main;
             .icon {
-                fill: $garnett-neutral-5;
+                fill: $brightness-100;
             }
         }
     }
@@ -85,26 +85,26 @@
 
 .content--pillar-sport {
     .speech-bubble {
-        color: $garnett-neutral-5;
-        background-color: $sport-garnett-feature;
+        color: $brightness-100;
+        background-color: $sport-dark;
         &::after {
-            color: $garnett-neutral-5;
-            background-color: $sport-garnett-feature;
+            color: $brightness-100;
+            background-color: $sport-dark;
         }
     }
 .content--pillar-sport .campaign--snippet .form_submit {
         button {
-            color: $garnett-neutral-5;
-            background-color: $sport-garnett-feature;
+            color: $brightness-100;
+            background-color: $sport-dark;
         }
     }
     .campaign--snippet__handle {
-        color: $garnett-neutral-5;
-        background-color: $garnett-neutral-1;
+        color: $brightness-100;
+        background-color: $brightness-7;
         &:hover, :active {
-            background-color: $sport-garnett-feature;
+            background-color: $sport-dark;
             .icon {
-                fill: $garnett-neutral-5;
+                fill: $brightness-100;
             }
         }
     }
@@ -112,25 +112,25 @@
 
 .content--pillar-opinion {
     .speech-bubble {
-        color: $garnett-neutral-5;
-        background-color: $opinion-garnett-feature;
+        color: $brightness-100;
+        background-color: $opinion-dark;
         &::after {
-            background-color: $opinion-garnett-feature;
+            background-color: $opinion-dark;
         }
     }
 .content--pillar-opinion .campaign--snippet .form_submit {
         button {
-            color: $garnett-neutral-5;
-            background-color: $opinion-garnett-feature;
+            color: $brightness-100;
+            background-color: $opinion-dark;
         }
     }
     .campaign--snippet__handle {
-        color: $garnett-neutral-5;
-        background-color: $garnett-neutral-1;
+        color: $brightness-100;
+        background-color: $brightness-7;
         &:hover, :active {
-            background-color: $opinion-garnett-feature;
+            background-color: $opinion-dark;
             .icon {
-                fill: $garnett-neutral-5;
+                fill: $brightness-100;
             }
         }
     }
@@ -138,28 +138,28 @@
 
 .content--pillar-arts {
     .speech-bubble {
-        color: $garnett-neutral-5;
-        background-color: $culture-garnett-feature;
+        color: $brightness-100;
+        background-color: $culture-dark;
         &::after {
-            background-color: $culture-garnett-feature;
+            background-color: $culture-dark;
         }
     }
 .content--pillar-arts .campaign--snippet .form_submit {
         button {
-            color: $garnett-neutral-5;
-            background-color: $culture-garnett-feature;
+            color: $brightness-100;
+            background-color: $culture-dark;
             .icon {
-                fill: $garnett-neutral-5;
+                fill: $brightness-100;
             }
         }
     }
     .campaign--snippet__handle {
-        color: $garnett-neutral-5;
-        background-color: $garnett-neutral-1;
+        color: $brightness-100;
+        background-color: $brightness-7;
         &:hover, :active {
-            background-color: $culture-garnett-feature;
+            background-color: $culture-dark;
             .icon {
-                fill: $garnett-neutral-5;
+                fill: $brightness-100;
             }
         }
     }
@@ -167,25 +167,25 @@
 
 .content--pillar-lifestyle {
     .speech-bubble {
-        color: $garnett-neutral-5;
-        background-color: $lifestyle-garnett-main-1;
+        color: $brightness-100;
+        background-color: $lifestyle-main;
         &::after {
-            background-color: $lifestyle-garnett-main-1;
+            background-color: $lifestyle-main;
         }
     }
 .content--pillar-lifestyle .campaign--snippet .form_submit {
         button {
-            color: $garnett-neutral-5;
-            background-color: $lifestyle-garnett-main-1;
+            color: $brightness-100;
+            background-color: $lifestyle-main;
         }
     }
     .campaign--snippet__handle {
-        color: $garnett-neutral-5;
-        background-color: $garnett-neutral-1;
+        color: $brightness-100;
+        background-color: $brightness-7;
         &:hover, :active {
-            background-color: $lifestyle-garnett-main-1;
+            background-color: $lifestyle-main;
             .icon {
-                fill: $garnett-neutral-5;
+                fill: $brightness-100;
             }
         }
     }
@@ -214,7 +214,7 @@
             .speech-bubble {
                 background-color: $news-main;
                 padding: 6px 10px 10px;
-                color: #ffffff;
+                color: $brightness-100;
                 line-height: 18px;
                 min-width: 84px;
             }
@@ -254,7 +254,7 @@
         align-items: center;
     }
     .icon {
-        fill: #ffffff;
+        fill: $brightness-100;
         width: 16px;
         height: 16px;
         margin: -3px 6px 0 4px;
@@ -411,7 +411,7 @@
 
         a {
             flex: auto;
-            color: #121212;
+            color: $brightness-7;
             text-decoration: none;
             margin: 8px 0 0;
 
