@@ -7,7 +7,7 @@ $sfl-button-height: 30px;
     border: 0;
     background-color: transparent;
     padding: 0;
-    color: $news-main-1;
+    color: $sport-dark;
 
     .inline-icon {
         text-align: center;
@@ -15,8 +15,8 @@ $sfl-button-height: 30px;
         margin-right: .5em;
         width: $sfl-button-height;
         height: $sfl-button-height;
-        border: 1px solid $news-main-1;
-        fill: $news-main-1;
+        border: 1px solid $sport-dark;
+        fill: $sport-dark;
 
         svg {
             width: 8px;
@@ -29,18 +29,18 @@ $sfl-button-height: 30px;
 .save-for-later__button--save:focus {
     .inline-icon {
         fill: #ffffff;
-        background-color: $news-main-1;
+        background-color: $sport-dark;
     }
 }
 
 // media tone
 .tonal--tone-media {
     .save-for-later__button {
-        color: $neutral-4;
+        color: $brightness-86;
 
         .inline-icon {
-            border-color: $neutral-2;
-            fill: $neutral-4;
+            border-color: $brightness-46;
+            fill: $brightness-86;
         }
     }
 
@@ -48,9 +48,9 @@ $sfl-button-height: 30px;
     .save-for-later__button--save:hover,
     .save-for-later__button--save:focus {
         .inline-icon {
-            fill: $multimedia-support-5;
-            border-color: $neutral-4;
-            background-color: $neutral-4;
+            fill: $brightness-7;
+            border-color: $brightness-86;
+            background-color: $brightness-86;
         }
     }
 }

@@ -3,7 +3,7 @@ $cp-scott-width-tablet: 80px;
 
 .fc-cp-scott__quote {
     display: block;
-    color: $garnett-neutral-6;
+    color: $brightness-46;
 }
 
 .fc-cp-scott__quote-line {
@@ -14,7 +14,7 @@ $cp-scott-width-tablet: 80px;
 
 .fc-cp-scott__citation {
     display: block;
-    color: $garnett-neutral-1;
+    color: $brightness-7;
 }
 
 .fc-cp-scott__portrait {
@@ -31,7 +31,7 @@ $cp-scott-width-tablet: 80px;
     height: $cp-scott-width-mobile - 10;
     border-radius: 100%;
     overflow: hidden;
-    background-color: darken($opinion-garnett-background, 5);
+    background-color: darken($opinion-faded, 5);
 
     @include mq($until: mobileLandscape) {
         position: absolute;
@@ -71,7 +71,7 @@ $cp-scott-width-tablet: 80px;
     .inline-quote svg {
         width: $gs-gutter/2 + $gs-baseline/2;
         height: auto;
-        fill: $neutral-2;
+        fill: $brightness-46;
     }
 
     @include mq(mobileLandscape) {

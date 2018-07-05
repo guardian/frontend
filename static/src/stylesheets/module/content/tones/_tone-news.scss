@@ -5,17 +5,17 @@
         .element-pullquote {
             &:before,
             &:after {
-                background-color: $news-default;
+                background-color: $sport-dark;
             }
         }
     }
 
     .tone-colour {
-        color: $news-default;
+        color: $sport-dark;
     }
 
     .tone-accent-border {
-        border-color: $news-accent;
+        border-color: $sport-bright;
     }
 }
 

@@ -93,7 +93,7 @@ $container-color: #ffffff;
 .bb-link,
 .ct-link {
     text-decoration: none;
-    color: $neutral-1;
+    color: $brightness-7;
 }
 
 // td
@@ -222,8 +222,8 @@ $email-tones: (
     }
 
     .ct__inner {
-        border-top-color: $paid-article-brand;
-        background-color: $paid-article;
+        border-top-color: $labs-main;
+        background-color: $brightness-86;
     }
 
     .ct__padding {
@@ -234,12 +234,12 @@ $email-tones: (
 
 .fc__margin--branded {
     padding-top: 0;
-    background-color: $paid-article;
+    background-color: $brightness-86;
 }
 
 // branded banner for PaidFor content
 .branded-banner {
-    background-color: $paid-article;
+    background-color: $brightness-86;
     width: 100%;
 }
 
@@ -252,7 +252,7 @@ $email-tones: (
     font-family: Helvetica, Arial, sans-serif;
     font-size: 12px;
     width: 15%;
-    color: $paid-card-kicker;
+    color: $brightness-46;
     text-align: right;
 }
 
@@ -267,16 +267,16 @@ $email-tones: (
 
 // tone overrides for PaidFor content
 .tone-branded {
-    border-top-color: $paid-article-brand;
-    background-color: $paid-article-card-bg;
+    border-top-color: $labs-main;
+    background-color: $brightness-97;
 
     .trail-text a {
-        color: $neutral-1;
+        color: $brightness-7;
         font-family: Helvetica, Arial, sans-serif;
     }
 
     .headline a {
-        color: $neutral-1;
+        color: $brightness-7;
         font-family: Helvetica, Arial, sans-serif;
     }
 }

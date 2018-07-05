@@ -77,7 +77,7 @@
 
 .email-sub__text-input {
     border: 1px solid $form-primary-colour;
-    color: $neutral-1;
+    color: $brightness-7;
     height: 3em;
     outline: none;
     padding: .667em 1.25em;
@@ -85,7 +85,7 @@
 
 .email-sub__submit-button {
     background-color: transparent;
-    border: 1px solid $news-support-1;
+    border: 1px solid $sport-pastel;
     color: $form-primary-colour;
 
     &:focus,
@@ -135,9 +135,9 @@
     position: relative;
 
     .inline-icon {
-        background-color: $neutral-3;
+        background-color: $brightness-86;
         border-radius: 1000px;
-        fill: $neutral-1;
+        fill: $brightness-7;
         height: $icon-size;
         left: 0;
         position: absolute;
@@ -179,12 +179,12 @@
 }
 
 .email-sub__close-icon svg {
-    fill: darken($neutral-2, 10%);
+    fill: darken($brightness-46, 10%);
 
     &:hover,
     &:focus {
         cursor: pointer;
-        fill: $neutral-2;
+        fill: $brightness-46;
     }
 }
 
@@ -204,25 +204,25 @@
     padding: 0 $gs-gutter;
 
     .email-sub__submit-button {
-        background-color: lighten($multimedia-support-5, 5%);
-        border-color: lighten($multimedia-support-5, 5%);
+        background-color: lighten($brightness-7, 5%);
+        border-color: lighten($brightness-7, 5%);
         margin-bottom: $gs-baseline;
 
         &:hover,
         &:focus,
         &:active {
-            background-color: $multimedia-support-5;
-            border-color: $multimedia-support-5;
+            background-color: $brightness-7;
+            border-color: $brightness-7;
         }
     }
 
     .email-sub__text-input {
-        background-color: darken($neutral-2, 20%);
-        border-color: darken($neutral-2, 20%);
+        background-color: darken($brightness-46, 20%);
+        border-color: darken($brightness-46, 20%);
 
         &:hover {
-            background-color: darken($neutral-2, 15%);
-            border-color: darken($neutral-2, 15%);
+            background-color: darken($brightness-46, 15%);
+            border-color: darken($brightness-46, 15%);
         }
 
         &:active,
@@ -233,7 +233,7 @@
     }
 
     .email-sub__label {
-        color: $neutral-3;
+        color: $brightness-86;
     }
 }
 
@@ -277,7 +277,7 @@
     }
 
     .email-sub__text-input {
-        border-color: $neutral-3;
+        border-color: $brightness-86;
     }
 
     .email-sub__submit-button {
@@ -310,9 +310,9 @@
     padding: 0;
 
     .email-sub__submit-button {
-        background-color: $neutral-4;
-        border-color: $neutral-4;
-        color: $neutral-1;
+        background-color: $brightness-86;
+        border-color: $brightness-86;
+        color: $brightness-7;
     }
 
     .email-sub__message {
@@ -329,16 +329,16 @@
     padding: 0;
 
     .email-sub__submit-button {
-        background-color: $neutral-4;
-        border-color: $neutral-4;
-        color: $neutral-1;
+        background-color: $brightness-86;
+        border-color: $brightness-86;
+        color: $brightness-7;
     }
 }
 
 .email-sub--plaintone {
     .email-sub__message__headline,
     .email-sub__message__description {
-        color: $neutral-1;
+        color: $brightness-7;
     }
 }
 

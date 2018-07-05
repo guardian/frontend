@@ -1,8 +1,8 @@
 $gallery-lightbox-sidebar-width: gs-span(1);
 $gallery-lightbox-info-width-desktop: gs-span(4) + $gs-gutter;
 $gallery-lightbox-info-width-wide: gs-span(5) + $gs-gutter;
-$c-gallery-lightbox-btn: $media-mute;
-$c-gallery-lightbox-btn--active: $neutral-2;
+$c-gallery-lightbox-btn: $brightness-20;
+$c-gallery-lightbox-btn--active: $brightness-46;
 $gallery-lightbox-sidebar-breakpoint: desktop;
 
 /* Root element and states
@@ -11,7 +11,7 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
 .gallery-lightbox {
     display: none;
     position: fixed;
-    background-color: lighten($media-background, 2.5%);
+    background-color: lighten($brightness-7, 2.5%);
     overflow: hidden;
     z-index: $zindex-lightbox;
 }
@@ -47,7 +47,7 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
 .gallery-lightbox--endslate {
     .gallery-lightbox__progress,
     .gallery-lightbox__index {
-        color: $neutral-2;
+        color: $brightness-46;
     }
     .gallery-lightbox__info {
         display: none;
@@ -86,7 +86,7 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
     height: 100%;
     position: relative;
     z-index: 3;
-    background-color: lighten($media-background, 2.5%);
+    background-color: lighten($brightness-7, 2.5%);
     vertical-align: top;
 
     box-sizing: border-box;
@@ -101,7 +101,7 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
 }
 
 .gallery-lightbox__item--endslate {
-    background-color: $media-background;
+    background-color: $brightness-7;
 }
 
 .gallery-lightbox__img-container {
@@ -145,13 +145,13 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
     white-space: normal;
     position: absolute;
     z-index: 5;
-    color: $neutral-8;
+    color: $brightness-97;
     box-sizing: border-box;
     word-wrap: break-word;
     width: 100%;
     bottom: 0;
-    border-top: 1px solid $media-mute;
-    background-color: $media-background;
+    border-top: 1px solid $brightness-20;
+    background-color: $brightness-7;
     padding: $gs-gutter/2;
     padding-bottom: $gs-gutter;
     display: none;
@@ -202,8 +202,8 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
     }
 
     a {
-        color: $neutral-8;
-        border-bottom: 1px solid $neutral-2;
+        color: $brightness-97;
+        border-bottom: 1px solid $brightness-46;
         &:hover {
             color: #ffffff;
             text-decoration: none;
@@ -217,7 +217,7 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
 }
 
 .gallery-lightbox__img-credit {
-    color: $neutral-3;
+    color: $brightness-86;
     padding-bottom: $gs-baseline/2;
 }
 
@@ -231,8 +231,8 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
         right: 0;
         width: $gallery-lightbox-sidebar-width;
         z-index: 6; // above content
-        border-left: 1px solid $media-mute;
-        background: $media-background;
+        border-left: 1px solid $brightness-20;
+        background: $brightness-7;
     }
 }
 
@@ -318,7 +318,7 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
 
 .gallery-lightbox__progress {
     @include fs-textSans(1);
-    color: $neutral-3;
+    color: $brightness-86;
     display: none;
 }
 
@@ -343,7 +343,7 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
 }
 
 .gallery-lightbox__index {
-    color: $neutral-8;
+    color: $brightness-97;
 }
 
 /* Endslate

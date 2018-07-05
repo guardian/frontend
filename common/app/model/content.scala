@@ -122,12 +122,21 @@ final case class Content(
   // read this before modifying: https://developers.facebook.com/docs/opengraph/howtos/maximizing-distribution-media-content#images
   private lazy val openGraphImageProfile: ElementProfile =
     if(isPaidContent && FacebookShareImageLogoOverlay.isSwitchedOn) Item700
+    else if(isFromTheObserver && tags.isComment) FacebookOpenGraphImage.opinionsObserver
     else if(tags.isComment) FacebookOpenGraphImage.opinions
     else if(tags.isLiveBlog) FacebookOpenGraphImage.live
     else starRating.map(rating =>
-        FacebookOpenGraphImage.starRating(rating)
+        if(isFromTheObserver) {
+            FacebookOpenGraphImage.starRatingObserver(rating)
+        } else {
+            FacebookOpenGraphImage.starRating(rating)
+        }
     ).getOrElse(
-        FacebookOpenGraphImage.default
+        if(isFromTheObserver) {
+            FacebookOpenGraphImage.defaultObserver
+        } else {
+            FacebookOpenGraphImage.default
+        }
     )
 
   lazy val openGraphImage: String = ImgSrc(openGraphImageOrFallbackUrl, openGraphImageProfile)
@@ -142,12 +151,21 @@ final case class Content(
   // URL of image to use in the twitter card. Image must be less than 1MB in size: https://dev.twitter.com/cards/overview
   lazy val twitterCardImage: String = {
     val image = if (isPaidContent && TwitterShareImageLogoOverlay.isSwitchedOn) Item700
+    else if(isFromTheObserver && tags.isComment) TwitterImage.opinionsObserver
     else if(tags.isComment) TwitterImage.opinions
     else if(tags.isLiveBlog) TwitterImage.live
     else starRating.map(rating =>
-        TwitterImage.starRating(rating)
+        if(isFromTheObserver) {
+            TwitterImage.starRatingObserver(rating)
+        } else {
+            TwitterImage.starRating(rating)
+        }
     ).getOrElse(
-        TwitterImage.default
+        if(isFromTheObserver) {
+            TwitterImage.defaultObserver
+        } else {
+            TwitterImage.default
+        }
     )
     ImgSrc(openGraphImageOrFallbackUrl, image)
   }
@@ -302,7 +320,7 @@ final case class Content(
       metadata.sectionId == "childrens-books-site"
 
     val maybeDisableSticky = canDisableStickyTopBanner match {
-      case true if !tags.hasSuperStickyBanner => Some("disableStickyTopBanner", JsBoolean(true))
+      case true => Some("disableStickyTopBanner", JsBoolean(true))
       case _ if alwaysDisableStickyTopBanner  => Some("disableStickyTopBanner", JsBoolean(true))
       case _ => None
     }
@@ -567,7 +585,7 @@ object Audio {
   }
 
   def acastUrl(player: AudioPlayer, url: String, isAdFree: Boolean): String = if (player.audio.tags.isPodcast) acastUrl(url, isAdFree) else url
-  def acastUrl(url: String, isAdFree: Boolean): String = if (!isAdFree) "https://flex.acast.com/" + url.replace("https://", "") else url
+  def acastUrl(url: String, isAdFree: Boolean): String = if (!isAdFree && conf.switches.Switches.Acast.isSwitchedOn) "https://flex.acast.com/" + url.replace("https://", "") else url
 }
 
 final case class Audio (override val content: Content) extends ContentType {

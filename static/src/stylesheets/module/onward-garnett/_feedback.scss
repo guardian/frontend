@@ -3,7 +3,7 @@
     border: 0;
     outline: none;
     display: none;
-    background-color: $news-support-1;
+    background-color: $sport-pastel;
     padding: 10px;
 }
 
@@ -21,7 +21,7 @@
 }
 
 .feedback__entry {
-    border: 1px solid $neutral-4;
+    border: 1px solid $brightness-86;
     padding: 12px;
     outline: none;
     appearance: none;
@@ -35,7 +35,7 @@
 }
 
 .feedback__select {
-    border: 1px solid $neutral-4;
+    border: 1px solid $brightness-86;
     padding: 8px;
     margin-top: $gs-baseline * 2;
     outline: none;
@@ -49,9 +49,9 @@
 }
 
 .feedback__entry--mandatory-failed {
-    border-color: $error;
+    border-color: $news-main;
 }
 
 #feedback__explainer {
-    color: $error;
+    color: $news-main;
 }

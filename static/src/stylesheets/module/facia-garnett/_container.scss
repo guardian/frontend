@@ -3,7 +3,7 @@ $header-image-size-desktop: 100px;
 
 .fc-container {
     .fc-container__inner {
-        border-top: 1px solid $neutral-5;
+        border-top: 1px solid $brightness-86;
     }
 }
 
@@ -129,7 +129,7 @@ $header-image-size-desktop: 100px;
     position: relative;
     padding-bottom: $gs-baseline/3;
     line-height: get-line-height(header, 2);
-    color: $garnett-neutral-1;
+    color: $brightness-7;
 
     @include mq(leftCol, wide) {
         @include font-size(20px, 24px);
@@ -152,7 +152,7 @@ $header-image-size-desktop: 100px;
         position: absolute;
         height: $gs-gutter * 1.5;
         width: 1px;
-        background-color: $garnett-neutral-4;
+        background-color: $brightness-86;
         // Offset by 1px to the right so that it coincides
         // with the rule in the body of articles
         right: -$gs-gutter / 2 - 1;
@@ -167,17 +167,17 @@ $header-image-size-desktop: 100px;
         color: inherit;
 
         &:hover {
-            color: $news-garnett-main-1;
+            color: $news-main;
             text-decoration: none;
-            border-bottom: 1px solid $news-garnett-main-1;
+            border-bottom: 1px solid $news-main;
 
             & .inline-icon {
-                fill: $news-accent;
+                fill: $sport-bright;
             }
         }
 
         .inline-icon {
-            fill: $news-main-1;
+            fill: $sport-dark;
             position: relative;
             height: .7em;
             width: 1em;
@@ -195,7 +195,7 @@ $header-image-size-desktop: 100px;
     border: 0;
 
     & button {
-        color: $neutral-3;
+        color: $brightness-86;
         font-weight: 500;
         text-align: left;
         background: #ffffff;
@@ -260,7 +260,7 @@ $header-image-size-desktop: 100px;
 .fc-container__header__description {
     @include fs-headline(2);
     padding-bottom: $gs-baseline / 2;
-    color: $neutral-2;
+    color: $brightness-46;
     clear: left;
     font-weight: 500;
 
@@ -279,7 +279,7 @@ $header-image-size-desktop: 100px;
     }
 
     a {
-        color: $garnett-neutral-7;
+        color: $brightness-20;
     }
 }
 
@@ -295,7 +295,7 @@ $header-image-size-desktop: 100px;
     }
 
     @include mq(leftCol) {
-        border-top: 1px dotted $neutral-5;
+        border-top: 1px dotted $brightness-86;
         padding-top: $gs-baseline / 2;
         margin-top: $gs-baseline;
         width: 100%;
@@ -335,7 +335,7 @@ $header-image-size-desktop: 100px;
     }
 
     .fc-today__sub {
-        color: $news-garnett-main-1;
+        color: $news-main;
         @include mq(wide) {
             .has-page-skin & {
                 border-top: 0;
@@ -380,12 +380,12 @@ $header-image-size-desktop: 100px;
     right: 0;
     bottom: 0;
     padding-bottom: $gs-baseline / 2;
-    color: $neutral-2;
+    color: $brightness-46;
 
     @include mq(leftCol) {
         position: static;
         margin-top: ($gs-baseline / 3) * 5;
-        border-top: 1px dotted $neutral-3;
+        border-top: 1px dotted $brightness-86;
         padding-top: $gs-baseline / 4;
     }
 
@@ -531,12 +531,12 @@ $header-image-size-desktop: 100px;
     right: 0;
     border: 0;
     padding: 0;
-    color: $neutral-2;
+    color: $brightness-46;
     text-align: right;
 
     &:hover,
     &:focus {
-        color: $neutral-1;
+        color: $brightness-7;
     }
 
     [data-component='headlines'] & {
@@ -561,11 +561,11 @@ $header-image-size-desktop: 100px;
 .fc-container--media {
     .fc-container__inner,
     .fc-slice__item+.fc-slice__item:before {
-        border-color: $media-mute;
+        border-color: $brightness-20;
     }
 
     .fc-container__header__title {
-        color: $neutral-6;
+        color: $brightness-93;
     }
 
     .fc-item__media-wrapper {
@@ -577,7 +577,7 @@ $header-image-size-desktop: 100px;
 
 .fc-date-headline {
     @include fs-headline(2);
-    color: $neutral-1;
+    color: $brightness-7;
     display: block;
     padding-bottom: $gs-baseline / 2;
 }
@@ -586,7 +586,7 @@ $header-image-size-desktop: 100px;
     padding-bottom: 0;
 
     .fc-container__inner {
-        border-top: 1px solid $neutral-5;
+        border-top: 1px solid $brightness-86;
     }
 }
 
@@ -625,7 +625,7 @@ $header-image-size-desktop: 100px;
 
     &,
     a {
-        color: $garnett-neutral-1;
+        color: $brightness-7;
     }
 
     @include fs-header(4);
@@ -650,7 +650,7 @@ $header-image-size-desktop: 100px;
 
 .index-page-header__description {
     @include fs-headline(2);
-    color: $neutral-2;
+    color: $brightness-46;
 
     @include mq(leftCol) {
         float: left;

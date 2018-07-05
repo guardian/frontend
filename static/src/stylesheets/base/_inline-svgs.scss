@@ -7,7 +7,7 @@
 }
 
 .inline-icon--light-grey {
-    fill: $neutral-3;
+    fill: $brightness-86;
 }
 
 .inline-close--small svg {
@@ -16,40 +16,7 @@
 }
 
 .inline-tone-fill {
-    fill: $news-default;
-
-    .tonal--tone-comment & {
-        fill: $comment-default;
-    }
-
-    .tonal--tone-feature & {
-        fill: $feature-default;
-    }
-
-    .tonal--tone-review & {
-        fill: $review-background;
-    }
-
-    .tonal--tone-editorial & {
-        fill: $editorial-default;
-    }
-
-    .tonal--tone-analysis & {
-        fill: $analysis-accent;
-    }
-
-    .tonal--tone-live &,
-    .tonal--tone-dead & {
-        fill: $live-default;
-    }
-
-    .tonal--tone-media & {
-        fill: $media-default;
-    }
-
-    .tonal--tone-special-report & {
-        fill: $special-report-accent;
-    }
+    fill: $sport-dark;
 }
 
 .inline-icon__fallback {

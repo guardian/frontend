@@ -1,6 +1,6 @@
 @mixin immersiveCommon() {
     .fc-item__kicker {
-        color: $news-garnett-highlight;
+        color: $highlight-main;
         display: block;
     }
 
@@ -153,13 +153,13 @@
             outline: 0;
 
             &:after {
-                background-color: $sport-garnett-feature;
+                background-color: $sport-dark;
             }
         }
 
         &:after {
             background: url('https://uploads.guim.co.uk/2018/06/13/hide-icon_ghost.svg');
-            background-color: $sport-garnett-main-1;
+            background-color: $sport-main;
             background-size: cover;
             border-radius: 50%;
             content: '';
@@ -199,15 +199,15 @@
         }
 
         .fc-item__headline {
-            color: $sport-garnett-main-1;
+            color: $sport-main;
         }
 
         .fc-item__title--quoted .fc-item__headline {
-            color: $sport-garnett-feature;
+            color: $sport-dark;
         }
 
         .fc-item__kicker {
-            color: $sport-garnett-feature;
+            color: $sport-dark;
         }
     }
 
@@ -219,7 +219,7 @@
     // All cards
     .fc-item {
         .fc-item__container:before {
-            background-color: rgba($sport-garnett-main-1, .4);
+            background-color: rgba($sport-main, .4);
         }
 
         .fc-item__kicker {
@@ -229,11 +229,11 @@
         }
 
         .fc-sublink__title:before {
-            border-color: rgba($sport-garnett-main-1, .4);
+            border-color: rgba($sport-main, .4);
         }
 
         @include mq(tablet) {
-            border-left: 1px solid rgba($sport-garnett-main-1, .4);
+            border-left: 1px solid rgba($sport-main, .4);
 
             .fc-sublink__title:before {
                 left: -5px;
@@ -250,22 +250,22 @@
         }
 
         .fc-item__headline {
-            color: $sport-garnett-feature;
+            color: $sport-dark;
         }
 
         .inline-garnett-quote {
-            fill: $sport-garnett-main-1;
+            fill: $sport-main;
         }
 
         .fc-item__byline {
-            color: $sport-garnett-main-1;
+            color: $sport-main;
         }
     }
 }
 
 [data-component='world-cup-2018'] .fc-item--has-boosted-title.fc-item--standard-mobile {
     .fc-item__content {
-        background-color: $sport-garnett-feature !important;
+        background-color: $sport-dark !important;
 
         .fc-item__headline {
             font-weight: 800;
@@ -273,13 +273,13 @@
 
         .fc-item__byline,
         .fc-item__kicker {
-            color: $live-garnett-sport2 !important;
+            color: $sport-pastel !important;
         }
     }
 
     &:hover {
         .fc-item__content {
-            background-color: darken($sport-garnett-feature, 5%) !important;
+            background-color: darken($sport-dark, 5%) !important;
         }
     }
 }

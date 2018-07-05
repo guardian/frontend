@@ -96,7 +96,7 @@ $fc-item-gutter: $gs-gutter / 4;
 
     .u-faux-block-link--hover,
     .fc-item__image-container {
-        background-color: $neutral-6;
+        background-color: $brightness-93;
 
         .fc-slice--nav-list--media & {
             background-color: inherit;
@@ -246,7 +246,7 @@ $fc-item-gutter: $gs-gutter / 4;
     @include fs-bodyCopy(1);
     font-size: 13px;
     line-height: 16px;
-    color: $neutral-2;
+    color: $brightness-46;
     display: none;
     flex: 1 1 auto;
     padding-right: $gs-gutter * .25;
@@ -303,12 +303,12 @@ $block-height: 58px;
     position: relative;
     overflow: hidden;
     line-height: 1rem;
-    color: mix(#ffffff, $live-default, 92%);
+    color: mix(#ffffff, $news-dark, 92%);
     max-height: $block-height;
     padding: $gs-baseline/4 $gs-baseline/2;
-    border-top: 1px solid mix(#ffffff, $live-default, 50%);
+    border-top: 1px solid mix(#ffffff, $news-dark, 50%);
     border-bottom: 4px solid #cc2b12;
-    background-color: $live-main-2;
+    background-color: $news-main;
 }
 
 .fc-item__liveblog-block__text:after {
@@ -319,11 +319,11 @@ $block-height: 58px;
     right: 0;
     font-size: 30px;
     line-height: $gs-baseline;
-    color: mix(#ffffff, $live-default, 92%);
+    color: mix(#ffffff, $news-dark, 92%);
     height: 18px;
     padding-right: 8px;
-    background-color: $live-main-2;
-    box-shadow: -5px 0 5px -2px $live-main-2;
+    background-color: $news-main;
+    box-shadow: -5px 0 5px -2px $news-main;
 }
 
 .fc-item__liveblog-block__time {
@@ -334,7 +334,7 @@ $block-height: 58px;
 
 .fc-item__meta {
     @include fs-textSans(1);
-    color: $garnett-neutral-6;
+    color: $brightness-46;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -342,7 +342,7 @@ $block-height: 58px;
     margin-left: auto;
 
     .inline-icon {
-        fill: $garnett-neutral-6;
+        fill: $brightness-46;
     }
 
     a {
@@ -443,7 +443,7 @@ $block-height: 58px;
     .fc-item__header
     {
         .fc-item__stars {
-            background-color: $news-garnett-highlight;
+            background-color: $highlight-main;
             display: inline-block;
             line-height: 0;
             padding: $gs-baseline / 4;
@@ -459,7 +459,7 @@ $block-height: 58px;
             }
 
             svg {
-                stroke: $garnett-neutral-1;
+                stroke: $brightness-7;
                 fill: transparent;
                 height: .75em;
                 width: .75em;
@@ -472,7 +472,7 @@ $block-height: 58px;
 
             &.star__item--golden {
                 svg {
-                    fill: $garnett-neutral-1;
+                    fill: $brightness-7;
                     stroke: none;
                 }
             }
@@ -496,7 +496,7 @@ $block-height: 58px;
             width: .65em;
 
             svg {
-                stroke: $garnett-neutral-1;
+                stroke: $brightness-7;
                 fill: transparent;
                 height: .75em;
                 width: .75em;

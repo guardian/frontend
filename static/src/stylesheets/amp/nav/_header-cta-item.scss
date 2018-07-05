@@ -1,5 +1,5 @@
 .header-cta-item {
-    color: $nav-background-colour;
+    color: $nav-faded;
 }
 
 .header-cta-item--text {
@@ -28,7 +28,7 @@
     transform-origin: top center;
 
     &:before {
-        background: $nav-primary-colour;
+        background: $brightness-7;
         border-radius: 50%;
         bottom: 0;
         content: '';

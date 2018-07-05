@@ -44,7 +44,7 @@
     }
 
     .fc-item__container > .fc-item__meta {
-        @include multiline(4, $garnett-neutral-4);
+        @include multiline(4, $brightness-86);
 
         display: flex;
         position: absolute;
