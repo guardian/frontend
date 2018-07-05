@@ -1,7 +1,7 @@
 package controllers
 
 import com.gu.contentapi.client.model.v1.{ItemResponse, Content => ApiContent}
-import common.`package`.{convertApiExceptions => _, renderFormat => _}
+import common.`package`.{convertApiExceptions => _, renderFormat => _, _}
 import common._
 import conf.switches.Switches
 import contentapi.ContentApiClient
@@ -20,10 +20,14 @@ import views.support.RenderOtherStatus
 
 import scala.concurrent.Future
 import common.RichRequestHeader
+import services.LookerUpper
 
 class LiveBlogController(contentApiClient: ContentApiClient, val controllerComponents: ControllerComponents, ws: WSClient)(implicit context: ApplicationContext) extends BaseController with RendersItemResponse with Logging with ImplicitControllerExecutionContext {
 
-  private def isSupported(c: ApiContent) = c.isLiveBlog
+  val lookerUpper: LookerUpper = new LookerUpper(contentApiClient)
+
+  // we support liveblogs and also articles so that minutes work
+  private def isSupported(c: ApiContent) = c.isLiveBlog || c.isArticle
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
   override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = mapModel(path, Some(Canonical))(render(path, _))
 
@@ -54,7 +58,7 @@ class LiveBlogController(contentApiClient: ContentApiClient, val controllerCompo
         page.map(ParseBlockId.fromPageParam) match {
           case Some(ParsedBlockId(id)) => renderWithRange(PageWithBlock(id)) // we know the id of a block
           case Some(InvalidFormat) => Future.successful(Cached(10)(WithoutRevalidationResult(NotFound))) // page param there but couldn't extract a block id
-          case None => renderWithRange(Canonical) // no page param
+          case None => println("rendering with canonical"); renderWithRange(Canonical) // no page param
         }
       }
 
@@ -157,28 +161,10 @@ class LiveBlogController(contentApiClient: ContentApiClient, val controllerCompo
   }
 
   private def mapModel(path: String, range: Option[BlockRange] = None)(render: PageWithStoryPackage => Result)(implicit request: RequestHeader): Future[Result] = {
-    lookup(path, range) map responseToModelOrResult(range) recover convertApiExceptions map {
+    lookerUpper.lookup(path, range) map responseToModelOrResult(range) recover convertApiExceptions map {
       case Left(model) => render(model)
       case Right(other) => RenderOtherStatus(other)
     }
-  }
-
-  private def lookup(path: String, range: Option[BlockRange])(implicit request: RequestHeader): Future[ItemResponse] = {
-    val edition = Edition(request)
-
-    val capiItem = contentApiClient.item(path, edition)
-      .showTags("all")
-      .showFields("all")
-      .showReferences("all")
-      .showAtoms("all")
-
-    val capiItemWithBlocks = range.map { blockRange =>
-      val blocksParam = blockRange.query.map(_.mkString(",")).getOrElse("body")
-      capiItem.showBlocks(blocksParam)
-    }.getOrElse(capiItem)
-
-    contentApiClient.getResponse(capiItemWithBlocks)
-
   }
 
   private def responseToModelOrResult(range: Option[BlockRange])(response: ItemResponse)(implicit request: RequestHeader): Either[PageWithStoryPackage, Result] = {
