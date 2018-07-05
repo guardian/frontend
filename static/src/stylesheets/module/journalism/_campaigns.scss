@@ -354,7 +354,7 @@
 .campaign--snippet .form_field {
     display: flex;
     flex-direction: column;
-    border-top: 1px solid $garnett-neutral-4;
+    border-top: 1px solid $$brightness-86;
 
     input {
         align-self: stretch;
@@ -388,7 +388,7 @@
 .campaign--snippet .form_footer {
     display: flex;
     flex-direction: row;
-    border-top: 1px $garnett-neutral-4 solid;
+    border-top: 1px $$brightness-86 solid;
 
     .form_submit {
         flex: auto;
