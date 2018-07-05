@@ -1,0 +1,198 @@
+package controllers
+
+import com.gu.contentapi.client.model.v1.{ItemResponse, Content => ApiContent}
+import common.`package`.{convertApiExceptions => _, renderFormat => _, _}
+import common._
+import conf.switches.Switches
+import contentapi.ContentApiClient
+import model.Cached.WithoutRevalidationResult
+import model.LiveBlogHelpers._
+import model.ParseBlockId.{InvalidFormat, ParsedBlockId}
+import model.liveblog.BodyBlock
+import model.{ApplicationContext, Canonical, _}
+import org.joda.time.DateTime
+import pages.{ArticleEmailHtmlPage, ArticleHtmlPage, LiveBlogHtmlPage}
+import play.api.libs.functional.syntax._
+import play.api.libs.json._
+import play.api.libs.ws.WSClient
+import play.api.mvc._
+import views.support.RenderOtherStatus
+
+import scala.concurrent.Future
+
+import common.RichRequestHeader
+
+class LiveBlogController(contentApiClient: ContentApiClient, val controllerComponents: ControllerComponents, ws: WSClient)(implicit context: ApplicationContext) extends BaseController with RendersItemResponse with Logging with ImplicitControllerExecutionContext {
+
+  private def isSupported(c: ApiContent) = c.isLiveBlog
+  override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
+  override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = mapModel(path, Some(Canonical))(render(path, _))
+
+  def renderLiveBlogEmail(path: String): Action[AnyContent] =
+    Action.async { implicit request =>
+      mapModel(path, range = Some(ArticleBlocks)) {
+        render(path, _)
+      }
+    }
+
+  def renderLiveBlog(path: String, page: Option[String] = None, format: Option[String] = None): Action[AnyContent] =
+
+      Action.async { implicit request =>
+
+        def renderWithRange(range: BlockRange) =
+          mapModel(path, range = Some(range)) {
+            render(path, _)
+          }
+
+        page.map(ParseBlockId.fromPageParam) match {
+          case Some(ParsedBlockId(id)) => renderWithRange(PageWithBlock(id)) // we know the id of a block
+          case Some(InvalidFormat) => Future.successful(Cached(10)(WithoutRevalidationResult(NotFound))) // page param there but couldn't extract a block id
+          case None => renderWithRange(Canonical) // no page param
+        }
+      }
+
+  def renderLiveBlogJson(path: String, lastUpdate: Option[String], rendered: Option[Boolean], isLivePage: Option[Boolean]): Action[AnyContent] = {
+    Action.async { implicit request =>
+
+      def renderWithRange(range: BlockRange) =
+        mapModel(path, Some(range)) { model =>
+          range match {
+            case SinceBlockId(lastBlockId) => renderNewerUpdates(model, SinceBlockId(lastBlockId), isLivePage)
+            case _ => render(path, model)
+          }
+        }
+
+      lastUpdate.map(ParseBlockId.fromBlockId) match {
+        case Some(ParsedBlockId(id)) => renderWithRange(SinceBlockId(id))
+        case Some(InvalidFormat) => Future.successful(Cached(10)(WithoutRevalidationResult(NotFound))) // page param there but couldn't extract a block id
+        case None => if (rendered.contains(false)) mapModel(path, Some(Canonical)) { model => blockText(model, 6) } else renderWithRange(Canonical) // no page param
+      }
+    }
+  }
+
+  private def renderNewerUpdates(page: PageWithStoryPackage, lastUpdateBlockId: SinceBlockId, isLivePage: Option[Boolean])(implicit request: RequestHeader): Result = {
+    val newBlocks = page.article.fields.blocks.toSeq.flatMap {
+      _.requestedBodyBlocks.getOrElse(lastUpdateBlockId.around, Seq())
+    }.takeWhile { block =>
+      block.id != lastUpdateBlockId.lastUpdate
+    }
+    val blocksHtml = views.html.liveblog.liveBlogBlocks(newBlocks, page.article, Edition(request).timezone)
+    val timelineHtml = views.html.liveblog.keyEvents("", model.KeyEventData(newBlocks, Edition(request).timezone))
+    val allPagesJson = Seq(
+      "timeline" -> timelineHtml,
+      "numNewBlocks" -> newBlocks.size
+    )
+    val livePageJson = isLivePage.filter(_ == true).map { _ =>
+      "html" -> blocksHtml
+    }
+    val mostRecent = newBlocks.headOption.map { block =>
+      "mostRecentBlockId" -> s"block-${block.id}"
+    }
+    Cached(page)(JsonComponent(allPagesJson ++ livePageJson ++ mostRecent: _*))
+  }
+
+  implicit val dateToTimestampWrites = play.api.libs.json.JodaWrites.JodaDateTimeNumberWrites
+  case class TextBlock(
+                        id: String,
+                        title: Option[String],
+                        publishedDateTime: Option[DateTime],
+                        lastUpdatedDateTime: Option[DateTime],
+                        body: String
+                      )
+
+  implicit val blockWrites = (
+    (__ \ "id").write[String] ~
+      (__ \ "title").write[Option[String]] ~
+      (__ \ "publishedDateTime").write[Option[DateTime]] ~
+      (__ \ "lastUpdatedDateTime").write[Option[DateTime]] ~
+      (__ \ "body").write[String]
+    )(unlift(TextBlock.unapply))
+
+  private def blockText(page: PageWithStoryPackage, number: Int)(implicit request: RequestHeader): Result = page match {
+    case LiveBlogPage(liveBlog, _, _) =>
+      val blocks =
+        liveBlog.blocks.toSeq.flatMap { blocks =>
+          blocks.requestedBodyBlocks.get(Canonical.firstPage).toSeq.flatMap { bodyBlocks: Seq[BodyBlock] =>
+            bodyBlocks.collect {
+              case BodyBlock(id, html, summary, title, _, _, _, publishedAt, _, updatedAt, _, _) if html.trim.nonEmpty =>
+                TextBlock(id, title, publishedAt, updatedAt, summary)
+            }
+          }
+        }.take(number)
+      Cached(page)(JsonComponent("blocks" -> Json.toJson(blocks)))
+    case _ => Cached(600)(WithoutRevalidationResult(NotFound("Can only return block text for a live blog")))
+
+  }
+
+
+  private def render(path: String, page: PageWithStoryPackage)(implicit request: RequestHeader) = page match {
+
+    case blog: LiveBlogPage =>
+      val htmlResponse = () => {
+        if (request.isAmp) views.html.liveBlogAMP(blog)
+        else LiveBlogHtmlPage.html(blog)
+      }
+      val jsonResponse = () => views.html.liveblog.liveBlogBody(blog)
+      renderFormat(htmlResponse, jsonResponse, blog, Switches.all)
+
+    case article: ArticlePage =>
+
+      val htmlResponse = () => {
+        if (request.isEmail) ArticleEmailHtmlPage.html(article)
+        else if (request.isAmp) views.html.articleAMP(article)
+        else ArticleHtmlPage.html(article)
+      }
+
+      val contentFieldsJson = if (request.isGuuiJson) List("contentFields" -> Json.toJson(ContentFields(article.article))) else List()
+
+      val jsonResponse = () => List(("html", views.html.fragments.articleBody(article))) ++ contentFieldsJson
+      renderFormat(htmlResponse, jsonResponse, article)
+
+  }
+
+  def mapModel(path: String, range: Option[BlockRange] = None)(render: PageWithStoryPackage => Result)(implicit request: RequestHeader): Future[Result] = {
+    lookup(path, range) map responseToModelOrResult(range) recover convertApiExceptions map {
+      case Left(model) => render(model)
+      case Right(other) => RenderOtherStatus(other)
+    }
+  }
+
+  private def lookup(path: String, range: Option[BlockRange])(implicit request: RequestHeader): Future[ItemResponse] = {
+    val edition = Edition(request)
+
+    val capiItem = contentApiClient.item(path, edition)
+      .showTags("all")
+      .showFields("all")
+      .showReferences("all")
+      .showAtoms("all")
+
+    val capiItemWithBlocks = range.map { blockRange =>
+      val blocksParam = blockRange.query.map(_.mkString(",")).getOrElse("body")
+      capiItem.showBlocks(blocksParam)
+    }.getOrElse(capiItem)
+
+    contentApiClient.getResponse(capiItemWithBlocks)
+
+  }
+
+  def responseToModelOrResult(range: Option[BlockRange])(response: ItemResponse)(implicit request: RequestHeader): Either[PageWithStoryPackage, Result] = {
+
+    val supportedContent = response.content.filter(isSupported).map(Content(_))
+    val supportedContentResult = ModelOrResult(supportedContent, response)
+
+    val content: Either[PageWithStoryPackage, Result] = supportedContentResult.left.flatMap {
+      case liveBlog: Article if liveBlog.isLiveBlog && request.isEmail =>
+        Left(MinutePage(liveBlog, StoryPackages(liveBlog, response)))
+      case liveBlog: Article if liveBlog.isLiveBlog =>
+        range.map {
+          createLiveBlogModel(liveBlog, response, _)
+        }.getOrElse(Right(NotFound))
+      case article: Article =>
+        Left(ArticlePage(article, StoryPackages(article, response)))
+    }
+
+    content
+
+  }
+
+}
