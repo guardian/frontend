@@ -25,6 +25,7 @@ import fastForward from 'svgs/journalism/audio-player/fast-forward.svg';
 import fastBackwardActive from 'svgs/journalism/audio-player/fast-backward-active.svg';
 import fastForwardActive from 'svgs/journalism/audio-player/fast-forward-active.svg';
 
+import waveW from 'svgs/journalism/audio-player/wave-wide.svg';
 import { formatTime, sendToOphan, checkForTimeEvents } from './utils';
 
 import ProgressBar from './ProgressBar';
@@ -110,8 +111,24 @@ const Track = styled('div')({
     top: '-4px',
 });
 
-const Wave = styled('svg')({
+const FakeWave = styled('div')({
     flex: 1,
+    svg: {
+        width: '100%',
+        transform: `translate(0px, 11px)`,
+        [tablet]: {
+            transform: `translate(0px, 2px)`,
+        },
+        [desktop]: {
+            transform: `translate(0px, 3px)`,
+        },
+        [leftCol]: {
+            transform: `translate(0px, 9px)`,
+        },
+        [wide]: {
+            transform: `translate(0px, 10px)`,
+        },
+    },
 });
 
 const Volume = styled('div')({
@@ -274,7 +291,6 @@ type Props = {
     mediaId: string,
     downloadUrl: string,
     iTunesUrl: string,
-    barWidth: number,
     pillar: string,
 };
 
@@ -282,14 +298,11 @@ type State = {
     ready: boolean,
     playing: boolean,
     currentTime: number,
-    iteration: number,
     duration: number,
     volume: number,
-    bins: Array<number>,
+    bins: ?NodeList<HTMLElement>,
     interval: number,
     currentOffset: number,
-    canvasH: number,
-    sampler?: ?IntervalID,
     hasBeenPlayed: boolean,
 };
 
@@ -300,39 +313,25 @@ export default class AudioPlayer extends Component<Props, State> {
             ready: false,
             playing: false,
             currentTime: 0,
-            iteration: 0,
             duration: NaN,
             volume: NaN,
-            bins: [],
+            bins: null,
             interval: NaN,
             currentOffset: 0,
-            canvasH: 0,
             hasBeenPlayed: false,
         };
     }
 
     componentDidMount() {
-        const rect = this.canvas.getBoundingClientRect();
-        this.canvas.setAttribute('viewBox', `0 0 ${rect.width} ${rect.height}`);
-        const nbins = Math.floor(rect.width / 3);
+        const bins = this.wave.querySelectorAll('#Rectangle-path rect');
+
         this.audio.addEventListener('volumechange', this.onVolumeChange);
         this.audio.addEventListener('timeupdate', this.onTimeUpdate);
-        this.context = new window.AudioContext();
-        this.analyser = this.context.createAnalyser();
-        this.analyser.fftSize = 256;
-        this.dataArray = new Uint8Array(this.analyser.frequencyBinCount);
-        this.source = this.context.createMediaElementSource(this.audio);
-        this.source.connect(this.analyser);
-        this.analyser.connect(this.context.destination);
-        this.audio.crossOrigin = 'anonymous';
 
         // eslint-disable-next-line react/no-did-mount-set-state
         this.setState(
             {
-                bins: new Array(nbins)
-                    .fill(0, 0, nbins)
-                    .map(() => Math.floor(Math.random() * rect.height * 0.8)),
-                canvasH: rect.height,
+                bins,
             },
             () => {
                 if (Number.isNaN(this.audio.duration)) {
@@ -357,16 +356,13 @@ export default class AudioPlayer extends Component<Props, State> {
         if (percentPlayed > this.state.currentOffset) {
             checkForTimeEvents(this.props.mediaId, percentPlayed);
         }
+
+        this.incrementBlock(this.audio.currentTime);
+
         this.setState({
             currentTime: this.audio.currentTime,
             currentOffset: percentPlayed,
         });
-    };
-
-    setCanvas = (el: ?HTMLElement) => {
-        if (el) {
-            this.canvas = el;
-        }
     };
 
     setAudio = (el: ?HTMLAudioElement) => {
@@ -375,21 +371,26 @@ export default class AudioPlayer extends Component<Props, State> {
         }
     };
 
-    dataArray: Uint8Array;
-    source: MediaElementAudioSourceNode;
-    analyser: AnalyserNode;
+    setWave = (el: ?HTMLElement) => {
+        if (el) {
+            this.wave = el;
+        }
+    };
+
     audio: HTMLAudioElement;
-    canvas: HTMLElement;
+    wave: HTMLElement;
 
     ready = () => {
         const duration = this.audio.duration;
-        const interval = duration / this.state.bins.length;
-        this.setState({
-            ready: true,
-            duration,
-            interval,
-            volume: this.audio.volume,
-        });
+        if (this.state.bins) {
+            const interval = duration / this.state.bins.length;
+            this.setState({
+                ready: true,
+                duration,
+                interval,
+                volume: this.audio.volume,
+            });
+        }
     };
 
     play = () => {
@@ -400,17 +401,8 @@ export default class AudioPlayer extends Component<Props, State> {
             () => {
                 if (this.state.playing) {
                     this.audio.play();
-                    this.sample();
-                    this.setState({
-                        sampler: window.setInterval(
-                            this.sample,
-                            this.state.interval * 1000
-                        ),
-                    });
                 } else {
                     this.audio.pause();
-                    window.clearInterval(this.state.sampler);
-                    this.setState({ sampler: null });
                 }
             }
         );
@@ -426,24 +418,13 @@ export default class AudioPlayer extends Component<Props, State> {
             this.state.duration
         );
         this.audio.currentTime = chosenTime;
-
-        this.setState({
-            iteration:
-                Math.floor(
-                    (this.state.bins.length * chosenTime) / this.state.duration
-                ) - 1,
-        });
+        this.incrementBlock(this.audio.currentTime);
     };
 
     backward = () => {
         const chosenTime = Math.max(this.state.currentTime - 15, 0);
         this.audio.currentTime = chosenTime;
-        this.setState({
-            iteration:
-                Math.floor(
-                    (this.state.bins.length * chosenTime) / this.state.duration
-                ) - 1,
-        });
+        this.incrementBlock(this.audio.currentTime);
     };
 
     updateVolume = (v: number) => {
@@ -452,28 +433,24 @@ export default class AudioPlayer extends Component<Props, State> {
 
     seek = (chosenTime: number) => {
         this.audio.currentTime = (this.audio.duration * chosenTime) / 100;
-        this.setState({
-            iteration:
-                Math.floor((this.state.bins.length * chosenTime) / 100) - 1,
-        });
+        this.incrementBlock(this.audio.currentTime);
     };
 
-    sample = () => {
-        this.analyser.getByteFrequencyData(this.dataArray);
-        const factor = Math.max(1, ...this.dataArray);
-        const mean =
-            this.dataArray.reduce((res, x) => res + x, 0) /
-            this.dataArray.length;
-        const minHeight = 5;
-        const barHeight =
-            minHeight +
-            Math.ceil((mean / factor) * (this.state.canvasH - minHeight));
-        const bins = this.state.bins;
-        bins[this.state.iteration] = barHeight;
-        this.setState({
-            bins,
-            iteration: this.state.iteration + 1,
-        });
+    incrementBlock = (currentTime: number) => {
+        const blocksToFill = Math.floor(currentTime / this.state.interval);
+
+        if (this.state.bins) {
+            this.state.bins.forEach((bin, i) => {
+                if (i <= blocksToFill) {
+                    bin.setAttribute(
+                        'fill',
+                        pillarsHighlight[this.props.pillar]
+                    );
+                } else {
+                    bin.setAttribute('fill', palette.neutral[4]);
+                }
+            });
+        }
     };
 
     render() {
@@ -507,7 +484,6 @@ export default class AudioPlayer extends Component<Props, State> {
                                 : playBtn.markup,
                         }}
                     />
-
                     <Button
                         isPlay={false}
                         onClick={this.forward}
@@ -528,44 +504,13 @@ export default class AudioPlayer extends Component<Props, State> {
                     {this.state.ready ? <Time t={this.state.duration} /> : ''}
                 </TimeContainer>
                 <WaveAndTrack>
-                    <Wave
-                        innerRef={this.setCanvas}
-                        colour={pillarsHighlight[`${this.props.pillar}`]}>
-                        {this.state.ready
-                            ? this.state.bins.map(
-                                  (barHeight, i) =>
-                                      i < this.state.iteration ? (
-                                          <rect
-                                              x={i * (this.props.barWidth + 1)}
-                                              y={this.state.canvasH - barHeight}
-                                              width={this.props.barWidth}
-                                              height={barHeight}
-                                              fill={
-                                                  pillarsHighlight[
-                                                      `${this.props.pillar}`
-                                                  ]
-                                              }
-                                          />
-                                      ) : i < this.state.iteration + 1 ? (
-                                          <rect
-                                              x={i * (this.props.barWidth + 1)}
-                                              y={this.state.canvasH}
-                                              width={this.props.barWidth}
-                                              height={0}
-                                              fill={palette.neutral[4]}
-                                          />
-                                      ) : (
-                                          <rect
-                                              x={i * (this.props.barWidth + 1)}
-                                              y={this.state.canvasH - barHeight}
-                                              width={this.props.barWidth}
-                                              height={barHeight}
-                                              fill={palette.neutral[4]}
-                                          />
-                                      )
-                              )
-                            : ''}
-                    </Wave>
+                    <FakeWave>
+                        <span
+                            ref={this.setWave}
+                            className="wave-holder"
+                            dangerouslySetInnerHTML={{ __html: waveW.markup }}
+                        />
+                    </FakeWave>
                     <Track>
                         <ProgressBar
                             barContext="playTime"
