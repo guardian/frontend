@@ -34,11 +34,25 @@
         color: $brightness-7;
         background-color: $highlight-main;
     }
+
+    .content--pillar-news & {
+        color: $brightness-100;
+        background-color: $news-main;
+        &::after {
+            color: $brightness-100;
+            background-color: $news-main;
+        }
+    }
 }
 
 .campaign--snippet .form_submit button {
     color: $brightness-7;
     background-color: $highlight-main;
+
+    .content--pillar-news & {
+        color: $brightness-100;
+        background-color: $news-main;
+    }
 }
 
 .campaign--snippet__handle {
@@ -52,24 +66,8 @@
             fill: $brightness-7;
         }
     }
-}
 
-.content--pillar-news {
-    .speech-bubble {
-        color: $brightness-100;
-        background-color: $news-main;
-        &::after {
-            color: $brightness-100;
-            background-color: $news-main;
-        }
-    }
-
-    .content--pillar-news .campaign--snippet .form_submit button {
-        color: $brightness-100;
-        background-color: $news-main;
-    }
-
-    .campaign--snippet__handle {
+    .content--pillar-news & {
         color: $brightness-100;
         background-color: $brightness-7;
 
