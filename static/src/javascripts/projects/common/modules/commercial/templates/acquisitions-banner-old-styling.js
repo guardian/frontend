@@ -26,7 +26,7 @@ export const acquisitionsBannerTemplateOldStyling = (
                         class="message-button-rounded__cta membership-prominent yellow"
                         href="${params.linkUrl}"
                     >
-                        ${params.buttonCaption}${arrowWhiteRight}
+                        ${params.buttonCaption}${arrowWhiteRight.markup}
                     </a>
                 </span>
             </span>

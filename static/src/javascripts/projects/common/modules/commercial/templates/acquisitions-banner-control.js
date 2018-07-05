@@ -30,7 +30,8 @@ export const acquisitionsBannerControlTemplate = (
             <img
                 class="engagement-banner__payment-logos"
                 src="${config.get(
-                    'images.acquisitions.paypal-and-credit-card'
+                    'images.acquisitions.paypal-and-credit-card',
+                    ''
                 )}"
                 alt="PayPal and credit card"
             >
