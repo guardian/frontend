@@ -32,7 +32,7 @@ class LiveBlogController(contentApiClient: ContentApiClient, val controllerCompo
     else renderPage
   }
 
-  def renderLiveBlogEmail(path: String): Action[AnyContent] =
+  def renderEmail(path: String): Action[AnyContent] =
     Action.async { implicit request =>
       println("Rendering live blog email")
       mapModel(path, range = Some(ArticleBlocks)) {
@@ -40,7 +40,7 @@ class LiveBlogController(contentApiClient: ContentApiClient, val controllerCompo
       }
     }
 
-  def renderLiveBlog(path: String, page: Option[String] = None, format: Option[String] = None): Action[AnyContent] =
+  def renderArticle(path: String, page: Option[String] = None, format: Option[String] = None): Action[AnyContent] =
 
       Action.async { implicit request =>
 
@@ -58,7 +58,7 @@ class LiveBlogController(contentApiClient: ContentApiClient, val controllerCompo
         }
       }
 
-  def renderLiveBlogJson(path: String, lastUpdate: Option[String], rendered: Option[Boolean], isLivePage: Option[Boolean]): Action[AnyContent] = {
+  def renderJson(path: String, lastUpdate: Option[String], rendered: Option[Boolean], isLivePage: Option[Boolean]): Action[AnyContent] = {
     Action.async { implicit request =>
 
       println("Rendering live blog json")

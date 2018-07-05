@@ -75,6 +75,7 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
         else ArticleHtmlPage.html(article)
       }
 
+      // add extra data for *.json?guui endpoint
       val contentFieldsJson = if (request.isGuuiJson) List("contentFields" -> Json.toJson(ContentFields(article.article))) else List()
 
       val jsonResponse = () => List(("html", views.html.fragments.articleBody(article))) ++ contentFieldsJson
@@ -130,5 +131,3 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
   }
 
 }
-
-
