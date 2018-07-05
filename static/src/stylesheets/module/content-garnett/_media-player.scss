@@ -1,7 +1,7 @@
 @import '../../icons/video-icons-svg';
 
 // parameterising these as they're used in a few places
-$vjs-control-colour: $media-mute;
+$vjs-control-colour: $brightness-20;
 $vjs-control-height: $gs-baseline*4;
 $vjs-progress-hitbox-height: $gs-baseline;
 $vjs-progress-visual-height-resting: $gs-baseline/2;
@@ -158,7 +158,7 @@ $ima-controls-height: 70px;
     width: 100%;
     z-index: 4;
     left: 0;
-    background-color: rgba($media-background, .8);
+    background-color: rgba($brightness-7, .8);
     color: #ffffff;
     font-weight: bold;
     height: $vjs-control-height;
@@ -264,7 +264,7 @@ $ima-controls-height: 70px;
 }
 
 .vjs-duration {
-    color: $neutral-3;
+    color: $brightness-86;
 }
 
 .vjs-fullscreen-control {
@@ -338,7 +338,7 @@ $ima-controls-height: 70px;
 }
 
 .vjs-play-progress {
-    background-color: $media-default;
+    background-color: $highlight-main;
     z-index: 2;
 }
 
@@ -368,7 +368,7 @@ $ima-controls-height: 70px;
         content: '';
         left: 0;
         right: 0;
-        background-color: $neutral-7;
+        background-color: $brightness-97;
     }
 }
 
@@ -380,11 +380,11 @@ $ima-controls-height: 70px;
 }
 
 .vjs-volume-level {
-    background-color: $media-default;
+    background-color: $highlight-main;
 
     &:before {
         position: absolute;
-        background-color: $media-default;
+        background-color: $highlight-main;
         height: 11px;
         width: 2px;
         top: -$gs-baseline/3;
@@ -536,7 +536,7 @@ $ima-controls-height: 70px;
     .vjs-overlay__duration {
         @include fs-headline(3);
         text-align: left;
-        color: $media-default;
+        color: $highlight-main;
         padding: 0 $gs-gutter/2 $gs-baseline*2;
     }
 }
@@ -606,9 +606,9 @@ $ima-controls-height: 70px;
     box-sizing: border-box;
     width: 100%;
     height: gs-height(1) + $gs-baseline;
-    color: $neutral-1;
+    color: $brightness-7;
     padding: $gs-baseline/3 $gs-gutter/2 0;
-    border: 1px solid $neutral-3;
+    border: 1px solid $brightness-86;
     outline: none;
 
     &::selection {
@@ -658,7 +658,7 @@ $ima-controls-height: 70px;
         }
 
         .vjs-control-text {
-            color: $media-default;
+            color: $highlight-main;
         }
     }
 }
@@ -700,7 +700,7 @@ $ima-controls-height: 70px;
         display: inline-block;
         max-width: 90%;
         &:hover {
-            color: $media-default;
+            color: $highlight-main;
         }
     }
 
@@ -712,7 +712,7 @@ $ima-controls-height: 70px;
         fill: #ffffff;
 
         &:hover {
-            fill: $media-default;
+            fill: $highlight-main;
         }
     }
 }
@@ -727,7 +727,7 @@ $ima-controls-height: 70px;
     right: 8px;
     // width so text goes over two lines
     width: 140px;
-    background-color: rgba($neutral-1, .8);
+    background-color: rgba($brightness-7, .8);
     color: #ffffff;
     text-align: left;
 
@@ -754,7 +754,7 @@ $ima-controls-height: 70px;
         display: none;
     }
     &:hover {
-        color: $comment-main-2;
+        color: $opinion-bright;
 
         .i-play-icon-grey {
             display: none;
@@ -780,7 +780,7 @@ $ima-controls-height: 70px;
     margin: auto;
     box-sizing: border-box;
     background-color: rgba(25, 25, 25, .8);
-    color: $neutral-7;
+    color: $brightness-97;
     top: $gs-baseline*4;
     padding-top: $gs-gutter/4;
     max-width: gs-span(7);
@@ -823,13 +823,13 @@ $ima-controls-height: 70px;
             list-style: none;
 
             &:not(:first-child) {
-                border-left: 1px solid $neutral-2;
+                border-left: 1px solid $brightness-46;
             }
 
             .fc-item__action {
                 color: #ffffff;
                 &:hover {
-                    color: $media-default;
+                    color: $highlight-main;
                 }
             }
 
@@ -848,7 +848,7 @@ $ima-controls-height: 70px;
 
         @include mq($until: tablet) {
             top: $gs-baseline*4;
-            border-top: 1px solid $neutral-2;
+            border-top: 1px solid $brightness-46;
         }
 
         @include mq(tablet, desktop) {
@@ -895,7 +895,7 @@ $ima-controls-height: 70px;
             margin-bottom: 0;
 
             &:nth-child(-n+3) {
-                border-right: 1px solid $neutral-2;
+                border-right: 1px solid $brightness-46;
             }
         }
         .item__headline {
@@ -912,7 +912,7 @@ $ima-controls-height: 70px;
 
 .podcast-meta {
     text-align: left;
-    border-top: 1px solid $media-background;
+    border-top: 1px solid $brightness-7;
     margin-top: $gs-baseline/2;
     padding: $gs-baseline/2 $gs-gutter/2;
 }
@@ -928,7 +928,7 @@ $ima-controls-height: 70px;
 }
 .podcast-meta__item__link {
     @include fs-textSans(1);
-    color: $neutral-7;
+    color: $brightness-97;
 }
 
 /* IMA Adverts
@@ -960,7 +960,7 @@ $ima-controls-height: 70px;
 }
 #ima-progress-div {
     height: 100%;
-    background-color: $media-default;
+    background-color: $highlight-main;
 }
 #ima-play-pause-div,
 #ima-mute-div,
@@ -1026,7 +1026,7 @@ $ima-controls-height: 70px;
     .fc-item__action {
         display: block;
         padding-top: $gs-baseline;
-        color: $neutral-5;
+        color: $brightness-86;
 
         &:hover,
         &:focus {
@@ -1034,7 +1034,7 @@ $ima-controls-height: 70px;
         }
         &:visited,
         &:active {
-            color: darken($neutral-5, 20%);
+            color: darken($brightness-86, 20%);
         }
     }
 
@@ -1045,7 +1045,7 @@ $ima-controls-height: 70px;
         text-align: left; //Required for end slate items
         height: get-line-height(headline, 1) * 3;
         .inline-video-icon {
-            fill: $media-default;
+            fill: $highlight-main;
             svg {
                 height: .75em;
                 width: 1.1em;
@@ -1070,7 +1070,7 @@ $ima-controls-height: 70px;
 
     .vjs-big-play-button .vjs-control-text {
         &:before {
-            background-color: $media-default;
+            background-color: $highlight-main;
         }
 
         &:after {

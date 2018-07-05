@@ -1,13 +1,13 @@
 .giraffe {
     width: 100%;
     padding: $gs-baseline / 2 $gs-gutter / 4 $gs-baseline;
-    background: $multimedia-main-2;
+    background: $highlight-main;
     box-sizing: border-box;
 }
 
 .giraffe__heading {
     @include fs-header(5);
-    color: $neutral-1;
+    color: $brightness-7;
     display: inline;
 }
 
@@ -23,11 +23,11 @@
 
 .button--giraffe {
     @include button-colour(
-        $maps-main-2,
+        $green-bold,
         #ffffff
     );
     @include button-hover-colour(
-        mix($maps-main-2, $neutral-1, 60%)
+        mix($green-bold, $brightness-7, 60%)
     );
     margin-top: $gs-baseline;
 }

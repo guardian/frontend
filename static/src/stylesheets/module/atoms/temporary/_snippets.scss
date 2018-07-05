@@ -28,7 +28,7 @@
     display: flex;
     width: 100px;
     height: 0;
-    border-top: 1px dotted $neutral-3;
+    border-top: 1px dotted $brightness-86;
     @include mq($until: mobileLandscape) {
         width: 100px;
     }
@@ -46,7 +46,7 @@
     border-radius: 100%;
     float: left;
     margin-left: -24px;
-    background-color: $news-main-2;
+    background-color: $sport-bright;
 }
 
 .explainer-snippet__event-date {
@@ -77,7 +77,7 @@
     }
 
     .explainer-snippet__item:not(:last-child) {
-        border-left: 1px solid rgba($neutral-3, .5);
+        border-left: 1px solid rgba($brightness-86, .5);
         padding-bottom: 16px;
 
         .explainer-snippet__event-date::before {
@@ -88,12 +88,12 @@
 
 .explainer-snippet__credit {
     @include fs-textSans(1, true);
-    color: $neutral-1;
+    color: $brightness-7;
     margin: $gs-baseline 0;
     
     > .inline-icon {
         display: inline-flex;
-        background: $neutral-3;
+        background: $brightness-86;
         border-radius: 100%;
         width: 16px;
         height: 16px;

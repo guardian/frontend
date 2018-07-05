@@ -24,7 +24,7 @@
 
 .fieldset {
     border: 0;
-    border-top: 1px solid $neutral-7;
+    border-top: 1px solid $brightness-97;
     display: table;
     padding: (($gs-baseline/3)*4 - 1) 0 ($gs-baseline*2);
     margin: 0;
@@ -74,37 +74,37 @@
 
 .form-field--error {
     .label {
-        color: $error;
+        color: $news-main;
     }
 
     .text-input,
     .text-input:focus {
-        border-color: $error;
+        border-color: $news-main;
     }
 }
 
 .form__error {
     @include fs-textSans(2);
-    background-color: lighten($error, 55%);
-    border-bottom: 1px solid lighten($error, 35%);
-    border-top: 1px solid lighten($error, 35%);
-    color: $error;
+    background-color: lighten($news-main, 55%);
+    border-bottom: 1px solid lighten($news-main, 35%);
+    border-top: 1px solid lighten($news-main, 35%);
+    color: $news-main;
     margin-top: 6px;
     padding: 7px ($gs-baseline/3)*2;
 }
 
 .form__success {
     @include fs-textSans(2);
-    background-color: lighten($success, 70%);
-    border-bottom: 1px solid lighten($success, 35%);
-    border-top: 1px solid lighten($success, 35%);
-    color: $success;
+    background-color: lighten($green-bold, 70%);
+    border-bottom: 1px solid lighten($green-bold, 35%);
+    border-top: 1px solid lighten($green-bold, 35%);
+    color: $green-bold;
     margin-top: $gs-baseline/2;
     padding: 7px ($gs-baseline/3)*2;
 }
 
 .form-field__error {
-    color: $error;
+    color: $news-main;
     margin-top: $gs-baseline/2;
 }
 
@@ -155,10 +155,10 @@
 
 .text-input,
 .textarea {
-    border: 1px solid $neutral-4;
+    border: 1px solid $brightness-86;
     box-shadow: none;
     box-sizing: border-box;
-    color: $neutral-1;
+    color: $brightness-7;
     display: inline-block;
     font-family: $f-sans-serif-text;
     padding: 8px 8px 7px;
@@ -170,7 +170,7 @@
     -webkit-appearance: none;
 
     &:focus {
-        border-color: $neutral-2;
+        border-color: $brightness-46;
     }
 
     @include mq(tablet) {
@@ -196,7 +196,7 @@
 }
 
 .submit-input, .submit-input--behaviour {
-    background: $news-main-1;
+    background: $sport-dark;
     border: 0 none;
     color: #ffffff;
     cursor: pointer;
@@ -209,11 +209,11 @@
 
     &:hover,
     &:focus {
-        background: darken($news-main-1, 5%);
+        background: darken($sport-dark, 5%);
     }
 
     &:active {
-        background: $neutral-1;
+        background: $brightness-7;
     }
 }
 
@@ -222,7 +222,7 @@
 }
 
 .submit-input[disabled] {
-    background: $neutral-5;
+    background: $brightness-86;
 }
 
 .check-label,
@@ -249,15 +249,15 @@
 }
 
 .delete-input-warn {
-    background-color: $live-main-1;
+    background-color: $news-dark;
     &:hover,
     &:focus {
-        background-color: darken($live-main-1, 5%);
+        background-color: darken($news-dark, 5%);
     }
 }
 
 .delete-input-warn[disabled] {
-    background-color: lighten($live-main-1, 5%);
+    background-color: lighten($news-dark, 5%);
     opacity: .6;
     pointer-events: none;
 }

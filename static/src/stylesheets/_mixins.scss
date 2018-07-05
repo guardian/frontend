@@ -35,7 +35,7 @@
     overflow: hidden;
 }
 
-@mixin faux-bullet-point($color: $neutral-3, $right-space: 2px) {
+@mixin faux-bullet-point($color: $brightness-86, $right-space: 2px) {
     &:before {
         display: inline-block;
         content: '';
@@ -182,7 +182,7 @@
     }
 }
 
-@mixin column-rule($style: 1px solid $neutral-5) {
+@mixin column-rule($style: 1px solid $brightness-86) {
     column-rule: $style;
 }
 

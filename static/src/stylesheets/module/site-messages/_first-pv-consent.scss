@@ -2,6 +2,7 @@ $btn-height: ($gs-baseline*3.5);
 
 .site-message--first-pv-consent {
     padding: ($gs-baseline / 2) 0 $gs-baseline * 2;
+    background: $sport-dark;
 
     a {
         color: currentColor;
@@ -63,8 +64,8 @@ $btn-height: ($gs-baseline*3.5);
     @include fs-textSans(5);
     @include circular;
     height: $btn-height;
-    background: $news-garnett-highlight;
-    color: $garnett-neutral-1;
+    background: $highlight-main;
+    color: $brightness-7;
 
     .site-message--double-banner & {
         background: transparent;
@@ -84,7 +85,7 @@ $btn-height: ($gs-baseline*3.5);
     white-space: nowrap;
     overflow: hidden;
     &:hover {
-        background: darken($news-garnett-highlight, 1%);
+        background: darken($highlight-main, 1%);
     }
 
     .site-message--double-banner &:hover {
@@ -102,7 +103,7 @@ $btn-height: ($gs-baseline*3.5);
         height: $btn-height;
         transform: scale(.5);
         g, path {
-            fill: $garnett-neutral-1;
+            fill: $brightness-7;
 
             .site-message--double-banner & {
                 fill: #ffffff;
@@ -124,7 +125,7 @@ $btn-height: ($gs-baseline*3.5);
         }
         font-weight: bold;
         padding-bottom: $gs-baseline;
-        color: $news-garnett-highlight;
+        color: $highlight-main;
 
         .site-message--double-banner & {
             display: none;

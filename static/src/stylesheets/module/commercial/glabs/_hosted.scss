@@ -176,7 +176,7 @@ $hosted-video-height: 551px;
 .hosted__glogo {
     display: inline-block;
     padding: 4px $gs-gutter / 2;
-    background-color: $garnett-neutral-1;
+    background-color: $brightness-7;
     text-align: right;
 
     &:hover {
@@ -302,7 +302,7 @@ $hosted-video-height: 551px;
         top: 50%;
         left: 20%;
         border-width: 8px 8px 8px 18px;
-        border-color: transparent transparent transparent $neutral-7;
+        border-color: transparent transparent transparent $brightness-97;
     }
 }
 
@@ -636,7 +636,7 @@ $hosted-video-height: 551px;
     &,
     &:focus,
     &:hover {
-        color: $neutral-1;
+        color: $brightness-7;
     }
 
     @include mq(mobile) {
@@ -648,7 +648,7 @@ $hosted-video-height: 551px;
         line-height: 26px;
 
         svg {
-            fill: $neutral-1;
+            fill: $brightness-7;
             width: 16px;
             height: 16px;
         }

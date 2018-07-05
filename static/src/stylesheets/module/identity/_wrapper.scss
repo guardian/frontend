@@ -1,7 +1,7 @@
 /* Header wrapper (for mma tabs)
    ========================================================================== */
 .identity-wrapper-header {
-    border-bottom: 1px solid $garnett-neutral-4;
+    border-bottom: 1px solid $brightness-86;
     .identity-wrapper {
         padding-bottom: 0;
     }
@@ -51,7 +51,7 @@
     }
 
     a.u-underline {
-        color: $identity-main;
+        color: $brightness-7;
     }
 }
 
@@ -68,7 +68,7 @@
     min-height: 100vh;
     align-items: stretch;
     &.identity-wrapper-page-flex--flow {
-        background: $garnett-nav-background;
+        background: $nav-faded;
     }
     & > .identity-wrapper-page-flex__content {
         flex: 1 1 auto;

@@ -11,7 +11,7 @@
     }
 
     a {
-        text-decoration-color: $garnett-neutral-1;
+        text-decoration-color: $brightness-7;
         display: flex;
 
         @include mq(leftCol) {
@@ -24,14 +24,14 @@
     @include mq(leftCol) {
         content: '';
         width: 58px;
-        border-top: 1px solid $garnett-neutral-2;
+        border-top: 1px solid $brightness-60;
         margin-top: 5px;
         display: block;
     }
 }
 
 .football-weekly-treat__container {
-    background-color: $garnett-neutral-3;
+    background-color: $brightness-97;
     border-top: .0625rem solid #dfdfdf;
     border-bottom: .0625rem solid #dfdfdf;
     margin-bottom: 30px;
@@ -95,9 +95,9 @@
 }
 
 .football-weekly-treat__podcast {
-    background: $news-garnett-highlight;
+    background: $highlight-main;
 
-    color: $garnett-neutral-1;
+    color: $brightness-7;
     font-size: 14px;
     font-family: $f-serif-headline;
     line-height: 1.5;
@@ -112,7 +112,7 @@
 }
 
 .football-weekly-treat__podcast-title {
-    color: $garnett-neutral-5;
+    color: $brightness-100;
     font-family: $f-serif-headline;
 
     line-height: 1.3;
@@ -129,7 +129,7 @@
     }
 }
 .football-weekly-treat__podcast-title span {
-    background: $garnett-neutral-1;
+    background: $brightness-7;
 
     padding: 2px 3px 5px;
 
@@ -139,7 +139,7 @@
 .football-weekly-treat__player {
     background: #e9eff1;
     font-size: 13px;
-    color: $garnett-neutral-1;
+    color: $brightness-7;
 
     padding: 3px 1px 0 2px;
 
@@ -175,7 +175,7 @@
     font-size: 13px;
     font-family: $f-sans-serif-text;
     line-height: 16px;
-    color: $garnett-neutral-1;
+    color: $brightness-7;
     padding-left: 2px;
 
     padding-top: 5px;

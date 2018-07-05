@@ -27,7 +27,7 @@
 .menu-item-divider {
     height: 1px;
     width: 100%;
-    background: $nav-darker-colour;
+    background: $nav-bold;
     border: 0;
     margin: $gs-baseline/2 0 0 $menu-spacing-left-small;
 
@@ -44,7 +44,7 @@
     background-color: transparent;
     border: 0;
     box-sizing: border-box;
-    color: $nav-primary-colour;
+    color: $brightness-7;
     cursor: pointer;
     display: inline-block;
     font-size: 20px;
@@ -68,7 +68,7 @@
 
     &:hover,
     &:focus {
-        color: $nav-secondary-colour;
+        color: $brightness-20;
     }
 
     > * {
@@ -80,7 +80,7 @@
     &[data-link-name='nav2 : facebook'] {
         @include mq($until: desktop) {
             &:not([aria-expanded='true']):after {
-                background-color: $rule;
+                background-color: $nav-dark;
                 bottom: 0;
                 content: '';
                 display: block;
@@ -144,7 +144,7 @@
 
 .menu-item__icon,
 .menu-item__toggle {
-    color: $nav-secondary-colour;
+    color: $brightness-20;
     left: 25px;
     position: absolute;
 

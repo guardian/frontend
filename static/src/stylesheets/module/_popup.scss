@@ -3,7 +3,7 @@
    ========================================================================== */
 $popup-anchor-arrow-size: 6px;
 $popup-top: $headerHeight + $gs-baseline/2 + 3;
-$c-popup-bg: $neutral-8;
+$c-popup-bg: $brightness-97;
 
 // Popups align with the label, so if there's a control icon, we need to account
 // for it. The number is derived from the icon size on the control.
@@ -58,9 +58,9 @@ $control-offset: 36 + $gs-gutter/2;
 
 .popup__group-header {
     @include fs-textSans(2);
-    color: $neutral-2;
+    color: $brightness-46;
     padding: $gs-baseline/2 $gs-gutter/2;
-    border-top: 1px solid $neutral-4;
+    border-top: 1px solid $brightness-86;
     padding-bottom: 0;
     margin: 0;
 
@@ -174,7 +174,7 @@ $control-offset: 36 + $gs-gutter/2;
     line-height: 36px;
 
     a {
-        border-bottom: 1px solid $neutral-5;
+        border-bottom: 1px solid $brightness-86;
     }
 
     &:last-child {
@@ -192,7 +192,7 @@ $control-offset: 36 + $gs-gutter/2;
     .brand-bar__item--action:hover {
         display: block;
         white-space: nowrap;
-        color: $neutral-1;
+        color: $brightness-7;
         line-height: $gs-baseline * 3;
     }
 
@@ -271,8 +271,8 @@ $control-offset: 36 + $gs-gutter/2;
     cursor: pointer;
 
     &::after {
-        border-top-color: $neutral-2-contrasted;
-        border-bottom-color: $neutral-2-contrasted;
+        border-top-color: $brightness-46;
+        border-bottom-color: $brightness-46;
     }
 
     &::before {
@@ -283,7 +283,7 @@ $control-offset: 36 + $gs-gutter/2;
 .ad-feedback.popup {
     width: 240px;
     top: 100%;
-    border: 1px solid $neutral-4;
+    border: 1px solid $brightness-86;
     z-index: $zindex-overlay;
     padding: 0;
     ul {
@@ -297,7 +297,7 @@ $control-offset: 36 + $gs-gutter/2;
     }
     .popup__item--option {
         position: relative;
-        border-top: 1px solid $neutral-4;
+        border-top: 1px solid $brightness-86;
         > button {
             cursor: pointer;
             padding: 0 $gs-gutter/2;
@@ -306,22 +306,22 @@ $control-offset: 36 + $gs-gutter/2;
             background: transparent;
             text-align: left;
             &:focus, &:hover {
-                background: $neutral-5;
+                background: $brightness-86;
             }
         }
     }
 
     .ad-slot--dark & {
-        background: $multimedia-support-5;
-        border-color: $neutral-1;
-        color: $neutral-3;
+        background: $brightness-7;
+        border-color: $brightness-7;
+        color: $brightness-86;
         .popup__group-header {
-            color: $neutral-3;
+            color: $brightness-86;
         }
         .popup__item--option {
-            border-top-color: $neutral-1;
+            border-top-color: $brightness-7;
             > button:hover {
-                background: $neutral-1;
+                background: $brightness-7;
             }
         }
     }

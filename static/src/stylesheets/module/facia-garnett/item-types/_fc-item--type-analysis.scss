@@ -10,12 +10,12 @@
 }
 
 $pillars: (
-    news:      $news-garnett-main-1,
-    opinion:   $opinion-garnett-main-1,
-    sport:     $sport-garnett-main-1,
-    arts:      $culture-garnett-main-1,
-    lifestyle: $lifestyle-garnett-main-1,
-    special-report: $news-garnett-highlight
+    news:      $news-main,
+    opinion:   $opinion-main,
+    sport:     $sport-main,
+    arts:      $culture-main,
+    lifestyle: $lifestyle-main,
+    special-report: $highlight-main
 );
 
 .fc-item--type-analysis.fc-item--has-boosted-title {

@@ -13,14 +13,14 @@ from scrolling */
 }
 
 .new-header {
-    background-color: $nav-background-colour;
+    background-color: $nav-faded;
     position: relative;
 
     &:not(.new-header--slim) {
         margin-bottom: 0;
 
         &:after {
-            @include multiline(4, $garnett-neutral-4, bottom);
+            @include multiline(4, $brightness-86, bottom);
             background-color: #ffffff;
             content: '';
             display: block;
@@ -35,7 +35,7 @@ from scrolling */
     @include mq(desktop) {
 
         &.new-header--open {
-            background-color: $nav-background-colour;
+            background-color: $nav-faded;
         }
     }
 
@@ -89,7 +89,7 @@ from scrolling */
 
 .new-header__menu-toggle {
     display: block;
-    
+
     @include mq($until: desktop) {
         position: absolute;
         right: $gutter-small;
@@ -224,7 +224,7 @@ from scrolling */
 }
 
 .new-header--slim {
-    border-bottom: 1px solid $rule;
+    border-bottom: 1px solid $nav-dark;
     height: $slim-nav-height + $gs-baseline + $gs-baseline / 2;
 
     .immersive-header-container & {
@@ -235,7 +235,7 @@ from scrolling */
     }
 
     @include mq(tablet) {
-        border-bottom: 1px solid $rule;
+        border-bottom: 1px solid $nav-dark;
         height: $slim-nav-height;
     }
 }

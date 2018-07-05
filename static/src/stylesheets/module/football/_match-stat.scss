@@ -39,16 +39,16 @@
 }
 
 .team-result--won {
-    background-color: $status-positive;
+    background-color: $green-bold;
     margin-top: - $gs-baseline / 2;
 }
 
 .team-result--drew {
-    background-color: $status-neutral;
+    background-color: $brightness-46;
     height: 4px;
 }
 
 .team-result--lost {
-    background-color: $status-negative;
+    background-color: $news-main;
     margin-top: $gs-baseline / 2;
 }
