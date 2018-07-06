@@ -81,6 +81,14 @@ export default class ProgressBar extends Component<Props, State> {
         this.setState({ width, left, position });
     }
 
+    componentDidUpdate(prevProps: Props) {
+        if (this.props.value !== prevProps.value) {
+            const position = (this.props.value * this.state.width) / 100;
+            // eslint-disable-next-line react/no-did-update-set-state
+            this.setState({ position });
+        }
+    }
+
     onChange: number => void;
 
     getElement = (el: ?HTMLElement) => {
@@ -106,9 +114,15 @@ export default class ProgressBar extends Component<Props, State> {
     };
 
     update = (e: MouseEvent) => {
-        const position = e.clientX - this.state.left;
+        const rawPosition = e.clientX - this.state.left;
+        const position = this.cleanUpPosition(rawPosition);
         const value = (position * 100) / this.state.width;
         this.setState({ value, position });
+    };
+
+    cleanUpPosition = (num: number) => {
+        const position = Math.min(this.state.width, num);
+        return Math.max(0, position);
     };
 
     render() {
