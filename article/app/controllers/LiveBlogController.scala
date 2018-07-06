@@ -34,11 +34,6 @@ class LiveBlogController(contentApiClient: ContentApiClient, val controllerCompo
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
   override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = mapModel(path, Some(Canonical))(render(path, _))
 
-  private def noAMP(renderPage: => Result)(implicit  request: RequestHeader): Result = {
-    if (request.isAmp) NotFound
-    else renderPage
-  }
-
   def renderEmail(path: String): Action[AnyContent] =
     Action.async { implicit request =>
       println("Rendering live blog email")
@@ -125,7 +120,7 @@ class LiveBlogController(contentApiClient: ContentApiClient, val controllerCompo
       (__ \ "body").write[String]
     )(unlift(TextBlock.unapply))
 
-  private def blockText(page: PageWithStoryPackage, number: Int)(implicit request: RequestHeader): Result = page match {
+  private def blockText(page: PageWithStoryPackage, number: Int): Result = page match {
     case LiveBlogPage(liveBlog, _, _) =>
       val blocks =
         liveBlog.blocks.toSeq.flatMap { blocks =>
@@ -143,16 +138,15 @@ class LiveBlogController(contentApiClient: ContentApiClient, val controllerCompo
 
   private def render(path: String, page: PageWithStoryPackage)(implicit request: RequestHeader) = page match {
 
+    case minute: MinutePage if request.isAmp =>
+      NotFound
     case minute: MinutePage =>
-      noAMP {
         val htmlResponse = () => {
           if (request.isEmail) ArticleEmailHtmlPage.html(minute)
           else MinuteHtmlPage.html(minute)
         }
-
         val jsonResponse = () => views.html.fragments.minuteBody(minute)
         renderFormat(htmlResponse, jsonResponse, minute, Switches.all)
-      }
     case blog: LiveBlogPage =>
       val htmlResponse = () => {
         if (request.isAmp) views.html.liveBlogAMP(blog)
