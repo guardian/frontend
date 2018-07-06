@@ -13,9 +13,7 @@
     page.item.tags.isPaidContent
 )) { case (hasEmbed, hasMainMedia, hasVideo, isPaidContent) =>
   <style>
-
       @Html(common.Assets.css.inlinePhotoEssayGarnett)
-
   </style>
 
     <div class="content--photo-essay @RenderClasses(Map(
@@ -66,10 +64,12 @@
       </div>
     }
     @if(page.item.fields.standfirst.isDefined) {
-            <div class="content__wrapper--standfirst gs-container">
+        <div class="content__wrapper--standfirst">
+            <div class="gs-container">
                 <div class="content__main-column">
                     @fragments.standfirst(page.item)
                 </div>
             </div>
+        </div>
     }
 }

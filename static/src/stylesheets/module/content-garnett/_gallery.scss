@@ -7,7 +7,6 @@
 }
 
 .gallery__divider {
-    border-top: 1px solid $brightness-20;
     @include mq(desktop) {
         padding-top: $gs-gutter / 2;
     }
@@ -136,10 +135,6 @@
     color: $brightness-86;
     display: block;
     margin-bottom: $gs-baseline;
-
-    &:empty {
-        display: none;
-    }
 }
 
 .gallery__credit {
@@ -173,14 +168,14 @@
 }
 
 .gallery__main-content {
-    background: $garnett-neutral-1;
+    background: $brightness-7;
 
     .content__head {
         padding-bottom: $gs-baseline;
     }
 
     .content--immersive .content__main {
-        border-bottom: solid 1px $neutral-1;
+        border-bottom: solid 1px $brightness-20;
         padding: 0;
     }
 
@@ -284,12 +279,6 @@
     }
 }
 
-#more-galleries {
-    .fc-container__inner {
-        border-top: 0;
-    }
-}
-
 //Picture essay styles - Header
 .immersive-header-container--photo-essay {
     .content__wrapper--standfirst {
@@ -297,12 +286,12 @@
     }
 
     .content__standfirst {
-        color: $garnett-neutral-1;
+        color: $brightness-7;
     }
 
     .u-underline {
-        color: $garnett-neutral-6;
-        border-bottom: 1px solid $garnett-neutral-6;
+        color: $brightness-20;
+        border-bottom: 1px solid $brightness-20;
     }
 
     .content__main-column {
