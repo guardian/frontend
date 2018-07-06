@@ -919,6 +919,9 @@ $quote-mark: 35px;
 .content--media:not(.paid-content) {
     &.content--media {
         background-color: $brightness-7;
+        .caption {
+            color: $brightness-86;
+        }
     }
 
     .content__main {
