@@ -29,7 +29,9 @@ const stickyCommentsMpu = (adSlot: HTMLElement) => {
         stickySlot = adSlot;
     }
 
-    const referenceElement: any = document.querySelector('.js-comments');
+    const referenceElement: ?HTMLElement = document.querySelector(
+        '.js-comments'
+    );
 
     if (!referenceElement || !adSlot) {
         return;
@@ -48,16 +50,20 @@ const stickyCommentsMpu = (adSlot: HTMLElement) => {
                 stickyElement.init();
                 register('resize', onResize);
             }
-            mediator.emit('page:commercial:sticky-mpu');
+            mediator.emit('page:commercial:sticky-comments-mpu');
         });
 };
+
+stickyCommentsMpu.whenRendered = new Promise(resolve => {
+    mediator.on('page:commercial:sticky-comments-mpu', resolve);
+});
 
 const stickyMpu = (adSlot: HTMLElement) => {
     if (isStickyMpuSlot(adSlot)) {
         stickySlot = adSlot;
     }
 
-    const referenceElement: any = document.querySelector(
+    const referenceElement: ?HTMLElement = document.querySelector(
         '.js-article__body,.js-liveblog-body-content'
     );
 
