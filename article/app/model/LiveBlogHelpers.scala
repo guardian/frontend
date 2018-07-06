@@ -4,6 +4,9 @@ import com.gu.contentapi.client.model.v1.ItemResponse
 import common.`package`._
 import model.liveblog.BodyBlock
 import model.ParseBlockId.ParsedBlockId
+import org.joda.time.DateTime
+import play.api.libs.functional.syntax._
+import play.api.libs.json.{JsValue, Json, _}
 
 object LiveBlogHelpers {
 
@@ -79,4 +82,38 @@ object LiveBlogHelpers {
     }.getOrElse(Right(NotFound))
 
   }
+
+  def blockTextJson(page: LiveBlogPage, number: Int): JsValue = {
+
+    case class TextBlock(
+      id: String,
+      title: Option[String],
+      publishedDateTime: Option[DateTime],
+      lastUpdatedDateTime: Option[DateTime],
+      body: String
+    )
+
+    implicit val dateToTimestampWrites = play.api.libs.json.JodaWrites.JodaDateTimeNumberWrites
+
+    implicit val blockWrites = (
+      (__ \ "id").write[String] ~
+        (__ \ "title").write[Option[String]] ~
+        (__ \ "publishedDateTime").write[Option[DateTime]] ~
+        (__ \ "lastUpdatedDateTime").write[Option[DateTime]] ~
+        (__ \ "body").write[String]
+      )(unlift(TextBlock.unapply))
+
+    Json.toJson(
+      page.article.blocks.toSeq.flatMap { blocks =>
+        blocks.requestedBodyBlocks.get(Canonical.firstPage).toSeq.flatMap { bodyBlocks: Seq[BodyBlock] =>
+          bodyBlocks.collect {
+            case BodyBlock(id, html, summary, title, _, _, _, publishedAt, _, updatedAt, _, _) if html.trim.nonEmpty =>
+              TextBlock(id, title, publishedAt, updatedAt, summary)
+          }
+        }
+      }.take(number)
+    )
+
+  }
+
 }
