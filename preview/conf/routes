@@ -193,9 +193,12 @@ GET        /weatherapi/locations                                                
 GET        /news-alert/alerts                                                                  controllers.NewsAlertController.alerts()
 
 # Articles
-GET        /*path.json                                                                         controllers.ArticleController.renderLiveBlogJson(path, lastUpdate: Option[String], rendered: Option[Boolean], isLivePage: Option[Boolean])
-GET        /*path/email                                                                        controllers.ArticleController.renderArticle(path)
-GET        /$path<[^/]+/([^/]+/)?live/.*>                                                      controllers.ArticleController.renderLiveBlog(path, page: Option[String], format: Option[String])
+GET     /$path<[^/]+/([^/]+/)?live/.*>.json controllers.LiveBlogController.renderJson(path, lastUpdate: Option[String], rendered: Option[Boolean], isLivePage: Option[Boolean])
+GET     /$path<[^/]+/([^/]+/)?live/.*>/email controllers.LiveBlogController.renderEmail(path)
+GET     /$path<[^/]+/([^/]+/)?live/.*> controllers.LiveBlogController.renderArticle(path, page: Option[String], format: Option[String])
+GET     /*path.json                 controllers.ArticleController.renderJson(path)
+GET     /*path/email                controllers.ArticleController.renderEmail(path)
+
 
 # Don't forward requests for favicon.ico to the Content API
 GET        /favicon.ico                                                                        controllers.FaviconController.favicon
