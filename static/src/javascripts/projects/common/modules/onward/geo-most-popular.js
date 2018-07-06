@@ -47,21 +47,24 @@ const fetchMostPopular = (articleBodyHeight: number): void => {
 };
 
 const geoMostPopular = {
-    render: once((): Promise<void> => {
-        fastdom
-            .read(() => {
-                const jsArticleBodyElement = document.querySelector(
-                    '.js-article__body'
-                );
-                return jsArticleBodyElement
-                    ? jsArticleBodyElement.getBoundingClientRect() &&
-                          jsArticleBodyElement.getBoundingClientRect().height
-                    : 0;
-            })
-            .then(fetchMostPopular);
+    render: once(
+        (): Promise<void> => {
+            fastdom
+                .read(() => {
+                    const jsArticleBodyElement = document.querySelector(
+                        '.js-article__body'
+                    );
+                    return jsArticleBodyElement
+                        ? jsArticleBodyElement.getBoundingClientRect() &&
+                              jsArticleBodyElement.getBoundingClientRect()
+                                  .height
+                        : 0;
+                })
+                .then(fetchMostPopular);
 
-        return promise;
-    }),
+            return promise;
+        }
+    ),
 
     whenRendered: promise,
 };

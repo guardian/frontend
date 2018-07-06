@@ -267,16 +267,6 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-  val AdBlockMessage = Switch(
-    Commercial,
-    "adblock",
-    "Switch for the Adblock Message.",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
   val KruxVideoTracking = Switch(
     Commercial,
     "krux-video-tracking",
@@ -303,7 +293,7 @@ trait CommercialSwitches {
     description = "Turn on to include the analytics ONLY for Oriel. Turn off to include the FULL integration script. Depends on AB test switch.",
     owners = group(Commercial),
     safeState = On,
-    sellByDate = new LocalDate(2018, 6, 28),
+    sellByDate = new LocalDate(2018, 9, 12),
     exposeClientSide = false
   )
 
@@ -313,7 +303,7 @@ trait CommercialSwitches {
     description = "Include the blockthrough script for testing the vendors effectiveness at circumventing ad-blocking.",
     owners = group(Commercial),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 6, 20),
+    sellByDate = new LocalDate(2018, 8, 22),
     exposeClientSide = false
    )
 
@@ -387,14 +377,14 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-  val orielSonobiIntegration: Switch = Switch(
+  val prebidS2SOzoneBidder: Switch = Switch(
     group = Commercial,
-    name = "oriel-sonobi-integration-test",
-    description = "This is a short test to test the integration between Oriel and Sonobi",
+    name = "prebid-s2sozone",
+    description = "Include S2S Ozone project adapter in Prebid auctions",
     owners = group(Commercial),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 6, 28),
-    exposeClientSide = false
+    sellByDate = never,
+    exposeClientSide = true
   )
 
   val AffiliateLinks: Switch = Switch(
@@ -417,13 +407,23 @@ trait CommercialSwitches {
     exposeClientSide = false
   )
 
-  val includePersonalisedAdsConsent: Switch = Switch(
+  val enableConsentManagementService: Switch = Switch(
     group = Commercial,
-    name = "include-personalised-ads-consent",
-    description = "Include a flag with consent status in ad calls.",
+    name = "enable-consent-management-service",
+    description = "Enable our CMP service to run on each page, so that vendors can query the consent status.",
     owners = group(Commercial),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 5, 25),
+    sellByDate = new LocalDate(2018, 8, 23),
+    exposeClientSide = true
+  )
+
+  val commercialPageViewAnalytics: Switch = Switch(
+    group = Commercial,
+    name = "commercial-page-view-analytics",
+    description = "Gather commercial analytics from page views",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
     exposeClientSide = true
   )
 }

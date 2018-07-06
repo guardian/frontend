@@ -22,6 +22,28 @@ const inlineDefinition = {
     },
 };
 
+const commentsDefinition = {
+    sizeMappings: {
+        mobile: [
+            adSizes.outOfPage,
+            adSizes.empty,
+            adSizes.mpu,
+            adSizes.googleCard,
+            adSizes.fluid,
+        ],
+        desktop: [
+            adSizes.outOfPage,
+            adSizes.empty,
+            adSizes.mpu,
+            adSizes.video,
+            adSizes.video2,
+            adSizes.googleCard,
+            adSizes.fluid,
+            adSizes.halfPage,
+        ],
+    },
+};
+
 const adSlotToBlockthroughUids = {
     inline1: '5a98587091-157',
     inline2: '5a98587869-157',
@@ -83,7 +105,7 @@ const adSlotDefinitions = {
     },
     inline: inlineDefinition,
     mostpop: inlineDefinition,
-    comments: inlineDefinition,
+    comments: commentsDefinition,
     'top-above-nav': {
         sizeMappings: {
             mobile: [
@@ -99,6 +121,14 @@ const adSlotDefinitions = {
         label: false,
         refresh: false,
         name: 'carrot',
+        sizeMappings: {
+            mobile: [adSizes.fluid],
+        },
+    },
+    epic: {
+        label: false,
+        refresh: false,
+        name: 'epic',
         sizeMappings: {
             mobile: [adSizes.fluid],
         },

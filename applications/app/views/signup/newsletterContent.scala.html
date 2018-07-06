@@ -13,11 +13,7 @@
     </div>
     <div class="newsletter-card__wrapper">
         @emailListings.zipWithRowInfo.map { case (emailListing, row) =>
-            <div class="newsletter-card
-            @if(emailListing.tone.isDefined) {  newsletter-card--tone-@emailListing.tone
-            } else { newsletter-card--tone-news }"
-                data-component="newsletter-card @emailListing.name">
-
+            <div class="newsletter-card" data-component="newsletter-card @emailListing.name">
                 <div class="newsletter-card__content js-newsletter-content">
 
                     <div class="newsletter-card__name">@emailListing.name
@@ -92,7 +88,8 @@
         "Culture"        -> cultureEmails,
         "Lifestyle"      -> lifestyleEmails,
         "Comment"        -> commentEmails,
-        "Work"           -> workEmails
+        "Work"           -> workEmails,
+        "From the papers" -> fromThePapersEmails
     ).map { case (theme, newsletters) =>
         <div class="newsletters-category" name="@theme">
             @emailListCategoryList(theme, newsletters)

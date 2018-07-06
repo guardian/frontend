@@ -1,7 +1,7 @@
 .subnav-link {
     font-family: $f-serif-headline;
     font-weight: 400;
-    color: $nav-primary-colour;
+    color: $brightness-7;
     display: block;
     font-size: 14px;
     height: $veggie-burger-medium - $gs-baseline;
@@ -21,7 +21,7 @@
 
     &:after {
         @include mq($until: tablet) {
-            border-bottom: 1px solid $neutral-5;
+            border-bottom: 1px solid $brightness-86;
             bottom: -1px;
             content: '';
             left: $gs-gutter / 4;
@@ -37,18 +37,18 @@
 
     &:hover,
     &:focus {
-        color: $nav-secondary-colour;
+        color: $brightness-20;
     }
 }
 
 .subnav-link--toggle-more {
     background: transparent;
     border: 0;
-    color: $neutral-2;
+    color: $brightness-46;
 
     &:hover,
     &:focus {
-        color: $neutral-2;
+        color: $brightness-46;
         outline: 0;
     }
 }

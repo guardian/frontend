@@ -5,7 +5,6 @@ import com.gu.contentapi.client.model.{v1 => contentapi}
 import com.gu.contentapi.client.utils.DesignType
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichContent
 import implicits.Dates.CapiRichDateTime
-import commercial.campaigns.PersonalInvestmentsCampaign
 import common.commercial.{AdUnitMaker, CommercialProperties}
 import common.dfp._
 import common.{Edition, ManifestData, Pagination}
@@ -244,6 +243,8 @@ final case class MetaData (
   sensitive: Boolean = false
 ){
   val sectionId = section map (_.value) getOrElse ""
+  lazy val neilsenApid: String = Nielsen.apidFromString(sectionId)
+
   private val fullAdUnitPath = AdUnitMaker.make(id, adUnitSuffix)
 
   def hasPageSkin(edition: Edition): Boolean = DfpAgent.hasPageSkin(fullAdUnitPath, this, edition)
@@ -515,10 +516,16 @@ case class TagCombiner(
   pagination: Option[Pagination] = None
 ) extends StandalonePage {
 
+  private val webTitleOverrides: Map[String, String] = Map(
+    "football/football+tone/minutebyminute" -> "Football live "
+  )
+
+  private val webTitle: String = webTitleOverrides.getOrElse(id, s"${leftTag.name} + ${rightTag.name}")
+
   override val metadata: MetaData = MetaData.make(
     id = id,
     section = leftTag.metadata.section,
-    webTitle = s"${leftTag.name} + ${rightTag.name}",
+    webTitle = webTitle,
     pagination = pagination,
     description = Some(DotcomContentType.TagIndex.toString),
     commercial = Some(
@@ -710,8 +717,6 @@ final case class Tags(
   //this is for the immersive header to access this info
   lazy val isPaidContent = tags.exists( t => t.id == "tone/advertisement-features" )
 
-  lazy val hasSuperStickyBanner = PersonalInvestmentsCampaign.isRunning(keywordIds)
-
   lazy val keywordIds = keywords.map { _.id }
 
   lazy val commissioningDesks = tracking.map(_.id).collect { case Tags.CommissioningDesk(desk) => desk }
@@ -719,7 +724,6 @@ final case class Tags(
   def javascriptConfig: Map[String, JsValue] = Map(
     ("keywords", JsString(keywords.map { _.name }.mkString(","))),
     ("keywordIds", JsString(keywordIds.mkString(","))),
-    ("hasSuperStickyBanner", JsBoolean(hasSuperStickyBanner)),
     ("nonKeywordTagIds", JsString(nonKeywordTags.map { _.id }.mkString(","))),
     ("richLink", JsString(richLink.getOrElse(""))),
     ("author", JsString(contributors.map(_.name).mkString(","))),

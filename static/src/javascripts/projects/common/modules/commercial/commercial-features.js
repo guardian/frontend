@@ -26,6 +26,7 @@ class CommercialFeatures {
     constructor(config: any = defaultConfig) {
         // this is used for SpeedCurve tests
         const noadsUrl = window.location.hash.match(/[#&]noads(&.*)?$/);
+        const forceAdFree = window.location.hash.match(/[#&]noadsaf(&.*)?$/);
         const externalAdvertising = !noadsUrl && !userPrefs.isOff('adverts');
         const sensitiveContent =
             config.page.shouldHideAdverts ||
@@ -55,7 +56,7 @@ class CommercialFeatures {
         this.adFree =
             switches.commercial &&
             switches.adFreeSubscriptionTrial &&
-            isAdFreeUser();
+            (!!forceAdFree || isAdFreeUser());
 
         this.dfpAdvertising =
             switches.commercial && externalAdvertising && !sensitiveContent;
@@ -75,6 +76,7 @@ class CommercialFeatures {
             !newRecipeDesign;
 
         this.carrotTrafficDriver =
+            !this.adFree &&
             this.articleBodyAdverts &&
             config.get('switches.carrotTrafficDriver', false) &&
             !config.page.isPaidContent;
@@ -110,16 +112,12 @@ class CommercialFeatures {
             !isMinuteArticle &&
             config.switches.enableDiscussionSwitch &&
             config.page.commentable &&
-            isUserLoggedIn() &&
             (!isLiveBlog || isWidePage);
 
         this.liveblogAdverts =
             isLiveBlog && this.dfpAdvertising && !this.adFree;
 
-        this.paidforBand =
-            config.page.isPaidContent &&
-            !config.page.hasSuperStickyBanner &&
-            !supportsSticky;
+        this.paidforBand = config.page.isPaidContent && !supportsSticky;
 
         this.adFeedback = false;
     }

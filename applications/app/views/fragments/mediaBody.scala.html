@@ -2,12 +2,12 @@
 
 @import common.LinkTo
 @import model.{Audio, AudioPlayer, Video, VideoPlayer}
-@import views.support.Commercial.isPaidContent
+@import views.support.Commercial.{isPaidContent, isAdFree}
 @import views.support.TrailCssClasses.toneClass
 @import views.support.{RenderClasses, SeoOptimisedContentImage, StripHtmlTags, Video640, Video1280}
 
 @defining(page.media, page.media match { case _: Audio => "audio" case _ => "video" }) { case (media, mediaType) =>
-    @defining(isPaidContent(page)) { isPaidContent =>
+    @defining(isPaidContent(page), isAdFree(request)) { case (isPaidContent, isAdFree) =>
         <div class="l-side-margins @if(!isPaidContent) {l-side-margins--media}">
 
             <article id="article" class="@RenderClasses(
@@ -48,7 +48,8 @@
                                                     audioElement,
                                                     audio.trail.headline,
                                                     autoPlay = false
-                                                )
+                                                ),
+                                                isAdFree
                                             )
                                         }
                                         </figure>

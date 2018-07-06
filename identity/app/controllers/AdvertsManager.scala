@@ -9,7 +9,6 @@ import play.api.http.HttpConfiguration
 import play.api.mvc._
 import services.{IdRequestParser, IdentityUrlBuilder, ReturnUrlVerifier}
 import utils.SafeLogging
-import conf.switches.Switches.IdentityAdConsentsSwitch
 
 
 class AdvertsManager(
@@ -25,22 +24,19 @@ class AdvertsManager(
   with Mappings
   with Forms {
 
-  val page = IdentityPage("/adverts/manage", "Manage Adverts", usesGuardianHeader = true)
+  val page = IdentityPage("/privacy-settings", "Cookies and advertising settings", usesGuardianHeader = true)
 
   def renderAdvertsManager(returnUrl: Option[String]): Action[AnyContent] = Action { implicit request =>
 
-    if(IdentityAdConsentsSwitch.isSwitchedOff) {
-      NotFound(views.html.errors._404())
-    } else {
-      val verifiedReturnUrlAsOpt = returnUrlVerifier.getVerifiedReturnUrl(request)
-      val verifiedReturnUrl = verifiedReturnUrlAsOpt.getOrElse(returnUrlVerifier.defaultReturnUrl)
+    val verifiedReturnUrlAsOpt = returnUrlVerifier.getVerifiedReturnUrl(request)
+    val verifiedReturnUrl = verifiedReturnUrlAsOpt.getOrElse(returnUrlVerifier.defaultReturnUrl)
 
-      NoCache(Ok(
-        IdentityHtmlPage.html(
-          content = views.html.advertsManager(verifiedReturnUrl,idUrlBuilder)
-        )(page, request, context)
-      ))
-    }
+    NoCache(Ok(
+      IdentityHtmlPage.html(
+        content = views.html.advertsManager(verifiedReturnUrl,idUrlBuilder)
+      )(page, request, context)
+    ))
+
   }
 
 }

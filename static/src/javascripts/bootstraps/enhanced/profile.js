@@ -8,13 +8,13 @@ import { FormstackEmbedIframe } from 'common/modules/identity/formstack-iframe-e
 import { init as initValidationEmail } from 'common/modules/identity/validation-email';
 import { AccountProfile } from 'common/modules/identity/account-profile';
 import { init as initPublicProfile } from 'common/modules/identity/public-profile';
-import { enhanceEmailPrefs } from 'common/modules/identity/email-prefs';
 import { enhanceFormAjax } from 'common/modules/identity/form-ajax';
 import { enhanceConsents } from 'common/modules/identity/consents';
 import { enhanceConsentJourney } from 'common/modules/identity/consent-journey';
 import { setupLoadingAnimation } from 'common/modules/identity/delete-account';
 import { initHeader } from 'common/modules/identity/header';
 import { initUserAvatars } from 'common/modules/discussion/user-avatars';
+import { initUserEditLink } from 'common/modules/discussion/user-edit-link';
 import { init as initTabs } from 'common/modules/ui/tabs';
 import { enhanceAdPrefs } from 'common/modules/identity/ad-prefs';
 
@@ -54,9 +54,9 @@ const initProfile = (): void => {
         ['password-toggle', passwordToggle],
         ['init-validation-email', initValidationEmail],
         ['init-user-avatars', initUserAvatars],
+        ['init-user-edit-link', initUserEditLink],
         ['init-tabs', initTabs],
         ['init-account-profile', initAccountProfile],
-        ['enhance-email-prefs', enhanceEmailPrefs],
         ['setup-loading-animation', setupLoadingAnimation],
         ['init-public-profile', initPublicProfile],
         ['enhance-consents', enhanceConsents],

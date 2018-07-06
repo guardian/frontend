@@ -1,7 +1,7 @@
 .tone-live--item {
     $c-headline: #ffffff;
 
-    background-color: $live-default;
+    background-color: $news-dark;
 
     &,
     .fc-sublink__title {
@@ -10,13 +10,13 @@
 
     .u-faux-block-link--hover,
     .fc-item__image-container {
-        background-color: darken($live-default, 4%);
+        background-color: darken($news-dark, 4%);
     }
 
     .fc-item__link,
     .fc-sublink__link {
         &:visited {
-            color: mix($c-headline, $live-default, 80%);
+            color: mix($c-headline, $news-dark, 80%);
         }
     }
 
@@ -26,32 +26,32 @@
 
     .fc-item__container:before,
     .rich-link__container:before {
-        background-color: $live-mute;
+        background-color: $news-pastel;
     }
 
     .fc-item__kicker,
     .fc-item__byline,
     .fc-item__meta,
     .rich-link__read-more-text {
-        color: $live-mute;
+        color: $news-pastel;
     }
 
     .rich-link__arrow-icon {
-        fill: $live-mute;
+        fill: $news-pastel;
     }
 
     .fc-item__kicker:after,
     .rich-link__kicker:after,
     .fc-sublink__kicker:after {
-        color: mix($c-headline, $live-default, 20%);
+        color: mix($c-headline, $news-dark, 20%);
     }
 
     .fc-item__kicker--dreamsnap {
-        background-color: mix(#000000, $live-default, 10%);
+        background-color: mix(#000000, $news-dark, 10%);
     }
 
     .fc-item__standfirst {
-        color: mix($c-headline, $live-default, 80%);
+        color: mix($c-headline, $news-dark, 80%);
     }
 
     .fc-item__live-indicator,
@@ -61,24 +61,24 @@
     }
 
     .fc-sublink__title:before {
-        border-color: mix($c-headline, $live-default, 20%);
+        border-color: mix($c-headline, $news-dark, 20%);
     }
 
     .fc-item__meta {
         .inline-icon {
-            fill: $live-mute;
+            fill: $news-pastel;
         }
     }
 }
 
 .tone-live--sublink {
     .fc-sublink__kicker {
-        color: $live-accent;
+        color: $news-main;
     }
 
     .fc-sublink__live-indicator,
     .fc-sublink__breaking-indicator {
-        color: $live-default;
+        color: $news-dark;
     }
 
     @include sublink-style(editorial, feature, live, media, review) {
@@ -89,5 +89,5 @@
 }
 
 .tone-live--most-popular .fc-item__kicker {
-    color: $live-accent;
+    color: $news-main;
 }

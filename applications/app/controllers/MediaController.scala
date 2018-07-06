@@ -52,7 +52,11 @@ class MediaController(contentApiClient: ContentApiClient, val controllerComponen
 
   private def renderMedia(model: MediaPage)(implicit request: RequestHeader): Result = {
     val htmlResponse = () => ContentHtmlPage.html(model)
-    val jsonResponse = () => views.html.fragments.mediaBody(model, displayCaption = false)
+    // The jsonResponse allows for a json version of each page to be accessed by users eg: https://www.theguardian.com/world/2018/jun/13/kim-jong-un-north-korea-summit-trump-visit-kcna.json
+    val jsonResponse = model.media match {
+      case audio: Audio => () => views.html.fragments.audioBody(model, displayCaption = false)
+      case _ => () => views.html.fragments.mediaBody(model, displayCaption = false)
+    }
     renderFormat(htmlResponse, jsonResponse, model, Switches.all)
   }
 

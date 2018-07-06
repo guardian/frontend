@@ -27,7 +27,7 @@ object HtmlPageHelpers {
       commercial.topBanner() when showTop && showAds,
       header() when showTop
     )
-    if(model.Page.getContent(page).exists(_.tags.hasSuperStickyBanner)) headerContent else bannerAndHeaderDiv(headerContent)
+    bannerAndHeaderDiv(headerContent)
   }
 
   def defaultBodyClasses()(implicit page: model.Page, request: RequestHeader, applicationContext: ApplicationContext): Map[String, Boolean] = {
@@ -35,8 +35,7 @@ object HtmlPageHelpers {
     Map(
       ("has-page-skin", page.metadata.hasPageSkin(edition)),
       ("has-membership-access-requirement", page.metadata.requiresMembershipAccess),
-      ("childrens-books-site", page.metadata.sectionId == "childrens-books-site"),
-      ("has-super-sticky-banner", model.Page.getContent(page).exists(_.tags.hasSuperStickyBanner)))
+      ("childrens-books-site", page.metadata.sectionId == "childrens-books-site"))
   }
 
   def FaciaCSSFile(implicit request: RequestHeader): String = "facia.garnett"

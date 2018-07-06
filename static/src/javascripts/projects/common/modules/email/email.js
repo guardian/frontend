@@ -56,9 +56,7 @@ const replaceContent = (isSuccess: boolean, $form: bonzo): void => {
         : 'Please try again.';
     const submissionIcon = isSuccess ? envelope.markup : crossIcon.markup;
     const submissionHtml = `
-        <div class="email-sub__message ${
-            statusClass
-        }" role="alert" aria-live="assertive">
+        <div class="email-sub__message ${statusClass}" role="alert" aria-live="assertive">
             ${submissionIcon}
             <h3 class="email-sub__message__headline">${submissionHeadline}</h3>
             <p class="email-sub__message__description">${submissionMessage}</p>

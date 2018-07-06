@@ -3,13 +3,15 @@ package http
 import javax.inject.Inject
 
 import akka.stream.Materializer
-import cache.SurrogateKey
+import conf.switches.Switches
 import implicits.Responses._
-import model.ApplicationContext
+import model.{ApplicationContext, Cached}
 import play.api.http.HttpFilters
 import play.api.mvc._
 import play.filters.gzip.{GzipFilter, GzipFilterConfig}
 import experiments.LookedAtExperiments
+import model.Cached.PanicReuseExistingResult
+import org.apache.commons.codec.digest.DigestUtils
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -63,7 +65,7 @@ class SurrogateKeyFilter(implicit val mat: Materializer, executionContext: Execu
   private val SurrogateKeyHeader = "Surrogate-Key"
 
   override def apply(nextFilter: (RequestHeader) => Future[Result])(request: RequestHeader): Future[Result] = {
-    val surrogateKey = SurrogateKey(request)
+    val surrogateKey = DigestUtils.md5Hex(request.path)
     nextFilter(request).map{ result =>
       // Surrogate keys are space delimited, so string them together if there are already some present
       val key = result.header.headers.get(SurrogateKeyHeader).map(key => s"$key $surrogateKey").getOrElse(surrogateKey)
@@ -101,6 +103,15 @@ class ExperimentsFilter(implicit val mat: Materializer, executionContext: Execut
       .groupBy(_._1).map { case (k,v) => k -> v.map(_._2).mkString(",") }
 }
 
+class PanicSheddingFilter(implicit val mat: Materializer, executionContext: ExecutionContext) extends Filter {
+  override def apply(nextFilter: (RequestHeader) => Future[Result])(request: RequestHeader): Future[Result] = {
+    if (Switches.PanicShedding.isSwitchedOn && request.headers.hasHeader("If-None-Match")) {
+      Future.successful(Cached(900)(PanicReuseExistingResult(Results.NotModified))(request))
+    } else {
+      nextFilter(request)
+    }
+  }
+}
 
 object Filters {
   // NOTE - order is important here, Gzipper AFTER JsonVaryHeaders
@@ -111,6 +122,7 @@ object Filters {
     executionContext: ExecutionContext
   ): List[EssentialFilter] = List(
     new RequestLoggingFilter,
+    new PanicSheddingFilter,
     new JsonVaryHeadersFilter,
     new ExperimentsFilter,
     new Gzipper,

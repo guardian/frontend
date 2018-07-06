@@ -24,11 +24,27 @@
     }
 }
 
+.menu-item-divider {
+    height: 1px;
+    width: 100%;
+    background: $nav-bold;
+    border: 0;
+    margin: $gs-baseline/2 0 0 $menu-spacing-left-small;
+
+    @include mq(tablet) {
+        margin-left: $menu-spacing-left-medium;
+    }
+
+    @include mq(desktop) {
+        margin-left: ($gs-baseline / 2) 0;
+    }
+}
+
 .menu-item__title {
     background-color: transparent;
     border: 0;
     box-sizing: border-box;
-    color: $nav-primary-colour;
+    color: $brightness-7;
     cursor: pointer;
     display: inline-block;
     font-size: 20px;
@@ -52,7 +68,7 @@
 
     &:hover,
     &:focus {
-        color: $nav-secondary-colour;
+        color: $brightness-20;
     }
 
     > * {
@@ -64,7 +80,7 @@
     &[data-link-name='nav2 : facebook'] {
         @include mq($until: desktop) {
             &:not([aria-expanded='true']):after {
-                background-color: $rule;
+                background-color: $nav-dark;
                 bottom: 0;
                 content: '';
                 display: block;
@@ -128,7 +144,7 @@
 
 .menu-item__icon,
 .menu-item__toggle {
-    color: $nav-secondary-colour;
+    color: $brightness-20;
     left: 25px;
     position: absolute;
 
@@ -174,6 +190,10 @@
     .inline-home__svg {
         height: 16px;
         width: 16px;
+    }
+
+    .inline-log-off__svg {
+        height: .8em;
     }
 
     .inline-share-facebook__svg,

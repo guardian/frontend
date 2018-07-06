@@ -16,6 +16,14 @@
     .identity-dropdown__item:first-child .identity-dropdown__title:before {
         display: none;
     }
+
+    > hr {
+        height: 1px;
+        background: $brightness-93;
+        border: 0;
+        display: block;
+        margin: 0 0 0 $gs-gutter * 1.5;
+    }
 }
 
 .identity-dropdown__item {
@@ -30,18 +38,27 @@
     white-space: nowrap;
     position: relative;
     margin-top: -1px;
-    &:before {
-        content: '';
-        border-top: 1px solid $neutral-6;
-        display: block;
-        position: absolute;
-        top: 0;
-        left: $gs-gutter * 1.5;
-        right: 0;
+    .inline-icon {
+        position: relative;
+        display: inline-block;
+        height: .8em;
+        width: 1em;
+        > svg {
+            position: absolute;
+            height: .8em;
+            width: .8em;
+            * {
+                fill: $brightness-7;
+                @supports(fill: currentColor) {
+                    fill: currentColor;
+                }
+            }
+        }
+        /*prevent svgs from making the row higher*/
     }
     &:hover,
     &:focus {
-        background-color: $neutral-6;
+        background-color: $brightness-93;
         text-decoration: none;
     }
 }

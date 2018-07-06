@@ -12,19 +12,16 @@ const getStyles = (specs: Specs, styleSheets: StyleSheetList): ?Array<any> => {
 
     const result = [];
     for (let i = 0; i < styleSheets.length; i += 1) {
-        const sheet: StyleSheet = styleSheets[i];
-        // #? Why are we coercing the Type to `Object` rather than being more
-        // specific? Flow typing of `Node` does not account for `matches` or
-        // `tagName` but the code below works. Could we use `nodeName` instead?
-        const ownerNode: Object = sheet.ownerNode;
+        const sheet: CSSStyleSheet = (styleSheets[i]: any);
+        const ownerNode: Element = (sheet.ownerNode: any);
 
         if (
             ownerNode &&
             ownerNode.matches &&
             ownerNode.matches(specs.selector)
         ) {
-            if (sheet.ownerNode.tagName === 'STYLE') {
-                result.push(sheet.ownerNode.textContent);
+            if (ownerNode.tagName === 'STYLE') {
+                result.push(ownerNode.textContent);
             } else {
                 result.push(
                     Array.prototype.reduce.call(
@@ -40,11 +37,14 @@ const getStyles = (specs: Specs, styleSheets: StyleSheetList): ?Array<any> => {
 };
 
 const init = (register: RegisterListeners) => {
-    register('get-styles', (specs): ?Array<any> => {
-        if (specs) {
-            return getStyles(specs, document.styleSheets);
+    register(
+        'get-styles',
+        (specs): ?Array<any> => {
+            if (specs) {
+                return getStyles(specs, document.styleSheets);
+            }
         }
-    });
+    );
 };
 
 export const _ = { getStyles };

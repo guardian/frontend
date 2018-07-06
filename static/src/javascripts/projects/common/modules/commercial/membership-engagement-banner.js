@@ -12,6 +12,7 @@ import { engagementBannerParams } from 'common/modules/commercial/membership-eng
 import { isBlocked } from 'common/modules/commercial/membership-engagement-banner-block';
 import { getSync as getGeoLocation } from 'lib/geolocation';
 import { shouldShowReaderRevenue } from 'common/modules/commercial/contributions-utilities';
+import type { Banner } from 'common/modules/ui/bannerPicker';
 
 import {
     submitComponentEvent,
@@ -83,7 +84,6 @@ const getUserVariantParams = (
  *  {
  *    minArticles: 5, // how many articles should the user see before they get the engagement banner?
  *    messageText: "..."
- *    colourStrategy: // a function to determine what css class to use for the banner's colour
  *    buttonCaption: "Become a Supporter"
  *  }
  *
@@ -94,7 +94,11 @@ const deriveBannerParams = (location: string): ?EngagementBannerParams => {
     const campaignId = userTest ? userTest.campaignId : undefined;
     const userVariant = getUserVariant(userTest);
 
-    if (userVariant && userVariant.blockEngagementBanner) {
+    if (
+        userVariant &&
+        userVariant.options &&
+        userVariant.options.blockEngagementBanner
+    ) {
         return;
     }
 
@@ -110,27 +114,11 @@ const getVisitCount = (): number => local.get('gu.alreadyVisited') || 0;
 const selectSequentiallyFrom = (array: Array<string>): string =>
     array[getVisitCount() % array.length];
 
-const messageModifierClass = (
-    colourClass: string,
-    modifierClass: ?string
-): string => {
-    if (modifierClass) {
-        return `${colourClass} ${modifierClass}`;
-    }
-
-    return colourClass;
-};
-
 const showBanner = (params: EngagementBannerParams): void => {
-    if (isBlocked()) {
-        return;
-    }
-
     const test = getUserTest();
     const variant = getUserVariant(test);
     const paypalAndCreditCardImage =
         config.get('images.acquisitions.paypal-and-credit-card') || '';
-    const colourClass = params.colourStrategy();
     const messageText = Array.isArray(params.messageText)
         ? selectSequentiallyFrom(params.messageText)
         : params.messageText;
@@ -152,7 +140,6 @@ const showBanner = (params: EngagementBannerParams): void => {
         messageText,
         ctaText,
         paypalAndCreditCardImage,
-        colourClass,
         linkUrl,
         buttonCaption,
         buttonSvg,
@@ -162,15 +149,12 @@ const showBanner = (params: EngagementBannerParams): void => {
         ? params.template(templateParams)
         : acquisitionsBannerControlTemplate(templateParams);
     const messageShown = new Message(messageCode, {
-        pinOnHide: false,
         siteMessageLinkName: 'membership message',
         siteMessageCloseBtn: 'hide',
         siteMessageComponentName: params.campaignCode,
         trackDisplay: true,
-        cssModifierClass: messageModifierClass(
-            colourClass,
-            params.bannerModifierClass
-        ),
+        cssModifierClass:
+            params.bannerModifierClass || 'support-the-guardian-banner',
     }).show(renderedBanner);
 
     if (messageShown) {
@@ -198,23 +182,32 @@ const showBanner = (params: EngagementBannerParams): void => {
     }
 };
 
-const membershipEngagementBannerInit = (): Promise<void> => {
-    const bannerParams = deriveBannerParams(getGeoLocation());
-    if (bannerParams && getVisitCount() >= bannerParams.minArticles) {
-        return canDisplayMembershipEngagementBanner().then(canShow => {
-            if (canShow) {
-                mediator.on(
-                    'modules:onwards:breaking-news:ready',
-                    breakingShown => {
-                        if (!breakingShown) {
-                            showBanner(bannerParams);
-                        }
-                    }
-                );
-            }
-        });
+let bannerParams;
+
+const show = (): void => {
+    if (bannerParams) {
+        showBanner(bannerParams);
     }
-    return Promise.resolve(undefined);
 };
 
-export { membershipEngagementBannerInit };
+const canShow = (): Promise<boolean> => {
+    if (!config.get('switches.membershipEngagementBanner') || isBlocked()) {
+        return Promise.resolve(false);
+    }
+
+    bannerParams = deriveBannerParams(getGeoLocation());
+
+    if (bannerParams && getVisitCount() >= bannerParams.minArticles) {
+        return canDisplayMembershipEngagementBanner();
+    }
+
+    return Promise.resolve(false);
+};
+
+const membershipEngagementBanner: Banner = {
+    id: messageCode,
+    show,
+    canShow,
+};
+
+export { membershipEngagementBanner };

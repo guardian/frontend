@@ -16,6 +16,7 @@ import play.api.mvc.RequestHeader
 import play.twirl.api.HtmlFormat
 import services.SkimLinksCache
 import conf.Configuration.affiliatelinks._
+import conf.Configuration.site.host
 import views.html.fragments.affiliateLinksDisclaimer
 
 import scala.collection.JavaConverters._
@@ -798,7 +799,7 @@ object GarnettQuoteCleaner extends HtmlCleaner {
 }
 
 case class AffiliateLinksCleaner(pageUrl: String, sectionId: String, showAffiliateLinks: Option[Boolean],
-  contentType: String, appendDisclaimer: Boolean = true) extends HtmlCleaner with Logging {
+  contentType: String, appendDisclaimer: Option[Boolean] = None) extends HtmlCleaner with Logging {
 
   override def clean(document: Document): Document = {
     if (AffiliateLinks.isSwitchedOn && AffiliateLinksCleaner.shouldAddAffiliateLinks(AffiliateLinkSections.isSwitchedOn,
@@ -809,13 +810,18 @@ case class AffiliateLinksCleaner(pageUrl: String, sectionId: String, showAffilia
 }
 
 object AffiliateLinksCleaner {
-  def replaceLinksInHtml(html: Document, pageUrl: String, appendDisclaimer: Boolean, contentType: String, skimlinksId: String): Document = {
-    val links = html.getElementsByAttribute("href")
 
-    val supportedLinks: mutable.Seq[Element] = links.asScala.filter(isAffiliatable)
-    supportedLinks.foreach{el => el.attr("href", linkToSkimLink(el.attr("href"), pageUrl, skimlinksId))}
+  def getAffiliateableLinks(html:Document): mutable.Seq[Element] =
+    html.getElementsByAttribute("href").asScala.filter(isAffiliatable)
 
-    if (supportedLinks.nonEmpty) insertAffiliateDisclaimer(html, contentType)
+  def replaceLinksInHtml(html: Document, pageUrl: String, appendDisclaimer: Option[Boolean], contentType: String, skimlinksId: String): Document = {
+
+    val linksToReplace: mutable.Seq[Element] = getAffiliateableLinks(html)
+    linksToReplace.foreach{el => el.attr("href", linkToSkimLink(el.attr("href"), pageUrl, skimlinksId))}
+
+    // respect appendDisclaimer, or if it's not set then always add the disclaimer if affilate links have been added
+    val shouldAppendDisclaimer = appendDisclaimer.getOrElse(linksToReplace.nonEmpty)
+    if (shouldAppendDisclaimer) insertAffiliateDisclaimer(html, contentType)
     else html
   }
 
@@ -829,7 +835,7 @@ object AffiliateLinksCleaner {
 
   def linkToSkimLink(link: String, pageUrl: String, skimlinksId: String): String = {
     val urlEncodedLink = URLEncode(link)
-    s"http://go.theguardian.com/?id=$skimlinksId&url=$urlEncodedLink&sref=$pageUrl"
+    s"http://go.theguardian.com/?id=$skimlinksId&url=$urlEncodedLink&sref=$host$pageUrl"
   }
 
   def shouldAddAffiliateLinks(switchedOn: Boolean, section: String, showAffiliateLinks: Option[Boolean], supportedSections: Set[String]): Boolean = {
@@ -838,5 +844,9 @@ object AffiliateLinksCleaner {
     } else {
       switchedOn && supportedSections.contains(section)
     }
+  }
+
+  def stringContainsAffiliateableLinks(s: String): Boolean = {
+    getAffiliateableLinks(Jsoup.parseBodyFragment(s)).nonEmpty
   }
 }

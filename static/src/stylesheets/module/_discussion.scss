@@ -29,6 +29,13 @@ $avatarPadding: $gs-gutter / 2;
     display: none;
 }
 
+.discussion__main-comments, .discussion__pagination  {
+    @include mq(desktop) {
+        margin-right: 0;
+        max-width: gs-span(8);
+    }
+}
+
 .id--signed-in .content--liveblog + .content-footer .discussion .content__main-column {
     // align comments with main column on liveblogs
     @include mq(desktop) {
@@ -64,7 +71,7 @@ $avatarPadding: $gs-gutter / 2;
 
 .discussion__top-border {
     @include mq(tablet) {
-        border-top: 1px solid $news-accent;
+        border-top: 1px solid $sport-bright;
         margin-top: -1px;
     }
 }
@@ -97,7 +104,7 @@ $avatarPadding: $gs-gutter / 2;
 .discussion__disabled-msg {
     @include fs-headline(3);
     padding-top: $gs-baseline / 1.5;
-    color: $neutral-2;
+    color: $brightness-46;
 }
 
 .d-discussion {
@@ -113,9 +120,9 @@ $avatarPadding: $gs-gutter / 2;
 .d-discussion__message {
     @include fs-textSans(2);
     margin-bottom: $gs-baseline * 2 / 3;
-    border-top: 1px solid $neutral-4;
+    border-top: 1px solid $brightness-86;
     padding-top: $gs-baseline;
-    color: $neutral-2;
+    color: $brightness-46;
 
     & + .d-comment {
         border-top: 0;
@@ -123,13 +130,13 @@ $avatarPadding: $gs-gutter / 2;
 }
 
 .d-discussion__message--error {
-    color: $status-negative;
+    color: $news-main;
 }
 
 .discussion__heading {
     margin-bottom: 0;
     padding-top: 0;
-    border-top: 1px solid $news-accent;
+    border-top: 1px solid $sport-bright;
 
     @include mq(tablet) {
         border-top: 0;
@@ -190,7 +197,7 @@ $avatarPadding: $gs-gutter / 2;
 
 .discussion__pagination--bottom {
     .pagination {
-        border-top: 1px solid $neutral-4;
+        border-top: 1px solid $brightness-86;
     }
 }
 
@@ -199,10 +206,12 @@ $avatarPadding: $gs-gutter / 2;
     float: left;
 }
 
-.content__repositioned-comments .content__main-column {
-    @include mq(desktop) {
-        max-width: none;
-        margin-right: 25%;
+.content__repositioned-comments {
+    .content__main-column:not(.discussion__ad-wrapper) {
+        @include mq(desktop) {
+            max-width: none;
+            margin-right: 25%;
+        }
     }
 }
 
@@ -236,7 +245,7 @@ $avatarPadding: $gs-gutter / 2;
 .discussion__toolbar {
     .id--signed-in .discussion--open &,
     .discussion--has-top-comments & {
-        border-top: 1px solid $neutral-4;
+        border-top: 1px solid $brightness-86;
     }
 
     .pagination {
@@ -249,7 +258,7 @@ $avatarPadding: $gs-gutter / 2;
     position: relative;
     top: 1px;
     float: left;
-    color: $neutral-2;
+    color: $brightness-46;
     display: inline-block;
     line-height: $gs-baseline * 2;
 
@@ -267,10 +276,10 @@ $avatarPadding: $gs-gutter / 2;
         display: inline-block;
         width: auto;
         &:after {
-            border-top-color: $neutral-2;
+            border-top-color: $brightness-46;
         }
         &.is-active:after {
-            border-bottom-color: $neutral-2;
+            border-bottom-color: $brightness-46;
         }
     }
     span {
@@ -282,7 +291,7 @@ $avatarPadding: $gs-gutter / 2;
     &:not(:first-child) {
         padding-left: $gs-gutter / 2;
         margin-left: $gs-gutter / 2;
-        border-left: 1px solid $neutral-4;
+        border-left: 1px solid $brightness-86;
     }
 }
 
@@ -317,7 +326,7 @@ $avatarPadding: $gs-gutter / 2;
 }
 
 .d-comment:target {
-    background-color: $neutral-7;
+    background-color: $brightness-97;
     &:before,
     &:after {
         content: '';
@@ -325,10 +334,10 @@ $avatarPadding: $gs-gutter / 2;
         height: 100%;
         width: .5 * $gs-gutter;
         top: -1px;
-        background-color: $neutral-7;
+        background-color: $brightness-97;
         border-style: solid;
         border-width: 1px 0;
-        border-color: $neutral-4;
+        border-color: $brightness-86;
     }
     &:before {
         left: -.5 * $gs-gutter;
@@ -339,15 +348,15 @@ $avatarPadding: $gs-gutter / 2;
     &.d-comment--response {
         &:before,
         &:after {
-            border-color: $neutral-6;
+            border-color: $brightness-93;
         }
     }
 
     .d-comment-box__parent-comment-spout {
-        border-bottom-color: $neutral-5;
+        border-bottom-color: $brightness-86;
     }
     .d-comment-box__parent-comment {
-        background-color: $neutral-5;
+        background-color: $brightness-86;
     }
 }
 
@@ -432,17 +441,17 @@ $avatarPadding: $gs-gutter / 2;
 
 .d-comment-box__author-label {
     @include fs-textSans(4);
-    color: $neutral-2;
+    color: $brightness-46;
 }
 
 .d-comment__author-label {
     @include fs-textSans(1);
     display: block;
-    color: $news-default;
+    color: $sport-dark;
     font-weight: bold;
 
     .d-comment__gu-icon svg {
-        fill: $news-default;
+        fill: $sport-dark;
     }
 
 }
@@ -454,7 +463,7 @@ $avatarPadding: $gs-gutter / 2;
     font-weight: bold;
 
     .d-comment__gu-icon svg {
-        fill: $neutral-1;
+        fill: $brightness-7;
     }
 }
 
@@ -483,7 +492,7 @@ $avatarPadding: $gs-gutter / 2;
     }
 
     a {
-        color: $neutral-2;
+        color: $brightness-46;
     }
     .inline-comment-anchor {
         display: none;
@@ -570,7 +579,7 @@ $avatarPadding: $gs-gutter / 2;
     blockquote {
         margin: $gs-baseline $gs-gutter;
         padding-left: $gs-gutter / 2;
-        color: $neutral-2;
+        color: $brightness-46;
 
         .d-comment__inner--top-level &:first-child {
             margin-top: $gs-baseline * 1.5;
@@ -595,7 +604,7 @@ $avatarPadding: $gs-gutter / 2;
    ======================================================= */
 
 .d-comment--top-level {
-    border-top: 1px solid $neutral-4;
+    border-top: 1px solid $brightness-86;
 }
 
 .d-comment__inner--top-level {
@@ -646,7 +655,7 @@ $avatarPadding: $gs-gutter / 2;
 
 .d-comment--response,
 .d-comment-box--response {
-    border-top: 1px solid $neutral-6;
+    border-top: 1px solid $brightness-93;
     margin-left: $gs-gutter * 1.5;
 
     @include mq(tablet) {
@@ -664,7 +673,7 @@ $avatarPadding: $gs-gutter / 2;
 
 .d-show-more-replies {
     @include fs-textSans(2);
-    border-top: 1px dotted $neutral-5;
+    border-top: 1px dotted $brightness-86;
     padding: $gs-baseline 0;
 
     @include mq(tablet) {
@@ -687,7 +696,7 @@ $avatarPadding: $gs-gutter / 2;
 
 .d-comment__comment-removed {
     @include fs-textSans(1);
-    color: $neutral-2;
+    color: $brightness-46;
     margin-top: $gs-baseline / 1.5;
 
     a {
@@ -717,7 +726,7 @@ $comment-recommend-button-size: 19px;
     width: $comment-recommend-button-size;
     height: $comment-recommend-button-size;
     display: inline-block;
-    background-color: $neutral-7;
+    background-color: $brightness-97;
     cursor: default;
     position: relative;
     top: 1px;
@@ -728,7 +737,7 @@ $comment-recommend-button-size: 19px;
         height: $gs-baseline;
         padding-top: $gs-baseline/4;
         padding-left: $gs-baseline/6;
-        fill: $neutral-2;
+        fill: $brightness-46;
     }
     .id--signed-in .d-discussion--recommendations-open & {
         cursor: pointer;
@@ -750,14 +759,14 @@ $comment-recommend-button-size: 19px;
     width: $comment-recommend-button-size;
     height: $comment-recommend-button-size;
     border-radius: 18px;
-    background-color: $neutral-7;
+    background-color: $brightness-97;
 }
 .d-comment__recommend-count {
     @include fs-textSans(1);
     display: inline-block;
     overflow: hidden;
     min-width: 12px;
-    color: $neutral-2;
+    color: $brightness-46;
     text-align: right;
     line-height: $comment-recommend-button-size;
     height: $comment-recommend-button-size;
@@ -791,7 +800,7 @@ $comment-recommend-button-size: 19px;
     .d-comment__recommend-button,
     .d-comment__recommend-pulse {
         transition: background-color .25s ease-in-out;
-        background-color: $news-main-2;
+        background-color: $sport-bright;
     }
     .d-comment__recommend-pulse {
         animation: pulse .5s ease-in-out 1;
@@ -841,7 +850,7 @@ $comment-recommend-button-size: 19px;
 .d-comment__action {
     @include fs-textSans(3);
     display: inline-block;
-    color: $news-default;
+    color: $sport-dark;
     font-weight: bold;
     line-height: 20px;
     width: auto;
@@ -868,7 +877,7 @@ $comment-recommend-button-size: 19px;
     font-size: 11px;
 
     a {
-        color: $neutral-2;
+        color: $brightness-46;
     }
 
     .discussion__comments__top & {
@@ -877,7 +886,7 @@ $comment-recommend-button-size: 19px;
 }
 
 .d-comment__action--pick {
-    color: $neutral-2;
+    color: $brightness-46;
 }
 
 .d-comment__action-separator {
@@ -886,7 +895,7 @@ $comment-recommend-button-size: 19px;
     position: relative;
     bottom: 1px;
     margin: 0 ($gs-gutter / 5) * 2;
-    color: $neutral-2;
+    color: $brightness-46;
     vertical-align: bottom;
 }
 
@@ -1035,11 +1044,11 @@ $comment-recommend-button-size: 19px;
 
 .d-top-comment__bubble {
     @include fs-textSans(4);
-    color: $neutral-1;
+    color: $brightness-7;
     box-sizing: border-box;
     padding: $gs-baseline ($gs-baseline * 4 / 3);
     position: relative;
-    background-color: $comment-support-2;
+    background-color: $brightness-93;
     border-radius: 15px;
 }
 
@@ -1047,7 +1056,7 @@ $comment-recommend-button-size: 19px;
     width: 24px;
     height: 24px;
     margin-left: $avatarSize-big / 2;
-    fill: $comment-support-2;
+    fill: $brightness-93;
 }
 
 .d-top-comment__body {
@@ -1059,7 +1068,7 @@ $comment-recommend-button-size: 19px;
 
     blockquote {
         padding-left: $gs-gutter / 2;
-        color: $neutral-2;
+        color: $brightness-46;
     }
 }
 
@@ -1094,7 +1103,7 @@ $comment-recommend-button-size: 19px;
 
     .comment__inner {
         box-sizing: border-box;
-        background-color: $neutral-7;
+        background-color: $brightness-97;
         display: inline-block;
         padding: ($gs-baseline / 3) * 2 $gs-gutter / 2 $gs-baseline;
         max-width: $right-column;
@@ -1113,8 +1122,8 @@ $comment-recommend-button-size: 19px;
             border: solid transparent;
             height: 0;
             width: 0;
-            border-color: rgba($neutral-7, 0);
-            border-top-color: $neutral-7;
+            border-color: rgba($brightness-97, 0);
+            border-top-color: $brightness-97;
             border-width: 30px;
             left: 23px;
             margin-left: -30px;
@@ -1197,7 +1206,7 @@ $comment-recommend-button-size: 19px;
 .d-discussion__error {
     @include fs-textSans(4);
     margin-top: ($gs-baseline / 3) * 2;
-    color: $error;
+    color: $news-main;
 
     .d-discussion__error-text {
         display: inline-block;
@@ -1213,11 +1222,11 @@ $comment-recommend-button-size: 19px;
 }
 
 .d-comment-box__error-meta {
-    color: $neutral-2;
+    color: $brightness-46;
 }
 
 .d-comment-box--response {
-    border-top: 1px solid $neutral-5;
+    border-top: 1px solid $brightness-86;
     padding-top: $gs-baseline / 2;
 
     .d-comment-box__author-label {
@@ -1244,11 +1253,11 @@ $comment-recommend-button-size: 19px;
 .d-bar {
     @include fs-textSans(4);
     margin-bottom: ($gs-baseline / 3) * 4;
-    color: $neutral-2;
+    color: $brightness-46;
 }
 .d-comment-box__body {
     box-sizing: border-box;
-    border: 1px solid $neutral-3;
+    border: 1px solid $brightness-86;
     height: 50px;
     margin: ($gs-baseline / 3) * 2 0;
     padding: ($gs-baseline / 3) * 2 $gs-gutter / 2;
@@ -1259,7 +1268,7 @@ $comment-recommend-button-size: 19px;
     position: relative;
     z-index: 2;
     .d-comment-box--top-level &::placeholder {
-        color: $neutral-1;
+        color: $brightness-7;
         font-weight: bold;
     }
     .d-comment-box--top-level.d-comment-box--expanded &::placeholder {
@@ -1290,7 +1299,7 @@ $comment-recommend-button-size: 19px;
 
 .d-comment-box--invalid {
     .d-comment-box__body {
-        border-color: $error;
+        border-color: $news-main;
     }
 }
 .d-comment-box--expanded .d-comment-box__body {
@@ -1303,8 +1312,8 @@ $comment-recommend-button-size: 19px;
 .d-comment-box__submit {
     vertical-align: middle;
     &[disabled] {
-        background-color: $neutral-3;
-        border-color: $neutral-3;
+        background-color: $brightness-86;
+        border-color: $brightness-86;
     }
 }
 .d-comment-box__cancel {
@@ -1313,12 +1322,12 @@ $comment-recommend-button-size: 19px;
 .d-comment-box__reply-to,
 .d-comment-box__cancel {
     @include fs-textSans(1);
-    color: $neutral-1;
+    color: $brightness-7;
 }
 .d-comment-box__hide-preview,
 .d-comment-box__preview {
     @include fs-textSans(1);
-    color: $neutral-2;
+    color: $brightness-46;
     font-weight: bold;
 }
 .d-comment-box__hide-preview {
@@ -1369,7 +1378,7 @@ $comment-recommend-button-size: 19px;
 .d-comment-box__cancel {
     display: none;
     bottom: $gs-baseline;
-    color: $neutral-2;
+    color: $brightness-46;
 
     .d-comment-box--expanded &,
     .d-comment-box--response & {
@@ -1386,11 +1395,11 @@ $comment-recommend-button-size: 19px;
     margin-top: ($gs-baseline / 3) * 8;
 
     .clamp-fade {
-        @include simple-gradient(transparent, $neutral-7);
+        @include simple-gradient(transparent, $brightness-97);
     }
     .clamp-fade__content {
-        border-top: 1px solid $neutral-3;
-        background: $neutral-7;
+        border-top: 1px solid $brightness-86;
+        background: $brightness-97;
     }
 }
 .d-comment-box__preview-spout,
@@ -1400,14 +1409,14 @@ $comment-recommend-button-size: 19px;
     width: 0;
     height: 0;
     border-right: 16px solid transparent;
-    border-bottom: 16px solid $neutral-7;
+    border-bottom: 16px solid $brightness-97;
     margin-left: $gs-gutter * 2;
     border-right-style: inset;
 }
 .d-comment-box__parent-comment {
     @include fs-textSans(4);
     padding: $gs-baseline $gs-gutter;
-    background-color: $neutral-7;
+    background-color: $brightness-97;
 
     .d-comment-box__hide-parent {
         margin-left: 0;
@@ -1443,7 +1452,7 @@ $comment-recommend-button-size: 19px;
 }
 .d-comment-box__preview-block {
     display: block;
-    background-color: $neutral-7;
+    background-color: $brightness-97;
     padding: $gs-baseline $gs-gutter;
 }
 .d-comment-box__preview-body {
@@ -1475,8 +1484,8 @@ $comment-recommend-button-size: 19px;
 .d-comment-box__formatting-link {
     @include fs-textSans(2);
     display: inline-block;
-    border: 1px solid $neutral-5;
-    color: $neutral-2;
+    border: 1px solid $brightness-86;
+    color: $brightness-46;
     text-align: center;
     cursor: pointer;
     margin-left: $gs-gutter / 5;
@@ -1496,7 +1505,7 @@ $comment-recommend-button-size: 19px;
 .d-comment-box--expanded .d-comment-box__community-standards {
     @include fs-textSans(1);
     display: block;
-    background-color: $neutral-7;
+    background-color: $brightness-97;
     padding: ($gs-baseline / 3) * 2 ($gs-gutter / 2);
     margin-top: $gs-baseline / 2;
 }
@@ -1512,7 +1521,7 @@ $comment-recommend-button-size: 19px;
 .d-comment-box--onboarding-visible .d-comment-box__onboarding {
     @include fs-textSans(2);
     display: block;
-    background-color: colour(neutral-7);
+    background-color: colour(brightness-97);
     padding: $gs-baseline $gs-gutter;
 }
 
@@ -1521,22 +1530,22 @@ $comment-recommend-button-size: 19px;
 }
 
 .d-comment-box__onboarding-preview-body p {
-    background-color: $neutral-7;
+    background-color: $brightness-97;
     padding: $gs-baseline $gs-gutter;
     margin-bottom: $gs-baseline;
 }
 
 .d-comment-box__onboarding-cancel {
-    background-color: colour(neutral-3);
-    border-color: colour(neutral-3);
+    background-color: colour(brightness-86);
+    border-color: colour(brightness-86);
 }
 
 .d-comment-box__onboarding-username-input {
     box-sizing: border-box;
     display: block;
     background-color: transparent;
-    border: 1px solid $neutral-4;
-    color: $neutral-1;
+    border: 1px solid $brightness-86;
+    color: $brightness-7;
     padding: $gs-baseline/2 $gs-gutter;
     border-radius: 18px;
     margin: $gs-baseline 0;
@@ -1544,7 +1553,7 @@ $comment-recommend-button-size: 19px;
     width: 70%;
 
     &:focus {
-        border-color: $neutral-2;
+        border-color: $brightness-46;
         outline: none;
     }
 }
@@ -1555,9 +1564,9 @@ $comment-recommend-button-size: 19px;
 }
 
 .d-comment-box__onboarding-username-error-border {
-    border-color: $error;
+    border-color: $news-main;
 }
 
 .d-comment-box__onboarding-username-error-message {
-    color: $error;
+    color: $news-main;
 }

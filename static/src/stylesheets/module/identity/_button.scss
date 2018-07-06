@@ -6,7 +6,7 @@
         @if (lightness($color) < 50) {
             color: #ffffff;
         } @else {
-            color: $garnett-neutral-1;
+            color: $brightness-7;
         }
     }
     &:not(.is-updating, .is-disabled):hover {
@@ -26,17 +26,17 @@
 
 .manage-account__button {
     $font-size: 5;
-    $height: $gs-baseline * 3.5;
+    $height: $gs-baseline * 3;
     $padding-vertical: ($height - get-line-height(textSans, $font-size))/2;
-    $padding-horizontal: $gs-gutter;
+    $padding-horizontal: $gs-gutter * .9;
     @include fs-textSans($font-size);
-    @include identity-button($identity-main)
+    @include identity-button($brightness-7)
     height: $height;
     border-radius: 100px;
     border: 0;
     cursor: pointer;
     float: left;
-    padding: $padding-vertical $padding-horizontal;
+    padding: $padding-vertical * 1.1 $padding-horizontal $padding-vertical * .9;
     min-width: $gs-baseline * 14;
     white-space: nowrap;
     text-overflow: clip;
@@ -123,7 +123,7 @@
     }
 
     .disabled {
-        background-color: $garnett-neutral-4;
+        background-color: $brightness-86;
     }
 }
 
@@ -144,47 +144,29 @@
 }
 
 .manage-account__button--main {
-    @include identity-button($news-garnett-highlight)
-}
-
-.manage-account__button--gdpr-oi-campaign {
-    @include identity-button($news-garnett-highlight)
+    @include identity-button($highlight-main)
 }
 
 .manage-account__button--secondary {
     @include identity-button(hsla(0, 100%, 100%, 0));
-    border: 1px solid $garnett-neutral-4;
+    border: 1px solid $brightness-86;
 }
 
 .manage-account__button--light {
     @extend %manage-account__button--light;
 }
 
-.manage-account__button--mini {
-    @include fs-textSans(1);
-    min-width: $gs-baseline * 20;
-    display: inline-flex;
-    height: $gs-gutter * 1.2;
-    line-height: $gs-gutter * 1.2;
-    padding-left: $gs-gutter / 1.6;
-    padding-right: $gs-gutter / 1.6;
-    .inline-icon {
-        width: $gs-gutter * 1.2;
-        height: $gs-gutter * 1.2;
-    }
-}
-
 %manage-account__button--light {
-    color: $identity-main;
+    color: $brightness-7;
     background-color: transparent;
     text-decoration: underline;
     @supports (box-shadow: 0 0 0 red) {
         text-decoration: none;
-        box-shadow: inset 0 0 0 1px lighten($identity-main, 75%);
+        box-shadow: inset 0 0 0 1px lighten($brightness-7, 75%);
     }
     &:hover, &:focus, &:active {
         background-color: transparent!important;
-        color: $identity-main;
-        box-shadow: inset 0 0 0 1px $identity-main;
+        color: $brightness-7;
+        box-shadow: inset 0 0 0 1px $brightness-7;
     }
 }

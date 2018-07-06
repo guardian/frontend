@@ -171,20 +171,25 @@ category: Common
 }
 .paid-content, .paid-content.tonal--tone-media {
     .social-icon {
-        border: 1px solid $neutral-1;
+        border: 1px solid $brightness-7;
         &:hover,
         &:active,
         &:focus {
-            background-color: $garnett-neutral-1;
+            background-color: $brightness-7;
         }
         .social-icon__svg {
-            fill: $garnett-neutral-1;
+            fill: $brightness-7;
         }
         &:focus,
         &:hover {
             svg {
-                fill: $garnett-neutral-5;
+                fill: $brightness-100;
             }
         }
     }
+}
+
+// prevent yank and spacefinder issue when embedded tweets resize
+.tweet-main-image {
+    width: 100%;
 }

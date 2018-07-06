@@ -98,7 +98,7 @@ trait Results extends Logging with implicits.Collections {
         val awayTeam = r.awayTeam.copy(name = teamNameBuilder.withTeam(r.awayTeam))
         r.copy(homeTeam = homeTeam, awayTeam = awayTeam)
       }
-    }
+    } // TODO it would be nice to handle expected errors more gracefully (e.g. like 'No data available', which happens in between seasons)
       .recover(footballClient.logErrorsWithMessage(s"Failed getting results for competition: ${competition.id}"))
   }
 }

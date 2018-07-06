@@ -226,10 +226,10 @@
         }
     }
 
+
     .gallery__meta-container {
         order: 3;
         padding-top: 0;
-    }
 
     .badge {
         order: 5;
@@ -241,5 +241,15 @@
             margin-top: $gs-baseline;
         }
     }
+}
 
+.content__headline--paidgallery {
+    .inline-tone-fill {
+        fill: $labs-main;
+    }
+}
+.content__labels--paidgallery {
+    .content__series-label {
+        color: $labs-main;
+    }
 }

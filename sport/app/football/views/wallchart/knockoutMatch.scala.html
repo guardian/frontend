@@ -6,7 +6,9 @@
 <div class="football-match" id="football-match-@fm.id">
     <div class="football-match__container">
         <div class="football-match__team football-match__team--home @if(fm.homeTeam.isGhostTeam){football-match__team--ghost}">
-            @if(!fm.homeTeam.isGhostTeam){<span class="team-crest" style="background-image: url(@Configuration.staticSport.path/football/crests/120/@{fm.homeTeam.id}.png);"></span>}
+            @if(!fm.homeTeam.isGhostTeam){
+                <img class="team-crest knockout--crest" alt="" src="@Configuration.staticSport.path/football/crests/120/@{fm.homeTeam.id}.png" />
+            }
             @fm.homeTeam.knockoutName
             @if(fm.hasStarted){
                 <span class="football-match__score">@fm.homeTeam.score</span>
@@ -15,7 +17,7 @@
         <div class="football-match__details">
             @if(round.name.exists(_ == "Final")) {
                 <div class="bigfatfinal">
-                    <img src="http://sport.guim.co.uk/football/world-cup-2014/brazil.svg" class="bigfatfinal__image" />
+                    @fragments.inlineSvg("world_cup_badge", "badges", List("world__cup-svg", "world__cup-badge", "bigfatfinal__image"))
                     <div class="football-match__name"><b>Final</b></div>
                 </div>
             }
@@ -30,8 +32,10 @@
             }
 
         </div>
-        <div class="football-match__team football-match__team--away @if(fm.awayTeam.isGhostTeam){football-match__team--ghost}"">
-            @if(!fm.awayTeam.isGhostTeam){<span class="team-crest" style="background-image: url(@Configuration.staticSport.path/football/crests/120/@{fm.awayTeam.id}.png);"></span>}
+        <div class="football-match__team football-match__team--away @if(fm.awayTeam.isGhostTeam){football-match__team--ghost}">
+            @if(!fm.awayTeam.isGhostTeam){
+                <img class="team-crest knockout--crest" alt="" src="@Configuration.staticSport.path/football/crests/120/@{fm.awayTeam.id}.png" />
+            }
             @fm.awayTeam.knockoutName
             @if(fm.hasStarted){
                 <span class="football-match__score">@fm.awayTeam.score</span>

@@ -4,7 +4,7 @@
 @import views.support.Commercial.isPaidContent
 @import views.support.TrailCssClasses.toneClass
 @import views.support.`package`.Seq2zipWithRowInfo
-@import views.support.{RenderClasses}
+@import views.support.{RenderClasses, RowInfo}
 @import views.GalleryCaptionCleaners
 
 @import model.DotcomContentType
@@ -26,7 +26,7 @@
                         @fragments.witnessCallToAction(page.item.content)
                         <ul class="gallery">
                             @page.item.lightbox.largestCrops.zipWithRowInfo.map { case (image, row) =>
-                                @galleryItem(4, image, row.rowNum, page.item.lightbox.imageContainer(row.rowNum - 1))
+                                @galleryItem(4, image, row, page.item.lightbox.imageContainer(row.rowNum - 1))
                             }
                             @fragments.witnessCallToAction(page.item.content)
                             @fragments.submeta(page.item)
@@ -57,14 +57,14 @@
     @fragments.contentFooter(page.item, page.related, "media", isPaidContent(page))
 </div>
 
-@galleryItem(adInterval: Int, image: ImageAsset, rowNum: Int, imageElement: ImageElement) = {
+@galleryItem(adInterval: Int, image: ImageAsset, rowInfo: RowInfo, imageElement: ImageElement) = {
 
-    <li id="img-@rowNum" class="gallery__item js-gallery-item" data-link-name="Gallery item | @rowNum">
+    <li id="img-@rowInfo.rowNum" class="gallery__item js-gallery-item" data-link-name="Gallery item | @rowInfo.rowNum">
         <figure itemscope itemtype="http://schema.org/ImageObject">
 
             <div class="gallery__figcaption">
                 @image.caption.map { caption =>
-                    <div class="gallery__caption" itemprop="caption">@GalleryCaptionCleaners(page, caption, rowNum)</div>
+                    <div class="gallery__caption" itemprop="caption">@GalleryCaptionCleaners(page, caption, rowInfo.rowNum == 1)</div>
                 }
                 @if(image.displayCredit) {
                     @image.credit.map { credit =>
@@ -73,8 +73,8 @@
                 }
 
                 @fragments.share.blockLevelSharing(
-                    "img-" + rowNum.toString,
-                    page.item.sharelinks.elementShares("img-" + rowNum.toString, image.path),
+                    "img-" + rowInfo.rowNum.toString,
+                    page.item.sharelinks.elementShares("img-" + rowInfo.rowNum.toString, image.path),
                     page.item.metadata.contentType.getOrElse(DotcomContentType.Unknown),
                     isNewGallery = true
                 )
@@ -88,7 +88,7 @@
                      * This ensures that the image height never goes above 96vh
                      *@
                     style="max-width: calc(@image.ratioDouble * 96vh)"
-                    href="@LinkTo{@page.item.metadata.url#img-@rowNum}"
+                    href="@LinkTo{@page.item.metadata.url#img-@rowInfo.rowNum}"
                     data-link-name="Launch Gallery Lightbox" data-is-ajax>
                     @fragments.image(
                         imageElement.images,
@@ -102,10 +102,10 @@
         </figure>
     </li>
 
-    @if(!page.item.content.shouldHideAdverts && rowNum % adInterval == 0) {
+    @if(!page.item.content.shouldHideAdverts && rowInfo.rowNum % adInterval == 0) {
         <li class="gallery__item gallery__item--advert">
             <div class="gallery__img-container">
-                @defining(rowNum / adInterval) { inlineId =>
+                @defining(rowInfo.rowNum / adInterval) { inlineId =>
                     @gallerySlot(inlineId)
                     @gallerySlot(inlineId - 1, isMobile = true)
                 }

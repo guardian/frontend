@@ -64,6 +64,7 @@ class DevParametersHttpRequestHandler(
     "0p19G", // Google AMP AB test parameter
     "dll", // Disable lazy loading of ads
     "iasdebug", // IAS troubleshooting
+    "cmpdebug", // CMP troubleshooting
     "utm_source", // Google Analytics source
     "utm_medium", // Google Analytics medium
     "utm_campaign", // Google Analytics campaign

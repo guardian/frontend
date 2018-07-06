@@ -34,7 +34,6 @@ declare type AcquisitionsABTest = ABTest & {
 
 declare type EpicABTest = AcquisitionsABTest & {
     campaignPrefix: string,
-    campaignSuffix: string,
     useLocalViewLog: boolean,
     overrideCanRun: boolean,
     showToContributorsAndSupporters: boolean,
@@ -71,7 +70,6 @@ declare type InitEpicABTest = {
     locationCheck?: () => boolean,
     dataLinkNames?: string,
     campaignPrefix?: string,
-    campaignSuffix?: string,
     useLocalViewLog?: boolean,
     overrideCanRun?: boolean,
     useTargetingTool?: boolean,

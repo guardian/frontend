@@ -9,6 +9,10 @@ import bean from 'bean';
 import bonzo from 'bonzo';
 import { pushUrl } from 'lib/url';
 import avatarApi from 'common/modules/avatar/api';
+import {
+    prependSuccessMessage,
+    prependErrorMessage,
+} from './modules/prependMessage';
 
 const classes = {
     forms: '.js-account-profile-forms',
@@ -31,30 +35,6 @@ const messages = {
     avatarUploadSuccess:
         'Thank you for uploading your avatar. It will be checked by Guardian moderators shortly.',
     avatarUploadFailure: 'Sorry, something went wrong. Please try again.',
-};
-
-const prependMessage = (
-    message: string,
-    location: HTMLElement,
-    clazz: string
-): void => {
-    const errorHtml = document.createElement('div');
-    errorHtml.innerHTML = message;
-    errorHtml.className = clazz;
-    location.insertBefore(errorHtml, location.firstChild);
-};
-
-const prependErrorMessage = (message: string, location: HTMLElement): void => {
-    const errorClass = classes.formError.replace('.', '');
-    prependMessage(message, location, errorClass);
-};
-
-const prependSuccessMessage = (
-    message: string,
-    location: HTMLElement
-): void => {
-    const errorClass = classes.formSuccess.replace('.', '');
-    prependMessage(message, location, errorClass);
 };
 
 const avatarUploadByApi = (avatarForm: HTMLFormElement): void => {
@@ -146,7 +126,7 @@ class AccountProfile {
             event.target instanceof HTMLElement &&
             event.target.nodeName.toLowerCase() === 'a'
         ) {
-            const eventTarget: HTMLElement = event.target;
+            const eventTarget: HTMLAnchorElement = (event.target: any);
             if (eventTarget.dataset.tabsIgnore) {
                 if (eventTarget.href) window.location.assign(eventTarget.href);
                 event.preventDefault();
@@ -249,7 +229,9 @@ class AccountProfile {
      */
     bindInputs(form: ?HTMLElement) {
         if (form instanceof HTMLFormElement) {
-            const inputs = [...form.querySelectorAll(classes.textInput)];
+            const inputs: Array<HTMLInputElement> = ([
+                ...form.querySelectorAll(classes.textInput),
+            ]: Array<any>);
             inputs
                 .concat([...form.querySelectorAll('select')])
                 .forEach(input => {

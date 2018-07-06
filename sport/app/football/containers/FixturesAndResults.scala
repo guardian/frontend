@@ -89,7 +89,7 @@ class FixturesAndResults(competitions: Competitions) extends Football {
           maybeCompetitionAndGroup map { case CompetitionAndGroup(competition, group) =>
             HtmlAndClasses(
               3,
-              tablesComponent(competition, group, highlightTeamId = Some(teamId), false),
+              tablesComponent(competition, group, competition.fullName, highlightTeamId = Some(teamId), false),
               cssClasses
             )
           }

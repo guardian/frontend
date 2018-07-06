@@ -8,8 +8,9 @@
 
     // Generic
     &.facia-snap-embed {
-        height: $slice-innerHeight;
-        margin: 0 $gs-gutter/2;
+        height: auto;
+        margin: 0;
+        padding: 0 $gs-gutter/2;
         position: relative;
         background: #ffffff;
     }
@@ -24,7 +25,7 @@
 
     .c-football-matches {
         overflow: hidden;
-        background: $neutral-8;
+        background: $brightness-97;
         width: 100%;
     }
 
@@ -45,13 +46,13 @@
         .football-matches__date {
             margin: 0;
             padding: $title-padding;
-            border-top: 1px solid darken($neutral-8, 4%);
+            border-top: 1px solid $brightness-86;
         }
     }
 
     .table__caption--bottom {
         box-sizing: border-box;
-        background: $neutral-8;
+        background: $brightness-97;
         border-width: 0;
         bottom: 0;
         left: 0;
@@ -59,17 +60,16 @@
         z-index: 2;
         position: absolute;
         margin: 0;
-        padding: 10px 0;
+        padding: 0;
 
         .full-table-link {
-            margin-left: $gs-gutter/2;
             display: inline-block;
         }
 
         &:after {
             @include simple-gradient(transparent, #f6f6f6);
             height: $gs-baseline*1.5;
-            border-bottom: 1px solid $neutral-3;
+            border-bottom: 1px solid $brightness-86;
             bottom: $gs-baseline*2.75-2;
             content: ' ';
             left: 0;
@@ -98,12 +98,12 @@
     .match-summary {
         padding-left: $gs-gutter/2;
         padding-right: $gs-gutter/2;
-        background: $neutral-8;
+        background: $brightness-97;
         height: 100%;
         &:hover,
         &:active {
-            background: $neutral-6;
-            color: $neutral-1;
+            background: $brightness-93;
+            color: $brightness-7;
             text-decoration: none;
         }
     }
@@ -167,67 +167,6 @@
             @include fs-headline(2, true)
         }
     }
-
-    &.facia-snap-point--mini,
-    &.facia-snap-point--tiny {
-        @include table--hide-from-importance-3;
-
-        .competition-name {
-            display: none;
-        }
-
-        .team-name:after,
-        .team__name:after {
-            content: attr(data-abbr);
-        }
-        .team-name__long,
-        .team__name-long {
-            @include u-h;
-        }
-
-        .match-info__venue {
-            display: none;
-        }
-
-        .football-match__status {
-            padding-right: $gs-gutter/5;
-        }
-        .football-match__team--home {
-            padding-right: $gs-gutter*.5;
-        }
-        .football-match__team--away {
-            padding-left: $gs-gutter*.5;
-        }
-
-        .football-match--live,
-        .football-match--result {
-
-            .football-match__team {
-                display: block;
-                text-align: left;
-                padding: 0;
-                width: 100%;
-
-                .football-team__name {
-                    text-align: left;
-                    display: inline;
-                }
-                .team-name__long {
-                    display: none;
-                }
-                .football-team__score {
-                    display: inline;
-                    position: relative;
-                    right: 0;
-                    left: 30%;
-                }
-            }
-
-            .football-teams__battleline {
-                display: none;
-            }
-        }
-    }
 }
 
 $footballBadgeSizeMobile: 80px;
@@ -253,7 +192,34 @@ $footballBadgeSizeDesktop: 120px;
 .football-component-missing {
     @include fs-textSans(2);
 
-    background: $neutral-8;
+    background: $brightness-97;
     width: 100%;
     padding: $gs-baseline/1.5;
+}
+
+.knockout-embed {
+    width: 100%;
+
+    .football-match__crest, .facia-snap--football .football-team__form {
+        display: table-cell;
+        vertical-align: middle;
+    }
+
+}
+
+.facia-snap.facia-snap--football.facia-snap-embed {
+    height: auto !important; // height is normally set on the parent snap element in Facia
+}
+
+.facia-snap--football .inline-icon {
+    fill: #ffffff; /* override garnett styling */
+}
+
+.football-embed {
+    height: 14rem;
+    position: relative;
+}
+
+.football-embed.knockout-embed {
+    height: auto;
 }

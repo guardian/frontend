@@ -52,7 +52,7 @@ $checkbox-size: $gs-gutter / 1.25;
     hr {
         height: 0;
         border: 0;
-        border-bottom: 1px solid $garnett-neutral-4;
+        border-bottom: 1px solid $brightness-86;
         margin: ($row-gutter * 2) 0;
     }
 
@@ -73,7 +73,7 @@ $checkbox-size: $gs-gutter / 1.25;
 
 .manage-account__switch {
     @include fs-textSans(4);
-    @include identity-switch($identity-main)
+    @include identity-switch($brightness-7)
     line-height: 1.333;
     overflow: visible;
     position: relative;
@@ -82,20 +82,20 @@ $checkbox-size: $gs-gutter / 1.25;
 
     &:hover, &:focus {
         .manage-account__switch-checkbox {
-            border-color: $identity-main;
+            border-color: $brightness-7;
         }
-        input:checked + .manage-account__switch-checkbox {
-            box-shadow: 0 0 0 1px #ffffff, 0 0 0 2px $identity-main;
+        input + .manage-account__switch-checkbox {
+            box-shadow: 0 0 0 1px #ffffff, 0 0 0 2px $brightness-7;
         }
     }
 
-    input:focus:checked + .manage-account__switch-checkbox {
-        box-shadow: 0 0 0 1px #ffffff, 0 0 0 2px $garnett-neutral-7;
+    input:focus + .manage-account__switch-checkbox {
+        box-shadow: 0 0 0 1px #ffffff, 0 0 0 2px $brightness-20;
     }
 
 
     &.manage-account__switch--hinted {
-        color: $features-main-1;
+        color: $lifestyle-dark;
     }
 
     &:before {
@@ -105,7 +105,7 @@ $checkbox-size: $gs-gutter / 1.25;
         top: 0;
         left: 0;
         right: 0;
-        background-color: $identity-main;
+        background-color: $brightness-7;
         height: 2px;
         transform-origin: center;
         opacity: 0;
@@ -173,7 +173,7 @@ $checkbox-size: $gs-gutter / 1.25;
     contain: strict;
     height: $checkbox-size;
     width: $checkbox-size;
-    border: 1px solid $neutral-3;
+    border: 1px solid $brightness-86;
     border-radius: 2px;
     background-size: $checkbox-size / 1.5;
     background: #ffffff no-repeat center center;

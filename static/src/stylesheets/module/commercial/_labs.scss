@@ -130,7 +130,7 @@
 }
 
 .dumathoin--legacy {
-    background: $neutral-6;
+    background: $brightness-93;
 
     @include mq($until: tablet) {
         padding: 0;
@@ -215,7 +215,7 @@
                 position: relative;
 
                 &:nth-child(even)::before {
-                    @include separator($neutral-4, $gs-gutter / -2);
+                    @include separator($brightness-86, $gs-gutter / -2);
                 }
             }
         }
@@ -227,7 +227,7 @@
                 position: relative;
 
                 &::before {
-                    @include separator($neutral-4, $gs-gutter / -2);
+                    @include separator($brightness-86, $gs-gutter / -2);
                 }
             }
         }
@@ -277,7 +277,7 @@
             }
 
             &::after {
-                @include separator($neutral-4, calc((100% - #{$gs-gutter}) / 2), $gs-gutter / 2);
+                @include separator($brightness-86, calc((100% - #{$gs-gutter}) / 2), $gs-gutter / 2);
             }
         }
     }
@@ -290,11 +290,11 @@
             }
 
             &::before {
-                @include separator($neutral-4, calc((100% - #{$gs-gutter}) / 3), $gs-gutter / 2);
+                @include separator($brightness-86, calc((100% - #{$gs-gutter}) / 3), $gs-gutter / 2);
             }
 
             &::after {
-                @include separator($neutral-4, calc((100% - #{$gs-gutter}) / 3 * 2), $gs-gutter / 2);
+                @include separator($brightness-86, calc((100% - #{$gs-gutter}) / 3 * 2), $gs-gutter / 2);
             }
         }
     }
@@ -317,7 +317,7 @@
         }
 
         .dumathoin__row > .vergadain::after {
-            @include separator($neutral-4, 100%, $gs-gutter / 2);
+            @include separator($brightness-86, 100%, $gs-gutter / 2);
         }
 
         .dumathoin__row > .button {

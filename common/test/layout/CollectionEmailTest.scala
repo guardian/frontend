@@ -1,11 +1,10 @@
 package layout
 
-import common.commercial.FixtureBuilder
+import common.facia.FixtureBuilder
 import model.facia.PressedCollection
 import model.pressed.{CollectionConfig, DisplayHints, PressedContent}
 import model.{FrontProperties, PressedPage, SeoData}
 import org.scalatest.{FlatSpec, Matchers, OptionValues}
-import FixtureBuilder.mkPressedContent
 
 class CollectionEmailTest extends FlatSpec with Matchers with OptionValues {
 
@@ -37,7 +36,7 @@ class CollectionEmailTest extends FlatSpec with Matchers with OptionValues {
     result.contentCollections.map(_.displayName) shouldEqual List("Test Collection 1", "Test Collection 3")
   }
 
-  private def mkContent(id: Int): PressedContent = mkPressedContent(id)
+  private def mkContent(id: Int): PressedContent = FixtureBuilder.mkPressedContent(id)
 
   private def mkPressedCollection(id: String, curated: Seq[PressedContent] = IndexedSeq.empty, backfill: Seq[PressedContent] = IndexedSeq.empty, maxItemsToDisplay: Option[Int] = None) = {
     PressedCollection(

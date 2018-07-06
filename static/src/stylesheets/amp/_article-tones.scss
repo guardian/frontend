@@ -6,7 +6,7 @@
     .tone-colour,
     a.tone-colour,
     .submeta a,
-    .content__series-label__link {
+    .content__label__link {
         color: $dark;
     }
 
@@ -37,7 +37,7 @@
     a.tone-colour,
     .submeta a,
     a.u-underline,
-    .content__series-label__link {
+    .content__label__link {
         color: $bright;
     }
 
@@ -67,37 +67,37 @@
 }
 
 .content--pillar-news {
-    @include PillarColourTwo($news-garnett-main-1, $news-garnett-feature);
+    @include PillarColourTwo($news-main, $news-dark);
 }
 
 .content--pillar-opinion {
-    @include PillarColourTwo($opinion-garnett-main-1, $opinion-garnett-feature);
+    @include PillarColourTwo($opinion-main, $opinion-dark);
 
-    background-color: $opinion-garnett-background;
+    background-color: $opinion-faded;
 }
 
 .content--pillar-sport {
-    @include PillarColourOne($sport-garnett-main-1, $sport-garnett-feature);
+    @include PillarColourOne($sport-main, $sport-dark);
 }
 
 .content--pillar-arts {
-    @include PillarColourOne($culture-garnett-main-1, $culture-garnett-feature);
+    @include PillarColourOne($culture-main, $culture-dark);
 }
 
 .content--pillar-lifestyle {
-    @include PillarColourOne($lifestyle-garnett-main-1, $lifestyle-garnett-feature);
+    @include PillarColourOne($lifestyle-main, $lifestyle-dark);
 }
 
 .tonal--tone-special-report {
-    @include PillarColourOne($story-package-garnett, $story-package-garnett);
+    @include PillarColourOne($special-report-dark, $special-report-dark);
     background-color: #eff1f2;
 
-    .content__series-label__link {
-        background-color: $news-garnett-highlight;
+    .content__label__link {
+        background-color: $highlight-main;
         padding: ($gs-baseline / 4) ($gs-gutter / 4);
     }
 
     .content__meta-container .byline-img {
-        background-color: $news-garnett-highlight;
+        background-color: $highlight-main;
     }
 }

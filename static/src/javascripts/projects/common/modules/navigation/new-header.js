@@ -307,12 +307,15 @@ const initiateUserAccountDropdown = (): void => {
             const { menu } = userAccountDropdownEls;
 
             if (menu) {
-                menu.addEventListener('keyup', (event: KeyboardEvent): void => {
-                    if (event.key === 'Escape') {
-                        toggleDropdown(userAccountDropdownEls);
-                        returnFocusToButton(MY_ACCOUNT_ID);
+                menu.addEventListener(
+                    'keyup',
+                    (event: KeyboardEvent): void => {
+                        if (event.key === 'Escape') {
+                            toggleDropdown(userAccountDropdownEls);
+                            returnFocusToButton(MY_ACCOUNT_ID);
+                        }
                     }
-                });
+                );
             }
         });
 };
@@ -422,9 +425,9 @@ const enhanceCheckbox = (checkbox: HTMLElement): void => {
 };
 
 const enhanceMenuToggles = (): void => {
-    const checkboxs = [
+    const checkboxs: Array<HTMLInputElement> = ([
         ...document.getElementsByClassName('js-enhance-checkbox'),
-    ];
+    ]: Array<any>);
 
     checkboxs.forEach(checkbox => {
         if (!enhanced[checkbox.id] && !checkbox.checked) {

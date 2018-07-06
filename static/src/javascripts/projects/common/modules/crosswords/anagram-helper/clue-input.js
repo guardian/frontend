@@ -1,6 +1,5 @@
 // @flow
-import React, { Component } from 'react';
-import { findDOMNode } from 'react-dom';
+import React, { Component, findDOMNode } from 'preact-compat';
 
 class ClueInput extends Component<*, *> {
     componentDidMount() {
@@ -27,7 +26,7 @@ class ClueInput extends Component<*, *> {
         this.props.onChange(e.target.value.toLowerCase());
     }
 
-    onKeyDown(e: Event) {
+    onKeyDown(e: KeyboardEvent) {
         const el: HTMLElement = (findDOMNode(this): any);
 
         if (e.keyCode === 13 && el) {

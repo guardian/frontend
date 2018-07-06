@@ -3,7 +3,7 @@ import fakeMediator from 'lib/mediator';
 import fakeConfig from 'lib/config';
 import fakeOphan from 'ophan/ng';
 import { engagementBannerParams as engagementBannerParams_ } from 'common/modules/commercial/membership-engagement-banner-parameters';
-import { membershipEngagementBannerInit } from 'common/modules/commercial/membership-engagement-banner';
+import { membershipEngagementBanner } from 'common/modules/commercial/membership-engagement-banner';
 import { shouldShowReaderRevenue } from 'common/modules/commercial/contributions-utilities';
 
 const engagementBannerParams: any = engagementBannerParams_;
@@ -25,7 +25,6 @@ jest.mock('lib/geolocation', () => ({
 jest.mock('common/views/svgs', () => ({
     inlineSvg: jest.fn(() => ''),
 }));
-
 jest.mock('common/modules/experiments/acquisition-test-selector', () => ({
     getTest: jest.fn(() => ({
         campaignId: 'fake-campaign-id',
@@ -43,7 +42,6 @@ jest.mock('common/modules/experiments/acquisition-test-selector', () => ({
         componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
     })),
 }));
-
 jest.mock(
     'common/modules/experiments/tests/membership-engagement-banner-tests',
     () => ({
@@ -73,14 +71,12 @@ jest.mock(
         ],
     })
 );
-
 jest.mock(
     'common/modules/commercial/membership-engagement-banner-parameters',
     () => ({
         engagementBannerParams: jest.fn(() => ({
             minArticles: 1,
             products: ['CONTRIBUTION'],
-            colourStrategy: jest.fn(() => ''),
             linkUrl: 'fake-link-url',
         })),
     })
@@ -105,7 +101,7 @@ jest.mock('ophan/ng', () => ({
     record: jest.fn(),
 }));
 jest.mock('lib/config', () => ({
-    get: jest.fn(() => ''),
+    get: jest.fn(() => true),
 }));
 jest.mock('lib/detect', () => ({
     adblockInUse: Promise.resolve(false),
@@ -119,11 +115,22 @@ const fakeVariantFor: any = require('common/modules/experiments/segment-util')
     .variantFor;
 const fakeConstructQuery: any = require('lib/url').constructQuery;
 const fakeInlineSvg: any = require('common/views/svgs').inlineSvg;
+const fakeIsBlocked: any = require('common/modules/commercial/membership-engagement-banner-block')
+    .isBlocked;
+const fakeGet: any = require('lib/storage').local.get;
+const fakeShouldShowReaderRevenue: any = require('common/modules/commercial/contributions-utilities')
+    .shouldShowReaderRevenue;
 
 beforeEach(() => {
     FakeMessage.mockReset();
     FakeMessage.prototype.show = jest.fn(() => true);
+    fakeIsBlocked.mockClear();
+    fakeVariantFor.mockClear();
+    fakeGet.mockClear();
+    fakeShouldShowReaderRevenue.mockClear();
+    fakeConfig.get.mockClear();
 });
+
 afterEach(() => {
     FakeMessage.prototype.show.mockRestore();
     fakeMediator.removeAllListeners();
@@ -131,47 +138,95 @@ afterEach(() => {
 });
 
 describe('Membership engagement banner', () => {
-    describe('If breaking news banner has show', () => {
-        it('should not show the membership engagement banner', () =>
-            membershipEngagementBannerInit().then(() => {
-                fakeMediator.emit('modules:onwards:breaking-news:ready', true);
-                expect(FakeMessage.prototype.show).not.toHaveBeenCalled();
+    describe('canShow returns false', () => {
+        it('should return false if membershipEngagementBanner switch off', () => {
+            fakeConfig.get.mockImplementationOnce(() => false);
+
+            return membershipEngagementBanner.canShow().then(canShow => {
+                expect(canShow).toBe(false);
+            });
+        });
+
+        it('should return false if the engagement banner is blocked', () => {
+            fakeIsBlocked.mockReturnValueOnce(true);
+
+            return membershipEngagementBanner.canShow().then(canShow => {
+                expect(canShow).toBe(false);
+            });
+        });
+
+        it('should return false user variant is blocked for test', () => {
+            fakeVariantFor.mockImplementationOnce(() => ({
+                options: {
+                    blockEngagementBanner: true,
+                },
             }));
+
+            return membershipEngagementBanner.canShow().then(canShow => {
+                expect(canShow).toBe(false);
+            });
+        });
+
+        it('should return false user visit count less than minArticles for banner', () => {
+            fakeGet.mockReturnValueOnce(0); // gu.alreadyVisited
+
+            return membershipEngagementBanner.canShow().then(canShow => {
+                expect(canShow).toBe(false);
+            });
+        });
+
+        it('should return false if shouldShowReaderRevenue false', () => {
+            fakeShouldShowReaderRevenue.mockReturnValueOnce(false);
+
+            return membershipEngagementBanner.canShow().then(canShow => {
+                expect(canShow).toBe(false);
+            });
+        });
     });
 
-    describe('If breaking news banner has not shown', () => {
-        let showBanner;
+    describe('canShow returns true', () => {
         let emitSpy;
 
         beforeEach(() => {
             engagementBannerParams.mockImplementationOnce(() => ({
                 minArticles: 1,
                 products: ['CONTRIBUTION'],
-                colourStrategy: jest.fn(() => 'fake-colour-class'),
                 campaignCode: 'fake-campaign-code',
                 linkUrl: 'fake-link-url',
             }));
             emitSpy = jest.spyOn(fakeMediator, 'emit');
-            showBanner = membershipEngagementBannerInit().then(() => {
-                fakeMediator.emit('modules:onwards:breaking-news:ready', false);
-            });
         });
+
         afterEach(() => {
             emitSpy.mockRestore();
         });
 
         it('should show the membership engagement banner', () =>
-            showBanner.then(() => {
+            membershipEngagementBanner.canShow().then(canShow => {
+                expect(canShow).toBe(true);
+
+                membershipEngagementBanner.show();
+
                 expect(FakeMessage.prototype.show).toHaveBeenCalledTimes(1);
             }));
+
         it('should emit a display event', () =>
-            showBanner.then(() => {
+            membershipEngagementBanner.canShow().then(canShow => {
+                expect(canShow).toBe(true);
+
+                membershipEngagementBanner.show();
+
                 expect(emitSpy).toHaveBeenCalledWith(
                     'membership-message:display'
                 );
             }));
+
         it('should record the component event in ophan with a/b test info', () =>
-            showBanner.then(() => {
+            membershipEngagementBanner.canShow().then(canShow => {
+                expect(canShow).toBe(true);
+
+                membershipEngagementBanner.show();
+
                 expect(fakeOphan.record).toHaveBeenCalledWith({
                     componentEvent: {
                         component: {
@@ -193,20 +248,17 @@ describe('Membership engagement banner', () => {
     describe('If user already member', () => {
         it('should not show any messages even to engaged readers', () => {
             (shouldShowReaderRevenue: any).mockImplementationOnce(() => false);
-            membershipEngagementBannerInit().then(() => {
-                fakeMediator.emit('modules:onwards:breaking-news:ready', false);
-                expect(FakeMessage.prototype.show).not.toHaveBeenCalled();
+
+            return membershipEngagementBanner.canShow().then(canShow => {
+                expect(canShow).toBe(false);
             });
         });
     });
 
     describe('creates message with', () => {
-        let showBanner;
-
         beforeEach(() => {
             engagementBannerParams.mockImplementationOnce(() => ({
                 minArticles: 1,
-                colourStrategy: jest.fn(() => 'fake-colour-class'),
                 linkUrl: 'fake-link-url',
             }));
             fakeVariantFor.mockImplementationOnce(() => ({
@@ -217,80 +269,111 @@ describe('Membership engagement banner', () => {
                     engagementBannerParams: {},
                 },
             }));
-            showBanner = membershipEngagementBannerInit().then(() => {
-                fakeMediator.emit('modules:onwards:breaking-news:ready', false);
-            });
         });
 
         it('correct campaign code', () =>
-            showBanner.then(() => {
+            membershipEngagementBanner.canShow().then(canShow => {
+                expect(canShow).toBe(true);
+
+                membershipEngagementBanner.show();
+
                 expect(
                     FakeMessage.mock.calls[0][1].siteMessageComponentName
                 ).toBe('fake-campaign-id_fake-variant-id');
             }));
+
         it('correct CSS modifier class', () =>
-            showBanner.then(() => {
+            membershipEngagementBanner.canShow().then(canShow => {
+                expect(canShow).toBe(true);
+
+                membershipEngagementBanner.show();
+
                 expect(FakeMessage.mock.calls[0][1].cssModifierClass).toBe(
-                    'fake-colour-class'
+                    'support-the-guardian-banner'
                 );
             }));
     });
 
     describe('renders message with', () => {
-        let showBanner;
-
         beforeEach(() => {
             engagementBannerParams.mockImplementationOnce(() => ({
                 minArticles: 1,
-                colourStrategy: jest.fn(() => 'fake-colour-class'),
                 messageText: 'fake-message-text',
                 linkUrl: 'fake-link-url',
                 buttonCaption: 'fake-button-caption',
             }));
-            fakeConfig.get.mockImplementationOnce(
-                () => 'fake-paypal-and-credit-card-image'
-            );
+            fakeConfig.get
+                .mockImplementationOnce(() => true)
+                .mockImplementationOnce(
+                    () => 'fake-paypal-and-credit-card-image'
+                );
             fakeInlineSvg.mockImplementationOnce(() => 'fake-button-svg');
             fakeConstructQuery.mockImplementationOnce(
                 () => 'fake-query-parameters'
             );
-            showBanner = membershipEngagementBannerInit().then(() => {
-                fakeMediator.emit('modules:onwards:breaking-news:ready', false);
-            });
         });
 
         it('message text', () =>
-            showBanner.then(() => {
+            membershipEngagementBanner.canShow().then(canShow => {
+                expect(canShow).toBe(true);
+
+                membershipEngagementBanner.show();
+
                 expect(FakeMessage.prototype.show.mock.calls[0][0]).toMatch(
                     /fake-message-text/
                 );
             }));
+
         it('paypal and credit card image', () =>
-            showBanner.then(() => {
+            membershipEngagementBanner.canShow().then(canShow => {
+                expect(canShow).toBe(true);
+
+                membershipEngagementBanner.show();
+
                 expect(FakeMessage.prototype.show.mock.calls[0][0]).toMatch(
                     /fake-paypal-and-credit-card-image/
                 );
             }));
+
         it('colour class', () =>
-            showBanner.then(() => {
+            membershipEngagementBanner.canShow().then(canShow => {
+                expect(canShow).toBe(true);
+
+                membershipEngagementBanner.show();
+
                 expect(FakeMessage.prototype.show.mock.calls[0][0]).toMatch(
-                    /fake-colour-class/
+                    /support-the-guardian-banner/
                 );
             }));
+
         it('link URL', () =>
-            showBanner.then(() => {
+            membershipEngagementBanner.canShow().then(canShow => {
+                expect(canShow).toBe(true);
+
+                membershipEngagementBanner.show();
+
                 expect(FakeMessage.prototype.show.mock.calls[0][0]).toMatch(
                     /fake-link-url\?fake-query-parameters/
                 );
             }));
+
         it('button caption', () =>
-            showBanner.then(() => {
+            membershipEngagementBanner.canShow().then(canShow => {
+                expect(canShow).toBe(true);
+
+                membershipEngagementBanner.show();
+
                 expect(FakeMessage.prototype.show.mock.calls[0][0]).toMatch(
                     /fake-button-caption/
                 );
             }));
+
         it('button SVG', () =>
-            showBanner.then(() => {
+            membershipEngagementBanner.canShow().then(canShow => {
+                expect(canShow).toBe(true);
+
+                membershipEngagementBanner.show();
+
                 expect(FakeMessage.prototype.show.mock.calls[0][0]).toMatch(
                     /fake-button-svg/
                 );

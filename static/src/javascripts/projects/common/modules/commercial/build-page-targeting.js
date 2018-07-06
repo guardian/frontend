@@ -2,11 +2,16 @@
 import config from 'lib/config';
 import { getCookie, removeCookie } from 'lib/cookies';
 import { getReferrer as detectGetReferrer, getBreakpoint } from 'lib/detect';
+import { getSync as geolocationGetSync } from 'lib/geolocation';
 import { local } from 'lib/storage';
 import { getUrlVars } from 'lib/url';
 import { getKruxSegments } from 'common/modules/commercial/krux';
 import { isUserLoggedIn } from 'common/modules/identity/api';
 import { getUserSegments } from 'common/modules/commercial/user-ad-targeting';
+import {
+    getAdConsentState,
+    thirdPartyTrackingAdConsent,
+} from 'common/modules/commercial/ad-prefs.lib';
 import { getParticipations } from 'common/modules/experiments/utils';
 import flatten from 'lodash/arrays/flatten';
 import once from 'lodash/functions/once';
@@ -34,10 +39,12 @@ const abParam = (): Array<string> => {
         }
     };
 
-    Object.keys(abParticipations).forEach((testKey: string): void => {
-        const testValue: { variant: string } = abParticipations[testKey];
-        pushAbParams(testKey, testValue.variant);
-    });
+    Object.keys(abParticipations).forEach(
+        (testKey: string): void => {
+            const testValue: { variant: string } = abParticipations[testKey];
+            pushAbParams(testKey, testValue.variant);
+        }
+    );
 
     if (config.tests) {
         Object.entries(config.tests).forEach(([testName, testValue]) => {
@@ -128,68 +135,81 @@ const formatAppNexusTargeting = (obj: Object): string =>
             })
     ).join(',');
 
-const buildAppNexusTargeting = once((pageTargeting: Object): string =>
-    formatAppNexusTargeting({
-        sens: pageTargeting.sens,
-        pt1: pageTargeting.url,
-        pt2: pageTargeting.edition,
-        pt3: pageTargeting.ct,
-        pt4: pageTargeting.p,
-        pt5: pageTargeting.k,
-        pt6: pageTargeting.su,
-        pt7: pageTargeting.bp,
-        pt8: pageTargeting.x,
-        pt9: [
-            pageTargeting.gdncrm,
-            pageTargeting.pv,
-            pageTargeting.co,
-            pageTargeting.tn,
-            pageTargeting.slot,
-        ].join('|'),
-    })
+const buildAppNexusTargeting = once(
+    (pageTargeting: Object): string =>
+        formatAppNexusTargeting({
+            sens: pageTargeting.sens,
+            pt1: pageTargeting.url,
+            pt2: pageTargeting.edition,
+            pt3: pageTargeting.ct,
+            pt4: pageTargeting.p,
+            pt5: pageTargeting.k,
+            pt6: pageTargeting.su,
+            pt7: pageTargeting.bp,
+            pt8: pageTargeting.x,
+            pt9: [
+                pageTargeting.gdncrm,
+                pageTargeting.pv,
+                pageTargeting.co,
+                pageTargeting.tn,
+                pageTargeting.slot,
+            ].join('|'),
+        })
 );
 
-const buildPageTargeting = once((adFree: ?boolean): Object => {
-    const page: Object = config.page;
-    const adFreeTargeting: Object = adFree ? { af: 't' } : {};
-    const pageTargets: Object = Object.assign(
-        {
-            sens: page.isSensitive ? 't' : 'f',
-            x: getKruxSegments(),
-            pv: config.ophan.pageViewId,
-            bp: getBreakpoint(),
-            at: adtestParams(),
-            si: isUserLoggedIn() ? 't' : 'f',
-            gdncrm: getUserSegments(),
-            ab: abParam(),
-            ref: getReferrer(),
-            ms: formatTarget(page.source),
-            fr: getVisitedValue(),
-            // round video duration up to nearest 30 multiple
-            vl: page.videoDuration
-                ? (Math.ceil(page.videoDuration / 30.0) * 30).toString()
-                : undefined,
-        },
-        page.sharedAdTargeting,
-        adFreeTargeting,
-        getWhitelistedQueryParams()
-    );
+const buildPageTargeting = once(
+    (adFree: ?boolean): Object => {
+        const page: Object = config.page;
+        const adConsentState: ?boolean = getAdConsentState(
+            thirdPartyTrackingAdConsent
+        );
 
-    // filter out empty values
-    const pageTargeting: Object = pick(pageTargets, target => {
-        if (Array.isArray(target)) {
-            return target.length > 0;
-        }
-        return target;
-    });
+        // personalised ads targeting
+        const paTargeting: Object =
+            adConsentState !== null ? { pa: adConsentState ? 't' : 'f' } : {};
+        const adFreeTargeting: Object = adFree ? { af: 't' } : {};
+        const pageTargets: Object = Object.assign(
+            {
+                sens: page.isSensitive ? 't' : 'f',
+                x: getKruxSegments(),
+                pv: config.ophan.pageViewId,
+                bp: getBreakpoint(),
+                at: adtestParams(),
+                si: isUserLoggedIn() ? 't' : 'f',
+                gdncrm: getUserSegments(),
+                ab: abParam(),
+                ref: getReferrer(),
+                ms: formatTarget(page.source),
+                fr: getVisitedValue(),
+                // round video duration up to nearest 30 multiple
+                vl: page.videoDuration
+                    ? (Math.ceil(page.videoDuration / 30.0) * 30).toString()
+                    : undefined,
+                cc: geolocationGetSync(),
+                s: page.section, // for reference in a macro, so cannot be extracted from ad unit
+            },
+            page.sharedAdTargeting,
+            paTargeting,
+            adFreeTargeting,
+            getWhitelistedQueryParams()
+        );
 
-    // third-parties wish to access our page targeting, before the googletag script is loaded.
-    page.appNexusPageTargeting = buildAppNexusTargeting(pageTargeting);
+        // filter out empty values
+        const pageTargeting: Object = pick(pageTargets, target => {
+            if (Array.isArray(target)) {
+                return target.length > 0;
+            }
+            return target;
+        });
 
-    // This can be removed once we get sign-off from third parties who prefer to use appNexusPageTargeting.
-    page.pageAdTargeting = pageTargeting;
+        // third-parties wish to access our page targeting, before the googletag script is loaded.
+        page.appNexusPageTargeting = buildAppNexusTargeting(pageTargeting);
 
-    return pageTargeting;
-});
+        // This can be removed once we get sign-off from third parties who prefer to use appNexusPageTargeting.
+        page.pageAdTargeting = pageTargeting;
+
+        return pageTargeting;
+    }
+);
 
 export { buildPageTargeting, buildAppNexusTargeting };

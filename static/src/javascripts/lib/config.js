@@ -28,11 +28,13 @@ const get = (path: string = '', defaultValue: any): any => {
 const set = (path: string, value: any): void => {
     const pathSegments = path.split('.');
     const last = pathSegments.pop();
-    pathSegments.reduce(
-        // eslint-disable-next-line no-return-assign
-        (obj, subpath) => obj[subpath] || (obj[subpath] = {}),
-        config
-    )[last] = value;
+    pathSegments.reduce((obj, subpath) => {
+        if (typeof obj[subpath] === 'object') {
+            return obj[subpath];
+        }
+        obj[subpath] = {};
+        return obj[subpath];
+    }, config)[last] = value;
 };
 
 const hasTone = (name: string): boolean =>
@@ -72,8 +74,6 @@ const dateFromSlug = (): ?string => {
     return s ? s[0] : null;
 };
 
-const isMedia: boolean = ['Video', 'Audio'].includes(config.page.contentType);
-
 export default Object.assign(
     {},
     {
@@ -85,7 +85,6 @@ export default Object.assign(
         referenceOfType,
         webPublicationDateAsUrlPart,
         dateFromSlug,
-        isMedia,
     },
     config
 );

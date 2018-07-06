@@ -36,7 +36,7 @@
                 ))">
                 <td class="football-match__status football-match__status--@MatchStatus(theMatch.matchStatus).toString.toLowerCase table-column--sub">
                     @if(theMatch.isFixture){
-                        <time datetime="@theMatch.date.toString("yyyy-MM-dd'T'HH:mm:ssZ")" data-timestamp="@theMatch.date.getMillis" 
+                        <time datetime="@theMatch.date.toString("yyyy-MM-dd'T'HH:mm:ssZ")" data-timestamp="@theMatch.date.getMillis"
                         class="js-locale-timestamp">
                             @theMatch.date.toString("HH:mm")</time>
                     }else{
@@ -44,7 +44,7 @@
                     }
                 </td>
                 <td class="football-match__crest football-match__crest--home">
-                    <span class="team-crest" style="background-image: url(@Configuration.staticSport.path/football/crests/60/@{theMatch.homeTeam.id}.png);"></span>
+                    <img class="team-crest" alt="" src="@Configuration.staticSport.path/football/crests/60/@{theMatch.homeTeam.id}.png" />
                 </td>
                 <td class="football-match__teams table-column--main">
                     <a href="@LinkTo{@theMatch.smartUrl}" class="u-unstyled football-teams u-cf" data-link-name="match-redirect">
@@ -70,7 +70,7 @@
                     </a>
                 </td>
                 <td class="football-match__crest football-match__crest--home">
-                    <span class="team-crest" style="background-image: url(@Configuration.staticSport.path/football/crests/120/@{theMatch.awayTeam.id}.png);"></span>
+                    <img class="team-crest" alt="" src="@Configuration.staticSport.path/football/crests/120/@{theMatch.awayTeam.id}.png" />
                 </td>
             </tr>
         }

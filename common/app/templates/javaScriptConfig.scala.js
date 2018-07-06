@@ -13,7 +13,7 @@
             s""""${CamelCase.fromHyphenated(switch.name)}":${switch.isSwitchedOn}"""}.mkString(","))}
         },
         "tests": { @JavaScript(experiments.ActiveExperiments.getJavascriptConfig) },
-        "modules": { 
+        "modules": {
             "tracking": {
                 "ready": null
             }
@@ -24,15 +24,14 @@
                 "abp-icon": "@Static("images/commercial/abp-icon.png")",
                 "abp-whitelist-instruction-chrome": "@Static("images/commercial/ad-block-instructions-chrome.png")"
             },
-            "membership": {
-                "adblock-coins": "@Static("images/membership/adblock-coins.png")",
-                "adblock-coins-us": "@Static("images/membership/adblock-coins-us.png")"
-            },
             "acquisitions": {
-                "paypal-and-credit-card": "@Static("images/acquisitions/paypal-and-credit-card.png")"
+                "paypal-and-credit-card": "@Static("images/acquisitions/paypal-and-credit-card.png")",
+                "info-logo": "@Static("images/acquisitions/info-logo.svg")"
+
             },
-            "identity": {
-                "missing": "@Static("images/identity/missing.svg")"
+            "journalism": {
+                "apple-podcast-logo": "@Static("images/journalism/apple-podcast-icon-48.png")"
+
             }
         },
         "stylesheets": {

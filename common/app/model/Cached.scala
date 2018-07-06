@@ -45,6 +45,7 @@ object Cached extends implicits.Dates {
   sealed trait CacheableResult { def result: Result }
   case class RevalidatableResult(result: Result, hash: Hash) extends CacheableResult
   case class WithoutRevalidationResult(result: Result) extends CacheableResult
+  case class PanicReuseExistingResult(result: Result) extends CacheableResult
 
   object RevalidatableResult {
     def apply[C](result: Result, content: C)(implicit writeable: Writeable[C]): RevalidatableResult = {
@@ -82,16 +83,19 @@ object Cached extends implicits.Dates {
   // conventionally cacheable. Typically we only cache 200 and 404 responses.
   def explicitlyCache(seconds: Int)(result: Result): Result = cacheHeaders(seconds, result, None)
 
-  def apply(seconds: Int, cacheableResult: CacheableResult, ifNoneMatch: Option[String]): Result =
-    if (cacheableStatusCodes.contains(cacheableResult.result.header.status)) {
-      cacheableResult match {
-        case RevalidatableResult(result, hash) =>
-          cacheHeaders(seconds, result, Some((hash, ifNoneMatch)))
-        case WithoutRevalidationResult(result) => cacheHeaders(seconds, result, None)
-      }
-    } else {
-      cacheableResult.result
+  def apply(seconds: Int, cacheableResult: CacheableResult, ifNoneMatch: Option[String]): Result = {
+    cacheableResult match {
+      case RevalidatableResult(result, hash) if cacheableStatusCodes.contains(result.header.status) =>
+        val etag = s"""W/"hash${hash.string}""""
+        val newResult = if (ifNoneMatch.contains(etag)) Results.NotModified else result
+        cacheHeaders(seconds, newResult, Some(etag))
+      case WithoutRevalidationResult(result) if cacheableStatusCodes.contains(result.header.status) =>
+        cacheHeaders(seconds, result, None)
+      case PanicReuseExistingResult(result) =>
+        cacheHeaders(seconds, result, ifNoneMatch)
+      case result: CacheableResult => result.result
     }
+  }
 
   /*
     NOTE, if you change these headers make sure they are compatible with our Edge Cache
@@ -105,10 +109,8 @@ object Cached extends implicits.Dates {
     TLDR Surrogate-Control is used by the CDN, Cache-Control by the browser - do *not* add `private` to Cache-Control
     https://docs.fastly.com/guides/tutorials/cache-control-tutorial
   */
-  private def cacheHeaders(maxAge: Int, result: Result, maybeHash: Option[(Hash, Option[String])]) = {
+  private def cacheHeaders(maxAge: Int, result: Result, maybeEtag: Option[String]): Result = {
     val now = DateTime.now
-    val expiresTime = if (LongCacheSwitch.isSwitchedOn) now + min(maxAge, 60).seconds else now + maxAge.seconds
-
     val staleWhileRevalidateSeconds = max(maxAge / 10, 1)
     val surrogateCacheControl = s"max-age=$maxAge, stale-while-revalidate=$staleWhileRevalidateSeconds, stale-if-error=$tenDaysInSeconds"
 
@@ -120,46 +122,31 @@ object Cached extends implicits.Dates {
       surrogateCacheControl
     }
 
-    val (etagHeaderString, validatedResult): (String, Result) = maybeHash.map { case (hash, maybeHashToMatch) =>
-      val etag = s"""W/"hash${hash.string}""""
-      if (maybeHashToMatch.contains(etag)) {
-        (etag, Results.NotModified)
-      } else {
-        (etag, result)
-      }
-    }.getOrElse(
-      (s""""guRandomEtag${scala.util.Random.nextInt}${scala.util.Random.nextInt}"""", result) // just to see if they come back in
+    val etagHeaderString: String = maybeEtag.getOrElse(
+      s""""guRandomEtag${scala.util.Random.nextInt}${scala.util.Random.nextInt}"""" // setting a random tag still helps
     )
 
-    validatedResult.withHeaders(
+    result.withHeaders(
 
       // the cache headers used by the CDN
       "Surrogate-Control" -> surrogateCacheControl,
       // the cache headers that make their way through to the browser
       "Cache-Control" -> cacheControl,
 
-      "Expires" -> expiresTime.toHttpDateTimeString,
       "Date" -> now.toHttpDateTimeString,
       "ETag" -> etagHeaderString)
   }
 }
 
-object PrivateCache {
-  def apply(result: Result): Result = result.withHeaders("Cache-Control" -> "private")
-}
-
 object NoCache {
-  def apply(result: Result): Result = result.withHeaders("Cache-Control" -> "no-cache", "Pragma" -> "no-cache")
+  def apply(result: Result): Result = result.withHeaders("Cache-Control" -> "private, no-store, no-cache")
 }
 
 case class NoCache[A](action: Action[A])(implicit val executionContext: ExecutionContext) extends Action[A] {
 
   override def apply(request: Request[A]): Future[Result] = {
-    action(request) map { response =>
-      response.withHeaders(
-        ("Cache-Control", "no-cache, no-store, must-revalidate"),
-        ("Pragma", "no-cache"),
-        ("Expires", "0")
+    action(request) map { response => response.withHeaders(
+        ("Cache-Control", "private, no-store, no-cache")
       )
     }
   }

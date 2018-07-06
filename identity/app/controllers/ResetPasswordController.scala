@@ -1,5 +1,7 @@
 package controllers
 
+import java.nio.file.Paths
+
 import common.ImplicitControllerExecutionContext
 import model.{ApplicationContext, IdentityPage, NoCache}
 import play.api.data.{Form, Forms}
@@ -28,7 +30,7 @@ class ResetPasswordController(
 )(implicit context: ApplicationContext)
   extends BaseController with ImplicitControllerExecutionContext with SafeLogging with Mappings with implicits.Forms {
 
-  private val page = IdentityPage("/reset-password", "Reset Password")
+  private val page = IdentityPage("/reset-password", "Reset Password", isFlow = true)
 
   private val requestPasswordResetForm = Form(
     Forms.single(
@@ -36,31 +38,27 @@ class ResetPasswordController(
     )
   )
 
-  private val requestPasswordResetFormWithConstraints = Form(
-    Forms.single(
-      "email-address" -> of[String].verifying(Constraints.nonEmpty)
-    )
-  )
-
   private val passwordResetForm = Form(
     Forms.tuple (
       "password" -> Forms.text,
       "password-confirm" ->  Forms.text,
-      "email-address" -> Forms.text
+      "email-address" -> Forms.text,
+      "returnUrl" -> Forms.optional(text)
     )
   )
 
-  private def passwordResetFormWithConstraints(implicit messagesProvider: MessagesProvider): Form[(String, String, String)] = Form(
+  private def passwordResetFormWithConstraints(implicit messagesProvider: MessagesProvider): Form[(String, String, String, Option[String])] = Form(
     Forms.tuple (
       "password" ->  idPassword
         .verifying(Constraints.nonEmpty),
       "password-confirm" ->  idPassword
         .verifying(Constraints.nonEmpty),
-      "email-address" -> of[String].verifying(Constraints.nonEmpty)
+      "email-address" -> of[String].verifying(Constraints.nonEmpty),
+      "returnUrl" -> Forms.optional(text)
     ) verifying(Messages("error.passwordsMustMatch"), { f => f._1 == f._2 }  )
   )
 
-  private def clearPasswords(form: Form[(String, String, String)]): Form[(String, String, String)] = form.copy(
+  private def clearPasswords(form: Form[(String, String, String, Option[String])]): Form[(String, String, String, Option[String])] = form.copy(
     data = form.data + ("password" -> "", "password-confirm" -> "")
   )
 
@@ -72,31 +70,31 @@ class ResetPasswordController(
     )(page, request, context))
   }
 
-  def renderResetPassword(token: String): Action[AnyContent] = Action{ implicit request =>
+  def renderResetPassword(token: String, returnUrl: Option[String]): Action[AnyContent] = Action{ implicit request =>
     val idRequest = idRequestParser(request)
     val boundForm = passwordResetForm.bindFromFlash.getOrElse(passwordResetForm)
     NoCache(Ok(
       IdentityHtmlPage.html(
-        views.html.password.resetPassword(page, idRequest, idUrlBuilder, boundForm, token)
+        views.html.password.resetPassword(page, idRequest, idUrlBuilder, boundForm, token, returnUrl.getOrElse(""))
       )(page, request, context)
     ))
   }
 
-  def resetPassword(token : String): Action[AnyContent] = Action.async { implicit request =>
+  def resetPassword(token : String, returnUrl: Option[String]): Action[AnyContent] = Action.async { implicit request =>
     val boundForm = passwordResetFormWithConstraints.bindFromRequest
 
-    def onError(formWithErrors: Form[(String, String, String)]): Future[Result] = {
+    def onError(formWithErrors: Form[(String, String, String, Option[String])]): Future[Result] = {
       logger.info("form errors in reset password attempt")
       Future.successful {
         NoCache(
-          SeeOther(routes.ResetPasswordController.renderResetPassword(token).url)
+          SeeOther(routes.ResetPasswordController.renderResetPassword(token, returnUrl).url)
             .flashing(clearPasswords(formWithErrors).toFlash)
         )
       }
     }
 
-    def onSuccess(form: (String, String, String)): Future[Result] = form match {
-      case (password, password_confirm, email_address) =>
+    def onSuccess(form: (String, String, String, Option[String])): Future[Result] = form match {
+      case (password, password_confirm, email_address, returnUrl) =>
 
         val authResponse = api.resetPassword(token,password)
         signInService.getCookies(authResponse, true) map {
@@ -117,7 +115,7 @@ class ResetPasswordController(
 
           case Right(responseCookies) =>
             logger.trace("Logging user in")
-            SeeOther(routes.ResetPasswordController.renderPasswordResetConfirmation.url)
+            SeeOther(routes.ResetPasswordController.renderPasswordResetConfirmation(returnUrl).url)
               .withCookies(responseCookies:_*)
         }
     }
@@ -125,15 +123,15 @@ class ResetPasswordController(
     boundForm.fold[Future[Result]](onError, onSuccess)
   }
 
-  def renderPasswordResetConfirmation: Action[AnyContent] = Action{ implicit request =>
+  def renderPasswordResetConfirmation(returnUrl: Option[String]): Action[AnyContent] = Action{ implicit request =>
     val idRequest = idRequestParser(request)
     val userIsLoggedIn = authenticationService.userIsFullyAuthenticated(request)
     Ok(IdentityHtmlPage.html(
-      views.html.password.passwordResetConfirmation(page, idRequest, idUrlBuilder, userIsLoggedIn)
+      views.html.password.passwordResetConfirmation(page, idRequest, idUrlBuilder, userIsLoggedIn, returnUrl)
     )(page, request, context))
   }
 
-  def processUpdatePasswordToken( token : String): Action[AnyContent] = Action.async { implicit request =>
+  def processUpdatePasswordToken(token : String, returnUrl: Option[String]): Action[AnyContent] = Action.async { implicit request =>
     val idRequest = idRequestParser(request)
     api.userForToken(token) map {
       case Left(errors) =>
@@ -141,8 +139,8 @@ class ResetPasswordController(
         val idRequest = idRequestParser(request)
         NoCache(SeeOther(idUrlBuilder.buildUrl("/reset/resend", idRequest)))
       case Right(user) =>
-        val filledForm = passwordResetForm.fill("","", user.primaryEmailAddress)
-        NoCache(SeeOther(routes.ResetPasswordController.renderResetPassword(token).url).flashing(filledForm.toFlash))
+        val filledForm = passwordResetForm.fill("","", user.primaryEmailAddress, returnUrl)
+        NoCache(SeeOther(routes.ResetPasswordController.renderResetPassword(token, returnUrl).url).flashing(filledForm.toFlash))
    }
   }
 }

@@ -1,14 +1,10 @@
 .badge-slot {
-    width: 37px;
-
     @include mq($until: leftCol) {
         float: left;
-        margin-right: $gs-gutter / 4;
+        margin-right: $gs-gutter / 2;
     }
 
     @include mq(desktop) {
-        width: gs-span(1);
-
         article:not(.content--type-immersive) & {
             margin-bottom: $gs-baseline / 2;
         }
@@ -17,21 +13,10 @@
 
 .badge-slot__img {
     display: block;
-    width: 100%;
-}
+    height: 42px;
+    width: auto;
 
-/* Content Rules
-   ========================================================================== */
-.content__head--is-badged {
-    .content__header {
-        @include mq($from: leftCol) {
-            // Prevents badged labels area overlapping meta
-            min-height: gs-height(4);
-        }
-    }
-
-    .content__section-label,
-    .content__series-label {
-        float: none;
+    @include mq(leftCol) {
+        height: 54px;
     }
 }

@@ -23,8 +23,8 @@
     }
 }
 
-.fc-container--story-package:not([data-component='royal-wedding']) {
-    background-color: $garnett-neutral-4;
+.fc-container--story-package {
+    background-color: $brightness-86;
 
     .fc-container__toggle {
         display: none;
@@ -77,17 +77,17 @@
     .fc-item.fc-item--pillar-arts.fc-item--type-comment,
     .fc-item.fc-item--type-feature
     {
-        background-color: $story-package-garnett;
+        background-color: $special-report-dark;
 
         &:hover {
-            background-color: darken($story-package-garnett, 5%);
+            background-color: darken($special-report-dark, 5%);
 
             .fc-trail__count--commentcount {
-                background-color: darken($story-package-garnett, 5%);
+                background-color: darken($special-report-dark, 5%);
             }
         }
         .fc-trail__count--commentcount {
-            background-color: $story-package-garnett;
+            background-color: $special-report-dark;
         }
 
         .fc-item__headline {
@@ -102,7 +102,7 @@
     .fc-item--pillar-lifestyle.fc-item--type-comment
     {
         .fc-item__meta {
-            @include multiline(4, $garnett-neutral-6, $position: bottom);
+            @include multiline(4, $brightness-46, $position: bottom);
         }
 
         .fc-item__standfirst-wrapper .fc-item__meta {
@@ -111,7 +111,7 @@
     }
 
     .fc-item__container.u-faux-block-link--hover {
-        background-color: darken($story-package-garnett, 5%) !important;
+        background-color: darken($special-report-dark, 5%) !important;
     }
 
     .fc-item__standfirst {
@@ -124,17 +124,17 @@
 
     .treats__list-item {
         .treats__treat {
-            background-color: $garnett-neutral-4;
-            border-color: $story-package-garnett;
-            color: $story-package-garnett;
+            background-color: $brightness-86;
+            border-color: $special-report-dark;
+            color: $special-report-dark;
         }
     }
 
     //These need to exist for all kickers because of tone on tone action
-    @include kicker-override(lifestyle, $lifestyle-garnett-media-main-1);
-    @include kicker-override(arts, $culture-garnett-media-main-1);
-    @include kicker-override(sport, $sport-garnett-media-main-1);
-    @include kicker-override(opinion, $opinion-garnett-media-main-1);
-    @include kicker-override(news, $news-garnett-media-main-1);
-    @include kicker-override(special-report, $news-garnett-highlight);
+    @include kicker-override(lifestyle, $lifestyle-bright);
+    @include kicker-override(arts, $culture-bright);
+    @include kicker-override(sport, $sport-bright);
+    @include kicker-override(opinion, $opinion-bright);
+    @include kicker-override(news, $news-bright);
+    @include kicker-override(special-report, $highlight-main);
 }

@@ -1,86 +1,86 @@
 $pillars: (
     news: (
-        cardBackground: $garnett-neutral-3,
-        lines: $news-garnett-main-1,
-        kicker: $news-garnett-main-1,
-        headline: $garnett-neutral-1,
-        featureHeadline: $news-garnett-feature,
-        byline: $news-garnett-main-1,
-        commentCount: $garnett-neutral-2,
-        headlineIcon: $news-garnett-main-1,
-        metaText: $garnett-neutral-2,
-        cutoutBackground: $news-garnett-main-1,
-        invertedKicker: $news-garnett-media-main-1,
-        liveColour: $live-garnett-main-2
+        cardBackground: $brightness-97,
+        lines: $news-main,
+        kicker: $news-main,
+        headline: $brightness-7,
+        featureHeadline: $news-dark,
+        byline: $news-main,
+        commentCount: $brightness-60,
+        headlineIcon: $news-main,
+        metaText: $brightness-60,
+        cutoutBackground: $news-main,
+        invertedKicker: $news-bright,
+        liveColour: $news-pastel
     ),
     opinion: (
-        cardBackground: $garnett-neutral-3,
-        lines: $opinion-garnett-main-1,
-        kicker: $opinion-garnett-main-1,
-        headline: $garnett-neutral-1,
-        featureHeadline: $opinion-garnett-feature,
-        byline: $opinion-garnett-main-1,
-        commentCount: $garnett-neutral-6,
-        headlineIcon: $opinion-garnett-main-1,
-        metaText: $garnett-neutral-2,
-        cutoutBackground: $opinion-garnett-main-1,
-        invertedKicker: $opinion-garnett-media-main-1,
-        liveColour: #ffffff
+        cardBackground: $brightness-97,
+        lines: $opinion-main,
+        kicker: $opinion-main,
+        headline: $brightness-7,
+        featureHeadline: $opinion-dark,
+        byline: $opinion-main,
+        commentCount: $brightness-46,
+        headlineIcon: $opinion-main,
+        metaText: $brightness-60,
+        cutoutBackground: $opinion-main,
+        invertedKicker: $opinion-bright,
+        liveColour: $opinion-pastel
     ),
     sport: (
-        cardBackground: $garnett-neutral-3,
-        lines: $sport-garnett-main-1,
-        kicker: $sport-garnett-main-1,
-        headline: $garnett-neutral-1,
-        featureHeadline: $sport-garnett-feature,
-        byline: $sport-garnett-main-1,
-        commentCount: $garnett-neutral-2,
-        headlineIcon: $sport-garnett-main-1,
-        metaText: $garnett-neutral-2,
-        cutoutBackground: $sport-garnett-feature,
-        invertedKicker: $sport-garnett-media-main-1,
-        liveColour: $live-garnett-sport2
+        cardBackground: $brightness-97,
+        lines: $sport-main,
+        kicker: $sport-main,
+        headline: $brightness-7,
+        featureHeadline: $sport-dark,
+        byline: $sport-main,
+        commentCount: $brightness-60,
+        headlineIcon: $sport-main,
+        metaText: $brightness-60,
+        cutoutBackground: $sport-dark,
+        invertedKicker: $sport-bright,
+        liveColour: $sport-pastel
     ),
     arts: (
-        cardBackground: $garnett-neutral-3,
-        lines: $culture-garnett-main-1,
-        kicker: $culture-garnett-main-1,
-        headline: $garnett-neutral-1,
-        featureHeadline: $culture-garnett-feature,
-        byline: $culture-garnett-main-1,
-        commentCount: $garnett-neutral-2,
-        headlineIcon: $culture-garnett-main-1,
-        metaText: $garnett-neutral-2,
-        cutoutBackground: $culture-garnett-main-1,
-        invertedKicker: $culture-garnett-media-main-1,
-        liveColour: $live-garnett-culture2
+        cardBackground: $brightness-97,
+        lines: $culture-main,
+        kicker: $culture-main,
+        headline: $brightness-7,
+        featureHeadline: $culture-dark,
+        byline: $culture-main,
+        commentCount: $brightness-60,
+        headlineIcon: $culture-main,
+        metaText: $brightness-60,
+        cutoutBackground: $culture-main,
+        invertedKicker: $culture-bright,
+        liveColour: $culture-pastel
     ),
     lifestyle: (
-        cardBackground: $garnett-neutral-3,
-        lines: $lifestyle-garnett-main-1,
-        kicker: $lifestyle-garnett-main-1,
-        headline: $garnett-neutral-1,
-        featureHeadline: $lifestyle-garnett-feature,
-        byline: $lifestyle-garnett-main-1,
-        commentCount: $garnett-neutral-2,
-        headlineIcon: $lifestyle-garnett-main-1,
-        metaText: $garnett-neutral-2,
-        cutoutBackground: $lifestyle-garnett-feature,
-        invertedKicker: $lifestyle-garnett-media-main-1,
-        liveColour: $live-garnett-lifestyle2
+        cardBackground: $brightness-97,
+        lines: $lifestyle-main,
+        kicker: $lifestyle-main,
+        headline: $brightness-7,
+        featureHeadline: $lifestyle-dark,
+        byline: $lifestyle-main,
+        commentCount: $brightness-60,
+        headlineIcon: $lifestyle-main,
+        metaText: $brightness-60,
+        cutoutBackground: $lifestyle-dark,
+        invertedKicker: $lifestyle-bright,
+        liveColour: $lifestyle-pastel
     ),
     special-report: (
-        cardBackground: $story-package-garnett,
-        lines: $news-garnett-highlight,
-        kicker: $news-garnett-highlight,
+        cardBackground: $special-report-dark,
+        lines: $highlight-main,
+        kicker: $highlight-main,
         headline: #ffffff,
         featureHeadline: #ffffff,
-        byline: $story-package-garnett,
-        commentCount: $garnett-neutral-2,
-        headlineIcon: $story-package-garnett,
-        metaText: $garnett-neutral-2,
-        cutoutBackground: $news-garnett-highlight,
-        invertedKicker: $news-garnett-highlight,
+        byline: $special-report-dark,
+        commentCount: $brightness-60,
+        headlineIcon: $special-report-dark,
+        metaText: $brightness-60,
+        cutoutBackground: $highlight-main,
+        invertedKicker: $highlight-main,
         liveColour: #ffffff
     )
 );
@@ -104,7 +104,7 @@ $pillars: (
 
         .fc-item__timestamp,
         .fc-trail__count--commentcount {
-            background-color: darken($opinion-garnett-background, 3%);
+            background-color: darken($opinion-faded, 3%);
         }
     }
 
@@ -125,10 +125,7 @@ $pillars: (
         color: map-get($palette, kicker);
     }
 
-    &.fc-item--half-tablet.fc-item--type-immersive.fc-item--has-boosted-title.fc-item--standard-mobile,
-    &.fc-item--third-tablet.fc-item--type-immersive.fc-item--has-boosted-title.fc-item--standard-mobile,
-    &.fc-item--three-quarters-tablet.fc-item--type-immersive.fc-item--has-boosted-title.fc-item--standard-mobile,
-    &.fc-item--third-tablet.fc-item--type-immersive.fc-item--has-boosted-title  {
+    &.fc-item--type-immersive.fc-item--has-boosted-title.fc-item--standard-mobile {
         .fc-item__content {
             background-color: map-get($palette, kicker);
         }
@@ -172,26 +169,19 @@ $pillars: (
         }
     }
 
-    &.fc-item--standard-tablet.fc-item--type-immersive.fc-item--has-boosted-title .fc-item__kicker,
-    &.fc-item--list-media-tablet.fc-item--type-immersive.fc-item--has-boosted-title .fc-item__kicker,
-    &.fc-item--list-tablet.fc-item--type-immersive.fc-item--has-boosted-title .fc-item__kicker
+    &.fc-item--type-immersive.fc-item--has-boosted-title .fc-item__kicker
     {
         color: map-get($palette, kicker);
     }
 
-    &.fc-item--standard-tablet.fc-item--type-immersive.fc-item--has-boosted-title:not(.fc-item--pillar-special-report) .fc-item__standfirst {
-        color: $garnett-neutral-1;
+    &.fc-item--type-immersive.fc-item--has-boosted-title:not(.fc-item--pillar-special-report) .fc-item__standfirst {
+        color: $brightness-7;
     }
 
-    &.fc-item--standard-tablet.fc-item--type-immersive.fc-item--has-boosted-title .inline-icon,
-    &.fc-item--standard-tablet.fc-item--type-immersive.fc-item--has-boosted-title .fc-item__meta,
-    &.fc-item--list-media-tablet.fc-item--type-immersive.fc-item--has-boosted-title .inline-icon,
-    &.fc-item--list-media-tablet.fc-item--type-immersive.fc-item--has-boosted-title .fc-item__meta,
-    &.fc-item--list-tablet.fc-item--type-immersive.fc-item--has-boosted-title .inline-icon,
-    &.fc-item--list-tablet.fc-item--type-immersive.fc-item--has-boosted-title .fc-item__meta
+    &.fc-item--type-immersive.fc-item--has-boosted-title .inline-icon
     {
-        fill: $garnett-neutral-6;
-        color: $garnett-neutral-6;
+        fill: $brightness-46;
+        color: $brightness-46;
     }
 
     .fc-item__standfirst {
@@ -280,11 +270,11 @@ $pillars: (
         &.fc-item--pillar-sport,
         &.fc-item--pillar-arts,
         &.fc-item--pillar-lifestyle {
-            background-color: $opinion-garnett-background;
+            background-color: $opinion-faded;
         }
 
         .fc-item__container.u-faux-block-link--hover {
-            background-color: darken($opinion-garnett-background, 2%);
+            background-color: darken($opinion-faded, 2%);
         }
 
         .fc-item__avatar {
@@ -294,7 +284,7 @@ $pillars: (
         .fc-item__timestamp,
         .fc-trail__count--commentcount {
             color: map-get($palette, commentCount);
-            background-color: $opinion-garnett-background;
+            background-color: $opinion-faded;
 
             .inline-icon {
                 fill: map-get($palette, commentCount);
@@ -308,7 +298,7 @@ $pillars: (
 
             .fc-item__timestamp,
             .fc-trail__count--commentcount {
-                background-color: darken($opinion-garnett-background, 2%);
+                background-color: darken($opinion-faded, 2%);
             }
         }
     }
@@ -333,7 +323,7 @@ $pillars: (
     &.fc-item--pillar-news.video-playlist__item,
     &.fc-item--pillar-news.fc-item--type-immersive {
         .fc-item__kicker {
-            color: $paid-card-kicker;
+            color: $brightness-46;
         }
     }
 }
@@ -342,39 +332,51 @@ $pillars: (
 
 .fc-item--pillar-special-report,
 .fc-item--pillar-special-report.fc-item--type-feature {
+    &.fc-item--type-immersive.fc-item--has-boosted-title.fc-item--standard-mobile {
+        .fc-item__content {
+            background-color: $special-report-dark;
+        }
+
+        &:hover {
+            .fc-item__content {
+                background-color: darken($special-report-dark, 5%);
+            }
+        }
+    }
+
     &.fc-item--type-comment {
         .fc-item__headline,
         .fc-item__standfirst {
-            color: $story-package-garnett;
+            color: $special-report-dark;
         }
 
         .fc-item__byline {
-            color: $story-package-garnett;
-            background-color: $news-garnett-highlight;
+            color: $special-report-dark;
+            background-color: $highlight-main;
             display: inline;
         }
 
         .fc-item__kicker {
-            color: $story-package-garnett;
+            color: $special-report-dark;
         }
     }
 
     &.fc-item--type-media {
-        background-color: darken($story-package-garnett, 8%);
+        background-color: darken($special-report-dark, 8%);
 
         .youtube-media-atom__play-button.vjs-control-text {
             .inline-play svg {
-                fill: $garnett-neutral-1;
+                fill: $brightness-7;
             }
         }
     }
 
     .fc-item__container.u-faux-block-link--hover {
-        background-color: darken($story-package-garnett, 2%);
+        background-color: darken($special-report-dark, 2%);
     }
 
     .fc-sublink__kicker {
-        color: $news-garnett-highlight;
+        color: $highlight-main;
     }
 
     .fc-sublink__title {

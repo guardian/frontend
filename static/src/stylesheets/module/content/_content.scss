@@ -89,7 +89,7 @@
 .content__hr {
     border: 0;
     margin: 0;
-    border-top: 1px dotted $neutral-5;
+    border-top: 1px dotted $brightness-86;
     padding-top: 5px;
 }
 
@@ -118,7 +118,7 @@
     padding-bottom: $gs-baseline/3;
 
     .content--media & a {
-        color: $neutral-5;
+        color: $brightness-86;
     }
 }
 
@@ -139,7 +139,7 @@
 }
 
 .content__labels--not-immersive {
-    border-bottom: 1px dotted $neutral-5;
+    border-bottom: 1px dotted $brightness-86;
 
     @include mq($until: tablet) {
         border: 0;
@@ -200,8 +200,8 @@
     font-weight: bold;
 }
 
-.content__series-label__link {
-    color: $neutral-2;
+.content__label__link {
+    color: $brightness-46;
 }
 
 @include mq(leftCol, wide) {
@@ -226,7 +226,7 @@
     @include fs-header(3);
     box-sizing: border-box;
     padding: $gs-baseline/2 0 $gs-baseline;
-    border-top: 1px dotted $neutral-5 !important; // Disable tone colour
+    border-top: 1px dotted $brightness-86 !important; // Disable tone colour
 }
 
 .content__headline {
@@ -252,7 +252,7 @@
         &:hover,
         &:active,
         &:focus {
-            color: $neutral-1;
+            color: $brightness-7;
         }
     }
 
@@ -353,7 +353,7 @@
 .content__standfirst {
     @include fs-headline(2);
     margin-bottom: $gs-baseline/2;
-    color: $neutral-2;
+    color: $brightness-46;
 
     @include mq(tablet) {
         @include font-size(18px, 22px);
@@ -391,7 +391,7 @@
             left: -16px;
             content: counter(li);
             counter-increment: li;
-            color: $neutral-3;
+            color: $brightness-86;
 
             @include mq(tablet) {
                 @include fs-header(3, true);
@@ -405,7 +405,7 @@
 .content__dateline {
     @include fs-textSans(1);
     position: relative;
-    color: $neutral-2;
+    color: $brightness-46;
     box-sizing: border-box;
     padding-top: $gs-baseline / 6;
     margin-bottom: $gs-baseline / 2;
@@ -440,7 +440,7 @@
         padding-top: $gs-baseline/6;
         padding-bottom: $gs-baseline;
         margin-bottom: 0;
-        border-top: 1px dotted $neutral-5;
+        border-top: 1px dotted $brightness-86;
     }
 }
 
@@ -489,7 +489,7 @@
         height: 60px; //Intentionally off grid
         margin: $gs-baseline/2 0;
         overflow: hidden;
-        background-color: $neutral-7;
+        background-color: $brightness-97;
 
         @include mq(leftCol) {
             width: gs-span(2);
@@ -564,7 +564,7 @@
     @include mq(leftCol) {
         border-top: 1px dotted;
         border-bottom: 1px dotted;
-        border-color: $neutral-5;
+        border-color: $brightness-86;
         height: 36px;
         padding-bottom: $gs-baseline / 4;
         padding-top: $gs-baseline / 4;
@@ -578,7 +578,7 @@
     display: inline-block;
     padding-top: $gs-baseline/3;
     line-height: 20px;
-    color: $neutral-2;
+    color: $brightness-46;
 
     @include mq(tablet) {
         line-height: 22px;
@@ -588,7 +588,7 @@
         clear: both;
         margin-right: 0;
         display: block;
-        border-top: 1px dotted $neutral-5;
+        border-top: 1px dotted $brightness-86;
         box-sizing: border-box;
         padding-top: $gs-baseline/6;
         padding-bottom: $gs-baseline;
@@ -688,20 +688,20 @@
             display: block;
             padding-top: $gs-baseline/3;
             margin-bottom: $gs-baseline;
-            border-top: 1px dotted $neutral-5;
+            border-top: 1px dotted $brightness-86;
         }
     }
 
 }
 
 .paid-content {
-    color: $neutral-1;
+    color: $brightness-7;
 
 
     .content__standfirst,
     .content__dateline,
     .caption--main {
-        color: $neutral-2-contrasted;
+        color: $brightness-46;
     }
     .content__headline,
     .content__standfirst {
@@ -713,20 +713,20 @@
     .element.element-pullquote {
         .pullquote-paragraph {
             font-family: $f-sans-serif-text;
-            color: $paid-article-brand;
+            color: $labs-main;
         }
     }
     a.in-body-link--immersive {
-        color: $paid-article-brand;
+        color: $labs-main;
     }
 
     &.content--article,
     &.content--interactive,
     &.tonal--tone-media {
-        background-color: $paid-article;
+        background-color: $brightness-86;
 
         .caption :not(caption--main) {
-            color: $neutral-1;
+            color: $brightness-7;
         }
     }
 
@@ -739,7 +739,7 @@
     }
 
     .content__header {
-        background-color: $paid-article-header;
+        background-color: $brightness-86;
     }
 
     .tonal__standfirst {
@@ -748,33 +748,33 @@
         padding: $gs-baseline 0 $gs-baseline*2;
 
         .content__standfirst {
-            color: $neutral-1;
+            color: $brightness-7;
         }
     }
 
     .tone-media--item {
-        color: $neutral-1;
+        color: $brightness-7;
 
         .rich-link__container:before {
-            background-color: $news-support-3
+            background-color: $labs-main
         }
 
         .rich-link__standfirst {
-            color: $neutral-1;
+            color: $brightness-7;
             font-family: $f-sans-serif-text;
         }
 
         .rich-link__kicker, .rich-link__read-more-text {
-            color: $paid-article-richlink;
+            color: $labs-dark;
         }
 
         .rich-link__arrow-icon {
-            fill: $paid-article-richlink;
+            fill: $labs-dark;
         }
     }
 
     .tone-news--item.rich-link {
-        background: $paid-article-subheader;
+        background: $brightness-86;
     }
 
     .rich-link__header,
@@ -789,29 +789,29 @@
 
     .ad-slot__label,
     .ad-slot--inline {
-        background-color: $paid-article-subheader;
+        background-color: $brightness-86;
         border-top: 0;
-        color: $neutral-2-contrasted;
+        color: $brightness-46;
     }
 
     .content__section-label {
         @include f-textSans;
         font-weight: 400;
 
-        .content__section-label__link {
-            color: $neutral-1;
+        .content__label__link {
+            color: $brightness-7;
         }
     }
 
     .meta__extras {
-        border-color: $paid-article-header;
+        border-color: $brightness-86;
     }
 
     .social--expanded-top {
-        background-color: $paid-article;
+        background-color: $brightness-86;
 
         .inline-close {
-            background-color: $neutral-6;
+            background-color: $brightness-93;
         }
     }
 
@@ -819,17 +819,17 @@
         .content__headline,
         .from-content-api,
         .tonal__main .tone-colour {
-            color: $neutral-1;
+            color: $brightness-7;
 
             .inline-icon {
-                fill: $neutral-2;
+                fill: $brightness-46;
             }
         }
 
         .most-viewed-container--media,
         .meta__number {
             .inline-icon {
-                fill: $neutral-2;
+                fill: $brightness-46;
             }
         }
 
@@ -845,13 +845,13 @@
         .meta__numbers .sharecount__heading,
         .meta__numbers .commentcount2__heading,
         .content__dateline,
-        .content__series-label__link {
-            color: $neutral-2-contrasted;
+        .content__label__link {
+            color: $brightness-46;
         }
 
         .tonal__main--tone-media .sharecount__value,
         .tonal__main--tone-media .commentcount2__value {
-            color: $neutral-1;
+            color: $brightness-7;
         }
 
         .byline,
@@ -861,42 +861,42 @@
         .meta__numbers,
         .meta__social,
         .meta__number + .meta__number {
-            border-color: $neutral-3;
+            border-color: $brightness-86;
         }
 
         .byline {
             .tone-colour {
-                color: $neutral-2-contrasted;
+                color: $brightness-46;
                 &:hover {
-                    color: $neutral-1;
+                    color: $brightness-7;
                 }
             }
         }
 
         .meta__twitter .button {
-            color: $neutral-2-contrasted;
-            background-color: $neutral-6;
+            color: $brightness-46;
+            background-color: $brightness-93;
 
             &:hover {
-                color: $neutral-2-contrasted;
-                background-color: $neutral-3;
+                color: $brightness-46;
+                background-color: $brightness-86;
             }
         }
 
         .button--tone-media {
-            color: $neutral-1;
-            background-color: $neutral-6;
-            border-color: $neutral-6;
+            color: $brightness-7;
+            background-color: $brightness-93;
+            border-color: $brightness-93;
 
             &:hover {
-                background-color: $neutral-3;
-                border-color: $neutral-3;
+                background-color: $brightness-86;
+                border-color: $brightness-86;
             }
         }
 
         .content__main-column--audio {
             .caption--img {
-                color: $neutral-4;
+                color: $brightness-86;
             }
         }
 
@@ -904,12 +904,12 @@
         .vjs-control-bar,
         .vjs-embed-button:hover .vjs-control-text,
         .vjs-progress-holder:before {
-            color: $multimedia-main-1;
-            background: $paid-article-media-bg;
+            color: $brightness-20;
+            background: $brightness-60;
 
             .podcast-meta__item__link,
             .vjs-duration {
-                color: $multimedia-main-1;
+                color: $brightness-20;
             }
         }
 
@@ -934,24 +934,24 @@
         }
 
         .vjs-volume-bar:before {
-            background-color: $neutral-1;
+            background-color: $brightness-7;
         }
 
         .end-slate-container--video {
-            background-color: $paid-article;
+            background-color: $brightness-86;
 
             .end-slate-container__heading {
-                color: $news-support-7;
+                color: $brightness-20;
             }
 
             .fc-item__container {
                 &:before {
-                    background: $neutral-2;
+                    background: $brightness-46;
                 }
             }
 
             .fc-item__action {
-                color: $neutral-2-contrasted;
+                color: $brightness-46;
             }
         }
     }
@@ -959,20 +959,20 @@
     &.tonal--tone-media,
     &.tonal--tone-news {
         .save-for-later__button {
-            color: $neutral-2-contrasted;
+            color: $brightness-46;
         }
         .save-for-later__button--save,
         .save-for-later__button--saved {
             .inline-icon {
-                fill: $neutral-2-contrasted;
-                border-color: $neutral-2-contrasted;
-                background-color: $paid-article;
+                fill: $brightness-46;
+                border-color: $brightness-46;
+                background-color: $brightness-86;
             }
             &:hover {
                 .inline-icon {
-                    fill: $paid-article;
-                    border-color: $neutral-2-contrasted;
-                    background-color: $neutral-2-contrasted;
+                    fill: $brightness-86;
+                    border-color: $brightness-46;
+                    background-color: $brightness-46;
                 }
             }
         }
@@ -984,7 +984,7 @@
         }
 
         .content__standfirst {
-            color: $neutral-2-contrasted;
+            color: $brightness-46;
 
             a {
                 color: $guardian-brand;
@@ -996,18 +996,18 @@
         }
 
         .ad-slot--dark {
-            background-color: $paid-article-subheader;
+            background-color: $brightness-86;
         }
     }
 
     &.content--media--audio {
         .content__headline:before {
-            @include icon(volume-high-black, $with-width: false);
+            @include icon(volume-high-brightness-7, $with-width: false);
         }
     }
 
     .fc-item__title svg {
-        fill: $multimedia-main-2;
+        fill: $highlight-main;
     }
 }
 
@@ -1016,15 +1016,15 @@
     padding-top: ($gs-baseline/3);
     padding-bottom: ($gs-baseline/3)*4;
     margin-bottom: 0;
-    border-top: 1px solid $neutral-4;
+    border-top: 1px solid $brightness-86;
 }
 
 .meta__extras {
     position: relative;
     clear: both;
     min-height: 45px;
-    border-top: 1px dotted $neutral-5;
-    border-bottom: 1px dotted $neutral-5;
+    border-top: 1px dotted $brightness-86;
+    border-bottom: 1px dotted $brightness-86;
 
     @include mq(leftCol) {
         border: 0;
@@ -1040,7 +1040,7 @@
     box-sizing: border-box;
 
     @include mq(leftCol) {
-        border-top: 1px dotted $neutral-5;
+        border-top: 1px dotted $brightness-86;
     }
 
     .meta__extras--crossword & {
@@ -1100,16 +1100,16 @@
 
         .tonal--tone-media & {
             border: 0;
-            color: $neutral-3;
-            background-color: $media-mute;
+            color: $brightness-86;
+            background-color: $brightness-20;
 
             .inline-tone-fill {
-                fill: $neutral-3;
+                fill: $brightness-86;
             }
 
             &:hover {
-                color: $neutral-3;
-                background-color: darken($media-mute, 5%);
+                color: $brightness-86;
+                background-color: darken($brightness-20, 5%);
             }
         }
 
@@ -1191,19 +1191,19 @@
     margin-bottom: $gs-baseline;
     padding-top: $gs-baseline/2;
 
-    color: $neutral-2;
+    color: $brightness-46;
 
     @include mq($until: leftCol) {
         display: none;
     }
 
     .tonal--tone-media & {
-        color: $neutral-7;
+        color: $brightness-97;
     }
 
     .meta__author--comment & {
         padding-top: $gs-baseline/6;
-        border-top: 1px dotted $neutral-5;
+        border-top: 1px dotted $brightness-86;
     }
 
     .content__meta-container--twitter &,
@@ -1212,7 +1212,7 @@
     }
 
     .content__meta-container--tonal-header & {
-        border-top: 1px dotted $neutral-5;
+        border-top: 1px dotted $brightness-86;
         padding-top: $gs-baseline/6;
     }
 }
@@ -1220,9 +1220,9 @@
 .meta__contact-header {
     @include fs-textSans(1);
     line-height: 15px;
-    color: $neutral-2;
+    color: $brightness-46;
     margin-bottom: 0;
-    border-top: 1px dotted $neutral-5;
+    border-top: 1px dotted $brightness-86;
     padding-top: $gs-baseline/6;
 
     .content__meta-container--bio & {
@@ -1245,21 +1245,21 @@
 .old-article-message {
     @include fs-textSans(1);
     display: inline-block;
-    color: $neutral-2;
+    color: $brightness-46;
     margin-bottom: $gs-baseline;
 
     .old-article-message--clock svg {
-        fill: $neutral-2;
+        fill: $brightness-46;
         margin-bottom: -1px;
     }
 }
 
 .tonal--tone-media {
     .old-article-message {
-        color: $neutral-3;
+        color: $brightness-86;
 
         .old-article-message--clock svg {
-            fill: $neutral-3;
+            fill: $brightness-86;
         }
     }
 }

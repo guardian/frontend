@@ -8,6 +8,8 @@ import { isBreakpoint } from 'lib/detect';
 import { begin } from 'common/modules/analytics/register';
 import uniq from 'lodash/arrays/uniq';
 
+type MessagePosition = 'top' | 'bottom';
+
 /**
  * Message provides a common means of flash messaging a user in the UI.
  *
@@ -22,7 +24,7 @@ class Message {
     blocking: boolean;
     trackDisplay: boolean;
     type: string;
-    pinOnHide: boolean;
+    position: MessagePosition;
     siteMessageComponentName: string;
     siteMessageLinkName: string;
     siteMessageCloseBtn: string;
@@ -34,7 +36,6 @@ class Message {
     $siteMessage: Object;
     $siteMessageContainer: Object;
     $siteMessageOverlay: Object;
-    $footerMessage: Object;
 
     constructor(id: string, options?: Object) {
         const opts = options || {};
@@ -44,7 +45,7 @@ class Message {
         this.blocking = opts.blocking || false;
         this.trackDisplay = opts.trackDisplay || false;
         this.type = opts.type || 'banner';
-        this.pinOnHide = opts.pinOnHide || false;
+        this.position = opts.position || 'bottom';
         this.siteMessageComponentName = opts.siteMessageComponentName || '';
         this.siteMessageLinkName = opts.siteMessageLinkName || '';
         this.siteMessageCloseBtn = opts.siteMessageCloseBtn || '';
@@ -53,32 +54,39 @@ class Message {
         this.cssModifierClass = opts.cssModifierClass || '';
         this.customJs = opts.customJs || noop;
         this.customOpts = opts.customOpts || {};
-        this.$footerMessage = $('.js-footer-message');
         this.$siteMessageContainer = $('.js-site-message');
         this.$siteMessageOverlay = $('.js-site-message-overlay');
     }
 
     show(message: string): boolean {
-        if (this.pinOnHide) {
-            $('.js-footer-site-message-copy').html(message);
-        }
-
         // don't let messages unknowingly overwrite each other
         if (
-            (!this.$siteMessageContainer.hasClass('is-hidden') &&
-                !this.important) ||
-            this.hasSeen()
+            !this.$siteMessageContainer.hasClass('is-hidden') &&
+            !this.important
         ) {
             // if we're not showing a banner message, display it in the footer
-            if (this.pinOnHide) {
-                this.$footerMessage.removeClass('is-hidden');
-            }
             return false;
         }
+
+        // Move the message to the top if needed
+        if (this.position === 'top') {
+            const bodyEl: ?HTMLElement = document.body;
+            if (!bodyEl) throw new Error('Missing <body>');
+            const bodyElFirstChild: ?Node = bodyEl.childNodes[0];
+            if (!bodyElFirstChild) throw new Error('<body> is empty');
+
+            bodyEl.insertBefore(
+                this.$siteMessageContainer[0],
+                bodyElFirstChild
+            );
+            this.$siteMessageContainer.addClass('site-message--on-top');
+        }
+
         $('.js-site-message-copy').html(message);
 
         // Add a blocking overlay if needed
         if (this.blocking) {
+            $('body, html').addClass('is-scroll-blocked');
             this.$siteMessageOverlay.removeClass('is-hidden');
             this.$siteMessageOverlay[0].addEventListener('click', () => {
                 this.$siteMessageContainer[0].focus();
@@ -184,16 +192,9 @@ class Message {
 
     hide(): void {
         $('#header').removeClass('js-site-message');
-        $('.js-site-message').addClass('is-hidden');
-        $('.js-site-message-overlay').addClass('is-hidden');
-        if (this.pinOnHide) {
-            this.$footerMessage.removeClass('is-hidden');
-        }
-    }
-
-    hasSeen(): boolean {
-        const messageStates = userPrefs.get(this.prefs);
-        return messageStates && messageStates.indexOf(this.id) > -1;
+        this.$siteMessageContainer.addClass('is-hidden');
+        this.$siteMessageOverlay.addClass('is-hidden');
+        $('body, html').removeClass('is-scroll-blocked');
     }
 
     remember(): void {
@@ -236,4 +237,5 @@ class Message {
     }
 }
 
+export type { MessagePosition };
 export { Message };

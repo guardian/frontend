@@ -31,6 +31,36 @@ case class PressedCollection(
   hasMore: Boolean
 ) {
 
+  lazy val isEmpty: Boolean = curated.isEmpty && backfill.isEmpty && treats.isEmpty
+
+  lazy val adFree = {
+    copy(
+      curated = curated.filterNot(_.isPaidFor),
+      backfill = backfill.filterNot(_.isPaidFor),
+      treats = treats.filterNot(_.isPaidFor)
+    )
+  }
+
+  def withoutTrailTextOnTail: PressedCollection = (curated, backfill) match {
+    case (curatedHead :: tail, _) => copy(curated = curatedHead :: tail.map(_.withoutTrailText), backfill = backfill.map(_.withoutTrailText))
+    case (_, backfillHead :: tail) => copy(backfill = backfillHead :: tail.map(_.withoutTrailText))
+    case _ => this
+  }
+
+  def totalSize: Int = curated.size + backfill.size
+
+  def lite(visible: Int): PressedCollection = {
+    val liteCurated = curated.take(visible)
+    val liteBackfill = backfill.take(visible - liteCurated.length)
+    val hasMore = curatedPlusBackfillDeduplicated.length > visible
+    copy(curated = liteCurated, backfill = liteBackfill, hasMore = hasMore)
+  }
+
+  def full(visible: Int): PressedCollection = {
+    val hasMore = curatedPlusBackfillDeduplicated.length > visible
+    copy(hasMore = hasMore)
+  }
+
   lazy val collectionConfigWithId = CollectionConfigWithId(id, config)
 
   lazy val curatedPlusBackfillDeduplicated = (curated ++ backfill).distinctBy { c =>

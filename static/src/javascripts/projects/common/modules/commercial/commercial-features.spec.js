@@ -108,6 +108,14 @@ describe('Commercial features', () => {
             const features = new CommercialFeatures();
             expect(features.dfpAdvertising).toBe(false);
         });
+
+        it('Is enabled for speedcurve tests of ad-free mode', () => {
+            config.switches.adFreeSubscriptionTrial = true;
+            window.location.hash = '#noadsaf';
+            const features = new CommercialFeatures();
+            expect(features.dfpAdvertising).toBe(true);
+            expect(features.adFree).toBe(true);
+        });
     });
 
     describe('Article body adverts', () => {
@@ -338,23 +346,22 @@ describe('Commercial features', () => {
     describe('Comment adverts', () => {
         beforeEach(() => {
             config.page.commentable = true;
-            // isAdFreeUser.mockReturnValue(true);
             isUserLoggedIn.mockReturnValue(true);
         });
 
-        it('Displays when page has comments and user is signed in', () => {
+        it('Displays when page has comments', () => {
+            const features = new CommercialFeatures();
+            expect(features.commentAdverts).toBe(true);
+        });
+
+        it('Will also display when the user is not logged in', () => {
+            isUserLoggedIn.mockReturnValue(false);
             const features = new CommercialFeatures();
             expect(features.commentAdverts).toBe(true);
         });
 
         it('Does not display on minute articles', () => {
             config.page.isMinuteArticle = true;
-            const features = new CommercialFeatures();
-            expect(features.commentAdverts).toBe(false);
-        });
-
-        it('Does not appear when user signed out', () => {
-            isUserLoggedIn.mockReturnValue(false);
             const features = new CommercialFeatures();
             expect(features.commentAdverts).toBe(false);
         });

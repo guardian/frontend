@@ -8,9 +8,6 @@ import { supportContributeURL } from './support-utilities';
 
 const baseParams = {
     minArticles: 3,
-    colourStrategy() {
-        return 'membership-prominent yellow';
-    },
     campaignCode: 'gdnwb_copts_memco_banner',
 };
 
@@ -59,12 +56,13 @@ const supporterCost = (location: string): string => {
             : euro + amount;
     }
 
-    return `${extendedCurrencySymbol[countryGroup]}
-            ${initialContribution}`;
+    return `${extendedCurrencySymbol[countryGroup]}${initialContribution}`;
 };
 
-const supporterEngagementCtaCopyJustOne = (location: string): string =>
-    `Support The Guardian from as little as ${supporterCost(location)}.`;
+const supporterEngagementCtaCopyControl = (location: string): string =>
+    `<span class="support-the-guardian-banner__highlight"> Support The Guardian from as little as ${supporterCost(
+        location
+    )}.</span>`;
 
 export const engagementBannerParams = (
     location: string
@@ -74,6 +72,6 @@ export const engagementBannerParams = (
         linkUrl: supportContributeURL,
         products: ['CONTRIBUTION', 'RECURRING_CONTRIBUTION'],
         messageText: engagementBannerCopy(),
-        ctaText: supporterEngagementCtaCopyJustOne(location),
+        ctaText: supporterEngagementCtaCopyControl(location),
         pageviewId: config.get('ophan.pageViewId', 'not_found'),
     });

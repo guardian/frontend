@@ -25,9 +25,7 @@ export const passwordToggle = (): void => {
             const password = form.querySelector('.js-register-password');
             const toggleClass = 'js-toggle-password';
             const toggleTmpl = `<div class="form-field__note form-field__note--right mobile-only"> 
-                    <a href="#toggle-password" class="'${
-                        toggleClass
-                    }" data-password-label="Show password"
+                    <a href="#toggle-password" class="'${toggleClass}" data-password-label="Show password"
                     data-text-label="Hide password" data-link-name="Toggle password field">Show password</a>
                 </div>`;
             const $toggle = bonzo(bonzo.create(toggleTmpl)).insertBefore(

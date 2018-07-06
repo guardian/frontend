@@ -7,6 +7,7 @@ export type PrebidSonobiParams = {
     dom_id: string,
     appNexusTargeting: string,
     pageViewId: string,
+    render?: string,
 };
 
 export type PrebidIndexExchangeParams = {
@@ -32,12 +33,22 @@ export type PrebidXaxisParams = {
     placementId: number,
 };
 
+export type PrebidAppNexusParams = {
+    placementId: string,
+};
+
+export type PrebidOpenXParams = {
+    delDomain: string,
+    unit: string,
+};
+
 export type PrebidSlotKey =
     | 'top-above-nav'
     | 'right'
     | 'inline1'
     | 'inline'
-    | 'mostpop';
+    | 'mostpop'
+    | 'comments';
 
 export type PrebidSlotLabel =
     | 'mobile'
@@ -67,7 +78,9 @@ export type PrebidBidder = {
         | PrebidIndexExchangeParams
         | PrebidTrustXParams
         | PrebidImproveParams
-        | PrebidXaxisParams,
+        | PrebidXaxisParams
+        | PrebidAppNexusParams
+        | PrebidOpenXParams,
     labelAny?: PrebidBidLabel[],
     labelAll?: PrebidBidLabel[],
 };
@@ -79,7 +92,9 @@ export type PrebidBid = {
         | PrebidIndexExchangeParams
         | PrebidTrustXParams
         | PrebidImproveParams
-        | PrebidXaxisParams,
+        | PrebidXaxisParams
+        | PrebidAppNexusParams
+        | PrebidOpenXParams,
     labelAny?: PrebidBidLabel[],
     labelAll?: PrebidBidLabel[],
 };

@@ -6,7 +6,10 @@ import {
     addForMinutes,
     removeCookie,
     getCookie,
+    _,
 } from 'lib/cookies';
+
+const { isValidCookieValue } = _;
 
 // Mock the Date constructor to always return the beginning of time
 const OriginalDate = global.Date;
@@ -63,6 +66,21 @@ describe('Cookies', () => {
         );
     });
 
+    describe('isValidCookieValue', () => {
+        it('should be able to detect malformed cookies', () => {
+            expect(isValidCookieValue('bad,cookie')).toBeFalsy();
+            expect(isValidCookieValue('bad;cookie')).toBeFalsy();
+            expect(isValidCookieValue('bad cookie')).toBeFalsy();
+            expect(isValidCookieValue('bad  cookie')).toBeFalsy();
+            expect(isValidCookieValue('bad=cookie')).toBeFalsy();
+        });
+
+        it('should be able to detect good cookies', () => {
+            expect(isValidCookieValue('good-cookie')).toBeTruthy();
+            expect(isValidCookieValue('cool.cookie')).toBeTruthy();
+        });
+    });
+
     it('should be able to set a cookie', () => {
         addCookie('cookie-1-name', 'cookie-1-value');
         expect(document.cookie).toMatch(
@@ -111,5 +129,5 @@ describe('Cookies', () => {
 
 afterAll(() => {
     global.Date = OriginalDate;
-    expect(new Date()).not.toMatch(new RegExp('Thu Jan 01 1970'));
+    expect(new Date().toString()).not.toMatch(new RegExp('Thu Jan 01 1970'));
 });

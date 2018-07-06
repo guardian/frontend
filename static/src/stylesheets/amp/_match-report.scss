@@ -3,7 +3,7 @@
 }
 
 .match-summary {
-    border-top: 1px dotted $neutral-5;
+    border-top: 1px dotted $brightness-86;
 
     .match-summary__status {
         display: none;
@@ -32,7 +32,7 @@
 
 .match-summary__teams {
     display: flex;
-    border-top: 1px dotted $neutral-5;
+    border-top: 1px dotted $brightness-86;
     padding-top: $gs-baseline;
 }
 
@@ -59,7 +59,7 @@
 .team__scorers {
     font-size: 13px;
     line-height: 18px;
-    color: $neutral-2;
+    color: $brightness-46;
 
     dd {
         margin: 0;

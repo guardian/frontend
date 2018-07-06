@@ -66,8 +66,24 @@ object NavLinks {
   val letters = NavLink("Letters", "/tone/letters")
 
   /* SPORT */
+
+  // TODO remove after world cup
+  val worldCup2018 = NavLink(
+    title = "World Cup 2018",
+    url = "/football/world-cup-2018",
+    children = List(
+      NavLink("Fixtures and tables", "/football/world-cup-2018/overview"),
+      NavLink("Golden Boot", "/football/ng-interactive/2018/jun/14/golden-boot-standings-top-scorers-for-russia-2018-world-cup"),
+      NavLink("Player-by-player guide", "/football/ng-interactive/2018/jun/05/world-cup-2018-complete-guide-players-ratings-goals-caps"),
+      NavLink("Experts' Network", "/football/series/world-cup-2018-guardian-experts-network"),
+      NavLink("All-time XIs", "/football/series/world-cup-all-time-xis"),
+      NavLink("Football", "/football") // Note, non-ideal for US audience :(
+    )
+  )
+
   val football = NavLink("Football", "/football",
     children = List(
+      worldCup2018,
       NavLink("Live scores", "/football/live", "football/live"),
       NavLink("Tables", "/football/tables", "football/tables"),
       NavLink("Fixtures", "/football/fixtures", "football/fixtures"),
@@ -77,6 +93,7 @@ object NavLinks {
     )
   )
   val soccer = football.copy(title = "Soccer")
+
   val cricket = NavLink("Cricket", "/sport/cricket")
   val cycling = NavLink("Cycling", "/sport/cycling")
   val rugbyUnion = NavLink("Rugby union", "/sport/rugby-union")
@@ -141,6 +158,7 @@ object NavLinks {
       NavLink("Saturday review", "/theguardian/guardianreview")
     )
   )
+  val insideTheGuardian = NavLink("Inside the Guardian", "https://www.theguardian.com/membership")
   val observer = NavLink("The Observer", "/observer",
     children = List(
       NavLink("Comment", "/theobserver/news/comment"),
@@ -148,7 +166,7 @@ object NavLinks {
       NavLink("Observer Magazine", "/theobserver/magazine")
     )
   )
-  val digitalNewspaperArchive = NavLink("Digital archive", "https://theguardian.newspapers.com")
+  val digitalNewspaperArchive = NavLink("Digital Archive", "https://theguardian.newspapers.com")
   val crosswords = NavLink("Crosswords", "/crosswords",
     children = List(
       NavLink("Blog", "/crosswords/crossword-blog"),
@@ -192,6 +210,7 @@ object NavLinks {
       ukNews,
       world,
       ukBusiness,
+      worldCup2018,
       football,
       politics,
       ukEnvironment,
@@ -209,6 +228,7 @@ object NavLinks {
       world,
       auPolitics,
       auEnvironment,
+      worldCup2018,
       football,
       indigenousAustralia,
       auImmigration,
@@ -222,6 +242,7 @@ object NavLinks {
       usNews,
       world,
       ukEnvironment,
+      worldCup2018,
       soccer,
       usPolitics,
       usBusiness,
@@ -237,6 +258,7 @@ object NavLinks {
       science,
       cities,
       globalDevelopment,
+      worldCup2018,
       football,
       tech,
       ukBusiness,
@@ -286,6 +308,7 @@ object NavLinks {
   //Sport Pillar
   val ukSportPillar = NavLink("Sport", "/sport", longTitle = "Sport home", iconName = "home",
     List(
+      worldCup2018,
       football,
       rugbyUnion,
       cricket,
@@ -296,11 +319,12 @@ object NavLinks {
       boxing,
       rugbyLeague,
       racing,
-      usSports
+      usSports,
     )
   )
   val auSportPillar = ukSportPillar.copy(
     children = List(
+      worldCup2018,
       football,
       AFL,
       NRL,
@@ -312,6 +336,7 @@ object NavLinks {
   )
   val usSportPillar = ukSportPillar.copy(
     children = List(
+      worldCup2018,
       soccer,
       NFL,
       tennis,
@@ -323,6 +348,7 @@ object NavLinks {
   )
   val intSportPillar = ukSportPillar.copy(
     children = List(
+      worldCup2018,
       football,
       rugbyUnion,
       cricket,
@@ -446,8 +472,8 @@ object NavLinks {
     pictures,
     newsletters,
     todaysPaper,
+    insideTheGuardian,
     observer,
-    digitalNewspaperArchive,
     NavLink("Professional networks", "/guardian-professional"),
     crosswords,
     guardianMasterClasses
@@ -458,7 +484,7 @@ object NavLinks {
     podcasts,
     pictures,
     newsletters,
-    digitalNewspaperArchive,
+    insideTheGuardian,
     crosswords
   )
   val usOtherLinks = List(
@@ -467,7 +493,7 @@ object NavLinks {
     podcasts,
     pictures,
     newsletters,
-    digitalNewspaperArchive,
+    insideTheGuardian,
     crosswords
   )
   val intOtherLinks = List(
@@ -477,8 +503,8 @@ object NavLinks {
     pictures,
     newsletters,
     todaysPaper,
+    insideTheGuardian,
     observer,
-    digitalNewspaperArchive,
     crosswords
   )
 
@@ -486,18 +512,22 @@ object NavLinks {
     jobs.copy(url = jobs.url + "?INTCMP=jobs_uk_web_newheader"),
     dating.copy(url = dating.url + "?INTCMP=soulmates_uk_web_newheader"),
     holidays.copy(url = holidays.url + "?INTCMP=holidays_uk_web_newheader"),
-    ukMasterClasses
+    ukMasterClasses,
+    digitalNewspaperArchive
   )
   val auBrandExtensions = List(
-    auEvents
+    auEvents,
+    digitalNewspaperArchive
   )
   val usBrandExtensions= List(
-    jobs.copy(url = jobs.url + "?INTCMP=jobs_us_web_newheader")
+    jobs.copy(url = jobs.url + "?INTCMP=jobs_us_web_newheader"),
+    digitalNewspaperArchive
   )
   val intBrandExtensions = List(
     jobs.copy(url = jobs.url + "?INTCMP=jobs_int_web_newheader"),
     dating.copy(url = dating.url + "?INTCMP=soulmates_int_web_newheader"),
-    holidays.copy(url = holidays.url + "?INTCMP=holidays_int_web_newheader")
+    holidays.copy(url = holidays.url + "?INTCMP=holidays_int_web_newheader"),
+    digitalNewspaperArchive
   )
 
   // Tertiary Navigation
@@ -579,6 +609,7 @@ object NavLinks {
     "football/competitions",
     "football/results",
     "football/fixtures",
+    "football/world-cup-2018", // TODO remove after world cup
     "education",
     "crosswords/crossword-blog",
     "crosswords/series/crossword-editor-update",

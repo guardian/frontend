@@ -1,14 +1,11 @@
 // @flow
 
 import fastdom from 'lib/fastdom-promise';
-import { addCookie } from 'lib/cookies';
 
 import loadEnhancers from './modules/loadEnhancers';
 import { getContents, show as showModal } from './modules/modal';
 
 const ERR_MALFORMED_HTML = 'Something went wrong';
-const HAS_VISITED_CONSENTS_COOKIE_KEY =
-    'gu_consents_user_has_visited_consents_once';
 const ERR_MODAL_MALFORMED = 'Modal is malformed';
 
 const removeNewsletterReminders = (reminderEl: HTMLElement) =>
@@ -165,20 +162,14 @@ const submitJourneyAnyway = (buttonEl: HTMLElement): void => {
     });
 };
 
-const setLocalHasVisitedConsentsFlag = (): void => {
-    /* opt-in-engagement-banner will use this to decide whether to show an alert or not */
-    addCookie(HAS_VISITED_CONSENTS_COOKIE_KEY, 'true', null, true);
-};
-
 const enhanceConsentJourney = (): void => {
     const loaders = [
         ['.identity-consent-journey', showJourney],
         ['.identity-consent-journey--with-alert', showJourneyAlert],
-        ['.identity-consent-journey', setLocalHasVisitedConsentsFlag],
         ['.js-identity-consent-journey-continue', submitJourneyAnyway],
         ['#identityConsentsLoadingError', hideLoading],
     ];
     loadEnhancers(loaders);
 };
 
-export { enhanceConsentJourney, HAS_VISITED_CONSENTS_COOKIE_KEY };
+export { enhanceConsentJourney };

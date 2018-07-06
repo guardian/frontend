@@ -75,9 +75,9 @@ class Loader extends Component {
     // eslint-disable-next-line class-methods-use-this
     getCommentIdFromHash(): ?number {
         const reg = /#comment-(\d+)/;
-        return reg.exec(window.location.hash)
-            ? parseInt(reg.exec(window.location.hash)[1], 10)
-            : null;
+        const matches = reg.exec(window.location.hash);
+
+        return matches ? parseInt(matches[1], 10) : null;
     }
 
     // eslint-disable-next-line class-methods-use-this
@@ -441,9 +441,7 @@ class Loader extends Component {
         }
 
         return fetchJson(
-            `/discussion/top-comments/${
-                discussionId
-            }.json?commentsClosed=${this.getDiscussionClosed().toString()}`,
+            `/discussion/top-comments/${discussionId}.json?commentsClosed=${this.getDiscussionClosed().toString()}`,
             {
                 mode: 'cors',
             }

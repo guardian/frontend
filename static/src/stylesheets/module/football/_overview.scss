@@ -1,4 +1,215 @@
 /* ==========================================================================
+   World Cup 2018
+   ========================================================================== */
+.wc-overview {
+    .container__title {
+        &:after {
+            display: none;
+        }
+    }
+}
+
+.facia-header {
+    .facia-header__inner {
+        padding-top: $gs-baseline / 2;
+        background-color: $highlight-main;
+        padding-bottom: 0;
+        display: flex;
+        flex-direction: column;
+
+        @include mq($from: desktop) {
+            height: gs-span(1.2);
+            flex-direction: row;
+        }
+    }
+
+    .facia-header__column {
+        flex-basis: 100%;
+        overflow: visible;
+        border-bottom: 1px solid $brightness-7;
+        padding-bottom: $gs-gutter / 2;
+
+        @include mq($from: desktop) {
+            border-bottom: 0;
+            padding-bottom: 0;
+            flex-basis: 380px;
+        }
+
+        @include mq($from: leftCol) {
+            flex-basis: 190px;
+        }
+
+        @include mq($from: wide) {
+            flex-basis: 270px;
+        }
+
+        &:nth-child(2), &:nth-child(3) {
+            padding-left: $gs-gutter / 2;
+
+            @include mq($from: mobileLandscape) {
+                padding-left: $gs-gutter;
+            }
+
+            @include mq($from: desktop) {
+                padding-left: $gs-gutter / 2;
+                flex-basis: 333px;
+                border-left: 1px solid $brightness-7;
+            }
+
+            @include mq($from: leftCol) {
+                flex-basis: 210px;
+            }
+
+            @include mq($from: wide) {
+                flex-basis: 220px;
+            }
+        }
+
+        &:last-child {
+            flex-basis: 40%;
+            display: none;
+
+            @include mq($from: desktop) {
+                display: block;
+            }
+        }
+
+        &.facia-header__column-flags {
+            display: flex;
+
+            .wc-match__badges {
+                order: 2;
+                margin-left: $gs-gutter / 2;
+
+                @include mq($from: desktop) {
+                    order: 0;
+                    margin-left: 0;
+                    margin-right: $gs-gutter / 2;
+                }
+            }
+        }
+    }
+
+    .container__title__label {
+        max-width: 320px;
+        width: 300px;
+        display: inline-block;
+        font-size: 20px;
+        line-height: 22px;
+
+        @include mq($from: desktop) {
+            max-width: 160px;
+            width: 160px;
+            font-size: 20px;
+            line-height: 22px;
+        }
+
+        @include mq($from: leftCol) {
+            max-width: 120px;
+            width: 120px;
+        }
+
+        @include mq($from: wide) {
+            max-width: 160px;
+            width: 160px;
+        }
+
+        .container__title__label-secondary {
+            display: block;
+            font-style: italic;
+            font-weight: 400;
+            width: 100%;
+
+            @include mq($from: leftCol) {
+                display: none;
+            }
+
+            @include mq($from: wide) {
+                display: block;
+            }
+        }
+    }
+
+    .inline-world_cup_badge {
+        margin-right: $gs-gutter / 2;
+        margin-left: $gs-gutter / 2;
+        float: left;
+        width: 30px;
+
+        @include mq($from: desktop) {
+            margin-left: $gs-gutter;
+        }
+    }
+
+    .wc-match__badges {
+        width: 80px;
+        height: 50px;
+        float: left;
+        margin-top: 5px;
+    }
+
+    .wc-badge__flag {
+        border: 1px solid $brightness-7;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        float: left;
+        background-color: $brightness-100;
+
+        &:nth-child(1) {
+            margin-right: -10px;
+            z-index: 10;
+            position: relative;
+        }
+
+        .team-crest {
+            display: block;
+            max-width: 24px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 12px;
+            height: auto;
+            border: 1px solid #999999;
+        }
+    }
+
+    .world__cup-badge__svg {
+        width: 100%;
+    }
+
+    .wc-label {
+        @include fs-textSans(5);
+        color: $brightness-7;
+    }
+
+    .wc-label__title {
+        @include fs-headline(3);
+        font-weight: 900;
+    }
+
+    .wc-player-image {
+        height: 112px;
+        overflow: hidden;
+        display: inline-block;
+        margin-top: -36px;
+    }
+
+    .wc-player-image__offset {
+        display: none;
+
+        @include mq($from: leftCol) {
+            margin-left: 30px;
+            margin-right: -20px;
+            display: inline-block;
+        }
+
+        @include mq($from: wide) {
+            margin-left: 48px;
+        }
+    }
+}
+
+/* ==========================================================================
    Football groups / lists
    ========================================================================== */
 .football-groups {
@@ -57,7 +268,7 @@
 }
 .football-group__container {
     @include mq(tablet) {
-        background: $neutral-8;
+        background: $brightness-97;
         flex: 1 1 auto;
         margin-bottom: 0;
     }
@@ -71,24 +282,24 @@
     }
 
     .football-matches__date {
-        color: $neutral-1;
+        color: $brightness-7;
         font-weight: bold;
         float: none;
     }
 
     .football-matches {
         .table__caption--top {
-            border-top: 1px solid darken($neutral-8, 4%);
+            border-top: 1px solid darken($brightness-97, 4%);
         }
     }
 
     .football-matches:first-child {
         .table__caption--top {
-            border-top: 1px solid $news-accent;
+            border-top: 1px solid $sport-bright;
         }
 
         .football-matches__date {
-            border-top: 1px solid darken($neutral-8, 4%);
+            border-top: 1px solid darken($brightness-97, 4%);
             display: block;
             margin-top: $gs-baseline/2;
             padding-top: $gs-baseline/2;
@@ -116,7 +327,7 @@
    ========================================================================== */
 .football-knockout-chart {
     padding: 0 $gs-gutter/2;
-    background: $neutral-8;
+    background: $brightness-97;
     display: none;
     position: relative;
 
@@ -134,7 +345,7 @@
     .football-match__team {
         height: ($gs-baseline/1.5)*2;
         padding: 0 0 $gs-baseline*1.5;
-        border: 1px solid $neutral-2;
+        border: 1px solid $brightness-46;
         border-top: 0;
         display: block;
         float: none;
@@ -155,14 +366,14 @@
         top: auto;
     }
     .football-match__victory-line {
-        border-left: 1px dotted $neutral-2;
+        border-left: 1px dotted $brightness-46;
         height: 50%;
         position: absolute;
         right: 0;
         top: 25%;
 
         &:after {
-            border-top: 1px dotted $neutral-2;
+            border-top: 1px dotted $brightness-46;
             content: ' ';
             display: block;
             position: absolute;
@@ -201,6 +412,7 @@
         display: block;
     }
 }
+
 .football-knockout-chart--4-rounds,
 .football-knockout-chart--5-rounds {
     .football-round {
@@ -211,9 +423,11 @@
 .football-knockout-chart__timezone {
     @include fs-textSans(1);
     padding: $gs-baseline 0;
-    float: left;
     text-align: center;
     width: 100%;
+    position: absolute;
+    bottom: 0;
+    z-index: $zindex-ui;
 }
 
 .football-rounds--second-half {
@@ -267,7 +481,7 @@
     }
     .football-match__victory-line {
         box-sizing: border-box;
-        border-right: 1px dotted $neutral-2;
+        border-right: 1px dotted $brightness-46;
         width: 100%;
 
         &:after {
@@ -277,7 +491,7 @@
 }
 .football-round__name {
     padding: $gs-baseline/2 0;
-    border-bottom: 1px solid $neutral-3;
+    border-bottom: 1px solid $brightness-86;
     font-weight: bold;
     text-align: center;
 }
@@ -288,7 +502,7 @@
 }
 
 .football-round--playoff {
-    background: $neutral-8;
+    background: $brightness-97;
     bottom: 0;
     height: 25%;
     left: 42.857142857%; // 50 - (100/7/2) Half off the width of a seventh to get it exactly center

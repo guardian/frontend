@@ -321,16 +321,16 @@ const initPlayButtons = (root: ?HTMLElement): void => {
                     player
                         .removeClass('media__container--hidden')
                         .addClass('media__container--active');
-                    $el
-                        .removeClass('media__placeholder--active')
-                        .addClass('media__placeholder--hidden');
+                    $el.removeClass('media__placeholder--active').addClass(
+                        'media__placeholder--hidden'
+                    );
                     enhanceVideo($('video', player).get(0), true);
                 });
             });
             fastdom.write(() => {
-                $el
-                    .removeClass('media__placeholder--hidden')
-                    .addClass('media__placeholder--active');
+                $el.removeClass('media__placeholder--hidden').addClass(
+                    'media__placeholder--active'
+                );
             });
         });
     });

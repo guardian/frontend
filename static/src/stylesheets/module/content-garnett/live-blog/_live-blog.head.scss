@@ -134,7 +134,7 @@ $block-padding-left: gs-span(1) + $gs-gutter;
 }
 
 .content--liveblog .content__main {
-    background-color: $neutral-8;
+    background-color: $brightness-97;
 }
 
 /* Main Media =============================================================== */
@@ -160,7 +160,7 @@ $block-padding-left: gs-span(1) + $gs-gutter;
     time {
         display: inline-block;
         margin-bottom: $gs-baseline/2;
-        color: $garnett-neutral-1;
+        color: $brightness-7;
     }
 }
 
@@ -188,7 +188,7 @@ $block-padding-left: gs-span(1) + $gs-gutter;
         $size: 12px;
         display: inline-block;
         content: '';
-        background-color: $live-default;
+        background-color: $news-dark;
         width: $size;
         height: $size;
         margin-bottom: -1px;
@@ -200,7 +200,7 @@ $block-padding-left: gs-span(1) + $gs-gutter;
         @include fs-textSans(1);
         display: inline-block;
         margin-left: $gs-gutter/4;
-        color: $neutral-2;
+        color: $brightness-46;
         font-weight: normal;
     }
 
@@ -218,12 +218,12 @@ $block-padding-left: gs-span(1) + $gs-gutter;
 }
 
 .block-time__link {
-    color: $garnett-neutral-1;
+    color: $brightness-7;
 }
 
 .updated-time {
     @include fs-textSans(1);
-    color: $neutral-2;
+    color: $brightness-46;
     position: absolute;
     right: $gs-gutter;
     bottom: $gs-baseline / 3;
@@ -247,8 +247,8 @@ $block-padding-left: gs-span(1) + $gs-gutter;
     padding-top: $gs-baseline/2;
     padding-bottom: $gs-baseline;
     background-color: #ffffff;
-    border-top: 1px solid $neutral-3;
-    border-bottom: 1px solid $neutral-6;
+    border-top: 1px solid $brightness-86;
+    border-bottom: 1px solid $brightness-93;
 }
 
 .truncated-block {
@@ -264,7 +264,7 @@ $block-padding-left: gs-span(1) + $gs-gutter;
 }
 
 .block--notification {
-    border-top-color: $live-default;
+    border-top-color: $news-dark;
 }
 
 .notify {
@@ -275,7 +275,7 @@ $block-padding-left: gs-span(1) + $gs-gutter;
     @include fs-textSans(3);
     text-align: left;
     font-weight: bold;
-    color: $live-default;
+    color: $news-dark;
 }
 
 .autoupdate--has-animation {
@@ -285,15 +285,15 @@ $block-padding-left: gs-span(1) + $gs-gutter;
 }
 
 @keyframes new-block-animation {
-    0% { opacity: 0; border-top-color: $live-accent; }
-    100% { opacity: 1; border-top-color: $neutral-3; }
+    0% { opacity: 0; border-top-color: $news-main; }
+    100% { opacity: 1; border-top-color: $brightness-86; }
 }
 
 /* Above/Below content
    ========================================================= */
 .blog {
     .content__keywords {
-        border-top: 1px dotted $neutral-3;
+        border-top: 1px dotted $brightness-86;
         line-height: 20px;
     }
 }
@@ -349,7 +349,7 @@ $block-padding-left: gs-span(1) + $gs-gutter;
     .liveblog-block-byline__name {
         @include fs-bodyCopy(2);
         display: inline;
-        color: $garnett-neutral-1;
+        color: $brightness-7;
     }
 
     .block-elements {
@@ -374,7 +374,7 @@ $block-padding-left: gs-span(1) + $gs-gutter;
         }
 
         > blockquote {
-            color: $neutral-2;
+            color: $brightness-46;
         }
 
         /* Media
@@ -395,7 +395,7 @@ $block-padding-left: gs-span(1) + $gs-gutter;
                 background: none;
             }
             tr {
-                border-bottom: 1px solid darken($neutral-8, 4%);
+                border-bottom: 1px solid darken($brightness-97, 4%);
 
                 th:first-child,
                 td:first-child {
@@ -407,7 +407,7 @@ $block-padding-left: gs-span(1) + $gs-gutter;
                 }
             }
             thead {
-                border-top: 1px solid darken($neutral-8, 4%);
+                border-top: 1px solid darken($brightness-97, 4%);
             }
         }
 
@@ -442,7 +442,7 @@ $block-padding-left: gs-span(1) + $gs-gutter;
         > .element-image,
         > .element-video {
             clear: left;
-            border-bottom: 2px solid $neutral-8;
+            border-bottom: 2px solid $brightness-97;
             margin-bottom: $gs-baseline;
             padding-bottom: $gs-baseline/2;
 
@@ -547,7 +547,7 @@ $block-padding-left: gs-span(1) + $gs-gutter;
         margin: 0;
 
         @include mq($until: desktop) {
-            background-color: $neutral-8;
+            background-color: $brightness-97;
             padding: $gs-baseline $content-gutter;
         }
 
@@ -578,7 +578,7 @@ $timeline-width: 15px;
         }
 
         .dropdown {
-            border-top: 1px solid $live-main-1;
+            border-top: 1px solid $news-dark;
             padding-top: $gs-baseline/2;
         }
     }
@@ -624,7 +624,7 @@ $timeline-width: 15px;
     width: 100%;
     overflow: hidden;
     min-height: gs-height(1) + $gs-baseline/3;
-    border-bottom: 1px solid $neutral-4;
+    border-bottom: 1px solid $brightness-86;
 
     &:last-child {
         border-bottom: 0;
@@ -644,14 +644,14 @@ $timeline-width: 15px;
     &:hover,
     &:visited,
     &:active {
-        color: $garnett-neutral-1;
+        color: $brightness-7;
         text-decoration: none;
     }
 
     @include mq(desktop) {
         position: relative;
         padding: 0 $gs-gutter $gs-baseline*2;
-        border-left: 1px solid $neutral-5;
+        border-left: 1px solid $brightness-86;
 
         &:before {
             @include circular;
@@ -662,14 +662,14 @@ $timeline-width: 15px;
             left: ($timeline-width/2)*-1;
             width: $timeline-width;
             height: $timeline-width;
-            background-color: $neutral-3;
+            background-color: $brightness-86;
         }
 
         &:hover:before {
-            background-color: $neutral-2;
+            background-color: $brightness-46;
         }
         &.live-blog__key-event--selected:before {
-            background-color: $garnett-neutral-1;
+            background-color: $brightness-7;
         }
 
         .timeline__item:first-child &:before,
@@ -691,7 +691,7 @@ $timeline-width: 15px;
     font-weight: bold;
 
     time {
-        color: $garnett-neutral-1;
+        color: $brightness-7;
     }
 
     .block-time__absolute,
@@ -709,8 +709,8 @@ $timeline-width: 15px;
 .timeline__title {
     @include fs-textSans(3);
     display: table-cell;
-    border-color: $neutral-8;
-    color: $garnett-neutral-1;
+    border-color: $brightness-97;
+    color: $brightness-7;
 
     @include mq(desktop) {
         display: inline;
@@ -729,12 +729,12 @@ $timeline-width: 15px;
 
     .tone-news--item {
         .fc-item__content {
-            background-color: darken($neutral-8, 3%);
+            background-color: darken($brightness-97, 3%);
         }
 
         .u-faux-block-link--hover {
             .fc-item__content {
-                background-color: darken($neutral-8, 8%);
+                background-color: darken($brightness-97, 8%);
             }
         }
     }
@@ -744,7 +744,7 @@ $timeline-width: 15px;
     @include fs-header(2);
     padding-top: $gs-baseline / 4;
     margin-bottom: ($gs-baseline/3)*4;
-    border-top: 1px solid $neutral-4;
+    border-top: 1px solid $brightness-86;
 }
 
 /* Football components
@@ -755,7 +755,7 @@ $timeline-width: 15px;
     }
 
     .tabs__tab--selected {
-        border-bottom-color: $neutral-8 !important;
+        border-bottom-color: $brightness-97 !important;
     }
 
     .match-summary {
@@ -770,7 +770,7 @@ $timeline-width: 15px;
             margin: $gs-baseline/2 $gs-gutter/2 0;
 
             @include mq(mobileLandscape) {
-                border-left: 1px solid darken($neutral-8, 4%);
+                border-left: 1px solid darken($brightness-97, 4%);
                 margin-left: $gs-gutter;
                 margin-right: $gs-gutter;
                 padding-left: $gs-gutter;
@@ -778,7 +778,7 @@ $timeline-width: 15px;
         }
         .player-card__position {
             @include fs-textSans(2);
-            color: $garnett-neutral-1;
+            color: $brightness-7;
             font-weight: 700;
         }
     }
@@ -789,11 +789,11 @@ $timeline-width: 15px;
 
     @include mq(desktop) {
         .tabs__container--multiple {
-            background-color: $neutral-8;
+            background-color: $brightness-97;
         }
 
         .tabs__tab--selected .tab__link {
-            background-color: $neutral-8;
+            background-color: $brightness-97;
         }
 
         .match-summary {
@@ -816,29 +816,29 @@ $timeline-width: 15px;
 
 $pillars: (
     news: (
-        pillarColor: $news-garnett-main-1,
-        kickerColor: $live-garnett-main-2,
-        altKickerColor: $news-garnett-main-1
+        pillarColor: $news-main,
+        kickerColor: $news-pastel,
+        altKickerColor: $news-main
     ),
     opinion: (
-        pillarColor: $opinion-garnett-main-1,
-        kickerColor: $opinion-garnett-feature,
-        altKickerColor: $opinion-garnett-main-1
+        pillarColor: $opinion-main,
+        kickerColor: $opinion-dark,
+        altKickerColor: $opinion-main
     ),
     sport: (
-        pillarColor: $sport-garnett-feature,
-        kickerColor:  $live-garnett-sport2,
-        altKickerColor: $sport-garnett-main-1
+        pillarColor: $sport-dark,
+        kickerColor:  $sport-pastel,
+        altKickerColor: $sport-main
     ),
     arts: (
-        pillarColor: $culture-garnett-feature,
-        kickerColor: $live-garnett-culture2,
-        altKickerColor: $culture-garnett-main-1
+        pillarColor: $culture-dark,
+        kickerColor: $culture-pastel,
+        altKickerColor: $culture-main
     ),
     lifestyle: (
-        pillarColor: $lifestyle-garnett-feature,
-        kickerColor: $live-garnett-lifestyle2,
-        altKickerColor: $lifestyle-garnett-main-1
+        pillarColor: $lifestyle-dark,
+        kickerColor: $news-pastel,
+        altKickerColor: $lifestyle-main
     )
 );
 
@@ -853,7 +853,7 @@ $pillars: (
             background: darken(map-get($palette, pillarColor), 5);
         }
 
-        .content__section-label__link[href] {
+        .content__label__link[href] {
             color: map-get($palette, kickerColor);
         }
 
@@ -873,16 +873,13 @@ $pillars: (
         background-color: #ffffff;
 
         .content__labels {
-            border-bottom-color: $neutral-5;
+            border-bottom-color: $brightness-86;
         }
-        .content__section-label__link {
-            color: $sport-garnett-feature;
-        }
-        .content__series-label__link {
-            color: $sport-garnett-main-1;
+        .content__label__link {
+            color: $sport-dark;
         }
         .content__headline {
-            color: $garnett-neutral-1;
+            color: $brightness-7;
             padding-left: 0;
 
             @include mq(phablet) {
@@ -899,7 +896,7 @@ $pillars: (
     .content__head,
     .content__standfirst,
     .content__standfirst a[href],
-    .content__series-label__link[href] {
+    .content__label__link[href] {
         color: #ffffff;
     }
 
@@ -953,23 +950,19 @@ $pillars: (
 
         .content__head,
         .content__standfirst {
-            color: $garnett-neutral-1;
+            color: $brightness-7;
         }
 
-        .content__section-label__link {
+        .content__label__link {
             color: map-get($palette, altKickerColor);
         }
 
-        .content__series-label__link {
-            color: $garnett-neutral-6;
-        }
-
         .content__header {
-            background: $garnett-neutral-5;
+            background: $brightness-100;
         }
 
         .tonal__standfirst {
-            background: $live-garnett-dead-background;
+            background: $brightness-93;
         }
 
         .content__standfirst a {
@@ -985,7 +978,7 @@ $pillars: (
 // *************** Has scores overrides ****************
 .content--has-scores.content--pillar-sport.content--liveblog {
     .content__header {
-        background-color: $news-garnett-highlight;
+        background-color: $highlight-main;
     }
 
     .match-summary__teams {
@@ -996,9 +989,8 @@ $pillars: (
     }
 
     .content__labels {
-        .content__section-label__link,
-        .content__series-label__link {
-            color: $neutral-1;
+        .content__label__link {
+            color: $brightness-7;
         }
     }
 }

@@ -110,7 +110,7 @@ object GetClasses {
     dynamicSlowMpu: Boolean
   ): String = {
     // no toggle for Headlines container as it will be hosting the weather widget instead
-    val showToggle = !disableHide && !container.exists(!slices.Container.showToggle(_)) && hasTitle && !isHeadlines
+    val showToggle = !disableHide && !container.exists(!slices.Container.showToggle(_)) && !isFirst && hasTitle && !isHeadlines
 
     RenderClasses((Seq(
       ("fc-container", true),

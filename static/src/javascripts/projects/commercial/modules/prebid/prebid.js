@@ -4,13 +4,12 @@ import 'prebid.js/build/dist/prebid';
 import config from 'lib/config';
 import { Advert } from 'commercial/modules/dfp/Advert';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
-import { bidders } from 'commercial/modules/prebid/bidder-config';
+import { bids } from 'commercial/modules/prebid/bid-config';
 import { labels } from 'commercial/modules/prebid/labels';
 import { slots } from 'commercial/modules/prebid/slot-config';
 import { priceGranularity } from 'commercial/modules/prebid/price-config';
 import type {
     PrebidBid,
-    PrebidBidder,
     PrebidMediaTypes,
     PrebidSlot,
     PrebidSlotLabel,
@@ -23,6 +22,28 @@ import {
 
 const bidderTimeout = 1500;
 
+const consentManagement = {
+    cmpApi: 'iab',
+    timeout: 200,
+    allowAuctionWithoutConsent: true,
+};
+
+const s2sConfig = {
+    accountId: '1',
+    enabled: true,
+    bidders: [
+        'appnexus',
+        'openx', // Defined in the doc.
+    ],
+    timeout: bidderTimeout,
+    adapter: 'prebidServer',
+    is_debug: 'false',
+    endpoint: 'https://elb.the-ozone-project.com/openrtb2/auction',
+    syncEndpoint: 'https://prebid.adnxs.com/pbs/v1/cookie_sync',
+    cookieSet: true,
+    cookiesetUrl: 'https://acdn.adnxs.com/cookieset/cs.js',
+};
+
 class PrebidAdUnit {
     code: ?string;
     bids: ?(PrebidBid[]);
@@ -32,19 +53,7 @@ class PrebidAdUnit {
 
     constructor(advert: Advert, slot: PrebidSlot) {
         this.code = advert.id;
-        this.bids = bidders.map((bidder: PrebidBidder) => {
-            const bid: PrebidBid = {
-                bidder: bidder.name,
-                params: bidder.bidParams(advert.id, slot.sizes),
-            };
-            if (bidder.labelAny) {
-                bid.labelAny = bidder.labelAny;
-            }
-            if (bidder.labelAll) {
-                bid.labelAll = bidder.labelAll;
-            }
-            return bid;
-        });
+        this.bids = bids(advert.id, slot.sizes);
         this.mediaTypes = { banner: { sizes: slot.sizes } };
         if (slot.labelAny) {
             this.labelAny = slot.labelAny;
@@ -61,13 +70,22 @@ class PrebidAdUnit {
 
 class PrebidService {
     static initialise(): void {
-        window.pbjs.setConfig({
-            bidderTimeout,
-            priceGranularity,
-        });
+        const pbjsConfig = Object.assign(
+            {},
+            {
+                bidderTimeout,
+                priceGranularity,
+            },
+            config.switches.enableConsentManagementService
+                ? { consentManagement }
+                : {},
+            config.switches.prebidS2sozone ? { s2sConfig } : {}
+        );
 
-        // gather analytics from 0.01% of pageviews
-        const inSample = getRandomIntInclusive(1, 10000) === 1;
+        window.pbjs.setConfig(pbjsConfig);
+
+        // gather analytics from 20% (1 in 5) of page views
+        const inSample = getRandomIntInclusive(1, 5) === 1;
         if (
             config.switches.prebidAnalytics &&
             (inSample || config.page.isDev)
@@ -83,6 +101,8 @@ class PrebidService {
             ]);
         }
 
+        // This creates an 'unsealed' object. Flows
+        // allows dynamic assignment.
         window.pbjs.bidderSettings = {};
 
         if (config.switches.prebidSonobi) {

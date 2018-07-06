@@ -54,7 +54,7 @@ import scala.collection.JavaConverters._
   it should "not cache 404s" in {
     val result = articleController.renderArticle("oops")(TestRequest())
     status(result) should be(404)
-    header("Cache-Control", result).head should be ("no-cache")
+    header("Cache-Control", result).head should be ("private, no-store, no-cache")
   }
 
   it should "redirect for short urls" in {

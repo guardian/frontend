@@ -12,7 +12,7 @@
         <div class="js-sport-tabs football-tabs"></div>
     </div>
 
-@if((article.tags.isFeature && article.elements.hasShowcaseMainElement)) {
+@if((article.elements.hasShowcaseMainElement)) {
     <div class="content__headline-showcase-wrapper">
         <div class="content__header tonal__header">
 
@@ -32,7 +32,7 @@
 
                 @if(article.tags.isInterview) {
                     @article.trail.byline.map { text =>
-                        <span class="content__headline--byline-interview">By @ContributorLinks(text, article.tags.contributors)</span>
+                        <span class="content__headline--byline-interview">@ContributorLinks(text, article.tags.contributors)</span>
                     }
                 }
             </div>
@@ -61,13 +61,13 @@
 
                 @if(article.tags.isInterview) {
                     @article.trail.byline.map { text =>
-                        <span class="content__headline--byline-interview">By @ContributorLinks(text, article.tags.contributors)</span>
+                        <span class="content__headline--byline-interview">@ContributorLinks(text, article.tags.contributors)</span>
                     }
                 }
                 @if(article.content.hasTonalHeaderIllustration) {
                     <span class="content__head__illustration hide-on-mobile">@fragments.inlineSvg("illustration-letters", "icon")</span>
                 }
-                @if(!(article.tags.isFeature && article.elements.hasShowcaseMainElement)) {
+                @if(!(article.elements.hasShowcaseMainElement)) {
 
                     @article.content.starRating.map { rating =>
                         <span class="u-h" articleprop="reviewRating" articlescope articletype="http://schema.org/Rating">
@@ -111,7 +111,7 @@
         </div>
     </div>
     @fragments.contentMeta(article, page, amp = amp)
-    @if(article.tags.isFeature && article.elements.hasShowcaseMainElement && article.content.starRating.isDefined) {
+    @if(article.elements.hasShowcaseMainElement && article.content.starRating.isDefined) {
     <div class="media-primary media-content  media-primary--showcase  ">
         @article.content.starRating.map { rating =>
             <span class="u-h" articleprop="reviewRating" articlescope articletype="http://schema.org/Rating">
@@ -124,7 +124,7 @@
         }
     }
     @fragments.mainMedia(article, amp)
-    @if(article.tags.isFeature && article.elements.hasShowcaseMainElement && article.content.starRating.isDefined) {
+    @if(article.elements.hasShowcaseMainElement && article.content.starRating.isDefined) {
     </div>
     }
 </header>

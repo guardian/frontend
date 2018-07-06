@@ -13,9 +13,7 @@ describe('Navigation', () => {
     const LINK_CLASS = 'js-navigation-toggle';
 
     const domSnippet = `<div class="js-navigation-header navigation-container--collapsed">
-        <a class="${
-            LINK_CLASS
-        }" href="#footer-nav" data-target-nav="js-navigation-header"></a>
+        <a class="${LINK_CLASS}" href="#footer-nav" data-target-nav="js-navigation-header"></a>
         <div class="${PLACEHOLDER_CLASS}"></div>
     </div>
     <div class="js-mega-nav">
