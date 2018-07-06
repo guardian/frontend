@@ -22,6 +22,9 @@ import scala.concurrent.Future
 import common.RichRequestHeader
 import services.LookerUpper
 
+
+case class MinutePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
+
 class LiveBlogController(contentApiClient: ContentApiClient, val controllerComponents: ControllerComponents, ws: WSClient)(implicit context: ApplicationContext) extends BaseController with RendersItemResponse with Logging with ImplicitControllerExecutionContext {
 
   val lookerUpper: LookerUpper = new LookerUpper(contentApiClient)
