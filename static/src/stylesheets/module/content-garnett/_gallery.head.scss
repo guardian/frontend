@@ -7,11 +7,6 @@
     background-color: $brightness-100;
 }
 
-// Header and tags
-.immersive-main-media__gallery {
-    height: 100vh;
-}
-
 .immersive-main-media__headline-container--gallery {
     position: relative;
     background: transparent;
@@ -29,8 +24,7 @@
         padding: 0 $gs-gutter/2 $gs-baseline*2;
         min-height: gs-height(2);
         //This allows the headline block to be aligned to the left and not run full width
-        // width: 90%;
-        width: calc(90vw - #{$gs-gutter});
+        width: calc(95% - #{$gs-gutter});
         max-width: none;
 
         @include mq($from: tablet) {
