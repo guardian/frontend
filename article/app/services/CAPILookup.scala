@@ -8,7 +8,7 @@ import play.api.mvc.RequestHeader
 
 import scala.concurrent.Future
 
-class LookerUpper(contentApiClient: ContentApiClient) {
+class CAPILookup(contentApiClient: ContentApiClient) {
 
   def lookup(path: String, range: Option[BlockRange])(implicit request: RequestHeader): Future[ItemResponse] = {
     val edition = Edition(request)

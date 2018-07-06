@@ -12,7 +12,7 @@ import model.{ApplicationContext, Canonical, _}
 import pages.{ArticleEmailHtmlPage, LiveBlogHtmlPage, MinuteHtmlPage}
 import play.api.libs.ws.WSClient
 import play.api.mvc._
-import services.LookerUpper
+import services.CAPILookup
 import views.support.RenderOtherStatus
 
 import scala.concurrent.Future
@@ -21,7 +21,7 @@ case class MinutePage(article: Article, related: RelatedContent) extends PageWit
 
 class LiveBlogController(contentApiClient: ContentApiClient, val controllerComponents: ControllerComponents, ws: WSClient)(implicit context: ApplicationContext) extends BaseController with RendersItemResponse with Logging with ImplicitControllerExecutionContext {
 
-  val lookerUpper: LookerUpper = new LookerUpper(contentApiClient)
+  val lookerUpper: CAPILookup = new CAPILookup(contentApiClient)
 
   // we support liveblogs and also articles, so that minutes work
   private def isSupported(c: ApiContent) = c.isLiveBlog || c.isArticle

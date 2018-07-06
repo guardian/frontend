@@ -11,7 +11,7 @@ import play.api.mvc._
 import views.support._
 import metrics.TimingMetric
 import renderers.RemoteRender
-import services.LookerUpper
+import services.CAPILookup
 
 import scala.concurrent.Future
 
@@ -19,7 +19,7 @@ case class ArticlePage(article: Article, related: RelatedContent) extends PageWi
 
 class ArticleController(contentApiClient: ContentApiClient, val controllerComponents: ControllerComponents, ws: WSClient)(implicit context: ApplicationContext) extends BaseController with RendersItemResponse with Logging with ImplicitControllerExecutionContext {
 
-  val lookerUpper: LookerUpper = new LookerUpper(contentApiClient)
+  val lookerUpper: CAPILookup = new CAPILookup(contentApiClient)
   val remoteRender: RemoteRender = new RemoteRender()
 
   private def isSupported(c: ApiContent) = c.isArticle || c.isLiveBlog || c.isSudoku
