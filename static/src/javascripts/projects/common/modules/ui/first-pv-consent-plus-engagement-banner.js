@@ -139,13 +139,13 @@ const show = (): void => {
 const firstPvConsentPlusEngagementBanner: Banner = {
     id: messageCode,
     canShow: () =>
-        canShowFirstPvConsent() &&
-        canShowEngagementBanner() &&
-        Promise.resolve(
-            !(
-                firstPvConsentMessage.isRemembered() ||
-                engagementMessage.isRemembered()
-            )
+        Promise.all([canShowFirstPvConsent(), canShowEngagementBanner()]).then(
+            (canShowBanners: Array<boolean>) =>
+                canShowBanners.every(canShowBanner => canShowBanner === true) &&
+                !(
+                    firstPvConsentMessage.isRemembered() ||
+                    engagementMessage.isRemembered()
+                )
         ),
     show,
 };
