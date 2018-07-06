@@ -29,7 +29,7 @@
         padding: 0 $gs-gutter/2 $gs-baseline*2;
         min-height: gs-height(2);
         //This allows the headline block to be aligned to the left and not run full width
-        width: 90%;
+        // width: 90%;
         width: calc(90vw - #{$gs-gutter});
         max-width: none;
 
