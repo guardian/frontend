@@ -188,3 +188,8 @@ category: Common
         }
     }
 }
+
+// prevent yank and spacefinder issue when embedded tweets resize
+.tweet-main-image {
+    width: 100%;
+}
