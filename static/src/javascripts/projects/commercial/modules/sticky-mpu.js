@@ -87,7 +87,7 @@ const stickyMpu = (adSlot: HTMLElement) => {
         .then(() => {
             if (noSticky) {
                 // if there is a sticky 'paid by' band move the sticky mpu down so it will be always visible
-                const options = config.page.isPaidContent
+                const options = config.get('page.isPaidContent')
                     ? {
                           top: 43,
                       }
