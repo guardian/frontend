@@ -1,4 +1,6 @@
 @charset 'UTF-8';
+
+// The main image needs to take up 100vh and the slim header needs to sit just on top of it.
 .l-header--new-gallery {
     position: absolute;
     z-index: 1;
@@ -175,7 +177,6 @@
     }
 
     .content--immersive .content__main {
-        border-bottom: solid 1px $brightness-20;
         padding: 0;
     }
 
@@ -282,7 +283,7 @@
 //Picture essay styles - Header
 .immersive-header-container--photo-essay {
     .content__wrapper--standfirst {
-        background: none;
+        background: $brightness-100;
     }
 
     .content__standfirst {
