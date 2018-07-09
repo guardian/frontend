@@ -9,6 +9,8 @@ import palette, {
     pillarsHighlight,
 } from '@guardian/dotcom-rendering/packages/pasteup/palette';
 import {
+    mobileLandscape,
+    phablet,
     tablet,
     leftCol,
     wide,
@@ -116,6 +118,12 @@ const FakeWave = styled('div')({
     svg: {
         width: '100%',
         transform: `translate(0px, 11px)`,
+        [mobileLandscape]: {
+            transform: `translate(0px, 8px)`,
+        },
+        [phablet]: {
+            transform: `translate(0px, 3px)`,
+        },
         [tablet]: {
             transform: `translate(0px, 2px)`,
         },
@@ -357,12 +365,16 @@ export default class AudioPlayer extends Component<Props, State> {
             checkForTimeEvents(this.props.mediaId, percentPlayed);
         }
 
-        this.incrementBlock(this.audio.currentTime);
-
-        this.setState({
-            currentTime: this.audio.currentTime,
-            currentOffset: percentPlayed,
-        });
+        // pause when it gets to the end
+        if (this.audio.currentTime > this.state.duration - 1) {
+            this.resetAudio();
+        } else {
+            this.incrementBlock(this.audio.currentTime);
+            this.setState({
+                currentTime: this.audio.currentTime,
+                currentOffset: percentPlayed,
+            });
+        }
     };
 
     setAudio = (el: ?HTMLAudioElement) => {
@@ -375,6 +387,11 @@ export default class AudioPlayer extends Component<Props, State> {
         if (el) {
             this.wave = el;
         }
+    };
+
+    resetAudio = () => {
+        this.setState({ playing: false });
+        this.audio.pause();
     };
 
     audio: HTMLAudioElement;
@@ -412,28 +429,59 @@ export default class AudioPlayer extends Component<Props, State> {
         }
     };
 
+    seekWave = (e: any) => {
+        if (document.querySelector('.fake-wave')) {
+            // $FlowFixMe
+            const boxW = document.querySelector('.fake-wave').offsetWidth;
+            const svg = document.querySelector('.fake-wave svg');
+            // $FlowFixMe
+            const pt = svg.createSVGPoint();
+
+            pt.x = e.clientX;
+            pt.y = e.clientY;
+            const adjustedPosition = pt.matrixTransform(
+                // $FlowFixMe
+                svg.getScreenCTM().inverse()
+            );
+            const clickedPosition = (adjustedPosition.x / boxW) * 98; // sorry this just seemed to work
+            this.seek(clickedPosition);
+        }
+    };
+
+    seek = (chosenPoint: number) => {
+        const chosenTime = (this.audio.duration * chosenPoint) / 100;
+        this.updatePlayerTime(chosenTime);
+    };
+
     forward = () => {
         const chosenTime = Math.min(
             this.state.currentTime + 15,
             this.state.duration
         );
-        this.audio.currentTime = chosenTime;
-        this.incrementBlock(this.audio.currentTime);
+        this.updatePlayerTime(chosenTime);
     };
 
     backward = () => {
         const chosenTime = Math.max(this.state.currentTime - 15, 0);
-        this.audio.currentTime = chosenTime;
-        this.incrementBlock(this.audio.currentTime);
+        this.updatePlayerTime(chosenTime);
+    };
+
+    updatePlayerTime = (currTime: number) => {
+        this.audio.currentTime = currTime;
+        this.incrementBlock(currTime);
+
+        const currentOffset = Math.round(
+            (currTime / this.state.duration) * 100
+        );
+
+        this.setState({
+            currentTime: currTime,
+            currentOffset,
+        });
     };
 
     updateVolume = (v: number) => {
         this.audio.volume = v / 100;
-    };
-
-    seek = (chosenTime: number) => {
-        this.audio.currentTime = (this.audio.duration * chosenTime) / 100;
-        this.incrementBlock(this.audio.currentTime);
     };
 
     incrementBlock = (currentTime: number) => {
@@ -504,7 +552,7 @@ export default class AudioPlayer extends Component<Props, State> {
                     {this.state.ready ? <Time t={this.state.duration} /> : ''}
                 </TimeContainer>
                 <WaveAndTrack>
-                    <FakeWave>
+                    <FakeWave onClick={this.seekWave} className="fake-wave">
                         <span
                             ref={this.setWave}
                             className="wave-holder"
@@ -573,7 +621,7 @@ export default class AudioPlayer extends Component<Props, State> {
                                     height="20px"
                                     alt=""
                                 />
-                                Apple podcast
+                                Apple Podcasts
                             </a>
                         </li>
                     </ul>
