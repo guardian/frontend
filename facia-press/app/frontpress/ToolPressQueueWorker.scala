@@ -1,7 +1,7 @@
 package frontpress
 
 import com.amazonaws.services.sqs.AmazonSQSAsyncClient
-import com.gu.facia.api.models.{Draft, FrontPath, Live, PressJob}
+import com.gu.facia.api.models.faciapress.{Draft, FrontPath, Live, PressJob}
 import common._
 import conf.Configuration
 import services._
