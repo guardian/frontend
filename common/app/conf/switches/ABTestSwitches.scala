@@ -172,7 +172,7 @@ trait ABTestSwitches {
     "Always show the epic on thailand cave stories (unlimited)",
     owners = Seq(Owner.withGithub("tsop14")),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 9, 30),
+    sellByDate = new LocalDate(2018, 9, 28),
     exposeClientSide = true
   )
 
