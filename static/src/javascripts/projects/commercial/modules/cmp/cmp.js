@@ -16,6 +16,20 @@ import { encodeVendorConsentData } from 'commercial/modules/cmp/cookie';
 
 import type { CmpConfig } from 'commercial/modules/cmp/types';
 
+type receivedMessage = {
+    data: {
+        __cmpCall: ?{
+            callId: any,
+            command: any,
+            parameter: any,
+        },
+    },
+    origin: string,
+    source: ?{
+        postMessage: (__cmpReturn: any, origin: string) => void,
+    },
+};
+
 const readConsentCookie = (cookieName: string): boolean | null => {
     const cookieVal: ?string = getCookie(cookieName);
     if (cookieVal && cookieVal.split('.')[0] === '1') return true;
@@ -135,7 +149,7 @@ class CmpService {
         }
     };
 
-    processCommandQueue = () => {
+    processCommandQueue = (): void => {
         const queue = [...this.commandQueue];
         if (queue.length) {
             log.info(`Process ${queue.length} queued commands`);
@@ -160,18 +174,24 @@ class CmpService {
             });
         }
     };
-    // $FlowFixMe
-    receiveMessage = ({ data, origin, source }) => {
+
+    receiveMessage = ({ data, origin, source }: receivedMessage): void => {
         const { __cmpCall: cmp } = data;
         if (cmp) {
-            log.debug(`Message from: ${origin}`);
+            log.info(`Message from: ${origin}`);
             const { callId, command, parameter } = cmp;
-            this.processCommand(command, parameter, returnValue =>
-                source.postMessage(
-                    { __cmpReturn: { callId, command, returnValue } },
-                    origin
-                )
-            );
+            if (source && source.postMessage) {
+                this.processCommand(command, parameter, returnValue =>
+                    source.postMessage(
+                        { __cmpReturn: { callId, command, returnValue } },
+                        origin
+                    )
+                );
+            } else {
+                log.debug(
+                    `Missing source: Unable to process command from ${origin}`
+                );
+            }
         }
     };
 
