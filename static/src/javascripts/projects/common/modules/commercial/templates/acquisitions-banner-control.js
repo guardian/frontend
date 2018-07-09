@@ -6,7 +6,7 @@ import config from 'lib/config';
 
 export const acquisitionsBannerControlTemplate = (
     params: EngagementBannerTemplateParams
-) =>
+): string =>
     `
     <div class="engagement-banner__close">
         <div class="engagement-banner__roundel">

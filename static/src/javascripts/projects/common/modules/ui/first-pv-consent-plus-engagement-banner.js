@@ -87,7 +87,7 @@ class SubMessage extends Message {
         this.parent = parent;
     }
 
-    hide() {
+    hide(): void {
         const element = document.querySelector(this.elementSelector);
         if (element) {
             const parentElement = element.parentElement;
@@ -101,7 +101,7 @@ class SubMessage extends Message {
         this.parent.remember();
     }
 
-    bindCloseHandler() {
+    bindCloseHandler(): void {
         const element = document.querySelector(this.elementSelector);
         if (element) {
             const closeButton = element.querySelector('.js-site-message-close');
@@ -138,7 +138,7 @@ const show = (): void => {
 
 const firstPvConsentPlusEngagementBanner: Banner = {
     id: messageCode,
-    canShow: () =>
+    canShow: (): Promise<boolean> =>
         Promise.all([canShowFirstPvConsent(), canShowEngagementBanner()]).then(
             (canShowBanners: Array<boolean>) =>
                 canShowBanners.every(canShowBanner => canShowBanner === true) &&

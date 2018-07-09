@@ -4,7 +4,7 @@ import arrowWhiteRight from 'svgs/icon/arrow-white-right.svg';
 
 export const acquisitionsBannerTemplateOldStyling = (
     params: EngagementBannerTemplateParams
-) =>
+): string =>
     `<div id="site-message__message">
         <div class="site-message__message site-message__message--membership">
             <div class="membership__message-text-long">
