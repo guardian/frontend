@@ -158,7 +158,7 @@ const trackImpression = (name: string) => (track: () => void): void => {
 export const FootballWeeklyTreatVsContainer = {
     id: 'FootballWeeklyTreatVsContainer',
     start: '2018-07-02',
-    expiry: '2018-07-11',
+    expiry: '2018-07-12',
     author: 'Tom Forbes',
     description:
         'Test linking to latest episode of Football Weekly podcast using a treat vs a container',
