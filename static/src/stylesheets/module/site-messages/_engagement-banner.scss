@@ -52,12 +52,15 @@
 }
 
 .engagement-banner__text {
-    color: $brightness-7;
+    @include banner-copy-alignment;
 
-    font-size: 17px;
-    line-height: 22px;
+    color: $brightness-7;
+    font-size: 15px;
+    line-height: 20px;
 
     @include mq(tablet) {
+        font-size: 17px;
+        line-height: 22px;
         width: 580px;
     }
 
@@ -74,15 +77,6 @@
 
 .engagement-banner__container {
     position: relative;
-}
-
-.engagement-banner__text {
-    @include banner-copy-alignment;
-
-    color: $brightness-7;
-
-    font-size: 17px;
-    line-height: 22px;
 }
 
 .engagement-banner__cta {
