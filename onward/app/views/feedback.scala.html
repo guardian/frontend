@@ -1,4 +1,4 @@
-@(page: model.Page, path: String, alerts: Option[List[String]])(implicit request: RequestHeader, context: model.ApplicationContext)
+@(page: model.Page, path: String, alerts: List[String])(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @import common.LinkTo
 
@@ -19,10 +19,10 @@
                             <div class="from-content-api" itemprop="articleBody">
                                 <div class="from-content-api">
 
-                                    @if(alerts.getOrElse(List()).nonEmpty){
+                                    @if(alerts.nonEmpty) {
                                         <div class="feedback__alertbox">
                                             <h2><span class="feedback__exclamation">!</span>Known Issues</h2>
-                                            @for(alert <- alerts.get){
+                                            @for(alert <- alerts) {
                                                 <p class="feedback__alert">@alert</p>
                                             }
                                         </div>

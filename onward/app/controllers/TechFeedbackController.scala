@@ -12,6 +12,7 @@ import play.api.libs.json.{JsValue, Json}
 import play.api.libs.ws._
 import play.api.mvc._
 
+import scala.concurrent.Future
 import scala.concurrent.duration._
 
 class TechFeedbackController(ws: WSClient, val controllerComponents: ControllerComponents) (implicit context: ApplicationContext) extends BaseController with Logging with ImplicitControllerExecutionContext {
@@ -56,37 +57,30 @@ class TechFeedbackController(ws: WSClient, val controllerComponents: ControllerC
 
     Action.async { implicit request =>
 
-      val page: SimplePage = model.SimplePage(MetaData.make(
-        request.path,
-        Some(SectionId.fromId("info")),
-        "Thanks for your report"
-      ))
-
-      ws.url(Configuration.feedback.feedbackHelpConfig)
+      def getAlerts: Future[List[String]] = ws.url(Configuration.feedback.feedbackHelpConfig)
         .withRequestTimeout(3000.millis)
         .get()
-        .map((resp: WSResponse) => {
+        .map((resp: WSResponse) => (Json.parse(resp.body) \ "alerts").get.as[List[String]])
 
-          val jsConfig: JsValue = Json.parse(resp.body)
-          val alerts: List[String] = (jsConfig \ "alerts").get.as[List[String]]
+      def pageWithAlerts(alerts: List[String]): Result = {
+        val page: SimplePage = model.SimplePage(MetaData.make(
+          request.path,
+          Some(SectionId.fromId("info")),
+          "Thanks for your report"
+        ))
+        Cached(60)(RevalidatableResult.Ok(views.html.feedback(
+          page,
+          path,
+          alerts
+        )))
+      }
 
-          Cached(60)(RevalidatableResult.Ok(views.html.feedback(
-            page,
-            path,
-            Option(alerts)))
-          )
-
-        }) recover {
-
-        case t: Throwable =>
-
-          this.logException(new Exception("Failed to get known issues for user feedback", t))
-          Cached(60)(RevalidatableResult.Ok(views.html.feedback(
-            page,
-            path,
-            Option.empty
-          )))
-
+      getAlerts.map {
+        pageWithAlerts
+      } recover {
+        case t:Throwable =>
+          log.error("Failed to get alerts", t)
+          pageWithAlerts(Nil)
       }
 
     }
