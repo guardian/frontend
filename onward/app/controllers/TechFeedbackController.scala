@@ -1,5 +1,7 @@
 package controllers
 
+import java.lang.Throwable
+
 import common._
 import conf.Configuration
 import model.Cached.RevalidatableResult
@@ -76,8 +78,9 @@ class TechFeedbackController(ws: WSClient, val controllerComponents: ControllerC
 
         }) recover {
 
-        case _ =>
-          this.logException(new Exception("Failed to get known issues for user feedback"))
+        case t: Throwable =>
+
+          this.logException(new Exception("Failed to get known issues for user feedback", t))
           Cached(60)(RevalidatableResult.Ok(views.html.feedback(
             page,
             path,
