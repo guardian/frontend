@@ -166,4 +166,14 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-thailand-cave",
+    "Always show the epic on thailand cave stories (unlimited)",
+    owners = Seq(Owner.withGithub("tsop14")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 9, 30),
+    exposeClientSide = true
+  )
+
 }
