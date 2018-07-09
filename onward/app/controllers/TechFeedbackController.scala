@@ -1,18 +1,16 @@
 package controllers
 
-import conf.Configuration
 import common._
+import conf.Configuration
 import model.Cached.RevalidatableResult
-import model.{ApplicationContext, Cached, MetaData, NoCache, SectionId}
+import model.{ApplicationContext, Cached, MetaData, NoCache, SectionId, SimplePage}
 import play.api.data.Form
-import play.api.libs.json.{JsValue, Json}
-import play.api.mvc._
-import play.api.libs.ws._
 import play.api.data.Forms._
+import play.api.libs.json.{JsValue, Json}
+import play.api.libs.ws._
+import play.api.mvc._
 
 import scala.concurrent.duration._
-import scala.concurrent.Future
-import scala.util.Try
 
 class TechFeedbackController(ws: WSClient, val controllerComponents: ControllerComponents) (implicit context: ApplicationContext) extends BaseController with Logging with ImplicitControllerExecutionContext {
 
@@ -56,13 +54,13 @@ class TechFeedbackController(ws: WSClient, val controllerComponents: ControllerC
 
     Action.async { implicit request =>
 
-      val page = model.SimplePage(MetaData.make(
+      val page: SimplePage = model.SimplePage(MetaData.make(
         request.path,
         Some(SectionId.fromId("info")),
         "Thanks for your report"
       ))
 
-      Try(ws.url(Configuration.feedback.feedbackHelpConfig)
+      ws.url(Configuration.feedback.feedbackHelpConfig)
         .withRequestTimeout(3000.millis)
         .get()
         .map((resp: WSResponse) => {
@@ -76,17 +74,17 @@ class TechFeedbackController(ws: WSClient, val controllerComponents: ControllerC
             Option(alerts)))
           )
 
-      })).getOrElse(
+        }) recover {
 
-        Future.successful(
+        case _ =>
+          this.logException(new Exception("Failed to get known issues for user feedback"))
           Cached(60)(RevalidatableResult.Ok(views.html.feedback(
             page,
             path,
             Option.empty
           )))
-        )
 
-      )
+      }
 
     }
 
