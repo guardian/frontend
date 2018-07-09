@@ -261,10 +261,14 @@
         padding-right: .375em;
     }
 }
-@mixin mediaPalatte($mediaColor, $pillar) {
-    .content__label__link,
+@mixin mediaPalatte($mediaColor, $pillarColor, $pillar) {
+    .content__section-label__link,
     .youtube-media-atom__bottom-bar__duration {
         color: $mediaColor;
+    }
+
+    .content__labels--immersive {
+        background: $pillarColor;
     }
 
     .gu-media--show-controls-at-start.vjs-paused .vjs-big-play-button .vjs-control-text:before,
@@ -286,7 +290,7 @@
         fill: $brightness-86;
     }
 
-    a.content__label__link {
+    .content__label__link {
         color: $brightness-97;
     }
 
@@ -364,33 +368,39 @@
 }
 
 .content--media.content--pillar-news,
-.immersive-main-media__headline-container.content--pillar-news {
-    @include mediaPalatte($news-bright, news);
+.immersive-main-media__headline-container.content--pillar-news,
+.immersive-main-media__headline-container--gallery.content--pillar-news {
+    @include mediaPalatte($news-bright, $news-main, news);
 }
 
 .content--media:not(.paid-content).content--pillar-opinion,
-.immersive-main-media__headline-container.content--pillar-opinion {
-    @include mediaPalatte($opinion-bright, opinion);
+.immersive-main-media__headline-container.content--pillar-opinion,
+.immersive-main-media__headline-container--gallery.content--pillar-opinion {
+    @include mediaPalatte($opinion-bright, $opinion-main, opinion);
 }
 
 .content--media:not(.paid-content).content--pillar-arts,
-.immersive-main-media__headline-container.content--pillar-arts {
-    @include mediaPalatte($culture-bright, culture);
+.immersive-main-media__headline-container.content--pillar-arts
+.immersive-main-media__headline-container--gallery.content--pillar-arts  {
+    @include mediaPalatte($culture-bright, $culture-main, culture);
 }
 
 .content--media:not(.paid-content).content--pillar-lifestyle,
-.immersive-main-media__headline-container.content--pillar-lifestyle {
-    @include mediaPalatte($lifestyle-bright, lifestyle);
+.immersive-main-media__headline-container.content--pillar-lifestyle,
+.immersive-main-media__headline-container--gallery.content--pillar-lifestyle {
+    @include mediaPalatte($lifestyle-bright, $lifestyle-main, lifestyle);
 }
 
 .content--media:not(.paid-content).content--pillar-sport,
-.immersive-main-media__headline-container.content--pillar-sport {
-    @include mediaPalatte($sport-bright, sport);
+.immersive-main-media__headline-container.content--pillar-sport,
+.immersive-main-media__headline-container-gallery.content--pillar-lifestyle {
+    @include mediaPalatte($sport-bright, $sport-main, sport);
 }
 
 .content--media:not(.paid-content).content--pillar-special-report,
-.immersive-main-media__headline-container.content--pillar-special-report {
-    @include mediaPalatte($highlight-main, pink);
+.immersive-main-media__headline-container.content--pillar-special-report,
+.immersive-main-media__headline-container--gallery.content--pillar-special-report {
+    @include mediaPalatte($news-bright, $news-main, pink);
 }
 
 .content--type-analysis {

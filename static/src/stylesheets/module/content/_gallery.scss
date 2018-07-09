@@ -24,8 +24,6 @@
 }
 
 .gallery__divider {
-    border-top: 1px solid $brightness-20;
-
     @include mq(desktop) {
         padding-top: $gs-baseline / 2;
     }
