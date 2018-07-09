@@ -1,6 +1,6 @@
 .tone-media--item {
     $c-headline: #ffffff;
-    background-color: $media-mute;
+    background-color: $brightness-20;
 
     &,
     .fc-sublink__title {
@@ -9,66 +9,66 @@
 
     .u-faux-block-link--hover,
     .fc-item__image-container {
-        background-color: darken($media-mute, 7.5%);
+        background-color: darken($brightness-20, 7.5%);
     }
 
     .fc-item__link,
     .rich-link__link,
     .fc-sublink__link {
         &:visited {
-            color: mix($c-headline, $media-mute, 80%);
+            color: mix($c-headline, $brightness-20, 80%);
         }
     }
 
     .rich-link__arrow-icon {
-        fill: $media-default;
+        fill: $highlight-main;
     }
 
     .inline-quote {
-        fill: $neutral-3;
+        fill: $brightness-86;
     }
 
     .fc-item__container:before,
     .rich-link__container:before {
-        background-color: $media-default;
+        background-color: $highlight-main;
     }
 
     .fc-item__kicker,
     .rich-link__kicker,
     .fc-item__byline,
     .rich-link__read-more-text {
-        color: $media-default;
+        color: $highlight-main;
     }
 
     .fc-item__kicker:after,
     .rich-link__kicker:after,
     .fc-sublink__kicker:after {
-        color: mix($c-headline, $media-background, 40%);
+        color: mix($c-headline, $brightness-7, 40%);
     }
 
     .fc-item__kicker--dreamsnap {
-        background-color: mix(#000000, $media-background, 10%);
+        background-color: mix(#000000, $brightness-7, 10%);
     }
 
     .fc-item__standfirst,
     .rich-link__standfirst,
     .fc-item__meta {
-        color: $neutral-3;
+        color: $brightness-86;
     }
 }
 
 .tone-media--sublink {
     .fc-sublink__kicker {
-        color: $media-default;
+        color: $highlight-main;
     }
 
     @include sublink-style(analysis, comment, letters, dead, news) {
         .fc-sublink__kicker {
-            color: $media-background;
+            color: $brightness-7;
         }
     }
 }
 
 .tone-media--most-popular .fc-item__kicker {
-    color: $news-default;
+    color: $sport-dark;
 }

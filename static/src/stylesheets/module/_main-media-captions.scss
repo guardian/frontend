@@ -6,11 +6,11 @@ $caption-button-size: 32px;
     width: $caption-button-size;
     height: $caption-button-size;
     z-index: 1;
-    background-color: rgba($neutral-1, .6);
+    background-color: rgba($brightness-7,  .6);
     border-radius: 50%;
 
     &:hover {
-        background-color: rgba($neutral-1, 1);
+        background-color: rgba($brightness-7,  1);
     }
 }
 
@@ -40,7 +40,7 @@ $caption-button-size: 32px;
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba($multimedia-support-5, .8);
+            background: rgba($brightness-7,  .8);
             color: #ffffff;
             display: none;
             padding: $gs-baseline / 2 $gs-gutter * 2 $gs-baseline $gs-gutter / 2;
@@ -66,15 +66,15 @@ $caption-button-size: 32px;
     }
 
     .reveal-caption__checkbox:checked ~ .reveal-caption {
-        background-color: $multimedia-support-5;
+        background-color: $brightness-7;
 
         &:hover {
-            background-color: rgba($neutral-1, 1);
+            background-color: rgba($brightness-7,  1);
         }
     }
 
     .reveal-caption__checkbox:focus ~ .reveal-caption {
-        background-color: rgba($neutral-1, 1);
+        background-color: rgba($brightness-7,  1);
     }
 
 }

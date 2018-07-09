@@ -58,26 +58,26 @@ const bindableClassNames: BindableClassNames = {
     agree: 'js-first-pv-consent-agree',
 };
 
-const makeHtml = (tpl: Template, classes: BindableClassNames): string => `
+const makeHtml = (): string => `
     <div class="site-message--first-pv-consent__block site-message--first-pv-consent__block--head">${
-        tpl.heading
+        template.heading
     }</div>
-    <div class="site-message--first-pv-consent__block site-message--first-pv-consent__block--intro">${tpl.consentText
+    <div class="site-message--first-pv-consent__block site-message--first-pv-consent__block--intro">${template.consentText
         .map(_ => `<p>${_}</p>`)
         .join('')}
-        <div class="site-message--first-pv-consent__actions">
-            <button 
-                data-link-name="first-pv-consent : agree" 
-                class="site-message--first-pv-consent__button site-message--first-pv-consent__button--main ${
-                    classes.agree
-                }"
-            >${checkIcon.markup}<span>${tpl.agreeButton}</span></button>
-            <a 
-                href="${tpl.linkToPreferences}" 
-                data-link-name="first-pv-consent : to-prefs" 
-                class="site-message--first-pv-consent__link u-underline"
-            >${tpl.choicesButton}</a>
-        </div>
+    </div>
+    <div class="site-message--first-pv-consent__actions">
+        <button 
+            data-link-name="first-pv-consent : agree" 
+            class="site-message--first-pv-consent__button site-message--first-pv-consent__button--main ${
+                bindableClassNames.agree
+            }"
+        >${checkIcon.markup}<span>${template.agreeButton}</span></button>
+        <a 
+            href="${template.linkToPreferences}" 
+            data-link-name="first-pv-consent : to-prefs" 
+            class="site-message--first-pv-consent__link u-underline"
+        >${template.choicesButton}</a>
     </div>
 `;
 
@@ -106,22 +106,30 @@ const trackInteraction = (interaction: string): void => {
 const canShow = (): Promise<boolean> =>
     Promise.resolve([hasUnsetAdChoices(), isInEU()].every(_ => _ === true));
 
-const show = (): void => {
+const track = (): void => {
     upAlertViewCount();
     trackInteraction(displayEventKey);
+};
+
+const bindClickHandlers = (msg: Message): void => {
+    [...document.querySelectorAll(`.${bindableClassNames.agree}`)].forEach(
+        agreeButtonEl => {
+            agreeButtonEl.addEventListener('click', () => onAgree(msg));
+        }
+    );
+};
+
+const show = (): void => {
+    track();
 
     const msg = new Message(messageCode, {
         important: true,
         permanent: true,
         customJs: () => {
-            [
-                ...document.querySelectorAll(`.${bindableClassNames.agree}`),
-            ].forEach(agreeButtonEl => {
-                agreeButtonEl.addEventListener('click', () => onAgree(msg));
-            });
+            bindClickHandlers(msg);
         },
     });
-    msg.show(makeHtml(template, bindableClassNames));
+    msg.show(makeHtml());
 };
 
 const firstPvConsentBanner: Banner = {
@@ -135,4 +143,11 @@ export const _ = {
     bindableClassNames,
 };
 
-export { firstPvConsentBanner };
+export {
+    firstPvConsentBanner,
+    canShow,
+    track,
+    bindClickHandlers,
+    messageCode,
+    makeHtml,
+};

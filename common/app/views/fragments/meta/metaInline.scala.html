@@ -65,8 +65,8 @@
               </a>
           </div>
         } else {
-            @if(!(item.content.isImmersive && item.content.tags.isArticle || item.content.isColumn)) {
-              <div class="content__section-label content__label @if(item.content.tags.isGallery) { content__section-label--gallery }">
+            @if(!(item.content.isImmersive && item.content.tags.isArticle || item.content.isColumn || item.content.tags.isGallery)) {
+              <div class="content__section-label content__label">
                   <a class="content__label__link"
                       data-link-name="article section"
                       href="@LinkTo {/@item.content.sectionLabelLink}">

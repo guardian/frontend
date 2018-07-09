@@ -1,5 +1,5 @@
 .content {
-    color: $garnett-neutral-1;
+    color: $brightness-7;
     font-size: 19px;
     padding-top: 0;
     padding-bottom: $gs-baseline*3;
@@ -29,7 +29,7 @@
         &:hover,
         &:active,
         &:focus {
-            color: $neutral-1;
+            color: $brightness-7;
         }
     }
 
@@ -58,7 +58,7 @@
 }
 
 .content__head--byline-pic .content__header {
-    @include multiline(8, $garnett-neutral-4, bottom);
+    @include multiline(8, $brightness-86, bottom);
 }
 
 .content__standfirst {
@@ -93,7 +93,7 @@
             left: -16px;
             content: counter(li);
             counter-increment: li;
-            color: $neutral-3;
+            color: $brightness-86;
         }
     }
 }
@@ -102,7 +102,7 @@
     font-size: 12px;
     line-height: 16px;
     position: relative;
-    color: $garnett-neutral-6;
+    color: $brightness-46;
     box-sizing: border-box;
     padding-top: $gs-baseline / 6;
     margin-bottom: $gs-baseline / 2;
@@ -120,8 +120,8 @@
 
 .meta__extras {
     clear: both;
-    border-top: 1px solid $garnett-neutral-4;
-    border-bottom: 1px solid $garnett-neutral-4;
+    border-top: 1px solid $brightness-86;
+    border-bottom: 1px solid $brightness-86;
 }
 
 .content__meta-container {
@@ -136,7 +136,7 @@
         height: 60px; //Intentionally off grid
         margin: ($gs-baseline / 2) ($gs-gutter / 2) ($gs-baseline / 2) 0;
         overflow: hidden;
-        background-color: $neutral-7;
+        background-color: $brightness-97;
         float: left;
     }
 
@@ -184,11 +184,11 @@
 .meta__twitter,
 .meta__email {
     a {
-        color: $garnett-neutral-6;;
+        color: $brightness-46;;
     }
 
     svg {
-        fill: $garnett-neutral-6;
+        fill: $brightness-46;
         height: 12px;
         margin-bottom: -2px;
         width: 12px;
@@ -199,11 +199,11 @@
     font-size: 12px;
     line-height: 1;
     display: inline-block;
-    color: $garnett-neutral-6;
+    color: $brightness-46;
     margin-bottom: $gs-baseline;
 
     .old-article-message--clock svg {
-        fill: $garnett-neutral-6;
+        fill: $brightness-46;
         margin-bottom: -1px;
     }
 }
@@ -239,7 +239,7 @@
 }
 
 .stars {
-    background-color: $news-garnett-highlight;
+    background-color: $highlight-main;
     display: inline-block;
     padding: ($gs-baseline / 2) ($gs-gutter / 2) 0;
     margin: 0 0 ($gs-baseline / 2) (-$gs-gutter / 2);
@@ -257,5 +257,5 @@
 
 .star__item--golden {
     stroke: none;
-    fill: $garnett-neutral-1;
+    fill: $brightness-7;
 }

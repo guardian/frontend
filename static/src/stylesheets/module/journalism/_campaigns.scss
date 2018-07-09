@@ -1,7 +1,7 @@
 
 .campaign--snippet {
-    border-top: 1px $garnett-neutral-4 solid;
-    background: $garnett-neutral-8;
+    border-top: 1px $brightness-86 solid;
+    background: $brightness-93;
     position: relative;
     padding: 0 0 6px;
     margin: 16px 0 36px;
@@ -19,7 +19,7 @@
 .campaign--snippet > summary {
     outline: none;
     padding: 0;
-    border-top: 1px $garnett-neutral-4 solid;
+    border-top: 1px $brightness-86 solid;
     list-style: none;
 
     &::-webkit-details-marker {
@@ -35,7 +35,7 @@
             margin-right: 10px;
 
             .speech-bubble {
-                background-color: $news-garnett-main-1;
+                background-color: $news-main;
                 padding: 6px 10px 10px;
                 color: #ffffff;
                 line-height: 18px;
@@ -103,7 +103,7 @@
 }
 
 .content--pillar-news .campaign--snippet__handle:focus {
-    background-color: $news-garnett-main-1;
+    background-color: $news-main;
 }
 
 .speech-bubble {
@@ -117,7 +117,7 @@
         position: absolute;
         bottom: -12px;
         left: 10px;
-        background: $news-garnett-main-1;
+        background: $news-main;
     }
 }
 
@@ -127,7 +127,7 @@
     display: flex;
     flex-direction: column;
     padding: 0 .5em 2em;
-    border-top: 1px $garnett-neutral-4 solid;
+    border-top: 1px $brightness-86 solid;
 
     [type=radio], [type=checkbox] {
         margin-left: 0;
@@ -182,7 +182,7 @@
     input,
     select,
     textarea {
-        border: 1px solid var(--c-garnett-neutral-8);
+        border: 1px solid var(--c-brightness-93);
         font-family: $f-sans-serif-text;
     }
     .form_field_label {

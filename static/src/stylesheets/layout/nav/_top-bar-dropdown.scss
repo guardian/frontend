@@ -5,10 +5,10 @@
     }
 
     & ~ .top-bar__item--dropdown {
-        color: $nav-primary-colour;
+        color: $brightness-7;
 
         &:hover {
-            color: $nav-secondary-colour;
+            color: $brightness-20;
         }
     }
 }
@@ -29,7 +29,7 @@
     > hr {
         height: 0;
         border: 0;
-        border-top: 1px solid $neutral-6;
+        border-top: 1px solid $brightness-93;
         display: block;
         top: 0;
         margin: -1px 0 0 $gs-gutter * 1.5;
@@ -42,7 +42,7 @@
 
 .dropdown-menu__title {
     @include fs-textSans(4);
-    color: $nav-primary-colour;
+    color: $brightness-7;
     cursor: pointer;
     display: block;
     letter-spacing: .01rem;
@@ -55,14 +55,14 @@
 
     &:hover,
     &:focus {
-        color: $nav-primary-colour;
-        background-color: $neutral-6;
+        color: $brightness-7;
+        background-color: $brightness-93;
         text-decoration: none;
     }
 
     &:before {
         content: '';
-        border-top: 1px solid $neutral-6;
+        border-top: 1px solid $brightness-93;
         display: block;
         position: absolute;
         top: 0;
@@ -89,7 +89,7 @@
             height: .8em;
             width: .8em;
             g {
-                fill: $nav-primary-colour;
+                fill: $brightness-7;
                 @supports(fill: currentColor) {
                     fill: currentColor;
                 }
@@ -109,7 +109,7 @@
     &:after {
         // Tick icon
         content: '';
-        border: 2px solid $nav-secondary-colour;
+        border: 2px solid $brightness-20;
         border-top: 0;
         border-right: 0;
         position: absolute;

@@ -4,7 +4,7 @@
     display: block;
     float: left;
     cursor: pointer;
-    border: 1px solid $neutral-3;
+    border: 1px solid $brightness-86;
     margin-right: $gs-gutter / 4;
     width: $gs-baseline * 2;
     height: $gs-baseline * 2;
@@ -123,7 +123,7 @@
         .block-share__item {
             position: relative;
             background-color: transparent;
-            border: 1px solid $neutral-2;
+            border: 1px solid $brightness-46;
             box-sizing: border-box;
             transition: border-color .15s ease-out;
             width: 32px;
@@ -131,11 +131,11 @@
 
             &:hover {
                 background-color: transparent;
-                border-color: $neutral-6;
+                border-color: $brightness-93;
             }
 
             .inline-icon {
-                fill: $neutral-3;
+                fill: $brightness-86;
 
                 // Directly referencing the sizes in _social.scss
                 svg {
@@ -183,7 +183,7 @@
 
     .fig--border {
         @include mq(leftCol) {
-            border-bottom: 1px dotted $neutral-5 !important;
+            border-bottom: 1px dotted $brightness-86 !important;
         }
 
         &.element--thumbnail {

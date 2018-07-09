@@ -72,7 +72,7 @@
 
 // [type=radio] + label
 .atom-quiz__answer__item {
-    background-color: $neutral-8;
+    background-color: $brightness-97;
     transition: background-color 100ms;
     display: block;
     position: relative;
@@ -88,33 +88,33 @@
     // [type=radio]:checked + label
     :checked + & {
         cursor: default; // make it look un-clickable
-        background-color: $comment-main-2;
+        background-color: $opinion-bright;
 
         .element-image {
             opacity: .8;
         }
 
         &:before {
-            background-color: $neutral-1;
-            box-shadow: 0px 0px 0px 1px $neutral-1, inset 0px 0px 0px 3px $comment-main-2;
+            background-color: $brightness-7;
+            box-shadow: 0px 0px 0px 1px $brightness-7, inset 0px 0px 0px 3px $opinion-bright;
         }
     }
 
     // highlight state (darker grey)
     .atom-quiz--is-not-results :not(:checked) + &:hover,
     .atom-quiz--is-not-results :not(:checked):focus + & {
-        background-color: $neutral-4;
+        background-color: $brightness-86;
 
         &:before {
-            background-color: $neutral-2;
-            box-shadow: 0px 0px 0px 1px $neutral-2, inset 0px 0px 0px 3px $neutral-4;
+            background-color: $brightness-46;
+            box-shadow: 0px 0px 0px 1px $brightness-46, inset 0px 0px 0px 3px $brightness-86;
         }
     }
 }
 
 @mixin atom-quiz__answer__item--selected--is-incorrect {
     color: #ffffff;
-    background-color: $quiz-incorrect;
+    background-color: $news-main;
 
     .element-image {
         opacity: .8;
@@ -126,7 +126,7 @@
 }
 
 @mixin atom-quiz__answer__item--selected--is-correct {
-    background-color: $quiz-correct;
+    background-color: $green-bold;
 
     .element-image {
         opacity: 1;
@@ -141,7 +141,7 @@
 }
 
 @mixin atom-quiz__answer__item--is-correct {
-    background-color: fade-out($quiz-correct, .4);
+    background-color: fade-out($green-bold, .4);
 
     .element-image {
         opacity: .8;
@@ -180,20 +180,20 @@
         position: absolute;
         left: 1em;
         top: 1em;
-        box-shadow: 0px 0px 0px 1px $neutral-3;
+        box-shadow: 0px 0px 0px 1px $brightness-86;
         transition: background-color 100ms, box-shadow 50ms;
     }
 
     :checked + &:before {
-        background-color: $neutral-1;
-        box-shadow: 0px 0px 0px 1px $neutral-1, inset 0px 0px 0px 3px $comment-main-2;
+        background-color: $brightness-7;
+        box-shadow: 0px 0px 0px 1px $brightness-7, inset 0px 0px 0px 3px $opinion-bright;
     }
 
     // highlight state (darker grey)
     .atom-quiz--is-not-results :not(:checked) + &:hover:before,
     .atom-quiz--is-not-results :not(:checked):focus + &:before {
-        background-color: $neutral-2;
-        box-shadow: 0px 0px 0px 1px $neutral-2, inset 0px 0px 0px 3px $neutral-4;
+        background-color: $brightness-46;
+        box-shadow: 0px 0px 0px 1px $brightness-46, inset 0px 0px 0px 3px $brightness-86;
     }
 
     // don't show the fake radio button on a personality quiz results page
@@ -267,7 +267,7 @@
 .atom-quiz__answer__reveal-text {
     @include fs-textSans(1);
     display: none;
-    color: $neutral-1;
+    color: $brightness-7;
 
     .atom-quiz--is-results & {
         display: block;
@@ -281,8 +281,8 @@
 
 .atom-quiz__message {
     display: none;
-    border-top: 1px solid $neutral-4;
-    background-color: $neutral-8;
+    border-top: 1px solid $brightness-86;
+    background-color: $brightness-97;
     padding: $gs-baseline / 2 $gs-gutter * 2 / 3;
 
     .atom-quiz--is-results & {
@@ -297,7 +297,7 @@
 
 .atom-quiz__score-message,
 .atom-quiz__bucket-message {
-    color: $neutral-2;
+    color: $brightness-46;
 }
 
 .atom-quiz__score {
@@ -309,7 +309,7 @@
 }
 
 .atom-quiz__share {
-    border-top: 1px solid $neutral-4;
+    border-top: 1px solid $brightness-86;
     padding-top: $gs-baseline * 2 / 3;
     margin-top: $gs-baseline;
 }

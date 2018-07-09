@@ -10,17 +10,17 @@
 }
 
 .menu-group--secondary {
-    background-color: $nav-darker-colour;
+    background-color: $nav-bold;
     margin-top: 0;
     padding-top: 0;
 }
 
 .menu-group--membership,
 .menu-group--editions {
-    background-color: $nav-darker-colour;
+    background-color: $nav-bold;
     padding-bottom: 0;
 }
 
 .menu-group--editions .menu-group {
-    background-color: darken($nav-background-colour, 10%);
+    background-color: darken($nav-faded, 10%);
 }

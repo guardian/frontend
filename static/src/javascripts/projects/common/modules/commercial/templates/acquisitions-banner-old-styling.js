@@ -1,7 +1,10 @@
 // @flow
+import config from 'lib/config';
+import arrowWhiteRight from 'svgs/icon/arrow-white-right.svg';
+
 export const acquisitionsBannerTemplateOldStyling = (
     params: EngagementBannerTemplateParams
-) =>
+): string =>
     `<div id="site-message__message">
         <div class="site-message__message site-message__message--membership">
             <div class="membership__message-text-long">
@@ -12,7 +15,10 @@ export const acquisitionsBannerTemplateOldStyling = (
             <span class="membership__paypal-container">
                 <img
                     class="membership__paypal-logo"
-                    src="${params.paypalAndCreditCardImage}"
+                    src="${config.get(
+                        'images.acquisitions.paypal-and-credit-card',
+                        ''
+                    )}"
                     alt="Paypal and credit card"
                 >
                 <span class="membership__support-button">
@@ -20,7 +26,7 @@ export const acquisitionsBannerTemplateOldStyling = (
                         class="message-button-rounded__cta membership-prominent yellow"
                         href="${params.linkUrl}"
                     >
-                        ${params.buttonCaption}${params.buttonSvg}
+                        ${params.buttonCaption}${arrowWhiteRight.markup}
                     </a>
                 </span>
             </span>

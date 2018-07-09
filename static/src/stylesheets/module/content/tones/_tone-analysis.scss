@@ -2,15 +2,15 @@
 
 @include tone-content(
     analysis, // $tone
-    $neutral-7, // $tonal__header-background
-    $neutral-2, // $tonal__header-text
-    $analysis-default, // $tonal__header-link
+    $brightness-97, // $tonal__header-background
+    $brightness-46, // $tonal__header-text
+    $sport-dark, // $tonal__header-link
     400, // $tonal__headline-weight
-    $analysis-default, // $tonal__headline-colour
-    $analysis-accent, // $tonal__headline-accent
-    $neutral-8, // $tonal__standfirst-background
-    $neutral-2, // $tonal__standfirst-text
-    $analysis-default, // $tonal__standfirst-link
+    $sport-dark, // $tonal__headline-colour
+    $sport-bright, // $tonal__headline-accent
+    $brightness-97, // $tonal__standfirst-background
+    $brightness-46, // $tonal__standfirst-text
+    $sport-dark, // $tonal__standfirst-link
     #ffffff, // $tonal__article-background
-    darken($analysis-accent, 15%) // $tonal__article-link
+    darken($sport-bright, 15%) // $tonal__article-link
 );

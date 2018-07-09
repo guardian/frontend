@@ -33,7 +33,7 @@
     }
 
     .end-slate-container a {
-        color: $garnett-neutral-8;
+        color: $brightness-93;
     }
 
     .content__meta-container .byline-img,
@@ -100,8 +100,8 @@
 
     .meta__extras--crossword {
         .social-icon {
-            background: $garnett-neutral-5;
-            border: 1px solid $garnett-neutral-4;
+            background: $brightness-100;
+            border: 1px solid $brightness-86;
 
             &:hover {
                 background: $kickerColor;
@@ -113,7 +113,7 @@
             fill: $kickerColor;
 
             &:hover {
-                fill: $garnett-neutral-5;
+                fill: $brightness-100;
             }
         }
     }
@@ -140,12 +140,12 @@
     .comment-share-icon,
     .d-show-more-replies__button.button--show-more svg,
     .inline-reply.blue {
-        fill: $garnett-neutral-6;
+        fill: $brightness-46;
         left: $gs-gutter/3;
     }
 
     .discussion__top-border {
-        border-top: 1px solid $garnett-neutral-4;
+        border-top: 1px solid $brightness-86;
     }
 
     .button--primary {
@@ -166,13 +166,13 @@
     }
 
     .d-show-more-replies__button {
-        border: 1px solid $garnett-neutral-4;
-        background: $garnett-neutral-5;
+        border: 1px solid $brightness-86;
+        background: $brightness-100;
 
         &:focus,
         &:hover {
-            border: 1px solid darken($garnett-neutral-4, 20%);
-            background: $garnett-neutral-5;
+            border: 1px solid darken($brightness-86, 20%);
+            background: $brightness-100;
         }
     }
 
@@ -185,12 +185,12 @@
     .social-icon,
     .social-icon.social-icon--more {
         background-color: transparent;
-        border: 1px solid $neutral-4;
+        border: 1px solid $brightness-86;
 
         &:focus,
         &:hover {
             svg {
-                fill: $garnett-neutral-5;
+                fill: $brightness-100;
             }
         }
     }
@@ -261,10 +261,14 @@
         padding-right: .375em;
     }
 }
-@mixin mediaPalatte($mediaColor, $pillar) {
-    .content__label__link,
+@mixin mediaPalatte($mediaColor, $pillarColor, $pillar) {
+    .content__section-label__link,
     .youtube-media-atom__bottom-bar__duration {
         color: $mediaColor;
+    }
+
+    .content__labels--immersive {
+        background: $pillarColor;
     }
 
     .gu-media--show-controls-at-start.vjs-paused .vjs-big-play-button .vjs-control-text:before,
@@ -283,11 +287,11 @@
     }
 
     .social-icon__svg {
-        fill: $garnett-neutral-4;
+        fill: $brightness-86;
     }
 
-    a.content__label__link {
-        color: $garnett-neutral-3;
+    .content__label__link {
+        color: $brightness-97;
     }
 
     .vjs-paused .vjs-play-control {
@@ -301,7 +305,7 @@
 
 .content--interactive,
 .content--pillar-news:not(.paid-content) {
-    @include colorPalatte($news-garnett-main-1, $news-garnett-feature, $news-garnett-media-main-1);
+    @include colorPalatte($news-main, $news-dark, $news-bright);
 }
 // #? There is a lot of :not(.paid-content) to avoid having to override
 // after the fact.
@@ -311,86 +315,92 @@
 .content--pillar-opinion:not(.paid-content),
 .content--type-comment:not(.paid-content),
 .content--type-guardianview:not(.paid-content) {
-    @include colorPalatte($opinion-garnett-main-1, $opinion-garnett-main-1, $opinion-garnett-media-main-1);
+    @include colorPalatte($opinion-main, $opinion-main, $opinion-bright);
 }
 
 .content--pillar-arts.content--type-comment:not(.paid-content),
 .content--pillar-arts.content--type-guardianview:not(.paid-content),
 .content--pillar-arts:not(.paid-content) {
-    @include colorPalatte($culture-garnett-main-1, $culture-garnett-feature, $culture-garnett-media-main-1);
+    @include colorPalatte($culture-main, $culture-dark, $culture-bright);
 }
 
 .content--pillar-lifestyle.content--type-comment:not(.paid-content),
 .content--pillar-lifestyle.content--type-guardianview:not(.paid-content),
 .content--pillar-lifestyle:not(.paid-content),
 .content__head--crossword {
-    @include colorPalatte($lifestyle-garnett-main-1, $lifestyle-garnett-feature, $lifestyle-garnett-media-main-1);
+    @include colorPalatte($lifestyle-main, $lifestyle-dark, $lifestyle-bright);
 }
 
 .content--pillar-sport.content--type-comment:not(.paid-content),
 .content--pillar-sport.content--type-guardianview:not(.paid-content),
 .content--pillar-sport:not(.paid-content) {
-    @include colorPalatte($sport-garnett-main-1, $sport-garnett-feature, $sport-garnett-media-main-1);
+    @include colorPalatte($sport-main, $sport-dark, $sport-bright);
 }
 
 .content--pillar-special-report.content--type-comment:not(.paid-content),
 .content--pillar-special-report.content--type-guardianview:not(.paid-content),
 .content--pillar-special-report:not(.paid-content) {
-    @include colorPalatte($story-package-garnett, $story-package-garnett, $news-garnett-highlight);
+    @include colorPalatte($special-report-dark, $special-report-dark, $highlight-main);
 
     .youtube-media-atom__play-button .inline-icon svg {
-        fill: $garnett-neutral-1;
+        fill: $brightness-7;
     }
 }
 
 .content-footer--pillar-news:not(.paid-content) {
-    @include footerPalette($news-garnett-main-1);
+    @include footerPalette($news-main);
 }
 
 .content-footer--pillar-arts:not(.paid-content) {
-    @include footerPalette($culture-garnett-feature);
+    @include footerPalette($culture-dark);
 }
 
 .content-footer--pillar-lifestyle:not(.paid-content) {
-    @include footerPalette($lifestyle-garnett-feature);
+    @include footerPalette($lifestyle-dark);
 }
 
 .content-footer--pillar-opinion:not(.paid-content) {
-    @include footerPalette($opinion-garnett-main-1);
+    @include footerPalette($opinion-main);
 }
 
 .content-footer--pillar-sport:not(.paid-content) {
-    @include footerPalette($sport-garnett-main-1);
+    @include footerPalette($sport-main);
 }
 
 .content--media.content--pillar-news,
-.immersive-main-media__headline-container.content--pillar-news {
-    @include mediaPalatte($news-garnett-media-main-1, news);
+.immersive-main-media__headline-container.content--pillar-news,
+.immersive-main-media__headline-container--gallery.content--pillar-news {
+    @include mediaPalatte($news-bright, $news-main, news);
 }
 
 .content--media:not(.paid-content).content--pillar-opinion,
-.immersive-main-media__headline-container.content--pillar-opinion {
-    @include mediaPalatte($opinion-garnett-media-main-1, opinion);
+.immersive-main-media__headline-container.content--pillar-opinion,
+.immersive-main-media__headline-container--gallery.content--pillar-opinion {
+    @include mediaPalatte($opinion-bright, $opinion-main, opinion);
 }
 
 .content--media:not(.paid-content).content--pillar-arts,
-.immersive-main-media__headline-container.content--pillar-arts {
-    @include mediaPalatte($culture-garnett-media-main-1, culture);
+.immersive-main-media__headline-container.content--pillar-arts
+.immersive-main-media__headline-container--gallery.content--pillar-arts  {
+    @include mediaPalatte($culture-bright, $culture-main, culture);
 }
 
 .content--media:not(.paid-content).content--pillar-lifestyle,
-.immersive-main-media__headline-container.content--pillar-lifestyle {
-    @include mediaPalatte($lifestyle-garnett-media-main-1, lifestyle);
+.immersive-main-media__headline-container.content--pillar-lifestyle,
+.immersive-main-media__headline-container--gallery.content--pillar-lifestyle {
+    @include mediaPalatte($lifestyle-bright, $lifestyle-main, lifestyle);
 }
 
 .content--media:not(.paid-content).content--pillar-sport,
-.immersive-main-media__headline-container.content--pillar-sport {
-    @include mediaPalatte($sport-garnett-media-main-1, sport);
+.immersive-main-media__headline-container.content--pillar-sport,
+.immersive-main-media__headline-container-gallery.content--pillar-lifestyle {
+    @include mediaPalatte($sport-bright, $sport-main, sport);
 }
 
 .content--media:not(.paid-content).content--pillar-special-report,
-.immersive-main-media__headline-container.content--pillar-special-report {
-    @include mediaPalatte($news-garnett-highlight, pink);
+.immersive-main-media__headline-container.content--pillar-special-report,
+.immersive-main-media__headline-container--gallery.content--pillar-special-report {
+    @include mediaPalatte($news-bright, $news-main, pink);
 }
 
 .content--type-analysis {
@@ -408,24 +418,24 @@
 .rich-link:not(.rich-link--paidfor) {
     &,
     &.rich-link--pillar-news {
-        @include richLink($news-garnett-main-1, $garnett-neutral-3);
+        @include richLink($news-main, $brightness-97);
     }
 
     &.rich-link--pillar-opinion,
     &.tone-comment--item {
-        @include richLink($opinion-garnett-main-1, $garnett-neutral-3);
+        @include richLink($opinion-main, $brightness-97);
     }
 
     &.rich-link--pillar-sport {
-        @include richLink($sport-garnett-main-1, $garnett-neutral-3);
+        @include richLink($sport-main, $brightness-97);
     }
 
     &.rich-link--pillar-arts {
-        @include richLink($culture-garnett-main-1, $garnett-neutral-3);
+        @include richLink($culture-main, $brightness-97);
     }
 
     &.rich-link--pillar-lifestyle {
-        @include richLink($lifestyle-garnett-main-1, $garnett-neutral-3);
+        @include richLink($lifestyle-main, $brightness-97);
     }
 
     &.rich-link--pillar-opinion {
@@ -434,30 +444,30 @@
         }
 
         .rich-link__container {
-            @include multiline(4, $garnett-neutral-4);
+            @include multiline(4, $brightness-86);
             padding-bottom: 13px;
         }
     }
 
     &.tone-live--item {
         &.rich-link--pillar-news {
-            @include richLink(#ffffff, $news-garnett-feature);
+            @include richLink(#ffffff, $news-dark);
         }
 
         &.rich-link--pillar-opinion {
-            @include richLink(#ffffff, $opinion-garnett-main-1);
+            @include richLink(#ffffff, $opinion-main);
         }
 
         &.rich-link--pillar-sport {
-            @include richLink(#ffffff, $sport-garnett-feature);
+            @include richLink(#ffffff, $sport-dark);
         }
 
         &.rich-link--pillar-arts {
-            @include richLink(#ffffff, $culture-garnett-feature);
+            @include richLink(#ffffff, $culture-dark);
         }
 
         &.rich-link--pillar-lifestyle {
-            @include richLink(#ffffff, $lifestyle-garnett-feature);
+            @include richLink(#ffffff, $lifestyle-dark);
         }
 
         &,
@@ -469,10 +479,10 @@
     &.rich-link--audio,
     &.rich-link--gallery,
     &.rich-link--video {
-        background: $media-garnett-main-1;
+        background: $brightness-20;
 
         .u-faux-block-link--hover {
-            background-color: darken($media-garnett-main-1, 5%);
+            background-color: darken($brightness-20, 5%);
         }
 
         &,
@@ -487,5 +497,5 @@
 }
 
 .immersive-main-media__headline-container .content__label__link {
-    color: $garnett-neutral-3;
+    color: $brightness-97;
 }

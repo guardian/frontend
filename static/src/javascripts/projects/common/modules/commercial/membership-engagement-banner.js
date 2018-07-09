@@ -5,7 +5,6 @@ import { adblockInUse } from 'lib/detect';
 import { Message } from 'common/modules/ui/message';
 import mediator from 'lib/mediator';
 import { membershipEngagementBannerTests } from 'common/modules/experiments/tests/membership-engagement-banner-tests';
-import { inlineSvg } from 'common/views/svgs';
 import { testCanBeRun } from 'common/modules/experiments/test-can-run-checks';
 import { isInTest, variantFor } from 'common/modules/experiments/segment-util';
 import { engagementBannerParams } from 'common/modules/commercial/membership-engagement-banner-parameters';
@@ -117,8 +116,6 @@ const selectSequentiallyFrom = (array: Array<string>): string =>
 const showBanner = (params: EngagementBannerParams): void => {
     const test = getUserTest();
     const variant = getUserVariant(test);
-    const paypalAndCreditCardImage =
-        config.get('images.acquisitions.paypal-and-credit-card') || '';
     const messageText = Array.isArray(params.messageText)
         ? selectSequentiallyFrom(params.messageText)
         : params.messageText;
@@ -135,14 +132,11 @@ const showBanner = (params: EngagementBannerParams): void => {
                 : undefined,
     });
     const buttonCaption = params.buttonCaption;
-    const buttonSvg = inlineSvg('arrowWhiteRight');
     const templateParams = {
         messageText,
         ctaText,
-        paypalAndCreditCardImage,
         linkUrl,
         buttonCaption,
-        buttonSvg,
     };
 
     const renderedBanner: string = params.template
@@ -153,8 +147,7 @@ const showBanner = (params: EngagementBannerParams): void => {
         siteMessageCloseBtn: 'hide',
         siteMessageComponentName: params.campaignCode,
         trackDisplay: true,
-        cssModifierClass:
-            params.bannerModifierClass || 'support-the-guardian-banner',
+        cssModifierClass: params.bannerModifierClass || 'engagement-banner',
     }).show(renderedBanner);
 
     if (messageShown) {
@@ -210,4 +203,4 @@ const membershipEngagementBanner: Banner = {
     canShow,
 };
 
-export { membershipEngagementBanner };
+export { membershipEngagementBanner, canShow, messageCode };

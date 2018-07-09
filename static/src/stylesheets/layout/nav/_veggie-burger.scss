@@ -1,5 +1,5 @@
 .veggie-burger {
-    background-color: $nav-primary-colour;
+    background-color: $brightness-7;
     color: #ffffff;
     cursor: pointer;
     display: block;
@@ -33,13 +33,13 @@
     }
 
     .new-header--slim & {
-        background-color: $nav-secondary-colour;
+        background-color: $brightness-20;
         height: $veggie-burger-large;
         width: $veggie-burger-large;
     }
 
     .new-header--open.new-header--slim & {
-        background-color: $nav-primary-colour;
+        background-color: $brightness-7;
     }
 }
 

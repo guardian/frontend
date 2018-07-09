@@ -1,7 +1,7 @@
 .crossword__clues-header {
     @include fs-header(1);
-    border-top: 1px solid $lifestyle-garnett-main-1;
-    border-bottom: 1px dotted $neutral-3;
+    border-top: 1px solid $lifestyle-main;
+    border-bottom: 1px dotted $brightness-86;
     padding-bottom: $gs-baseline * .75;
 }
 
@@ -59,7 +59,7 @@
 }
 
 .crossword__clue--answered {
-    color: $neutral-2;
+    color: $brightness-46;
 }
 
 //For grouped clues we display 11.12,23 accross instead of just a number

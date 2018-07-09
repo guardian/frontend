@@ -274,7 +274,7 @@ Hence why a greater depth of selector specificity is needed.
     @include mq(desktop) {
         width: auto;
         margin-left: auto;
-        border-top: 1px solid $neutral-5;
+        border-top: 1px solid $brightness-86;
         padding: $gs-baseline 0 0 $gs-gutter;
         margin-top: 39px; // magic number: unavoidable to match the tab headings
 
