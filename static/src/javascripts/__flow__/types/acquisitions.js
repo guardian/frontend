@@ -13,10 +13,8 @@ declare type AcquisitionsEpicTemplateCopy = {
 declare type EngagementBannerTemplateParams = {
     messageText: string,
     ctaText: string,
-    paypalAndCreditCardImage: string,
-    linkUrl: string,
     buttonCaption: string,
-    buttonSvg: string,
+    linkUrl: string,
 };
 
 declare type EngagementBannerParams = {

@@ -60,7 +60,7 @@ const supporterCost = (location: string): string => {
 };
 
 const supporterEngagementCtaCopyControl = (location: string): string =>
-    `<span class="support-the-guardian-banner__highlight"> Support The Guardian from as little as ${supporterCost(
+    `<span class="engagement-banner__highlight"> Support The Guardian from as little as ${supporterCost(
         location
     )}.</span>`;
 

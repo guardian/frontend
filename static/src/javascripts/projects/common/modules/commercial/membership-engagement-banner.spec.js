@@ -22,9 +22,6 @@ jest.mock('lib/url', () => ({
 jest.mock('lib/geolocation', () => ({
     getSync: jest.fn(() => 'GB'),
 }));
-jest.mock('common/views/svgs', () => ({
-    inlineSvg: jest.fn(() => ''),
-}));
 jest.mock('common/modules/experiments/acquisition-test-selector', () => ({
     getTest: jest.fn(() => ({
         campaignId: 'fake-campaign-id',
@@ -114,7 +111,6 @@ const FakeMessage: any = require('common/modules/ui/message').Message;
 const fakeVariantFor: any = require('common/modules/experiments/segment-util')
     .variantFor;
 const fakeConstructQuery: any = require('lib/url').constructQuery;
-const fakeInlineSvg: any = require('common/views/svgs').inlineSvg;
 const fakeIsBlocked: any = require('common/modules/commercial/membership-engagement-banner-block')
     .isBlocked;
 const fakeGet: any = require('lib/storage').local.get;
@@ -289,7 +285,7 @@ describe('Membership engagement banner', () => {
                 membershipEngagementBanner.show();
 
                 expect(FakeMessage.mock.calls[0][1].cssModifierClass).toBe(
-                    'support-the-guardian-banner'
+                    'engagement-banner'
                 );
             }));
     });
@@ -302,12 +298,7 @@ describe('Membership engagement banner', () => {
                 linkUrl: 'fake-link-url',
                 buttonCaption: 'fake-button-caption',
             }));
-            fakeConfig.get
-                .mockImplementationOnce(() => true)
-                .mockImplementationOnce(
-                    () => 'fake-paypal-and-credit-card-image'
-                );
-            fakeInlineSvg.mockImplementationOnce(() => 'fake-button-svg');
+            fakeConfig.get.mockImplementationOnce(() => true);
             fakeConstructQuery.mockImplementationOnce(
                 () => 'fake-query-parameters'
             );
@@ -324,17 +315,6 @@ describe('Membership engagement banner', () => {
                 );
             }));
 
-        it('paypal and credit card image', () =>
-            membershipEngagementBanner.canShow().then(canShow => {
-                expect(canShow).toBe(true);
-
-                membershipEngagementBanner.show();
-
-                expect(FakeMessage.prototype.show.mock.calls[0][0]).toMatch(
-                    /fake-paypal-and-credit-card-image/
-                );
-            }));
-
         it('colour class', () =>
             membershipEngagementBanner.canShow().then(canShow => {
                 expect(canShow).toBe(true);
@@ -342,7 +322,7 @@ describe('Membership engagement banner', () => {
                 membershipEngagementBanner.show();
 
                 expect(FakeMessage.prototype.show.mock.calls[0][0]).toMatch(
-                    /support-the-guardian-banner/
+                    /engagement-banner/
                 );
             }));
 
@@ -365,17 +345,6 @@ describe('Membership engagement banner', () => {
 
                 expect(FakeMessage.prototype.show.mock.calls[0][0]).toMatch(
                     /fake-button-caption/
-                );
-            }));
-
-        it('button SVG', () =>
-            membershipEngagementBanner.canShow().then(canShow => {
-                expect(canShow).toBe(true);
-
-                membershipEngagementBanner.show();
-
-                expect(FakeMessage.prototype.show.mock.calls[0][0]).toMatch(
-                    /fake-button-svg/
                 );
             }));
     });

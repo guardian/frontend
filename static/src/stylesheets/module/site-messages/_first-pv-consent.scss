@@ -1,8 +1,20 @@
 $btn-height: ($gs-baseline*3.5);
 
-.site-message.site-message--first-pv-consent {
+.site-message--first-pv-consent {
     padding: ($gs-baseline / 2) 0 $gs-baseline * 2;
     background: $sport-dark;
+
+    a {
+        color: currentColor;
+    }
+
+    .site-message--double-banner & {
+        padding: ($gs-baseline / 2) 0;
+
+        @include mq(tablet) {
+            padding: $gs-baseline 0;
+        }
+    }
 
     .u-underline {
         border-color: rgba(255, 255, 255, .5);
@@ -24,6 +36,19 @@ $btn-height: ($gs-baseline*3.5);
     .site-message__copy {
         display: block;
         margin: 0 $gs-gutter / 2;
+
+        .site-message--double-banner & {
+            padding: 0;
+            @include mq(tablet) {
+                display: flex;
+                margin: 0 $gs-gutter;
+            }
+
+            @include mq(desktop) {
+                display: block;
+            }
+        }
+
         @include mq(leftCol) {
             padding-left: gs-span(2) + $gs-gutter * 1.5;
         }
@@ -39,6 +64,15 @@ $btn-height: ($gs-baseline*3.5);
     height: $btn-height;
     background: $highlight-main;
     color: $brightness-7;
+
+    .site-message--double-banner & {
+        background: transparent;
+        color: #ffffff;
+        border: 1px solid rgba(255, 255, 255, .5);
+        transition: border-color .15s ease-out;
+        height: 36px;
+    }
+
     padding: 0 ($gs-gutter*1.25) 0 ($gs-gutter*1.25)+($btn-height*.5);
     display: block;
     align-items: flex-start;
@@ -51,6 +85,12 @@ $btn-height: ($gs-baseline*3.5);
     &:hover {
         background: darken($highlight-main, 1%);
     }
+
+    .site-message--double-banner &:hover {
+        background: transparent;
+        border-color: #ffffff;
+    }
+
     svg {
         position: absolute;
         top: 0;
@@ -62,6 +102,10 @@ $btn-height: ($gs-baseline*3.5);
         transform: scale(.5);
         g, path {
             fill: $brightness-7;
+
+            .site-message--double-banner & {
+                fill: #ffffff;
+            }
         }
     }
 }
@@ -80,26 +124,73 @@ $btn-height: ($gs-baseline*3.5);
         font-weight: bold;
         padding-bottom: $gs-baseline;
         color: $highlight-main;
+
+        .site-message--double-banner & {
+            display: none;
+        }
     }
     &.site-message--first-pv-consent__block--intro {
         @include fs-bodyCopy(2);
         font-size: 17px;
         line-height: 24px;
-        a {
-            color: currentColor;
+
+        .site-message--double-banner & {
+            @include fs-textSans(2);
+            @include mq(tablet) {
+                @include fs-textSans(5);
+            }
+
+            @include banner-copy-alignment;
         }
+    }
+
+    .site-message--double-banner & p {
+        display: inline;
     }
 }
 
 .site-message--first-pv-consent__actions {
     @include fs-textSans(3);
     margin-top: $gs-baseline * 2;
-    .site-message--first-pv-consent__button {
-        margin-right: $gs-baseline;
+
+    .site-message--double-banner & {
+        margin-top: $gs-baseline;
+
+        @include mq(tablet) {
+            @include fs-textSans(5);
+            margin-left: auto;
+            margin-top: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            justify-content: space-around;
+        }
+
+        @include mq(desktop) {
+            display: inline-block;
+            vertical-align: bottom;
+        }
+    }
+
+    .site-message--first-pv-consent__link {
+        margin-left: $gs-baseline;
     }
     .site-message--first-pv-consent__button,
     .site-message--first-pv-consent__link {
         display: inline-block;
         vertical-align: baseline;
+
+        .site-message--double-banner & {
+            font-weight: bold;
+            vertical-align: middle;
+
+            @include mq(tablet) {
+                display: block;
+            }
+
+            @include mq(desktop) {
+                display: inline;
+            }
+        }
     }
 }
