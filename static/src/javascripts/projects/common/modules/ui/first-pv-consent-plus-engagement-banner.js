@@ -15,8 +15,6 @@ import {
     canShow as canShowFirstPvConsent,
     messageCode as firstPvConsentMessageCode,
     makeHtml as makeFirstPvConsentHtml,
-    template as firstPvConsentTemplate,
-    bindableClassNames as firstPvConsentBindableClassNames,
 } from 'common/modules/ui/first-pv-consent-banner';
 import marque36icon from 'svgs/icon/marque-36.svg';
 
@@ -61,10 +59,7 @@ const bannerHtml = `
                         ${marque36icon.markup}
                     </div>
                     <div class="site-message__copy js-site-message-copy u-cf">
-                        ${makeFirstPvConsentHtml(
-                            firstPvConsentTemplate,
-                            firstPvConsentBindableClassNames
-                        )}
+                        ${makeFirstPvConsentHtml()}
                     </div>
                 </div>
             </div>

@@ -58,11 +58,11 @@ const bindableClassNames: BindableClassNames = {
     agree: 'js-first-pv-consent-agree',
 };
 
-const makeHtml = (tpl: Template, classes: BindableClassNames): string => `
+const makeHtml = (): string => `
     <div class="site-message--first-pv-consent__block site-message--first-pv-consent__block--head">${
-        tpl.heading
+        template.heading
     }</div>
-    <div class="site-message--first-pv-consent__block site-message--first-pv-consent__block--intro">${tpl.consentText
+    <div class="site-message--first-pv-consent__block site-message--first-pv-consent__block--intro">${template.consentText
         .map(_ => `<p>${_}</p>`)
         .join('')}
     </div>
@@ -70,14 +70,14 @@ const makeHtml = (tpl: Template, classes: BindableClassNames): string => `
         <button 
             data-link-name="first-pv-consent : agree" 
             class="site-message--first-pv-consent__button site-message--first-pv-consent__button--main ${
-                classes.agree
+                bindableClassNames.agree
             }"
-        >${checkIcon.markup}<span>${tpl.agreeButton}</span></button>
+        >${checkIcon.markup}<span>${template.agreeButton}</span></button>
         <a 
-            href="${tpl.linkToPreferences}" 
+            href="${template.linkToPreferences}" 
             data-link-name="first-pv-consent : to-prefs" 
             class="site-message--first-pv-consent__link u-underline"
-        >${tpl.choicesButton}</a>
+        >${template.choicesButton}</a>
     </div>
 `;
 
@@ -129,7 +129,7 @@ const show = (): void => {
             bindClickHandlers(msg);
         },
     });
-    msg.show(makeHtml(template, bindableClassNames));
+    msg.show(makeHtml());
 };
 
 const firstPvConsentBanner: Banner = {
@@ -150,6 +150,4 @@ export {
     bindClickHandlers,
     messageCode,
     makeHtml,
-    template,
-    bindableClassNames,
 };
