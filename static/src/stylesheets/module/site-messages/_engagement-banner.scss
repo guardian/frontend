@@ -55,8 +55,8 @@
     @include banner-copy-alignment;
 
     color: $brightness-7;
-    font-size: 15px;
-    line-height: 20px;
+    font-size: 14px;
+    line-height: 18px;
 
     @include mq(tablet) {
         font-size: 17px;

@@ -20,6 +20,9 @@ const thirdPartyTrackingAdConsent: AdConsent = {
     cookie: 'GU_TK',
 };
 
+addCookie('GU_geo_continent', 'EU', 365);
+addCookie('GU_mvt_id', '1', 365);
+
 const allAdConsents: AdConsent[] = [thirdPartyTrackingAdConsent];
 
 const setAdConsentState = (provider: AdConsent, state: boolean): void => {
