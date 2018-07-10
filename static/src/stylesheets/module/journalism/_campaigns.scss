@@ -27,24 +27,6 @@
     }
 }
 
-.speech-bubble {
-    color: $brightness-7;
-    background-color: $highlight-main;
-    &::after {
-        color: $brightness-7;
-        background-color: $highlight-main;
-    }
-
-    .content--pillar-news & {
-        color: $brightness-100;
-        background-color: $news-main;
-        &::after {
-            color: $brightness-100;
-            background-color: $news-main;
-        }
-    }
-}
-
 .campaign--snippet .form_submit button {
     color: $brightness-7;
     background-color: $highlight-main;
@@ -52,6 +34,26 @@
     .content--pillar-news & {
         color: $brightness-100;
         background-color: $news-main;
+    }
+
+    .content--pillar-sport & {
+        color: $brightness-100;
+        background-color: $sport-dark;
+    }
+
+    .content--pillar-opinion & {
+        color: $brightness-100;
+        background-color: $opinion-dark;
+    }
+
+    .content--pillar-arts & {
+        color: $brightness-100;
+        background-color: $culture-dark;
+    }
+
+    .content--pillar-lifestyle & {
+        color: $brightness-100;
+        background-color: $lifestyle-main;
     }
 }
 
@@ -68,9 +70,6 @@
     }
 
     .content--pillar-news & {
-        color: $brightness-100;
-        background-color: $brightness-7;
-
         &:hover, :active {
             color: $brightness-100;
             background-color: $news-main;
@@ -79,71 +78,29 @@
             }
         }
     }
-}
 
-.content--pillar-sport {
-    .speech-bubble {
-        color: $brightness-100;
-        background-color: $sport-dark;
-        &::after {
-            color: $brightness-100;
-            background-color: $sport-dark;
-        }
-    }
-.content--pillar-sport .campaign--snippet .form_submit {
-        button {
-            color: $brightness-100;
-            background-color: $sport-dark;
-        }
-    }
-    .campaign--snippet__handle {
-        color: $brightness-100;
-        background-color: $brightness-7;
+    .content--pillar-sport & {
         &:hover, :active {
+            color: $brightness-100;
             background-color: $sport-dark;
             .icon {
                 fill: $brightness-100;
             }
         }
     }
-}
 
-.content--pillar-opinion {
-    .speech-bubble {
-        color: $brightness-100;
-        background-color: $opinion-dark;
-        &::after {
-            background-color: $opinion-dark;
-        }
-    }
-.content--pillar-opinion .campaign--snippet .form_submit {
-        button {
-            color: $brightness-100;
-            background-color: $opinion-dark;
-        }
-    }
-    .campaign--snippet__handle {
-        color: $brightness-100;
-        background-color: $brightness-7;
+    .content--pillar-opinion & {
         &:hover, :active {
+            color: $brightness-100;
             background-color: $opinion-dark;
             .icon {
                 fill: $brightness-100;
             }
         }
     }
-}
 
-.content--pillar-arts {
-    .speech-bubble {
-        color: $brightness-100;
-        background-color: $culture-dark;
-        &::after {
-            background-color: $culture-dark;
-        }
-    }
-.content--pillar-arts .campaign--snippet .form_submit {
-        button {
+    .content--pillar-arts & {
+        &:hover, :active {
             color: $brightness-100;
             background-color: $culture-dark;
             .icon {
@@ -151,11 +108,11 @@
             }
         }
     }
-    .campaign--snippet__handle {
-        color: $brightness-100;
-        background-color: $brightness-7;
+
+    .content--pillar-lifestyle & {
         &:hover, :active {
-            background-color: $culture-dark;
+            color: $brightness-100;
+            background-color: $lifestyle-main;
             .icon {
                 fill: $brightness-100;
             }
@@ -163,31 +120,6 @@
     }
 }
 
-.content--pillar-lifestyle {
-    .speech-bubble {
-        color: $brightness-100;
-        background-color: $lifestyle-main;
-        &::after {
-            background-color: $lifestyle-main;
-        }
-    }
-.content--pillar-lifestyle .campaign--snippet .form_submit {
-        button {
-            color: $brightness-100;
-            background-color: $lifestyle-main;
-        }
-    }
-    .campaign--snippet__handle {
-        color: $brightness-100;
-        background-color: $brightness-7;
-        &:hover, :active {
-            background-color: $lifestyle-main;
-            .icon {
-                fill: $brightness-100;
-            }
-        }
-    }
-}
 
 /* SUMMARY */
 
@@ -216,8 +148,8 @@
                 min-width: 84px;
 
                 &::after {
-                color: $brightness-7;
-                background-color: $highlight-main;
+                    color: $brightness-7;
+                    background-color: $highlight-main;
                 }
 
                 .content--pillar-news & {
@@ -228,13 +160,50 @@
                         background-color: $news-main;
                     }
                 }
+
+                .content--pillar-sport & {
+                    color: $brightness-100;
+                    background-color: $sport-dark;
+                    &::after {
+                        color: $brightness-100;
+                        background-color: $sport-dark;
+                    }
+                }
+
+                .content--pillar-opinion & {
+                    color: $brightness-100;
+                    background-color: $opinion-dark;
+                    &::after {
+                        background-color: $opinion-dark;
+                    }
+                }
+
+                .content--pillar-arts & {
+                    color: $brightness-100;
+                    background-color: $culture-dark;
+                    &::after {
+                        background-color: $culture-dark;
+                    }
+                }
+
+                .content--pillar-lifestyle & {
+                    color: $brightness-100;
+                    background-color: $lifestyle-main;
+                    &::after {
+                        background-color: $lifestyle-main;
+                    }
+                }
             }
         }
     }
 }
 
 .campaign--snippet__header {
-    margin: 0 0 16px;
+    margin: 0 0 6px;
+
+    @include mq(mobileMedium) {
+        margin: 0 0 20px;
+    }
 }
 
 .campaign--snippet__headline {
@@ -308,7 +277,6 @@
         position: absolute;
         bottom: -12px;
         left: 10px;
-        background: $news-main;
     }
 }
 
@@ -317,7 +285,6 @@
 .campaign--snippet form {
     display: flex;
     flex-direction: column;
-    padding: 0 .5em 2em;
 
     [type=radio], [type=checkbox] {
         margin-left: 0;
@@ -340,7 +307,7 @@
         }
         input {
             flex: initial;
-            margin: 0 4px 0 13px;
+            margin: 2px 4px 0 13px;
             min-width: 16px;
         }
     }
@@ -379,6 +346,7 @@
         border: 1px solid var(--c-brightness-93);
         font-family: $f-sans-serif-text;
         font-size: 14px;
+        line-height: 20px;
         margin: 0 10px;
     }
 
@@ -422,7 +390,6 @@
         a {
             flex: auto;
             color: $brightness-7;
-            text-decoration: none;
             margin: 8px 0 0;
 
             &:hover {
