@@ -20,6 +20,8 @@ export const acquisitionsEpicThailandCave: EpicABTest = makeABTest({
     audience: 1,
     audienceOffset: 0,
     canRun: () => keywordExists(['Thailand cave rescue']),
+    pageCheck: page =>
+        page.contentType === 'Article' || page.contentType === 'Interactive',
 
     variants: [
         {
@@ -27,6 +29,8 @@ export const acquisitionsEpicThailandCave: EpicABTest = makeABTest({
             products: [],
             options: {
                 isUnlimited: true,
+                insertAtSelector:
+                    '.submeta, .content__main-column.content__meta-footer > .content__meta-container.js-content-meta.js-football-meta.u-cf',
             },
         },
     ],
