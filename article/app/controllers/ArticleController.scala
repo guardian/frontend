@@ -268,8 +268,8 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
       val blocksParam = blockRange.query.map(_.mkString(",")).getOrElse("body")
       capiItem.showBlocks(blocksParam)
     }.getOrElse(capiItem)
-    contentApiClient.getResponse(capiItemWithBlocks)
 
+    contentApiClient.getResponse(capiItemWithBlocks)
   }
 
   /**
