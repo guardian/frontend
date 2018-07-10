@@ -198,9 +198,18 @@ class Message {
     }
 
     remember(): void {
+        if (this.isRemembered()) {
+            return;
+        }
+
         const messageStates = userPrefs.get(this.prefs) || [];
         messageStates.push(this.id);
         userPrefs.set(this.prefs, uniq(messageStates));
+    }
+
+    isRemembered(): boolean {
+        const messageStates = userPrefs.get(this.prefs) || [];
+        return messageStates.includes(this.id);
     }
 
     acknowledge(): void {

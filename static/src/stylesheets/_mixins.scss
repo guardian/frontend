@@ -292,3 +292,22 @@
         width: $iconSize;
     }
 }
+
+@mixin banner-copy-alignment {
+    @include mq(tablet) {
+        width: gs-span(7) + $gs-gutter;
+    }
+
+    @include mq(desktop) {
+        display: inline-block;
+        margin-right: gs-span(1) + $gs-gutter;
+    }
+
+    @include mq(leftCol) {
+        margin-left: gs-span(2) + $gs-gutter;
+    }
+
+    @include mq(wide) {
+        margin-left: gs-span(3) + $gs-gutter;
+    }
+}

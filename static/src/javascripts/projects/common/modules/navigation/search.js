@@ -5,13 +5,6 @@ import fastdom from 'lib/fastdom-promise';
 import $ from 'lib/$';
 import config from 'lib/config';
 
-const focusSearchField = (): void => {
-    const $input = $('input.gsc-input');
-    if ($input.length > 0) {
-        $input.focus();
-    }
-};
-
 // TODO refactor to singleton
 class Search {
     gcsUrl: string;
@@ -115,7 +108,6 @@ class Search {
                                     this.load(popup);
 
                                     // Make sure search is always in the correct state
-                                    focusSearchField();
                                     e.preventDefault();
                                 });
                             });
@@ -139,12 +131,6 @@ class Search {
             }))
             .then(els => {
                 const { allSearchPlaceholders, searchPlaceholder } = els;
-
-                // Set so Google know what to do
-                // eslint-disable-next-line no-underscore-dangle
-                window.__gcse = {
-                    callback: focusSearchField,
-                };
 
                 if (!searchPlaceholder) {
                     return;

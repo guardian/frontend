@@ -1,18 +1,21 @@
 package controllers
 
-import conf.Configuration
-import common._
-import model.Cached.RevalidatableResult
-import model.{ApplicationContext, Cached, MetaData, NoCache, SectionId}
-import play.api.data.Form
-import play.api.libs.json.Json
-import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
-import play.api.libs.ws._
-import play.api.data.Forms._
+import java.lang.Throwable
 
+import common._
+import conf.Configuration
+import model.Cached.RevalidatableResult
+import model.{ApplicationContext, Cached, MetaData, NoCache, SectionId, SimplePage}
+import play.api.data.Form
+import play.api.data.Forms._
+import play.api.libs.json.{JsValue, Json}
+import play.api.libs.ws._
+import play.api.mvc._
+
+import scala.concurrent.Future
 import scala.concurrent.duration._
 
-class TechFeedbackController(ws: WSClient, val controllerComponents: ControllerComponents) (implicit context: ApplicationContext) extends BaseController with Logging {
+class TechFeedbackController(ws: WSClient, val controllerComponents: ControllerComponents) (implicit context: ApplicationContext) extends BaseController with Logging with ImplicitControllerExecutionContext {
 
   def submitFeedback(path: String): Action[AnyContent] = Action { implicit request =>
 
@@ -50,13 +53,38 @@ class TechFeedbackController(ws: WSClient, val controllerComponents: ControllerC
 
   }
 
-  def techFeedback(path: String): Action[AnyContent] = Action { implicit request =>
-    val page = model.SimplePage(MetaData.make(
-      request.path,
-      Some(SectionId.fromId("info")),
-      "Thanks for your report"
-    ))
-    Cached(900)(RevalidatableResult.Ok(views.html.feedback(page, path)))
+  def techFeedback(path: String): Action[AnyContent] = {
+
+    Action.async { implicit request =>
+
+      def getAlerts: Future[List[String]] = ws.url(Configuration.feedback.feedbackHelpConfig)
+        .withRequestTimeout(3000.millis)
+        .get()
+        .map((resp: WSResponse) => (Json.parse(resp.body) \ "alerts").get.as[List[String]])
+
+      def pageWithAlerts(alerts: List[String]): Result = {
+        val page: SimplePage = model.SimplePage(MetaData.make(
+          request.path,
+          Some(SectionId.fromId("info")),
+          "Thanks for your report"
+        ))
+        Cached(60)(RevalidatableResult.Ok(views.html.feedback(
+          page,
+          path,
+          alerts
+        )))
+      }
+
+      getAlerts.map {
+        pageWithAlerts
+      } recover {
+        case t:Throwable =>
+          log.error("Failed to get alerts", t)
+          pageWithAlerts(Nil)
+      }
+
+    }
+
   }
 
 }

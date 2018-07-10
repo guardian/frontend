@@ -131,9 +131,9 @@ describe('cmp', () => {
         const processSpy = jest.spyOn(cmp, 'processCommand');
         cmp.receiveMessage({
             data: {
-                __cmpCall: { command: 'showConsentTool' },
+                __cmpCall: ({ command: 'showConsentTool' }: any),
             },
-            origin: {},
+            origin: 'example',
             source,
         });
         expect(processSpy.mock.calls[0][0]).toMatch('showConsentTool');
