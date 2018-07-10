@@ -105,6 +105,7 @@ const WaveAndTrack = styled('div')({
     flexDirection: 'column',
     alignItems: 'stretch',
     padding: '0 9px',
+    cursor: 'pointer',
 });
 
 const Track = styled('div')({
@@ -335,6 +336,8 @@ export default class AudioPlayer extends Component<Props, State> {
 
         this.audio.addEventListener('volumechange', this.onVolumeChange);
         this.audio.addEventListener('timeupdate', this.onTimeUpdate);
+        // this should fire on Firefox
+        this.audio.addEventListener('ended', this.resetAudio);
 
         // eslint-disable-next-line react/no-did-mount-set-state
         this.setState(
@@ -435,35 +438,22 @@ export default class AudioPlayer extends Component<Props, State> {
             const boxW = document.querySelector('.fake-wave').offsetWidth;
             const svg = document.querySelector('.fake-wave svg');
             // $FlowFixMe
-            const pt = svg.createSVGPoint();
+            const leftOffset = svg.getBoundingClientRect().left;
 
-            pt.x = e.clientX;
-            pt.y = e.clientY;
-            const adjustedPosition = pt.matrixTransform(
-                // $FlowFixMe
-                svg.getScreenCTM().inverse()
-            );
-            const clickedPosition = (adjustedPosition.x / boxW) * 98; // sorry this just seemed to work
-            this.seek(clickedPosition);
+            const clickedPos = e.clientX - leftOffset;
+            const posPercentage = (clickedPos / boxW) * 100;
+
+            this.seek(posPercentage);
         }
     };
 
-    seek = (chosenPoint: number) => {
-        const chosenTime = (this.audio.duration * chosenPoint) / 100;
-        this.updatePlayerTime(chosenTime);
-    };
-
-    forward = () => {
-        const chosenTime = Math.min(
-            this.state.currentTime + 15,
-            this.state.duration
+    seek = (chosenPercent: number) => {
+        const chosenTime = (this.audio.duration * chosenPercent) / 100;
+        const checkedTime = Math.max(
+            0,
+            Math.min(this.state.duration, chosenTime)
         );
-        this.updatePlayerTime(chosenTime);
-    };
-
-    backward = () => {
-        const chosenTime = Math.max(this.state.currentTime - 15, 0);
-        this.updatePlayerTime(chosenTime);
+        this.updatePlayerTime(checkedTime);
     };
 
     updatePlayerTime = (currTime: number) => {
@@ -478,6 +468,19 @@ export default class AudioPlayer extends Component<Props, State> {
             currentTime: currTime,
             currentOffset,
         });
+    };
+
+    forward = () => {
+        const chosenTime = Math.min(
+            this.state.currentTime + 15,
+            this.state.duration
+        );
+        this.updatePlayerTime(chosenTime);
+    };
+
+    backward = () => {
+        const chosenTime = Math.max(this.state.currentTime - 15, 0);
+        this.updatePlayerTime(chosenTime);
     };
 
     updateVolume = (v: number) => {
