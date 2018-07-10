@@ -21,7 +21,7 @@ case class MinutePage(article: Article, related: RelatedContent) extends PageWit
 
 class LiveBlogController(contentApiClient: ContentApiClient, val controllerComponents: ControllerComponents, ws: WSClient)(implicit context: ApplicationContext) extends BaseController with RendersItemResponse with Logging with ImplicitControllerExecutionContext {
 
-  val lookerUpper: CAPILookup = new CAPILookup(contentApiClient)
+  val capiLookup: CAPILookup = new CAPILookup(contentApiClient)
 
   // we support liveblogs and also articles, so that minutes work
   private def isSupported(c: ApiContent) = c.isLiveBlog || c.isArticle
@@ -115,16 +115,20 @@ class LiveBlogController(contentApiClient: ContentApiClient, val controllerCompo
   }
 
   private def mapModel(path: String, range: Option[BlockRange] = None)(render: PageWithStoryPackage => Result)(implicit request: RequestHeader): Future[Result] = {
-    lookerUpper.lookup(path, range) map responseToModelOrResult(range) recover convertApiExceptions map {
-      case Left(model) => render(model)
-      case Right(other) => RenderOtherStatus(other)
-    }
+    capiLookup
+      .lookup(path, range)
+      .map(responseToModelOrResult(range))
+      .recover(convertApiExceptions)
+      .map {
+        case Left(model) => render(model)
+        case Right(other) => RenderOtherStatus(other)
+      }
   }
 
   private def responseToModelOrResult(range: Option[BlockRange])(response: ItemResponse)(implicit request: RequestHeader): Either[PageWithStoryPackage, Result] = {
 
-    val supportedContent = response.content.filter(isSupported).map(Content(_))
-    val supportedContentResult = ModelOrResult(supportedContent, response)
+    val supportedContent: Option[ContentType] = response.content.filter(isSupported).map(Content(_))
+    val supportedContentResult: Either[ContentType, Result] = ModelOrResult(supportedContent, response)
 
     val content: Either[PageWithStoryPackage, Result] = supportedContentResult.left.flatMap {
       case minute: Article if minute.isTheMinute =>
