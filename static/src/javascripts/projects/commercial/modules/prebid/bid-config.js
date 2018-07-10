@@ -253,6 +253,7 @@ const xaxisBidder: PrebidBidder = {
     name: 'xhb',
     bidParams: (slotId: string, sizes: PrebidSize[]): PrebidXaxisParams => ({
         placementId: getXaxisPlacementId(sizes),
+        member: '2127',
     }),
     labelAll: ['edn-UK', 'deal-FirstLook'],
 };
