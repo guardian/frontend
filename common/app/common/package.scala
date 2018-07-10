@@ -106,32 +106,6 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
         RevalidatableResult.Ok(htmlResponse())
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   def renderHtml(html: Html, page: model.Page)(implicit request: RequestHeader, context: ApplicationContext): Result = Cached(page){
     RevalidatableResult.Ok(html)
   }
