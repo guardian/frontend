@@ -1,25 +1,131 @@
 
 .campaign--snippet {
     border-top: 1px $brightness-86 solid;
-    background: $brightness-93;
+    border-bottom: 1px $brightness-86 solid;
     position: relative;
-    padding: 0 0 6px;
-    margin: 16px 0 36px;
-    font-size: 14px;
-    line-height: 21px;
+    padding: 0;
+    margin: 16px -10px 36px;
+    @include mq(phablet) {
+        margin: 16px 0 36px -10px;
+    }
 
     &:not([open]) .is-on,
     &[open] .is-off {
         display: none;
     }
+
+    &[open] {
+        background: $brightness-93;
+    }
+
+    p {
+        font-size: 14px;
+        line-height: 18px;
+        font-family: $f-serif-headline;
+        font-weight: 400;
+        padding-top: 2px;
+    }
 }
+
+.campaign--snippet .form_submit button {
+    color: $brightness-7;
+    background-color: $highlight-main;
+
+    .content--pillar-news & {
+        color: $brightness-100;
+        background-color: $news-main;
+    }
+
+    .content--pillar-sport & {
+        color: $brightness-100;
+        background-color: $sport-dark;
+    }
+
+    .content--pillar-opinion & {
+        color: $brightness-100;
+        background-color: $opinion-dark;
+    }
+
+    .content--pillar-arts & {
+        color: $brightness-100;
+        background-color: $culture-dark;
+    }
+
+    .content--pillar-lifestyle & {
+        color: $brightness-100;
+        background-color: $lifestyle-main;
+    }
+}
+
+.campaign--snippet__handle {
+    color: $brightness-100;
+    background-color: $brightness-7;
+
+    &:hover, :active {
+        color: $brightness-7;
+        background-color: $highlight-main;
+        .icon {
+            fill: $brightness-7;
+        }
+    }
+
+    .content--pillar-news & {
+        &:hover, :active {
+            color: $brightness-100;
+            background-color: $news-main;
+            .icon {
+                fill: $brightness-100;
+            }
+        }
+    }
+
+    .content--pillar-sport & {
+        &:hover, :active {
+            color: $brightness-100;
+            background-color: $sport-dark;
+            .icon {
+                fill: $brightness-100;
+            }
+        }
+    }
+
+    .content--pillar-opinion & {
+        &:hover, :active {
+            color: $brightness-100;
+            background-color: $opinion-dark;
+            .icon {
+                fill: $brightness-100;
+            }
+        }
+    }
+
+    .content--pillar-arts & {
+        &:hover, :active {
+            color: $brightness-100;
+            background-color: $culture-dark;
+            .icon {
+                fill: $brightness-100;
+            }
+        }
+    }
+
+    .content--pillar-lifestyle & {
+        &:hover, :active {
+            color: $brightness-100;
+            background-color: $lifestyle-main;
+            .icon {
+                fill: $brightness-100;
+            }
+        }
+    }
+}
+
 
 /* SUMMARY */
 
 .campaign--snippet > summary {
     outline: none;
     padding: 0;
-    border-top: 1px $brightness-86 solid;
     list-style: none;
 
     &::-webkit-details-marker {
@@ -35,49 +141,103 @@
             margin-right: 10px;
 
             .speech-bubble {
-                background-color: $news-main;
+                color: $brightness-7;
+                background-color: $highlight-main;
                 padding: 6px 10px 10px;
-                color: #ffffff;
                 line-height: 18px;
+                min-width: 84px;
+
+                &::after {
+                    color: $brightness-7;
+                    background-color: $highlight-main;
+                }
+
+                .content--pillar-news & {
+                    color: $brightness-100;
+                    background-color: $news-main;
+                    &::after {
+                        color: $brightness-100;
+                        background-color: $news-main;
+                    }
+                }
+
+                .content--pillar-sport & {
+                    color: $brightness-100;
+                    background-color: $sport-dark;
+                    &::after {
+                        color: $brightness-100;
+                        background-color: $sport-dark;
+                    }
+                }
+
+                .content--pillar-opinion & {
+                    color: $brightness-100;
+                    background-color: $opinion-dark;
+                    &::after {
+                        background-color: $opinion-dark;
+                    }
+                }
+
+                .content--pillar-arts & {
+                    color: $brightness-100;
+                    background-color: $culture-dark;
+                    &::after {
+                        background-color: $culture-dark;
+                    }
+                }
+
+                .content--pillar-lifestyle & {
+                    color: $brightness-100;
+                    background-color: $lifestyle-main;
+                    &::after {
+                        background-color: $lifestyle-main;
+                    }
+                }
             }
-        }
-        > .heading {
-            flex: auto;
-            font-weight: bold;
         }
     }
 }
 
 .campaign--snippet__header {
-    margin: 0 0 16px;
+    margin: 0 0 6px;
+
+    @include mq(mobileMedium) {
+        margin: 0 0 20px;
+    }
 }
 
-.campaign--snippet__headline, .campaign--snippet__heading-logo {
+.campaign--snippet__headline {
     font-size: 18px;
     line-height: 22px;
-    font-family: $f-serif-text;
+    font-family: $f-serif-headline;
+    font-weight: 500;
+    padding-top: 1px;
+}
+
+.campaign--snippet__heading-logo {
+    font-size: 18px;
+    font-family: $f-serif-headline;
     font-weight: 500;
 }
 
 .campaign--snippet__handle {
-    background: #121212;
-    color: #ffffff;
     font-family: $f-sans-serif-text;
     font-size: 13px;
+    font-weight: bold;
     position: absolute;
     bottom: 0;
     transform: translate(0, 50%);
-    padding: 0 15px 0 7px;
+    padding: 3px 15px 0 6px;
     margin-left: 5px;
     span {
         display: inline-flex;
         align-items: center;
     }
     .icon {
-        fill: #ffffff;
-        width: 20px;
-        height: 20px;
-        margin-right: 10px;
+        fill: $brightness-100;
+        width: 16px;
+        height: 16px;
+        margin: -3px 6px 0 4px;
     }
 }
 
@@ -95,7 +255,7 @@
     -webkit-box-align: center;
     align-items: center;
     border: 0;
-    margin: 0;
+    margin: 0 0 0 10px;
 
     svg:not(:root) {
         overflow: hidden;
@@ -111,13 +271,12 @@
 
     &::after {
         content: '';
-        width: 14px;
-        height: 12px;
-        border-radius: 0 0 14px;
+        width: 20px;
+        height: 22px;
+        border-radius: 0 0 18px;
         position: absolute;
         bottom: -12px;
         left: 10px;
-        background: $news-main;
     }
 }
 
@@ -126,8 +285,6 @@
 .campaign--snippet form {
     display: flex;
     flex-direction: column;
-    padding: 0 .5em 2em;
-    border-top: 1px $brightness-86 solid;
 
     [type=radio], [type=checkbox] {
         margin-left: 0;
@@ -138,7 +295,7 @@
 .campaign--snippet .form_input {
 
     &:not(:first-child) {
-        margin: 12px 0;
+        margin: 0 0 20px;
     }
     &.form_input--radio .form_field,
     &.form_input--checkbox .form_field {
@@ -150,22 +307,25 @@
         }
         input {
             flex: initial;
+            margin: 2px 4px 0 13px;
+            min-width: 16px;
         }
     }
 
     textarea {
         max-width: 100%;
-        min-width: 100%;
-        min-height: 25px;
+        min-height: 80px;
     }
 
     .form_option_container {
         display: flex;
-        margin-left: .3em;
         label {
             flex: initial;
-            margin-right: 1em;
-            margin-left: .5em;
+            margin: 2px 0 0 4px;
+            font-size: 14px;
+            line-height: 18px;
+            font-weight: 400;
+            font-family: $f-serif-headline;
         }
     }
 }
@@ -173,10 +333,11 @@
 .campaign--snippet .form_field {
     display: flex;
     flex-direction: column;
+    border-top: 1px solid $brightness-86;
 
     input {
         align-self: stretch;
-        padding: 3px 5px 4px;
+        padding: 10px 0 10px 4px;
     }
 
     input,
@@ -184,14 +345,22 @@
     textarea {
         border: 1px solid var(--c-brightness-93);
         font-family: $f-sans-serif-text;
+        font-size: 14px;
+        line-height: 20px;
+        margin: 0 10px;
     }
+
     .form_field_label {
-        margin-left: .3em;
+        margin: 1px 0 6px 3px;
+        padding: 0 10px;
+        font-size: 16px;
+        line-height: 20px;
         font-weight: 500;
         font-family: $f-serif-headline;
+
         span {
-            font-weight: normal;
-            display: table; /* hack to force new line for span */
+            font-weight: 200;
+            margin-right: 10px;
         }
     }
 }
@@ -199,15 +368,15 @@
 .campaign--snippet .form_footer {
     display: flex;
     flex-direction: row;
+    border-top: 1px $brightness-86 solid;
 
     .form_submit {
         flex: auto;
+        padding: 4px 0 40px 10px;
         .button {
-            background-color: #c70000;
-            color: #ffffff;
             height: 30px;
             line-height: 30px;
-            padding: 0 10px;
+            padding: 1px 16px;
             border: 0;
         }
     }
@@ -216,15 +385,21 @@
         text-align: right;
         display: flex;
         font-family: $f-sans-serif-text;
+        font-size: 12px;
+
         a {
             flex: auto;
-            align-self: center;
-            color: #121212;
+            color: $brightness-7;
+            margin: 8px 0 0;
+
+            &:hover {
+                text-decoration: underline;
+            }
+
+            @include mq(mobileMedium) {
+                font-size: 14px;
+                margin: 8px 10px 0 0;
+            }
         }
     }
 }
-
-
-
-
-
