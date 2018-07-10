@@ -35,6 +35,7 @@ object RenderingTierPicker {
       case _: ImageBlockElement => false
       case _ => true
     }
+
     !page.article.blocks.exists(_.body.exists(_.elements.exists(unsupportedElement)))
   }
 
