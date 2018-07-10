@@ -7,6 +7,7 @@ import { init as initHighMerch } from 'commercial/modules/high-merch';
 import { init as initArticleAsideAdverts } from 'commercial/modules/article-aside-adverts';
 import { init as initArticleBodyAdverts } from 'commercial/modules/article-body-adverts';
 import { closeDisabledSlots } from 'commercial/modules/close-disabled-slots';
+import { adFreeSlotRemove } from 'commercial/modules/ad-free-slot-remove';
 import { init as initCmpService } from 'commercial/modules/cmp/cmp';
 import { trackConsent as trackCmpConsent } from 'commercial/modules/cmp/consent-tracker';
 import { init as prepareGoogletag } from 'commercial/modules/dfp/prepare-googletag';
@@ -33,15 +34,16 @@ import { initDFPEpicSlot } from 'commercial/modules/epic/dfp-epic-slot';
 const commercialModules: Array<Array<any>> = [
     ['cm-prepare-cmp', initCmpService],
     ['cm-track-cmp-consent', trackCmpConsent],
+    ['cm-adFreeSlotRemove', adFreeSlotRemove],
     ['cm-thirdPartyTags', initThirdPartyTags],
-    ['cm-prepare-googletag', prepareGoogletag, true],
-    ['cm-closeDisabledSlots', closeDisabledSlots],
-    ['cm-dfp-epic', initDFPEpicSlot],
-    ['cm-checkDispatcher', initCheckDispatcher],
+    ['cm-checkDispatcher', initCheckDispatcher]
 ];
 
 if (!commercialFeatures.adFree) {
     commercialModules.push(
+        ['cm-prepare-googletag', prepareGoogletag, true],
+        ['cm-closeDisabledSlots', closeDisabledSlots],
+        ['cm-dfp-epic', initDFPEpicSlot],
         ['cm-highMerch', initHighMerch],
         ['cm-prepare-sonobi-tag', prepareSonobiTag, true],
         ['cm-articleAsideAdverts', initArticleAsideAdverts, true],

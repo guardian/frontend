@@ -16,7 +16,7 @@ import {
 import { buildPageTargeting } from 'common/modules/commercial/build-page-targeting';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 
-import { adFreeSlotRemove } from 'commercial/modules/close-disabled-slots';
+import { adFreeSlotRemove } from 'commercial/modules/ad-free-slot-remove';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import { fillAdvertSlots } from 'commercial/modules/dfp/fill-advert-slots';
 import { getUserFromCookie } from 'common/modules/identity/api';
