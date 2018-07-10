@@ -215,8 +215,12 @@ final case class Content(
     }
   }
 
+  // we take the first blog or series tag in the tag list, unless a series tag has an associated badge, in which
+  // case it takes priority over other blog/series tags
   lazy val blogOrSeriesTag: Option[Tag] = {
-    tags.tags.find( tag => tag.showSeriesInMeta && (tag.isBlog || tag.isSeries ))
+    val seriesAndBlogTags = tags.tags.filter( tag => tag.showSeriesInMeta && (tag.isBlog || tag.isSeries ))
+    val seriesWithBadge = seriesAndBlogTags.filter(tag => tag.isSeries && Badges.allBadges.exists(b => b.maybeThisBadge(tag.id).isDefined))
+    (seriesWithBadge ++ seriesAndBlogTags).headOption
   }
 
   lazy val seriesTag: Option[Tag] = {
