@@ -5,11 +5,11 @@ import common._
 import contentapi.ContentApiClient
 import model.{PageWithStoryPackage, _}
 import pages.{ArticleEmailHtmlPage, ArticleHtmlPage}
-import play.api.libs.json.Json
 import play.api.libs.ws.WSClient
 import play.api.mvc._
 import views.support._
 import metrics.TimingMetric
+import play.libs.Json
 import renderers.RemoteRender
 import services.CAPILookup
 
@@ -50,16 +50,20 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
     }
   }
 
-  private def render(path: String, article: ArticlePage)(implicit request: RequestHeader): Future[Result] = {
-    val htmlResponse = () => {
-      if (request.isEmail) ArticleEmailHtmlPage.html(article)
-      else if (request.isAmp) views.html.articleAMP(article)
-      else ArticleHtmlPage.html(article)
-    }
-    // add extra data for *.json?guui endpoint
+  private def getJson(article: ArticlePage)(implicit request: RequestHeader) = {
     val contentFieldsJson = if (request.isGuuiJson) List("contentFields" -> Json.toJson(ContentFields(article.article))) else List()
-    val jsonResponse = () => List(("html", views.html.fragments.articleBody(article))) ++ contentFieldsJson
-    Future { renderFormat(htmlResponse, jsonResponse, article) }
+    List(("html", views.html.fragments.articleBody(article))) ++ contentFieldsJson
+  }
+
+  private def render(path: String, article: ArticlePage)(implicit request: RequestHeader): Future[Result] = {
+    Future {
+      request.getRequestFormat match {
+        case implicits.Json => common.renderJson(getJson(article), article)
+        case implicits.Email => common.renderEmail(ArticleEmailHtmlPage.html(article), article)
+        case implicits.Html => common.renderHtml(ArticleHtmlPage.html(article), article)
+        case implicits.Amp => common.renderHtml(views.html.articleAMP(article), article)
+      }
+    }
   }
 
   def mapModel(path: String, range: Option[BlockRange] = None)(render: ArticlePage => Future[Result])(implicit request: RequestHeader): Future[Result] = {
