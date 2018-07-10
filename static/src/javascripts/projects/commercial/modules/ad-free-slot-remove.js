@@ -27,27 +27,28 @@ const shouldRemoveFaciaContainerWhenAdFree = faciaContainer => {
 
 const adFreeSlotRemove = once(
     (): Promise<void> => {
-    const adSlotsToRemove: Array<Element> = qwery(dfpEnv.adSlotSelector).filter(
-        shouldRemoveAdSlotWhenAdFree
-    );
+        const adSlotsToRemove: Array<Element> = qwery(
+            dfpEnv.adSlotSelector
+        ).filter(shouldRemoveAdSlotWhenAdFree);
 
-    const mpusToRemove: Array<Element> = qwery(mpuCandidateSelector).filter(
-        shouldRemoveMpuWhenAdFree
-    );
-
-    const commercialFaciaContainersToRemove: Array<Element> = qwery(
-        '.fc-container'
-    ).filter(shouldRemoveFaciaContainerWhenAdFree);
-
-    return fastdom.write(() => {
-        adSlotsToRemove.forEach((adSlot: Element) => adSlot.remove());
-        mpusToRemove.forEach((mpu: Element) =>
-            mpu.classList.add('fc-slice__item--no-mpu')
+        const mpusToRemove: Array<Element> = qwery(mpuCandidateSelector).filter(
+            shouldRemoveMpuWhenAdFree
         );
-        commercialFaciaContainersToRemove.forEach((faciaContainer: Element) =>
-            faciaContainer.classList.add('u-h')
-        );
-    });
-});
+
+        const commercialFaciaContainersToRemove: Array<Element> = qwery(
+            '.fc-container'
+        ).filter(shouldRemoveFaciaContainerWhenAdFree);
+
+        return fastdom.write(() => {
+            adSlotsToRemove.forEach((adSlot: Element) => adSlot.remove());
+            mpusToRemove.forEach((mpu: Element) =>
+                mpu.classList.add('fc-slice__item--no-mpu')
+            );
+            commercialFaciaContainersToRemove.forEach(
+                (faciaContainer: Element) => faciaContainer.classList.add('u-h')
+            );
+        });
+    }
+);
 
 export { adFreeSlotRemove };

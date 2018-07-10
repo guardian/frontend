@@ -36,7 +36,7 @@ const commercialModules: Array<Array<any>> = [
     ['cm-track-cmp-consent', trackCmpConsent],
     ['cm-adFreeSlotRemove', adFreeSlotRemove],
     ['cm-thirdPartyTags', initThirdPartyTags],
-    ['cm-checkDispatcher', initCheckDispatcher]
+    ['cm-checkDispatcher', initCheckDispatcher],
 ];
 
 if (!commercialFeatures.adFree) {
