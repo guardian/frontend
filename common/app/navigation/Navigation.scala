@@ -33,8 +33,6 @@ case class NavLink(
 ) extends NavNode
 
 
-case class NavRoot private(children: Seq[NavLink], otherLinks: Seq[NavLink], brandExtensions: Seq[NavLink]) extends NavNode
-
 case class SimpleMenu(
   pillars: Seq[NavLink],
   otherLinks: Seq[NavLink],
@@ -53,6 +51,8 @@ case class NavMenu(
 )
 
 object NavMenu {
+
+  private[navigation] case class NavRoot(children: Seq[NavLink], otherLinks: Seq[NavLink], brandExtensions: Seq[NavLink])
 
   def apply(page: Page, edition: Edition): NavMenu = {
     val root = navRoot(edition)
