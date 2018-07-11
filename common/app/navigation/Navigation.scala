@@ -94,21 +94,37 @@ case class SimpleMenu(
   brandExtensions: Seq[NavLink]
 )
 
-case class NavMenu private (page: Page, root: NavRoot, edition: Edition) {
-
-  def currentUrl: String = NavMenu.getSectionOrPageUrl(page, edition)
-  def pillars: Seq[NavLink] = root.children
-  def otherLinks: Seq[NavLink] = root.otherLinks
-  def brandExtensions: Seq[NavLink] = root.brandExtensions
-  def currentNavLink: Option[NavLink] = root.findDescendantByUrl(currentUrl, edition)
-  def currentParent: Option[NavLink] = currentNavLink.flatMap( link => root.findParent(link, edition) )
-  def currentPillar: Option[NavLink] = root.getPillar(currentParent, edition)
-  def subNavSections: Option[Subnav] = NavMenu.getSubnav(page.metadata.customSignPosting, currentNavLink, currentParent, currentPillar)
-}
+case class NavMenu(
+  currentUrl: String,
+  pillars: Seq[NavLink],
+  otherLinks: Seq[NavLink],
+  brandExtensions: Seq[NavLink],
+  currentNavLink: Option[NavLink],
+  currentParent: Option[NavLink],
+  currentPillar: Option[NavLink],
+  subNavSections: Option[Subnav]
+)
 
 object NavMenu {
 
-  def apply(page: Page, edition: Edition): NavMenu = NavMenu(page, navRoot(edition), edition)
+  def apply(page: Page, edition: Edition): NavMenu = {
+    val root = navRoot(edition)
+    val currentUrl = getSectionOrPageUrl(page, edition)
+    val currentNavLink = root.findDescendantByUrl(currentUrl, edition)
+    val currentParent = currentNavLink.flatMap(link => root.findParent(link, edition))
+    val currentPillar = root.getPillar(currentParent, edition)
+
+    NavMenu(
+      currentUrl = currentUrl,
+      pillars = root.children,
+      otherLinks = root.otherLinks,
+      brandExtensions = root.brandExtensions,
+      currentNavLink = currentNavLink,
+      currentParent = currentParent,
+      currentPillar = currentPillar,
+      subNavSections = getSubnav(page.metadata.customSignPosting, currentNavLink, currentParent, currentPillar)
+    )
+  }
 
   def apply(edition: Edition): SimpleMenu = {
     val root = navRoot(edition)
