@@ -110,10 +110,9 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
     val maybeNavLink = root.findDescendantByUrl("/uk-news", edition)
     val parent = maybeNavLink.flatMap( link => root.findParent(link, edition) )
     val pillar = root.getPillar(parent, edition)
-    val subnav = NavMenu.getSubnav(fakePage(), maybeNavLink, parent, pillar)
+    val subnav = NavMenu.getSubnav(fakePage().metadata.customSignPosting, maybeNavLink, parent, pillar)
 
-    subnav.parent.map( p => p should be(ukNews) )
-    subnav.children should be(ukNews.children)
+    subnav shouldBe Some(ParentSubnav(ukNews, ukNews.children))
   }
 
   "On `/money/work-and-careers`, the subnav" should "have a parent, and children in the subnav" in {
@@ -122,10 +121,9 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
     val maybeNavLink = root.findDescendantByUrl("/money/work-and-careers", edition)
     val parent = maybeNavLink.flatMap( link => root.findParent(link, edition) )
     val pillar = root.getPillar(parent, edition)
-    val subnav = NavMenu.getSubnav(fakePage(), maybeNavLink, parent, pillar)
+    val subnav = NavMenu.getSubnav(fakePage().metadata.customSignPosting, maybeNavLink, parent, pillar)
 
-    subnav.parent.map( p => p should be(money) )
-    subnav.children should be(money.children)
+    subnav shouldBe Some(ParentSubnav(money, money.children))
   }
 
   "On `/culture`, the subnav" should "only have children, which are not tertiary" in {
@@ -134,10 +132,9 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
     val maybeNavLink = root.findDescendantByUrl("/culture", edition)
     val parent = maybeNavLink.flatMap( link => root.findParent(link, edition) )
     val pillar = root.getPillar(parent, edition)
-    val subnav = NavMenu.getSubnav(fakePage(), maybeNavLink, parent, pillar)
+    val subnav = NavMenu.getSubnav(fakePage().metadata.customSignPosting, maybeNavLink, parent, pillar)
 
-    subnav.parent.isDefined should be(false)
-    subnav.children should be(auCulturePillar.children)
+    subnav shouldBe Some(FlatSubnav(auCulturePillar.children))
   }
 
   "The section `Indigenous Australians`" should "still be in the pillar News in the Uk edition" in {
@@ -177,11 +174,11 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
     val maybeNavLink = root.findDescendantByUrl("/crosswords", edition)
     val parent = maybeNavLink.flatMap( link => root.findParent(link, edition) )
     val pillar = root.getPillar(parent, edition)
-    val subnav = NavMenu.getSubnav(fakePage(), maybeNavLink, parent, pillar)
+    val subnav = NavMenu.getSubnav(fakePage().metadata.customSignPosting, maybeNavLink, parent, pillar)
 
     pillar should be(None)
-    subnav.parent.map(_ should be(crosswords))
-    subnav.children should be(crosswords.children)
+
+    subnav shouldBe Some(ParentSubnav(crosswords, crosswords.children))
   }
 
   "On cryptic crosswords the parent" should "be crosswords, and the pillar should be None" in {
@@ -190,11 +187,11 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
     val maybeNavLink = root.findDescendantByUrl("/crosswords/series/cryptic", edition)
     val parent = maybeNavLink.flatMap( link => root.findParent(link, edition) )
     val pillar = root.getPillar(parent, edition)
-    val subnav = NavMenu.getSubnav(fakePage(), maybeNavLink, parent, pillar)
+    val subnav = NavMenu.getSubnav(fakePage().metadata.customSignPosting, maybeNavLink, parent, pillar)
 
     pillar should be(None)
-    subnav.parent.map(_ should be(crosswords))
-    subnav.children should be(crosswords.children)
+
+    subnav shouldBe Some(ParentSubnav(crosswords, crosswords.children))
   }
 
   "On a food article, the pillar" should "be lifeStyle, and food should be highlighted" in {

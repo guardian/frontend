@@ -14,7 +14,9 @@ import scala.annotation.tailrec
 // - reduce interface surface area (number of classes)
 // - improve naming
 
-case class Subnav(parent: Option[NavLink], children: Seq[NavLink])
+sealed trait Subnav
+case class FlatSubnav(links: Seq[NavLink]) extends Subnav
+case class ParentSubnav(parent: NavLink, links: Seq[NavLink]) extends Subnav
 
 sealed trait NavNode {
   def children: Seq[NavLink]
@@ -112,12 +114,13 @@ case class NavMenu private (page: Page, root: NavRoot, edition: Edition) {
   def currentNavLink: Option[NavLink] = root.findDescendantByUrl(currentUrl, edition)
   def currentParent: Option[NavLink] = currentNavLink.flatMap( link => root.findParent(link, edition) )
   def currentPillar: Option[NavLink] = root.getPillar(currentParent, edition)
-  def subNavSections: Subnav = NavMenu.getSubnav(page, currentNavLink, currentParent, currentPillar)
+  def subNavSections: Option[Subnav] = NavMenu.getSubnav(page.metadata.customSignPosting, currentNavLink, currentParent, currentPillar)
 }
 
 object NavMenu {
 
   def apply(page: Page, edition: Edition): NavMenu = NavMenu(page, NavRoot(edition), edition)
+
   def apply(edition: Edition): SimpleMenu = SimpleMenu(NavRoot(edition))
 
   private def getTagsFromPage(page: Page): Tags = {
@@ -144,14 +147,14 @@ object NavMenu {
 
     val id = if (page.metadata.sectionId == "commentisfree") {
       page.metadata.sectionId
-    } else if(networkFronts.contains(page.metadata.sectionId)) {
+    } else if (networkFronts.contains(page.metadata.sectionId)) {
       ""
     } else if (isTagPage) {
       page.metadata.id
     } else if (isArticleInTagPageSection) {
       commonKeywords.head
-    } else if(edition.isEditionalised(page.metadata.sectionId) || page.metadata.isFront) {
-       page.metadata.sectionId
+    } else if (edition.isEditionalised(page.metadata.sectionId) || page.metadata.isFront) {
+      page.metadata.sectionId
     } else {
       page.metadata.sectionId
     }
@@ -159,27 +162,50 @@ object NavMenu {
     s"/$id"
   }
 
-  private[navigation] def getCustomSignPosting(navItem: NavItem): Subnav = {
-    val children = navItem.links.map( link => NavLink(link.breadcrumbTitle, link.href) )
+  private[navigation] def getCustomSignPosting(navItem: NavItem): ParentSubnav = {
+    val links = navItem.links.map(link => NavLink(link.breadcrumbTitle, link.href))
     val parent = NavLink(navItem.name.breadcrumbTitle, navItem.name.href)
-    Subnav(Some(parent), children)
+    ParentSubnav(parent, links)
   }
 
-  private[navigation] def getSubnav(page: Page, currentNavLink: Option[NavLink], currentParent: Option[NavLink], currentPillar: Option[NavLink]): Subnav = {
-    lazy val subnav = {
-      val currentNavHasChildren = currentNavLink.exists(_.children.nonEmpty)
-      val parentIsPillar = currentParent.equals(currentPillar)
+  private[navigation] def getSubnav(
+    customSignPosting: Option[NavItem],
+    currentNavLink: Option[NavLink],
+    currentParent: Option[NavLink],
+    currentPillar: Option[NavLink]
+  ): Option[Subnav] = {
 
-      val currentNavIsPillar = currentNavLink.equals(currentPillar)
+    customSignPosting match {
 
-      val parent = if (currentNavHasChildren & !currentNavIsPillar) currentNavLink else if (parentIsPillar) None else currentParent
+      case Some(link) =>
+        Some(getCustomSignPosting(link))
 
-      val childrenToShow = if (currentNavHasChildren) currentNavLink else currentParent
-      val children = childrenToShow.map(navLink => navLink.children).getOrElse(Nil)
+      case None =>
+        val currentNavIsPillar = currentNavLink.equals(currentPillar)
+        val currentNavHasChildren = currentNavLink.exists(_.children.nonEmpty)
+        val parentIsPillar = currentParent.equals(currentPillar)
 
-      Subnav(parent, children)
+        val parent =
+          if (currentNavHasChildren & !currentNavIsPillar) {
+            currentNavLink
+          } else if (parentIsPillar) {
+            None
+          } else {
+            currentParent
+          }
+
+        val links =
+          if (currentNavHasChildren) {
+            currentNavLink.map(_.children).getOrElse(Nil)
+          } else {
+            currentParent.map(_.children).getOrElse(Nil)
+          }
+
+        parent match {
+          case Some(p) => Some(ParentSubnav(p, links))
+          case None if links.nonEmpty => Some(FlatSubnav(links))
+          case None => None
+        }
     }
-
-    page.metadata.customSignPosting.map(getCustomSignPosting).getOrElse(subnav)
   }
 }
