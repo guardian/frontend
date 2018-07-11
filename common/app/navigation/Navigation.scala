@@ -7,13 +7,6 @@ import navigation.NavLinks._
 
 import scala.annotation.tailrec
 
-// TODO tidy this up:
-// - remove behaviour from case classes
-// - remove inheritance model
-// - stop passing massive arguments (e.g. Page) when only one thing needed
-// - reduce interface surface area (number of classes)
-// - improve naming
-
 sealed trait Subnav
 case class FlatSubnav(links: Seq[NavLink]) extends Subnav
 case class ParentSubnav(parent: NavLink, links: Seq[NavLink]) extends Subnav
