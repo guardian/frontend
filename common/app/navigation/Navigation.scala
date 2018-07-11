@@ -86,14 +86,14 @@ object NavMenu {
   * want the Sports Pillar to be highlighted, even though cricket isn't in the
   * UsSportsPillar
   */
-  def getChildrenFromOtherEditions(edition: Edition): Seq[NavLink] = {
+  private[navigation] def getChildrenFromOtherEditions(edition: Edition): Seq[NavLink] = {
     Edition.others(edition).flatMap( edition =>
       NavMenu.navRoot(edition).children ++ NavMenu.navRoot(edition).otherLinks
     )
   }
 
   @tailrec
-  final def find(graph: Seq[NavLink], p: NavLink => Boolean): Option[NavLink] = {
+  private[navigation] def find(graph: Seq[NavLink], p: NavLink => Boolean): Option[NavLink] = {
     graph match {
       case Nil => None
       case head :: tail if p(head) => Some(head)
@@ -101,14 +101,14 @@ object NavMenu {
     }
   }
 
-  def findDescendantByUrl(url: String, edition: Edition, pillars: Seq[NavLink], otherLinks: Seq[NavLink]): Option[NavLink] = {
+  private[navigation] def findDescendantByUrl(url: String, edition: Edition, pillars: Seq[NavLink], otherLinks: Seq[NavLink]): Option[NavLink] = {
     val p: NavLink => Boolean = _.url == url
 
     find(pillars ++ otherLinks, p)
       .orElse(find(getChildrenFromOtherEditions(edition), p))
   }
 
-  def findParent(currentNavLink: NavLink, edition: Edition,  pillars: Seq[NavLink], otherLinks: Seq[NavLink]): Option[NavLink] = {
+  private[navigation] def findParent(currentNavLink: NavLink, edition: Edition,  pillars: Seq[NavLink], otherLinks: Seq[NavLink]): Option[NavLink] = {
     // Football is currently in the News Pillar and the Sport pillar, however we don't want the parent to be News.
     def isFootballInNews(parentTitle: String): Boolean = {
       currentNavLink.title == "Football" && parentTitle == "News"
@@ -120,7 +120,7 @@ object NavMenu {
       .orElse(find(getChildrenFromOtherEditions(edition), p))
   }
 
-  def getPillar(currentParent: Option[NavLink], edition: Edition,  pillars: Seq[NavLink], otherLinks: Seq[NavLink]): Option[NavLink] = {
+  private[navigation] def getPillar(currentParent: Option[NavLink], edition: Edition,  pillars: Seq[NavLink], otherLinks: Seq[NavLink]): Option[NavLink] = {
     currentParent.flatMap( parent =>
       if (otherLinks.contains(parent)) {
         None
@@ -130,7 +130,7 @@ object NavMenu {
     )
   }
 
-  def navRoot(edition: Edition): NavRoot = {
+  private[navigation] def navRoot(edition: Edition): NavRoot = {
     edition match {
       case editions.Uk => NavRoot(Seq(ukNewsPillar, ukOpinionPillar, ukSportPillar, ukCulturePillar, ukLifestylePillar), ukOtherLinks, ukBrandExtensions)
       case editions.Us => NavRoot(Seq(usNewsPillar, usOpinionPillar, usSportPillar, usCulturePillar, usLifestylePillar), usOtherLinks, usBrandExtensions)
@@ -139,7 +139,7 @@ object NavMenu {
     }
   }
 
-  private def getTagsFromPage(page: Page): Tags = {
+  private[navigation] def getTagsFromPage(page: Page): Tags = {
     Page.getContent(page).map(_.tags).getOrElse(Tags(Nil))
   }
 
