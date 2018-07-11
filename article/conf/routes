@@ -9,6 +9,8 @@ GET     /_healthcheck               controllers.HealthCheck.healthCheck()
 
 GET     /_cdn_healthcheck           controllers.HealthCheck.healthCheck()
 
+GET     /amp/remote.html            controllers.ArticleController.ampRemoteHTML()
+
 # Newspaper pages paths
 # gallery format (?)
 #  e.g. /theobserver/gallery/2013/sep/14/the-10-best-fonts

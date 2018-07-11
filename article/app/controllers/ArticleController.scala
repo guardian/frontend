@@ -220,29 +220,22 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
   }
 
   def renderArticle(path: String): Action[AnyContent] = {
-
     Action.async { implicit request =>
-
       if(request.isGuui){
-
         timedFuture(
           mapModelGUUI(path, Some(ArticleBlocks)){
             remoteRender(path, _)
           },
           ArticleRenderingMetrics.RemoteRenderingMetric
         )
-
       } else {
-
         timedFuture(
           mapModel(path, Some(ArticleBlocks)) {
             render(path, _)
           },
           ArticleRenderingMetrics.LocalRenderingMetric
         )
-
       }
-
     }
   }
 
@@ -301,7 +294,13 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
 
   }
 
-
+  def ampRemoteHTML(): Action[AnyContent] = {
+    Action.async { implicit request =>
+      Future(
+        Ok(views.html.ampRemoteHTML())
+      )
+    }
+  }
 }
 
 
