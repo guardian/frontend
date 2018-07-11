@@ -24,6 +24,9 @@
         ),
         "content", "tonal", s"tonal--${toneClass(page.item)}")
     ">
+        @if(isPaidContent) {
+            @fragments.guBand()
+        }
         <div class="immersive-main-media__media">
             @if(page.item.elements.hasMainPicture) {
                 @page.item.elements.mainPicture.map(_.images).orElse(page.item.trail.trailPicture).map { picture =>
