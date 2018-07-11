@@ -37,7 +37,7 @@ case class NavRoot private(children: Seq[NavLink], otherLinks: Seq[NavLink], bra
 
   def getChildrenFromOtherEditions(edition: Edition): Seq[NavLink] = {
     Edition.others(edition).flatMap( edition =>
-      NavRoot(edition).children ++ NavRoot(edition).otherLinks
+      NavMenu.navRoot(edition).children ++ NavMenu.navRoot(edition).otherLinks
     )
   }
 
@@ -88,17 +88,6 @@ case class NavRoot private(children: Seq[NavLink], otherLinks: Seq[NavLink], bra
   }
 }
 
-object NavRoot {
-  def apply(edition: Edition): NavRoot = {
-    edition match {
-      case editions.Uk => NavRoot(Seq(ukNewsPillar, ukOpinionPillar, ukSportPillar, ukCulturePillar, ukLifestylePillar), ukOtherLinks, ukBrandExtensions)
-      case editions.Us => NavRoot(Seq(usNewsPillar, usOpinionPillar, usSportPillar, usCulturePillar, usLifestylePillar), usOtherLinks, usBrandExtensions)
-      case editions.Au => NavRoot(Seq(auNewsPillar, auOpinionPillar, auSportPillar, auCulturePillar, auLifestylePillar), auOtherLinks, auBrandExtensions)
-      case editions.International => NavRoot(Seq(intNewsPillar, intOpinionPillar, intSportPillar, intCulturePillar, intLifestylePillar), intOtherLinks, intBrandExtensions)
-    }
-  }
-}
-
 case class SimpleMenu private (root: NavRoot) {
   def pillars: Seq[NavLink] = root.children
   def otherLinks: Seq[NavLink] = root.otherLinks
@@ -119,9 +108,18 @@ case class NavMenu private (page: Page, root: NavRoot, edition: Edition) {
 
 object NavMenu {
 
-  def apply(page: Page, edition: Edition): NavMenu = NavMenu(page, NavRoot(edition), edition)
+  def apply(page: Page, edition: Edition): NavMenu = NavMenu(page, navRoot(edition), edition)
 
-  def apply(edition: Edition): SimpleMenu = SimpleMenu(NavRoot(edition))
+  def apply(edition: Edition): SimpleMenu = SimpleMenu(navRoot(edition))
+
+  def navRoot(edition: Edition): NavRoot = {
+    edition match {
+      case editions.Uk => NavRoot(Seq(ukNewsPillar, ukOpinionPillar, ukSportPillar, ukCulturePillar, ukLifestylePillar), ukOtherLinks, ukBrandExtensions)
+      case editions.Us => NavRoot(Seq(usNewsPillar, usOpinionPillar, usSportPillar, usCulturePillar, usLifestylePillar), usOtherLinks, usBrandExtensions)
+      case editions.Au => NavRoot(Seq(auNewsPillar, auOpinionPillar, auSportPillar, auCulturePillar, auLifestylePillar), auOtherLinks, auBrandExtensions)
+      case editions.International => NavRoot(Seq(intNewsPillar, intOpinionPillar, intSportPillar, intCulturePillar, intLifestylePillar), intOtherLinks, intBrandExtensions)
+    }
+  }
 
   private def getTagsFromPage(page: Page): Tags = {
     Page.getContent(page).map(_.tags).getOrElse(Tags(Nil))
@@ -162,12 +160,6 @@ object NavMenu {
     s"/$id"
   }
 
-  private[navigation] def getCustomSignPosting(navItem: NavItem): ParentSubnav = {
-    val links = navItem.links.map(link => NavLink(link.breadcrumbTitle, link.href))
-    val parent = NavLink(navItem.name.breadcrumbTitle, navItem.name.href)
-    ParentSubnav(parent, links)
-  }
-
   private[navigation] def getSubnav(
     customSignPosting: Option[NavItem],
     currentNavLink: Option[NavLink],
@@ -177,8 +169,10 @@ object NavMenu {
 
     customSignPosting match {
 
-      case Some(link) =>
-        Some(getCustomSignPosting(link))
+      case Some(navItem) =>
+        val links = navItem.links.map(link => NavLink(link.breadcrumbTitle, link.href))
+        val parent = NavLink(navItem.name.breadcrumbTitle, navItem.name.href)
+        Some(ParentSubnav(parent, links))
 
       case None =>
         val currentNavIsPillar = currentNavLink.equals(currentPillar)
