@@ -33,60 +33,7 @@ case class NavLink(
 ) extends NavNode
 
 
-case class NavRoot private(children: Seq[NavLink], otherLinks: Seq[NavLink], brandExtensions: Seq[NavLink]) extends NavNode {
-
-  /*
-  * Useful when looking for a link, which may not exist in current edition, but
-  * does in another.
-  *
-  * For example, if you are in the US edition, but go to `/cricket`, we still
-  * want the Sports Pillar to be highlighted, even though cricket isn't in the
-  * UsSportsPillar
-  */
-  def getChildrenFromOtherEditions(edition: Edition): Seq[NavLink] = {
-    Edition.others(edition).flatMap( edition =>
-      NavMenu.navRoot(edition).children ++ NavMenu.navRoot(edition).otherLinks
-    )
-  }
-
-  @tailrec
-  final def find(graph: Seq[NavLink], p: NavLink => Boolean): Option[NavLink] = {
-    children match {
-      case Nil => None
-      case head :: tail if p(head) => Some(head)
-      case head :: tail => find(tail ++ head.children, p)
-    }
-  }
-
-  def findDescendantByUrl(url: String, edition: Edition): Option[NavLink] = {
-    val p: NavLink => Boolean = _.url == url
-
-    find(children ++ otherLinks, p)
-      .orElse(find(getChildrenFromOtherEditions(edition), p))
-  }
-
-  def findParent(currentNavLink: NavLink, edition: Edition): Option[NavLink] = {
-    // Football is currently in the News Pillar and the Sport pillar, however we don't want the parent to be News.
-    def isFootballInNews(parentTitle: String): Boolean = {
-      currentNavLink.title == "Football" && parentTitle == "News"
-    }
-
-    val p: NavLink => Boolean = link => link == currentNavLink || link.children.contains(currentNavLink) && !isFootballInNews(link.title)
-
-    find(children ++ otherLinks, p)
-      .orElse(find(getChildrenFromOtherEditions(edition), p))
-  }
-
-  def getPillar(currentParent: Option[NavLink], edition: Edition): Option[NavLink] = {
-    currentParent.flatMap( parent =>
-      if (otherLinks.contains(parent)) {
-        None
-      } else if (children.contains(parent)) {
-        currentParent
-      } else findParent(parent, edition).orElse(Some(ukNewsPillar))
-    )
-  }
-}
+case class NavRoot private(children: Seq[NavLink], otherLinks: Seq[NavLink], brandExtensions: Seq[NavLink]) extends NavNode
 
 case class SimpleMenu(
   pillars: Seq[NavLink],
@@ -110,9 +57,9 @@ object NavMenu {
   def apply(page: Page, edition: Edition): NavMenu = {
     val root = navRoot(edition)
     val currentUrl = getSectionOrPageUrl(page, edition)
-    val currentNavLink = root.findDescendantByUrl(currentUrl, edition)
-    val currentParent = currentNavLink.flatMap(link => root.findParent(link, edition))
-    val currentPillar = root.getPillar(currentParent, edition)
+    val currentNavLink = findDescendantByUrl(currentUrl, edition, root.children, root.otherLinks)
+    val currentParent = currentNavLink.flatMap(link => findParent(link, edition, root.children, root.otherLinks))
+    val currentPillar = getPillar(currentParent, edition, root.children, root.otherLinks)
 
     NavMenu(
       currentUrl = currentUrl,
@@ -129,6 +76,58 @@ object NavMenu {
   def apply(edition: Edition): SimpleMenu = {
     val root = navRoot(edition)
     SimpleMenu(root.children, root.otherLinks, root.brandExtensions)
+  }
+
+  /*
+  * Useful when looking for a link, which may not exist in current edition, but
+  * does in another.
+  *
+  * For example, if you are in the US edition, but go to `/cricket`, we still
+  * want the Sports Pillar to be highlighted, even though cricket isn't in the
+  * UsSportsPillar
+  */
+  def getChildrenFromOtherEditions(edition: Edition): Seq[NavLink] = {
+    Edition.others(edition).flatMap( edition =>
+      NavMenu.navRoot(edition).children ++ NavMenu.navRoot(edition).otherLinks
+    )
+  }
+
+  @tailrec
+  final def find(graph: Seq[NavLink], p: NavLink => Boolean): Option[NavLink] = {
+    graph match {
+      case Nil => None
+      case head :: tail if p(head) => Some(head)
+      case head :: tail => find(tail ++ head.children, p)
+    }
+  }
+
+  def findDescendantByUrl(url: String, edition: Edition, pillars: Seq[NavLink], otherLinks: Seq[NavLink]): Option[NavLink] = {
+    val p: NavLink => Boolean = _.url == url
+
+    find(pillars ++ otherLinks, p)
+      .orElse(find(getChildrenFromOtherEditions(edition), p))
+  }
+
+  def findParent(currentNavLink: NavLink, edition: Edition,  pillars: Seq[NavLink], otherLinks: Seq[NavLink]): Option[NavLink] = {
+    // Football is currently in the News Pillar and the Sport pillar, however we don't want the parent to be News.
+    def isFootballInNews(parentTitle: String): Boolean = {
+      currentNavLink.title == "Football" && parentTitle == "News"
+    }
+
+    val p: NavLink => Boolean = link => link == currentNavLink || link.children.contains(currentNavLink) && !isFootballInNews(link.title)
+
+    find(pillars ++ otherLinks, p)
+      .orElse(find(getChildrenFromOtherEditions(edition), p))
+  }
+
+  def getPillar(currentParent: Option[NavLink], edition: Edition,  pillars: Seq[NavLink], otherLinks: Seq[NavLink]): Option[NavLink] = {
+    currentParent.flatMap( parent =>
+      if (otherLinks.contains(parent)) {
+        None
+      } else if (pillars.contains(parent)) {
+        currentParent
+      } else findParent(parent, edition, pillars, otherLinks).orElse(Some(ukNewsPillar))
+    )
   }
 
   def navRoot(edition: Edition): NavRoot = {
