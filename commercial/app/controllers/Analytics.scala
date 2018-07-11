@@ -15,7 +15,7 @@ import scala.util.control.NonFatal
 
 object Analytics extends Results {
 
-  def storeJsonBody[A](switch: Switch, streamName: String, log: Logger)(
+  def storeJsonBody[A](switch: Switch, streamName: => String, log: Logger)(
     analytics: String)(implicit ec: ExecutionContext, request: Request[A]): Result = {
     if (switch.isSwitchedOn) {
       if (isProd) {
