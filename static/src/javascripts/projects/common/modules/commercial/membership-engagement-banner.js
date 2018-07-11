@@ -1,7 +1,6 @@
 // @flow
 import config from 'lib/config';
 import { local } from 'lib/storage';
-import { adblockInUse } from 'lib/detect';
 import { Message } from 'common/modules/ui/message';
 import mediator from 'lib/mediator';
 import { membershipEngagementBannerTests } from 'common/modules/experiments/tests/membership-engagement-banner-tests';
@@ -12,18 +11,39 @@ import { isBlocked } from 'common/modules/commercial/membership-engagement-banne
 import { getSync as getGeoLocation } from 'lib/geolocation';
 import { shouldShowReaderRevenue } from 'common/modules/commercial/contributions-utilities';
 import type { Banner } from 'common/modules/ui/bannerPicker';
+import bean from 'bean';
+import fetchJSON from 'lib/fetch-json';
 
 import {
     submitComponentEvent,
     addTrackingCodesToUrl,
 } from 'common/modules/commercial/acquisitions-ophan';
 import { acquisitionsBannerControlTemplate } from 'common/modules/commercial/templates/acquisitions-banner-control';
+import userPrefs from 'common/modules/user-prefs';
 
 // change messageCode to force redisplay of the message to users who already closed it.
 const messageCode = 'engagement-banner-2018-05-18';
 
-const canDisplayMembershipEngagementBanner = (): Promise<boolean> =>
-    adblockInUse.then(adblockUsed => !adblockUsed && shouldShowReaderRevenue());
+const getTimestampOfLastBannerDeploy = fetchJSON('/reader-revenue/banner', {
+    mode: 'cors',
+}).then(resp => resp && resp.lastDeployedAt);
+
+const canDisplayMembershipEngagementBanner = (): Promise<boolean> => {
+    if (!shouldShowReaderRevenue()) {
+        return Promise.resolve(false);
+    }
+
+    return getTimestampOfLastBannerDeploy
+        .then(timestampOfLastBannerDeploy => {
+            const bannerLastDeployedAt = new Date(timestampOfLastBannerDeploy);
+            const userLastClosedBannerAt = new Date(
+                userPrefs.get('engagementBannerLastClosedAt')
+            );
+
+            return bannerLastDeployedAt > userLastClosedBannerAt;
+        })
+        .catch(() => false);
+};
 
 const getUserTest = (): ?AcquisitionsABTest =>
     membershipEngagementBannerTests.find(
@@ -113,6 +133,13 @@ const getVisitCount = (): number => local.get('gu.alreadyVisited') || 0;
 const selectSequentiallyFrom = (array: Array<string>): string =>
     array[getVisitCount() % array.length];
 
+const hideBanner = (banner: Message) => {
+    banner.hide();
+
+    // Store timestamp in localStorage
+    userPrefs.set('engagementBannerLastClosedAt', new Date().toISOString());
+};
+
 const showBanner = (params: EngagementBannerParams): void => {
     const test = getUserTest();
     const variant = getUserVariant(test);
@@ -148,6 +175,14 @@ const showBanner = (params: EngagementBannerParams): void => {
         siteMessageComponentName: params.campaignCode,
         trackDisplay: true,
         cssModifierClass: params.bannerModifierClass || 'engagement-banner',
+        customJs() {
+            bean.on(
+                document,
+                'click',
+                '.js-site-message-close',
+                hideBanner(this)
+            );
+        },
     }).show(renderedBanner);
 
     if (messageShown) {
