@@ -24,13 +24,10 @@ Follow [this link](https://www.google.co.uk) and enter the relevant search strin
 
 # Obtain AWS credentials
 
-1. Fork [Janus](https://github.com/guardian/janus) and follow the readme (**Note:** you will need permission to access the Janus repo to do this, and 2FA set up on your Google account)
-2. Make your change and push to a new branch (you can review the closed PRs for help)
-3. Submit a PR
-4. You may need to `pip install awscli` and add `/Library/Frameworks/Python.framework/Versions/Current/bin` to your `$PATH` to run the commands Janus gives you.
-
-**Note:** To install `awscli` on MacOS El Capitan and later, you will need to run `pip install awscli --upgrade --ignore-installed six`
-due to the [System Integrity Protocol](https://github.com/pypa/pip/issues/3165)
+1. Fork [Janus](https://github.com/guardian/janus) and follow the readme (**Note:** you will need permission to access the Janus repo to do this, and 2FA set up on your Google account).
+1. Make your change and push to a new branch (you can review the closed PRs for help).
+1. Submit a PR.
+1. To install local Janus credentials make sure you have `awscli` installed. For this run `brew install awscli` at your terminal.
 
 # Local dev server setup
 
