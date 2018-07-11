@@ -79,7 +79,7 @@ case class NavRoot private(children: Seq[NavLink], otherLinks: Seq[NavLink], bra
 
   def getPillar(currentParent: Option[NavLink], edition: Edition): Option[NavLink] = {
     currentParent.flatMap( parent =>
-      if(otherLinks.contains(parent)) {
+      if (otherLinks.contains(parent)) {
         None
       } else if (children.contains(parent)) {
         currentParent
@@ -88,11 +88,11 @@ case class NavRoot private(children: Seq[NavLink], otherLinks: Seq[NavLink], bra
   }
 }
 
-case class SimpleMenu private (root: NavRoot) {
-  def pillars: Seq[NavLink] = root.children
-  def otherLinks: Seq[NavLink] = root.otherLinks
-  def brandExtensions: Seq[NavLink] = root.brandExtensions
-}
+case class SimpleMenu(
+  pillars: Seq[NavLink],
+  otherLinks: Seq[NavLink],
+  brandExtensions: Seq[NavLink]
+)
 
 case class NavMenu private (page: Page, root: NavRoot, edition: Edition) {
 
@@ -110,7 +110,10 @@ object NavMenu {
 
   def apply(page: Page, edition: Edition): NavMenu = NavMenu(page, navRoot(edition), edition)
 
-  def apply(edition: Edition): SimpleMenu = SimpleMenu(navRoot(edition))
+  def apply(edition: Edition): SimpleMenu = {
+    val root = navRoot(edition)
+    SimpleMenu(root.children, root.otherLinks, root.brandExtensions)
+  }
 
   def navRoot(edition: Edition): NavRoot = {
     edition match {
