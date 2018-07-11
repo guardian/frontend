@@ -18,10 +18,6 @@ sealed trait Subnav
 case class FlatSubnav(links: Seq[NavLink]) extends Subnav
 case class ParentSubnav(parent: NavLink, links: Seq[NavLink]) extends Subnav
 
-sealed trait NavNode {
-  def children: Seq[NavLink]
-}
-
 case class NavLink(
   title: String,
   url: String,
@@ -30,8 +26,7 @@ case class NavLink(
   iconName: String = "",
   children: Seq[NavLink] = Nil,
   classList: Seq[String] = Nil
-) extends NavNode
-
+)
 
 case class SimpleMenu(
   pillars: Seq[NavLink],
