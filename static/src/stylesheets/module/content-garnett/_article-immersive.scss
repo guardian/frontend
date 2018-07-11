@@ -179,6 +179,41 @@
     }
 }
 
+.gs-container--immersive {
+    @include mq(leftCol) {
+        position: static;
+    }
+}
+
+.caption--immersive {
+    @include mq($until: leftCol) {
+        margin: $gs-baseline 0 ($gs-baseline / 4);
+        min-height: 0;
+
+        @include mq(desktop) {
+            margin-left: -$gs-gutter / 2;
+        }
+
+        &:before {
+            content: 'Main image: ';
+        }
+    }
+
+    @include mq(leftCol) {
+        padding-top: $gs-baseline / 4;
+        position: absolute;
+        left: 50%;
+        top: 100px;
+        margin-left: -(gs-span(7) + ($gs-gutter / 2));
+        width: gs-span(2);
+    }
+
+    @include mq(wide) {
+        margin-left: -(gs-span(8) + ($gs-gutter / 2));
+        width: gs-span(3);
+    }
+}
+
 .content__standfirst--immersive-article {
     position: relative;
     padding-top: .33em;
