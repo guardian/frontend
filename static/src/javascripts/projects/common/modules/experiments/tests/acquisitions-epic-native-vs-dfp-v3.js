@@ -26,7 +26,7 @@ const epicNativeVsDfpV3: ABTest = {
     id: testName,
     campaignId: 'epic_native_vs_dfp_v3',
     start: '2018-06-27',
-    expiry: '2018-07-11',
+    expiry: '2018-07-18',
     author: 'Guy Dawson',
     description:
         'See if there is any difference in annualised value between serving the Epic natively vs DFP',
