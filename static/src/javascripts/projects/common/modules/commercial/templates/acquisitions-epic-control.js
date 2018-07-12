@@ -31,11 +31,8 @@ export const acquisitionsEpicControlTemplate = ({
                     ${heading}
                 </h2>
                 ${appendHighlightedText(paragraphs, highlightedText)
-                    .map(
-                        paragraph =>
-                            `<p class="contributions__paragraph contributions__paragraph--epic">
-                        ${paragraph}
-                    </p>`
+                    .map(paragraph =>
+                        `<p class="contributions__paragraph contributions__paragraph--epic">${paragraph}</p>`
                     )
                     .join('')}
             </div>
