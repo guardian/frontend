@@ -40,14 +40,13 @@
                 <label for="<%=field.name%>"
                        class="form_field_label">
                     <%= field.label %>
-                    <span><%= field.description %></span>
+                    <% if(field.description) { %>
+                        <span>(<%= field.description %>)</span>
+                    <% } %>
                 </label>
 
                 <% if(field.type === "textarea") { %>
-                <textarea name="field_<%=field.id%>"
-                <% if (field.required == "1") { %> required <% } %>
-                />
-                </textarea>
+                <textarea name="field_<%=field.id%>"<% if (field.required == "1") { %> required <% } %>/></textarea>
 
                 <% } else if(field.type === "radio" || field.type === "checkbox") { %>
                 <div class="form_option_container">
@@ -99,4 +98,3 @@
     </form>
 
 </details>
-

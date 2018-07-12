@@ -24,6 +24,9 @@
         ),
         "content", "tonal", s"tonal--${toneClass(page.item)}")
     ">
+        @if(isPaidContent) {
+            @fragments.guBand()
+        }
         <div class="immersive-main-media__media">
             @if(page.item.elements.hasMainPicture) {
                 @page.item.elements.mainPicture.map(_.images).orElse(page.item.trail.trailPicture).map { picture =>
@@ -61,6 +64,21 @@
                 <h1 class="@if(hasMainMedia){content__headline--immersive--with-main-media} @if(isPaidContent){content__headline--advertisement} content__headline content__headline--immersive content__headline--immersive-article">
                     @Html(page.item.trail.headline)
                 </h1>
+
+                @defining(page.item.content.trail.trailPicture.flatMap(_.masterImage)) {
+                    case Some(masterImage) => {
+                        <figcaption class="caption caption--immersive hide-until-leftcol">
+                            @fragments.inlineSvg("triangle", "icon")
+                            @masterImage.credit.map { credit =>
+                                @credit
+                            }
+                            @masterImage.caption.map { caption =>
+                                @caption
+                            }
+                        </figcaption>
+                    }
+                    case None => { }
+                }
             </div>
           </div>
       </div>
@@ -70,6 +88,21 @@
             <div class="gs-container">
                 <div class="content__main-column">
                     @fragments.standfirst(page.item)
+
+                    @defining(page.item.content.trail.trailPicture.flatMap(_.masterImage)) {
+                        case Some(masterImage) => {
+                            <figcaption class="caption caption--immersive hide-from-leftcol">
+                                Main image:
+                                @masterImage.credit.map { credit =>
+                                    @credit
+                                }
+                                @masterImage.caption.map { caption =>
+                                    @caption
+                                }
+                            </figcaption>
+                        }
+                        case None => { }
+                    }
                 </div>
             </div>
         </div>

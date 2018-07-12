@@ -92,7 +92,7 @@ trait ABTestSwitches {
     "See if there is any difference in annualised value between serving the Epic natively vs DFP",
     owners = Seq(Owner.withGithub("Mullefa")),
     safeState = On,
-    sellByDate = new LocalDate(2018, 7, 11),
+    sellByDate = new LocalDate(2018, 7, 18),
     exposeClientSide = true
   )
 
@@ -163,6 +163,16 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("jeteve")),
     safeState = Off,
     sellByDate = new LocalDate(2019, 9, 30),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-thailand-cave",
+    "Always show the epic on thailand cave stories (unlimited)",
+    owners = Seq(Owner.withGithub("tsop14")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 9, 28),
     exposeClientSide = true
   )
 

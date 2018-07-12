@@ -54,7 +54,9 @@ const init = (): void => {
         const downloadUrl = placeholder.dataset.downloadUrl;
         const iTunesUrl = placeholder.dataset.itunesUrl;
 
-        sendToOphan(mediaId, 'ready');
+        if (supportsCSSGrid) {
+            sendToOphan(mediaId, 'ready');
+        }
 
         const pillarClassName = Array.from(article.classList).filter(x =>
             x.includes('pillar')

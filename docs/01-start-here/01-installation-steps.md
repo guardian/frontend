@@ -24,13 +24,10 @@ Follow [this link](https://www.google.co.uk) and enter the relevant search strin
 
 # Obtain AWS credentials
 
-1. Fork [Janus](https://github.com/guardian/janus) and follow the readme (**Note:** you will need permission to access the Janus repo to do this, and 2FA set up on your Google account)
-2. Make your change and push to a new branch (you can review the closed PRs for help)
-3. Submit a PR
-4. You may need to `pip install awscli` and add `/Library/Frameworks/Python.framework/Versions/Current/bin` to your `$PATH` to run the commands Janus gives you.
-
-**Note:** To install `awscli` on MacOS El Capitan and later, you will need to run `pip install awscli --upgrade --ignore-installed six`
-due to the [System Integrity Protocol](https://github.com/pypa/pip/issues/3165)
+1. Fork [Janus](https://github.com/guardian/janus) and follow the readme (**Note:** you will need permission to access the Janus repo to do this, and 2FA set up on your Google account).
+1. Make your change and push to a new branch (you can review the closed PRs for help).
+1. Submit a PR.
+1. To install local Janus credentials make sure you have `awscli` installed. For this run `brew install awscli` at your terminal.
 
 # Local dev server setup
 
@@ -47,6 +44,8 @@ You need a Mac or Linux PC (Ubuntu).
 
 ## Automatic
 
+1. Make sure you have `git` installed. Run `brew install git` if required.
+
 1. Check out the repository:
 
     ```bash
@@ -54,13 +53,13 @@ You need a Mac or Linux PC (Ubuntu).
     $ cd frontend
     ```
 
-2. Get AWS Credentials using [Janus](https://janus.gutools.co.uk/) for *Frontend* and *CMS fronts* (you will need access to Janus)
+1. Get AWS Credentials using [Janus](https://janus.gutools.co.uk/) for *Frontend* and *CMS fronts* (you will need access to Janus)
 
-3. Make sure you have the [latest version of Java](#jdk)
+1. Make sure you have the [latest version of Java](#jdk)
 
-4. Run ```./setup.sh``` to install dependencies and compile assets. *[EACCES error?](04-troubleshooting.md#npm-eacces)*
+1. Run ```./setup.sh``` to install dependencies and compile assets. *[EACCES error?](04-troubleshooting.md#npm-eacces)*
 
-5. All being well, you should be able to [run the app](#running-the-app)
+1. All being well, you should be able to [run the app](#running-the-app)
 
 Manual
 ------
@@ -128,20 +127,6 @@ Mac:
 ```bash
 $ brew install node@8
 ```
-
-### Xcode (if on a Mac, one of the Node modules requires it)
-
-This is needed on Mac only:
-https://itunes.apple.com/gb/app/xcode/id497799835
-
-Xcode installs an old version of git `1.9.3`. If you need a newer version, you can run
-
-```bash
-$ brew install git
-$ echo 'export PATH="/usr/local/bin:$PATH"' >> ~/.bash_profile
-```
-
-Quit Terminal, relaunch it and check that `git --version` outputs `2.1.3` or newer.
 
 
 ### Client side code
