@@ -40,7 +40,6 @@
                 case Some(masterImage) => {
                     <figcaption class="caption caption--gallery hide-until-desktop">
                         @fragments.inlineSvg("triangle", "icon")
-                        Main image:
                         @masterImage.credit.map { credit =>
                             @credit
                         }
