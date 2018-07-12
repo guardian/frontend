@@ -5,10 +5,12 @@
 @import play.api.libs.json.Json
 @import views.support.{CamelCase, JavaScriptPage, GoogleAnalyticsAccount}
 @import conf.Configuration.environment
+@import navigation.NavMenu
 
 @defining(Edition(request)) { edition =>
     {
         "page": @JavaScript(StringEncodings.jsonToJS(Json.stringify(JavaScriptPage.get(item, Edition(request), context.isPreview)))),
+        "nav": @JavaScript(Json.stringify(Json.toJson(NavMenu(item, edition)))),
         "switches" : { @{JavaScript(conf.switches.Switches.all.filter(_.exposeClientSide).map{ switch =>
             s""""${CamelCase.fromHyphenated(switch.name)}":${switch.isSwitchedOn}"""}.mkString(","))}
         },
