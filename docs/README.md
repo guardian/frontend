@@ -76,4 +76,3 @@
 - First line of every documentation file should contain its title (used to generated the table of content).
 - Store all the images in an `/images` subfolder in the same directory the document referencing them will be.
 - Table of content (TOC) is generated automatically with every commit, all changes will be staged accordingly.
-
