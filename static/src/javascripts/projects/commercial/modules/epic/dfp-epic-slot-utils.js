@@ -68,7 +68,7 @@ const renderEpicSlotWithTimeout = (
 
 export const displayDFPEpic = (duration: number): Promise<EpicComponent> => {
     const epicAdSlot = createEpicAdSlot();
-    return insertAtSubmeta(epicAdSlot).then(() =>
+    return insertAtSubmeta({ html: epicAdSlot }).then(() =>
         renderEpicSlotWithTimeout(epicAdSlot, duration)
     );
 };

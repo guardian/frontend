@@ -256,7 +256,7 @@ const makeABTestVariant = (
         test() {
             const copyPromise =
                 (options.copy && Promise.resolve(options.copy)) ||
-                Promise.resolve(acquisitionsCopyControl);
+                acquisitionsCopyControl;
 
             const render = (templateFn: ?EpicTemplate) =>
                 copyPromise

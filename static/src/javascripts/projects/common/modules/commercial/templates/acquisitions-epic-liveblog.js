@@ -13,15 +13,13 @@ export const epicLiveBlogTemplate = (params: {
             </a>
         </p>
         <div class="block-elements block-elements--no-byline">
-            <p>
-                <em>
-                    ${params.copy.p1}
-                </em>
-            </p>
-            <p>
-                <em>
-                    ${params.copy.p2}
-                </em>
-            </p>
+            ${params.copy.paragraphs
+                .map(
+                    paragraph =>
+                        `<p>
+                    <em>${paragraph}</em>
+                </p>`
+                )
+                .join('')}
         </div>
     </div>`;

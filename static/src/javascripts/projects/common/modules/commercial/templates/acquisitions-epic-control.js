@@ -1,16 +1,26 @@
 // @flow
+const appendHighlightedText = (
+    paragraphs: Array<string>,
+    highlightedText?: string
+): Array<string> =>
+    paragraphs.map((paragraph, index) => {
+        if (highlightedText && index + 1 === paragraphs.length) {
+            return `${paragraph} <strong><span className="contributions__highlight">${highlightedText}</span></strong>`;
+        }
+
+        return paragraph;
+    });
+
 export const acquisitionsEpicControlTemplate = ({
-    copy: { heading = '', p1, p2 },
+    copy: { heading = '', paragraphs, highlightedText },
     componentName,
     buttonTemplate,
-    testimonialBlock = '',
     epicClass = '',
     wrapperClass = '',
 }: {
     copy: AcquisitionsEpicTemplateCopy,
     componentName: string,
     buttonTemplate: string,
-    testimonialBlock?: string,
     epicClass?: string,
     wrapperClass?: string,
 }) =>
@@ -20,13 +30,14 @@ export const acquisitionsEpicControlTemplate = ({
                 <h2 class="contributions__title contributions__title--epic">
                     ${heading}
                 </h2>
-                <p class="contributions__paragraph contributions__paragraph--epic">
-                    ${p1}
-                </p>
-                ${testimonialBlock}
-                <p class="contributions__paragraph contributions__paragraph--epic">
-                    ${p2}
-                </p>
+                ${appendHighlightedText(paragraphs, highlightedText)
+                    .map(
+                        paragraph =>
+                            `<p class="contributions__paragraph contributions__paragraph--epic">
+                        ${paragraph}
+                    </p>`
+                    )
+                    .join('')}
             </div>
     
             ${buttonTemplate}
