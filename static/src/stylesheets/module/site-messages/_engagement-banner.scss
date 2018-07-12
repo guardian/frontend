@@ -11,7 +11,7 @@
         padding: 9px 0;
 
         @include mq(tablet) {
-            padding: 9px $gs-gutter 18px $gs-gutter;
+            padding: 9px $gs-gutter 18px;
         }
     }
 
