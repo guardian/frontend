@@ -91,7 +91,7 @@
 
                     @defining(page.item.content.trail.trailPicture.flatMap(_.masterImage)) {
                         case Some(masterImage) => {
-                            <figcaption class="caption caption--immersive">
+                            <figcaption class="caption caption--immersive hide-from-leftcol">
                                 Main image:
                                 @masterImage.credit.map { credit =>
                                     @credit
