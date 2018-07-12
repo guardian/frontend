@@ -44,6 +44,7 @@
                 <div class="panel-heading">Ops metrics (is the site healthy?).</div>
                 <div class="panel-body">
                     <ul>
+                        <li><a href="https://eu-west-1.console.aws.amazon.com/cloudwatch/home?region=eu-west-1#dashboards:name=OKR">OKR dashboard (requires AWS access)</a></li>
                         <li><a href="@Configuration.Elk.kibanaUrl">Kibana (Server side logs)</a></li>
                         <li><a href="@controllers.admin.routes.MetricsController.renderLoadBalancers()">Load Balancers</a></li>
                         <li><a href="@controllers.admin.routes.FastlyController.renderFastly()">Fastly</a></li>
