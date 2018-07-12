@@ -21,7 +21,7 @@
     </li>
 }
 
-@navMenu.subNavSections.map { subnav => {
+@navMenu.subNavSections.map { subnav =>
     <div class="subnav js-expand-subnav">
         <div class="gs-container">
             <ul class="subnav__list js-get-last-child-subnav"
@@ -29,11 +29,11 @@
 
                 @subnav match {
                     case FlatSubnav(links) => {
-                        links.map(link => subNavItem(link, navMenu.currentUrl))
+                        @links.map(link => subNavItem(link, navMenu.currentUrl))
                     }
                     case ParentSubnav(parent, links) => {
-                        subNavItem(parent, navMenu.currentUrl, isParent = links.nonEmpty)
-                        links.map(link => subNavItem(link, navMenu.currentUrl))
+                        @subNavItem(parent, navMenu.currentUrl, isParent = links.nonEmpty)
+                        @links.map(link => subNavItem(link, navMenu.currentUrl))
                     }
                 }
             </ul>
@@ -50,4 +50,4 @@
             }
         </div>
     </div>
-}}
+}
