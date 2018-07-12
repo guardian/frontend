@@ -29,6 +29,21 @@
                     @fragments.meta.contactAuthor(gallery.item.tags)
                 }
 
+                @defining(gallery.item.content.trail.trailPicture.flatMap(_.masterImage)) {
+                    case Some(masterImage) => {
+                        <figcaption class="caption caption--gallery hide-from-desktop">
+                            Main image:
+                            @masterImage.credit.map { credit =>
+                                @credit
+                            }
+                            @masterImage.caption.map { caption =>
+                                @caption
+                            }
+                        </figcaption>
+                    }
+                    case None => { }
+                }
+
                 @if(!gallery.item.trail.shouldHidePublicationDate) {
                     @fragments.meta.dateline(gallery.item.trail.webPublicationDate, gallery.item.fields.lastModified, gallery.item.content.hasBeenModified, gallery.item.fields.firstPublicationDate, gallery.item.tags.isLiveBlog, gallery.item.fields.isLive)
                 }
