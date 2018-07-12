@@ -264,6 +264,7 @@ const Links = styled('div')({
 const Button = styled('button')(({ isPlay, pillarColor }) => ({
     background: 'none',
     border: 0,
+    cursor: 'pointer',
     margin: 0,
     ':focus': {
         outline: 'none', // ಠ_ಠ
