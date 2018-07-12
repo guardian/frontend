@@ -90,10 +90,10 @@ object NavMenu {
   }
 
   private[navigation] def findDescendantByUrl(url: String, edition: Edition, pillars: Seq[NavLink], otherLinks: Seq[NavLink]): Option[NavLink] = {
-    val p: NavLink => Boolean = _.url == url
+    def hasUrl(link: NavLink): Boolean = link.url == url
 
-    find(pillars ++ otherLinks, p)
-      .orElse(find(getChildrenFromOtherEditions(edition), p))
+    find(pillars ++ otherLinks, hasUrl)
+      .orElse(find(getChildrenFromOtherEditions(edition), hasUrl))
   }
 
   private[navigation] def findParent(currentNavLink: NavLink, edition: Edition,  pillars: Seq[NavLink], otherLinks: Seq[NavLink]): Option[NavLink] = {
@@ -102,10 +102,10 @@ object NavMenu {
       currentNavLink.title == "Football" && parentTitle == "News"
     }
 
-    val p: NavLink => Boolean = link => link == currentNavLink || link.children.contains(currentNavLink) && !isFootballInNews(link.title)
+    def isParent(link: NavLink): Boolean = link == currentNavLink || link.children.contains(currentNavLink) && !isFootballInNews(link.title)
 
-    find(pillars ++ otherLinks, p)
-      .orElse(find(getChildrenFromOtherEditions(edition), p))
+    find(pillars ++ otherLinks, isParent)
+      .orElse(find(getChildrenFromOtherEditions(edition), isParent))
   }
 
   private[navigation] def getPillar(currentParent: Option[NavLink], edition: Edition,  pillars: Seq[NavLink], otherLinks: Seq[NavLink]): Option[NavLink] = {
