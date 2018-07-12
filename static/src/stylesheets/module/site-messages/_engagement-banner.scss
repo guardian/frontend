@@ -8,12 +8,10 @@
     }
 
     @mixin padding {
-        padding-top: 9px;
-        padding-bottom: 18px;
+        padding: 9px 0;
 
         @include mq(tablet) {
-            padding-left: $gs-gutter;
-            padding-right: $gs-gutter;
+            padding: 9px $gs-gutter 18px $gs-gutter;
         }
     }
 
@@ -80,7 +78,11 @@
 }
 
 .engagement-banner__cta {
-    margin-top: $gs-baseline;
+    margin-top: $gs-baseline / 2;
+
+    @include mq(tablet) {
+        margin-top: $gs-baseline;
+    }
 
     @include mq(desktop) {
         display: inline-block;
