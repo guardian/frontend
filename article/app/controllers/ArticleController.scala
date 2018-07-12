@@ -66,7 +66,7 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
     }
   }
 
-  def mapModel(path: String, range: Option[BlockRange] = None)(render: ArticlePage => Future[Result])(implicit request: RequestHeader): Future[Result] = {
+  private def mapModel(path: String, range: Option[BlockRange] = None)(render: ArticlePage => Future[Result])(implicit request: RequestHeader): Future[Result] = {
     capiLookup
       .lookup(path, range)
       .map(responseToModelOrResult)
@@ -77,16 +77,12 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
       }
   }
 
-  def responseToModelOrResult(response: ItemResponse)(implicit request: RequestHeader): Either[ArticlePage, Result] = {
+  private def responseToModelOrResult(response: ItemResponse)(implicit request: RequestHeader): Either[ArticlePage, Result] = {
     val supportedContent: Option[ContentType] = response.content.filter(isSupported).map(Content(_))
-    val supportedContentResult: Either[ContentType, Result] = ModelOrResult(supportedContent, response)
-    val content: Either[ArticlePage, Result] = supportedContentResult.left.flatMap {
-      case article: Article =>
-        Left(ArticlePage(article, StoryPackages(article, response)))
+    supportedContent match {
+      case Some(article:Article) => ModelOrResult(Some(ArticlePage(article, StoryPackages(article, response))), response)
       case _ => Right(NotFound)
-
     }
-    content
   }
 
 }
