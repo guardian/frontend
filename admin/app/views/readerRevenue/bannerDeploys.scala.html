@@ -1,0 +1,15 @@
+@()(implicit request: RequestHeader, context: model.ApplicationContext)
+
+
+
+@admin_main("Banner deploys", isAuthed = true) {
+
+    <h1>Banner Deploys</h1>
+
+    <p>Click this button to redeploy engagement banner</p>
+
+    <a class="btn btn-danger" href="@controllers.admin.routes.ReaderRevenueController.redeployBanner()" role="button">
+        Re-deploy!
+    </a>
+
+}

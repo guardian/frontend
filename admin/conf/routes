@@ -52,7 +52,12 @@ POST        /dev/switchboard-plista                                             
 
 # Analytics
 GET         /analytics/abtests                                                                      controllers.admin.AnalyticsController.abtests()
-GET         /analytics/confidence                                                                   controllers.admin.AnalyticsConfidenceController.renderConfidence()
+GET         /analytics/confidence                                                                controllers.admin.AnalyticsConfidenceController.renderConfidence()
+
+# Reader Revenue
+GET         /reader-revenue                                                                         controllers.admin.ReaderRevenueController.renderReaderRevenueMenu()
+GET         /reader-revenue/banner-deploys                                                          controllers.admin.ReaderRevenueController.renderBannerDeploys()
+GET         /reader-revenue/redeploy-banner                                                         controllers.admin.ReaderRevenueController.redeployBanner()
 
 # Commercial
 GET         /commercial                                                                             controllers.admin.CommercialController.renderCommercialMenu()
