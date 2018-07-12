@@ -36,6 +36,22 @@
                 @Html(page.item.trail.headline)
             </h1>
 
+            @defining(page.item.content.trail.trailPicture.flatMap(_.masterImage)) {
+                case Some(masterImage) => {
+                    <figcaption class="caption caption--gallery hide-until-desktop">
+                        @fragments.inlineSvg("triangle", "icon")
+                        Main image:
+                        @masterImage.credit.map { credit =>
+                            @credit
+                        }
+                        @masterImage.caption.map { caption =>
+                            @caption
+                        }
+                    </figcaption>
+                }
+                case None => { }
+            }
+
             @if(page.item.content.hasTonalHeaderByline) {
                 @page.item.trail.byline.map { text =>
                     <span class="content__headline content__headline--byline">@ContributorLinks(text, page.item.tags.contributors)</span>

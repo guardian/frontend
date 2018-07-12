@@ -47,16 +47,16 @@
             @defining(model.article.content.trail.trailPicture.flatMap(_.masterImage)) {
                 case Some(masterImage) => {
                     <div class="gs-container gs-container--immersive">
-                    <figcaption class="caption caption--immersive">
-                        @fragments.inlineSvg("triangle", "icon", List("hide-until-leftcol"))
-                        @masterImage.credit.map { credit =>
-                            @credit
-                        }
-                        @masterImage.caption.map { caption =>
-                            @caption
-                        }
-                    </figcaption>
-                </div>
+                        <figcaption class="caption caption--immersive">
+                            @fragments.inlineSvg("triangle", "icon", List("hide-until-leftcol"))
+                            @masterImage.credit.map { credit =>
+                                @credit
+                            }
+                            @masterImage.caption.map { caption =>
+                                @caption
+                            }
+                        </figcaption>
+                    </div>
                 }
                 case None => { }
             }
