@@ -47,7 +47,7 @@ const replaceLinks = (links: Element[], newHref: string): void => {
 };
 
 export const newSignInExperiment: ABTest = {
-    id: 'NewSignInExperimentBump',
+    id: 'NewSignInExperimentBumpAgain',
     start: '2018-06-07',
     expiry: '2019-06-07',
     author: 'Laura gonzalez',

@@ -18,7 +18,7 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-new-sign-in-experiment-bump",
+    "ab-new-sign-in-experiment-bump-again",
     "This test will send a % of users to the new sign in experience",
     owners = Seq(Owner.withGithub("walaura")),
     safeState = Off,
