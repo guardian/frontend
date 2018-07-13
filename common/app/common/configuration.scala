@@ -392,6 +392,13 @@ class GuardianConfiguration extends Logging {
     lazy val witnessApiRoot = configuration.getMandatoryStringProperty("witness.apiRoot")
   }
 
+  object readerRevenue {
+    private lazy val readerRevenueRoot = {
+      configuration.getStringProperty("readerRevenue.s3.root") getOrElse s"${environment.stage.toUpperCase}/reader-revenue"
+    }
+    lazy val contributionsBannerDeployLogKey = s"$readerRevenueRoot/contributions-banner-deploy-log.json"
+  }
+
   object commercial {
 
     lazy val testDomain =

@@ -26,6 +26,8 @@ GET        /advertiser-content/:campaignName/:pageName                          
 GET        /advertiser-content/:campaignName/:pageName/:cType/onward.json                      commercial.controllers.HostedContentController.renderOnwardComponent(campaignName, pageName, cType)
 GET        /advertiser-content/:campaignName/:pageName/autoplay.json                           commercial.controllers.HostedContentController.renderAutoplayComponent(campaignName, pageName)
 
+# Reader revenue
+GET       /reader-revenue/contributions-banner-deploy-log                                      controllers.ReaderRevenueController.contributionsBannerDeployLog()
 
 # Onward
 GET        /most-read.json                                                                     controllers.MostPopularController.render(path = "")
