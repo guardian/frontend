@@ -31,8 +31,8 @@ class RemoteRender(implicit context: ApplicationContext) {
 
     case article : ArticlePage =>
       val contentFieldsJson = if (request.isGuui) List("contentFields" -> Json.toJson(ContentFields(article.article))) else List()
-      val jsonResponse = () => List(("html", views.html.fragments.articleBody(article))) ++ contentFieldsJson
-      val jsonPayload = JsonComponent.jsonFor(model, jsonResponse():_*)
+      val jsonResponse = List(("html", views.html.fragments.articleBody(article))) ++ contentFieldsJson
+      val jsonPayload = JsonComponent.jsonFor(model, jsonResponse:_*)
 
       remoteRenderArticle(ws, jsonPayload).map(s => {
         Cached(article){ RevalidatableResult.Ok(Html(s)) }
