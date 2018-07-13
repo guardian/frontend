@@ -43,7 +43,7 @@ export const getCopyFromGoogleDoc = (
     sheetName: string
 ): Promise<AcquisitionsEpicTemplateCopy> => {
     const url =
-        'https://interactive.guim.co.uk/docsdata/1Hoqzg-LeB0xJf2z0JwsfDTHdXKtq-7O5DsQhpqRm7ho.json';
+        'https://interactive.guim.co.uk/docsdata/1fy0JolB1bf1IEFLHGHfUYWx-niad7vR9K954OpTOvjE.json';
 
     return fetchJSON(url, {
         mode: 'cors',
