@@ -59,7 +59,6 @@
     @include mq(tablet) {
         font-size: 17px;
         line-height: 22px;
-        width: 580px;
     }
 
     @include mq(desktop) {
