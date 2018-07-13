@@ -8,7 +8,6 @@ import mediator from 'lib/mediator';
 
 import { control as epicControlCopy } from 'common/modules/commercial/acquisitions-copy';
 import { epicButtonsTemplate } from 'common/modules/commercial/templates/acquisitions-epic-buttons';
-import { acquisitionsTestimonialBlockTemplate } from 'common/modules/commercial/templates/acquisitions-epic-testimonial-block';
 import { supportContributeURL } from 'common/modules/commercial/support-utilities';
 import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templates/acquisitions-epic-control';
 import {
@@ -35,59 +34,58 @@ const reportEpicError = (error: ReportedError): void => {
     reportError(error, { feature: 'epic' }, false);
 };
 
-const controlEpicComponent = (abTest?: ABTestVariant): EpicComponent => {
+const controlEpicComponent = (
+    abTest?: ABTestVariant
+): Promise<EpicComponent> => {
     const epicId = 'epic_control'; // TODO: check ok to use this
     const epicComponentType = 'ACQUISITIONS_EPIC';
-    let testimonialBlock = '';
-    if (epicControlCopy.testimonial) {
-        testimonialBlock = acquisitionsTestimonialBlockTemplate(
-            epicControlCopy.testimonial
-        );
-    }
-    const rawEpic = acquisitionsEpicControlTemplate({
-        copy: epicControlCopy,
-        componentName: '', // TODO: confirm data-component not needed
-        buttonTemplate: epicButtonsTemplate({
-            supportUrl: addTrackingCodesToUrl({
-                base: supportContributeURL,
-                componentType: epicComponentType,
-                componentId: epicId,
-                campaignCode: epicId,
-                abTest,
+    const testimonialBlock = '';
+
+    return epicControlCopy().then(copy => {
+        const rawEpic = acquisitionsEpicControlTemplate({
+            copy,
+            componentName: '', // TODO: confirm data-component not needed
+            buttonTemplate: epicButtonsTemplate({
+                supportUrl: addTrackingCodesToUrl({
+                    base: supportContributeURL,
+                    componentType: epicComponentType,
+                    componentId: epicId,
+                    campaignCode: epicId,
+                    abTest,
+                }),
             }),
-        }),
-        testimonialBlock,
-        epicClass: '',
-        wrapperClass: '',
-    });
-    const epic = $.create(rawEpic).get(0);
-    return {
-        html: epic,
-        componentEvent: {
-            component: {
-                componentType: epicComponentType,
-                id: epicId,
+            testimonialBlock,
+            epicClass: '',
+            wrapperClass: '',
+        });
+
+        const epicElement = $.create(rawEpic).get(0);
+        return {
+            html: epicElement,
+            componentEvent: {
+                component: {
+                    componentType: epicComponentType,
+                    id: epicId,
+                },
+                abTest,
             },
-            abTest,
-        },
-    };
+        };
+    });
 };
 
-const insertAtSubmeta = (epic: HTMLDivElement): Promise<void> =>
+const insertAtSubmeta = (epic: EpicComponent): Promise<EpicComponent> =>
     fastdom.read(() => document.querySelector('.submeta')).then(element => {
         if (element && element.parentElement) {
-            element.parentElement.insertBefore(epic, element);
-            return Promise.resolve();
+            element.parentElement.insertBefore(epic.html, element);
+            return Promise.resolve(epic);
         }
         const error = new Error('unable to insert Epic');
         reportEpicError(error);
         return Promise.reject(error);
     });
 
-const displayControlEpic = (abTest?: ABTestVariant): Promise<EpicComponent> => {
-    const epic = controlEpicComponent(abTest);
-    return insertAtSubmeta(epic.html).then(() => epic);
-};
+const displayControlEpic = (abTest?: ABTestVariant): Promise<EpicComponent> =>
+    controlEpicComponent(abTest).then(epic => insertAtSubmeta(epic));
 
 const awaitEpicViewed = (epic: HTMLDivElement): Promise<void> => {
     const inView = elementInView(epic, window, { top: 18 });
