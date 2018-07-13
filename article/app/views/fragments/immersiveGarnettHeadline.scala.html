@@ -48,6 +48,21 @@
             @Html(page.item.trail.headline)
         </h1>
 
+        @defining(page.item.content.trail.trailPicture.flatMap(_.masterImage)) {
+            case Some(masterImage) => {
+                <figcaption class="caption caption--immersive hide-until-leftcol">
+                    @fragments.inlineSvg("triangle", "icon")
+                    @masterImage.credit.map { credit =>
+                        @credit
+                    }
+                    @masterImage.caption.map { caption =>
+                        @caption
+                    }
+                </figcaption>
+            }
+            case None => { }
+        }
+
         @if(isTheMinuteArticle) {
 
             @if(page.item.trail.shouldHidePublicationDate) {
