@@ -149,8 +149,6 @@ class LiveBlogController(contentApiClient: ContentApiClient, val controllerCompo
 
   private def responseToModelOrResult(range: Option[BlockRange])(response: ItemResponse)(implicit request: RequestHeader): Either[PageWithStoryPackage, Result] = {
 
-    // basically this function serves to narrow the result of ModelOrResult's type
-
     val supportedContent: Option[ContentType] = response.content.filter(isSupported).map(Content(_))
     val supportedContentResult: Either[ContentType, Result] = ModelOrResult(supportedContent, response)
 
