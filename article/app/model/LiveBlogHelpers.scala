@@ -50,7 +50,7 @@ object LiveBlogHelpers {
 
     val pageSize = if (liveBlog.content.tags.tags.map(_.id).contains("sport/sport")) 30 else 10
 
-    val liveBlogPageModel =
+    val liveBlogPageModel: Option[LiveBlogCurrentPage] =
       liveBlog.content.fields.blocks.map { blocks =>
         LiveBlogCurrentPage(
           pageSize = pageSize,
