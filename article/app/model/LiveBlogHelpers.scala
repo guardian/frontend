@@ -103,16 +103,20 @@ object LiveBlogHelpers {
         (__ \ "body").write[String]
       )(unlift(TextBlock.unapply))
 
-    Json.toJson(
-      page.article.blocks.toSeq.flatMap { blocks =>
-        blocks.requestedBodyBlocks.get(Canonical.firstPage).toSeq.flatMap { bodyBlocks: Seq[BodyBlock] =>
-          bodyBlocks.collect {
-            case BodyBlock(id, html, summary, title, _, _, _, publishedAt, _, updatedAt, _, _) if html.trim.nonEmpty =>
-              TextBlock(id, title, publishedAt, updatedAt, summary)
-          }
-        }
-      }.take(number)
-    )
+    val firstPageBlocks = for {
+      blocks <- page.article.blocks.toSeq
+      firstPageBlocks <- blocks.requestedBodyBlocks.get(Canonical.firstPage).toSeq
+      firstPageBlock <- firstPageBlocks
+    } yield firstPageBlock
+
+    val textBlocks = firstPageBlocks
+      .take(number)
+      .collect {
+        case BodyBlock(id, html, summary, title, _, _, _, publishedAt, _, updatedAt, _, _) if html.trim.nonEmpty =>
+          TextBlock(id, title, publishedAt, updatedAt, summary)
+      }
+
+    Json.toJson(textBlocks)
 
   }
 
