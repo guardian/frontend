@@ -13,6 +13,7 @@ import play.api.libs.ws.WSClient
 import play.api.mvc._
 import services.CAPILookup
 import views.support.RenderOtherStatus
+import implicits.{JsonFormat, AmpFormat, HtmlFormat, EmailFormat}
 
 import scala.concurrent.Future
 
@@ -110,10 +111,10 @@ class LiveBlogController(contentApiClient: ContentApiClient, val controllerCompo
   private def renderMinute(path: String, minute: MinutePage)(implicit request: RequestHeader): Future[Result] = {
     Future {
       request.getRequestFormat match {
-        case implicits.Json => common.renderJson (views.html.fragments.minuteBody(minute), minute)
-        case implicits.Email => common.renderEmail (ArticleEmailHtmlPage.html(minute), minute)
-        case implicits.Html => common.renderHtml (MinuteHtmlPage.html(minute), minute)
-        case implicits.Amp => NotFound
+        case JsonFormat => common.renderJson (views.html.fragments.minuteBody(minute), minute)
+        case EmailFormat => common.renderEmail (ArticleEmailHtmlPage.html(minute), minute)
+        case HtmlFormat => common.renderHtml (MinuteHtmlPage.html(minute), minute)
+        case AmpFormat => NotFound
       }
     }
   }
@@ -121,10 +122,10 @@ class LiveBlogController(contentApiClient: ContentApiClient, val controllerCompo
   private def renderLiveBlog(path: String, blog: LiveBlogPage)(implicit request: RequestHeader): Future[Result] = {
     Future {
       request.getRequestFormat match {
-        case implicits.Json => common.renderJson( views.html.liveblog.liveBlogBody(blog), blog )
-        case implicits.Email => common.renderEmail( LiveBlogHtmlPage.html(blog), blog )
-        case implicits.Html => common.renderHtml( LiveBlogHtmlPage.html(blog), blog )
-        case implicits.Amp => common.renderHtml( views.html.liveBlogAMP(blog), blog )
+        case JsonFormat => common.renderJson( views.html.liveblog.liveBlogBody(blog), blog )
+        case EmailFormat => common.renderEmail( LiveBlogHtmlPage.html(blog), blog )
+        case HtmlFormat => common.renderHtml( LiveBlogHtmlPage.html(blog), blog )
+        case AmpFormat => common.renderHtml( views.html.liveBlogAMP(blog), blog )
       }
     }
   }

@@ -4,10 +4,10 @@ import conf.Configuration
 import play.api.mvc.RequestHeader
 
 sealed trait RequestFormat
-case object Html extends RequestFormat
-case object Json extends RequestFormat
-case object Email extends RequestFormat
-case object Amp extends RequestFormat
+case object HtmlFormat extends RequestFormat
+case object JsonFormat extends RequestFormat
+case object EmailFormat extends RequestFormat
+case object AmpFormat extends RequestFormat
 
 trait Requests {
 
@@ -23,7 +23,7 @@ trait Requests {
 
     def getBooleanParameter(name: String): Option[Boolean] = getParameter(name).map(_.toBoolean)
 
-    def getRequestFormat: RequestFormat = if(isJson) Json else if (isEmail) Email else if(isAmp) Amp else Html
+    def getRequestFormat: RequestFormat = if(isJson) JsonFormat else if (isEmail) EmailFormat else if(isAmp) AmpFormat else HtmlFormat
 
     lazy val isJson: Boolean = r.getQueryString("callback").isDefined || r.path.endsWith(".json")
 

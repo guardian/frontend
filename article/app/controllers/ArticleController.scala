@@ -12,6 +12,7 @@ import metrics.TimingMetric
 import play.libs.Json
 import renderers.RemoteRender
 import services.CAPILookup
+import implicits.{JsonFormat, AmpFormat, HtmlFormat, EmailFormat}
 
 import scala.concurrent.Future
 
@@ -58,10 +59,10 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
   private def render(path: String, article: ArticlePage)(implicit request: RequestHeader): Future[Result] = {
     Future {
       request.getRequestFormat match {
-        case implicits.Json => common.renderJson(getJson(article), article)
-        case implicits.Email => common.renderEmail(ArticleEmailHtmlPage.html(article), article)
-        case implicits.Html => common.renderHtml(ArticleHtmlPage.html(article), article)
-        case implicits.Amp => common.renderHtml(views.html.articleAMP(article), article)
+        case JsonFormat => common.renderJson(getJson(article), article)
+        case EmailFormat => common.renderEmail(ArticleEmailHtmlPage.html(article), article)
+        case HtmlFormat => common.renderHtml(ArticleHtmlPage.html(article), article)
+        case AmpFormat => common.renderHtml(views.html.articleAMP(article), article)
       }
     }
   }
