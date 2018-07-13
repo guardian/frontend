@@ -8,12 +8,10 @@
     }
 
     @mixin padding {
-        padding-top: 9px;
-        padding-bottom: 18px;
+        padding: 9px 0;
 
         @include mq(tablet) {
-            padding-left: $gs-gutter;
-            padding-right: $gs-gutter;
+            padding: 9px $gs-gutter 18px;
         }
     }
 
@@ -52,12 +50,15 @@
 }
 
 .engagement-banner__text {
-    color: $brightness-7;
+    @include banner-copy-alignment;
 
-    font-size: 17px;
-    line-height: 22px;
+    color: $brightness-7;
+    font-size: 14px;
+    line-height: 18px;
 
     @include mq(tablet) {
+        font-size: 17px;
+        line-height: 22px;
         width: 580px;
     }
 
@@ -76,17 +77,12 @@
     position: relative;
 }
 
-.engagement-banner__text {
-    @include banner-copy-alignment;
-
-    color: $brightness-7;
-
-    font-size: 17px;
-    line-height: 22px;
-}
-
 .engagement-banner__cta {
-    margin-top: $gs-baseline;
+    margin-top: $gs-baseline / 2;
+
+    @include mq(tablet) {
+        margin-top: $gs-baseline;
+    }
 
     @include mq(desktop) {
         display: inline-block;
