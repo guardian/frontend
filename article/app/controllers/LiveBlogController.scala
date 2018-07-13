@@ -26,11 +26,11 @@ class LiveBlogController(contentApiClient: ContentApiClient, val controllerCompo
   // we support liveblogs and also articles, so that minutes work
   private def isSupported(c: ApiContent) = c.isLiveBlog || c.isArticle
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
-  override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = mapModel(path, Some(Canonical))(render(path, _))
+  override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = mapModel(path, Canonical)(render(path, _))
 
   def renderEmail(path: String): Action[AnyContent] =
     Action.async { implicit request =>
-      mapModel(path, range = Some(ArticleBlocks)) {
+      mapModel(path, ArticleBlocks) {
         render(path, _)
       }
     }
@@ -38,7 +38,7 @@ class LiveBlogController(contentApiClient: ContentApiClient, val controllerCompo
   def renderArticle(path: String, page: Option[String] = None, format: Option[String] = None): Action[AnyContent] =
       Action.async { implicit request =>
         def renderWithRange(range: BlockRange) =
-          mapModel(path, range = Some(range)) {
+          mapModel(path, range) {
             render(path, _)
           }
         page.map(ParseBlockId.fromPageParam) match {
@@ -52,7 +52,7 @@ class LiveBlogController(contentApiClient: ContentApiClient, val controllerCompo
     Action.async { implicit request =>
       val range = getRange(lastUpdate, rendered)
 
-      mapModel(path, Some(range)) {
+      mapModel(path, range) {
         case liveblog: LiveBlogPage if rendered.contains(false) => getJsonForFronts(liveblog)
         case liveblog: LiveBlogPage => getJson(path, liveblog, range, isLivePage)
         case minute: MinutePage => render(path, minute)
@@ -136,9 +136,9 @@ class LiveBlogController(contentApiClient: ContentApiClient, val controllerCompo
   }
 
 
-  private def mapModel(path: String, range: Option[BlockRange] = None)(render: PageWithStoryPackage => Future[Result])(implicit request: RequestHeader): Future[Result] = {
+  private def mapModel(path: String, range: BlockRange)(render: PageWithStoryPackage => Future[Result])(implicit request: RequestHeader): Future[Result] = {
     capiLookup
-      .lookup(path, range)
+      .lookup(path, Some(range))
       .map(responseToModelOrResult(range))
       .recover(convertApiExceptions)
       .flatMap {
@@ -147,7 +147,7 @@ class LiveBlogController(contentApiClient: ContentApiClient, val controllerCompo
       }
   }
 
-  private def responseToModelOrResult(range: Option[BlockRange])(response: ItemResponse)(implicit request: RequestHeader): Either[PageWithStoryPackage, Result] = {
+  private def responseToModelOrResult(range: BlockRange)(response: ItemResponse)(implicit request: RequestHeader): Either[PageWithStoryPackage, Result] = {
 
     val supportedContent: Option[ContentType] = response.content.filter(isSupported).map(Content(_))
     val supportedContentResult: Either[ContentType, Result] = ModelOrResult(supportedContent, response)
@@ -158,9 +158,7 @@ class LiveBlogController(contentApiClient: ContentApiClient, val controllerCompo
       case liveBlog: Article if liveBlog.isLiveBlog && request.isEmail =>
         Left(MinutePage(liveBlog, StoryPackages(liveBlog, response)))
       case liveBlog: Article if liveBlog.isLiveBlog =>
-        range.map {
-          createLiveBlogModel(liveBlog, response, _)
-        }.getOrElse(Right(NotFound))
+        createLiveBlogModel(liveBlog, response, range)
     }
 
     content

@@ -25,11 +25,11 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
 
   private def isSupported(c: ApiContent) = c.isArticle || c.isLiveBlog || c.isSudoku
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
-  override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = mapModel(path, Some(Canonical))(render(path, _))
+  override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = mapModel(path, Canonical)(render(path, _))
 
   def renderJson(path: String): Action[AnyContent] = {
     Action.async { implicit request =>
-      mapModel(path, if (request.isGuuiJson) Some(ArticleBlocks) else None) {
+      mapModel(path, ArticleBlocks) {
         render(path, _)
       }
     }
@@ -37,7 +37,7 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
 
   def renderArticle(path: String): Action[AnyContent] = {
     Action.async { implicit request =>
-        mapModel(path, Some(ArticleBlocks)) {
+        mapModel(path, ArticleBlocks) {
           if(request.isGuui) remoteRender.render(ws, path, _) else render(path, _)
         }
     }
@@ -45,7 +45,7 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
 
   def renderEmail(path: String): Action[AnyContent] = {
     Action.async { implicit request =>
-      mapModel(path, range = Some(ArticleBlocks)) {
+      mapModel(path, ArticleBlocks) {
         render(path, _)
       }
     }
@@ -67,9 +67,9 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
     }
   }
 
-  private def mapModel(path: String, range: Option[BlockRange] = None)(render: ArticlePage => Future[Result])(implicit request: RequestHeader): Future[Result] = {
+  private def mapModel(path: String, range: BlockRange)(render: ArticlePage => Future[Result])(implicit request: RequestHeader): Future[Result] = {
     capiLookup
-      .lookup(path, range)
+      .lookup(path, Some(range))
       .map(responseToModelOrResult)
       .recover(convertApiExceptions)
       .flatMap {
