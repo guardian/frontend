@@ -54,6 +54,7 @@ class LiveBlogController(contentApiClient: ContentApiClient, val controllerCompo
       mapModel(path, Some(range)) {
         case liveblog: LiveBlogPage if rendered.contains(false) => getJsonForFronts(liveblog)
         case liveblog: LiveBlogPage => getJson(path, liveblog, range, isLivePage)
+        case minute: MinutePage => render(path, minute)
         case _ => Future { Cached(600)(WithoutRevalidationResult(NotFound)) }
       }
 
@@ -67,13 +68,13 @@ class LiveBlogController(contentApiClient: ContentApiClient, val controllerCompo
     }
   }
 
-  private def getJsonForFronts(liveblog: LiveBlogPage): Future[Result] = {
+  private def getJsonForFronts(liveblog: LiveBlogPage)(implicit request: RequestHeader): Future[Result] = {
     Future {
       Cached(liveblog)(JsonComponent("blocks" -> model.LiveBlogHelpers.blockTextJson(liveblog, 6)))
     }
   }
 
-  private def getJson(path: String, liveblog: LiveBlogPage, range: BlockRange, isLivePage: Option[Boolean]): Future[Result] = {
+  private def getJson(path: String, liveblog: PageWithStoryPackage, range: BlockRange, isLivePage: Option[Boolean])(implicit request: RequestHeader): Future[Result] = {
     range match {
       case SinceBlockId(lastBlockId) => renderNewerUpdatesJson(liveblog, SinceBlockId(lastBlockId), isLivePage)
       case _ => render(path, liveblog)

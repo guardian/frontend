@@ -115,7 +115,7 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
   }
 
   def renderJson(json: Html, page: model.Page)(implicit request: RequestHeader, context: ApplicationContext): Result = Cached(page) {
-    JsonComponent(json)
+    JsonComponent(page, json)
   }
 
   def renderEmail(html: Html, page: model.Page)(implicit request: RequestHeader, context: ApplicationContext): Result = Cached(page){
