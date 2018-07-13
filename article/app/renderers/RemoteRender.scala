@@ -27,18 +27,15 @@ class RemoteRender(implicit context: ApplicationContext) {
       response.body
     )
 
-  def render(ws:WSClient, path: String, model: PageWithStoryPackage)(implicit request: RequestHeader): Future[Result] = model match {
+  def render(ws:WSClient, path: String, article: ArticlePage)(implicit request: RequestHeader): Future[Result] = {
 
-    case article : ArticlePage =>
       val contentFieldsJson = if (request.isGuui) List("contentFields" -> Json.toJson(ContentFields(article.article))) else List()
       val jsonResponse = List(("html", views.html.fragments.articleBody(article))) ++ contentFieldsJson
-      val jsonPayload = JsonComponent.jsonFor(model, jsonResponse:_*)
+      val jsonPayload = JsonComponent.jsonFor(article, jsonResponse:_*)
 
       remoteRenderArticle(ws, jsonPayload).map(s => {
         Cached(article){ RevalidatableResult.Ok(Html(s)) }
       })
-
-    case _ => throw new Exception("Remote render not supported for this content type")
 
   }
 
