@@ -41,7 +41,7 @@ const controlEpicComponent = (
     const epicComponentType = 'ACQUISITIONS_EPIC';
     const testimonialBlock = '';
 
-    return epicControlCopy.then(copy => {
+    return epicControlCopy().then(copy => {
         const rawEpic = acquisitionsEpicControlTemplate({
             copy,
             componentName: '', // TODO: confirm data-component not needed

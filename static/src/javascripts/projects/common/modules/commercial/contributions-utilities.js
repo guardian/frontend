@@ -254,9 +254,13 @@ const makeABTestVariant = (
         },
 
         test() {
-            const copyPromise =
+            if (typeof options.copy === 'function') {
+                options.copy = options.copy();
+            }
+
+            const copyPromise: Promise<AcquisitionsEpicTemplateCopy> =
                 (options.copy && Promise.resolve(options.copy)) ||
-                acquisitionsCopyControl;
+                acquisitionsCopyControl();
 
             const render = (templateFn: ?EpicTemplate) =>
                 copyPromise
@@ -447,7 +451,7 @@ const makeGoogleDocEpicVariants = (count: number): Array<Object> => {
             id: `variant_${i}`,
             products: [],
             options: {
-                copy: getCopyFromGoogleDoc(`variant_${i}`),
+                copy: () => getCopyFromGoogleDoc(`variant_${i}`),
             },
         });
     }

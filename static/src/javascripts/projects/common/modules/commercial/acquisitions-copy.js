@@ -80,9 +80,8 @@ export const getCopyFromGoogleDoc = (
 /*
  Exported instances of AcquisitionsEpicTemplateCopy
  */
-export const control: Promise<
-    AcquisitionsEpicTemplateCopy
-> = getCopyFromGoogleDoc('control');
+export const control: () => Promise<AcquisitionsEpicTemplateCopy> = () =>
+    getCopyFromGoogleDoc('control');
 
 export const liveblogCopy = (
     supportUrl: string
