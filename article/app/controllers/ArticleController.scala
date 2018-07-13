@@ -3,7 +3,7 @@ package controllers
 import com.gu.contentapi.client.model.v1.{ItemResponse, Content => ApiContent}
 import common._
 import contentapi.ContentApiClient
-import model.{PageWithStoryPackage, _}
+import model.{ContentType, PageWithStoryPackage, _}
 import pages.{ArticleEmailHtmlPage, ArticleHtmlPage}
 import play.api.libs.ws.WSClient
 import play.api.mvc._
@@ -12,7 +12,7 @@ import metrics.TimingMetric
 import play.libs.Json
 import renderers.RemoteRender
 import services.CAPILookup
-import implicits.{JsonFormat, AmpFormat, HtmlFormat, EmailFormat}
+import implicits.{AmpFormat, EmailFormat, HtmlFormat, JsonFormat}
 
 import scala.concurrent.Future
 
@@ -80,10 +80,13 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
 
   private def responseToModelOrResult(response: ItemResponse)(implicit request: RequestHeader): Either[ArticlePage, Result] = {
     val supportedContent: Option[ContentType] = response.content.filter(isSupported).map(Content(_))
-    supportedContent match {
-      case Some(article:Article) => ModelOrResult(Some(ArticlePage(article, StoryPackages(article, response))), response)
+
+    ModelOrResult(supportedContent, response) match {
+      case Left(article:Article) => Left(ArticlePage(article, StoryPackages(article, response)))
+      case Right(r) => Right(r)
       case _ => Right(NotFound)
     }
+
   }
 
 }
