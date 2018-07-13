@@ -2,88 +2,95 @@
 import { local } from 'lib/storage';
 
 type LotameError = {
-    error: number;
-}
+    error: number,
+};
 
 type LotameConsentType = {
     name: string,
-    consent: boolean
-}
+    consent: boolean,
+};
 
 type LotameClientConsent = {
     clientId: string,
     lastupdate: number,
-    types: Array<LotameConsentType>
-}
-
+    types: Array<LotameConsentType>,
+};
 
 type LotameSuccess = {
-    consent: Array<LotameClientConsent>
-}
+    consent: Array<LotameClientConsent>,
+};
 
 const clientId = 12666;
 const lotameVendorId = 95;
 const lotameConsent = 'lotameConsent';
-    
+
 const lotameConsentData = (isConsenting: boolean) => ({
-    analytics: isConsenting, 
-    crossdevice: isConsenting, 
-    datasharing: isConsenting, 
-    targeting: isConsenting
+    analytics: isConsenting,
+    crossdevice: isConsenting,
+    datasharing: isConsenting,
+    targeting: isConsenting,
 });
-    
+
 const getLotameConsent = () => local.get(lotameConsent);
 
-const setLotameConsent = (consent: boolean) => local.set(lotameConsent, consent ? 1 : 0);
+const setLotameConsent = (consent: boolean) =>
+    local.set(lotameConsent, consent ? 1 : 0);
 
-function lotameCallback(data: LotameSuccess | LotameError) {
+const lotameCallback = (data: LotameSuccess | LotameError): void => {
     if ('error' in data) {
         setLotameConsent(false);
     } else if ('consent' in data) {
         setLotameConsent(true);
     }
-}
+};
 
 const isConsentingData = (consentData): boolean => {
     try {
-        const vendorConsents = consentData['vendorConsents'];
-        const purposeConsents = consentData['purposeConsents'];  
-        if(
-            Object.keys(vendorConsents).every((k) => vendorConsents[k]) && 
-            Object.keys(purposeConsents).every((k) => purposeConsents[k])
+        const vendorConsents = consentData.vendorConsents;
+        const purposeConsents = consentData.purposeConsents;
+        if (
+            Object.keys(vendorConsents).every(k => vendorConsents[k]) &&
+            Object.keys(purposeConsents).every(k => purposeConsents[k])
         ) {
             return true;
-        } else {
-            return false;
-        } 
+        }
+        return false;
     } catch (e) {
         return false;
     }
-}
+};
 
-
-const getLotameAdConsent = async (): Promise<boolean> => {
-    return new Promise((resolve, reject) => {
+const getLotameAdConsent = async (): Promise<boolean> =>
+    new Promise((resolve, reject) => {
         if ('__cmp' in window) {
+            /*eslint-disable */
             window.__cmp(
-                'getVendorConsents', 
-                [lotameVendorId], 
-                (consentData, success) => success ? resolve(isConsentingData(consentData)) : reject(null));
+                /* eslint-enable */
+                'getVendorConsents',
+                [lotameVendorId],
+                (consentData, success) =>
+                    success
+                        ? resolve(isConsentingData(consentData))
+                        : reject(Error('Error calling getVendorConsents'))
+            );
+        } else {
+            reject(Error('__cmp does not exist on the window'));
         }
-        reject(null);
     });
-}
 
 const init = () => {
     console.log(`Initialising lotame consent`);
-    if(!getLotameConsent()) {
+    if (!getLotameConsent()) {
         if ('LOTCC' in window && 'setConsent' in window.LOTCC) {
-            getLotameAdConsent().then((isConsenting) => 
-                window.LOTCC.setConsent(lotameCallback, clientId, lotameConsentData(isConsenting))
-            );            
+            getLotameAdConsent().then(isConsenting =>
+                window.LOTCC.setConsent(
+                    lotameCallback,
+                    clientId,
+                    lotameConsentData(isConsenting)
+                )
+            );
         }
     }
-}
+};
 
 export { init };
-    
