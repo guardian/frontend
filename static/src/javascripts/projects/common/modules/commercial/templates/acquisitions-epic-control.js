@@ -5,7 +5,7 @@ const appendHighlightedText = (
 ): Array<string> =>
     paragraphs.map((paragraph, index) => {
         if (highlightedText && index + 1 === paragraphs.length) {
-            return `${paragraph} <strong><span className="contributions__highlight">${highlightedText}</span></strong>`;
+            return `${paragraph} <strong><span class="contributions__highlight">${highlightedText}</span></strong>`;
         }
 
         return paragraph;
