@@ -96,14 +96,17 @@ const containsMpu = (sizes: PrebidSize[]): boolean =>
 const containsDmpu = (sizes: PrebidSize[]): boolean =>
     contains(sizes, [300, 600]);
 
-const containsMpuOrDmpu = (sizes: PrebidSize[]): boolean =>
-    containsMpu(sizes) || containsDmpu(sizes);
-
 const containsLeaderboard = (sizes: PrebidSize[]): boolean =>
     contains(sizes, [728, 90]);
 
+const containsBillboard = (sizes: PrebidSize[]): boolean =>
+    contains(sizes, [970, 250]);
+
+const containsMpuOrDmpu = (sizes: PrebidSize[]): boolean =>
+    containsMpu(sizes) || containsDmpu(sizes);
+
 const containsLeaderboardOrBillboard = (sizes: PrebidSize[]): boolean =>
-    containsLeaderboard(sizes) || contains(sizes, [970, 250]);
+    containsLeaderboard(sizes) || containsBillboard(sizes);
 
 const getImprovePlacementId = (sizes: PrebidSize[]): number => {
     switch (config.page.edition) {
@@ -210,9 +213,10 @@ const getImproveSizeParam = (slotId: string): PrebidImproveSizeParam => {
 };
 
 const getXaxisPlacementId = (sizes: PrebidSize[]): number => {
-    if (contains(sizes, [970, 250])) return 13218365;
-    if (contains(sizes, [300, 600])) return 12984524;
-    return 13218372;
+    if (containsDmpu(sizes)) return 13663297;
+    if (containsMpu(sizes)) return 13663304;
+    if (containsBillboard(sizes)) return 13663284;
+    return 13663304;
 };
 
 const sonobiBidder: PrebidBidder = {
@@ -253,7 +257,6 @@ const xaxisBidder: PrebidBidder = {
     name: 'xhb',
     bidParams: (slotId: string, sizes: PrebidSize[]): PrebidXaxisParams => ({
         placementId: getXaxisPlacementId(sizes),
-        member: '2127',
     }),
     labelAll: ['edn-UK', 'deal-FirstLook'],
 };
