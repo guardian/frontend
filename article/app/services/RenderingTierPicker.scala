@@ -40,7 +40,7 @@ object RenderingTierPicker {
   }
 
   private def isAdFree(page: PageWithStoryPackage): Boolean = {
-    page.metadata.sensitive
+    page.item.content.shouldHideAdverts
   }
 
   def getRenderTierFor(page: PageWithStoryPackage): RenderType = {
