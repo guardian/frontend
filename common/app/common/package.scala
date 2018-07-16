@@ -105,6 +105,23 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
       else
         RevalidatableResult.Ok(htmlResponse())
     }
+
+  def renderHtml(html: Html, page: model.Page)(implicit request: RequestHeader, context: ApplicationContext): Result = Cached(page){
+    RevalidatableResult.Ok(html)
+  }
+
+  def renderJson(json: List[(String, Any)], page: model.Page)(implicit request: RequestHeader, context: ApplicationContext): Result = Cached(page){
+    JsonComponent(page, json:_*)
+  }
+
+  def renderJson(json: Html, page: model.Page)(implicit request: RequestHeader, context: ApplicationContext): Result = Cached(page) {
+    JsonComponent(page, json)
+  }
+
+  def renderEmail(html: Html, page: model.Page)(implicit request: RequestHeader, context: ApplicationContext): Result = Cached(page){
+    RevalidatableResult.Ok(if (InlineEmailStyles.isSwitchedOn) InlineStyles(html) else html)
+  }
+
 }
 
 

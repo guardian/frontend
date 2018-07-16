@@ -3,6 +3,12 @@ package implicits
 import conf.Configuration
 import play.api.mvc.RequestHeader
 
+sealed trait RequestFormat
+case object HtmlFormat extends RequestFormat
+case object JsonFormat extends RequestFormat
+case object EmailFormat extends RequestFormat
+case object AmpFormat extends RequestFormat
+
 trait Requests {
 
   val EMAIL_SUFFIX = "/email"
@@ -16,6 +22,8 @@ trait Requests {
     def getIntParameter(name: String): Option[Int] = getParameter(name).map(_.toInt)
 
     def getBooleanParameter(name: String): Option[Boolean] = getParameter(name).map(_.toBoolean)
+
+    def getRequestFormat: RequestFormat = if(isJson) JsonFormat else if (isEmail) EmailFormat else if(isAmp) AmpFormat else HtmlFormat
 
     lazy val isJson: Boolean = r.getQueryString("callback").isDefined || r.path.endsWith(".json")
 
