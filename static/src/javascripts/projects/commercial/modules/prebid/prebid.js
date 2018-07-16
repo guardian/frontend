@@ -39,7 +39,7 @@ const s2sConfig = {
     adapter: 'prebidServer',
     is_debug: 'false',
     endpoint: 'https://elb.the-ozone-project.com/openrtb2/auction',
-    syncEndpoint: 'https://prebid.adnxs.com/pbs/v1/cookie_sync',
+    syncEndpoint: 'https://elb.the-ozone-project.com/cookie_sync',
     cookieSet: true,
     cookiesetUrl: 'https://acdn.adnxs.com/cookieset/cs.js',
 };
