@@ -4,6 +4,7 @@ package navigation
 import _root_.model.{NavItem, Page, Tags}
 import common.{Edition, editions}
 import navigation.NavLinks._
+import play.api.libs.json.{Json, Writes}
 
 import scala.annotation.tailrec
 
@@ -39,6 +40,15 @@ case class NavMenu(
 )
 
 object NavMenu {
+
+  implicit val navlinkWrites = Json.writes[NavLink]
+  implicit val flatSubnavWrites = Json.writes[FlatSubnav]
+  implicit val parentSubnavWrites = Json.writes[ParentSubnav]
+  implicit val subnavWrites = Writes[Subnav]{
+    case nav: FlatSubnav => flatSubnavWrites.writes(nav)
+    case nav: ParentSubnav => parentSubnavWrites.writes(nav)
+  }
+  implicit val writes = Json.writes[NavMenu]
 
   private[navigation] case class NavRoot(children: Seq[NavLink], otherLinks: Seq[NavLink], brandExtensions: Seq[NavLink])
 
