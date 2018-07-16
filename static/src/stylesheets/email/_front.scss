@@ -57,7 +57,7 @@ $container-color: #ffffff;
     font-family: Helvetica, Arial, sans-serif;
     font-size: 14px;
     line-height: 18px;
-    padding: 6px 0;
+    padding: 6px $gutter;
 
     a {
         color: #0084c6;
