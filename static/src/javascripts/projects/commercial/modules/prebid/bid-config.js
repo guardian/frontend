@@ -178,12 +178,12 @@ const getAppNexusPlacementId = (sizes: PrebidSize[]): string => {
                     if (containsLeaderboardOrBillboard(sizes)) {
                         return '13366615';
                     }
-                    return '';
+                    return '13144370';
                 case 'M':
                     if (containsMpu(sizes)) {
                         return '13366904';
                     }
-                    return '';
+                    return '13144370';
                 case 'T':
                     if (containsMpu(sizes)) {
                         return '13366913';
@@ -191,12 +191,12 @@ const getAppNexusPlacementId = (sizes: PrebidSize[]): string => {
                     if (containsLeaderboard(sizes)) {
                         return '13366916';
                     }
-                    return '';
+                    return '13144370';
                 default:
-                    return '';
+                    return '13144370';
             }
         default:
-            return '';
+            return '13144370';
     }
 };
 
