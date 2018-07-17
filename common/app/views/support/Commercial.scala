@@ -15,7 +15,7 @@ object Commercial {
   def isAdFree(request: RequestHeader): Boolean = {
     try {
       request.headers.get("X-GU-Commercial-Ad-Free").exists(_.toLowerCase == "true") ||
-        request.cookies.get("GU_AF1").exists(_.value.toInt > 0)
+        request.cookies.get("GU_AF1").exists(_.value.toLong > 0)
     } catch {
        case e: Exception => false   // in case the cookie value can't be converted toInt
     }
