@@ -48,8 +48,10 @@ const isConsentingData = (consentData): boolean => {
     try {
         const vendorConsents = consentData.vendorConsents;
         const purposeConsents = consentData.purposeConsents;
-        return Object.keys(vendorConsents).every(k => vendorConsents[k]) &&
-            Object.keys(purposeConsents).every(k => purposeConsents[k]);
+        return (
+            Object.keys(vendorConsents).every(k => vendorConsents[k]) &&
+            Object.keys(purposeConsents).every(k => purposeConsents[k])
+        );
     } catch (e) {
         return false;
     }
