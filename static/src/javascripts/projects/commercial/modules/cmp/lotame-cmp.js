@@ -37,6 +37,7 @@ const setLotameConsent = (consent: boolean) =>
     local.set(lotameConsent, consent ? 1 : 0);
 
 const lotameCallback = (data: LotameSuccess | LotameError): void => {
+    console.log(`lotameCallback: ${JSON.stringify(data)}`);
     if ('error' in data) {
         setLotameConsent(false);
     } else if ('consent' in data) {
@@ -81,13 +82,14 @@ const init = () => {
         if ('LOTCC' in window && 'setConsent' in window.LOTCC) {
             getLotameAdConsent()
                 .then(isConsentingData)
-                .then(isConsenting =>
-                    window.LOTCC.setConsent(
+                .then(isConsenting => {
+                    console.log(`isConsenting: ${isConsenting.toString()}`);
+                    return window.LOTCC.setConsent(
                         lotameCallback,
                         clientId,
                         lotameConsentData(isConsenting)
-                    )
-                );
+                    );
+                });
         }
     }
 };
