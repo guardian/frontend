@@ -48,19 +48,14 @@ const isConsentingData = (consentData): boolean => {
     try {
         const vendorConsents = consentData.vendorConsents;
         const purposeConsents = consentData.purposeConsents;
-        if (
-            Object.keys(vendorConsents).every(k => vendorConsents[k]) &&
-            Object.keys(purposeConsents).every(k => purposeConsents[k])
-        ) {
-            return true;
-        }
-        return false;
+        return Object.keys(vendorConsents).every(k => vendorConsents[k]) &&
+            Object.keys(purposeConsents).every(k => purposeConsents[k]);
     } catch (e) {
         return false;
     }
 };
 
-const getLotameAdConsent = async (): Promise<boolean> =>
+const getLotameAdConsent = (): Promise<any> =>
     new Promise((resolve, reject) => {
         if ('__cmp' in window) {
             /*eslint-disable */
@@ -70,7 +65,7 @@ const getLotameAdConsent = async (): Promise<boolean> =>
                 [lotameVendorId],
                 (consentData, success) =>
                     success
-                        ? resolve(isConsentingData(consentData))
+                        ? resolve(consentData)
                         : reject(Error('Error calling getVendorConsents'))
             );
         } else {
@@ -82,13 +77,15 @@ const init = () => {
     console.log(`Initialising lotame consent`);
     if (!getLotameConsent()) {
         if ('LOTCC' in window && 'setConsent' in window.LOTCC) {
-            getLotameAdConsent().then(isConsenting =>
-                window.LOTCC.setConsent(
-                    lotameCallback,
-                    clientId,
-                    lotameConsentData(isConsenting)
-                )
-            );
+            getLotameAdConsent()
+                .then(isConsentingData)
+                .then(isConsenting =>
+                    window.LOTCC.setConsent(
+                        lotameCallback,
+                        clientId,
+                        lotameConsentData(isConsenting)
+                    )
+                );
         }
     }
 };
