@@ -20,9 +20,9 @@ type LotameSuccess = {
     consent: Array<LotameClientConsent>,
 };
 
-const clientId = 12666;
-const lotameVendorId = 95;
-const lotameConsent = 'lotameConsent';
+const clientId: number = 12666;
+const lotameVendorId: number = 95;
+const lotameConsentKey: string = 'lotameConsent';
 
 const lotameConsentData = (isConsenting: boolean) => ({
     analytics: isConsenting,
@@ -31,15 +31,14 @@ const lotameConsentData = (isConsenting: boolean) => ({
     targeting: isConsenting,
 });
 
-const getLotameConsent = (): number => local.get(lotameConsent);
+const getLotameConsent = (): number => local.get(lotameConsentKey);
 
 const setLotameConsent = (consent: boolean) =>
-    local.set(lotameConsent, consent ? 1 : 0);
+    local.set(lotameConsentKey, consent ? 1 : 0);
 
 const lotameCallback = (isConsenting: boolean) => (
     data: LotameSuccess | LotameError
 ): void => {
-    console.log(`lotameCallback: ${JSON.stringify(data)}`);
     if ('error' in data) {
         setLotameConsent(false);
     } else if ('consent' in data) {
@@ -60,7 +59,7 @@ const isConsentingData = (consentData): boolean => {
     }
 };
 
-const getLotameAdConsent = (): Promise<any> =>
+const getLotameAdConsentFromCmp = (): Promise<any> =>
     new Promise((resolve, reject) => {
         if ('__cmp' in window) {
             /*eslint-disable */
@@ -79,12 +78,10 @@ const getLotameAdConsent = (): Promise<any> =>
     });
 
 const init = () => {
-    console.log(`Initialising lotame consent`);
     if ('LOTCC' in window && 'setConsent' in window.LOTCC) {
-        getLotameAdConsent()
+        getLotameAdConsentFromCmp()
             .then(isConsentingData)
             .then(isConsenting => {
-                console.log(`isConsenting: ${isConsenting.toString()}`);
                 const localConsenting: boolean = !!getLotameConsent();
                 if (localConsenting !== isConsenting) {
                     return window.LOTCC.setConsent(
@@ -95,7 +92,9 @@ const init = () => {
                 }
             })
             .catch(error =>
-                console.error(`Error with lotame: ${error.toString()}`)
+                console.error(
+                    `Error with lotame initialisation: ${error.toString()}`
+                )
             );
     }
 };
