@@ -92,7 +92,10 @@ const init = () => {
                         lotameConsentData(isConsenting)
                     );
                 }
-            });
+            })
+            .catch(error =>
+                console.error(`Error with lotame: ${error.toString()}`)
+            );
     }
 };
 
