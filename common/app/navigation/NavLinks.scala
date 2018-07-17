@@ -289,7 +289,6 @@ object NavLinks {
   //Sport Pillar
   val ukSportPillar = NavLink("Sport", "/sport", longTitle = "Sport home", iconName = "home",
     List(
-      worldCup2018,
       football,
       rugbyUnion,
       cricket,
@@ -305,7 +304,6 @@ object NavLinks {
   )
   val auSportPillar = ukSportPillar.copy(
     children = List(
-      worldCup2018,
       football,
       AFL,
       NRL,
@@ -317,7 +315,6 @@ object NavLinks {
   )
   val usSportPillar = ukSportPillar.copy(
     children = List(
-      worldCup2018,
       soccer,
       NFL,
       tennis,
@@ -329,7 +326,6 @@ object NavLinks {
   )
   val intSportPillar = ukSportPillar.copy(
     children = List(
-      worldCup2018,
       football,
       rugbyUnion,
       cricket,
