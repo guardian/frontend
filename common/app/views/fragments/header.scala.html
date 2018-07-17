@@ -5,7 +5,7 @@
 @import navigation.NavMenu
 @import navigation.UrlHelpers.{getJobUrl, Header, getReaderRevenueUrl }
 @import navigation.ReaderRevenueSite.{Support, SupportSubscribe}
-@import conf.switches.Switches.{ IdentityProfileNavigationSwitch, SearchSwitch }
+@import conf.switches.Switches.{ IdentityProfileNavigationSwitch, SearchSwitch, GuardianPride }
 
 @defining(NavMenu(page, Edition(request))) { navMenu: NavMenu =>
     <header class="@RenderClasses(Map(
@@ -25,13 +25,22 @@
             <a href="@LinkTo{/}"
                 class="new-header__logo"
                 data-link-name="nav2 : logo">
+                @if(GuardianPride.isSwitchedOn) {
+                    <span class="u-h">The Guardian Pride - Back to home</span>
 
-                <span class="u-h">The Guardian - Back to home</span>
-
-                @if(page.metadata.hasSlimHeader) {
-                    @fragments.inlineSvg("the-guardian-roundel", "logo")
+                    @if(page.metadata.hasSlimHeader) {
+                        @fragments.inlineSvg("the-guardian-roundel--pride", "logo")
+                    } else {
+                        @fragments.inlineSvg("the-guardian-logo--pride", "logo")
+                    }
                 } else {
-                    @fragments.inlineSvg("the-guardian-logo", "logo")
+                    <span class="u-h">The Guardian - Back to home</span>
+
+                    @if(page.metadata.hasSlimHeader) {
+                        @fragments.inlineSvg("the-guardian-roundel", "logo")
+                    } else {
+                        @fragments.inlineSvg("the-guardian-logo", "logo")
+                    }
                 }
             </a>
 

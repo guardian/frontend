@@ -453,6 +453,17 @@ trait FeatureSwitches {
     exposeClientSide = false
   )
 
+  // Owner: Zef Cherry-Kynaston
+  val GuardianPride = Switch(
+    SwitchGroup.Feature,
+    "guardian-pride",
+    "When ON will change masthead logo into a Pride logo",
+    owners= Seq(Owner.withGithub("zeftilldeath")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
   // Owner: Journalism
   val ReaderAnswersDeliveryMechanism = Switch(
     SwitchGroup.Feature,
