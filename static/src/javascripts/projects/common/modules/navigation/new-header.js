@@ -488,7 +488,9 @@ const showMoreButton = (): void => {
                 // +1 to compensate for the border top on the subnav
                 if (subnavRect.top + 1 === lastChildRect.top) {
                     fastdom.write(() => {
-                        moreButton.classList.add('is-hidden');
+                        if (moreButton) {
+                            moreButton.classList.add('is-hidden');
+                        }
                     });
                 }
             }
