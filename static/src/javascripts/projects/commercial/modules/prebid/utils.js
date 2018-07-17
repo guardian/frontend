@@ -1,6 +1,7 @@
 // @flow
 
 import { getBreakpoint } from 'lib/detect';
+import { getSync as geolocationGetSync } from 'lib/geolocation';
 
 const stripSuffix = (s: string, suffix: string): string => {
     const re = new RegExp(`${suffix}$`);
@@ -23,6 +24,11 @@ export const getBreakpointKey = (): string => {
         default:
             return 'D';
     }
+};
+
+export const isExcludedGeolocation = (): boolean => {
+    const excludedGeos = ['US', 'CA', 'NZ', 'AU'];
+    return excludedGeos.includes(geolocationGetSync());
 };
 
 export const stripMobileSuffix = (s: string): string =>

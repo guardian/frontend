@@ -1,7 +1,6 @@
 // @flow
 
 import config from 'lib/config';
-
 import { getTestVariantId } from 'common/modules/experiments/utils.js';
 
 import {
@@ -24,6 +23,7 @@ import type {
 import {
     getBreakpointKey,
     getRandomIntInclusive,
+    isExcludedGeolocation,
     stripMobileSuffix,
     stripTrailingNumbersAbove1,
 } from 'commercial/modules/prebid/utils';
@@ -262,49 +262,55 @@ const xaxisBidder: PrebidBidder = {
 };
 
 // Dummy bidders for the whitehorse project (https://trello.com/c/KbeBLyYZ)
-const appnexusBidder: PrebidBidder = {
-    name: 'appnexus',
-    bidParams: (slotId: string, sizes: PrebidSize[]): PrebidAppNexusParams => ({
-        placementId: getAppNexusPlacementId(sizes),
-    }),
-};
+const getDummyServerSideBidders = (): Array<PrebidBidder> => {
+    const dummyServerSideBidders: Array<PrebidBidder> = [];
 
-const openxBidder: PrebidBidder = {
-    name: 'openx',
-    bidParams: (): PrebidOpenXParams => {
-        switch (config.get('page.edition')) {
-            case 'UK':
-                return {
-                    delDomain: 'guardian-d.openx.net',
-                    unit: '539997090',
-                };
-            case 'US':
-                return {
-                    delDomain: 'guardian-us-d.openx.net',
-                    unit: '539997087',
-                };
-            default:
-                // AU and rest
-                return {
-                    delDomain: 'guardian-aus-d.openx.net',
-                    unit: '539997046',
-                };
+    const appnexusBidder: PrebidBidder = {
+        name: 'appnexus',
+        bidParams: (
+            slotId: string,
+            sizes: PrebidSize[]
+        ): PrebidAppNexusParams => ({
+            placementId: getAppNexusPlacementId(sizes),
+        }),
+    };
+
+    const openxBidder: PrebidBidder = {
+        name: 'openx',
+        bidParams: (): PrebidOpenXParams => {
+            switch (config.get('page.edition')) {
+                case 'UK':
+                    return {
+                        delDomain: 'guardian-d.openx.net',
+                        unit: '539997090',
+                    };
+                case 'US':
+                    return {
+                        delDomain: 'guardian-us-d.openx.net',
+                        unit: '539997087',
+                    };
+                default:
+                    // AU and rest
+                    return {
+                        delDomain: 'guardian-aus-d.openx.net',
+                        unit: '539997046',
+                    };
+            }
+        },
+    };
+
+    // Experimental. Only 0.01% of the PVs.
+    if (
+        config.get('switches.prebidS2sozone') &&
+        getRandomIntInclusive(1, 10000) === 1
+    ) {
+        dummyServerSideBidders.push(openxBidder);
+        if (!isExcludedGeolocation()) {
+            dummyServerSideBidders.push(appnexusBidder);
         }
-    },
+    }
+    return dummyServerSideBidders;
 };
-
-const dummyServerSideBidders: PrebidBidder[] = [];
-
-// Experimental. Only 0.01% of the PVs.
-if (
-    config.get('switches.prebidS2sozone') &&
-    getRandomIntInclusive(1, 10000) === 1
-) {
-    dummyServerSideBidders.push(appnexusBidder);
-    dummyServerSideBidders.push(openxBidder);
-}
-
-// End of dummy serverside bidders
 
 // There's an IX bidder for every size that the slot can take
 const indexExchangeBidders: (PrebidSize[]) => PrebidBidder[] = slotSizes => {
@@ -338,7 +344,7 @@ if (config.get('switches.prebidXaxis')) {
 const bidders: (PrebidSize[]) => PrebidBidder[] = slotSizes => {
     let combinedBidders = otherBidders.slice();
     combinedBidders = combinedBidders.concat(indexExchangeBidders(slotSizes));
-    combinedBidders = combinedBidders.concat(dummyServerSideBidders);
+    combinedBidders = combinedBidders.concat(getDummyServerSideBidders());
     return combinedBidders;
 };
 
@@ -359,3 +365,5 @@ export const bids: (string, PrebidSize[]) => PrebidBid[] = (
         }
         return bid;
     });
+
+export const _ = { getDummyServerSideBidders };
