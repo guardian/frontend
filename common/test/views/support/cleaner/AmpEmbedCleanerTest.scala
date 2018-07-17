@@ -286,6 +286,7 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
   }
 
   "AmpEmbedCleaner" should "create an amp-soundcloud element with a trackid from the iframe src that has a src url from soundcloud.com" in {
+
     val result: Document = cleanDocumentWithAudioEmbed("element-audio", "", "", "", soundcloudUrlV2)
     result.getElementsByTag("amp-soundcloud").first.attr("data-trackid") should be(soundcloudTrackid.toString)
   }
