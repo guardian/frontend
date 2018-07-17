@@ -527,7 +527,7 @@ case class TagCombiner(
     section = leftTag.metadata.section,
     webTitle = webTitle,
     pagination = pagination,
-    description = Some(DotcomContentType.TagIndex.toString),
+    description = Some(DotcomContentType.TagIndex.name),
     commercial = Some(
       //We only use the left tag for CommercialProperties
       CommercialProperties(
