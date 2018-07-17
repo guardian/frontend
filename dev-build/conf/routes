@@ -5,6 +5,7 @@
 GET            /commercial/test-page                                                                                             commercial.controllers.CreativeTestPage.allComponents(k: List[String])
 
 GET            /reader-revenue/contributions-banner-deploy-log                                                                   controllers.ReaderRevenueController.contributionsBannerDeployLog()
+POST           /reader-revenue/redeploy-contributions-banner                                                                     controllers.ReaderRevenueController.redeployContributionsBanner()
 
 GET            /email-newsletters                                                                                                controllers.SignupPageController.renderNewslettersPage()
 

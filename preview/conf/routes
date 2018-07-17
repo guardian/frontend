@@ -28,6 +28,7 @@ GET        /advertiser-content/:campaignName/:pageName/autoplay.json            
 
 # Reader revenue
 GET       /reader-revenue/contributions-banner-deploy-log                                      controllers.ReaderRevenueController.contributionsBannerDeployLog()
+POST      /reader-revenue/redeploy-contributions-banner                                        controllers.ReaderRevenueController.redeployContributionsBanner()
 
 # Onward
 GET        /most-read.json                                                                     controllers.MostPopularController.render(path = "")
