@@ -47,7 +47,7 @@ const replaceLinks = (links: Element[], newHref: string): void => {
 };
 
 export const newSignInExperiment: ABTest = {
-    id: 'NewSignInExperimentBumpAgain',
+    id: 'NewSignInExperiment2',
     start: '2018-06-07',
     expiry: '2019-06-07',
     author: 'Laura gonzalez',
@@ -67,19 +67,19 @@ export const newSignInExperiment: ABTest = {
                 getSignInLinks().then(links => {
                     replaceLinks(
                         links,
-                        'signin?INTCMP=sign-in-ab-control&from=topnav'
+                        'signin?INTCMP=sign-in-ab-2-control&from=topnav'
                     );
                 });
                 getCommentSignInLinks().then(links => {
                     replaceLinks(
                         links,
-                        'signin?INTCMP=sign-in-ab-control&from=comments-signin'
+                        'signin?INTCMP=sign-in-ab-2-control&from=comments-signin'
                     );
                 });
                 getCommentRegisterLinks().then(links => {
                     replaceLinks(
                         links,
-                        'register?INTCMP=sign-in-ab-control&from=comments-signup'
+                        'register?INTCMP=sign-in-ab-2-control&from=comments-signup'
                     );
                 });
             },
@@ -90,19 +90,19 @@ export const newSignInExperiment: ABTest = {
                 getSignInLinks().then(links => {
                     replaceLinks(
                         links,
-                        'signin/start?INTCMP=sign-in-ab-variant&from=topnav'
+                        'signin/start?INTCMP=sign-in-ab-2-variant&from=topnav'
                     );
                 });
                 getCommentSignInLinks().then(links => {
                     replaceLinks(
                         links,
-                        'signin/start?INTCMP=sign-in-ab-variant&from=comments-signin'
+                        'signin/start?INTCMP=sign-in-ab-2-variant&from=comments-signin'
                     );
                 });
                 getCommentRegisterLinks().then(links => {
                     replaceLinks(
                         links,
-                        'signin/start?INTCMP=sign-in-ab-variant&from=comments-signup'
+                        'signin/start?INTCMP=sign-in-ab-2-variant&from=comments-signup'
                     );
                 });
             },
