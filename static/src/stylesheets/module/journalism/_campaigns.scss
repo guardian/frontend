@@ -30,30 +30,48 @@
 .campaign--snippet .form_submit button {
     color: $brightness-7;
     background-color: $highlight-main;
+    &:hover, :active {
+        background-color: darken($highlight-main, 5%);
+    }
 
     .content--pillar-news & {
         color: $brightness-100;
         background-color: $news-main;
+        &:hover, :active {
+            background-color: darken($news-main, 5%);
+        }
     }
 
     .content--pillar-sport & {
         color: $brightness-100;
         background-color: $sport-dark;
+        &:hover, :active {
+            background-color: darken($sport-dark, 5%);
+        }
     }
 
     .content--pillar-opinion & {
         color: $brightness-100;
         background-color: $opinion-dark;
+        &:hover, :active {
+            background-color: darken($opinion-dark, 5%);
+        }
     }
 
     .content--pillar-arts & {
         color: $brightness-100;
         background-color: $culture-dark;
+        &:hover, :active {
+            background-color: darken($culture-dark, 5%);
+        }
     }
 
     .content--pillar-lifestyle & {
         color: $brightness-100;
         background-color: $lifestyle-main;
+        &:hover, :active {
+            background-color: darken($lifestyle-main, 5%);
+        }
     }
 }
 
@@ -280,6 +298,35 @@
     }
 }
 
+/*---------- SUCCESS STATE TOGGLE -----------------*/
+
+.success.element-campaign .campaign--snippet {
+    .heading {
+        display: none;
+    }
+    button {
+        display: none;
+    }
+    form {
+        display: none;
+    }
+    div.success_box {
+        display: block;
+        color: $brightness-7;
+        padding: 8px 0px 10px 10px;
+        p {
+            font-weight: 700;
+            font-family: $f-sans-serif-text;
+        }
+    }
+}
+
+.element-campaign .campaign--snippet {
+    div.success_box {
+        display: none;
+    }
+}
+
 /*---------- FORM -----------------*/
 
 .campaign--snippet form {
@@ -289,7 +336,15 @@
     [type=radio], [type=checkbox] {
         margin-left: 0;
     }
-
+    .error_box {
+        padding: 0px 0px 10px 23px;
+        color: $news-dark;
+        margin-top: -35px;
+        margin-bottom: 20px;
+        p {
+            font-family: $f-sans-serif-text;
+        }
+    }
 }
 
 .campaign--snippet .form_input {
@@ -309,6 +364,12 @@
             flex: initial;
             margin: 2px 4px 0 13px;
             min-width: 16px;
+            @include mq(tablet) {
+                margin: 3px 4px 0 13px;
+            }
+            @include mq(leftCol) {
+                margin: 5px 4px 0 13px;
+            }
         }
     }
 
@@ -348,6 +409,9 @@
         font-size: 14px;
         line-height: 20px;
         margin: 0 10px;
+    }
+    select {
+        height: 40px;
     }
 
     .form_field_label {
