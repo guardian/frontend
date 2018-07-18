@@ -188,4 +188,9 @@
         border-color: $brightness-46;
     }
 
+    .bullet {
+        &:before {
+            background-color: $brightness-60;
+        }
+    }
 }
