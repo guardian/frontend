@@ -68,7 +68,7 @@ const webPublicationDateAsUrlPart = (): ?string => {
     return null;
 };
 
-// returns 2014/apr/22
+// returns 2014 /apr/22
 const dateFromSlug = (): ?string => {
     const s = config.page.pageId.match(/\d{4}\/\w{3}\/\d{2}/);
     return s ? s[0] : null;

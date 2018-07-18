@@ -204,10 +204,11 @@ const getAppNexusPlacementId = (sizes: PrebidSize[]): string => {
 // because it uses same placement ID for multiple slot sizes and has no other size information
 const getImproveSizeParam = (slotId: string): PrebidImproveSizeParam => {
     const key = stripTrailingNumbersAbove1(stripMobileSuffix(slotId));
-    return key.endsWith('mostpop') ||
-        key.endsWith('comments') ||
-        key.endsWith('inline1') ||
-        (key.endsWith('inline') && !isDesktopArticle)
+    return key &&
+        (key.endsWith('mostpop') ||
+            key.endsWith('comments') ||
+            key.endsWith('inline1') ||
+            (key.endsWith('inline') && !isDesktopArticle))
         ? { w: 300, h: 250 }
         : {};
 };
@@ -221,6 +222,7 @@ const getXaxisPlacementId = (sizes: PrebidSize[]): number => {
 
 const sonobiBidder: PrebidBidder = {
     name: 'sonobi',
+    switchName: 'prebidSonobi',
     bidParams: (slotId: string): PrebidSonobiParams =>
         Object.assign(
             {},
@@ -238,6 +240,7 @@ const sonobiBidder: PrebidBidder = {
 
 const trustXBidder: PrebidBidder = {
     name: 'trustx',
+    switchName: 'prebidTrustx',
     bidParams: (slotId: string): PrebidTrustXParams => ({
         uid: getTrustXAdUnitId(slotId),
     }),
@@ -246,6 +249,7 @@ const trustXBidder: PrebidBidder = {
 
 const improveDigitalBidder: PrebidBidder = {
     name: 'improvedigital',
+    switchName: 'prebidImproveDigital',
     bidParams: (slotId: string, sizes: PrebidSize[]): PrebidImproveParams => ({
         placementId: getImprovePlacementId(sizes),
         size: getImproveSizeParam(slotId),
@@ -255,6 +259,7 @@ const improveDigitalBidder: PrebidBidder = {
 
 const xaxisBidder: PrebidBidder = {
     name: 'xhb',
+    switchName: 'prebidXaxis',
     bidParams: (slotId: string, sizes: PrebidSize[]): PrebidXaxisParams => ({
         placementId: getXaxisPlacementId(sizes),
     }),
@@ -267,6 +272,7 @@ const getDummyServerSideBidders = (): Array<PrebidBidder> => {
 
     const appnexusBidder: PrebidBidder = {
         name: 'appnexus',
+        switchName: 'prebidS2sozone',
         bidParams: (
             slotId: string,
             sizes: PrebidSize[]
@@ -277,6 +283,7 @@ const getDummyServerSideBidders = (): Array<PrebidBidder> => {
 
     const openxBidder: PrebidBidder = {
         name: 'openx',
+        switchName: 'prebidS2sozone',
         bidParams: (): PrebidOpenXParams => {
             switch (config.get('page.edition')) {
                 case 'UK':
@@ -314,45 +321,55 @@ const getDummyServerSideBidders = (): Array<PrebidBidder> => {
 
 // There's an IX bidder for every size that the slot can take
 const indexExchangeBidders: (PrebidSize[]) => PrebidBidder[] = slotSizes => {
-    if (config.get('switches.prebidIndexExchange')) {
-        const indexSiteId = getIndexSiteId();
-        return slotSizes.map(size => ({
-            name: 'ix',
-            bidParams: (): PrebidIndexExchangeParams => ({
-                siteId: indexSiteId,
-                size,
-            }),
-        }));
-    }
-    return [];
+    const indexSiteId = getIndexSiteId();
+    return slotSizes.map(size => ({
+        name: 'ix',
+        switchName: 'prebidIndexExchange',
+        bidParams: (): PrebidIndexExchangeParams => ({
+            siteId: indexSiteId,
+            size,
+        }),
+    }));
 };
 
-const otherBidders: PrebidBidder[] = [];
-if (config.get('switches.prebidSonobi')) {
-    otherBidders.push(sonobiBidder);
-}
-if (config.get('switches.prebidTrustx')) {
-    otherBidders.push(trustXBidder);
-}
-if (config.get('switches.prebidImproveDigital')) {
-    otherBidders.push(improveDigitalBidder);
-}
-if (config.get('switches.prebidXaxis')) {
-    otherBidders.push(xaxisBidder);
-}
+const otherBidders: PrebidBidder[] = [
+    sonobiBidder,
+    trustXBidder,
+    improveDigitalBidder,
+    xaxisBidder,
+];
 
-const bidders: (PrebidSize[]) => PrebidBidder[] = slotSizes => {
-    let combinedBidders = otherBidders.slice();
-    combinedBidders = combinedBidders.concat(indexExchangeBidders(slotSizes));
-    combinedBidders = combinedBidders.concat(getDummyServerSideBidders());
-    return combinedBidders;
+const biddersBeingTested: (PrebidBidder[]) => PrebidBidder[] = allBidders => {
+    const bidderNamesBeingTested = new URL(
+        window.location.href
+    ).searchParams.getAll('pbtest');
+
+    return bidderNamesBeingTested.reduce((bidders, name) => {
+        const bidder = allBidders.find(b => b.name === name);
+        if (bidder) bidders.push(bidder);
+        return bidders;
+    }, []);
+};
+
+const biddersSwitchedOn: (PrebidBidder[]) => PrebidBidder[] = allBidders => {
+    const isSwitchedOn: PrebidBidder => boolean = bidder =>
+        config.get(`switches.${bidder.switchName}`);
+    return allBidders.filter(bidder => isSwitchedOn(bidder));
+};
+
+const currentBidders: (PrebidSize[]) => PrebidBidder[] = slotSizes => {
+    const allBidders = indexExchangeBidders(slotSizes)
+        .concat(otherBidders)
+        .concat(getDummyServerSideBidders());
+    const beingTested = biddersBeingTested(allBidders);
+    return beingTested.length ? beingTested : biddersSwitchedOn(allBidders);
 };
 
 export const bids: (string, PrebidSize[]) => PrebidBid[] = (
     slotId,
     slotSizes
 ) =>
-    bidders(slotSizes).map((bidder: PrebidBidder) => {
+    currentBidders(slotSizes).map((bidder: PrebidBidder) => {
         const bid: PrebidBid = {
             bidder: bidder.name,
             params: bidder.bidParams(slotId, slotSizes),

@@ -51,9 +51,11 @@ class DevParametersHttpRequestHandler(
     "pbjs_debug" // set to true to enable prebid debugging
   )
 
+
   val commercialParams = Seq(
     "ad-unit", // allows overriding of the ad unit
     "adtest", // used to set ad-test cookie from admin domain
+    "pbtest", // used to test Prebid adapters in isolation
     "adrefresh", // force adrefresh to be off with adrefresh=false in the URL
     "google_console", // two params for dfp console
     "googfc",
