@@ -272,6 +272,7 @@ const getDummyServerSideBidders = (): Array<PrebidBidder> => {
             sizes: PrebidSize[]
         ): PrebidAppNexusParams => ({
             placementId: getAppNexusPlacementId(sizes),
+            customData: buildAppNexusTargeting(buildPageTargeting()), // Ok to duplicate call. Lodash 'once' is used.
         }),
     };
 
