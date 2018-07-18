@@ -8,6 +8,11 @@ import type { PrebidBidder } from 'commercial/modules/prebid/types';
 const getRandomIntInclusive: any = getRandomIntInclusive_;
 const { getDummyServerSideBidders } = _;
 
+jest.mock('common/modules/commercial/build-page-targeting', () => ({
+    buildAppNexusTargeting: () => 'someTestAppNexusTargeting',
+    buildPageTargeting: () => 'bla',
+}));
+
 jest.mock('common/modules/commercial/ad-prefs.lib', () => ({
     getAdConsentState: jest.fn(),
 }));
@@ -65,6 +70,7 @@ describe('getDummyServerSideBidders', () => {
         });
         expect(appnexusParams).toEqual({
             placementId: '13144370',
+            customData: 'someTestAppNexusTargeting',
         });
     });
 });
