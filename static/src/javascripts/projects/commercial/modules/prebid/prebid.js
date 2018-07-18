@@ -39,7 +39,7 @@ const s2sConfig = {
     adapter: 'prebidServer',
     is_debug: 'false',
     endpoint: 'https://elb.the-ozone-project.com/openrtb2/auction',
-    syncEndpoint: 'https://prebid.adnxs.com/pbs/v1/cookie_sync',
+    syncEndpoint: 'https://elb.the-ozone-project.com/cookie_sync',
     cookieSet: true,
     cookiesetUrl: 'https://acdn.adnxs.com/cookieset/cs.js',
 };
@@ -76,10 +76,10 @@ class PrebidService {
                 bidderTimeout,
                 priceGranularity,
             },
-            config.switches.enableConsentManagementService
+            config.get('switches.enableConsentManagementService')
                 ? { consentManagement }
                 : {},
-            config.switches.prebidS2sozone ? { s2sConfig } : {}
+            config.get('switches.prebidS2sozone') ? { s2sConfig } : {}
         );
 
         window.pbjs.setConfig(pbjsConfig);
@@ -87,15 +87,15 @@ class PrebidService {
         // gather analytics from 20% (1 in 5) of page views
         const inSample = getRandomIntInclusive(1, 5) === 1;
         if (
-            config.switches.prebidAnalytics &&
-            (inSample || config.page.isDev)
+            config.get('switches.prebidAnalytics') &&
+            (inSample || config.get('page.isDev'))
         ) {
             window.pbjs.enableAnalytics([
                 {
                     provider: 'gu',
                     options: {
-                        ajaxUrl: config.page.ajaxUrl,
-                        pv: config.ophan.pageViewId,
+                        ajaxUrl: config.get('page.ajaxUrl'),
+                        pv: config.get('ophan.pageViewId'),
                     },
                 },
             ]);
@@ -105,14 +105,14 @@ class PrebidService {
         // allows dynamic assignment.
         window.pbjs.bidderSettings = {};
 
-        if (config.switches.prebidSonobi) {
+        if (config.get('switches.prebidSonobi')) {
             window.pbjs.bidderSettings.sonobi = {
                 // for Jetstream deals
                 alwaysUseBid: true,
             };
         }
 
-        if (config.switches.prebidXaxis) {
+        if (config.get('switches.prebidXaxis')) {
             window.pbjs.bidderSettings.xhb = {
                 // for First Look deals
                 alwaysUseBid: true,
