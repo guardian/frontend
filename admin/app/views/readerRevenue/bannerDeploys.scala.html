@@ -1,15 +1,18 @@
-@()(implicit request: RequestHeader, context: model.ApplicationContext)
+@()(implicit request: RequestHeader, context: model.ApplicationContext, flash: Flash)
 
 
+@admin_main("Redeploy Contributions Banner", isAuthed = true) {
 
-@admin_main("Banner deploys", isAuthed = true) {
+    <h1>Contributions Banner Redeploy</h1>
 
-    <h1>Banner Deploys</h1>
+    <p>Click this button to redeploy contributions (engagement) banner</p>
+    <p>NB This will clear the cache</p>
 
-    <p>Click this button to redeploy engagement banner</p>
+    <form action="@controllers.admin.routes.ReaderRevenueAdminController.redeployContributionsBanner()" method="POST">
+        <input class="btn btn-large btn-danger" type="submit" value="Redeploy banner">
+    </form>
 
-    <a class="btn btn-danger" href="@controllers.admin.routes.ReaderRevenueController.redeployBanner()" role="button">
-        Re-deploy!
-    </a>
+    <h1>@flash.get("success")</h1>
+    <h1>@flash.get("failure")</h1>
 
 }

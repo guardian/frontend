@@ -55,9 +55,9 @@ GET         /analytics/abtests                                                  
 GET         /analytics/confidence                                                                controllers.admin.AnalyticsConfidenceController.renderConfidence()
 
 # Reader Revenue
-GET         /reader-revenue                                                                         controllers.admin.ReaderRevenueController.renderReaderRevenueMenu()
-GET         /reader-revenue/banner-deploys                                                          controllers.admin.ReaderRevenueController.renderBannerDeploys()
-GET         /reader-revenue/redeploy-banner                                                         controllers.admin.ReaderRevenueController.redeployBanner()
+GET         /reader-revenue                                                                         controllers.admin.ReaderRevenueAdminController.renderReaderRevenueMenu()
+GET         /reader-revenue/contributions-banner                                                    controllers.admin.ReaderRevenueAdminController.renderContributionsBannerAdmin()
+POST        /reader-revenue/redeploy-contributions-banner                                           controllers.admin.ReaderRevenueAdminController.redeployContributionsBanner()
 
 # Commercial
 GET         /commercial                                                                             controllers.admin.CommercialController.renderCommercialMenu()

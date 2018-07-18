@@ -53,7 +53,7 @@ trait AdminControllers {
   lazy val analyticsConfidenceController = wire[AnalyticsConfidenceController]
   lazy val metricsController = wire[MetricsController]
   lazy val commercialController = wire[CommercialController]
-  lazy val readerRevenueController = wire[ReaderRevenueController]
+  lazy val readerRevenueAdminController = wire[ReaderRevenueAdminController]
   lazy val dfpDataController = wire[DfpDataController]
   lazy val slotController = wire[SlotController]
   lazy val takeoverWithEmptyMPUsController = wire[TakeoverWithEmptyMPUsController]
