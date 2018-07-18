@@ -128,8 +128,6 @@ object BlockAttributes {
     new BlockAttributes(blockAttributes.keyEvent.getOrElse(false), blockAttributes.summary.getOrElse(false), blockAttributes.membershipPlaceholder.map(mp => MembershipPlaceholder(mp.campaignCode)))
 
   implicit val blockAttributes: Writes[BlockAttributes] = Json.writes[BlockAttributes]
-
-
 }
 
 case class BlockAttributes(keyEvent: Boolean, summary: Boolean, membershipPlaceholder: Option[MembershipPlaceholder])
