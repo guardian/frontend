@@ -31,10 +31,10 @@ const lotameConsentData = (isConsenting: boolean) => ({
     targeting: isConsenting,
 });
 
-const getLotameConsent = (): number => local.get(lotameConsentKey);
+const getLotameConsent = (): boolean => local.get(lotameConsentKey);
 
 const setLotameConsent = (consent: boolean) =>
-    local.set(lotameConsentKey, consent ? 1 : 0);
+    local.set(lotameConsentKey, consent);
 
 const lotameCallback = (isConsenting: boolean) => (
     data: LotameSuccess | LotameError
@@ -77,7 +77,7 @@ const getLotameAdConsentFromCmp = (): Promise<any> =>
         }
     });
 
-const init = () => {
+const init = (): void => {
     if ('LOTCC' in window && 'setConsent' in window.LOTCC) {
         getLotameAdConsentFromCmp()
             .then(isConsentingData)
