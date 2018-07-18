@@ -2,7 +2,7 @@
   related: model.RelatedContent,
   cssClass: String = "",
   isPaidContent: Boolean)(implicit request: RequestHeader, context: model.ApplicationContext)
-@import views.support.{ContentFooterContainersLayout, RenderClasses}
+@import views.support.{ContentFooterContainersLayout, RenderClasses, Commercial}
 
 <div class="@RenderClasses(Map(
     "content-footer" -> true,
@@ -14,7 +14,10 @@
     @ContentFooterContainersLayout(content.content, isPaidContent) {
         @fragments.storyPackagePlaceholder(content, related, isPaidContent)
     } {
-        @fragments.onwardPlaceholder(isPaidContent)
+        @if(!(Commercial.isAdFree(request) && isPaidContent)) {
+            @fragments.onwardPlaceholder(isPaidContent)
+        }
+
     } {
         <div class="js-repositioned-comments content__repositioned-comments"></div>
     } {

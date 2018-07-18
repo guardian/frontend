@@ -26,6 +26,8 @@ GET        /advertiser-content/:campaignName/:pageName                          
 GET        /advertiser-content/:campaignName/:pageName/:cType/onward.json                      commercial.controllers.HostedContentController.renderOnwardComponent(campaignName, pageName, cType)
 GET        /advertiser-content/:campaignName/:pageName/autoplay.json                           commercial.controllers.HostedContentController.renderAutoplayComponent(campaignName, pageName)
 
+# Reader revenue
+GET       /reader-revenue/contributions-banner-deploy-log                                      controllers.ReaderRevenueController.contributionsBannerDeployLog()
 
 # Onward
 GET        /most-read.json                                                                     controllers.MostPopularController.render(path = "")
@@ -40,7 +42,6 @@ GET        /related/*path                                                       
 GET        /popular-in-tag/*tag.json                                                           controllers.PopularInTag.render(tag)
 
 GET        /preference/edition/:edition                                                        controllers.ChangeEditionController.render(edition)
-GET        /preference/front-alphas/:optAction                                                 controllers.ChangeAlphaController.render(optAction, page)
 
 GET        /cards/opengraph/*path.json                                                         controllers.CardController.opengraph(path)
 GET        /tagged.json                                                                        controllers.TaggedContentController.renderJson(tag: String)

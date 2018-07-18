@@ -4,6 +4,8 @@
 
 GET            /commercial/test-page                                                                                             commercial.controllers.CreativeTestPage.allComponents(k: List[String])
 
+GET            /reader-revenue/contributions-banner-deploy-log                                                                   controllers.ReaderRevenueController.contributionsBannerDeployLog()
+
 GET            /email-newsletters                                                                                                controllers.SignupPageController.renderNewslettersPage()
 
 GET            /survey/:formName/show                                                                                            controllers.SurveyPageController.renderFormStackSurvey(formName)
@@ -97,7 +99,6 @@ GET            /related/*path                                                   
 GET            /popular-in-tag/*tag.json                                                                                         controllers.PopularInTag.render(tag)
 
 GET            /preference/edition/:edition                                                                                      controllers.ChangeEditionController.render(edition)
-GET            /preference/front-alphas/:optAction                                                                               controllers.ChangeAlphaController.render(optAction, page)
 
 GET            /cards/opengraph/*path.json                                                                                       controllers.CardController.opengraph(path)
 GET            /tagged.json                                                                                                      controllers.TaggedContentController.renderJson(tag: String)

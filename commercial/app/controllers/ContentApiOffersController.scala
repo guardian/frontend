@@ -3,8 +3,7 @@ package commercial.controllers
 import commercial.model.capi.{CapiAgent, CapiMultiple, CapiSingle, Lookup}
 import common.{Edition, ImplicitControllerExecutionContext, JsonComponent, Logging}
 import contentapi.ContentApiClient
-import layout.PaidCard
-import model.{Cached, ContentType, NoCache}
+import model.{Cached, ContentType}
 import play.api.mvc._
 
 import scala.concurrent.Future

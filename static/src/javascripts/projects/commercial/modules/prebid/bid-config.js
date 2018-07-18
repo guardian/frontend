@@ -1,7 +1,6 @@
 // @flow
 
 import config from 'lib/config';
-
 import { getTestVariantId } from 'common/modules/experiments/utils.js';
 
 import {
@@ -24,12 +23,13 @@ import type {
 import {
     getBreakpointKey,
     getRandomIntInclusive,
+    isExcludedGeolocation,
     stripMobileSuffix,
     stripTrailingNumbersAbove1,
 } from 'commercial/modules/prebid/utils';
 
 const isDesktopArticle =
-    getBreakpointKey() === 'D' && config.page.contentType === 'Article';
+    getBreakpointKey() === 'D' && config.get('page.contentType') === 'Article';
 
 const getTrustXAdUnitId = (slotId: string): string => {
     switch (stripMobileSuffix(slotId)) {
@@ -81,9 +81,9 @@ const getTrustXAdUnitId = (slotId: string): string => {
 };
 
 const getIndexSiteId = (): string => {
-    const site = config.page.pbIndexSites.find(
-        s => s.bp === getBreakpointKey()
-    );
+    const site = config
+        .get('page.pbIndexSites')
+        .find(s => s.bp === getBreakpointKey());
     return site && site.id ? site.id.toString() : '';
 };
 
@@ -109,7 +109,7 @@ const containsLeaderboardOrBillboard = (sizes: PrebidSize[]): boolean =>
     containsLeaderboard(sizes) || containsBillboard(sizes);
 
 const getImprovePlacementId = (sizes: PrebidSize[]): number => {
-    switch (config.page.edition) {
+    switch (config.get('page.edition')) {
         case 'UK':
             switch (getBreakpointKey()) {
                 case 'D':
@@ -168,7 +168,7 @@ const getImprovePlacementId = (sizes: PrebidSize[]): number => {
 };
 
 const getAppNexusPlacementId = (sizes: PrebidSize[]): string => {
-    switch (config.page.edition) {
+    switch (config.get('page.edition')) {
         case 'UK':
             switch (getBreakpointKey()) {
                 case 'D':
@@ -178,12 +178,12 @@ const getAppNexusPlacementId = (sizes: PrebidSize[]): string => {
                     if (containsLeaderboardOrBillboard(sizes)) {
                         return '13366615';
                     }
-                    return '';
+                    return '13144370';
                 case 'M':
                     if (containsMpu(sizes)) {
                         return '13366904';
                     }
-                    return '';
+                    return '13144370';
                 case 'T':
                     if (containsMpu(sizes)) {
                         return '13366913';
@@ -191,12 +191,12 @@ const getAppNexusPlacementId = (sizes: PrebidSize[]): string => {
                     if (containsLeaderboard(sizes)) {
                         return '13366916';
                     }
-                    return '';
+                    return '13144370';
                 default:
-                    return '';
+                    return '13144370';
             }
         default:
-            return '';
+            return '13144370';
     }
 };
 
@@ -225,10 +225,10 @@ const sonobiBidder: PrebidBidder = {
         Object.assign(
             {},
             {
-                ad_unit: config.page.adUnit,
+                ad_unit: config.get('page.adUnit'),
                 dom_id: slotId,
                 appNexusTargeting: buildAppNexusTargeting(buildPageTargeting()),
-                pageViewId: config.ophan.pageViewId,
+                pageViewId: config.get('ophan.pageViewId'),
             },
             getTestVariantId('CommercialPrebidSafeframe') === 'variant'
                 ? { render: 'safeframe' }
@@ -262,50 +262,59 @@ const xaxisBidder: PrebidBidder = {
 };
 
 // Dummy bidders for the whitehorse project (https://trello.com/c/KbeBLyYZ)
-const appnexusBidder: PrebidBidder = {
-    name: 'appnexus',
-    bidParams: (slotId: string, sizes: PrebidSize[]): PrebidAppNexusParams => ({
-        placementId: getAppNexusPlacementId(sizes),
-    }),
-};
+const getDummyServerSideBidders = (): Array<PrebidBidder> => {
+    const dummyServerSideBidders: Array<PrebidBidder> = [];
 
-const openxBidder: PrebidBidder = {
-    name: 'openx',
-    bidParams: (): PrebidOpenXParams => {
-        switch (config.page.edition) {
-            case 'UK':
-                return {
-                    delDomain: 'guardian-d.openx.net',
-                    unit: '539997090',
-                };
-            case 'US':
-                return {
-                    delDomain: 'guardian-us-d.openx.net',
-                    unit: '539997087',
-                };
-            default:
-                // AU and rest
-                return {
-                    delDomain: 'guardian-aus-d.openx.net',
-                    unit: '539997046',
-                };
+    const appnexusBidder: PrebidBidder = {
+        name: 'appnexus',
+        bidParams: (
+            slotId: string,
+            sizes: PrebidSize[]
+        ): PrebidAppNexusParams => ({
+            placementId: getAppNexusPlacementId(sizes),
+        }),
+    };
+
+    const openxBidder: PrebidBidder = {
+        name: 'openx',
+        bidParams: (): PrebidOpenXParams => {
+            switch (config.get('page.edition')) {
+                case 'UK':
+                    return {
+                        delDomain: 'guardian-d.openx.net',
+                        unit: '539997090',
+                    };
+                case 'US':
+                    return {
+                        delDomain: 'guardian-us-d.openx.net',
+                        unit: '539997087',
+                    };
+                default:
+                    // AU and rest
+                    return {
+                        delDomain: 'guardian-aus-d.openx.net',
+                        unit: '539997046',
+                    };
+            }
+        },
+    };
+
+    // Experimental. Only 0.01% of the PVs.
+    if (
+        config.get('switches.prebidS2sozone') &&
+        getRandomIntInclusive(1, 10000) === 1
+    ) {
+        dummyServerSideBidders.push(openxBidder);
+        if (!isExcludedGeolocation()) {
+            dummyServerSideBidders.push(appnexusBidder);
         }
-    },
+    }
+    return dummyServerSideBidders;
 };
-
-const dummyServerSideBidders: PrebidBidder[] = [];
-
-// Experimental. Only 0.01% of the PVs.
-if (config.switches.prebidS2sozone && getRandomIntInclusive(1, 10000) === 1) {
-    dummyServerSideBidders.push(appnexusBidder);
-    dummyServerSideBidders.push(openxBidder);
-}
-
-// End of dummy serverside bidders
 
 // There's an IX bidder for every size that the slot can take
 const indexExchangeBidders: (PrebidSize[]) => PrebidBidder[] = slotSizes => {
-    if (config.switches.prebidIndexExchange) {
+    if (config.get('switches.prebidIndexExchange')) {
         const indexSiteId = getIndexSiteId();
         return slotSizes.map(size => ({
             name: 'ix',
@@ -319,23 +328,23 @@ const indexExchangeBidders: (PrebidSize[]) => PrebidBidder[] = slotSizes => {
 };
 
 const otherBidders: PrebidBidder[] = [];
-if (config.switches.prebidSonobi) {
+if (config.get('switches.prebidSonobi')) {
     otherBidders.push(sonobiBidder);
 }
-if (config.switches.prebidTrustx) {
+if (config.get('switches.prebidTrustx')) {
     otherBidders.push(trustXBidder);
 }
-if (config.switches.prebidImproveDigital) {
+if (config.get('switches.prebidImproveDigital')) {
     otherBidders.push(improveDigitalBidder);
 }
-if (config.switches.prebidXaxis) {
+if (config.get('switches.prebidXaxis')) {
     otherBidders.push(xaxisBidder);
 }
 
 const bidders: (PrebidSize[]) => PrebidBidder[] = slotSizes => {
     let combinedBidders = otherBidders.slice();
     combinedBidders = combinedBidders.concat(indexExchangeBidders(slotSizes));
-    combinedBidders = combinedBidders.concat(dummyServerSideBidders);
+    combinedBidders = combinedBidders.concat(getDummyServerSideBidders());
     return combinedBidders;
 };
 
@@ -356,3 +365,5 @@ export const bids: (string, PrebidSize[]) => PrebidBid[] = (
         }
         return bid;
     });
+
+export const _ = { getDummyServerSideBidders };
