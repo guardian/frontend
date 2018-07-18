@@ -1,5 +1,3 @@
-@(amp: Boolean = false)(implicit page: model.Page, request: RequestHeader, context: model.ApplicationContext)
-
 @import common.{AnalyticsHost, _}
 @import conf.{Configuration, _}
 @import model.meta.LinkedData
@@ -7,6 +5,19 @@
 @import views.support.{SeoThumbnail, StripHtmlTags}
 @import conf.switches.Switches.{ComscoreSwitch, SmartAppBanner}
 @import play.api.Mode.Dev
+
+@(amp: Boolean = false)(implicit page: model.Page, request: RequestHeader, context: model.ApplicationContext)
+
+@openGraphMeta(properties: Map[String, String]) = {
+    @properties.map{ case (key, value) =>
+        @if(key == "og:image") {
+            @* Image url contains query parameters joined with & which must not be escaped *@
+            <meta property="@key" content="@Html(value)" />
+        } else {
+            <meta property="@key" content="@value" />
+        }
+    }
+}
 
 <meta charset="utf-8">
 @* Critical meta data that have an impact on rendering speed *@
@@ -105,18 +116,15 @@
             <meta name="keywords" content="@c.item.tags.keywords.map(_.name).mkString(",")" />
             <meta name="news_keywords" content="@c.item.tags.keywords.take(10).map(_.name).mkString(",")" />
         }
-        @c.getOpenGraphProperties.map { case (key, value) =>
+        @openGraphMeta(c.getOpenGraphProperties)
 
-            <meta property="@key" content="@Html(value)" />
-        }
         @c.getTwitterProperties.map{ case (key, value) =>
             <meta name="@key" content="@value" />
         }
     }
     case s: model.StandalonePage => {
-        @s.getOpenGraphProperties.map{ case (key, value) =>
-            <meta property="@key" content="@Html(value)" />
-        }
+        @openGraphMeta(s.getOpenGraphProperties)
+
         @s.getTwitterProperties.map{ case (key, value) =>
             <meta name="@key" content="@value" />
         }
