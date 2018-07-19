@@ -1,15 +1,12 @@
 .paidfor-meta {
-    @include f-textSans;
-    background: $labs-main;
+    @include fs-textSans(3);
     color: $brightness-7;
-    font-size: get-font-size(textSans, 2);
 }
 
 
 .paidfor-meta__label,
 .paidfor-meta__more {
     display: inline-block;
-    font-size: get-font-size(textSans, 2);
 }
 
 .paidfor-meta__label,
@@ -26,25 +23,9 @@
 }
 
 .paidfor-label .popup__toggle {
-    border-left: 1px solid rgba(0, 0, 0, .2);
-    border-right: 1px solid rgba(0, 0, 0, .2);
+    border-left: 1px solid $labs-dark;
+    border-right: 1px solid $labs-dark;
     display: inline-block;
-
-    &:before,
-    &:after {
-        content: none;
-    }
-
-    svg {
-        width: 12px;
-        height: 9px;
-        fill: $brightness-7;
-
-    }
-
-    &.is-active svg {
-        transform: rotate(180deg);
-    }
 
     .commercial__header & {
         border: 0;

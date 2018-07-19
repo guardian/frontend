@@ -4,7 +4,7 @@
         display: block;
     }
 
-    & ~ .top-bar__item--dropdown {
+    & ~ .popup__toggle {
         color: $brightness-7;
 
         &:hover {
@@ -19,7 +19,7 @@
     top: $gs-baseline * 2 + $gs-baseline / 2;
     right: 0;
     width: $gs-column-width * 3 + $gs-gutter;
-    background-color: #ffffff;
+    background-color: $brightness-100;
     border-radius: $gs-baseline / 4;
     padding: $gs-baseline / 2 0;
     margin: 0;
