@@ -83,19 +83,19 @@ $control-offset: 36 + $gs-gutter/2;
 
     // disclosure arrow
     &:after {
-      content: '';
-      display: inline-block;
-      width: 4px;
-      height: 4px;
-      transform: translateY(-2px) rotate(45deg);
-      border: 1px solid currentColor;
-      border-left: transparent;
-      border-top: transparent;
-      margin-left: 2px;
-      vertical-align: middle;
-      // Prevents wobble on webkit browsers
-      -webkit-backface-visibility: hidden;
-      transition: transform 250ms ease-out;
+        content: '';
+        display: inline-block;
+        width: 4px;
+        height: 4px;
+        transform: translateY(-2px) rotate(45deg);
+        border: 1px solid currentColor;
+        border-left: transparent;
+        border-top: transparent;
+        margin-left: 2px;
+        vertical-align: middle;
+        // Prevents wobble on webkit browsers
+        -webkit-backface-visibility: hidden;
+        transition: transform 250ms ease-out;
     }
 
     &:hover,
