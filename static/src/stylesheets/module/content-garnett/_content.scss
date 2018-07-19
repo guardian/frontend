@@ -1071,7 +1071,7 @@
     .ad-slot__label,
     .ad-slot--inline {
         background-color: $brightness-86;
-        border-top: 0;
+        border-top-color: $brightness-60;
         color: $brightness-46;
     }
     .content__section-label {
@@ -1082,7 +1082,7 @@
         }
     }
     .meta__extras {
-        border-color: $brightness-20;
+        border-color: $brightness-60;
     }
 
     &.tonal--tone-media {
@@ -1124,7 +1124,7 @@
         .meta__numbers,
         .meta__social,
         .meta__number + .meta__number {
-            border-color: $brightness-86;
+            border-color: $brightness-60;
         }
         .byline {
             .tone-colour {

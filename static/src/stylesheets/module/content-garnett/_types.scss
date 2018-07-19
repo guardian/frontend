@@ -1286,12 +1286,7 @@ $quote-mark: 35px;
     }
 
     .content__meta-container {
-        @include multiline(3, $brightness-46, top);
-    }
-
-    .social-icon,
-    .block-share__item {
-        border-color: $brightness-46;
+        @include multiline(3, $brightness-60, top);
     }
 
     .content__article-body::before {
