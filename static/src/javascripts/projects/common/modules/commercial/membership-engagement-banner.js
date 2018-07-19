@@ -1,7 +1,6 @@
 // @flow
 import config from 'lib/config';
 import { local } from 'lib/storage';
-import { adblockInUse } from 'lib/detect';
 import { Message } from 'common/modules/ui/message';
 import mediator from 'lib/mediator';
 import { membershipEngagementBannerTests } from 'common/modules/experiments/tests/membership-engagement-banner-tests';
@@ -23,7 +22,7 @@ import { acquisitionsBannerControlTemplate } from 'common/modules/commercial/tem
 const messageCode = 'engagement-banner-2018-07-13';
 
 const canDisplayMembershipEngagementBanner = (): Promise<boolean> =>
-    adblockInUse.then(adblockUsed => !adblockUsed && shouldShowReaderRevenue());
+    Promise.resolve(shouldShowReaderRevenue());
 
 const getUserTest = (): ?AcquisitionsABTest =>
     membershipEngagementBannerTests.find(
