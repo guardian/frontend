@@ -156,6 +156,10 @@
     > li {
         @include faux-bullet-point($right-space: 4px);
 
+        .paid-content & {
+            @include faux-bullet-point($brightness-60, $right-space: 4px);
+        }
+
         > p:first-child { // this stops line breaking for the following bullet point format: <ul><li><p>text</p></li></ul>
             display: inline;
         }
