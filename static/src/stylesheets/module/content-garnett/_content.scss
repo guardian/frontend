@@ -1019,6 +1019,9 @@
     a.in-body-link--immersive {
         color: $labs-main;
     }
+    .inline-expand-image {
+      fill: $brightness-100;
+    }
     &.content--article,
     &.content--interactive,
     &.tonal--tone-media {
