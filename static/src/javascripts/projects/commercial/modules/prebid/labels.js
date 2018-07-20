@@ -55,7 +55,8 @@ switch (getCookie('GU_geo_continent')) {
     // do nothing
 }
 
-if (config.page.isDev || getRandomIntInclusive(1, 10) === 1)
+// todo put back to 1 in 10
+if (config.page.isDev || getRandomIntInclusive(1, 2) === 1)
     bidLabels.push('deal-FirstLook');
 
 export const labels: PrebidLabel[] = slotLabels.concat(bidLabels);
