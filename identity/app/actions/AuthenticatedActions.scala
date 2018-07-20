@@ -106,7 +106,7 @@ class AuthenticatedActions(
       override val executionContext = ec
 
       def refine[A](request: AuthRequest[A]) =
-        identityApiClient.me(request.user.auth).map {
+        identityApiClient.me(request.user.auth, idRequestParser(request).trackingData).map {
           _.fold(
             errors => {
               logger.warn(s"Failed to look up logged-in user: $errors")

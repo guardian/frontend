@@ -52,7 +52,7 @@ trait EmailsTab
   def deleteAllSubscriptionsAndMarketingConsents(): Action[AnyContent] =
     csrfCheck {
       recentFullAuthWithIdapiUserAction.async { implicit request =>
-        identityApiClient.unsubscribeFromAllEmailsAndOptoutMarketingConsents(request.user.auth).map {
+        identityApiClient.unsubscribeFromAllEmailsAndOptoutMarketingConsents(request.user.auth, idRequestParser(request).trackingData).map {
           case Right(_) => NoContent
           case Left(errors) =>
             logger.error(s"Failed to unsubscribe User ${request.user.id} from all")

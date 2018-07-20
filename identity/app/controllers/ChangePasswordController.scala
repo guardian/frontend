@@ -64,7 +64,7 @@ class ChangePasswordController(
         val form = passwordForm.bindFromFlash.getOrElse(passwordForm)
 
         val idRequest = idRequestParser(request)
-        api.passwordExists(request.user.auth) map {
+        api.passwordExists(request.user.auth, idRequest.trackingData) map {
           result =>
             val pwdExists = result.right.toOption exists {_ == true}
             NoCache(Ok(

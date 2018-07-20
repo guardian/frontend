@@ -5,7 +5,7 @@ import java.net.URLEncoder
 import actions.AuthenticatedActions.AuthRequest
 import com.gu.identity.model.{StatusFields, Subscriber, User}
 import conf.switches.Switches
-import idapiclient.{Auth, IdApiClient, ScGuRp, ScGuU}
+import idapiclient._
 import org.mockito.Mockito._
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.mockito.MockitoSugar
@@ -15,7 +15,6 @@ import play.api.mvc.{AnyContent, _}
 import play.api.test.{FakeRequest, Helpers, Injecting}
 import services.{ProfileRedirect, _}
 import test.{WithTestExecutionContext, WithTestIdConfig}
-import idapiclient.Response
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.test.Helpers._
 
@@ -67,7 +66,7 @@ class AuthenticatedActionsTest extends WordSpecLike with MockitoSugar with Scala
       def callMock: AuthRequest[AnyContent] => Result = _ => mockFunc.apply(1)
 
       when(authService.fullyAuthenticatedUser(any[RequestHeader])).thenReturn(Some(recentlyAuthedUser))
-      when(client.me(any[Auth])).thenReturn(Future(Right(user)))
+      when(client.me(any[Auth], any[TrackingData])).thenReturn(Future(Right(user)))
       when(mockFunc.apply(1)) thenReturn mock[Result]
       when(profileRedirectService.toProfileRedirect(any[User], any[RequestHeader])).thenReturn(NoRedirect)
 
@@ -104,7 +103,7 @@ class AuthenticatedActionsTest extends WordSpecLike with MockitoSugar with Scala
 
       when(authService.fullyAuthenticatedUser(any[RequestHeader])).thenReturn(None)
       when(authService.consentCookieAuthenticatedUser(any[RequestHeader])).thenReturn(Some(userWithRpCookie))
-      when(client.me(any[Auth])).thenReturn(Future(Right(user)))
+      when(client.me(any[Auth], any[TrackingData])).thenReturn(Future(Right(user)))
       when(profileRedirectService.toConsentsRedirect(any[User], any[RequestHeader])).thenReturn(NoRedirect)
 
       val mockFunc = mock[Int => Result]
@@ -123,7 +122,7 @@ class AuthenticatedActionsTest extends WordSpecLike with MockitoSugar with Scala
 
       when(authService.fullyAuthenticatedUser(any[RequestHeader])).thenReturn(Some(recentlyAuthedUser))
       when(authService.consentCookieAuthenticatedUser(any[RequestHeader])).thenReturn(None)
-      when(client.me(any[Auth])).thenReturn(Future(Right(user)))
+      when(client.me(any[Auth], any[TrackingData])).thenReturn(Future(Right(user)))
       when(profileRedirectService.toConsentsRedirect(any[User], any[RequestHeader])).thenReturn(NoRedirect)
 
       val mockFunc = mock[Int => Result]

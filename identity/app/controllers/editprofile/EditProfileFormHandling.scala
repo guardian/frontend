@@ -71,7 +71,7 @@ trait EditProfileFormHandling extends EditProfileControllerComponents {
           formWithErrors => profileFormsView(page, boundProfileForms, userDO),
           success = {
             case formData: AccountFormData if formData.deleteTelephone =>
-              identityApiClient.deleteTelephone(userDO.auth) flatMap {
+              identityApiClient.deleteTelephone(userDO.auth, idRequestParser(request).trackingData) flatMap {
                 case Left(errors) => profileFormsView(page, boundProfileForms.withErrors(errors), userDO)
 
                 case Right(_) => {
