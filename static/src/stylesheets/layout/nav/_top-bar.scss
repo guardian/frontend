@@ -28,48 +28,6 @@
     }
 }
 
-.top-bar__item--dropdown {
-    cursor: pointer;
-
-    &:after {
-        content: '';
-        display: inline-block;
-        width: 4px;
-        height: 4px;
-        transform: translateY(-2px) rotate(45deg);
-        border: 1px solid currentColor;
-        border-left: transparent;
-        border-top: transparent;
-        margin-left: 2px;
-        vertical-align: middle;
-        // Prevents wobble on webkit browsers
-        -webkit-backface-visibility: hidden;
-        transition: transform 250ms ease-out;
-    }
-
-    &:hover,
-    &:focus {
-        text-decoration: none;
-
-        &:after {
-            transform: translateY(0) rotate(45deg);
-        }
-    }
-
-    &.is-active,
-    &[aria-expanded=true] {
-        &:after {
-            transform: translateY(1px) rotate(-135deg);
-        }
-
-        &:hover {
-            &:after {
-                transform: translateY(-1px) rotate(-135deg);
-            }
-        }
-    }
-}
-
 .top-bar__item--cta {
     color: $nav-faded;
     font-family: $f-serif-headline;
