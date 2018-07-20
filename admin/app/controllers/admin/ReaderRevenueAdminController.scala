@@ -10,11 +10,13 @@ import play.api.mvc._
 import services.S3
 import conf.Configuration.readerRevenue._
 import org.apache.commons.codec.digest.DigestUtils
+import play.api.libs.ws.WSClient
 import purge.CdnPurge
 
+import scala.concurrent.Future
 import scala.util.Try
 
-class ReaderRevenueAdminController(val controllerComponents: ControllerComponents)(implicit context: ApplicationContext)
+class ReaderRevenueAdminController(wsClient: WSClient, val controllerComponents: ControllerComponents)(implicit context: ApplicationContext)
 
    extends BaseController with Logging with ImplicitControllerExecutionContext {
 
@@ -26,13 +28,14 @@ class ReaderRevenueAdminController(val controllerComponents: ControllerComponent
     NoCache(Ok(views.html.readerRevenue.bannerDeploys()))
   }
 
-  def redeployContributionsBanner: Action[AnyContent] = Action { implicit request =>
+  def redeployContributionsBanner: Action[AnyContent] = Action.async { implicit request =>
     val requester: String = UserIdentity.fromRequest(request) map(_.fullName) getOrElse "unknown user (dev-build?)"
     val time = DateTime.now
     val jsonLog: JsValue = Json.toJson(ContributionsBannerDeploy(time))
     val message = s"Contributions banner redeploy by $requester at ${time.toString}}"
 
-    Try(updateContributionsBannerDeployLog(jsonLog.toString)).fold( _ => updateFailed(message, "failed to upload timestamp to s3") , _ => updateSuccessful(message))
+    Try(updateContributionsBannerDeployLog(jsonLog.toString))
+      .fold( e => Future.successful(updateFailed(message, s"upload timestamp to s3: ${e.getLocalizedMessage}")) , _ => updateSuccessful(message))
   }
 
   private def updateContributionsBannerDeployLog(bannerDeployLogJson: String): Unit = {
@@ -40,11 +43,14 @@ class ReaderRevenueAdminController(val controllerComponents: ControllerComponent
     S3.putPublic(contributionsBannerDeployLogKey, bannerDeployLogJson, defaultJsonEncoding)
   }
 
-  private def updateSuccessful(message: String): Result = {
+  private def updateSuccessful(message: String): Future[Result] = {
+    val path = "reader-revenue/redeploy-contributions-banner"
+
     new CdnPurge(wsClient)
-      .soft(DigestUtils.md5Hex(urlToDecache.getPath)).map(_ => bannerRedploySuccessful(message))
-      .recover { case e => updateFailed(message, "cache purge request failed") }
-      .map(_).getOrElse(updateFailed(message, "cache purge didn't happen"))
+      .soft(DigestUtils.md5Hex(path))
+      .map(_ => bannerRedploySuccessful(message))
+      .recover { case e => updateFailed(message, s"cache purge request: ${e.getLocalizedMessage}") }
+
   }
 
   private def bannerRedploySuccessful(message: String): Result = {
