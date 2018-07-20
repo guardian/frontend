@@ -3,6 +3,7 @@ package frontpress
 import java.util.concurrent.atomic.AtomicInteger
 
 import com.amazonaws.services.sqs.model.ReceiveMessageRequest
+import com.gu.contentapi.client.model.ContentApiError
 import common.{JsonMessageQueue, Logging, Message}
 import org.joda.time.DateTime
 import play.api.libs.json.Reads
@@ -114,7 +115,9 @@ abstract class JsonQueueWorker[A: Reads]()(implicit executionContext: ExecutionC
     }
 
     getRequest.failed.foreach {
-      error: Throwable => log.error("Encountered error receiving message from queue", error)
+      case error: ContentApiError =>
+        log.error(s"Encountered content api error receiving message from queue: ${error.httpMessage} status: ${error.httpStatus}", error)
+      case error: Throwable => log.error("Encountered error receiving message from queue", error)
     }
 
     getRequest.map(_ => ())
