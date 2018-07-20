@@ -66,7 +66,7 @@ import scala.concurrent.Future
     )
 
     when(authService.fullyAuthenticatedUser(MockitoMatchers.any[RequestHeader])) thenReturn Some(authenticatedUser)
-    when(api.me(testAuth, any[TrackingData])) thenReturn Future.successful(Right(user))
+    when(api.me(MockitoMatchers.eq(testAuth), any[TrackingData])) thenReturn Future.successful(Right(user))
 
     when(idRequestParser.apply(MockitoMatchers.any[RequestHeader])) thenReturn idRequest
     when(idRequest.trackingData) thenReturn trackingData
