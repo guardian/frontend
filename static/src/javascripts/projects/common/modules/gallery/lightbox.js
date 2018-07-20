@@ -82,7 +82,6 @@ class GalleryLightbox {
     bodyScrollPosition: number;
     endslateEl: bonzo;
     endslate: Object;
-    currentImageId: string;
     navigationDirection: string;
 
     constructor(): void {
@@ -327,17 +326,13 @@ class GalleryLightbox {
         if (galleryJson.images.length < 2) {
             // store current path with leading slash removed
             const currentId = window.location.pathname.substring(1);
-            this.currentImageId = currentId;
             // fetch next and previous images and load them
             return Promise.all([this.loadNextOrPrevious(currentId, 'forwards'), this.loadNextOrPrevious(currentId, 'backwards')])
                 .then((result) => { return {next: result[0].map(e => e.images[0]), previous: result[1].map(e => e.images[0])}})
                 .then((nextPrevJson) => {
-                    console.log(nextPrevJson)
-                    // const test1 = nextPrevJson.next.map(e => e.images[0])
-                    // console.log(test1);
-                    const newIm = nextPrevJson.previous.concat(galleryJson.images, nextPrevJson.next);
-                    console.log("combinedall", newIm);
-                    galleryJson.images= newIm;
+                    const allImages = nextPrevJson.previous.concat(galleryJson.images, nextPrevJson.next);
+                    console.log("combinedall", allImages);
+                    galleryJson.images= allImages;
                     this.index = nextPrevJson.previous.length + 1;
                     this.loadOrOpen(galleryJson)
                 });
@@ -347,22 +342,12 @@ class GalleryLightbox {
     }
 
     loadHtml(json: GalleryJson): void {
-        if (this.images) {
-            this.images.push(json.images[0]);
-            if (this.navigationDirection === 'forwards') {
-                const imagesHtml = this.generateImgHTML(this.images[0], this.images.length);
-                this.$contentEl.append(imagesHtml);
-            } else {
-                const imagesHtml = this.generateImgHTML(this.images[0], 0);
-                this.$contentEl.prepend(imagesHtml);
-            }
-        } else {
-            this.images = json.images || [];
-            const imagesHtml = json.images
-                .map((img, i) => this.generateImgHTML(img, i + 1))
-                .join('');
-            this.$contentEl.html(imagesHtml);
-        }
+
+        this.images = json.images || [];
+        const imagesHtml = json.images
+            .map((img, i) => this.generateImgHTML(img, i + 1))
+            .join('');
+        this.$contentEl.html(imagesHtml);
         this.$images = $(
             '.js-gallery-lightbox-img',
             this.$contentEl[0]
@@ -525,21 +510,6 @@ class GalleryLightbox {
                 },
             },
         },
-        fetchImage: {
-            enter(): void {
-                this.loadNextOrPrevious(this.currentImageId).then((nextjson) => {
-                    this.currentImageId = nextjson.id;
-                    this.trigger('loadJson', nextjson);
-
-                })
-            },
-            events: {
-                loadJson(json: GalleryJson): void {
-                    this.loadHtml(json);
-                    this.state = 'image';
-                }
-            }
-        },
 
         image: {
             enter(): void {
@@ -594,10 +564,6 @@ class GalleryLightbox {
                             this.index = 1;
                             this.reloadState = true;
                         }
-                    } else if (this.index+1 === this.images.length ) { // and is image
-                        this.navigationDirection = 'forwards';
-                        this.state = 'fetchImage';
-                        this.index += 1;
                     } else {
                         this.index += 1;
                         this.reloadState = true;
@@ -614,11 +580,6 @@ class GalleryLightbox {
                             this.index = this.images.length;
                             this.reloadState = true;
                         }
-                    } else if (this.index - 1 === 1) {
-                        console.log("GOING BACKWARDS");
-                        this.navigationDirection = 'backwards';
-                        this.state = 'fetchImage';
-                        this.index -=1;
                     } else {
                         this.index -= 1;
                         this.reloadState = true;
