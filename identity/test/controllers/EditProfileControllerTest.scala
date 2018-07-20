@@ -14,6 +14,7 @@ import controllers.editprofile.EditProfileController
 import org.joda.time.format.ISODateTimeFormat
 import org.mockito.Mockito._
 import org.mockito.{ArgumentCaptor, Matchers => MockitoMatchers}
+import org.mockito.Matchers.any
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.{DoNotDiscover, Matchers, OptionValues, WordSpec}
 import org.scalatest.mockito.MockitoSugar
@@ -65,7 +66,7 @@ import scala.concurrent.Future
     )
 
     when(authService.fullyAuthenticatedUser(MockitoMatchers.any[RequestHeader])) thenReturn Some(authenticatedUser)
-    when(api.me(testAuth)) thenReturn Future.successful(Right(user))
+    when(api.me(testAuth, any[TrackingData])) thenReturn Future.successful(Right(user))
 
     when(idRequestParser.apply(MockitoMatchers.any[RequestHeader])) thenReturn idRequest
     when(idRequest.trackingData) thenReturn trackingData
@@ -334,13 +335,13 @@ import scala.concurrent.Future
       "delete a telephone number with a delete telephone number request" in new EditProfileFixture {
         val fakeRequest = createFakeRequestDeleteTelephoneNumber
 
-        when(api.deleteTelephone(MockitoMatchers.any[Auth]))
+        when(api.deleteTelephone(MockitoMatchers.any[Auth], any[TrackingData]))
           .thenReturn(Future.successful(Right(())))
 
         val result = controller.submitAccountForm().apply(fakeRequest)
         status(result) should be(200)
 
-        verify(api).deleteTelephone(MockitoMatchers.eq(testAuth))
+        verify(api).deleteTelephone(MockitoMatchers.eq(testAuth), any[TrackingData])
       }
 
       "save the user on the ID API without telephone number request" in new EditProfileFixture {
