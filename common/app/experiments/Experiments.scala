@@ -10,7 +10,6 @@ object ActiveExperiments extends ExperimentsDefinition {
     AudioPageChange,
     CommercialClientLogging,
     OrielParticipation,
-    LotameParticipation,
     OldTLSSupportDeprecation,
   )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
@@ -30,14 +29,6 @@ object OrielParticipation extends Experiment(
   owners = Seq(Owner.withGithub("janua")),
   sellByDate = new LocalDate(2018, 9, 12),
   participationGroup = Perc20A
-)
-
-object LotameParticipation extends Experiment(
-  name = "lotame-participation",
-  description = "A slice of the audience who will participate in Lotame tracking",
-  owners = Seq(Owner.withGithub("janua")),
-  sellByDate = new LocalDate(2018, 9, 12),
-  participationGroup = Perc1D
 )
 
 object OldTLSSupportDeprecation extends Experiment(

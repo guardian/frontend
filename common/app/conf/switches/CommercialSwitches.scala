@@ -307,6 +307,16 @@ trait CommercialSwitches {
     exposeClientSide = false
    )
 
+   val LotameSwitch: Switch = Switch(
+     group = Commercial,
+     name = "lotame",
+     description = "When this is switched on the Lotame script will be included on the page",
+     owners = group(Commercial),
+     safeState = Off,
+     sellByDate = never,
+     exposeClientSide = false
+   )
+
   val prebidSwitch: Switch = Switch(
     group = Commercial,
     name = "prebid-header-bidding",
