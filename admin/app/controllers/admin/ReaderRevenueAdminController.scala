@@ -44,7 +44,7 @@ class ReaderRevenueAdminController(wsClient: WSClient, val controllerComponents:
   }
 
   private def updateSuccessful(message: String): Future[Result] = {
-    val path = "reader-revenue/redeploy-contributions-banner"
+    val path = "/reader-revenue/contributions-banner-deploy-log"
 
     new CdnPurge(wsClient)
       .soft(DigestUtils.md5Hex(path))
