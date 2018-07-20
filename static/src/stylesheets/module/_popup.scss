@@ -110,6 +110,7 @@ $control-offset: 36 + $gs-gutter/2;
     &.is-active,
     .is-active > &,
     &[aria-expanded=true],
+    [aria-expanded=true] ~ &,
     .is-not-modern .brand-bar__item--has-control:hover &,
     .is-not-modern .is-signed-in.brand-bar__item--profile:hover & {
         &:after {
