@@ -9,6 +9,8 @@ import play.api.libs.json.{JsValue, Json}
 import play.api.mvc._
 import services.S3
 import conf.Configuration.readerRevenue._
+import org.apache.commons.codec.digest.DigestUtils
+import purge.CdnPurge
 
 import scala.util.Try
 
@@ -30,7 +32,7 @@ class ReaderRevenueAdminController(val controllerComponents: ControllerComponent
     val jsonLog: JsValue = Json.toJson(ContributionsBannerDeploy(time))
     val message = s"Contributions banner redeploy by $requester at ${time.toString}}"
 
-    Try(updateContributionsBannerDeployLog(jsonLog.toString)).fold( _ => updateFailed(message) , _ => updateSuccessful(message))
+    Try(updateContributionsBannerDeployLog(jsonLog.toString)).fold( _ => updateFailed(message, "failed to upload timestamp to s3") , _ => updateSuccessful(message))
   }
 
   private def updateContributionsBannerDeployLog(bannerDeployLogJson: String): Unit = {
@@ -39,6 +41,13 @@ class ReaderRevenueAdminController(val controllerComponents: ControllerComponent
   }
 
   private def updateSuccessful(message: String): Result = {
+    new CdnPurge(wsClient)
+      .soft(DigestUtils.md5Hex(urlToDecache.getPath)).map(_ => bannerRedploySuccessful(message))
+      .recover { case e => updateFailed(message, "cache purge request failed") }
+      .map(_).getOrElse(updateFailed(message, "cache purge didn't happen"))
+  }
+
+  private def bannerRedploySuccessful(message: String): Result = {
     log.info(s"$message: SUCCESSFUL")
     Redirect(routes.ReaderRevenueAdminController.renderContributionsBannerAdmin()).flashing(
       "success" -> ("Banner redeployed")
@@ -46,8 +55,8 @@ class ReaderRevenueAdminController(val controllerComponents: ControllerComponent
 
   }
 
-  private def updateFailed(message: String): Result = {
-    log.error(s"$message: FAILED")
+  private def updateFailed(message: String, error: String): Result = {
+    log.error(s"$message: FAILED, $error")
     Redirect(routes.ReaderRevenueAdminController.renderContributionsBannerAdmin()).flashing(
     "error" -> ("Banner not redeployed"))
 
