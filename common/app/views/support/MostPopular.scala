@@ -4,9 +4,13 @@ import layout.FaciaContainer
 
 object MostPopular extends implicits.Requests {
 
+  def isAdFree(maybeContainer: Option[FaciaContainer]): Boolean = {
+    maybeContainer.exists(_.commercialOptions.adFree)
+  }
+
   def showMPU(maybeContainer: Option[FaciaContainer]): Boolean = {
     !maybeContainer.exists(_.commercialOptions.omitMPU) &&
-    !maybeContainer.exists(_.commercialOptions.adFree)
+    !isAdFree(maybeContainer)
   }
 
   def tabsPaneCssClass(maybeContainer: Option[FaciaContainer]): String = {

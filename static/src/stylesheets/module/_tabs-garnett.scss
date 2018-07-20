@@ -17,6 +17,12 @@
     }
 }
 
+.tabs--mostpop--without-mpu {
+    @include mq($from: desktop) {
+        width: 100%;
+        max-width: gs-span(8);
+    }
+}
 
 /**
  * Multiple tab sizing
