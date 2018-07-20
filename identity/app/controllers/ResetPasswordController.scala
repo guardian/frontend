@@ -96,7 +96,7 @@ class ResetPasswordController(
     def onSuccess(form: (String, String, String, Option[String])): Future[Result] = form match {
       case (password, password_confirm, email_address, returnUrl) =>
 
-        val authResponse = api.resetPassword(token,password)
+        val authResponse = api.resetPassword(token, password, idRequestParser(request).trackingData)
         signInService.getCookies(authResponse, true) map {
           case Left(errors) =>
             logger.info(s"reset password errors, ${errors.toString()}")
@@ -133,7 +133,7 @@ class ResetPasswordController(
 
   def processUpdatePasswordToken(token : String, returnUrl: Option[String]): Action[AnyContent] = Action.async { implicit request =>
     val idRequest = idRequestParser(request)
-    api.userForToken(token) map {
+    api.userForToken(token, idRequest.trackingData) map {
       case Left(errors) =>
         logger.warn(s"Could not retrieve password reset request for token: $token, errors: ${errors.toString()}")
         val idRequest = idRequestParser(request)
