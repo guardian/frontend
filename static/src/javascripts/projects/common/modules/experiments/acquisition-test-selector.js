@@ -46,6 +46,7 @@ const isViewable = (v: Variant, t: ABTest): boolean => {
  * acquisition tests in priority order (highest to lowest)
  */
 export const acquisitionsTests: $ReadOnlyArray<AcquisitionsABTest> = [
+    acquisitionsEpicAlwaysAskIfTagged,
     acquisitionsEpicThailandCave,
     acquisitionsEpicNativeVsDfpV3,
     acquisitionsEpicFromGoogleDocOneVariant,
@@ -56,7 +57,6 @@ export const acquisitionsTests: $ReadOnlyArray<AcquisitionsABTest> = [
     acquisitionsEpicAusEnvCampaign,
     acquisitionsEpicUSGunCampaign,
     askFourEarning,
-    acquisitionsEpicAlwaysAskIfTagged,
     acquisitionsEpicLiveblogWorldCup,
     acquisitionsEpicLiveblog,
     acquisitionsEpicThankYou,
