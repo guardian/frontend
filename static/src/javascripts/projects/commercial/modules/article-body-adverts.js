@@ -51,11 +51,13 @@ const insertAdAtPara = (
         })
         .then(() => {
             try {
-                //clearThrough needs to be added any time a BT span is added to the DOM
+                // clearThrough needs to be called any time a BT span is added to the DOM
                 if ('BT' in window && 'clearThrough' in window.BT) {
                     window.BT.clearThrough();
                 }
-            } catch(e){}
+            } catch (e) {
+                console.warn('Error calling clearThrough');
+            }
         });
 };
 
