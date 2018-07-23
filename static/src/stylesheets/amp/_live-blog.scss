@@ -191,7 +191,6 @@
     position: relative;
     display: inline-block;
     box-sizing: border-box;
-    cursor: pointer;
     overflow: hidden;
     height: 36px;
     width: auto;
@@ -284,7 +283,6 @@
 }
 
 .liveblog-navigation__link--disabled {
-    cursor: default;
     color: $brightness-86;
     border-color: $brightness-93;
 }

@@ -86,7 +86,6 @@
     border: 1px solid #ffffff;
     border-radius: 50%;
     padding: 9px;
-    cursor: pointer;
     order: 1;
     height: 16px;
 
@@ -124,7 +123,6 @@
     a {
         color: #ffffff;
         position: relative;
-        cursor: pointer;
         text-decoration: none;
         &:not(.social__action)::after {
             content: '';
