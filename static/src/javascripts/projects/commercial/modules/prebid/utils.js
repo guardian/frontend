@@ -26,6 +26,8 @@ export const getBreakpointKey = (): string => {
     }
 };
 
+export const shouldIncludeTrustX = (): boolean => geolocationGetSync() === 'US';
+
 export const isExcludedGeolocation = (): boolean => {
     const excludedGeos = ['US', 'CA', 'NZ', 'AU'];
     return excludedGeos.includes(geolocationGetSync());

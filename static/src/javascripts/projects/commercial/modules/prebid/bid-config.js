@@ -24,6 +24,7 @@ import {
     getBreakpointKey,
     getRandomIntInclusive,
     isExcludedGeolocation,
+    shouldIncludeTrustX,
     stripMobileSuffix,
     stripTrailingNumbersAbove1,
 } from 'commercial/modules/prebid/utils';
@@ -335,7 +336,7 @@ const indexExchangeBidders: (PrebidSize[]) => PrebidBidder[] = slotSizes => {
 
 const otherBidders: PrebidBidder[] = [
     sonobiBidder,
-    trustXBidder,
+    ...(shouldIncludeTrustX() ? [trustXBidder] : []),
     improveDigitalBidder,
     xaxisBidder,
 ];
