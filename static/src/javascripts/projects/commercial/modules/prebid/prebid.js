@@ -162,7 +162,7 @@ class PrebidService {
                                     auctionInitHandler
                                 );
                                 advert.slot.setTargeting(
-                                    'pbaid',
+                                    'hb_auction',
                                     data.auctionId
                                 );
                             };
