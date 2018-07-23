@@ -35,11 +35,11 @@
         <p class="block-time published-time">
             @if(amp){
                 <a href="@LinkTo{/@article.metadata.id?page=with:block-@block.id#block-@block.id}" itemprop="url" class="block-time__link">
-                    @views.html.liveblog.dateBlock(block.publishedDate.map(LiveBlogDate(_, timezone)))
+                    @views.html.liveblog.dateBlock(block.publishedCreatedDate(timezone))
                 </a>
             } else {
                 <a href="/@article.metadata.id?page=with:block-@block.id#block-@block.id" itemprop="url" class="block-time__link">
-                    @views.html.liveblog.dateBlock(block.publishedDate.map(LiveBlogDate(_, timezone)))
+                    @views.html.liveblog.dateBlock(block.publishedCreatedDate(timezone))
                 </a>
             }
         </p>
