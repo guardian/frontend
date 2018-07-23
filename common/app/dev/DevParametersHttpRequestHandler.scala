@@ -51,7 +51,6 @@ class DevParametersHttpRequestHandler(
     "pbjs_debug" // set to true to enable prebid debugging
   )
 
-
   val commercialParams = Seq(
     "ad-unit", // allows overriding of the ad unit
     "adtest", // used to set ad-test cookie from admin domain
