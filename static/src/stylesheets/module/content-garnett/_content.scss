@@ -1041,8 +1041,9 @@
     }
     .tonal__standfirst {
         background-color: transparent;
+        border-top: 1px solid $brightness-60;
         min-height: $gs-baseline*8;
-        padding: $gs-baseline 0 $gs-baseline*2;
+        padding: ($gs-baseline / 4) 0 ($gs-baseline * 2);
         .content__standfirst {
             color: $brightness-7;
         }
