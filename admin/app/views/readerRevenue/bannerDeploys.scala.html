@@ -1,12 +1,13 @@
 @()(implicit request: RequestHeader, context: model.ApplicationContext, flash: Flash)
+@import common.LinkTo
 
 
 @admin_main("Redeploy Contributions Banner", isAuthed = true) {
 
     <h1>Contributions Banner Redeploy</h1>
 
+    <p><a href="@LinkTo("/reader-revenue/contributions-banner-deploy-log")">Timestamp of last banner redeploy</a></p>
     <p>Click this button to redeploy contributions (engagement) banner</p>
-    <p>NB This will clear the cache</p>
 
     <form action="@controllers.admin.routes.ReaderRevenueAdminController.redeployContributionsBanner()" method="POST">
         <input class="btn btn-large btn-danger" type="submit" value="Redeploy banner">
