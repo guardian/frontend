@@ -48,6 +48,14 @@ const insertAdAtPara = (
             const shouldForceDisplay = ['im', 'carrot'].includes(name);
             // Only add the first ad (the DFP one) to GTP
             addSlot(ads[0], shouldForceDisplay);
+        })
+        .then(() => {
+            try {
+                //clearThrough needs to be added any time a BT span is added to the DOM
+                if ('BT' in window && 'clearThrough' in window.BT) {
+                    window.BT.clearThrough();
+                }
+            } catch(e){}
         });
 };
 
