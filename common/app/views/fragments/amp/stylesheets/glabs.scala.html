@@ -2,21 +2,18 @@
     background-color: #d9d9d9;
 }
 
-.paid-content .meta__extras {
-    border-color: #999999;
-}
-
 .paid-content .content__meta-container:not(.content__meta-container--no-byline) {
     margin: 0;
 }
 
 .paid-content .social-icon,
-.paid-content .submeta__keywords {
+.paid-content .submeta__keywords,
+.paid-content .meta__extras {
     border-color: #999999;
 }
 
 .paid-content .social-icon svg,
-.paid-content .inline-icon {
+.paid-content .inline-triangle__svg {
     fill: #121212;
 }
 
@@ -63,14 +60,6 @@
     display: block;
 }
 
-.paidfor-input:not(:checked) ~ .tooltip-label svg {
-    transform: rotate(180deg);
-}
-
-.paidfor-input:checked ~ .tooltip-label svg {
-    transform: rotate(0deg);
-}
-
 .paidfor-meta__label {
     align-items: center;
 }
@@ -102,25 +91,6 @@
     border-right: 1px solid rgba(0, 0, 0, .2);
     display: inline-block;
     padding: 19px 10px;
-}
-
-.paidfor-label .tooltip-label::after {
-    content: '';
-    display: inline-block;
-    width: 4px;
-    height: 4px;
-    transform: translateY(-2px) rotate(45deg);
-    border: 1px solid currentColor;
-    border-left: transparent;
-    border-top: transparent;
-    margin-left: 2px;
-    vertical-align: middle;
-}
-
-.paidfor-label .tooltip-label svg {
-    width: 12px;
-    height: 9px;
-    fill: #333;
 }
 
 .popup--paidfor {
