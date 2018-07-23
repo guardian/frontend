@@ -88,7 +88,7 @@ Messages
 }
 
 .identity-forms-email-wrap {
-
+    padding-top: $gs-baseline * 4;
     header {
         @include fs-headline(3);
         font-weight: 500;

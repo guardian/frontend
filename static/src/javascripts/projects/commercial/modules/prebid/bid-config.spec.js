@@ -10,7 +10,10 @@ import type { PrebidBidder } from 'commercial/modules/prebid/types';
 const getRandomIntInclusive: any = getRandomIntInclusive_;
 const { getDummyServerSideBidders } = _;
 
-const adSlotName: string = 'dfp-ad--top-above-nav';
+jest.mock('common/modules/commercial/build-page-targeting', () => ({
+    buildAppNexusTargeting: () => 'someTestAppNexusTargeting',
+    buildPageTargeting: () => 'bla',
+}));
 
 jest.mock('common/modules/commercial/ad-prefs.lib', () => ({
     getAdConsentState: jest.fn(),
@@ -71,6 +74,7 @@ describe('getDummyServerSideBidders', () => {
         });
         expect(appnexusParams).toEqual({
             placementId: '13144370',
+            customData: 'someTestAppNexusTargeting',
         });
     });
 });
@@ -99,7 +103,8 @@ describe('bids', () => {
         });
     };
 
-    const bidders = () => bids(adSlotName, [[728, 90]]).map(bid => bid.bidder);
+    const bidders = () =>
+        bids('dfp-ad--top-above-nav', [[728, 90]]).map(bid => bid.bidder);
 
     test('should only include bidders that are switched on if no bidders being tested', () => {
         config.switches.prebidXaxis = false;

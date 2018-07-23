@@ -5,15 +5,20 @@ import fetch from 'lib/fetch';
 const isCheckbox = element => element.type === 'checkbox';
 const isNamed = element => element.name > '';
 
-const showConfirmation = cForm => {
-    fastdom.write(() => {
-        cForm.textContent = 'Thank you for your contribution';
-    });
+const showConfirmation = () => {
+    const callout = document.querySelector('.element-campaign');
+    if (callout) {
+        fastdom.write(() => {
+            callout.classList.add('success');
+        });
+    }
 };
 
 const showError = cForm => {
+    const errorField = cForm.querySelector('.error_box');
     fastdom.write(() => {
-        cForm.append('Sorry, there was an error submitting your contribution');
+        errorField.innerHtml =
+            '<p>Sorry, there was a problem submitting your form. Please try again later.</p>';
     });
 };
 
@@ -49,7 +54,7 @@ export const submitForm = (e: any) => {
         },
     }).then(res => {
         if (res.ok) {
-            showConfirmation(cForm);
+            showConfirmation();
         } else {
             showError(cForm);
         }

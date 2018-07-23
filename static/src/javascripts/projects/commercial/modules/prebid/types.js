@@ -35,6 +35,7 @@ export type PrebidXaxisParams = {
 
 export type PrebidAppNexusParams = {
     placementId: string,
+    customData: string,
 };
 
 export type PrebidOpenXParams = {

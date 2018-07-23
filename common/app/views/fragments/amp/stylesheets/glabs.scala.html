@@ -16,7 +16,13 @@
 
 .paidfor-band {
     background: #69d1ca;
+    font-family: 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
+    font-size: 14px;
     width: 100%;
+}
+
+.paidfor-band .inline-glabs-logo svg {
+  margin-top: 6px;
 }
 
 .paidfor-meta,
@@ -75,7 +81,22 @@
     border-left: 1px solid rgba(0, 0, 0, .2);
     border-right: 1px solid rgba(0, 0, 0, .2);
     display: inline-block;
-    padding: 7px 10px;
+    padding: 19px 10px;
+}
+
+.paidfor-label .tooltip-label::after {
+    content: '';
+    display: inline-block;
+    width: 4px;
+    height: 4px;
+    transform: translateY(-2px) rotate(45deg);
+    border: 1px solid currentColor;
+    border-left: transparent;
+    border-top: transparent;
+    margin-left: 2px;
+    vertical-align: middle;
+    -webkit-backface-visibility: hidden;
+    transition: transform 250ms ease-out;
 }
 
 .paidfor-label .tooltip-label svg {
@@ -86,44 +107,25 @@
 
 .popup--paidfor {
     position: absolute;
-    background: #333;
-    box-shadow: none;
+    background: #121212;
+    font-weight: normal;
     left: 100px;
-    top: 35px;
+    top: 38px;
     padding: 16px;
     color: #ffffff;
     transform: translate(-50%, 0);
     width: 234px;
     border-radius: 4px;
-    font-weight: 700;
     z-index: 32000;
-}
-
-.popup--paidfor::before {
-    content: '';
-    border: solid transparent;
-    border-bottom-color: #333;
-    border-width: 6px;
-    height: 0;
-    width: 0;
-    position: absolute;
-    bottom: 100%;
-    left: 35%;
-    transform: translate(-50%, 0);
 }
 
 .popup--paidfor__title {
     display: block;
-    font-size: 0.875rem;
-    font-weight: normal;
-    line-height: 1rem;
     margin: 0 0 1em;
 }
 
 .popup--paidfor__link {
     color: #69d1ca;
-    font-size: 0.8125rem;
-    line-height: .8;
     display: block;
 }
 
@@ -134,4 +136,3 @@
     height: 20px;
     width: 20px;
 }
-
