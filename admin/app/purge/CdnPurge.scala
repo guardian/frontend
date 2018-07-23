@@ -8,12 +8,12 @@ import play.api.libs.ws.{WSClient, WSResponse}
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class CdnPurge(wsClient: WSClient) extends Dates with Logging {
+object CdnPurge extends Dates with Logging {
 
   private val serviceId = "2eYr6Wx3ZCUoVPShlCM61l"
 
   // Performs soft purge which will still serve stale if there is an error
-  def soft(key:String)(implicit executionContext: ExecutionContext): Future[WSResponse] = {
+  def soft(wsClient: WSClient, key:String)(implicit executionContext: ExecutionContext): Future[WSResponse] = {
     // under normal circumstances we only ever want this called from PROD.
     // Don't want too much decaching going on.
     if (environment.isProd) {

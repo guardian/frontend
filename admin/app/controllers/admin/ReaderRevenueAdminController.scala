@@ -10,11 +10,10 @@ import play.api.mvc._
 import services.S3
 import conf.Configuration.readerRevenue._
 import org.apache.commons.codec.digest.DigestUtils
-import play.api.libs.ws.WSClient
+import play.api.libs.ws.{WSClient, WSResponse}
 import purge.CdnPurge
 
 import scala.concurrent.Future
-import scala.util.Try
 
 class ReaderRevenueAdminController(wsClient: WSClient, val controllerComponents: ControllerComponents)(implicit context: ApplicationContext)
 
@@ -34,38 +33,34 @@ class ReaderRevenueAdminController(wsClient: WSClient, val controllerComponents:
     val jsonLog: JsValue = Json.toJson(ContributionsBannerDeploy(time))
     val message = s"Contributions banner redeploy by $requester at ${time.toString}}"
 
-    Try(updateContributionsBannerDeployLog(jsonLog.toString))
-      .fold( e => Future.successful(updateFailed(message, s"upload timestamp to s3: ${e.getLocalizedMessage}")) , _ => updateSuccessful(message))
+   val result = for {
+      _ <- updateContributionsBannerDeployLog(jsonLog.toString)
+      _ <- purgeDeployLogCache()
+    } yield bannerRedeploySuccessful(message)
+
+    result.recover { case e => redeployFailed(e)}
   }
 
-  private def updateContributionsBannerDeployLog(bannerDeployLogJson: String): Unit = {
+  private def updateContributionsBannerDeployLog(bannerDeployLogJson: String): Future[Unit] = {
     val defaultJsonEncoding: String = "application/json;charset=utf-8"
-    S3.putPublic(contributionsBannerDeployLogKey, bannerDeployLogJson, defaultJsonEncoding)
+    Future(S3.putPublic(contributionsBannerDeployLogKey, bannerDeployLogJson, defaultJsonEncoding))
   }
 
-  private def updateSuccessful(message: String): Future[Result] = {
+  private def purgeDeployLogCache(): Future[WSResponse] = {
     val path = "/reader-revenue/contributions-banner-deploy-log"
-
-    new CdnPurge(wsClient)
-      .soft(DigestUtils.md5Hex(path))
-      .map(_ => bannerRedploySuccessful(message))
-      .recover { case e => updateFailed(message, s"cache purge request: ${e.getLocalizedMessage}") }
-
+    CdnPurge.soft(wsClient, DigestUtils.md5Hex(path))
   }
 
-  private def bannerRedploySuccessful(message: String): Result = {
+  private def bannerRedeploySuccessful(message: String): Result = {
     log.info(s"$message: SUCCESSFUL")
     Redirect(routes.ReaderRevenueAdminController.renderContributionsBannerAdmin()).flashing(
-      "success" -> ("Banner redeployed")
-    )
-
+      "success" -> ("Banner redeployed"))
   }
 
-  private def updateFailed(message: String, error: String): Result = {
-    log.error(s"$message: FAILED, $error")
+  private def redeployFailed(error: Throwable): Result = {
+    log.error("Contributions banner redeploy FAILED", error)
     Redirect(routes.ReaderRevenueAdminController.renderContributionsBannerAdmin()).flashing(
     "error" -> ("Banner not redeployed"))
-
   }
 
 
