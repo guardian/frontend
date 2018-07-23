@@ -179,7 +179,6 @@ $badge-width: $gs-column-width + $gs-gutter;
     color: #ffffff;
     border: 0;
     padding: 0;
-    cursor: pointer;
     background: transparent;
 }
 
@@ -234,7 +233,6 @@ $badge-width: $gs-column-width + $gs-gutter;
 
     .survey-close {
         position: absolute;
-        cursor: pointer;
         top: 4px;
         right: 8px;
     }

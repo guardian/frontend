@@ -1,9 +1,7 @@
 /* ==========================================================================
    Pop-up
    ========================================================================== */
-$popup-anchor-arrow-size: 6px;
 $popup-top: $headerHeight + $gs-baseline/2 + 3;
-$c-popup-bg: $brightness-97;
 
 // Popups align with the label, so if there's a control icon, we need to account
 // for it. The number is derived from the icon size on the control.
@@ -12,8 +10,9 @@ $c-popup-bg: $brightness-97;
 $control-offset: 36 + $gs-gutter/2;
 
 .popup--default {
-    background: $c-popup-bg;
-    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .25);
+    background: $brightness-100;
+    border-radius: $gs-baseline / 4;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, .1);
     left: 0;
     top: $popup-top - 2;
     padding: 0;
@@ -80,75 +79,47 @@ $control-offset: 36 + $gs-gutter/2;
 }
 
 .popup__toggle {
+    cursor: pointer;
+
     // disclosure arrow
     &:after {
         content: '';
         display: inline-block;
-        pointer-events: none;
-        width: 0;
-        height: 0;
-        border-bottom: 0;
-        margin-top: 2px;
-        margin-bottom: 2px;
-        margin-left: 4px;
-        border-left: $popup-toggle-arrow-size solid transparent;
-        border-right: $popup-toggle-arrow-size solid transparent;
-        border-top: $popup-toggle-arrow-size solid $c-popup-bg;
+        width: 4px;
+        height: 4px;
+        transform: translateY(-2px) rotate(45deg);
+        border: 1px solid currentColor;
+        border-left: transparent;
+        border-top: transparent;
+        margin-left: 2px;
+        vertical-align: middle;
+        // Prevents wobble on webkit browsers
+        -webkit-backface-visibility: hidden;
+        transition: transform 250ms ease-out;
+    }
+
+    &:hover,
+    &:focus {
+        text-decoration: none;
+
+        &:after {
+            transform: translateY(0) rotate(45deg);
+        }
     }
 
     &.is-active,
     .is-active > &,
+    &[aria-expanded=true],
+    [aria-expanded=true] ~ &,
     .is-not-modern .brand-bar__item--has-control:hover &,
     .is-not-modern .is-signed-in.brand-bar__item--profile:hover & {
         &:after {
-            border-top: 0;
-            border-bottom: $popup-toggle-arrow-size solid $c-popup-bg;
+            transform: translateY(1px) rotate(-135deg);
         }
 
-        // This is the exposed menu arrow pointing up
-        // to the link. It's placed on the link to center it.
-        &:before {
-            content: '';
-            display: inline-block;
-            width: 0;
-            height: 0;
-            border-top: 0;
-            position: absolute;
-            left: 50%;
-            border-left: $popup-anchor-arrow-size solid transparent;
-            border-right: $popup-anchor-arrow-size solid transparent;
-            border-bottom: $popup-anchor-arrow-size solid $c-popup-bg;
-            top: $popup-top - $popup-anchor-arrow-size;
-        }
-    }
-}
-
-.popup__toggle {
-    &.is-active,
-    .is-active > & {
-        &:before {
-            .has-popup & {
-                @include mq(tablet) {
-                    margin-left: $control-offset * .5 - $popup-anchor-arrow-size;
-                };
-            }
-
-            .brand-bar__item--search & {
-                @include mq($until: tablet) {
-                    margin-left: 0 - $popup-anchor-arrow-size;
-                };
-            }
-
-            .brand-bar__item--right & {
-                @include mq(tablet) {
-                    margin-left: 0 - $popup-anchor-arrow-size * 2;
-                }
-            }
-
-            // This margin must come last in the cascade
-            &,
-            .l-header--is-slim & {
-                margin-left: 0 - $popup-anchor-arrow-size;
+        &:hover {
+            &:after {
+                transform: translateY(-1px) rotate(-135deg);
             }
         }
     }
@@ -340,4 +311,3 @@ $control-offset: 36 + $gs-gutter/2;
     }
 
 }
-

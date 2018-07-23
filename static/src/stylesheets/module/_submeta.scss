@@ -12,10 +12,10 @@
     }
 
     .paid-content & {
-        @include multiline(4, $brightness-46, top);
+        @include multiline(4, $brightness-60, top);
 
         .submeta__keywords {
-            border-color: $brightness-46;
+            border-color: $brightness-60;
         }
     }
 }

@@ -463,6 +463,10 @@ class GuardianConfiguration extends Logging {
     lazy val pageViewAnalyticsStream = configuration.getMandatoryStringProperty("commercial.pv.analytics.stream")
   }
 
+  object journalism {
+    lazy val calloutsUrl = configuration.getMandatoryStringProperty("journalism.callouts.url")
+  }
+
   object interactive {
     lazy val cdnPath = "https://interactive.guim.co.uk"
     lazy val url = s"$cdnPath/next-gen/"
@@ -607,7 +611,6 @@ class GuardianConfiguration extends Logging {
   object formstack {
     val url = configuration.getMandatoryStringProperty("formstack.url")
     val identityOauthToken = configuration.getMandatoryStringProperty("formstack.oauthToken")
-    val editorialOauthToken = configuration.getMandatoryStringProperty("formstack.editorial.oauthToken")
   }
 
   object standalone {

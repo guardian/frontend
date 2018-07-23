@@ -170,14 +170,16 @@ category: Common
     }
 }
 .paid-content, .paid-content.tonal--tone-media {
-    .social-icon {
-        border: 1px solid $brightness-7;
+    .social-icon,
+    .block-share__item {
+        border: 1px solid $brightness-60;
         &:hover,
         &:active,
         &:focus {
+            border: 1px solid $brightness-7;
             background-color: $brightness-7;
         }
-        .social-icon__svg {
+        svg {
             fill: $brightness-7;
         }
         &:focus,

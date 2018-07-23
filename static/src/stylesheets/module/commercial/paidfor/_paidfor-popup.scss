@@ -1,48 +1,27 @@
 .popup--paidfor {
     background: $brightness-7;
     box-shadow: none;
-    left: 100%;
-    top: 100%;
-    padding: 16px;
-    color: #ffffff;
-    transform: translate(-50%, 0);
-    width: 240px;
-    border-radius: 4px;
-    font-weight: 700;
-    z-index: 32000;
+    left: -$gs-gutter / 2;
+    top: $gs-baseline * 4;
+    padding: $gs-baseline $gs-gutter;
+    color: $brightness-100;
+    width: gs-span(3);
+    border-radius: $gs-baseline / 4;
+    z-index: $zindex-main-menu;
 
     &,
     h3 {
-        @include f-textSans;
-    }
-
-    &::before {
-        content: '';
-        border: solid transparent;
-        border-bottom-color: $brightness-7;
-        border-style: solid;
-        border-width: 6px;
-        height: 0;
-        width: 0;
-        position: absolute;
-        bottom: 100%;
-        left: 35%;
-        transform: translate(-50%, 0);
+        @include fs-textSans(3);
     }
 }
 
 .popup--paidfor__title {
     display: block;
-    font-size: get-font-size(textSans, 3);
-    line-height: get-line-height(textSans, 1);
-    margin: 0 0 1em;
-    font-weight: normal;
+    margin: 0 0 $gs-baseline;
 }
 
-.popup--paidfor__link {
+a.popup--paidfor__link {
     color: $labs-main;
-    font-size: get-font-size(textSans, 2);
-    line-height: .8;
     display: block;
 
     svg {
