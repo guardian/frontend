@@ -66,29 +66,29 @@
     }
 }
 
-.content--pillar-news {
+.content--pillar-news:not(.paid-content) {
     @include PillarColourTwo($news-main, $news-dark);
 }
 
-.content--pillar-opinion {
+.content--pillar-opinion:not(.paid-content) {
     @include PillarColourTwo($opinion-main, $opinion-dark);
 
     background-color: $opinion-faded;
 }
 
-.content--pillar-sport {
+.content--pillar-sport:not(.paid-content) {
     @include PillarColourOne($sport-main, $sport-dark);
 }
 
-.content--pillar-arts {
+.content--pillar-arts:not(.paid-content) {
     @include PillarColourOne($culture-main, $culture-dark);
 }
 
-.content--pillar-lifestyle {
+.content--pillar-lifestyle:not(.paid-content) {
     @include PillarColourOne($lifestyle-main, $lifestyle-dark);
 }
 
-.tonal--tone-special-report {
+.tonal--tone-special-report:not(.paid-content) {
     @include PillarColourOne($special-report-dark, $special-report-dark);
     background-color: #eff1f2;
 

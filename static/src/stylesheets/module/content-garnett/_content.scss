@@ -1019,6 +1019,9 @@
     a.in-body-link--immersive {
         color: $labs-main;
     }
+    .inline-expand-image {
+        fill: $brightness-100;
+    }
     &.content--article,
     &.content--interactive,
     &.tonal--tone-media {
@@ -1038,8 +1041,9 @@
     }
     .tonal__standfirst {
         background-color: transparent;
+        border-top: 1px solid $brightness-60;
         min-height: $gs-baseline*8;
-        padding: $gs-baseline 0 $gs-baseline*2;
+        padding: ($gs-baseline / 4) 0 ($gs-baseline * 2);
         .content__standfirst {
             color: $brightness-7;
         }
@@ -1071,7 +1075,7 @@
     .ad-slot__label,
     .ad-slot--inline {
         background-color: $brightness-86;
-        border-top: 0;
+        border-top-color: $brightness-60;
         color: $brightness-46;
     }
     .content__section-label {
@@ -1082,7 +1086,7 @@
         }
     }
     .meta__extras {
-        border-color: $brightness-20;
+        border-color: $brightness-60;
     }
 
     &.tonal--tone-media {
@@ -1124,7 +1128,7 @@
         .meta__numbers,
         .meta__social,
         .meta__number + .meta__number {
-            border-color: $brightness-86;
+            border-color: $brightness-60;
         }
         .byline {
             .tone-colour {
