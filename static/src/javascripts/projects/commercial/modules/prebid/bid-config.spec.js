@@ -81,6 +81,7 @@ describe('getDummyServerSideBidders', () => {
 
 describe('bids', () => {
     beforeEach(() => {
+        getRandomIntInclusive.mockReturnValue(5);
         config.switches.prebidImproveDigital = true;
         config.switches.prebidIndexExchange = true;
         config.switches.prebidSonobi = true;
@@ -108,7 +109,7 @@ describe('bids', () => {
 
     test('should only include bidders that are switched on if no bidders being tested', () => {
         config.switches.prebidXaxis = false;
-        getRandomIntInclusive.mockReturnValueOnce(1);
+        getRandomIntInclusive.mockReturnValue(1);
         expect(bidders()).toEqual([
             'ix',
             'sonobi',
@@ -120,14 +121,24 @@ describe('bids', () => {
 
     test('should not include Ozone bidders when fate is against them', () => {
         config.switches.prebidXaxis = false;
-        getRandomIntInclusive.mockReturnValueOnce(3);
         expect(bidders()).toEqual(['ix', 'sonobi', 'improvedigital']);
     });
 
     test('should not include ix bidders when switched off', () => {
         config.switches.prebidIndexExchange = false;
-        getRandomIntInclusive.mockReturnValueOnce(3);
         expect(bidders()).toEqual(['sonobi', 'improvedigital', 'xhb']);
+    });
+
+    test('should include ix bidder for each size that slot can take', () => {
+        const rightSlotBidders = () =>
+            bids('dfp-right', [[300, 600], [300, 250]]).map(bid => bid.bidder);
+        expect(rightSlotBidders()).toEqual([
+            'ix',
+            'ix',
+            'sonobi',
+            'improvedigital',
+            'xhb',
+        ]);
     });
 
     test('should only include bidder being tested', () => {
