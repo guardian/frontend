@@ -82,7 +82,7 @@ class GalleryLightbox {
     bodyScrollPosition: number;
     endslateEl: bonzo;
     endslate: Object;
-    navigationDirection: string;
+    startIndex: number;
 
     constructor(): void {
         // CONFIG
@@ -300,8 +300,7 @@ class GalleryLightbox {
     }
 
     loadNextOrPrevious(currentImageId: string, direction: string): Promise<Object> {
-        const fetchDirection = direction ? direction : this.navigationDirection;
-        const pathPrefix = pathPrefix || (fetchDirection === 'forwards') ? 'getnext' : 'getprev';
+        const pathPrefix = pathPrefix || (direction === 'forwards') ? 'getnext' : 'getprev';
         const seriesTag = guardian.config.page.nonKeywordTagIds.split(",").filter(tag => tag.includes("series"))[0];
         const fetchUrl = '/' + pathPrefix + '/' + seriesTag + '/' + currentImageId;
         return fetch(fetchUrl)
@@ -333,7 +332,8 @@ class GalleryLightbox {
                     const allImages = nextPrevJson.previous.concat(galleryJson.images, nextPrevJson.next);
                     console.log("combinedall", allImages);
                     galleryJson.images= allImages;
-                    this.index = nextPrevJson.previous.length + 1;
+                    this.startIndex = nextPrevJson.previous.length + 1
+                    this.index = startIndex;
                     this.loadOrOpen(galleryJson)
                 });
         } else {
