@@ -54,11 +54,8 @@
     display: flex;
 }
 
+.paidfor-input:not(:checked) ~ .popup--paidfor,
 .paidfor-input {
-    display: none;
-}
-
-.paidfor-input:not(:checked) ~ .popup--paidfor {
     display: none;
 }
 
@@ -118,8 +115,6 @@
     border-top: transparent;
     margin-left: 2px;
     vertical-align: middle;
-    -webkit-backface-visibility: hidden;
-    transition: transform 250ms ease-out;
 }
 
 .paidfor-label .tooltip-label svg {
@@ -147,7 +142,7 @@
     margin: 0 0 1em;
 }
 
-.popup--paidfor__link {
+a.popup--paidfor__link {
     color: #69d1ca;
     display: block;
 }
