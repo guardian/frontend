@@ -246,5 +246,10 @@ class Message {
     }
 }
 
+const hasUserAcknowledgedBanner = (id: string): boolean => {
+    const messageStates = userPrefs.get('messages');
+    return messageStates && messageStates.includes(id);
+};
+
 export type { MessagePosition };
-export { Message };
+export { Message, hasUserAcknowledgedBanner };
