@@ -10,8 +10,9 @@ import conf.Configuration.readerRevenue._
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 
 
-class ReaderRevenueController(val controllerComponents: ControllerComponents)(implicit context: ApplicationContext)
+class ReaderRevenueAppController(val controllerComponents: ControllerComponents)(implicit context: ApplicationContext)
   extends BaseController with ImplicitControllerExecutionContext with Logging {
+
 
   private def getContributionsBannerDeployLog(): Option[String] = {
     S3.get(contributionsBannerDeployLogKey)
@@ -29,4 +30,5 @@ class ReaderRevenueController(val controllerComponents: ControllerComponents)(im
       }
     }
   }
+
 }

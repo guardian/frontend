@@ -4,7 +4,11 @@
 
 GET            /commercial/test-page                                                                                             commercial.controllers.CreativeTestPage.allComponents(k: List[String])
 
-GET            /reader-revenue/contributions-banner-deploy-log                                                                   controllers.ReaderRevenueController.contributionsBannerDeployLog()
+# Reader Revenue
+GET            /reader-revenue                                                                                                   controllers.admin.ReaderRevenueAdminController.renderReaderRevenueMenu()
+GET            /reader-revenue/contributions-banner                                                                              controllers.admin.ReaderRevenueAdminController.renderContributionsBannerAdmin()
+POST           /reader-revenue/redeploy-contributions-banner                                                                     controllers.admin.ReaderRevenueAdminController.redeployContributionsBanner()
+GET            /reader-revenue/contributions-banner-deploy-log                                                                   controllers.ReaderRevenueAppController.contributionsBannerDeployLog()
 
 GET            /email-newsletters                                                                                                controllers.SignupPageController.renderNewslettersPage()
 

@@ -26,8 +26,7 @@ class PageDecacheController(wsClient: WSClient, val controllerComponents: Contro
 
   def decache(): Action[AnyContent] = AdminAuthAction.async { implicit request =>
     getSubmittedUrl(request).map(new URI(_)).map{ urlToDecache =>
-      new CdnPurge(wsClient)
-        .soft(DigestUtils.md5Hex(urlToDecache.getPath))
+      CdnPurge.soft(wsClient, DigestUtils.md5Hex(urlToDecache.getPath))
         .map { _ => "Purge request successfully sent" }
         .recover { case e => s"Purge request was not successful, please report this issue: '${e.getLocalizedMessage}'" }
         .map { message => NoCache(Ok(views.html.cache.pageDecache(message))) }
