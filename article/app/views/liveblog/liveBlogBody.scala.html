@@ -54,8 +54,13 @@
 
                         @if(!amp) {
                             <div class="content__updated-container content__updated-container--liveblog">
+                               
                                 @if(article.fields.isLive) {
-                                    <span class="blog__live live-pulse-icon flashing-image">LIVE</span>
+                                     @if(article.tags.exists{ _.id == "sport/tour-de-france-2018"  }) {
+                                       <span class="blog__live live-pulse-icon flashing-image">EN DIRECT 🇫🇷 </span>
+                                     } else {
+                                       <span class="blog__live live-pulse-icon flashing-image">LIVE</span>
+                                     }
                                 }
                                 Updated <time class="js-timestamp" datetime="@article.fields.lastModified" data-relativeformat="med"></time>
                             </div>
