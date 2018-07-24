@@ -56,7 +56,7 @@ const updateLink = accountDataUpdateWarning();
 
 const canShow: () => Promise<boolean> = () =>
     Promise.resolve(
-        updateLink !== null && hasUserAcknowledgedBanner(messageCode)
+        updateLink !== null && !hasUserAcknowledgedBanner(messageCode)
     );
 
 const show: () => void = () => {

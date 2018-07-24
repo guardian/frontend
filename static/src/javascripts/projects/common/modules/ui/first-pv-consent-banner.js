@@ -105,8 +105,8 @@ const trackInteraction = (interaction: string): void => {
 
 const canShow = (): Promise<boolean> =>
     Promise.resolve(
-        [hasUnsetAdChoices(), isInEU()].every(_ => _ === true) &&
-            hasUserAcknowledgedBanner(messageCode)
+        hasUnsetAdChoices() && isInEU() &&
+            !hasUserAcknowledgedBanner(messageCode)
     );
 
 const track = (): void => {
