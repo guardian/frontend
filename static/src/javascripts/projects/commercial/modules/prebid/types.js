@@ -71,6 +71,7 @@ export type PrebidSlot = {
 
 export type PrebidBidder = {
     name: string,
+    switchName: string,
     bidParams: (
         slotId: string,
         sizes: PrebidSize[]

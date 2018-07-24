@@ -1,6 +1,8 @@
 // @flow
+/* global jsdom */
+
 import config from 'lib/config';
-import { _ } from 'commercial/modules/prebid/bid-config';
+import { _, bids } from 'commercial/modules/prebid/bid-config';
 import { getRandomIntInclusive as getRandomIntInclusive_ } from 'commercial/modules/prebid/utils';
 
 import type { PrebidBidder } from 'commercial/modules/prebid/types';
@@ -21,6 +23,8 @@ jest.mock('./utils', () => ({
     isExcludedGeolocation: jest.fn(() => false),
     getRandomIntInclusive: jest.fn(),
     getBreakpointKey: jest.fn(() => 'D'),
+    stripMobileSuffix: jest.fn(),
+    stripTrailingNumbersAbove1: jest.fn(),
 }));
 
 jest.mock('lib/geolocation', () => ({
@@ -72,5 +76,91 @@ describe('getDummyServerSideBidders', () => {
             placementId: '13144370',
             customData: 'someTestAppNexusTargeting',
         });
+    });
+});
+
+describe('bids', () => {
+    beforeEach(() => {
+        getRandomIntInclusive.mockReturnValue(5);
+        config.switches.prebidImproveDigital = true;
+        config.switches.prebidIndexExchange = true;
+        config.switches.prebidSonobi = true;
+        config.switches.prebidS2sozone = true;
+        config.switches.prebidTrustX = true;
+        config.switches.prebidXaxis = true;
+        config.ophan = { pageViewId: 'pvid' };
+        config.page.pbIndexSites = [];
+    });
+
+    afterEach(() => {
+        jsdom.reconfigure({
+            url: 'https://some.domain/path',
+        });
+    });
+
+    const setQueryString = (s: string) => {
+        jsdom.reconfigure({
+            url: `https://some.domain/path?${s}`,
+        });
+    };
+
+    const bidders = () =>
+        bids('dfp-ad--top-above-nav', [[728, 90]]).map(bid => bid.bidder);
+
+    test('should only include bidders that are switched on if no bidders being tested', () => {
+        config.switches.prebidXaxis = false;
+        getRandomIntInclusive.mockReturnValue(1);
+        expect(bidders()).toEqual([
+            'ix',
+            'sonobi',
+            'improvedigital',
+            'openx',
+            'appnexus',
+        ]);
+    });
+
+    test('should not include Ozone bidders when fate is against them', () => {
+        config.switches.prebidXaxis = false;
+        expect(bidders()).toEqual(['ix', 'sonobi', 'improvedigital']);
+    });
+
+    test('should not include ix bidders when switched off', () => {
+        config.switches.prebidIndexExchange = false;
+        expect(bidders()).toEqual(['sonobi', 'improvedigital', 'xhb']);
+    });
+
+    test('should include ix bidder for each size that slot can take', () => {
+        const rightSlotBidders = () =>
+            bids('dfp-right', [[300, 600], [300, 250]]).map(bid => bid.bidder);
+        expect(rightSlotBidders()).toEqual([
+            'ix',
+            'ix',
+            'sonobi',
+            'improvedigital',
+            'xhb',
+        ]);
+    });
+
+    test('should only include bidder being tested', () => {
+        setQueryString('pbtest=xhb');
+        expect(bidders()).toEqual(['xhb']);
+    });
+
+    test('should only include bidder being tested, even when its switch is off', () => {
+        setQueryString('pbtest=xhb');
+        config.switches.prebidXaxis = false;
+        expect(bidders()).toEqual(['xhb']);
+    });
+
+    test('should only include multiple bidders being tested, even when their switches are off', () => {
+        setQueryString('pbtest=xhb&pbtest=sonobi');
+        config.switches.prebidXaxis = false;
+        config.switches.prebidSonobi = false;
+        expect(bidders()).toEqual(['xhb', 'sonobi']);
+    });
+
+    test('should ignore bidder that does not exist', () => {
+        setQueryString('pbtest=nonexistentbidder&pbtest=xhb');
+        expect(bidders()).toEqual(['xhb']);
     });
 });
