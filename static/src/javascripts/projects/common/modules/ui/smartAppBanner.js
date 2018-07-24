@@ -7,6 +7,7 @@ import template from 'lodash/utilities/template';
 import { loadCssPromise } from 'lib/load-css-promise';
 import { Message } from 'common/modules/ui/message';
 import config from 'lib/config';
+import { hasUserAcknowledgedBanner } from "common/modules/ui/message";
 import type { Banner } from 'common/modules/ui/bannerPicker';
 
 /**
@@ -64,7 +65,7 @@ const canUseSmartBanner = (): boolean =>
 const canShow = (): Promise<boolean> =>
     new Promise(resolve => {
         const result =
-            !canUseSmartBanner() && isDevice() && validImpressionCount();
+            !canUseSmartBanner() && isDevice() && validImpressionCount() && !hasUserAcknowledgedBanner(messageCode);
         resolve(result);
     });
 
