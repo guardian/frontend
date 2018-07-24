@@ -10,6 +10,7 @@ import { engagementBannerParams } from 'common/modules/commercial/membership-eng
 import { isBlocked } from 'common/modules/commercial/membership-engagement-banner-block';
 import { getSync as getGeoLocation } from 'lib/geolocation';
 import { shouldShowReaderRevenue } from 'common/modules/commercial/contributions-utilities';
+import { hasUserAcknowledgedBanner } from "common/modules/ui/message";
 import type { Banner } from 'common/modules/ui/bannerPicker';
 
 import {
@@ -184,6 +185,10 @@ const show = (): void => {
 
 const canShow = (): Promise<boolean> => {
     if (!config.get('switches.membershipEngagementBanner') || isBlocked()) {
+        return Promise.resolve(false);
+    }
+
+    if (hasUserAcknowledgedBanner(messageCode)) {
         return Promise.resolve(false);
     }
 
