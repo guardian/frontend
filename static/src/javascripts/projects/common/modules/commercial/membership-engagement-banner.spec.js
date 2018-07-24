@@ -93,7 +93,7 @@ jest.mock(
 );
 jest.mock('common/modules/ui/message', () => ({
     Message: jest.fn(),
-    hasUserAcknowledgedBanner: jest.fn((_) => false)
+    hasUserAcknowledgedBanner: jest.fn(() => false),
 }));
 jest.mock('ophan/ng', () => ({
     record: jest.fn(),
