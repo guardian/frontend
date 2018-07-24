@@ -1,6 +1,5 @@
 // @flow
 import ophan from 'ophan/ng';
-import userPrefs from 'common/modules/user-prefs';
 
 export type Banner = {
     id: string,

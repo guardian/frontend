@@ -5,10 +5,9 @@ import {
     accountDataUpdateWarning,
 } from 'common/modules/commercial/user-features';
 import fastdom from 'lib/fastdom-promise';
-import { Message } from 'common/modules/ui/message';
+import { Message, hasUserAcknowledgedBanner } from 'common/modules/ui/message';
 import config from 'lib/config';
 import bean from 'bean';
-import { hasUserAcknowledgedBanner } from "common/modules/ui/message";
 import type { Banner } from 'common/modules/ui/bannerPicker';
 
 const accountDataUpdateLink = accountDataUpdateWarningLink =>
@@ -56,7 +55,9 @@ const showAccountDataUpdateWarningMessage = accountDataUpdateWarningLink => {
 const updateLink = accountDataUpdateWarning();
 
 const canShow: () => Promise<boolean> = () =>
-    Promise.resolve(updateLink !== null && hasUserAcknowledgedBanner(messageCode));
+    Promise.resolve(
+        updateLink !== null && hasUserAcknowledgedBanner(messageCode)
+    );
 
 const show: () => void = () => {
     if (updateLink) {

@@ -1,7 +1,7 @@
 // @flow
 import config from 'lib/config';
 import { local } from 'lib/storage';
-import { Message } from 'common/modules/ui/message';
+import { Message, hasUserAcknowledgedBanner } from 'common/modules/ui/message';
 import mediator from 'lib/mediator';
 import { membershipEngagementBannerTests } from 'common/modules/experiments/tests/membership-engagement-banner-tests';
 import { testCanBeRun } from 'common/modules/experiments/test-can-run-checks';
@@ -10,7 +10,6 @@ import { engagementBannerParams } from 'common/modules/commercial/membership-eng
 import { isBlocked } from 'common/modules/commercial/membership-engagement-banner-block';
 import { getSync as getGeoLocation } from 'lib/geolocation';
 import { shouldShowReaderRevenue } from 'common/modules/commercial/contributions-utilities';
-import { hasUserAcknowledgedBanner } from "common/modules/ui/message";
 import type { Banner } from 'common/modules/ui/bannerPicker';
 
 import {

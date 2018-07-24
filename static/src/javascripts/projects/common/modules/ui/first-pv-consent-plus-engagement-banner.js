@@ -17,7 +17,6 @@ import {
     makeHtml as makeFirstPvConsentHtml,
 } from 'common/modules/ui/first-pv-consent-banner';
 import marque36icon from 'svgs/icon/marque-36.svg';
-import { hasUserAcknowledgedBanner } from "common/modules/ui/message";
 
 const messageCode: string = 'first-pv-consent-plus-engagement-banner';
 
