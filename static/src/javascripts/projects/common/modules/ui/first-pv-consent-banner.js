@@ -11,6 +11,7 @@ import {
 import { trackNonClickInteraction } from 'common/modules/analytics/google';
 import ophan from 'ophan/ng';
 import { upAlertViewCount } from 'common/modules/analytics/send-privacy-prefs';
+import { hasUserAcknowledgedBanner } from "common/modules/ui/message";
 import type { AdConsent } from 'common/modules/commercial/ad-prefs.lib';
 import type { Banner } from 'common/modules/ui/bannerPicker';
 
@@ -104,7 +105,7 @@ const trackInteraction = (interaction: string): void => {
 };
 
 const canShow = (): Promise<boolean> =>
-    Promise.resolve([hasUnsetAdChoices(), isInEU()].every(_ => _ === true));
+    Promise.resolve([hasUnsetAdChoices(), isInEU()].every(_ => _ === true) && hasUserAcknowledgedBanner(messageCode));
 
 const track = (): void => {
     upAlertViewCount();
