@@ -49,7 +49,7 @@
                     <div class="content__main-column content__main-column--article js-content-main-column @if(article.tags.isSudoku) {sudoku}">
                         @defining(model.article.content.trail.trailPicture.flatMap(_.masterImage)) {
                             case Some(masterImage) => {
-                                <figcaption class="caption caption--immersive">
+                                <figcaption class="caption caption--immersive hide-from-desktop">
                                     Main image:
                                     @masterImage.credit.map { credit =>
                                         @credit
