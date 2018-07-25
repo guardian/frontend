@@ -1,9 +1,7 @@
 // @flow
 import type { GuAdSize } from 'commercial/types';
 
-const getAdSize = (
-    width: number,
-    height: number): GuAdSize => {
+const getAdSize = (width: number, height: number): GuAdSize => {
     const toString = (): string =>
         width === height && height === 0 ? 'fluid' : `${width},${height}`;
 
@@ -25,7 +23,7 @@ const adSizes: Object = {
     // dfp proprietary ad sizes
     fluid: getAdSize(0, 0),
     outOfPage: getAdSize(1, 1),
-    googleCardloadAdvert: getAdSize(300, 274),
+    googleCard: getAdSize(300, 274),
 
     // guardian proprietary ad sizes
     video: getAdSize(620, 1),
