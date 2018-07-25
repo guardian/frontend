@@ -13,7 +13,6 @@ import { commercialFeatures } from 'common/modules/commercial/commercial-feature
 type AdSize = {
     width: number,
     height: number,
-    switchUnitId: ?number,
     toString: (_: void) => string,
 };
 
