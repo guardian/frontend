@@ -1,6 +1,5 @@
 // @flow
 import ophan from 'ophan/ng';
-import userPrefs from 'common/modules/user-prefs';
 
 export type Banner = {
     id: string,
@@ -38,7 +37,6 @@ const init = (banners: Array<Banner>): Promise<void> => {
 
     return new Promise(resolve => {
         const TIME_LIMIT = 2000;
-        const messageStates = userPrefs.get('messages');
         let bannerPicked = false;
 
         banners.forEach((banner, index) => {
@@ -66,40 +64,28 @@ const init = (banners: Array<Banner>): Promise<void> => {
                 }
             };
 
-            const hasUserAcknowledgedBanner = (): boolean =>
-                messageStates && messageStates.includes(banner.id);
+            let hasTimedOut = false;
 
-            /**
-             * if the banner has been seen and dismissed
-             * we don't want to show it. Previously this rule was
-             * enforced in the show() of Message.js
-             * */
-            if (hasUserAcknowledgedBanner()) {
+            // checks that take longer than TIME_LIMIT are forced to fail
+            const timeout = setTimeout(() => {
+                hasTimedOut = true;
+
                 pushToResults(false);
-            } else {
-                let hasTimedOut = false;
 
-                // checks that take longer than TIME_LIMIT are forced to fail
-                const timeout = setTimeout(() => {
-                    hasTimedOut = true;
+                const trackingObj = {
+                    component: 'banner-picker-timeout',
+                    value: banner.id,
+                };
 
-                    pushToResults(false);
+                ophan.record(trackingObj);
+            }, TIME_LIMIT);
 
-                    const trackingObj = {
-                        component: 'banner-picker-timeout',
-                        value: banner.id,
-                    };
-
-                    ophan.record(trackingObj);
-                }, TIME_LIMIT);
-
-                banner.canShow().then(result => {
-                    if (!hasTimedOut) {
-                        clearTimeout(timeout);
-                        pushToResults(result);
-                    }
-                });
-            }
+            banner.canShow().then(result => {
+                if (!hasTimedOut) {
+                    clearTimeout(timeout);
+                    pushToResults(result);
+                }
+            });
         });
     });
 };

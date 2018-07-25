@@ -43,6 +43,7 @@ jest.mock('lib/config', () => ({
 
 jest.mock('common/modules/ui/message', () => ({
     Message: jest.fn(),
+    hasUserAcknowledgedBanner: jest.fn(() => false),
 }));
 
 jest.mock('common/modules/analytics/google', () => ({

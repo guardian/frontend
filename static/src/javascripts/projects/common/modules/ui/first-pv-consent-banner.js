@@ -1,7 +1,7 @@
 // @flow
 import config from 'lib/config';
 import { getCookie } from 'lib/cookies';
-import { Message } from 'common/modules/ui/message';
+import { Message, hasUserAcknowledgedBanner } from 'common/modules/ui/message';
 import checkIcon from 'svgs/icon/tick.svg';
 import {
     getAdConsentState,
@@ -104,7 +104,11 @@ const trackInteraction = (interaction: string): void => {
 };
 
 const canShow = (): Promise<boolean> =>
-    Promise.resolve([hasUnsetAdChoices(), isInEU()].every(_ => _ === true));
+    Promise.resolve(
+        hasUnsetAdChoices() &&
+            isInEU() &&
+            !hasUserAcknowledgedBanner(messageCode)
+    );
 
 const track = (): void => {
     upAlertViewCount();

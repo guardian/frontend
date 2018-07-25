@@ -1,7 +1,7 @@
 // @flow
 import config from 'lib/config';
 import { local } from 'lib/storage';
-import { Message } from 'common/modules/ui/message';
+import { Message, hasUserAcknowledgedBanner } from 'common/modules/ui/message';
 import mediator from 'lib/mediator';
 import { membershipEngagementBannerTests } from 'common/modules/experiments/tests/membership-engagement-banner-tests';
 import { testCanBeRun } from 'common/modules/experiments/test-can-run-checks';
@@ -184,6 +184,10 @@ const show = (): void => {
 
 const canShow = (): Promise<boolean> => {
     if (!config.get('switches.membershipEngagementBanner') || isBlocked()) {
+        return Promise.resolve(false);
+    }
+
+    if (hasUserAcknowledgedBanner(messageCode)) {
         return Promise.resolve(false);
     }
 
