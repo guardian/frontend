@@ -148,6 +148,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-commercial-ad-verification",
+    "Test the impact of verifiyng ads",
+    owners = Seq(Owner.withGithub("jeteve")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 9, 30),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-acquisitions-epic-thailand-cave",
     "Always show the epic on thailand cave stories (unlimited)",
     owners = Seq(Owner.withGithub("tsop14")),
