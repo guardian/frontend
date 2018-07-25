@@ -30,12 +30,16 @@ const messageCode = 'engagement-banner';
 const canDisplayMembershipEngagementBanner = (): Promise<boolean> =>
     Promise.resolve(shouldShowReaderRevenue());
 
-const getTimestampOfLastBannerDeploy = fetchJSON('/reader-revenue/contributions-banner-deploy-log', {
-    mode: 'cors',
-}).then( (resp: BannerDeployLog) => resp && resp.time);
+const getTimestampOfLastBannerDeploy = fetchJSON(
+    '/reader-revenue/contributions-banner-deploy-log',
+    {
+        mode: 'cors',
+    }
+).then((resp: BannerDeployLog) => resp && resp.time);
 
-const hasBannerBeenRedeployedSinceClosed = (): Promise<boolean> => {
-    return getTimestampOfLastBannerDeploy.then(timestamp => {
+const hasBannerBeenRedeployedSinceClosed = (): Promise<boolean> =>
+    getTimestampOfLastBannerDeploy
+        .then(timestamp => {
             const bannerLastDeployedAt = new Date(timestamp);
             const userLastClosedBannerAt = new Date(
                 userPrefs.get('engagementBannerLastClosedAt')
@@ -44,7 +48,6 @@ const hasBannerBeenRedeployedSinceClosed = (): Promise<boolean> => {
             return bannerLastDeployedAt > userLastClosedBannerAt;
         })
         .catch(() => false);
-};
 
 const getUserTest = (): ?AcquisitionsABTest =>
     membershipEngagementBannerTests.find(
@@ -136,7 +139,6 @@ const selectSequentiallyFrom = (array: Array<string>): string =>
 
 const hideBanner = (banner: Message) => {
     banner.hide();
-    console.log('hide banner called')
 
     // Store timestamp in localStorage
     userPrefs.set('engagementBannerLastClosedAt', new Date().toISOString());
@@ -230,21 +232,20 @@ const canShow = (): Promise<boolean> => {
     }
 
     bannerParams = deriveBannerParams(getGeoLocation());
-    const hasSeenEnoughArticles = bannerParams && getVisitCount() >= bannerParams.minArticles;
+    const hasSeenEnoughArticles =
+        bannerParams && getVisitCount() >= bannerParams.minArticles;
 
     if (hasSeenEnoughArticles) {
         return hasBannerBeenRedeployedSinceClosed().then(hasBeenRedeployed => {
             if (hasBeenRedeployed) {
                 return canDisplayMembershipEngagementBanner();
             }
-            else {
-                return Promise.resolve(false);
-            }
-        })
+
+            return Promise.resolve(false);
+        });
     }
 
-    return Promise.resolve(false)
-
+    return Promise.resolve(false);
 };
 
 const membershipEngagementBanner: Banner = {
