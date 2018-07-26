@@ -303,7 +303,7 @@ object Commercial {
           if (isContentPage) "Onward container"
           else "Front container",
         editionId = Edition(request).id,
-        frontId = frontId.getOrElse("unknown front id"),
+        frontId = frontId.filter(_.nonEmpty).getOrElse("unknown front id"),
         containerIndex = containerIndex,
         containerTitle = containerDisplayName.getOrElse("unknown container"),
         sponsorName = card.branding.map(_.sponsorName) getOrElse "unknown",

@@ -1,32 +1,22 @@
 // @flow
-import type { GuAdSize, SwitchUnitId } from 'commercial/types';
-import {
-    mpuUnitId,
-    leaderboardUnitId,
-    billboardUnitId,
-} from 'commercial/types';
+import type { GuAdSize } from 'commercial/types';
 
-const getAdSize = (
-    width: number,
-    height: number,
-    switchUnitId: ?SwitchUnitId
-): GuAdSize => {
+const getAdSize = (width: number, height: number): GuAdSize => {
     const toString = (): string =>
         width === height && height === 0 ? 'fluid' : `${width},${height}`;
 
     return Object.freeze({
         width,
         height,
-        switchUnitId,
         toString,
     });
 };
 
 const adSizes: Object = {
     // standard ad sizes
-    billboard: getAdSize(970, 250, billboardUnitId),
-    leaderboard: getAdSize(728, 90, leaderboardUnitId),
-    mpu: getAdSize(300, 250, mpuUnitId),
+    billboard: getAdSize(970, 250),
+    leaderboard: getAdSize(728, 90),
+    mpu: getAdSize(300, 250),
     halfPage: getAdSize(300, 600),
     portrait: getAdSize(300, 1050),
 

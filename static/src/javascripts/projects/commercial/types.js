@@ -94,19 +94,8 @@ export type SlotVisibilityChangedEvent = {
     slot: Slot,
 };
 
-type MPUUnitId = 228;
-type LeaderboardUnitId = 229;
-type BillboardUnitId = 229;
-
-export type SwitchUnitId = MPUUnitId | LeaderboardUnitId | BillboardUnitId;
-
 export type GuAdSize = {
     width: number,
     height: number,
-    switchUnitId: ?SwitchUnitId,
     toString: (_: void) => string,
 };
-
-export const mpuUnitId: MPUUnitId = 228;
-export const leaderboardUnitId: LeaderboardUnitId = 229;
-export const billboardUnitId: BillboardUnitId = 229;
