@@ -37,7 +37,9 @@ describe('url', () => {
         const QUERIES = [
             ['foo', { foo: true }],
             ['foo=bar', { foo: 'bar' }],
+            ['foo=bar&foo=baz', { foo: 'baz' }], // The last value wins
             ['foo=bar&boo=far', { foo: 'bar', boo: 'far' }],
+            ['foo=bar&boo=far&foo=baz', { foo: 'baz', boo: 'far' }],
             ['foo=bar&boo=far&', { foo: 'bar', boo: 'far' }],
             ['foo=bar&boo', { foo: 'bar', boo: true }],
             ['', {}],

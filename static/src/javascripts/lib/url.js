@@ -1,6 +1,7 @@
 // @flow
 
 import { hasPushStateSupport } from 'lib/detect';
+import memoize from 'lodash/functions/memoize';
 
 const supportsPushState = hasPushStateSupport();
 
@@ -8,18 +9,28 @@ const supportsPushState = hasPushStateSupport();
 const getCurrentQueryString = (): string =>
     window.location.search.replace(/^\?/, '');
 
+// This is a pure function that can be memoized safely
+const queryStringToUrlVars = memoize(
+    (queryString: string): Object =>
+        queryString
+            .split('&')
+            .filter(Boolean)
+            .map(
+                param =>
+                    param.includes('=') ? param.split('=') : [param, true]
+            )
+            .reduce((acc, input) => {
+                const result = acc;
+                result[input[0]] = input[1];
+                return result;
+            }, {})
+);
+
 // returns a map of querystrings
 // eg ?foo=bar&fizz=buzz returns {foo: 'bar', fizz: 'buzz'}
+// ?foo=bar&foo=baz returns {foo: 'baz'}
 const getUrlVars = (query?: string): Object =>
-    (query || getCurrentQueryString())
-        .split('&')
-        .filter(Boolean)
-        .map(param => (param.includes('=') ? param.split('=') : [param, true]))
-        .reduce((acc, input) => {
-            const result = acc;
-            result[input[0]] = input[1];
-            return result;
-        }, {});
+    queryStringToUrlVars(query || getCurrentQueryString());
 
 const updateQueryString = (params: Object, historyFn: Function) => {
     const querystringChanged = getCurrentQueryString() !== params.querystring;
