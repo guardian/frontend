@@ -11,18 +11,13 @@ class PassbackController(val controllerComponents: ControllerComponents) extends
 
   private val sizePattern = """(\d\d\d)x(\d\d\d)""".r
 
-  private def parsed(size: String) = size match {
-    case sizePattern(width, height) => Some((width.toInt, height.toInt))
-    case _                          => None
-  }
-
   /*
    * To be called as src of an iframe where a passback will be served
    * when the original ad has been blocked for brand safety.
    */
   def renderIasPassback(size: String): Action[AnyContent] = Action { implicit request =>
-    parsed(size) map {
-      case (width, height) =>
+    size match {
+      case sizePattern(width, height) =>
         Cached(CacheTime(anHour))(
           WithoutRevalidationResult(
             Ok(
@@ -30,10 +25,11 @@ class PassbackController(val controllerComponents: ControllerComponents) extends
                 dfpNetworkId = dfpAccountId,
                 adUnitName = s"$dfpAdUnitGuRoot/x-passback/ias",
                 passbackTarget = "ias",
-                width,
-                height
+                width.toInt,
+                height.toInt
               ))))
-    } getOrElse
-      Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound))
+      case _ =>
+        Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound))
+    }
   }
 }
