@@ -31,7 +31,6 @@ import { trackPerformance } from 'common/modules/analytics/google';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { initCheckDispatcher } from 'commercial/modules/check-dispatcher';
 import { initCommentAdverts } from 'commercial/modules/comment-adverts';
-import { initDFPEpicSlot } from 'commercial/modules/epic/dfp-epic-slot';
 
 const commercialModules: Array<Array<any>> = [
     ['cm-prepare-cmp', initCmpService],
@@ -47,7 +46,6 @@ if (!commercialFeatures.adFree) {
         ['cm-prepare-adverification', prepareAdVerification, true],
         ['cm-prepare-googletag', prepareGoogletag, true],
         ['cm-closeDisabledSlots', closeDisabledSlots],
-        ['cm-dfp-epic', initDFPEpicSlot],
         ['cm-highMerch', initHighMerch],
         ['cm-prepare-sonobi-tag', prepareSonobiTag, true],
         ['cm-articleAsideAdverts', initArticleAsideAdverts, true],
