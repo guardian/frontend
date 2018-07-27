@@ -97,6 +97,10 @@ const setupPlayer = (
             onStateChange,
             onError,
         },
+        playerVars: {
+            rel: 0,
+            showinfo: 0,
+        },
         embedConfig: {
             adsConfig: {
                 nonPersonalizedAd: !wantPersonalisedAds,
