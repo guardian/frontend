@@ -7,13 +7,14 @@ import {
     getRandomIntInclusive as getRandomIntInclusive_,
     getBreakpointKey as getBreakpointKey_,
     shouldIncludeTrustX as shouldIncludeTrustX_,
+    stripMobileSuffix as stripMobileSuffix_,
 } from 'commercial/modules/prebid/utils';
 
 import type { PrebidBidder, PrebidSize } from 'commercial/modules/prebid/types';
 
 const getRandomIntInclusive: any = getRandomIntInclusive_;
 const shouldIncludeTrustX: any = shouldIncludeTrustX_;
-
+const stripMobileSuffix: any = stripMobileSuffix_;
 const getBreakpointKey: any = getBreakpointKey_;
 
 const {
@@ -32,29 +33,30 @@ jest.mock('common/modules/commercial/ad-prefs.lib', () => ({
     getAdConsentState: jest.fn(),
 }));
 
-jest.mock('./utils', () => ({
-    isExcludedGeolocation: jest.fn(() => false),
-    getRandomIntInclusive: jest.fn(),
-    getBreakpointKey: jest.fn(() => 'D'),
-    stripMobileSuffix: jest.fn(str => str),
-    stripTrailingNumbersAbove1: jest.fn(),
-    shouldIncludeTrustX: jest.fn(),
-}));
-
-jest.mock('lib/geolocation', () => ({
-    getSync: jest.fn(() => 'GB'),
-}));
+jest.mock('./utils');
 
 /* eslint-disable guardian-frontend/no-direct-access-config */
+const resetConfig = () => {
+    config.switches.prebidImproveDigital = true;
+    config.switches.prebidIndexExchange = true;
+    config.switches.prebidSonobi = true;
+    config.switches.prebidS2sozone = true;
+    config.switches.prebidTrustx = true;
+    config.switches.prebidXaxis = true;
+    config.ophan = { pageViewId: 'pvid' };
+    config.page.contentType = 'Article';
+    config.page.edition = 'UK';
+};
+
 describe('getDummyServerSideBidders', () => {
     beforeEach(() => {
         getRandomIntInclusive.mockReturnValue(1);
         config.switches.prebidS2sozone = true;
-        config.page.edition = 'UK';
     });
 
     afterEach(() => {
         jest.resetAllMocks();
+        resetConfig();
     });
 
     test('should return an empty array if the switch is off', () => {
@@ -96,8 +98,31 @@ describe('getDummyServerSideBidders', () => {
     });
 });
 
-describe('getIndexSiteId', () => {
+describe('getTrustXAdUnitId', () => {
     beforeEach(() => {
+        getBreakpointKey.mockReturnValue('D');
+        stripMobileSuffix.mockImplementation(str => str);
+    });
+
+    afterEach(() => {
+        jest.resetAllMocks();
+    });
+
+    test('should return the expected value for dfp-ad--comments', () => {
+        expect(getTrustXAdUnitId('dfp-ad--comments', true)).toBe('3840');
+    });
+
+    test('should return the expected values for dfp-ad--inline10', () => {
+        expect(getTrustXAdUnitId('dfp-ad--inline10', true)).toBe('3840');
+        expect(getTrustXAdUnitId('dfp-ad--inline10', false)).toBe('3841');
+    });
+});
+
+
+describe('indexExchangeBidders', () => {
+    beforeEach(() => {
+        jest.resetAllMocks();
+        getBreakpointKey.mockReturnValue('D');
         config.page.pbIndexSites = [
             { bp: 'D', id: 123456 },
             { bp: 'M', id: 234567 },
@@ -106,7 +131,43 @@ describe('getIndexSiteId', () => {
     });
 
     afterEach(() => {
+        resetConfig();
+    });
+
+    test('should return an IX bidder for every size that the slot can take', () => {
+        const slotSizes: Array<PrebidSize> = [[300, 250], [300, 600]];
+        const bidders: Array<PrebidBidder> = indexExchangeBidders(slotSizes);
+        expect(bidders).toEqual([
+            expect.objectContaining({
+                name: 'ix',
+                bidParams: expect.any(Function),
+            }),
+            expect.objectContaining({
+                name: 'ix',
+                bidParams: expect.any(Function),
+            }),
+        ]);
+    });
+
+    test('should include methods in the response that generate the correct bid params', () => {
+        const slotSizes: Array<PrebidSize> = [[300, 250], [300, 600]];
+        const bidders: Array<PrebidBidder> = indexExchangeBidders(slotSizes);
+        expect(bidders[0].bidParams('type', [[1, 2]])).toEqual({
+            siteId: '123456',
+            size: [300, 250],
+        });
+        expect(bidders[1].bidParams('type', [[1, 2]])).toEqual({
+            siteId: '123456',
+            size: [300, 600],
+        });
+    });
+});
+
+describe('getIndexSiteId', () => {
+
+    afterEach(() => {
         jest.resetAllMocks();
+        resetConfig();
     });
 
     test('should return an empty string if pbIndexSites is empty', () => {
@@ -117,6 +178,11 @@ describe('getIndexSiteId', () => {
     });
 
     test('should find the correct ID for the breakpoint', () => {
+        config.page.pbIndexSites = [
+            { bp: 'D', id: 123456 },
+            { bp: 'M', id: 234567 },
+            { bp: 'T', id: 345678 },
+        ];
         const breakpoints = ['M', 'D', 'M', 'T', 'D'];
         const results = [];
         for (let i = 0; i < breakpoints.length; i += 1) {
@@ -137,15 +203,8 @@ describe('bids', () => {
     beforeEach(() => {
         getRandomIntInclusive.mockReturnValue(5);
         shouldIncludeTrustX.mockReturnValue(false);
-        config.switches.prebidImproveDigital = true;
-        config.switches.prebidIndexExchange = true;
-        config.switches.prebidSonobi = true;
-        config.switches.prebidS2sozone = true;
-        config.switches.prebidTrustx = true;
-        config.switches.prebidXaxis = true;
-        config.ophan = { pageViewId: 'pvid' };
-        config.page.pbIndexSites = [];
-        config.page.contentType = 'Article';
+        stripMobileSuffix.mockImplementation(str => str);
+        resetConfig();
     });
 
     afterEach(() => {
