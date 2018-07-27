@@ -2,6 +2,8 @@
 import fakeMediator from 'lib/mediator';
 import fakeConfig from 'lib/config';
 import fakeOphan from 'ophan/ng';
+import fetchJson from 'lib/fetch-json';
+import userPrefs from 'common/modules/user-prefs';
 import { engagementBannerParams as engagementBannerParams_ } from 'common/modules/commercial/membership-engagement-banner-parameters';
 import { membershipEngagementBanner } from 'common/modules/commercial/membership-engagement-banner';
 import { shouldShowReaderRevenue } from 'common/modules/commercial/contributions-utilities';
@@ -101,11 +103,12 @@ jest.mock('ophan/ng', () => ({
 jest.mock('lib/config', () => ({
     get: jest.fn(() => true),
 }));
-jest.mock('lib/detect', () => ({
-    adblockInUse: Promise.resolve(false),
-}));
 jest.mock('common/modules/commercial/contributions-utilities', () => ({
     shouldShowReaderRevenue: jest.fn(() => true),
+}));
+jest.mock('lib/fetch-json', () => jest.fn());
+jest.mock('common/modules/user-prefs', () => ({
+    get: jest.fn(() => '2018-07-24T17:05:46+0000'),
 }));
 
 const FakeMessage: any = require('common/modules/ui/message').Message;
@@ -118,6 +121,9 @@ const fakeGet: any = require('lib/storage').local.get;
 const fakeShouldShowReaderRevenue: any = require('common/modules/commercial/contributions-utilities')
     .shouldShowReaderRevenue;
 
+const fetchJsonMock: JestMockFn<*, *> = (fetchJson: any);
+const fakeUserPrefs: JestMockFn<*, *> = (userPrefs.get: any);
+
 beforeEach(() => {
     FakeMessage.mockReset();
     FakeMessage.prototype.show = jest.fn(() => true);
@@ -126,12 +132,16 @@ beforeEach(() => {
     fakeGet.mockClear();
     fakeShouldShowReaderRevenue.mockClear();
     fakeConfig.get.mockClear();
+    fetchJsonMock.mockImplementation(() =>
+        Promise.resolve({ time: '2018-07-25T17:05:46+0000' })
+    );
 });
 
 afterEach(() => {
     FakeMessage.prototype.show.mockRestore();
     fakeMediator.removeAllListeners();
     fakeOphan.record.mockReset();
+    fetchJsonMock.mockReset();
 });
 
 describe('Membership engagement banner', () => {
@@ -179,6 +189,14 @@ describe('Membership engagement banner', () => {
                 expect(canShow).toBe(false);
             });
         });
+
+        it('should return false if redeploy before last closed', () => {
+            fakeUserPrefs.mockReturnValueOnce('2018-07-26T17:05:46+0000');
+
+            return membershipEngagementBanner.canShow().then(canShow => {
+                expect(canShow).toBe(false);
+            });
+        });
     });
 
     describe('canShow returns true', () => {
@@ -198,14 +216,15 @@ describe('Membership engagement banner', () => {
             emitSpy.mockRestore();
         });
 
-        it('should show the membership engagement banner', () =>
+        it('should show the membership engagement banner', () => {
             membershipEngagementBanner.canShow().then(canShow => {
                 expect(canShow).toBe(true);
 
                 membershipEngagementBanner.show();
 
                 expect(FakeMessage.prototype.show).toHaveBeenCalledTimes(1);
-            }));
+            });
+        });
 
         it('should emit a display event', () =>
             membershipEngagementBanner.canShow().then(canShow => {

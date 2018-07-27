@@ -12,7 +12,7 @@ import { getSync as getGeoLocation } from 'lib/geolocation';
 import { shouldShowReaderRevenue } from 'common/modules/commercial/contributions-utilities';
 import type { Banner } from 'common/modules/ui/bannerPicker';
 import bean from 'bean';
-import fetchJSON from 'lib/fetch-json';
+import fetchJson from 'lib/fetch-json';
 
 import {
     submitComponentEvent,
@@ -30,15 +30,13 @@ const messageCode = 'engagement-banner';
 const canDisplayMembershipEngagementBanner = (): Promise<boolean> =>
     Promise.resolve(shouldShowReaderRevenue());
 
-const getTimestampOfLastBannerDeploy = fetchJSON(
-    '/reader-revenue/contributions-banner-deploy-log',
-    {
+const getTimestampOfLastBannerDeploy = (): Promise<string> =>
+    fetchJson('/reader-revenue/contributions-banner-deploy-log', {
         mode: 'cors',
-    }
-).then((resp: BannerDeployLog) => resp && resp.time);
+    }).then((resp: BannerDeployLog) => resp && resp.time);
 
 const hasBannerBeenRedeployedSinceClosed = (): Promise<boolean> =>
-    getTimestampOfLastBannerDeploy
+    getTimestampOfLastBannerDeploy()
         .then(timestamp => {
             const bannerLastDeployedAt = new Date(timestamp);
             const userLastClosedBannerAt = new Date(
