@@ -12,7 +12,7 @@ export const acquisitionsBannerControlTemplate = (
         <div class="engagement-banner__roundel">
             ${marque36icon.markup}
         </div>
-        <button class="button engagement-banner__close-button js-site-message js-engagement-banner-close-button" data-link-name="hide release message">
+        <button class="button engagement-banner__close-button js-site-message-close js-engagement-banner-close-button" data-link-name="hide release message">
             <span class="u-h">Close</span>
             ${closeCentralIcon.markup}
         </button>
