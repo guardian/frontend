@@ -9,7 +9,7 @@ import play.api.libs.ws.WSClient
 import play.api.mvc._
 import views.support._
 import metrics.TimingMetric
-import play.libs.Json
+import play.api.libs.json.Json
 import renderers.RemoteRender
 import services.CAPILookup
 import implicits.{AmpFormat, EmailFormat, HtmlFormat, JsonFormat}
