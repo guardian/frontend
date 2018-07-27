@@ -334,13 +334,6 @@ const indexExchangeBidders: (PrebidSize[]) => PrebidBidder[] = slotSizes => {
     }));
 };
 
-const otherBidders: PrebidBidder[] = [
-    sonobiBidder,
-    ...(shouldIncludeTrustX() ? [trustXBidder] : []),
-    improveDigitalBidder,
-    xaxisBidder,
-];
-
 const biddersBeingTested: (PrebidBidder[]) => PrebidBidder[] = allBidders => {
     const bidderNamesBeingTested = new URL(
         window.location.href
@@ -360,6 +353,13 @@ const biddersSwitchedOn: (PrebidBidder[]) => PrebidBidder[] = allBidders => {
 };
 
 const currentBidders: (PrebidSize[]) => PrebidBidder[] = slotSizes => {
+    const otherBidders: PrebidBidder[] = [
+        sonobiBidder,
+        ...(shouldIncludeTrustX() ? [trustXBidder] : []),
+        improveDigitalBidder,
+        xaxisBidder,
+    ];
+
     const allBidders = indexExchangeBidders(slotSizes)
         .concat(otherBidders)
         .concat(getDummyServerSideBidders());

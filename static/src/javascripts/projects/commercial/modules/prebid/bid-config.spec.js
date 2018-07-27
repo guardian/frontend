@@ -3,11 +3,15 @@
 
 import config from 'lib/config';
 import { _, bids } from 'commercial/modules/prebid/bid-config';
-import { getRandomIntInclusive as getRandomIntInclusive_ } from 'commercial/modules/prebid/utils';
+import {
+    getRandomIntInclusive as getRandomIntInclusive_,
+    shouldIncludeTrustX as shouldIncludeTrustX_,
+} from 'commercial/modules/prebid/utils';
 
 import type { PrebidBidder } from 'commercial/modules/prebid/types';
 
 const getRandomIntInclusive: any = getRandomIntInclusive_;
+const shouldIncludeTrustX: any = shouldIncludeTrustX_;
 const { getDummyServerSideBidders } = _;
 
 jest.mock('common/modules/commercial/build-page-targeting', () => ({
@@ -23,8 +27,9 @@ jest.mock('./utils', () => ({
     isExcludedGeolocation: jest.fn(() => false),
     getRandomIntInclusive: jest.fn(),
     getBreakpointKey: jest.fn(() => 'D'),
-    stripMobileSuffix: jest.fn(),
+    stripMobileSuffix: jest.fn(str => str),
     stripTrailingNumbersAbove1: jest.fn(),
+    shouldIncludeTrustX: jest.fn(),
 }));
 
 jest.mock('lib/geolocation', () => ({
@@ -82,17 +87,20 @@ describe('getDummyServerSideBidders', () => {
 describe('bids', () => {
     beforeEach(() => {
         getRandomIntInclusive.mockReturnValue(5);
+        shouldIncludeTrustX.mockReturnValue(false);
         config.switches.prebidImproveDigital = true;
         config.switches.prebidIndexExchange = true;
         config.switches.prebidSonobi = true;
         config.switches.prebidS2sozone = true;
-        config.switches.prebidTrustX = true;
+        config.switches.prebidTrustx = true;
         config.switches.prebidXaxis = true;
         config.ophan = { pageViewId: 'pvid' };
         config.page.pbIndexSites = [];
+        config.page.contentType = 'Article';
     });
 
     afterEach(() => {
+        jest.resetAllMocks();
         jsdom.reconfigure({
             url: 'https://some.domain/path',
         });
@@ -127,6 +135,17 @@ describe('bids', () => {
     test('should not include ix bidders when switched off', () => {
         config.switches.prebidIndexExchange = false;
         expect(bidders()).toEqual(['sonobi', 'improvedigital', 'xhb']);
+    });
+
+    test('should include TrustX if in target geolocation', () => {
+        shouldIncludeTrustX.mockReturnValue(true);
+        expect(bidders()).toEqual([
+            'ix',
+            'sonobi',
+            'trustx',
+            'improvedigital',
+            'xhb',
+        ]);
     });
 
     test('should include ix bidder for each size that slot can take', () => {
