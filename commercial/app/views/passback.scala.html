@@ -1,0 +1,9 @@
+@(dfpNetworkId: String, adUnitName: String, passbackTarget: String, width: Int, height: Int)
+
+<!-- Passback for '@adUnitName' Size: [[@width,@height]] -->
+<script src='https://www.googletagservices.com/tag/js/gpt.js'>
+  googletag.pubads().definePassback('/@dfpNetworkId/@adUnitName', [[@width,@height]])
+  .setTargeting('passback', ['@passbackTarget'])
+  .display();
+</script>
+<!-- End -->
