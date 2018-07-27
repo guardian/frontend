@@ -406,4 +406,9 @@ export const bids: (string, PrebidSize[]) => PrebidBid[] = (
         return bid;
     });
 
-export const _ = { getDummyServerSideBidders };
+export const _ = {
+    getDummyServerSideBidders,
+    getIndexSiteId,
+    getTrustXAdUnitId,
+    indexExchangeBidders,
+};

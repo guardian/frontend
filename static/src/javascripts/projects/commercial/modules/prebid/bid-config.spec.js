@@ -5,14 +5,23 @@ import config from 'lib/config';
 import { _, bids } from 'commercial/modules/prebid/bid-config';
 import {
     getRandomIntInclusive as getRandomIntInclusive_,
+    getBreakpointKey as getBreakpointKey_,
     shouldIncludeTrustX as shouldIncludeTrustX_,
 } from 'commercial/modules/prebid/utils';
 
-import type { PrebidBidder } from 'commercial/modules/prebid/types';
+import type { PrebidBidder, PrebidSize } from 'commercial/modules/prebid/types';
 
 const getRandomIntInclusive: any = getRandomIntInclusive_;
 const shouldIncludeTrustX: any = shouldIncludeTrustX_;
-const { getDummyServerSideBidders } = _;
+
+const getBreakpointKey: any = getBreakpointKey_;
+
+const {
+    getDummyServerSideBidders,
+    getIndexSiteId,
+    getTrustXAdUnitId,
+    indexExchangeBidders,
+} = _;
 
 jest.mock('common/modules/commercial/build-page-targeting', () => ({
     buildAppNexusTargeting: () => 'someTestAppNexusTargeting',
@@ -39,10 +48,13 @@ jest.mock('lib/geolocation', () => ({
 /* eslint-disable guardian-frontend/no-direct-access-config */
 describe('getDummyServerSideBidders', () => {
     beforeEach(() => {
-        jest.resetAllMocks();
         getRandomIntInclusive.mockReturnValue(1);
         config.switches.prebidS2sozone = true;
         config.page.edition = 'UK';
+    });
+
+    afterEach(() => {
+        jest.resetAllMocks();
     });
 
     test('should return an empty array if the switch is off', () => {
@@ -81,6 +93,43 @@ describe('getDummyServerSideBidders', () => {
             placementId: '13144370',
             customData: 'someTestAppNexusTargeting',
         });
+    });
+});
+
+describe('getIndexSiteId', () => {
+    beforeEach(() => {
+        config.page.pbIndexSites = [
+            { bp: 'D', id: 123456 },
+            { bp: 'M', id: 234567 },
+            { bp: 'T', id: 345678 },
+        ];
+    });
+
+    afterEach(() => {
+        jest.resetAllMocks();
+    });
+
+    test('should return an empty string if pbIndexSites is empty', () => {
+        config.page.pbIndexSites = [];
+        getBreakpointKey.mockReturnValue('D');
+        expect(getIndexSiteId()).toBe('');
+        expect(getIndexSiteId().length).toBe(0);
+    });
+
+    test('should find the correct ID for the breakpoint', () => {
+        const breakpoints = ['M', 'D', 'M', 'T', 'D'];
+        const results = [];
+        for (let i = 0; i < breakpoints.length; i += 1) {
+            getBreakpointKey.mockReturnValue(breakpoints[i]);
+            results.push(getIndexSiteId());
+        }
+        expect(results).toEqual([
+            '234567',
+            '123456',
+            '234567',
+            '345678',
+            '123456',
+        ]);
     });
 });
 
