@@ -13,6 +13,7 @@ const getCurrentQueryString = (): string =>
 const queryStringToUrlVars = memoize(
     (queryString: string): Object =>
         queryString
+            .replace(/^\?/, '')
             .split('&')
             .filter(Boolean)
             .map(
@@ -30,7 +31,7 @@ const queryStringToUrlVars = memoize(
 // eg ?foo=bar&fizz=buzz returns {foo: 'bar', fizz: 'buzz'}
 // ?foo=bar&foo=baz returns {foo: 'baz'}
 const getUrlVars = (query?: string): Object =>
-    queryStringToUrlVars(query || getCurrentQueryString());
+    queryStringToUrlVars(query || window.location.search);
 
 const updateQueryString = (params: Object, historyFn: Function) => {
     const querystringChanged = getCurrentQueryString() !== params.querystring;
