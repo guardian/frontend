@@ -435,10 +435,6 @@
         width: gs-span(3);
     }
 
-    @include mq(leftCol) {
-        margin-left: -1 * (gs-span(2) + $gs-gutter);
-    }
-
     @include mq(wide) {
         margin-left: -1 * (gs-span(3) + $gs-gutter);
     }
