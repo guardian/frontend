@@ -48,7 +48,7 @@
                     <div class="content__main-column content__main-column--article js-content-main-column @if(article.tags.isSudoku) {sudoku}">
                         @defining(model.article.elements.mainPicture.flatMap(_.images.masterImage)) {
                             case Some(masterImage) => {
-                                <figcaption class="caption caption--immersive hide-from-desktop">
+                                <figcaption class="caption caption--immersive hide-from-leftCol">
                                     Main image:
                                     @masterImage.caption.map(Html(_))
                                     @if(masterImage.displayCredit && !masterImage.creditEndsWithCaption) {
