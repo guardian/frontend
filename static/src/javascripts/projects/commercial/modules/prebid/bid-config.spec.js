@@ -118,7 +118,6 @@ describe('getTrustXAdUnitId', () => {
     });
 });
 
-
 describe('indexExchangeBidders', () => {
     beforeEach(() => {
         jest.resetAllMocks();
@@ -164,7 +163,6 @@ describe('indexExchangeBidders', () => {
 });
 
 describe('getIndexSiteId', () => {
-
     afterEach(() => {
         jest.resetAllMocks();
         resetConfig();
