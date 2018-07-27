@@ -179,7 +179,6 @@
     .tonal__standfirst {
         max-width: gs-span(4) - $gs-gutter/2;
         margin: 0;
-        order: 2;
 
         @include mq($from: tablet) {
             max-width: gs-span(5) + $gs-gutter;

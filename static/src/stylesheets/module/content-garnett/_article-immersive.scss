@@ -179,6 +179,25 @@
     }
 }
 
+.caption--immersive {
+    @include mq($until: leftCol) {
+        margin: $gs-baseline 0 ($gs-baseline / 2);
+    }
+
+    @include mq(leftCol) {
+        margin-left: -$gs-gutter;
+        padding-top: $gs-baseline / 4;
+        position: absolute;
+        top: 100px;
+        width: gs-span(2);
+        transform: translateX(-100%);
+    }
+
+    @include mq(wide) {
+        width: gs-span(3);
+    }
+}
+
 .content__standfirst--immersive-article {
     position: relative;
     padding-top: .33em;
