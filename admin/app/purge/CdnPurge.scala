@@ -5,18 +5,22 @@ import conf.AdminConfiguration.fastly
 import conf.Configuration.environment
 import implicits.Dates
 import play.api.libs.ws.{WSClient, WSResponse}
+import conf.AdminConfiguration.fastly
 
 import scala.concurrent.{ExecutionContext, Future}
 
 object CdnPurge extends Dates with Logging {
 
-  private val serviceId = "2eYr6Wx3ZCUoVPShlCM61l"
+  sealed trait FastlyService { def serviceId: String }
+  case object GuardianHost extends FastlyService { val serviceId = fastly.serviceId }
+  case object AjaxHost extends FastlyService { val serviceId = fastly.ajaxServiceId }
 
   // Performs soft purge which will still serve stale if there is an error
-  def soft(wsClient: WSClient, key:String)(implicit executionContext: ExecutionContext): Future[WSResponse] = {
+  def soft(wsClient: WSClient, key:String, fastlyService: FastlyService)(implicit executionContext: ExecutionContext): Future[WSResponse] = {
     // under normal circumstances we only ever want this called from PROD.
     // Don't want too much decaching going on.
     if (environment.isProd) {
+      val serviceId = fastlyService.serviceId
       wsClient.url(s"https://api.fastly.com/service/$serviceId/purge/$key")
         .withHttpHeaders(
           "Fastly-Key" -> fastly.key,
