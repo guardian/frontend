@@ -2,6 +2,8 @@
 
 import config from 'lib/config';
 import { getTestVariantId } from 'common/modules/experiments/utils.js';
+import memoize from 'lodash/functions/memoize';
+import isEmpty from 'lodash/objects/isEmpty';
 
 import {
     buildAppNexusTargeting,
@@ -340,17 +342,25 @@ const otherBidders: PrebidBidder[] = [
     xaxisBidder,
 ];
 
-const biddersBeingTested: (PrebidBidder[]) => PrebidBidder[] = allBidders => {
-    const bidderNamesBeingTested = new URL(
-        window.location.href
-    ).searchParams.getAll('pbtest');
+// Returns a map { <bidderName>: true } of bidders
+// according to the pbtest URL parameter
+const pbTestNameMap = memoize(
+    (): Object =>
+        new URLSearchParams(window.location.search)
+            .getAll('pbtest')
+            .reduce((acc, value) => {
+                acc[value] = true;
+                return acc;
+            }, {}),
+    (): String =>
+        // Same implicit parameter as the memoized function
+        window.location.search
+);
+// Is pbtest being used?
+const isPbTestOn = (): Boolean => !isEmpty(pbTestNameMap());
 
-    return bidderNamesBeingTested.reduce((bidders, name) => {
-        const bidder = allBidders.find(b => b.name === name);
-        if (bidder) bidders.push(bidder);
-        return bidders;
-    }, []);
-};
+const biddersBeingTested: (PrebidBidder[]) => PrebidBidder[] = allBidders =>
+    allBidders.filter(bidder => pbTestNameMap()[bidder.name]);
 
 const biddersSwitchedOn: (PrebidBidder[]) => PrebidBidder[] = allBidders => {
     const isSwitchedOn: PrebidBidder => boolean = bidder =>
@@ -362,8 +372,9 @@ const currentBidders: (PrebidSize[]) => PrebidBidder[] = slotSizes => {
     const allBidders = indexExchangeBidders(slotSizes)
         .concat(otherBidders)
         .concat(getDummyServerSideBidders());
-    const beingTested = biddersBeingTested(allBidders);
-    return beingTested.length ? beingTested : biddersSwitchedOn(allBidders);
+    return isPbTestOn()
+        ? biddersBeingTested(allBidders)
+        : biddersSwitchedOn(allBidders);
 };
 
 export const bids: (string, PrebidSize[]) => PrebidBid[] = (

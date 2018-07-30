@@ -1,6 +1,7 @@
 // @flow
 
 import { hasPushStateSupport } from 'lib/detect';
+import memoize from 'lodash/functions/memoize';
 
 const supportsPushState = hasPushStateSupport();
 
@@ -8,18 +9,21 @@ const supportsPushState = hasPushStateSupport();
 const getCurrentQueryString = (): string =>
     window.location.search.replace(/^\?/, '');
 
+const queryStringToUrlVars = memoize(
+    (queryString: string): Object =>
+        Array.from(new URLSearchParams(queryString).entries()) // polyfill.io guarantees URLSearchParams
+            .reduce((acc, pair) => {
+                acc[pair[0]] = pair[1] === '' ? true : pair[1];
+                return acc;
+            }, {})
+);
+
 // returns a map of querystrings
 // eg ?foo=bar&fizz=buzz returns {foo: 'bar', fizz: 'buzz'}
+// ?foo=bar&foo=baz returns {foo: 'baz'}
+// ?foo returns { foo: true }
 const getUrlVars = (query?: string): Object =>
-    (query || getCurrentQueryString())
-        .split('&')
-        .filter(Boolean)
-        .map(param => (param.includes('=') ? param.split('=') : [param, true]))
-        .reduce((acc, input) => {
-            const result = acc;
-            result[input[0]] = input[1];
-            return result;
-        }, {});
+    queryStringToUrlVars(query || window.location.search);
 
 const updateQueryString = (params: Object, historyFn: Function) => {
     const querystringChanged = getCurrentQueryString() !== params.querystring;
@@ -46,6 +50,7 @@ const replaceQueryString = (params: Object) =>
     updateQueryString(params, window.history.replaceState.bind(window.history));
 
 // take an Object, construct into a query, e.g. {page: 1, pageSize: 10} => page=1&pageSize=10
+// Note that Array value parameters will turn into param=value1,value2 as opposed to param=value1&param=value2
 const constructQuery = (query: Object): string =>
     Object.keys(query)
         .map(param => {
