@@ -280,43 +280,8 @@
     }
 }
 
-//Picture essay styles - Header
-.immersive-header-container--photo-essay {
-    .content__wrapper--standfirst {
-        background: $brightness-100;
-    }
-
-    .content__standfirst {
-        color: $brightness-7;
-    }
-
-    .u-underline {
-        color: $brightness-20;
-        border-bottom: 1px solid $brightness-20;
-    }
-
-    .content__main-column {
-        position: relative;
-        padding-left: $gs-gutter;
-        padding-right: $gs-baseline;
-        left: -$gs-gutter;
-        margin-left: 0;
-
-        @include mq($from: tablet) {
-            padding-left: 0;
-            left: $gs-gutter / 2;
-        }
-
-        @include mq($from: desktop) {
-            left: $gs-gutter / 2;
-        }
-
-        @include mq(leftCol) {
-            margin-left: $left-column + $gs-gutter;
-        }
-
-        @include mq(wide) {
-            margin-left: $left-column-wide + $gs-gutter;
-        }
+.gs-container--gallery {
+    @include mq(leftCol) {
+        position: static;
     }
 }
