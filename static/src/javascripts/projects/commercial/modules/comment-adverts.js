@@ -4,35 +4,40 @@ import config from 'lib/config';
 import mediator from 'lib/mediator';
 import fastdom from 'lib/fastdom-promise';
 import { addSlot } from 'commercial/modules/dfp/add-slot';
+import { adSizes } from 'commercial/modules/ad-sizes';
+import { isUserLoggedIn } from 'common/modules/identity/api';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { createSlots } from 'commercial/modules/dfp/create-slots';
 import type bonzo from 'bonzo';
 
-const insertCommentAd = (
-    $commentMainColumn: bonzo,
-    $adSlotContainer: bonzo
-): void => {
-    const adSlots = createSlots('comments', {
-        classes: 'mpu-banner-ad',
-    });
+const createCommentSlot = (canBeDmpu: boolean): HTMLElement => {
+    const sizes = canBeDmpu ? { desktop: [adSizes.halfPage] } : {};
+    const adSlots = createSlots('comments', { sizes });
+
     adSlots.forEach(adSlot => {
         adSlot.classList.add('js-sticky-mpu');
     });
+    return adSlots[0];
+};
+
+const insertCommentAd = (
+    $commentMainColumn: bonzo,
+    $adSlotContainer: bonzo,
+    canBeDmpu: boolean
+): void => {
+    const commentSlot: HTMLElement = createCommentSlot(canBeDmpu);
+
     fastdom
         .write(() => {
             $commentMainColumn.addClass('discussion__ad-wrapper');
-
             if (
                 !config.get('page.isLiveBlog') &&
                 !config.get('page.isMinuteArticle')
             ) {
                 $commentMainColumn.addClass('discussion__ad-wrapper-wider');
             }
-
-            adSlots.forEach(adSlot => {
-                $adSlotContainer.append(adSlot);
-            });
-            return adSlots[0];
+            $adSlotContainer.append(commentSlot);
+            return commentSlot;
         })
         // Add only the fist slot (DFP slot) to GTP
         .then((adSlot: HTMLElement) => {
@@ -58,15 +63,30 @@ export const initCommentAdverts = (): ?boolean => {
             fastdom
                 .read(() => $commentMainColumn.dim().height)
                 .then((mainColHeight: number) => {
-                    if (mainColHeight >= 800) {
-                        insertCommentAd($commentMainColumn, $adSlotContainer);
+                    const isLoggedIn: boolean = isUserLoggedIn();
+                    if (
+                        mainColHeight >= 800 ||
+                        (isLoggedIn && mainColHeight >= 600)
+                    ) {
+                        insertCommentAd(
+                            $commentMainColumn,
+                            $adSlotContainer,
+                            true
+                        );
+                    } else if (isLoggedIn) {
+                        insertCommentAd(
+                            $commentMainColumn,
+                            $adSlotContainer,
+                            false
+                        );
                     } else {
-                        mediator.once(
+                        mediator.on(
                             'discussion:comments:get-more-replies',
                             () => {
                                 insertCommentAd(
                                     $commentMainColumn,
-                                    $adSlotContainer
+                                    $adSlotContainer,
+                                    true
                                 );
                             }
                         );
@@ -75,3 +95,5 @@ export const initCommentAdverts = (): ?boolean => {
         }
     );
 };
+
+export const _ = { createCommentSlot, insertCommentAd };
