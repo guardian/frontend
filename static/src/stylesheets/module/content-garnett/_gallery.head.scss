@@ -270,6 +270,13 @@
 
 .caption.caption--gallery {
     color: $brightness-86;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height: $gs-baseline * 9;
+    display: -webkit-box;
+    -webkit-line-clamp: 7;
+    -webkit-box-orient: vertical;
+    z-index: 1;
 
     @include mq($until: desktop) {
         margin: $gs-baseline 0 ($gs-baseline / 2);

@@ -180,6 +180,13 @@
 }
 
 .caption--immersive {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height: $gs-baseline * 9;
+    display: -webkit-box;
+    -webkit-line-clamp: 7;
+    -webkit-box-orient: vertical;
+
     @include mq($until: leftCol) {
         margin: $gs-baseline 0 ($gs-baseline / 2);
     }
@@ -203,15 +210,6 @@
     padding-top: $gs-baseline / 2;
     padding-bottom: $gs-baseline;
     margin-bottom: 0;
-
-    .u-underline {
-        color: $brightness-93;
-        border-bottom: 1px solid rgba($brightness-93, .4);
-
-        &:hover {
-            border-bottom-color: rgba($brightness-93, 1);
-        }
-    }
 
     &.content__standfirst--advertisement {
         font-family: $f-sans-serif-text;
