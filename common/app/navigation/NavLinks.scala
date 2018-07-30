@@ -15,7 +15,8 @@ object NavLinks {
   val indigenousAustraliaOpinion = NavLink("Indigenous", "/commentisfree/series/indigenousx")
   val usNews = NavLink("US", "/us-news", longTitle = "US news")
   val usPolitics = NavLink("US politics", "/us-news/us-politics", longTitle = "US politics")
-  val education = NavLink("Education", "/education")
+  val teachers = NavLink("Teachers", "/teacher-network")
+  val education = NavLink("Education", "/education", children = List(teachers))
   val society = NavLink("Society", "/society")
   val law = NavLink("Law", "/law")
   val scotland = NavLink("Scotland", "/uk/scotland")
@@ -200,6 +201,7 @@ object NavLinks {
       politics,
       ukEnvironment,
       education,
+      society,
       science,
       tech,
       globalDevelopment,
