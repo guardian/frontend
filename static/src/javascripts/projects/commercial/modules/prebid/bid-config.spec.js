@@ -156,7 +156,7 @@ describe('bids', () => {
         setQueryString('pbtest=xhb&pbtest=sonobi');
         config.switches.prebidXaxis = false;
         config.switches.prebidSonobi = false;
-        expect(bidders()).toEqual(['xhb', 'sonobi']);
+        expect(bidders()).toEqual(['sonobi', 'xhb']);
     });
 
     test('should ignore bidder that does not exist', () => {
