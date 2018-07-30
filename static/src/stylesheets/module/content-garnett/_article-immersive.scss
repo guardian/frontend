@@ -180,6 +180,13 @@
 }
 
 .caption--immersive {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height: $gs-baseline * 9;
+    display: -webkit-box;
+    -webkit-line-clamp: 7;
+    -webkit-box-orient: vertical;
+
     @include mq($until: leftCol) {
         margin: $gs-baseline 0 ($gs-baseline / 2);
     }
