@@ -418,7 +418,7 @@
 }
 
 .ad-slot--carrot {
-    min-height: 250px;
+    min-height: 0px;
     padding: 0;
     margin: 5px $gs-gutter $gs-baseline 0;
 
@@ -433,10 +433,6 @@
 
     @include mq(mobileLandscape) {
         width: gs-span(3);
-    }
-
-    @include mq(leftCol) {
-        margin-left: -1 * (gs-span(2) + $gs-gutter);
     }
 
     @include mq(wide) {
