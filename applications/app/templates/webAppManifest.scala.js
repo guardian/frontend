@@ -24,7 +24,6 @@
     ],
     "theme_color": "#e7edef",
     "background_color": "#121212",
-    "start_url": "/uk?INTCMP=webapp",
     "display": "browser",
     "orientation": "portrait",
     "gcm_sender_id":"660236028602",
