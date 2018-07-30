@@ -8,9 +8,9 @@ import model.Cached.RevalidatableResult
 import model.{ApplicationContext, Cached, MetaData, NoCache, SectionId, SimplePage}
 import play.api.data.Form
 import play.api.data.Forms._
-import play.api.libs.json.{JsValue, Json}
+import play.api.libs.json.Json
 import play.api.libs.ws._
-import play.api.mvc.{request, _}
+import play.api.mvc._
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
@@ -36,7 +36,7 @@ class TechFeedbackController(ws: WSClient, val controllerComponents: ControllerC
     val page = model.SimplePage(MetaData.make(
       request.path,
       Some(SectionId.fromId("info")),
-      "Your report has been sent"
+      "Submit Feedback"
     ))
 
     val sendFeedback: Future[Result] = ws.url(Configuration.feedback.feedpipeEndpoint)
