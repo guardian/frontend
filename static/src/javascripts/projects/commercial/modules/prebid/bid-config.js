@@ -76,6 +76,7 @@ const getTrustXAdUnitId = (slotId: string): string => {
                 if (isDesktopArticle) return '3840';
                 return '3841';
             }
+            // eslint-disable-next-line no-console
             console.log(
                 `PREBID: Failed to get TrustX ad unit for slot ${slotId}.`
             );
@@ -223,6 +224,27 @@ const getXaxisPlacementId = (sizes: PrebidSize[]): number => {
     return 13663304;
 };
 
+/* testing instrument */
+// Returns a map { <bidderName>: true } of bidders
+// according to the pbtest URL parameter
+const pbTestNameMap = memoize(
+    (): Object =>
+        new URLSearchParams(window.location.search)
+            .getAll('pbtest')
+            .reduce((acc, value) => {
+                acc[value] = true;
+                return acc;
+            }, {}),
+    (): String =>
+        // Same implicit parameter as the memoized function
+        window.location.search
+);
+// Is pbtest being used?
+const isPbTestOn = (): boolean => !isEmpty(pbTestNameMap());
+// Helper for conditions
+const inPbTestOr = (liveClause: boolean): boolean => isPbTestOn() || liveClause;
+
+/* Bidders */
 const sonobiBidder: PrebidBidder = {
     name: 'sonobi',
     switchName: 'prebidSonobi',
@@ -312,11 +334,13 @@ const getDummyServerSideBidders = (): Array<PrebidBidder> => {
 
     // Experimental. Only 0.01% of the PVs.
     if (
-        config.get('switches.prebidS2sozone') &&
-        getRandomIntInclusive(1, 10000) === 1
+        inPbTestOr(
+            config.get('switches.prebidS2sozone') &&
+                getRandomIntInclusive(1, 10000) === 1
+        )
     ) {
         dummyServerSideBidders.push(openxBidder);
-        if (!isExcludedGeolocation()) {
+        if (inPbTestOr(!isExcludedGeolocation())) {
             dummyServerSideBidders.push(appnexusBidder);
         }
     }
@@ -336,30 +360,6 @@ const indexExchangeBidders: (PrebidSize[]) => PrebidBidder[] = slotSizes => {
     }));
 };
 
-const otherBidders: PrebidBidder[] = [
-    sonobiBidder,
-    trustXBidder,
-    improveDigitalBidder,
-    xaxisBidder,
-];
-
-// Returns a map { <bidderName>: true } of bidders
-// according to the pbtest URL parameter
-const pbTestNameMap = memoize(
-    (): Object =>
-        new URLSearchParams(window.location.search)
-            .getAll('pbtest')
-            .reduce((acc, value) => {
-                acc[value] = true;
-                return acc;
-            }, {}),
-    (): String =>
-        // Same implicit parameter as the memoized function
-        window.location.search
-);
-// Is pbtest being used?
-const isPbTestOn = (): Boolean => !isEmpty(pbTestNameMap());
-
 const biddersBeingTested: (PrebidBidder[]) => PrebidBidder[] = allBidders =>
     allBidders.filter(bidder => pbTestNameMap()[bidder.name]);
 
@@ -372,7 +372,7 @@ const biddersSwitchedOn: (PrebidBidder[]) => PrebidBidder[] = allBidders => {
 const currentBidders: (PrebidSize[]) => PrebidBidder[] = slotSizes => {
     const otherBidders: PrebidBidder[] = [
         sonobiBidder,
-        ...(shouldIncludeTrustX() ? [trustXBidder] : []),
+        ...(inPbTestOr(shouldIncludeTrustX()) ? [trustXBidder] : []),
         improveDigitalBidder,
         xaxisBidder,
     ];
@@ -394,11 +394,14 @@ export const bids: (string, PrebidSize[]) => PrebidBid[] = (
             bidder: bidder.name,
             params: bidder.bidParams(slotId, slotSizes),
         };
-        if (bidder.labelAny) {
-            bid.labelAny = bidder.labelAny;
-        }
-        if (bidder.labelAll) {
-            bid.labelAll = bidder.labelAll;
+        if (!isPbTestOn()) {
+            // Label filtering only when not in test mode.
+            if (bidder.labelAny) {
+                bid.labelAny = bidder.labelAny;
+            }
+            if (bidder.labelAll) {
+                bid.labelAll = bidder.labelAll;
+            }
         }
         return bid;
     });

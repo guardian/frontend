@@ -12,8 +12,8 @@ const getCurrentQueryString = (): string =>
 const queryStringToUrlVars = memoize(
     (queryString: string): Object =>
         Array.from(new URLSearchParams(queryString).entries()) // polyfill.io guarantees URLSearchParams
-            .reduce((acc, pair) => {
-                acc[pair[0]] = pair[1] === '' ? true : pair[1];
+            .reduce((acc, [key, value]) => {
+                acc[key] = value === '' ? true : value;
                 return acc;
             }, {})
 );
