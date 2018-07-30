@@ -1,6 +1,5 @@
 .immersive-header-container {
     background-color: $brightness-7;
-    overflow-x: hidden;
 }
 
 .immersive-header-container--photo-essay {
@@ -8,9 +7,23 @@
 }
 
 .immersive-main-media__headline-container--gallery {
-    position: relative;
     background: transparent;
     margin-top: -$gs-gutter*5;
+    position: relative;
+
+    @include mq(tablet) {
+        &:after {
+            content: '';
+            display: block;
+            position: absolute;
+            width: 50%;
+            right: 0;
+            background-color: $brightness-7;
+            z-index: 0;
+            top: 0;
+            bottom: 0;
+        }
+    }
 
     .gs-container {
         @include mq($until: tablet) {
@@ -20,22 +33,17 @@
 
     .content__main-column {
         background-color: $brightness-7;
-        margin-left: -$gs-gutter/2;
-        padding: 0 $gs-gutter/2 $gs-baseline*2;
+        margin-left: -$gs-gutter / 2;
+        padding: 0 ($gs-gutter / 2) ($gs-baseline * 2);
         min-height: gs-height(2);
-        //This allows the headline block to be aligned to the left and not run full width
-        width: calc(95% - #{$gs-gutter});
-        max-width: none;
+        position: static;
 
-        @include mq($from: tablet) {
+        @include mq(tablet) {
             margin-left: $gs-gutter;
-            //120 needed so that container always runs to edge
-            width: 120%;
-            padding-left: 0;
         }
 
-        @include mq($from: desktop) {
-            margin-left: $left-column-wide + ($gs-gutter / 2) * 3;
+        @include mq(desktop) {
+            margin-left: $left-column-wide + ($gs-gutter + $gs-gutter / 2) ;
         }
     }
 
@@ -43,7 +51,6 @@
         @include fs-headline(6, true);
         line-height: 1.1;
         font-weight: 700;
-        max-width: gs-span(8);
         padding: 0 $gs-gutter/2;
 
         @include mq(mobileLandscape) {
@@ -51,12 +58,15 @@
         }
 
         @include mq(tablet) {
-            padding-left: $gs-gutter/2;
+            padding-left: 0;
         }
 
         @include mq(desktop) {
             font-size: 50px;
             line-height: 54px;
+            width: gs-span(8) - ($gs-gutter / 2);
+            z-index: 1;
+            position: relative;
         }
     }
 
@@ -68,8 +78,6 @@
             font-size: 50px;
             line-height: 54px;
         }
-
-
     }
 
     .content__labels {
@@ -85,6 +93,7 @@
 
         @include mq(tablet) {
             padding: $gs-baseline/2 $gs-gutter/2;
+            margin-left: -$gs-gutter / 2;
         }
     }
 

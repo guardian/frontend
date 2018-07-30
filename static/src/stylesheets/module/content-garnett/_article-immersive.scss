@@ -200,14 +200,9 @@
 
 .content__standfirst--immersive-article {
     position: relative;
-    padding-top: .33em;
-    padding-bottom: .5rem;
+    padding-top: $gs-baseline / 2;
+    padding-bottom: $gs-baseline;
     margin-bottom: 0;
-    color: #ffffff;
-
-    @include mq(desktop) {
-        padding-bottom: 1rem;
-    }
 
     .u-underline {
         color: $brightness-93;
@@ -225,7 +220,6 @@
 
 .content__wrapper--standfirst {
     @include content-gutter();
-    background-color: rgba(0, 0, 0, .5);
 }
 
 .content--immersive-article:not(.content--immersive-garnett) {
