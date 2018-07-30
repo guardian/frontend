@@ -69,11 +69,9 @@
                     case Some(masterImage) => {
                         <figcaption class="caption caption--immersive hide-until-leftcol">
                             @fragments.inlineSvg("triangle", "icon")
-                            @masterImage.credit.map { credit =>
-                                @credit
-                            }
-                            @masterImage.caption.map { caption =>
-                                @caption
+                            @masterImage.caption.map(Html(_))
+                            @if(masterImage.displayCredit && !masterImage.creditEndsWithCaption) {
+                                @masterImage.credit.map(Html(_))
                             }
                         </figcaption>
                     }

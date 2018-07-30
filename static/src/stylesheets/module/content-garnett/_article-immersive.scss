@@ -211,15 +211,6 @@
     padding-bottom: $gs-baseline;
     margin-bottom: 0;
 
-    .u-underline {
-        color: $brightness-93;
-        border-bottom: 1px solid rgba($brightness-93, .4);
-
-        &:hover {
-            border-bottom-color: rgba($brightness-93, 1);
-        }
-    }
-
     &.content__standfirst--advertisement {
         font-family: $f-sans-serif-text;
     }
