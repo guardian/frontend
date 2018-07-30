@@ -1,20 +1,51 @@
 // @flow
 import { getSync as getSync_ } from 'lib/geolocation';
+import { getBreakpoint as getBreakpoint_ } from 'lib/detect';
 import {
+    getBreakpointKey,
     isExcludedGeolocation,
+    shouldIncludeTrustX,
     stripMobileSuffix,
     stripTrailingNumbersAbove1,
 } from './utils';
 
 const getSync: any = getSync_;
+const getBreakpoint: any = getBreakpoint_;
 
 jest.mock('lib/geolocation', () => ({
     getSync: jest.fn(() => 'GB'),
 }));
 
+jest.mock('lib/detect', () => ({
+    getBreakpoint: jest.fn(() => 'mobile'),
+}));
+
 describe('Utils', () => {
     beforeEach(() => {
         jest.resetAllMocks();
+    });
+
+    test('getBreakpointKey should find the correct key', () => {
+        const breakpoints = ['mobile', 'phablet', 'tablet', 'desktop', 'wide'];
+        const results = [];
+        for (let i = 0; i < breakpoints.length; i += 1) {
+            getBreakpoint.mockReturnValueOnce(breakpoints[i]);
+            results.push(getBreakpointKey());
+        }
+        expect(results).toEqual(['M', 'M', 'T', 'D', 'D']);
+    });
+
+    test('shouldIncludeTrustX should return true if geolocation is US', () => {
+        getSync.mockReturnValueOnce('US');
+        expect(shouldIncludeTrustX()).toBe(true);
+    });
+
+    test('shouldIncludeTrustX should otherwise return false', () => {
+        const testGeos = ['FK', 'GI', 'GG', 'IM', 'JE', 'SH', 'CA'];
+        for (let i = 0; i < testGeos.length; i += 1) {
+            getSync.mockReturnValueOnce(testGeos[i]);
+            expect(shouldIncludeTrustX()).toBe(false);
+        }
     });
 
     test('isExcludedGeolocation should return true for excluded geolocations', () => {
