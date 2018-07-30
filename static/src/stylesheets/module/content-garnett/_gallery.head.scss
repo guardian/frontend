@@ -2,10 +2,6 @@
     background-color: $brightness-7;
 }
 
-.immersive-header-container--photo-essay {
-    background-color: $brightness-100;
-}
-
 .immersive-main-media__headline-container--gallery {
     background: transparent;
     margin-top: -$gs-gutter*5;
@@ -250,6 +246,20 @@
             @include mq(tablet) {
                 margin-top: $gs-baseline;
             }
+        }
+    }
+}
+
+.immersive-header-container--photo-essay {
+    background-color: $brightness-100;
+
+    .content__main-column {
+        @include mq(desktop) {
+            margin-left: 0;
+        }
+
+        @include mq(leftCol) {
+            margin-left: gs-span(2) + ($gs-gutter * 2);
         }
     }
 }
