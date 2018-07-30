@@ -285,24 +285,3 @@
         position: static;
     }
 }
-
-.caption--gallery {
-    color: $brightness-86;
-
-    @include mq($until: desktop) {
-        margin: $gs-baseline 0 ($gs-baseline / 2);
-    }
-
-    @include mq(desktop) {
-        padding-top: $gs-baseline / 4;
-        position: absolute;
-        top: 100px;
-        width: gs-span(3);
-        transform: translateX(-100%);
-        margin-left: -$gs-gutter;
-    }
-
-    .inline-icon__svg {
-        fill: $brightness-86;
-    }
-}
