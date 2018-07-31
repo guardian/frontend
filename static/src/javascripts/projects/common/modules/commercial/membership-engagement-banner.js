@@ -13,6 +13,7 @@ import { shouldShowReaderRevenue } from 'common/modules/commercial/contributions
 import type { Banner } from 'common/modules/ui/bannerPicker';
 import bean from 'bean';
 import fetchJson from 'lib/fetch-json';
+import reportError from 'lib/report-error';
 
 import {
     submitComponentEvent,
@@ -26,9 +27,6 @@ type BannerDeployLog = {
 };
 
 const messageCode = 'engagement-banner';
-
-const canDisplayMembershipEngagementBanner = (): Promise<boolean> =>
-    Promise.resolve(shouldShowReaderRevenue());
 
 const getTimestampOfLastBannerDeploy = (): Promise<string> =>
     fetchJson('/reader-revenue/contributions-banner-deploy-log', {
@@ -45,7 +43,17 @@ const hasBannerBeenRedeployedSinceClosed = (): Promise<boolean> =>
 
             return bannerLastDeployedAt > userLastClosedBannerAt;
         })
-        .catch(() => false);
+        .catch(err => {
+            // Capture in sentry
+            reportError(
+                new Error(
+                    `Unable to get contributions banner deploy log: ${err}`
+                ),
+                { feature: 'reader-revenue-contributions-banner' },
+                false
+            );
+            return false;
+        });
 
 const getUserTest = (): ?AcquisitionsABTest =>
     membershipEngagementBannerTests.find(
@@ -229,14 +237,8 @@ const canShow = (): Promise<boolean> => {
     const hasSeenEnoughArticles =
         bannerParams && getVisitCount() >= bannerParams.minArticles;
 
-    if (hasSeenEnoughArticles) {
-        return hasBannerBeenRedeployedSinceClosed().then(hasBeenRedeployed => {
-            if (hasBeenRedeployed) {
-                return canDisplayMembershipEngagementBanner();
-            }
-
-            return Promise.resolve(false);
-        });
+    if (hasSeenEnoughArticles && shouldShowReaderRevenue()) {
+        return hasBannerBeenRedeployedSinceClosed();
     }
 
     return Promise.resolve(false);
