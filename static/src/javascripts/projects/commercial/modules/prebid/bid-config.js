@@ -410,8 +410,10 @@ export const bids: (string, PrebidSize[]) => PrebidBid[] = (
     });
 
 export const _ = {
+    getAppNexusPlacementId,
     getDummyServerSideBidders,
     getIndexSiteId,
+    getImprovePlacementId,
     getTrustXAdUnitId,
     indexExchangeBidders,
 };
