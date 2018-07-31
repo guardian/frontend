@@ -86,7 +86,7 @@ sizeCallbacks[adSizes.mpu] = (_, advert) =>
  */
 sizeCallbacks[adSizes.halfPage] = (_, advert) =>
     fastdom.read(() => {
-        if (advert.node.classList.contains('js-sticky-mpu')) {
+        if (advert.node.classList.contains('ad-slot--right')) {
             stickyMpu(advert.node);
         }
         if (advert.node.classList.contains('ad-slot--comments')) {

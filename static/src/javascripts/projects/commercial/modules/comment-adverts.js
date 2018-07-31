@@ -80,7 +80,7 @@ export const initCommentAdverts = (): ?boolean => {
                             false
                         );
                     } else {
-                        mediator.on(
+                        mediator.once(
                             'discussion:comments:get-more-replies',
                             () => {
                                 insertCommentAd(
