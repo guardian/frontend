@@ -113,6 +113,11 @@
                                     @fragments.standfirst(v)
                                     </div>
                                 }
+                                case a: Audio => {
+                                    @a.elements.images.map{ img =>
+                                        @fragments.imageFigure(img.images)
+                                    }
+                                }
                                 case _ => {}
                             }
 

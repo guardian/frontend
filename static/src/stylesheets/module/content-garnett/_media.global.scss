@@ -43,12 +43,15 @@
             margin-left: -10rem;
         }
         .content__meta-container {
-            top: auto;
+            top: 175px;
         }
     }
     @media (min-width: 81.25em) {
         .player {
             margin-left: -15rem;
+        }
+        .content__meta-container {
+            top: 235px;
         }
     }
 
