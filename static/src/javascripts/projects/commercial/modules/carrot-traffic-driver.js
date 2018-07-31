@@ -101,7 +101,9 @@ const insertSlot = (paras: HTMLElement[]): Promise<void> => {
 
 export const init = (): Promise<void> => {
     if (commercialFeatures.carrotTrafficDriver) {
-        const rules = isBreakpoint({max: 'tablet'}) ? mobileRules : defaultRules;
+        const rules = isBreakpoint({ max: 'tablet' })
+            ? mobileRules
+            : defaultRules;
         return spaceFiller.fillSpace(rules, insertSlot, {
             waitForImages: false,
             waitForLinks: true,
