@@ -146,4 +146,13 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-optimize-test",
+    "Bootstrap the AB testing framework to display the Epic using Google Optimize",
+    owners = Seq(Owner.withGithub("Mullefa")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 7, 31),
+    exposeClientSide = true
+  )
 }
