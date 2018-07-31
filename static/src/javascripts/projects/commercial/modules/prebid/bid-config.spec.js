@@ -50,6 +50,77 @@ const resetConfig = () => {
     config.page.edition = 'UK';
 };
 
+describe('getAppNexusPlacementId', () => {
+    beforeEach(() => {
+        resetConfig();
+    });
+
+    afterEach(() => {
+        jest.resetAllMocks();
+        resetConfig();
+    });
+
+    const generateTestIds = (): Array<string> => {
+        const prebidSizes: Array<Array<PrebidSize>> = [
+            [[300, 250]],
+            [[300, 600]],
+            [[970, 250]],
+            [[728, 90]],
+            [[1, 2]],
+        ];
+        return prebidSizes.map(getAppNexusPlacementId);
+    };
+
+    test('should return the expected values when on UK Edition and desktop device', () => {
+        getBreakpointKey.mockReturnValue('D');
+        expect(generateTestIds()).toEqual([
+            '13366606',
+            '13366606',
+            '13366615',
+            '13366615',
+            '13144370',
+        ]);
+    });
+
+    test('should return the expected values when on UK Edition and tablet device', () => {
+        getBreakpointKey.mockReturnValue('T');
+        expect(generateTestIds()).toEqual([
+            '13366913',
+            '13144370',
+            '13144370',
+            '13366916',
+            '13144370',
+        ]);
+    });
+
+    test('should return the expected values when on UK Edition and mobile device', () => {
+        getBreakpointKey.mockReturnValue('M');
+        expect(generateTestIds()).toEqual([
+            '13366904',
+            '13144370',
+            '13144370',
+            '13144370',
+            '13144370',
+        ]);
+    });
+
+    test('should return the default value on all other editions', () => {
+        const editions = ['AU', 'US', 'INT'];
+        const expected = [
+            '13144370',
+            '13144370',
+            '13144370',
+            '13144370',
+            '13144370',
+        ];
+
+        editions.forEach(edition => {
+            config.page.edition = edition;
+            expect(generateTestIds()).toEqual(expected);
+        });
+    });
+});
+
 describe('getDummyServerSideBidders', () => {
     beforeEach(() => {
         getRandomIntInclusive.mockReturnValue(1);
