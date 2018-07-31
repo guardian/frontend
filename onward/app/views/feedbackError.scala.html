@@ -1,0 +1,32 @@
+@(page: model.Page, path: String)(implicit request: RequestHeader, context: model.ApplicationContext)
+
+@mainLegacy(page){ } {
+    <div class="l-side-margins">
+        <div class="content content--expired">
+            <header class="content__head">
+                <div class="gs-container">
+                    <div class="content__main-column">
+                        <h1 itemprop="headline" class="content__headline">A problem has occurred</h1>
+                    </div>
+                </div>
+            </header>
+            <div class="content__main">
+                <div class="gs-container">
+                    <div class="content__main-column content__main-column--expired">
+                        <div class="js-article__container u-cf">
+                            <div class="from-content-api" itemprop="articleBody">
+                                <div class="from-content-api">
+                                    <h2>Unable to submit feedback</h2>
+                                    <p>
+                                        Unfortunately there was an error when submitting your feedback. You can try
+                                        again later, or contact us directly at <a href="mailto:userhelp@@theguardian.com">userhelp@@theguardian.com</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
