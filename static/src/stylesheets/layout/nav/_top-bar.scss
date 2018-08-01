@@ -23,6 +23,12 @@
         color: $brightness-20;
     }
 
+    .inline-icon {
+        fill: $brightness-7;
+        display: inline-block;
+        vertical-align: middle;
+    }
+
     @include mq(tablet) {
         font-size: 14px;
     }

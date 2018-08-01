@@ -18,8 +18,8 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-new-sign-in-experiment-bump",
-    "This test will send a % of users to the new sign in experience",
+    "ab-mobile-nav-sign-in",
+    "This test will show a sign in link in the mobile nav",
     owners = Seq(Owner.withGithub("walaura")),
     safeState = Off,
     sellByDate = new LocalDate(2019, 6, 7),
