@@ -13,6 +13,7 @@ const createEpicIframe = (url: string): Promise<EpicComponent> => {
     const container = document.createElement('div');
     const iframe = document.createElement('iframe');
     iframe.src = url;
+    iframe.style.width = '100%';
     iframe.frameBorder = '0';
     container.appendChild(iframe);
     // TODO: check epic has been rendered in iframe
