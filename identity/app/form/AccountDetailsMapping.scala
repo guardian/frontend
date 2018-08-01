@@ -19,7 +19,6 @@ class AccountDetailsMapping
       "title"                     -> comboList("" :: Titles.titles),
       "firstName"                 -> nonEmptyText,
       "secondName"                -> nonEmptyText,
-      "birthDate"                 -> dateMapping,
       "address"                   -> idAddress,
       "billingAddress"            -> optional(idAddress),
       "telephoneNumber"           -> optional(telephoneNumberMapping),
@@ -32,7 +31,6 @@ class AccountDetailsMapping
     ("privateFields.title", "title"),
     ("privateFields.firstName", "firstName"),
     ("privateFields.secondName", "secondName"),
-    ("dates.birthDate", "birthDate"),
     ("privateFields.address1", "address.line1"),
     ("privateFields.address2", "address.line2"),
     ("privateFields.address3", "address.line3"),
@@ -54,7 +52,6 @@ case class AccountFormData(
   title: String,
   firstName: String,
   secondName: String,
-  birthDate: DateFormData,
   address: AddressFormData,
   billingAddress: Option[AddressFormData],
   telephoneNumber: Option[TelephoneNumberFormData],
@@ -63,7 +60,6 @@ case class AccountFormData(
 
   def toUserUpdateDTO(currentUser: User): UserUpdateDTO = UserUpdateDTO(
     primaryEmailAddress = toUpdate(primaryEmailAddress, Some(currentUser.primaryEmailAddress)),
-    dates = Some(UserDates(birthDate = birthDate.dateTime)),
     privateFields = Some(PrivateFields(
       title = toUpdate(title, currentUser.privateFields.title),
       firstName = toUpdate(firstName, currentUser.privateFields.firstName),
@@ -92,7 +88,6 @@ object AccountFormData {
     title = user.privateFields.title getOrElse "",
     firstName = user.privateFields.firstName getOrElse "",
     secondName = user.privateFields.secondName getOrElse "",
-    birthDate = DateFormData(user.dates.birthDate),
     address = AddressFormData(
       address1 = user.privateFields.address1 getOrElse "",
       address2 = user.privateFields.address2 getOrElse "",
