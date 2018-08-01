@@ -37,6 +37,15 @@ class Search {
                             return;
                         }
 
+                        fastdom.write(() => {
+                            toggle.setAttribute('role', 'button');
+                            toggle.setAttribute(
+                                'aria-controls',
+                                'search-popup'
+                            );
+                            toggle.setAttribute('aria-haspopup', 'dialog');
+                        });
+
                         fastdom
                             .read(
                                 () =>
