@@ -26,7 +26,7 @@ export const mobileNavSignIn: ABTest = {
     author: 'Laura gonzalez',
     description: 'This test will show a sign in link in the mobile nav.',
     audience: 0.1,
-    audienceOffset: .5,
+    audienceOffset: 0.5,
     successMeasure: 'signed in mobile users',
     audienceCriteria: 'mobile users',
     dataLinkNames: 'n/a',
