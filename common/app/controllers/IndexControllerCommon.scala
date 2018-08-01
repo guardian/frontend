@@ -66,7 +66,8 @@ trait IndexControllerCommon extends BaseController with Index with RendersItemRe
     case _ =>
       logGoogleBot(request)
       index(Edition(request), path, inferPage(request), request.isRss) map {
-        case Left(model) => renderFaciaFront(model)
+        case Left(model) if model.contents.nonEmpty => renderFaciaFront(model)
+        case Left(model) if model.contents.isEmpty => NoCache(NotFound)
         case Right(other) => RenderOtherStatus(other)
       }
   }
