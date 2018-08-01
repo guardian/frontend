@@ -37,11 +37,16 @@ const hasBannerBeenRedeployedSinceClosed = (): Promise<boolean> =>
     getTimestampOfLastBannerDeploy()
         .then(timestamp => {
             const bannerLastDeployedAt = new Date(timestamp);
-            const userLastClosedBannerAt = new Date(
-                userPrefs.get('engagementBannerLastClosedAt')
+            const userLastClosedBannerAt = userPrefs.get(
+                'engagementBannerLastClosedAt'
             );
 
-            return bannerLastDeployedAt > userLastClosedBannerAt;
+            if (!userLastClosedBannerAt) {
+                // show the banner if we can't get a value for this
+                return true;
+            }
+
+            return bannerLastDeployedAt > new Date(userLastClosedBannerAt);
         })
         .catch(err => {
             // Capture in sentry
