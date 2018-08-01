@@ -30,10 +30,14 @@ const displayEpicIframe = (id: string, url: string): Promise<EpicComponent> =>
         .then(insertAtSubmeta)
         .then(epic => {
             const host = `${window.location.protocol}//${window.location.host}`;
-            iframe.contentWindow.postMessage({
-                id,
-                host,
-            });
+            console.log('posting iframe message');
+            iframe.contentWindow.postMessage(
+                JSON.stringify({
+                    id,
+                    host,
+                }),
+                '*'
+            );
             return epic;
         });
 
