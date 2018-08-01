@@ -50,28 +50,37 @@ class Search {
                                 }
 
                                 bean.on(toggle, 'click', e => {
-                                    const handleEsc = (event: Event) => {
-                                        if (event.key === 'Escape') {
-                                            dismissSearchPopup(event);
+                                    const handleEsc = (event: Event): void => {
+                                        const keyboardEvent: KeyboardEvent = (event: any);
+
+                                        if (keyboardEvent.key === 'Escape') {
+                                            // eslint-disable-next-line no-use-before-define
+                                            dismissSearchPopup(keyboardEvent);
                                             toggle.focus();
                                         }
                                     };
-                                    const dismissSearchPopup = (event: Event): void => {
+                                    const dismissSearchPopup = (
+                                        event: Event
+                                    ): void => {
                                         event.preventDefault();
-                                        toggle.classList.remove(
-                                            'is-active'
-                                        );
+                                        toggle.classList.remove('is-active');
                                         popup.classList.add('is-off');
 
                                         bean.off(
                                             document,
                                             'click',
+                                            // eslint-disable-next-line no-use-before-define
                                             maybeDismissSearchPopup
                                         );
-                                        document.removeEventListener('keyup', handleEsc);
+                                        document.removeEventListener(
+                                            'keyup',
+                                            handleEsc
+                                        );
                                     };
-                                    const maybeDismissSearchPopup = (event: Event): void => {
-                                        let el = event.target;
+                                    const maybeDismissSearchPopup = (
+                                        event: Event
+                                    ): void => {
+                                        let el: ?Element = (event.target: any);
                                         let clickedPop = false;
 
                                         while (el && !clickedPop) {
@@ -93,7 +102,7 @@ class Search {
                                                 clickedPop = true;
                                             }
 
-                                            el = el.parentNode;
+                                            el = el && el.parentElement;
                                         }
 
                                         if (!clickedPop) {
@@ -113,7 +122,10 @@ class Search {
                                                 'click',
                                                 maybeDismissSearchPopup
                                             );
-                                            document.addEventListener('keyup', handleEsc);
+                                            document.addEventListener(
+                                                'keyup',
+                                                handleEsc
+                                            );
                                         }
                                     });
 
