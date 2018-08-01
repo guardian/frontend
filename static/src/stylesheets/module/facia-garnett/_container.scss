@@ -453,7 +453,7 @@ $header-image-size-desktop: 100px;
     padding: 0;
     color: $brightness-46;
     text-align: right;
-    min-width: 60px;
+    min-width: gs-span(1);
 
     &:hover,
     &:focus {
