@@ -7,33 +7,79 @@ import {
     reportEpicError,
 } from 'common/modules/commercial/epic/epic-utils';
 
+import { init as initMessenger } from 'commercial/modules/messenger';
+// import { init as resize } from 'commercial/modules/messenger/resize';
+import {addResizeListener, lastViewportRead} from 'commercial/modules/messenger/viewport';
+
 import type { EpicComponent } from 'common/modules/commercial/epic/epic-utils';
 
 // TODO: fix hack
 let iframe: HTMLIFrameElement;
 
-const createEpicIframe = (id: string, url: string): Promise<EpicComponent> => {
+const createEpicIframe = (id: string, url: string): Promise<EpicComponent> => new Promise((resolve, reject) => {
     const container = document.createElement('div');
     iframe = document.createElement('iframe');
     iframe.src = url;
+    iframe.style.width = '100%';
     iframe.id = id;
     iframe.frameBorder = '0';
     container.appendChild(iframe);
-    // TODO: check epic has been rendered in iframe
-    return Promise.resolve({
-        html: container,
+    // initMessenger(viewport);
+    window.addEventListener('message', (event: MessageEvent) => {
+        if (event.data === 'EPIC_READY') {
+            resolve({html: container});
+            return;
+        }
+
+        let data = null;
+        try {
+            if (typeof event.data === 'string') {
+                data = JSON.parse(event.data);
+            }
+        } catch (err) {
+            console.log('bad message', event.data);
+        }
+
+        if (data && data.type === 'viewport') {
+            const msgId = data.id;
+
+            // Send current width
+            lastViewportRead().then(({width}) => {
+                iframe.contentWindow.postMessage(JSON.stringify({
+                    id: msgId,
+                    result: {width},
+                }), '*');
+            });
+
+            // Send all future widths
+            addResizeListener(iframe, (alwaysNull, {width}) => {
+                console.log('respond');
+                // Send the viewport info to the iframe
+                iframe.contentWindow.postMessage(JSON.stringify({
+                    id: msgId,
+                    result: {width},
+                }), '*');
+            });
+        }
+
+        if (data && data.type === 'resize') {
+            console.log('Got resize event', data);
+            iframe.style.height = `${data.value.height}px`;
+            // container.style.height = `${data.value.height}px`;
+        }
     });
-};
+    insertAtSubmeta({html: container}).catch(reject);
+});
 
 const displayEpicIframe = (id: string, url: string): Promise<EpicComponent> =>
     createEpicIframe(id, url)
-        .then(insertAtSubmeta)
         .then(epic => {
             const host = `${window.location.protocol}//${window.location.host}`;
-            iframe.contentWindow.postMessage({
+            console.log('posting id to iframe');
+            iframe.contentWindow.postMessage(JSON.stringify({
                 id,
                 host,
-            });
+            }), '*');
             return epic;
         });
 
