@@ -109,6 +109,7 @@ class Search {
                                                 'is-active'
                                             )
                                         ) {
+                                            popup.focus();
                                             bean.on(
                                                 document,
                                                 'click',
