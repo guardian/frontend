@@ -50,6 +50,11 @@ class Search {
                                 }
 
                                 bean.on(toggle, 'click', e => {
+                                    const handleEsc = (event: Event) => {
+                                        if (event.key === 'Escape') {
+                                            maybeDismissSearchPopup(event);
+                                        }
+                                    };
                                     const maybeDismissSearchPopup = event => {
                                         let el = event.target;
                                         let clickedPop = false;
@@ -88,6 +93,7 @@ class Search {
                                                 'click',
                                                 maybeDismissSearchPopup
                                             );
+                                            document.removeEventListener('keyup', handleEsc);
                                         }
                                     };
 
@@ -102,6 +108,7 @@ class Search {
                                                 'click',
                                                 maybeDismissSearchPopup
                                             );
+                                            document.addEventListener('keyup', handleEsc);
                                         }
                                     });
 
