@@ -721,7 +721,7 @@ $quote-mark: 35px;
         padding: 0;
         line-height: 35px;
 
-        @include mq($from: desktop) {
+        @include mq($from: tablet) {
             line-height: 42px;
         }
 
