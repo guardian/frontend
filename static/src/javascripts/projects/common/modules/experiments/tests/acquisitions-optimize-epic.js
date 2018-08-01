@@ -1,7 +1,6 @@
-import  { displayDefaultOptimizeEpic } from 'common/modules/commercial/epic/optimize-epic-utils';
+// @flow
+import { displayOptimizeEpic } from 'common/modules/commercial/epic/optimize-epic-utils';
 import { isEpicDisplayable } from 'common/modules/commercial/contributions-utilities';
-
-import type { ABTest } from 'common/modules/commercial/acquisitions-ophan';
 
 const epicOptimizeTest: ABTest = {
     id: 'AcquisitionsEpicOptimizeTest',
@@ -12,8 +11,7 @@ const epicOptimizeTest: ABTest = {
     description:
         'Bootstrap the AB testing framework to display the Epic using Google Optimize',
     successMeasure: 'AV2.0',
-    idealOutcome:
-        'We are able to test the Epic using Google Optimize',
+    idealOutcome: 'We are able to test the Epic using Google Optimize',
     audienceCriteria: 'All',
     audience: 1, // FIXME
     audienceOffset: 0, // FIXME
@@ -25,12 +23,12 @@ const epicOptimizeTest: ABTest = {
                 isUnlimited: true,
             },
             test: () => {
-                displayDefaultOptimizeEpic()
-            }
-        }
-    ]
+                displayOptimizeEpic();
+            },
+        },
+    ],
 };
 
 const acquisitionsEpicOptimizeTest: AcquisitionsABTest = (epicOptimizeTest: any);
 
-export { acquisitionsEpicOptimizeTest }
+export { acquisitionsEpicOptimizeTest };
