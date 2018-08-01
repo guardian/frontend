@@ -453,6 +453,7 @@ $header-image-size-desktop: 100px;
     padding: 0;
     color: $brightness-46;
     text-align: right;
+    // min-width needed to ensure button is visible on Safari
     min-width: gs-span(1);
 
     &:hover,
