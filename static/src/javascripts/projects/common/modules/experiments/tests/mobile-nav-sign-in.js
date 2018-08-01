@@ -1,20 +1,23 @@
 // @flow
 import fastdom from 'lib/fastdom-promise';
-import mediator from 'lib/mediator';
-import config from 'lib/config';
 
-const replaceTopnavMobileLinkWith = (label:string): Promise<void> =>
+const replaceTopnavMobileLinkWith = (label: string): Promise<void> =>
     fastdom
-        .read(()=>({
-            topNavLinkEl: document.querySelector('.js-navigation-sign-in-top-nav'),
-            topNavLinkElBody: document.querySelector('.js-navigation-sign-in-top-nav-body'),
+        .read(() => ({
+            topNavLinkEl: document.querySelector(
+                '.js-navigation-sign-in-top-nav'
+            ),
+            topNavLinkElBody: document.querySelector(
+                '.js-navigation-sign-in-top-nav-body'
+            ),
         }))
-        .then(({topNavLinkEl,topNavLinkElBody})=>fastdom.write(()=>{
-            topNavLinkEl.classList.remove('hide-until-desktop');
-            topNavLinkEl.classList.add('hide-until-mobile-medium');
-            topNavLinkElBody.innerHTML = label;
-        }));
-
+        .then(({ topNavLinkEl, topNavLinkElBody }) =>
+            fastdom.write(() => {
+                topNavLinkEl.classList.remove('hide-until-desktop');
+                topNavLinkEl.classList.add('hide-until-mobile-medium');
+                topNavLinkElBody.innerHTML = label;
+            })
+        );
 
 export const mobileNavSignIn: ABTest = {
     id: 'MobileNavSignIn',
@@ -22,8 +25,8 @@ export const mobileNavSignIn: ABTest = {
     expiry: '2019-06-07',
     author: 'Laura gonzalez',
     description: 'This test will show a sign in link in the mobile nav.',
-    audience: .1,
-    audienceOffset: 0,
+    audience: 0.1,
+    audienceOffset: .5,
     successMeasure: 'signed in mobile users',
     audienceCriteria: 'mobile users',
     dataLinkNames: 'n/a',
