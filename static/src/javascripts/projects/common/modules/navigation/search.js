@@ -52,21 +52,34 @@ class Search {
                                 bean.on(toggle, 'click', e => {
                                     const handleEsc = (event: Event) => {
                                         if (event.key === 'Escape') {
-                                            if (maybeDismissSearchPopup(event)) {
-                                                toggle.focus();
-                                            }
+                                            dismissSearchPopup(event);
+                                            toggle.focus();
                                         }
                                     };
-                                    const maybeDismissSearchPopup = (event: Event): boolean => {
+                                    const dismissSearchPopup = (event: Event): void => {
+                                        event.preventDefault();
+                                        toggle.classList.remove(
+                                            'is-active'
+                                        );
+                                        popup.classList.add('is-off');
+
+                                        bean.off(
+                                            document,
+                                            'click',
+                                            maybeDismissSearchPopup
+                                        );
+                                        document.removeEventListener('keyup', handleEsc);
+                                    };
+                                    const maybeDismissSearchPopup = (event: Event): void => {
                                         let el = event.target;
                                         let clickedPop = false;
 
                                         while (el && !clickedPop) {
-                                            /* either the search pop-up or the autocomplete resultSetSize
-                                           NOTE: it would be better to check for `.gssb_c`,
+                                            /*  either the search pop-up or the autocomplete resultSetSize
+                                                NOTE: it would be better to check for `.gssb_c`,
                                                  which is the outer autocomplete element, but
                                                  google stops the event bubbling earlier
-                                        */
+                                            */
                                             if (
                                                 el &&
                                                 el.classList &&
@@ -84,23 +97,8 @@ class Search {
                                         }
 
                                         if (!clickedPop) {
-                                            event.preventDefault();
-                                            toggle.classList.remove(
-                                                'is-active'
-                                            );
-                                            popup.classList.add('is-off');
-
-                                            bean.off(
-                                                document,
-                                                'click',
-                                                maybeDismissSearchPopup
-                                            );
-                                            document.removeEventListener('keyup', handleEsc);
-
-                                            return true;
+                                            dismissSearchPopup(event);
                                         }
-
-                                        return false;
                                     };
 
                                     setTimeout(() => {
