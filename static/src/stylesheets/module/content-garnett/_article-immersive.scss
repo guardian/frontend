@@ -179,25 +179,30 @@
     }
 }
 
+.caption--immersive {
+    @include mq($until: leftCol) {
+        margin: $gs-baseline 0 ($gs-baseline / 2);
+    }
+
+    @include mq(leftCol) {
+        margin-left: -$gs-gutter;
+        padding-top: $gs-baseline / 4;
+        position: absolute;
+        top: 100px;
+        width: gs-span(2);
+        transform: translateX(-100%);
+    }
+
+    @include mq(wide) {
+        width: gs-span(3);
+    }
+}
+
 .content__standfirst--immersive-article {
     position: relative;
-    padding-top: .33em;
-    padding-bottom: .5rem;
+    padding-top: $gs-baseline / 2;
+    padding-bottom: $gs-baseline;
     margin-bottom: 0;
-    color: #ffffff;
-
-    @include mq(desktop) {
-        padding-bottom: 1rem;
-    }
-
-    .u-underline {
-        color: $brightness-93;
-        border-bottom: 1px solid rgba($brightness-93, .4);
-
-        &:hover {
-            border-bottom-color: rgba($brightness-93, 1);
-        }
-    }
 
     &.content__standfirst--advertisement {
         font-family: $f-sans-serif-text;
@@ -206,7 +211,6 @@
 
 .content__wrapper--standfirst {
     @include content-gutter();
-    background-color: rgba(0, 0, 0, .5);
 }
 
 .content--immersive-article:not(.content--immersive-garnett) {

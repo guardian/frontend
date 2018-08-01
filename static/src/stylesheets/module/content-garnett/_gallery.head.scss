@@ -1,16 +1,25 @@
 .immersive-header-container {
     background-color: $brightness-7;
-    overflow-x: hidden;
-}
-
-.immersive-header-container--photo-essay {
-    background-color: $brightness-100;
 }
 
 .immersive-main-media__headline-container--gallery {
-    position: relative;
     background: transparent;
     margin-top: -$gs-gutter*5;
+    position: relative;
+
+    @include mq(tablet) {
+        &:after {
+            content: '';
+            display: block;
+            position: absolute;
+            width: 50%;
+            right: 0;
+            background-color: $brightness-7;
+            z-index: 0;
+            top: 0;
+            bottom: 0;
+        }
+    }
 
     .gs-container {
         @include mq($until: tablet) {
@@ -20,22 +29,17 @@
 
     .content__main-column {
         background-color: $brightness-7;
-        margin-left: -$gs-gutter/2;
-        padding: 0 $gs-gutter/2 $gs-baseline*2;
+        margin-left: -$gs-gutter / 2;
+        padding: 0 ($gs-gutter / 2) ($gs-baseline * 2);
         min-height: gs-height(2);
-        //This allows the headline block to be aligned to the left and not run full width
-        width: calc(95% - #{$gs-gutter});
-        max-width: none;
+        position: static;
 
-        @include mq($from: tablet) {
+        @include mq(tablet) {
             margin-left: $gs-gutter;
-            //120 needed so that container always runs to edge
-            width: 120%;
-            padding-left: 0;
         }
 
-        @include mq($from: desktop) {
-            margin-left: $left-column-wide + ($gs-gutter / 2) * 3;
+        @include mq(desktop) {
+            margin-left: $left-column-wide + ($gs-gutter + $gs-gutter / 2);
         }
     }
 
@@ -43,7 +47,6 @@
         @include fs-headline(6, true);
         line-height: 1.1;
         font-weight: 700;
-        max-width: gs-span(8);
         padding: 0 $gs-gutter/2;
 
         @include mq(mobileLandscape) {
@@ -51,12 +54,15 @@
         }
 
         @include mq(tablet) {
-            padding-left: $gs-gutter/2;
+            padding-left: 0;
         }
 
         @include mq(desktop) {
             font-size: 50px;
             line-height: 54px;
+            width: gs-span(8) - ($gs-gutter / 2);
+            z-index: 1;
+            position: relative;
         }
     }
 
@@ -68,8 +74,6 @@
             font-size: 50px;
             line-height: 54px;
         }
-
-
     }
 
     .content__labels {
@@ -85,6 +89,7 @@
 
         @include mq(tablet) {
             padding: $gs-baseline/2 $gs-gutter/2;
+            margin-left: -$gs-gutter / 2;
         }
     }
 
@@ -179,7 +184,6 @@
     .tonal__standfirst {
         max-width: gs-span(4) - $gs-gutter/2;
         margin: 0;
-        order: 2;
 
         @include mq($from: tablet) {
             max-width: gs-span(5) + $gs-gutter;
@@ -243,5 +247,45 @@
                 margin-top: $gs-baseline;
             }
         }
+    }
+}
+
+.immersive-header-container--photo-essay {
+    background-color: $brightness-100;
+
+    .content__main-column {
+        @include mq(desktop) {
+            margin-left: 0;
+        }
+
+        @include mq(leftCol) {
+            margin-left: gs-span(2) + ($gs-gutter * 2);
+        }
+
+        @include mq(wide) {
+            margin-left: gs-span(3) + ($gs-gutter + $gs-gutter / 2);
+        }
+    }
+}
+
+.caption.caption--gallery {
+    color: $brightness-86;
+    z-index: 1;
+
+    @include mq($until: desktop) {
+        margin: $gs-baseline 0 ($gs-baseline / 2);
+    }
+
+    @include mq(desktop) {
+        padding-top: $gs-baseline / 4;
+        position: absolute;
+        top: 100px;
+        width: gs-span(3);
+        transform: translateX(-100%);
+        margin-left: -$gs-gutter;
+    }
+
+    .inline-icon__svg {
+        fill: $brightness-86;
     }
 }

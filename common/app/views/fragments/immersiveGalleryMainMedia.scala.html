@@ -26,7 +26,7 @@
 
 <div class="@RenderClasses("immersive-main-media__headline-container--dark", "immersive-main-media__headline-container--gallery", "content--pillar-news", s"content--pillar-${page.metadata.pillar.nameOrDefault}")">
     <div class="gs-container">
-        <div class="content__main-column content__main-column--gallery">
+        <div class="content__main-column">
             @fragments.meta.metaInline(page.item)
 
             <h1 class="@RenderClasses(
@@ -35,6 +35,19 @@
                 )">
                 @Html(page.item.trail.headline)
             </h1>
+
+            @defining(page.item.elements.mainPicture.flatMap(_.images.masterImage)) {
+                case Some(masterImage) => {
+                    <figcaption class="caption caption--gallery hide-until-desktop">
+                        @fragments.inlineSvg("triangle", "icon")
+                        @masterImage.caption.map(Html(_))
+                        @if(masterImage.displayCredit && !masterImage.creditEndsWithCaption) {
+                            @masterImage.credit.map(Html(_))
+                        }
+                    </figcaption>
+                }
+                case None => { }
+            }
 
             @if(page.item.content.hasTonalHeaderByline) {
                 @page.item.trail.byline.map { text =>
