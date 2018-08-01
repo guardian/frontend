@@ -15,7 +15,7 @@ import { MostPopular } from 'common/modules/onward/popular';
 import { related } from 'common/modules/onward/related';
 import { TonalComponent } from 'common/modules/onward/tonal';
 import { loadShareCounts } from 'common/modules/social/share-count';
-// import { onwardVideo } from 'common/modules/video/onward-container';
+import { onwardVideo } from 'common/modules/video/onward-container';
 import { moreInSeriesContainerInit } from 'common/modules/video/more-in-series-container';
 
 const initMoreInSection = (): void => {
@@ -95,10 +95,6 @@ const initRelated = () => {
     }
 };
 
-/**
- * TODO: reinstate this when styling is correct
- * https://trello.com/c/dq7QQQZ1
-
 const initOnwardVideoContainer = (): void => {
     if (
         config.get('page.contentType') !== 'Audio' &&
@@ -118,7 +114,6 @@ const initOnwardVideoContainer = (): void => {
         onwardVideo(el, mediaType);
     });
 };
- */
 
 const initOnwardContent = () => {
     insertOrProximity('.js-onward', () => {
@@ -137,9 +132,8 @@ const initOnwardContent = () => {
                 });
         }
     });
-    // TODO: reinstate this when styling is correct
-    // https://trello.com/c/dq7QQQZ1
-    // initOnwardVideoContainer();
+
+    initOnwardVideoContainer();
 };
 
 const initDiscussion = () => {

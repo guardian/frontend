@@ -5,14 +5,26 @@ import config from 'lib/config';
 import { _, bids } from 'commercial/modules/prebid/bid-config';
 import {
     getRandomIntInclusive as getRandomIntInclusive_,
+    getBreakpointKey as getBreakpointKey_,
     shouldIncludeTrustX as shouldIncludeTrustX_,
+    stripMobileSuffix as stripMobileSuffix_,
 } from 'commercial/modules/prebid/utils';
 
-import type { PrebidBidder } from 'commercial/modules/prebid/types';
+import type { PrebidBidder, PrebidSize } from 'commercial/modules/prebid/types';
 
 const getRandomIntInclusive: any = getRandomIntInclusive_;
 const shouldIncludeTrustX: any = shouldIncludeTrustX_;
-const { getDummyServerSideBidders } = _;
+const stripMobileSuffix: any = stripMobileSuffix_;
+const getBreakpointKey: any = getBreakpointKey_;
+
+const {
+    getAppNexusPlacementId,
+    getDummyServerSideBidders,
+    getIndexSiteId,
+    getImprovePlacementId,
+    getTrustXAdUnitId,
+    indexExchangeBidders,
+} = _;
 
 jest.mock('common/modules/commercial/build-page-targeting', () => ({
     buildAppNexusTargeting: () => 'someTestAppNexusTargeting',
@@ -23,26 +35,101 @@ jest.mock('common/modules/commercial/ad-prefs.lib', () => ({
     getAdConsentState: jest.fn(),
 }));
 
-jest.mock('./utils', () => ({
-    isExcludedGeolocation: jest.fn(() => false),
-    getRandomIntInclusive: jest.fn(),
-    getBreakpointKey: jest.fn(() => 'D'),
-    stripMobileSuffix: jest.fn(str => str),
-    stripTrailingNumbersAbove1: jest.fn(),
-    shouldIncludeTrustX: jest.fn(),
-}));
-
-jest.mock('lib/geolocation', () => ({
-    getSync: jest.fn(() => 'GB'),
-}));
+jest.mock('./utils');
 
 /* eslint-disable guardian-frontend/no-direct-access-config */
+const resetConfig = () => {
+    config.switches.prebidImproveDigital = true;
+    config.switches.prebidIndexExchange = true;
+    config.switches.prebidSonobi = true;
+    config.switches.prebidS2sozone = true;
+    config.switches.prebidTrustx = true;
+    config.switches.prebidXaxis = true;
+    config.ophan = { pageViewId: 'pvid' };
+    config.page.contentType = 'Article';
+    config.page.edition = 'UK';
+};
+
+describe('getAppNexusPlacementId', () => {
+    beforeEach(() => {
+        resetConfig();
+    });
+
+    afterEach(() => {
+        jest.resetAllMocks();
+        resetConfig();
+    });
+
+    const generateTestIds = (): Array<string> => {
+        const prebidSizes: Array<Array<PrebidSize>> = [
+            [[300, 250]],
+            [[300, 600]],
+            [[970, 250]],
+            [[728, 90]],
+            [[1, 2]],
+        ];
+        return prebidSizes.map(getAppNexusPlacementId);
+    };
+
+    test('should return the expected values when on UK Edition and desktop device', () => {
+        getBreakpointKey.mockReturnValue('D');
+        expect(generateTestIds()).toEqual([
+            '13366606',
+            '13366606',
+            '13366615',
+            '13366615',
+            '13144370',
+        ]);
+    });
+
+    test('should return the expected values when on UK Edition and tablet device', () => {
+        getBreakpointKey.mockReturnValue('T');
+        expect(generateTestIds()).toEqual([
+            '13366913',
+            '13144370',
+            '13144370',
+            '13366916',
+            '13144370',
+        ]);
+    });
+
+    test('should return the expected values when on UK Edition and mobile device', () => {
+        getBreakpointKey.mockReturnValue('M');
+        expect(generateTestIds()).toEqual([
+            '13366904',
+            '13144370',
+            '13144370',
+            '13144370',
+            '13144370',
+        ]);
+    });
+
+    test('should return the default value on all other editions', () => {
+        const editions = ['AU', 'US', 'INT'];
+        const expected = [
+            '13144370',
+            '13144370',
+            '13144370',
+            '13144370',
+            '13144370',
+        ];
+
+        editions.forEach(edition => {
+            config.page.edition = edition;
+            expect(generateTestIds()).toEqual(expected);
+        });
+    });
+});
+
 describe('getDummyServerSideBidders', () => {
     beforeEach(() => {
-        jest.resetAllMocks();
         getRandomIntInclusive.mockReturnValue(1);
         config.switches.prebidS2sozone = true;
-        config.page.edition = 'UK';
+    });
+
+    afterEach(() => {
+        jest.resetAllMocks();
+        resetConfig();
     });
 
     test('should return an empty array if the switch is off', () => {
@@ -84,19 +171,202 @@ describe('getDummyServerSideBidders', () => {
     });
 });
 
+describe('getImprovePlacementId', () => {
+    beforeEach(() => {
+        getBreakpointKey.mockReturnValue('D');
+    });
+
+    afterEach(() => {
+        jest.resetAllMocks();
+        resetConfig();
+    });
+
+    const generateTestIds = (): Array<number> => {
+        const prebidSizes: Array<Array<PrebidSize>> = [
+            [[300, 250]],
+            [[300, 600]],
+            [[970, 250]],
+            [[728, 90]],
+            [[1, 2]],
+        ];
+        return prebidSizes.map(getImprovePlacementId);
+    };
+
+    test('should return -1 if no cases match', () => {
+        expect(getImprovePlacementId([[1, 2]])).toBe(-1);
+    });
+
+    test('should return the expected values when on the UK Edition and desktop device', () => {
+        getBreakpointKey.mockReturnValue('D');
+        expect(generateTestIds()).toEqual([
+            1116396,
+            1116396,
+            1116397,
+            1116397,
+            -1,
+        ]);
+    });
+
+    test('should return the expected values when on the UK Edition and tablet device', () => {
+        getBreakpointKey.mockReturnValue('T');
+        expect(generateTestIds()).toEqual([
+            1116398,
+            1116398,
+            1116399,
+            1116399,
+            -1,
+        ]);
+    });
+
+    test('should return the expected values when on the UK Edition and mobile device', () => {
+        getBreakpointKey.mockReturnValue('M');
+        expect(generateTestIds()).toEqual([1116400, 1116400, -1, -1, -1]);
+    });
+
+    test('should return the expected values when on the INT Edition and desktop device', () => {
+        config.page.edition = 'INT';
+        getBreakpointKey.mockReturnValue('D');
+        expect(generateTestIds()).toEqual([
+            1116420,
+            1116420,
+            1116421,
+            1116421,
+            -1,
+        ]);
+    });
+
+    test('should return the expected values when on the INT Edition and tablet device', () => {
+        config.page.edition = 'INT';
+        getBreakpointKey.mockReturnValue('T');
+        expect(generateTestIds()).toEqual([
+            1116422,
+            1116422,
+            1116423,
+            1116423,
+            -1,
+        ]);
+    });
+
+    test('should return the expected values when on the INT Edition and mobile device', () => {
+        config.page.edition = 'INT';
+        getBreakpointKey.mockReturnValue('M');
+        expect(generateTestIds()).toEqual([1116424, 1116424, -1, -1, -1]);
+    });
+
+    test('should return -1 if on the US or AU Editions', () => {
+        config.page.edition = 'AU';
+        expect(generateTestIds()).toEqual([-1, -1, -1, -1, -1]);
+        config.page.edition = 'US';
+        expect(generateTestIds()).toEqual([-1, -1, -1, -1, -1]);
+    });
+});
+
+describe('getTrustXAdUnitId', () => {
+    beforeEach(() => {
+        getBreakpointKey.mockReturnValue('D');
+        stripMobileSuffix.mockImplementation(str => str);
+    });
+
+    afterEach(() => {
+        jest.resetAllMocks();
+        resetConfig();
+    });
+
+    test('should return the expected value for dfp-ad--comments', () => {
+        expect(getTrustXAdUnitId('dfp-ad--comments', true)).toBe('3840');
+    });
+
+    test('should return the expected values for dfp-ad--inline10', () => {
+        expect(getTrustXAdUnitId('dfp-ad--inline10', true)).toBe('3840');
+        expect(getTrustXAdUnitId('dfp-ad--inline10', false)).toBe('3841');
+    });
+});
+
+describe('indexExchangeBidders', () => {
+    beforeEach(() => {
+        getBreakpointKey.mockReturnValue('D');
+        config.page.pbIndexSites = [
+            { bp: 'D', id: 123456 },
+            { bp: 'M', id: 234567 },
+            { bp: 'T', id: 345678 },
+        ];
+    });
+
+    afterEach(() => {
+        jest.resetAllMocks();
+        resetConfig();
+    });
+
+    test('should return an IX bidder for every size that the slot can take', () => {
+        const slotSizes: Array<PrebidSize> = [[300, 250], [300, 600]];
+        const bidders: Array<PrebidBidder> = indexExchangeBidders(slotSizes);
+        expect(bidders).toEqual([
+            expect.objectContaining({
+                name: 'ix',
+                bidParams: expect.any(Function),
+            }),
+            expect.objectContaining({
+                name: 'ix',
+                bidParams: expect.any(Function),
+            }),
+        ]);
+    });
+
+    test('should include methods in the response that generate the correct bid params', () => {
+        const slotSizes: Array<PrebidSize> = [[300, 250], [300, 600]];
+        const bidders: Array<PrebidBidder> = indexExchangeBidders(slotSizes);
+        expect(bidders[0].bidParams('type', [[1, 2]])).toEqual({
+            siteId: '123456',
+            size: [300, 250],
+        });
+        expect(bidders[1].bidParams('type', [[1, 2]])).toEqual({
+            siteId: '123456',
+            size: [300, 600],
+        });
+    });
+});
+
+describe('getIndexSiteId', () => {
+    afterEach(() => {
+        jest.resetAllMocks();
+        resetConfig();
+    });
+
+    test('should return an empty string if pbIndexSites is empty', () => {
+        config.page.pbIndexSites = [];
+        getBreakpointKey.mockReturnValue('D');
+        expect(getIndexSiteId()).toBe('');
+        expect(getIndexSiteId().length).toBe(0);
+    });
+
+    test('should find the correct ID for the breakpoint', () => {
+        config.page.pbIndexSites = [
+            { bp: 'D', id: 123456 },
+            { bp: 'M', id: 234567 },
+            { bp: 'T', id: 345678 },
+        ];
+        const breakpoints = ['M', 'D', 'M', 'T', 'D'];
+        const results = [];
+        for (let i = 0; i < breakpoints.length; i += 1) {
+            getBreakpointKey.mockReturnValue(breakpoints[i]);
+            results.push(getIndexSiteId());
+        }
+        expect(results).toEqual([
+            '234567',
+            '123456',
+            '234567',
+            '345678',
+            '123456',
+        ]);
+    });
+});
+
 describe('bids', () => {
     beforeEach(() => {
         getRandomIntInclusive.mockReturnValue(5);
         shouldIncludeTrustX.mockReturnValue(false);
-        config.switches.prebidImproveDigital = true;
-        config.switches.prebidIndexExchange = true;
-        config.switches.prebidSonobi = true;
-        config.switches.prebidS2sozone = true;
-        config.switches.prebidTrustx = true;
-        config.switches.prebidXaxis = true;
-        config.ophan = { pageViewId: 'pvid' };
-        config.page.pbIndexSites = [];
-        config.page.contentType = 'Article';
+        stripMobileSuffix.mockImplementation(str => str);
+        resetConfig();
     });
 
     afterEach(() => {

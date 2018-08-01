@@ -31,10 +31,13 @@ import {
     stripTrailingNumbersAbove1,
 } from 'commercial/modules/prebid/utils';
 
-const isDesktopArticle =
+const isDesktopAndArticle =
     getBreakpointKey() === 'D' && config.get('page.contentType') === 'Article';
 
-const getTrustXAdUnitId = (slotId: string): string => {
+const getTrustXAdUnitId = (
+    slotId: string,
+    isDesktopArticle: boolean
+): string => {
     switch (stripMobileSuffix(slotId)) {
         case 'dfp-ad--inline1':
             return '2960';
@@ -212,7 +215,7 @@ const getImproveSizeParam = (slotId: string): PrebidImproveSizeParam => {
         (key.endsWith('mostpop') ||
             key.endsWith('comments') ||
             key.endsWith('inline1') ||
-            (key.endsWith('inline') && !isDesktopArticle))
+            (key.endsWith('inline') && !isDesktopAndArticle))
         ? { w: 300, h: 250 }
         : {};
 };
@@ -267,7 +270,7 @@ const trustXBidder: PrebidBidder = {
     name: 'trustx',
     switchName: 'prebidTrustx',
     bidParams: (slotId: string): PrebidTrustXParams => ({
-        uid: getTrustXAdUnitId(slotId),
+        uid: getTrustXAdUnitId(slotId, isDesktopAndArticle),
     }),
     labelAll: ['geo-NA'],
 };
@@ -406,4 +409,11 @@ export const bids: (string, PrebidSize[]) => PrebidBid[] = (
         return bid;
     });
 
-export const _ = { getDummyServerSideBidders };
+export const _ = {
+    getAppNexusPlacementId,
+    getDummyServerSideBidders,
+    getIndexSiteId,
+    getImprovePlacementId,
+    getTrustXAdUnitId,
+    indexExchangeBidders,
+};
