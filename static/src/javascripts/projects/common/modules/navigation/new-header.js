@@ -530,6 +530,7 @@ const addEventHandler = (): void => {
 
                 if (parent) {
                     event.preventDefault();
+                    event.stopPropagation();
                     toggleMenuSection(parent);
                 }
             }
