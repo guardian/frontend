@@ -1,5 +1,8 @@
 // @flow
 
+import { constructQuery as constructURLQuery } from 'lib/url';
+import config from 'lib/config';
+
 import {
     insertAtSubmeta,
     reportEpicError,
@@ -7,8 +10,6 @@ import {
 } from 'common/modules/commercial/epic/epic-utils';
 
 import type { EpicComponent } from 'common/modules/commercial/epic/epic-utils';
-
-let iframe: HTMLIFrameElement;
 
 // TODO: use flow types for messages in optimize epic channel
 
@@ -24,6 +25,8 @@ const RESIZE_TRIGGERED = 'RESIZE_TRIGGERED';
 // incoming event types
 const EPIC_INITIALIZED = 'EPIC_INITIALIZED';
 const EPIC_HEIGHT = 'EPIC_HEIGHT';
+
+let iframe: HTMLIFrameElement;
 
 // Return type a Promise - presuming fastdom will be required (?)
 const createEpicIframe = (url: string): Promise<EpicComponent> => {
@@ -77,10 +80,9 @@ const insertEpicIframe = (component: EpicComponent): Promise<EpicComponent> =>
     });
 
 const setIframeHeight = (component: EpicComponent): EpicComponent => {
+    // Ok to call this function at this point in the iframe initialisation,
+    // since event handler in the iframe will already have been initialised.
     const sendResizeTriggeredMessage = () => {
-        // setIframeHeight should be called once the iframe has been inserted.
-        // This means the Optimize Epic will have been initialized.
-        // In particular, handlers will be set up for message events in the Optimize Epic channel.
         iframe.contentWindow.postMessage(
             JSON.stringify({
                 channel: OPTIMIZE_EPIC_CHANNEL,
@@ -104,18 +106,21 @@ const displayEpicIframe = (url: string): Promise<EpicComponent> =>
             return epic;
         });
 
-const getOptimizeEpicUrl = (): ?string =>
-    // TODO: create new config field
-    'http://reader-revenue-components.s3-website-eu-west-1.amazonaws.com/epic/v1/index.html';
-// 'https://support.code.dev-theguardian.com/epic/v1/index.html';
+const getOptimizeEpicUrl = (): string => {
+    const url =
+        config.get('page.optimizeEpicUrl') ||
+        // FIXME
+        'http://reader-revenue-components.s3-website-eu-west-1.amazonaws.com/epic/v1/index.html';
+    // data passed in query string used to augment acquisition tracking link in iframe
+    const params = constructURLQuery({
+        pvid: config.get('ophan.pageViewId'),
+        url: window.location.href.split('?')[0],
+    });
+    return `${url}?${params}`;
+};
 
 const displayOptimizeEpic = (): Promise<EpicComponent> => {
     const url = getOptimizeEpicUrl();
-    if (!url) {
-        return Promise.reject(
-            new Error('unable to get default optimize epic url')
-        );
-    }
     return displayEpicIframe(url).catch(err => {
         reportEpicError(err);
         throw err;
