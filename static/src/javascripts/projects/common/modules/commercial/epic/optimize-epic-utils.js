@@ -24,9 +24,16 @@ const createEpicIframe = (id: string, url: string): Promise<EpicComponent> => ne
     iframe.id = id;
     iframe.frameBorder = '0';
     container.appendChild(iframe);
-    // initMessenger(viewport);
+
     window.addEventListener('message', (event: MessageEvent) => {
+
         if (event.data === 'EPIC_READY') {
+            const host = `${window.location.protocol}//${window.location.host}`;
+            console.log('posting id to iframe');
+            iframe.contentWindow.postMessage(JSON.stringify({
+                id,
+                host,
+            }), '*');
             resolve({html: container});
             return;
         }
@@ -37,17 +44,21 @@ const createEpicIframe = (id: string, url: string): Promise<EpicComponent> => ne
                 data = JSON.parse(event.data);
             }
         } catch (err) {
+            // TODO: remove
             console.log('bad message', event.data);
+            return;
         }
 
+        // Received when the iframe is ready to handle view port events.
+        // If the sent width is different to current width within the iframe,
+        // it will send it's height to the parent so that the parent can re-size the iframe.
         if (data && data.type === 'viewport') {
             const msgId = data.id;
 
-            // Send current width
-            lastViewportRead().then(({width}) => {
+            lastViewportRead().then(({ width }) => {
                 iframe.contentWindow.postMessage(JSON.stringify({
                     id: msgId,
-                    result: {width},
+                    result: { width },
                 }), '*');
             });
 
@@ -68,18 +79,14 @@ const createEpicIframe = (id: string, url: string): Promise<EpicComponent> => ne
             // container.style.height = `${data.value.height}px`;
         }
     });
+
     insertAtSubmeta({html: container}).catch(reject);
 });
 
 const displayEpicIframe = (id: string, url: string): Promise<EpicComponent> =>
     createEpicIframe(id, url)
         .then(epic => {
-            const host = `${window.location.protocol}//${window.location.host}`;
-            console.log('posting id to iframe');
-            iframe.contentWindow.postMessage(JSON.stringify({
-                id,
-                host,
-            }), '*');
+
             return epic;
         });
 
@@ -92,8 +99,8 @@ const getOptimizeEpicUrl = (): ?string =>
     //     return undefined;
     // }
     // return host + '/epic/v1/index.html';
-    // 'https://support.code.dev-theguardian.com/epic/v1/index.html';
-    'http://reader-revenue-components.s3-website-eu-west-1.amazonaws.com/epic/v1/index.html';
+    'https://support.code.dev-theguardian.com/epic/v1/index.html';
+    //'http://reader-revenue-components.s3-website-eu-west-1.amazonaws.com/epic/v1/index.html';
 
 const displayOptimizeEpic = (): Promise<EpicComponent> => {
     const url = getOptimizeEpicUrl();
