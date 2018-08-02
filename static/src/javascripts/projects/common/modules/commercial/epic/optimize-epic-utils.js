@@ -61,6 +61,7 @@ const insertEpicIframe = (component: EpicComponent): Promise<EpicComponent> => n
         }
 
         if (message.messageType === EPIC_HEIGHT) {
+            console.log('setting height', message.data.height);
             iframe.style.height = `${message.data.height}px`;
         }
     });
