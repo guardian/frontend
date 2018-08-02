@@ -275,7 +275,6 @@ If you want to set up your AB test with scala instead of javascript, almost all 
 *Advantages:* 
 - Allows you to run tests that just won't work in javascript ie if you want to render a whole different page
 - Avoid javascript rendering problems (eg a jump if a DOM element is rendered and then hidden)
-- More performant
 
 *Disadvantages:* 
 - Can only do AB tests, not multivariant ABC test
@@ -301,14 +300,14 @@ object AudioChangeImagePosition extends Experiment(
 3. Add the experiment to the object property `ActiveExperiments.allExperiments` at the top of the file 
 
 4. Switch the test on for your local environment: http://localhost:9000/dev/switchboard You should be able to find it under `Serverside Tests`
-NB: You should be running in `project dev-build` because you will need access to the /admin screen to let you turn the switch on and off. 
+NB: You should be running in `project dev-build` because you will need it to access the /switchboard screen
 
 5. Incorporate the test in your code as a switch, eg:
 
 ```
 @import experiments.{ActiveExperiments, AudioChangeImagePosition}
 
-if(ActiveExperiments.isParticipating(AudioHideImage)) { 
+if(ActiveExperiments.isParticipating(AudioChangeImagePosition)) { 
     //do variant thing 
  }
 
