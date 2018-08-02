@@ -186,8 +186,8 @@ export const renderAdvert = (
                         sizeCallbacks[size]
                             ? sizeCallbacks[size](slotRenderEndedEvent, advert)
                             : fastdom.write(() => {
-                                advert.updateExtraSlotClasses()
-                            })
+                                  advert.updateExtraSlotClasses();
+                              })
                     );
                 }
                 return Promise.resolve(null);

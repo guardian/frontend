@@ -138,11 +138,14 @@ class Advert {
         updateAdvertMetric(this, 'stopRendering', getCurrentTime());
     }
 
-    static filterClasses(oldClasses: Array<string>, newClasses: Array<string>): Array<string> {
-        let classesToRemove: Array<string> = [];
-        for(let i=0;i<oldClasses.length;i++){
-            let currentClass: string = oldClasses[i];
-            if(!newClasses.includes(currentClass)){
+    static filterClasses(
+        oldClasses: Array<string>,
+        newClasses: Array<string>
+    ): Array<string> {
+        const classesToRemove: Array<string> = [];
+        for (let i = 0; i < oldClasses.length; i += 1) {
+            const currentClass: string = oldClasses[i];
+            if (!newClasses.includes(currentClass)) {
                 classesToRemove.push(currentClass);
             }
         }
@@ -150,7 +153,10 @@ class Advert {
     }
 
     updateExtraSlotClasses(...newClasses: Array<string>): void {
-        let classesToRemove: Array<string> = Advert.filterClasses(this.extraNodeClasses, newClasses);
+        const classesToRemove: Array<string> = Advert.filterClasses(
+            this.extraNodeClasses,
+            newClasses
+        );
         this.node.classList.remove(...classesToRemove);
         this.node.classList.add(...newClasses);
         this.extraNodeClasses = newClasses;
