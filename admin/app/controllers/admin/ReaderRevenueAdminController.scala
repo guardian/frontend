@@ -48,7 +48,7 @@ class ReaderRevenueAdminController(wsClient: WSClient, val controllerComponents:
 
   private def purgeDeployLogCache(): Future[WSResponse] = {
     val path = "/reader-revenue/contributions-banner-deploy-log"
-    CdnPurge.soft(wsClient, DigestUtils.md5Hex(path))
+    CdnPurge.soft(wsClient, DigestUtils.md5Hex(path), CdnPurge.AjaxHost)
   }
 
   private def bannerRedeploySuccessful(message: String): Result = {

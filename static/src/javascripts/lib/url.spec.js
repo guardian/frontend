@@ -36,10 +36,15 @@ describe('url', () => {
         const origWindowLocation = window.location.href;
         const QUERIES = [
             ['foo', { foo: true }],
-            ['foo=bar', { foo: 'bar' }],
-            ['foo=bar&boo=far', { foo: 'bar', boo: 'far' }],
-            ['foo=bar&boo=far&', { foo: 'bar', boo: 'far' }],
+            ['?foo', { foo: true }],
+            ['?foo=bar', { foo: 'bar' }],
+            ['foo=bar&foo=baz', { foo: 'baz' }], // Last value wins
+            ['?foo=bar&boo=far', { foo: 'bar', boo: 'far' }],
+            ['foo=bar&boo=far&foo=baz', { foo: 'baz', boo: 'far' }],
+            ['?foo=bar&boo=far&', { foo: 'bar', boo: 'far' }],
             ['foo=bar&boo', { foo: 'bar', boo: true }],
+            ['boo=&foo=bar', { foo: 'bar', boo: true }],
+            ['name=J%C3%A9r%C3%B4me', { name: 'Jérôme' }],
             ['', {}],
         ];
 
@@ -51,8 +56,8 @@ describe('url', () => {
         // get the query from window.location.search
         QUERIES.forEach(([query, expected]) => {
             const preQuery = window.location.href.split('?')[0];
-            window.location.assign(`${preQuery}?${query}`);
-
+            const cleanQuery = query.replace(/^\?/, '');
+            window.location.assign(`${preQuery}?${cleanQuery}`);
             expect(getUrlVars()).toEqual(expected);
         });
 
