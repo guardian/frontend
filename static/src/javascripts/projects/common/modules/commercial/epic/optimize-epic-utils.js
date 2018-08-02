@@ -3,11 +3,11 @@
 import {
     insertAtSubmeta,
     reportEpicError,
+    trackEpic,
 } from 'common/modules/commercial/epic/epic-utils';
 
 import type { EpicComponent } from 'common/modules/commercial/epic/epic-utils';
 
-// TODO: fix hack - should be passed along
 let iframe: HTMLIFrameElement;
 
 // TODO: use flow types for messages in optimize epic channel
@@ -56,12 +56,21 @@ const insertEpicIframe = (component: EpicComponent): Promise<EpicComponent> => n
         }
 
         if (message.messageType === EPIC_INITIALIZED) {
-            resolve(component);
+            resolve({
+                html: component.html,
+                // with some more work, variant-specific component event data could be sent in the epic initialized message
+                componentEvent: {
+                    component: {
+                        componentType: 'ACQUISITIONS_EPIC',
+                        id: 'optimize_epic',
+                    },
+                },
+            });
             return;
         }
 
         if (message.messageType === EPIC_HEIGHT) {
-            iframe.style.height = `${message.data.height}px`;
+            iframe.style.height = `${message.data.height}px`; // TODO: px unit ok?
         }
     });
 
@@ -86,9 +95,13 @@ const setIframeHeight = (component: EpicComponent): EpicComponent => {
 };
 
 const displayEpicIframe = (url: string): Promise<EpicComponent> =>
-    createEpicIframe(url).then(insertEpicIframe).then(setIframeHeight);
+    createEpicIframe(url).then(insertEpicIframe).then(setIframeHeight).then(epic => {
+        trackEpic(epic);
+        return epic;
+    });
 
 const getOptimizeEpicUrl = (): ?string =>
+    // TODO: create new config field
     'http://reader-revenue-components.s3-website-eu-west-1.amazonaws.com/epic/v1/index.html';
     // 'https://support.code.dev-theguardian.com/epic/v1/index.html';
 
