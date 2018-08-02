@@ -30,7 +30,7 @@ export const mobileNavSignIn: ABTest = {
     successMeasure: 'signed in mobile users',
     audienceCriteria: 'mobile users',
     dataLinkNames: 'n/a',
-    idealOutcome: 'More sgned in users',
+    idealOutcome: 'More signed in users',
     canRun: () => true,
     variants: [
         {
