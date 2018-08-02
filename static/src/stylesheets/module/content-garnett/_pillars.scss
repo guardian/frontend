@@ -303,7 +303,6 @@
     }
 }
 
-.content--interactive,
 .content--pillar-news:not(.paid-content) {
     @include colorPalatte($news-main, $news-dark, $news-bright);
 }
