@@ -36,57 +36,58 @@ const createEpicIframe = (url: string): Promise<EpicComponent> => {
     return Promise.resolve({ html: container });
 };
 
-const insertEpicIframe = (component: EpicComponent): Promise<EpicComponent> => new Promise((resolve, reject) => {
-
-    // adding listener before inserting iframe into the DOM,
-    // ensures no messages sent from the iframe will be unhandled
-    window.addEventListener('message', (event: MessageEvent) => {
-
-        let message = null;
-        try {
-            if (typeof event.data === 'string') {
-                message = JSON.parse(event.data);
+const insertEpicIframe = (component: EpicComponent): Promise<EpicComponent> =>
+    new Promise((resolve, reject) => {
+        // adding listener before inserting iframe into the DOM,
+        // ensures no messages sent from the iframe will be unhandled
+        window.addEventListener('message', (event: MessageEvent) => {
+            let message = null;
+            try {
+                if (typeof event.data === 'string') {
+                    message = JSON.parse(event.data);
+                }
+            } catch (err) {
+                return;
             }
-        } catch (err) {
-            return;
-        }
 
-        if (!message || message.channel !== OPTIMIZE_EPIC_CHANNEL) {
-            return;
-        }
+            if (!message || message.channel !== OPTIMIZE_EPIC_CHANNEL) {
+                return;
+            }
 
-        if (message.messageType === EPIC_INITIALIZED) {
-            resolve({
-                html: component.html,
-                // with some more work, variant-specific component event data could be sent in the epic initialized message
-                componentEvent: {
-                    component: {
-                        componentType: 'ACQUISITIONS_EPIC',
-                        id: 'optimize_epic',
+            if (message.messageType === EPIC_INITIALIZED) {
+                resolve({
+                    html: component.html,
+                    // with some more work, variant-specific component event data could be sent in the epic initialized message
+                    componentEvent: {
+                        component: {
+                            componentType: 'ACQUISITIONS_EPIC',
+                            id: 'optimize_epic',
+                        },
                     },
-                },
-            });
-            return;
-        }
+                });
+                return;
+            }
 
-        if (message.messageType === EPIC_HEIGHT) {
-            iframe.style.height = `${message.data.height}px`; // TODO: px unit ok?
-        }
+            if (message.messageType === EPIC_HEIGHT) {
+                iframe.style.height = `${message.data.height}px`; // TODO: px unit ok?
+            }
+        });
+
+        insertAtSubmeta(component).catch(reject);
     });
 
-    insertAtSubmeta(component).catch(reject);
-});
-
 const setIframeHeight = (component: EpicComponent): EpicComponent => {
-
     const sendResizeTriggeredMessage = () => {
         // setIframeHeight should be called once the iframe has been inserted.
         // This means the Optimize Epic will have been initialized.
         // In particular, handlers will be set up for message events in the Optimize Epic channel.
-        iframe.contentWindow.postMessage(JSON.stringify({
-            channel: OPTIMIZE_EPIC_CHANNEL,
-            messageType: RESIZE_TRIGGERED,
-        }), '*'); // TODO: target origin
+        iframe.contentWindow.postMessage(
+            JSON.stringify({
+                channel: OPTIMIZE_EPIC_CHANNEL,
+                messageType: RESIZE_TRIGGERED,
+            }),
+            '*'
+        ); // TODO: target origin
     };
 
     window.addEventListener('resize', sendResizeTriggeredMessage);
@@ -95,15 +96,18 @@ const setIframeHeight = (component: EpicComponent): EpicComponent => {
 };
 
 const displayEpicIframe = (url: string): Promise<EpicComponent> =>
-    createEpicIframe(url).then(insertEpicIframe).then(setIframeHeight).then(epic => {
-        trackEpic(epic);
-        return epic;
-    });
+    createEpicIframe(url)
+        .then(insertEpicIframe)
+        .then(setIframeHeight)
+        .then(epic => {
+            trackEpic(epic);
+            return epic;
+        });
 
 const getOptimizeEpicUrl = (): ?string =>
     // TODO: create new config field
     'http://reader-revenue-components.s3-website-eu-west-1.amazonaws.com/epic/v1/index.html';
-    // 'https://support.code.dev-theguardian.com/epic/v1/index.html';
+// 'https://support.code.dev-theguardian.com/epic/v1/index.html';
 
 const displayOptimizeEpic = (): Promise<EpicComponent> => {
     const url = getOptimizeEpicUrl();
