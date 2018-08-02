@@ -4,6 +4,8 @@ We have a homebrewed AB testing framework running in the application. The data i
 
 Most tests can be written in JavaScript, although we can serve variants via Varnish.
 
+Read this if you want to [write a server-side AB Test](#write-a-server-side-test)
+
 # Guide
 
 There are six steps in the test lifecycle:
@@ -265,3 +267,86 @@ Optimizely is relatively expensive - several thousand pounds p/month.
 Optimizely is a client-side framework, which is limited for some types of testing.
 
 It adds a rather large overhead to the cookie (mine is 2.5kb).
+
+# Write a Server-Side Test 
+
+If you want to set up your AB test with scala instead of javascript, almost all the steps are different. 
+
+*Advantages:* 
+- Allows you to run tests that just won't work in javascript ie if you want to render a whole different page
+- Avoid javascript rendering problems (eg a jump if a DOM element is rendered and then hidden)
+- More performant
+
+*Disadvantages:* 
+- Can only do AB tests, not multivariant ABC test
+- Only one test can use a given bucket at a time eg. if someone is running a 50:50 test, you can't run a 50:50 until they finish (current setup) 
+- Slightly harder to set up, preview and read test results 
+
+## Configure the test
+
+1. In `Experiments.scala`, create a new object for your test filling in author, and end date as per the other tests. 
+
+2. Ensure that the object name and the name property are the same - but formatted correctly.  
+eg: object `AudioChangeImagePosition` has the name property `audio-change-image-position`.
+```
+object AudioChangeImagePosition extends Experiment(
+  name = "audio-change-image-position",
+  description = "Test the position of the image on audio pages",
+  owners = Owner.group(SwitchGroup.Journalism),
+  sellByDate = new LocalDate(2018, 8, 3),
+  participationGroup = Perc50
+)
+
+```
+3. Add the experiment to the object property `ActiveExperiments.allExperiments` at the top of the file 
+
+4. Switch the test on for your local environment: http://localhost:9000/dev/switchboard You should be able to find it under `Serverside Tests`
+NB: You should be running in `project dev-build` because you will need access to the /admin screen to let you turn the switch on and off. 
+
+5. Incorporate the test in your code as a switch, eg:
+
+```
+@import experiments.{ActiveExperiments, AudioChangeImagePosition}
+
+if(ActiveExperiments.isParticipating(AudioHideImage)) { 
+    //do variant thing 
+ }
+
+```
+
+NB: If your test suddenly stops working in local, check the switchboard again and make sure your test is still switched on. 
+
+## Checking the test
+
+### Test on CODE:
+
+- deploy branch to CODE
+- switch AB test on for CODE: https://frontend.code.dev-gutools.co.uk/dev/switchboard
+
+### Forcing yourself into the test
+
+Severside AB tests use your session ID run through Fastly's Varnish configuration to assign you to a bucket. To trick it into putting you in the test, add the header `relevant-header-name: variant` to your request for a given page. eg: `X-GU-Experiment-50perc: variant` 
+
+A tool like the Chrome extension Header Hacker can help you to do this. You'll need to do this for the different urls you see the Guardian on: eg `localhost`, `https://code.dev-theguardian.com`. Ask for help configuring this if you need it. 
+
+Example Header Hacker configuration for putting yourself into a 50% test on CODE. 
+
+	```
+    Custom Request Headers 
+	ServerTest3	X-GU-Experiment-50perc	Replace With	variant
+    
+    Permanent Header Switches 
+    https://code.dev-theguardian.com/	ServerTest3 (Replace X-GU-Experiment-50perc)
+    
+    ```
+    
+ ## Getting the results 
+ 
+Because it is a server-side test, different html will be rendered. 
+
+Give each component a different `data-component` attribute to distinguish them. This will show up in the `rendered components` list on the page view table. 
+
+You can check this in the Network tab of the page, by filtering for requests sent off to `ophan` and checking what's in the `renderedComponents` property. 
+
+In the data lake search for the presence of that rendered component then correlate that with the event you want to measure eg page ready, clicked play. Ophan events such as these can be added as per the clientside tests above. 
+ 
