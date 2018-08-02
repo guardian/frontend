@@ -138,14 +138,19 @@ class Advert {
         updateAdvertMetric(this, 'stopRendering', getCurrentTime());
     }
 
-    updateExtraSlotClasses(...newClasses: Array<string>): void {
+    static filterClasses(oldClasses: Array<string>, newClasses: Array<string>): Array<string> {
         let classesToRemove: Array<string> = [];
-        for(let i=0;i<this.extraNodeClasses.length;i++){
-            let currentClass: string = this.extraNodeClasses[i];
+        for(let i=0;i<oldClasses.length;i++){
+            let currentClass: string = oldClasses[i];
             if(!newClasses.includes(currentClass)){
                 classesToRemove.push(currentClass);
             }
         }
+        return classesToRemove;
+    }
+
+    updateExtraSlotClasses(...newClasses: Array<string>): void {
+        let classesToRemove: Array<string> = Advert.filterClasses(this.extraNodeClasses, newClasses);
         this.node.classList.remove(...classesToRemove);
         this.node.classList.add(...newClasses);
         this.extraNodeClasses = newClasses;
@@ -153,3 +158,7 @@ class Advert {
 }
 
 export { Advert };
+
+export const _ = {
+    filterClasses: Advert.filterClasses,
+};
