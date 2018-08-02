@@ -18,7 +18,6 @@ const reset = (window_: WindowProxy): void => {
 };
 
 const sendViewportDimensions = (iframeId, viewport): void => {
-    console.log('sendViewportDimensions', iframeId);
     if (iframes[iframeId] && iframes[iframeId].respond) {
         iframes[iframeId].respond(null, viewport);
     }
@@ -64,18 +63,14 @@ const removeResizeListener = (iframe: Element): void => {
 };
 
 const onMessage = (respond: any, start: any, iframe: ?Element): void => {
-    console.log('onMessage inside viewport');
     if (!iframe) return;
-    console.log('iframe', iframe);
     if (start) {
-        console.log('addResizeListener');
         addResizeListener(iframe, respond);
     } else {
         removeResizeListener(iframe);
     }
 };
 const init = (register: RegisterListeners) => {
-    console.log('init viewport');
     register('viewport', onMessage, {
         persist: true,
     });
@@ -83,4 +78,4 @@ const init = (register: RegisterListeners) => {
 
 export const _ = { addResizeListener, removeResizeListener, reset, onMessage };
 
-export { init, addResizeListener, lastViewportRead };
+export { init };

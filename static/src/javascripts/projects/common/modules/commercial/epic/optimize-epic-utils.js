@@ -1,106 +1,96 @@
 // @flow
-// FIXME
-// import config from 'lib/config';
 
 import {
     insertAtSubmeta,
     reportEpicError,
 } from 'common/modules/commercial/epic/epic-utils';
 
-import { init as initMessenger } from 'commercial/modules/messenger';
-// import { init as resize } from 'commercial/modules/messenger/resize';
-import {addResizeListener, lastViewportRead} from 'commercial/modules/messenger/viewport';
-
 import type { EpicComponent } from 'common/modules/commercial/epic/epic-utils';
 
-// TODO: fix hack
+// TODO: fix hack - should be passed along
 let iframe: HTMLIFrameElement;
 
-const createEpicIframe = (id: string, url: string): Promise<EpicComponent> => new Promise((resolve, reject) => {
+// TODO: use flow types for messages in optimize epic channel
+
+// channel for messages between Optimize Epic and Guardian frontend
+const OPTIMIZE_EPIC_CHANNEL = 'OPTIMIZE_EPIC';
+
+// messages in this channel (incoming / outgoing) should have the following schema:
+// { channel: 'OPTIMIZE_EPIC', messageType: string, data: ?any }
+
+// outgoing event types
+const RESIZE_TRIGGERED = 'RESIZE_TRIGGERED';
+
+// incoming event types
+const EPIC_INITIALIZED = 'EPIC_INITIALIZED';
+const EPIC_HEIGHT = 'EPIC_HEIGHT';
+
+// Return type a Promise - presuming fastdom will be required (?)
+const createEpicIframe = (url: string): Promise<EpicComponent> => {
     const container = document.createElement('div');
     iframe = document.createElement('iframe');
     iframe.src = url;
     iframe.style.width = '100%';
-    iframe.id = id;
     iframe.frameBorder = '0';
     container.appendChild(iframe);
+    return Promise.resolve({ html: container });
+};
 
+const insertEpicIframe = (component: EpicComponent): Promise<EpicComponent> => new Promise((resolve, reject) => {
+
+    // adding listener before inserting iframe into the DOM,
+    // ensures no messages sent from the iframe will be unhandled
     window.addEventListener('message', (event: MessageEvent) => {
 
-        if (event.data === 'EPIC_READY') {
-            const host = `${window.location.protocol}//${window.location.host}`;
-            console.log('posting id to iframe');
-            iframe.contentWindow.postMessage(JSON.stringify({
-                id,
-                host,
-            }), '*');
-            resolve({html: container});
-            return;
-        }
-
-        let data = null;
+        let message = null;
         try {
             if (typeof event.data === 'string') {
-                data = JSON.parse(event.data);
+                message = JSON.parse(event.data);
             }
         } catch (err) {
-            // TODO: remove
-            console.log('bad message', event.data);
             return;
         }
 
-        // Received when the iframe is ready to handle view port events.
-        // If the sent width is different to current width within the iframe,
-        // it will send it's height to the parent so that the parent can re-size the iframe.
-        if (data && data.type === 'viewport') {
-            const msgId = data.id;
-
-            lastViewportRead().then(({ width }) => {
-                iframe.contentWindow.postMessage(JSON.stringify({
-                    id: msgId,
-                    result: { width },
-                }), '*');
-            });
-
-            // Send all future widths
-            addResizeListener(iframe, (alwaysNull, {width}) => {
-                console.log('respond');
-                // Send the viewport info to the iframe
-                iframe.contentWindow.postMessage(JSON.stringify({
-                    id: msgId,
-                    result: {width},
-                }), '*');
-            });
+        if (!message || message.channel !== OPTIMIZE_EPIC_CHANNEL) {
+            return;
         }
 
-        if (data && data.type === 'resize') {
-            console.log('Got resize event', data);
-            iframe.style.height = `${data.value.height}px`;
-            // container.style.height = `${data.value.height}px`;
+        if (message.messageType === EPIC_INITIALIZED) {
+            resolve(component);
+            return;
+        }
+
+        if (message.messageType === EPIC_HEIGHT) {
+            iframe.style.height = `${message.data.height}px`;
         }
     });
 
-    insertAtSubmeta({html: container}).catch(reject);
+    insertAtSubmeta(component).catch(reject);
 });
 
-const displayEpicIframe = (id: string, url: string): Promise<EpicComponent> =>
-    createEpicIframe(id, url)
-        .then(epic => {
+const setIframeHeight = (component: EpicComponent): EpicComponent => {
 
-            return epic;
-        });
+    const sendResizeTriggeredMessage = () => {
+        // setIframeHeight should be called once the iframe has been inserted.
+        // This means the Optimize Epic will have been initialized.
+        // In particular, handlers will be set up for message events in the Optimize Epic channel.
+        iframe.contentWindow.postMessage(JSON.stringify({
+            channel: OPTIMIZE_EPIC_CHANNEL,
+            messageType: RESIZE_TRIGGERED,
+        }), '*'); // TODO: target origin
+    };
 
-const optimizeEpicId = 'optimize-epic';
+    window.addEventListener('resize', sendResizeTriggeredMessage);
+    sendResizeTriggeredMessage();
+    return component;
+};
+
+const displayEpicIframe = (url: string): Promise<EpicComponent> =>
+    createEpicIframe(url).then(insertEpicIframe).then(setIframeHeight);
 
 const getOptimizeEpicUrl = (): ?string =>
-    // FIXME
-    // const host = config.get('page.supportUrl');
-    // if (!host) {
-    //     return undefined;
-    // }
-    // return host + '/epic/v1/index.html';
-    'https://support.code.dev-theguardian.com/epic/v1/index.html';
-    //'http://reader-revenue-components.s3-website-eu-west-1.amazonaws.com/epic/v1/index.html';
+    'http://reader-revenue-components.s3-website-eu-west-1.amazonaws.com/epic/v1/index.html';
+    // 'https://support.code.dev-theguardian.com/epic/v1/index.html';
 
 const displayOptimizeEpic = (): Promise<EpicComponent> => {
     const url = getOptimizeEpicUrl();
@@ -109,7 +99,7 @@ const displayOptimizeEpic = (): Promise<EpicComponent> => {
             new Error('unable to get default optimize epic url')
         );
     }
-    return displayEpicIframe(optimizeEpicId, url).catch(err => {
+    return displayEpicIframe(url).catch(err => {
         reportEpicError(err);
         throw err;
     });
