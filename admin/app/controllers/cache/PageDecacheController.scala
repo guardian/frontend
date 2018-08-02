@@ -10,7 +10,7 @@ import org.apache.commons.codec.digest.DigestUtils
 import play.api.libs.ws.WSClient
 import play.api.mvc.Security.AuthenticatedRequest
 import play.api.mvc._
-import purge.CdnPurge
+import purge.{AjaxHost, CdnPurge, FastlyService, GuardianHost}
 
 import scala.concurrent.Future
 import scala.concurrent.Future.successful
@@ -24,21 +24,32 @@ class PageDecacheController(wsClient: WSClient, val controllerComponents: Contro
       Future(NoCache(Ok(views.html.cache.pageDecache())))
   }
 
-  def decache(): Action[AnyContent] = AdminAuthAction.async { implicit request =>
-    getSubmittedUrl(request).map(new URI(_)).map{ urlToDecache =>
-      CdnPurge.soft(wsClient, DigestUtils.md5Hex(urlToDecache.getPath), CdnPurge.GuardianHost)
-        .map { _ => "Purge request successfully sent" }
-        .recover { case e => s"Purge request was not successful, please report this issue: '${e.getLocalizedMessage}'" }
-        .map { message => NoCache(Ok(views.html.cache.pageDecache(message))) }
-    }.getOrElse(successful(BadRequest("No page submitted")))
+  def renderAjaxDecache(): Action[AnyContent] = Action.async { implicit request =>
+    Future(NoCache(Ok(views.html.cache.ajaxDecache())))
   }
 
-  private def getSubmittedUrl(request: AuthenticatedRequest[AnyContent, UserIdentity]): Option[String] =
-    request
+  def decacheAjax(): Action[AnyContent] = AdminAuthAction.async { implicit request =>
+    getSubmittedUrlPathMd5(request) match {
+      case Some(path) => CdnPurge.soft(wsClient, path, AjaxHost).map(message => NoCache(Ok(views.html.cache.ajaxDecache(message))))
+      case None => successful(BadRequest("No page submitted"))
+    }
+  }
+
+  def decachePage(): Action[AnyContent] = AdminAuthAction.async { implicit request =>
+    getSubmittedUrlPathMd5(request) match {
+      case Some(md5Path) => CdnPurge.soft(wsClient, md5Path, GuardianHost).map(message => NoCache(Ok(views.html.cache.pageDecache(message))))
+      case None => successful(BadRequest("No page submitted"))
+    }
+  }
+
+  private def getSubmittedUrlPathMd5(request: AuthenticatedRequest[AnyContent, UserIdentity]): Option[String] = {
+    val url = request
       .body.asFormUrlEncoded
       .getOrElse(Map.empty)
       .get("url")
       .flatMap(_.headOption)
       .map(_.trim)
+    url.map(url => DigestUtils.md5Hex(new URI(url).getPath))
+  }
 
 }
