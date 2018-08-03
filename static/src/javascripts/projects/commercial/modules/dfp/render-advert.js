@@ -68,8 +68,8 @@ sizeCallbacks[adSizes.fluid] = (renderSlotEvent: any, advert: Advert) =>
 /**
  * Trigger sticky scrolling for MPUs in the right-hand article column
  */
-sizeCallbacks[adSizes.mpu] = (_, advert) => {
-    return fastdom.read(() => {
+sizeCallbacks[adSizes.mpu] = (_, advert) =>
+    fastdom.read(() => {
         if (advert.node.classList.contains('js-sticky-mpu')) {
             if (advert.node.classList.contains('ad-slot--right')) {
                 stickyMpu(advert.node);
@@ -80,13 +80,12 @@ sizeCallbacks[adSizes.mpu] = (_, advert) => {
         }
         return fastdom.write(() => advert.updateExtraSlotClasses());
     });
-};
 
 /**
  * Resolve the stickyMpu.whenRendered promise
  */
-sizeCallbacks[adSizes.halfPage] = (_, advert) => {
-    return fastdom.read(() => {
+sizeCallbacks[adSizes.halfPage] = (_, advert) =>
+    fastdom.read(() => {
         if (advert.node.classList.contains('js-sticky-mpu')) {
             stickyMpu(advert.node);
         }
@@ -95,25 +94,21 @@ sizeCallbacks[adSizes.halfPage] = (_, advert) => {
         }
         return fastdom.write(() => advert.updateExtraSlotClasses());
     });
-};
 
-sizeCallbacks[adSizes.video] = (_, advert) => {
-    return fastdom.write(() => {
+sizeCallbacks[adSizes.video] = (_, advert) =>
+    fastdom.write(() => {
         advert.updateExtraSlotClasses('u-h');
     });
-};
 
-sizeCallbacks[adSizes.video2] = (_, advert) => {
-    return fastdom.write(() => {
+sizeCallbacks[adSizes.video2] = (_, advert) =>
+    fastdom.write(() => {
         advert.updateExtraSlotClasses('ad-slot--outstream');
     });
-};
 
-sizeCallbacks[adSizes.googleCard] = (_, advert) => {
-    return fastdom.write(() => {
+sizeCallbacks[adSizes.googleCard] = (_, advert) =>
+    fastdom.write(() => {
         advert.updateExtraSlotClasses('ad-slot--gc');
     });
-};
 
 /**
  * Out of page adverts - creatives that aren't directly shown on the page - need to be hidden,
@@ -138,9 +133,9 @@ sizeCallbacks[adSizes.empty] = outOfPageCallback;
 /**
  * Portrait adverts exclude the locally-most-popular widget
  */
-sizeCallbacks[adSizes.portrait] = () => {
+sizeCallbacks[adSizes.portrait] = () =>
     // remove geo most popular
-    return geoMostPopular.whenRendered.then(popular =>
+    geoMostPopular.whenRendered.then(popular =>
         fastdom.write(() => {
             if (popular && popular.elem) {
                 popular.elem.remove();
@@ -148,7 +143,6 @@ sizeCallbacks[adSizes.portrait] = () => {
             }
         })
     );
-};
 
 /**
  * Commercial components with merch sizing get fluid-250 styling

@@ -14,8 +14,8 @@ const shouldRenderLabel = adSlotNode =>
         adSlotNode.getElementsByClassName('ad-slot__label').length
     );
 
-export const renderAdvertLabel = (adSlotNode: HTMLElement): Promise<null> => {   
-    return fastdom.read(() => {
+export const renderAdvertLabel = (adSlotNode: HTMLElement): Promise<null> =>
+    fastdom.read(() => {
         if (shouldRenderLabel(adSlotNode)) {
             let feedbackPopup = '';
             let feedbackThanksMessage = '';
@@ -39,4 +39,3 @@ export const renderAdvertLabel = (adSlotNode: HTMLElement): Promise<null> => {
             });
         }
     });
-};
