@@ -36,6 +36,10 @@ const createEpicIframe = (url: string): Promise<EpicComponent> => {
     return Promise.resolve({ html: container });
 };
 
+const setIframeHeight = (height: number) => {
+    iframe.style.height = `${height}px`; // TODO: px unit ok?
+};
+
 const insertEpicIframe = (epic: EpicComponent): Promise<EpicComponent> =>
     new Promise((resolve, reject) => {
         // adding listener before inserting iframe into the DOM,
@@ -64,6 +68,8 @@ const insertEpicIframe = (epic: EpicComponent): Promise<EpicComponent> =>
                 const abTest = data.abTest;
                 const componentEvent = (abTest) ? { component, abTest } : { component };
 
+                setIframeHeight(message.data.height);
+
                 resolve({
                     html: epic.html,
                     // with some more work, variant-specific component event data could be sent in the epic initialized message
@@ -73,35 +79,16 @@ const insertEpicIframe = (epic: EpicComponent): Promise<EpicComponent> =>
             }
 
             if (message.messageType === EPIC_HEIGHT) {
-                iframe.style.height = `${message.data.height}px`; // TODO: px unit ok?
+                setIframeHeight(message.data.height);
             }
         });
 
         insertAtSubmeta(epic).catch(reject);
     });
 
-const setIframeHeight = (component: EpicComponent): EpicComponent => {
-    // Ok to call this function at this point in the iframe initialisation,
-    // since event handler in the iframe will already have been initialised.
-    const sendResizeTriggeredMessage = () => {
-        iframe.contentWindow.postMessage(
-            JSON.stringify({
-                channel: OPTIMIZE_EPIC_CHANNEL,
-                messageType: RESIZE_TRIGGERED,
-            }),
-            '*'
-        ); // TODO: target origin
-    };
-
-    window.addEventListener('resize', sendResizeTriggeredMessage);
-    sendResizeTriggeredMessage();
-    return component;
-};
-
 const displayIframeEpic = (url: string): Promise<EpicComponent> =>
     createEpicIframe(url)
         .then(insertEpicIframe)
-        .then(setIframeHeight)
         .then(epic => {
             trackEpic(epic);
             return epic;
