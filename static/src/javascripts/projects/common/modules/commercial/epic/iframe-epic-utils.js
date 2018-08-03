@@ -36,7 +36,7 @@ const createEpicIframe = (url: string): Promise<EpicComponent> => {
     return Promise.resolve({ html: container });
 };
 
-const insertEpicIframe = (component: EpicComponent): Promise<EpicComponent> =>
+const insertEpicIframe = (epic: EpicComponent): Promise<EpicComponent> =>
     new Promise((resolve, reject) => {
         // adding listener before inserting iframe into the DOM,
         // ensures no messages sent from the iframe will be unhandled
@@ -55,15 +55,19 @@ const insertEpicIframe = (component: EpicComponent): Promise<EpicComponent> =>
             }
 
             if (message.messageType === EPIC_INITIALIZED) {
+                const data = message.data;
+                const component = {
+                    componentType: 'ACQUISITIONS_EPIC',
+                    id: (data && data.componentId) ? data.componentId : 'optimize_epic',
+                };
+
+                const abTest = data.abTest;
+                const componentEvent = (abTest) ? { component, abTest } : { component };
+
                 resolve({
-                    html: component.html,
+                    html: epic.html,
                     // with some more work, variant-specific component event data could be sent in the epic initialized message
-                    componentEvent: {
-                        component: {
-                            componentType: 'ACQUISITIONS_EPIC',
-                            id: 'optimize_epic',
-                        },
-                    },
+                    componentEvent,
                 });
                 return;
             }
@@ -73,7 +77,7 @@ const insertEpicIframe = (component: EpicComponent): Promise<EpicComponent> =>
             }
         });
 
-        insertAtSubmeta(component).catch(reject);
+        insertAtSubmeta(epic).catch(reject);
     });
 
 const setIframeHeight = (component: EpicComponent): EpicComponent => {
