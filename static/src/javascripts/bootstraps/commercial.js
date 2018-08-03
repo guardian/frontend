@@ -14,7 +14,6 @@ import { trackConsent as trackCmpConsent } from 'commercial/modules/cmp/consent-
 import { init as prepareAdVerification } from 'commercial/modules/ad-verification/prepare-ad-verification';
 import { init as prepareGoogletag } from 'commercial/modules/dfp/prepare-googletag';
 import { init as prepareSonobiTag } from 'commercial/modules/dfp/prepare-sonobi-tag';
-import { init as initCarrotTrafficDriver } from 'commercial/modules/carrot-traffic-driver';
 import { init as initLiveblogAdverts } from 'commercial/modules/liveblog-adverts';
 import { init as initStickyTopBanner } from 'commercial/modules/sticky-top-banner';
 import { init as initThirdPartyTags } from 'commercial/modules/third-party-tags';
@@ -54,8 +53,7 @@ if (!commercialFeatures.adFree) {
         ['cm-stickyTopBanner', initStickyTopBanner],
         ['cm-paidContainers', paidContainers],
         ['cm-paidforBand', initPaidForBand],
-        ['cm-commentAdverts', initCommentAdverts],
-        ['cm-carrot', initCarrotTrafficDriver]
+        ['cm-commentAdverts', initCommentAdverts]
     );
 }
 

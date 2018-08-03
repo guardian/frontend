@@ -14,8 +14,8 @@ const defaultRules = {
     clearContentMeta: 0,
     selectors: {
         ' .element-rich-link': {
-            minAbove: 100,
-            minBelow: 400,
+            minAbove: 200,
+            minBelow: 300,
         },
         ' .element-image': {
             minAbove: 440,
@@ -38,9 +38,9 @@ const defaultRules = {
             minAbove: 50,
             minBelow: 50,
         },
-        ' .ad-slot': {
-            minAbove: 100,
-            minBelow: 100,
+        ' .ad-slot--im': {
+            minAbove: 400,
+            minBelow: 400,
         },
     },
     fromBottom: true,
@@ -99,15 +99,15 @@ const insertSlot = (paras: HTMLElement[]): Promise<void> => {
         .then(() => addSlot(slots[0], true));
 };
 
-export const init = (): Promise<void> => {
+export const initCarrot = (): Promise<void> => {
     if (commercialFeatures.carrotTrafficDriver) {
         const rules = isBreakpoint({ max: 'tablet' })
             ? mobileRules
             : defaultRules;
         return spaceFiller.fillSpace(rules, insertSlot, {
-            waitForImages: false,
+            waitForImages: true,
             waitForLinks: true,
-            waitForInteractives: false,
+            waitForInteractives: true,
         });
     }
     return Promise.resolve();
