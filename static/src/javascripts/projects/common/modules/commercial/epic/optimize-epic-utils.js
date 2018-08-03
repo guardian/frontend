@@ -6,7 +6,7 @@ import { constructQuery as constructURLQuery } from 'lib/url';
 
 import { displayIframeEpic } from 'common/modules/commercial/epic/iframe-epic-utils';
 
-import type { EpicComponent } from 'common/modules/commercial/epic/epic-utils';
+import type { IframeEpicComponent } from 'common/modules/commercial/epic/iframe-epic-utils';
 
 const getOptimizeEpicUrl = (): string => {
     const url =
@@ -18,13 +18,13 @@ const getOptimizeEpicUrl = (): string => {
         // used in acquisition tracking link
         pvid: config.get('ophan.pageViewId'),
         url: window.location.href.split('?')[0],
-        // use to display local currency in pricing
+        // use to display pricing in local currency
         lcs: getLocalCurrencySymbol(),
     });
     return `${url}?${params}`;
 };
 
-const displayOptimizeEpic = (): Promise<EpicComponent> => {
+const displayOptimizeEpic = (): Promise<IframeEpicComponent> => {
     const url = getOptimizeEpicUrl();
     return displayIframeEpic(url);
 };
