@@ -114,7 +114,7 @@ object NavLinks {
   /* LIFE */
   val fashion = NavLink("Fashion", "/fashion")
   val fashionAu = NavLink("Fashion", "/au/lifeandstyle/fashion")
-  val food = NavLink("Food", "/lifeandstyle/food-and-drink")
+  val food = NavLink("Food", "/food")
   val foodAu = NavLink("Food", "/au/lifeandstyle/food-and-drink")
   val relationshipsAu = NavLink("Relationships", "/au/lifeandstyle/relationships")
   val loveAndSex = NavLink("Love & sex", "/lifeandstyle/love-and-sex")
@@ -566,7 +566,7 @@ object NavLinks {
     "football/a-league",
     "sport/nrl",
     "music/classicalmusicandopera",
-    "lifeandstyle/food-and-drink",
+    "food",
     "tone/recipes",
     "lifeandstyle/health-and-wellbeing",
     "lifeandstyle/family",

@@ -164,8 +164,8 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner with Logging {
             iframeElement.replaceWith(createAmpIframeElement(document, src, width, height, frameBorder))
           } else {
             iframeElement.remove()
-            //Here is where I would emit some broken html to force a validation failure
-            logAmpRemoval(s"AMP cleaner an iframe was removed as it was missing attributes. ${article.content.metadata.id}")
+            val attrs  = iframeElement.attributes().asList().asScala.map(_.getKey).mkString(", ")
+            logAmpRemoval(s"AMP cleaner an audio element iframe with src ${iframeElement.attr("src")} and attributes ${attrs} was removed as it was missing attributes.  ${article.content.metadata.id}")
           }
         }
       }
@@ -240,8 +240,7 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner with Logging {
           interactive.appendChild(iframe)
         } else {
           interactive.remove()
-          //break the page
-          logAmpRemoval(s"AMP cleaner an interactive was removed as it was missing attributes. ${article.content.metadata.id}")
+          logAmpRemoval(s"AMP cleaner an interactive was removed. ${article.content.metadata.id}")
         }
     }
   }
@@ -317,7 +316,8 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner with Logging {
             iframeElement.replaceWith(soundcloudElement.get)
           } else
             iframeElement.remove()
-            logAmpRemoval(s"AMP cleaner a soundcloud embed was removed. ${article.content.metadata.id}")
+            val src = iframeElement.attr("src")
+            logAmpRemoval(s"AMP cleaner an embed was removed with an src of ${src}. ${article.content.metadata.id}")
       })
   }
 

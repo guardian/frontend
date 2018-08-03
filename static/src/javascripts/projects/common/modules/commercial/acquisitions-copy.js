@@ -70,7 +70,7 @@ export const getCopyFromGoogleDoc = (
             heading: firstRow.heading,
             paragraphs: rows.map(row => row.paragraphs),
             highlightedText: firstRow.highlightedText.replace(
-                '%%CURRENCY_SYMBOL%%',
+                /%%CURRENCY_SYMBOL%%/g,
                 getLocalCurrencySymbol()
             ),
         };
