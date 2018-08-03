@@ -481,18 +481,26 @@ const showMoreButton = (): void => {
                 return { moreButton, lastChildRect, subnavRect };
             }
         })
-        .then(els => {
-            if (els) {
-                const { moreButton, lastChildRect, subnavRect } = els;
+        .then(
+            (els: {
+                moreButton: ?HTMLElement,
+                lastChildRect: ClientRect,
+                subnavRect: ClientRect,
+            }) => {
+                if (els) {
+                    const { moreButton, lastChildRect, subnavRect } = els;
 
-                // +1 to compensate for the border top on the subnav
-                if (subnavRect.top + 1 === lastChildRect.top) {
-                    fastdom.write(() => {
-                        moreButton.classList.add('is-hidden');
-                    });
+                    // +1 to compensate for the border top on the subnav
+                    if (subnavRect.top + 1 === lastChildRect.top) {
+                        fastdom.write(() => {
+                            if (moreButton) {
+                                moreButton.classList.add('is-hidden');
+                            }
+                        });
+                    }
                 }
             }
-        });
+        );
 };
 
 const toggleSubnavSections = (moreButton: HTMLElement): void => {
@@ -530,6 +538,7 @@ const addEventHandler = (): void => {
 
                 if (parent) {
                     event.preventDefault();
+                    event.stopPropagation();
                     toggleMenuSection(parent);
                 }
             }

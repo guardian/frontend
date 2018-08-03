@@ -2,7 +2,7 @@ package pages
 
 import common.Edition
 import conf.switches.Switches._
-import experiments.{ActiveExperiments, LotameParticipation, OldTLSSupportDeprecation}
+import experiments.{ActiveExperiments, OldTLSSupportDeprecation}
 import html.HtmlPageHelpers._
 import html.Styles
 import model.{ApplicationContext, Page}
@@ -43,7 +43,7 @@ object StoryHtmlPage {
       headTag(
         weAreHiring() when WeAreHiring.isSwitchedOn,
         orielScriptTag(),
-        lotameScriptTag() when ActiveExperiments.isParticipating(LotameParticipation),
+        lotameScriptTag() when LotameSwitch.isSwitchedOn,
         titleTag(),
         metaData(),
         head,
