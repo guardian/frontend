@@ -92,6 +92,7 @@ const awaitEpicViewed = (epic: HTMLDivElement): Promise<void> => {
     return new Promise(resolve => inView.on('firstview', () => resolve()));
 };
 
+// TODO: think about how clicks can be tracked for iframes
 const awaitEpicButtonClicked = (): Promise<void> =>
     new Promise(resolve => {
         mediator.on('module:clickstream:click', (clickSpec: Spec | boolean) => {

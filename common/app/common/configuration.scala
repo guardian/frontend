@@ -317,6 +317,7 @@ class GuardianConfiguration extends Logging {
     lazy val oauthUrl = configuration.getStringProperty("id.oauth.url").getOrElse("")
     lazy val membershipUrl = configuration.getStringProperty("id.membership.url").getOrElse("https://membership.theguardian.com")
     lazy val supportUrl = configuration.getStringProperty("id.support.url").getOrElse("https://support.theguardian.com")
+    lazy val optimizeEpicUrl = configuration.getStringProperty("id.support.optimize-epic-url").getOrElse("https://support.theguardian.com/epic/latest/index.html")
     lazy val subscribeUrl = configuration.getStringProperty("id.digitalpack.url").getOrElse("https://subscribe.theguardian.com")
     lazy val contributeUrl = configuration.getStringProperty("id.contribute.url").getOrElse("https://contribute.theguardian.com")
     lazy val membersDataApiUrl = configuration.getStringProperty("id.members-data-api.url").getOrElse("https://members-data-api.theguardian.com")
@@ -487,7 +488,8 @@ class GuardianConfiguration extends Logging {
       ("membershipUrl", id.membershipUrl),
       ("supportUrl", id.supportUrl),
       ("stripePublicToken", id.stripePublicToken),
-      ("sonobiHeaderBiddingJsUrl", sonobi.jsLocation)
+      ("sonobiHeaderBiddingJsUrl", sonobi.jsLocation),
+      ("optimizeEpicUrl", id.optimizeEpicUrl)
     )
 
     lazy val pageData: Map[String, String] = {
