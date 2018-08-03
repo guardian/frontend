@@ -1,7 +1,10 @@
 // @flow
 import fastdom from 'lib/fastdom-promise';
 
-const replaceTopnavMobileLinkWith = (label: string): Promise<void> =>
+const replaceTopnavMobileLinkWith = (
+    campaign: string,
+    label: ?string
+): Promise<void> =>
     fastdom
         .read(() => ({
             topNavLinkEl: document.querySelector(
@@ -13,9 +16,12 @@ const replaceTopnavMobileLinkWith = (label: string): Promise<void> =>
         }))
         .then(({ topNavLinkEl, topNavLinkElBody }) =>
             fastdom.write(() => {
-                topNavLinkEl.classList.remove('hide-until-desktop');
-                topNavLinkEl.classList.add('hide-until-mobile-medium');
-                topNavLinkElBody.innerHTML = label;
+                if (label) {
+                    topNavLinkElBody.innerHTML = label;
+                    topNavLinkEl.classList.remove('hide-until-desktop');
+                    topNavLinkEl.classList.add('hide-until-mobile-medium');
+                }
+                topNavLinkEl.href += `&ABCMP=${campaign}`;
             })
         );
 
@@ -25,28 +31,30 @@ export const mobileNavSignIn: ABTest = {
     expiry: '2019-06-07',
     author: 'Laura gonzalez',
     description: 'This test will show a sign in link in the mobile nav.',
-    audience: 0.1,
-    audienceOffset: 0.5,
-    successMeasure: 'signed in mobile users',
+    audience: 0.3,
+    audienceOffset: 0.4,
+    successMeasure: 'exploratory',
     audienceCriteria: 'mobile users',
     dataLinkNames: 'n/a',
-    idealOutcome: 'More signed in users',
+    idealOutcome: 'A better understanding of clicks on our sign in button',
     canRun: () => true,
     variants: [
         {
             id: 'control',
-            test: (): void => {},
+            test: (): void => {
+                replaceTopnavMobileLinkWith('ab-control');
+            },
         },
         {
             id: 'variant-register',
             test: (): void => {
-                replaceTopnavMobileLinkWith('Register');
+                replaceTopnavMobileLinkWith('ab-register', 'Register');
             },
         },
         {
             id: 'variant-sign-in',
             test: (): void => {
-                replaceTopnavMobileLinkWith('Sign in');
+                replaceTopnavMobileLinkWith('ab-sign-in', 'Sign in');
             },
         },
     ],
