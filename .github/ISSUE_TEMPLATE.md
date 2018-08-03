@@ -9,7 +9,7 @@ and update you on our progress.
 We also request that you email userhelp@theguardian.com with a link to your post,
 they will be most able to respond to your concerns.
 
-Finally, any issues which just relate to editorial or commerical decisions will
+Finally, any issues which just relate to editorial or commercial decisions will
 be closed without comment.
 -->
 # ISSUE
