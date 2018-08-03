@@ -53,7 +53,7 @@ const removeStyleFromAdIframe = (advert: Advert, style: string) => {
     });
 };
 
-const sizeCallbacks = {};
+const sizeCallbacks: { [string]: (any, any) => Promise<void> } = {};
 
 /**
  * DFP fluid ads should use existing fluid-250 styles in the top banner position
