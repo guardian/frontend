@@ -7,7 +7,7 @@
     "tools/amp-validation"
   ],
   "engines": {
-    "yarn": "1.9.2"
+    "yarn": "1.8.0"
   },
   "dependencies": {
     "@guardian/atom-renderer": "0.14.6",
@@ -28,7 +28,7 @@
     "ophan-tracker-js": "1.3.9",
     "preact": "^8.2.9",
     "preact-compat": "^3.18.0",
-    "prebid.js": "https://github.com/guardian/Prebid.js.git#c3dd8a0",
+    "prebid.js": "https://github.com/guardian/Prebid.js.git#6a13dd8",
     "qwery": "3.4.2",
     "rangefix": "^0.2.5",
     "raven-js": "^3.19.1",

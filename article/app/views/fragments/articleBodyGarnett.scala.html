@@ -73,8 +73,6 @@
                                 @fragments.mainMedia(article, amp)
                             }
 
-                            @fragments.witnessCallToAction(article.content)
-
                             @if(article.content.isColumn){
                                 @fragments.contentMeta(article, model, amp = amp)
                             }
@@ -82,8 +80,6 @@
                             @BodyCleaner(article, amp = amp)
 
                             <div class="after-article js-after-article"></div>
-
-                            @fragments.witnessCallToAction(article.content)
 
                             @fragments.submeta(article, amp)
                         </div>

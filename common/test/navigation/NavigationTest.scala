@@ -197,7 +197,7 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
 
   "On a food article, the pillar" should "be lifeStyle, and food should be highlighted" in {
     val edition = Uk
-    val url = "lifeandstyle/2017/dec/03/chocolate-orange-tart-and-upside-down-cake-jeremy-lee-12-puddings-christmas-part-3"
+    val url = "/lifeandstyle/2018/aug/01/can-you-learn-to-cook-like-a-chef-by-watching-youtube"
     val response = testContentApiClient.getResponse(
       testContentApiClient.item(url, edition)
     )

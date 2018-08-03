@@ -7,11 +7,9 @@ import play.api.mvc.RequestHeader
 
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] = Set(
-    AudioChangeImagePosition,
     AudioPageChange,
     CommercialClientLogging,
     OrielParticipation,
-    LotameParticipation,
     OldTLSSupportDeprecation,
   )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
@@ -21,7 +19,7 @@ object CommercialClientLogging extends Experiment(
   name = "commercial-client-logging",
   description = "A slice of the audience who will post their commercial js performance data",
   owners = Owner.group(SwitchGroup.Commercial),
-  sellByDate = new LocalDate(2018, 8, 1),
+  sellByDate = new LocalDate(2018, 9, 12),
   participationGroup = Perc1A
 )
 
@@ -31,14 +29,6 @@ object OrielParticipation extends Experiment(
   owners = Seq(Owner.withGithub("janua")),
   sellByDate = new LocalDate(2018, 9, 12),
   participationGroup = Perc20A
-)
-
-object LotameParticipation extends Experiment(
-  name = "lotame-participation",
-  description = "A slice of the audience who will participate in Lotame tracking",
-  owners = Seq(Owner.withGithub("janua")),
-  sellByDate = new LocalDate(2018, 9, 12),
-  participationGroup = Perc1D
 )
 
 object OldTLSSupportDeprecation extends Experiment(
@@ -55,13 +45,5 @@ object AudioPageChange extends Experiment(
   description = "Show a different version of the audio page to certain people",
   owners = Owner.group(SwitchGroup.Journalism),
   sellByDate = new LocalDate(2018, 8, 20),
-  participationGroup = Perc0A
-)
-
-object AudioChangeImagePosition extends Experiment(
-  name = "audio-change-image-position",
-  description = "Test the position of the image on audio pages",
-  owners = Owner.group(SwitchGroup.Journalism),
-  sellByDate = new LocalDate(2018, 8, 3),
   participationGroup = Perc50
 )

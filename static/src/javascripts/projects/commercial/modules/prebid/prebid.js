@@ -105,17 +105,8 @@ class PrebidService {
         // allows dynamic assignment.
         window.pbjs.bidderSettings = {};
 
-        if (config.get('switches.prebidSonobi')) {
-            window.pbjs.bidderSettings.sonobi = {
-                // for Jetstream deals
-                alwaysUseBid: true,
-            };
-        }
-
         if (config.get('switches.prebidXaxis')) {
             window.pbjs.bidderSettings.xhb = {
-                // for First Look deals
-                alwaysUseBid: true,
                 adserverTargeting: [
                     {
                         key: 'hb_buyer_id',

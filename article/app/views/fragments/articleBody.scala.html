@@ -52,8 +52,6 @@
                         <div class="js-score"></div>
                         <div class="js-sport-tabs football-tabs content__mobile-full-width"></div>
 
-                        @fragments.witnessCallToAction(article.content)
-
                         @fragments.contentMeta(article, model, amp = amp)
 
                         @if(article.tags.isNews && !article.elements.hasMainEmbed && (article.elements.elements("main") && article.elements.elements("main").isEmpty)) {
@@ -75,8 +73,6 @@
                                 </div>
                             }
                         </div>
-
-                        @fragments.witnessCallToAction(article.content)
 
                         @fragments.submeta(article, amp)
 
