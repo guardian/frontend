@@ -69,44 +69,48 @@ sizeCallbacks[adSizes.fluid] = (renderSlotEvent: any, advert: Advert) =>
  * Trigger sticky scrolling for MPUs in the right-hand article column
  */
 sizeCallbacks[adSizes.mpu] = (_, advert) => {
-    fastdom.write(() => advert.updateExtraSlotClasses());
-    if (advert.node.classList.contains('js-sticky-mpu')) {
-        if (advert.node.classList.contains('ad-slot--right')) {
-            stickyMpu(advert.node);
+    return fastdom.read(() => {
+        if (advert.node.classList.contains('js-sticky-mpu')) {
+            if (advert.node.classList.contains('ad-slot--right')) {
+                stickyMpu(advert.node);
+            }
+            if (advert.node.classList.contains('ad-slot--comments')) {
+                stickyCommentsMpu(advert.node);
+            }
         }
-        if (advert.node.classList.contains('ad-slot--comments')) {
-            stickyCommentsMpu(advert.node);
-        }
-    }
+        return fastdom.write(() => advert.updateExtraSlotClasses());
+    });
 };
 
 /**
  * Resolve the stickyMpu.whenRendered promise
  */
 sizeCallbacks[adSizes.halfPage] = (_, advert) => {
-    fastdom.write(() => advert.updateExtraSlotClasses());
-    if (advert.node.classList.contains('js-sticky-mpu')) {
-        stickyMpu(advert.node);
-    }
-    if (advert.node.classList.contains('ad-slot--comments')) {
-        stickyCommentsMpu(advert.node);
-    }
+    return fastdom.read(() => {
+        if (advert.node.classList.contains('js-sticky-mpu')) {
+            stickyMpu(advert.node);
+        }
+        if (advert.node.classList.contains('ad-slot--comments')) {
+            stickyCommentsMpu(advert.node);
+        }
+        return fastdom.write(() => advert.updateExtraSlotClasses());
+    });
 };
 
 sizeCallbacks[adSizes.video] = (_, advert) => {
-    fastdom.write(() => {
+    return fastdom.write(() => {
         advert.updateExtraSlotClasses('u-h');
     });
 };
 
 sizeCallbacks[adSizes.video2] = (_, advert) => {
-    fastdom.write(() => {
+    return fastdom.write(() => {
         advert.updateExtraSlotClasses('ad-slot--outstream');
     });
 };
 
 sizeCallbacks[adSizes.googleCard] = (_, advert) => {
-    fastdom.write(() => {
+    return fastdom.write(() => {
         advert.updateExtraSlotClasses('ad-slot--gc');
     });
 };
@@ -126,6 +130,7 @@ const outOfPageCallback = (event, advert) => {
             }
         });
     }
+    return Promise.resolve();
 };
 sizeCallbacks[adSizes.outOfPage] = outOfPageCallback;
 sizeCallbacks[adSizes.empty] = outOfPageCallback;
@@ -135,7 +140,7 @@ sizeCallbacks[adSizes.empty] = outOfPageCallback;
  */
 sizeCallbacks[adSizes.portrait] = () => {
     // remove geo most popular
-    geoMostPopular.whenRendered.then(popular =>
+    return geoMostPopular.whenRendered.then(popular =>
         fastdom.write(() => {
             if (popular && popular.elem) {
                 popular.elem.remove();

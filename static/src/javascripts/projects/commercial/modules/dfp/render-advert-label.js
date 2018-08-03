@@ -14,29 +14,29 @@ const shouldRenderLabel = adSlotNode =>
         adSlotNode.getElementsByClassName('ad-slot__label').length
     );
 
-export const renderAdvertLabel = (adSlotNode: any): Promise<null> => {
-    if (shouldRenderLabel(adSlotNode)) {
-        let feedbackPopup = '';
-        let feedbackThanksMessage = '';
-        if (commercialFeatures.adFeedback) {
-            feedbackPopup = template(popupTemplate, {
-                feedbackOptions: {
-                    inappropriate: "It's offensive or inappropriate",
-                    repetitive: 'I keep seeing this',
-                    irrelevant: "It's not relevant to me",
-                    useful: 'This advert was useful',
-                },
-                icon: tick.markup,
-                slot: adSlotNode.id,
+export const renderAdvertLabel = (adSlotNode: HTMLElement): Promise<null> => {   
+    return fastdom.read(() => {
+        if (shouldRenderLabel(adSlotNode)) {
+            let feedbackPopup = '';
+            let feedbackThanksMessage = '';
+            if (commercialFeatures.adFeedback) {
+                feedbackPopup = template(popupTemplate, {
+                    feedbackOptions: {
+                        inappropriate: "It's offensive or inappropriate",
+                        repetitive: 'I keep seeing this',
+                        irrelevant: "It's not relevant to me",
+                        useful: 'This advert was useful',
+                    },
+                    icon: tick.markup,
+                    slot: adSlotNode.id,
+                });
+                feedbackThanksMessage =
+                    '<i class="ad-feedback__thanks-message"> Thanks for your feedback </i>';
+            }
+            const labelDiv = `<div class="ad-slot__label">Advertisement${feedbackPopup}${feedbackThanksMessage}</div>`;
+            return fastdom.write(() => {
+                adSlotNode.insertAdjacentHTML('afterbegin', labelDiv);
             });
-            feedbackThanksMessage =
-                '<i class="ad-feedback__thanks-message"> Thanks for your feedback </i>';
         }
-        const labelDiv = `<div class="ad-slot__label">Advertisement${feedbackPopup}${feedbackThanksMessage}</div>`;
-        return fastdom.write(() => {
-            adSlotNode.insertAdjacentHTML('afterbegin', labelDiv);
-        });
-    }
-
-    return Promise.resolve(null);
+    });
 };
