@@ -36,6 +36,10 @@
                         <div class="media-primary player">
                         @media match {
                             case audio: Audio => {
+                                @audio.elements.images.map{ img =>
+                                    @fragments.imageFigure(img.images)
+                                }
+
                                 <figure data-component="main audio new-player"
                                     id="audio-component-container"
                                     data-media-id="@audio.elements.mainAudio.map{ audioElement => @audioElement.properties.id}"
@@ -112,11 +116,6 @@
                                     <div class="tonal__standfirst">
                                     @fragments.standfirst(v)
                                     </div>
-                                }
-                                case a: Audio => {
-                                    @a.elements.images.map{ img =>
-                                        @fragments.imageFigure(img.images)
-                                    }
                                 }
                                 case _ => {}
                             }
