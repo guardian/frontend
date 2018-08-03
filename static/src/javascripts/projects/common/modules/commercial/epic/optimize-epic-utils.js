@@ -1,7 +1,8 @@
 // @flow
 
-import { constructQuery as constructURLQuery } from 'lib/url';
 import config from 'lib/config';
+import { getLocalCurrencySymbol } from 'lib/geolocation';
+import { constructQuery as constructURLQuery } from 'lib/url';
 
 import { displayIframeEpic } from 'common/modules/commercial/epic/iframe-epic-utils';
 
@@ -12,10 +13,13 @@ const getOptimizeEpicUrl = (): string => {
         config.get('page.optimizeEpicUrl') ||
         // FIXME
         'http://reader-revenue-components.s3-website-eu-west-1.amazonaws.com/epic/v1/index.html';
-    // data passed in query string used to augment acquisition tracking link in iframe
+    // data passed in query string used to augment iframe
     const params = constructURLQuery({
+        // used in acquisition tracking link
         pvid: config.get('ophan.pageViewId'),
         url: window.location.href.split('?')[0],
+        // use to display local currency in pricing
+        lcs: getLocalCurrencySymbol(),
     });
     return `${url}?${params}`;
 };
