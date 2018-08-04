@@ -1,4 +1,4 @@
-// @flow
+// @flow strict
 
 import 'prebid.js/build/dist/prebid';
 import config from 'lib/config';
@@ -146,7 +146,9 @@ class PrebidService {
                         window.pbjs.que.push(() => {
                             // Capture this specific auction starting
                             // to set this slot pbaid targeting value
-                            const auctionInitHandler = (data: Object) => {
+                            const auctionInitHandler = (data: {
+                                auctionId: string,
+                            }) => {
                                 // Get rid of this handler now.
                                 window.pbjs.offEvent(
                                     'auctionInit',
