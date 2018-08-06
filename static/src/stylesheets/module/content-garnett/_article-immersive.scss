@@ -801,6 +801,16 @@
                 bottom: -$gs-baseline * 3;
             }
         }
+
+        &[lang='ar'] {
+            @include mq(leftCol) {
+                margin-left: auto;
+
+                &:before {
+                    display: none;
+                }
+            }
+        }
     }
 
     .content__meta-container {
