@@ -158,7 +158,7 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-acquisitions-epic-optimize-test",
+    "ab-acquisitions-epic-optimize-a-a-test",
     "Bootstrap the AB testing framework to display the Epic using Google Optimize",
     owners = Seq(Owner.withGithub("Mullefa")),
     safeState = Off,
