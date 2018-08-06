@@ -10,7 +10,10 @@ import { getStyles } from 'commercial/modules/messenger/get-stylesheet';
 import type { EpicComponent } from 'common/modules/commercial/epic/epic-utils';
 
 export type IframeEpicComponent = EpicComponent & { iframe: HTMLIFrameElement };
-type FontName = 'GuardianHeadline' | 'GuardianTextEgyptianWeb' | 'GuardianTextSansWeb';
+type FontName =
+    | 'GuardianHeadline'
+    | 'GuardianTextEgyptianWeb'
+    | 'GuardianTextSansWeb';
 
 // TODO: use flow types for messages in optimize epic channel
 
@@ -99,14 +102,19 @@ const insertEpicIframe = (
         insertAtSubmeta(epic).catch(reject);
     });
 
-const sendFontsToIframe = (fonts: Array<FontName>, iframe: HTMLIFrameElement) => {
-    const selector = fonts.map(font => `.webfont[data-cache-name="${font}"]`).join(',');
-    const fontStyle = getStyles({selector}, document.styleSheets);
+const sendFontsToIframe = (
+    fonts: Array<FontName>,
+    iframe: HTMLIFrameElement
+) => {
+    const selector = fonts
+        .map(font => `.webfont[data-cache-name="${font}"]`)
+        .join(',');
+    const fontStyle = getStyles({ selector }, document.styleSheets);
 
     const message = JSON.stringify({
         channel: OPTIMIZE_EPIC_CHANNEL,
         messageType: FONTS,
-        fonts: fontStyle
+        fonts: fontStyle,
     });
 
     iframe.contentWindow.postMessage(message, '*');
@@ -116,7 +124,14 @@ const displayIframeEpic = (url: string): Promise<IframeEpicComponent> =>
     createEpicIframe(url)
         .then(insertEpicIframe)
         .then(epic => {
-            sendFontsToIframe(['GuardianHeadline', 'GuardianTextEgyptianWeb', 'GuardianTextSansWeb'], epic.iframe);
+            sendFontsToIframe(
+                [
+                    'GuardianHeadline',
+                    'GuardianTextEgyptianWeb',
+                    'GuardianTextSansWeb',
+                ],
+                epic.iframe
+            );
             trackEpic(epic);
             return epic;
         })
