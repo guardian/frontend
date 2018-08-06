@@ -33,7 +33,7 @@
                 <div class="content__main-column content__main-column--media content__main-column--@mediaType">
                     <div class="media-body">
 
-                        <div class="media-primary player">
+
                         @media match {
                             case audio: Audio => {
                                 @audio.elements.images.map{ img =>
@@ -108,7 +108,6 @@
                             }
                             case _ => {}
                         }
-                        </div>
 
                         <div class="content__main-column__body" data-component="body">
                             @media match {
