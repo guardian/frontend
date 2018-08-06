@@ -191,6 +191,10 @@
         top: 100px;
         width: gs-span(2);
         transform: translateX(-100%);
+
+        [lang='ar'] & {
+            left: 0;
+        }
     }
 
     @include mq(wide) {
