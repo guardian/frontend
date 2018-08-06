@@ -1,4 +1,4 @@
-// @flow
+// @flow strict
 
 import config from 'lib/config';
 import { getCookie } from 'lib/cookies';
@@ -28,7 +28,7 @@ switch (getBreakpointKey()) {
     // do nothing
 }
 
-if (config.page.contentType === 'Article') {
+if (config.get('page.contentType') === 'Article') {
     slotLabels.push('article');
 } else {
     slotLabels.push('non-article');
@@ -36,7 +36,7 @@ if (config.page.contentType === 'Article') {
 
 const bidLabels: PrebidBidLabel[] = [];
 
-switch (config.page.edition) {
+switch (config.get('page.edition')) {
     case 'UK':
         bidLabels.push('edn-UK');
         break;
@@ -55,7 +55,7 @@ switch (getCookie('GU_geo_continent')) {
     // do nothing
 }
 
-if (config.page.isDev || getRandomIntInclusive(1, 10) === 1)
+if (config.get('page.isDev') || getRandomIntInclusive(1, 10) === 1)
     bidLabels.push('deal-FirstLook');
 
 export const labels: PrebidLabel[] = slotLabels.concat(bidLabels);

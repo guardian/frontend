@@ -1,4 +1,4 @@
-// @flow
+// @flow strict
 
 import config from 'lib/config';
 import { getTestVariantId } from 'common/modules/experiments/utils.js';
@@ -231,7 +231,7 @@ const getXaxisPlacementId = (sizes: PrebidSize[]): number => {
 // Returns a map { <bidderName>: true } of bidders
 // according to the pbtest URL parameter
 const pbTestNameMap = memoize(
-    (): Object =>
+    (): {} =>
         new URLSearchParams(window.location.search)
             .getAll('pbtest')
             .reduce((acc, value) => {

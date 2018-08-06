@@ -3,30 +3,33 @@
 @import conf.Configuration
 @import views.support.DropdownMenus.accountDropdownMenu
 
-<div class="new-header__user-account-container hide-until-desktop">
+<div class="new-header__user-account-container">
 
-    <a class="top-bar__item hide-until-desktop js-navigation-sign-in"
+    <a class="top-bar__item hide-until-desktop js-navigation-sign-in js-navigation-sign-in-top-nav"
         data-link-name="nav2 : topbar : signin"
         href="@Configuration.id.url/signin?INTCMP=DOTCOM_NEWHEADER_SIGNIN">
-
-        Sign in / Register
+        <span class="hide-until-tablet">Sign in / Register</span>
+        <span class="hide-from-tablet">
+            @views.html.fragments.inlineSvg("profile", "icon", isPresentation = true)
+            <span class="js-navigation-sign-in-top-nav-body"></span>
+        </span>
     </a>
 
-    <button class="is-hidden dropdown-menu-fallback js-user-account-trigger"
+    <button class="is-hidden dropdown-menu-fallback js-user-account-trigger hide-until-desktop"
         id="my-account-toggle"
         title="user account toggle"
         data-link-name="nav2 : topbar: my account"
         aria-expanded="false"
         aria-controls="my-account-dropdown"></button>
 
-    <label class="top-bar__item popup__toggle is-hidden js-navigation-account-actions"
+    <label class="top-bar__item popup__toggle is-hidden js-navigation-account-actions hide-until-desktop"
         for="my-account-toggle"
         data-link-name="nav2 : topbar: my account">
 
         My account
     </label>
 
-    <ul class="dropdown-menu dropdown-menu--light js-user-account-dropdown-menu"
+    <ul class="dropdown-menu dropdown-menu--light js-user-account-dropdown-menu hide-until-desktop"
     id="my-account-dropdown"
     aria-hidden="true">
 
