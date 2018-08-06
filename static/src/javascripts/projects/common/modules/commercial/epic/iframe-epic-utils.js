@@ -132,7 +132,6 @@ const displayIframeEpic = (url: string): Promise<IframeEpicComponent> =>
                 ],
                 epic.iframe
             );
-            trackEpic(epic);
             return epic;
         })
         .catch(error => {

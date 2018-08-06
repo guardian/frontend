@@ -18,6 +18,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-mobile-nav-sign-in",
+    "This test will show a sign in link in the mobile nav",
+    owners = Seq(Owner.withGithub("walaura")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 6, 7),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-acquisitions-epic-liveblog",
     "This places the epic below those blocks on liveblogs which have been marked for displaying the epic in Composer",
     owners = Seq(Owner.withGithub("joelochlann")),
@@ -148,7 +158,7 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-acquisitions-epic-optimize-test",
+    "ab-acquisitions-epic-optimize-a-a-test",
     "Bootstrap the AB testing framework to display the Epic using Google Optimize",
     owners = Seq(Owner.withGithub("Mullefa")),
     safeState = Off,

@@ -8,10 +8,19 @@ import { daysSince } from 'lib/time-utils';
 // Persistence keys
 const USER_FEATURES_EXPIRY_COOKIE = 'gu_user_features_expiry';
 const PAYING_MEMBER_COOKIE = 'gu_paying_member';
-const RECURRING_CONTRIBUTOR_COOKIE = 'gu_recurring_contributor';
 const AD_FREE_USER_COOKIE = 'GU_AF1';
 const ACTION_REQUIRED_FOR_COOKIE = 'gu_action_required_for';
 const DIGITAL_SUBSCRIBER_COOKIE = 'gu_digital_subscriber';
+
+// This cookie comes from the user attributes API
+const RECURRING_CONTRIBUTOR_COOKIE = 'gu_recurring_contributor';
+
+// These cookies are dropped by support frontend at the point of making
+// a recurring contribution
+const SUPPORT_RECURRING_CONTRIBUTOR_MONTHLY_COOKIE =
+    'gu.contributions.recurring.contrib-timestamp.Monthly';
+const SUPPORT_RECURRING_CONTRIBUTOR_ANNUAL_COOKIE =
+    'gu.contributions.recurring.contrib-timestamp.Annual';
 
 const forcedAdFreeMode: boolean = !!window.location.hash.match(
     /[#&]noadsaf(&.*)?$/
@@ -126,6 +135,10 @@ const refresh = (): Promise<void> => {
     return Promise.resolve();
 };
 
+const supportSiteRecurringCookiePresent = () =>
+    getCookie(SUPPORT_RECURRING_CONTRIBUTOR_MONTHLY_COOKIE) != null ||
+    getCookie(SUPPORT_RECURRING_CONTRIBUTOR_ANNUAL_COOKIE) != null;
+
 /**
  * Does our _existing_ data say the user is a paying member?
  * This data may be stale; we do not wait for userFeatures.refresh()
@@ -145,7 +158,8 @@ const isRecentContributor = (): boolean => daysSinceLastContribution <= 180;
 
 const isRecurringContributor = (): boolean =>
     // If the user is logged in, but has no cookie yet, play it safe and assume they're a contributor
-    isUserLoggedIn() && getCookie(RECURRING_CONTRIBUTOR_COOKIE) !== 'false';
+    (isUserLoggedIn() && getCookie(RECURRING_CONTRIBUTOR_COOKIE) !== 'false') ||
+    supportSiteRecurringCookiePresent();
 
 const isDigitalSubscriber = (): boolean =>
     // If the user is logged in, but has no cookie yet, play it safe and assume they're a digital subscriber
