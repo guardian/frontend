@@ -24,14 +24,18 @@ const epicOptimizeTest: ABTest = {
             options: {
                 isUnlimited: true, // FIXME
             },
-            test: () => displayControlEpic().then(trackEpic)
+            test: () => {
+                displayControlEpic().then(trackEpic)
+            }
         },
         {
             id: 'optimize',
             options: {
                 isUnlimited: true, // FIXME
             },
-            test: () => displayOptimizeEpic().then(trackEpic)
+            test: () => {
+                displayOptimizeEpic().then(trackEpic)
+            }
         },
     ],
 };
