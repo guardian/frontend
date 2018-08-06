@@ -1,8 +1,8 @@
-// @flow
+// @flow strict
 import { makeBannerABTestVariants } from 'common/modules/commercial/contributions-utilities';
 
-const componentType = 'ACQUISITIONS_ENGAGEMENT_BANNER';
-const abTestName = 'AcquisitionsBannerEditorialIndependence';
+const componentType: OphanComponentType = 'ACQUISITIONS_ENGAGEMENT_BANNER';
+const abTestName: string = 'AcquisitionsBannerEditorialIndependence';
 
 const engagementBannerCopyTest = (): string =>
     `<strong>The Guardian is editorially independent &ndash; our journalism is free from the influence of billionaire owners or politicians. No one edits our editor. No one steers our opinion.
