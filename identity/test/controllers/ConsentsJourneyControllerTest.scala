@@ -122,22 +122,18 @@ import scala.concurrent.Future
       }
 
       "show an alert modal for non rp'd users" in new ConsentsJourneyFixture {
-        user.statusFields.setHasRepermissioned(false)
         val result = controller.displayConsentsJourney(None).apply(FakeCSRFRequest(csrfAddToken))
         status(result) should be(200)
         contentAsString(result) should include ("identity-consent-journey--with-alert")
       }
 
       "not show an alert modal for rp'd users" in new ConsentsJourneyFixture {
-        user.statusFields.setHasRepermissioned(true)
         val result = controller.displayConsentsJourney(None).apply(FakeCSRFRequest(csrfAddToken))
         status(result) should be(200)
         contentAsString(result) should not include ("identity-consent-journey--with-alert")
       }
 
       "set a repermission flag on submit" in new ConsentsJourneyFixture {
-        user.statusFields.setHasRepermissioned(false)
-
         val updatedUser = user.copy(
           statusFields = StatusFields(hasRepermissioned = Some(true))
         )

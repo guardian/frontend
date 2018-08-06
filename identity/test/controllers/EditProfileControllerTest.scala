@@ -465,7 +465,6 @@ import scala.concurrent.Future
 
     "displayEmailPrefsForm method" should {
       "Redirect non repermissioned users" in new EditProfileFixture {
-        user.statusFields.setHasRepermissioned(false)
         val userEmailSubscriptions = List(EmailList(EmailNewsletters.guardianTodayUk.listId.toString))
         when(api.userEmails(MockitoMatchers.anyString(), MockitoMatchers.any[TrackingData]))
           .thenReturn(Future.successful(Right(Subscriber("HTML", userEmailSubscriptions))))
@@ -475,7 +474,6 @@ import scala.concurrent.Future
         contentAsString(result) should not include (EmailNewsletters.guardianTodayUk.name)
       }
       "display Guardian Today UK newsletter" in new EditProfileFixture {
-        user.statusFields.setHasRepermissioned(true)
         val userEmailSubscriptions = List(EmailList(EmailNewsletters.guardianTodayUk.listId.toString))
         when(api.userEmails(MockitoMatchers.anyString(), MockitoMatchers.any[TrackingData]))
           .thenReturn(Future.successful(Right(Subscriber("HTML", userEmailSubscriptions))))
