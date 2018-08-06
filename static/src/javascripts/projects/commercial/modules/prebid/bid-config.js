@@ -134,61 +134,89 @@ const containsLeaderboardOrBillboard = (sizes: PrebidSize[]): boolean =>
     containsLeaderboard(sizes) || containsBillboard(sizes);
 
 const getImprovePlacementId = (sizes: PrebidSize[]): number => {
-    switch (config.get('page.edition')) {
-        case 'UK':
-            switch (getBreakpointKey()) {
-                case 'D':
-                    if (containsMpuOrDmpu(sizes)) {
-                        return 1116396;
-                    }
-                    if (containsLeaderboardOrBillboard(sizes)) {
-                        return 1116397;
-                    }
-                    return -1;
-                case 'M':
-                    if (containsMpuOrDmpu(sizes)) {
-                        return 1116400;
-                    }
-                    return -1;
-                case 'T':
-                    if (containsMpuOrDmpu(sizes)) {
-                        return 1116398;
-                    }
-                    if (containsLeaderboardOrBillboard(sizes)) {
-                        return 1116399;
-                    }
-                    return -1;
-                default:
-                    return -1;
-            }
-        case 'INT':
-            switch (getBreakpointKey()) {
-                case 'D':
-                    if (containsMpuOrDmpu(sizes)) {
-                        return 1116420;
-                    }
-                    if (containsLeaderboardOrBillboard(sizes)) {
-                        return 1116421;
-                    }
-                    return -1;
-                case 'M':
-                    if (containsMpuOrDmpu(sizes)) {
-                        return 1116424;
-                    }
-                    return -1;
-                case 'T':
-                    if (containsMpuOrDmpu(sizes)) {
-                        return 1116422;
-                    }
-                    if (containsLeaderboardOrBillboard(sizes)) {
-                        return 1116423;
-                    }
-                    return -1;
-                default:
-                    return -1;
-            }
-        default:
-            return -1;
+    if (isInSafeframeTestVariant()) {
+        switch (getBreakpointKey()) {
+            case 'D':
+                if (containsDmpu(sizes)) {
+                    return 1116408;
+                }
+                if (containsMpu(sizes)) {
+                    return 1116407;
+                }
+                if (containsLeaderboardOrBillboard(sizes)) {
+                    return 1116409;
+                }
+                return -1;
+            case 'T':
+                if (containsMpu(sizes)) {
+                    return 1116410;
+                }
+                if (containsLeaderboard(sizes)) {
+                    return 1116411;
+                }
+                return -1;
+            case 'M':
+                return 1116412;
+            default:
+                return -1;
+        }
+    } else {
+        switch (config.get('page.edition')) {
+            case 'UK':
+                switch (getBreakpointKey()) {
+                    case 'D':
+                        if (containsMpuOrDmpu(sizes)) {
+                            return 1116396;
+                        }
+                        if (containsLeaderboardOrBillboard(sizes)) {
+                            return 1116397;
+                        }
+                        return -1;
+                    case 'M':
+                        if (containsMpuOrDmpu(sizes)) {
+                            return 1116400;
+                        }
+                        return -1;
+                    case 'T':
+                        if (containsMpuOrDmpu(sizes)) {
+                            return 1116398;
+                        }
+                        if (containsLeaderboardOrBillboard(sizes)) {
+                            return 1116399;
+                        }
+                        return -1;
+                    default:
+                        return -1;
+                }
+            case 'INT':
+                switch (getBreakpointKey()) {
+                    case 'D':
+                        if (containsMpuOrDmpu(sizes)) {
+                            return 1116420;
+                        }
+                        if (containsLeaderboardOrBillboard(sizes)) {
+                            return 1116421;
+                        }
+                        return -1;
+                    case 'M':
+                        if (containsMpuOrDmpu(sizes)) {
+                            return 1116424;
+                        }
+                        return -1;
+                    case 'T':
+                        if (containsMpuOrDmpu(sizes)) {
+                            return 1116422;
+                        }
+                        if (containsLeaderboardOrBillboard(sizes)) {
+                            return 1116423;
+                        }
+                        return -1;
+                    default:
+                        return -1;
+                }
+            default:
+                return -1;
+        }
     }
 };
 
