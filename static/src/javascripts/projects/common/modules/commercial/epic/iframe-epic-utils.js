@@ -3,7 +3,6 @@
 import {
     insertAtSubmeta,
     reportEpicError,
-    trackEpic,
 } from 'common/modules/commercial/epic/epic-utils';
 import { getStyles } from 'commercial/modules/messenger/get-stylesheet';
 
