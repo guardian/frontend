@@ -33,19 +33,12 @@ const getTimestampOfLastBannerDeploy = (): Promise<string> =>
         mode: 'cors',
     }).then((resp: BannerDeployLog) => resp && resp.time);
 
-const hasBannerBeenRedeployedSinceClosed = (): Promise<boolean> =>
+const hasBannerBeenRedeployedSinceClosed = (
+    userLastClosedBannerAt: string
+): Promise<boolean> =>
     getTimestampOfLastBannerDeploy()
         .then(timestamp => {
             const bannerLastDeployedAt = new Date(timestamp);
-            const userLastClosedBannerAt = userPrefs.get(
-                'engagementBannerLastClosedAt'
-            );
-
-            if (!userLastClosedBannerAt) {
-                // show the banner if we can't get a value for this
-                return true;
-            }
-
             return bannerLastDeployedAt > new Date(userLastClosedBannerAt);
         })
         .catch(err => {
@@ -239,11 +232,19 @@ const canShow = (): Promise<boolean> => {
     }
 
     bannerParams = deriveBannerParams(getGeoLocation());
-    const hasSeenEnoughArticles =
-        bannerParams && getVisitCount() >= bannerParams.minArticles;
+    const hasSeenEnoughArticles: boolean =
+        !!bannerParams && getVisitCount() >= bannerParams.minArticles;
 
     if (hasSeenEnoughArticles && shouldShowReaderRevenue()) {
-        return hasBannerBeenRedeployedSinceClosed();
+        const userLastClosedBannerAt = userPrefs.get(
+            'engagementBannerLastClosedAt'
+        );
+
+        if (!userLastClosedBannerAt) {
+            // show the banner if we can't get a value for this
+            return Promise.resolve(true);
+        }
+        return hasBannerBeenRedeployedSinceClosed(userLastClosedBannerAt);
     }
 
     return Promise.resolve(false);
