@@ -5,6 +5,7 @@ import {
     reportEpicError,
     trackEpic,
 } from 'common/modules/commercial/epic/epic-utils';
+import { getStyles } from 'commercial/modules/messenger/get-stylesheet';
 
 import type { EpicComponent } from 'common/modules/commercial/epic/epic-utils';
 
@@ -21,6 +22,9 @@ const OPTIMIZE_EPIC_CHANNEL = 'OPTIMIZE_EPIC';
 // incoming event types
 const EPIC_INITIALIZED = 'EPIC_INITIALIZED';
 const EPIC_HEIGHT = 'EPIC_HEIGHT';
+
+// outgoing event types
+const FONTS = 'FONTS';
 
 // Return type a Promise - presuming fastdom will be required (?)
 const createEpicIframe = (url: string): Promise<IframeEpicComponent> => {
@@ -94,10 +98,25 @@ const insertEpicIframe = (
         insertAtSubmeta(epic).catch(reject);
     });
 
+const sendFontsToIframe = (iframe: HTMLIFrameElement) => {
+    // TODO: why are only two of these actually sent?
+    const selector = '.webfont[data-cache-name="GuardianTextEgyptianWeb"], .webfont[data-cache-name="GuardianEgyptianWeb"], .webfont[data-cache-name="GuardianTextSansWeb"]';
+    const fontStyle = getStyles({selector}, document.styleSheets);
+
+    const message = JSON.stringify({
+        channel: OPTIMIZE_EPIC_CHANNEL,
+        messageType: FONTS,
+        fonts: fontStyle
+    });
+
+    iframe.contentWindow.postMessage(message, '*');
+};
+
 const displayIframeEpic = (url: string): Promise<IframeEpicComponent> =>
     createEpicIframe(url)
         .then(insertEpicIframe)
         .then(epic => {
+            sendFontsToIframe(epic.iframe);
             trackEpic(epic);
             return epic;
         })
