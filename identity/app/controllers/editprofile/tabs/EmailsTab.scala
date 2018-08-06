@@ -71,18 +71,18 @@ trait EmailsTab
         marketingConsentForm.bindFromRequest.fold(
           formWithErrors => {
             val formBindingErrorsJson = Json.toJson(formWithErrors.errors.toList)
-            logger.error(s"Failed to submit marketing consent form for user ${userDO.user.getId}: $formBindingErrorsJson")
+            logger.error(s"Failed to submit marketing consent form for user ${userDO.user.id}: $formBindingErrorsJson")
             Future(BadRequest(formBindingErrorsJson))
           },
 
           privacyFormData => {
             identityApiClient.saveUser(userDO.id, privacyFormData.toUserUpdateDTOAjax(userDO), userDO.auth) map {
               case Left(idapiErrors) =>
-                logger.error(s"Failed to process marketing consent form submission for user ${userDO.getId}: $idapiErrors")
+                logger.error(s"Failed to process marketing consent form submission for user ${userDO.id}: $idapiErrors")
                 InternalServerError(Json.toJson(idapiErrors))
 
               case Right(updatedUser) =>
-                val successMsg = s"Successfully updated marketing consent for user ${userDO.getId}"
+                val successMsg = s"Successfully updated marketing consent for user ${userDO.id}"
                 logger.info(successMsg)
                 Ok(successMsg)
             }
