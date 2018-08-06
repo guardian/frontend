@@ -315,6 +315,14 @@ if(ActiveExperiments.isParticipating(AudioChangeImagePosition)) {
 
 NB: If your test suddenly stops working in local, check the switchboard again and make sure your test is still switched on. 
 
+Alternatively you can create your own switchboard to avoid your switch states being overridden by other developers.
+Create a file `~/.gu/frontend.conf` and adding an entry to it like:
+                                                  
+        devOverrides {
+          switches.key=DEV/config/switches-<name>.properties
+      }
+  
+
 ## Checking the test
 
 ### Test on CODE:
@@ -324,7 +332,27 @@ NB: If your test suddenly stops working in local, check the switchboard again an
 
 ### Forcing yourself into the test
 
-Severside AB tests use your session ID run through Fastly's Varnish configuration to assign you to a bucket. To trick it into putting you in the test, add the header `relevant-header-name: variant` to your request for a given page. eg: `X-GU-Experiment-50perc: variant` 
+Severside AB tests use your session ID run through Fastly's Varnish configuration language (VCL) to assign you to a bucket. 
+Requests are bucketed in fixed groups in the [Guardian's VCL files](https://github.com/guardian/fastly-edge-cache/blob/0c366d7f8ef16a5b664fe7205cdd4bae57e07f56/theguardiancom/src/main/resources/varnish21/ab-tests.vcl), and frontend apps use the Vary response header to signify 
+multiple variants exist for the same request. [More information on how VCL enables AB tests here](https://github.com/guardian/frontend/pull/18320). 
+ 
+ 
+There are two ways to put yourself into a test:
+
+*1. Use the opt/in link:*
+
+Copy the name of your test and visit this url: `https://www.theguardian.com/opt/in/your-test-name` 
+eg: `https://www.theguardian.com/opt/in/audio-page-change` this will redirect to the home page, but sets a cookie in your browser
+that should tell the website to opt you into the test, for PROD. If `audio-page-change` is a 50% test, the resulting cookie
+would be: `X-GU-Experiment-50perc : true`. For CODE or DEV environments, adapt the url accordingly. 
+
+Then navigate to the page where you should see the test and you should be opted into the variant.
+
+To opt out you can use the url: `https://www.theguardian.com/opt/out/your-test-name`. `/opt` routes are defined [here](https://github.com/guardian/frontend/blob/master/applications/app/controllers/OptInController.scala#L42). 
+
+*2. Use a header hacker extension:*  
+
+Add the header `relevant-header-name: variant` to your request for a given page. eg: `X-GU-Experiment-50perc: variant` 
 
 A tool like the Chrome extension Header Hacker can help you to do this. You'll need to do this for the different urls you see the Guardian on: eg `localhost`, `https://code.dev-theguardian.com`. Ask for help configuring this if you need it. 
 
@@ -347,5 +375,7 @@ Give each component a different `data-component` attribute to distinguish them. 
 
 You can check this in the Network tab of the page, by filtering for requests sent off to `ophan` and checking what's in the `renderedComponents` property. 
 
-In the data lake search for the presence of that rendered component then correlate that with the event you want to measure eg page ready, clicked play. Ophan events such as these can be added as per the clientside tests above. 
+In the data lake search for the presence of that rendered component. [Find out about querying the data lake here](https://github.com/guardian/frontend/blob/master/docs/03-dev-howtos/19-tracking-components-in-the-data-lake.md#rendered-components).
+ 
+Correlate the presence of the element with the event you want to measure eg page ready, clicked play. Ophan events such as these can be added as per the clientside tests above.  
  
