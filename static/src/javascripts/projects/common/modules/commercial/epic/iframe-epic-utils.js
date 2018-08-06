@@ -14,8 +14,6 @@ type FontName =
     | 'GuardianTextEgyptianWeb'
     | 'GuardianTextSansWeb';
 
-// TODO: use flow types for messages in optimize epic channel
-
 // channel for messages between Optimize Epic and Guardian frontend
 const OPTIMIZE_EPIC_CHANNEL = 'OPTIMIZE_EPIC';
 
