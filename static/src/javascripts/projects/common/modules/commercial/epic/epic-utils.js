@@ -91,8 +91,8 @@ const displayControlEpic = (abTest?: ABTestVariant): Promise<EpicComponent> =>
             const controlEpicError = new Error(
                 `unable to display control epic - ${error}`
             );
-            reportEpicError(error);
-            return Promise.reject(error);
+            reportEpicError(controlEpicError);
+            return Promise.reject(controlEpicError);
         });
 
 const awaitEpicViewed = (epic: HTMLDivElement): Promise<void> => {
