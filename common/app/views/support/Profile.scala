@@ -10,6 +10,7 @@ import layout.{BreakpointWidth, WidthsByBreakpoint}
 import model._
 import org.apache.commons.math3.fraction.Fraction
 import org.apache.commons.math3.util.Precision
+import common.Environment.{app, awsRegion, stage}
 
 import Function.const
 
@@ -229,7 +230,7 @@ object Naked extends Profile(None, None)
 
 object ImgSrc extends Logging with implicits.Strings {
 
-  private val imageServiceHost: String = Configuration.images.path
+  private val imageServiceHost: String = if (stage == "PROD") Configuration.images.path else Configuration.images.fastlyIOHost
 
   private case class HostMapping(prefix: String, token: String)
 
