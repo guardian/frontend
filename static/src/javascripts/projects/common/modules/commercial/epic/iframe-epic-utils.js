@@ -117,7 +117,6 @@ const displayIframeEpic = (url: string): Promise<IframeEpicComponent> =>
         .then(insertEpicIframe)
         .then(epic => {
             sendFontsToIframe(epic.iframe);
-            trackEpic(epic);
             return epic;
         })
         .catch(error => {

@@ -1,12 +1,14 @@
 // @flow
-import { displayOptimizeEpic } from 'common/modules/commercial/epic/optimize-epic-utils';
+
 import { isEpicDisplayable } from 'common/modules/commercial/contributions-utilities';
+import { displayControlEpic, trackEpic } from 'common/modules/commercial/epic/epic-utils';
+import { displayOptimizeEpic } from 'common/modules/commercial/epic/optimize-epic-utils';
 
 const epicOptimizeTest: ABTest = {
     id: 'AcquisitionsEpicOptimizeTest',
     campaignId: 'epic_optimize_test',
-    start: '2018-07-31',
-    expiry: '2019-07-31',
+    start: '2018-07-31', // FIXME
+    expiry: '2019-07-31', // FIXME
     author: 'Guy Dawson',
     description:
         'Bootstrap the AB testing framework to display the Epic using Google Optimize',
@@ -20,11 +22,16 @@ const epicOptimizeTest: ABTest = {
         {
             id: 'control',
             options: {
-                isUnlimited: true,
+                isUnlimited: true, // FIXME
             },
-            test: () => {
-                displayOptimizeEpic();
+            test: () => displayControlEpic().then(trackEpic)
+        },
+        {
+            id: 'optimize',
+            options: {
+                isUnlimited: true, // FIXME
             },
+            test: () => displayOptimizeEpic().then(trackEpic)
         },
     ],
 };
