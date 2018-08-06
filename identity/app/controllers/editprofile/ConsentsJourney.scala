@@ -106,7 +106,7 @@ trait ConsentsJourney
    page: IdentityPage,
    returnUrl : String)(implicit request: AuthRequest[AnyContent]): Future[Result] = {
 
-    newsletterService.subscriptions(request.user.getId, idRequestParser(request).trackingData).map { emailFilledForm =>
+    newsletterService.subscriptions(request.user.id, idRequestParser(request).trackingData).map { emailFilledForm =>
       Ok(IdentityHtmlPage.html(
         views.html.completeConsents(
           idRequestParser(request),
@@ -126,7 +126,7 @@ trait ConsentsJourney
     user: User,
     consentHint: Option[String])(implicit request: AuthRequest[AnyContent]): Future[Result] = {
 
-    newsletterService.subscriptions(request.user.getId, idRequestParser(request).trackingData).map { emailFilledForm =>
+    newsletterService.subscriptions(request.user.id, idRequestParser(request).trackingData).map { emailFilledForm =>
 
       NoCache(Ok(
         IdentityHtmlPage.html(content = views.html.consentJourney(
