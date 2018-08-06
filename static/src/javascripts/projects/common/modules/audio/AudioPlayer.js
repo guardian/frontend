@@ -9,6 +9,7 @@ import palette, {
     pillarsHighlight,
 } from '@guardian/dotcom-rendering/packages/pasteup/palette';
 import {
+    mobileMedium,
     mobileLandscape,
     phablet,
     tablet,
@@ -118,7 +119,10 @@ const FakeWave = styled('div')({
     flex: 1,
     svg: {
         width: '100%',
-        transform: `translate(0px, 18px)`,
+        transform: `translate(0px, 20px)`,
+        [mobileMedium]: {
+            transform: `translate(0px, 18px)`,
+        },
         [mobileLandscape]: {
             transform: `translate(0px, 16px)`,
         },
