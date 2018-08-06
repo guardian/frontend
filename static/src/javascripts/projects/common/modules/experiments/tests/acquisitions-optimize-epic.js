@@ -1,6 +1,6 @@
 // @flow
 
-import { isEpicDisplayable } from 'common/modules/commercial/contributions-utilities';
+import { isEpicDisplayable, defaultMaxViews } from 'common/modules/commercial/contributions-utilities';
 import { displayControlEpic, trackEpic } from 'common/modules/commercial/epic/epic-utils';
 import { displayOptimizeEpic } from 'common/modules/commercial/epic/optimize-epic-utils';
 
@@ -22,7 +22,7 @@ const epicOptimizeTest: ABTest = {
         {
             id: 'control',
             options: {
-                isUnlimited: true, // FIXME
+                maxViews: defaultMaxViews,
             },
             test: () => {
                 displayControlEpic().then(trackEpic)
@@ -31,7 +31,7 @@ const epicOptimizeTest: ABTest = {
         {
             id: 'optimize',
             options: {
-                isUnlimited: true, // FIXME
+                maxViews: defaultMaxViews,
             },
             test: () => {
                 displayOptimizeEpic().then(trackEpic)
