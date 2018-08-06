@@ -162,7 +162,7 @@ trait ABTestSwitches {
     "Test the impact of banner with message focused on editorial independence",
     owners = Seq(Owner.withGithub("tsop14")),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 9, 28),
+    sellByDate = new LocalDate(2018, 9, 6),
     exposeClientSide = true
   )
 }
