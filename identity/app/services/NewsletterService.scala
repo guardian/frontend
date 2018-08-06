@@ -38,7 +38,7 @@ class NewsletterService(
 
   def savePreferences()(implicit request: AuthRequest[AnyContent]): Future[Form[EmailPrefsData]] = {
     val idRequest = idRequestParser(request)
-    val userId = request.user.getId()
+    val userId = request.user.id
     val auth = request.user.auth
     val trackingParameters = idRequest.trackingData
 

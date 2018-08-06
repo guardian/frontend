@@ -42,24 +42,10 @@
         .player {
             margin-left: -10rem;
         }
-        .content__meta-container {
-            top: auto;
-        }
-
-        figure.media-content {
-            padding-left: 10rem;
-
-            margin-bottom: 0;
-            padding-bottom: 6px;
-            background-color: #121212;
-        }
     }
     @media (min-width: 81.25em) {
         .player {
             margin-left: -15rem;
-        }
-        figure.media-content {
-            padding-left: 15rem;
         }
     }
 
