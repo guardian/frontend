@@ -118,24 +118,24 @@ const FakeWave = styled('div')({
     flex: 1,
     svg: {
         width: '100%',
-        transform: `translate(0px, 11px)`,
+        transform: `translate(0px, 18px)`,
         [mobileLandscape]: {
-            transform: `translate(0px, 8px)`,
+            transform: `translate(0px, 16px)`,
         },
         [phablet]: {
-            transform: `translate(0px, 3px)`,
+            transform: `translate(0px, 11px)`,
         },
         [tablet]: {
-            transform: `translate(0px, 2px)`,
+            transform: `translate(0px, 8px)`,
         },
         [desktop]: {
-            transform: `translate(0px, 3px)`,
+            transform: `translate(0px, 10px)`,
         },
         [leftCol]: {
-            transform: `translate(0px, 9px)`,
+            transform: `translate(0px, 15px)`,
         },
         [wide]: {
-            transform: `translate(0px, 10px)`,
+            transform: `translate(0px, 16px)`,
         },
     },
 });
