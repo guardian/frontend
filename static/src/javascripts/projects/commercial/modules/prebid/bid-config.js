@@ -26,6 +26,7 @@ import {
     getBreakpointKey,
     getRandomIntInclusive,
     isExcludedGeolocation,
+    shouldIncludeAppNexus,
     shouldIncludeTrustX,
     stripMobileSuffix,
     stripTrailingNumbersAbove1,
@@ -294,6 +295,15 @@ const isPbTestOn = (): boolean => !isEmpty(pbTestNameMap());
 const inPbTestOr = (liveClause: boolean): boolean => isPbTestOn() || liveClause;
 
 /* Bidders */
+const appNexusBidder: PrebidBidder = {
+    name: 'appnexus',
+    switchName: 'prebidAppNexus',
+    bidParams: (slotId: string, sizes: PrebidSize[]): PrebidAppNexusParams => ({
+        placementId: getAppNexusPlacementId(sizes),
+        customData: buildAppNexusTargeting(buildPageTargeting()), // Ok to duplicate call. Lodash 'once' is used.
+    }),
+};
+
 const sonobiBidder: PrebidBidder = {
     name: 'sonobi',
     switchName: 'prebidSonobi',
@@ -342,7 +352,7 @@ const xaxisBidder: PrebidBidder = {
 const getDummyServerSideBidders = (): Array<PrebidBidder> => {
     const dummyServerSideBidders: Array<PrebidBidder> = [];
 
-    const appnexusBidder: PrebidBidder = {
+    const appnexusServerSideBidder: PrebidBidder = {
         name: 'appnexus',
         switchName: 'prebidS2sozone',
         bidParams: (
@@ -354,7 +364,7 @@ const getDummyServerSideBidders = (): Array<PrebidBidder> => {
         }),
     };
 
-    const openxBidder: PrebidBidder = {
+    const openxServerSideBidder: PrebidBidder = {
         name: 'openx',
         switchName: 'prebidS2sozone',
         bidParams: (): PrebidOpenXParams => {
@@ -386,9 +396,9 @@ const getDummyServerSideBidders = (): Array<PrebidBidder> => {
                 getRandomIntInclusive(1, 10000) === 1
         )
     ) {
-        dummyServerSideBidders.push(openxBidder);
+        dummyServerSideBidders.push(openxServerSideBidder);
         if (inPbTestOr(!isExcludedGeolocation())) {
-            dummyServerSideBidders.push(appnexusBidder);
+            dummyServerSideBidders.push(appnexusServerSideBidder);
         }
     }
     return dummyServerSideBidders;
@@ -420,6 +430,7 @@ const currentBidders: (PrebidSize[]) => PrebidBidder[] = slotSizes => {
     const otherBidders: PrebidBidder[] = [
         sonobiBidder,
         ...(inPbTestOr(shouldIncludeTrustX()) ? [trustXBidder] : []),
+        ...(inPbTestOr(shouldIncludeAppNexus()) ? [appNexusBidder] : []),
         improveDigitalBidder,
         xaxisBidder,
     ];
