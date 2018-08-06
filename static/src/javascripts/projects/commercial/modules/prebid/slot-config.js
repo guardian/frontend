@@ -1,4 +1,4 @@
-// @flow
+// @flow strict
 
 import type { PrebidSlot } from 'commercial/modules/prebid/types';
 

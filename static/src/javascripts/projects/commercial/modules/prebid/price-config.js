@@ -1,4 +1,4 @@
-// @flow
+// @flow strict
 
 import type { PrebidPriceGranularity } from 'commercial/modules/prebid/types';
 
