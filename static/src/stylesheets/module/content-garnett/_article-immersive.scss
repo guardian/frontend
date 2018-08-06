@@ -592,7 +592,7 @@
         }
 
         figure.fig--narrow-caption.img--landscape {
-             @include mq($from: tablet, $until:leftCol) {
+            @include mq($from: tablet, $until: leftCol) {
                 .caption {
                     float: left;
                     padding-left: 0;
