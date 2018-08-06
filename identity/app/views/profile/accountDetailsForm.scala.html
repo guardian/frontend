@@ -26,7 +26,7 @@
     @views.html.helper.CSRF.formField
 
     @if(accountDetailsForm.hasErrors) {
-        <div class="form__error">There was a problem processing the form: @accountDetailsForm.errors</div>
+        <div class="form__error">There was a problem processing the form: @accountDetailsForm.errors.map(_.message)</div>
     }
 
     <fieldset class="fieldset">
