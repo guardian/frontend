@@ -1,4 +1,4 @@
-// @flow
+// @flow strict
 
 import { getBreakpoint } from 'lib/detect';
 import { getSync as geolocationGetSync } from 'lib/geolocation';

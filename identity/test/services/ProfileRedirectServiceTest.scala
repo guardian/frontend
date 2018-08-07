@@ -42,8 +42,8 @@ class ProfileRedirectServiceTest extends path.FreeSpec with MockitoSugar with Sc
     when(api.userEmails(anyString(), any[TrackingData])) thenReturn Future.successful(Right(Subscriber("Text", List(EmailList("37")))))
 
 
-    val userWithValidEmailAndHasRepermed = new User(statusFields = new StatusFields(userEmailValidated = Some(true), hasRepermissioned = Some(true)))
-    val userWithoutValidEmail = new User(statusFields = new StatusFields(userEmailValidated = Some(false)))
+    val userWithValidEmailAndHasRepermed = new User("", "", statusFields = new StatusFields(userEmailValidated = Some(true), hasRepermissioned = Some(true)))
+    val userWithoutValidEmail = new User("", "", statusFields = new StatusFields(userEmailValidated = Some(false)))
     val profileRedirectService = new ProfileRedirectService(newsletterService, idRequestParser, controllerComponents)
 
     val originalEmailPreflUrl = "https://profile.thegulocal.com/email-prefs"

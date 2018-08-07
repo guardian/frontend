@@ -4,6 +4,11 @@
 
 [include]
 
+[strict]
+unclear-type
+unsafe-getters-setters
+untyped-type-import
+sketchy-null
 
 [libs]
 ####### STATIC APP #######

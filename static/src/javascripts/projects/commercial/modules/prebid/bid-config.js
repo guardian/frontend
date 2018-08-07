@@ -1,27 +1,27 @@
-// @flow
+// @flow strict
 
 import config from 'lib/config';
-import { getTestVariantId } from 'common/modules/experiments/utils.js';
 import memoize from 'lodash/functions/memoize';
 import isEmpty from 'lodash/objects/isEmpty';
-
+import { commercialPrebidSafeframe } from 'common/modules/experiments/tests/commercial-prebid-safeframe';
+import { getVariant, isInVariant } from 'common/modules/experiments/utils';
 import {
     buildAppNexusTargeting,
     buildPageTargeting,
 } from 'common/modules/commercial/build-page-targeting';
 import type {
+    PrebidAppNexusParams,
     PrebidBid,
     PrebidBidder,
     PrebidImproveParams,
     PrebidImproveSizeParam,
     PrebidIndexExchangeParams,
+    PrebidOpenXParams,
     PrebidSize,
     PrebidSonobiParams,
     PrebidTrustXParams,
     PrebidXaxisParams,
-    PrebidAppNexusParams,
-    PrebidOpenXParams,
-} from 'commercial/modules/prebid/types';
+} from './types';
 import {
     getBreakpointKey,
     getRandomIntInclusive,
@@ -29,7 +29,12 @@ import {
     shouldIncludeTrustX,
     stripMobileSuffix,
     stripTrailingNumbersAbove1,
-} from 'commercial/modules/prebid/utils';
+} from './utils';
+
+const isInSafeframeTestVariant = (): boolean => {
+    const variant = getVariant(commercialPrebidSafeframe, 'variant');
+    return variant ? isInVariant(commercialPrebidSafeframe, variant) : false;
+};
 
 const isDesktopAndArticle =
     getBreakpointKey() === 'D' && config.get('page.contentType') === 'Article';
@@ -88,10 +93,23 @@ const getTrustXAdUnitId = (
 };
 
 const getIndexSiteId = (): string => {
-    const site = config
-        .get('page.pbIndexSites')
-        .find(s => s.bp === getBreakpointKey());
-    return site && site.id ? site.id.toString() : '';
+    if (isInSafeframeTestVariant()) {
+        switch (getBreakpointKey()) {
+            case 'D':
+                return '287246';
+            case 'T':
+                return '287247';
+            case 'M':
+                return '287248';
+            default:
+                return '-1';
+        }
+    } else {
+        const site = config
+            .get('page.pbIndexSites')
+            .find(s => s.bp === getBreakpointKey());
+        return site && site.id ? site.id.toString() : '';
+    }
 };
 
 const contains = (sizes: PrebidSize[], size: PrebidSize): boolean =>
@@ -116,61 +134,89 @@ const containsLeaderboardOrBillboard = (sizes: PrebidSize[]): boolean =>
     containsLeaderboard(sizes) || containsBillboard(sizes);
 
 const getImprovePlacementId = (sizes: PrebidSize[]): number => {
-    switch (config.get('page.edition')) {
-        case 'UK':
-            switch (getBreakpointKey()) {
-                case 'D':
-                    if (containsMpuOrDmpu(sizes)) {
-                        return 1116396;
-                    }
-                    if (containsLeaderboardOrBillboard(sizes)) {
-                        return 1116397;
-                    }
-                    return -1;
-                case 'M':
-                    if (containsMpuOrDmpu(sizes)) {
-                        return 1116400;
-                    }
-                    return -1;
-                case 'T':
-                    if (containsMpuOrDmpu(sizes)) {
-                        return 1116398;
-                    }
-                    if (containsLeaderboardOrBillboard(sizes)) {
-                        return 1116399;
-                    }
-                    return -1;
-                default:
-                    return -1;
-            }
-        case 'INT':
-            switch (getBreakpointKey()) {
-                case 'D':
-                    if (containsMpuOrDmpu(sizes)) {
-                        return 1116420;
-                    }
-                    if (containsLeaderboardOrBillboard(sizes)) {
-                        return 1116421;
-                    }
-                    return -1;
-                case 'M':
-                    if (containsMpuOrDmpu(sizes)) {
-                        return 1116424;
-                    }
-                    return -1;
-                case 'T':
-                    if (containsMpuOrDmpu(sizes)) {
-                        return 1116422;
-                    }
-                    if (containsLeaderboardOrBillboard(sizes)) {
-                        return 1116423;
-                    }
-                    return -1;
-                default:
-                    return -1;
-            }
-        default:
-            return -1;
+    if (isInSafeframeTestVariant()) {
+        switch (getBreakpointKey()) {
+            case 'D':
+                if (containsDmpu(sizes)) {
+                    return 1116408;
+                }
+                if (containsMpu(sizes)) {
+                    return 1116407;
+                }
+                if (containsLeaderboardOrBillboard(sizes)) {
+                    return 1116409;
+                }
+                return -1;
+            case 'T':
+                if (containsMpu(sizes)) {
+                    return 1116410;
+                }
+                if (containsLeaderboard(sizes)) {
+                    return 1116411;
+                }
+                return -1;
+            case 'M':
+                return 1116412;
+            default:
+                return -1;
+        }
+    } else {
+        switch (config.get('page.edition')) {
+            case 'UK':
+                switch (getBreakpointKey()) {
+                    case 'D':
+                        if (containsMpuOrDmpu(sizes)) {
+                            return 1116396;
+                        }
+                        if (containsLeaderboardOrBillboard(sizes)) {
+                            return 1116397;
+                        }
+                        return -1;
+                    case 'M':
+                        if (containsMpuOrDmpu(sizes)) {
+                            return 1116400;
+                        }
+                        return -1;
+                    case 'T':
+                        if (containsMpuOrDmpu(sizes)) {
+                            return 1116398;
+                        }
+                        if (containsLeaderboardOrBillboard(sizes)) {
+                            return 1116399;
+                        }
+                        return -1;
+                    default:
+                        return -1;
+                }
+            case 'INT':
+                switch (getBreakpointKey()) {
+                    case 'D':
+                        if (containsMpuOrDmpu(sizes)) {
+                            return 1116420;
+                        }
+                        if (containsLeaderboardOrBillboard(sizes)) {
+                            return 1116421;
+                        }
+                        return -1;
+                    case 'M':
+                        if (containsMpuOrDmpu(sizes)) {
+                            return 1116424;
+                        }
+                        return -1;
+                    case 'T':
+                        if (containsMpuOrDmpu(sizes)) {
+                            return 1116422;
+                        }
+                        if (containsLeaderboardOrBillboard(sizes)) {
+                            return 1116423;
+                        }
+                        return -1;
+                    default:
+                        return -1;
+                }
+            default:
+                return -1;
+        }
     }
 };
 
@@ -231,7 +277,7 @@ const getXaxisPlacementId = (sizes: PrebidSize[]): number => {
 // Returns a map { <bidderName>: true } of bidders
 // according to the pbtest URL parameter
 const pbTestNameMap = memoize(
-    (): Object =>
+    (): {} =>
         new URLSearchParams(window.location.search)
             .getAll('pbtest')
             .reduce((acc, value) => {
@@ -260,9 +306,7 @@ const sonobiBidder: PrebidBidder = {
                 appNexusTargeting: buildAppNexusTargeting(buildPageTargeting()),
                 pageViewId: config.get('ophan.pageViewId'),
             },
-            getTestVariantId('CommercialPrebidSafeframe') === 'variant'
-                ? { render: 'safeframe' }
-                : {}
+            isInSafeframeTestVariant() ? { render: 'safeframe' } : {}
         ),
 };
 

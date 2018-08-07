@@ -191,6 +191,10 @@
         top: 100px;
         width: gs-span(2);
         transform: translateX(-100%);
+
+        [lang='ar'] & {
+            left: 0;
+        }
     }
 
     @include mq(wide) {
@@ -559,6 +563,58 @@
     .element--halfWidth {
         float: none;
     }
+
+    [lang='ar'] {
+        figure.element--showcase {
+            .caption {
+                @include mq(leftCol) {
+                    left: 0;
+                }
+            }
+        }
+
+        figure.fig--narrow-caption.img--portrait {
+            @include mq(tablet) {
+                .caption {
+                    float: left;
+                    padding-left: 0;
+                }
+
+                &:after {
+                    visibility: hidden;
+                    display: block;
+                    font-size: 0;
+                    content: '';
+                    clear: both;
+                    height: 0;
+                }
+            }
+        }
+
+        figure.fig--narrow-caption.img--landscape {
+            @include mq($from: tablet, $until: leftCol) {
+                .caption {
+                    float: left;
+                    padding-left: 0;
+                }
+
+                &:after {
+                    visibility: hidden;
+                    display: block;
+                    font-size: 0;
+                    content: '';
+                    clear: both;
+                    height: 0;
+                }
+            }
+
+            @include mq(leftCol) {
+                .caption {
+                    left: 0
+                }
+            }
+        }
+    }
 }
 
 //overides the immersive article — done like this to keep gallery's and photo eassy in ok shape
@@ -743,6 +799,16 @@
             @include mq($from: leftCol) {
                 display: block;
                 bottom: -$gs-baseline * 3;
+            }
+        }
+
+        &[lang='ar'] {
+            @include mq(leftCol) {
+                margin-left: auto;
+
+                &:before {
+                    display: none;
+                }
             }
         }
     }
