@@ -5,7 +5,7 @@ import {
     defaultMaxViews,
 } from 'common/modules/commercial/contributions-utilities';
 import {
-    displayControlEpic,
+    displayControlEpicInAbTest,
     trackEpic,
 } from 'common/modules/commercial/epic/epic-utils';
 import { displayOptimizeEpic } from 'common/modules/commercial/epic/optimize-epic-utils';
@@ -32,7 +32,13 @@ const epicOptimizeTest: ABTest = {
                 maxViews: defaultMaxViews,
             },
             test: () => {
-                displayControlEpic().then(trackEpic);
+                displayControlEpicInAbTest({
+                    // This is the id of the Google Analytics experiment currently running against the Epic.
+                    // Using this means that the 3 variants (the frontend variant, and the 2 Optimize variants),
+                    // will be reported under the same test name.
+                    name: 'LR3RQO-bRVmYQ8I_UBQJew',
+                    variant: 'frontend_native_epic',
+                }).then(trackEpic);
             },
         },
         {
