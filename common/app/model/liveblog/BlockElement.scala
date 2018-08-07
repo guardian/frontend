@@ -1,24 +1,41 @@
 package model.liveblog
 
 import com.gu.contentapi.client.model.v1.ElementType.{Map => _, _}
-import com.gu.contentapi.client.model.v1.{SponsorshipType, BlockElement => ApiBlockElement, Sponsorship => ApiSponsorship}
+import com.gu.contentapi.client.model.v1.{ElementType, SponsorshipType, BlockElement => ApiBlockElement, Sponsorship => ApiSponsorship}
 import model.{AudioAsset, ImageAsset, ImageMedia, VideoAsset}
 import play.api.libs.json._
 
 sealed trait BlockElement
 case class TextBlockElement(html: Option[String]) extends BlockElement
+case class TweetBlockElement(html: Option[String]) extends BlockElement
+case class PullquoteBlockElement(html: Option[String]) extends BlockElement
 case class ImageBlockElement(media: ImageMedia, data: Map[String, String], displayCredit: Option[Boolean]) extends BlockElement
 case class AudioBlockElement(assets: Seq[AudioAsset]) extends BlockElement
 case class GuVideoBlockElement(assets: Seq[VideoAsset], imageMedia: ImageMedia, data: Map[String, String]) extends BlockElement
 case class VideoBlockElement(data: Map[String, String]) extends BlockElement
 case class EmbedBlockElement(html: Option[String], safe: Option[Boolean], alt: Option[String]) extends BlockElement
 case class ContentAtomBlockElement(atomId: String) extends BlockElement
+case class InteractiveBlockElement(html: Option[String]) extends BlockElement
+case class CommentBlockElement(html: Option[String]) extends BlockElement
+case class TableBlockElement(html: Option[String]) extends BlockElement
+case class WitnessBlockElement(html: Option[String]) extends BlockElement
+case class DocumentBlockElement(html: Option[String]) extends BlockElement
+case class InstagramBlockElement(html: Option[String]) extends BlockElement
+case class VineBlockElement(html: Option[String]) extends BlockElement
+case class MapBlockElement(html: Option[String]) extends BlockElement
+case class UnknownBlockElement(html: Option[String]) extends BlockElement
+
+// these don't appear to have typeData on the capi models so their html field is always None
+case class CodeBlockElement(html: Option[String]) extends BlockElement
+case class MembershipBlockElement(html: Option[String]) extends BlockElement
+case class FormBlockElement(html: Option[String]) extends BlockElement
 
 case class RichLinkBlockElement(
   url: Option[String],
   text: Option[String],
   prefix: Option[String],
-  sponsorship: Option[Sponsorship]) extends BlockElement
+  sponsorship: Option[Sponsorship]
+) extends BlockElement
 
 case class Sponsorship (
   sponsorName: String,
@@ -41,10 +58,12 @@ object Sponsorship {
 object BlockElement {
 
   def make(element: ApiBlockElement): Option[BlockElement] = {
+
     element.`type` match {
+
       case Text => Some(TextBlockElement(element.textTypeData.flatMap(_.html)))
 
-      case Tweet => Some(TextBlockElement(element.tweetTypeData.flatMap(_.html)))
+      case Tweet => Some(TweetBlockElement(element.tweetTypeData.flatMap(_.html)))
 
       case RichLink => Some(RichLinkBlockElement(
         element.richLinkTypeData.flatMap(_.originalUrl),
@@ -71,14 +90,26 @@ object BlockElement {
             videoDataFor(element))
           )
         }
-
         else Some(VideoBlockElement(videoDataFor(element)))
 
       case Embed => element.embedTypeData.map(d => EmbedBlockElement(d.html, d.safeEmbedCode, d.alt))
 
       case Contentatom => element.contentAtomTypeData.map(d => ContentAtomBlockElement(d.atomId))
 
-      case _ => None
+      case Pullquote => element.pullquoteTypeData.map(d => PullquoteBlockElement(d.html))
+      case Interactive => element.interactiveTypeData.map(d => InteractiveBlockElement(d.html))
+      case Comment => element.commentTypeData.map(d => CommentBlockElement(d.html))
+      case Table => element.tableTypeData.map(d => TableBlockElement(d.html))
+      case Witness => element.witnessTypeData.map(d => WitnessBlockElement(d.html))
+      case Document => element.documentTypeData.map(d => DocumentBlockElement(d.html))
+      case Instagram => element.instagramTypeData.map(d => InstagramBlockElement(d.html))
+      case Vine => element.vineTypeData.map(d => VineBlockElement(d.html))
+      case ElementType.Map => element.mapTypeData.map(d => MapBlockElement(d.html))
+      case Code => Some(CodeBlockElement(None))
+      case Membership => Some(MembershipBlockElement(None))
+      case Form => Some(MembershipBlockElement(None))
+      case EnumUnknownElementType(f) => Some(UnknownBlockElement(None))
+
     }
   }
 
@@ -105,8 +136,24 @@ object BlockElement {
   implicit val AudioBlockElementWrites: Writes[AudioBlockElement] = Json.writes[AudioBlockElement]
   implicit val GuVideoBlockElementWrites: Writes[GuVideoBlockElement] = Json.writes[GuVideoBlockElement]
   implicit val VideoBlockElementWrites: Writes[VideoBlockElement] = Json.writes[VideoBlockElement]
+  implicit val TweetBlockElementWrites: Writes[TweetBlockElement] = Json.writes[TweetBlockElement]
   implicit val EmbedBlockElementWrites: Writes[EmbedBlockElement] = Json.writes[EmbedBlockElement]
   implicit val ContentAtomBlockElementWrites: Writes[ContentAtomBlockElement] = Json.writes[ContentAtomBlockElement]
+  implicit val PullquoteBlockElementWrites: Writes[PullquoteBlockElement] = Json.writes[PullquoteBlockElement]
+  implicit val InteractiveBlockElementWrites: Writes[InteractiveBlockElement] = Json.writes[InteractiveBlockElement]
+  implicit val CommentBlockElementWrites: Writes[CommentBlockElement] = Json.writes[CommentBlockElement]
+  implicit val TableBlockElementWrites: Writes[TableBlockElement] = Json.writes[TableBlockElement]
+  implicit val WitnessBlockElementWrites: Writes[WitnessBlockElement] = Json.writes[WitnessBlockElement]
+  implicit val DocumentBlockElementWrites: Writes[DocumentBlockElement] = Json.writes[DocumentBlockElement]
+  implicit val InstagramBlockElementWrites: Writes[InstagramBlockElement] = Json.writes[InstagramBlockElement]
+  implicit val VineBlockElementWrites: Writes[VineBlockElement] = Json.writes[VineBlockElement]
+  implicit val MapBlockElementWrites: Writes[MapBlockElement] = Json.writes[MapBlockElement]
+  implicit val CodeBlockElementWrites: Writes[CodeBlockElement] = Json.writes[CodeBlockElement]
+  implicit val MembershipBlockElementWrites: Writes[MembershipBlockElement] = Json.writes[MembershipBlockElement]
+  implicit val FormBlockElementWrites: Writes[FormBlockElement] = Json.writes[FormBlockElement]
+  implicit val UnknownBlockElementWrites: Writes[UnknownBlockElement] = Json.writes[UnknownBlockElement]
+
+
   implicit val SponsorshipWrites: Writes[Sponsorship] = new Writes[Sponsorship] {
     def writes(sponsorship: Sponsorship): JsObject = Json.obj(
       "sponsorName" -> sponsorship.sponsorName,
@@ -114,6 +161,7 @@ object BlockElement {
       "sponsorLink" -> sponsorship.sponsorLink,
       "sponsorshipType" -> sponsorship.sponsorshipType.name)
   }
+
   implicit val RichLinkBlockElementWrites: Writes[RichLinkBlockElement] = Json.writes[RichLinkBlockElement]
   val blockElementWrites: Writes[BlockElement] = Json.writes[BlockElement]
 }
