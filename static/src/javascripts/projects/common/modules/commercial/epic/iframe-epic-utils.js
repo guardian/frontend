@@ -38,7 +38,7 @@ const createEpicIframe = (url: string): IframeEpicComponent => {
 };
 
 const setIframeHeight = (epic: IframeEpicComponent, height: number) => {
-    epic.iframe.style.height = `${height}px`; // TODO: px unit ok?
+    epic.iframe.style.height = `${height}px`;
 };
 
 const insertEpicIframe = (
