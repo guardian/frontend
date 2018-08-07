@@ -138,19 +138,11 @@ class Advert {
         updateAdvertMetric(this, 'stopRendering', getCurrentTime());
     }
 
-    static filterClasses(
+    static filterClasses = (
         oldClasses: Array<string>,
         newClasses: Array<string>
-    ): Array<string> {
-        const classesToRemove: Array<string> = [];
-        for (let i = 0; i < oldClasses.length; i += 1) {
-            const currentClass: string = oldClasses[i];
-            if (!newClasses.includes(currentClass)) {
-                classesToRemove.push(currentClass);
-            }
-        }
-        return classesToRemove;
-    }
+    ): Array<string> =>
+        oldClasses.filter(oldClass => !newClasses.includes(oldClass));
 
     updateExtraSlotClasses(...newClasses: Array<string>): void {
         const classesToRemove: Array<string> = Advert.filterClasses(
