@@ -46,7 +46,7 @@ object JsonComponent extends Results with implicits.Requests {
 
   def jsonFor(items: (String, Any)*): String = {
     import play.api.libs.json.Writes._
-    Json.prettyPrint(toJson(
+    Json.stringify(toJson(
       (items.toMap + ("refreshStatus" -> AutoRefreshSwitch.isSwitchedOn)).map {
         // compress and take the body if value is Html
         case (name, html: Html) => name -> toJson(html.body)
