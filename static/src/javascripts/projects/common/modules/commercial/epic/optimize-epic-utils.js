@@ -9,10 +9,7 @@ import { displayIframeEpic } from 'common/modules/commercial/epic/iframe-epic-ut
 import type { IframeEpicComponent } from 'common/modules/commercial/epic/iframe-epic-utils';
 
 const getOptimizeEpicUrl = (): string => {
-    const url =
-        config.get('page.optimizeEpicUrl') ||
-        // FIXME
-        'http://reader-revenue-components.s3-website-eu-west-1.amazonaws.com/epic/v1/index.html';
+    const url = config.get('page.optimizeEpicUrl');
     // data passed in query string used to augment iframe
     const params = constructURLQuery({
         // used in acquisition tracking link
