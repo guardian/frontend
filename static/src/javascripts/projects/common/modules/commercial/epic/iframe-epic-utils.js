@@ -27,15 +27,14 @@ const EPIC_HEIGHT = 'EPIC_HEIGHT';
 // outgoing event types
 const FONTS = 'FONTS';
 
-// Return type a Promise - presuming fastdom will be required (?)
-const createEpicIframe = (url: string): Promise<IframeEpicComponent> => {
+const createEpicIframe = (url: string): IframeEpicComponent => {
     const container = document.createElement('div');
     const iframe = document.createElement('iframe');
     iframe.src = url;
     iframe.style.width = '100%';
     iframe.frameBorder = '0';
     container.appendChild(iframe);
-    return Promise.resolve({ html: container, iframe });
+    return { html: container, iframe };
 };
 
 const setIframeHeight = (epic: IframeEpicComponent, height: number) => {
@@ -117,9 +116,9 @@ const sendFontsToIframe = (
     iframe.contentWindow.postMessage(message, '*');
 };
 
-const displayIframeEpic = (url: string): Promise<IframeEpicComponent> =>
-    createEpicIframe(url)
-        .then(insertEpicIframe)
+const displayIframeEpic = (url: string): Promise<IframeEpicComponent> => {
+    const iframeEpicComponent = createEpicIframe(url);
+    return insertEpicIframe(iframeEpicComponent)
         .then(epic => {
             sendFontsToIframe(
                 [
@@ -138,5 +137,6 @@ const displayIframeEpic = (url: string): Promise<IframeEpicComponent> =>
             reportEpicError(iframeError);
             return Promise.reject(iframeError);
         });
+};
 
 export { displayIframeEpic };
