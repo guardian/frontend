@@ -95,6 +95,10 @@ const displayControlEpic = (abTest?: ABTestVariant): Promise<EpicComponent> =>
             return Promise.reject(controlEpicError);
         });
 
+const displayControlEpicInAbTest = (
+    abTest: ABTestVariant
+): Promise<EpicComponent> => displayControlEpic(abTest);
+
 const awaitEpicViewed = (epic: HTMLDivElement): Promise<void> => {
     const inView = elementInView(epic, window, { top: 18 });
     return new Promise(resolve => inView.on('firstview', () => resolve()));
@@ -133,6 +137,7 @@ export {
     reportEpicError,
     insertAtSubmeta,
     displayControlEpic,
+    displayControlEpicInAbTest,
     trackEpic,
     awaitEpicButtonClicked,
 };
