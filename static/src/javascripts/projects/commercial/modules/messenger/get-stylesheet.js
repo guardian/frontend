@@ -49,4 +49,4 @@ const init = (register: RegisterListeners) => {
 
 export const _ = { getStyles };
 
-export { init };
+export { init, getStyles };

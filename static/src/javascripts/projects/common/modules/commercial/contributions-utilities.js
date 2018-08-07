@@ -22,7 +22,7 @@ import { epicButtonsTemplate } from 'common/modules/commercial/templates/acquisi
 import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templates/acquisitions-epic-control';
 import { shouldSeeReaderRevenue as userShouldSeeReaderRevenue } from 'common/modules/commercial/user-features';
 import { supportContributeURL } from 'common/modules/commercial/support-utilities';
-import { awaitEpicButtonClicked } from 'common/modules/commercial/epic-utils';
+import { awaitEpicButtonClicked } from 'common/modules/commercial/epic/epic-utils';
 
 type EpicTemplate = (Variant, AcquisitionsEpicTemplateCopy) => string;
 
