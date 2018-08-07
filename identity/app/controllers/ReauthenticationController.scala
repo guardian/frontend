@@ -52,7 +52,7 @@ class ReauthenticationController(
 
     logger.trace("Rendering reauth form")
     val idRequest = idRequestParser(request)
-    val googleId = request.user.socialLinks.find(_.getNetwork == "google").map(_.getSocialId)
+    val googleId = request.user.socialLinks.find(_.network == "google").map(_.socialId)
 
     NoCache(Ok(
       IdentityHtmlPage.html(

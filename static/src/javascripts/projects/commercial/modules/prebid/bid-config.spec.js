@@ -2,20 +2,25 @@
 /* global jsdom */
 
 import config from 'lib/config';
-import { _, bids } from 'commercial/modules/prebid/bid-config';
+import {
+    getVariant as getVariant_,
+    isInVariant as isInVariant_,
+} from 'common/modules/experiments/utils';
+import { _, bids } from './bid-config';
+import type { PrebidBidder, PrebidSize } from './types';
 import {
     getRandomIntInclusive as getRandomIntInclusive_,
     getBreakpointKey as getBreakpointKey_,
     shouldIncludeTrustX as shouldIncludeTrustX_,
     stripMobileSuffix as stripMobileSuffix_,
-} from 'commercial/modules/prebid/utils';
-
-import type { PrebidBidder, PrebidSize } from 'commercial/modules/prebid/types';
+} from './utils';
 
 const getRandomIntInclusive: any = getRandomIntInclusive_;
 const shouldIncludeTrustX: any = shouldIncludeTrustX_;
 const stripMobileSuffix: any = stripMobileSuffix_;
 const getBreakpointKey: any = getBreakpointKey_;
+const getVariant: any = getVariant_;
+const isInVariant: any = isInVariant_;
 
 const {
     getAppNexusPlacementId,
@@ -37,17 +42,19 @@ jest.mock('common/modules/commercial/ad-prefs.lib', () => ({
 
 jest.mock('./utils');
 
+jest.mock('common/modules/experiments/utils');
+
 /* eslint-disable guardian-frontend/no-direct-access-config */
 const resetConfig = () => {
-    config.switches.prebidImproveDigital = true;
-    config.switches.prebidIndexExchange = true;
-    config.switches.prebidSonobi = true;
-    config.switches.prebidS2sozone = true;
-    config.switches.prebidTrustx = true;
-    config.switches.prebidXaxis = true;
-    config.ophan = { pageViewId: 'pvid' };
-    config.page.contentType = 'Article';
-    config.page.edition = 'UK';
+    config.set('switches.prebidImproveDigital', true);
+    config.set('switches.prebidIndexExchange', true);
+    config.set('switches.prebidSonobi', true);
+    config.set('switches.prebidS2sozone', true);
+    config.set('switches.prebidTrustx', true);
+    config.set('switches.prebidXaxis', true);
+    config.set('ophan', { pageViewId: 'pvid' });
+    config.set('page.contentType', 'Article');
+    config.set('page.edition', 'UK');
 };
 
 describe('getAppNexusPlacementId', () => {
@@ -115,7 +122,7 @@ describe('getAppNexusPlacementId', () => {
         ];
 
         editions.forEach(edition => {
-            config.page.edition = edition;
+            config.set('page.edition', edition);
             expect(generateTestIds()).toEqual(expected);
         });
     });
@@ -124,7 +131,7 @@ describe('getAppNexusPlacementId', () => {
 describe('getDummyServerSideBidders', () => {
     beforeEach(() => {
         getRandomIntInclusive.mockReturnValue(1);
-        config.switches.prebidS2sozone = true;
+        config.set('switches.prebidS2sozone', true);
     });
 
     afterEach(() => {
@@ -133,7 +140,7 @@ describe('getDummyServerSideBidders', () => {
     });
 
     test('should return an empty array if the switch is off', () => {
-        config.switches.prebidS2sozone = false;
+        config.set('switches.prebidS2sozone', false);
         expect(getDummyServerSideBidders()).toEqual([]);
     });
 
@@ -224,7 +231,7 @@ describe('getImprovePlacementId', () => {
     });
 
     test('should return the expected values when on the INT Edition and desktop device', () => {
-        config.page.edition = 'INT';
+        config.set('page.edition', 'INT');
         getBreakpointKey.mockReturnValue('D');
         expect(generateTestIds()).toEqual([
             1116420,
@@ -236,7 +243,7 @@ describe('getImprovePlacementId', () => {
     });
 
     test('should return the expected values when on the INT Edition and tablet device', () => {
-        config.page.edition = 'INT';
+        config.set('page.edition', 'INT');
         getBreakpointKey.mockReturnValue('T');
         expect(generateTestIds()).toEqual([
             1116422,
@@ -248,16 +255,86 @@ describe('getImprovePlacementId', () => {
     });
 
     test('should return the expected values when on the INT Edition and mobile device', () => {
-        config.page.edition = 'INT';
+        config.set('page.edition', 'INT');
         getBreakpointKey.mockReturnValue('M');
         expect(generateTestIds()).toEqual([1116424, 1116424, -1, -1, -1]);
     });
 
     test('should return -1 if on the US or AU Editions', () => {
-        config.page.edition = 'AU';
+        config.set('page.edition', 'AU');
         expect(generateTestIds()).toEqual([-1, -1, -1, -1, -1]);
-        config.page.edition = 'US';
+        config.set('page.edition', 'US');
         expect(generateTestIds()).toEqual([-1, -1, -1, -1, -1]);
+    });
+
+    test('should use test placement ID when participating in CommercialPrebidSafeframe test in desktop MPU', () => {
+        getVariant.mockReturnValue({
+            id: 'variant',
+            test: (): void => {},
+        });
+        isInVariant.mockReturnValue(true);
+        getBreakpointKey.mockReturnValue('D');
+        expect(getImprovePlacementId([[300, 250]])).toEqual(1116407);
+    });
+
+    test('should use test placement ID when participating in CommercialPrebidSafeframe test in desktop DMPU', () => {
+        getVariant.mockReturnValue({
+            id: 'variant',
+            test: (): void => {},
+        });
+        isInVariant.mockReturnValue(true);
+        getBreakpointKey.mockReturnValue('D');
+        expect(getImprovePlacementId([[300, 600]])).toEqual(1116408);
+    });
+
+    test('should use test placement ID when participating in CommercialPrebidSafeframe test in desktop billboard', () => {
+        getVariant.mockReturnValue({
+            id: 'variant',
+            test: (): void => {},
+        });
+        isInVariant.mockReturnValue(true);
+        getBreakpointKey.mockReturnValue('D');
+        expect(getImprovePlacementId([[970, 250]])).toEqual(1116409);
+    });
+
+    test('should use test placement ID when participating in CommercialPrebidSafeframe test in desktop leaderboard', () => {
+        getVariant.mockReturnValue({
+            id: 'variant',
+            test: (): void => {},
+        });
+        isInVariant.mockReturnValue(true);
+        getBreakpointKey.mockReturnValue('D');
+        expect(getImprovePlacementId([[728, 90]])).toEqual(1116409);
+    });
+
+    test('should use test placement ID when participating in CommercialPrebidSafeframe test in tablet MPU', () => {
+        getVariant.mockReturnValue({
+            id: 'variant',
+            test: (): void => {},
+        });
+        isInVariant.mockReturnValue(true);
+        getBreakpointKey.mockReturnValue('T');
+        expect(getImprovePlacementId([[300, 250]])).toEqual(1116410);
+    });
+
+    test('should use test placement ID when participating in CommercialPrebidSafeframe test in tablet leaderboard', () => {
+        getVariant.mockReturnValue({
+            id: 'variant',
+            test: (): void => {},
+        });
+        isInVariant.mockReturnValue(true);
+        getBreakpointKey.mockReturnValue('T');
+        expect(getImprovePlacementId([[728, 90]])).toEqual(1116411);
+    });
+
+    test('should use test placement ID when participating in CommercialPrebidSafeframe test in mobile MPU', () => {
+        getVariant.mockReturnValue({
+            id: 'variant',
+            test: (): void => {},
+        });
+        isInVariant.mockReturnValue(true);
+        getBreakpointKey.mockReturnValue('M');
+        expect(getImprovePlacementId([[300, 250]])).toEqual(1116412);
     });
 });
 
@@ -285,11 +362,11 @@ describe('getTrustXAdUnitId', () => {
 describe('indexExchangeBidders', () => {
     beforeEach(() => {
         getBreakpointKey.mockReturnValue('D');
-        config.page.pbIndexSites = [
+        config.set('page.pbIndexSites', [
             { bp: 'D', id: 123456 },
             { bp: 'M', id: 234567 },
             { bp: 'T', id: 345678 },
-        ];
+        ]);
     });
 
     afterEach(() => {
@@ -333,18 +410,18 @@ describe('getIndexSiteId', () => {
     });
 
     test('should return an empty string if pbIndexSites is empty', () => {
-        config.page.pbIndexSites = [];
+        config.set('page.pbIndexSites', []);
         getBreakpointKey.mockReturnValue('D');
         expect(getIndexSiteId()).toBe('');
         expect(getIndexSiteId().length).toBe(0);
     });
 
     test('should find the correct ID for the breakpoint', () => {
-        config.page.pbIndexSites = [
+        config.set('page.pbIndexSites', [
             { bp: 'D', id: 123456 },
             { bp: 'M', id: 234567 },
             { bp: 'T', id: 345678 },
-        ];
+        ]);
         const breakpoints = ['M', 'D', 'M', 'T', 'D'];
         const results = [];
         for (let i = 0; i < breakpoints.length; i += 1) {
@@ -358,6 +435,36 @@ describe('getIndexSiteId', () => {
             '345678',
             '123456',
         ]);
+    });
+
+    test('should use test site ID when participating in CommercialPrebidSafeframe test on desktop', () => {
+        getVariant.mockReturnValue({
+            id: 'variant',
+            test: (): void => {},
+        });
+        isInVariant.mockReturnValue(true);
+        getBreakpointKey.mockReturnValue('D');
+        expect(getIndexSiteId()).toEqual('287246');
+    });
+
+    test('should use test site ID when participating in CommercialPrebidSafeframe test on tablet', () => {
+        getVariant.mockReturnValue({
+            id: 'variant',
+            test: (): void => {},
+        });
+        isInVariant.mockReturnValue(true);
+        getBreakpointKey.mockReturnValue('T');
+        expect(getIndexSiteId()).toEqual('287247');
+    });
+
+    test('should use test site ID when participating in CommercialPrebidSafeframe test on mobile', () => {
+        getVariant.mockReturnValue({
+            id: 'variant',
+            test: (): void => {},
+        });
+        isInVariant.mockReturnValue(true);
+        getBreakpointKey.mockReturnValue('M');
+        expect(getIndexSiteId()).toEqual('287248');
     });
 });
 
@@ -386,7 +493,7 @@ describe('bids', () => {
         bids('dfp-ad--top-above-nav', [[728, 90]]).map(bid => bid.bidder);
 
     test('should only include bidders that are switched on if no bidders being tested', () => {
-        config.switches.prebidXaxis = false;
+        config.set('switches.prebidXaxis', false);
         getRandomIntInclusive.mockReturnValue(1);
         expect(bidders()).toEqual([
             'ix',
@@ -398,12 +505,12 @@ describe('bids', () => {
     });
 
     test('should not include Ozone bidders when fate is against them', () => {
-        config.switches.prebidXaxis = false;
+        config.set('switches.prebidXaxis', false);
         expect(bidders()).toEqual(['ix', 'sonobi', 'improvedigital']);
     });
 
     test('should not include ix bidders when switched off', () => {
-        config.switches.prebidIndexExchange = false;
+        config.set('switches.prebidIndexExchange', false);
         expect(bidders()).toEqual(['sonobi', 'improvedigital', 'xhb']);
     });
 
@@ -437,14 +544,14 @@ describe('bids', () => {
 
     test('should only include bidder being tested, even when its switch is off', () => {
         setQueryString('pbtest=xhb');
-        config.switches.prebidXaxis = false;
+        config.set('switches.prebidXaxis', false);
         expect(bidders()).toEqual(['xhb']);
     });
 
     test('should only include multiple bidders being tested, even when their switches are off', () => {
         setQueryString('pbtest=xhb&pbtest=sonobi');
-        config.switches.prebidXaxis = false;
-        config.switches.prebidSonobi = false;
+        config.set('switches.prebidXaxis', false);
+        config.set('switches.prebidSonobi', false);
         expect(bidders()).toEqual(['sonobi', 'xhb']);
     });
 
