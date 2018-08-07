@@ -1,7 +1,7 @@
 // @flow
 import config from 'lib/config';
 import { local } from 'lib/storage';
-import { Message, hasUserAcknowledgedBanner } from 'common/modules/ui/message';
+import { Message } from 'common/modules/ui/message';
 import mediator from 'lib/mediator';
 import { membershipEngagementBannerTests } from 'common/modules/experiments/tests/membership-engagement-banner-tests';
 import { testCanBeRun } from 'common/modules/experiments/test-can-run-checks';
@@ -11,18 +11,47 @@ import { isBlocked } from 'common/modules/commercial/membership-engagement-banne
 import { getSync as getGeoLocation } from 'lib/geolocation';
 import { shouldShowReaderRevenue } from 'common/modules/commercial/contributions-utilities';
 import type { Banner } from 'common/modules/ui/bannerPicker';
+import bean from 'bean';
+import fetchJson from 'lib/fetch-json';
+import reportError from 'lib/report-error';
 
 import {
     submitComponentEvent,
     addTrackingCodesToUrl,
 } from 'common/modules/commercial/acquisitions-ophan';
 import { acquisitionsBannerControlTemplate } from 'common/modules/commercial/templates/acquisitions-banner-control';
+import userPrefs from 'common/modules/user-prefs';
 
-// change messageCode to force redisplay of the message to users who already closed it.
-const messageCode = 'engagement-banner-2018-07-13';
+type BannerDeployLog = {
+    time: string,
+};
 
-const canDisplayMembershipEngagementBanner = (): Promise<boolean> =>
-    Promise.resolve(shouldShowReaderRevenue());
+const messageCode = 'engagement-banner';
+
+const getTimestampOfLastBannerDeploy = (): Promise<string> =>
+    fetchJson('/reader-revenue/contributions-banner-deploy-log', {
+        mode: 'cors',
+    }).then((resp: BannerDeployLog) => resp && resp.time);
+
+const hasBannerBeenRedeployedSinceClosed = (
+    userLastClosedBannerAt: string
+): Promise<boolean> =>
+    getTimestampOfLastBannerDeploy()
+        .then(timestamp => {
+            const bannerLastDeployedAt = new Date(timestamp);
+            return bannerLastDeployedAt > new Date(userLastClosedBannerAt);
+        })
+        .catch(err => {
+            // Capture in sentry
+            reportError(
+                new Error(
+                    `Unable to get contributions banner deploy log: ${err}`
+                ),
+                { feature: 'reader-revenue-contributions-banner' },
+                false
+            );
+            return false;
+        });
 
 const getUserTest = (): ?AcquisitionsABTest =>
     membershipEngagementBannerTests.find(
@@ -112,6 +141,13 @@ const getVisitCount = (): number => local.get('gu.alreadyVisited') || 0;
 const selectSequentiallyFrom = (array: Array<string>): string =>
     array[getVisitCount() % array.length];
 
+const hideBanner = (banner: Message) => {
+    banner.hide();
+
+    // Store timestamp in localStorage
+    userPrefs.set('engagementBannerLastClosedAt', new Date().toISOString());
+};
+
 const showBanner = (params: EngagementBannerParams): void => {
     const test = getUserTest();
     const variant = getUserVariant(test);
@@ -147,6 +183,14 @@ const showBanner = (params: EngagementBannerParams): void => {
         siteMessageComponentName: params.campaignCode,
         trackDisplay: true,
         cssModifierClass: params.bannerModifierClass || 'engagement-banner',
+        customJs() {
+            bean.on(
+                document,
+                'click',
+                '.js-engagement-banner-close-button',
+                () => hideBanner(this)
+            );
+        },
     }).show(renderedBanner);
 
     if (messageShown) {
@@ -187,14 +231,20 @@ const canShow = (): Promise<boolean> => {
         return Promise.resolve(false);
     }
 
-    if (hasUserAcknowledgedBanner(messageCode)) {
-        return Promise.resolve(false);
-    }
-
     bannerParams = deriveBannerParams(getGeoLocation());
+    const hasSeenEnoughArticles: boolean =
+        !!bannerParams && getVisitCount() >= bannerParams.minArticles;
 
-    if (bannerParams && getVisitCount() >= bannerParams.minArticles) {
-        return canDisplayMembershipEngagementBanner();
+    if (hasSeenEnoughArticles && shouldShowReaderRevenue()) {
+        const userLastClosedBannerAt = userPrefs.get(
+            'engagementBannerLastClosedAt'
+        );
+
+        if (!userLastClosedBannerAt) {
+            // show the banner if we can't get a value for this
+            return Promise.resolve(true);
+        }
+        return hasBannerBeenRedeployedSinceClosed(userLastClosedBannerAt);
     }
 
     return Promise.resolve(false);
