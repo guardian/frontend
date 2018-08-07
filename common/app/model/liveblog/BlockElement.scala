@@ -25,9 +25,20 @@ case class VineBlockElement(html: Option[String]) extends BlockElement
 case class MapBlockElement(html: Option[String]) extends BlockElement
 case class UnknownBlockElement(html: Option[String]) extends BlockElement
 
-// these don't appear to have typeData on the capi models so their html field is always None
+case class MembershipBlockElement(
+  originalUrl: Option[String],
+  linkText: Option[String],
+  linkPrefix: Option[String],
+  title: Option[String],
+  venue: Option[String],
+  location: Option[String],
+  identifier: Option[String],
+  image: Option[String],
+  price: Option[String]
+) extends BlockElement
+
+// these don't appear to have typeData on the capi models so we just have empty html
 case class CodeBlockElement(html: Option[String]) extends BlockElement
-case class MembershipBlockElement(html: Option[String]) extends BlockElement
 case class FormBlockElement(html: Option[String]) extends BlockElement
 
 case class RichLinkBlockElement(
@@ -92,6 +103,18 @@ object BlockElement {
         }
         else Some(VideoBlockElement(videoDataFor(element)))
 
+      case Membership => element.membershipTypeData.map(m => MembershipBlockElement(
+        m.originalUrl,
+        m.linkText,
+        m.linkPrefix,
+        m.title,
+        m.venue,
+        m.location,
+        m.identifier,
+        m.image,
+        m.price
+      ))
+
       case Embed => element.embedTypeData.map(d => EmbedBlockElement(d.html, d.safeEmbedCode, d.alt))
 
       case Contentatom => element.contentAtomTypeData.map(d => ContentAtomBlockElement(d.atomId))
@@ -106,8 +129,8 @@ object BlockElement {
       case Vine => element.vineTypeData.map(d => VineBlockElement(d.html))
       case ElementType.Map => element.mapTypeData.map(d => MapBlockElement(d.html))
       case Code => Some(CodeBlockElement(None))
-      case Membership => Some(MembershipBlockElement(None))
-      case Form => Some(MembershipBlockElement(None))
+      case Form => Some(FormBlockElement(None))
+
       case EnumUnknownElementType(f) => Some(UnknownBlockElement(None))
 
     }
@@ -152,7 +175,6 @@ object BlockElement {
   implicit val MembershipBlockElementWrites: Writes[MembershipBlockElement] = Json.writes[MembershipBlockElement]
   implicit val FormBlockElementWrites: Writes[FormBlockElement] = Json.writes[FormBlockElement]
   implicit val UnknownBlockElementWrites: Writes[UnknownBlockElement] = Json.writes[UnknownBlockElement]
-
 
   implicit val SponsorshipWrites: Writes[Sponsorship] = new Writes[Sponsorship] {
     def writes(sponsorship: Sponsorship): JsObject = Json.obj(
