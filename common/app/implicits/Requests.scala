@@ -25,7 +25,9 @@ trait Requests {
 
     def getRequestFormat: RequestFormat = if(isJson) JsonFormat else if (isEmail) EmailFormat else if(isAmp) AmpFormat else HtmlFormat
 
-    lazy val isJson: Boolean = r.getQueryString("callback").isDefined || r.path.endsWith(".json")
+    lazy val isJson: Boolean = r.getQueryString("callback").isDefined || (r.path.endsWith(".json") && !isEmailJson)
+
+    lazy val isEmailJson: Boolean = r.path.endsWith(s"$EMAIL_SUFFIX.json")
 
     // parameters for moon/guui new rendering layer project.
     lazy val isGuuiJson: Boolean = isJson && isGuui
