@@ -189,7 +189,7 @@ import scala.concurrent.Await
   }
 
   it should "render json email fronts" in {
-    val emailRequest = FakeRequest("GET", "/email/uk/daily/email.json")
+    val emailRequest = FakeRequest("GET", "/email/uk/daily.emailjson")
     val emailJsonResponse = faciaController.renderFront("email/uk/daily")(emailRequest)
     status(emailJsonResponse) shouldBe 200
     val jsonResponse = contentAsJson(emailJsonResponse)
