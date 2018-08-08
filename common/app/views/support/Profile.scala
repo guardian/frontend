@@ -11,6 +11,7 @@ import model._
 import org.apache.commons.math3.fraction.Fraction
 import org.apache.commons.math3.util.Precision
 import common.Environment.{app, awsRegion, stage}
+import experiments.{ActiveExperiments, FastlyIOImages}
 
 import Function.const
 
@@ -231,7 +232,13 @@ object Naked extends Profile(None, None)
 
 object ImgSrc extends Logging with implicits.Strings {
 
-  private val imageServiceHost: String = if (stage == "PROD") Configuration.images.path else Configuration.images.fastlyIOHost
+  def getImageServiceHost: String = {
+    if (stage != "PROD" || ActiveExperiments.isParticipating(FastlyIOImages)) {
+      Configuration.images.fastlyIOHost
+    } else {
+      Configuration.images.imgixHost
+    }
+  }
 
   private case class HostMapping(prefix: String, token: String)
 
@@ -259,7 +266,7 @@ object ImgSrc extends Logging with implicits.Strings {
         .filter(const(isSupportedImage))
         .map { host =>
           val signedPath = ImageUrlSigner.sign(s"${uri.getRawPath}${imageType.resizeString}", host.token)
-          s"$imageServiceHost/img/${host.prefix}$signedPath"
+          s"$getImageServiceHost/img/${host.prefix}$signedPath"
         }.getOrElse(url)
     } catch {
       case error: URISyntaxException =>

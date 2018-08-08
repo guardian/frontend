@@ -49,6 +49,7 @@ object AudioPageChange extends Experiment(
   participationGroup = Perc50
 )
 
+
 object ThrasherAdjacentMPU extends Experiment(
   name = "thrasher-adjacent-mpu",
   description = "This will no longer allow an MPU to show adjacent to a thrasher on mobile",
@@ -56,3 +57,12 @@ object ThrasherAdjacentMPU extends Experiment(
   sellByDate = new LocalDate(2018, 9, 7),
   participationGroup = Perc10A
 )
+
+object FastlyIOImages extends Experiment(
+  name = "fastly-io-images",
+  description = "SServe images from fastly-io",
+  owners = Owner.group(SwitchGroup.ServerSideExperiments),
+  sellByDate = new LocalDate(2018, 8, 25),
+  participationGroup = Perc2A
+)
+
