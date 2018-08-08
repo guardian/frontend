@@ -123,7 +123,7 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
           else if (request.isJson)
             JsonFront(faciaPage)
           else if (request.isEmail || ConfigAgent.isEmailFront(path)) {
-            renderEmailFront(faciaPage)
+            renderEmail(faciaPage)
           }
           else {
             RevalidatableResult.Ok(FrontHtmlPage.html(faciaPage))
@@ -135,25 +135,33 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
     futureResult
   }
 
-  private def renderEmailFront(faciaPage: PressedPage)(implicit request: RequestHeader) = {
+  private def renderEmail(faciaPage: PressedPage)(implicit request: RequestHeader) = {
     if (shouldOnlyReturnHeadline(request)) {
-      val webTitle = for {
-        topCollection <- faciaPage.collections.headOption
-        topCurated <- topCollection.curatedPlusBackfillDeduplicated.headOption
-      } yield RevalidatableResult.Ok(topCurated.properties.webTitle)
-
-      webTitle.getOrElse(WithoutRevalidationResult(NotFound("Could not extract headline from front")))
+      renderEmailHeadline(faciaPage)
     } else {
-      val htmlResponse = FrontEmailHtmlPage.html(faciaPage)
-      val htmResponseInlined = if (InlineEmailStyles.isSwitchedOn) InlineStyles(htmlResponse) else htmlResponse
-
-      if (request.isEmailJson) {
-        val emailJson = JsObject(Map("html" -> JsString(htmResponseInlined.toString)))
-        RevalidatableResult.Ok(emailJson)
-      } else {
-        RevalidatableResult.Ok(htmResponseInlined)
-      }
+      renderEmailFront(faciaPage)
     }
+  }
+
+  private def renderEmailFront(faciaPage: PressedPage)(implicit request: RequestHeader) = {
+    val htmlResponse = FrontEmailHtmlPage.html(faciaPage)
+    val htmResponseInlined = if (InlineEmailStyles.isSwitchedOn) InlineStyles(htmlResponse) else htmlResponse
+
+    if (request.isEmailJson) {
+      val emailJson = JsObject(Map("html" -> JsString(htmResponseInlined.toString)))
+      RevalidatableResult.Ok(emailJson)
+    } else {
+      RevalidatableResult.Ok(htmResponseInlined)
+    }
+  }
+
+  private def renderEmailHeadline(faciaPage: PressedPage) = {
+    val webTitle = for {
+      topCollection <- faciaPage.collections.headOption
+      topCurated <- topCollection.curatedPlusBackfillDeduplicated.headOption
+    } yield RevalidatableResult.Ok(topCurated.properties.webTitle)
+
+    webTitle.getOrElse(WithoutRevalidationResult(NotFound("Could not extract headline from front")))
   }
 
   def renderFrontPress(path: String): Action[AnyContent] = Action.async { implicit request => renderFrontPressResult(path) }
