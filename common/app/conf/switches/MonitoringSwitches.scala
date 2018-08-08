@@ -82,7 +82,7 @@ trait MonitoringSwitches {
     "Sends log messages to kibana whenever an element is removed from an AMP article.",
     Seq(Owner.withGithub("aware")),
     Off,
-    new LocalDate(2018, 9, 8),
+    new LocalDate(2018, 9, 7),
     false
   )
 
