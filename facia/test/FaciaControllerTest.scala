@@ -1,6 +1,7 @@
 package test
 
 import akka.actor.ActorSystem
+import com.fasterxml.jackson.core.JsonParseException
 import com.gu.facia.client.models.{ConfigJson, FrontJson}
 import common.editions.{Uk, Us}
 import implicits.FakeRequests
@@ -42,7 +43,7 @@ import scala.concurrent.Await
   override def beforeAll() {
     val refresh = ConfigAgent.refreshWith(
       ConfigJson(
-        fronts = Map("music" -> frontJson, "inline-embeds" -> frontJson, "uk" -> frontJson, "au/media" -> frontJson),
+        fronts = Map("music" -> frontJson, "inline-embeds" -> frontJson, "uk" -> frontJson, "au/media" -> frontJson, "email/uk/daily" -> frontJson),
         collections = Map.empty)
     )
     conf.switches.Switches.FaciaInlineEmbeds.switchOn()
@@ -185,6 +186,25 @@ import scala.concurrent.Await
     val result = faciaController.renderSomeFrontContainersMf2(count, 0, section, edition)(request)
     status(result) should be(200)
     (contentAsJson(result) \ "items").as[JsArray].value.size should be(count)
+  }
+
+  it should "render json email fronts" in {
+    val emailRequest = FakeRequest("GET", "/email/uk/daily.emailjson")
+    val emailJsonResponse = faciaController.renderFront("email/uk/daily")(emailRequest)
+    status(emailJsonResponse) shouldBe 200
+    val jsonResponse = contentAsJson(emailJsonResponse)
+    val (key, html) = jsonResponse.as[Map[String,String]].head
+    key shouldBe "html"
+    html should include ("<!DOCTYPE html")
+  }
+
+  it should "render email fronts" in {
+    val emailRequest = FakeRequest("GET", "/email/uk/daily")
+    val emailJsonResponse = faciaController.renderFront("email/uk/daily")(emailRequest)
+    status(emailJsonResponse) shouldBe 200
+    assertThrows[JsonParseException](contentAsJson(emailJsonResponse))
+    contentAsString(emailJsonResponse)
+    contentAsString(emailJsonResponse) should include ("<!DOCTYPE html")
   }
 
 }
