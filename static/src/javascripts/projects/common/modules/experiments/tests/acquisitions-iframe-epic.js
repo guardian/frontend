@@ -17,7 +17,7 @@ const epicIframeTest: ABTest = {
     expiry: '2019-07-31',
     author: 'Joseph Smith',
     description:
-        'Bootstrap the AB testing framework to display the Epic inside an iframe',
+        'Test displaying the Epic inside an iframe (with no Google javascript running)',
     successMeasure: 'AV2.0',
     idealOutcome:
         'Serving the Epic inside an iframe does not lead to a drop in revenue',

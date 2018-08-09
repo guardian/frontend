@@ -165,4 +165,14 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2019, 7, 31),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-iframe-test",
+    "Test displaying the Epic inside an iframe (with no Google javascript running)",
+    owners = Seq(Owner.withGithub("joelochlann")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 7, 31),
+    exposeClientSide = true
+  )
 }
