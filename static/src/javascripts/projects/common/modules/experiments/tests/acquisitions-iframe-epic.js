@@ -27,7 +27,7 @@ const epicIframeTest: ABTest = {
     canRun: isEpicDisplayable,
     variants: [
         {
-            id: 'control',
+            id: 'not_iframe',
             options: {
                 maxViews: defaultMaxViews,
             },
@@ -41,7 +41,7 @@ const epicIframeTest: ABTest = {
             },
         },
         {
-            id: 'optimize',
+            id: 'iframe',
             options: {
                 maxViews: defaultMaxViews,
             },
@@ -50,6 +50,10 @@ const epicIframeTest: ABTest = {
                     url:
                         'https://support.theguardian.com/epic/iframe-or-not-test/index.html',
                     sendFonts: false,
+                    abTestVariant: {
+                        name: 'iframe_or_not',
+                        variant: 'iframe',
+                    },
                 }).then(trackEpic);
             },
         },

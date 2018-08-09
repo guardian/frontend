@@ -20,7 +20,11 @@ const getOptimizeEpicUrl = (): ?string => {
 const displayOptimizeEpic = (): Promise<IframeEpicComponent> => {
     const url = getOptimizeEpicUrl();
     if (url) {
-        return displayIframeEpic({ url, sendFonts: true });
+        // TODO: allow fallback ab test to be set via function argument?
+        return displayIframeEpic({
+            url,
+            sendFonts: true,
+        });
     }
     const urlError = new Error('config page.optimizeEpicUrl not found');
     reportEpicError(urlError);

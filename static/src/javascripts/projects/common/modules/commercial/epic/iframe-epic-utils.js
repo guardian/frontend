@@ -11,6 +11,7 @@ import {
 import { getStyles } from 'commercial/modules/messenger/get-stylesheet';
 
 import type { EpicComponent } from 'common/modules/commercial/epic/epic-utils';
+import type { ABTestVariant } from 'common/modules/commercial/acquisitions-ophan';
 
 export type IframeEpicComponent = EpicComponent & { iframe: HTMLIFrameElement };
 
@@ -47,7 +48,8 @@ const setIframeHeight = (epic: IframeEpicComponent, height: number) => {
 };
 
 const insertEpicIframe = (
-    epic: IframeEpicComponent
+    epic: IframeEpicComponent,
+    abTestVariant?: ABTestVariant
 ): Promise<IframeEpicComponent> =>
     new Promise((resolve, reject) => {
         // adding listener before inserting iframe into the DOM,
@@ -74,10 +76,10 @@ const insertEpicIframe = (
                     id:
                         data && data.componentId
                             ? data.componentId
-                            : 'optimize_epic',
+                            : 'iframe_epic',
                 };
 
-                const abTest = data.abTest;
+                const abTest = data.abTest || abTestVariant;
                 const componentEvent = abTest
                     ? { component, abTest }
                     : { component };
@@ -135,13 +137,14 @@ const addEpicDataToUrl = (url: string): string => {
 type IframeEpicDisplayConfig = {
     url: string,
     sendFonts: boolean,
+    abTestVariant?: ABTestVariant,
 };
 
 const displayIframeEpic = (
     iframeConfig: IframeEpicDisplayConfig
 ): Promise<IframeEpicComponent> => {
     const iframeEpicComponent = createEpicIframe(iframeConfig.url);
-    return insertEpicIframe(iframeEpicComponent)
+    return insertEpicIframe(iframeEpicComponent, iframeConfig.abTestVariant)
         .then(epic => {
             if (iframeConfig.sendFonts) {
                 sendFontsToIframe(
@@ -157,7 +160,9 @@ const displayIframeEpic = (
         })
         .catch(error => {
             const iframeError = new Error(
-                `unable to display iframe epic with url ${iframeConfig.url} - ${error}`
+                `unable to display iframe epic with url ${
+                    iframeConfig.url
+                } - ${error}`
             );
             reportEpicError(iframeError);
             return Promise.reject(iframeError);
