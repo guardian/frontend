@@ -11,12 +11,11 @@ const baseParams = {
     campaignCode: 'gdnwb_copts_memco_banner',
 };
 
-const engagementBannerCopy: string =
-    `<strong>The Guardian is editorially independent &ndash; our journalism is free from the influence of
-    billionaire owners or politicians. No one edits our editor. No one steers our opinion.</strong>
-    And unlike many others, we haven’t put up a paywall as we want to keep our journalism open and accessible.
-    But the revenue we get from advertising is falling, so we increasingly need our readers to fund our independent,
-    investigative reporting.`;
+const engagementBannerCopy: string = `<strong>The Guardian is editorially independent &ndash;
+    our journalism is free from the influence of billionaire owners or politicians.
+    No one edits our editor. No one steers our opinion.</strong> And unlike many others, we haven’t put
+    up a paywall as we want to keep our journalism open and accessible. But the revenue we get from
+    advertising is falling, so we increasingly need our readers to fund our independent, investigative reporting.`;
 
 const initialContribution = 1;
 
