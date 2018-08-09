@@ -143,7 +143,8 @@ type IframeEpicDisplayConfig = {
 const displayIframeEpic = (
     iframeConfig: IframeEpicDisplayConfig
 ): Promise<IframeEpicComponent> => {
-    const iframeEpicComponent = createEpicIframe(iframeConfig.url);
+    const url = addEpicDataToUrl(iframeConfig.url);
+    const iframeEpicComponent = createEpicIframe(url);
     return insertEpicIframe(iframeEpicComponent, iframeConfig.abTestVariant)
         .then(epic => {
             if (iframeConfig.sendFonts) {
@@ -161,7 +162,7 @@ const displayIframeEpic = (
         .catch(error => {
             const iframeError = new Error(
                 `unable to display iframe epic with url ${
-                    iframeConfig.url
+                    url
                 } - ${error}`
             );
             reportEpicError(iframeError);
@@ -169,4 +170,4 @@ const displayIframeEpic = (
         });
 };
 
-export { addEpicDataToUrl, displayIframeEpic };
+export { displayIframeEpic };
