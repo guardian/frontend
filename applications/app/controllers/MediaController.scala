@@ -54,7 +54,7 @@ class MediaController(contentApiClient: ContentApiClient, val controllerComponen
     val htmlResponse = () => ContentHtmlPage.html(model)
     // The jsonResponse allows for a json version of each page to be accessed by users eg: https://www.theguardian.com/world/2018/jun/13/kim-jong-un-north-korea-summit-trump-visit-kcna.json
     val jsonResponse = model.media match {
-      case audio: Audio => () => views.html.fragments.audioBody(model, displayCaption = false)
+      case audio: Audio => () => views.html.fragments.audioBody(model, audio)
       case _ => () => views.html.fragments.mediaBody(model, displayCaption = false)
     }
     renderFormat(htmlResponse, jsonResponse, model, Switches.all)
