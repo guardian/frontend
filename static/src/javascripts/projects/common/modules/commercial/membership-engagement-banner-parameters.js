@@ -11,11 +11,12 @@ const baseParams = {
     campaignCode: 'gdnwb_copts_memco_banner',
 };
 
-const engagementBannerCopy = (): string =>
-    `<strong>Unlike many news organisations, we haven’t put up a paywall &ndash; we want to keep our journalism as open as we
-    can.</strong> The Guardian’s independent, investigative journalism takes a lot of time, money and hard work to
-    produce. But the revenue we get from advertising is falling, so we increasingly need our readers to fund us. If
-    everyone who reads our reporting, who likes it, helps fund it, our future would be much more secure.`;
+const engagementBannerCopy: string =
+    `<strong>The Guardian is editorially independent &ndash; our journalism is free from the influence of
+    billionaire owners or politicians. No one edits our editor. No one steers our opinion.</strong>
+    And unlike many others, we haven’t put up a paywall as we want to keep our journalism open and accessible.
+    But the revenue we get from advertising is falling, so we increasingly need our readers to fund our independent,
+    investigative reporting.`;
 
 const initialContribution = 1;
 
@@ -71,7 +72,7 @@ export const engagementBannerParams = (
         buttonCaption: 'Support The Guardian',
         linkUrl: supportContributeURL,
         products: ['CONTRIBUTION', 'RECURRING_CONTRIBUTION'],
-        messageText: engagementBannerCopy(),
+        messageText: engagementBannerCopy,
         ctaText: supporterEngagementCtaCopyControl(location),
         pageviewId: config.get('ophan.pageViewId', 'not_found'),
     });
