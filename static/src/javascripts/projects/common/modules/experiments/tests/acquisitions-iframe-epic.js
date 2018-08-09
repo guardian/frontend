@@ -34,7 +34,7 @@ const epicIframeTest: ABTest = {
             test: () => {
                 displayControlEpicInAbTest({
                     // Name corresponds to test name hard coded in the tracking link in the epic:
-                    // https://support.theguardian.com/epic/iframe-or-not/index.html
+                    // https://support.theguardian.com/epic/iframe-or-not-test/index.html
                     name: 'iframe_or_not',
                     variant: 'not_iframe',
                 }).then(trackEpic);
@@ -48,7 +48,7 @@ const epicIframeTest: ABTest = {
             test: () => {
                 displayIframeEpic({
                     url:
-                        'https://support.theguardian.com/epic/iframe-or-not/index.html',
+                        'https://support.theguardian.com/epic/iframe-or-not-test/index.html',
                     sendFonts: false,
                 }).then(trackEpic);
             },
