@@ -440,12 +440,14 @@ GET            /$leftSide<[^+]+>+*rightSide                                     
 # Live Blogs
 GET     /$path<[^/]+/([^/]+/)?live/.*>.json                                                                                      controllers.LiveBlogController.renderJson(path, lastUpdate: Option[String], rendered: Option[Boolean], isLivePage: Option[Boolean])
 GET     /$path<[^/]+/([^/]+/)?live/.*>/email                                                                                     controllers.LiveBlogController.renderEmail(path)
+GET     /$path<[^/]+/([^/]+/)?live/.*>/email.emailjson                                                                           controllers.LiveBlogController.renderEmail(path)
 GET     /$path<[^/]+/([^/]+/)?live/.*>                                                                                           controllers.LiveBlogController.renderArticle(path, page: Option[String], format: Option[String])
 
 # articles, finished liveblogs
 
 GET     /*path.json                                                                                                              controllers.ArticleController.renderJson(path)
 GET     /*path/email                                                                                                             controllers.ArticleController.renderEmail(path)
+GET     /*path/email.emailjson                                                                                                   controllers.ArticleController.renderEmail(path)
 GET     /*path                                                                                                                   controllers.ArticleController.renderArticle(path)
 
 # Formstack form submission
