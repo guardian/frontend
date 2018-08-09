@@ -8,7 +8,7 @@ import {
     displayControlEpicInAbTest,
     trackEpic,
 } from 'common/modules/commercial/epic/epic-utils';
-import { displayOptimizeEpic } from 'common/modules/commercial/epic/optimize-epic-utils';
+import { displayIframeEpic } from 'common/modules/commercial/epic/iframe-epic-utils';
 
 const epicIframeTest: ABTest = {
     id: 'AcquisitionsEpicIframeTest',
@@ -33,9 +33,8 @@ const epicIframeTest: ABTest = {
             },
             test: () => {
                 displayControlEpicInAbTest({
-                    // This is the id of the Google Analytics experiment currently running against the Epic.
-                    // Using this means that the 3 variants (the frontend variant, and the 2 Optimize variants),
-                    // will be reported under the same test name.
+                    // Name corresponds to test name hard coded in the tracking link in the epic:
+                    // https://support.theguardian.com/epic/iframe-or-not/index.html
                     name: 'iframe_or_not',
                     variant: 'not_iframe',
                 }).then(trackEpic);
@@ -47,12 +46,16 @@ const epicIframeTest: ABTest = {
                 maxViews: defaultMaxViews,
             },
             test: () => {
-                displayOptimizeEpic().then(trackEpic);
+                displayIframeEpic({
+                    url:
+                        'https://support.theguardian.com/epic/iframe-or-not/index.html',
+                    sendFonts: false,
+                }).then(trackEpic);
             },
         },
     ],
 };
 
-const acquisitionsEpicOptimizeAATest: AcquisitionsABTest = (epicIframeTest: any);
+const acquisitionsEpicIframeTest: AcquisitionsABTest = (epicIframeTest: any);
 
-export { acquisitionsEpicOptimizeAATest };
+export { acquisitionsEpicIframeTest };
