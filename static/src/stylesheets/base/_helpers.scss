@@ -14,12 +14,6 @@
     }
 }
 
-.hide-until-mobile-medium {
-    @include mq($until: mobileMedium) {
-        display: none !important;
-    }
-}
-
 .hide-until-mobile-landscape {
     @include mq($until: mobileLandscape) {
         display: none !important;
@@ -51,12 +45,6 @@
 }
 
 // Hide from
-
-.hide-from-mobile-medium {
-    @include mq(mobileMedium) {
-        display: none !important;
-    }
-}
 
 .hide-from-mobile-landscape {
     @include mq(mobileLandscape) {
