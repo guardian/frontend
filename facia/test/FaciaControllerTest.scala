@@ -194,7 +194,7 @@ import scala.concurrent.Await
     status(emailJsonResponse) shouldBe 200
     val jsonResponse = contentAsJson(emailJsonResponse)
     val (key, html) = jsonResponse.as[Map[String,String]].head
-    key shouldBe "html"
+    key shouldBe "body"
     html should include ("<!DOCTYPE html")
   }
 

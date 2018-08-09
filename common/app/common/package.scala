@@ -11,6 +11,7 @@ import model.Cached.RevalidatableResult
 import model.{ApplicationContext, Cached, NoCache}
 import org.apache.commons.lang.exception.ExceptionUtils
 import play.api.Logger
+import play.api.libs.json.{JsObject, JsString}
 import play.api.mvc.{RequestHeader, Result}
 import play.twirl.api.Html
 
@@ -118,8 +119,14 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
     JsonComponent(page, json)
   }
 
-  def renderEmail(html: Html, page: model.Page)(implicit request: RequestHeader, context: ApplicationContext): Result = Cached(page){
-    RevalidatableResult.Ok(if (InlineEmailStyles.isSwitchedOn) InlineStyles(html) else html)
+  def renderEmail(html: Html, page: model.Page)(implicit request: RequestHeader, context: ApplicationContext): Result = Cached(page) {
+    val htmlWithInlineStyles = if (InlineEmailStyles.isSwitchedOn) InlineStyles(html) else html
+
+    if (request.isEmailJson) {
+      RevalidatableResult.Ok(JsObject(Map("body" -> JsString(htmlWithInlineStyles.toString))))
+    } else {
+      RevalidatableResult.Ok(htmlWithInlineStyles)
+    }
   }
 
 }
