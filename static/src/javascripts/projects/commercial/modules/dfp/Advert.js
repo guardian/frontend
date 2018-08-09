@@ -51,6 +51,7 @@ class Advert {
     whenRendered: Promise<boolean>;
     whenRenderedResolver: Resolver;
     whenSlotReady: Promise<void>;
+    extraNodeClasses: Array<string>;
     timings: {
         createTime: ?number,
         startLoading: ?number,
@@ -106,6 +107,8 @@ class Advert {
             }
         );
 
+        this.extraNodeClasses = [];
+
         updateAdvertMetric(this, 'createTime', getCurrentTime());
     }
 
@@ -134,6 +137,26 @@ class Advert {
         }
         updateAdvertMetric(this, 'stopRendering', getCurrentTime());
     }
+
+    static filterClasses = (
+        oldClasses: Array<string>,
+        newClasses: Array<string>
+    ): Array<string> =>
+        oldClasses.filter(oldClass => !newClasses.includes(oldClass));
+
+    updateExtraSlotClasses(...newClasses: Array<string>): void {
+        const classesToRemove: Array<string> = Advert.filterClasses(
+            this.extraNodeClasses,
+            newClasses
+        );
+        this.node.classList.remove(...classesToRemove);
+        this.node.classList.add(...newClasses);
+        this.extraNodeClasses = newClasses;
+    }
 }
 
 export { Advert };
+
+export const _ = {
+    filterClasses: Advert.filterClasses,
+};
