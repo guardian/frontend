@@ -28,6 +28,7 @@ const createEpicIframe = (url: string): IframeEpicComponent => {
     const iframe = document.createElement('iframe');
     iframe.src = url;
     iframe.style.width = '100%';
+    iframe.style.height = '549px';
     iframe.frameBorder = '0';
     container.appendChild(iframe);
     return { html: container, iframe };
