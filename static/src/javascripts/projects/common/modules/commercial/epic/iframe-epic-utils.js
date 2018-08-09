@@ -161,9 +161,7 @@ const displayIframeEpic = (
         })
         .catch(error => {
             const iframeError = new Error(
-                `unable to display iframe epic with url ${
-                    url
-                } - ${error}`
+                `unable to display iframe epic with url ${url} - ${error}`
             );
             reportEpicError(iframeError);
             return Promise.reject(iframeError);
