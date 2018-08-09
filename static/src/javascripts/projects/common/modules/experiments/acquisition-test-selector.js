@@ -18,9 +18,12 @@ import { acquisitionsEpicFromGoogleDocThreeVariants } from 'common/modules/exper
 import { acquisitionsEpicFromGoogleDocFourVariants } from 'common/modules/experiments/tests/acquisitions-epic-from-google-doc-four-variants';
 import { acquisitionsEpicFromGoogleDocFiveVariants } from 'common/modules/experiments/tests/acquisitions-epic-from-google-doc-five-variants';
 import { acquisitionsEpicThailandCave } from 'common/modules/experiments/tests/acquisitions-epic-thailand-cave';
+import { acquisitionsEpicOptimizeAATest } from 'common/modules/experiments/tests/acquisitions-optimize-epic';
 
 const isViewable = (v: Variant, t: ABTest): boolean => {
-    if (!v.options || !v.options.maxViews) return false;
+    if (!v.options) return false;
+    if (v.options.isUnlimited) return true;
+    if (!v.options.maxViews) return false;
 
     const {
         count: maxViewCount,
@@ -44,6 +47,7 @@ const isViewable = (v: Variant, t: ABTest): boolean => {
  * acquisition tests in priority order (highest to lowest)
  */
 export const acquisitionsTests: $ReadOnlyArray<AcquisitionsABTest> = [
+    acquisitionsEpicOptimizeAATest,
     acquisitionsEpicThailandCave,
     acquisitionsEpicFromGoogleDocOneVariant,
     acquisitionsEpicFromGoogleDocTwoVariants,
@@ -71,8 +75,12 @@ export const getTest = (): ?ABTest => {
 
     return acquisitionsTests.find(t => {
         const variant: ?Variant = variantFor(t);
-        return (
-            variant && testCanBeRun(t) && isInTest(t) && isViewable(variant, t)
-        );
+        if (variant) {
+            const isTestRunnable = testCanBeRun(t);
+            const isUserInTest = isInTest(t);
+            const isEpicViewable = isViewable(variant, t);
+            return isTestRunnable && isUserInTest && isEpicViewable;
+        }
+        return false;
     });
 };

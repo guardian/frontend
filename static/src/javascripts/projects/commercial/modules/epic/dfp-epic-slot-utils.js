@@ -7,9 +7,9 @@ import { createSlots } from 'commercial/modules/dfp/create-slots';
 import {
     insertAtSubmeta,
     reportEpicError,
-} from 'common/modules/commercial/epic-utils';
+} from 'common/modules/commercial/epic/epic-utils';
 
-import type { EpicComponent } from 'common/modules/commercial/epic-utils';
+import type { EpicComponent } from 'common/modules/commercial/epic/epic-utils';
 
 const createEpicAdSlot = (): HTMLDivElement => {
     const adSlots = createSlots('epic', {});

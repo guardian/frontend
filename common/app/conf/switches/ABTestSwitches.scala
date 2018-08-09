@@ -158,11 +158,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-acquisitions-banner-editorial-independence",
-    "Test the impact of banner with message focused on editorial independence",
-    owners = Seq(Owner.withGithub("tsop14")),
+    "ab-acquisitions-epic-optimize-a-a-test",
+    "Bootstrap the AB testing framework to display the Epic using Google Optimize",
+    owners = Seq(Owner.withGithub("Mullefa")),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 9, 6),
+    sellByDate = new LocalDate(2019, 7, 31),
     exposeClientSide = true
   )
 }

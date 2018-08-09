@@ -121,7 +121,13 @@ class PrebidService {
 
     static requestQueue: Promise<void> = Promise.resolve();
 
-    static requestBids(advert: Advert): Promise<void> {
+    // slotFlatMap allows you to dynamically interfere with the PrebidSlot definition
+    // for this given request for bids.
+    static requestBids(
+        advert: Advert,
+        slotFlatMap?: PrebidSlot => PrebidSlot[]
+    ): Promise<void> {
+        const effectiveSlotFlatMap = slotFlatMap || (s => [s]); // default to identity
         if (dfpEnv.externalDemand !== 'prebid') {
             return PrebidService.requestQueue;
         }
@@ -132,6 +138,8 @@ class PrebidService {
                     stripMobileSuffix(advert.id)
                 ).endsWith(slot.key)
             )
+            .map(effectiveSlotFlatMap)
+            .reduce((acc, elt) => acc.concat(elt), []) // the "flat" in "flatMap"
             .map(slot => new PrebidAdUnit(advert, slot))
             .filter(adUnit => !adUnit.isEmpty());
 

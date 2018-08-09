@@ -85,7 +85,19 @@ const insertAtSubmeta = (epic: EpicComponent): Promise<EpicComponent> =>
     });
 
 const displayControlEpic = (abTest?: ABTestVariant): Promise<EpicComponent> =>
-    controlEpicComponent(abTest).then(epic => insertAtSubmeta(epic));
+    controlEpicComponent(abTest)
+        .then(epic => insertAtSubmeta(epic))
+        .catch(error => {
+            const controlEpicError = new Error(
+                `unable to display control epic - ${error}`
+            );
+            reportEpicError(controlEpicError);
+            return Promise.reject(controlEpicError);
+        });
+
+const displayControlEpicInAbTest = (
+    abTest: ABTestVariant
+): Promise<EpicComponent> => displayControlEpic(abTest);
 
 const awaitEpicViewed = (epic: HTMLDivElement): Promise<void> => {
     const inView = elementInView(epic, window, { top: 18 });
@@ -125,6 +137,7 @@ export {
     reportEpicError,
     insertAtSubmeta,
     displayControlEpic,
+    displayControlEpicInAbTest,
     trackEpic,
     awaitEpicButtonClicked,
 };

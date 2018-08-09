@@ -107,6 +107,7 @@ const WaveAndTrack = styled('div')({
     alignItems: 'stretch',
     padding: '0 9px',
     cursor: 'pointer',
+    maxWidth: '100%',
 });
 
 const Track = styled('div')({

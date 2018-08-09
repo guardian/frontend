@@ -21,8 +21,42 @@ export const loadAdvert = (advert: Advert): void => {
 };
 
 export const refreshAdvert = (advert: Advert): void => {
-    advert.whenSlotReady.then(() => prebid.requestBids(advert)).then(() => {
-        advert.slot.setTargeting('refreshed', 'true');
-        window.googletag.pubads().refresh([advert.slot]);
-    });
+    // advert.size contains the effective size being displayed prior to refreshing
+    advert.whenSlotReady
+        .then(() =>
+            prebid.requestBids(advert, prebidSlot => {
+                // We only fiddle with top-above-nav prebidSlot(s)
+                if (prebidSlot.key !== 'top-above-nav') {
+                    return [prebidSlot];
+                }
+                // For top-above-nav slots, we force the refreshed
+                // to be the same size as the first display
+                if (prebidSlot.sizes.length === 1) {
+                    // No point forcing a size, as there is already only one
+                    // possible (mobile/tablet). See prebid/slot-config.js
+                    return [prebidSlot];
+                }
+                // Prebid slots only support array sizes (no string litterals).
+                if (Array.isArray(advert.size)) {
+                    return [
+                        Object.assign({}, prebidSlot, {
+                            sizes: [[advert.size[0], advert.size[1]]],
+                        }),
+                    ];
+                }
+                // No point having this prebidSlot, as advert.size is not an array
+                return [];
+            })
+        )
+        .then(() => {
+            advert.slot.setTargeting('refreshed', 'true');
+            if (advert.id === 'dfp-ad--top-above-nav') {
+                // force the slot sizes to be the same as advert.size (current)
+                // only when advert.size is an array (forget 'fluid' and other specials)
+                if (Array.isArray(advert.size)) {
+                    advert.slot.defineSizeMapping([[[0, 0], [advert.size]]]);
+                }
+            }
+            window.googletag.pubads().refresh([advert.slot]);
+        });
 };

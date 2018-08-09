@@ -442,6 +442,11 @@
             line-height: 30px;
             padding: 1px 16px;
             border: 0;
+            &:disabled {
+                background-color: transparent;
+                border: 1px $brightness-7 solid;
+
+            }
         }
     }
     .t_and_c {
