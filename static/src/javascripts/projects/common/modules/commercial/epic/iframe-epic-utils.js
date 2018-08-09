@@ -9,10 +9,6 @@ import { getStyles } from 'commercial/modules/messenger/get-stylesheet';
 import type { EpicComponent } from 'common/modules/commercial/epic/epic-utils';
 
 export type IframeEpicComponent = EpicComponent & { iframe: HTMLIFrameElement };
-type FontName =
-    | 'GuardianHeadline'
-    | 'GuardianTextEgyptianWeb'
-    | 'GuardianTextSansWeb';
 
 // channel for messages between Optimize Epic and Guardian frontend
 const OPTIMIZE_EPIC_CHANNEL = 'OPTIMIZE_EPIC';
@@ -98,38 +94,9 @@ const insertEpicIframe = (
         insertAtSubmeta(epic).catch(reject);
     });
 
-const sendFontsToIframe = (
-    fonts: Array<FontName>,
-    iframe: HTMLIFrameElement
-) => {
-    const selector = fonts
-        .map(font => `.webfont[data-cache-name="${font}"]`)
-        .join(',');
-    const fontStyle = getStyles({ selector }, document.styleSheets);
-
-    const message = JSON.stringify({
-        channel: OPTIMIZE_EPIC_CHANNEL,
-        messageType: FONTS,
-        fonts: fontStyle,
-    });
-
-    iframe.contentWindow.postMessage(message, '*');
-};
-
 const displayIframeEpic = (url: string): Promise<IframeEpicComponent> => {
     const iframeEpicComponent = createEpicIframe(url);
     return insertEpicIframe(iframeEpicComponent)
-        .then(epic => {
-            sendFontsToIframe(
-                [
-                    'GuardianHeadline',
-                    'GuardianTextEgyptianWeb',
-                    'GuardianTextSansWeb',
-                ],
-                epic.iframe
-            );
-            return epic;
-        })
         .catch(error => {
             const iframeError = new Error(
                 `unable to display iframe epic with url ${url} - ${error}`
