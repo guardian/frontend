@@ -76,7 +76,7 @@ const insertEpicIframe = (
                     id:
                         data && data.componentId
                             ? data.componentId
-                            : 'iframe_epic',
+                            : 'iframe_epic_unknown',
                 };
 
                 const abTest = data.abTest || abTestVariant;
