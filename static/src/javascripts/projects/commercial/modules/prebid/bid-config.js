@@ -108,7 +108,7 @@ const getIndexSiteId = (): string => {
     } else {
         const site = config
             .get('page.pbIndexSites')
-            .find(s => s.bp === getBreakpointKey());
+            .find(s => s.bp === getBreakpointKey(), []);
         return site && site.id ? site.id.toString() : '';
     }
 };
@@ -277,18 +277,22 @@ const getXaxisPlacementId = (sizes: PrebidSize[]): number => {
 /* testing instrument */
 // Returns a map { <bidderName>: true } of bidders
 // according to the pbtest URL parameter
-const pbTestNameMap = memoize(
-    (): {} =>
+
+type TestNameMap = { [string]: boolean };
+
+const pbTestNameMap: () => TestNameMap = memoize(
+    (): TestNameMap =>
         new URLSearchParams(window.location.search)
             .getAll('pbtest')
             .reduce((acc, value) => {
                 acc[value] = true;
                 return acc;
             }, {}),
-    (): String =>
+    (): string =>
         // Same implicit parameter as the memoized function
         window.location.search
 );
+
 // Is pbtest being used?
 const isPbTestOn = (): boolean => !isEmpty(pbTestNameMap());
 // Helper for conditions
@@ -296,8 +300,8 @@ const inPbTestOr = (liveClause: boolean): boolean => isPbTestOn() || liveClause;
 
 /* Bidders */
 const appNexusBidder: PrebidBidder = {
-    name: 'appnexus',
-    switchName: 'prebidAppNexus',
+    name: 'appnexusDirect',
+    switchName: 'prebidAppnexus',
     bidParams: (slotId: string, sizes: PrebidSize[]): PrebidAppNexusParams => ({
         placementId: getAppNexusPlacementId(sizes),
         customData: buildAppNexusTargeting(buildPageTargeting()), // Ok to duplicate call. Lodash 'once' is used.

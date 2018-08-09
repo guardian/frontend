@@ -68,7 +68,7 @@ class PrebidAdUnit {
     }
 }
 
-class PrebidService {
+export class PrebidService {
     static initialise(): void {
         const pbjsConfig = Object.assign(
             {},
@@ -76,10 +76,10 @@ class PrebidService {
                 bidderTimeout,
                 priceGranularity,
             },
-            config.get('switches.enableConsentManagementService')
+            config.get('switches.enableConsentManagementService', false)
                 ? { consentManagement }
                 : {},
-            config.get('switches.prebidS2sozone') ? { s2sConfig } : {}
+            config.get('switches.prebidS2sozone', false) ? { s2sConfig } : {}
         );
 
         window.pbjs.setConfig(pbjsConfig);
@@ -87,8 +87,8 @@ class PrebidService {
         // gather analytics from 20% (1 in 5) of page views
         const inSample = getRandomIntInclusive(1, 5) === 1;
         if (
-            config.get('switches.prebidAnalytics') &&
-            (inSample || config.get('page.isDev'))
+            config.get('switches.prebidAnalytics', false) &&
+            (inSample || config.get('page.isDev', false))
         ) {
             window.pbjs.enableAnalytics([
                 {
@@ -105,7 +105,7 @@ class PrebidService {
         // allows dynamic assignment.
         window.pbjs.bidderSettings = {};
 
-        if (config.get('switches.prebidXaxis')) {
+        if (config.get('switches.prebidXaxis', false)) {
             window.pbjs.bidderSettings.xhb = {
                 adserverTargeting: [
                     {
@@ -116,6 +116,10 @@ class PrebidService {
                     },
                 ],
             };
+        }
+
+        if (config.get('switches.prebidAppnexus', false)) {
+            window.pbjs.aliasBidder('appnexus', 'appnexusDirect');
         }
     }
 
@@ -132,7 +136,7 @@ class PrebidService {
             return PrebidService.requestQueue;
         }
 
-        const adUnits = slots
+        const adUnits: Array<PrebidAdUnit> = slots
             .filter(slot =>
                 stripTrailingNumbersAbove1(
                     stripMobileSuffix(advert.id)

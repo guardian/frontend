@@ -48,7 +48,7 @@ jest.mock('common/modules/experiments/utils');
 
 /* eslint-disable guardian-frontend/no-direct-access-config */
 const resetConfig = () => {
-    config.set('switches.prebidAppNexus', true);
+    config.set('switches.prebidAppnexus', true);
     config.set('switches.prebidImproveDigital', true);
     config.set('switches.prebidIndexExchange', true);
     config.set('switches.prebidSonobi', true);
@@ -523,7 +523,7 @@ describe('bids', () => {
         expect(bidders()).toEqual([
             'ix',
             'sonobi',
-            'appnexus',
+            'appnexusDirect',
             'improvedigital',
             'xhb',
         ]);
