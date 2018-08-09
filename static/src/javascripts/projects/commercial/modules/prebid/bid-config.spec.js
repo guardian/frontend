@@ -523,7 +523,7 @@ describe('bids', () => {
         expect(bidders()).toEqual([
             'ix',
             'sonobi',
-            'appnexusDirect',
+            'and',
             'improvedigital',
             'xhb',
         ]);

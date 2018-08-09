@@ -117,10 +117,6 @@ export class PrebidService {
                 ],
             };
         }
-
-        if (config.get('switches.prebidAppnexus', false)) {
-            window.pbjs.aliasBidder('appnexus', 'appnexusDirect');
-        }
     }
 
     static requestQueue: Promise<void> = Promise.resolve();

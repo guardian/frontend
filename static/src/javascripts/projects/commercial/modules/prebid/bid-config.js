@@ -300,7 +300,7 @@ const inPbTestOr = (liveClause: boolean): boolean => isPbTestOn() || liveClause;
 
 /* Bidders */
 const appNexusBidder: PrebidBidder = {
-    name: 'appnexusDirect',
+    name: 'and',
     switchName: 'prebidAppnexus',
     bidParams: (slotId: string, sizes: PrebidSize[]): PrebidAppNexusParams => ({
         placementId: getAppNexusPlacementId(sizes),
