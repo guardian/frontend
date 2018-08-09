@@ -47,10 +47,7 @@ const epicIframeTest: ABTest = {
                 maxViews: defaultMaxViews,
             },
             test: () => {
-                displayOptimizeEpic({
-                    name: 'iframe_or_not',
-                    variant: 'iframe'
-                }).then(trackEpic);
+                displayOptimizeEpic().then(trackEpic);
             },
         },
     ],
