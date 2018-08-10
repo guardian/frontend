@@ -257,3 +257,11 @@
     stroke: none;
     fill: $brightness-7;
 }
+
+.onward-list {
+    .fc-item__title {
+        .inline-icon {
+            fill: $brightness-7;
+        }
+    }
+}
