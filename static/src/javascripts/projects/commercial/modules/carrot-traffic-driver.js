@@ -139,11 +139,12 @@ const mobileRules: SpacefinderRules = {
 
 const insertSlot = (paras: HTMLElement[]): Promise<void> => {
     const slots = createSlots('carrot');
+    const candidates = paras.slice(1);
     return fastdom
         .write(() => {
             slots.forEach(slot => {
-                if (paras[0] && paras[0].parentNode) {
-                    paras[0].parentNode.insertBefore(slot, paras[0]);
+                if (candidates[0] && candidates[0].parentNode) {
+                    candidates[0].parentNode.insertBefore(slot, candidates[0]);
                 }
             });
         })
