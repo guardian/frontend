@@ -152,7 +152,14 @@
     list-style: none;
 
     > li {
-        @include faux-bullet-point($right-space: 4px);
+        @include faux-bullet-point($right-space: 8px);
+        margin-bottom: $gs-baseline / 2;
+        padding-left: $gs-gutter;
+        overflow: hidden;
+
+        &:before {
+            margin-left: -$gs-gutter;
+        }
 
         .paid-content & {
             @include faux-bullet-point($brightness-60, $right-space: 4px);
@@ -163,7 +170,6 @@
         }
     }
 }
-
 
 /* Captions
    ========================================================================== */
@@ -389,24 +395,6 @@ figure.element--thumbnail + h2 {
                 text-decoration: none;
                 border-bottom: 1px solid $brightness-46;
             }
-        }
-    }
-}
-
-/* Bullet list
-   ========================================================================== */
-
-.from-content-api,
-.from-content-api .block-elements {
-    > ul > li {
-        margin-bottom: $gs-baseline / 2;
-        padding-left: $gs-gutter;
-        overflow: hidden;
-
-        &:before {
-            position: absolute;
-            top: 4px;
-            margin-left: -$gs-gutter;
         }
     }
 }
