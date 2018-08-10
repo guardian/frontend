@@ -15,4 +15,14 @@ trait IdentitySwitches {
     exposeClientSide = true
   )
 
+  val IdentityEmailSignInUpsellSwitch = Switch(
+    SwitchGroup.Identity,
+    "id-email-sign-in-upsell",
+    "If switched on, users coming from newsletters will get prompts to sign in.",
+    owners = Seq(Owner.withGithub("walaura")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
 }
