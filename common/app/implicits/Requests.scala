@@ -1,5 +1,6 @@
 package implicits
 
+import common.Logging
 import conf.Configuration
 import play.api.mvc.RequestHeader
 
@@ -65,4 +66,16 @@ trait Requests {
   }
 }
 
+trait EmailRequests extends Requests {
+  implicit class EmailRichRequestHeader(r: RequestHeader) extends Logging {
+    lazy val emailId: String = r.path match {
+      case "/email/uk/daily" => "today-uk"
+      case "/email/us/daily" => "today-us"
+      case "/email/au/daily" => "today-au"
+      case _ => ""
+    }
+  }
+}
+
+object EmailRequests extends EmailRequests
 object Requests extends Requests
