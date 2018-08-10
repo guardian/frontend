@@ -5,8 +5,9 @@ import { createSlots } from 'commercial/modules/dfp/create-slots';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { spaceFiller } from 'common/modules/article/space-filler';
 import { getBreakpoint } from 'lib/detect';
+import type { SpacefinderRules } from 'common/modules/spacefinder';
 
-const defaultRules = {
+const defaultRules: SpacefinderRules = {
     bodySelector: '.js-article__body',
     slotSelector: ' > p',
     minAbove: 500,
@@ -47,7 +48,7 @@ const defaultRules = {
 };
 
 // desktop(980) and tablet(740)
-const desktopRules = {
+const desktopRules: SpacefinderRules = {
     bodySelector: '.js-article__body',
     slotSelector: ' > p',
     minAbove: 500,
@@ -92,7 +93,7 @@ const desktopRules = {
 };
 
 // mobile(320) and above
-const mobileRules = {
+const mobileRules: SpacefinderRules = {
     bodySelector: '.js-article__body',
     slotSelector: ' > p',
     minAbove: 500,
@@ -149,7 +150,7 @@ const insertSlot = (paras: HTMLElement[]): Promise<void> => {
         .then(() => addSlot(slots[0], true));
 };
 
-const getRules = (): {} => {
+const getRules = (): SpacefinderRules => {
     switch (getBreakpoint()) {
         case 'mobile':
         case 'mobileMedium':
