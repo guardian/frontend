@@ -352,7 +352,7 @@ trait CommercialSwitches {
     name = "prebid-appnexus",
     description = "Include AppNexus adapter in Prebid auctions",
     owners = group(Commercial),
-    safeState = On,
+    safeState = Off,
     sellByDate = never,
     exposeClientSide = true
   )

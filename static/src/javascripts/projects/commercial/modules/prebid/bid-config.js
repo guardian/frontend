@@ -107,8 +107,8 @@ const getIndexSiteId = (): string => {
         }
     } else {
         const site = config
-            .get('page.pbIndexSites')
-            .find(s => s.bp === getBreakpointKey(), []);
+            .get('page.pbIndexSites', [])
+            .find(s => s.bp === getBreakpointKey());
         return site && site.id ? site.id.toString() : '';
     }
 };

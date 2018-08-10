@@ -68,7 +68,7 @@ class PrebidAdUnit {
     }
 }
 
-export class PrebidService {
+class PrebidService {
     static initialise(): void {
         const pbjsConfig = Object.assign(
             {},
