@@ -9,7 +9,7 @@ import { addSlot } from 'commercial/modules/dfp/add-slot';
 import { trackAdRender } from 'commercial/modules/dfp/track-ad-render';
 import { createSlots } from 'commercial/modules/dfp/create-slots';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
-import {initCarrot} from 'commercial/modules/carrot-traffic-driver';
+import { initCarrot } from 'commercial/modules/carrot-traffic-driver';
 
 type AdSize = {
     width: number,
