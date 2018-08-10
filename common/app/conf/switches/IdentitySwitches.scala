@@ -21,7 +21,7 @@ trait IdentitySwitches {
     "If switched on, users coming from newsletters will get prompts to sign in.",
     owners = Seq(Owner.withGithub("walaura")),
     safeState = Off,
-    sellByDate = never,
+    sellByDate = new LocalDate(2018, 10, 24),
     exposeClientSide = true
   )
 
