@@ -5,11 +5,9 @@ import { getTest as getAcquisitionTest } from 'common/modules/experiments/acquis
 import { commercialPrebidSafeframe } from 'common/modules/experiments/tests/commercial-prebid-safeframe.js';
 import { commercialAdVerification } from 'common/modules/experiments/tests/commercial-ad-verification.js';
 import { FootballWeeklyTreatVsContainer } from 'common/modules/experiments/tests/football-weekly-treat-vs-container';
-import { mobileNavSignIn } from './tests/mobile-nav-sign-in';
 
 export const TESTS: $ReadOnlyArray<ABTest> = [
     getAcquisitionTest(),
-    mobileNavSignIn,
     commercialPrebidSafeframe,
     commercialAdVerification,
     FootballWeeklyTreatVsContainer,
