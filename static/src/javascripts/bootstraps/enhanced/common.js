@@ -19,6 +19,7 @@ import { init as initCookieRefresh } from 'common/modules/identity/cookierefresh
 import { initNavigation } from 'common/modules/navigation/navigation';
 import { Profile } from 'common/modules/navigation/profile';
 import { Search } from 'common/modules/navigation/search';
+import { emailSignInBanner } from 'common/modules/identity/email-sign-in-banner';
 import {
     initMembership,
     membershipBanner,
@@ -274,6 +275,7 @@ const initialiseBanner = (): void => {
         membershipBanner,
         membershipEngagementBanner,
         smartAppBanner,
+        emailSignInBanner,
     ];
     initBannerPicker(bannerList);
 };
