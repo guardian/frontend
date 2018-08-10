@@ -4,50 +4,9 @@ import { addSlot } from 'commercial/modules/dfp/add-slot';
 import { createSlots } from 'commercial/modules/dfp/create-slots';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { spaceFiller } from 'common/modules/article/space-filler';
-import { isBreakpoint } from 'lib/detect';
+import { getBreakpoint } from 'lib/detect';
 
-// const defaultRules = {
-//     bodySelector: '.js-article__body',
-//     slotSelector: ' > p',
-//     minAbove: 500,
-//     minBelow: 400,
-//     clearContentMeta: 0,
-//     selectors: {
-//         ' .element-rich-link': {
-//             minAbove: 200,
-//             minBelow: 300,
-//         },
-//         ' .element-image': {
-//             minAbove: 440,
-//             minBelow: 440,
-//         },
-//
-//         ' .player': {
-//             minAbove: 50,
-//             minBelow: 50,
-//         },
-//         ' > h1': {
-//             minAbove: 50,
-//             minBelow: 50,
-//         },
-//         ' > h2': {
-//             minAbove: 50,
-//             minBelow: 50,
-//         },
-//         ' > *:not(p):not(h2):not(blockquote)': {
-//             minAbove: 50,
-//             minBelow: 50,
-//         },
-//         ' .ad-slot--im': {
-//             minAbove: 400,
-//             minBelow: 400,
-//         },
-//     },
-//     fromBottom: true,
-// };
-
-//wide(1300) and leftCol(1140)
-const wideRules = {
+const defaultRules = {
     bodySelector: '.js-article__body',
     slotSelector: ' > p',
     minAbove: 500,
@@ -87,7 +46,7 @@ const wideRules = {
     fromBottom: true,
 };
 
-//desktop(980) and tablet(740)
+// desktop(980) and tablet(740)
 const desktopRules = {
     bodySelector: '.js-article__body',
     slotSelector: ' > p',
@@ -132,7 +91,7 @@ const desktopRules = {
     fromBottom: true,
 };
 
-//mobile(320) and above
+// mobile(320) and above
 const mobileRules = {
     bodySelector: '.js-article__body',
     slotSelector: ' > p',
@@ -190,15 +149,24 @@ const insertSlot = (paras: HTMLElement[]): Promise<void> => {
         .then(() => addSlot(slots[0], true));
 };
 
+const getRules = (): {} => {
+    switch (getBreakpoint()) {
+        case 'mobile':
+        case 'mobileMedium':
+        case 'mobileLandscape':
+        case 'phablet':
+            return mobileRules;
+        case 'tablet':
+        case 'desktop':
+            return desktopRules;
+        default:
+            return defaultRules;
+    }
+};
+
 export const initCarrot = (): Promise<void> => {
     if (commercialFeatures.carrotTrafficDriver) {
-        const rules = isBreakpoint({ max: 'tablet' })
-            ? mobileRules
-            : wideRules;
-        // const breakpointRules = isBreakpoint({ max: 'tablet' })
-        //         ? mobileRules
-        //         : defaultRules;
-        return spaceFiller.fillSpace(rules, insertSlot, {
+        return spaceFiller.fillSpace(getRules(), insertSlot, {
             waitForImages: true,
             waitForLinks: true,
             waitForInteractives: true,
