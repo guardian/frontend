@@ -13,7 +13,11 @@ import { getStyles } from 'commercial/modules/messenger/get-stylesheet';
 import type { EpicComponent } from 'common/modules/commercial/epic/epic-utils';
 import type { ABTestVariant } from 'common/modules/commercial/acquisitions-ophan';
 
-export type IframeEpicComponent = EpicComponent & { iframe: HTMLIFrameElement };
+// origin field useful for determining that messages are being sent / received from the expected iframe.
+export type IframeEpicComponent = EpicComponent & {
+    iframe: HTMLIFrameElement,
+    origin: string,
+};
 
 type FontName =
     | 'GuardianHeadline'
@@ -33,14 +37,21 @@ const EPIC_HEIGHT = 'EPIC_HEIGHT';
 // outgoing event types
 const FONTS = 'FONTS';
 
-const createEpicIframe = (url: string): IframeEpicComponent => {
+const createEpicIframe = (url: string): Error | IframeEpicComponent => {
+    let origin;
+    try {
+        origin = new URL(url).origin;
+    } catch (error) {
+        return new Error(`unable to get origin of iframe Epic - ${error}`);
+    }
+
     const container = document.createElement('div');
     const iframe = document.createElement('iframe');
     iframe.src = url;
     iframe.style.width = '100%';
     iframe.frameBorder = '0';
     container.appendChild(iframe);
-    return { html: container, iframe };
+    return { html: container, iframe, origin };
 };
 
 const setIframeHeight = (epic: IframeEpicComponent, height: number) => {
@@ -55,6 +66,10 @@ const insertEpicIframe = (
         // adding listener before inserting iframe into the DOM,
         // ensures no messages sent from the iframe will be unhandled
         window.addEventListener('message', (event: MessageEvent) => {
+            if (event.origin !== epic.origin) {
+                return;
+            }
+
             let message = null;
             try {
                 if (typeof event.data === 'string') {
@@ -91,6 +106,7 @@ const insertEpicIframe = (
                 resolve({
                     html: epic.html,
                     iframe: epic.iframe,
+                    origin: epic.origin,
                     // with some more work, variant-specific component event data could be sent in the epic initialized message
                     componentEvent,
                 });
@@ -107,7 +123,7 @@ const insertEpicIframe = (
 
 const sendFontsToIframe = (
     fonts: Array<FontName>,
-    iframe: HTMLIFrameElement
+    epic: IframeEpicComponent
 ) => {
     const selector = fonts
         .map(font => `.webfont[data-cache-name="${font}"]`)
@@ -120,7 +136,13 @@ const sendFontsToIframe = (
         fonts: fontStyle,
     });
 
-    iframe.contentWindow.postMessage(message, '*');
+    try {
+        epic.iframe.contentWindow.postMessage(message, epic.origin);
+    } catch (error) {
+        reportEpicError(
+            new Error(`unable to send fonts to Epic iframe - ${error}`)
+        );
+    }
 };
 
 const addEpicDataToUrl = (url: string): string => {
@@ -145,6 +167,11 @@ const displayIframeEpic = (
 ): Promise<IframeEpicComponent> => {
     const url = addEpicDataToUrl(iframeConfig.url);
     const iframeEpicComponent = createEpicIframe(url);
+
+    if (iframeEpicComponent instanceof Error) {
+        return Promise.reject(iframeEpicComponent);
+    }
+
     return insertEpicIframe(iframeEpicComponent, iframeConfig.abTestVariant)
         .then(epic => {
             if (iframeConfig.sendFonts) {
@@ -154,7 +181,7 @@ const displayIframeEpic = (
                         'GuardianTextEgyptianWeb',
                         'GuardianTextSansWeb',
                     ],
-                    epic.iframe
+                    epic
                 );
             }
             return epic;
