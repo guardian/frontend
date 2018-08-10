@@ -1,15 +1,17 @@
 // @flow
 
-import fastdom from 'lib/fastdom-promise';
 import { Message, hasUserAcknowledgedBanner } from 'common/modules/ui/message';
 import config from 'lib/config';
 import type { Banner } from 'common/modules/ui/bannerPicker';
 
 const messageCode: string = 'email-sign-in-banner';
 
-const signInLink = `${config.get('page.idUrl')}/login?returnUrl=https://theguardian.com/email-newsletters`;
+const signInLink = `${config.get(
+    'page.idUrl'
+)}/login?returnUrl=https://theguardian.com/email-newsletters`;
 
-const isInExperiment = ():boolean  => config.get('switches.idEmailSignInUpsell');
+const isInExperiment = (): boolean =>
+    config.get('switches.idEmailSignInUpsell');
 
 const canShow: () => Promise<boolean> = () =>
     Promise.resolve(
@@ -24,7 +26,7 @@ const show: () => void = () => {
         siteMessageComponentName: messageCode,
     });
     message.show(
-        `Enjoying this newsletter? Sign in to get more.`
+        `Enjoying this newsletter? <a href="${signInLink}">Sign in</a> to get more.`
     );
 };
 
