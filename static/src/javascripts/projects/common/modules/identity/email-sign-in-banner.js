@@ -6,9 +6,9 @@ import type { Banner } from 'common/modules/ui/bannerPicker';
 
 const messageCode: string = 'email-sign-in-banner';
 
-const signInLink = `${config.get(
-    'page.idUrl'
-)}/login?returnUrl=https://theguardian.com/email-newsletters`;
+const signInLink = `${config.get('page.idUrl')}/login?returnUrl=${config.get(
+    'page.host'
+)}/email-newsletters`;
 
 const isInExperiment = (): boolean =>
     config.get('switches.idEmailSignInUpsell');
