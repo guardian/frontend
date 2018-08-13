@@ -5,10 +5,9 @@ import { trackNonClickInteraction } from 'common/modules/analytics/google';
 import ophan from 'ophan/ng';
 import config from 'lib/config';
 import userPrefs from 'common/modules/user-prefs';
-import fastdom from 'lib/fastdom-promise';
 import type { Banner } from 'common/modules/ui/bannerPicker';
 import { campaigns } from './campaigns';
-import { make as makeTemplate, classNames, messageCode } from './template';
+import { make as makeTemplate, messageCode } from './template';
 import type { Campaign } from './campaigns';
 
 const displayEventKey: string = `${messageCode} : display`;
@@ -65,40 +64,12 @@ const show: () => void = () => {
     if (!campaign) {
         throw new Error(`missing campaign for utm (${utm})`);
     }
-    // userPrefs.remove(userPrefsReferrerKey)
+    userPrefs.remove(userPrefsReferrerKey);
     const message = new Message(messageCode, {
         cssModifierClass: messageCode,
         trackDisplay: true,
         siteMessageLinkName: messageCode,
         siteMessageComponentName: messageCode,
-        customJs: () => {
-            fastdom
-                .read(() => ({
-                    slide1El: document.querySelectorAll(
-                        `.${classNames.slide1}`
-                    ),
-                    slide2El: document.querySelectorAll(
-                        `.${classNames.slide2}`
-                    ),
-                    toSlideTwoEl: document.querySelectorAll(
-                        `.${classNames.toSlideTwo}`
-                    ),
-                }))
-                .then(({ slide1El, slide2El, toSlideTwoEl }) => {
-                    toSlideTwoEl.forEach(toSlideTwoLinkEl => {
-                        toSlideTwoLinkEl.addEventListener('click', () => {
-                            fastdom.write(() => {
-                                slide1El.forEach(_ => {
-                                    _.classList.add(classNames.slideHidden);
-                                });
-                                slide2El.forEach(_ => {
-                                    _.classList.remove(classNames.slideHidden);
-                                });
-                            });
-                        });
-                    });
-                });
-        },
     });
     message.show(
         makeTemplate({
