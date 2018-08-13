@@ -10,7 +10,7 @@ export type CmpConfig = {
 export type ConsentDataResponse = {
     gdprApplies: boolean,
     hasGlobalScope: boolean,
-    consentData: string,
+    consentData?: string,
 };
 
 export type Purpose = {
