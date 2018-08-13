@@ -1,7 +1,10 @@
 // @flow
 
 import { Message, hasUserAcknowledgedBanner } from 'common/modules/ui/message';
+import { trackNonClickInteraction } from 'common/modules/analytics/google';
+import ophan from 'ophan/ng';
 import config from 'lib/config';
+import userPrefs from 'common/modules/user-prefs';
 import fastdom from 'lib/fastdom-promise';
 import type { Banner } from 'common/modules/ui/bannerPicker';
 import { campaigns } from './campaigns';
@@ -9,27 +12,26 @@ import { make as makeTemplate, classNames, messageCode } from './template';
 import type { Campaign } from './campaigns';
 
 const displayEventKey: string = `${messageCode} : display`;
+const userPrefsReferrerKey = 'emailbanner.referrerEmail';
 
-const displayAfter = 4;
-
-const emailPrefsLink = `https://${config.get(
-    'page.host'
-)}/email-newsletters`;
+const emailPrefsLink = `https://${config.get('page.host')}/email-newsletters`;
 
 const signInLink = `${config.get('page.idUrl')}/login?returnUrl=${config.get(
     emailPrefsLink
 )}`;
 
-const getEmailCampaign = (): ?Campaign => {
+const getEmailCampaignFromUtm = (utm): ?Campaign =>
+    campaigns.find((campaign: Campaign) => campaign.utm === utm);
+
+const getEmailCampaignFromUrl = (): ?Campaign => {
     const emailCampaignInUrl = (new window.URLSearchParams(
         window.location.search
     ).getAll('utm_campaign') || [''])[0];
-    return campaigns.find(
-        (campaign: Campaign) => campaign.utm === emailCampaignInUrl
-    );
+    return getEmailCampaignFromUtm(emailCampaignInUrl);
 };
 
-const isSecondEmailPageview = (): boolean => getEmailCampaign() !== null;
+const isSecondEmailPageview = (): boolean =>
+    userPrefs.get(userPrefsReferrerKey) !== null;
 
 const isInExperiment = (): boolean =>
     config.get('switches.idEmailSignInUpsell', false);
@@ -43,16 +45,27 @@ const trackInteraction = (interaction: string): void => {
     trackNonClickInteraction(interaction);
 };
 
-const canShow: () => Promise<boolean> = () =>
-    Promise.resolve(
+const canShow: () => Promise<boolean> = () => {
+    const can = Promise.resolve(
         !hasUserAcknowledgedBanner(messageCode) &&
             isInExperiment() &&
             isSecondEmailPageview()
     );
+    const cmp = getEmailCampaignFromUrl();
+    if (cmp) {
+        userPrefs.set(userPrefsReferrerKey, cmp.utm);
+    }
+    return can;
+};
 
 const show: () => void = () => {
     trackInteraction(displayEventKey);
-    const campaign = getEmailCampaign();
+    const utm = userPrefs.get(userPrefsReferrerKey);
+    const campaign = getEmailCampaignFromUtm(utm);
+    if (!campaign) {
+        throw new Error(`missing campaign for utm (${utm})`);
+    }
+    // userPrefs.remove(userPrefsReferrerKey)
     const message = new Message(messageCode, {
         cssModifierClass: messageCode,
         trackDisplay: true,
@@ -73,7 +86,7 @@ const show: () => void = () => {
                 }))
                 .then(({ slide1El, slide2El, toSlideTwoEl }) => {
                     toSlideTwoEl.forEach(toSlideTwoLinkEl => {
-                        toSlideTwoLinkEl.addEventListener('click', ev => {
+                        toSlideTwoLinkEl.addEventListener('click', () => {
                             fastdom.write(() => {
                                 slide1El.forEach(_ => {
                                     _.classList.add(classNames.slideHidden);
@@ -89,9 +102,9 @@ const show: () => void = () => {
     });
     message.show(
         makeTemplate({
-            campaign: campaign,
+            campaign,
             signInLink,
-            emailPrefsLink
+            emailPrefsLink,
         })
     );
 };

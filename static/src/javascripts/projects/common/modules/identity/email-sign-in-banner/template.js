@@ -1,3 +1,4 @@
+// @flow
 import checkIcon from 'svgs/icon/tick.svg';
 import type { Campaign } from './campaigns';
 
@@ -5,14 +6,14 @@ export type Params = {
     signInLink: string,
     emailPrefsLink: string,
     campaign: Campaign,
-}
+};
 
 export type ClassNames = {
     slide1: string,
     slide2: string,
     slideHidden: string,
     toSlideTwo: string,
-}
+};
 
 export const classNames: ClassNames = {
     slide1: 'js-site-message--email-sign-in-banner-slide--1',
@@ -33,14 +34,14 @@ export const make = (params: Params): string =>
          </p>
          <button data-link-name="${messageCode} : onwards" class="site-message--email-sign-in-banner-cta ${
         classNames.toSlideTwo
-        }">
+    }">
             Find your new favourite newsletter
             ${checkIcon.markup}
          </button>
     </div>
     <div class="site-message--email-sign-in-banner-slide ${classNames.slide2} ${
         classNames.slideHidden
-        }">
+    }">
         <h3 class="site-message--email-sign-in-banner-title">
             Use your free Guardian account to manage your newsletters.
          </h3>
@@ -49,7 +50,7 @@ export const make = (params: Params): string =>
           </p>
         <a data-link-name="${messageCode} : to-sign-in" class="site-message--email-sign-in-banner-cta" href="${
         params.signInLink
-        }">
+    }">
         Sign in / Register
         ${checkIcon.markup}
         </a>
