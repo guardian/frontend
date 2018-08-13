@@ -6,7 +6,9 @@ import idapiclient.UserUpdateDTO
 import model.{IdentityPage, NoCache}
 import pages.IdentityHtmlPage
 import play.api.data.Form
-import play.api.data.Forms.{nonEmptyText, single}
+import play.api.data.Forms.{mapping, nonEmptyText, single, text}
+import play.api.data.validation.Constraints
+import play.api.i18n.MessagesProvider
 import play.api.libs.json.Json
 import play.api.mvc.{Action, AnyContent, Result}
 import utils.ConsentOrder.userWithOrderedConsents
@@ -14,11 +16,40 @@ import utils.ConsentsJourneyType.AnyConsentsJourney
 
 import scala.concurrent.Future
 
+object GuestPasswordForm {
+
+  def form()(implicit messagesProvider: MessagesProvider): Form[GuestPasswordFormData] = Form(
+    mapping(
+        ("password", text.verifying(Constraints.nonEmpty)),
+      ("token", text)
+    )(GuestPasswordFormData.apply)(GuestPasswordFormData.unapply)
+  )
+
+}
+case class GuestPasswordFormData(password: String, token: String)
+
+
 trait ConsentsJourney
     extends EditProfileControllerComponents
     with EditProfileFormHandling {
 
   import authenticatedActions._
+
+  def guestPasswordSet(): Action[AnyContent] = csrfCheck {
+    Action.async { implicit request =>
+      val form = GuestPasswordForm.form().bindFromRequest()
+      form.fold(errorForm => {
+        displayConsentComplete(Some(errorForm))(request)
+      }, completedForm => {
+        identityApiClient.setPasswordGuest(completedForm.password, completedForm.token).flatMap {
+          case Right(resp) if resp.statusCode == 200 =>
+            Future.successful(NoCache(SeeOther(s"/password/confirm")))
+          case _ =>
+            displayConsentComplete(Some(form.withError("error", "An unexpected error occurred, please try again later.")))(request)
+        }
+      })
+    }
+  }
 
   /** GET /consents/thank-you */
   def displayConsentsJourneyThankYou: Action[AnyContent] =
@@ -29,8 +60,8 @@ trait ConsentsJourney
     displayConsentJourneyForm(ConsentJourneyPageDefault, consentHint)
 
   /** GET /complete-consents */
-  def displayConsentComplete: Action[AnyContent] =
-    displayConsentComplete(ConsentJourneyPageDefault, None)
+  def displayConsentComplete(guestPasswordForm: Option[Form[GuestPasswordFormData]] = None): Action[AnyContent] =
+    displayConsentComplete(ConsentJourneyPageDefault, None, guestPasswordForm)
 
   /** POST /complete-consents */
   def submitRepermissionedFlag: Action[AnyContent] =
@@ -86,7 +117,8 @@ trait ConsentsJourney
 
   private def displayConsentComplete(
     page: ConsentJourneyPage,
-    consentHint: Option[String]): Action[AnyContent] =
+    consentHint: Option[String],
+    guestPasswordSetForm: Option[Form[GuestPasswordFormData]]): Action[AnyContent] =
     csrfAddToken {
       consentsRedirectAction.async { implicit request =>
 
@@ -97,14 +129,16 @@ trait ConsentsJourney
 
         consentCompleteView(
           page,
-          returnUrl
+          returnUrl,
+          guestPasswordSetForm
         )
       }
     }
 
   private def consentCompleteView(
    page: IdentityPage,
-   returnUrl : String)(implicit request: AuthRequest[AnyContent]): Future[Result] = {
+   returnUrl : String,
+   guestPasswordSetForm: Option[Form[GuestPasswordFormData]])(implicit request: AuthRequest[AnyContent]): Future[Result] = {
 
     newsletterService.subscriptions(request.user.id, idRequestParser(request).trackingData).map { emailFilledForm =>
       Ok(IdentityHtmlPage.html(
@@ -113,6 +147,7 @@ trait ConsentsJourney
           idUrlBuilder,
           returnUrl,
           emailFilledForm,
+          guestPasswordSetForm.getOrElse(GuestPasswordForm.form()),
           newsletterService.getEmailSubscriptions(emailFilledForm),
           EmailNewsletters.all)
       )(page, request, context))

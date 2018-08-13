@@ -1,16 +1,21 @@
 @import com.gu.identity.model.EmailNewsletters
 @import services.EmailPrefsData
 
+@import controllers.editprofile.GuestPasswordFormData
 @(
     idRequest: services.IdentityRequest,
     idUrlBuilder: services.IdentityUrlBuilder,
     returnUrl: String,
     emailPrefsForm: Form[EmailPrefsData],
+    setPasswordForm: Form[GuestPasswordFormData],
     emailSubscriptions: List[String],
     availableLists: EmailNewsletters,
 )(implicit request: RequestHeader, messages: play.api.i18n.Messages)
 
 @import common.LinkTo
+@import form.IdFormHelpers._
+@import views.html.fragments.form.inputField
+@import views.html.fragments.registrationFooter
 
 @buildIdentityUrl(endpoint: String) = {
 @idUrlBuilder.buildUrl(s"/$endpoint", idRequest)
@@ -41,6 +46,29 @@
                         The Guardian's newsletters include content from our website, which may be funded by outside parties. Newsletters may also display information about Guardian News and Media's other products, services or events (such as Guardian Jobs or Masterclasses), chosen charities or online advertisements.
                     </p>
                 </div>
+            </form>
+        }
+
+        @if(request.cookies.get("SC_GU_GUEST_PW_SET").isDefined) {
+            <form class="form js-register-form" novalidate action="/password/guest" role="form" method="post">
+                <fieldset class="fieldset">
+                    @views.html.helper.CSRF.formField
+                    <div>
+                        <h1 class="identity-title--small">Set a Password</h1>
+                        <div class="identity-forms-message__body">
+                            <p>Set a password to manage your email preferences at any time.</p>
+                        </div>
+                        <div class="fieldset__fields">
+                            <input type="hidden" value="@request.cookies.get("SC_GU_GUEST_PW_SET").get.value" name="token" />
+
+                            @inputField(Password(setPasswordForm("password"), ('_label, "Password"), ('class, "js-register-password"),
+                            ('tabindex, 1), ('maxlength, 72), (Symbol("data-test-id"), "password")))
+                            <li class="form-field form-field__submit">
+                                <button type="submit" class="manage-account__button manage-account__button--center" data-link-name="Set password" tabindex="4" data-test-id="set-pwd">Set password</button>
+                            </li>
+                        </div>
+                    </div>
+                </fieldset>
             </form>
         }
         <aside class="identity-forms-message__body">
