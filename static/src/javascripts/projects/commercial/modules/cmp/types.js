@@ -63,3 +63,26 @@ export type VendorConsentResponse = ConsentData & {
     purposeConsents: { [string]: number },
     vendorConsents: { [string]: number },
 };
+
+export type Range = {
+    isRange: boolean,
+    startVendorId: number,
+    endVendorId: number,
+};
+
+export type VendorCookieData = {
+    cookieVersion: number,
+    cmpId: number,
+    cmpVersion: number,
+    consentScreen: number,
+    consentLanguage: string,
+    vendorListVersion: number,
+    purposeIdBitString: string,
+    maxVendorId: number,
+    created: Date,
+    lastUpdated: Date,
+    isRange: boolean,
+    defaultConsent: boolean,
+    vendorIdBitString: string,
+    vendorRangeList: Array<Range>,
+};
