@@ -23,6 +23,7 @@ class EditProfileController(
     override val csrfAddToken: CSRFAddToken,
     override val returnUrlVerifier: ReturnUrlVerifier,
     override val newsletterService: NewsletterService,
+    override val signinService: PlaySigninService,
     override implicit val profileFormsMapping: ProfileFormsMapping,
     override implicit val context: ApplicationContext,
     val httpConfiguration: HttpConfiguration,

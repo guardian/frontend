@@ -53,7 +53,7 @@ const removeStyleFromAdIframe = (advert: Advert, style: string) => {
     });
 };
 
-const sizeCallbacks = {};
+const sizeCallbacks: { [string]: (any, any) => Promise<void> } = {};
 
 /**
  * DFP fluid ads should use existing fluid-250 styles in the top banner position
@@ -68,46 +68,47 @@ sizeCallbacks[adSizes.fluid] = (renderSlotEvent: any, advert: Advert) =>
 /**
  * Trigger sticky scrolling for MPUs in the right-hand article column
  */
-sizeCallbacks[adSizes.mpu] = (_, advert) => {
-    if (advert.node.classList.contains('js-sticky-mpu')) {
-        if (advert.node.classList.contains('ad-slot--right')) {
+sizeCallbacks[adSizes.mpu] = (_, advert) =>
+    fastdom.read(() => {
+        if (advert.node.classList.contains('js-sticky-mpu')) {
+            if (advert.node.classList.contains('ad-slot--right')) {
+                stickyMpu(advert.node);
+            }
+            if (advert.node.classList.contains('ad-slot--comments')) {
+                stickyCommentsMpu(advert.node);
+            }
+        }
+        return fastdom.write(() => advert.updateExtraSlotClasses());
+    });
+
+/**
+ * Resolve the stickyMpu.whenRendered promise
+ */
+sizeCallbacks[adSizes.halfPage] = (_, advert) =>
+    fastdom.read(() => {
+        if (advert.node.classList.contains('js-sticky-mpu')) {
             stickyMpu(advert.node);
         }
         if (advert.node.classList.contains('ad-slot--comments')) {
             stickyCommentsMpu(advert.node);
         }
-    }
-};
-
-/**
- * Resolve the stickyMpu.whenRendered promise
- */
-sizeCallbacks[adSizes.halfPage] = (_, advert) => {
-    if (advert.node.classList.contains('js-sticky-mpu')) {
-        stickyMpu(advert.node);
-    }
-    if (advert.node.classList.contains('ad-slot--comments')) {
-        stickyCommentsMpu(advert.node);
-    }
-};
-
-sizeCallbacks[adSizes.video] = (_, advert) => {
-    fastdom.write(() => {
-        advert.node.classList.add('u-h');
+        return fastdom.write(() => advert.updateExtraSlotClasses());
     });
-};
 
-sizeCallbacks[adSizes.video2] = (_, advert) => {
+sizeCallbacks[adSizes.video] = (_, advert) =>
     fastdom.write(() => {
-        advert.node.classList.add('ad-slot--outstream');
+        advert.updateExtraSlotClasses('u-h');
     });
-};
 
-sizeCallbacks[adSizes.googleCard] = (_, advert) => {
+sizeCallbacks[adSizes.video2] = (_, advert) =>
     fastdom.write(() => {
-        advert.node.classList.add('ad-slot--gc');
+        advert.updateExtraSlotClasses('ad-slot--outstream');
     });
-};
+
+sizeCallbacks[adSizes.googleCard] = (_, advert) =>
+    fastdom.write(() => {
+        advert.updateExtraSlotClasses('ad-slot--gc');
+    });
 
 /**
  * Out of page adverts - creatives that aren't directly shown on the page - need to be hidden,
@@ -124,6 +125,7 @@ const outOfPageCallback = (event, advert) => {
             }
         });
     }
+    return Promise.resolve();
 };
 sizeCallbacks[adSizes.outOfPage] = outOfPageCallback;
 sizeCallbacks[adSizes.empty] = outOfPageCallback;
@@ -131,7 +133,7 @@ sizeCallbacks[adSizes.empty] = outOfPageCallback;
 /**
  * Portrait adverts exclude the locally-most-popular widget
  */
-sizeCallbacks[adSizes.portrait] = () => {
+sizeCallbacks[adSizes.portrait] = () =>
     // remove geo most popular
     geoMostPopular.whenRendered.then(popular =>
         fastdom.write(() => {
@@ -141,7 +143,6 @@ sizeCallbacks[adSizes.portrait] = () => {
             }
         })
     );
-};
 
 /**
  * Commercial components with merch sizing get fluid-250 styling
@@ -183,7 +184,9 @@ export const renderAdvert = (
                     return Promise.resolve(
                         sizeCallbacks[size]
                             ? sizeCallbacks[size](slotRenderEndedEvent, advert)
-                            : null
+                            : fastdom.write(() => {
+                                  advert.updateExtraSlotClasses();
+                              })
                     );
                 }
                 return Promise.resolve(null);

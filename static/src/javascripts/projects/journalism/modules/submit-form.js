@@ -5,6 +5,16 @@ import fetch from 'lib/fetch';
 const isCheckbox = element => element.type === 'checkbox';
 const isNamed = element => element.name > '';
 
+const disableButton = button => {
+    button.disabled = true;
+};
+
+const enableButton = form => {
+    const button = form.querySelector('button');
+    button.disabled = false;
+    button.textContent = 'Share with the Guardian';
+};
+
 const showConfirmation = () => {
     const callout = document.querySelector('.element-campaign');
     if (callout) {
@@ -17,8 +27,19 @@ const showConfirmation = () => {
 const showError = cForm => {
     const errorField = cForm.querySelector('.error_box');
     fastdom.write(() => {
-        errorField.innerHtml =
-            '<p>Sorry, there was a problem submitting your form. Please try again later.</p>';
+        errorField.innerHTML =
+            '<p class="error">Sorry, there was a problem submitting your form. Please try again later.</p>';
+    });
+    enableButton(cForm);
+};
+
+const showWaiting = cForm => {
+    const button = cForm.querySelector('button');
+    const errorField = cForm.querySelector('.error_box');
+    fastdom.write(() => {
+        button.textContent = 'Sending...';
+        disableButton(button);
+        errorField.innerHTML = '';
     });
 };
 
@@ -44,6 +65,7 @@ export const submitForm = (e: any) => {
     e.preventDefault();
     const cForm = e.target;
     const data = formatData(cForm.elements);
+    showWaiting(cForm);
 
     return fetch('/formstack-campaign/submit', {
         method: 'post',

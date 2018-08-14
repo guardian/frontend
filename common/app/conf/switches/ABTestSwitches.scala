@@ -18,16 +18,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-mobile-nav-sign-in",
-    "This test will show a sign in link in the mobile nav",
-    owners = Seq(Owner.withGithub("walaura")),
-    safeState = Off,
-    sellByDate = new LocalDate(2019, 6, 7),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-acquisitions-epic-liveblog",
     "This places the epic below those blocks on liveblogs which have been marked for displaying the epic in Composer",
     owners = Seq(Owner.withGithub("joelochlann")),
@@ -153,16 +143,6 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("tsop14")),
     safeState = Off,
     sellByDate = new LocalDate(2018, 9, 28),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-acquisitions-banner-editorial-independence",
-    "Test the impact of banner with message focused on editorial independence",
-    owners = Seq(Owner.withGithub("tsop14")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 9, 6),
     exposeClientSide = true
   )
 

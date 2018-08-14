@@ -55,14 +55,14 @@
 
         @include mq(tablet) {
             padding-left: 0;
+            position: relative;
+            z-index: 1;
         }
 
         @include mq(desktop) {
             font-size: 50px;
             line-height: 54px;
             width: gs-span(8) - ($gs-gutter / 2);
-            z-index: 1;
-            position: relative;
         }
     }
 
