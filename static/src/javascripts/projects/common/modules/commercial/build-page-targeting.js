@@ -12,6 +12,7 @@ import {
     getAdConsentState,
     thirdPartyTrackingAdConsent,
 } from 'common/modules/commercial/ad-prefs.lib';
+import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { getParticipations } from 'common/modules/experiments/utils';
 import flatten from 'lodash/arrays/flatten';
 import once from 'lodash/functions/once';
@@ -158,7 +159,7 @@ const buildAppNexusTargeting = once(
 );
 
 const buildPageTargeting = once(
-    (adFree: ?boolean): Object => {
+    (): Object => {
         const page: Object = config.page;
         const adConsentState: ?boolean = getAdConsentState(
             thirdPartyTrackingAdConsent
@@ -167,7 +168,7 @@ const buildPageTargeting = once(
         // personalised ads targeting
         const paTargeting: Object =
             adConsentState !== null ? { pa: adConsentState ? 't' : 'f' } : {};
-        const adFreeTargeting: Object = adFree ? { af: 't' } : {};
+        const adFreeTargeting: Object = commercialFeatures.adFree ? { af: 't' } : {};
         const pageTargets: Object = Object.assign(
             {
                 sens: page.isSensitive ? 't' : 'f',

@@ -33,10 +33,13 @@ import { initCheckDispatcher } from 'commercial/modules/check-dispatcher';
 import { initCommentAdverts } from 'commercial/modules/comment-adverts';
 
 const commercialModules: Array<Array<any>> = [
+    ['cm-adFreeSlotRemove', adFreeSlotRemove],
+    ['cm-closeDisabledSlots', closeDisabledSlots],
     ['cm-prepare-cmp', initCmpService],
     ['cm-track-cmp-consent', trackCmpConsent],
-    ['cm-adFreeSlotRemove', adFreeSlotRemove],
     ['cm-thirdPartyTags', initThirdPartyTags],
+    ['cm-prepare-sonobi-tag', prepareSonobiTag, true],
+    ['cm-prepare-googletag', prepareGoogletag, true],
     ['cm-checkDispatcher', initCheckDispatcher],
     ['cm-lotame-cmp', initLotameCmp],
 ];
@@ -44,10 +47,7 @@ const commercialModules: Array<Array<any>> = [
 if (!commercialFeatures.adFree) {
     commercialModules.push(
         ['cm-prepare-adverification', prepareAdVerification, true],
-        ['cm-prepare-googletag', prepareGoogletag, true],
-        ['cm-closeDisabledSlots', closeDisabledSlots],
         ['cm-highMerch', initHighMerch],
-        ['cm-prepare-sonobi-tag', prepareSonobiTag, true],
         ['cm-articleAsideAdverts', initArticleAsideAdverts, true],
         ['cm-articleBodyAdverts', initArticleBodyAdverts, true],
         ['cm-liveblogAdverts', initLiveblogAdverts, true],
