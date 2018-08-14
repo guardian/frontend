@@ -6,31 +6,22 @@ import ophan from 'ophan/ng';
 import config from 'lib/config';
 import userPrefs from 'common/modules/user-prefs';
 import type { Banner } from 'common/modules/ui/bannerPicker';
-import { campaigns } from './campaigns';
 import { make as makeTemplate, messageCode } from './template';
-import type { Campaign } from './campaigns';
+import { getEmailCampaignFromUrl, getEmailCampaignFromUtm } from './campaigns';
 
 const displayEventKey: string = `${messageCode} : display`;
-const userPrefsReferrerKey = 'emailbanner.referrerEmail';
+const userPrefsStoreKey = 'emailbanner.referrerEmail';
 
 const emailPrefsLink = `https://${config.get('page.host')}/email-newsletters`;
 
-const signInLink = `${config.get('page.idUrl')}/login?returnUrl=${config.get(
+const signInLink = `${config.get('page.idUrl')}/signin?returnUrl=${config.get(
     emailPrefsLink
 )}`;
 
-const getEmailCampaignFromUtm = (utm): ?Campaign =>
-    campaigns.find((campaign: Campaign) => campaign.utm === utm);
-
-const getEmailCampaignFromUrl = (): ?Campaign => {
-    const emailCampaignInUrl = (new window.URLSearchParams(
-        window.location.search
-    ).getAll('utm_campaign') || [''])[0];
-    return getEmailCampaignFromUtm(emailCampaignInUrl);
+const isSecondEmailPageview = (): boolean => {
+    const prefs = userPrefs.get(userPrefsStoreKey) || {};
+    return prefs.pv && prefs.pv >= 2;
 };
-
-const isSecondEmailPageview = (): boolean =>
-    userPrefs.get(userPrefsReferrerKey) !== null;
 
 const isInExperiment = (): boolean =>
     config.get('switches.idEmailSignInUpsell', false);
@@ -38,7 +29,6 @@ const isInExperiment = (): boolean =>
 const trackInteraction = (interaction: string): void => {
     ophan.record({
         component: 'first-pv-consent',
-        action: interaction,
         value: interaction,
     });
     trackNonClickInteraction(interaction);
@@ -50,21 +40,44 @@ const canShow: () => Promise<boolean> = () => {
             isInExperiment() &&
             isSecondEmailPageview()
     );
-    const cmp = getEmailCampaignFromUrl();
-    if (cmp) {
-        userPrefs.set(userPrefsReferrerKey, cmp.utm);
-    }
     return can;
+};
+
+const sideEffects: () => void = () => {
+    const cmp = getEmailCampaignFromUrl();
+    const existing = userPrefs.get(userPrefsStoreKey);
+    if (cmp && !existing) {
+        userPrefs.set(userPrefsStoreKey, {
+            utm: cmp.utm,
+            pv: 1,
+        });
+    } else if (existing && cmp && existing.utm !== cmp.utm) {
+        userPrefs.remove(userPrefsStoreKey);
+        userPrefs.set(userPrefsStoreKey, {
+            utm: cmp.utm,
+            pv: 1,
+        });
+    } else if (existing) {
+        userPrefs.set(userPrefsStoreKey, {
+            ...existing,
+            pv: existing.pv + 1,
+        });
+    }
 };
 
 const show: () => void = () => {
     trackInteraction(displayEventKey);
-    const utm = userPrefs.get(userPrefsReferrerKey);
-    const campaign = getEmailCampaignFromUtm(utm);
-    if (!campaign) {
-        throw new Error(`missing campaign for utm (${utm})`);
+    const store = userPrefs.get(userPrefsStoreKey) || {};
+    if (!store || !store.utm) {
+        throw new Error(`email-sign-in : wrong store format`);
     }
-    userPrefs.remove(userPrefsReferrerKey);
+    const campaign = getEmailCampaignFromUtm(store.utm);
+    if (!campaign) {
+        throw new Error(
+            `email-sign-in missing campaign for utm (${store.utm})`
+        );
+    }
+    userPrefs.remove(userPrefsStoreKey);
     const message = new Message(messageCode, {
         cssModifierClass: messageCode,
         trackDisplay: true,
@@ -79,6 +92,8 @@ const show: () => void = () => {
         })
     );
 };
+
+sideEffects();
 
 export const emailSignInBanner: Banner = {
     id: messageCode,
