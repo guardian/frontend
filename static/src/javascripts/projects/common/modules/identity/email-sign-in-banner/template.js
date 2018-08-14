@@ -15,7 +15,7 @@ export const make = (params: Params): string =>
             Enjoying ${params.campaign.name}?
          </h3>
          <p class="site-message--email-sign-in-banner-text">
-            ${params.campaign.upsell}
+            Upsell copy
          </p>
          <a data-link-name="${messageCode} : to-sign-in" data-link-name="${messageCode} : success" class="site-message--email-sign-in-banner-cta">
             Continue
