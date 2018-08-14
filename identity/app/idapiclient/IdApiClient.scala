@@ -163,7 +163,7 @@ class IdApiClient(
 
   def setPasswordGuest(password: String, token: String): Future[Response[CookiesResponse]] = {
     val body: JObject = "password" -> password
-    put("guest/password", None, None, Some(compactRender(body)), List("X-Guest-Registration-Token" -> token, "Content-Type" -> "application/json")).map(extract(jsonField("cookies")))
+    put("guest/password", None, None, Some(compactRender(body)), List("X-Guest-Registration-Token" -> token, "Content-Type" -> "application/json"), List("validate-email" -> "0")).map(extract(jsonField("cookies")))
   }
 
   def resendEmailValidationEmail(auth: Auth, trackingParameters: TrackingData, returnUrlOpt: Option[String]): Future[Response[Unit]] = {
@@ -191,8 +191,8 @@ class IdApiClient(
     ) map extract[AccountDeletionResult](identity)
   }
 
-  def put(apiPath: String, auth: Option[Auth] = None, trackingParameters: Option[TrackingData] = None, body: Option[String] = None, extraHeaders: Parameters): Future[Response[HttpResponse]] =
-    httpClient.PUT(apiUrl(apiPath), body, buildParams(auth, trackingParameters), buildHeaders(auth) ++ extraHeaders)
+  def put(apiPath: String, auth: Option[Auth] = None, trackingParameters: Option[TrackingData] = None, body: Option[String] = None, extraHeaders: Parameters, urlParameters: Parameters): Future[Response[HttpResponse]] =
+    httpClient.PUT(apiUrl(apiPath), body, buildParams(auth, trackingParameters) ++ urlParameters, buildHeaders(auth) ++ extraHeaders)
 
   def post(apiPath: String,
            auth: Option[Auth] = None,
