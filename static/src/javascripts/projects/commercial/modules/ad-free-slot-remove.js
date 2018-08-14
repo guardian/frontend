@@ -23,13 +23,11 @@ const shouldRemoveFaciaContainerWhenAdFree = faciaContainer => {
 
 const adFreeSlotRemove = once(
     (): Promise<void> => {
-        if(!commercialFeatures.adFree) {
+        if (!commercialFeatures.adFree) {
             return Promise.resolve();
         }
 
-        const adSlotsToRemove: Array<Element> = qwery(
-            dfpEnv.adSlotSelector
-        );
+        const adSlotsToRemove: Array<Element> = qwery(dfpEnv.adSlotSelector);
 
         const mpusToRemove: Array<Element> = qwery(mpuCandidateSelector).filter(
             shouldRemoveMpuWhenAdFree

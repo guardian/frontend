@@ -168,7 +168,9 @@ const buildPageTargeting = once(
         // personalised ads targeting
         const paTargeting: Object =
             adConsentState !== null ? { pa: adConsentState ? 't' : 'f' } : {};
-        const adFreeTargeting: Object = commercialFeatures.adFree ? { af: 't' } : {};
+        const adFreeTargeting: Object = commercialFeatures.adFree
+            ? { af: 't' }
+            : {};
         const pageTargets: Object = Object.assign(
             {
                 sens: page.isSensitive ? 't' : 'f',
