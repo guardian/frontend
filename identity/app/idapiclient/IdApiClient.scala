@@ -161,9 +161,9 @@ class IdApiClient(
   def validateEmail(token: String, trackingParameters: TrackingData): Future[Response[Unit]] =
     post(urlJoin("user","validate-email", token), trackingParameters = Some(trackingParameters)) map extractUnit
 
-  def setPasswordGuest(password: String, token: String): Future[Response[HttpResponse]] = {
+  def setPasswordGuest(password: String, token: String): Future[Response[CookiesResponse]] = {
     val body: JObject = "password" -> password
-    put("guest/password", None, None, Some(compactRender(body)), List("X-Guest-Registration-Token" -> token, "Content-Type" -> "application/json"))
+    put("guest/password", None, None, Some(compactRender(body)), List("X-Guest-Registration-Token" -> token, "Content-Type" -> "application/json")).map(extract(jsonField("cookies")))
   }
 
   def resendEmailValidationEmail(auth: Auth, trackingParameters: TrackingData, returnUrlOpt: Option[String]): Future[Response[Unit]] = {

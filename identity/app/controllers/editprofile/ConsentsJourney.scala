@@ -10,7 +10,8 @@ import play.api.data.Forms.{mapping, nonEmptyText, single, text}
 import play.api.data.validation.Constraints
 import play.api.i18n.MessagesProvider
 import play.api.libs.json.Json
-import play.api.mvc.{Action, AnyContent, Result}
+import play.api.mvc.{Action, AnyContent, DiscardingCookie, Result}
+import services.PlaySigninService
 import utils.ConsentOrder.userWithOrderedConsents
 import utils.ConsentsJourneyType.AnyConsentsJourney
 
@@ -35,15 +36,18 @@ trait ConsentsJourney
 
   import authenticatedActions._
 
+  def signinService: PlaySigninService
+
   def guestPasswordSet(): Action[AnyContent] = csrfCheck {
     Action.async { implicit request =>
       val form = GuestPasswordForm.form().bindFromRequest()
       form.fold(errorForm => {
         displayConsentComplete(Some(errorForm))(request)
       }, completedForm => {
-        identityApiClient.setPasswordGuest(completedForm.password, completedForm.token).flatMap {
-          case Right(resp) if resp.statusCode == 200 =>
-            Future.successful(NoCache(SeeOther(s"/password/confirm")))
+        val authResponse = identityApiClient.setPasswordGuest(completedForm.password, completedForm.token)
+        signinService.getCookies(authResponse, rememberMe = false).flatMap {
+          case Right(cookies) =>
+            Future.successful(NoCache(SeeOther(returnUrlVerifier.defaultReturnUrl).withCookies(cookies: _*).discardingCookies(DiscardingCookie("SC_GU_GUEST_PW_SET"))))
           case _ =>
             displayConsentComplete(Some(form.withError("error", "An unexpected error occurred, please try again later.")))(request)
         }
