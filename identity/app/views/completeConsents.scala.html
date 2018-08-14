@@ -54,17 +54,17 @@
                 <fieldset class="fieldset">
                     @views.html.helper.CSRF.formField
                     <div>
-                        <h1 class="identity-title--small">Set a Password</h1>
+                        <h1 class="identity-title--small">Want even more from the Guardian? Create a free account</h1>
                         <div class="identity-forms-message__body">
-                            <p>Set a password to manage your email preferences at any time.</p>
+                            <p>Create your account by setting a password, and manage your email preferences at any time.</p>
                         </div>
                         <div class="fieldset__fields">
                             <input type="hidden" value="@request.cookies.get("SC_GU_GUEST_PW_SET").get.value" name="token" />
 
                             @inputField(Password(setPasswordForm("password"), ('_label, "Password"), ('class, "js-register-password"),
-                            ('tabindex, 1), ('maxlength, 72), (Symbol("data-test-id"), "password")))
+                            ('tabindex, 1), ('maxlength, 72), (Symbol("data-test-id"), "password"), (Symbol("data-link-name"), "set-password")))
                             <li class="form-field form-field__submit">
-                                <button type="submit" class="manage-account__button manage-account__button--center" data-link-name="set-password" tabindex="4">Set password</button>
+                                <button type="submit" class="manage-account__button manage-account__button--center" tabindex="4">Set password</button>
                             </li>
                         </div>
                     </div>
