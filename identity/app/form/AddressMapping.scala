@@ -45,12 +45,12 @@ case class AddressFormData(
 
   private val ZipcodePattern = """^\d{5}(?:[-\s]\d{4})?$""".r
   private lazy val isValidUsZipcode = {
-      postcode.isEmpty || ZipcodePattern.findFirstIn(postcode).isDefined
+      postcode.isEmpty || ZipcodePattern.findFirstIn(postcode.trim).isDefined
   }
 
-   private val PostcodePattern = """^(GIR 0AA)|((([A-Z-[QVX]][0-9][0-9]?)|(([A-Z-[QVX]][A-Z-[IJZ]][0-9][0-9]?)|(([A-Z-[QVX]][0-9][A-HJKSTUW])|([A-Z-[QVX]][A-Z-[IJZ]][0-9][ABEHMNPRVWXY])))) [0-9][A-Z-[CIKMOV]]{2})$""".r
+  private val PostcodePattern = """^(GIR 0AA)|((([A-Z-[QVX]][0-9][0-9]?)|(([A-Z-[QVX]][A-Z-[IJZ]][0-9][0-9]?)|(([A-Z-[QVX]][0-9][A-HJKSTUW])|([A-Z-[QVX]][A-Z-[IJZ]][0-9][ABEHMNPRVWXY])))) [0-9][A-Z-[CIKMOV]]{2})$""".r
 
   private lazy val isValidUkPostcode = {
-      postcode.isEmpty || PostcodePattern.findFirstIn(postcode.toUpperCase).isDefined
+      postcode.isEmpty || PostcodePattern.findFirstIn(postcode.trim.toUpperCase).isDefined
   }
 }
