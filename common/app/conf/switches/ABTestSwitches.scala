@@ -138,16 +138,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-acquisitions-epic-thailand-cave",
-    "Always show the epic on thailand cave stories (unlimited)",
-    owners = Seq(Owner.withGithub("tsop14")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 9, 28),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-acquisitions-epic-optimize-a-a-test",
     "Bootstrap the AB testing framework to display the Epic using Google Optimize",
     owners = Seq(Owner.withGithub("Mullefa")),
