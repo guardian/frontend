@@ -10,18 +10,12 @@ import {
 } from 'common/modules/commercial/epic/epic-utils';
 
 import type { EpicComponent } from 'common/modules/commercial/epic/epic-utils';
-import type { ABTestVariant } from 'common/modules/commercial/acquisitions-ophan';
 
 // origin field useful for determining that messages are being sent / received from the expected iframe.
 export type IframeEpicComponent = EpicComponent & {
     iframe: HTMLIFrameElement,
     origin: string,
 };
-
-type FontName =
-    | 'GuardianHeadline'
-    | 'GuardianTextEgyptianWeb'
-    | 'GuardianTextSansWeb';
 
 // channel for messages between Optimize Epic and Guardian frontend
 const OPTIMIZE_EPIC_CHANNEL = 'OPTIMIZE_EPIC';
@@ -32,9 +26,6 @@ const OPTIMIZE_EPIC_CHANNEL = 'OPTIMIZE_EPIC';
 // incoming event types
 const EPIC_INITIALIZED = 'EPIC_INITIALIZED';
 const EPIC_HEIGHT = 'EPIC_HEIGHT';
-
-// outgoing event types
-const FONTS = 'FONTS';
 
 const createEpicIframe = (url: string): Error | IframeEpicComponent => {
     let origin;
@@ -125,13 +116,15 @@ const displayIframeEpic = (url: string): Promise<IframeEpicComponent> => {
 
     setupListener(iframeEpicComponent);
 
-    return insertAtSubmeta(iframeEpicComponent).catch(error => {
-        const iframeError = new Error(
-            `unable to display iframe epic with url ${url} - ${error}`
-        );
-        reportEpicError(iframeError);
-        return Promise.reject(iframeError);
-    });
+    return insertAtSubmeta(iframeEpicComponent)
+        .then(() => iframeEpicComponent)
+        .catch(error => {
+            const iframeError = new Error(
+                `unable to display iframe epic with url ${url} - ${error}`
+            );
+            reportEpicError(iframeError);
+            return Promise.reject(iframeError);
+        });
 };
 
 export { displayIframeEpic };
