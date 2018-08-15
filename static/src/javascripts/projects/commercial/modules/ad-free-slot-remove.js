@@ -8,10 +8,7 @@ import { commercialFeatures } from 'common/modules/commercial/commercial-feature
 const mpuCandidateClass: string = 'fc-slice__item--mpu-candidate';
 const mpuCandidateSelector: string = `.${mpuCandidateClass}`;
 
-const shouldRemoveAdSlotWhenAdFree = () => commercialFeatures.adFree;
-
 const shouldRemoveMpuWhenAdFree = mpuCandidate =>
-    commercialFeatures.adFree &&
     mpuCandidate.className.toLowerCase().includes(mpuCandidateClass);
 
 const shouldRemoveFaciaContainerWhenAdFree = faciaContainer => {
@@ -19,7 +16,6 @@ const shouldRemoveFaciaContainerWhenAdFree = faciaContainer => {
         'data-component'
     );
     return (
-        commercialFeatures.adFree &&
         dataComponentAttribute &&
         dataComponentAttribute.includes('commercial-container')
     );
@@ -27,9 +23,11 @@ const shouldRemoveFaciaContainerWhenAdFree = faciaContainer => {
 
 const adFreeSlotRemove = once(
     (): Promise<void> => {
-        const adSlotsToRemove: Array<Element> = qwery(
-            dfpEnv.adSlotSelector
-        ).filter(shouldRemoveAdSlotWhenAdFree);
+        if (!commercialFeatures.adFree) {
+            return Promise.resolve();
+        }
+
+        const adSlotsToRemove: Array<Element> = qwery(dfpEnv.adSlotSelector);
 
         const mpusToRemove: Array<Element> = qwery(mpuCandidateSelector).filter(
             shouldRemoveMpuWhenAdFree

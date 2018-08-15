@@ -148,7 +148,7 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
     val htmResponseInlined = if (InlineEmailStyles.isSwitchedOn) InlineStyles(htmlResponse) else htmlResponse
 
     if (request.isEmailJson) {
-      val emailJson = JsObject(Map("html" -> JsString(htmResponseInlined.toString)))
+      val emailJson = JsObject(Map("body" -> JsString(htmResponseInlined.toString)))
       RevalidatableResult.Ok(emailJson)
     } else {
       RevalidatableResult.Ok(htmResponseInlined)

@@ -6,10 +6,13 @@ import scala.concurrent.{ExecutionContext, Future}
 import idapiclient.responses.{AccountDeletionResult, CookiesResponse, Error, HttpResponse}
 import conf.IdConfig
 import idapiclient.parser.IdApiJsonBodyParser
-import net.liftweb.json.JsonAST.JValue
+import net.liftweb.json.JsonDSL._
+import net.liftweb.json.compactRender
+import net.liftweb.json.JsonAST.{JObject, JString, JValue}
 import net.liftweb.json.Serialization.write
 import utils.SafeLogging
 import idapiclient.requests.{DeletionBody, PasswordUpdate, TokenPassword}
+import org.json4s.JsonAST.JField
 import org.slf4j.LoggerFactory
 import play.api.libs.ws.WSClient
 
@@ -158,6 +161,11 @@ class IdApiClient(
   def validateEmail(token: String, trackingParameters: TrackingData): Future[Response[Unit]] =
     post(urlJoin("user","validate-email", token), trackingParameters = Some(trackingParameters)) map extractUnit
 
+  def setPasswordGuest(password: String, token: String): Future[Response[CookiesResponse]] = {
+    val body: JObject = "password" -> password
+    put("guest/password", None, None, Some(compactRender(body)), List("X-Guest-Registration-Token" -> token, "Content-Type" -> "application/json"), List("validate-email" -> "0")).map(extract(jsonField("cookies")))
+  }
+
   def resendEmailValidationEmail(auth: Auth, trackingParameters: TrackingData, returnUrlOpt: Option[String]): Future[Response[Unit]] = {
     val extraParams = returnUrlOpt.map(url => List("returnUrl" -> url))
     httpClient.POST(apiUrl("user/send-validation-email"), None, buildParams(Some(auth), Some(trackingParameters), extraParams), buildHeaders(Some(auth))) map extractUnit
@@ -182,6 +190,9 @@ class IdApiClient(
         headers = buildHeaders(Some(auth), extra = Seq(("x-api-key", conf.accountDeletionApiKey)))
     ) map extract[AccountDeletionResult](identity)
   }
+
+  def put(apiPath: String, auth: Option[Auth] = None, trackingParameters: Option[TrackingData] = None, body: Option[String] = None, extraHeaders: Parameters, urlParameters: Parameters): Future[Response[HttpResponse]] =
+    httpClient.PUT(apiUrl(apiPath), body, buildParams(auth, trackingParameters) ++ urlParameters, buildHeaders(auth) ++ extraHeaders)
 
   def post(apiPath: String,
            auth: Option[Auth] = None,
@@ -238,6 +249,10 @@ class HttpClient(
   def DELETE(uri: String, body: Option[String], urlParameters: Parameters = Nil, headers: Parameters): Future[Response[HttpResponse]] = {
     makeRequest("DELETE", uri, body, urlParameters, headers)
   }
+
+  def PUT(uri: String, body: Option[String], urlParameters: Parameters = Nil, headers: Parameters): Future[Response[HttpResponse]] =
+    makeRequest("PUT", uri, body, urlParameters, headers)
+
 
   def makeRequest(
       method: String,

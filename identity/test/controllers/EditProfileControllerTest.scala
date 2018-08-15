@@ -57,7 +57,7 @@ import scala.concurrent.Future
 
     val redirectDecisionService = new ProfileRedirectService(newsletterService, idRequestParser, controllerComponent)
     val authenticatedActions = new AuthenticatedActions(authService, api, mock[IdentityUrlBuilder], controllerComponent, newsletterService, idRequestParser, redirectDecisionService)
-
+    val signinService = mock[PlaySigninService]
     val profileFormsMapping = ProfileFormsMapping(
       new AccountDetailsMapping,
       new PrivacyMapping,
@@ -84,6 +84,7 @@ import scala.concurrent.Future
       csrfAddToken,
       returnUrlVerifier,
       newsletterService,
+      signinService,
       profileFormsMapping,
       testApplicationContext,
       httpConfiguration,
@@ -176,7 +177,7 @@ import scala.concurrent.Future
         val address2 = "London"
         val address3 = ""
         val address4 = ""
-        val postcode = "N1 9GU"
+        val postcode = "N1 9GU "
         val country = Countries.UK
         val billingAddress1 = "Buckingham Palace"
         val billingAddress2 = "London"

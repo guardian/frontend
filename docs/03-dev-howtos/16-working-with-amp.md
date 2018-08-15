@@ -30,9 +30,13 @@ In order for content to be discoverable (via search) and served in Google's cach
 * Validate in your browser - Add `#development=1` to your URL, and check the developer console for messages
 * [Google validation UI](https://validator.ampproject.org/)
 * [Scala validation tests (example)](https://github.com/guardian/frontend/blob/master/article/test/ArticleAmpValidityTest.scala)
-    * Run these like any other scala test using `sbt` - e.g. `test-only *ArticleTestSuite`
+    * Run these like any other scala test using `sbt` - e.g. `testOnly *ArticleTestSuite`
     * If adding a new endpoint to the tests, make sure you run the test and commit the auto-generated test fixture - you should find a new file generated with a hash filename.
-    * We do not use a live version of the validator, so if you find a discrepancy between the results of these tests and another validation method, this may be the reason.  All you need to do to update the validator itself is delete the file under `data/amp-validator`, re-run the tests and commit the new validator fixture.
+    * We do not use a live version of the validator, so if you find a discrepancy between the results of these 
+    tests and another validation method, this may be the reason.  All you need to do to update the validator 
+    itself is ~delete the file under `data/amp-validator`, re-run the tests~ download the [JavaScript from the 
+    CDN](https://cdn.ampproject.org/v0/validator.js), copy-paste it into the file under `data/amp-validator` and
+    commit the new validator fixture (see [#20124](https://github.com/guardian/frontend/pull/20124))
 * [Guardian amp validation tool](https://github.com/guardian/frontend/tree/master/tools/amp-validation)
     * 3 ways this tool can be used:
         1. Validate your local changes on a hardcoded set of endpoints - `make validate-amp`
