@@ -32,7 +32,11 @@ const createEpicIframe = (url: string): Error | IframeEpicComponent => {
     try {
         origin = new URL(url).origin;
     } catch (error) {
-        return new Error(`unable to get origin of iframe Epic - ${error}`);
+        const iframeError = new Error(
+            `unable to get origin of iframe Epic - ${error}`
+        );
+        reportEpicError(iframeError);
+        return iframeError;
     }
 
     const container = document.createElement('div');
