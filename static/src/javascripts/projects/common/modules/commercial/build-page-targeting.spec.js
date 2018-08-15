@@ -1,6 +1,7 @@
 // @flow
 import { local } from 'lib/storage';
 
+import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { buildPageTargeting } from 'common/modules/commercial/build-page-targeting';
 import config from 'lib/config';
 import { getCookie as getCookie_ } from 'lib/cookies';
@@ -57,6 +58,10 @@ jest.mock('common/modules/commercial/ad-prefs.lib', () => ({
     getAdConsentState: jest.fn(),
 }));
 
+jest.mock('common/modules/commercial/commercial-features', () => ({
+    commercialFeatures() {},
+}));
+
 describe('Build Page Targeting', () => {
     beforeEach(() => {
         config.page = {
@@ -93,6 +98,8 @@ describe('Build Page Targeting', () => {
         config.ophan = {
             pageViewId: 'presetOphanPageViewId',
         };
+
+        commercialFeatures.adFree = false;
 
         // Reset mocking to default values.
         getAdConsentState.mockReturnValue(null);
@@ -193,15 +200,7 @@ describe('Build Page Targeting', () => {
         expect(buildPageTargeting().br).toEqual('p');
     });
 
-    it('should set the ad-free param to t when enabled', () => {
-        expect(buildPageTargeting(true).af).toBe('t');
-    });
-
-    it('should not contain an ad-free param when disabled', () => {
-        expect(buildPageTargeting(false).af).toBeUndefined();
-    });
-
-    it('should not contain an ad-free param when not specified', () => {
+    it('should not contain an ad-free targeting value', () => {
         expect(buildPageTargeting().af).toBeUndefined();
     });
 
@@ -220,6 +219,13 @@ describe('Build Page Targeting', () => {
             pv: '123456',
             fr: '0',
             cc: 'US',
+        });
+    });
+
+    describe('Build Page Targeting (ad-free)', () => {
+        it('should set the ad-free param to t when enabled', () => {
+            commercialFeatures.adFree = true;
+            expect(buildPageTargeting().af).toBe('t');
         });
     });
 

@@ -149,10 +149,10 @@
 
 .content__labels {
     box-sizing: border-box;
-    padding: ($gs-baseline / 2 + $gs-baseline / 4) 0 0;
     position: relative;
     z-index: 1; // bring-to-front fix to make it clickable
     overflow: hidden;
+    padding-top: $gs-baseline / 4;
 
     @include mq($until: tablet) {
         order: 1;
@@ -162,10 +162,10 @@
         .content__head--column & {
             order: 0;
         }
+    }
 
-        & > .content__section-label  {
-            display: none;
-        }
+    @include mq(leftCol) {
+        padding-top: $gs-baseline / 2 + $gs-baseline / 4;
     }
 }
 

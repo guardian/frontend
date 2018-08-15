@@ -31,14 +31,12 @@
         }
     }
     > ol,
-    > blockquote > ul,
-    > ul {
+    > blockquote > ul {
         margin-top: .8em;
     }
     > li, // sometimes HTML is malformed on purpose by editors
     > ol,
-    > blockquote ul,
-    > ul {
+    > blockquote ul {
         list-style: none;
     }
     > ol {
@@ -154,7 +152,14 @@
     list-style: none;
 
     > li {
-        @include faux-bullet-point($right-space: 4px);
+        @include faux-bullet-point($right-space: 8px);
+        margin-bottom: $gs-baseline / 2;
+        padding-left: $gs-gutter;
+        overflow: hidden;
+
+        &:before {
+            margin-left: -$gs-gutter;
+        }
 
         .paid-content & {
             @include faux-bullet-point($brightness-60, $right-space: 4px);
@@ -165,7 +170,6 @@
         }
     }
 }
-
 
 /* Captions
    ========================================================================== */

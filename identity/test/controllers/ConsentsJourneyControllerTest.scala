@@ -55,6 +55,7 @@ import scala.concurrent.Future
     val redirectDecisionService = new ProfileRedirectService(newsletterService, idRequestParser, controllerComponent)
     val authenticatedActions = new AuthenticatedActions(authService, api, mock[IdentityUrlBuilder], controllerComponent, newsletterService, idRequestParser, redirectDecisionService)
 
+    val signinService = mock[PlaySigninService]
     val profileFormsMapping = ProfileFormsMapping(
       new AccountDetailsMapping,
       new PrivacyMapping,
@@ -83,6 +84,7 @@ import scala.concurrent.Future
       csrfAddToken,
       returnUrlVerifier,
       newsletterService,
+      signinService,
       profileFormsMapping,
       testApplicationContext,
       httpConfiguration,
