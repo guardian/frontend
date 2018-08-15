@@ -111,7 +111,9 @@ class PrebidService {
                     {
                         key: 'hb_buyer_id',
                         val(bidResponse) {
-                            return bidResponse.appnexus.buyerMemberId;
+                            return bidResponse.appnexus
+                                ? bidResponse.appnexus.buyerMemberId
+                                : '';
                         },
                     },
                 ],
