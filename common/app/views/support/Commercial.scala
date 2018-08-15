@@ -54,6 +54,11 @@ object Commercial {
     }
   }
 
+  def getBlockthroughStyleForSlot(slotName: String): Option[String] = slotName match {
+      case "top-above-nav" => Some("display:table;margin:0 auto;padding:1.125rem 0;")
+      case _ => None
+  }
+
   def isPaidContent(page: Page): Boolean = page.metadata.commercial.exists(_.isPaidContent)
 
   def isSponsoredContent(page: Page)(implicit request: RequestHeader): Boolean =

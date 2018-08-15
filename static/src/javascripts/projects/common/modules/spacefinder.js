@@ -432,9 +432,17 @@ const findSpace = (
 
     return getReady(rules, options || defaultOptions)
         .then(() => getCandidates(rules, exclusions))
+        .then(candidates => {
+            console.log(`Found ${candidates.length} candidates`)
+            return candidates;
+        })
         .then(candidates => getMeasurements(rules, candidates))
         .then(measurements => enforceRules(measurements, rules, exclusions))
-        .then(winners => returnCandidates(rules, winners));
+        .then(winners => {
+            const candidates = returnCandidates(rules, winners);
+            console.log(`Winning candidates being returned: ${winners.length}`)
+            candidates.map(element => console.log(element));
+            return candidates});
 };
 
 export const _ = {

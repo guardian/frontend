@@ -24,6 +24,17 @@ const adSlotClassSelectorSizes = {
     minBelow: 500,
 };
 
+const callBTClearThrough = (): void => {
+    try {
+        // clearThrough needs to be called any time a BT span is added to the DOM
+        if ('BT' in window && 'clearThrough' in window.BT) {
+            window.BT.clearThrough();
+        }
+    } catch (e) {
+        console.warn('Error calling clearThrough');
+    }
+}
+
 const insertAdAtPara = (
     para: Node,
     name: string,
@@ -31,24 +42,34 @@ const insertAdAtPara = (
     classes: ?string,
     sizes: ?Sizes
 ): Promise<void> => {
+    console.log(`Calling createSlots for type ${type}`);
     const ads = createSlots(type, {
         name,
         classes,
         sizes,
     });
 
+    console.log(`insertAdAtPara ads length: ${ads.length}`);
+
     return fastdom
-        .write(() =>
+        .write(() => {
+                console.log(`Amount of ads to insert: ${ads.length}`);
             ads.forEach(ad => {
                 if (para.parentNode) {
+                        console.log(`Inserting ${ad.toString()} at ${para.toString()}`);
                     para.parentNode.insertBefore(ad, para);
+                    callBTClearThrough();
                 }
-            })
+                });
+            }
         )
         .then(() => {
             const shouldForceDisplay = ['im', 'carrot'].includes(name);
             // Only add the first ad (the DFP one) to GTP
             addSlot(ads[0], shouldForceDisplay);
+        })
+        .catch((error) => {
+            console.log(`Error: ${error.toString()}`);
         });
 };
 
@@ -111,6 +132,11 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<number> => {
         filter: filterNearbyCandidates(adSizes.halfPage.height),
     };
 
+    if (isInline1) {
+        console.log('Default rules');
+    } else {
+        console.log('Relaxed rules');
+    }
     const rules = isInline1 ? defaultRules : relaxedRules;
 
     const insertAds = (paras: HTMLElement[]): Promise<number> => {
@@ -127,6 +153,13 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<number> => {
                     isInline1 ? null : { desktop: [adSizes.halfPage] }
                 );
             });
+
+        if (isInline1) {
+            console.log('Default rules');
+        } else {
+            console.log('Relaxed rules');
+        }
+        console.log(`Oh ffs Amount of slots in insertAds: ${slots.length}`);
 
         return Promise.all(slots).then(() => slots.length);
     };
@@ -180,6 +213,7 @@ const addMobileInlineAds = (): Promise<number> => {
 };
 
 const addInlineAds = (): Promise<number> => {
+    console.log(`Calling addInlineAds`);
     const isMobile = isBreakpoint({
         max: 'phablet',
     });
@@ -238,16 +272,10 @@ export const init = (start: () => void, stop: () => void): Promise<any> => {
         return Promise.resolve();
     }
 
-    const im = config.page.hasInlineMerchandise
-        ? attemptToAddInlineMerchAd()
-        : Promise.resolve(false);
-    im.then(
-        (inlineMerchAdded: boolean) =>
-            inlineMerchAdded ? trackAdRender('dfp-ad--im') : Promise.resolve()
-    )
-        .then(initCarrot)
-        .then(addInlineAds)
+    const x = addInlineAds()
         .then(stop);
 
-    return im;
+    x.catch(error => console.log(`INIT error: ${error.toString()}`));
+
+    return x;
 };

@@ -5,6 +5,7 @@ import { findSpace, SpaceError } from 'common/modules/spacefinder';
 
 const onError = (e: Error): boolean => {
     // e.g. if writer fails
+    console.log(`Error in space-filler: ${e.toString()}`);
     raven.captureException(e);
     return false;
 };
@@ -31,6 +32,7 @@ class SpaceFiller {
             fastdom.write(() => writer(paragraphs));
 
         const onNoSpacesFound = (ex: Error): boolean => {
+            console.log(`No spaces found: ${ex.toString()}`);
             if (ex instanceof SpaceError) {
                 return false;
             }

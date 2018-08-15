@@ -69,7 +69,9 @@ class DevParametersHttpRequestHandler(
     "utm_source", // Google Analytics source
     "utm_medium", // Google Analytics medium
     "utm_campaign", // Google Analytics campaign
-    "utm_term" // Google Analytics term
+    "utm_term", // Google Analytics term
+    "gbug",
+    "r"
   )
 
   val playBugs = Seq("") // (Play 2.5 bug?) request.queryString is returning an empty string when empty

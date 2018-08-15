@@ -34,6 +34,8 @@ object StoryHtmlPage {
     maybeHeadContent: Option[Html] = None
   )(implicit page: Page, request: RequestHeader, applicationContext: ApplicationContext): Html = {
 
+    println("Francis test")
+
     val head: Html = maybeHeadContent.getOrElse(Html(""))
     val bodyClasses: Map[String, Boolean] = defaultBodyClasses() ++ Map(
       ("is-immersive", Page.getContent(page).exists(_.content.isImmersive))
@@ -50,7 +52,7 @@ object StoryHtmlPage {
         styles(allStyles),
         fixIEReferenceErrors(),
         inlineJSBlocking(),
-        blockthrough() when BlockthroughSwitch.isSwitchedOn
+        blockthrough()
       ),
       bodyTag(classes = bodyClasses)(
         tlsWarning() when ActiveExperiments.isParticipating(OldTLSSupportDeprecation),

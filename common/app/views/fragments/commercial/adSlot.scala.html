@@ -29,6 +29,6 @@
 </div>
 @if(!request.isAmp) {
     @Commercial.getBlockthroughElementUid(name).map { uid =>
-<span class="bt-uid-tg" uid="@uid" style="display: none !important"></span>
+        <span data-style="@Commercial.getBlockthroughStyleForSlot(name)" class="bt-uid-tg" uid="@uid" style="display: none !important"></span>
     }
 }
