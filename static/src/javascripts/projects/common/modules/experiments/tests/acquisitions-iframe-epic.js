@@ -46,15 +46,9 @@ const epicIframeTest: ABTest = {
                 maxViews: defaultMaxViews,
             },
             test: () => {
-                displayIframeEpic({
-                    url:
-                        'https://support.theguardian.com/epic/iframe-or-not-test/index.html',
-                    sendFonts: false,
-                    abTestVariant: {
-                        name: 'iframe_or_not',
-                        variant: 'iframe',
-                    },
-                }).then(trackEpic);
+                displayIframeEpic(
+                    'https://support.theguardian.com/epic/iframe-or-not-test/index.html'
+                ).then(trackEpic);
             },
         },
     ],

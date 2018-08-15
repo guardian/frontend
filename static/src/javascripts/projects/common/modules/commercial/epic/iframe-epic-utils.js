@@ -8,7 +8,6 @@ import {
     insertAtSubmeta,
     reportEpicError,
 } from 'common/modules/commercial/epic/epic-utils';
-import { getStyles } from 'commercial/modules/messenger/get-stylesheet';
 
 import type { EpicComponent } from 'common/modules/commercial/epic/epic-utils';
 import type { ABTestVariant } from 'common/modules/commercial/acquisitions-ophan';
@@ -51,98 +50,58 @@ const createEpicIframe = (url: string): Error | IframeEpicComponent => {
     iframe.style.width = '100%';
     iframe.frameBorder = '0';
     container.appendChild(iframe);
-    return { html: container, iframe, origin };
+    // hard coded for test purposes
+    return {
+        html: container,
+        iframe,
+        origin,
+        componentEvent: {
+            component: {
+                componentType: 'ACQUISITIONS_EPIC',
+                id: 'iframe_control_epic',
+            },
+            abTest: {
+                name: 'iframe_or_not',
+                variant: 'iframe',
+            },
+        },
+    };
 };
 
 const setIframeHeight = (epic: IframeEpicComponent, height: number) => {
     epic.iframe.style.height = `${height}px`;
 };
 
-const insertEpicIframe = (
-    epic: IframeEpicComponent,
-    abTestVariant?: ABTestVariant
-): Promise<IframeEpicComponent> =>
-    new Promise((resolve, reject) => {
-        // adding listener before inserting iframe into the DOM,
-        // ensures no messages sent from the iframe will be unhandled
-        window.addEventListener('message', (event: MessageEvent) => {
-            if (event.origin !== epic.origin) {
-                return;
+const setupListener = (epic: IframeEpicComponent) => {
+    window.addEventListener('message', (event: MessageEvent) => {
+        if (event.origin !== epic.origin) {
+            return;
+        }
+
+        let message = null;
+        try {
+            if (typeof event.data === 'string') {
+                message = JSON.parse(event.data);
             }
+        } catch (err) {
+            return;
+        }
 
-            let message = null;
-            try {
-                if (typeof event.data === 'string') {
-                    message = JSON.parse(event.data);
-                }
-            } catch (err) {
-                return;
-            }
+        if (!message || message.channel !== OPTIMIZE_EPIC_CHANNEL) {
+            return;
+        }
 
-            if (!message || message.channel !== OPTIMIZE_EPIC_CHANNEL) {
-                return;
-            }
+        const data = message.data;
 
-            const data = message.data;
+        if (message.messageType === EPIC_INITIALIZED && data.height) {
+            setIframeHeight(epic, data.height);
+            return;
+        }
 
-            if (message.messageType === EPIC_INITIALIZED) {
-                const component = {
-                    componentType: 'ACQUISITIONS_EPIC',
-                    id:
-                        data && data.componentId
-                            ? data.componentId
-                            : 'iframe_epic_unknown',
-                };
-
-                const abTest = data.abTest || abTestVariant;
-                const componentEvent = abTest
-                    ? { component, abTest }
-                    : { component };
-
-                if (data.height) {
-                    setIframeHeight(epic, data.height);
-                }
-
-                resolve({
-                    html: epic.html,
-                    iframe: epic.iframe,
-                    origin: epic.origin,
-                    // with some more work, variant-specific component event data could be sent in the epic initialized message
-                    componentEvent,
-                });
-                return;
-            }
-
-            if (message.messageType === EPIC_HEIGHT && data.height) {
-                setIframeHeight(epic, data.height);
-            }
-        });
-
-        insertAtSubmeta(epic).catch(reject);
+        if (message.messageType === EPIC_HEIGHT && data.height) {
+            setIframeHeight(epic, data.height);
+        }
     });
-
-const sendFontsToIframe = (
-    fonts: Array<FontName>,
-    epic: IframeEpicComponent
-) => {
-    const selector = fonts
-        .map(font => `.webfont[data-cache-name="${font}"]`)
-        .join(',');
-    const fontStyle = getStyles({ selector }, document.styleSheets);
-
-    const message = JSON.stringify({
-        channel: OPTIMIZE_EPIC_CHANNEL,
-        messageType: FONTS,
-        fonts: fontStyle,
-    });
-
-    try {
-        epic.iframe.contentWindow.postMessage(message, epic.origin);
-    } catch (error) {
-        reportEpicError(
-            new Error(`unable to send fonts to Epic iframe - ${error}`)
-        );
-    }
 };
 
 const addEpicDataToUrl = (url: string): string => {
@@ -156,43 +115,23 @@ const addEpicDataToUrl = (url: string): string => {
     return `${url}?${params}`;
 };
 
-type IframeEpicDisplayConfig = {
-    url: string,
-    sendFonts: boolean,
-    abTestVariant?: ABTestVariant,
-};
-
-const displayIframeEpic = (
-    iframeConfig: IframeEpicDisplayConfig
-): Promise<IframeEpicComponent> => {
-    const url = addEpicDataToUrl(iframeConfig.url);
-    const iframeEpicComponent = createEpicIframe(url);
+const displayIframeEpic = (url: string): Promise<IframeEpicComponent> => {
+    const iframeEpicComponent = createEpicIframe(addEpicDataToUrl(url));
 
     if (iframeEpicComponent instanceof Error) {
+        reportEpicError(iframeEpicComponent);
         return Promise.reject(iframeEpicComponent);
     }
 
-    return insertEpicIframe(iframeEpicComponent, iframeConfig.abTestVariant)
-        .then(epic => {
-            if (iframeConfig.sendFonts) {
-                sendFontsToIframe(
-                    [
-                        'GuardianHeadline',
-                        'GuardianTextEgyptianWeb',
-                        'GuardianTextSansWeb',
-                    ],
-                    epic
-                );
-            }
-            return epic;
-        })
-        .catch(error => {
-            const iframeError = new Error(
-                `unable to display iframe epic with url ${url} - ${error}`
-            );
-            reportEpicError(iframeError);
-            return Promise.reject(iframeError);
-        });
+    setupListener(iframeEpicComponent);
+
+    return insertAtSubmeta(iframeEpicComponent).catch(error => {
+        const iframeError = new Error(
+            `unable to display iframe epic with url ${url} - ${error}`
+        );
+        reportEpicError(iframeError);
+        return Promise.reject(iframeError);
+    });
 };
 
 export { displayIframeEpic };
