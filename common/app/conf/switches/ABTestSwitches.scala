@@ -148,16 +148,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-acquisitions-epic-thailand-cave",
-    "Always show the epic on thailand cave stories (unlimited)",
-    owners = Seq(Owner.withGithub("tsop14")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 9, 28),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-acquisitions-epic-iframe-test",
     "Test displaying the Epic inside an iframe (with no Google javascript running)",
     owners = Seq(Owner.withGithub("joelochlann")),
