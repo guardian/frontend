@@ -43,13 +43,13 @@ class PageDecacheController(wsClient: WSClient, val controllerComponents: Contro
   }
 
   private def getSubmittedUrlPathMd5(request: AuthenticatedRequest[AnyContent, UserIdentity]): Option[String] = {
-    val url = request
+    request
       .body.asFormUrlEncoded
       .getOrElse(Map.empty)
       .get("url")
       .flatMap(_.headOption)
       .map(_.trim)
-    url.map(url => DigestUtils.md5Hex(new URI(url).getPath))
+      .map(url => DigestUtils.md5Hex(new URI(url).getPath))
   }
 
 }
