@@ -8,6 +8,7 @@ import { displayLazyAds } from 'commercial/modules/dfp/display-lazy-ads';
 import { displayAds } from 'commercial/modules/dfp/display-ads';
 import { setupSonobi } from 'commercial/modules/dfp/prepare-sonobi-tag';
 import { closeDisabledSlots } from 'commercial/modules/close-disabled-slots';
+import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 
 // Pre-rendered ad slots that were rendered on the page by the server are collected here.
 // For dynamic ad slots that are created at js-runtime, see:
@@ -22,6 +23,10 @@ const fillAdvertSlots = (): Promise<void> => {
     const dependencies: Promise<void>[] = [setupSonobi(), closeDisabledSlots()];
 
     return Promise.all(dependencies).then(() => {
+        // Quit if ad-free
+        if (commercialFeatures.adFree) {
+            return Promise.resolve();
+        }
         // Get all ad slots
         const adverts = qwery(dfpEnv.adSlotSelector)
             .filter(adSlot => !(adSlot.id in dfpEnv.advertIds))

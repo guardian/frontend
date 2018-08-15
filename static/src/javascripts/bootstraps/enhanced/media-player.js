@@ -26,7 +26,6 @@ import { Component } from 'common/modules/component';
 import { getVideoInfo, isGeoBlocked } from 'common/modules/video/metadata';
 import { fullscreener } from 'common/modules/media/videojs-plugins/fullscreener';
 import { skipAd } from 'common/modules/media/videojs-plugins/skip-ad';
-import { isAdFreeUser } from 'common/modules/commercial/user-features';
 
 const initLoadingSpinner = (player: any): void => {
     player.loadingSpinner.contentEl().innerHTML = loadingTmpl;
@@ -180,8 +179,7 @@ const enhanceVideo = (
                 } else {
                     blockVideoAds =
                         videoInfo.shouldHideAdverts ||
-                        (config.get('switches.adFreeSubscriptionTrial') &&
-                            isAdFreeUser());
+                        commercialFeatures.adFree;
 
                     withPreroll = shouldPreroll && !blockVideoAds;
 
