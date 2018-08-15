@@ -30,6 +30,14 @@ const elementIsBelowViewport = (el: Element): Promise<boolean> =>
         return rect.top > height;
     });
 
+const parseURL = (url: string): ?URL => {
+    try {
+        return new URL(url);
+    } catch (e) {
+        return undefined;
+    }
+};
+
 const doUpgrade = (el: Element, resp: Object): Promise<void> =>
     fastdom.write(() => {
         el.innerHTML = resp.html;
@@ -48,15 +56,13 @@ const upgradeRichLink = (el: Element): Promise<void> => {
 
     if (!link) return Promise.resolve();
 
-    const href: string = link.href;
-    const host: string = config.get('page.host');
-    const matches: ?(string[]) = href.split(host);
+    const url = parseURL(link.href);
     const isOnMobile: boolean = isBreakpoint({
         max: 'mobileLandscape',
     });
 
-    if (matches && matches[1]) {
-        return fetchJson(`/embed/card${matches[1]}.json`, {
+    if (url) {
+        return fetchJson(`/embed/card${url.pathname}.json`, {
             mode: 'cors',
         })
             .then(resp => {
