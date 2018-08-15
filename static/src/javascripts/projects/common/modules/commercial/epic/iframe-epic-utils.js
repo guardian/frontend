@@ -39,6 +39,7 @@ const createEpicIframe = (url: string): Error | IframeEpicComponent => {
     const iframe = document.createElement('iframe');
     iframe.src = url;
     iframe.style.width = '100%';
+    iframe.style.height = '525px';
     iframe.frameBorder = '0';
     container.appendChild(iframe);
     // hard coded for test purposes
