@@ -174,6 +174,27 @@ class PrebidService {
                                 auctionInitHandler
                             );
 
+                            const onAuctionEndHandler = ({auctionId}) => {
+                                const getHighestCpm = (bids): number => bids && bids.map(_ => _.cpm).sort().pop() || 0;
+                                const bidResponses = window.pbjs.getBidResponses()[advert.id];
+                                const cpm: number = getHighestCpm(bidResponses && bidResponses.bids || []);
+                                if (cpm > 0) {
+                                    advert.slot.setTargeting(
+                                        'hb_cpm',
+                                        cpm
+                                    );
+                                }
+                                window.pbjs.offEvent(
+                                    'auctionEnd',
+                                    onAuctionEndHandler
+                                );
+                            };
+
+                            window.pbjs.onEvent(
+                                'auctionEnd',
+                                onAuctionEndHandler
+                            );
+
                             window.pbjs.requestBids({
                                 adUnits,
                                 bidsBackHandler() {
