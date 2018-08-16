@@ -11,7 +11,11 @@ import {
 const setConsentFlags = consentFlags => {
     window.Krux('consent:set', consentFlags, ex => {
         if (ex) {
-            console.error(`KRUX: ${ex}`);
+            if (ex.idv) {
+                console.error(`KRUX: ${ex.idv}`);
+            } else {
+                console.error(`KRUX: ${ex}`);
+            }
         }
     });
 };
