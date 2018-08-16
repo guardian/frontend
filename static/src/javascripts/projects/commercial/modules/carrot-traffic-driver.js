@@ -43,6 +43,10 @@ const defaultRules: SpacefinderRules = {
             minAbove: 100,
             minBelow: 100,
         },
+        ' .element-pullquote': {
+            minAbove: 400,
+            minBelow: 400,
+        },
     },
     fromBottom: true,
 };
@@ -85,6 +89,10 @@ const desktopRules: SpacefinderRules = {
             minBelow: 400,
         },
         ' .ad-slot--im': {
+            minAbove: 400,
+            minBelow: 400,
+        },
+        ' .element-pullquote': {
             minAbove: 400,
             minBelow: 400,
         },
@@ -133,17 +141,22 @@ const mobileRules: SpacefinderRules = {
             minAbove: 400,
             minBelow: 400,
         },
+        ' .element-pullquote': {
+            minAbove: 400,
+            minBelow: 400,
+        },
     },
     fromBottom: true,
 };
 
 const insertSlot = (paras: HTMLElement[]): Promise<void> => {
     const slots = createSlots('carrot');
+    const candidates = paras.slice(1);
     return fastdom
         .write(() => {
             slots.forEach(slot => {
-                if (paras[0] && paras[0].parentNode) {
-                    paras[0].parentNode.insertBefore(slot, paras[0]);
+                if (candidates[0] && candidates[0].parentNode) {
+                    candidates[0].parentNode.insertBefore(slot, candidates[0]);
                 }
             });
         })
