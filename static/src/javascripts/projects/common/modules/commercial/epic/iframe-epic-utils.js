@@ -10,6 +10,7 @@ import {
 } from 'common/modules/commercial/epic/epic-utils';
 
 import type { EpicComponent } from 'common/modules/commercial/epic/epic-utils';
+import { submitComponentEvent } from 'common/modules/commercial/acquisitions-ophan';
 
 // origin field useful for determining that messages are being sent / received from the expected iframe.
 export type IframeEpicComponent = EpicComponent & {
@@ -89,8 +90,20 @@ const setupListener = (epic: IframeEpicComponent) => {
 
         const data = message.data;
 
-        if (message.messageType === EPIC_INITIALIZED && data.height) {
-            setIframeHeight(epic, data.height);
+        if (message.messageType === EPIC_INITIALIZED) {
+            if (data.height) {
+                setIframeHeight(epic, data.height);
+            }
+
+            // Track that we got a message out of the iframe
+            submitComponentEvent({
+                action: 'ANSWER',
+                component: {
+                    componentType: 'ACQUISITIONS_EPIC',
+                },
+                value: JSON.stringify(message),
+            });
+
             return;
         }
 
