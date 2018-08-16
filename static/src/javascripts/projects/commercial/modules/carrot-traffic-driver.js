@@ -43,6 +43,10 @@ const defaultRules: SpacefinderRules = {
             minAbove: 100,
             minBelow: 100,
         },
+        ' .element-pullquote': {
+            minAbove: 400,
+            minBelow: 400,
+        },
     },
     fromBottom: true,
 };
@@ -88,6 +92,10 @@ const desktopRules: SpacefinderRules = {
             minAbove: 400,
             minBelow: 400,
         },
+        ' .element-pullquote': {
+            minAbove: 400,
+            minBelow: 400,
+        },
     },
     fromBottom: true,
 };
@@ -130,6 +138,10 @@ const mobileRules: SpacefinderRules = {
             minBelow: 400,
         },
         ' .ad-slot--im': {
+            minAbove: 400,
+            minBelow: 400,
+        },
+        ' .element-pullquote': {
             minAbove: 400,
             minBelow: 400,
         },
