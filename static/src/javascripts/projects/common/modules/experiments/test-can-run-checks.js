@@ -14,11 +14,14 @@ export const isExpired = (testExpiry: string): boolean => {
 export const testCanBeRun = (test: ABTest): boolean => {
     const expired = isExpired(test.expiry);
     const isSensitive = config.page.isSensitive;
+    const shouldShowForSensitive = !!test.showForSensitive;
+    const isTestOn = isTestSwitchedOn(test);
+    const canTestBeRun = (!test.canRun || test.canRun());
 
     return (
-        (isSensitive ? !!test.showForSensitive : true) &&
-        isTestSwitchedOn(test) &&
+        (isSensitive ? shouldShowForSensitive : true) &&
+        isTestOn &&
         !expired &&
-        (!test.canRun || test.canRun())
+        canTestBeRun
     );
 };
