@@ -23,19 +23,6 @@
         color: $brightness-20;
     }
 
-    .inline-icon {
-        fill: $brightness-7;
-        display: inline-block;
-        vertical-align: middle;
-        /*
-        this visually aligns the profile icon with the Support circle,
-        part of ab-mobile-nav-sign-in
-        */
-        &.inline-profile {
-            margin-left: -4px;
-        }
-    }
-
     @include mq(tablet) {
         font-size: 14px;
     }

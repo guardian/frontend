@@ -76,10 +76,10 @@ class PrebidService {
                 bidderTimeout,
                 priceGranularity,
             },
-            config.get('switches.enableConsentManagementService')
+            config.get('switches.enableConsentManagementService', false)
                 ? { consentManagement }
                 : {},
-            config.get('switches.prebidS2sozone') ? { s2sConfig } : {}
+            config.get('switches.prebidS2sozone', false) ? { s2sConfig } : {}
         );
 
         window.pbjs.setConfig(pbjsConfig);
@@ -87,8 +87,8 @@ class PrebidService {
         // gather analytics from 20% (1 in 5) of page views
         const inSample = getRandomIntInclusive(1, 5) === 1;
         if (
-            config.get('switches.prebidAnalytics') &&
-            (inSample || config.get('page.isDev'))
+            config.get('switches.prebidAnalytics', false) &&
+            (inSample || config.get('page.isDev', false))
         ) {
             window.pbjs.enableAnalytics([
                 {
@@ -105,13 +105,15 @@ class PrebidService {
         // allows dynamic assignment.
         window.pbjs.bidderSettings = {};
 
-        if (config.get('switches.prebidXaxis')) {
+        if (config.get('switches.prebidXaxis', false)) {
             window.pbjs.bidderSettings.xhb = {
                 adserverTargeting: [
                     {
                         key: 'hb_buyer_id',
                         val(bidResponse) {
-                            return bidResponse.buyerMemberId;
+                            return bidResponse.appnexus
+                                ? bidResponse.appnexus.buyerMemberId
+                                : '';
                         },
                     },
                 ],
@@ -132,7 +134,7 @@ class PrebidService {
             return PrebidService.requestQueue;
         }
 
-        const adUnits = slots
+        const adUnits: Array<PrebidAdUnit> = slots
             .filter(slot =>
                 stripTrailingNumbersAbove1(
                     stripMobileSuffix(advert.id)
@@ -170,6 +172,34 @@ class PrebidService {
                             window.pbjs.onEvent(
                                 'auctionInit',
                                 auctionInitHandler
+                            );
+
+                            const onAuctionEndHandler = () => {
+                                const getHighestCpm = (auctionBids): number =>
+                                    (auctionBids &&
+                                        auctionBids
+                                            .map(_ => _.cpm)
+                                            .sort()
+                                            .pop()) ||
+                                    0;
+                                const bidResponses = window.pbjs.getBidResponses()[
+                                    advert.id
+                                ];
+                                const cpm: number = getHighestCpm(
+                                    (bidResponses && bidResponses.bids) || []
+                                );
+                                if (cpm > 0) {
+                                    advert.slot.setTargeting('hb_cpm', cpm);
+                                }
+                                window.pbjs.offEvent(
+                                    'auctionEnd',
+                                    onAuctionEndHandler
+                                );
+                            };
+
+                            window.pbjs.onEvent(
+                                'auctionEnd',
+                                onAuctionEndHandler
                             );
 
                             window.pbjs.requestBids({

@@ -4,6 +4,7 @@ import { getBreakpoint as getBreakpoint_ } from 'lib/detect';
 import {
     getBreakpointKey,
     isExcludedGeolocation,
+    shouldIncludeAppNexus,
     shouldIncludeTrustX,
     stripMobileSuffix,
     stripTrailingNumbersAbove1,
@@ -35,13 +36,26 @@ describe('Utils', () => {
         expect(results).toEqual(['M', 'M', 'T', 'D', 'D']);
     });
 
+    test('shouldIncludeAppNexus should return true if geolocation is AU', () => {
+        getSync.mockReturnValueOnce('AU');
+        expect(shouldIncludeAppNexus()).toBe(true);
+    });
+
+    test('shouldIncludeAppNexus should otherwise return false', () => {
+        const testGeos = ['FK', 'GI', 'GG', 'IM', 'JE', 'SH', 'CA', 'US'];
+        for (let i = 0; i < testGeos.length; i += 1) {
+            getSync.mockReturnValueOnce(testGeos[i]);
+            expect(shouldIncludeAppNexus()).toBe(false);
+        }
+    });
+
     test('shouldIncludeTrustX should return true if geolocation is US', () => {
         getSync.mockReturnValueOnce('US');
         expect(shouldIncludeTrustX()).toBe(true);
     });
 
     test('shouldIncludeTrustX should otherwise return false', () => {
-        const testGeos = ['FK', 'GI', 'GG', 'IM', 'JE', 'SH', 'CA'];
+        const testGeos = ['FK', 'GI', 'GG', 'IM', 'JE', 'SH', 'CA', 'AU'];
         for (let i = 0; i < testGeos.length; i += 1) {
             getSync.mockReturnValueOnce(testGeos[i]);
             expect(shouldIncludeTrustX()).toBe(false);

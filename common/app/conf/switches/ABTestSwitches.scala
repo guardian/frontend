@@ -18,16 +18,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-mobile-nav-sign-in",
-    "This test will show a sign in link in the mobile nav",
-    owners = Seq(Owner.withGithub("walaura")),
-    safeState = Off,
-    sellByDate = new LocalDate(2019, 6, 7),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-acquisitions-epic-liveblog",
     "This places the epic below those blocks on liveblogs which have been marked for displaying the epic in Composer",
     owners = Seq(Owner.withGithub("joelochlann")),
@@ -148,19 +138,9 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-acquisitions-epic-thailand-cave",
-    "Always show the epic on thailand cave stories (unlimited)",
-    owners = Seq(Owner.withGithub("tsop14")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 9, 28),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-acquisitions-epic-optimize-a-a-test",
-    "Bootstrap the AB testing framework to display the Epic using Google Optimize",
-    owners = Seq(Owner.withGithub("Mullefa")),
+    "ab-acquisitions-epic-iframe-test",
+    "Test displaying the Epic inside an iframe (with no Google javascript running)",
+    owners = Seq(Owner.withGithub("joelochlann")),
     safeState = Off,
     sellByDate = new LocalDate(2019, 7, 31),
     exposeClientSide = true

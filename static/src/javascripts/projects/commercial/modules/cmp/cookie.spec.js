@@ -164,13 +164,13 @@ describe('CMP cookie', () => {
             consentScreen: 0,
         };
         // $FlowFixMe I know fields are missing, Flow... this is a test
-        expect(encodeVendorConsentData({ ...consentData, vendorList })).toEqual(
+        expect(encodeVendorConsentData(consentData, vendorList)).toEqual(
             'BAAAAAAAAAAAAABABAAAABAAAAAAAA'
         );
 
-        expect(
-            encodeVendorConsentData({ ...vendorConsentData, vendorList })
-        ).toEqual('BAAAAAAAAAAAAABABBENABwAAAAApoA');
+        expect(encodeVendorConsentData(vendorConsentData, vendorList)).toEqual(
+            'BAAAAAAAAAAAAABABBENABwAAAAApoA'
+        );
     });
 
     it('decodes the vendor cookie object from a string', () => {
@@ -200,10 +200,7 @@ describe('CMP cookie', () => {
     });
 
     it('writes and reads the local cookie', () =>
-        writeVendorConsentCookie({
-            ...vendorConsentData,
-            vendorList,
-        }).then(() =>
+        writeVendorConsentCookie(vendorConsentData).then(() =>
             readVendorConsentCookie().then(fromCookie => {
                 expect(document.cookie).toEqual(
                     'euconsent=BAAAAAAAAAAAAABABBENABwAAAAApoA; path=/; expires=Fri, 07 Jul 94226 23:00:00 GMT; domain=.theguardian.com'

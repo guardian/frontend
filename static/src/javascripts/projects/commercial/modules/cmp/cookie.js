@@ -1,4 +1,4 @@
-// @flow
+// @flow strict
 import { log } from 'commercial/modules/cmp/log';
 import { getCookie, addCookie } from 'lib/cookies';
 import {
@@ -12,7 +12,7 @@ import {
     decodeCookieValue,
 } from 'commercial/modules/cmp/cookieutils';
 
-import type { VendorConsentData } from './types';
+import type { VendorConsentData, Range, VendorList } from './types';
 
 const encodeVendorCookieValue = (data: VendorConsentData): ?string => {
     if (data && data.cookieVersion) {
@@ -66,7 +66,7 @@ const decodeBitsToIds = (bitString: string): Array<number> => {
 const convertVendorsToRanges = (
     maxVendorId: number,
     selectedIds: Array<number> = []
-): Array<any> => {
+): Array<Range> => {
     let range = [];
     const ranges = [];
     for (let id = 1; id <= maxVendorId; id += 1) {
@@ -89,18 +89,21 @@ const convertVendorsToRanges = (
     return ranges;
 };
 
-const encodeVendorConsentData = (consentData: any): string => {
+const encodeVendorConsentData = (
+    data: VendorConsentData,
+    vendorList?: VendorList
+): string => {
     const {
-        vendorList = {},
         selectedPurposeIds = [],
         selectedVendorIds = [],
         maxVendorId,
-    } = consentData;
-    const { purposes } = vendorList;
+    } = data;
+
+    const purposes = vendorList ? vendorList.purposes : [];
 
     // Encode the data with and without ranges and return the smallest encoded payload
     const noRangesData: ?string = encodeVendorCookieValue({
-        ...consentData,
+        ...data,
         maxVendorId,
         purposeIdBitString: encodePurposeIdsToBits(
             purposes,
@@ -119,7 +122,7 @@ const encodeVendorConsentData = (consentData: any): string => {
     );
 
     const rangesData: ?string = encodeVendorCookieValue({
-        ...consentData,
+        ...data,
         maxVendorId,
         purposeIdBitString: encodePurposeIdsToBits(
             purposes,
@@ -130,7 +133,7 @@ const encodeVendorConsentData = (consentData: any): string => {
         numEntries: vendorRangeList.length,
         vendorRangeList,
     });
-
+    // flowlint sketchy-null-string:warn
     if (noRangesData && rangesData) {
         return noRangesData.length < rangesData.length
             ? noRangesData
@@ -141,6 +144,8 @@ const encodeVendorConsentData = (consentData: any): string => {
 };
 
 const decodeVendorConsentData = (cookieValue: string): VendorConsentData => {
+    // $FlowFixMe allowing Object just this once since sanity checks below
+    const decoded: Object = decodeVendorCookieValue(cookieValue);
     const {
         cookieVersion,
         cmpId,
@@ -156,7 +161,7 @@ const decodeVendorConsentData = (cookieValue: string): VendorConsentData => {
         defaultConsent,
         vendorIdBitString,
         vendorRangeList,
-    } = decodeVendorCookieValue(cookieValue);
+    } = decoded;
 
     const cookieData: VendorConsentData = {
         cookieVersion,
@@ -199,16 +204,20 @@ const decodeVendorConsentData = (cookieValue: string): VendorConsentData => {
     return cookieData;
 };
 
-const readVendorConsentCookie = (): Promise<any> => {
-    const cookie = getCookie(VENDOR_CONSENT_COOKIE_NAME);
-    log.debug('Read consent data from local cookie', cookie);
-    return Promise.resolve(cookie && decodeVendorConsentData(cookie));
+const readVendorConsentCookie = (): Promise<VendorConsentData | false> => {
+    const cookieVal: ?string = getCookie(VENDOR_CONSENT_COOKIE_NAME);
+    if (cookieVal) {
+        log.debug(`Read consent data from cookie: ${cookieVal}`);
+        return Promise.resolve(decodeVendorConsentData(cookieVal));
+    }
+    log.warn('Unable to read from CMP cookie');
+    return Promise.resolve(false);
 };
 
 const writeVendorConsentCookie = (
     vendorConsentData: VendorConsentData
-): Promise<any> => {
-    log.debug('Write consent data to local cookie', vendorConsentData);
+): Promise<void> => {
+    log.debug(`Attempting to write consent data to cookie`, vendorConsentData);
     return Promise.resolve(
         addCookie(
             VENDOR_CONSENT_COOKIE_NAME,

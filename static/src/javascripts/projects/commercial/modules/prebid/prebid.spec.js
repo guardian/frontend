@@ -14,6 +14,7 @@ jest.mock('commercial/modules/prebid/bid-config', () => ({
 describe('initialise', () => {
     beforeEach(() => {
         config.set('switches.enableConsentManagementService', true);
+        config.set('switches.prebidAppNexus', true);
         config.set('switches.prebidS2sozone', true);
         config.set('switches.prebidSonobi', true);
         config.set('switches.prebidXaxis', true);

@@ -11,7 +11,7 @@ import { getRandomIntInclusive } from 'commercial/modules/prebid/utils';
 
 declare type ConsentPayload = {
     pv: string, // page view ID
-    cs: string, // consent string
+    cs: ?string, // consent string
     cc: ?boolean, // consent cookie value
 };
 
