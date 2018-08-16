@@ -25,6 +25,7 @@ const epicIframeTest: ABTest = {
     audience: 0.3,
     audienceOffset: 0,
     canRun: isEpicDisplayable,
+    showForSensitive: true,
     variants: [
         {
             id: 'not_iframe',
