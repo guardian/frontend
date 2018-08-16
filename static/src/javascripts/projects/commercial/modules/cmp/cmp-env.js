@@ -1,4 +1,10 @@
-// @flow
+// @flow strict
+
+type DecodedObject = {
+    maxVendorId: number,
+    isRange: boolean,
+    numEntries: number,
+};
 
 const vendorVersion = {
     version: 1,
@@ -17,26 +23,28 @@ const vendorVersion = {
         {
             name: 'vendorIdBitString',
             type: 'bits',
-            numBits: (decodedObject: Object) => decodedObject.maxVendorId,
-            validator: (decodedObject: Object) => !decodedObject.isRange,
+            numBits: (decodedObject: DecodedObject) =>
+                decodedObject.maxVendorId,
+            validator: (decodedObject: DecodedObject) => !decodedObject.isRange,
         },
         {
             name: 'defaultConsent',
             type: 'bool',
             numBits: 1,
-            validator: (decodedObject: Object) => decodedObject.isRange,
+            validator: (decodedObject: DecodedObject) => decodedObject.isRange,
         },
         {
             name: 'numEntries',
             numBits: 12,
             type: 'int',
-            validator: (decodedObject: Object) => decodedObject.isRange,
+            validator: (decodedObject: DecodedObject) => decodedObject.isRange,
         },
         {
             name: 'vendorRangeList',
             type: 'list',
-            listCount: (decodedObject: Object) => decodedObject.numEntries,
-            validator: (decodedObject: Object) => decodedObject.isRange,
+            listCount: (decodedObject: DecodedObject) =>
+                decodedObject.numEntries,
+            validator: (decodedObject: DecodedObject) => decodedObject.isRange,
             fields: [
                 {
                     name: 'isRange',
@@ -52,7 +60,8 @@ const vendorVersion = {
                     name: 'endVendorId',
                     type: 'int',
                     numBits: 16,
-                    validator: (decodedObject: Object) => decodedObject.isRange,
+                    validator: (decodedObject: DecodedObject) =>
+                        decodedObject.isRange,
                 },
             ],
         },
@@ -62,7 +71,7 @@ const vendorVersion = {
 export const VENDOR_CONSENT_COOKIE_NAME = 'euconsent';
 export const VENDOR_CONSENT_COOKIE_MAX_AGE = 33696000;
 export const CMP_GLOBAL_NAME = '__cmp';
-export const CMP_ID = 1;
+export const CMP_ID = 112;
 export const CMP_VERSION = 1;
 export const COOKIE_VERSION = 1;
 export const COOKIE_NAME = 'GU_TK';
