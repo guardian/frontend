@@ -1,6 +1,7 @@
 // @flow
 import config from 'lib/config';
 import { getCookie } from 'lib/cookies';
+import reportError from 'lib/report-error';
 import { local } from 'lib/storage';
 import {
     getAdConsentState,
@@ -11,11 +12,14 @@ import {
 const setConsentFlags = consentFlags => {
     window.Krux('consent:set', consentFlags, ex => {
         if (ex) {
-            if (ex.idv) {
-                console.error(`KRUX: ${ex.idv}`);
-            } else {
-                console.error(`KRUX: ${ex}`);
-            }
+            const exStr = Object.keys(ex)
+                .map(prop => `${prop} -> '${ex[prop]}'`)
+                .join(', ');
+            const msg = `KRUX: ${exStr}`;
+            reportError(new Error(msg), {
+                feature: 'krux:consent:set',
+                consentFlags,
+            });
         }
     });
 };
