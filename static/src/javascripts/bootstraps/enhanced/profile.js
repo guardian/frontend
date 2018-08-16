@@ -17,6 +17,7 @@ import { initUserAvatars } from 'common/modules/discussion/user-avatars';
 import { initUserEditLink } from 'common/modules/discussion/user-edit-link';
 import { init as initTabs } from 'common/modules/ui/tabs';
 import { enhanceAdPrefs } from 'common/modules/identity/ad-prefs';
+import { enhanceAccountUpsell } from 'common/modules/identity/uppsala/account-upsell';
 
 const initFormstack = (): void => {
     const attr = 'data-formstack-id';
@@ -64,6 +65,7 @@ const initProfile = (): void => {
         ['enhance-form-ajax', enhanceFormAjax],
         ['enhance-consent-journey', enhanceConsentJourney],
         ['init-header', initHeader],
+        ['init-account-upsell', enhanceAccountUpsell],
     ];
     catchErrorsWithContext(modules);
 };
