@@ -138,9 +138,9 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-acquisitions-epic-optimize-a-a-test",
-    "Bootstrap the AB testing framework to display the Epic using Google Optimize",
-    owners = Seq(Owner.withGithub("Mullefa")),
+    "ab-acquisitions-epic-iframe-test",
+    "Test displaying the Epic inside an iframe (with no Google javascript running)",
+    owners = Seq(Owner.withGithub("joelochlann")),
     safeState = Off,
     sellByDate = new LocalDate(2019, 7, 31),
     exposeClientSide = true

@@ -1,29 +1,21 @@
 // @flow
 
 import config from 'lib/config';
-import { getLocalCurrencySymbol } from 'lib/geolocation';
-import { constructQuery as constructURLQuery } from 'lib/url';
 
+import { reportEpicError } from 'common/modules/commercial/epic/epic-utils';
 import { displayIframeEpic } from 'common/modules/commercial/epic/iframe-epic-utils';
 
 import type { IframeEpicComponent } from 'common/modules/commercial/epic/iframe-epic-utils';
 
-const getOptimizeEpicUrl = (): string => {
-    const url = config.get('page.optimizeEpicUrl');
-    // data passed in query string used to augment iframe
-    const params = constructURLQuery({
-        // used in acquisition tracking link
-        pvid: config.get('ophan.pageViewId'),
-        url: window.location.href.split('?')[0],
-        // use to display pricing in local currency
-        lcs: getLocalCurrencySymbol(),
-    });
-    return `${url}?${params}`;
-};
-
 const displayOptimizeEpic = (): Promise<IframeEpicComponent> => {
-    const url = getOptimizeEpicUrl();
-    return displayIframeEpic(url);
+    const url = config.get('page.optimizeEpicUrl');
+    if (url) {
+        // TODO: allow fallback ab test to be set via function argument?
+        return displayIframeEpic(url);
+    }
+    const urlError = new Error('config page.optimizeEpicUrl not found');
+    reportEpicError(urlError);
+    return Promise.reject(urlError);
 };
 
 export { displayOptimizeEpic };

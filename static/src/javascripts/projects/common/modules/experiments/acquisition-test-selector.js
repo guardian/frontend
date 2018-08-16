@@ -17,7 +17,7 @@ import { acquisitionsEpicFromGoogleDocTwoVariants } from 'common/modules/experim
 import { acquisitionsEpicFromGoogleDocThreeVariants } from 'common/modules/experiments/tests/acquisitions-epic-from-google-doc-three-variants';
 import { acquisitionsEpicFromGoogleDocFourVariants } from 'common/modules/experiments/tests/acquisitions-epic-from-google-doc-four-variants';
 import { acquisitionsEpicFromGoogleDocFiveVariants } from 'common/modules/experiments/tests/acquisitions-epic-from-google-doc-five-variants';
-import { acquisitionsEpicOptimizeAATest } from 'common/modules/experiments/tests/acquisitions-optimize-epic';
+import { acquisitionsEpicIframeTest } from 'common/modules/experiments/tests/acquisitions-iframe-epic';
 
 const isViewable = (v: Variant, t: ABTest): boolean => {
     if (!v.options) return false;
@@ -46,7 +46,7 @@ const isViewable = (v: Variant, t: ABTest): boolean => {
  * acquisition tests in priority order (highest to lowest)
  */
 export const acquisitionsTests: $ReadOnlyArray<AcquisitionsABTest> = [
-    acquisitionsEpicOptimizeAATest,
+    acquisitionsEpicIframeTest,
     acquisitionsEpicFromGoogleDocOneVariant,
     acquisitionsEpicFromGoogleDocTwoVariants,
     acquisitionsEpicFromGoogleDocThreeVariants,
