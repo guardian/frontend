@@ -15,7 +15,7 @@ export const make = (params: Params): string =>
             Enjoying ${params.campaign.name}?
          </h3>
          <p class="site-message--email-sign-in-banner-text">
-            We want to help you find more newsleters you'll love. If you sign in we can suggest you newsletters tailored to your personal taste. And you can manage your preferences at any time.
+            We want to help you find more newsletters you'll love. If you sign in we can suggest you newsletters tailored to your personal taste. And you can manage your preferences at any time.
          </p>
          <a data-link-name="${messageCode} : to-sign-in" data-link-name="${messageCode} : success" class="site-message--email-sign-in-banner-cta">
             Sign in / Register
