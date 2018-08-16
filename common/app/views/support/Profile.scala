@@ -12,6 +12,7 @@ import org.apache.commons.math3.fraction.Fraction
 import org.apache.commons.math3.util.Precision
 import common.Environment.{app, awsRegion, stage}
 import experiments.{ActiveExperiments, FastlyIOImages}
+import play.api.mvc.RequestHeader
 
 import Function.const
 
@@ -24,8 +25,8 @@ sealed trait ElementProfile {
   def isPng: Boolean
   def autoFormat: Boolean
 
-  private def toSrc(maybeAsset: Option[ImageAsset]): Option[String] =
-    maybeAsset.flatMap(_.url).map(ImgSrc(_, this))
+  private def toSrc(maybeAsset: Option[ImageAsset], requestHeader: Option[RequestHeader] = None): Option[String] =
+    maybeAsset.flatMap(_.url).map(ImgSrc(_, this, requestHeader))
 
   def bestFor(image: ImageMedia): Option[ImageAsset] = {
     if(!ImageServerSwitch.isSwitchedOn) {
@@ -36,7 +37,7 @@ sealed trait ElementProfile {
     }
     else image.largestImage
   }
-  def bestSrcFor(image: ImageMedia): Option[String] = toSrc(bestFor(image))
+  def bestSrcFor(image: ImageMedia, request: Option[RequestHeader] = None): Option[String] = toSrc(bestFor(image), request)
 
   def captionFor(image: ImageMedia): Option[String] =
     bestFor(image).flatMap(_.caption)
@@ -232,8 +233,8 @@ object Naked extends Profile(None, None)
 
 object ImgSrc extends Logging with implicits.Strings {
 
-  def getImageServiceHost: String = {
-    if (stage != "PROD" || ActiveExperiments.isParticipating(FastlyIOImages)) {
+  def getImageServiceHost(request: Option[RequestHeader]): String = {
+    if (request.exists(r => ActiveExperiments.isParticipating(FastlyIOImages)(r))) {
       Configuration.images.fastlyIOHost
     } else {
       Configuration.images.imgixHost
@@ -255,7 +256,8 @@ object ImgSrc extends Logging with implicits.Strings {
 
   def apply(
     url: String,
-    imageType: ElementProfile
+    imageType: ElementProfile,
+    request: Option[RequestHeader] = None
   ): String = {
     try {
       val uri = new URI(url.trim.encodeURI)
@@ -266,7 +268,7 @@ object ImgSrc extends Logging with implicits.Strings {
         .filter(const(isSupportedImage))
         .map { host =>
           val signedPath = ImageUrlSigner.sign(s"${uri.getRawPath}${imageType.resizeString}", host.token)
-          s"$getImageServiceHost/img/${host.prefix}$signedPath"
+          s"${getImageServiceHost(request)}/img/${host.prefix}$signedPath"
         }.getOrElse(url)
     } catch {
       case error: URISyntaxException =>
@@ -275,8 +277,8 @@ object ImgSrc extends Logging with implicits.Strings {
     }
   }
 
-  def srcset(imageContainer: ImageMedia, widths: WidthsByBreakpoint): String = {
-    widths.profiles.map { profile => srcsetForProfile(profile, imageContainer, hidpi = false) } mkString ", "
+  def srcset(imageContainer: ImageMedia, widths: WidthsByBreakpoint, request: Option[RequestHeader] = None): String = {
+    widths.profiles.map { profile => srcsetForProfile(profile, imageContainer, hidpi = false, request) } mkString ", "
   }
 
   def srcsetForBreakpoint(
@@ -284,15 +286,16 @@ object ImgSrc extends Logging with implicits.Strings {
     breakpointWidths: Seq[BreakpointWidth],
     maybePath: Option[String] = None,
     maybeImageMedia: Option[ImageMedia] = None,
-    hidpi: Boolean = false
+    hidpi: Boolean = false,
+    request: Option[RequestHeader] = None
   ): String = {
     val isPng = maybePath.exists(path => path.toLowerCase.endsWith("png"))
     breakpointWidth.toPixels(breakpointWidths)
       .map(browserWidth => Profile(width = Some(browserWidth), hidpi = hidpi, isPng = isPng))
       .map { profile => {
         maybePath
-          .map(url => srcsetForProfile(profile, url, hidpi))
-          .orElse(maybeImageMedia.map(imageContainer => srcsetForProfile(profile, imageContainer, hidpi)))
+          .map(url => srcsetForProfile(profile, url, hidpi, request))
+          .orElse(maybeImageMedia.map(imageContainer => srcsetForProfile(profile, imageContainer, hidpi, request)))
           .getOrElse("")
       } }
       .mkString(", ")
@@ -301,12 +304,13 @@ object ImgSrc extends Logging with implicits.Strings {
   def srcsetForProfile(
     profile: Profile,
     imageContainer: ImageMedia,
-    hidpi: Boolean
+    hidpi: Boolean,
+    request: Option[RequestHeader] = None
   ): String =
-    s"${profile.bestSrcFor(imageContainer).get} ${profile.width.get * (if (hidpi) 2 else 1)}w"
+    s"${profile.bestSrcFor(imageContainer, request).get} ${profile.width.get * (if (hidpi) 2 else 1)}w"
 
-  def srcsetForProfile(profile: Profile, path: String, hidpi: Boolean): String =
-    s"${ImgSrc(path, profile)} ${profile.width.get * (if (hidpi) 2 else 1)}w"
+  def srcsetForProfile(profile: Profile, path: String, hidpi: Boolean, request: Option[RequestHeader]): String =
+    s"${ImgSrc(path, profile, request)} ${profile.width.get * (if (hidpi) 2 else 1)}w"
 
   def getFallbackUrl(ImageElement: ImageMedia): Option[String] =
     Item300.bestSrcFor(ImageElement)

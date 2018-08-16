@@ -165,7 +165,7 @@ class CrosswordSearchController(
               val section = Section.make(ApiSection("crosswords", "Crosswords search results", "http://www.theguardian.com/crosswords/search", "", Nil))
               val page = IndexPage(
                 page = section,
-                contents = results.map(IndexPageItem(_)),
+                contents = results.map(IndexPageItem(_, Some(request))),
                 tags = Tags(Nil),
                 date = DateTime.now,
                 tzOverride = None

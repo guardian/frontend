@@ -179,9 +179,9 @@ object IndexPage {
 
 }
 object IndexPageItem {
-  def apply(content: ApiContent): IndexPageItem = {
+  def apply(content: ApiContent, request: Option[RequestHeader] = None): IndexPageItem = {
     IndexPageItem(
-      Content(content),
+      Content(content, request),
       FaciaContentConvert.contentToFaciaContent(content))
   }
 }
