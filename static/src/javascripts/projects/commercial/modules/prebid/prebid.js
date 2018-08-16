@@ -28,6 +28,16 @@ const consentManagement = {
     allowAuctionWithoutConsent: true,
 };
 
+const userSync = {
+    syncsPerBidder: 0, // allow all syncs
+    filterSettings: {
+        iframe: {
+            bidders: ['sonobi'],
+            filter: 'include',
+        },
+    },
+};
+
 const s2sConfig = {
     accountId: '1',
     enabled: true,
@@ -75,6 +85,7 @@ class PrebidService {
             {
                 bidderTimeout,
                 priceGranularity,
+                userSync,
             },
             config.get('switches.enableConsentManagementService', false)
                 ? { consentManagement }
