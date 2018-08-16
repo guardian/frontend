@@ -16,7 +16,7 @@ export const testCanBeRun = (test: ABTest): boolean => {
     const isSensitive = config.page.isSensitive;
     const shouldShowForSensitive = !!test.showForSensitive;
     const isTestOn = isTestSwitchedOn(test);
-    const canTestBeRun = (!test.canRun || test.canRun());
+    const canTestBeRun = !test.canRun || test.canRun();
 
     return (
         (isSensitive ? shouldShowForSensitive : true) &&
