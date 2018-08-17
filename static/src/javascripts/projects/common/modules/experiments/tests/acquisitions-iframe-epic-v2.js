@@ -10,9 +10,9 @@ import {
 } from 'common/modules/commercial/epic/epic-utils';
 import { displayIframeEpic } from 'common/modules/commercial/epic/iframe-epic-utils';
 
-const epicIframeTest: ABTest = {
-    id: 'AcquisitionsEpicIframeTest',
-    campaignId: 'epic_iframe_test',
+const epicIframeTestV2: ABTest = {
+    id: 'AcquisitionsEpicIframeTestV2',
+    campaignId: 'epic_iframe_test_v2',
     start: '2018-07-31',
     expiry: '2019-07-31',
     author: 'Joseph Smith',
@@ -25,6 +25,7 @@ const epicIframeTest: ABTest = {
     audience: 0.3,
     audienceOffset: 0,
     canRun: isEpicDisplayable,
+    showForSensitive: true,
     variants: [
         {
             id: 'not_iframe',
@@ -35,7 +36,7 @@ const epicIframeTest: ABTest = {
                 displayControlEpicInAbTest({
                     // Name corresponds to test name hard coded in the tracking link in the epic:
                     // https://support.theguardian.com/epic/iframe-or-not-test/index.html
-                    name: 'iframe_or_not',
+                    name: 'iframe_or_not_v2',
                     variant: 'not_iframe',
                 }).then(trackEpic);
             },
@@ -47,13 +48,13 @@ const epicIframeTest: ABTest = {
             },
             test: () => {
                 displayIframeEpic(
-                    'https://support.theguardian.com/epic/iframe-or-not-test/index.html'
+                    'https://support.theguardian.com/epic/iframe-or-not-test-v2/index.html'
                 ).then(trackEpic);
             },
         },
     ],
 };
 
-const acquisitionsEpicIframeTest: AcquisitionsABTest = (epicIframeTest: any);
+const acquisitionsEpicIframeTestV2: AcquisitionsABTest = (epicIframeTestV2: any);
 
-export { acquisitionsEpicIframeTest };
+export { acquisitionsEpicIframeTestV2 };
