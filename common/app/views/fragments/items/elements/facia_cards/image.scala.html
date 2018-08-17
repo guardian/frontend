@@ -19,7 +19,7 @@
                 srcset="@ImgSrc.srcsetForBreakpoint(breakpointWidth, widths.breakpoints, maybePath, maybeImageMedia, hidpi = true, Some(request))" />
         <source media="(min-width: @breakpointWidth.breakpoint.minWidth.getOrElse("0")px)"
                 sizes="@breakpointWidth.width"
-                srcset="@ImgSrc.srcsetForBreakpoint(breakpointWidth, widths.breakpoints, maybePath, maybeImageMedia, Some(request))" />
+                srcset="@ImgSrc.srcsetForBreakpoint(breakpointWidth, widths.breakpoints, maybePath, maybeImageMedia, request = Some(request))" />
     }
     <!--[if IE 9]></video><![endif]-->
     @maybeImageMedia.map(ImgSrc.getFallbackUrl(_)).orElse(maybeSrc).orElse(maybePath).map { src =>
