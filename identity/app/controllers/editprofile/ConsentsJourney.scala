@@ -41,7 +41,7 @@ trait ConsentsJourney
   def guestPasswordSet(): Action[AnyContent] = csrfCheck {
 
     val returnUrlWithTracking  = idUrlBuilder.appendQueryParams(
-      returnUrlVerifier.defaultReturnUrl, List("INTCMP" -> "uppsala-signin-upsell")
+      returnUrlVerifier.defaultReturnUrl, List("INTCMP" -> "upsell-account-creation")
     )
 
     Action.async { implicit request =>
