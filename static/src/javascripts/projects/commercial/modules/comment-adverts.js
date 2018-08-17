@@ -1,4 +1,4 @@
-// @flow
+// @flow strict
 import $ from 'lib/$';
 import config from 'lib/config';
 import mediator from 'lib/mediator';
@@ -10,14 +10,16 @@ import { commercialFeatures } from 'common/modules/commercial/commercial-feature
 import { createSlots } from 'commercial/modules/dfp/create-slots';
 import type bonzo from 'bonzo';
 
-const createCommentSlot = (canBeDmpu: boolean): HTMLElement => {
+const createCommentSlots = (
+    canBeDmpu: boolean
+): Array<HTMLDivElement | HTMLSpanElement> => {
     const sizes = canBeDmpu ? { desktop: [adSizes.halfPage] } : {};
     const adSlots = createSlots('comments', { sizes });
 
     adSlots.forEach(adSlot => {
         adSlot.classList.add('js-sticky-mpu');
     });
-    return adSlots[0];
+    return adSlots;
 };
 
 const insertCommentAd = (
@@ -25,7 +27,7 @@ const insertCommentAd = (
     $adSlotContainer: bonzo,
     canBeDmpu: boolean
 ): void => {
-    const commentSlot: HTMLElement = createCommentSlot(canBeDmpu);
+    const commentSlots = createCommentSlots(canBeDmpu);
 
     fastdom
         .write(() => {
@@ -36,8 +38,11 @@ const insertCommentAd = (
             ) {
                 $commentMainColumn.addClass('discussion__ad-wrapper-wider');
             }
-            $adSlotContainer.append(commentSlot);
-            return commentSlot;
+            // Append each slot into the adslot container...
+            commentSlots.forEach(adSlot => {
+                $adSlotContainer.append(adSlot);
+            });
+            return commentSlots[0];
         })
         // Add only the fist slot (DFP slot) to GTP
         .then((adSlot: HTMLElement) => {
@@ -96,4 +101,4 @@ export const initCommentAdverts = (): ?boolean => {
     );
 };
 
-export const _ = { createCommentSlot, insertCommentAd };
+export const _ = { createCommentSlots, insertCommentAd };

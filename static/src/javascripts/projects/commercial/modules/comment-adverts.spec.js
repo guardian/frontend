@@ -29,7 +29,7 @@ jest.mock('common/modules/identity/api', () => ({
     isUserLoggedIn: jest.fn(),
 }));
 
-const { createCommentSlot } = _;
+const { createCommentSlots } = _;
 
 const commercialFeaturesMock: any = commercialFeatures;
 const isUserLoggedIn: any = isUserLoggedIn_;
@@ -38,7 +38,7 @@ const mockHeight = (height: number) => {
     jest.spyOn(fastdom, 'read').mockReturnValue(Promise.resolve(height));
 };
 
-describe('createCommentSlot', () => {
+describe('createCommentSlots', () => {
     beforeEach(() => {
         if (document.body) {
             document.body.innerHTML = `<div class="js-comments">
@@ -55,8 +55,8 @@ describe('createCommentSlot', () => {
     });
 
     it('should return an ad slot with the correct sizes', () => {
-        const commentMpu: HTMLElement = createCommentSlot(false);
-        const commentDmpu: HTMLElement = createCommentSlot(true);
+        const commentMpu: HTMLElement = createCommentSlots(false)[0];
+        const commentDmpu: HTMLElement = createCommentSlots(true)[0];
         expect(commentMpu.getAttribute('data-desktop')).toBe(
             '1,1|2,2|300,250|620,1|620,350|300,274|fluid'
         );
@@ -72,8 +72,8 @@ describe('createCommentSlot', () => {
     });
 
     it('should add js-sticky-mpu to the class list', () => {
-        const commentMpu: HTMLElement = createCommentSlot(false);
-        const commentDmpu: HTMLElement = createCommentSlot(true);
+        const commentMpu: HTMLElement = createCommentSlots(false)[0];
+        const commentDmpu: HTMLElement = createCommentSlots(true)[0];
         expect(commentMpu.classList).toContain('js-sticky-mpu');
         expect(commentDmpu.classList).toContain('js-sticky-mpu');
     });
