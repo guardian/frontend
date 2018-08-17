@@ -48,7 +48,7 @@ const epicIframeTestV2: ABTest = {
             },
             test: () => {
                 displayIframeEpic(
-                    'https://support.theguardian.com/epic/iframe-or-not-test/index.html'
+                    'https://support.theguardian.com/epic/iframe-or-not-test-v2/index.html'
                 ).then(trackEpic);
             },
         },
