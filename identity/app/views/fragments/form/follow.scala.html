@@ -3,7 +3,6 @@
 
 @(
     title: String,
-    subheading: Option[String],
     description: Option[String],
     behaviour: SwitchBehaviour,
     field: Field,
@@ -11,23 +10,13 @@
 )(implicit handler: views.html.helper.FieldConstructor, messages: play.api.i18n.Messages)
 
 
-@classes = @{
-    Map(
-        ("identity-follow", true),
-        (switchJsBehaviour(behaviour), false)
-    )
-}
-
-<div class="@views.support.RenderClasses(classes)">
+<div class="identity-follow" data-behaviour="@switchJsBehaviour(behaviour)">
     <div class="identity-follow__content">
-        <p class="identity-follow__copy">
+        <p class="identity-follow__heading">
             @title
-            @if(subheading) {
-                <em>@subheading</em>
-            }
         </p>
         @if(description) {
-            <p class="identity-follow__copy identity-follow__copy--extra">
+            <p class="identity-follow__copy">
                 @description.map(Html(_))
             </p>
         }
