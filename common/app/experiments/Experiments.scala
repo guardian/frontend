@@ -63,7 +63,7 @@ object FastlyIOImages extends Experiment(
   name = "fastly-io-images",
   description = "SServe images from fastly-io",
   owners = Owner.group(SwitchGroup.ServerSideExperiments),
-  sellByDate = new LocalDate(2018, 8, 25),
+  sellByDate = new LocalDate(2018, 8, 27),
   participationGroup = Perc0A
 )
 
