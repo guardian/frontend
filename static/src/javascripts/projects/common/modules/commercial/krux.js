@@ -12,14 +12,21 @@ import {
 const setConsentFlags = consentFlags => {
     window.Krux('consent:set', consentFlags, ex => {
         if (ex) {
-            const exStr = Object.keys(ex)
-                .map(prop => `${prop} -> '${ex[prop]}'`)
-                .join(', ');
-            const msg = `KRUX: ${exStr}`;
-            reportError(new Error(msg), {
-                feature: 'krux:consent:set',
-                consentFlags,
-            });
+            switch (ex.idv) {
+                case 'no identifier found for user':
+                case 'user opted out via (optout or dnt)':
+                    break; // swallow these as they're harmless
+                default: {
+                    const exStr = Object.keys(ex)
+                        .map(prop => `${prop} -> '${ex[prop]}'`)
+                        .join(', ');
+                    const msg = `KRUX: ${exStr}`;
+                    reportError(new Error(msg), {
+                        feature: 'krux:consent:set',
+                        consentFlags,
+                    });
+                }
+            }
         }
     });
 };
