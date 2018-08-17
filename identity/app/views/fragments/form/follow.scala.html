@@ -1,0 +1,38 @@
+@import _root_.form.IdFormHelpers.Checkbox
+@import views.support.fragment.Switch._
+
+@(
+    title: String,
+    subheading: Option[String],
+    description: Option[String],
+    behaviour: SwitchBehaviour,
+    field: Field,
+    extraFields: List[Html] = Nil,
+)(implicit handler: views.html.helper.FieldConstructor, messages: play.api.i18n.Messages)
+
+
+@classes = @{
+    Map(
+        ("identity-follow", true),
+        (switchJsBehaviour(behaviour), false)
+    )
+}
+
+<label class="@views.support.RenderClasses(classes)">
+    <div class="identity-follow__content">
+        <p class="identity-follow__copy">
+            @title
+            @if(subheading) {
+                <em>@subheading</em>
+            }
+        </p>
+        @if(description) {
+            <p class="identity-follow__extra">
+                @description.map(Html(_))
+            </p>
+        }
+
+        @extraFields
+    </div>
+    <div class="identity-follow__button-target"></div>
+</label>
