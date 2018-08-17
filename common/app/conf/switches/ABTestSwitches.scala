@@ -138,7 +138,7 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-acquisitions-epic-iframe-test",
+    "ab-acquisitions-epic-iframe-test-v2",
     "Test displaying the Epic inside an iframe (with no Google javascript running)",
     owners = Seq(Owner.withGithub("joelochlann")),
     safeState = Off,
