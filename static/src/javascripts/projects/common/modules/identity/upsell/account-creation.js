@@ -11,12 +11,14 @@ const trackInteraction = (interaction: string): void => {
     trackNonClickInteraction(interaction);
 };
 
-const bindAccountUpsell = (): void => {
+const bindAccountCreation = (): void => {
     trackInteraction('set-password : display');
 };
 
-const enhanceAccountUpsell = (): void => {
-    loadEnhancers([['.js-identity-uppsala-account-upsell', bindAccountUpsell]]);
+const enhanceAccountCreation = (): void => {
+    loadEnhancers([
+        ['.js-identity-upsell-account-creation', bindAccountCreation],
+    ]);
 };
 
-export { enhanceAccountUpsell };
+export { enhanceAccountCreation };
