@@ -115,7 +115,13 @@ describe('initialise', () => {
                 pixelEnabled: true,
                 syncDelay: 3000,
                 syncEnabled: true,
-                syncsPerBidder: 5,
+                syncsPerBidder: 0,
+                filterSettings: {
+                    iframe: {
+                        bidders: ['sonobi'],
+                        filter: 'include',
+                    },
+                },
             },
         });
     });
