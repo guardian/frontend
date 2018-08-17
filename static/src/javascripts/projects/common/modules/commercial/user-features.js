@@ -160,7 +160,7 @@ const getLastContributionDate = (): ?number => {
 
     // Contributions frontend set date time of last contribution using ISO 8601 format.
     // Support frontend set date time of last contribution in Epoch milliseconds.
-    // If we first attempted to parse cookie in Epoch milliseconds format,
+    // If we first attempted to parse cookie in Epoch milliseconds format (parseInt()),
     // then a value in ISO 8601 format would parse (incorrectly) e.g. 2018-08-17T16:11:10Z => 2018
     // So first attempt to parse cookie in ISO 8601 format.
 
@@ -169,14 +169,14 @@ const getLastContributionDate = (): ?number => {
         if (Number.isInteger(ms)) {
             return ms;
         }
-    } catch (_) {}
+    } catch (_) {} // FIXME: Empty block statement
 
     try {
-        const ms = parseInt(cookie);
+        const ms = parseInt(cookie, 10);
         if (Number.isInteger(ms)) {
             return ms;
         }
-    } catch (_) {}
+    } catch (_) {} // FIXME: Empty block statement
 
     return null;
 };
@@ -188,11 +188,6 @@ const getDaysSinceLastContribution = (): ?number => {
     }
     return dateDiffDays(lastContributionDate, Date.now());
 };
-
-// Don't bother trying to parse one-off contribution cookie.
-// Enough to check that the cookie has been set.
-const isContributor = (): boolean =>
-    getCookie(SUPPORT_ONE_OFF_CONTRIBUTION_COOKIE) != null; // TODO: is this check ok
 
 // in last six months
 const isRecentContributor = (): boolean => {
@@ -229,7 +224,6 @@ export {
     accountDataUpdateWarning,
     isAdFreeUser,
     isPayingMember,
-    isContributor,
     isRecentContributor,
     isRecurringContributor,
     isDigitalSubscriber,

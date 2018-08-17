@@ -20,7 +20,7 @@
 const dateDiffDays = (from: Date, to: Date): number => {
     const diffMs = to - from;
     const oneDayMs = 24 * 60 * 60 * 1000;
-    return Math.floor(diffMs / oneDayMs)
+    return Math.floor(diffMs / oneDayMs);
 };
 
 export { dateDiffDays };
