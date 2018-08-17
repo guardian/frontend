@@ -3,8 +3,8 @@ import React, { Component } from 'preact-compat';
 
 type FollowButtonWrapProps = {
     initiallyFollowing: boolean,
-    onFollow: () => void,
-    onUnfollow: () => void,
+    onFollow: () => Promise<void>,
+    onUnfollow: () => Promise<void>,
 };
 
 class FollowButtonWrap extends Component<

@@ -18,7 +18,7 @@
     )
 }
 
-<label class="@views.support.RenderClasses(classes)">
+<div class="@views.support.RenderClasses(classes)">
     <div class="identity-follow__content">
         <p class="identity-follow__copy">
             @title
@@ -27,7 +27,7 @@
             }
         </p>
         @if(description) {
-            <p class="identity-follow__extra">
+            <p class="identity-follow__copy identity-follow__copy--extra">
                 @description.map(Html(_))
             </p>
         }
@@ -35,4 +35,4 @@
         @extraFields
     </div>
     <div class="identity-follow__button-target"></div>
-</label>
+</div>
