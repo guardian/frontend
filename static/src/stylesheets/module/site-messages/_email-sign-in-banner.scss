@@ -1,0 +1,117 @@
+$btn-height: ($gs-baseline*3.5);
+
+.site-message--email-sign-in-banner {
+    padding: ($gs-baseline / 2) 0 $gs-baseline * 2;
+    background: $sport-dark;
+
+    a {
+        color: currentColor;
+    }
+
+    .site-message--double-banner & {
+        padding: ($gs-baseline / 2) 0;
+
+        @include mq(tablet) {
+            padding: $gs-baseline 0;
+        }
+    }
+
+    .u-underline {
+        border-color: rgba(255, 255, 255, .5);
+        &:hover {
+            border-color: #ffffff;
+        }
+    }
+
+    @include mq(leftCol) {
+        padding-bottom: $gs-baseline * 4;
+    }
+
+    .site-message__roundel {
+        display: none;
+    }
+    .site-message__inner {
+        padding: 0;
+    }
+    .site-message__copy {
+        display: block;
+        margin: 0 $gs-gutter / 2;
+
+        .site-message--double-banner & {
+            padding: 0;
+            @include mq(tablet) {
+                display: flex;
+                margin: 0 $gs-gutter;
+            }
+
+            @include mq(desktop) {
+                display: block;
+            }
+        }
+
+        @include mq(leftCol) {
+            padding-left: gs-span(2) + $gs-gutter * 1.5;
+        }
+        @include mq(wide) {
+            padding-left: gs-span(3) + $gs-gutter * 1.5;
+        }
+    }
+}
+
+.site-message--email-sign-in-banner-slide {
+    &.site-message--email-sign-in-banner-slide--hidden {
+        display: none;
+    }
+}
+
+.site-message--email-sign-in-banner-cta {
+    @include fs-textSans(5);
+    @include circular;
+    height: $btn-height;
+    background: $highlight-main;
+    color: $brightness-7;
+
+    .site-message--double-banner & {
+        background: transparent;
+        color: #ffffff;
+        border: 1px solid rgba(255, 255, 255, .5);
+        transition: border-color .15s ease-out;
+        height: 36px;
+    }
+
+    padding: 0 ($gs-gutter*1.25) 0 ($gs-gutter*1.25)+($btn-height*.5);
+    display: block;
+    align-items: flex-start;
+    justify-content: space-between;
+    cursor: pointer;
+    position: relative;
+    border: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    &:hover {
+        background: darken($highlight-main, 1%);
+    }
+
+    .site-message--double-banner &:hover {
+        background: transparent;
+        border-color: #ffffff;
+    }
+
+    svg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        margin: auto;
+        width: $btn-height;
+        height: $btn-height;
+        transform: scale(.5);
+        g, path {
+            fill: $brightness-7;
+
+            .site-message--double-banner & {
+                fill: #ffffff;
+            }
+        }
+    }
+}
