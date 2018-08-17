@@ -11,7 +11,8 @@ object ActiveExperiments extends ExperimentsDefinition {
     CommercialClientLogging,
     OrielParticipation,
     OldTLSSupportDeprecation,
-    ThrasherAdjacentMPU
+    ThrasherAdjacentMPU,
+    FastlyIOImages
   )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
