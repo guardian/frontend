@@ -39,6 +39,11 @@ trait ConsentsJourney
   def signinService: PlaySigninService
 
   def guestPasswordSet(): Action[AnyContent] = csrfCheck {
+
+    val returnUrlWithTracking  = idUrlBuilder.appendQueryParams(
+      returnUrlVerifier.defaultReturnUrl, List("INTCMP" -> "upsell-account-creation")
+    )
+
     Action.async { implicit request =>
       val form = GuestPasswordForm.form().bindFromRequest()
       form.fold(errorForm => {
@@ -47,7 +52,7 @@ trait ConsentsJourney
         val authResponse = identityApiClient.setPasswordGuest(completedForm.password, completedForm.token)
         signinService.getCookies(authResponse, rememberMe = false).flatMap {
           case Right(cookies) =>
-            Future.successful(NoCache(SeeOther(returnUrlVerifier.defaultReturnUrl).withCookies(cookies: _*).discardingCookies(DiscardingCookie("SC_GU_GUEST_PW_SET"))))
+            Future.successful(NoCache(SeeOther(returnUrlWithTracking).withCookies(cookies: _*).discardingCookies(DiscardingCookie("SC_GU_GUEST_PW_SET"))))
           case _ =>
             displayConsentComplete(Some(form.withError("error", "An unexpected error occurred, please try again later.")))(request)
         }
