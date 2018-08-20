@@ -3,13 +3,19 @@
 import config from 'lib/config';
 import memoize from 'lodash/functions/memoize';
 import isEmpty from 'lodash/objects/isEmpty';
-import { commercialPrebidSafeframe } from 'common/modules/experiments/tests/commercial-prebid-safeframe';
-import { getVariant, isInVariant } from 'common/modules/experiments/utils';
 import {
     buildAppNexusTargeting,
     buildPageTargeting,
 } from 'common/modules/commercial/build-page-targeting';
+import { commercialPrebidAdYouLike } from 'common/modules/experiments/tests/commercial-prebid-adyoulike';
+import { commercialPrebidSafeframe } from 'common/modules/experiments/tests/commercial-prebid-safeframe';
+import {
+    getParticipations,
+    getVariant,
+    isInVariant,
+} from 'common/modules/experiments/utils';
 import type {
+    PrebidAdYouLikeParams,
     PrebidAppNexusParams,
     PrebidBid,
     PrebidBidder,
@@ -23,9 +29,16 @@ import type {
     PrebidXaxisParams,
 } from './types';
 import {
+    containsBillboard,
+    containsDmpu,
+    containsLeaderboard,
+    containsLeaderboardOrBillboard,
+    containsMpu,
+    containsMpuOrDmpu,
     getBreakpointKey,
     getRandomIntInclusive,
     isExcludedGeolocation,
+    shouldIncludeAdYouLike,
     shouldIncludeAppNexus,
     shouldIncludeTrustX,
     stripMobileSuffix,
@@ -112,27 +125,6 @@ const getIndexSiteId = (): string => {
         return site && site.id ? site.id.toString() : '';
     }
 };
-
-const contains = (sizes: PrebidSize[], size: PrebidSize): boolean =>
-    Boolean(sizes.find(s => s[0] === size[0] && s[1] === size[1]));
-
-const containsMpu = (sizes: PrebidSize[]): boolean =>
-    contains(sizes, [300, 250]);
-
-const containsDmpu = (sizes: PrebidSize[]): boolean =>
-    contains(sizes, [300, 600]);
-
-const containsLeaderboard = (sizes: PrebidSize[]): boolean =>
-    contains(sizes, [728, 90]);
-
-const containsBillboard = (sizes: PrebidSize[]): boolean =>
-    contains(sizes, [970, 250]);
-
-const containsMpuOrDmpu = (sizes: PrebidSize[]): boolean =>
-    containsMpu(sizes) || containsDmpu(sizes);
-
-const containsLeaderboardOrBillboard = (sizes: PrebidSize[]): boolean =>
-    containsLeaderboard(sizes) || containsBillboard(sizes);
 
 const getImprovePlacementId = (sizes: PrebidSize[]): number => {
     if (isInSafeframeTestVariant()) {
@@ -254,6 +246,16 @@ const getAppNexusPlacementId = (sizes: PrebidSize[]): string => {
     }
 };
 
+const getAdYouLikePlacementId = (): string => {
+    const test = commercialPrebidAdYouLike;
+    const participations = getParticipations();
+    const participation = participations ? participations[test.id] : {};
+    const variant = participation
+        ? getVariant(test, participation.variant)
+        : {};
+    return variant && variant.options ? variant.options.placementId : '';
+};
+
 // Improve has to have single size as parameter if slot doesn't accept multiple sizes,
 // because it uses same placement ID for multiple slot sizes and has no other size information
 const getImproveSizeParam = (slotId: string): PrebidImproveSizeParam => {
@@ -352,6 +354,14 @@ const xaxisBidder: PrebidBidder = {
     labelAll: ['edn-UK', 'deal-FirstLook'],
 };
 
+const adYouLikeBidder: PrebidBidder = {
+    name: 'adyoulike',
+    switchName: 'prebidAdYouLike',
+    bidParams: (): PrebidAdYouLikeParams => ({
+        placementId: getAdYouLikePlacementId(),
+    }),
+};
+
 // Dummy bidders for the whitehorse project (https://trello.com/c/KbeBLyYZ)
 const getDummyServerSideBidders = (): Array<PrebidBidder> => {
     const dummyServerSideBidders: Array<PrebidBidder> = [];
@@ -437,6 +447,7 @@ const currentBidders: (PrebidSize[]) => PrebidBidder[] = slotSizes => {
         ...(inPbTestOr(shouldIncludeAppNexus()) ? [appNexusBidder] : []),
         improveDigitalBidder,
         xaxisBidder,
+        ...(shouldIncludeAdYouLike(slotSizes) ? [adYouLikeBidder] : []),
     ];
 
     const allBidders = indexExchangeBidders(slotSizes)
@@ -469,6 +480,7 @@ export const bids: (string, PrebidSize[]) => PrebidBid[] = (
     });
 
 export const _ = {
+    getAdYouLikePlacementId,
     getAppNexusPlacementId,
     getDummyServerSideBidders,
     getIndexSiteId,

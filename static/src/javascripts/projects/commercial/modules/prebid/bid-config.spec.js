@@ -2,29 +2,47 @@
 /* global jsdom */
 
 import config from 'lib/config';
+import { commercialPrebidAdYouLike as CommercialPrebidAdYouLike } from 'common/modules/experiments/tests/commercial-prebid-adyoulike';
 import {
+    getParticipations as getParticipations_,
     getVariant as getVariant_,
     isInVariant as isInVariant_,
 } from 'common/modules/experiments/utils';
 import { _, bids } from './bid-config';
 import type { PrebidBidder, PrebidSize } from './types';
 import {
-    getRandomIntInclusive as getRandomIntInclusive_,
+    containsBillboard as containsBillboard_,
+    containsDmpu as containsDmpu_,
+    containsLeaderboard as containsLeaderboard_,
+    containsLeaderboardOrBillboard as containsLeaderboardOrBillboard_,
+    containsMpu as containsMpu_,
+    containsMpuOrDmpu as containsMpuOrDmpu_,
     getBreakpointKey as getBreakpointKey_,
+    getRandomIntInclusive as getRandomIntInclusive_,
+    shouldIncludeAdYouLike as shouldIncludeAdYouLike_,
     shouldIncludeAppNexus as shouldIncludeAppNexus_,
     shouldIncludeTrustX as shouldIncludeTrustX_,
     stripMobileSuffix as stripMobileSuffix_,
 } from './utils';
 
+const containsBillboard: any = containsBillboard_;
+const containsDmpu: any = containsDmpu_;
+const containsLeaderboard: any = containsLeaderboard_;
+const containsLeaderboardOrBillboard: any = containsLeaderboardOrBillboard_;
+const containsMpu: any = containsMpu_;
+const containsMpuOrDmpu: any = containsMpuOrDmpu_;
 const getRandomIntInclusive: any = getRandomIntInclusive_;
+const shouldIncludeAdYouLike: any = shouldIncludeAdYouLike_;
 const shouldIncludeAppNexus: any = shouldIncludeAppNexus_;
 const shouldIncludeTrustX: any = shouldIncludeTrustX_;
 const stripMobileSuffix: any = stripMobileSuffix_;
 const getBreakpointKey: any = getBreakpointKey_;
+const getParticipations: any = getParticipations_;
 const getVariant: any = getVariant_;
 const isInVariant: any = isInVariant_;
 
 const {
+    getAdYouLikePlacementId,
     getAppNexusPlacementId,
     getDummyServerSideBidders,
     getIndexSiteId,
@@ -55,6 +73,7 @@ const resetConfig = () => {
     config.set('switches.prebidS2sozone', true);
     config.set('switches.prebidTrustx', true);
     config.set('switches.prebidXaxis', true);
+    config.set('switches.prebidAdYouLike', true);
     config.set('ophan', { pageViewId: 'pvid' });
     config.set('page.contentType', 'Article');
     config.set('page.edition', 'UK');
@@ -83,6 +102,12 @@ describe('getAppNexusPlacementId', () => {
 
     test('should return the expected values when on UK Edition and desktop device', () => {
         getBreakpointKey.mockReturnValue('D');
+        containsMpuOrDmpu.mockReturnValueOnce(true);
+        containsMpuOrDmpu.mockReturnValueOnce(true);
+        containsMpuOrDmpu.mockReturnValue(false);
+        containsLeaderboardOrBillboard.mockReturnValueOnce(true);
+        containsLeaderboardOrBillboard.mockReturnValueOnce(true);
+        containsLeaderboardOrBillboard.mockReturnValue(false);
         expect(generateTestIds()).toEqual([
             '13366606',
             '13366606',
@@ -94,6 +119,12 @@ describe('getAppNexusPlacementId', () => {
 
     test('should return the expected values when on UK Edition and tablet device', () => {
         getBreakpointKey.mockReturnValue('T');
+        containsMpu.mockReturnValueOnce(true);
+        containsMpu.mockReturnValue(false);
+        containsLeaderboard.mockReturnValueOnce(false);
+        containsLeaderboard.mockReturnValueOnce(false);
+        containsLeaderboard.mockReturnValueOnce(true);
+        containsLeaderboard.mockReturnValue(false);
         expect(generateTestIds()).toEqual([
             '13366913',
             '13144370',
@@ -105,6 +136,8 @@ describe('getAppNexusPlacementId', () => {
 
     test('should return the expected values when on UK Edition and mobile device', () => {
         getBreakpointKey.mockReturnValue('M');
+        containsMpu.mockReturnValueOnce(true);
+        containsMpu.mockReturnValue(false);
         expect(generateTestIds()).toEqual([
             '13366904',
             '13144370',
@@ -208,6 +241,12 @@ describe('getImprovePlacementId', () => {
 
     test('should return the expected values when on the UK Edition and desktop device', () => {
         getBreakpointKey.mockReturnValue('D');
+        containsMpuOrDmpu.mockReturnValueOnce(true);
+        containsMpuOrDmpu.mockReturnValueOnce(true);
+        containsMpuOrDmpu.mockReturnValue(false);
+        containsLeaderboardOrBillboard.mockReturnValueOnce(true);
+        containsLeaderboardOrBillboard.mockReturnValueOnce(true);
+        containsLeaderboardOrBillboard.mockReturnValue(false);
         expect(generateTestIds()).toEqual([
             1116396,
             1116396,
@@ -219,6 +258,12 @@ describe('getImprovePlacementId', () => {
 
     test('should return the expected values when on the UK Edition and tablet device', () => {
         getBreakpointKey.mockReturnValue('T');
+        containsMpuOrDmpu.mockReturnValueOnce(true);
+        containsMpuOrDmpu.mockReturnValueOnce(true);
+        containsMpuOrDmpu.mockReturnValue(false);
+        containsLeaderboardOrBillboard.mockReturnValueOnce(true);
+        containsLeaderboardOrBillboard.mockReturnValueOnce(true);
+        containsLeaderboardOrBillboard.mockReturnValue(false);
         expect(generateTestIds()).toEqual([
             1116398,
             1116398,
@@ -230,12 +275,24 @@ describe('getImprovePlacementId', () => {
 
     test('should return the expected values when on the UK Edition and mobile device', () => {
         getBreakpointKey.mockReturnValue('M');
+        containsMpuOrDmpu.mockReturnValueOnce(true);
+        containsMpuOrDmpu.mockReturnValueOnce(true);
+        containsMpuOrDmpu.mockReturnValue(false);
+        containsLeaderboardOrBillboard.mockReturnValueOnce(true);
+        containsLeaderboardOrBillboard.mockReturnValueOnce(true);
+        containsLeaderboardOrBillboard.mockReturnValue(false);
         expect(generateTestIds()).toEqual([1116400, 1116400, -1, -1, -1]);
     });
 
     test('should return the expected values when on the INT Edition and desktop device', () => {
         config.set('page.edition', 'INT');
         getBreakpointKey.mockReturnValue('D');
+        containsMpuOrDmpu.mockReturnValueOnce(true);
+        containsMpuOrDmpu.mockReturnValueOnce(true);
+        containsMpuOrDmpu.mockReturnValue(false);
+        containsLeaderboardOrBillboard.mockReturnValueOnce(true);
+        containsLeaderboardOrBillboard.mockReturnValueOnce(true);
+        containsLeaderboardOrBillboard.mockReturnValue(false);
         expect(generateTestIds()).toEqual([
             1116420,
             1116420,
@@ -248,6 +305,12 @@ describe('getImprovePlacementId', () => {
     test('should return the expected values when on the INT Edition and tablet device', () => {
         config.set('page.edition', 'INT');
         getBreakpointKey.mockReturnValue('T');
+        containsMpuOrDmpu.mockReturnValueOnce(true);
+        containsMpuOrDmpu.mockReturnValueOnce(true);
+        containsMpuOrDmpu.mockReturnValue(false);
+        containsLeaderboardOrBillboard.mockReturnValueOnce(true);
+        containsLeaderboardOrBillboard.mockReturnValueOnce(true);
+        containsLeaderboardOrBillboard.mockReturnValue(false);
         expect(generateTestIds()).toEqual([
             1116422,
             1116422,
@@ -260,6 +323,9 @@ describe('getImprovePlacementId', () => {
     test('should return the expected values when on the INT Edition and mobile device', () => {
         config.set('page.edition', 'INT');
         getBreakpointKey.mockReturnValue('M');
+        containsMpuOrDmpu.mockReturnValueOnce(true);
+        containsMpuOrDmpu.mockReturnValueOnce(true);
+        containsMpuOrDmpu.mockReturnValue(false);
         expect(generateTestIds()).toEqual([1116424, 1116424, -1, -1, -1]);
     });
 
@@ -277,6 +343,7 @@ describe('getImprovePlacementId', () => {
         });
         isInVariant.mockReturnValue(true);
         getBreakpointKey.mockReturnValue('D');
+        containsMpu.mockReturnValue(true);
         expect(getImprovePlacementId([[300, 250]])).toEqual(1116407);
     });
 
@@ -287,6 +354,7 @@ describe('getImprovePlacementId', () => {
         });
         isInVariant.mockReturnValue(true);
         getBreakpointKey.mockReturnValue('D');
+        containsDmpu.mockReturnValue(true);
         expect(getImprovePlacementId([[300, 600]])).toEqual(1116408);
     });
 
@@ -297,6 +365,7 @@ describe('getImprovePlacementId', () => {
         });
         isInVariant.mockReturnValue(true);
         getBreakpointKey.mockReturnValue('D');
+        containsLeaderboardOrBillboard.mockReturnValue(true);
         expect(getImprovePlacementId([[970, 250]])).toEqual(1116409);
     });
 
@@ -307,6 +376,7 @@ describe('getImprovePlacementId', () => {
         });
         isInVariant.mockReturnValue(true);
         getBreakpointKey.mockReturnValue('D');
+        containsLeaderboardOrBillboard.mockReturnValue(true);
         expect(getImprovePlacementId([[728, 90]])).toEqual(1116409);
     });
 
@@ -317,6 +387,7 @@ describe('getImprovePlacementId', () => {
         });
         isInVariant.mockReturnValue(true);
         getBreakpointKey.mockReturnValue('T');
+        containsMpu.mockReturnValue(true);
         expect(getImprovePlacementId([[300, 250]])).toEqual(1116410);
     });
 
@@ -327,6 +398,7 @@ describe('getImprovePlacementId', () => {
         });
         isInVariant.mockReturnValue(true);
         getBreakpointKey.mockReturnValue('T');
+        containsLeaderboard.mockReturnValue(true);
         expect(getImprovePlacementId([[728, 90]])).toEqual(1116411);
     });
 
@@ -359,6 +431,33 @@ describe('getTrustXAdUnitId', () => {
     test('should return the expected values for dfp-ad--inline10', () => {
         expect(getTrustXAdUnitId('dfp-ad--inline10', true)).toBe('3840');
         expect(getTrustXAdUnitId('dfp-ad--inline10', false)).toBe('3841');
+    });
+});
+
+describe('getAdYouLikePlacementId', () => {
+    beforeEach(() => {
+        jest.resetAllMocks();
+        resetConfig();
+    });
+
+    test('should serve expected style when in aylStyle variant', () => {
+        getParticipations.mockReturnValue({
+            CommercialPrebidAdYouLike: { variant: 'aylStyle' },
+        });
+        getVariant.mockReturnValue(CommercialPrebidAdYouLike.variants[0]);
+        expect(getAdYouLikePlacementId()).toBe(
+            '0da4f71dbe8e1af5c0e4739f53366020'
+        );
+    });
+
+    test('should serve expected style when in guardianStyle variant', () => {
+        getParticipations.mockReturnValue({
+            CommercialPrebidAdYouLike: { variant: 'aylStyle' },
+        });
+        getVariant.mockReturnValue(CommercialPrebidAdYouLike.variants[1]);
+        expect(getAdYouLikePlacementId()).toBe(
+            '2b4d757e0ec349583ce704699f1467dd'
+        );
     });
 });
 
@@ -473,10 +572,18 @@ describe('getIndexSiteId', () => {
 
 describe('bids', () => {
     beforeEach(() => {
+        containsBillboard.mockReturnValue(false);
+        containsDmpu.mockReturnValue(false);
+        containsLeaderboard.mockReturnValue(false);
+        containsLeaderboardOrBillboard.mockReturnValue(false);
+        containsMpu.mockReturnValue(false);
+        containsMpuOrDmpu.mockReturnValue(false);
         getRandomIntInclusive.mockReturnValue(5);
+        shouldIncludeAdYouLike.mockReturnValue(true);
         shouldIncludeAppNexus.mockReturnValue(false);
         shouldIncludeTrustX.mockReturnValue(false);
         stripMobileSuffix.mockImplementation(str => str);
+        getVariant.mockReturnValue(CommercialPrebidAdYouLike.variants[0]);
         resetConfig();
     });
 
@@ -503,6 +610,7 @@ describe('bids', () => {
             'ix',
             'sonobi',
             'improvedigital',
+            'adyoulike',
             'openx',
             'appnexus',
         ]);
@@ -510,12 +618,22 @@ describe('bids', () => {
 
     test('should not include Ozone bidders when fate is against them', () => {
         config.set('switches.prebidXaxis', false);
-        expect(bidders()).toEqual(['ix', 'sonobi', 'improvedigital']);
+        expect(bidders()).toEqual([
+            'ix',
+            'sonobi',
+            'improvedigital',
+            'adyoulike',
+        ]);
     });
 
     test('should not include ix bidders when switched off', () => {
         config.set('switches.prebidIndexExchange', false);
-        expect(bidders()).toEqual(['sonobi', 'improvedigital', 'xhb']);
+        expect(bidders()).toEqual([
+            'sonobi',
+            'improvedigital',
+            'xhb',
+            'adyoulike',
+        ]);
     });
 
     test('should include AppNexus directly if in target geolocation', () => {
@@ -526,6 +644,7 @@ describe('bids', () => {
             'and',
             'improvedigital',
             'xhb',
+            'adyoulike',
         ]);
     });
 
@@ -537,6 +656,7 @@ describe('bids', () => {
             'trustx',
             'improvedigital',
             'xhb',
+            'adyoulike',
         ]);
     });
 
@@ -549,6 +669,7 @@ describe('bids', () => {
             'sonobi',
             'improvedigital',
             'xhb',
+            'adyoulike',
         ]);
     });
 

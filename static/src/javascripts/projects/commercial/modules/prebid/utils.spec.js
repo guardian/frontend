@@ -1,9 +1,12 @@
 // @flow
 import { getSync as getSync_ } from 'lib/geolocation';
 import { getBreakpoint as getBreakpoint_ } from 'lib/detect';
+import { testCanBeRun as testCanBeRun_ } from 'common/modules/experiments/test-can-run-checks';
+import { getParticipations as getParticipations_ } from 'common/modules/experiments/utils';
 import {
     getBreakpointKey,
     isExcludedGeolocation,
+    shouldIncludeAdYouLike,
     shouldIncludeAppNexus,
     shouldIncludeTrustX,
     stripMobileSuffix,
@@ -12,6 +15,8 @@ import {
 
 const getSync: any = getSync_;
 const getBreakpoint: any = getBreakpoint_;
+const testCanBeRun: any = testCanBeRun_;
+const getParticipations: any = getParticipations_;
 
 jest.mock('lib/geolocation', () => ({
     getSync: jest.fn(() => 'GB'),
@@ -20,6 +25,9 @@ jest.mock('lib/geolocation', () => ({
 jest.mock('lib/detect', () => ({
     getBreakpoint: jest.fn(() => 'mobile'),
 }));
+
+jest.mock('common/modules/experiments/test-can-run-checks');
+jest.mock('common/modules/experiments/utils');
 
 describe('Utils', () => {
     beforeEach(() => {
@@ -88,5 +96,33 @@ describe('Utils', () => {
         expect(stripTrailingNumbersAbove1('inline23')).toBe('inline');
         expect(stripTrailingNumbersAbove1('inline101')).toBe('inline');
         expect(stripTrailingNumbersAbove1('inline456')).toBe('inline');
+    });
+
+    test('shouldIncludeAdYouLike when not in AdYouLike test', () => {
+        testCanBeRun.mockReturnValue(true);
+        getParticipations.mockReturnValue(undefined);
+        expect(shouldIncludeAdYouLike([[300, 250]])).toBe(false);
+        expect(shouldIncludeAdYouLike([[300, 600], [300, 250]])).toBe(false);
+        expect(shouldIncludeAdYouLike([[728, 90]])).toBe(false);
+    });
+
+    test('shouldIncludeAdYouLike when in aylStyle variant', () => {
+        testCanBeRun.mockReturnValue(true);
+        getParticipations.mockReturnValue({
+            CommercialPrebidAdYouLike: { variant: 'aylStyle' },
+        });
+        expect(shouldIncludeAdYouLike([[300, 250]])).toBe(true);
+        expect(shouldIncludeAdYouLike([[300, 600], [300, 250]])).toBe(true);
+        expect(shouldIncludeAdYouLike([[728, 90]])).toBe(false);
+    });
+
+    test('shouldIncludeAdYouLike when in guardianStyle variant', () => {
+        testCanBeRun.mockReturnValue(true);
+        getParticipations.mockReturnValue({
+            CommercialPrebidAdYouLike: { variant: 'guardianStyle' },
+        });
+        expect(shouldIncludeAdYouLike([[300, 250]])).toBe(true);
+        expect(shouldIncludeAdYouLike([[300, 600], [300, 250]])).toBe(true);
+        expect(shouldIncludeAdYouLike([[728, 90]])).toBe(false);
     });
 });
