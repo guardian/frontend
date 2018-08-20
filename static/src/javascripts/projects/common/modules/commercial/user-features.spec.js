@@ -425,13 +425,12 @@ describe('getting the last one-off contribution date of a user', () => {
 describe('getting the days since last contribution', () => {
     const contributionDateTimeEpoch = Date.parse('2018-08-01T12:00:30Z');
 
-    global.Date.now = jest.fn(() => Date.parse('2018-08-07T10:50:34'));
-
     it('returns null if the last one-off contribution date is null', () => {
         expect(getDaysSinceLastOneOffContribution()).toBe(null);
     });
 
     it('returns the difference in days between the last contribution date and now if the last contribution date is set', () => {
+        global.Date.now = jest.fn(() => Date.parse('2018-08-07T10:50:34'));
         setOneOffContributionCookie(contributionDateTimeEpoch);
         expect(getDaysSinceLastOneOffContribution()).toBe(5);
     });
