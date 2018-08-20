@@ -43,7 +43,7 @@ class GalleryController(contentApiClient: ContentApiClient, val controllerCompon
     contentApiClient.getResponse(contentApiClient.item(path, edition)
       .showFields("all")
     ).map { response =>
-      val gallery = response.content.map(Content(_))
+      val gallery = response.content.map(Content(_, Some(request)))
       val model: Option[GalleryPage] = gallery collect { case g: Gallery => GalleryPage(g, StoryPackages(g, response), index, isTrail) }
 
       ModelOrResult(model, response)

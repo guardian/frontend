@@ -556,9 +556,9 @@ object IsRatio {
  * designed to add some structure to the data that comes from CAPI
  */
 object Elements {
-  def make(apiContent: contentapi.Content): Elements = {
+  def make(apiContent: contentapi.Content, request: Option[RequestHeader] = None): Elements = {
     Elements(apiContent.elements
-      .map(_.zipWithIndex.map { case (element, index) => Element(element, index) })
+      .map(_.zipWithIndex.map { case (element, index) => Element(element, index, request) })
       .getOrElse(Nil))
   }
 }

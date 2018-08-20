@@ -2,6 +2,7 @@ package model
 
 import com.gu.contentapi.client.model.v1.Asset
 import play.api.libs.json.{Json, Writes}
+import play.api.mvc.RequestHeader
 import views.support.{ImgSrc, Naked, Orientation}
 
 object Helpers {
@@ -32,13 +33,23 @@ object Helpers {
 }
 
 object ImageAsset {
-  def make(asset: Asset, index: Int): ImageAsset = {
+  def make(asset: Asset, index: Int, request: Option[RequestHeader] = None): ImageAsset = {
+
+    // TODO: Remove override parameters and below code after fastly-io test
+    val fields: Map[String, String] = Helpers.assetFieldsToMap(asset)
+    val url = asset.typeData.flatMap(_.secureFile).orElse(asset.file)
+    lazy val path: Option[String] = url.map(ImgSrc(_, Naked, request))
+    val thumbnail: Option[String] = fields.get("thumbnail")
+    val thumbnailPath: Option[String] = thumbnail.map(ImgSrc(_, Naked, request))
+
+
     ImageAsset(
       index = index,
       fields = Helpers.assetFieldsToMap(asset),
       mediaType = asset.`type`.name,
       mimeType = asset.mimeType,
-      url = asset.typeData.flatMap(_.secureFile).orElse(asset.file) )
+      url = asset.typeData.flatMap(_.secureFile).orElse(asset.file),
+      path, thumbnailPath)
   }
   implicit val imageAssetWrites: Writes[ImageAsset] = Json.writes[ImageAsset]
 }
@@ -48,12 +59,14 @@ case class ImageAsset(
   fields: Map[String, String],
   mediaType: String,
   mimeType: Option[String],
-  url: Option[String]) {
+  url: Option[String],
+  overridePath: Option[String] = None,
+  overrideThumbnailPath: Option[String] = None) {
 
-  lazy val path: Option[String] = url.map(ImgSrc(_, Naked))
+  lazy val path: Option[String] = if (overridePath.isDefined) overridePath else url.map(ImgSrc(_, Naked))
 
   val thumbnail: Option[String] = fields.get("thumbnail")
-  val thumbnailPath: Option[String] = thumbnail.map(ImgSrc(_, Naked))
+  val thumbnailPath: Option[String] = if (overrideThumbnailPath.isDefined) overrideThumbnailPath else thumbnail.map(ImgSrc(_, Naked))
 
   val width: Int = fields.get("width").map(_.toInt).getOrElse(1)
   val height: Int = fields.get("height").map(_.toInt).getOrElse(1)

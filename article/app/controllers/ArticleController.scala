@@ -79,7 +79,7 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
   }
 
   private def responseToModelOrResult(response: ItemResponse)(implicit request: RequestHeader): Either[ArticlePage, Result] = {
-    val supportedContent: Option[ContentType] = response.content.filter(isSupported).map(Content(_))
+    val supportedContent: Option[ContentType] = response.content.filter(isSupported).map(Content(_, Some(request)))
 
     ModelOrResult(supportedContent, response) match {
       case Left(article:Article) => Left(ArticlePage(article, StoryPackages(article, response)))
