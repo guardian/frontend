@@ -395,7 +395,7 @@ describe('Storing new feature data', () => {
         }));
 });
 
-const setOneOffContributionCookie = (value: string): void =>
+const setOneOffContributionCookie = (value: any): void =>
     addCookie(PERSISTENCE_KEYS.SUPPORT_ONE_OFF_CONTRIBUTION_COOKIE, value);
 
 describe('getting the last one-off contribution date of a user', () => {
@@ -423,8 +423,7 @@ describe('getting the last one-off contribution date of a user', () => {
 });
 
 describe('getting the days since last contribution', () => {
-    const contributionDateTimeISO8601 = '2018-08-01T12:00:30Z';
-    const contributionDateTimeEpoch = Date.parse(contributionDateTimeISO8601);
+    const contributionDateTimeEpoch = Date.parse('2018-08-01T12:00:30Z');
 
     global.Date.now = jest.fn(() => Date.parse('2018-08-07T10:50:34'));
 
