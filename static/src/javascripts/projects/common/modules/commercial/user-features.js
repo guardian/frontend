@@ -151,7 +151,8 @@ const isPayingMember = (): boolean =>
     isUserLoggedIn() && getCookie(PAYING_MEMBER_COOKIE) !== 'false';
 
 // number returned is Epoch time in milliseconds.
-const getLastContributionDate = (): ?number => {
+// null value signifies no last contribution date.
+const getLastOneOffContributionDate = (): ?number => {
     const cookie = getCookie(SUPPORT_ONE_OFF_CONTRIBUTION_COOKIE);
 
     if (!cookie) {
@@ -181,8 +182,8 @@ const getLastContributionDate = (): ?number => {
     return null;
 };
 
-const getDaysSinceLastContribution = (): ?number => {
-    const lastContributionDate = getLastContributionDate();
+const getDaysSinceLastOneOffContribution = (): ?number => {
+    const lastContributionDate = exports.getLastOneOffContributionDate();
     if (!lastContributionDate) {
         return null;
     }
@@ -190,8 +191,8 @@ const getDaysSinceLastContribution = (): ?number => {
 };
 
 // in last six months
-const isRecentContributor = (): boolean => {
-    const daysSinceLastContribution = getDaysSinceLastContribution();
+const isRecentOneOffContributor = (): boolean => {
+    const daysSinceLastContribution = getDaysSinceLastOneOffContribution();
     if (!daysSinceLastContribution) {
         return false;
     }
@@ -214,7 +215,7 @@ const isDigitalSubscriber = (): boolean =>
 */
 const shouldSeeReaderRevenue = (): boolean =>
     !isPayingMember() &&
-    !isRecentContributor() &&
+    !isRecentOneOffContributor() &&
     !isRecurringContributor() &&
     !isDigitalSubscriber();
 
@@ -224,10 +225,12 @@ export {
     accountDataUpdateWarning,
     isAdFreeUser,
     isPayingMember,
-    isRecentContributor,
+    isRecentOneOffContributor,
     isRecurringContributor,
     isDigitalSubscriber,
     shouldSeeReaderRevenue,
     refresh,
     deleteOldData,
+    getLastOneOffContributionDate,
+    getDaysSinceLastOneOffContribution,
 };

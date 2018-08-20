@@ -6,7 +6,7 @@ import { getBreakpoint as getBreakpoint_ } from 'lib/detect';
 import { isUserLoggedIn as isUserLoggedIn_ } from 'common/modules/identity/api';
 import {
     isPayingMember as isPayingMember_,
-    isRecentContributor as isRecentContributor_,
+    isRecentOneOffContributor as isRecentContributor_,
     shouldSeeReaderRevenue as shouldSeeReaderRevenue_,
     isAdFreeUser as isAdFreeUser_,
 } from 'common/modules/commercial/user-features';

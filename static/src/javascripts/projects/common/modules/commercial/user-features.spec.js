@@ -10,6 +10,8 @@ import {
     isRecurringContributor,
     accountDataUpdateWarning,
     isDigitalSubscriber,
+    getLastOneOffContributionDate,
+    getDaysSinceLastOneOffContribution,
 } from './user-features.js';
 
 jest.mock('projects/common/modules/identity/api', () => ({
@@ -37,6 +39,7 @@ const PERSISTENCE_KEYS = {
     AD_FREE_USER_COOKIE: 'GU_AF1',
     ACTION_REQUIRED_FOR_COOKIE: 'gu_action_required_for',
     DIGITAL_SUBSCRIBER_COOKIE: 'gu_digital_subscriber',
+    SUPPORT_ONE_OFF_CONTRIBUTION_COOKIE: 'gu.contributions.contrib-timestamp',
 };
 
 const setAllFeaturesData = opts => {
@@ -390,4 +393,47 @@ describe('Storing new feature data', () => {
             const currentTimeEpoch = new Date().getTime();
             expect(currentTimeEpoch < expiryDateEpoch).toBe(true);
         }));
+});
+
+const setOneOffContributionCookie = (value: string): void =>
+    addCookie(PERSISTENCE_KEYS.SUPPORT_ONE_OFF_CONTRIBUTION_COOKIE, value);
+
+describe('getting the last one-off contribution date of a user', () => {
+    const contributionDateTimeISO8601 = '2018-01-06T09:30:14Z';
+    const contributionDateTimeEpoch = Date.parse(contributionDateTimeISO8601);
+
+    it("returns null if the user hasn't previously contributed", () => {
+        expect(getLastOneOffContributionDate()).toBe(null);
+    });
+
+    it('returns the correct date if the user last contributed on contributions frontend', () => {
+        setOneOffContributionCookie(contributionDateTimeISO8601);
+        expect(getLastOneOffContributionDate()).toBe(contributionDateTimeEpoch);
+    });
+
+    it('return the correct date if the user last contributed on support frontend', () => {
+        setOneOffContributionCookie(contributionDateTimeEpoch.toString());
+        expect(getLastOneOffContributionDate()).toBe(contributionDateTimeEpoch);
+    });
+
+    it('returns null if the cookie has been set with an invalid value', () => {
+        setOneOffContributionCookie('invalid value');
+        expect(getLastOneOffContributionDate()).toBe(null);
+    });
+});
+
+describe('getting the days since last contribution', () => {
+    const contributionDateTimeISO8601 = '2018-08-01T12:00:30Z';
+    const contributionDateTimeEpoch = Date.parse(contributionDateTimeISO8601);
+
+    global.Date.now = jest.fn(() => Date.parse('2018-08-07T10:50:34'));
+
+    it('returns null if the last one-off contribution date is null', () => {
+        expect(getDaysSinceLastOneOffContribution()).toBe(null);
+    });
+
+    it('returns the difference in days between the last contribution date and now if the last contribution date is set', () => {
+        setOneOffContributionCookie(contributionDateTimeEpoch);
+        expect(getDaysSinceLastOneOffContribution()).toBe(5);
+    });
 });
