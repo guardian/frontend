@@ -4,6 +4,7 @@ import com.softwaremill.macwire._
 import commercial.CommercialLifecycle
 import commercial.controllers.CommercialControllers
 import commercial.targeting.TargetingLifecycle
+import common.{ApplicationMetrics, CloudWatchMetricsLifecycle, ContentApiMetrics}
 import common.Logback.{LogbackOperationsPool, LogstashLifecycle}
 import common.dfp.FaciaDfpAgentLifecycle
 import conf.{CachedHealthCheckLifeCycle, FootballLifecycle}
@@ -49,7 +50,8 @@ trait PreviewLifecycleComponents extends SportServices with CommercialServices w
     wire[CricketLifecycle],
     wire[RugbyLifecycle],
     wire[TargetingLifecycle],
-    wire[SkimLinksCacheLifeCycle]
+    wire[SkimLinksCacheLifeCycle],
+    wire[CloudWatchMetricsLifecycle]
   )
 
   def actorSystem: ActorSystem
@@ -80,14 +82,21 @@ trait PreviewControllerComponents
 
 trait AppComponents
   extends FrontendComponents
-  with PreviewControllerComponents
-  with PreviewLifecycleComponents
-  with OnwardServices
-  with ApplicationsServices {
+    with PreviewControllerComponents
+    with PreviewLifecycleComponents
+    with OnwardServices
+    with ApplicationsServices {
 
   override lazy val capiHttpClient: HttpClient = new CapiHttpClient(wsClient) { override val signer = Some(PreviewSigner()) }
   override lazy val contentApiClient = wire[PreviewContentApi]
   override lazy val ophanApi = wire[OphanApi]
+
+  override lazy val appMetrics = ApplicationMetrics(
+    ContentApiMetrics.HttpLatencyTimingMetric,
+    ContentApiMetrics.HttpTimeoutCountMetric,
+    ContentApiMetrics.ContentApiErrorMetric,
+    ContentApiMetrics.ContentApiRequestsMetric
+  )
 
   lazy val healthCheck = wire[HealthCheck]
   lazy val responsiveViewerController = wire[ResponsiveViewerController]
