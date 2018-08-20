@@ -296,10 +296,10 @@ describe('The isDigitalSubscriber getter', () => {
             expect(isDigitalSubscriber()).toBe(false);
         });
 
-        it('Is true when the user has no digital subscriber cookie', () => {
+        it('Is false when the user has no digital subscriber cookie', () => {
             // If we don't know, we err on the side of caution, rather than annoy paying users
             removeCookie(PERSISTENCE_KEYS.DIGITAL_SUBSCRIBER_COOKIE);
-            expect(isDigitalSubscriber()).toBe(true);
+            expect(isDigitalSubscriber()).toBe(false);
         });
     });
 });
