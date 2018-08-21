@@ -317,6 +317,49 @@ trait CommercialSwitches {
      exposeClientSide = false
    )
 
+  val AffiliateLinks: Switch = Switch(
+    group = Commercial,
+    name = "affiliate-links",
+    description = "Enable affiliate links. If off, affiliate links will never be added to content by frontend apps. If on, affiliate links may be added based off other settings",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+
+  val AffiliateLinkSections: Switch = Switch(
+    group = Commercial,
+    name = "affiliate-links-sections",
+    description = "Add affiliate links to all content in sections in affiliateLinkSections config property when no override exists in capi (showAffiliateLinks field).",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+
+  val enableConsentManagementService: Switch = Switch(
+    group = Commercial,
+    name = "enable-consent-management-service",
+    description = "Enable our CMP service to run on each page, so that vendors can query the consent status.",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 8, 23),
+    exposeClientSide = true
+  )
+
+  val commercialPageViewAnalytics: Switch = Switch(
+    group = Commercial,
+    name = "commercial-page-view-analytics",
+    description = "Gather commercial analytics from page views",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+}
+
+trait PrebidSwitches {
+
   val prebidSwitch: Switch = Switch(
     group = Commercial,
     name = "prebid-header-bidding",
@@ -397,50 +440,20 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
+  val prebidAdYouLike: Switch = Switch(
+    group = Commercial,
+    name = "prebid-ad-you-like",
+    description = "Include AdYouLike adapter in Prebid auctions",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
   val prebidS2SOzoneBidder: Switch = Switch(
     group = Commercial,
     name = "prebid-s2sozone",
     description = "Include S2S Ozone project adapter in Prebid auctions",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
-  val AffiliateLinks: Switch = Switch(
-    group = Commercial,
-    name = "affiliate-links",
-    description = "Enable affiliate links. If off, affiliate links will never be added to content by frontend apps. If on, affiliate links may be added based off other settings",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false
-  )
-
-  val AffiliateLinkSections: Switch = Switch(
-    group = Commercial,
-    name = "affiliate-links-sections",
-    description = "Add affiliate links to all content in sections in affiliateLinkSections config property when no override exists in capi (showAffiliateLinks field).",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false
-  )
-
-  val enableConsentManagementService: Switch = Switch(
-    group = Commercial,
-    name = "enable-consent-management-service",
-    description = "Enable our CMP service to run on each page, so that vendors can query the consent status.",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 8, 23),
-    exposeClientSide = true
-  )
-
-  val commercialPageViewAnalytics: Switch = Switch(
-    group = Commercial,
-    name = "commercial-page-view-analytics",
-    description = "Gather commercial analytics from page views",
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
