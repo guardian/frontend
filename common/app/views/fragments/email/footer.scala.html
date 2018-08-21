@@ -3,7 +3,8 @@
 @import fragments.email._
 @import model.EmailAddons.EmailContentType
 @import common.{CanonicalLink, LinkTo}
-
+@import implicits.EmailRequests._
+@import conf.Configuration.id.brazeUnsubscribeToken
 
 <table class="ft">
     <tr>
@@ -15,7 +16,16 @@
                             <tr>
                                 <td class="ft__links">
                                     <a href="https://profile.theguardian.com/email-prefs">Manage your emails</a> |
-                                    <a href="%%unsub_center_url%%">Unsubscribe</a> |
+                                    @if(request.isEmailBraze && request.emailId.nonEmpty) {
+                                        {% assign date_now = "now" | date: "%s" %}
+                                        {% assign path_data = "@request.emailId" | append: ":" | append: external_id  | append: ":" | append: date_now %}
+                                        {% assign hmac_token = path_data | hmac_sha1: "@brazeUnsubscribeToken" %}
+                                        {% assign url_encoded_path = path_data | url_encode %}
+                                        {% assign url_encoded_token = hmac_token | url_encode %}
+                                        <a href="https://profile.theguardian.com/unsubscribe/newsletter/{{url_encoded_path}}/{{url_encoded_token}}">Unsubscribe</a> |
+                                    } else {
+                                        <a href="%%unsub_center_url%%">Unsubscribe</a> |
+                                    }
                                     <a href="@LinkTo(page.metadata.canonicalUrl.map(LinkTo(_)).getOrElse(CanonicalLink(request, page.metadata.webUrl)))">Trouble viewing?</a>
                                 </td>
                             </tr>
