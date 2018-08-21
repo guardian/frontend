@@ -296,7 +296,7 @@ const checkElemForVideo = (elem: ?HTMLElement): void => {
                     onPlayerStateChange: onPlayerStateChange.bind(null, atomId),
                 },
                 playerDiv.dataset.assetId,
-                channelId,
+                channelId
             );
         });
     });

@@ -90,8 +90,8 @@ const setupPlayer = (
     const wantPersonalisedAds: boolean =
         getAdConsentState(thirdPartyTrackingAdConsent) !== false;
     const disableRelatedVideos = !config.get('switches.youtubeRelatedVideos');
-    const relatedChannels = (!disableRelatedVideos && channelId) ? [channelId] : [];
-
+    const relatedChannels =
+        !disableRelatedVideos && channelId ? [channelId] : [];
 
     return new window.YT.Player(eltId, {
         videoId,
@@ -103,8 +103,8 @@ const setupPlayer = (
             onError,
         },
         embedConfig: {
-            'adsConfig': {
-                'nonPersonalizedAd': !wantPersonalisedAds,
+            adsConfig: {
+                nonPersonalizedAd: !wantPersonalisedAds,
             },
             relatedChannels,
             disableRelatedVideos,
@@ -121,7 +121,7 @@ export const initYoutubePlayer = (
     el: HTMLElement,
     handlers: Handlers,
     videoId: string,
-    channelId?: string,
+    channelId?: string
 ): Promise<void> => {
     loadYoutubeJs();
     return promise.then(() => {
