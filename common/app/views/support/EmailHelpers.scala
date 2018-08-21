@@ -12,7 +12,7 @@ object EmailHelpers {
     def imageUrl(displayElement: Option[FaciaDisplayElement]): Option[String] = displayElement.flatMap {
       case InlineImage(imageMedia) => SmallFrontEmailImage(width).bestSrcFor(imageMedia)
       case InlineVideo(video, _, _, maybeFallbackImage) => EmailVideoImage.bestSrcFor(video.images).orElse(imageUrl(maybeFallbackImage))
-      case InlineYouTubeMediaAtom(atom, posterOverride) => posterOverride.orElse(atom.posterImage).flatMap(image => EmailVideoImage.bestSrcFor(image))
+      case InlineYouTubeMediaAtom(atom, posterOverride) => posterOverride.orElse(atom.posterImage).flatMap(EmailVideoImage.bestSrcFor)
       case _ => None
     }
     imageUrl(contentCard.displayElement)

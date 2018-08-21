@@ -53,7 +53,7 @@ class LatestIndexController(
       item.section.map( section =>
         IndexPage(
           page = Section.make(section),
-          contents = item.results.getOrElse(Nil).map(IndexPageItem(_, Some(request))),
+          contents = item.results.getOrElse(Nil).map(IndexPageItem(_)),
           tags = Tags(Nil),
           date = DateTime.now,
           tzOverride = None
@@ -61,7 +61,7 @@ class LatestIndexController(
       ).orElse(item.tag.map( tag =>
         IndexPage(
           page = Tag.make(tag),
-          contents = item.results.getOrElse(Nil).map(IndexPageItem(_, Some(request))),
+          contents = item.results.getOrElse(Nil).map(IndexPageItem(_)),
           tags = Tags(Nil),
           date = DateTime.now,
           tzOverride = None

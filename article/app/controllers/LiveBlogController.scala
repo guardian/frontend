@@ -149,7 +149,7 @@ class LiveBlogController(contentApiClient: ContentApiClient, val controllerCompo
 
   private def responseToModelOrResult(range: BlockRange)(response: ItemResponse)(implicit request: RequestHeader): Either[PageWithStoryPackage, Result] = {
 
-    val supportedContent: Option[ContentType] = response.content.filter(isSupported).map(Content(_, Some(request)))
+    val supportedContent: Option[ContentType] = response.content.filter(isSupported).map(Content(_))
     val supportedContentResult: Either[ContentType, Result] = ModelOrResult(supportedContent, response)
 
     val content: Either[PageWithStoryPackage, Result] = supportedContentResult.left.flatMap {

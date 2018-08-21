@@ -50,13 +50,13 @@ object Trail {
     commercial: Commercial,
     elements: Elements,
     metadata: MetaData,
-    apiContent: contentapi.Content, request: Option[RequestHeader] = None): Trail = {
+    apiContent: contentapi.Content): Trail = {
 
     Trail(
       webPublicationDate = apiContent.webPublicationDate.map(_.toJoda).getOrElse(DateTime.now),
       headline = apiContent.fields.flatMap(_.headline).getOrElse(""),
       sectionName = apiContent.sectionName.getOrElse(""),
-      thumbnailPath = apiContent.fields.flatMap(_.thumbnail).map(ImgSrc(_, Naked, request)),
+      thumbnailPath = apiContent.fields.flatMap(_.thumbnail).map(ImgSrc(_, Naked)),
       isCommentable = apiContent.fields.flatMap(_.commentable).exists(b => b),
       isClosedForComments = !apiContent.fields.flatMap(_.commentCloseDate).map(_.toJoda).exists(_.isAfterNow),
       byline = apiContent.fields.flatMap(_.byline).map(stripHtml),

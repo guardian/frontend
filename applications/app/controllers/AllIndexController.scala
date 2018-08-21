@@ -127,7 +127,7 @@ class AllIndexController(
       item.section.map( section =>
         IndexPage(
           page = Section.make(section),
-          contents = item.results.getOrElse(Nil).map(IndexPageItem(_, Some(request))),
+          contents = item.results.getOrElse(Nil).map(IndexPageItem(_)),
           Tags(Nil),
           date,
           tzOverride = None
@@ -137,7 +137,7 @@ class AllIndexController(
           val tag = Tag.make(apitag)
           IndexPage(
             page = tag,
-            contents = item.results.getOrElse(Nil).map(IndexPageItem(_, Some(request))),
+            contents = item.results.getOrElse(Nil).map(IndexPageItem(_)),
             Tags(List(tag)),
             date,
             tzOverride = None
