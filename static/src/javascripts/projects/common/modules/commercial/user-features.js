@@ -203,8 +203,7 @@ const isRecurringContributor = (): boolean =>
     supportSiteRecurringCookiePresent();
 
 const isDigitalSubscriber = (): boolean =>
-    // If the user is logged in, but has no cookie yet, play it safe and assume they're a digital subscriber
-    isUserLoggedIn() && getCookie(DIGITAL_SUBSCRIBER_COOKIE) !== 'false';
+    getCookie(DIGITAL_SUBSCRIBER_COOKIE) === 'true';
 
 /*
     Whenever the checks are updated, please make sure to update

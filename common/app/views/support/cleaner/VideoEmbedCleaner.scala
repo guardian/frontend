@@ -76,7 +76,7 @@ case class VideoEmbedCleaner(article: Article, maxEmbedHeight: Int = 812) extend
         element.getElementsByTag("source").remove()
 
         // add the poster url
-        video.map(_.images).flatMap(Item640.bestSrcFor).foreach(element.attr("poster", _))
+        video.map(_.images).flatMap(image => Item640.bestSrcFor(image)).foreach(element.attr("poster", _))
 
         video.foreach { videoElement =>
           videoElement.videos.encodings.map { encoding => {

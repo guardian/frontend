@@ -5,6 +5,7 @@ import org.joda.time.Duration
 import com.gu.contentapi.client.model.v1.{AssetType, ElementType, Element => ApiElement}
 import org.apache.commons.math3.fraction.Fraction
 import play.api.libs.json.{Json, Writes}
+import play.api.mvc.RequestHeader
 
 object ElementProperties {
   def make(capiElement: ApiElement, index: Int): ElementProperties = {
@@ -28,9 +29,9 @@ final case class ElementProperties (
 )
 
 object Element {
-  def apply(capiElement: ApiElement, elementIndex: Int): Element = {
+  def apply(capiElement: ApiElement, elementIndex: Int, request: Option[RequestHeader] = None): Element = {
     val properties = ElementProperties.make(capiElement, elementIndex)
-    val images = ImageMedia.make(capiElement, properties)
+    val images = ImageMedia.make(capiElement, properties, request)
 
     capiElement.`type` match {
       case ElementType.Image => ImageElement(properties, images)
@@ -48,8 +49,8 @@ sealed trait Element {
 }
 
 object ImageMedia {
-  def make(capiElement: ApiElement, properties: ElementProperties): ImageMedia = ImageMedia(
-    allImages = capiElement.assets.filter(_.`type` == AssetType.Image).map(ImageAsset.make(_,properties.index)).sortBy(-_.width)
+  def make(capiElement: ApiElement, properties: ElementProperties, request: Option[RequestHeader] = None): ImageMedia = ImageMedia(
+    allImages = capiElement.assets.filter(_.`type` == AssetType.Image).map(ImageAsset.make(_,properties.index, request)).sortBy(-_.width)
   )
   def make(crops: Seq[ImageAsset]): ImageMedia = ImageMedia(
     allImages = crops
