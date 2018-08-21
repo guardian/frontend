@@ -20,7 +20,6 @@ class CommercialFeatures {
     liveblogAdverts: any;
     paidforBand: any;
     asynchronous: any;
-    adFeedback: any;
     adFree: any;
 
     constructor(config: any = defaultConfig) {
@@ -118,8 +117,6 @@ class CommercialFeatures {
             isLiveBlog && this.dfpAdvertising && !this.adFree;
 
         this.paidforBand = config.page.isPaidContent && !supportsSticky;
-
-        this.adFeedback = false;
     }
 }
 
