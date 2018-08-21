@@ -358,7 +358,7 @@ const adYouLikeBidder: PrebidBidder = {
     name: 'adyoulike',
     switchName: 'prebidAdYouLike',
     bidParams: (): PrebidAdYouLikeParams => ({
-        placementId: getAdYouLikePlacementId(),
+        placement: getAdYouLikePlacementId(),
     }),
 };
 

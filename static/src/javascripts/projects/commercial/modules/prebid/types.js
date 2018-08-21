@@ -44,7 +44,7 @@ export type PrebidOpenXParams = {
 };
 
 export type PrebidAdYouLikeParams = {
-    placementId: string,
+    placement: string,
 };
 
 export type PrebidSlotKey =
