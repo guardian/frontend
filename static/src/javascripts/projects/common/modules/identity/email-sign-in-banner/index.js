@@ -65,7 +65,7 @@ const sideEffects: () => void = () => {
     }
 };
 
-const show: () => void = () => {
+const show: () => Promise<boolean> = () => {
     trackInteraction(displayEventKey);
     const store = userPrefs.get(userPrefsStoreKey) || {};
     if (!store || !store.utm) {
@@ -84,12 +84,15 @@ const show: () => void = () => {
         siteMessageLinkName: messageCode,
         siteMessageComponentName: messageCode,
     });
-    message.show(
-        makeTemplate({
-            campaign,
-            signInLink,
-            emailPrefsLink,
-        })
+
+    return Promise.resolve(
+        message.show(
+            makeTemplate({
+                campaign,
+                signInLink,
+                emailPrefsLink,
+            })
+        )
     );
 };
 

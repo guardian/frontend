@@ -159,7 +159,7 @@ const renderSpectre = ($breakingNews: bonzo): bonzo =>
         .addClass('breaking-news--spectre')
         .removeClass('breaking-news--fade-in breaking-news--hidden');
 
-const show = (): void => {
+const show = (): Promise<boolean> => {
     const $body = bonzo(document.body);
     const $breakingNews = bonzo(qwery('.js-breaking-news-placeholder'));
 
@@ -188,6 +188,8 @@ const show = (): void => {
             markAlertAsSeen(alertToShow.id);
         });
     }, alertDelay);
+
+    return Promise.resolve(true);
 };
 
 const canShow = (): Promise<boolean> => {
