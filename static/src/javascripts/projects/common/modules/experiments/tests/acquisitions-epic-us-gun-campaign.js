@@ -3,7 +3,7 @@ import { makeABTest } from 'common/modules/commercial/contributions-utilities';
 import config from 'lib/config';
 import {
     isPayingMember,
-    isRecentContributor,
+    isRecentOneOffContributor,
 } from 'common/modules/commercial/user-features';
 
 const campaignTag = 'us-news/series/break-the-cycle';
@@ -14,7 +14,7 @@ const tagsMatch = () =>
         .split(',')
         .includes(campaignTag);
 
-const isTargetReader = () => isPayingMember() || isRecentContributor();
+const isTargetReader = () => isPayingMember() || isRecentOneOffContributor();
 
 const isTargetPage = () => tagsMatch() && !config.page.shouldHideReaderRevenue;
 

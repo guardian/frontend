@@ -1,9 +1,6 @@
 // @flow
 import { isAbTestTargeted } from 'common/modules/commercial/targeting-tool';
-import {
-    control as acquisitionsCopyControl,
-    getCopyFromGoogleDoc,
-} from 'common/modules/commercial/acquisitions-copy';
+import { getEpicParams } from 'common/modules/commercial/acquisitions-copy';
 import { logView } from 'common/modules/commercial/acquisitions-view-log';
 import {
     submitClickEvent,
@@ -23,6 +20,10 @@ import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templ
 import { shouldSeeReaderRevenue as userShouldSeeReaderRevenue } from 'common/modules/commercial/user-features';
 import { supportContributeURL } from 'common/modules/commercial/support-utilities';
 import { awaitEpicButtonClicked } from 'common/modules/commercial/epic/epic-utils';
+import {
+    getEpicGoogleDoc,
+    googleDocEpicControl,
+} from 'common/modules/commercial/contributions-google-docs';
 
 type EpicTemplate = (Variant, AcquisitionsEpicTemplateCopy) => string;
 
@@ -260,7 +261,7 @@ const makeABTestVariant = (
 
             const copyPromise: Promise<AcquisitionsEpicTemplateCopy> =
                 (options.copy && Promise.resolve(options.copy)) ||
-                acquisitionsCopyControl();
+                googleDocEpicControl();
 
             const render = (templateFn: ?EpicTemplate) =>
                 copyPromise
@@ -451,7 +452,10 @@ const makeGoogleDocEpicVariants = (count: number): Array<Object> => {
             id: `variant_${i}`,
             products: [],
             options: {
-                copy: () => getCopyFromGoogleDoc(`variant_${i}`),
+                copy: () =>
+                    getEpicGoogleDoc.then(res =>
+                        getEpicParams(res, `variant_${i}`)
+                    ),
             },
         });
     }

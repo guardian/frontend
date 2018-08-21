@@ -11,7 +11,8 @@ object ActiveExperiments extends ExperimentsDefinition {
     CommercialClientLogging,
     OrielParticipation,
     OldTLSSupportDeprecation,
-    ThrasherAdjacentMPU
+    ThrasherAdjacentMPU,
+    FastlyIOImages
   )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
@@ -45,9 +46,10 @@ object AudioPageChange extends Experiment(
   name = "audio-page-change",
   description = "Show a different version of the audio page to certain people",
   owners = Owner.group(SwitchGroup.Journalism),
-  sellByDate = new LocalDate(2018, 8, 20),
+  sellByDate = new LocalDate(2018, 8, 27),
   participationGroup = Perc50
 )
+
 
 object ThrasherAdjacentMPU extends Experiment(
   name = "thrasher-adjacent-mpu",
@@ -56,3 +58,12 @@ object ThrasherAdjacentMPU extends Experiment(
   sellByDate = new LocalDate(2018, 9, 7),
   participationGroup = Perc10A
 )
+
+object FastlyIOImages extends Experiment(
+  name = "fastly-io-images",
+  description = "SServe images from fastly-io",
+  owners = Owner.group(SwitchGroup.ServerSideExperiments),
+  sellByDate = new LocalDate(2018, 8, 29),
+  participationGroup = Perc0A
+)
+

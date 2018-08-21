@@ -55,10 +55,10 @@ const createEpicIframe = (url: string): Error | IframeEpicComponent => {
         componentEvent: {
             component: {
                 componentType: 'ACQUISITIONS_EPIC',
-                id: 'iframe_control_epic',
+                id: 'iframe_control_epic_v2',
             },
             abTest: {
-                name: 'iframe_or_not',
+                name: 'iframe_or_not_v2',
                 variant: 'iframe',
             },
         },

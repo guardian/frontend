@@ -19,6 +19,8 @@ type AdSize = {
 
 type Sizes = { desktop: Array<AdSize> };
 
+const isPaidContent = config.get('page.isPaidContent', false);
+
 const adSlotClassSelectorSizes = {
     minAbove: 500,
     minBelow: 500,
@@ -73,6 +75,7 @@ const filterNearbyCandidates = (maximumAdHeight: number) => (
 const addDesktopInlineAds = (isInline1: boolean): Promise<number> => {
     const isImmersive = config.get('page.isImmersive');
 
+    // For inline1
     const defaultRules = {
         bodySelector: '.js-article__body',
         slotSelector: ' > p',
@@ -96,10 +99,11 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<number> => {
         filter: filterNearbyCandidates(adSizes.mpu.height),
     };
 
+    // For any other inline
     const relaxedRules = {
         bodySelector: '.js-article__body',
         slotSelector: ' > p',
-        minAbove: 1000,
+        minAbove: isPaidContent ? 1600 : 1000,
         minBelow: 800,
         selectors: {
             ' .ad-slot': adSlotClassSelectorSizes,
@@ -184,9 +188,13 @@ const addInlineAds = (): Promise<number> => {
         max: 'phablet',
     });
 
-    return isMobile
-        ? addMobileInlineAds()
-        : addDesktopInlineAds(true).then(() => addDesktopInlineAds(false));
+    if (isMobile) {
+        return addMobileInlineAds();
+    }
+    if (isPaidContent) {
+        return addDesktopInlineAds(false);
+    }
+    return addDesktopInlineAds(true).then(() => addDesktopInlineAds(false));
 };
 
 const attemptToAddInlineMerchAd = (): Promise<boolean> => {
