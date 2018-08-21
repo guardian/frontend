@@ -26,7 +26,8 @@ class YoutubeSpec extends MixedPlaySpec {
         posterImage = None,
         endSlatePath = None,
         expired = None,
-        activeVersion = None
+        activeVersion = None,
+        channelId = None
       )
       val displayCaption = false
       val view           = views.html.fragments.atoms.youtube(mediaAtom, displayCaption)(FakeRequest())

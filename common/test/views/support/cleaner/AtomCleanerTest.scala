@@ -38,7 +38,8 @@ class AtomCleanerTest extends FlatSpec
       posterImage = Some(image),
       endSlatePath = Some("/video/end-slate/section/football.json?shortUrl=https://gu.com/p/6vf9z"),
       expired = None,
-      activeVersion = None)
+      activeVersion = None,
+      channelId = None)
     ),
     interactives = Nil,
     recipes = Nil,
