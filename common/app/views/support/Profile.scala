@@ -231,7 +231,7 @@ object Naked extends Profile(None, None)
 
 object ImgSrc extends Logging with implicits.Strings {
 
-  private val imageServiceHost: String = if (stage == "PROD") Configuration.images.path else Configuration.images.fastlyIOHost
+  private val imageServiceHost: String = Configuration.images.fastlyIOHost
 
   private case class HostMapping(prefix: String, token: String)
 
