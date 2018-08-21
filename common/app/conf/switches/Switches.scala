@@ -21,9 +21,9 @@ object SwitchGroup {
   val Commercial = SwitchGroup("Commercial")
   val CommercialFeeds = SwitchGroup("Commercial: Feeds",
                             Some("These switches enable the fetching and parsing of the commercial merchandising components."))
-  val CommercialLabs = SwitchGroup(
-    name = "Commercial: Labs",
-    description = Some("Features of, and experiments with, branded content.")
+  val CommercialPrebid = SwitchGroup(
+    name = "Commercial: Prebid",
+    description = Some("Features of our Prebid auction configuration.")
   )
   val Discussion = SwitchGroup("Discussion")
   val Facia = SwitchGroup("Facia")
