@@ -279,6 +279,7 @@ const checkElemForVideo = (elem: ?HTMLElement): void => {
             // need data attribute with index for unique lookup
             el.setAttribute('data-unique-atom-id', atomId);
             const overlay = el.querySelector('.youtube-media-atom__overlay');
+            const channelId = el.getAttribute('data-channel-id');
 
             initYoutubeEvents(getTrackingId(atomId));
 
@@ -293,7 +294,8 @@ const checkElemForVideo = (elem: ?HTMLElement): void => {
                     ),
                     onPlayerStateChange: onPlayerStateChange.bind(null, atomId),
                 },
-                playerDiv.dataset.assetId
+                playerDiv.dataset.assetId,
+                channelId,
             );
         });
     });
