@@ -89,6 +89,8 @@ const setupPlayer = (
 ) => {
     const wantPersonalisedAds: boolean =
         getAdConsentState(thirdPartyTrackingAdConsent) !== false;
+    // YouTube onward video suggestions will be scoped to this channel
+    // If no channel is specified, no onward suggestions will appear
     const relatedChannels = channelId ? [channelId] : [];
 
     return new window.YT.Player(eltId, {
