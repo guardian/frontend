@@ -596,8 +596,9 @@ final case class Audio (override val content: Content) extends ContentType {
 
   private lazy val podcastTag: Option[Tag] = tags.tags.find(_.properties.podcast.nonEmpty)
   lazy val iTunesSubscriptionUrl: Option[String] = podcastTag.flatMap(_.properties.podcast.flatMap(_.subscriptionUrl))
+  lazy val googlePodcastsUrl: Option[String] = podcastTag.flatMap(_.properties.podcast.flatMap(_.googlePodcastsUrl))
+  lazy val spotifyUrl: Option[String] = podcastTag.flatMap(_.properties.podcast.flatMap(_.spotifyUrl))
   lazy val seriesFeedUrl: Option[String] = podcastTag.map(tag => s"/${tag.id}/podcast.xml")
-
 }
 
 object AtomProperties {
