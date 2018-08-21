@@ -71,7 +71,7 @@ const canShow = (): Promise<boolean> =>
         resolve(result);
     });
 
-const show = (): void => {
+const show = (): Promise<boolean> =>
     loadCssPromise.then(() => {
         const msg = new Message(messageCode, { position: 'top' });
         const fullTemplate = tmp + (getBreakpoint() === 'mobile' ? '' : tablet);
@@ -87,8 +87,9 @@ const show = (): void => {
                 window.scrollTo(window.scrollX, window.scrollY + bannerHeight);
             }
         });
+
+        return true;
     });
-};
 
 const smartAppBanner: Banner = {
     id: messageCode,

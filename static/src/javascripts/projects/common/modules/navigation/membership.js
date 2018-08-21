@@ -59,10 +59,13 @@ const canShow: () => Promise<boolean> = () =>
         updateLink !== null && !hasUserAcknowledgedBanner(messageCode)
     );
 
-const show: () => void = () => {
+const show: () => Promise<boolean> = () => {
     if (updateLink) {
         showAccountDataUpdateWarningMessage(updateLink);
+        return Promise.resolve(true);
     }
+
+    return Promise.resolve(false);
 };
 
 export const membershipBanner: Banner = {

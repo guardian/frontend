@@ -220,10 +220,12 @@ const showBanner = (params: EngagementBannerParams): void => {
 
 let bannerParams;
 
-const show = (): void => {
+const show = (): Promise<boolean> => {
     if (bannerParams) {
         showBanner(bannerParams);
+        return Promise.resolve(true);
     }
+    return Promise.resolve(false);
 };
 
 const canShow = (): Promise<boolean> => {
