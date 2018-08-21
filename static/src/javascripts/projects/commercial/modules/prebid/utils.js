@@ -63,6 +63,7 @@ export const shouldIncludeAdYouLike = (slotSizes: PrebidSize[]): boolean => {
         testCanBeRun(test) &&
         participations !== undefined &&
         participations[test.id] !== undefined &&
+        participations[test.id].variant !== 'notintest' &&
         containsMpu(slotSizes)
     );
 };

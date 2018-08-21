@@ -98,9 +98,19 @@ describe('Utils', () => {
         expect(stripTrailingNumbersAbove1('inline456')).toBe('inline');
     });
 
-    test('shouldIncludeAdYouLike when not in AdYouLike test', () => {
+    test('shouldIncludeAdYouLike when not in any tests', () => {
         testCanBeRun.mockReturnValue(true);
         getParticipations.mockReturnValue(undefined);
+        expect(shouldIncludeAdYouLike([[300, 250]])).toBe(false);
+        expect(shouldIncludeAdYouLike([[300, 600], [300, 250]])).toBe(false);
+        expect(shouldIncludeAdYouLike([[728, 90]])).toBe(false);
+    });
+
+    test('shouldIncludeAdYouLike when not in AdYouLike test', () => {
+        testCanBeRun.mockReturnValue(true);
+        getParticipations.mockReturnValue({
+            CommercialPrebidAdYouLike: { variant: 'notintest' },
+        });
         expect(shouldIncludeAdYouLike([[300, 250]])).toBe(false);
         expect(shouldIncludeAdYouLike([[300, 600], [300, 250]])).toBe(false);
         expect(shouldIncludeAdYouLike([[728, 90]])).toBe(false);
