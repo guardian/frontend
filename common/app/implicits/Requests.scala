@@ -30,6 +30,8 @@ trait Requests {
 
     lazy val isEmailJson: Boolean = r.path.endsWith(".emailjson")
 
+    lazy val isEmailBraze: Boolean = r.path.endsWith(".emailbraze")
+
     // parameters for moon/guui new rendering layer project.
     lazy val isGuuiJson: Boolean = isJson && isGuui
 
@@ -39,7 +41,7 @@ trait Requests {
 
     lazy val isAmp: Boolean = r.getQueryString("amp").isDefined || (!r.host.isEmpty && r.host == Configuration.amp.host)
 
-    lazy val isEmail: Boolean = r.getQueryString("format").exists(_.contains("email")) || r.path.endsWith(EMAIL_SUFFIX) || isEmailJson
+    lazy val isEmail: Boolean = r.getQueryString("format").exists(_.contains("email")) || r.path.endsWith(EMAIL_SUFFIX) || isEmailJson || isEmailBraze
 
     lazy val isModified = isJson || isRss || isEmail
 
@@ -69,9 +71,9 @@ trait Requests {
 trait EmailRequests extends Requests {
   implicit class EmailRichRequestHeader(r: RequestHeader) extends Logging {
     lazy val emailId: String = r.path match {
-      case "/email/uk/daily" => "today-uk"
-      case "/email/us/daily" => "today-us"
-      case "/email/au/daily" => "today-au"
+      case "/email/uk/daily.emailbraze" => "today-uk"
+      case "/email/us/daily.emailbraze" => "today-us"
+      case "/email/au/daily.emailbraze" => "today-au"
       case _ => ""
     }
   }
