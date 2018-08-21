@@ -9,6 +9,7 @@
 @import model.content.MediaWrapper
 @import model.content.MediaAsset
 @import conf.switches.Switches.YouTubePosterOverride
+@import conf.switches.Switches.YouTubeRelatedVideos
 @import model.VideoFaciaProperties
 @import views.html.fragments.items.elements.facia_cards.title
 
@@ -25,14 +26,19 @@
 @defining(media.activeAssets.headOption) { activeAsset: Option[MediaAsset] =>
 @defining(media.expired.getOrElse(false)){expired: Boolean =>
     @defining(playable && !posterImageOverride.exists(_ => YouTubePosterOverride.isSwitchedOn)){sixteenByNine: Boolean =>
-        @defining(media.channelId.getOrElse("UCHpw8xwDNhU9gdohEcJu4aA")){channelId: String =>
+        @defining(
+            if (YouTubeRelatedVideos.isSwitchedOn) {
+                media.channelId.getOrElse("UCHpw8xwDNhU9gdohEcJu4aA")
+            } else {
+                ""
+            }){channelId: String =>
             <div data-media-atom-id="@media.id" class="@RenderClasses(Map(
                 ("u-responsive-ratio", true),
                 ("u-responsive-ratio--hd", sixteenByNine),
                 ("youtube-media-atom", true),
                 ("no-player", !playable || expired )
             ))"
-            @for(endSlatePath <- media.endSlatePath if displayEndSlate)  {
+            @for(endSlatePath <- media.endSlatePath if displayEndSlate && !YouTubeRelatedVideos.isSwitchedOn)  {
               data-end-slate="@endSlatePath"
             }
                 data-channel-id="@channelId"

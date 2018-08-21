@@ -1,8 +1,14 @@
 @import model.content.MediaWrapper
 @(media: model.content.MediaAtom, displayCaption: Boolean, mediaWrapper: Option[MediaWrapper])(implicit request: RequestHeader)
 @import views.html.fragments.atoms.mediaAtomCaption
+@import conf.switches.Switches.YouTubeRelatedVideos
 
-@defining(media.channelId.getOrElse("UCHpw8xwDNhU9gdohEcJu4aA")) { channelId: String =>
+@defining(
+    if(YouTubeRelatedVideos.isSwitchedOn) {
+        media.channelId.getOrElse("UCHpw8xwDNhU9gdohEcJu4aA")
+    } else {
+        ""
+    }) { channelId: String =>
     @for(asset <- media.activeAssets.headOption) {
         <amp-youtube
             id="gu-video-youtube-@{media.id}"
@@ -11,7 +17,7 @@
             width="16"
             height="9"
             data-param-showinfo="0"
-            data-param-embed_config={"relatedChannels":["@channelId"]}
+            data-param-embed_config='{"relatedChannels":["@{channelId}"], "disableRelatedVideos": @{YouTubeRelatedVideos.isSwitchedOff}}'
         >
         </amp-youtube>
     }

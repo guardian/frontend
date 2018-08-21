@@ -241,6 +241,7 @@ const onPlayerReady = (
 
         if (
             !!config.get('page.section') &&
+            !config.get('switches.youtubeRelatedVideos') &&
             isBreakpoint({
                 min: 'desktop',
             })
