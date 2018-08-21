@@ -24,20 +24,21 @@
 
 @defining(media.activeAssets.headOption) { activeAsset: Option[MediaAsset] =>
 @defining(media.expired.getOrElse(false)){expired: Boolean =>
-@defining(playable && !posterImageOverride.exists(_ => YouTubePosterOverride.isSwitchedOn)){sixteenByNine: Boolean =>
-
-
-    <div data-media-atom-id="@media.id" class="@RenderClasses(Map(
-        ("u-responsive-ratio", true),
-        ("u-responsive-ratio--hd", sixteenByNine),
-        ("youtube-media-atom", true),
-        ("no-player", !playable || expired )
-    ))"
-    @for(endSlatePath <- media.endSlatePath if displayEndSlate)  {
-      data-end-slate="@endSlatePath"
+    @defining(playable && !posterImageOverride.exists(_ => YouTubePosterOverride.isSwitchedOn)){sixteenByNine: Boolean =>
+        @defining(media.channelId.getOrElse("UCHpw8xwDNhU9gdohEcJu4aA")){channelId: String =>
+            <div data-media-atom-id="@media.id" class="@RenderClasses(Map(
+                ("u-responsive-ratio", true),
+                ("u-responsive-ratio--hd", sixteenByNine),
+                ("youtube-media-atom", true),
+                ("no-player", !playable || expired )
+            ))"
+            @for(endSlatePath <- media.endSlatePath if displayEndSlate)  {
+              data-end-slate="@endSlatePath"
+            }
+                data-channel-id="@channelId"
+            >
+        }
     }
-    >
-}
 
         @for(asset <- activeAsset if playable && !expired) {
 
