@@ -1,19 +1,10 @@
 // @flow
 
-const daysSince = (date: ?string): number => {
-    const oneDay = 24 * 60 * 60 * 1000;
-
-    if (date !== null && date !== undefined) {
-        try {
-            const ms = Date.parse(date);
-
-            if (Number.isNaN(ms)) return Infinity;
-            return (new Date() - ms) / oneDay;
-        } catch (e) {
-            return Infinity;
-        }
-    }
-    return Infinity;
+// from and to should be Epoch time in milliseconds
+const dateDiffDays = (from: number, to: number): number => {
+    const oneDayMs = 1000 * 60 * 60 * 24;
+    const diffMs = to - from;
+    return Math.floor(diffMs / oneDayMs);
 };
 
-export { daysSince };
+export { dateDiffDays };
