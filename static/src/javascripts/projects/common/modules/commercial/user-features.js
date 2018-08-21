@@ -165,31 +165,19 @@ const getLastOneOffContributionDate = (): ?number => {
     // then a value in ISO 8601 format would parse (incorrectly) e.g. 2018-08-17T16:11:10Z => 2018
     // So first attempt to parse cookie in ISO 8601 format.
 
-    const parseIso = (c: string) => {
-        try {
-            const ms = Date.parse(c);
-            if (Number.isInteger(ms)) {
-                return ms;
-            }
-        } catch (_) {
-            return null;
-        }
-        return null;
-    };
+    let ms;
 
-    const parseEpoch = (c: string) => {
-        try {
-            const ms = parseInt(c, 10);
-            if (Number.isInteger(ms)) {
-                return ms;
-            }
-        } catch (_) {
-            return null;
-        }
-        return null;
-    };
+    ms = Date.parse(cookie);
+    if (Number.isInteger(ms)) {
+        return ms;
+    }
 
-    return parseIso(cookie) || parseEpoch(cookie);
+    ms = parseInt(cookie, 10);
+    if (Number.isInteger(ms)) {
+        return ms;
+    }
+
+    return null;
 };
 
 const getDaysSinceLastOneOffContribution = (): ?number => {
