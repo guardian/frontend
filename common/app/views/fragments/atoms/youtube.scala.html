@@ -36,7 +36,8 @@
                 ("u-responsive-ratio", true),
                 ("u-responsive-ratio--hd", sixteenByNine),
                 ("youtube-media-atom", true),
-                ("no-player", !playable || expired )
+                ("no-player", !playable || expired ),
+                ("youtube-related-videos", YouTubePosterOverride.isSwitchedOn)
             ))"
             @for(endSlatePath <- media.endSlatePath if displayEndSlate && !YouTubeRelatedVideos.isSwitchedOn)  {
               data-end-slate="@endSlatePath"

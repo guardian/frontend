@@ -93,9 +93,9 @@
     transition-duration: 500ms;
 }
 
-.youtube-media-atom__iframe.youtube__video-ended.youtube__video-started ~ .youtube-media-atom__overlay {
+youtube-media-atom:not(.youtube-related-videos) .youtube-media-atom__iframe.youtube__video-ended.youtube__video-started ~ .youtube-media-atom__overlay {
     @include fade-in;
-}
+ }
 
 .youtube-media-atom__iframe.youtube__video-ended.youtube__video-started ~ .end-slate-container {
     @include mq($from: tablet) {
