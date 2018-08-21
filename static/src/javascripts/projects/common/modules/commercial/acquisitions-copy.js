@@ -1,6 +1,5 @@
 // @flow
 import { getLocalCurrencySymbol } from 'lib/geolocation';
-import fetchJSON from 'lib/fetch-json';
 import reportError from 'lib/report-error';
 
 const controlHeading = 'Since you’re here &hellip;';
@@ -39,49 +38,43 @@ const ctaLinkSentenceWorldCupLiveblogPlayful = (
 ): string =>
     `<span class="contributions__highlight"> For as little as ${currencySymbol}1, you can support the Guardian – and it only takes a minute.</span> Otherwise we’ll send Sergio Ramos round to sort you out. <a href="${supportUrl}" target="_blank" class="u-underline">Make a contribution</a>`;
 
-export const getCopyFromGoogleDoc = (
+export const getEpicParams = (
+    googleDocJson: any,
     sheetName: string
-): Promise<AcquisitionsEpicTemplateCopy> => {
-    const url =
-        'https://interactive.guim.co.uk/docsdata/1fy0JolB1bf1IEFLHGHfUYWx-niad7vR9K954OpTOvjE.json';
+): AcquisitionsEpicTemplateCopy => {
+    const rows =
+        googleDocJson &&
+        googleDocJson.sheets &&
+        googleDocJson.sheets[sheetName];
+    const firstRow = rows && rows[0];
 
-    return fetchJSON(url, {
-        mode: 'cors',
-    }).then(res => {
-        const rows = res && res.sheets && res.sheets[sheetName];
-        const firstRow = rows && rows[0];
+    if (
+        !(
+            firstRow &&
+            firstRow.heading &&
+            firstRow.paragraphs &&
+            firstRow.highlightedText
+        )
+    ) {
+        reportError(new Error('Could not fetch epic copy from Google Doc'), {
+            feature: 'epic-test',
+        });
+        return fallbackControl;
+    }
 
-        if (
-            !(
-                firstRow &&
-                firstRow.heading &&
-                firstRow.paragraphs &&
-                firstRow.highlightedText
-            )
-        ) {
-            reportError(
-                new Error('Could not fetch epic copy from Google Doc'),
-                { feature: 'epic-test' }
-            );
-            return fallbackControl;
-        }
-
-        return {
-            heading: firstRow.heading,
-            paragraphs: rows.map(row => row.paragraphs),
-            highlightedText: firstRow.highlightedText.replace(
-                /%%CURRENCY_SYMBOL%%/g,
-                getLocalCurrencySymbol()
-            ),
-        };
-    });
+    return {
+        heading: firstRow.heading,
+        paragraphs: rows.map(row => row.paragraphs),
+        highlightedText: firstRow.highlightedText.replace(
+            /%%CURRENCY_SYMBOL%%/g,
+            getLocalCurrencySymbol()
+        ),
+    };
 };
 
 /*
  Exported instances of AcquisitionsEpicTemplateCopy
  */
-export const control: () => Promise<AcquisitionsEpicTemplateCopy> = () =>
-    getCopyFromGoogleDoc('control');
 
 export const liveblogCopy = (
     supportUrl: string

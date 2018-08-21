@@ -60,7 +60,7 @@ export const acquisitionsTests: $ReadOnlyArray<AcquisitionsABTest> = [
     acquisitionsEpicThankYou,
 ];
 
-export const getTest = (): ?ABTest => {
+export const getTest = (): ?AcquisitionsABTest => {
     const forcedTests = getForcedTests()
         .map(({ testId }) => acquisitionsTests.find(t => t.id === testId))
         .filter(Boolean);
