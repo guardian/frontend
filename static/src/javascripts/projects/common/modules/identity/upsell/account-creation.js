@@ -4,7 +4,7 @@ import React, { render } from 'preact-compat';
 import fastdom from 'lib/fastdom-promise';
 import ophan from 'ophan/ng';
 import loadEnhancers from './../modules/loadEnhancers';
-import { AccountCreationForm } from './account-creation/AccountCreationForm';
+import { AccountCreationFlow } from './account-creation/AccountCreationFlow';
 
 const trackInteraction = (interaction: string): void => {
     ophan.record({
@@ -18,7 +18,7 @@ const bindAccountCreation = (el): void => {
     trackInteraction('set-password : display');
     fastdom.write(() => {
         render(
-            <AccountCreationForm
+            <AccountCreationFlow
                 csrfToken="test1"
                 accountToken="test2"
                 userEmail="test3@test.test"
