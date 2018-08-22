@@ -23,6 +23,7 @@ import { supportContributeURL } from 'common/modules/commercial/support-utilitie
 import { awaitEpicButtonClicked } from 'common/modules/commercial/epic/epic-utils';
 import {
     getEpicGoogleDoc,
+    getBannerGoogleDoc,
     googleDocEpicControl,
 } from 'common/modules/commercial/contributions-google-docs';
 
@@ -453,11 +454,21 @@ const makeGoogleDocEpicVariants = (count: number): Array<Object> => {
             id: `variant_${i}`,
             products: [],
             options: {
-                copy: () =>
-                    getEpicGoogleDoc.then(res =>
-                        getEpicParams(res, `variant_${i}`)
-                    ),
+                copy: () => getEpicGoogleDoc.then(res => getEpicParams(res, `variant_${i}`)),
             },
+        });
+    }
+    return variants;
+};
+
+const makeGoogleDocBannerVariants = (count: number): Array<InitBannerABTestVariant> => {
+    const variants = [];
+
+    for (let i = 1; i <= count; i += 1) {
+        variants.push({
+            id: `variant_${i}`,
+            products: [],
+            engagementBannerParams: () => getBannerGoogleDoc.then(res => getAcquisitionsBannerParams(res, `variant_${i}`)),
         });
     }
     return variants;
@@ -470,6 +481,7 @@ export {
     defaultButtonTemplate,
     makeBannerABTestVariants,
     makeGoogleDocEpicVariants,
+    makeGoogleDocBannerVariants,
     defaultMaxViews,
     isEpicDisplayable,
 };
