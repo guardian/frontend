@@ -1,6 +1,6 @@
 @(player: model.AudioPlayer, isAdFree: Boolean)
 
-@trackingCode(target: String) = {@if(player.audio.tags.isPodcast){podcast:}@target:@player.title}
+@trackingCode(target: String) = {@if(player.audio.tags.isPodcast){podcast:subscribe:}@target:@player.title}
 
 <div class="gu-media-wrapper gu-media-wrapper--audio">
     <audio controls="controls" class="gu-media gu-media--audio js-gu-media--enhance" data-title="@player.title"
@@ -14,25 +14,42 @@
     @player.audio match {
         case audio: model.Audio => {
             <ul class="podcast-meta u-unstyled">
+                <li class="podcast-meta__item podcast-meta__item--itunes">
+                    <p class="podcast-meta__item__link pseudo-icon">Subscribe for free:</p>
+                </li>
                 @audio.iTunesSubscriptionUrl.map { iTunesSubscriptionUrl =>
                     <li class="podcast-meta__item podcast-meta__item--itunes">
-                        <a class="podcast-meta__item__link pseudo-icon pseudo-icon--audio--white"
+                        <a class="podcast-meta__item__link pseudo-icon"
                            href="@iTunesSubscriptionUrl"
-                           data-link-name="@trackingCode("subscribe")">Subscribe via Apple Podcasts</a>
+                           data-link-name="@trackingCode("iTunes")">Apple Podcasts</a>
                     </li>
                 }
-                @audio.downloadUrl.map { downloadUrl =>
-                    <li class="podcast-meta__item podcast-meta__item--download">
-                        <a class="podcast-meta__item__link pseudo-icon pseudo-icon--download--white"
-                           href="@model.Audio.acastUrl(player, downloadUrl, isAdFree)"
-                           data-link-name="@trackingCode("download")">Download MP3</a>
+                @audio.googlePodcastsUrl.map { googlePodcastsUrl =>
+                    <li class="podcast-meta__item podcast-meta__item--googlePodcasts">
+                        <a class="podcast-meta__item__link pseudo-icon"
+                        href="@googlePodcastsUrl"
+                        data-link-name="@trackingCode("googlePodcasts")">Google Podcasts</a>
+                    </li>
+                }
+                @audio.spotifyUrl.map { spotifyUrl =>
+                    <li class="podcast-meta__item podcast-meta__item--spotify">
+                        <a class="podcast-meta__item__link pseudo-icon"
+                        href="@spotifyUrl"
+                        data-link-name="@trackingCode("spotify")">Spotify</a>
                     </li>
                 }
                 @audio.seriesFeedUrl.map { seriesFeedUrl =>
                     <li class="podcast-meta__item podcast-meta__item--feed">
-                        <a class="podcast-meta__item__link pseudo-icon pseudo-icon--rss--white"
+                        <a class="podcast-meta__item__link pseudo-icon"
                            href="@seriesFeedUrl"
-                           data-link-name="@trackingCode("feed")">Podcast feed URL</a>
+                           data-link-name="@trackingCode("feed")">RSS</a>
+                    </li>
+                }
+                @audio.downloadUrl.map { downloadUrl =>
+                    <li class="podcast-meta__item podcast-meta__item--download">
+                        <a class="podcast-meta__item__link pseudo-icon"
+                        href="@model.Audio.acastUrl(player, downloadUrl, isAdFree)"
+                        data-link-name="@trackingCode("download")">Download</a>
                     </li>
                 }
             </ul>
