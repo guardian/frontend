@@ -50,7 +50,10 @@
         }
 
         @if(request.cookies.get("SC_GU_GUEST_PW_SET").isDefined) {
-            <form class="form js-identity-upsell-account-creation" novalidate action="/password/guest" role="form" method="post">
+            <div class="js-identity-upsell-account-creation" data-csrf="dsfsdfsf">
+                …
+            </div>
+            <form class="form js-identity-upsell-account-creation-old" novalidate action="/password/guest" role="form" method="post">
                 <fieldset class="fieldset">
                     @views.html.helper.CSRF.formField
                     <div>
