@@ -6,9 +6,8 @@ import mediator from 'lib/mediator';
 import { membershipEngagementBannerTests } from 'common/modules/experiments/tests/membership-engagement-banner-tests';
 import { testCanBeRun } from 'common/modules/experiments/test-can-run-checks';
 import { isInTest, variantFor } from 'common/modules/experiments/segment-util';
-import { engagementBannerParams } from 'common/modules/commercial/membership-engagement-banner-parameters';
+import { defaultEngagementBannerParams, getUserVariantTemplateParams } from 'common/modules/commercial/membership-engagement-banner-parameters';
 import { isBlocked } from 'common/modules/commercial/membership-engagement-banner-block';
-import { getSync as getGeoLocation } from 'lib/geolocation';
 import { shouldShowReaderRevenue } from 'common/modules/commercial/contributions-utilities';
 import type { Banner } from 'common/modules/ui/bannerPicker';
 import bean from 'bean';
@@ -27,6 +26,7 @@ type BannerDeployLog = {
 };
 
 const messageCode = 'engagement-banner';
+const minArticles = 3;
 
 const getTimestampOfLastBannerDeploy = (): Promise<string> =>
     fetchJson('/reader-revenue/contributions-banner-deploy-log', {
@@ -61,36 +61,6 @@ const getUserTest = (): ?AcquisitionsABTest =>
 const getUserVariant = (test: ?ABTest): ?Variant =>
     test ? variantFor(test) : undefined;
 
-const buildCampaignCode = (campaignId: string, variantId: string): string =>
-    `${campaignId}_${variantId}`;
-
-const getUserVariantParams = (
-    userVariant: ?Variant,
-    campaignId: ?string
-): EngagementBannerParams | {} => {
-    if (
-        campaignId &&
-        userVariant &&
-        userVariant.options &&
-        userVariant.options.engagementBannerParams
-    ) {
-        const userVariantParams = userVariant.options.engagementBannerParams;
-
-        if (!userVariantParams.campaignCode) {
-            userVariantParams.campaignCode = buildCampaignCode(
-                campaignId,
-                userVariant.id
-            );
-        }
-
-        return userVariantParams;
-    } else if (campaignId && userVariant) {
-        return {
-            campaignCode: buildCampaignCode(campaignId, userVariant.id),
-        };
-    }
-    return {};
-};
 
 /*
  * Params for the banner are overlaid in this order, earliest taking precedence:
@@ -109,16 +79,35 @@ const getUserVariantParams = (
  * otherwise a populated params object that looks like this:
  *
  *  {
- *    minArticles: 5, // how many articles should the user see before they get the engagement banner?
  *    messageText: "..."
  *    buttonCaption: "Become a Supporter"
  *  }
  *
  */
-const deriveBannerParams = (location: string): ?EngagementBannerParams => {
-    const defaultParams = engagementBannerParams(location);
+
+const buildCampaignCode= (userTest: ?AcquisitionsABTest, userVariant: ?Variant): {campaignCode: string } | {}  => {
+    if (userTest && userVariant) {
+        return {campaignCode: `${userTest.campaignId}_${userVariant.id}`}
+    }
+    return {}
+};
+
+export const deriveBannerParams = (): Promise<?EngagementBannerParams> => {
+    const userTest: ?AcquisitionsABTest = getUserTest();
+    const userVariant: ?Variant= getUserVariant(userTest);
+
+    const defaultParams: EngagementBannerParams = defaultEngagementBannerParams();
+    const variantTemplateParamsPromise: Promise<EngagementBannerTemplateParams | {} > = getUserVariantTemplateParams(userVariant);
+    const campaignCode: { campaignCode :string } | {} = buildCampaignCode(userTest, userVariant);
+
+    return variantTemplateParamsPromise.then(variantTemplateParams => {
+
+        return {...defaultParams, ...variantTemplateParams, ...campaignCode};
+    });
+};
+
+const userVariantCanShow = (): boolean => {
     const userTest = getUserTest();
-    const campaignId = userTest ? userTest.campaignId : undefined;
     const userVariant = getUserVariant(userTest);
 
     if (
@@ -126,14 +115,10 @@ const deriveBannerParams = (location: string): ?EngagementBannerParams => {
         userVariant.options &&
         userVariant.options.blockEngagementBanner
     ) {
-        return;
+        return false;
     }
+    return true;
 
-    return Object.assign(
-        {},
-        defaultParams,
-        getUserVariantParams(userVariant, campaignId)
-    );
 };
 
 const getVisitCount = (): number => local.get('gu.alreadyVisited') || 0;
@@ -218,14 +203,14 @@ const showBanner = (params: EngagementBannerParams): void => {
     }
 };
 
-let bannerParams;
-
 const show = (): Promise<boolean> => {
-    if (bannerParams) {
-        showBanner(bannerParams);
-        return Promise.resolve(true);
-    }
-    return Promise.resolve(false);
+    return deriveBannerParams().then(params => {
+        if (params) {
+            showBanner(params);
+            return Promise.resolve(true);
+        }
+        return Promise.resolve(false);
+    })
 };
 
 const canShow = (): Promise<boolean> => {
@@ -233,11 +218,10 @@ const canShow = (): Promise<boolean> => {
         return Promise.resolve(false);
     }
 
-    bannerParams = deriveBannerParams(getGeoLocation());
     const hasSeenEnoughArticles: boolean =
-        !!bannerParams && getVisitCount() >= bannerParams.minArticles;
+        getVisitCount() >= minArticles;
 
-    if (hasSeenEnoughArticles && shouldShowReaderRevenue()) {
+    if (hasSeenEnoughArticles && shouldShowReaderRevenue() && userVariantCanShow()) {
         const userLastClosedBannerAt = userPrefs.get(
             'engagementBannerLastClosedAt'
         );
@@ -248,7 +232,6 @@ const canShow = (): Promise<boolean> => {
         }
         return hasBannerBeenRedeployedSinceClosed(userLastClosedBannerAt);
     }
-
     return Promise.resolve(false);
 };
 

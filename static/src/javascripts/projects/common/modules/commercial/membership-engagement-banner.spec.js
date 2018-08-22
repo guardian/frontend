@@ -4,11 +4,14 @@ import fakeConfig from 'lib/config';
 import fakeOphan from 'ophan/ng';
 import fetchJson from 'lib/fetch-json';
 import userPrefs from 'common/modules/user-prefs';
-import { engagementBannerParams as engagementBannerParams_ } from 'common/modules/commercial/membership-engagement-banner-parameters';
-import { membershipEngagementBanner } from 'common/modules/commercial/membership-engagement-banner';
+import { defaultEngagementBannerParams as defaultEngagementBannerParams_,
+    getUserVariantTemplateParams as getUserVariantTemplateParams_
+} from 'common/modules/commercial/membership-engagement-banner-parameters';
+import { membershipEngagementBanner, deriveBannerParams } from 'common/modules/commercial/membership-engagement-banner';
 import { shouldShowReaderRevenue } from 'common/modules/commercial/contributions-utilities';
 
-const engagementBannerParams: any = engagementBannerParams_;
+const defaultEngagementBannerParams: any = defaultEngagementBannerParams_;
+const getUserVariantTemplateParams: any = getUserVariantTemplateParams_;
 
 jest.mock('lib/mediator');
 jest.mock('lib/storage', () => ({
@@ -59,9 +62,7 @@ jest.mock(
                 variants: [
                     {
                         id: 'fake-variant-id',
-                        options: {
-                            engagementBannerParams: {},
-                        },
+                        engagementBannerParams: {},
                     },
                 ],
                 canRun: () => true,
@@ -73,11 +74,18 @@ jest.mock(
 jest.mock(
     'common/modules/commercial/membership-engagement-banner-parameters',
     () => ({
-        engagementBannerParams: jest.fn(() => ({
-            minArticles: 1,
+        defaultEngagementBannerParams: jest.fn(() => ({
             products: ['CONTRIBUTION'],
             linkUrl: 'fake-link-url',
         })),
+        getUserVariantTemplateParams: jest.fn(() =>
+            Promise.resolve({
+                buttonCaption: 'test-button-caption',
+                linkUrl: 'test-link-url',
+                messageText: 'test-message-text',
+                ctaText: 'test-cta-text',
+            })
+        )
     })
 );
 jest.mock('common/modules/experiments/test-can-run-checks', () => ({
@@ -148,7 +156,6 @@ describe('Membership engagement banner', () => {
     describe('canShow returns false', () => {
         it('should return false if membershipEngagementBanner switch off', () => {
             fakeConfig.get.mockImplementationOnce(() => false);
-
             return membershipEngagementBanner.canShow().then(canShow => {
                 expect(canShow).toBe(false);
             });
@@ -203,8 +210,7 @@ describe('Membership engagement banner', () => {
         let emitSpy;
 
         beforeEach(() => {
-            engagementBannerParams.mockImplementationOnce(() => ({
-                minArticles: 1,
+            defaultEngagementBannerParams.mockImplementationOnce(() => ({
                 products: ['CONTRIBUTION'],
                 campaignCode: 'fake-campaign-code',
                 linkUrl: 'fake-link-url',
@@ -217,32 +223,21 @@ describe('Membership engagement banner', () => {
         });
 
         it('should show the membership engagement banner', () => {
-            membershipEngagementBanner.canShow().then(canShow => {
-                expect(canShow).toBe(true);
-
-                membershipEngagementBanner.show();
-
-                expect(FakeMessage.prototype.show).toHaveBeenCalledTimes(1);
-            });
+            membershipEngagementBanner.show().then( () =>
+                expect(FakeMessage.prototype.show).toHaveBeenCalledTimes(1)
+            )
         });
 
-        it('should emit a display event', () =>
-            membershipEngagementBanner.canShow().then(canShow => {
-                expect(canShow).toBe(true);
-
-                membershipEngagementBanner.show();
-
+        it('should emit a display event', () => {
+            membershipEngagementBanner.show().then( () =>
                 expect(emitSpy).toHaveBeenCalledWith(
                     'membership-message:display'
-                );
-            }));
+                )
+            )
+        });
 
         it('should record the component event in ophan with a/b test info', () =>
-            membershipEngagementBanner.canShow().then(canShow => {
-                expect(canShow).toBe(true);
-
-                membershipEngagementBanner.show();
-
+            membershipEngagementBanner.show().then( () =>
                 expect(fakeOphan.record).toHaveBeenCalledWith({
                     componentEvent: {
                         component: {
@@ -257,8 +252,8 @@ describe('Membership engagement banner', () => {
                             variant: 'fake-variant-id',
                         },
                     },
-                });
-            }));
+                })
+            ));
     });
 
     describe('If user already member', () => {
@@ -273,51 +268,43 @@ describe('Membership engagement banner', () => {
 
     describe('creates message with', () => {
         beforeEach(() => {
-            engagementBannerParams.mockImplementationOnce(() => ({
-                minArticles: 1,
+            defaultEngagementBannerParams.mockImplementationOnce(() => ({
                 linkUrl: 'fake-link-url',
             }));
-            fakeVariantFor.mockImplementationOnce(() => ({
+            getUserVariantTemplateParams.mockImplementationOnce(() =>
+                Promise.resolve({
                 id: 'fake-variant-id',
-                options: {
-                    // This being empty is what lets the campaign
-                    // code default to the test campaignId plus variant id
-                    engagementBannerParams: {},
-                },
+                engagementBannerParams: {},
             }));
         });
 
         it('correct campaign code', () =>
-            membershipEngagementBanner.canShow().then(canShow => {
-                expect(canShow).toBe(true);
-
-                membershipEngagementBanner.show();
-
+            membershipEngagementBanner.show().then( () =>
                 expect(
                     FakeMessage.mock.calls[0][1].siteMessageComponentName
-                ).toBe('fake-campaign-id_fake-variant-id');
-            }));
+                ).toBe('fake-campaign-id_fake-variant-id')
+            )
+        );
 
         it('correct CSS modifier class', () =>
-            membershipEngagementBanner.canShow().then(canShow => {
-                expect(canShow).toBe(true);
-
-                membershipEngagementBanner.show();
-
+            membershipEngagementBanner.show().then( () =>
                 expect(FakeMessage.mock.calls[0][1].cssModifierClass).toBe(
                     'engagement-banner'
-                );
-            }));
+                )
+            )
+        );
     });
 
     describe('renders message with', () => {
         beforeEach(() => {
-            engagementBannerParams.mockImplementationOnce(() => ({
-                minArticles: 1,
+            defaultEngagementBannerParams.mockImplementationOnce(() => ({
                 messageText: 'fake-message-text',
                 linkUrl: 'fake-link-url',
                 buttonCaption: 'fake-button-caption',
             }));
+            getUserVariantTemplateParams.mockImplementationOnce(() =>
+                Promise.resolve({ })
+            );
             fakeConfig.get.mockImplementationOnce(() => true);
             fakeConstructQuery.mockImplementationOnce(
                 () => 'fake-query-parameters'
@@ -325,47 +312,35 @@ describe('Membership engagement banner', () => {
         });
 
         it('message text', () =>
-            membershipEngagementBanner.canShow().then(canShow => {
-                expect(canShow).toBe(true);
-
-                membershipEngagementBanner.show();
-
+            membershipEngagementBanner.show().then( () =>
                 expect(FakeMessage.prototype.show.mock.calls[0][0]).toMatch(
                     /fake-message-text/
-                );
-            }));
+                )
+            )
+        );
 
         it('colour class', () =>
-            membershipEngagementBanner.canShow().then(canShow => {
-                expect(canShow).toBe(true);
-
-                membershipEngagementBanner.show();
-
+            membershipEngagementBanner.show().then( () =>
                 expect(FakeMessage.prototype.show.mock.calls[0][0]).toMatch(
                     /engagement-banner/
-                );
-            }));
+                )
+            )
+        );
 
         it('link URL', () =>
-            membershipEngagementBanner.canShow().then(canShow => {
-                expect(canShow).toBe(true);
-
-                membershipEngagementBanner.show();
-
+            membershipEngagementBanner.show().then( () =>
                 expect(FakeMessage.prototype.show.mock.calls[0][0]).toMatch(
                     /fake-link-url\?fake-query-parameters/
-                );
-            }));
+                )
+            )
+        );
 
         it('button caption', () =>
-            membershipEngagementBanner.canShow().then(canShow => {
-                expect(canShow).toBe(true);
-
-                membershipEngagementBanner.show();
-
+            membershipEngagementBanner.show().then( () =>
                 expect(FakeMessage.prototype.show.mock.calls[0][0]).toMatch(
                     /fake-button-caption/
-                );
-            }));
+                )
+            )
+        );
     });
 });
