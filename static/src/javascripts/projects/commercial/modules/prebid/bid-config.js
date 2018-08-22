@@ -213,6 +213,8 @@ const getImprovePlacementId = (sizes: PrebidSize[]): number => {
     }
 };
 
+const getAppNexusDirectPlacementId = (): string => '11016434';
+
 const getAppNexusPlacementId = (sizes: PrebidSize[]): string => {
     switch (config.get('page.edition')) {
         case 'UK':
@@ -304,8 +306,8 @@ const inPbTestOr = (liveClause: boolean): boolean => isPbTestOn() || liveClause;
 const appNexusBidder: PrebidBidder = {
     name: 'and',
     switchName: 'prebidAppnexus',
-    bidParams: (slotId: string, sizes: PrebidSize[]): PrebidAppNexusParams => ({
-        placementId: getAppNexusPlacementId(sizes),
+    bidParams: (): PrebidAppNexusParams => ({
+        placementId: getAppNexusDirectPlacementId(),
         customData: buildAppNexusTargeting(buildPageTargeting()), // Ok to duplicate call. Lodash 'once' is used.
     }),
 };
