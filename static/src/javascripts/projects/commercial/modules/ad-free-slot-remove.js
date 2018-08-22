@@ -49,7 +49,9 @@ const adFreeSlotRemove = once(
             commercialFaciaContainersToRemove.forEach(
                 (faciaContainer: Element) => faciaContainer.classList.add('u-h')
             );
-            paidForItemsToRemove.forEach((paidItem: Element) => paidItem.remove());
+            paidForItemsToRemove.forEach((paidItem: Element) =>
+                paidItem.remove()
+            );
         });
     }
 );
