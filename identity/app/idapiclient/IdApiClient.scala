@@ -223,11 +223,11 @@ class IdApiClient(
     def apply(paramsOpt: Option[Parameters]): Parameters = paramsOpt.getOrElse(Iterable.empty)
    }
 
-  private def buildParams(auth: Option[Auth] = None,
-                            tracking: Option[TrackingData] = None,
-                            extra: Parameters = Iterable.empty): Parameters = {
-    extra ++ clientAuth.parameters ++ auth.map(_.parameters)
-  }
+  private def buildParams(
+      auth: Option[Auth] = None,
+      tracking: Option[TrackingData] = None,
+      extra: Parameters = Iterable.empty): Parameters =
+    extra ++ clientAuth.parameters ++ auth.map(_.parameters) ++ tracking.map(_.parameters)
 
   private def buildHeaders(auth: Option[Auth] = None, extra: Parameters = Iterable.empty): Parameters = {
     extra ++ clientAuth.headers ++ auth.map(_.headers)
