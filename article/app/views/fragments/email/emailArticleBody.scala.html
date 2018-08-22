@@ -138,7 +138,7 @@
                     }
 
                     case ImageBlockElement(media, data, showCredit) => {
-                        @EmailImage.bestSrcFor(media, Some(request)).map { imageUrl =>
+                        @EmailImage.bestSrcFor(media).map { imageUrl =>
                             @row(Seq("no-pad")) {
                                 @if(article.isTheMinute && block.url.isDefined) {
                                     <a href="@block.url.getOrElse("#")">
@@ -183,7 +183,7 @@
 
                     case ContentAtomBlockElement(atomId) => {
                         @page.article.content.media.find(_.id == atomId).map { atom: MediaAtom =>
-                            @atom.posterImage.flatMap(image => EmailVideoImage.bestSrcFor(image, Some(request))).map { imageUrl =>
+                            @atom.posterImage.flatMap(EmailVideoImage.bestSrcFor).map { imageUrl =>
                                 @atom.activeAssets.headOption.map { asset =>
                                     @row(Seq("padded")) {
                                         @asset.platform match {

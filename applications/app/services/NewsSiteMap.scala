@@ -76,7 +76,7 @@ class NewsSiteMap(contentApiClient: ContentApiClient) {
     responses.map { paginatedResults =>
       val urls = for {
         resp <- paginatedResults
-        item <- resp.results.map(result => Content(result))
+        item <- resp.results.map(Content.apply)
       } yield {
         val keywordTags = item.tags.keywords.map(_.metadata.webTitle)
         val sectionTag = item.content.seriesTag.toList.filter(tag => !keywordTags.contains(tag.properties.sectionName)).map(_.metadata.webTitle)

@@ -55,7 +55,7 @@ class TaggedContentController(
       .tag(tag)
       .pageSize(3)
     ).map { response =>
-        response.results.toList map { Content(_, Some(request)) }
+        response.results.toList map { Content(_) }
     } recover { case ContentApiError(404, message, _) =>
       log.info(s"Got a 404 while calling content api: $message")
       Nil

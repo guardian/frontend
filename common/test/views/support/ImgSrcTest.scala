@@ -15,7 +15,7 @@ import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 
 class ImgSrcTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
 
-  lazy val imageHost = Configuration.images.imgixHost
+  lazy val imageHost = Configuration.images.fastlyIOHost
 
   val asset = Asset(
     AssetType.Image,

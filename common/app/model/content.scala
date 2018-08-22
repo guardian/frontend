@@ -18,11 +18,9 @@ import org.jsoup.safety.Whitelist
 import com.github.nscala_time.time.Imports._
 import play.api.libs.json._
 import views.support._
-
 import scala.collection.JavaConverters._
 import scala.util.Try
 import implicits.Booleans._
-import play.api.mvc.RequestHeader
 
 sealed trait ContentType {
   def content: Content
@@ -66,7 +64,8 @@ final case class Content(
   wordCount: Int,
   showByline: Boolean,
   hasStoryPackage: Boolean,
-  rawOpenGraphImage: Option[ImageAsset]) {
+  rawOpenGraphImage: Option[ImageAsset]
+) {
 
   lazy val isBlog: Boolean = tags.blogs.nonEmpty
   lazy val isSeries: Boolean = tags.series.nonEmpty
@@ -358,8 +357,8 @@ final case class Content(
 
 object Content {
 
-  def apply(apiContent: contentapi.Content, request: Option[RequestHeader] = None): ContentType = {
-    val content = make(apiContent, request)
+  def apply(apiContent: contentapi.Content): ContentType = {
+    val content = make(apiContent)
 
     apiContent match {
       case _ if apiContent.isLiveBlog || apiContent.isArticle || apiContent.isSudoku => Article.make(content)
@@ -371,13 +370,13 @@ object Content {
     }
   }
 
-  def make(apiContent: contentapi.Content, request: Option[RequestHeader] = None): Content = {
+  def make(apiContent: contentapi.Content): Content = {
     val fields = Fields.make(apiContent)
     val metadata = MetaData.make(fields, apiContent)
-    val elements = Elements.make(apiContent, request)
+    val elements = Elements.make(apiContent)
     val tags = Tags.make(apiContent)
     val commercial = Commercial.make(tags, apiContent)
-    val trail = Trail.make(tags, fields, commercial, elements, metadata, apiContent, request)
+    val trail = Trail.make(tags, fields, commercial, elements, metadata, apiContent)
     val sharelinks = ShareLinks(tags, fields, metadata)
     val atoms = Atoms.make(apiContent, sharelinks.pageShares)
     val apifields = apiContent.fields
@@ -765,14 +764,14 @@ case class GalleryLightboxProperties(
 case class GalleryLightbox(
   elements: Elements,
   tags: Tags,
-  properties: GalleryLightboxProperties,
-  request: Option[RequestHeader] = None){
+  properties: GalleryLightboxProperties
+){
   def imageContainer(index: Int): ImageElement = galleryImages(index)
 
   private val facebookImage: ShareImage = if(tags.isComment) FacebookOpenGraphImage.opinions else if(tags.isLiveBlog) FacebookOpenGraphImage.live else FacebookOpenGraphImage.default
   val galleryImages: Seq[ImageElement] = elements.images.filter(_.properties.isGallery)
   val largestCrops: Seq[ImageAsset] = galleryImages.flatMap(_.images.largestImage)
-  val openGraphImages: Seq[String] = largestCrops.flatMap(_.url).map(ImgSrc(_, facebookImage, request))
+  val openGraphImages: Seq[String] = largestCrops.flatMap(_.url).map(ImgSrc(_, facebookImage))
   val size = galleryImages.size
   val landscapes = largestCrops.filter(i => i.width > i.height).sortBy(_.index)
   val portraits = largestCrops.filter(i => i.width < i.height).sortBy(_.index)
@@ -788,8 +787,8 @@ case class GalleryLightbox(
         "caption" -> JsString(img.caption.getOrElse("")),
         "credit" -> JsString(img.credit.getOrElse("")),
         "displayCredit" -> JsBoolean(img.displayCredit),
-        "src" -> JsString(Item700.bestSrcFor(container.images, request).getOrElse("")),
-        "srcsets" -> JsString(ImgSrc.srcset(container.images, GalleryMedia.lightbox, request)),
+        "src" -> JsString(Item700.bestSrcFor(container.images).getOrElse("")),
+        "srcsets" -> JsString(ImgSrc.srcset(container.images, GalleryMedia.lightbox)),
         "sizes" -> JsString(GalleryMedia.lightbox.sizes),
         "ratio" -> Try(JsNumber(img.width.toDouble / img.height.toDouble)).getOrElse(JsNumber(1)),
         "role" -> JsString(img.role.toString)
@@ -811,8 +810,7 @@ case class GenericLightboxProperties(
   shouldHideAdverts: Boolean,
   standfirst: Option[String],
   lightboxableCutoffWidth: Int,
-  includeBodyImages: Boolean,
-  request: Option[RequestHeader] = None)
+  includeBodyImages: Boolean)
 
 case class GenericLightbox(
   elements: Elements,
@@ -834,7 +832,6 @@ case class GenericLightbox(
       container <- lightboxImages
       img <- container.images.largestEditorialCrop
     } yield {
-
       JsObject(Seq(
         "caption" -> JsString(img.caption.getOrElse("")),
         "credit" -> JsString(img.credit.getOrElse("")),

@@ -76,7 +76,7 @@ class VideoSiteMap(contentApiClient: ContentApiClient) {
     responses.map { paginatedResults =>
       val urls = for {
         resp <- paginatedResults
-        item <- resp.results.map(result => Content(result)).collect({ case video:Video => video })
+        item <- resp.results.map(Content.apply).collect({ case video:Video => video })
       } yield {
         val keywordTags = item.tags.keywords.map(_.metadata.webTitle)
         val sectionTag = item.content.seriesTag.filter(tag => !keywordTags.contains(tag.properties.sectionName)).map(_.metadata.webTitle)
