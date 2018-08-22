@@ -8,7 +8,7 @@ import { testCanBeRun } from 'common/modules/experiments/test-can-run-checks';
 import { isInTest, variantFor } from 'common/modules/experiments/segment-util';
 import {
     defaultEngagementBannerParams,
-    getUserVariantTemplateParams,
+    getUserVariantParams,
 } from 'common/modules/commercial/membership-engagement-banner-parameters';
 import { isBlocked } from 'common/modules/commercial/membership-engagement-banner-block';
 import { shouldShowReaderRevenue } from 'common/modules/commercial/contributions-utilities';
@@ -92,6 +92,10 @@ const buildCampaignCode = (
     userVariant: ?Variant
 ): { campaignCode: string } | {} => {
     if (userTest && userVariant) {
+        const params = userVariant.engagementBannerParams;
+        if (params && params.campaignCode) {
+            return params.campaignCode;
+        }
         return { campaignCode: `${userTest.campaignId}_${userVariant.id}` };
     }
     return {};
@@ -102,15 +106,15 @@ const deriveBannerParams = (): Promise<?EngagementBannerParams> => {
     const userVariant: ?Variant = getUserVariant(userTest);
 
     const defaultParams: EngagementBannerParams = defaultEngagementBannerParams();
-    const variantTemplateParamsPromise: Promise<
-        EngagementBannerTemplateParams | {}
-    > = getUserVariantTemplateParams(userVariant);
+    const variantParamsPromise: Promise<
+        EngagementBannerParams | {}
+    > = getUserVariantParams(userVariant);
     const campaignCode: { campaignCode: string } | {} = buildCampaignCode(
         userTest,
         userVariant
     );
 
-    return variantTemplateParamsPromise.then(variantTemplateParams => ({
+    return variantParamsPromise.then(variantTemplateParams => ({
         ...defaultParams,
         ...variantTemplateParams,
         ...campaignCode,

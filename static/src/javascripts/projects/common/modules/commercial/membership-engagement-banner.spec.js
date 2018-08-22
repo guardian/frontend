@@ -6,13 +6,13 @@ import fetchJson from 'lib/fetch-json';
 import userPrefs from 'common/modules/user-prefs';
 import {
     defaultEngagementBannerParams as defaultEngagementBannerParams_,
-    getUserVariantTemplateParams as getUserVariantTemplateParams_,
+    getUserVariantParams as getUserVariantParams_,
 } from 'common/modules/commercial/membership-engagement-banner-parameters';
 import { membershipEngagementBanner } from 'common/modules/commercial/membership-engagement-banner';
 import { shouldShowReaderRevenue } from 'common/modules/commercial/contributions-utilities';
 
 const defaultEngagementBannerParams: any = defaultEngagementBannerParams_;
-const getUserVariantTemplateParams: any = getUserVariantTemplateParams_;
+const getUserVariantParams: any = getUserVariantParams_;
 
 jest.mock('lib/mediator');
 jest.mock('lib/storage', () => ({
@@ -79,7 +79,7 @@ jest.mock(
             products: ['CONTRIBUTION'],
             linkUrl: 'fake-link-url',
         })),
-        getUserVariantTemplateParams: jest.fn(() =>
+        getUserVariantParams: jest.fn(() =>
             Promise.resolve({
                 buttonCaption: 'test-button-caption',
                 linkUrl: 'test-link-url',
@@ -276,7 +276,7 @@ describe('Membership engagement banner', () => {
             defaultEngagementBannerParams.mockImplementationOnce(() => ({
                 linkUrl: 'fake-link-url',
             }));
-            getUserVariantTemplateParams.mockImplementationOnce(() =>
+            getUserVariantParams.mockImplementationOnce(() =>
                 Promise.resolve({
                     id: 'fake-variant-id',
                     engagementBannerParams: {},
@@ -310,7 +310,7 @@ describe('Membership engagement banner', () => {
                 linkUrl: 'fake-link-url',
                 buttonCaption: 'fake-button-caption',
             }));
-            getUserVariantTemplateParams.mockImplementationOnce(() =>
+            getUserVariantParams.mockImplementationOnce(() =>
                 Promise.resolve({})
             );
             fakeConfig.get.mockImplementationOnce(() => true);

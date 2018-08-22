@@ -119,7 +119,7 @@ export const getAcquisitionsBannerParams = (
     return paramsFromGoogleDoc;
 };
 
-export const getUserVariantTemplateParams = (
+export const getUserVariantParams = (
     userVariant: ?Variant
 ): Promise<EngagementBannerTemplateParams | {}> => {
     if (userVariant && userVariant.engagementBannerParams) {
