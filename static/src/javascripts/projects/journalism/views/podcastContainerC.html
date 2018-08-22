@@ -1,0 +1,29 @@
+<div class="fc-slice-wrapper">
+    <div class="podcast-container-c__main fc-item--type-media">
+        <div class="podcast-container-c__episode-image">
+            <img src="https://uploads.guim.co.uk/2018/08/22/behemoth-b.png"/>
+        </div>
+        <div class="podcast-container-c__episode-kicker podcast-container-c__yellow">Podcast</div>
+        <div class="podcast-container-c__episode-empty"></div>
+        <div class="podcast-container-c__episode-headline"><%=headline%></div>
+        <div class="podcast-container-c__episode-standfirst"><%=standfirst%></div>
+        <div class="podcast-container-c__episode-waveform">
+            <%= audioIcon %>
+            <%= waveLarge %>
+            <%= waveTablet %>
+        </div>
+        <div class="podcast-container-c__episode-previous podcast-container-c__yellow">
+            <a href="<%= seriesUrl %>">Previous episodes</a>
+        </div>
+        <div class="podcast-container-c__episode-subscribe">
+            <span class="podcast-container-c__yellow">Subscribe</span>
+            <span><a href="https://itunes.apple.com/gb/podcast/the-guardian-long-read/id587347784?mt=2">Apple</a></span>
+            <span><a href="https://www.google.com/podcasts?feed=aHR0cHM6Ly93d3cudGhlZ3VhcmRpYW4uY29tL25ld3Mvc2VyaWVzL3RoZS1hdWRpby1sb25nLXJlYWQvcG9kY2FzdC54bWw%3D">Google</a></span>
+            <span><a href="https://open.spotify.com/show/0jG1HXr3tGoGorW1ieytRS">Spotify</a></span>
+        </div>
+
+        <a class="u-faux-block-link__overlay js-headline-text" href="<%= episodeUrl %>" data-link-name="article" tabindex="-1" aria-hidden="true">
+            <%= headline %>
+        </a>
+    </div>
+</div>

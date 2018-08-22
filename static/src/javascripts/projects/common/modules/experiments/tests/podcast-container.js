@@ -1,0 +1,179 @@
+// @flow
+import template from 'lodash/utilities/template';
+import containerAHtml from 'raw-loader!journalism/views/podcastContainerA.html';
+import containerBHtml from 'raw-loader!journalism/views/podcastContainerB.html';
+import containerCHtml from 'raw-loader!journalism/views/podcastContainerC.html';
+import config from 'lib/config';
+import { addClassesAndTitle } from 'common/views/svg';
+
+import containerWaveALarge from 'svgs/journalism/podcast-container/waveform.svg';
+import containerWaveATablet from 'svgs/journalism/podcast-container/waveform-tablet.svg';
+import containerWaveAMobile from 'svgs/journalism/podcast-container/waveform-mobile.svg';
+import containerWaveATiny from 'svgs/journalism/podcast-container/waveform-tiny.svg';
+import containerButton from 'svgs/journalism/podcast-container/play-btnbig.svg';
+
+import audioIcon from 'svgs/journalism/podcast-container/audio-icon.svg';
+
+import containerWaveCLarge from 'svgs/journalism/podcast-container/waveform-c.svg';
+import containerWaveCTablet from 'svgs/journalism/podcast-container/waveform-c-tablet.svg';
+import containerWaveCMobile from 'svgs/journalism/podcast-container/waveform-c-mobile.svg';
+
+const headline =
+    'Behemoth, bully, thief: how the English language is taking over the planet ';
+const standfirst =
+    'No language in history has dominated the world quite like English does today. Is there any point in resisting?';
+const episodeUrl =
+    '/news/audio/2018/aug/13/behemoth-bully-thief-how-the-english-language-is-taking-over-the-planet-podcast';
+const seriesUrl = '/news/series/the-audio-long-read';
+const urlWithCampaign = (url: string, variant: string) =>
+    `${url}?CMP=podcast-container-${variant}`;
+
+const runContainerTest = (variant: string) => (): void => {
+    const podcastContainer = document.getElementById('podcast');
+
+    if (podcastContainer) {
+        podcastContainer.className += ` podcast-container-${variant}`;
+        const oldBody = podcastContainer.querySelector('.fc-container__body');
+
+        if (oldBody) {
+            podcastContainer.className += ' podcast-container__visible';
+
+            switch (variant) {
+                case 'a':
+                    oldBody.innerHTML = template(containerAHtml, {
+                        headline,
+                        standfirst,
+                        url: urlWithCampaign(episodeUrl, variant),
+                        button: addClassesAndTitle(containerButton.markup, [
+                            `podcast-container-a__button`,
+                        ]),
+                        waveLarge: addClassesAndTitle(
+                            containerWaveALarge.markup,
+                            [`podcast-container-a__wave-large`]
+                        ),
+                        waveTablet: addClassesAndTitle(
+                            containerWaveATablet.markup,
+                            [`podcast-container-a__wave-tablet`]
+                        ),
+                        waveMobile: addClassesAndTitle(
+                            containerWaveAMobile.markup,
+                            [`podcast-container-a__wave-mobile`]
+                        ),
+                        waveTiny: addClassesAndTitle(
+                            containerWaveATiny.markup,
+                            [`podcast-container-a__wave-tiny`]
+                        ),
+                    });
+
+                    break;
+                case 'b':
+                    oldBody.innerHTML = template(containerBHtml, {
+                        headline,
+                        standfirst,
+                        episodeUrl: urlWithCampaign(episodeUrl, variant),
+                        seriesUrl: urlWithCampaign(seriesUrl, variant),
+                        audioIcon: addClassesAndTitle(audioIcon.markup, [
+                            `podcast-container-b__audio-icon`,
+                        ]),
+                    });
+
+                    break;
+                case 'c':
+                    oldBody.innerHTML = template(containerCHtml, {
+                        headline,
+                        standfirst,
+                        episodeUrl: urlWithCampaign(episodeUrl, variant),
+                        seriesUrl: urlWithCampaign(seriesUrl, variant),
+                        audioIcon: addClassesAndTitle(audioIcon.markup, [
+                            `podcast-container-c__audio-icon`,
+                        ]),
+                        waveLarge: addClassesAndTitle(
+                            containerWaveCLarge.markup,
+                            [`podcast-container-c__wave-large`]
+                        ),
+                        waveTablet: addClassesAndTitle(
+                            containerWaveCTablet.markup,
+                            [`podcast-container-c__wave-tablet`]
+                        ),
+                        waveMobile: addClassesAndTitle(
+                            containerWaveCMobile.markup,
+                            [`podcast-container-c__wave-mobile`]
+                        ),
+                    });
+
+                    podcastContainer.className +=
+                        ' podcast-container-c__thrasher';
+
+                    break;
+
+                default:
+            }
+        }
+    }
+};
+
+const trackClick = (name: string) => (complete: () => void): void => {
+    const treat = document.querySelector(`.${name}`);
+    if (treat) {
+        treat.onclick = () => {
+            complete();
+        };
+    }
+};
+
+const trackImpression = (name: string) => (track: () => void): void => {
+    const treat = document.querySelector(`.${name}`);
+    if (treat) {
+        const observer = new window.IntersectionObserver(
+            (entries, self) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        self.disconnect();
+                        track();
+                    }
+                });
+            },
+            { threshold: 1.0 }
+        );
+        observer.observe(treat);
+    }
+};
+
+export const PodcastContainer = {
+    id: 'PodcastContainer',
+    start: '2018-08-21',
+    expiry: '2018-09-01',
+    author: 'Tom Forbes',
+    description: 'Test designs for a /uk podcasts container',
+    audience: 1,
+    audienceOffset: 0,
+    successMeasure: 'Measure click-through across the variants',
+    audienceCriteria: '',
+    showForSensitive: true,
+    canRun() {
+        return (
+            config.page.pageId === 'uk' && window.CSS.supports('display: grid')
+        );
+    },
+
+    variants: [
+        {
+            id: 'a',
+            test: runContainerTest('a'),
+            impression: trackImpression('podcast-container-a'),
+            success: trackClick('podcast-container-a'),
+        },
+        {
+            id: 'b',
+            test: runContainerTest('b'),
+            impression: trackImpression('podcast-container-b'),
+            success: trackClick('podcast-container-b'),
+        },
+        {
+            id: 'c',
+            test: runContainerTest('c'),
+            impression: trackImpression('podcast-container-c'),
+            success: trackClick('podcast-container-c'),
+        },
+    ],
+};

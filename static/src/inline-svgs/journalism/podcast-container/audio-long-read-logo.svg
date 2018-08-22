@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="220" height="132" viewBox="0 0 220 132">
+    <defs>
+        <path id="a" d="M0 0h220v132H0z"/>
+    </defs>
+    <g fill="none" fill-rule="evenodd">
+        <mask id="b" fill="#fff">
+            <use xlink:href="#a"/>
+        </mask>
+        <g mask="url(#b)">
+            <path fill="#000" fill-rule="nonzero" d="M-3-37.654h230v220.632H-3z"/>
+            <path fill="#767676" fill-rule="nonzero" d="M11-38c.56 5.165 11.535 177.146 11.535 177.146L194.333 139 68.292-38"/>
+            <path fill="#EBE8E4" fill-rule="nonzero" d="M138.072 91.678l-1.23-8.287-.036.005-1.22-8.21-62.69 9.358.002.016-22.745 3.395 1.23 8.287.036-.006 1.218 8.21 62.691-9.357-.002-.016zM46.187 16.045l8.27-1.253 9.535 62.927-8.27 1.253z"/>
+            <path fill="#DCDCDC" fill-rule="nonzero" d="M38.042 17.249l8.26-1.254 9.538 62.843-8.26 1.254z"/>
+            <path fill="#333" fill-rule="nonzero" d="M47.576 79.958l72.32-10.847 1.243 8.285-72.32 10.847z"/>
+            <path fill="#DCDCDC" fill-rule="nonzero" d="M138.16 91.738l-1.178-7.94-22.734 3.392.002.017-62.69 9.357-.007-.04-.011.002 1.184 7.98 62.69-9.357-.002-.016z"/>
+            <path fill="#333" fill-rule="nonzero" d="M115.7 140.177l10.97-.447-12.779-62.285-18.984 2.962z"/>
+            <path fill="#767676" fill-rule="nonzero" d="M114.079 78.434l-9.506 1.362 16.72 60.16 5.354-.267z" opacity=".33"/>
+            <path fill="#333" fill-rule="nonzero" d="M48.833 88.253l-.014-.096-10.539 51.365 10.97.447 19.008-54.64z"/>
+            <path fill="#767676" fill-rule="nonzero" d="M120.5 72.735l.1.67.047-.006-.661-4.414-72.32 10.883.56 3.745z" opacity=".33"/>
+            <path fill="#333" fill-rule="nonzero" d="M48.891 88.313L38.38 139.55l10.97.446 18.998-54.61z"/>
+            <path fill="#767676" fill-rule="nonzero" d="M48.741 88.322l-10.544 50.843 5.615.275 14.772-52.584z" opacity=".33"/>
+        </g>
+    </g>
+</svg>
