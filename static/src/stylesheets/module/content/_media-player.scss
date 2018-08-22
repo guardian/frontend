@@ -913,7 +913,7 @@ $ima-controls-height: 70px;
     padding: $gs-baseline/2 $gs-gutter/2;
 }
 .podcast-meta__item {
-    margin-right: $gs-gutter/2;
+    margin-right: $gs-gutter;
 
     @include mq(phablet) {
         display: inline-block;
