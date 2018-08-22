@@ -8,4 +8,9 @@ import {AcquisitionsBannerGoogleDocTestOneVariant,
 
 export const membershipEngagementBannerTests: $ReadOnlyArray<
     AcquisitionsABTest
-> = [AcquisitionsBannerGoogleDocTestOneVariant];
+> = [AcquisitionsBannerGoogleDocTestOneVariant,
+    AcquisitionsBannerGoogleDocTestTwoVariants,
+    AcquisitionsBannerGoogleDocTestThreeVariants,
+    AcquisitionsBannerGoogleDocTestFourVariants,
+    AcquisitionsBannerGoogleDocTestFiveVariants,
+];

@@ -17,14 +17,14 @@ const engagementBannerControl: string = `<strong>The Guardian is editorially ind
 
 const initialContribution = 1;
 
-const supporterCost = (location: string): string => {
+const supporterCost = (location: string, askAmount: number): string => {
     const countryGroup = getSupporterCountryGroup(location);
+    const amount = askAmount ? askAmount : initialContribution;
 
     if (countryGroup === 'EURCountries') {
         // Format either 4.99 € or €4.99 depending on country
         // See https://en.wikipedia.org/wiki/Linguistic_issues_concerning_the_euro
         const euro = extendedCurrencySymbol.EURCountries;
-        const amount = initialContribution;
 
         const euroAfterCountryCodes = [
             'BG',
@@ -54,12 +54,12 @@ const supporterCost = (location: string): string => {
             : euro + amount;
     }
 
-    return `${extendedCurrencySymbol[countryGroup]}${initialContribution}`;
+    return `${extendedCurrencySymbol[countryGroup]}${amount}`;
 };
 
 const supporterEngagementCtaCopyControl = (location: string): string =>
     `<span class="engagement-banner__highlight"> Support The Guardian from as little as ${supporterCost(
-        location
+        location, initialContribution,
     )}.</span>`;
 
 export const defaultEngagementBannerParams = (): EngagementBannerParams => {
@@ -88,6 +88,7 @@ export const getAcquisitionsBannerParams = (
             firstRow &&
             firstRow.messageText &&
             firstRow.ctaText &&
+            firstRow.askAmount &&
             firstRow.buttonCaption &&
             firstRow.linkUrl
         )
@@ -99,11 +100,13 @@ export const getAcquisitionsBannerParams = (
         return {};
     }
 
+    const ctaText = `<span class="engagement-banner__highlight">${firstRow.ctaText}</span>`;
+
     const location = getGeoLocation();
     const paramsFromGoogleDoc: EngagementBannerTemplateParams = {
         messageText: firstRow.messageText,
-        ctaText: firstRow.ctaText.replace(
-            /%%CURRENCY_SYMBOL%%/g, supporterEngagementCtaCopyControl(location)),
+        ctaText: ctaText.replace(
+            /%%CURRENCY_SYMBOL%%/g, supporterCost(location, firstRow.askAmount)),
         buttonCaption: firstRow.buttonCaption,
         linkUrl: firstRow.linkUrl,
     };
