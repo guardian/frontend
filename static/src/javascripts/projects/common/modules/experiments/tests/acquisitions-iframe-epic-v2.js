@@ -22,7 +22,7 @@ const epicIframeTestV2: ABTest = {
     idealOutcome:
         'Serving the Epic inside an iframe does not lead to a drop in revenue',
     audienceCriteria: 'All',
-    audience: 0.3,
+    audience: 0.65,
     audienceOffset: 0,
     canRun: isEpicDisplayable,
     showForSensitive: true,

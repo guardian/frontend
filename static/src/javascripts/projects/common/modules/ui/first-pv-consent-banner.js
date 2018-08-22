@@ -123,7 +123,7 @@ const bindClickHandlers = (msg: Message): void => {
     );
 };
 
-const show = (): void => {
+const show = (): Promise<boolean> => {
     track();
 
     const msg = new Message(messageCode, {
@@ -133,7 +133,8 @@ const show = (): void => {
             bindClickHandlers(msg);
         },
     });
-    msg.show(makeHtml());
+
+    return Promise.resolve(msg.show(makeHtml()));
 };
 
 const firstPvConsentBanner: Banner = {

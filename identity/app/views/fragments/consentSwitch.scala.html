@@ -26,14 +26,24 @@
     }
 }
 
-@fragments.form.switch(
-    title = titleProvider(getConsentText(consentField)),
-    subheading = None,
-    description = descriptionProvider(getConsentText(consentField)),
-    behaviour = ConsentSwitch,
-    field = consentField("consented"),
-    extraFields = consentHiddenFormFields,
-    highlighted = highlighted,
-    skin = skin,
-    boldTitle = boldTitle
-)(nonInputFields, messages)
+@if(conf.switches.Switches.IdentityUseFollowSwitches.isSwitchedOn) {
+    @fragments.form.follow(
+        title = titleProvider(getConsentText(consentField)),
+        description = descriptionProvider(getConsentText(consentField)),
+        behaviour = ConsentSwitch,
+        field = consentField("consented"),
+        extraFields = consentHiddenFormFields,
+    )(nonInputFields, messages)
+} else {
+    @fragments.form.switch(
+        title = titleProvider(getConsentText(consentField)),
+        subheading = None,
+        description = descriptionProvider(getConsentText(consentField)),
+        behaviour = ConsentSwitch,
+        field = consentField("consented"),
+        extraFields = consentHiddenFormFields,
+        highlighted = highlighted,
+        skin = skin,
+        boldTitle = boldTitle
+    )(nonInputFields, messages)
+}

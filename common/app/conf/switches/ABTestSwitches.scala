@@ -1,7 +1,7 @@
 package conf.switches
 
 import common.editions._
-import conf.switches.SwitchGroup.ABTests
+import conf.switches.SwitchGroup.{ABTests, Commercial}
 import org.joda.time.LocalDate
 
 trait ABTestSwitches {
@@ -123,6 +123,16 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("jeteve")),
     safeState = Off,
     sellByDate = new LocalDate(2019, 9, 30),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-commercial-prebid-ad-you-like",
+    "Test the rendering of Prebid ads served by AdYouLike",
+    owners = Owner.group(Commercial),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 9, 26),
     exposeClientSide = true
   )
 

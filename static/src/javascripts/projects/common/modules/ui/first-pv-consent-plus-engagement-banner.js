@@ -122,13 +122,15 @@ const engagementMessage = new SubMessage(
     firstPvConsentPlusEngagementMessage
 );
 
-const show = (): void => {
+const show = (): Promise<boolean> => {
     trackFirstPvConsent();
     if (document.body) {
         document.body.insertAdjacentHTML('beforeend', bannerHtml);
     }
     bindFirstPvConsentClickHandlers(firstPvConsentMessage);
     engagementMessage.bindCloseHandler();
+
+    return Promise.resolve(true);
 };
 
 const firstPvConsentPlusEngagementBanner: Banner = {

@@ -1,6 +1,6 @@
 // @flow
 import {
-    isRecentContributor,
+    isRecentOneOffContributor,
     isPayingMember,
 } from 'common/modules/commercial/user-features';
 import { makeABTest } from 'common/modules/commercial/contributions-utilities';
@@ -26,7 +26,7 @@ export const acquisitionsEpicThankYou = makeABTest({
 
     showToContributorsAndSupporters: true,
 
-    canRun: () => isPayingMember() || isRecentContributor(),
+    canRun: () => isPayingMember() || isRecentOneOffContributor(),
 
     useLocalViewLog: true,
 

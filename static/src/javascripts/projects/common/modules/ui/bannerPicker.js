@@ -4,7 +4,7 @@ import ophan from 'ophan/ng';
 export type Banner = {
     id: string,
     canShow: () => Promise<boolean>,
-    show: () => void,
+    show: () => Promise<boolean>,
 };
 
 const init = (banners: Array<Banner>): Promise<void> => {

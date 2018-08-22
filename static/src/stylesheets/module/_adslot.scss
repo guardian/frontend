@@ -50,16 +50,6 @@
         border-top-color: $brightness-20;
         background-color: transparent;
     }
-
-    &.feedback-submitted .ad-feedback,
-    .ad-feedback__thanks-message {
-        display: none;
-    }
-
-    &.feedback-submitted .ad-feedback__thanks-message {
-        display: inline-block;
-        float: right;
-    }
 }
 
 /**

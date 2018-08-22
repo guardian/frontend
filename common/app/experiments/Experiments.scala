@@ -46,8 +46,8 @@ object AudioPageChange extends Experiment(
   name = "audio-page-change",
   description = "Show a different version of the audio page to certain people",
   owners = Owner.group(SwitchGroup.Journalism),
-  sellByDate = new LocalDate(2018, 8, 20),
-  participationGroup = Perc50
+  sellByDate = new LocalDate(2018, 8, 27),
+  participationGroup = Perc5A
 )
 
 
@@ -64,6 +64,6 @@ object FastlyIOImages extends Experiment(
   description = "SServe images from fastly-io",
   owners = Owner.group(SwitchGroup.ServerSideExperiments),
   sellByDate = new LocalDate(2018, 8, 29),
-  participationGroup = Perc0A
+  participationGroup = Perc50
 )
 

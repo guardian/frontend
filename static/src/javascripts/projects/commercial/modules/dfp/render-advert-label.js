@@ -1,9 +1,5 @@
 // @flow
 import fastdom from 'lib/fastdom-promise';
-import template from 'lodash/utilities/template';
-import popupTemplate from 'raw-loader!commercial/views/ad-feedback-popup.html';
-import tick from 'svgs/icon/tick.svg';
-import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 
 const shouldRenderLabel = adSlotNode =>
     !(
@@ -17,23 +13,7 @@ const shouldRenderLabel = adSlotNode =>
 export const renderAdvertLabel = (adSlotNode: HTMLElement): Promise<null> =>
     fastdom.read(() => {
         if (shouldRenderLabel(adSlotNode)) {
-            let feedbackPopup = '';
-            let feedbackThanksMessage = '';
-            if (commercialFeatures.adFeedback) {
-                feedbackPopup = template(popupTemplate, {
-                    feedbackOptions: {
-                        inappropriate: "It's offensive or inappropriate",
-                        repetitive: 'I keep seeing this',
-                        irrelevant: "It's not relevant to me",
-                        useful: 'This advert was useful',
-                    },
-                    icon: tick.markup,
-                    slot: adSlotNode.id,
-                });
-                feedbackThanksMessage =
-                    '<i class="ad-feedback__thanks-message"> Thanks for your feedback </i>';
-            }
-            const labelDiv = `<div class="ad-slot__label">Advertisement${feedbackPopup}${feedbackThanksMessage}</div>`;
+            const labelDiv = `<div class="ad-slot__label">Advertisement</div>`;
             return fastdom.write(() => {
                 adSlotNode.insertAdjacentHTML('afterbegin', labelDiv);
             });

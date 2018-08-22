@@ -25,4 +25,14 @@ trait IdentitySwitches {
     exposeClientSide = true
   )
 
+  val IdentityUseFollowSwitches = Switch(
+    SwitchGroup.Identity,
+    "id-use-follow-switches",
+    "If switched on, some consent boxes will become follow boxes.",
+    owners = Owner.group(SwitchGroup.Identity),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 10, 24),
+    exposeClientSide = false
+  )
+
 }
