@@ -37,6 +37,10 @@ const adFreeSlotRemove = once(
             '.fc-container'
         ).filter(shouldRemoveFaciaContainerWhenAdFree);
 
+        const paidForItemsToRemove: Array<Element> = qwery(
+            '.fc-item--paid-content'
+        );
+
         return fastdom.write(() => {
             adSlotsToRemove.forEach((adSlot: Element) => adSlot.remove());
             mpusToRemove.forEach((mpu: Element) =>
@@ -45,6 +49,7 @@ const adFreeSlotRemove = once(
             commercialFaciaContainersToRemove.forEach(
                 (faciaContainer: Element) => faciaContainer.classList.add('u-h')
             );
+            paidForItemsToRemove.forEach((paidItem: Element) => paidItem.remove());
         });
     }
 );
