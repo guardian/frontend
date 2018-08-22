@@ -46,16 +46,23 @@ case class EmailForm(
 
 class EmailFormService(wsClient: WSClient) extends LazyLogging {
 
-  def submit(form: EmailForm): Future[WSResponse] = if (form.isLikelyBotSubmission) {
+  val MvtHeaderName = "X-GU-mvt-id"
+
+  private def extractMvtHeader(req: Request[_]) = req.headers.get(MvtHeaderName).getOrElse("0")
+
+  def submit(form: EmailForm)(implicit request: Request[_]): Future[WSResponse] = if (form.isLikelyBotSubmission) {
     Future.failed(new IllegalAccessException("Form was likely submitted by a bot."))
   } else {
     val idAccessClientToken = Configuration.id.apiClientToken
     val consentMailerUrl = s"${Configuration.id.apiRoot}/consent-email"
-    val consentMailerPayload = JsObject(Json.obj("email" -> form.email, "set-lists" -> List(form.listName)).fields)
+    val consentMailerPayload = Json.obj(
+      "email" -> form.email,
+      "set-lists" -> List(form.listName)
+    )
 
     wsClient
       .url(consentMailerUrl)
-      .addHttpHeaders("X-GU-ID-Client-Access-Token" -> s"Bearer $idAccessClientToken")
+      .addHttpHeaders("X-GU-ID-Client-Access-Token" -> s"Bearer $idAccessClientToken", MvtHeaderName -> extractMvtHeader(request))
       .post(consentMailerPayload)
   }
 }
