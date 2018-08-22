@@ -70,13 +70,11 @@ object Tag {
 
 object Podcast {
   def make(podcast: ApiPodcast): Podcast = {
-    Podcast(podcast.subscriptionUrl, podcast.googlePodcastsUrl, podcast.spotifyUrl)
+    Podcast(podcast.subscriptionUrl)
   }
 }
 case class Podcast(
-  subscriptionUrl: Option[String],
-  googlePodcastsUrl: Option[String],
-  spotifyUrl: Option[String]
+  subscriptionUrl: Option[String]
 )
 
 object Reference {
