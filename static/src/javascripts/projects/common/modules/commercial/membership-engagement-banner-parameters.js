@@ -1,13 +1,12 @@
 // @flow
 import config from 'lib/config';
+import reportError from 'lib/report-error';
 import {
+    getSync as getGeoLocation,
     getSupporterCountryGroup,
     extendedCurrencySymbol,
 } from 'lib/geolocation';
 import { supportContributeURL } from './support-utilities';
-import reportError from 'lib/report-error';
-import { noop } from 'lib/noop';
-import { getSync as getGeoLocation } from 'lib/geolocation';
 
 const engagementBannerControl: string = `<strong>The Guardian is editorially independent &ndash;
     our journalism is free from the influence of billionaire owners or politicians.
@@ -19,7 +18,7 @@ const initialContribution = 1;
 
 const supporterCost = (location: string, askAmount: number): string => {
     const countryGroup = getSupporterCountryGroup(location);
-    const amount = askAmount ? askAmount : initialContribution;
+    const amount = askAmount || initialContribution;
 
     if (countryGroup === 'EURCountries') {
         // Format either 4.99 € or €4.99 depending on country
@@ -59,7 +58,8 @@ const supporterCost = (location: string, askAmount: number): string => {
 
 const supporterEngagementCtaCopyControl = (location: string): string =>
     `<span class="engagement-banner__highlight"> Support The Guardian from as little as ${supporterCost(
-        location, initialContribution,
+        location,
+        initialContribution
     )}.</span>`;
 
 export const defaultEngagementBannerParams = (): EngagementBannerParams => {
@@ -72,15 +72,17 @@ export const defaultEngagementBannerParams = (): EngagementBannerParams => {
         ctaText: supporterEngagementCtaCopyControl(location),
         pageviewId: config.get('ophan.pageViewId', 'not_found'),
         products: ['CONTRIBUTION', 'RECURRING_CONTRIBUTION'],
-        buttonCaption: 'Support The Guardian',
-    }
+    };
 };
 
 export const getAcquisitionsBannerParams = (
     googleDocJson: any,
-    sheetName: string,
+    sheetName: string
 ): EngagementBannerTemplateParams | {} => {
-    const rows = googleDocJson && googleDocJson.sheets && googleDocJson.sheets[sheetName];
+    const rows =
+        googleDocJson &&
+        googleDocJson.sheets &&
+        googleDocJson.sheets[sheetName];
     const firstRow = rows && rows[0];
 
     if (
@@ -93,35 +95,34 @@ export const getAcquisitionsBannerParams = (
             firstRow.linkUrl
         )
     ) {
-        reportError(
-            new Error('Could not fetch banner copy from Google Doc'),
-            { feature: 'engagement-banner-test' }
-        );
+        reportError(new Error('Could not fetch banner copy from Google Doc'), {
+            feature: 'engagement-banner-test',
+        });
         return {};
     }
 
-    const ctaText = `<span class="engagement-banner__highlight">${firstRow.ctaText}</span>`;
+    const ctaText = `<span class="engagement-banner__highlight">${
+        firstRow.ctaText
+    }</span>`;
 
     const location = getGeoLocation();
     const paramsFromGoogleDoc: EngagementBannerTemplateParams = {
         messageText: firstRow.messageText,
         ctaText: ctaText.replace(
-            /%%CURRENCY_SYMBOL%%/g, supporterCost(location, firstRow.askAmount)),
+            /%%CURRENCY_SYMBOL%%/g,
+            supporterCost(location, firstRow.askAmount)
+        ),
         buttonCaption: firstRow.buttonCaption,
         linkUrl: firstRow.linkUrl,
     };
 
     return paramsFromGoogleDoc;
-
 };
 
 export const getUserVariantTemplateParams = (
-    userVariant: ?Variant,
-): Promise<EngagementBannerTemplateParams | {} > => {
-    if (
-        userVariant &&
-        userVariant.engagementBannerParams
-    ) {
+    userVariant: ?Variant
+): Promise<EngagementBannerTemplateParams | {}> => {
+    if (userVariant && userVariant.engagementBannerParams) {
         return userVariant.engagementBannerParams();
     }
 
