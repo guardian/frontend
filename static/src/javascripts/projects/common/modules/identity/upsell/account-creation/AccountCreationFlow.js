@@ -63,10 +63,6 @@ class AccountCreationForm extends Component<
 > {
     onSubmit = (ev: Event) => {
         ev.preventDefault();
-        console.log({
-            csrfToken: this.props.csrfToken,
-            accountToken: this.props.accountToken,
-        });
         this.setState({
             isLoading: true,
             isError: false,
@@ -83,8 +79,13 @@ class AccountCreationForm extends Component<
             success: () => {
                 this.props.onAccountCreated();
             },
-            error: () => {
-                this.setState({ isError: true });
+            error: (response) => {
+                try {
+                    const apiError = JSON.parse(response.responseText)[0];
+                    this.setState({ isError: true, errorMessage: apiError.message, errorReason: apiError.description })
+                } catch (exception) {
+                    this.setState({ isError: true});
+                }
             },
             complete: () => {
                 this.setState({ isLoading: false });
@@ -100,12 +101,13 @@ class AccountCreationForm extends Component<
     };
 
     render() {
+        const { isError, errorReason } = this.state;
         return (
             <form className="form" onSubmit={this.onSubmit}>
                 <hr className="manage-account-small-divider" />
-                {this.state.isError && (
+                {isError && (
                     <div className="form__error">
-                        Opps. Something went wrong
+                        {errorReason ? errorReason: 'Oops. Something went wrong'}
                     </div>
                 )}
                 <h1 className="identity-title--small">

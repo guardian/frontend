@@ -1,7 +1,8 @@
 package controllers.editprofile
 
 import actions.AuthenticatedActions._
-import com.gu.identity.model.{Consent, EmailNewsletters, StatusFields, User}
+import com.gu.identity.model._
+import com.typesafe.play.cachecontrol.CacheDirectives
 import idapiclient.UserUpdateDTO
 import model.{IdentityPage, NoCache}
 import pages.IdentityHtmlPage
@@ -53,8 +54,8 @@ trait ConsentsJourney
         signinService.getCookies(authResponse, rememberMe = false).flatMap {
           case Right(cookies) =>
             Future.successful(NoCache(SeeOther(returnUrlWithTracking).withCookies(cookies: _*).discardingCookies(DiscardingCookie("SC_GU_GUEST_PW_SET"))))
-          case _ =>
-            displayConsentComplete(Some(form.withError("error", "An unexpected error occurred, please try again later.")))(request)
+          case Left(errors) =>
+            Future.successful(NoCache(InternalServerError(Json.toJson(errors))))
         }
       })
     }
