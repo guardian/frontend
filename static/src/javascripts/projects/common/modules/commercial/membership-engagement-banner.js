@@ -114,20 +114,16 @@ const deriveBannerParams = (): Promise<?EngagementBannerParams> => {
         }));
     }
 
-    if (userVariant && userVariant.engagementBannerParams) {
-        const campaignCode: ?{ campaignCode: string } = buildCampaignCode(
-            userTest,
-            userVariant
-        );
+    const campaignCode: ?{ campaignCode: string } = buildCampaignCode(
+        userTest,
+        userVariant
+    );
 
-        return getUserVariantParams(userVariant).then(variantParams => ({
-            ...defaultParams,
-            ...variantParams,
-            ...campaignCode,
-        }));
-    }
-
-    return Promise.resolve({ ...defaultParams });
+    return getUserVariantParams(userVariant).then(variantParams => ({
+        ...defaultParams,
+        ...variantParams,
+        ...campaignCode,
+    }));
 };
 
 const userVariantCanShow = (): boolean => {
