@@ -89,6 +89,7 @@ case class AmpAdCleaner(edition: Edition, uri: String, article: Article) extends
   def adAfter(element: Element): Element = {
     val ampAd = <amp-ad
                    data-npa-on-unknown-consent="true"
+                   layout="responsive"
                    width="300" height="250"
                    type="doubleclick"
                    data-loading-strategy="prefer-viewability-over-views"
