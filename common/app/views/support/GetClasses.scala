@@ -6,6 +6,7 @@ import slices.{Dynamic, DynamicSlowMPU}
 import play.api.mvc.RequestHeader
 import model.Pillar.RichPillar
 import model.ContentDesignType.RichContentDesignType
+import views.support.Commercial.isAdFree
 
 object GetClasses {
   def forHtmlBlob(item: HtmlBlob): String = {
@@ -62,7 +63,7 @@ object GetClasses {
     case Audio => "fc-sublink--audio"
   }
 
-  def forContainerDefinition(containerDefinition: FaciaContainer): String =
+  def forContainerDefinition(containerDefinition: FaciaContainer)(implicit request: RequestHeader): String =
     forContainer(
       containerDefinition.showLatestUpdate,
       containerDefinition.index == 0 && containerDefinition.customHeader.isEmpty,
@@ -76,7 +77,7 @@ object GetClasses {
         slices.Container.customClasses(containerDefinition.container),
       disableHide = containerDefinition.hideToggle,
       lazyLoad = containerDefinition.shouldLazyLoad,
-      dynamicSlowMpu = containerDefinition.container == Dynamic(DynamicSlowMPU(omitMPU = false, adFree = false))
+      dynamicSlowMpu = containerDefinition.container == Dynamic(DynamicSlowMPU(omitMPU = false, adFree = isAdFree(request)))
     )
 
   /** TODO get rid of this when we consolidate 'all' logic with index logic */

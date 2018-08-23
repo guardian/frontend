@@ -35,7 +35,7 @@ class IdApiClient(
   //   AUTH
   def authBrowser(userAuth: Auth, trackingData: TrackingData, persistent: Option[Boolean] = None): Future[Response[CookiesResponse]] = {
     val params = buildParams(None, Some(trackingData), Seq("format" -> "cookies") ++ persistent.map("persistent" -> _.toString))
-    val headers = buildHeaders(Some(userAuth))
+    val headers = buildHeaders(Some(userAuth), extra = xForwardedForHeader(trackingData))
     val body = write(userAuth)
     val response = httpClient.POST(apiUrl("auth"), Some(body), params, headers)
     response map extract(jsonField("cookies"))
@@ -80,31 +80,12 @@ class IdApiClient(
     response map extractUser
   }
 
-  /**
-   * data to save to a subdocument in the user's record
-   * The path param provides the subdocument to be saved to e.g. prefs.myApp
-   */
-  def updateUser(userId: String, auth: Auth, trackingData: TrackingData, path: String, data: JValue): Future[Response[User]] = {
-    val pathParts = path.split('.').toList
-    post(urlJoin("user" :: userId :: pathParts : _*), Some(auth), Some(trackingData), Some(write(data))) map extractUser
-  }
-
-  def updateUser(user: User, auth: Auth, trackingData: TrackingData): Future[Response[User]] =
-    post("user", Some(auth), Some(trackingData), Some(write(user))) map extractUser
-
-  def register(user: User, trackingParameters: TrackingData, returnUrl: Option[String] = None): Future[Response[User]] = {
-    val userData = write(user)
-    val params = buildParams(tracking = Some(trackingParameters), extra = returnUrl.map(url => Iterable("returnUrl" -> url)))
-    val headers = buildHeaders(extra = trackingParameters.ipAddress.map(ip => Iterable("X-Forwarded-For" -> ip)))
-    val response = httpClient.POST(apiUrl("user"), Some(userData), params, headers)
-    response map extractUser
-  }
-
   // PASSWORD RESET/UPDATE
 
-  def passwordExists( auth: Auth ): Future[Response[Boolean]] = {
+  def passwordExists(auth: Auth, trackingData: TrackingData): Future[Response[Boolean]] = {
     val apiPath = urlJoin("user", "password-exists")
-    val response = httpClient.GET(apiUrl(apiPath), None, buildParams(Some(auth)), buildHeaders(Some(auth)))
+    val headers = buildHeaders(Some(auth), extra = xForwardedForHeader(trackingData))
+    val response = httpClient.GET(apiUrl(apiPath), None, buildParams(Some(auth)), headers)
     response map extract[Boolean](jsonField("passwordExists"))
   }
 
@@ -122,18 +103,12 @@ class IdApiClient(
     response map extractUser
   }
 
-  def resetPassword( token : String, newPassword : String ): Future[Response[CookiesResponse]] = {
+  def resetPassword( token : String, newPassword: String, trackingData: TrackingData): Future[Response[CookiesResponse]] = {
     val apiPath = urlJoin("pwd-reset", "reset-pwd-for-user")
     val postBody = write(TokenPassword(token, newPassword))
-    val response = httpClient.POST(apiUrl(apiPath), Some(postBody), clientAuth.parameters, clientAuth.headers)
+    val headers = clientAuth.headers ++ buildHeaders(extra = xForwardedForHeader(trackingData))
+    val response = httpClient.POST(apiUrl(apiPath), Some(postBody), clientAuth.parameters, headers)
     response map extract(jsonField("cookies"))
-  }
-
-  def sendPasswordResetEmail(emailAddress : String, trackingParameters: TrackingData): Future[Response[Unit]] = {
-    val apiPath = urlJoin("pwd-reset", "send-password-reset-email")
-    val params = buildParams(tracking = Some(trackingParameters), extra = Iterable("email-address" -> emailAddress, "type" -> "reset"))
-    val response = httpClient.GET(apiUrl(apiPath), None, params, buildHeaders())
-    response map extractUnit
   }
 
   // EMAILS
@@ -141,7 +116,7 @@ class IdApiClient(
   def userEmails(userId: String, trackingParameters: TrackingData): Future[Response[Subscriber]] = {
     val apiPath = urlJoin("useremails", userId)
     val params = buildParams(tracking = Some(trackingParameters))
-    val response = httpClient.GET(apiUrl(apiPath), None, params, buildHeaders())
+    val response = httpClient.GET(apiUrl(apiPath), None, params, buildHeaders(extra = xForwardedForHeader(trackingParameters)))
     response map extract(jsonField("result"))
   }
 
@@ -168,7 +143,13 @@ class IdApiClient(
 
   def resendEmailValidationEmail(auth: Auth, trackingParameters: TrackingData, returnUrlOpt: Option[String]): Future[Response[Unit]] = {
     val extraParams = returnUrlOpt.map(url => List("returnUrl" -> url))
-    httpClient.POST(apiUrl("user/send-validation-email"), None, buildParams(Some(auth), Some(trackingParameters), extraParams), buildHeaders(Some(auth))) map extractUnit
+    httpClient
+      .POST(
+        apiUrl("user/send-validation-email"),
+        None,
+        buildParams(Some(auth), Some(trackingParameters), extraParams),
+        buildHeaders(Some(auth), xForwardedForHeader(trackingParameters)))
+      .map(extractUnit)
   }
 
   def deleteTelephone(auth: Auth): Future[Response[Unit]] =
@@ -178,10 +159,6 @@ class IdApiClient(
     post("remove/consent/all", Some(auth)).map(extractUnit)
 
   // THIRD PARTY SIGN-IN
-  def addUserToGroup(groupCode: String, auth: Auth): Future[Response[Unit]] = {
-    post(urlJoin("user", "me", "group", groupCode), Some(auth)) map extractUnit
-  }
-
   def executeAccountDeletionStepFunction(userId: String, email: String, reason: Option[String], auth: Auth): Future[Response[AccountDeletionResult]] = {
     httpClient.POST(
         s"${conf.accountDeletionApiRoot}/delete",
@@ -197,8 +174,13 @@ class IdApiClient(
   def post(apiPath: String,
            auth: Option[Auth] = None,
            trackingParameters: Option[TrackingData] = None,
-           body: Option[String] = None): Future[Response[HttpResponse]] =
-    httpClient.POST(apiUrl(apiPath), body, buildParams(auth, trackingParameters), buildHeaders(auth))
+           body: Option[String] = None): Future[Response[HttpResponse]] = {
+    httpClient.POST(
+      apiUrl(apiPath),
+      body,
+      buildParams(auth, trackingParameters),
+      buildHeaders(auth, trackingParameters.map(xForwardedForHeader)))
+  }
 
   def delete(apiPath: String,
            auth: Option[Auth] = None,
@@ -210,15 +192,11 @@ class IdApiClient(
     def apply(paramsOpt: Option[Parameters]): Parameters = paramsOpt.getOrElse(Iterable.empty)
    }
 
-  private def buildParams(auth: Option[Auth] = None,
-                            tracking: Option[TrackingData] = None,
-                            extra: Parameters = Iterable.empty): Parameters = {
-    extra ++ clientAuth.parameters ++
-      auth.map(_.parameters) ++
-      tracking.map({ trackingData =>
-        trackingData.parameters ++ trackingData.ipAddress.map(ip => "ip" -> ip)
-      })
-  }
+  private def buildParams(
+      auth: Option[Auth] = None,
+      tracking: Option[TrackingData] = None,
+      extra: Parameters = Iterable.empty): Parameters =
+    extra ++ clientAuth.parameters ++ auth.map(_.parameters) ++ tracking.map(_.parameters)
 
   private def buildHeaders(auth: Option[Auth] = None, extra: Parameters = Iterable.empty): Parameters = {
     extra ++ clientAuth.headers ++ auth.map(_.headers)
@@ -231,6 +209,12 @@ class IdApiClient(
       slug.stripPrefix("/").stripSuffix("/")
     }) mkString "/"
   }
+
+  private def xForwardedForHeader(trackingParameters: TrackingData): Parameters =
+    trackingParameters
+      .ipAddress
+      .map(ip => Iterable("X-Forwarded-For" -> ip))
+      .getOrElse(Iterable.empty)
 }
 
 
