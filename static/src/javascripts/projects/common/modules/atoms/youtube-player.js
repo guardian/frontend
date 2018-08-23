@@ -90,6 +90,7 @@ const setupPlayer = (
     const wantPersonalisedAds: boolean =
         getAdConsentState(thirdPartyTrackingAdConsent) !== false;
     const disableRelatedVideos = !config.get('switches.youtubeRelatedVideos');
+    // relatedChannels needs to be an array, as per YouTube's IFrame Embed Config API
     const relatedChannels =
         !disableRelatedVideos && channelId ? [channelId] : [];
 

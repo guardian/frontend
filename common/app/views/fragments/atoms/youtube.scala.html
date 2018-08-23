@@ -28,7 +28,7 @@
     @defining(playable && !posterImageOverride.exists(_ => YouTubePosterOverride.isSwitchedOn)){sixteenByNine: Boolean =>
         @defining(
             if (YouTubeRelatedVideos.isSwitchedOn) {
-                media.channelId.getOrElse("UCHpw8xwDNhU9gdohEcJu4aA")
+                media.channelId.getOrElse("")
             } else {
                 ""
             }){channelId: String =>
@@ -39,7 +39,7 @@
                 ("no-player", !playable || expired ),
                 ("youtube-related-videos", YouTubePosterOverride.isSwitchedOn)
             ))"
-            @for(endSlatePath <- media.endSlatePath if displayEndSlate && !YouTubeRelatedVideos.isSwitchedOn)  {
+            @for(endSlatePath <- media.endSlatePath if displayEndSlate && YouTubeRelatedVideos.isSwitchedOff)  {
               data-end-slate="@endSlatePath"
             }
                 data-channel-id="@channelId"
