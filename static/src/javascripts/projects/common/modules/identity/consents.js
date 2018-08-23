@@ -357,10 +357,7 @@ const enhanceConsents = (): void => {
         [`.${checkAllCheckboxClassName}`, bindCheckAllSwitch],
         [`.${consentCheckboxClassName}`, bindConsentSwitch],
         [`.${newsletterCheckboxClassName}`, bindNewsletterSwitch],
-        [
-            `.${unsubscribeButtonClassName}`,
-            bindUnsubscribeFromAll,
-        ],
+        [`.${unsubscribeButtonClassName}`, bindUnsubscribeFromAll],
     ];
     loadEnhancers(loaders);
 };
