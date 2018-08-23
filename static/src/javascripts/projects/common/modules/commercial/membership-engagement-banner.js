@@ -123,7 +123,7 @@ const deriveBannerParams = (): Promise<?EngagementBannerParams> => {
         ...defaultParams,
         ...variantParams,
         ...campaignCode,
-    }));
+    })).catch(() => defaultParams);
 };
 
 const userVariantCanShow = (): boolean => {
