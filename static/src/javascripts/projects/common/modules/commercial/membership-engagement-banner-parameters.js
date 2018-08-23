@@ -15,11 +15,8 @@ const engagementBannerControl: string = `<strong>The Guardian is editorially ind
     up a paywall as we want to keep our journalism open and accessible. But the revenue we get from
     advertising is falling, so we increasingly need our readers to fund our independent, investigative reporting.`;
 
-const initialContribution = 1;
-
-const supporterCost = (location: string, askAmount: number): string => {
+const supporterCost = (location: string, amount: number = 1 ): string => {
     const countryGroup = getSupporterCountryGroup(location);
-    const amount = askAmount || initialContribution;
 
     if (countryGroup === 'EURCountries') {
         // Format either 4.99 € or €4.99 depending on country
@@ -60,7 +57,6 @@ const supporterCost = (location: string, askAmount: number): string => {
 const supporterEngagementCtaCopyControl = (location: string): string =>
     `<span class="engagement-banner__highlight"> Support The Guardian from as little as ${supporterCost(
         location,
-        initialContribution
     )}.</span>`;
 
 export const defaultEngagementBannerParams = (): EngagementBannerParams => {
@@ -96,9 +92,13 @@ export const getAcquisitionsBannerParams = (
             firstRow.linkUrl
         )
     ) {
-        reportError(new Error('Could not fetch banner copy from Google Doc'), {
-            feature: 'engagement-banner-test',
-        }, true);
+        reportError(
+            new Error('Could not fetch banner copy from Google Doc'),
+            {
+                feature: 'engagement-banner-test',
+            },
+            true
+        );
     }
 
     const ctaText = `<span class="engagement-banner__highlight">${

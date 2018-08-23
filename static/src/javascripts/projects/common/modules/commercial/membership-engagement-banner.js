@@ -106,7 +106,7 @@ const deriveBannerParams = (): Promise<?EngagementBannerParams> => {
     const userVariant: ?Variant = getUserVariant(userTest);
     const defaultParams: EngagementBannerParams = defaultEngagementBannerParams();
 
-    // if the user isn't in a test, use the control in google docs
+    // if the user isn't in a test variant, use the control in google docs
     if (!userVariant) {
         return getControlEngagementBannerParams().then(controlParams => ({
             ...defaultParams,
@@ -119,11 +119,13 @@ const deriveBannerParams = (): Promise<?EngagementBannerParams> => {
         userVariant
     );
 
-    return getUserVariantParams(userVariant).then(variantParams => ({
-        ...defaultParams,
-        ...variantParams,
-        ...campaignCode,
-    })).catch(() => defaultParams);
+    return getUserVariantParams(userVariant)
+        .then(variantParams => ({
+            ...defaultParams,
+            ...variantParams,
+            ...campaignCode,
+        }))
+        .catch(() => defaultParams);
 };
 
 const userVariantCanShow = (): boolean => {
