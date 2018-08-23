@@ -21,8 +21,10 @@ case class DynamicSlowMPU(omitMPU: Boolean, adFree: Boolean) extends DynamicCont
 
   override protected def standardSlices(stories: Seq[Story], firstSlice: Option[Slice]): Seq[Slice] =
     firstSlice match {
-      case Some(_) if omitMPU || adFree =>
+      case Some(_) if omitMPU =>
         if (stories.size > 3) Seq(Hl3QuarterQuarter) else Seq(HalfQQ)
+      case Some(_) if adFree =>
+        if (stories.size > 3) Seq(Hl3QuarterQuarter) else Seq(TlTlTl)
       case Some(_) => Seq(Hl3Mpu)
       case None if omitMPU || adFree =>
         if (stories.size > 3) Seq(QuarterQuarterQuarterQuarter) else Seq(HalfHalf)
