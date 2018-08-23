@@ -79,12 +79,15 @@ class AccountCreationForm extends Component<
             success: () => {
                 this.props.onAccountCreated();
             },
-            error: (response) => {
+            error: response => {
                 try {
                     const apiError = JSON.parse(response.responseText)[0];
-                    this.setState({ isError: true, errorMessage: apiError.message, errorReason: apiError.description })
+                    this.setState({
+                        isError: true,
+                        errorReason: apiError.description,
+                    });
                 } catch (exception) {
-                    this.setState({ isError: true});
+                    this.setState({ isError: true });
                 }
             },
             complete: () => {
@@ -107,7 +110,7 @@ class AccountCreationForm extends Component<
                 <hr className="manage-account-small-divider" />
                 {isError && (
                     <div className="form__error">
-                        {errorReason ? errorReason: 'Oops. Something went wrong'}
+                        {errorReason || 'Oops. Something went wrong'}
                     </div>
                 )}
                 <h1 className="identity-title--small">
