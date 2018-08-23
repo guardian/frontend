@@ -7,6 +7,7 @@ import {
     extendedCurrencySymbol,
 } from 'lib/geolocation';
 import { supportContributeURL } from './support-utilities';
+import { getBannerGoogleDoc } from './contributions-google-docs';
 
 const engagementBannerControl: string = `<strong>The Guardian is editorially independent &ndash;
     our journalism is free from the influence of billionaire owners or politicians.
@@ -78,7 +79,7 @@ export const defaultEngagementBannerParams = (): EngagementBannerParams => {
 export const getAcquisitionsBannerParams = (
     googleDocJson: any,
     sheetName: string
-): EngagementBannerTemplateParams | {} => {
+): ?EngagementBannerTemplateParams => {
     const rows =
         googleDocJson &&
         googleDocJson.sheets &&
@@ -98,7 +99,7 @@ export const getAcquisitionsBannerParams = (
         reportError(new Error('Could not fetch banner copy from Google Doc'), {
             feature: 'engagement-banner-test',
         });
-        return {};
+        return;
     }
 
     const ctaText = `<span class="engagement-banner__highlight">${
@@ -119,12 +120,17 @@ export const getAcquisitionsBannerParams = (
     return paramsFromGoogleDoc;
 };
 
+export const getControlEngagementBannerParams = (): Promise<?EngagementBannerTemplateParams> =>
+    getBannerGoogleDoc.then(json =>
+        getAcquisitionsBannerParams(json, 'control')
+    );
+
 export const getUserVariantParams = (
     userVariant: ?Variant
-): Promise<EngagementBannerTemplateParams | {}> => {
+): Promise<?EngagementBannerParams> => {
     if (userVariant && userVariant.engagementBannerParams) {
         return userVariant.engagementBannerParams();
     }
 
-    return Promise.resolve({});
+    return Promise.resolve();
 };

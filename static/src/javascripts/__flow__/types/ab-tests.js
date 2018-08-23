@@ -54,7 +54,7 @@ declare type InitEpicABTestVariant = {
 declare type InitBannerABTestVariant = {
     id: string,
     products: $ReadOnlyArray<OphanProduct>,
-    engagementBannerParams: () => Promise<EngagementBannerTemplateParams | {} >
+    engagementBannerParams: () => Promise<?EngagementBannerTemplateParams>
 };
 
 declare type InitEpicABTest = {

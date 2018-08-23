@@ -9,6 +9,7 @@ import { isInTest, variantFor } from 'common/modules/experiments/segment-util';
 import {
     defaultEngagementBannerParams,
     getUserVariantParams,
+    getControlEngagementBannerParams,
 } from 'common/modules/commercial/membership-engagement-banner-parameters';
 import { isBlocked } from 'common/modules/commercial/membership-engagement-banner-block';
 import { shouldShowReaderRevenue } from 'common/modules/commercial/contributions-utilities';
@@ -90,7 +91,7 @@ const getUserVariant = (test: ?ABTest): ?Variant =>
 const buildCampaignCode = (
     userTest: ?AcquisitionsABTest,
     userVariant: ?Variant
-): { campaignCode: string } | {} => {
+): ?{ campaignCode: string } => {
     if (userTest && userVariant) {
         const params = userVariant.engagementBannerParams;
         if (params && params.campaignCode) {
@@ -98,27 +99,35 @@ const buildCampaignCode = (
         }
         return { campaignCode: `${userTest.campaignId}_${userVariant.id}` };
     }
-    return {};
 };
 
 const deriveBannerParams = (): Promise<?EngagementBannerParams> => {
     const userTest: ?AcquisitionsABTest = getUserTest();
     const userVariant: ?Variant = getUserVariant(userTest);
-
     const defaultParams: EngagementBannerParams = defaultEngagementBannerParams();
-    const variantParamsPromise: Promise<
-        EngagementBannerParams | {}
-    > = getUserVariantParams(userVariant);
-    const campaignCode: { campaignCode: string } | {} = buildCampaignCode(
-        userTest,
-        userVariant
-    );
 
-    return variantParamsPromise.then(variantTemplateParams => ({
-        ...defaultParams,
-        ...variantTemplateParams,
-        ...campaignCode,
-    }));
+    // if the user isn't in a test, use the control in google docs
+    if (!userVariant) {
+        return getControlEngagementBannerParams().then(controlParams => ({
+            ...defaultParams,
+            ...controlParams,
+        }));
+    }
+
+    if (userVariant && userVariant.engagementBannerParams) {
+        const campaignCode: ?{ campaignCode: string } = buildCampaignCode(
+            userTest,
+            userVariant
+        );
+
+        return getUserVariantParams(userVariant).then(variantParams => ({
+            ...defaultParams,
+            ...variantParams,
+            ...campaignCode,
+        }));
+    }
+
+    return Promise.resolve({ ...defaultParams });
 };
 
 const userVariantCanShow = (): boolean => {

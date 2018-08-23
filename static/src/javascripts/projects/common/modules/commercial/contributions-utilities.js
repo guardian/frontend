@@ -482,6 +482,15 @@ const makeGoogleDocBannerVariants = (
     return variants;
 };
 
+const makeGoogleDocBannerControl = (): InitBannerABTestVariant => ({
+    id: 'control',
+    products: [],
+    engagementBannerParams: () =>
+        getBannerGoogleDoc.then(res =>
+            getAcquisitionsBannerParams(res, 'control')
+        ),
+});
+
 export {
     shouldShowReaderRevenue,
     shouldShowEpic,
@@ -490,6 +499,7 @@ export {
     makeBannerABTestVariants,
     makeGoogleDocEpicVariants,
     makeGoogleDocBannerVariants,
+    makeGoogleDocBannerControl,
     defaultMaxViews,
     isEpicDisplayable,
 };
