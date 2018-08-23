@@ -98,6 +98,7 @@ class HostedTrailsTest extends FlatSpec with Matchers {
     val r2ContributorId = None
     val tagCategories = None
     val entityIds = None
+    val campaignInformationType = None
   }
 
   private def mkHostedTag(): Tag = mkTag(
