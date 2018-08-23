@@ -98,8 +98,7 @@ export const getAcquisitionsBannerParams = (
     ) {
         reportError(new Error('Could not fetch banner copy from Google Doc'), {
             feature: 'engagement-banner-test',
-        });
-        return;
+        }, true);
     }
 
     const ctaText = `<span class="engagement-banner__highlight">${
