@@ -96,14 +96,20 @@ const setProgressTracker = (atomId: string): IntervalID => {
 
 const onPlayerPlaying = (atomId: string): void => {
     const player = players[atomId];
+    const currentVideo = player.player.getVideoUrl().split('?v=')[1];
+    const originalVideo = player.iframe.dataset.assetId;
 
     if (!player) {
         return;
     }
 
     killProgressTracker(atomId);
-    setProgressTracker(atomId);
-    trackYoutubeEvent('play', getTrackingId(atomId));
+
+    // TODO: implement progress tracking for related videos
+    if (currentVideo === originalVideo) {
+        setProgressTracker(atomId);
+        trackYoutubeEvent('play', getTrackingId(atomId));
+    }
 
     const mainMedia =
         (player.iframe && player.iframe.closest('.immersive-main-media')) ||
