@@ -1,32 +1,53 @@
 // @flow
+/* eslint-disable react/no-danger */
 import React, { Component } from 'preact-compat';
 import arrowRight from 'svgs/icon/arrow-right.svg';
+import reqwest from 'reqwest';
 
 type AccountCreationFlowProps = {
     csrfToken: string,
+    returnUrl: string,
     accountToken: string,
-    userEmail: string,
 };
 
 type AccountCreationFormProps = {
     csrfToken: string,
     accountToken: string,
-    userEmail: string,
+    returnUrl: string,
     onAccountCreated: () => {},
 };
 
-class AccountCreationFeatures extends Component<> {
+type AccountCreationFeaturesProps = {
+    returnUrl: string,
+};
+
+class AccountCreationFeatures extends Component<AccountCreationFeaturesProps> {
     render() {
         return (
             <div>
-                Thanks!!
-                <a
-                    className="manage-account__button manage-account__button--main"
-                    data-link-name="complete-consents : cta-bottom"
-                    href="http://theguardian.com">
-                    Go to The Guardian
-                    <div dangerouslySetInnerHTML={arrowRight.markup} />
-                </a>
+                <hr className="manage-account-small-divider" />
+                <h1 className="identity-title--small">
+                    Thanks for creating a Guardian account!
+                </h1>
+                <div className="identity-forms-message__body">
+                    <p>
+                        You are now signed in. Start exploring your benefits
+                        from our home page.
+                    </p>
+                </div>
+                <div className="identity-forms-message__body">
+                    <a
+                        className="manage-account__button manage-account__button--icon manage-account__button--main"
+                        data-link-name="complete-consents : cta-bottom"
+                        href={this.props.returnUrl}>
+                        Go to The Guardian
+                        <span
+                            dangerouslySetInnerHTML={{
+                                __html: arrowRight.markup,
+                            }}
+                        />
+                    </a>
+                </div>
             </div>
         );
     }
@@ -36,6 +57,8 @@ class AccountCreationForm extends Component<
     AccountCreationFormProps,
     {
         password: string,
+        isLoading: boolean,
+        isError: boolean,
     }
 > {
     onSubmit = (ev: Event) => {
@@ -44,73 +67,108 @@ class AccountCreationForm extends Component<
             csrfToken: this.props.csrfToken,
             accountToken: this.props.accountToken,
         });
-        this.props.onAccountCreated();
+        this.setState({
+            isLoading: true,
+            isError: false,
+        });
+
+        reqwest({
+            url: '/password/guest',
+            method: 'post',
+            data: {
+                csrfToken: this.props.csrfToken,
+                token: this.props.accountToken,
+                password: this.state.password,
+            },
+            success: () => {
+                this.props.onAccountCreated();
+            },
+            error: () => {
+                this.setState({ isError: true });
+            },
+            complete: () => {
+                this.setState({ isLoading: false });
+            },
+        });
     };
 
     handlePasswordChange = (ev: Event) => {
+        if (!(ev.target instanceof HTMLInputElement)) {
+            return;
+        }
         this.setState({ password: ev.target.value });
     };
 
     render() {
         return (
             <form className="form" onSubmit={this.onSubmit}>
-                <fieldset className="fieldset">
-                    <h1 className="identity-title--small">
-                        Want even more from the Guardian? Create a free account
-                    </h1>
-                    <div className="identity-forms-message__body">
-                        <p>
-                            Create your account by setting a password, and
-                            manage your email preferences at any time.
-                        </p>
+                <hr className="manage-account-small-divider" />
+                {this.state.isError && (
+                    <div className="form__error">
+                        Opps. Something went wrong
                     </div>
-                    <div className="fieldset__fields">
-                        <li className="form-field" id="password_field">
-                            <label htmlFor="email">
-                                <div className="label">Email</div>
-                                <div className="input">
-                                    <input
-                                        className="text-input"
-                                        type="email"
-                                        id="email"
-                                        name="email"
-                                        value={this.props.userEmail}
-                                        disabled="disabled"
-                                    />
-                                </div>
-                            </label>
-                        </li>
+                )}
+                <h1 className="identity-title--small">
+                    Want even more from the Guardian? Create a free account
+                </h1>
+                <div className="identity-forms-message__body">
+                    <p>
+                        Create your account by setting a password, and manage
+                        your email preferences at any time.
+                    </p>
+                </div>
+                <div className="fieldset__fields">
+                    <li className="form-field" id="password_field">
+                        <label htmlFor="password">
+                            <div className="label">Password</div>
+                            <div className="input">
+                                <input
+                                    className="text-input"
+                                    type="password"
+                                    id="password"
+                                    name="password"
+                                    value={this.state.password}
+                                    autoComplete="off"
+                                    onChange={this.handlePasswordChange}
+                                    autoCapitalize="off"
+                                    autoCorrect="off"
+                                    spellCheck="false"
+                                    aria-required="true"
+                                />
+                            </div>
+                        </label>
+                    </li>
 
-                        <li className="form-field" id="password_field">
-                            <label htmlFor="password">
-                                <div className="label">Password</div>
-                                <div className="input">
-                                    <input
-                                        className="text-input"
-                                        type="password"
-                                        id="password"
-                                        name="password"
-                                        value={this.state.password}
-                                        autoComplete="off"
-                                        onChange={this.handlePasswordChange}
-                                        autoCapitalize="off"
-                                        autoCorrect="off"
-                                        spellCheck="false"
-                                        aria-required="true"
-                                    />
-                                </div>
-                            </label>
-                        </li>
-
-                        <li className="form-field form-field__submit">
+                    <li className="form-field form-field__submit">
+                        {this.state.isLoading ? (
+                            <button
+                                disabled
+                                className="manage-account__button manage-account__button--light manage-account__button--center">
+                                Hang on...
+                            </button>
+                        ) : (
                             <button
                                 type="submit"
-                                className="manage-account__button manage-account__button--center">
-                                Set password
+                                className="manage-account__button manage-account__button--icon manage-account__button--main">
+                                Set password{' '}
+                                <span
+                                    dangerouslySetInnerHTML={{
+                                        __html: arrowRight.markup,
+                                    }}
+                                />
                             </button>
-                        </li>
-                    </div>
-                </fieldset>
+                        )}
+                    </li>
+                </div>
+                <aside className="identity-forms-message__body">
+                    <hr className="manage-account-small-divider" />
+                    <a
+                        className="manage-account__button manage-account__button--light"
+                        data-link-name="complete-consents : cta-bottom"
+                        href={this.props.returnUrl}>
+                        Go to The Guardian
+                    </a>
+                </aside>
             </form>
         );
     }
@@ -122,13 +180,6 @@ class AccountCreationFlow extends Component<
         hasCreatedAccount: boolean,
     }
 > {
-    constructor(props) {
-        super(props);
-        this.state = {
-            hasCreatedAccount: false,
-        };
-    }
-
     onAccountCreated = () => {
         this.setState({
             hasCreatedAccount: true,
@@ -140,11 +191,11 @@ class AccountCreationFlow extends Component<
             <AccountCreationForm
                 csrfToken={this.props.csrfToken}
                 accountToken={this.props.accountToken}
-                userEmail={this.props.userEmail}
+                returnUrl={this.props.returnUrl}
                 onAccountCreated={this.onAccountCreated}
             />
         ) : (
-            <AccountCreationFeatures />
+            <AccountCreationFeatures returnUrl={this.props.returnUrl} />
         );
     }
 }

@@ -125,6 +125,10 @@
     .disabled {
         background-color: $brightness-86;
     }
+
+    &[disabled] {
+        pointer-events: none;
+    }
 }
 
 .manage-account__button--round {

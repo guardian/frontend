@@ -69,6 +69,9 @@
     align-items: stretch;
     &.identity-wrapper-page-flex--flow {
         background: $nav-faded;
+        .manage-account-small-divider {
+            border-color: $nav-dark;
+        }
     }
     & > .identity-wrapper-page-flex__content {
         flex: 1 1 auto;

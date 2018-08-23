@@ -19,9 +19,9 @@ const bindAccountCreation = (el): void => {
     fastdom.write(() => {
         render(
             <AccountCreationFlow
-                csrfToken="test1"
-                accountToken="test2"
-                userEmail="test3@test.test"
+                csrfToken={el.dataset.csrf}
+                returnUrl={el.dataset.returnUrl}
+                accountToken={el.dataset.accountToken}
             />,
             el
         );
