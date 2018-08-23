@@ -80,26 +80,6 @@ class IdApiClient(
     response map extractUser
   }
 
-  /**
-   * data to save to a subdocument in the user's record
-   * The path param provides the subdocument to be saved to e.g. prefs.myApp
-   */
-  def updateUser(userId: String, auth: Auth, trackingData: TrackingData, path: String, data: JValue): Future[Response[User]] = {
-    val pathParts = path.split('.').toList
-    post(urlJoin("user" :: userId :: pathParts : _*), Some(auth), Some(trackingData), Some(write(data))) map extractUser
-  }
-
-  def updateUser(user: User, auth: Auth, trackingData: TrackingData): Future[Response[User]] =
-    post("user", Some(auth), Some(trackingData), Some(write(user))) map extractUser
-
-  def register(user: User, trackingParameters: TrackingData, returnUrl: Option[String] = None): Future[Response[User]] = {
-    val userData = write(user)
-    val params = buildParams(tracking = Some(trackingParameters), extra = returnUrl.map(url => Iterable("returnUrl" -> url)))
-    val headers = buildHeaders(extra = xForwardedForHeader(trackingParameters))
-    val response = httpClient.POST(apiUrl("user"), Some(userData), params, headers)
-    response map extractUser
-  }
-
   // PASSWORD RESET/UPDATE
 
   def passwordExists(auth: Auth, trackingData: TrackingData): Future[Response[Boolean]] = {
@@ -129,13 +109,6 @@ class IdApiClient(
     val headers = clientAuth.headers ++ buildHeaders(extra = xForwardedForHeader(trackingData))
     val response = httpClient.POST(apiUrl(apiPath), Some(postBody), clientAuth.parameters, headers)
     response map extract(jsonField("cookies"))
-  }
-
-  def sendPasswordResetEmail(emailAddress : String, trackingParameters: TrackingData): Future[Response[Unit]] = {
-    val apiPath = urlJoin("pwd-reset", "send-password-reset-email")
-    val params = buildParams(tracking = Some(trackingParameters), extra = Iterable("email-address" -> emailAddress, "type" -> "reset"))
-    val response = httpClient.GET(apiUrl(apiPath), None, params, buildHeaders(extra = xForwardedForHeader(trackingParameters)))
-    response map extractUnit
   }
 
   // EMAILS
@@ -186,10 +159,6 @@ class IdApiClient(
     post("remove/consent/all", Some(auth)).map(extractUnit)
 
   // THIRD PARTY SIGN-IN
-  def addUserToGroup(groupCode: String, auth: Auth): Future[Response[Unit]] = {
-    post(urlJoin("user", "me", "group", groupCode), Some(auth)) map extractUnit
-  }
-
   def executeAccountDeletionStepFunction(userId: String, email: String, reason: Option[String], auth: Auth): Future[Response[AccountDeletionResult]] = {
     httpClient.POST(
         s"${conf.accountDeletionApiRoot}/delete",
