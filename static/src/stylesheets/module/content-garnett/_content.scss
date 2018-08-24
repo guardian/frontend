@@ -36,7 +36,7 @@
             padding-right: gs-span(1) + $gs-gutter;
 
             // Unruly video expands to 100%; this negative right margin affects Unruly on Tablet
-            .ad-slot:not(.ad-slot--im):not(.ad-slot--unruly) {
+            .ad-slot:not(.ad-slot--im):not(.ad-slot--unruly):not(.ad-slot--carrot) {
                 margin-right: -1 * (gs-span(1) + $gs-gutter);
             }
 
@@ -114,7 +114,7 @@
 .content__hr {
     border: 0;
     margin: 0;
-    border-top: 1px dotted $neutral-5;
+    border-top: 1px dotted $brightness-86;
     padding-top: 5px;
 }
 
@@ -143,16 +143,16 @@
     padding-bottom: $gs-baseline/3;
 
     .content--media & a {
-        color: $neutral-5;
+        color: $brightness-86;
     }
 }
 
 .content__labels {
     box-sizing: border-box;
-    padding: $gs-baseline/2 0 0;
     position: relative;
     z-index: 1; // bring-to-front fix to make it clickable
     overflow: hidden;
+    padding-top: $gs-baseline / 4;
 
     @include mq($until: tablet) {
         order: 1;
@@ -162,10 +162,10 @@
         .content__head--column & {
             order: 0;
         }
+    }
 
-        & > .content__section-label  {
-            display: none;
-        }
+    @include mq(leftCol) {
+        padding-top: $gs-baseline / 2 + $gs-baseline / 4;
     }
 }
 
@@ -189,44 +189,31 @@
     }
 }
 
-.content__section-label {
-    @include fs-header(2);
+.content__label {
+    @include fs-header(1);
     display: inline;
-    padding-right: $gs-gutter/3;
+    padding-right: $gs-gutter / 3;
 
     @include mq(leftCol) {
         @include fs-header(4);
-        line-height: get-line-height(header, 2);
+        line-height: 20px;
         padding-right: 0;
     }
-
-    .content--interactive & {
-        padding-right: $gs-gutter/3 !important;
-    }
 }
 
-.content__series-label {
-    display: inline;
-    font-family: $f-serif-headline;
-    font-size: 16px;
-    line-height: 19px;
-
-    @include mq($until: tablet) {
-        font-weight: 800;
-    }
-
-    @include mq(tablet) {
-        display: inline;
-    }
+.content__label ~ .content__label {
+    font-weight: normal;
 
     @include mq(leftCol) {
-        @include fs-headline(2);
+        font-size: 16px;
+        line-height: 18px;
+        margin-bottom: $gs-baseline;
         display: block;
     }
-}
 
-.content__series-label__link {
-    color: $neutral-2;
+    @include mq($until: tablet) {
+        display: none;
+    }
 }
 
 @include mq(leftCol, wide) {
@@ -240,7 +227,7 @@
     @include fs-header(3);
     box-sizing: border-box;
     padding: $gs-baseline/2 0 $gs-baseline;
-    border-top: 1px dotted $neutral-5 !important; // Disable tone colour
+    border-top: 1px dotted $brightness-86 !important; // Disable tone colour
 }
 
 .content__headline {
@@ -314,7 +301,7 @@
 .content__standfirst {
     @include fs-headline(2);
     margin-bottom: $gs-baseline/2;
-    color: $garnett-neutral-1;
+    color: $brightness-7;
 
     @include mq(tablet) {
         @include font-size(18px, 22px);
@@ -352,7 +339,7 @@
             left: -16px;
             content: counter(li);
             counter-increment: li;
-            color: $neutral-3;
+            color: $brightness-86;
 
             @include mq(tablet) {
                 @include fs-header(3, true);
@@ -370,7 +357,7 @@
 .content__dateline {
     @include fs-textSans(1);
     position: relative;
-    color: $neutral-2;
+    color: $brightness-46;
     box-sizing: border-box;
     padding-top: $gs-baseline / 6;
     margin-bottom: $gs-baseline / 2;
@@ -447,7 +434,7 @@
         height: 60px; //Intentionally off grid
         margin: $gs-baseline/2 0;
         overflow: hidden;
-        background-color: $neutral-7;
+        background-color: $brightness-97;
 
         // chrome bug means the border radius is disabled while
         // main nav transitions on hover. this stops that.
@@ -478,7 +465,7 @@
 
     .meta__image {
         @include mq(leftCol) {
-            border-top: 1px dotted $neutral-5;
+            border-top: 1px dotted $brightness-86;
         }
     }
 }
@@ -523,26 +510,22 @@
 }
 
 .byline {
-    @include fs-bodyHeading(2);
-    margin-bottom: 0;
-    display: inline-block;
-    padding-top: $gs-baseline/3;
-    line-height: 20px;
-    color: $neutral-2;
+    @include fs-header(1);
+    border-top: 0;
+    color: $brightness-46;
+    font-style: italic;
+    min-height: 0;
+    margin-bottom: $gs-baseline / 3;
+    font-weight: normal;
+    width: 100%;
 
-    @include mq(tablet) {
-        line-height: 22px;
+    @include mq($until: phablet) {
+        border-top: 0;
     }
 
-    @include mq(leftCol) {
-        clear: both;
-        margin-right: 0;
-        display: block;
-        border-top: 1px dotted $neutral-5;
-        box-sizing: border-box;
-        padding-top: $gs-baseline/6;
-        padding-bottom: $gs-baseline;
-        min-height: $gs-baseline*4;
+    span[itemprop='author'] {
+        font-weight: 700;
+        font-style: normal;
     }
 
     .content__meta-container--twitter &,
@@ -638,7 +621,7 @@
             display: block;
             padding-top: $gs-baseline/3;
             margin-bottom: $gs-baseline;
-            border-top: 1px dotted $neutral-5;
+            border-top: 1px dotted $brightness-86;
         }
     }
 
@@ -649,11 +632,11 @@
     padding-top: ($gs-baseline/3);
     padding-bottom: ($gs-baseline/3)*4;
     margin-bottom: 0;
-    border-top: 1px solid $neutral-4;
+    border-top: 1px solid $brightness-86;
 }
 
 .meta__extras {
-    border-top: 1px solid $garnett-neutral-4;
+    border-top: 1px solid $brightness-86;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -694,16 +677,16 @@
 
         .tonal--tone-media & {
             border: 0;
-            color: $neutral-3;
-            background-color: $media-mute;
+            color: $brightness-86;
+            background-color: $brightness-20;
 
             .inline-tone-fill {
-                fill: $neutral-3;
+                fill: $brightness-86;
             }
 
             &:hover {
-                color: $neutral-3;
-                background-color: darken($media-mute, 5%);
+                color: $brightness-86;
+                background-color: darken($brightness-20, 5%);
             }
         }
 
@@ -785,19 +768,19 @@
     margin-bottom: $gs-baseline;
     padding-top: $gs-baseline/2;
 
-    color: $neutral-2;
+    color: $brightness-46;
 
     @include mq($until: leftCol) {
         display: none;
     }
 
     .tonal--tone-media & {
-        color: $neutral-7;
+        color: $brightness-97;
     }
 
     .meta__author--comment & {
         padding-top: $gs-baseline/6;
-        border-top: 1px dotted $neutral-5;
+        border-top: 1px dotted $brightness-86;
     }
 
     .content__meta-container--twitter &,
@@ -806,7 +789,7 @@
     }
 
     .content__meta-container--tonal-header & {
-        border-top: 1px dotted $neutral-5;
+        border-top: 1px dotted $brightness-86;
         padding-top: $gs-baseline/6;
     }
 }
@@ -814,9 +797,9 @@
 .meta__contact-header {
     @include fs-textSans(1);
     line-height: 15px;
-    color: $neutral-2;
+    color: $brightness-46;
     margin-bottom: 0;
-    border-top: 1px dotted $neutral-5;
+    border-top: 1px dotted $brightness-86;
     padding-top: $gs-baseline/6;
 
     .content__meta-container--bio & {
@@ -839,21 +822,21 @@
 .old-article-message {
     @include fs-textSans(1);
     display: inline-block;
-    color: $neutral-2;
+    color: $brightness-46;
     margin-bottom: $gs-baseline;
 
     .old-article-message--clock svg {
-        fill: $neutral-2;
+        fill: $brightness-46;
         margin-bottom: -1px;
     }
 }
 
 .tonal--tone-media {
     .old-article-message {
-        color: $neutral-3;
+        color: $brightness-86;
 
         .old-article-message--clock svg {
-            fill: $neutral-3;
+            fill: $brightness-86;
         }
     }
 }
@@ -992,7 +975,7 @@
     }
 }
 .paid-content {
-    color: $neutral-1;
+    color: $brightness-7;
     .content__head {
         display: block;
         margin-left: 0;
@@ -1009,39 +992,42 @@
     .content__dateline,
     .caption--main,
     .caption {
-        color: $garnett-neutral-7;
+        color: $brightness-20;
     }
     .inline-icon {
-        fill: $garnett-neutral-7;
+        fill: $brightness-20;
     }
     a {
-        color: $garnett-neutral-1;
+        color: $brightness-7;
     }
     .u-underline {
-        border-color: $garnett-neutral-2;
+        border-color: $brightness-60;
         &:hover,
         &:focus {
-            border-color: mix($garnett-neutral-1, $garnett-neutral-1, 50%);
+            border-color: mix($brightness-7, $brightness-7, 50%);
         }
         &:active {
-            border-color: $garnett-neutral-1;
+            border-color: $brightness-7;
         }
     }
     .element.element-pullquote {
         .pullquote-paragraph {
             font-family: $f-sans-serif-text;
-            color: $paid-article-brand;
+            color: $labs-main;
         }
     }
     a.in-body-link--immersive {
-        color: $paid-article-brand;
+        color: $labs-main;
+    }
+    .inline-expand-image {
+        fill: $brightness-100;
     }
     &.content--article,
     &.content--interactive,
     &.tonal--tone-media {
-        background-color: $paid-article;
+        background-color: $brightness-86;
         .caption :not(caption--main) {
-            color: $neutral-1;
+            color: $brightness-7;
         }
     }
     &.content {
@@ -1051,31 +1037,32 @@
         padding-top: $gs-baseline;
     }
     .content__header {
-        background-color: $paid-article-header;
+        background-color: $brightness-86;
     }
     .tonal__standfirst {
         background-color: transparent;
+        border-top: 1px solid $brightness-60;
         min-height: $gs-baseline*8;
-        padding: $gs-baseline 0 $gs-baseline*2;
+        padding: ($gs-baseline / 4) 0 ($gs-baseline * 2);
         .content__standfirst {
-            color: $neutral-1;
+            color: $brightness-7;
         }
     }
     .tone-media--item {
-        color: $neutral-1;
+        color: $brightness-7;
         .rich-link__container:before {
-            background-color: $news-support-3
+            background-color: $labs-main
         }
         .rich-link__kicker,
         .rich-link__read-more-text {
-            color: $paid-article-richlink;
+            color: $labs-dark;
         }
         .rich-link__arrow-icon {
-            fill: $paid-article-richlink;
+            fill: $labs-dark;
         }
     }
     .tone-news--item.rich-link {
-        background: $paid-article-subheader;
+        background: $brightness-86;
     }
     .rich-link__header,
     .rich-link__read-more-text {
@@ -1087,34 +1074,34 @@
     }
     .ad-slot__label,
     .ad-slot--inline {
-        background-color: $paid-article-subheader;
-        border-top: 0;
-        color: $neutral-2-contrasted;
+        background-color: $brightness-86;
+        border-top-color: $brightness-60;
+        color: $brightness-46;
     }
     .content__section-label {
         @include f-textSans;
         font-weight: 400;
         .content__section-label__link {
-            color: $neutral-1;
+            color: $brightness-7;
         }
     }
     .meta__extras {
-        border-color: $garnett-neutral-7;
+        border-color: $brightness-60;
     }
 
     &.tonal--tone-media {
         .content__headline,
         .from-content-api,
         .tonal__main .tone-colour {
-            color: $neutral-1;
+            color: $brightness-7;
             .inline-icon {
-                fill: $neutral-2;
+                fill: $brightness-46;
             }
         }
         .most-viewed-container--media,
         .meta__number {
             .inline-icon {
-                fill: $neutral-2;
+                fill: $brightness-46;
             }
         } // On video, standfirsts are injected twice - once in their usual location, another time as a replacement for the body
         // We want to hide the first instance and style the latter
@@ -1128,11 +1115,11 @@
         .meta__numbers .commentcount2__heading,
         .content__dateline,
         .content__series-label__link {
-            color: $neutral-2-contrasted;
+            color: $brightness-46;
         }
         .tonal__main--tone-media .sharecount__value,
         .tonal__main--tone-media .commentcount2__value {
-            color: $neutral-1;
+            color: $brightness-7;
         }
         .byline,
         .content__dateline,
@@ -1141,13 +1128,13 @@
         .meta__numbers,
         .meta__social,
         .meta__number + .meta__number {
-            border-color: $neutral-3;
+            border-color: $brightness-60;
         }
         .byline {
             .tone-colour {
-                color: $neutral-2-contrasted;
+                color: $brightness-46;
                 &:hover {
-                    color: $neutral-1;
+                    color: $brightness-7;
                 }
             }
         }
@@ -1155,11 +1142,11 @@
         .vjs-control-bar,
         .vjs-embed-button:hover .vjs-control-text,
         .vjs-progress-holder:before {
-            color: $multimedia-main-1;
-            background: $paid-article-media-bg;
+            color: $brightness-20;
+            background: $brightness-60;
             .podcast-meta__item__link,
             .vjs-duration {
-                color: $multimedia-main-1;
+                color: $brightness-20;
             }
         }
         .vjs-embed-button {
@@ -1180,54 +1167,54 @@
             }
         }
         .vjs-volume-bar:before {
-            background-color: $neutral-1;
+            background-color: $brightness-7;
         }
         .end-slate-container--video {
-            background-color: $paid-article;
+            background-color: $brightness-86;
             .end-slate-container__heading {
-                color: $news-support-7;
+                color: $brightness-20;
             }
             .fc-item__container {
                 &:before {
-                    background: $neutral-2;
+                    background: $brightness-46;
                 }
             }
             .fc-item__action {
-                color: $neutral-2-contrasted;
+                color: $brightness-46;
             }
         }
     }
     &.tonal--tone-media,
     &.tonal--tone-news {
         .save-for-later__button {
-            color: $neutral-2-contrasted;
+            color: $brightness-46;
         }
         .save-for-later__button--save,
         .save-for-later__button--saved {
             .inline-icon {
-                fill: $neutral-2-contrasted;
-                border-color: $neutral-2-contrasted;
-                background-color: $paid-article;
+                fill: $brightness-46;
+                border-color: $brightness-46;
+                background-color: $brightness-86;
             }
             &:hover {
                 .inline-icon {
-                    fill: $paid-article;
-                    border-color: $neutral-2-contrasted;
-                    background-color: $neutral-2-contrasted;
+                    fill: $brightness-86;
+                    border-color: $brightness-46;
+                    background-color: $brightness-46;
                 }
             }
         }
 
         .ad-slot--dark {
-            background-color: $paid-article-subheader;
+            background-color: $brightness-86;
         }
     }
     &.content--media--audio {
         .content__headline:before {
-            @include icon(volume-high-black, $with-width: false);
+            @include icon(volume-high-brightness-7, $with-width: false);
         }
     }
     .fc-item__title svg {
-        fill: $multimedia-main-2;
+        fill: $highlight-main;
     }
 }

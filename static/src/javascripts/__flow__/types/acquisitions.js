@@ -5,22 +5,19 @@ declare type AcquisitionsEpicTestimonialCopy = {
 
 declare type AcquisitionsEpicTemplateCopy = {
     heading?: string,
-    p1: string,
-    p2: string,
+    paragraphs: Array<string>,
+    highlightedText?: string,
     testimonial?: AcquisitionsEpicTestimonialCopy
 };
 
 declare type EngagementBannerTemplateParams = {
     messageText: string,
     ctaText: string,
-    paypalAndCreditCardImage: string,
-    linkUrl: string,
     buttonCaption: string,
-    buttonSvg: string,
+    linkUrl: string,
 };
 
 declare type EngagementBannerParams = {
-    minArticles: number,
     campaignCode: string,
     buttonCaption: string,
     linkUrl: string,

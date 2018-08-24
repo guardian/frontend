@@ -58,7 +58,8 @@ final case class MediaAtom(
   posterImage: Option[ImageMedia],
   endSlatePath: Option[String],
   expired: Option[Boolean],
-  activeVersion: Option[Long]
+  activeVersion: Option[Long],
+  channelId: Option[String]
 ) extends Atom {
 
   def activeAssets: Seq[MediaAsset] = activeVersion
@@ -332,7 +333,8 @@ object MediaAtom extends common.Logging {
       posterImage = mediaAtom.posterImage.map(imageMediaMake(_, mediaAtom.title)),
       endSlatePath = endSlatePath,
       expired = expired,
-      activeVersion = mediaAtom.activeVersion
+      activeVersion = mediaAtom.activeVersion,
+      channelId = mediaAtom.metadata.flatMap(_.channelId)
     )
   }
 

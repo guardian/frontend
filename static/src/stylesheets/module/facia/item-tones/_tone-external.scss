@@ -1,23 +1,23 @@
 .tone-external--item {
-    background-color: $neutral-6;
+    background-color: $brightness-93;
 
     .fc-item__kicker,
     .fc-item__byline {
-        color: $external-main-1;
+        color: $green-dark;
     }
 
     .fc-item__kicker--dreamsnap {
-        background-color: mix(#000000, $neutral-6, 10%);
+        background-color: mix(#000000, $brightness-93, 10%);
     }
 
     .u-faux-block-link--hover,
     .fc-item__image-container {
-        background-color: darken($neutral-6, 3%);
+        background-color: darken($brightness-93, 3%);
     }
 
     .fc-item__container:before,
     .rich-link__container:before {
-        background-color: $external-support-1;
+        background-color: $green-bold;
     }
 }
 

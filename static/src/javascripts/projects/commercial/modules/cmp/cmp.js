@@ -1,4 +1,5 @@
-// @flow
+// @flow strict
+
 import { log } from 'commercial/modules/cmp/log';
 import { CmpStore } from 'commercial/modules/cmp/store';
 import { getCookie } from 'lib/cookies';
@@ -14,10 +15,42 @@ import {
 } from 'commercial/modules/cmp/cmp-env';
 import { encodeVendorConsentData } from 'commercial/modules/cmp/cookie';
 
-import type { CmpConfig } from 'commercial/modules/cmp/types';
+import type {
+    CmpConfig,
+    ConsentDataResponse,
+    VendorList,
+    VendorConsentResponse,
+} from 'commercial/modules/cmp/types';
+
+type MessageData = {
+    __cmpCall: ?{
+        callId: string,
+        command: string,
+        parameter: string,
+    },
+};
+
+type PingResponse = {
+    cmpLoaded: boolean,
+    gdprAppliesGlobally: boolean,
+};
+
+type CommandCallback = (
+    res: VendorConsentResponse | ConsentDataResponse | PingResponse,
+    ok?: boolean
+) => void;
+
+type Command = {
+    callId: string,
+    command: string,
+    parameter: string,
+    callback: CommandCallback,
+    event: MessageEvent,
+};
 
 const readConsentCookie = (cookieName: string): boolean | null => {
     const cookieVal: ?string = getCookie(cookieName);
+    // flowlint sketchy-null-string:warn
     if (cookieVal && cookieVal.split('.')[0] === '1') return true;
     if (cookieVal && cookieVal.split('.')[0] === '0') return false;
     return null;
@@ -30,8 +63,8 @@ class CmpService {
     isLoaded: boolean;
     cmpReady: boolean;
     cmpConfig: CmpConfig;
-    eventListeners: Object;
-    commandQueue: Array<any>;
+    eventListeners: { [string]: Array<(obj: {}) => void> };
+    commandQueue: Array<Command>;
     store: CmpStore;
     generateConsentString: () => string;
     processCommand: () => void;
@@ -74,46 +107,58 @@ class CmpService {
     };
 
     commands = {
-        // $FlowFixMe
-        getVendorConsents: (vendorIds: ?Array<number>, callback = () => {}) => {
+        getVendorConsents: (
+            vendorIds: ?Array<number>,
+            callback: CommandCallback = () => {}
+        ): void => {
             const consent = this.store.getVendorConsentsObject(vendorIds) || {};
-            const result = {
-                metadata: this.generateConsentString() || undefined,
+            const result: VendorConsentResponse = {
                 gdprApplies: this.cmpConfig.gdprApplies,
                 hasGlobalScope: this.cmpConfig.storeConsentGlobally,
+                metadata: this.generateConsentString() || undefined,
                 ...consent,
             };
             callback(result, true);
         },
-        // $FlowFixMe
-        getConsentData: (_, callback = () => {}): void => {
-            const consentData = {
+
+        getConsentData: (
+            _: mixed,
+            callback: CommandCallback = () => {}
+        ): void => {
+            const consentData: ConsentDataResponse = {
                 gdprApplies: this.cmpConfig.gdprApplies,
                 hasGlobalScope: this.cmpConfig.storeConsentGlobally,
                 consentData: this.generateConsentString() || undefined,
             };
             callback(consentData, true);
         },
-        // $FlowFixMe
-        getVendorList: (vendorListVersion, callback = () => {}): void => {
+
+        getVendorList: (
+            vendorListVersion: number | null,
+            callback: (res: VendorList | null, ok: boolean) => void = () => {}
+        ): void => {
             const { vendorList } = this.store;
             const { vendorListVersion: listVersion } = vendorList || {};
+            // flowlint sketchy-null-number:warn
             if (!vendorListVersion || vendorListVersion === listVersion) {
                 callback(vendorList, true);
             } else {
                 callback(null, false);
             }
         },
-        // $FlowFixMe
-        ping: (_, callback = () => {}): void => {
+
+        ping: (_: mixed, callback: CommandCallback = () => {}): void => {
             const result = {
                 gdprAppliesGlobally: this.cmpConfig.storeConsentGlobally,
                 cmpLoaded: true,
             };
             callback(result, true);
         },
-        // $FlowFixMe
-        addEventListener: (event: string, callback) => {
+
+        addEventListener: (
+            event: string,
+            callback: (res: {}) => void
+        ): void => {
             const eventSet = this.eventListeners[event] || [];
             eventSet.push(callback);
             this.eventListeners[event] = eventSet;
@@ -126,16 +171,23 @@ class CmpService {
         },
     };
 
-    processCommand = (command: string, parameter: any, callback: any): void => {
+    processCommand = (
+        command: string,
+        parameter: string | null,
+        callback: CommandCallback = () => {}
+    ): void => {
         if (typeof this.commands[command] !== 'function') {
             log.error(`Invalid CMP command "${command}"`);
         } else {
-            log.info(`Proccess command: ${command}, parameter: ${parameter}`);
+            log.info(
+                `Proccess command: ${command}, parameter: ${parameter ||
+                    'unkonwn'}`
+            );
             this.commands[command](parameter, callback);
         }
     };
 
-    processCommandQueue = () => {
+    processCommandQueue = (): void => {
         const queue = [...this.commandQueue];
         if (queue.length) {
             log.info(`Process ${queue.length} queued commands`);
@@ -160,22 +212,30 @@ class CmpService {
             });
         }
     };
-    // $FlowFixMe
-    receiveMessage = ({ data, origin, source }) => {
-        const { __cmpCall: cmp } = data;
-        if (cmp) {
-            log.debug(`Message from: ${origin}`);
-            const { callId, command, parameter } = cmp;
-            this.processCommand(command, parameter, returnValue =>
-                source.postMessage(
-                    { __cmpReturn: { callId, command, returnValue } },
-                    origin
-                )
-            );
+
+    receiveMessage = ({ data, origin, source }: MessageEvent): void => {
+        if (data instanceof Object) {
+            const { __cmpCall: cmp }: MessageData = data;
+            if (cmp) {
+                log.info(`Message from: ${origin}`);
+                const { callId, command, parameter } = cmp;
+                if (source && source.postMessage) {
+                    this.processCommand(command, parameter, returnValue =>
+                        source.postMessage(
+                            { __cmpReturn: { callId, command, returnValue } },
+                            origin
+                        )
+                    );
+                } else {
+                    log.debug(
+                        `Missing source: Unable to process command from ${origin}`
+                    );
+                }
+            }
         }
     };
 
-    notify = (event: string, data: any): void => {
+    notify = (event: string, data?: MessageData): void => {
         log.info(`Notify event: ${event}`);
         const eventSet = this.eventListeners[event] || [];
         eventSet.forEach(listener => {

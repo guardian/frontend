@@ -4,6 +4,9 @@ import com.gu.contentapi.client.model.v1.ItemResponse
 import common.`package`._
 import model.liveblog.BodyBlock
 import model.ParseBlockId.ParsedBlockId
+import org.joda.time.DateTime
+import play.api.libs.functional.syntax._
+import play.api.libs.json.{JsValue, Json, _}
 
 object LiveBlogHelpers {
 
@@ -47,7 +50,7 @@ object LiveBlogHelpers {
 
     val pageSize = if (liveBlog.content.tags.tags.map(_.id).contains("sport/sport")) 30 else 10
 
-    val liveBlogPageModel =
+    val liveBlogPageModel: Option[LiveBlogCurrentPage] =
       liveBlog.content.fields.blocks.map { blocks =>
         LiveBlogCurrentPage(
           pageSize = pageSize,
@@ -79,4 +82,42 @@ object LiveBlogHelpers {
     }.getOrElse(Right(NotFound))
 
   }
+
+  def blockTextJson(page: LiveBlogPage, number: Int): JsValue = {
+
+    case class TextBlock(
+      id: String,
+      title: Option[String],
+      publishedDateTime: Option[DateTime],
+      lastUpdatedDateTime: Option[DateTime],
+      body: String
+    )
+
+    implicit val dateToTimestampWrites = play.api.libs.json.JodaWrites.JodaDateTimeNumberWrites
+
+    implicit val blockWrites = (
+      (__ \ "id").write[String] ~
+        (__ \ "title").write[Option[String]] ~
+        (__ \ "publishedDateTime").write[Option[DateTime]] ~
+        (__ \ "lastUpdatedDateTime").write[Option[DateTime]] ~
+        (__ \ "body").write[String]
+      )(unlift(TextBlock.unapply))
+
+    val firstPageBlocks = for {
+      blocks <- page.article.blocks.toSeq
+      firstPageBlocks <- blocks.requestedBodyBlocks.get(Canonical.firstPage).toSeq
+      firstPageBlock <- firstPageBlocks
+    } yield firstPageBlock
+
+    val textBlocks = firstPageBlocks
+      .take(number)
+      .collect {
+        case BodyBlock(id, html, summary, title, _, _, _, publishedAt, _, updatedAt, _, _) if html.trim.nonEmpty =>
+          TextBlock(id, title, publishedAt, updatedAt, summary)
+      }
+
+    Json.toJson(textBlocks)
+
+  }
+
 }

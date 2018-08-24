@@ -15,18 +15,17 @@ import scala.util.control.NonFatal
 
 object Analytics extends Results {
 
-  def storeJsonBody(switch: Switch, streamName: String, log: Logger)(request: Request[String])(
-    implicit ec: ExecutionContext): Result = {
+  def storeJsonBody[A](switch: Switch, streamName: => String, log: Logger)(
+    analytics: String)(implicit ec: ExecutionContext, request: Request[A]): Result = {
     if (switch.isSwitchedOn) {
-      val analytics = request.body
       if (isProd) {
         val result = Firehose.stream(streamName)(analytics)
         result.failed foreach {
           case NonFatal(e) => log.error(s"Failed to put '$analytics'", e)
         }
       } else log.info(prettyPrint(Json.parse(analytics)))
-      TinyResponse.noContent()(request)
+      TinyResponse.noContent()
     } else
-      Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound))(request)
+      Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound))
   }
 }

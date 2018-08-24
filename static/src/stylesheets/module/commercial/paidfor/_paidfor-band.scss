@@ -1,22 +1,6 @@
-.paidfor-brand {
-    @include f-textSans;
-    color: #767676;
-    text-align: right;
-    font-size: get-font-size(textSans, 2);
-
-    img {
-        vertical-align: middle;
-    }
-}
-
-.paidfor-logo {
-    max-height: $gs-baseline * 5;
-}
-
 .paidfor-band {
-    background: $paidfor-background;
+    background: $labs-main;
     width: 100%;
-
     position: sticky;
     top: 0;
     z-index: $zindex-sticky;
@@ -50,4 +34,8 @@
     display: flex;
     justify-content: space-between;
     box-sizing: border-box;
+
+    .inline-glabs-logo__svg {
+        margin-top: $gs-baseline / 4;
+    }
 }

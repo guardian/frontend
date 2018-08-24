@@ -15,7 +15,7 @@
     @include mq($from: leftCol, $until: wide) {
         // Excude templates that have a full width meta
         .content:not(.content--liveblog):not(.content--gallery):not(.content--interactive) .meta__extras:not(.meta__extras--crossword) & {
-            border-top: 1px solid $garnett-neutral-4;
+            border-top: 1px solid $brightness-86;
             margin-top: -1px;
             flex-grow: 1;
         }
@@ -71,7 +71,7 @@
     }
 
     .sharecount__value {
-        color: $neutral-2;
+        color: $brightness-46;
     }
 
     .sharecount__value--short {
@@ -87,11 +87,11 @@
     }
 
     .sharecount__heading {
-        color: $neutral-2;
+        color: $brightness-46;
     }
 
     .inline-share {
-        fill: $neutral-2;
+        fill: $brightness-46;
     }
 }
 
@@ -104,7 +104,7 @@
 }
 
 .meta__number + .meta__number {
-    border-left: 1px solid $garnett-neutral-4;
+    border-left: 1px solid $brightness-86;
     padding-left: $gs-gutter / 4;
     margin-left: $gs-gutter / 4;
 }

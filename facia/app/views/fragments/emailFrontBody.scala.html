@@ -14,7 +14,7 @@
 @import common.LinkTo
 
 
-@headline(card: ContentCard, isLarge: Boolean = false, isLast: Boolean) = {
+@headline(card: ContentCard, isLarge: Boolean = false, isTrailText: Boolean = false) = {
 
     @row(Seq("headline")) {
         <a @Html(card.header.url.hrefWithRel) class="fc-link">
@@ -52,10 +52,6 @@
         }
     }
 
-    @if(isLast) {
-        @row(Seq("fc__pad")) { }
-    }
-
     @card.mediaTypeIcon.map { mediaType: String =>
         @row(Seq("media-icon-wrapper")) {
             @card.pillar.map( pillar => {
@@ -70,6 +66,12 @@
             })
         }
     }
+
+    @if(isTrailText) {
+        @trailText(card)
+    }
+
+    @row(Seq("fc__pad")) { }
 }
 
 @trailText(card: ContentCard) = {
@@ -81,8 +83,7 @@
 }
 
 @headlineAndTrailWithCutout(card: ContentCard, withImage: Boolean) = {
-    @headline(card, isLarge = withImage, isLast = false)
-    @trailText(card)
+    @headline(card, isLarge = withImage, isTrailText = true)
 }
 
 
@@ -91,7 +92,7 @@
         @if(withImage) {
             @row(Seq("no-pad")){@imgFromCard(card)}
         }
-        @headline(card, isLast = true)
+        @headline(card)
     }
 }
 
@@ -103,8 +104,7 @@
         @if(card.header.quoted) {
             @headlineAndTrailWithCutout(card, withImage)
         } else {
-            @headline(card, isLarge = largeHeadline, isLast = false)
-            @trailText(card)
+            @headline(card, isLarge = largeHeadline, isTrailText = true)
         }
     }
 }
@@ -112,12 +112,12 @@
 @faciaCardWithoutTrailText(card: ContentCard, withImage: Boolean, largeHeadline: Boolean, isBranded: Boolean) = {
     @imgFromCard(card, 5).filter(_ => withImage).fold {
         @faciaCard(classesForCard(card), isBranded) {
-            @headline(card, largeHeadline, isLast = true)
+            @headline(card, largeHeadline)
         }
     } { img =>
         @faciaCard(classesForCard(card), isBranded) {
             <tr valign="top">
-                <td class="left-col"><table>@headline(card, isLast = true)</table></td>
+                <td class="left-col"><table>@headline(card)</table></td>
                 <td class="right-col no-pad">@img</td>
             </tr>
         }

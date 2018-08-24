@@ -15,7 +15,7 @@ object Commercial {
   def isAdFree(request: RequestHeader): Boolean = {
     try {
       request.headers.get("X-GU-Commercial-Ad-Free").exists(_.toLowerCase == "true") ||
-        request.cookies.get("GU_AF1").exists(_.value.toInt > 0)
+        request.cookies.get("GU_AF1").exists(_.value.toLong > 0)
     } catch {
        case e: Exception => false   // in case the cookie value can't be converted toInt
     }
@@ -49,6 +49,7 @@ object Commercial {
     slotName match {
       case "right" => Some("5a9858a84f-157")
       case "top-above-nav" => Some("5a98585772-157")
+      case "mostpop" => Some("5a9d5c1d72-157")
       case _ => None
     }
   }
@@ -302,7 +303,7 @@ object Commercial {
           if (isContentPage) "Onward container"
           else "Front container",
         editionId = Edition(request).id,
-        frontId = frontId.getOrElse("unknown front id"),
+        frontId = frontId.filter(_.nonEmpty).getOrElse("unknown front id"),
         containerIndex = containerIndex,
         containerTitle = containerDisplayName.getOrElse("unknown container"),
         sponsorName = card.branding.map(_.sponsorName) getOrElse "unknown",

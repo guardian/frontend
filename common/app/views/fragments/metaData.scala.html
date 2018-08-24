@@ -18,7 +18,7 @@
 @if(!amp) {
     @* http://www.chromium.org/developers/design-documents/dns-prefetching *@
     <link rel="dns-prefetch" href="@Configuration.assets.path" />
-    <link rel="dns-prefetch" href="@Configuration.images.path" />
+    <link rel="dns-prefetch" href="@Configuration.images.fastlyIOHost" />
     <link rel="dns-prefetch" href="@Configuration.ajax.url" />
     <link rel="dns-prefetch" href="@AnalyticsHost()" />
     <link rel="dns-prefetch" href="//j.ophan.co.uk" />
@@ -106,7 +106,7 @@
             <meta name="news_keywords" content="@c.item.tags.keywords.take(10).map(_.name).mkString(",")" />
         }
         @c.getOpenGraphProperties.map { case (key, value) =>
-            <meta property="@key" content="@value" />
+            <meta property="@key" content="@Html(value)" />
         }
         @c.getTwitterProperties.map{ case (key, value) =>
             <meta name="@key" content="@value" />

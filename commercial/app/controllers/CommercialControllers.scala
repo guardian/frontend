@@ -35,4 +35,5 @@ trait CommercialControllers {
   lazy val adsDotTextFileController = wire[AdsDotTextViewController]
   lazy val prebidAnalyticsController = wire[PrebidAnalyticsController]
   lazy val pageViewAnalyticsController = wire[PageViewAnalyticsController]
+  lazy val passbackController = wire[PassbackController]
 }

@@ -13,7 +13,7 @@
             svg {
                 width: $gs-gutter;
                 height: $gs-gutter;
-                fill: $neutral-3;
+                fill: $brightness-60;
             }
         }
     }
@@ -29,7 +29,6 @@
     .epic__testimonial-name {
         @include fs-textSans(3);
         font-style: normal;
-
         display: block;
         margin-top: 5px;
     }

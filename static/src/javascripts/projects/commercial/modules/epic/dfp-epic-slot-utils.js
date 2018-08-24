@@ -7,9 +7,9 @@ import { createSlots } from 'commercial/modules/dfp/create-slots';
 import {
     insertAtSubmeta,
     reportEpicError,
-} from 'common/modules/commercial/epic-utils';
+} from 'common/modules/commercial/epic/epic-utils';
 
-import type { EpicComponent } from 'common/modules/commercial/epic-utils';
+import type { EpicComponent } from 'common/modules/commercial/epic/epic-utils';
 
 const createEpicAdSlot = (): HTMLDivElement => {
     const adSlots = createSlots('epic', {});
@@ -43,10 +43,10 @@ const renderEpicSlot = (epicSlot: HTMLDivElement): Promise<EpicComponent> => {
         componentEvent: {
             component: {
                 componentType: 'ACQUISITIONS_EPIC',
-                componentId: 'gdnwb_copts_memco_epic_native_vs_dfp_v2_dfp',
+                id: 'gdnwb_copts_memco_epic_native_vs_dfp_v3_dfp',
             },
             abTest: {
-                name: 'AcquisitionsEpicNativeVsDfpV2',
+                name: 'AcquisitionsEpicNativeVsDfpV3',
                 variant: 'dfp',
             },
         },
@@ -68,7 +68,7 @@ const renderEpicSlotWithTimeout = (
 
 export const displayDFPEpic = (duration: number): Promise<EpicComponent> => {
     const epicAdSlot = createEpicAdSlot();
-    return insertAtSubmeta(epicAdSlot).then(() =>
+    return insertAtSubmeta({ html: epicAdSlot }).then(() =>
         renderEpicSlotWithTimeout(epicAdSlot, duration)
     );
 };

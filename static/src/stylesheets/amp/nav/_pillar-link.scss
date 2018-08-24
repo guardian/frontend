@@ -7,7 +7,6 @@
     padding: 0 4px;
     position: relative;
     color: currentColor;
-    cursor: pointer;
 
     @include mq(mobileMedium) {
         font-size: 16px;
@@ -19,7 +18,7 @@
         left: 0;
         bottom: 0;
         position: absolute;
-        border-left: 1px solid $rule;
+        border-left: 1px solid $nav-dark;
         top: $gs-baseline / 4;
     }
 }

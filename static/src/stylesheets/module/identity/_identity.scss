@@ -74,7 +74,7 @@ $identity-header-height: 48px;
     margin-bottom: $gs-baseline;
     &.identity-title-explainer--small {
         @include fs-textSans(2);
-        color: $neutral-2;
+        color: $brightness-46;
     }
 }
 
@@ -247,7 +247,7 @@ $identity-header-height: 48px;
 .user-profile__edit-link {
     @include fs-textSans(1);
     display: block;
-    color: $neutral-2-contrasted;
+    color: $brightness-46;
     font-weight: normal;
     margin: 0;
 }
@@ -283,9 +283,9 @@ $identity-header-height: 48px;
     padding-left: $gs-gutter * 1.2;
 
     .inline-icon {
-        background-color: $garnett-neutral-4;
+        background-color: $brightness-86;
         border-radius: 1000px;
-        fill: $garnett-neutral-7;
+        fill: $brightness-20;
         height: 18px;
         left: 0;
         position: absolute;
@@ -332,7 +332,7 @@ $identity-header-height: 48px;
 /* Email subscriptions
    ========================================================================== */
 .email-subscription {
-    border-top: 1px solid $garnett-neutral-4;
+    border-top: 1px solid $brightness-86;
     margin-bottom: $gs-baseline*2;
     padding-top: $gs-baseline/3;
 
@@ -362,16 +362,16 @@ $identity-header-height: 48px;
 
 .dropdown-styled.dropdown--email-subscription {
     @supports (transform: rotate(45deg)) {
-        border-color: $neutral-6;
+        border-color: $brightness-93;
         .dropdown__button {
             padding: $gs-baseline / 4 0 $gs-baseline;
-            color: $identity-main;
+            color: $brightness-7;
         }
-        @include pillar-dropdown('News', $news-garnett-main-1);
-        @include pillar-dropdown('Sport', $sport-garnett-main-1);
-        @include pillar-dropdown('Culture', $culture-garnett-main-1);
-        @include pillar-dropdown('Lifestyle', $lifestyle-garnett-main-1);
-        @include pillar-dropdown('Comment', $opinion-garnett-main-1);
+        @include pillar-dropdown('News', $news-main);
+        @include pillar-dropdown('Sport', $sport-main);
+        @include pillar-dropdown('Culture', $culture-main);
+        @include pillar-dropdown('Lifestyle', $lifestyle-main);
+        @include pillar-dropdown('Comment', $opinion-main);
         .dropdown__label {
             @include fs-bodyHeading(3);
             &:after {
@@ -401,7 +401,7 @@ $identity-header-height: 48px;
         }
         &:hover .dropdown__button,
         .dropdown__button:focus {
-            color: darken($identity-main, 15%);
+            color: darken($brightness-7, 15%);
             &:hover, &:focus {
                 text-decoration: underline;
             }
@@ -524,7 +524,7 @@ $identity-header-height: 48px;
 .identity-wrapper .activity-stream__empty {
     a {
         @extend %u-underline;
-        color: $identity-main;
+        color: $brightness-7;
     }
 
 }

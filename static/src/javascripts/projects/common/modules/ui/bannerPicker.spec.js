@@ -252,32 +252,4 @@ describe('bannerPicker', () => {
             });
         });
     });
-
-    describe('bannerPicker fails banner without calling canShow if it has already been acknowledged by user', () => {
-        it('should call show() for banner at index 1 if index 0 timesout', () => {
-            const banners = [
-                {
-                    id: 'banner-0',
-                    canShow: jest.fn(),
-                    show: jest.fn(),
-                },
-                {
-                    id: 'banner-1',
-                    canShow: jest.fn().mockReturnValue(Promise.resolve(true)),
-                    show: jest.fn(),
-                },
-            ];
-
-            userPrefs.get.mockReturnValueOnce(['banner-0']);
-
-            const asyncTest = init(banners);
-
-            return asyncTest.then(() => {
-                expect(banners[0].canShow).not.toHaveBeenCalled();
-                expect(banners[1].canShow).toHaveBeenCalled();
-                expect(banners[0].show).not.toHaveBeenCalled();
-                expect(banners[1].show).toHaveBeenCalled();
-            });
-        });
-    });
 });

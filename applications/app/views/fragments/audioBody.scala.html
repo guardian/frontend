@@ -1,0 +1,75 @@
+
+@import model.{Audio}
+@import views.support.Commercial.{isPaidContent, isAdFree}
+@import views.support.TrailCssClasses.toneClass
+@import views.support.{RenderClasses}
+
+@(page: MediaPage, audio: Audio)(implicit request: RequestHeader, context: model.ApplicationContext)
+
+@defining(isPaidContent(page), isAdFree(request)) { case (isPaidContent, isAdFree) =>
+
+<div class="l-side-margins @if(!isPaidContent) {l-side-margins--media}">
+    <article id="article" class="@RenderClasses(
+        Map(
+            "content--has-body" -> audio.fields.body.nonEmpty,
+            "content--paid-content paid-content" -> isPaidContent,
+            "content--pillar-special-report" -> (toneClass(audio) == "tone-special-report")
+        ),
+        "content", "content--media", "new-audio", s"content--pillar-${audio.metadata.pillar.nameOrDefault}", s"content--media--audio", "tonal", "tonal--tone-media", s"tonal--${toneClass(audio)}"
+    )"
+    itemscope itemtype="@audio.metadata.schemaType" role="main">
+
+        @if(isPaidContent) { @fragments.guBand() }
+
+        @fragments.headTonal(audio, page)
+
+        <div class="content__main tonal__main tonal__main--@toneClass(audio)">
+            <div class="gs-container">
+                <div class="content__main-column content__main-column--media content__main-column--audio">
+                    <div class="media-body">
+
+                        @audio.elements.images.map{ img =>
+                            @fragments.imageFigure(img.images)
+                        }
+
+                        <figure data-component="main audio new-player"
+                            id="audio-component-container"
+                            data-media-id="@audio.elements.mainAudio.map{ audioElement => @audioElement.properties.id}"
+                            data-source="@audio.downloadUrl.map(Audio.acastUrl(_, false))"
+                            data-itunes-url="@audio.iTunesSubscriptionUrl.getOrElse("#")"
+                            data-download-url="@audio.downloadUrl.getOrElse("#")">
+                        </figure>
+
+
+                        <div class="content__main-column__body" data-component="body">
+
+                            @fragments.contentMeta(audio, page)
+
+                            @if(audio.fields.body.nonEmpty) {
+                                <div class="from-content-api">
+                                    @Html(audio.fields.body)
+                                </div>
+                               }
+
+                            @fragments.submeta(audio)
+                        </div>
+                    </div>
+
+                     @if(audio.fields.body.nonEmpty) {
+                         <div class="content__secondary-column content__secondary-column--media content__secondary-column--audio hide-on-childrens-books-site"
+                         aria-hidden="true">
+                             @fragments.commercial.standardAd("right", Seq("dark"), Map("desktop" -> Seq("300,250", "300,274", "fluid")))
+                         </div>
+                     }
+                </div>
+            </div>
+        </div>
+    </article>
+
+</div>
+
+<div class="l-side-margins">
+    @fragments.contentFooter(audio, page.related, "media", isPaidContent)
+</div>
+}
+

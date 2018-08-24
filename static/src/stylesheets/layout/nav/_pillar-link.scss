@@ -41,7 +41,7 @@
 
     &:before {
         // Dividing lines
-        border-left: 1px solid $rule;
+        border-left: 1px solid $nav-dark;
         top: $gs-baseline / 4;
         z-index: 1;
 
@@ -119,7 +119,7 @@
 }
 
 .pillar-link--sections {
-    color: $nav-secondary-colour;
+    color: $brightness-20;
     font-weight: 400;
     float: left;
     padding-right: $gs-gutter / 4;
@@ -127,6 +127,6 @@
 
     &:hover,
     &:focus {
-        color: $nav-primary-colour;
+        color: $brightness-7;
     }
 }

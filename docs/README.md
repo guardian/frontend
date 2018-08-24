@@ -43,6 +43,7 @@
 ## [Quality](04-quality/)
 - [Browsers support](04-quality/01-browser-support.md)
 - [Browser support principles](04-quality/02-browser-support-principles.md)
+- [Accessibility](04-quality/03-accessibility.md)
 
 ## [Commercial](05-commercial/)
 - [How do DFP adverts work?](05-commercial/01-DFP-Advertising.md)
@@ -76,4 +77,3 @@
 - First line of every documentation file should contain its title (used to generated the table of content).
 - Store all the images in an `/images` subfolder in the same directory the document referencing them will be.
 - Table of content (TOC) is generated automatically with every commit, all changes will be staged accordingly.
-

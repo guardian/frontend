@@ -28,13 +28,11 @@
             <div class="content__main tonal__main tonal__main--@toneClass(page.item)">
                 <div class="gs-container gallery__divider">
                     <div class="content__main-column content__main-column--gallery">
-                        @fragments.witnessCallToAction(page.item.content)
                         <ul class="gallery">
                             @page.item.lightbox.largestCrops.zipWithRowInfo.map { case (image, row) =>
                                 @galleryItem(4, image, row, page.item.lightbox.imageContainer(row.rowNum - 1))
                             }
                         </ul>
-                        @fragments.witnessCallToAction(page.item.content)
                         @fragments.submeta(page.item)
                     </div>
                 </div>
@@ -70,7 +68,7 @@
 
             <div class="gallery__figcaption">
                 @image.caption.map { caption =>
-                    <div class="gallery__caption" itemprop="caption">@GalleryCaptionCleaners(page, caption, rowInfo.isLast)</div>
+                    <div class="gallery__caption" itemprop="caption">@GalleryCaptionCleaners(page, caption, rowInfo.rowNum == 1)</div>
                 }
                 @if(image.displayCredit) {
                     @image.credit.map { credit =>

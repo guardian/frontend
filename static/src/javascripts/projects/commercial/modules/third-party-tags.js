@@ -96,7 +96,9 @@ const init = (): Promise<any> => {
 
     // Outbrain/Plista needs to be loaded before the first ad as it is checking
     // for the presence of high relevance component on page
-    loadExternalContentWidget();
+    if (!commercialFeatures.adFree) {
+        loadExternalContentWidget();
+    }
 
     loadOther();
 

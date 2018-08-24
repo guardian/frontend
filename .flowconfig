@@ -4,6 +4,11 @@
 
 [include]
 
+[strict]
+unclear-type
+unsafe-getters-setters
+untyped-type-import
+sketchy-null
 
 [libs]
 ####### STATIC APP #######
@@ -12,6 +17,9 @@ static/src/javascripts/__flow__/types
 
 ####### ATOM LIBRARY #######
 node_modules/@guardian/atom-renderer/dist/__flow__/types
+
+####### DOTCOM RENDERING #######
+node_modules/@guardian/dotcom-rendering/flow-typed
 
 [options]
 emoji=true

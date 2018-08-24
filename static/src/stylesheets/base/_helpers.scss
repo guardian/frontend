@@ -216,15 +216,15 @@
 .u-underline,
 %u-underline {
     text-decoration: none !important;
-    border-bottom: 1px solid $neutral-4;
+    border-bottom: 1px solid $brightness-86;
     transition: border-color .15s ease-out;
 
     &:hover,
     &:focus {
-        border-color: mix($news-default, $neutral-4, 50%);
+        border-color: mix($sport-dark, $brightness-86, 50%);
     }
     &:active {
-        border-color: $news-accent;
+        border-color: $sport-bright;
     }
 }
 

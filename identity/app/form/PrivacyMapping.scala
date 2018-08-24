@@ -16,8 +16,6 @@ class PrivacyMapping extends UserFormMapping[PrivacyFormData] {
 
   def formMapping(implicit messagesProvider: MessagesProvider): Mapping[PrivacyFormData] =
     mapping(
-      "receiveGnmMarketing" -> optional(boolean),     // TODO: statusFields to be removed once GDPR V2 is in PROD
-      "receive3rdPartyMarketing" -> optional(boolean),
       "allowThirdPartyProfiling" -> optional(boolean),
       "consents" -> list(
         mapping(
@@ -35,8 +33,6 @@ class PrivacyMapping extends UserFormMapping[PrivacyFormData] {
     PrivacyFormData(userDO)
 
   protected lazy val idapiErrorContextToFormFieldKeyMap = Map(
-    "statusFields.receiveGnmMarketing" -> "receiveGnmMarketing",
-    "statusFields.receive3rdPartyMarketing" -> "receive3rdPartyMarketing",
     "statusFields.allowThirdPartyProfiling" -> "allowThirdPartyProfiling"
   )
 }
@@ -45,8 +41,6 @@ class PrivacyMapping extends UserFormMapping[PrivacyFormData] {
   * Form specific DTO representing marketing consent subset of User model
   */
 case class PrivacyFormData(
-    receiveGnmMarketing: Option[Boolean],
-    receive3rdPartyMarketing: Option[Boolean],
     allowThirdPartyProfiling: Option[Boolean],
     consents: List[Consent]) extends UserFormData{
 
@@ -67,23 +61,11 @@ case class PrivacyFormData(
   def toUserUpdateDTO(oldUserDO: User): UserUpdateDTO =
     UserUpdateDTO(
       statusFields = Some(oldUserDO.statusFields.copy(
-        receive3rdPartyMarketing = Some(receive3rdPartyMarketing.getOrElse(false)),
-        receiveGnmMarketing = Some(receiveGnmMarketing.getOrElse(false)),
         allowThirdPartyProfiling = Some(allowThirdPartyProfiling.getOrElse(false))
       )),
       consents = Some(consents))
 
   def toUserUpdateDTOAjax(oldUserDO: User): UserUpdateDTO = {
-
-    val newReceiveGnmMarketing = receiveGnmMarketing match {
-      case None => oldUserDO.statusFields.receiveGnmMarketing
-      case Some(_) => receiveGnmMarketing
-    }
-
-    val newReceive3rdPartyMarketing = receive3rdPartyMarketing match {
-      case None => oldUserDO.statusFields.receive3rdPartyMarketing
-      case Some(_) => receive3rdPartyMarketing
-    }
 
     val newAllowThirdPartyProfiling = allowThirdPartyProfiling match {
       case None => oldUserDO.statusFields.allowThirdPartyProfiling
@@ -92,8 +74,6 @@ case class PrivacyFormData(
 
     UserUpdateDTO(
       statusFields = Some(StatusFields(
-        receive3rdPartyMarketing = newReceive3rdPartyMarketing,
-        receiveGnmMarketing = newReceiveGnmMarketing,
         allowThirdPartyProfiling = newAllowThirdPartyProfiling
       )),
       consents = Some(consents))
@@ -109,8 +89,6 @@ object PrivacyFormData extends SafeLogging {
     */
   def apply(userDO: User): PrivacyFormData = {
     PrivacyFormData(
-      receiveGnmMarketing = userDO.statusFields.receiveGnmMarketing,
-      receive3rdPartyMarketing = userDO.statusFields.receive3rdPartyMarketing,
       allowThirdPartyProfiling = userDO.statusFields.allowThirdPartyProfiling,
       consents = if (userDO.consents.isEmpty) defaultConsents else onlyValidConsents(userDO)
     )

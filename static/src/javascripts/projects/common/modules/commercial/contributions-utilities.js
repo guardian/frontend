@@ -1,9 +1,7 @@
 // @flow
 import { isAbTestTargeted } from 'common/modules/commercial/targeting-tool';
-import {
-    control as acquisitionsCopyControl,
-    getCopyFromGoogleDoc,
-} from 'common/modules/commercial/acquisitions-copy';
+import { getEpicParams } from 'common/modules/commercial/acquisitions-copy';
+import { getAcquisitionsBannerParams } from 'common/modules/commercial/membership-engagement-banner-parameters';
 import { logView } from 'common/modules/commercial/acquisitions-view-log';
 import {
     submitClickEvent,
@@ -20,10 +18,14 @@ import { getSync as geolocationGetSync } from 'lib/geolocation';
 import { noop } from 'lib/noop';
 import { epicButtonsTemplate } from 'common/modules/commercial/templates/acquisitions-epic-buttons';
 import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templates/acquisitions-epic-control';
-import { acquisitionsTestimonialBlockTemplate } from 'common/modules/commercial/templates/acquisitions-epic-testimonial-block';
 import { shouldSeeReaderRevenue as userShouldSeeReaderRevenue } from 'common/modules/commercial/user-features';
 import { supportContributeURL } from 'common/modules/commercial/support-utilities';
-import { awaitEpicButtonClicked } from 'common/modules/commercial/epic-utils';
+import { awaitEpicButtonClicked } from 'common/modules/commercial/epic/epic-utils';
+import {
+    getEpicGoogleDoc,
+    getBannerGoogleDoc,
+    googleDocEpicControl,
+} from 'common/modules/commercial/contributions-google-docs';
 
 type EpicTemplate = (Variant, AcquisitionsEpicTemplateCopy) => string;
 
@@ -51,9 +53,6 @@ const controlTemplate: EpicTemplate = (
 ) =>
     acquisitionsEpicControlTemplate({
         copy,
-        testimonialBlock: copy.testimonial
-            ? acquisitionsTestimonialBlockTemplate(copy.testimonial)
-            : '',
         componentName: options.componentName,
         buttonTemplate: options.buttonTemplate({
             supportUrl: options.supportURL,
@@ -258,9 +257,13 @@ const makeABTestVariant = (
         },
 
         test() {
-            const copyPromise =
+            if (typeof options.copy === 'function') {
+                options.copy = options.copy();
+            }
+
+            const copyPromise: Promise<AcquisitionsEpicTemplateCopy> =
                 (options.copy && Promise.resolve(options.copy)) ||
-                Promise.resolve(acquisitionsCopyControl);
+                googleDocEpicControl();
 
             const render = (templateFn: ?EpicTemplate) =>
                 copyPromise
@@ -451,12 +454,42 @@ const makeGoogleDocEpicVariants = (count: number): Array<Object> => {
             id: `variant_${i}`,
             products: [],
             options: {
-                copy: getCopyFromGoogleDoc(`variant_${i}`),
+                copy: () =>
+                    getEpicGoogleDoc.then(res =>
+                        getEpicParams(res, `variant_${i}`)
+                    ),
             },
         });
     }
     return variants;
 };
+
+const makeGoogleDocBannerVariants = (
+    count: number
+): Array<InitBannerABTestVariant> => {
+    const variants = [];
+
+    for (let i = 1; i <= count; i += 1) {
+        variants.push({
+            id: `variant_${i}`,
+            products: [],
+            engagementBannerParams: () =>
+                getBannerGoogleDoc.then(res =>
+                    getAcquisitionsBannerParams(res, `variant_${i}`)
+                ),
+        });
+    }
+    return variants;
+};
+
+const makeGoogleDocBannerControl = (): InitBannerABTestVariant => ({
+    id: 'control',
+    products: [],
+    engagementBannerParams: () =>
+        getBannerGoogleDoc.then(res =>
+            getAcquisitionsBannerParams(res, 'control')
+        ),
+});
 
 export {
     shouldShowReaderRevenue,
@@ -465,6 +498,8 @@ export {
     defaultButtonTemplate,
     makeBannerABTestVariants,
     makeGoogleDocEpicVariants,
+    makeGoogleDocBannerVariants,
+    makeGoogleDocBannerControl,
     defaultMaxViews,
     isEpicDisplayable,
 };

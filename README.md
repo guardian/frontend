@@ -9,7 +9,7 @@ The Guardian website frontend.
 
 **For everybody who engages with our journalism, [theguardian.com](https://www.theguardian.com) is an industry-best news website that is fast, accessible and easy to use. Unlike other ways of developing products, ours puts the audience first.**
 
-Frontend is [a set of Play Framework 2 Scala applications](https://github.com/guardian/frontend/wiki/Applications-architecture). It is built in two parts, using `make` for the client side asset build and SBT for the Play Framework backend.
+Frontend is [a set of Play Framework 2 Scala applications](docs/02-architecture/01-applications-architecture.md). It is built in two parts, using `make` for the client side asset build and SBT for the Play Framework backend.
 
 # Documentation
 

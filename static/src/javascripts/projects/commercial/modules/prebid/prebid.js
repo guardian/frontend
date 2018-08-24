@@ -1,4 +1,4 @@
-// @flow
+// @flow strict
 
 import 'prebid.js/build/dist/prebid';
 import config from 'lib/config';
@@ -28,6 +28,16 @@ const consentManagement = {
     allowAuctionWithoutConsent: true,
 };
 
+const userSync = {
+    syncsPerBidder: 0, // allow all syncs
+    filterSettings: {
+        iframe: {
+            bidders: ['sonobi'],
+            filter: 'include',
+        },
+    },
+};
+
 const s2sConfig = {
     accountId: '1',
     enabled: true,
@@ -39,7 +49,7 @@ const s2sConfig = {
     adapter: 'prebidServer',
     is_debug: 'false',
     endpoint: 'https://elb.the-ozone-project.com/openrtb2/auction',
-    syncEndpoint: 'https://prebid.adnxs.com/pbs/v1/cookie_sync',
+    syncEndpoint: 'https://elb.the-ozone-project.com/cookie_sync',
     cookieSet: true,
     cookiesetUrl: 'https://acdn.adnxs.com/cookieset/cs.js',
 };
@@ -75,11 +85,12 @@ class PrebidService {
             {
                 bidderTimeout,
                 priceGranularity,
+                userSync,
             },
-            config.switches.enableConsentManagementService
+            config.get('switches.enableConsentManagementService', false)
                 ? { consentManagement }
                 : {},
-            config.switches.prebidS2sozone ? { s2sConfig } : {}
+            config.get('switches.prebidS2sozone', false) ? { s2sConfig } : {}
         );
 
         window.pbjs.setConfig(pbjsConfig);
@@ -87,15 +98,15 @@ class PrebidService {
         // gather analytics from 20% (1 in 5) of page views
         const inSample = getRandomIntInclusive(1, 5) === 1;
         if (
-            config.switches.prebidAnalytics &&
-            (inSample || config.page.isDev)
+            config.get('switches.prebidAnalytics', false) &&
+            (inSample || config.get('page.isDev', false))
         ) {
             window.pbjs.enableAnalytics([
                 {
                     provider: 'gu',
                     options: {
-                        ajaxUrl: config.page.ajaxUrl,
-                        pv: config.ophan.pageViewId,
+                        ajaxUrl: config.get('page.ajaxUrl'),
+                        pv: config.get('ophan.pageViewId'),
                     },
                 },
             ]);
@@ -105,22 +116,15 @@ class PrebidService {
         // allows dynamic assignment.
         window.pbjs.bidderSettings = {};
 
-        if (config.switches.prebidSonobi) {
-            window.pbjs.bidderSettings.sonobi = {
-                // for Jetstream deals
-                alwaysUseBid: true,
-            };
-        }
-
-        if (config.switches.prebidXaxis) {
+        if (config.get('switches.prebidXaxis', false)) {
             window.pbjs.bidderSettings.xhb = {
-                // for First Look deals
-                alwaysUseBid: true,
                 adserverTargeting: [
                     {
                         key: 'hb_buyer_id',
                         val(bidResponse) {
-                            return bidResponse.buyerMemberId;
+                            return bidResponse.appnexus
+                                ? bidResponse.appnexus.buyerMemberId
+                                : '';
                         },
                     },
                 ],
@@ -130,17 +134,25 @@ class PrebidService {
 
     static requestQueue: Promise<void> = Promise.resolve();
 
-    static requestBids(advert: Advert): Promise<void> {
+    // slotFlatMap allows you to dynamically interfere with the PrebidSlot definition
+    // for this given request for bids.
+    static requestBids(
+        advert: Advert,
+        slotFlatMap?: PrebidSlot => PrebidSlot[]
+    ): Promise<void> {
+        const effectiveSlotFlatMap = slotFlatMap || (s => [s]); // default to identity
         if (dfpEnv.externalDemand !== 'prebid') {
             return PrebidService.requestQueue;
         }
 
-        const adUnits = slots
+        const adUnits: Array<PrebidAdUnit> = slots
             .filter(slot =>
                 stripTrailingNumbersAbove1(
                     stripMobileSuffix(advert.id)
                 ).endsWith(slot.key)
             )
+            .map(effectiveSlotFlatMap)
+            .reduce((acc, elt) => acc.concat(elt), []) // the "flat" in "flatMap"
             .map(slot => new PrebidAdUnit(advert, slot))
             .filter(adUnit => !adUnit.isEmpty());
 
@@ -153,6 +165,54 @@ class PrebidService {
                 () =>
                     new Promise(resolve => {
                         window.pbjs.que.push(() => {
+                            // Capture this specific auction starting
+                            // to set this slot pbaid targeting value
+                            const auctionInitHandler = (data: {
+                                auctionId: string,
+                            }) => {
+                                // Get rid of this handler now.
+                                window.pbjs.offEvent(
+                                    'auctionInit',
+                                    auctionInitHandler
+                                );
+                                advert.slot.setTargeting(
+                                    'hb_auction',
+                                    data.auctionId
+                                );
+                            };
+                            window.pbjs.onEvent(
+                                'auctionInit',
+                                auctionInitHandler
+                            );
+
+                            const onAuctionEndHandler = () => {
+                                const getHighestCpm = (auctionBids): number =>
+                                    (auctionBids &&
+                                        auctionBids
+                                            .map(_ => _.cpm)
+                                            .sort()
+                                            .pop()) ||
+                                    0;
+                                const bidResponses = window.pbjs.getBidResponses()[
+                                    advert.id
+                                ];
+                                const cpm: number = getHighestCpm(
+                                    (bidResponses && bidResponses.bids) || []
+                                );
+                                if (cpm > 0) {
+                                    advert.slot.setTargeting('hb_cpm', cpm);
+                                }
+                                window.pbjs.offEvent(
+                                    'auctionEnd',
+                                    onAuctionEndHandler
+                                );
+                            };
+
+                            window.pbjs.onEvent(
+                                'auctionEnd',
+                                onAuctionEndHandler
+                            );
+
                             window.pbjs.requestBids({
                                 adUnits,
                                 bidsBackHandler() {

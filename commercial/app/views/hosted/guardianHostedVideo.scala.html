@@ -79,11 +79,6 @@
                             }
                         </video>
                     }
-                    @if(page.video.youtubeId.isDefined && !Option(page.video.posterUrl).getOrElse("").isEmpty){
-                        <div class="hosted__youtube-poster-image" style="background-image: url(@page.video.posterUrl);">
-                            <div class="hosted__youtube-play-button"></div>
-                        </div>
-                    }
                     <div class="hosted-fading js-hosted-fading">
                         <div class="hosted__video-overlay"></div>
                         <div class="hosted__meta">

@@ -8,19 +8,14 @@
 @headerAndTopAds(showAdverts: Boolean, edition: Edition, content: Option[model.ContentType]) = {
   @if(!page.metadata.shouldHideHeaderAndTopAds) {
     @defining(showAdverts && !content.exists(_.tags.isTheMinuteArticle) && !Commercial.isAdFree(request)) { showTopSlot =>
-      @if(content.exists(_.tags.hasSuperStickyBanner)) {
+
+      <div id="bannerandheader">
           @if(showTopSlot) {
             @fragments.commercial.topBanner()
           }
           @fragments.header()
-      } else {
-          <div id="bannerandheader">
-              @if(showTopSlot) {
-                @fragments.commercial.topBanner()
-              }
-              @fragments.header()
-          </div>
-      }
+      </div>
+
       <div id="maincontent" tabindex="0"></div>
     }
   }
@@ -39,7 +34,7 @@
             ("has-page-skin", page.metadata.hasPageSkin(edition)),
             ("has-membership-access-requirement", page.metadata.requiresMembershipAccess),
             ("childrens-books-site", page.metadata.sectionId == "childrens-books-site"),
-            ("has-super-sticky-banner", content.exists(_.tags.hasSuperStickyBanner)),
+            ("has-super-sticky-banner", false),
             ("is-immersive", content.exists(_.content.isImmersive)),
             ("is-hosted-content", page.metadata.isHosted),
             ("is-immersive-interactive", content.exists(content => content.tags.isInteractive && content.content.isImmersive))))"

@@ -2,11 +2,11 @@ package controllers.cache
 
 import java.net.URI
 
-import cache.SurrogateKey
 import com.gu.googleauth.UserIdentity
 import common.{ImplicitControllerExecutionContext, Logging}
 import controllers.admin.AdminAuthController
 import model.{ApplicationContext, NoCache}
+import org.apache.commons.codec.digest.DigestUtils
 import play.api.libs.ws.WSClient
 import play.api.mvc.Security.AuthenticatedRequest
 import play.api.mvc._
@@ -26,8 +26,7 @@ class PageDecacheController(wsClient: WSClient, val controllerComponents: Contro
 
   def decache(): Action[AnyContent] = AdminAuthAction.async { implicit request =>
     getSubmittedUrl(request).map(new URI(_)).map{ urlToDecache =>
-      new CdnPurge(wsClient)
-        .soft(SurrogateKey(urlToDecache.getPath))
+      CdnPurge.soft(wsClient, DigestUtils.md5Hex(urlToDecache.getPath), CdnPurge.GuardianHost)
         .map { _ => "Purge request successfully sent" }
         .recover { case e => s"Purge request was not successful, please report this issue: '${e.getLocalizedMessage}'" }
         .map { message => NoCache(Ok(views.html.cache.pageDecache(message))) }

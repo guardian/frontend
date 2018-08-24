@@ -1,4 +1,4 @@
-@(page: model.Page, path: String)(implicit request: RequestHeader, context: model.ApplicationContext)
+@(page: model.Page, path: String, alerts: List[String])(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @import common.LinkTo
 
@@ -18,6 +18,15 @@
                         <div class="js-article__container u-cf">
                             <div class="from-content-api" itemprop="articleBody">
                                 <div class="from-content-api">
+
+                                    @if(alerts.nonEmpty) {
+                                        <div class="feedback__alertbox">
+                                            <h2><span class="feedback__exclamation">!</span>Known Issues</h2>
+                                            @for(alert <- alerts) {
+                                                <p class="feedback__alert">@alert</p>
+                                            }
+                                        </div>
+                                    }
 
                                     <h2>Contact us</h2>
 
@@ -79,16 +88,13 @@
 
                                     <p id="feedback__explainer"></p>
 
-                                </form>
+                                </div>
+
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-
-        <div class="facia-container facia-container--layout-content">
-        @fragments.mostPopularPlaceholder("/")
         </div>
     </div>
 }

@@ -3,7 +3,7 @@ package services
 import common.Logging
 import controllers.ArticlePage
 import model.PageWithStoryPackage
-import model.liveblog.{BodyBlock, ImageBlockElement, TextBlockElement}
+import model.liveblog.{BlockElement, BodyBlock, ImageBlockElement, TextBlockElement}
 
 sealed trait RenderType
 case object RemoteRender extends RenderType
@@ -30,21 +30,17 @@ object RenderingTierPicker {
   }
 
   private def hasOnlySupportedElements(page: PageWithStoryPackage): Boolean = {
-    ! page.article.blocks.get.body.exists((block: BodyBlock) => {
+    def unsupportedElement(blockElement: BlockElement) = blockElement match {
+      case _: TextBlockElement => false
+      case _: ImageBlockElement => false
+      case _ => true
+    }
 
-      val hasUnsupportedElements: Boolean = block.elements.flatMap {
-        case b: TextBlockElement => None
-        case b: ImageBlockElement => None
-        case b => Some(b)
-      }.nonEmpty
-
-      hasUnsupportedElements
-
-    })
+    !page.article.blocks.exists(_.body.exists(_.elements.exists(unsupportedElement)))
   }
 
   private def isAdFree(page: PageWithStoryPackage): Boolean = {
-    page.metadata.sensitive
+    page.item.content.shouldHideAdverts
   }
 
   def getRenderTierFor(page: PageWithStoryPackage): RenderType = {

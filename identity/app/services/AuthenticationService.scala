@@ -29,12 +29,12 @@ class AuthenticationService(
       guU           <- request.cookies.get("GU_U")
       userFromScGuU <- cookieDecoder.getUserDataForScGuU(scGuU.value)
       dataFromGuU   <- cookieDecoder.getUserDataForGuU(guU.value)
-      if dataFromGuU.getUser.getId == userFromScGuU.getId
+      if dataFromGuU.user.id == userFromScGuU.id
     } yield {
       AuthenticatedUser(
-        user = dataFromGuU.getUser,
+        user = dataFromGuU.user,
         auth = ScGuU(scGuU.value, dataFromGuU),
-        hasRecentlyAuthenticated = hasRecentlyAuthenticated(dataFromGuU.getUser, request.cookies.get("SC_GU_LA")))
+        hasRecentlyAuthenticated = hasRecentlyAuthenticated(dataFromGuU.user, request.cookies.get("SC_GU_LA")))
     }
 
   def consentCookieAuthenticatedUser(request: RequestHeader): Option[AuthenticatedUser] =

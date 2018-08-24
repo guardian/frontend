@@ -95,7 +95,7 @@
             @include button-colour(
                 transparent,
                 null,
-                darken($neutral-3, 10%)
+                darken($brightness-86, 10%)
             );
         }
     }
@@ -115,11 +115,11 @@
         content: '/';
         display: inline-block;
         margin-left: .2em;
-        color: mix(#ffffff, $news-support-6, 20%);
+        color: mix(#ffffff, $brightness-46, 20%);
 
     }
 
-    color: $paid-card-kicker;
+    color: $brightness-46;
 }
 
 .paidfor-container {
@@ -159,11 +159,11 @@
 
 .advert__meta {
     @include f-textSans;
-    color: $neutral-2;
+    color: $brightness-46;
 }
 
 .advert__meta--scarcity {
-    color: $rainbow-red;
+    color: $news-bright;
 }
 
 .advert__more {

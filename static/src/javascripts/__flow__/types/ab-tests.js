@@ -6,7 +6,7 @@ declare type Variant = {
     impression?: ListenerFunction,
     success?: ListenerFunction,
     options?: Object,
-    engagementBannerParams?: EngagementBannerParams,
+    engagementBannerParams?: () => Promise<EngagementBannerParams>,
 };
 
 declare type ABTest = {
@@ -49,6 +49,12 @@ declare type InitEpicABTestVariant = {
     id: string,
     products: $ReadOnlyArray<OphanProduct>,
     options?: Object
+};
+
+declare type InitBannerABTestVariant = {
+    id: string,
+    products: $ReadOnlyArray<OphanProduct>,
+    engagementBannerParams: () => Promise<?EngagementBannerTemplateParams>
 };
 
 declare type InitEpicABTest = {

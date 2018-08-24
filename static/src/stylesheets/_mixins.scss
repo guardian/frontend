@@ -35,7 +35,7 @@
     overflow: hidden;
 }
 
-@mixin faux-bullet-point($color: $neutral-3, $right-space: 2px) {
+@mixin faux-bullet-point($color: $brightness-86, $right-space: 2px) {
     &:before {
         display: inline-block;
         content: '';
@@ -182,7 +182,7 @@
     }
 }
 
-@mixin column-rule($style: 1px solid $neutral-5) {
+@mixin column-rule($style: 1px solid $brightness-86) {
     column-rule: $style;
 }
 
@@ -290,5 +290,24 @@
         transform: translate(-40%, -50%);
         fill: #ffffff;
         width: $iconSize;
+    }
+}
+
+@mixin banner-copy-alignment {
+    @include mq(tablet) {
+        width: gs-span(7) + $gs-gutter;
+    }
+
+    @include mq(desktop) {
+        display: inline-block;
+        margin-right: gs-span(1) + $gs-gutter;
+    }
+
+    @include mq(leftCol) {
+        margin-left: gs-span(2) + $gs-gutter;
+    }
+
+    @include mq(wide) {
+        margin-left: gs-span(3) + $gs-gutter;
     }
 }

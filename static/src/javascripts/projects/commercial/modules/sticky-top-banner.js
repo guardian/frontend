@@ -2,7 +2,6 @@
 import type { Advert } from 'commercial/modules/dfp/Advert';
 
 import { addEventListener } from 'lib/events';
-import config from 'lib/config';
 import { isBreakpoint } from 'lib/detect';
 import fastdom from 'lib/fastdom-promise';
 import { trackAdRender } from 'commercial/modules/dfp/track-ad-render';
@@ -111,11 +110,9 @@ const onResize = (specs: any, _: any, iframe: ?Element): void => {
 // place when it reaches the end of the header.
 const setupListeners = (): void => {
     register('resize', onResize);
-    if (!config.page.hasSuperStickyBanner) {
-        addEventListener(window, 'scroll', onScroll, {
-            passive: true,
-        });
-    }
+    addEventListener(window, 'scroll', onScroll, {
+        passive: true,
+    });
 };
 
 const getAdvertSizeByIndex = (advert: ?Advert, index: number): ?number => {

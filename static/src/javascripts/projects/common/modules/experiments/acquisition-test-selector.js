@@ -8,21 +8,21 @@ import { testCanBeRun } from 'common/modules/experiments/test-can-run-checks';
 import { viewsInPreviousDays } from 'common/modules/commercial/acquisitions-view-log';
 import { askFourEarning } from 'common/modules/experiments/tests/contributions-epic-ask-four-earning';
 import { acquisitionsEpicLiveblog } from 'common/modules/experiments/tests/acquisitions-epic-liveblog';
-import { acquisitionsEpicLiveblogWorldCup } from 'common/modules/experiments/tests/acquisitions-epic-liveblog-world-cup';
 import { acquisitionsEpicAlwaysAskIfTagged } from 'common/modules/experiments/tests/acquisitions-epic-always-ask-if-tagged';
 import { acquisitionsEpicThankYou } from 'common/modules/experiments/tests/acquisitions-epic-thank-you';
 import { acquisitionsEpicUSGunCampaign } from 'common/modules/experiments/tests/acquisitions-epic-us-gun-campaign';
 import { acquisitionsEpicAusEnvCampaign } from 'common/modules/experiments/tests/acquisitions-epic-aus-env-campaign';
-import { acquisitionsEpicAlwaysAskAprilStory } from 'common/modules/experiments/tests/acquisitions-epic-always-ask-april-story';
-import { AcquisitionsEpicBorderThankyou } from 'common/modules/experiments/tests/acquisitions-epic-border-thankyou';
-import { acquisitionsEpicNativeVsDfpV2 } from 'common/modules/experiments/tests/acquisitions-epic-native-vs-dfp-v2';
 import { acquisitionsEpicFromGoogleDocOneVariant } from 'common/modules/experiments/tests/acquisitions-epic-from-google-doc-one-variant';
 import { acquisitionsEpicFromGoogleDocTwoVariants } from 'common/modules/experiments/tests/acquisitions-epic-from-google-doc-two-variants';
 import { acquisitionsEpicFromGoogleDocThreeVariants } from 'common/modules/experiments/tests/acquisitions-epic-from-google-doc-three-variants';
 import { acquisitionsEpicFromGoogleDocFourVariants } from 'common/modules/experiments/tests/acquisitions-epic-from-google-doc-four-variants';
+import { acquisitionsEpicFromGoogleDocFiveVariants } from 'common/modules/experiments/tests/acquisitions-epic-from-google-doc-five-variants';
+import { acquisitionsEpicIframeTestV2 } from 'common/modules/experiments/tests/acquisitions-iframe-epic-v2';
 
 const isViewable = (v: Variant, t: ABTest): boolean => {
-    if (!v.options || !v.options.maxViews) return false;
+    if (!v.options) return false;
+    if (v.options.isUnlimited) return true;
+    if (!v.options.maxViews) return false;
 
     const {
         count: maxViewCount,
@@ -46,23 +46,21 @@ const isViewable = (v: Variant, t: ABTest): boolean => {
  * acquisition tests in priority order (highest to lowest)
  */
 export const acquisitionsTests: $ReadOnlyArray<AcquisitionsABTest> = [
-    acquisitionsEpicNativeVsDfpV2,
+    acquisitionsEpicIframeTestV2,
     acquisitionsEpicFromGoogleDocOneVariant,
     acquisitionsEpicFromGoogleDocTwoVariants,
     acquisitionsEpicFromGoogleDocThreeVariants,
     acquisitionsEpicFromGoogleDocFourVariants,
-    acquisitionsEpicAlwaysAskAprilStory,
+    acquisitionsEpicFromGoogleDocFiveVariants,
     acquisitionsEpicAusEnvCampaign,
     acquisitionsEpicUSGunCampaign,
-    AcquisitionsEpicBorderThankyou,
     askFourEarning,
     acquisitionsEpicAlwaysAskIfTagged,
-    acquisitionsEpicLiveblogWorldCup,
     acquisitionsEpicLiveblog,
     acquisitionsEpicThankYou,
 ];
 
-export const getTest = (): ?ABTest => {
+export const getTest = (): ?AcquisitionsABTest => {
     const forcedTests = getForcedTests()
         .map(({ testId }) => acquisitionsTests.find(t => t.id === testId))
         .filter(Boolean);
@@ -75,8 +73,12 @@ export const getTest = (): ?ABTest => {
 
     return acquisitionsTests.find(t => {
         const variant: ?Variant = variantFor(t);
-        return (
-            variant && testCanBeRun(t) && isInTest(t) && isViewable(variant, t)
-        );
+        if (variant) {
+            const isTestRunnable = testCanBeRun(t);
+            const isUserInTest = isInTest(t);
+            const isEpicViewable = isViewable(variant, t);
+            return isTestRunnable && isUserInTest && isEpicViewable;
+        }
+        return false;
     });
 };

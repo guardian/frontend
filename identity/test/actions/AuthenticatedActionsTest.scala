@@ -28,7 +28,7 @@ class AuthenticatedActionsTest extends WordSpecLike with MockitoSugar with Scala
     val client: IdApiClient = mock[IdApiClient]
     val idRequestParser: IdRequestParser = mock[IdRequestParser]
     val controllerComponents: ControllerComponents = mock[ControllerComponents]
-    val user = User("test@example.com", statusFields = new StatusFields(userEmailValidated = Some(true), hasRepermissioned = Some(true)))
+    val user = User("", "test@example.com", statusFields = new StatusFields(userEmailValidated = Some(true), hasRepermissioned = Some(true)))
     val newsletterService: NewsletterService = mock[NewsletterService]
     val rpCookie = mock[ScGuRp]
     val guUCookie = mock[ScGuU]

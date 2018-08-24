@@ -3,15 +3,31 @@ import { getCookie, removeCookie, addCookie } from 'lib/cookies';
 import config from 'lib/config';
 import fetchJson from 'lib/fetch-json';
 import { isUserLoggedIn } from 'common/modules/identity/api';
-import { daysSince } from 'lib/time-utils';
+import { dateDiffDays } from 'lib/time-utils';
 
 // Persistence keys
 const USER_FEATURES_EXPIRY_COOKIE = 'gu_user_features_expiry';
 const PAYING_MEMBER_COOKIE = 'gu_paying_member';
-const RECURRING_CONTRIBUTOR_COOKIE = 'gu_recurring_contributor';
 const AD_FREE_USER_COOKIE = 'GU_AF1';
 const ACTION_REQUIRED_FOR_COOKIE = 'gu_action_required_for';
 const DIGITAL_SUBSCRIBER_COOKIE = 'gu_digital_subscriber';
+
+// This cookie comes from the user attributes API
+const RECURRING_CONTRIBUTOR_COOKIE = 'gu_recurring_contributor';
+
+// These cookies are dropped by support frontend at the point of making
+// a recurring contribution
+const SUPPORT_RECURRING_CONTRIBUTOR_MONTHLY_COOKIE =
+    'gu.contributions.recurring.contrib-timestamp.Monthly';
+const SUPPORT_RECURRING_CONTRIBUTOR_ANNUAL_COOKIE =
+    'gu.contributions.recurring.contrib-timestamp.Annual';
+
+const SUPPORT_ONE_OFF_CONTRIBUTION_COOKIE =
+    'gu.contributions.contrib-timestamp';
+
+const forcedAdFreeMode: boolean = !!window.location.hash.match(
+    /[#&]noadsaf(&.*)?$/
+);
 
 const userHasData = (): boolean => {
     const cookie =
@@ -55,7 +71,7 @@ const persistResponse = (JsonResponse: () => void) => {
         addCookie(ACTION_REQUIRED_FOR_COOKIE, JsonResponse.alertAvailableFor);
     }
 
-    if (adFreeDataIsPresent() && !JsonResponse.adFree) {
+    if (adFreeDataIsPresent() && !JsonResponse.adFree && !forcedAdFreeMode) {
         removeCookie(AD_FREE_USER_COOKIE);
     }
     if (switches.adFreeSubscriptionTrial && JsonResponse.adFree) {
@@ -116,11 +132,15 @@ const userHasDataAfterSignout = (): boolean =>
 const refresh = (): Promise<void> => {
     if (isUserLoggedIn() && userNeedsNewFeatureData()) {
         return requestNewData();
-    } else if (userHasDataAfterSignout()) {
+    } else if (userHasDataAfterSignout() && !forcedAdFreeMode) {
         deleteOldData();
     }
     return Promise.resolve();
 };
+
+const supportSiteRecurringCookiePresent = () =>
+    getCookie(SUPPORT_RECURRING_CONTRIBUTOR_MONTHLY_COOKIE) != null ||
+    getCookie(SUPPORT_RECURRING_CONTRIBUTOR_ANNUAL_COOKIE) != null;
 
 /**
  * Does our _existing_ data say the user is a paying member?
@@ -130,22 +150,60 @@ const isPayingMember = (): boolean =>
     // If the user is logged in, but has no cookie yet, play it safe and assume they're a paying user
     isUserLoggedIn() && getCookie(PAYING_MEMBER_COOKIE) !== 'false';
 
-const lastContributionDate = getCookie('gu.contributions.contrib-timestamp');
+// number returned is Epoch time in milliseconds.
+// null value signifies no last contribution date.
+const getLastOneOffContributionDate = (): ?number => {
+    const cookie = getCookie(SUPPORT_ONE_OFF_CONTRIBUTION_COOKIE);
 
-const daysSinceLastContribution = daysSince(lastContributionDate);
+    if (!cookie) {
+        return null;
+    }
 
-const isContributor = (): boolean => !!lastContributionDate;
+    // Contributions frontend set date time of last contribution using ISO 8601 format.
+    // Support frontend set date time of last contribution in Epoch milliseconds.
+    // If we first attempted to parse cookie in Epoch milliseconds format (parseInt()),
+    // then a value in ISO 8601 format would parse (incorrectly) e.g. 2018-08-17T16:11:10Z => 2018
+    // So first attempt to parse cookie in ISO 8601 format.
+
+    let ms;
+
+    ms = Date.parse(cookie);
+    if (Number.isInteger(ms)) {
+        return ms;
+    }
+
+    ms = parseInt(cookie, 10);
+    if (Number.isInteger(ms)) {
+        return ms;
+    }
+
+    return null;
+};
+
+const getDaysSinceLastOneOffContribution = (): ?number => {
+    const lastContributionDate = getLastOneOffContributionDate();
+    if (!lastContributionDate) {
+        return null;
+    }
+    return dateDiffDays(lastContributionDate, Date.now());
+};
 
 // in last six months
-const isRecentContributor = (): boolean => daysSinceLastContribution <= 180;
+const isRecentOneOffContributor = (): boolean => {
+    const daysSinceLastContribution = getDaysSinceLastOneOffContribution();
+    if (!daysSinceLastContribution) {
+        return false;
+    }
+    return daysSinceLastContribution <= 180;
+};
 
 const isRecurringContributor = (): boolean =>
     // If the user is logged in, but has no cookie yet, play it safe and assume they're a contributor
-    isUserLoggedIn() && getCookie(RECURRING_CONTRIBUTOR_COOKIE) !== 'false';
+    (isUserLoggedIn() && getCookie(RECURRING_CONTRIBUTOR_COOKIE) !== 'false') ||
+    supportSiteRecurringCookiePresent();
 
 const isDigitalSubscriber = (): boolean =>
-    // If the user is logged in, but has no cookie yet, play it safe and assume they're a digital subscriber
-    isUserLoggedIn() && getCookie(DIGITAL_SUBSCRIBER_COOKIE) !== 'false';
+    getCookie(DIGITAL_SUBSCRIBER_COOKIE) === 'true';
 
 /*
     Whenever the checks are updated, please make sure to update
@@ -154,7 +212,7 @@ const isDigitalSubscriber = (): boolean =>
 */
 const shouldSeeReaderRevenue = (): boolean =>
     !isPayingMember() &&
-    !isRecentContributor() &&
+    !isRecentOneOffContributor() &&
     !isRecurringContributor() &&
     !isDigitalSubscriber();
 
@@ -164,11 +222,12 @@ export {
     accountDataUpdateWarning,
     isAdFreeUser,
     isPayingMember,
-    isContributor,
-    isRecentContributor,
+    isRecentOneOffContributor,
     isRecurringContributor,
     isDigitalSubscriber,
     shouldSeeReaderRevenue,
     refresh,
     deleteOldData,
+    getLastOneOffContributionDate,
+    getDaysSinceLastOneOffContribution,
 };

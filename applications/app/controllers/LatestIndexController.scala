@@ -19,13 +19,7 @@ class LatestIndexController(
   def latest(path: String): Action[AnyContent] = Action.async { implicit request =>
     loadLatest(path).map { _.map { index =>
       index.page match {
-        case tag: Tag if tag.isSeries || tag.isBlog => index.trails.headOption.map(latest => {
-          if (request.isEmail) {
-            Redirect(latest.metadata.url + "/email", request.campaignCode.fold(Map[String, Seq[String]]())(c => Map("CMP" -> Seq(c))))
-          }
-          else Found(latest.metadata.url)
-        }).getOrElse(NotFound)
-
+        case tag: Tag if tag.isSeries || tag.isBlog => handleSeriesBlogs(index)
         case tag: Tag => MovedPermanently(s"${tag.metadata.url}/all")
         case section: Section =>
           val url = if (section.isEditionalised) Paths.stripEditionIfPresent(section.metadata.url) else section.metadata.url
@@ -33,6 +27,22 @@ class LatestIndexController(
         case _ => NotFound
       }
     }.getOrElse(NotFound)}.map(r => Cached(300)(WithoutRevalidationResult(r)))
+  }
+
+  private def handleSeriesBlogs(index: IndexPage)(implicit request: RequestHeader) = (index.trails.headOption, request.isEmail) match {
+    case (Some(latest), true) =>
+      val queryString = request.campaignCode.fold(Map.empty[String, Seq[String]])(c => Map("CMP" -> Seq(c)))
+      val queryStringWithFormat = if (request.isEmailHeadlineText) queryString + ("format" -> Seq("email-headline")) else queryString
+
+      val emailJsonPrefix = if (request.isEmailJson) ".emailjson" else ""
+      val url = s"${latest.metadata.url}/email$emailJsonPrefix"
+      Redirect(url, queryStringWithFormat)
+
+    case (Some(latest), false) =>
+      Found(latest.metadata.url)
+
+    case (_, _) =>
+      NotFound
   }
 
   // this is simply the latest by date. No lead content, editors picks, or anything else

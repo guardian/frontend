@@ -34,10 +34,8 @@
                                 @media match {
                                     case audio: Audio => {
 
-                                        @audio.elements.images.map { img =>
-                                            @fragments.imageFigure(
-                                                img.images
-                                            )
+                                        @audio.elements.images.map{ img =>
+                                            @fragments.imageFigure(img.images)
                                         }
 
                                         <figure data-component="main audio">

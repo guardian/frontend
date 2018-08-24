@@ -14,7 +14,7 @@
     // We're going to style this like the upgraded embed
     font-family: Helvetica, Roboto, 'Segoe UI', Calibri, sans-serif;
     font-size: 14px;
-    border: 1px solid $neutral-4;
+    border: 1px solid $brightness-86;
     border-radius: 4px;
     padding: 20px;
     // End tweet embed styles
@@ -78,13 +78,12 @@
 }
 
 .tweet-main-image {
-    width: 100%;
     margin-bottom: $gs-gutter;
 }
 
 .tweet-date {
     display: block;
-    color: $neutral-2;
+    color: $brightness-46;
 }
 
 .twitter-tweet {

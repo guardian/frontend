@@ -3,7 +3,7 @@
     padding: 0;
     list-style: none;
     overflow-y: hidden;
-    height: 32px;
+    height: 36px;
 }
 
 .social--top {
@@ -21,7 +21,7 @@
 }
 
 .social-icon {
-    border: 1px solid $garnett-neutral-4;
+    border: 1px solid $brightness-86;
     text-align: center;
     height: 32px;
     width: 32px;
@@ -33,5 +33,5 @@
 }
 
 .social-icon__svg {
-    fill: $garnett-neutral-1;
+    fill: $brightness-7;
 }

@@ -4,6 +4,7 @@ import java.time.ZoneOffset
 
 import com.gu.contentapi.client.model.v1.{Asset, AssetType, Content, Element, ElementType, Tag, TagType}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichOffsetDateTime
+import common.Environment.stage
 import conf.Configuration
 import conf.switches.Switches.ImageServerSwitch
 import implicits.Dates.jodaToJavaInstant
@@ -14,7 +15,7 @@ import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 
 class ImgSrcTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
 
-  lazy val imageHost = Configuration.images.path
+  lazy val imageHost = Configuration.images.fastlyIOHost
 
   val asset = Asset(
     AssetType.Image,

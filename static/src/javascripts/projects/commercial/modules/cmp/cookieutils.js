@@ -1,8 +1,24 @@
-// @flow
+// @flow strict
 import { log } from 'commercial/modules/cmp/log';
 
 const SIX_BIT_ASCII_OFFSET = 65;
 const NUM_BITS_VERSION = 6;
+
+type Field = {
+    name: string,
+    type: string,
+    input?: string,
+    numBits: (input: {}) => number | number,
+    decoder?: (
+        input: string,
+        output: {},
+        startPosition?: number
+    ) => { fieldValue?: mixed, newPosition?: number },
+    encoder?: (input: {}) => number,
+    validator?: (input: {}) => boolean,
+    listCount?: number,
+    fields?: Array<Field>,
+};
 
 const repeat = (count: number, string: string = '0'): string => {
     let padString = '';
@@ -18,13 +34,14 @@ const padLeft = (string: string, padding: number): string =>
 const padRight = (string: string, padding: number): string =>
     string + repeat(Math.max(0, padding));
 
-const encodeIntToBits = (number: number, numBits: ?number): string => {
+const encodeIntToBits = (number: mixed, numBits: ?number): string => {
     let bitString = '';
     if (typeof number === 'number' && !Number.isNaN(number)) {
         bitString = parseInt(number, 10).toString(2);
     }
 
     // Pad the string if not filling all bits
+    // flowlint sketchy-null-number:warn
     if (numBits && numBits >= bitString.length) {
         bitString = padLeft(bitString, numBits - bitString.length);
     }
@@ -61,10 +78,10 @@ const encode6BitCharacters = (string: string, numBits: number): string => {
     return padRight(encoded, numBits).substr(0, numBits);
 };
 
-const encodeBoolToBits = (value: boolean): string =>
+const encodeBoolToBits = (value: mixed): string =>
     encodeIntToBits(value === true ? 1 : 0, 1);
 
-const encodeDateToBits = (date: Date, numBits: number): string => {
+const encodeDateToBits = (date: mixed, numBits: number): string => {
     if (date instanceof Date) {
         return encodeIntToBits(date.getTime() / 100, numBits);
     }
@@ -107,15 +124,14 @@ const decode6BitCharacters = (
     return decoded;
 };
 
-const encodeFields = ({ input, fields }) =>
+const encodeFields = ({ input, fields }: { input: {}, fields: Array<Field> }) =>
     fields.reduce((acc, field) => {
-        // eslint-disable-next-line no-use-before-define, no-param-reassign
-        acc += encodeField({ input, field });
-        return acc;
+        // eslint-disable-next-line no-use-before-define
+        const res: string = acc + encodeField({ input, field });
+        return res;
     }, '');
 
-// $FlowFixMe
-const encodeField = ({ input, field }) => {
+const encodeField = ({ input, field }: { input: {}, field: Field }) => {
     const { name, type, numBits, encoder, validator } = field;
     if (typeof validator === 'function') {
         if (!validator(input)) {
@@ -128,8 +144,8 @@ const encodeField = ({ input, field }) => {
 
     const bitCount = typeof numBits === 'function' ? numBits(input) : numBits;
 
-    const inputValue = input[name];
-    const fieldValue: any =
+    const inputValue: mixed = input[name];
+    const fieldValue: mixed =
         inputValue === null || inputValue === undefined ? '' : inputValue;
     switch (type) {
         case 'int':
@@ -139,22 +155,32 @@ const encodeField = ({ input, field }) => {
         case 'date':
             return encodeDateToBits(fieldValue, bitCount);
         case 'bits':
-            return padRight(fieldValue, bitCount - fieldValue.length).substring(
-                0,
-                bitCount
-            );
+            if (typeof fieldValue === 'string') {
+                return padRight(
+                    fieldValue,
+                    bitCount - fieldValue.length
+                ).substring(0, bitCount);
+            }
+            return '';
         case '6bitchar':
-            return encode6BitCharacters(fieldValue, bitCount);
+            if (typeof fieldValue === 'string') {
+                return encode6BitCharacters(fieldValue, bitCount);
+            }
+            return '';
         case 'list':
-            return fieldValue.reduce(
-                (acc, listValue) =>
-                    acc +
-                    encodeFields({
-                        input: listValue,
-                        fields: field.fields,
-                    }),
-                ''
-            );
+            if (Array.isArray(fieldValue)) {
+                return fieldValue.reduce(
+                    (acc, listValue) =>
+                        acc +
+                        encodeFields({
+                            // $FlowFixMe we have gotten this far... this will okay
+                            input: listValue,
+                            fields: field.fields ? field.fields : [],
+                        }),
+                    ''
+                );
+            }
+            return '';
         default:
             log.warn(
                 `Cookie definition field found without encoder or type: ${name}`
@@ -163,7 +189,13 @@ const encodeField = ({ input, field }) => {
     }
 };
 
-const decodeFields = ({ input, fields, startPosition = 0 }) => {
+type DecodeFields = {
+    input: string,
+    fields: Array<Field>,
+    startPosition?: number,
+};
+
+const decodeFields = ({ input, fields, startPosition = 0 }: DecodeFields) => {
     let position = startPosition;
     const decodedObject = fields.reduce((acc, field) => {
         const { name, numBits } = field;
@@ -190,7 +222,12 @@ const decodeFields = ({ input, fields, startPosition = 0 }) => {
     };
 };
 
-const decodeField = ({ input, output, startPosition, field }): Object => {
+const decodeField = ({
+    input,
+    output,
+    startPosition,
+    field,
+}): { fieldValue?: mixed, newPosition?: number } => {
     const { type, numBits, decoder, validator, listCount } = field;
     if (typeof validator === 'function') {
         if (!validator(output)) {
@@ -240,7 +277,7 @@ const decodeField = ({ input, output, startPosition, field }): Object => {
                 acc => {
                     const { decodedObject, newPosition } = decodeFields({
                         input,
-                        fields: field.fields,
+                        fields: field.fields ? field.fields : [],
                         startPosition: acc.newPosition,
                     });
                     return {
@@ -263,7 +300,7 @@ const decodeField = ({ input, output, startPosition, field }): Object => {
  */
 const encodeDataToBits = (
     data: { cookieVersion: number },
-    definitionMap: Object
+    definitionMap: {}
 ) => {
     const { cookieVersion } = data;
 
@@ -274,7 +311,7 @@ const encodeDataToBits = (
             `Could not find definition to encode cookie version ${cookieVersion}`
         );
     } else {
-        const cookieFields = definitionMap[cookieVersion].fields;
+        const cookieFields: Array<Field> = definitionMap[cookieVersion].fields;
         return encodeFields({ input: data, fields: cookieFields });
     }
 };
@@ -285,9 +322,10 @@ const encodeDataToBits = (
  */
 const encodeCookieValue = (
     data: { cookieVersion: number },
-    definitionMap: Object
+    definitionMap: {}
 ): ?string => {
     const binaryValue = encodeDataToBits(data, definitionMap);
+    // flowlint sketchy-null-string:warn
     if (binaryValue) {
         // Pad length to multiple of 8
         const paddedBinaryValue = padRight(
@@ -309,10 +347,16 @@ const encodeCookieValue = (
     }
 };
 
+type DefinitionMap = {
+    [number]: {
+        fields: Array<Field>,
+    },
+};
+
 const decodeCookieBitValue = (
     bitString: string,
-    definitionMap: Object
-): Object => {
+    definitionMap: DefinitionMap
+) => {
     const cookieVersion = decodeBitsToInt(bitString, 0, NUM_BITS_VERSION);
     if (typeof cookieVersion !== 'number') {
         log.error('Could not find cookieVersion to decode');
@@ -323,8 +367,8 @@ const decodeCookieBitValue = (
         );
         return {};
     }
-    const cookieFields = definitionMap[cookieVersion].fields;
-    // $FlowFixMe shhhh
+    const cookieFields: Array<Field> = definitionMap[cookieVersion].fields;
+
     const { decodedObject } = decodeFields({
         input: bitString,
         fields: cookieFields,
@@ -335,7 +379,7 @@ const decodeCookieBitValue = (
 /**
  * Decode the (URL safe Base64) value of a cookie into an object.
  */
-const decodeCookieValue = (cookieValue: string, definitionMap: any): Object => {
+const decodeCookieValue = (cookieValue: string, definitionMap: {}) => {
     // Replace safe characters
     const unsafe =
         cookieValue.replace(/-/g, '+').replace(/_/g, '/') +

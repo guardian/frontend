@@ -55,6 +55,7 @@ import scala.concurrent.Future
     val redirectDecisionService = new ProfileRedirectService(newsletterService, idRequestParser, controllerComponent)
     val authenticatedActions = new AuthenticatedActions(authService, api, mock[IdentityUrlBuilder], controllerComponent, newsletterService, idRequestParser, redirectDecisionService)
 
+    val signinService = mock[PlaySigninService]
     val profileFormsMapping = ProfileFormsMapping(
       new AccountDetailsMapping,
       new PrivacyMapping,
@@ -83,6 +84,7 @@ import scala.concurrent.Future
       csrfAddToken,
       returnUrlVerifier,
       newsletterService,
+      signinService,
       profileFormsMapping,
       testApplicationContext,
       httpConfiguration,
@@ -122,22 +124,24 @@ import scala.concurrent.Future
       }
 
       "show an alert modal for non rp'd users" in new ConsentsJourneyFixture {
-        user.statusFields.setHasRepermissioned(false)
         val result = controller.displayConsentsJourney(None).apply(FakeCSRFRequest(csrfAddToken))
         status(result) should be(200)
         contentAsString(result) should include ("identity-consent-journey--with-alert")
       }
 
       "not show an alert modal for rp'd users" in new ConsentsJourneyFixture {
-        user.statusFields.setHasRepermissioned(true)
+        override val user = User("test@example.com", userId, statusFields = StatusFields(userEmailValidated = Some(true), hasRepermissioned = Some(true)))
+        override val testAuth = ScGuU("abc", GuUCookieData(user, 0, None))
+        override val authenticatedUser = AuthenticatedUser(user, testAuth, true)
+        when(authService.fullyAuthenticatedUser(MockitoMatchers.any[RequestHeader])) thenReturn Some(authenticatedUser)
+        when(api.me(testAuth)) thenReturn Future.successful(Right(user))
+
         val result = controller.displayConsentsJourney(None).apply(FakeCSRFRequest(csrfAddToken))
         status(result) should be(200)
         contentAsString(result) should not include ("identity-consent-journey--with-alert")
       }
 
       "set a repermission flag on submit" in new ConsentsJourneyFixture {
-        user.statusFields.setHasRepermissioned(false)
-
         val updatedUser = user.copy(
           statusFields = StatusFields(hasRepermissioned = Some(true))
         )

@@ -5,13 +5,6 @@ import fastdom from 'lib/fastdom-promise';
 import $ from 'lib/$';
 import config from 'lib/config';
 
-const focusSearchField = (): void => {
-    const $input = $('input.gsc-input');
-    if ($input.length > 0) {
-        $input.focus();
-    }
-};
-
 // TODO refactor to singleton
 class Search {
     gcsUrl: string;
@@ -44,6 +37,15 @@ class Search {
                             return;
                         }
 
+                        fastdom.write(() => {
+                            toggle.setAttribute('role', 'button');
+                            toggle.setAttribute(
+                                'aria-controls',
+                                'search-popup'
+                            );
+                            toggle.setAttribute('aria-haspopup', 'dialog');
+                        });
+
                         fastdom
                             .read(
                                 () =>
@@ -57,16 +59,45 @@ class Search {
                                 }
 
                                 bean.on(toggle, 'click', e => {
-                                    const maybeDismissSearchPopup = event => {
-                                        let el = event.target;
+                                    const handleEsc = (event: Event): void => {
+                                        const keyboardEvent: KeyboardEvent = (event: any);
+
+                                        if (keyboardEvent.key === 'Escape') {
+                                            // eslint-disable-next-line no-use-before-define
+                                            dismissSearchPopup(keyboardEvent);
+                                            toggle.focus();
+                                        }
+                                    };
+                                    const dismissSearchPopup = (
+                                        event: Event
+                                    ): void => {
+                                        event.preventDefault();
+                                        toggle.classList.remove('is-active');
+                                        popup.classList.add('is-off');
+
+                                        bean.off(
+                                            document,
+                                            'click',
+                                            // eslint-disable-next-line no-use-before-define
+                                            maybeDismissSearchPopup
+                                        );
+                                        document.removeEventListener(
+                                            'keyup',
+                                            handleEsc
+                                        );
+                                    };
+                                    const maybeDismissSearchPopup = (
+                                        event: Event
+                                    ): void => {
+                                        let el: ?Element = (event.target: any);
                                         let clickedPop = false;
 
                                         while (el && !clickedPop) {
-                                            /* either the search pop-up or the autocomplete resultSetSize
-                                           NOTE: it would be better to check for `.gssb_c`,
+                                            /*  either the search pop-up or the autocomplete resultSetSize
+                                                NOTE: it would be better to check for `.gssb_c`,
                                                  which is the outer autocomplete element, but
                                                  google stops the event bubbling earlier
-                                        */
+                                            */
                                             if (
                                                 el &&
                                                 el.classList &&
@@ -80,21 +111,11 @@ class Search {
                                                 clickedPop = true;
                                             }
 
-                                            el = el.parentNode;
+                                            el = el && el.parentElement;
                                         }
 
                                         if (!clickedPop) {
-                                            event.preventDefault();
-                                            toggle.classList.remove(
-                                                'is-active'
-                                            );
-                                            popup.classList.add('is-off');
-
-                                            bean.off(
-                                                document,
-                                                'click',
-                                                maybeDismissSearchPopup
-                                            );
+                                            dismissSearchPopup(event);
                                         }
                                     };
 
@@ -104,10 +125,15 @@ class Search {
                                                 'is-active'
                                             )
                                         ) {
+                                            popup.focus();
                                             bean.on(
                                                 document,
                                                 'click',
                                                 maybeDismissSearchPopup
+                                            );
+                                            document.addEventListener(
+                                                'keyup',
+                                                handleEsc
                                             );
                                         }
                                     });
@@ -115,7 +141,6 @@ class Search {
                                     this.load(popup);
 
                                     // Make sure search is always in the correct state
-                                    focusSearchField();
                                     e.preventDefault();
                                 });
                             });
@@ -139,12 +164,6 @@ class Search {
             }))
             .then(els => {
                 const { allSearchPlaceholders, searchPlaceholder } = els;
-
-                // Set so Google know what to do
-                // eslint-disable-next-line no-underscore-dangle
-                window.__gcse = {
-                    callback: focusSearchField,
-                };
 
                 if (!searchPlaceholder) {
                     return;

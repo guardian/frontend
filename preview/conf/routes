@@ -26,6 +26,8 @@ GET        /advertiser-content/:campaignName/:pageName                          
 GET        /advertiser-content/:campaignName/:pageName/:cType/onward.json                      commercial.controllers.HostedContentController.renderOnwardComponent(campaignName, pageName, cType)
 GET        /advertiser-content/:campaignName/:pageName/autoplay.json                           commercial.controllers.HostedContentController.renderAutoplayComponent(campaignName, pageName)
 
+# Reader revenue
+GET       /reader-revenue/contributions-banner-deploy-log                                      controllers.ReaderRevenueAppController.contributionsBannerDeployLog()
 
 # Onward
 GET        /most-read.json                                                                     controllers.MostPopularController.render(path = "")
@@ -40,7 +42,6 @@ GET        /related/*path                                                       
 GET        /popular-in-tag/*tag.json                                                           controllers.PopularInTag.render(tag)
 
 GET        /preference/edition/:edition                                                        controllers.ChangeEditionController.render(edition)
-GET        /preference/front-alphas/:optAction                                                 controllers.ChangeAlphaController.render(optAction, page)
 
 GET        /cards/opengraph/*path.json                                                         controllers.CardController.opengraph(path)
 GET        /tagged.json                                                                        controllers.TaggedContentController.renderJson(tag: String)
@@ -151,6 +152,7 @@ POST       /atom/quiz/:id/*path                                                 
 GET        /$path<.+/\d\d\d\d/\w\w\w/\d\d>                                                     controllers.AllIndexController.on(path)
 GET        /$path<.+>/latest                                                                   controllers.LatestIndexController.latest(path)
 GET        /$path<.+>/latest/email                                                             controllers.LatestIndexController.latest(path)
+GET        /$path<.+>/latest/email.emailjson                                                   controllers.LatestIndexController.latest(path)
 GET        /$path<.+>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/all                            controllers.AllIndexController.allOn(path, day, month, year)
 GET        /$path<.+>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/altdate                        controllers.AllIndexController.altDate(path, day, month, year)
 GET        /$path<.+>/all                                                                      controllers.AllIndexController.all(path)
@@ -193,9 +195,14 @@ GET        /weatherapi/locations                                                
 GET        /news-alert/alerts                                                                  controllers.NewsAlertController.alerts()
 
 # Articles
-GET        /*path.json                                                                         controllers.ArticleController.renderLiveBlogJson(path, lastUpdate: Option[String], rendered: Option[Boolean], isLivePage: Option[Boolean])
-GET        /*path/email                                                                        controllers.ArticleController.renderArticle(path)
-GET        /$path<[^/]+/([^/]+/)?live/.*>                                                      controllers.ArticleController.renderLiveBlog(path, page: Option[String], format: Option[String])
+GET     /$path<[^/]+/([^/]+/)?live/.*>.json controllers.LiveBlogController.renderJson(path, lastUpdate: Option[String], rendered: Option[Boolean], isLivePage: Option[Boolean])
+GET     /$path<[^/]+/([^/]+/)?live/.*>/email controllers.LiveBlogController.renderEmail(path)
+GET     /$path<[^/]+/([^/]+/)?live/.*>/email.emailjson controllers.LiveBlogController.renderEmail(path)
+GET     /$path<[^/]+/([^/]+/)?live/.*> controllers.LiveBlogController.renderArticle(path, page: Option[String], format: Option[String])
+GET     /*path.json                 controllers.ArticleController.renderJson(path)
+GET     /*path/email                controllers.ArticleController.renderEmail(path)
+GET     /*path/email.emailjson      controllers.ArticleController.renderEmail(path)
+
 
 # Don't forward requests for favicon.ico to the Content API
 GET        /favicon.ico                                                                        controllers.FaviconController.favicon

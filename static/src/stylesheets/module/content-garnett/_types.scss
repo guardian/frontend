@@ -3,7 +3,7 @@ $quote-mark: 35px;
 
 .content {
     padding-bottom: 0;
-    color: $garnett-neutral-1;
+    color: $brightness-7;
 }
 
 .content--liveblog,
@@ -53,7 +53,7 @@ $quote-mark: 35px;
     }
 
     .content__meta-container {
-        @include multiline(4, $garnett-neutral-4, top);
+        @include multiline(4, $brightness-86, top);
         // creates correct top spacing for multiline bg image
         padding-top: 15px;
         margin-bottom: $gs-baseline / 2;
@@ -102,14 +102,6 @@ $quote-mark: 35px;
         }
     }
 
-    .byline {
-        padding-top: 0;
-        padding-bottom: $gs-baseline*1.5;
-        @include mq($until: phablet) {
-            border-top: 0;
-        }
-    }
-
     .content__meta-container .byline-img {
         max-width: gs-span(1);
         float: left;
@@ -126,26 +118,6 @@ $quote-mark: 35px;
         @include mq(leftCol) {
             margin-top: $gs-baseline/2;
             max-width: none;
-        }
-    }
-
-    .byline {
-        @include fs-bodyCopy(2);
-        border-top: 0;
-        color: $garnett-neutral-1;
-        font-style: italic;
-        line-height: 20px;
-        min-height: 0;
-        margin-top: -$gs-baseline/4;
-        // magic numbers are correcting line heights so vertical alignment appears even
-        padding-top: 4px;
-        font-weight: normal;
-        width: 100%;
-        margin-bottom: -14px;
-
-        span[itemprop='author'] {
-            font-weight: 700;
-            font-style: normal;
         }
     }
 
@@ -194,10 +166,10 @@ $quote-mark: 35px;
         }
 
         a {
-            color: $garnett-neutral-6;
+            color: $brightness-46;
 
             .inline-icon {
-                fill: $garnett-neutral-6;
+                fill: $brightness-46;
             }
 
             &:focus,
@@ -210,7 +182,7 @@ $quote-mark: 35px;
         }
 
         .contact {
-            color: $garnett-neutral-6;
+            color: $brightness-46;
             display: inline-block!important;
         }
     }
@@ -222,22 +194,22 @@ $quote-mark: 35px;
     .block-share__item,
     .social-icon {
         background-color: transparent;
-        border: 1px solid $neutral-4;
+        border: 1px solid $brightness-86;
 
         &:focus,
         &:hover {
             svg {
-                fill: $garnett-neutral-5;
+                fill: $brightness-100;
             }
         }
     }
 
     .meta__number + .meta__number {
-        border-color: $garnett-neutral-4;
+        border-color: $brightness-86;
     }
     // *************** Header and Body Styles ***************
 
-    .content__main-column {
+    .content__main-column:not(.content__main-column--gallery) {
         &:before {
             @include mq(leftCol) {
                 content: '';
@@ -247,7 +219,7 @@ $quote-mark: 35px;
                 left: 0;
                 height: 100%;
                 width: 1px;
-                background: $garnett-neutral-4;
+                background: $brightness-86;
             }
         }
 
@@ -303,7 +275,7 @@ $quote-mark: 35px;
 
     //Review stars
     .stars {
-        background-color: $news-garnett-highlight;
+        background-color: $highlight-main;
         display: inline-block;
         line-height: 0;
         padding: calc((#{$gs-baseline} / 2) - 2px);
@@ -329,7 +301,7 @@ $quote-mark: 35px;
         display: inline;
 
         svg {
-            stroke: $garnett-neutral-1;
+            stroke: $brightness-7;
             fill: transparent;
             height: 1.2em;
             width: 1.2em;
@@ -338,7 +310,7 @@ $quote-mark: 35px;
 
     .inline-star.star__item--golden {
         svg {
-            fill: $garnett-neutral-1;
+            fill: $brightness-7;
             stroke: none;
         }
     }
@@ -349,7 +321,7 @@ $quote-mark: 35px;
         font-size: 17px;
         line-height: 22px;
         border-top: 0;
-        color: $garnett-neutral-1;
+        color: $brightness-7;
         padding-top: 2px;
         margin-bottom: $gs-baseline;
         max-width: 80%;
@@ -391,7 +363,7 @@ $quote-mark: 35px;
 
     // *************** Quote Styles ***************
     .element-pullquote {
-        background-color: $garnett-neutral-3;
+        background-color: $brightness-97;
         margin: $gs-gutter/4 0 $gs-baseline*2;
         padding: $gs-baseline/2 $gs-gutter/2 $gs-baseline;
         position: relative;
@@ -417,7 +389,7 @@ $quote-mark: 35px;
             position: absolute;
             bottom: -$quote-tail;
             left: $gs-gutter/2;
-            background-color: $garnett-neutral-3;
+            background-color: $brightness-97;
             @include mq(mobileLandscape) {
                 left: $gs-gutter;
             }
@@ -633,7 +605,7 @@ $quote-mark: 35px;
 }
 
 /**** sport overrides ****/
-.content--pillar-sport,
+.content--pillar-sport:not(.content--interactive),
 .content--pillar-sport.content--type-feature {
     .content__meta-container {
         background-image: url('data:image/svg+xml,%3Csvg%20width%3D%229%22%20height%3D%2212%22%20viewBox%3D%220%200%209%2012%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cg%20fill%3D%22%23DFDFDF%22%3E%3Ccircle%20cx%3D%221.5%22%20cy%3D%221.5%22%20r%3D%221%22/%3E%3Ccircle%20cx%3D%221.5%22%20cy%3D%224.5%22%20r%3D%221%22/%3E%3Ccircle%20cx%3D%221.5%22%20cy%3D%227.5%22%20r%3D%221%22/%3E%3Ccircle%20cx%3D%221.5%22%20cy%3D%2210.5%22%20r%3D%221%22/%3E%3Ccircle%20cx%3D%224.5%22%20cy%3D%221.5%22%20r%3D%221%22/%3E%3Ccircle%20cx%3D%224.5%22%20cy%3D%224.5%22%20r%3D%221%22/%3E%3Ccircle%20cx%3D%224.5%22%20cy%3D%227.5%22%20r%3D%221%22/%3E%3Ccircle%20cx%3D%224.5%22%20cy%3D%2210.5%22%20r%3D%221%22/%3E%3Ccircle%20cx%3D%227.5%22%20cy%3D%221.5%22%20r%3D%221%22/%3E%3Ccircle%20cx%3D%227.5%22%20cy%3D%224.5%22%20r%3D%221%22/%3E%3Ccircle%20cx%3D%227.5%22%20cy%3D%227.5%22%20r%3D%221%22/%3E%3Ccircle%20cx%3D%227.5%22%20cy%3D%2210.5%22%20r%3D%221%22/%3E%3C/g%3E%3C/svg%3E');
@@ -672,10 +644,9 @@ $quote-mark: 35px;
 // *************** Matchreport overrides ****************
 .content--has-scores {
     .content__labels {
-        .content__series-label__link,
-        .content__section-label__link {
+        .content__label__link {
             @include mq(leftCol) {
-                color: $neutral-1;
+                color: $brightness-7;
             }
         }
     }
@@ -697,7 +668,9 @@ $quote-mark: 35px;
     .content__headline-showcase-wrapper {
         .content__header {
             @include mq($from: desktop) {
-                margin-bottom: calc(-#{$gs-baseline} * 7 - 2px);
+                @supports (display: grid) {
+                    margin-bottom: calc(-#{$gs-baseline} * 7 - 2px);
+                }
             }
         }
     }
@@ -748,17 +721,17 @@ $quote-mark: 35px;
         padding: 0;
         line-height: 35px;
 
-        @include mq($from: desktop) {
+        @include mq($from: tablet) {
             line-height: 42px;
         }
 
         .content__headline--interview-wrapper {
-            background-color: $garnett-neutral-1;
+            background-color: $brightness-7;
             display: inline;
             position: relative;
             z-index: 10;
             color: #ffffff;
-            box-shadow: $gs-baseline / 2 0 0 $garnett-neutral-1, -$gs-baseline / 2 0 0 $garnett-neutral-1;
+            box-shadow: $gs-baseline / 2 0 0 $brightness-7, -$gs-baseline / 2 0 0 $brightness-7;
             box-decoration-break: clone;
             padding-bottom: $gs-baseline / 2;
         }
@@ -769,9 +742,9 @@ $quote-mark: 35px;
         display: inline-block;
         font-style: italic;
         font-weight: 500;
-        background-color: $news-garnett-highlight;
-        box-shadow: $gs-baseline / 2 0 0 $news-garnett-highlight, -$gs-baseline / 2 0 0 $news-garnett-highlight;
-        color: $garnett-neutral-1;
+        background-color: $highlight-main;
+        box-shadow: $gs-baseline / 2 0 0 $highlight-main, -$gs-baseline / 2 0 0 $highlight-main;
+        color: $brightness-7;
         margin-bottom: $gs-baseline;
         padding-bottom: $gs-baseline / 4;
         position: relative;
@@ -811,25 +784,25 @@ $quote-mark: 35px;
 .content--type-guardianview:not(.content--type-column),
 .content--type-comment {
     .content__main {
-        background-color: $opinion-garnett-background;
+        background-color: $opinion-faded;
         padding-bottom: $gs-baseline/2;
 
         .rich-link {
-            background-color: $garnett-neutral-5;
+            background-color: $brightness-100;
         }
 
         .rich-link.tone-media--item {
-            background-color: $neutral-1;
+            background-color: $brightness-7;
         }
 
         .element-pullquote,
         .element-pullquote:after
         {
-            background-color: darken($opinion-garnett-background, 7%);
+            background-color: darken($opinion-faded, 7%);
         }
 
         .element-pullquote blockquote p.pullquote-paragraph {
-            color: $garnett-neutral-1;
+            color: $brightness-7;
         }
 
     }
@@ -854,7 +827,7 @@ $quote-mark: 35px;
         margin-bottom: 0;
 
         @include mq(leftCol) {
-            @include multiline(8, $garnett-neutral-4, 8);
+            @include multiline(8, $brightness-86, 8);
             padding-top: $gs-baseline * 3;
             // the multiline pattern is 4px high, so its height for n lines is (n - 1) * 4 + 1
             margin-top: -1 * (7 * 4px + 1);
@@ -889,7 +862,7 @@ $quote-mark: 35px;
     }
 
     .content__header {
-        @include multiline(8, $garnett-neutral-4);
+        @include multiline(8, $brightness-86);
         position: relative;
     }
 
@@ -945,7 +918,10 @@ $quote-mark: 35px;
 
 .content--media:not(.paid-content) {
     &.content--media {
-        background-color: $garnett-neutral-1;
+        background-color: $brightness-7;
+        .caption {
+            color: $brightness-86;
+        }
     }
 
     .content__main {
@@ -959,7 +935,7 @@ $quote-mark: 35px;
     }
 
     .content__headline {
-        color: $garnett-neutral-5;
+        color: $brightness-100;
         padding-bottom: $gs-baseline*3;
     }
 
@@ -984,30 +960,24 @@ $quote-mark: 35px;
     .meta__numbers .sharecount__value,
     .u-underline,
     a {
-        color: $garnett-neutral-4;
+        color: $brightness-86;
     }
 
     .byline a,
     .from-content-api a {
         text-decoration: none;
-        border-bottom: .1px solid $garnett-neutral-6;
+        border-bottom: .1px solid $brightness-46;
         transition: border-color .15s ease-out;
 
         &:hover {
-            border-color: $garnett-neutral-4;
+            border-color: $brightness-86;
         }
-    }
-
-    .byline,
-    .byline span {
-        @include fs-bodyCopy(2);
-        font-style: normal;
     }
 
     .meta__extras,
     .meta__number:not(.u-h) + .meta__number,
     .meta__numbers {
-        border-color: $garnett-neutral-7;
+        border-color: $brightness-20;
     }
 
     .tonal__standfirst {
@@ -1024,21 +994,21 @@ $quote-mark: 35px;
     }
 
     .u-underline {
-        border-bottom: solid 1px $garnett-neutral-6;
+        border-bottom: solid 1px $brightness-46;
     }
 
     .bullet:before {
-        background-color: $garnett-neutral-4;
+        background-color: $brightness-86;
     }
 
     .content__meta-container {
-        @include multiline(4, $garnett-neutral-7, top);
+        @include multiline(4, $brightness-20, top);
     }
 
     .inline-icon,
     .meta__numbers .inline-share svg,
     .social-icon__svg {
-        fill: $garnett-neutral-4;
+        fill: $brightness-86;
     }
 
     .byline span {
@@ -1303,7 +1273,7 @@ $quote-mark: 35px;
 // *************** Interactive elements ***************
 .interactive.element--showcase,
 .interactive.element--supporting {
-    background: $garnett-neutral-5;
+    background: $brightness-100;
 }
 
 .paid-content {
@@ -1316,16 +1286,12 @@ $quote-mark: 35px;
     }
 
     .content__meta-container {
-        @include multiline(3, $garnett-neutral-6, top);
-    }
-
-    .social-icon,
-    .block-share__item {
-        border-color: $garnett-neutral-6;
+        border-top: 1px solid $brightness-60;
+        padding-top: $gs-baseline / 4;
     }
 
     .content__article-body::before {
-        background: $garnett-neutral-6;
+        background: $brightness-46;
     }
 
     .element .caption {

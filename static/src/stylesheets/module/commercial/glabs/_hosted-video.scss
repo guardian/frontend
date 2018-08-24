@@ -43,7 +43,7 @@
         @include mq($until: leftCol) {
             margin: $gs-baseline 0 0;
             padding: 0 $gs-gutter;
-            background-color: $neutral-7;
+            background-color: $brightness-97;
             .hosted__next-page-header--border {
                 margin-left: -$gs-gutter;
                 width: 150%;
@@ -300,7 +300,7 @@
             left: 14px;
             top: 8px;
             border-style: solid;
-            border-color: transparent transparent transparent $neutral-7;
+            border-color: transparent transparent transparent $brightness-97;
             border-width: .5rem .5rem .5rem 1.125rem;
             -moz-transform: scale(.99999); // fix for diagonal border aliasing in firefox
         }

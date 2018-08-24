@@ -10,7 +10,6 @@
 
     <div class="gs-container">
         <div class="content__main-column content__main-column--gallery">
-
             @fragments.contentMeta(gallery.item, gallery)
 
             @if(gallery.item.fields.standfirst.isDefined) {
@@ -27,6 +26,19 @@
                 @if(gallery.item.content.tags.contributors.length == 1) {
                     @if(gallery.item.content.hasTonalHeaderByline && (gallery.item.tags.contributors.headOption.exists(_.properties.twitterHandle.nonEmpty) || gallery.item.tags.contributors.headOption.exists(_.properties.emailAddress.nonEmpty))) { <p class="meta__contact-header hide-until-leftcol">Contact author</p> }
                     @fragments.meta.contactAuthor(gallery.item.tags)
+                }
+
+                @defining(gallery.item.elements.mainPicture.flatMap(_.images.masterImage)) {
+                    case Some(masterImage) => {
+                        <figcaption class="caption caption--gallery hide-from-desktop">
+                            Main image:
+                            @masterImage.caption.map(Html(_))
+                            @if(masterImage.displayCredit && !masterImage.creditEndsWithCaption) {
+                                @masterImage.credit.map(Html(_))
+                            }
+                        </figcaption>
+                    }
+                    case None => { }
                 }
 
                 @if(!gallery.item.trail.shouldHidePublicationDate) {

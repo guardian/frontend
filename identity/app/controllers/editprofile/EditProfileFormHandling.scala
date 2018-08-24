@@ -86,7 +86,7 @@ trait EditProfileFormHandling extends EditProfileControllerComponents {
             case formData: UserFormData =>
               identityApiClient.saveUser(userDO.id, formData.toUserUpdateDTO(userDO), userDO.auth) flatMap {
                 case Left(idapiErrors) =>
-                  logger.error(s"Failed to process ${page.id} form submission for user ${userDO.getId}: $idapiErrors")
+                  logger.error(s"Failed to process ${page.id} form submission for user ${userDO.id}: $idapiErrors")
                   profileFormsView(page, boundProfileForms.withErrors(idapiErrors), userDO)
 
                 case Right(updatedUser) =>
@@ -108,7 +108,7 @@ trait EditProfileFormHandling extends EditProfileControllerComponents {
     (implicit request: AuthRequest[AnyContent]): Future[Result] = {
 
     val emailFilledForm: Future[Form[EmailPrefsData]] =
-      newsletterService.subscriptions(request.user.getId, idRequestParser(request).trackingData)
+      newsletterService.subscriptions(request.user.id, idRequestParser(request).trackingData)
     val redirectDecision: ProfileRedirect = redirectDecisionService.toProfileRedirect(user, request)
 
     emailFilledForm.map { emailFilledForm =>

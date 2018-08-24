@@ -81,29 +81,6 @@ import scala.collection.JavaConverters._
 
   val expiredArticle = "football/2012/sep/14/zlatan-ibrahimovic-paris-st-germain-toulouse"
 
-  it should "return the latest blocks of a live blog" in {
-    val lastUpdateBlock = "block-56d03169e4b074a9f6b35baa"
-    val fakeRequest = FakeRequest(GET, s"/football/live/2016/feb/26/fifa-election-who-will-succeed-sepp-blatter-president-live.json?lastUpdate=$lastUpdateBlock")
-      .withHeaders("host" -> "localhost:9000")
-
-    val result = articleController.renderLiveBlogJson("/football/live/2016/feb/26/fifa-election-who-will-succeed-sepp-blatter-president-live", Some(lastUpdateBlock), None, Some(true))(fakeRequest)
-    status(result) should be(200)
-
-    val content = contentAsString(result)
-
-    // newer blocks
-    content should include("block-56d03894e4b0bd5a0524cbab")
-    content should include("block-56d039fce4b0d38537b1f61e")
-    content should not include "56d04877e4b0bd5a0524cbe2" // at the moment it only tries 5 either way, reverse this test once we use blocks:published-since
-
-    //this block
-    content should not include lastUpdateBlock
-
-    //older block
-    content should not include "block-56d02bd2e4b0d38537b1f5fa"
-
-  }
-
   it should "know which backend served the request" in {
     val result = route(app, TestRequest("/world/2014/sep/24/radical-cleric-islamic-state-release-british-hostage-alan-henning")).head
     status(result) should be (200)

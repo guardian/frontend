@@ -12,10 +12,10 @@
     }
 
     .button {
-        border-color: $neutral-2;
+        border-color: $brightness-46;
 
         &:hover {
-            border-color: $neutral-4;
+            border-color: $brightness-86;
         }
 
         @include mq(tablet) {

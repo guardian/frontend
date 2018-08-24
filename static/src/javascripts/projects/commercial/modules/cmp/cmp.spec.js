@@ -64,7 +64,7 @@ const globalVendorList = {
 };
 
 class StoreMock {
-    vendorList: Object;
+    vendorList: {};
 
     constructor(vendorList) {
         this.vendorList = vendorList;
@@ -86,14 +86,16 @@ describe('cmp', () => {
     });
 
     it('ping executes', () => {
-        cmp.processCommand('ping', log.info('ping called!'), result => {
-            expect(log.info.mock.calls[0][0]).toMatch('ping called!');
+        cmp.processCommand('ping', log.info('ping called!'), (result: any) => {
             expect(result.cmpLoaded).toEqual(true);
         });
+        expect(log.info.mock.calls[0][0]).toMatch('ping called!');
     });
 
     it('will log error on invalid use of processCommand', () => {
-        cmp.processCommand('fakeCommand');
+        cmp.processCommand('fakeCommand', null, result => {
+            expect(result).toBe(undefined);
+        });
         expect(log.error.mock.calls[0][0]).toMatch('Invalid CMP command');
     });
 
@@ -108,7 +110,7 @@ describe('cmp', () => {
     });
 
     it('getVendorList executes', () => {
-        cmp.processCommand('getVendorList', null, result => {
+        cmp.processCommand('getVendorList', null, (result: any) => {
             expect(result.purposes).toEqual(globalVendorList.purposes);
             expect(result.vendors).toEqual(globalVendorList.vendors);
         });
@@ -125,17 +127,15 @@ describe('cmp', () => {
     });
 
     it('processes messages from iframes', () => {
-        const source = {
-            postMessage: jest.fn(),
-        };
         const processSpy = jest.spyOn(cmp, 'processCommand');
-        cmp.receiveMessage({
+        const message: any = {
             data: {
                 __cmpCall: { command: 'showConsentTool' },
             },
-            origin: {},
-            source,
-        });
+            origin: 'example',
+            source: { postMessage: jest.fn() },
+        };
+        cmp.receiveMessage(message);
         expect(processSpy.mock.calls[0][0]).toMatch('showConsentTool');
     });
 });

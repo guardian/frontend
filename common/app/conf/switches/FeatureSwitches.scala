@@ -24,16 +24,6 @@ trait FeatureSwitches {
     exposeClientSide = false
   )
 
-  val WorldCup2018Chrome = Switch(
-    SwitchGroup.Feature,
-    "world-cup-next-match",
-    "Used to toggle display of special world cup components/text on world cup overview page",
-    owners = Seq(Owner.withGithub("nicl")),
-    safeState = On,
-    sellByDate = new LocalDate(2018, 8, 14),
-    exposeClientSide = false
-  )
-
   val FacebookShareImageLogoOverlay = Switch(
     SwitchGroup.Feature,
     "facebook-share-image-logo-overlay",
@@ -171,7 +161,7 @@ trait FeatureSwitches {
     "If this is switched on then videos are enhanced using VideoJS",
     owners = Seq(Owner.withGithub("siadcock")),
     safeState = On,
-    sellByDate = new LocalDate(2018, 7, 19),
+    sellByDate = new LocalDate(2018, 8, 31),
     exposeClientSide = true
   )
 
@@ -453,6 +443,16 @@ trait FeatureSwitches {
     exposeClientSide = false
   )
 
+  val YouTubeRelatedVideos = Switch(
+    SwitchGroup.Feature,
+    "youtube-related-videos",
+    "When ON show YouTube related video suggestions in YouTube media atoms",
+    owners = Seq(Owner.withGithub("siadcock")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 10, 2),
+    exposeClientSide = true
+  )
+
   // Owner: Journalism
   val ReaderAnswersDeliveryMechanism = Switch(
     SwitchGroup.Feature,
@@ -472,5 +472,15 @@ trait FeatureSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true
+  )
+
+  val Acast = Switch(
+    SwitchGroup.Feature,
+    "acast",
+    "When ON, requests to audio files will be routed to Acast if advertising is enabled",
+    owners = Seq(Owner.withName("journalism team")),
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = false
   )
 }

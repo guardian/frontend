@@ -156,6 +156,7 @@ with ServerSideExperimentSwitches
 with FaciaSwitches
 with ABTestSwitches
 with CommercialSwitches
+with PrebidSwitches
 with DiscussionSwitches
 with PerformanceSwitches
 with MonitoringSwitches

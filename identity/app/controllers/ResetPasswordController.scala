@@ -95,13 +95,12 @@ class ResetPasswordController(
 
     def onSuccess(form: (String, String, String, Option[String])): Future[Result] = form match {
       case (password, password_confirm, email_address, returnUrl) =>
-
-        val authResponse = api.resetPassword(token,password)
+        val idRequest = idRequestParser(request)
+        val authResponse = api.resetPassword(token, password, idRequest.trackingData)
         signInService.getCookies(authResponse, true) map {
           case Left(errors) =>
             logger.info(s"reset password errors, ${errors.toString()}")
             if (errors.exists("Token expired" == _.message)) {
-              val idRequest = idRequestParser(request)
               NoCache(SeeOther(idUrlBuilder.buildUrl("/reset/resend", idRequest)))
             } else {
               val formWithError = errors.foldLeft(requestPasswordResetForm) { (form, error) =>

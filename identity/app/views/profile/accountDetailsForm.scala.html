@@ -25,8 +25,8 @@
     <button type="submit" class="is-hidden"></button>
     @views.html.helper.CSRF.formField
 
-    @if(accountDetailsForm.globalError.isDefined) {
-        <div class="form__error">@accountDetailsForm.globalErrors.map(_.message).mkString(", ")</div>
+    @if(accountDetailsForm.hasErrors) {
+        <div class="form__error">There was a problem processing the form: @accountDetailsForm.errors.map(_.message)</div>
     }
 
     <fieldset class="fieldset">
@@ -130,36 +130,6 @@
                 )
                 @inputField(Input(accountDetailsForm("firstName"), ('_label, "First name"), Symbol("data-test-id") -> "first-name"))
                 @inputField(Input(accountDetailsForm("secondName"), ('_label, "Last name"), Symbol("data-test-id") -> "last-name"))
-
-                <li class="form-field form-fields__inline form-fields--date-of-birth">
-                    <span class="form-fields__heading">Date of birth</span>
-                    <ul class="u-unstyled">
-                        @if(accountDetailsForm("birthDate").hasErrors) {
-                            <div class="form__error">@accountDetailsForm("birthDate").errors.map(_.message).mkString(", ")</div>
-                        }
-                        @select(
-                            accountDetailsForm("birthDate.day"),
-                            options((1 to 31).toList map {_.toString}),
-                            ('_label, "Day"),
-                            ('_showConstraints, false),
-                            ('_default, "")
-                        )
-                        @select(
-                            accountDetailsForm("birthDate.month"),
-                            options((1 to 12).toList map {_.toString}),
-                            ('_label, "Month"),
-                            ('_showConstraints, false),
-                            ('_default, "")
-                        )
-                        @select(
-                            accountDetailsForm("birthDate.year"),
-                            options((1850 to now.getYear).reverse.toList map {_.toString}),
-                            ('_label, "Year"),
-                            ('_showConstraints, false),
-                            ('_default, "")
-                        )
-                    </ul>
-                </li>
             </ul>
         </div>
     </fieldset>

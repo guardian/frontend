@@ -1,4 +1,4 @@
-// @flow
+// @flow strict
 
 export type PrebidSize = [number, number];
 
@@ -7,6 +7,7 @@ export type PrebidSonobiParams = {
     dom_id: string,
     appNexusTargeting: string,
     pageViewId: string,
+    render?: string,
 };
 
 export type PrebidIndexExchangeParams = {
@@ -34,11 +35,16 @@ export type PrebidXaxisParams = {
 
 export type PrebidAppNexusParams = {
     placementId: string,
+    customData: string,
 };
 
 export type PrebidOpenXParams = {
     delDomain: string,
     unit: string,
+};
+
+export type PrebidAdYouLikeParams = {
+    placement: string,
 };
 
 export type PrebidSlotKey =
@@ -69,6 +75,7 @@ export type PrebidSlot = {
 
 export type PrebidBidder = {
     name: string,
+    switchName: string,
     bidParams: (
         slotId: string,
         sizes: PrebidSize[]
@@ -79,7 +86,8 @@ export type PrebidBidder = {
         | PrebidImproveParams
         | PrebidXaxisParams
         | PrebidAppNexusParams
-        | PrebidOpenXParams,
+        | PrebidOpenXParams
+        | PrebidAdYouLikeParams,
     labelAny?: PrebidBidLabel[],
     labelAll?: PrebidBidLabel[],
 };
@@ -93,7 +101,8 @@ export type PrebidBid = {
         | PrebidImproveParams
         | PrebidXaxisParams
         | PrebidAppNexusParams
-        | PrebidOpenXParams,
+        | PrebidOpenXParams
+        | PrebidAdYouLikeParams,
     labelAny?: PrebidBidLabel[],
     labelAll?: PrebidBidLabel[],
 };

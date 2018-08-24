@@ -1,5 +1,60 @@
 @import '../social-icons';
 
+
+/* new audio styles hacked in for test page */
+
+.content--media.new-audio {
+
+    * {
+        box-sizing: border-box;
+    }
+    figure#audio-component-container {
+        margin-bottom: 12px;
+    }
+    @media (min-width: 1300px) {
+        figure#audio-component-container {
+            margin-bottom: 36px;
+        }
+    }
+    ul {
+        margin: 0;
+        list-style-type: none;
+        line-height: 1.5rem;
+        img {
+            display: inline-block;
+        }
+    }
+
+    h1, h2, h3, li, p {
+        color: #dcdcdc;
+    }
+    .player {
+        line-height: 0;
+    }
+
+    @media (max-width: 46.24em) {
+        .player {
+            margin: 0 -.55rem;
+        }
+    }
+
+    @media (min-width: 71.25em) {
+        .player {
+            margin-left: -10rem;
+        }
+    }
+    @media (min-width: 81.25em) {
+        .player {
+            margin-left: -15rem;
+        }
+    }
+
+}
+
+
+/* original styles */
+
+
 .content--media {
     .content__main-column {
         &::before {
@@ -39,7 +94,7 @@
             &:hover,
             &:focus {
                 background-color: transparent;
-                border-color: $neutral-6;
+                border-color: $brightness-93;
             }
         }
     }
@@ -64,7 +119,7 @@
         }
         @include mq(desktop) {
             padding-left: $gs-gutter/2;
-            border-left: 1px solid $media-mute;
+            border-left: 1px solid $brightness-20;
         }
     }
     .content__secondary-column--video {
@@ -104,7 +159,7 @@
    ========================================================================== */
 
 .most-viewed-container--media {
-    border-top: 1px solid $media-mute;
+    border-top: 1px solid $brightness-20;
 
     @include mq($until: desktop) {
         margin-top: $gs-baseline*2;
@@ -117,6 +172,7 @@
         @include fs-header(2);
         position: relative;
         top: $gs-baseline/4;
+        color: $brightness-93;
     }
 }
 .most-viewed--media {

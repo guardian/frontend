@@ -293,7 +293,7 @@ trait CommercialSwitches {
     description = "Turn on to include the analytics ONLY for Oriel. Turn off to include the FULL integration script. Depends on AB test switch.",
     owners = group(Commercial),
     safeState = On,
-    sellByDate = new LocalDate(2018, 6, 28),
+    sellByDate = new LocalDate(2018, 9, 12),
     exposeClientSide = false
   )
 
@@ -303,9 +303,62 @@ trait CommercialSwitches {
     description = "Include the blockthrough script for testing the vendors effectiveness at circumventing ad-blocking.",
     owners = group(Commercial),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 8, 22),
+    sellByDate = new LocalDate(2018, 9, 27),
     exposeClientSide = false
    )
+
+   val LotameSwitch: Switch = Switch(
+     group = Commercial,
+     name = "lotame",
+     description = "When this is switched on the Lotame script will be included on the page",
+     owners = group(Commercial),
+     safeState = Off,
+     sellByDate = never,
+     exposeClientSide = false
+   )
+
+  val AffiliateLinks: Switch = Switch(
+    group = Commercial,
+    name = "affiliate-links",
+    description = "Enable affiliate links. If off, affiliate links will never be added to content by frontend apps. If on, affiliate links may be added based off other settings",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+
+  val AffiliateLinkSections: Switch = Switch(
+    group = Commercial,
+    name = "affiliate-links-sections",
+    description = "Add affiliate links to all content in sections in affiliateLinkSections config property when no override exists in capi (showAffiliateLinks field).",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+
+  val enableConsentManagementService: Switch = Switch(
+    group = Commercial,
+    name = "enable-consent-management-service",
+    description = "Enable our CMP service to run on each page, so that vendors can query the consent status.",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
+  val commercialPageViewAnalytics: Switch = Switch(
+    group = Commercial,
+    name = "commercial-page-view-analytics",
+    description = "Gather commercial analytics from page views",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+}
+
+trait PrebidSwitches {
 
   val prebidSwitch: Switch = Switch(
     group = Commercial,
@@ -333,6 +386,16 @@ trait CommercialSwitches {
     description = "Include Sonobi adapter in Prebid auctions",
     owners = group(Commercial),
     safeState = On,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
+  val prebidAppNexus: Switch = Switch(
+    group = Commercial,
+    name = "prebid-appnexus",
+    description = "Include AppNexus adapter in Prebid auctions",
+    owners = group(Commercial),
+    safeState = Off,
     sellByDate = never,
     exposeClientSide = true
   )
@@ -377,60 +440,20 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
+  val prebidAdYouLike: Switch = Switch(
+    group = Commercial,
+    name = "prebid-ad-you-like",
+    description = "Include AdYouLike adapter in Prebid auctions",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
   val prebidS2SOzoneBidder: Switch = Switch(
     group = Commercial,
     name = "prebid-s2sozone",
     description = "Include S2S Ozone project adapter in Prebid auctions",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
-  val orielSonobiIntegration: Switch = Switch(
-    group = Commercial,
-    name = "oriel-sonobi-integration-test",
-    description = "This is a short test to test the integration between Oriel and Sonobi",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 6, 28),
-    exposeClientSide = false
-  )
-
-  val AffiliateLinks: Switch = Switch(
-    group = Commercial,
-    name = "affiliate-links",
-    description = "Enable affiliate links. If off, affiliate links will never be added to content by frontend apps. If on, affiliate links may be added based off other settings",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false
-  )
-
-  val AffiliateLinkSections: Switch = Switch(
-    group = Commercial,
-    name = "affiliate-links-sections",
-    description = "Add affiliate links to all content in sections in affiliateLinkSections config property when no override exists in capi (showAffiliateLinks field).",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false
-  )
-
-  val enableConsentManagementService: Switch = Switch(
-    group = Commercial,
-    name = "enable-consent-management-service",
-    description = "Enable our CMP service to run on each page, so that vendors can query the consent status.",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 8, 23),
-    exposeClientSide = true
-  )
-
-  val pageViewAnalytics: Switch = Switch(
-    group = Commercial,
-    name = "page-view-analytics",
-    description = "Gather commercial analytics from page view",
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,

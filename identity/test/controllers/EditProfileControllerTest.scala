@@ -57,7 +57,7 @@ import scala.concurrent.Future
 
     val redirectDecisionService = new ProfileRedirectService(newsletterService, idRequestParser, controllerComponent)
     val authenticatedActions = new AuthenticatedActions(authService, api, mock[IdentityUrlBuilder], controllerComponent, newsletterService, idRequestParser, redirectDecisionService)
-
+    val signinService = mock[PlaySigninService]
     val profileFormsMapping = ProfileFormsMapping(
       new AccountDetailsMapping,
       new PrivacyMapping,
@@ -84,6 +84,7 @@ import scala.concurrent.Future
       csrfAddToken,
       returnUrlVerifier,
       newsletterService,
+      signinService,
       profileFormsMapping,
       testApplicationContext,
       httpConfiguration,
@@ -176,7 +177,7 @@ import scala.concurrent.Future
         val address2 = "London"
         val address3 = ""
         val address4 = ""
-        val postcode = "N1 9GU"
+        val postcode = "N1 9GU "
         val country = Countries.UK
         val billingAddress1 = "Buckingham Palace"
         val billingAddress2 = "London"
@@ -465,7 +466,12 @@ import scala.concurrent.Future
 
     "displayEmailPrefsForm method" should {
       "Redirect non repermissioned users" in new EditProfileFixture {
-        user.statusFields.setHasRepermissioned(false)
+        override val user = User("test@example.com", userId, statusFields = StatusFields(userEmailValidated = Some(true), hasRepermissioned = Some(false)))
+        override val testAuth = ScGuU("abc", GuUCookieData(user, 0, None))
+        override val authenticatedUser = AuthenticatedUser(user, testAuth, true)
+        when(authService.fullyAuthenticatedUser(MockitoMatchers.any[RequestHeader])) thenReturn Some(authenticatedUser)
+        when(api.me(testAuth)) thenReturn Future.successful(Right(user))
+
         val userEmailSubscriptions = List(EmailList(EmailNewsletters.guardianTodayUk.listId.toString))
         when(api.userEmails(MockitoMatchers.anyString(), MockitoMatchers.any[TrackingData]))
           .thenReturn(Future.successful(Right(Subscriber("HTML", userEmailSubscriptions))))
@@ -475,7 +481,12 @@ import scala.concurrent.Future
         contentAsString(result) should not include (EmailNewsletters.guardianTodayUk.name)
       }
       "display Guardian Today UK newsletter" in new EditProfileFixture {
-        user.statusFields.setHasRepermissioned(true)
+        override val user = User("test@example.com", userId, statusFields = StatusFields(userEmailValidated = Some(true), hasRepermissioned = Some(true)))
+        override val testAuth = ScGuU("abc", GuUCookieData(user, 0, None))
+        override val authenticatedUser = AuthenticatedUser(user, testAuth, true)
+        when(authService.fullyAuthenticatedUser(MockitoMatchers.any[RequestHeader])) thenReturn Some(authenticatedUser)
+        when(api.me(testAuth)) thenReturn Future.successful(Right(user))
+
         val userEmailSubscriptions = List(EmailList(EmailNewsletters.guardianTodayUk.listId.toString))
         when(api.userEmails(MockitoMatchers.anyString(), MockitoMatchers.any[TrackingData]))
           .thenReturn(Future.successful(Right(Subscriber("HTML", userEmailSubscriptions))))

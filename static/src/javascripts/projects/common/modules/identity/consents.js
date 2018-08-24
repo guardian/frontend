@@ -14,7 +14,6 @@ import {
     bindAnalyticsEventsOnce as bindCheckboxAnalyticsEventsOnce,
 } from './modules/switch';
 import { getCsrfTokenFromElement } from './modules/fetchFormFields';
-import { show as showModal } from './modules/modal';
 
 import { prependSuccessMessage } from './modules/prependMessage';
 
@@ -191,14 +190,6 @@ const bindUnsubscribeFromAll = (buttonEl: HTMLButtonElement) => {
     });
 };
 
-const bindUnsubscribeFromAllModalConfirmation = (
-    buttonEl: HTMLButtonElement
-) => {
-    buttonEl.addEventListener('click', () => {
-        showModal('confirm-unsubscribe-all');
-    });
-};
-
 const updateNewsletterSwitch = (labelEl: HTMLElement): Promise<void> =>
     Promise.all([
         getCsrfTokenFromElement(labelEl),
@@ -366,11 +357,7 @@ const enhanceConsents = (): void => {
         [`.${checkAllCheckboxClassName}`, bindCheckAllSwitch],
         [`.${consentCheckboxClassName}`, bindConsentSwitch],
         [`.${newsletterCheckboxClassName}`, bindNewsletterSwitch],
-        [
-            `.${unsubscribeButtonClassName}`,
-            bindUnsubscribeFromAllModalConfirmation,
-        ],
-        ['.js-confirm-unsubscribe-all', bindUnsubscribeFromAll],
+        [`.${unsubscribeButtonClassName}`, bindUnsubscribeFromAll],
     ];
     loadEnhancers(loaders);
 };

@@ -1,29 +1,16 @@
 // @flow
-import { daysSince } from 'lib/time-utils';
+import { dateDiffDays } from 'lib/time-utils';
 
-describe('Days since', () => {
-    it('should return a correct duration give a valid date string', () => {
-        const mockDate = new Date('2017-06-09T15:00:00Z');
-        const originalDate = global.Date;
-        const correctDateString = '2017-06-08T15:00:00Z';
-        const correctDateTime = 1496934000000;
+describe('calculating the difference between 2 dates', () => {
+    it('should return the correct duration', () => {
+        const oneDayMs = 1000 * 60 * 60 * 24;
 
-        global.Date = jest.fn(() => mockDate);
-        global.Date.parse = jest.fn(() => correctDateTime);
+        const now = Date.now();
 
-        expect(daysSince(correctDateString)).toBe(1);
+        expect(dateDiffDays(now, now + oneDayMs)).toBe(1);
 
-        global.Date = originalDate;
-        global.Date.parse = originalDate.parse;
-    });
+        expect(dateDiffDays(now, now + oneDayMs - 1)).toBe(0);
 
-    it('should return infinity for an incorrect give a invalid date string', () => {
-        const incorrectDateString = 'blah';
-        expect(daysSince(incorrectDateString)).toBe(Infinity);
-    });
-
-    it('should return infinity for an null value', () => {
-        const incorrectDateString = null;
-        expect(daysSince(incorrectDateString)).toBe(Infinity);
+        expect(dateDiffDays(now, now + 4 * oneDayMs - 1)).toBe(3);
     });
 });

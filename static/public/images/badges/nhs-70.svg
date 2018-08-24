@@ -1,0 +1,14 @@
+<svg width="560" height="240" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" fill-rule="evenodd">
+    <path fill="#DAE0E0" d="M377 200h183v-80H377z"/>
+    <path fill="#58BDC7" d="M138 240h317v-80H138z"/>
+    <path fill="#2E737F" d="M173 200h204v-40H173z"/>
+    <path fill="#4BA6AE" d="M377 200h78v-40h-78z"/>
+    <path fill="#143961" d="M0 160h484V80H0z"/>
+    <path fill="#0A223E" d="M173 160h204v-40H173z"/>
+    <path fill="#113255" d="M377 160h106.988v-40H377z"/>
+    <path fill="#D9DFE5" d="M111 120h142.222V80H111z"/>
+    <path fill="#FBB916" d="M74.46 80h302.87V0H74.46z"/>
+    <path fill="#FEF3D9" d="M111 80h142.222V40H111z"/>
+  </g>
+</svg>

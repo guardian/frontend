@@ -1,6 +1,7 @@
 // @flow
 import config from 'lib/config';
 import { getCookie } from 'lib/cookies';
+import reportError from 'lib/report-error';
 import { local } from 'lib/storage';
 import {
     getAdConsentState,
@@ -11,7 +12,21 @@ import {
 const setConsentFlags = consentFlags => {
     window.Krux('consent:set', consentFlags, ex => {
         if (ex) {
-            console.error(`KRUX: ${ex}`);
+            switch (ex.idv) {
+                case 'no identifier found for user':
+                case 'user opted out via (optout or dnt)':
+                    break; // swallow these as they're harmless
+                default: {
+                    const exStr = Object.keys(ex)
+                        .map(prop => `${prop} -> '${ex[prop]}'`)
+                        .join(', ');
+                    const msg = `KRUX: ${exStr}`;
+                    reportError(new Error(msg), {
+                        feature: 'krux:consent:set',
+                        consentFlags,
+                    });
+                }
+            }
         }
     });
 };
