@@ -38,6 +38,14 @@ import play.api.test.Helpers._
     header("Location", result).head should endWith ("/email.emailjson")
   }
 
+
+  it should "redirect with URL parameter format=email-headline for a blog" in {
+    val result = latestIndexController.latest("fashion/fashion-blog")(TestRequest("/fashion/fashion-blog/email?format=email-headline"))
+    status(result) should be(SeeOther)
+    header("Location", result).head should include ("/fashion-blog/")
+    header("Location", result).head should endWith ("/email?format=email-headline")
+  }
+
   it should "redirect to latest for a blog" in {
     val result = latestIndexController.latest("fashion/fashion-blog")(TestRequest())
     status(result) should be(Found)

@@ -40,6 +40,8 @@ trait Requests {
 
     lazy val isEmail: Boolean = r.getQueryString("format").exists(_.contains("email")) || r.path.endsWith(EMAIL_SUFFIX) || isEmailJson
 
+    lazy val isEmailHeadlineText: Boolean = r.getQueryString("format").contains("email-headline")
+
     lazy val isModified = isJson || isRss || isEmail
 
     lazy val pathWithoutModifiers: String =
