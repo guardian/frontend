@@ -1,4 +1,5 @@
 // @flow
+import config from 'lib/config';
 import qwery from 'qwery';
 import fastdom from 'lib/fastdom-promise';
 import once from 'lodash/functions/once';
@@ -21,6 +22,32 @@ const shouldRemoveFaciaContainerWhenAdFree = faciaContainer => {
     );
 };
 
+const obscurePaidForContent = paidContentContainer => {
+    if (config.page.sponsorshipType && config.page.sponsorshipType === 'paid-content' ) {
+        return;
+    }
+    const removeList = [];
+    for (let child = 0; child < paidContentContainer.children.length; child++) {
+        const childElement = paidContentContainer.children[child];
+        if (childElement.classList.toString().contains('fc-item__container')) {
+          for (let grandChild = 0; grandChild < childElement.children.length; grandChild++) {
+              const grandChildElement = childElement.children[grandChild];
+              if (grandChildElement.classList.toString().contains('fc-item__media-wrapper') ||
+                    grandChildElement.classList.toString().contains('fc-item__content')) {
+                  removeList.push(grandChildElement);
+              }
+          }
+          const cuckooElement: HTMLDivElement = document.createElement('div');
+          cuckooElement.innerText = 'Paid-for content hidden. Click to view.';
+          cuckooElement.classList.add('fc-item__content');
+          childElement.appendChild(cuckooElement);
+        }
+    }
+    for (let remove = 0; remove < removeList.length; remove++) {
+        removeList[remove].remove();
+    }
+};
+
 const adFreeSlotRemove = once(
     (): Promise<void> => {
         if (!commercialFeatures.adFree) {
@@ -37,7 +64,7 @@ const adFreeSlotRemove = once(
             '.fc-container'
         ).filter(shouldRemoveFaciaContainerWhenAdFree);
 
-        const paidForItemsToRemove: Array<Element> = qwery(
+        const paidForItemsToObscure: Array<Element> = qwery(
             '.fc-item--paid-content'
         );
 
@@ -49,8 +76,8 @@ const adFreeSlotRemove = once(
             commercialFaciaContainersToRemove.forEach(
                 (faciaContainer: Element) => faciaContainer.classList.add('u-h')
             );
-            paidForItemsToRemove.forEach((paidItem: Element) =>
-                paidItem.remove()
+            paidForItemsToObscure.forEach((paidItem: Element) =>
+                obscurePaidForContent(paidItem)
             );
         });
     }
