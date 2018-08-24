@@ -5,7 +5,7 @@ import {
     richLinkTag,
     insertTagRichLink,
 } from 'common/modules/article/rich-links';
-import {commercialFeatures} from "common/modules/commercial/commercial-features";
+import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 
 let mockParas: ?NodeList<HTMLParagraphElement>;
 

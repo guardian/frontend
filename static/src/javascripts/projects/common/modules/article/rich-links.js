@@ -9,7 +9,7 @@ import fetchJson from 'lib/fetch-json';
 import mediator from 'lib/mediator';
 import reportError from 'lib/report-error';
 import { spaceFiller } from 'common/modules/article/space-filler';
-import { commercialFeatures } from "common/modules/commercial/commercial-features";
+import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 
 const richLinkTag = ({ href }: { href: string }): string =>
     `<aside class=" element element-rich-link element-rich-link--tag
@@ -26,7 +26,11 @@ const hideIfPaidForAndAdFree = (el: Element): Promise<void> => {
     }
     return fastdom.write(() => {
         for (let child = 0; child < el.children.length; child += 1) {
-            if (el.children[child].classList.toString().includes('rich-link--paidfor')) {
+            if (
+                el.children[child].classList
+                    .toString()
+                    .includes('rich-link--paidfor')
+            ) {
                 el.classList.add('u-h');
                 break;
             }
