@@ -98,9 +98,6 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
     (editionalisedPath != path) && request.getQueryString("page").isEmpty
   }
 
-  private[this] def shouldOnlyReturnHeadline(request: RequestHeader): Boolean =
-    request.getQueryString("format").contains("email-headline")
-
   def redirectTo(path: String)(implicit request: RequestHeader): Future[Result] = successful {
     val params = request.rawQueryStringOption.map(q => s"?$q").getOrElse("")
     Cached(CacheTime.Facia)(WithoutRevalidationResult(Found(LinkTo(s"/$path$params"))))
@@ -136,7 +133,7 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
   }
 
   private def renderEmail(faciaPage: PressedPage)(implicit request: RequestHeader) = {
-    if (shouldOnlyReturnHeadline(request)) {
+    if (request.isEmailHeadlineText) {
       renderEmailHeadline(faciaPage)
     } else {
       renderEmailFront(faciaPage)

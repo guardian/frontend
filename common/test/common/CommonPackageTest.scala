@@ -45,4 +45,10 @@ class CommonPackageTest extends FlatSpec with Matchers with WithTestApplicationC
     key shouldBe "body"
     value should include ("<html")
   }
+
+  "renderEmail" should "output the article title used by the email subject if the format parameter is set to email-headline" in new PackageTestScope {
+    val html = Html("")
+    val result = Future.successful(common.renderEmail(html, contentPage)(TestRequest("/content/email?format=email-headline"), testApplicationContext))
+    contentAsString(result) shouldBe "webTitle"
+  }
 }
