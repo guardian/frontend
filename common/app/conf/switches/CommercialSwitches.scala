@@ -343,7 +343,7 @@ trait CommercialSwitches {
     description = "Enable our CMP service to run on each page, so that vendors can query the consent status.",
     owners = group(Commercial),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 8, 23),
+    sellByDate = never,
     exposeClientSide = true
   )
 

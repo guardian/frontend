@@ -122,7 +122,9 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
   def renderEmail(html: Html, page: model.Page)(implicit request: RequestHeader, context: ApplicationContext): Result = Cached(page) {
     val htmlWithInlineStyles = if (InlineEmailStyles.isSwitchedOn) InlineStyles(html) else html
 
-    if (request.isEmailJson) {
+    if (request.isEmailHeadlineText) {
+      RevalidatableResult.Ok(page.metadata.webTitle)
+    } else if (request.isEmailJson) {
       RevalidatableResult.Ok(JsObject(Map("body" -> JsString(htmlWithInlineStyles.toString))))
     } else {
       RevalidatableResult.Ok(htmlWithInlineStyles)
