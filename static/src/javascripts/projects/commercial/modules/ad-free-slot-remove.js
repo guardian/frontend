@@ -29,11 +29,11 @@ const obscurePaidForContent = paidContentContainer => {
     const removeList = [];
     for (let child = 0; child < paidContentContainer.children.length; child++) {
         const childElement = paidContentContainer.children[child];
-        if (childElement.classList.toString().contains('fc-item__container')) {
+        if (childElement.classList.toString().includes('fc-item__container')) {
           for (let grandChild = 0; grandChild < childElement.children.length; grandChild++) {
               const grandChildElement = childElement.children[grandChild];
-              if (grandChildElement.classList.toString().contains('fc-item__media-wrapper') ||
-                    grandChildElement.classList.toString().contains('fc-item__content')) {
+              if (grandChildElement.classList.toString().includes('fc-item__media-wrapper') ||
+                    grandChildElement.classList.toString().includes('fc-item__content')) {
                   removeList.push(grandChildElement);
               }
           }
