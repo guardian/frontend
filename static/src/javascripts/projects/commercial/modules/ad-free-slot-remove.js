@@ -23,27 +23,44 @@ const shouldRemoveFaciaContainerWhenAdFree = faciaContainer => {
 };
 
 const obscurePaidForContent = paidContentContainer => {
-    if (config.page.sponsorshipType && config.page.sponsorshipType === 'paid-content' ) {
+    if (
+        config.page.sponsorshipType &&
+        config.page.sponsorshipType === 'paid-content'
+    ) {
         return;
     }
     const removeList = [];
-    for (let child = 0; child < paidContentContainer.children.length; child++) {
+    for (
+        let child = 0;
+        child < paidContentContainer.children.length;
+        child += 1
+    ) {
         const childElement = paidContentContainer.children[child];
         if (childElement.classList.toString().includes('fc-item__container')) {
-          for (let grandChild = 0; grandChild < childElement.children.length; grandChild++) {
-              const grandChildElement = childElement.children[grandChild];
-              if (grandChildElement.classList.toString().includes('fc-item__media-wrapper') ||
-                    grandChildElement.classList.toString().includes('fc-item__content')) {
-                  removeList.push(grandChildElement);
-              }
-          }
-          const cuckooElement: HTMLDivElement = document.createElement('div');
-          cuckooElement.innerText = 'Paid-for content hidden. Click to view.';
-          cuckooElement.classList.add('fc-item__content');
-          childElement.appendChild(cuckooElement);
+            for (
+                let grandChild = 0;
+                grandChild < childElement.children.length;
+                grandChild += 1
+            ) {
+                const grandChildElement = childElement.children[grandChild];
+                if (
+                    grandChildElement.classList
+                        .toString()
+                        .includes('fc-item__media-wrapper') ||
+                    grandChildElement.classList
+                        .toString()
+                        .includes('fc-item__content')
+                ) {
+                    removeList.push(grandChildElement);
+                }
+            }
+            const cuckooElement: HTMLDivElement = document.createElement('div');
+            cuckooElement.innerText = 'Paid-for content hidden. Click to view.';
+            cuckooElement.classList.add('fc-item__content');
+            childElement.appendChild(cuckooElement);
         }
     }
-    for (let remove = 0; remove < removeList.length; remove++) {
+    for (let remove = 0; remove < removeList.length; remove += 1) {
         removeList[remove].remove();
     }
 };
