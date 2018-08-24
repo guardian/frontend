@@ -55,15 +55,14 @@ sealed trait ElementProfile {
       "dpr=2"
     }
   } else {""}
-  val heightParam = height.map(pixels => s"h=$pixels").getOrElse("")
-  val widthParam = width.map(pixels => s"w=$pixels").getOrElse("")
+  val heightParam = height.map(pixels => s"height=$pixels").getOrElse("")
+  val widthParam = width.map(pixels => s"width=$pixels").getOrElse("")
 
   def resizeString: String = {
     val params = Seq(widthParam, heightParam, qualityparam, autoParam, sharpParam, fitParam, dprParam).filter(_.nonEmpty).mkString("&")
     s"?$params"
   }
-
-
+  
 }
 
 case class Profile(
