@@ -196,8 +196,10 @@ class PrebidService {
                                 const bidResponses = window.pbjs.getBidResponses()[
                                     advert.id
                                 ];
+                                const adSlotBidResponses = 
+                                    bidResponses && advert.id in bidResponses ? bidResponses[advert.id] : {};
                                 const cpm: number = getHighestCpm(
-                                    (bidResponses && bidResponses.bids) || []
+                                    (adSlotBidResponses && adSlotBidResponses.bids) || []
                                 );
                                 if (cpm > 0) {
                                     advert.slot.setTargeting('hb_cpm', cpm);
