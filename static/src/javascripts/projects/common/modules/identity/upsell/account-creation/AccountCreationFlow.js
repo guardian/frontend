@@ -1,5 +1,4 @@
 // @flow
-/* eslint-disable react/no-danger */
 import React, { Component } from 'preact-compat';
 import arrowRight from 'svgs/icon/arrow-right.svg';
 import reqwest from 'reqwest';
@@ -157,7 +156,7 @@ class AccountCreationForm extends Component<
                                 className="manage-account__button manage-account__button--icon manage-account__button--main">
                                 Set password{' '}
                                 <span
-                                    dangerouslySetInnerHTML={{
+                                    dangerouslySetInnerHTML={{ // eslint-disable-line react/no-danger
                                         __html: arrowRight.markup,
                                     }}
                                 />

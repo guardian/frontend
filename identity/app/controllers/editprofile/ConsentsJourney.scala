@@ -53,7 +53,7 @@ trait ConsentsJourney
         val authResponse = identityApiClient.setPasswordGuest(completedForm.password, completedForm.token)
         signinService.getCookies(authResponse, rememberMe = false).flatMap {
           case Right(cookies) =>
-            Future.successful(NoCache(SeeOther(returnUrlWithTracking).withCookies(cookies: _*).discardingCookies(DiscardingCookie("SC_GU_GUEST_PW_SET"))))
+            Future.successful(NoCache(Created("{}").withCookies(cookies: _*).discardingCookies(DiscardingCookie("SC_GU_GUEST_PW_SET"))))
           case Left(errors) =>
             Future.successful(NoCache(InternalServerError(Json.toJson(errors))))
         }
