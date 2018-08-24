@@ -15,7 +15,7 @@ const engagementBannerControl: string = `<strong>The Guardian is editorially ind
     up a paywall as we want to keep our journalism open and accessible. But the revenue we get from
     advertising is falling, so we increasingly need our readers to fund our independent, investigative reporting.`;
 
-const supporterCost = (location: string, amount: number = 1 ): string => {
+const supporterCost = (location: string, amount: number = 1): string => {
     const countryGroup = getSupporterCountryGroup(location);
 
     if (countryGroup === 'EURCountries') {
@@ -56,7 +56,7 @@ const supporterCost = (location: string, amount: number = 1 ): string => {
 
 const supporterEngagementCtaCopyControl = (location: string): string =>
     `<span class="engagement-banner__highlight"> Support The Guardian from as little as ${supporterCost(
-        location,
+        location
     )}.</span>`;
 
 export const defaultEngagementBannerParams = (): EngagementBannerParams => {
@@ -101,7 +101,7 @@ export const getAcquisitionsBannerParams = (
         );
     }
 
-    const ctaText = `<span class="engagement-banner__highlight">${
+    const ctaText = `<span class="engagement-banner__highlight"> ${
         firstRow.ctaText
     }</span>`;
 
