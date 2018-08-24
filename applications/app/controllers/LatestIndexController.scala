@@ -38,7 +38,7 @@ class LatestIndexController(
       val emailJsonSuffix = if (request.isEmailJson) ".emailjson" else ""
       val url = s"${latest.metadata.url}/email$emailJsonSuffix"
 
-      InternalRedirect.internalRedirect("applications", url, Some(queryString))
+      InternalRedirect.internalRedirect("article", url, Some(queryString))
 
     case (Some(latest), false) =>
       Found(latest.metadata.url)
