@@ -62,7 +62,7 @@ sealed trait ElementProfile {
     val params = Seq(widthParam, heightParam, qualityparam, autoParam, sharpParam, fitParam, dprParam).filter(_.nonEmpty).mkString("&")
     s"?$params"
   }
-  
+
 }
 
 case class Profile(
