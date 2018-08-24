@@ -31,12 +31,14 @@ class LatestIndexController(
 
   private def handleSeriesBlogs(index: IndexPage)(implicit request: RequestHeader) = (index.trails.headOption, request.isEmail) match {
     case (Some(latest), true) =>
-      val queryString = request.campaignCode.fold(Map.empty[String, Seq[String]])(c => Map("CMP" -> Seq(c)))
-      val queryStringWithFormat = if (request.isEmailHeadlineText) queryString + ("format" -> Seq("email-headline")) else queryString
+      val queryParameters = request.campaignCode.fold(Seq.empty[String])(c => Seq(s"CMP=$c"))
+      val queryParameterWithFormat = if (request.isEmailHeadlineText) queryParameters :+ "format=email-headline" else queryParameters
+      val queryString = if (queryParameterWithFormat.nonEmpty) s"?${queryParameterWithFormat.mkString("&")}" else ""
 
-      val emailJsonPrefix = if (request.isEmailJson) ".emailjson" else ""
-      val url = s"${latest.metadata.url}/email$emailJsonPrefix"
-      Redirect(url, queryStringWithFormat)
+      val emailJsonSuffix = if (request.isEmailJson) ".emailjson" else ""
+      val url = s"${latest.metadata.url}/email$emailJsonSuffix"
+
+      InternalRedirect.internalRedirect("applications", url, Some(queryString))
 
     case (Some(latest), false) =>
       Found(latest.metadata.url)
