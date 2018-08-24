@@ -156,7 +156,8 @@ class AccountCreationForm extends Component<
                                 className="manage-account__button manage-account__button--icon manage-account__button--main">
                                 Set password{' '}
                                 <span
-                                    dangerouslySetInnerHTML={{ // eslint-disable-line react/no-danger
+                                    // eslint-disable-next-line react/no-danger
+                                    dangerouslySetInnerHTML={{
                                         __html: arrowRight.markup,
                                     }}
                                 />
