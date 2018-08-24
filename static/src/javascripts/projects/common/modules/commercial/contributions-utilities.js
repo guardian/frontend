@@ -1,6 +1,7 @@
 // @flow
 import { isAbTestTargeted } from 'common/modules/commercial/targeting-tool';
 import { getEpicParams } from 'common/modules/commercial/acquisitions-copy';
+import { getAcquisitionsBannerParams } from 'common/modules/commercial/membership-engagement-banner-parameters';
 import { logView } from 'common/modules/commercial/acquisitions-view-log';
 import {
     submitClickEvent,
@@ -22,6 +23,7 @@ import { supportContributeURL } from 'common/modules/commercial/support-utilitie
 import { awaitEpicButtonClicked } from 'common/modules/commercial/epic/epic-utils';
 import {
     getEpicGoogleDoc,
+    getBannerGoogleDoc,
     googleDocEpicControl,
 } from 'common/modules/commercial/contributions-google-docs';
 
@@ -462,6 +464,33 @@ const makeGoogleDocEpicVariants = (count: number): Array<Object> => {
     return variants;
 };
 
+const makeGoogleDocBannerVariants = (
+    count: number
+): Array<InitBannerABTestVariant> => {
+    const variants = [];
+
+    for (let i = 1; i <= count; i += 1) {
+        variants.push({
+            id: `variant_${i}`,
+            products: [],
+            engagementBannerParams: () =>
+                getBannerGoogleDoc.then(res =>
+                    getAcquisitionsBannerParams(res, `variant_${i}`)
+                ),
+        });
+    }
+    return variants;
+};
+
+const makeGoogleDocBannerControl = (): InitBannerABTestVariant => ({
+    id: 'control',
+    products: [],
+    engagementBannerParams: () =>
+        getBannerGoogleDoc.then(res =>
+            getAcquisitionsBannerParams(res, 'control')
+        ),
+});
+
 export {
     shouldShowReaderRevenue,
     shouldShowEpic,
@@ -469,6 +498,8 @@ export {
     defaultButtonTemplate,
     makeBannerABTestVariants,
     makeGoogleDocEpicVariants,
+    makeGoogleDocBannerVariants,
+    makeGoogleDocBannerControl,
     defaultMaxViews,
     isEpicDisplayable,
 };

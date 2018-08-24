@@ -155,4 +155,54 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2019, 7, 31),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-banner-from-google-doc-one-variant",
+    "serves an banner with copy from a google doc",
+    owners = Seq(Owner.withGithub("tsop14")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 6, 6),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-banner-from-google-doc-two-variants",
+    "Serves an banner with copy from a Google Doc",
+    owners = Seq(Owner.withGithub("tsop14")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 6, 6),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-banner-from-google-doc-three-variants",
+    "Serves an banner with copy from a Google Doc",
+    owners = Seq(Owner.withGithub("tsop14")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 6, 6),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-banner-from-google-doc-four-variants",
+    "Serves an banner with copy from a Google Doc",
+    owners = Seq(Owner.withGithub("tsop14")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 6, 6),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-banner-from-google-doc-five-variants",
+    "Serves an banner with copy from a Google Doc",
+    owners = Seq(Owner.withGithub("tsop14")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 6, 6),
+    exposeClientSide = true
+  )
 }
