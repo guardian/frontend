@@ -137,7 +137,7 @@ import collection.JavaConverters._
 
         And("I should see the image url")
         el("[itemprop='associatedMedia image'] [itemprop=url]").attribute("content") should
-          include("/img/static/sys-images/Guardian/Pix/pictures/2012/8/6/1344274684805/Gunnerside-village-Swaled-009.jpg?w=700&q=55&auto=format&usm=12&fit=max&s=")
+          include("/img/static/sys-images/Guardian/Pix/pictures/2012/8/6/1344274684805/Gunnerside-village-Swaled-009.jpg?width=700&q=55&auto=format&usm=12&fit=max&s=")
 
         And("I should see the image width")
         el("[itemprop='associatedMedia image'] [itemprop=width]").attribute("content") should be("460")
