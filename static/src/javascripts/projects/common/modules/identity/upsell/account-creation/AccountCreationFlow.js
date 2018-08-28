@@ -41,6 +41,7 @@ class AccountCreationFeatures extends Component<AccountCreationFeaturesProps> {
                         href={this.props.returnUrl}>
                         Go to The Guardian
                         <span
+                            // eslint-disable-next-line react/no-danger
                             dangerouslySetInnerHTML={{
                                 __html: arrowRight.markup,
                             }}
