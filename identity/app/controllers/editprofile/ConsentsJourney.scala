@@ -51,11 +51,11 @@ trait ConsentsJourney
         displayConsentComplete(Some(errorForm))(request)
       }, completedForm => {
         val authResponse = identityApiClient.setPasswordGuest(completedForm.password, completedForm.token)
-        signinService.getCookies(authResponse, rememberMe = false).flatMap {
+        signinService.getCookies(authResponse, rememberMe = false).map {
           case Right(cookies) =>
-            Future.successful(NoCache(Created("{}").withCookies(cookies: _*).discardingCookies(DiscardingCookie("SC_GU_GUEST_PW_SET"))))
+            NoCache(Created("{}").withCookies(cookies: _*).discardingCookies(DiscardingCookie("SC_GU_GUEST_PW_SET")))
           case Left(errors) =>
-            Future.successful(NoCache(InternalServerError(Json.toJson(errors))))
+            NoCache(InternalServerError(Json.toJson(errors)))
         }
       })
     }

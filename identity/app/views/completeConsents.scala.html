@@ -49,8 +49,8 @@
             </form>
         }
 
-        @if(request.cookies.get("SC_GU_GUEST_PW_SET").isDefined) {
-            <div class="js-identity-upsell-account-creation" data-return-url="@LinkTo(returnUrl)" data-account-token="@{request.cookies.get("SC_GU_GUEST_PW_SET").get.value}" data-csrf="@{play.filters.csrf.CSRF.getToken.map(_.value)}"></div>
+        @request.cookies.get("SC_GU_GUEST_PW_SET").map { passwordSetToken =>
+            <div class="js-identity-upsell-account-creation" data-return-url="@LinkTo(returnUrl)" data-account-token="@{passwordSetToken}" data-csrf="@{play.filters.csrf.CSRF.getToken.map(_.value)}"></div>
         }
     </section>
 </div>
