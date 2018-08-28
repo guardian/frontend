@@ -124,7 +124,7 @@ class AccountCreationForm extends Component<
                     </p>
                 </div>
                 <div className="fieldset__fields">
-                    <ul className="">
+                    <ul>
                         <li className="form-field" id="password_field">
                             <label htmlFor="password">
                                 <div className="label">Password</div>
