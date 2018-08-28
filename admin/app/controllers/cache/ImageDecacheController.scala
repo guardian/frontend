@@ -23,8 +23,8 @@ class ImageDecacheController(
 
   val imageServices = new ImageServices(wsClient)
 
-  private val iGuim = """i.guim.co.uk/img/(static|media|uploads)(/.*)""".r
-  private val Origin = """(static|media).guim.co.uk/.*""".r
+  private val iGuim = """i.guim.co.uk/img/(static|media|uploads|sport)(/.*)""".r
+  private val Origin = """(static|media|sport|uploads).guim.co.uk/.*""".r
 
   def renderImageDecacheForm(): Action[AnyContent] = Action { implicit request =>
     NoCache(Ok(views.html.cache.imageDecache()))
@@ -45,7 +45,6 @@ class ImageDecacheController(
       val originUri = new URI(originUrl)
 
       imageServices.clearFastly(originUri)
-      imageServices.clearImgix(originUri)
 
       val decacheRequest: Future[WSResponse] = wsClient.url(s"$originUrl?cachebust=$cacheBust").get
       decacheRequest.map(_.status).map{
