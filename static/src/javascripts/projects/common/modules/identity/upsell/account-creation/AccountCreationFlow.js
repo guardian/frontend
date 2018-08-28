@@ -187,7 +187,7 @@ class AccountCreationForm extends Component<
 class AccountCreationFlow extends Component<
     AccountCreationFlowProps,
     {
-        hasCreatedAccount: boolean,
+        hasCreatedAccount?: boolean,
     }
 > {
     onAccountCreated = () => {
