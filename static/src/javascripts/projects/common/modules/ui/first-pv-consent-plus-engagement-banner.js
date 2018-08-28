@@ -1,9 +1,8 @@
 // @flow
 import { Message } from 'common/modules/ui/message';
-import { getSync as geolocationGetSync } from 'lib/geolocation';
 import type { Banner } from 'common/modules/ui/bannerPicker';
 import { acquisitionsBannerControlTemplate } from 'common/modules/commercial/templates/acquisitions-banner-control';
-import { engagementBannerParams } from 'common/modules/commercial/membership-engagement-banner-parameters';
+import { defaultEngagementBannerParams } from 'common/modules/commercial/membership-engagement-banner-parameters';
 import { addTrackingCodesToUrl } from 'common/modules/commercial/acquisitions-ophan';
 import {
     messageCode as engagementMessageCode,
@@ -20,9 +19,7 @@ import marque36icon from 'svgs/icon/marque-36.svg';
 
 const messageCode: string = 'first-pv-consent-plus-engagement-banner';
 
-const bannerParams: EngagementBannerParams = engagementBannerParams(
-    geolocationGetSync()
-);
+const bannerParams: EngagementBannerParams = defaultEngagementBannerParams();
 
 const bannerTemplateParams: EngagementBannerTemplateParams = {
     messageText: bannerParams.messageText,

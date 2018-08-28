@@ -18,7 +18,6 @@ declare type EngagementBannerTemplateParams = {
 };
 
 declare type EngagementBannerParams = {
-    minArticles: number,
     campaignCode: string,
     buttonCaption: string,
     linkUrl: string,
