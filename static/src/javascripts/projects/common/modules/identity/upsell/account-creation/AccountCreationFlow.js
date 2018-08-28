@@ -124,48 +124,51 @@ class AccountCreationForm extends Component<
                     </p>
                 </div>
                 <div className="fieldset__fields">
-                    <li className="form-field" id="password_field">
-                        <label htmlFor="password">
-                            <div className="label">Password</div>
-                            <div className="input">
-                                <input
-                                    className="text-input"
-                                    type="password"
-                                    id="password"
-                                    name="password"
-                                    value={this.state.password}
-                                    autoComplete="off"
-                                    onChange={this.handlePasswordChange}
-                                    autoCapitalize="off"
-                                    autoCorrect="off"
-                                    spellCheck="false"
-                                    aria-required="true"
-                                />
-                            </div>
-                        </label>
-                    </li>
+                    <ul className="">
+                        <li className="form-field" id="password_field">
+                            <label htmlFor="password">
+                                <div className="label">Password</div>
+                                <div className="input">
+                                    <input
+                                        className="text-input"
+                                        type="password"
+                                        id="password"
+                                        name="password"
+                                        value={this.state.password}
+                                        autoComplete="off"
+                                        onChange={this.handlePasswordChange}
+                                        autoCapitalize="off"
+                                        autoCorrect="off"
+                                        spellCheck="false"
+                                        aria-required="true"
+                                        required
+                                    />
+                                </div>
+                            </label>
+                        </li>
 
-                    <li className="form-field form-field__submit">
-                        {this.state.isLoading ? (
-                            <button
-                                disabled
-                                className="manage-account__button manage-account__button--light manage-account__button--center">
-                                Hang on...
-                            </button>
-                        ) : (
-                            <button
-                                type="submit"
-                                className="manage-account__button manage-account__button--icon manage-account__button--main">
-                                Set password{' '}
-                                <span
-                                    // eslint-disable-next-line react/no-danger
-                                    dangerouslySetInnerHTML={{
-                                        __html: arrowRight.markup,
-                                    }}
-                                />
-                            </button>
-                        )}
-                    </li>
+                        <li className="form-field form-field__submit">
+                            {this.state.isLoading ? (
+                                <button
+                                    disabled
+                                    className="manage-account__button manage-account__button--light manage-account__button--center">
+                                    Hang on...
+                                </button>
+                            ) : (
+                                <button
+                                    type="submit"
+                                    className="manage-account__button manage-account__button--icon manage-account__button--main">
+                                    Set password{' '}
+                                    <span
+                                        // eslint-disable-next-line react/no-danger
+                                        dangerouslySetInnerHTML={{
+                                            __html: arrowRight.markup,
+                                        }}
+                                    />
+                                </button>
+                            )}
+                        </li>
+                    </ul>
                 </div>
                 <aside className="identity-forms-message__body">
                     <hr className="manage-account-small-divider" />
