@@ -56,9 +56,10 @@ class AccountCreationFeatures extends Component<AccountCreationFeaturesProps> {
 class AccountCreationForm extends Component<
     AccountCreationFormProps,
     {
-        password: string,
-        isLoading: boolean,
-        isError: boolean,
+        password?: string,
+        isLoading?: boolean,
+        isError?: boolean,
+        errorReason?: string
     }
 > {
     onSubmit = (ev: Event) => {
