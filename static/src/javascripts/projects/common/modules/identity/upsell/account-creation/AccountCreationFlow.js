@@ -59,7 +59,7 @@ class AccountCreationForm extends Component<
         password?: string,
         isLoading?: boolean,
         isError?: boolean,
-        errorReason?: string
+        errorReason?: string,
     }
 > {
     onSubmit = (ev: Event) => {
