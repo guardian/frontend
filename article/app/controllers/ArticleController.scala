@@ -13,6 +13,7 @@ import play.api.libs.json.Json
 import renderers.RemoteRender
 import services.{CAPILookup, RemoteRender, RenderingTierPicker}
 import implicits.{AmpFormat, EmailFormat, HtmlFormat, JsonFormat}
+import model.Cached.RevalidatableResult
 
 import scala.concurrent.Future
 
@@ -47,6 +48,14 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
     Action.async { implicit request =>
       mapModel(path, ArticleBlocks) {
         render(path, _)
+      }
+    }
+  }
+
+  def renderHeadline(path: String): Action[AnyContent] = {
+    Action.async { implicit request =>
+      mapModel(path, ArticleBlocks) { article =>
+        Future.successful(Cached(article)(RevalidatableResult.Ok(article.metadata.webTitle)))
       }
     }
   }

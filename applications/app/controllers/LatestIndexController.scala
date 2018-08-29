@@ -29,23 +29,27 @@ class LatestIndexController(
     }.getOrElse(NotFound)}.map(r => Cached(300)(WithoutRevalidationResult(r)))
   }
 
-  private def handleSeriesBlogs(index: IndexPage)(implicit request: RequestHeader) = (index.trails.headOption, request.isEmail) match {
-    case (Some(latest), true) =>
-      val queryParameters = request.campaignCode.fold(Seq.empty[String])(c => Seq(s"CMP=$c"))
-      val queryParameterWithFormat = if (request.isEmailHeadlineText) queryParameters :+ "format=email-headline" else queryParameters
-      val queryString = if (queryParameterWithFormat.nonEmpty) s"?${queryParameterWithFormat.mkString("&")}" else ""
+  private def handleSeriesBlogs(index: IndexPage)(implicit request: RequestHeader) = index.trails.headOption match {
+    case Some(latest) if request.isEmail || request.isHeadlineText =>
+      emailInternalRedirect(latest)
 
-      val emailJsonSuffix = if (request.isEmailJson) ".emailjson" else ""
-      val url = s"${latest.metadata.url}/email$emailJsonSuffix"
-      val urlWithoutSlash = if (url.startsWith("/")) url.drop(1) else url
-
-      InternalRedirect.internalRedirect("type/article", urlWithoutSlash, Some(queryString))
-
-    case (Some(latest), false) =>
+    case Some(latest) =>
       Found(latest.metadata.url)
 
-    case (_, _) =>
+    case None =>
       NotFound
+  }
+
+  private def emailInternalRedirect(latest: Content)(implicit request: RequestHeader) = {
+    val queryParameters = request.campaignCode.fold[Option[String]](None)(c => Some(s"?CMP=$c"))
+
+    val emailJsonSuffix = if (request.isEmailJson) EMAIL_JSON_SUFFIX else ""
+    val headlineSuffix = if (request.isHeadlineText) HEADLINE_SUFFIX else ""
+
+    val url = s"${latest.metadata.url}/email$emailJsonSuffix$headlineSuffix"
+    val urlWithoutSlash = if (url.startsWith("/")) url.drop(1) else url
+
+    InternalRedirect.internalRedirect("type/article", urlWithoutSlash, queryParameters)
   }
 
   // this is simply the latest by date. No lead content, editors picks, or anything else

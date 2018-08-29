@@ -144,7 +144,7 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
   }
 
   private def renderEmail(faciaPage: PressedPage)(implicit request: RequestHeader) = {
-    if (request.isEmailHeadlineText) {
+    if (request.isHeadlineText) {
       FrontHeadline.renderEmailHeadline(faciaPage)
     } else {
       renderEmailFront(faciaPage)

@@ -38,10 +38,10 @@ import play.api.test.Helpers._
   }
 
   it should "redirect with URL parameter format=email-headline for a blog" in {
-    val result = latestIndexController.latest("fashion/fashion-blog")(TestRequest("/fashion/fashion-blog/email?format=email-headline"))
+    val result = latestIndexController.latest("fashion/fashion-blog")(TestRequest("/fashion/fashion-blog/email/headline.txt"))
     status(result) should be(OK)
     header("X-Accel-Redirect", result).head should include ("/fashion-blog/")
-    header("X-Accel-Redirect", result).head should endWith ("/email?format=email-headline")
+    header("X-Accel-Redirect", result).head should endWith ("/email/headline.txt")
   }
 
   it should "redirect to latest for a blog" in {
