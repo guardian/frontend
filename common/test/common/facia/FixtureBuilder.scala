@@ -8,7 +8,7 @@ object FixtureBuilder {
 
   def mkContent(id: Int): PressedContent = FixtureBuilder.mkPressedContent(id)
 
-  def mkPressedCollection(id: String, curated: Seq[PressedContent] = IndexedSeq.empty, backfill: Seq[PressedContent] = IndexedSeq.empty, maxItemsToDisplay: Option[Int] = None) = {
+  def mkPressedCollection(id: String, curated: Seq[PressedContent] = IndexedSeq.empty, backfill: Seq[PressedContent] = IndexedSeq.empty, maxItemsToDisplay: Option[Int] = None): PressedCollection = {
     PressedCollection(
       id = "test-collection",
       displayName = s"Test Collection $id",
@@ -31,7 +31,7 @@ object FixtureBuilder {
     )
   }
 
-  def mkPressedPage(collections: List[PressedCollection]) = {
+  def mkPressedPage(collections: List[PressedCollection]): PressedPage = {
     PressedPage(
       id = "test-pressed-page",
       seoData = SeoData.empty,
