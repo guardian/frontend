@@ -211,7 +211,7 @@ trait ABTestSwitches {
     "ab-commercial-cmp-customise",
     "change the location and format of your CMP data",
     owners = Seq(Owner.withGithub("katebee")),
-    safeState = On,
+    safeState = Off,
     sellByDate = new LocalDate(2019, 9, 30),
     exposeClientSide = true
   )
