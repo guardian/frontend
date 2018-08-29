@@ -1,12 +1,12 @@
 @(message: String = "")(implicit request: RequestHeader, context: model.ApplicationContext)
 
-@admin_main("Purge Cache", isAuthed = true) {
+@admin_main("Purge Ajax Cache", isAuthed = true) {
 
-    <h1>Purge Cache</h1>
+    <h1>Purge Ajax Cache</h1>
 
     <h3>Warnings:</h3>
     <ul>
-        <li>This tool performs a <strong><i>soft</i></strong> purge of the cached content on www.theguardian.com. This will <strong>immediately attempt to refresh the cached content</strong>.</li>
+        <li>This tool performs a <strong><i>soft</i></strong> purge of the cached content on api.nextgen.guardianapps.co.uk. This will <strong>immediately attempt to refresh the cached content</strong>.</li>
         <li>If the backend service that provides the content is not healthy, <strong>stale content will continue to be served.</strong></li>
         <li>If you are trying to resolve an issue and have not already done so, please use the <a href="@controllers.admin.routes.TroubleshooterController.index()">Troubleshoot Tool</a></li>
     </ul>
@@ -14,16 +14,16 @@
     <h3>Usage:</h3>
     <ol>
         <li>
-            Paste the url of the page (content) you want to clear below, including the entire url. Only works on <code>www.theguardian.com</code>.
+            Paste the url of the page (content) you want to clear below, including the entire url. Only works on <code>api.nextgen.guardianapps.co.uk</code>.
             <br>
-            E.g. <code>https://www.theguardian.com/artanddesign/2015/nov/17/12-designs-that-revolutionised-cycling-fold-up-helmets-and-sandwich-bikes</code>
+            E.g. <code>https://api.nextgen.guardianapps.co.uk/politics/blog/live/2018/aug/01/chequers-brexit-plan-would-cost-economy-equivalent-of-500-per-head-says-thinktank-politics-live.json</code>
         </li>
         <li>Click <i>Purge</i> to clear the page from the cache.</li>
     </ol>
     <hr/>
 
     <form method="POST">
-        <input class="img-url form-control" name="url" type="text" value="" placeholder="https://www.theguardian.com/books/xxxxx"/>
+        <input class="img-url form-control" name="url" type="text" value="" placeholder="https://api.nextgen.guardianapps.co.uk/politics/blog/xx.json"/>
         <button class="btn btn-default" type="submit">Purge</button>
     </form>
 

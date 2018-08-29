@@ -44,7 +44,7 @@ sealed trait ElementProfile {
     bestFor(image).flatMap(_.altText)
 
   // NOTE - if you modify this in any way there is a decent chance that you decache all our images :(
-  val qualityparam = if (hidpi) {"q=20"} else {"q=55"}
+  val qualityparam = if (hidpi) {"quality=45"} else {"quality=85"}
   val autoParam = if (autoFormat) "auto=format" else ""
   val sharpParam = "usm=12"
   val fitParam = "fit=max"
@@ -55,14 +55,13 @@ sealed trait ElementProfile {
       "dpr=2"
     }
   } else {""}
-  val heightParam = height.map(pixels => s"h=$pixels").getOrElse("")
-  val widthParam = width.map(pixels => s"w=$pixels").getOrElse("")
+  val heightParam = height.map(pixels => s"height=$pixels").getOrElse("")
+  val widthParam = width.map(pixels => s"width=$pixels").getOrElse("")
 
   def resizeString: String = {
     val params = Seq(widthParam, heightParam, qualityparam, autoParam, sharpParam, fitParam, dprParam).filter(_.nonEmpty).mkString("&")
     s"?$params"
   }
-
 
 }
 
@@ -108,7 +107,7 @@ object Video1280 extends VideoProfile(width = Some(1280), height = Some(720)) //
 object GoogleStructuredData extends Profile(width = Some(300), height = Some(300)) // 1:1
 
 class ShareImage(blendImageParam: String, shouldIncludeOverlay: Boolean) extends Profile(width = Some(1200)) {
-  override val heightParam = "h=630"
+  override val heightParam = "height=630"
   override val fitParam = "fit=crop"
   val cropParam = "crop=faces%2Centropy"
   val blendModeParam = "bm=normal"
@@ -194,13 +193,13 @@ object FacebookOpenGraphImage extends OverlayBase64 {
 }
 
 object EmailImage extends Profile(width = Some(580), autoFormat = false) {
-  override val qualityparam = "q=40"
+  override val qualityparam = "quality=60"
   val knownWidth = width.get
 }
 
 object EmailVideoImage extends Profile(width = Some(580), autoFormat = false) with OverlayBase64 {
   override val fitParam = "fit=crop"
-  override val qualityparam = "q=40"
+  override val qualityparam = "quality=60"
   val blendModeParam = "bm=normal"
   val blendOffsetParam = "ba=center"
   val blendImageParam = s"blend64=${overlayUrlBase64("play.png")}"
@@ -212,7 +211,7 @@ object EmailVideoImage extends Profile(width = Some(580), autoFormat = false) wi
 }
 
 object FrontEmailImage extends Profile(width = Some(500), autoFormat = false) {
-  override val qualityparam = "q=40"
+  override val qualityparam = "quality=60"
   val knownWidth = width.get
 }
 
@@ -220,7 +219,7 @@ object SmallFrontEmailImage {
   def apply(customWidth: Int): SmallFrontEmailImage = new SmallFrontEmailImage(customWidth)
 }
 class SmallFrontEmailImage(customWidth: Int) extends Profile(Some(customWidth), autoFormat = false) {
-  override val qualityparam = "q=40"
+  override val qualityparam = "quality=60"
 }
 
 // The imager/images.js base image.

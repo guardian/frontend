@@ -11,7 +11,7 @@ import services.S3
 import conf.Configuration.readerRevenue._
 import org.apache.commons.codec.digest.DigestUtils
 import play.api.libs.ws.{WSClient, WSResponse}
-import purge.CdnPurge
+import purge.{AjaxHost, CdnPurge}
 
 import scala.concurrent.Future
 
@@ -46,9 +46,9 @@ class ReaderRevenueAdminController(wsClient: WSClient, val controllerComponents:
     Future(S3.putPublic(contributionsBannerDeployLogKey, bannerDeployLogJson, defaultJsonEncoding))
   }
 
-  private def purgeDeployLogCache(): Future[WSResponse] = {
+  private def purgeDeployLogCache(): Future[String] = {
     val path = "/reader-revenue/contributions-banner-deploy-log"
-    CdnPurge.soft(wsClient, DigestUtils.md5Hex(path), CdnPurge.AjaxHost)
+    CdnPurge.soft(wsClient, DigestUtils.md5Hex(path), AjaxHost)
   }
 
   private def bannerRedeploySuccessful(message: String): Result = {

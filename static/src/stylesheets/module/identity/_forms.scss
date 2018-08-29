@@ -64,6 +64,12 @@ Messages
             margin-top: $gs-baseline * 2;
         }
 
+        &:last-child {
+            @include mq(mobile, desktop) {
+                margin-top: $gs-baseline * 5;
+            }
+        }
+
         &.identity-forms-message__body--aside {
             @include fs-textSans(4);
             .manage-account__button {

@@ -355,6 +355,12 @@
     margin: $gs-baseline auto ($gs-baseline / 2);
 }
 
+.manage-account-small-divider {
+    margin: $gs-baseline auto ($gs-baseline / 2);
+    border: 0;
+    border-top: 1px solid $brightness-86;
+}
+
 /* Modals
    ========================================================================== */
 
