@@ -6,11 +6,7 @@ import { getVariant, isInVariant } from 'common/modules/experiments/utils';
 import { commercialCmpCustomise } from 'common/modules/experiments/tests/commercial-cmp-customise';
 import { log } from './log';
 import { CmpStore } from './store';
-import {
-    encodeVendorConsentData,
-    readVendorConsentCookie,
-    writeVendorConsentCookie,
-} from './cookie';
+import { encodeVendorConsentData } from './cookie';
 import { vendorList as globalVendorList } from './vendorlist';
 
 import {
