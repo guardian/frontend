@@ -204,14 +204,14 @@ const decodeVendorConsentData = (cookieValue: string): VendorConsentData => {
     return cookieData;
 };
 
-const readVendorConsentCookie = (): Promise<VendorConsentData | false> => {
+const readVendorConsentCookie = (): VendorConsentData | false => {
     const cookieVal: ?string = getCookie(VENDOR_CONSENT_COOKIE_NAME);
     if (cookieVal) {
-        log.debug(`Read consent data from cookie: ${cookieVal}`);
-        return Promise.resolve(decodeVendorConsentData(cookieVal));
+        log.info(`Read consent data from cookie: ${cookieVal}`);
+        return decodeVendorConsentData(cookieVal);
     }
-    log.warn('Unable to read from CMP cookie');
-    return Promise.resolve(false);
+    log.info('Unable to read from CMP cookie');
+    return false;
 };
 
 const writeVendorConsentCookie = (

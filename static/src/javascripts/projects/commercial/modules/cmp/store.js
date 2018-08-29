@@ -1,4 +1,4 @@
-// @flow
+// @flow strict
 import { log } from 'commercial/modules/cmp/log';
 
 import type {
@@ -8,6 +8,8 @@ import type {
     VendorConsentData,
     VendorConsentResponse,
 } from 'commercial/modules/cmp/types';
+
+import { readVendorConsentCookie } from './cookie';
 
 type ConsentSelection = {
     maxVendorId: number,
@@ -102,8 +104,14 @@ const getVendorConsentData = (
     cmpVersion: number,
     cookieVersion: number,
     canPersonalise: boolean | null,
-    vendorList: VendorList
+    vendorList: VendorList,
+    isRunningCmpCustomise: boolean = false
 ): ?VendorConsentData => {
+    if (isRunningCmpCustomise) {
+        log.info('getVendorConsentData: Running Cmp Customise');
+        const cookieVal = readVendorConsentCookie();
+        if (cookieVal) return { ...cookieVal };
+    }
     if (typeof canPersonalise === 'boolean') {
         const consentData = generateConsentData(
             cmpId,
@@ -131,7 +139,8 @@ export class CmpStore {
         cmpVersion: number,
         cookieVersion: number,
         canPersonalise: boolean | null,
-        vendorList: VendorList
+        vendorList: VendorList,
+        isRunningCmpCustomise: boolean = false
     ) {
         this.vendorList = vendorList;
         this.canPersonalise = canPersonalise;
@@ -147,7 +156,8 @@ export class CmpStore {
             cmpVersion,
             cookieVersion,
             canPersonalise,
-            vendorList
+            vendorList,
+            isRunningCmpCustomise
         );
     }
 
