@@ -53,7 +53,7 @@ object IdentityHtmlPage {
           inlineJSNonBlocking(),
           views.html.layout.identitySkinnyFooter() when page.isFlow,
           footer() when !page.isFlow,
-          analytics.base()
+          analytics.google(page)
         )
       ),
       devTakeShot()

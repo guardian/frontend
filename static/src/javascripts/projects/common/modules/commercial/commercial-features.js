@@ -58,7 +58,10 @@ class CommercialFeatures {
             (!!forceAdFree || isAdFreeUser());
 
         this.dfpAdvertising =
-            switches.commercial && externalAdvertising && !sensitiveContent;
+            switches.commercial &&
+            externalAdvertising &&
+            !sensitiveContent &&
+            !isIdentityPage;
 
         this.stickyTopBannerAd =
             !this.adFree &&
