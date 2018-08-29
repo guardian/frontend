@@ -11,7 +11,7 @@ import views.support._
 import metrics.TimingMetric
 import play.api.libs.json.Json
 import renderers.RemoteRender
-import services.CAPILookup
+import services.{CAPILookup, RemoteRender, RenderingTierPicker}
 import implicits.{AmpFormat, EmailFormat, HtmlFormat, JsonFormat}
 
 import scala.concurrent.Future
@@ -57,6 +57,14 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
   }
 
   private def render(path: String, article: ArticlePage)(implicit request: RequestHeader): Future[Result] = {
+
+    val renderTier = RenderingTierPicker.getRenderTierFor(article)
+
+    renderTier match {
+      case RemoteRender => log.logger.info(s"Remotely renderable article $path");
+      case _ =>
+    }
+
     Future {
       request.getRequestFormat match {
         case JsonFormat => common.renderJson(getJson(article), article)
@@ -65,6 +73,7 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
         case AmpFormat => common.renderHtml(views.html.articleAMP(article), article)
       }
     }
+
   }
 
   private def mapModel(path: String, range: BlockRange)(render: ArticlePage => Future[Result])(implicit request: RequestHeader): Future[Result] = {
