@@ -25,16 +25,9 @@ const hideIfPaidForAndAdFree = (el: Element): Promise<void> => {
         return Promise.resolve();
     }
     return fastdom.write(() => {
-        for (let child = 0; child < el.children.length; child += 1) {
-            if (
-                el.children[child].classList
-                    .toString()
-                    .includes('rich-link--paidfor')
-            ) {
-                el.classList.add('u-h');
-                break;
-            }
-        }
+        [...el.children]
+            .filter(child => child.classList.toString().includes('rich-link--paidfor'))
+            .forEach(child => child.classList.add('u-h'));
     });
 };
 
