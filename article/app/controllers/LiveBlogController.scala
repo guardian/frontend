@@ -35,20 +35,6 @@ class LiveBlogController(contentApiClient: ContentApiClient, val controllerCompo
       }
     }
 
-  def renderHeadline(path: String): Action[AnyContent] = Action.async { implicit request =>
-    def responseFromHeadline(headline: Option[String]) = {
-      headline
-        .map(title => Cached(CacheTime.Default)(RevalidatableResult.Ok(title)))
-        .getOrElse(Cached(10)(WithoutRevalidationResult(NotFound)))
-    }
-
-    capiLookup
-      .lookup(path, Some(ArticleBlocks))
-      .map(_.content.map(_.webTitle))
-      .map(responseFromHeadline)
-  }
-
-
   def renderArticle(path: String, page: Option[String] = None, format: Option[String] = None): Action[AnyContent] =
       Action.async { implicit request =>
         def renderWithRange(range: BlockRange) =
