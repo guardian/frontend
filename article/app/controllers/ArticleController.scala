@@ -13,7 +13,7 @@ import play.api.libs.json.Json
 import renderers.RemoteRender
 import services.{CAPILookup, RemoteRender, RenderingTierPicker}
 import implicits.{AmpFormat, EmailFormat, HtmlFormat, JsonFormat}
-import model.Cached.RevalidatableResult
+import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 
 import scala.concurrent.Future
 
@@ -52,12 +52,20 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
     }
   }
 
-  def renderHeadline(path: String): Action[AnyContent] = {
-    Action.async { implicit request =>
-      mapModel(path, ArticleBlocks) { article =>
-        Future.successful(Cached(article)(RevalidatableResult.Ok(article.metadata.webTitle)))
-      }
+  def renderHeadline(path: String): Action[AnyContent] = Action.async { implicit request =>
+    def responseFromHeadline(headline: Option[String]) = {
+      headline
+        .map(title => Cached(CacheTime.Default)(RevalidatableResult.Ok(title)))
+        .getOrElse {
+          log.warn(s"headline not found for $path")
+          Cached(10)(WithoutRevalidationResult(NotFound))
+        }
     }
+
+    capiLookup
+      .lookup(path, Some(ArticleBlocks))
+      .map(_.content.map(_.webTitle))
+      .map(responseFromHeadline)
   }
 
   private def getJson(article: ArticlePage)(implicit request: RequestHeader) = {
