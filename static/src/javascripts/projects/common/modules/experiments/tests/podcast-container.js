@@ -142,7 +142,7 @@ const trackImpression = (name: string) => (track: () => void): void => {
 export const PodcastContainer = {
     id: 'PodcastContainer',
     start: '2018-08-21',
-    expiry: '2018-09-06',
+    expiry: '2018-09-03',
     author: 'Tom Forbes',
     description: 'Test designs for a /uk podcasts container',
     audience: 1,
