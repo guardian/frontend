@@ -1,0 +1,9 @@
+<svg width="30" height="30" viewBox="0 0 30 30">
+  <g fill="none" fill-rule="evenodd">
+    <circle fill="#FFE500" cx="15" cy="15" r="15"/>
+    <g fill="#121212">
+      <path d="M9.429 7.286h3.429v15.429h-3.43zM16.715 7.286h3.429v15.429h-3.43z"/>
+    </g>
+  </g>
+</svg>
+

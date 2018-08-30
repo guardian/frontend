@@ -32,4 +32,14 @@ trait JournalismSwitches {
     sellByDate = never,
     exposeClientSide = true
   )
+
+  val FootballWeeklyPlayerTest = Switch(
+    SwitchGroup.Journalism,
+    "football-weekly-player-test",
+    "Test in-article player in football content",
+    owners = Seq(Owner.withName("journalism team")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false
+  )
 }
