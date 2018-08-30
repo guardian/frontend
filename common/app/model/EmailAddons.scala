@@ -329,6 +329,11 @@ case object FilmToday extends FrontEmailMetadata {
   override val banner = Some("film-today.png")
 }
 
+case object OpinionAus extends FrontEmailMetadata {
+  val name = "Opinion Aus"
+  override val banner = Some("opinion.png")
+}
+
 object EmailAddons {
   private val defaultAddress = "Kings Place, 90 York Way, London, N1 9GU. Registered in England No. 908396"
   private val defaultBanner = "generic.png"
@@ -390,7 +395,8 @@ object EmailAddons {
     SocietyWeekly,
     TheGuardianToday,
     TheGuardianTodayAustralia,
-    FilmToday
+    FilmToday,
+    OpinionAus
   )
 
   implicit class EmailContentType(p: Page) {
