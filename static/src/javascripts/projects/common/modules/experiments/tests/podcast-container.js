@@ -113,17 +113,17 @@ const runContainerTest = (variant: string) => (): void => {
 };
 
 const trackClick = (name: string) => (complete: () => void): void => {
-    const treat = document.querySelector(`.${name}`);
-    if (treat) {
-        treat.onclick = () => {
+    const component = document.querySelector(`.${name}`);
+    if (component) {
+        component.onclick = () => {
             complete();
         };
     }
 };
 
 const trackImpression = (name: string) => (track: () => void): void => {
-    const treat = document.querySelector(`.${name}`);
-    if (treat) {
+    const component = document.querySelector(`.${name}`);
+    if (component) {
         const observer = new window.IntersectionObserver(
             (entries, self) => {
                 entries.forEach(entry => {
@@ -135,7 +135,7 @@ const trackImpression = (name: string) => (track: () => void): void => {
             },
             { threshold: 1.0 }
         );
-        observer.observe(treat);
+        observer.observe(component);
     }
 };
 
@@ -160,20 +160,20 @@ export const PodcastContainer = {
         {
             id: 'a',
             test: runContainerTest('a'),
-            impression: trackImpression('podcast-container-a'),
-            success: trackClick('podcast-container-a'),
+            impression: trackImpression('podcast-container-a__main'),
+            success: trackClick('podcast-container-a__main'),
         },
         {
             id: 'b',
             test: runContainerTest('b'),
-            impression: trackImpression('podcast-container-b'),
-            success: trackClick('podcast-container-b'),
+            impression: trackImpression('podcast-container__track'),
+            success: trackClick('podcast-container__track'),
         },
         {
             id: 'c',
             test: runContainerTest('c'),
-            impression: trackImpression('podcast-container-c'),
-            success: trackClick('podcast-container-c'),
+            impression: trackImpression('podcast-container-c__main'),
+            success: trackClick('podcast-container__track'),
         },
     ],
 };
