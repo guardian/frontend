@@ -21,7 +21,11 @@ const pageSkin = (): void => {
     };
 
     const togglePageSkin = (): void => {
-        if (hasPageSkin && hasCrossedBreakpoint(true) && !commercialFeatures.adFree) {
+        if (
+            hasPageSkin &&
+            hasCrossedBreakpoint(true) &&
+            !commercialFeatures.adFree
+        ) {
             togglePageSkinActiveClass();
         }
     };

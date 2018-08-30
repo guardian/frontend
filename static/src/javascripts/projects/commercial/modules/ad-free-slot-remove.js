@@ -42,14 +42,12 @@ const adFreeSlotRemove = once(
         return fastdom.write(() => {
             if (bodyEl) {
                 if (bodyEl.classList.toString().includes('has-page-skin')) {
-                    bodyEl.classList.remove(
-                        'has-page-skin'
-                    );
+                    bodyEl.classList.remove('has-page-skin');
                 }
-                if (bodyEl.classList.toString().includes('has-active-pageskin')) {
-                    bodyEl.classList.remove(
-                        'has-active-pageskin'
-                    );
+                if (
+                    bodyEl.classList.toString().includes('has-active-pageskin')
+                ) {
+                    bodyEl.classList.remove('has-active-pageskin');
                 }
             }
             adSlotsToRemove.forEach((adSlot: Element) => adSlot.remove());
