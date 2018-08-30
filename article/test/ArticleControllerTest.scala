@@ -34,6 +34,12 @@ import scala.collection.JavaConverters._
     status(result) should be(200)
   }
 
+  it should "return article headline" in {
+    val result = articleController.renderHeadline(articleUrl)(TestRequest(articleUrl))
+    status(result) should be(200)
+    contentAsString(result) shouldBe "We must capitalise on a low-carbon future | Norman Baker"
+  }
+
   it should "200 when content type is live blog" in {
     val result = articleController.renderArticle(liveBlogUrl)(TestRequest(liveBlogUrl))
     status(result) should be(200)

@@ -1,12 +1,10 @@
-import org.scalatest.{BeforeAndAfterAll, FlatSpec, Matchers}
-import test._
+package test
+
 import controllers.LiveBlogController
-import org.apache.commons.codec.digest.DigestUtils
 import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 
-import scala.collection.JavaConverters._
 
 @DoNotDiscover class LiveBlogControllerTest extends FlatSpec
   with Matchers
