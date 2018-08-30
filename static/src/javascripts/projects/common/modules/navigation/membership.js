@@ -8,6 +8,7 @@ import fastdom from 'lib/fastdom-promise';
 import { Message, hasUserAcknowledgedBanner } from 'common/modules/ui/message';
 import config from 'lib/config';
 import bean from 'bean';
+import arrowRight from 'svgs/icon/arrow-right.svg';
 import type { Banner } from 'common/modules/ui/bannerPicker';
 
 const accountDataUpdateLink = accountDataUpdateWarningLink =>
@@ -46,10 +47,17 @@ const showAccountDataUpdateWarningMessage = accountDataUpdateWarningLink => {
             );
         },
     });
+
     newMessage.show(
-        `An action is needed on your Guardian account. Please <a href='${accountDataUpdateLink(
+        `<span class="site-message__copy-text">
+            An action is needed on your Guardian account. 
+            Please review and update your details as soon as you can. Thank you.
+        </span>
+        <a class="button site-message__copy-button" href="${accountDataUpdateLink(
             accountDataUpdateWarningLink
-        )}'>update your details</a>`
+        )}">
+            Update details ${arrowRight.markup}
+        </a>`
     );
 };
 const updateLink = accountDataUpdateWarning();
