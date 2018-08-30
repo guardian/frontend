@@ -41,15 +41,13 @@ class LatestIndexController(
   }
 
   private def emailInternalRedirect(latest: Content)(implicit request: RequestHeader) = {
-    val queryParameters = request.campaignCode.fold[Option[String]](None)(c => Some(s"?CMP=$c"))
-
     val emailJsonSuffix = if (request.isEmailJson) EMAIL_JSON_SUFFIX else ""
     val headlineSuffix = if (request.isHeadlineText) HEADLINE_SUFFIX else ""
 
     val url = s"${latest.metadata.url}/email$emailJsonSuffix$headlineSuffix"
     val urlWithoutSlash = if (url.startsWith("/")) url.drop(1) else url
 
-    InternalRedirect.internalRedirect("type/article", urlWithoutSlash, queryParameters)
+    InternalRedirect.internalRedirect("type/article", urlWithoutSlash, None)
   }
 
   // this is simply the latest by date. No lead content, editors picks, or anything else
