@@ -20,6 +20,7 @@ jest.mock('lib/fetch-json', () =>
 
 const fetchJsonSpy: any = fetchJson;
 
+// TODO: Investigate why these sometimes fails and re-enable these
 describe.skip('Comment Count', () => {
     beforeEach(() => {
         if (document.body) {
