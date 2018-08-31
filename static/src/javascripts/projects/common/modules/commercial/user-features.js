@@ -74,14 +74,18 @@ const persistResponse = (JsonResponse: () => void) => {
     if (switches.adFreeEmergencyShutdown) {
         removeCookie(AD_FREE_USER_COOKIE);
     } else {
-        if (adFreeDataIsPresent() && !JsonResponse.adFree && !forcedAdFreeMode && !JsonResponse.contectAccess.digitalPack) {
+        if (
+            adFreeDataIsPresent() &&
+            !JsonResponse.adFree &&
+            !forcedAdFreeMode &&
+            !JsonResponse.contectAccess.digitalPack
+        ) {
             removeCookie(AD_FREE_USER_COOKIE);
         }
         if (JsonResponse.adFree || JsonResponse.contectAccess.digitalPack) {
             addCookie(AD_FREE_USER_COOKIE, timeInDaysFromNow(2));
         }
     }
-
 };
 
 const deleteOldData = (): void => {
