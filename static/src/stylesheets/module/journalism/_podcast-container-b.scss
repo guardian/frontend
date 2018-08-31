@@ -95,7 +95,7 @@
 .podcast-container-b__subscribe-small {
     padding: 5px;
 
-    @include mq(mobileMedium) {
+    @include mq(mobileLandscape) {
         display: none;
     }
 }
@@ -104,7 +104,7 @@
     padding: 7px 0;
 
     display: none;
-    @include mq(mobileMedium) {
+    @include mq(mobileLandscape) {
         display: block;
     }
 }
