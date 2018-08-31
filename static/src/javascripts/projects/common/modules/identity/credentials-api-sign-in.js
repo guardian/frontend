@@ -29,6 +29,8 @@ export const signInWithSavedCredentials = (): Promise<boolean> => {
                                 component: 'pwmanager-api',
                                 value: 'conversion',
                             });
+                            // $FlowFixMe
+                            navigator.credentials.store(creds);
                             cookies.values.forEach(cookie => {
                                 addCookie(
                                     cookie.key,
