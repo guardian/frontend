@@ -32,5 +32,6 @@ GET        /*path/rss                                                           
 GET        /*path/lite.json                                                         controllers.FaciaController.renderFrontJsonLite(path)
 GET        /*path.emailjson                                                         controllers.FaciaController.renderFrontJson(path)
 GET        /*path.json                                                              controllers.FaciaController.renderFrontJson(path)
+GET        /*path/headline.txt                                                      controllers.FaciaController.renderFrontHeadline(path)
 GET        /                                                                        controllers.FaciaController.rootEditionRedirect()
 GET        /*path                                                                   controllers.FaciaController.renderFront(path)

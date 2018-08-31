@@ -12,6 +12,8 @@ case object AmpFormat extends RequestFormat
 trait Requests {
 
   val EMAIL_SUFFIX = "/email"
+  val HEADLINE_SUFFIX = "/headline.txt"
+  val EMAIL_JSON_SUFFIX = ".emailjson"
 
   implicit class RichRequestHeader(r: RequestHeader) {
 
@@ -27,7 +29,7 @@ trait Requests {
 
     lazy val isJson: Boolean = r.getQueryString("callback").isDefined || r.path.endsWith(".json")
 
-    lazy val isEmailJson: Boolean = r.path.endsWith(".emailjson")
+    lazy val isEmailJson: Boolean = r.path.endsWith(EMAIL_JSON_SUFFIX)
 
     // parameters for moon/guui new rendering layer project.
     lazy val isGuuiJson: Boolean = isJson && isGuui
@@ -40,9 +42,9 @@ trait Requests {
 
     lazy val isEmail: Boolean = r.getQueryString("format").exists(_.contains("email")) || r.path.endsWith(EMAIL_SUFFIX) || isEmailJson
 
-    lazy val isEmailHeadlineText: Boolean = r.getQueryString("format").contains("email-headline")
+    lazy val isHeadlineText: Boolean = r.getQueryString("format").contains("email-headline") || r.path.endsWith(HEADLINE_SUFFIX)
 
-    lazy val isModified = isJson || isRss || isEmail
+    lazy val isModified = isJson || isRss || isEmail || isHeadlineText
 
     lazy val pathWithoutModifiers: String =
       if (isEmail) r.path.stripSuffix(EMAIL_SUFFIX)

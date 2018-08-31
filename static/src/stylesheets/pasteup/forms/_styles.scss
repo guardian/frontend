@@ -43,6 +43,9 @@
         vertical-align: top;
         width: gs-span(6);
         max-width: gs-span(6);
+        & ul {
+            margin-left: 0;
+        }
     }
 }
 

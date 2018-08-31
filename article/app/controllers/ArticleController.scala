@@ -11,8 +11,9 @@ import views.support._
 import metrics.TimingMetric
 import play.api.libs.json.Json
 import renderers.RemoteRender
-import services.CAPILookup
+import services.{CAPILookup, RemoteRender, RenderingTierPicker}
 import implicits.{AmpFormat, EmailFormat, HtmlFormat, JsonFormat}
+import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 
 import scala.concurrent.Future
 
@@ -51,12 +52,36 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
     }
   }
 
+  def renderHeadline(path: String): Action[AnyContent] = Action.async { implicit request =>
+    def responseFromHeadline(headline: Option[String]) = {
+      headline
+        .map(title => Cached(CacheTime.Default)(RevalidatableResult.Ok(title)))
+        .getOrElse {
+          log.warn(s"headline not found for $path")
+          Cached(10)(WithoutRevalidationResult(NotFound))
+        }
+    }
+
+    capiLookup
+      .lookup(path, Some(ArticleBlocks))
+      .map(_.content.map(_.webTitle))
+      .map(responseFromHeadline)
+  }
+
   private def getJson(article: ArticlePage)(implicit request: RequestHeader) = {
     val contentFieldsJson = if (request.isGuuiJson) List("contentFields" -> Json.toJson(ContentFields(article.article))) else List()
     List(("html", views.html.fragments.articleBody(article))) ++ contentFieldsJson
   }
 
   private def render(path: String, article: ArticlePage)(implicit request: RequestHeader): Future[Result] = {
+
+    val renderTier = RenderingTierPicker.getRenderTierFor(article)
+
+    renderTier match {
+      case RemoteRender => log.logger.info(s"Remotely renderable article $path");
+      case _ =>
+    }
+
     Future {
       request.getRequestFormat match {
         case JsonFormat => common.renderJson(getJson(article), article)
@@ -65,6 +90,7 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
         case AmpFormat => common.renderHtml(views.html.articleAMP(article), article)
       }
     }
+
   }
 
   private def mapModel(path: String, range: BlockRange)(render: ArticlePage => Future[Result])(implicit request: RequestHeader): Future[Result] = {

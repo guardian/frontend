@@ -29,10 +29,6 @@ object AdminConfiguration {
     lazy val ajaxServiceId = configuration.getStringProperty("fastly.ajax.serviceId").getOrElse(throw new RuntimeException("Fastly ajax service id not configured"))
   }
 
-  object imgix {
-    lazy val key = configuration.getStringProperty("imgix.key").getOrElse(throw new RuntimeException("Imgix key not configured"))
-  }
-
   object dfpApi {
     lazy val clientId = configuration.getStringProperty("api.dfp.clientId")
     lazy val clientSecret = configuration.getStringProperty("api.dfp.clientSecret")
