@@ -806,17 +806,16 @@ object GarnettQuoteCleaner extends HtmlCleaner {
     document
   }
 }
-
+import implicits.Requests._
 case class AffiliateLinksCleaner(
                                   pageUrl: String,
                                   sectionId: String,
                                   showAffiliateLinks: Option[Boolean],
                                   contentType: String,
                                   appendDisclaimer: Option[Boolean] = None,
-                                  tags: List[String]) extends HtmlCleaner with Logging {
-
+                                  tags: List[String])(implicit request: RequestHeader) extends HtmlCleaner with Logging {
   override def clean(document: Document): Document = {
-    if (AffiliateLinks.isSwitchedOn && AffiliateLinksCleaner.shouldAddAffiliateLinks(AffiliateLinks.isSwitchedOn,
+    if (AffiliateLinks.isSwitchedOn && !request.isAdFree && AffiliateLinksCleaner.shouldAddAffiliateLinks(AffiliateLinks.isSwitchedOn,
       sectionId, showAffiliateLinks, affiliateLinkSections, defaultOffTags, alwaysOffTags, tags)) {
       AffiliateLinksCleaner.replaceLinksInHtml(document, pageUrl, appendDisclaimer, contentType, skimlinksId)
     } else document
