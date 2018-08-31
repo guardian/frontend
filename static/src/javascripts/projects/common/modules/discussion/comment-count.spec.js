@@ -20,7 +20,7 @@ jest.mock('lib/fetch-json', () =>
 
 const fetchJsonSpy: any = fetchJson;
 
-describe('Comment Count', () => {
+describe.skip('Comment Count', () => {
     beforeEach(() => {
         if (document.body) {
             document.body.innerHTML = `<div class="comment-trails">
