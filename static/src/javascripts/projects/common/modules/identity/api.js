@@ -8,6 +8,9 @@ import mediator from 'lib/mediator';
 import { local } from 'lib/storage';
 import { mergeCalls } from 'common/modules/async-call-merger';
 import { getUrlVars } from 'lib/url';
+import fetch from 'lib/fetch-json';
+
+const qs = require('qs');
 
 let userFromCookieCache = null;
 
@@ -16,6 +19,11 @@ const signOutCookieName = 'GU_SO';
 const fbCheckKey = 'gu.id.nextFbCheck';
 let idApiRoot = null;
 let profileRoot = null;
+
+type PasswordCredential = {
+    id: string,
+    password: string,
+};
 
 export type IdentityUser = {
     id: number,
@@ -205,4 +213,17 @@ export const updateUsername = (username: string): any => {
     });
 
     return request;
+};
+
+export const ajaxSignIn = (credentials: PasswordCredential) => {
+    const url = `${profileRoot || ''}/actions/auth/ajax`;
+    return fetch(url, {
+        mode: 'cors',
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: qs.stringify({
+            email: credentials.id,
+            password: credentials.password,
+        }),
+    });
 };
