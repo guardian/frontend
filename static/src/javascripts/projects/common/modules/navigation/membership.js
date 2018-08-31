@@ -5,11 +5,12 @@ import {
     accountDataUpdateWarning,
 } from 'common/modules/commercial/user-features';
 import fastdom from 'lib/fastdom-promise';
-import { Message, hasUserAcknowledgedBanner } from 'common/modules/ui/message';
+import { Message } from 'common/modules/ui/message';
 import config from 'lib/config';
 import bean from 'bean';
 import arrowRight from 'svgs/icon/arrow-right.svg';
 import type { Banner } from 'common/modules/ui/bannerPicker';
+import userPrefs from 'common/modules/user-prefs';
 
 const accountDataUpdateLink = accountDataUpdateWarningLink =>
     `${config.get('page.idUrl')}/${
@@ -19,6 +20,18 @@ const accountDataUpdateLink = accountDataUpdateWarningLink =>
     }`;
 
 const messageCode: string = 'membership-action-required';
+
+const bannerCanBeLoadedAgainAfterKey: string =
+    'mmaActionRequiredBannerCanBeShownAgainAfter';
+
+const storeBannerCanBeLoadedAgainAfter = () => {
+    const thisTimeTomorrow = new Date();
+    thisTimeTomorrow.setDate(thisTimeTomorrow.getDate() + 1);
+    userPrefs.set(
+        bannerCanBeLoadedAgainAfterKey,
+        thisTimeTomorrow.toISOString()
+    );
+};
 
 const showAccountDataUpdateWarningMessage = accountDataUpdateWarningLink => {
     const gaTracker = config.get('googleAnalytics.trackers.editorial');
@@ -36,6 +49,18 @@ const showAccountDataUpdateWarningMessage = accountDataUpdateWarningLink => {
                     'in page',
                     'membership action required | banner hidden'
                 );
+                storeBannerCanBeLoadedAgainAfter();
+            });
+
+            bean.on(document, 'click', '.js-mma-update-details-button', () => {
+                window.ga(
+                    `${gaTracker}.send`,
+                    'event',
+                    'click',
+                    'in page',
+                    'membership action required | banner update details clicked'
+                );
+                storeBannerCanBeLoadedAgainAfter();
             });
 
             window.ga(
@@ -53,7 +78,7 @@ const showAccountDataUpdateWarningMessage = accountDataUpdateWarningLink => {
             An action is needed on your Guardian account. 
             Please review and update your details as soon as you can. Thank you.
         </span>
-        <a class="button site-message__copy-button" href="${accountDataUpdateLink(
+        <a class="button site-message__copy-button js-mma-update-details-button" href="${accountDataUpdateLink(
             accountDataUpdateWarningLink
         )}">
             Update details ${arrowRight.markup}
@@ -62,10 +87,18 @@ const showAccountDataUpdateWarningMessage = accountDataUpdateWarningLink => {
 };
 const updateLink = accountDataUpdateWarning();
 
-const canShow: () => Promise<boolean> = () =>
-    Promise.resolve(
-        updateLink !== null && !hasUserAcknowledgedBanner(messageCode)
+const canShow: () => Promise<boolean> = () => {
+    const bannerCanBeLoadedAgainAfter = userPrefs.get(
+        bannerCanBeLoadedAgainAfterKey
     );
+    return Promise.resolve(
+        updateLink !== null &&
+            !(
+                bannerCanBeLoadedAgainAfter &&
+                new Date(bannerCanBeLoadedAgainAfter) > new Date()
+            )
+    );
+};
 
 const show: () => Promise<boolean> = () => {
     if (updateLink) {
