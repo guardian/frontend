@@ -57,10 +57,10 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-  val AdFreeTrialSwitch = Switch(
+  val AdFreeEmergencyShutdown = Switch(
     Commercial,
-    "ad-free-subscription-trial",
-    "Master switch for trialling ad-free subscription",
+    "ad-free-emergency-shutdown",
+    "When ON, we kill the ad-free service immediately.",
     owners = Seq(Owner.withGithub("JustinPinner")),
     safeState = Off,
     sellByDate = never,

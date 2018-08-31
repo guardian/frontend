@@ -65,7 +65,6 @@ describe('Commercial features', () => {
             outbrain: true,
             commercial: true,
             enableDiscussionSwitch: true,
-            adFreeSubscriptionTrial: false,
         };
 
         config.get.mockReturnValue('');
@@ -113,7 +112,6 @@ describe('Commercial features', () => {
         });
 
         it('Is enabled for speedcurve tests of ad-free mode', () => {
-            config.switches.adFreeSubscriptionTrial = true;
             window.location.hash = '#noadsaf';
             const features = new CommercialFeatures();
             expect(features.dfpAdvertising).toBe(true);
@@ -149,7 +147,6 @@ describe('Commercial features', () => {
     describe('Article body adverts under ad-free', () => {
         // LOL grammar
         it('are disabled', () => {
-            config.switches.adFreeSubscriptionTrial = true;
             isAdFreeUser.mockReturnValue(true);
             const features = new CommercialFeatures();
             expect(features.articleBodyAdverts).toBe(false);
@@ -165,7 +162,6 @@ describe('Commercial features', () => {
 
     describe('Video prerolls under ad-free', () => {
         it('are disabled', () => {
-            config.switches.adFreeSubscriptionTrial = true;
             isAdFreeUser.mockReturnValue(true);
             const features = new CommercialFeatures();
             expect(features.videoPreRolls).toBe(false);
@@ -194,7 +190,6 @@ describe('Commercial features', () => {
 
     describe('High-relevance commercial component under ad-free', () => {
         beforeEach(() => {
-            config.switches.adFreeSubscriptionTrial = true;
             isAdFreeUser.mockReturnValue(true);
         });
 
@@ -253,7 +248,6 @@ describe('Commercial features', () => {
 
     describe('Third party tags under ad-free', () => {
         beforeEach(() => {
-            config.switches.adFreeSubscriptionTrial = true;
             isAdFreeUser.mockReturnValue(true);
         });
 
@@ -311,7 +305,6 @@ describe('Commercial features', () => {
 
     describe('Outbrain / Plista under ad-free', () => {
         beforeEach(() => {
-            config.switches.adFreeSubscriptionTrial = true;
             isAdFreeUser.mockReturnValue(true);
         });
 
@@ -396,7 +389,6 @@ describe('Commercial features', () => {
 
     describe('Comment adverts under ad-free', () => {
         beforeEach(() => {
-            config.switches.adFreeSubscriptionTrial = true;
             config.page.commentable = true;
             isAdFreeUser.mockReturnValue(true);
         });
