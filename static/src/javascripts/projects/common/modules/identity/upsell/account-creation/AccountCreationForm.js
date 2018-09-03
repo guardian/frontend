@@ -83,9 +83,9 @@ class AccountCreationForm extends Component<
                         Create your account now to manage your preferences and explore your free benefits.
                     </p>
                 </h1>
-                <div className="fieldset__fields">
-                    <ul>
-                        <li className="form-field" id="email_field" aria-hidden={true}>
+                <div>
+                    <ul className="identity-forms-fields">
+                        <li id="email_field" aria-hidden={true}>
                             <label class="identity-forms-input-wrap" htmlFor="email">
                                 <div className="identity-forms-label">Email</div>
                                 <input
@@ -103,8 +103,7 @@ class AccountCreationForm extends Component<
                                 />
                             </label>
                         </li>
-
-                        <li className="form-field" id="password_field">
+                        <li id="password_field">
                             <label class="identity-forms-input-wrap" htmlFor="password">
                                 <div className="identity-forms-label">Password</div>
                                 <input
@@ -123,8 +122,7 @@ class AccountCreationForm extends Component<
                                 />
                             </label>
                         </li>
-
-                        <li className="form-field form-field__submit">
+                        <li>
                             {isLoading ? (
                                 <button
                                     disabled
@@ -142,6 +140,7 @@ class AccountCreationForm extends Component<
                     </ul>
                 </div>
                 <aside className={'identity-upsell-account-creation-block'}>
+                    <hr class="manage-account-small-divider" />
                     <AccountBenefits/>
                 </aside>
                 <aside className="identity-forms-message__body">

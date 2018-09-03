@@ -133,9 +133,22 @@ Wrapper
 }
 
 /*
-Interim guui input
+List of fields
 */
+.identity-forms-fields {
+    list-style: none;
+    margin: 0;
+    display: block;
+    li {
+        @include clearfix;
+        margin-bottom: $gs-baseline;
+        display: block;
+    }
+}
 
+/*
+Interim guui inputs
+*/
 .identity-forms-label {
     @include fs-textSans(5);
     font-weight: 700;
@@ -155,6 +168,7 @@ Interim guui input
     padding: 0 $gs-gutter / 2;
     width: 100%;
     transition: all .2s ease-in-out;
+    box-sizing: border-box;
 
     &:hover {
         box-shadow: 0 0 0 3px $brightness-93;

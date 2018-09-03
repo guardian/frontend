@@ -1,6 +1,8 @@
 .identity-upsell-account-creation-bullets {
     @include fs-headlineGarnett(0);
     list-style: none;
+    margin-bottom: $gs-baseline;
+    margin-top: $gs-baseline / 3;
     li {
         position: relative;
         margin-bottom: $gs-baseline;

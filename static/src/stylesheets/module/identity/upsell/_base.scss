@@ -1,6 +1,7 @@
 .identity-upsell-title {
     @include fs-headlineGarnett(2);
     font-weight: 600;
+    margin-bottom: $gs-baseline * 2;
     .identity-upsell-title__title {
         font-size: 1em;
     }
