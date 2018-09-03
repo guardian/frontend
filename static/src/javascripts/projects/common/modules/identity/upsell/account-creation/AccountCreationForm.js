@@ -1,5 +1,6 @@
 import React, { Component } from 'preact-compat';
 import reqwest from 'reqwest';
+import ophan from 'ophan/ng';
 import {AccountBenefits} from "./AccountBenefits";
 
 type AccountCreationFormProps = {
@@ -34,6 +35,10 @@ class AccountCreationForm extends Component<
                 password: this.state.password,
             },
             success: () => {
+                ophan.record({
+                    component: 'set-password',
+                    value: 'set-password',
+                });
                 this.props.onAccountCreated();
             },
             error: response => {
