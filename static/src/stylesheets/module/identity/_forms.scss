@@ -175,12 +175,12 @@ Interim guui inputs
     }
 
     &:focus {
-      outline: transparent;
-      box-shadow: 0 0 0 3px #ffe500;
+        outline: transparent;
+        box-shadow: 0 0 0 3px $highlight-main;
     }
 
     &[disabled] {
-        background: #EDEDED;
+        background: $brightness-93;
         pointer-events: none;
     }
 }
