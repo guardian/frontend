@@ -17,7 +17,9 @@ const loadScript = (src: string, props?: Object): Promise<any> => {
             Object.assign(script, props);
         }
         script.onload = resolve;
-        script.onerror = reject;
+        script.onerror = () => {
+            reject(new Error(`Failed to load script ${src}`));
+        };
         if (ref.parentNode) {
             ref.parentNode.insertBefore(script, ref);
         }
