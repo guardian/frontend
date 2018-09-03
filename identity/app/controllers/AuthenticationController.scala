@@ -1,6 +1,7 @@
 package controllers
 
 import common.ImplicitControllerExecutionContext
+import conf.Configuration
 import form.Mappings
 import idapiclient.responses.{CookieResponse, CookiesResponse}
 import idapiclient.{EmailPassword, IdApiClient, TrackingData}
@@ -53,9 +54,9 @@ class AuthenticationController(
          val authResponse = api.authBrowser(emailPassword, TrackingData(None, None, None, None, None, None))
          authResponse.map {
            case Right(cookies) =>
-             Cors(NoCache(Ok(Json.toJson(cookies))), fallbackAllowOrigin = "null")
+             Cors(NoCache(Ok(Json.toJson(cookies))), fallbackAllowOrigin = Configuration.ajax.corsOrigins.head)
            case Left(errors) =>
-             Cors(NoCache(InternalServerError(Json.toJson(errors))), fallbackAllowOrigin = "null")
+             Cors(NoCache(InternalServerError(Json.toJson(errors))), fallbackAllowOrigin = Configuration.ajax.corsOrigins.head)
          }
        }
     )
