@@ -7,6 +7,7 @@ type AccountCreationFlowProps = {
     csrfToken: string,
     returnUrl: string,
     accountToken: string,
+    email: string,
 };
 
 class AccountCreationFlow extends Component<
@@ -24,9 +25,9 @@ class AccountCreationFlow extends Component<
     render() {
         return !this.state.hasCreatedAccount ? (
             <AccountCreationForm
+                email={this.props.email}
                 csrfToken={this.props.csrfToken}
                 accountToken={this.props.accountToken}
-                returnUrl={this.props.returnUrl}
                 onAccountCreated={this.onAccountCreated}
             />
         ) : (

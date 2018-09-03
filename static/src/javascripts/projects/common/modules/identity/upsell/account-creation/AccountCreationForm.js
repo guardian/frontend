@@ -7,7 +7,7 @@ import { AccountBenefits } from './AccountBenefits';
 type AccountCreationFormProps = {
     csrfToken: string,
     accountToken: string,
-    returnUrl: string,
+    email: string,
     onAccountCreated: () => {},
 };
 
@@ -68,6 +68,7 @@ class AccountCreationForm extends Component<
 
     render() {
         const { isError, errorReason, isLoading } = this.state;
+        const { email } = this.props;
         return (
             <form className="form" onSubmit={this.onSubmit}>
                 <hr className="manage-account-small-divider" />
@@ -98,7 +99,7 @@ class AccountCreationForm extends Component<
                                     className="identity-forms-input"
                                     type="email"
                                     id="email"
-                                    value="tester@test.com"
+                                    value={email}
                                     autoComplete="off"
                                     autoCapitalize="off"
                                     autoCorrect="off"
@@ -152,15 +153,6 @@ class AccountCreationForm extends Component<
                 <aside className="identity-upsell-account-creation-block">
                     <hr className="manage-account-small-divider" />
                     <AccountBenefits />
-                </aside>
-                <aside className="identity-forms-message__body">
-                    <hr className="manage-account-small-divider" />
-                    <a
-                        className="manage-account__button manage-account__button--light"
-                        data-link-name="complete-consents : cta-bottom"
-                        href={this.props.returnUrl}>
-                        Go to The Guardian
-                    </a>
                 </aside>
             </form>
         );

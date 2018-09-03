@@ -20,8 +20,8 @@ const bindAccountCreation = (el): void => {
         render(
             <AccountCreationFlow
                 csrfToken={el.dataset.csrf}
-                returnUrl={el.dataset.returnUrl}
                 accountToken={el.dataset.accountToken}
+                email={el.dataset.email}
             />,
             el
         );
