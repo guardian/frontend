@@ -2,6 +2,7 @@
 import React, { Component } from 'preact-compat';
 import reqwest from 'reqwest';
 import ophan from 'ophan/ng';
+import reportError from 'lib/report-error';
 import { AccountBenefits } from './AccountBenefits';
 
 type AccountCreationFormProps = {
@@ -43,6 +44,9 @@ class AccountCreationForm extends Component<
                 this.props.onAccountCreated();
             },
             error: response => {
+                reportError(Error(response), {
+                    feature: 'identity-create-account-upsell',
+                });
                 try {
                     const apiError = JSON.parse(response.responseText)[0];
                     this.setState({
