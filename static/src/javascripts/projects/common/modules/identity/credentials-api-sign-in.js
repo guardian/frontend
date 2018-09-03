@@ -7,8 +7,6 @@ import { ajaxSignIn } from 'common/modules/identity/api';
 import ophan from 'ophan-tracker-js';
 import { addCookie } from 'lib/cookies';
 
-const ONE_DAY_IN_MILLIS = 86400000;
-
 export const signInWithSavedCredentials = (): Promise<boolean> => {
     if (identityFeatures.promptForSignIn) {
         // $FlowFixMe
@@ -20,24 +18,13 @@ export const signInWithSavedCredentials = (): Promise<boolean> => {
             .then(creds => {
                 if (creds) {
                     return ajaxSignIn(creds)
-                        .then(cookies => {
-                            const expiryDate = new Date(cookies.expiresAt);
-                            const daysUntilExpiry =
-                                (expiryDate.getTime() - new Date().getTime()) /
-                                ONE_DAY_IN_MILLIS;
+                        .then(_ => {
                             ophan.record({
                                 component: 'pwmanager-api',
                                 value: 'conversion',
                             });
                             // $FlowFixMe
                             navigator.credentials.store(creds);
-                            cookies.values.forEach(cookie => {
-                                addCookie(
-                                    cookie.key,
-                                    cookie.value,
-                                    daysUntilExpiry
-                                );
-                            });
                             return Promise.resolve(true);
                         })
                         .catch(() => Promise.resolve(false));

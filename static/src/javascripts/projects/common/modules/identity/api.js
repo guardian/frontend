@@ -9,8 +9,8 @@ import { local } from 'lib/storage';
 import { mergeCalls } from 'common/modules/async-call-merger';
 import { getUrlVars } from 'lib/url';
 import fetch from 'lib/fetch-json';
+import qs from 'qs';
 
-const qs = require('qs');
 
 let userFromCookieCache = null;
 
@@ -225,5 +225,6 @@ export const ajaxSignIn = (credentials: PasswordCredential) => {
             email: credentials.id,
             password: credentials.password,
         }),
+        credentials: 'include',
     });
 };
