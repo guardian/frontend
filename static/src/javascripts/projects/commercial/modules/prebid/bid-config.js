@@ -374,45 +374,35 @@ const getDummyServerSideBidders = (): Array<PrebidBidder> => {
         bidParams: (
             slotId: string,
             sizes: PrebidSize[]
-        ): PrebidAppNexusParams =>
-            Object.assign(
-                {},
-                {
-                    placementId: getAppNexusPlacementId(sizes),
-                    customData: buildAppNexusTargeting(buildPageTargeting()), // Ok to duplicate call. Lodash 'once' is used.
-                },
-                window.OzoneLotameData ? { lotame: window.OzoneLotameData } : {}
-            ),
+        ): PrebidAppNexusParams => ({
+            placementId: getAppNexusPlacementId(sizes),
+            customData: buildAppNexusTargeting(buildPageTargeting()), // Ok to duplicate call. Lodash 'once' is used.
+        }),
     };
 
     const openxServerSideBidder: PrebidBidder = {
         name: 'openx',
         switchName: 'prebidS2sozone',
-        bidParams: (): PrebidOpenXParams =>
-            Object.assign(
-                {},
-                (() => {
-                    switch (config.get('page.edition')) {
-                        case 'UK':
-                            return {
-                                delDomain: 'guardian-d.openx.net',
-                                unit: '539997090',
-                            };
-                        case 'US':
-                            return {
-                                delDomain: 'guardian-us-d.openx.net',
-                                unit: '539997087',
-                            };
-                        default:
-                            // AU and rest
-                            return {
-                                delDomain: 'guardian-aus-d.openx.net',
-                                unit: '539997046',
-                            };
-                    }
-                })(),
-                window.OzoneLotameData ? { lotame: window.OzoneLotameData } : {}
-            ),
+        bidParams: (): PrebidOpenXParams => {
+            switch (config.get('page.edition')) {
+                case 'UK':
+                    return {
+                        delDomain: 'guardian-d.openx.net',
+                        unit: '539997090',
+                    };
+                case 'US':
+                    return {
+                        delDomain: 'guardian-us-d.openx.net',
+                        unit: '539997087',
+                    };
+                default:
+                    // AU and rest
+                    return {
+                        delDomain: 'guardian-aus-d.openx.net',
+                        unit: '539997046',
+                    };
+            }
+        },
     };
 
     // Experimental. Only 0.01% of the PVs.

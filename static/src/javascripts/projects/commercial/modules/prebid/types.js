@@ -36,13 +36,11 @@ export type PrebidXaxisParams = {
 export type PrebidAppNexusParams = {
     placementId: string,
     customData: string,
-    lotame?: {},
 };
 
 export type PrebidOpenXParams = {
     delDomain: string,
     unit: string,
-    lotame?: {},
 };
 
 export type PrebidAdYouLikeParams = {
