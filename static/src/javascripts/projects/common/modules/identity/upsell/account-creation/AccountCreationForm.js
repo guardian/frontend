@@ -81,8 +81,8 @@ class AccountCreationForm extends Component<
                 <div className="fieldset__fields">
                     <ul>
                         <li className="form-field" id="email_field" aria-hidden={true}>
-                            <label htmlFor="email">
-                                <div className="label">Email</div>
+                            <label class="identity-forms-input-wrap" htmlFor="email">
+                                <div className="identity-forms-label">Email</div>
                                 <input
                                     className="identity-forms-input"
                                     type="email"
@@ -100,8 +100,8 @@ class AccountCreationForm extends Component<
                         </li>
 
                         <li className="form-field" id="password_field">
-                            <label htmlFor="password">
-                                <div className="label">Password</div>
+                            <label class="identity-forms-input-wrap" htmlFor="password">
+                                <div className="identity-forms-label">Password</div>
                                 <input
                                     className="identity-forms-input"
                                     type="password"
