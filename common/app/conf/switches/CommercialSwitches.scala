@@ -310,11 +310,11 @@ trait CommercialSwitches {
    val LotameSwitch: Switch = Switch(
      group = Commercial,
      name = "lotame",
-     description = "When this is switched on the Lotame script will be included on the page",
+     description = "When this is switched on the Lotame script will be included in the commercial bootstrap",
      owners = group(Commercial),
      safeState = Off,
      sellByDate = never,
-     exposeClientSide = false
+     exposeClientSide = true
    )
 
   val AffiliateLinks: Switch = Switch(
