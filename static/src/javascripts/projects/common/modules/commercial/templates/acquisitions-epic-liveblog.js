@@ -2,6 +2,7 @@
 export const epicLiveBlogTemplate = (params: {
     copy: AcquisitionsEpicTemplateCopy,
     componentName: string,
+    supportURL: string
 }) =>
     `<div class="block block--content is-epic" data-component="${
         params.componentName
@@ -16,5 +17,7 @@ export const epicLiveBlogTemplate = (params: {
             ${params.copy.paragraphs
                 .map(paragraph => `<p><em>${paragraph}</em></p>`)
                 .join('')}
+            <span class="contributions__highlight">${params.copy.highlightedText}</span>
+            <a href="${params.supportURL}" target="_blank" class="u-underline">Make a contribution</a> - Guardian HQ
         </div>
     </div>`;
