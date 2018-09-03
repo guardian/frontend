@@ -26,11 +26,11 @@
 
 .manage-account__button {
     $font-size: 5;
-    $height: $gs-baseline * 3;
+    $height: $gs-baseline * 3.5;
     $padding-vertical: ($height - get-line-height(textSans, $font-size))/2;
-    $padding-horizontal: $gs-gutter * .9;
+    $padding-horizontal: $gs-gutter / 2;
     @include fs-textSans($font-size);
-    @include identity-button($brightness-7)
+    @include identity-button($brightness-7);
     height: $height;
     border-radius: 100px;
     border: 0;
@@ -148,7 +148,8 @@
 }
 
 .manage-account__button--main {
-    @include identity-button($highlight-main)
+    @include identity-button($highlight-main);
+    font-weight: 600;
 }
 
 .manage-account__button--secondary {
