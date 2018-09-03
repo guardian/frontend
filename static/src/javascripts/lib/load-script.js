@@ -1,5 +1,5 @@
 // @flow
-const loadScript = (src: string, props?: Object): Promise<any> => {
+const loadScript = (src: string, props?: Object): Promise<void> => {
     if (document.querySelector(`script[src="${src}"]`)) {
         return Promise.resolve();
     }
