@@ -1,5 +1,6 @@
 // @flow
 import React from 'preact-compat';
+import config from 'lib/config';
 import star from 'svgs/icon/star.svg';
 
 type BenefitCta = {
@@ -43,7 +44,7 @@ const actionableBenefits: ActionableBenefit[] = [
         cta: [
             {
                 name: `Find newsletters you'll love`,
-                link: `/newsletters`,
+                link: `https://${config.get('page.host')}/email-newsletters`,
             },
         ],
     },
@@ -53,7 +54,7 @@ const actionableBenefits: ActionableBenefit[] = [
         cta: [
             {
                 name: `Go to The Guardian`,
-                link: `/newsletters`,
+                link: `https://${config.get('page.host')}/`,
             },
         ],
     },
@@ -63,7 +64,7 @@ const actionableBenefits: ActionableBenefit[] = [
         cta: [
             {
                 name: `Visit Guardian Jobs`,
-                link: `/newsletters`,
+                link: `https://jobs.theguardian.com/`,
             },
         ],
     },
@@ -73,7 +74,9 @@ const actionableBenefits: ActionableBenefit[] = [
         cta: [
             {
                 name: `Get the Guardian App`,
-                link: `/newsletters`,
+                link: `https://${config.get(
+                    'page.host'
+                )}/technology/ng-interactive/2018/may/15/the-guardian-app`,
             },
         ],
     },
