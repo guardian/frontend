@@ -1,7 +1,8 @@
+// @flow
 import React, { Component } from 'preact-compat';
 import reqwest from 'reqwest';
 import ophan from 'ophan/ng';
-import {AccountBenefits} from "./AccountBenefits";
+import { AccountBenefits } from './AccountBenefits';
 
 type AccountCreationFormProps = {
     csrfToken: string,
@@ -18,7 +19,7 @@ class AccountCreationForm extends Component<
         isError?: boolean,
         errorReason?: string,
     }
-    > {
+> {
     onSubmit = (ev: Event) => {
         ev.preventDefault();
         this.setState({
@@ -75,37 +76,46 @@ class AccountCreationForm extends Component<
                         {errorReason || 'Oops. Something went wrong'}
                     </div>
                 )}
-                <h1 className={'identity-upsell-title'}>
-                    <h1 className={'identity-upsell-title__title'}>
+                <h1 className="identity-upsell-title">
+                    <h1 className="identity-upsell-title__title">
                         Want more from The Guardian?
                     </h1>
-                    <p className={'identity-upsell-title__subtitle'}>
-                        Create your account now to manage your preferences and explore your free benefits.
+                    <p className="identity-upsell-title__subtitle">
+                        Create your account now to manage your preferences and
+                        explore your free benefits.
                     </p>
                 </h1>
                 <div>
                     <ul className="identity-forms-fields">
-                        <li id="email_field" aria-hidden={true}>
-                            <label class="identity-forms-input-wrap" htmlFor="email">
-                                <div className="identity-forms-label">Email</div>
+                        <li id="email_field" aria-hidden>
+                            <label
+                                className="identity-forms-input-wrap"
+                                htmlFor="email">
+                                <div className="identity-forms-label">
+                                    Email
+                                </div>
                                 <input
                                     className="identity-forms-input"
                                     type="email"
                                     id="email"
-                                    value={'tester@test.com'}
+                                    value="tester@test.com"
                                     autoComplete="off"
                                     autoCapitalize="off"
                                     autoCorrect="off"
                                     spellCheck="false"
                                     aria-required="true"
                                     required
-                                    disabled={true}
+                                    disabled
                                 />
                             </label>
                         </li>
                         <li id="password_field">
-                            <label class="identity-forms-input-wrap" htmlFor="password">
-                                <div className="identity-forms-label">Password</div>
+                            <label
+                                className="identity-forms-input-wrap"
+                                htmlFor="password">
+                                <div className="identity-forms-label">
+                                    Password
+                                </div>
                                 <input
                                     className="identity-forms-input"
                                     type="password"
@@ -139,9 +149,9 @@ class AccountCreationForm extends Component<
                         </li>
                     </ul>
                 </div>
-                <aside className={'identity-upsell-account-creation-block'}>
-                    <hr class="manage-account-small-divider" />
-                    <AccountBenefits/>
+                <aside className="identity-upsell-account-creation-block">
+                    <hr className="manage-account-small-divider" />
+                    <AccountBenefits />
                 </aside>
                 <aside className="identity-forms-message__body">
                     <hr className="manage-account-small-divider" />
@@ -157,4 +167,4 @@ class AccountCreationForm extends Component<
     }
 }
 
-export {AccountCreationForm}
+export { AccountCreationForm };

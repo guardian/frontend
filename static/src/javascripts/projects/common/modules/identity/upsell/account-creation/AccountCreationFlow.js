@@ -1,14 +1,13 @@
 // @flow
 import React, { Component } from 'preact-compat';
-import {AccountCreationForm} from "./AccountCreationForm";
-import {AccountCreationFeatures} from "./AccountCreationFeatures";
+import { AccountCreationForm } from './AccountCreationForm';
+import { AccountCreationFeatures } from './AccountCreationFeatures';
 
 type AccountCreationFlowProps = {
     csrfToken: string,
     returnUrl: string,
     accountToken: string,
 };
-
 
 class AccountCreationFlow extends Component<
     AccountCreationFlowProps,

@@ -1,25 +1,22 @@
+// @flow
 import React, { Component } from 'preact-compat';
-import {AccountActionableBenefits} from "./AccountBenefits";
+import { AccountActionableBenefits } from './AccountBenefits';
 
-type AccountCreationFeaturesProps = {
-    returnUrl: string,
-};
-
-export class AccountCreationFeatures extends Component<AccountCreationFeaturesProps> {
+export class AccountCreationFeatures extends Component {
     render() {
         return (
             <div>
                 <hr className="manage-account-small-divider" />
-                <h1 className={'identity-upsell-title'}>
-                    <h1 className={'identity-upsell-title__title'}>
+                <h1 className="identity-upsell-title">
+                    <h1 className="identity-upsell-title__title">
                         Your account has been created.
                     </h1>
-                    <p className={'identity-upsell-title__subtitle'}>
-                        Start exploring your benefits.
+                    <p className="identity-upsell-title__subtitle">
+                        Start exploring your benefits:
                     </p>
                 </h1>
                 <div className="identity-forms-message__body">
-                    <AccountActionableBenefits/>
+                    <AccountActionableBenefits />
                 </div>
             </div>
         );
