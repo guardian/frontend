@@ -82,6 +82,7 @@ const resetConfig = () => {
 describe('getAppNexusPlacementId', () => {
     beforeEach(() => {
         resetConfig();
+        window.OzoneLotameData = { some: 'lotamedata' };
     });
 
     afterEach(() => {
@@ -206,10 +207,12 @@ describe('getDummyServerSideBidders', () => {
         expect(openxParams).toEqual({
             delDomain: 'guardian-d.openx.net',
             unit: '539997090',
+            lotame: { some: 'lotamedata' },
         });
         expect(appNexusParams).toEqual({
             placementId: '13144370',
             customData: 'someTestAppNexusTargeting',
+            lotame: { some: 'lotamedata' },
         });
     });
 });
