@@ -48,15 +48,16 @@ class AuthenticationController(
 
   def authenticateUsernamePassword(): Action[AnyContent] = Action.async { implicit request =>
     val form = EmailPasswordForm.emailPasswordForm.bindFromRequest()
+    val idRequest = idRequestParser(request)
     form.fold(
        formWithErrors => {
          Future.successful(NoCache(InternalServerError(Json.toJson(formWithErrors.errors.map(_.toString)))))
        },
        emailPassword => {
-         val authResponse = api.authBrowser(emailPassword, TrackingData(None, None, None, None, None, None))
+         val authResponse = signInService.getCookies(api.authBrowser(emailPassword, idRequest.trackingData), rememberMe = false)
          authResponse.map {
            case Right(cookies) =>
-             Cors(NoCache(Ok(Json.toJson(cookies))), fallbackAllowOrigin = fallbackAccessControlOrigin)
+             Cors(NoCache(Ok("")), fallbackAllowOrigin = fallbackAccessControlOrigin).withCookies(cookies: _*)
            case Left(errors) =>
              Cors(NoCache(InternalServerError(Json.toJson(errors))), fallbackAllowOrigin = fallbackAccessControlOrigin)
          }
