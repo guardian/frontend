@@ -93,7 +93,10 @@ export const AccountActionableBenefits = () => (
                 <h4>{title}</h4>
                 <p>{blurb}</p>
                 {cta.map(({ name, link }) => (
-                    <a data-link-name={`benefit : ${title}`} href={link} className="manage-account__button manage-account__button--light">
+                    <a
+                        data-link-name={`benefit : ${title}`}
+                        href={link}
+                        className="manage-account__button manage-account__button--light">
                         {name}
                     </a>
                 ))}
