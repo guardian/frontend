@@ -44,6 +44,8 @@ class AuthenticationController(
 )(implicit context: ApplicationContext)
   extends BaseController with ImplicitControllerExecutionContext with SafeLogging with Mappings with implicits.Forms with IdentityJsonProtocol {
 
+  private val fallbackAccessControlOrigin = Configuration.ajax.corsOrigins.headOption.getOrElse(Configuration.site.host)
+
   def authenticateUsernamePassword(): Action[AnyContent] = Action.async { implicit request =>
     val form = EmailPasswordForm.emailPasswordForm.bindFromRequest()
     form.fold(
@@ -54,9 +56,9 @@ class AuthenticationController(
          val authResponse = api.authBrowser(emailPassword, TrackingData(None, None, None, None, None, None))
          authResponse.map {
            case Right(cookies) =>
-             Cors(NoCache(Ok(Json.toJson(cookies))), fallbackAllowOrigin = Configuration.ajax.corsOrigins.head)
+             Cors(NoCache(Ok(Json.toJson(cookies))), fallbackAllowOrigin = fallbackAccessControlOrigin)
            case Left(errors) =>
-             Cors(NoCache(InternalServerError(Json.toJson(errors))), fallbackAllowOrigin = Configuration.ajax.corsOrigins.head)
+             Cors(NoCache(InternalServerError(Json.toJson(errors))), fallbackAllowOrigin = fallbackAccessControlOrigin)
          }
        }
     )
