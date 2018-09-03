@@ -42,20 +42,20 @@ class AuthenticationController(
   val httpConfiguration: HttpConfiguration
 )(implicit context: ApplicationContext)
   extends BaseController with ImplicitControllerExecutionContext with SafeLogging with Mappings with implicits.Forms with IdentityJsonProtocol {
+
   def authenticateUsernamePassword(): Action[AnyContent] = Action.async { implicit request =>
     val form = EmailPasswordForm.emailPasswordForm.bindFromRequest()
     form.fold(
        formWithErrors => {
-         logger.warn("eror with form")
-         Future.successful(NoCache(InternalServerError("")))
+         Future.successful(NoCache(InternalServerError(Json.toJson(formWithErrors.errors.map(_.toString)))))
        },
        emailPassword => {
          val authResponse = api.authBrowser(emailPassword, TrackingData(None, None, None, None, None, None))
          authResponse.map {
            case Right(cookies) =>
-             Cors(NoCache(Ok(Json.toJson(cookies))))
+             Cors(NoCache(Ok(Json.toJson(cookies))), fallbackAllowOrigin = "null")
            case Left(errors) =>
-             Cors(NoCache(InternalServerError(Json.toJson(errors))))
+             Cors(NoCache(InternalServerError(Json.toJson(errors))), fallbackAllowOrigin = "null")
          }
        }
     )

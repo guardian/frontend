@@ -14,8 +14,7 @@ class IdentityFeatures {
             // $FlowFixMe
             navigator.credentials &&
             window.PasswordCredential &&
-            getCookie(CookieNames.PW_MANAGER_DISMISSED) === null &&
-            getCookie(CookieNames.GU_SO) === null;
+            getCookie(CookieNames.PW_MANAGER_DISMISSED) === null;
     }
 }
 
