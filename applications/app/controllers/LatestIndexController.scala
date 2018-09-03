@@ -30,8 +30,13 @@ class LatestIndexController(
   }
 
   private def handleSeriesBlogs(index: IndexPage)(implicit request: RequestHeader) = index.trails.headOption match {
-    case Some(latest) if request.isEmail || request.isHeadlineText =>
+    case Some(latest) if request.isEmailJson || request.isHeadlineText =>
       emailInternalRedirect(latest)
+
+    case Some(latest) if request.isEmail =>
+      val queryString = request.campaignCode.fold(Map.empty[String, Seq[String]])(c => Map("CMP" -> Seq(c)))
+      val url = s"${latest.metadata.url}/email"
+      Redirect(url, queryString)
 
     case Some(latest) =>
       Found(latest.metadata.url)
