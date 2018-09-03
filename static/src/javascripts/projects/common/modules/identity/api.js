@@ -11,7 +11,6 @@ import { getUrlVars } from 'lib/url';
 import fetch from 'lib/fetch-json';
 import qs from 'qs';
 
-
 let userFromCookieCache = null;
 
 const cookieName = 'GU_U';

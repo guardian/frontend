@@ -18,7 +18,7 @@ export const signInWithSavedCredentials = (): Promise<boolean> => {
             .then(creds => {
                 if (creds) {
                     return ajaxSignIn(creds)
-                        .then(_ => {
+                        .then(() => {
                             ophan.record({
                                 component: 'pwmanager-api',
                                 value: 'conversion',
