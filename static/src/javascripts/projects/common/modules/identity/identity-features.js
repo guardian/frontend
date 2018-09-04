@@ -6,10 +6,8 @@ class IdentityFeatures {
     constructor() {
         this.promptForSignIn =
             // $FlowFixMe
-            navigator.credentials &&
-            window.PasswordCredential;
+            navigator.credentials && window.PasswordCredential;
     }
 }
 
 export const identityFeatures = new IdentityFeatures();
-

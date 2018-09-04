@@ -1,7 +1,5 @@
 // @flow
-import {
-    identityFeatures,
-} from 'common/modules/identity/identity-features';
+import { identityFeatures } from 'common/modules/identity/identity-features';
 import { ajaxSignIn } from 'common/modules/identity/api';
 import ophan from 'ophan-tracker-js';
 
