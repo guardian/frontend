@@ -7836,9 +7836,9 @@ preact@^8.2.9:
   version "8.2.9"
   resolved "https://registry.yarnpkg.com/preact/-/preact-8.2.9.tgz#813ba9dd45e5d97c5ea0d6c86d375b3be711cc40"
 
-"prebid.js@https://github.com/guardian/Prebid.js.git#7dccca":
+"prebid.js@https://github.com/guardian/Prebid.js.git#097ada":
   version "1.20.0"
-  resolved "https://github.com/guardian/Prebid.js.git#7dccca859513d7d3f1ca0e5c399de952ff01994b"
+  resolved "https://github.com/guardian/Prebid.js.git#097adac622ac9a8c6dfc232e7569a912b351f117"
   dependencies:
     babel-plugin-transform-object-assign "^6.22.0"
     core-js "^2.4.1"
