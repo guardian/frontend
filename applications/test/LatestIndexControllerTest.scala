@@ -15,6 +15,7 @@ import play.api.test.Helpers._
 
   private val MovedPermanently = 301
   private val Found = 302
+  private val SeeOther = 303
   lazy val latestIndexController = new LatestIndexController(testContentApiClient, play.api.test.Helpers.stubControllerComponents())
 
   it should "redirect to latest for a series" in {
@@ -25,9 +26,9 @@ import play.api.test.Helpers._
 
   it should "redirect to latest email for a blog" in {
     val result = latestIndexController.latest("fashion/fashion-blog")(TestRequest("/fashion/fashion-blog/email"))
-    status(result) should be(OK)
-    header("X-Accel-Redirect", result).head should include ("/fashion-blog/")
-    header("X-Accel-Redirect", result).head should endWith ("/email")
+    status(result) should be(SeeOther)
+    header("Location", result).head should include ("/fashion-blog/")
+    header("Location", result).head should endWith ("/email")
   }
 
   it should "redirect to latest emailjson for a blog" in {

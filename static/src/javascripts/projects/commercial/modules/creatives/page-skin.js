@@ -3,6 +3,7 @@ import config from 'lib/config';
 import { isBreakpoint, hasCrossedBreakpoint } from 'lib/detect';
 import mediator from 'lib/mediator';
 import fastdom from 'fastdom';
+import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 
 const pageSkin = (): void => {
     const bodyEl = document.body;
@@ -20,7 +21,11 @@ const pageSkin = (): void => {
     };
 
     const togglePageSkin = (): void => {
-        if (hasPageSkin && hasCrossedBreakpoint(true)) {
+        if (
+            hasPageSkin &&
+            hasCrossedBreakpoint(true) &&
+            !commercialFeatures.adFree
+        ) {
             togglePageSkinActiveClass();
         }
     };

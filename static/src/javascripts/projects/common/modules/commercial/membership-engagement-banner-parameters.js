@@ -120,7 +120,7 @@ export const getAcquisitionsBannerParams = (
 };
 
 export const getControlEngagementBannerParams = (): Promise<?EngagementBannerTemplateParams> =>
-    getBannerGoogleDoc.then(json =>
+    getBannerGoogleDoc().then(json =>
         getAcquisitionsBannerParams(json, 'control')
     );
 

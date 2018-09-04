@@ -1,5 +1,4 @@
 // @flow
-
 import fastdom from 'lib/fastdom-promise';
 import { getUserFromCookie, isUserLoggedIn } from 'common/modules/identity/api';
 

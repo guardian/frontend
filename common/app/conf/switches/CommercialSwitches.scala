@@ -2,7 +2,7 @@ package conf.switches
 
 import conf.switches.Expiry.never
 import conf.switches.Owner.group
-import conf.switches.SwitchGroup.Commercial
+import conf.switches.SwitchGroup.{Commercial, CommercialPrebid}
 import org.joda.time.LocalDate
 
 trait CommercialSwitches {
@@ -310,11 +310,11 @@ trait CommercialSwitches {
    val LotameSwitch: Switch = Switch(
      group = Commercial,
      name = "lotame",
-     description = "When this is switched on the Lotame script will be included on the page",
+     description = "When this is switched on the Lotame script will be included in the commercial bootstrap",
      owners = group(Commercial),
      safeState = Off,
      sellByDate = never,
-     exposeClientSide = false
+     exposeClientSide = true
    )
 
   val AffiliateLinks: Switch = Switch(
@@ -361,7 +361,7 @@ trait CommercialSwitches {
 trait PrebidSwitches {
 
   val prebidSwitch: Switch = Switch(
-    group = Commercial,
+    group = CommercialPrebid,
     name = "prebid-header-bidding",
     description = "Turn on Prebid header bidding (takes priority over Sonobi)",
     owners = group(Commercial),
@@ -371,7 +371,7 @@ trait PrebidSwitches {
   )
 
   val prebidAnalytics: Switch = Switch(
-    group = Commercial,
+    group = CommercialPrebid,
     name = "prebid-analytics",
     description = "Gather analytics from Prebid auctions",
     owners = group(Commercial),
@@ -381,7 +381,7 @@ trait PrebidSwitches {
   )
 
   val prebidSonobi: Switch = Switch(
-    group = Commercial,
+    group = CommercialPrebid,
     name = "prebid-sonobi",
     description = "Include Sonobi adapter in Prebid auctions",
     owners = group(Commercial),
@@ -391,7 +391,7 @@ trait PrebidSwitches {
   )
 
   val prebidAppNexus: Switch = Switch(
-    group = Commercial,
+    group = CommercialPrebid,
     name = "prebid-appnexus",
     description = "Include AppNexus adapter in Prebid auctions",
     owners = group(Commercial),
@@ -401,7 +401,7 @@ trait PrebidSwitches {
   )
 
   val prebidIndexExchange: Switch = Switch(
-    group = Commercial,
+    group = CommercialPrebid,
     name = "prebid-index-exchange",
     description = "Include Index Exchange adapter in Prebid auctions",
     owners = group(Commercial),
@@ -411,7 +411,7 @@ trait PrebidSwitches {
   )
 
   val prebidTrustx: Switch = Switch(
-    group = Commercial,
+    group = CommercialPrebid,
     name = "prebid-trustx",
     description = "Include TrustX adapter in Prebid auctions",
     owners = group(Commercial),
@@ -421,7 +421,7 @@ trait PrebidSwitches {
   )
 
   val prebidImproveDigital: Switch = Switch(
-    group = Commercial,
+    group = CommercialPrebid,
     name = "prebid-improve-digital",
     description = "Include Improve Digital adapter in Prebid auctions",
     owners = group(Commercial),
@@ -431,7 +431,7 @@ trait PrebidSwitches {
   )
 
   val prebidXaxis: Switch = Switch(
-    group = Commercial,
+    group = CommercialPrebid,
     name = "prebid-xaxis",
     description = "Include Xaxis adapter in Prebid auctions",
     owners = group(Commercial),
@@ -441,7 +441,7 @@ trait PrebidSwitches {
   )
 
   val prebidAdYouLike: Switch = Switch(
-    group = Commercial,
+    group = CommercialPrebid,
     name = "prebid-ad-you-like",
     description = "Include AdYouLike adapter in Prebid auctions",
     owners = group(Commercial),
@@ -451,7 +451,7 @@ trait PrebidSwitches {
   )
 
   val prebidS2SOzoneBidder: Switch = Switch(
-    group = Commercial,
+    group = CommercialPrebid,
     name = "prebid-s2sozone",
     description = "Include S2S Ozone project adapter in Prebid auctions",
     owners = group(Commercial),

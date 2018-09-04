@@ -198,14 +198,13 @@ object EmailImage extends Profile(width = Some(580), autoFormat = false) {
 }
 
 object EmailVideoImage extends Profile(width = Some(580), autoFormat = false) with OverlayBase64 {
-  override val fitParam = "fit=crop"
   override val qualityparam = "quality=60"
   val blendModeParam = "bm=normal"
   val blendOffsetParam = "ba=center"
   val blendImageParam = s"blend64=${overlayUrlBase64("play.png")}"
 
   override def resizeString: String = {
-    val params = Seq(widthParam, heightParam, qualityparam, autoParam, sharpParam, fitParam, dprParam, blendModeParam, blendOffsetParam, blendImageParam).filter(_.nonEmpty).mkString("&")
+    val params = Seq(widthParam, heightParam, qualityparam, autoParam, sharpParam, dprParam, blendModeParam, blendOffsetParam, blendImageParam).filter(_.nonEmpty).mkString("&")
     s"?$params"
   }
 }
