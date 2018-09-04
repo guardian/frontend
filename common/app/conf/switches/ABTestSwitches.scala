@@ -205,14 +205,4 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2019, 6, 6),
     exposeClientSide = true
   )
-
-  Switch(
-    ABTests,
-    "ab-acquisitions-epic-google-doc-vs-hardcoded",
-    "Tests an epic which gets its copy from a Google Doc against one whose copy is hardcoded",
-    owners = Seq(Owner.withGithub("joelochlann")),
-    safeState = Off,
-    sellByDate = new LocalDate(2019, 6, 6),
-    exposeClientSide = true
-  )
 }
