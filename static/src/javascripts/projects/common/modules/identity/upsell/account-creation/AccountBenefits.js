@@ -1,7 +1,6 @@
 // @flow
 import React from 'preact-compat';
 import config from 'lib/config';
-import star from 'svgs/icon/star.svg';
 
 type BenefitCta = {
     name: string,
@@ -86,13 +85,6 @@ export const AccountActionableBenefits = () => (
     <ul className="identity-upsell-account-creation-superbullets">
         {actionableBenefits.map(({ title, blurb, cta }) => (
             <li>
-                <span
-                    className="identity-upsell-account-creation-superbullets__icon"
-                    // eslint-disable-next-line react/no-danger
-                    dangerouslySetInnerHTML={{
-                        __html: star.markup,
-                    }}
-                />
                 <h4>{title}</h4>
                 <p>{blurb}</p>
                 {cta.map(({ name, link }) => (

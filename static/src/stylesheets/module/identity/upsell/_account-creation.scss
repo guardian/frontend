@@ -1,4 +1,4 @@
-.identity-upsell-account-creation-bullets {
+.identity-upsell-account-creation-bullets, .identity-upsell-account-creation-superbullets {
     @include fs-headlineGarnett(0);
     list-style: none;
     margin-bottom: $gs-baseline;
@@ -14,31 +14,5 @@
             width: 1em;
             margin-left: -$gs-gutter;
         }
-    }
-}
-
-.identity-upsell-account-creation-superbullets {
-    $icon-size: $gs-gutter * 2.5;
-    @include fs-headlineGarnett(0);
-    list-style: none;
-    margin-bottom: $gs-baseline;
-    margin-top: $gs-baseline / 3;
-    margin-left: $icon-size + ($gs-gutter/2);
-    li {
-        .identity-upsell-account-creation-superbullets__icon {
-            @include circular;
-            position: absolute;
-            left: ($icon-size + ($gs-gutter/2)) * -1;
-            width: $icon-size;
-            height: $icon-size;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: $brightness-7;
-
-        }
-        @include clearfix;
-        position: relative;
-        margin-bottom: $gs-baseline * 2;
     }
 }
