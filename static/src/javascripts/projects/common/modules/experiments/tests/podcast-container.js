@@ -142,7 +142,7 @@ const trackImpression = (name: string) => (track: () => void): void => {
 export const PodcastContainer = {
     id: 'PodcastContainer',
     start: '2018-08-21',
-    expiry: '2018-09-03',
+    expiry: '2018-09-13',
     author: 'Tom Forbes',
     description: 'Test designs for a /uk podcasts container',
     audience: 1,
@@ -161,7 +161,7 @@ export const PodcastContainer = {
             id: 'a',
             test: runContainerTest('a'),
             impression: trackImpression('podcast-container-a__main'),
-            success: trackClick('podcast-container-a__main'),
+            success: trackClick('podcast-container__track'),
         },
         {
             id: 'b',
