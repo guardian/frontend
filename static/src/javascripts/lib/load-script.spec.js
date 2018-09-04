@@ -93,8 +93,8 @@ describe('loadScript', () => {
         expect(scripts).toHaveLength(0);
 
         loadScript('xxx', {})
-            .catch(msg => {
-                expect(msg).toBe('fail');
+            .catch(err => {
+                expect(err.message).toBe('Failed to load script xxx');
 
                 if (scripts[0]) {
                     scripts[0].remove();
