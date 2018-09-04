@@ -471,10 +471,15 @@ $video-width-desktop: 700px;
     .youtube-media-atom.no-player {
         z-index: 0;
     }
+}
 
+.fc-item__video-container,
+.video-playlist__item {
     .youtube-media-atom__iframe:not(.youtube__video-ready) {
         ~ .youtube-media-atom__overlay {
-            visibility: hidden;
+            .youtube-media-atom__play-button {
+                visibility: hidden;
+            }
         }
     }
 }
