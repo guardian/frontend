@@ -95,9 +95,6 @@ class PrebidService {
 
         window.pbjs.setConfig(pbjsConfig);
 
-        // Add aliases
-        window.pbjs.aliasBidder('openx', 'oxd');
-
         // gather analytics from 20% (1 in 5) of page views
         const inSample = getRandomIntInclusive(1, 5) === 1;
         if (
@@ -196,14 +193,12 @@ class PrebidService {
                                             .sort()
                                             .pop()) ||
                                     0;
-                                const bidResponses = window.pbjs.getBidResponses();
-                                const adslotBids =
-                                    advert.id in bidResponses
-                                        ? bidResponses[advert.id]
-                                        : [];
+                                const bidResponses = window.pbjs.getBidResponses()[
+                                    advert.id
+                                ];
 
                                 const cpm: number = getHighestCpm(
-                                    (adslotBids && adslotBids.bids) || []
+                                    (bidResponses && bidResponses.bids) || []
                                 );
                                 if (cpm > 0) {
                                     advert.slot.setTargeting('hb_cpm', cpm);
