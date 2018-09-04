@@ -32,9 +32,7 @@ export const signInWithSavedCredentials = (): Promise<boolean> => {
             .then(creds => {
                 if (creds) {
                     return ajaxSignIn(creds)
-                        .then(() => {
-                            return storeCredsAndResolvePromise(creds);
-                        })
+                        .then(() => storeCredsAndResolvePromise(creds))
                         .catch(() => Promise.resolve(false));
                 }
                 recordOphanCredentialsApiInteraction('impression');
