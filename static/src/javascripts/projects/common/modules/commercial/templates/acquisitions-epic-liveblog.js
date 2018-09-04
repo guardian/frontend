@@ -1,4 +1,6 @@
 // @flow
+import { appendToLastElement } from 'lib/array-utils';
+
 export const epicLiveBlogTemplate = (params: {
     copy: AcquisitionsEpicTemplateCopy,
     componentName: string,
@@ -14,10 +16,11 @@ export const epicLiveBlogTemplate = (params: {
             </a>
         </p>
         <div class="block-elements block-elements--no-byline">
-            ${params.copy.paragraphs
-                .map(paragraph => `<p><em>${paragraph}</em></p>`)
-                .join('')}
-            <span class="contributions__highlight">${params.copy.highlightedText}</span>
-            <a href="${params.supportURL}" target="_blank" class="u-underline">Make a contribution</a> - Guardian HQ
+            ${appendToLastElement(
+                params.copy.paragraphs,
+                ` <span class="contributions__highlight">${params.copy.highlightedText}</span> <a href="${params.supportURL}" target="_blank" class="u-underline">Make a contribution</a> - Guardian HQ`
+            ).map(paragraph =>
+                `<p><em>${paragraph}</em></p>`
+            ).join('')}        
         </div>
     </div>`;
