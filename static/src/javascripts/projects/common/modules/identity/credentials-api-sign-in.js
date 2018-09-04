@@ -1,11 +1,9 @@
 // @flow
 import {
-    IdentityCookies,
     identityFeatures,
 } from 'common/modules/identity/identity-features';
 import { ajaxSignIn } from 'common/modules/identity/api';
 import ophan from 'ophan-tracker-js';
-import { addCookie } from 'lib/cookies';
 
 const recordOphanCredentialsApiInteraction = (interactionType): void => {
     ophan.record({
@@ -36,7 +34,6 @@ export const signInWithSavedCredentials = (): Promise<boolean> => {
                         .catch(() => Promise.resolve(false));
                 }
                 recordOphanCredentialsApiInteraction('impression');
-                addCookie(IdentityCookies.PW_MANAGER_DISMISSED, 'true', 7);
                 return Promise.resolve(false);
             });
     }
