@@ -573,8 +573,7 @@ const bindCredentialsApiSignIn = (): void => {
                 ...document.querySelectorAll('.js-navigation-sign-in'),
             ],
         }))
-        .then(els => {
-            const { signInLinks } = els;
+        .then(({ signInLinks }) => {
             signInLinks.forEach(signInLink => {
                 signInLink.addEventListener(
                     'click',

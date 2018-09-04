@@ -7,7 +7,7 @@ const CookieNames = {
 };
 
 class IdentityFeatures {
-    promptForSignIn: any;
+    promptForSignIn: boolean;
 
     constructor() {
         this.promptForSignIn =
