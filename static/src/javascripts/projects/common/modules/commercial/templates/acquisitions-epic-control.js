@@ -23,9 +23,9 @@ export const acquisitionsEpicControlTemplate = ({
                 ${appendToLastElement(
                     paragraphs,
                     ` <strong><span class="contributions__highlight">${highlightedText}</span></strong>`
-                ).map(paragraph =>
-                    `<p><em>${paragraph}</em></p>`
-                ).join('')}               
+                )
+                    .map(paragraph => `<p><em>${paragraph}</em></p>`)
+                    .join('')}               
             </div>
     
             ${buttonTemplate}

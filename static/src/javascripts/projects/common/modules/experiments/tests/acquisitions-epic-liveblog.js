@@ -37,7 +37,7 @@ export const acquisitionsEpicLiveblog: EpicABTest = makeABTest({
                     return epicLiveBlogTemplate({
                         copy: liveblogCopy,
                         componentName: variant.options.componentName,
-                        supportURL: variant.options.supportURL
+                        supportURL: variant.options.supportURL,
                     });
                 },
 

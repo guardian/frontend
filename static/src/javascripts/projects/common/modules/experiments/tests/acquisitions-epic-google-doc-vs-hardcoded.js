@@ -29,8 +29,8 @@ export const acquisitionsEpicGoogleDocVsHardcoded: EpicABTest = makeABTest({
             id: 'hardcoded',
             products: [],
             options: {
-                copy: articleCopy
-            }
+                copy: articleCopy,
+            },
         },
     ],
 });
