@@ -54,7 +54,8 @@ export const getBreakpointKey = (): string => {
 export const shouldIncludeAppNexus = (): boolean =>
     geolocationGetSync() === 'AU';
 
-export const shouldIncludeOpenx = (): boolean => geolocationGetSync() === 'UK';
+export const shouldIncludeOpenx = (): boolean => 
+    !['US', 'CA', 'AU', 'NZ'].includes(geolocationGetSync());
 
 export const shouldIncludeTrustX = (): boolean => geolocationGetSync() === 'US';
 
