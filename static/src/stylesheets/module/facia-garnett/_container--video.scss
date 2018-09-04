@@ -466,10 +466,11 @@ $video-width-desktop: 700px;
 .fc-item__video-container {
     .youtube-media-atom {
         z-index: 1;
-    }
 
-    .youtube-media-atom.no-player {
-        z-index: 0;
+        &.no-player,
+        .is-not-modern & {
+            z-index: 0;
+        }
     }
 }
 
