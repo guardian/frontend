@@ -28,7 +28,7 @@ export const acquisitionsEpicControlTemplate = ({
                         paragraph =>
                             `<p class="contributions__paragraph contributions__paragraph--epic">${paragraph}</p>`
                     )
-                    .join('')}               
+                    .join('')}
             </div>
     
             ${buttonTemplate}
