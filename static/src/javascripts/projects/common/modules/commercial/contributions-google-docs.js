@@ -12,10 +12,10 @@ const getGoogleDoc = (url: string): Promise<any> =>
         mode: 'cors',
     });
 
-export const getEpicGoogleDoc: Promise<any> = getGoogleDoc(epicGoogleDocUrl);
-export const getBannerGoogleDoc: Promise<any> = getGoogleDoc(
-    bannerGoogleDocUrl
-);
+export const getEpicGoogleDoc = (): Promise<any> =>
+    getGoogleDoc(epicGoogleDocUrl);
+export const getBannerGoogleDoc = (): Promise<any> =>
+    getGoogleDoc(bannerGoogleDocUrl);
 
 export const googleDocEpicControl = (): Promise<AcquisitionsEpicTemplateCopy> =>
     getGoogleDoc(epicGoogleDocUrl).then(res => getEpicParams(res, 'control'));
