@@ -1,7 +1,7 @@
 package pages
 
 import common.Edition
-import conf.switches.Switches.WeAreHiring
+import conf.switches.Switches.{LotameSwitch, WeAreHiring}
 import experiments.{ActiveExperiments, OldTLSSupportDeprecation}
 import html.HtmlPageHelpers._
 import html.{HtmlPage, Styles}
@@ -45,6 +45,7 @@ object TagIndexHtmlPage extends HtmlPage[StandalonePage] {
       headTag(
         weAreHiring() when WeAreHiring.isSwitchedOn,
         orielScriptTag(),
+        lotameScriptTag() when LotameSwitch.isSwitchedOn,
         titleTag(),
         metaData(),
         styles(allStyles),
