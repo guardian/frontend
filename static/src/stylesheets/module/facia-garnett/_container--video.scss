@@ -473,14 +473,3 @@ $video-width-desktop: 700px;
         }
     }
 }
-
-.fc-item__video-container,
-.video-playlist__item {
-    .youtube-media-atom__iframe:not(.youtube__video-ready) {
-        ~ .youtube-media-atom__overlay {
-            .youtube-media-atom__play-button {
-                visibility: hidden;
-            }
-        }
-    }
-}
