@@ -23,7 +23,7 @@ class AccountCreationFlow extends Component<
     };
 
     render() {
-        return this.state.hasCreatedAccount ? (
+        return !this.state.hasCreatedAccount ? (
             <AccountCreationForm
                 email={this.props.email}
                 csrfToken={this.props.csrfToken}
