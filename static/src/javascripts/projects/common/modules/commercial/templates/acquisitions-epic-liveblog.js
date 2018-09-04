@@ -1,13 +1,17 @@
 // @flow
 import { appendToLastElement } from 'lib/array-utils';
 
-export const epicLiveBlogTemplate = (params: {
+const lastSentenceTemplate = (highlightedText: string, supportURL: string) =>
+    `<span class="contributions__highlight">${highlightedText}</span>
+    <a href="${supportURL}" target="_blank" class="u-underline">Make a contribution</a> - Guardian HQ`;
+
+export const epicLiveBlogTemplate = ({copy, componentName, supportURL}: {
     copy: AcquisitionsEpicTemplateCopy,
     componentName: string,
     supportURL: string,
 }) =>
     `<div class="block block--content is-epic" data-component="${
-        params.componentName
+        componentName
     }">
         <p class="block-time published-time">
             <a href="#" itemprop="url" class="block-time__link">
@@ -17,14 +21,8 @@ export const epicLiveBlogTemplate = (params: {
         </p>
         <div class="block-elements block-elements--no-byline">
             ${appendToLastElement(
-                params.copy.paragraphs,
-                ` <span class="contributions__highlight">${
-                    params.copy.highlightedText
-                }</span> <a href="${
-                    params.supportURL
-                }" target="_blank" class="u-underline">Make a contribution</a> - Guardian HQ`
-            )
-                .map(paragraph => `<p><em>${paragraph}</em></p>`)
-                .join('')}        
+                copy.paragraphs,
+                ` ${lastSentenceTemplate(copy.highlightedText, supportURL)}`
+            ).map(paragraph => `<p><em>${paragraph}</em></p>`).join('')}
         </div>
     </div>`;
