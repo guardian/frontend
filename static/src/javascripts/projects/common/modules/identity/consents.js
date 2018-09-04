@@ -33,10 +33,12 @@ const UNSUBSCRIPTION_SUCCESS_MESSAGE =
     "You've been unsubscribed from all Guardian marketing newsletters and emails.";
 const ERR_MALFORMED_HTML = 'Something went wrong';
 
-const updateConsent = (consent: {
+type Consent = {
     id: string,
     consented: boolean,
-}): Promise<void> =>
+};
+
+const updateConsent = (consent: Consent): Promise<void> =>
     reqwest({
         url: `${config.get('page.idApiUrl')}/users/me/consents`,
         method: 'PATCH',
@@ -80,7 +82,7 @@ const submitNewsletterAction = (
 
 const buildConsentUpdatePayload = (
     fields: NodeList<any> = new NodeList()
-): { id: string, consented: boolean } => {
+): Consent => {
     const consent = {};
     [...fields].forEach((field: HTMLInputElement) => {
         switch (field.type) {
