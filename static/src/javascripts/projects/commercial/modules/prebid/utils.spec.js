@@ -63,8 +63,16 @@ describe('Utils', () => {
         expect(shouldIncludeOpenx()).toBe(true);
     });
 
-    test('shouldIncludeOpenx should otherwise return false', () => {
-        const testGeos = ['FK', 'GI', 'GG', 'IM', 'JE', 'SH', 'CA', 'US', 'AU'];
+    test('shouldIncludeOpenx should return true if within ROW region', () => {
+        const testGeos = ['FK', 'GI', 'GG', 'IM', 'JE', 'SH', 'IE'];
+        for (let i = 0; i < testGeos.length; i += 1) {
+            getSync.mockReturnValueOnce(testGeos[i]);
+            expect(shouldIncludeOpenx()).toBe(true);
+        }
+    });
+
+    test('shouldIncludeOpenx should return false if within AU/US region', () => {
+        const testGeos = ['NZ', 'CA', 'US', 'AU'];
         for (let i = 0; i < testGeos.length; i += 1) {
             getSync.mockReturnValueOnce(testGeos[i]);
             expect(shouldIncludeOpenx()).toBe(false);
