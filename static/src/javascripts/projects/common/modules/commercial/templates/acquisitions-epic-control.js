@@ -24,7 +24,7 @@ export const acquisitionsEpicControlTemplate = ({
                     paragraphs,
                     ` <strong><span class="contributions__highlight">${highlightedText}</span></strong>`
                 )
-                    .map(paragraph => `<p><em>${paragraph}</em></p>`)
+                    .map(paragraph => `<p class="contributions__paragraph contributions__paragraph--epic">${paragraph}</p>`)
                     .join('')}               
             </div>
     
