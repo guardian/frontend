@@ -248,10 +248,9 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
 
   private object JsonFront{
     def apply(faciaPage: PressedPage)(implicit request: RequestHeader): RevalidatableResult = JsonComponent(
-        "html" -> views.html.fragments.frontBody(faciaPage),
-        "config" -> Json.parse(templates.js.javaScriptConfig(faciaPage).body)
-      )
-
+      "html" -> views.html.fragments.frontBody(faciaPage),
+      "config" -> Json.parse(templates.js.javaScriptConfig(faciaPage).body)
+    )
   }
 
   private def getPressedCollection(collectionId: String)(implicit request: RequestHeader): Future[Option[PressedCollection]] =
