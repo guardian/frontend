@@ -14,7 +14,6 @@ const init = (start: () => void): Promise<void> => {
     }
 
     const promiseArray = [
-        // loadScript(`//tags.crwdcntrl.net/c/12666/cc.js`),
         // This will inject OzoneLotameData in the window object
         // to be used by Ozone bid adapters.
         ...(edition === 'UK' || edition === 'INT'
@@ -33,10 +32,16 @@ const init = (start: () => void): Promise<void> => {
             }
         }),
     ];
-    return promiseArray.reduce(
-        (current, next) => current.then(() => next),
-        Promise.resolve()
-    );
+    return promiseArray
+        .reduce((current, next) => current.then(() => next), Promise.resolve())
+        .then(
+            () => {},
+            error => {
+                // Lotame fails to load 0.04% of the time. We dont
+                // want to pollute our sentry
+                console.log('Failed to extract lotame data:', error);
+            }
+        );
 };
 
 export { init };
