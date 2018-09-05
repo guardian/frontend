@@ -78,11 +78,11 @@ const persistResponse = (JsonResponse: () => void) => {
             adFreeDataIsPresent() &&
             !JsonResponse.adFree &&
             !forcedAdFreeMode &&
-            !JsonResponse.contectAccess.digitalPack
+            !JsonResponse.contentAccess.digitalPack
         ) {
             removeCookie(AD_FREE_USER_COOKIE);
         }
-        if (JsonResponse.adFree || JsonResponse.contectAccess.digitalPack) {
+        if (JsonResponse.adFree || JsonResponse.contentAccess.digitalPack) {
             addCookie(AD_FREE_USER_COOKIE, timeInDaysFromNow(2));
         }
     }
