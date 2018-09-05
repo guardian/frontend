@@ -57,9 +57,9 @@ class AuthenticationController(
          val authResponse = signInService.getCookies(api.authBrowser(emailPassword, idRequest.trackingData), rememberMe = false)
          authResponse.map {
            case Right(cookies) =>
-             Cors(NoCache(Ok("{}")), fallbackAllowOrigin = fallbackAccessControlOrigin).withCookies(cookies: _*)
+             Cors(NoCache(Ok("{}")), fallbackAllowOrigin = Some(fallbackAccessControlOrigin)).withCookies(cookies: _*)
            case Left(errors) =>
-             Cors(NoCache(InternalServerError(Json.toJson(errors))), fallbackAllowOrigin = fallbackAccessControlOrigin)
+             Cors(NoCache(InternalServerError(Json.toJson(errors))), fallbackAllowOrigin = Some(fallbackAccessControlOrigin))
          }
        }
     )
