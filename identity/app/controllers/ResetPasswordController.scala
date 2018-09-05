@@ -125,9 +125,11 @@ class ResetPasswordController(
   def renderPasswordResetConfirmation(returnUrl: Option[String]): Action[AnyContent] = Action{ implicit request =>
     val idRequest = idRequestParser(request)
     val userIsLoggedIn = authenticationService.userIsFullyAuthenticated(request)
-    Ok(IdentityHtmlPage.html(
-      views.html.password.passwordResetConfirmation(page, idRequest, idUrlBuilder, userIsLoggedIn, returnUrl)
-    )(page, request, context))
+    DiscardingIdentityCookies(
+      Ok(IdentityHtmlPage.html(
+        views.html.password.passwordResetConfirmation(page, idRequest, idUrlBuilder, userIsLoggedIn, returnUrl)
+      )(page, request, context))
+    )
   }
 
   def processUpdatePasswordToken(token : String, returnUrl: Option[String]): Action[AnyContent] = Action.async { implicit request =>

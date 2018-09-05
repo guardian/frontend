@@ -581,9 +581,9 @@ const bindCredentialsApiSignIn = (): void => {
                         e.preventDefault();
                         signInWithSavedCredentials().then(wasSignedIn => {
                             if (!wasSignedIn) {
-                                window.location = signInLink.getAttribute(
-                                    'href'
-                                );
+                                window.location =
+                                    signInLink.getAttribute('href') ||
+                                    '/signin';
                             }
                             return showMyAccountIfNecessary();
                         });
