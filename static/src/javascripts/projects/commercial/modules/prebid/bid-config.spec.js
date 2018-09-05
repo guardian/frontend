@@ -21,6 +21,7 @@ import {
     getRandomIntInclusive as getRandomIntInclusive_,
     shouldIncludeAdYouLike as shouldIncludeAdYouLike_,
     shouldIncludeAppNexus as shouldIncludeAppNexus_,
+    shouldIncludeOpenx as shouldIncludeOpenx_,
     shouldIncludeTrustX as shouldIncludeTrustX_,
     stripMobileSuffix as stripMobileSuffix_,
 } from './utils';
@@ -34,6 +35,7 @@ const containsMpuOrDmpu: any = containsMpuOrDmpu_;
 const getRandomIntInclusive: any = getRandomIntInclusive_;
 const shouldIncludeAdYouLike: any = shouldIncludeAdYouLike_;
 const shouldIncludeAppNexus: any = shouldIncludeAppNexus_;
+const shouldIncludeOpenx: any = shouldIncludeOpenx_;
 const shouldIncludeTrustX: any = shouldIncludeTrustX_;
 const stripMobileSuffix: any = stripMobileSuffix_;
 const getBreakpointKey: any = getBreakpointKey_;
@@ -67,6 +69,7 @@ jest.mock('common/modules/experiments/utils');
 /* eslint-disable guardian-frontend/no-direct-access-config */
 const resetConfig = () => {
     config.set('switches.prebidAppnexus', true);
+    config.set('switches.prebidOpenx', true);
     config.set('switches.prebidImproveDigital', true);
     config.set('switches.prebidIndexExchange', true);
     config.set('switches.prebidSonobi', true);
@@ -584,6 +587,7 @@ describe('bids', () => {
         getRandomIntInclusive.mockReturnValue(5);
         shouldIncludeAdYouLike.mockReturnValue(true);
         shouldIncludeAppNexus.mockReturnValue(false);
+        shouldIncludeAppNexus.mockReturnValue(false);
         shouldIncludeTrustX.mockReturnValue(false);
         stripMobileSuffix.mockImplementation(str => str);
         getVariant.mockReturnValue(CommercialPrebidAdYouLike.variants[0]);
@@ -648,6 +652,18 @@ describe('bids', () => {
             'improvedigital',
             'xhb',
             'adyoulike',
+        ]);
+    });
+
+    test('should include OpenX directly if in target geolocation', () => {
+        shouldIncludeOpenx.mockReturnValue(true);
+        expect(bidders()).toEqual([
+            'ix',
+            'sonobi',
+            'improvedigital',
+            'xhb',
+            'adyoulike',
+            'oxd',
         ]);
     });
 

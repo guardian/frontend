@@ -410,6 +410,16 @@ trait PrebidSwitches {
     exposeClientSide = true
   )
 
+    val prebidOpenx: Switch = Switch(
+    group = Commercial,
+    name = "prebid-openx",
+    description = "Include OpenX adapter in Prebid auctions",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
   val prebidTrustx: Switch = Switch(
     group = CommercialPrebid,
     name = "prebid-trustx",

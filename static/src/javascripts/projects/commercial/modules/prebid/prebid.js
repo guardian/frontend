@@ -196,6 +196,7 @@ class PrebidService {
                                 const bidResponses = window.pbjs.getBidResponses()[
                                     advert.id
                                 ];
+
                                 const cpm: number = getHighestCpm(
                                     (bidResponses && bidResponses.bids) || []
                                 );

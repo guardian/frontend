@@ -40,6 +40,7 @@ import {
     isExcludedGeolocation,
     shouldIncludeAdYouLike,
     shouldIncludeAppNexus,
+    shouldIncludeOpenx,
     shouldIncludeTrustX,
     stripMobileSuffix,
     stripTrailingNumbersAbove1,
@@ -312,6 +313,31 @@ const appNexusBidder: PrebidBidder = {
     }),
 };
 
+const openxClientSideBidder: PrebidBidder = {
+    name: 'oxd',
+    switchName: 'prebidOpenx',
+    bidParams: (): PrebidOpenXParams => {
+        switch (config.get('page.edition')) {
+            case 'US':
+                return {
+                    delDomain: 'guardian-us-d.openx.net',
+                    unit: '540279544',
+                };
+            case 'AU':
+                return {
+                    delDomain: 'guardian-aus-d.openx.net',
+                    unit: '540279542',
+                };
+            default:
+                // UK and ROW
+                return {
+                    delDomain: 'guardian-d.openx.net',
+                    unit: '540279541',
+                };
+        }
+    },
+};
+
 const sonobiBidder: PrebidBidder = {
     name: 'sonobi',
     switchName: 'prebidSonobi',
@@ -460,6 +486,7 @@ const currentBidders: (PrebidSize[]) => PrebidBidder[] = slotSizes => {
         improveDigitalBidder,
         xaxisBidder,
         ...(shouldIncludeAdYouLike(slotSizes) ? [adYouLikeBidder] : []),
+        ...(shouldIncludeOpenx() ? [openxClientSideBidder] : []),
     ];
 
     const allBidders = indexExchangeBidders(slotSizes)
