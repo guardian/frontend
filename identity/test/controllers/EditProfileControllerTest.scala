@@ -72,7 +72,6 @@ import scala.concurrent.Future
     when(idRequest.returnUrl) thenReturn None
 
     when(api.userEmails(MockitoMatchers.anyString(), MockitoMatchers.any[TrackingData])) thenReturn Future.successful(Right(Subscriber("Text", List(EmailList("37")))))
-    when(api.updateUserEmails(MockitoMatchers.anyString(), MockitoMatchers.any[Subscriber], MockitoMatchers.any[Auth], MockitoMatchers.any[TrackingData])) thenReturn Future.successful(Right(()))
 
     lazy val controller = new EditProfileController(
       idUrlBuilder,
@@ -442,25 +441,19 @@ import scala.concurrent.Future
     "saveEmailPreferences method is called with valid form body" should {
       "respond with success body if IDAPI post email endpoint returns 200" in new EditProfileFixture {
         val fakeRequestEmailPrefs = FakeCSRFRequest(csrfAddToken)
-        when(api.updateUserEmails(MockitoMatchers.anyString(), MockitoMatchers.any[Subscriber], MockitoMatchers.any[Auth], MockitoMatchers.any[TrackingData])) thenReturn Future.successful(Right(()))
 
         val result = controller.saveEmailPreferencesAjax().apply(fakeRequestEmailPrefs)
         status(result) should be(200)
         contentAsString(result) should include ("updated")
-
-        verify(api).updateUserEmails(userId, Subscriber("HTML", Nil), testAuth, trackingData)
       }
 
       "respond with error body if IDAPI post email endpoint returns error" in new EditProfileFixture {
         val fakeRequestEmailPrefs = FakeCSRFRequest(csrfAddToken)
         val errors = List(Error("Test message", "Test description", 500))
-        when(api.updateUserEmails(MockitoMatchers.anyString(), MockitoMatchers.any[Subscriber], MockitoMatchers.any[Auth], MockitoMatchers.any[TrackingData])) thenReturn Future.successful(Left(errors))
 
         val result = controller.saveEmailPreferencesAjax().apply(fakeRequestEmailPrefs)
         status(result) should not be(200)
         contentAsString(result) should include ("There was an error saving your preferences")
-
-        verify(api).updateUserEmails(userId, Subscriber("HTML", Nil), testAuth, trackingData)
       }
     }
 

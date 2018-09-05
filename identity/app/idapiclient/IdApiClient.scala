@@ -130,9 +130,6 @@ class IdApiClient(
     delete(urlJoin("useremails", userId, "subscriptions"), Some(auth), Some(trackingParameters), Some(write(emailList))) map extractUnit
   }
 
-  def updateUserEmails(userId: String, subscriber: Subscriber, auth: Auth, trackingParameters: TrackingData): Future[Response[Unit]] =
-    post(urlJoin("useremails", userId), Some(auth), Some(trackingParameters), Some(write(subscriber))) map extractUnit
-
   def validateEmail(token: String, trackingParameters: TrackingData): Future[Response[Unit]] =
     post(urlJoin("user","validate-email", token), trackingParameters = Some(trackingParameters)) map extractUnit
 
