@@ -140,7 +140,6 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
 
     futureResult.failed.foreach { t: Throwable => log.error(s"Failed rendering $path with $t", t)}
     futureResult
-
   }
 
   private def renderEmail(faciaPage: PressedPage)(implicit request: RequestHeader) = {
@@ -248,12 +247,11 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
   }
 
   private object JsonFront{
-    def apply(faciaPage: PressedPage)(implicit request: RequestHeader): RevalidatableResult = {
-      JsonComponent(
+    def apply(faciaPage: PressedPage)(implicit request: RequestHeader): RevalidatableResult = JsonComponent(
         "html" -> views.html.fragments.frontBody(faciaPage),
         "config" -> Json.parse(templates.js.javaScriptConfig(faciaPage).body)
       )
-    }
+
   }
 
   private def getPressedCollection(collectionId: String)(implicit request: RequestHeader): Future[Option[PressedCollection]] =
