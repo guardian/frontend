@@ -83,18 +83,11 @@ class ChangePasswordController(
   def renderPasswordConfirmation(returnUrl: Option[String]): Action[AnyContent] = Action { implicit request =>
     val idRequest = idRequestParser(request)
     val userIsLoggedIn = authenticationService.userIsFullyAuthenticated(request)
-    NoCache(Ok(
-      IdentityHtmlPage.html(
-        views.html.password.passwordResetConfirmation(page, idRequest, idUrlBuilder, userIsLoggedIn, returnUrl)
-      )(page, request, context)
-    ).discardingCookies(
-      DiscardingCookie("SC_GU_U"), DiscardingCookie("GU_U")
-    ).withCookies(
-      Cookie(
-        "GU_SO",
-        Instant.now().getEpochSecond.toString,
-        Some(Instant.now().plus(90, ChronoUnit.DAYS).getEpochSecond.toInt),
-        secure = true
+    NoCache(DiscardingIdentityCookies(
+      Ok(
+        IdentityHtmlPage.html(
+          views.html.password.passwordResetConfirmation(page, idRequest, idUrlBuilder, userIsLoggedIn, returnUrl)
+        )(page, request, context)
       )
     ))
   }
