@@ -1,5 +1,8 @@
 package controllers
 
+import java.time.temporal.{ChronoUnit, TemporalUnit}
+import java.time.{Instant, LocalDateTime, ZoneOffset}
+
 import common.ImplicitControllerExecutionContext
 import model.{ApplicationContext, IdentityPage, NoCache}
 import play.api.mvc._
@@ -15,6 +18,7 @@ import play.api.i18n.{Messages, MessagesProvider}
 
 import scala.concurrent.Future
 import idapiclient.requests.PasswordUpdate
+import org.joda.time.DateTime
 import pages.IdentityHtmlPage
 import play.api.http.HttpConfiguration
 
@@ -83,6 +87,15 @@ class ChangePasswordController(
       IdentityHtmlPage.html(
         views.html.password.passwordResetConfirmation(page, idRequest, idUrlBuilder, userIsLoggedIn, returnUrl)
       )(page, request, context)
+    ).discardingCookies(
+      DiscardingCookie("SC_GU_U"), DiscardingCookie("GU_U")
+    ).withCookies(
+      Cookie(
+        "GU_SO",
+        Instant.now().getEpochSecond.toString,
+        Some(Instant.now().plus(90, ChronoUnit.DAYS).getEpochSecond.toInt),
+        secure = true
+      )
     ))
   }
 
