@@ -72,7 +72,6 @@ import scala.concurrent.Future
     when(returnUrlVerifier.defaultReturnUrl) thenReturn "http://1234.67"
     when(returnUrlVerifier.getVerifiedReturnUrl(any[RequestHeader])) thenReturn None
     when(api.userEmails(anyString(), any[TrackingData])) thenReturn Future.successful(Right(Subscriber("Text", List(EmailList("37")))))
-    when(api.updateUserEmails(anyString(), any[Subscriber], any[Auth], any[TrackingData])) thenReturn Future.successful(Right(()))
 
     lazy val controller = new EditProfileController(
       idUrlBuilder,

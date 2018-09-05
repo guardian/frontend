@@ -57,10 +57,7 @@ class NewsletterService(
           api.addSubscription(userId, EmailList(id), auth, trackingParameters)
         }
 
-        val newSubscriber = Subscriber("HTML", Nil) //TODO: remove the htmlPreference property from Subscriber as no longer used
-        val updatePreferencesResponse = api.updateUserEmails(userId, newSubscriber, auth, trackingParameters)
-
-        Future.sequence(updatePreferencesResponse :: unsubscribeResponse ++ subscribeResponse).map { responses =>
+        Future.sequence(unsubscribeResponse ++ subscribeResponse).map { responses =>
           if (responses.exists(_.isLeft)) {
             form.withGlobalError("There was an error saving your preferences")
           } else {
