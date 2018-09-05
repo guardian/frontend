@@ -78,7 +78,6 @@
     }
 }
 
-.youtube-media-atom:not(.no-player) .youtube-media-atom__iframe:not(.youtube__video-ready) ~ .youtube-media-atom__overlay,
 .youtube-media-atom__iframe.youtube__video-ended ~ .youtube-media-atom__overlay {
     @include hide;
 }
