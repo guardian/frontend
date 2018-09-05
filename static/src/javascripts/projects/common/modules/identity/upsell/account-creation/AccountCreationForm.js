@@ -92,28 +92,30 @@ class AccountCreationForm extends Component<
                 </h1>
                 <div>
                     <ul className="identity-forms-fields">
-                        <li id="email_field" aria-hidden>
-                            <label
-                                className="identity-forms-input-wrap"
-                                htmlFor="email">
-                                <div className="identity-forms-label">
-                                    Email
-                                </div>
-                                <input
-                                    className="identity-forms-input"
-                                    type="email"
-                                    id="email"
-                                    value={email}
-                                    autoComplete="off"
-                                    autoCapitalize="off"
-                                    autoCorrect="off"
-                                    spellCheck="false"
-                                    aria-required="true"
-                                    required
-                                    disabled
-                                />
-                            </label>
-                        </li>
+                        {email && (
+                            <li id="email_field" aria-hidden>
+                                <label
+                                    className="identity-forms-input-wrap"
+                                    htmlFor="email">
+                                    <div className="identity-forms-label">
+                                        Email
+                                    </div>
+                                    <input
+                                        className="identity-forms-input"
+                                        type="email"
+                                        id="email"
+                                        value={email}
+                                        autoComplete="off"
+                                        autoCapitalize="off"
+                                        autoCorrect="off"
+                                        spellCheck="false"
+                                        aria-required="true"
+                                        required
+                                        disabled
+                                    />
+                                </label>
+                            </li>
+                        )}
                         <li id="password_field">
                             <label
                                 className="identity-forms-input-wrap"
