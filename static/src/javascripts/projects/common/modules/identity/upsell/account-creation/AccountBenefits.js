@@ -42,7 +42,7 @@ const actionableBenefits: ActionableBenefit[] = [
         cta: [
             {
                 name: `Find your favourite newsletter`,
-                link: `https://${config.get('page.host')}/email-newsletters`,
+                link: `${config.get('page.host')}/email-newsletters`,
             },
         ],
     },
@@ -62,7 +62,7 @@ const actionableBenefits: ActionableBenefit[] = [
         cta: [
             {
                 name: `Explore our apps`,
-                link: `https://${config.get(
+                link: `${config.get(
                     'page.host'
                 )}/technology/ng-interactive/2018/may/15/the-guardian-app`,
             },
