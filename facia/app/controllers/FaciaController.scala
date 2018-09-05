@@ -110,8 +110,18 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
   }
 
   private[controllers] def renderFrontPressResult(path: String)(implicit request: RequestHeader) = {
-    val futureResult = frontJsonFapi.get(path, liteRequestType).flatMap {
-      case Some(faciaPage) =>
+    val futureFaciaPage: Future[Option[PressedPage]] = frontJsonFapi.get(path, liteRequestType).flatMap {
+        case Some(faciaPage: PressedPage) =>
+          if(faciaPage.collections.isEmpty && liteRequestType == LiteAdFreeType) {
+            log.info(s"Nothing in the collection for ${faciaPage.id} so making a LiteType request.")
+            frontJsonFapi.get(path, LiteType)
+          }
+          else Future.successful(Some(faciaPage))
+        case None => Future.successful(None)
+    }
+
+    val futureResult = futureFaciaPage.flatMap {
+      case Some(faciaPage: PressedPage) =>
         successful(Cached(CacheTime.Facia)(
           if (request.isRss) {
             val body = TrailsToRss.fromPressedPage(faciaPage)
@@ -130,6 +140,7 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
 
     futureResult.failed.foreach { t: Throwable => log.error(s"Failed rendering $path with $t", t)}
     futureResult
+
   }
 
   private def renderEmail(faciaPage: PressedPage)(implicit request: RequestHeader) = {
@@ -237,10 +248,12 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
   }
 
   private object JsonFront{
-    def apply(faciaPage: PressedPage)(implicit request: RequestHeader): RevalidatableResult = JsonComponent(
-      "html" -> views.html.fragments.frontBody(faciaPage),
-      "config" -> Json.parse(templates.js.javaScriptConfig(faciaPage).body)
-    )
+    def apply(faciaPage: PressedPage)(implicit request: RequestHeader): RevalidatableResult = {
+      JsonComponent(
+        "html" -> views.html.fragments.frontBody(faciaPage),
+        "config" -> Json.parse(templates.js.javaScriptConfig(faciaPage).body)
+      )
+    }
   }
 
   private def getPressedCollection(collectionId: String)(implicit request: RequestHeader): Future[Option[PressedCollection]] =

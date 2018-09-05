@@ -319,6 +319,7 @@ object Front extends implicits.Collections {
                                  edition: Edition,
                                  initialContext: ContainerLayoutContext = ContainerLayoutContext.empty,
                                  adFree: Boolean): Seq[FaciaContainer] = {
+    println(s"making a deduped front and adfree is ${adFree}")
 
     @tailrec
     def faciaContainers(collections: List[PressedCollection],
