@@ -7,7 +7,7 @@ import play.api.mvc.{Cookie, DiscardingCookie, Result}
 
 object DiscardingIdentityCookies {
   def apply(result: Result): Result = result.discardingCookies(
-    DiscardingCookie("SC_GU_U"), DiscardingCookie("GU_U"), DiscardingCookie("SC_GU_RP")
+    DiscardingCookie("SC_GU_U", secure = true), DiscardingCookie("GU_U", secure = true), DiscardingCookie("SC_GU_RP", secure = true)
   ).withCookies(
     Cookie(
       "GU_SO",
