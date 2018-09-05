@@ -7,11 +7,13 @@ import play.api.test.{FakeHeaders, FakeRequest}
 import play.api.test.Helpers._
 
 class CorsTest extends FlatSpec with Matchers {
-  "Cors Helper" should "return forbidden for unsupported origins" in {
+  "Cors Helper" should "not provide Cors response headers for unsupported origins" in {
     // This test is here to show that we really do accept any origin outside of the whitelist. We should change this policy.
     val fakeHeaders = FakeHeaders(List("Origin" -> "unknown.origin.com"))
     val fakeRequest = FakeRequest(POST, "/css", fakeHeaders, AnyContentAsEmpty)
-    Cors(NoContent)(fakeRequest).header.status shouldBe 403
+    Cors(NoContent)(fakeRequest).header.headers.get("Access-Control-Allow-Origin") shouldBe None
+    Cors(NoContent)(fakeRequest).header.headers.get("Access-Control-Allow-Credentials") shouldBe None
+    Cors(NoContent)(fakeRequest).header.headers.get("Access-Control-Allow-Headers") shouldBe None
   }
 
   it should "provide the appropriate standard Cors response headers with an accepted Origin" in {
@@ -23,9 +25,9 @@ class CorsTest extends FlatSpec with Matchers {
   it should "not provide Cors response headers if the request has no Origin" in {
     val fakeHeaders = FakeHeaders(Nil)
     val fakeRequest = FakeRequest(POST, "/css", fakeHeaders, AnyContentAsEmpty)
-    Cors(NoContent)(fakeRequest).header.headers should not contain ("Access-Control-Allow-Origin" -> "*")
-    Cors(NoContent)(fakeRequest).header.headers should not contain ("Access-Control-Allow-Credentials" -> "true")
-    Cors(NoContent)(fakeRequest).header.headers should not contain ("Access-Control-Allow-Headers" -> "X-Requested-With,Origin,Accept,Content-Type")
+    Cors(NoContent)(fakeRequest).header.headers.get("Access-Control-Allow-Origin") shouldBe None
+    Cors(NoContent)(fakeRequest).header.headers.get("Access-Control-Allow-Credentials") shouldBe None
+    Cors(NoContent)(fakeRequest).header.headers.get("Access-Control-Allow-Headers") shouldBe None
   }
 
   it should "provide Cors response with allowed methods" in {

@@ -12,21 +12,20 @@ object Cors extends Results with implicits.Requests {
 
     val responseHeaders = (defaultAllowHeaders ++ request.headers.get("Access-Control-Request-Headers").toList) mkString ","
 
-    request.headers.get("Origin") match {
+    def isWhitelisted(origin: String): Boolean = ajax.corsOrigins.exists(_ == origin)
+
+    request.headers.get("Origin")
+      .filter(isWhitelisted)
+      .orElse(fallbackAllowOrigin) match {
+
+      case Some(allowedOrigin) =>
+        val headers = allowedMethods.map("Access-Control-Allow-Methods" -> _).toList ++ List(
+          "Access-Control-Allow-Origin" -> allowedOrigin,
+          "Access-Control-Allow-Headers" -> responseHeaders,
+          "Access-Control-Allow-Credentials" -> "true")
+
+        result.withHeaders(headers: _*)
       case None => result
-      case Some(requestOrigin) =>
-        val allowedOrigin = ajax.corsOrigins.find(_ == requestOrigin).orElse(fallbackAllowOrigin)
-
-        allowedOrigin match {
-          case Some(origin) =>
-            val headers = allowedMethods.map("Access-Control-Allow-Methods" -> _).toList ++ List(
-              "Access-Control-Allow-Origin" -> origin,
-              "Access-Control-Allow-Headers" -> responseHeaders,
-              "Access-Control-Allow-Credentials" -> "true")
-
-            result.withHeaders(headers: _*)
-          case None => Forbidden("Unsupported CORS origin")
-        }
     }
   }
 }
