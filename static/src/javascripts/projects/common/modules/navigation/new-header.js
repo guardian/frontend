@@ -2,14 +2,14 @@
 
 import debounce from 'lodash/functions/debounce';
 import ophan from 'ophan/ng';
-import {isBreakpoint} from 'lib/detect';
+import { isBreakpoint } from 'lib/detect';
 import mediator from 'lib/mediator';
 import fastdom from 'lib/fastdom-promise';
-import {local} from 'lib/storage';
-import {scrollToElement} from 'lib/scroller';
-import {addEventListener} from 'lib/events';
-import {signInWithSavedCredentials} from 'common/modules/identity/credentials-api-sign-in';
-import {showMyAccountIfNecessary} from './user-account';
+import { local } from 'lib/storage';
+import { scrollToElement } from 'lib/scroller';
+import { addEventListener } from 'lib/events';
+import { signInWithSavedCredentials } from 'common/modules/identity/credentials-api-sign-in';
+import { showMyAccountIfNecessary } from './user-account';
 
 type MenuAndTriggerEls = {
     menu: HTMLElement,
@@ -581,9 +581,9 @@ const bindCredentialsApiSignIn = (): void => {
                         e.preventDefault();
                         signInWithSavedCredentials().then(wasSignedIn => {
                             if (!wasSignedIn) {
-                                window.location = signInLink.getAttribute(
-                                    'href'
-                                ) || '/signin';
+                                window.location =
+                                    signInLink.getAttribute('href') ||
+                                    '/signin';
                             }
                             return showMyAccountIfNecessary();
                         });
