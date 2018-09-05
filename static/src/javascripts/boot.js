@@ -36,6 +36,11 @@ const go = () => {
             });
         }
 
+        // Init preact devtools
+        if (process.env.NODE_ENV !== 'production') {
+            import('preact/devtools');
+        }
+
         // Start downloading these ASAP
 
         // eslint-disable-next-line no-nested-ternary
