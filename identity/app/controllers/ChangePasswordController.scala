@@ -1,8 +1,5 @@
 package controllers
 
-import java.time.temporal.{ChronoUnit, TemporalUnit}
-import java.time.{Instant, LocalDateTime, ZoneOffset}
-
 import common.ImplicitControllerExecutionContext
 import model.{ApplicationContext, IdentityPage, NoCache}
 import play.api.mvc._
@@ -18,7 +15,6 @@ import play.api.i18n.{Messages, MessagesProvider}
 
 import scala.concurrent.Future
 import idapiclient.requests.PasswordUpdate
-import org.joda.time.DateTime
 import pages.IdentityHtmlPage
 import play.api.http.HttpConfiguration
 
