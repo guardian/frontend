@@ -26,18 +26,17 @@
 
 .manage-account__button {
     $font-size: 5;
-    $height: $gs-baseline * 3;
+    $height: $gs-baseline * 3.5;
     $padding-vertical: ($height - get-line-height(textSans, $font-size))/2;
-    $padding-horizontal: $gs-gutter * .9;
+    $padding-horizontal: $gs-gutter;
     @include fs-textSans($font-size);
-    @include identity-button($brightness-7)
+    @include identity-button($brightness-7);
     height: $height;
     border-radius: 100px;
     border: 0;
     cursor: pointer;
     float: left;
     padding: $padding-vertical * 1.1 $padding-horizontal $padding-vertical * .9;
-    min-width: $gs-baseline * 14;
     white-space: nowrap;
     text-overflow: clip;
     appearance: none;
@@ -46,7 +45,6 @@
     -ms-appearance: none;
     box-sizing: border-box;
     transition: .15s linear;
-    text-align: left;
 
     &, & > .manage-account__button-flexwrap {
         justify-content: space-between;
@@ -148,7 +146,8 @@
 }
 
 .manage-account__button--main {
-    @include identity-button($highlight-main)
+    @include identity-button($highlight-main);
+    font-weight: 600;
 }
 
 .manage-account__button--secondary {

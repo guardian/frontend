@@ -139,6 +139,7 @@ trait ConsentsJourney
 
         consentCompleteView(
           page,
+          request.user,
           returnUrl,
           guestPasswordSetForm
         )
@@ -147,6 +148,7 @@ trait ConsentsJourney
 
   private def consentCompleteView(
    page: IdentityPage,
+   user: User,
    returnUrl : String,
    guestPasswordSetForm: Option[Form[GuestPasswordFormData]])(implicit request: AuthRequest[AnyContent]): Future[Result] = {
 
@@ -156,6 +158,7 @@ trait ConsentsJourney
           idRequestParser(request),
           idUrlBuilder,
           returnUrl,
+          user.primaryEmailAddress,
           emailFilledForm,
           guestPasswordSetForm.getOrElse(GuestPasswordForm.form()),
           newsletterService.getEmailSubscriptions(emailFilledForm),
