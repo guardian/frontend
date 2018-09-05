@@ -18,12 +18,11 @@ import containerWaveCLarge from 'svgs/journalism/podcast-container/waveform-c.sv
 import containerWaveCTablet from 'svgs/journalism/podcast-container/waveform-c-tablet.svg';
 import containerWaveCMobile from 'svgs/journalism/podcast-container/waveform-c-mobile.svg';
 
-const headline =
-    'Behemoth, bully, thief: how the English language is taking over the planet ';
+const headline = 'Denialism: what drives people to reject the truth';
 const standfirst =
-    'No language in history has dominated the world quite like English does today. Is there any point in resisting?';
+    'From vaccines to climate change to genocide, a new age of denialism is upon us. Why have we failed to understand it?';
 const episodeUrl =
-    '/news/audio/2018/aug/13/behemoth-bully-thief-how-the-english-language-is-taking-over-the-planet-podcast';
+    '/news/audio/2018/sep/03/denialism-what-drives-people-to-reject-the-truth-podcast';
 const seriesUrl = '/news/series/the-audio-long-read';
 const urlWithCampaign = (url: string, variant: string) =>
     `${url}?CMP=podcast-container-${variant}`;
@@ -142,7 +141,7 @@ const trackImpression = (name: string) => (track: () => void): void => {
 export const PodcastContainer = {
     id: 'PodcastContainer',
     start: '2018-08-21',
-    expiry: '2018-09-13',
+    expiry: '2018-09-23',
     author: 'Tom Forbes',
     description: 'Test designs for a /uk podcasts container',
     audience: 1,

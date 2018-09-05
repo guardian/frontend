@@ -18,7 +18,7 @@ trait JournalismSwitches {
     "ab-podcast-container",
     "Test designs for a /uk podcasts container",
     owners = Seq(Owner.withName("journalism team")),
-    safeState = On,
+    safeState = Off,
     sellByDate = never,
     exposeClientSide = true
   )
