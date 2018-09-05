@@ -41,10 +41,43 @@ class RedirectService(implicit executionContext: ExecutionContext) extends Loggi
   // protocol fixed to http so that lookups to dynamo find existing
   // redirects which were originally all stored as http://...
   private val expectedSourceHost = "http://www.theguardian.com"
+  private val CombinerTags = """^(/[\w\d-/]+)\+([\w\d-/]+)$""".r
   private lazy val tableName = if (Configuration.environment.isProd) "redirects" else "redirects-CODE"
 
 
-  def destinationFor(source: String): Future[Option[Destination]] =
+  def destinationForCombiner(source: String, tag1: String, tag2: String) : Future[Option[Destination]] = {
+    val rssSuffix: String = if (tag2.endsWith("/rss")) "/rss" else ""
+    // for paths such as /lifeandstyle/restaurants+lifeandstyle/wine/rss, we want to look up
+    // /lifeandstyle/food and /lifeandstyle/wine individually - so the second tag needs cleaning
+    val tag2Cleaned = s"/${tag2.replace("/rss", "")}"
+    // look up each tag to check if there is a redirect set for it
+    val newDestinations = for {
+      d1 <- lookupRedirectDestination(tag1)
+      d2 <- lookupRedirectDestination(tag2Cleaned)
+    } yield (d1.map(_.location), d2.map(_.location))
+    // if redirects exist, generate a new combiner url including the redirects
+    newDestinations.map{ dests => {
+      val tag1RedirectLocation = dests._1.getOrElse(tag1)
+      val tag2RedirectTag = dests._2.map(s => s.replace("https://www.theguardian.com/", "")).getOrElse(tag2Cleaned)
+
+      val destination = s"$tag1RedirectLocation+$tag2RedirectTag$rssSuffix"
+      if (destination != source) {
+        Some(PermanentRedirect(source, destination))
+      } else {
+        None
+      }
+    }}
+  }
+
+  def getDestination(source: String): Future[Option[Destination]] = {
+    source match {
+      case CombinerTags(tag1, tag2) =>
+        destinationForCombiner(source, tag1, tag2).flatMap(destOpt => destOpt.fold(lookupRedirectDestination(source))(_ => Future.successful(destOpt)))
+      case _ => lookupRedirectDestination(source)
+    }
+  }
+
+  def lookupRedirectDestination(source: String): Future[Option[Destination]] =
     ScanamoAsync
       .get[Destination](DynamoDB.asyncClient)(tableName)('source -> (expectedSourceHost + source))
       .map({

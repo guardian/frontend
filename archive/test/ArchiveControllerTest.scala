@@ -21,7 +21,7 @@ import services.RedirectService.{ArchiveRedirect, PermanentRedirect}
   with WithTestWsClient {
 
   lazy val mockRedirects = new RedirectService {
-    override def destinationFor(source: String) = Future.successful(None)
+    override def lookupRedirectDestination(source: String) = Future.successful(None)
   }
   lazy val archiveController = new ArchiveController(mockRedirects, play.api.test.Helpers.stubControllerComponents(), wsClient)
 

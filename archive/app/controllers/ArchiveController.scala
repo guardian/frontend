@@ -84,7 +84,9 @@ class ArchiveController(redirects: RedirectService, val controllerComponents: Co
     }
   }
 
-  private def destinationFor(path: String): Future[Option[Destination]] = redirects.destinationFor(normalise(path))
+  private def destinationFor(path: String): Future[Option[Destination]] = {
+    redirects.getDestination(normalise(path))
+  }
 
   private object Combiner {
     def unapply(path: String): Option[String] = {
