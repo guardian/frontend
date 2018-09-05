@@ -455,7 +455,7 @@ const makeGoogleDocEpicVariants = (count: number): Array<Object> => {
             products: [],
             options: {
                 copy: () =>
-                    getEpicGoogleDoc.then(res =>
+                    getEpicGoogleDoc().then(res =>
                         getEpicParams(res, `variant_${i}`)
                     ),
             },
@@ -474,7 +474,7 @@ const makeGoogleDocBannerVariants = (
             id: `variant_${i}`,
             products: [],
             engagementBannerParams: () =>
-                getBannerGoogleDoc.then(res =>
+                getBannerGoogleDoc().then(res =>
                     getAcquisitionsBannerParams(res, `variant_${i}`)
                 ),
         });
@@ -486,7 +486,7 @@ const makeGoogleDocBannerControl = (): InitBannerABTestVariant => ({
     id: 'control',
     products: [],
     engagementBannerParams: () =>
-        getBannerGoogleDoc.then(res =>
+        getBannerGoogleDoc().then(res =>
             getAcquisitionsBannerParams(res, 'control')
         ),
 });

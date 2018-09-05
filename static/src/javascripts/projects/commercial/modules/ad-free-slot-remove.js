@@ -27,6 +27,8 @@ const adFreeSlotRemove = once(
             return Promise.resolve();
         }
 
+        const bodyEl = document.body;
+
         const adSlotsToRemove: Array<Element> = qwery(dfpEnv.adSlotSelector);
 
         const mpusToRemove: Array<Element> = qwery(mpuCandidateSelector).filter(
@@ -38,6 +40,16 @@ const adFreeSlotRemove = once(
         ).filter(shouldRemoveFaciaContainerWhenAdFree);
 
         return fastdom.write(() => {
+            if (bodyEl) {
+                if (bodyEl.classList.toString().includes('has-page-skin')) {
+                    bodyEl.classList.remove('has-page-skin');
+                }
+                if (
+                    bodyEl.classList.toString().includes('has-active-pageskin')
+                ) {
+                    bodyEl.classList.remove('has-active-pageskin');
+                }
+            }
             adSlotsToRemove.forEach((adSlot: Element) => adSlot.remove());
             mpusToRemove.forEach((mpu: Element) =>
                 mpu.classList.add('fc-slice__item--no-mpu')

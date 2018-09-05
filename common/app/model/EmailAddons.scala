@@ -329,6 +329,26 @@ case object FilmToday extends FrontEmailMetadata {
   override val banner = Some("film-today.png")
 }
 
+case object OpinionAus extends FrontEmailMetadata {
+  val name = "Opinion Aus"
+  override val banner = Some("opinion.png")
+}
+
+case object PoliticsAu extends FrontEmailMetadata {
+  val name = "Politics Au"
+  override val banner = Some("australian-politics.png")
+}
+
+case object SportAu extends FrontEmailMetadata {
+  val name = "Sport Au"
+  override val banner = Some("australia-sports.png")
+}
+
+case object FirstDogOnTheMoon extends FrontEmailMetadata {
+  val name = "First Dog On The Moon"
+  override val banner = Some("first-dog-on-the-moon.png")
+}
+
 object EmailAddons {
   private val defaultAddress = "Kings Place, 90 York Way, London, N1 9GU. Registered in England No. 908396"
   private val defaultBanner = "generic.png"
@@ -390,7 +410,11 @@ object EmailAddons {
     SocietyWeekly,
     TheGuardianToday,
     TheGuardianTodayAustralia,
-    FilmToday
+    FilmToday,
+    OpinionAus,
+    PoliticsAu,
+    SportAu,
+    FirstDogOnTheMoon
   )
 
   implicit class EmailContentType(p: Page) {

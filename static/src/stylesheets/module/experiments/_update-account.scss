@@ -1,18 +1,140 @@
+@mixin padding {
+    padding: $gs-baseline 0;
+
+    @include mq(tablet) {
+        padding: $gs-baseline $gs-gutter;
+    }
+}
+
 .site-message--membership-action-required {
     color: $brightness-100;
-    background: $brightness-7;
-    &:after {
-        @include multiline(3, $brightness-20, top);
-        content: '';
-        display: block;
-        height: 4px * 3; /*height of multiline (4px) times the number of lines (3)*/
-        margin-bottom: -1px;
-        width: 100%;
+    background: $sport-dark;
+
+    .site-message__inner {
+        width: auto;
     }
+
     a {
-        color: $brightness-100;
+        color: $brightness-7;
         font-weight: 900;
         text-decoration: underline;
+    }
+
+    .site-message__roundel {
+        position: absolute;
+        padding: 0;
+        width: auto;
+        height: auto;
+
+        .inline-icon {
+            fill: $brightness-100;
+            path:last-child {
+                fill: $brightness-7;
+            }
+        }
+
+        display: block;
+        bottom: $gs-baseline;
+        right: $gs-baseline;
+        svg {
+            width: 32px;
+            height: 32px;
+        }
+
+        @include mq(desktop) {
+            top: $gs-baseline;
+            left: $gs-gutter;
+            right: auto;
+            bottom: auto;
+            svg {
+                width: inherit;
+                height: inherit;
+            }
+        }
+
+        @include mq(tablet) {
+            right: $gs-gutter;
+        }
+
+    }
+
+    .site-message__close-btn {
+        position: absolute;
+        top: $gs-baseline;
+        right: $gs-baseline;
+
+        .inline-icon {
+            fill: $brightness-100;
+        }
+
+        @include mq(tablet) {
+            right: $gs-gutter;
+        }
+
+    }
+
+    .site-message__copy {
+        @include padding;
+        @include mq(desktop) {
+            display: flex;
+            margin-left: gs-span(1);
+        }
+        @include mq(leftCol) {
+            margin-left: 0;
+        }
+    }
+
+    .site-message__copy-text {
+        @include banner-copy-alignment;
+        display: block;
+        margin-bottom: 12px;
+        margin-right: 24px;
+        font-size: 16px;
+        line-height: 20px;
+        @include mq(phablet) {
+            font-size: 18px;
+            line-height: 24px;
+            width: auto;
+            margin-right: gs-span(1);
+        }
+        @include mq(desktop) {
+            flex-basis: gs-span(6) + $gs-gutter*3;
+            margin-right: gs-span(2);
+        }
+        @include mq(leftCol) {
+            margin-bottom: 0;
+            margin-right: gs-span(3);
+            flex-basis: gs-span(6) + $gs-gutter*2;
+        }
+    }
+
+    .site-message__copy-button {
+        color: $brightness-7;
+        background-color: $highlight-main;
+        border-color: $highlight-main;
+        font-size: 14px;
+        line-height: 36px;
+        height: 36px;
+        vertical-align: middle;
+        padding-right: 0;
+        text-decoration: none;
+        svg {
+            fill: $brightness-7;
+            float: right;
+            margin-left: 36px;
+            padding-top: 3px;
+}
+
+        &:hover, &:focus {
+            border-color: mix($highlight-main, $brightness-7, 80%);
+            background-color: mix($highlight-main, $brightness-7, 80%);
+        }
+
+        &:focus {
+            outline: auto;
+            outline-color: $sport-bright;
+            outline-width: 5px; 
+        }
     }
 
 }

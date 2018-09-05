@@ -7,6 +7,7 @@ import com.gu.contentapi.client.model.ContentApiError
 import com.gu.contentapi.client.model.v1.ErrorResponse
 import conf.switches.Switch
 import conf.switches.Switches.InlineEmailStyles
+import model.CacheTime.RecentlyUpdated
 import model.Cached.RevalidatableResult
 import model.{ApplicationContext, Cached, NoCache}
 import org.apache.commons.lang.exception.ExceptionUtils
@@ -119,15 +120,12 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
     JsonComponent(page, json)
   }
 
-  def renderEmail(html: Html, page: model.Page)(implicit request: RequestHeader, context: ApplicationContext): Result = Cached(page) {
+  def renderEmail(html: Html, page: model.Page)(implicit request: RequestHeader, context: ApplicationContext): Result = {
     val htmlWithInlineStyles = if (InlineEmailStyles.isSwitchedOn) InlineStyles(html) else html
-
-    if (request.isEmailHeadlineText) {
-      RevalidatableResult.Ok(page.metadata.webTitle)
-    } else if (request.isEmailJson) {
-      RevalidatableResult.Ok(JsObject(Map("body" -> JsString(htmlWithInlineStyles.toString))))
+    if (request.isEmailJson) {
+      Cached(RecentlyUpdated)(RevalidatableResult.Ok(JsObject(Map("body" -> JsString(htmlWithInlineStyles.toString)))))
     } else {
-      RevalidatableResult.Ok(htmlWithInlineStyles)
+      Cached(page)(RevalidatableResult.Ok(htmlWithInlineStyles))
     }
   }
 

@@ -9,6 +9,7 @@ import fetchJson from 'lib/fetch-json';
 import mediator from 'lib/mediator';
 import reportError from 'lib/report-error';
 import { spaceFiller } from 'common/modules/article/space-filler';
+import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 
 const richLinkTag = ({ href }: { href: string }): string =>
     `<aside class=" element element-rich-link element-rich-link--tag
@@ -18,6 +19,19 @@ const richLinkTag = ({ href }: { href: string }): string =>
             >
         <p><a href="${href}">${href}</a></p>
     </aside>`;
+
+const hideIfPaidForAndAdFree = (el: Element): Promise<void> => {
+    if (!commercialFeatures.adFree) {
+        return Promise.resolve();
+    }
+    return fastdom.write(() => {
+        [...el.children]
+            .filter(child =>
+                child.classList.toString().includes('rich-link--paidfor')
+            )
+            .forEach(child => child.classList.add('u-h'));
+    });
+};
 
 const elementIsBelowViewport = (el: Element): Promise<boolean> =>
     fastdom.read(() => {
@@ -71,6 +85,7 @@ const upgradeRichLink = (el: Element): Promise<void> => {
                     } else {
                         doUpgrade(el, resp);
                     }
+                    hideIfPaidForAndAdFree(el); // only identifiable as paid-for when upgraded
                 }
             })
             .catch(ex => {
