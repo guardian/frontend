@@ -17,7 +17,7 @@ export const acquisitionsEpicGoogleDocVsHardcoded: EpicABTest = makeABTest({
     idealOutcome: 'Alternative copy makes more money than the control',
 
     audienceCriteria: 'All',
-    audience: 1,
+    audience: 0.5,
     audienceOffset: 0,
 
     variants: [
