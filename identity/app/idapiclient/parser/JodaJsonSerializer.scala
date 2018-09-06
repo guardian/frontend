@@ -10,7 +10,7 @@ import net.liftweb.json.JsonAST.JString
   */
 object JodaJsonSerializer extends Serializer[DateTime]{
   private val DateTimeClass = classOf[DateTime]
-  val dateTimeFormatISO8601 = ISODateTimeFormat.dateTimeNoMillis
+  val dateTimeFormatISO8601 = ISODateTimeFormat.dateTimeParser().withZoneUTC()
 
   def deserialize(implicit format: Formats): PartialFunction[(TypeInfo, _root_.net.liftweb.json.JValue), DateTime] = {
     case (TypeInfo(DateTimeClass, _), json) => json match {
