@@ -1,0 +1,24 @@
+@import controllers.UpsellPages.UpsellPage
+
+@import controllers.UpsellPages.ConfirmEmailThankYou
+@import services.IdentityRequest
+@import services.IdentityUrlBuilder
+@import model.ApplicationContext
+@(
+    pageVariant: UpsellPage,
+    identityRequest: IdentityRequest,
+    identityUrlBuilder: IdentityUrlBuilder,
+    returnUrl: String
+)(implicit requestHeader: RequestHeader, applicationContext: ApplicationContext)
+
+@noJsBehaviour = @{
+    pageVariant match {
+        case ConfirmEmailThankYou => views.html.emailVerified(
+            ValidationState.validated, identityRequest, identityUrlBuilder, userIsLoggedIn = true, returnUrl
+        )
+    }
+}
+
+<div class="@(s"js-identity-upsell-${pageVariant.jsName}")">
+    @noJsBehaviour
+</div>

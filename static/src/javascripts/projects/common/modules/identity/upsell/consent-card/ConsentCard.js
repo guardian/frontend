@@ -2,7 +2,7 @@
 import React, { Component } from 'preact-compat';
 import { FollowButtonWrap } from 'common/modules/identity/follow/FollowButtonWrap';
 
-type Consent = {
+export type Consent = {
     id: string,
     name: string,
     text: string,

@@ -35,4 +35,5 @@ trait IdentityControllers extends IdApiComponents
   lazy val emailSignupController = wire[EmailSignupController]
   lazy val accountDeletionController = wire[AccountDeletionController]
   lazy val authenticationController = wire[AuthenticationController]
+  lazy val upsellController = wire[UpsellController]
 }

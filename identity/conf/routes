@@ -71,6 +71,11 @@ DELETE      /user/email-subscriptions               controllers.editprofile.Edit
 GET         /privacy-settings                       controllers.AdvertsManager.renderAdvertsManager(returnUrl : Option[String])
 
 ########################################################################################################################
+# Upsell
+########################################################################################################################
+GET /confirm-email/thank-you                        controllers.UpsellController.confirmEmailThankYou(returnUrl: Option[String])
+
+########################################################################################################################
 # Consents journey
 ########################################################################################################################
 GET         /consents/thank-you                     controllers.editprofile.EditProfileController.displayConsentsJourneyThankYou
