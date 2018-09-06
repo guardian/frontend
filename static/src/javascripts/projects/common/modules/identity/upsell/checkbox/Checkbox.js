@@ -1,11 +1,15 @@
 // @flow
 import React, { Component } from 'preact-compat';
 
+type CheckboxHtmlProps = {
+    checked: ?boolean,
+    onChange: (ev: Event) => void,
+};
+
 type CheckboxProps = {
     title: string,
     subtitle: ?string,
-    checked: ?boolean,
-    onChange: ?(ev: Event) => void,
+    checkboxHtmlProps: CheckboxHtmlProps,
 };
 
 export class Checkbox extends Component<CheckboxProps, { checked: boolean }> {
@@ -17,9 +21,8 @@ export class Checkbox extends Component<CheckboxProps, { checked: boolean }> {
                 {subtitle && <span>{subtitle}</span>}
                 <input
                     type="checkbox"
-                    checked={this.props.checked}
-                    onChange={this.props.onChange}
                     id={title}
+                    {...this.props.checkboxHtmlProps}
                 />
                 <span className="identity-upsell-checkbox__checkmark">
                     <span className="identity-upsell-checkbox__checkmark_tick" />

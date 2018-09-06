@@ -55,8 +55,10 @@ export class OptOutsList extends Component<
                     <Checkbox
                         title={title}
                         key={id}
-                        checked={checked}
-                        onChange={ev => this.onCheckboxChange(ev, i)}
+                        checkboxHtmlProps={{
+                            checked,
+                            onChange: ev => this.onCheckboxChange(ev, i),
+                        }}
                     />
                 ))}
             </div>
