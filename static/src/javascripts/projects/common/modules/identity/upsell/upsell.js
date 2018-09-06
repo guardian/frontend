@@ -5,7 +5,6 @@ import fastdom from 'lib/fastdom-promise';
 import ophan from 'ophan/ng';
 import loadEnhancers from './../modules/loadEnhancers';
 import { AccountCreationFlow } from './account-creation/AccountCreationFlow';
-import { Checkbox } from './checkbox/Checkbox';
 
 const trackInteraction = (interaction: string): void => {
     ophan.record({
@@ -29,35 +28,10 @@ const bindAccountCreation = (el): void => {
     });
 };
 
-const bindOptouts = (el): void => {
-    fastdom.write(() => {
-        render(
-            <div>
-                <Checkbox
-                    title={'I do not want to be contacted by phone'}
-                    preticked={false}
-                />
-                <Checkbox
-                    title={'I do not want to be contacted by mail'}
-                    preticked={true}
-                />
-                <Checkbox
-                    title={'I do not want to be contacted by SMS'}
-                    preticked={false}
-                />
-            </div>,
-            el
-        );
-    });
-};
-
 const enhanceAccountCreation = (): void => {
     loadEnhancers([
         ['.js-identity-upsell-account-creation', bindAccountCreation],
-        ['.js-identity-upsell-optputs', bindOptouts],
     ]);
 };
 
-
-//TODO: generalise this as upsell.js
 export { enhanceAccountCreation };

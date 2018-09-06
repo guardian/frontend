@@ -9,3 +9,50 @@
         font-weight: 100;
     }
 }
+
+.identity-upsell-checkbox {
+    @include fs-textSans(4);
+    padding-left: $gs-gutter * 1.5;
+    position: relative;
+    display: block;
+
+    & + .identity-upsell-checkbox {
+        margin-top: $gs-baseline / 2;
+    }
+
+    input[type=checkbox] {
+        margin-left: -9999em;
+        opacity: 0;
+    }
+
+    .identity-upsell-checkbox__title {
+        @include fs-textSans(5, true);
+        font-weight: 600;
+        display: block;
+    }
+
+    .identity-upsell-checkbox__checkmark {
+        width: $gs-gutter - 2px;
+        height: $gs-gutter - 2px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        transition: all .2s ease-in-out;
+        border: 1px solid $brightness-86;
+        background: $brightness-100 center no-repeat;
+    }
+
+    input[type=checkbox]:checked + .identity-upsell-checkbox__checkmark {
+        background-color: $green-dark;
+        background-image: url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2210.79%22%20height%3D%228.61%22%20viewBox%3D%220%200%2010.79%208.608%22%3E%3Cpath%20fill%3D%22%23fff%22%20d%3D%22M3%206.58l7.23-6.58.55.53-7.78%208.07h-.27l-2.73-3.8.55-.56%202.44%202.33z%22%2F%3E%3C%2Fsvg%3E');
+    }
+
+    &:hover .identity-upsell-checkbox__checkmark {
+        box-shadow: 0 0 0 3px $brightness-93;
+    }
+
+    input[type=checkbox]:focus + .identity-upsell-checkbox__checkmark {
+        box-shadow: 0 0 0 3px $highlight-main;
+    }
+
+}
