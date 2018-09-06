@@ -17,12 +17,11 @@
     display: block;
 
     & + .identity-upsell-checkbox {
-        margin-top: $gs-baseline / 2;
+        margin-top: $gs-baseline;
     }
 
     input[type=checkbox] {
-        margin-left: -9999em;
-        opacity: 0;
+        @include u-h();
     }
 
     .identity-upsell-checkbox__title {
@@ -52,7 +51,7 @@
     }
 
     input[type=checkbox]:focus + .identity-upsell-checkbox__checkmark {
-        box-shadow: 0 0 0 3px $highlight-main;
+        box-shadow: 0 0 0 3px $brightness-93;
     }
 
 }
