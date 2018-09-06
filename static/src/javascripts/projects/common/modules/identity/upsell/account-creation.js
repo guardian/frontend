@@ -5,7 +5,7 @@ import fastdom from 'lib/fastdom-promise';
 import ophan from 'ophan/ng';
 import loadEnhancers from './../modules/loadEnhancers';
 import { AccountCreationFlow } from './account-creation/AccountCreationFlow';
-import { Checkbox } from './checkbox/Checkbox';
+import { OptOutsList } from './opt-outs/OptOutsList';
 
 const trackInteraction = (interaction: string): void => {
     ophan.record({
@@ -32,20 +32,7 @@ const bindAccountCreation = (el): void => {
 const bindOptouts = (el): void => {
     fastdom.write(() => {
         render(
-            <div>
-                <Checkbox
-                    title={'I do not want to be contacted by phone'}
-                    preticked={false}
-                />
-                <Checkbox
-                    title={'I do not want to be contacted by mail'}
-                    preticked={true}
-                />
-                <Checkbox
-                    title={'I do not want to be contacted by SMS'}
-                    preticked={false}
-                />
-            </div>,
+            <OptOutsList />,
             el
         );
     });
