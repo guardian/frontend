@@ -31,10 +31,7 @@ const bindAccountCreation = (el): void => {
 
 const bindOptouts = (el): void => {
     fastdom.write(() => {
-        render(
-            <OptOutsList />,
-            el
-        );
+        render(<OptOutsList />, el);
     });
 };
 
@@ -45,6 +42,5 @@ const enhanceAccountCreation = (): void => {
     ]);
 };
 
-
-//TODO: generalise this as upsell.js
+// TODO: generalise this as upsell.js
 export { enhanceAccountCreation };
