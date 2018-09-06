@@ -54,11 +54,22 @@ const updateConsent = (consent: Consent): Promise<void> =>
         data: JSON.stringify(consent),
     });
 
-const updateNewsletter = (
+const updateNewsletter = (newsletter: Newsletter): Promise<void> =>
+    reqwest({
+        url: `${config.get('page.idApiUrl')}/users/me/newsletters`,
+        method: 'PATCH',
+        type: 'json',
+        contentType: 'application/json',
+        withCredentials: true,
+        crossOrigin: true,
+        data: JSON.stringify(newsletter),
+    });
+
+const buildNewsletterUpdatePayload = (
     action: string = 'none',
     newsletterId: string
-): Promise<void> => {
-    const newsletter: Newsletter = {}
+): Newsletter => {
+    const newsletter = {};
     switch (action) {
         case 'add':
             newsletter.id = newsletterId;
@@ -71,16 +82,7 @@ const updateNewsletter = (
         default:
             throw new Error(`Undefined newsletter action type (${action})`);
     }
-
-    return reqwest({
-        url: `${config.get('page.idApiUrl')}/users/me/newsletters`,
-        method: 'PATCH',
-        type: 'json',
-        contentType: 'application/json',
-        withCredentials: true,
-        crossOrigin: true,
-        data: JSON.stringify(newsletter),
-    });
+    return newsletter;
 };
 
 const buildConsentUpdatePayload = (
@@ -185,11 +187,14 @@ const bindUnsubscribeFromAll = (buttonEl: HTMLButtonElement) => {
 };
 
 const updateNewsletterSwitch = (labelEl: HTMLElement): Promise<void> =>
-    Promise.all([
-        getCheckboxInfo(labelEl),
-        addSpinner(labelEl),
-    ])
-        .then(([checkbox]) => updateNewsletter(checkbox.checked ? 'add' : 'remove', checkbox.name))
+    Promise.all([getCheckboxInfo(labelEl), addSpinner(labelEl)])
+        .then(([checkbox]) =>
+            buildNewsletterUpdatePayload(
+                checkbox.checked ? 'add' : 'remove',
+                checkbox.name
+            )
+        )
+        .then(newsletter => updateNewsletter(newsletter))
         .catch((err: Error) => {
             pushError(err, 'reload').then(() => {
                 window.scrollTo(0, 0);
