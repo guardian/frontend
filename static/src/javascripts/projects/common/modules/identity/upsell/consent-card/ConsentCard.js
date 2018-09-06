@@ -18,40 +18,34 @@ class ConsentCard extends Component<
     {
         hasConsented: boolean,
     }
-    > {
-
+> {
     constructor(props: ConsentCardProps) {
         super(props);
         this.state = {
-            hasConsented: props.hasConsented
-        }
+            hasConsented: props.hasConsented,
+        };
     }
 
-    follow = () => {
+    toggleConsent = () => {
+        const { hasConsented } = this.state;
         this.setState({
-            hasCreatedAccount: true,
+            hasConsented: !hasConsented,
         });
     };
 
-    unFollow = () => {
-        this.setState({
-            hasCreatedAccount: true,
-        });
-    };
-
-    render(parent?: HTMLElement) {
-        const { consent, hasConsented } = this.state;
+    render() {
+        const { hasConsented } = this.state;
         return (
             <div className="identity-upsell-consent-card">
-                {consent.name} <br />
-                {consent.text} <br />
+                {this.props.consent.name} <br />
+                {this.props.consent.text} <br />
                 <FollowButtonWrap
                     initiallyFollowing={hasConsented}
                     onFollow={() => {
-                        this.follow();
+                        this.toggleConsent();
                     }}
                     onUnfollow={() => {
-                        this.unFollow();
+                        this.toggleConsent();
                     }}
                 />
             </div>
@@ -59,4 +53,4 @@ class ConsentCard extends Component<
     }
 }
 
-export { ConsentCard, Consent };
+export { ConsentCard };
