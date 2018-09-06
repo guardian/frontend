@@ -42,7 +42,7 @@ class UpsellController(
     with ImplicitControllerExecutionContext
     with SafeLogging {
 
-  def confirmEmailThankYou(returnUrl: Option[String]): Action[AnyContent] = Action.async { implicit request =>
+  def confirmEmailThankYou(returnUrl: Option[String]): Action[AnyContent] = authenticatedActions.consentAuthWithIdapiUserAction.async { implicit request =>
     val returnUrl = returnUrlVerifier.getVerifiedReturnUrl(request)
     val view = views.html.upsell.upsellContainer(
       ConfirmEmailThankYou, idRequestParser(request), idUrlBuilder, returnUrl.getOrElse(returnUrlVerifier.defaultReturnUrl))

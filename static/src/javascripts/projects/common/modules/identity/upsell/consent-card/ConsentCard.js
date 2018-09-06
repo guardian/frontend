@@ -5,7 +5,9 @@ import { FollowButtonWrap } from 'common/modules/identity/follow/FollowButtonWra
 export type Consent = {
     id: string,
     name: string,
-    text: string,
+    description: string,
+    isOptOut: boolean,
+    isChannel: boolean,
 };
 
 type ConsentCardProps = {
@@ -41,7 +43,7 @@ class ConsentCard extends Component<
                     {this.props.consent.name}
                 </h1>
                 <p className="identity-upsell-consent-card__description">
-                    {this.props.consent.text}
+                    {this.props.consent.description}
                 </p>
                 <FollowButtonWrap
                     initiallyFollowing={hasConsented}
