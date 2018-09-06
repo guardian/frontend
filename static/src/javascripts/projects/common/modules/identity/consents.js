@@ -38,6 +38,11 @@ type Consent = {
     consented: boolean,
 };
 
+type Newsletter = {
+    id: string,
+    subscribed: boolean,
+};
+
 const updateConsent = (consent: Consent): Promise<void> =>
     reqwest({
         url: `${config.get('page.idApiUrl')}/users/me/consents`,
@@ -49,35 +54,35 @@ const updateConsent = (consent: Consent): Promise<void> =>
         data: JSON.stringify(consent),
     });
 
-const submitNewsletterAction = (
-    csrfToken: string,
-    action: string = 'none',
-    newsletters: Array<string> = []
-): Promise<void> => {
-    const formData = new FormData();
-    formData.append('csrfToken', csrfToken);
+const updateNewsletter = (newsletter: Newsletter): Promise<void> =>
+    reqwest({
+        url: `${config.get('page.idApiUrl')}/users/me/newsletters`,
+        method: 'PATCH',
+        type: 'json',
+        contentType: 'application/json',
+        withCredentials: true,
+        crossOrigin: true,
+        data: JSON.stringify(newsletter),
+    });
 
+const buildNewsletterUpdatePayload = (
+    action: string = 'none',
+    newsletterId: string
+): Newsletter => {
+    const newsletter = {};
     switch (action) {
         case 'add':
-            newsletters.map(id =>
-                formData.append('addEmailSubscriptions[]', id)
-            );
+            newsletter.id = newsletterId;
+            newsletter.subscribed = true;
             break;
         case 'remove':
-            newsletters.map(id =>
-                formData.append('removeEmailSubscriptions[]', id)
-            );
+            newsletter.id = newsletterId;
+            newsletter.subscribed = false;
             break;
         default:
             throw new Error(`Undefined newsletter action type (${action})`);
     }
-
-    return reqwest({
-        url: '/email-prefs',
-        method: 'POST',
-        data: formData,
-        processData: false,
-    });
+    return newsletter;
 };
 
 const buildConsentUpdatePayload = (
@@ -182,16 +187,14 @@ const bindUnsubscribeFromAll = (buttonEl: HTMLButtonElement) => {
 };
 
 const updateNewsletterSwitch = (labelEl: HTMLElement): Promise<void> =>
-    Promise.all([
-        getCsrfTokenFromElement(labelEl),
-        getCheckboxInfo(labelEl),
-        addSpinner(labelEl),
-    ])
-        .then(([token, info]) =>
-            submitNewsletterAction(token, info.checked ? 'add' : 'remove', [
-                info.name,
-            ])
+    Promise.all([getCheckboxInfo(labelEl), addSpinner(labelEl)])
+        .then(([checkbox]) =>
+            buildNewsletterUpdatePayload(
+                checkbox.checked ? 'add' : 'remove',
+                checkbox.name
+            )
         )
+        .then(newsletter => updateNewsletter(newsletter))
         .catch((err: Error) => {
             pushError(err, 'reload').then(() => {
                 window.scrollTo(0, 0);
