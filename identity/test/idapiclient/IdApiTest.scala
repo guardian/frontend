@@ -125,7 +125,7 @@ class IdApiTest
       whenReady(idApi.authBrowser(Anonymous, trackingParameters)) {
         case Left(result) => fail("Got Left(%s), instead of expected Right".format(result.toString()))
         case Right(cookiesResponse) => {
-          cookiesResponse.expiresAt must equal(ISODateTimeFormat.dateTimeParser().withZoneUTC().parseDateTime("2018-01-08T15:49:19+00:00"))
+          cookiesResponse.expiresAt must equal(ISODateTimeFormat.dateTimeNoMillis.parseDateTime("2018-01-08T15:49:19+00:00"))
           val cookies = cookiesResponse.values
           cookies.size must equal(1)
           cookies(0) must have('key("SC_GU_U"))
