@@ -37,8 +37,12 @@ class ConsentCard extends Component<
         const { hasConsented } = this.state;
         return (
             <div className="identity-upsell-consent-card">
-                {this.props.consent.name} <br />
-                {this.props.consent.text} <br />
+                <h1 className="identity-upsell-consent-card__title">
+                    {this.props.consent.name}
+                </h1>
+                <p className="identity-upsell-consent-card__description">
+                    {this.props.consent.text}
+                </p>
                 <FollowButtonWrap
                     initiallyFollowing={hasConsented}
                     onFollow={() => {
