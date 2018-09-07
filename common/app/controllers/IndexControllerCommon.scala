@@ -68,7 +68,7 @@ trait IndexControllerCommon extends BaseController with Index with RendersItemRe
       index(Edition(request), path, inferPage(request), request.isRss) map {
         case Left(model) if model.contents.nonEmpty => renderFaciaFront(model)
         // if no content is returned (as often happens with old/expired/migrated microsites) return 404 rather than an empty page
-        case Left(model) if model.contents.isEmpty => NoCache(NotFound)
+        case Left(model) if model.contents.isEmpty => NoCache(Gone)
         case Right(other) => RenderOtherStatus(other)
       }
   }
