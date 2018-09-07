@@ -1,3 +1,4 @@
+// @flow
 import {
     getAllConsents,
     getUserFromApi,
@@ -13,37 +14,35 @@ type Consent = {
     hasConsented: ?boolean,
 };
 
-const getUserConsents = (): Promise<string[]> => new Promise((accept, reject)=>{
-    getUserFromApi(user => {
-        if (user && user.consents) {
-            accept(user.consents
-                .filter(consent => consent.consented === true)
-                .map(consent => consent.id)
-            )
-        }
-        else {
-            accept([]);
-        }
+const getUserConsents = (): Promise<string[]> =>
+    new Promise(accept => {
+        getUserFromApi(user => {
+            if (user && user.consents) {
+                accept(
+                    user.consents
+                        .filter(consent => consent.consented === true)
+                        .map(consent => consent.id)
+                );
+            } else {
+                accept([]);
+            }
+        });
     });
-});
 
-const fetchConsents = Promise.all([
-    getUserConsents(),
-    getAllConsents(),
-]);
+const fetchConsents = Promise.all([getUserConsents(), getAllConsents()]);
 
 const get = (): Promise<Consent[]> =>
-    fetchConsents.then(([acceptedConsents, allConsents]) => (
-        allConsents.map(c =>
-            ({
-                ...c,
-                hasConsented: acceptedConsents.includes(c.id)
-            })
-        )
-    ));
+    fetchConsents.then(([acceptedConsents, allConsents]) =>
+        allConsents.map(c => ({
+            ...c,
+            hasConsented: acceptedConsents.includes(c.id),
+        }))
+    );
 
-const updateRemotely = (hasConsented: boolean, consentId: string): Promise<void> =>
-    setConsent(consentId, hasConsented);
+const updateRemotely = (
+    hasConsented: boolean,
+    consentId: string
+): Promise<void> => setConsent(consentId, hasConsented);
 
-export type {Consent}
-export {get, updateRemotely}
+export type { Consent };
+export { get, updateRemotely };
