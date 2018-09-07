@@ -1,8 +1,10 @@
 package controllers
 
 import actions.AuthenticatedActions
+import com.gu.identity.model.ErrorResponse
 import common.ImplicitControllerExecutionContext
-import conf.IdentityConfiguration
+import conf.switches.IdentitySwitches
+import conf.{Configuration, IdentityConfiguration}
 import controllers.UpsellPages.ConfirmEmailThankYou
 import idapiclient.IdApiClient
 import model.{ApplicationContext, IdentityPage, NoCache}
@@ -40,15 +42,20 @@ class UpsellController(
  )(implicit context: ApplicationContext)
   extends BaseController
     with ImplicitControllerExecutionContext
-    with SafeLogging {
+    with SafeLogging
+    with IdentitySwitches {
 
-  def confirmEmailThankYou(returnUrl: Option[String]): Action[AnyContent] = authenticatedActions.consentAuthWithIdapiUserAction.async { implicit request =>
-    val returnUrl = returnUrlVerifier.getVerifiedReturnUrl(request)
-    val view = views.html.upsell.upsellContainer(
-      ConfirmEmailThankYou, idRequestParser(request), idUrlBuilder, returnUrl.getOrElse(returnUrlVerifier.defaultReturnUrl))
-    Future(NoCache(Ok(
-      IdentityHtmlPage.html(view)(ConfirmEmailThankYou, request, context)
-    )))
+  def confirmEmailThankYou(returnUrl: Option[String]): Action[AnyContent] = if (IdentityUseFollowSwitches.isSwitchedOn) {
+    authenticatedActions.consentAuthWithIdapiUserAction.async { implicit request =>
+      val returnUrl = returnUrlVerifier.getVerifiedReturnUrl(request)
+      val view = views.html.upsell.upsellContainer(
+        ConfirmEmailThankYou, idRequestParser(request), idUrlBuilder, returnUrl.getOrElse(returnUrlVerifier.defaultReturnUrl))
+      Future(NoCache(Ok(
+        IdentityHtmlPage.html(view)(ConfirmEmailThankYou, request, context)
+      )))
+    }
+  } else {
+    Action(NotFound(views.html.errors._404()))
   }
 
 }
