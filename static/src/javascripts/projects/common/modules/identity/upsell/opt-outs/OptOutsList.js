@@ -1,17 +1,13 @@
 // @flow
 import React, { Component } from 'preact-compat';
 import { Checkbox } from '../checkbox/Checkbox';
-
-type OptOut = {
-    id: string,
-    title: string,
-    checked: boolean,
-};
+import { get as getConsents } from '../store/consents';
+import type {Consent} from "../store/consents";
 
 export class OptOutsList extends Component<
     {},
     {
-        optouts: OptOut[],
+        consents: Consent[],
         isLoading: boolean,
         hasUnsavedChanges: boolean
     }
@@ -21,33 +17,25 @@ export class OptOutsList extends Component<
         this.state = {
             loading: false,
             hasUnsavedChanges: true,
-            optouts: [
-                {
-                    id: 'phone',
-                    title:
-                        'I do NOT wish to receive communications from the Guardian by telephone.',
-                    checked: false,
-                },
-                {
-                    id: 'mail',
-                    title: 'I do not want to be contacted by mail',
-                    checked: true,
-                },
-                {
-                    id: 'sms',
-                    title: 'I do not want to be contacted by SMS',
-                    checked: false,
-                },
-            ],
+            consents: [],
         };
+    }
+
+    componentDidMount() {
+        getConsents().then(consents=>{
+            this.setState({
+                consents: consents.filter(c=>c.isOptOut),
+            });
+            console.log(consents);
+        })
     }
 
     onCheckboxChange = (ev: Event, i: number) => {
         if (ev.currentTarget instanceof HTMLInputElement) {
-            const optoutsClone = [...this.state.optouts];
-            optoutsClone[i].checked = ev.currentTarget.checked;
+            const clone = [...this.state.consents];
+            clone[i].hasConsented = ev.currentTarget.checked;
             this.setState({
-                optouts: optoutsClone,
+                consents: clone,
                 hasUnsavedChanges: true,
             });
         }
@@ -76,20 +64,23 @@ export class OptOutsList extends Component<
     }
 
     render() {
-        const {hasUnsavedChanges, isLoading} = this.state;
+        const {hasUnsavedChanges, isLoading, consents} = this.state;
         return (
             <form onSubmit={ev => this.onSubmit(ev)}>
                 <div>
-                    {this.state.optouts.map(({ title, checked, id }, i) => (
-                        <Checkbox
-                            title={title}
-                            key={id}
-                            checkboxHtmlProps={{
-                                checked,
-                                onChange: ev => this.onCheckboxChange(ev, i),
-                            }}
-                        />
-                    ))}
+                    {consents.map(({ description, hasConsented, id }, i) => {
+                            return (
+                            <Checkbox
+                                title={description}
+                                key={id}
+                                checkboxHtmlProps={{
+                                    checked: hasConsented,
+                                    onChange: ev => this.onCheckboxChange(ev, i),
+                                }}
+                            />)
+                        }
+                        )
+                    }
                 </div>
                 <div class={'identity-upsell-button-with-proxy'}>
                     <button
