@@ -1,9 +1,3 @@
-/*
-    NB: these may be duplicated elsewhere in scala tests
-    that extend AmpValidityTest - consider adding any new
-    URLs there as well.  Not centralising as running full
-    suite in scala tests may be overkill as we add more tests
-*/
 module.exports = (() => [
     /*
             Tones
