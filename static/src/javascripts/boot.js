@@ -19,7 +19,6 @@ __webpack_public_path__ = `${config.get('page.assetsPath')}javascripts/`;
 // Debug preact in DEV
 if (process.env.NODE_ENV !== 'production') {
     import('preact/debug');
-    import('preact/devtools');
 }
 
 // kick off the app
