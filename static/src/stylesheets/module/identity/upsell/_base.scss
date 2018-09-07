@@ -9,6 +9,33 @@
         font-weight: 100;
     }
 }
+.identity-upsell-container {
+    margin-top: $gs-gutter;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.identity-upsell-consent-card {
+    @include fs-headlineGarnett(2);
+    margin-bottom: $gs-baseline * 2;
+    max-width: $gs-gutter * 16;
+    border: 1px solid #000000;
+    .identity-upsell-consent-card__title {
+        font-size: 1.3em;
+        margin: $gs-gutter;
+    }
+    .identity-upsell-consent-card__description {
+        font-size: 1em;
+        margin-bottom: $gs-gutter;
+        margin-left: $gs-gutter;
+    }
+    button {
+        @include identity-button($green-bold);
+        margin: .5em;
+    }
+}
 
 .identity-upsell-checkbox {
     @include fs-textSans(4);

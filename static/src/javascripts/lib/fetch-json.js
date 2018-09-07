@@ -18,7 +18,12 @@ const json = (
 
     return fetch(path, options).then(resp => {
         if (resp.ok) {
-            return resp.json();
+            switch (resp.status) {
+                case 204:
+                    return {};
+                default:
+                    return resp.json();
+            }
         }
         if (!resp.status) {
             // IE9 uses XDomainRequest which doesn't set the response status thus failing

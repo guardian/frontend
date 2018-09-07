@@ -214,6 +214,30 @@ export const updateUsername = (username: string): any => {
     return request;
 };
 
+export const getAllConsents = () => {
+    const endpoint = '/consents';
+    const url = (idApiRoot || '') + endpoint;
+    return fetch(url, {
+        mode: 'cors',
+        method: 'GET',
+        headers: { Accept: 'application/json' },
+    });
+};
+
+export const setConsent = (consentId: string, consented: boolean) => {
+    const url = `${idApiRoot || ''}/users/me/consents`;
+    return fetch(url, {
+        mode: 'cors',
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            id: consentId,
+            consented,
+        }),
+        credentials: 'include',
+    });
+};
+
 export const ajaxSignIn = (credentials: PasswordCredential) => {
     const url = `${profileRoot || ''}/actions/auth/ajax`;
     return fetch(url, {
