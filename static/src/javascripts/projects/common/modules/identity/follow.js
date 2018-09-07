@@ -11,7 +11,7 @@ const bindFollow = (el): void => {
             fastdom.write(() => {
                 render(
                     <FollowButtonWrap
-                        initiallyFollowing
+                        following
                         onFollow={() => {
                             console.log('following');
                         }}

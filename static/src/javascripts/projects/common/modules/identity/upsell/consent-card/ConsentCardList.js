@@ -1,6 +1,10 @@
 // @flow
 import React, { Component } from 'preact-compat';
-import { getAllConsents, getUserFromApi } from 'common/modules/identity/api';
+import {
+    getAllConsents,
+    getUserFromApi,
+    setConsent,
+} from 'common/modules/identity/api';
 import { ConsentCard } from './ConsentCard';
 import type { Consent } from './ConsentCard';
 
@@ -40,6 +44,28 @@ class ConsentCardList extends Component<
         });
     }
 
+    toggleConsent = (hasConsented: boolean, consentId: string) => {
+        setConsent(consentId, hasConsented).then(() => {
+            const { acceptedConsents } = this.state;
+            if (hasConsented) {
+                this.setState({
+                    acceptedConsents: [
+                        ...acceptedConsents.filter(
+                            consent => consent !== consentId
+                        ),
+                        consentId,
+                    ],
+                });
+            } else {
+                this.setState({
+                    acceptedConsents: acceptedConsents.filter(
+                        consent => consent !== consentId
+                    ),
+                });
+            }
+        });
+    };
+
     render() {
         const { allConsents, acceptedConsents } = this.state;
         return (
@@ -52,6 +78,9 @@ class ConsentCardList extends Component<
                         <ConsentCard
                             consent={consent}
                             hasConsented={hasConsented}
+                            onToggleConsent={hasConsent =>
+                                this.toggleConsent(hasConsent, consent.id)
+                            }
                         />
                     );
                 })}

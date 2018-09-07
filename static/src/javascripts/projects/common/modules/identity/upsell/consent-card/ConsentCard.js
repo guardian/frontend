@@ -1,7 +1,6 @@
 // @flow
 import React, { Component } from 'preact-compat';
 import { FollowButtonWrap } from 'common/modules/identity/follow/FollowButtonWrap';
-import { setConsent } from 'common/modules/identity/api';
 
 export type Consent = {
     id: string,
@@ -14,32 +13,12 @@ export type Consent = {
 type ConsentCardProps = {
     consent: Consent,
     hasConsented: boolean,
+    onToggleConsent: boolean => void,
 };
 
-class ConsentCard extends Component<
-    ConsentCardProps,
-    {
-        hasConsented: boolean,
-    }
-> {
-    constructor(props: ConsentCardProps) {
-        super(props);
-        this.state = {
-            hasConsented: props.hasConsented,
-        };
-    }
-
-    toggleConsent = () => {
-        const { hasConsented } = this.state;
-        setConsent(this.props.consent.id, !hasConsented).then(() => {
-            this.setState({
-                hasConsented: !hasConsented,
-            });
-        });
-    };
-
+class ConsentCard extends Component<ConsentCardProps, {}> {
     render() {
-        const { hasConsented } = this.state;
+        const { hasConsented } = this.props;
         return (
             <div className="identity-upsell-consent-card">
                 <h1 className="identity-upsell-consent-card__title">
@@ -49,12 +28,12 @@ class ConsentCard extends Component<
                     {this.props.consent.description}
                 </p>
                 <FollowButtonWrap
-                    initiallyFollowing={hasConsented}
+                    following={hasConsented}
                     onFollow={() => {
-                        this.toggleConsent();
+                        this.props.onToggleConsent(true);
                     }}
                     onUnfollow={() => {
-                        this.toggleConsent();
+                        this.props.onToggleConsent(false);
                     }}
                 />
             </div>
