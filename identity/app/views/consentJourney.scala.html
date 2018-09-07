@@ -28,6 +28,11 @@
 
 @selectAllCheckboxContent = {
     <div class="manage-account__switches">
+        @if(conf.switches.Switches.IdentityUseFollowSwitches.isSwitchedOn) {
+            <div
+                class="js-identity-upsell-optputs"
+            ></div>
+        }
         <ul>
             <li>
                 <label class="manage-account__switch @skin.map(s => s"manage-account__switch--$s") manage-account__switch--no-box manage-account__switch--no-padding js-manage-account__check-allCheckbox" style="visibility:hidden;pointer-events:none;" data-link-name-template="mma switch : (consents - all) : [action]" data-wrapper="body">
