@@ -28,7 +28,7 @@ trait IdentitySwitches {
   val IdentityUseFollowSwitches = Switch(
     SwitchGroup.Identity,
     "id-use-follow-switches",
-    "If switched on, some consent boxes will become follow boxes.",
+    "If switched on, access to the new consent journeys will be enabled.",
     owners = Owner.group(SwitchGroup.Identity),
     safeState = Off,
     sellByDate = new LocalDate(2018, 10, 24),
