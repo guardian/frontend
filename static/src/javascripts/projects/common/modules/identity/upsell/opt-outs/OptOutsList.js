@@ -1,13 +1,16 @@
 // @flow
 import React, { Component } from 'preact-compat';
-import { Checkbox } from '../checkbox/Checkbox';
-import { get as getConsents, updateRemotely } from '../store/consents';
-import type { Consent } from '../store/consents';
+import { Checkbox } from 'common/modules/identity/upsell/checkbox/Checkbox';
+import {
+    get as getConsents,
+    updateRemotely,
+} from 'common/modules/identity/upsell/store/consents';
+import type { ConsentType } from 'common/modules/identity/upsell/store/consents';
 
 export class OptOutsList extends Component<
     {},
     {
-        consents: Consent[],
+        consents: ConsentType[],
         isLoading: boolean,
         hasUnsavedChanges: boolean,
     }
@@ -24,9 +27,8 @@ export class OptOutsList extends Component<
     componentDidMount() {
         getConsents().then(consents => {
             this.setState({
-                consents: consents.filter(c => c.isOptOut),
+                consents: consents.filter(c => c.consent.isOptOut),
             });
-            console.log(consents);
         });
     }
 
@@ -46,22 +48,19 @@ export class OptOutsList extends Component<
         this.setState({
             isLoading: true,
         });
-        this.updateChangesRemotely()
-            .then(() => {
-                this.setState({
-                    isLoading: false,
-                    hasUnsavedChanges: false,
-                });
-            })
-            .catch(() => {
-                alert('oops');
+        this.updateChangesRemotely().then(() => {
+            this.setState({
+                isLoading: false,
+                hasUnsavedChanges: false,
             });
-        console.table(this.state.consents);
+        });
     };
 
     updateChangesRemotely = (): Promise<void> =>
         Promise.all(
-            this.state.consents.map(c => updateRemotely(c.hasConsented, c.id))
+            this.state.consents.map(c =>
+                updateRemotely(c.hasConsented, c.consent.id)
+            )
         );
 
     render() {
@@ -69,10 +68,10 @@ export class OptOutsList extends Component<
         return (
             <form onSubmit={ev => this.onSubmit(ev)}>
                 <div>
-                    {consents.map(({ description, hasConsented, id }, i) => (
+                    {consents.map(({ consent, hasConsented }, i) => (
                         <Checkbox
-                            title={description}
-                            key={id}
+                            title={consent.description}
+                            key={consent.id}
                             checkboxHtmlProps={{
                                 checked: hasConsented,
                                 onChange: ev => this.onCheckboxChange(ev, i),

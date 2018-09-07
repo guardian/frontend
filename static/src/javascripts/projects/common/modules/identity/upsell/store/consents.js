@@ -11,6 +11,10 @@ type Consent = {
     description: string,
     isOptOut: boolean,
     isChannel: boolean,
+};
+
+type ConsentType = {
+    consent: Consent,
     hasConsented: ?boolean,
 };
 
@@ -31,11 +35,11 @@ const getUserConsents = (): Promise<string[]> =>
 
 const fetchConsents = Promise.all([getUserConsents(), getAllConsents()]);
 
-const get = (): Promise<Consent[]> =>
+const get = (): Promise<ConsentType[]> =>
     fetchConsents.then(([acceptedConsents, allConsents]) =>
-        allConsents.map(c => ({
-            ...c,
-            hasConsented: acceptedConsents.includes(c.id),
+        allConsents.map(consent => ({
+            consent,
+            hasConsented: acceptedConsents.includes(consent.id),
         }))
     );
 
@@ -44,5 +48,5 @@ const updateRemotely = (
     consentId: string
 ): Promise<void> => setConsent(consentId, hasConsented);
 
-export type { Consent };
+export type { Consent, ConsentType };
 export { get, updateRemotely };

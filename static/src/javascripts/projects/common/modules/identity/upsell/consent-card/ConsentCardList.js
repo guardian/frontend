@@ -1,13 +1,19 @@
 // @flow
 import React, { Component } from 'preact-compat';
-import { ConsentCard } from './ConsentCard';
-import { get as getConsents, updateRemotely } from '../store/consents';
-import type { Consent } from '../store/consents';
+import { ConsentCard } from 'common/modules/identity/upsell/consent-card/ConsentCard';
+import {
+    get as getConsents,
+    updateRemotely,
+} from 'common/modules/identity/upsell/store/consents';
+import type {
+    ConsentType,
+    Consent,
+} from 'common/modules/identity/upsell/store/consents';
 
 class ConsentCardList extends Component<
     {},
     {
-        consents: Consent[],
+        consents: ConsentType[],
     }
 > {
     constructor(props: {}) {
@@ -21,7 +27,9 @@ class ConsentCardList extends Component<
         getConsents().then(consents => {
             this.setState({
                 consents: consents.filter(
-                    c => c.isOptOut === false && c.isChannel === false
+                    c =>
+                        c.consent.isOptOut === false &&
+                        c.consent.isChannel === false
                 ),
             });
         });
@@ -32,7 +40,10 @@ class ConsentCardList extends Component<
             this.setState({
                 consents: [
                     ...this.state.consents.map(
-                        c => (c.id === consent.id ? { ...c, hasConsented } : c)
+                        c =>
+                            c.consent.id === consent.id
+                                ? { consent, hasConsented }
+                                : c
                     ),
                 ],
             });
@@ -45,10 +56,10 @@ class ConsentCardList extends Component<
             <div>
                 {consents.map(consent => (
                     <ConsentCard
-                        consent={consent}
+                        consent={consent.consent}
                         hasConsented={consent.hasConsented}
                         onToggleConsent={hasConsent =>
-                            this.toggleConsent(hasConsent, consent)
+                            this.toggleConsent(hasConsent, consent.consent)
                         }
                     />
                 ))}
