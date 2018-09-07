@@ -1,6 +1,7 @@
 import {
     getAllConsents,
     getUserFromApi,
+    setConsent,
 } from 'common/modules/identity/api';
 
 type Consent = {
@@ -41,9 +42,8 @@ const get = (): Promise<Consent[]> =>
         )
     ));
 
-const set = (consentId, value) => {
-    console.log(1212);
-};
+const updateRemotely = (hasConsented: boolean, consentId: string): Promise<void> =>
+    setConsent(consentId, hasConsented);
 
 export type {Consent}
-export {get, set}
+export {get, updateRemotely}

@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'preact-compat';
 import { Checkbox } from '../checkbox/Checkbox';
-import { get as getConsents } from '../store/consents';
+import { get as getConsents, updateRemotely } from '../store/consents';
 import type {Consent} from "../store/consents";
 
 export class OptOutsList extends Component<
@@ -41,26 +41,24 @@ export class OptOutsList extends Component<
         }
     };
 
-    updateChangesRemotely = (): Promise<void> =>new Promise((yay,nay)=>{
-        setTimeout(()=>{
-            yay();
-        },1000);
-    })
+    updateChangesRemotely = (): Promise<void> =>
+        Promise.all(this.state.consents.map(c=>updateRemotely(c.hasConsented,c.id))
+    );
 
     onSubmit = (ev: Event) => {
         ev.preventDefault();
         this.setState({
             isLoading: true,
-            hasUnsavedChanges: false,
         });
         this.updateChangesRemotely().then(()=>{
             this.setState({
                 isLoading: false,
+                hasUnsavedChanges: false,
             });
         }).catch(()=>{
             alert('oops');
         })
-        console.table(this.state.optouts);
+        console.table(this.state.consents);
     }
 
     render() {
