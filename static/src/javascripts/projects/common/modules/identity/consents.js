@@ -13,8 +13,6 @@ import {
     getInfo as getCheckboxInfo,
     removeSpinner,
 } from './modules/switch';
-import { getCsrfTokenFromElement } from './modules/fetchFormFields';
-
 import { prependSuccessMessage } from './modules/prependMessage';
 
 const consentCheckboxClassName = 'js-manage-account__consentCheckbox';
@@ -108,18 +106,13 @@ const buildConsentUpdatePayload = (
 const getInputFields = (labelEl: HTMLElement): Promise<NodeList<HTMLElement>> =>
     fastdom.read(() => labelEl.querySelectorAll('[name][value]'));
 
-const unsubscribeFromAll = (
-    buttonEl: HTMLButtonElement,
-    csrfToken: string
-): Promise<void> => {
+const unsubscribeFromAll = (buttonEl: HTMLButtonElement): Promise<void> => {
     buttonEl.classList.add(isLoadingClassName);
     return reqwest({
-        url: `/user/email-subscriptions`,
-        method: 'DELETE',
+        url: `${config.get('page.idApiUrl')}/remove/consent/all`,
+        method: 'POST',
         withCredentials: true,
-        headers: {
-            'Csrf-Token': csrfToken,
-        },
+        crossOrigin: true,
     });
 };
 
@@ -167,10 +160,7 @@ const showUnsubscribeConfirmation = (): Promise<void> => {
 const bindUnsubscribeFromAll = (buttonEl: HTMLButtonElement) => {
     buttonEl.addEventListener('click', () => {
         toggleInputsWithSelector(newsletterCheckboxClassName, false);
-        return getCsrfTokenFromElement(
-            document.getElementsByClassName(newsletterCheckboxClassName)[0]
-        )
-            .then(csrfToken => unsubscribeFromAll(buttonEl, csrfToken))
+        unsubscribeFromAll(buttonEl)
             .then(() =>
                 Promise.all([
                     showUnsubscribeConfirmation(),
