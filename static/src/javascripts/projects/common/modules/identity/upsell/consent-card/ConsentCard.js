@@ -1,6 +1,7 @@
 // @flow
 import React, { Component } from 'preact-compat';
 import { FollowButtonWrap } from 'common/modules/identity/follow/FollowButtonWrap';
+import { setConsent } from 'common/modules/identity/api';
 
 export type Consent = {
     id: string,
@@ -30,8 +31,10 @@ class ConsentCard extends Component<
 
     toggleConsent = () => {
         const { hasConsented } = this.state;
-        this.setState({
-            hasConsented: !hasConsented,
+        setConsent(this.props.consent.id, !hasConsented).then(() => {
+            this.setState({
+                hasConsented: !hasConsented,
+            });
         });
     };
 
