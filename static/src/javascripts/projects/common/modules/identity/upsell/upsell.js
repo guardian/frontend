@@ -4,6 +4,7 @@ import React, { render } from 'preact-compat';
 import fastdom from 'lib/fastdom-promise';
 import ophan from 'ophan/ng';
 import { ConsentCardList } from 'common/modules/identity/upsell/consent-card/ConsentCardList';
+import { ExpandableConsentCardList } from 'common/modules/identity/upsell/consent-card/ExpandableConsentCardList';
 import loadEnhancers from './../modules/loadEnhancers';
 import { AccountCreationFlow } from './account-creation/AccountCreationFlow';
 import { OptOutsList } from './opt-outs/OptOutsList';
@@ -38,7 +39,19 @@ const bindOptouts = (el): void => {
 
 const bindConfirmEmailThankYou = (el): void => {
     fastdom.write(() => {
-        render(<ConsentCardList />, el);
+        render(
+            <div>
+                <ConsentCardList displayWhiteList={['supporter']} />
+                <ExpandableConsentCardList
+                    list={
+                        <ConsentCardList
+                            displayWhiteList={['jobs', 'offers']}
+                        />
+                    }
+                />
+            </div>,
+            el
+        );
     });
 };
 
