@@ -7,15 +7,21 @@
         <tr>
             <td class="center no-pad" align="center" valign="top">
                 <center class="center-element">
-                    <table align="center" class="container float-center">
-                        <tbody>
-                            <tr>
-                                <td class="no-pad">
-                                    @content
-                                    @fragments.email.footer(page)
-                                </td>
-                            </tr>
-                        </tbody>
+                    <table>
+                        <tr>
+                            <td class="no-pad">
+                                <table align="center" class="container float-center">
+                                    <tbody>
+                                        <tr>
+                                            <td class="no-pad">
+                                                @content
+                                                @fragments.email.footer(page)
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
                     </table>
                 </center>
             </td>
