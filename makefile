@@ -50,7 +50,7 @@ compile: install
 
 # Compile all assets in development.
 compile-dev: install
-	@./tools/task-runner/runner compile --dev
+	@NODE_ENV=development @./tools/task-runner/runner compile --dev
 
 # Compile atom-specific JS
 compile-atoms: install
@@ -58,7 +58,7 @@ compile-atoms: install
 
 # Compile all assets for watch.
 compile-watch: install # PRIVATE
-	@./tools/task-runner/runner compile/index.watch
+	@NODE_ENV=development ./tools/task-runner/runner compile/index.watch
 
 compile-javascript: install # PRIVATE
 	@./tools/task-runner/runner compile/javascript
