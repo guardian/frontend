@@ -151,7 +151,7 @@ export const PodcastContainer = {
     showForSensitive: true,
     canRun() {
         return (
-            config.page.pageId === 'uk' && window.CSS.supports('display: grid')
+            config.page.pageId === 'uk' && window.CSS && window.CSS.supports('display: grid')
         );
     },
 
