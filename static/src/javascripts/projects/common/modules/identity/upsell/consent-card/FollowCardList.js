@@ -81,11 +81,13 @@ class FollowCardList extends Component<
                         0;
                     return (
                         <FollowCard
-                            followable={consent}
+                            followable={{
+                                value: consent,
+                                onChange: newValue => {
+                                    this.toggleConsent(newValue, consent.id);
+                                },
+                            }}
                             hasFollowed={hasConsented}
-                            onToggleFollow={hasConsent =>
-                                this.toggleConsent(hasConsent, consent.id)
-                            }
                         />
                     );
                 })}
