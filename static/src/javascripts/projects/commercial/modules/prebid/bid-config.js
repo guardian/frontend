@@ -245,7 +245,7 @@ const getAppNexusPlacementId = (sizes: PrebidSize[]): string => {
                     return '13144370';
             }
         default:
-            return '13144370';
+            return '13915593';
     }
 };
 
