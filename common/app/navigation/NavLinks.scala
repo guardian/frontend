@@ -521,6 +521,9 @@ object NavLinks {
   )
 
   // Tertiary Navigation
+  // NOTE: content with tags from this list will have the navigation set to the tag in this list, rather than its
+  // section tag. e.g. Content in technology section with world/europe-news will appear in the world section in
+  // the navigation. The workaround for this is to add the section to this list,as has been done with CiF and education
   val tagPages = List(
     "us-news/us-politics",
     "australia-news/australian-politics",
@@ -599,7 +602,6 @@ object NavLinks {
     "football/competitions",
     "football/results",
     "football/fixtures",
-    "education",
     "crosswords/crossword-blog",
     "crosswords/series/crossword-editor-update",
     "crosswords/series/quick",
@@ -612,6 +614,10 @@ object NavLinks {
     "crosswords/series/everyman",
     "crosswords/series/azed",
     "fashion/beauty",
-    "technology/motoring"
+    "technology/motoring",
+    // these last two are here to ensure that content in education and CiF always appear as such in the navigation
+    // even if they also have a tag from this list
+    "commentisfree/commentisfree",
+    "education/education"
   )
 }

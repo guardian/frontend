@@ -159,9 +159,7 @@ object NavMenu {
     val isTagPage = (page.metadata.isFront || frontLikePages.contains(page.metadata.id)) && tagPages.contains(page.metadata.id)
     val isArticleInTagPageSection = commonKeywords.nonEmpty
 
-    val id = if (page.metadata.sectionId == "commentisfree") {
-      page.metadata.sectionId
-    } else if (networkFronts.contains(page.metadata.sectionId)) {
+    val id = if (networkFronts.contains(page.metadata.sectionId)) {
       ""
     } else if (isTagPage) {
       page.metadata.id
@@ -173,7 +171,13 @@ object NavMenu {
       page.metadata.sectionId
     }
 
-    s"/$id"
+    // if id is a section tag, e.g. education/education, convert it to just /education, so it can be succesfully
+    // found up in the navigation (see findDescendantByUrl)
+    val idParts = id.split("/")
+    if (idParts.length == 2 && idParts(0) == idParts(1)) {
+      s"/${idParts(0)}"
+    } else s"/$id"
+
   }
 
   private[navigation] def getSubnav(
