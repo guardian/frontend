@@ -124,8 +124,8 @@ object CompetitionsProvider {
 
     Competition("870", "/football/women-s-world-cup-2015", "Women's World Cup 2015", "Women's World Cup", "Internationals", showInTeamsList = true, tableDividers = List(2)),
     Competition("423", "/football/women-euro-2017", "Women's Euro 2017", "Women's Euro", "Internationals", showInTeamsList = true, tableDividers = List(2)),
-    Competition("970", "football/women-s-champions-league", "Women's Champions League", "Women's Champions League", "European"),
-    Competition("333", "football/womens-fa-cup", "Women's FA Cup", "Women's FA Cup", "English"),
+    Competition("970", "/football/women-s-champions-league", "Women's Champions League", "Women's Champions League", "European"),
+    Competition("333", "/football/womens-fa-cup", "Women's FA Cup", "Women's FA Cup", "English"),
     Competition("961", "/football/womens-super-league", "Women's Super League",  "Women's Super League", "English")
   )
 }
