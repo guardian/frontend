@@ -44,40 +44,12 @@ case class PrivacyFormData(
     allowThirdPartyProfiling: Option[Boolean],
     consents: List[Consent]) extends UserFormData{
 
-  /**
-    * FIXME: Fix the semantic discrepancy between toUserUpdateDTO and toUserUpdateDTOAjax.
-    * In the non-ajax case no value means set it to false while in the ajax case no value means use the old value.
-    *
-    * If a checkbox is unchecked then nothing is sent to dotocom identity frontend,
-    * however IDAPI is expecting Some(false)
-    *
-    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/checkbox:
-    *
-    * "Note: If a checkbox is unchecked when its form is submitted, there is no value submitted to
-    * the server to represent its unchecked state (e.g. value=unchecked); the value is not submitted
-    * to the server at all."
-    */
-
   def toUserUpdateDTO(oldUserDO: User): UserUpdateDTO =
     UserUpdateDTO(
       statusFields = Some(oldUserDO.statusFields.copy(
         allowThirdPartyProfiling = Some(allowThirdPartyProfiling.getOrElse(false))
       )),
       consents = Some(consents))
-
-  def toUserUpdateDTOAjax(oldUserDO: User): UserUpdateDTO = {
-
-    val newAllowThirdPartyProfiling = allowThirdPartyProfiling match {
-      case None => oldUserDO.statusFields.allowThirdPartyProfiling
-      case Some(_) => allowThirdPartyProfiling
-    }
-
-    UserUpdateDTO(
-      statusFields = Some(StatusFields(
-        allowThirdPartyProfiling = newAllowThirdPartyProfiling
-      )),
-      consents = Some(consents))
-  }
 }
 
 object PrivacyFormData extends SafeLogging {

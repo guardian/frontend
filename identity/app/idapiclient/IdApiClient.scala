@@ -152,9 +152,6 @@ class IdApiClient(
   def deleteTelephone(auth: Auth): Future[Response[Unit]] =
     delete("user/me/telephoneNumber", Some(auth)) map extractUnit
 
-  def unsubscribeFromAllEmailsAndOptoutMarketingConsents(auth: Auth): Future[Response[Unit]] =
-    post("remove/consent/all", Some(auth)).map(extractUnit)
-
   // THIRD PARTY SIGN-IN
   def executeAccountDeletionStepFunction(userId: String, email: String, reason: Option[String], auth: Auth): Future[Response[AccountDeletionResult]] = {
     httpClient.POST(
