@@ -1,6 +1,6 @@
 @import conf.Static
 @import conf.Configuration
-@import conf.switches.Switches.{PolyfillIO}
+@import conf.switches.Switches.{PolyfillIO, LotameSwitch}
 
 @(bootModule: String = "standard")(implicit request: RequestHeader)
 
@@ -39,11 +39,18 @@ function guardianPolyfilled() {
     } else {
       Static("javascripts/vendor/polyfillio.fallback.js")
     }) { polyfillioUrl =>
-        var scripts = [
-            '@polyfillioUrl',
-            '@Configuration.lotame.lotameScriptUrl',
-            '@Static(s"javascripts/graun.$bootModule.js")'
-        ];
+        @if(LotameSwitch.isSwitchedOn) {
+            var scripts = [
+                '@polyfillioUrl',
+                '@Configuration.lotame.lotameScriptUrl',
+                '@Static(s"javascripts/graun.$bootModule.js")'
+            ];            
+        } else {
+            var scripts = [
+                '@polyfillioUrl',
+                '@Static(s"javascripts/graun.$bootModule.js")'
+            ];
+        }
     }
 
     function stateChange() {

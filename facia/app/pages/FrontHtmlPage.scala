@@ -1,7 +1,7 @@
 package pages
 
 import common.Edition
-import conf.switches.Switches.{LotameSwitch, WeAreHiring}
+import conf.switches.Switches.WeAreHiring
 import experiments.{ActiveExperiments, OldTLSSupportDeprecation}
 import html.{HtmlPage, Styles}
 import html.HtmlPageHelpers._
@@ -47,7 +47,6 @@ object FrontHtmlPage extends HtmlPage[PressedPage] {
       headTag(
         weAreHiring() when WeAreHiring.isSwitchedOn,
         orielScriptTag(),
-        lotameScriptTag() when LotameSwitch.isSwitchedOn,
         titleTag(),
         metaData(),
         frontMeta(),

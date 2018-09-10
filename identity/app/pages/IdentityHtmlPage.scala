@@ -1,6 +1,6 @@
 package pages
 
-import conf.switches.Switches.{LotameSwitch, WeAreHiring}
+import conf.switches.Switches.WeAreHiring
 import experiments.{ActiveExperiments, OldTLSSupportDeprecation}
 import html.HtmlPageHelpers._
 import html.{HtmlPage, Styles}
@@ -11,7 +11,7 @@ import views.html.fragments._
 import views.html.fragments.page._
 import views.html.fragments.page.body._
 import views.html.fragments.page.head.stylesheets.{criticalStyleInline, criticalStyleLink, styles}
-import views.html.fragments.page.head.{fixIEReferenceErrors, headTag, lotameScriptTag, titleTag, weAreHiring}
+import views.html.fragments.page.head.{fixIEReferenceErrors, headTag, titleTag, weAreHiring}
 import html.HtmlPageHelpers.ContentCSSFile
 
 object IdentityHtmlPage {
@@ -35,7 +35,6 @@ object IdentityHtmlPage {
     htmlTag(
       headTag(
         weAreHiring() when WeAreHiring.isSwitchedOn,
-        lotameScriptTag() when LotameSwitch.isSwitchedOn,
         titleTag(),
         metaData(),
         styles(allStyles),
