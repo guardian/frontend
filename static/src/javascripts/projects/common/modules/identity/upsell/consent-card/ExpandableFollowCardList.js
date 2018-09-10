@@ -1,13 +1,13 @@
 // @flow
 import React, { Component } from 'preact-compat';
-import { ConsentCardList } from './ConsentCardList';
+import { FollowCardList } from './FollowCardList';
 
-type CollapsibleConsentCardListProps = {
-    list: ConsentCardList,
+type ExpandableConsentCardListProps = {
+    list: FollowCardList,
 };
 
-class ExpandableConsentCardList extends Component<
-    CollapsibleConsentCardListProps,
+class ExpandableFollowCardList extends Component<
+    ExpandableConsentCardListProps,
     {
         expanded: boolean,
     }
@@ -34,4 +34,4 @@ class ExpandableConsentCardList extends Component<
     }
 }
 
-export { ExpandableConsentCardList };
+export { ExpandableFollowCardList };

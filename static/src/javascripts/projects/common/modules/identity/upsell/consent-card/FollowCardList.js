@@ -5,21 +5,21 @@ import {
     getUserFromApi,
     setConsent,
 } from 'common/modules/identity/api';
-import { ConsentCard } from './ConsentCard';
-import type { Consent } from './ConsentCard';
+import { FollowCard } from './FollowCard';
+import type { Consent } from './FollowCard';
 
-type ConsentCardListProps = {
+type FollowCardListProps = {
     displayWhiteList: string[],
 };
 
-class ConsentCardList extends Component<
-    ConsentCardListProps,
+class FollowCardList extends Component<
+    FollowCardListProps,
     {
         acceptedConsents: string[],
         allConsents: Consent[],
     }
 > {
-    constructor(props: ConsentCardListProps) {
+    constructor(props: FollowCardListProps) {
         super(props);
         this.setState({
             acceptedConsents: [],
@@ -80,10 +80,10 @@ class ConsentCardList extends Component<
                         acceptedConsents.filter(e => e === consent.id).length >
                         0;
                     return (
-                        <ConsentCard
-                            consent={consent}
-                            hasConsented={hasConsented}
-                            onToggleConsent={hasConsent =>
+                        <FollowCard
+                            followable={consent}
+                            hasFollowed={hasConsented}
+                            onToggleFollow={hasConsent =>
                                 this.toggleConsent(hasConsent, consent.id)
                             }
                         />
@@ -94,4 +94,4 @@ class ConsentCardList extends Component<
     }
 }
 
-export { ConsentCardList };
+export { FollowCardList };

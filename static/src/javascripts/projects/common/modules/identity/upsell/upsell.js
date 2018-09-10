@@ -3,8 +3,8 @@ import { trackNonClickInteraction } from 'common/modules/analytics/google';
 import React, { render } from 'preact-compat';
 import fastdom from 'lib/fastdom-promise';
 import ophan from 'ophan/ng';
-import { ConsentCardList } from 'common/modules/identity/upsell/consent-card/ConsentCardList';
-import { ExpandableConsentCardList } from 'common/modules/identity/upsell/consent-card/ExpandableConsentCardList';
+import { FollowCardList } from 'common/modules/identity/upsell/consent-card/FollowCardList';
+import { ExpandableFollowCardList } from 'common/modules/identity/upsell/consent-card/ExpandableFollowCardList';
 import loadEnhancers from './../modules/loadEnhancers';
 import { AccountCreationFlow } from './account-creation/AccountCreationFlow';
 import { OptOutsList } from './opt-outs/OptOutsList';
@@ -41,12 +41,10 @@ const bindConfirmEmailThankYou = (el): void => {
     fastdom.write(() => {
         render(
             <div>
-                <ConsentCardList displayWhiteList={['supporter']} />
-                <ExpandableConsentCardList
+                <FollowCardList displayWhiteList={['supporter']} />
+                <ExpandableFollowCardList
                     list={
-                        <ConsentCardList
-                            displayWhiteList={['jobs', 'offers']}
-                        />
+                        <FollowCardList displayWhiteList={['jobs', 'offers']} />
                     }
                 />
             </div>,

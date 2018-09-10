@@ -44,7 +44,7 @@ class AdPrefsWrapper extends Component<
         const consentsWithState = [...this.state.consentsWithState];
         const changesPending =
             this.props.getAdConsentState(
-                consentsWithState[consentId].consent
+                consentsWithState[consentId].followable
             ) !== state;
         consentsWithState[consentId].state = state;
         if (this.SubmitButtonRef) {
@@ -62,7 +62,7 @@ class AdPrefsWrapper extends Component<
         this.state.consentsWithState.forEach(consentWithState => {
             if (typeof consentWithState.state === 'boolean') {
                 this.props.setAdConsentState(
-                    consentWithState.consent,
+                    consentWithState.followable,
                     consentWithState.state
                 );
             }
@@ -85,9 +85,9 @@ class AdPrefsWrapper extends Component<
                     {this.state.consentsWithState.map(
                         (consentWithState, index) => (
                             <ConsentBox
-                                consent={consentWithState.consent}
+                                consent={consentWithState.followable}
                                 state={consentWithState.state}
-                                key={consentWithState.consent.cookie}
+                                key={consentWithState.followable.cookie}
                                 onUpdate={(state: ?boolean) => {
                                     this.onUpdate(index, state);
                                 }}

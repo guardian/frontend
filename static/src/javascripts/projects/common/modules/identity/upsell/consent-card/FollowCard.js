@@ -2,6 +2,15 @@
 import React, { Component } from 'preact-compat';
 import { FollowButtonWrap } from 'common/modules/identity/follow/FollowButtonWrap';
 
+/**
+ * Things that are Followable, i.e. Consents and EmailNewsletters.
+ */
+export type Followable = {
+    id: string,
+    name: string,
+    description: string,
+};
+
 export type Consent = {
     id: string,
     name: string,
@@ -10,30 +19,30 @@ export type Consent = {
     isChannel: boolean,
 };
 
-type ConsentCardProps = {
-    consent: Consent,
-    hasConsented: boolean,
-    onToggleConsent: boolean => void,
+type FollowCardProps = {
+    followable: Followable,
+    hasFollowed: boolean,
+    onToggleFollow: boolean => void,
 };
 
-class ConsentCard extends Component<ConsentCardProps, {}> {
+class FollowCard extends Component<FollowCardProps, {}> {
     render() {
-        const { hasConsented } = this.props;
+        const { hasFollowed } = this.props;
         return (
             <div className="identity-upsell-consent-card">
                 <h1 className="identity-upsell-consent-card__title">
-                    {this.props.consent.name}
+                    {this.props.followable.name}
                 </h1>
                 <p className="identity-upsell-consent-card__description">
-                    {this.props.consent.description}
+                    {this.props.followable.description}
                 </p>
                 <FollowButtonWrap
-                    following={hasConsented}
+                    following={hasFollowed}
                     onFollow={() => {
-                        this.props.onToggleConsent(true);
+                        this.props.onToggleFollow(true);
                     }}
                     onUnfollow={() => {
-                        this.props.onToggleConsent(false);
+                        this.props.onToggleFollow(false);
                     }}
                 />
             </div>
@@ -41,4 +50,4 @@ class ConsentCard extends Component<ConsentCardProps, {}> {
     }
 }
 
-export { ConsentCard };
+export { FollowCard };
