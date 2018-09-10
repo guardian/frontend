@@ -37,6 +37,20 @@
     }
 }
 
+.identity-upsell-button-with-proxy {
+    display: flex;
+    align-items: center;
+    .identity-upsell-button-with-proxy__proxy {
+        @include fs-textSans(5);
+        color: $brightness-20;
+        padding-left: $gs-gutter;
+        &.identity-upsell-button-with-proxy__proxy--success {
+            color: $green-bold;
+            font-weight: 600;
+        }
+    }
+}
+
 .identity-upsell-checkbox {
     @include fs-textSans(4);
     padding-left: $gs-gutter * 1.5;

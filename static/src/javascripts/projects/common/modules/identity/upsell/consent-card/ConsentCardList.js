@@ -1,89 +1,70 @@
 // @flow
 import React, { Component } from 'preact-compat';
+import { ConsentCard } from 'common/modules/identity/upsell/consent-card/ConsentCard';
 import {
-    getAllConsents,
-    getUserFromApi,
-    setConsent,
-} from 'common/modules/identity/api';
-import { ConsentCard } from './ConsentCard';
-import type { Consent } from './ConsentCard';
+    get as getConsents,
+    updateRemotely,
+} from 'common/modules/identity/upsell/store/consents';
+import type {
+    ConsentType,
+    Consent,
+} from 'common/modules/identity/upsell/store/consents';
+
+type ConsentCardListProps = {
+    displayWhiteList: string[],
+};
 
 class ConsentCardList extends Component<
-    {},
+    ConsentCardListProps,
     {
-        acceptedConsents: string[],
-        allConsents: Consent[],
+        consents: ConsentType[],
     }
 > {
-    constructor(props: {}) {
+    constructor(props: ConsentCardListProps) {
         super(props);
         this.setState({
-            acceptedConsents: [],
-            allConsents: [],
+            consents: [],
         });
     }
 
     componentDidMount() {
-        let acceptedConsents = [];
-        getUserFromApi(user => {
-            if (user && user.consents) {
-                acceptedConsents = user.consents
-                    .filter(consent => consent.consented === true)
-                    .map(consent => consent.id);
-            }
-        });
-        getAllConsents().then(allConsents => {
-            const filteredConsents = allConsents.filter(
-                consent =>
-                    consent.isOptOut === false && consent.isChannel === false
-            );
+        getConsents().then(consents => {
             this.setState({
-                allConsents: filteredConsents,
-                acceptedConsents,
+                consents: consents.filter(c =>
+                    this.props.displayWhiteList.contains(c.consent.id)
+                ),
             });
         });
     }
 
-    toggleConsent = (hasConsented: boolean, consentId: string) => {
-        setConsent(consentId, hasConsented).then(() => {
-            const { acceptedConsents } = this.state;
-            if (hasConsented) {
-                this.setState({
-                    acceptedConsents: [
-                        ...acceptedConsents.filter(
-                            consent => consent !== consentId
-                        ),
-                        consentId,
-                    ],
-                });
-            } else {
-                this.setState({
-                    acceptedConsents: acceptedConsents.filter(
-                        consent => consent !== consentId
+    toggleConsent = (hasConsented: boolean, consent: Consent) => {
+        updateRemotely(hasConsented, consent.id).then(() => {
+            this.setState({
+                consents: [
+                    ...this.state.consents.map(
+                        c =>
+                            c.consent.id === consent.id
+                                ? { consent, hasConsented }
+                                : c
                     ),
-                });
-            }
+                ],
+            });
         });
     };
 
     render() {
-        const { allConsents, acceptedConsents } = this.state;
+        const { consents } = this.state;
         return (
             <div>
-                {allConsents.map(consent => {
-                    const hasConsented =
-                        acceptedConsents.filter(e => e === consent.id).length >
-                        0;
-                    return (
-                        <ConsentCard
-                            consent={consent}
-                            hasConsented={hasConsented}
-                            onToggleConsent={hasConsent =>
-                                this.toggleConsent(hasConsent, consent.id)
-                            }
-                        />
-                    );
-                })}
+                {consents.map(consent => (
+                    <ConsentCard
+                        consent={consent.consent}
+                        hasConsented={consent.hasConsented}
+                        onToggleConsent={hasConsent =>
+                            this.toggleConsent(hasConsent, consent.consent)
+                        }
+                    />
+                ))}
             </div>
         );
     }

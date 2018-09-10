@@ -102,7 +102,8 @@ youtube-media-atom:not(.youtube-related-videos) .youtube-media-atom__iframe.yout
     }
 }
 
-.youtube-media-atom__overlay.vjs-big-play-button {
+// in articles, youtube iframe is below the overlay, so we should allow users to click through it
+.content .youtube-media-atom__overlay.vjs-big-play-button {
     pointer-events: none;
 }
 

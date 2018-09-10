@@ -1,67 +1,103 @@
 // @flow
 import React, { Component } from 'preact-compat';
-import { Checkbox } from '../checkbox/Checkbox';
-
-type OptOut = {
-    id: string,
-    title: string,
-    checked: boolean,
-};
+import { Checkbox } from 'common/modules/identity/upsell/checkbox/Checkbox';
+import {
+    get as getConsents,
+    updateRemotely,
+} from 'common/modules/identity/upsell/store/consents';
+import type { ConsentType } from 'common/modules/identity/upsell/store/consents';
 
 export class OptOutsList extends Component<
     {},
     {
-        optouts: OptOut[],
+        consents: ConsentType[],
+        isLoading: boolean,
+        hasUnsavedChanges: boolean,
     }
 > {
     constructor(props: {}) {
         super(props);
         this.state = {
-            optouts: [
-                {
-                    id: 'phone',
-                    title:
-                        'I do NOT wish to receive communications from the Guardian by telephone.',
-                    checked: false,
-                },
-                {
-                    id: 'mail',
-                    title: 'I do not want to be contacted by mail',
-                    checked: true,
-                },
-                {
-                    id: 'sms',
-                    title: 'I do not want to be contacted by SMS',
-                    checked: false,
-                },
-            ],
+            isLoading: false,
+            hasUnsavedChanges: true,
+            consents: [],
         };
+    }
+
+    componentDidMount() {
+        getConsents().then(consents => {
+            this.setState({
+                consents: consents.filter(c => c.consent.isOptOut),
+            });
+        });
     }
 
     onCheckboxChange = (ev: Event, i: number) => {
         if (ev.currentTarget instanceof HTMLInputElement) {
-            const optoutsClone = [...this.state.optouts];
-            optoutsClone[i].checked = ev.currentTarget.checked;
+            const clone = [...this.state.consents];
+            clone[i].hasConsented = ev.currentTarget.checked;
             this.setState({
-                optouts: optoutsClone,
+                consents: clone,
+                hasUnsavedChanges: true,
             });
         }
     };
 
+    onSubmit = (ev: Event) => {
+        ev.preventDefault();
+        this.setState({
+            isLoading: true,
+        });
+        this.updateChangesRemotely().then(() => {
+            this.setState({
+                isLoading: false,
+                hasUnsavedChanges: false,
+            });
+        });
+    };
+
+    updateChangesRemotely = (): Promise<void> =>
+        Promise.all(
+            this.state.consents.map(c =>
+                updateRemotely(c.hasConsented, c.consent.id)
+            )
+        );
+
     render() {
+        const { hasUnsavedChanges, isLoading, consents } = this.state;
         return (
-            <div>
-                {this.state.optouts.map(({ title, checked, id }, i) => (
-                    <Checkbox
-                        title={title}
-                        key={id}
-                        checkboxHtmlProps={{
-                            checked,
-                            onChange: ev => this.onCheckboxChange(ev, i),
-                        }}
-                    />
-                ))}
-            </div>
+            <form onSubmit={ev => this.onSubmit(ev)}>
+                <div>
+                    {consents.map(({ consent, hasConsented }, i) => (
+                        <Checkbox
+                            title={consent.description}
+                            key={consent.id}
+                            checkboxHtmlProps={{
+                                checked: hasConsented,
+                                onChange: ev => this.onCheckboxChange(ev, i),
+                            }}
+                        />
+                    ))}
+                </div>
+                <div className="identity-upsell-button-with-proxy">
+                    <button
+                        type="submit"
+                        disabled={isLoading}
+                        className="manage-account__button manage-account__button--main">
+                        Save changes
+                    </button>
+                    {!hasUnsavedChanges && (
+                        <span className="identity-upsell-button-with-proxy__proxy identity-upsell-button-with-proxy__proxy--success">
+                            Changes saved
+                        </span>
+                    )}
+                    {isLoading && (
+                        <span className="identity-upsell-button-with-proxy__proxy">
+                            Loading
+                        </span>
+                    )}
+                </div>
+            </form>
         );
     }
 }
