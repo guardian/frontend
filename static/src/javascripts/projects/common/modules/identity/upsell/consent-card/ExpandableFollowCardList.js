@@ -2,12 +2,12 @@
 import React, { Component } from 'preact-compat';
 import { FollowCardList } from './FollowCardList';
 
-type ExpandableConsentCardListProps = {
+type ExpandableFollowCardListProps = {
     list: FollowCardList,
 };
 
 class ExpandableFollowCardList extends Component<
-    ExpandableConsentCardListProps,
+    ExpandableFollowCardListProps,
     {
         expanded: boolean,
     }
