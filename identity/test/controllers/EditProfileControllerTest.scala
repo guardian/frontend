@@ -134,38 +134,6 @@ import scala.concurrent.Future
       }
     }
 
-
-    "submitPrivacyForm method is called with valid CSRF request" should {
-      "post UserUpdateDTO with consent to IDAPI" in new EditProfileFixture {
-        val consent = Consent(Supporter.id, "user", false)
-
-        val fakeRequest = FakeCSRFRequest(csrfAddToken)
-          .withFormUrlEncodedBody(
-            "consents[0].actor" -> consent.actor,
-            "consents[0].id" -> consent.id,
-            "consents[0].consented" -> consent.consented.toString,
-            "consents[0].privacyPolicyVersion" -> consent.privacyPolicyVersion.toString,
-            "consents[0].timestamp" -> consent.timestamp.toString(ISODateTimeFormat.dateTimeNoMillis.withZoneUTC()),
-            "consents[0].version" -> consent.version.toString
-          )
-
-        when(api.saveUser(MockitoMatchers.any[String], MockitoMatchers.any[UserUpdateDTO], MockitoMatchers.any[Auth]))
-          .thenReturn(Future.successful(Right(user.copy(consents = List(consent)))))
-
-        val result = controller.saveConsentPreferences().apply(fakeRequest)
-
-        status(result) should be(200)
-
-        val userUpdateDTOCapture = ArgumentCaptor.forClass(classOf[UserUpdateDTO])
-        verify(api).saveUser(MockitoMatchers.eq(userId), userUpdateDTOCapture.capture(), MockitoMatchers.eq(testAuth))
-        val userUpdateDTO = userUpdateDTOCapture.getValue
-
-        userUpdateDTO.consents.value.head.actor should equal(consent.actor)
-        userUpdateDTO.consents.value.head.id should equal(consent.id)
-        userUpdateDTO.consents.value.head.consented should equal(consent.consented)
-      }
-    }
-
     "The submitAccountForm method" should {
       object FakeRequestAccountData {
         val primaryEmailAddress = "john.smith@bobmail.com"
@@ -435,33 +403,6 @@ import scala.concurrent.Future
         userUpdate.privateFields.value.billingPostcode.value should equal(billingPostcode)
         userUpdate.privateFields.value.billingCountry.value should equal(billingCountry)
         userUpdate.privateFields.value.telephoneNumber.value should equal(TelephoneNumber(Some(telephoneNumberCountryCode), Some(telephoneNumberLocalNumber)))
-      }
-    }
-
-    "saveEmailPreferences method is called with valid form body" should {
-      "respond with success body if IDAPI post email endpoint returns 200" in new EditProfileFixture {
-        val fakeRequestEmailPrefs = FakeCSRFRequest(csrfAddToken).withFormUrlEncodedBody(
-          "addEmailSubscriptions[]" -> "4151",
-          "currentEmailSubscriptions[]" -> "1234"
-        )
-        when(api.addSubscription(MockitoMatchers.anyString(), MockitoMatchers.any[EmailList], MockitoMatchers.any[Auth], MockitoMatchers.any[TrackingData])) thenReturn Future.successful(Right({}))
-
-        val result = controller.saveEmailPreferencesAjax().apply(fakeRequestEmailPrefs)
-        status(result) should be(200)
-        contentAsString(result) should include ("updated")
-      }
-
-      "respond with error body if IDAPI post email endpoint returns error" in new EditProfileFixture {
-        val fakeRequestEmailPrefs = FakeCSRFRequest(csrfAddToken).withFormUrlEncodedBody(
-          "addEmailSubscriptions[]" -> "4151",
-          "currentEmailSubscriptions[]" -> "1234"
-        )
-        val errors = List(Error("Test message", "Test description", 500))
-        when(api.addSubscription(MockitoMatchers.anyString(), MockitoMatchers.any[EmailList], MockitoMatchers.any[Auth], MockitoMatchers.any[TrackingData])) thenReturn Future.successful(Left(errors))
-
-        val result = controller.saveEmailPreferencesAjax().apply(fakeRequestEmailPrefs)
-        status(result) should not be(200)
-        contentAsString(result) should include ("There was an error saving your preferences")
       }
     }
 

@@ -31,7 +31,7 @@ class ConsentCardList extends Component<
         getConsents().then(consents => {
             this.setState({
                 consents: consents.filter(c =>
-                    this.props.displayWhiteList.includes(c.consent.id)
+                    this.props.displayWhiteList.contains(c.consent.id)
                 ),
             });
         });

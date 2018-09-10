@@ -36,37 +36,6 @@ class NewsletterService(
         }
     }
 
-  def savePreferences()(implicit request: AuthRequest[AnyContent]): Future[Form[EmailPrefsData]] = {
-    val idRequest = idRequestParser(request)
-    val userId = request.user.id
-    val auth = request.user.auth
-    val trackingParameters = idRequest.trackingData
-
-    emailPrefsForm.bindFromRequest.fold({
-      case formWithErrors: Form[EmailPrefsData] =>
-        Future.successful(formWithErrors)
-    }, {
-      case emailPrefsData: EmailPrefsData =>
-        val form = emailPrefsForm.fill(emailPrefsData)
-
-        val unsubscribeResponse = emailPrefsData.removeEmailSubscriptions.map { id =>
-          api.deleteSubscription(userId, EmailList(id), auth, trackingParameters)
-        }
-
-        val subscribeResponse = emailPrefsData.addEmailSubscriptions.map { id =>
-          api.addSubscription(userId, EmailList(id), auth, trackingParameters)
-        }
-
-        Future.sequence(unsubscribeResponse ++ subscribeResponse).map { responses =>
-          if (responses.exists(_.isLeft)) {
-            form.withGlobalError("There was an error saving your preferences")
-          } else {
-            form
-          }
-        }
-    })
-  }
-
   def getEmailSubscriptions(
      form: Form[EmailPrefsData],
      add: List[String] = List(),
