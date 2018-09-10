@@ -41,6 +41,7 @@ function guardianPolyfilled() {
     }) { polyfillioUrl =>
         var scripts = [
             '@polyfillioUrl',
+            '@Configuration.lotame.lotameScriptUrl',
             '@Static(s"javascripts/graun.$bootModule.js")'
         ];
     }
