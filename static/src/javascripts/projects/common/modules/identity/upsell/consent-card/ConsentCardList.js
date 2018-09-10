@@ -8,14 +8,18 @@ import {
 import { ConsentCard } from './ConsentCard';
 import type { Consent } from './ConsentCard';
 
+type ConsentCardListProps = {
+    displayWhiteList: string[],
+};
+
 class ConsentCardList extends Component<
-    {},
+    ConsentCardListProps,
     {
         acceptedConsents: string[],
         allConsents: Consent[],
     }
 > {
-    constructor(props: {}) {
+    constructor(props: ConsentCardListProps) {
         super(props);
         this.setState({
             acceptedConsents: [],
@@ -35,7 +39,8 @@ class ConsentCardList extends Component<
         getAllConsents().then(allConsents => {
             const filteredConsents = allConsents.filter(
                 consent =>
-                    consent.isOptOut === false && consent.isChannel === false
+                    this.props.displayWhiteList.filter(id => consent.id === id)
+                        .length > 0
             );
             this.setState({
                 allConsents: filteredConsents,
