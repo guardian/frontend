@@ -43,16 +43,10 @@ class FollowCard<T: CardLike> extends Component<FollowCardProps<T>, {}> {
                 <FollowButtonWrap
                     following={hasFollowed}
                     onFollow={() => {
-                        this.props.followable.onChange(
-                            true,
-                            this.props.followable.value
-                        );
+                        this.props.followable.onChange(true);
                     }}
                     onUnfollow={() => {
-                        this.props.followable.onChange(
-                            false,
-                            this.props.followable.value
-                        );
+                        this.props.followable.onChange(false);
                     }}
                 />
             </div>
