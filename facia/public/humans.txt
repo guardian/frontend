@@ -136,6 +136,8 @@ Development Manager: Mark Butler
 Twitter: @mark_j_butler
 Location: London, UK
 
+Developer: Lauren Emms
+From: London, UK
 
 /* CONTENT PRODUCTION */
 
