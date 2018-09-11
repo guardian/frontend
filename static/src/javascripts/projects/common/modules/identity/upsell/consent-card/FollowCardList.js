@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'preact-compat';
-import { ConsentCard } from 'common/modules/identity/upsell/consent-card/ConsentCard';
+import { FollowCard } from 'common/modules/identity/upsell/consent-card/FollowCard';
 import {
     get as getConsents,
     updateRemotely,
@@ -10,17 +10,17 @@ import type {
     Consent,
 } from 'common/modules/identity/upsell/store/consents';
 
-type ConsentCardListProps = {
+type FollowCardListProps = {
     displayWhiteList: string[],
 };
 
-class ConsentCardList extends Component<
-    ConsentCardListProps,
+class FollowCardList extends Component<
+    FollowCardListProps,
     {
         consents: ConsentType[],
     }
 > {
-    constructor(props: ConsentCardListProps) {
+    constructor(props: FollowCardListProps) {
         super(props);
         this.setState({
             consents: [],
@@ -31,7 +31,7 @@ class ConsentCardList extends Component<
         getConsents().then(consents => {
             this.setState({
                 consents: consents.filter(c =>
-                    this.props.displayWhiteList.contains(c.consent.id)
+                    this.props.displayWhiteList.includes(c.consent.id)
                 ),
             });
         });
@@ -57,12 +57,14 @@ class ConsentCardList extends Component<
         return (
             <div>
                 {consents.map(consent => (
-                    <ConsentCard
-                        consent={consent.consent}
-                        hasConsented={consent.hasConsented}
-                        onToggleConsent={hasConsent =>
-                            this.toggleConsent(hasConsent, consent.consent)
-                        }
+                    <FollowCard
+                        followable={{
+                            value: consent.consent,
+                            onChange: newValue => {
+                                this.toggleConsent(newValue, consent.consent);
+                            },
+                        }}
+                        hasFollowed={consent.hasConsented}
                     />
                 ))}
             </div>
@@ -70,4 +72,4 @@ class ConsentCardList extends Component<
     }
 }
 
-export { ConsentCardList };
+export { FollowCardList };
