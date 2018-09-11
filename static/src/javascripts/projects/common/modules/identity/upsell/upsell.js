@@ -10,20 +10,22 @@ import { AccountCreationFlow } from 'common/modules/identity/upsell/account-crea
 import { OptOutsList } from 'common/modules/identity/upsell/opt-outs/OptOutsList';
 import { Block } from 'common/modules/identity/upsell/block/Block';
 
-const ConfirmEmailThankYou = (<Block title="Interested in any of this content?">
-    <FollowCardList displayWhiteList={['supporter']} />
-    <ExpandableFollowCardList
-        list={
-            <FollowCardList displayWhiteList={['jobs', 'offers']} />
-        }
-    />
-</Block>)
+const ConfirmEmailThankYou = (
+    <Block title="Interested in any of this content?">
+        <FollowCardList displayWhiteList={['supporter']} />
+        <ExpandableFollowCardList
+            list={<FollowCardList displayWhiteList={['jobs', 'offers']} />}
+        />
+    </Block>
+);
 
-const Optouts = (<Block
-    title="One more thing..."
-    subtitle="These are your privacy settings. You’re in full control of them.">
-    <OptOutsList />
-</Block>)
+const Optouts = (
+    <Block
+        title="One more thing..."
+        subtitle="These are your privacy settings. You’re in full control of them.">
+        <OptOutsList />
+    </Block>
+);
 
 const trackInteraction = (interaction: string): void => {
     ophan.record({
@@ -47,18 +49,22 @@ const bindAccountCreation = (el): void => {
     });
 };
 
-
 const bindBlockList = (el): void => {
     fastdom.write(() => {
-        render(<div>{ConfirmEmailThankYou}{Optouts}</div>, el);
+        render(
+            <div>
+                {ConfirmEmailThankYou}
+                {Optouts}
+            </div>,
+            el
+        );
     });
 };
-
 
 const enhanceUpsell = (): void => {
     loadEnhancers([
         ['.js-identity-upsell-account-creation', bindAccountCreation],
-        ['.js-identity-block-list', bindBlockList]
+        ['.js-identity-block-list', bindBlockList],
     ]);
 };
 
