@@ -178,7 +178,7 @@ const shouldAutoplay = (atomId: string): boolean => {
         accessibilityIsOn('flashing-elements');
 
     const isVideoArticle = () =>
-        config.get('page.contentType').toLowerCase() === 'video';
+        config.get('page.contentType', '').toLowerCase() === 'video';
 
     const isFront = () => config.get('page.isFront');
 
