@@ -97,3 +97,13 @@
     }
 
 }
+
+.identity-upsell-block {
+    width: 100%;
+    border-top: 2px solid pink;
+    padding: 10px;
+}
+
+.identity-upsell-block__title, .identity-upsell-block__subtitle {
+    @include fs-headlineGarnett(2);
+}
