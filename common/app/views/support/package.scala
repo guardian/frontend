@@ -189,7 +189,10 @@ object RenderOtherStatus {
   def apply(result: Result)(implicit request: RequestHeader, context: ApplicationContext): Result = result.header.status match {
     case 404 => NoCache(NotFound)
     case 410 if request.isJson => Cached(60)(JsonComponent(gonePage, "status" -> "GONE"))
-    case 410 => Cached(60)(WithoutRevalidationResult(Gone(views.html.expired(gonePage))))
+    case 410 => Cached(60)(WithoutRevalidationResult(Gone(views.html.gone(
+      gonePage,
+      "Sorry - this page has been removed.",
+      "This could be because the content on this tag page hasn't been published yet or has expired, there was a legal issue, or for another reason."))))
     case _ => result
   }
 }
