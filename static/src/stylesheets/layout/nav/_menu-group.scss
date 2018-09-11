@@ -59,9 +59,9 @@
     padding-bottom: 0;
 
     .menu-group {
-        background-color: darken($nav-faded, 10%);
+        background-color: darken($brightness-97, 10%);
         .menu-item-divider {
-            background-color: darken($nav-faded, 20%);
+            background-color: darken($brightness-97, 20%);
         }
     }
 }

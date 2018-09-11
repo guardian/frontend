@@ -13,7 +13,7 @@ from scrolling */
 }
 
 .new-header {
-    background-color: $nav-faded;
+    background-color: $brightness-97;
     position: relative;
 
     &:not(.new-header--slim) {
@@ -35,7 +35,7 @@ from scrolling */
     @include mq(desktop) {
 
         &.new-header--open {
-            background-color: $nav-faded;
+            background-color: $brightness-97;
         }
     }
 

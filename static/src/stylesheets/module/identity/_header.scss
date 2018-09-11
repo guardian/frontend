@@ -4,7 +4,7 @@ $gutter: 5px;
 
 .identity-header {
     @include clearfix;
-    background-color: $nav-faded;
+    background-color: $brightness-97;
     padding: ($gutter/2) 0 0;
     color: $brightness-7;
     height: $slim-nav-height + 1px;
