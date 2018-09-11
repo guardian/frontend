@@ -444,14 +444,13 @@ const getDummyServerSideBidders = (): Array<PrebidBidder> => {
     // Experimental. Only 0.01% of the PVs.
     if (
         inPbTestOr(
-            config.get('switches.prebidS2sozone') &&
+            !isExcludedGeolocation() &&
+                config.get('switches.prebidS2sozone') &&
                 getRandomIntInclusive(1, 10000) === 1
         )
     ) {
         dummyServerSideBidders.push(openxServerSideBidder);
-        if (inPbTestOr(!isExcludedGeolocation())) {
-            dummyServerSideBidders.push(appnexusServerSideBidder);
-        }
+        dummyServerSideBidders.push(appnexusServerSideBidder);
     }
     return dummyServerSideBidders;
 };
