@@ -224,7 +224,7 @@ from scrolling */
 }
 
 .new-header--slim {
-    border-bottom: 1px solid $nav-dark;
+    border-bottom: 1px solid $brightness-86;
     height: $slim-nav-height + $gs-baseline + $gs-baseline / 2;
 
     .immersive-header-container & {
@@ -235,7 +235,7 @@ from scrolling */
     }
 
     @include mq(tablet) {
-        border-bottom: 1px solid $nav-dark;
+        border-bottom: 1px solid $brightness-86;
         height: $slim-nav-height;
     }
 }

@@ -45,7 +45,7 @@
         left: 0;
         right: 0;
         width: 100%;
-        border-bottom: 1px solid $nav-dark;
+        border-bottom: 1px solid $brightness-86;
 
         @supports (width: 100vw) {
             // based on https://css-tricks.com/full-width-containers-limited-width-parents/#article-header-id-6
