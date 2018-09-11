@@ -53,7 +53,7 @@ object ThrasherAdjacentMPU extends Experiment(
   name = "thrasher-adjacent-mpu",
   description = "This will no longer allow an MPU to show adjacent to a thrasher on mobile",
   owners = Seq(Owner.withGithub("janua")),
-  sellByDate = new LocalDate(2018, 9, 11),
+  sellByDate = new LocalDate(2018, 9, 18),
   participationGroup = Perc10A
 )
 
