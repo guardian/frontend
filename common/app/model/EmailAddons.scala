@@ -184,6 +184,12 @@ case object AnimalsFarmed extends ArticleEmailMetadata {
   def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "animals-farmed/series/animals-farmed-update")
 }
 
+case object USMorningBriefing extends ArticleEmailMetadata {
+  val name = "US Morning Briefing"
+  override val banner = Some("us-morning-briefing.png")
+  def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "us-news/series/guardian-us-briefing")
+}
+
 case object TheFlyer extends FrontEmailMetadata {
   val name = "The Flyer"
   override val banner = Some("the-flyer.png")
@@ -378,7 +384,8 @@ object EmailAddons {
     HearHere,
     CrosswordEditorsUpdate,
     TheUpsideWeeklyReport,
-    AnimalsFarmed)
+    AnimalsFarmed,
+    USMorningBriefing)
   private val frontEmails = Seq(
     SocialCareNetwork,
     HigherEducationNetwork,
