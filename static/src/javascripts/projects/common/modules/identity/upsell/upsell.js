@@ -5,9 +5,27 @@ import fastdom from 'lib/fastdom-promise';
 import ophan from 'ophan/ng';
 import { FollowCardList } from 'common/modules/identity/upsell/consent-card/FollowCardList';
 import { ExpandableFollowCardList } from 'common/modules/identity/upsell/consent-card/ExpandableFollowCardList';
-import loadEnhancers from './../modules/loadEnhancers';
-import { AccountCreationFlow } from './account-creation/AccountCreationFlow';
-import { OptOutsList } from './opt-outs/OptOutsList';
+import loadEnhancers from 'common/modules/identity/modules/loadEnhancers';
+import { AccountCreationFlow } from 'common/modules/identity/upsell/account-creation/AccountCreationFlow';
+import { OptOutsList } from 'common/modules/identity/upsell/opt-outs/OptOutsList';
+import { Block } from 'common/modules/identity/upsell/block/Block';
+
+const ConfirmEmailThankYou = (
+    <Block title="Interested in any of this content?">
+        <FollowCardList displayWhiteList={['supporter']} />
+        <ExpandableFollowCardList
+            list={<FollowCardList displayWhiteList={['jobs', 'offers']} />}
+        />
+    </Block>
+);
+
+const Optouts = (
+    <Block
+        title="One more thing..."
+        subtitle="These are your privacy settings. You’re in full control of them.">
+        <OptOutsList />
+    </Block>
+);
 
 const trackInteraction = (interaction: string): void => {
     ophan.record({
@@ -31,22 +49,12 @@ const bindAccountCreation = (el): void => {
     });
 };
 
-const bindOptouts = (el): void => {
-    fastdom.write(() => {
-        render(<OptOutsList />, el);
-    });
-};
-
-const bindConfirmEmailThankYou = (el): void => {
+const bindBlockList = (el): void => {
     fastdom.write(() => {
         render(
             <div>
-                <FollowCardList displayWhiteList={['supporter']} />
-                <ExpandableFollowCardList
-                    list={
-                        <FollowCardList displayWhiteList={['jobs', 'offers']} />
-                    }
-                />
+                {ConfirmEmailThankYou}
+                {Optouts}
             </div>,
             el
         );
@@ -56,11 +64,7 @@ const bindConfirmEmailThankYou = (el): void => {
 const enhanceUpsell = (): void => {
     loadEnhancers([
         ['.js-identity-upsell-account-creation', bindAccountCreation],
-        ['.js-identity-upsell-optputs', bindOptouts],
-        [
-            '.js-identity-upsell-confirm-email-thank-you',
-            bindConfirmEmailThankYou,
-        ],
+        ['.js-identity-block-list', bindBlockList],
     ]);
 };
 
