@@ -657,6 +657,20 @@ class GuardianConfiguration extends Logging {
     lazy val externalEmbedHost = configuration.getMandatoryStringProperty("guardian.page.externalEmbedHost")
   }
 
+  object Onward {
+    // TODO These are for the mega most viewed experiment and should be removed after
+    lazy val megaSlot1Heading = configuration.getStringProperty("onward.mega.heading1")
+    lazy val megaSlot1UK = configuration.getStringProperty("onward.mega.uk1")
+    lazy val megaSlot1US = configuration.getStringProperty("onward.mega.us1")
+    lazy val megaSlot1AU = configuration.getStringProperty("onward.mega.au1")
+    lazy val megaSlot1ROW = configuration.getStringProperty("onward.mega.row1")
+
+    lazy val megaSlot2Heading = configuration.getStringProperty("onward.mega.heading2")
+    lazy val megaSlot2UK = configuration.getStringProperty("onward.mega.uk2")
+    lazy val megaSlot2US = configuration.getStringProperty("onward.mega.us2")
+    lazy val megaSlot2AU = configuration.getStringProperty("onward.mega.au2")
+    lazy val megaSlot2ROW = configuration.getStringProperty("onward.mega.row2")
+  }
 }
 
 object ManifestData {

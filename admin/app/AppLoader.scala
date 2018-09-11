@@ -11,6 +11,7 @@ import _root_.dfp.DfpDataCacheLifecycle
 import akka.actor.ActorSystem
 import concurrent.BlockingOperations
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
+import controllers.admin.MegaMostViewedController
 import http.{AdminFilters, AdminHttpErrorHandler, CommonGzipFilter}
 import dev.DevAssetsController
 import jobs._
@@ -77,6 +78,7 @@ trait AppComponents extends FrontendComponents with AdminControllers with AdminS
 
   lazy val healthCheck = wire[HealthCheck]
   lazy val devAssetsController = wire[DevAssetsController]
+  lazy val megaController = wire[MegaMostViewedController]
   lazy val logbackOperationsPool = wire[LogbackOperationsPool]
   override lazy val lifecycleComponents: List[LifecycleComponent] = List(
     wire[LogstashLifecycle],

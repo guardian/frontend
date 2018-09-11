@@ -1,0 +1,17 @@
+@(title: String, form: play.api.data.Form[model.MegaSlotMeta], action: Call)(implicit request: RequestHeader, context: model.ApplicationContext, messagesProvider: MessagesProvider)
+
+@admin_main(title, isAuthed = true) {
+    <h1>@title</h1>
+    <p>Populates the experiment slots below the expanded Most Viewed container.</p>
+    <p>Changes will take 5-10 minutes to take effect on the site.</p>
+    <p>Provide paths as <strong>relative URLs without the leading slash</strong> - e.g. for https://www.theguardian.com/foo/bar submit 'foo/bar'..</p>
+
+    @helper.form(action = action) {
+        @helper.inputText(form("headline"))
+        @helper.inputText(form("uk"))
+        @helper.inputText(form("us"))
+        @helper.inputText(form("au"))
+        @helper.inputText(form("row"))
+        <button type="submit">Save</button>
+    }
+}

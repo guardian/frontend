@@ -1,10 +1,13 @@
 package feed
 
 import com.gu.Box
+import com.gu.contentapi.client.model.SearchQuery
 import contentapi.ContentApiClient
 import common._
-import services.OphanApi
-import model.RelatedContentItem
+import services.{OphanApi, S3, S3Megaslot}
+import model.{Content, MegaSlotMeta, RelatedContentItem}
+import play.api.libs.json._
+import play.api.libs.ws.WSClient
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -113,5 +116,129 @@ class DayMostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi
       }
       ophanPopularAgent.alter(_ + (country.code -> validItems))
     }
+  }
+}
+
+case class MegaSlot(
+  headline: String,
+  uk: Content,
+  us: Content,
+  au: Content,
+  row: Content
+)
+
+object MegaSlot extends Logging {
+  def get(client: ContentApiClient, key: String)(implicit ec: ExecutionContext): Future[MegaSlot] = {
+    S3Megaslot.get(key).flatMap(asMeta) match {
+      case Some(m) => populateFromCAPI(client, m)
+      case None => Future.failed(throw new NoSuchElementException("JSON not found or invalid"))
+    }
+  }
+
+  private[this] def asMeta(blob: String): Option[MegaSlotMeta] = {
+    val meta = Json.parse(blob).asOpt[MegaSlotMeta]
+    if (meta.isEmpty) {
+      log.info(s"Megaslot - unable to read JSON, received: $blob")
+    }
+    meta
+  }
+
+  private[this] def populateFromCAPI(client: ContentApiClient, meta: MegaSlotMeta)(implicit ec: ExecutionContext): Future[MegaSlot] = {
+    val idsParam = s"${meta.uk},${meta.au},${meta.us},${meta.row}"
+    val query = client.search.ids(idsParam).showFields("all").showTags("all")
+
+    for {
+      response <- client.getResponse(query)
+    } yield {
+      val models = response.results.map(c => c.id -> Content.make(c)).toMap
+      log.info(s"Megaslot - capi response has IDs: ${response.results.map(_.id).mkString(",")}")
+      MegaSlot(
+        headline = meta.headline,
+        uk = models(meta.uk),
+        us = models(meta.us),
+        au = models(meta.au),
+        row = models(meta.row)
+      )
+    }
+  }
+}
+
+class OnSocialAgent(val contentApiClient: ContentApiClient) extends Logging {
+  private[this] val agent = Box[Option[MegaSlot]](None)
+
+  def getHeadline: String = agent.get.map(_.headline).getOrElse("")
+
+  def get(edition: Edition): Option[Content] = {
+    agent.get.flatMap { megaSlot =>
+      edition match {
+        case editions.Uk => Some(megaSlot.uk)
+        case editions.Us => Some(megaSlot.us)
+        case editions.Au => Some(megaSlot.au)
+        case editions.International => Some(megaSlot.row)
+        case _ => None
+      }
+    }
+  }
+
+  def refresh()(implicit ec: ExecutionContext): Future[MegaSlot] = {
+    val ms = MegaSlot.get(contentApiClient, "on-social.json")
+    ms.foreach(slot => agent.alter(Some(slot)))
+    ms
+  }
+}
+
+class MostCommentedAgent(val contentApiClient: ContentApiClient, wsClient: WSClient) extends Logging {
+  private[this] val agent = Box[Option[MegaSlot]](None)
+  private[this] val commentCounts = Box[Map[String, Int]](Map.empty)
+  import conf.Configuration
+
+  private[this] val dapiURL = Configuration.discussion.apiRoot
+
+  def getHeadline: String = agent.get.map(_.headline).getOrElse("")
+
+  def get(edition: Edition): Option[(Content, Int)] = {
+    log.info(s"Megaslot - comment counts are: ${commentCounts.get}")
+
+    agent.get.flatMap { megaSlot =>
+      edition match {
+        case editions.Uk => commentCounts.get.get(megaSlot.uk.shortUrlPath).map(count => megaSlot.uk -> count)
+        case editions.Us => commentCounts.get.get(megaSlot.us.shortUrlPath).map(count => megaSlot.au -> count)
+        case editions.Au => commentCounts.get.get(megaSlot.au.shortUrlPath).map(count => megaSlot.uk -> count)
+        case editions.International => commentCounts.get.get(megaSlot.row.shortUrlPath).map(count => megaSlot.row -> count)
+        case _ => {
+          log.info(s"Megaslot - unable to find most commented for edition ${edition.id} in ${commentCounts}")
+          None
+        }
+      }
+    }
+  }
+
+  def refresh()(implicit ec: ExecutionContext): Future[MegaSlot] = {
+    val ms = MegaSlot.get(contentApiClient, "most-commented.json")
+
+    ms.foreach { slot =>
+      agent.alter(Some(slot))
+      // now get DAPI stuff
+      val params = List(slot.uk.shortUrlId, slot.us.shortUrlId, slot.au.shortUrlId, slot.row.shortUrlId)
+          .map("short-urls" -> _)
+      log.info(s"Megaslot - shorts URLS are ${params.mkString(",")}")
+
+      val countsURL = s"$dapiURL/getCommentCounts"
+      log.info(s"Megaslot - getting DAPI counts from $countsURL")
+      val response = wsClient
+        .url(countsURL)
+        .addQueryStringParameters(params: _*)
+        .get()
+
+      val counts = response.flatMap(r => {
+        r.json.asOpt[Map[String, Int]] match {
+          case Some(m) => Future.successful(m)
+          case None => Future.failed(throw new NoSuchElementException("JSON not found or invalid"))
+        }
+      })
+
+      counts.foreach(commentCounts.alter(_))
+    }
+    ms
   }
 }

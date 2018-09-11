@@ -225,4 +225,14 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2019, 6, 6),
     exposeClientSide = true
   )
+
+ val UseMegaMostViewed = Switch(
+    ABTests,
+    "ab-mega-most-viewed",
+    "Tests larger most viewed component",
+    owners = Seq(Owner.withGithub("nicl")),
+    safeState = On,
+    sellByDate = new LocalDate(2019, 11, 1),
+    exposeClientSide = false
+  )
 }

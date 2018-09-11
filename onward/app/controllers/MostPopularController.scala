@@ -4,14 +4,17 @@ import java.time.Instant
 import java.time.temporal.ChronoUnit
 
 import common._
+import conf.switches.Switches
 import contentapi.ContentApiClient
-import feed.{DayMostPopularAgent, GeoMostPopularAgent, MostPopularAgent}
+import feed._
 import model.Cached.RevalidatableResult
 import model._
 import models.OnwardCollection._
 import models.{MostPopularGeoResponse, OnwardCollection, OnwardCollectionResponse}
+import org.joda.time.DateTime
 import play.api.libs.json._
 import play.api.mvc._
+import play.twirl.api.HtmlFormat
 import views.support.FaciaToMicroFormat2Helpers._
 
 import scala.concurrent.Future
@@ -20,6 +23,8 @@ class MostPopularController(contentApiClient: ContentApiClient,
   geoMostPopularAgent: GeoMostPopularAgent,
   dayMostPopularAgent: DayMostPopularAgent,
   mostPopularAgent: MostPopularAgent,
+  mostCommentedAgent: MostCommentedAgent,
+  onSocialAgent: OnSocialAgent,
   val controllerComponents: ControllerComponents)
   (implicit context: ApplicationContext) extends BaseController with Logging with ImplicitControllerExecutionContext {
     val page = SimplePage(MetaData.make(
@@ -30,6 +35,8 @@ class MostPopularController(contentApiClient: ContentApiClient,
 
   def renderHtml(path: String): Action[AnyContent] = render(path)
   def render(path: String): Action[AnyContent] = Action.async { implicit request =>
+    log.info("Megaslot - render from most popular!!!")
+
     val edition = Edition(request)
     val globalPopular: Option[MostPopular] = {
       val globalPopularContent = mostPopularAgent.mostPopular(edition)
@@ -39,6 +46,9 @@ class MostPopularController(contentApiClient: ContentApiClient,
         None
     }
     val sectionPopular: Future[List[MostPopular]] = if (path.nonEmpty) lookup(edition, path).map(_.toList) else Future(Nil)
+
+    val mostCommented = mostCommentedAgent.get(edition)
+    val onSocial = onSocialAgent.get(edition)
 
     sectionPopular.map { sectionPopular =>
       val sectionFirst = sectionPopular ++ globalPopular
@@ -51,7 +61,7 @@ class MostPopularController(contentApiClient: ContentApiClient,
         case popular if !request.isJson => Cached(900) { RevalidatableResult.Ok(views.html.mostPopular(page, popular)) }
         case popular => Cached(900) {
           JsonComponent(
-            "html" ->  views.html.fragments.collections.popular(popular),
+            "html" ->  getPopular(popular, mostCommented, onSocial),
             "rightHtml" -> views.html.fragments.rightMostPopular(globalPopular)
           )
         }
@@ -65,18 +75,53 @@ class MostPopularController(contentApiClient: ContentApiClient,
     "IN" -> "India"
   )
 
+  def getPopular(
+    items: Seq[MostPopular],
+    mostCommented: Option[(Content, Int)],
+    onSocial: Option[Content]
+  )(implicit request: RequestHeader): HtmlFormat.Appendable = {
+
+    //log.info(s"Megaslot - got popular items ($mostCommented, $onSocial)")
+
+    def isTooOld(content: Content): Boolean = {
+      val threeDaysAgo = DateTime.now.minusDays(3)
+      val tooOld = content.fields.firstPublicationDate.exists(_.isBefore(threeDaysAgo))
+      if (tooOld) {
+        log.info(s"Megaslot - rejecting ${content.metadata.id} as too old")
+      }
+
+      tooOld
+    }
+
+    val mega = for {
+      commented <- mostCommented
+      (mcContent, count) = commented
+      social <- onSocial
+      if Switches.UseMegaMostViewed.isSwitchedOn
+      //if !isTooOld(mcContent) && !isTooOld(social)
+    } yield {
+      views.html.fragments.collections.popularMega(items,mcContent, count, social)
+    }
+
+    mega.getOrElse(views.html.fragments.collections.popular(items))
+  }
+
   def renderPopularGeo(): Action[AnyContent] = Action { implicit request =>
     val headers = request.headers.toSimpleMap
     val countryCode = headers.getOrElse("X-GU-GeoLocation","country:row").replace("country:","")
 
     val countryPopular = MostPopular("across the guardian", "", geoMostPopularAgent.mostPopular(countryCode).map(_.faciaContent))
 
+    val edition = Edition.apply(request)
+    val mostCommented = mostCommentedAgent.get(edition)
+    val onSocial = onSocialAgent.get(edition)
+
     if (request.isGuui) {
       jsonResponse(countryPopular, countryCode)
     } else {
       Cached(900) {
         JsonComponent(
-          "html" -> views.html.fragments.collections.popular(Seq(countryPopular)),
+          "html" -> getPopular(Seq(countryPopular), mostCommented, onSocial),
           "rightHtml" -> views.html.fragments.rightMostPopularGeoGarnett(countryPopular, countryNames.get(countryCode), countryCode),
           "country" -> countryCode
         )
