@@ -56,19 +56,17 @@ class FollowCardList extends Component<
         const { consents } = this.state;
         return (
             <div>
-                {consents.map(consent => {
-                    return (
-                        <FollowCard
-                            followable={{
-                                value: consent.consent,
-                                onChange: newValue => {
-                                    this.toggleConsent(newValue, consent.consent);
-                                },
-                            }}
-                            hasFollowed={consent.hasConsented}
-                        />
-                    );
-                })}
+                {consents.map(consent => (
+                    <FollowCard
+                        followable={{
+                            value: consent.consent,
+                            onChange: newValue => {
+                                this.toggleConsent(newValue, consent.consent);
+                            },
+                        }}
+                        hasFollowed={consent.hasConsented}
+                    />
+                ))}
             </div>
         );
     }
