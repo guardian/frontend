@@ -231,7 +231,7 @@ object NavLinks {
       usPolitics,
       usBusiness,
       tech,
-      science,
+      science
     )
   )
   val intNewsPillar = ukNewsPillar.copy(
