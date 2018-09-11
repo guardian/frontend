@@ -316,3 +316,6 @@ Developer: Anne Byrne
 Twitter: @aycenne
 From: Cork, Ireland
 Location: London, UK
+
+Associate Software Developer: Lauren Emms
+From: London, UK
