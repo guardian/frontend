@@ -100,10 +100,13 @@
 
 .identity-upsell-block {
     width: 100%;
-    border-top: 2px solid pink;
-    padding: 10px;
+    border-top: 2px solid $brightness-86;
+    padding: $gs-baseline 0;
+    .identity-upsell-block__title, .identity-upsell-block__subtitle {
+        @include fs-headlineGarnett(2);
+    }
+    .identity-upsell-block__title {
+        font-weight: 900;
+    }
 }
 
-.identity-upsell-block__title, .identity-upsell-block__subtitle {
-    @include fs-headlineGarnett(2);
-}

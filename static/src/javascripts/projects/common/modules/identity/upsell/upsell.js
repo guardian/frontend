@@ -10,6 +10,21 @@ import { AccountCreationFlow } from 'common/modules/identity/upsell/account-crea
 import { OptOutsList } from 'common/modules/identity/upsell/opt-outs/OptOutsList';
 import { Block } from 'common/modules/identity/upsell/block/Block';
 
+const ConfirmEmailThankYou = (<Block title="Interested in any of this content?">
+    <FollowCardList displayWhiteList={['supporter']} />
+    <ExpandableFollowCardList
+        list={
+            <FollowCardList displayWhiteList={['jobs', 'offers']} />
+        }
+    />
+</Block>)
+
+const Optouts = (<Block
+    title="One more thing..."
+    subtitle="These are your privacy settings. You’re in full control of them.">
+    <OptOutsList />
+</Block>)
+
 const trackInteraction = (interaction: string): void => {
     ophan.record({
         component: 'set-password',
@@ -32,50 +47,18 @@ const bindAccountCreation = (el): void => {
     });
 };
 
-const bindOptouts = (el): void => {
+
+const bindBlockList = (el): void => {
     fastdom.write(() => {
-        render(
-            <Block
-                title="One more thing..."
-                subtitle="These are your privacy settings. You’re in full control of them.">
-                <OptOutsList />
-            </Block>,
-            el
-        );
+        render(<div>{ConfirmEmailThankYou}{Optouts}</div>, el);
     });
 };
 
-const bindBlock = (el): void => {
-    fastdom.write(() => {
-        render(<Block title="Hello!">Test</Block>, el);
-    });
-};
-
-const bindConfirmEmailThankYou = (el): void => {
-    fastdom.write(() => {
-        render(
-            <Block title="Interested in any of this content?">
-                <FollowCardList displayWhiteList={['supporter']} />
-                <ExpandableFollowCardList
-                    list={
-                        <FollowCardList displayWhiteList={['jobs', 'offers']} />
-                    }
-                />
-            </Block>,
-            el
-        );
-    });
-};
 
 const enhanceUpsell = (): void => {
     loadEnhancers([
         ['.js-identity-upsell-account-creation', bindAccountCreation],
-        ['.js-identity-upsell-optputs', bindOptouts],
-        [
-            '.js-identity-upsell-confirm-email-thank-you',
-            bindConfirmEmailThankYou,
-        ],
-        ['.js-identity-upsell-block', bindBlock],
+        ['.js-identity-block-list', bindBlockList]
     ]);
 };
 
