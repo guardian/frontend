@@ -136,6 +136,8 @@ Development Manager: Mark Butler
 Twitter: @mark_j_butler
 Location: London, UK
 
+Developer: Lauren Emms
+From: London, UK
 
 /* CONTENT PRODUCTION */
 
@@ -316,6 +318,3 @@ Developer: Anne Byrne
 Twitter: @aycenne
 From: Cork, Ireland
 Location: London, UK
-
-Associate Software Developer: Lauren Emms
-From: London, UK
