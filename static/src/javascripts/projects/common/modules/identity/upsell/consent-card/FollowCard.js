@@ -1,6 +1,7 @@
 // @flow
 import React, { Component } from 'preact-compat';
 import { FollowButtonWrap } from 'common/modules/identity/follow/FollowButtonWrap';
+import type { Consent } from 'common/modules/identity/upsell/store/consents';
 
 /**
  * Type for things that can be rendered in a Follow Card
@@ -11,13 +12,6 @@ export type CardLike = {
     description: string,
 };
 
-export type Consent = {
-    id: string,
-    name: string,
-    description: string,
-    isOptOut: boolean,
-    isChannel: boolean,
-};
 
 export type Followable<T: CardLike> = {
     value: T,

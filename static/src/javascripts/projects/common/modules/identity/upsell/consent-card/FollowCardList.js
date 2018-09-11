@@ -1,12 +1,14 @@
 // @flow
 import React, { Component } from 'preact-compat';
+import { FollowCard } from 'common/modules/identity/upsell/consent-card/FollowCard';
 import {
-    getAllConsents,
-    getUserFromApi,
-    setConsent,
-} from 'common/modules/identity/api';
-import { FollowCard } from './FollowCard';
-import type { Consent } from './FollowCard';
+    get as getConsents,
+    updateRemotely,
+} from 'common/modules/identity/upsell/store/consents';
+import type {
+    ConsentType,
+    Consent,
+} from 'common/modules/identity/upsell/store/consents';
 
 type FollowCardListProps = {
     displayWhiteList: string[],
@@ -15,79 +17,55 @@ type FollowCardListProps = {
 class FollowCardList extends Component<
     FollowCardListProps,
     {
-        acceptedConsents: string[],
-        allConsents: Consent[],
+        consents: ConsentType[],
     }
 > {
     constructor(props: FollowCardListProps) {
         super(props);
         this.setState({
-            acceptedConsents: [],
-            allConsents: [],
+            consents: [],
         });
     }
 
     componentDidMount() {
-        let acceptedConsents = [];
-        getUserFromApi(user => {
-            if (user && user.consents) {
-                acceptedConsents = user.consents
-                    .filter(consent => consent.consented === true)
-                    .map(consent => consent.id);
-            }
-        });
-        getAllConsents().then(allConsents => {
-            const filteredConsents = allConsents.filter(
-                consent =>
-                    this.props.displayWhiteList.filter(id => consent.id === id)
-                        .length > 0
-            );
+        getConsents().then(consents => {
             this.setState({
-                allConsents: filteredConsents,
-                acceptedConsents,
+                consents: consents.filter(c =>
+                    this.props.displayWhiteList.includes(c.consent.id)
+                ),
             });
         });
     }
 
-    toggleConsent = (hasConsented: boolean, consentId: string) => {
-        setConsent(consentId, hasConsented).then(() => {
-            const { acceptedConsents } = this.state;
-            if (hasConsented) {
-                this.setState({
-                    acceptedConsents: [
-                        ...acceptedConsents.filter(
-                            consent => consent !== consentId
-                        ),
-                        consentId,
-                    ],
-                });
-            } else {
-                this.setState({
-                    acceptedConsents: acceptedConsents.filter(
-                        consent => consent !== consentId
+    toggleConsent = (hasConsented: boolean, consent: Consent) => {
+        updateRemotely(hasConsented, consent.id).then(() => {
+            this.setState({
+                consents: [
+                    ...this.state.consents.map(
+                        c =>
+                            c.consent.id === consent.id
+                                ? { consent, hasConsented }
+                                : c
                     ),
-                });
-            }
+                ],
+            });
         });
     };
 
     render() {
-        const { allConsents, acceptedConsents } = this.state;
+        const { consents } = this.state;
         return (
             <div>
-                {allConsents.map(consent => {
-                    const hasConsented =
-                        acceptedConsents.filter(e => e === consent.id).length >
-                        0;
+                {consents.map(consent => {
                     return (
                         <FollowCard
                             followable={{
-                                value: consent,
+                                value: consent.consent,
                                 onChange: newValue => {
-                                    this.toggleConsent(newValue, consent.id);
+                                    this.toggleConsent(newValue, consent.consent);
                                 },
                             }}
-                            hasFollowed={hasConsented}
+                            hasFollowed={consent.hasConsented}
                         />
                     );
                 })}

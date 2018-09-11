@@ -181,6 +181,10 @@
         width: $left-column;
         margin-left: -($left-column + $gs-gutter);
         margin-bottom: $gs-baseline;
+
+        &.content__labels--crossword {
+            width: inherit;
+        }
     }
 
     @include mq(wide) {
