@@ -14,19 +14,16 @@ export type CardLike = {
 export type Followable<T: CardLike> = {
     value: T,
     onChange: boolean => void,
-    isFollowing: boolean
+    isFollowing: boolean,
 };
 
 class FollowCard<T: CardLike> extends Component<Followable<T>, {}> {
-
     render() {
         const { isFollowing } = this.props;
         const { name, description } = this.props.value;
         return (
             <div className="identity-upsell-consent-card">
-                <h1 className="identity-upsell-consent-card__title">
-                    {name}
-                </h1>
+                <h1 className="identity-upsell-consent-card__title">{name}</h1>
                 <p className="identity-upsell-consent-card__description">
                     {description}
                 </p>

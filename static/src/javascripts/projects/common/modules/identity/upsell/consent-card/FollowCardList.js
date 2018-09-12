@@ -17,10 +17,10 @@ import type {
 
 type FollowCardListProps<T: CardLike> = {
     displayWhiteList: string[],
-    loadFollowables: () => Promise<Followable<T>[]>
+    loadFollowables: () => Promise<Followable<T>[]>,
 };
 
-class FollowCardList<T> extends Component<
+class FollowCardList<T: CardLike> extends Component<
     FollowCardListProps<T>,
     {
         followables: Followable<T>[],
@@ -43,7 +43,7 @@ class FollowCardList<T> extends Component<
         });
     }
 
-    updateState<T: CardLike>(followable: Followable<T>, newValue: boolean) {
+    updateState(followable: Followable<T>, newValue: boolean) {
         this.setState(state => ({
             followables: [
                 ...state.followables.map(
@@ -60,18 +60,16 @@ class FollowCardList<T> extends Component<
         const { followables } = this.state;
         return (
             <div>
-                {followables.map(followable => {
-                    return (
-                        <FollowCard
-                            value={followable.value}
-                            isFollowing={followable.isFollowing}
-                            onChange={(newValue) => {
-                                followable.onChange(newValue);
-                                this.updateState(followable, newValue);
-                            }}
-                        />
-                    )
-                })}
+                {followables.map(followable => (
+                    <FollowCard
+                        value={followable.value}
+                        isFollowing={followable.isFollowing}
+                        onChange={newValue => {
+                            followable.onChange(newValue);
+                            this.updateState(followable, newValue);
+                        }}
+                    />
+                ))}
             </div>
         );
     }

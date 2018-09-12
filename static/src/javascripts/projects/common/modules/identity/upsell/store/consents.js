@@ -4,9 +4,8 @@ import {
     getUserFromApi,
     setConsent,
 } from 'common/modules/identity/api';
-import type {
-    Followable
-} from 'common/modules/identity/upsell/consent-card/FollowCard';
+import type { Followable } from 'common/modules/identity/upsell/consent-card/FollowCard';
+
 type Consent = {
     id: string,
     name: string,
@@ -42,9 +41,7 @@ const get = (): Promise<Followable<Consent>[]> =>
         allConsents.map(consent => ({
             value: consent,
             isFollowing: acceptedConsents.includes(consent.id),
-            onChange: (newValue) => {
-                return setConsent(consent.id, newValue);
-            }
+            onChange: newValue => setConsent(consent.id, newValue),
         }))
     );
 
