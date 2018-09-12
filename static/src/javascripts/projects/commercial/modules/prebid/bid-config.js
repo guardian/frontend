@@ -323,17 +323,20 @@ const openxClientSideBidder: PrebidBidder = {
                 return {
                     delDomain: 'guardian-us-d.openx.net',
                     unit: '540279544',
+                    customParams: buildPageTargeting(),
                 };
             case 'AU':
                 return {
                     delDomain: 'guardian-aus-d.openx.net',
                     unit: '540279542',
+                    customParams: buildPageTargeting(),
                 };
             default:
                 // UK and ROW
                 return {
                     delDomain: 'guardian-d.openx.net',
                     unit: '540279541',
+                    customParams: buildPageTargeting(),
                 };
         }
     },
