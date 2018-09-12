@@ -19,17 +19,9 @@ export type Followable<T: CardLike> = {
 
 class FollowCard<T: CardLike> extends Component<Followable<T>, {}> {
 
-    constructor(props: Followable<T>) {
-        super(props);
-        console.log("constructor of followcard:");
-        console.log(props);
-    }
-
     render() {
         const { isFollowing } = this.props;
         const { name, description } = this.props.value;
-        console.log("render card:");
-        console.log(this.props.value);
         return (
             <div className="identity-upsell-consent-card">
                 <h1 className="identity-upsell-consent-card__title">

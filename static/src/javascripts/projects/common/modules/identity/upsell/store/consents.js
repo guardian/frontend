@@ -43,11 +43,7 @@ const get = (): Promise<Followable<Consent>[]> =>
             value: consent,
             isFollowing: acceptedConsents.includes(consent.id),
             onChange: (newValue) => {
-                console.log('n',newValue);
-                console.log('s',setConsent);
-                console.log('c',consent);
-                const temp =  setConsent(consent.id, newValue)
-                return temp
+                return setConsent(consent.id, newValue);
             }
         }))
     );

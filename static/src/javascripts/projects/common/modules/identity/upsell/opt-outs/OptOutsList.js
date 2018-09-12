@@ -35,7 +35,7 @@ export class OptOutsList extends Component<
     onCheckboxChange = (ev: Event, i: number) => {
         if (ev.currentTarget instanceof HTMLInputElement) {
             const clone = [...this.state.consents];
-            clone[i].hasConsented = ev.currentTarget.checked;
+            clone[i].isFollowing = ev.currentTarget.checked;
             this.setState({
                 consents: clone,
                 hasUnsavedChanges: true,

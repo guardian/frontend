@@ -44,7 +44,6 @@ class FollowCardList<T> extends Component<
     }
 
     updateState<T: CardLike>(followable: Followable<T>, newValue: boolean) {
-        console.log('update state', followable, newValue);
         this.setState(state => ({
             followables: [
                 ...state.followables.map(
@@ -55,7 +54,6 @@ class FollowCardList<T> extends Component<
                 ),
             ],
         }));
-        console.log(this.state);
     }
 
     render() {
@@ -63,8 +61,6 @@ class FollowCardList<T> extends Component<
         return (
             <div>
                 {followables.map(followable => {
-                    console.log("render list:");
-                    console.log(followable);
                     return (
                         <FollowCard
                             value={followable.value}
