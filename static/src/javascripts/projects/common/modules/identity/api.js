@@ -224,6 +224,34 @@ export const getAllConsents = () => {
     });
 };
 
+export const getAllNewsletters = () => {
+    const endpoint = '/newsletters';
+    const url = (idApiRoot || '') + endpoint;
+    return fetch(url, {
+        mode: 'cors',
+        method: 'GET',
+        headers: { Accept: 'application/json' },
+    });
+};
+
+export const getSubscribedNewsletters = () => {
+    const endpoint = '/users/me/newsletters';
+    const url = (idApiRoot || '') + endpoint;
+    return fetch(url, {
+        mode: 'cors',
+        method: 'GET',
+        headers: { Accept: 'application/json' },
+        credentials: 'include',
+    })
+        .then(json => {
+            if (json.result.subscriptions) {
+                return json.result.subscriptions.map(sub => sub.id);
+            }
+            return [];
+        })
+        .catch(() => []);
+};
+
 export const setConsent = (consentId: string, consented: boolean) => {
     const url = `${idApiRoot || ''}/users/me/consents`;
     return fetch(url, {
