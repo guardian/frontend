@@ -75,7 +75,7 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
 
   private def render(path: String, article: ArticlePage)(implicit request: RequestHeader): Future[Result] = {
 
-    val renderTier = RenderingTierPicker.getRenderTierFor(article)
+    val renderTier = RenderingTierPicker.getRenderTierFor(article, request)
 
     renderTier match {
       case RemoteRender => log.logger.info(s"Remotely renderable article $path");
