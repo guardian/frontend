@@ -4,6 +4,7 @@ import {
     getUserFromApi,
     setConsent,
 } from 'common/modules/identity/api';
+import type { Followable } from 'common/modules/identity/upsell/consent-card/FollowCard';
 
 type Consent = {
     id: string,
@@ -35,11 +36,12 @@ const getUserConsents = (): Promise<string[]> =>
 
 const fetchConsents = Promise.all([getUserConsents(), getAllConsents()]);
 
-const get = (): Promise<ConsentType[]> =>
+const get = (): Promise<Followable<Consent>[]> =>
     fetchConsents.then(([acceptedConsents, allConsents]) =>
         allConsents.map(consent => ({
-            consent,
-            hasConsented: acceptedConsents.includes(consent.id),
+            value: consent,
+            isFollowing: acceptedConsents.includes(consent.id),
+            onChange: newValue => setConsent(consent.id, newValue),
         }))
     );
 
@@ -49,4 +51,4 @@ const updateRemotely = (
 ): Promise<void> => setConsent(consentId, hasConsented);
 
 export type { Consent, ConsentType };
-export { get, updateRemotely };
+export { get, updateRemotely, fetchConsents };

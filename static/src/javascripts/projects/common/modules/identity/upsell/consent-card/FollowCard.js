@@ -1,5 +1,5 @@
 // @flow
-import React, { Component } from 'preact-compat';
+import React from 'preact-compat';
 import { FollowButtonWrap } from 'common/modules/identity/follow/FollowButtonWrap';
 
 /**
@@ -14,36 +14,29 @@ export type CardLike = {
 export type Followable<T: CardLike> = {
     value: T,
     onChange: boolean => void,
+    isFollowing: boolean,
 };
 
-type FollowCardProps<T: CardLike> = {
-    followable: Followable<T>,
-    hasFollowed: boolean,
+const FollowCard = <T: CardLike>(props: Followable<T>) => {
+    const { isFollowing } = props;
+    const { name, description } = props.value;
+    return (
+        <div className="identity-upsell-consent-card">
+            <h1 className="identity-upsell-consent-card__title">{name}</h1>
+            <p className="identity-upsell-consent-card__description">
+                {description}
+            </p>
+            <FollowButtonWrap
+                following={isFollowing}
+                onFollow={() => {
+                    props.onChange(true);
+                }}
+                onUnfollow={() => {
+                    props.onChange(false);
+                }}
+            />
+        </div>
+    );
 };
-
-class FollowCard<T: CardLike> extends Component<FollowCardProps<T>, {}> {
-    render() {
-        const { hasFollowed } = this.props;
-        return (
-            <div className="identity-upsell-consent-card">
-                <h1 className="identity-upsell-consent-card__title">
-                    {this.props.followable.value.name}
-                </h1>
-                <p className="identity-upsell-consent-card__description">
-                    {this.props.followable.value.description}
-                </p>
-                <FollowButtonWrap
-                    following={hasFollowed}
-                    onFollow={() => {
-                        this.props.followable.onChange(true);
-                    }}
-                    onUnfollow={() => {
-                        this.props.followable.onChange(false);
-                    }}
-                />
-            </div>
-        );
-    }
-}
 
 export { FollowCard };

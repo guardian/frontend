@@ -9,12 +9,21 @@ import loadEnhancers from 'common/modules/identity/modules/loadEnhancers';
 import { AccountCreationFlow } from 'common/modules/identity/upsell/account-creation/AccountCreationFlow';
 import { OptOutsList } from 'common/modules/identity/upsell/opt-outs/OptOutsList';
 import { Block } from 'common/modules/identity/upsell/block/Block';
+import { get as getConsents } from 'common/modules/identity/upsell/store/consents';
 
 const ConfirmEmailThankYou = (
     <Block title="Interested in any of this content?">
-        <FollowCardList displayWhiteList={['supporter']} />
+        <FollowCardList
+            displayWhiteList={['supporter']}
+            loadFollowables={getConsents}
+        />
         <ExpandableFollowCardList
-            list={<FollowCardList displayWhiteList={['jobs', 'offers']} />}
+            list={
+                <FollowCardList
+                    displayWhiteList={['jobs', 'offers']}
+                    loadFollowables={getConsents}
+                />
+            }
         />
     </Block>
 );

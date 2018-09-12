@@ -27,7 +27,7 @@ export class OptOutsList extends Component<
     componentDidMount() {
         getConsents().then(consents => {
             this.setState({
-                consents: consents.filter(c => c.consent.isOptOut),
+                consents: consents.filter(c => c.value.isOptOut),
             });
         });
     }
@@ -35,7 +35,7 @@ export class OptOutsList extends Component<
     onCheckboxChange = (ev: Event, i: number) => {
         if (ev.currentTarget instanceof HTMLInputElement) {
             const clone = [...this.state.consents];
-            clone[i].hasConsented = ev.currentTarget.checked;
+            clone[i].isFollowing = ev.currentTarget.checked;
             this.setState({
                 consents: clone,
                 hasUnsavedChanges: true,
@@ -59,7 +59,7 @@ export class OptOutsList extends Component<
     updateChangesRemotely = (): Promise<void> =>
         Promise.all(
             this.state.consents.map(c =>
-                updateRemotely(c.hasConsented, c.consent.id)
+                updateRemotely(c.isFollowing, c.value.id)
             )
         );
 
@@ -68,12 +68,12 @@ export class OptOutsList extends Component<
         return (
             <form onSubmit={ev => this.onSubmit(ev)}>
                 <div>
-                    {consents.map(({ consent, hasConsented }, i) => (
+                    {consents.map(({ value, isFollowing }, i) => (
                         <Checkbox
-                            title={consent.description}
-                            key={consent.id}
+                            title={value.description}
+                            key={value.id}
                             checkboxHtmlProps={{
-                                checked: hasConsented,
+                                checked: isFollowing,
                                 onChange: ev => this.onCheckboxChange(ev, i),
                             }}
                         />

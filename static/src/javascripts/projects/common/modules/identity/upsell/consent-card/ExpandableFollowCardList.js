@@ -1,13 +1,14 @@
 // @flow
 import React, { Component } from 'preact-compat';
+import type { CardLike } from 'common/modules/identity/upsell/consent-card/FollowCard';
 import { FollowCardList } from './FollowCardList';
 
-type ExpandableFollowCardListProps = {
-    list: FollowCardList,
+type ExpandableFollowCardListProps<T: CardLike> = {
+    list: FollowCardList<T>,
 };
 
-class ExpandableFollowCardList extends Component<
-    ExpandableFollowCardListProps,
+class ExpandableFollowCardList<T: CardLike> extends Component<
+    ExpandableFollowCardListProps<T>,
     {
         expanded: boolean,
     }

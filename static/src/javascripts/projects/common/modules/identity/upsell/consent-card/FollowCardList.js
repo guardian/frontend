@@ -1,70 +1,64 @@
 // @flow
 import React, { Component } from 'preact-compat';
 import { FollowCard } from 'common/modules/identity/upsell/consent-card/FollowCard';
-import {
-    get as getConsents,
-    updateRemotely,
-} from 'common/modules/identity/upsell/store/consents';
 import type {
-    ConsentType,
-    Consent,
-} from 'common/modules/identity/upsell/store/consents';
+    CardLike,
+    Followable,
+} from 'common/modules/identity/upsell/consent-card/FollowCard';
 
-type FollowCardListProps = {
+type FollowCardListProps<T: CardLike> = {
     displayWhiteList: string[],
+    loadFollowables: () => Promise<Followable<T>[]>,
 };
 
-class FollowCardList extends Component<
-    FollowCardListProps,
+class FollowCardList<T: CardLike> extends Component<
+    FollowCardListProps<T>,
     {
-        consents: ConsentType[],
+        followables: Followable<T>[],
     }
 > {
-    constructor(props: FollowCardListProps) {
+    constructor(props: FollowCardListProps<T>) {
         super(props);
         this.setState({
-            consents: [],
+            followables: [],
         });
     }
 
     componentDidMount() {
-        getConsents().then(consents => {
+        this.props.loadFollowables().then(followables => {
             this.setState({
-                consents: consents.filter(c =>
-                    this.props.displayWhiteList.includes(c.consent.id)
+                followables: followables.filter(c =>
+                    this.props.displayWhiteList.includes(c.value.id)
                 ),
             });
         });
     }
 
-    toggleConsent = (hasConsented: boolean, consent: Consent) => {
-        updateRemotely(hasConsented, consent.id).then(() => {
-            this.setState({
-                consents: [
-                    ...this.state.consents.map(
-                        c =>
-                            c.consent.id === consent.id
-                                ? { consent, hasConsented }
-                                : c
-                    ),
-                ],
-            });
-        });
-    };
+    updateState(followable: Followable<T>, newValue: boolean) {
+        this.setState(state => ({
+            followables: [
+                ...state.followables.map(
+                    f =>
+                        f.value.id === followable.value.id
+                            ? { ...followable, isFollowing: newValue }
+                            : f
+                ),
+            ],
+        }));
+    }
 
     render() {
-        const { consents } = this.state;
+        const { followables } = this.state;
         return (
             <div>
-                {consents.map(consent => (
+                {followables.map(followable => (
                     <FollowCard
-                        followable={{
-                            value: consent.consent,
-                            onChange: newValue => {
-                                this.toggleConsent(newValue, consent.consent);
-                            },
+                        value={followable.value}
+                        isFollowing={followable.isFollowing}
+                        onChange={newValue => {
+                            followable.onChange(newValue);
+                            this.updateState(followable, newValue);
                         }}
-                        hasFollowed={consent.hasConsented}
                     />
                 ))}
             </div>
