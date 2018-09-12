@@ -8,6 +8,10 @@ import { ExpandableFollowCardList } from 'common/modules/identity/upsell/consent
 import loadEnhancers from './../modules/loadEnhancers';
 import { AccountCreationFlow } from './account-creation/AccountCreationFlow';
 import { OptOutsList } from './opt-outs/OptOutsList';
+import {
+    get as getConsents,
+    updateRemotely,
+} from 'common/modules/identity/upsell/store/consents';
 
 const trackInteraction = (interaction: string): void => {
     ophan.record({
@@ -41,10 +45,13 @@ const bindConfirmEmailThankYou = (el): void => {
     fastdom.write(() => {
         render(
             <div>
-                <FollowCardList displayWhiteList={['supporter']} />
+                <FollowCardList
+                    displayWhiteList={['supporter']}
+                    loadFollowables={getConsents}
+                />
                 <ExpandableFollowCardList
                     list={
-                        <FollowCardList displayWhiteList={['jobs', 'offers']} />
+                        <FollowCardList displayWhiteList={['jobs', 'offers']} loadFollowables={getConsents} />
                     }
                 />
             </div>,

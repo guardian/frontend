@@ -1,72 +1,81 @@
 // @flow
 import React, { Component } from 'preact-compat';
 import { FollowCard } from 'common/modules/identity/upsell/consent-card/FollowCard';
-import {
-    get as getConsents,
-    updateRemotely,
-} from 'common/modules/identity/upsell/store/consents';
-import type {
-    ConsentType,
-    Consent,
-} from 'common/modules/identity/upsell/store/consents';
+// import {
+//     get as getConsents,
+//     updateRemotely,
+// } from 'common/modules/identity/upsell/store/consents';
+// import type {
+//     ConsentType,
+//     Consent,
+// } from 'common/modules/identity/upsell/store/consents';
 
-type FollowCardListProps = {
+import type {
+    CardLike,
+    Followable,
+} from 'common/modules/identity/upsell/consent-card/FollowCard';
+
+type FollowCardListProps<T: CardLike> = {
     displayWhiteList: string[],
+    loadFollowables: () => Promise<Followable<T>[]>
 };
 
-class FollowCardList extends Component<
-    FollowCardListProps,
+class FollowCardList<T> extends Component<
+    FollowCardListProps<T>,
     {
-        consents: ConsentType[],
+        followables: Followable<T>[],
     }
 > {
-    constructor(props: FollowCardListProps) {
+    constructor(props: FollowCardListProps<T>) {
         super(props);
         this.setState({
-            consents: [],
+            followables: [],
         });
     }
 
     componentDidMount() {
-        getConsents().then(consents => {
+        this.props.loadFollowables().then(followables => {
             this.setState({
-                consents: consents.filter(c =>
-                    this.props.displayWhiteList.includes(c.consent.id)
+                followables: followables.filter(c =>
+                    this.props.displayWhiteList.includes(c.value.id)
                 ),
             });
         });
     }
 
-    toggleConsent = (hasConsented: boolean, consent: Consent) => {
-        updateRemotely(hasConsented, consent.id).then(() => {
-            this.setState({
-                consents: [
-                    ...this.state.consents.map(
-                        c =>
-                            c.consent.id === consent.id
-                                ? { consent, hasConsented }
-                                : c
-                    ),
-                ],
-            });
-        });
-    };
+    updateState<T: CardLike>(followable: Followable<T>, newValue: boolean) {
+        console.log('update state', followable, newValue);
+        this.setState(state => ({
+            followables: [
+                ...state.followables.map(
+                    f =>
+                        f.value.id === followable.value.id
+                            ? { ...followable, isFollowing: newValue }
+                            : f
+                ),
+            ],
+        }));
+        console.log(this.state);
+    }
 
     render() {
-        const { consents } = this.state;
+        const { followables } = this.state;
         return (
             <div>
-                {consents.map(consent => (
-                    <FollowCard
-                        followable={{
-                            value: consent.consent,
-                            onChange: newValue => {
-                                this.toggleConsent(newValue, consent.consent);
-                            },
-                        }}
-                        hasFollowed={consent.hasConsented}
-                    />
-                ))}
+                {followables.map(followable => {
+                    console.log("render list:");
+                    console.log(followable);
+                    return (
+                        <FollowCard
+                            value={followable.value}
+                            isFollowing={followable.isFollowing}
+                            onChange={(newValue) => {
+                                followable.onChange(newValue);
+                                this.updateState(followable, newValue);
+                            }}
+                        />
+                    )
+                })}
             </div>
         );
     }

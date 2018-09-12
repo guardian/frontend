@@ -14,31 +14,37 @@ export type CardLike = {
 export type Followable<T: CardLike> = {
     value: T,
     onChange: boolean => void,
+    isFollowing: boolean
 };
 
-type FollowCardProps<T: CardLike> = {
-    followable: Followable<T>,
-    hasFollowed: boolean,
-};
+class FollowCard<T: CardLike> extends Component<Followable<T>, {}> {
 
-class FollowCard<T: CardLike> extends Component<FollowCardProps<T>, {}> {
+    constructor(props: Followable<T>) {
+        super(props);
+        console.log("constructor of followcard:");
+        console.log(props);
+    }
+
     render() {
-        const { hasFollowed } = this.props;
+        const { isFollowing } = this.props;
+        const { name, description } = this.props.value;
+        console.log("render card:");
+        console.log(this.props.value);
         return (
             <div className="identity-upsell-consent-card">
                 <h1 className="identity-upsell-consent-card__title">
-                    {this.props.followable.value.name}
+                    {name}
                 </h1>
                 <p className="identity-upsell-consent-card__description">
-                    {this.props.followable.value.description}
+                    {description}
                 </p>
                 <FollowButtonWrap
-                    following={hasFollowed}
+                    following={isFollowing}
                     onFollow={() => {
-                        this.props.followable.onChange(true);
+                        this.props.onChange(true);
                     }}
                     onUnfollow={() => {
-                        this.props.followable.onChange(false);
+                        this.props.onChange(false);
                     }}
                 />
             </div>
