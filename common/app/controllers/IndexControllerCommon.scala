@@ -75,7 +75,7 @@ trait IndexControllerCommon extends BaseController with Index with RendersItemRe
           Cached(60)(WithoutRevalidationResult(Gone(
             views.html.gone(
               gonePage,
-              "Sorry - there is no content here.",
+              "Sorry - there is no content here",
               "This could be because the content on this tag page hasn't been published yet or has expired, there was a legal issue, or for another reason.",
               ))))
         case Right(other) => RenderOtherStatus(other)
