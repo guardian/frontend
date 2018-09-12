@@ -31,24 +31,14 @@ describe('initialise', () => {
             _customPriceBucket: {
                 buckets: [
                     {
-                        increment: 0.05,
-                        max: 5,
+                        increment: 0.01,
+                        max: 100,
                         min: 0,
                     },
                     {
-                        increment: 0.1,
-                        max: 10,
-                        min: 5,
-                    },
-                    {
-                        increment: 0.5,
-                        max: 20,
-                        min: 10,
-                    },
-                    {
-                        increment: 10,
-                        max: 40,
-                        min: 20,
+                        increment: 1,
+                        max: 500,
+                        min: 100,
                     },
                 ],
             },
@@ -70,24 +60,14 @@ describe('initialise', () => {
             customPriceBucket: {
                 buckets: [
                     {
-                        increment: 0.05,
-                        max: 5,
+                        increment: 0.01,
+                        max: 100,
                         min: 0,
                     },
                     {
-                        increment: 0.1,
-                        max: 10,
-                        min: 5,
-                    },
-                    {
-                        increment: 0.5,
-                        max: 20,
-                        min: 10,
-                    },
-                    {
-                        increment: 10,
-                        max: 40,
-                        min: 20,
+                        increment: 1,
+                        max: 500,
+                        min: 100,
                     },
                 ],
             },
