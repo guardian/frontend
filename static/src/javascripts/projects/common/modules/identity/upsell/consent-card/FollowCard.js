@@ -1,5 +1,5 @@
 // @flow
-import React, { Component } from 'preact-compat';
+import React from 'preact-compat';
 import { FollowButtonWrap } from 'common/modules/identity/follow/FollowButtonWrap';
 
 /**
@@ -17,28 +17,26 @@ export type Followable<T: CardLike> = {
     isFollowing: boolean,
 };
 
-class FollowCard<T: CardLike> extends Component<Followable<T>, {}> {
-    render() {
-        const { isFollowing } = this.props;
-        const { name, description } = this.props.value;
-        return (
-            <div className="identity-upsell-consent-card">
-                <h1 className="identity-upsell-consent-card__title">{name}</h1>
-                <p className="identity-upsell-consent-card__description">
-                    {description}
-                </p>
-                <FollowButtonWrap
-                    following={isFollowing}
-                    onFollow={() => {
-                        this.props.onChange(true);
-                    }}
-                    onUnfollow={() => {
-                        this.props.onChange(false);
-                    }}
-                />
-            </div>
-        );
-    }
-}
+const FollowCard = <T: CardLike>(props: Followable<T>) => {
+    const { isFollowing } = props;
+    const { name, description } = props.value;
+    return (
+        <div className="identity-upsell-consent-card">
+            <h1 className="identity-upsell-consent-card__title">{name}</h1>
+            <p className="identity-upsell-consent-card__description">
+                {description}
+            </p>
+            <FollowButtonWrap
+                following={isFollowing}
+                onFollow={() => {
+                    props.onChange(true);
+                }}
+                onUnfollow={() => {
+                    props.onChange(false);
+                }}
+            />
+        </div>
+    );
+};
 
 export { FollowCard };
