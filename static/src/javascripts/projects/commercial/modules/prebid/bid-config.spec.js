@@ -117,7 +117,7 @@ describe('getAppNexusPlacementId', () => {
             '13366606',
             '13366615',
             '13366615',
-            '13144370',
+            '13915593',
         ]);
     });
 
@@ -131,10 +131,10 @@ describe('getAppNexusPlacementId', () => {
         containsLeaderboard.mockReturnValue(false);
         expect(generateTestIds()).toEqual([
             '13366913',
-            '13144370',
-            '13144370',
+            '13915593',
+            '13915593',
             '13366916',
-            '13144370',
+            '13915593',
         ]);
     });
 
@@ -144,21 +144,21 @@ describe('getAppNexusPlacementId', () => {
         containsMpu.mockReturnValue(false);
         expect(generateTestIds()).toEqual([
             '13366904',
-            '13144370',
-            '13144370',
-            '13144370',
-            '13144370',
+            '13915593',
+            '13915593',
+            '13915593',
+            '13915593',
         ]);
     });
 
     test('should return the default value on all other editions', () => {
         const editions = ['AU', 'US', 'INT'];
         const expected = [
-            '13144370',
-            '13144370',
-            '13144370',
-            '13144370',
-            '13144370',
+            '13915593',
+            '13915593',
+            '13915593',
+            '13915593',
+            '13915593',
         ];
 
         editions.forEach(edition => {
@@ -213,7 +213,7 @@ describe('getDummyServerSideBidders', () => {
             lotame: { some: 'lotamedata' },
         });
         expect(appNexusParams).toEqual({
-            placementId: '13144370',
+            placementId: '13915593',
             customData: 'someTestAppNexusTargeting',
             lotame: { some: 'lotamedata' },
         });

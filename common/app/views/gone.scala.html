@@ -1,4 +1,4 @@
-@(page: model.Page)(implicit request: RequestHeader, context: model.ApplicationContext)
+@(page: model.Page, headlineText: String, explanation: String)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @mainLegacy(page){ }{
 <div class="l-side-margins">
@@ -6,7 +6,7 @@
         <header class="content__head">
             <div class="gs-container">
                 <div class="content__main-column">
-                    <h1 itemprop="headline" class="content__headline">Sorry - this page has been removed.</h1>
+                    <h1 itemprop="headline" class="content__headline">@headlineText</h1>
                 </div>
             </div>
         </header>
@@ -16,7 +16,7 @@
                     <div class="js-article__container u-cf">
                         <div class="from-content-api" itemprop="articleBody">
                             <div class="from-content-api">
-                                <p>This could be because it launched early, our rights have expired, there was a legal issue, or for another reason.<p>
+                                <p>@explanation<p>
                                 <p>For further information, please contact:</p>
                                 <ul>
                                     <li>The Readers&apos; editor: <a  href="mailto:guardian.readers@@theguardian.com">guardian.readers@@theguardian.com</a> </li>

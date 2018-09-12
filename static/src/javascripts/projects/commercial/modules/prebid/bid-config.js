@@ -217,6 +217,7 @@ const getImprovePlacementId = (sizes: PrebidSize[]): number => {
 const getAppNexusDirectPlacementId = (): string => '11016434';
 
 const getAppNexusPlacementId = (sizes: PrebidSize[]): string => {
+    const defaultPlacementId: string = '13915593';
     switch (config.get('page.edition')) {
         case 'UK':
             switch (getBreakpointKey()) {
@@ -227,12 +228,12 @@ const getAppNexusPlacementId = (sizes: PrebidSize[]): string => {
                     if (containsLeaderboardOrBillboard(sizes)) {
                         return '13366615';
                     }
-                    return '13144370';
+                    return defaultPlacementId;
                 case 'M':
                     if (containsMpu(sizes)) {
                         return '13366904';
                     }
-                    return '13144370';
+                    return defaultPlacementId;
                 case 'T':
                     if (containsMpu(sizes)) {
                         return '13366913';
@@ -240,12 +241,12 @@ const getAppNexusPlacementId = (sizes: PrebidSize[]): string => {
                     if (containsLeaderboard(sizes)) {
                         return '13366916';
                     }
-                    return '13144370';
+                    return defaultPlacementId;
                 default:
-                    return '13144370';
+                    return defaultPlacementId;
             }
         default:
-            return '13144370';
+            return defaultPlacementId;
     }
 };
 
@@ -444,14 +445,13 @@ const getDummyServerSideBidders = (): Array<PrebidBidder> => {
     // Experimental. Only 0.01% of the PVs.
     if (
         inPbTestOr(
-            config.get('switches.prebidS2sozone') &&
+            !isExcludedGeolocation() &&
+                config.get('switches.prebidS2sozone') &&
                 getRandomIntInclusive(1, 10000) === 1
         )
     ) {
         dummyServerSideBidders.push(openxServerSideBidder);
-        if (inPbTestOr(!isExcludedGeolocation())) {
-            dummyServerSideBidders.push(appnexusServerSideBidder);
-        }
+        dummyServerSideBidders.push(appnexusServerSideBidder);
     }
     return dummyServerSideBidders;
 };
