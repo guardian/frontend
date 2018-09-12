@@ -310,7 +310,7 @@ const appNexusBidder: PrebidBidder = {
     switchName: 'prebidAppnexus',
     bidParams: (): PrebidAppNexusParams => ({
         placementId: getAppNexusDirectPlacementId(),
-        customData: buildAppNexusTargeting(buildPageTargeting()), // Ok to duplicate call. Lodash 'once' is used.
+        keywords: buildAppNexusTargeting(buildPageTargeting()), // Ok to duplicate call. Lodash 'once' is used.
     }),
 };
 
@@ -406,7 +406,7 @@ const getDummyServerSideBidders = (): Array<PrebidBidder> => {
                 {},
                 {
                     placementId: getAppNexusPlacementId(sizes),
-                    customData: buildAppNexusTargeting(buildPageTargeting()), // Ok to duplicate call. Lodash 'once' is used.
+                    keywords: buildAppNexusTargeting(buildPageTargeting()), // Ok to duplicate call. Lodash 'once' is used.
                 },
                 window.OzoneLotameData ? { lotame: window.OzoneLotameData } : {}
             ),
@@ -424,17 +424,20 @@ const getDummyServerSideBidders = (): Array<PrebidBidder> => {
                             return {
                                 delDomain: 'guardian-d.openx.net',
                                 unit: '539997090',
+                                customParams: buildPageTargeting(),
                             };
                         case 'US':
                             return {
                                 delDomain: 'guardian-us-d.openx.net',
                                 unit: '539997087',
+                                customParams: buildPageTargeting(),
                             };
                         default:
                             // AU and rest
                             return {
                                 delDomain: 'guardian-aus-d.openx.net',
                                 unit: '539997046',
+                                customParams: buildPageTargeting(),
                             };
                     }
                 })(),
