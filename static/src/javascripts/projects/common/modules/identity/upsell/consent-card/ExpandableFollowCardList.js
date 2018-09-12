@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'preact-compat';
+import type { CardLike } from 'common/modules/identity/upsell/consent-card/FollowCard';
 import { FollowCardList } from './FollowCardList';
-import type {CardLike} from "common/modules/identity/upsell/consent-card/FollowCard";
 
 type ExpandableFollowCardListProps<T: CardLike> = {
     list: FollowCardList<T>,

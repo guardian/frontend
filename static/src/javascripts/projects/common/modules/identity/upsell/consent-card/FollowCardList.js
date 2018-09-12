@@ -1,15 +1,6 @@
 // @flow
 import React, { Component } from 'preact-compat';
 import { FollowCard } from 'common/modules/identity/upsell/consent-card/FollowCard';
-// import {
-//     get as getConsents,
-//     updateRemotely,
-// } from 'common/modules/identity/upsell/store/consents';
-// import type {
-//     ConsentType,
-//     Consent,
-// } from 'common/modules/identity/upsell/store/consents';
-
 import type {
     CardLike,
     Followable,
