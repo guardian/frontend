@@ -97,8 +97,8 @@ describe('initialise', () => {
                 syncEnabled: true,
                 syncsPerBidder: 0,
                 filterSettings: {
-                    iframe: {
-                        bidders: ['sonobi'],
+                    all: {
+                        bidders: '*',
                         filter: 'include',
                     },
                 },
