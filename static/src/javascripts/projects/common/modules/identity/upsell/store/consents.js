@@ -1,9 +1,5 @@
 // @flow
-import {
-    getAllConsents,
-    getUserFromApi,
-    setConsent,
-} from 'common/modules/identity/api';
+import { getAllConsents, getUserFromApi, setConsent } from 'common/modules/identity/api';
 import type { Followable } from 'common/modules/identity/upsell/consent-card/FollowCard';
 
 type Consent = {
@@ -46,10 +42,5 @@ const get = (): Promise<Followable<Consent>[]> =>
         }))
     );
 
-const updateRemotely = (
-    hasConsented: boolean,
-    consentId: string
-): Promise<void> => setConsent([{ id: consentId, consented: hasConsented }]);
-
 export type { Consent, ConsentType };
-export { get, updateRemotely, fetchConsents };
+export { get, fetchConsents };
