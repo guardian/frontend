@@ -136,26 +136,30 @@ const formatAppNexusTargeting = (obj: Object): string =>
             })
     ).join(',');
 
+const buildAppNexusTargetingObject = once(
+    (pageTargeting: Object): Object => ({
+        sens: pageTargeting.sens,
+        pt1: pageTargeting.url,
+        pt2: pageTargeting.edition,
+        pt3: pageTargeting.ct,
+        pt4: pageTargeting.p,
+        pt5: pageTargeting.k,
+        pt6: pageTargeting.su,
+        pt7: pageTargeting.bp,
+        pt8: pageTargeting.x,
+        pt9: [
+            pageTargeting.gdncrm,
+            pageTargeting.pv,
+            pageTargeting.co,
+            pageTargeting.tn,
+            pageTargeting.slot,
+        ].join('|'),
+    })
+);
+
 const buildAppNexusTargeting = once(
     (pageTargeting: Object): string =>
-        formatAppNexusTargeting({
-            sens: pageTargeting.sens,
-            pt1: pageTargeting.url,
-            pt2: pageTargeting.edition,
-            pt3: pageTargeting.ct,
-            pt4: pageTargeting.p,
-            pt5: pageTargeting.k,
-            pt6: pageTargeting.su,
-            pt7: pageTargeting.bp,
-            pt8: pageTargeting.x,
-            pt9: [
-                pageTargeting.gdncrm,
-                pageTargeting.pv,
-                pageTargeting.co,
-                pageTargeting.tn,
-                pageTargeting.slot,
-            ].join('|'),
-        })
+        formatAppNexusTargeting(buildAppNexusTargetingObject(pageTargeting))
 );
 
 const buildPageTargeting = once(
@@ -221,4 +225,9 @@ const ozoneAppnexusKeysFormat = (keyTargeting: Object): Array<{}> =>
         [key]: keyTargeting[key],
     }));
 
-export { buildPageTargeting, buildAppNexusTargeting, ozoneAppnexusKeysFormat };
+export {
+    buildPageTargeting,
+    buildAppNexusTargeting,
+    buildAppNexusTargetingObject,
+    ozoneAppnexusKeysFormat,
+};
