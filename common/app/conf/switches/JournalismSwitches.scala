@@ -22,4 +22,14 @@ trait JournalismSwitches {
     sellByDate = never,
     exposeClientSide = true
   )
+
+  val AudioMostViewedSwitch = Switch(
+    SwitchGroup.Journalism,
+    "audio-most-viewed-switch",
+    "Display most viewed audio on audio pages",
+    owners = Seq(Owner.withName("journalism team")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
 }
