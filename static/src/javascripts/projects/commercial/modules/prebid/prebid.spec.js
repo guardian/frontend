@@ -95,7 +95,7 @@ describe('initialise', () => {
                 pixelEnabled: true,
                 syncDelay: 3000,
                 syncEnabled: true,
-                syncsPerBidder: 0,
+                syncsPerBidder: 999,
                 filterSettings: {
                     all: {
                         bidders: '*',
