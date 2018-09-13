@@ -32,7 +32,7 @@ const userSync = {
     syncsPerBidder: 0, // allow all syncs
     filterSettings: {
         iframe: {
-            bidders: ['sonobi'],
+            bidders: '*', // allow all bidders to sync by iframe
             filter: 'include',
         },
     },
