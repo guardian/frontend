@@ -36,11 +36,10 @@ import {
     containsMpu,
     containsMpuOrDmpu,
     getBreakpointKey,
-    getRandomIntInclusive,
-    isExcludedGeolocation,
     shouldIncludeAdYouLike,
     shouldIncludeAppNexus,
     shouldIncludeOpenx,
+    shouldIncludeOzone,
     shouldIncludeTrustX,
     stripMobileSuffix,
     stripTrailingNumbersAbove1,
@@ -445,9 +444,7 @@ const getDummyServerSideBidders = (): Array<PrebidBidder> => {
     // Experimental. Only 0.01% of the PVs.
     if (
         inPbTestOr(
-            !isExcludedGeolocation() &&
-                config.get('switches.prebidS2sozone') &&
-                getRandomIntInclusive(1, 10000) === 1
+            config.get('switches.prebidS2sozone') && shouldIncludeOzone()
         )
     ) {
         dummyServerSideBidders.push(openxServerSideBidder);

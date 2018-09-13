@@ -18,10 +18,10 @@ import {
     containsMpu as containsMpu_,
     containsMpuOrDmpu as containsMpuOrDmpu_,
     getBreakpointKey as getBreakpointKey_,
-    getRandomIntInclusive as getRandomIntInclusive_,
     shouldIncludeAdYouLike as shouldIncludeAdYouLike_,
     shouldIncludeAppNexus as shouldIncludeAppNexus_,
     shouldIncludeOpenx as shouldIncludeOpenx_,
+    shouldIncludeOzone as shouldIncludeOzone_,
     shouldIncludeTrustX as shouldIncludeTrustX_,
     stripMobileSuffix as stripMobileSuffix_,
 } from './utils';
@@ -32,10 +32,10 @@ const containsLeaderboard: any = containsLeaderboard_;
 const containsLeaderboardOrBillboard: any = containsLeaderboardOrBillboard_;
 const containsMpu: any = containsMpu_;
 const containsMpuOrDmpu: any = containsMpuOrDmpu_;
-const getRandomIntInclusive: any = getRandomIntInclusive_;
 const shouldIncludeAdYouLike: any = shouldIncludeAdYouLike_;
 const shouldIncludeAppNexus: any = shouldIncludeAppNexus_;
 const shouldIncludeOpenx: any = shouldIncludeOpenx_;
+const shouldIncludeOzone: any = shouldIncludeOzone_;
 const shouldIncludeTrustX: any = shouldIncludeTrustX_;
 const stripMobileSuffix: any = stripMobileSuffix_;
 const getBreakpointKey: any = getBreakpointKey_;
@@ -170,7 +170,6 @@ describe('getAppNexusPlacementId', () => {
 
 describe('getDummyServerSideBidders', () => {
     beforeEach(() => {
-        getRandomIntInclusive.mockReturnValue(1);
         config.set('switches.prebidS2sozone', true);
     });
 
@@ -185,25 +184,19 @@ describe('getDummyServerSideBidders', () => {
     });
 
     test('should return an empty array if outside the test sample', () => {
-        getRandomIntInclusive.mockReturnValueOnce(3);
         expect(getDummyServerSideBidders()).toEqual([]);
     });
 
     test('should otherwise return the expected array of bidders', () => {
-        const bidders: Array<PrebidBidder> = getDummyServerSideBidders();
-        expect(bidders).toEqual([
-            expect.objectContaining({
-                name: 'openx',
-                bidParams: expect.any(Function),
-            }),
-            expect.objectContaining({
-                name: 'appnexus',
-                bidParams: expect.any(Function),
-            }),
-        ]);
+        shouldIncludeOzone.mockReturnValueOnce(true);
+        const bidderNames = getDummyServerSideBidders().map(
+            bidder => bidder.name
+        );
+        expect(bidderNames).toEqual(['openx', 'appnexus']);
     });
 
     test('should include methods in the response that generate the correct bid params', () => {
+        shouldIncludeOzone.mockReturnValueOnce(true);
         const bidders: Array<PrebidBidder> = getDummyServerSideBidders();
         const openxParams = bidders[0].bidParams('type', [[1, 2]]);
         const appNexusParams = bidders[1].bidParams('type', [[1, 2]]);
@@ -584,7 +577,6 @@ describe('bids', () => {
         containsLeaderboardOrBillboard.mockReturnValue(false);
         containsMpu.mockReturnValue(false);
         containsMpuOrDmpu.mockReturnValue(false);
-        getRandomIntInclusive.mockReturnValue(5);
         shouldIncludeAdYouLike.mockReturnValue(true);
         shouldIncludeAppNexus.mockReturnValue(false);
         shouldIncludeAppNexus.mockReturnValue(false);
@@ -612,7 +604,7 @@ describe('bids', () => {
 
     test('should only include bidders that are switched on if no bidders being tested', () => {
         config.set('switches.prebidXaxis', false);
-        getRandomIntInclusive.mockReturnValue(1);
+        shouldIncludeOzone.mockReturnValueOnce(true);
         expect(bidders()).toEqual([
             'ix',
             'sonobi',
