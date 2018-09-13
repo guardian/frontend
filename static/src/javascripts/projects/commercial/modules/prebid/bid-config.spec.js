@@ -55,6 +55,7 @@ const {
 
 jest.mock('common/modules/commercial/build-page-targeting', () => ({
     buildAppNexusTargeting: () => 'someTestAppNexusTargeting',
+    buildAppNexusTargetingObject: () => 'someAppNexusTargetingObject',
     buildPageTargeting: () => 'bla',
     ozoneAppnexusKeysFormat: () => 'someTestAppNexusTargeting',
 }));
