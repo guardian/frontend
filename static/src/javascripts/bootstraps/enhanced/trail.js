@@ -118,7 +118,7 @@ const initOnwardVideoContainer = (): void => {
 
 const initOnwardAudioContainer = (): void => {
     if (config.get('page.contentType') === 'Audio') {
-        $('.js-audio-components-container').each(el => onwardAudio(el))
+        $('.js-audio-components-container').each(el => onwardAudio(el));
     }
 };
 
