@@ -10,6 +10,7 @@ import { mergeCalls } from 'common/modules/async-call-merger';
 import { getUrlVars } from 'lib/url';
 import fetch from 'lib/fetch-json';
 import qs from 'qs';
+import reqwest from 'reqwest';
 
 let userFromCookieCache = null;
 
@@ -257,16 +258,16 @@ export const getSubscribedNewsletters = () => {
         .catch(() => []);
 };
 
-export const setConsent = (consents: SettableConsent[]) => {
-    const url = `${idApiRoot || ''}/users/me/consents`;
-    return fetch(url, {
-        mode: 'cors',
+export const setConsent = (consents: SettableConsent[]): Promise<void> =>
+    reqwest({
+        url: `${idApiRoot || ''}/users/me/consents`,
         method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(consents),
-        credentials: 'include',
+        type: 'json',
+        contentType: 'application/json',
+        withCredentials: true,
+        crossOrigin: true,
+        data: JSON.stringify(consents),
     });
-};
 
 export const ajaxSignIn = (credentials: PasswordCredential) => {
     const url = `${profileRoot || ''}/actions/auth/ajax`;
