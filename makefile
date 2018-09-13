@@ -50,7 +50,7 @@ compile: install
 
 # Compile all assets in development.
 compile-dev: install
-	@NODE_ENV=development @./tools/task-runner/runner compile --dev
+	@NODE_ENV=development ./tools/task-runner/runner compile --dev
 
 # Compile atom-specific JS
 compile-atoms: install

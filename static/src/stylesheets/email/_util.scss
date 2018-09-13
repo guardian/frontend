@@ -23,7 +23,10 @@
 // table
 .container {
     background: $container-color;
-    width: $max-width;
     margin: 0 auto;
     text-align: left;
+}
+
+.container-td {
+    width: $max-width;
 }
