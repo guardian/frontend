@@ -6,7 +6,9 @@
 AMP (Accelerated Mobile Pages) in Google's own words:
 > AMP is a way to build web pages for static content that render fast. AMP in action consists of three different parts:
 >
-> **AMP HTML** is HTML with some restrictions for reliable performance and some extensions for building rich content beyond basic HTML. The **AMP JS** library ensures the fast rendering of AMP HTML pages. The **Google AMP Cache** can be used to serve cached AMP HTML pages.
+> **AMP HTML** is HTML with some restrictions for reliable performance and some extensions for building rich content beyond basic HTML.
+> The **AMP JS** library ensures the fast rendering of AMP HTML pages. 
+> The **Google AMP Cache** can be used to serve cached AMP HTML pages.
 
 ## Why do I care?
 At the time of writing, Google is trialling wide roll-outs of AMP blue links in specific regions.  This means that all mobile traffic in these regions coming from Google search results will see AMP versions of our content (if available).  As a result we have to ensure that as much of our content as possible works with AMP.
@@ -29,17 +31,9 @@ In order for content to be discoverable (via search) and served in Google's cach
 
 * Validate in your browser - Add `#development=1` to your URL, and check the developer console for messages
 * [Google validation UI](https://validator.ampproject.org/)
-* [Scala validation tests (example)](https://github.com/guardian/frontend/blob/master/article/test/ArticleAmpValidityTest.scala)
-    * Run these like any other scala test using `sbt` - e.g. `testOnly *ArticleTestSuite`
-    * If adding a new endpoint to the tests, make sure you run the test and commit the auto-generated test fixture - you should find a new file generated with a hash filename.
-    * We do not use a live version of the validator, so if you find a discrepancy between the results of these 
-    tests and another validation method, this may be the reason.  All you need to do to update the validator 
-    itself is ~delete the file under `data/amp-validator`, re-run the tests~ download the [JavaScript from the 
-    CDN](https://cdn.ampproject.org/v0/validator.js), copy-paste it into the file under `data/amp-validator` and
-    commit the new validator fixture (see [#20124](https://github.com/guardian/frontend/pull/20124))
 * [Guardian amp validation tool](https://github.com/guardian/frontend/tree/master/tools/amp-validation)
     * 3 ways this tool can be used:
-        1. Validate your local changes on a hardcoded set of endpoints - `make validate-amp`
+        1. Validate your local changes on a hardcoded set of endpoints - `make validate-amp` - **please see note below!**
         2. Validate `amp.theguardian.com` on the same endpoints - `node ./tools/amp-validation/index.js`
         3. Validate `amp.theguardian.com` on today's top 50 most-read articles (according to Ophan) - `node ./tools/amp-validation/top-traffic.js`
 
