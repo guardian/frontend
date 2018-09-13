@@ -24,6 +24,11 @@ type PasswordCredential = {
     password: string,
 };
 
+export type SettableConsent = {
+    is: string,
+    consented: boolean,
+};
+
 export type IdentityUser = {
     id: number,
     primaryEmailAddress: string,
@@ -252,16 +257,13 @@ export const getSubscribedNewsletters = () => {
         .catch(() => []);
 };
 
-export const setConsent = (consentId: string, consented: boolean) => {
+export const setConsent = (consents: SettableConsent[]) => {
     const url = `${idApiRoot || ''}/users/me/consents`;
     return fetch(url, {
         mode: 'cors',
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            id: consentId,
-            consented,
-        }),
+        body: JSON.stringify(consents),
         credentials: 'include',
     });
 };
