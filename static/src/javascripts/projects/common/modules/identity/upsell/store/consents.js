@@ -1,5 +1,9 @@
 // @flow
-import { getAllConsents, getUserFromApi, setConsent } from 'common/modules/identity/api';
+import {
+    getAllConsents,
+    getUserFromApi,
+    setConsent,
+} from 'common/modules/identity/api';
 import type { Followable } from 'common/modules/identity/upsell/consent-card/FollowCard';
 
 type Consent = {

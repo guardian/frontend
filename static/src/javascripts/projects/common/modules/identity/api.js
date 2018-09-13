@@ -25,7 +25,7 @@ type PasswordCredential = {
 };
 
 export type SettableConsent = {
-    is: string,
+    id: string,
     consented: boolean,
 };
 
