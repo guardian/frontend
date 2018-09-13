@@ -10,7 +10,8 @@ object ActiveExperiments extends ExperimentsDefinition {
     AudioPageChange,
     CommercialClientLogging,
     OrielParticipation,
-    OldTLSSupportDeprecation
+    OldTLSSupportDeprecation,
+    DotcomponentsRendering
   )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
@@ -48,4 +49,10 @@ object AudioPageChange extends Experiment(
   participationGroup = Perc5A
 )
 
-
+object DotcomponentsRendering extends Experiment(
+  name = "dotcomponents-rendering",
+  description = "This will allow rendering of articles to use dotcomponents, if that page is supported",
+  owners = Seq(Owner.withGithub("MatthewJWalls")),
+  sellByDate = new LocalDate(2018, 12, 31),
+  participationGroup = Perc0A
+)
