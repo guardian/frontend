@@ -31,8 +31,8 @@ const consentManagement = {
 const userSync = {
     syncsPerBidder: 0, // allow all syncs
     filterSettings: {
-        iframe: {
-            bidders: '*', // allow all bidders to sync by iframe
+        all: {
+            bidders: '*', // allow all bidders to sync by iframe or image beacons
             filter: 'include',
         },
     },
