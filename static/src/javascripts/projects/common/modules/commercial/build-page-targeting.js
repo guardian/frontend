@@ -215,4 +215,10 @@ const buildPageTargeting = once(
     }
 );
 
-export { buildPageTargeting, buildAppNexusTargeting };
+const ozoneAppnexusKeysFormat = (keyTargeting: Object): Array<{}> =>
+    Object.keys(keyTargeting).map((key: string) => ({
+        key,
+        [key]: keyTargeting[key],
+    }));
+
+export { buildPageTargeting, buildAppNexusTargeting, ozoneAppnexusKeysFormat };
