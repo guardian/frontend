@@ -1,5 +1,5 @@
 .menu {
-    background-color: $nav-faded;
+    background-color: $brightness-97;
     box-sizing: border-box;
     font-size: 20px;
     left: 0;
@@ -45,7 +45,7 @@
         left: 0;
         right: 0;
         width: 100%;
-        border-bottom: 1px solid $nav-dark;
+        border-bottom: 1px solid $brightness-86;
 
         @supports (width: 100vw) {
             // based on https://css-tricks.com/full-width-containers-limited-width-parents/#article-header-id-6
@@ -87,7 +87,7 @@
     }
 
     @include mq(desktop) {
-        background-color: $nav-faded;
+        background-color: $brightness-97;
         margin-top: -20px ;
         padding: 0 $gs-gutter;
 

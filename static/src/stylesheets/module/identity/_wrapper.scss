@@ -68,9 +68,9 @@
     min-height: 100vh;
     align-items: stretch;
     &.identity-wrapper-page-flex--flow {
-        background: $nav-faded;
+        background: $brightness-97;
         .manage-account-small-divider {
-            border-color: $nav-dark;
+            border-color: $brightness-86;
         }
     }
     & > .identity-wrapper-page-flex__content {

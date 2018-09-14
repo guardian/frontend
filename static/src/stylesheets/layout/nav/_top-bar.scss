@@ -29,7 +29,7 @@
 }
 
 .top-bar__item--cta {
-    color: $nav-faded;
+    color: $brightness-97;
     font-family: $f-serif-headline;
     font-weight: 800;
     padding: 0;
@@ -46,7 +46,7 @@
 
     &:hover,
     &:focus {
-        color: $nav-faded;
+        color: $brightness-97;
         text-decoration: none;
 
         & .top-bar__item--cta--circle {

@@ -1,6 +1,7 @@
 .footer__back-to-top-container {
     @include content-gutter();
-    background-color: #e7edf1;
+    background-color: $brightness-97;
+    border-top: 1px solid $brightness-86;
 }
 
 .footer__back-to-top {

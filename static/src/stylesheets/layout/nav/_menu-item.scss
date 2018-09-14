@@ -27,7 +27,7 @@
 .menu-item-divider {
     height: 1px;
     width: 100%;
-    background: $nav-bold;
+    background: $brightness-93;
     border: 0;
     margin: $gs-baseline/2 0 0 $menu-spacing-left-small;
 
@@ -80,7 +80,7 @@
     &[data-link-name='nav2 : facebook'] {
         @include mq($until: desktop) {
             &:not([aria-expanded='true']):after {
-                background-color: $nav-dark;
+                background-color: $brightness-86;
                 bottom: 0;
                 content: '';
                 display: block;

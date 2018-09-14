@@ -33,7 +33,7 @@
 }
 
 .menu-group--secondary {
-    background-color: $nav-bold;
+    background-color: $brightness-93;
     margin-top: 0;
     padding-top: 0;
 
@@ -46,7 +46,7 @@
 
 .menu-group--membership,
 .menu-group--editions {
-    background-color: $nav-bold;
+    background-color: $brightness-93;
 }
 
 .menu-group--membership {
@@ -59,9 +59,9 @@
     padding-bottom: 0;
 
     .menu-group {
-        background-color: darken($nav-faded, 10%);
+        background-color: darken($brightness-97, 10%);
         .menu-item-divider {
-            background-color: darken($nav-faded, 20%);
+            background-color: darken($brightness-97, 20%);
         }
     }
 }
@@ -92,7 +92,7 @@
         left: 0;
         top: 0;
         bottom: 0;
-        border-left: 1px solid $nav-dark;
+        border-left: 1px solid $brightness-86;
     }
 }
 

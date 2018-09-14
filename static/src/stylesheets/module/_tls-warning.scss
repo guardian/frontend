@@ -1,7 +1,7 @@
-$tls-warning-rule: darken($nav-faded, 20%);
+$tls-warning-rule: darken($brightness-97, 20%);
 
 .tls-warning {
-    background-color: $nav-faded;
+    background-color: $brightness-97;
     color: $brightness-7;
     border-bottom: 1px solid $tls-warning-rule;
 
@@ -27,7 +27,7 @@ $tls-warning-rule: darken($nav-faded, 20%);
         }
 
         path {
-            fill: $nav-faded;
+            fill: $brightness-97;
         }
     }
 }
