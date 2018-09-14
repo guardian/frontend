@@ -41,14 +41,10 @@ const get = (): Promise<Followable<Consent>[]> =>
         allConsents.map(consent => ({
             value: consent,
             isFollowing: acceptedConsents.includes(consent.id),
-            onChange: newValue => setConsent(consent.id, newValue),
+            onChange: newValue =>
+                setConsent([{ id: consent.id, consented: newValue }]),
         }))
     );
 
-const updateRemotely = (
-    hasConsented: boolean,
-    consentId: string
-): Promise<void> => setConsent(consentId, hasConsented);
-
 export type { Consent, ConsentType };
-export { get, updateRemotely, fetchConsents };
+export { get, fetchConsents };

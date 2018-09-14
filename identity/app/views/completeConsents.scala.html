@@ -21,7 +21,6 @@
 @buildIdentityUrl(endpoint: String) = {
 @idUrlBuilder.buildUrl(s"/$endpoint", idRequest)
 }
-
 <div class="identity-wrapper monocolumn-wrapper">
     <section class="identity-forms-message">
         <h1 class="identity-title">Thank you! We've got your preferences</h1>
@@ -58,6 +57,6 @@
                 data-csrf="@{play.filters.csrf.CSRF.getToken.map(_.value)}"
             ></div>
         }
-        
+
     </section>
 </div>
