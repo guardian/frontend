@@ -55,6 +55,7 @@ const {
 
 jest.mock('common/modules/commercial/build-page-targeting', () => ({
     buildAppNexusTargeting: () => 'someTestAppNexusTargeting',
+    buildAppNexusTargetingObject: () => 'someAppNexusTargetingObject',
     buildPageTargeting: () => 'bla',
 }));
 
@@ -215,7 +216,7 @@ describe('getDummyServerSideBidders', () => {
         });
         expect(appNexusParams).toEqual({
             placementId: '13915593',
-            keywords: 'someTestAppNexusTargeting',
+            keywords: 'someAppNexusTargetingObject',
             lotame: { some: 'lotamedata' },
         });
     });
