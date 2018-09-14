@@ -7,7 +7,6 @@ import {
     buildAppNexusTargeting,
     buildPageTargeting,
     buildAppNexusTargetingObject,
-    ozoneAppnexusKeysFormat,
 } from 'common/modules/commercial/build-page-targeting';
 import { commercialPrebidAdYouLike } from 'common/modules/experiments/tests/commercial-prebid-adyoulike';
 import { commercialPrebidSafeframe } from 'common/modules/experiments/tests/commercial-prebid-safeframe';
@@ -411,8 +410,8 @@ const getDummyServerSideBidders = (): Array<PrebidBidder> => {
                 {},
                 {
                     placementId: getAppNexusPlacementId(sizes),
-                    keywords: ozoneAppnexusKeysFormat(
-                        buildAppNexusTargetingObject(buildPageTargeting())
+                    keywords: buildAppNexusTargetingObject(
+                        buildPageTargeting()
                     ), // Ok to duplicate call. Lodash 'once' is used.
                 },
                 window.OzoneLotameData ? { lotame: window.OzoneLotameData } : {}
