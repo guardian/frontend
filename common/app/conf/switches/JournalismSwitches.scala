@@ -23,10 +23,10 @@ trait JournalismSwitches {
     exposeClientSide = true
   )
 
-  val AudioMostViewedSwitch = Switch(
+  val AudioOnwardJourneySwitch = Switch(
     SwitchGroup.Journalism,
-    "audio-most-viewed-switch",
-    "Display most viewed audio on audio pages",
+    "audio-onward-journey-switch",
+    "Display latest podcast episodes on audio pages",
     owners = Seq(Owner.withName("journalism team")),
     safeState = Off,
     sellByDate = never,
