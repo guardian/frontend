@@ -1,10 +1,8 @@
 // @flow
 import React, { Component } from 'preact-compat';
 import { Checkbox } from 'common/modules/identity/upsell/checkbox/Checkbox';
-import {
-    get as getConsents,
-    updateRemotely,
-} from 'common/modules/identity/upsell/store/consents';
+import { get as getConsents } from 'common/modules/identity/upsell/store/consents';
+import { setConsent } from 'common/modules/identity/api';
 import type { ConsentType } from 'common/modules/identity/upsell/store/consents';
 
 export class OptOutsList extends Component<
@@ -57,10 +55,11 @@ export class OptOutsList extends Component<
     };
 
     updateChangesRemotely = (): Promise<void> =>
-        Promise.all(
-            this.state.consents.map(c =>
-                updateRemotely(c.isFollowing, c.value.id)
-            )
+        setConsent(
+            this.state.consents.map(c => ({
+                consented: c.isFollowing,
+                id: c.value.id,
+            }))
         );
 
     render() {

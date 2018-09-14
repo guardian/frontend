@@ -14,6 +14,8 @@ import {
     removeSpinner,
 } from './modules/switch';
 import { prependSuccessMessage } from './modules/prependMessage';
+import { setConsent } from './api';
+import type { SettableConsent } from './api';
 
 const consentCheckboxClassName = 'js-manage-account__consentCheckbox';
 const newsletterCheckboxClassName = 'js-manage-account__newsletterCheckbox';
@@ -31,26 +33,13 @@ const UNSUBSCRIPTION_SUCCESS_MESSAGE =
     "You've been unsubscribed from all Guardian marketing newsletters and emails.";
 const ERR_MALFORMED_HTML = 'Something went wrong';
 
-type Consent = {
-    id: string,
-    consented: boolean,
-};
-
 type Newsletter = {
     id: string,
     subscribed: boolean,
 };
 
-const updateConsent = (consent: Consent): Promise<void> =>
-    reqwest({
-        url: `${config.get('page.idApiUrl')}/users/me/consents`,
-        method: 'PATCH',
-        type: 'json',
-        contentType: 'application/json',
-        withCredentials: true,
-        crossOrigin: true,
-        data: JSON.stringify(consent),
-    });
+const updateConsent = (consent: SettableConsent): Promise<void> =>
+    setConsent([consent]);
 
 const updateNewsletter = (newsletter: Newsletter): Promise<void> =>
     reqwest({
@@ -85,7 +74,7 @@ const buildNewsletterUpdatePayload = (
 
 const buildConsentUpdatePayload = (
     fields: NodeList<any> = new NodeList()
-): Consent => {
+): SettableConsent => {
     const consent = {};
     [...fields].forEach((field: HTMLInputElement) => {
         switch (field.type) {
