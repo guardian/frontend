@@ -18,21 +18,22 @@
 }
 
 .identity-upsell-consent-card {
-    @include fs-bodyCopy(2)
+    @include fs-bodyCopy(2);
     margin: $gs-baseline 0;
     max-width: $gs-gutter * 16;
     background: $brightness-97;
+    box-shadow: inset ($gs-gutter / 4) 0 0 0 $brightness-93;
     padding: $gs-baseline /3 $gs-gutter / 1.5 $gs-baseline;
     .identity-upsell-consent-card__title {
         @include fs-headlineGarnett(0);
         font-weight: 600;
+        margin-bottom: $gs-baseline / 2;
     }
     .identity-upsell-consent-card__description {
-
+        color: $brightness-20;
     }
     button {
         @include identity-button($green-bold);
-        margin: .5em;
     }
 }
 
