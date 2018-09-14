@@ -75,7 +75,6 @@ class AccountCreationForm extends Component<
         const { email } = this.props;
         return (
             <form className="form" onSubmit={this.onSubmit}>
-                <hr className="manage-account-small-divider" />
                 {isError && (
                     <div className="form__error">
                         {errorReason || 'Oops. Something went wrong'}

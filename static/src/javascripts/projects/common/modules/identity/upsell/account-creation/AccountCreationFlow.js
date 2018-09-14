@@ -24,14 +24,20 @@ class AccountCreationFlow extends Component<
 
     render() {
         return !this.state.hasCreatedAccount ? (
-            <AccountCreationForm
-                email={this.props.email}
-                csrfToken={this.props.csrfToken}
-                accountToken={this.props.accountToken}
-                onAccountCreated={this.onAccountCreated}
-            />
+            <div>
+                <hr className="manage-account-small-divider" />
+                <AccountCreationForm
+                    email={this.props.email}
+                    csrfToken={this.props.csrfToken}
+                    accountToken={this.props.accountToken}
+                    onAccountCreated={this.onAccountCreated}
+                />
+            </div>
         ) : (
-            <AccountCreationFeatures returnUrl={this.props.returnUrl} />
+            <div>
+                <hr className="manage-account-small-divider" />
+                <AccountCreationFeatures returnUrl={this.props.returnUrl} />
+            </div>
         );
     }
 }

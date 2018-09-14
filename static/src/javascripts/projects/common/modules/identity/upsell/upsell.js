@@ -69,6 +69,13 @@ const bindBlockList = (el): void => {
             <div>
                 {ConfirmEmailThankYou}
                 {Optouts}
+                <Block title="Create an account or liberal journalism gets it">
+                    <AccountCreationFlow
+                        csrfToken={'dsfdsfdsf'}
+                        accountToken={'dsfdsfdsfsdf'}
+                        email={'dsfdsfdsf'}
+                    />
+                </Block>
             </div>,
             el
         );
