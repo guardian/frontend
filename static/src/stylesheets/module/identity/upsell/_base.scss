@@ -9,6 +9,20 @@
         font-weight: 100;
     }
 }
+
+.identity-upsell-hero {
+    @include fs-headlineGarnett(2);
+    font-weight: 600;
+    margin-bottom: $gs-baseline * 2;
+    .identity-upsell-hero__title {
+        font-size: 1em;
+    }
+    .identity-upsell-hero__subtitle {
+        font-weight: 100;
+        font-size: 1em;
+    }
+}
+
 .identity-upsell-container {
     margin-top: $gs-gutter;
     display: flex;
