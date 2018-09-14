@@ -69,24 +69,33 @@ class RedirectService(implicit executionContext: ExecutionContext) extends Loggi
     }}
   }
 
+  def isRss(source: String): Boolean = source.endsWith("/rss")
+
   def getDestination(source: String): Future[Option[Destination]] = {
-    val rssSuffix: String = if (source.endsWith("/rss")) "/rss" else ""
-    val sourceNoRss = if (source.endsWith("/rss")) source.replace("/rss", "") else source
-    val destination1 = sourceNoRss match {
+    // strip /rss suffix as redirects won't exist for /rss urls
+    val sourceNoRss = source.replaceAll("/rss$", "")
+
+    val destination = sourceNoRss match {
       case CombinerTags(tag1, tag2) =>
-        destinationForCombiner(sourceNoRss, tag1, tag2).flatMap(destOpt => destOpt.fold(lookupRedirectDestination(sourceNoRss))(_ => Future.successful(destOpt)))
+        destinationForCombiner(sourceNoRss, tag1, tag2)
+          .flatMap{
+            case Some(d) => Future.successful(Some(d))
+            case None => lookupRedirectDestination(sourceNoRss)
+          }
       case _ => lookupRedirectDestination(sourceNoRss)
     }
-    destination1.map(_.map{
-      case PermanentRedirect(redirectSource, location) => PermanentRedirect(redirectSource, location+rssSuffix)
+    destination.map(_.map{
+      case PermanentRedirect(redirectSource, location) =>
+        val newLocation = if (isRss(source)) location+"/rss" else location
+        PermanentRedirect(redirectSource, newLocation)
       case otherRedirect => otherRedirect
     })
   }
 
   def lookupRedirectDestination(source: String): Future[Option[Destination]] = {
-    val fullSource = if (source.head != '/') expectedSourceHost + source else s"$expectedSourceHost/$source"
+    val fullUrl = if (source.head == '/') expectedSourceHost + source else s"$expectedSourceHost/$source"
     ScanamoAsync
-      .get[Destination](DynamoDB.asyncClient)(tableName)('source -> fullSource)
+      .get[Destination](DynamoDB.asyncClient)(tableName)('source -> fullUrl)
       .map({
         case Some(Right(destination)) => Some(destination)
         case _ => None
