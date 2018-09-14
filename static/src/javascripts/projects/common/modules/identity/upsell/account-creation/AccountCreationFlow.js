@@ -38,7 +38,10 @@ class AccountCreationFlow extends Component<
                         </p>
                     </h1>
                     <div>
-                        <AccountCreationFormFields {...this.props} />
+                        <AccountCreationFormFields
+                            {...this.props}
+                            onAccountCreated={this.onAccountCreated}
+                        />
                     </div>
                     <aside className="identity-upsell-account-creation-block">
                         <hr className="manage-account-small-divider" />

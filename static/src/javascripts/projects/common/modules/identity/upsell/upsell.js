@@ -11,6 +11,7 @@ import { OptOutsList } from 'common/modules/identity/upsell/opt-outs/OptOutsList
 import { Block } from 'common/modules/identity/upsell/block/Block';
 import { get as getConsents } from 'common/modules/identity/upsell/store/consents';
 import { get as getNewsletters } from 'common/modules/identity/upsell/store/newsletters';
+import { AccountCreationBlock } from './account-creation/AccountCreationBlock';
 
 const ConfirmEmailThankYou = (
     <Block title="Interested in any of this content?">
@@ -69,13 +70,11 @@ const bindBlockList = (el): void => {
             <div>
                 {ConfirmEmailThankYou}
                 {Optouts}
-                <Block title="Create an account or liberal journalism gets it">
-                    <AccountCreationFlow
-                        csrfToken="dsfdsfdsf"
-                        accountToken="dsfdsfdsfsdf"
-                        email="dsfdsfdsf"
-                    />
-                </Block>
+                <AccountCreationBlock
+                    csrfToken="test"
+                    accountToken="test"
+                    email="test@test"
+                />
             </div>,
             el
         );

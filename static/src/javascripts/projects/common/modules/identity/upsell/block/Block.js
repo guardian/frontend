@@ -4,14 +4,19 @@ import React, { Component } from 'preact-compat';
 type BlockProps = {
     title: string,
     subtitle: ?string,
+    withGrid: ?boolean,
     children: any,
 };
 
 export class Block extends Component<BlockProps> {
     render() {
-        const { title, subtitle, children } = this.props;
+        const { title, subtitle, children, withGrid } = this.props;
         return (
-            <section className="identity-upsell-block">
+            <section
+                className={[
+                    'identity-upsell-block',
+                    withGrid ? 'identity-upsell-block--with-grid' : '',
+                ].join(' ')}>
                 <h2 className="identity-upsell-block__title">{title}</h2>
                 {subtitle && (
                     <h3 className="identity-upsell-block__subtitle">
