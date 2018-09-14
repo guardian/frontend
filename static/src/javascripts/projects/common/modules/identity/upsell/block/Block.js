@@ -12,12 +12,14 @@ export class Block extends Component<BlockProps> {
         const { title, subtitle, children } = this.props;
         return (
             <section className="identity-upsell-block">
-                <h2 className="identity-upsell-block__title">{title}</h2>
-                {subtitle && (
-                    <h3 className="identity-upsell-block__subtitle">
-                        {subtitle}
-                    </h3>
-                )}
+                <div className="identity-upsell-title">
+                    <h2 className="identity-upsell-title__title">{title}</h2>
+                    {subtitle && (
+                        <h3 className="identity-upsell-title__subtitle">
+                            {subtitle}
+                        </h3>
+                    )}
+                </div>
                 <div className="identity-upsell-block__container">
                     {children}
                 </div>
