@@ -35,9 +35,8 @@ object PageSkinSponsorshipReport {
 object PageSkin {
   private val ngFrontSuffix = "/front/ng"
   private val frontSuffix = "/front"
-  private val tagPageSuffix = "/subsection/ng"
 
-  private val validAdUnitSuffixes = Seq(ngFrontSuffix, frontSuffix, tagPageSuffix)
+  private val validAdUnitSuffixes = Seq(ngFrontSuffix, frontSuffix)
 
   def isValidAdUnit(adUnitPath: String): Boolean = validAdUnitSuffixes.exists(suffix => adUnitPath endsWith suffix)
 }

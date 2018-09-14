@@ -1,8 +1,7 @@
 package common.dfp
 
-import com.gu.contentapi.client.model.v1.{ Tag, TagType }
 import com.gu.commercial.display.{AdTargetParam, KeywordParam, SeriesParam}
-
+import com.gu.contentapi.client.model.v1.{Tag, TagType}
 import common.Edition.defaultEdition
 import common.commercial.{CommercialProperties, EditionAdTargeting}
 import common.editions.{Au, Uk, Us}
@@ -41,6 +40,8 @@ class PageskinAdAgentTest extends FlatSpec with Matchers {
 
   val sportIndexFrontMeta = MetaData.make("", None, "The title", None, isFront = true, commercial = Some(commercialProperties))
   val articleMeta = MetaData.make("", None, "The title", None)
+
+  val keywordPressedFrontMeta = MetaData.make("", None, "The title", None, isFront = true, isPressedPage = true, commercial = Some(commercialProperties))
 
   val examplePageSponsorships = Seq(
     PageSkinSponsorship(
@@ -171,5 +172,26 @@ class PageskinAdAgentTest extends FlatSpec with Matchers {
     NotProductionTestPageskinAdAgent.hasPageSkin(s"$dfpAdUnitGuRoot/testSport/front", pressedFrontMeta,
       defaultEdition) should be(
       true)
+  }
+
+  "findSponsorships" should "find keyword-targeted sponsorship when keyword page has been overwritten by a pressed front" in {
+    TestPageskinAdAgent.findSponsorships(
+      adUnitPath = "/123456/root/technology/subsection/ng",
+      metaData = keywordPressedFrontMeta,
+      edition = Uk
+    ) shouldBe Seq(
+      PageSkinSponsorship(
+        lineItemName = "lineItemName5",
+        lineItemId = 123458,
+        adUnits = Seq("sport-index"),
+        editions = Seq(Uk),
+        countries = Nil,
+        isR2Only = false,
+        targetsAdTest = false,
+        adTestValue = None,
+        keywords = Seq("sport-keyword"),
+        series = Nil
+      )
+    )
   }
 }
