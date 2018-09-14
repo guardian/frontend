@@ -71,9 +71,9 @@ const bindBlockList = (el): void => {
                 {Optouts}
                 <Block title="Create an account or liberal journalism gets it">
                     <AccountCreationFlow
-                        csrfToken={'dsfdsfdsf'}
-                        accountToken={'dsfdsfdsfsdf'}
-                        email={'dsfdsfdsf'}
+                        csrfToken="dsfdsfdsf"
+                        accountToken="dsfdsfdsfsdf"
+                        email="dsfdsfdsf"
                     />
                 </Block>
             </div>,
