@@ -108,5 +108,13 @@
     .identity-upsell-block__title {
         font-weight: 900;
     }
+    &.identity-upsell-block--with-grid {
+        .identity-upsell-block__container {
+            display: grid;
+            grid-column-gap: $gs-gutter;
+            grid-row-gap: $gs-baseline;
+            grid-template-columns: 1fr 1fr;
+        }
+    }
 }
 
