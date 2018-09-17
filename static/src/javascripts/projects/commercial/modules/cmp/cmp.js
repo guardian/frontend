@@ -1,14 +1,10 @@
 // @flow strict
 
+import { log } from 'commercial/modules/cmp/log';
+import { CmpStore } from 'commercial/modules/cmp/store';
 import { getCookie } from 'lib/cookies';
 import { getUrlVars } from 'lib/url';
-import { getVariant, isInVariant } from 'common/modules/experiments/utils';
-import { commercialCmpCustomise } from 'common/modules/experiments/tests/commercial-cmp-customise';
-import { log } from './log';
-import { CmpStore } from './store';
-import { encodeVendorConsentData } from './cookie';
-import { vendorList as globalVendorList } from './vendorlist';
-
+import { vendorList as globalVendorList } from 'commercial/modules/cmp/vendorlist';
 import {
     defaultConfig,
     CMP_GLOBAL_NAME,
@@ -16,14 +12,15 @@ import {
     CMP_VERSION,
     COOKIE_VERSION,
     COOKIE_NAME,
-} from './cmp-env';
+} from 'commercial/modules/cmp/cmp-env';
+import { encodeVendorConsentData } from 'commercial/modules/cmp/cookie';
 
 import type {
     CmpConfig,
     ConsentDataResponse,
     VendorList,
     VendorConsentResponse,
-} from './types';
+} from 'commercial/modules/cmp/types';
 
 type MessageData = {
     __cmpCall: ?{
@@ -57,23 +54,6 @@ const readConsentCookie = (cookieName: string): boolean | null => {
     if (cookieVal && cookieVal.split('.')[0] === '1') return true;
     if (cookieVal && cookieVal.split('.')[0] === '0') return false;
     return null;
-};
-
-const isInCmpCustomiseTest = (): boolean => {
-    const variant = getVariant(commercialCmpCustomise, 'variant');
-    return variant ? isInVariant(commercialCmpCustomise, variant) : false;
-};
-
-const generateStore = (isInTest: boolean): CmpStore => {
-    const store = new CmpStore(
-        CMP_ID,
-        CMP_VERSION,
-        COOKIE_VERSION,
-        isInTest ? readConsentCookie(COOKIE_NAME) : null,
-        globalVendorList,
-        isInTest
-    );
-    return store;
 };
 
 const isInEU = (): boolean =>
@@ -201,7 +181,7 @@ class CmpService {
         } else {
             log.info(
                 `Proccess command: ${command}, parameter: ${parameter ||
-                    'unknown'}`
+                    'unkonwn'}`
             );
             this.commands[command](parameter, callback);
         }
@@ -273,9 +253,14 @@ export const init = (): void => {
     if (window[CMP_GLOBAL_NAME]) {
         // Pull queued commands from the CMP stub
         const { commandQueue = [] } = window[CMP_GLOBAL_NAME] || {};
-        const shouldAccessTestCookie = isInCmpCustomiseTest();
         // Initialize the store with all of our consent data
-        const store = generateStore(shouldAccessTestCookie);
+        const store = new CmpStore(
+            CMP_ID,
+            CMP_VERSION,
+            COOKIE_VERSION,
+            readConsentCookie(COOKIE_NAME),
+            globalVendorList
+        );
         const cmp = new CmpService(store);
         // Expose `processCommand` as the CMP implementation
         window[CMP_GLOBAL_NAME] = cmp.processCommand;
@@ -287,10 +272,6 @@ export const init = (): void => {
 
         cmp.cmpReady = true;
         cmp.notify('cmpReady');
-
-        if (shouldAccessTestCookie) {
-            log.info('CMP customise is ACTIVE');
-        }
     }
 };
 
