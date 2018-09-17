@@ -24,6 +24,7 @@ jest.mock('commercial/modules/cmp/log', () => ({
         debug: jest.fn(),
         error: jest.fn(),
         warn: jest.fn(),
+        info: jest.fn(),
     },
 }));
 
@@ -199,15 +200,14 @@ describe('CMP cookie', () => {
         ).toEqual(vendorConsentData);
     });
 
-    it('writes and reads the local cookie', () =>
-        writeVendorConsentCookie(vendorConsentData).then(() =>
-            readVendorConsentCookie().then(fromCookie => {
-                expect(document.cookie).toEqual(
-                    'euconsent=BAAAAAAAAAAAAABABBENABwAAAAApoA; path=/; expires=Fri, 07 Jul 94226 23:00:00 GMT; domain=.theguardian.com'
-                );
-                expect(fromCookie).toEqual(vendorConsentData);
-            })
-        ));
+    it('writes and reads the local cookie', () => {
+        writeVendorConsentCookie(vendorConsentData).then(() => {
+            expect(document.cookie).toEqual(
+                'euconsent=BAAAAAAAAAAAAABABBENABwAAAAApoA; path=/; expires=Fri, 07 Jul 94226 23:00:00 GMT; domain=.theguardian.com'
+            );
+            expect(readVendorConsentCookie()).toEqual(vendorConsentData);
+        });
+    });
 
     it('converts selected vendor list to a range', () => {
         const maxId = Math.max(...vendorList.vendors.map(vendor => vendor.id));
