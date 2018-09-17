@@ -2,8 +2,8 @@
 
 /* eslint-disable  */
 export const vendorList = {
-    "vendorListVersion": 82,
-    "lastUpdated": "2018-07-12T16:00:16Z",
+    "vendorListVersion": 102,
+    "lastUpdated": "2018-09-13T16:00:23Z",
     "purposes": [
         {
             "id": 1,
@@ -278,7 +278,9 @@ export const vendorList = {
             "purposeIds": [
                 1,
                 2,
-                3
+                3,
+                4,
+                5
             ],
             "legIntPurposeIds": [],
             "featureIds": []
@@ -926,9 +928,10 @@ export const vendorList = {
             "id": 40,
             "name": "Active Agent AG",
             "policyUrl": "http://www.active-agent.com/de/unternehmen/datenschutzerklaerung/",
-            "purposeIds": [],
+            "purposeIds": [
+                1
+            ],
             "legIntPurposeIds": [
-                1,
                 2,
                 3,
                 5
@@ -1131,7 +1134,7 @@ export const vendorList = {
         {
             "id": 100,
             "name": "Fifty Technology Limited",
-            "policyUrl": "https://fiftymedia.com/privacy-policy/",
+            "policyUrl": "https://fifty.io/privacy-policy.php",
             "purposeIds": [
                 1,
                 2,
@@ -1236,11 +1239,14 @@ export const vendorList = {
             "id": 120,
             "name": "Eyeota Ptd Ltd",
             "policyUrl": "https://www.eyeota.com/privacy-policy/",
-            "purposeIds": [],
-            "legIntPurposeIds": [
+            "purposeIds": [
                 1,
-                2
+                2,
+                3,
+                4,
+                5
             ],
+            "legIntPurposeIds": [],
             "featureIds": [
                 1
             ]
@@ -1276,13 +1282,13 @@ export const vendorList = {
             "name": "admetrics GmbH",
             "policyUrl": "https://admetrics.io/en/privacy_policy/",
             "purposeIds": [
-                1
-            ],
-            "legIntPurposeIds": [
+                1,
+                2,
                 3,
                 4,
                 5
             ],
+            "legIntPurposeIds": [],
             "featureIds": []
         },
         {
@@ -1413,13 +1419,13 @@ export const vendorList = {
             "id": 72,
             "name": "Nano Interactive GmbH",
             "policyUrl": "http://www.nanointeractive.com/privacy",
-            "purposeIds": [],
-            "legIntPurposeIds": [
+            "purposeIds": [
                 1,
                 2,
                 3,
                 5
             ],
+            "legIntPurposeIds": [],
             "featureIds": []
         },
         {
@@ -1441,7 +1447,7 @@ export const vendorList = {
         },
         {
             "id": 136,
-            "name": "Ströer SSP GmbH",
+            "name": "Str\u00f6er SSP GmbH",
             "policyUrl": "https://www.stroeer.de/fileadmin/user_upload/Datenschutz.pdf",
             "purposeIds": [],
             "legIntPurposeIds": [
@@ -1475,9 +1481,7 @@ export const vendorList = {
                 1
             ],
             "legIntPurposeIds": [],
-            "featureIds": [
-                1
-            ]
+            "featureIds": []
         },
         {
             "id": 124,
@@ -1577,7 +1581,8 @@ export const vendorList = {
             "policyUrl": "http://madvertise.com/en/gdpr/",
             "purposeIds": [
                 1,
-                2
+                2,
+                4
             ],
             "legIntPurposeIds": [
                 3,
@@ -1668,7 +1673,7 @@ export const vendorList = {
         {
             "id": 130,
             "name": "AdRoll Inc",
-            "policyUrl": "adrollgroup.com/privacy",
+            "policyUrl": "https://www.adrollgroup.com/privacy",
             "purposeIds": [
                 1
             ],
@@ -2345,7 +2350,7 @@ export const vendorList = {
         },
         {
             "id": 126,
-            "name": "DoubleVerify Inc.​",
+            "name": "DoubleVerify Inc.\u200b",
             "policyUrl": "https://www.doubleverify.com/privacy/",
             "purposeIds": [
                 5
@@ -2503,8 +2508,7 @@ export const vendorList = {
             ],
             "featureIds": [
                 1,
-                2,
-                3
+                2
             ]
         },
         {
@@ -2554,7 +2558,7 @@ export const vendorList = {
         {
             "id": 215,
             "name": "ARMIS SAS",
-            "policyUrl": "http://armis.tech/infos-cookies/",
+            "policyUrl": "http://armis.tech/politique-de-protection-donnees/",
             "purposeIds": [
                 1,
                 2
@@ -2701,23 +2705,18 @@ export const vendorList = {
             "name": "Digitize New Media Ltd",
             "policyUrl": "http://www.digitize.ie/online-privacy",
             "purposeIds": [
-                2
+                2,
+                4
             ],
-            "legIntPurposeIds": [
-                1,
-                3,
-                4,
-                5
-            ],
+            "legIntPurposeIds": [],
             "featureIds": []
         },
         {
             "id": 273,
             "name": "Bannerflow AB",
-            "policyUrl": "bannerflow.com/privacy",
+            "policyUrl": "https://www.bannerflow.com/privacy ",
             "purposeIds": [],
             "legIntPurposeIds": [
-                1,
                 3
             ],
             "featureIds": []
@@ -2774,13 +2773,13 @@ export const vendorList = {
             "id": 113,
             "name": "iotec global Ltd.",
             "policyUrl": "https://www.iotecglobal.com/privacy-policy/",
-            "purposeIds": [],
-            "legIntPurposeIds": [
+            "purposeIds": [
                 1,
                 2,
                 3,
                 5
             ],
+            "legIntPurposeIds": [],
             "featureIds": []
         },
         {
@@ -2867,12 +2866,11 @@ export const vendorList = {
             "purposeIds": [
                 1,
                 2,
-                3
-            ],
-            "legIntPurposeIds": [
+                3,
                 4,
                 5
             ],
+            "legIntPurposeIds": [],
             "featureIds": [
                 1,
                 2,
@@ -3099,7 +3097,6 @@ export const vendorList = {
                 1
             ],
             "legIntPurposeIds": [
-                1,
                 3,
                 4,
                 5
@@ -3884,7 +3881,7 @@ export const vendorList = {
         },
         {
             "id": 270,
-            "name": "Marfeel Slutions S.L",
+            "name": "Marfeel Solutions S.L",
             "policyUrl": "https://www.marfeel.com/privacy-policy/",
             "purposeIds": [
                 1,
@@ -4126,7 +4123,13 @@ export const vendorList = {
             "id": 343,
             "name": "DIGITEKA Technologies",
             "policyUrl": "https://www.ultimedia.com/POLICY.html",
-            "purposeIds": [],
+            "purposeIds": [
+                1,
+                2,
+                3,
+                4,
+                5
+            ],
             "legIntPurposeIds": [
                 1,
                 2,
@@ -4539,9 +4542,6 @@ export const vendorList = {
             "purposeIds": [],
             "legIntPurposeIds": [
                 1,
-                2,
-                3,
-                4,
                 5
             ],
             "featureIds": [
@@ -4661,7 +4661,7 @@ export const vendorList = {
         {
             "id": 385,
             "name": "Oracle",
-            "policyUrl": "https://www.oracle.com/legal/privacy/marketing-cloud-data-cloud-privacy-policy.html,\n",
+            "policyUrl": "https://www.oracle.com/legal/privacy/marketing-cloud-data-cloud-privacy-policy.html",
             "purposeIds": [
                 1,
                 2,
@@ -5194,7 +5194,7 @@ export const vendorList = {
         {
             "id": 429,
             "name": "Signals",
-            "policyUrl": "http://signalsdata.com/website-privacy-policy/",
+            "policyUrl": "https://signalsdata.com/platform-cookie-policy/",
             "purposeIds": [
                 1,
                 2,
@@ -5309,13 +5309,17 @@ export const vendorList = {
             "name": "Innovid Inc.",
             "policyUrl": "http://www.innovid.com/privacy-policy",
             "purposeIds": [
-                2
+                1,
+                2,
+                3,
+                4
             ],
             "legIntPurposeIds": [
-                3,
                 5
             ],
-            "featureIds": []
+            "featureIds": [
+                2
+            ]
         },
         {
             "id": 444,
@@ -5544,7 +5548,7 @@ export const vendorList = {
         },
         {
             "id": 466,
-            "name": "TACTIC™ Real-Time Marketing AS",
+            "name": "TACTIC\u2122 Real-Time Marketing AS",
             "policyUrl": "https://tacticrealtime.com/privacy/",
             "purposeIds": [
                 1,
@@ -5705,12 +5709,14 @@ export const vendorList = {
             "purposeIds": [
                 1,
                 2,
-                3
-            ],
-            "legIntPurposeIds": [
+                3,
+                4,
                 5
             ],
+            "legIntPurposeIds": [],
             "featureIds": [
+                1,
+                2,
                 3
             ]
         },
@@ -5844,7 +5850,7 @@ export const vendorList = {
         },
         {
             "id": 392,
-            "name": "Ströer Mobile Performance GmbH",
+            "name": "Str\u00f6er Mobile Performance GmbH",
             "policyUrl": "https://stroeermobileperformance.com/?dl=privacy",
             "purposeIds": [
                 2,
@@ -5936,6 +5942,645 @@ export const vendorList = {
             "featureIds": [
                 1
             ]
+        },
+        {
+            "id": 478,
+            "name": "RevLifter Ltd",
+            "policyUrl": "https://www.revlifter.com/privacy-policy",
+            "purposeIds": [
+                1
+            ],
+            "legIntPurposeIds": [
+                2
+            ],
+            "featureIds": []
+        },
+        {
+            "id": 489,
+            "name": "YellowHammer Media Group",
+            "policyUrl": "http://www.yhmg.com/privacy-policy/",
+            "purposeIds": [
+                1,
+                2,
+                3
+            ],
+            "legIntPurposeIds": [],
+            "featureIds": []
+        },
+        {
+            "id": 484,
+            "name": "adledge",
+            "policyUrl": "https://adledge.com/data-privacy/",
+            "purposeIds": [],
+            "legIntPurposeIds": [
+                5
+            ],
+            "featureIds": []
+        },
+        {
+            "id": 493,
+            "name": "Clicksco Digital Limited",
+            "policyUrl": "https://carbondmp.com/privacy.html",
+            "purposeIds": [
+                1,
+                2,
+                3,
+                4
+            ],
+            "legIntPurposeIds": [
+                5
+            ],
+            "featureIds": [
+                2
+            ]
+        },
+        {
+            "id": 495,
+            "name": "Arcspire Limited",
+            "policyUrl": "https://s3.eu-west-2.amazonaws.com/public.arcspire.io/docs/ARCSPIRE-PrivacyPolicy_v1.0.pdf",
+            "purposeIds": [
+                1,
+                2,
+                3,
+                4,
+                5
+            ],
+            "legIntPurposeIds": [],
+            "featureIds": [
+                3
+            ]
+        },
+        {
+            "id": 496,
+            "name": "Automattic Inc.",
+            "policyUrl": "https://en.blog.wordpress.com/2017/12/04/updated-privacy-policy/",
+            "purposeIds": [
+                1,
+                2,
+                3,
+                4
+            ],
+            "legIntPurposeIds": [],
+            "featureIds": []
+        },
+        {
+            "id": 424,
+            "name": "KUPONA GmbH",
+            "policyUrl": "https://www.kupona.de/dsgvo/",
+            "purposeIds": [],
+            "legIntPurposeIds": [
+                3,
+                5
+            ],
+            "featureIds": []
+        },
+        {
+            "id": 408,
+            "name": "FM Labs LLC",
+            "policyUrl": "https://fidelity-media.com/privacy-policy/",
+            "purposeIds": [
+                2
+            ],
+            "legIntPurposeIds": [
+                1,
+                3,
+                4,
+                5
+            ],
+            "featureIds": [
+                3
+            ]
+        },
+        {
+            "id": 473,
+            "name": "Sub2 Technologies Ltd",
+            "policyUrl": "http://www.sub2tech.com/privacy-policy/",
+            "purposeIds": [
+                3,
+                4,
+                5
+            ],
+            "legIntPurposeIds": [
+                1,
+                2
+            ],
+            "featureIds": []
+        },
+        {
+            "id": 467,
+            "name": "Haensel AMS GmbH",
+            "policyUrl": "https://haensel-ams.com/data-privacy/",
+            "purposeIds": [
+                3,
+                5
+            ],
+            "legIntPurposeIds": [],
+            "featureIds": [
+                2
+            ]
+        },
+        {
+            "id": 488,
+            "name": "Opinary GmbH",
+            "policyUrl": "https://opinary.com/privacy-policy/",
+            "purposeIds": [
+                2
+            ],
+            "legIntPurposeIds": [
+                1,
+                3,
+                4,
+                5
+            ],
+            "featureIds": []
+        },
+        {
+            "id": 490,
+            "name": "PLAYGROUND XYZ EMEA LTD",
+            "policyUrl": "https://playground.xyz/privacy/privacy-policy.pdf",
+            "purposeIds": [
+                1,
+                3,
+                5
+            ],
+            "legIntPurposeIds": [],
+            "featureIds": []
+        },
+        {
+            "id": 464,
+            "name": "Oracle AddThis",
+            "policyUrl": "http://www.addthis.com/privacy/privacy-policy/",
+            "purposeIds": [
+                1,
+                2,
+                3,
+                4
+            ],
+            "legIntPurposeIds": [
+                5
+            ],
+            "featureIds": [
+                2
+            ]
+        },
+        {
+            "id": 491,
+            "name": "Triboo Data Analytics",
+            "policyUrl": "https://www.shinystat.com/it/informativa_sito.html",
+            "purposeIds": [
+                1,
+                2,
+                3,
+                4,
+                5
+            ],
+            "legIntPurposeIds": [],
+            "featureIds": []
+        },
+        {
+            "id": 499,
+            "name": "PurposeLab, LLC",
+            "policyUrl": "https://purposelab.com/privacy/",
+            "purposeIds": [
+                5
+            ],
+            "legIntPurposeIds": [],
+            "featureIds": []
+        },
+        {
+            "id": 500,
+            "name": "Turbo",
+            "policyUrl": "http://www.turboadv.com/white-rabbit-privacy-policy/",
+            "purposeIds": [
+                1,
+                2,
+                3,
+                5
+            ],
+            "legIntPurposeIds": [],
+            "featureIds": [
+                2,
+                3
+            ]
+        },
+        {
+            "id": 502,
+            "name": "NEXD",
+            "policyUrl": "https://nexd.com/privacy-policy",
+            "purposeIds": [
+                2,
+                3,
+                5
+            ],
+            "legIntPurposeIds": [
+                1
+            ],
+            "featureIds": [
+                3
+            ]
+        },
+        {
+            "id": 465,
+            "name": "Schibsted Product and Tech UK",
+            "policyUrl": "https://www.schibsted.com/",
+            "purposeIds": [
+                1,
+                2,
+                3,
+                4,
+                5
+            ],
+            "legIntPurposeIds": [],
+            "featureIds": [
+                1
+            ]
+        },
+        {
+            "id": 497,
+            "name": "Little Big Data sp.z.o.o.",
+            "policyUrl": "http://dtxngr.com/legal/",
+            "purposeIds": [
+                1,
+                2,
+                4
+            ],
+            "legIntPurposeIds": [],
+            "featureIds": [
+                1,
+                2,
+                3
+            ]
+        },
+        {
+            "id": 492,
+            "name": "LotaData, Inc.",
+            "policyUrl": "https://lotadata.com/privacy_policy",
+            "purposeIds": [],
+            "legIntPurposeIds": [
+                1,
+                5
+            ],
+            "featureIds": [
+                1
+            ]
+        },
+        {
+            "id": 508,
+            "name": "Lucid Holdings, LLC",
+            "policyUrl": "https://luc.id/gdpr",
+            "purposeIds": [
+                1,
+                2,
+                3,
+                4,
+                5
+            ],
+            "legIntPurposeIds": [],
+            "featureIds": [
+                1,
+                2,
+                3
+            ]
+        },
+        {
+            "id": 512,
+            "name": "PubNative GmbH",
+            "policyUrl": "https://pubnative.net/privacy-notice/",
+            "purposeIds": [
+                1,
+                2,
+                3,
+                4,
+                5
+            ],
+            "legIntPurposeIds": [],
+            "featureIds": [
+                3
+            ]
+        },
+        {
+            "id": 471,
+            "name": "FlexOffers.com, LLC",
+            "policyUrl": "https://www.flexoffers.com/privacy-policy/",
+            "purposeIds": [
+                1,
+                2,
+                3,
+                4,
+                5
+            ],
+            "legIntPurposeIds": [],
+            "featureIds": [
+                1,
+                2,
+                3
+            ]
+        },
+        {
+            "id": 494,
+            "name": "Cablato Limited",
+            "policyUrl": "https://cablato.com/privacy",
+            "purposeIds": [
+                1,
+                2,
+                4,
+                5
+            ],
+            "legIntPurposeIds": [],
+            "featureIds": []
+        },
+        {
+            "id": 516,
+            "name": "Pexi B.V.",
+            "policyUrl": "https://pexi.nl/privacy-policy/",
+            "purposeIds": [
+                1,
+                2,
+                3,
+                4,
+                5
+            ],
+            "legIntPurposeIds": [],
+            "featureIds": []
+        },
+        {
+            "id": 507,
+            "name": "AdsWizz Inc.",
+            "policyUrl": "https://www.adswizz.com/our-privacy-policy/",
+            "purposeIds": [],
+            "legIntPurposeIds": [
+                1,
+                2,
+                3,
+                5
+            ],
+            "featureIds": [
+                1,
+                2,
+                3
+            ]
+        },
+        {
+            "id": 482,
+            "name": "UberMedia, Inc.",
+            "policyUrl": "http://ubermedia.com/company/products-privacy-policy/#ADDITIONAL_NOTICE",
+            "purposeIds": [
+                1,
+                2,
+                3,
+                4,
+                5
+            ],
+            "legIntPurposeIds": [],
+            "featureIds": []
+        },
+        {
+            "id": 505,
+            "name": "Shopalyst Inc",
+            "policyUrl": "https://www.shortlyst.com/eu/privacy_terms.html",
+            "purposeIds": [
+                1,
+                2
+            ],
+            "legIntPurposeIds": [],
+            "featureIds": []
+        },
+        {
+            "id": 517,
+            "name": "SunMedia ",
+            "policyUrl": "https://www.sunmedia.tv/en/cookies",
+            "purposeIds": [
+                1,
+                2
+            ],
+            "legIntPurposeIds": [
+                3
+            ],
+            "featureIds": [
+                2
+            ]
+        },
+        {
+            "id": 518,
+            "name": "Accelerize Inc.",
+            "policyUrl": "https://getcake.com/privacy-policy/",
+            "purposeIds": [
+                1
+            ],
+            "legIntPurposeIds": [
+                5
+            ],
+            "featureIds": [
+                2,
+                3
+            ]
+        },
+        {
+            "id": 511,
+            "name": "Admixer EU GmbH",
+            "policyUrl": "https://admixer.net/privacy",
+            "purposeIds": [
+                1,
+                2,
+                3,
+                4,
+                5
+            ],
+            "legIntPurposeIds": [],
+            "featureIds": [
+                2,
+                3
+            ]
+        },
+        {
+            "id": 479,
+            "name": "INFINIA MOBILE S.L.",
+            "policyUrl": "http://www.infiniamobile.com/privacy_policy",
+            "purposeIds": [
+                1,
+                2,
+                3
+            ],
+            "legIntPurposeIds": [],
+            "featureIds": [
+                2,
+                3
+            ]
+        },
+        {
+            "id": 513,
+            "name": "Shopstyle",
+            "policyUrl": "https://www.shopstyle.co.uk/privacy",
+            "purposeIds": [
+                1,
+                2,
+                3,
+                4,
+                5
+            ],
+            "legIntPurposeIds": [],
+            "featureIds": [
+                1,
+                2
+            ]
+        },
+        {
+            "id": 509,
+            "name": "ATG Ad Tech Group GmbH",
+            "policyUrl": "http://advandeo.com/privacy-policy/",
+            "purposeIds": [
+                1,
+                3
+            ],
+            "legIntPurposeIds": [],
+            "featureIds": []
+        },
+        {
+            "id": 521,
+            "name": "netzeffekt GmbH",
+            "policyUrl": "https://www.netzeffekt.de/en/imprint",
+            "purposeIds": [],
+            "legIntPurposeIds": [
+                1,
+                3,
+                5
+            ],
+            "featureIds": []
+        },
+        {
+            "id": 487,
+            "name": "nugg.ad GmbH",
+            "policyUrl": "https://www.nugg.ad/en/privacy/general-information.html",
+            "purposeIds": [],
+            "legIntPurposeIds": [
+                1,
+                2,
+                3,
+                5
+            ],
+            "featureIds": [
+                1
+            ]
+        },
+        {
+            "id": 515,
+            "name": "ZighZag",
+            "policyUrl": "https://zighzag.com/privacy",
+            "purposeIds": [
+                1,
+                3
+            ],
+            "legIntPurposeIds": [
+                5
+            ],
+            "featureIds": [
+                1,
+                2
+            ]
+        },
+        {
+            "id": 520,
+            "name": "ChannelSight ",
+            "policyUrl": "https://www.channelsight.com/privacypolicy/",
+            "purposeIds": [
+                1
+            ],
+            "legIntPurposeIds": [
+                5
+            ],
+            "featureIds": []
+        },
+        {
+            "id": 524,
+            "name": "The Ozone Project Limited",
+            "policyUrl": "https://ozoneproject.com/privacy-policy",
+            "purposeIds": [
+                1,
+                2,
+                3
+            ],
+            "legIntPurposeIds": [],
+            "featureIds": [
+                2,
+                3
+            ]
+        },
+        {
+            "id": 529,
+            "name": "Fidzup",
+            "policyUrl": "https://www.fidzup.com/en/privacy/",
+            "purposeIds": [
+                1,
+                2,
+                3,
+                4,
+                5
+            ],
+            "legIntPurposeIds": [],
+            "featureIds": [
+                1,
+                2,
+                3
+            ]
+        },
+        {
+            "id": 528,
+            "name": "AppLift GmbH",
+            "policyUrl": "https://www.applift.com/privacy-notice",
+            "purposeIds": [
+                1,
+                2,
+                3,
+                5
+            ],
+            "legIntPurposeIds": [],
+            "featureIds": []
+        },
+        {
+            "id": 527,
+            "name": "Jampp LTD",
+            "policyUrl": "https://jampp.com/privacy-policy/",
+            "purposeIds": [
+                1,
+                2,
+                3,
+                4,
+                5
+            ],
+            "legIntPurposeIds": [],
+            "featureIds": [
+                3
+            ]
+        },
+        {
+            "id": 506,
+            "name": "salesforce.com, inc.",
+            "policyUrl": "www.salesforce.com/company/privacy/",
+            "purposeIds": [
+                1,
+                2,
+                3
+            ],
+            "legIntPurposeIds": [],
+            "featureIds": [
+                2
+            ]
+        },
+        {
+            "id": 534,
+            "name": "SmartyAds Inc.",
+            "policyUrl": "https://smartyads.com/privacy-policy",
+            "purposeIds": [
+                1,
+                3,
+                4,
+                5
+            ],
+            "legIntPurposeIds": [],
+            "featureIds": [
+                2,
+                3
+            ]
         }
     ]
-}
+};
