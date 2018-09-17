@@ -5,10 +5,10 @@ import { testCanBeRun as testCanBeRun_ } from 'common/modules/experiments/test-c
 import { getParticipations as getParticipations_ } from 'common/modules/experiments/utils';
 import {
     getBreakpointKey,
-    isExcludedGeolocation,
     shouldIncludeAdYouLike,
     shouldIncludeAppNexus,
     shouldIncludeOpenx,
+    shouldIncludeOzone,
     shouldIncludeTrustX,
     stripMobileSuffix,
     stripTrailingNumbersAbove1,
@@ -18,6 +18,8 @@ const getSync: any = getSync_;
 const getBreakpoint: any = getBreakpoint_;
 const testCanBeRun: any = testCanBeRun_;
 const getParticipations: any = getParticipations_;
+
+jest.mock('lodash/functions/once', () => a => a);
 
 jest.mock('lib/geolocation', () => ({
     getSync: jest.fn(() => 'GB'),
@@ -50,6 +52,11 @@ describe('Utils', () => {
         expect(shouldIncludeAppNexus()).toBe(true);
     });
 
+    test('shouldIncludeAppNexus should return true if geolocation is NZ', () => {
+        getSync.mockReturnValueOnce('NZ');
+        expect(shouldIncludeAppNexus()).toBe(true);
+    });
+
     test('shouldIncludeAppNexus should otherwise return false', () => {
         const testGeos = ['FK', 'GI', 'GG', 'IM', 'JE', 'SH', 'CA', 'US'];
         for (let i = 0; i < testGeos.length; i += 1) {
@@ -74,7 +81,7 @@ describe('Utils', () => {
     test('shouldIncludeOpenx should return false if within AU/US region', () => {
         const testGeos = ['NZ', 'CA', 'US', 'AU'];
         for (let i = 0; i < testGeos.length; i += 1) {
-            getSync.mockReturnValueOnce(testGeos[i]);
+            getSync.mockReturnValue(testGeos[i]);
             expect(shouldIncludeOpenx()).toBe(false);
         }
     });
@@ -85,23 +92,26 @@ describe('Utils', () => {
     });
 
     test('shouldIncludeTrustX should otherwise return false', () => {
-        const testGeos = ['FK', 'GI', 'GG', 'IM', 'JE', 'SH', 'CA', 'AU'];
+        const testGeos = ['FK', 'GI', 'GG', 'IM', 'JE', 'SH', 'AU'];
         for (let i = 0; i < testGeos.length; i += 1) {
             getSync.mockReturnValueOnce(testGeos[i]);
             expect(shouldIncludeTrustX()).toBe(false);
         }
     });
 
-    test('isExcludedGeolocation should return true for excluded geolocations', () => {
+    test('shouldIncludeOzone should return false for excluded geolocations', () => {
         const excludedGeos = ['US', 'CA', 'NZ', 'AU'];
         for (let i = 0; i < excludedGeos.length; i += 1) {
             getSync.mockReturnValueOnce(excludedGeos[i]);
-            expect(isExcludedGeolocation()).toBe(true);
+            expect(shouldIncludeOzone()).toBe(false);
         }
     });
 
-    test('isExcludedGeolocation should otherwise return false', () => {
-        expect(isExcludedGeolocation()).toBe(false);
+    test('shouldIncludeOzone should otherwise return true if fate decrees', () => {
+        const mockMath = Object.create(global.Math);
+        mockMath.random = () => 0;
+        global.Math = mockMath;
+        expect(shouldIncludeOzone()).toBe(true);
     });
 
     test('stripMobileSuffix', () => {
