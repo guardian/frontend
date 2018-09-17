@@ -162,7 +162,7 @@ export const PodcastContainer = {
             id: 'a',
             test: runContainerTest('a'),
             impression: trackImpression('podcast-container-a__main'),
-            success: trackClick('podcast-container__track'),
+            success: trackClick('podcast-container-a__main'),
         },
         {
             id: 'b',
