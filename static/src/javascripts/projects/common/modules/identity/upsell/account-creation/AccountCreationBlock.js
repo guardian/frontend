@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'preact-compat';
-import { AccountCreationFormFields } from './AccountCreationFormFields';
+import { AccountCreationForm } from './AccountCreationForm';
 import { AccountActionableBenefits, AccountBenefits } from './AccountBenefits';
 import { Block } from '../block/Block';
 
@@ -28,7 +28,7 @@ class AccountCreationBlock extends Component<
                 withGrid
                 title="Want more from The Guardian?"
                 subtitle="Create your account now to manage your preferences and explore your free benefits.">
-                <AccountCreationFormFields
+                <AccountCreationForm
                     {...this.props}
                     onAccountCreated={this.onAccountCreated}
                 />

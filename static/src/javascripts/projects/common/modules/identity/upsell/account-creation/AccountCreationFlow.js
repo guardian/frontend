@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'preact-compat';
 import { AccountCreationFeatures } from './AccountCreationFeatures';
-import { AccountCreationFormFields } from './AccountCreationFormFields';
+import { AccountCreationForm } from './AccountCreationForm';
 import { AccountBenefits } from './AccountBenefits';
 
 type AccountCreationFlowProps = {
@@ -38,7 +38,7 @@ class AccountCreationFlow extends Component<
                         </p>
                     </h1>
                     <div>
-                        <AccountCreationFormFields
+                        <AccountCreationForm
                             {...this.props}
                             onAccountCreated={this.onAccountCreated}
                         />

@@ -4,15 +4,15 @@ import reqwest from 'reqwest';
 import ophan from 'ophan/ng';
 import reportError from 'lib/report-error';
 
-type AccountCreationFormFieldsProps = {
+type AccountCreationFormProps = {
     csrfToken: string,
     accountToken: string,
     email: string,
     onAccountCreated: () => {},
 };
 
-class AccountCreationFormFields extends Component<
-    AccountCreationFormFieldsProps,
+class AccountCreationForm extends Component<
+    AccountCreationFormProps,
     {
         password?: string,
         isLoading?: boolean,
@@ -150,5 +150,5 @@ class AccountCreationFormFields extends Component<
     }
 }
 
-export type { AccountCreationFormFieldsProps };
-export { AccountCreationFormFields };
+export type { AccountCreationFormProps };
+export { AccountCreationForm };
