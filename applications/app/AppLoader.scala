@@ -4,6 +4,7 @@ import assets.DiscussionExternalAssetsLifecycle
 import com.softwaremill.macwire._
 import common.dfp.DfpAgentLifecycle
 import common.{ApplicationMetrics, CloudWatchMetricsLifecycle, ContentApiMetrics, EmailSubsciptionMetrics}
+import _root_.commercial.targeting.TargetingLifecycle
 import common.Logback.{LogbackOperationsPool, LogstashLifecycle}
 import common.commercial.OrielCacheLifecycle
 import conf.CachedHealthCheckLifeCycle
@@ -62,6 +63,7 @@ trait AppComponents extends FrontendComponents with ApplicationsControllers with
     wire[SwitchboardLifecycle],
     wire[SiteMapLifecycle],
     wire[CachedHealthCheckLifeCycle],
+    wire[TargetingLifecycle],
     wire[DiscussionExternalAssetsLifecycle],
     wire[SkimLinksCacheLifeCycle],
     wire[OrielCacheLifecycle]
