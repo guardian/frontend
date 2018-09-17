@@ -18,11 +18,11 @@ import containerWaveCLarge from 'svgs/journalism/podcast-container/waveform-c.sv
 import containerWaveCTablet from 'svgs/journalism/podcast-container/waveform-c-tablet.svg';
 import containerWaveCMobile from 'svgs/journalism/podcast-container/waveform-c-mobile.svg';
 
-const headline = 'Denialism: what drives people to reject the truth';
+const headline = 'How to be human: the man who was raised by wolves';
 const standfirst =
-    'From vaccines to climate change to genocide, a new age of denialism is upon us. Why have we failed to understand it?';
+    'Abandoned as a child, Marcos Rodríguez Pantoja survived alone in the wild for 15 years. But living with people proved to be even more difficult';
 const episodeUrl =
-    '/news/audio/2018/sep/03/denialism-what-drives-people-to-reject-the-truth-podcast';
+    '/news/audio/2018/sep/10/how-to-be-human-the-man-who-was-raised-by-wolves-podcast';
 const seriesUrl = '/news/series/the-audio-long-read';
 const urlWithCampaign = (url: string, variant: string) =>
     `${url}?CMP=podcast-container-${variant}`;
@@ -140,8 +140,8 @@ const trackImpression = (name: string) => (track: () => void): void => {
 
 export const PodcastContainer = {
     id: 'PodcastContainer',
-    start: '2018-08-21',
-    expiry: '2018-09-23',
+    start: '2018-09-17',
+    expiry: '2018-10-17',
     author: 'Tom Forbes',
     description: 'Test designs for a /uk podcasts container',
     audience: 1,
