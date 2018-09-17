@@ -105,16 +105,15 @@ object Video700 extends VideoProfile(width = Some(700), height = Some(394)) // 1
 object Video1280 extends VideoProfile(width = Some(1280), height = Some(720)) // 16:9
 object GoogleStructuredData extends Profile(width = Some(300), height = Some(300)) // 1:1
 
-class ShareImage(blendImageParam: String, shouldIncludeOverlay: Boolean) extends Profile(width = Some(1200)) {
+class ShareImage(overlayUrlParam: String, shouldIncludeOverlay: Boolean) extends Profile(width = Some(1200)) {
   override val heightParam = "height=630"
   override val fitParam = "fit=crop"
-  val cropParam = "crop=faces%2Centropy"
-  val blendModeParam = "bm=normal"
-  val blendOffsetParam = "ba=bottom%2Cleft"
+  val overlayAlignParam = "overlay-align=bottom%2Cleft"
+  val overlayWidthParam = "overlay-width=100p"
 
   override def resizeString: String = {
     if(shouldIncludeOverlay) {
-      val params = Seq(widthParam, heightParam, qualityparam, autoParam, fitParam, dprParam, cropParam, blendModeParam, blendOffsetParam, blendImageParam).filter(_.nonEmpty).mkString("&")
+      val params = Seq(widthParam, heightParam, qualityparam, autoParam, fitParam, dprParam, overlayAlignParam, overlayWidthParam, overlayUrlParam).filter(_.nonEmpty).mkString("&")
       s"?$params"
     } else {
       super.resizeString
@@ -124,71 +123,71 @@ class ShareImage(blendImageParam: String, shouldIncludeOverlay: Boolean) extends
 
 trait OverlayBase64 {
   def overlayUrlBase64(overlay: String): String =
-    Base64.getUrlEncoder.encodeToString(Static(s"images/overlays/$overlay").getBytes).replace("=", "")
+    Base64.getUrlEncoder.encodeToString(s"img/static/overlays/$overlay".getBytes).replace("=", "")
 }
 
 object TwitterImage extends OverlayBase64 {
-    val default = new ShareImage(s"blend64=${overlayUrlBase64("tg-default.png")}", TwitterShareImageLogoOverlay.isSwitchedOn)
-    val opinions = new ShareImage(s"blend64=${overlayUrlBase64("tg-opinions.png")}", TwitterShareImageLogoOverlay.isSwitchedOn)
-    val live = new ShareImage(s"blend64=${overlayUrlBase64("tg-live.png")}", TwitterShareImageLogoOverlay.isSwitchedOn)
-    def starRating(rating: Int) = {
+    val default = new ShareImage(s"overlay-base64=${overlayUrlBase64("tg-default.png")}", TwitterShareImageLogoOverlay.isSwitchedOn)
+    val opinions = new ShareImage(s"overlay-base64=${overlayUrlBase64("tg-opinions.png")}", TwitterShareImageLogoOverlay.isSwitchedOn)
+    val live = new ShareImage(s"overlay-base64=${overlayUrlBase64("tg-live.png")}", TwitterShareImageLogoOverlay.isSwitchedOn)
+    def starRating(rating: Int): ShareImage = {
         val image = rating match {
-            case 0 => s"blend64=${overlayUrlBase64("tg-review-0.png")}"
-            case 1 => s"blend64=${overlayUrlBase64("tg-review-1.png")}"
-            case 2 => s"blend64=${overlayUrlBase64("tg-review-2.png")}"
-            case 3 => s"blend64=${overlayUrlBase64("tg-review-3.png")}"
-            case 4 => s"blend64=${overlayUrlBase64("tg-review-4.png")}"
-            case 5 => s"blend64=${overlayUrlBase64("tg-review-5.png")}"
-            case _ => s"blend64=${overlayUrlBase64("tg-default.png")}"
+            case 0 => s"overlay-base64=${overlayUrlBase64("tg-review-0.png")}"
+            case 1 => s"overlay-base64=${overlayUrlBase64("tg-review-1.png")}"
+            case 2 => s"overlay-base64=${overlayUrlBase64("tg-review-2.png")}"
+            case 3 => s"overlay-base64=${overlayUrlBase64("tg-review-3.png")}"
+            case 4 => s"overlay-base64=${overlayUrlBase64("tg-review-4.png")}"
+            case 5 => s"overlay-base64=${overlayUrlBase64("tg-review-5.png")}"
+            case _ => s"overlay-base64=${overlayUrlBase64("tg-default.png")}"
         }
         new ShareImage(image, TwitterShareImageLogoOverlay.isSwitchedOn)
     }
-    def starRatingObserver(rating: Int) = {
+    def starRatingObserver(rating: Int): ShareImage = {
         val image = rating match {
-            case 0 => s"blend64=${overlayUrlBase64("to-review-0.png")}"
-            case 1 => s"blend64=${overlayUrlBase64("to-review-1.png")}"
-            case 2 => s"blend64=${overlayUrlBase64("to-review-2.png")}"
-            case 3 => s"blend64=${overlayUrlBase64("to-review-3.png")}"
-            case 4 => s"blend64=${overlayUrlBase64("to-review-4.png")}"
-            case 5 => s"blend64=${overlayUrlBase64("to-review-5.png")}"
-            case _ => s"blend64=${overlayUrlBase64("to-default.png")}"
+            case 0 => s"overlay-base64=${overlayUrlBase64("to-review-0.png")}"
+            case 1 => s"overlay-base64=${overlayUrlBase64("to-review-1.png")}"
+            case 2 => s"overlay-base64=${overlayUrlBase64("to-review-2.png")}"
+            case 3 => s"overlay-base64=${overlayUrlBase64("to-review-3.png")}"
+            case 4 => s"overlay-base64=${overlayUrlBase64("to-review-4.png")}"
+            case 5 => s"overlay-base64=${overlayUrlBase64("to-review-5.png")}"
+            case _ => s"overlay-base64=${overlayUrlBase64("to-default.png")}"
         }
         new ShareImage(image, TwitterShareImageLogoOverlay.isSwitchedOn)
     }
-    val defaultObserver = new ShareImage(s"blend64=${overlayUrlBase64("to-default.png")}", TwitterShareImageLogoOverlay.isSwitchedOn)
-    val opinionsObserver = new ShareImage(s"blend64=${overlayUrlBase64("to-opinions.png")}", TwitterShareImageLogoOverlay.isSwitchedOn)
+    val defaultObserver = new ShareImage(s"overlay-base64=${overlayUrlBase64("to-default.png")}", TwitterShareImageLogoOverlay.isSwitchedOn)
+    val opinionsObserver = new ShareImage(s"overlay-base64=${overlayUrlBase64("to-opinions.png")}", TwitterShareImageLogoOverlay.isSwitchedOn)
 }
 
 object FacebookOpenGraphImage extends OverlayBase64 {
-    val default = new ShareImage(s"blend64=${overlayUrlBase64("tg-default.png")}", FacebookShareImageLogoOverlay.isSwitchedOn)
-    val opinions = new ShareImage(s"blend64=${overlayUrlBase64("tg-opinions.png")}", FacebookShareImageLogoOverlay.isSwitchedOn)
-    val live = new ShareImage(s"blend64=${overlayUrlBase64("tg-live.png")}", FacebookShareImageLogoOverlay.isSwitchedOn)
-    def starRating(rating: Int) = {
+    val default = new ShareImage(s"overlay-base64=${overlayUrlBase64("tg-default.png")}", FacebookShareImageLogoOverlay.isSwitchedOn)
+    val opinions = new ShareImage(s"overlay-base64=${overlayUrlBase64("tg-opinions.png")}", FacebookShareImageLogoOverlay.isSwitchedOn)
+    val live = new ShareImage(s"overlay-base64=${overlayUrlBase64("tg-live.png")}", FacebookShareImageLogoOverlay.isSwitchedOn)
+    def starRating(rating: Int): ShareImage = {
         val image = rating match {
-            case 0 => s"blend64=${overlayUrlBase64("tg-review-0.png")}"
-            case 1 => s"blend64=${overlayUrlBase64("tg-review-1.png")}"
-            case 2 => s"blend64=${overlayUrlBase64("tg-review-2.png")}"
-            case 3 => s"blend64=${overlayUrlBase64("tg-review-3.png")}"
-            case 4 => s"blend64=${overlayUrlBase64("tg-review-4.png")}"
-            case 5 => s"blend64=${overlayUrlBase64("tg-review-5.png")}"
-            case _ => s"blend64=${overlayUrlBase64("tg-default.png")}"
+            case 0 => s"overlay-base64=${overlayUrlBase64("tg-review-0.png")}"
+            case 1 => s"overlay-base64=${overlayUrlBase64("tg-review-1.png")}"
+            case 2 => s"overlay-base64=${overlayUrlBase64("tg-review-2.png")}"
+            case 3 => s"overlay-base64=${overlayUrlBase64("tg-review-3.png")}"
+            case 4 => s"overlay-base64=${overlayUrlBase64("tg-review-4.png")}"
+            case 5 => s"overlay-base64=${overlayUrlBase64("tg-review-5.png")}"
+            case _ => s"overlay-base64=${overlayUrlBase64("tg-default.png")}"
         }
         new ShareImage(image, FacebookShareImageLogoOverlay.isSwitchedOn)
     }
-    def starRatingObserver(rating: Int) = {
+    def starRatingObserver(rating: Int): ShareImage = {
         val image = rating match {
-            case 0 => s"blend64=${overlayUrlBase64("to-review-0.png")}"
-            case 1 => s"blend64=${overlayUrlBase64("to-review-1.png")}"
-            case 2 => s"blend64=${overlayUrlBase64("to-review-2.png")}"
-            case 3 => s"blend64=${overlayUrlBase64("to-review-3.png")}"
-            case 4 => s"blend64=${overlayUrlBase64("to-review-4.png")}"
-            case 5 => s"blend64=${overlayUrlBase64("to-review-5.png")}"
-            case _ => s"blend64=${overlayUrlBase64("to-default.png")}"
+            case 0 => s"overlay-base64=${overlayUrlBase64("to-review-0.png")}"
+            case 1 => s"overlay-base64=${overlayUrlBase64("to-review-1.png")}"
+            case 2 => s"overlay-base64=${overlayUrlBase64("to-review-2.png")}"
+            case 3 => s"overlay-base64=${overlayUrlBase64("to-review-3.png")}"
+            case 4 => s"overlay-base64=${overlayUrlBase64("to-review-4.png")}"
+            case 5 => s"overlay-base64=${overlayUrlBase64("to-review-5.png")}"
+            case _ => s"overlay-base64=${overlayUrlBase64("to-default.png")}"
         }
         new ShareImage(image, FacebookShareImageLogoOverlay.isSwitchedOn)
     }
-    val defaultObserver = new ShareImage(s"blend64=${overlayUrlBase64("to-default.png")}", FacebookShareImageLogoOverlay.isSwitchedOn)
-    val opinionsObserver = new ShareImage(s"blend64=${overlayUrlBase64("to-opinions.png")}", FacebookShareImageLogoOverlay.isSwitchedOn)
+    val defaultObserver = new ShareImage(s"overlay-base64=${overlayUrlBase64("to-default.png")}", FacebookShareImageLogoOverlay.isSwitchedOn)
+    val opinionsObserver = new ShareImage(s"overlay-base64=${overlayUrlBase64("to-opinions.png")}", FacebookShareImageLogoOverlay.isSwitchedOn)
 }
 
 object EmailImage extends Profile(width = Some(580), autoFormat = false) {
@@ -198,12 +197,11 @@ object EmailImage extends Profile(width = Some(580), autoFormat = false) {
 
 object EmailVideoImage extends Profile(width = Some(580), autoFormat = false) with OverlayBase64 {
   override val qualityparam = "quality=60"
-  val blendModeParam = "bm=normal"
-  val blendOffsetParam = "ba=center"
-  val blendImageParam = s"blend64=${overlayUrlBase64("play.png")}"
+  val overlayAlignParam = "overlay-align=center"
+  val overlayUrlParam = s"overlay-base64=${overlayUrlBase64("play.png")}"
 
   override def resizeString: String = {
-    val params = Seq(widthParam, heightParam, qualityparam, autoParam, dprParam, blendModeParam, blendOffsetParam, blendImageParam).filter(_.nonEmpty).mkString("&")
+    val params = Seq(widthParam, heightParam, qualityparam, autoParam, dprParam, overlayAlignParam, overlayUrlParam).filter(_.nonEmpty).mkString("&")
     s"?$params"
   }
 }
