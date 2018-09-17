@@ -54,7 +54,6 @@ const timeInDaysFromNow = (daysFromNow: number): string => {
 };
 
 const persistResponse = (JsonResponse: () => void) => {
-    const switches = config.switches;
     addCookie(USER_FEATURES_EXPIRY_COOKIE, timeInDaysFromNow(1));
     addCookie(PAYING_MEMBER_COOKIE, JsonResponse.contentAccess.paidMember);
     addCookie(
@@ -71,20 +70,17 @@ const persistResponse = (JsonResponse: () => void) => {
         addCookie(ACTION_REQUIRED_FOR_COOKIE, JsonResponse.alertAvailableFor);
     }
 
-    if (switches.adFreeEmergencyShutdown) {
+    if (
+        adFreeDataIsPresent() &&
+        !JsonResponse.adFree &&
+        !forcedAdFreeMode &&
+        !JsonResponse.contentAccess.digitalPack
+    ) {
         removeCookie(AD_FREE_USER_COOKIE);
-    } else {
-        if (
-            adFreeDataIsPresent() &&
-            !JsonResponse.adFree &&
-            !forcedAdFreeMode &&
-            !JsonResponse.contentAccess.digitalPack
-        ) {
-            removeCookie(AD_FREE_USER_COOKIE);
-        }
-        if (JsonResponse.adFree || JsonResponse.contentAccess.digitalPack) {
-            addCookie(AD_FREE_USER_COOKIE, timeInDaysFromNow(2));
-        }
+    }
+
+    if (JsonResponse.adFree || JsonResponse.contentAccess.digitalPack) {
+        addCookie(AD_FREE_USER_COOKIE, timeInDaysFromNow(2));
     }
 };
 
@@ -226,8 +222,7 @@ const shouldSeeReaderRevenue = (): boolean =>
     !isDigitalSubscriber();
 
 const isAdFreeUser = (): boolean =>
-    !config.switches.adFreeEmergencyShutdown &&
-    (isDigitalSubscriber() || (adFreeDataIsPresent() && !adFreeDataIsOld()));
+    isDigitalSubscriber() || (adFreeDataIsPresent() && !adFreeDataIsOld());
 
 export {
     accountDataUpdateWarning,

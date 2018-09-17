@@ -203,11 +203,6 @@ const bootStandard = (): void => {
     // Set adtest query if url param declares it
     setAdTestCookie();
 
-    // If we flip the kill switch over ad-free, immediately remove the cookie
-    if (config.get('switches.adFreeEmergencyShutdown')) {
-        removeCookie('GU_AF1');
-    }
-
     // set a short-lived cookie to trigger server-side ad-freeness
     // if the user is genuinely ad-free, this one will be overwritten
     // in user-features
