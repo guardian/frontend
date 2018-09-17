@@ -1,5 +1,5 @@
 #podcast .fc-container__inner {
-    border-top: none;
+    border-top: 0;
 }
 
 .podcast-container-c {
@@ -186,7 +186,7 @@
 .podcast-container-c__episode-kicker,
 .podcast-container-c__episode-headline,
 .podcast-container-c__episode-waveform {
-    @include mq($from:tablet) {
+    @include mq($from: tablet) {
         border-left: solid 1px #777777;
     }
 }
