@@ -65,20 +65,26 @@ const bindAccountCreation = (el): void => {
 };
 
 const bindBlockList = (el): void => {
-    fastdom.write(() => {
-        render(
-            <div>
-                {ConfirmEmailThankYou}
-                {Optouts}
-                <AccountCreationBlock
-                    csrfToken="test"
-                    accountToken="test"
-                    email="test@test"
-                />
-            </div>,
-            el
+    fastdom
+        .read(() => {
+            const jsonEl: HTMLScriptElement = el.querySelector(
+                'script[data-for-prefill]'
+            );
+            if (!jsonEl) throw new Error('Missing prefill');
+            return JSON.parse(jsonEl.innerText || '');
+        })
+        .then(prefill =>
+            fastdom.write(() => {
+                render(
+                    <div>
+                        {ConfirmEmailThankYou}
+                        {Optouts}
+                        <AccountCreationBlock {...prefill} />
+                    </div>,
+                    el
+                );
+            })
         );
-    });
 };
 
 const enhanceUpsell = (): void => {

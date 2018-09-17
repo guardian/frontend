@@ -4,11 +4,15 @@
 @import services.IdentityRequest
 @import services.IdentityUrlBuilder
 @import model.ApplicationContext
+@import play.api.libs.json.Json
+
+@import org.json4s.JsonAST.JNull
 @(
     pageVariant: UpsellPage,
     identityRequest: IdentityRequest,
     identityUrlBuilder: IdentityUrlBuilder,
-    returnUrl: String
+    returnUrl: String,
+    email: String
 )(implicit requestHeader: RequestHeader, applicationContext: ApplicationContext)
 
 @noJsBehaviour = @{
@@ -18,6 +22,18 @@
         )
     }
 }
+
+@prefill = @{
+    Json.toJson(Map(
+        "csrfToken" -> play.filters.csrf.CSRF.getToken.map(_.value),
+        "accountToken" -> requestHeader.cookies.get("SC_GU_GUEST_PW_SET").map(_.value),
+        "email" -> Option(email)
+    ).collect{
+        case (name, Some(value)) => name -> value
+    }
+    ).toString()
+}
+
 <div class="identity-upsell-subheader">
     <div class="identity-wrapper identity-wrapper--wide monocolumn-wrapper">
         <header class="identity-upsell-title identity-upsell-title--hero">
@@ -32,6 +48,9 @@
 </div>
 <div class="identity-wrapper identity-wrapper--wide monocolumn-wrapper">
     <div class="js-identity-block-list" data-page-variant="@{pageVariant.jsName}">
+        <script type="text/json" data-for-prefill="true">
+            @Html(prefill)
+        </script>
         @noJsBehaviour
     </div>
 </div>
