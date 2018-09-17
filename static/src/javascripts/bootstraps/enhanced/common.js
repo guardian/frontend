@@ -118,7 +118,6 @@ const cleanupCookies = (): void => {
         'GU_ALPHA',
         'GU_ME',
         'at',
-        'gu_adfree_user',
         'gu_join_date',
     ]);
 };

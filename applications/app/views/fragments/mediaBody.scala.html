@@ -1,6 +1,7 @@
 @(page: MediaPage, displayCaption: Boolean)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @import common.LinkTo
+@import conf.switches.Switches.SurveySwitch
 @import model.{Audio, AudioPlayer, Video, VideoPlayer}
 @import views.support.Commercial.{isPaidContent, isAdFree}
 @import views.support.TrailCssClasses.toneClass
@@ -19,6 +20,10 @@
                 "content", "content--media", s"content--pillar-${media.metadata.pillar.nameOrDefault}", s"content--media--$mediaType", "tonal", "tonal--tone-media", s"tonal--${toneClass(media)}"
             )"
             itemscope itemtype="@media.metadata.schemaType" role="main">
+
+                @if(!page.metadata.isFront && SurveySwitch.isSwitchedOn) {
+                    @fragments.commercial.survey()
+                }
 
                 @if(isPaidContent) {
                     @fragments.guBand()

@@ -8,6 +8,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-commercial-cmp-customise",
+    "change the location and format of your CMP data",
+    owners = Seq(Owner.withGithub("katebee")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 9, 30),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-contributions-epic-ask-four-earning",
     "This places the epic on all articles for all users, with a limit of 4 impressions in any given 30 days",
     owners = Seq(Owner.withGithub("jranks123")),
@@ -208,11 +218,21 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-commercial-cmp-customise",
-    "change the location and format of your CMP data",
-    owners = Seq(Owner.withGithub("katebee")),
+    "ab-acquisitions-epic-google-doc-vs-hardcoded",
+    "Tests an epic which gets its copy from a Google Doc against one whose copy is hardcoded",
+    owners = Seq(Owner.withGithub("joelochlann")),
     safeState = Off,
-    sellByDate = new LocalDate(2019, 9, 30),
+    sellByDate = new LocalDate(2019, 6, 6),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-aus-fairfax",
+    "Tests an epic with custom copy in Australia which alludes to Fairfax Media takeover",
+    owners = Seq(Owner.withGithub("joelochlann")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 6, 6),
     exposeClientSide = true
   )
 }

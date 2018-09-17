@@ -1,0 +1,29 @@
+%identity-upsell-account-creation-bullets {
+    @include fs-headlineGarnett(0);
+    list-style: none;
+    margin-bottom: $gs-baseline;
+    margin-top: $gs-baseline / 3;
+    li {
+        @include clearfix;
+        position: relative;
+        margin-bottom: $gs-baseline;
+        &:before {
+            position: absolute;
+            content: '•';
+            color: $green-dark;
+            width: 1em;
+            margin-left: -$gs-gutter;
+        }
+    }
+}
+
+.identity-upsell-account-creation-bullets {
+    @extend %identity-upsell-account-creation-bullets;
+}
+
+.identity-upsell-account-creation-superbullets {
+    @extend %identity-upsell-account-creation-bullets;
+    li {
+        margin-bottom: $gs-baseline * 2;
+    }
+}

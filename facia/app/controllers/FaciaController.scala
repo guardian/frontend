@@ -3,7 +3,7 @@ package controllers
 import common._
 import controllers.front._
 import layout.{CollectionEssentials, ContentCard, FaciaCard, FaciaCardAndIndex, FaciaContainer, Front}
-import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
+import model.Cached.{CacheableResult, RevalidatableResult, WithoutRevalidationResult}
 import model._
 import model.facia.PressedCollection
 import model.pressed.{CollectionConfig, PressedContent}
@@ -83,6 +83,17 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
 
   def rootEditionRedirect(): Action[AnyContent] = renderFront(path = "")
 
+  def renderFrontHeadline(path: String): Action[AnyContent] = Action.async { implicit request =>
+    def notFound() = {
+      log.warn(s"headline not found for $path")
+      FrontHeadline.headlineNotFound
+    }
+
+    frontJsonFapi.get(path, liteRequestType)
+      .map(_.fold[CacheableResult](notFound())(FrontHeadline.renderEmailHeadline))
+      .map(Cached(CacheTime.Facia))
+  }
+
   def renderFront(path: String): Action[AnyContent] = Action.async { implicit request =>
     log.info(s"Serving Path: $path")
     if (shouldEditionRedirect(path))
@@ -110,8 +121,18 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
   }
 
   private[controllers] def renderFrontPressResult(path: String)(implicit request: RequestHeader) = {
-    val futureResult = frontJsonFapi.get(path, liteRequestType).flatMap {
-      case Some(faciaPage) =>
+    val futureFaciaPage: Future[Option[PressedPage]] = frontJsonFapi.get(path, liteRequestType).flatMap {
+        case Some(faciaPage: PressedPage) =>
+          if(faciaPage.collections.isEmpty && liteRequestType == LiteAdFreeType) {
+            log.info(s"Nothing in the collection for ${faciaPage.id} so making a LiteType request.")
+            frontJsonFapi.get(path, LiteType)
+          }
+          else Future.successful(Some(faciaPage))
+        case None => Future.successful(None)
+    }
+
+    val futureResult = futureFaciaPage.flatMap {
+      case Some(faciaPage: PressedPage) =>
         successful(Cached(CacheTime.Facia)(
           if (request.isRss) {
             val body = TrailsToRss.fromPressedPage(faciaPage)
@@ -133,8 +154,8 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
   }
 
   private def renderEmail(faciaPage: PressedPage)(implicit request: RequestHeader) = {
-    if (request.isEmailHeadlineText) {
-      renderEmailHeadline(faciaPage)
+    if (request.isHeadlineText) {
+      FrontHeadline.renderEmailHeadline(faciaPage)
     } else {
       renderEmailFront(faciaPage)
     }
@@ -150,15 +171,6 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
     } else {
       RevalidatableResult.Ok(htmResponseInlined)
     }
-  }
-
-  private def renderEmailHeadline(faciaPage: PressedPage) = {
-    val webTitle = for {
-      topCollection <- faciaPage.collections.headOption
-      topCurated <- topCollection.curatedPlusBackfillDeduplicated.headOption
-    } yield RevalidatableResult.Ok(topCurated.properties.webTitle)
-
-    webTitle.getOrElse(WithoutRevalidationResult(NotFound("Could not extract headline from front")))
   }
 
   def renderFrontPress(path: String): Action[AnyContent] = Action.async { implicit request => renderFrontPressResult(path) }

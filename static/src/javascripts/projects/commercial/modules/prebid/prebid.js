@@ -29,10 +29,11 @@ const consentManagement = {
 };
 
 const userSync = {
-    syncsPerBidder: 0, // allow all syncs
+    // syncsPerBidder: 0, // allow all syncs - bug https://github.com/prebid/Prebid.js/issues/2781
+    syncsPerBidder: 999, // temporarily until above bug fixed
     filterSettings: {
-        iframe: {
-            bidders: ['sonobi'],
+        all: {
+            bidders: '*', // allow all bidders to sync by iframe or image beacons
             filter: 'include',
         },
     },
@@ -196,6 +197,7 @@ class PrebidService {
                                 const bidResponses = window.pbjs.getBidResponses()[
                                     advert.id
                                 ];
+
                                 const cpm: number = getHighestCpm(
                                     (bidResponses && bidResponses.bids) || []
                                 );

@@ -1,0 +1,38 @@
+@import controllers.UpsellPages.UpsellPage
+
+@import controllers.UpsellPages.ConfirmEmailThankYou
+@import services.IdentityRequest
+@import services.IdentityUrlBuilder
+@import model.ApplicationContext
+@(
+    pageVariant: UpsellPage,
+    identityRequest: IdentityRequest,
+    identityUrlBuilder: IdentityUrlBuilder,
+    returnUrl: String
+)(implicit requestHeader: RequestHeader, applicationContext: ApplicationContext)
+
+@noJsBehaviour = @{
+    pageVariant match {
+        case ConfirmEmailThankYou => views.html.emailVerified(
+            ValidationState.validated, identityRequest, identityUrlBuilder, userIsLoggedIn = true, returnUrl
+        )
+    }
+}
+<div class="identity-upsell-subheader">
+    <div class="identity-wrapper identity-wrapper--wide monocolumn-wrapper">
+        <header class="identity-upsell-title identity-upsell-title--hero">
+            <h1 class="identity-upsell-title__title">
+                Thank you! 
+            </h1>
+            <h1 class="identity-upsell-title__subtitle">
+                You’re now subscribed to your content
+            </h1>
+        </header>
+    </div>
+</div>
+<div class="identity-wrapper identity-wrapper--wide monocolumn-wrapper">
+    <div class="js-identity-block-list" data-page-variant="@{pageVariant.jsName}">
+        @noJsBehaviour
+    </div>
+</div>
+

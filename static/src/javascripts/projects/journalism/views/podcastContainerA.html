@@ -1,0 +1,31 @@
+<div class="fc-slice-wrapper podcast-container-a__main">
+    <div class="fc-item fc-item--pillar-news">
+        <div class="fc-item__container">
+            <div class="fc-item__content">
+                <div class="podcast-container-a__logo">
+                    <img src="https://uploads.guim.co.uk/2018/09/17/wolf.png"/>
+                </div>
+                <div class="fc-item__header">
+                    <h2 class="fc-item__title">
+                        <a href="<%= url %>" class="fc-item__link podcast-container__track" data-link-name="article">
+                            <div class="fc-item__kicker">Podcast</div>
+                            <div class="u-faux-block-link__cta fc-item__headline">
+                                <span class="js-headline-text"><%= headline %></span>
+                            </div>
+                        </a>
+                    </h2>
+                    <div class="podcast-container-a__player">
+                        <%= button %>
+                        <%= waveLarge %>
+                        <%= waveTablet %>
+                        <%= waveMobile %>
+                        <%= waveTiny %>
+                    </div>
+                </div>
+                <a class="u-faux-block-link__overlay js-headline-text" href="<%= url %>" data-link-name="article" tabindex="-1" aria-hidden="true">
+                    <%= headline %>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

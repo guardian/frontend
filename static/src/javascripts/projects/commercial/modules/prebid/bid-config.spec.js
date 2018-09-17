@@ -18,9 +18,10 @@ import {
     containsMpu as containsMpu_,
     containsMpuOrDmpu as containsMpuOrDmpu_,
     getBreakpointKey as getBreakpointKey_,
-    getRandomIntInclusive as getRandomIntInclusive_,
     shouldIncludeAdYouLike as shouldIncludeAdYouLike_,
     shouldIncludeAppNexus as shouldIncludeAppNexus_,
+    shouldIncludeOpenx as shouldIncludeOpenx_,
+    shouldIncludeOzone as shouldIncludeOzone_,
     shouldIncludeTrustX as shouldIncludeTrustX_,
     stripMobileSuffix as stripMobileSuffix_,
 } from './utils';
@@ -31,9 +32,10 @@ const containsLeaderboard: any = containsLeaderboard_;
 const containsLeaderboardOrBillboard: any = containsLeaderboardOrBillboard_;
 const containsMpu: any = containsMpu_;
 const containsMpuOrDmpu: any = containsMpuOrDmpu_;
-const getRandomIntInclusive: any = getRandomIntInclusive_;
 const shouldIncludeAdYouLike: any = shouldIncludeAdYouLike_;
 const shouldIncludeAppNexus: any = shouldIncludeAppNexus_;
+const shouldIncludeOpenx: any = shouldIncludeOpenx_;
+const shouldIncludeOzone: any = shouldIncludeOzone_;
 const shouldIncludeTrustX: any = shouldIncludeTrustX_;
 const stripMobileSuffix: any = stripMobileSuffix_;
 const getBreakpointKey: any = getBreakpointKey_;
@@ -53,6 +55,7 @@ const {
 
 jest.mock('common/modules/commercial/build-page-targeting', () => ({
     buildAppNexusTargeting: () => 'someTestAppNexusTargeting',
+    buildAppNexusTargetingObject: () => 'someAppNexusTargetingObject',
     buildPageTargeting: () => 'bla',
 }));
 
@@ -67,6 +70,7 @@ jest.mock('common/modules/experiments/utils');
 /* eslint-disable guardian-frontend/no-direct-access-config */
 const resetConfig = () => {
     config.set('switches.prebidAppnexus', true);
+    config.set('switches.prebidOpenx', true);
     config.set('switches.prebidImproveDigital', true);
     config.set('switches.prebidIndexExchange', true);
     config.set('switches.prebidSonobi', true);
@@ -82,6 +86,7 @@ const resetConfig = () => {
 describe('getAppNexusPlacementId', () => {
     beforeEach(() => {
         resetConfig();
+        window.OzoneLotameData = { some: 'lotamedata' };
     });
 
     afterEach(() => {
@@ -113,7 +118,7 @@ describe('getAppNexusPlacementId', () => {
             '13366606',
             '13366615',
             '13366615',
-            '13144370',
+            '13915593',
         ]);
     });
 
@@ -127,10 +132,10 @@ describe('getAppNexusPlacementId', () => {
         containsLeaderboard.mockReturnValue(false);
         expect(generateTestIds()).toEqual([
             '13366913',
-            '13144370',
-            '13144370',
+            '13915593',
+            '13915593',
             '13366916',
-            '13144370',
+            '13915593',
         ]);
     });
 
@@ -140,21 +145,21 @@ describe('getAppNexusPlacementId', () => {
         containsMpu.mockReturnValue(false);
         expect(generateTestIds()).toEqual([
             '13366904',
-            '13144370',
-            '13144370',
-            '13144370',
-            '13144370',
+            '13915593',
+            '13915593',
+            '13915593',
+            '13915593',
         ]);
     });
 
     test('should return the default value on all other editions', () => {
         const editions = ['AU', 'US', 'INT'];
         const expected = [
-            '13144370',
-            '13144370',
-            '13144370',
-            '13144370',
-            '13144370',
+            '13915593',
+            '13915593',
+            '13915593',
+            '13915593',
+            '13915593',
         ];
 
         editions.forEach(edition => {
@@ -166,7 +171,6 @@ describe('getAppNexusPlacementId', () => {
 
 describe('getDummyServerSideBidders', () => {
     beforeEach(() => {
-        getRandomIntInclusive.mockReturnValue(1);
         config.set('switches.prebidS2sozone', true);
     });
 
@@ -181,35 +185,32 @@ describe('getDummyServerSideBidders', () => {
     });
 
     test('should return an empty array if outside the test sample', () => {
-        getRandomIntInclusive.mockReturnValueOnce(3);
         expect(getDummyServerSideBidders()).toEqual([]);
     });
 
     test('should otherwise return the expected array of bidders', () => {
-        const bidders: Array<PrebidBidder> = getDummyServerSideBidders();
-        expect(bidders).toEqual([
-            expect.objectContaining({
-                name: 'openx',
-                bidParams: expect.any(Function),
-            }),
-            expect.objectContaining({
-                name: 'appnexus',
-                bidParams: expect.any(Function),
-            }),
-        ]);
+        shouldIncludeOzone.mockReturnValueOnce(true);
+        const bidderNames = getDummyServerSideBidders().map(
+            bidder => bidder.name
+        );
+        expect(bidderNames).toEqual(['openx', 'appnexus']);
     });
 
     test('should include methods in the response that generate the correct bid params', () => {
+        shouldIncludeOzone.mockReturnValueOnce(true);
         const bidders: Array<PrebidBidder> = getDummyServerSideBidders();
         const openxParams = bidders[0].bidParams('type', [[1, 2]]);
         const appNexusParams = bidders[1].bidParams('type', [[1, 2]]);
         expect(openxParams).toEqual({
             delDomain: 'guardian-d.openx.net',
             unit: '539997090',
+            lotame: { some: 'lotamedata' },
+            customParams: 'bla',
         });
         expect(appNexusParams).toEqual({
-            placementId: '13144370',
-            customData: 'someTestAppNexusTargeting',
+            placementId: '13915593',
+            keywords: 'someAppNexusTargetingObject',
+            lotame: { some: 'lotamedata' },
         });
     });
 });
@@ -578,8 +579,8 @@ describe('bids', () => {
         containsLeaderboardOrBillboard.mockReturnValue(false);
         containsMpu.mockReturnValue(false);
         containsMpuOrDmpu.mockReturnValue(false);
-        getRandomIntInclusive.mockReturnValue(5);
         shouldIncludeAdYouLike.mockReturnValue(true);
+        shouldIncludeAppNexus.mockReturnValue(false);
         shouldIncludeAppNexus.mockReturnValue(false);
         shouldIncludeTrustX.mockReturnValue(false);
         stripMobileSuffix.mockImplementation(str => str);
@@ -605,7 +606,7 @@ describe('bids', () => {
 
     test('should only include bidders that are switched on if no bidders being tested', () => {
         config.set('switches.prebidXaxis', false);
-        getRandomIntInclusive.mockReturnValue(1);
+        shouldIncludeOzone.mockReturnValueOnce(true);
         expect(bidders()).toEqual([
             'ix',
             'sonobi',
@@ -645,6 +646,18 @@ describe('bids', () => {
             'improvedigital',
             'xhb',
             'adyoulike',
+        ]);
+    });
+
+    test('should include OpenX directly if in target geolocation', () => {
+        shouldIncludeOpenx.mockReturnValue(true);
+        expect(bidders()).toEqual([
+            'ix',
+            'sonobi',
+            'improvedigital',
+            'xhb',
+            'adyoulike',
+            'oxd',
         ]);
     });
 

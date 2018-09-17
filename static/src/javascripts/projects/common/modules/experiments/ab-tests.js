@@ -6,7 +6,7 @@ import { commercialPrebidAdYouLike } from 'common/modules/experiments/tests/comm
 import { commercialPrebidSafeframe } from 'common/modules/experiments/tests/commercial-prebid-safeframe.js';
 import { commercialAdVerification } from 'common/modules/experiments/tests/commercial-ad-verification.js';
 import { commercialCmpCustomise } from 'common/modules/experiments/tests/commercial-cmp-customise.js';
-import { FootballWeeklyTreatVsContainer } from 'common/modules/experiments/tests/football-weekly-treat-vs-container';
+import { PodcastContainer } from 'common/modules/experiments/tests/podcast-container';
 
 export const TESTS: $ReadOnlyArray<ABTest> = [
     getAcquisitionTest(),
@@ -14,7 +14,7 @@ export const TESTS: $ReadOnlyArray<ABTest> = [
     commercialPrebidAdYouLike,
     commercialAdVerification,
     commercialCmpCustomise,
-    FootballWeeklyTreatVsContainer,
+    PodcastContainer,
 ].filter(Boolean);
 
 export const getActiveTests = (): $ReadOnlyArray<ABTest> =>

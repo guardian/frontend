@@ -6,6 +6,7 @@ import isEmpty from 'lodash/objects/isEmpty';
 import {
     buildAppNexusTargeting,
     buildPageTargeting,
+    buildAppNexusTargetingObject,
 } from 'common/modules/commercial/build-page-targeting';
 import { commercialPrebidAdYouLike } from 'common/modules/experiments/tests/commercial-prebid-adyoulike';
 import { commercialPrebidSafeframe } from 'common/modules/experiments/tests/commercial-prebid-safeframe';
@@ -36,10 +37,10 @@ import {
     containsMpu,
     containsMpuOrDmpu,
     getBreakpointKey,
-    getRandomIntInclusive,
-    isExcludedGeolocation,
     shouldIncludeAdYouLike,
     shouldIncludeAppNexus,
+    shouldIncludeOpenx,
+    shouldIncludeOzone,
     shouldIncludeTrustX,
     stripMobileSuffix,
     stripTrailingNumbersAbove1,
@@ -216,6 +217,7 @@ const getImprovePlacementId = (sizes: PrebidSize[]): number => {
 const getAppNexusDirectPlacementId = (): string => '11016434';
 
 const getAppNexusPlacementId = (sizes: PrebidSize[]): string => {
+    const defaultPlacementId: string = '13915593';
     switch (config.get('page.edition')) {
         case 'UK':
             switch (getBreakpointKey()) {
@@ -226,12 +228,12 @@ const getAppNexusPlacementId = (sizes: PrebidSize[]): string => {
                     if (containsLeaderboardOrBillboard(sizes)) {
                         return '13366615';
                     }
-                    return '13144370';
+                    return defaultPlacementId;
                 case 'M':
                     if (containsMpu(sizes)) {
                         return '13366904';
                     }
-                    return '13144370';
+                    return defaultPlacementId;
                 case 'T':
                     if (containsMpu(sizes)) {
                         return '13366913';
@@ -239,12 +241,12 @@ const getAppNexusPlacementId = (sizes: PrebidSize[]): string => {
                     if (containsLeaderboard(sizes)) {
                         return '13366916';
                     }
-                    return '13144370';
+                    return defaultPlacementId;
                 default:
-                    return '13144370';
+                    return defaultPlacementId;
             }
         default:
-            return '13144370';
+            return defaultPlacementId;
     }
 };
 
@@ -308,8 +310,36 @@ const appNexusBidder: PrebidBidder = {
     switchName: 'prebidAppnexus',
     bidParams: (): PrebidAppNexusParams => ({
         placementId: getAppNexusDirectPlacementId(),
-        customData: buildAppNexusTargeting(buildPageTargeting()), // Ok to duplicate call. Lodash 'once' is used.
+        keywords: buildAppNexusTargeting(buildPageTargeting()), // Ok to duplicate call. Lodash 'once' is used.
     }),
+};
+
+const openxClientSideBidder: PrebidBidder = {
+    name: 'oxd',
+    switchName: 'prebidOpenx',
+    bidParams: (): PrebidOpenXParams => {
+        switch (config.get('page.edition')) {
+            case 'US':
+                return {
+                    delDomain: 'guardian-us-d.openx.net',
+                    unit: '540279544',
+                    customParams: buildPageTargeting(),
+                };
+            case 'AU':
+                return {
+                    delDomain: 'guardian-aus-d.openx.net',
+                    unit: '540279542',
+                    customParams: buildPageTargeting(),
+                };
+            default:
+                // UK and ROW
+                return {
+                    delDomain: 'guardian-d.openx.net',
+                    unit: '540279541',
+                    customParams: buildPageTargeting(),
+                };
+        }
+    },
 };
 
 const sonobiBidder: PrebidBidder = {
@@ -374,48 +404,60 @@ const getDummyServerSideBidders = (): Array<PrebidBidder> => {
         bidParams: (
             slotId: string,
             sizes: PrebidSize[]
-        ): PrebidAppNexusParams => ({
-            placementId: getAppNexusPlacementId(sizes),
-            customData: buildAppNexusTargeting(buildPageTargeting()), // Ok to duplicate call. Lodash 'once' is used.
-        }),
+        ): PrebidAppNexusParams =>
+            Object.assign(
+                {},
+                {
+                    placementId: getAppNexusPlacementId(sizes),
+                    keywords: buildAppNexusTargetingObject(
+                        buildPageTargeting()
+                    ), // Ok to duplicate call. Lodash 'once' is used.
+                },
+                window.OzoneLotameData ? { lotame: window.OzoneLotameData } : {}
+            ),
     };
 
     const openxServerSideBidder: PrebidBidder = {
         name: 'openx',
         switchName: 'prebidS2sozone',
-        bidParams: (): PrebidOpenXParams => {
-            switch (config.get('page.edition')) {
-                case 'UK':
-                    return {
-                        delDomain: 'guardian-d.openx.net',
-                        unit: '539997090',
-                    };
-                case 'US':
-                    return {
-                        delDomain: 'guardian-us-d.openx.net',
-                        unit: '539997087',
-                    };
-                default:
-                    // AU and rest
-                    return {
-                        delDomain: 'guardian-aus-d.openx.net',
-                        unit: '539997046',
-                    };
-            }
-        },
+        bidParams: (): PrebidOpenXParams =>
+            Object.assign(
+                {},
+                (() => {
+                    switch (config.get('page.edition')) {
+                        case 'UK':
+                            return {
+                                delDomain: 'guardian-d.openx.net',
+                                unit: '539997090',
+                                customParams: buildPageTargeting(),
+                            };
+                        case 'US':
+                            return {
+                                delDomain: 'guardian-us-d.openx.net',
+                                unit: '539997087',
+                                customParams: buildPageTargeting(),
+                            };
+                        default:
+                            // AU and rest
+                            return {
+                                delDomain: 'guardian-aus-d.openx.net',
+                                unit: '539997046',
+                                customParams: buildPageTargeting(),
+                            };
+                    }
+                })(),
+                window.OzoneLotameData ? { lotame: window.OzoneLotameData } : {}
+            ),
     };
 
     // Experimental. Only 0.01% of the PVs.
     if (
         inPbTestOr(
-            config.get('switches.prebidS2sozone') &&
-                getRandomIntInclusive(1, 10000) === 1
+            config.get('switches.prebidS2sozone') && shouldIncludeOzone()
         )
     ) {
         dummyServerSideBidders.push(openxServerSideBidder);
-        if (inPbTestOr(!isExcludedGeolocation())) {
-            dummyServerSideBidders.push(appnexusServerSideBidder);
-        }
+        dummyServerSideBidders.push(appnexusServerSideBidder);
     }
     return dummyServerSideBidders;
 };
@@ -450,6 +492,7 @@ const currentBidders: (PrebidSize[]) => PrebidBidder[] = slotSizes => {
         improveDigitalBidder,
         xaxisBidder,
         ...(shouldIncludeAdYouLike(slotSizes) ? [adYouLikeBidder] : []),
+        ...(shouldIncludeOpenx() ? [openxClientSideBidder] : []),
     ];
 
     const allBidders = indexExchangeBidders(slotSizes)

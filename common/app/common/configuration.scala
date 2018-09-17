@@ -244,6 +244,10 @@ class GuardianConfiguration extends Logging {
     lazy val orielCacheTimeInMinutes: Int = if (environment.isProd) 60 else 5
   }
 
+  object lotame {
+    val lotameScriptUrl: String = "//tags.crwdcntrl.net/c/12666/cc.js"
+  }
+
   object affiliatelinks {
     lazy val skimlinksId = configuration.getMandatoryStringProperty("skimlinks.id")
     lazy val affiliateLinkSections: Set[String] = configuration.getStringProperty("affiliatelinks.sections").getOrElse("").split(",").toSet
@@ -329,12 +333,8 @@ class GuardianConfiguration extends Logging {
   object images {
     lazy val path = configuration.getMandatoryStringProperty("images.path")
     lazy val fastlyIOHost = configuration.getMandatoryStringProperty("fastly-io.host")
+    lazy val signatureSalt: String  = configuration.getMandatoryStringProperty("images.signature-salt")
     val fallbackLogo = Static("images/fallback-logo.png")
-    object backends {
-      lazy val mediaToken: String = configuration.getMandatoryStringProperty("images.media.token")
-      lazy val staticToken: String = configuration.getMandatoryStringProperty("images.static.token")
-      lazy val uploadsToken: String = configuration.getMandatoryStringProperty("images.uploads.token")
-    }
   }
 
   object headlines {

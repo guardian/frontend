@@ -6,6 +6,7 @@
     idRequest: services.IdentityRequest,
     idUrlBuilder: services.IdentityUrlBuilder,
     returnUrl: String,
+    email: String,
     emailPrefsForm: Form[EmailPrefsData],
     setPasswordForm: Form[GuestPasswordFormData],
     emailSubscriptions: List[String],
@@ -20,7 +21,6 @@
 @buildIdentityUrl(endpoint: String) = {
 @idUrlBuilder.buildUrl(s"/$endpoint", idRequest)
 }
-
 <div class="identity-wrapper monocolumn-wrapper">
     <section class="identity-forms-message">
         <h1 class="identity-title">Thank you! We've got your preferences</h1>
@@ -34,7 +34,7 @@
             <form>
                 @views.html.helper.CSRF.formField
                 <div>
-                    <h1 class="identity-title--small">Before you go...</h1>
+                    <h1 class="identity-upsell-title">Before you go...</h1>
                     <div class="identity-forms-message__body">
                         <p>Did you know that we have <b>more than 40</b> different email newsletters that focus on a range of diverse topics - from politics and the latest tech to documentaries, sport and scientific breakthroughs.</p>
                         <p>Why not take a few seconds to see whether there is anything here for you?</p>
@@ -50,7 +50,13 @@
         }
 
         @request.cookies.get("SC_GU_GUEST_PW_SET").map { passwordSetToken =>
-            <div class="js-identity-upsell-account-creation" data-return-url="@LinkTo(returnUrl)" data-account-token="@{passwordSetToken.value}" data-csrf="@{play.filters.csrf.CSRF.getToken.map(_.value)}"></div>
+            <div
+                class="js-identity-upsell-account-creation"
+                data-email="@{email}"
+                data-account-token="@{passwordSetToken.value}"
+                data-csrf="@{play.filters.csrf.CSRF.getToken.map(_.value)}"
+            ></div>
         }
+
     </section>
 </div>

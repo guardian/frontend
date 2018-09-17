@@ -8,6 +8,9 @@ import mediator from 'lib/mediator';
 import { local } from 'lib/storage';
 import { mergeCalls } from 'common/modules/async-call-merger';
 import { getUrlVars } from 'lib/url';
+import fetch from 'lib/fetch-json';
+import qs from 'qs';
+import reqwest from 'reqwest';
 
 let userFromCookieCache = null;
 
@@ -16,6 +19,16 @@ const signOutCookieName = 'GU_SO';
 const fbCheckKey = 'gu.id.nextFbCheck';
 let idApiRoot = null;
 let profileRoot = null;
+
+type PasswordCredential = {
+    id: string,
+    password: string,
+};
+
+export type SettableConsent = {
+    id: string,
+    consented: boolean,
+};
 
 export type IdentityUser = {
     id: number,
@@ -205,4 +218,67 @@ export const updateUsername = (username: string): any => {
     });
 
     return request;
+};
+
+export const getAllConsents = () => {
+    const endpoint = '/consents';
+    const url = (idApiRoot || '') + endpoint;
+    return fetch(url, {
+        mode: 'cors',
+        method: 'GET',
+        headers: { Accept: 'application/json' },
+    });
+};
+
+export const getAllNewsletters = () => {
+    const endpoint = '/newsletters';
+    const url = (idApiRoot || '') + endpoint;
+    return fetch(url, {
+        mode: 'cors',
+        method: 'GET',
+        headers: { Accept: 'application/json' },
+    });
+};
+
+export const getSubscribedNewsletters = () => {
+    const endpoint = '/users/me/newsletters';
+    const url = (idApiRoot || '') + endpoint;
+    return fetch(url, {
+        mode: 'cors',
+        method: 'GET',
+        headers: { Accept: 'application/json' },
+        credentials: 'include',
+    })
+        .then(json => {
+            if (json.result.subscriptions) {
+                return json.result.subscriptions.map(sub => sub.id);
+            }
+            return [];
+        })
+        .catch(() => []);
+};
+
+export const setConsent = (consents: SettableConsent[]): Promise<void> =>
+    reqwest({
+        url: `${idApiRoot || ''}/users/me/consents`,
+        method: 'PATCH',
+        type: 'json',
+        contentType: 'application/json',
+        withCredentials: true,
+        crossOrigin: true,
+        data: JSON.stringify(consents),
+    });
+
+export const ajaxSignIn = (credentials: PasswordCredential) => {
+    const url = `${profileRoot || ''}/actions/auth/ajax`;
+    return fetch(url, {
+        mode: 'cors',
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: qs.stringify({
+            email: credentials.id,
+            password: credentials.password,
+        }),
+        credentials: 'include',
+    });
 };

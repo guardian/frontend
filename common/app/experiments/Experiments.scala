@@ -20,7 +20,7 @@ object CommercialClientLogging extends Experiment(
   name = "commercial-client-logging",
   description = "A slice of the audience who will post their commercial js performance data",
   owners = Owner.group(SwitchGroup.Commercial),
-  sellByDate = new LocalDate(2018, 9, 12),
+  sellByDate = new LocalDate(2018, 10, 17),
   participationGroup = Perc1A
 )
 
@@ -28,7 +28,7 @@ object OrielParticipation extends Experiment(
   name = "oriel-participation",
   description = "A slice of the audience who will participate in Oriel ad-blocking technology",
   owners = Seq(Owner.withGithub("janua")),
-  sellByDate = new LocalDate(2018, 9, 12),
+  sellByDate = new LocalDate(2018, 10, 17),
   participationGroup = Perc20A
 )
 
@@ -53,7 +53,7 @@ object ThrasherAdjacentMPU extends Experiment(
   name = "thrasher-adjacent-mpu",
   description = "This will no longer allow an MPU to show adjacent to a thrasher on mobile",
   owners = Seq(Owner.withGithub("janua")),
-  sellByDate = new LocalDate(2018, 9, 7),
+  sellByDate = new LocalDate(2018, 9, 18),
   participationGroup = Perc10A
 )
 

@@ -21,7 +21,6 @@ jest.mock('lib/fetch-json', () => jest.fn(() => Promise.resolve()));
 
 jest.mock('lib/config', () => ({
     switches: {
-        adFreeSubscriptionTrial: true,
         adFreeStrictExpiryEnforcement: true,
     },
     page: {

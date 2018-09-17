@@ -1,5 +1,6 @@
 // @flow strict
 
+import once from 'lodash/functions/once';
 import { getBreakpoint } from 'lib/detect';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
 import { commercialPrebidAdYouLike } from 'common/modules/experiments/tests/commercial-prebid-adyoulike';
@@ -11,6 +12,12 @@ const stripSuffix = (s: string, suffix: string): string => {
     const re = new RegExp(`${suffix}$`);
     return s.replace(re, '');
 };
+
+const currentGeoLocation = once((): string => geolocationGetSync());
+
+const isInUsRegion = (): boolean => ['US', 'CA'].includes(currentGeoLocation());
+
+const isInAuRegion = (): boolean => ['AU', 'NZ'].includes(currentGeoLocation());
 
 const contains = (sizes: PrebidSize[], size: PrebidSize): boolean =>
     Boolean(sizes.find(s => s[0] === size[0] && s[1] === size[1]));
@@ -51,10 +58,21 @@ export const getBreakpointKey = (): string => {
     }
 };
 
-export const shouldIncludeAppNexus = (): boolean =>
-    geolocationGetSync() === 'AU';
+export const getRandomIntInclusive = (
+    minimum: number,
+    maximum: number
+): number => {
+    const min = Math.ceil(minimum);
+    const max = Math.floor(maximum);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+};
 
-export const shouldIncludeTrustX = (): boolean => geolocationGetSync() === 'US';
+export const shouldIncludeAppNexus = (): boolean => isInAuRegion();
+
+export const shouldIncludeOpenx = (): boolean =>
+    !isInUsRegion() && !isInAuRegion();
+
+export const shouldIncludeTrustX = (): boolean => isInUsRegion();
 
 export const shouldIncludeAdYouLike = (slotSizes: PrebidSize[]): boolean => {
     const test = commercialPrebidAdYouLike;
@@ -68,22 +86,11 @@ export const shouldIncludeAdYouLike = (slotSizes: PrebidSize[]): boolean => {
     );
 };
 
-export const isExcludedGeolocation = (): boolean => {
-    const excludedGeos = ['US', 'CA', 'NZ', 'AU'];
-    return excludedGeos.includes(geolocationGetSync());
-};
+export const shouldIncludeOzone = (): boolean =>
+    !isInUsRegion() && !isInAuRegion() && getRandomIntInclusive(1, 10000) === 1;
 
 export const stripMobileSuffix = (s: string): string =>
     stripSuffix(s, '--mobile');
 
 export const stripTrailingNumbersAbove1 = (s: string): string =>
     stripSuffix(s, '([2-9]|\\d{2,})');
-
-export const getRandomIntInclusive = (
-    minimum: number,
-    maximum: number
-): number => {
-    const min = Math.ceil(minimum);
-    const max = Math.floor(maximum);
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-};

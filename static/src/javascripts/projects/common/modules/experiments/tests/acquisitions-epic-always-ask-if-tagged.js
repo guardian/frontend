@@ -18,6 +18,8 @@ export const acquisitionsEpicAlwaysAskIfTagged = makeABTest({
     audience: 1,
     audienceOffset: 0,
     useTargetingTool: true,
+    pageCheck: page =>
+        page.contentType === 'Article' || page.contentType === 'Interactive',
 
     variants: [
         {

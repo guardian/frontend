@@ -20,6 +20,17 @@
 - [ ] No
 - [ ] Yes (please give details)
 
+### Does this change break ad-free?
+
+<!-- The scope for this includes, but is not limited to, ad-slots, page targeting, podcasts, rich links, outbrain, -->
+<!-- merchandising, page skins and paid-for content -->
+<!-- If there's any chance it could cause problems, please test it with an appropriate test user or add a new test -->
+<!-- scenario -->
+
+- [ ] No
+- [ ] It did, but tests caught it and I fixed it
+- [ ] It did, but there was no test coverage so I added that then fixed it
+
 ### Accessibility test checklist
 
 <!-- for changes that affect how a page appears in the browser -->

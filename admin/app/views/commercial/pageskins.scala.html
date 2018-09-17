@@ -51,13 +51,28 @@
     <link rel="stylesheet" type="text/css" href="@controllers.admin.routes.UncachedAssets.at("css/commercial.css")">
 
     <h1>Pageskins</h1>
-    <p>Pages will squish to accommodate pageskins according to these criteria:</p>
+    <p>Pages will squish to accommodate pageskins according to either of these criteria:</p>
     <ol>
-        <li>The Ad Unit must be a <em>front</em>, including the final "/ng" ad unit</li>
-        <li>The Line Item must target an <em>edition</em> in its customised criteria</li>
-        <li>The Line Item must have a Roadblocking type of <em>Creative Set</em></li>
-        <li>The Line Item Placeholder should target the <em>Out of Page (1x1 pixel)</em> slot.</li>
-        <li>The viewport must be at least 1300px wide.</li>
+        <li>
+            <h4>Targeting a section front:</h4>
+            <ul>
+                <li>The Ad Unit must be a <em>front</em>, including the final "/ng" ad unit</li>
+                <li>The Line Item must target an <em>edition</em> in its customised criteria</li>
+                <li>The Line Item must have a Roadblocking type of <em>Creative Set</em></li>
+                <li>The Line Item Placeholder should target the <em>Out of Page (1x1 pixel)</em> slot.</li>
+                <li>The viewport must be at least 1300px wide.</li>
+            </ul>
+        </li>
+        <li>
+            <h4>Targeting a keyword or series front:</h4>
+            <ul>
+                <li>The line item must target the name (last part) of a <em>keyword</em> or <em>series</em></li>
+                <li>The Line Item must target an <em>edition</em> in its customised criteria</li>
+                <li>The Line Item must have a Roadblocking type of <em>Creative Set</em></li>
+                <li>The Line Item Placeholder should target the <em>Out of Page (1x1 pixel)</em> slot.</li>
+                <li>The viewport must be at least 1300px wide.</li>
+            </ul>
+        </li>
     </ol>
 
     <h2>Pageskinned Ad Units</h2>

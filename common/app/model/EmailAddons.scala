@@ -184,6 +184,12 @@ case object AnimalsFarmed extends ArticleEmailMetadata {
   def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "animals-farmed/series/animals-farmed-update")
 }
 
+case object USMorningBriefing extends ArticleEmailMetadata {
+  val name = "US Morning Briefing"
+  override val banner = Some("us-morning-briefing.png")
+  def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "us-news/series/guardian-us-briefing")
+}
+
 case object TheFlyer extends FrontEmailMetadata {
   val name = "The Flyer"
   override val banner = Some("the-flyer.png")
@@ -329,6 +335,26 @@ case object FilmToday extends FrontEmailMetadata {
   override val banner = Some("film-today.png")
 }
 
+case object OpinionAus extends FrontEmailMetadata {
+  val name = "Opinion Aus"
+  override val banner = Some("opinion.png")
+}
+
+case object PoliticsAu extends FrontEmailMetadata {
+  val name = "Politics Au"
+  override val banner = Some("australian-politics.png")
+}
+
+case object SportAu extends FrontEmailMetadata {
+  val name = "Sport Au"
+  override val banner = Some("australia-sports.png")
+}
+
+case object FirstDogOnTheMoon extends FrontEmailMetadata {
+  val name = "First Dog On The Moon"
+  override val banner = Some("first-dog-on-the-moon.png")
+}
+
 object EmailAddons {
   private val defaultAddress = "Kings Place, 90 York Way, London, N1 9GU. Registered in England No. 908396"
   private val defaultBanner = "generic.png"
@@ -358,7 +384,8 @@ object EmailAddons {
     HearHere,
     CrosswordEditorsUpdate,
     TheUpsideWeeklyReport,
-    AnimalsFarmed)
+    AnimalsFarmed,
+    USMorningBriefing)
   private val frontEmails = Seq(
     SocialCareNetwork,
     HigherEducationNetwork,
@@ -390,7 +417,11 @@ object EmailAddons {
     SocietyWeekly,
     TheGuardianToday,
     TheGuardianTodayAustralia,
-    FilmToday
+    FilmToday,
+    OpinionAus,
+    PoliticsAu,
+    SportAu,
+    FirstDogOnTheMoon
   )
 
   implicit class EmailContentType(p: Page) {

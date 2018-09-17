@@ -130,9 +130,6 @@ class IdApiClient(
     delete(urlJoin("useremails", userId, "subscriptions"), Some(auth), Some(trackingParameters), Some(write(emailList))) map extractUnit
   }
 
-  def updateUserEmails(userId: String, subscriber: Subscriber, auth: Auth, trackingParameters: TrackingData): Future[Response[Unit]] =
-    post(urlJoin("useremails", userId), Some(auth), Some(trackingParameters), Some(write(subscriber))) map extractUnit
-
   def validateEmail(token: String, trackingParameters: TrackingData): Future[Response[Unit]] =
     post(urlJoin("user","validate-email", token), trackingParameters = Some(trackingParameters)) map extractUnit
 
@@ -154,9 +151,6 @@ class IdApiClient(
 
   def deleteTelephone(auth: Auth): Future[Response[Unit]] =
     delete("user/me/telephoneNumber", Some(auth)) map extractUnit
-
-  def unsubscribeFromAllEmailsAndOptoutMarketingConsents(auth: Auth): Future[Response[Unit]] =
-    post("remove/consent/all", Some(auth)).map(extractUnit)
 
   // THIRD PARTY SIGN-IN
   def executeAccountDeletionStepFunction(userId: String, email: String, reason: Option[String], auth: Auth): Future[Response[AccountDeletionResult]] = {

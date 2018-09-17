@@ -32,7 +32,7 @@
     bypassing it.
 *@
 
-@tab(i: Int, name: String, url: String, dataTestId: Option[String], hidden: Boolean = false, optionalClass: String = "", redirect: ProfileRedirect = NoRedirect) = {
+@tab(i: Int, name: String, url: String, dataTestId: Option[String], hidden: Boolean = false, optionalClass: String = "", redirect: ProfileRedirect = NoRedirect, disableClientSideRouting: Boolean = false) = {
 
     <li class="tabs__tab @if(hidden){is-hidden} @if(activeUrl == url){tabs__tab--selected tone-colour tone-accent-border} @optionalClass" role="tab" id="tabs-account-profile-@i-tab" aria-selected="@(activeUrl == url)" aria-controls="tabs-account-profile-@i">
         <a
@@ -42,7 +42,9 @@
             @dataTestId.map{idValue => data-test-id="@idValue"}
             @{
                 if(redirect.isAllowedFrom(url))
-                Html(s"href='${idUrlBuilder.buildUrl(redirect.url, ("returnUrl", idUrlBuilder.buildUrl(url)))}' data-tabs-ignore='true'")
+                    Html(s"href='${idUrlBuilder.buildUrl(redirect.url, ("returnUrl", idUrlBuilder.buildUrl(url)))}' data-tabs-ignore='true'")
+                else if(disableClientSideRouting)
+                    Html(s"href='$url' data-tabs-ignore='true'")
                 else
                     Html(s"href='$url'")
             }
@@ -80,7 +82,7 @@
 
                     @tab(2, "Account details", "/account/edit", Some("edit-account-details"), optionalClass="qa-account-details-tab", redirect = redirectDecision)
 
-                    @tab(3, "Membership", "/membership/edit", None, optionalClass="qa-membership-tab", redirect = redirectDecision)
+                    @tab(3, "Membership", "/membership/edit", None, optionalClass="qa-membership-tab", redirect = redirectDecision, disableClientSideRouting = true)
 
                     @tab(4, "Digital Pack", "/digitalpack/edit", None, optionalClass="qa-digitalpack-tab", redirect = redirectDecision)
 

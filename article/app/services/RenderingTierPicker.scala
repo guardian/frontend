@@ -1,9 +1,10 @@
 package services
 
-import common.Logging
 import controllers.ArticlePage
 import model.PageWithStoryPackage
-import model.liveblog.{BlockElement, BodyBlock, ImageBlockElement, TextBlockElement}
+import model.liveblog.{BlockElement, ImageBlockElement, TextBlockElement}
+import play.api.mvc.RequestHeader
+import views.support.Commercial
 
 sealed trait RenderType
 case object RemoteRender extends RenderType
@@ -39,17 +40,17 @@ object RenderingTierPicker {
     !page.article.blocks.exists(_.body.exists(_.elements.exists(unsupportedElement)))
   }
 
-  private def isAdFree(page: PageWithStoryPackage): Boolean = {
-    page.item.content.shouldHideAdverts
+  private def isAdFree(page: PageWithStoryPackage, request: RequestHeader): Boolean = {
+    page.item.content.shouldHideAdverts || Commercial.isAdFree(request)
   }
 
-  def getRenderTierFor(page: PageWithStoryPackage): RenderType = {
+  def getRenderTierFor(page: PageWithStoryPackage, request: RequestHeader): RenderType = {
 
     val canRemotelyRender = isSupportedType(page) &&
       hasBlocks(page) &&
       hasOnlySupportedElements(page) &&
       isDiscussionDisabled(page) &&
-      isAdFree(page)
+      isAdFree(page, request)
 
     if(canRemotelyRender){
       RemoteRender
