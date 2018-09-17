@@ -61,8 +61,8 @@ GET        /opt/reset                                                           
 GET        /service-worker.js                                                   controllers.WebAppController.serviceWorker()
 GET        /2015-06-24-manifest.json                                            controllers.WebAppController.manifest()
 
-GET        /getnext/$tag<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/*path                   controllers.ImageContentController.getNextLightboxJson(path, tag, direction = "next")
-GET        /getprev/$tag<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/*path                   controllers.ImageContentController.getNextLightboxJson(path, tag, direction = "prev")
+GET        /getnext/$tag<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/*path                controllers.ImageContentController.getNextLightboxJson(path, tag, direction = "next")
+GET        /getprev/$tag<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/*path                controllers.ImageContentController.getNextLightboxJson(path, tag, direction = "prev")
 
 # Newspaper pages
 GET        /theguardian                                                                     controllers.NewspaperController.latestGuardianNewspaper()

@@ -47,40 +47,19 @@ class ImageContentController(
   private def isSupported(c: ApiContent) = c.isImageContent
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
 
-  def getNextLightbox(path: String, tag: String, direction: String): Action[AnyContent] = Action.async { implicit request =>
-    println(path)
-    println(s"$path/next")
-
-
-    println(tag)
-    wsClient.url(s"${contentApiClient.thriftClient.targetUrl}/content/$path/$direction?tag=$tag").get().flatMap {
-      stuff =>
-        val result = stuff.json("response")("results")(0)("id").as[String]
-        renderItem(result)
-    }
-  }
-
   def getNextLightboxJson(path: String, tag: String, direction: String): Action[AnyContent] = Action.async { implicit request =>
 
-    val capiquery = ContentApiNavQuery(currentId = path, direction=direction).tag(tag).showTags("all").showElements("all").pageSize(100)
-    println(capiquery.pathSegment)
-    println(capiquery)
-    val capimod = contentApiClient.thriftClient.getResponse(capiquery).map {
-      mod =>
+    val capiquery = ContentApiNavQuery(currentId = path, direction=direction)
+      .tag(tag).showTags("all").showElements("image").pageSize(100)
 
-        println(mod.results.length)
-        val json = mod.results.flatMap(result => Content(result) match {
+    contentApiClient.thriftClient.getResponse(capiquery).map {
+      response =>
+        val lightboxJson = response.results.flatMap(result => Content(result) match {
           case content: ImageContent => Some(content.lightBox.javascriptConfig)
           case _ => None
         })
-        Cached(1)(JsonComponent(JsArray(json)))
-//        mod.results.map(Content.apply) match {
-//          case content: Seq[ImageContent @unchecked] if classTag[A] == classTag[String] =>
-//            Cached(1)(JsonComponent(JsArray(content.map(_.lightBox.javascriptConfig))))
-//          case _ => InternalServerError
-//        }
+        Cached(1)(JsonComponent(JsArray(lightboxJson)))
     }
-    capimod
   }
 }
 

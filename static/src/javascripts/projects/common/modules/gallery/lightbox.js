@@ -131,8 +131,6 @@ class GalleryLightbox {
         this.$swipeContainer = $('.js-gallery-swipe');
         bean.on(this.nextBtn, 'click', this.trigger.bind(this, 'next'));
         bean.on(this.prevBtn, 'click', this.trigger.bind(this, 'prev'));
-        // bean.on(this.nextBtn, 'click', this.trigger.bind(this, 'xkcdNext'));
-        // bean.on(this.prevBtn, 'click', this.trigger.bind(this, 'xkcdPrev'));
         bean.on(this.closeBtn, 'click', this.close.bind(this));
         bean.on(this.infoBtn, 'click', this.trigger.bind(this, 'toggleInfo'));
         this.handleKeyEvents = this.handleKeyEvents.bind(this); // bound for event handler
@@ -299,59 +297,86 @@ class GalleryLightbox {
         this.fsm.trigger(event, data);
     }
 
-    loadNextOrPrevious(currentImageId: string, direction: string): Promise<Object> {
-        const pathPrefix = pathPrefix || (direction === 'forwards') ? 'getnext' : 'getprev';
-        const seriesTag = guardian.config.page.nonKeywordTagIds.split(",").filter(tag => tag.includes("series"))[0];
-        const fetchUrl = '/' + pathPrefix + '/' + seriesTag + '/' + currentImageId;
+    static loadNextOrPrevious(
+        currentImageId: string,
+        direction: string
+    ): Promise<Object> {
+        const pathPrefix = direction === 'forwards' ? 'getnext' : 'getprev';
+        const seriesTag = config
+            .get('page.nonKeywordTagIds')
+            .split(',')
+            .filter(tag => tag.includes('series'))[0];
+        const fetchUrl = `/${pathPrefix}/${seriesTag}/${currentImageId}`;
         return fetch(fetchUrl)
-            .then(function(response) {
-                return response.json();
-            }).catch(function(ex) {
-            console.error('next/previous parsing failed', ex);
-        });
+            .then(response => response.json())
+            .then(json =>
+                // filter out non-lightbox items in the series
+                json.filter(image => image.images.length > 0)
+            );
     }
 
     loadOrOpen(newGalleryJson: Object): void {
-        if (this.galleryJson && newGalleryJson.id === this.galleryJson.id && newGalleryJson.images.length === this.galleryJson.images.length) {
+        if (
+            this.galleryJson &&
+            newGalleryJson.id === this.galleryJson.id &&
+            newGalleryJson.images.length === this.galleryJson.images.length
+        ) {
             this.trigger('open');
         } else {
             this.trigger('loadJson', newGalleryJson);
         }
     }
 
-    loadGalleryfromJson(galleryJson: GalleryJson, startIndex: number): void {
-        this.index = startIndex;
-
-        if (galleryJson.images.length < 2) {
+    loadGalleryfromJson(
+        galleryJson: GalleryJson,
+        defaultIndex: number,
+        jumpToStartImage: boolean
+    ): void {
+        // if this is an image page, load series of images into the lightbox
+        if (
+            config.get('page.contentType') === 'ImageContent' &&
+            galleryJson.images.length < 2
+        ) {
             // store current path with leading slash removed
             const currentId = window.location.pathname.substring(1);
             // fetch next and previous images and load them
-            return Promise.all([this.loadNextOrPrevious(currentId, 'forwards'), this.loadNextOrPrevious(currentId, 'backwards')])
-                .then((result) => { return {next: result[0].map(e => e.images[0]), previous: result[1].map(e => e.images[0])}})
-                .then((nextPrevJson) => {
-                    const allImages = nextPrevJson.previous.concat(galleryJson.images, nextPrevJson.next);
-                    console.log("combinedall", allImages);
-                    galleryJson.images= allImages;
-                    this.startIndex = nextPrevJson.previous.length + 1
-                    this.index = startIndex;
-                    this.loadOrOpen(galleryJson)
+            Promise.all([
+                GalleryLightbox.loadNextOrPrevious(currentId, 'forwards'),
+                GalleryLightbox.loadNextOrPrevious(currentId, 'backwards'),
+            ])
+                .then(result => ({
+                    next: result[0].map(e => e.images[0]),
+                    previous: result[1].map(e => e.images[0]),
+                }))
+                .then(nextPrevJson => {
+                    // combine this image, and the ones before and after it, into one big array
+                    const allImages = nextPrevJson.previous
+                        .reverse()
+                        .concat(galleryJson.images, nextPrevJson.next);
+
+                    galleryJson.images = allImages;
+                    // start index is in the middle of the two lists we just concatenated
+                    this.startIndex = nextPrevJson.previous.length + 1;
+                    if (jumpToStartImage) {
+                        this.index = this.startIndex;
+                    } else {
+                        this.index = defaultIndex;
+                    }
+                    this.loadOrOpen(galleryJson);
                 });
         } else {
+            this.index = defaultIndex;
             this.loadOrOpen(galleryJson);
         }
     }
 
     loadHtml(json: GalleryJson): void {
-
         this.images = json.images || [];
         const imagesHtml = json.images
             .map((img, i) => this.generateImgHTML(img, i + 1))
             .join('');
         this.$contentEl.html(imagesHtml);
-        this.$images = $(
-            '.js-gallery-lightbox-img',
-            this.$contentEl[0]
-        );
+        this.$images = $('.js-gallery-lightbox-img', this.$contentEl[0]);
         this.$countEl.text(this.images.length);
     }
 
@@ -371,7 +396,6 @@ class GalleryLightbox {
                     $img.attr('src', imageContent.src);
                     $img.attr('srcset', imageContent.srcsets);
                     $img.attr('sizes', imageContent.sizes);
-                    // console.log("foreaching", i, $img[0]);
 
                     bean.one($img[0], 'load', () => {
                         $('.js-loader').remove();
@@ -669,7 +693,7 @@ const init = (): void => {
                     : parsedGalleryIndex; // 1-based index
                 lightbox = lightbox || new GalleryLightbox();
 
-                lightbox.loadGalleryfromJson(images, galleryIndex);
+                lightbox.loadGalleryfromJson(images, galleryIndex, true);
             });
 
             lightbox = lightbox || new GalleryLightbox();
@@ -679,12 +703,20 @@ const init = (): void => {
             if (match) {
                 // index specified so launch lightbox at that index
                 pushUrl({}, document.title, galleryId, true); // lets back work properly
-                lightbox.loadGalleryfromJson(images, parseInt(match[1], 10));
+                lightbox.loadGalleryfromJson(
+                    images,
+                    parseInt(match[1], 10),
+                    false
+                );
             } else {
                 res = /^#(?:img-)?(\d+)$/.exec(galleryHash);
 
                 if (res) {
-                    lightbox.loadGalleryfromJson(images, parseInt(res[1], 10));
+                    lightbox.loadGalleryfromJson(
+                        images,
+                        parseInt(res[1], 10),
+                        false
+                    );
                 }
             }
         }
