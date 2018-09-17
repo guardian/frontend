@@ -81,10 +81,12 @@ const actionableBenefits: ActionableBenefit[] = [
 ];
 
 export const AccountActionableBenefits = () => (
-    <ul className="identity-upsell-account-creation-superbullets">
+    <ul className="identity-upsell-account-creation-bullets identity-upsell-account-creation-bullets--super">
         {actionableBenefits.map(({ title, blurb, cta }) => (
             <li>
-                <h4>{title}</h4>
+                <h4 className="identity-upsell-account-creation-bullets__title">
+                    {title}
+                </h4>
                 <p>{blurb}</p>
                 {cta.map(({ name, link }) => (
                     <a
@@ -103,7 +105,9 @@ export const AccountBenefits = () => (
     <ul className="identity-upsell-account-creation-bullets">
         {benefits.map(benefit => (
             <li>
-                <h4>{benefit.title}</h4>
+                <h4 className="identity-upsell-account-creation-bullets__title">
+                    {benefit.title}
+                </h4>
                 <p>{benefit.blurb}</p>
             </li>
         ))}

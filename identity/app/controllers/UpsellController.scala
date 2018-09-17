@@ -48,8 +48,9 @@ class UpsellController(
   def confirmEmailThankYou(returnUrl: Option[String]): Action[AnyContent] = if (IdentityUseFollowSwitches.isSwitchedOn) {
     authenticatedActions.consentAuthWithIdapiUserAction.async { implicit request =>
       val returnUrl = returnUrlVerifier.getVerifiedReturnUrl(request)
+      val email = request.user.primaryEmailAddress
       val view = views.html.upsell.upsellContainer(
-        ConfirmEmailThankYou, idRequestParser(request), idUrlBuilder, returnUrl.getOrElse(returnUrlVerifier.defaultReturnUrl))
+        ConfirmEmailThankYou, idRequestParser(request), idUrlBuilder, returnUrl.getOrElse(returnUrlVerifier.defaultReturnUrl), email)
       Future(NoCache(Ok(
         IdentityHtmlPage.html(view)(ConfirmEmailThankYou, request, context)
       )))
