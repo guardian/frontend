@@ -18,7 +18,6 @@ import { acquisitionsEpicFromGoogleDocThreeVariants } from 'common/modules/exper
 import { acquisitionsEpicFromGoogleDocFourVariants } from 'common/modules/experiments/tests/acquisitions-epic-from-google-doc-four-variants';
 import { acquisitionsEpicFromGoogleDocFiveVariants } from 'common/modules/experiments/tests/acquisitions-epic-from-google-doc-five-variants';
 import { acquisitionsEpicIframeTestV2 } from 'common/modules/experiments/tests/acquisitions-iframe-epic-v2';
-import { acquisitionsEpicGoogleDocVsHardcoded } from 'common/modules/experiments/tests/acquisitions-epic-google-doc-vs-hardcoded';
 import { acquisitionsEpicAusFairfax } from 'common/modules/experiments/tests/acquisitions-epic-aus-fairfax';
 
 const isViewable = (v: Variant, t: ABTest): boolean => {
@@ -49,7 +48,6 @@ const isViewable = (v: Variant, t: ABTest): boolean => {
  */
 export const acquisitionsTests: $ReadOnlyArray<AcquisitionsABTest> = [
     acquisitionsEpicAusFairfax,
-    acquisitionsEpicGoogleDocVsHardcoded,
     acquisitionsEpicIframeTestV2,
     acquisitionsEpicFromGoogleDocOneVariant,
     acquisitionsEpicFromGoogleDocTwoVariants,
