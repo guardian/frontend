@@ -54,7 +54,6 @@ const timeInDaysFromNow = (daysFromNow: number): string => {
 };
 
 const persistResponse = (JsonResponse: () => void) => {
-    const switches = config.switches;
     addCookie(USER_FEATURES_EXPIRY_COOKIE, timeInDaysFromNow(1));
     addCookie(PAYING_MEMBER_COOKIE, JsonResponse.contentAccess.paidMember);
     addCookie(
