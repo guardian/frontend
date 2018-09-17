@@ -21,7 +21,15 @@ import services.RedirectService.{ArchiveRedirect, PermanentRedirect}
   with WithTestWsClient {
 
   lazy val mockRedirects = new RedirectService {
-    override def destinationFor(source: String) = Future.successful(None)
+    override def lookupRedirectDestination(source: String) = {
+      if (source == "/lifeandstyle/restaurants"){
+        Future.successful(Some(PermanentRedirect(source, "https://www.theguardian.com/food/cookityourselflazy")))
+      } else if (source == "books/politics") {
+        Future.successful(Some(PermanentRedirect(source, "https://www.theguardian.com/books/nopasaran")))
+      } else {
+        Future.successful(None)
+      }
+    }
   }
   lazy val archiveController = new ArchiveController(mockRedirects, play.api.test.Helpers.stubControllerComponents(), wsClient)
 
@@ -107,6 +115,32 @@ import services.RedirectService.{ArchiveRedirect, PermanentRedirect}
   it should "not redirect a random URL that contains the word century" in {
     val result = archiveController.lookup("/discover-culture/2014/jul/22/mid-century-textiles-then-and-now")(TestRequest())
     status(result) should be (404)
+  }
+
+  it should "redirect combiners to the the redirect location of individual tags" in {
+    val result = archiveController.lookup("/lifeandstyle/restaurants+media/chris-evans")(TestRequest())
+    status(result) should be (301)
+    location(result) should be ("/food/cookityourselflazy+media/chris-evans")
+
+    val result2 = archiveController.lookup("/lifeandstyle/restaurants+books/politics")(TestRequest())
+    status(result2) should be (301)
+    location(result2) should be ("/food/cookityourselflazy+books/nopasaran")
+  }
+
+  it should "redirect rss requests to redirect location of associated tag " in {
+    val result = archiveController.lookup("/lifeandstyle/restaurants/rss")(TestRequest())
+    status(result) should be (301)
+    location(result) should be ("/food/cookityourselflazy/rss")
+  }
+
+  it should "redirect rss combiners to the the redirect location of individual tags" in {
+    val result = archiveController.lookup("/lifeandstyle/restaurants+media/chris-evans/rss")(TestRequest())
+    status(result) should be (301)
+    location(result) should be ("/food/cookityourselflazy+media/chris-evans/rss")
+
+    val result2 = archiveController.lookup("/lifeandstyle/restaurants+books/politics/rss")(TestRequest())
+    status(result2) should be (301)
+    location(result2) should be ("/food/cookityourselflazy+books/nopasaran/rss")
   }
 
   it should "redirect failed combiners to the (non-editionalised) section" in {

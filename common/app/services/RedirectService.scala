@@ -1,5 +1,7 @@
 package services
 
+import java.awt.JobAttributes.DestinationType
+
 import com.gu.scanamo.error.MissingProperty
 import com.gu.scanamo.syntax._
 import com.gu.scanamo.{DynamoFormat, Scanamo, ScanamoAsync}
@@ -41,16 +43,64 @@ class RedirectService(implicit executionContext: ExecutionContext) extends Loggi
   // protocol fixed to http so that lookups to dynamo find existing
   // redirects which were originally all stored as http://...
   private val expectedSourceHost = "http://www.theguardian.com"
+  private val CombinerTags = """^(/[\w\d-/]+)\+([\w\d-/]+)$""".r
   private lazy val tableName = if (Configuration.environment.isProd) "redirects" else "redirects-CODE"
 
 
-  def destinationFor(source: String): Future[Option[Destination]] =
+  def destinationForCombiner(source: String, tag1: String, tag2: String) : Future[Option[Destination]] = {
+    // for paths such as /lifeandstyle/restaurants+lifeandstyle/wine/rss, we want to look up
+    // /lifeandstyle/food and /lifeandstyle/wine individually - so the second tag needs cleaning
+    // look up each tag to check if there is a redirect set for it
+    val newDestinations = for {
+      d1 <- lookupRedirectDestination(tag1)
+      d2 <- lookupRedirectDestination(tag2)
+    } yield (d1.map(_.location), d2.map(_.location))
+    // if redirects exist, generate a new combiner url including the redirects
+    newDestinations.map{ destinations => {
+      val tag1RedirectLocation = destinations._1.getOrElse(tag1)
+      val tag2RedirectTag = destinations._2.map(_.replace("https://www.theguardian.com/", "")).getOrElse(tag2)
+
+      val destination = s"$tag1RedirectLocation+$tag2RedirectTag"
+      if (destination != source) {
+        Some(PermanentRedirect(source, destination))
+      } else {
+        None
+      }
+    }}
+  }
+
+  def isRss(source: String): Boolean = source.endsWith("/rss")
+
+  def getDestination(source: String): Future[Option[Destination]] = {
+    // strip /rss suffix as redirects won't exist for /rss urls
+    val sourceNoRss = source.replaceAll("/rss$", "")
+
+    val destination = sourceNoRss match {
+      case CombinerTags(tag1, tag2) =>
+        destinationForCombiner(sourceNoRss, tag1, tag2)
+          .flatMap{
+            case Some(d) => Future.successful(Some(d))
+            case None => lookupRedirectDestination(sourceNoRss)
+          }
+      case _ => lookupRedirectDestination(sourceNoRss)
+    }
+    destination.map(_.map{
+      case PermanentRedirect(redirectSource, location) =>
+        val newLocation = if (isRss(source)) location+"/rss" else location
+        PermanentRedirect(redirectSource, newLocation)
+      case otherRedirect => otherRedirect
+    })
+  }
+
+  def lookupRedirectDestination(source: String): Future[Option[Destination]] = {
+    val fullUrl = if (source.head == '/') expectedSourceHost + source else s"$expectedSourceHost/$source"
     ScanamoAsync
-      .get[Destination](DynamoDB.asyncClient)(tableName)('source -> (expectedSourceHost + source))
+      .get[Destination](DynamoDB.asyncClient)(tableName)('source -> fullUrl)
       .map({
         case Some(Right(destination)) => Some(destination)
         case _ => None
       })
+  }
 
   private def normaliseSource(source: String): Option[String] = {
     val FullURL = """(https?://)?www\.theguardian\.com(.*)""".r
