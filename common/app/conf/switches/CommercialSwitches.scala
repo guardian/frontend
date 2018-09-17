@@ -57,16 +57,6 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-  val AdFreeEmergencyShutdown = Switch(
-    Commercial,
-    "ad-free-emergency-shutdown",
-    "When ON, we kill the ad-free service immediately. This is a temporary switch for live-testing.",
-    owners = Seq(Owner.withGithub("JustinPinner")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 9, 18),
-    exposeClientSide = true
-  )
-
   val AdFreeStrictExpiryEnforcement = Switch(
     Commercial,
     "ad-free-strict-expiry-enforcement",
