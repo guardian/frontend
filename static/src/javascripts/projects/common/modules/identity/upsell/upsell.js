@@ -6,7 +6,7 @@ import ophan from 'ophan/ng';
 import { FollowCardList } from 'common/modules/identity/upsell/consent-card/FollowCardList';
 import { ExpandableFollowCardList } from 'common/modules/identity/upsell/consent-card/ExpandableFollowCardList';
 import loadEnhancers from 'common/modules/identity/modules/loadEnhancers';
-import { AccountCreationFlow } from 'common/modules/identity/upsell/account-creation/AccountCreationFlow';
+import { AccountCreationCompleteConsentsFlow } from 'common/modules/identity/upsell/account-creation/AccountCreationCompleteConsentsFlow';
 import { OptOutsList } from 'common/modules/identity/upsell/opt-outs/OptOutsList';
 import { Block } from 'common/modules/identity/upsell/block/Block';
 import { get as getConsents } from 'common/modules/identity/upsell/store/consents';
@@ -54,7 +54,7 @@ const bindAccountCreation = (el): void => {
     trackInteraction('set-password : display');
     fastdom.write(() => {
         render(
-            <AccountCreationFlow
+            <AccountCreationCompleteConsentsFlow
                 csrfToken={el.dataset.csrf}
                 accountToken={el.dataset.accountToken}
                 email={el.dataset.email}

@@ -4,15 +4,15 @@ import { AccountCreationFeatures } from './AccountCreationFeatures';
 import { AccountCreationForm } from './AccountCreationForm';
 import { AccountBenefits } from './AccountBenefits';
 
-type AccountCreationFlowProps = {
+type AccountCreationCompleteConsentsFlowProps = {
     csrfToken: string,
     returnUrl: string,
     accountToken: string,
     email: string,
 };
 
-class AccountCreationFlow extends Component<
-    AccountCreationFlowProps,
+class AccountCreationCompleteConsentsFlow extends Component<
+    AccountCreationCompleteConsentsFlowProps,
     {
         hasCreatedAccount?: boolean,
     }
@@ -58,4 +58,4 @@ class AccountCreationFlow extends Component<
     }
 }
 
-export { AccountCreationFlow };
+export { AccountCreationCompleteConsentsFlow };
