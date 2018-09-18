@@ -51,20 +51,43 @@ class FollowCardList extends Component<
         }));
     }
 
+    updateExpandState = (isExpanded: boolean) => {
+        this.setState(s => ({
+            ...s,
+            isExpanded,
+        }));
+    };
+
     render() {
-        const { followables } = this.state;
+        const { followables, expandableFollowables, isExpanded } = this.state;
+
+        const displayables = isExpanded
+            ? [...followables, ...expandableFollowables]
+            : followables;
+
         return (
             <div>
-                {followables.map(followable => (
-                    <FollowCard
-                        consent={followable.consent}
-                        hasConsented={followable.hasConsented}
-                        onChange={hasConsented => {
-                            this.updateState(followable, hasConsented);
-                            setConsentsInApi([{ ...followable, hasConsented }]);
-                        }}
-                    />
-                ))}
+                <div>
+                    {displayables.map(followable => (
+                        <FollowCard
+                            consent={followable.consent}
+                            hasConsented={followable.hasConsented}
+                            onChange={hasConsented => {
+                                this.updateState(followable, hasConsented);
+                                setConsentsInApi([
+                                    { ...followable, hasConsented },
+                                ]);
+                            }}
+                        />
+                    ))}
+                </div>
+                {isExpanded ? (
+                    <button onClick={this.updateExpandState(false)}>
+                        less
+                    </button>
+                ) : (
+                    <button onClick={this.updateExpandState(true)}>more</button>
+                )}
             </div>
         );
     }
