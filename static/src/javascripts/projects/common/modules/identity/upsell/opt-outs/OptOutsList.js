@@ -11,12 +11,14 @@ export class OptOutsList extends Component<
         consents: ConsentType[],
         isLoading: boolean,
         hasUnsavedChanges: boolean,
+        hasError: boolean,
     }
 > {
     constructor(props: {}) {
         super(props);
         this.state = {
             isLoading: false,
+            hasError: false,
             hasUnsavedChanges: true,
             consents: [],
         };
@@ -45,11 +47,19 @@ export class OptOutsList extends Component<
         ev.preventDefault();
         this.setState({
             isLoading: true,
+            hasError: false,
         });
         this.updateChangesRemotely().then(() => {
             this.setState({
-                isLoading: false,
                 hasUnsavedChanges: false,
+            });
+        }).catch(()=>{
+            this.setState({
+                hasError: true,
+            });
+        }).then((e)=>{
+            this.setState({
+                isLoading: false
             });
         });
     };
@@ -63,9 +73,12 @@ export class OptOutsList extends Component<
         );
 
     render() {
-        const { hasUnsavedChanges, isLoading, consents } = this.state;
+        const { hasUnsavedChanges, isLoading, consents, hasError } = this.state;
         return (
             <form onSubmit={ev => this.onSubmit(ev)}>
+                { hasError &&
+                    <div className="form__error">Oops. Something went wrong</div>
+                }
                 <div>
                     {consents.map(({ value, isFollowing }, i) => (
                         <Checkbox
