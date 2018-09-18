@@ -712,8 +712,6 @@ object setSvgClasses {
 }
 
 case class CommercialMPUForFronts(isNetworkFront: Boolean)(implicit val request: RequestHeader) extends HtmlCleaner {
-  import experiments.{ ActiveExperiments, ThrasherAdjacentMPU }
-
   override def clean(document: Document): Document = {
 
     def isNetworkFrontWithThrasher(element: Element, index: Int): Boolean = {
@@ -736,8 +734,7 @@ case class CommercialMPUForFronts(isNetworkFront: Boolean)(implicit val request:
     // and remove a container if it, or the next sibling, is a commercial container
     // then we take every other container, up to a maximum of 10, for targeting MPU insertion
     val containersForCommercialMPUs = containers.zipWithIndex.collect {
-      case (x, i) if ActiveExperiments.isParticipating(ThrasherAdjacentMPU) && !isNetworkFrontWithThrasher(x, i) && !hasAdjacentCommercialContainer(x) && !hasAdjacentThrasher(x) => x
-      case (x, i) if !ActiveExperiments.isParticipating(ThrasherAdjacentMPU) && !isNetworkFrontWithThrasher(x, i) && !hasAdjacentCommercialContainer(x) => x
+      case (x, i) if !isNetworkFrontWithThrasher(x, i) && !hasAdjacentCommercialContainer(x) && !hasAdjacentThrasher(x) => x
     }.zipWithIndex.collect {
       case (x, i) if i % 2 == 0 => x
     }.take(10)

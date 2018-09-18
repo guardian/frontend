@@ -10,8 +10,7 @@ object ActiveExperiments extends ExperimentsDefinition {
     AudioPageChange,
     CommercialClientLogging,
     OrielParticipation,
-    OldTLSSupportDeprecation,
-    ThrasherAdjacentMPU
+    OldTLSSupportDeprecation
   )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
@@ -47,14 +46,6 @@ object AudioPageChange extends Experiment(
   owners = Owner.group(SwitchGroup.Journalism),
   sellByDate = new LocalDate(2018, 9, 27),
   participationGroup = Perc5A
-)
-
-object ThrasherAdjacentMPU extends Experiment(
-  name = "thrasher-adjacent-mpu",
-  description = "This will no longer allow an MPU to show adjacent to a thrasher on mobile",
-  owners = Seq(Owner.withGithub("janua")),
-  sellByDate = new LocalDate(2018, 9, 18),
-  participationGroup = Perc10A
 )
 
 
