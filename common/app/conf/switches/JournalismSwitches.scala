@@ -22,4 +22,14 @@ trait JournalismSwitches {
     sellByDate = never,
     exposeClientSide = true
   )
+
+  val AudioOnwardJourneySwitch = Switch(
+    SwitchGroup.Journalism,
+    "audio-onward-journey-switch",
+    "Display latest podcast episodes on audio pages",
+    owners = Seq(Owner.withName("journalism team")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
 }

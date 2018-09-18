@@ -335,6 +335,7 @@ GET            /football-mf2/api/match-summary/:year/:month/:day/:home/:away.jso
 GET            /editionalised-nav.json                                                                                           controllers.NavigationController.renderAmpNav()
 
 # Onward journeys
+GET            /audio/series/*path.json                                                                                          controllers.SeriesController.renderPodcastEpisodes(path)
 GET            /series/*path.json                                                                                                controllers.SeriesController.renderSeriesStories(path)
 
 # opt-in/out routes

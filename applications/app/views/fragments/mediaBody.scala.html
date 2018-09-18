@@ -154,6 +154,17 @@
                                     </div>
                                 }
                             }
+                            case a: Audio if conf.switches.Switches.AudioOnwardJourneySwitch.isSwitchedOn => {
+                                <div class="content__secondary-column content__secondary-column--media content__secondary-column--audio hide-on-childrens-books-site"
+                                aria-hidden="true">
+                                    <div class="js-audio-components-container"></div>
+                                    @if(a.fields.body.nonEmpty) {
+                                        <br/>
+                                        @fragments.commercial.standardAd("right", Seq("dark"), Map("desktop" -> Seq("300,250", "300,274", "fluid")))
+                                    }
+                                </div>
+                            }
+
                             case a: Audio if a.fields.body.nonEmpty => {
                                 <div class="content__secondary-column content__secondary-column--media content__secondary-column--audio hide-on-childrens-books-site"
                                 aria-hidden="true">

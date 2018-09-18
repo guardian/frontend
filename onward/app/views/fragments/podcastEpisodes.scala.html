@@ -1,0 +1,17 @@
+@(audios: Seq[model.ContentType])(implicit request: RequestHeader)
+
+@import views.support.Seq2zipWithRowInfo
+
+<div class="most-viewed-container most-viewed-container--media most-viewed-container--audio"
+data-component="most-viewed-audio">
+
+    <div class="most-viewed-container__header">
+        <h3 class="most-viewed-container__heading">More from this series</h3>
+    </div>
+    <ul class="u-cf u-unstyled most-viewed--media most-viewed--audio items--media items--audio" data-link-name="More from this series">
+    @audios.zipWithRowInfo.map{ case (audio, row) =>
+        @fragments.mediaItem(audio, row.rowNum)
+    }
+    </ul>
+
+</div>
