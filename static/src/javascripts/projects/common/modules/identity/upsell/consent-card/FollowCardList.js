@@ -1,37 +1,39 @@
 // @flow
 import React, { Component } from 'preact-compat';
 import { FollowCard } from 'common/modules/identity/upsell/consent-card/FollowCard';
-import type {
-    CardLike,
-    Followable,
-} from 'common/modules/identity/upsell/consent-card/FollowCard';
-import type {ConsentType} from "../store/consents";
-import {setConsentsInApi} from "../store/consents";
+import type { ConsentType } from '../store/consents';
+import { setConsentsInApi } from '../store/consents';
 
-
-type FollowCardListProps<T: CardLike> = {
-    displayWhiteList: string[],
-    followables: Promise<ConsentType>,
-    loadFollowables: () => Promise<Followable<T>[]>,
+type FollowCardListProps = {
+    followables: Promise<ConsentType>[],
+    expandableFollowables: Promise<ConsentType>[],
 };
 
-class FollowCardList<T: CardLike> extends Component<
-    FollowCardListProps<T>,
+class FollowCardList extends Component<
+    FollowCardListProps,
     {
-        followables: Followable<T>[],
+        followables: ConsentType[],
+        expandableFollowables: ConsentType[],
+        isExpanded: ConsentType[],
     }
 > {
     constructor(props: FollowCardListProps<T>) {
         super(props);
         this.setState({
             followables: [],
+            expandableFollowables: [],
+            isExpanded: false,
         });
     }
 
     componentDidMount() {
-        Promise.all(this.props.followables).then(followables => {
+        Promise.all([
+            Promise.all(this.props.followables),
+            Promise.all(this.props.expandableFollowables),
+        ]).then(([followables, expandableFollowables]) => {
             this.setState({
-                followables
+                followables,
+                expandableFollowables,
             });
         });
     }
@@ -59,7 +61,7 @@ class FollowCardList<T: CardLike> extends Component<
                         hasConsented={followable.hasConsented}
                         onChange={hasConsented => {
                             this.updateState(followable, hasConsented);
-                            setConsentsInApi([{...followable, hasConsented}]);
+                            setConsentsInApi([{ ...followable, hasConsented }]);
                         }}
                     />
                 ))}
