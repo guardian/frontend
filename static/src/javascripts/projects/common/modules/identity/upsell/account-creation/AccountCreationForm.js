@@ -16,7 +16,7 @@ class AccountCreationForm extends Component<
     {
         password?: string,
         isLoading?: boolean,
-        isError?: boolean,
+        hasError?: boolean,
         errorReason?: string,
     }
 > {
@@ -24,7 +24,7 @@ class AccountCreationForm extends Component<
         ev.preventDefault();
         this.setState({
             isLoading: true,
-            isError: false,
+            hasError: false,
         });
 
         reqwest({
@@ -53,11 +53,11 @@ class AccountCreationForm extends Component<
                 try {
                     const apiError = JSON.parse(response.responseText)[0];
                     this.setState({
-                        isError: true,
+                        hasError: true,
                         errorReason: apiError.description,
                     });
                 } catch (exception) {
-                    this.setState({ isError: true });
+                    this.setState({ hasError: true });
                 }
             },
             complete: () => {
@@ -74,16 +74,18 @@ class AccountCreationForm extends Component<
     };
 
     render() {
-        const { isError, errorReason, isLoading } = this.state;
+        const { hasError, errorReason, isLoading } = this.state;
         const { email } = this.props;
         return (
             <form onSubmit={this.onSubmit}>
-                {isError && (
-                    <div className="form__error">
-                        {errorReason || 'Oops. Something went wrong'}
-                    </div>
-                )}
                 <ul className="identity-forms-fields">
+                    <li aria-live="polite">
+                        {hasError && (
+                            <div className="form__error" role="alert">
+                                {errorReason || 'Oops. Something went wrong'}
+                            </div>
+                        )}
+                    </li>
                     {email && (
                         <li id="email_field" aria-hidden>
                             <label

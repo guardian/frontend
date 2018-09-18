@@ -141,8 +141,10 @@ List of fields
     display: block;
     li {
         @include clearfix;
-        margin-bottom: $gs-baseline;
         display: block;
+        &:not(:empty) {
+            margin-bottom: $gs-baseline;
+        }
     }
 }
 
