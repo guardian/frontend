@@ -8,13 +8,14 @@ import type { Followable } from 'common/modules/identity/upsell/consent-card/Fol
 
 type Consent = {
     id: string,
+    idType: 'email' | 'marketing',
     name: string,
     description: string,
     isOptOut: boolean,
     isChannel: boolean,
 };
 
-type ConsentType<T: ConsentType> = {
+type ConsentType<T: Consent> = {
     consent: T,
     hasConsented: ?boolean,
 };
@@ -34,26 +35,28 @@ const getUserConsents = (): Promise<string[]> =>
         });
     });
 
-const fetchConsents = Promise.all([getUserConsents(), getAllConsents()]);
+const fetchMarketingConsents = Promise.all([getUserConsents(), getAllConsents()]).then(([acceptedConsents, allConsents]) =>
+    allConsents.map(consent => ({
+        consent: consent,
+        hasConsented: acceptedConsents.includes(consent.id),
+    })));
 
-const get = (): Promise<Followable<Consent>[]> =>
-    fetchConsents.then(([acceptedConsents, allConsents]) =>
-        allConsents.map(consent => ({
-            value: consent,
-            isFollowing: acceptedConsents.includes(consent.id),
-            onChange: newValue =>
-                setConsent([{ id: consent.id, consented: newValue }]),
-        }))
-    );
+const getMarketingConsents = (): Promise<ConsentType[]> => fetchMarketingConsents;
 
-const getConsent = (consentId: string): Promise<?ConsentType> => {
-    return fetchConsents.then(([acceptedConsents, allConsents]) =>
-        allConsents.map(consent => ({
-            consent: consent,
-            hasConsented: acceptedConsents.includes(consent.id),
-        })).find(consent => consent.consent.id === consentId)
-    );
-}
+const getMarketingConsent = (consentId: string): Promise<?ConsentType> => {
+    return fetchMarketingConsents.then(cs=>cs.find(consent => consent.consent.id === consentId));
+};
+
+const setConsentsInApi = (consents:ConsentType[]): Promise<void> => {
+    const mktConsents = consents.filter(c => c.consent.idType === 'marketing').map(c => ({
+        id: c.consent.id,
+        consented: c.hasConsented
+    }));
+    return Promise.all([
+        mktConsents?setConsent(mktConsents):true
+    ]);
+
+};
 
 export type { Consent, ConsentType };
-export { get, getConsent, fetchConsents };
+export { getMarketingConsent, getMarketingConsents, setConsentsInApi };

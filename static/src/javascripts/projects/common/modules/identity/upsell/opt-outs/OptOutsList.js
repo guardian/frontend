@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'preact-compat';
 import { Checkbox } from 'common/modules/identity/upsell/checkbox/Checkbox';
-import { get as getConsents } from 'common/modules/identity/upsell/store/consents';
+import { getMarketingConsents } from 'common/modules/identity/upsell/store/consents';
 import { setConsent } from 'common/modules/identity/api';
 import type { ConsentType } from 'common/modules/identity/upsell/store/consents';
 
@@ -25,9 +25,9 @@ export class OptOutsList extends Component<
     }
 
     componentDidMount() {
-        getConsents().then(consents => {
+        getMarketingConsents().then(consents => {
             this.setState({
-                consents: consents.filter(c => c.value.isOptOut),
+                consents: consents.filter(c => c.consent.isOptOut),
             });
         });
     }
@@ -35,7 +35,7 @@ export class OptOutsList extends Component<
     onCheckboxChange = (ev: Event, i: number) => {
         if (ev.currentTarget instanceof HTMLInputElement) {
             const clone = [...this.state.consents];
-            clone[i].isFollowing = ev.currentTarget.checked;
+            clone[i].hasConsented = ev.currentTarget.checked;
             this.setState({
                 consents: clone,
                 hasUnsavedChanges: true,
@@ -85,12 +85,12 @@ export class OptOutsList extends Component<
                         )}
                     </li>
                     <li>
-                        {consents.map(({ value, isFollowing }, i) => (
+                        {consents.map(({ consent, hasConsented }, i) => (
                             <Checkbox
-                                title={value.description}
-                                key={value.id}
+                                title={consent.description}
+                                key={consent.id}
                                 checkboxHtmlProps={{
-                                    checked: isFollowing,
+                                    checked: hasConsented,
                                     onChange: ev =>
                                         this.onCheckboxChange(ev, i),
                                 }}

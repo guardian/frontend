@@ -5,9 +5,13 @@ import type {
     CardLike,
     Followable,
 } from 'common/modules/identity/upsell/consent-card/FollowCard';
+import type {ConsentType} from "../store/consents";
+import {setConsentsInApi} from "../store/consents";
+
 
 type FollowCardListProps<T: CardLike> = {
     displayWhiteList: string[],
+    followables: Promise<ConsentType>,
     loadFollowables: () => Promise<Followable<T>[]>,
 };
 
@@ -25,22 +29,20 @@ class FollowCardList<T: CardLike> extends Component<
     }
 
     componentDidMount() {
-        this.props.loadFollowables().then(followables => {
+        Promise.all(this.props.followables).then(followables => {
             this.setState({
-                followables: followables.filter(c =>
-                    this.props.displayWhiteList.includes(c.value.id)
-                ),
+                followables
             });
         });
     }
 
-    updateState(followable: Followable<T>, newValue: boolean) {
+    updateState(followable: ConsentType, newValue: boolean) {
         this.setState(state => ({
             followables: [
                 ...state.followables.map(
                     f =>
-                        f.value.id === followable.value.id
-                            ? { ...followable, isFollowing: newValue }
+                        f.consent.id === followable.consent.id
+                            ? { ...followable, hasConsented: newValue }
                             : f
                 ),
             ],
@@ -53,11 +55,11 @@ class FollowCardList<T: CardLike> extends Component<
             <div>
                 {followables.map(followable => (
                     <FollowCard
-                        value={followable.value}
-                        isFollowing={followable.isFollowing}
-                        onChange={newValue => {
-                            followable.onChange(newValue);
-                            this.updateState(followable, newValue);
+                        consent={followable.consent}
+                        hasConsented={followable.hasConsented}
+                        onChange={hasConsented => {
+                            this.updateState(followable, hasConsented);
+                            setConsentsInApi([{...followable, hasConsented}]);
                         }}
                     />
                 ))}
