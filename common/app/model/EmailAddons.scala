@@ -292,7 +292,7 @@ case object HealthcareProfessionalsNetwork extends FrontEmailMetadata {
 
 case object HigherEducationNetwork extends FrontEmailMetadata {
   val name = "Higher Education Network"
-  override val banner = Some("higher-education-network.png")
+  override val banner = Some("universities.png")
 }
 
 case object PublicLeadersNetwork extends FrontEmailMetadata {
