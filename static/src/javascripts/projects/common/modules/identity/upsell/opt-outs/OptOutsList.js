@@ -77,13 +77,13 @@ export class OptOutsList extends Component<
         return (
             <form onSubmit={ev => this.onSubmit(ev)}>
                 <ul className="identity-forms-fields">
-                    {hasError && (
-                        <li>
-                            <div className="form__error">
+                    <li aria-live="polite">
+                        {hasError && (
+                            <div className="form__error" role="alert">
                                 Oops. Something went wrong
                             </div>
-                        </li>
-                    )}
+                        )}
+                    </li>
                     <li>
                         {consents.map(({ value, isFollowing }, i) => (
                             <Checkbox
