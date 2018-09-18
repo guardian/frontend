@@ -69,7 +69,7 @@ const generateStore = (isInTest: boolean): CmpStore => {
         CMP_ID,
         CMP_VERSION,
         COOKIE_VERSION,
-        isInTest ? readConsentCookie(COOKIE_NAME) : null,
+        readConsentCookie(COOKIE_NAME),
         globalVendorList,
         isInTest
     );
