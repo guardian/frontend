@@ -14,8 +14,8 @@ type Consent = {
     isChannel: boolean,
 };
 
-type ConsentType = {
-    consent: Consent,
+type ConsentType<T: ConsentType> = {
+    consent: T,
     hasConsented: ?boolean,
 };
 
@@ -46,5 +46,14 @@ const get = (): Promise<Followable<Consent>[]> =>
         }))
     );
 
+const getConsent = (consentId: string): Promise<?ConsentType> => {
+    return fetchConsents.then(([acceptedConsents, allConsents]) =>
+        allConsents.map(consent => ({
+            consent: consent,
+            hasConsented: acceptedConsents.includes(consent.id),
+        })).find(consent => consent.consent.id === consentId)
+    );
+}
+
 export type { Consent, ConsentType };
-export { get, fetchConsents };
+export { get, getConsent, fetchConsents };
