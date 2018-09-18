@@ -76,10 +76,13 @@ export class OptOutsList extends Component<
         const { hasUnsavedChanges, isLoading, consents, hasError } = this.state;
         return (
             <form onSubmit={ev => this.onSubmit(ev)}>
-                { hasError &&
-                    <div className="form__error">Oops. Something went wrong</div>
+                <ul className={'identity-forms-fields'}>
+                {hasError &&
+                    <li>
+                        <div className="form__error">Oops. Something went wrong</div>
+                    </li>
                 }
-                <div>
+                <li>
                     {consents.map(({ value, isFollowing }, i) => (
                         <Checkbox
                             title={value.description}
@@ -90,25 +93,28 @@ export class OptOutsList extends Component<
                             }}
                         />
                     ))}
-                </div>
-                <div className="identity-upsell-button-with-proxy">
-                    <button
-                        type="submit"
-                        disabled={isLoading}
-                        className="manage-account__button manage-account__button--main">
-                        Save changes
-                    </button>
-                    {!hasUnsavedChanges && (
-                        <span className="identity-upsell-button-with-proxy__proxy identity-upsell-button-with-proxy__proxy--success">
-                            Changes saved
-                        </span>
-                    )}
-                    {isLoading && (
-                        <span className="identity-upsell-button-with-proxy__proxy">
-                            Loading
-                        </span>
-                    )}
-                </div>
+                </li>
+                <li>
+                    <div className="identity-upsell-button-with-proxy">
+                        <button
+                            type="submit"
+                            disabled={isLoading}
+                            className="manage-account__button manage-account__button--main">
+                            Save changes
+                        </button>
+                        {!hasUnsavedChanges && (
+                            <span className="identity-upsell-button-with-proxy__proxy identity-upsell-button-with-proxy__proxy--success">
+                                Changes saved
+                            </span>
+                        )}
+                        {isLoading && (
+                            <span className="identity-upsell-button-with-proxy__proxy">
+                                Loading
+                            </span>
+                        )}
+                    </div>
+                </li>
+                </ul>
             </form>
         );
     }

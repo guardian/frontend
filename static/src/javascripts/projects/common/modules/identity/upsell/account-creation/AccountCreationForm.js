@@ -78,12 +78,14 @@ class AccountCreationForm extends Component<
         const { email } = this.props;
         return (
             <form onSubmit={this.onSubmit}>
-                {isError && (
-                    <div className="form__error">
-                        {errorReason || 'Oops. Something went wrong'}
-                    </div>
-                )}
                 <ul className="identity-forms-fields">
+                    {isError && (
+                        <li>
+                            <div className="form__error">
+                                {errorReason || 'Oops. Something went wrong'}
+                            </div>
+                        </li>
+                    )}
                     {email && (
                         <li id="email_field" aria-hidden>
                             <label
