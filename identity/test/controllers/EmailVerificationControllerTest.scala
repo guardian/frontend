@@ -49,8 +49,7 @@ class EmailVerificationControllerTest extends path.FreeSpec
   when(authService.fullyAuthenticatedUser(any[RequestHeader])) thenReturn Some(authenticatedUser)
   when(api.me(testAuth)) thenReturn Future.successful(Right(user))
 
-  val redirectDecisionService = new ProfileRedirectService(newsletterService, idRequestParser, controllerComponent)
-  val authenticatedActions = new AuthenticatedActions(authService, api, mock[IdentityUrlBuilder], controllerComponent, newsletterService, idRequestParser, redirectDecisionService)
+  val authenticatedActions = new AuthenticatedActions(authService, api, mock[IdentityUrlBuilder], controllerComponent, newsletterService, idRequestParser)
 
   val EmailValidatedMessage = "Your email address has been validated."
   when(identityUrlBuilder.buildUrl(anyString(), anyVararg[(String, String)]())) thenAnswer returnsFirstArg()

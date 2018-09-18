@@ -3,17 +3,14 @@
 @import model.{ApplicationContext, IdentityPage}
 @import com.gu.identity.model.EmailNewsletters
 @import services.EmailPrefsData
-@import services.{ProfileRedirect}
 @import controllers.editprofile.ProfileForms
 
-@import services.NoRedirect
 @(
     activeUrl: String,
     user: com.gu.identity.model.User,
     forms: ProfileForms,
     idRequest: services.IdentityRequest,
     idUrlBuilder: services.IdentityUrlBuilder,
-    redirectDecision: ProfileRedirect,
     emailPrefsForm: Form[EmailPrefsData],
     emailSubscriptions: List[String],
     availableLists: EmailNewsletters,
@@ -32,7 +29,7 @@
     bypassing it.
 *@
 
-@tab(i: Int, name: String, url: String, dataTestId: Option[String], hidden: Boolean = false, optionalClass: String = "", redirect: ProfileRedirect = NoRedirect, disableClientSideRouting: Boolean = false) = {
+@tab(i: Int, name: String, url: String, dataTestId: Option[String], hidden: Boolean = false, optionalClass: String = "", disableClientSideRouting: Boolean = false) = {
 
     <li class="tabs__tab @if(hidden){is-hidden} @if(activeUrl == url){tabs__tab--selected tone-colour tone-accent-border} @optionalClass" role="tab" id="tabs-account-profile-@i-tab" aria-selected="@(activeUrl == url)" aria-controls="tabs-account-profile-@i">
         <a
@@ -41,9 +38,7 @@
             data-pushstate-url="@url"
             @dataTestId.map{idValue => data-test-id="@idValue"}
             @{
-                if(redirect.isAllowedFrom(url))
-                    Html(s"href='${idUrlBuilder.buildUrl(redirect.url, ("returnUrl", idUrlBuilder.buildUrl(url)))}' data-tabs-ignore='true'")
-                else if(disableClientSideRouting)
+                if(disableClientSideRouting)
                     Html(s"href='$url' data-tabs-ignore='true'")
                 else
                     Html(s"href='$url'")
@@ -64,11 +59,7 @@
          data-link-name="Public Profile"
          data-link-context="Identity/profile"
     >
-        @(if(redirectDecision.isAllowedFrom(url)) {
-            Html("<div class='identity-forms-loading u-identity-forms-padded'><div class='identity-forms-loading__spinner is-updating'></div></div>")
-        } else {
-            body
-        })
+        @body
     </div>
 }
 
@@ -78,17 +69,17 @@
         <div class="identity-wrapper identity-wrapper--wide monocolumn-wrapper">
                 <h1 class="identity-title" data-test-id="edit-profile-header">Edit your profile</h1>
                 <ol class="tabs__container tabs__container--multiple js-tabs js-account-profile-tabs" id="js-account-profile-tabs" role="tablist" data-is-bound="true">
-                    @tab(1, "Public profile", "/public/edit", None, redirect = redirectDecision)
+                    @tab(1, "Public profile", "/public/edit", None)
 
-                    @tab(2, "Account details", "/account/edit", Some("edit-account-details"), optionalClass="qa-account-details-tab", redirect = redirectDecision)
+                    @tab(2, "Account details", "/account/edit", Some("edit-account-details"), optionalClass="qa-account-details-tab")
 
-                    @tab(3, "Membership", "/membership/edit", None, optionalClass="qa-membership-tab", redirect = redirectDecision, disableClientSideRouting = true)
+                    @tab(3, "Membership", "/membership/edit", None, optionalClass="qa-membership-tab", disableClientSideRouting = true)
 
-                    @tab(4, "Digital Pack", "/digitalpack/edit", None, optionalClass="qa-digitalpack-tab", redirect = redirectDecision)
+                    @tab(4, "Digital Pack", "/digitalpack/edit", None, optionalClass="qa-digitalpack-tab")
 
-                    @tab(5, "Contributions", "/contribution/recurring/edit", None, optionalClass="qa-contributions-tab", redirect = redirectDecision)
+                    @tab(5, "Contributions", "/contribution/recurring/edit", None, optionalClass="qa-contributions-tab")
 
-                    @tab(6, "Emails & marketing", "/email-prefs", None, optionalClass="qa-privacy-tab", redirect = redirectDecision)
+                    @tab(6, "Emails & marketing", "/email-prefs", None, optionalClass="qa-privacy-tab", disableClientSideRouting = true)
                 </ol>
         </div>
     </div>
