@@ -9,14 +9,14 @@ import loadEnhancers from 'common/modules/identity/modules/loadEnhancers';
 import { AccountCreationCompleteConsentsFlow } from 'common/modules/identity/upsell/account-creation/AccountCreationCompleteConsentsFlow';
 import { OptOutsList } from 'common/modules/identity/upsell/opt-outs/OptOutsList';
 import { Block } from 'common/modules/identity/upsell/block/Block';
-import { getMarketingConsent } from 'common/modules/identity/upsell/store/consents';
-import { get as getNewsletters } from 'common/modules/identity/upsell/store/newsletters';
+import { getUserConsent } from 'common/modules/identity/upsell/store/consents';
 import { AccountCreationBlock } from './account-creation/AccountCreationBlock';
+import {getNewsletterConsent} from "./store/consents";
 
 const ConfirmEmailThankYou = (
     <Block title="Interested in any of this content?">
         <FollowCardList
-            followables={[getMarketingConsent('supporter'),getMarketingConsent('jobs')]}
+            followables={[getUserConsent('supporter'),getUserConsent('jobs'),getNewsletterConsent('today-uk')]}
         />
     </Block>
 );
