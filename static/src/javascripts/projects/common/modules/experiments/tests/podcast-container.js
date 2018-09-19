@@ -111,8 +111,8 @@ const runContainerTest = (variant: string) => (): void => {
     }
 };
 
-const trackClick = (name: string) => (complete: () => void): void => {
-    const component = document.querySelector(`.${name}`);
+const trackClick = (selector: string) => (complete: () => void): void => {
+    const component = document.querySelector(selector);
     if (component) {
         component.onclick = () => {
             complete();
@@ -120,8 +120,8 @@ const trackClick = (name: string) => (complete: () => void): void => {
     }
 };
 
-const trackImpression = (name: string) => (track: () => void): void => {
-    const component = document.querySelector(`.${name}`);
+const trackImpression = (selector: string) => (track: () => void): void => {
+    const component = document.querySelector(selector);
     if (component) {
         const observer = new window.IntersectionObserver(
             (entries, self) => {
@@ -161,20 +161,20 @@ export const PodcastContainer = {
         {
             id: 'a',
             test: runContainerTest('a'),
-            impression: trackImpression('podcast-container-a__main'),
-            success: trackClick('podcast-container-a__main'),
+            impression: trackImpression('#podcast'),
+            success: trackClick('.podcast-container-a__main'),
         },
         {
             id: 'b',
             test: runContainerTest('b'),
-            impression: trackImpression('podcast-container__track'),
-            success: trackClick('podcast-container__track'),
+            impression: trackImpression('.podcast-container__track'),
+            success: trackClick('.podcast-container__track'),
         },
         {
             id: 'c',
             test: runContainerTest('c'),
-            impression: trackImpression('podcast-container-c__main'),
-            success: trackClick('podcast-container__track'),
+            impression: trackImpression('.podcast-container-c__main'),
+            success: trackClick('.podcast-container__track'),
         },
     ],
 };
