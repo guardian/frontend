@@ -310,7 +310,7 @@ const appNexusBidder: PrebidBidder = {
     switchName: 'prebidAppnexus',
     bidParams: (): PrebidAppNexusParams => ({
         placementId: getAppNexusDirectPlacementId(),
-        keywords: buildAppNexusTargeting(buildPageTargeting()), // Ok to duplicate call. Lodash 'once' is used.
+        keywords: buildAppNexusTargetingObject(buildPageTargeting()), // Ok to duplicate call. Lodash 'once' is used.
     }),
 };
 
