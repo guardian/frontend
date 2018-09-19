@@ -38,6 +38,10 @@
         }
     }
 
+    &.identity-wrapper--no-padding {
+        padding: 0;
+    }
+
     &.identity-wrapper--wide {
         max-width: gs-span(8);
 
