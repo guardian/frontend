@@ -13,11 +13,14 @@
         position: relative;
         margin-bottom: $gs-baseline;
         &:before {
+            @include circular;
             position: absolute;
-            content: '•';
-            color: $green-dark;
-            width: 1em;
+            content: '';
+            background-color: $green-dark;
+            width: .9em;
+            height: .9em;
             margin-left: -$gs-gutter;
+            margin-top: $gs-baseline / 3;
         }
     }
     &.identity-upsell-account-creation-bullets--super {

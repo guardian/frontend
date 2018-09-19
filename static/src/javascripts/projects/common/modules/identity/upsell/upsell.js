@@ -19,12 +19,12 @@ const ConfirmEmailThankYou = (
         <FollowCardList
             consents={[
                 getUserConsent('supporter'),
-                getUserConsent('jobs'),
                 getNewsletterConsent('today-uk'),
             ]}
             expandableConsents={[
                 getUserConsent('jobs'),
-                getNewsletterConsent('today-uk'),
+                getUserConsent('holidays'),
+                getNewsletterConsent('today-us'),
             ]}
         />
     </Block>

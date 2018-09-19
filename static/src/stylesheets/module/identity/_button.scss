@@ -31,8 +31,8 @@
     $padding-horizontal: $gs-gutter;
     @include fs-textSans($font-size);
     @include identity-button($brightness-7);
+    @include circular;
     height: $height;
-    border-radius: 100px;
     border: 0;
     cursor: pointer;
     float: left;
@@ -150,9 +150,19 @@
     font-weight: 600;
 }
 
+.manage-account__button--danger {
+    @include identity-button($news-main);
+    font-weight: 600;
+}
+
 .manage-account__button--secondary {
     @include identity-button(hsla(0, 100%, 100%, 0));
-    border: 1px solid $brightness-86;
+    box-shadow: inset 0 0 0 1px $brightness-86;
+}
+
+.manage-account__button--green {
+    @include identity-button($green-dark);
+    font-weight: 600;
 }
 
 .manage-account__button--light {

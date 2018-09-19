@@ -18,15 +18,17 @@ const FollowCard = (props: FollowCardProps) => {
             <p className="identity-upsell-consent-card__description">
                 {description}
             </p>
-            <FollowButtonWrap
-                following={hasConsented}
-                onFollow={() => {
-                    props.onChange(true);
-                }}
-                onUnfollow={() => {
-                    props.onChange(false);
-                }}
-            />
+            <div className="identity-upsell-consent-card__footer">
+                <FollowButtonWrap
+                    following={hasConsented}
+                    onFollow={() => {
+                        props.onChange(true);
+                    }}
+                    onUnfollow={() => {
+                        props.onChange(false);
+                    }}
+                />
+            </div>
         </div>
     );
 };
