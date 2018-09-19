@@ -155,6 +155,11 @@
     border: 1px solid $brightness-86;
 }
 
+.manage-account__button--green {
+    @include identity-button($green-dark);
+    font-weight: 600;
+}
+
 .manage-account__button--light {
     @extend %manage-account__button--light;
 }

@@ -68,7 +68,7 @@ class FollowCardList extends Component<
 
         return (
             <div>
-                <div>
+                <div className={'identity-upsell-consent-card-grid'}>
                     {displayables.map((consent, index) => (
                         <FollowCard
                             key={consent.uniqueId+index}
@@ -82,15 +82,17 @@ class FollowCardList extends Component<
                         />
                     ))}
                 </div>
-                {isExpanded ? (
-                    <button onClick={() => this.updateExpandState(false)}>
-                        less
-                    </button>
-                ) : (
-                    <button onClick={() => this.updateExpandState(true)}>
-                        more
-                    </button>
-                )}
+                <div className={'identity-upsell-consent-card-footer'}>
+                    {isExpanded ? (
+                        <button className={'manage-account__button manage-account__button--secondary'} onClick={() => this.updateExpandState(false)}>
+                            Less
+                        </button>
+                    ) : (
+                        <button className={'manage-account__button manage-account__button--secondary'} onClick={() => this.updateExpandState(true)}>
+                            More
+                        </button>
+                    )}
+                </div>
             </div>
         );
     }

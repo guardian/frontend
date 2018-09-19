@@ -21,10 +21,11 @@ class FollowButtonWrap extends Component<FollowButtonWrapProps, {}> {
             return (
                 <button
                     type="button"
+                    className={'manage-account__button manage-account__button--secondary'}
                     onClick={() => {
                         this.updateFollowing(false);
                     }}>
-                    Following – click to unfollow
+                    Signed up – click to undo
                 </button>
             );
         }
@@ -32,10 +33,11 @@ class FollowButtonWrap extends Component<FollowButtonWrapProps, {}> {
         return (
             <button
                 type="button"
+                className={'manage-account__button manage-account__button--green'}
                 onClick={() => {
                     this.updateFollowing(true);
                 }}>
-                Follow
+                Sign me up
             </button>
         );
     }
