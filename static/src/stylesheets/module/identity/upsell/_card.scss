@@ -32,6 +32,6 @@
 }
 
 .identity-upsell-consent-card-footer {
-    margin-top: $gs-baseline;
     @include clearfix;
+    margin-top: $gs-baseline;
 }
