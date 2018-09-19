@@ -1,16 +1,9 @@
 // @flow
 import template from 'lodash/utilities/template';
-import containerAHtml from 'raw-loader!journalism/views/podcastContainerA.html';
 import containerBHtml from 'raw-loader!journalism/views/podcastContainerB.html';
 import containerCHtml from 'raw-loader!journalism/views/podcastContainerC.html';
 import config from 'lib/config';
 import { addClassesAndTitle } from 'common/views/svg';
-
-import containerWaveALarge from 'svgs/journalism/podcast-container/waveform.svg';
-import containerWaveATablet from 'svgs/journalism/podcast-container/waveform-tablet.svg';
-import containerWaveAMobile from 'svgs/journalism/podcast-container/waveform-mobile.svg';
-import containerWaveATiny from 'svgs/journalism/podcast-container/waveform-tiny.svg';
-import containerButton from 'svgs/journalism/podcast-container/play-btnbig.svg';
 
 import audioIcon from 'svgs/journalism/podcast-container/audio-icon.svg';
 
@@ -38,33 +31,6 @@ const runContainerTest = (variant: string) => (): void => {
             podcastContainer.className += ' podcast-container__visible';
 
             switch (variant) {
-                case 'a':
-                    oldBody.innerHTML = template(containerAHtml, {
-                        headline,
-                        standfirst,
-                        url: urlWithCampaign(episodeUrl, variant),
-                        button: addClassesAndTitle(containerButton.markup, [
-                            `podcast-container-a__button`,
-                        ]),
-                        waveLarge: addClassesAndTitle(
-                            containerWaveALarge.markup,
-                            [`podcast-container-a__wave-large`]
-                        ),
-                        waveTablet: addClassesAndTitle(
-                            containerWaveATablet.markup,
-                            [`podcast-container-a__wave-tablet`]
-                        ),
-                        waveMobile: addClassesAndTitle(
-                            containerWaveAMobile.markup,
-                            [`podcast-container-a__wave-mobile`]
-                        ),
-                        waveTiny: addClassesAndTitle(
-                            containerWaveATiny.markup,
-                            [`podcast-container-a__wave-tiny`]
-                        ),
-                    });
-
-                    break;
                 case 'b':
                     oldBody.innerHTML = template(containerBHtml, {
                         headline,
@@ -158,12 +124,6 @@ export const PodcastContainer = {
     },
 
     variants: [
-        {
-            id: 'a',
-            test: runContainerTest('a'),
-            impression: trackImpression('#podcast'),
-            success: trackClick('.podcast-container-a__main'),
-        },
         {
             id: 'b',
             test: runContainerTest('b'),
