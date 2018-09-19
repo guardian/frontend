@@ -18,7 +18,7 @@ const FollowCard = (props: FollowCardProps) => {
             <p className="identity-upsell-consent-card__description">
                 {description}
             </p>
-            <div className={'identity-upsell-consent-card__footer'}>
+            <div className="identity-upsell-consent-card__footer">
                 <FollowButtonWrap
                     following={hasConsented}
                     onFollow={() => {

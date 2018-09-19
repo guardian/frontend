@@ -57,6 +57,28 @@ class FollowCardList extends Component<
         }));
     };
 
+    expandableConsentsButtonText = (): string => {
+        const joinWithOr = arr =>
+            arr.reduce(
+                (acc, val, idx, src) =>
+                    idx === 0
+                        ? val
+                        : [
+                              acc,
+                              idx + 1 >= src.length ? ' or ' : ', ',
+                              val,
+                          ].join(''),
+                ''
+            );
+        const buttonWords = [...this.state.expandableConsents]
+            .splice(0, 2)
+            .map(c => c.consent.name);
+        if (this.state.expandableConsents.length > buttonWords.length) {
+            buttonWords.push('More');
+        }
+        return `Interested in ${joinWithOr(buttonWords)}?`;
+    };
+
     render() {
         const { consents, expandableConsents, isExpanded } = this.state;
 
@@ -64,14 +86,12 @@ class FollowCardList extends Component<
             ? [...consents, ...expandableConsents]
             : [...consents];
 
-        console.log(displayables.length);
-
         return (
             <div>
-                <div className={'identity-upsell-consent-card-grid'}>
-                    {displayables.map((consent, index) => (
+                <div className="identity-upsell-consent-card-grid">
+                    {displayables.map(consent => (
                         <FollowCard
-                            key={consent.uniqueId+index}
+                            key={consent.uniqueId}
                             consent={consent.consent}
                             hasConsented={consent.hasConsented}
                             onChange={hasConsented => {
@@ -82,17 +102,23 @@ class FollowCardList extends Component<
                         />
                     ))}
                 </div>
-                <div className={'identity-upsell-consent-card-footer'}>
-                    {isExpanded ? (
-                        <button className={'manage-account__button manage-account__button--secondary'} onClick={() => this.updateExpandState(false)}>
-                            Less
-                        </button>
-                    ) : (
-                        <button className={'manage-account__button manage-account__button--secondary'} onClick={() => this.updateExpandState(true)}>
-                            More
-                        </button>
-                    )}
-                </div>
+                {expandableConsents.length > 0 && (
+                    <div className="identity-upsell-consent-card-footer">
+                        {isExpanded ? (
+                            <button
+                                className="manage-account__button manage-account__button--secondary"
+                                onClick={() => this.updateExpandState(false)}>
+                                Less
+                            </button>
+                        ) : (
+                            <button
+                                className="manage-account__button manage-account__button--secondary"
+                                onClick={() => this.updateExpandState(true)}>
+                                {this.expandableConsentsButtonText()}
+                            </button>
+                        )}
+                    </div>
+                )}
             </div>
         );
     }

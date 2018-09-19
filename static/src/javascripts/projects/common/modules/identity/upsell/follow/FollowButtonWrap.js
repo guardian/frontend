@@ -8,17 +8,25 @@ type FollowButtonWrapProps = {
 };
 
 type FollowButtonWrapState = {
-    mousedOutOnce: boolean
-}
+    mousedOutOnce: boolean,
+};
 
-class FollowButtonWrap extends Component<FollowButtonWrapProps, FollowButtonWrapState> {
-
-    constructor(props:FollowButtonWrapProps) {
+class FollowButtonWrap extends Component<
+    FollowButtonWrapProps,
+    FollowButtonWrapState
+> {
+    constructor(props: FollowButtonWrapProps) {
         super(props);
         this.setState(() => ({
-            mousedOutOnce: false
+            mousedOutOnce: false,
         }));
     }
+
+    onMouseOut = () => {
+        this.setState(() => ({
+            mousedOutOnce: true,
+        }));
+    };
 
     updateFollowing = (to: boolean) => {
         if (to) {
@@ -27,42 +35,48 @@ class FollowButtonWrap extends Component<FollowButtonWrapProps, FollowButtonWrap
             this.props.onUnfollow();
         }
         this.setState(() => ({
-            mousedOutOnce: false
+            mousedOutOnce: false,
         }));
     };
 
-    onMouseOut = () => {
-        this.setState(() => ({
-            mousedOutOnce: true
-        }));
-    }
-
     render() {
-        const {following }= this.props;
-        const {mousedOutOnce} = this.state;
+        const { following } = this.props;
+        const { mousedOutOnce } = this.state;
         if (following) {
             return (
-                <div aria-live={'polite'} className={
-                    ['identity-upsell-follow-button-wrap',mousedOutOnce?'':'identity-upsell-follow-button-wrap--blocked'].join(' ')
-                } onMouseOut={()=>{this.onMouseOut()}}>
+                <div
+                    aria-live="polite"
+                    className={[
+                        'identity-upsell-follow-button-wrap',
+                        mousedOutOnce
+                            ? ''
+                            : 'identity-upsell-follow-button-wrap--blocked',
+                    ].join(' ')}
+                    onMouseOut={() => {
+                        this.onMouseOut();
+                    }}
+                    onBlur={() => {
+                        this.onMouseOut();
+                    }}>
                     <div
-                        role={'alert'}
-                        className={['manage-account__button',
+                        role="alert"
+                        className={[
+                            'manage-account__button',
                             'manage-account__button--secondary',
                             'manage-account__button--center',
-                            'identity-upsell-follow-button-wrap__button'
-                        ].join(' ')}
-                        >
+                            'identity-upsell-follow-button-wrap__button',
+                        ].join(' ')}>
                         Signed up
                     </div>
                     <button
                         type="button"
-                        className={['manage-account__button',
+                        className={[
+                            'manage-account__button',
                             'manage-account__button--danger',
                             'manage-account__button--center',
                             'identity-upsell-follow-button-wrap__button',
                             'identity-upsell-follow-button-wrap__button--longer',
-                            'identity-upsell-follow-button-wrap__button--hoverable'
+                            'identity-upsell-follow-button-wrap__button--hoverable',
                         ].join(' ')}
                         onClick={() => {
                             this.updateFollowing(false);
@@ -76,7 +90,7 @@ class FollowButtonWrap extends Component<FollowButtonWrapProps, FollowButtonWrap
         return (
             <button
                 type="button"
-                className={'manage-account__button manage-account__button--green'}
+                className="manage-account__button manage-account__button--green"
                 onClick={() => {
                     this.updateFollowing(true);
                 }}>
