@@ -1,9 +1,13 @@
 .identity-upsell-consent-card-grid {
     display: grid;
-    grid-column-gap: $gs-gutter;
     grid-row-gap: $gs-baseline;
-    grid-template-columns: 1fr 1fr;
-    grid-auto-rows: 1fr;
+    grid-auto-columns: 1fr;
+    @include mq(tablet) {
+        display: grid;
+        grid-column-gap: $gs-gutter;
+        grid-template-columns: 1fr 1fr;
+        grid-auto-rows: 1fr;
+    }
 }
 
 .identity-upsell-consent-card {

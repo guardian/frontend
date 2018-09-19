@@ -85,20 +85,23 @@
 
 .identity-upsell-block {
     width: 100%;
-    padding-top: $gs-baseline;
+    padding: $gs-baseline $gs-gutter/2 $gs-baseline * 3.5;
+    margin: 0 $gs-gutter/-2;
     border-top: 2px solid $brightness-86;
-    margin: $gs-baseline auto $gs-baseline * 3.5;
+    box-shadow: -1px 0 0 $brightness-86;
     &:first-child {
-        margin: 0 auto $gs-baseline;
         border-top: 0;
-        padding: 0;
     }
     &.identity-upsell-block--with-grid {
         .identity-upsell-block__container {
             display: grid;
-            grid-column-gap: $gs-gutter;
             grid-row-gap: $gs-baseline;
-            grid-template-columns: 1fr 1fr;
+            grid-auto-columns: 1fr;
+            @include mq(tablet) {
+                display: grid;
+                grid-column-gap: $gs-gutter;
+                grid-template-columns: 1fr 1fr;
+            }
         }
     }
 }
