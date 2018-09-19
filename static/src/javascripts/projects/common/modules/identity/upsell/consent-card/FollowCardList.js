@@ -44,6 +44,10 @@ class FollowCardList extends Component<
                 original =>
                     original.uniqueId === consent.uniqueId ? consent : original
             ),
+            expandableConsents: state.expandableConsents.map(
+                original =>
+                    original.uniqueId === consent.uniqueId ? consent : original
+            ),
         }));
     }
 
@@ -58,14 +62,16 @@ class FollowCardList extends Component<
 
         const displayables = isExpanded
             ? [...consents, ...expandableConsents]
-            : consents;
+            : [...consents];
+
+        console.log(displayables.length);
 
         return (
             <div>
                 <div>
-                    {displayables.map(consent => (
+                    {displayables.map((consent, index) => (
                         <FollowCard
-                            key={consent.uniqueId}
+                            key={consent.uniqueId+index}
                             consent={consent.consent}
                             hasConsented={consent.hasConsented}
                             onChange={hasConsented => {
