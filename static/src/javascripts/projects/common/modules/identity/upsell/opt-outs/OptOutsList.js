@@ -1,14 +1,16 @@
 // @flow
 import React, { Component } from 'preact-compat';
 import { Checkbox } from 'common/modules/identity/upsell/checkbox/Checkbox';
-import { get as getConsents } from 'common/modules/identity/upsell/store/consents';
-import { setConsent } from 'common/modules/identity/api';
-import type { ConsentType } from 'common/modules/identity/upsell/store/consents';
+import {
+    getUserConsents,
+    setConsentsInApi,
+} from 'common/modules/identity/upsell/store/consents';
+import type { ConsentWithState } from 'common/modules/identity/upsell/store/types';
 
 export class OptOutsList extends Component<
     {},
     {
-        consents: ConsentType[],
+        consents: ConsentWithState[],
         isLoading: boolean,
         hasUnsavedChanges: boolean,
         hasError: boolean,
@@ -25,22 +27,21 @@ export class OptOutsList extends Component<
     }
 
     componentDidMount() {
-        getConsents().then(consents => {
+        getUserConsents().then(consents => {
             this.setState({
-                consents: consents.filter(c => c.value.isOptOut),
+                consents: consents.filter(c => c.consent.isOptOut),
             });
         });
     }
 
-    onCheckboxChange = (ev: Event, i: number) => {
-        if (ev.currentTarget instanceof HTMLInputElement) {
-            const clone = [...this.state.consents];
-            clone[i].isFollowing = ev.currentTarget.checked;
-            this.setState({
-                consents: clone,
-                hasUnsavedChanges: true,
-            });
-        }
+    onCheckboxChange = (consent: ConsentWithState) => {
+        this.setState(state => ({
+            hasUnsavedChanges: true,
+            consents: state.consents.map(
+                original =>
+                    original.uniqueId === consent.uniqueId ? consent : original
+            ),
+        }));
     };
 
     onSubmit = (ev: Event) => {
@@ -49,7 +50,7 @@ export class OptOutsList extends Component<
             isLoading: true,
             hasError: false,
         });
-        this.updateChangesRemotely()
+        setConsentsInApi(this.state.consents)
             .then(() => {
                 this.setState({
                     hasUnsavedChanges: false,
@@ -64,14 +65,6 @@ export class OptOutsList extends Component<
             });
     };
 
-    updateChangesRemotely = (): Promise<void> =>
-        setConsent(
-            this.state.consents.map(c => ({
-                consented: c.isFollowing,
-                id: c.value.id,
-            }))
-        );
-
     render() {
         const { hasUnsavedChanges, isLoading, consents, hasError } = this.state;
         return (
@@ -85,14 +78,18 @@ export class OptOutsList extends Component<
                         )}
                     </li>
                     <li>
-                        {consents.map(({ value, isFollowing }, i) => (
+                        {consents.map(consent => (
                             <Checkbox
-                                title={value.description}
-                                key={value.id}
+                                title={consent.consent.description}
+                                key={consent.uniqueId}
                                 checkboxHtmlProps={{
-                                    checked: isFollowing,
-                                    onChange: ev =>
-                                        this.onCheckboxChange(ev, i),
+                                    checked: consent.hasConsented,
+                                    onChange: ev => {
+                                        consent.setState(
+                                            ev.currentTarget.checked
+                                        );
+                                        this.onCheckboxChange(consent);
+                                    },
                                 }}
                             />
                         ))}

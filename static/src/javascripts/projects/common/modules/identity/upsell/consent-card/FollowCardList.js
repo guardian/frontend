@@ -1,66 +1,90 @@
 // @flow
 import React, { Component } from 'preact-compat';
 import { FollowCard } from 'common/modules/identity/upsell/consent-card/FollowCard';
-import type {
-    CardLike,
-    Followable,
-} from 'common/modules/identity/upsell/consent-card/FollowCard';
+import type { ConsentWithState } from '../store/types';
+import { setConsentsInApi } from '../store/consents';
 
-type FollowCardListProps<T: CardLike> = {
-    displayWhiteList: string[],
-    loadFollowables: () => Promise<Followable<T>[]>,
+type FollowCardListProps = {
+    consents: Promise<ConsentWithState>[],
+    expandableConsents: Promise<ConsentWithState>[],
 };
 
-class FollowCardList<T: CardLike> extends Component<
-    FollowCardListProps<T>,
+class FollowCardList extends Component<
+    FollowCardListProps,
     {
-        followables: Followable<T>[],
+        consents: ConsentWithState[],
+        expandableConsents: ConsentWithState[],
+        isExpanded: boolean,
     }
 > {
-    constructor(props: FollowCardListProps<T>) {
+    constructor(props: FollowCardListProps) {
         super(props);
         this.setState({
-            followables: [],
+            consents: [],
+            expandableConsents: [],
+            isExpanded: false,
         });
     }
 
     componentDidMount() {
-        this.props.loadFollowables().then(followables => {
+        Promise.all([
+            Promise.all(this.props.consents),
+            Promise.all(this.props.expandableConsents),
+        ]).then(([consents, expandableConsents]) => {
             this.setState({
-                followables: followables.filter(c =>
-                    this.props.displayWhiteList.includes(c.value.id)
-                ),
+                consents,
+                expandableConsents,
             });
         });
     }
 
-    updateState(followable: Followable<T>, newValue: boolean) {
+    updateState(consent: ConsentWithState) {
         this.setState(state => ({
-            followables: [
-                ...state.followables.map(
-                    f =>
-                        f.value.id === followable.value.id
-                            ? { ...followable, isFollowing: newValue }
-                            : f
-                ),
-            ],
+            consents: state.consents.map(
+                original =>
+                    original.uniqueId === consent.uniqueId ? consent : original
+            ),
         }));
     }
 
+    updateExpandState = (isExpanded: boolean) => {
+        this.setState(() => ({
+            isExpanded,
+        }));
+    };
+
     render() {
-        const { followables } = this.state;
+        const { consents, expandableConsents, isExpanded } = this.state;
+
+        const displayables = isExpanded
+            ? [...consents, ...expandableConsents]
+            : consents;
+
         return (
             <div>
-                {followables.map(followable => (
-                    <FollowCard
-                        value={followable.value}
-                        isFollowing={followable.isFollowing}
-                        onChange={newValue => {
-                            followable.onChange(newValue);
-                            this.updateState(followable, newValue);
-                        }}
-                    />
-                ))}
+                <div>
+                    {displayables.map(consent => (
+                        <FollowCard
+                            key={consent.uniqueId}
+                            consent={consent.consent}
+                            hasConsented={consent.hasConsented}
+                            onChange={hasConsented => {
+                                consent.setState(hasConsented);
+                                this.updateState(consent);
+                                setConsentsInApi([consent]);
+                            }}
+                        />
+                    ))}
+                </div>
+                {isExpanded ? (
+                    <button onClick={() => this.updateExpandState(false)}>
+                        less
+                    </button>
+                ) : (
+                    <button onClick={() => this.updateExpandState(true)}>
+                        more
+                    </button>
+                )}
             </div>
         );
     }

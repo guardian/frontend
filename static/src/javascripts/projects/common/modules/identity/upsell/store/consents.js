@@ -1,50 +1,45 @@
 // @flow
-import {
-    getAllConsents,
-    getUserFromApi,
-    setConsent,
-} from 'common/modules/identity/api';
-import type { Followable } from 'common/modules/identity/upsell/consent-card/FollowCard';
+import { fetchNewsletters, fetchUserConsents } from './fetch';
+import { consentTypeList, UserConsentWithState } from './types';
+import type { ConsentWithState } from './types';
 
-type Consent = {
-    id: string,
-    name: string,
-    description: string,
-    isOptOut: boolean,
-    isChannel: boolean,
-};
+const getUserConsents = (): Promise<UserConsentWithState[]> =>
+    fetchUserConsents;
 
-type ConsentType = {
-    consent: Consent,
-    hasConsented: ?boolean,
-};
-
-const getUserConsents = (): Promise<string[]> =>
-    new Promise(accept => {
-        getUserFromApi(user => {
-            if (user && user.consents) {
-                accept(
-                    user.consents
-                        .filter(consent => consent.consented === true)
-                        .map(consent => consent.id)
-                );
-            } else {
-                accept([]);
-            }
-        });
-    });
-
-const fetchConsents = Promise.all([getUserConsents(), getAllConsents()]);
-
-const get = (): Promise<Followable<Consent>[]> =>
-    fetchConsents.then(([acceptedConsents, allConsents]) =>
-        allConsents.map(consent => ({
-            value: consent,
-            isFollowing: acceptedConsents.includes(consent.id),
-            onChange: newValue =>
-                setConsent([{ id: consent.id, consented: newValue }]),
-        }))
+const getUserConsent = (consentId: string): Promise<?UserConsentWithState> =>
+    fetchUserConsents.then(cs =>
+        cs.find(consent => consent.consent.id === consentId)
     );
 
-export type { Consent, ConsentType };
-export { get, fetchConsents };
+const getNewsletterConsents = (): Promise<ConsentWithState[]> =>
+    fetchNewsletters;
+
+const getNewsletterConsent = (consentId: string): Promise<?ConsentWithState> =>
+    fetchNewsletters.then(cs =>
+        cs.find(consent => consent.consent.id === consentId)
+    );
+
+const setConsentsInApi = (consents: ConsentWithState[]): Promise<any> => {
+    /*
+    This function takes n consents then will split
+    them into all consent types, then will use the send
+    to api fn for that consent type. The reason for this is
+    that an arbitrary number of consents of different types
+    can be set at once.
+    */
+    const consentsWithFunctions = consentTypeList.map(type => {
+        const filteredConsents = consents.filter(c => c instanceof type);
+        return filteredConsents && filteredConsents.length
+            ? type.updateInApiFn(filteredConsents)
+            : true;
+    });
+    return Promise.all(consentsWithFunctions);
+};
+
+export {
+    getUserConsent,
+    getUserConsents,
+    getNewsletterConsent,
+    getNewsletterConsents,
+    setConsentsInApi,
+};

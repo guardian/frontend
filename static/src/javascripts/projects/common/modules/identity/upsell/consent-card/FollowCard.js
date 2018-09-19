@@ -1,25 +1,17 @@
 // @flow
 import React from 'preact-compat';
-import { FollowButtonWrap } from 'common/modules/identity/follow/FollowButtonWrap';
+import { FollowButtonWrap } from 'common/modules/identity/upsell/follow/FollowButtonWrap';
+import type { Consent } from '../store/types';
 
-/**
- * Type for things that can be rendered in a Follow Card
- */
-export type CardLike = {
-    id: string,
-    name: string,
-    description: string,
-};
-
-export type Followable<T: CardLike> = {
-    value: T,
+export type FollowCardProps = {
+    consent: Consent,
     onChange: boolean => void,
-    isFollowing: boolean,
+    hasConsented: boolean,
 };
 
-const FollowCard = <T: CardLike>(props: Followable<T>) => {
-    const { isFollowing } = props;
-    const { name, description } = props.value;
+const FollowCard = (props: FollowCardProps) => {
+    const { hasConsented } = props;
+    const { name, description } = props.consent;
     return (
         <div className="identity-upsell-consent-card">
             <h1 className="identity-upsell-consent-card__title">{name}</h1>
@@ -27,7 +19,7 @@ const FollowCard = <T: CardLike>(props: Followable<T>) => {
                 {description}
             </p>
             <FollowButtonWrap
-                following={isFollowing}
+                following={hasConsented}
                 onFollow={() => {
                     props.onChange(true);
                 }}
