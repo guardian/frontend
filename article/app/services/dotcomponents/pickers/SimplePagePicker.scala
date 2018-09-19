@@ -1,16 +1,13 @@
-package services
+package services.dotcomponents.pickers
 
 import controllers.ArticlePage
 import model.PageWithStoryPackage
 import model.liveblog.{BlockElement, ImageBlockElement, TextBlockElement}
 import play.api.mvc.RequestHeader
+import services.dotcomponents.{LocalRender, RemoteRender, RenderType}
 import views.support.Commercial
 
-sealed trait RenderType
-case object RemoteRender extends RenderType
-case object LocalRender extends RenderType
-
-object RenderingTierPicker {
+class SimplePagePicker extends RenderTierPickerStrategy {
 
   private def isDiscussionDisabled(page: PageWithStoryPackage): Boolean = {
     (! page.article.content.trail.isCommentable) && page.article.content.trail.isClosedForComments
@@ -61,3 +58,4 @@ object RenderingTierPicker {
   }
 
 }
+

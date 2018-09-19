@@ -11,9 +11,10 @@ import views.support._
 import metrics.TimingMetric
 import play.api.libs.json.Json
 import renderers.RemoteRender
-import services.{CAPILookup, RemoteRender, RenderingTierPicker}
+import services.CAPILookup
 import implicits.{AmpFormat, EmailFormat, HtmlFormat, JsonFormat}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
+import services.dotcomponents.{LocalRender, RemoteRender, RenderType, RenderingTierPicker}
 
 import scala.concurrent.Future
 
@@ -38,9 +39,13 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
 
   def renderArticle(path: String): Action[AnyContent] = {
     Action.async { implicit request =>
-        mapModel(path, ArticleBlocks) {
-          if(request.isGuui) remoteRender.render(ws, path, _) else render(path, _)
+      mapModel(path, ArticleBlocks)( article => {
+        RenderingTierPicker.getRenderTierFor(article) match {
+          case RemoteRender => remoteRender.render(ws, path, article)
+          case LocalRender => render(path, article)
+          case _ => render(path, article)
         }
+      })
     }
   }
 
@@ -74,14 +79,6 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
   }
 
   private def render(path: String, article: ArticlePage)(implicit request: RequestHeader): Future[Result] = {
-
-    val renderTier = RenderingTierPicker.getRenderTierFor(article, request)
-
-    renderTier match {
-      case RemoteRender => log.logger.info(s"Remotely renderable article $path");
-      case _ =>
-    }
-
     Future {
       request.getRequestFormat match {
         case JsonFormat => common.renderJson(getJson(article), article)
@@ -90,7 +87,6 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
         case AmpFormat => common.renderHtml(views.html.articleAMP(article), article)
       }
     }
-
   }
 
   private def mapModel(path: String, range: BlockRange)(render: ArticlePage => Future[Result])(implicit request: RequestHeader): Future[Result] = {
