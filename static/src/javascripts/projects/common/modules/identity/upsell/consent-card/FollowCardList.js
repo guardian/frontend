@@ -17,7 +17,7 @@ class FollowCardList extends Component<
         isExpanded: ConsentType[],
     }
 > {
-    constructor(props: FollowCardListProps<T>) {
+    constructor(props: FollowCardListProps) {
         super(props);
         this.setState({
             followables: [],
@@ -52,8 +52,7 @@ class FollowCardList extends Component<
     }
 
     updateExpandState = (isExpanded: boolean) => {
-        this.setState(s => ({
-            ...s,
+        this.setState(() => ({
             isExpanded,
         }));
     };
@@ -82,11 +81,13 @@ class FollowCardList extends Component<
                     ))}
                 </div>
                 {isExpanded ? (
-                    <button onClick={this.updateExpandState(false)}>
+                    <button onClick={() => this.updateExpandState(false)}>
                         less
                     </button>
                 ) : (
-                    <button onClick={this.updateExpandState(true)}>more</button>
+                    <button onClick={() => this.updateExpandState(true)}>
+                        more
+                    </button>
                 )}
             </div>
         );

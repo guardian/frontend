@@ -70,12 +70,12 @@ const getNewsletterConsent = (consentId: string): Promise<?ConsentType> =>
         cs.find(consent => consent.consent.id === consentId)
     );
 
-const setConsentsInApi = (consents: ConsentType[]): Promise<void> => {
+const setConsentsInApi = (consents: ConsentType[]): Promise<any> => {
     const mktConsents = consents
         .filter(c => c.consent.idType === 'marketing')
         .map(c => ({
             id: c.consent.id,
-            consented: c.hasConsented,
+            consented: c.hasConsented || false,
         }));
     const emailConsents = consents.filter(c => c.consent.idType === 'email');
     return Promise.all([
