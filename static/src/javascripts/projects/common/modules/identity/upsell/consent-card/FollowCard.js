@@ -1,7 +1,7 @@
 // @flow
 import React from 'preact-compat';
 import { FollowButtonWrap } from 'common/modules/identity/follow/FollowButtonWrap';
-import type { Consent } from '../store/consents';
+import type { Consent } from '../store/types';
 
 export type FollowCardProps = {
     consent: Consent,

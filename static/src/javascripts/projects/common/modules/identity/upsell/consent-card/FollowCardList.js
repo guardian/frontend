@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'preact-compat';
 import { FollowCard } from 'common/modules/identity/upsell/consent-card/FollowCard';
-import type { ConsentWithState } from '../store/consents';
+import type { ConsentWithState } from '../store/types';
 import { setConsentsInApi } from '../store/consents';
 
 type FollowCardListProps = {

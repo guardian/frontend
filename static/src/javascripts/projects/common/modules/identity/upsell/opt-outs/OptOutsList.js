@@ -5,7 +5,7 @@ import {
     getUserConsents,
     setConsentsInApi,
 } from 'common/modules/identity/upsell/store/consents';
-import type { ConsentWithState } from 'common/modules/identity/upsell/store/consents';
+import type { ConsentWithState } from 'common/modules/identity/upsell/store/types';
 
 export class OptOutsList extends Component<
     {},
