@@ -3,15 +3,6 @@ import React from 'preact-compat';
 import { FollowButtonWrap } from 'common/modules/identity/follow/FollowButtonWrap';
 import type { Consent } from '../store/consents';
 
-/**
- * Type for things that can be rendered in a Follow Card
- */
-export type CardLike = {
-    id: string,
-    name: string,
-    description: string,
-};
-
 export type FollowCardProps = {
     consent: Consent,
     onChange: boolean => void,

@@ -7,16 +7,36 @@ import {
     setConsent,
 } from 'common/modules/identity/api';
 
+const consentTypes = {
+    email: {
+        updateFn: (cs: ConsentWithState[]) => {
+            console.log(cs);
+        },
+    },
+    marketing: {
+        updateFn: (cs: ConsentWithState[]) => {
+            setConsent(
+                cs.map(c => ({
+                    id: c.consent.id,
+                    consented: c.hasConsented || false,
+                }))
+            );
+        },
+    },
+};
+
+type ConsentType = $Keys<typeof consentTypes>;
+
 type Consent = {
     id: string,
-    idType: 'email' | 'marketing',
+    idType: ConsentType,
     name: string,
     description: string,
     isOptOut: ?boolean,
     isChannel: ?boolean,
 };
 
-type ConsentType = {
+type ConsentWithState = {
     consent: Consent,
     hasConsented: ?boolean,
 };
@@ -56,35 +76,37 @@ const fetchNewsletters = Promise.all([
     }))
 );
 
-const getUserConsents = (): Promise<ConsentType[]> => fetchUserConsents;
+const getUserConsents = (): Promise<ConsentWithState[]> =>
+    fetchUserConsents;
 
-const getUserConsent = (consentId: string): Promise<?ConsentType> =>
+const getUserConsent = (consentId: string): Promise<?ConsentWithState> =>
     fetchUserConsents.then(cs =>
         cs.find(consent => consent.consent.id === consentId)
     );
 
-const getNewsletterConsents = (): Promise<ConsentType[]> => fetchNewsletters;
+const getNewsletterConsents = (): Promise<ConsentWithState[]> =>
+    fetchNewsletters;
 
-const getNewsletterConsent = (consentId: string): Promise<?ConsentType> =>
+const getNewsletterConsent = (
+    consentId: string
+): Promise<?ConsentWithState> =>
     fetchNewsletters.then(cs =>
         cs.find(consent => consent.consent.id === consentId)
     );
 
-const setConsentsInApi = (consents: ConsentType[]): Promise<any> => {
-    const mktConsents = consents
-        .filter(c => c.consent.idType === 'marketing')
-        .map(c => ({
-            id: c.consent.id,
-            consented: c.hasConsented || false,
-        }));
-    const emailConsents = consents.filter(c => c.consent.idType === 'email');
-    return Promise.all([
-        mktConsents ? setConsent(mktConsents) : true,
-        emailConsents ? console.log(emailConsents) : true,
-    ]);
+const setConsentsInApi = (consents: ConsentWithState[]): Promise<any> => {
+    const consentsWithFunctions = Object.entries(consentTypes).map(
+        ([consentType, { updateFn }]) => {
+            const filteredConsents = consents.filter(
+                c => c.consent.idType === consentType
+            );
+            return filteredConsents ? updateFn(filteredConsents) : true;
+        }
+    );
+    return Promise.all(consentsWithFunctions);
 };
 
-export type { Consent, ConsentType };
+export type { Consent, ConsentWithState };
 export {
     getUserConsent,
     getUserConsents,

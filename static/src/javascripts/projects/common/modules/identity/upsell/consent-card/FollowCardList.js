@@ -1,20 +1,20 @@
 // @flow
 import React, { Component } from 'preact-compat';
 import { FollowCard } from 'common/modules/identity/upsell/consent-card/FollowCard';
-import type { ConsentType } from '../store/consents';
+import type { ConsentWithState } from '../store/consents';
 import { setConsentsInApi } from '../store/consents';
 
 type FollowCardListProps = {
-    followables: Promise<ConsentType>[],
-    expandableFollowables: Promise<ConsentType>[],
+    followables: Promise<ConsentWithState>[],
+    expandableFollowables: Promise<ConsentWithState>[],
 };
 
 class FollowCardList extends Component<
     FollowCardListProps,
     {
-        followables: ConsentType[],
-        expandableFollowables: ConsentType[],
-        isExpanded: ConsentType[],
+        followables: ConsentWithState[],
+        expandableFollowables: ConsentWithState[],
+        isExpanded: ConsentWithState[],
     }
 > {
     constructor(props: FollowCardListProps) {
@@ -38,7 +38,7 @@ class FollowCardList extends Component<
         });
     }
 
-    updateState(followable: ConsentType, newValue: boolean) {
+    updateState(followable: ConsentWithState, newValue: boolean) {
         this.setState(state => ({
             followables: [
                 ...state.followables.map(
