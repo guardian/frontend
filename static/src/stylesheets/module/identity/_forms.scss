@@ -172,7 +172,7 @@ Interim guui inputs
     transition: all .2s ease-in-out;
     box-sizing: border-box;
 
-    &:hover {
+    &:not([disabled]):hover {
         box-shadow: 0 0 0 3px $brightness-93;
     }
 

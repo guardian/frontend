@@ -31,8 +31,8 @@
     $padding-horizontal: $gs-gutter;
     @include fs-textSans($font-size);
     @include identity-button($brightness-7);
+    @include circular;
     height: $height;
-    border-radius: 100px;
     border: 0;
     cursor: pointer;
     float: left;
