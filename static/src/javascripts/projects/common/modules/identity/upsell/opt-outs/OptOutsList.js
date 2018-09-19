@@ -34,15 +34,14 @@ export class OptOutsList extends Component<
         });
     }
 
-    onCheckboxChange = (ev: Event, i: number) => {
-        if (ev.currentTarget instanceof HTMLInputElement) {
-            const clone = [...this.state.consents];
-            clone[i].hasConsented = ev.currentTarget.checked;
-            this.setState({
-                consents: clone,
-                hasUnsavedChanges: true,
-            });
-        }
+    onCheckboxChange = (consent: ConsentWithState) => {
+        this.setState(state => ({
+            hasUnsavedChanges: true,
+            consents: state.consents.map(
+                original =>
+                    original.uniqueId === consent.uniqueId ? consent : original
+            ),
+        }));
     };
 
     onSubmit = (ev: Event) => {
@@ -82,14 +81,18 @@ export class OptOutsList extends Component<
                         )}
                     </li>
                     <li>
-                        {consents.map(({ consent, hasConsented }, i) => (
+                        {consents.map(consent => (
                             <Checkbox
-                                title={consent.description}
-                                key={consent.id}
+                                title={consent.consent.description}
+                                key={consent.uniqueId}
                                 checkboxHtmlProps={{
-                                    checked: hasConsented,
-                                    onChange: ev =>
-                                        this.onCheckboxChange(ev, i),
+                                    checked: consent.hasConsented,
+                                    onChange: ev => {
+                                        consent.setState(
+                                            ev.currentTarget.checked
+                                        );
+                                        this.onCheckboxChange(consent);
+                                    },
                                 }}
                             />
                         ))}

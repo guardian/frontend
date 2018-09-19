@@ -17,12 +17,12 @@ import { AccountCreationBlock } from './account-creation/AccountCreationBlock';
 const ConfirmEmailThankYou = (
     <Block title="Interested in any of this content?">
         <FollowCardList
-            followables={[
+            consents={[
                 getUserConsent('supporter'),
                 getUserConsent('jobs'),
                 getNewsletterConsent('today-uk'),
             ]}
-            expandableFollowables={[
+            expandableConsents={[
                 getUserConsent('jobs'),
                 getNewsletterConsent('today-uk'),
             ]}

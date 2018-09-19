@@ -5,49 +5,45 @@ import type { ConsentWithState } from '../store/types';
 import { setConsentsInApi } from '../store/consents';
 
 type FollowCardListProps = {
-    followables: Promise<ConsentWithState>[],
-    expandableFollowables: Promise<ConsentWithState>[],
+    consents: Promise<ConsentWithState>[],
+    expandableConsents: Promise<ConsentWithState>[],
 };
 
 class FollowCardList extends Component<
     FollowCardListProps,
     {
-        followables: ConsentWithState[],
-        expandableFollowables: ConsentWithState[],
-        isExpanded: ConsentWithState[],
+        consents: ConsentWithState[],
+        expandableConsents: ConsentWithState[],
+        isExpanded: boolean,
     }
 > {
     constructor(props: FollowCardListProps) {
         super(props);
         this.setState({
-            followables: [],
-            expandableFollowables: [],
+            consents: [],
+            expandableConsents: [],
             isExpanded: false,
         });
     }
 
     componentDidMount() {
         Promise.all([
-            Promise.all(this.props.followables),
-            Promise.all(this.props.expandableFollowables),
-        ]).then(([followables, expandableFollowables]) => {
+            Promise.all(this.props.consents),
+            Promise.all(this.props.expandableConsents),
+        ]).then(([consents, expandableConsents]) => {
             this.setState({
-                followables,
-                expandableFollowables,
+                consents,
+                expandableConsents,
             });
         });
     }
 
-    updateState(followable: ConsentWithState, newValue: boolean) {
+    updateState(consent: ConsentWithState) {
         this.setState(state => ({
-            followables: [
-                ...state.followables.map(
-                    f =>
-                        f.consent.id === followable.consent.id
-                            ? { ...followable, hasConsented: newValue }
-                            : f
-                ),
-            ],
+            consents: state.consents.map(
+                original =>
+                    original.uniqueId === consent.uniqueId ? consent : original
+            ),
         }));
     }
 
@@ -58,24 +54,24 @@ class FollowCardList extends Component<
     };
 
     render() {
-        const { followables, expandableFollowables, isExpanded } = this.state;
+        const { consents, expandableConsents, isExpanded } = this.state;
 
         const displayables = isExpanded
-            ? [...followables, ...expandableFollowables]
-            : followables;
+            ? [...consents, ...expandableConsents]
+            : consents;
 
         return (
             <div>
                 <div>
-                    {displayables.map(followable => (
+                    {displayables.map(consent => (
                         <FollowCard
-                            consent={followable.consent}
-                            hasConsented={followable.hasConsented}
+                            key={consent.uniqueId}
+                            consent={consent.consent}
+                            hasConsented={consent.hasConsented}
                             onChange={hasConsented => {
-                                this.updateState(followable, hasConsented);
-                                setConsentsInApi([
-                                    { ...followable, hasConsented },
-                                ]);
+                                consent.setState(hasConsented);
+                                this.updateState(consent);
+                                setConsentsInApi([consent]);
                             }}
                         />
                     ))}

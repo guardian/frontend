@@ -15,14 +15,16 @@ const getNewsletterConsents = (): Promise<ConsentWithState[]> =>
     fetchNewsletters;
 
 const getNewsletterConsent = (consentId: string): Promise<?ConsentWithState> =>
-    fetchUserConsents.then(cs =>
+    fetchNewsletters.then(cs =>
         cs.find(consent => consent.consent.id === consentId)
     );
 
 const setConsentsInApi = (consents: ConsentWithState[]): Promise<any> => {
     const consentsWithFunctions = consentTypeList.map(type => {
         const filteredConsents = consents.filter(c => c instanceof type);
-        return filteredConsents ? type.updateInApiFn(filteredConsents) : true;
+        return filteredConsents && filteredConsents.length
+            ? type.updateInApiFn(filteredConsents)
+            : true;
     });
     return Promise.all(consentsWithFunctions);
 };

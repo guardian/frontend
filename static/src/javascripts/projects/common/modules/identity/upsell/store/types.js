@@ -11,6 +11,7 @@ type Consent = {
 
 class ConsentWithState {
     consent: Consent;
+    uniqueId: string;
     hasConsented: boolean;
     updateInApiFn: (cs: ConsentWithState[]) => Promise<void>;
 
@@ -18,12 +19,17 @@ class ConsentWithState {
         this.consent = consent;
         this.hasConsented = hasConsented || false;
     }
+
     setState(hasConsented: boolean) {
         this.hasConsented = hasConsented;
     }
 }
 
 class UserConsentWithState extends ConsentWithState {
+    constructor(...args: any[]) {
+        super(...args);
+        this.uniqueId = ['user', this.consent.id].join('-');
+    }
     static updateInApiFn = (cs: ConsentWithState[]) => {
         setConsent(
             cs.map(c => ({
@@ -35,6 +41,10 @@ class UserConsentWithState extends ConsentWithState {
 }
 
 class EmailConsentWithState extends ConsentWithState {
+    constructor(...args: any[]) {
+        super(...args);
+        this.uniqueId = ['email', this.consent.id].join('-');
+    }
     static updateInApiFn = (cs: ConsentWithState[]) => {
         console.log(cs);
     };
