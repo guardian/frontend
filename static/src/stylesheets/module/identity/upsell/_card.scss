@@ -2,6 +2,9 @@
     display: grid;
     grid-row-gap: $gs-baseline;
     grid-auto-columns: 1fr;
+    &:not(:first-child) {
+        margin-top: $gs-baseline;
+    }
     @include mq(tablet) {
         display: grid;
         grid-column-gap: $gs-gutter;

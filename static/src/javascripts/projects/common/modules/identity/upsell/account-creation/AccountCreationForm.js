@@ -3,6 +3,7 @@ import React, { Component } from 'preact-compat';
 import reqwest from 'reqwest';
 import ophan from 'ophan/ng';
 import reportError from 'lib/report-error';
+import { ErrorBar, genericErrorStr } from '../error-bar/ErrorBar';
 
 type AccountCreationFormProps = {
     csrfToken: string,
@@ -16,15 +17,21 @@ class AccountCreationForm extends Component<
     {
         password?: string,
         isLoading?: boolean,
-        hasError?: boolean,
-        errorReason?: string,
+        errors: string[],
     }
 > {
+    constructor(props: AccountCreationFormProps) {
+        super(props);
+        this.setState({
+            errors: [],
+        });
+    }
+
     onSubmit = (ev: Event) => {
         ev.preventDefault();
         this.setState({
             isLoading: true,
-            hasError: false,
+            errors: [],
         });
 
         reqwest({
@@ -53,11 +60,10 @@ class AccountCreationForm extends Component<
                 try {
                     const apiError = JSON.parse(response.responseText)[0];
                     this.setState({
-                        hasError: true,
-                        errorReason: apiError.description,
+                        errors: [apiError.description],
                     });
                 } catch (exception) {
-                    this.setState({ hasError: true });
+                    this.setState({ errors: [genericErrorStr] });
                 }
             },
             complete: () => {
@@ -74,18 +80,12 @@ class AccountCreationForm extends Component<
     };
 
     render() {
-        const { hasError, errorReason, isLoading } = this.state;
+        const { errors, isLoading } = this.state;
         const { email } = this.props;
         return (
             <form onSubmit={this.onSubmit}>
                 <ul className="identity-forms-fields">
-                    <li aria-live="polite">
-                        {hasError && (
-                            <div className="form__error" role="alert">
-                                {errorReason || 'Oops. Something went wrong'}
-                            </div>
-                        )}
-                    </li>
+                    <ErrorBar tagName="li" errors={errors} />
                     {email && (
                         <li id="email_field" aria-hidden>
                             <label

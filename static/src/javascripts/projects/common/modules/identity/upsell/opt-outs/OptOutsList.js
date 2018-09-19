@@ -6,6 +6,7 @@ import {
     setConsentsInApi,
 } from 'common/modules/identity/upsell/store/consents';
 import type { ConsentWithState } from 'common/modules/identity/upsell/store/types';
+import { ErrorBar, genericErrorStr } from '../error-bar/ErrorBar';
 
 export class OptOutsList extends Component<
     {},
@@ -13,14 +14,14 @@ export class OptOutsList extends Component<
         consents: ConsentWithState[],
         isLoading: boolean,
         hasUnsavedChanges: boolean,
-        hasError: boolean,
+        errors: string[],
     }
 > {
     constructor(props: {}) {
         super(props);
         this.state = {
             isLoading: false,
-            hasError: false,
+            errors: [],
             hasUnsavedChanges: true,
             consents: [],
         };
@@ -48,7 +49,7 @@ export class OptOutsList extends Component<
         ev.preventDefault();
         this.setState({
             isLoading: true,
-            hasError: false,
+            errors: [],
         });
         setConsentsInApi(this.state.consents)
             .then(() => {
@@ -59,24 +60,18 @@ export class OptOutsList extends Component<
             })
             .catch(() => {
                 this.setState({
-                    hasError: true,
+                    errors: [genericErrorStr],
                     isLoading: false,
                 });
             });
     };
 
     render() {
-        const { hasUnsavedChanges, isLoading, consents, hasError } = this.state;
+        const { hasUnsavedChanges, isLoading, consents, errors } = this.state;
         return (
             <form onSubmit={ev => this.onSubmit(ev)}>
                 <ul className="identity-forms-fields">
-                    <li aria-live="polite">
-                        {hasError && (
-                            <div className="form__error" role="alert">
-                                Oops. Something went wrong
-                            </div>
-                        )}
-                    </li>
+                    <ErrorBar errors={errors} tagName="li" />
                     <li>
                         {consents.map(consent => (
                             <Checkbox

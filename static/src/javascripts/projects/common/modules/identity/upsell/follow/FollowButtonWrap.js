@@ -17,15 +17,15 @@ class FollowButtonWrap extends Component<
 > {
     constructor(props: FollowButtonWrapProps) {
         super(props);
-        this.setState(() => ({
+        this.setState({
             mousedOutOnce: false,
-        }));
+        });
     }
 
     onMouseOut = () => {
-        this.setState(() => ({
+        this.setState({
             mousedOutOnce: true,
-        }));
+        });
     };
 
     updateFollowing = (to: boolean) => {
@@ -34,9 +34,9 @@ class FollowButtonWrap extends Component<
         } else {
             this.props.onUnfollow();
         }
-        this.setState(() => ({
+        this.setState({
             mousedOutOnce: false,
-        }));
+        });
     };
 
     render() {
