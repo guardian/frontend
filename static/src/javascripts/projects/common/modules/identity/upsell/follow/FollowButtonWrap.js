@@ -7,26 +7,69 @@ type FollowButtonWrapProps = {
     onUnfollow: () => Promise<void>,
 };
 
-class FollowButtonWrap extends Component<FollowButtonWrapProps, {}> {
+type FollowButtonWrapState = {
+    mousedOutOnce: boolean
+}
+
+class FollowButtonWrap extends Component<FollowButtonWrapProps, FollowButtonWrapState> {
+
+    constructor(props:FollowButtonWrapProps) {
+        super(props);
+        this.setState(() => ({
+            mousedOutOnce: false
+        }));
+    }
+
     updateFollowing = (to: boolean) => {
         if (to) {
             this.props.onFollow();
         } else {
             this.props.onUnfollow();
         }
+        this.setState(() => ({
+            mousedOutOnce: false
+        }));
     };
 
+    onMouseOut = () => {
+        this.setState(() => ({
+            mousedOutOnce: true
+        }));
+    }
+
     render() {
-        if (this.props.following === true) {
+        const {following }= this.props;
+        const {mousedOutOnce} = this.state;
+        if (following) {
             return (
-                <button
-                    type="button"
-                    className={'manage-account__button manage-account__button--secondary'}
-                    onClick={() => {
-                        this.updateFollowing(false);
-                    }}>
-                    Signed up – click to undo
-                </button>
+                <div aria-live={'polite'} className={
+                    ['identity-upsell-follow-button-wrap',mousedOutOnce?'':'identity-upsell-follow-button-wrap--blocked'].join(' ')
+                } onMouseOut={()=>{this.onMouseOut()}}>
+                    <div
+                        role={'alert'}
+                        className={['manage-account__button',
+                            'manage-account__button--secondary',
+                            'manage-account__button--center',
+                            'identity-upsell-follow-button-wrap__button'
+                        ].join(' ')}
+                        >
+                        Signed up
+                    </div>
+                    <button
+                        type="button"
+                        className={['manage-account__button',
+                            'manage-account__button--danger',
+                            'manage-account__button--center',
+                            'identity-upsell-follow-button-wrap__button',
+                            'identity-upsell-follow-button-wrap__button--longer',
+                            'identity-upsell-follow-button-wrap__button--hoverable'
+                        ].join(' ')}
+                        onClick={() => {
+                            this.updateFollowing(false);
+                        }}>
+                        Unsubscribe
+                    </button>
+                </div>
             );
         }
 
