@@ -259,16 +259,19 @@ export const getSubscribedNewsletters = () => {
 };
 
 export const setConsent = (consents: SettableConsent[]): Promise<void> =>
-    reqwest({
-        url: `${idApiRoot || ''}/users/me/consents`,
-        method: 'PATCH',
-        type: 'json',
-        contentType: 'application/json',
-        withCredentials: true,
-        crossOrigin: true,
-        data: JSON.stringify(consents),
+    new Promise((success, error) => {
+        reqwest({
+            url: `${idApiRoot || ''}/users/me/consents`,
+            method: 'PATCH',
+            type: 'json',
+            contentType: 'application/json',
+            withCredentials: true,
+            crossOrigin: true,
+            data: JSON.stringify(consents),
+            error,
+            success,
+        });
     });
-
 export const ajaxSignIn = (credentials: PasswordCredential) => {
     const url = `${profileRoot || ''}/actions/auth/ajax`;
     return fetch(url, {

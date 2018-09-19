@@ -30,14 +30,13 @@ class UserConsentWithState extends ConsentWithState {
         super(...args);
         this.uniqueId = ['user', this.consent.id].join('-');
     }
-    static updateInApiFn = (cs: ConsentWithState[]) => {
+    static updateInApiFn = (cs: ConsentWithState[]): Promise<void> =>
         setConsent(
             cs.map(c => ({
                 id: c.consent.id,
                 consented: c.hasConsented || false,
             }))
         );
-    };
 }
 
 class EmailConsentWithState extends ConsentWithState {
@@ -45,8 +44,9 @@ class EmailConsentWithState extends ConsentWithState {
         super(...args);
         this.uniqueId = ['email', this.consent.id].join('-');
     }
-    static updateInApiFn = (cs: ConsentWithState[]) => {
+    static updateInApiFn = (cs: ConsentWithState[]): Promise<void> => {
         console.log(cs);
+        return Promise.resolve();
     };
 }
 

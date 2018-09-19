@@ -50,7 +50,7 @@ export class OptOutsList extends Component<
             isLoading: true,
             hasError: false,
         });
-        this.updateChangesRemotely()
+        setConsentsInApi(this.state.consents)
             .then(() => {
                 this.setState({
                     hasUnsavedChanges: false,
@@ -64,9 +64,6 @@ export class OptOutsList extends Component<
                 });
             });
     };
-
-    updateChangesRemotely = (): Promise<void> =>
-        setConsentsInApi(this.state.consents);
 
     render() {
         const { hasUnsavedChanges, isLoading, consents, hasError } = this.state;
