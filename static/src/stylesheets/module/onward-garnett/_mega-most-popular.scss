@@ -1,0 +1,60 @@
+.meg-meta {
+    column-width: 18.75rem;
+    column-gap: 1px;
+
+    column-rule: 1px solid #dcdcdc;
+
+    .slot-heading,
+    .slot-body {
+        padding: .5rem;
+        border-top: 1px solid #dcdcdc;
+
+        display: inline-block;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    h2 {
+        font-size: 1rem;
+        line-height: 1.25rem;
+        font-family: 'Guardian Egyptian Web', Georgia, serif;
+        font-weight: 600;
+    }
+
+    .byline,
+    .byline span[itemprop='author'] {
+        color: #767676;
+        font-weight: normal;
+    }
+
+    .meg-onward-link {
+        color: #121212;
+    }
+
+    .comment-count {
+
+    }
+}
+
+.mega-most-popular {
+
+    .headline-column--desktop {
+        column-rule: 1px solid #dcdcdc;
+
+        column-width: 18.75rem;
+        column-gap: 1px;
+    }
+
+    /* Override Garnett styling to avoid double border */
+    .tabs__content {
+        border-top: 0;
+    }
+    .headline-list__item:first-child:before {
+        display: block;
+    }
+
+    .headline-column--desktop__item {
+        padding: .1875rem .5rem 0;
+    }
+
+}

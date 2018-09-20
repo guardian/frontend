@@ -10,7 +10,7 @@
 @import model.Pillar.RichPillar
 
 @defining(popular.size > 1){ isTabbed =>
-    <div id="popular-trails" class="" data-link-name="most popular Test" data-test-id="popular-in">
+    <div id="popular-trails" class="mega-most-popular" data-link-name="most popular Test" data-test-id="popular-in">
         @if(isTabbed) {
             <div class="tabs tabs--megamostpop u-cf @if(isAdFree(containerDefinition) && isFront){tabs--mostpop--without-mpu}">
                 <ol class="tabs__container js-tabs" id="js-popular-tabs" role="tablist">
@@ -63,18 +63,27 @@
             </div>
         }
 
-        <div class="mega-meta">
-            <div>
-                <h2>Most commented</h2>
-                @fragments.meta.byline(mostCommented.trail.byline, mostCommented.tags)
-                <a href="@{mostCommented.metadata.id}">@{mostCommented.trail.headline}</a>
-                @mostCommentedCount
-                @fragments.meta.bylineImage(mostCommented.tags)
+        <div class="meg-meta">
+            <div class="slot">
+                <div class="slot-heading">
+                    <h2>most comments</h2>
+                </div>
+                <div class="slot-body">
+                    @fragments.meta.byline(mostCommented.trail.byline, mostCommented.tags)
+                    <a class="meg-onward-link" href="@{mostCommented.metadata.id}">@{mostCommented.trail.headline}</a>
+                    <div class="comment-count">@mostCommentedCount</div>
+                    @fragments.meta.bylineImage(mostCommented.tags)
+                </div>
             </div>
-            <div>
-                <h2>On social media</h2>
-                @fragments.meta.byline(onSocial.trail.byline, onSocial.tags)
-                <a href="@{onSocial.metadata.id}">@{onSocial.trail.headline}</a>
+
+            <div class="slot">
+                <div class="slot-heading">
+                    <h2>on social</h2>
+                </div>
+                <div class="slot-body">
+                    @fragments.meta.byline(onSocial.trail.byline, onSocial.tags)
+                <a class="meg-onward-link" href="@{onSocial.metadata.id}">@{onSocial.trail.headline}</a>
+                </div>
             </div>
         </div>
 
