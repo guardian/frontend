@@ -20,20 +20,12 @@ class FollowButtonWrap extends Component<
         this.setState({
             mousedOutOnce: false,
         });
-        this.hoverTimeout = null;
     }
 
-    onMouseIn = () => {
-        clearTimeout(this.hoverTimeout);
-    };
-
     onMouseOut = () => {
-        clearTimeout(this.hoverTimeout);
-        setTimeout(() => {
-            this.setState({
-                mousedOutOnce: true,
-            });
-        }, 50);
+        this.setState({
+            mousedOutOnce: true,
+        });
     };
 
     updateFollowing = (to: boolean) => {
@@ -65,12 +57,6 @@ class FollowButtonWrap extends Component<
                     }}
                     onBlur={() => {
                         this.onMouseOut();
-                    }}
-                    onMouseOver={() => {
-                        this.onMouseIn();
-                    }}
-                    onFocus={() => {
-                        this.onMouseIn();
                     }}>
                     <div
                         role="alert"
