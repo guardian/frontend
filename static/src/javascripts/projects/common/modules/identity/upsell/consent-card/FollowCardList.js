@@ -107,12 +107,14 @@ class FollowCardList extends Component<
                     <div className="identity-upsell-consent-card-footer">
                         {isExpanded ? (
                             <button
+                                data-link-name="upsell-follow-expander : shrink"
                                 className="manage-account__button manage-account__button--secondary"
                                 onClick={() => this.updateExpandState(false)}>
                                 Less
                             </button>
                         ) : (
                             <button
+                                data-link-name="upsell-follow-expander : expand"
                                 className="manage-account__button manage-account__button--secondary"
                                 onClick={() => this.updateExpandState(true)}>
                                 {this.expandableConsentsButtonText(
