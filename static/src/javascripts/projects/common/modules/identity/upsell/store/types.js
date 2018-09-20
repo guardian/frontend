@@ -23,6 +23,10 @@ class ConsentWithState {
     setState(hasConsented: boolean) {
         this.hasConsented = hasConsented;
     }
+
+    flipState() {
+        this.hasConsented = !this.hasConsented;
+    }
 }
 
 class UserConsentWithState extends ConsentWithState {

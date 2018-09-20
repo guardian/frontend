@@ -20,12 +20,11 @@ const ConfirmEmailThankYou = (
             consents={[
                 getUserConsent('supporter'),
                 getNewsletterConsent('today-uk'),
-            ]}
-            expandableConsents={[
                 getUserConsent('jobs'),
                 getUserConsent('holidays'),
                 getNewsletterConsent('today-us'),
             ]}
+            cutoff={2}
         />
     </Block>
 );
