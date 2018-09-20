@@ -68,7 +68,9 @@ val facia = application("facia").dependsOn(commonWithTests).aggregate(common).se
   libraryDependencies += scalaCheck
 )
 
-val article = application("article").dependsOn(commonWithTests).aggregate(common)
+val onward = application("onward").dependsOn(commonWithTests).aggregate(common)
+
+val article = application("article").dependsOn(commonWithTests, onward).aggregate(common)
 
 val applications = application("applications")
   .dependsOn(commonWithTests).aggregate(common)
@@ -130,8 +132,6 @@ val identity = application("identity").dependsOn(commonWithTests).aggregate(comm
 )
 
 val commercial = application("commercial").dependsOn(commonWithTests).aggregate(common)
-
-val onward = application("onward").dependsOn(commonWithTests).aggregate(common)
 
 val dev = application("dev-build")
   .dependsOn(

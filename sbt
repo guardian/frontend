@@ -30,7 +30,7 @@ else
 fi
 
 #http://stackoverflow.com/questions/5374455/what-does-java-option-xmx-stand-for
-jvm_mem="-Xmx$((physical_mem / 2 / 1024))m"
+jvm_mem="-Xmx$((physical_mem / 4 / 1024))m"
 
 
 if [ -z $FRONTEND_JVM_ARGS ]; then

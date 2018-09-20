@@ -1,27 +1,28 @@
-import http.{CommonFilters, CorsHttpErrorHandler}
+import _root_.commercial.targeting.TargetingLifecycle
+import akka.actor.ActorSystem
 import app.{FrontendApplicationLoader, FrontendComponents}
 import assets.DiscussionExternalAssetsLifecycle
 import com.softwaremill.macwire._
-import common._
 import common.Logback.{LogbackOperationsPool, LogstashLifecycle}
-import _root_.commercial.targeting.TargetingLifecycle
-import akka.actor.ActorSystem
+import common._
 import common.commercial.OrielCacheLifecycle
 import common.dfp.DfpAgentLifecycle
-import conf.switches.SwitchboardLifecycle
 import conf.CachedHealthCheckLifeCycle
+import conf.switches.SwitchboardLifecycle
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
 import controllers.{ArticleControllers, HealthCheck}
 import dev.{DevAssetsController, DevParametersHttpRequestHandler}
+import feed.{MostReadLifecycle, OnwardJourneyLifecycle}
+import http.{CommonFilters, CorsHttpErrorHandler}
 import model.ApplicationIdentity
-import services.ophan.SurgingContentAgentLifecycle
 import play.api.ApplicationLoader.Context
 import play.api.BuiltInComponentsFromContext
 import play.api.http.{HttpErrorHandler, HttpRequestHandler}
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router
-import services.{NewspaperBooksAndSectionsAutoRefresh, OphanApi, SkimLinksCacheLifeCycle}
 import router.Routes
+import services.ophan.SurgingContentAgentLifecycle
+import services.{NewspaperBooksAndSectionsAutoRefresh, OphanApi, SkimLinksCacheLifeCycle}
 
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents = new BuiltInComponentsFromContext(context) with AppComponents
@@ -31,7 +32,7 @@ trait AppComponents extends FrontendComponents with ArticleControllers {
 
   lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
   lazy val contentApiClient = wire[ContentApiClient]
-  lazy val ophanApi = wire[OphanApi]
+  override lazy val ophanApi = wire[OphanApi]
 
   lazy val healthCheck = wire[HealthCheck]
   lazy val devAssetsController = wire[DevAssetsController]
@@ -48,7 +49,8 @@ trait AppComponents extends FrontendComponents with ArticleControllers {
     wire[TargetingLifecycle],
     wire[DiscussionExternalAssetsLifecycle],
     wire[OrielCacheLifecycle],
-    wire[SkimLinksCacheLifeCycle]
+    wire[SkimLinksCacheLifeCycle],
+    wire[MostReadLifecycle]
   )
 
   lazy val router: Router = wire[Routes]
