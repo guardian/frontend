@@ -205,7 +205,7 @@ describe('getDummyServerSideBidders', () => {
             delDomain: 'guardian-d.openx.net',
             unit: '539997090',
             lotame: { some: 'lotamedata' },
-            customParams: 'bla',
+            customParams: 'someAppNexusTargetingObject',
         });
         expect(appNexusParams).toEqual({
             placementId: '13915593',
