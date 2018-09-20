@@ -13,11 +13,6 @@ export class ErrorBar extends Component<ErrorBarProps> {
         tagName: 'div',
     };
 
-    constructor(props: ErrorBarProps) {
-        super(props);
-        console.error(props);
-    }
-
     render() {
         const { errors } = this.props;
         const TagName = this.props.tagName;
