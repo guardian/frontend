@@ -14,6 +14,7 @@ trait Requests {
   val EMAIL_SUFFIX = "/email"
   val HEADLINE_SUFFIX = "/headline.txt"
   val EMAIL_JSON_SUFFIX = ".emailjson"
+  val EMAIL_TXT_SUFFIX = ".emailtxt"
 
   implicit class RichRequestHeader(r: RequestHeader) {
 
@@ -31,6 +32,8 @@ trait Requests {
 
     lazy val isEmailJson: Boolean = r.path.endsWith(EMAIL_JSON_SUFFIX)
 
+    lazy val isEmailTxt: Boolean = r.path.endsWith(EMAIL_TXT_SUFFIX)
+
     // parameters for moon/guui new rendering layer project.
     lazy val isGuuiJson: Boolean = isJson && isGuui
 
@@ -40,7 +43,7 @@ trait Requests {
 
     lazy val isAmp: Boolean = r.getQueryString("amp").isDefined || (!r.host.isEmpty && r.host == Configuration.amp.host)
 
-    lazy val isEmail: Boolean = r.getQueryString("format").exists(_.contains("email")) || r.path.endsWith(EMAIL_SUFFIX) || isEmailJson
+    lazy val isEmail: Boolean = r.getQueryString("format").exists(_.contains("email")) || r.path.endsWith(EMAIL_SUFFIX) || isEmailJson || isEmailTxt
 
     lazy val isHeadlineText: Boolean = r.getQueryString("format").contains("email-headline") || r.path.endsWith(HEADLINE_SUFFIX)
 

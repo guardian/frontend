@@ -124,6 +124,8 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
     val htmlWithInlineStyles = if (InlineEmailStyles.isSwitchedOn) InlineStyles(html) else html
     if (request.isEmailJson) {
       Cached(RecentlyUpdated)(RevalidatableResult.Ok(JsObject(Map("body" -> JsString(htmlWithInlineStyles.toString)))))
+    } else if (request.isEmailTxt) {
+      Cached(RecentlyUpdated)(RevalidatableResult.Ok(JsObject(Map("body" -> JsString(HtmlTextExtractor(htmlWithInlineStyles))))))
     } else {
       Cached(page)(RevalidatableResult.Ok(htmlWithInlineStyles))
     }

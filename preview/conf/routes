@@ -153,6 +153,7 @@ GET        /$path<.+/\d\d\d\d/\w\w\w/\d\d>                                      
 GET        /$path<.+>/latest                                                                   controllers.LatestIndexController.latest(path)
 GET        /$path<.+>/latest/email                                                             controllers.LatestIndexController.latest(path)
 GET        /$path<.+>/latest/email.emailjson                                                   controllers.LatestIndexController.latest(path)
+GET        /$path<.+>/latest/email.emailtxt                                                    controllers.LatestIndexController.latest(path)
 GET        /$path<.+>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/all                            controllers.AllIndexController.allOn(path, day, month, year)
 GET        /$path<.+>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/altdate                        controllers.AllIndexController.altDate(path, day, month, year)
 GET        /$path<.+>/all                                                                      controllers.AllIndexController.all(path)
@@ -198,10 +199,12 @@ GET        /news-alert/alerts                                                   
 GET     /$path<[^/]+/([^/]+/)?live/.*>.json controllers.LiveBlogController.renderJson(path, lastUpdate: Option[String], rendered: Option[Boolean], isLivePage: Option[Boolean])
 GET     /$path<[^/]+/([^/]+/)?live/.*>/email controllers.LiveBlogController.renderEmail(path)
 GET     /$path<[^/]+/([^/]+/)?live/.*>/email.emailjson controllers.LiveBlogController.renderEmail(path)
+GET     /$path<[^/]+/([^/]+/)?live/.*>/email.emailtxt  controllers.LiveBlogController.renderEmail(path)
 GET     /$path<[^/]+/([^/]+/)?live/.*> controllers.LiveBlogController.renderArticle(path, page: Option[String], format: Option[String])
 GET     /*path.json                 controllers.ArticleController.renderJson(path)
 GET     /*path/email                controllers.ArticleController.renderEmail(path)
 GET     /*path/email.emailjson      controllers.ArticleController.renderEmail(path)
+GET     /*path/email.emailtxt       controllers.ArticleController.renderEmail(path)
 
 
 # Don't forward requests for favicon.ico to the Content API
