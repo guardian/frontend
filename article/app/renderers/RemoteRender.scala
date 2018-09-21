@@ -29,7 +29,7 @@ class RemoteRender(implicit context: ApplicationContext) {
 
   def render(ws:WSClient, path: String, article: ArticlePage)(implicit request: RequestHeader): Future[Result] = {
 
-      val contentFieldsJson = if (request.isGuui) List("contentFields" -> Json.toJson(ContentFields(article.article))) else List()
+      val contentFieldsJson = List("contentFields" -> Json.toJson(ContentFields(article.article)))
       val jsonResponse = List(("html", views.html.fragments.articleBody(article))) ++ contentFieldsJson
       val jsonPayload = JsonComponent.jsonFor(article, jsonResponse:_*)
 
