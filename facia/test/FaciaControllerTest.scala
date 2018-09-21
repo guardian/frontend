@@ -198,6 +198,16 @@ import scala.concurrent.Await
     html should include ("<!DOCTYPE html")
   }
 
+  it should "render txt email fronts" in {
+    val emailRequest = FakeRequest("GET", "/email/uk/daily.emailtxt")
+    val emailJsonResponse = faciaController.renderFront("email/uk/daily")(emailRequest)
+    status(emailJsonResponse) shouldBe 200
+    val jsonResponse = contentAsJson(emailJsonResponse)
+    val (key, html) = jsonResponse.as[Map[String,String]].head
+    key shouldBe "body"
+    html should not include "<!DOCTYPE html"
+  }
+
   it should "render email fronts" in {
     val emailRequest = FakeRequest("GET", "/email/uk/daily")
     val emailJsonResponse = faciaController.renderFront("email/uk/daily")(emailRequest)

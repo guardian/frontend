@@ -46,4 +46,14 @@ class CommonPackageTest extends FlatSpec with Matchers with WithTestApplicationC
     value should include ("<html")
   }
 
+  "renderEmail" should "render an email txt result page" in new PackageTestScope {
+    val html = Html("")
+    val result = Future.successful(common.renderEmail(html, contentPage)(TestRequest("/content/email.emailtxt"), testApplicationContext))
+
+    val jsonResult: JsValue = contentAsJson(result)
+    val (key, value) = jsonResult.as[Map[String,String]].head
+    key shouldBe "body"
+    value should not include ("<html")
+  }
+
 }
