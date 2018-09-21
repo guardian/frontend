@@ -20,6 +20,7 @@ const FollowCard = (props: FollowCardProps) => {
             </p>
             <div className="identity-upsell-consent-card__footer">
                 <FollowButtonWrap
+                    trackingName={name}
                     following={hasConsented}
                     onFollow={() => {
                         props.onChange(true);

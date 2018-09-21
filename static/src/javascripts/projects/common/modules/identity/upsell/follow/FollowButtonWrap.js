@@ -5,6 +5,7 @@ type FollowButtonWrapProps = {
     following: boolean,
     onFollow: () => Promise<void>,
     onUnfollow: () => Promise<void>,
+    trackingName: ?string,
 };
 
 type FollowButtonWrapState = {
@@ -40,7 +41,7 @@ class FollowButtonWrap extends Component<
     };
 
     render() {
-        const { following } = this.props;
+        const { following, trackingName } = this.props;
         const { mousedOutOnce } = this.state;
         if (following) {
             return (
@@ -69,6 +70,11 @@ class FollowButtonWrap extends Component<
                         Signed up
                     </div>
                     <button
+                        data-link-name={
+                            trackingName
+                                ? `upsell-consent : ${trackingName} : untick`
+                                : false
+                        }
                         type="button"
                         className={[
                             'manage-account__button',
@@ -89,6 +95,11 @@ class FollowButtonWrap extends Component<
 
         return (
             <button
+                data-link-name={
+                    trackingName
+                        ? `upsell-consent : ${trackingName} : tick`
+                        : false
+                }
                 type="button"
                 className="manage-account__button manage-account__button--green"
                 onClick={() => {

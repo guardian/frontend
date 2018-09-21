@@ -15,8 +15,14 @@ type CheckboxProps = {
 export class Checkbox extends Component<CheckboxProps, { checked: boolean }> {
     render() {
         const { title, subtitle } = this.props;
+        const { checked } = this.props.checkboxHtmlProps;
         return (
-            <label className="identity-upsell-checkbox" htmlFor={title}>
+            <label
+                data-link-name={`upsell-consent : checkbox : ${title} : ${
+                    checked ? 'untick' : 'tick'
+                }`}
+                className="identity-upsell-checkbox"
+                htmlFor={title}>
                 <span className="identity-upsell-checkbox__title">{title}</span>
                 {subtitle && <span>{subtitle}</span>}
                 <input
