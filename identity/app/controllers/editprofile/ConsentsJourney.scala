@@ -113,7 +113,7 @@ trait ConsentsJourney
 
 
       csrfAddToken {
-        consentsRedirectAction.async { implicit request =>
+        consentAuthWithIdapiUserWithEmailValidation.async { implicit request =>
           consentJourneyView(
             page = page,
             journey = page.journey,
@@ -130,7 +130,7 @@ trait ConsentsJourney
     consentHint: Option[String],
     guestPasswordSetForm: Option[Form[GuestPasswordFormData]]): Action[AnyContent] =
     csrfAddToken {
-      consentsRedirectAction.async { implicit request =>
+      consentAuthWithIdapiUserWithEmailValidation.async { implicit request =>
 
         val returnUrl = returnUrlVerifier.getVerifiedReturnUrl(request) match {
           case Some(url) => if (url contains "/consents") returnUrlVerifier.defaultReturnUrl else url

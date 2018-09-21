@@ -9,9 +9,11 @@ trait EmailsTab
 
   import authenticatedActions._
 
+  val emailFilter = emailValidationFilter
+
   /** GET /email-prefs */
   def displayEmailPrefsForm(consentsUpdated: Boolean, consentHint: Option[String]): Action[AnyContent] =
-    displayForm(EmailPrefsProfilePage, consentsUpdated, consentHint)
+    displayForm(EmailPrefsProfilePage, consentsUpdated, consentHint, emailValidationRequired = true)
 
   /** GET /privacy/edit */
   def displayPrivacyFormRedirect(

@@ -52,8 +52,7 @@ import scala.concurrent.Future
     val authenticatedUser = AuthenticatedUser(user, testAuth, true)
     val phoneNumbers = PhoneNumbers
 
-    val redirectDecisionService = new ProfileRedirectService(newsletterService, idRequestParser, controllerComponent)
-    val authenticatedActions = new AuthenticatedActions(authService, api, mock[IdentityUrlBuilder], controllerComponent, newsletterService, idRequestParser, redirectDecisionService)
+    val authenticatedActions = new AuthenticatedActions(authService, api, mock[IdentityUrlBuilder], controllerComponent, newsletterService, idRequestParser)
 
     val signinService = mock[PlaySigninService]
     val profileFormsMapping = ProfileFormsMapping(
@@ -75,7 +74,6 @@ import scala.concurrent.Future
 
     lazy val controller = new EditProfileController(
       idUrlBuilder,
-      redirectDecisionService,
       authenticatedActions,
       api,
       idRequestParser,
