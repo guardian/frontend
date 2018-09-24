@@ -10,6 +10,11 @@ export type PrebidSonobiParams = {
     render?: string,
 };
 
+export type PrebidPubmaticParams = {
+    publisherId: string,
+    adSlot: string
+};
+
 export type PrebidIndexExchangeParams = {
     siteId: string,
     size: PrebidSize,

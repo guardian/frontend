@@ -24,6 +24,7 @@ import type {
     PrebidImproveSizeParam,
     PrebidIndexExchangeParams,
     PrebidOpenXParams,
+    PrebidPubmaticParams,
     PrebidSize,
     PrebidSonobiParams,
     PrebidTrustXParams,
@@ -364,6 +365,31 @@ const sonobiBidder: PrebidBidder = {
         ),
 };
 
+const getPubmaticPublisherId = (edition: string): string => {
+    switch(edition) {
+        case 'US':
+            return '157206'
+        case 'AU':
+            return '157203'
+        case 'UK':
+        default:
+            return '157207'
+    }
+}
+
+const pubmaticBidder: PrebidBidder = {
+    name: 'pubmatic',
+    switchName: 'prebidPubmatic',
+    bidParams: (slotId: string): PrebidPubmaticParams =>
+        Object.assign(
+            {},
+            {
+                publisherId: getPubmaticPublisherId(config.get('page.edition')),
+                adSlot: slotId,
+            }
+        ),
+};
+
 const trustXBidder: PrebidBidder = {
     name: 'trustx',
     switchName: 'prebidTrustx',
@@ -503,6 +529,7 @@ const currentBidders: (PrebidSize[]) => PrebidBidder[] = slotSizes => {
         ...(inPbTestOr(shouldIncludeAppNexus()) ? [appNexusBidder] : []),
         improveDigitalBidder,
         xaxisBidder,
+        pubmaticBidder,
         ...(shouldIncludeAdYouLike(slotSizes) ? [adYouLikeBidder] : []),
         ...(shouldIncludeOpenx() ? [openxClientSideBidder] : []),
     ];
