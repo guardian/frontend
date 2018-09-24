@@ -74,6 +74,16 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
+  val MostViewedFronts = Switch(
+    SwitchGroup.Feature,
+    "most-viewed-fronts",
+    "If this is switched off, most viewed will not show on fronts",
+    owners = Seq(Owner.withName("dotcom platform")),
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
   val FontSwitch = Switch(
     SwitchGroup.Feature,
     "web-fonts",
