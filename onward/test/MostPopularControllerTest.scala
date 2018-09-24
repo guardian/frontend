@@ -1,7 +1,7 @@
 package test
 
 import controllers.MostPopularController
-import feed.{DayMostPopularAgent, GeoMostPopularAgent, MostPopularAgent}
+import feed._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 import play.api.test._
 import play.api.test.Helpers._
@@ -25,6 +25,8 @@ import services.OphanApi
     new GeoMostPopularAgent(testContentApiClient, ophanApi),
     new DayMostPopularAgent(testContentApiClient, ophanApi),
     new MostPopularAgent(testContentApiClient),
+    new MostCommentedAgent(testContentApiClient, wsClient),
+    new OnSocialAgent(testContentApiClient),
     play.api.test.Helpers.stubControllerComponents()
   )
 

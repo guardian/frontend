@@ -131,9 +131,11 @@ object GuardianConfiguration extends Logging {
 }
 
 class GuardianConfiguration extends Logging {
+
   import GuardianConfiguration._
 
   case class OAuthCredentials(oauthClientId: String, oauthSecret: String, oauthCallback: String)
+
   case class OAuthCredentialsWithMultipleCallbacks(oauthClientId: String, oauthSecret: String, authorizedOauthCallbacks: List[String])
 
   object business {
@@ -279,7 +281,9 @@ class GuardianConfiguration extends Logging {
     lazy val isDefined: Boolean = hostOption.isDefined && portOption.isDefined
 
     private lazy val hostOption = Option(System.getenv("proxy_host"))
-    private lazy val portOption = Option(System.getenv("proxy_port")) flatMap { _.toIntOption }
+    private lazy val portOption = Option(System.getenv("proxy_port")) flatMap {
+      _.toIntOption
+    }
 
     lazy val host: String = hostOption getOrElse {
       throw new IllegalStateException("HTTP proxy host not configured")
@@ -326,7 +330,7 @@ class GuardianConfiguration extends Logging {
     lazy val subscribeUrl = configuration.getStringProperty("id.digitalpack.url").getOrElse("https://subscribe.theguardian.com")
     lazy val contributeUrl = configuration.getStringProperty("id.contribute.url").getOrElse("https://contribute.theguardian.com")
     lazy val membersDataApiUrl = configuration.getStringProperty("id.members-data-api.url").getOrElse("https://members-data-api.theguardian.com")
-    lazy val stripePublicToken =  configuration.getStringProperty("id.membership.stripePublicToken").getOrElse("")
+    lazy val stripePublicToken = configuration.getStringProperty("id.membership.stripePublicToken").getOrElse("")
     lazy val accountDeletionApiKey = configuration.getStringProperty("id.accountDeletion.apiKey").getOrElse("")
     lazy val accountDeletionApiRoot = configuration.getStringProperty("id.accountDeletion.apiRoot").getOrElse("")
   }
@@ -347,7 +351,7 @@ class GuardianConfiguration extends Logging {
     // This configuration value determines if this server will load and resolve assets using the asset map.
     // Set this to true if you want to run the Play server in dev, and emulate prod mode asset-loading.
     // If true in dev, assets are locally loaded from the `hash` build output, otherwise assets come from 'target' for css, and 'src' for js.
-    lazy val useHashedBundles =  configuration.getStringProperty("assets.useHashedBundles")
+    lazy val useHashedBundles = configuration.getStringProperty("assets.useHashedBundles")
       .map(_.toBoolean)
       .getOrElse(environment.isNonDev)
   }
@@ -366,13 +370,16 @@ class GuardianConfiguration extends Logging {
 
   object facebook {
     lazy val appId = configuration.getMandatoryStringProperty("guardian.page.fbAppId")
+
     object pages {
       lazy val authorisedIdsForLinkEdits = configuration.getStringPropertiesSplitByComma("facebook.pages.authorisedIdsForLinkEdits")
     }
+
     object graphApi {
       lazy val version = configuration.getStringProperty("facebook.graphApi.version").getOrElse("2.8")
       lazy val accessToken = configuration.getMandatoryStringProperty("facebook.graphApi.accessToken")
     }
+
   }
 
   object ios {
@@ -441,7 +448,7 @@ class GuardianConfiguration extends Logging {
     lazy val masterclassesToken = configuration.getStringProperty("masterclasses.token")
     lazy val liveEventsToken = configuration.getStringProperty("live-events.token")
     lazy val liveEventsMembershipUrl = "https://membership.theguardian.com/events.json"
-    lazy val jobsUrl= configuration.getStringProperty("jobs.api.url")
+    lazy val jobsUrl = configuration.getStringProperty("jobs.api.url")
 
     object magento {
       lazy val domain = configuration.getStringProperty("magento.domain")
@@ -587,6 +594,7 @@ class GuardianConfiguration extends Logging {
     lazy val r2PressTakedownSns: Option[String] = configuration.getStringProperty("r2press.takedown.sns.topic")
 
     def mandatoryCredentials: AWSCredentialsProvider = credentials.getOrElse(throw new BadConfigurationException("AWS credentials are not configured"))
+
     val credentials: Option[AWSCredentialsProvider] = {
       val provider = new AWSCredentialsProviderChain(
         new ProfileCredentialsProvider("frontend"),
@@ -655,21 +663,6 @@ class GuardianConfiguration extends Logging {
 
   object Media {
     lazy val externalEmbedHost = configuration.getMandatoryStringProperty("guardian.page.externalEmbedHost")
-  }
-
-  object Onward {
-    // TODO These are for the mega most viewed experiment and should be removed after
-    lazy val megaSlot1Heading = configuration.getStringProperty("onward.mega.heading1")
-    lazy val megaSlot1UK = configuration.getStringProperty("onward.mega.uk1")
-    lazy val megaSlot1US = configuration.getStringProperty("onward.mega.us1")
-    lazy val megaSlot1AU = configuration.getStringProperty("onward.mega.au1")
-    lazy val megaSlot1ROW = configuration.getStringProperty("onward.mega.row1")
-
-    lazy val megaSlot2Heading = configuration.getStringProperty("onward.mega.heading2")
-    lazy val megaSlot2UK = configuration.getStringProperty("onward.mega.uk2")
-    lazy val megaSlot2US = configuration.getStringProperty("onward.mega.us2")
-    lazy val megaSlot2AU = configuration.getStringProperty("onward.mega.au2")
-    lazy val megaSlot2ROW = configuration.getStringProperty("onward.mega.row2")
   }
 }
 

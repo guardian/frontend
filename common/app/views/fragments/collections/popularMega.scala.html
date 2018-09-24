@@ -1,22 +1,23 @@
-@(popular: Seq[model.MostPopular], mostCommented: model.Content, mostCommentedCount: Int, onSocial: model.Content, containerDefinition: Option[layout.FaciaContainer] = None, isFront: Boolean = false)(implicit request: RequestHeader)
+
+@(popular: Seq[model.MostPopular], mostCommented: Option[(layout.ContentCard, Int)], onSocial: Option[layout.ContentCard], containerDefinition: Option[layout.FaciaContainer] = None, isFront: Boolean = false)(implicit request: RequestHeader)
 
 @import common.Localisation
 @import layout.FaciaCardHeader
-@import views.html.fragments.items.elements.facia_cards.title
-@import views.support._
-@import TrailCssClasses.toneClass
-@import views.support.MostPopular.{isAdFree, showMPU, tabsPaneCssClass}
-@import views.support.GetClasses
 @import model.Pillar.RichPillar
+@import views.html.fragments.items.elements.facia_cards.title
+@import views.html.fragments.items.facia_cards.contentCard
+@import views.support.MostPopular.{isAdFree, showMPU, tabsPaneCssClass}
+@import views.support.TrailCssClasses.toneClass
+@import views.support._
 
 @defining(popular.size > 1){ isTabbed =>
-    <div id="popular-trails" class="mega-most-popular" data-link-name="most popular Test" data-test-id="popular-in">
+        <div id="popular-trails" class="fc-slice--mega-popular" data-link-name="most popular Test" data-test-id="popular-in">
         @if(isTabbed) {
             <div class="tabs tabs--megamostpop u-cf @if(isAdFree(containerDefinition) && isFront){tabs--mostpop--without-mpu}">
                 <ol class="tabs__container js-tabs" id="js-popular-tabs" role="tablist">
                     @popular.zipWithRowInfo.map{ case (section, info) =>
                     <li class="tabs__tab@if(info.isFirst){ tabs__tab--selected tone-colour tone-accent-border}" role="tab" id="tabs-popular-@info.rowNum-tab"@if(info.isFirst){ aria-selected="true"} aria-controls="tabs-popular-@info.rowNum">
-                        <a href="#tabs-popular-@info.rowNum" data-link-name="tab @info.rowNum @section.heading"><span class="u-h">Most viewed </span>@Html(Localisation(section.heading.stripPrefix("popular ")))</a>
+                        <a href="#tabs-popular-@info.rowNum" data-link-name="tab @info.rowNum @section.heading"><span class="u-h">Most viewed </span>@Html(Localisation(section.heading.stripPrefix("popular ").capitalize))</a>
                     </li>
                     }
                 </ol>
@@ -63,29 +64,28 @@
             </div>
         }
 
-        <div class="meg-meta">
-            <div class="slot">
-                <div class="slot-heading">
-                    <h2>most comments</h2>
-                </div>
-                <div class="slot-body">
-                    @fragments.meta.byline(mostCommented.trail.byline, mostCommented.tags)
-                    <a class="meg-onward-link" href="@{mostCommented.metadata.id}">@{mostCommented.trail.headline}</a>
-                    <div class="comment-count">@mostCommentedCount</div>
-                    @fragments.meta.bylineImage(mostCommented.tags)
-                </div>
-            </div>
+        @mostCommented.map{ case (commented, count) =>
+            @onSocial.map { social =>
+                <div class="fc-slots__popular">
+                    <div>
+                        <div class="fc-slot__heading--popular">
+                            <h2 class="fc-slot__header--popular">Most comments</h2>
+                        </div>
+                        <div class="fc-slot__body--popular">
+                           @contentCard(commented, 0, 0, "", false, false)
+                        </div>
+                    </div>
 
-            <div class="slot">
-                <div class="slot-heading">
-                    <h2>on social</h2>
+                    <div>
+                        <div class="fc-slot__heading--popular">
+                            <h2 class="fc-slot__header--popular">Popular on social</h2>
+                        </div>
+                        <div class="fc-slot__body--popular">
+                            @contentCard(social, 0, 0, "", false, false)
+                        </div>
+                    </div>
                 </div>
-                <div class="slot-body">
-                    @fragments.meta.byline(onSocial.trail.byline, onSocial.tags)
-                <a class="meg-onward-link" href="@{onSocial.metadata.id}">@{onSocial.trail.headline}</a>
-                </div>
-            </div>
-        </div>
-
+            }
+        }
     </div>
 }

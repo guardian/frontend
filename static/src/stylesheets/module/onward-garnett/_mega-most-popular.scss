@@ -1,51 +1,57 @@
-.meg-meta {
-    column-width: 18.75rem;
+.fc-slots__popular {
+    column-width: 300px;
     column-gap: 1px;
 
-    column-rule: 1px solid #dcdcdc;
-
-    .slot-heading,
-    .slot-body {
-        padding: .5rem;
-        border-top: 1px solid #dcdcdc;
-
-        display: inline-block;
-        width: 100%;
-        box-sizing: border-box;
-    }
-
-    h2 {
-        font-size: 1rem;
-        line-height: 1.25rem;
-        font-family: 'Guardian Egyptian Web', Georgia, serif;
-        font-weight: 600;
-    }
+    column-rule: 1px solid $brightness-86;
 
     .byline,
     .byline span[itemprop='author'] {
-        color: #767676;
+        color: $brightness-46;
         font-weight: normal;
-    }
-
-    .meg-onward-link {
-        color: #121212;
-    }
-
-    .comment-count {
-
     }
 }
 
-.mega-most-popular {
+.fc-slot__heading--popular,
+.fc-slot__body--popular {
+    padding: 4px 6px 0;
+    border-top: 1px solid $brightness-86;
+    min-height: 40px;
+    display: inline-block;
+    width: 100%;
+    box-sizing: border-box;
+    font-family: 'Guardian Egyptian Web', Georgia, serif;
+}
+
+.fc-slot__header--popular {
+    font-size: 16px;
+    line-height: 20px;
+    font-family: 'Guardian Egyptian Web', Georgia, serif;
+    font-weight: normal;
+    display: inline-block;
+}
+
+.fc-slot__onward-link--popular {
+    color: $brightness-7;
+}
+
+.fc-slot__count-popular {
+    font-size: 22px;
+    font-weight: 600;
+}
+
+/* Override Garnett styling around borders */
+.fc-slice--mega-popular {
+    @include mq(leftCol) {
+        border-left: 1px solid $brightness-86;
+    }
 
     .headline-column--desktop {
-        column-rule: 1px solid #dcdcdc;
+        column-rule: 1px solid $brightness-86;
 
-        column-width: 18.75rem;
+        column-width: 300px;
         column-gap: 1px;
     }
 
-    /* Override Garnett styling to avoid double border */
     .tabs__content {
         border-top: 0;
     }
@@ -54,7 +60,107 @@
     }
 
     .headline-column--desktop__item {
-        padding: .1875rem .5rem 0;
+        padding: 3px 8px 0;
     }
 
+    .tabs__container {
+        max-width: 100%;
+        background-color: $brightness-93;
+    }
+
+    .tabs__tab {
+        border-bottom: 1px solid $brightness-86;
+        border-top: 0;
+
+        a {
+            font-weight: normal;
+            min-height: 40px;
+        }
+    }
+
+    .inline-icon {
+        fill: #000000;
+    }
+}
+
+.popular-trails-mega.fc-container__body {
+    @include mq(leftCol) {
+        margin-left: 150px;
+        display: flex;
+        padding-top: 0;
+
+    }
+}
+
+.popular-trails-mega {
+    .fc-slice__popular-mpu {
+        border-top: 0;
+    }
+
+    .tabs--megamostpop {
+        margin-top: -6px;
+    }
+}
+
+.fc-slots__popular .fc-slot__cutout {
+    height: 4.5rem;
+    width: 4.5rem;
+    border-radius: 50%;
+    float: right;
+}
+
+.fc-slots__popular {
+    .fc-item {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .fc-item,
+    .fc-item--pillar-opinion,
+    .fc-item:hover,
+    .fc-item--pillar-opinion:hover,
+    .fc-item__container.u-faux-block-link--hover,
+    .fc-item--pillar-opinion.fc-item--type-comment .fc-item__container.u-faux-block-link--hover,
+    .fc-item--pillar-opinion.fc-item--type-comment.fc-item--pillar-opinion
+    {
+        background-color: transparent;
+    }
+
+    .fc-item__container::before {
+        display: none;
+    }
+
+    .fc-item__header {
+        font-size: 1rem;
+    }
+
+    .fc-item__meta {
+        background: none;
+    }
+
+    .fc-item--type-comment .fc-item__container > .fc-item__meta {
+        display: none; // hide vertical lines
+    }
+
+    .fc-item--type-comment.fc-item--has-cutout.fc-item--standard-tablet .fc-item__avatar {
+        height: 4.5rem;
+        width: 4.5rem;
+        top: 2rem;
+    }
+
+    .fc-item--type-comment.fc-item--has-cutout.fc-item--standard-tablet .fc-item__avatar__media {
+        height: 4.5rem;
+        width: 4.5rem;
+        left: 0;
+    }
+
+    .fc-item--standard-tablet.fc-item--has-cutout .fc-item__header {
+        padding-bottom: 1rem;
+        padding-right: 5rem;
+    }
+
+    .fc-item a,
+    .fc-item--pillar-sport.fc-item--type-feature .fc-item__headline {
+        color: #000000;
+    }
 }

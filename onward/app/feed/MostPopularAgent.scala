@@ -1,13 +1,14 @@
 package feed
 
 import com.gu.Box
-import com.gu.contentapi.client.model.SearchQuery
-import contentapi.ContentApiClient
+import com.gu.contentapi.client.model.v1.Content
 import common._
-import services.{OphanApi, S3, S3Megaslot}
-import model.{Content, MegaSlotMeta, RelatedContentItem}
+import contentapi.ContentApiClient
+import model.{MegaSlotMeta, RelatedContentItem}
 import play.api.libs.json._
 import play.api.libs.ws.WSClient
+import services.{OphanApi, S3Megaslot}
+import conf.Configuration
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -130,7 +131,12 @@ case class MegaSlot(
 object MegaSlot extends Logging {
   def get(client: ContentApiClient, key: String)(implicit ec: ExecutionContext): Future[MegaSlot] = {
     S3Megaslot.get(key).flatMap(asMeta) match {
-      case Some(m) => populateFromCAPI(client, m)
+      case Some(m) => {
+        log.info(s"Megaslot - got meta $m")
+        val res = populateFromCAPI(client, m)
+        res.onComplete(r => log.info(s"Popular from CAPI gave:\n\n $r"))
+        res
+      }
       case None => Future.failed(throw new NoSuchElementException("JSON not found or invalid"))
     }
   }
@@ -150,8 +156,7 @@ object MegaSlot extends Logging {
     for {
       response <- client.getResponse(query)
     } yield {
-      val models = response.results.map(c => c.id -> Content.make(c)).toMap
-      log.info(s"Megaslot - capi response has IDs: ${response.results.map(_.id).mkString(",")}")
+      val models = response.results.map(c => c.id -> c).toMap
       MegaSlot(
         headline = meta.headline,
         uk = models(meta.uk),
@@ -190,21 +195,28 @@ class OnSocialAgent(val contentApiClient: ContentApiClient) extends Logging {
 class MostCommentedAgent(val contentApiClient: ContentApiClient, wsClient: WSClient) extends Logging {
   private[this] val agent = Box[Option[MegaSlot]](None)
   private[this] val commentCounts = Box[Map[String, Int]](Map.empty)
-  import conf.Configuration
-
   private[this] val dapiURL = Configuration.discussion.apiRoot
 
   def getHeadline: String = agent.get.map(_.headline).getOrElse("")
 
   def get(edition: Edition): Option[(Content, Int)] = {
-    log.info(s"Megaslot - comment counts are: ${commentCounts.get}")
+    def commentCount(c: Content): Option[(Content, Int)] = {
+      val surl = shortUrl(c)
+      commentCounts.get.get(surl) match {
+        case Some(count) =>
+          Some(c -> count)
+        case None =>
+          log.info(s"Megaslot - unable to find comment count for content ${c.id}. Short URL was $surl.")
+          None
+      }
+    }
 
     agent.get.flatMap { megaSlot =>
       edition match {
-        case editions.Uk => commentCounts.get.get(megaSlot.uk.shortUrlPath).map(count => megaSlot.uk -> count)
-        case editions.Us => commentCounts.get.get(megaSlot.us.shortUrlPath).map(count => megaSlot.au -> count)
-        case editions.Au => commentCounts.get.get(megaSlot.au.shortUrlPath).map(count => megaSlot.uk -> count)
-        case editions.International => commentCounts.get.get(megaSlot.row.shortUrlPath).map(count => megaSlot.row -> count)
+        case editions.Uk => commentCount(megaSlot.uk)
+        case editions.Us => commentCount(megaSlot.us)
+        case editions.Au => commentCount(megaSlot.au)
+        case editions.International => commentCount(megaSlot.row)
         case _ => {
           log.info(s"Megaslot - unable to find most commented for edition ${edition.id} in ${commentCounts}")
           None
@@ -218,13 +230,10 @@ class MostCommentedAgent(val contentApiClient: ContentApiClient, wsClient: WSCli
 
     ms.foreach { slot =>
       agent.alter(Some(slot))
-      // now get DAPI stuff
-      val params = List(slot.uk.shortUrlId, slot.us.shortUrlId, slot.au.shortUrlId, slot.row.shortUrlId)
+      val params = List(shortUrl(slot.uk), shortUrl(slot.us), shortUrl(slot.au), shortUrl(slot.row))
           .map("short-urls" -> _)
-      log.info(s"Megaslot - shorts URLS are ${params.mkString(",")}")
 
       val countsURL = s"$dapiURL/getCommentCounts"
-      log.info(s"Megaslot - getting DAPI counts from $countsURL")
       val response = wsClient
         .url(countsURL)
         .addQueryStringParameters(params: _*)
@@ -237,8 +246,11 @@ class MostCommentedAgent(val contentApiClient: ContentApiClient, wsClient: WSCli
         }
       })
 
-      counts.foreach(commentCounts.alter(_))
+      counts.foreach(commentCounts.alter)
     }
     ms
   }
+
+  private[this] def shortUrl(c: Content) = c.fields.flatMap(_.shortUrl).map(_.stripPrefix("https://gu.com")).getOrElse("")
+
 }

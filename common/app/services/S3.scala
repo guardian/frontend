@@ -179,10 +179,10 @@ object S3ArchiveOriginals extends S3 {
 
 object S3Megaslot extends S3 {
   override lazy val bucket = {
-    if (Configuration.environment.isNonProd) {
-      "com-gu-most-viewed-test-code"
-    } else {
+    if (Configuration.environment.isProd) {
       "com-gu-most-viewed-test-prod"
+    } else {
+      "com-gu-most-viewed-test-code"
     }
   }
 

@@ -3,18 +3,20 @@ package controllers
 import java.time.Instant
 import java.time.temporal.ChronoUnit
 
+import com.gu.contentapi.client.model.v1.Content
 import common._
 import conf.switches.Switches
 import contentapi.ContentApiClient
 import feed._
+import layout.ContentCard
 import model.Cached.RevalidatableResult
 import model._
 import models.OnwardCollection._
 import models.{MostPopularGeoResponse, OnwardCollection, OnwardCollectionResponse}
-import org.joda.time.DateTime
 import play.api.libs.json._
 import play.api.mvc._
 import play.twirl.api.HtmlFormat
+import services.FaciaContentConvert
 import views.support.FaciaToMicroFormat2Helpers._
 
 import scala.concurrent.Future
@@ -49,6 +51,7 @@ class MostPopularController(contentApiClient: ContentApiClient,
 
     val mostCommented = mostCommentedAgent.get(edition)
     val onSocial = onSocialAgent.get(edition)
+    log.info(s"Megaslot - found\n\n ${mostCommented} \n\n $onSocial")
 
     sectionPopular.map { sectionPopular =>
       val sectionFirst = sectionPopular ++ globalPopular
@@ -81,29 +84,13 @@ class MostPopularController(contentApiClient: ContentApiClient,
     onSocial: Option[Content]
   )(implicit request: RequestHeader): HtmlFormat.Appendable = {
 
-    //log.info(s"Megaslot - got popular items ($mostCommented, $onSocial)")
-
-    def isTooOld(content: Content): Boolean = {
-      val threeDaysAgo = DateTime.now.minusDays(3)
-      val tooOld = content.fields.firstPublicationDate.exists(_.isBefore(threeDaysAgo))
-      if (tooOld) {
-        log.info(s"Megaslot - rejecting ${content.metadata.id} as too old")
-      }
-
-      tooOld
+    if (Switches.MegaMostViewed.isSwitchedOn) {
+      val commentedCard = mostCommented.flatMap{ case (content, count) => ContentCard.fromApiContent(content).map(_ -> count)}
+      val socialCard = onSocial.flatMap(ContentCard.fromApiContent)
+      views.html.fragments.collections.popularMega(items, commentedCard, socialCard)
+    } else {
+      views.html.fragments.collections.popular(items)
     }
-
-    val mega = for {
-      commented <- mostCommented
-      (mcContent, count) = commented
-      social <- onSocial
-      if Switches.UseMegaMostViewed.isSwitchedOn
-      //if !isTooOld(mcContent) && !isTooOld(social)
-    } yield {
-      views.html.fragments.collections.popularMega(items,mcContent, count, social)
-    }
-
-    mega.getOrElse(views.html.fragments.collections.popular(items))
   }
 
   def renderPopularGeo(): Action[AnyContent] = Action { implicit request =>

@@ -226,7 +226,7 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
- val UseMegaMostViewed = Switch(
+ val MegaMostViewed = Switch(
     ABTests,
     "ab-mega-most-viewed",
     "Tests larger most viewed component",
