@@ -61,14 +61,14 @@ const adFreeSlotRemove = once(
             commercialFaciaContainersToRemove.forEach(
                 (faciaContainer: Element) => faciaContainer.classList.add('u-h')
             );
-            commercialThrashers.forEach(
-                (thrasher: Element) => {
-                    const closestFaciaContainer = thrasher.closest('.fc-container--thrasher');
-                    if (closestFaciaContainer) {
-                        closestFaciaContainer.remove();
-                    }
+            commercialThrashers.forEach((thrasher: Element) => {
+                const closestFaciaContainer = thrasher.closest(
+                    '.fc-container--thrasher'
+                );
+                if (closestFaciaContainer) {
+                    closestFaciaContainer.remove();
                 }
-            );
+            });
         });
     }
 );
