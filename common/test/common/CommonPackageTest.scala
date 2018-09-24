@@ -53,7 +53,7 @@ class CommonPackageTest extends FlatSpec with Matchers with WithTestApplicationC
     val jsonResult: JsValue = contentAsJson(result)
     val (key, value) = jsonResult.as[Map[String,String]].head
     key shouldBe "body"
-    value should not include ("<html")
+    value should not include "<html"
   }
 
 }

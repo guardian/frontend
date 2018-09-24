@@ -203,9 +203,10 @@ import scala.concurrent.Await
     val emailJsonResponse = faciaController.renderFront("email/uk/daily")(emailRequest)
     status(emailJsonResponse) shouldBe 200
     val jsonResponse = contentAsJson(emailJsonResponse)
-    val (key, html) = jsonResponse.as[Map[String,String]].head
+    val (key, text) = jsonResponse.as[Map[String,String]].head
     key shouldBe "body"
-    html should not include "<!DOCTYPE html"
+    text should not include "<!DOCTYPE html"
+    text should include ("The Guardian Today | The Guardian")
   }
 
   it should "render email fronts" in {
