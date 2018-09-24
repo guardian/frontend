@@ -95,7 +95,8 @@ export type PrebidBidder = {
         | PrebidXaxisParams
         | PrebidAppNexusParams
         | PrebidOpenXParams
-        | PrebidAdYouLikeParams,
+        | PrebidAdYouLikeParams
+        | PrebidPubmaticParams,
     labelAny?: PrebidBidLabel[],
     labelAll?: PrebidBidLabel[],
 };
@@ -110,7 +111,8 @@ export type PrebidBid = {
         | PrebidXaxisParams
         | PrebidAppNexusParams
         | PrebidOpenXParams
-        | PrebidAdYouLikeParams,
+        | PrebidAdYouLikeParams
+        | PrebidPubmaticParams,
     labelAny?: PrebidBidLabel[],
     labelAll?: PrebidBidLabel[],
 };
