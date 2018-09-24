@@ -1,16 +1,19 @@
 package services.dotcomponents
 
-import common.Logging
 import experiments.{ActiveExperiments, Control, DotcomponentsRendering, Excluded, Participant}
 import model.PageWithStoryPackage
 import play.api.mvc.RequestHeader
 import services.dotcomponents.pickers.{RenderTierPickerStrategy, SimplePagePicker, WhitelistPicker}
 import implicits.Requests._
 
-object RenderingTierPicker extends Logging {
+object RenderingTierPicker {
 
   // todo: use injection for this
   val picker: RenderTierPickerStrategy = new SimplePagePicker()
+
+  // use this logger so we get all the log fields populated for free
+  def logRequest(msg:String)(implicit request: RequestHeader): Unit =
+    DotcomponentsLogger().withRequestHeaders(request).info(msg)
 
   def getRenderTierFor(page: PageWithStoryPackage)(implicit request: RequestHeader): RenderType = {
 
@@ -25,7 +28,7 @@ object RenderingTierPicker extends Logging {
     val isSupported = picker.getRenderTierFor(page, request)
 
     isSupported match {
-      case RemoteRender => log.info(s"Article was remotely renderable ${page.metadata.id}")
+      case RemoteRender => logRequest("Article was remotely renderable")
       case _ =>
     }
 
