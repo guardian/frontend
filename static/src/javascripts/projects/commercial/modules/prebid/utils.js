@@ -87,7 +87,8 @@ export const shouldIncludeAdYouLike = (slotSizes: PrebidSize[]): boolean => {
 };
 
 export const shouldIncludeOzone = (): boolean =>
-    !isInUsRegion() && !isInAuRegion() && getRandomIntInclusive(1, 10000) === 1;
+    // include in 1 in 20 (5%) of auctions
+    !isInUsRegion() && !isInAuRegion() && getRandomIntInclusive(1, 20) === 1;
 
 export const stripMobileSuffix = (s: string): string =>
     stripSuffix(s, '--mobile');
