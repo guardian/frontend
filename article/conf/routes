@@ -9,12 +9,6 @@ GET     /_healthcheck               controllers.HealthCheck.healthCheck()
 
 GET     /_cdn_healthcheck           controllers.HealthCheck.healthCheck()
 
-# temp
-GET        /most-read.json                            controllers.MostPopularController.render(path = "")
-GET        /most-read/*path.json                      controllers.MostPopularController.render(path)
-GET        /most-read-geo.json                        controllers.MostPopularController.renderPopularGeo()
-GET        /most-read-day.json                        controllers.MostPopularController.renderPopularDay(countryCode)
-
 # Newspaper pages paths
 # gallery format (?)
 #  e.g. /theobserver/gallery/2013/sep/14/the-10-best-fonts
@@ -43,4 +37,3 @@ GET     /*path/email/headline.txt   controllers.ArticleController.renderHeadline
 GET     /*path/email.emailjson      controllers.ArticleController.renderEmail(path)
 GET     /*path/email.emailtxt       controllers.ArticleController.renderEmail(path)
 GET     /*path                      controllers.ArticleController.renderArticle(path)
-
