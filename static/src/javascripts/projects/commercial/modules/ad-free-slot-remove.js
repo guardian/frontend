@@ -39,6 +39,10 @@ const adFreeSlotRemove = once(
             '.fc-container'
         ).filter(shouldRemoveFaciaContainerWhenAdFree);
 
+        const commercialThrashers: Array<Element> = qwery(
+            '.commercial-thrasher'
+        );
+
         return fastdom.write(() => {
             if (bodyEl) {
                 if (bodyEl.classList.toString().includes('has-page-skin')) {
@@ -56,6 +60,14 @@ const adFreeSlotRemove = once(
             );
             commercialFaciaContainersToRemove.forEach(
                 (faciaContainer: Element) => faciaContainer.classList.add('u-h')
+            );
+            commercialThrashers.forEach(
+                (thrasher: Element) => {
+                    const closestFaciaContainer = thrasher.closest('.fc-container--thrasher');
+                    if (closestFaciaContainer) {
+                        closestFaciaContainer.remove();
+                    }
+                }
             );
         });
     }
