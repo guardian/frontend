@@ -30,7 +30,8 @@ class LatestIndexController(
   }
 
   private def handleSeriesBlogs(index: IndexPage)(implicit request: RequestHeader) = index.trails.headOption match {
-    case Some(latest) if request.isEmailJson || request.isHeadlineText =>
+    case Some(latest) if request.isEmailJson || request.isEmailTxt || request.isHeadlineText =>
+      // We perform an internal redirect for Braze. It cannot handle 30Xs
       emailInternalRedirect(latest)
 
     case Some(latest) if request.isEmail =>
@@ -47,9 +48,10 @@ class LatestIndexController(
 
   private def emailInternalRedirect(latest: Content)(implicit request: RequestHeader) = {
     val emailJsonSuffix = if (request.isEmailJson) EMAIL_JSON_SUFFIX else ""
+    val emailTxtSuffix = if (request.isEmailTxt) EMAIL_TXT_SUFFIX else ""
     val headlineSuffix = if (request.isHeadlineText) HEADLINE_SUFFIX else ""
 
-    val url = s"${latest.metadata.url}/email$emailJsonSuffix$headlineSuffix"
+    val url = s"${latest.metadata.url}/email$emailTxtSuffix$emailJsonSuffix$headlineSuffix"
     val urlWithoutSlash = if (url.startsWith("/")) url.drop(1) else url
 
     InternalRedirect.internalRedirect("type/article", urlWithoutSlash, None)

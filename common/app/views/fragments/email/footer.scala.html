@@ -16,7 +16,7 @@
                             <tr>
                                 <td class="ft__links">
                                     <a href="https://profile.theguardian.com/email-prefs">Manage your emails</a> |
-                                    @if(request.isEmailJson) {
+                                    @if(request.isEmailJson || request.isEmailTxt) {
                                         <a href="%%unsub_center_url%%">Unsubscribe</a> |
                                     } else {
                                         <a href="%%microsite_base_url[default]40543[/default]%%">Unsubscribe</a> |
