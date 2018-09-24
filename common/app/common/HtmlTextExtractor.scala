@@ -29,6 +29,7 @@ object HtmlTextExtractor {
 
   private def filterImagesAndFlattenNodes(node: Node): Seq[Node] = {
     val children = node.childNodes.asScala
+    // only filter the large full width images since they contain duplicated links
     if (children.exists(child => child.nodeName() == "img" && child.attr("class") == "full-width"))
       Nil
     else
