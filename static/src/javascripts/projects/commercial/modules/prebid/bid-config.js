@@ -366,16 +366,16 @@ const sonobiBidder: PrebidBidder = {
 };
 
 const getPubmaticPublisherId = (edition: string): string => {
-    switch(edition) {
+    switch (edition) {
         case 'US':
-            return '157206'
+            return '157206';
         case 'AU':
-            return '157203'
+            return '157203';
         case 'UK':
         default:
-            return '157207'
+            return '157207';
     }
-}
+};
 
 const pubmaticBidder: PrebidBidder = {
     name: 'pubmatic',
