@@ -74,7 +74,7 @@ const setDuration = (el, duration) => {
 const init = () => {
     const player = document.querySelector('audio.inline-audio-player-element');
 
-    if (player && !(player instanceof HTMLMediaElement)) return;
+    if (!player || !(player instanceof HTMLMediaElement)) return;
 
     const container: ?HTMLElement = document.querySelector(
         '.inline-audio_container'
@@ -133,4 +133,3 @@ const init = () => {
 };
 
 export { init };
-

@@ -72,7 +72,6 @@ const init = () => {
         ['article-handle-quiz-completion', handleQuizCompletion],
         ['article-campaign', initCampaign],
         ['article-inline-audio', initInArticleAudio], // added for a test of play rates on inarticle audio players
-
     ]);
 };
 

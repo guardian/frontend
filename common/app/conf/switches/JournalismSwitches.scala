@@ -33,10 +33,10 @@ trait JournalismSwitches {
     exposeClientSide = true
   )
 
-  val FootballWeeklyPlayerTest = Switch(
+  val InArticlePlayerTest = Switch(
     SwitchGroup.Journalism,
-    "football-weekly-player-test",
-    "Test in-article player in football content",
+    "in-article-player-test",
+    "Test in-article player in relevant tagged content",
     owners = Seq(Owner.withName("journalism team")),
     safeState = Off,
     sellByDate = never,

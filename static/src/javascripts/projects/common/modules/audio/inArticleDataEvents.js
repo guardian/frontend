@@ -20,22 +20,20 @@ const monitorPercentPlayed = (
 };
 
 const playerObserved = (el: ?HTMLElement, id: string) => {
-    if (el) {
-        const observer = new window.IntersectionObserver(
-            (entries, self) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        sendToOphan(id, 'ready');
-                        self.disconnect();
-                    }
-                });
-            },
-            {
-                threshold: 1.0,
-            }
-        );
-        observer.observe(el);
-    }
+    const observer = new window.IntersectionObserver(
+        (entries, self) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    sendToOphan(id, 'ready');
+                    self.disconnect();
+                }
+            });
+        },
+        {
+            threshold: 1.0,
+        }
+    );
+    observer.observe(el);
 };
 
 export { monitorPercentPlayed, playerObserved };

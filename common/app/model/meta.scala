@@ -717,7 +717,7 @@ final case class Tags(
   //this is for the immersive header to access this info
   lazy val isPaidContent = tags.exists( t => t.id == "tone/advertisement-features" )
 
-  lazy val isFootball = tags.exists(t => t.id=="football/football")
+  lazy val isPolitics = tags.exists(t => t.id=="politics/politics")
 
   lazy val keywordIds = keywords.map { _.id }
 
