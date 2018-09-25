@@ -331,8 +331,7 @@ class GuardianConfiguration extends Logging {
   }
 
   object images {
-    lazy val path = configuration.getMandatoryStringProperty("images.path")
-    lazy val fastlyIOHost = configuration.getMandatoryStringProperty("fastly-io.host")
+    lazy val host = configuration.getMandatoryStringProperty("fastly-io.host")
     lazy val signatureSalt: String  = configuration.getMandatoryStringProperty("images.signature-salt")
     val fallbackLogo = Static("images/fallback-logo.png")
   }
