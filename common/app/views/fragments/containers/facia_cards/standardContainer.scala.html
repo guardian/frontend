@@ -38,21 +38,29 @@
          data-title="@Localisation(containerDefinition.displayName getOrElse "")"
          data-id="@containerDefinition.dataId">
 
-        @for(sliceWithCards <- containerLayout.slices) {
-            @slice(sliceWithCards, containerDefinition.index, frontProperties = Some(frontProperties), containerDefinition.displayName, frontId)
-        }
+        @if(containerDefinition.displayName.contains("Flagship")) {
+            <div>FLAGSHIP TESTING TESTING</div>
+            @for(slice <- containerLayout.slices.headOption) {
+                @podcastContainer(slice, containerDefinition.index, frontProperties = Some(frontProperties), containerDefinition.displayName, frontId)
+            }
+        } else {
 
-        @if(containerDefinition.hasShowMore && containerDefinition.hasShowMoreEnabled) {
-            @if(containerDefinition.useShowMore) {
-                <div class="js-show-more-placeholder"></div>
+            @for(sliceWithCards <- containerLayout.slices) {
+                @slice(sliceWithCards, containerDefinition.index, frontProperties = Some(frontProperties), containerDefinition.displayName, frontId)
+            }
 
-                @showMoreButton(containerDefinition.displayName getOrElse "")
-            } else {
-                @* Don't hide any items, for on tag pages, which are chronological *@
-                @showMore(
-                    containerDefinition.containerLayout.map(_.remainingCards).getOrElse(Nil),
-                    containerDefinition.index
-                )
+            @if(containerDefinition.hasShowMore && containerDefinition.hasShowMoreEnabled) {
+                @if(containerDefinition.useShowMore) {
+                    <div class="js-show-more-placeholder"></div>
+
+                    @showMoreButton(containerDefinition.displayName getOrElse "")
+                } else {
+                    @* Don't hide any items, for on tag pages, which are chronological *@
+                    @showMore(
+                        containerDefinition.containerLayout.map(_.remainingCards).getOrElse(Nil),
+                        containerDefinition.index
+                    )
+                }
             }
         }
     </div>

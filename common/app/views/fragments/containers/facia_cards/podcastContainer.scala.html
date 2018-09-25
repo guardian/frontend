@@ -1,0 +1,61 @@
+@import model.FrontProperties
+@(slice: layout.SliceWithCards, containerIndex: Int, frontProperties: Option[FrontProperties] = None, containerDisplayName: Option[String] = None, frontId: Option[String] = None)(implicit request: RequestHeader)
+
+@import layout.{ColumnAndCards, SingleItem, Rows, SplitColumn, MPU}
+@import views.html.fragments.items.facia_cards.item
+
+@getAllCards = @{
+    for {
+        column <- slice.columns
+        card <- column.cards
+    } yield card.item
+}
+
+@getLatestEpisode(allCards: Seq[FaciaCard]) = @{
+    allCards.collectFirst { case c: layout.ContentCard => c }
+}
+
+<div class="fc-slice-wrapper">
+    <ul class="u-unstyled l-row  l-row--cols-@slice.numberOfCols fc-slice fc-slice--@slice.cssClassName">
+    @defining(getAllCards) { case allCards =>
+        <div>allCards: @allCards.length</div>
+    }
+
+    @for(ColumnAndCards(column, cards) <- slice.columns) {
+        @column match {
+            case SingleItem(colSpan, _) => {
+                @cards.headOption.map { card =>
+                    @item(card, containerIndex, colSpan = colSpan, frontProperties = frontProperties, containerDisplayName = containerDisplayName, frontId = frontId)
+                }
+            }
+
+            case Rows(colSpan, columns, rows, _) => {
+                <li class="fc-slice__item l-row__item l-row__item--span-@colSpan">
+                    <ul class="u-unstyled l-list l-list--columns-@columns l-list--rows-@rows">
+                    @if(cards.nonEmpty) {
+                        @cards.map{ card =>
+                            @item(card, containerIndex, isList = true, frontProperties = frontProperties, containerDisplayName = containerDisplayName, frontId = frontId)
+                        }
+                    }
+                    </ul>
+                </li>
+            }
+
+            case SplitColumn(colSpan, topItemRows, _, bottomItemRows, _) => {
+                <li class="fc-slice__item l-row__item l-row__item--span-@colSpan">
+                    <ul class="u-unstyled l-list l-list--columns-1 l-list--rows-@(topItemRows + bottomItemRows)">
+                    @cards.map { card =>
+                        @item(card, containerIndex, isList = true, frontProperties = frontProperties, containerDisplayName = containerDisplayName, frontId = frontId)
+                    }
+                    </ul>
+                </li>
+            }
+
+            case MPU(colSpan) => {
+                <li class="fc-slice__item l-row__item l-row__item--span-@colSpan fc-slice__item--mpu-candidate">
+              </li>
+            }
+        }
+    }
+    </ul>
+</div>
