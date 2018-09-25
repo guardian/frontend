@@ -15,9 +15,9 @@ const stripSuffix = (s: string, suffix: string): string => {
 
 const currentGeoLocation = once((): string => geolocationGetSync());
 
-const isInUsRegion = (): boolean => ['US', 'CA'].includes(currentGeoLocation());
+export const isInUsRegion = (): boolean => ['US', 'CA'].includes(currentGeoLocation());
 
-const isInAuRegion = (): boolean => ['AU', 'NZ'].includes(currentGeoLocation());
+export const isInAuRegion = (): boolean => ['AU', 'NZ'].includes(currentGeoLocation());
 
 const contains = (sizes: PrebidSize[], size: PrebidSize): boolean =>
     Boolean(sizes.find(s => s[0] === size[0] && s[1] === size[1]));

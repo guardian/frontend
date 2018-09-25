@@ -13,7 +13,7 @@ import { commercialPrebidSafeframe } from 'common/modules/experiments/tests/comm
 import {
     getParticipations,
     getVariant,
-    isInVariant,
+    isInVariant
 } from 'common/modules/experiments/utils';
 import type {
     PrebidAdYouLikeParams,
@@ -45,6 +45,8 @@ import {
     shouldIncludeTrustX,
     stripMobileSuffix,
     stripTrailingNumbersAbove1,
+    isInUsRegion,
+    isInAuRegion
 } from './utils';
 
 const isInSafeframeTestVariant = (): boolean => {
@@ -365,16 +367,13 @@ const sonobiBidder: PrebidBidder = {
         ),
 };
 
-const getPubmaticPublisherId = (edition: string): string => {
-    switch (edition) {
-        case 'US':
-            return '157206';
-        case 'AU':
-            return '157203';
-        case 'UK':
-        default:
-            return '157207';
-    }
+const getPubmaticPublisherId = (): string => {
+    if (isInUsRegion()) {
+        return '157206';
+    } else if (isInAuRegion()) {
+        return '157203';
+    }   
+    return '157207';
 };
 
 const pubmaticBidder: PrebidBidder = {
@@ -384,7 +383,7 @@ const pubmaticBidder: PrebidBidder = {
         Object.assign(
             {},
             {
-                publisherId: getPubmaticPublisherId(config.get('page.edition')),
+                publisherId: getPubmaticPublisherId(),
                 adSlot: slotId,
             }
         ),
