@@ -24,6 +24,7 @@ import type {
     PrebidImproveSizeParam,
     PrebidIndexExchangeParams,
     PrebidOpenXParams,
+    PrebidPubmaticParams,
     PrebidSize,
     PrebidSonobiParams,
     PrebidTrustXParams,
@@ -44,6 +45,8 @@ import {
     shouldIncludeTrustX,
     stripMobileSuffix,
     stripTrailingNumbersAbove1,
+    isInUsRegion,
+    isInAuRegion,
 } from './utils';
 
 const isInSafeframeTestVariant = (): boolean => {
@@ -364,6 +367,29 @@ const sonobiBidder: PrebidBidder = {
         ),
 };
 
+const getPubmaticPublisherId = (): string => {
+    if (isInUsRegion()) {
+        return '157206';
+    }
+    if (isInAuRegion()) {
+        return '157203';
+    }
+    return '157207';
+};
+
+const pubmaticBidder: PrebidBidder = {
+    name: 'pubmatic',
+    switchName: 'prebidPubmatic',
+    bidParams: (slotId: string): PrebidPubmaticParams =>
+        Object.assign(
+            {},
+            {
+                publisherId: getPubmaticPublisherId(),
+                adSlot: slotId,
+            }
+        ),
+};
+
 const trustXBidder: PrebidBidder = {
     name: 'trustx',
     switchName: 'prebidTrustx',
@@ -503,6 +529,7 @@ const currentBidders: (PrebidSize[]) => PrebidBidder[] = slotSizes => {
         ...(inPbTestOr(shouldIncludeAppNexus()) ? [appNexusBidder] : []),
         improveDigitalBidder,
         xaxisBidder,
+        pubmaticBidder,
         ...(shouldIncludeAdYouLike(slotSizes) ? [adYouLikeBidder] : []),
         ...(shouldIncludeOpenx() ? [openxClientSideBidder] : []),
     ];
