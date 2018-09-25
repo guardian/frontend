@@ -370,7 +370,8 @@ const sonobiBidder: PrebidBidder = {
 const getPubmaticPublisherId = (): string => {
     if (isInUsRegion()) {
         return '157206';
-    } else if (isInAuRegion()) {
+    }
+    if (isInAuRegion()) {
         return '157203';
     }
     return '157207';
