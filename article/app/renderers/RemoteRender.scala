@@ -25,12 +25,12 @@ class RemoteRender(implicit context: ApplicationContext) {
     .withRequestTimeout(2000.millis)
     .addHttpHeaders("Content-Type" -> "application/json")
     .post(payload)
-    .map((response) => {
+    .map(response => {
       response.status match {
         case 200 =>
           Cached(article)(RevalidatableResult.Ok(Html(response.body)))
         case _ =>
-          NoCache(InternalServerError)
+          NoCache(InternalServerError("Rendering tier failed"))
       }
     })
 
