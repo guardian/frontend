@@ -39,7 +39,7 @@ object UrlHelpers {
   }
 
   def readerRevenueLinks(implicit request: RequestHeader) = List(
-    NavLink("Make a contribution", getReaderRevenueUrl(SupportContribute, SideMenu)),
+    NavLink("Support The Guardian", getReaderRevenueUrl(SupportContribute, SideMenu)),
     NavLink("Subscribe", getReaderRevenueUrl(SupportSubscribe, SideMenu), classList = Seq("js-subscribe"))
   )
 
