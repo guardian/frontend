@@ -13,7 +13,7 @@ import { commercialPrebidSafeframe } from 'common/modules/experiments/tests/comm
 import {
     getParticipations,
     getVariant,
-    isInVariant
+    isInVariant,
 } from 'common/modules/experiments/utils';
 import type {
     PrebidAdYouLikeParams,
@@ -46,7 +46,7 @@ import {
     stripMobileSuffix,
     stripTrailingNumbersAbove1,
     isInUsRegion,
-    isInAuRegion
+    isInAuRegion,
 } from './utils';
 
 const isInSafeframeTestVariant = (): boolean => {
@@ -372,7 +372,7 @@ const getPubmaticPublisherId = (): string => {
         return '157206';
     } else if (isInAuRegion()) {
         return '157203';
-    }   
+    }
     return '157207';
 };
 
