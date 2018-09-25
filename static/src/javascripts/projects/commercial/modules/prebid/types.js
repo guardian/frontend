@@ -10,6 +10,11 @@ export type PrebidSonobiParams = {
     render?: string,
 };
 
+export type PrebidPubmaticParams = {
+    publisherId: string,
+    adSlot: string,
+};
+
 export type PrebidIndexExchangeParams = {
     siteId: string,
     size: PrebidSize,
@@ -90,7 +95,8 @@ export type PrebidBidder = {
         | PrebidXaxisParams
         | PrebidAppNexusParams
         | PrebidOpenXParams
-        | PrebidAdYouLikeParams,
+        | PrebidAdYouLikeParams
+        | PrebidPubmaticParams,
     labelAny?: PrebidBidLabel[],
     labelAll?: PrebidBidLabel[],
 };
@@ -105,7 +111,8 @@ export type PrebidBid = {
         | PrebidXaxisParams
         | PrebidAppNexusParams
         | PrebidOpenXParams
-        | PrebidAdYouLikeParams,
+        | PrebidAdYouLikeParams
+        | PrebidPubmaticParams,
     labelAny?: PrebidBidLabel[],
     labelAll?: PrebidBidLabel[],
 };
