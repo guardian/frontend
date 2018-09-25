@@ -488,7 +488,6 @@ const getDummyServerSideBidders = (): Array<PrebidBidder> => {
             ),
     };
 
-    // Experimental. Only 0.01% of the PVs.
     if (
         inPbTestOr(
             config.get('switches.prebidS2sozone') && shouldIncludeOzone()
