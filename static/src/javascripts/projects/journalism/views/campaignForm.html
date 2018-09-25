@@ -9,7 +9,7 @@
             </div>
             <div class="heading">
                 <h4 class="campaign--snippet__headline"> <%= data.title %></h4>
-                <p> <%= data.description %></p>
+                <%= data.description %>
             </div>
             <div class="success_box">
                 <p class="success-message">Thank you for your contribution</p>
@@ -41,7 +41,7 @@
         <div class="form_input form_input--<%=field.type%>">
             <div class="form_field">
                 <label for="<%=field.name%>"
-                       class="form_field_label">
+                       class="form_field_label <% if (field.required == '1') { %> required <% } %>" >
                     <%= field.label %>
                     <% if(field.description) { %>
                         <span>(<%= field.description %>)</span>

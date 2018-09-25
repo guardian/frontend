@@ -422,6 +422,10 @@
         font-weight: 500;
         font-family: $f-serif-headline;
 
+        &.required:after {
+            content: '*';
+        }
+
         span {
             font-weight: 200;
             margin-right: 10px;
