@@ -115,6 +115,7 @@ final case class Trail (
     ("isLive", JsBoolean(fields.isLive)),
     ("webPublicationDate", Json.toJson(webPublicationDate)),
     ("headline", JsString(headline)),
-    ("commentable", JsBoolean(isCommentable))
+    ("commentable", JsBoolean(isCommentable)),
+    ("byline", JsString(byline.getOrElse("")))
   )
 }

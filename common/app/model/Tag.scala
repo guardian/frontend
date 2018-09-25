@@ -66,12 +66,14 @@ object Tag {
       richLinkId = richLinkId
     )
   }
+  implicit val tagWrites: Writes[Tag] = Json.writes[Tag]
 }
 
 object Podcast {
   def make(podcast: ApiPodcast): Podcast = {
     Podcast(podcast.subscriptionUrl, podcast.googlePodcastsUrl, podcast.spotifyUrl)
   }
+  implicit val podcastWrites: Writes[Podcast] = Json.writes[Podcast]
 }
 case class Podcast(
   subscriptionUrl: Option[String],
@@ -108,6 +110,7 @@ object Reference {
       */
     JsObject(Seq(k -> JsString(RelativePathEscaper.escapeLeadingSlashFootballPaths(v))))
   }
+  implicit val referenceWrites: Writes[Reference] = Json.writes[Reference]
 }
 
 case class Reference(
@@ -138,6 +141,8 @@ object TagProperties {
       commercial = Some(CommercialProperties.fromTag(tag))
     )
   }
+
+  implicit val tagPropertiesWrites: Writes[TagProperties] = Json.writes[TagProperties]
 }
 
 case class TagProperties(
@@ -187,4 +192,6 @@ case class Tag (
   val isFootballTeam = properties.references.exists(_.`type` == "pa-football-team")
   val isFootballCompetition = properties.references.exists(_.`type` == "pa-football-competition")
   val contributorImagePath = properties.bylineImageUrl.map(ImgSrc(_, Contributor))
+
+  implicit val tagWrites: Writes[Tag] = Json.writes[Tag]
 }

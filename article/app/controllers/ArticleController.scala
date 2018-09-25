@@ -74,7 +74,9 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
   }
 
   private def getJson(article: ArticlePage)(implicit request: RequestHeader) = {
-    val contentFieldsJson = if (request.isGuuiJson) List("contentFields" -> Json.toJson(ContentFields(article.article))) else List()
+    val contentFieldsJson = if (request.isGuuiJson) List(
+      "contentFields" -> Json.toJson(ContentFields(article.article)),
+      "tags" -> Json.toJson(article.article.tags)) else List()
     List(("html", views.html.fragments.articleBody(article))) ++ contentFieldsJson
   }
 
