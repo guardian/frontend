@@ -35,7 +35,9 @@ function shouldServeLotame() {
         }
         return true;
     }
-    catch(e) {};
+    catch(e) {
+        console.log(`shouldServeLotame exception: ${e.toString()}`);
+    };
     return false;
 }
 
