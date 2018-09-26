@@ -19,7 +19,7 @@ class FollowButtonWrap extends Component<
     constructor(props: FollowButtonWrapProps) {
         super(props);
         this.setState({
-            mousedOutOnce: false,
+            mousedOutOnce: true,
         });
     }
 
