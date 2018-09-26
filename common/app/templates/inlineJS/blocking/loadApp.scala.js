@@ -29,15 +29,12 @@ function guardianPolyfilled() {
 function shouldServeLotame() {
     try {    
         var geo = JSON.parse(window.localStorage.getItem("gu.geolocation")).value;
-        console.log(`Geo was: ${geo}`)
         if (geo === 'US' || geo === 'CA' || geo === 'AU' || geo === 'NZ') {
             return false;
         }
         return true;
     }
-    catch(e) {
-        console.log(`shouldServeLotame exception: ${e.toString()}`);
-    };
+    catch(e) {};
     return false;
 }
 
@@ -59,7 +56,6 @@ function shouldServeLotame() {
                 '@polyfillioUrl'                
             ];
             if (shouldServeLotame() === true) {
-                console.log('I am going to serve lotame');
                 scripts.push('@Configuration.lotame.lotameScriptUrl');
             }
             scripts.push('@Static(s"javascripts/graun.$bootModule.js")');
