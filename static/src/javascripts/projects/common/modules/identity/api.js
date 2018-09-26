@@ -287,7 +287,7 @@ export const getSubscribedNewsletters = () => {
     })
         .then(json => {
             if (json.result.subscriptions) {
-                return json.result.subscriptions.map(sub => sub.id);
+                return json.result.subscriptions.map(sub => sub.listId);
             }
             return [];
         })
