@@ -17,10 +17,15 @@ module.exports = {
             // Do the massaging and shortening
             const shortVendors = { 
                 version: vendorList.vendorListVersion,
+                purposeIDs: [],
                 purposesByVID: {},
                 legIntPurposesByVID: {},
                 featuresIdsByVID: {}
             };
+            vendorList.purposes.map(function(purpose){
+                shortVendors.purposeIDs.push( purpose.id );
+            })
+
             vendorList.vendors.map(function(vendor){
                 shortVendors.purposesByVID[vendor.id] = vendor.purposeIds;
                 shortVendors.legIntPurposesByVID[vendor.id] = vendor.legIntPurposeIds;
