@@ -16,11 +16,12 @@ const setPauseButton = el => {
 };
 
 // design hack to give immediate feedback on the progress bar for a play event
-const showStarterBlockOnFirstPlay = () => {
+const showStarterBlockOnFirstPlay = timePlayedSpan => {
     const scrubberBar: ?HTMLElement = document.querySelector(
         '.inline-audio_content_progress-bar'
     );
     if (scrubberBar) scrubberBar.classList.add('started');
+    timePlayedSpan.textContent = 'loading...';
 };
 
 // PLAYER ACTION FUNCTIONS
@@ -40,13 +41,13 @@ const updateTime = (el: HTMLElement, player, progressBar: HTMLElement) => {
     });
 };
 
-const activateAudioControls = (el, player, id) => {
+const activateAudioControls = (el, player, id, timePlayedSpan) => {
     el.addEventListener('click', () => {
         if (player.paused) {
             sendToOphan(id, 'play');
             player.play();
             setPauseButton(el);
-            showStarterBlockOnFirstPlay();
+            showStarterBlockOnFirstPlay(timePlayedSpan);
         } else {
             player.pause();
             setPlayButton(el);
@@ -110,7 +111,7 @@ const init = () => {
         durationSpan
     ) {
         playerObserved(container, mediaId);
-        activateAudioControls(buttonDiv, player, mediaId);
+        activateAudioControls(buttonDiv, player, mediaId, timePlayedSpan);
         updateTime(timePlayedSpan, player, progressBar);
 
         // should run on Chrome, FF
