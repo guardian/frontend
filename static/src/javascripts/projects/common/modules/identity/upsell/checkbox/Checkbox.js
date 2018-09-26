@@ -12,19 +12,20 @@ type CheckboxProps = {
     checkboxHtmlProps: CheckboxHtmlProps,
 };
 
-const Checkbox = ({ title, subtitle, checkboxHtmlProps}: CheckboxProps) => {
-    return (
-        <label data-link-name={`upsell-consent : checkbox : ${title} : ${
-                    checkboxHtmlProps.checked ? 'untick' : 'tick'
-                }`} className="identity-upsell-checkbox" htmlFor={title}>
-            <span className="identity-upsell-checkbox__title">{title}</span>
-            {subtitle && <span>{subtitle}</span>}
-            <input type="checkbox" id={title} {...checkboxHtmlProps} />
-            <span className="identity-upsell-checkbox__checkmark">
-                <span className="identity-upsell-checkbox__checkmark_tick" />
-            </span>
-        </label>
-    );
-};
+const Checkbox = ({ title, subtitle, checkboxHtmlProps }: CheckboxProps) => (
+    <label
+        data-link-name={`upsell-consent : checkbox : ${title} : ${
+            checkboxHtmlProps.checked ? 'untick' : 'tick'
+        }`}
+        className="identity-upsell-checkbox"
+        htmlFor={title}>
+        <span className="identity-upsell-checkbox__title">{title}</span>
+        {subtitle && <span>{subtitle}</span>}
+        <input type="checkbox" id={title} {...checkboxHtmlProps} />
+        <span className="identity-upsell-checkbox__checkmark">
+            <span className="identity-upsell-checkbox__checkmark_tick" />
+        </span>
+    </label>
+);
 
 export { Checkbox };
