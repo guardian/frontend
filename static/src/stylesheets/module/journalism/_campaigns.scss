@@ -422,7 +422,7 @@
         font-weight: 500;
         font-family: $f-serif-headline;
 
-        &.required:after {
+        &.required::after {
             content: '*';
         }
 
