@@ -1,8 +1,11 @@
 @import model.FrontProperties
 @(slice: layout.SliceWithCards, containerIndex: Int, frontProperties: Option[FrontProperties] = None, containerDisplayName: Option[String] = None, frontId: Option[String] = None)(implicit request: RequestHeader)
 
-@import layout.{ColumnAndCards, SingleItem, Rows, SplitColumn, MPU}
-@import views.html.fragments.items.facia_cards.item
+@import views.support.RemoveOuterParaHtml
+@import views.html.fragments.items.elements.facia_cards._
+@import model.InlineImage
+@import views.support.ImgSrc
+
 
 @getAllCards = @{
     for {
@@ -12,21 +15,90 @@
 }
 
 @getLatestEpisode(allCards: Seq[layout.FaciaCardAndIndex]) = @{
-    allCards.collectFirst { case f @ layout.FaciaCardAndIndex(_, c: layout.ContentCard, _) if c.snapStuff.isEmpty => f }
+    allCards.collectFirst { case layout.FaciaCardAndIndex(_, card: layout.ContentCard, _) if card.snapStuff.isEmpty => card }
 }
 
 @getSnapLink(allCards: Seq[layout.FaciaCardAndIndex]) = @{
-    allCards.collectFirst { case f @ layout.FaciaCardAndIndex(_, c: layout.ContentCard, _) if c.snapStuff.nonEmpty => f }
+    allCards.collectFirst { case layout.FaciaCardAndIndex(_, card: layout.ContentCard, _) if card.snapStuff.nonEmpty => card }
 }
 
-<div class="fc-slice-wrapper">
-    <ul class="u-unstyled l-row  l-row--cols-@slice.numberOfCols fc-slice fc-slice--@slice.cssClassName">
+<div class="fc-slice-wrapper fc-podcast-container__main">
     @defining(getAllCards) { allCards =>
         @getLatestEpisode(allCards).map { card =>
-            @item(card, containerIndex, frontProperties = frontProperties, containerDisplayName = containerDisplayName, frontId = frontId)
+            <div class="fc-item--type-media">
+                <div class="fc-podcast-container__episode">
+                    <div class="fc-podcast-container__episode-image">
+                        @card.displayElement match {
+                            case Some(InlineImage(images)) => {
+                                @image(
+                                    classes = Seq("responsive-img"),
+                                    widths = card.mediaWidthsByBreakpoint,
+                                    maybeImageMedia = Some(images),
+                                    maybeSrc = ImgSrc.getFallbackUrl(images)
+                                )
+                            }
+                            case _ => {}
+                        }
+                    </div>
+                    <div class="fc-podcast-container__episode-details">
+                        <div class="fc-item__header">
+                            <h2 class="fc-item__title">
+                                <a @Html(card.header.url.hrefWithRel) class="fc-item__link" data-link-name="article">
+                                    <div class="fc-item__kicker">Podcast</div>
+                                    <div class="u-faux-block-link__cta fc-item__headline">
+                                        <span class="js-headline-text">@RemoveOuterParaHtml(card.header.headline)</span>
+                                    </div>
+                                </a>
+                            </h2>
+                        </div>
+                        <div class="fc-item__standfirst-wrapper">
+                            <div class="fc-item__standfirst">
+                                @card.trailText.map { standfirst => @RemoveOuterParaHtml(standfirst) }
+                                <br>
+                            </div>
+                        </div>
+                        <div class="fc-podcast-container__subscribe fc-podcast-container__subscribe-large">
+                            <span>Subscribe</span>
+                            <span><a data-link-name="apple" href="https://itunes.apple.com/gb/podcast/the-guardian-long-read/id587347784?mt=2">Apple Podcasts</a></span>
+                            <span><a data-link-name="google" href="https://www.google.com/podcasts?feed=aHR0cHM6Ly93d3cudGhlZ3VhcmRpYW4uY29tL25ld3Mvc2VyaWVzL3RoZS1hdWRpby1sb25nLXJlYWQvcG9kY2FzdC54bWw%3D">Google Podcasts</a></span>
+                            <span><a data-link-name="spotify" href="https://open.spotify.com/show/0jG1HXr3tGoGorW1ieytRS">Spotify</a></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="fc-podcast-container__subscribe fc-podcast-container__subscribe-small">
+                    <span>Subscribe</span>
+                    <span><a data-link-name="apple" href="https://itunes.apple.com/gb/podcast/the-guardian-long-read/id587347784?mt=2">Apple Podcasts</a></span>
+                    <span><a data-link-name="google" href="https://www.google.com/podcasts?feed=aHR0cHM6Ly93d3cudGhlZ3VhcmRpYW4uY29tL25ld3Mvc2VyaWVzL3RoZS1hdWRpby1sb25nLXJlYWQvcG9kY2FzdC54bWw%3D">Google Podcasts</a></span>
+                    <span><a data-link-name="spotify" href="https://open.spotify.com/show/0jG1HXr3tGoGorW1ieytRS">Spotify</a></span>
+                </div>
+                <a class="fc-podcast-container__track u-faux-block-link__overlay js-headline-text" @Html(card.header.url.hrefWithRel) data-link-name="article" tabindex="-1" aria-hidden="true">
+                    @RemoveOuterParaHtml(card.header.headline)
+                </a>
+            </div>
         }
         @getSnapLink(allCards).map { card =>
-            @item(card, containerIndex, frontProperties = frontProperties, containerDisplayName = containerDisplayName, frontId = frontId)
+            <div class="fc-podcast-container__series fc-item--type-media">
+                <div class="fc-item__container">
+                    @card.displayElement match {
+                        case Some(InlineImage(images)) => {
+                            <div class="fc-item__media-wrapper">
+                                @itemImage(
+                                    images,
+                                    inlineImage = true,
+                                    widthsByBreakpoint = Some(card.mediaWidthsByBreakpoint)
+                                )
+                            </div>
+                        }
+                        case _ => {}
+                    }
+                    <div class="fc-item__content ">
+                        <div class="fc-item__header">
+                            <h2 class="fc-item__title"><a @Html(card.header.url.hrefWithRel) class="fc-item__link" data-link-name="series"><span class="fc-item__kicker">@RemoveOuterParaHtml(card.header.headline)</span> <span class="u-faux-block-link__cta fc-item__headline"> <span class="js-headline-text">More from the series</span></span> </a></h2>
+                        </div>
+                    </div>
+                    <a @Html(card.header.url.hrefWithRel) class="u-faux-block-link__overlay js-headline-text" data-link-name="series" tabindex="-1" aria-hidden="true">More from the series</a>
+                </div>
+            </div>
         }
     }
     </ul>
