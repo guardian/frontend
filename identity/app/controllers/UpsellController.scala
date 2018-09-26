@@ -21,6 +21,7 @@ object UpsellPages {
   sealed abstract class UpsellPage(id: String)
     extends IdentityPage(id, "Thank You") {
     def jsName: String = id.drop(1).replaceAllLiterally("/", "-")
+    override val isFlow = true;
   }
 
   object ConfirmEmailThankYou extends UpsellPage("/confirm-email/thank-you")

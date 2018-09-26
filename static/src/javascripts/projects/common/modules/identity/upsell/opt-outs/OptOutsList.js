@@ -92,6 +92,7 @@ export class OptOutsList extends Component<
                     <li>
                         <div className="identity-upsell-button-with-proxy">
                             <button
+                                data-link-name="upsell-consent : submit optouts"
                                 type="submit"
                                 disabled={isLoading}
                                 className="manage-account__button manage-account__button--main">

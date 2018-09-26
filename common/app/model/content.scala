@@ -259,7 +259,8 @@ final case class Content(
     ("isImmersive", JsBoolean(isImmersive)),
     ("isColumn", JsBoolean(isColumn)),
     ("isPaidContent", JsBoolean(isPaidContent)),
-    ("campaigns", JsArray(campaigns.map(Campaign.toJson)))
+    ("campaigns", JsArray(campaigns.map(Campaign.toJson))),
+    ("contributorBio", JsString(contributorBio.getOrElse("")))
 
   )
 

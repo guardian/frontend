@@ -51,7 +51,7 @@ class R2PressController(
         if (line.nonEmpty) {
           //TODO: other validation?
           if (isTakedown) {
-            R2PressedPageTakedownNotifier.enqueue(akkaAsync)(line)
+            normaliseAndEnqueueTakedown(line)
           } else {
             R2PagePressNotifier.enqueue(akkaAsync)(R2PressMessage(line, isFromPreservedSource, isConvertToHttps))
           }
@@ -65,6 +65,24 @@ class R2PressController(
     }
   }
 
+  private def normaliseAndEnqueueTakedown(url: String): String = {
+    // NOTE: This code is copied from ArchiveController in the interest of not endlessly expanding the common
+    // library. Changes made here should be reflected there - function is currently called 'normalise'
+    // Our redirects are 'normalised' Vignette URLs, Ie. path/to/0,<n>,123,<n>.html -> path/to/0,,123,.html
+    def normalise(path: String): String = {
+      val R1ArtifactUrl = """^/(.*)/[0|1]?,[\d]*,(-?\d+),[\d]*(.*)""".r
+      val ShortUrl = """^(/p/[\w\d]+).*$""".r
+      path match {
+        case R1ArtifactUrl(p, artifactOrContextId, _) =>
+          s"/$p/0,,$artifactOrContextId,.html"
+        case ShortUrl(p) => p
+        case _ => path
+      }
+    }
+    R2PressedPageTakedownNotifier.enqueue(akkaAsync)(url)
+    R2PressedPageTakedownNotifier.enqueue(akkaAsync)(normalise(url))
+  }
+
   def press(): Action[AnyContent] = Action { implicit request =>
     val body = request.body
     val result = body.asFormUrlEncoded.map { form =>
@@ -73,7 +91,7 @@ class R2PressController(
           // TODO: other validation?
           case url if url.nonEmpty =>
             if (isTakedown(body)) {
-              R2PressedPageTakedownNotifier.enqueue(akkaAsync)(url)
+              normaliseAndEnqueueTakedown(url)
             } else {
               R2PagePressNotifier.enqueue(akkaAsync)(R2PressMessage(url, isFromPreservedSource(body), isConvertToHttps(body)))
             }

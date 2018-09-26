@@ -26,6 +26,18 @@ function guardianPolyfilled() {
     } catch (e) {};
 }
 
+function shouldServeLotame() {
+    try {    
+        var geo = JSON.parse(window.localStorage.getItem("gu.geolocation")).value;
+        if (geo === 'US' || geo === 'CA' || geo === 'AU' || geo === 'NZ') {
+            return false;
+        }
+        return true;
+    }
+    catch(e) {};
+    return false;
+}
+
 // Load the app and try to patch the env with polyfill.io
 // Adapted from https://www.html5rocks.com/en/tutorials/speed/script-loading/#toc-aggressive-optimisation
 (function (document, window) {
@@ -41,10 +53,12 @@ function guardianPolyfilled() {
     }) { polyfillioUrl =>
         @if(LotameSwitch.isSwitchedOn) {
             var scripts = [
-                '@polyfillioUrl',
-                '@Configuration.lotame.lotameScriptUrl',
-                '@Static(s"javascripts/graun.$bootModule.js")'
-            ];            
+                '@polyfillioUrl'                
+            ];
+            if (shouldServeLotame() === true) {
+                scripts.push('@Configuration.lotame.lotameScriptUrl');
+            }
+            scripts.push('@Static(s"javascripts/graun.$bootModule.js")');
         } else {
             var scripts = [
                 '@polyfillioUrl',

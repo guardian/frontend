@@ -293,7 +293,7 @@ trait CommercialSwitches {
     description = "Include the blockthrough script for testing the vendors effectiveness at circumventing ad-blocking.",
     owners = group(Commercial),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 9, 27),
+    sellByDate = new LocalDate(2018, 10, 25),
     exposeClientSide = false
    )
 
@@ -400,10 +400,20 @@ trait PrebidSwitches {
     exposeClientSide = true
   )
 
-    val prebidOpenx: Switch = Switch(
+  val prebidOpenx: Switch = Switch(
     group = Commercial,
     name = "prebid-openx",
     description = "Include OpenX adapter in Prebid auctions",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
+  val prebidPubmatic: Switch = Switch(
+    group = Commercial,
+    name = "prebid-pubmatic",
+    description = "Include Pubmatic adapter in Prebid auctions",
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,

@@ -21,7 +21,7 @@ class ImageDecacheController(
   extends BaseController with Logging with ImplicitControllerExecutionContext with AdminAuthController {
     import ImageDecacheController._
 
-  private val iGuim = """i.guim.co.uk/img/(static|media|uploads|sport)(/.*)""".r
+  private val iGuim = """i.(guim|guimcode).co.uk/img/(static|media|uploads|sport)(/.*)""".r
   private val Origin = """(static|media|sport|uploads).guim.co.uk/.*""".r
 
   def renderImageDecacheForm(): Action[AnyContent] = Action { implicit request =>
@@ -33,7 +33,7 @@ class ImageDecacheController(
 
       // here we limit the url to ones for which purging is supported
       val originUrl: String = s"${imageUri.getHost}${imageUri.getPath}" match {
-        case iGuim(host, path) => s"${imageUri.getScheme}://$host.guim.co.uk$path"
+        case iGuim(_, host, path) => s"${imageUri.getScheme}://$host.guim.co.uk$path"
         case Origin(_) => s"${imageUri.getScheme}://${imageUri.getHost}${imageUri.getPath}"
 
         case _ => throw new RuntimeException(imageUri.toString)

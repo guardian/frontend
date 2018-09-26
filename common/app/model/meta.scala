@@ -792,4 +792,5 @@ object Tags {
   def make(apiContent: contentapi.Content): Tags = {
     Tags(apiContent.tags.toList map { Tag.make(_) })
   }
+  implicit val tagsWrites: Writes[Tags] = Json.writes[Tags]
 }

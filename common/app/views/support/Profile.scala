@@ -46,7 +46,6 @@ sealed trait ElementProfile {
   // NOTE - if you modify this in any way there is a decent chance that you decache all our images :(
   val qualityparam = if (hidpi) {"quality=45"} else {"quality=85"}
   val autoParam = if (autoFormat) "auto=format" else ""
-  val sharpParam = "usm=12"
   val fitParam = "fit=max"
   val dprParam = if (hidpi) {
     if (isPng) {
@@ -59,7 +58,7 @@ sealed trait ElementProfile {
   val widthParam = width.map(pixels => s"width=$pixels").getOrElse("")
 
   def resizeString: String = {
-    val params = Seq(widthParam, heightParam, qualityparam, autoParam, sharpParam, fitParam, dprParam).filter(_.nonEmpty).mkString("&")
+    val params = Seq(widthParam, heightParam, qualityparam, autoParam, fitParam, dprParam).filter(_.nonEmpty).mkString("&")
     s"?$params"
   }
 
@@ -115,7 +114,7 @@ class ShareImage(blendImageParam: String, shouldIncludeOverlay: Boolean) extends
 
   override def resizeString: String = {
     if(shouldIncludeOverlay) {
-      val params = Seq(widthParam, heightParam, qualityparam, autoParam, sharpParam, fitParam, dprParam, cropParam, blendModeParam, blendOffsetParam, blendImageParam).filter(_.nonEmpty).mkString("&")
+      val params = Seq(widthParam, heightParam, qualityparam, autoParam, fitParam, dprParam, cropParam, blendModeParam, blendOffsetParam, blendImageParam).filter(_.nonEmpty).mkString("&")
       s"?$params"
     } else {
       super.resizeString
@@ -204,7 +203,7 @@ object EmailVideoImage extends Profile(width = Some(580), autoFormat = false) wi
   val blendImageParam = s"blend64=${overlayUrlBase64("play.png")}"
 
   override def resizeString: String = {
-    val params = Seq(widthParam, heightParam, qualityparam, autoParam, sharpParam, dprParam, blendModeParam, blendOffsetParam, blendImageParam).filter(_.nonEmpty).mkString("&")
+    val params = Seq(widthParam, heightParam, qualityparam, autoParam, dprParam, blendModeParam, blendOffsetParam, blendImageParam).filter(_.nonEmpty).mkString("&")
     s"?$params"
   }
 }
@@ -229,7 +228,7 @@ object Naked extends Profile(None, None)
 
 object ImgSrc extends Logging with implicits.Strings {
 
-  private val imageServiceHost: String = Configuration.images.fastlyIOHost
+  private val imageServiceHost: String = Configuration.images.host
 
   private lazy val hostPrefixMapping: Map[String, String] = Map(
     "static.guim.co.uk" -> "static",

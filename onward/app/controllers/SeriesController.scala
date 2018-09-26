@@ -2,7 +2,7 @@ package controllers
 
 import java.net.URI
 
-import com.gu.contentapi.client.model.ContentApiError
+import com.gu.contentapi.client.model.{ContentApiError, ItemQuery}
 import com.gu.contentapi.client.model.v1.{Content => ApiContent}
 import com.gu.facia.client.models.Backfill
 import common._
@@ -49,34 +49,36 @@ class SeriesController(
   }
 
   def renderPodcastEpisodes(seriesId: String): Action[AnyContent] = Action.async { implicit request =>
-    lookup(Edition(request), seriesId) map {
+    lookup(Edition(request), seriesId, _.contentType("audio")) map {
       _.map(series => Cached(900) {
         JsonComponent(views.html.fragments.podcastEpisodes(series.trails.items.take(4).map(_.content)))
       }).getOrElse(NotFound)
     }
   }
 
-  private def lookup( edition: Edition, seriesId: String)(implicit request: RequestHeader): Future[Option[Series]] = {
+  private def lookup(edition: Edition, seriesId: String, queryModifier: ItemQuery => ItemQuery = identity)(implicit request: RequestHeader): Future[Option[Series]] = {
     val currentShortUrl = request.getQueryString("shortUrl").getOrElse("")
     log.info(s"Fetching content in series: $seriesId the ShortUrl $currentShortUrl" )
 
     def isCurrentStory(content: ApiContent) =
       content.fields.flatMap(_.shortUrl).exists(_.equals(currentShortUrl))
 
-    val seriesResponse: Future[Option[Series]] = contentApiClient.getResponse(contentApiClient.item(seriesId, edition)
-      .showFields("all")
-    ).map { response =>
-        response.tag.flatMap { tag =>
-          val trails = response.results.getOrElse(Nil) filterNot isCurrentStory map (RelatedContentItem(_))
-          if (trails.nonEmpty) {
-            Some(Series(seriesId, Tag.make(tag,None), RelatedContent(trails)))
-          } else { None }
-        }
+    val query = queryModifier {
+      contentApiClient.item(seriesId, edition).showFields("all")
+    }
+
+    val seriesResponse: Future[Option[Series]] = contentApiClient.getResponse(query).map { response =>
+      response.tag.flatMap { tag =>
+        val trails = response.results.getOrElse(Nil) filterNot isCurrentStory map (RelatedContentItem(_))
+        if (trails.nonEmpty) {
+          Some(Series(seriesId, Tag.make(tag,None), RelatedContent(trails)))
+        } else { None }
       }
-      seriesResponse.recover{ case ContentApiError(404, message, _) =>
-        log.info(s"Got a 404 calling content api: $message" )
-        None
-      }
+    }
+    seriesResponse.recover{ case ContentApiError(404, message, _) =>
+      log.info(s"Got a 404 calling content api: $message" )
+      None
+    }
   }
 
   private def rendermf2Series(series: Series)(implicit request: RequestHeader): RevalidatableResult = {

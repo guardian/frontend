@@ -15,12 +15,14 @@ const stripSuffix = (s: string, suffix: string): string => {
 
 const currentGeoLocation = once((): string => geolocationGetSync());
 
-const isInUsRegion = (): boolean => ['US', 'CA'].includes(currentGeoLocation());
-
-const isInAuRegion = (): boolean => ['AU', 'NZ'].includes(currentGeoLocation());
-
 const contains = (sizes: PrebidSize[], size: PrebidSize): boolean =>
     Boolean(sizes.find(s => s[0] === size[0] && s[1] === size[1]));
+
+export const isInUsRegion = (): boolean =>
+    ['US', 'CA'].includes(currentGeoLocation());
+
+export const isInAuRegion = (): boolean =>
+    ['AU', 'NZ'].includes(currentGeoLocation());
 
 export const containsMpu = (sizes: PrebidSize[]): boolean =>
     contains(sizes, [300, 250]);
@@ -87,7 +89,8 @@ export const shouldIncludeAdYouLike = (slotSizes: PrebidSize[]): boolean => {
 };
 
 export const shouldIncludeOzone = (): boolean =>
-    !isInUsRegion() && !isInAuRegion() && getRandomIntInclusive(1, 10000) === 1;
+    // include in 1 in 20 (5%) of page views
+    !isInUsRegion() && !isInAuRegion() && getRandomIntInclusive(1, 20) === 1;
 
 export const stripMobileSuffix = (s: string): string =>
     stripSuffix(s, '--mobile');

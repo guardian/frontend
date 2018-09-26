@@ -137,7 +137,7 @@ import collection.JavaConverters._
 
         And("I should see the image url")
         el("[itemprop='associatedMedia image'] [itemprop=url]").attribute("content") should
-          include("/img/static/sys-images/Guardian/Pix/pictures/2012/8/6/1344274684805/Gunnerside-village-Swaled-009.jpg?width=700&quality=85&auto=format&usm=12&fit=max&s=")
+          include("/img/static/sys-images/Guardian/Pix/pictures/2012/8/6/1344274684805/Gunnerside-village-Swaled-009.jpg?width=700&quality=85&auto=format&fit=max&s=")
 
         And("I should see the image width")
         el("[itemprop='associatedMedia image'] [itemprop=width]").attribute("content") should be("460")
@@ -405,7 +405,7 @@ import collection.JavaConverters._
 
         And("video meta thumbnailUrl should be set")
         $("[itemprop='associatedMedia video'] [itemprop=thumbnailUrl]").attribute("content") should
-          include("img/static/sys-images/Guardian/Pix/audio/video/2014/5/16/1400240928538/Nigel-Farage-LBC-debate-i-014.jpg?width=640&height=360&quality=85&auto=format&usm=12&fit=max&s=")
+          include("img/static/sys-images/Guardian/Pix/audio/video/2014/5/16/1400240928538/Nigel-Farage-LBC-debate-i-014.jpg?width=640&height=360&quality=85&auto=format&fit=max&s=")
 
         And("video meta uploadDate should be set")
         $("[itemprop='associatedMedia video'] [itemprop=uploadDate]").attribute("content") should be("2014-05-16T16:09:34.000+01:00")

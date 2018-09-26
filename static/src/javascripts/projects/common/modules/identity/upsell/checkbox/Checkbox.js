@@ -14,7 +14,9 @@ type CheckboxProps = {
 
 const Checkbox = ({ title, subtitle, checkboxHtmlProps}: CheckboxProps) => {
     return (
-        <label className="identity-upsell-checkbox" htmlFor={title}>
+        <label data-link-name={`upsell-consent : checkbox : ${title} : ${
+                    checkboxHtmlProps.checked ? 'untick' : 'tick'
+                }`} className="identity-upsell-checkbox" htmlFor={title}>
             <span className="identity-upsell-checkbox__title">{title}</span>
             {subtitle && <span>{subtitle}</span>}
             <input type="checkbox" id={title} {...checkboxHtmlProps} />

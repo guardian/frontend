@@ -24,6 +24,7 @@ import type {
     PrebidImproveSizeParam,
     PrebidIndexExchangeParams,
     PrebidOpenXParams,
+    PrebidPubmaticParams,
     PrebidSize,
     PrebidSonobiParams,
     PrebidTrustXParams,
@@ -44,6 +45,8 @@ import {
     shouldIncludeTrustX,
     stripMobileSuffix,
     stripTrailingNumbersAbove1,
+    isInUsRegion,
+    isInAuRegion,
 } from './utils';
 
 const isInSafeframeTestVariant = (): boolean => {
@@ -323,20 +326,26 @@ const openxClientSideBidder: PrebidBidder = {
                 return {
                     delDomain: 'guardian-us-d.openx.net',
                     unit: '540279544',
-                    customParams: buildPageTargeting(),
+                    customParams: buildAppNexusTargetingObject(
+                        buildPageTargeting()
+                    ),
                 };
             case 'AU':
                 return {
                     delDomain: 'guardian-aus-d.openx.net',
                     unit: '540279542',
-                    customParams: buildPageTargeting(),
+                    customParams: buildAppNexusTargetingObject(
+                        buildPageTargeting()
+                    ),
                 };
             default:
                 // UK and ROW
                 return {
                     delDomain: 'guardian-d.openx.net',
                     unit: '540279541',
-                    customParams: buildPageTargeting(),
+                    customParams: buildAppNexusTargetingObject(
+                        buildPageTargeting()
+                    ),
                 };
         }
     },
@@ -355,6 +364,29 @@ const sonobiBidder: PrebidBidder = {
                 pageViewId: config.get('ophan.pageViewId'),
             },
             isInSafeframeTestVariant() ? { render: 'safeframe' } : {}
+        ),
+};
+
+const getPubmaticPublisherId = (): string => {
+    if (isInUsRegion()) {
+        return '157206';
+    }
+    if (isInAuRegion()) {
+        return '157203';
+    }
+    return '157207';
+};
+
+const pubmaticBidder: PrebidBidder = {
+    name: 'pubmatic',
+    switchName: 'prebidPubmatic',
+    bidParams: (slotId: string): PrebidPubmaticParams =>
+        Object.assign(
+            {},
+            {
+                publisherId: getPubmaticPublisherId(),
+                adSlot: slotId,
+            }
         ),
 };
 
@@ -429,20 +461,26 @@ const getDummyServerSideBidders = (): Array<PrebidBidder> => {
                             return {
                                 delDomain: 'guardian-d.openx.net',
                                 unit: '539997090',
-                                customParams: buildPageTargeting(),
+                                customParams: buildAppNexusTargetingObject(
+                                    buildPageTargeting()
+                                ),
                             };
                         case 'US':
                             return {
                                 delDomain: 'guardian-us-d.openx.net',
                                 unit: '539997087',
-                                customParams: buildPageTargeting(),
+                                customParams: buildAppNexusTargetingObject(
+                                    buildPageTargeting()
+                                ),
                             };
                         default:
                             // AU and rest
                             return {
                                 delDomain: 'guardian-aus-d.openx.net',
                                 unit: '539997046',
-                                customParams: buildPageTargeting(),
+                                customParams: buildAppNexusTargetingObject(
+                                    buildPageTargeting()
+                                ),
                             };
                     }
                 })(),
@@ -450,7 +488,6 @@ const getDummyServerSideBidders = (): Array<PrebidBidder> => {
             ),
     };
 
-    // Experimental. Only 0.01% of the PVs.
     if (
         inPbTestOr(
             config.get('switches.prebidS2sozone') && shouldIncludeOzone()
@@ -491,6 +528,7 @@ const currentBidders: (PrebidSize[]) => PrebidBidder[] = slotSizes => {
         ...(inPbTestOr(shouldIncludeAppNexus()) ? [appNexusBidder] : []),
         improveDigitalBidder,
         xaxisBidder,
+        pubmaticBidder,
         ...(shouldIncludeAdYouLike(slotSizes) ? [adYouLikeBidder] : []),
         ...(shouldIncludeOpenx() ? [openxClientSideBidder] : []),
     ];
