@@ -1,24 +1,23 @@
 // @flow
 import React from 'preact-compat';
 
-export type CheckboxHtmlProps = {
+type CheckboxHtmlProps = {
     checked: ?boolean,
     onChange: (ev: Event) => void,
 };
 
-export type CheckboxProps = {
+type CheckboxProps = {
     title: string,
     subtitle: ?string,
     checkboxHtmlProps: CheckboxHtmlProps,
 };
 
-const Checkbox = (props: CheckboxProps) => {
-    const { title, subtitle } = props;
+const Checkbox = ({ title, subtitle, checkboxHtmlProps}: CheckboxProps) => {
     return (
         <label className="identity-upsell-checkbox" htmlFor={title}>
             <span className="identity-upsell-checkbox__title">{title}</span>
             {subtitle && <span>{subtitle}</span>}
-            <input type="checkbox" id={title} {...props.checkboxHtmlProps} />
+            <input type="checkbox" id={title} {...checkboxHtmlProps} />
             <span className="identity-upsell-checkbox__checkmark">
                 <span className="identity-upsell-checkbox__checkmark_tick" />
             </span>
