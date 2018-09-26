@@ -81,7 +81,7 @@ const dedupShowMore = ($container: bonzo, html: string): bonzo => {
             $article.attr(ARTICLE_ID_ATTRIBUTE) in seenArticles ||
             (isAdFreeUser() &&
                 articleClass &&
-                articleClass.contains('paid-content'))
+                articleClass.includes('paid-content'))
         ) {
             $article.remove();
         }
