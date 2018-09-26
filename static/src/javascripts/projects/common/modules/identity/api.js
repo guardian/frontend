@@ -30,6 +30,11 @@ export type SettableConsent = {
     consented: boolean,
 };
 
+export type Newsletter = {
+    id: string,
+    subscribed: boolean,
+};
+
 export type IdentityUser = {
     id: number,
     primaryEmailAddress: string,
@@ -79,6 +84,37 @@ export const getUserFromCookie = (): ?IdentityUser => {
     }
 
     return userFromCookieCache;
+};
+
+export const updateNewsletter = (newsletter: Newsletter): Promise<void> =>
+    reqwest({
+        url: `${config.get('page.idApiUrl')}/users/me/newsletters`,
+        method: 'PATCH',
+        type: 'json',
+        contentType: 'application/json',
+        withCredentials: true,
+        crossOrigin: true,
+        data: JSON.stringify(newsletter),
+    });
+
+export const buildNewsletterUpdatePayload = (
+    action: string = 'none',
+    newsletterId: string
+): Newsletter => {
+    const newsletter = {};
+    switch (action) {
+        case 'add':
+            newsletter.id = newsletterId;
+            newsletter.subscribed = true;
+            break;
+        case 'remove':
+            newsletter.id = newsletterId;
+            newsletter.subscribed = false;
+            break;
+        default:
+            throw new Error(`Undefined newsletter action type (${action})`);
+    }
+    return newsletter;
 };
 
 export const isUserLoggedIn = (): boolean => getUserFromCookie() !== null;
@@ -251,7 +287,7 @@ export const getSubscribedNewsletters = () => {
     })
         .then(json => {
             if (json.result.subscriptions) {
-                return json.result.subscriptions.map(sub => sub.id);
+                return json.result.subscriptions.map(sub => sub.listId);
             }
             return [];
         })

@@ -1,5 +1,9 @@
 // @flow
-import { setConsent } from 'common/modules/identity/api';
+import {
+    setConsent,
+    buildNewsletterUpdatePayload,
+    updateNewsletter,
+} from 'common/modules/identity/api';
 
 type Consent = {
     id: string,
@@ -7,6 +11,7 @@ type Consent = {
     description: string,
     isOptOut: ?boolean,
     isChannel: ?boolean,
+    exactTargetListId: ?string,
 };
 
 class ConsentWithState {
@@ -48,10 +53,18 @@ class EmailConsentWithState extends ConsentWithState {
         super(...args);
         this.uniqueId = ['email', this.consent.id].join('-');
     }
-    static updateInApiFn = (cs: ConsentWithState[]): Promise<void> => {
-        console.log(cs);
-        return Promise.resolve();
-    };
+    static updateInApiFn = (cs: ConsentWithState[]): Promise<void> =>
+        Promise.all(
+            cs.map(consent => {
+                if (!consent.consent.exactTargetListId) return Promise.reject();
+                return updateNewsletter(
+                    buildNewsletterUpdatePayload(
+                        consent.hasConsented ? 'add' : 'remove',
+                        consent.consent.exactTargetListId
+                    )
+                );
+            })
+        ).then(() => {});
 }
 
 const consentTypeList = [UserConsentWithState, EmailConsentWithState];
