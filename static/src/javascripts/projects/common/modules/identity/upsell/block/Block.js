@@ -4,18 +4,30 @@ import React, { Component } from 'preact-compat';
 type BlockProps = {
     title: string,
     subtitle: ?string,
-    withGrid: ?boolean,
+    sideBySide: ?boolean,
+    sideBySideBackwards: ?boolean,
     children: any,
 };
 
 export class Block extends Component<BlockProps> {
     render() {
-        const { title, subtitle, children, withGrid } = this.props;
+        const {
+            title,
+            subtitle,
+            children,
+            sideBySide,
+            sideBySideBackwards,
+        } = this.props;
         return (
             <section
                 className={[
                     'identity-upsell-block',
-                    withGrid ? 'identity-upsell-block--with-grid' : '',
+                    sideBySide || sideBySideBackwards
+                        ? 'identity-upsell-block--side-by-side'
+                        : '',
+                    sideBySideBackwards
+                        ? 'identity-upsell-block--side-by-side identity-upsell-block--side-by-side--backwards'
+                        : '',
                 ].join(' ')}>
                 <div className="identity-upsell-title">
                     <h2 className="identity-upsell-title__title">{title}</h2>
