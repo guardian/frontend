@@ -5,12 +5,8 @@
     line-height: 1.2;
     position: relative;
     transition: color 80ms ease-out;
-    padding: ($gs-baseline / 2) ($gs-gutter / 2);
-    margin: 1px 0 0;
-
-    &:nth-child(2) {
-        padding-left: $gs-gutter / 2 + $gs-gutter / 4;
-    }
+    padding: 10px ($gs-gutter / 2);
+    margin-left: -8px;
 
     .is-paying-member &:nth-child(2),
     .is-recent-contributor &:nth-child(2) {
@@ -23,8 +19,72 @@
         color: $brightness-20;
     }
 
+    @include mq($until: tablet) {
+        &.popup__toggle:after {
+            content: none;
+        }
+    }
+
+    @include mq(mobileMedium) {
+        padding-top: 13px;
+    }
+
     @include mq(tablet) {
         font-size: 14px;
+        margin: 0;
+        padding: ($gs-baseline / 2) ($gs-gutter / 2);
+    }
+}
+
+
+.my-account-toggle {
+    .dropdown-is-open & {
+        @include mq($until: tablet) {
+            z-index: $zindex-main-menu + 1;
+        }
+    }
+
+    svg {
+        height: 18px;
+        width: 18px;
+
+        @include mq(mobileMedium) {
+            height: 23px;
+            width: 23px;
+        }
+
+        path {
+            fill: $brightness-46;
+        }
+    }
+}
+
+.dropdown-is-open .my-account-toggle--icon {
+    @include mq($until: tablet) {
+        &:before,
+        &:after {
+            content: '';
+            display: block;
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            width: 0;
+            height: 0;
+            transform: translateX(-50%);
+            z-index: $zindex-main-menu + 1;
+        }
+
+        &:before {
+            border-left: 11px solid transparent;
+            border-right: 11px solid transparent;
+            border-bottom: 11px solid rgba(0, 0, 0, .1);
+        }
+
+        &:after {
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-bottom: 10px solid $brightness-100;
+        }
     }
 }
 

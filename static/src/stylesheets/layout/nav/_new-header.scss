@@ -93,7 +93,7 @@ from scrolling */
     @include mq($until: desktop) {
         position: absolute;
         right: $gutter-small;
-        top: $gs-baseline * 2;
+        top: 16px;
 
         @include mq(mobileMedium) {
             bottom: -$gs-baseline / 2;
@@ -125,12 +125,12 @@ from scrolling */
 
 .new-header__logo {
     float: right;
-    margin-bottom: $gs-baseline + $gs-baseline / 4;
-    margin-right: $gs-gutter / 4 + $veggie-burger-small;
+    margin-bottom: 20px;
+    margin-right: $gs-gutter / 3 + $veggie-burger-small;
     margin-top: $gs-baseline / 4;
 
     @include mq(mobileMedium) {
-        margin-right: $gs-gutter / 4;
+        margin-right: 6px;
     }
 
     @include mq(mobileLandscape) {
@@ -197,8 +197,8 @@ from scrolling */
 
 .inline-the-guardian-logo__svg {
     display: block;
-    height: 51px;
-    width: 159px;
+    height: 44px;
+    width: 135px;
 
     @include mq(mobileMedium) {
         height: 56px;
