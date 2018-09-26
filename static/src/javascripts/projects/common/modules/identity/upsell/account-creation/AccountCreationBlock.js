@@ -25,14 +25,16 @@ class AccountCreationBlock extends Component<
     render() {
         return !this.state.hasCreatedAccount ? (
             <Block
-                withGrid
+                sideBySide
                 title="Want more from The Guardian?"
                 subtitle="Create your account now to manage your preferences and explore your free benefits.">
                 <AccountCreationForm
                     {...this.props}
                     onAccountCreated={this.onAccountCreated}
                 />
-                <AccountBenefits />
+                <div>
+                    <AccountBenefits />
+                </div>
             </Block>
         ) : (
             <Block title="Start exploring your benefits">

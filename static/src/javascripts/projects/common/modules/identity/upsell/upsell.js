@@ -12,8 +12,8 @@ import {
     getUserConsent,
     getNewsletterConsent,
 } from 'common/modules/identity/upsell/store/consents';
-import { AccountCreationBlock } from './account-creation/AccountCreationBlock';
-import {LegalTextBlock} from "common/modules/identity/upsell/block/LegalTextBlock";
+import { LegalTextBlock } from 'common/modules/identity/upsell/block/LegalTextBlock';
+import { AccountCreationBlock } from 'common/modules/identity/upsell/account-creation/AccountCreationBlock';
 
 const ConfirmEmailThankYou = (
     <Block title="Interested in any of this content?">
@@ -32,11 +32,12 @@ const ConfirmEmailThankYou = (
 
 const Optouts = (
     <Block
-        withGrid={true}
+        sideBySideBackwards
         title="One more thing..."
         subtitle="These are your privacy settings. You’re in full control of them.">
         <LegalTextBlock>
-            You can also change these settings any time by visiting our Emails & marketing section of your account.
+            You can also change these settings any time by visiting our Emails &
+            marketing section of your account.
         </LegalTextBlock>
         <OptOutsList />
     </Block>
