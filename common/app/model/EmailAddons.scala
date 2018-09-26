@@ -356,6 +356,8 @@ case object FirstDogOnTheMoon extends FrontEmailMetadata {
 }
 
 object EmailAddons {
+  val unsubscribePlaceholder = "%%unsub_center_url%%"
+
   private val defaultAddress = "Kings Place, 90 York Way, London, N1 9GU. Registered in England No. 908396"
   private val defaultBanner = "generic.png"
   private val articleEmails     = Seq(

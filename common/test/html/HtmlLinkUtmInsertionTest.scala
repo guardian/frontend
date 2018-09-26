@@ -92,4 +92,32 @@ class HtmlLinkUtmInsertionTest extends FlatSpec with Matchers {
     HtmlLinkUtmInsertion(Html(rawHtml)) shouldBe Html(Jsoup.parse(expectedText).toString)
   }
 
+  it should "not affect unsubscribe url placeholder links" in {
+    val rawHtml =
+      """
+        |<!DOCTYPE html>
+        |<html>
+        |<head></head>
+        |<body>
+        |
+        |<a href="%%unsub_center_url%%">unsubscribe</a>
+        |
+        |</body>
+        |</html>""".stripMargin
+
+    val expectedText =
+      """
+        |<!DOCTYPE html>
+        |<html>
+        |<head></head>
+        |<body>
+        |
+        |<a href="%%unsub_center_url%%">unsubscribe</a>
+        |
+        |</body>
+        |</html>""".stripMargin
+
+    HtmlLinkUtmInsertion(Html(rawHtml)) shouldBe Html(Jsoup.parse(expectedText).toString)
+  }
+
 }

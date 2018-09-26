@@ -2,6 +2,7 @@ package html
 
 import java.net.URL
 import common.Logging
+import model.EmailAddons
 import org.jsoup.Jsoup
 import org.jsoup.nodes._
 import play.twirl.api.Html
@@ -17,7 +18,7 @@ object HtmlLinkUtmInsertion extends Logging {
 
   private def setLinks(element: Element): Element = {
     Option(element.attr("href"))
-      .collect { case url if url.nonEmpty && element.nodeName() == "a" =>
+      .collect { case url if url.nonEmpty && element.nodeName() == "a" && !url.contains(EmailAddons.unsubscribePlaceholder) =>
         val startQuery = Try(new URL(url))
           .toOption
           .flatMap(uri => Option(uri.getQuery))
