@@ -47,3 +47,7 @@
     }
 }
 
+.identity-upsell-legal-text-block {
+    @include fs-textSans(5);
+    color: $brightness-46;
+}
