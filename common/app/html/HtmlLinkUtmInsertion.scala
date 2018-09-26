@@ -1,11 +1,11 @@
-package common.html
+package html
 
 import java.net.URL
 import common.Logging
-import scala.collection.JavaConverters._
 import org.jsoup.Jsoup
 import org.jsoup.nodes._
 import play.twirl.api.Html
+import scala.collection.JavaConverters._
 import scala.util.Try
 
 object HtmlLinkUtmInsertion extends Logging {

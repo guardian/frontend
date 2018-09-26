@@ -1,7 +1,7 @@
 package controllers
 
 import common._
-import common.html.{HtmlLinkUtmInsertion, HtmlTextExtractor}
+import _root_.html.{HtmlLinkUtmInsertion, HtmlTextExtractor}
 import controllers.front._
 import layout.{CollectionEssentials, ContentCard, FaciaCard, FaciaCardAndIndex, FaciaContainer, Front}
 import model.Cached.{CacheableResult, RevalidatableResult, WithoutRevalidationResult}

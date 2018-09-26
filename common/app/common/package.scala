@@ -5,9 +5,9 @@ import java.util.concurrent.TimeoutException
 import akka.pattern.CircuitBreakerOpenException
 import com.gu.contentapi.client.model.ContentApiError
 import com.gu.contentapi.client.model.v1.ErrorResponse
-import common.html.{HtmlLinkUtmInsertion, HtmlTextExtractor}
 import conf.switches.Switch
 import conf.switches.Switches.InlineEmailStyles
+import _root_.html.{HtmlLinkUtmInsertion, HtmlTextExtractor}
 import model.CacheTime.RecentlyUpdated
 import model.Cached.RevalidatableResult
 import model.{ApplicationContext, Cached, NoCache}

@@ -1,4 +1,4 @@
-package common.html
+package html
 
 import org.jsoup.Jsoup
 import org.jsoup.nodes.{Node, TextNode}
