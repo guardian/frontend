@@ -38,7 +38,7 @@ object HtmlTextExtractor {
 
   private def removeWhitespace(text: String): String = {
     val withoutTripleNewline = "\n\\s*\n\\s*\n\\s*\n".r.replaceAllIn(text, "\n\n\n")
-    val withoutSpacing = "(?m)^[ \\t\\x0B\\f\\r]+$".r.replaceAllIn(withoutTripleNewline, "")
+    val withoutSpacing = "(?m)^[ \\t\\x0B\\f\\r\\u00a0]+$".r.replaceAllIn(withoutTripleNewline, "")
     if (withoutSpacing == text) withoutSpacing else removeWhitespace(withoutSpacing)
   }
 
