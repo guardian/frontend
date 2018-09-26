@@ -5,8 +5,13 @@
     border-bottom: 1px solid $brightness-86;
 }
 
+.identity-upsell-wrapper {
+    background: #ffffff;
+}
+
 .identity-upsell-block {
     width: 100%;
+    box-sizing: border-box;
     padding: $gs-baseline $gs-gutter/2 $gs-baseline * 3.5;
     border-top: 2px solid $brightness-86;
     @include mq(phablet) {

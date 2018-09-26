@@ -33,25 +33,25 @@
     }
     ).toString()
 }
-
-<div class="identity-upsell-subheader">
-    <div class="identity-wrapper identity-wrapper--wide monocolumn-wrapper">
-        <header class="identity-upsell-title identity-upsell-title--hero">
-            <h1 class="identity-upsell-title__title">
-                Thank you! 
-            </h1>
-            <h1 class="identity-upsell-title__subtitle">
-                You’re now subscribed to your content
-            </h1>
-        </header>
+<div class="identity-upsell-wrapper">
+    <div class="identity-upsell-subheader">
+        <div class="identity-wrapper identity-wrapper--wide monocolumn-wrapper">
+            <header class="identity-upsell-title identity-upsell-title--hero">
+                <h1 class="identity-upsell-title__title">
+                    Thank you! 
+                </h1>
+                <h1 class="identity-upsell-title__subtitle">
+                    You’re now subscribed to your content
+                </h1>
+            </header>
+        </div>
+    </div>
+    <div class="identity-wrapper identity-wrapper--no-padding identity-wrapper--wide monocolumn-wrapper">
+        <div class="js-identity-block-list" data-page-variant="@{pageVariant.jsName}">
+            <script type="text/json" data-for-prefill="true">
+                @Html(prefill)
+            </script>
+            @noJsBehaviour
+        </div>
     </div>
 </div>
-<div class="identity-wrapper identity-wrapper--no-padding identity-wrapper--wide monocolumn-wrapper">
-    <div class="js-identity-block-list" data-page-variant="@{pageVariant.jsName}">
-        <script type="text/json" data-for-prefill="true">
-            @Html(prefill)
-        </script>
-        @noJsBehaviour
-    </div>
-</div>
-
