@@ -137,15 +137,6 @@ object SliceWithCards {
 }
 
 case class SliceWithCards(cssClassName: String, columns: Seq[ColumnAndCards]) {
-  //Get 1st ColumnAndCards
-  def test(): Option[ContentCard] = {
-    val allCards = for {
-      column <- columns
-      card <- column.cards
-    } yield card.item
-
-    allCards.collectFirst { case c: ContentCard => c }
-  }
 
   def numberOfItems: Int = (columns map { columnAndCards: ColumnAndCards =>
     columnAndCards.column match {

@@ -39,7 +39,6 @@
          data-id="@containerDefinition.dataId">
 
         @if(containerDefinition.displayName.contains("Flagship")) {
-            <div>FLAGSHIP TESTING TESTING</div>
             @for(slice <- containerLayout.slices.headOption) {
                 @podcastContainer(slice, containerDefinition.index, frontProperties = Some(frontProperties), containerDefinition.displayName, frontId)
             }
