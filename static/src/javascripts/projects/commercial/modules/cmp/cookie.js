@@ -12,7 +12,7 @@ import {
     decodeCookieValue,
 } from 'commercial/modules/cmp/cookieutils';
 
-import type { VendorConsentData, Range, VendorList } from './types';
+import type { VendorConsentData, Range, ShortVendorList } from './types';
 
 const encodeVendorCookieValue = (data: VendorConsentData): ?string => {
     if (data && data.cookieVersion) {
@@ -38,12 +38,12 @@ const encodeVendorIdsToBits = (
 };
 
 const encodePurposeIdsToBits = (
-    purposes: Array<{ id: number, name: string }>,
+    purposeIDs: Array<number>,
     selectedPurposeIds: Array<number>
 ): string => {
     const maxPurposeId = Math.max(
         0,
-        ...purposes.map(({ id }) => id),
+        ...purposeIDs,
         ...selectedPurposeIds
     );
     let purposeString = '';
@@ -91,7 +91,7 @@ const convertVendorsToRanges = (
 
 const encodeVendorConsentData = (
     data: VendorConsentData,
-    vendorList?: VendorList
+    shortVendorList?: shortVendorList
 ): string => {
     const {
         selectedPurposeIds = [],
@@ -99,14 +99,14 @@ const encodeVendorConsentData = (
         maxVendorId,
     } = data;
 
-    const purposes = vendorList ? vendorList.purposes : [];
+    const purposeIDs = shortVendorList ? shortVendorList.purposeIDs : [];
 
     // Encode the data with and without ranges and return the smallest encoded payload
     const noRangesData: ?string = encodeVendorCookieValue({
         ...data,
         maxVendorId,
         purposeIdBitString: encodePurposeIdsToBits(
-            purposes,
+            purposeIDs,
             selectedPurposeIds
         ),
         isRange: false,
@@ -125,7 +125,7 @@ const encodeVendorConsentData = (
         ...data,
         maxVendorId,
         purposeIdBitString: encodePurposeIdsToBits(
-            purposes,
+            purposeIDs,
             selectedPurposeIds
         ),
         isRange: true,
