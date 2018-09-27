@@ -36,7 +36,7 @@ from scrolling */
     position: absolute;
     top: $gs-baseline * 2 + $gs-baseline / 2;
     right: 0;
-    width: $gs-column-width * 3 + $gs-gutter;
+    width: $gs-column-width * 3 + $gs-gutter * 2;
     background-color: $brightness-100;
     border-radius: $gs-baseline / 4;
     padding: $gs-baseline / 2 0;
@@ -44,26 +44,41 @@ from scrolling */
     box-shadow: 0 0 0 1px rgba(0, 0, 0, .1);
     z-index: $zindex-main-menu;
 
-    @include mq($until: tablet) {
-        position: fixed;
-        border-radius: 0;
-        top: 43px;
-        left: 0;
-        right: 0;
-        width: auto;
-
-        @include mq(mobileMedium) {
-            top: 51px;
-        }
-    }
-
     > hr {
         height: 0;
         border: 0;
         border-top: 1px solid $brightness-93;
         display: block;
         top: 0;
-        margin: -1px 0 0 $gs-gutter * 1.5;
+        margin: -1px 0 0 $gs-gutter;
+    }
+
+    @include mq($until: tablet) {
+        position: fixed;
+        border-radius: 0;
+        top: 36px;
+        left: 0;
+        right: 0;
+        width: auto;
+
+        @media (max-height: 370px) {
+            overflow: auto;
+            bottom: 0;
+        }
+
+        > hr {
+            margin-left: $gs-gutter / 2;
+        }
+
+        @include mq(mobileMedium) {
+            top: 43px;
+        }
+
+        @include mq(mobileLandscape) {
+            > hr {
+                margin-left: $gs-gutter;
+            }
+        }
     }
 }
 
@@ -79,11 +94,15 @@ from scrolling */
     display: block;
     letter-spacing: .01rem;
     outline: none;
-    padding: ($gs-baseline / 2 + 1) $gs-gutter ($gs-baseline + $gs-baseline / 4) ($gs-baseline * 2 + $gs-baseline / 2);
+    padding: ($gs-baseline / 2 + 1) $gs-gutter ($gs-baseline + $gs-baseline / 4) ($gs-gutter / 2);
     position: relative;
     box-sizing: border-box;
     // Hides border on hover
     margin-top: -1px;
+
+    @include mq(mobileLandscape) {
+        padding-left: $gs-gutter;
+    }
 
     &:hover,
     &:focus {
@@ -98,7 +117,7 @@ from scrolling */
         display: block;
         position: absolute;
         top: 0;
-        left: $gs-gutter * 1.5;
+        left: $gs-gutter;
         right: 0;
         .dropdown-menu.dropdown-menu--light & {
             display: none;
@@ -141,8 +160,8 @@ from scrolling */
         border-top: 0;
         border-right: 0;
         position: absolute;
-        top: 10px;
-        left: 10px;
+        top: 13px;
+        right: $gs-gutter;
         width: 10px;
         height: 4px;
         transform: rotate(-45deg);

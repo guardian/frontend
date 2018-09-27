@@ -257,14 +257,17 @@ const toggleDropdown = (menuAndTriggerEls: MenuAndTriggerEls): void => {
 
             menu.setAttribute('aria-hidden', hiddenAttr);
             menu.classList.toggle(openClass, !isOpen);
+
             if (documentElement) {
                 documentElement.classList.toggle(globalOpenClass, !isOpen);
             }
+
             if (!isOpen) {
+                (document.documentElement || document.body.parentNode || document.body).scrollTop = 0;
+
                 const menuId = menu.getAttribute('id');
                 const triggerToggle = clickSpec => {
                     const elem = clickSpec ? clickSpec.target : null;
-
                     if (elem !== menu) {
                         toggleDropdown(menuAndTriggerEls);
 

@@ -93,7 +93,7 @@ from scrolling */
     @include mq($until: desktop) {
         position: absolute;
         right: $gutter-small;
-        top: 16px;
+        top: 17px;
 
         @include mq(mobileMedium) {
             bottom: -$gs-baseline / 2;
@@ -126,7 +126,7 @@ from scrolling */
 .new-header__logo {
     float: right;
     margin-bottom: 20px;
-    margin-right: $gs-gutter / 3 + $veggie-burger-small;
+    margin-right: ($gs-gutter / 2) + $veggie-burger-small;
     margin-top: $gs-baseline / 4;
 
     @include mq(mobileMedium) {
