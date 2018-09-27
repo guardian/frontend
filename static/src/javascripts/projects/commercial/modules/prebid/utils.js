@@ -69,7 +69,8 @@ export const getRandomIntInclusive = (
     return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
-export const shouldIncludeAppNexus = (): boolean => isInAuRegion();
+export const shouldIncludeAppNexus = (): boolean =>
+    isInAuRegion() || !isInUsRegion();
 
 export const shouldIncludeOpenx = (): boolean =>
     !isInUsRegion() && !isInAuRegion();
