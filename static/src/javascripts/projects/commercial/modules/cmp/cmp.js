@@ -9,7 +9,7 @@ import { commercialCmpCustomise } from 'common/modules/experiments/tests/commerc
 import { log } from './log';
 import { CmpStore } from './store';
 import { encodeVendorConsentData } from './cookie';
-import { shortVendorList as shortVendorList } from './vendorlist';
+import { shortVendorList as shortVendorListData } from './vendorlist';
 
 import {
     defaultConfig,
@@ -72,7 +72,7 @@ const generateStore = (isInTest: boolean): CmpStore => {
         CMP_VERSION,
         COOKIE_VERSION,
         readConsentCookie(COOKIE_NAME),
-        shortVendorList,
+        shortVendorListData,
         isInTest
     );
     return store;
@@ -159,22 +159,23 @@ class CmpService {
             vendorListVersion: number | null,
             callback: (res: VendorList | null, ok: boolean) => void = () => {}
         ): void => {
-
-            fetchJSON('theFullListURL',
-                      { mode: 'cors' }
-                     ).then( vendorList => {
-                         const { vendorListVersion: listVersion } = vendorList || {};
-                         // flowlint sketchy-null-number:warn
-                         if (!vendorListVersion || vendorListVersion === listVersion) {
-                             callback(vendorList, true);
-                         } else {
-                             callback(null, false);
-                         }
-                     }).then(undefined,
-                             err => {
-                                 console.log("ERROR fetching fullvendorlist: ", err);
-                                 callback(null, false);
-                             });
+            fetchJSON('theFullListURL', { mode: 'cors' })
+                .then(vendorList => {
+                    const { vendorListVersion: listVersion } = vendorList || {};
+                    // flowlint sketchy-null-number:warn
+                    if (
+                        !vendorListVersion ||
+                        vendorListVersion === listVersion
+                    ) {
+                        callback(vendorList, true);
+                    } else {
+                        callback(null, false);
+                    }
+                })
+                .then(undefined, err => {
+                    console.log('ERROR fetching fullvendorlist: ', err);
+                    callback(null, false);
+                });
         },
 
         ping: (_: mixed, callback: CommandCallback = () => {}): void => {

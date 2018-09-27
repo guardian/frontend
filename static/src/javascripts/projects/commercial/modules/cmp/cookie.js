@@ -41,11 +41,7 @@ const encodePurposeIdsToBits = (
     purposeIDs: Array<number>,
     selectedPurposeIds: Array<number>
 ): string => {
-    const maxPurposeId = Math.max(
-        0,
-        ...purposeIDs,
-        ...selectedPurposeIds
-    );
+    const maxPurposeId = Math.max(0, ...purposeIDs, ...selectedPurposeIds);
     let purposeString = '';
     for (let id = 1; id <= maxPurposeId; id += 1) {
         purposeString += selectedPurposeIds.includes(id) ? '1' : '0';
@@ -91,7 +87,7 @@ const convertVendorsToRanges = (
 
 const encodeVendorConsentData = (
     data: VendorConsentData,
-    shortVendorList?: shortVendorList
+    shortVendorList?: ShortVendorList
 ): string => {
     const {
         selectedPurposeIds = [],

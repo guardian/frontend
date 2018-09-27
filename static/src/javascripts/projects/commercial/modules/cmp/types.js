@@ -35,10 +35,11 @@ export type VendorList = {
 };
 
 export type ShortVendorList = {
+    version: number,
     purposeIDs: Array<number>,
     purposesByVID: { [string]: Array<number> },
     legIntPurposesByVID: { [string]: Array<number> },
-    featuresIdsByVID: { [string]: Array<number> }
+    featuresIdsByVID: { [string]: Array<number> },
 };
 
 export type SelectedData = {

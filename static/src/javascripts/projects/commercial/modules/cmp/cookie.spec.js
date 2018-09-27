@@ -34,33 +34,37 @@ global.Date = jest.fn(() => new OriginalDate(0));
 
 const shortVendorList = {
     version: 1,
-    purposeIDs: [1,2,3,4],
-    purposesByVID: { "1":[], //name:Globex
-                     "2":[], //name:Initech
-                     "3":[], //name:CRS
-                     "4":[], //name:Umbrella
-                     "8":[], //name:Aperture
-                     "10": [], // Pierce and Pierce
-                   },
-    legIntPurposesByVID: { "1":[], //name:Globex
-                           "2":[], //name:Initech
-                           "3":[], //name:CRS
-                           "4":[], //name:Umbrella
-                           "8":[], //name:Aperture
-                           "10": [], // Pierce and Pierce
-                         },
-    featuresIdsByVID: { "1":[], //name:Globex
-                        "2":[], //name:Initech
-                        "3":[], //name:CRS
-                        "4":[], //name:Umbrella
-                        "8":[], //name:Aperture
-                        "10": [], // Pierce and Pierce
-                      }
+    purposeIDs: [1, 2, 3, 4],
+    purposesByVID: {
+        '1': [], // name:Globex
+        '2': [], // name:Initech
+        '3': [], // name:CRS
+        '4': [], // name:Umbrella
+        '8': [], // name:Aperture
+        '10': [], // Pierce and Pierce
+    },
+    legIntPurposesByVID: {
+        '1': [], // name:Globex
+        '2': [], // name:Initech
+        '3': [], // name:CRS
+        '4': [], // name:Umbrella
+        '8': [], // name:Aperture
+        '10': [], // Pierce and Pierce
+    },
+    featuresIdsByVID: {
+        '1': [], // name:Globex
+        '2': [], // name:Initech
+        '3': [], // name:CRS
+        '4': [], // name:Umbrella
+        '8': [], // name:Aperture
+        '10': [], // Pierce and Pierce
+    },
 };
 
-
 const aDate = new Date('2018-07-15 PDT');
-const maxVendorId = Math.max( ...Object.keys(shortVendorList.purposesByVID).map((s) => parseInt(s)) );
+const maxVendorId = Math.max(
+    ...Object.keys(shortVendorList.purposesByVID).map(s => parseInt(s, 10))
+);
 
 const vendorConsentData: VendorConsentData = {
     cookieVersion: 1,
@@ -141,9 +145,9 @@ describe('CMP cookie', () => {
             'BAAAAAAAAAAAAABABAAAABAAAAAAAA'
         );
 
-        expect(encodeVendorConsentData(vendorConsentData, shortVendorList)).toEqual(
-            'BAAAAAAAAAAAAABABBENABwAAAAApoA'
-        );
+        expect(
+            encodeVendorConsentData(vendorConsentData, shortVendorList)
+        ).toEqual('BAAAAAAAAAAAAABABBENABwAAAAApoA');
     });
 
     it('decodes the vendor cookie object from a string', () => {

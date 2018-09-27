@@ -1,4 +1,6 @@
-/* DO NOT EDIT THIS. Generated at Wed Sep 26 2018 14:57:33 GMT+0100 (BST) by /Users/jerome_eteve/dev/github/guardian/frontend/tools/__tasks__/compile/data/transform.js
+// @flow
+/* eslint-disable */
+/* DO NOT EDIT THIS.
  Regenerate by doing make compile-dev or make watch.
  See tools/__tasks__/compile/data/transform.js  */
 export const shortVendorList = 

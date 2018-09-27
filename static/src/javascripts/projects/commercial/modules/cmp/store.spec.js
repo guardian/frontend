@@ -1,7 +1,7 @@
 // @flow
 import { CmpStore, _ } from './store';
 
-import type { VendorConsentData, ConsentData, VendorData } from './types';
+import type { VendorConsentData, ConsentData, SelectedData } from './types';
 
 const {
     getVendorConsentData,
@@ -25,28 +25,31 @@ global.Date = jest.fn(() => new OriginalDate(0));
 
 const shortVendorList = {
     version: 1,
-    purposeIDs: [1,2,3,4],
-    purposesByVID: { "1":[], //name:Globex
-                     "2":[], //name:Initech
-                     "3":[], //name:CRS
-                     "4":[], //name:Umbrella
-                     "8":[], //name:Aperture
-                     "10": [], // Pierce and Pierce
-                   },
-    legIntPurposesByVID: { "1":[], //name:Globex
-                           "2":[], //name:Initech
-                           "3":[], //name:CRS
-                           "4":[], //name:Umbrella
-                           "8":[], //name:Aperture
-                           "10": [], // Pierce and Pierce
-                         },
-    featuresIdsByVID: { "1":[], //name:Globex
-                        "2":[], //name:Initech
-                        "3":[], //name:CRS
-                        "4":[], //name:Umbrella
-                        "8":[], //name:Aperture
-                        "10": [], // Pierce and Pierce
-                      }
+    purposeIDs: [1, 2, 3, 4],
+    purposesByVID: {
+        '1': [], // name:Globex
+        '2': [], // name:Initech
+        '3': [], // name:CRS
+        '4': [], // name:Umbrella
+        '8': [], // name:Aperture
+        '10': [], // Pierce and Pierce
+    },
+    legIntPurposesByVID: {
+        '1': [], // name:Globex
+        '2': [], // name:Initech
+        '3': [], // name:CRS
+        '4': [], // name:Umbrella
+        '8': [], // name:Aperture
+        '10': [], // Pierce and Pierce
+    },
+    featuresIdsByVID: {
+        '1': [], // name:Globex
+        '2': [], // name:Initech
+        '3': [], // name:CRS
+        '4': [], // name:Umbrella
+        '8': [], // name:Aperture
+        '10': [], // Pierce and Pierce
+    },
 };
 
 const aDate = new Date('2018-07-15 PDT');
@@ -78,7 +81,7 @@ describe('CMP store', () => {
     });
 
     it('can generate the VendorData when consent = true', () => {
-        const expected: VendorData = {
+        const expected: SelectedData = {
             maxVendorId: 10,
             selectedPurposeIds: [1, 2, 3, 4],
             selectedVendorIds: [1, 2, 3, 4, 8, 10],
@@ -88,7 +91,7 @@ describe('CMP store', () => {
     });
 
     it('can generate the VendorData when consent = false', () => {
-        const expected: VendorData = {
+        const expected: SelectedData = {
             maxVendorId: 10,
             selectedPurposeIds: [],
             selectedVendorIds: [],
