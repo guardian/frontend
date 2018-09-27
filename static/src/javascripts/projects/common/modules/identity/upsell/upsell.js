@@ -14,6 +14,7 @@ import {
 } from 'common/modules/identity/upsell/store/consents';
 import { LegalTextBlock } from 'common/modules/identity/upsell/block/LegalTextBlock';
 import { AccountCreationBlock } from 'common/modules/identity/upsell/account-creation/AccountCreationBlock';
+import { Header } from 'common/modules/identity/upsell/header/Header';
 
 const ConfirmEmailThankYou = (
     <Block title="Interested in any of this content?">
@@ -78,9 +79,15 @@ const bindBlockList = (el): void => {
             fastdom.write(() => {
                 render(
                     <div>
-                        {ConfirmEmailThankYou}
-                        {Optouts}
-                        <AccountCreationBlock {...prefill} />
+                        <Header
+                            title="Thank you!"
+                            subtitle="You’re now subscribed to your content"
+                        />
+                        <div className="identity-wrapper identity-wrapper--no-padding identity-wrapper--wide monocolumn-wrapper">
+                            {ConfirmEmailThankYou}
+                            {Optouts}
+                            <AccountCreationBlock {...prefill} />
+                        </div>
                     </div>,
                     el
                 );
