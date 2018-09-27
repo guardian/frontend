@@ -235,8 +235,6 @@ const toggleMenu = (): void => {
 const toggleDropdown = (menuAndTriggerEls: MenuAndTriggerEls): void => {
     const documentElement = document.documentElement;
     const globalOpenClass = 'dropdown-is-open';
-    const trigger = document.querySelector('.my-account-toggle');
-    const isOpen = trigger && trigger.getAttribute('aria-expanded') === 'true';
     const openClass = 'dropdown-menu--open';
 
     fastdom.read(() => menuAndTriggerEls).then(els => {
@@ -262,8 +260,9 @@ const toggleDropdown = (menuAndTriggerEls: MenuAndTriggerEls): void => {
                 documentElement.classList.toggle(globalOpenClass, !isOpen);
             }
 
-            if (!isOpen) {
-                (document.documentElement || document.body.parentNode || document.body).scrollTop = 0;
+            if (!isOpen && document.body) {
+                // Prevents menu from being disconnected with trigger
+                (document.documentElement || document.body).scrollTop = 0;
 
                 const menuId = menu.getAttribute('id');
                 const triggerToggle = clickSpec => {

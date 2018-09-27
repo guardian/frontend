@@ -19,7 +19,7 @@ from scrolling */
 
 .dropdown-menu-fallback[aria-expanded=true] {
     @include mq($until: tablet) {
-        background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%,rgba(0,0,0,0.3) 100%);
+        background: linear-gradient(to bottom, rgba(0, 0, 0, .1) 0%, rgba(0, 0, 0, .3) 100%);
         border: 0;
         position: fixed;
         display: block;
