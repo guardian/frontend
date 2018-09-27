@@ -1,5 +1,6 @@
 // @flow strict
 
+import config from 'lib/config';
 import { getCookie } from 'lib/cookies';
 import { getUrlVars } from 'lib/url';
 import fetchJSON from 'lib/fetch-json';
@@ -159,7 +160,9 @@ class CmpService {
             vendorListVersion: number | null,
             callback: (res: VendorList | null, ok: boolean) => void = () => {}
         ): void => {
-            fetchJSON('theFullListURL', { mode: 'cors' })
+            fetchJSON(config.get('libs.cmp.fullVendorDataUrl'), {
+                mode: 'cors',
+            })
                 .then(vendorList => {
                     const { vendorListVersion: listVersion } = vendorList || {};
                     // flowlint sketchy-null-number:warn
@@ -173,7 +176,7 @@ class CmpService {
                     }
                 })
                 .then(undefined, err => {
-                    console.log('ERROR fetching fullvendorlist: ', err);
+                    log.error('ERROR fetching fullvendorlist: ', err);
                     callback(null, false);
                 });
         },

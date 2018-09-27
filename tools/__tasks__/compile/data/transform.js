@@ -43,6 +43,7 @@ module.exports = {
             })
             .then(shortVendors => {
                 const vendorListJsCode =
+                    `// @flow\n` +
                     `/* eslint-disable */\n` +
                     `/* DO NOT EDIT THIS.\n` +
                     ` Regenerate by doing make compile-dev or make watch.\n` +
