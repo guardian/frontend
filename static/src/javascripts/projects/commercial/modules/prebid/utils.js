@@ -3,6 +3,7 @@
 import once from 'lodash/functions/once';
 import { getBreakpoint } from 'lib/detect';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
+import config from 'lib/config';
 import { commercialPrebidAdYouLike } from 'common/modules/experiments/tests/commercial-prebid-adyoulike';
 import { testCanBeRun } from 'common/modules/experiments/test-can-run-checks';
 import { getParticipations } from 'common/modules/experiments/utils';
@@ -70,7 +71,8 @@ export const getRandomIntInclusive = (
 };
 
 export const shouldIncludeAppNexus = (): boolean =>
-    isInAuRegion() || !isInUsRegion();
+    isInAuRegion() ||
+    (config.get('switches.prebidAppnexusUkRow') && !isInUsRegion());
 
 export const shouldIncludeOpenx = (): boolean =>
     !isInUsRegion() && !isInAuRegion();
