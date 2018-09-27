@@ -2,12 +2,14 @@
 
 import { getCookie } from 'lib/cookies';
 import { getUrlVars } from 'lib/url';
+import fetchJSON from 'lib/fetch-json';
+
 import { getVariant, isInVariant } from 'common/modules/experiments/utils';
 import { commercialCmpCustomise } from 'common/modules/experiments/tests/commercial-cmp-customise';
 import { log } from './log';
 import { CmpStore } from './store';
 import { encodeVendorConsentData } from './cookie';
-import { vendorList as globalVendorList } from './vendorlist';
+import { shortVendorList as shortVendorList } from './vendorlist';
 
 import {
     defaultConfig,
@@ -70,7 +72,7 @@ const generateStore = (isInTest: boolean): CmpStore => {
         CMP_VERSION,
         COOKIE_VERSION,
         readConsentCookie(COOKIE_NAME),
-        globalVendorList,
+        shortVendorList,
         isInTest
     );
     return store;
@@ -107,9 +109,9 @@ class CmpService {
     }
 
     generateConsentString = () => {
-        const { vendorConsentData, vendorList } = this.store;
+        const { vendorConsentData, shortVendorList } = this.store;
 
-        if (this.store.vendorConsentData && this.store.vendorList) {
+        if (this.store.vendorConsentData && this.store.shortVendorList) {
             log.info(
                 'GenerateConsentString: Persisted vendor consent data found'
             );
@@ -117,7 +119,7 @@ class CmpService {
             // TODO: Zero trust! we need to catch any errors, and log them...
             return encodeVendorConsentData({
                 ...vendorConsentData,
-                vendorList,
+                shortVendorList,
             });
         }
         // TODO: if the persisted data is missing we will need to generate it
@@ -157,14 +159,22 @@ class CmpService {
             vendorListVersion: number | null,
             callback: (res: VendorList | null, ok: boolean) => void = () => {}
         ): void => {
-            const { vendorList } = this.store;
-            const { vendorListVersion: listVersion } = vendorList || {};
-            // flowlint sketchy-null-number:warn
-            if (!vendorListVersion || vendorListVersion === listVersion) {
-                callback(vendorList, true);
-            } else {
-                callback(null, false);
-            }
+
+            fetchJSON('theFullListURL',
+                      { mode: 'cors' }
+                     ).then( vendorList => {
+                         const { vendorListVersion: listVersion } = vendorList || {};
+                         // flowlint sketchy-null-number:warn
+                         if (!vendorListVersion || vendorListVersion === listVersion) {
+                             callback(vendorList, true);
+                         } else {
+                             callback(null, false);
+                         }
+                     }).then(undefined,
+                             err => {
+                                 console.log("ERROR fetching fullvendorlist: ", err);
+                                 callback(null, false);
+                             });
         },
 
         ping: (_: mixed, callback: CommandCallback = () => {}): void => {
