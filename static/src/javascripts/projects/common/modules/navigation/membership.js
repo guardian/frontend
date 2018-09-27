@@ -12,12 +12,18 @@ import arrowRight from 'svgs/icon/arrow-right.svg';
 import type { Banner } from 'common/modules/ui/bannerPicker';
 import userPrefs from 'common/modules/user-prefs';
 
-const accountDataUpdateLink = accountDataUpdateWarningLink =>
-    `${config.get('page.idUrl')}/${
-        accountDataUpdateWarningLink === 'contribution'
-            ? 'contribution/recurring/edit'
-            : `${accountDataUpdateWarningLink}/edit`
-    }`;
+const accountDataUpdateLink = accountDataUpdateWarningLink => {
+    switch (accountDataUpdateWarningLink) {
+        case 'contribution':
+            return `${config.get('page.idUrl')}/contribution/recurring/edit`;
+        case 'membership':
+            return `https://manage.theguardian.com/payment/membership?INTCMP=BANNER`;
+        default:
+            return `${config.get(
+                'page.idUrl'
+            )}/${accountDataUpdateWarningLink}/edit`;
+    }
+};
 
 const messageCode: string = 'membership-action-required';
 
@@ -33,42 +39,55 @@ const storeBannerCanBeLoadedAgainAfter = () => {
     );
 };
 
+const gaTrackMMA = (category, action) => label => {
+    window.ga(
+        `${config.get('googleAnalytics.trackers.editorial')}.send`,
+        'event',
+        category,
+        action,
+        label
+    );
+};
+
+const updateLink = accountDataUpdateWarning();
+
 const showAccountDataUpdateWarningMessage = accountDataUpdateWarningLink => {
-    const gaTracker = config.get('googleAnalytics.trackers.editorial');
     const newMessage = new Message(messageCode, {
         cssModifierClass: messageCode,
         trackDisplay: true,
         siteMessageLinkName: messageCode,
         siteMessageComponentName: messageCode,
         customJs: () => {
+            const gaTrackClickMMA = gaTrackMMA('click', 'in page');
+            const gaTrackElementViewMMA = gaTrackMMA(
+                'element view',
+                'internal'
+            );
+
             bean.on(document, 'click', '.js-site-message-close', () => {
-                window.ga(
-                    `${gaTracker}.send`,
-                    'event',
-                    'click',
-                    'in page',
-                    'membership action required | banner hidden'
+                gaTrackClickMMA('membership action required | banner hidden');
+                gaTrackClickMMA(
+                    `mma action required | banner hidden | ${updateLink || '?'}`
                 );
                 storeBannerCanBeLoadedAgainAfter();
             });
 
             bean.on(document, 'click', '.js-mma-update-details-button', () => {
-                window.ga(
-                    `${gaTracker}.send`,
-                    'event',
-                    'click',
-                    'in page',
+                gaTrackClickMMA(
                     'membership action required | banner update details clicked'
+                );
+                gaTrackClickMMA(
+                    `membership action required | banner update details clicked | ${updateLink ||
+                        '?'}`
                 );
                 storeBannerCanBeLoadedAgainAfter();
             });
 
-            window.ga(
-                `${gaTracker}.send`,
-                'event',
-                'element view',
-                'internal',
+            gaTrackElementViewMMA(
                 'membership action required | banner impression'
+            );
+            gaTrackElementViewMMA(
+                `mma action required | banner impression | ${updateLink || '?'}`
             );
         },
     });
@@ -85,7 +104,6 @@ const showAccountDataUpdateWarningMessage = accountDataUpdateWarningLink => {
         </a>`
     );
 };
-const updateLink = accountDataUpdateWarning();
 
 const canShow: () => Promise<boolean> = () => {
     const bannerCanBeLoadedAgainAfter = userPrefs.get(
