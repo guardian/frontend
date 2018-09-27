@@ -57,8 +57,18 @@ describe('Utils', () => {
         expect(shouldIncludeAppNexus()).toBe(true);
     });
 
+    test('shouldIncludeAppNexus should return true if geolocation is UK', () => {
+        getSync.mockReturnValueOnce('UK');
+        expect(shouldIncludeAppNexus()).toBe(true);
+    });
+
+    test('shouldIncludeAppNexus should return true if geolocation is JE', () => {
+        getSync.mockReturnValueOnce('JE');
+        expect(shouldIncludeAppNexus()).toBe(true);
+    });
+
     test('shouldIncludeAppNexus should otherwise return false', () => {
-        const testGeos = ['FK', 'GI', 'GG', 'IM', 'JE', 'SH', 'CA', 'US'];
+        const testGeos = ['CA', 'US'];
         for (let i = 0; i < testGeos.length; i += 1) {
             getSync.mockReturnValueOnce(testGeos[i]);
             expect(shouldIncludeAppNexus()).toBe(false);
