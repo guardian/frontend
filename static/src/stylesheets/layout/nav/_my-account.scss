@@ -1,10 +1,12 @@
-.my-account-toggle {
+.my-account {
     .dropdown-is-open & {
         @include mq($until: tablet) {
             z-index: $zindex-main-menu + 1;
         }
     }
+}
 
+.my-account--icon {
     svg {
         height: 18px;
         width: 18px;
@@ -20,7 +22,7 @@
     }
 }
 
-.dropdown-is-open .my-account-toggle--icon {
+.dropdown-is-open .my-account--icon {
     @include mq($until: tablet) {
         &:before,
         &:after {

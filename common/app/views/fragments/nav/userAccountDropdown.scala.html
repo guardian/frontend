@@ -5,11 +5,11 @@
 
 <div class="new-header__user-account-container">
 
-    <a class="top-bar__item js-navigation-sign-in"
+    <a class="top-bar__item js-navigation-sign-in my-account"
         data-link-name="nav2 : topbar : signin"
         href="@Configuration.id.url/signin?INTCMP=DOTCOM_NEWHEADER_SIGNIN">
 
-        @fragments.inlineSvg("profile", "icon", List("hide-from-tablet"))
+        @fragments.inlineSvg("profile", "icon", List("hide-from-tablet", "my-account--icon"))
         <span class="hide-until-tablet">Sign in</span>
     </a>
 
@@ -20,11 +20,11 @@
         aria-expanded="false"
         aria-controls="my-account-dropdown"></button>
 
-    <label class="top-bar__item popup__toggle my-account-toggle is-hidden js-navigation-account-actions"
+    <label class="top-bar__item popup__toggle my-account is-hidden js-navigation-account-actions"
         for="my-account-toggle"
         data-link-name="nav2 : topbar: my account">
 
-        @fragments.inlineSvg("profile", "icon", List("hide-from-tablet", "my-account-toggle--icon"))
+        @fragments.inlineSvg("profile", "icon", List("hide-from-tablet", "my-account--icon"))
         <span class="hide-until-tablet">My account</span>
     </label>
 
