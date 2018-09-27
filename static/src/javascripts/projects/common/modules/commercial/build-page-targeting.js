@@ -1,4 +1,4 @@
-// @flow
+// @flow strict
 import config from 'lib/config';
 import { getCookie, removeCookie } from 'lib/cookies';
 import { getReferrer as detectGetReferrer, getBreakpoint } from 'lib/detect';
@@ -21,6 +21,7 @@ import pick from 'lodash/objects/pick';
 const format = (keyword: string): string =>
     keyword.replace(/[+\s]+/g, '-').toLowerCase();
 
+// flowlint sketchy-null-string:warn
 const formatTarget = (target: ?string): ?string =>
     target
         ? format(target)
@@ -29,7 +30,7 @@ const formatTarget = (target: ?string): ?string =>
         : null;
 
 const abParam = (): Array<string> => {
-    const abParticipations: Object = getParticipations();
+    const abParticipations: Participations = getParticipations();
     const abParams: Array<string> = [];
 
     const pushAbParams = (testName: string, testValue: mixed): void => {
@@ -119,25 +120,43 @@ const getReferrer = (): ?string => {
     return matchedRef.id;
 };
 
-const getWhitelistedQueryParams = (): Object => {
+const getWhitelistedQueryParams = (): {} => {
     const whiteList: Array<string> = ['0p19G'];
     return pick(getUrlVars(), whiteList);
 };
 
-const formatAppNexusTargeting = (obj: Object): string =>
+const formatAppNexusTargeting = (obj: { [string]: string }): string =>
     flatten(
         Object.keys(obj)
             .filter((key: string) => obj[key] !== '' && obj[key] !== null)
             .map((key: string) => {
-                const value: any = obj[key];
+                const value: Array<string> | string = obj[key];
                 return Array.isArray(value)
                     ? value.map(nestedValue => `${key}=${nestedValue}`)
                     : `${key}=${value}`;
             })
     ).join(',');
 
+type PageTargeting = {
+    sens: string,
+    url: string,
+    edition: string,
+    ct: string,
+    p: string,
+    k: string,
+    su: string,
+    bp: string,
+    x: string,
+    gdncrm: string,
+    pv: string,
+    co: string,
+    tn: string,
+    slot: string,
+    invCode: ?string,
+};
+
 const buildAppNexusTargetingObject = once(
-    (pageTargeting: Object): Object => ({
+    (pageTargeting: PageTargeting): {} => ({
         sens: pageTargeting.sens,
         pt1: pageTargeting.url,
         pt2: pageTargeting.edition,
@@ -158,28 +177,29 @@ const buildAppNexusTargetingObject = once(
 );
 
 const buildAppNexusTargeting = once(
-    (pageTargeting: Object): string =>
+    (pageTargeting: PageTargeting): string =>
         formatAppNexusTargeting(buildAppNexusTargetingObject(pageTargeting))
 );
 
 const buildPageTargeting = once(
-    (): Object => {
-        const page: Object = config.page;
-        const adConsentState: ?boolean = getAdConsentState(
+    (): {} => {
+        const page = config.page;
+        //
+        const adConsentState: boolean | null = getAdConsentState(
             thirdPartyTrackingAdConsent
         );
 
         // personalised ads targeting
-        const paTargeting: Object =
+        const paTargeting: {} =
             adConsentState !== null ? { pa: adConsentState ? 't' : 'f' } : {};
-        const adFreeTargeting: Object = commercialFeatures.adFree
+        const adFreeTargeting: {} = commercialFeatures.adFree
             ? { af: 't' }
             : {};
-        const pageTargets: Object = Object.assign(
+        const pageTargets: PageTargeting = Object.assign(
             {
                 sens: page.isSensitive ? 't' : 'f',
                 x: getKruxSegments(),
-                pv: config.ophan.pageViewId,
+                pv: config.get('ophan.pageViewId'),
                 bp: getBreakpoint(),
                 at: adtestParams(),
                 si: isUserLoggedIn() ? 't' : 'f',
@@ -202,7 +222,7 @@ const buildPageTargeting = once(
         );
 
         // filter out empty values
-        const pageTargeting: Object = pick(pageTargets, target => {
+        const pageTargeting: {} = pick(pageTargets, target => {
             if (Array.isArray(target)) {
                 return target.length > 0;
             }
