@@ -134,7 +134,8 @@ final case class PressedMetadata(
   `type`: Option[DotcomContentType],
   pillar: Option[Pillar],
   sectionId: Option[SectionId],
-  designType: DesignType
+  designType: DesignType,
+  isPaid: Option[Boolean]
 )
 final case class PressedElements(
   mainVideo: Option[VideoElement],
@@ -174,7 +175,8 @@ object PressedStory {
         metadata.contentType,
         Pillar(apiContent),
         sectionId,
-        apiContent.designType
+        apiContent.designType,
+        metadata.commercial.map(_.isPaidContent)
       ),
       PressedFields(
         fields.main,
