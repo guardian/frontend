@@ -1,7 +1,7 @@
 // @flow
 import { CmpStore, _ } from './store';
 
-import type { VendorConsentData, ConsentData, VendorData } from './types';
+import type { VendorConsentData, ConsentData, SelectedData } from './types';
 
 const {
     getVendorConsentData,
@@ -23,52 +23,33 @@ jest.mock('commercial/modules/cmp/log', () => ({
 const OriginalDate = global.Date;
 global.Date = jest.fn(() => new OriginalDate(0));
 
-const vendorList = {
-    vendorListVersion: 1,
-    purposes: [
-        {
-            id: 1,
-            name: 'Accessing a Device or Browser',
-        },
-        {
-            id: 2,
-            name: 'Advertising Personalisation',
-        },
-        {
-            id: 3,
-            name: 'Analytics',
-        },
-        {
-            id: 4,
-            name: 'Content Personalisation',
-        },
-    ],
-    vendors: [
-        {
-            id: 1,
-            name: 'Globex',
-        },
-        {
-            id: 2,
-            name: 'Initech',
-        },
-        {
-            id: 3,
-            name: 'CRS',
-        },
-        {
-            id: 4,
-            name: 'Umbrella',
-        },
-        {
-            id: 8,
-            name: 'Aperture',
-        },
-        {
-            id: 10,
-            name: 'Pierce and Pierce',
-        },
-    ],
+const shortVendorList = {
+    version: 1,
+    purposeIDs: [1, 2, 3, 4],
+    purposesByVID: {
+        '1': [], // name:Globex
+        '2': [], // name:Initech
+        '3': [], // name:CRS
+        '4': [], // name:Umbrella
+        '8': [], // name:Aperture
+        '10': [], // Pierce and Pierce
+    },
+    legIntPurposesByVID: {
+        '1': [], // name:Globex
+        '2': [], // name:Initech
+        '3': [], // name:CRS
+        '4': [], // name:Umbrella
+        '8': [], // name:Aperture
+        '10': [], // Pierce and Pierce
+    },
+    featuresIdsByVID: {
+        '1': [], // name:Globex
+        '2': [], // name:Initech
+        '3': [], // name:CRS
+        '4': [], // name:Umbrella
+        '8': [], // name:Aperture
+        '10': [], // Pierce and Pierce
+    },
 };
 
 const aDate = new Date('2018-07-15 PDT');
@@ -100,24 +81,22 @@ describe('CMP store', () => {
     });
 
     it('can generate the VendorData when consent = true', () => {
-        const expected: VendorData = {
+        const expected: SelectedData = {
             maxVendorId: 10,
             selectedPurposeIds: [1, 2, 3, 4],
             selectedVendorIds: [1, 2, 3, 4, 8, 10],
-            vendorList,
         };
-        const result = generateVendorData(true, vendorList);
+        const result = generateVendorData(true, shortVendorList);
         expect(result).toEqual(expected);
     });
 
     it('can generate the VendorData when consent = false', () => {
-        const expected: VendorData = {
+        const expected: SelectedData = {
             maxVendorId: 10,
             selectedPurposeIds: [],
             selectedVendorIds: [],
-            vendorList,
         };
-        const result = generateVendorData(false, vendorList);
+        const result = generateVendorData(false, shortVendorList);
         expect(result).toEqual(expected);
     });
 
@@ -127,9 +106,8 @@ describe('CMP store', () => {
             maxVendorId: 10,
             selectedPurposeIds: [],
             selectedVendorIds: [],
-            vendorList,
         };
-        const result = getVendorConsentData(1, 1, 1, false, vendorList);
+        const result = getVendorConsentData(1, 1, 1, false, shortVendorList);
         expect(result).toEqual(expected);
     });
 
@@ -139,9 +117,8 @@ describe('CMP store', () => {
             maxVendorId: 10,
             selectedPurposeIds: [1, 2, 3, 4],
             selectedVendorIds: [1, 2, 3, 4, 8, 10],
-            vendorList,
         };
-        const result = getVendorConsentData(1, 1, 1, true, vendorList);
+        const result = getVendorConsentData(1, 1, 1, true, shortVendorList);
         expect(result).toEqual(expected);
     });
 
@@ -154,7 +131,7 @@ describe('CMP store', () => {
         };
         const result = generateVendorConsentResponse(
             vendorConsentData,
-            vendorList
+            shortVendorList
         );
         expect(result.purposeConsents).toEqual({
             '1': false,
@@ -185,7 +162,7 @@ describe('CMP store', () => {
         };
         const result = generateVendorConsentResponse(
             vendorConsentData,
-            vendorList
+            shortVendorList
         );
         expect(result.purposeConsents).toEqual({
             '1': true,
@@ -216,7 +193,7 @@ describe('CMP store', () => {
         };
         const result = generateVendorConsentResponse(
             vendorConsentData,
-            vendorList,
+            shortVendorList,
             [4, 6, 8]
         );
         expect(result.purposeConsents).toEqual({
@@ -233,17 +210,17 @@ describe('CMP store', () => {
     });
 
     it('can generate a store when consent = true', () => {
-        const store = new CmpStore(1, 1, 1, true, vendorList);
+        const store = new CmpStore(1, 1, 1, true, shortVendorList);
         expect(store.canPersonalise).toBe(true);
         expect(store.consentData).toEqual(consentData);
-        expect(store.vendorList).toEqual(vendorList);
+        expect(store.shortVendorList).toEqual(shortVendorList);
     });
 
     it('can generate a store when consent = false', () => {
-        const store = new CmpStore(1, 1, 1, false, vendorList);
+        const store = new CmpStore(1, 1, 1, false, shortVendorList);
         expect(store.canPersonalise).toBe(false);
         expect(store.consentData).toEqual(consentData);
-        expect(store.vendorList).toEqual(vendorList);
+        expect(store.shortVendorList).toEqual(shortVendorList);
     });
 });
 

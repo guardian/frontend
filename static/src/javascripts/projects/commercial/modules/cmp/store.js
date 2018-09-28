@@ -3,10 +3,10 @@ import { log } from 'commercial/modules/cmp/log';
 
 import type {
     ConsentData,
-    VendorData,
-    VendorList,
     VendorConsentData,
     VendorConsentResponse,
+    ShortVendorList,
+    SelectedData,
 } from 'commercial/modules/cmp/types';
 
 import { readVendorConsentCookie } from './cookie';
@@ -19,7 +19,7 @@ type ConsentSelection = {
 
 const generateVendorConsentResponse = (
     vendorConsentData: VendorConsentData,
-    vendorList: VendorList,
+    shortVendorList: ShortVendorList,
     vendorIds: ?Array<number>
 ): ConsentSelection => {
     const {
@@ -28,25 +28,39 @@ const generateVendorConsentResponse = (
         selectedPurposeIds = [],
     } = vendorConsentData;
 
-    const allPurposes = vendorList.purposes.map(_ => _.id);
-    const maxPurposeId = Math.max(0, ...allPurposes);
-    const vendorMap = {};
     const purposeMap = {};
 
-    for (let i = 1; i <= maxPurposeId; i += 1) {
-        purposeMap[i] = selectedPurposeIds.includes(i);
-    }
+    // Initialise allPurposes map
+    const allPurposes = shortVendorList.purposeIDs;
+    allPurposes.forEach(pid => {
+        purposeMap[pid] = false;
+    });
+    // Set the selected ones to true
+    selectedPurposeIds.forEach(pid => {
+        purposeMap[pid] = true;
+    });
 
+    const vendorMap = {};
+
+    // Initialise vendorMap
     if (vendorIds && vendorIds.length) {
-        vendorIds.forEach(
-            // eslint-disable-next-line no-return-assign
-            id => (vendorMap[id] = selectedVendorIds.includes(id))
-        );
+        // We are only interested in those vendorIds to be included in the map
+        vendorIds.forEach(vid => {
+            vendorMap[vid] = false;
+        });
     } else {
         for (let i = 1; i <= maxVendorId; i += 1) {
-            vendorMap[i] = selectedVendorIds.includes(i);
+            // Got through all vendors to initialise vendorMap
+            vendorMap[i] = false;
         }
     }
+
+    // and set the ones that are selected to true, only
+    // for the ones considered.
+    selectedVendorIds.filter(svid => svid in vendorMap).forEach(svid => {
+        vendorMap[svid] = true;
+    });
+
     return {
         maxVendorId,
         purposeConsents: purposeMap,
@@ -56,30 +70,34 @@ const generateVendorConsentResponse = (
 
 const generateVendorData = (
     canPersonalise: boolean,
-    vendorList: VendorList
-): VendorData => {
-    const allVendors = vendorList.vendors.map(_ => _.id);
+    shortVendorList: ShortVendorList
+): SelectedData => {
+    const allVendors = Object.keys(shortVendorList.purposesByVID).map(s =>
+        parseInt(s, 10)
+    );
     const maxVendorId = Math.max(0, ...allVendors);
 
     if (canPersonalise) {
-        const selectedPurposeIds = vendorList.purposes.map(_ => _.id);
+        const selectedPurposeIds = shortVendorList.purposeIDs;
         const selectedVendorIds = allVendors;
 
         return {
-            vendorList,
             selectedPurposeIds,
             selectedVendorIds,
             maxVendorId,
         };
     }
     return {
-        vendorList,
         selectedPurposeIds: [],
         selectedVendorIds: [],
         maxVendorId,
     };
 };
 
+/* 
+   This is a stub. For now it just enriches the
+   given parameters with some constant context data.
+*/
 const generateConsentData = (
     cmpId: number,
     cmpVersion: number,
@@ -104,7 +122,7 @@ const getVendorConsentData = (
     cmpVersion: number,
     cookieVersion: number,
     canPersonalise: boolean | null,
-    vendorList: VendorList,
+    shortVendorList: ShortVendorList,
     isRunningCmpCustomise: boolean = false
 ): ?VendorConsentData => {
     if (isRunningCmpCustomise) {
@@ -117,16 +135,19 @@ const getVendorConsentData = (
             cmpId,
             cmpVersion,
             cookieVersion,
-            vendorList.vendorListVersion
+            shortVendorList.version
         );
-        const vendorData = generateVendorData(canPersonalise, vendorList);
-        return { ...consentData, ...vendorData };
+        const selectedData = generateVendorData(
+            canPersonalise,
+            shortVendorList
+        );
+        return { ...consentData, ...selectedData };
     }
     log.warn('Missing value for consent state, Store will be incomplete');
 };
 
 export class CmpStore {
-    vendorList: VendorList;
+    shortVendorList: ShortVendorList;
     consentData: ConsentData;
     canPersonalise: boolean | null;
     allowedVendorIds: Array<number>;
@@ -139,24 +160,26 @@ export class CmpStore {
         cmpVersion: number,
         cookieVersion: number,
         canPersonalise: boolean | null,
-        vendorList: VendorList,
+        shortVendorList: ShortVendorList,
         isRunningCmpCustomise: boolean = false
     ) {
-        this.vendorList = vendorList;
+        this.shortVendorList = shortVendorList;
         this.canPersonalise = canPersonalise;
-        this.allowedVendorIds = vendorList.vendors.map(_ => _.id);
+        this.allowedVendorIds = Object.keys(shortVendorList.purposesByVID).map(
+            s => parseInt(s, 10)
+        );
         this.consentData = generateConsentData(
             cmpId,
             cmpVersion,
             cookieVersion,
-            vendorList.vendorListVersion
+            shortVendorList.version
         );
         this.vendorConsentData = getVendorConsentData(
             cmpId,
             cmpVersion,
             cookieVersion,
             canPersonalise,
-            vendorList,
+            shortVendorList,
             isRunningCmpCustomise
         );
     }
@@ -167,7 +190,7 @@ export class CmpStore {
         if (this.vendorConsentData) {
             const consentDataResponse = generateVendorConsentResponse(
                 this.vendorConsentData,
-                this.vendorList,
+                this.shortVendorList,
                 vendorIds
             );
             log.info(
