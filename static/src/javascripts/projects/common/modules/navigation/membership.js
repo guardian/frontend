@@ -17,7 +17,7 @@ const accountDataUpdateLink = accountDataUpdateWarningLink => {
         case 'contribution':
             return `${config.get('page.idUrl')}/contribution/recurring/edit`;
         case 'membership':
-            return `https://manage.theguardian.com/payment/membership?INTCMP=BANNER`;
+            return `https://manage.theguardian.com/banner/membership`;
         default:
             return `${config.get(
                 'page.idUrl'
