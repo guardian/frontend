@@ -38,7 +38,7 @@
          data-title="@Localisation(containerDefinition.displayName getOrElse "")"
          data-id="@containerDefinition.dataId">
 
-        @if(containerDefinition.displayName.contains("Flagship")) {
+        @if(containerDefinition.displayName.contains("Flagship") && frontId.contains("uk")) {
             @for(slice <- containerLayout.slices.headOption) {
                 @podcastContainer(slice, containerDefinition.index, frontProperties = Some(frontProperties), containerDefinition.displayName, frontId)
             }
