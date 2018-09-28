@@ -27,6 +27,7 @@
             <div class="fc-item--type-media">
                 <div class="fc-podcast-container__episode">
                     <div class="fc-podcast-container__episode-image">
+                        @fragments.inlineSvg("audio-icon", "journalism/podcast-container", Seq("fc-podcast-container__audio-icon"))
                         <img src="https://media.guim.co.uk/79284468f1b259db7d713dc24ea9af2a3f5c9937/0_0_800_800/500.png"/>
                     </div>
                     <div class="fc-podcast-container__episode-details">
@@ -46,6 +47,10 @@
                                 <br>
                             </div>
                         </div>
+                        @fragments.inlineSvg("waveform-wide", "journalism/podcast-container", Seq("fc-podcast-container__waveform-wide"))
+                        @fragments.inlineSvg("waveform-tablet", "journalism/podcast-container", Seq("fc-podcast-container__waveform-tablet"))
+                        @fragments.inlineSvg("waveform-mobile-landscape", "journalism/podcast-container", Seq("fc-podcast-container__waveform-mobile-landscape"))
+                        @fragments.inlineSvg("waveform-mobile", "journalism/podcast-container", Seq("fc-podcast-container__waveform-mobile"))
                         <div class="fc-podcast-container__subscribe fc-podcast-container__subscribe-large">
                             <span>Subscribe</span>
                             <span><a data-link-name="apple" href="https://itunes.apple.com/gb/podcast/the-guardian-long-read/id587347784?mt=2">Apple Podcasts</a></span>

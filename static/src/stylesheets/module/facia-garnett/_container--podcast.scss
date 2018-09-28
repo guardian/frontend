@@ -163,6 +163,33 @@
     }
 }
 
+.fc-podcast-container__waveform-wide {
+    @include mq($until: desktop) {
+        display: none;
+    }
+}
+.fc-podcast-container__waveform-tablet {
+    @include mq($until: tablet) {
+        display: none;
+    }
+    @include mq(desktop) {
+        display: none;
+    }
+}
+.fc-podcast-container__waveform-mobile-landscape {
+    @include mq($until: mobileLandscape) {
+        display: none;
+    }
+    @include mq(tablet) {
+        display: none;
+    }
+}
+.fc-podcast-container__waveform-mobile {
+    @include mq(mobileLandscape) {
+        display: none;
+    }
+}
+
 .fc-podcast-container__series {
     margin-top: 11px;
 
