@@ -4,7 +4,6 @@
 @import views.support.RemoveOuterParaHtml
 @import views.html.fragments.items.elements.facia_cards._
 @import model.InlineImage
-@import views.support.ImgSrc
 
 
 @getAllCards = @{
@@ -28,17 +27,7 @@
             <div class="fc-item--type-media">
                 <div class="fc-podcast-container__episode">
                     <div class="fc-podcast-container__episode-image">
-                        @card.displayElement match {
-                            case Some(InlineImage(images)) => {
-                                @image(
-                                    classes = Seq("responsive-img"),
-                                    widths = card.mediaWidthsByBreakpoint,
-                                    maybeImageMedia = Some(images),
-                                    maybeSrc = ImgSrc.getFallbackUrl(images)
-                                )
-                            }
-                            case _ => {}
-                        }
+                        <img src="https://media.guim.co.uk/79284468f1b259db7d713dc24ea9af2a3f5c9937/0_0_800_800/500.png"/>
                     </div>
                     <div class="fc-podcast-container__episode-details">
                         <div class="fc-item__header">
