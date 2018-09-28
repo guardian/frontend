@@ -1,6 +1,6 @@
 /* When the Account dropdown is open this class is added to the html to prevent users
 from scrolling */
-.dropdown-is-open {
+.dropdown--open {
     @include mq($until: tablet) {
         overflow: hidden;
         width: 100%;

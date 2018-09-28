@@ -1,5 +1,5 @@
 .my-account {
-    .dropdown-is-open & {
+    .dropdown--open & {
         @include mq($until: tablet) {
             z-index: $zindex-main-menu + 1;
         }
@@ -8,6 +8,7 @@
 
 .my-account--icon {
     svg {
+        fill: $brightness-46;
         height: 18px;
         width: 18px;
 
@@ -15,14 +16,10 @@
             height: 23px;
             width: 23px;
         }
-
-        path {
-            fill: $brightness-46;
-        }
     }
 }
 
-.dropdown-is-open .my-account--icon {
+.dropdown--open .my-account--icon {
     @include mq($until: tablet) {
         &:before,
         &:after {
