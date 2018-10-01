@@ -77,7 +77,7 @@ const showAccountDataUpdateWarningMessage = accountDataUpdateWarningLink => {
                     'membership action required | banner update details clicked'
                 );
                 gaTrackClickMMA(
-                    `membership action required | banner update details clicked | ${updateLink ||
+                    `mma action required | banner update details clicked | ${updateLink ||
                         '?'}`
                 );
                 storeBannerCanBeLoadedAgainAfter();
