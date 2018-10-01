@@ -61,6 +61,7 @@ from scrolling */
         right: 0;
         width: auto;
 
+        // Allows expanded dropdown to be scrolled when it's partially clipped e.g. mobile landscape
         @media (max-height: 370px) {
             overflow: auto;
             bottom: 0;
@@ -87,8 +88,7 @@ from scrolling */
 }
 
 .dropdown-menu__title {
-    @include fs-textSans(4);
-    font-size: 16px;
+    @include fs-textSans(5);
     color: $brightness-7;
     cursor: pointer;
     display: block;
