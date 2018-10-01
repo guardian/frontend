@@ -70,7 +70,7 @@ class FollowButtonWrap extends Component<
                     role="alert"
                     className={[
                         ...getButtonClassNames(
-                            'secondary',
+                            'green-secondary',
                             'center',
                             'icon-left'
                         ),
