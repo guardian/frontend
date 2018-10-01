@@ -253,6 +253,9 @@ $pillars: (
             display: inline-block;
             background-color: map-get($palette, invertedKicker);
             border-radius: 50%;
+            &.inline-video-icon svg {
+                transform: translateY(1px);
+            }
         }
     }
 
