@@ -4,6 +4,7 @@ import { FollowCard } from 'common/modules/identity/upsell/consent-card/FollowCa
 import type { ConsentWithState } from '../store/types';
 import { setConsentsInApi } from '../store/consents';
 import { ErrorBar, genericErrorStr } from '../error-bar/ErrorBar';
+import { ExpanderButton } from '../button/ExpanderButton';
 
 const joinWithOr = arr =>
     arr.reduce(
@@ -105,23 +106,17 @@ class FollowCardList extends Component<
                 </div>
                 {[...consents].splice(cutoff).length > 0 && (
                     <div className="identity-upsell-consent-card-footer">
-                        {isExpanded ? (
-                            <button
-                                data-link-name="upsell-follow-expander : shrink"
-                                className="manage-account__button manage-account__button--secondary"
-                                onClick={() => this.updateExpandState(false)}>
-                                Less
-                            </button>
-                        ) : (
-                            <button
-                                data-link-name="upsell-follow-expander : expand"
-                                className="manage-account__button manage-account__button--secondary"
-                                onClick={() => this.updateExpandState(true)}>
-                                {this.expandableConsentsButtonText(
+                        <ExpanderButton
+                            isExpanded={isExpanded}
+                            linkName="upsell-follow-expander"
+                            onToggle={this.updateExpandState}
+                            text={{
+                                more: this.expandableConsentsButtonText(
                                     [...consents].splice(cutoff)
-                                )}
-                            </button>
-                        )}
+                                ),
+                                less: 'Less',
+                            }}
+                        />
                     </div>
                 )}
             </div>

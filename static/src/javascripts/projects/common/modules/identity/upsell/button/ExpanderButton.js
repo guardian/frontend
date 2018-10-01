@@ -23,8 +23,8 @@ const ExpanderButton = ({
     onToggle,
     linkName,
     text,
-}: ExpanderButtonProps) => {
-    return isExpanded ? (
+}: ExpanderButtonProps) =>
+    isExpanded ? (
         <button
             data-link-name={linkName ? `${linkName} : shrink` : null}
             className="manage-account__button manage-account__button--secondary"
@@ -39,5 +39,4 @@ const ExpanderButton = ({
             {(text || defaultExpanderButtonText).more}
         </button>
     );
-};
 export { ExpanderButton };
