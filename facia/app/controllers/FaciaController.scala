@@ -249,9 +249,13 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
             containerLayout <- container.containerLayout
           } yield {
             val withFrom: Seq[FaciaCardAndIndex] = containerLayout.remainingCards.map(_.withFromShowMore)
-            val withFromFiltered = withFrom.filter( c => !checkIfPaid(c.item).getOrElse(false) )
+            val withFromAdapted : Seq[FaciaCardAndIndex] = if (request.isAdFree) {
+              withFrom.filter( c => !checkIfPaid(c.item).getOrElse(false) )
+            } else {
+              withFrom
+            }
             successful(Cached(CacheTime.Facia) {
-              JsonComponent(views.html.fragments.containers.facia_cards.showMore(withFromFiltered, index))
+              JsonComponent(views.html.fragments.containers.facia_cards.showMore(withFromAdapted, index))
             })
           }
 
