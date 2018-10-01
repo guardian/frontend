@@ -1,20 +1,16 @@
 /* Button styles
 ========================================================================== */
-@mixin identity-button($color, $font-color: $brightness-7) {
-    background-color: $color;
+@mixin identity-button($bg, $bg-hover, $font: $brightness-7) {
+    background-color: $bg;
     &, &:hover, &:active, &:focus {
-        @if (lightness($color) < 50) {
+        @if ($font == $brightness-7 and lightness($bg) < 50) {
             color: #ffffff;
         } @else {
-            color: $font-color;
+            color: $font;
         }
     }
     &:not(.is-updating, .is-disabled):hover {
-        @if (lightness($color) < 50) {
-            background-color: lighten($color, 20%);
-        } @else {
-            background-color: darken($color, 5%);
-        }
+        background-color: $bg-hover;
     }
 }
 
@@ -30,7 +26,7 @@
     $padding-vertical: ($height - get-line-height(textSans, $font-size))/2;
     $padding-horizontal: $gs-gutter;
     @include fs-textSans($font-size);
-    @include identity-button($brightness-7);
+    @include identity-button($brightness-7, lighten($brightness-7, 10%));
     @include circular;
     font-weight: 600;
     height: $height;
@@ -165,31 +161,25 @@
 }
 
 .manage-account__button--main {
-    @include identity-button($highlight-main);
+    @include identity-button($highlight-main, darken($highlight-main, 5%));
 }
 
 .manage-account__button--danger {
-    @include identity-button($news-main);
+    @include identity-button($news-main, darken($news-main, 5%));
 }
 
 .manage-account__button--secondary {
-    @include identity-button(hsla(0, 100%, 100%, 0));
+    @include identity-button(hsla(0, 100%, 100%, 0), $brightness-97);
     box-shadow: inset 0 0 0 1px $brightness-86;
-    &:hover, &:focus {
-        background: $brightness-97;
-    }
 }
 
 .manage-account__button--green-secondary {
-    @include identity-button(hsla(0, 100%, 100%, 0), $green-dark);
+    @include identity-button(hsla(0, 100%, 100%, 0), $brightness-97, $green-dark);
     box-shadow: inset 0 0 0 1px rgba($green-dark, .25);
-    &:hover, &:focus {
-        background: $brightness-97;
-    }
 }
 
 .manage-account__button--green {
-    @include identity-button($green-dark);
+    @include identity-button($green-dark, darken($green-dark, 5%));
     font-weight: 600;
 }
 
