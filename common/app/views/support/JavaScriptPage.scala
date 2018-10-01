@@ -70,6 +70,7 @@ object JavaScriptPage {
       ("isDev", JsBoolean(!environment.isProd)),
       ("isProd", JsBoolean(Configuration.environment.isProd)),
       ("idUrl", JsString(Configuration.id.url)),
+      ("mmaUrl", JsString(Configuration.id.mmaUrl)),
       ("beaconUrl", JsString(Configuration.debug.beaconUrl)),
       ("assetsPath", JsString(Configuration.assets.path)),
       ("isPreview", JsBoolean(isPreview)),
