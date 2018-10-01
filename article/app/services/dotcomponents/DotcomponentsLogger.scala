@@ -8,7 +8,7 @@ import scala.util.Random
 
 case class DotcomponentsLoggerFields(request: Option[RequestHeader]) {
 
-  private lazy val customFields: List[LogField] = {
+  lazy val customFields: List[LogField] = {
 
     val requestHeaders: List[LogField] = request.map { r: RequestHeader =>
       List[LogField](
@@ -22,28 +22,33 @@ case class DotcomponentsLoggerFields(request: Option[RequestHeader]) {
 
   }
 
-  def toList: List[LogField] = customFields
-
 }
 
 case class DotcomponentsLogger(request: Option[RequestHeader]) extends Logging {
 
-  private def allFields: List[LogField] = DotcomponentsLoggerFields(request).toList
+  private def customFields: List[LogField] = DotcomponentsLoggerFields(request).customFields
+
+  def fieldsFromResults(results: List[(String, Boolean)]):List[LogField] =
+    results.map(x => LogFieldString(x._1, x._2.toString))
 
   def withRequestHeaders(rh: RequestHeader): DotcomponentsLogger = {
     copy(Some(rh))
   }
 
+  def results(message: String, results: List[(String, Boolean)]): Unit = {
+    logInfoWithCustomFields(message, customFields ++ fieldsFromResults(results))
+  }
+
   def info(message: String): Unit = {
-    logInfoWithCustomFields(message, allFields)
+    logInfoWithCustomFields(message, customFields)
   }
 
   def warn(message: String, error: Throwable): Unit = {
-    logWarningWithCustomFields(message, error, allFields)
+    logWarningWithCustomFields(message, error, customFields)
   }
 
   def error(message: String, error: Throwable): Unit = {
-    logErrorWithCustomFields(message, error, allFields)
+    logErrorWithCustomFields(message, error, customFields)
   }
 
 }

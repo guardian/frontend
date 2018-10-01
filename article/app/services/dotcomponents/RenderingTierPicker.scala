@@ -8,12 +8,13 @@ import implicits.Requests._
 
 object RenderingTierPicker {
 
-  // todo: use injection for this
+  type Results = List[(String, Boolean)]
+
   val picker: RenderTierPickerStrategy = new SimplePagePicker()
 
   // use this logger so we get all the log fields populated for free
-  def logRequest(msg:String)(implicit request: RequestHeader): Unit =
-    DotcomponentsLogger().withRequestHeaders(request).info(msg)
+  def logRequest(msg:String, results:Results)(implicit request: RequestHeader): Unit =
+    DotcomponentsLogger().withRequestHeaders(request).results(msg, results)
 
   def getRenderTierFor(page: PageWithStoryPackage)(implicit request: RequestHeader): RenderType = {
 
@@ -25,11 +26,11 @@ object RenderingTierPicker {
 
     // log out whenever we find a supported article, for metrics purposes
 
-    val isSupported = picker.getRenderTierFor(page, request)
+    val (results, isSupported) = picker.getRenderTierFor(page, request)
 
     isSupported match {
-      case RemoteRender => logRequest("Article was remotely renderable")
-      case _ =>
+      case RemoteRender => logRequest("Article was remotely renderable", results)
+      case _ => logRequest("Article was only locally renderable", results)
     }
 
     // We use dotcomponents if we are in the AB test, and are a supported article according to the picker
