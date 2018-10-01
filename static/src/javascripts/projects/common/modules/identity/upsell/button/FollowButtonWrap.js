@@ -4,6 +4,11 @@ import envelopeRemove from 'svgs/icon/envelope-remove.svg';
 import envelopeAdd from 'svgs/icon/envelope-add.svg';
 import tick from 'svgs/icon/tick.svg';
 
+const getButtonClassNames = (...modifiers: string[]) => [
+    'manage-account__button',
+    ...modifiers.map(m => `manage-account__button--${m}`),
+];
+
 type FollowButtonWrapProps = {
     following: boolean,
     onFollow: () => Promise<void>,
@@ -46,64 +51,63 @@ class FollowButtonWrap extends Component<
     render() {
         const { following, trackingName } = this.props;
         const { mousedOutOnce } = this.state;
-        return (following) ?
-            (
+        return following ? (
+            <div
+                aria-live="polite"
+                className={[
+                    'identity-upsell-follow-button-wrap',
+                    mousedOutOnce
+                        ? ''
+                        : 'identity-upsell-follow-button-wrap--blocked',
+                ].join(' ')}
+                onMouseOut={() => {
+                    this.onMouseOut();
+                }}
+                onBlur={() => {
+                    this.onMouseOut();
+                }}>
                 <div
-                    aria-live="polite"
+                    role="alert"
                     className={[
-                        'identity-upsell-follow-button-wrap',
-                        mousedOutOnce
-                            ? ''
-                            : 'identity-upsell-follow-button-wrap--blocked',
-                    ].join(' ')}
-                    onMouseOut={() => {
-                        this.onMouseOut();
-                    }}
-                    onBlur={() => {
-                        this.onMouseOut();
-                    }}>
-                    <div
-                        role="alert"
-                        className={[
-                            'manage-account__button',
-                            'manage-account__button--secondary',
-                            'manage-account__button--center',
-                            'manage-account__button--icon-left',
-                            'identity-upsell-follow-button-wrap__button',
-                        ].join(' ')}>
-                                                <span
-                                                    className="manage-account__button-react-icon"
-                                                    dangerouslySetInnerHTML={{ __html: tick.markup }}
-                                                />
-                        Signed up
-                    </div>
-                    <button
-                        data-link-name={
-                            trackingName
-                                ? `upsell-consent : ${trackingName} : untick`
-                                : false
-                        }
-                        type="button"
-                        className={[
-                            'manage-account__button',
-                            'manage-account__button--danger',
-                            'manage-account__button--icon-left',
-                            'manage-account__button--center',
-                            'identity-upsell-follow-button-wrap__button',
-                            'identity-upsell-follow-button-wrap__button--longer',
-                            'identity-upsell-follow-button-wrap__button--hoverable',
-                        ].join(' ')}
-                        onClick={() => {
-                            this.updateFollowing(false);
-                        }}>
-                        <span
-                            className="manage-account__button-react-icon"
-                            dangerouslySetInnerHTML={{ __html: envelopeRemove.markup }}
-                        />
-                        Unsubscribe
-                    </button>
+                        ...getButtonClassNames(
+                            'secondary',
+                            'center',
+                            'icon-left'
+                        ),
+                        'identity-upsell-follow-button-wrap__button',
+                    ].join(' ')}>
+                    <span
+                        className="manage-account__button-react-icon"
+                        dangerouslySetInnerHTML={{ __html: tick.markup }}
+                    />
+                    Signed up
                 </div>
-            ) : (
+                <button
+                    data-link-name={
+                        trackingName
+                            ? `upsell-consent : ${trackingName} : untick`
+                            : false
+                    }
+                    type="button"
+                    className={[
+                        ...getButtonClassNames('danger', 'center', 'icon-left'),
+                        'identity-upsell-follow-button-wrap__button',
+                        'identity-upsell-follow-button-wrap__button--longer',
+                        'identity-upsell-follow-button-wrap__button--hoverable',
+                    ].join(' ')}
+                    onClick={() => {
+                        this.updateFollowing(false);
+                    }}>
+                    <span
+                        className="manage-account__button-react-icon"
+                        dangerouslySetInnerHTML={{
+                            __html: envelopeRemove.markup,
+                        }}
+                    />
+                    Unsubscribe
+                </button>
+            </div>
+        ) : (
             <button
                 data-link-name={
                     trackingName
@@ -111,7 +115,7 @@ class FollowButtonWrap extends Component<
                         : false
                 }
                 type="button"
-                className={['manage-account__button','manage-account__button--green','manage-account__button--icon-left'].join(' ')}
+                className={getButtonClassNames('green', 'icon-left').join(' ')}
                 onClick={() => {
                     this.updateFollowing(true);
                 }}>
