@@ -1,6 +1,7 @@
 package controllers.admin
 
 import java.io.File
+import java.net.URL
 
 import common.{AkkaAsync, ImplicitControllerExecutionContext, Logging}
 import model.{ApplicationContext, R2PressMessage}
@@ -69,18 +70,22 @@ class R2PressController(
     // NOTE: This code is copied from ArchiveController in the interest of not endlessly expanding the common
     // library. Changes made here should be reflected there - function is currently called 'normalise'
     // Our redirects are 'normalised' Vignette URLs, Ie. path/to/0,<n>,123,<n>.html -> path/to/0,,123,.html
-    def normalise(path: String): String = {
+    def getVariations(url: String): List[String] = {
+      val urlParsed = new URL(url)
+      val host = urlParsed.getHost
+      val path = new URL(url).getPath
       val R1ArtifactUrl = """^/(.*)/[0|1]?,[\d]*,(-?\d+),[\d]*(.*)""".r
       val ShortUrl = """^(/p/[\w\d]+).*$""".r
-      path match {
+      val normalisedPath = path match {
         case R1ArtifactUrl(p, artifactOrContextId, _) =>
           s"/$p/0,,$artifactOrContextId,.html"
         case ShortUrl(p) => p
         case _ => path
       }
+      List(s"https://$host$path", s"http://$host$path", s"https://$host$normalisedPath", s"http://$host$normalisedPath")
     }
-    R2PressedPageTakedownNotifier.enqueue(akkaAsync)(url)
-    R2PressedPageTakedownNotifier.enqueue(akkaAsync)(normalise(url))
+
+    getVariations(url).map(u => R2PressedPageTakedownNotifier.enqueue(akkaAsync)(u)).mkString("\n")
   }
 
   def press(): Action[AnyContent] = Action { implicit request =>
