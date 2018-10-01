@@ -87,14 +87,13 @@
             transform: scale(.5);
         }
         &.inline-arrow-down {
-            transform: translateY(10%) scale(.9);
+            transform: scale(.9);
         }
         &.inline-arrow-up {
-            transform: translateY(10%) scale(.9);
+            transform: translateY(-10%) scale(.9);
         }
         &.inline-tick svg {
-            width: 22px
-            transform: translateY(-10%);
+            width: 22px;
         }
         &.inline-envelope-add,
         &.inline-envelope-remove {
