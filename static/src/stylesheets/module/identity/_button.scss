@@ -88,6 +88,16 @@
         &.inline-cross {
             transform: scale(.5);
         }
+        &.inline-arrow-down {
+            transform: scale(.9);
+        }
+        &.inline-arrow-up {
+            transform: translateY(-10%) scale(.9);
+        }
+    }
+
+    &.manage-account__button--icon-left .inline-icon {
+        margin: 0 ($gs-gutter / 2) 0 ($gs-gutter/2  * -1);
     }
 
     &.manage-account__button--center {
@@ -140,7 +150,8 @@
     }
 }
 
-.manage-account__button--icon {
+.manage-account__button--icon,
+.manage-account__button--icon-left {
     padding-top: 0;
     padding-bottom: 0;
 }
