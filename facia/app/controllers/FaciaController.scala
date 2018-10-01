@@ -231,6 +231,13 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
     }
   }
 
+  def checkIfPaid(faciaCard: FaciaCard): Boolean = {
+    faciaCard match {
+      case c: ContentCard => c.properties.exists(_.isPaidFor)
+      case _ => false
+    }
+  }
+
   def renderShowMore(path: String, collectionId: String): Action[AnyContent] = Action.async { implicit request =>
     frontJsonFapi.get(path, fullRequestType).flatMap {
       case Some(pressedPage) =>
@@ -240,14 +247,21 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
             (container, index) <- containers.zipWithIndex.find(_._1.dataId == collectionId)
             containerLayout <- container.containerLayout
           } yield {
-            val withFrom = containerLayout.remainingCards.map(_.withFromShowMore)
+            val remainingCards: Seq[FaciaCardAndIndex] = containerLayout.remainingCards.map(_.withFromShowMore)
+            val adFreeFilteredCards : Seq[FaciaCardAndIndex] = if (request.isAdFree) {
+              remainingCards.filter( c => !checkIfPaid(c.item) )
+            } else {
+              remainingCards
+            }
             successful(Cached(CacheTime.Facia) {
-              JsonComponent(views.html.fragments.containers.facia_cards.showMore(withFrom, index))
+              JsonComponent(views.html.fragments.containers.facia_cards.showMore(adFreeFilteredCards, index))
             })
           }
 
         maybeResponse getOrElse successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))
-      case None => successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))}}
+      case None => successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))
+    }
+  }
 
 
   private object JsonCollection{
