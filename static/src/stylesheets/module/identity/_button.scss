@@ -70,11 +70,9 @@
 
     .inline-icon {
         transition: .125s;
-        display: inline-block;
-        height: 28px;
-        width: 28px;
         vertical-align: middle;
-        margin: 0 ($gs-gutter / 2 * -1) 0 ($gs-gutter/2);
+        margin: 0 0 0 ($gs-gutter / 2);
+        display: inline-flex;
         &, & * {
             fill: currentColor;
         }
@@ -82,21 +80,25 @@
             width: 100%;
             height: 100%;
         }
+        &.inline-arrow-right {
+            margin-right: $gs-gutter / 2 * -1;
+        }
         &.inline-cross {
             transform: scale(.5);
         }
         &.inline-arrow-down {
-            transform: scale(.9);
+            transform: translateY(10%) scale(.9);
         }
         &.inline-arrow-up {
-            transform: translateY(-10%) scale(.9);
+            transform: translateY(10%) scale(.9);
         }
-        &.inline-tick {
-            transform: scale(.8);
+        &.inline-tick svg {
+            width: 22px
+            transform: translateY(-10%);
         }
         &.inline-envelope-add,
         &.inline-envelope-remove {
-            transform: translateY(-5%) scale(.9);
+            transform: translateY(-10%);
         }
     }
 
