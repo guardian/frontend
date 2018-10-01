@@ -233,7 +233,6 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
 
   def checkIfPaid(faciaCard: FaciaCard): Option[Boolean] = {
     faciaCard match {
-      // case c: ContentCard => c.properties.map( p => p.maybeContent.map( c => c.metadata.isPaid ) )
       case c: ContentCard => c.properties.map( pp => pp.isPaidFor )
       case _ => None
     }
