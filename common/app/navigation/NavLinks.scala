@@ -192,7 +192,7 @@ object NavLinks {
       NavLink("Business", "/guardian-masterclasses/business"),
       NavLink("Creative writing", "/guardian-masterclasses/writing-and-publishing"),
       NavLink("Wellbeing & Culture", "/guardian-masterclasses/culture"),
-      NavLink("Corporate training", "/guardian-masterclasses/corporate-training"),
+      NavLink("Bespoke training", "/guardian-masterclasses/corporate-training"),
       NavLink("Calendar", "/guardian-masterclasses/calendar")
     )
   )
