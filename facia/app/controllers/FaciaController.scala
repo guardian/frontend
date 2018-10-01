@@ -231,10 +231,10 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
     }
   }
 
-  def checkIfPaid(faciaCard: FaciaCard): Option[Boolean] = {
+  def checkIfPaid(faciaCard: FaciaCard): Boolean = {
     faciaCard match {
-      case c: ContentCard => c.properties.map( pp => pp.isPaidFor )
-      case _ => None
+      case c: ContentCard => c.properties.exists(_.isPaidFor)
+      case _ => false
     }
   }
 
@@ -247,14 +247,14 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
             (container, index) <- containers.zipWithIndex.find(_._1.dataId == collectionId)
             containerLayout <- container.containerLayout
           } yield {
-            val withFrom: Seq[FaciaCardAndIndex] = containerLayout.remainingCards.map(_.withFromShowMore)
-            val withFromAdapted : Seq[FaciaCardAndIndex] = if (request.isAdFree) {
-              withFrom.filter( c => !checkIfPaid(c.item).getOrElse(false) )
+            val remainingCards: Seq[FaciaCardAndIndex] = containerLayout.remainingCards.map(_.withFromShowMore)
+            val adFreeFilteredCards : Seq[FaciaCardAndIndex] = if (request.isAdFree) {
+              remainingCards.filter( c => !checkIfPaid(c.item) )
             } else {
-              withFrom
+              remainingCards
             }
             successful(Cached(CacheTime.Facia) {
-              JsonComponent(views.html.fragments.containers.facia_cards.showMore(withFromAdapted, index))
+              JsonComponent(views.html.fragments.containers.facia_cards.showMore(adFreeFilteredCards, index))
             })
           }
 
