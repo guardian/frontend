@@ -8,12 +8,9 @@ import implicits.Requests._
 
 object RenderingTierPicker {
 
-  type Results = List[(String, Boolean)]
-
   val picker: RenderTierPickerStrategy = new SimplePagePicker()
 
-  // use this logger so we get all the log fields populated for free
-  def logRequest(msg:String, results:Results)(implicit request: RequestHeader): Unit =
+  def logRequest(msg:String, results:List[(String, Boolean)])(implicit request: RequestHeader): Unit =
     DotcomponentsLogger().withRequestHeaders(request).results(msg, results)
 
   def getRenderTierFor(page: PageWithStoryPackage)(implicit request: RequestHeader): RenderType = {
