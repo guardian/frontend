@@ -51,63 +51,52 @@ class FollowButtonWrap extends Component<
     render() {
         const { following, trackingName } = this.props;
         const { mousedOutOnce } = this.state;
-        return following ? (
+
+        const followingFeedbackButton = (...classNames: string[]) => (
             <div
-                aria-live="polite"
+                role="alert"
                 className={[
-                    'identity-upsell-follow-button-wrap',
-                    mousedOutOnce
-                        ? ''
-                        : 'identity-upsell-follow-button-wrap--blocked',
-                ].join(' ')}
-                onMouseOut={() => {
-                    this.onMouseOut();
-                }}
-                onBlur={() => {
-                    this.onMouseOut();
-                }}>
-                <div
-                    role="alert"
-                    className={[
-                        ...getButtonClassNames(
-                            'green-secondary',
-                            'center',
-                            'icon-left'
-                        ),
-                        'identity-upsell-follow-button-wrap__button',
-                    ].join(' ')}>
-                    <span
-                        className="manage-account__button-react-icon"
-                        dangerouslySetInnerHTML={{ __html: tick.markup }}
-                    />
-                    Signed up
-                </div>
-                <button
-                    data-link-name={
-                        trackingName
-                            ? `upsell-consent : ${trackingName} : untick`
-                            : false
-                    }
-                    type="button"
-                    className={[
-                        ...getButtonClassNames('danger', 'center', 'icon-left'),
-                        'identity-upsell-follow-button-wrap__button',
-                        'identity-upsell-follow-button-wrap__button--longer',
-                        'identity-upsell-follow-button-wrap__button--hoverable',
-                    ].join(' ')}
-                    onClick={() => {
-                        this.updateFollowing(false);
-                    }}>
-                    <span
-                        className="manage-account__button-react-icon"
-                        dangerouslySetInnerHTML={{
-                            __html: envelopeRemove.markup,
-                        }}
-                    />
-                    Unsubscribe
-                </button>
+                    ...getButtonClassNames(
+                        'green-secondary',
+                        'center',
+                        'icon-left'
+                    ),
+                    ...classNames,
+                ].join(' ')}>
+                <span
+                    className="manage-account__button-react-icon"
+                    dangerouslySetInnerHTML={{ __html: tick.markup }}
+                />
+                Signed up
             </div>
-        ) : (
+        );
+
+        const unfollowButton = (...classNames: string[]) => (
+            <button
+                data-link-name={
+                    trackingName
+                        ? `upsell-consent : ${trackingName} : untick`
+                        : false
+                }
+                type="button"
+                className={[
+                    ...getButtonClassNames('danger', 'center', 'icon-left'),
+                    ...classNames,
+                ].join(' ')}
+                onClick={() => {
+                    this.updateFollowing(false);
+                }}>
+                <span
+                    className="manage-account__button-react-icon"
+                    dangerouslySetInnerHTML={{
+                        __html: envelopeRemove.markup,
+                    }}
+                />
+                Unsubscribe
+            </button>
+        );
+
+        const followButton = () => (
             <button
                 data-link-name={
                     trackingName
@@ -125,6 +114,34 @@ class FollowButtonWrap extends Component<
                 />
                 Sign me up
             </button>
+        );
+
+        return following ? (
+            <div
+                aria-live="polite"
+                className={[
+                    'identity-upsell-follow-button-wrap',
+                    mousedOutOnce
+                        ? ''
+                        : 'identity-upsell-follow-button-wrap--blocked',
+                ].join(' ')}
+                onMouseOut={() => {
+                    this.onMouseOut();
+                }}
+                onBlur={() => {
+                    this.onMouseOut();
+                }}>
+                {followingFeedbackButton(
+                    'identity-upsell-follow-button-wrap__button'
+                )}
+                {unfollowButton(
+                    'identity-upsell-follow-button-wrap__button',
+                    'identity-upsell-follow-button-wrap__button--longer',
+                    'identity-upsell-follow-button-wrap__button--hoverable'
+                )}
+            </div>
+        ) : (
+            followButton()
         );
     }
 }
