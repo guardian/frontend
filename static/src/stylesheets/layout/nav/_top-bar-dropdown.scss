@@ -1,15 +1,33 @@
-.dropdown-menu-fallback:checked {
+/* When the Account dropdown is open this class is added to the html to prevent users
+from scrolling */
+.dropdown--open {
+    @include mq($until: tablet) {
+        overflow: hidden;
+        width: 100%;
+    }
+}
 
+.dropdown-menu-fallback {
+    display: none;
+}
+
+.dropdown-menu-fallback:checked {
     & ~ .dropdown-menu {
         display: block;
     }
+}
 
-    & ~ .popup__toggle {
-        color: $brightness-7;
-
-        &:hover {
-            color: $brightness-20;
-        }
+.dropdown-menu-fallback[aria-expanded=true] {
+    @include mq($until: tablet) {
+        background: linear-gradient(to bottom, rgba(0, 0, 0, .1) 0%, rgba(0, 0, 0, .2) 30%);
+        border: 0;
+        position: fixed;
+        display: block;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        width: 100%;
     }
 }
 
@@ -18,7 +36,7 @@
     position: absolute;
     top: $gs-baseline * 2 + $gs-baseline / 2;
     right: 0;
-    width: $gs-column-width * 3 + $gs-gutter;
+    width: $gs-column-width * 3 + $gs-gutter * 2;
     background-color: $brightness-100;
     border-radius: $gs-baseline / 4;
     padding: $gs-baseline / 2 0;
@@ -32,7 +50,32 @@
         border-top: 1px solid $brightness-93;
         display: block;
         top: 0;
-        margin: -1px 0 0 $gs-gutter * 1.5;
+        margin: -1px 0 0 $gs-gutter;
+    }
+
+    @include mq($until: tablet) {
+        position: fixed;
+        border-radius: 0;
+        top: 36px;
+        left: 0;
+        right: 0;
+        width: auto;
+        max-height: calc(100% - 50px);
+        overflow: auto;
+
+        > hr {
+            margin-left: $gs-gutter / 2;
+        }
+
+        @include mq(mobileMedium) {
+            top: 43px;
+        }
+
+        @include mq(mobileLandscape) {
+            > hr {
+                margin-left: $gs-gutter;
+            }
+        }
     }
 }
 
@@ -41,17 +84,21 @@
 }
 
 .dropdown-menu__title {
-    @include fs-textSans(4);
+    @include fs-textSans(5);
     color: $brightness-7;
     cursor: pointer;
     display: block;
     letter-spacing: .01rem;
     outline: none;
-    padding: ($gs-baseline / 2 + 1) $gs-gutter ($gs-baseline + $gs-baseline / 4) ($gs-baseline * 2 + $gs-baseline / 2);
+    padding: ($gs-baseline / 2 + 1) $gs-gutter ($gs-baseline + $gs-baseline / 4) ($gs-gutter / 2);
     position: relative;
     box-sizing: border-box;
     // Hides border on hover
     margin-top: -1px;
+
+    @include mq(mobileLandscape) {
+        padding-left: $gs-gutter;
+    }
 
     &:hover,
     &:focus {
@@ -66,7 +113,7 @@
         display: block;
         position: absolute;
         top: 0;
-        left: $gs-gutter * 1.5;
+        left: $gs-gutter;
         right: 0;
         .dropdown-menu.dropdown-menu--light & {
             display: none;
@@ -97,10 +144,6 @@
         }
         /*prevent svgs from making the row higher*/
     }
-
-    @include mq(desktop) {
-        font-size: 15px;
-    }
 }
 
 .dropdown-menu__title--active {
@@ -113,8 +156,8 @@
         border-top: 0;
         border-right: 0;
         position: absolute;
-        top: 10px;
-        left: 10px;
+        top: 13px;
+        right: $gs-gutter;
         width: 10px;
         height: 4px;
         transform: rotate(-45deg);

@@ -5,12 +5,8 @@
     line-height: 1.2;
     position: relative;
     transition: color 80ms ease-out;
-    padding: ($gs-baseline / 2) ($gs-gutter / 2);
-    margin: 1px 0 0;
-
-    &:nth-child(2) {
-        padding-left: $gs-gutter / 2 + $gs-gutter / 4;
-    }
+    padding: 10px ($gs-gutter / 2);
+    margin-left: -8px;
 
     .is-paying-member &:nth-child(2),
     .is-recent-contributor &:nth-child(2) {
@@ -23,8 +19,20 @@
         color: $brightness-20;
     }
 
+    @include mq($until: tablet) {
+        &.popup__toggle:after {
+            content: none;
+        }
+    }
+
+    @include mq(mobileMedium) {
+        padding-top: $gs-baseline;
+    }
+
     @include mq(tablet) {
         font-size: 14px;
+        margin: 0;
+        padding: ($gs-baseline / 2) ($gs-gutter / 2);
     }
 }
 
