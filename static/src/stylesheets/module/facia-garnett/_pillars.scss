@@ -228,7 +228,7 @@ $pillars: (
         .inline-volume-high,
         .inline-camera {
             svg {
-                fill: map-get($palette, invertedKicker);
+                fill: $brightness-7;
             }
 
             &::after {
@@ -251,8 +251,11 @@ $pillars: (
             width: 24px;
             height: 23px;
             display: inline-block;
-            border: 1px solid map-get($palette, invertedKicker);
+            background-color: map-get($palette, invertedKicker);
             border-radius: 50%;
+            &.inline-video-icon svg {
+                transform: translateY(1px);
+            }
         }
     }
 
