@@ -8,7 +8,7 @@ import model.{ApplicationContext, R2PressMessage}
 import play.api.mvc._
 import services.{R2PagePressNotifier, R2PressedPageTakedownNotifier}
 
-import scala.util.{Failure, Success, Try}
+import scala.util.Try
 
 class R2PressController(
   akkaAsync: AkkaAsync,
@@ -83,35 +83,37 @@ class R2PressController(
     case _ => path
   }
 
-  def normaliseURL(url: String):String = {
-    val urlParsed = new URL(url)
-    val host = urlParsed.getHost
-    val path = new URL(url).getPath
-    val normalisedPath = normalisePath(path)
-    s"https://$host$path"
+  def normaliseURL(url: String):Option[String] = {
+    Try(new URL(url)).toOption.map{url=>
+      val host = url.getHost
+      val path = url.getPath
+      val normalisedPath = normalisePath(path)
+      s"https://$host$normalisedPath"
+    }
   }
 
-  def getVariations(url: String): List[String] = {
-    val urlParsed = new URL(url)
-    val host = urlParsed.getHost
-    val path = new URL(url).getPath
-    val normalisedPath = normalisePath(path)
-    List(s"https://$host$path", s"http://$host$path", s"https://$host$normalisedPath", s"http://$host$normalisedPath")
-    //An http version of the redirect may exist so preemptively delete it.
+  def getVariations(url: String): Option[List[String]] = {
+    Try(new URL(url)).toOption.map{url=>
+      val host = url.getHost
+      val path = url.getPath
+      val normalisedPath = normalisePath(path)
+      List(s"https://$host$path", s"http://$host$path", s"https://$host$normalisedPath", s"http://$host$normalisedPath")
+      //An http version of the redirect may exist so preemptively delete it.
+    }
   }
 
   private def normaliseAndEnqueueTakedown(url: String): String = {
-    Try(getVariations(url)) match {
-      case Success(urls) => urls.map(u => R2PressedPageTakedownNotifier.enqueue(akkaAsync)(u)).mkString("\n")
-      case Failure(_) => s"$url not recognised as a valid url."
+    getVariations(url) match {
+      case Some(urls) => urls.map(u => R2PressedPageTakedownNotifier.enqueue(akkaAsync)(u)).mkString("\n")
+      case None => s"$url not recognised as a valid url."
     }
   }
 
   def normaliseAndEnqueuePress(message: R2PressMessage): String = {
-    val tryUrl = Try(normaliseURL(message.url))
+    val tryUrl = normaliseURL(message.url)
     tryUrl match {
-      case Success(url) => R2PagePressNotifier.enqueue(akkaAsync)(message.copy(url = url))
-      case Failure(_) => s"${message.url} not recognised as a valid url."
+      case Some(url) => R2PagePressNotifier.enqueue(akkaAsync)(message.copy(url = url))
+      case None => s"${message.url} not recognised as a valid url."
     }
   }
 
