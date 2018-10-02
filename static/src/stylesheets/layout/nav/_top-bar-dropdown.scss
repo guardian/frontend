@@ -60,12 +60,8 @@ from scrolling */
         left: 0;
         right: 0;
         width: auto;
-
-        // Allows expanded dropdown to be scrolled when it's partially clipped e.g. mobile landscape
-        @media (max-height: 370px) {
-            overflow: auto;
-            bottom: 0;
-        }
+        max-height: calc(100% - 50px);
+        overflow: auto;
 
         > hr {
             margin-left: $gs-gutter / 2;
