@@ -21,7 +21,7 @@ trait PageskinAdAgent {
   ): Seq[PageSkinSponsorship] = {
 
     val candidates = pageSkinSponsorships filter { sponsorship =>
-      sponsorship.editions.contains(edition) && !sponsorship.isR2Only
+      sponsorship.editions.contains(edition)
     }
 
     if (PageSkin.isValidAdUnit(adUnitPath)) {

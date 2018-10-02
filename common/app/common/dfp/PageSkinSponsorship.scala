@@ -13,7 +13,6 @@ case class PageSkinSponsorship(lineItemName: String,
                               // Targeting properties
                                editions: Seq[Edition],
                                countries: Seq[String],
-                               isR2Only: Boolean, // Legacy platform.
                                targetsAdTest: Boolean,
                                adTestValue: Option[String],
                                keywords: Seq[String],
