@@ -152,7 +152,6 @@ type PageTargeting = {
     co: string,
     tn: string,
     slot: string,
-    invCode: ?string,
 };
 
 const buildAppNexusTargetingObject = once(
