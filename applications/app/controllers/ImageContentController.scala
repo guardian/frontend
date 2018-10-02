@@ -58,7 +58,7 @@ class ImageContentController(
           case content: ImageContent => Some(content.lightBox.javascriptConfig)
           case _ => None
         })
-        Cached(1)(JsonComponent(JsArray(lightboxJson)))
+        Cached(CacheTime.Default)(JsonComponent(JsArray(lightboxJson)))
     }
   }
 }
