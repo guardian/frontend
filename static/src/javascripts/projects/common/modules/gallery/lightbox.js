@@ -354,6 +354,14 @@ class GalleryLightbox {
                         .reverse()
                         .concat(galleryJson.images, nextPrevJson.next);
 
+                    if (allImages.length < 2) {
+                        bonzo([this.nextBtn, this.prevBtn]).hide();
+                        $(
+                            '.gallery-lightbox__progress',
+                            this.lightboxEl
+                        ).hide();
+                    }
+
                     galleryJson.images = allImages;
                     // start index is in the middle of the two lists we just concatenated
                     this.startIndex = nextPrevJson.previous.length + 1;
@@ -520,14 +528,6 @@ class GalleryLightbox {
 
                     if (this.useSwipe) {
                         this.initSwipe();
-                    }
-
-                    if (this.galleryJson.images.length < 2) {
-                        // bonzo([this.nextBtn, this.prevBtn]).hide();
-                        $(
-                            '.gallery-lightbox__progress',
-                            this.lightboxEl
-                        ).hide();
                     }
 
                     this.state = 'image';
