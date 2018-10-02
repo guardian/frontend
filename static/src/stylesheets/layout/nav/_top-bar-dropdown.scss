@@ -17,7 +17,7 @@ from scrolling */
     }
 }
 
-.dropdown-menu-fallback[aria-expanded=true] {
+.dropdown-menu-fallback[aria-expanded=true] ~ .my-account__overlay {
     @include mq($until: tablet) {
         background: linear-gradient(to bottom, rgba(0, 0, 0, .1) 0%, rgba(0, 0, 0, .2) 30%);
         border: 0;
