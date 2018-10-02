@@ -1,6 +1,7 @@
 package services
 
 import java.awt.JobAttributes.DestinationType
+import java.net.URL
 
 import com.gu.scanamo.error.MissingProperty
 import com.gu.scanamo.syntax._
@@ -9,6 +10,7 @@ import common.Logging
 import conf.Configuration
 
 import scala.concurrent.{ExecutionContext, Future}
+import scala.util.Try
 
 
 object RedirectService {
@@ -16,6 +18,32 @@ object RedirectService {
     def source: String
     def location: String
   }
+
+
+  // NOTE: This code is copied from ArchiveController in the interest of not endlessly expanding the common
+  // library. Changes made here should be reflected there - function is currently called 'normalise'
+  // Our redirects are 'normalised' Vignette URLs, Ie. path/to/0,<n>,123,<n>.html -> path/to/0,,123,.html
+
+  val R1ArtifactUrl = """^/(.*)/[0|1]?,[\d]*,(-?\d+),[\d]*(.*)""".r
+  val ShortUrl = """^(/p/[\w\d]+).*$""".r
+
+
+  def normalisePath(path: String): String = path match {
+    case R1ArtifactUrl(p, artifactOrContextId, _) =>
+      s"/$p/0,,$artifactOrContextId,.html"
+    case ShortUrl(p) => p
+    case _ => path
+  }
+
+  def normaliseURL(url: String):Option[String] = {
+    Try(new URL(url)).toOption.map{url=>
+      val host = url.getHost
+      val path = url.getPath
+      val normalisedPath = normalisePath(path)
+      s"https://$host$normalisedPath"
+    }
+  }
+
 
   implicit val destinationFormat = DynamoFormat.xmap[Destination, Map[String, String]] {
     // map -> destination (i.e. reads)
@@ -45,6 +73,7 @@ class RedirectService(implicit executionContext: ExecutionContext) extends Loggi
   private val expectedSourceHost = "http://www.theguardian.com"
   private val CombinerTags = """^(/[\w\d-/]+)\+([\w\d-/]+)$""".r
   private lazy val tableName = if (Configuration.environment.isProd) "redirects" else "redirects-CODE"
+
 
 
   def destinationForCombiner(source: String, tag1: String, tag2: String) : Future[Option[Destination]] = {
@@ -106,7 +135,7 @@ class RedirectService(implicit executionContext: ExecutionContext) extends Loggi
     val FullURL = """(https?://)?www\.theguardian\.com(.*)""".r
 
     source match {
-      case FullURL(_, path) => Some(expectedSourceHost + path)
+      case FullURL(_, path) => Some(expectedSourceHost + normalisePath(path))
       case _ => None
     }
   }
