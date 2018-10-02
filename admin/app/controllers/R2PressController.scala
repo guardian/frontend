@@ -8,6 +8,8 @@ import model.{ApplicationContext, R2PressMessage}
 import play.api.mvc._
 import services.{R2PagePressNotifier, R2PressedPageTakedownNotifier}
 
+import scala.util.{Failure, Success, Try}
+
 class R2PressController(
   akkaAsync: AkkaAsync,
   val controllerComponents: ControllerComponents
@@ -54,7 +56,7 @@ class R2PressController(
           if (isTakedown) {
             normaliseAndEnqueueTakedown(line)
           } else {
-            R2PagePressNotifier.enqueue(akkaAsync)(R2PressMessage(line, isFromPreservedSource, isConvertToHttps))
+            normaliseAndEnqueuePress(R2PressMessage(line, isFromPreservedSource, isConvertToHttps))
           }
         } else {
           "* empty line *"
@@ -66,39 +68,64 @@ class R2PressController(
     }
   }
 
-  private def normaliseAndEnqueueTakedown(url: String): String = {
-    // NOTE: This code is copied from ArchiveController in the interest of not endlessly expanding the common
-    // library. Changes made here should be reflected there - function is currently called 'normalise'
-    // Our redirects are 'normalised' Vignette URLs, Ie. path/to/0,<n>,123,<n>.html -> path/to/0,,123,.html
-    def getVariations(url: String): List[String] = {
-      val urlParsed = new URL(url)
-      val host = urlParsed.getHost
-      val path = new URL(url).getPath
-      val R1ArtifactUrl = """^/(.*)/[0|1]?,[\d]*,(-?\d+),[\d]*(.*)""".r
-      val ShortUrl = """^(/p/[\w\d]+).*$""".r
-      val normalisedPath = path match {
-        case R1ArtifactUrl(p, artifactOrContextId, _) =>
-          s"/$p/0,,$artifactOrContextId,.html"
-        case ShortUrl(p) => p
-        case _ => path
-      }
-      List(s"https://$host$path", s"http://$host$path", s"https://$host$normalisedPath", s"http://$host$normalisedPath")
-    }
+  // NOTE: This code is copied from ArchiveController in the interest of not endlessly expanding the common
+  // library. Changes made here should be reflected there - function is currently called 'normalise'
+  // Our redirects are 'normalised' Vignette URLs, Ie. path/to/0,<n>,123,<n>.html -> path/to/0,,123,.html
 
-    getVariations(url).map(u => R2PressedPageTakedownNotifier.enqueue(akkaAsync)(u)).mkString("\n")
+  val R1ArtifactUrl = """^/(.*)/[0|1]?,[\d]*,(-?\d+),[\d]*(.*)""".r
+  val ShortUrl = """^(/p/[\w\d]+).*$""".r
+
+
+  def normalisePath(path: String): String = path match {
+    case R1ArtifactUrl(p, artifactOrContextId, _) =>
+      s"/$p/0,,$artifactOrContextId,.html"
+    case ShortUrl(p) => p
+    case _ => path
+  }
+
+  def normaliseURL(url: String):String = {
+    val urlParsed = new URL(url)
+    val host = urlParsed.getHost
+    val path = new URL(url).getPath
+    val normalisedPath = normalisePath(path)
+    s"https://$host$path"
+  }
+
+  def getVariations(url: String): List[String] = {
+    val urlParsed = new URL(url)
+    val host = urlParsed.getHost
+    val path = new URL(url).getPath
+    val normalisedPath = normalisePath(path)
+    List(s"https://$host$path", s"http://$host$path", s"https://$host$normalisedPath", s"http://$host$normalisedPath")
+    //An http version of the redirect may exist so preemptively delete it.
+  }
+
+  private def normaliseAndEnqueueTakedown(url: String): String = {
+    Try(getVariations(url)) match {
+      case Success(urls) => urls.map(u => R2PressedPageTakedownNotifier.enqueue(akkaAsync)(u)).mkString("\n")
+      case Failure(_) => s"$url not recognised as a valid url."
+    }
+  }
+
+  def normaliseAndEnqueuePress(message: R2PressMessage): String = {
+    val tryUrl = Try(normaliseURL(message.url))
+    tryUrl match {
+      case Success(url) => R2PagePressNotifier.enqueue(akkaAsync)(message.copy(url = url))
+      case Failure(_) => s"${message.url} not recognised as a valid url."
+    }
   }
 
   def press(): Action[AnyContent] = Action { implicit request =>
     val body = request.body
     val result = body.asFormUrlEncoded.map { form =>
-      form("r2url").map { r2Url =>
+      form("r2url").map{ r2Url =>
         r2Url.trim match {
           // TODO: other validation?
           case url if url.nonEmpty =>
             if (isTakedown(body)) {
               normaliseAndEnqueueTakedown(url)
             } else {
-              R2PagePressNotifier.enqueue(akkaAsync)(R2PressMessage(url, isFromPreservedSource(body), isConvertToHttps(body)))
+              normaliseAndEnqueuePress(R2PressMessage(url, isFromPreservedSource(body), isConvertToHttps(body)))
             }
           case _ => "URL was not specified"
         }
