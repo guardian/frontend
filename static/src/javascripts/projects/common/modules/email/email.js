@@ -15,6 +15,7 @@ import userPrefs from 'common/modules/user-prefs';
 import uniq from 'lodash/arrays/uniq';
 import envelope from 'svgs/icon/envelope.svg';
 import crossIcon from 'svgs/icon/cross.svg';
+import { loadScript } from 'lib/load-script';
 
 import type { IdentityUser } from 'common/modules/identity/api';
 import type { bonzo } from 'bonzo';
@@ -27,6 +28,7 @@ type Analytics = {
 
 const state = {
     submitting: false,
+    captchaRendered: false,
 };
 
 const messages = {
@@ -241,7 +243,9 @@ const handleSubmit = (isSuccess: boolean, $form: bonzo): (() => void) => () => {
 };
 
 const submitForm = (
+    event: Event,
     $form: bonzo,
+    iFrameEl?: HTMLIFrameElement,
     url: string,
     analytics: Analytics
 ): (Event => ?Promise<any>) => {
@@ -249,28 +253,55 @@ const submitForm = (
     const validate = (emailAddress: string): boolean =>
         emailAddress.includes('@');
 
-    return event => {
-        const emailAddress = $(`.${classes.textInput}`, $form).val();
-        const csrfToken = $(`input[name=csrfToken]`, $form).val();
-        const dummy = $(`.${classes.dummyInput}`, $form).val();
-        const listName = $(`.${classes.listNameHiddenInput}`, $form);
+    const emailAddress = $(`.${classes.textInput}`, $form).val();
+    const csrfToken = $(`input[name=csrfToken]`, $form).val();
+    const dummy = $(`.${classes.dummyInput}`, $form).val();
+    const listName = $(`.${classes.listNameHiddenInput}`, $form);
 
-        let analyticsInfo;
+    const recaptchaHolder = document.createElement('div');
+    iFrameEl.insertAdjacentElement('beforebegin',recaptchaHolder);
 
-        event.preventDefault();
-        if (!state.submitting && validate(emailAddress)) {
+    let analyticsInfo;
+
+    event.preventDefault();
+
+    let captchaRendere
+
+    const onCaptchaSolved = () => new Promise((accept, reject)=>{
+        loadScript('https://www.google.com/recaptcha/api.js', { async: true }).then(
+            () => {
+                grecaptcha.ready(()=>{
+                    if(!state.captchaRendered) {
+                        grecaptcha.render(recaptchaHolder, {
+                            'sitekey': '6LfvU3MUAAAAAFMDYT2sgAUSYn8dDnjB65w8jAmn',
+                            'size': 'invisible',
+                            'errorCallback': reject,
+                            'callback': accept,
+                        });
+                        state.captchaRendered = true;
+                    }
+                    grecaptcha.execute();
+                })
+            }
+        ).catch(reject);
+    })
+
+    if (!state.submitting && validate(emailAddress)) {
+        onCaptchaSolved().catch(e=>{
+            debugger;
+        }).then(()=> {
             const formData = $form.data('formData');
             const data = `email=${encodeURIComponent(
                 emailAddress
             )}&name=${encodeURIComponent(dummy)}&campaignCode=${
                 formData.campaignCode
-            }&referrer=${formData.referrer}&csrfToken=${encodeURIComponent(
+                }&referrer=${formData.referrer}&csrfToken=${encodeURIComponent(
                 csrfToken
             )}&listName=${listName.val()}`;
 
             analyticsInfo = `rtrt | email form inline | ${
                 analytics.formType
-            } | ${analytics.signedIn} | %action%`;
+                } | ${analytics.signedIn} | %action%`;
 
             state.submitting = true;
 
@@ -293,7 +324,7 @@ const submitForm = (
                             throw new Error(
                                 `Fetch error: ${response.status} ${
                                     response.statusText
-                                }`
+                                    }`
                             );
                         }
                     })
@@ -314,14 +345,14 @@ const submitForm = (
                         handleSubmit(false, $form)();
                     });
             });
-        }
-    };
+        });
+    }
 };
 
-const bindSubmit = ($form: bonzo, analytics: Analytics): void => {
+const bindSubmit = ($form: bonzo, iframeEl?: HTMLIFrameElement, analytics: Analytics): void => {
     const url = '/email';
 
-    bean.on($form[0], 'submit', submitForm($form, url, analytics));
+    bean.on($form[0], 'submit', (ev) => {submitForm(ev, $form, iframeEl, url, analytics)});
 };
 
 const setup = (
@@ -351,7 +382,7 @@ const setup = (
         };
         let onResize;
 
-        bindSubmit($formEl, analytics);
+        bindSubmit($formEl, iframeEl, analytics);
 
         // If we're in an iframe, we should check whether we need to add a title and description
         // from the data attributes on the iframe (eg: allowing us to set them from composer).
