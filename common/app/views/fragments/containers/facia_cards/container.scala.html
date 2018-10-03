@@ -6,6 +6,8 @@
 @import views.support.Commercial.container.shouldRenderAsPaidContainer
 @import views.support.GetClasses
 @import conf.switches.Switches.MostViewedFronts
+@import org.joda.time.DateTime
+@import org.joda.time.DateTimeConstants.{SATURDAY, SUNDAY}
 
 @(containerDefinition: layout.FaciaContainer,
   frontProperties: model.FrontProperties = model.FrontProperties.empty,
@@ -54,7 +56,15 @@
 
                     case _: Dynamic | _: Fixed => {
                         <div class="fc-container__inner">
-                            @standardContainer(containerDefinition, frontProperties, maybeContainerModel, showFrontBranding, frontId)
+                            @if(containerDefinition.displayName.contains("Flagship") && frontId.contains("uk")) {
+                                @defining(DateTime.now.getDayOfWeek) { now =>
+                                    @if(now != SATURDAY && now != SUNDAY) {
+                                        @podcastContainer(containerDefinition, frontProperties)
+                                    }
+                                }
+                            } else {
+                                @standardContainer(containerDefinition, frontProperties, maybeContainerModel, showFrontBranding, frontId)
+                            }
                         </div>
                     }
 

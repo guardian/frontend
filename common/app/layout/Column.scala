@@ -137,7 +137,6 @@ object SliceWithCards {
 }
 
 case class SliceWithCards(cssClassName: String, columns: Seq[ColumnAndCards]) {
-
   def numberOfItems: Int = (columns map { columnAndCards: ColumnAndCards =>
     columnAndCards.column match {
       case Rows(_, cols, _, _) => cols
