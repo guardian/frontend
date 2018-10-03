@@ -168,13 +168,7 @@ do you have fonts in localStorage?
 
             fonts.rel = 'stylesheet';
             fonts.className = 'webfonts';
-
-            // show hinted fonts for Windows XP
-            if (shouldHint) {
-                fonts.href = window.guardian.config.stylesheets.fonts['hintingOn'];
-            } else {
-                fonts.href = window.guardian.config.stylesheets.fonts['hintingOff'];
-            }
+            fonts.href = window.guardian.config.stylesheets.fonts[shouldHint ? 'hintingAuto' : 'hintingOff'].kerningOn;
             
             window.setTimeout(function () {
                 thisScript.parentNode.insertBefore(fonts, thisScript);
