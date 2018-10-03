@@ -5,7 +5,7 @@ import common.{ImplicitControllerExecutionContext, LinkTo, Logging}
 import conf.Configuration
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
-import com.gu.identity.model.{EmailNewsletter, EmailNewsletters}
+import com.gu.identity.model.EmailNewsletter
 import com.typesafe.scalalogging.LazyLogging
 import play.api.data.Forms._
 import play.api.data._
@@ -15,10 +15,10 @@ import play.api.libs.json._
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc._
 import play.filters.csrf.{CSRFAddToken, CSRFCheck}
+import utils.RemoteAddress
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
-import scala.util.{Failure, Success, Try}
 
 object emailLandingPage extends StandalonePage {
   private val id = "email-landing-page"
@@ -44,18 +44,23 @@ case class EmailForm(
   }
 }
 
-class EmailFormService(wsClient: WSClient) extends LazyLogging {
+class EmailFormService(wsClient: WSClient) extends LazyLogging with RemoteAddress {
 
-  def submit(form: EmailForm): Future[WSResponse] = if (form.isLikelyBotSubmission) {
+  def submit(form: EmailForm)(implicit request: Request[AnyContent]): Future[WSResponse] = if (form.isLikelyBotSubmission) {
     Future.failed(new IllegalAccessException("Form was likely submitted by a bot."))
   } else {
     val idAccessClientToken = Configuration.id.apiClientToken
     val consentMailerUrl = s"${Configuration.id.apiRoot}/consent-email"
     val consentMailerPayload = JsObject(Json.obj("email" -> form.email, "set-lists" -> List(form.listName)).fields)
+    val headers = clientIp(request)
+      .map(ip => List("X-Forwarded-For" -> ip))
+      .getOrElse(List.empty)
+    :+ ("X-GU-ID-Client-Access-Token" -> s"Bearer $idAccessClientToken")
 
+    //FIXME: this should go via the identity api client / app
     wsClient
       .url(consentMailerUrl)
-      .addHttpHeaders("X-GU-ID-Client-Access-Token" -> s"Bearer $idAccessClientToken")
+      .addHttpHeaders(headers: _*)
       .post(consentMailerPayload)
   }
 }
