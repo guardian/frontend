@@ -267,9 +267,7 @@ const submitForm = (
     let analyticsInfo;
 
     event.preventDefault();
-
-    let captchaRendere
-
+    
     const onCaptchaSolved = () => new Promise((accept, reject)=>{
         loadScript(recaptchaJsLib, { async: true }).then(
             () => {
@@ -353,6 +351,9 @@ const submitForm = (
 const bindSubmit = ($form: bonzo, iframeEl?: HTMLIFrameElement, analytics: Analytics): void => {
     const url = '/email';
 
+    bean.on($form[0], 'mouseover', () => {
+        loadScript(recaptchaJsLib)
+    });
     bean.on($form[0], 'submit', (ev) => {submitForm(ev, $form, iframeEl, url, analytics)});
 };
 
