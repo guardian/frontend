@@ -24,7 +24,7 @@
 
         <ul class="submeta__links">
             @if(!(content.content.isImmersive && content.content.tags.isArticle)) {
-                <li class="submeta__link-item">
+                <li data-test="TEST-1" class="submeta__link-item">
                     <a class="submeta__link"
                         data-link-name="article section"
                         href="@LinkTo {/@content.content.sectionLabelLink}">
@@ -34,7 +34,7 @@
             }
 
             @content.content.blogOrSeriesTag.map { series =>
-                <li class="submeta__link-item">
+                <li data-test="TEST-2" class="submeta__link-item">
                     <a class="submeta__link"
                        href="@LinkTo {/@series.id}">
                             @series.name
@@ -42,7 +42,7 @@
                 </li>
             }.getOrElse {
                 @if(content.content.isFromTheObserver) {
-                    <li class="submeta__link-item">
+                    <li data-test="TEST-3" class="submeta__link-item">
                         <a class="submeta__link"
                            href="https://www.theguardian.com/observer">
                                The Observer
