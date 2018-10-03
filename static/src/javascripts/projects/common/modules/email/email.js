@@ -290,9 +290,7 @@ const submitForm = (
     })
 
     if (!state.submitting && validate(emailAddress)) {
-        onCaptchaSolved().catch(e=>{
-            debugger;
-        }).then(()=> {
+        onCaptchaSolved().then((captchaToken)=> {
             const formData = $form.data('formData');
             const data = `email=${encodeURIComponent(
                 emailAddress
@@ -300,7 +298,7 @@ const submitForm = (
                 formData.campaignCode
                 }&referrer=${formData.referrer}&csrfToken=${encodeURIComponent(
                 csrfToken
-            )}&listName=${listName.val()}`;
+            )}&g-recaptcha-response=${encodeURIComponent(captchaToken)}&listName=${listName.val()}`;
 
             analyticsInfo = `rtrt | email form inline | ${
                 analytics.formType
