@@ -244,6 +244,10 @@ $footballBadgeSizeDesktop: 120px;
     overflow: visible;
 }
 
+.content__main-column--liveblog .football-embed {
+    height: auto;
+}
+
 .football-embed.knockout-embed {
     height: auto;
 }
