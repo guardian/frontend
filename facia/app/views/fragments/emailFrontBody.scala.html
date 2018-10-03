@@ -12,6 +12,8 @@
 @import views.support.RemoveOuterParaHtml
 @import fragments.email._
 @import common.LinkTo
+@import org.joda.time.DateTime
+@import org.joda.time.DateTimeConstants.{SATURDAY, SUNDAY}
 
 
 @headline(card: ContentCard, isLarge: Boolean = false, isTrailText: Boolean = false) = {
@@ -206,6 +208,36 @@
     }
 }
 
+@renderFlagshipContainer(collection: EmailContentContainer) = {
+    @defining(DateTime.now.getDayOfWeek) { now =>
+        @if(now != SATURDAY && now != SUNDAY) {
+
+            @containerTitle(Seq("ct--not-top")) {
+                @collection.href.map { href =>
+                <a class="ct-link" href="@LinkTo {/@Html(href)}">@collection.displayName</a>
+                }.getOrElse {
+                    @collection.displayName
+                }
+            }
+
+            @collection.cards.headOption.map { card =>
+                @faciaCard(classesForCard(card, withImage = true), collection.branding.isDefined) {
+                    @row(Seq("no-pad")){
+                        <a class="fc-link" href="@card.header.url.hrefWithRel">
+                            <img class="full-width" src="https://i.guim.co.uk/img/media/60478bdc559fa72fe4fe0ac09636f78df9f3cdb9/3_170_3910_2345/master/3910.jpg?width=500&amp;quality=60&amp;fit=max&amp;s=a31b2353a7f08f4417006bda4a77acf5" alt="@card.header.headline">
+                        </a>
+                    }
+                    @if(card.header.quoted) {
+                        @headlineAndTrailWithCutout(card, withImage = true)
+                    } else {
+                        @headline(card, isLarge = true, isTrailText = true)
+                    }
+                }
+            }
+        }
+    }
+}
+
 @renderMarquee(marquee: LiveIntentMarquee) = {
     <table align="center" border="0" cellpadding="0" cellspacing="0" style="margin-left:auto; margin-right:auto;">
         <tr>
@@ -286,6 +318,7 @@
 }
 
 @layout.CollectionEmail.fromPressedPage(page).collections.zipWithIndex.map {
+    case (collection: EmailContentContainer, index) if collection.displayName == "Flagship" => { @renderFlagshipContainer(collection) }
     case (collection: EmailContentContainer, index) => { @renderContentContainer(collection, index) }
     case (marquee: LiveIntentMarquee, _) => { @renderMarquee(marquee) }
     case (mpu: LiveIntentMPU, _) => { @renderMPU(mpu) }
