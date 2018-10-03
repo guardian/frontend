@@ -30,12 +30,6 @@ case object DocumentariesUpdate extends ArticleEmailMetadata {
   def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "news/series/guardian-documentaries-update")
 }
 
-case object GreenLight extends ArticleEmailMetadata {
-  val name = "Green Light"
-  override val banner = Some("green-light.png")
-  def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "environment/series/green-light")
-}
-
 case object MoneyTalks extends ArticleEmailMetadata {
   val name = "Money Talks"
   override val banner = Some("money-talks.png")
@@ -355,6 +349,11 @@ case object FirstDogOnTheMoon extends FrontEmailMetadata {
   override val banner = Some("first-dog-on-the-moon.png")
 }
 
+case object GreenLight extends FrontEmailMetadata {
+  val name = "Green Light"
+  override val banner = Some("green-light.png")
+}
+
 object EmailAddons {
   val unsubscribePlaceholder = "%%unsub_center_url%%"
 
@@ -363,7 +362,6 @@ object EmailAddons {
   private val articleEmails     = Seq(
     ArtWeekly,
     DocumentariesUpdate,
-    GreenLight,
     MoneyTalks,
     TheBreakdown,
     WorldCupFiver,
@@ -423,7 +421,8 @@ object EmailAddons {
     OpinionAus,
     PoliticsAu,
     SportAu,
-    FirstDogOnTheMoon
+    FirstDogOnTheMoon,
+    GreenLight
   )
 
   implicit class EmailContentType(p: Page) {
