@@ -217,6 +217,13 @@ const getImprovePlacementId = (sizes: PrebidSize[]): number => {
     }
 };
 
+const getAppNexusInvCode = (slotSize: PrebidSize[]): string => {
+    const device: string = getBreakpointKey();
+    const section: string = config.get('page.section', '');
+    const sizes: string = slotSize.map(_ => _.join('x')).join('|');
+    return `${device}${section}${sizes}`;
+};
+
 const getAppNexusDirectPlacementId = (): string => '11016434';
 
 const getAppNexusPlacementId = (sizes: PrebidSize[]): string => {
@@ -311,7 +318,12 @@ const inPbTestOr = (liveClause: boolean): boolean => isPbTestOn() || liveClause;
 const appNexusBidder: PrebidBidder = {
     name: 'and',
     switchName: 'prebidAppnexus',
-    bidParams: (): PrebidAppNexusParams => ({
+    bidParams: (
+        slotId: string,
+        slotSize: PrebidSize[]
+    ): PrebidAppNexusParams => ({
+        invCode: getAppNexusInvCode(slotSize),
+        member: '7012',
         placementId: getAppNexusDirectPlacementId(),
         keywords: buildAppNexusTargetingObject(buildPageTargeting()), // Ok to duplicate call. Lodash 'once' is used.
     }),
