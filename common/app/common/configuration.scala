@@ -87,11 +87,11 @@ object GuardianConfiguration extends Logging {
     if (stage == "DEVINFRA")
       ConfigFactory.parseResourcesAnySyntax("env/DEVINFRA.properties")
     else {
-      lazy val userPrivate = configFromFile(s"${System.getProperty("user.home")}/.gu/frontend.conf", "devOverrides")
-      lazy val runtimeOnly =  configFromFile("/etc/gu/frontend.conf", "parameters")
-      lazy val frontendConfig = configFromParameterStore("/frontend")
-      lazy val frontendStageConfig = configFromParameterStore(s"/frontend/${stage.toLowerCase}")
-      lazy val frontendAppConfig = configFromParameterStore(s"/frontend/${stage.toLowerCase}/${app.toLowerCase}")
+      val userPrivate = configFromFile(s"${System.getProperty("user.home")}/.gu/frontend.conf", "devOverrides")
+      val runtimeOnly =  configFromFile("/etc/gu/frontend.conf", "parameters")
+      val frontendConfig = configFromParameterStore("/frontend")
+      val frontendStageConfig = configFromParameterStore(s"/frontend/${stage.toLowerCase}")
+      val frontendAppConfig = configFromParameterStore(s"/frontend/${stage.toLowerCase}/${app.toLowerCase}")
 
       userPrivate
         .withFallback(runtimeOnly)
@@ -463,6 +463,9 @@ class GuardianConfiguration extends Logging {
 
     lazy val prebidAnalyticsStream = configuration.getMandatoryStringProperty("commercial.prebid.analytics.stream")
     lazy val pageViewAnalyticsStream = configuration.getMandatoryStringProperty("commercial.pv.analytics.stream")
+
+    lazy val prebidServerHost =
+      configuration.getStringProperty("commercial.prebid.server.host") getOrElse "http://localhost:8000"
   }
 
   object journalism {
