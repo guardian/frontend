@@ -20,6 +20,9 @@ import { loadScript } from 'lib/load-script';
 import type { IdentityUser } from 'common/modules/identity/api';
 import type { bonzo } from 'bonzo';
 
+const recaptchaJsLib = 'https://www.google.com/recaptcha/api.js';
+const recaptchaApiKey = '6LfvU3MUAAAAAFMDYT2sgAUSYn8dDnjB65w8jAmn';
+
 type Analytics = {
     formType: string,
     listId: string,
@@ -268,12 +271,12 @@ const submitForm = (
     let captchaRendere
 
     const onCaptchaSolved = () => new Promise((accept, reject)=>{
-        loadScript('https://www.google.com/recaptcha/api.js', { async: true }).then(
+        loadScript(recaptchaJsLib, { async: true }).then(
             () => {
                 grecaptcha.ready(()=>{
                     if(!state.captchaRendered) {
                         grecaptcha.render(recaptchaHolder, {
-                            'sitekey': '6LfvU3MUAAAAAFMDYT2sgAUSYn8dDnjB65w8jAmn',
+                            'sitekey': recaptchaApiKey,
                             'size': 'invisible',
                             'errorCallback': reject,
                             'callback': accept,
