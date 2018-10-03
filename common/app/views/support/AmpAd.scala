@@ -51,6 +51,10 @@ object AmpAdRtcConfig {
         KruxSwitch
       )
 
+      /*
+       * See https://github.com/ampproject/amphtml/pull/14155
+       * and https://github.com/prebid/prebid-server/blob/master/docs/endpoints/openrtb2/amp.md#query-parameters
+       */
       val prebidServerUrl = urlValue(
         s"$prebidServerHost/openrtb2/amp?tag_id=1&w=ATTR(width)&h=ATTR(height)&ow=ATTR(data-override-width)" +
           "&oh=ATTR(data-override-height)&slot=ATTR(data-slot)&targeting=TGT&curl=CANONICAL_URL&timeout=TIMEOUT" +
