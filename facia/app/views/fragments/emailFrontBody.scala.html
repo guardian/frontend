@@ -214,24 +214,21 @@
 
             @containerTitle(Seq("ct--not-top")) {
                 @collection.href.map { href =>
-                <a class="ct-link" href="@LinkTo {/@Html(href)}">@collection.displayName</a>
+                    <a class="ct-link" href="@LinkTo {/@Html(href)}">@collection.displayName</a>
                 }.getOrElse {
                     @collection.displayName
                 }
             }
 
             @collection.cards.headOption.map { card =>
-                @faciaCard(classesForCard(card, withImage = true), collection.branding.isDefined) {
+                @faciaCard(classesForCard(card, withImage = true)) {
                     @row(Seq("no-pad")){
                         <a class="fc-link" href="@card.header.url.hrefWithRel">
                             <img class="full-width" src="https://i.guim.co.uk/img/media/60478bdc559fa72fe4fe0ac09636f78df9f3cdb9/3_170_3910_2345/master/3910.jpg?width=500&amp;quality=60&amp;fit=max&amp;s=a31b2353a7f08f4417006bda4a77acf5" alt="@card.header.headline">
                         </a>
                     }
-                    @if(card.header.quoted) {
-                        @headlineAndTrailWithCutout(card, withImage = true)
-                    } else {
-                        @headline(card, isLarge = true, isTrailText = true)
-                    }
+
+                    @headline(card, isLarge = true, isTrailText = true)
                 }
             }
         }
