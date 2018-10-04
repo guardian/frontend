@@ -46,7 +46,7 @@ object AudioPageChange extends Experiment(
   description = "Show a different version of the audio page to certain people",
   owners = Owner.group(SwitchGroup.Journalism),
   sellByDate = new LocalDate(2018, 10, 26),
-  participationGroup = Perc5A
+  participationGroup = Perc0B
 )
 
 object DotcomponentsRendering extends Experiment(
