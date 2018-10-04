@@ -48,6 +48,7 @@ const isInVariant: any = isInVariant_;
 const {
     getAdYouLikePlacementId,
     getAppNexusInvCode,
+    getAppNexusBidParams,
     getAppNexusPlacementId,
     getDummyServerSideBidders,
     getIndexSiteId,
@@ -73,6 +74,7 @@ jest.mock('common/modules/experiments/utils');
 /* eslint-disable guardian-frontend/no-direct-access-config */
 const resetConfig = () => {
     config.set('switches.prebidAppnexus', true);
+    config.set('switches.prebidAppNexusInvcode', false);
     config.set('switches.prebidOpenx', true);
     config.set('switches.prebidImproveDigital', true);
     config.set('switches.prebidIndexExchange', true);
@@ -89,11 +91,10 @@ const resetConfig = () => {
 
 describe('getAppNexusInvCode', () => {
     beforeEach(() => {
-        getBreakpointKey.mockReturnValue('D');
+        resetConfig();
         [[300, 250], [300, 600], [970, 250], [728, 90]].map(
             getLargestSize.mockReturnValueOnce
         );
-        resetConfig();
     });
 
     afterEach(() => {
@@ -103,7 +104,7 @@ describe('getAppNexusInvCode', () => {
 
     test('should return the magic strings for mobile breakpoints', () => {
         getBreakpointKey.mockReturnValue('M');
-        const invCodes: Array<string> = [
+        const invCodes = [
             [[300, 250]],
             [[300, 600]],
             [[970, 250]],
@@ -120,7 +121,7 @@ describe('getAppNexusInvCode', () => {
 
     test('should return the magic strings for other breakpoints', () => {
         getBreakpointKey.mockReturnValue('D');
-        const invCodes: Array<string> = [
+        const invCodes = [
             [[300, 250]],
             [[300, 600]],
             [[970, 250]],
@@ -132,6 +133,36 @@ describe('getAppNexusInvCode', () => {
             'Dmagic970x250',
             'Dmagic728x90',
         ]);
+    });
+});
+
+describe('getAppNexusBidParams', () => {
+    beforeEach(() => {
+        resetConfig();
+        getLargestSize.mockReturnValueOnce([300, 250]);
+    });
+
+    afterEach(() => {
+        jest.resetAllMocks();
+        resetConfig();
+    });
+
+    test('should include placementId when invCode switch is off', () => {
+        getBreakpointKey.mockReturnValue('M');
+        expect(getAppNexusBidParams([[300, 250]])).toEqual({
+            keywords: 'someAppNexusTargetingObject',
+            placementId: '11016434',
+        });
+    });
+
+    test('should exclude placementId when including member and invCode', () => {
+        config.set('switches.prebidAppNexusInvcode', true);
+        getBreakpointKey.mockReturnValue('M');
+        expect(getAppNexusBidParams([[300, 250]])).toEqual({
+            keywords: 'someAppNexusTargetingObject',
+            member: '7012',
+            invCode: 'Mmagic300x250',
+        });
     });
 });
 

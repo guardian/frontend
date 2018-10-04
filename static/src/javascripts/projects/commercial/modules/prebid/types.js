@@ -41,7 +41,7 @@ export type PrebidXaxisParams = {
 export type PrebidAppNexusParams = {
     invCode?: string,
     member?: string,
-    placementId: string,
+    placementId?: string,
     keywords: {},
     lotame?: {},
 };

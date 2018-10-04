@@ -400,6 +400,16 @@ trait PrebidSwitches {
     exposeClientSide = true
   )
 
+  val prebidAppNexusInvcode: Switch = Switch(
+    group = CommercialPrebid,
+    name = "prebid-appnexus-invcode",
+    description = "Swap placementId for invCode in the bid params",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
   val prebidIndexExchange: Switch = Switch(
     group = CommercialPrebid,
     name = "prebid-index-exchange",
