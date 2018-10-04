@@ -11,6 +11,7 @@ import {
 import { _, bids } from './bid-config';
 import type { PrebidBidder, PrebidSize } from './types';
 import {
+    getLargestSize as getLargestSize_,
     containsBillboard as containsBillboard_,
     containsDmpu as containsDmpu_,
     containsLeaderboard as containsLeaderboard_,
@@ -26,6 +27,7 @@ import {
     stripMobileSuffix as stripMobileSuffix_,
 } from './utils';
 
+const getLargestSize: any = getLargestSize_;
 const containsBillboard: any = containsBillboard_;
 const containsDmpu: any = containsDmpu_;
 const containsLeaderboard: any = containsLeaderboard_;
@@ -45,6 +47,7 @@ const isInVariant: any = isInVariant_;
 
 const {
     getAdYouLikePlacementId,
+    getAppNexusInvCode,
     getAppNexusPlacementId,
     getDummyServerSideBidders,
     getIndexSiteId,
@@ -80,13 +83,66 @@ const resetConfig = () => {
     config.set('switches.prebidAdYouLike', true);
     config.set('ophan', { pageViewId: 'pvid' });
     config.set('page.contentType', 'Article');
+    config.set('page.section', 'Magic');
     config.set('page.edition', 'UK');
 };
+
+describe('getAppNexusInvCode', () => {
+    beforeEach(() => {
+        getBreakpointKey.mockReturnValue('D');
+        [[300, 250], [300, 600], [970, 250], [728, 90]].map(
+            getLargestSize.mockReturnValueOnce
+        );
+        resetConfig();
+    });
+
+    afterEach(() => {
+        jest.resetAllMocks();
+        resetConfig();
+    });
+
+    test('should return the magic strings for mobile breakpoints', () => {
+        getBreakpointKey.mockReturnValue('M');
+        const invCodes: Array<string> = [
+            [[300, 250]],
+            [[300, 600]],
+            [[970, 250]],
+            [[728, 90]],
+        ].map(getAppNexusInvCode);
+
+        expect(invCodes).toEqual([
+            'Mmagic300x250',
+            'Mmagic300x600',
+            'Mmagic970x250',
+            'Mmagic728x90',
+        ]);
+    });
+
+    test('should return the magic strings for other breakpoints', () => {
+        getBreakpointKey.mockReturnValue('D');
+        const invCodes: Array<string> = [
+            [[300, 250]],
+            [[300, 600]],
+            [[970, 250]],
+            [[728, 90]],
+        ].map(getAppNexusInvCode);
+        expect(invCodes).toEqual([
+            'Dmagic300x250',
+            'Dmagic300x600',
+            'Dmagic970x250',
+            'Dmagic728x90',
+        ]);
+    });
+});
 
 describe('getAppNexusPlacementId', () => {
     beforeEach(() => {
         resetConfig();
         window.OzoneLotameData = { some: 'lotamedata' };
+
+        [[300, 250], [300, 600], [970, 250], [728, 90]].map(
+            getLargestSize.mockReturnValueOnce
+        );
     });
 
     afterEach(() => {
@@ -586,6 +642,10 @@ describe('bids', () => {
         stripMobileSuffix.mockImplementation(str => str);
         getVariant.mockReturnValue(CommercialPrebidAdYouLike.variants[0]);
         resetConfig();
+
+        [[300, 250], [300, 600], [970, 250], [728, 90]].map(
+            getLargestSize.mockReturnValueOnce
+        );
     });
 
     afterEach(() => {

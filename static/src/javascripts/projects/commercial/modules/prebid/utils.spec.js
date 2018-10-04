@@ -4,6 +4,7 @@ import { getBreakpoint as getBreakpoint_ } from 'lib/detect';
 import { testCanBeRun as testCanBeRun_ } from 'common/modules/experiments/test-can-run-checks';
 import { getParticipations as getParticipations_ } from 'common/modules/experiments/utils';
 import {
+    getLargestSize,
     getBreakpointKey,
     shouldIncludeAdYouLike,
     shouldIncludeAppNexus,
@@ -35,6 +36,16 @@ jest.mock('common/modules/experiments/utils');
 describe('Utils', () => {
     beforeEach(() => {
         jest.resetAllMocks();
+    });
+
+    test('getLargestSize should return only one and the largest size', () => {
+        expect(getLargestSize([[300, 250]])).toEqual([300, 250]);
+        expect(getLargestSize([[300, 250], [300, 600]])).toEqual([300, 600]);
+        expect(getLargestSize([[970, 250], [728, 80]])).toEqual([970, 250]);
+    });
+
+    test('getLargestSize should return null if no sizes exist', () => {
+        expect(getLargestSize([])).toEqual(null);
     });
 
     test('getBreakpointKey should find the correct key', () => {

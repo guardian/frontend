@@ -31,6 +31,7 @@ import type {
     PrebidXaxisParams,
 } from './types';
 import {
+    getLargestSize,
     containsBillboard,
     containsDmpu,
     containsLeaderboard,
@@ -217,10 +218,10 @@ const getImprovePlacementId = (sizes: PrebidSize[]): number => {
     }
 };
 
-const getAppNexusInvCode = (slotSize: PrebidSize[]): string => {
+const getAppNexusInvCode = (slotSize: Array<PrebidSize>): string => {
     const device: string = getBreakpointKey();
-    const section: string = config.get('page.section', '');
-    const sizes: string = slotSize.map(_ => _.join('x')).join('|');
+    const section: string = config.get('page.section', '').toLowerCase();
+    const sizes: string = getLargestSize(slotSize).join('x');
     return `${device}${section}${sizes}`;
 };
 
@@ -576,6 +577,7 @@ export const bids: (string, PrebidSize[]) => PrebidBid[] = (
 
 export const _ = {
     getAdYouLikePlacementId,
+    getAppNexusInvCode,
     getAppNexusPlacementId,
     getDummyServerSideBidders,
     getIndexSiteId,

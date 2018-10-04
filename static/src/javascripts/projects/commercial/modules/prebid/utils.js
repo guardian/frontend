@@ -42,6 +42,16 @@ export const containsMpuOrDmpu = (sizes: PrebidSize[]): boolean =>
 export const containsLeaderboardOrBillboard = (sizes: PrebidSize[]): boolean =>
     containsLeaderboard(sizes) || containsBillboard(sizes);
 
+export const getLargestSize = (sizes: PrebidSize[]): PrebidSize | null => {
+    const reducer = (previous: PrebidSize, current: PrebidSize) => {
+        if (previous[0] >= current[0] && previous[1] >= current[1]) {
+            return previous;
+        }
+        return current;
+    };
+    return sizes.length > 0 ? sizes.reduce(reducer) : null;
+};
+
 export const getBreakpointKey = (): string => {
     switch (getBreakpoint()) {
         case 'mobile':
