@@ -46,13 +46,13 @@ module.exports = [
             {
                 'font-weight': '300',
                 src:
-                    'GuardianHeadline/noalts-not-hinted/GHGuardianHeadline-Light.woff',
+                    'GuardianHeadline/latin1-not-hinted/GHGuardianHeadline-Light.woff',
             },
             {
                 'font-weight': '300',
                 'font-style': 'italic',
                 src:
-                    'GuardianHeadline/noalts-not-hinted/GHGuardianHeadline-LightItalic.woff',
+                    'GuardianHeadline/latin1-not-hinted/GHGuardianHeadline-LightItalic.woff',
             },
             {
                 'font-weight': '500',
@@ -63,17 +63,17 @@ module.exports = [
                 'font-weight': '500',
                 'font-style': 'italic',
                 src:
-                    'GuardianHeadline/noalts-not-hinted/GHGuardianHeadline-MediumItalic.woff',
+                    'GuardianHeadline/latin1-not-hinted/GHGuardianHeadline-MediumItalic.woff',
             },
             {
                 'font-weight': '600',
                 src:
-                    'GuardianHeadline/noalts-not-hinted/GHGuardianHeadline-Semibold.woff',
+                    'GuardianHeadline/latin1-not-hinted/GHGuardianHeadline-Semibold.woff',
             },
             {
                 'font-weight': '700',
                 src:
-                    'GuardianHeadline/noalts-not-hinted/GHGuardianHeadline-Bold.woff',
+                    'GuardianHeadline/latin1-not-hinted/GHGuardianHeadline-Bold.woff',
             },
         ],
     },
@@ -85,34 +85,34 @@ module.exports = [
             {
                 'font-weight': '300',
                 src:
-                    'GuardianHeadline/noalts-not-hinted/GHGuardianHeadline-Light.ttf',
+                    'GuardianHeadline/latin1-not-hinted/GHGuardianHeadline-Light.ttf',
             },
             {
                 'font-weight': '300',
                 'font-style': 'italic',
                 src:
-                    'GuardianHeadline/noalts-not-hinted/GHGuardianHeadline-LightItalic.ttf',
+                    'GuardianHeadline/latin1-not-hinted/GHGuardianHeadline-LightItalic.ttf',
             },
             {
                 'font-weight': '500',
                 src:
-                    'GuardianHeadline/noalts-not-hinted/GHGuardianHeadline-Medium.ttf',
+                    'GuardianHeadline/latin1-not-hinted/GHGuardianHeadline-Medium.ttf',
             },
             {
                 'font-weight': '500',
                 'font-style': 'italic',
                 src:
-                    'GuardianHeadline/noalts-not-hinted/GHGuardianHeadline-MediumItalic.ttf',
+                    'GuardianHeadline/latin1-not-hinted/GHGuardianHeadline-MediumItalic.ttf',
             },
             {
                 'font-weight': '600',
                 src:
-                    'GuardianHeadline/noalts-not-hinted/GHGuardianHeadline-Semibold.ttf',
+                    'GuardianHeadline/latin1-not-hinted/GHGuardianHeadline-Semibold.ttf',
             },
             {
                 'font-weight': '700',
                 src:
-                    'GuardianHeadline/noalts-not-hinted/GHGuardianHeadline-Bold.ttf',
+                    'GuardianHeadline/latin1-not-hinted/GHGuardianHeadline-Bold.ttf',
             },
         ],
     },
@@ -163,13 +163,13 @@ module.exports = [
             {
                 'font-weight': '300',
                 src:
-                    'GuardianHeadline/noalts-autohinted/GHGuardianHeadline-Light.woff',
+                    'GuardianHeadline/latin1-autohinted/GHGuardianHeadline-Light.woff',
             },
             {
                 'font-weight': '300',
                 'font-style': 'italic',
                 src:
-                    'GuardianHeadline/noalts-autohinted/GHGuardianHeadline-LightItalic.woff',
+                    'GuardianHeadline/latin1-autohinted/GHGuardianHeadline-LightItalic.woff',
             },
             {
                 'font-weight': '500',
@@ -180,17 +180,17 @@ module.exports = [
                 'font-weight': '500',
                 'font-style': 'italic',
                 src:
-                    'GuardianHeadline/noalts-autohinted/GHGuardianHeadline-MediumItalic.woff',
+                    'GuardianHeadline/latin1-autohinted/GHGuardianHeadline-MediumItalic.woff',
             },
             {
                 'font-weight': '600',
                 src:
-                    'GuardianHeadline/noalts-autohinted/GHGuardianHeadline-Semibold.woff',
+                    'GuardianHeadline/latin1-autohinted/GHGuardianHeadline-Semibold.woff',
             },
             {
                 'font-weight': '700',
                 src:
-                    'GuardianHeadline/noalts-autohinted/GHGuardianHeadline-Bold.woff',
+                    'GuardianHeadline/latin1-autohinted/GHGuardianHeadline-Bold.woff',
             },
         ],
     },
@@ -202,34 +202,34 @@ module.exports = [
             {
                 'font-weight': '300',
                 src:
-                    'GuardianHeadline/noalts-autohinted/GHGuardianHeadline-Light.ttf',
+                    'GuardianHeadline/latin1-autohinted/GHGuardianHeadline-Light.ttf',
             },
             {
                 'font-weight': '300',
                 'font-style': 'italic',
                 src:
-                    'GuardianHeadline/noalts-autohinted/GHGuardianHeadline-LightItalic.ttf',
+                    'GuardianHeadline/latin1-autohinted/GHGuardianHeadline-LightItalic.ttf',
             },
             {
                 'font-weight': '500',
                 src:
-                    'GuardianHeadline/noalts-autohinted/GHGuardianHeadline-Medium.ttf',
+                    'GuardianHeadline/latin1-autohinted/GHGuardianHeadline-Medium.ttf',
             },
             {
                 'font-weight': '500',
                 'font-style': 'italic',
                 src:
-                    'GuardianHeadline/noalts-autohinted/GHGuardianHeadline-MediumItalic.ttf',
+                    'GuardianHeadline/latin1-autohinted/GHGuardianHeadline-MediumItalic.ttf',
             },
             {
                 'font-weight': '600',
                 src:
-                    'GuardianHeadline/noalts-autohinted/GHGuardianHeadline-Semibold.ttf',
+                    'GuardianHeadline/latin1-autohinted/GHGuardianHeadline-Semibold.ttf',
             },
             {
                 'font-weight': '700',
                 src:
-                    'GuardianHeadline/noalts-autohinted/GHGuardianHeadline-Bold.ttf',
+                    'GuardianHeadline/latin1-autohinted/GHGuardianHeadline-Bold.ttf',
             },
         ],
     },
@@ -266,12 +266,12 @@ module.exports = [
             {
                 'font-style': 'italic',
                 src:
-                    'GuardianTextEgyptian/noalts-not-hinted/GuardianTextEgyptian-RegularItalic.woff',
+                    'GuardianTextEgyptian/latin1-not-hinted/GuardianTextEgyptian-RegularItalic.woff',
             },
             {
                 'font-weight': '700',
                 src:
-                    'GuardianTextEgyptian/noalts-not-hinted/GuardianTextEgyptian-Bold.woff',
+                    'GuardianTextEgyptian/latin1-not-hinted/GuardianTextEgyptian-Bold.woff',
             },
         ],
     },
@@ -282,17 +282,17 @@ module.exports = [
         fonts: [
             {
                 src:
-                    'GuardianTextEgyptian/noalts-not-hinted/GuardianTextEgyptian-Regular.ttf',
+                    'GuardianTextEgyptian/latin1-not-hinted/GuardianTextEgyptian-Regular.ttf',
             },
             {
                 'font-style': 'italic',
                 src:
-                    'GuardianTextEgyptian/noalts-not-hinted/GuardianTextEgyptian-RegularItalic.ttf',
+                    'GuardianTextEgyptian/latin1-not-hinted/GuardianTextEgyptian-RegularItalic.ttf',
             },
             {
                 'font-weight': '700',
                 src:
-                    'GuardianTextEgyptian/noalts-not-hinted/GuardianTextEgyptian-Bold.ttf',
+                    'GuardianTextEgyptian/latin1-not-hinted/GuardianTextEgyptian-Bold.ttf',
             },
         ],
     },
@@ -329,12 +329,12 @@ module.exports = [
             {
                 'font-style': 'italic',
                 src:
-                    'GuardianTextEgyptian/noalts-autohinted/GuardianTextEgyptian-RegularItalic.woff',
+                    'GuardianTextEgyptian/latin1-autohinted/GuardianTextEgyptian-RegularItalic.woff',
             },
             {
                 'font-weight': '700',
                 src:
-                    'GuardianTextEgyptian/noalts-autohinted/GuardianTextEgyptian-Bold.woff',
+                    'GuardianTextEgyptian/latin1-autohinted/GuardianTextEgyptian-Bold.woff',
             },
         ],
     },
@@ -346,18 +346,18 @@ module.exports = [
             {
                 'font-weight': '300',
                 src:
-                    'GuardianTextEgyptian/noalts-autohinted/GuardianTextEgyptian-Regular.ttf',
+                    'GuardianTextEgyptian/latin1-autohinted/GuardianTextEgyptian-Regular.ttf',
             },
             {
                 'font-weight': '300',
                 'font-style': 'italic',
                 src:
-                    'GuardianTextEgyptian/noalts-autohinted/GuardianTextEgyptian-RegularItalic.ttf',
+                    'GuardianTextEgyptian/latin1-autohinted/GuardianTextEgyptian-RegularItalic.ttf',
             },
             {
                 'font-weight': '700',
                 src:
-                    'GuardianTextEgyptian/noalts-autohinted/GuardianTextEgyptian-Bold.ttf',
+                    'GuardianTextEgyptian/latin1-autohinted/GuardianTextEgyptian-Bold.ttf',
             },
         ],
     },
@@ -394,12 +394,12 @@ module.exports = [
             {
                 'font-style': 'italic',
                 src:
-                    'GuardianTextSans/noalts-not-hinted/GuardianTextSans-RegularItalic.woff',
+                    'GuardianTextSans/latin1-not-hinted/GuardianTextSans-RegularItalic.woff',
             },
             {
                 'font-weight': '700',
                 src:
-                    'GuardianTextSans/noalts-not-hinted/GuardianTextSans-Bold.woff',
+                    'GuardianTextSans/latin1-not-hinted/GuardianTextSans-Bold.woff',
             },
         ],
     },
@@ -410,17 +410,17 @@ module.exports = [
         fonts: [
             {
                 src:
-                    'GuardianTextSans/noalts-not-hinted/GuardianTextSans-Regular.ttf',
+                    'GuardianTextSans/latin1-not-hinted/GuardianTextSans-Regular.ttf',
             },
             {
                 'font-style': 'italic',
                 src:
-                    'GuardianTextSans/noalts-not-hinted/GuardianTextSans-RegularItalic.ttf',
+                    'GuardianTextSans/latin1-not-hinted/GuardianTextSans-RegularItalic.ttf',
             },
             {
                 'font-weight': '700',
                 src:
-                    'GuardianTextSans/noalts-not-hinted/GuardianTextSans-Bold.ttf',
+                    'GuardianTextSans/latin1-not-hinted/GuardianTextSans-Bold.ttf',
             },
         ],
     },
@@ -457,12 +457,12 @@ module.exports = [
             {
                 'font-style': 'italic',
                 src:
-                    'GuardianTextSans/noalts-autohinted/GuardianTextSans-RegularItalic.woff',
+                    'GuardianTextSans/latin1-autohinted/GuardianTextSans-RegularItalic.woff',
             },
             {
                 'font-weight': '700',
                 src:
-                    'GuardianTextSans/noalts-autohinted/GuardianTextSans-Bold.woff',
+                    'GuardianTextSans/latin1-autohinted/GuardianTextSans-Bold.woff',
             },
         ],
     },
@@ -473,17 +473,17 @@ module.exports = [
         fonts: [
             {
                 src:
-                    'GuardianTextSans/noalts-autohinted/GuardianTextSans-Regular.ttf',
+                    'GuardianTextSans/latin1-autohinted/GuardianTextSans-Regular.ttf',
             },
             {
                 'font-style': 'italic',
                 src:
-                    'GuardianTextSans/noalts-autohinted/GuardianTextSans-RegularItalic.ttf',
+                    'GuardianTextSans/latin1-autohinted/GuardianTextSans-RegularItalic.ttf',
             },
             {
                 'font-weight': '700',
                 src:
-                    'GuardianTextSans/noalts-autohinted/GuardianTextSans-Bold.ttf',
+                    'GuardianTextSans/latin1-autohinted/GuardianTextSans-Bold.ttf',
             },
         ],
     },
