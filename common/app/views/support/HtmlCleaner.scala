@@ -810,7 +810,7 @@ case class AffiliateLinksCleaner(
                                   tags: List[String]) extends HtmlCleaner with Logging {
 
   override def clean(document: Document): Document = {
-    if (true && AffiliateLinksCleaner.shouldAddAffiliateLinks(true,
+    if (AffiliateLinks.isSwitchedOn && AffiliateLinksCleaner.shouldAddAffiliateLinks(AffiliateLinks.isSwitchedOn,
       sectionId, showAffiliateLinks, affiliateLinkSections, defaultOffTags, tags)) {
       AffiliateLinksCleaner.replaceLinksInHtml(document, pageUrl, appendDisclaimer, contentType, skimlinksId)
     } else document
