@@ -15,6 +15,16 @@ trait IdentitySwitches {
     exposeClientSide = true
   )
 
+  val IdentityNewsletterRecaptchaSwitch = Switch(
+    SwitchGroup.Identity,
+    "id-newsletter-recaptcha",
+    "If switched on, newsletter widgets will trigger a recaptcha.",
+    owners = Seq(Owner.withGithub("walaura")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
   val IdentityEmailSignInUpsellSwitch = Switch(
     SwitchGroup.Identity,
     "id-email-sign-in-upsell",
