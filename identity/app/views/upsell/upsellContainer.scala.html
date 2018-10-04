@@ -50,22 +50,20 @@
     ).toString()
 }
 
-<div class="identity-upsell-wrapper">
-    <div class="js-identity-block-list" data-page-variant="@{pageVariant.jsName}">
-        <script type="text/json" data-for-prefill="true">
-            @Html(prefill)
-        </script>
-        <noscript>
-            @spinnerError(
-                "noscriptError",
-                Html(noJsBehaviour),
-            )
-        </noscript>
+<div class="js-identity-block-list" data-page-variant="@{pageVariant.jsName}">
+    <script type="text/json" data-for-prefill="true">
+        @Html(prefill)
+    </script>
+    <noscript>
         @spinnerError(
-            "identityUpsellLoadingError",
+            "noscriptError",
             Html(noJsBehaviour),
-            None,
-            true
         )
-    </div>
+    </noscript>
+    @spinnerError(
+        "identityUpsellLoadingError",
+        Html(noJsBehaviour),
+        None,
+        true
+    )
 </div>
