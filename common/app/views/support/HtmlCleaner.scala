@@ -801,12 +801,17 @@ object GarnettQuoteCleaner extends HtmlCleaner {
   }
 }
 
-case class AffiliateLinksCleaner(pageUrl: String, sectionId: String, showAffiliateLinks: Option[Boolean],
-  contentType: String, appendDisclaimer: Option[Boolean] = None) extends HtmlCleaner with Logging {
+case class AffiliateLinksCleaner(
+                                  pageUrl: String,
+                                  sectionId: String,
+                                  showAffiliateLinks: Option[Boolean],
+                                  contentType: String,
+                                  appendDisclaimer: Option[Boolean] = None,
+                                  tags: List[String]) extends HtmlCleaner with Logging {
 
   override def clean(document: Document): Document = {
-    if (AffiliateLinks.isSwitchedOn && AffiliateLinksCleaner.shouldAddAffiliateLinks(AffiliateLinkSections.isSwitchedOn,
-      sectionId, showAffiliateLinks, affiliateLinkSections)) {
+    if (true && AffiliateLinksCleaner.shouldAddAffiliateLinks(true,
+      sectionId, showAffiliateLinks, affiliateLinkSections, defaultOffTags, tags)) {
       AffiliateLinksCleaner.replaceLinksInHtml(document, pageUrl, appendDisclaimer, contentType, skimlinksId)
     } else document
   }
@@ -841,11 +846,11 @@ object AffiliateLinksCleaner {
     s"http://go.theguardian.com/?id=$skimlinksId&url=$urlEncodedLink&sref=$host$pageUrl"
   }
 
-  def shouldAddAffiliateLinks(switchedOn: Boolean, section: String, showAffiliateLinks: Option[Boolean], supportedSections: Set[String]): Boolean = {
+  def shouldAddAffiliateLinks(switchedOn: Boolean, section: String, showAffiliateLinks: Option[Boolean], supportedSections: Set[String], defaultOffTags: Set[String], tagPaths: List[String]): Boolean = {
     if (showAffiliateLinks.isDefined) {
       showAffiliateLinks.contains(true)
     } else {
-      switchedOn && supportedSections.contains(section)
+      switchedOn && supportedSections.contains(section) && !tagPaths.exists(path => defaultOffTags.contains(path))
     }
   }
 
