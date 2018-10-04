@@ -73,11 +73,13 @@
         }
     }
     .identity-upsell-follow-button-wrap__button--hoverable {
-        visibility: hidden;
+        will-change: opacity;
+        opacity: 0;
+        transition: none !important;
     }
     &:not(.identity-upsell-follow-button-wrap--blocked):hover {
         .identity-upsell-follow-button-wrap__button--hoverable {
-            visibility: visible;
+            opacity: 1;
         }
     }
 }
