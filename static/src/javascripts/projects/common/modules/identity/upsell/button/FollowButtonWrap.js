@@ -40,12 +40,12 @@ class FollowButtonWrap extends Component<
     updateFollowing = (to: boolean) => {
         if (to) {
             this.props.onFollow();
+            this.setState({
+                mousedOutOnce: false,
+            });
         } else {
             this.props.onUnfollow();
         }
-        this.setState({
-            mousedOutOnce: false,
-        });
     };
 
     render() {

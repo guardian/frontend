@@ -74,8 +74,10 @@
     }
     .identity-upsell-follow-button-wrap__button--hoverable {
         will-change: opacity;
-        opacity: 0;
         transition: none !important;
+        @media not all and (hover: none) {
+            opacity: 0;
+        }
     }
     &:not(.identity-upsell-follow-button-wrap--blocked):hover {
         .identity-upsell-follow-button-wrap__button--hoverable {
