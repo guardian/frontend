@@ -30,6 +30,12 @@ body {
     &:active {
         outline: 0;
     }
+
+    &[disabled] {
+        opacity: .5;
+        pointer-events: none;
+    }
+
 }
 
 /**

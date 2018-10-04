@@ -44,6 +44,7 @@ const classes = {
     form: 'js-email-sub__form',
     inlineLabel: 'js-email-sub__inline-label',
     textInput: 'js-email-sub__text-input',
+    button: 'email-sub__submit-button',
     dummyInput: 'js-email-sub__text-name',
     listNameHiddenInput: 'js-email-sub__listname-input',
 };
@@ -248,10 +249,9 @@ const handleSubmit = (isSuccess: boolean, $form: bonzo): (() => void) => () => {
 const submitForm = (
     event: Event,
     $form: bonzo,
-    iFrameEl?: HTMLIFrameElement,
     url: string,
     analytics: Analytics
-): (Event => ?Promise<any>) => {
+): void => {
     // simplistic email address validation to prevent misfired omniture events
     const validate = (emailAddress: string): boolean =>
         emailAddress.includes('@');
@@ -260,47 +260,63 @@ const submitForm = (
     const csrfToken = $(`input[name=csrfToken]`, $form).val();
     const dummy = $(`.${classes.dummyInput}`, $form).val();
     const listName = $(`.${classes.listNameHiddenInput}`, $form);
+    const button = $(`.${classes.button}`, $form)[0];
 
     const recaptchaHolder = document.createElement('div');
-    iFrameEl.insertAdjacentElement('beforebegin',recaptchaHolder);
+    if (document.body) document.body.appendChild(recaptchaHolder);
+
+    if (button) {
+        button.innerText = 'Hang on...';
+        button.disabled = true;
+    }
 
     let analyticsInfo;
 
     event.preventDefault();
-    
-    const onCaptchaSolved = () => new Promise((accept, reject)=>{
-        loadScript(recaptchaJsLib, { async: true }).then(
-            () => {
-                grecaptcha.ready(()=>{
-                    if(!state.captchaRendered) {
-                        grecaptcha.render(recaptchaHolder, {
-                            'sitekey': recaptchaApiKey,
-                            'size': 'invisible',
-                            'errorCallback': reject,
-                            'callback': accept,
+
+    const onCaptchaSolved = () =>
+        new Promise((accept, reject) => {
+            if (!config.get('switches.idNewsletterRecaptcha', false)) {
+                accept('-');
+            } else {
+                loadScript(recaptchaJsLib, { async: true })
+                    .then(() => {
+                        if (!window.grecaptcha) {
+                            throw new Error(`Couldn't load recaptcha js`);
+                        }
+                        window.grecaptcha.ready(() => {
+                            if (!state.captchaRendered) {
+                                window.grecaptcha.render(recaptchaHolder, {
+                                    sitekey: recaptchaApiKey,
+                                    size: 'invisible',
+                                    errorCallback: reject,
+                                    callback: accept,
+                                });
+                                state.captchaRendered = true;
+                            }
+                            window.grecaptcha.execute();
                         });
-                        state.captchaRendered = true;
-                    }
-                    grecaptcha.execute();
-                })
+                    })
+                    .catch(reject);
             }
-        ).catch(reject);
-    })
+        });
 
     if (!state.submitting && validate(emailAddress)) {
-        onCaptchaSolved().then((captchaToken)=> {
+        onCaptchaSolved().then(captchaToken => {
             const formData = $form.data('formData');
             const data = `email=${encodeURIComponent(
                 emailAddress
             )}&name=${encodeURIComponent(dummy)}&campaignCode=${
                 formData.campaignCode
-                }&referrer=${formData.referrer}&csrfToken=${encodeURIComponent(
+            }&referrer=${formData.referrer}&csrfToken=${encodeURIComponent(
                 csrfToken
-            )}&g-recaptcha-response=${encodeURIComponent(captchaToken)}&listName=${listName.val()}`;
+            )}&g-recaptcha-response=${encodeURIComponent(
+                captchaToken
+            )}&listName=${listName.val()}`;
 
             analyticsInfo = `rtrt | email form inline | ${
                 analytics.formType
-                } | ${analytics.signedIn} | %action%`;
+            } | ${analytics.signedIn} | %action%`;
 
             state.submitting = true;
 
@@ -323,7 +339,7 @@ const submitForm = (
                             throw new Error(
                                 `Fetch error: ${response.status} ${
                                     response.statusText
-                                    }`
+                                }`
                             );
                         }
                     })
@@ -348,13 +364,17 @@ const submitForm = (
     }
 };
 
-const bindSubmit = ($form: bonzo, iframeEl?: HTMLIFrameElement, analytics: Analytics): void => {
+const bindSubmit = ($form: bonzo, analytics: Analytics): void => {
     const url = '/email';
 
-    bean.on($form[0], 'mouseover', () => {
-        loadScript(recaptchaJsLib)
+    if (config.get('switches.idNewsletterRecaptcha', false)) {
+        bean.on($form[0], 'mouseover', () => {
+            loadScript(recaptchaJsLib);
+        });
+    }
+    bean.on($form[0], 'submit', ev => {
+        submitForm(ev, $form, url, analytics);
     });
-    bean.on($form[0], 'submit', (ev) => {submitForm(ev, $form, iframeEl, url, analytics)});
 };
 
 const setup = (
@@ -384,7 +404,7 @@ const setup = (
         };
         let onResize;
 
-        bindSubmit($formEl, iframeEl, analytics);
+        bindSubmit($formEl, analytics);
 
         // If we're in an iframe, we should check whether we need to add a title and description
         // from the data attributes on the iframe (eg: allowing us to set them from composer).
