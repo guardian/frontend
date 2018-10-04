@@ -43,6 +43,8 @@ export const containsMpuOrDmpu = (sizes: PrebidSize[]): boolean =>
 export const containsLeaderboardOrBillboard = (sizes: PrebidSize[]): boolean =>
     containsLeaderboard(sizes) || containsBillboard(sizes);
 
+const test: boolean = "true";
+
 export const getBreakpointKey = (): string => {
     switch (getBreakpoint()) {
         case 'mobile':
@@ -69,10 +71,6 @@ export const getRandomIntInclusive = (
     const max = Math.floor(maximum);
     return Math.floor(Math.random() * (max - min + 1)) + min;
 };
-
-export const shouldIncludeAppNexus = (): boolean =>
-    isInAuRegion() ||
-    (config.get('switches.prebidAppnexusUkRow') && !isInUsRegion());
 
 export const shouldIncludeOpenx = (): boolean =>
     !isInUsRegion() && !isInAuRegion();

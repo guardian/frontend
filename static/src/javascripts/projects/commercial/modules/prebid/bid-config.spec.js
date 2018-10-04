@@ -8,7 +8,7 @@ import {
     getVariant as getVariant_,
     isInVariant as isInVariant_,
 } from 'common/modules/experiments/utils';
-import { _, bids } from './bid-config';
+import { _, bids, shouldIncludeAppNexus as shouldIncludeAppNexus_ } from './bid-config';
 import type { PrebidBidder, PrebidSize } from './types';
 import {
     containsBillboard as containsBillboard_,
@@ -19,7 +19,6 @@ import {
     containsMpuOrDmpu as containsMpuOrDmpu_,
     getBreakpointKey as getBreakpointKey_,
     shouldIncludeAdYouLike as shouldIncludeAdYouLike_,
-    shouldIncludeAppNexus as shouldIncludeAppNexus_,
     shouldIncludeOpenx as shouldIncludeOpenx_,
     shouldIncludeOzone as shouldIncludeOzone_,
     shouldIncludeTrustX as shouldIncludeTrustX_,
@@ -33,7 +32,7 @@ const containsLeaderboardOrBillboard: any = containsLeaderboardOrBillboard_;
 const containsMpu: any = containsMpu_;
 const containsMpuOrDmpu: any = containsMpuOrDmpu_;
 const shouldIncludeAdYouLike: any = shouldIncludeAdYouLike_;
-const shouldIncludeAppNexus: any = shouldIncludeAppNexus_;
+const shouldIncludeAppNexus: any = jest.fn(shouldIncludeAppNexus_);
 const shouldIncludeOpenx: any = shouldIncludeOpenx_;
 const shouldIncludeOzone: any = shouldIncludeOzone_;
 const shouldIncludeTrustX: any = shouldIncludeTrustX_;

@@ -39,7 +39,6 @@ import {
     containsMpuOrDmpu,
     getBreakpointKey,
     shouldIncludeAdYouLike,
-    shouldIncludeAppNexus,
     shouldIncludeOpenx,
     shouldIncludeOzone,
     shouldIncludeTrustX,
@@ -592,6 +591,14 @@ export const bids: (string, PrebidSize[]) => PrebidBid[] = (
         }
         return bid;
     });
+
+export const shouldIncludeAppNexus = (): boolean =>
+    isInAuRegion() ||
+    (
+        config.get('switches.prebidAppnexusUkRow') &&
+        !isInUsRegion() ||
+        pbTestNameMap()['and']
+    );
 
 export const _ = {
     getAdYouLikePlacementId,
