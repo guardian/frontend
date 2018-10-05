@@ -463,6 +463,9 @@ class GuardianConfiguration extends Logging {
 
     lazy val prebidAnalyticsStream = configuration.getMandatoryStringProperty("commercial.prebid.analytics.stream")
     lazy val pageViewAnalyticsStream = configuration.getMandatoryStringProperty("commercial.pv.analytics.stream")
+
+    lazy val prebidServerHost =
+      configuration.getStringProperty("commercial.prebid.server.host") getOrElse "http://localhost:8000"
   }
 
   object journalism {
