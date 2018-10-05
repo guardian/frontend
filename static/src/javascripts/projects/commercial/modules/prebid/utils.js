@@ -44,8 +44,6 @@ export const containsMpuOrDmpu = (sizes: PrebidSize[]): boolean =>
 export const containsLeaderboardOrBillboard = (sizes: PrebidSize[]): boolean =>
     containsLeaderboard(sizes) || containsBillboard(sizes);
 
-const test: boolean = "true";
-
 export const getBreakpointKey = (): string => {
     switch (getBreakpoint()) {
         case 'mobile':
