@@ -2,6 +2,7 @@
 @import layout.MetaDataHeader
 @import layout.slices.{Dynamic, Fixed, MostPopular, NavList, NavMediaList, Video}
 @import views.html.fragments.commercial.containers.paidContainer
+@import views.html.fragments.audio.containers.flagshipContainer
 @import views.html.fragments.containers.facia_cards._
 @import views.support.Commercial.container.shouldRenderAsPaidContainer
 @import views.support.GetClasses
@@ -59,7 +60,7 @@
                             @if(containerDefinition.displayName.contains("Flagship") && frontId.contains("uk")) {
                                 @defining(DateTime.now.getDayOfWeek) { now =>
                                     @if(now != SATURDAY && now != SUNDAY) {
-                                        @podcastContainer(containerDefinition, frontProperties)
+                                        @flagshipContainer(containerDefinition, frontProperties)
                                     }
                                 }
                             } else {

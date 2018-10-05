@@ -1,6 +1,7 @@
 @import model.FrontProperties
 @import views.support.RemoveOuterParaHtml
 @import views.html.fragments.items.elements.facia_cards._
+@import views.html.fragments.containers.facia_cards.containerHeader
 @import views.support.RenderClasses
 @import common.Localisation
 @import model.InlineImage
@@ -35,8 +36,8 @@
         ("js-container--fc-show-more", containerDefinition.addShowMoreClasses),
         ("fc-show-more--mobile-only", containerDefinition.hasMobileOnlyShowMore)
     ))"
-    data-title="@Localisation(containerDefinition.displayName getOrElse "")"
-    data-id="@containerDefinition.dataId">
+        data-title="@Localisation(containerDefinition.displayName getOrElse "")"
+        data-id="@containerDefinition.dataId">
 
         @for(slice <- containerLayout.slices.headOption) {
 
