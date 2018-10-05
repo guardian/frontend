@@ -83,17 +83,21 @@ beforeEach(() => {
     getMock.mockClear();
     isWithinSecondsMock.mockClear();
     fakeFetchJson.mockClear();
-    fakeTemplate.mockClear();
+    fakeTemplate.mockReset();
 });
 
 describe('breaking news', () => {
     const knownAlertIDsStorageKey = 'gu.breaking-news.hidden';
 
     describe('canShow', () => {
-        it('should return true', () =>
+        it('should return true', () => {
+            const compiled = jest.fn();
+
+            fakeTemplate.mockReturnValueOnce(compiled);
             breakingNews.canShow().then(canShow => {
                 expect(canShow).toBe(true);
-            }));
+            });
+        });
 
         it('should return false if user cannot dismiss alerts', () => {
             isAvailableMock.mockReturnValueOnce(false);
@@ -280,6 +284,9 @@ describe('breaking news', () => {
         });
 
         it('should wait 3 seconds before displaying new alert', () => {
+            const compiled = jest.fn();
+
+            fakeTemplate.mockReturnValueOnce(compiled);
             getMock.mockImplementationOnce(key => {
                 if (key === knownAlertIDsStorageKey) {
                     return {
@@ -328,9 +335,8 @@ describe('breaking news', () => {
                         );
                         expect(spectreElems.length).toBe(1);
 
-                        expect(fakeTemplate.mock.calls[0][1].id).toBe(
-                            'alert_1'
-                        );
+                        // console.log('compiled', compiled.mock.calls[0][0].id)
+                        expect(compiled.mock.calls[0][0].id).toBe('alert_1');
                     }
 
                     expect(lastCallArgs[0]).toEqual(knownAlertIDsStorageKey);
@@ -344,7 +350,10 @@ describe('breaking news', () => {
             });
         });
 
-        it('should show a known alert immediately', () =>
+        it('should show a known alert immediately', () => {
+            const compiled = jest.fn();
+
+            fakeTemplate.mockReturnValueOnce(compiled);
             breakingNews.canShow().then(canShow => {
                 expect(canShow).toBe(true);
 
@@ -380,9 +389,7 @@ describe('breaking news', () => {
                         );
                         expect(spectreElems.length).toBe(1);
 
-                        expect(fakeTemplate.mock.calls[0][1].id).toBe(
-                            'alert_1'
-                        );
+                        expect(compiled.mock.calls[0][0].id).toBe('alert_1');
                     }
 
                     expect(lastCallArgs[0]).toEqual(knownAlertIDsStorageKey);
@@ -392,11 +399,14 @@ describe('breaking news', () => {
                         alert_3: false,
                     });
                 }
-            }));
+            });
+        });
 
         it('should show a global alert before an edition alert', () => {
             const pubDate = Date.now();
+            const compiled = jest.fn();
 
+            fakeTemplate.mockReturnValueOnce(compiled);
             fakeFetchJson.mockReturnValueOnce(
                 Promise.resolve({
                     webTitle: 'Breaking News',
@@ -469,9 +479,7 @@ describe('breaking news', () => {
                         );
                         expect(spectreElems.length).toBe(1);
 
-                        expect(fakeTemplate.mock.calls[0][1].id).toBe(
-                            'alert_2'
-                        );
+                        expect(compiled.mock.calls[0][0].id).toBe('alert_2');
                     }
 
                     expect(lastCallArgs[0]).toEqual(knownAlertIDsStorageKey);
@@ -485,7 +493,9 @@ describe('breaking news', () => {
 
         it('should show an edition alert before a section alert', () => {
             const pubDate = Date.now();
+            const compiled = jest.fn();
 
+            fakeTemplate.mockReturnValueOnce(compiled);
             fakeFetchJson.mockReturnValueOnce(
                 Promise.resolve({
                     webTitle: 'Breaking News',
@@ -558,9 +568,7 @@ describe('breaking news', () => {
                         );
                         expect(spectreElems.length).toBe(1);
 
-                        expect(fakeTemplate.mock.calls[0][1].id).toBe(
-                            'alert_2'
-                        );
+                        expect(compiled.mock.calls[0][0].id).toBe('alert_2');
                     }
 
                     expect(lastCallArgs[0]).toEqual(knownAlertIDsStorageKey);
