@@ -193,6 +193,16 @@
     }
 }
 
+.content__labels--flagship {
+    .content--media.content--pillar-news & {
+        padding: 6px 0 0;
+
+        .content__label__link {
+            color: $highlight-main;
+        }
+    }
+}
+
 .content__label {
     @include fs-header(1);
     display: inline;
@@ -271,6 +281,10 @@
     @include mq(leftCol) {
         margin-bottom: -$gs-baseline / 2;
     }
+}
+
+.content__headline--flagship {
+    padding-top: 0;
 }
 
 .content__head--byline-pic {
