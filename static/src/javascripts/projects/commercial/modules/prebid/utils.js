@@ -2,6 +2,7 @@
 
 import once from 'lodash/functions/once';
 import { getBreakpoint } from 'lib/detect';
+import { pbTestNameMap } from 'lib/url';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
 import config from 'lib/config';
 import { commercialPrebidAdYouLike } from 'common/modules/experiments/tests/commercial-prebid-adyoulike';
@@ -92,6 +93,14 @@ export const shouldIncludeAdYouLike = (slotSizes: PrebidSize[]): boolean => {
 export const shouldIncludeOzone = (): boolean =>
     // include in 1 in 2 (50%) of page views
     !isInUsRegion() && !isInAuRegion() && getRandomIntInclusive(1, 2) === 1;
+
+export const shouldIncludeAppNexus = (): boolean =>
+    isInAuRegion() ||
+    (
+        config.get('switches.prebidAppnexusUkRow') &&
+        !isInUsRegion() ||
+        !!pbTestNameMap()['and']
+    );
 
 export const stripMobileSuffix = (s: string): string =>
     stripSuffix(s, '--mobile');

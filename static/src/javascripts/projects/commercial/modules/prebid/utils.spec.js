@@ -7,14 +7,13 @@ import { getParticipations as getParticipations_ } from 'common/modules/experime
 import {
     getBreakpointKey,
     shouldIncludeAdYouLike,
+    shouldIncludeAppNexus,
     shouldIncludeOpenx,
     shouldIncludeOzone,
     shouldIncludeTrustX,
     stripMobileSuffix,
     stripTrailingNumbersAbove1,
 } from './utils';
-import { shouldIncludeAppNexus } from './bid-config';
-//const shouldIncludeAppNexus = jest.fn(() => true);
 
 const getSync: any = getSync_;
 const getBreakpoint: any = getBreakpoint_;

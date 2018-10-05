@@ -3,6 +3,7 @@
 import config from 'lib/config';
 import memoize from 'lodash/functions/memoize';
 import isEmpty from 'lodash/objects/isEmpty';
+import { pbTestNameMap } from 'lib/url';
 import {
     buildAppNexusTargeting,
     buildPageTargeting,
@@ -39,6 +40,7 @@ import {
     containsMpuOrDmpu,
     getBreakpointKey,
     shouldIncludeAdYouLike,
+    shouldIncludeAppNexus,
     shouldIncludeOpenx,
     shouldIncludeOzone,
     shouldIncludeTrustX,
@@ -313,25 +315,6 @@ const getXaxisPlacementId = (sizes: PrebidSize[]): number => {
     return 13663304;
 };
 
-/* testing instrument */
-// Returns a map { <bidderName>: true } of bidders
-// according to the pbtest URL parameter
-
-type TestNameMap = { [string]: boolean };
-
-const pbTestNameMap: () => TestNameMap = memoize(
-    (): TestNameMap =>
-        new URLSearchParams(window.location.search)
-            .getAll('pbtest')
-            .reduce((acc, value) => {
-                acc[value] = true;
-                return acc;
-            }, {}),
-    (): string =>
-        // Same implicit parameter as the memoized function
-        window.location.search
-);
-
 // Is pbtest being used?
 const isPbTestOn = (): boolean => !isEmpty(pbTestNameMap());
 // Helper for conditions
@@ -591,14 +574,6 @@ export const bids: (string, PrebidSize[]) => PrebidBid[] = (
         }
         return bid;
     });
-
-export const shouldIncludeAppNexus = (): boolean =>
-    isInAuRegion() ||
-    (
-        config.get('switches.prebidAppnexusUkRow') &&
-        !isInUsRegion() ||
-        pbTestNameMap()['and']
-    );
 
 export const _ = {
     getAdYouLikePlacementId,
