@@ -1,8 +1,8 @@
 module.exports = [
-    // *** Guardian Headline - woff2 - Not Hinted ***
+    // *** GH Guardian Headline - woff2 - Not Hinted ***
     {
         dest: 'GHGuardianHeadline.woff2.json',
-        'font-family': '"Guardian Headline"',
+        'font-family': '"GH Guardian Headline"',
         fonts: [
             {
                 'font-weight': '300',
@@ -38,10 +38,10 @@ module.exports = [
             },
         ],
     },
-    // *** Guardian Headline - woff - Not Hinted ***
+    // *** GH Guardian Headline - woff - Not Hinted ***
     {
         dest: 'GHGuardianHeadline.woff.json',
-        'font-family': '"Guardian Headline"',
+        'font-family': '"GH Guardian Headline"',
         fonts: [
             {
                 'font-weight': '300',
@@ -77,10 +77,10 @@ module.exports = [
             },
         ],
     },
-    // *** Guardian Headline - ttf - Not Hinted ***
+    // *** GH Guardian Headline - ttf - Not Hinted ***
     {
         dest: 'GHGuardianHeadline.ttf.json',
-        'font-family': '"Guardian Headline"',
+        'font-family': '"GH Guardian Headline"',
         fonts: [
             {
                 'font-weight': '300',
@@ -116,10 +116,10 @@ module.exports = [
             },
         ],
     },
-    // *** Guardian Headline - woff2 - Hinted ***
+    // *** GH Guardian Headline - woff2 - Hinted ***
     {
         dest: 'GHGuardianHeadlineHinted.woff2.json',
-        'font-family': '"Guardian Headline"',
+        'font-family': '"GH Guardian Headline"',
         fonts: [
             {
                 'font-weight': '300',
@@ -155,10 +155,10 @@ module.exports = [
             },
         ],
     },
-    // *** Guardian Headline - woff - Hinted ***
+    // *** GH Guardian Headline - woff - Hinted ***
     {
         dest: 'GHGuardianHeadlineHinted.woff.json',
-        'font-family': '"Guardian Headline"',
+        'font-family': '"GH Guardian Headline"',
         fonts: [
             {
                 'font-weight': '300',
@@ -194,10 +194,10 @@ module.exports = [
             },
         ],
     },
-    // *** Guardian Headline - ttf - Hinted ***
+    // *** GH Guardian Headline - ttf - Hinted ***
     {
         dest: 'GHGuardianHeadlineHinted.ttf.json',
-        'font-family': '"Guardian Headline"',
+        'font-family': '"GH Guardian Headline"',
         fonts: [
             {
                 'font-weight': '300',
