@@ -94,11 +94,8 @@ export const shouldIncludeOzone = (): boolean =>
 
 export const shouldIncludeAppNexus = (): boolean =>
     isInAuRegion() ||
-    (
-        config.get('switches.prebidAppnexusUkRow') &&
-        !isInUsRegion() ||
-        !!pbTestNameMap()['and']
-    );
+    ((config.get('switches.prebidAppnexusUkRow') && !isInUsRegion()) ||
+        !!pbTestNameMap().and);
 
 export const stripMobileSuffix = (s: string): string =>
     stripSuffix(s, '--mobile');

@@ -5,7 +5,6 @@ import memoize from 'lodash/functions/memoize';
 
 const supportsPushState = hasPushStateSupport();
 
-
 /* commercial testing instrument */
 // Returns a map { <bidderName>: true } of bidders
 // according to the pbtest URL parameter
