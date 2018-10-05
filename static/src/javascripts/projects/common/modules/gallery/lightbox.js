@@ -303,7 +303,7 @@ class GalleryLightbox {
     ): Promise<Object> {
         const pathPrefix = direction === 'forwards' ? 'getnext' : 'getprev';
         const seriesTag = config
-            .get('page.nonKeywordTagIds')
+            .get('page.nonKeywordTagIds', '')
             .split(',')
             .filter(tag => tag.includes('series'))[0];
         const fetchUrl = `/${pathPrefix}/${seriesTag}/${currentImageId}`;
@@ -315,7 +315,7 @@ class GalleryLightbox {
             );
     }
 
-    loadOrOpen(newGalleryJson: Object): void {
+    loadOrOpen(newGalleryJson: GalleryJson): void {
         if (
             this.galleryJson &&
             newGalleryJson.id === this.galleryJson.id &&
@@ -344,16 +344,15 @@ class GalleryLightbox {
                 GalleryLightbox.loadNextOrPrevious(currentId, 'forwards'),
                 GalleryLightbox.loadNextOrPrevious(currentId, 'backwards'),
             ])
-                .then(result => ({
-                    next: result[0].map(e => e.images[0]),
-                    previous: result[1].map(e => e.images[0]),
+                .then(([nextResult, previousResult]) => ({
+                    next: nextResult.map(e => e.images[0]),
+                    previous: previousResult.map(e => e.images[0]),
                 }))
-                .then(nextPrevJson => {
+                .then(({ next, previous }) => {
                     // combine this image, and the ones before and after it, into one big array
-                    const allImages = nextPrevJson.previous
+                    const allImages = previous
                         .reverse()
-                        .concat(galleryJson.images, nextPrevJson.next);
-
+                        .concat(galleryJson.images, next);
                     if (allImages.length < 2) {
                         bonzo([this.nextBtn, this.prevBtn]).hide();
                         $(
@@ -364,7 +363,7 @@ class GalleryLightbox {
 
                     galleryJson.images = allImages;
                     // start index is in the middle of the two lists we just concatenated
-                    this.startIndex = nextPrevJson.previous.length + 1;
+                    this.startIndex = previous.length + 1;
                     if (jumpToStartImage) {
                         this.index = this.startIndex;
                     } else {
@@ -373,7 +372,7 @@ class GalleryLightbox {
                     this.loadOrOpen(galleryJson);
                 });
         } else {
-            this.index = defaultIndex;
+            this.index = this.startIndex ? this.startIndex : defaultIndex;
             this.loadOrOpen(galleryJson);
         }
     }
