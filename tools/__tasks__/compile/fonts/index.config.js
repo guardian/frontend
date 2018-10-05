@@ -27,11 +27,6 @@ module.exports = [
                     'GuardianHeadline/noalts-not-hinted/GHGuardianHeadline-MediumItalic.woff2',
             },
             {
-                'font-weight': '600',
-                src:
-                    'GuardianHeadline/noalts-not-hinted/GHGuardianHeadline-Semibold.woff2',
-            },
-            {
                 'font-weight': '700',
                 src:
                     'GuardianHeadline/noalts-not-hinted/GHGuardianHeadline-Bold.woff2',
@@ -64,11 +59,6 @@ module.exports = [
                 'font-style': 'italic',
                 src:
                     'GuardianHeadline/latin1-not-hinted/GHGuardianHeadline-MediumItalic.woff',
-            },
-            {
-                'font-weight': '600',
-                src:
-                    'GuardianHeadline/latin1-not-hinted/GHGuardianHeadline-Semibold.woff',
             },
             {
                 'font-weight': '700',
@@ -105,11 +95,6 @@ module.exports = [
                     'GuardianHeadline/latin1-not-hinted/GHGuardianHeadline-MediumItalic.ttf',
             },
             {
-                'font-weight': '600',
-                src:
-                    'GuardianHeadline/latin1-not-hinted/GHGuardianHeadline-Semibold.ttf',
-            },
-            {
                 'font-weight': '700',
                 src:
                     'GuardianHeadline/latin1-not-hinted/GHGuardianHeadline-Bold.ttf',
@@ -142,11 +127,6 @@ module.exports = [
                 'font-style': 'italic',
                 src:
                     'GuardianHeadline/noalts-autohinted/GHGuardianHeadline-MediumItalic.woff2',
-            },
-            {
-                'font-weight': '600',
-                src:
-                    'GuardianHeadline/noalts-autohinted/GHGuardianHeadline-Semibold.woff2',
             },
             {
                 'font-weight': '700',
@@ -183,11 +163,6 @@ module.exports = [
                     'GuardianHeadline/latin1-autohinted/GHGuardianHeadline-MediumItalic.woff',
             },
             {
-                'font-weight': '600',
-                src:
-                    'GuardianHeadline/latin1-autohinted/GHGuardianHeadline-Semibold.woff',
-            },
-            {
                 'font-weight': '700',
                 src:
                     'GuardianHeadline/latin1-autohinted/GHGuardianHeadline-Bold.woff',
@@ -220,11 +195,6 @@ module.exports = [
                 'font-style': 'italic',
                 src:
                     'GuardianHeadline/latin1-autohinted/GHGuardianHeadline-MediumItalic.ttf',
-            },
-            {
-                'font-weight': '600',
-                src:
-                    'GuardianHeadline/latin1-autohinted/GHGuardianHeadline-Semibold.ttf',
             },
             {
                 'font-weight': '700',
