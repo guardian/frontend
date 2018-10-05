@@ -1,6 +1,11 @@
 // @flow
+import fetchJson from 'lib/fetch-json';
+
 import { _, init } from './cmp';
 import { log as log_ } from './log';
+
+jest.mock('lib/fetch-json', () => jest.fn());
+const fetchJsonMock: JestMockFn<*, *> = (fetchJson: any);
 
 const { CmpService } = _;
 
@@ -14,6 +19,35 @@ jest.mock('commercial/modules/cmp/log', () => ({
         info: jest.fn(),
     },
 }));
+
+const shortVendorList = {
+    version: 1,
+    purposeIDs: [1, 2, 3, 4],
+    purposesByVID: {
+        '1': [],
+        '2': [],
+        '3': [],
+        '4': [],
+        '5': [],
+        '6': [],
+    },
+    legIntPurposesByVID: {
+        '1': [],
+        '2': [],
+        '3': [],
+        '4': [],
+        '5': [],
+        '6': [],
+    },
+    featuresIdsByVID: {
+        '1': [],
+        '2': [],
+        '3': [],
+        '4': [],
+        '5': [],
+        '6': [],
+    },
+};
 
 const globalVendorList = {
     vendorListVersion: 1,
@@ -64,10 +98,10 @@ const globalVendorList = {
 };
 
 class StoreMock {
-    vendorList: {};
+    shortVendorList: {};
 
-    constructor(vendorList) {
-        this.vendorList = vendorList;
+    constructor(shortVendorListData) {
+        this.shortVendorList = shortVendorListData;
     }
     getVendorConsentsObject = jest.fn(() => {});
 }
@@ -77,8 +111,11 @@ describe('cmp', () => {
 
     beforeEach(() => {
         // $FlowFixMe I know the Store is a Mock Flow... this is a test
-        cmp = new CmpService(new StoreMock(globalVendorList));
+        cmp = new CmpService(new StoreMock(shortVendorList));
         jest.resetAllMocks();
+        fetchJsonMock.mockImplementation(
+            () => new Promise(resolve => resolve(globalVendorList))
+        );
     });
 
     it('exists', () => {

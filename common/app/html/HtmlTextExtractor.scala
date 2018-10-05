@@ -1,4 +1,4 @@
-package common
+package html
 
 import org.jsoup.Jsoup
 import org.jsoup.nodes.{Node, TextNode}
@@ -23,7 +23,7 @@ object HtmlTextExtractor {
       }
       .mkString
 
-    removeTripleNewline(text)
+    removeWhitespace(text)
 
   }
 
@@ -36,9 +36,10 @@ object HtmlTextExtractor {
       node +: children.flatMap(filterImagesAndFlattenNodes)
   }
 
-  private def removeTripleNewline(text: String): String = {
-    val modified = "\n\\s*\n\\s*\n\\s*\n".r.replaceAllIn(text, "\n\n\n")
-    if (modified == text) modified else removeTripleNewline(modified)
+  private def removeWhitespace(text: String): String = {
+    val withoutTripleNewline = "\n\\s*\n\\s*\n\\s*\n".r.replaceAllIn(text, "\n\n\n")
+    val withoutSpacing = "(?m)^[ \\t\\x0B\\f\\r\\u00a0]+$".r.replaceAllIn(withoutTripleNewline, "")
+    if (withoutSpacing == text) withoutSpacing else removeWhitespace(withoutSpacing)
   }
 
 }

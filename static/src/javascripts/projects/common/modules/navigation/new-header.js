@@ -233,6 +233,8 @@ const toggleMenu = (): void => {
 };
 
 const toggleDropdown = (menuAndTriggerEls: MenuAndTriggerEls): void => {
+    const documentElement = document.documentElement;
+    const globalOpenClass = 'dropdown--open';
     const openClass = 'dropdown-menu--open';
 
     fastdom.read(() => menuAndTriggerEls).then(els => {
@@ -253,13 +255,21 @@ const toggleDropdown = (menuAndTriggerEls: MenuAndTriggerEls): void => {
 
             menu.setAttribute('aria-hidden', hiddenAttr);
             menu.classList.toggle(openClass, !isOpen);
-            if (!isOpen) {
+
+            if (documentElement) {
+                documentElement.classList.toggle(globalOpenClass, !isOpen);
+            }
+
+            if (!isOpen && document.body) {
+                // Prevents menu from being disconnected with trigger
+                (document.documentElement || document.body).scrollTop = 0;
+
                 const menuId = menu.getAttribute('id');
                 const triggerToggle = clickSpec => {
                     const elem = clickSpec ? clickSpec.target : null;
-
                     if (elem !== menu) {
                         toggleDropdown(menuAndTriggerEls);
+
                         // remove event listener when the dropdown closes
                         if (menuId) {
                             removeClickstreamListener(menuId);

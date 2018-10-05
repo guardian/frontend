@@ -171,7 +171,7 @@ trait FeatureSwitches {
     "If this is switched on then videos are enhanced using VideoJS",
     owners = Seq(Owner.withGithub("siadcock")),
     safeState = On,
-    sellByDate = new LocalDate(2018, 9, 28),
+    sellByDate = new LocalDate(2019, 1, 29),
     exposeClientSide = true
   )
 
@@ -459,7 +459,7 @@ trait FeatureSwitches {
     "When ON show YouTube related video suggestions in YouTube media atoms",
     owners = Seq(Owner.withGithub("siadcock")),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 10, 2),
+    sellByDate = new LocalDate(2018, 11, 6),
     exposeClientSide = true
   )
 

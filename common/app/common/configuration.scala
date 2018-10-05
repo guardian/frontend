@@ -319,6 +319,7 @@ class GuardianConfiguration extends Logging {
     lazy val domain = """^https?://(?:profile\.)?([^/:]+)""".r.unapplySeq(url).flatMap(_.headOption).getOrElse("theguardian.com")
     lazy val apiClientToken = configuration.getStringProperty("id.apiClientToken").getOrElse("")
     lazy val oauthUrl = configuration.getStringProperty("id.oauth.url").getOrElse("")
+    lazy val mmaUrl = configuration.getStringProperty("id.manage.url").getOrElse("https://manage.theguardian.com")
     lazy val membershipUrl = configuration.getStringProperty("id.membership.url").getOrElse("https://membership.theguardian.com")
     lazy val supportUrl = configuration.getStringProperty("id.support.url").getOrElse("https://support.theguardian.com")
     lazy val optimizeEpicUrl = configuration.getStringProperty("id.support.optimize-epic-url").getOrElse("https://support.theguardian.com/epic/control/index.html")
@@ -422,7 +423,7 @@ class GuardianConfiguration extends Logging {
     private lazy val dfpRoot = s"$commercialRoot/dfp"
     lazy val dfpInlineMerchandisingTagsDataKey = s"$dfpRoot/inline-merchandising-tags-v3.json"
     lazy val dfpHighMerchandisingTagsDataKey = s"$dfpRoot/high-merchandising-tags.json"
-    lazy val dfpPageSkinnedAdUnitsKey = s"$dfpRoot/pageskinned-adunits-v8.json"
+    lazy val dfpPageSkinnedAdUnitsKey = s"$dfpRoot/pageskinned-adunits-v9.json"
     lazy val dfpNonRefreshableLineItemIdsKey = s"$dfpRoot/non-refreshable-lineitem-ids-v1.json"
     lazy val dfpLineItemsKey = s"$dfpRoot/lineitems-v7.json"
     lazy val dfpActiveAdUnitListKey = s"$dfpRoot/active-ad-units.csv"

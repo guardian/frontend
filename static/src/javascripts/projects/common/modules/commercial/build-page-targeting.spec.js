@@ -28,7 +28,7 @@ const isUserLoggedIn: any = isUserLoggedIn_;
 const getSync: any = getSync_;
 
 jest.mock('lib/storage');
-jest.mock('lib/config', () => ({}));
+jest.mock('lib/config');
 jest.mock('lib/cookies', () => ({
     getCookie: jest.fn(),
 }));
@@ -94,10 +94,7 @@ describe('Build Page Targeting', () => {
             },
             isSensitive: false,
         };
-
-        config.ophan = {
-            pageViewId: 'presetOphanPageViewId',
-        };
+        config.ophan = { pageViewId: 'presetOphanPageViewId' };
 
         commercialFeatures.adFree = false;
 
@@ -206,7 +203,7 @@ describe('Build Page Targeting', () => {
 
     it('should remove empty values', () => {
         config.page = {};
-        config.ophan.pageViewId = '123456';
+        config.ophan = { pageViewId: '123456' };
         getUserSegments.mockReturnValue([]);
         getKruxSegments.mockReturnValue([]);
 
@@ -252,10 +249,6 @@ describe('Build Page Targeting', () => {
     });
 
     describe('Referrer', () => {
-        afterEach(() => {
-            getReferrer.mockReturnValue('');
-        });
-
         it('should set ref to Facebook', () => {
             getReferrer.mockReturnValue(
                 'https://www.facebook.com/feel-the-force'

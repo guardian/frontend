@@ -2,6 +2,7 @@
 
 @import fragments.email._
 @import model.EmailAddons.EmailContentType
+@import model.EmailAddons.unsubscribePlaceholder
 @import common.{CanonicalLink, LinkTo}
 @import implicits.Requests._
 
@@ -17,7 +18,7 @@
                                 <td class="ft__links">
                                     <a href="https://profile.theguardian.com/email-prefs">Manage your emails</a> |
                                     @if(request.isEmailJson || request.isEmailTxt) {
-                                        <a href="%%unsub_center_url%%">Unsubscribe</a> |
+                                        <a href="@unsubscribePlaceholder">Unsubscribe</a> |
                                     } else {
                                         <a href="%%microsite_base_url[default]40543[/default]%%">Unsubscribe</a> |
                                     }

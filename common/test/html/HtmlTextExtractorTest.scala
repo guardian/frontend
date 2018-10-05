@@ -1,4 +1,4 @@
-package common
+package html
 
 import org.scalatest.{FlatSpec, Matchers}
 import play.twirl.api.Html

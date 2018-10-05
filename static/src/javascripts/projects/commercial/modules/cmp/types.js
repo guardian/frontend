@@ -34,8 +34,15 @@ export type VendorList = {
     vendors: Array<Vendor>,
 };
 
-export type VendorData = {
-    vendorList: VendorList,
+export type ShortVendorList = {
+    version: number,
+    purposeIDs: Array<number>,
+    purposesByVID: { [string]: Array<number> },
+    legIntPurposesByVID: { [string]: Array<number> },
+    featuresIdsByVID: { [string]: Array<number> },
+};
+
+export type SelectedData = {
     selectedPurposeIds: Array<number>,
     selectedVendorIds: Array<number>,
     maxVendorId: number,

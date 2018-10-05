@@ -275,7 +275,8 @@ final case class MetaData (
     ("buildNumber", JsString(buildNumber)),
     ("revisionNumber", JsString(revision)),
     ("isFront", JsBoolean(isFront)),
-    ("contentType", JsString(contentType.map(_.name).getOrElse("")))
+    ("contentType", JsString(contentType.map(_.name).getOrElse(""))),
+    ("pillar", JsString(pillar.map(_.toString).getOrElse("")))
   )
 
   def opengraphProperties: Map[String, String] = {
