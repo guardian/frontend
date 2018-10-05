@@ -59,7 +59,8 @@ export const isBlocked = (
         .filter(conf => conf.geolocation === geolocation);
 
     const blockedUrls: Array<string> = flatten(
-        activeBlockConfigs.map(conf => conf.urls)
+        activeBlockConfigs.map(conf => conf.urls),
+        true
     );
 
     return blockedUrls.includes(pathname);

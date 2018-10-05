@@ -119,7 +119,7 @@ const initRadiator = (): void => {
     fetchJson(`//${window.location.host}/ophan/pageviews`).then(data => {
         const pluckedData = data.seriesData.map(dataObj => dataObj.data);
 
-        const todayData = flatten(pluckedData).reduce((days, day) => {
+        const todayData = flatten(pluckedData, true).reduce((days, day) => {
             const dateTime = day.dateTime;
 
             if (!days[dateTime]) {

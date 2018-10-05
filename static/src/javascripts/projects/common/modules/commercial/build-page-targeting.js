@@ -134,7 +134,8 @@ const formatAppNexusTargeting = (obj: { [string]: string }): string =>
                 return Array.isArray(value)
                     ? value.map(nestedValue => `${key}=${nestedValue}`)
                     : `${key}=${value}`;
-            })
+            }),
+        true
     ).join(',');
 
 type PageTargeting = {

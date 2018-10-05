@@ -77,7 +77,8 @@ const getAllSeparatorsForGroup = (clues: Array<Clue>): SeparatorLocations => {
                 cnt += clue.length;
 
                 return seps;
-            })
+            }),
+            true
         );
         k[separator] = flattenedSeparators;
     });
@@ -141,7 +142,7 @@ const cellsForClue = (entries: Array<Clue>, clue: Clue): Array<Position> => {
     if (clueIsInGroup(clue)) {
         const entriesForClue = getGroupEntriesForClue(entries, clue.group);
 
-        return flatten(entriesForClue.map(entry => cellsForEntry(entry)));
+        return flatten(entriesForClue.map(entry => cellsForEntry(entry)), true);
     }
 
     return cellsForEntry(clue);
@@ -188,7 +189,8 @@ const getClearableCellsForClue = (
             flatten(
                 entriesForClue.map(entry =>
                     getClearableCellsForEntry(grid, clueMap, entries, entry)
-                )
+                ),
+                true
             ),
             cell => [cell.x, cell.y].join()
         );
