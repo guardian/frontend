@@ -239,10 +239,12 @@ module.exports = [
         'font-family': '"Guardian Text Egyptian"',
         fonts: [
             {
+                'font-weight': '400',
                 src:
                     'GuardianTextEgyptian/noalts-not-hinted/GuardianTextEgyptian-Regular.woff2',
             },
             {
+                'font-weight': '400',
                 'font-style': 'italic',
                 src:
                     'GuardianTextEgyptian/noalts-not-hinted/GuardianTextEgyptian-RegularItalic.woff2',
@@ -260,10 +262,12 @@ module.exports = [
         'font-family': '"Guardian Text Egyptian"',
         fonts: [
             {
+                'font-weight': '400',
                 src:
                     'GuardianTextEgyptian/noalts-not-hinted/GuardianTextEgyptian-Regular.woff',
             },
             {
+                'font-weight': '400',
                 'font-style': 'italic',
                 src:
                     'GuardianTextEgyptian/latin1-not-hinted/GuardianTextEgyptian-RegularItalic.woff',
@@ -281,10 +285,12 @@ module.exports = [
         'font-family': '"Guardian Text Egyptian"',
         fonts: [
             {
+                'font-weight': '400',
                 src:
                     'GuardianTextEgyptian/latin1-not-hinted/GuardianTextEgyptian-Regular.ttf',
             },
             {
+                'font-weight': '400',
                 'font-style': 'italic',
                 src:
                     'GuardianTextEgyptian/latin1-not-hinted/GuardianTextEgyptian-RegularItalic.ttf',
@@ -302,10 +308,12 @@ module.exports = [
         'font-family': '"Guardian Text Egyptian"',
         fonts: [
             {
+                'font-weight': '400',
                 src:
                     'GuardianTextEgyptian/noalts-autohinted/GuardianTextEgyptian-Regular.woff2',
             },
             {
+                'font-weight': '400',
                 'font-style': 'italic',
                 src:
                     'GuardianTextEgyptian/noalts-autohinted/GuardianTextEgyptian-RegularItalic.woff2',
@@ -323,10 +331,12 @@ module.exports = [
         'font-family': '"Guardian Text Egyptian"',
         fonts: [
             {
+                'font-weight': '400',
                 src:
                     'GuardianTextEgyptian/noalts-autohinted/GuardianTextEgyptian-Regular.woff',
             },
             {
+                'font-weight': '400',
                 'font-style': 'italic',
                 src:
                     'GuardianTextEgyptian/latin1-autohinted/GuardianTextEgyptian-RegularItalic.woff',
@@ -344,12 +354,12 @@ module.exports = [
         'font-family': '"Guardian Text Egyptian"',
         fonts: [
             {
-                'font-weight': '300',
+                'font-weight': '400',
                 src:
                     'GuardianTextEgyptian/latin1-autohinted/GuardianTextEgyptian-Regular.ttf',
             },
             {
-                'font-weight': '300',
+                'font-weight': '400',
                 'font-style': 'italic',
                 src:
                     'GuardianTextEgyptian/latin1-autohinted/GuardianTextEgyptian-RegularItalic.ttf',
@@ -367,10 +377,12 @@ module.exports = [
         'font-family': '"Guardian Text Sans"',
         fonts: [
             {
+                'font-weight': '400',
                 src:
                     'GuardianTextSans/noalts-not-hinted/GuardianTextSans-Regular.woff2',
             },
             {
+                'font-weight': '400',
                 'font-style': 'italic',
                 src:
                     'GuardianTextSans/noalts-not-hinted/GuardianTextSans-RegularItalic.woff2',
@@ -388,10 +400,12 @@ module.exports = [
         'font-family': '"Guardian Text Sans"',
         fonts: [
             {
+                'font-weight': '400',
                 src:
                     'GuardianTextSans/noalts-not-hinted/GuardianTextSans-Regular.woff',
             },
             {
+                'font-weight': '400',
                 'font-style': 'italic',
                 src:
                     'GuardianTextSans/latin1-not-hinted/GuardianTextSans-RegularItalic.woff',
@@ -409,10 +423,12 @@ module.exports = [
         'font-family': '"Guardian Text Sans"',
         fonts: [
             {
+                'font-weight': '400',
                 src:
                     'GuardianTextSans/latin1-not-hinted/GuardianTextSans-Regular.ttf',
             },
             {
+                'font-weight': '400',
                 'font-style': 'italic',
                 src:
                     'GuardianTextSans/latin1-not-hinted/GuardianTextSans-RegularItalic.ttf',
@@ -430,10 +446,12 @@ module.exports = [
         'font-family': '"Guardian Text Sans"',
         fonts: [
             {
+                'font-weight': '400',
                 src:
                     'GuardianTextSans/noalts-autohinted/GuardianTextSans-Regular.woff2',
             },
             {
+                'font-weight': '400',
                 'font-style': 'italic',
                 src:
                     'GuardianTextSans/noalts-autohinted/GuardianTextSans-RegularItalic.woff2',
@@ -451,10 +469,12 @@ module.exports = [
         'font-family': '"Guardian Text Sans"',
         fonts: [
             {
+                'font-weight': '400',
                 src:
                     'GuardianTextSans/noalts-autohinted/GuardianTextSans-Regular.woff',
             },
             {
+                'font-weight': '400',
                 'font-style': 'italic',
                 src:
                     'GuardianTextSans/latin1-autohinted/GuardianTextSans-RegularItalic.woff',
@@ -472,10 +492,12 @@ module.exports = [
         'font-family': '"Guardian Text Sans"',
         fonts: [
             {
+                'font-weight': '400',
                 src:
                     'GuardianTextSans/latin1-autohinted/GuardianTextSans-Regular.ttf',
             },
             {
+                'font-weight': '400',
                 'font-style': 'italic',
                 src:
                     'GuardianTextSans/latin1-autohinted/GuardianTextSans-RegularItalic.ttf',
