@@ -15,7 +15,9 @@
                                         -> badgeFor(item).exists(_.classModifier.nonEmpty),
             "content__head--flagship"   -> (item.tags.isAudio && ActiveExperiments.isParticipating(AudioPageChange))
         ),
-        s"content__head tonal__head tonal__head--${toneClass(item)}"
+        "content__head",
+        "tonal__head",
+        s"tonal__head--${toneClass(item)}"
     )">
 
     <div class="content__header tonal__header">
