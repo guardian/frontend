@@ -12,7 +12,7 @@ class AmpAdRtcConfigTest extends FlatSpec with Matchers with BeforeAndAfter {
   private val prebidServerUrl =
     "http://localhost:8000/openrtb2/amp?tag_id=1&w=ATTR(width)&h=ATTR(height)&ow=ATTR(data-override-width)" +
       "&oh=ATTR(data-override-height)&slot=ATTR(data-slot)" +
-      "&targeting=TGT&curl=CANONICAL_URL&timeout=TIMEOUT&adcid=ADCID&purl=HREF"
+      "&targeting=TGT&curl=CANONICAL_URL&timeout=TIMEOUT&adcid=ADCID&purl=HREF&debug=1"
 
   before {
     Switches.KruxSwitch.switchOff()

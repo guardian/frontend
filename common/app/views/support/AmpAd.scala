@@ -5,6 +5,7 @@ import com.gu.commercial.display.{AdTargetParamValue, MultipleValues, SingleValu
 import common.Edition
 import common.commercial.AdUnitMaker
 import conf.Configuration.commercial.prebidServerHost
+import conf.Configuration.environment
 import conf.switches.Switches.KruxSwitch
 import conf.switches.{Switch, Switches}
 import model.Article
@@ -55,12 +56,16 @@ object AmpAdRtcConfig {
        * See https://github.com/ampproject/amphtml/pull/14155
        * and https://github.com/prebid/prebid-server/blob/master/docs/endpoints/openrtb2/amp.md#query-parameters
        */
-      val prebidServerUrl = urlValue(
-        s"$prebidServerHost/openrtb2/amp?tag_id=1&w=ATTR(width)&h=ATTR(height)&ow=ATTR(data-override-width)" +
-          "&oh=ATTR(data-override-height)&slot=ATTR(data-slot)&targeting=TGT&curl=CANONICAL_URL&timeout=TIMEOUT" +
-          "&adcid=ADCID&purl=HREF",
-        Switches.prebidServer
-      )
+      val prebidServerUrl = {
+        val url = s"$prebidServerHost/openrtb2/amp?tag_id=1&w=ATTR(width)&h=ATTR(height)&ow=ATTR(data-override-width)" +
+          "&oh=ATTR(data-override-height)&slot=ATTR(data-slot)" +
+          "&targeting=TGT&curl=CANONICAL_URL&timeout=TIMEOUT" +
+          s"&adcid=ADCID&purl=HREF"
+        urlValue(
+          if (environment.isProd) url else s"$url&debug=1",
+          Switches.prebidServer
+        )
+      }
 
       val urlValues = (kruxUrl ++ prebidServerUrl).toSeq
       if (urlValues.nonEmpty) Seq("urls" -> urlValues)
