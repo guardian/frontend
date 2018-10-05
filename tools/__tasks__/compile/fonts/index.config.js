@@ -1,8 +1,8 @@
 module.exports = [
     // *** GH Guardian Headline - woff2 - Not Hinted ***
     {
-        dest: 'GHGuardianHeadline.woff2.json',
-        'font-family': '"GH Guardian Headline"',
+        dest: 'GuardianHeadline.woff2.json',
+        'font-family': '"Guardian Egyptian Web"',
         fonts: [
             {
                 'font-weight': '300',
@@ -35,8 +35,8 @@ module.exports = [
     },
     // *** GH Guardian Headline - woff - Not Hinted ***
     {
-        dest: 'GHGuardianHeadline.woff.json',
-        'font-family': '"GH Guardian Headline"',
+        dest: 'GuardianHeadline.woff.json',
+        'font-family': '"Guardian Egyptian Web"',
         fonts: [
             {
                 'font-weight': '300',
@@ -69,8 +69,8 @@ module.exports = [
     },
     // *** GH Guardian Headline - ttf - Not Hinted ***
     {
-        dest: 'GHGuardianHeadline.ttf.json',
-        'font-family': '"GH Guardian Headline"',
+        dest: 'GuardianHeadline.ttf.json',
+        'font-family': '"Guardian Egyptian Web"',
         fonts: [
             {
                 'font-weight': '300',
@@ -103,8 +103,8 @@ module.exports = [
     },
     // *** GH Guardian Headline - woff2 - Hinted ***
     {
-        dest: 'GHGuardianHeadlineHinted.woff2.json',
-        'font-family': '"GH Guardian Headline"',
+        dest: 'GuardianHeadlineHinted.woff2.json',
+        'font-family': '"Guardian Egyptian Web"',
         fonts: [
             {
                 'font-weight': '300',
@@ -137,8 +137,8 @@ module.exports = [
     },
     // *** GH Guardian Headline - woff - Hinted ***
     {
-        dest: 'GHGuardianHeadlineHinted.woff.json',
-        'font-family': '"GH Guardian Headline"',
+        dest: 'GuardianHeadlineHinted.woff.json',
+        'font-family': '"Guardian Egyptian Web"',
         fonts: [
             {
                 'font-weight': '300',
@@ -171,8 +171,8 @@ module.exports = [
     },
     // *** GH Guardian Headline - ttf - Hinted ***
     {
-        dest: 'GHGuardianHeadlineHinted.ttf.json',
-        'font-family': '"GH Guardian Headline"',
+        dest: 'GuardianHeadlineHinted.ttf.json',
+        'font-family': '"Guardian Egyptian Web"',
         fonts: [
             {
                 'font-weight': '300',
@@ -205,8 +205,8 @@ module.exports = [
     },
     // *** Guardian Text Egyptian - woff2 - Not Hinted ***
     {
-        dest: 'GuardianTextEgyptian.woff2.json',
-        'font-family': '"Guardian Text Egyptian"',
+        dest: 'GuardianTextEgyptianWeb.woff2.json',
+        'font-family': '"Guardian Text Egyptian Web"',
         fonts: [
             {
                 'font-weight': '400',
@@ -228,8 +228,8 @@ module.exports = [
     },
     // *** Guardian Text Egyptian - woff - Not Hinted ***
     {
-        dest: 'GuardianTextEgyptian.woff.json',
-        'font-family': '"Guardian Text Egyptian"',
+        dest: 'GuardianTextEgyptianWeb.woff.json',
+        'font-family': '"Guardian Text Egyptian Web"',
         fonts: [
             {
                 'font-weight': '400',
@@ -251,8 +251,8 @@ module.exports = [
     },
     // *** Guardian Text Egyptian - ttf - Not Hinted ***
     {
-        dest: 'GuardianTextEgyptian.ttf.json',
-        'font-family': '"Guardian Text Egyptian"',
+        dest: 'GuardianTextEgyptianWeb.ttf.json',
+        'font-family': '"Guardian Text Egyptian Web"',
         fonts: [
             {
                 'font-weight': '400',
@@ -274,8 +274,8 @@ module.exports = [
     },
     // *** Guardian Text Egyptian - woff2 - Hinted ***
     {
-        dest: 'GuardianTextEgyptianHinted.woff2.json',
-        'font-family': '"Guardian Text Egyptian"',
+        dest: 'GuardianTextEgyptianWebHinted.woff2.json',
+        'font-family': '"Guardian Text Egyptian Web"',
         fonts: [
             {
                 'font-weight': '400',
@@ -297,8 +297,8 @@ module.exports = [
     },
     // *** Guardian Text Egyptian - woff - Hinted ***
     {
-        dest: 'GuardianTextEgyptianHinted.woff.json',
-        'font-family': '"Guardian Text Egyptian"',
+        dest: 'GuardianTextEgyptianWebHinted.woff.json',
+        'font-family': '"Guardian Text Egyptian Web"',
         fonts: [
             {
                 'font-weight': '400',
@@ -320,8 +320,8 @@ module.exports = [
     },
     // *** Guardian Text Egyptian - ttf - Hinted ***
     {
-        dest: 'GuardianTextEgyptianHinted.ttf.json',
-        'font-family': '"Guardian Text Egyptian"',
+        dest: 'GuardianTextEgyptianWebHinted.ttf.json',
+        'font-family': '"Guardian Text Egyptian Web"',
         fonts: [
             {
                 'font-weight': '400',
@@ -343,8 +343,8 @@ module.exports = [
     },
     // *** Guardian Text Sans - woff2 - Not Hinted ***
     {
-        dest: 'GuardianTextSans.woff2.json',
-        'font-family': '"Guardian Text Sans"',
+        dest: 'GuardianTextSansWeb.woff2.json',
+        'font-family': '"Guardian Text Sans Web"',
         fonts: [
             {
                 'font-weight': '400',
@@ -366,8 +366,8 @@ module.exports = [
     },
     // *** Guardian Text Sans - woff - Not Hinted ***
     {
-        dest: 'GuardianTextSans.woff.json',
-        'font-family': '"Guardian Text Sans"',
+        dest: 'GuardianTextSansWeb.woff.json',
+        'font-family': '"Guardian Text Sans Web"',
         fonts: [
             {
                 'font-weight': '400',
@@ -389,8 +389,8 @@ module.exports = [
     },
     // *** Guardian Text Sans - ttf - Not Hinted ***
     {
-        dest: 'GuardianTextSans.ttf.json',
-        'font-family': '"Guardian Text Sans"',
+        dest: 'GuardianTextSansWeb.ttf.json',
+        'font-family': '"Guardian Text Sans Web"',
         fonts: [
             {
                 'font-weight': '400',
@@ -412,8 +412,8 @@ module.exports = [
     },
     // *** Guardian Text Sans - woff2 - Hinted ***
     {
-        dest: 'GuardianTextSansHinted.woff2.json',
-        'font-family': '"Guardian Text Sans"',
+        dest: 'GuardianTextSansWebHinted.woff2.json',
+        'font-family': '"Guardian Text Sans Web"',
         fonts: [
             {
                 'font-weight': '400',
@@ -435,8 +435,8 @@ module.exports = [
     },
     // *** Guardian Text Sans - woff - Hinted ***
     {
-        dest: 'GuardianTextSansHinted.woff.json',
-        'font-family': '"Guardian Text Sans"',
+        dest: 'GuardianTextSansWebHinted.woff.json',
+        'font-family': '"Guardian Text Sans Web"',
         fonts: [
             {
                 'font-weight': '400',
@@ -458,8 +458,8 @@ module.exports = [
     },
     // *** Guardian Text Sans - ttf - Hinted ***
     {
-        dest: 'GuardianTextSansHinted.ttf.json',
-        'font-family': '"Guardian Text Sans"',
+        dest: 'GuardianTextSansWebHinted.ttf.json',
+        'font-family': '"Guardian Text Sans Web"',
         fonts: [
             {
                 'font-weight': '400',
