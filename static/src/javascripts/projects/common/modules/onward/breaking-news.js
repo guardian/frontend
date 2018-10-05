@@ -8,12 +8,12 @@ import config from 'lib/config';
 import fetchJson from 'lib/fetch-json';
 import reportError from 'lib/report-error';
 import { local } from 'lib/storage';
-import template from 'lodash/utilities/template';
+import template from 'lodash/string/template';
 import { isWithinSeconds } from 'common/modules/ui/relativedates';
 import { inlineSvg } from 'common/views/svgs';
 import alertHtml from 'raw-loader!common/views/breaking-news.html';
-import flatten from 'lodash/arrays/flatten';
-import pick from 'lodash/objects/pick';
+import flatten from 'lodash/array/flatten';
+import pick from 'lodash/object/pick';
 import type { Banner } from 'common/modules/ui/bannerPicker';
 
 let alertToShow;
@@ -138,7 +138,7 @@ const pickNewest = (alerts: Array<Alert>): Alert =>
 const renderAlert = (alert: Alert): bonzo => {
     alert.closeIcon = inlineSvg('closeCentralIcon');
 
-    const $alert = bonzo.create(template(alertHtml, alert));
+    const $alert = bonzo.create(template(alertHtml)(alert));
 
     const closeButton = $('.js-breaking-news__item__close', $alert)[0];
 

@@ -9,7 +9,7 @@ import { TableDoughnut } from 'common/modules/charts/table-doughnut';
 import { belowArticleVisible } from 'lib/page';
 import { ScoreBoard } from 'common/modules/sport/score-board';
 import { addComponent as addRhcComponent } from 'common/modules/ui/rhc';
-import template from 'lodash/utilities/template';
+import template from 'lodash/string/template';
 
 declare type Extra = {
     name: string,

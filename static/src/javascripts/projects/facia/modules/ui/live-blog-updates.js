@@ -7,10 +7,10 @@ import fastdomPromise from 'lib/fastdom-promise';
 import fetchJson from 'lib/fetch-json';
 import mediator from 'lib/mediator';
 import { session } from 'lib/storage';
-import template from 'lodash/utilities/template';
+import template from 'lodash/string/template';
 import blockTemplate from 'raw-loader!facia/views/liveblog-block.html';
-import isUndefined from 'lodash/objects/isUndefined';
-import debounce from 'lodash/functions/debounce';
+import isUndefined from 'lodash/lang/isUndefined';
+import debounce from 'lodash/function/debounce';
 
 const animateDelayMs = 2000;
 const animateAfterScrollDelayMs = 500;
@@ -52,7 +52,7 @@ const renderBlock = (
         relTime = 'Updated just now';
     }
 
-    return template(blockTemplate, {
+    return template(blockTemplate)({
         ariaHidden: !block.isNew,
         href: `/${articleId}#${block.id}`,
         relativeTime: relTime,

@@ -65,7 +65,7 @@ jest.mock('lib/fetch-json', () =>
 jest.mock('common/modules/ui/relativedates', () => ({
     isWithinSeconds: jest.fn().mockReturnValue(true),
 }));
-jest.mock('lodash/utilities/template', () => jest.fn());
+jest.mock('lodash/string/template', () => jest.fn());
 jest.useFakeTimers();
 
 const isAvailableMock: any = require('lib/storage').local.isAvailable;
@@ -74,7 +74,7 @@ const setMock: any = require('lib/storage').local.set;
 const fakeFetchJson: any = require('lib/fetch-json');
 const isWithinSecondsMock: any = require('common/modules/ui/relativedates')
     .isWithinSeconds;
-const fakeTemplate: any = require('lodash/utilities/template');
+const fakeTemplate: any = require('lodash/string/template');
 
 const BREAKING_NEWS_DELAY = 3000;
 

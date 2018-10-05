@@ -1,7 +1,7 @@
 // @flow
 
 import bonzo from 'bonzo';
-import debounce from 'lodash/functions/debounce';
+import debounce from 'lodash/function/debounce';
 import fastdom from 'lib/fastdom-promise';
 import mediator from 'lib/mediator';
 

@@ -1,7 +1,7 @@
 // @flow
 import type { SlotRenderEndedEvent } from 'commercial/types';
 
-import once from 'lodash/functions/once';
+import once from 'lodash/function/once';
 import mediator from 'lib/mediator';
 import reportError from 'lib/report-error';
 import { fire } from 'common/modules/analytics/beacon';

@@ -1,5 +1,5 @@
 // @flow
-import memoize from 'lodash/functions/memoize';
+import memoize from 'lodash/function/memoize';
 import {
     getMvtNumValues,
     getMvtValue,

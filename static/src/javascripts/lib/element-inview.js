@@ -1,7 +1,7 @@
 // @flow
 
 import bean from 'bean';
-import debounce from 'lodash/functions/debounce';
+import debounce from 'lodash/function/debounce';
 import { noop } from 'lib/noop';
 
 type offsetType = {

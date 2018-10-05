@@ -1,6 +1,6 @@
 // @flow
 
-import sortBy from 'lodash/collections/sortBy';
+import sortBy from 'lodash/collection/sortBy';
 
 import { AnagramHelper } from './main';
 

@@ -6,7 +6,7 @@ import fastdom from 'fastdom';
 import { initEmail } from 'common/modules/email/email';
 import config from 'lib/config';
 import iframeTemplate from 'raw-loader!common/views/email/iframe.html';
-import template from 'lodash/utilities/template';
+import template from 'lodash/string/template';
 import { spaceFiller } from 'common/modules/article/space-filler';
 import { logError } from 'lib/robust';
 import {
@@ -261,7 +261,7 @@ const addListToPage = (
     successEventName: string = ''
 ): void => {
     const iframe = bonzo.create(
-        template(iframeTemplate, { ...listConfig, ...{ successEventName } })
+        template(iframeTemplate)({ ...listConfig, ...{ successEventName } })
     )[0];
     const $iframeEl = $(iframe);
     const onEmailAdded = () => {

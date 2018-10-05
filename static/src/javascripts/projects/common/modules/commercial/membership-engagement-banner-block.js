@@ -1,7 +1,7 @@
 // @flow
 import config from 'lib/config';
 import { getSync } from 'lib/geolocation';
-import flatten from 'lodash/arrays/flatten';
+import flatten from 'lodash/array/flatten';
 
 /**
  * A set of front URLs associated with a given region

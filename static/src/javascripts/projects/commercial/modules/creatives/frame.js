@@ -1,6 +1,6 @@
 // @flow
 import fastdom from 'lib/fastdom-promise';
-import template from 'lodash/utilities/template';
+import template from 'lodash/string/template';
 import { Toggles } from 'common/modules/ui/toggles';
 import { addClassesAndTitle } from 'common/views/svg';
 import { addTrackingPixel } from 'commercial/modules/creatives/add-tracking-pixel';

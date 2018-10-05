@@ -1,7 +1,7 @@
 // @flow
 
 import mediator from 'lib/mediator';
-import debounce from 'lodash/functions/debounce';
+import debounce from 'lodash/function/debounce';
 
 const timeSince = (time: number): number => new Date().getTime() - time;
 

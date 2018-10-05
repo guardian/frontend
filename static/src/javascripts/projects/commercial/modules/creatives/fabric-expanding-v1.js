@@ -5,12 +5,12 @@ import $ from 'lib/$';
 import { getViewport, isBreakpoint, isIOS, isAndroid } from 'lib/detect';
 import mediator from 'lib/mediator';
 import { local } from 'lib/storage';
-import template from 'lodash/utilities/template';
+import template from 'lodash/string/template';
 import fabricExpandingV1Html from 'raw-loader!commercial/views/creatives/fabric-expanding-v1.html';
 import fabricExpandingVideoHtml from 'raw-loader!commercial/views/creatives/fabric-expanding-video.html';
 import arrowDown from 'svgs/icon/arrow-down.svg';
 import closeCentral from 'svgs/icon/close-central.svg';
-import bindAll from 'lodash/functions/bindAll';
+import bindAll from 'lodash/function/bindAll';
 import { addTrackingPixel } from 'commercial/modules/creatives/add-tracking-pixel';
 import { addViewabilityTracker } from 'commercial/modules/creatives/add-viewability-tracker';
 

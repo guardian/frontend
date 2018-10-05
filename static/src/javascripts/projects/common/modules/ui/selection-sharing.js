@@ -6,7 +6,7 @@ import config from 'lib/config';
 import { hasTouchScreen } from 'lib/detect';
 import mediator from 'lib/mediator';
 import { inlineSvg } from 'common/views/svgs';
-import debounce from 'lodash/functions/debounce';
+import debounce from 'lodash/function/debounce';
 
 const twitterIcon = inlineSvg('shareTwitter', ['icon', 'centered-icon']);
 const emailIcon = inlineSvg('shareEmail', ['icon', 'centered-icon']);

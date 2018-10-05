@@ -1,5 +1,5 @@
 // @flow
-import template from 'lodash/utilities/template';
+import template from 'lodash/string/template';
 import { local as storage } from 'lib/storage';
 import $ from 'lib/$';
 import bean from 'bean';
@@ -85,7 +85,7 @@ const appendOverlay = () => {
         acquisitionsTests: acquisitionsTests.map(extractData),
     };
 
-    $('body').prepend(template(overlay, data));
+    $('body').prepend(template(overlay)(data));
 };
 
 export const showExperiments = () => {

@@ -1,6 +1,6 @@
 // @flow strict
 
-import once from 'lodash/functions/once';
+import once from 'lodash/function/once';
 import { getBreakpoint } from 'lib/detect';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
 import { commercialPrebidAdYouLike } from 'common/modules/experiments/tests/commercial-prebid-adyoulike';

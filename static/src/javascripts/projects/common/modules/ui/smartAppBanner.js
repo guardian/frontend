@@ -3,7 +3,7 @@ import fastdom from 'fastdom';
 import $ from 'lib/$';
 import { getCookie, addCookie } from 'lib/cookies';
 import { isIOS, isAndroid, getBreakpoint, getUserAgent } from 'lib/detect';
-import template from 'lodash/utilities/template';
+import template from 'lodash/string/template';
 import { loadCssPromise } from 'lib/load-css-promise';
 import { Message, hasUserAcknowledgedBanner } from 'common/modules/ui/message';
 import config from 'lib/config';
@@ -76,7 +76,7 @@ const show = (): Promise<boolean> =>
         const msg = new Message(messageCode, { position: 'top' });
         const fullTemplate = tmp + (getBreakpoint() === 'mobile' ? '' : tablet);
 
-        msg.show(template(fullTemplate, DATA[messageCode.toUpperCase()]));
+        msg.show(template(fullTemplate)(DATA[messageCode.toUpperCase()]));
 
         addCookie(COOKIE_IMPRESSION_KEY, String(impressions + 1));
 

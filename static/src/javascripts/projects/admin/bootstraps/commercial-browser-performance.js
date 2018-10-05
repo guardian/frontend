@@ -2,8 +2,8 @@
 
 import config from 'lib/config';
 import fetchJson from 'lib/fetch-json';
-import template from 'lodash/utilities/template';
-import countBy from 'lodash/collections/countBy';
+import template from 'lodash/string/template';
+import countBy from 'lodash/collection/countBy';
 
 // Globals that aren't imported
 declare var $: any;
@@ -53,7 +53,7 @@ const updateAverageStartTime = (startTimes: Array<number>): void => {
 const fetchData = (): void => {
     const currentDate: Date = new Date();
     currentDate.setSeconds(currentDate.getSeconds() - FETCH_DELAY);
-    const fetchUrl: string = template(reportTemplateUrl, {
+    const fetchUrl: string = template(reportTemplateUrl)({
         isoDate: currentDate.toISOString(),
     });
 

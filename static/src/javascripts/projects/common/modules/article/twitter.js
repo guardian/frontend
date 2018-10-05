@@ -6,7 +6,7 @@ import fastdom from 'fastdom';
 import config from 'lib/config';
 import { getBreakpoint, getViewport } from 'lib/detect';
 import mediator from 'lib/mediator';
-import debounce from 'lodash/functions/debounce';
+import debounce from 'lodash/function/debounce';
 
 const body: ?Element = document.querySelector(
     '.js-liveblog-body, .js-article__body, .js-article__body--minute-article'

@@ -12,7 +12,7 @@ import { trackNonClickInteraction } from 'common/modules/analytics/google';
 import { inlineSvg } from 'common/views/svgs';
 import { getUserFromApi, isUserLoggedIn } from 'common/modules/identity/api';
 import userPrefs from 'common/modules/user-prefs';
-import uniq from 'lodash/arrays/uniq';
+import uniq from 'lodash/array/uniq';
 import envelope from 'svgs/icon/envelope.svg';
 import crossIcon from 'svgs/icon/cross.svg';
 

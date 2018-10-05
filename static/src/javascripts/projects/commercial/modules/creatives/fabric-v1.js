@@ -1,7 +1,7 @@
 // @flow
 import fastdom from 'lib/fastdom-promise';
 import { isEnhanced, isAndroid, getUserAgent, getViewport } from 'lib/detect';
-import template from 'lodash/utilities/template';
+import template from 'lodash/string/template';
 import mediator from 'lib/mediator';
 import { addTrackingPixel } from 'commercial/modules/creatives/add-tracking-pixel';
 import { addViewabilityTracker } from 'commercial/modules/creatives/add-viewability-tracker';

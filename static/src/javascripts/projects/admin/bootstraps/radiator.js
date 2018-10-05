@@ -1,6 +1,6 @@
 // @flow
 import fetchJson from 'lib/fetch-json';
-import flatten from 'lodash/arrays/flatten';
+import flatten from 'lodash/array/flatten';
 
 const initRadiator = (): void => {
     // riff raff - requires you to be on the guardian network
