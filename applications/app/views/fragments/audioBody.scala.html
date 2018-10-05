@@ -15,7 +15,14 @@
             "content--paid-content paid-content" -> isPaidContent,
             "content--pillar-special-report" -> (toneClass(audio) == "tone-special-report")
         ),
-        "content", "content--media", "new-audio", s"content--pillar-${audio.metadata.pillar.nameOrDefault}", s"content--media--audio", "tonal", "tonal--tone-media", s"tonal--${toneClass(audio)}"
+        "content", 
+        "content--media", 
+        "content--flagship", 
+        s"content--pillar-${audio.metadata.pillar.nameOrDefault}", 
+        s"content--media--audio", 
+        "tonal", 
+        "tonal--tone-media", 
+        s"tonal--${toneClass(audio)}"
     )"
     itemscope itemtype="@audio.metadata.schemaType" role="main">
 
@@ -47,7 +54,7 @@
 
                             @if(audio.fields.body.nonEmpty) {
                                 <div class="from-content-api">
-                                    @Html(audio.fields.body)
+                                        @Html(audio.fields.body)
                                 </div>
                                }
 
