@@ -25,6 +25,13 @@
     allCards.collectFirst { case layout.FaciaCardAndIndex(_, card: layout.ContentCard, _) if card.snapStuff.nonEmpty => card }
 }
 
+@subscriptionLinks = @{
+    <span>Subscribe</span>
+    <span><a data-link-name="apple" href="https://itunes.apple.com/gb/podcast/the-guardian-long-read/id587347784?mt=2">Apple Podcasts</a></span>
+    <span><a data-link-name="google" href="https://www.google.com/podcasts?feed=aHR0cHM6Ly93d3cudGhlZ3VhcmRpYW4uY29tL25ld3Mvc2VyaWVzL3RoZS1hdWRpby1sb25nLXJlYWQvcG9kY2FzdC54bWw%3D">Google Podcasts</a></span>
+    <span><a data-link-name="spotify" href="https://open.spotify.com/show/0jG1HXr3tGoGorW1ieytRS">Spotify</a></span>
+}
+
 
 @containerHeader(containerDefinition, frontProperties)
 
@@ -72,18 +79,12 @@
                                     @fragments.inlineSvg("waveform-mobile-landscape", "journalism/podcast-container", Seq("fc-podcast-container__waveform-mobile-landscape"))
                                     @fragments.inlineSvg("waveform-mobile", "journalism/podcast-container", Seq("fc-podcast-container__waveform-mobile"))
                                     <div class="fc-podcast-container__subscribe fc-podcast-container__subscribe-large">
-                                        <span>Subscribe</span>
-                                        <span><a data-link-name="apple" href="https://itunes.apple.com/gb/podcast/the-guardian-long-read/id587347784?mt=2">Apple Podcasts</a></span>
-                                        <span><a data-link-name="google" href="https://www.google.com/podcasts?feed=aHR0cHM6Ly93d3cudGhlZ3VhcmRpYW4uY29tL25ld3Mvc2VyaWVzL3RoZS1hdWRpby1sb25nLXJlYWQvcG9kY2FzdC54bWw%3D">Google Podcasts</a></span>
-                                        <span><a data-link-name="spotify" href="https://open.spotify.com/show/0jG1HXr3tGoGorW1ieytRS">Spotify</a></span>
+                                        subscriptionLinks
                                     </div>
                                 </div>
                             </div>
                             <div class="fc-podcast-container__subscribe fc-podcast-container__subscribe-small">
-                                <span>Subscribe</span>
-                                <span><a data-link-name="apple" href="https://itunes.apple.com/gb/podcast/the-guardian-long-read/id587347784?mt=2">Apple Podcasts</a></span>
-                                <span><a data-link-name="google" href="https://www.google.com/podcasts?feed=aHR0cHM6Ly93d3cudGhlZ3VhcmRpYW4uY29tL25ld3Mvc2VyaWVzL3RoZS1hdWRpby1sb25nLXJlYWQvcG9kY2FzdC54bWw%3D">Google Podcasts</a></span>
-                                <span><a data-link-name="spotify" href="https://open.spotify.com/show/0jG1HXr3tGoGorW1ieytRS">Spotify</a></span>
+                                subscriptionLinks
                             </div>
                             <a class="fc-podcast-container__track u-faux-block-link__overlay js-headline-text" @Html(card.header.url.hrefWithRel) data-link-name="article" tabindex="-1" aria-hidden="true">
                             @RemoveOuterParaHtml(card.header.headline)
