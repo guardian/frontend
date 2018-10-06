@@ -90,19 +90,17 @@ const getRelevantAlerts = (alerts: Array<Alert>): Array<Alert> => {
     const edition = (page.edition || '').toLowerCase();
     const section = supportedSections[page.section];
 
-    return flattenDeep(
-        [
-            alerts
-                .filter(alert => alert.href === 'global')
-                .map(alert => alert.content),
-            alerts
-                .filter(alert => alert.href === edition)
-                .map(alert => alert.content),
-            alerts
-                .filter(alert => section && alert.href === section)
-                .map(alert => alert.content),
-        ]
-    );
+    return flattenDeep([
+        alerts
+            .filter(alert => alert.href === 'global')
+            .map(alert => alert.content),
+        alerts
+            .filter(alert => alert.href === edition)
+            .map(alert => alert.content),
+        alerts
+            .filter(alert => section && alert.href === section)
+            .map(alert => alert.content),
+    ]);
 };
 
 // keep the local alert history in sync with live alerts
