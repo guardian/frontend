@@ -22,7 +22,7 @@
     "emotion-server": "^9.2.4",
     "fastdom": "0.8.5",
     "fence": "guardian/fence#0.2.11",
-    "lodash": "^3.10.1",
+    "lodash": "^4.17.11",
     "object-fit-videos": "^1.0.3",
     "ophan-tracker-js": "1.3.13",
     "preact": "^8.2.9",
