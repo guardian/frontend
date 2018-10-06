@@ -16,7 +16,7 @@ import { commercialFeatures } from 'common/modules/commercial/commercial-feature
 import { getParticipations } from 'common/modules/experiments/utils';
 import flattenDeep from 'lodash/flattenDeep';
 import once from 'lodash/once';
-import pick from 'lodash/pick';
+import pickBy from 'lodash/pickBy';
 
 const format = (keyword: string): string =>
     keyword.replace(/[+\s]+/g, '-').toLowerCase();
@@ -122,7 +122,7 @@ const getReferrer = (): ?string => {
 
 const getWhitelistedQueryParams = (): {} => {
     const whiteList: Array<string> = ['0p19G'];
-    return pick(getUrlVars(), whiteList);
+    return pickBy(getUrlVars(), whiteList);
 };
 
 const formatAppNexusTargeting = (obj: { [string]: string }): string =>
@@ -221,7 +221,7 @@ const buildPageTargeting = once(
         );
 
         // filter out empty values
-        const pageTargeting: {} = pick(pageTargets, target => {
+        const pageTargeting: {} = pickBy(pageTargets, target => {
             if (Array.isArray(target)) {
                 return target.length > 0;
             }
