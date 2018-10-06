@@ -1,7 +1,7 @@
 // @flow
 import config from 'lib/config';
 import { getSync } from 'lib/geolocation';
-import flatten from 'lodash/flatten';
+import flattenDeep from 'lodash/flattenDeep';
 
 /**
  * A set of front URLs associated with a given region
@@ -58,9 +58,8 @@ export const isBlocked = (
         .map(switchName => switchBlockConfig[switchName])
         .filter(conf => conf.geolocation === geolocation);
 
-    const blockedUrls: Array<string> = flatten(
-        activeBlockConfigs.map(conf => conf.urls),
-        true
+    const blockedUrls: Array<string> = flattenDeep(
+        activeBlockConfigs.map(conf => conf.urls)
     );
 
     return blockedUrls.includes(pathname);

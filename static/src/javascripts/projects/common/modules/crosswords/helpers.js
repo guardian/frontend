@@ -1,8 +1,8 @@
 // @flow
 import { constants } from 'common/modules/crosswords/constants';
-import flatten from 'lodash/flatten';
+import flattenDeep from 'lodash/flattenDeep';
 import range from 'lodash/range';
-import uniq from 'lodash/uniq';
+import uniqBy from 'lodash/uniqBy';
 
 const isAcross = (clue: Clue): boolean => clue.direction === 'across';
 
@@ -68,7 +68,7 @@ const getAllSeparatorsForGroup = (clues: Array<Clue>): SeparatorLocations => {
 
     [',', '-'].forEach(separator => {
         let cnt = 0;
-        const flattenedSeparators = flatten(
+        const flattenedSeparators = flattenDeep(
             clues.map(clue => {
                 const separatorLocations =
                     clue.separatorLocations[separator] || [];
@@ -77,8 +77,7 @@ const getAllSeparatorsForGroup = (clues: Array<Clue>): SeparatorLocations => {
                 cnt += clue.length;
 
                 return seps;
-            }),
-            true
+            })
         );
         k[separator] = flattenedSeparators;
     });
@@ -142,7 +141,7 @@ const cellsForClue = (entries: Array<Clue>, clue: Clue): Array<Position> => {
     if (clueIsInGroup(clue)) {
         const entriesForClue = getGroupEntriesForClue(entries, clue.group);
 
-        return flatten(entriesForClue.map(entry => cellsForEntry(entry)), true);
+        return flattenDeep(entriesForClue.map(entry => cellsForEntry(entry)));
     }
 
     return cellsForEntry(clue);
@@ -185,12 +184,11 @@ const getClearableCellsForClue = (
 ): Array<Position> => {
     if (clueIsInGroup(clue)) {
         const entriesForClue = getGroupEntriesForClue(entries, clue.group);
-        return uniq(
-            flatten(
+        return uniqBy(
+            flattenDeep(
                 entriesForClue.map(entry =>
                     getClearableCellsForEntry(grid, clueMap, entries, entry)
-                ),
-                true
+                )
             ),
             cell => [cell.x, cell.y].join()
         );

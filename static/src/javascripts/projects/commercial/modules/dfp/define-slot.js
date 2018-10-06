@@ -2,7 +2,7 @@
 import { getUrlVars } from 'lib/url';
 import config from 'lib/config';
 import { breakpoints } from 'lib/detect';
-import uniq from 'lodash/uniq';
+import uniqBy from 'lodash/uniqBy';
 import flatten from 'lodash/flatten';
 import once from 'lodash/once';
 import { getOutbrainComplianceTargeting } from 'commercial/modules/third-party-tags/outbrain';
@@ -39,7 +39,7 @@ const buildSizeMapping = (sizes: Object): SizeMappingArray => {
 const getSizeOpts = (sizesByBreakpoint: Object): Object => {
     const sizeMapping = buildSizeMapping(sizesByBreakpoint);
     // as we're using sizeMapping, pull out all the ad sizes, as an array of arrays
-    const sizes = uniq(
+    const sizes = uniqBy(
         flatten(sizeMapping.map(size => size[1])),
         size => `${size[0]}-${size[1]}`
     );

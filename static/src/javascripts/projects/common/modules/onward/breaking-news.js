@@ -9,7 +9,7 @@ import fetchJson from 'lib/fetch-json';
 import reportError from 'lib/report-error';
 import { local } from 'lib/storage';
 import template from 'lodash/template';
-import flatten from 'lodash/flatten';
+import flattenDeep from 'lodash/flattenDeep';
 import pick from 'lodash/pick';
 import { isWithinSeconds } from 'common/modules/ui/relativedates';
 import { inlineSvg } from 'common/views/svgs';
@@ -90,7 +90,7 @@ const getRelevantAlerts = (alerts: Array<Alert>): Array<Alert> => {
     const edition = (page.edition || '').toLowerCase();
     const section = supportedSections[page.section];
 
-    return flatten(
+    return flattenDeep(
         [
             alerts
                 .filter(alert => alert.href === 'global')
@@ -101,8 +101,7 @@ const getRelevantAlerts = (alerts: Array<Alert>): Array<Alert> => {
             alerts
                 .filter(alert => section && alert.href === section)
                 .map(alert => alert.content),
-        ],
-        true
+        ]
     );
 };
 

@@ -14,7 +14,7 @@ import {
 } from 'common/modules/commercial/ad-prefs.lib';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { getParticipations } from 'common/modules/experiments/utils';
-import flatten from 'lodash/flatten';
+import flattenDeep from 'lodash/flattenDeep';
 import once from 'lodash/once';
 import pick from 'lodash/pick';
 
@@ -126,7 +126,7 @@ const getWhitelistedQueryParams = (): {} => {
 };
 
 const formatAppNexusTargeting = (obj: { [string]: string }): string =>
-    flatten(
+    flattenDeep(
         Object.keys(obj)
             .filter((key: string) => obj[key] !== '' && obj[key] !== null)
             .map((key: string) => {
@@ -134,8 +134,7 @@ const formatAppNexusTargeting = (obj: { [string]: string }): string =>
                 return Array.isArray(value)
                     ? value.map(nestedValue => `${key}=${nestedValue}`)
                     : `${key}=${value}`;
-            }),
-        true
+            })
     ).join(',');
 
 type PageTargeting = {
