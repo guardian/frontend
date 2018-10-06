@@ -1,8 +1,8 @@
 // @flow
 import { constants } from 'common/modules/crosswords/constants';
-import flatten from 'lodash/array/flatten';
-import range from 'lodash/utility/range';
-import uniq from 'lodash/array/uniq';
+import flatten from 'lodash/flatten';
+import range from 'lodash/range';
+import uniq from 'lodash/uniq';
 
 const isAcross = (clue: Clue): boolean => clue.direction === 'across';
 

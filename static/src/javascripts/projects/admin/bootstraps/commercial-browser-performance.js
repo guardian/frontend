@@ -2,8 +2,8 @@
 
 import config from 'lib/config';
 import fetchJson from 'lib/fetch-json';
-import template from 'lodash/string/template';
-import countBy from 'lodash/collection/countBy';
+import template from 'lodash/template';
+import countBy from 'lodash/countBy';
 
 // Globals that aren't imported
 declare var $: any;

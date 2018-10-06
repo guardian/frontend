@@ -6,7 +6,7 @@ import fastdom from 'fastdom';
 import { initEmail } from 'common/modules/email/email';
 import config from 'lib/config';
 import iframeTemplate from 'raw-loader!common/views/email/iframe.html';
-import template from 'lodash/string/template';
+import template from 'lodash/template';
 import { spaceFiller } from 'common/modules/article/space-filler';
 import { logError } from 'lib/robust';
 import {

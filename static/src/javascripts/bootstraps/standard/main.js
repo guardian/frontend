@@ -34,7 +34,7 @@ import { markTime } from 'lib/user-timing';
 import config from 'lib/config';
 import { newHeaderInit } from 'common/modules/navigation/new-header';
 import { trackPerformance } from 'common/modules/analytics/google';
-import debounce from 'lodash/function/debounce';
+import debounce from 'lodash/debounce';
 import ophan from 'ophan/ng';
 import { initAtoms } from './atoms';
 

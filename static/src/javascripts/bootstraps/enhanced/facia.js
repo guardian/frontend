@@ -13,7 +13,7 @@ import { lazyLoadContainers } from 'facia/modules/ui/lazy-load-containers';
 import { showUpdatesFromLiveBlog } from 'facia/modules/ui/live-blog-updates';
 import { init as initSnaps } from 'facia/modules/ui/snaps';
 import { Weather } from 'facia/modules/onwards/weather';
-import partial from 'lodash/function/partial';
+import partial from 'lodash/partial';
 import { videoContainerInit } from 'common/modules/video/video-container';
 
 const showSnaps = (): void => {

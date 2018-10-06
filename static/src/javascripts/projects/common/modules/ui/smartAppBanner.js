@@ -3,7 +3,7 @@ import fastdom from 'fastdom';
 import $ from 'lib/$';
 import { getCookie, addCookie } from 'lib/cookies';
 import { isIOS, isAndroid, getBreakpoint, getUserAgent } from 'lib/detect';
-import template from 'lodash/string/template';
+import template from 'lodash/template';
 import { loadCssPromise } from 'lib/load-css-promise';
 import { Message, hasUserAcknowledgedBanner } from 'common/modules/ui/message';
 import config from 'lib/config';

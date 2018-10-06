@@ -19,7 +19,7 @@ const getBreakpoint: any = getBreakpoint_;
 const testCanBeRun: any = testCanBeRun_;
 const getParticipations: any = getParticipations_;
 
-jest.mock('lodash/function/once', () => a => a);
+jest.mock('lodash/once', () => a => a);
 
 jest.mock('lib/geolocation', () => ({
     getSync: jest.fn(() => 'GB'),

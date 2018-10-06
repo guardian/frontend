@@ -1,6 +1,6 @@
 // @flow
 import fastdom from 'lib/fastdom-promise';
-import template from 'lodash/string/template';
+import template from 'lodash/template';
 import campaignForm from 'raw-loader!journalism/views/campaignForm.html';
 import { getCampaign } from 'journalism/modules/get-campaign';
 import { submitForm } from 'journalism/modules/submit-form';

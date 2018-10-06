@@ -5,7 +5,7 @@ import {
     cellsForClue,
     getAnagramClueData,
 } from 'common/modules/crosswords/helpers';
-import shuffle from 'lodash/collection/shuffle';
+import shuffle from 'lodash/shuffle';
 import { ClueInput } from './clue-input';
 import { CluePreview } from './clue-preview';
 import { Ring } from './ring';

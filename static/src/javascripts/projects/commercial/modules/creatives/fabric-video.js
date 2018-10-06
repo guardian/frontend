@@ -3,7 +3,7 @@ import qwery from 'qwery';
 import { addEventListener } from 'lib/events';
 import fastdom from 'lib/fastdom-promise';
 import { isIOS, isAndroid, isBreakpoint, getViewport } from 'lib/detect';
-import template from 'lodash/string/template';
+import template from 'lodash/template';
 import { addTrackingPixel } from 'commercial/modules/creatives/add-tracking-pixel';
 import { addViewabilityTracker } from 'commercial/modules/creatives/add-viewability-tracker';
 import fabricVideoStr from 'raw-loader!commercial/views/creatives/fabric-video.html';

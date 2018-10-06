@@ -2,9 +2,9 @@
 import { getUrlVars } from 'lib/url';
 import config from 'lib/config';
 import { breakpoints } from 'lib/detect';
-import uniq from 'lodash/array/uniq';
-import flatten from 'lodash/array/flatten';
-import once from 'lodash/function/once';
+import uniq from 'lodash/uniq';
+import flatten from 'lodash/flatten';
+import once from 'lodash/once';
 import { getOutbrainComplianceTargeting } from 'commercial/modules/third-party-tags/outbrain';
 
 const adUnit = once(() => {

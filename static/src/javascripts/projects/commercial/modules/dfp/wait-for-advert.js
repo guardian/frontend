@@ -1,5 +1,5 @@
 // @flow
-import memoize from 'lodash/function/memoize';
+import memoize from 'lodash/memoize';
 import { getAdvertById } from 'commercial/modules/dfp/get-advert-by-id';
 
 export const waitForAdvert = memoize(

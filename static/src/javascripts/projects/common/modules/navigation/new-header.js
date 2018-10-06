@@ -1,6 +1,6 @@
 // @flow
 
-import debounce from 'lodash/function/debounce';
+import debounce from 'lodash/debounce';
 import ophan from 'ophan/ng';
 import { isBreakpoint } from 'lib/detect';
 import mediator from 'lib/mediator';

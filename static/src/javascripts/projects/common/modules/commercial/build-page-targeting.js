@@ -14,9 +14,9 @@ import {
 } from 'common/modules/commercial/ad-prefs.lib';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { getParticipations } from 'common/modules/experiments/utils';
-import flatten from 'lodash/array/flatten';
-import once from 'lodash/function/once';
-import pick from 'lodash/object/pick';
+import flatten from 'lodash/flatten';
+import once from 'lodash/once';
+import pick from 'lodash/pick';
 
 const format = (keyword: string): string =>
     keyword.replace(/[+\s]+/g, '-').toLowerCase();

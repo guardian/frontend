@@ -1,8 +1,8 @@
 // @flow strict
 
 import config from 'lib/config';
-import memoize from 'lodash/function/memoize';
-import isEmpty from 'lodash/lang/isEmpty';
+import memoize from 'lodash/memoize';
+import isEmpty from 'lodash/isEmpty';
 import {
     buildAppNexusTargeting,
     buildPageTargeting,

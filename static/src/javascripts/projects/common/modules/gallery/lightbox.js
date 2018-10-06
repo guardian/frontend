@@ -7,7 +7,8 @@ import config from 'lib/config';
 import { getBreakpoint, hasTouchScreen, isBreakpoint } from 'lib/detect';
 import FiniteStateMachine from 'lib/fsm';
 import mediator from 'lib/mediator';
-import template from 'lodash/string/template';
+import template from 'lodash/template';
+import throttle from 'lodash/throttle';
 import { supportsPushState, pushUrl, back as urlBack } from 'lib/url';
 import { Component } from 'common/modules/component';
 import { inlineSvg } from 'common/views/svgs';
@@ -16,7 +17,6 @@ import buttonTpl from 'raw-loader!common/views/content/button.html';
 import endslateTpl from 'raw-loader!common/views/content/endslate.html';
 import loaderTpl from 'raw-loader!common/views/content/loader.html';
 import shareButtonTpl from 'raw-loader!common/views/content/share-button.html';
-import throttle from 'lodash/function/throttle';
 import { loadCssPromise } from 'lib/load-css-promise';
 
 type ImageJson = {

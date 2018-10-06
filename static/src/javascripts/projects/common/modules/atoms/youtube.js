@@ -10,7 +10,7 @@ import { Component } from 'common/modules/component';
 import $ from 'lib/$';
 import config from 'lib/config';
 import { isIOS, isAndroid, isBreakpoint } from 'lib/detect';
-import debounce from 'lodash/function/debounce';
+import debounce from 'lodash/debounce';
 import { isOn as accessibilityIsOn } from 'common/modules/accessibility/main';
 
 declare class YoutubePlayerTarget extends EventTarget {

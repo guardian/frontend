@@ -6,8 +6,8 @@ import $ from 'lib/$';
 import config from 'lib/config';
 import { isBreakpoint } from 'lib/detect';
 import { isRevisit } from 'common/modules/onward/history';
-import throttle from 'lodash/function/throttle';
-import forOwn from 'lodash/object/forOwn';
+import throttle from 'lodash/throttle';
+import forOwn from 'lodash/forOwn';
 import {
     buildGoogleAnalyticsEvent,
     getGoogleAnalyticsEventAction,

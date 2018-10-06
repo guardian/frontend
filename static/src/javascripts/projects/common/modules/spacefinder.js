@@ -6,7 +6,7 @@ import qwery from 'qwery';
 import bean from 'bean';
 import fastdom from 'lib/fastdom-promise';
 import mediator from 'lib/mediator';
-import memoize from 'lodash/function/memoize';
+import memoize from 'lodash/memoize';
 
 type SpacefinderOptions = {
     waitForLinks?: boolean,

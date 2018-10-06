@@ -6,7 +6,7 @@ import $ from 'lib/$';
 import fetchJSON from 'lib/fetch-json';
 import config from 'lib/config';
 import { integerCommas } from 'lib/formatters';
-import template from 'lodash/string/template';
+import template from 'lodash/template';
 import { inlineSvg } from 'common/views/svgs';
 import shareCountTemplate from 'raw-loader!common/views/content/share-count.html';
 import shareCountImmersiveTemplate from 'raw-loader!common/views/content/share-count-immersive.html';

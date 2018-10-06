@@ -6,7 +6,7 @@ import userPrefs from 'common/modules/user-prefs';
 import mediator from 'lib/mediator';
 import { isBreakpoint } from 'lib/detect';
 import { begin } from 'common/modules/analytics/register';
-import uniq from 'lodash/array/uniq';
+import uniq from 'lodash/uniq';
 
 type MessagePosition = 'top' | 'bottom';
 
