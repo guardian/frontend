@@ -11,6 +11,7 @@ const controlCopyParagraphTwo =
 const controlCopyParagraphThree =
     'If everyone who reads our reporting, who likes it, helps to support it, our future would be much more secure.';
 
+// used when Google Doc control cannot be fetched
 export const articleCopy = {
     heading: 'Since you’re here &hellip;',
     paragraphs: [
