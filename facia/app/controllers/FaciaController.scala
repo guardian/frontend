@@ -1,7 +1,7 @@
 package controllers
 
 import common._
-import _root_.html.{HtmlLinkUtmInsertion, HtmlTextExtractor}
+import _root_.html.{BrazeEmailFormatter, HtmlTextExtractor}
 import controllers.front._
 import layout.{CollectionEssentials, ContentCard, FaciaCard, FaciaCardAndIndex, FaciaContainer, Front}
 import model.Cached.{CacheableResult, RevalidatableResult, WithoutRevalidationResult}
@@ -167,11 +167,11 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
     val htmResponseInlined = if (InlineEmailStyles.isSwitchedOn) InlineStyles(htmlResponse) else htmlResponse
 
     if (request.isEmailJson) {
-      val htmlWithUtmLinks = HtmlLinkUtmInsertion(htmResponseInlined)
+      val htmlWithUtmLinks = BrazeEmailFormatter(htmResponseInlined)
       val emailJson = JsObject(Map("body" -> JsString(htmlWithUtmLinks.toString)))
       RevalidatableResult.Ok(emailJson)
     } else if (request.isEmailTxt) {
-      val htmlWithUtmLinks = HtmlLinkUtmInsertion(htmResponseInlined)
+      val htmlWithUtmLinks = BrazeEmailFormatter(htmResponseInlined)
       val emailTxtJson = JsObject(Map("body" -> JsString(HtmlTextExtractor(htmlWithUtmLinks))))
       RevalidatableResult.Ok(emailTxtJson)
     } else {

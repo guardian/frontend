@@ -9,11 +9,15 @@ import play.twirl.api.Html
 import scala.collection.JavaConverters._
 import scala.util.Try
 
-object HtmlLinkUtmInsertion extends Logging {
+object BrazeEmailFormatter extends Logging {
 
   def apply(html: Html): Html = {
     val documentBody = Jsoup.parse(html.toString)
-    Html(setLinks(documentBody).toString)
+    Html(trimWhitespace(setLinks(documentBody).toString))
+  }
+
+  private def trimWhitespace(html: String): String = {
+    "(?m) *$".r.replaceAllIn("(?m)^ *".r.replaceAllIn(html, ""), "")
   }
 
   private def setLinks(element: Element): Element = {

@@ -7,7 +7,7 @@ import com.gu.contentapi.client.model.ContentApiError
 import com.gu.contentapi.client.model.v1.ErrorResponse
 import conf.switches.Switch
 import conf.switches.Switches.InlineEmailStyles
-import _root_.html.{HtmlLinkUtmInsertion, HtmlTextExtractor}
+import _root_.html.{BrazeEmailFormatter, HtmlTextExtractor}
 import model.CacheTime.RecentlyUpdated
 import model.Cached.RevalidatableResult
 import model.{ApplicationContext, Cached, NoCache}
@@ -125,10 +125,10 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
     val htmlWithInlineStyles = if (InlineEmailStyles.isSwitchedOn) InlineStyles(html) else html
 
     if (request.isEmailJson) {
-      val htmlWithUtmLinks = HtmlLinkUtmInsertion(htmlWithInlineStyles)
+      val htmlWithUtmLinks = BrazeEmailFormatter(htmlWithInlineStyles)
       Cached(RecentlyUpdated)(RevalidatableResult.Ok(JsObject(Map("body" -> JsString(htmlWithUtmLinks.toString)))))
     } else if (request.isEmailTxt) {
-      val htmlWithUtmLinks = HtmlLinkUtmInsertion(htmlWithInlineStyles)
+      val htmlWithUtmLinks = BrazeEmailFormatter(htmlWithInlineStyles)
       Cached(RecentlyUpdated)(RevalidatableResult.Ok(JsObject(Map("body" -> JsString(HtmlTextExtractor(htmlWithUtmLinks))))))
     } else {
       Cached(page)(RevalidatableResult.Ok(htmlWithInlineStyles))
