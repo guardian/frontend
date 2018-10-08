@@ -39,6 +39,24 @@
             }
         }
 
+        case _ if componentName == "flagship" && frontId.contains("uk") => {
+            @defining(DateTime.now.getDayOfWeek) { now =>
+                @if(FlagshipFrontContainer.isSwitchedOn && now != SATURDAY && now != SUNDAY) {
+                    <section id="@componentName"
+                        class="@GetClasses.forContainerDefinition(containerDefinition)"
+                        data-link-name="container-@{containerDefinition.index + 1} | @componentName"
+                        data-id="@containerDefinition.dataId"
+                        data-component="@componentName"
+                        aria-expanded="true">
+
+                        <div class="fc-container__inner">
+                            @flagshipContainer(containerDefinition, frontProperties)
+                        </div>
+                    </section>
+                }
+            }
+        }
+
         case _ => {
             <section id="@componentName"
                  class="@GetClasses.forContainerDefinition(containerDefinition) @GetClasses.forFrontId(frontId)"
@@ -57,15 +75,7 @@
 
                     case _: Dynamic | _: Fixed => {
                         <div class="fc-container__inner">
-                            @if(containerDefinition.displayName.contains("Flagship") && frontId.contains("uk")) {
-                                @defining(DateTime.now.getDayOfWeek) { now =>
-                                    @if(FlagshipFrontContainer.isSwitchedOn && now != SATURDAY && now != SUNDAY) {
-                                        @flagshipContainer(containerDefinition, frontProperties)
-                                    }
-                                }
-                            } else {
-                                @standardContainer(containerDefinition, frontProperties, maybeContainerModel, showFrontBranding, frontId)
-                            }
+                            @standardContainer(containerDefinition, frontProperties, maybeContainerModel, showFrontBranding, frontId)
                         </div>
                     }
 
