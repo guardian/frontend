@@ -6,7 +6,7 @@
 @import views.html.fragments.containers.facia_cards._
 @import views.support.Commercial.container.shouldRenderAsPaidContainer
 @import views.support.GetClasses
-@import conf.switches.Switches.MostViewedFronts
+@import conf.switches.Switches.{MostViewedFronts, FlagshipFrontContainer}
 @import org.joda.time.DateTime
 @import org.joda.time.DateTimeConstants.{SATURDAY, SUNDAY}
 
@@ -59,7 +59,7 @@
                         <div class="fc-container__inner">
                             @if(containerDefinition.displayName.contains("Flagship") && frontId.contains("uk")) {
                                 @defining(DateTime.now.getDayOfWeek) { now =>
-                                    @if(now != SATURDAY && now != SUNDAY) {
+                                    @if(FlagshipFrontContainer.isSwitchedOn && now != SATURDAY && now != SUNDAY) {
                                         @flagshipContainer(containerDefinition, frontProperties)
                                     }
                                 }
