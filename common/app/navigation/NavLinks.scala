@@ -159,6 +159,7 @@ object NavLinks {
       NavLink("Observer Magazine", "/theobserver/magazine")
     )
   )
+  val weekly = NavLink("Guardian Weekly", "https://www.theguardian.com/weekly")
   val digitalNewspaperArchive = NavLink("Digital Archive", "https://theguardian.newspapers.com")
   val crosswords = NavLink("Crosswords", "/crosswords",
     children = List(
@@ -459,6 +460,7 @@ object NavLinks {
     todaysPaper,
     insideTheGuardian,
     observer,
+    weekly,
     NavLink("Professional networks", "/guardian-professional"),
     crosswords,
     guardianMasterClasses
@@ -470,6 +472,7 @@ object NavLinks {
     pictures,
     newsletters,
     insideTheGuardian,
+    weekly,
     crosswords
   )
   val usOtherLinks = List(
@@ -479,6 +482,7 @@ object NavLinks {
     pictures,
     newsletters,
     insideTheGuardian,
+    weekly,
     crosswords
   )
   val intOtherLinks = List(
@@ -490,6 +494,7 @@ object NavLinks {
     todaysPaper,
     insideTheGuardian,
     observer,
+    weekly,
     crosswords
   )
 
