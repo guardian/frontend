@@ -228,6 +228,7 @@ const buildGrid = (
         });
     });
 
+    // $FlowFixMe
     return grid;
 };
 

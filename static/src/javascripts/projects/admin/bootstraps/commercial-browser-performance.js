@@ -9,7 +9,7 @@ import countBy from 'lodash/countBy';
 declare var $: any;
 declare var Epoch: any;
 
-type HeatmapDatapoint = { time: number, histogram: Array<Array<number>> };
+type HeatmapDatapoint = { time: number, histogram: { [string]: number } };
 type Chart = { push: (_: Array<HeatmapDatapoint>) => void };
 
 let chart: Chart;

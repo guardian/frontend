@@ -22,7 +22,7 @@ type Position = {
 };
 
 type Cell = {
-    number: number,
+    number: number | string,
     isHighlighted: boolean,
     isEditable: boolean,
     isError: boolean,
