@@ -224,6 +224,12 @@ module.exports = [
                 src:
                     'GuardianTextEgyptian/noalts-not-hinted/GuardianTextEgyptian-Bold.woff2',
             },
+            {
+                'font-weight': '700',
+                'font-style': 'italic',
+                src:
+                    'GuardianTextEgyptian/noalts-not-hinted/GuardianTextEgyptian-BoldItalic.woff2',
+            },
         ],
     },
     // *** Guardian Text Egyptian - woff - Not Hinted ***
@@ -292,6 +298,12 @@ module.exports = [
                 'font-weight': '700',
                 src:
                     'GuardianTextEgyptian/noalts-autohinted/GuardianTextEgyptian-Bold.woff2',
+            },
+            {
+                'font-weight': '700',
+                'font-style': 'italic',
+                src:
+                    'GuardianTextEgyptian/noalts-autohinted/GuardianTextEgyptian-BoldItalic.woff2',
             },
         ],
     },
