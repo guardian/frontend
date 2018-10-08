@@ -55,7 +55,7 @@
                             <div class="fc-podcast-container__episode">
                                 <div class="fc-podcast-container__episode-image">
                                     @fragments.inlineSvg("audio-icon", "journalism/podcast-container", Seq("fc-podcast-container__audio-icon"))
-                                <img src="https://media.guim.co.uk/79284468f1b259db7d713dc24ea9af2a3f5c9937/0_0_800_800/500.png"/>
+                                    <img src="https://media.guim.co.uk/79284468f1b259db7d713dc24ea9af2a3f5c9937/0_0_800_800/500.png"/>
                                 </div>
                                 <div class="fc-podcast-container__episode-details">
                                     <div class="fc-item__header">
@@ -74,20 +74,22 @@
                                             <br>
                                         </div>
                                     </div>
+
                                     @fragments.inlineSvg("waveform-wide", "journalism/podcast-container", Seq("fc-podcast-container__waveform-wide"))
                                     @fragments.inlineSvg("waveform-tablet", "journalism/podcast-container", Seq("fc-podcast-container__waveform-tablet"))
                                     @fragments.inlineSvg("waveform-mobile-landscape", "journalism/podcast-container", Seq("fc-podcast-container__waveform-mobile-landscape"))
                                     @fragments.inlineSvg("waveform-mobile", "journalism/podcast-container", Seq("fc-podcast-container__waveform-mobile"))
+
                                     <div class="fc-podcast-container__subscribe fc-podcast-container__subscribe-large">
-                                        subscriptionLinks
+                                        @subscriptionLinks
                                     </div>
                                 </div>
                             </div>
                             <div class="fc-podcast-container__subscribe fc-podcast-container__subscribe-small">
-                                subscriptionLinks
+                                @subscriptionLinks
                             </div>
                             <a class="fc-podcast-container__track u-faux-block-link__overlay js-headline-text" @Html(card.header.url.hrefWithRel) data-link-name="article" tabindex="-1" aria-hidden="true">
-                            @RemoveOuterParaHtml(card.header.headline)
+                                @RemoveOuterParaHtml(card.header.headline)
                             </a>
                         </div>
                     }
@@ -97,21 +99,30 @@
                                 @card.displayElement match {
                                     case Some(InlineImage(images)) => {
                                         <div class="fc-item__media-wrapper">
-                                        @itemImage(
-                                            images,
-                                            inlineImage = true,
-                                            widthsByBreakpoint = Some(card.mediaWidthsByBreakpoint)
-                                        )
+                                            @itemImage(
+                                                images,
+                                                inlineImage = true,
+                                                widthsByBreakpoint = Some(card.mediaWidthsByBreakpoint)
+                                            )
                                         </div>
                                     }
                                     case _ => {}
                                 }
-                            <div class="fc-item__content ">
-                                <div class="fc-item__header">
-                                    <h2 class="fc-item__title"><a @Html(card.header.url.hrefWithRel) class="fc-item__link" data-link-name="series"><span class="fc-item__kicker">@RemoveOuterParaHtml(card.header.headline)</span> <span class="u-faux-block-link__cta fc-item__headline"> <span class="js-headline-text">More from the series</span></span> </a></h2>
+                                <div class="fc-item__content ">
+                                    <div class="fc-item__header">
+                                        <h2 class="fc-item__title">
+                                            <a @Html(card.header.url.hrefWithRel) class="fc-item__link" data-link-name="series">
+                                                <span class="fc-item__kicker">@RemoveOuterParaHtml(card.header.headline)</span>
+                                                <span class="u-faux-block-link__cta fc-item__headline">
+                                                    <span class="js-headline-text">More from the series</span>
+                                                </span>
+                                            </a>
+                                        </h2>
+                                    </div>
                                 </div>
-                            </div>
-                            <a @Html(card.header.url.hrefWithRel) class="u-faux-block-link__overlay js-headline-text" data-link-name="series" tabindex="-1" aria-hidden="true">More from the series</a>
+                                <a @Html(card.header.url.hrefWithRel) class="u-faux-block-link__overlay js-headline-text" data-link-name="series" tabindex="-1" aria-hidden="true">
+                                    More from the series
+                                </a>
                             </div>
                         </div>
                     }
