@@ -29,10 +29,10 @@ class Frame {
             16
         )}`;
 
-        const frameMarkup = template(frameStr, {
+        const frameMarkup = template(frameStr)({
             data: this.params,
         });
-        const labelMarkup = template(labelStr, {
+        const labelMarkup = template(labelStr)({
             data: {
                 buttonTitle: 'Ad',
                 infoTitle: 'Advertising on the Guardian',

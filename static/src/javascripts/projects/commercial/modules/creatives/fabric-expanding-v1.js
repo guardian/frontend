@@ -181,7 +181,7 @@ class FabricExpandingV1 {
             inlineStyle: [leftMargin, leftPosition, rightPosition].join('; '),
         };
 
-        return template(fabricExpandingVideoHtml, viewModel);
+        return template(fabricExpandingVideoHtml)(viewModel);
     }
 
     stopVideo(delay: number = 0) {
@@ -245,7 +245,7 @@ class FabricExpandingV1 {
             Math.random() * 10000
         ).toString(16)}`;
         const $fabricExpandingV1 = $.create(
-            template(fabricExpandingV1Html, {
+            template(fabricExpandingV1Html)({
                 data: Object.assign(
                     this.params,
                     showmoreArrow,

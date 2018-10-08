@@ -63,7 +63,7 @@ const FabricExpandableVideoV2 = (adSlot: Element, params: Object) => {
         };
 
         const $fabricExpandableVideo = $.create(
-            template(fabricExpandableVideoHtml, {
+            template(fabricExpandableVideoHtml)({
                 data: Object.assign(params, additionalParams),
             })
         );
