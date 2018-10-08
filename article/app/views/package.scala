@@ -50,7 +50,6 @@ object BodyCleaner {
       InBodyLinkCleaner("in body link", amp),
       BlockNumberCleaner,
       new TweetCleaner(article.content, amp),
-      WitnessCleaner,
       TableEmbedComplimentaryToP,
       R2VideoCleaner,
       PictureCleaner(article, amp),
