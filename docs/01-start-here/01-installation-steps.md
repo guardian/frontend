@@ -202,6 +202,22 @@ Then load IntelliJ, then click Import project and import the directory as an SBT
 
 Congratulations, you are now set up to edit frontend code!  See the [Optional steps](#optional-steps) below for other things to do.
 
+## Client-side development with VSCode
+
+While IntelliJ is great for Scala, you may want another option if you are writing a lot of JS and CSS, so quite a few people choose to use VSCode.
+
+You can download VSCode from [https://code.visualstudio.com/](https://code.visualstudio.com/)
+
+The built-in linting of VSCode may start finding TypeScript errors in JavaScript files...  To resolve this open your user settings and add the following lines:
+
+``` json
+    "javascript.validate.enable": false,
+    "typescript.validate.enable": false,
+```
+
+You can use the Command Palette (shift + cmd + P) to open user or workspace settings, just type in `Preferences: Open User Settings`
+
+Recommended VSCode extensions are listed in `.vscode/extensions.json` and VSCode should prompt you to install these when you open the project. You can also find and install these by searching for `@recommended` in the extensions pane.
 
 # Optional steps
 
