@@ -3,16 +3,14 @@
 @import views.support.Commercial.{isPaidContent, isAdFree}
 @import views.support.TrailCssClasses.toneClass
 @import views.support.{RenderClasses}
-@import experiments.{ActiveExperiments, AudioPageChange}
 
 @(page: MediaPage, audio: Audio)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @defining(isPaidContent(page), isAdFree(request)) { case (isPaidContent, isAdFree) =>
 
 <div class="@RenderClasses(Map(
-    "l-side-margins--media" ->  !isPaidContent,
-    "l-side-margins--flagship" -> ActiveExperiments.isParticipating(AudioPageChange)
-), "l-side-margins")">
+    "l-side-margins--media" ->  !isPaidContent
+), "l-side-margins", "l-side-margins--flagship")">
     <article id="article" class="@RenderClasses(
         Map(
             "content--has-body" -> audio.fields.body.nonEmpty,
@@ -36,10 +34,7 @@
 
         <div class="content__main tonal__main tonal__main--@toneClass(audio)">
             <div class="gs-container">
-                <div class="@RenderClasses(
-                    Map("content__main-column--flagship" -> ActiveExperiments.isParticipating(AudioPageChange)),
-                    "content__main-column", "content__main-column--media", "content__main-column--audio"
-                )">
+                <div class="content__main-column content__main-column--media content__main-column--audio content__main-column--flagship">
                     <div class="media-body">
 
                         @audio.elements.images.map{ img =>
