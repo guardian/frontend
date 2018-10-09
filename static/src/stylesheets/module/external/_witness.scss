@@ -1,0 +1,134 @@
+// Module: witness
+// Desc: This file contains all styles for Guardian Witness
+// Note: the naming convention is a mix between BEM and SMACSS
+// block--element instead of block__element
+//
+// Testing:
+// - images: /music/musicblog/2013/jun/27/glastonbury-2013-festival-liveblog-thursday1
+// - text: /technology/guardianwitness-blog/2014/apr/14/the-10-tech-commandments-to-avoid-digital-shame
+// - "Contribute with…" cta: /lifeandstyle/the-running-blog/2013/aug/05/competition-win-gps-running-watch
+
+.element-witness {
+    border: 1px solid $brightness-86;
+    margin-bottom: ($gs-baseline/3)*5;
+}
+.element-witness--title {
+    margin-bottom: ($gs-baseline/3)*2;
+}
+.element-witness--main {
+    padding: $gs-baseline $gs-gutter/2 ($gs-baseline/3)*4;
+}
+.element-witness figcaption {
+    // Make it look like the body copy
+    @include fs-bodyCopy(2);
+    margin: ($gs-baseline/3)*4 0 0;
+    color: $brightness-7;
+
+    &:before {
+        display: none; // Hide the "camera" icon
+    }
+}
+.element-witness-video iframe {
+    max-width: 100%;
+}
+.element-witness--main img {
+    width: 100%;
+    max-width: 100%;
+}
+.element-witness--metadata {
+    @include fs-textSans(3);
+    border-top: 1px solid $brightness-86;
+    padding: $gs-baseline $gs-gutter/2;
+    background: $brightness-97;
+    color: $brightness-46 !important;
+
+    img {
+        margin-bottom: 0;
+    }
+}
+.element-witness--source {
+    @include fs-textSans(3);
+    padding-left: $gs-gutter/2;
+    color: $brightness-46;
+}
+.element-witness--author-name {
+    font-weight: bold;
+}
+.element-witness--date {
+    @include fs-textSans(1, true);
+}
+.element-witness--author time {
+    display: block;
+}
+.witness-avatar {
+    float: left;
+    padding: 0 $gs-gutter/2 0 0;
+}
+.element-witness--author,
+.element-witness--date {
+    margin-bottom: 0;
+}
+
+.witness-cta {
+    overflow: hidden;
+    padding: $gs-baseline / 3 0;
+    border-top: 1px dotted $brightness-86;
+    margin-top: $gs-baseline / 3;
+
+    @include mq(leftCol) {
+        border-bottom: 1px dotted $brightness-86;
+        margin-bottom: $gs-baseline;
+    }
+}
+
+.witness__button {
+    position: relative;
+    float: left;
+    padding-left: $gs-gutter * 2 - 2px;
+    font-family: $f-serif-headline;
+    font-size: get-font-size(header, 1);
+    font-weight: normal;
+    white-space: nowrap;
+    margin-right: 0;
+    border: 0;
+
+    @include mq($from: desktop) {
+        &.button--large {
+            line-height: $gs-baseline * 3 - 2px;
+        }
+    }
+
+    .inline-plus svg {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: $gs-gutter / 2;
+        margin: auto;
+        height: 18px;
+        width: 18px;
+    }
+}
+
+.witness-logo {
+    display: inline-block;
+    letter-spacing: -.04em;
+    text-transform: lowercase;
+
+    .witness__button & {
+        color: #ffffff;
+        font-weight: 700;
+    }
+
+    .element-witness--source & {
+        @include font($f-serif-text, 700, 16, 16);
+    }
+
+}
+.witness-logo__witness {
+    margin-left: -3px;
+
+    .element-witness--source & {
+        color: $brightness-46;
+    }
+
+}
