@@ -664,7 +664,7 @@ class Crossword extends Component<*, CrosswordState> {
         const cells = cellsForEntry(entry);
 
         if (entry.solution) {
-            const badCells = zip(cells, entry.solution)
+            const badCells = zip(cells, entry.solution.split(''))
                 .filter(cellAndSolution => {
                     const coords = cellAndSolution[0];
                     const cell = this.state.grid[coords.x][coords.y];
