@@ -460,7 +460,7 @@ object NavLinks {
     todaysPaper,
     insideTheGuardian,
     observer,
-    weekly,
+    weekly.copy(url = s"${weekly.url}?INTCMP=gdnwb_mawns_editorial_gweekly_GW_TopNav_UK"),
     NavLink("Professional networks", "/guardian-professional"),
     crosswords,
     guardianMasterClasses
@@ -472,7 +472,7 @@ object NavLinks {
     pictures,
     newsletters,
     insideTheGuardian,
-    weekly,
+    weekly.copy(url = s"${weekly.url}?INTCMP=gdnwb_mawns_editorial_gweekly_GW_TopNav_Aus"),
     crosswords
   )
   val usOtherLinks = List(
@@ -482,7 +482,7 @@ object NavLinks {
     pictures,
     newsletters,
     insideTheGuardian,
-    weekly,
+    weekly.copy(url = s"${weekly.url}?INTCMP=gdnwb_mawns_editorial_gweekly_GW_TopNav_US"),
     crosswords
   )
   val intOtherLinks = List(
@@ -494,7 +494,7 @@ object NavLinks {
     todaysPaper,
     insideTheGuardian,
     observer,
-    weekly,
+    weekly.copy(url = s"${weekly.url}?INTCMP=gdnwb_mawns_editorial_gweekly_GW_TopNav_Int"),
     crosswords
   )
 
