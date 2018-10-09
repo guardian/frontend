@@ -30,7 +30,7 @@ class RemoteRender(implicit context: ApplicationContext) {
         case 200 =>
           Cached(article)(RevalidatableResult.Ok(Html(response.body)))
         case _ =>
-          NoCache(InternalServerError("Rendering tier failed"))
+          throw new Exception(response.body)
       }
     })
 
