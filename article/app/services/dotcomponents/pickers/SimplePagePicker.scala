@@ -6,6 +6,7 @@ import model.liveblog.{BlockElement, ImageBlockElement, TextBlockElement}
 import play.api.mvc.RequestHeader
 import services.dotcomponents.{LocalRender, RemoteRender, RenderType}
 import views.support.Commercial
+import implicits.Requests._
 
 object PageChecks {
 
@@ -51,6 +52,8 @@ object PageChecks {
 
   def isNotAGallery(page:PageWithStoryPackage): Boolean = ! page.item.tags.isGallery
 
+  def isNotAMP(request: RequestHeader): Boolean = ! request.isAmp
+
 }
 
 class SimplePagePicker extends RenderTierPickerStrategy {
@@ -69,7 +72,8 @@ class SimplePagePicker extends RenderTierPickerStrategy {
       ("isNotImmersive", PageChecks.isNotImmersive(page)),
       ("isNotLiveBlog", PageChecks.isNotLiveBlog(page)),
       ("isNotAReview", PageChecks.isNotAReview(page)),
-      ("isNotAGallery", PageChecks.isNotAGallery(page))
+      ("isNotAGallery", PageChecks.isNotAGallery(page)),
+      ("isNotAMP", PageChecks.isNotAMP(request))
     )
 
     val success = ! results.exists{!_._2}
