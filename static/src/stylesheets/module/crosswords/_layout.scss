@@ -51,6 +51,10 @@
     clear: both;
     position: relative;
     margin-top: $gs-baseline;
+
+    @include mq($from: wide) {
+        margin-right: gs-span(4) + $gs-baseline;
+    }
 }
 
 .crossword__controls {
