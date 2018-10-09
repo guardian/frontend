@@ -2,7 +2,9 @@
 
 import once from 'lodash/once';
 import { getBreakpoint } from 'lib/detect';
+import { pbTestNameMap } from 'lib/url';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
+import config from 'lib/config';
 import { commercialPrebidAdYouLike } from 'common/modules/experiments/tests/commercial-prebid-adyoulike';
 import { testCanBeRun } from 'common/modules/experiments/test-can-run-checks';
 import { getParticipations } from 'common/modules/experiments/utils';
@@ -69,8 +71,6 @@ export const getRandomIntInclusive = (
     return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
-export const shouldIncludeAppNexus = (): boolean => isInAuRegion();
-
 export const shouldIncludeOpenx = (): boolean =>
     !isInUsRegion() && !isInAuRegion();
 
@@ -90,6 +90,11 @@ export const shouldIncludeAdYouLike = (slotSizes: PrebidSize[]): boolean => {
 
 export const shouldIncludeOzone = (): boolean =>
     !isInUsRegion() && !isInAuRegion();
+
+export const shouldIncludeAppNexus = (): boolean =>
+    isInAuRegion() ||
+    ((config.get('switches.prebidAppnexusUkRow') && !isInUsRegion()) ||
+        !!pbTestNameMap().and);
 
 export const stripMobileSuffix = (s: string): string =>
     stripSuffix(s, '--mobile');

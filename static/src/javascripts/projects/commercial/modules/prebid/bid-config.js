@@ -1,7 +1,7 @@
 // @flow strict
 
 import config from 'lib/config';
-import memoize from 'lodash/memoize';
+import { pbTestNameMap } from 'lib/url';
 import isEmpty from 'lodash/isEmpty';
 import {
     buildAppNexusTargeting,
@@ -217,7 +217,38 @@ const getImprovePlacementId = (sizes: PrebidSize[]): number => {
     }
 };
 
-const getAppNexusDirectPlacementId = (): string => '11016434';
+const getAppNexusDirectPlacementId = (sizes: PrebidSize[]): string => {
+    if (isInAuRegion()) {
+        return '11016434';
+    }
+
+    const defaultPlacementId: string = '9251752';
+    switch (getBreakpointKey()) {
+        case 'D':
+            if (containsMpuOrDmpu(sizes)) {
+                return '9251752';
+            }
+            if (containsLeaderboardOrBillboard(sizes)) {
+                return '9926678';
+            }
+            return defaultPlacementId;
+        case 'M':
+            if (containsMpu(sizes)) {
+                return '4298191';
+            }
+            return defaultPlacementId;
+        case 'T':
+            if (containsMpu(sizes)) {
+                return '11600568';
+            }
+            if (containsLeaderboard(sizes)) {
+                return '11600778';
+            }
+            return defaultPlacementId;
+        default:
+            return defaultPlacementId;
+    }
+};
 
 const getAppNexusPlacementId = (sizes: PrebidSize[]): string => {
     const defaultPlacementId: string = '13915593';
@@ -283,25 +314,6 @@ const getXaxisPlacementId = (sizes: PrebidSize[]): number => {
     return 13663304;
 };
 
-/* testing instrument */
-// Returns a map { <bidderName>: true } of bidders
-// according to the pbtest URL parameter
-
-type TestNameMap = { [string]: boolean };
-
-const pbTestNameMap: () => TestNameMap = memoize(
-    (): TestNameMap =>
-        new URLSearchParams(window.location.search)
-            .getAll('pbtest')
-            .reduce((acc, value) => {
-                acc[value] = true;
-                return acc;
-            }, {}),
-    (): string =>
-        // Same implicit parameter as the memoized function
-        window.location.search
-);
-
 // Is pbtest being used?
 const isPbTestOn = (): boolean => !isEmpty(pbTestNameMap());
 // Helper for conditions
@@ -311,8 +323,8 @@ const inPbTestOr = (liveClause: boolean): boolean => isPbTestOn() || liveClause;
 const appNexusBidder: PrebidBidder = {
     name: 'and',
     switchName: 'prebidAppnexus',
-    bidParams: (): PrebidAppNexusParams => ({
-        placementId: getAppNexusDirectPlacementId(),
+    bidParams: (slotId: string, sizes: PrebidSize[]): PrebidAppNexusParams => ({
+        placementId: getAppNexusDirectPlacementId(sizes),
         keywords: buildAppNexusTargetingObject(buildPageTargeting()), // Ok to duplicate call. Lodash 'once' is used.
     }),
 };
