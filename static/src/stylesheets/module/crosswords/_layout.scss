@@ -52,7 +52,7 @@
     position: relative;
     margin-top: $gs-baseline;
 
-    @include mq($from: wide) {
+    @include mq(wide) {
         margin-right: gs-span(4) + $gs-baseline;
     }
 }
