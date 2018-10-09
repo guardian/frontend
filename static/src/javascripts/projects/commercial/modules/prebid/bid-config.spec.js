@@ -74,7 +74,7 @@ jest.mock('common/modules/experiments/utils');
 /* eslint-disable guardian-frontend/no-direct-access-config */
 const resetConfig = () => {
     config.set('switches.prebidAppnexus', true);
-    config.set('switches.prebidAppNexusInvcode', false);
+    config.set('switches.prebidAppnexusInvcode', false);
     config.set('switches.prebidOpenx', true);
     config.set('switches.prebidImproveDigital', true);
     config.set('switches.prebidIndexExchange', true);
@@ -156,7 +156,7 @@ describe('getAppNexusBidParams', () => {
     });
 
     test('should exclude placementId when including member and invCode', () => {
-        config.set('switches.prebidAppNexusInvcode', true);
+        config.set('switches.prebidAppnexusInvcode', true);
         getBreakpointKey.mockReturnValue('M');
         expect(getAppNexusBidParams([[300, 250]])).toEqual({
             keywords: 'someAppNexusTargetingObject',

@@ -220,17 +220,17 @@ const getImprovePlacementId = (sizes: PrebidSize[]): number => {
 
 const getAppNexusInvCode = (slotSize: Array<PrebidSize>): ?string => {
     const device: string = getBreakpointKey();
-    const section: ?string = config.get('page.section');
+    const section: string = config.get('page.section', 'unknown');
     const sizes: PrebidSize | null = getLargestSize(slotSize);
-    // flowlint sketchy-null-string:warn
-    if (section && sizes) {
+    if (sizes) {
         return `${device}${section.toLowerCase()}${sizes.join('x')}`;
     }
 };
 
 const getAppNexusBidParams = (slotSize: PrebidSize[]): PrebidAppNexusParams => {
-    if (config.get('switches.prebidAppNexusInvcode', false)) {
+    if (config.get('switches.prebidAppnexusInvcode', false)) {
         const invCode = getAppNexusInvCode(slotSize);
+        // flowlint sketchy-null-string:warn
         if (invCode) {
             return {
                 invCode,
