@@ -1284,17 +1284,67 @@ $quote-mark: 35px;
     .submeta__section-labels .submeta__link {
         @include f-textSans;
     }
-
+    
     .content__meta-container {
         border-top: 1px solid $brightness-60;
         padding-top: $gs-baseline / 4;
     }
-
+    
     .content__article-body::before {
         background: $brightness-46;
     }
-
+    
     .element .caption {
         background: transparent;
+    }
+}
+
+// *************** Flagship ***************
+.content--flagship.content--flagship.content--flagship.content--flagship {
+    .content__meta-container {
+        background: none;
+        padding-top: 0;
+
+        @include mq(leftCol) {
+            position: static;
+            margin: 0;
+            width: auto;
+        }
+    }
+
+    .meta__contact-wrap {
+        max-width: none;
+        padding: 0;
+    }
+
+    .content__standfirst,
+    .content__standfirst a,
+    .byline,
+    .byline a {
+        color: #ffffff;
+    }
+
+    .content__dateline {
+        color: #969696;
+    }
+
+    .content__meta-container .content__dateline {
+        @include mq(leftCol) {
+            display: none;
+        }
+    }
+
+    .content__standfirst-cover {
+        @include mq($until: leftCol) {
+            float: left;
+            height: 120px;
+            margin-right: $gs-gutter / 2;
+            margin-top: $gs-baseline / 3;
+            width: 120px;
+        }
+
+        @include mq(leftCol) {
+            display: none;
+        }
     }
 }

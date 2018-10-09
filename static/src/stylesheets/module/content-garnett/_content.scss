@@ -90,7 +90,8 @@
             border-left: 1px solid $brightness-46;
         }
 
-        .content__standfirst {
+        .content__standfirst.content__standfirst {
+            font: 400 18px/22px $f-serif-headline;
             margin-bottom: 0;
             padding-bottom: $gs-baseline / 2;
         }
