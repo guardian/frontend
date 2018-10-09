@@ -13,6 +13,7 @@ import {
     shouldIncludeTrustX,
     stripMobileSuffix,
     stripTrailingNumbersAbove1,
+    stripDfpAdPrefixFrom,
 } from './utils';
 
 const getSync: any = getSync_;
@@ -38,6 +39,22 @@ describe('Utils', () => {
     beforeEach(() => {
         jest.resetAllMocks();
         config.switches.prebidAppnexusUkRow = undefined;
+    });
+
+    test('stripPrefix correctly strips valid cases', () => {
+        const validStrips: Array<Array<string>> = [
+            ['dfp-ad--slot', 'slot'],
+            ['slot', 'slot'],
+            ['dfp-ad--', ''],
+        ];
+
+        validStrips.forEach(([stringToStrip, result]) => {
+            expect(stripDfpAdPrefixFrom(stringToStrip)).toEqual(result);
+        });
+    });
+
+    test('stripPrefix correctly behaves in invalid case', () => {
+        expect(stripDfpAdPrefixFrom(' dfp-ad--slot')).toEqual(' dfp-ad--slot');
     });
 
     test('getBreakpointKey should find the correct key', () => {

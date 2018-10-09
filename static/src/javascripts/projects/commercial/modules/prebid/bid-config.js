@@ -47,6 +47,7 @@ import {
     stripTrailingNumbersAbove1,
     isInUsRegion,
     isInAuRegion,
+    stripDfpAdPrefixFrom,
 } from './utils';
 
 const isInSafeframeTestVariant = (): boolean => {
@@ -397,7 +398,7 @@ const pubmaticBidder: PrebidBidder = {
             {},
             {
                 publisherId: getPubmaticPublisherId(),
-                adSlot: slotId,
+                adSlot: stripDfpAdPrefixFrom(slotId),
             }
         ),
 };
