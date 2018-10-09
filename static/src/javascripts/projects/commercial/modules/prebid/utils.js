@@ -20,6 +20,14 @@ const currentGeoLocation = once((): string => geolocationGetSync());
 const contains = (sizes: PrebidSize[], size: PrebidSize): boolean =>
     Boolean(sizes.find(s => s[0] === size[0] && s[1] === size[1]));
 
+const stripPrefix = (s: string, prefix: string): string => {
+    const re = new RegExp(`^${prefix}`);
+    return s.replace(re, '');
+};
+
+export const stripDfpAdPrefixFrom = (s: string): string =>
+    stripPrefix(s, 'dfp-ad--');
+
 export const isInUsRegion = (): boolean =>
     ['US', 'CA'].includes(currentGeoLocation());
 
