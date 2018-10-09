@@ -27,7 +27,6 @@ GET         /discussion/profile/:id/search/:q.json                              
 GET         /discussion/profile/:id/discussions.json                            controllers.ProfileActivityController.profileDiscussions(id: String)
 GET         /discussion/profile/:id/replies.json                                controllers.ProfileActivityController.profileReplies(id: String)
 GET         /discussion/profile/:id/picks.json                                  controllers.ProfileActivityController.profilePicks(id: String)
-GET         /discussion/profile/:id/witness.json                                controllers.WitnessActivityController.witnessActivity(id: String)
 
 GET         /discussion/report-abuse/:commentId/thankyou                        controllers.CommentsController.reportAbuseThankYou(commentId: Int)
 GET         /discussion/report-abuse/*commentId                                 controllers.CommentsController.reportAbuseForm(commentId: Int)

@@ -390,10 +390,6 @@ class GuardianConfiguration extends Logging {
     lazy val frontendAssetsVersion = "v1.5.0"
   }
 
-  object witness {
-    lazy val witnessApiRoot = configuration.getMandatoryStringProperty("witness.apiRoot")
-  }
-
   object readerRevenue {
     private lazy val readerRevenueRoot = {
       configuration.getStringProperty("readerRevenue.s3.root") getOrElse s"${environment.stage.toUpperCase}/reader-revenue"
