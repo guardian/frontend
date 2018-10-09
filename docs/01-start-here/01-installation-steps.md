@@ -202,6 +202,41 @@ Then load IntelliJ, then click Import project and import the directory as an SBT
 
 Congratulations, you are now set up to edit frontend code!  See the [Optional steps](#optional-steps) below for other things to do.
 
+## Client-side development with VSCode
+
+While IntelliJ is great for Scala, you may want another option if you are writing a lot of JS and CSS, so quite a few people choose to use VSCode.
+
+You can download VSCode from [https://code.visualstudio.com/](https://code.visualstudio.com/)
+
+The built-in linting of VSCode may start finding TypeScript errors in JavaScript files...  To resolve this open your user settings and add the following lines:
+
+``` json
+    "javascript.validate.enable": false,
+    "typescript.validate.enable": false,
+```
+
+You can use the Command Palette (shift + cmd + P) to open user or workspace settings, just type in `Preferences: Open User Settings`
+
+Along with EditorConfig, the following plugins will be helpful:
+
+- [Flow VSCode plugin](https://github.com/flowtype/flow-for-vscode)
+- [Prettier VSCode plugin](https://github.com/prettier/prettier-vscode)
+- [Eslint VSCode plugin](https://github.com/Microsoft/vscode-eslint)
+
+Tip: creating or editing `.vscode/extensions.json` to contain the following will prompt VSCode to recommend installing them into your workspace:
+
+```json
+{
+	"recommendations": [
+        "dbaeumer.vscode-eslint",
+        "editorconfig.editorconfig",
+        "esbenp.prettier-vscode",
+        "flowtype.flow-for-vscode"
+	]
+}
+```
+
+The [VSCode documentation](http://go.microsoft.com/fwlink/?LinkId=827846) has more details on workspace recommendations.
 
 # Optional steps
 
