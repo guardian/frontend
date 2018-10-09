@@ -217,26 +217,7 @@ The built-in linting of VSCode may start finding TypeScript errors in JavaScript
 
 You can use the Command Palette (shift + cmd + P) to open user or workspace settings, just type in `Preferences: Open User Settings`
 
-Along with EditorConfig, the following plugins will be helpful:
-
-- [Flow VSCode plugin](https://github.com/flowtype/flow-for-vscode)
-- [Prettier VSCode plugin](https://github.com/prettier/prettier-vscode)
-- [Eslint VSCode plugin](https://github.com/Microsoft/vscode-eslint)
-
-Tip: creating or editing `.vscode/extensions.json` to contain the following will prompt VSCode to recommend installing them into your workspace:
-
-```json
-{
-	"recommendations": [
-        "dbaeumer.vscode-eslint",
-        "editorconfig.editorconfig",
-        "esbenp.prettier-vscode",
-        "flowtype.flow-for-vscode"
-	]
-}
-```
-
-The [VSCode documentation](http://go.microsoft.com/fwlink/?LinkId=827846) has more details on workspace recommendations.
+Recommended VSCode extensions are listed in `.vscode/extensions.json` and VSCode should prompt you to install these when you open the project. You can also find and install these by searching for `@recommended` in the extensions pane.
 
 # Optional steps
 
