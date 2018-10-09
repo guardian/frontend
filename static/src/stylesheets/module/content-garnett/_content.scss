@@ -204,14 +204,21 @@
     }
 }
 
-.content__labels--flagship {
-    .content--media.content--media.content--media & {
+.content__labels--flagship.content__labels--flagship.content__labels--flagship {
+    .content--media & {
         padding: 6px 0 0;
 
         .content__label__link {
             color: $highlight-main;
+
         }
     }
+
+    .content--pillar-news &      { .content__label__link { color: $news-bright; } }
+    .content--pillar-sport &     { .content__label__link { color: $sport-bright; } }
+    .content--pillar-opinion &   { .content__label__link { color: $opinion-bright; } }
+    .content--pillar-culture &   { .content__label__link { color: $culture-bright; } }
+    .content--pillar-lifestyle & { .content__label__link { color: $lifestyle-bright; } }
 }
 
 .content__label {
