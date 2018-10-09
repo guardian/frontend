@@ -37,7 +37,7 @@
             }
         },
         "stylesheets": {
-            "fonts": {
+           "fonts": {
                 "hintingCleartype": {
                     "kerningOn": "@Static("stylesheets/webfonts-hinting-cleartype-kerning-on.css")"
                 },

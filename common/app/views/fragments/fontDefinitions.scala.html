@@ -6,9 +6,7 @@
     <style class="webfont" data-cache-name="@typeface"
         @List("woff2", "woff", "ttf").map { font =>
             data-cache-file-@font="@Static(s"fonts/${typeface}.${font}.json")"
-            @List("cleartype", "auto").map { hinting =>
-                data-cache-file-hinted-@hinting-@font="@Static(s"fonts/${typeface}${hinting.capitalize}Hinted.${font}.json")"
-            }
+            data-cache-file-hinted-@font="@Static(s"fonts/${typeface}Hinted.${font}.json")"
         }
     ></style>
 }
