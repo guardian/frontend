@@ -84,6 +84,17 @@
             margin-right: gs-span(1) + $gs-gutter;
         }
     }
+
+    &.content__main-column--flagship {
+        @include mq(leftCol) {
+            border-left: 1px solid $brightness-46;
+        }
+
+        .content__standfirst {
+            margin-bottom: 0;
+            padding-bottom: $gs-baseline / 2;
+        }
+    }
 }
 
 // % used for padding-bottom isn't supported on Grid items in FireFox <53
@@ -194,7 +205,7 @@
 }
 
 .content__labels--flagship {
-    .content--media.content--pillar-news & {
+    .content--media.content--media.content--media & {
         padding: 6px 0 0;
 
         .content__label__link {

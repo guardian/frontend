@@ -85,3 +85,9 @@
         content: none;
     }
 }
+.l-side-margins--flagship {
+    &::before,
+    &::after {
+        content: none;
+    }
+}
