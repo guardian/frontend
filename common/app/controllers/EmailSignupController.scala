@@ -50,11 +50,13 @@ class EmailFormService(wsClient: WSClient) extends LazyLogging with RemoteAddres
     Future.failed(new IllegalAccessException("Form was likely submitted by a bot."))
   } else {
     val idAccessClientToken = Configuration.id.apiClientToken
+    println(request.headers)
     val consentMailerUrl = s"${Configuration.id.apiRoot}/consent-email"
     val consentMailerPayload = JsObject(Json.obj("email" -> form.email, "set-lists" -> List(form.listName)).fields)
     val headers = clientIp(request)
       .map(ip => List("X-Forwarded-For" -> ip))
       .getOrElse(List.empty).:+("X-GU-ID-Client-Access-Token" -> s"Bearer $idAccessClientToken")
+    println(headers)
 
     //FIXME: this should go via the identity api client / app
     wsClient
