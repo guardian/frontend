@@ -4,7 +4,7 @@ import $ from 'lib/$';
 import bonzo from 'bonzo';
 import fetchJson from 'lib/fetch-json';
 import { constructQuery } from 'lib/url';
-import range from 'lodash/arrays/range';
+import range from 'lodash/range';
 
 declare type DiscussionResponse = {
     commentsHtml: string,

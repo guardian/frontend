@@ -7,7 +7,7 @@ import qwery from 'qwery';
 import fastdom from 'lib/fastdom-promise';
 import { Component } from 'common/modules/component';
 import mediator from 'lib/mediator';
-import once from 'lodash/functions/once';
+import once from 'lodash/once';
 
 const promise: Promise<void> = new Promise((resolve, reject) => {
     mediator.on('modules:onward:geo-most-popular:ready', resolve);

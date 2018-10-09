@@ -4,7 +4,7 @@
 import $ from 'lib/$';
 import config from 'lib/config';
 import fastdom from 'lib/fastdom-promise';
-import template from 'lodash/utilities/template';
+import template from 'lodash/template';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import externalContentContainerStr from 'raw-loader!common/views/commercial/external-content.html';
 import { imrWorldwide } from 'commercial/modules/third-party-tags/imr-worldwide';

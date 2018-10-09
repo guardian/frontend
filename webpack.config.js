@@ -65,7 +65,6 @@ module.exports = {
             journalism: 'projects/journalism',
 
             // #wp-rjs weird old aliasing from requirejs
-            lodash: 'lodash-node/compat',
             raven: 'raven-js',
             videojs: 'video.js',
 

@@ -3,7 +3,7 @@ import $ from 'lib/$';
 import config from 'lib/config';
 import fetchJson from 'lib/fetch-json';
 import reportError from 'lib/report-error';
-import template from 'lodash/utilities/template';
+import template from 'lodash/template';
 import { inlineSvg } from 'common/views/svgs';
 import stockValueTemplate from 'raw-loader!common/views/business/stock-value.html';
 import stocksTemplate from 'raw-loader!common/views/business/stocks.html';
@@ -27,7 +27,7 @@ const deltaString = n => (n > 0 ? `+${n}` : `${n}`);
 const renderData = data => {
     const stockValues = data.stocks
         .map(stockValue =>
-            template(stockValueTemplate, {
+            template(stockValueTemplate)({
                 name: stockValue.name,
                 deltaClass: `stocks__stock-value--${stockValue.trend}`,
                 price: stockValue.price,
@@ -54,7 +54,7 @@ const renderData = data => {
         )
         .join('');
 
-    return template(stocksTemplate, {
+    return template(stocksTemplate)({
         stocks: stockValues,
     });
 };

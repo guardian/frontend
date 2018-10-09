@@ -4,7 +4,7 @@ import { loadScript } from 'lib/load-script';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { buildPageTargeting } from 'common/modules/commercial/build-page-targeting';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
-import once from 'lodash/functions/once';
+import once from 'lodash/once';
 import { prebid } from 'commercial/modules/prebid/prebid';
 
 // Wrap the native implementation of getOwnPropertyNames in a try-catch. If any polyfill attempts

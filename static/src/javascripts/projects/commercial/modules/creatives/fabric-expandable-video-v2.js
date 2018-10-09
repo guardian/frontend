@@ -2,7 +2,7 @@
 import bean from 'bean';
 import fastdom from 'lib/fastdom-promise';
 import $ from 'lib/$';
-import template from 'lodash/utilities/template';
+import template from 'lodash/template';
 import fabricExpandableVideoHtml from 'raw-loader!commercial/views/creatives/fabric-expandable-video-v2.html';
 import fabricExpandableCtaHtml from 'raw-loader!commercial/views/creatives/fabric-expandable-video-v2-cta.html';
 import arrowDown from 'svgs/icon/arrow-down.svg';
@@ -63,7 +63,7 @@ const FabricExpandableVideoV2 = (adSlot: Element, params: Object) => {
         };
 
         const $fabricExpandableVideo = $.create(
-            template(fabricExpandableVideoHtml, {
+            template(fabricExpandableVideoHtml)({
                 data: Object.assign(params, additionalParams),
             })
         );

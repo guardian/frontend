@@ -52,7 +52,7 @@ jest.mock('common/modules/experiments/utils', () => ({
 jest.mock('common/modules/commercial/krux', () => ({
     getKruxSegments: jest.fn(),
 }));
-jest.mock('lodash/functions/once', () => fn => fn);
+jest.mock('lodash/once', () => fn => fn);
 
 jest.mock('common/modules/commercial/ad-prefs.lib', () => ({
     getAdConsentState: jest.fn(),

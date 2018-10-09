@@ -1,6 +1,6 @@
 // @flow
 import fastdom from 'lib/fastdom-promise';
-import template from 'lodash/utilities/template';
+import template from 'lodash/template';
 import { Toggles } from 'common/modules/ui/toggles';
 import { addClassesAndTitle } from 'common/views/svg';
 import { addTrackingPixel } from 'commercial/modules/creatives/add-tracking-pixel';
@@ -29,10 +29,10 @@ class Frame {
             16
         )}`;
 
-        const frameMarkup = template(frameStr, {
+        const frameMarkup = template(frameStr)({
             data: this.params,
         });
-        const labelMarkup = template(labelStr, {
+        const labelMarkup = template(labelStr)({
             data: {
                 buttonTitle: 'Ad',
                 infoTitle: 'Advertising on the Guardian',

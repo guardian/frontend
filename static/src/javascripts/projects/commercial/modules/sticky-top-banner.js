@@ -122,7 +122,8 @@ const getAdvertSizeByIndex = (advert: ?Advert, index: number): ?number => {
 };
 
 const onFirstRender = (): void => {
-    // eslint-disable-next-line no-use-before-define
+    /* eslint-disable no-use-before-define */
+    // $FlowFixMe
     _.whenFirstRendered = trackAdRender(topSlotId).then(isRendered => {
         if (isRendered) {
             const advert = getAdvertById(topSlotId);
@@ -156,6 +157,7 @@ const onFirstRender = (): void => {
                 .then(resizeStickyBanner);
         }
     });
+    /* eslint-enable no-use-before-define */
 };
 
 const initState = (): Promise<any> =>
