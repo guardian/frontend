@@ -1,0 +1,39 @@
+package html
+
+import java.net.URL
+import common.Logging
+import model.EmailAddons
+import org.jsoup.Jsoup
+import org.jsoup.nodes._
+import play.twirl.api.Html
+import scala.collection.JavaConverters._
+import scala.util.Try
+
+object BrazeEmailFormatter extends Logging {
+
+  def apply(html: Html): Html = {
+    val documentBody = Jsoup.parse(html.toString)
+    Html(trimWhitespace(setLinks(documentBody).toString))
+  }
+
+  private def trimWhitespace(html: String): String = {
+    "(?m) *$".r.replaceAllIn("(?m)^ *".r.replaceAllIn(html, ""), "")
+  }
+
+  private def setLinks(element: Element): Element = {
+    Option(element.attr("href"))
+      .collect { case url if url.nonEmpty && element.nodeName() == "a" && !url.contains(EmailAddons.unsubscribePlaceholder) =>
+        val startQuery = Try(new URL(url))
+          .toOption
+          .flatMap(uri => Option(uri.getQuery))
+          .fold("?")(_ => "&")
+        s"$url$startQuery##braze_utm##"
+      }
+      .foreach { newHref =>
+        element.attr("href", newHref)
+      }
+
+    element.children().asScala.foreach(setLinks)
+    element
+  }
+}

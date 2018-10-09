@@ -7,7 +7,7 @@ import fastdom from 'fastdom';
 import $ from 'lib/$';
 import { local } from 'lib/storage';
 import { getPath } from 'lib/url';
-import isObject from 'lodash/objects/isObject';
+import isObject from 'lodash/isObject';
 
 import type { bonzo } from 'bonzo';
 

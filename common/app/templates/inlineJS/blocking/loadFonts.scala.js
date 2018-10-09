@@ -17,30 +17,24 @@ do you have fonts in localStorage?
 (function (window, document) {
     const ua = navigator.userAgent;
 
-    // Determine what type of font-hinting we want.
-    const fontHinting = (() => {
+    // Determine whether we need to deliver hinted fonts.
+    const shouldHint = (() => {
         const windowsNT = /Windows NT (\d\.\d+)/.exec(ua);
-        let hinting = 'Off';
-
+        
         try { // belt and braces
             if (windowsNT) {
                 const version = parseFloat(windowsNT[1], 10);
 
                 // For Windows XP-7
                 if (version >= 5.1 && version <= 6.1) {
-                    if (/Chrome/.exec(ua) && version < 6.0) {
-                        // Chrome on windows XP wants auto-hinting
-                        hinting = 'Auto';
-                    } else {
-                        // All others use cleartype
-                        hinting = 'Cleartype';
-                    }
+                    return true;
                 }
             }
         } catch (e) {
             @if(context.environment.mode == Dev){throw(e)}
         }
-        return hinting;
+
+        return false;
     })();
 
     // Load fonts from `localStorage`.
@@ -141,8 +135,7 @@ do you have fonts in localStorage?
                 // the target for each font and holders of all the necessary metadata
                 // are some style elements in the head, all identified by a .webfont class
                 const fonts = document.querySelectorAll('.webfont');
-                const hinting = fontHinting === 'Off' ? '' : `hinted-${fontHinting}-`;
-                const urlAttribute = `data-cache-file-${hinting}${fontFormat}`;
+                const urlAttribute = shouldHint ? `data-cache-file-hinted-${fontFormat}` : `data-cache-file-${fontFormat}`;
 
                 for (let i = 0, j = fonts.length; i < j; ++i) {
                     const font = fonts[i];
@@ -175,9 +168,8 @@ do you have fonts in localStorage?
 
             fonts.rel = 'stylesheet';
             fonts.className = 'webfonts';
-
-            // show cleartype-hinted for Windows XP-7 IE, autohinted for non-IE
-            fonts.href = window.guardian.config.stylesheets.fonts['hinting' + fontHinting].kerningOn;
+            fonts.href = window.guardian.config.stylesheets.fonts[shouldHint ? 'hintingAuto' : 'hintingOff'].kerningOn;
+            
             window.setTimeout(function () {
                 thisScript.parentNode.insertBefore(fonts, thisScript);
             });

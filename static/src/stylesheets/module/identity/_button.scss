@@ -76,10 +76,6 @@
         &, & * {
             fill: currentColor;
         }
-        svg {
-            width: 100%;
-            height: 100%;
-        }
         &.inline-arrow-right {
             margin-right: $gs-gutter / 2 * -1;
         }
@@ -92,8 +88,11 @@
         &.inline-arrow-up {
             transform: translateY(-10%) scale(.9);
         }
-        &.inline-tick svg {
-            width: 22px;
+        &.inline-tick {
+            transform: scale(2) translateY(-10%);
+            svg {
+                width: 22px;
+            }
         }
         &.inline-envelope-add,
         &.inline-envelope-remove {

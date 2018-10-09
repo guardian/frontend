@@ -1,8 +1,8 @@
 // @flow strict
 
 import config from 'lib/config';
-import isEmpty from 'lodash/objects/isEmpty';
 import { pbTestNameMap } from 'lib/url';
+import isEmpty from 'lodash/isEmpty';
 import {
     buildAppNexusTargeting,
     buildPageTargeting,

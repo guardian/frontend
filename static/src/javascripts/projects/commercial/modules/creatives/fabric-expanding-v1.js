@@ -5,12 +5,12 @@ import $ from 'lib/$';
 import { getViewport, isBreakpoint, isIOS, isAndroid } from 'lib/detect';
 import mediator from 'lib/mediator';
 import { local } from 'lib/storage';
-import template from 'lodash/utilities/template';
+import template from 'lodash/template';
 import fabricExpandingV1Html from 'raw-loader!commercial/views/creatives/fabric-expanding-v1.html';
 import fabricExpandingVideoHtml from 'raw-loader!commercial/views/creatives/fabric-expanding-video.html';
 import arrowDown from 'svgs/icon/arrow-down.svg';
 import closeCentral from 'svgs/icon/close-central.svg';
-import bindAll from 'lodash/functions/bindAll';
+import bindAll from 'lodash/bindAll';
 import { addTrackingPixel } from 'commercial/modules/creatives/add-tracking-pixel';
 import { addViewabilityTracker } from 'commercial/modules/creatives/add-viewability-tracker';
 
@@ -181,7 +181,7 @@ class FabricExpandingV1 {
             inlineStyle: [leftMargin, leftPosition, rightPosition].join('; '),
         };
 
-        return template(fabricExpandingVideoHtml, viewModel);
+        return template(fabricExpandingVideoHtml)(viewModel);
     }
 
     stopVideo(delay: number = 0) {
@@ -245,7 +245,7 @@ class FabricExpandingV1 {
             Math.random() * 10000
         ).toString(16)}`;
         const $fabricExpandingV1 = $.create(
-            template(fabricExpandingV1Html, {
+            template(fabricExpandingV1Html)({
                 data: Object.assign(
                     this.params,
                     showmoreArrow,

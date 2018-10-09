@@ -6,7 +6,7 @@ import $ from 'lib/$';
 import fetchJSON from 'lib/fetch-json';
 import config from 'lib/config';
 import { integerCommas } from 'lib/formatters';
-import template from 'lodash/utilities/template';
+import template from 'lodash/template';
 import { inlineSvg } from 'common/views/svgs';
 import shareCountTemplate from 'raw-loader!common/views/content/share-count.html';
 import shareCountImmersiveTemplate from 'raw-loader!common/views/content/share-count-immersive.html';
@@ -39,7 +39,7 @@ const incrementShareCount = (amount: number): void => {
 };
 
 const updateTooltip = (): void => {
-    $shareCountEls.attr('title', template(tooltip, counts));
+    $shareCountEls.attr('title', template(tooltip)(counts));
 };
 
 const addToShareCount = (val: number): void => {
@@ -47,7 +47,7 @@ const addToShareCount = (val: number): void => {
     const shareTemplate = $shareCountEls.hasClass('js-sharecount-immersive')
         ? shareCountImmersiveTemplate
         : shareCountTemplate;
-    const html = template(shareTemplate, {
+    const html = template(shareTemplate)({
         icon: shareSvg,
     });
 

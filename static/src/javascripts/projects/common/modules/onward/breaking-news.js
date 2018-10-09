@@ -8,12 +8,12 @@ import config from 'lib/config';
 import fetchJson from 'lib/fetch-json';
 import reportError from 'lib/report-error';
 import { local } from 'lib/storage';
-import template from 'lodash/utilities/template';
+import template from 'lodash/template';
+import flattenDeep from 'lodash/flattenDeep';
+import pickBy from 'lodash/pickBy';
 import { isWithinSeconds } from 'common/modules/ui/relativedates';
 import { inlineSvg } from 'common/views/svgs';
 import alertHtml from 'raw-loader!common/views/breaking-news.html';
-import flatten from 'lodash/arrays/flatten';
-import pick from 'lodash/objects/pick';
 import type { Banner } from 'common/modules/ui/bannerPicker';
 
 let alertToShow;
@@ -32,7 +32,6 @@ const page = config.page;
 // }
 const knownAlertIDsStorageKey = 'gu.breaking-news.hidden';
 const DEFAULT_DELAY = 3000;
-let knownAlertIDs;
 
 type Alert = {
     headline: string,
@@ -44,6 +43,11 @@ type Alert = {
     marque36icon: string,
     trailText: string,
 };
+type AlertIds = {
+    [id: string]: boolean,
+};
+
+let knownAlertIDs: AlertIds;
 
 const storeKnownAlertIDs = (): void => {
     local.set(knownAlertIDsStorageKey, knownAlertIDs);
@@ -90,7 +94,7 @@ const getRelevantAlerts = (alerts: Array<Alert>): Array<Alert> => {
     const edition = (page.edition || '').toLowerCase();
     const section = supportedSections[page.section];
 
-    return flatten([
+    return flattenDeep([
         alerts
             .filter(alert => alert.href === 'global')
             .map(alert => alert.content),
@@ -111,7 +115,7 @@ const pruneKnownAlertIDs = (alerts: Array<Alert>): Array<Alert> => {
 
     // then remove all known alert ids that are not
     // in the current breaking news alerts
-    knownAlertIDs = pick(knownAlertIDs, (state, id) =>
+    knownAlertIDs = pickBy(knownAlertIDs, (state: boolean, id: string) =>
         alerts.some(alert => alert.id === id)
     );
 
@@ -138,7 +142,7 @@ const pickNewest = (alerts: Array<Alert>): Alert =>
 const renderAlert = (alert: Alert): bonzo => {
     alert.closeIcon = inlineSvg('closeCentralIcon');
 
-    const $alert = bonzo.create(template(alertHtml, alert));
+    const $alert = bonzo.create(template(alertHtml)(alert));
 
     const closeButton = $('.js-breaking-news__item__close', $alert)[0];
 

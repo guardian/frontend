@@ -8,14 +8,23 @@
 
 @defining(isPaidContent(page), isAdFree(request)) { case (isPaidContent, isAdFree) =>
 
-<div class="l-side-margins @if(!isPaidContent) {l-side-margins--media}">
+<div class="@RenderClasses(Map(
+    "l-side-margins--media" ->  !isPaidContent
+), "l-side-margins", "l-side-margins--flagship")">
     <article id="article" class="@RenderClasses(
         Map(
             "content--has-body" -> audio.fields.body.nonEmpty,
             "content--paid-content paid-content" -> isPaidContent,
             "content--pillar-special-report" -> (toneClass(audio) == "tone-special-report")
         ),
-        "content", "content--media", "new-audio", s"content--pillar-${audio.metadata.pillar.nameOrDefault}", s"content--media--audio", "tonal", "tonal--tone-media", s"tonal--${toneClass(audio)}"
+        "content", 
+        "content--media", 
+        "content--flagship", 
+        s"content--pillar-${audio.metadata.pillar.nameOrDefault}", 
+        s"content--media--audio", 
+        "tonal", 
+        "tonal--tone-media", 
+        s"tonal--${toneClass(audio)}"
     )"
     itemscope itemtype="@audio.metadata.schemaType" role="main">
 
@@ -25,7 +34,7 @@
 
         <div class="content__main tonal__main tonal__main--@toneClass(audio)">
             <div class="gs-container">
-                <div class="content__main-column content__main-column--media content__main-column--audio">
+                <div class="content__main-column content__main-column--media content__main-column--audio content__main-column--flagship">
                     <div class="media-body">
 
                         @audio.elements.images.map{ img =>
@@ -47,7 +56,7 @@
 
                             @if(audio.fields.body.nonEmpty) {
                                 <div class="from-content-api">
-                                    @Html(audio.fields.body)
+                                        @Html(audio.fields.body)
                                 </div>
                                }
 

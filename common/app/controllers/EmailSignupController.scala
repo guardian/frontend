@@ -139,24 +139,34 @@ class EmailSignupController(wsClient: WSClient, val controllerComponents: Contro
         EmailFormError.increment()
         Future.successful(respond(InvalidEmail))},
 
-      form => emailFormService.submit(form).map(_.status match {
-        case 200 | 201 =>
-          EmailSubmission.increment()
-          respond(Subscribed)
+      form => {
+        log.info(
+          "Post request received to /email/ - " +
+          s"email: ${form.email}, " +
+          s"referer: ${request.headers.get("referer").getOrElse("unknown")}, " +
+          s"user-agent: ${request.headers.get("user-agent").getOrElse("unknown")}, " +
+          s"x-requested-with: ${request.headers.get("x-requested-with").getOrElse("unknown")}"
+        )
+        emailFormService.submit(form).map(_.status match {
+          case 200 | 201 =>
+            EmailSubmission.increment()
+            respond(Subscribed)
 
-        case status =>
-          log.error(s"Error posting to ExactTarget: HTTP $status")
-          APIHTTPError.increment()
-          respond(OtherError)
+          case status =>
+            log.error(s"Error posting to ExactTarget: HTTP $status")
+            APIHTTPError.increment()
+            respond(OtherError)
 
-      }) recover {
-        case _: IllegalAccessException =>
-          respond(Subscribed)
-        case e: Exception =>
-          log.error(s"Error posting to ExactTarget: ${e.getMessage}")
-          APINetworkError.increment()
-          respond(OtherError)
-      })
+        }) recover {
+          case _: IllegalAccessException =>
+            respond(Subscribed)
+          case e: Exception =>
+            log.error(s"Error posting to ExactTarget: ${e.getMessage}")
+            APINetworkError.increment()
+            respond(OtherError)
+        }
+      }
+    )
   }
 
   def options(): Action[AnyContent] = Action { implicit request =>

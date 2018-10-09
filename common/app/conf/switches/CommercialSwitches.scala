@@ -370,6 +370,16 @@ trait PrebidSwitches {
     exposeClientSide = true
   )
 
+  val prebidServer: Switch = Switch(
+    group = CommercialPrebid,
+    name = "prebid-server",
+    description = "In-house Prebid server is available",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+
   val prebidSonobi: Switch = Switch(
     group = CommercialPrebid,
     name = "prebid-sonobi",
@@ -411,7 +421,7 @@ trait PrebidSwitches {
   )
 
   val prebidOpenx: Switch = Switch(
-    group = Commercial,
+    group = CommercialPrebid,
     name = "prebid-openx",
     description = "Include OpenX adapter in Prebid auctions",
     owners = group(Commercial),
@@ -421,7 +431,7 @@ trait PrebidSwitches {
   )
 
   val prebidPubmatic: Switch = Switch(
-    group = Commercial,
+    group = CommercialPrebid,
     name = "prebid-pubmatic",
     description = "Include Pubmatic adapter in Prebid auctions",
     owners = group(Commercial),

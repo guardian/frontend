@@ -1,6 +1,6 @@
 // @flow strict
 
-import once from 'lodash/functions/once';
+import once from 'lodash/once';
 import { getBreakpoint } from 'lib/detect';
 import { pbTestNameMap } from 'lib/url';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
@@ -89,8 +89,7 @@ export const shouldIncludeAdYouLike = (slotSizes: PrebidSize[]): boolean => {
 };
 
 export const shouldIncludeOzone = (): boolean =>
-    // include in 1 in 2 (50%) of page views
-    !isInUsRegion() && !isInAuRegion() && getRandomIntInclusive(1, 2) === 1;
+    !isInUsRegion() && !isInAuRegion();
 
 export const shouldIncludeAppNexus = (): boolean =>
     isInAuRegion() ||

@@ -5,5 +5,5 @@ import play.api.mvc.RequestHeader
 import services.dotcomponents.RenderType
 
 trait RenderTierPickerStrategy {
-  def getRenderTierFor(page: PageWithStoryPackage, request: RequestHeader): RenderType
+  def getRenderTierFor(page: PageWithStoryPackage, request: RequestHeader): (List[(String, Boolean)], RenderType)
 }

@@ -20,7 +20,7 @@ const getBreakpoint: any = getBreakpoint_;
 const testCanBeRun: any = testCanBeRun_;
 const getParticipations: any = getParticipations_;
 
-jest.mock('lodash/functions/once', () => a => a);
+jest.mock('lodash/once', () => a => a);
 
 jest.mock('lib/geolocation', () => ({
     getSync: jest.fn(() => 'GB'),
@@ -158,11 +158,12 @@ describe('Utils', () => {
         }
     });
 
-    xtest('shouldIncludeOzone should otherwise return true if fate decrees', () => {
-        const mockMath = Object.create(global.Math);
-        mockMath.random = () => 0;
-        global.Math = mockMath;
-        expect(shouldIncludeOzone()).toBe(true);
+    xtest('shouldIncludeOzone should return true for UK and ROW', () => {
+        const includedGeos = ['UK', 'FR', 'SA'];
+        for (let i = 0; i < includedGeos.length; i += 1) {
+            getSync.mockReturnValueOnce(includedGeos[i]);
+            expect(shouldIncludeOzone()).toBe(true);
+        }
     });
 
     test('stripMobileSuffix', () => {

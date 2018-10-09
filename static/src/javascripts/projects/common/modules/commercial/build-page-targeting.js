@@ -14,9 +14,10 @@ import {
 } from 'common/modules/commercial/ad-prefs.lib';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { getParticipations } from 'common/modules/experiments/utils';
-import flatten from 'lodash/arrays/flatten';
-import once from 'lodash/functions/once';
-import pick from 'lodash/objects/pick';
+import flattenDeep from 'lodash/flattenDeep';
+import once from 'lodash/once';
+import pick from 'lodash/pick';
+import pickBy from 'lodash/pickBy';
 
 const format = (keyword: string): string =>
     keyword.replace(/[+\s]+/g, '-').toLowerCase();
@@ -126,7 +127,7 @@ const getWhitelistedQueryParams = (): {} => {
 };
 
 const formatAppNexusTargeting = (obj: { [string]: string }): string =>
-    flatten(
+    flattenDeep(
         Object.keys(obj)
             .filter((key: string) => obj[key] !== '' && obj[key] !== null)
             .map((key: string) => {
@@ -221,7 +222,7 @@ const buildPageTargeting = once(
         );
 
         // filter out empty values
-        const pageTargeting: {} = pick(pageTargets, target => {
+        const pageTargeting: {} = pickBy(pageTargets, target => {
             if (Array.isArray(target)) {
                 return target.length > 0;
             }

@@ -30,13 +30,16 @@ class RemoteRender(implicit context: ApplicationContext) {
         case 200 =>
           Cached(article)(RevalidatableResult.Ok(Html(response.body)))
         case _ =>
-          NoCache(InternalServerError("Rendering tier failed"))
+          throw new Exception(response.body)
       }
     })
 
   def render(ws:WSClient, path: String, article: ArticlePage)(implicit request: RequestHeader): Future[Result] = {
 
-    val contentFieldsJson = List("contentFields" -> Json.toJson(ContentFields(article.article)))
+    val contentFieldsJson = List(
+      "contentFields" -> Json.toJson(ContentFields(article.article)),
+      "tags" -> Json.toJson(article.article.tags)
+    )
     val jsonResponse = List(("html", views.html.fragments.articleBody(article))) ++ contentFieldsJson
     val jsonPayload = JsonComponent.jsonFor(article, jsonResponse:_*)
 

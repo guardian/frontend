@@ -1,7 +1,7 @@
 // @flow
 
 import { hasPushStateSupport } from 'lib/detect';
-import memoize from 'lodash/functions/memoize';
+import memoize from 'lodash/memoize';
 
 const supportsPushState = hasPushStateSupport();
 

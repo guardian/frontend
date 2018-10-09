@@ -13,16 +13,6 @@ trait JournalismSwitches {
     exposeClientSide = false
   )
 
-  val PodcastContainerSwitch = Switch(
-    SwitchGroup.Journalism,
-    "ab-podcast-container",
-    "Test designs for a /uk podcasts container",
-    owners = Seq(Owner.withName("journalism team")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
   val AudioOnwardJourneySwitch = Switch(
     SwitchGroup.Journalism,
     "audio-onward-journey-switch",

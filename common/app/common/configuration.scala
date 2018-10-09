@@ -390,10 +390,6 @@ class GuardianConfiguration extends Logging {
     lazy val frontendAssetsVersion = "v1.5.0"
   }
 
-  object witness {
-    lazy val witnessApiRoot = configuration.getMandatoryStringProperty("witness.apiRoot")
-  }
-
   object readerRevenue {
     private lazy val readerRevenueRoot = {
       configuration.getStringProperty("readerRevenue.s3.root") getOrElse s"${environment.stage.toUpperCase}/reader-revenue"
@@ -463,6 +459,9 @@ class GuardianConfiguration extends Logging {
 
     lazy val prebidAnalyticsStream = configuration.getMandatoryStringProperty("commercial.prebid.analytics.stream")
     lazy val pageViewAnalyticsStream = configuration.getMandatoryStringProperty("commercial.pv.analytics.stream")
+
+    lazy val prebidServerHost =
+      configuration.getStringProperty("commercial.prebid.server.host") getOrElse "http://localhost:8000"
   }
 
   object journalism {
