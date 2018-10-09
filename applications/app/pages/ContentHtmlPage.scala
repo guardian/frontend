@@ -35,7 +35,7 @@ object ContentHtmlPage extends HtmlPage[Page] {
 
     def mediaOrAudioBody(page: MediaPage): Html  = {
         page.media match {
-          case audio: Audio if (ActiveExperiments.isParticipating(AudioPageChange)) => audioBody(page, audio)
+          case audio: Audio if ActiveExperiments.isParticipating(AudioPageChange) => audioBody(page, audio)
           case _ => mediaBody(page, displayCaption = false)
         }
     }
