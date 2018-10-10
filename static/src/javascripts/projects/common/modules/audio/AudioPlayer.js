@@ -517,7 +517,7 @@ export default class AudioPlayer extends Component<Props, State> {
                 <audio
                     ref={this.setAudio}
                     data-media-id={this.props.mediaId}
-                    preload="metadata">
+                    preload="none">
                     <source src={this.props.sourceUrl} type="audio/mpeg" />
                 </audio>
                 <Controls>
