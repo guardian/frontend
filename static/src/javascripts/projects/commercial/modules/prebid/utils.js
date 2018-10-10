@@ -25,6 +25,14 @@ const stripPrefix = (s: string, prefix: string): string => {
     return s.replace(re, '');
 };
 
+export const removeUndefinedValues = (o: object): object =>
+    Object.keys(o).reduce((m: object, k: any) => {
+        if (o[k]) {
+            m[k] = o[k];
+        }
+        return m;
+    }, {});
+
 export const stripDfpAdPrefixFrom = (s: string): string =>
     stripPrefix(s, 'dfp-ad--');
 
