@@ -54,7 +54,7 @@ class EmailFormService(wsClient: WSClient) extends LazyLogging with RemoteAddres
     val consentMailerPayload = JsObject(Json.obj("email" -> form.email, "set-lists" -> List(form.listName)).fields)
     val headers = clientIp(request)
       .map(ip => List("X-Forwarded-For" -> ip))
-      .getOrElse(List.empty).:+("X-GU-ID-Client-Access-Token" -> s"Bearer $idAccessClientToken")
+      .getOrElse(List.empty) :+ "X-GU-ID-Client-Access-Token" -> s"Bearer $idAccessClientToken"
 
     //FIXME: this should go via the identity api client / app
     wsClient
