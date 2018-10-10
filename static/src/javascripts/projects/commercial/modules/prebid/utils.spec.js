@@ -239,16 +239,12 @@ describe('Utils', () => {
     });
 
     test('removeUndefinedValues correctly move non-truthy values', () => {
-        const result: object = removeUndefinedValues({
-            test1: 1,
-            testUndefined: undefined,
-            testNull: null,
+        const result = removeUndefinedValues({
             testString: 'non empty string',
             testEmptyString: '',
         });
 
         expect(result).toEqual({
-            test1: 1,
             testString: 'non empty string',
         });
     });
