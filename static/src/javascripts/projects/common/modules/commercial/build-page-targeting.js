@@ -14,7 +14,7 @@ import {
 } from 'common/modules/commercial/ad-prefs.lib';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { getParticipations } from 'common/modules/experiments/utils';
-import { removeUndefinedValues } from 'commercial/modules/prebid/utils';
+import { removeFalseyValues } from 'commercial/modules/prebid/utils';
 import flattenDeep from 'lodash/flattenDeep';
 import once from 'lodash/once';
 import pick from 'lodash/pick';
@@ -158,7 +158,7 @@ type PageTargeting = {
 
 const buildAppNexusTargetingObject = once(
     (pageTargeting: PageTargeting): {} =>
-        removeUndefinedValues({
+        removeFalseyValues({
             sens: pageTargeting.sens,
             pt1: pageTargeting.url,
             pt2: pageTargeting.edition,

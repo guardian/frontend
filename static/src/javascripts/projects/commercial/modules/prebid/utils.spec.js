@@ -14,7 +14,7 @@ import {
     stripMobileSuffix,
     stripTrailingNumbersAbove1,
     stripDfpAdPrefixFrom,
-    removeUndefinedValues,
+    removeFalseyValues,
 } from './utils';
 
 const getSync: any = getSync_;
@@ -238,8 +238,8 @@ describe('Utils', () => {
         expect(shouldIncludeAdYouLike([[728, 90]])).toBe(false);
     });
 
-    test('removeUndefinedValues correctly move non-truthy values', () => {
-        const result = removeUndefinedValues({
+    test('removeFalseyValues correctly move non-truthy values', () => {
+        const result = removeFalseyValues({
             testString: 'non empty string',
             testEmptyString: '',
         });

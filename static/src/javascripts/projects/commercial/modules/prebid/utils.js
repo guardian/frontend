@@ -25,7 +25,7 @@ const stripPrefix = (s: string, prefix: string): string => {
     return s.replace(re, '');
 };
 
-export const removeUndefinedValues = (o: {
+export const removeFalseyValues = (o: {
     [string]: string,
 }): { [string]: string } =>
     Object.keys(o).reduce((m: { [string]: string }, k: string) => {
