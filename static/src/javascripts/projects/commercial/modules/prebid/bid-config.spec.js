@@ -11,6 +11,7 @@ import {
 import { _, bids } from './bid-config';
 import type { PrebidBidder, PrebidSize } from './types';
 import {
+    getLargestSize as getLargestSize_,
     containsBillboard as containsBillboard_,
     containsDmpu as containsDmpu_,
     containsLeaderboard as containsLeaderboard_,
@@ -26,6 +27,7 @@ import {
     stripMobileSuffix as stripMobileSuffix_,
 } from './utils';
 
+const getLargestSize: any = getLargestSize_;
 const containsBillboard: any = containsBillboard_;
 const containsDmpu: any = containsDmpu_;
 const containsLeaderboard: any = containsLeaderboard_;
@@ -45,6 +47,8 @@ const isInVariant: any = isInVariant_;
 
 const {
     getAdYouLikePlacementId,
+    getAppNexusInvCode,
+    getAppNexusBidParams,
     getAppNexusPlacementId,
     getDummyServerSideBidders,
     getIndexSiteId,
@@ -70,6 +74,7 @@ jest.mock('common/modules/experiments/utils');
 /* eslint-disable guardian-frontend/no-direct-access-config */
 const resetConfig = () => {
     config.set('switches.prebidAppnexus', true);
+    config.set('switches.prebidAppnexusInvcode', false);
     config.set('switches.prebidOpenx', true);
     config.set('switches.prebidImproveDigital', true);
     config.set('switches.prebidIndexExchange', true);
@@ -80,13 +85,95 @@ const resetConfig = () => {
     config.set('switches.prebidAdYouLike', true);
     config.set('ophan', { pageViewId: 'pvid' });
     config.set('page.contentType', 'Article');
+    config.set('page.section', 'Magic');
     config.set('page.edition', 'UK');
 };
+
+describe('getAppNexusInvCode', () => {
+    beforeEach(() => {
+        resetConfig();
+        [[300, 250], [300, 600], [970, 250], [728, 90]].map(
+            getLargestSize.mockReturnValueOnce
+        );
+    });
+
+    afterEach(() => {
+        jest.resetAllMocks();
+        resetConfig();
+    });
+
+    test('should return the magic strings for mobile breakpoints', () => {
+        getBreakpointKey.mockReturnValue('M');
+        const invCodes = [
+            [[300, 250]],
+            [[300, 600]],
+            [[970, 250]],
+            [[728, 90]],
+        ].map(getAppNexusInvCode);
+
+        expect(invCodes).toEqual([
+            'Mmagic300x250',
+            'Mmagic300x600',
+            'Mmagic970x250',
+            'Mmagic728x90',
+        ]);
+    });
+
+    test('should return the magic strings for other breakpoints', () => {
+        getBreakpointKey.mockReturnValue('D');
+        const invCodes = [
+            [[300, 250]],
+            [[300, 600]],
+            [[970, 250]],
+            [[728, 90]],
+        ].map(getAppNexusInvCode);
+        expect(invCodes).toEqual([
+            'Dmagic300x250',
+            'Dmagic300x600',
+            'Dmagic970x250',
+            'Dmagic728x90',
+        ]);
+    });
+});
+
+describe('getAppNexusBidParams', () => {
+    beforeEach(() => {
+        resetConfig();
+        getLargestSize.mockReturnValueOnce([300, 250]);
+    });
+
+    afterEach(() => {
+        jest.resetAllMocks();
+        resetConfig();
+    });
+
+    test('should include placementId when invCode switch is off', () => {
+        getBreakpointKey.mockReturnValue('M');
+        expect(getAppNexusBidParams([[300, 250]])).toEqual({
+            keywords: 'someAppNexusTargetingObject',
+            placementId: '9251752',
+        });
+    });
+
+    test('should exclude placementId when including member and invCode', () => {
+        config.set('switches.prebidAppnexusInvcode', true);
+        getBreakpointKey.mockReturnValue('M');
+        expect(getAppNexusBidParams([[300, 250]])).toEqual({
+            keywords: 'someAppNexusTargetingObject',
+            member: '7012',
+            invCode: 'Mmagic300x250',
+        });
+    });
+});
 
 describe('getAppNexusPlacementId', () => {
     beforeEach(() => {
         resetConfig();
         window.OzoneLotameData = { some: 'lotamedata' };
+
+        [[300, 250], [300, 600], [970, 250], [728, 90]].map(
+            getLargestSize.mockReturnValueOnce
+        );
     });
 
     afterEach(() => {
@@ -586,6 +673,10 @@ describe('bids', () => {
         stripMobileSuffix.mockImplementation(str => str);
         getVariant.mockReturnValue(CommercialPrebidAdYouLike.variants[0]);
         resetConfig();
+
+        [[300, 250], [300, 600], [970, 250], [728, 90]].map(
+            getLargestSize.mockReturnValueOnce
+        );
     });
 
     afterEach(() => {
