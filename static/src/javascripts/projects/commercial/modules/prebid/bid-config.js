@@ -322,8 +322,7 @@ const getPangaeaPlacementId = (sizes: PrebidSize[]): number => {
         mmpu: number,
         dmpu: number,
     };
-    type PangaeaList = Array<PangaeaSection>;
-    const pangaeaList: PangaeaList = [
+    const pangaeaList: Array<PangaeaSection> = [
         {
             sections: ['business'],
             lb: 13892359,
