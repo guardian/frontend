@@ -151,7 +151,7 @@ describe('getAppNexusBidParams', () => {
         getBreakpointKey.mockReturnValue('M');
         expect(getAppNexusBidParams([[300, 250]])).toEqual({
             keywords: 'someAppNexusTargetingObject',
-            placementId: '11016434',
+            placementId: '9251752',
         });
     });
 

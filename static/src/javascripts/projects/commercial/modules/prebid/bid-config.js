@@ -1,7 +1,7 @@
 // @flow strict
 
 import config from 'lib/config';
-import memoize from 'lodash/memoize';
+import { pbTestNameMap } from 'lib/url';
 import isEmpty from 'lodash/isEmpty';
 import {
     buildAppNexusTargeting,
@@ -48,6 +48,7 @@ import {
     stripTrailingNumbersAbove1,
     isInUsRegion,
     isInAuRegion,
+    stripDfpAdPrefixFrom,
 } from './utils';
 
 const isInSafeframeTestVariant = (): boolean => {
@@ -218,18 +219,51 @@ const getImprovePlacementId = (sizes: PrebidSize[]): number => {
     }
 };
 
-const getAppNexusInvCode = (slotSize: Array<PrebidSize>): ?string => {
+const getAppNexusInvCode = (sizes: Array<PrebidSize>): ?string => {
     const device: string = getBreakpointKey();
     const section: string = config.get('page.section', 'unknown');
-    const sizes: PrebidSize | null = getLargestSize(slotSize);
-    if (sizes) {
-        return `${device}${section.toLowerCase()}${sizes.join('x')}`;
+    const slotSize: PrebidSize | null = getLargestSize(sizes);
+    if (slotSize) {
+        return `${device}${section.toLowerCase()}${slotSize.join('x')}`;
     }
 };
 
-const getAppNexusBidParams = (slotSize: PrebidSize[]): PrebidAppNexusParams => {
+const getAppNexusDirectPlacementId = (sizes: PrebidSize[]): string => {
+    if (isInAuRegion()) {
+        return '11016434';
+    }
+
+    const defaultPlacementId: string = '9251752';
+    switch (getBreakpointKey()) {
+        case 'D':
+            if (containsMpuOrDmpu(sizes)) {
+                return '9251752';
+            }
+            if (containsLeaderboardOrBillboard(sizes)) {
+                return '9926678';
+            }
+            return defaultPlacementId;
+        case 'M':
+            if (containsMpu(sizes)) {
+                return '4298191';
+            }
+            return defaultPlacementId;
+        case 'T':
+            if (containsMpu(sizes)) {
+                return '11600568';
+            }
+            if (containsLeaderboard(sizes)) {
+                return '11600778';
+            }
+            return defaultPlacementId;
+        default:
+            return defaultPlacementId;
+    }
+};
+
+const getAppNexusBidParams = (sizes: PrebidSize[]): PrebidAppNexusParams => {
     if (config.get('switches.prebidAppnexusInvcode', false)) {
-        const invCode = getAppNexusInvCode(slotSize);
+        const invCode = getAppNexusInvCode(sizes);
         // flowlint sketchy-null-string:warn
         if (invCode) {
             return {
@@ -240,7 +274,7 @@ const getAppNexusBidParams = (slotSize: PrebidSize[]): PrebidAppNexusParams => {
         }
     }
     return {
-        placementId: '11016434',
+        placementId: getAppNexusDirectPlacementId(sizes),
         keywords: buildAppNexusTargetingObject(buildPageTargeting()),
     };
 };
@@ -309,25 +343,6 @@ const getXaxisPlacementId = (sizes: PrebidSize[]): number => {
     return 13663304;
 };
 
-/* testing instrument */
-// Returns a map { <bidderName>: true } of bidders
-// according to the pbtest URL parameter
-
-type TestNameMap = { [string]: boolean };
-
-const pbTestNameMap: () => TestNameMap = memoize(
-    (): TestNameMap =>
-        new URLSearchParams(window.location.search)
-            .getAll('pbtest')
-            .reduce((acc, value) => {
-                acc[value] = true;
-                return acc;
-            }, {}),
-    (): string =>
-        // Same implicit parameter as the memoized function
-        window.location.search
-);
-
 // Is pbtest being used?
 const isPbTestOn = (): boolean => !isEmpty(pbTestNameMap());
 // Helper for conditions
@@ -337,8 +352,8 @@ const inPbTestOr = (liveClause: boolean): boolean => isPbTestOn() || liveClause;
 const appNexusBidder: PrebidBidder = {
     name: 'and',
     switchName: 'prebidAppnexus',
-    bidParams: (slotId: string, slotSize: PrebidSize[]): PrebidAppNexusParams =>
-        getAppNexusBidParams(slotSize),
+    bidParams: (slotId: string, sizes: PrebidSize[]): PrebidAppNexusParams =>
+        getAppNexusBidParams(sizes),
 };
 
 const openxClientSideBidder: PrebidBidder = {
@@ -409,7 +424,7 @@ const pubmaticBidder: PrebidBidder = {
             {},
             {
                 publisherId: getPubmaticPublisherId(),
-                adSlot: slotId,
+                adSlot: stripDfpAdPrefixFrom(slotId),
             }
         ),
 };

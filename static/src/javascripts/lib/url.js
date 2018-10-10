@@ -5,6 +5,25 @@ import memoize from 'lodash/memoize';
 
 const supportsPushState = hasPushStateSupport();
 
+/* commercial testing instrument */
+// Returns a map { <bidderName>: true } of bidders
+// according to the pbtest URL parameter
+
+type TestNameMap = { [string]: boolean };
+
+const pbTestNameMap: () => TestNameMap = memoize(
+    (): TestNameMap =>
+        new URLSearchParams(window.location.search)
+            .getAll('pbtest')
+            .reduce((acc, value) => {
+                acc[value] = true;
+                return acc;
+            }, {}),
+    (): string =>
+        // Same implicit parameter as the memoized function
+        window.location.search
+);
+
 // returns "foo=bar&fizz=buzz" (eg. no ? symbol)
 const getCurrentQueryString = (): string =>
     window.location.search.replace(/^\?/, '');
@@ -98,4 +117,5 @@ export {
     supportsPushState,
     pushQueryString,
     replaceQueryString,
+    pbTestNameMap,
 };

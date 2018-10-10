@@ -2,7 +2,9 @@
 
 import once from 'lodash/once';
 import { getBreakpoint } from 'lib/detect';
+import { pbTestNameMap } from 'lib/url';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
+import config from 'lib/config';
 import { commercialPrebidAdYouLike } from 'common/modules/experiments/tests/commercial-prebid-adyoulike';
 import { testCanBeRun } from 'common/modules/experiments/test-can-run-checks';
 import { getParticipations } from 'common/modules/experiments/utils';
@@ -17,6 +19,14 @@ const currentGeoLocation = once((): string => geolocationGetSync());
 
 const contains = (sizes: PrebidSize[], size: PrebidSize): boolean =>
     Boolean(sizes.find(s => s[0] === size[0] && s[1] === size[1]));
+
+const stripPrefix = (s: string, prefix: string): string => {
+    const re = new RegExp(`^${prefix}`);
+    return s.replace(re, '');
+};
+
+export const stripDfpAdPrefixFrom = (s: string): string =>
+    stripPrefix(s, 'dfp-ad--');
 
 export const isInUsRegion = (): boolean =>
     ['US', 'CA'].includes(currentGeoLocation());
@@ -79,8 +89,6 @@ export const getRandomIntInclusive = (
     return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
-export const shouldIncludeAppNexus = (): boolean => isInAuRegion();
-
 export const shouldIncludeOpenx = (): boolean =>
     !isInUsRegion() && !isInAuRegion();
 
@@ -100,6 +108,11 @@ export const shouldIncludeAdYouLike = (slotSizes: PrebidSize[]): boolean => {
 
 export const shouldIncludeOzone = (): boolean =>
     !isInUsRegion() && !isInAuRegion();
+
+export const shouldIncludeAppNexus = (): boolean =>
+    isInAuRegion() ||
+    ((config.get('switches.prebidAppnexusUkRow') && !isInUsRegion()) ||
+        !!pbTestNameMap().and);
 
 export const stripMobileSuffix = (s: string): string =>
     stripSuffix(s, '--mobile');
