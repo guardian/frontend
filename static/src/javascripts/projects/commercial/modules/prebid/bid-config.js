@@ -379,7 +379,7 @@ const getPangaeaPlacementId = (sizes: PrebidSize[]): number => {
         },
     ];
 
-    const section: string = (config.get('page.section') || '').toLowerCase();
+    const section: string = config.get('page.section', '').toLowerCase();
     const placementIdsForSection: PangaeaSection = pangaeaList.find(
         ({ sections }) => sections.includes(section)
     ) || {
@@ -678,7 +678,6 @@ export const bids: (string, PrebidSize[]) => PrebidBid[] = (
                 bid.labelAll = bidder.labelAll;
             }
         }
-        console.log(`Bid for ${slotId} ${bidder.name}: ${JSON.stringify(bid)}`);
         return bid;
     });
 
