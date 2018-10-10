@@ -28,7 +28,7 @@ import fastForward from 'svgs/journalism/audio-player/fast-forward.svg';
 import fastBackwardActive from 'svgs/journalism/audio-player/fast-backward-active.svg';
 import fastForwardActive from 'svgs/journalism/audio-player/fast-forward-active.svg';
 
-import waveW from 'svgs/journalism/audio-player/wave-wide.svg';
+import waveW from 'svgs/journalism/audio-player/waveform.svg';
 import { formatTime, sendToOphan, checkForTimeEvents } from './utils';
 
 import ProgressBar from './ProgressBar';
@@ -43,26 +43,27 @@ const AudioGrid = styled('div')({
     display: 'grid',
     backgroundColor: palette.neutral[1],
     color: palette.neutral[5],
-    gridTemplateColumns: '6fr 4fr',
-    gridTemplateRows: '30px 50px 94px 50px 1fr',
-    gridTemplateAreas:
-        '"currentTime duration" "wave wave" "controls controls" "volume download" "links links"',
-
-    [mobile]: {
-        gridTemplateColumns: '1fr 1fr',
-    },
-
-    [tablet]: {
-        gridTemplateColumns: '150px 1fr 1fr',
-        gridTemplateRows: '30px 50px 90px 1fr 1fr',
-        gridTemplateAreas:
-            '"currentTime currentTime duration" "wave wave wave" "controls controls controls" "volume volume volume" "download links links"',
-    },
+    //TODO - other breakpoints
+    // gridTemplateColumns: '6fr 4fr',
+    // gridTemplateRows: '30px 50px 94px 50px 1fr',
+    // gridTemplateAreas:
+    //     '"currentTime duration" "wave wave" "controls controls" "volume download" "links links"',
+    //
+    // [mobile]: {
+    //     gridTemplateColumns: '1fr 1fr',
+    // },
+    //
+    // [tablet]: {
+    //     gridTemplateColumns: '150px 1fr 1fr',
+    //     gridTemplateRows: '30px 50px 90px 1fr 1fr',
+    //     gridTemplateAreas:
+    //         '"currentTime currentTime duration" "wave wave wave" "controls controls controls" "volume volume volume" "download links links"',
+    // },
 
     [leftCol]: {
-        gridTemplateRows: '30px 60px 1fr 1fr',
+        gridTemplateColumns: '80px 1fr 80px',
         gridTemplateAreas:
-            '". currentTime duration" "controls wave wave" "volume . ." "download links links"',
+            '"currentTime wave duration" ". controls ." ". . volume"',
     },
 
     [wide]: {
@@ -78,9 +79,8 @@ const TimeContainer = styled('div')(({ area }) => ({
     [area === 'currentTime' ? 'paddingLeft' : 'paddingRight']: '4px',
     [area === 'currentTime' ? 'marginLeft' : 'marginRight']: '10px',
     gridArea: area,
-    paddingTop: '4px',
+    padding: '12px',
     fontFamily: 'Guardian Text Sans Web',
-    fontWeight: 'bold',
     display: 'flex',
     alignItems: 'center',
     justifyContent: area === 'duration' ? 'flex-end' : 'flex-start',
@@ -97,7 +97,7 @@ const Controls = styled('div')({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    padding: '33px 0',
+    paddingTop: '15px',
 });
 
 const WaveAndTrack = styled('div')({
@@ -105,7 +105,6 @@ const WaveAndTrack = styled('div')({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'stretch',
-    padding: '0 9px',
     cursor: 'pointer',
     maxWidth: '100%',
 });
@@ -113,11 +112,13 @@ const WaveAndTrack = styled('div')({
 const Track = styled('div')({
     height: '12px',
     position: 'relative',
-    top: '-4px',
+    top: '-1px',
+    marginTop: '-7px',
 });
 
 const FakeWave = styled('div')({
     flex: 1,
+    backgroundColor: "#4a4a4a",
     svg: {
         width: '100%',
         transform: `translate(0px, 20px)`,
@@ -285,18 +286,10 @@ const Button = styled('button')(({ isPlay, pillarColor }) => ({
     },
 
     [leftCol]: {
-        padding: isPlay ? '0 12px' : 0,
+        padding: isPlay ? '0 50px' : 0,
         svg: {
-            width: isPlay ? '50px' : '24px',
-            height: isPlay ? '50px' : '24px',
-        },
-    },
-
-    [wide]: {
-        padding: isPlay ? '0 20px' : 0,
-        svg: {
-            width: isPlay ? '74px' : '26px',
-            height: isPlay ? '74px' : '26px',
+            width: isPlay ? '60px' : '30px',
+            height: isPlay ? '60px' : '30px',
         },
     },
 }));
@@ -338,7 +331,7 @@ export default class AudioPlayer extends Component<Props, State> {
     }
 
     componentDidMount() {
-        const bins = this.wave.querySelectorAll('#Rectangle-path rect');
+        const bins = this.wave.querySelectorAll('#Rectangle-path polygon');
 
         this.audio.addEventListener('volumechange', this.onVolumeChange);
         this.audio.addEventListener('timeupdate', this.onTimeUpdate);
@@ -590,7 +583,7 @@ export default class AudioPlayer extends Component<Props, State> {
                 {Number.isNaN(this.state.volume) ? (
                     ''
                 ) : (
-                    <Volume>
+                    <Volume area="volume">
                         <span
                             dangerouslySetInnerHTML={{ __html: volume.markup }}
                         />
@@ -610,31 +603,6 @@ export default class AudioPlayer extends Component<Props, State> {
                         />
                     </Volume>
                 )}
-                <Download>
-                    <a href={this.props.downloadUrl}>
-                        Download MP3
-                        <span
-                            dangerouslySetInnerHTML={{
-                                __html: download.markup,
-                            }}
-                        />
-                    </a>
-                </Download>
-                <Links>
-                    <b>Subscribe for free</b>
-                    <ul>
-                        <li>
-                            <a href={this.props.iTunesUrl}>
-                                <img
-                                    src={applePodcastImage}
-                                    height="20px"
-                                    alt=""
-                                />
-                                Apple Podcasts
-                            </a>
-                        </li>
-                    </ul>
-                </Links>
             </AudioGrid>
         );
     }

@@ -129,8 +129,11 @@ export default class ProgressBar extends Component<Props, State> {
         return (
             <Progress
                 innerRef={this.getElement}
-                backgroundColor={this.props.backgroundColor}
-                highlightColor={this.props.highlightColor}
+                //TODO - do we want to display a progress bar still?
+                //backgroundColor={this.props.backgroundColor}
+                backgroundColor={"transparent"}
+                //highlightColor={this.props.highlightColor}
+                highlightColor={"transparent"}
                 barContext={this.props.barContext}
                 height={this.props.barHeight}
                 onMouseDown={this.start}
