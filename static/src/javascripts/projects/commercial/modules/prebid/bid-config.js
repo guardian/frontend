@@ -380,7 +380,7 @@ const getPangaeaPlacementId = (sizes: PrebidSize[]): number => {
         },
     ];
 
-    const section: string = config.page.section.toLowerCase();
+    const section: string = (config.get('page.section') || '').toLowerCase();
     const placementIdsForSection: PangaeaSection = pangaeaList.find(
         ({ sections }) => sections.includes(section)
     ) || {

@@ -193,7 +193,7 @@ describe('getDummyServerSideBidders', () => {
         const bidderNames = getDummyServerSideBidders().map(
             bidder => bidder.name
         );
-        expect(bidderNames).toEqual(['openx', 'appnexus']);
+        expect(bidderNames).toEqual(['openx', 'appnexus', 'pangaea']);
     });
 
     test('should include methods in the response that generate the correct bid params', () => {
@@ -614,6 +614,7 @@ describe('bids', () => {
             'adyoulike',
             'openx',
             'appnexus',
+            'pangaea',
         ]);
     });
 
