@@ -14,7 +14,7 @@
 .crossword__clue {
     @include fs-textSans(4);
     position: relative;
-    padding: $gs-baseline * .25 $gs-baseline;
+    padding: $gs-baseline * .25 $gs-baseline $gs-baseline * .25 0;
     margin: $gs-baseline * .25 0;
     display: block;
 
@@ -42,10 +42,6 @@
 
     .has-grouped-clues & {
         width: $gs-gutter * 2;
-
-        @include mq(leftCol) {
-            width: $gs-gutter * 3;
-        }
     }
 }
 
