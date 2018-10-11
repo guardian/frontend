@@ -960,6 +960,11 @@ $ima-controls-height: 70px;
         font: 500 14px/1 $f-sans-serif-text;
         height: 34px;
         padding: 0 $gs-baseline;
+
+        &:hover,
+        &:focus {
+            background: $brightness-7;
+        }
     }
 
     .podcast-meta__icon {
