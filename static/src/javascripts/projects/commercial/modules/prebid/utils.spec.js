@@ -15,6 +15,7 @@ import {
     stripMobileSuffix,
     stripTrailingNumbersAbove1,
     stripDfpAdPrefixFrom,
+    removeFalseyValues,
 } from './utils';
 
 const getSync: any = getSync_;
@@ -246,5 +247,16 @@ describe('Utils', () => {
         expect(shouldIncludeAdYouLike([[300, 250]])).toBe(true);
         expect(shouldIncludeAdYouLike([[300, 600], [300, 250]])).toBe(true);
         expect(shouldIncludeAdYouLike([[728, 90]])).toBe(false);
+    });
+
+    test('removeFalseyValues correctly remove non-truthy values', () => {
+        const result = removeFalseyValues({
+            testString: 'non empty string',
+            testEmptyString: '',
+        });
+
+        expect(result).toEqual({
+            testString: 'non empty string',
+        });
     });
 });

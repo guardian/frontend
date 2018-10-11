@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 17 17">
+  <g fill="#FFF">
+    <polygon points="7.299 5.308 7.299 7.836 7.299 8.847 7.299 11.375 9.384 11.375 9.384 8.847 9.384 7.836 9.384 5.308"/>
+    <circle cx="1.043" cy="7.773" r="1.043"/>
+    <circle cx="1.043" cy="8.91" r="1.043"/>
+    <rect width="2.085" height="1.137" y="7.773"/>
+    <circle cx="15.64" cy="8.91" r="1.043"/>
+    <circle cx="15.64" cy="7.773" r="1.043"/>
+    <rect width="2.085" height="1.137" x="14.597" y="7.773" transform="rotate(180 15.64 8.341)"/>
+    <circle cx="4.645" cy="11.185" r="1.043"/>
+    <circle cx="4.645" cy="12.323" r="1.043"/>
+    <rect width="2.085" height="1.137" x="3.602" y="11.185"/>
+    <circle cx="4.645" cy="4.36" r="1.043"/>
+    <circle cx="4.645" cy="8.057" r="1.043"/>
+    <rect width="2.085" height="3.72" x="3.602" y="4.36"/>
+    <circle cx="12.038" cy="5.498" r="1.043"/>
+    <circle cx="12.038" cy="4.36" r="1.043"/>
+    <rect width="2.085" height="1.137" x="10.996" y="4.36" transform="rotate(180 12.038 4.929)"/>
+    <circle cx="8.341" cy="2.18" r="1.043"/>
+    <circle cx="8.341" cy="1.043" r="1.043"/>
+    <rect width="2.085" height="1.137" x="7.299" y="1.043" transform="rotate(180 8.341 1.611)"/>
+    <circle cx="8.341" cy="15.64" r="1.043"/>
+    <circle cx="8.341" cy="14.503" r="1.043"/>
+    <rect width="2.085" height="1.137" x="7.299" y="14.503" transform="rotate(180 8.341 15.071)"/>
+    <circle cx="12.038" cy="12.323" r="1.043"/>
+    <circle cx="12.038" cy="8.626" r="1.043"/>
+    <rect width="2.085" height="3.697" x="10.996" y="8.626" transform="rotate(180 12.038 10.474)"/>
+    <circle cx="8.341" cy="5.308" r="1.043"/>
+    <circle cx="8.341" cy="11.375" r="1.043"/>
+  </g>
+</svg>

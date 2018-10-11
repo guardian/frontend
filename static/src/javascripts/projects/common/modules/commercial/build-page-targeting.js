@@ -14,6 +14,7 @@ import {
 } from 'common/modules/commercial/ad-prefs.lib';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { getParticipations } from 'common/modules/experiments/utils';
+import { removeFalseyValues } from 'commercial/modules/prebid/utils';
 import flattenDeep from 'lodash/flattenDeep';
 import once from 'lodash/once';
 import pick from 'lodash/pick';
@@ -156,24 +157,25 @@ type PageTargeting = {
 };
 
 const buildAppNexusTargetingObject = once(
-    (pageTargeting: PageTargeting): {} => ({
-        sens: pageTargeting.sens,
-        pt1: pageTargeting.url,
-        pt2: pageTargeting.edition,
-        pt3: pageTargeting.ct,
-        pt4: pageTargeting.p,
-        pt5: pageTargeting.k,
-        pt6: pageTargeting.su,
-        pt7: pageTargeting.bp,
-        pt8: pageTargeting.x,
-        pt9: [
-            pageTargeting.gdncrm,
-            pageTargeting.pv,
-            pageTargeting.co,
-            pageTargeting.tn,
-            pageTargeting.slot,
-        ].join('|'),
-    })
+    (pageTargeting: PageTargeting): {} =>
+        removeFalseyValues({
+            sens: pageTargeting.sens,
+            pt1: pageTargeting.url,
+            pt2: pageTargeting.edition,
+            pt3: pageTargeting.ct,
+            pt4: pageTargeting.p,
+            pt5: pageTargeting.k,
+            pt6: pageTargeting.su,
+            pt7: pageTargeting.bp,
+            pt8: pageTargeting.x, // OpenX cannot handle this being undefined
+            pt9: [
+                pageTargeting.gdncrm,
+                pageTargeting.pv,
+                pageTargeting.co,
+                pageTargeting.tn,
+                pageTargeting.slot,
+            ].join('|'),
+        })
 );
 
 const buildAppNexusTargeting = once(
