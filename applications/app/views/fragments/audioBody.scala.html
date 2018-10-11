@@ -58,33 +58,33 @@
                                 <ul class="podcast-meta__items">
                                     @audio.iTunesSubscriptionUrl.map { iTunesSubscriptionUrl =>
                                         <li class="podcast-meta__item podcast-meta__item--itunes">
-                                            <a class="podcast-meta__item__link"
+                                            <a class="podcast-meta__item__link podcast-section__link"
                                                 href="@iTunesSubscriptionUrl"
                                                 data-link-name="@trackingCode("iTunes")"
                                                 >
-                                                @fragments.inlineSvg("apple-podcasts", "journalism/audio", List("podcast-meta__icon"))
+                                                @fragments.inlineSvg("apple-podcasts", "journalism/audio", List("podcast-meta__icon", "podcast-section__icon"))
                                                 Apple Podcasts
                                             </a>
                                         </li>
                                     }
                                     @audio.googlePodcastsUrl.map { googlePodcastsUrl =>
                                         <li class="podcast-meta__item podcast-meta__item--googlePodcasts">
-                                            <a class="podcast-meta__item__link"
+                                            <a class="podcast-meta__item__link podcast-section__link"
                                                 href="@googlePodcastsUrl"
                                                 data-link-name="@trackingCode("googlePodcasts")"
                                                 >
-                                                @fragments.inlineSvg("google-podcasts", "journalism/audio", List("podcast-meta__icon"))
+                                                @fragments.inlineSvg("google-podcasts", "journalism/audio", List("podcast-meta__icon", "podcast-section__icon"))
                                                 Google Podcasts
                                             </a>
                                         </li>
                                     }
                                     @audio.spotifyUrl.map { spotifyUrl =>
                                         <li class="podcast-meta__item podcast-meta__item--spotify">
-                                            <a class="podcast-meta__item__link"
+                                            <a class="podcast-meta__item__link podcast-section__link"
                                                 href="@spotifyUrl"
                                                 data-link-name="@trackingCode("spotify")"
                                                 >
-                                                @fragments.inlineSvg("spotify", "journalism/audio", List("podcast-meta__icon"))
+                                                @fragments.inlineSvg("spotify", "journalism/audio", List("podcast-meta__icon", "podcast-section__icon"))
                                                 Spotify
                                             </a>
                                         </li>
@@ -99,9 +99,9 @@
                                     need our readers to fund our work. You can support The Guardian from as
                                     little as £1 – and it only takes a minute.
                                 </p>
-                                <a href=="https://support.theguardian.com/" class="podcast-support__link">
+                                <a href="https://support.theguardian.com/" class="podcast-support__link podcast-section__link">
                                     Support The Guardian
-                                    @fragments.inlineSvg("arrow-right", "icon", List("podcast-support__icon"))
+                                    @fragments.inlineSvg("arrow-right", "icon", List("podcast-support__icon", "podcast-section__icon"))
                                 </a>
                             </div>
 
