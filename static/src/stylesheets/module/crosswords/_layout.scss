@@ -51,7 +51,9 @@
     clear: both;
     position: relative;
     margin-top: $gs-baseline;
+}
 
+.crossword__spacer--ad {
     @include mq(wide) {
         margin-right: gs-span(4) + $gs-baseline;
         min-height: 600px + $mpu-ad-label-height;
