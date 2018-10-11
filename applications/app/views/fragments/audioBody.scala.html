@@ -40,17 +40,17 @@
                         <div class="content__main-column__body" data-component="body">
                             
                             @fragments.contentMeta(audio, page, false)
+                            
+                            @if(audio.fields.body.nonEmpty) {
+                                <div class="from-content-api">
+                                    @Html(audio.fields.body)
+                                </div>
+                            }                            
 
                             @audio.elements.images.map{ img =>
                                 @fragments.imageFigure(img.images)
                             }
-
-                            @if(audio.fields.body.nonEmpty) {
-                                <div class="from-content-api">
-                                        @Html(audio.fields.body)
-                                </div>
-                               }
-
+                            
                             @fragments.submeta(audio)
                         </div>
                     </div>
