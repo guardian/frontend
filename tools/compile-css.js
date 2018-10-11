@@ -37,7 +37,7 @@ const BROWSERS_LIST = [
     'Chrome >= 50',
 
     'iOS >= 9',
-    'Android > 4',
+    'Android >= 5',
     'BlackBerry >= 10',
     'ExplorerMobile >= 10',
 
