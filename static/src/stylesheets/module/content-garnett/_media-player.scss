@@ -948,12 +948,7 @@ $ima-controls-height: 70px;
 
     .podcast-meta__item {
         display: inline;
-        margin-right: 0;
-    }
-
-    
-    .podcast-meta__item + .podcast-meta__item {
-        margin-left: $gs-gutter / 2;
+        margin-right: $gs-gutter / 2;
     }
 
     .podcast-meta__item__link {
@@ -965,6 +960,11 @@ $ima-controls-height: 70px;
         font: 500 14px/1 $f-sans-serif-text;
         height: 34px;
         padding: 0 $gs-baseline;
+    }
+
+    .podcast-meta__icon {
+        display: inline-flex;
+        margin-right: $gs-gutter / 4;
     }
 }
 
