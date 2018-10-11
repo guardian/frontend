@@ -811,7 +811,7 @@ case class AffiliateLinksCleaner(
 
   override def clean(document: Document): Document = {
     if (AffiliateLinks.isSwitchedOn && AffiliateLinksCleaner.shouldAddAffiliateLinks(AffiliateLinks.isSwitchedOn,
-      sectionId, showAffiliateLinks, affiliateLinkSections, defaultOffTags, tags)) {
+      sectionId, showAffiliateLinks, affiliateLinkSections, defaultOffTags, alwaysOffTags, tags)) {
       AffiliateLinksCleaner.replaceLinksInHtml(document, pageUrl, appendDisclaimer, contentType, skimlinksId)
     } else document
   }
@@ -846,12 +846,26 @@ object AffiliateLinksCleaner {
     s"http://go.theguardian.com/?id=$skimlinksId&url=$urlEncodedLink&sref=$host$pageUrl"
   }
 
-  def shouldAddAffiliateLinks(switchedOn: Boolean, section: String, showAffiliateLinks: Option[Boolean], supportedSections: Set[String], defaultOffTags: Set[String], tagPaths: List[String]): Boolean = {
-    if (showAffiliateLinks.isDefined) {
-      showAffiliateLinks.contains(true)
-    } else {
-      switchedOn && supportedSections.contains(section) && !tagPaths.exists(path => defaultOffTags.contains(path))
-    }
+  def contentHasAlwaysOffTag(tagPaths: List[String], alwaysOffTags: Set[String]): Boolean = {
+    tagPaths.exists(path => alwaysOffTags.contains(path))
+  }
+
+  def shouldAddAffiliateLinks(
+    switchedOn: Boolean,
+    section: String,
+    showAffiliateLinks: Option[Boolean],
+    supportedSections: Set[String],
+    defaultOffTags: Set[String],
+    alwaysOffTags: Set[String],
+    tagPaths: List[String]
+  ): Boolean = {
+    if (!contentHasAlwaysOffTag(tagPaths, alwaysOffTags)) {
+      if (showAffiliateLinks.isDefined) {
+        showAffiliateLinks.contains(true)
+      } else {
+        switchedOn && supportedSections.contains(section) && !tagPaths.exists(path => defaultOffTags.contains(path))
+      }
+    } else false
   }
 
   def stringContainsAffiliateableLinks(s: String): Boolean = {
