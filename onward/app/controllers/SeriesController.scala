@@ -58,7 +58,6 @@ class SeriesController(
 
   private def lookup(edition: Edition, seriesId: String, queryModifier: ItemQuery => ItemQuery = identity)(implicit request: RequestHeader): Future[Option[Series]] = {
     val currentShortUrl = request.getQueryString("shortUrl").getOrElse("")
-    log.info(s"Fetching content in series: $seriesId the ShortUrl $currentShortUrl" )
 
     def isCurrentStory(content: ApiContent) =
       content.fields.flatMap(_.shortUrl).exists(_.equals(currentShortUrl))
