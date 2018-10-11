@@ -190,7 +190,7 @@ case object TheFlyer extends FrontEmailMetadata {
 }
 
 case object Opinion extends FrontEmailMetadata {
-  val name = "Opinion"
+  val name = "The Best of Guardian Opinion"
   override val banner = Some("opinion.png")
 }
 
@@ -245,7 +245,7 @@ case object BusinessView extends FrontEmailMetadata {
 }
 
 case object OpinionUs extends FrontEmailMetadata {
-  val name = "Opinion Us"
+  val name = "The Best of Guardian Opinion US"
   override val banner = Some("opinion.png")
 }
 
@@ -330,17 +330,17 @@ case object FilmToday extends FrontEmailMetadata {
 }
 
 case object OpinionAus extends FrontEmailMetadata {
-  val name = "Opinion Aus"
+  val name = "The Best of Guardian Opinion Australia"
   override val banner = Some("opinion.png")
 }
 
 case object PoliticsAu extends FrontEmailMetadata {
-  val name = "Politics Au"
+  val name = "Australian Politics"
   override val banner = Some("australian-politics.png")
 }
 
 case object SportAu extends FrontEmailMetadata {
-  val name = "Sport Au"
+  val name = "Guardian Australia Sport"
   override val banner = Some("australia-sports.png")
 }
 
