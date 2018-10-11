@@ -19,5 +19,7 @@ class AffiliateLinksCleanerTest extends FlatSpec with Matchers {
     shouldAddAffiliateLinks(switchedOn = true, "news", None, supportedSections, Set("bereavement"), List("bereavement")) should be (false)
     shouldAddAffiliateLinks(switchedOn = true, "news", None, supportedSections, Set("bereavement"), List("tech")) should be (false)
     shouldAddAffiliateLinks(switchedOn = true, "fashion", None, supportedSections, Set("bereavement"), List("tech")) should be (true)
+    shouldAddAffiliateLinks(switchedOn = true, "fashion", Some(true), supportedSections, Set("bereavement"), List("bereavement")) should be (false)
+    shouldAddAffiliateLinks(switchedOn = true, "fashion", Some(true), supportedSections, Set("bereavement"), List("tech")) should be (true)
   }
 }
