@@ -238,7 +238,7 @@ describe('Utils', () => {
         expect(shouldIncludeAdYouLike([[728, 90]])).toBe(false);
     });
 
-    test('removeFalseyValues correctly move non-truthy values', () => {
+    test('removeFalseyValues correctly remove non-truthy values', () => {
         const result = removeFalseyValues({
             testString: 'non empty string',
             testEmptyString: '',
