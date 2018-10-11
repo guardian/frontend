@@ -53,8 +53,8 @@
                                 @fragments.imageFigure(img.images)
                             }
 
-                            <div class="podcast-meta podcast-meta--flagship">
-                                <div class="podcast-meta__heading">Subscribe for free</div>
+                            <div class="podcast-meta podcast-meta--flagship podcast-section">
+                                <div class="podcast-meta__heading podcast-section__heading">Subscribe for free</div>
                                 <ul class="podcast-meta__items">
                                     @audio.iTunesSubscriptionUrl.map { iTunesSubscriptionUrl =>
                                         <li class="podcast-meta__item podcast-meta__item--itunes">
@@ -90,6 +90,19 @@
                                         </li>
                                     }
                                 </ul>
+                            </div>
+
+                            <div class="podcast-support from-content-api podcast-section">
+                                <div class="podcast-support__heading podcast-section__heading">Support The Guardian</div>
+                                <p>The Guardian is editorially independent. And we want to keep our journalism,
+                                    including our podcasts, open and accessible to all. But we increasingly
+                                    need our readers to fund our work. You can support The Guardian from as
+                                    little as £1 – and it only takes a minute.
+                                </p>
+                                <a href=="https://support.theguardian.com/" class="podcast-support__link">
+                                    Support The Guardian
+                                    @fragments.inlineSvg("arrow-right", "icon", List("podcast-support__icon"))
+                                </a>
                             </div>
 
                             @fragments.submeta(audio)
