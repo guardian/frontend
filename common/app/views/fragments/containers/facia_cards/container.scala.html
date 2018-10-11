@@ -6,10 +6,8 @@
 @import views.html.fragments.containers.facia_cards._
 @import views.support.Commercial.container.shouldRenderAsPaidContainer
 @import views.support.GetClasses
-@import conf.switches.Switches.{MostViewedFronts, FlagshipFrontContainer}
+@import conf.switches.Switches.MostViewedFronts
 @import conf.audio.Flagship
-@import org.joda.time.DateTime
-@import org.joda.time.DateTimeConstants.{SATURDAY, SUNDAY}
 
 @(containerDefinition: layout.FaciaContainer,
   frontProperties: model.FrontProperties = model.FrontProperties.empty,
@@ -40,21 +38,19 @@
             }
         }
 
-        case _ if Flagship.FrontContainerIds.contains(containerDefinition.dataId) => {
-            @defining(DateTime.now.getDayOfWeek) { now =>
-                @if(FlagshipFrontContainer.isSwitchedOn && now != SATURDAY && now != SUNDAY) {
-                    <section id="@componentName"
-                        class="@GetClasses.forContainerDefinition(containerDefinition)"
-                        data-link-name="container-@{containerDefinition.index + 1} | @componentName"
-                        data-id="@containerDefinition.dataId"
-                        data-component="@componentName"
-                        aria-expanded="true">
+        case _ if Flagship.isFlagshipContainer(containerDefinition.dataId) => {
+            @if(Flagship.displayFlagshipContainer()) {
+                <section id="@componentName"
+                    class="@GetClasses.forContainerDefinition(containerDefinition)"
+                    data-link-name="container-@{containerDefinition.index + 1} | @componentName"
+                    data-id="@containerDefinition.dataId"
+                    data-component="@componentName"
+                    aria-expanded="true">
 
-                        <div class="fc-container__inner">
-                            @flagshipContainer(containerDefinition, frontProperties)
-                        </div>
-                    </section>
-                }
+                    <div class="fc-container__inner">
+                        @flagshipContainer(containerDefinition, frontProperties)
+                    </div>
+                </section>
             }
         }
 
