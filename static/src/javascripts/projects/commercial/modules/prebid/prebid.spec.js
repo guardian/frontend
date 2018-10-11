@@ -78,7 +78,7 @@ describe('initialise', () => {
             s2sConfig: {
                 accountId: '1',
                 adapter: 'prebidServer',
-                bidders: ['appnexus', 'openx'],
+                bidders: ['appnexus', 'openx', 'pangaea'],
                 cookieSet: true,
                 cookiesetUrl: 'https://acdn.adnxs.com/cookieset/cs.js',
                 enabled: true,

@@ -45,6 +45,7 @@ const s2sConfig = {
     bidders: [
         'appnexus',
         'openx', // Defined in the doc.
+        'pangaea',
     ],
     timeout: bidderTimeout,
     adapter: 'prebidServer',
