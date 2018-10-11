@@ -5,6 +5,7 @@ import config from 'lib/config';
 import { testCanBeRun as testCanBeRun_ } from 'common/modules/experiments/test-can-run-checks';
 import { getParticipations as getParticipations_ } from 'common/modules/experiments/utils';
 import {
+    getLargestSize,
     getBreakpointKey,
     shouldIncludeAdYouLike,
     shouldIncludeAppNexus,
@@ -14,6 +15,7 @@ import {
     stripMobileSuffix,
     stripTrailingNumbersAbove1,
     stripDfpAdPrefixFrom,
+    removeFalseyValues,
 } from './utils';
 
 const getSync: any = getSync_;
@@ -55,6 +57,16 @@ describe('Utils', () => {
 
     test('stripPrefix correctly behaves in invalid case', () => {
         expect(stripDfpAdPrefixFrom(' dfp-ad--slot')).toEqual(' dfp-ad--slot');
+    });
+
+    test('getLargestSize should return only one and the largest size', () => {
+        expect(getLargestSize([[300, 250]])).toEqual([300, 250]);
+        expect(getLargestSize([[300, 250], [300, 600]])).toEqual([300, 600]);
+        expect(getLargestSize([[970, 250], [728, 80]])).toEqual([970, 250]);
+    });
+
+    test('getLargestSize should return null if no sizes exist', () => {
+        expect(getLargestSize([])).toEqual(null);
     });
 
     test('getBreakpointKey should find the correct key', () => {
@@ -235,5 +247,16 @@ describe('Utils', () => {
         expect(shouldIncludeAdYouLike([[300, 250]])).toBe(true);
         expect(shouldIncludeAdYouLike([[300, 600], [300, 250]])).toBe(true);
         expect(shouldIncludeAdYouLike([[728, 90]])).toBe(false);
+    });
+
+    test('removeFalseyValues correctly remove non-truthy values', () => {
+        const result = removeFalseyValues({
+            testString: 'non empty string',
+            testEmptyString: '',
+        });
+
+        expect(result).toEqual({
+            testString: 'non empty string',
+        });
     });
 });

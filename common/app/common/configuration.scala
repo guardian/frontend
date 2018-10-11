@@ -251,6 +251,7 @@ class GuardianConfiguration extends Logging {
   object affiliatelinks {
     lazy val skimlinksId = configuration.getMandatoryStringProperty("skimlinks.id")
     lazy val affiliateLinkSections: Set[String] = configuration.getStringProperty("affiliatelinks.sections").getOrElse("").split(",").toSet
+    lazy val defaultOffTags: Set[String] = configuration.getStringProperty("affiliatelinks.default.off.tags").getOrElse("").split(",").toSet
   }
 
   object frontend {

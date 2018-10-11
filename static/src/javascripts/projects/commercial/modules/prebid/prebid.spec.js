@@ -27,7 +27,6 @@ describe('initialise', () => {
         expect(window.pbjs.getConfig()).toEqual({
             _bidderSequence: 'random',
             _bidderTimeout: 1500,
-            _cookieSyncDelay: 100,
             _customPriceBucket: {
                 buckets: [
                     {
@@ -56,7 +55,6 @@ describe('initialise', () => {
                 cmpApi: 'iab',
                 timeout: 200,
             },
-            cookieSyncDelay: 100,
             customPriceBucket: {
                 buckets: [
                     {

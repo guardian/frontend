@@ -72,7 +72,7 @@ object BodyCleaner {
       TimestampCleaner(article),
       MinuteCleaner(article),
       GarnettQuoteCleaner,
-      AffiliateLinksCleaner(request.uri, article.content.metadata.sectionId, article.content.fields.showAffiliateLinks, "article")
+      AffiliateLinksCleaner(request.uri, article.content.metadata.sectionId, article.content.fields.showAffiliateLinks, "article", tags = article.content.tags.tags.map(_.id))
     ) ++
       ListIf(!amp)(VideoEmbedCleaner(article)) ++
       ListIf(amp)(AmpEmbedCleaner(article)) ++

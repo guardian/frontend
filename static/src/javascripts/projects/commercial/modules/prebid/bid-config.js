@@ -31,6 +31,7 @@ import type {
     PrebidXaxisParams,
 } from './types';
 import {
+    getLargestSize,
     containsBillboard,
     containsDmpu,
     containsLeaderboard,
@@ -218,6 +219,15 @@ const getImprovePlacementId = (sizes: PrebidSize[]): number => {
     }
 };
 
+const getAppNexusInvCode = (sizes: Array<PrebidSize>): ?string => {
+    const device: string = getBreakpointKey();
+    const section: string = config.get('page.section', 'unknown');
+    const slotSize: PrebidSize | null = getLargestSize(sizes);
+    if (slotSize) {
+        return `${device}${section.toLowerCase()}${slotSize.join('x')}`;
+    }
+};
+
 const getAppNexusDirectPlacementId = (sizes: PrebidSize[]): string => {
     if (isInAuRegion()) {
         return '11016434';
@@ -249,6 +259,24 @@ const getAppNexusDirectPlacementId = (sizes: PrebidSize[]): string => {
         default:
             return defaultPlacementId;
     }
+};
+
+const getAppNexusBidParams = (sizes: PrebidSize[]): PrebidAppNexusParams => {
+    if (config.get('switches.prebidAppnexusInvcode', false)) {
+        const invCode = getAppNexusInvCode(sizes);
+        // flowlint sketchy-null-string:warn
+        if (invCode) {
+            return {
+                invCode,
+                member: '7012',
+                keywords: buildAppNexusTargetingObject(buildPageTargeting()),
+            };
+        }
+    }
+    return {
+        placementId: getAppNexusDirectPlacementId(sizes),
+        keywords: buildAppNexusTargetingObject(buildPageTargeting()),
+    };
 };
 
 const getAppNexusPlacementId = (sizes: PrebidSize[]): string => {
@@ -409,10 +437,8 @@ const inPbTestOr = (liveClause: boolean): boolean => isPbTestOn() || liveClause;
 const appNexusBidder: PrebidBidder = {
     name: 'and',
     switchName: 'prebidAppnexus',
-    bidParams: (slotId: string, sizes: PrebidSize[]): PrebidAppNexusParams => ({
-        placementId: getAppNexusDirectPlacementId(sizes),
-        keywords: buildAppNexusTargetingObject(buildPageTargeting()), // Ok to duplicate call. Lodash 'once' is used.
-    }),
+    bidParams: (slotId: string, sizes: PrebidSize[]): PrebidAppNexusParams =>
+        getAppNexusBidParams(sizes),
 };
 
 const openxClientSideBidder: PrebidBidder = {
@@ -687,6 +713,8 @@ export const bids: (string, PrebidSize[]) => PrebidBid[] = (
 
 export const _ = {
     getAdYouLikePlacementId,
+    getAppNexusInvCode,
+    getAppNexusBidParams,
     getAppNexusPlacementId,
     getDummyServerSideBidders,
     getIndexSiteId,

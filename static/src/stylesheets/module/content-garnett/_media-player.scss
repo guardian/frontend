@@ -930,6 +930,49 @@ $ima-controls-height: 70px;
     color: $brightness-97;
 }
 
+.podcast-meta--flagship {
+    @include multiline(4, $brightness-86, top);
+    padding: ($gs-baseline * 1.5) ($gs-gutter / 2) 0;
+    margin: ($gs-baseline / 3 * 8) ($gs-gutter / -2) 0;
+
+    .podcast-meta__heading {
+        color: #ffffff;
+        font: bold 18px/20px $f-serif-headline;
+        margin: 0 0 ($gs-gutter / 3);
+    }
+
+    .podcast-meta__items {
+        line-height: 44px;
+        margin: 0;
+    }
+
+    .podcast-meta__item {
+        display: inline;
+        margin-right: $gs-gutter / 2;
+    }
+
+    .podcast-meta__item__link {
+        align-items: center;
+        background: $brightness-20;
+        border-radius: 17px;
+        color: #ffffff;
+        display: inline-flex;
+        font: 500 14px/1 $f-sans-serif-text;
+        height: 34px;
+        padding: 0 $gs-baseline;
+
+        &:hover,
+        &:focus {
+            background: $brightness-7;
+        }
+    }
+
+    .podcast-meta__icon {
+        display: inline-flex;
+        margin-right: $gs-gutter / 4;
+    }
+}
+
 /* IMA Adverts
    ========================================================================== */
 #ima-ad-container {
