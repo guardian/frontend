@@ -1,7 +1,9 @@
 @import common.Edition
 @import common.LinkTo
 @import model.ContentType
+@import com.gu.contentapi.client.model.v1.TagType
 @import views.support.{BulletCleaner, ContributorLinks, InBodyLinkCleaner, RenderClasses, withJsoup}
+@import experiments.{ActiveExperiments, AudioPageChange}
 
 @(item: ContentType)(implicit request: RequestHeader)
 
@@ -20,6 +22,14 @@
             s"$trailText${if (item.tags.isReview) "." else ""}"
         }){ trailText =>
             <meta itemprop="description" content="@trailText" />
+        }
+    }
+    @if(item.tags.isAudio && ActiveExperiments.isParticipating(AudioPageChange)) {
+        @for( series <- item.tags.tags.find(_.properties.podcast.nonEmpty)
+            ; podcast <- series.properties.podcast
+            ; image <- podcast.image
+        ) {
+            <img src="@image" class="content__standfirst-cover">
         }
     }
     @item.fields.standfirst.map { standfirst =>
