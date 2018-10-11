@@ -7,6 +7,7 @@
 @import views.support.Commercial.container.shouldRenderAsPaidContainer
 @import views.support.GetClasses
 @import conf.switches.Switches.{MostViewedFronts, FlagshipFrontContainer}
+@import conf.audio.Flagship
 @import org.joda.time.DateTime
 @import org.joda.time.DateTimeConstants.{SATURDAY, SUNDAY}
 
@@ -39,7 +40,7 @@
             }
         }
 
-        case _ if componentName == "flagship" && frontId.contains("uk") => {
+        case _ if Flagship.FrontContainerIds.contains(containerDefinition.dataId) => {
             @defining(DateTime.now.getDayOfWeek) { now =>
                 @if(FlagshipFrontContainer.isSwitchedOn && now != SATURDAY && now != SUNDAY) {
                     <section id="@componentName"

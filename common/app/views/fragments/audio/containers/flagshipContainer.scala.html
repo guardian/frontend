@@ -6,6 +6,7 @@
 @import common.Localisation
 @import model.InlineImage
 @import layout.SliceWithCards
+@import conf.audio.Flagship
 
 @(containerDefinition: layout.FaciaContainer, frontProperties: FrontProperties)(implicit request: RequestHeader)
 
@@ -55,7 +56,7 @@
                             <div class="fc-podcast-container__episode">
                                 <div class="fc-podcast-container__episode-image">
                                     @fragments.inlineSvg("audio-icon", "journalism/podcast-container", Seq("fc-podcast-container__audio-icon"))
-                                    <img src="https://media.guim.co.uk/79284468f1b259db7d713dc24ea9af2a3f5c9937/0_0_800_800/500.png"/>
+                                    <img src="@Flagship.AlbumArtUrl"/>
                                 </div>
                                 <div class="fc-podcast-container__episode-details">
                                     <div class="fc-item__header">
