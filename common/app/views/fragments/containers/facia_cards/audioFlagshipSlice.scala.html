@@ -1,0 +1,22 @@
+@import model.FrontProperties
+@(slice: layout.SliceWithCards, containerIndex: Int, frontProperties: Option[FrontProperties] = None, containerDisplayName: Option[String] = None, frontId: Option[String] = None)(implicit request: RequestHeader)
+
+@import layout.{ColumnAndCards, SingleItem, Rows, SplitColumn, MPU}
+@import views.html.fragments.items.facia_cards.audioFlagshipCard
+@import layout.{ContentCard}
+
+<div class="fc-slice-wrapper">
+    <ul class="u-unstyled l-row  l-row--cols-@slice.numberOfCols fc-slice fc-slice--@slice.cssClassName">
+    @for(ColumnAndCards(_, cards) <- slice.columns.headOption) {
+
+        @cards.headOption.map { card =>
+            @card.item match {
+                case content: ContentCard => {
+                    @audioFlagshipCard(content)
+                }
+                case _ => {}
+            }
+        }
+    }
+    </ul>
+</div>

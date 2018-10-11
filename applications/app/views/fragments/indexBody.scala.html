@@ -2,6 +2,7 @@
 @import com.gu.commercial.branding.PaidContent
 @import common.commercial.EditionBranding
 @import common.{Edition, PagePaths}
+@import conf.AudioFlagship
 @import model.FrontProperties
 @import model.FrontProperties.empty
 @import services.IndexPage
@@ -31,7 +32,8 @@
 
                 @defining(IndexPage.makeFront(index, Edition(request)).containers) { containers =>
                         @containers.map { containerDefinition =>
-                            @container(containerDefinition,
+                            @container(
+                                containerDefinition,
                                 frontProperties = FrontProperties.fromBranding(Edition(request), branding),
                                 frontId = Some(index.idWithoutEdition),
                                 showFrontBranding = isFirstNonThrasherContainer(containerDefinition.index, containers))
@@ -47,6 +49,43 @@
                 @fragments.trendingTopics(index.faciaTrails, index.page.metadata.id, None)
 
                 <div class="fc-container fc-container--commercial">@fragments.commercial.commercialComponent()</div>
+
+                @defining(IndexPage.makeLinkedData(index)) { linkedData =>
+                    <script data-schema="@{linkedData.`@type`}" type="application/ld+json">
+                        @Html(model.meta.LinkedData.toJson(linkedData))
+                    </script>
+                }
+
+            </div>
+        </div>
+    }
+
+    case None if index.page.metadata.id == AudioFlagship.tagName => {
+
+        <div class="l-side-margins content--media" id="flagship-audio">
+            <div class="u-cf index-page content--media" data-link-name="Front | @request.path" role="main">
+
+                @fragments.audioSeriesHead(AudioFlagship.seriesId, AudioFlagship.title, AudioFlagship.descriptionLong, AudioFlagship.descriptionShort, AudioFlagship.imageUrl, AudioFlagship.subscribeLinks)
+
+                @defining(IndexPage.makeFront(index, Edition(request)).containers) { containers =>
+                    @containers.map { containerDefinition =>
+                        @container(
+                            containerDefinition = containerDefinition,
+                            frontId = Some(index.idWithoutEdition),
+                            showFrontBranding = isFirstNonThrasherContainer(containerDefinition.index, containers)
+                        )
+                    }
+                }
+
+                @index.page.metadata.pagination.map { paginationInstance =>
+                    <div class="fc-container__pagination">
+                        @pagination(index.page.metadata.webTitle, paginationInstance, PagePaths.fromId(index.idWithoutEdition))
+                    </div>
+                }
+
+                @fragments.trendingTopics(index.faciaTrails, index.page.metadata.id, None)
+
+            <div class="fc-container fc-container--commercial">@fragments.commercial.commercialComponent()</div>
 
                 @defining(IndexPage.makeLinkedData(index)) { linkedData =>
                     <script data-schema="@{linkedData.`@type`}" type="application/ld+json">

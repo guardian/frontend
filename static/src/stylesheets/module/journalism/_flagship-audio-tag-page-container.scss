@@ -1,0 +1,56 @@
+/* ---------------- CONTAINERS ------------------- */
+
+#flagship-audio {
+    .fc-container {
+        .fc-date-headline {
+            color: $brightness-100;
+        }
+
+        .fc-item__container {
+            flex-direction: row;
+
+            &::before {
+                background-color: #ff6a56;
+            }
+
+            .fc-date-headline {
+                color: $brightness-100;
+            }
+
+            .fc-item__media-wrapper {
+                flex-basis: 20%;
+                @include mq($from: mobile , $until: phablet) {
+                    margin: 0;
+                }
+
+                .u-responsive-ratio {
+                    padding-bottom: 100%; /* this is horrible but it works */
+                    height: 100%;
+                    width: auto;
+                }
+
+                img {
+                    object-fit: cover;
+                }
+
+            }
+            .fc-item__content {
+                @include mq($from: phablet , $until: wide) {
+                    padding: 0 $gs-gutter $gs-gutter;
+                }
+
+                .fc-item__title {
+                    .fc-item__kicker {
+                        color: #ff6a56;
+                    }
+                }
+                .fc-item__media-meta {
+                    .inline-icon {
+                        background-color: #ff6a56;
+                    }
+                }
+
+            }
+        }
+    }
+}

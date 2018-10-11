@@ -1,0 +1,30 @@
+@import common.commercial.ContainerModel
+@import common.{Localisation}
+@import views.support.RenderClasses
+
+@(containerDefinition: layout.FaciaContainer,
+    frontProperties: model.FrontProperties,
+    maybeContainerModel: Option[ContainerModel],
+    showFrontBranding: Boolean,
+    frontId: Option[String])(implicit request: RequestHeader)
+
+@containerHeader(containerDefinition, frontProperties)
+
+@for(containerLayout <- containerDefinition.containerLayout) {
+    <div class="@RenderClasses(Map(
+        ("fc-container__body", true),
+        ("fc-container--rolled-up-hide", true)
+    ))"
+    data-title="@Localisation(containerDefinition.displayName getOrElse "")"
+    data-id="@containerDefinition.dataId">
+
+        @for(sliceWithCards <- containerLayout.slices.headOption) {
+            @audioFlagshipSlice(sliceWithCards, containerDefinition.index, frontProperties = Some(frontProperties), containerDefinition.displayName, frontId)
+        }
+
+        @showMore(
+            containerDefinition.containerLayout.map(_.remainingCards).getOrElse(Nil),
+            containerDefinition.index
+        )
+    </div>
+}
