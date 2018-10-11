@@ -613,8 +613,12 @@ const getDummyServerSideBidders = (): Array<PrebidBidder> => {
     ) {
         dummyServerSideBidders.push(openxServerSideBidder);
         dummyServerSideBidders.push(appnexusServerSideBidder);
+    }
+
+    if (isPbTestOn()) {
         dummyServerSideBidders.push(pangaeaServerSideBidder);
     }
+
     return dummyServerSideBidders;
 };
 
