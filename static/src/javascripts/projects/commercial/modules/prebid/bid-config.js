@@ -579,35 +579,13 @@ const getDummyServerSideBidders = (): Array<PrebidBidder> => {
         bidParams: (): PrebidOpenXParams =>
             Object.assign(
                 {},
-                (() => {
-                    switch (config.get('page.edition')) {
-                        case 'UK':
-                            return {
-                                delDomain: 'guardian-d.openx.net',
-                                unit: '539997090',
-                                customParams: buildAppNexusTargetingObject(
-                                    buildPageTargeting()
-                                ),
-                            };
-                        case 'US':
-                            return {
-                                delDomain: 'guardian-us-d.openx.net',
-                                unit: '539997087',
-                                customParams: buildAppNexusTargetingObject(
-                                    buildPageTargeting()
-                                ),
-                            };
-                        default:
-                            // AU and rest
-                            return {
-                                delDomain: 'guardian-aus-d.openx.net',
-                                unit: '539997046',
-                                customParams: buildAppNexusTargetingObject(
-                                    buildPageTargeting()
-                                ),
-                            };
-                    }
-                })(),
+                (() => ({
+                    delDomain: 'guardian-d.openx.net',
+                    unit: '539997090',
+                    customParams: buildAppNexusTargetingObject(
+                        buildPageTargeting()
+                    ),
+                }))(),
                 window.OzoneLotameData ? { lotame: window.OzoneLotameData } : {}
             ),
     };
