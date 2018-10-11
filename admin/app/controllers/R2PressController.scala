@@ -1,11 +1,14 @@
 package controllers.admin
 
 import java.io.File
+import java.net.URL
 
 import common.{AkkaAsync, ImplicitControllerExecutionContext, Logging}
 import model.{ApplicationContext, R2PressMessage}
 import play.api.mvc._
-import services.{R2PagePressNotifier, R2PressedPageTakedownNotifier}
+import services.{R2PagePressNotifier, R2PressedPageTakedownNotifier, RedirectService}
+
+import scala.util.Try
 
 class R2PressController(
   akkaAsync: AkkaAsync,
@@ -44,7 +47,7 @@ class R2PressController(
     Ok(views.html.pressR2(fileMsgs = msgs))
   }
 
-  private def pressFile(file: File, isTakedown: Boolean, isFromPreservedSource: Boolean, isConvertToHttps: Boolean): List[String] = {
+   private def pressFile(file: File, isTakedown: Boolean, isFromPreservedSource: Boolean, isConvertToHttps: Boolean): List[String] = {
     val source = scala.io.Source.fromFile(file)
     try {
       source.getLines().map { line =>
@@ -53,7 +56,7 @@ class R2PressController(
           if (isTakedown) {
             normaliseAndEnqueueTakedown(line)
           } else {
-            R2PagePressNotifier.enqueue(akkaAsync)(R2PressMessage(line, isFromPreservedSource, isConvertToHttps))
+            normaliseAndEnqueuePress(R2PressMessage(line, isFromPreservedSource, isConvertToHttps))
           }
         } else {
           "* empty line *"
@@ -65,35 +68,44 @@ class R2PressController(
     }
   }
 
-  private def normaliseAndEnqueueTakedown(url: String): String = {
-    // NOTE: This code is copied from ArchiveController in the interest of not endlessly expanding the common
-    // library. Changes made here should be reflected there - function is currently called 'normalise'
-    // Our redirects are 'normalised' Vignette URLs, Ie. path/to/0,<n>,123,<n>.html -> path/to/0,,123,.html
-    def normalise(path: String): String = {
-      val R1ArtifactUrl = """^/(.*)/[0|1]?,[\d]*,(-?\d+),[\d]*(.*)""".r
-      val ShortUrl = """^(/p/[\w\d]+).*$""".r
-      path match {
-        case R1ArtifactUrl(p, artifactOrContextId, _) =>
-          s"/$p/0,,$artifactOrContextId,.html"
-        case ShortUrl(p) => p
-        case _ => path
-      }
+
+
+  def getVariations(url: String): Option[List[String]] = {
+    Try(new URL(url)).toOption.map{url=>
+      val host = url.getHost
+      val path = url.getPath
+      val normalisedPath = RedirectService.normalisePath(path)
+      List(s"https://$host$path", s"http://$host$path", s"https://$host$normalisedPath", s"http://$host$normalisedPath")
+      //An http version of the redirect may exist so preemptively delete it.
     }
-    R2PressedPageTakedownNotifier.enqueue(akkaAsync)(url)
-    R2PressedPageTakedownNotifier.enqueue(akkaAsync)(normalise(url))
+  }
+
+  private def normaliseAndEnqueueTakedown(url: String): String = {
+    getVariations(url) match {
+      case Some(urls) => urls.map(u => R2PressedPageTakedownNotifier.enqueue(akkaAsync)(u)).mkString("\n")
+      case None => s"$url not recognised as a valid url."
+    }
+  }
+
+  def normaliseAndEnqueuePress(message: R2PressMessage): String = {
+    val tryUrl = RedirectService.normaliseURL(message.url)
+    tryUrl match {
+      case Some(url) => R2PagePressNotifier.enqueue(akkaAsync)(message.copy(url = url))
+      case None => s"${message.url} not recognised as a valid url."
+    }
   }
 
   def press(): Action[AnyContent] = Action { implicit request =>
     val body = request.body
     val result = body.asFormUrlEncoded.map { form =>
-      form("r2url").map { r2Url =>
+      form("r2url").map{ r2Url =>
         r2Url.trim match {
           // TODO: other validation?
           case url if url.nonEmpty =>
             if (isTakedown(body)) {
               normaliseAndEnqueueTakedown(url)
             } else {
-              R2PagePressNotifier.enqueue(akkaAsync)(R2PressMessage(url, isFromPreservedSource(body), isConvertToHttps(body)))
+              normaliseAndEnqueuePress(R2PressMessage(url, isFromPreservedSource(body), isConvertToHttps(body)))
             }
           case _ => "URL was not specified"
         }
