@@ -6,6 +6,8 @@
 
 @(page: MediaPage, audio: Audio)(implicit request: RequestHeader, context: model.ApplicationContext)
 
+@trackingCode(target: String) = {@if(page.media.tags.isPodcast){podcast:subscribe:}@target:@page.media.metadata.webTitle}
+
 @defining(isPaidContent(page), isAdFree(request)) { case (isPaidContent, isAdFree) =>
 
 <div class="@RenderClasses(Map(
@@ -50,7 +52,43 @@
                             @audio.elements.images.map{ img =>
                                 @fragments.imageFigure(img.images)
                             }
-                            
+
+                            <div class="podcast-meta podcast-meta--flagship">
+                                <div class="podcast-meta__heading">Subscribe for free:</div>
+                                <ul class="podcast-meta__items">
+                                    @audio.iTunesSubscriptionUrl.map { iTunesSubscriptionUrl =>
+                                        <li class="podcast-meta__item podcast-meta__item--itunes">
+                                            <a class="podcast-meta__item__link"
+                                                href="@iTunesSubscriptionUrl"
+                                                data-link-name="@trackingCode("iTunes")"
+                                                >
+                                                Apple Podcasts
+                                            </a>
+                                        </li>
+                                    }
+                                    @audio.googlePodcastsUrl.map { googlePodcastsUrl =>
+                                        <li class="podcast-meta__item podcast-meta__item--googlePodcasts">
+                                            <a class="podcast-meta__item__link"
+                                                href="@googlePodcastsUrl"
+                                                data-link-name="@trackingCode("googlePodcasts")"
+                                                >
+                                                Google Podcasts
+                                            </a>
+                                        </li>
+                                    }
+                                    @audio.spotifyUrl.map { spotifyUrl =>
+                                        <li class="podcast-meta__item podcast-meta__item--spotify">
+                                            <a class="podcast-meta__item__link"
+                                                href="@spotifyUrl"
+                                                data-link-name="@trackingCode("spotify")"
+                                                >
+                                                Spotify
+                                            </a>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+
                             @fragments.submeta(audio)
                         </div>
                     </div>
