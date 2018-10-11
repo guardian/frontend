@@ -73,7 +73,6 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
   // Needed as aliases for reverse routing
   def renderRootFrontRss(): Action[AnyContent] = renderFrontRss(path = "")
   def renderFrontRss(path: String): Action[AnyContent] = Action.async { implicit  request =>
-    log.info(s"Serving RSS Path: $path")
     if (shouldEditionRedirect(path))
       redirectTo(s"${Editionalise(path, Edition(request))}/rss")
     else if (!ConfigAgent.shouldServeFront(path))
@@ -86,7 +85,6 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
 
   def renderFrontHeadline(path: String): Action[AnyContent] = Action.async { implicit request =>
     def notFound() = {
-      log.warn(s"headline not found for $path")
       FrontHeadline.headlineNotFound
     }
 
@@ -96,7 +94,6 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
   }
 
   def renderFront(path: String): Action[AnyContent] = Action.async { implicit request =>
-    log.info(s"Serving Path: $path")
     if (shouldEditionRedirect(path))
       redirectTo(Editionalise(path, Edition(request)))
     else if (!ConfigAgent.shouldServeFront(path) || request.getQueryString("page").isDefined)
@@ -125,7 +122,6 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
     val futureFaciaPage: Future[Option[PressedPage]] = frontJsonFapi.get(path, liteRequestType).flatMap {
         case Some(faciaPage: PressedPage) =>
           if(faciaPage.collections.isEmpty && liteRequestType == LiteAdFreeType) {
-            log.info(s"Nothing in the collection for ${faciaPage.id} so making a LiteType request.")
             frontJsonFapi.get(path, LiteType)
           }
           else Future.successful(Some(faciaPage))
@@ -182,13 +178,10 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
   def renderFrontPress(path: String): Action[AnyContent] = Action.async { implicit request => renderFrontPressResult(path) }
 
   def renderContainer(id: String, preserveLayout: Boolean = false): Action[AnyContent] = Action.async { implicit request =>
-    log.info(s"Serving collection ID: $id")
     renderContainerView(id, preserveLayout)
   }
 
   def renderMostRelevantContainerJson(path: String): Action[AnyContent] = Action.async { implicit request =>
-    log.info(s"Serving most relevant container for $path")
-
     val canonicalId = ConfigAgent.getCanonicalIdForFront(path).orElse (
       alternativeEndpoints(path).map(ConfigAgent.getCanonicalIdForFront).headOption.flatten
     )
@@ -201,7 +194,6 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
   def alternativeEndpoints(path: String): Seq[String] = path.split("/").toList.take(2).reverse
 
   private def renderContainerView(collectionId: String, preserveLayout: Boolean = false)(implicit request: RequestHeader): Future[Result] = {
-    log.info(s"Rendering container view for collection id $collectionId")
     getPressedCollection(collectionId).map { collectionOption =>
       collectionOption.map { collection =>
 
