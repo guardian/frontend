@@ -3,9 +3,9 @@
 @import play.api.libs.json.Json
 @import views.html.fragments.crosswords._
 @import conf.switches.Switches.CommercialSwitch
-@import views.support.Commercial.shouldShowAds
+@import views.support.Commercial.{shouldShowAds, isAdFree}
 
-@defining(CommercialSwitch.isSwitchedOn && shouldShowAds(crosswordPage)) { adsEnabled =>
+@defining(CommercialSwitch.isSwitchedOn && shouldShowAds(crosswordPage) && !isAdFree(request)) { adsEnabled =>
     <div class="l-side-margins">
         <article id="crossword" class="content content--article tonal tonal--tone-news" role="main">
             @crosswordMetaHeader(crosswordPage)
