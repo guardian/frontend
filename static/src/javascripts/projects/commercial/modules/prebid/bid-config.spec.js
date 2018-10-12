@@ -27,6 +27,7 @@ import {
     shouldIncludeTrustX as shouldIncludeTrustX_,
     stripMobileSuffix as stripMobileSuffix_,
     isInAuRegion as isInAuRegion_,
+    isInUsRegion as isInUsRegion_,
 } from './utils';
 
 const getLargestSize: any = getLargestSize_;
@@ -48,6 +49,7 @@ const getParticipations: any = getParticipations_;
 const getVariant: any = getVariant_;
 const isInVariant: any = isInVariant_;
 const isInAuRegion: any = isInAuRegion_;
+const isInUsRegion: any = isInUsRegion_;
 
 const {
     getAdYouLikePlacementId,
@@ -748,10 +750,8 @@ describe('bids', () => {
         ]);
     });
 
-    test('should include AppNexus directly if in target geolocation', () => {
-        shouldIncludeAppNexusUkRow.mockReturnValue(false);
-        shouldIncludeAppNexusAu.mockReturnValue(false);
-        isInAuRegion.mockReturnValue(false);
+    test('should exclude AppNexus if not in target geolocation', () => {
+        isInUsRegion.mockReturnValue(true);
         expect(bidders()).toEqual([
             'ix',
             'sonobi',
