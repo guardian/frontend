@@ -23,6 +23,8 @@ deployments:
     template: frontend
   commercial:
     template: frontend
+  diagnostics:
+    template: frontend
   discussion:
     template: frontend
   facia:
