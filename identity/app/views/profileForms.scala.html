@@ -29,7 +29,7 @@
     bypassing it.
 *@
 
-@tab(i: Int, name: String, url: String, dataTestId: Option[String], hidden: Boolean = false, optionalClass: String = "", disableClientSideRouting: Boolean = false) = {
+@tab(i: Int, name: String, url: String, dataTestId: Option[String], hidden: Boolean = false, optionalClass: String = "", disableClientSideRouting: Boolean = false, requiresValidation: Boolean = false) = {
 
     <li class="tabs__tab @if(hidden){is-hidden} @if(activeUrl == url){tabs__tab--selected tone-colour tone-accent-border} @optionalClass" role="tab" id="tabs-account-profile-@i-tab" aria-selected="@(activeUrl == url)" aria-controls="tabs-account-profile-@i">
         <a
@@ -40,6 +40,8 @@
             @{
                 if(disableClientSideRouting)
                     Html(s"href='$url' data-tabs-ignore='true'")
+                else if(requiresValidation)
+                    Html(s"href='${idUrlBuilder.buildUrl(routes.EmailVerificationController.resendEmailValidationEmail().url, ("returnUrl", idUrlBuilder.buildUrl(url)))}' data-tabs-ignore='true'")
                 else
                     Html(s"href='$url'")
             }
@@ -49,7 +51,7 @@
     </li>
 }
 
-@content(i: Int, url: String, optionalClass: String = "")(body: => Html) = {
+@content(i: Int, url: String, optionalClass: String = "", requiresValidation: Boolean = false)(body: => Html) = {
     <div id="tabs-account-profile-@i"
          class="@RenderClasses(Map(
             "u-h" -> (activeUrl != url)
@@ -59,7 +61,11 @@
          data-link-name="Public Profile"
          data-link-context="Identity/profile"
     >
-        @body
+    @(if(requiresValidation) {
+        Html("<div class='identity-forms-loading u-identity-forms-padded'><div class='identity-forms-loading__spinner is-updating'></div></div>")
+    } else {
+        body
+    })
     </div>
 }
 
@@ -79,7 +85,7 @@
 
                     @tab(5, "Contributions", "/contribution/recurring/edit", None, optionalClass="qa-contributions-tab")
 
-                    @tab(6, "Emails & marketing", "/email-prefs", None, optionalClass="qa-privacy-tab", disableClientSideRouting = true)
+                    @tab(6, "Emails & marketing", "/email-prefs", None, optionalClass="qa-privacy-tab", requiresValidation = !user.statusFields.userEmailValidated.getOrElse(false))
                 </ol>
         </div>
     </div>
