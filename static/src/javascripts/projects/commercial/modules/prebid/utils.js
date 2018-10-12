@@ -119,10 +119,13 @@ export const shouldIncludeAdYouLike = (slotSizes: PrebidSize[]): boolean => {
 export const shouldIncludeOzone = (): boolean =>
     !isInUsRegion() && !isInAuRegion();
 
-export const shouldIncludeAppNexus = (): boolean =>
-    isInAuRegion() ||
-    ((config.get('switches.prebidAppnexusUkRow') && !isInUsRegion()) ||
-        !!pbTestNameMap().and);
+export const shouldIncludeAppNexusAu = (): boolean => isInAuRegion();
+
+export const shouldIncludeAppNexusUkRow = (): boolean =>
+    (config.get('switches.prebidAppnexusUkRow') &&
+        !isInUsRegion() &&
+        !isInAuRegion()) ||
+    !!pbTestNameMap().and;
 
 export const stripMobileSuffix = (s: string): string =>
     stripSuffix(s, '--mobile');
