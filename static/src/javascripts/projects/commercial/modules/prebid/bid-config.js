@@ -228,8 +228,11 @@ const getAppNexusInvCode = (sizes: Array<PrebidSize>): ?string => {
     }
 };
 
-const getAppNexusDirectPlacementId = (sizes: PrebidSize[]): string => {
-    if (isInAuRegion()) {
+const getAppNexusDirectPlacementId = (
+    sizes: PrebidSize[],
+    isAuRegion: boolean
+): string => {
+    if (isAuRegion) {
         return '11016434';
     }
 
@@ -261,20 +264,19 @@ const getAppNexusDirectPlacementId = (sizes: PrebidSize[]): string => {
     }
 };
 
-const getAppNexusBidParams = (sizes: PrebidSize[]): PrebidAppNexusParams => {
-    if (config.get('switches.prebidAppnexusInvcode', false)) {
-        const invCode = getAppNexusInvCode(sizes);
-        // flowlint sketchy-null-string:warn
-        if (invCode) {
-            return {
-                invCode,
-                member: '7012',
-                keywords: buildAppNexusTargetingObject(buildPageTargeting()),
-            };
-        }
+const getAppNexusDirectBidParams = (
+    sizes: PrebidSize[],
+    isAuRegion: boolean
+): PrebidAppNexusParams => {
+    if (isAuRegion && config.get('switches.prebidAppnexusInvcode', false)) {
+        return {
+            invCode: getAppNexusInvCode(sizes) || '',
+            member: '7012',
+            keywords: buildAppNexusTargetingObject(buildPageTargeting()),
+        };
     }
     return {
-        placementId: getAppNexusDirectPlacementId(sizes),
+        placementId: getAppNexusDirectPlacementId(sizes, isAuRegion),
         keywords: buildAppNexusTargetingObject(buildPageTargeting()),
     };
 };
@@ -432,12 +434,12 @@ const isPbTestOn = (): boolean => !isEmpty(pbTestNameMap());
 const inPbTestOr = (liveClause: boolean): boolean => isPbTestOn() || liveClause;
 
 /* Bidders */
-const appNexusBidder: PrebidBidder = {
-    name: 'and',
+const appNexusBidder = (isInAu: boolean): PrebidBidder => ({
+    name: isInAu ? 'and' : 'and-uk-row',
     switchName: 'prebidAppnexus',
     bidParams: (slotId: string, sizes: PrebidSize[]): PrebidAppNexusParams =>
-        getAppNexusBidParams(sizes),
-};
+        getAppNexusDirectBidParams(sizes, isInAu),
+});
 
 const openxClientSideBidder: PrebidBidder = {
     name: 'oxd',
@@ -650,7 +652,9 @@ const currentBidders: (PrebidSize[]) => PrebidBidder[] = slotSizes => {
     const otherBidders: PrebidBidder[] = [
         sonobiBidder,
         ...(inPbTestOr(shouldIncludeTrustX()) ? [trustXBidder] : []),
-        ...(inPbTestOr(shouldIncludeAppNexus()) ? [appNexusBidder] : []),
+        ...(inPbTestOr(shouldIncludeAppNexus())
+            ? [appNexusBidder(isInAuRegion())]
+            : []),
         improveDigitalBidder,
         xaxisBidder,
         pubmaticBidder,
@@ -690,7 +694,7 @@ export const bids: (string, PrebidSize[]) => PrebidBid[] = (
 export const _ = {
     getAdYouLikePlacementId,
     getAppNexusInvCode,
-    getAppNexusBidParams,
+    getAppNexusDirectBidParams,
     getAppNexusPlacementId,
     getDummyServerSideBidders,
     getIndexSiteId,

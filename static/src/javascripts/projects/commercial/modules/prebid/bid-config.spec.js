@@ -25,6 +25,7 @@ import {
     shouldIncludeOzone as shouldIncludeOzone_,
     shouldIncludeTrustX as shouldIncludeTrustX_,
     stripMobileSuffix as stripMobileSuffix_,
+    isInAuRegion as isInAuRegion_,
 } from './utils';
 
 const getLargestSize: any = getLargestSize_;
@@ -44,11 +45,12 @@ const getBreakpointKey: any = getBreakpointKey_;
 const getParticipations: any = getParticipations_;
 const getVariant: any = getVariant_;
 const isInVariant: any = isInVariant_;
+const isInAuRegion: any = isInAuRegion_;
 
 const {
     getAdYouLikePlacementId,
     getAppNexusInvCode,
-    getAppNexusBidParams,
+    getAppNexusDirectBidParams,
     getAppNexusPlacementId,
     getDummyServerSideBidders,
     getIndexSiteId,
@@ -136,7 +138,7 @@ describe('getAppNexusInvCode', () => {
     });
 });
 
-describe('getAppNexusBidParams', () => {
+describe('getAppNexusDirectBidParams', () => {
     beforeEach(() => {
         resetConfig();
         getLargestSize.mockReturnValueOnce([300, 250]);
@@ -147,18 +149,26 @@ describe('getAppNexusBidParams', () => {
         resetConfig();
     });
 
-    test('should include placementId when invCode switch is off', () => {
+    test('should include placementId', () => {
         getBreakpointKey.mockReturnValue('M');
-        expect(getAppNexusBidParams([[300, 250]])).toEqual({
+        expect(getAppNexusDirectBidParams([[300, 250]], false)).toEqual({
             keywords: 'someAppNexusTargetingObject',
             placementId: '9251752',
         });
     });
 
-    test('should exclude placementId when including member and invCode', () => {
+    test('should include placementId for AU region when invCode switch is off', () => {
+        getBreakpointKey.mockReturnValue('M');
+        expect(getAppNexusDirectBidParams([[300, 250]], true)).toEqual({
+            keywords: 'someAppNexusTargetingObject',
+            placementId: '11016434',
+        });
+    });
+
+    test('should exclude placementId for AU region when including member and invCode', () => {
         config.set('switches.prebidAppnexusInvcode', true);
         getBreakpointKey.mockReturnValue('M');
-        expect(getAppNexusBidParams([[300, 250]])).toEqual({
+        expect(getAppNexusDirectBidParams([[300, 250]], true)).toEqual({
             keywords: 'someAppNexusTargetingObject',
             member: '7012',
             invCode: 'Mmagic300x250',
@@ -730,6 +740,7 @@ describe('bids', () => {
 
     test('should include AppNexus directly if in target geolocation', () => {
         shouldIncludeAppNexus.mockReturnValue(true);
+        isInAuRegion.mockReturnValue(true);
         expect(bidders()).toEqual([
             'ix',
             'sonobi',
