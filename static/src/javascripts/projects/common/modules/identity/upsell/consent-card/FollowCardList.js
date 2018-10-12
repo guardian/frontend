@@ -8,7 +8,6 @@ import { setConsentsInApi } from '../store/consents';
 import { ErrorBar, genericErrorStr } from '../error-bar/ErrorBar';
 import { ExpanderButton } from '../button/ExpanderButton';
 
-
 const joinWithOr = arr =>
     arr.reduce(
         (acc, val, idx, src) =>
