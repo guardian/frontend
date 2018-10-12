@@ -29,7 +29,7 @@ const ConfirmEmailThankYou = (
                 getUserConsent('offers'),
                 getUserConsent('jobs'),
                 getNewsletterConsent('green-light'),
-                getNewsletterConsent('lab-notes')
+                getNewsletterConsent('lab-notes'),
             ]}
             cutoff={2}
         />

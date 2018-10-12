@@ -1,12 +1,13 @@
 // @flow
 import React, { Component } from 'preact-compat';
+import config from 'lib/config';
 import { FollowCard } from 'common/modules/identity/upsell/consent-card/FollowCard';
-import { NewsletterLink } from "common/modules/identity/upsell/newsletter-link/newsletter-link";
+import { NewsletterLink } from 'common/modules/identity/upsell/newsletter-link/newsletter-link';
 import type { ConsentWithState } from '../store/types';
 import { setConsentsInApi } from '../store/consents';
 import { ErrorBar, genericErrorStr } from '../error-bar/ErrorBar';
 import { ExpanderButton } from '../button/ExpanderButton';
-import config from 'lib/config';
+
 
 const joinWithOr = arr =>
     arr.reduce(
