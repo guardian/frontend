@@ -38,3 +38,13 @@
     @include clearfix;
     margin-top: $gs-baseline;
 }
+
+.identity-upsell-newsletter-link {
+    a {
+        @extend %u-underline;
+        color: $brightness-7;
+    }
+    &:active {
+        color: $brightness-7;
+    }
+}

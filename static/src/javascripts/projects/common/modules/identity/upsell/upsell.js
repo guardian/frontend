@@ -17,14 +17,19 @@ import { AccountCreationBlock } from 'common/modules/identity/upsell/account-cre
 import { Header } from 'common/modules/identity/upsell/header/Header';
 
 const ConfirmEmailThankYou = (
-    <Block title="Interested in any of this content?">
+    <Block title="Guardian favourites:">
         <FollowCardList
             consents={[
                 getUserConsent('supporter'),
-                getNewsletterConsent('today-uk'),
-                getUserConsent('jobs'),
+                getNewsletterConsent('the-long-read'),
                 getUserConsent('holidays'),
-                getNewsletterConsent('today-us'),
+                getNewsletterConsent('bookmarks'),
+                getUserConsent('events'),
+                getNewsletterConsent('brexit-briefing'),
+                getUserConsent('offers'),
+                getUserConsent('jobs'),
+                getNewsletterConsent('green-light'),
+                getNewsletterConsent('lab-notes')
             ]}
             cutoff={2}
         />

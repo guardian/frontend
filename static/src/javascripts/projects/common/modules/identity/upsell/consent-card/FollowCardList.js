@@ -1,10 +1,12 @@
 // @flow
 import React, { Component } from 'preact-compat';
 import { FollowCard } from 'common/modules/identity/upsell/consent-card/FollowCard';
+import { NewsletterLink } from "common/modules/identity/upsell/newsletter-link/newsletter-link";
 import type { ConsentWithState } from '../store/types';
 import { setConsentsInApi } from '../store/consents';
 import { ErrorBar, genericErrorStr } from '../error-bar/ErrorBar';
 import { ExpanderButton } from '../button/ExpanderButton';
+import config from 'lib/config';
 
 const joinWithOr = arr =>
     arr.reduce(
@@ -116,6 +118,16 @@ class FollowCardList extends Component<
                                 ),
                                 less: 'Less',
                             }}
+                        />
+                    </div>
+                )}
+                {isExpanded && (
+                    <div className="identity-upsell-newsletter-link">
+                        <NewsletterLink
+                            text="View all Guardian newsletters"
+                            href={`${config.get(
+                                'page.host'
+                            )}/email-newsletters`}
                         />
                     </div>
                 )}
