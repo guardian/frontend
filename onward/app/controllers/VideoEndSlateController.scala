@@ -25,7 +25,6 @@ class VideoEndSlateController(
 
   private def lookupSection(edition: Edition, sectionId: String)(implicit request: RequestHeader): Future[Seq[Video]] = {
     val currentShortUrl = request.getQueryString("shortUrl").getOrElse("")
-    log.info(s"Fetching video content in section: $sectionId" )
 
     def isCurrentStory(content: ApiContent) = content.fields.flatMap(_.shortUrl).contains(currentShortUrl)
 
