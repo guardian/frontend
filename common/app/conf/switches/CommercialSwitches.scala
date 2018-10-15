@@ -506,7 +506,7 @@ trait PrebidSwitches {
     description = "Include Ozone Pangaea connection",
     owners = group(Commercial),
     safeState = Off,
-    sellByDate = never,
+    sellByDate = new LocalDate(2018, 10, 24),
     exposeClientSide = true
   )
 }
