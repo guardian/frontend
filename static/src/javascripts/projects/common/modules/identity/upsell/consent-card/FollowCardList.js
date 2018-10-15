@@ -33,6 +33,7 @@ class FollowCardList extends Component<
             consents: [],
             errors: [],
             isExpanded: false,
+            isLoading: true,
         });
     }
 
@@ -40,8 +41,9 @@ class FollowCardList extends Component<
         Promise.all(this.props.consents).then(consents => {
             this.setState({
                 consents,
+                isLoading: false,
             });
-        });
+        })
     }
 
     updateConsentState(consent: ConsentWithState) {
@@ -81,7 +83,7 @@ class FollowCardList extends Component<
     };
 
     render() {
-        const { consents, isExpanded, errors } = this.state;
+        const { consents, isExpanded, errors, isLoading } = this.state;
         const { cutoff } = this.props;
 
         const displayables = isExpanded
@@ -90,6 +92,11 @@ class FollowCardList extends Component<
 
         return (
             <div>
+                {isLoading && <div
+                    className="identity-forms-loading @if(async){ identity-forms-loading--hide-text } u-identity-forms-padded">
+                    <div className="identity-forms-loading__spinner is-updating"></div>
+                    <div className="identity-forms-loading__text"></div>
+                </div> }
                 <ErrorBar errors={errors} />
                 <div className="identity-upsell-consent-card-grid">
                     {displayables.map(consent => (
