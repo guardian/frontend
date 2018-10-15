@@ -499,4 +499,14 @@ trait PrebidSwitches {
     sellByDate = never,
     exposeClientSide = true
   )
+
+  val ozonePangaeaSwitch: Switch = Switch(
+    group = CommercialPrebid,
+    name = "ozone-pangaea",
+    description = "Include Ozone Pangaea connection",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
 }
