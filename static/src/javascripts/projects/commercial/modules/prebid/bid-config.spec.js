@@ -20,11 +20,14 @@ import {
     containsMpuOrDmpu as containsMpuOrDmpu_,
     getBreakpointKey as getBreakpointKey_,
     shouldIncludeAdYouLike as shouldIncludeAdYouLike_,
-    shouldIncludeAppNexus as shouldIncludeAppNexus_,
+    shouldIncludeAppNexusUkRow as shouldIncludeAppNexusUkRow_,
+    shouldIncludeAppNexusAu as shouldIncludeAppNexusAu_,
     shouldIncludeOpenx as shouldIncludeOpenx_,
     shouldIncludeOzone as shouldIncludeOzone_,
     shouldIncludeTrustX as shouldIncludeTrustX_,
     stripMobileSuffix as stripMobileSuffix_,
+    isInAuRegion as isInAuRegion_,
+    isInUsRegion as isInUsRegion_,
 } from './utils';
 
 const getLargestSize: any = getLargestSize_;
@@ -35,7 +38,8 @@ const containsLeaderboardOrBillboard: any = containsLeaderboardOrBillboard_;
 const containsMpu: any = containsMpu_;
 const containsMpuOrDmpu: any = containsMpuOrDmpu_;
 const shouldIncludeAdYouLike: any = shouldIncludeAdYouLike_;
-const shouldIncludeAppNexus: any = shouldIncludeAppNexus_;
+const shouldIncludeAppNexusUkRow: any = shouldIncludeAppNexusUkRow_;
+const shouldIncludeAppNexusAu: any = shouldIncludeAppNexusAu_;
 const shouldIncludeOpenx: any = shouldIncludeOpenx_;
 const shouldIncludeOzone: any = shouldIncludeOzone_;
 const shouldIncludeTrustX: any = shouldIncludeTrustX_;
@@ -44,11 +48,14 @@ const getBreakpointKey: any = getBreakpointKey_;
 const getParticipations: any = getParticipations_;
 const getVariant: any = getVariant_;
 const isInVariant: any = isInVariant_;
+const isInAuRegion: any = isInAuRegion_;
+const isInUsRegion: any = isInUsRegion_;
 
 const {
     getAdYouLikePlacementId,
     getAppNexusInvCode,
-    getAppNexusBidParams,
+    getAppNexusBidParamsUkRow,
+    getAppNexusBidParamsAu,
     getAppNexusPlacementId,
     getDummyServerSideBidders,
     getIndexSiteId,
@@ -149,7 +156,7 @@ describe('getAppNexusBidParams', () => {
 
     test('should include placementId when invCode switch is off', () => {
         getBreakpointKey.mockReturnValue('M');
-        expect(getAppNexusBidParams([[300, 250]])).toEqual({
+        expect(getAppNexusBidParamsUkRow([[300, 250]])).toEqual({
             keywords: 'someAppNexusTargetingObject',
             placementId: '9251752',
         });
@@ -158,7 +165,7 @@ describe('getAppNexusBidParams', () => {
     test('should exclude placementId when including member and invCode', () => {
         config.set('switches.prebidAppnexusInvcode', true);
         getBreakpointKey.mockReturnValue('M');
-        expect(getAppNexusBidParams([[300, 250]])).toEqual({
+        expect(getAppNexusBidParamsAu([[300, 250]])).toEqual({
             keywords: 'someAppNexusTargetingObject',
             member: '7012',
             invCode: 'Mmagic300x250',
@@ -667,8 +674,8 @@ describe('bids', () => {
         containsMpu.mockReturnValue(false);
         containsMpuOrDmpu.mockReturnValue(false);
         shouldIncludeAdYouLike.mockReturnValue(true);
-        shouldIncludeAppNexus.mockReturnValue(false);
-        shouldIncludeAppNexus.mockReturnValue(false);
+        shouldIncludeAppNexusUkRow.mockReturnValue(false);
+        shouldIncludeAppNexusAu.mockReturnValue(false);
         shouldIncludeTrustX.mockReturnValue(false);
         stripMobileSuffix.mockImplementation(str => str);
         getVariant.mockReturnValue(CommercialPrebidAdYouLike.variants[0]);
@@ -729,11 +736,25 @@ describe('bids', () => {
     });
 
     test('should include AppNexus directly if in target geolocation', () => {
-        shouldIncludeAppNexus.mockReturnValue(true);
+        shouldIncludeAppNexusAu.mockReturnValue(true);
+        shouldIncludeAppNexusUkRow.mockReturnValue(true);
+        isInAuRegion.mockReturnValue(true);
         expect(bidders()).toEqual([
             'ix',
             'sonobi',
-            'and',
+            'and-au',
+            'and-uk-row',
+            'improvedigital',
+            'xhb',
+            'adyoulike',
+        ]);
+    });
+
+    test('should exclude AppNexus if not in target geolocation', () => {
+        isInUsRegion.mockReturnValue(true);
+        expect(bidders()).toEqual([
+            'ix',
+            'sonobi',
             'improvedigital',
             'xhb',
             'adyoulike',
