@@ -25,6 +25,7 @@ import {
     shouldIncludeOzone as shouldIncludeOzone_,
     shouldIncludeTrustX as shouldIncludeTrustX_,
     stripMobileSuffix as stripMobileSuffix_,
+    isInAuRegion as isInAuRegion_,
 } from './utils';
 
 const getLargestSize: any = getLargestSize_;
@@ -44,6 +45,7 @@ const getBreakpointKey: any = getBreakpointKey_;
 const getParticipations: any = getParticipations_;
 const getVariant: any = getVariant_;
 const isInVariant: any = isInVariant_;
+const isInAuRegion: any = isInAuRegion_;
 
 const {
     getAdYouLikePlacementId,
@@ -730,10 +732,24 @@ describe('bids', () => {
 
     test('should include AppNexus directly if in target geolocation', () => {
         shouldIncludeAppNexus.mockReturnValue(true);
+        isInAuRegion.mockReturnValue(true);
         expect(bidders()).toEqual([
             'ix',
             'sonobi',
             'and',
+            'improvedigital',
+            'xhb',
+            'adyoulike',
+        ]);
+    });
+
+    test('should include AppNexus directly if in target geolocation', () => {
+        shouldIncludeAppNexus.mockReturnValue(true);
+        isInAuRegion.mockReturnValue(false);
+        expect(bidders()).toEqual([
+            'ix',
+            'sonobi',
+            'and-uk-row',
             'improvedigital',
             'xhb',
             'adyoulike',
