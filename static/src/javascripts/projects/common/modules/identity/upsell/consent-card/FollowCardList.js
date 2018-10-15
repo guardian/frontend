@@ -2,7 +2,6 @@
 import React, { Component } from 'preact-compat';
 import config from 'lib/config';
 import { FollowCard } from 'common/modules/identity/upsell/consent-card/FollowCard';
-import { NewsletterLink } from 'common/modules/identity/upsell/newsletter-link/newsletter-link';
 import type { ConsentWithState } from '../store/types';
 import { setConsentsInApi } from '../store/consents';
 import { ErrorBar, genericErrorStr } from '../error-bar/ErrorBar';
@@ -119,16 +118,14 @@ class FollowCardList extends Component<
                                 less: 'Less',
                             }}
                         />
-                    </div>
-                )}
-                {isExpanded && (
-                    <div className="identity-upsell-newsletter-link">
-                        <NewsletterLink
-                            text="View all Guardian newsletters"
-                            href={`${config.get(
-                                'page.host'
-                            )}/email-newsletters`}
-                        />
+                        {isExpanded && (
+                            <div className="identity-upsell-newsletter-link">
+                                <a className="u-underline" href={`${config.get(
+                                    'page.host'
+                                )}/email-newsletters`}
+                                >View all Guardian newsletters</a>
+                            </div>
+                        )}
                     </div>
                 )}
             </div>
