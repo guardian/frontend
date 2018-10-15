@@ -821,7 +821,6 @@ case class GenericLightbox(
   properties: GenericLightboxProperties
 ) {
   lazy val mainFiltered = elements.mainPicture
-    .filter(_.images.largestEditorialCrop.map(_.ratioWholeNumber).getOrElse(0) > 0.7)
     .filter(_.images.largestEditorialCrop.map(_.width).getOrElse(1) > properties.lightboxableCutoffWidth).toSeq
   lazy val bodyFiltered: Seq[ImageElement] = elements.bodyImages.filter(_.images.largestEditorialCrop.map(_.width).getOrElse(1) > properties.lightboxableCutoffWidth)
 
