@@ -609,7 +609,6 @@ const getDummyServerSideBidders = (): Array<PrebidBidder> => {
             ),
     };
 
-    // Experimental. Only 0.01% of the PVs.
     if (
         inPbTestOr(
             config.get('switches.prebidS2sozone') && shouldIncludeOzone()
@@ -617,10 +616,11 @@ const getDummyServerSideBidders = (): Array<PrebidBidder> => {
     ) {
         dummyServerSideBidders.push(openxServerSideBidder);
         dummyServerSideBidders.push(appnexusServerSideBidder);
-    }
 
-    if (isPbTestOn()) {
-        dummyServerSideBidders.push(pangaeaServerSideBidder);
+        // Remove this switch after initial pangaea release
+        if (config.get('switches.ozonePangaea')) {
+            dummyServerSideBidders.push(pangaeaServerSideBidder);
+        }
     }
 
     return dummyServerSideBidders;
