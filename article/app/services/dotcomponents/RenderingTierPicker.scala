@@ -9,6 +9,7 @@ import implicits.Requests._
 object RenderingTierPicker {
 
   val picker: RenderTierPickerStrategy = new SimplePagePicker()
+  val whitelist: RenderTierPickerStrategy = new WhitelistPicker()
 
   def logRequest(msg:String, results:List[(String, Boolean)])(implicit request: RequestHeader): Unit =
     DotcomponentsLogger().withRequestHeaders(request).results(msg, results)
@@ -23,17 +24,23 @@ object RenderingTierPicker {
 
     // log out whenever we find a supported article, for metrics purposes
 
-    val (results, isSupported) = picker.getRenderTierFor(page, request)
+    val (pickerResult, isSupported) = picker.getRenderTierFor(page, request)
+    val (whitelistResult, isOnWhiteList) = whitelist.getRenderTierFor(page, request)
 
     isSupported match {
-      case RemoteRender => logRequest("Article was remotely renderable", results)
-      case _ => logRequest("Article was only locally renderable", results)
+      case RemoteRender => logRequest("Article was remotely renderable", pickerResult)
+      case _ => logRequest("Article was only locally renderable", pickerResult)
     }
 
-    // We use dotcomponents if we are in the AB test, and are a supported article according to the picker
+    // only use remote if supported article AND is on the whitelist
+
+    val supportedAndWhitelisted = List(isSupported, isOnWhiteList).forall(_ == RemoteRender)
+
+    // We use dotcomponents if we are in the AB test, and are supported
 
     ActiveExperiments.groupFor(DotcomponentsRendering) match {
-      case Participant => isSupported
+      case Participant if supportedAndWhitelisted => RemoteRender
+      case Participant => LocalRender
       case Control => LocalRender
       case Excluded => LocalRender
     }
