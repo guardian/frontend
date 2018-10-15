@@ -120,10 +120,13 @@ class FollowCardList extends Component<
                         />
                         {isExpanded && (
                             <div className="identity-upsell-newsletter-link">
-                                <a className="u-underline" href={`${config.get(
-                                    'page.host'
-                                )}/email-newsletters`}
-                                >View all Guardian newsletters</a>
+                                <a
+                                    className="u-underline"
+                                    href={`${config.get(
+                                        'page.host'
+                                    )}/email-newsletters`}>
+                                    View all Guardian newsletters
+                                </a>
                             </div>
                         )}
                     </div>
