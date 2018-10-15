@@ -54,5 +54,5 @@ object DotcomponentsRendering extends Experiment(
   description = "This will allow rendering of articles to use dotcomponents, if that page is supported",
   owners = Seq(Owner.withGithub("MatthewJWalls")),
   sellByDate = new LocalDate(2018, 12, 31),
-  participationGroup = Perc0A
+  participationGroup = Perc50
 )
