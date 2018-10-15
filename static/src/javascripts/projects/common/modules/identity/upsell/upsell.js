@@ -83,10 +83,12 @@ const bindBlockList = (el): void => {
                             title="Thank you!"
                             subtitle="You’re now subscribed to your content"
                         />
-                        <div className="identity-upsell-layout">
-                            {ConfirmEmailThankYou}
-                            {Optouts}
-                            <AccountCreationBlock {...prefill} />
+                        <div className="identity-upsell-wrapper">
+                            <div className="identity-upsell-layout">
+                                {ConfirmEmailThankYou}
+                                {Optouts}
+                                <AccountCreationBlock {...prefill} />
+                            </div>
                         </div>
                     </div>,
                     el
