@@ -123,7 +123,7 @@ class ShareImage(overlayUrlParam: String, shouldIncludeOverlay: Boolean) extends
 
 trait OverlayBase64 {
   def overlayUrlBase64(overlay: String): String =
-    Base64.getUrlEncoder.encodeToString(s"img/static/overlays/$overlay".getBytes).replace("=", "")
+    Base64.getUrlEncoder.encodeToString(s"/img/static/overlays/$overlay".getBytes).replace("=", "")
 }
 
 object TwitterImage extends OverlayBase64 {
