@@ -1,15 +1,23 @@
 // @flow
-import { Message } from 'common/modules/ui/message';
+import { Message, hasUserAcknowledgedBanner } from 'common/modules/ui/message';
 import type { Banner } from 'common/modules/ui/bannerPicker';
 import checkIcon from 'svgs/icon/tick.svg';
 import bean from 'bean';
 import config from 'lib/config';
+import { isAdFreeUser } from 'common/modules/commercial/user-features';
 
 const messageCode = 'ad-free-banner';
 const image = config.get('images.acquisitions.ad-free', '');
 
 const hideBanner = (banner: Message) => {
     banner.hide();
+};
+
+const canShow: () => Promise<boolean> = () => {
+    const can = Promise.resolve(
+        !hasUserAcknowledgedBanner(messageCode) && isAdFreeUser()
+    );
+    return can;
 };
 
 const show = (): Promise<boolean> => {
@@ -40,8 +48,6 @@ const show = (): Promise<boolean> => {
     `);
     return Promise.resolve(true);
 };
-
-const canShow = (): Promise<boolean> => Promise.resolve(true);
 
 const adFreeBanner: Banner = {
     id: messageCode,
