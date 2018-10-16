@@ -1,4 +1,4 @@
-// @flow strict
+// @flow
 import config from 'lib/config';
 
 import {
@@ -21,6 +21,7 @@ jest.mock('common/modules/commercial/build-page-targeting', () => ({
 }));
 
 jest.mock('./utils', () => {
+    // $FlowFixMe property requireActual is actually not missing Flow.
     const original = jest.requireActual('./utils');
     return {
         ...original,
@@ -142,6 +143,7 @@ describe('getAppNexusPlacementId', () => {
     afterEach(() => {
         jest.resetAllMocks();
         resetConfig();
+        window.OzoneLotameData = undefined;
     });
 
     const generateTestIds = (): Array<string> => {
@@ -204,6 +206,36 @@ describe('getAppNexusPlacementId', () => {
         editions.forEach(edition => {
             config.set('page.edition', edition);
             expect(generateTestIds()).toEqual(expected);
+        });
+    });
+});
+
+describe('getAppNexusServerSideBidParams', () => {
+    beforeEach(() => {
+        resetConfig();
+    });
+
+    afterEach(() => {
+        jest.resetAllMocks();
+        resetConfig();
+        window.OzoneLotameData = undefined;
+    });
+
+    test('should include OzoneLotameData if available', () => {
+        getBreakpointKey.mockReturnValue('M');
+        window.OzoneLotameData = { some: 'lotamedata' };
+        expect(getAppNexusServerSideBidParams([[300, 250]])).toEqual({
+            keywords: 'someAppNexusTargetingObject',
+            placementId: '13366904',
+            lotame: { some: 'lotamedata' },
+        });
+    });
+
+    test('should excude lotame if data is unavailable', () => {
+        getBreakpointKey.mockReturnValue('M');
+        expect(getAppNexusServerSideBidParams([[300, 250]])).toEqual({
+            keywords: 'someAppNexusTargetingObject',
+            placementId: '13366904',
         });
     });
 });
