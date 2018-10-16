@@ -43,7 +43,7 @@ class FollowCardList extends Component<
                 consents,
                 isLoading: false,
             });
-        })
+        });
     }
 
     updateConsentState(consent: ConsentWithState) {
@@ -92,11 +92,12 @@ class FollowCardList extends Component<
 
         return (
             <div>
-                {isLoading && <div
-                    className="identity-forms-loading @if(async){ identity-forms-loading--hide-text } u-identity-forms-padded">
-                    <div className="identity-forms-loading__spinner is-updating"></div>
-                    <div className="identity-forms-loading__text"></div>
-                </div> }
+                {isLoading && (
+                    <div className="identity-forms-loading @if(async){ identity-forms-loading--hide-text } u-identity-forms-padded">
+                        <div className="identity-forms-loading__spinner is-updating" />
+                        <div className="identity-forms-loading__text" />
+                    </div>
+                )}
                 <ErrorBar errors={errors} />
                 <div className="identity-upsell-consent-card-grid">
                     {displayables.map(consent => (
