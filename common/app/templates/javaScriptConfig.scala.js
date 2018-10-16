@@ -28,8 +28,8 @@
             },
             "acquisitions": {
                 "paypal-and-credit-card": "@Static("images/acquisitions/paypal-and-credit-card.png")",
-                "info-logo": "@Static("images/acquisitions/info-logo.svg")"
-
+                "info-logo": "@Static("images/acquisitions/info-logo.svg")",
+                "ad-free": "@Static("images/acquisitions/ad-free.svg")"
             },
             "journalism": {
                 "apple-podcast-logo": "@Static("images/journalism/apple-podcast-icon-48.png")"

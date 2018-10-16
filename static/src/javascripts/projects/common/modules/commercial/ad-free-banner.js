@@ -3,10 +3,10 @@ import { Message } from 'common/modules/ui/message';
 import type { Banner } from 'common/modules/ui/bannerPicker';
 import checkIcon from 'svgs/icon/tick.svg';
 import bean from 'bean';
+import config from 'lib/config';
 
 const messageCode = 'ad-free-banner';
-const image =
-    'https://media.guim.co.uk/6202ea352e93505f8096bfe3adb0cd2b3b80a5ed/0_0_1395_935/master/1395.png';
+const image = config.get('images.acquisitions.ad-free', '');
 
 const hideBanner = (banner: Message) => {
     banner.hide();
@@ -28,11 +28,10 @@ const show = (): Promise<boolean> => {
         },
     }).show(`
         <div class="site-message__copy-text">
-            <h2 class="site-message__copy-heading">Title for this banner</h2>
-            <p>An action is needed on your Guardian account. 
-            Please review and update your details as soon as you can. Thank you.</p>
-            <button class="button site-message__copy-button js-mma-update-details-button">
-                ${checkIcon.markup} Update details 
+            <h2 class="site-message__copy-heading">No ads, no interruptions</h2>
+            <p>As a valued subscriber, you won’t see adverts while logged in to the Guardian. Thank you for your support.</p>
+            <button class="button site-message__copy-button js-ad-free-banner-dismiss-button">
+                ${checkIcon.markup} Got it, thanks
             </button>
         </div>
         <div class="site-message__image">
