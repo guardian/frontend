@@ -111,8 +111,8 @@ class FollowCardList extends Component<
                                 <a
                                     className="u-underline identity-upsell-consent-card__link"
                                     href={`${config.get(
-                                        'page.host'
-                                    )}/email-newsletters`}>
+                                        'page.idUrl'
+                                    )}/email-prefs`}>
                                     View all Guardian newsletters
                                 </a>
                             </div>
