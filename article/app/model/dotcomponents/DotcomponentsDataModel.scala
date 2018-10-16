@@ -3,6 +3,7 @@ package model.dotcomponents
 import common.Edition
 import conf.Configuration
 import controllers.ArticlePage
+import model.liveblog.BlockElement
 import navigation.NavMenu
 import play.api.libs.json.{Json, Writes}
 import play.api.mvc.RequestHeader
@@ -11,11 +12,11 @@ import play.api.mvc.RequestHeader
 // because we don't want people changing the core frontend models and as a side effect,
 // making them incompatible with Dotcomponents. By having our own set of models, there's
 // only one reason for change.
-// The one exception to this is the Nav class, which we reuse because it's really big.
+// exceptions: we do resuse the existing Nav & BlockElement classes right now
 
 case class TagProperties(id: String, tagType: String, webTitle: String, twitterHandle: Option[String])
 case class Tag(properties: TagProperties)
-case class Block(bodyHtml: String)
+case class Block(bodyHtml: String, elements: List[BlockElement])
 case class Blocks(body: List[Block])
 case class PageData(author: String, pageId: String, pillar: String, ajaxUrl: String, webPublicationDate: Long, section: String, headline: String, webTitle: String)
 case class Config(isImmersive: Boolean, page: PageData, nav: NavMenu)
@@ -23,6 +24,7 @@ case class ContentFields(standfirst: String, main: String, body: String, blocks:
 case class DotcomponentsDataModel(contentFields: ContentFields, config: Config, tags: List[Tag], version: Int)
 
 object Block {
+  implicit val blockElementWrites: Writes[BlockElement] = Json.writes[BlockElement]
   implicit val writes = Json.writes[Block]
 }
 
@@ -59,7 +61,7 @@ object DotcomponentsDataModel {
     val article = articlePage.article
 
     val blocks: List[Block] = article.blocks match {
-      case Some(bs) => bs.body.map(bb => Block(bb.bodyHtml)).toList
+      case Some(bs) => bs.body.map(bb => Block(bb.bodyHtml, bb.elements.toList)).toList
       case None => List()
     }
 
