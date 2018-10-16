@@ -9,12 +9,19 @@ import { isAdFreeUser } from 'common/modules/commercial/user-features';
 const messageCode = 'ad-free-banner';
 const image = config.get('images.acquisitions.ad-free', '');
 
+const isInExperiment = (): boolean =>
+    config.get('switches.scAdFreeBanner', false);
+
 const hideBanner = (banner: Message) => {
     banner.hide();
 };
 
 const canShow: () => Promise<boolean> = () =>
-    Promise.resolve(!hasUserAcknowledgedBanner(messageCode) && isAdFreeUser());
+    Promise.resolve(
+        !hasUserAcknowledgedBanner(messageCode) &&
+            isAdFreeUser() &&
+            isInExperiment()
+    );
 
 const show = (): Promise<boolean> => {
     new Message(messageCode, {
