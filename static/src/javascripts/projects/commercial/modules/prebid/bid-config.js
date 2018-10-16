@@ -340,12 +340,12 @@ const isPbTestOn = (): boolean => !isEmpty(pbTestNameMap());
 const inPbTestOr = (liveClause: boolean): boolean => isPbTestOn() || liveClause;
 
 /* Bidders */
-const appNexusBidder = (isInAu: boolean): PrebidBidder => ({
-    name: isInAu ? 'and' : 'and-uk-row',
+const appNexusBidder: PrebidBidder = {
+    name: 'and',
     switchName: 'prebidAppnexus',
     bidParams: (slotId: string, sizes: PrebidSize[]): PrebidAppNexusParams =>
-        getAppNexusDirectBidParams(sizes, isInAu),
-});
+        getAppNexusDirectBidParams(sizes, isInAuRegion()),
+};
 
 const openxClientSideBidder: PrebidBidder = {
     name: 'oxd',
@@ -558,9 +558,7 @@ const currentBidders: (PrebidSize[]) => PrebidBidder[] = slotSizes => {
     const otherBidders: PrebidBidder[] = [
         sonobiBidder,
         ...(inPbTestOr(shouldIncludeTrustX()) ? [trustXBidder] : []),
-        ...(inPbTestOr(shouldIncludeAppNexus())
-            ? [appNexusBidder(isInAuRegion())]
-            : []),
+        ...(inPbTestOr(shouldIncludeAppNexus()) ? [appNexusBidder] : []),
         improveDigitalBidder,
         xaxisBidder,
         pubmaticBidder,
