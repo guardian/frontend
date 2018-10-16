@@ -1,6 +1,7 @@
 // @flow
 import { Message } from 'common/modules/ui/message';
 import type { Banner } from 'common/modules/ui/bannerPicker';
+import checkIcon from 'svgs/icon/tick.svg';
 import bean from 'bean';
 
 const messageCode = 'ad-free-banner';
@@ -23,7 +24,15 @@ const show = (): Promise<boolean> => {
                 () => hideBanner(this)
             );
         },
-    }).show('test');
+    }).show(`
+        <span class="site-message__copy-text">
+            An action is needed on your Guardian account. 
+            Please review and update your details as soon as you can. Thank you.
+        </span>
+        <button class="button site-message__copy-button js-mma-update-details-button">
+            ${checkIcon.markup} Update details 
+        </button>
+    `);
     return Promise.resolve(true);
 };
 
