@@ -39,6 +39,7 @@
 - [Working with emails](03-dev-howtos/17-working-with-emails.md)
 - [Apply the special report tone](03-dev-howtos/18-apply-the-special-report-tone.md)
 - [Tracking components in the Data Lake](03-dev-howtos/19-tracking-components-in-the-data-lake.md)
+- [Updating Social Media Overlay Images](03-dev-howtos/20-update-overlay-images.md)
 
 ## [Quality](04-quality/)
 - [Browsers support](04-quality/01-browser-support.md)
