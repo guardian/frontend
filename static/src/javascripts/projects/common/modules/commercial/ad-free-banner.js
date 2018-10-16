@@ -13,12 +13,8 @@ const hideBanner = (banner: Message) => {
     banner.hide();
 };
 
-const canShow: () => Promise<boolean> = () => {
-    const can = Promise.resolve(
-        !hasUserAcknowledgedBanner(messageCode) && isAdFreeUser()
-    );
-    return can;
-};
+const canShow: () => Promise<boolean> = () =>
+    Promise.resolve(!hasUserAcknowledgedBanner(messageCode) && isAdFreeUser());
 
 const show = (): Promise<boolean> => {
     new Message(messageCode, {
