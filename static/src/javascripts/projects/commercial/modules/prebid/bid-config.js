@@ -281,33 +281,31 @@ const getAppNexusBidParams = (sizes: PrebidSize[]): PrebidAppNexusParams => {
 
 const getAppNexusPlacementId = (sizes: PrebidSize[]): string => {
     const defaultPlacementId: string = '13915593';
-    switch (config.get('page.edition')) {
-        case 'UK':
-            switch (getBreakpointKey()) {
-                case 'D':
-                    if (containsMpuOrDmpu(sizes)) {
-                        return '13366606';
-                    }
-                    if (containsLeaderboardOrBillboard(sizes)) {
-                        return '13366615';
-                    }
-                    return defaultPlacementId;
-                case 'M':
-                    if (containsMpu(sizes)) {
-                        return '13366904';
-                    }
-                    return defaultPlacementId;
-                case 'T':
-                    if (containsMpu(sizes)) {
-                        return '13366913';
-                    }
-                    if (containsLeaderboard(sizes)) {
-                        return '13366916';
-                    }
-                    return defaultPlacementId;
-                default:
-                    return defaultPlacementId;
+    if (isInUsRegion() || isInAuRegion()) {
+        return defaultPlacementId;
+    }
+    switch (getBreakpointKey()) {
+        case 'D':
+            if (containsMpuOrDmpu(sizes)) {
+                return '13366606';
             }
+            if (containsLeaderboardOrBillboard(sizes)) {
+                return '13366615';
+            }
+            return defaultPlacementId;
+        case 'M':
+            if (containsMpu(sizes)) {
+                return '13366904';
+            }
+            return defaultPlacementId;
+        case 'T':
+            if (containsMpu(sizes)) {
+                return '13366913';
+            }
+            if (containsLeaderboard(sizes)) {
+                return '13366916';
+            }
+            return defaultPlacementId;
         default:
             return defaultPlacementId;
     }
