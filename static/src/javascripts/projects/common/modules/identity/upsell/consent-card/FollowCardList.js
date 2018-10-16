@@ -7,15 +7,6 @@ import { setConsentsInApi } from '../store/consents';
 import { ErrorBar, genericErrorStr } from '../error-bar/ErrorBar';
 import { ExpanderButton } from '../button/ExpanderButton';
 
-const joinWithOr = arr =>
-    arr.reduce(
-        (acc, val, idx, src) =>
-            idx === 0
-                ? val
-                : [acc, idx + 1 >= src.length ? ', or ' : ', ', val].join(''),
-        ''
-    );
-
 type FollowCardListProps = {
     consents: Promise<ConsentWithState>[],
     cutoff: number,
@@ -73,14 +64,6 @@ class FollowCardList extends Component<
         });
     };
 
-    expandableConsentsButtonText = (consents: ConsentWithState[]): string => {
-        const buttonWords = [...consents].splice(0, 2).map(c => c.consent.name);
-        if (consents.length > buttonWords.length) {
-            buttonWords.push('more');
-        }
-        return `Interested in ${joinWithOr(buttonWords)}?`;
-    };
-
     render() {
         const { consents, isExpanded, errors } = this.state;
         const { cutoff } = this.props;
@@ -112,9 +95,7 @@ class FollowCardList extends Component<
                             linkName="upsell-follow-expander"
                             onToggle={this.updateExpandState}
                             text={{
-                                more: this.expandableConsentsButtonText(
-                                    [...consents].splice(cutoff)
-                                ),
+                                more: 'See more',
                                 less: 'Less',
                             }}
                         />
