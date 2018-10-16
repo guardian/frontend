@@ -35,6 +35,16 @@
 }
 
 .identity-upsell-consent-card-footer {
-    @include clearfix;
     margin-top: $gs-baseline;
+    display: flex;
+    flex-direction: column;
+    @include mq(tablet) {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .identity-upsell-consent-card__link {
+        color: $brightness-7;
+    }
 }
+

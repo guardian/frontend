@@ -1,19 +1,11 @@
 // @flow
 import React, { Component } from 'preact-compat';
+import config from 'lib/config';
 import { FollowCard } from 'common/modules/identity/upsell/consent-card/FollowCard';
 import type { ConsentWithState } from '../store/types';
 import { setConsentsInApi } from '../store/consents';
 import { ErrorBar, genericErrorStr } from '../error-bar/ErrorBar';
 import { ExpanderButton } from '../button/ExpanderButton';
-
-const joinWithOr = arr =>
-    arr.reduce(
-        (acc, val, idx, src) =>
-            idx === 0
-                ? val
-                : [acc, idx + 1 >= src.length ? ', or ' : ', ', val].join(''),
-        ''
-    );
 
 type FollowCardListProps = {
     consents: Promise<ConsentWithState>[],
@@ -74,14 +66,6 @@ class FollowCardList extends Component<
         });
     };
 
-    expandableConsentsButtonText = (consents: ConsentWithState[]): string => {
-        const buttonWords = [...consents].splice(0, 2).map(c => c.consent.name);
-        if (consents.length > buttonWords.length) {
-            buttonWords.push('more');
-        }
-        return `Interested in ${joinWithOr(buttonWords)}?`;
-    };
-
     render() {
         const { consents, isExpanded, errors, isLoading } = this.state;
         const { cutoff } = this.props;
@@ -118,12 +102,21 @@ class FollowCardList extends Component<
                             linkName="upsell-follow-expander"
                             onToggle={this.updateExpandState}
                             text={{
-                                more: this.expandableConsentsButtonText(
-                                    [...consents].splice(cutoff)
-                                ),
+                                more: 'See more',
                                 less: 'Less',
                             }}
                         />
+                        {isExpanded && (
+                            <div>
+                                <a
+                                    className="u-underline identity-upsell-consent-card__link"
+                                    href={`${config.get(
+                                        'page.host'
+                                    )}/email-newsletters`}>
+                                    View all Guardian newsletters
+                                </a>
+                            </div>
+                        )}
                     </div>
                 )}
             </div>
