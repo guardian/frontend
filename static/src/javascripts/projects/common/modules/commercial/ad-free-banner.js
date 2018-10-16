@@ -34,7 +34,7 @@ const show = (): Promise<boolean> => {
         <div class="site-message__copy-text">
             <h2 class="site-message__copy-heading">No ads, no interruptions</h2>
             <p>As a valued subscriber, you won’t see adverts while logged in to the Guardian. Thank you for your support.</p>
-            <button class="button site-message__copy-button js-ad-free-banner-dismiss-button">
+            <button data-link-name="ad-free-banner : dismiss" class="button site-message__copy-button js-ad-free-banner-dismiss-button">
                 ${checkIcon.markup} Got it, thanks
             </button>
         </div>
