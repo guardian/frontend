@@ -7,7 +7,6 @@ import {
 } from 'common/modules/commercial/build-page-targeting';
 
 import {
-    isInAuRegion,
     getLargestSize,
     containsLeaderboard,
     containsLeaderboardOrBillboard,
@@ -18,11 +17,8 @@ import {
 
 import type { PrebidAppNexusParams, PrebidSize } from './types';
 
-const shouldUseInvCode = (): boolean =>
-    isInAuRegion() && config.get('switches.prebidAppnexusInvcode');
-
 const getAppNexusInvCode = (sizes: Array<PrebidSize>): ?string => {
-    const device: string = getBreakpointKey();
+    const device: string = getBreakpointKey() === 'M' ? 'M' : 'D';
     const section: string = config.get('page.section', 'unknown');
     const slotSize: PrebidSize | null = getLargestSize(sizes);
     if (slotSize) {
@@ -104,7 +100,7 @@ export const getAppNexusDirectBidParams = (
     sizes: PrebidSize[],
     isAuRegion: boolean
 ): PrebidAppNexusParams => {
-    if (isAuRegion && shouldUseInvCode()) {
+    if (isAuRegion && config.get('switches.prebidAppnexusInvcode')) {
         const invCode = getAppNexusInvCode(sizes);
         // flowlint sketchy-null-string:warn
         if (invCode) {

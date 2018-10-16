@@ -9,10 +9,7 @@ import {
 
 import type { PrebidSize } from './types';
 
-import {
-    getBreakpointKey as getBreakpointKey_,
-    isInAuRegion as isInAuRegion_,
-} from './utils';
+import { getBreakpointKey as getBreakpointKey_ } from './utils';
 
 jest.mock('common/modules/commercial/build-page-targeting', () => ({
     buildAppNexusTargeting: () => 'someTestAppNexusTargeting',
@@ -37,7 +34,6 @@ const {
 } = _;
 
 const getBreakpointKey: any = getBreakpointKey_;
-const isInAuRegion: any = isInAuRegion_;
 
 /* eslint-disable guardian-frontend/no-direct-access-config */
 const resetConfig = () => {
@@ -77,7 +73,8 @@ describe('getAppNexusInvCode', () => {
     });
 
     test('should return the magic strings for other breakpoints', () => {
-        getBreakpointKey.mockReturnValue('D');
+        getBreakpointKey.mockReturnValueOnce('T');
+        getBreakpointKey.mockReturnValueOnce('D');
         const invCodes = [
             [[300, 250]],
             [[300, 600]],
@@ -251,7 +248,6 @@ describe('getAppNexusDirectBidParams', () => {
     });
 
     test('should include placementId for AU region when invCode switch is off', () => {
-        isInAuRegion.mockReturnValue(true);
         getBreakpointKey.mockReturnValue('M');
         expect(getAppNexusDirectBidParams([[300, 250]], true)).toEqual({
             keywords: 'someAppNexusTargetingObject',
@@ -261,7 +257,6 @@ describe('getAppNexusDirectBidParams', () => {
 
     test('should exclude placementId for AU region when including member and invCode', () => {
         config.set('switches.prebidAppnexusInvcode', true);
-        isInAuRegion.mockReturnValue(true);
         getBreakpointKey.mockReturnValue('M');
         expect(getAppNexusDirectBidParams([[300, 250]], true)).toEqual({
             keywords: 'someAppNexusTargetingObject',
