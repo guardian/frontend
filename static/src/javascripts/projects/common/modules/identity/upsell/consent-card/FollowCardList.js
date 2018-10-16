@@ -109,10 +109,11 @@ class FollowCardList extends Component<
                         {isExpanded && (
                             <div>
                                 <a
+                                    data-link-name="upsell-newsletter-link"
                                     className="u-underline identity-upsell-consent-card__link"
                                     href={`${config.get(
-                                        'page.host'
-                                    )}/email-newsletters`}>
+                                        'page.idUrl'
+                                    )}/email-prefs`}>
                                     View all Guardian newsletters
                                 </a>
                             </div>
