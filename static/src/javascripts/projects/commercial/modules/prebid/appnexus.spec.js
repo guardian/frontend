@@ -250,14 +250,6 @@ describe('getAppNexusDirectBidParams', () => {
         resetConfig();
     });
 
-    test('should include placementId if outside AU region', () => {
-        getBreakpointKey.mockReturnValue('M');
-        expect(getAppNexusDirectBidParams([[300, 250]], false)).toEqual({
-            keywords: 'someAppNexusTargetingObject',
-            placementId: '4298191',
-        });
-    });
-
     test('should include placementId for AU region when invCode switch is off', () => {
         isInAuRegion.mockReturnValue(true);
         getBreakpointKey.mockReturnValue('M');
@@ -275,6 +267,15 @@ describe('getAppNexusDirectBidParams', () => {
             keywords: 'someAppNexusTargetingObject',
             member: '7012',
             invCode: 'Mmagic300x250',
+        });
+    });
+
+    test('should include placementId and not include invCode if outside AU region', () => {
+        config.set('switches.prebidAppnexusInvcode', true);
+        getBreakpointKey.mockReturnValue('M');
+        expect(getAppNexusDirectBidParams([[300, 250]], false)).toEqual({
+            keywords: 'someAppNexusTargetingObject',
+            placementId: '4298191',
         });
     });
 });
