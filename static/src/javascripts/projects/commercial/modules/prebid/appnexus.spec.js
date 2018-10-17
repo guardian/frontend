@@ -9,7 +9,11 @@ import {
 
 import type { PrebidSize } from './types';
 
-import { getBreakpointKey as getBreakpointKey_ } from './utils';
+import {
+    getBreakpointKey as getBreakpointKey_,
+    isInAuRegion as isInAuRegion_,
+    isInUsRegion as isInUsRegion_,
+} from './utils';
 
 jest.mock('common/modules/commercial/build-page-targeting', () => ({
     buildAppNexusTargeting: () => 'someTestAppNexusTargeting',
@@ -24,6 +28,7 @@ jest.mock('./utils', () => {
         ...original,
         getBreakpointKey: jest.fn(),
         isInAuRegion: jest.fn(),
+        isInUsRegion: jest.fn(),
     };
 });
 
@@ -34,6 +39,8 @@ const {
 } = _;
 
 const getBreakpointKey: any = getBreakpointKey_;
+const isInAuRegion: any = isInAuRegion_;
+const isInUsRegion: any = isInUsRegion_;
 
 /* eslint-disable guardian-frontend/no-direct-access-config */
 const resetConfig = () => {
@@ -134,6 +141,8 @@ describe('getAppNexusDirectPlacementId', () => {
 describe('getAppNexusPlacementId', () => {
     beforeEach(() => {
         resetConfig();
+        isInAuRegion.mockReturnValue(false);
+        isInUsRegion.mockReturnValue(false);
         window.OzoneLotameData = { some: 'lotamedata' };
     });
 
@@ -154,7 +163,7 @@ describe('getAppNexusPlacementId', () => {
         return prebidSizes.map(getAppNexusPlacementId);
     };
 
-    test('should return the expected values when on UK Edition and desktop device', () => {
+    test('should return the expected values when on desktop device', () => {
         getBreakpointKey.mockReturnValue('D');
         expect(generateTestIds()).toEqual([
             '13366606',
@@ -163,12 +172,9 @@ describe('getAppNexusPlacementId', () => {
             '13366615',
             '13915593',
         ]);
-        expect(getAppNexusPlacementId([[300, 250]])).toEqual('13366606');
-        expect(getAppNexusPlacementId([[970, 250]])).toEqual('13366615');
-        expect(getAppNexusPlacementId([[1, 2]])).toEqual('13915593');
     });
 
-    test('should return the expected values when on UK Edition and tablet device', () => {
+    test('should return the expected values when on tablet device', () => {
         getBreakpointKey.mockReturnValue('T');
         expect(generateTestIds()).toEqual([
             '13366913',
@@ -179,7 +185,7 @@ describe('getAppNexusPlacementId', () => {
         ]);
     });
 
-    test('should return the expected values when on UK Edition and mobile device', () => {
+    test('should return the expected values when on mobile device', () => {
         getBreakpointKey.mockReturnValue('M');
         expect(generateTestIds()).toEqual([
             '13366904',
@@ -190,20 +196,13 @@ describe('getAppNexusPlacementId', () => {
         ]);
     });
 
-    test('should return the default value on all other editions', () => {
-        const editions = ['AU', 'US', 'INT'];
-        const expected = [
-            '13915593',
-            '13915593',
-            '13915593',
-            '13915593',
-            '13915593',
-        ];
-
-        editions.forEach(edition => {
-            config.set('page.edition', edition);
-            expect(generateTestIds()).toEqual(expected);
-        });
+    test('should return the default value if in US or AU regions', () => {
+        getBreakpointKey.mockReturnValue('D');
+        isInAuRegion.mockReturnValueOnce(true);
+        isInUsRegion.mockReturnValueOnce(true);
+        expect(getAppNexusPlacementId([[300, 250]])).toEqual('13915593');
+        expect(getAppNexusPlacementId([[970, 250]])).toEqual('13915593');
+        expect(getAppNexusPlacementId([[1, 2]])).toEqual('13915593');
     });
 });
 
