@@ -6,7 +6,7 @@
 @import common.Localisation
 @import model.InlineImage
 @import layout.SliceWithCards
-@import conf.audio.Flagship
+@import conf.audio.FlagshipFrontContainer
 
 @(containerDefinition: layout.FaciaContainer, frontProperties: FrontProperties)(implicit request: RequestHeader)
 
@@ -26,11 +26,11 @@
     allCards.collectFirst { case layout.FaciaCardAndIndex(_, card: layout.ContentCard, _) if card.snapStuff.nonEmpty => card }
 }
 
-@subscriptionLinks = @{
+@subscriptionLinks = {
     <span>Subscribe</span>
-    <span><a data-link-name="apple" href="https://itunes.apple.com/gb/podcast/the-guardian-long-read/id587347784?mt=2">Apple Podcasts</a></span>
-    <span><a data-link-name="google" href="https://www.google.com/podcasts?feed=aHR0cHM6Ly93d3cudGhlZ3VhcmRpYW4uY29tL25ld3Mvc2VyaWVzL3RoZS1hdWRpby1sb25nLXJlYWQvcG9kY2FzdC54bWw%3D">Google Podcasts</a></span>
-    <span><a data-link-name="spotify" href="https://open.spotify.com/show/0jG1HXr3tGoGorW1ieytRS">Spotify</a></span>
+    <span><a data-link-name="apple" href="@FlagshipFrontContainer.SubscriptionUrls.apple">Apple Podcasts</a></span>
+    <span><a data-link-name="google" href="@FlagshipFrontContainer.SubscriptionUrls.google">Google Podcasts</a></span>
+    <span><a data-link-name="spotify" href="@FlagshipFrontContainer.SubscriptionUrls.spotify">Spotify</a></span>
 }
 
 
@@ -56,7 +56,7 @@
                             <div class="fc-podcast-container__episode">
                                 <div class="fc-podcast-container__episode-image">
                                     @fragments.inlineSvg("audio-icon", "journalism/podcast-container", Seq("fc-podcast-container__audio-icon"))
-                                    <img src="@Flagship.AlbumArtUrl"/>
+                                    <img src="@FlagshipFrontContainer.AlbumArtUrl"/>
                                 </div>
                                 <div class="fc-podcast-container__episode-details">
                                     <div class="fc-item__header">

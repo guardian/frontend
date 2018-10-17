@@ -21,5 +21,13 @@ object FlagshipFrontContainer {
       now.isAfter(GoLiveDateTime) &&
       now.getDayOfWeek != SATURDAY && now.getDayOfWeek != SUNDAY
 
+  //TODO - update
   val AlbumArtUrl = "https://media.guim.co.uk/79284468f1b259db7d713dc24ea9af2a3f5c9937/0_0_800_800/500.png"
+
+  object SubscriptionUrls {
+    //TODO - update
+    val apple = "https://itunes.apple.com/gb/podcast/the-guardian-long-read/id587347784?mt=2"
+    val google = "https://www.google.com/podcasts?feed=aHR0cHM6Ly93d3cudGhlZ3VhcmRpYW4uY29tL25ld3Mvc2VyaWVzL3RoZS1hdWRpby1sb25nLXJlYWQvcG9kY2FzdC54bWw%3D"
+    val spotify = "https://open.spotify.com/show/0jG1HXr3tGoGorW1ieytRS"
+  }
 }
