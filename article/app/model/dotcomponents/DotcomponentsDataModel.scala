@@ -5,7 +5,7 @@ import conf.Configuration
 import controllers.ArticlePage
 import model.liveblog.BlockElement
 import navigation.NavMenu
-import play.api.libs.json.{Json, Writes}
+import play.api.libs.json.{JsValue, Json, Writes}
 import play.api.mvc.RequestHeader
 
 // We have introduced our own set of objects for serializing data to the DotComponents API,
@@ -14,14 +14,63 @@ import play.api.mvc.RequestHeader
 // only one reason for change.
 // exceptions: we do resuse the existing Nav & BlockElement classes right now
 
-case class TagProperties(id: String, tagType: String, webTitle: String, twitterHandle: Option[String])
-case class Tag(properties: TagProperties)
-case class Block(bodyHtml: String, elements: List[BlockElement])
-case class Blocks(body: List[Block])
-case class PageData(author: String, pageId: String, pillar: String, ajaxUrl: String, webPublicationDate: Long, section: String, headline: String, webTitle: String)
-case class Config(isImmersive: Boolean, page: PageData, nav: NavMenu)
-case class ContentFields(standfirst: String, main: String, body: String, blocks: Blocks)
-case class DotcomponentsDataModel(contentFields: ContentFields, config: Config, tags: List[Tag], version: Int)
+case class TagProperties(
+    id: String,
+    tagType: String,
+    webTitle: String,
+    twitterHandle: Option[String]
+                        )
+case class Tag(
+    properties: TagProperties
+)
+
+case class Block(
+    bodyHtml: String,
+    elements: List[BlockElement]
+)
+
+case class Blocks(
+    body: List[Block]
+)
+
+case class PageData(
+    author: String,
+    pageId: String,
+    pillar: Option[String],
+    ajaxUrl: String,
+    webPublicationDate: Long,
+    section: Option[String],
+    headline: String,
+    webTitle: String,
+    byline: String,
+    contentId: Option[String],
+    authorIds: Option[String],
+    keywordIds: Option[String],
+    toneIds: Option[String],
+    seriesId: Option[String],
+    isHosted: Boolean,
+    beaconUrl: String
+)
+
+case class Config(
+    isImmersive: Boolean,
+    page: PageData,
+    nav: NavMenu
+)
+
+case class ContentFields(
+    standfirst: Option[String],
+    main: String,
+    body: String, 
+    blocks: Blocks
+)
+
+case class DotcomponentsDataModel(
+    contentFields: ContentFields,
+    config: Config,
+    tags: List[Tag],
+    version: Int
+)
 
 object Block {
   implicit val blockElementWrites: Writes[BlockElement] = Json.writes[BlockElement]
@@ -68,21 +117,31 @@ object DotcomponentsDataModel {
     val dcBlocks = Blocks(blocks)
 
     val contentFields = ContentFields(
-      article.fields.standfirst.getOrElse(""),
+      article.fields.standfirst,
       article.fields.main,
       article.fields.body,
       dcBlocks
     )
 
+    val jsConfig = (k: String) => articlePage.getJavascriptConfig.get(k).map(_.as[String])
+
     val pageData = PageData(
       article.tags.contributors.map(_.name).mkString(","),
       article.metadata.id,
-      article.metadata.pillar.map(_.toString).getOrElse(""),
+      article.metadata.pillar.map(_.toString),
       Configuration.ajax.url,
       article.trail.webPublicationDate.getMillis,
-      article.metadata.section.map(_.value).getOrElse(""),
+      article.metadata.section.map(_.value),
       article.trail.headline,
-      article.metadata.webTitle
+      article.metadata.webTitle,
+      article.trail.byline.getOrElse(""),
+      jsConfig("contentId"),   // source: content.scala
+      jsConfig("authorIds"),   // source: meta.scala
+      jsConfig("keywordIds"),  // source: tags.scala and meta.scala
+      jsConfig("toneIds"),     // source: meta.scala
+      jsConfig("seriesId"),    // source: content.scala
+      article.metadata.isHosted,
+      Configuration.debug.beaconUrl
     )
 
     val tags = article.tags.tags.map(
