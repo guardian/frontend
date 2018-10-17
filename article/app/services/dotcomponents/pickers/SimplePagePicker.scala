@@ -37,7 +37,6 @@ object PageChecks {
   def hasOnlySupportedElements(page: PageWithStoryPackage): Boolean = {
     def unsupportedElement(blockElement: BlockElement) = blockElement match {
       case _: TextBlockElement => false
-      case _: ImageBlockElement => false
       case _ => true
     }
 
