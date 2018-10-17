@@ -118,6 +118,8 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
         case None => Cached(CacheTime.Facia)(JsonComponent(JsObject(Nil)))}
   }
 
+  private def nonHtmlEmail(request: RequestHeader) = (request.isEmail && request.isHeadlineText) || request.isEmailJson || request.isEmailTxt
+
   private[controllers] def renderFrontPressResult(path: String)(implicit request: RequestHeader) = {
     val futureFaciaPage: Future[Option[PressedPage]] = frontJsonFapi.get(path, liteRequestType).flatMap {
         case Some(faciaPage: PressedPage) =>
@@ -129,6 +131,8 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
     }
 
     val futureResult = futureFaciaPage.flatMap {
+      case Some(faciaPage) if nonHtmlEmail(request) =>
+        successful(Cached(CacheTime.RecentlyUpdated)(renderEmail(faciaPage)))
       case Some(faciaPage: PressedPage) =>
         successful(Cached(CacheTime.Facia)(
           if (request.isRss) {
