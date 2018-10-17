@@ -26,7 +26,8 @@ $btn-height: ($gs-baseline*3.5);
         padding: 0;
         width: auto;
         height: auto;
-
+        display: none;
+        
         .inline-icon {
             fill: $brightness-100;
             path:last-child {
@@ -34,9 +35,6 @@ $btn-height: ($gs-baseline*3.5);
             }
         }
 
-        display: block;
-        bottom: $gs-baseline;
-        right: $gs-baseline;
         svg {
             width: 32px;
             height: 32px;
@@ -47,14 +45,11 @@ $btn-height: ($gs-baseline*3.5);
             left: $gs-gutter;
             right: auto;
             bottom: auto;
+            display: block;
             svg {
                 width: inherit;
                 height: inherit;
             }
-        }
-
-        @include mq(tablet) {
-            right: $gs-gutter;
         }
 
     }
@@ -82,12 +77,13 @@ $btn-height: ($gs-baseline*3.5);
 
     .site-message__image {
         display: block;
+        z-index: 9;
         img {
-            height: $gs-baseline * 12;
+            height: $gs-baseline * 14;
             display: block;
             @include mq($until: desktop) {
                 position: absolute;
-                right: -2em;
+                right: $gs-gutter * -3;
                 bottom: 0;
                 height: $gs-baseline * 8;
             }
@@ -114,6 +110,7 @@ $btn-height: ($gs-baseline*3.5);
         font-weight: bold;
         padding-bottom: $gs-baseline;
         color: $highlight-main;
+        padding-right: $gs-gutter * 2;
     }
 
     .site-message__copy-text {
@@ -151,6 +148,7 @@ $btn-height: ($gs-baseline*3.5);
         margin-top: $gs-baseline;
         border: 0;
         position: relative;
+        z-index: 10;
         svg {
             position: absolute;
             top: 0;
