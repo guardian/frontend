@@ -11,7 +11,7 @@ object Flagship {
     "c57a70c8-a00a-4a15-93a2-035b9221622b"  //CODE
   )
 
-  private val GoLiveDateTime = DateTimeFormat.forPattern("yyyy/MM/dd HH:mm").parseDateTime("2018/11/01 06:00")
+  private val GoLiveDateTime = DateTimeFormat.forPattern("yyyy/MM/dd HH:mm").parseDateTime("2018/11/01 04:00")
 
   def isFlagshipContainer(id: String): Boolean =
     FrontContainerIds.contains(id)
