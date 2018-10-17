@@ -26,7 +26,7 @@ object ImageServices {
   // clear both the origin CDN and Fastly IO service (either i.guim.co.uk or i.guimcode.co.uk)
   private def fastlyServiceIdsforOrigin(host: String): Seq[String] = Seq(fastlyOriginCdns(host), fastlyIOService)
 
-  def clearFastly(originUri: URI, wsClient: WSClient) {
+  def clearFastly(originUri: URI, wsClient: WSClient): Unit = {
     fastlyServiceIdsforOrigin(originUri.getHost).foreach { serviceId =>
       // This works because the "path" is set as a Surrogate Key for images in i.guim.co.uk
       // https://www.fastly.com/blog/surrogate-keys-part-1/

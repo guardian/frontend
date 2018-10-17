@@ -17,13 +17,13 @@ class SectionsLookUpLifecycle(
     descheduleJobs()
   }}
 
-  private def scheduleJobs() {
+  private def scheduleJobs(): Unit = {
     jobs.schedule("SectionsLookUpJob", "0 * * * * ?") {
       sectionsLookUp.refresh()
     }
   }
 
-  private def descheduleJobs() {
+  private def descheduleJobs(): Unit = {
     jobs.deschedule("SectionsLookUpJob")
   }
 

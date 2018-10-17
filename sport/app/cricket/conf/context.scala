@@ -18,17 +18,17 @@ class CricketLifecycle(
     descheduleJobs()
   }}
 
-  private def scheduleJobs() {
+  private def scheduleJobs(): Unit = {
     jobs.schedule("CricketAgentRefreshJob", "0 * * * * ?") {
       cricketStatsJob.run
     }
   }
 
-  private def descheduleJobs() {
+  private def descheduleJobs(): Unit = {
     jobs.deschedule("CricketAgentRefreshJob")
   }
 
-  override def start() {
+  override def start(): Unit = {
     descheduleJobs()
     scheduleJobs()
 

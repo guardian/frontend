@@ -22,7 +22,7 @@ class FootballLifecycle(
     descheduleJobs()
   }}
 
-  private def scheduleJobs() {
+  private def scheduleJobs(): Unit = {
     competitionsService.competitionIds.zipWithIndex foreach { case (id, index) =>
       //stagger fixtures and results refreshes to avoid timeouts
       val seconds = index * 5 % 60
@@ -47,7 +47,7 @@ class FootballLifecycle(
     }
   }
 
-  private def descheduleJobs() {
+  private def descheduleJobs(): Unit = {
     competitionsService.competitionIds foreach { id =>
       jobs.deschedule(s"CompetitionAgentRefreshJob_$id")
     }

@@ -37,7 +37,7 @@ object LoadBalancer extends Logging {
 
   private val agent =  Box(loadBalancers)
 
-  def refresh() {
+  def refresh(): Unit = {
     log.info("starting refresh LoadBalancer ELB DNS names")
     credentials.foreach{ credentials =>
       val client = AmazonElasticLoadBalancingClient

@@ -12,13 +12,13 @@ class DiagnosticsLifecycle(appLifecycle: ApplicationLifecycle, jobs: JobSchedule
     descheduleJobs()
   }}
 
-  private def scheduleJobs() {
+  private def scheduleJobs(): Unit = {
     jobs.schedule("DiagnosticsLoadJob", "0 * * * * ?") {
       model.diagnostics.analytics.UploadJob.run()
     }
   }
 
-  private def descheduleJobs() {
+  private def descheduleJobs(): Unit = {
     jobs.deschedule("DiagnosticsLoadJob")
   }
 

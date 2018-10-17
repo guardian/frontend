@@ -8,7 +8,7 @@ import utils.SafeLogging
 import scala.concurrent.Future
 
 class HeaderLoggingFilter(implicit val mat: Materializer) extends Filter with SafeLogging {
-  def logHeaders(rh: RequestHeader) {
+  def logHeaders(rh: RequestHeader): Unit = {
     val keys: Set[String] = rh.headers.keys filterNot { name =>
       "Cookie" == name || "User-Agent" == name || "Authorization" == name
     }

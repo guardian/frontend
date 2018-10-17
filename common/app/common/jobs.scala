@@ -19,7 +19,7 @@ object JobsState {
 
 class FunctionJob extends Job with Logging {
   import JobsState._
-  def execute(context: JobExecutionContext) {
+  def execute(context: JobExecutionContext): Unit = {
     val name = context.getJobDetail.getKey.getName
     val f = jobs(name)
     if (outstanding.get()(name) > 0) {
@@ -97,7 +97,7 @@ class JobScheduler(context: ApplicationContext) extends Logging {
     }
   }
 
-  def deschedule(name: String) {
+  def deschedule(name: String): Unit = {
     log.info(s"Descheduling $name")
     jobs.remove(name)
     scheduler.deleteJob(new JobKey(name))

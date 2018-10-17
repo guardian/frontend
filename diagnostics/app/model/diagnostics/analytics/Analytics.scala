@@ -2,7 +2,7 @@ package model.diagnostics.analytics
 
 object Analytics {
 
-  def report(prefix: String) {
+  def report(prefix: String): Unit = {
     val metric = Metric.metrics.get(prefix)
     metric.foreach(_.increment())
   }

@@ -128,7 +128,7 @@ case class VideoEmbedCleaner(article: Article, maxEmbedHeight: Int = 812) extend
     document
   }
 
-  private def wrapIframe(container: Element, iframe: Element) {
+  private def wrapIframe(container: Element, iframe: Element): Unit = {
     // Has no id to get data from capi so try and get from iframe
     val videoWidth = iframe.attr("width")
     val videoHeight = iframe.attr("height")
@@ -142,14 +142,14 @@ case class VideoEmbedCleaner(article: Article, maxEmbedHeight: Int = 812) extend
     }
   }
 
-  private def wrapCustom(container: Element, width: Float, height: Float) {
+  private def wrapCustom(container: Element, width: Float, height: Float): Unit = {
     val aspectRatio = width / height
     val maxWidth =  maxEmbedHeight * aspectRatio
     val paddingBottom = (1 / aspectRatio) * 100
     container.wrap(s"""<div class="u-responsive-aligner" style="max-width: ${maxWidth}px;"><div class="embed-video-wrapper u-responsive-ratio" style="padding-bottom: ${paddingBottom}%;"></div></div>""")
   }
 
-  private def wrapHD(container: Element) {
+  private def wrapHD(container: Element): Unit = {
     container.wrap(s"""<div class="embed-video-wrapper u-responsive-ratio u-responsive-ratio--hd"></div>""")
   }
 

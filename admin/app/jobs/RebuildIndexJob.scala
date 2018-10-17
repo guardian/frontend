@@ -14,7 +14,7 @@ class RebuildIndexJob(contentApiClient: ContentApiClient)(implicit executionCont
   val contentApiTagsEnumerator = new ContentApiTagsEnumerator(contentApiClient)
   val tagPages = new TagPages
 
-  def saveToS3(parentKey: String, tagPages: Seq[TagIndex]) {
+  def saveToS3(parentKey: String, tagPages: Seq[TagIndex]): Unit = {
     val s3StopWatch = new StopWatch
 
     tagPages foreach { tagPage =>
@@ -85,7 +85,7 @@ class RebuildIndexJob(contentApiClient: ContentApiClient)(implicit executionCont
     }
   }
 
-  def run() {
+  def run(): Unit = {
     rebuildKeywordIndexes().withErrorLogging andThen {
       case _ => rebuildContributorIndex().withErrorLogging andThen {
         case _ => rebuildNewspaperBooks().withErrorLogging andThen {

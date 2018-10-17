@@ -4,7 +4,7 @@ import common.Logging
 import model.diagnostics.CloudWatch
 
 object UploadJob extends Logging {
-  def run() {
+  def run(): Unit = {
 
     log.info("Uploading analytics count metrics")
 

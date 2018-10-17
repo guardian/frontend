@@ -18,7 +18,7 @@ class ArchiveMetrics(appLifecycle: ApplicationLifecycle, jobs: JobScheduler)(imp
     jobs.deschedule("ArchiveSystemMetricsJob")
   }}
 
-  private def report() {
+  private def report(): Unit = {
     CloudWatch.putMetrics("ArchiveMetrics", List(GoogleBotMetric.Googlebot404Count), List.empty)
   }
 

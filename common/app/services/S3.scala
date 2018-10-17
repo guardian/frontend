@@ -75,7 +75,7 @@ trait S3 extends Logging {
     result => new DateTime(result.getObjectMetadata.getLastModified)
   }
 
-  def putPublic(key: String, value: String, contentType: String) {
+  def putPublic(key: String, value: String, contentType: String): Unit = {
     put(key: String, value: String, contentType: String, PublicRead)
   }
 
@@ -84,11 +84,11 @@ trait S3 extends Logging {
     client.foreach(_.putObject(request))
   }
 
-  def putPrivate(key: String, value: String, contentType: String) {
+  def putPrivate(key: String, value: String, contentType: String): Unit = {
     put(key: String, value: String, contentType: String, Private)
   }
 
-  def putPrivateGzipped(key: String, value: String, contentType: String) {
+  def putPrivateGzipped(key: String, value: String, contentType: String): Unit = {
     putGzipped(key, value, contentType, Private)
   }
 
@@ -96,7 +96,7 @@ trait S3 extends Logging {
     Source.fromInputStream(new GZIPInputStream(result.getObjectContent)).mkString
   }
 
-  private def putGzipped(key: String, value: String, contentType: String, accessControlList: CannedAccessControlList) {
+  private def putGzipped(key: String, value: String, contentType: String, accessControlList: CannedAccessControlList): Unit = {
     lazy val request = {
       val metadata = new ObjectMetadata()
 
@@ -124,7 +124,7 @@ trait S3 extends Logging {
     }
   }
 
-  private def put(key: String, value: String, contentType: String, accessControlList: CannedAccessControlList) {
+  private def put(key: String, value: String, contentType: String, accessControlList: CannedAccessControlList): Unit = {
     val metadata = new ObjectMetadata()
     metadata.setCacheControl("no-cache,no-store")
     metadata.setContentType(contentType)
