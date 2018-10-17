@@ -13,7 +13,7 @@ const isInExperiment = (): boolean =>
     config.get('switches.scAdFreeBanner', false);
 
 const hideBanner = (banner: Message) => {
-    banner.hide();
+    banner.acknowledge();
 };
 
 const canShow: () => Promise<boolean> = () =>
