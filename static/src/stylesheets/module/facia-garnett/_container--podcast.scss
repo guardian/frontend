@@ -13,10 +13,12 @@
             margin: 0 10px;
             flex: calc(75% - 21px) 0 0;
         }
+
         >:last-child {
             margin-left: 10px;
             flex-basis: 25%;
         }
+
         >:last-child::before {
             content: '';
             display: block;
@@ -35,24 +37,42 @@
 
 .fc-podcast-container__episode {
     display: flex;
-
     height: 119px;
+
     @include mq(tablet) {
-        height: 172px;
+        height: 160px;
     }
+
     @include mq(desktop) {
-        height: 234px;
+        height: 220px;
     }
 }
 
-.fc-podcast-container__episode, .fc-podcast-container__series {
-    border-top: solid 1px #ffe900;
+.fc-podcast-container__episode,
+.fc-podcast-container__series {
+    border-top: solid 1px #c70000;
 }
 
 .fc-podcast-container__episode-details {
     display: flex;
     flex-direction: column;
-    margin: 0 5px;
+
+    @include mq(tablet) {
+        border-left: 1px solid #777777;
+        margin-left: 10px;
+    }
+}
+
+.fc-podcast-container__episode-details .fc-item__header,
+.fc-podcast-container__episode-details .fc-item__standfirst-wrapper,
+.fc-podcast-container__episode-details .fc-podcast-container__subscribe {
+    padding-left: 5px;
+    padding-right: 5px;
+
+    @include mq(tablet) {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
 }
 
 .fc-podcast-container__episode-details .fc-item__header {
@@ -63,6 +83,7 @@
         font-size: 20px;
         line-height: 24px;
     }
+
     @include mq(desktop) {
         font-size: 24px;
         line-height: 28px;
@@ -81,18 +102,20 @@
     }
 }
 
-.fc-podcast-container__episode-details .fc-item__kicker, .fc-podcast-container__series .fc-item__kicker {
-    color: #ffe900;
+.fc-podcast-container__episode-details .fc-item__kicker,
+.fc-podcast-container__series .fc-item__kicker {
+    color: #FF6A56;
 }
 
 .fc-podcast-container__episode-image img {
     width: 119px;
 
     @include mq(tablet) {
-        width: 172px;
+        width: 160px;
     }
+
     @include mq(desktop) {
-        width: 234px;
+        width: 220px;
     }
 }
 
@@ -103,25 +126,40 @@
         display: none;
     }
 }
+
 .fc-podcast-container__subscribe-large {
     background-color: transparent;
     padding: 7px 0;
-
     display: none;
+
     @include mq(mobileLandscape) {
         display: block;
     }
 }
 
+.fc-podcast-container__subscribe-links {
+    @include mq($from: desktop) {
+        display: inline-block;
+        position: relative;
+        top: -8px;
+        margin-left: 2px;
+    }
+}
+
 .fc-podcast-container__subscribe {
     color: $brightness-100;
-
-    font-size: 10px;
     font-family: $f-sans-serif-text;
+    font-size: 11px;
+    border-top: solid 1px #777777;
+    height: 15px;
 
-    @include mq(tablet) {
+    @include mq(mobileLandscape) {
         font-size: 12px;
-        border-top: solid 1px #777777;
+        height: 25px;
+    }
+
+    @include mq(desktop) {
+        height: 30px;
     }
 
     span {
@@ -133,7 +171,7 @@
     }
 
     span:not(:first-child):not(:last-child) {
-        border-right: solid 1px $brightness-100;
+        border-right: solid 1px $brightness-60;
         padding-right: 6px;
     }
 
@@ -145,48 +183,33 @@
 }
 
 .fc-podcast-container__audio-icon {
+    width: 23px;
+    height: 23px;
+    display: inline-block;
+    background-color: #FF6A56;
+    border-radius: 50%;
     position: absolute;
+    margin-left: 119px;
+    bottom: 30px;
 
-    margin: 74px 0 0 5px;
     svg {
-        width: 30px;
+        fill: #333333;
+        width: 14px;
+        height: auto;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 6px;
+        display: block;
     }
 
-    @include mq(tablet) {
-        margin: 112px 0 0 10px;
-        svg {
-            width: 50px;
-        }
-    }
-    @include mq(desktop) {
-        margin: 175px 0 0 10px;
-    }
-}
-
-.fc-podcast-container__waveform-wide {
-    @include mq($until: desktop) {
-        display: none;
-    }
-}
-.fc-podcast-container__waveform-tablet {
-    @include mq($until: tablet) {
-        display: none;
-    }
-    @include mq(desktop) {
-        display: none;
-    }
-}
-.fc-podcast-container__waveform-mobile-landscape {
-    @include mq($until: mobileLandscape) {
-        display: none;
-    }
-    @include mq(tablet) {
-        display: none;
-    }
-}
-.fc-podcast-container__waveform-mobile {
     @include mq(mobileLandscape) {
-        display: none;
+        bottom: 40px;
+        margin-left: 0;
+    }
+
+    @include mq(desktop) {
+        position: relative;
+        bottom: 0;
     }
 }
 
@@ -201,6 +224,7 @@
 
 .fc-podcast-container__series .fc-item__media-wrapper {
     display: none;
+
     @include mq(tablet) {
         display: block;
     }

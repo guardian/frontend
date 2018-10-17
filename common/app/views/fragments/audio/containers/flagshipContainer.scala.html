@@ -27,10 +27,12 @@
 }
 
 @subscriptionLinks = {
-    <span>Subscribe</span>
+    <div class="fc-podcast-container__subscribe-links">
+    <span>Subscribe:</span>
     <span><a data-link-name="apple" href="@FlagshipFrontContainer.SubscriptionUrls.apple">Apple Podcasts</a></span>
     <span><a data-link-name="google" href="@FlagshipFrontContainer.SubscriptionUrls.google">Google Podcasts</a></span>
     <span><a data-link-name="spotify" href="@FlagshipFrontContainer.SubscriptionUrls.spotify">Spotify</a></span>
+    </div>
 }
 
 
@@ -55,14 +57,13 @@
                         <div class="fc-item--type-media">
                             <div class="fc-podcast-container__episode">
                                 <div class="fc-podcast-container__episode-image">
-                                    @fragments.inlineSvg("audio-icon", "journalism/podcast-container", Seq("fc-podcast-container__audio-icon"))
                                     <img src="@FlagshipFrontContainer.AlbumArtUrl"/>
                                 </div>
                                 <div class="fc-podcast-container__episode-details">
                                     <div class="fc-item__header">
                                         <h2 class="fc-item__title">
                                             <a @Html(card.header.url.hrefWithRel) class="fc-item__link" data-link-name="article">
-                                                <div class="fc-item__kicker">Podcast</div>
+                                                <div class="fc-item__kicker">Today in Focus</div>
                                                 <div class="u-faux-block-link__cta fc-item__headline">
                                                     <span class="js-headline-text">@RemoveOuterParaHtml(card.header.headline)</span>
                                                 </div>
@@ -75,18 +76,14 @@
                                             <br>
                                         </div>
                                     </div>
-
-                                    @fragments.inlineSvg("waveform-wide", "journalism/podcast-container", Seq("fc-podcast-container__waveform-wide"))
-                                    @fragments.inlineSvg("waveform-tablet", "journalism/podcast-container", Seq("fc-podcast-container__waveform-tablet"))
-                                    @fragments.inlineSvg("waveform-mobile-landscape", "journalism/podcast-container", Seq("fc-podcast-container__waveform-mobile-landscape"))
-                                    @fragments.inlineSvg("waveform-mobile", "journalism/podcast-container", Seq("fc-podcast-container__waveform-mobile"))
-
                                     <div class="fc-podcast-container__subscribe fc-podcast-container__subscribe-large">
+                                        @fragments.inlineSvg("volume-high", "icon",  Seq("fc-podcast-container__audio-icon"))
                                         @subscriptionLinks
                                     </div>
                                 </div>
                             </div>
                             <div class="fc-podcast-container__subscribe fc-podcast-container__subscribe-small">
+                                @fragments.inlineSvg("volume-high", "icon",  Seq("fc-podcast-container__audio-icon"))
                                 @subscriptionLinks
                             </div>
                             <a class="fc-podcast-container__track u-faux-block-link__overlay js-headline-text" @Html(card.header.url.hrefWithRel) data-link-name="article" tabindex="-1" aria-hidden="true">
