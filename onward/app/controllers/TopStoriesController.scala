@@ -46,7 +46,7 @@ class TopStoriesController(
           case picks => Some(RelatedContent(picks))
         }
       } recover { case ContentApiError(404, message, _) =>
-        log.info(s"Got a 404 while calling content api: $message")
+        log.info(s"Got a 404 while calling content api for path '/', edition $edition: $message")
         None
       }
   }

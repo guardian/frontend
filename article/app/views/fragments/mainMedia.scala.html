@@ -2,9 +2,9 @@
 @(article: model.Article, amp: Boolean = false)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @import model.EndSlateComponents
-@import model.{VideoPlayer}
+@import model.VideoPlayer
 @import views.support.Video640
-@import views.{MainCleaner}
+@import views.MainCleaner
 
 @if(article.elements.hasMainEmbed || article.elements.elements("main").isEmpty) {
     <div class="media-primary">
