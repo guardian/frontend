@@ -493,4 +493,16 @@ trait FeatureSwitches {
     sellByDate = never,
     exposeClientSide = false
   )
+
+  // Simple & Coherent
+  val ScAdFreeBanner = Switch(
+    SwitchGroup.Feature,
+    "sc-ad-free-banner",
+    "If switched on, ad free users will be told they have ad free.",
+    owners = Seq(Owner.withName("simple.and.coherent")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
 }
