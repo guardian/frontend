@@ -56,7 +56,7 @@
     <div class="submeta__keywords">
         <ul class="submeta__links">
             @if(content.tags.keywords.filterNot(_.isSectionTag).nonEmpty) {
-                @defining(content.tags.keywords.filterNot(_.isSectionTag).slice(1, 6)) { shownKeywords =>
+                @defining(content.tags.keywords.filterNot(_.isSectionTag).slice(0, 6)) { shownKeywords =>
                     @if(shownKeywords.nonEmpty) {
                         @shownKeywords.zipWithRowInfo.map{ case(keyword, row) =>
                             <li class="submeta__link-item">
