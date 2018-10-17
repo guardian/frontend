@@ -1,6 +1,6 @@
 package conf.audio
 import org.joda.time.DateTime
-import org.joda.time.DateTimeConstants.{SATURDAY, SUNDAY}
+import org.joda.time.DateTimeConstants.{SATURDAY, SUNDAY, MONDAY}
 import org.joda.time.format.DateTimeFormat
 import conf.switches.Switches.FlagshipEmailContainerSwitch
 
@@ -18,7 +18,8 @@ object FlagshipEmailContainer {
   def displayFlagshipContainer(now: DateTime = DateTime.now): Boolean =
     FlagshipEmailContainerSwitch.isSwitchedOn &&
       now.isAfter(GoLiveDateTime) &&
-      now.getDayOfWeek != SATURDAY && now.getDayOfWeek != SUNDAY
+      now.getDayOfWeek != SATURDAY && now.getDayOfWeek != SUNDAY &&
+      !(now.getDayOfWeek == MONDAY && now.getHourOfDay < 4)
 
   //TODO - update with actual art
   val AlbumArtUrl = "https://media.guim.co.uk/60478bdc559fa72fe4fe0ac09636f78df9f3cdb9/3_170_3910_2345/500.jpg"
