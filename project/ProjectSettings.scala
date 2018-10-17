@@ -21,7 +21,7 @@ object ProjectSettings {
     maxErrors := 20,
     javacOptions := Seq("-g","-encoding", "utf8"),
     scalacOptions := Seq("-unchecked", "-deprecation", "-target:jvm-1.8",
-      "-Xcheckinit", "-encoding", "utf8", "-feature", "-Xfatal-warnings", "-Ywarn-unused"),
+      "-Xcheckinit", "-encoding", "utf8", "-feature", "-Xfatal-warnings"),
     publishArtifact in (Compile, packageDoc) := false,
     sources in (Compile,doc) := Seq.empty,
     doc in Compile := target.map(_ / "none").value,
