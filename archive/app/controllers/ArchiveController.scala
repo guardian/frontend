@@ -1,22 +1,21 @@
 package controllers
 
+import java.net.URLDecoder
+
 import commercial.campaigns.ShortCampaignCodes
 import common._
-import model.Cached.{CacheableResult, WithoutRevalidationResult}
-import play.api.mvc._
-import services.{GoogleBotMetric, RedirectService}
-import java.net.URLDecoder
 import javax.ws.rs.core.UriBuilder
-
+import model.Cached.{CacheableResult, WithoutRevalidationResult}
 import model.{CacheTime, Cached}
 import org.apache.http.HttpStatus
-import play.api.libs.ws.WSClient
+import play.api.mvc._
+import services.RedirectService
 import services.RedirectService.{ArchiveRedirect, Destination, PermanentRedirect}
 
 import scala.concurrent.Future
 
 
-class ArchiveController(redirects: RedirectService, val controllerComponents: ControllerComponents, ws: WSClient) extends BaseController with Logging with ImplicitControllerExecutionContext {
+class ArchiveController(redirects: RedirectService, val controllerComponents: ControllerComponents) extends BaseController with Logging with ImplicitControllerExecutionContext {
 
   private val R1ArtifactUrl = """^/(.*)/[0|1]?,[\d]*,(-?\d+),[\d]*(.*)""".r
   private val ShortUrl = """^(/p/[\w\d]+).*$""".r

@@ -7,9 +7,12 @@ import play.api.libs.json._
 case class ContributionsBannerDeploy(time: DateTime)
 
 object ContributionsBannerDeploy {
-  Format(JodaReads.jodaDateReads("yyyy-MM-dd'T'HH:mm:ssZ"), JodaWrites.jodaDateWrites("yyyy-MM-dd'T'HH:mm:ssZ"))
-  implicit val deployFormat: OFormat[ContributionsBannerDeploy] = Json.format[ContributionsBannerDeploy]
 
+  private implicit val jodaDateTimeFormats: Format[DateTime] = {
+    Format(JodaReads.jodaDateReads("yyyy-MM-dd'T'HH:mm:ssZ"), JodaWrites.jodaDateWrites("yyyy-MM-dd'T'HH:mm:ssZ"))
+  }
+
+  implicit val deployFormat: OFormat[ContributionsBannerDeploy] = Json.format[ContributionsBannerDeploy]
 }
 
 
