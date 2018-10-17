@@ -1011,6 +1011,7 @@
         }
     }
 }
+
 .paid-content {
     color: $brightness-7;
     .content__head {
@@ -1083,6 +1084,7 @@
         padding: ($gs-baseline / 4) 0 ($gs-baseline * 2);
         .content__standfirst {
             color: $brightness-7;
+            font-weight: lighter;
         }
     }
     .tone-media--item {
