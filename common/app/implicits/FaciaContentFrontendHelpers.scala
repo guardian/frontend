@@ -5,7 +5,7 @@ import implicits.Dates._
 import model._
 import model.content.{MediaAssetPlatform, MediaAtom}
 import model.pressed._
-import org.joda.time.{DateTime, Period, PeriodType}
+import org.joda.time.DateTime
 import org.jsoup.Jsoup
 import com.github.nscala_time.time.Implicits._
 import scala.util.Try

@@ -8,11 +8,10 @@ import conf.IdConfig
 import idapiclient.parser.IdApiJsonBodyParser
 import net.liftweb.json.JsonDSL._
 import net.liftweb.json.compactRender
-import net.liftweb.json.JsonAST.{JObject, JString, JValue}
+import net.liftweb.json.JsonAST.JObject
 import net.liftweb.json.Serialization.write
 import utils.SafeLogging
 import idapiclient.requests.{DeletionBody, PasswordUpdate, TokenPassword}
-import org.json4s.JsonAST.JField
 import org.slf4j.LoggerFactory
 import play.api.libs.ws.WSClient
 

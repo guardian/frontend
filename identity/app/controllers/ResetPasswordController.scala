@@ -1,6 +1,5 @@
 package controllers
 
-import java.nio.file.Paths
 
 import common.ImplicitControllerExecutionContext
 import model.{ApplicationContext, IdentityPage, NoCache}
@@ -131,7 +130,7 @@ class ResetPasswordController(
   }
 
   def processUpdatePasswordToken(token : String, returnUrl: Option[String]): Action[AnyContent] = Action.async { implicit request =>
-    val idRequest = idRequestParser(request)
+    idRequestParser(request)
     api.userForToken(token) map {
       case Left(errors) =>
         logger.warn(s"Could not retrieve password reset request for token: $token, errors: ${errors.toString()}")

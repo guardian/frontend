@@ -3,7 +3,7 @@ package pages
 import conf.switches.Switches.WeAreHiring
 import experiments.{ActiveExperiments, OldTLSSupportDeprecation}
 import html.HtmlPageHelpers._
-import html.{HtmlPage, Styles}
+import html.Styles
 import model.{ApplicationContext, IdentityPage}
 import play.api.mvc.RequestHeader
 import play.twirl.api.{Html, HtmlFormat}

@@ -14,7 +14,7 @@ import scala.xml.{Elem, XML}
 
 object TravelOffersApi extends Logging {
 
-  private val dateFormat = DateTimeFormat.forPattern("dd-MMM-yyyy")
+  DateTimeFormat.forPattern("dd-MMM-yyyy")
 
   def parse(xml: Elem): Seq[TravelOffer] = (xml \\ "product") map TravelOffer.fromXml
 

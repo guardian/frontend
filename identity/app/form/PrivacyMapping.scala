@@ -1,7 +1,7 @@
 package form
 
 import com.gu.identity.model.Consent._
-import com.gu.identity.model.{Consent, StatusFields, User}
+import com.gu.identity.model.{Consent, User}
 import idapiclient.UserUpdateDTO
 import play.api.data.Forms._
 import play.api.data.JodaForms.jodaDate

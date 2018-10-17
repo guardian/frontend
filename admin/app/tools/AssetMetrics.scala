@@ -22,9 +22,9 @@ object AssetMetrics {
   private val timePeriodInDays = 14 // Cloudwatch metric retention period is 14 days
 
   private val gzipped = new Dimension().withName("Compression").withValue("GZip")
-  private val raw = new Dimension().withName("Compression").withValue("None")
-  private val rules = new Dimension().withName("Metric").withValue("Rules")
-  private val selectors = new Dimension().withName("Metric").withValue("Total Selectors")
+  new Dimension().withName("Compression").withValue("None")
+  new Dimension().withName("Metric").withValue("Rules")
+  new Dimension().withName("Metric").withValue("Total Selectors")
 
   private def fetchMetric(metric: Metric, dimension: Dimension)(implicit executionContext: ExecutionContext): Future[GetMetricStatisticsResult] =
     withErrorLogging(euWestClient.getMetricStatisticsFuture(new GetMetricStatisticsRequest()

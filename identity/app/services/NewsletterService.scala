@@ -1,13 +1,8 @@
 package services
 
-import actions.AuthenticatedActions
-import actions.AuthenticatedActions.AuthRequest
-import com.gu.identity.model.{EmailList, EmailNewsletters, Subscriber}
+import com.gu.identity.model.EmailNewsletters
 import idapiclient.{IdApiClient, TrackingData}
-import idapiclient.responses.Error
 import play.api.data._
-import play.api.libs.json._
-import play.api.mvc._
 import utils.SafeLogging
 
 import scala.concurrent.{ExecutionContext, Future}

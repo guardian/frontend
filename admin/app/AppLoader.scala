@@ -21,7 +21,7 @@ import play.api.BuiltInComponentsFromContext
 import play.api.http.HttpErrorHandler
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router
-import play.api.i18n.{I18nComponents, Lang, Messages}
+import play.api.i18n.I18nComponents
 import play.api.libs.ws.WSClient
 import services.{ParameterStoreService, _}
 import router.Routes

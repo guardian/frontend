@@ -6,7 +6,6 @@ import pa.{FootballMatch, Round}
 import implicits.Football
 import football.collections.RichList
 
-import scala.collection.immutable
 
 trait MatchesList extends Football with RichList with implicits.Collections {
 

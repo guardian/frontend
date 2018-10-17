@@ -20,7 +20,7 @@ import scala.util.{Failure, Success}
 class BookFinder(actorSystem: ActorSystem, magentoService: MagentoService) extends Logging {
 
   private implicit val bookActorExecutionContext: ExecutionContext = actorSystem.dispatchers.lookup("akka.actor.book-lookup")
-  private implicit val bookActorTimeout: Timeout = 0.2.seconds
+  0.2.seconds
   private implicit val magentoServiceImplicit = magentoService
 
   def findByIsbn(isbn: String): Option[Book] = BookAgent.get(isbn) map { _.as[Book] }

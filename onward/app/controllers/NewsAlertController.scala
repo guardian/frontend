@@ -4,7 +4,6 @@ import akka.actor.ActorSystem
 import akka.pattern.ask
 import akka.util.Timeout
 import authentication.AuthenticationSupport
-import common.ImplicitControllerExecutionContext
 import conf.Configuration
 import model.Cached.RevalidatableResult
 import model.{Cached, Cors}

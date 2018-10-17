@@ -4,12 +4,12 @@ import common.ImplicitControllerExecutionContext
 import conf.Configuration
 import form.Mappings
 import idapiclient.responses.{CookieResponse, CookiesResponse}
-import idapiclient.{EmailPassword, IdApiClient, TrackingData}
+import idapiclient.{EmailPassword, IdApiClient}
 import model.{ApplicationContext, Cors, NoCache}
 import org.joda.time.DateTime
 import play.api.data.{Form, Forms}
 import play.api.http.HttpConfiguration
-import play.api.libs.json.{Format, JodaWrites, Json, Writes}
+import play.api.libs.json.{Format, Json}
 import play.api.mvc._
 import services._
 import utils.SafeLogging

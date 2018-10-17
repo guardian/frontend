@@ -12,7 +12,7 @@ trait Containers {
 
   protected def onwardContainer(dataId: String, trails: Seq[PressedContent]): FaciaContainer = {
     val displayName = Some(dataId)
-    val properties = FrontProperties.empty
+    FrontProperties.empty
     val config = CollectionConfigJson.withDefaults(displayName = displayName)
 
     val containerDefinition = trails.length match {

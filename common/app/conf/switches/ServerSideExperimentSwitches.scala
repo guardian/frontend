@@ -6,7 +6,7 @@ import experiments.ActiveExperiments
 trait ServerSideExperimentSwitches {
   val ServerSideExperiments = {
     // It's for the side effect. Blame agents.
-    val experiments = ActiveExperiments.allExperiments
+    ActiveExperiments.allExperiments
     Switch(
       SwitchGroup.ServerSideExperiments,
       "server-side-tests",

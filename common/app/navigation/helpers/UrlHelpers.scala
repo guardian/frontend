@@ -2,7 +2,6 @@ package navigation
 
 import play.api.libs.json.Json
 import play.api.mvc.RequestHeader
-import common.Edition
 import navigation.ReaderRevenueSite._
 import PartialFunction.condOpt
 

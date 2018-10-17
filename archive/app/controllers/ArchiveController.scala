@@ -6,23 +6,15 @@ import model.Cached.{CacheableResult, WithoutRevalidationResult}
 import play.api.mvc._
 import services.{GoogleBotMetric, RedirectService}
 import java.net.URLDecoder
-import java.util.concurrent.atomic.AtomicReference
 import javax.ws.rs.core.UriBuilder
 
-import conf.Configuration
-import experiments._
 import model.{CacheTime, Cached}
 import org.apache.http.HttpStatus
-import play.api.libs.json.Json
 import play.api.libs.ws.WSClient
-import play.twirl.api.Html
 import services.RedirectService.{ArchiveRedirect, Destination, PermanentRedirect}
 
-import scala.concurrent.duration._
-import scala.concurrent.{Await, Future}
-import java.lang.System.currentTimeMillis
+import scala.concurrent.Future
 
-import metrics.TimingMetric
 
 class ArchiveController(redirects: RedirectService, val controllerComponents: ControllerComponents, ws: WSClient) extends BaseController with Logging with ImplicitControllerExecutionContext {
 
@@ -131,15 +123,7 @@ class ArchiveController(redirects: RedirectService, val controllerComponents: Co
   }
 
 
-  private def log404(request: Request[AnyContent]) = {
-    log.warn(s"Archive returned 404 for path: ${request.path}")
-
-    val GoogleBot = """.*(Googlebot).*""".r
-    request.headers.get("User-Agent").getOrElse("no user agent") match {
-      case GoogleBot(_) => GoogleBotMetric.Googlebot404Count.increment()
-      case _ =>
-    }
-  }
+  
 
   private def lookupPath(path: String)(implicit request: RequestHeader): Future[Option[CacheableResult]] = destinationFor(path).map{ _.flatMap(processLookupDestination(path).lift) }
 

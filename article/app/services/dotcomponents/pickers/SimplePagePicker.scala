@@ -2,7 +2,7 @@ package services.dotcomponents.pickers
 
 import controllers.ArticlePage
 import model.PageWithStoryPackage
-import model.liveblog.{BlockElement, ImageBlockElement, TextBlockElement}
+import model.liveblog.{BlockElement, TextBlockElement}
 import play.api.mvc.RequestHeader
 import services.dotcomponents.{LocalRender, RemoteRender, RenderType}
 import views.support.Commercial

@@ -1,6 +1,5 @@
 package conf.switches
 
-import common.editions._
 import conf.switches.SwitchGroup.{ABTests, Commercial}
 import org.joda.time.LocalDate
 

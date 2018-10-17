@@ -6,7 +6,7 @@ import conf.Configuration
 
 object DynamoDB {
   private lazy val credentials = Configuration.aws.mandatoryCredentials
-  private lazy val region = Region.getRegion(Regions.fromName(Configuration.aws.region))
+  Region.getRegion(Regions.fromName(Configuration.aws.region))
 
   lazy val asyncClient: AmazonDynamoDBAsync = AmazonDynamoDBAsyncClient
     .asyncBuilder()

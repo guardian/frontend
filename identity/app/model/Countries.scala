@@ -2,7 +2,6 @@ package model
 
 import com.gu.i18n.CountryGroup
 
-import scala.collection.immutable
 
 object Countries {
   val all = CountryGroup.countries.map(_.name)

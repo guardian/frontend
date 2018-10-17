@@ -7,7 +7,7 @@ import layout.{CollectionEssentials, ContentCard, FaciaCard, FaciaCardAndIndex, 
 import model.Cached.{CacheableResult, RevalidatableResult, WithoutRevalidationResult}
 import model._
 import model.facia.PressedCollection
-import model.pressed.{CollectionConfig, PressedContent}
+import model.pressed.CollectionConfig
 import play.api.libs.json._
 import play.api.mvc._
 import play.twirl.api.Html

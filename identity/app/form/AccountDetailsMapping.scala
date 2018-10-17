@@ -2,7 +2,7 @@ package form
 
 import model.Titles
 import play.api.data.Forms._
-import com.gu.identity.model.{Consent, PrivateFields, User, UserDates}
+import com.gu.identity.model.{PrivateFields, User}
 import idapiclient.UserUpdateDTO
 import play.api.data.Mapping
 import play.api.i18n.MessagesProvider

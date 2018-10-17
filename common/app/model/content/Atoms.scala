@@ -7,13 +7,12 @@ import com.gu.contentatom.thrift.atom.media.{Asset => AtomApiMediaAsset, MediaAt
 import com.gu.contentatom.thrift.atom.timeline.{TimelineItem => TimelineApiItem}
 import com.gu.contentatom.thrift.{AtomData, Atom => AtomApiAtom, Image => AtomApiImage, ImageAsset => AtomApiImageAsset, atom => atomapi}
 import enumeratum._
-import model.{Content, EndSlateComponents, ImageAsset, ImageMedia, ShareLinkMeta}
+import model.{EndSlateComponents, ImageAsset, ImageMedia, ShareLinkMeta}
 import org.apache.commons.lang3.time.DurationFormatUtils
 import org.joda.time.{DateTime, DateTimeZone, Duration}
 import play.api.libs.json.{JsError, JsSuccess, Json}
 import quiz._
-import views.support.{GoogleStructuredData, ImgSrc}
-import conf.switches.Switches
+import views.support.GoogleStructuredData
 import conf.Configuration
 import org.joda.time.format.DateTimeFormat
 

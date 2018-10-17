@@ -2,7 +2,6 @@ package controllers.editprofile
 
 import actions.AuthenticatedActions._
 import com.gu.identity.model._
-import com.typesafe.play.cachecontrol.CacheDirectives
 import idapiclient.UserUpdateDTO
 import model.{IdentityPage, NoCache}
 import pages.IdentityHtmlPage
@@ -41,7 +40,7 @@ trait ConsentsJourney
 
   def guestPasswordSet(): Action[AnyContent] = csrfCheck {
 
-    val returnUrlWithTracking  = idUrlBuilder.appendQueryParams(
+    idUrlBuilder.appendQueryParams(
       returnUrlVerifier.defaultReturnUrl, List("INTCMP" -> "upsell-account-creation")
     )
 

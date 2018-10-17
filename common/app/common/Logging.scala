@@ -9,7 +9,6 @@ import net.logstash.logback.marker.Markers._
 import scala.collection.JavaConverters._
 import scala.concurrent.{ExecutionContext, Future}
 import scala.language.implicitConversions
-import scala.util.control.NonFatal
 import scala.util.{Failure, Success, Try}
 
 trait Logging {

@@ -8,7 +8,7 @@ import model.Cached.RevalidatableResult
 import model.{ApplicationContext, Cached, MetaData, NoCache, SectionId, SimplePage}
 import play.api.data.Form
 import play.api.data.Forms._
-import play.api.libs.json.{JsValue, Json}
+import play.api.libs.json.Json
 import play.api.libs.ws._
 import play.api.mvc._
 

@@ -20,7 +20,7 @@ import services.ophan.SurgingContentAgentLifecycle
 import play.api.ApplicationLoader.Context
 import play.api.BuiltInComponentsFromContext
 import play.api.http.{HttpErrorHandler, HttpRequestHandler}
-import play.api.mvc.{ControllerComponents, EssentialFilter}
+import play.api.mvc.EssentialFilter
 import play.api.routing.Router
 import play.api.libs.ws.WSClient
 import rugby.conf.RugbyLifecycle

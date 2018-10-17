@@ -7,17 +7,13 @@ import akka.pattern.CircuitBreaker
 import com.gu.contentapi.client.{ContentApiClient => CapiContentApiClient}
 import com.gu.contentapi.client.model._
 import com.gu.contentapi.client.model.v1.{Edition => _, _}
-import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
 import common._
 import conf.Configuration
 import conf.Configuration.contentApi
 import conf.switches.Switches.CircuitBreakerSwitch
-import model.{Content, Trail}
-import org.joda.time.DateTime
 import com.github.nscala_time.time.Implicits._
 import okhttp3.{ConnectionPool, OkHttpClient}
 
-import scala.concurrent.duration.{Duration, MILLISECONDS}
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.Try
 

@@ -3,7 +3,7 @@ package model.liveblog
 import java.util.Locale
 
 import implicits.Dates.CapiRichDateTime
-import com.gu.contentapi.client.model.v1.{Block, MembershipPlaceholder => ApiMembershipPlaceholder, BlockAttributes => ApiBlockAttributes, Blocks => ApiBlocks}
+import com.gu.contentapi.client.model.v1.{Block, MembershipPlaceholder => _, BlockAttributes => ApiBlockAttributes, Blocks => ApiBlocks}
 import model.liveblog.BodyBlock._
 import org.joda.time.format.{DateTimeFormat, ISODateTimeFormat}
 import org.joda.time.{DateTime, DateTimeZone}

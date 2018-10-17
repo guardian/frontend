@@ -3,7 +3,6 @@ package common
 import model.ApplicationIdentity
 import html.HtmlPageHelpers.ContentCSSFile
 import play.api.mvc.RequestHeader
-import experiments.ActiveExperiments
 
 object Preload {
 

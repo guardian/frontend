@@ -14,7 +14,6 @@ import views.html.fragments.page.body.{bodyTag, breakingNewsDiv, mainContent, sk
 import views.html.fragments.page.head._
 import views.html.fragments.page.head.stylesheets.{criticalStyleInline, criticalStyleLink, styles}
 import views.html.fragments.page.{devTakeShot, htmlTag}
-import views.html.stacked
 
 object FrontHtmlPage extends HtmlPage[PressedPage] {
 

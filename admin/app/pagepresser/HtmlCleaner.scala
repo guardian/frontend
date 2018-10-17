@@ -1,6 +1,5 @@
 package pagepresser
 
-import com.netaporter.uri.Uri.parse
 import common.{Logging}
 import org.jsoup.Jsoup
 import org.jsoup.nodes.{Element, Document}
@@ -154,7 +153,7 @@ abstract class HtmlCleaner extends Logging {
     document.getAllElements.asScala.filter( elementContainsCombo ) .foreach { el =>
 
       val combinerRegex = """//combo.guim.co.uk/(\w+)/(.+)(\.\w+)$""".r("cacheBustId", "paths", "extension")
-      val microAppRegex = """^m-(\d+)~(.+)""".r
+      """^m-(\d+)~(.+)""".r
       val href = if (el.hasAttr("href")) {
         el.attr("href")
       } else {

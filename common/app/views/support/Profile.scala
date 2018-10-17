@@ -5,12 +5,11 @@ import java.util.Base64
 
 import common.Logging
 import conf.switches.Switches.{FacebookShareImageLogoOverlay, ImageServerSwitch, TwitterShareImageLogoOverlay}
-import conf.{Configuration, Static}
+import conf.Configuration
 import layout.{BreakpointWidth, WidthsByBreakpoint}
 import model._
 import org.apache.commons.math3.fraction.Fraction
 import org.apache.commons.math3.util.Precision
-import common.Environment.{app, awsRegion, stage}
 
 import Function.const
 

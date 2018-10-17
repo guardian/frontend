@@ -13,7 +13,6 @@ import navigation.ReaderRevenueSite
 import org.jsoup.Jsoup
 import org.jsoup.nodes.{Document, Element, TextNode}
 import play.api.mvc.RequestHeader
-import play.twirl.api.HtmlFormat
 import services.SkimLinksCache
 import conf.Configuration.affiliatelinks._
 import conf.Configuration.site.host

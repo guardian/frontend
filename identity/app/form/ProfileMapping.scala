@@ -4,7 +4,7 @@ import play.api.data.Forms._
 import com.gu.identity.model.{PublicFields, User}
 import idapiclient.UserUpdateDTO
 import play.api.data.Mapping
-import play.api.i18n.{MessagesApi, MessagesProvider}
+import play.api.i18n.MessagesProvider
 
 class ProfileMapping extends UserFormMapping[ProfileFormData] {
 

@@ -1,10 +1,9 @@
 package controllers
 
 import actions.AuthenticatedActions
-import com.gu.identity.model.ErrorResponse
 import common.ImplicitControllerExecutionContext
 import conf.switches.IdentitySwitches
-import conf.{Configuration, IdentityConfiguration}
+import conf.IdentityConfiguration
 import controllers.UpsellPages.ConfirmEmailThankYou
 import idapiclient.IdApiClient
 import model.{ApplicationContext, IdentityPage, NoCache}

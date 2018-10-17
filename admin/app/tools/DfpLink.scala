@@ -3,7 +3,6 @@ package tools
 import conf.Configuration.commercial.dfpAccountId
 import conf.Configuration.site
 
-import scala.language.postfixOps
 
 object DfpLink {
 

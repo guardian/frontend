@@ -2,7 +2,7 @@ package controllers
 
 import java.net.{URI, URLEncoder}
 
-import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents, Result}
+import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import idapiclient.IdApiClient
 import services.{AuthenticationService, IdRequestParser, IdentityUrlBuilder, ReturnUrlVerifier}
 import common.ImplicitControllerExecutionContext

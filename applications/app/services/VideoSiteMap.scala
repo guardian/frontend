@@ -82,7 +82,7 @@ class VideoSiteMap(contentApiClient: ContentApiClient) {
         val sectionTag = item.content.seriesTag.filter(tag => !keywordTags.contains(tag.properties.sectionName)).map(_.metadata.webTitle)
 
 
-        val imageUrl: String = item.elements.mainPicture.flatMap(_.images.largestEditorialCrop.flatMap(_.url))
+        item.elements.mainPicture.flatMap(_.images.largestEditorialCrop.flatMap(_.url))
           .getOrElse(Configuration.images.fallbackLogo)
 
         val contentLocation: Option[String] = item.elements.mainVideo.flatMap(_.videos.encodings.find(_.format == "video/mp4")).map { encoding =>

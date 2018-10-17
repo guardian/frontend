@@ -61,7 +61,6 @@ class MetricsController(
     NoCache(SeeOther(Static("javascripts/bundle-analyzer-report.html")))
   }
 
-  private def toPercentage(graph: AwsLineChart) = graph.dataset.map(_.values)
-    .collect { case Seq(saw, clicked) => if (saw == 0) 0.0 else clicked / saw * 100 }
+  
 
 }

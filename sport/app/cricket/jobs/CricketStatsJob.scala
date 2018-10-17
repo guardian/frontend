@@ -13,7 +13,7 @@ class CricketStatsJob(paFeed: PaFeed) extends Logging {
 
   private val cricketStatsAgents = CricketTeams.teams.map(Team => (Team, Box[Map[String, Match]](Map.empty)))
 
-  private val dateFormatUTC = DateTimeFormat.forPattern("yyyy/MMM/dd").withZone(DateTimeZone.UTC)
+  DateTimeFormat.forPattern("yyyy/MMM/dd").withZone(DateTimeZone.UTC)
 
   def getMatch(team: CricketTeam, date: String): Option[Match] = cricketStatsAgents.find(_._1 == team)
     .flatMap{ case (_, agent) => agent().get(date)}

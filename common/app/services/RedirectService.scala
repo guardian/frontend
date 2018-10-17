@@ -1,6 +1,5 @@
 package services
 
-import java.awt.JobAttributes.DestinationType
 import java.net.URL
 
 import com.gu.scanamo.error.MissingProperty

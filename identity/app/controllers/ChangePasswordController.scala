@@ -113,7 +113,7 @@ class ChangePasswordController(
               SeeOther(routes.ChangePasswordController.displayForm().url).flashing(clearPasswords(form).toFlash)
             )
           } else {
-            val userIsLoggedIn = authenticationService.userIsFullyAuthenticated(request)
+            authenticationService.userIsFullyAuthenticated(request)
             NoCache(SeeOther(routes.ChangePasswordController.renderPasswordConfirmation(None).url))
           }
         }

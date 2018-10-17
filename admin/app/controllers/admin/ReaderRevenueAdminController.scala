@@ -10,7 +10,7 @@ import play.api.mvc._
 import services.S3
 import conf.Configuration.readerRevenue._
 import org.apache.commons.codec.digest.DigestUtils
-import play.api.libs.ws.{WSClient, WSResponse}
+import play.api.libs.ws.WSClient
 import purge.{AjaxHost, CdnPurge}
 
 import scala.concurrent.Future

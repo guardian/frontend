@@ -57,7 +57,7 @@ class AllIndexController(
   }
 
   def all(path: String): Action[AnyContent] = Action.async { implicit request =>
-    val edition = Edition(request)
+    Edition(request)
 
     if (ConfigAgent.shouldServeFront(path) || defaultEdition.isEditionalised(path)) {
       indexController.render(path)(request)

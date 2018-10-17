@@ -4,7 +4,7 @@ import java.net.URLDecoder
 
 import common.Logging
 import conf.switches.Switches
-import model.{Article, Content, VideoAsset}
+import model.{Article, VideoAsset}
 import org.jsoup.nodes.{Document, Element}
 import views.support.{AmpSrcCleaner, HtmlCleaner}
 

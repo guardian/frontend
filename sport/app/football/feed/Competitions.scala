@@ -138,7 +138,7 @@ class CompetitionsService(val footballClient: FootballClient, competitionDefinit
     with implicits.Collections
     with implicits.Football {
 
-  private implicit val dateOrdering = Ordering.comparatorToOrdering(
+  Ordering.comparatorToOrdering(
     DateTimeComparator.getInstance.asInstanceOf[Comparator[DateTime]]
   )
 

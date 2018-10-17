@@ -4,7 +4,7 @@ import com.gu.contentapi.client.model.v1.ElementType.Image
 import com.gu.contentapi.client.model.v1.{Asset, Content, Element}
 import conf.Configuration
 import model.{ImageMedia, Element => ModelElement}
-import views.support.{Item300, Item700, Item1200}
+import views.support.Item300
 
 object ContentUtils {
 

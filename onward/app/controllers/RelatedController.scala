@@ -6,7 +6,7 @@ import contentapi.ContentApiClient
 import feed.MostReadAgent
 import model.Cached.RevalidatableResult
 import model._
-import models.{OnwardCollection, OnwardCollectionResponse}
+import models.OnwardCollectionResponse
 import play.api.libs.json._
 import play.api.mvc._
 import services._

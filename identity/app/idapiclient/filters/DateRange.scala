@@ -1,7 +1,7 @@
 package client.filters
 
 import org.joda.time.DateTime
-import org.joda.time.format.{ISODateTimeFormat, DateTimeFormatter}
+import org.joda.time.format.ISODateTimeFormat
 
 case class DateRange(from: Option[DateTime] = None, datePath: String, to: Option[DateTime] = None) extends ApiFilter {
   require(from.isDefined || to.isDefined, "Neither from nor to date supplied to date range")

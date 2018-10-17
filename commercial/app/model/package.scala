@@ -1,6 +1,5 @@
 package commercial
 
-import play.api.data.validation.ValidationError
 import play.api.libs.json._
 
 package object model {

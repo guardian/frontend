@@ -11,7 +11,6 @@ import model.ApplicationIdentity
 import play.api.ApplicationLoader.Context
 import play.api.routing.Router
 import play.api._
-import play.api.libs.ws.WSClient
 import play.api.mvc.EssentialFilter
 import services.ConfigAgentLifecycle
 import router.Routes

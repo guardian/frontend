@@ -84,9 +84,7 @@ object ContributorLinks {
 
 object `package` {
 
-  def withJsoup(html: Html)(cleaners: HtmlCleaner*): Html = withJsoup(html.body) {
-    cleaners: _*
-  }
+  def withJsoup(html: Html)(cleaners: HtmlCleaner*): Html = withJsoup(html.body)(cleaners: _*)
 
   def withJsoup(html: String)(cleaners: HtmlCleaner*): Html = {
     val cleanedHtml = cleaners.foldLeft(Jsoup.parseBodyFragment(html)) { case (html, cleaner) => cleaner.clean(html) }

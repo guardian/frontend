@@ -3,7 +3,6 @@ package experiments
 import conf.switches.{Owner, SwitchGroup}
 import experiments.ParticipationGroups._
 import org.joda.time.LocalDate
-import play.api.mvc.RequestHeader
 
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] = Set(

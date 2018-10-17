@@ -3,7 +3,7 @@ package model
 import com.gu.contentapi.client.model.v1.{Section => ApiSection}
 import common.Pagination
 import common.commercial.CommercialProperties
-import play.api.libs.json.{JsBoolean, JsString, JsValue, Json}
+import play.api.libs.json.{JsString, JsValue, Json}
 
 object Section {
   def make(section: ApiSection, pagination: Option[Pagination] = None): Section = {

@@ -10,7 +10,7 @@ import org.apache.commons.codec.digest.DigestUtils
 import play.api.libs.ws.WSClient
 import play.api.mvc.Security.AuthenticatedRequest
 import play.api.mvc._
-import purge.{AjaxHost, CdnPurge, FastlyService, GuardianHost}
+import purge.{AjaxHost, CdnPurge, GuardianHost}
 
 import scala.concurrent.Future
 import scala.concurrent.Future.successful

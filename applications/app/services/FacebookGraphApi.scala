@@ -9,8 +9,6 @@ import play.api.libs.ws.{WSClient, WSResponse}
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.duration.{Duration, DurationInt}
-import scala.util.Failure
-import scala.util.control.NonFatal
 
 
 object URLResponseDeserializer {

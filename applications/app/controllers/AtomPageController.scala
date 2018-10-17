@@ -8,7 +8,6 @@ import model.content._
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import com.gu.contentapi.client.model.v1.ItemResponse
 import play.api.mvc._
-import play.twirl.api.Html
 import scala.concurrent.Future
 import scala.concurrent.duration._
 import play.api.data.Form

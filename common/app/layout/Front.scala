@@ -7,7 +7,6 @@ import model.facia.PressedCollection
 import model.meta.{ItemList, ListItem}
 import model.pressed.{CollectionConfig, PressedContent}
 import org.joda.time.DateTime
-import play.api.libs.json.Json
 import play.api.mvc.RequestHeader
 import services.CollectionConfigWithId
 import slices.{MostPopular, _}

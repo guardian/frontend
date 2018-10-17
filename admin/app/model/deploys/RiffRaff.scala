@@ -30,7 +30,7 @@ class RiffRaffService(httpClient: HttpLike) {
   )(implicit executionContext: ExecutionContext): Future[ApiResponse[List[RiffRaffDeploy]]] = {
     val url = s"${Configuration.riffraff.url}/api/history"
 
-    val u = pageSize.map("pageSize" -> _.toString)
+    pageSize.map("pageSize" -> _.toString)
 
     httpClient.GET(url,
       queryString = Map("key" -> Configuration.riffraff.apiKey)
