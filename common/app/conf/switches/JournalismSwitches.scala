@@ -43,7 +43,7 @@ trait JournalismSwitches {
     exposeClientSide = false
   )
 
-  val FlagshipFrontContainer = Switch(
+  val FlagshipFrontContainerSwitch = Switch(
     SwitchGroup.Journalism,
     "flagship-front-container",
     "Display the Flagship podcast container on the /uk front",

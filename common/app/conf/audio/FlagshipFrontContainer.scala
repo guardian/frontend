@@ -3,9 +3,9 @@ package conf.audio
 import org.joda.time.DateTime
 import org.joda.time.DateTimeConstants.{SATURDAY, SUNDAY}
 import org.joda.time.format.DateTimeFormat
-import conf.switches.Switches.FlagshipFrontContainer
+import conf.switches.Switches.FlagshipFrontContainerSwitch
 
-object Flagship {
+object FlagshipFrontContainer {
   private val FrontContainerIds = Seq(
     "75ef80cd-2f3d-40d6-abf6-2021f88ece8e", //PROD
     "c57a70c8-a00a-4a15-93a2-035b9221622b"  //CODE
@@ -17,7 +17,7 @@ object Flagship {
     FrontContainerIds.contains(id)
 
   def displayFlagshipContainer(now: DateTime = DateTime.now): Boolean =
-    FlagshipFrontContainer.isSwitchedOn &&
+    FlagshipFrontContainerSwitch.isSwitchedOn &&
       now.isAfter(GoLiveDateTime) &&
       now.getDayOfWeek != SATURDAY && now.getDayOfWeek != SUNDAY
 
