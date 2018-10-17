@@ -1,0 +1,25 @@
+package conf.audio
+import org.joda.time.DateTime
+import org.joda.time.DateTimeConstants.{SATURDAY, SUNDAY}
+import org.joda.time.format.DateTimeFormat
+import conf.switches.Switches.FlagshipEmailContainerSwitch
+
+object FlagshipEmailContainer {
+  private val EmailContainerIds = Seq(
+    "97f86ba7-4f14-43ec-bfb2-e149019b70f6", //PROD
+    "7050d39f-7e84-4894-a69d-449c359b9d54"  //CODE
+  )
+
+  private val GoLiveDateTime = DateTimeFormat.forPattern("yyyy/MM/dd HH:mm").parseDateTime("2018/11/01 04:00")
+
+  def isFlagshipContainer(id: String): Boolean =
+    EmailContainerIds.contains(id)
+
+  def displayFlagshipContainer(now: DateTime = DateTime.now): Boolean =
+    FlagshipEmailContainerSwitch.isSwitchedOn &&
+      now.isAfter(GoLiveDateTime) &&
+      now.getDayOfWeek != SATURDAY && now.getDayOfWeek != SUNDAY
+
+  //TODO - update with actual art
+  val AlbumArtUrl = "https://media.guim.co.uk/60478bdc559fa72fe4fe0ac09636f78df9f3cdb9/3_170_3910_2345/500.jpg"
+}
