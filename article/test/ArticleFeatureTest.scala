@@ -543,7 +543,7 @@ import collection.JavaConverters._
         import browser._
 
         Then("I should see links to keywords")
-        $(".submeta__link").size should be(6)
+        $(".submeta__link").size should be(8)
       }
     }
 
