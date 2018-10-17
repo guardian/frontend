@@ -6,6 +6,7 @@ import java.time.temporal.ChronoUnit
 import common._
 import contentapi.ContentApiClient
 import feed.{DayMostPopularAgent, GeoMostPopularAgent, MostPopularAgent}
+import layout.ContentCard
 import model.Cached.RevalidatableResult
 import model._
 import models.OnwardCollection._
@@ -31,6 +32,8 @@ class MostPopularController(contentApiClient: ContentApiClient,
   def renderHtml(path: String): Action[AnyContent] = render(path)
   def render(path: String): Action[AnyContent] = Action.async { implicit request =>
     val edition = Edition(request)
+
+    // Synchronous global popular, from the mostPopularAgent (stateful)
     val globalPopular: Option[MostPopular] = {
       val globalPopularContent = mostPopularAgent.mostPopular(edition)
       if (globalPopularContent.nonEmpty)
@@ -38,8 +41,16 @@ class MostPopularController(contentApiClient: ContentApiClient,
       else
         None
     }
+
+    // Async section specific most Popular.
     val sectionPopular: Future[List[MostPopular]] = if (path.nonEmpty) lookup(edition, path).map(_.toList) else Future(Nil)
 
+    val mostCards = mostPopularAgent.mostSingleCards.get().mapValues(ContentCard.fromApiContent(_))
+
+    log.info(s"Rendering MostPopular with path = $path Most cards is $mostCards"  )
+
+
+    // map is not on a list, but on a Future
     sectionPopular.map { sectionPopular =>
       val sectionFirst = sectionPopular ++ globalPopular
       val globalFirst = globalPopular.toList ++ sectionPopular
@@ -48,10 +59,12 @@ class MostPopularController(contentApiClient: ContentApiClient,
       mostPopular match {
         case Nil => NotFound
         case popular if request.isGuui => jsonResponse(popular)
-        case popular if !request.isJson => Cached(900) { RevalidatableResult.Ok(views.html.mostPopular(page, popular)) }
+        case popular if !request.isJson => Cached(900) {
+          RevalidatableResult.Ok(views.html.mostPopular(page, popular))
+        }
         case popular => Cached(900) {
           JsonComponent(
-            "html" ->  views.html.fragments.collections.popular(popular),
+            "html" -> views.html.fragments.collections.popularExtended(popular, mostCards),
             "rightHtml" -> views.html.fragments.rightMostPopular(globalPopular)
           )
         }
@@ -68,6 +81,10 @@ class MostPopularController(contentApiClient: ContentApiClient,
   def renderPopularGeo(): Action[AnyContent] = Action { implicit request =>
     val headers = request.headers.toSimpleMap
     val countryCode = headers.getOrElse("X-GU-GeoLocation","country:row").replace("country:","")
+
+
+    log.info(s"Rendering MostPopular with countryCode = $countryCode"  )
+
 
     val countryPopular = MostPopular("across the guardian", "", geoMostPopularAgent.mostPopular(countryCode).map(_.faciaContent))
 

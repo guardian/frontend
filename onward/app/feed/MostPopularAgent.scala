@@ -2,6 +2,7 @@ package feed
 
 import com.gu.Box
 import contentapi.ContentApiClient
+import com.gu.contentapi.client.model.v1.{Content, ContentType}
 import common._
 import services.OphanApi
 import model.RelatedContentItem
@@ -27,21 +28,42 @@ class MostPopularAgent(contentApiClient: ContentApiClient) extends Logging {
 
   private val agent = Box[Map[String, Seq[RelatedContentItem]]](Map.empty)
 
+  // Container for most_shared and most_commented
+  val mostSingleCards = Box[Map[String,Content]](Map.empty)
+
   def mostPopular(edition: Edition): Seq[RelatedContentItem] = agent().getOrElse(edition.id, Nil)
 
   def refresh()(implicit ec: ExecutionContext): Future[Map[String, Seq[RelatedContentItem]]] = {
-    log.info("Refreshing most popular.")
+    log.info("Refreshing most shared, commented and popular.")
+    // Note that here we're not in pure functional land here.
+    refreshGlobal()
     MostPopularRefresh.all(Edition.all)(refresh)
   }
 
-  private def refresh(edition: Edition)(implicit ec: ExecutionContext): Future[Map[String, Seq[RelatedContentItem]]] =
-    contentApiClient.getResponse(contentApiClient.item("/", edition)
-      .showMostViewed(true)
-    ).flatMap { response =>
-      val mostViewed = response.mostViewed.getOrElse(Nil).take(10).map(RelatedContentItem(_))
-      agent.alter(_ + (edition.id -> mostViewed))
-    }
+  private def refreshGlobal()(implicit ec: ExecutionContext): Future[Map[String,Content]] = {
+    val mostShared: Content = Content.apply("most_shared_id", ContentType.Article, Some("some_section"), Some("Some Section"),
+      None, "Most Shared Web Title" , "/most_shared_web_url" , "most_shared_api_url" )
+    val mostCommented: Content = mostShared
 
+    log.info("Setting Most shared and most viewed")
+
+    mostSingleCards.alter( _ + ( "most_shared" -> mostShared ) + ( "most_commented" -> mostCommented ))
+  }
+
+  private def refresh(edition: Edition)(implicit ec: ExecutionContext): Future[Map[String, Seq[RelatedContentItem]]] = {
+
+    val mostViewedQuery = contentApiClient.item("/", edition)
+      .showMostViewed(true)
+
+    val futureMostViewed = contentApiClient.getResponse(mostViewedQuery)
+
+    for {
+      mostViewedResponse <- futureMostViewed
+
+      mostViewed = mostViewedResponse.mostViewed.getOrElse(Nil).take(10).map(RelatedContentItem(_))
+      newMap <- agent.alter(_ + (edition.id -> mostViewed) )
+    } yield newMap
+  }
 }
 
 case class Country(code: String, edition: Edition)
