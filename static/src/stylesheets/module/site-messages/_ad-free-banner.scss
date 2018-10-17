@@ -27,7 +27,7 @@ $btn-height: ($gs-baseline*3.5);
         width: auto;
         height: auto;
         display: none;
-        
+
         .inline-icon {
             fill: $brightness-100;
             path:last-child {
@@ -38,6 +38,7 @@ $btn-height: ($gs-baseline*3.5);
         svg {
             width: 32px;
             height: 32px;
+            display: block;
         }
 
         @include mq(desktop) {
@@ -46,10 +47,6 @@ $btn-height: ($gs-baseline*3.5);
             right: auto;
             bottom: auto;
             display: block;
-            svg {
-                width: inherit;
-                height: inherit;
-            }
         }
 
     }
