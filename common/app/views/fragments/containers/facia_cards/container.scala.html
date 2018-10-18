@@ -6,7 +6,6 @@
 @import views.support.Commercial.container.shouldRenderAsPaidContainer
 @import views.support.GetClasses
 @import conf.switches.Switches.MostViewedFronts
-@import conf.AudioFlagship
 
 @(containerDefinition: layout.FaciaContainer,
   frontProperties: model.FrontProperties = model.FrontProperties.empty,
@@ -18,7 +17,7 @@
 
 @defining((containerDefinition.displayName, containerDefinition.faciaComponentName)) { case (title, componentName) =>
     @containerDefinition.customHeader.map {
-        case header: MetaDataHeader if frontId.get != AudioFlagship.tagName => {
+        case header: MetaDataHeader => {
             @containerMetaData(header)
         }
         case _ => {}
@@ -35,20 +34,6 @@
                 }
                 case None => {}
             }
-        }
-
-        case _ if frontId.get == AudioFlagship.tagName => {
-            <section id="@componentName"
-            class="@GetClasses.forContainerDefinition(containerDefinition) @GetClasses.forFrontId(frontId)"
-            data-link-name="container-@{containerDefinition.index + 1} | @componentName"
-            data-id="@containerDefinition.dataId"
-            data-component="@componentName"
-            aria-expanded="true">
-
-                <div class="fc-container__inner">
-                    @audioFlagshipContainer(containerDefinition, frontProperties, maybeContainerModel, showFrontBranding, frontId)
-                </div>
-            </section>
         }
 
         case _ => {

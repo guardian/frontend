@@ -1,8 +1,10 @@
 // header styling
 
 #flagship-audio {
+    @include fs-headlineGarnett(1);
     padding-top: 0;
     margin-bottom: 0;
+
 
     .ad-slot,
     .ad-slot--paid-for-badge {
@@ -26,33 +28,62 @@
             width: 100%;
             margin: 0;
             padding: 0;
-            .flagship-audio__content,
-            .flagship-audio__logo {
-                padding-top: 5px;
+            .flagship-audio__content {
+                padding-top: $gs-baseline/2;
             }
 
             /* ---------------- HEADER LOGO ------------------- */
             .flagship-audio__logo {
                 position: absolute;
+                top: $gs-baseline/2;
 
-                @include mq($from: mobile, $until: phablet) {
-                    display: none;
+                @include mq($from: mobile, $until: mobileLandscape) {
+                    right: 0;
                 }
 
-                @include mq($from: desktop, $until: wide) {
+                @include mq($from: mobileLandscape, $until: leftCol) {
+                    right: $gs-gutter /2;
+                }
+
+                @include mq($from: leftCol, $until: wide) {
                     flex: 1 0 auto;
+                }
+
+                @include mq($from: mobile, $until: phablet) {
+                    svg {
+                        transform-origin: top right;
+                        transform: scale(.8);
+                    }
                 }
             }
 
 
             /* ---------------- HEADER CONTENT ------------------- */
 
+            .flagship-audio__content-main {
+                z-index: 9;
+            }
+
             .flagship-audio__content {
-                border-left: 1px solid #d3d3d3;
-                padding: 0 0 0 7px;
+                padding: 0;
                 flex: 1 1 auto; /* what is width here */
                 display: flex;
                 flex-direction: row;
+
+
+                &::before {
+                    display: none;
+                    @include mq($from: leftCol) {
+                        display: block;
+                        content: '';
+                        position: relative;
+                        width: 1px;
+                        background-color: rgba(0, 0, 0, .1);
+                        top: 0;
+                        bottom: 0;
+                        left: -10px;
+                    }
+                }
 
                 @include mq($from: mobile, $until: desktop) {
                     flex-direction: column;
@@ -69,11 +100,13 @@
                     padding-top: 6px;
                     margin-top: 2px;
                     margin-bottom: 2px;
-                    line-height: 1.3;
+                    line-height: 22px;
+                    font-weight: normal;
+                    font-size: 18px;
                 }
 
                 .flagship-audio__title {
-                    font-weight: 900;
+                    font-weight: 700;
                     font-size: 42px;
                     line-height: 1;
                     color: #000000;
@@ -93,21 +126,36 @@
 
             /* ---------------- HEADER ARTWORK ------------------- */
             .flagship-audio__artwork {
-                flex: 1 1 auto;
-                justify-self: flex-end;
-                display: flex;
-                flex-direction: row;
-                align-items: flex-end;
-                justify-content: flex-end;
+
+                @include mq($from: mobile, $until: phablet) {
+                    flex: 1 1 auto;
+                    justify-self: flex-end;
+                    display: flex;
+                    flex-direction: row;
+                    align-items: flex-end;
+                    justify-content: flex-end;
+                }
+                @include mq($from: phablet) {
+                    position: absolute;
+                    right: 0;
+                    bottom: 0;
+                    z-index: 8;
+                }
                 .artwork-holder {
                     margin-bottom: -8px;
                     width: 100%;
+
                     svg {
                         width: 100%;
                     }
                     @include mq($from: mobile, $until: phablet) {
                         padding: 0 $gs-gutter/2;
+                        margin-bottom: -36px;
                     }
+                    @include mq($from: mobile, $until: mobileMedium) {
+                        margin-bottom: -50px;
+                    }
+
                 }
 
                 @include mq($from: mobile, $until: phablet) {
@@ -124,7 +172,7 @@
     .flagship-audio__content-buttons {
         list-style: none;
         line-height: 1;
-        padding: 15px 0 5px;
+        padding: $gs-baseline*2 0 5px;
         background-color: transparent;
         color: $brightness-7;
         overflow: auto;
@@ -138,11 +186,12 @@
             margin-bottom: 6px;
             color: $brightness-20;
             font-weight: 800;
-            line-height: 1.3;
+            font-size: 18px;
         }
     }
 
     .flagship-audio__button {
+        @include fs-textSans(1);
         align-items: center;
         display: inline-flex;
         background-color: $brightness-20;
@@ -163,7 +212,7 @@
         text-decoration: none;
 
         .flagship-audio__button {
-            background-color: lighten($brightness-20, 15%);
+            background-color: $brightness-7;
         }
     }
 
@@ -186,6 +235,9 @@
                     color: $brightness-100;
                 }
             }
+            //.flagship-audio__button {
+            //    background-color: $brightness-46;
+            //}
         }
     }
 

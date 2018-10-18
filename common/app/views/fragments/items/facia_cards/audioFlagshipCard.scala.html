@@ -6,8 +6,20 @@
 @import views.html.fragments.items.facia_cards.meta
 @import views.html.fragments.inlineSvg
 @import views.support.{CutOut, GetClasses, RemoveOuterParaHtml, RenderClasses}
+@import model.pressed.ItemKicker
+@import com.gu.facia.api.utils.TagKicker
 
 @import Function.const
+
+
+@getTagKicker() = @{
+    for {
+        properties <- item.properties
+        content <- properties.maybeContent
+        tag <- content.tags.tags.find(tag => tag.properties.tagType == "Keyword")
+    } yield ItemKicker.makeTagKicker(TagKicker(name = tag.properties.webTitle, url=tag.properties.webUrl, id=tag.properties.id))
+
+}
 
 <div class="@GetClasses.forItem(item, isFirstContainer) @item.cardTypes.classes @if(!item.hasInlineSnapHtml) {js-snappable}"
     @if(item.discussionSettings.isCommentable) {
@@ -65,7 +77,9 @@ data-test-id="facia-card"
 
         <div class="fc-item__content">
             <div class="fc-item__header">
-                @title(item.header, index, containerIndex, snapType = item.snapStuff.map(_.snapType))
+
+
+                @title(item.header.copy(kicker = getTagKicker()), index, containerIndex, snapType = item.snapStuff.map(_.snapType))
 
                 @item.bylineText.map { byline =>
                     <div class="fc-item__byline">@byline</div>

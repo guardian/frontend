@@ -1,5 +1,5 @@
 
-@(seriesId: String, title: String, descriptionLong: String, descriptionShort: String, imageUrl: String, subscribeLinks: Map[String, String])
+@(seriesId: String, title: String, subscribeLinks: Map[String, String], description: String)
 
 
 <section class="fc-container fc-container--first flagship-audio" >
@@ -21,9 +21,7 @@
                 </h1>
                 <p class="flagship-audio__description">
                     <span class="regular-description">
-                        Listen to the Guardian's <br />
-                        essential daily podcast  <br />
-                        <strong>Flagship Podcast </strong>
+                    @Html(description)
                     </span>
                 </p>
                 </div>

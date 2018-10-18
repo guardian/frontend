@@ -1,10 +1,11 @@
 package conf
 
 object AudioFlagship {
-  val tagName = "culture/series/thestart"
-  val title = "Flagship Audio"
-  val seriesId = "the-start"
-  val subscribeLinks = Map(
+  val tagName: String = "culture/series/thestart"
+  val title: String = "Flagship Audio"
+  val seriesId: String = "the-start"
+  val description: String = "Listen to the Guardian's <br />\n essential daily podcast  <br />\n <strong>Flagship Podcast </strong>"
+  val subscribeLinks: Map[String, String] = Map(
     "Apple Podcasts" -> "https://itunes.apple.com/us/podcast/id1337773497",
     "Google Podcasts" -> "https://www.google.com/podcasts?feed=aHR0cHM6Ly93d3cudGhlZ3VhcmRpYW4uY29tL2N1bHR1cmUvc2VyaWVzL3RoZXN0YXJ0L3BvZGNhc3QueG1s",
     "Spotify" -> "https://open.spotify.com/show/1Y95YPvBTyQTLxTNQalQcZ")

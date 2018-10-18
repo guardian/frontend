@@ -2,8 +2,27 @@
 
 #flagship-audio {
     .fc-container {
+
         .fc-date-headline {
             color: $brightness-100;
+        }
+
+        .fc-container__inner {
+            border-color: $brightness-46;
+
+            .fc-container__header::after {
+                display: none;
+                @include mq($from: leftCol) {
+                    display: block;
+                    content: '';
+                    position: absolute;
+                    height: 30px;
+                    width: 1px;
+                    background-color: $brightness-46;
+                    right: -11px;
+                    top: -6px;
+                }
+            }
         }
 
         .fc-item__container {
@@ -35,7 +54,8 @@
 
             }
             .fc-item__content {
-                @include mq($from: phablet , $until: wide) {
+                max-width: 100%;
+                @include mq($from: tablet , $until: wide) {
                     padding: 0 $gs-gutter $gs-gutter;
                 }
 

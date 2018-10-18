@@ -6,7 +6,7 @@
 @import model.FrontProperties
 @import model.FrontProperties.empty
 @import services.IndexPage
-@import views.html.fragments.containers.facia_cards.{container, containerScaffold}
+@import views.html.fragments.containers.facia_cards.{container, containerScaffold, audioFlagshipContainer}
 @import views.html.fragments.pagination
 @import views.support.Commercial.container.isFirstNonThrasherContainer
 @import views.support.RenderClasses
@@ -65,14 +65,15 @@
         <div class="l-side-margins content--media" id="flagship-audio">
             <div class="u-cf index-page content--media" data-link-name="Front | @request.path" role="main">
 
-                @fragments.audioSeriesHead(AudioFlagship.seriesId, AudioFlagship.title, AudioFlagship.descriptionLong, AudioFlagship.descriptionShort, AudioFlagship.imageUrl, AudioFlagship.subscribeLinks)
+                @fragments.audioSeriesHead(AudioFlagship.seriesId, AudioFlagship.title, AudioFlagship.subscribeLinks, AudioFlagship.description)
 
                 @defining(IndexPage.makeFront(index, Edition(request)).containers) { containers =>
                     @containers.map { containerDefinition =>
-                        @container(
-                            containerDefinition = containerDefinition,
-                            frontId = Some(index.idWithoutEdition),
-                            showFrontBranding = isFirstNonThrasherContainer(containerDefinition.index, containers)
+
+                        @audioFlagshipContainer(
+                            containerDefinition,
+                            frontProperties = model.FrontProperties.empty,
+                            frontId = Some(index.idWithoutEdition)
                         )
                     }
                 }
