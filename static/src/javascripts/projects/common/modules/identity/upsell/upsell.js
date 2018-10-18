@@ -82,8 +82,11 @@ const bindBlockList = (el): void => {
         })
         .then(prefill => {
             let accountCreationBlock;
-            if (prefill.hasPassword !== "true" && prefill.hasSocialLinks !== "true") {
-                accountCreationBlock = <AccountCreationBlock {...prefill} />
+            if (
+                prefill.hasPassword !== 'true' &&
+                prefill.hasSocialLinks !== 'true'
+            ) {
+                accountCreationBlock = <AccountCreationBlock {...prefill} />;
             }
             fastdom.write(() => {
                 render(
