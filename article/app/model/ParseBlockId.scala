@@ -8,7 +8,7 @@ import scala.util.parsing.combinator.RegexParsers
 object ParseBlockId extends RegexParsers {
 
   sealed trait ParseResult { def toOption: Option[String] }
-  case object InvalidFormat extends ParseResult { val toOption = None }
+  case object InvalidFormat extends ParseResult { val toOption: None.type = None }
   case class ParsedBlockId(blockId: String) extends ParseResult { val toOption = Some(blockId) }
 
   private def withParser: Parser[Unit] = "with:" ^^ { _ => () }

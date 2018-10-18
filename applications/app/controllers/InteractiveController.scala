@@ -16,7 +16,7 @@ import scala.concurrent.duration._
 import scala.concurrent.Future
 
 case class InteractivePage (interactive: Interactive, related: RelatedContent) extends ContentPage {
-  override lazy val item = interactive
+  override lazy val item: Interactive = interactive
 }
 
 class InteractiveController(contentApiClient: ContentApiClient, wsClient: WSClient, val controllerComponents: ControllerComponents)(implicit context: ApplicationContext) extends BaseController with RendersItemResponse with Logging with ImplicitControllerExecutionContext {

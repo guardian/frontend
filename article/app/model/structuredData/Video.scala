@@ -1,7 +1,7 @@
 package model.structuredData
 
 import model.{Article, EndSlateComponents, VideoElement, VideoPlayer}
-import play.api.libs.json.{JsValue, Json}
+import play.api.libs.json.{JodaWrites, JsValue, Json}
 import play.twirl.api.Html
 import views.support.Video640
 
@@ -21,7 +21,7 @@ object Video {
       path = blog.content.mainVideoCanonicalPath
     )
 
-    implicit val dateToTimestampWrites = play.api.libs.json.JodaWrites.JodaDateTimeNumberWrites
+    implicit val dateToTimestampWrites: JodaWrites.JodaDateTimeNumberWrites.type = play.api.libs.json.JodaWrites.JodaDateTimeNumberWrites
     Json.obj(
       "associatedMedia" -> Json.obj(
         "@type" -> "VideoObject",

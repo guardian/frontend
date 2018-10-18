@@ -4,18 +4,15 @@ import common.JsonComponent
 import conf.Configuration
 import controllers.ArticlePage
 import model.Cached.RevalidatableResult
-import model.{ApplicationContext, Cached, ContentFields, NoCache, PageWithStoryPackage}
+import model.{ApplicationContext, Cached, ContentFields}
 import play.api.libs.json.Json
 import play.api.libs.ws.WSClient
 import play.api.mvc.{RequestHeader, Result}
-import play.api.mvc.Results.InternalServerError
 
 import scala.concurrent.{ExecutionContext, Future}
 import play.twirl.api.Html
 
 import scala.concurrent.duration._
-import common.RichRequestHeader
-import staticpages.StaticPages
 
 import ExecutionContext.Implicits.global
 

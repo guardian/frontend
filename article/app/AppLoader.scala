@@ -30,12 +30,12 @@ class AppLoader extends FrontendApplicationLoader {
 trait AppComponents extends FrontendComponents with ArticleControllers {
 
   lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
-  lazy val contentApiClient = wire[ContentApiClient]
-  lazy val ophanApi = wire[OphanApi]
+  lazy val contentApiClient: ContentApiClient = wire[ContentApiClient]
+  lazy val ophanApi: OphanApi = wire[OphanApi]
 
-  lazy val healthCheck = wire[HealthCheck]
-  lazy val devAssetsController = wire[DevAssetsController]
-  lazy val logbackOperationsPool = wire[LogbackOperationsPool]
+  lazy val healthCheck: HealthCheck = wire[HealthCheck]
+  lazy val devAssetsController: DevAssetsController = wire[DevAssetsController]
+  lazy val logbackOperationsPool: LogbackOperationsPool = wire[LogbackOperationsPool]
 
   override lazy val lifecycleComponents = List(
     wire[LogstashLifecycle],

@@ -44,7 +44,7 @@ case class Pagination(currentPage: Int, lastPage: Int, totalContent: Int) {
     else Range(lowerBoundry, upperBoundry)
       .sliding(5 - (getOffset * 2))
       .toSeq
-      .sortBy(distanceFromCenter).head
+      .minBy(distanceFromCenter)
   }
 
   /**

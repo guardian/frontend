@@ -1,7 +1,7 @@
 package model
 
 case class SubjectsListing(listings: TagIndexListings) extends StandalonePage {
-  override val metadata = MetaData.make(
+  override val metadata: MetaData = MetaData.make(
     id = "index/subjects",
     section = Some(SectionId.fromId("Index")),
     webTitle = "subjects",
@@ -9,7 +9,7 @@ case class SubjectsListing(listings: TagIndexListings) extends StandalonePage {
 }
 
 case class ContributorsListing(listings: TagIndexListings) extends StandalonePage {
-  override val metadata = MetaData.make(
+  override val metadata: MetaData = MetaData.make(
     id = "index/contributors",
     section = Some(SectionId.fromId("Index")),
     webTitle = "contributors",

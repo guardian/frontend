@@ -37,9 +37,9 @@ case class DefaultSwitch(name: String, description: String, initiallyOn: Boolean
 
 object ManifestFile {
 
-  lazy val asStringOpt =
+  lazy val asStringOpt: Option[String] =
     Option(getClass.getResourceAsStream("/version.txt")) map (Source.fromInputStream(_).mkString)
-  lazy val asString = asStringOpt getOrElse ""
-  lazy val asList = asStringOpt map { _.split("\n").toList } getOrElse Nil
-  lazy val asKeyValuePairs = (asList map { _.split(":") } collect { case Array(k, v) => k -> v }).toMap
+  lazy val asString: String = asStringOpt getOrElse ""
+  lazy val asList: List[String] = asStringOpt map { _.split("\n").toList } getOrElse Nil
+  lazy val asKeyValuePairs: Map[String, String] = (asList map { _.split(":") } collect { case Array(k, v) => k -> v }).toMap
 }

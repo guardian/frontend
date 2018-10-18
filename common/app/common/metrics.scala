@@ -22,7 +22,7 @@ object SystemMetrics extends implicits.Numbers {
     private val lastGcCount = new AtomicLong(0)
     private val lastGcTime = new AtomicLong(0)
 
-    lazy val name = bean.getName.replace(" ", "_")
+    lazy val name: String = bean.getName.replace(" ", "_")
 
     def gcCount: Double = {
       val totalGcCount = bean.getCollectionCount

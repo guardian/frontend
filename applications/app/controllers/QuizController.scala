@@ -16,7 +16,7 @@ case class QuizAnswersPage(
   inputs: form.Inputs,
   contentPage: String,
   quiz: Quiz) extends model.StandalonePage {
-  override val metadata = MetaData.make("quiz atom", Some(SectionId.fromId("quizzes")), quiz.title)
+  override val metadata: MetaData = MetaData.make("quiz atom", Some(SectionId.fromId("quizzes")), quiz.title)
 
   val results: form.QuizResults = form.checkUsersAnswers(inputs, quiz)
 

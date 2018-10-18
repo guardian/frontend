@@ -14,7 +14,7 @@ trait ArticleControllers {
   implicit def appContext: ApplicationContext
   lazy val bookAgent: NewspaperBookTagAgent = wire[NewspaperBookTagAgent]
   lazy val bookSectionAgent: NewspaperBookSectionTagAgent = wire[NewspaperBookSectionTagAgent]
-  lazy val publicationController = wire[PublicationController]
-  lazy val articleController = wire[ArticleController]
-  lazy val liveBlogController = wire[LiveBlogController]
+  lazy val publicationController: PublicationController = wire[PublicationController]
+  lazy val articleController: ArticleController = wire[ArticleController]
+  lazy val liveBlogController: LiveBlogController = wire[LiveBlogController]
 }

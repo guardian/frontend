@@ -6,6 +6,7 @@ import model.liveblog.BodyBlock
 import model.ParseBlockId.ParsedBlockId
 import org.joda.time.DateTime
 import play.api.libs.functional.syntax._
+import play.api.libs.json
 import play.api.libs.json.{JsValue, Json, _}
 
 object LiveBlogHelpers {
@@ -93,9 +94,9 @@ object LiveBlogHelpers {
       body: String
     )
 
-    implicit val dateToTimestampWrites = play.api.libs.json.JodaWrites.JodaDateTimeNumberWrites
+    implicit val dateToTimestampWrites: json.JodaWrites.JodaDateTimeNumberWrites.type = play.api.libs.json.JodaWrites.JodaDateTimeNumberWrites
 
-    implicit val blockWrites = (
+    implicit val blockWrites: OWrites[TextBlock] = (
       (__ \ "id").write[String] ~
         (__ \ "title").write[Option[String]] ~
         (__ \ "publishedDateTime").write[Option[DateTime]] ~

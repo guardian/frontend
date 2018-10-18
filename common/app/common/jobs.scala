@@ -1,19 +1,22 @@
 package common
 
 import java.util.TimeZone
+
 import model.ApplicationContext
 import org.quartz.impl.StdSchedulerFactory
 import org.quartz._
 import play.api.Mode.Test
+
 import scala.collection.mutable
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContextExecutor, Future}
 import scala.concurrent.duration.Duration
 import com.gu.Box
+
 import scala.util.{Failure, Success}
 
 object JobsState {
-  implicit val global = scala.concurrent.ExecutionContext.global
-  val jobs = mutable.Map[String, () => Future[_]]()
+  implicit val global: ExecutionContextExecutor = scala.concurrent.ExecutionContext.global
+  val jobs: mutable.Map[String, () => Future[_]] = mutable.Map[String, () => Future[_]]()
   val outstanding = Box(Map[String,Int]().withDefaultValue(0))
 }
 
@@ -42,7 +45,7 @@ class FunctionJob extends Job with Logging {
 class JobScheduler(context: ApplicationContext) extends Logging {
   import JobsState._
 
-  val scheduler = StdSchedulerFactory.getDefaultScheduler
+  val scheduler: Scheduler = StdSchedulerFactory.getDefaultScheduler
 
   scheduler.start()
 

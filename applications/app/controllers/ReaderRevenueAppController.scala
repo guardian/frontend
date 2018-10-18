@@ -14,7 +14,7 @@ class ReaderRevenueAppController(val controllerComponents: ControllerComponents)
   extends BaseController with ImplicitControllerExecutionContext with Logging {
 
 
-  private def getContributionsBannerDeployLog(): Option[String] = {
+  private def getContributionsBannerDeployLog: Option[String] = {
     S3.get(contributionsBannerDeployLogKey)
   }
 

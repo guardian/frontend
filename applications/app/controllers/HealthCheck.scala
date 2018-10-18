@@ -7,7 +7,7 @@ import play.api.mvc.ControllerComponents
 
 class HealthCheck(wsClient: WSClient, sectionsLookUp: SectionsLookUp, val controllerComponents: ControllerComponents) extends CachedHealthCheck(
   policy = HealthCheckPolicy.All,
-  preconditionMaybe = Some(HealthCheckPrecondition(sectionsLookUp.isLoaded _, "Sections lookup service has not been loaded yet"))
+  preconditionMaybe = Some(HealthCheckPrecondition(sectionsLookUp.isLoaded, "Sections lookup service has not been loaded yet"))
 )(
   NeverExpiresSingleHealthCheck("/books"),
   NeverExpiresSingleHealthCheck("/books/harrypotter"),

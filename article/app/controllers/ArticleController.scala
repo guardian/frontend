@@ -8,13 +8,12 @@ import pages.{ArticleEmailHtmlPage, ArticleHtmlPage}
 import play.api.libs.ws.WSClient
 import play.api.mvc._
 import views.support._
-import metrics.TimingMetric
 import play.api.libs.json.Json
 import renderers.RemoteRender
 import services.CAPILookup
 import implicits.{AmpFormat, EmailFormat, HtmlFormat, JsonFormat}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
-import services.dotcomponents.{LocalRender, RemoteRender, RenderType, RenderingTierPicker}
+import services.dotcomponents.{LocalRender, RemoteRender, RenderingTierPicker}
 
 import scala.concurrent.Future
 

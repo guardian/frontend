@@ -14,7 +14,7 @@ import pages.ContentHtmlPage
 import scala.concurrent.Future
 
 case class MediaPage(media: ContentType, related: RelatedContent) extends ContentPage {
-  override lazy val item = media
+  override lazy val item: ContentType = media
 }
 
 class MediaController(contentApiClient: ContentApiClient, val controllerComponents: ControllerComponents)(implicit context: ApplicationContext) extends BaseController with RendersItemResponse with Logging with ImplicitControllerExecutionContext {

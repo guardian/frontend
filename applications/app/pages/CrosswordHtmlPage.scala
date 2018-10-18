@@ -23,11 +23,11 @@ object CrosswordHtmlPage extends HtmlPage[CrosswordPage] {
   def allStyles(implicit applicationContext: ApplicationContext, request: RequestHeader): Styles = new Styles {
     override def criticalCssLink: Html = criticalStyleLink(ContentCSSFile)
     override def criticalCssInline: Html = criticalStyleInline(Html(common.Assets.css.head(None)))
-    override def linkCss: Html = stylesheetLink(s"stylesheets/$ContentCSSFile.css", true)
-    override def oldIECriticalCss: Html = stylesheetLink(s"stylesheets/old-ie.head.$ContentCSSFile.css", true)
-    override def oldIELinkCss: Html = stylesheetLink(s"stylesheets/old-ie.$ContentCSSFile.css", true)
-    override def IE9LinkCss: Html = stylesheetLink(s"stylesheets/ie9.head.$ContentCSSFile.css", true)
-    override def IE9CriticalCss: Html = stylesheetLink(s"stylesheets/ie9.$ContentCSSFile.css", true)
+    override def linkCss: Html = stylesheetLink(s"stylesheets/$ContentCSSFile.css", forceSyncCss = true)
+    override def oldIECriticalCss: Html = stylesheetLink(s"stylesheets/old-ie.head.$ContentCSSFile.css", forceSyncCss = true)
+    override def oldIELinkCss: Html = stylesheetLink(s"stylesheets/old-ie.$ContentCSSFile.css", forceSyncCss = true)
+    override def IE9LinkCss: Html = stylesheetLink(s"stylesheets/ie9.head.$ContentCSSFile.css", forceSyncCss = true)
+    override def IE9CriticalCss: Html = stylesheetLink(s"stylesheets/ie9.$ContentCSSFile.css", forceSyncCss = true)
   }
 
   def html(page: CrosswordPage)(implicit request: RequestHeader, applicationContext: ApplicationContext): Html = {

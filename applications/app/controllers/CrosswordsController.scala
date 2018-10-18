@@ -180,7 +180,7 @@ class CrosswordSearchController(
 
   def lookup(): Action[AnyContent] = Action.async { implicit request =>
     lookupForm.bindFromRequest.fold(
-      formWithErrors => Future.successful(noResults),
+      _ => Future.successful(noResults),
       lookUpData => renderCrosswordPage(lookUpData.crosswordType, lookUpData.id)
     )
   }
@@ -190,7 +190,7 @@ class CrosswordSearchController(
                              year: Int,
                              setter: Option[String]) {
     val fromDate = new LocalDate(year, month, 1)
-    val toDate = fromDate.dayOfMonth.withMaximumValue.minusDays(1)
+    val toDate: LocalDate = fromDate.dayOfMonth.withMaximumValue.minusDays(1)
   }
 
   case class CrosswordLookup(crosswordType: String, id: Int)

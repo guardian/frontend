@@ -17,7 +17,7 @@ class CampaignsController(
 
   private val endpoint = Configuration.journalism.calloutsUrl
 
-  def formSubmit() = Action.async { implicit request =>
+  def formSubmit(): Action[AnyContent] = Action.async { implicit request =>
 
     val pageUrl: String = request.headers("referer")
     val jsonBody: Option[JsValue] = request.body.asJson

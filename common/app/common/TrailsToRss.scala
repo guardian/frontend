@@ -17,7 +17,6 @@ import play.api.mvc.RequestHeader
 import views.support.{Item140, Item460, Profile}
 
 import scala.collection.JavaConverters._
-import scala.collection.JavaConverters._
 
 object TrailsToRss extends implicits.Collections {
 
@@ -29,7 +28,7 @@ object TrailsToRss extends implicits.Collections {
     is a bug (http://bugs.java.com/bugdatabase/view_bug.do?bug_id=JDK-8179668).  For now, leaving this
     unchanged as the end result gives valid XML, although it may exclude supplementary characters.
   */
-  val pattern = Pattern.compile("[^\\x09\\x0A\\x0D\\x20-\\uD7FF\\uE000-\\uFFFD\\u10000-\\u10FFFF]")
+  val pattern: Pattern = Pattern.compile("[^\\x09\\x0A\\x0D\\x20-\\uD7FF\\uE000-\\uFFFD\\u10000-\\u10FFFF]")
   private def stripInvalidXMLCharacters(s: String) = {
     pattern.matcher(s).replaceAll("")
   }

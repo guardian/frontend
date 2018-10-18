@@ -13,7 +13,7 @@ import views.support.RenderOtherStatus
 import scala.concurrent.Future
 
 case class ImageContentPage(image: ImageContent, related: RelatedContent) extends ContentPage {
-  override lazy val item = image
+  override lazy val item: ImageContent = image
 }
 
 class ImageContentController(

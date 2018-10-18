@@ -22,8 +22,8 @@ final class CrosswordSearchPageWithResults extends CrosswordSearchPage with Cros
 
 class CrosswordPageWithContent(content: CrosswordContent) extends ContentPage {
 
-  override lazy val item = content
-  val crossword = content.crossword
+  override lazy val item: CrosswordContent = content
+  val crossword: CrosswordData = content.crossword
 
   import CrosswordSvg.{BorderSize, CellSize}
 
@@ -41,14 +41,14 @@ class CrosswordPageWithContent(content: CrosswordContent) extends ContentPage {
 
 class CrosswordSearchPage extends StandalonePage {
 
-  val metadata = MetaData.make(
+  val metadata: MetaData = MetaData.make(
     id = "crosswords/search",
     section = Some(SectionId.fromId("crosswords")),
     webTitle = "Crosswords search"
   )
 
-  val year = new DateTime().getYear
-  val searchYears = 1999 to year
+  val year: Int = new DateTime().getYear
+  val searchYears: Range.Inclusive = 1999 to year
 
   val crosswordTypes: Seq[String] = Seq(
     "quick",

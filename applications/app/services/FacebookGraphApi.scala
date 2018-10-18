@@ -4,7 +4,7 @@ import java.util.concurrent.TimeoutException
 
 import common.Logging
 import conf.Configuration
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, Reads}
 import play.api.libs.ws.{WSClient, WSResponse}
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -14,8 +14,8 @@ import scala.util.control.NonFatal
 
 
 object URLResponseDeserializer {
-  implicit val jsonShare = Json.reads[ShareObject]
-  implicit val jsonResponse = Json.reads[URLResponse]
+  implicit val jsonShare: Reads[ShareObject] = Json.reads[ShareObject]
+  implicit val jsonResponse: Reads[URLResponse] = Json.reads[URLResponse]
 }
 
 case class URLResponse(id: String, share: ShareObject)

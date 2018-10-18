@@ -26,7 +26,7 @@ object MainMediaWidths {
 
 object MainCleaner {
  def apply(article: Article, amp: Boolean)(implicit request: RequestHeader, context: ApplicationContext): Html = {
-      implicit val edition = Edition(request)
+      implicit val edition: Edition = Edition(request)
       withJsoup(BulletCleaner(article.fields.main))(
         if (amp) AmpEmbedCleaner(article) else VideoEmbedCleaner(article),
         PictureCleaner(article, amp),
@@ -39,14 +39,14 @@ object MainCleaner {
 object BodyCleaner {
 
   def cleaners(article: Article, amp: Boolean)(implicit request: RequestHeader, context: ApplicationContext): List[HtmlCleaner] = {
-    implicit val edition = Edition(request)
+    implicit val edition: Edition = Edition(request)
 
     val shouldShowAds = !article.content.shouldHideAdverts && article.metadata.sectionId != "childrens-books-site"
     def ListIf[T](condition: Boolean)(value: => T): List[T] = if(condition) List(value) else Nil
 
     List(
       InBodyElementCleaner,
-      AtomsCleaner(atoms = article.content.atoms, shouldFence = true, amp = amp),
+      AtomsCleaner(atoms = article.content.atoms, amp = amp),
       InBodyLinkCleaner("in body link", amp),
       BlockNumberCleaner,
       new TweetCleaner(article.content, amp),

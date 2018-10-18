@@ -4,10 +4,9 @@
 @import model.Tag
 
 @index.page match {
-    case tag: Tag => {
+    case tag: Tag =>
         <meta name="twitter:url" content="@LinkTo(request.uri)" />
         <meta property="og:title" content="@views.support.Title(index.page)" />
-    }
-    case _ => { }
+    case _ =>
 }
 

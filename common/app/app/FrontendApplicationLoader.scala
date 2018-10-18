@@ -1,5 +1,6 @@
 package app
 
+import akka.actor.ActorSystem
 import common._
 import model.{ApplicationContext, ApplicationIdentity}
 import play.api.ApplicationLoader.Context
@@ -9,7 +10,7 @@ import play.api.mvc.{ControllerComponents, EssentialFilter}
 import play.api.routing.Router
 import play.filters.csrf.CSRFComponents
 import controllers.AssetsComponents
-import play.api.{Application, ApplicationLoader, BuiltInComponents, LoggerConfigurator}
+import play.api._
 
 trait FrontendApplicationLoader extends ApplicationLoader {
 
@@ -36,13 +37,13 @@ trait FrontendComponents
 
   lazy val prefix = "/"
 
-  implicit lazy val as = actorSystem
+  implicit lazy val as: ActorSystem = actorSystem
 
   lazy val jobScheduler = new JobScheduler(appContext)
   lazy val akkaAsync = new AkkaAsync(environment, actorSystem)
   lazy val appMetrics = ApplicationMetrics()
   lazy val guardianConf = new GuardianConfiguration
-  lazy val mode = environment.mode
+  lazy val mode: Mode = environment.mode
 
   // here are the attributes you must provide for your app to start
   def appIdentity: ApplicationIdentity
@@ -63,7 +64,7 @@ trait LifecycleComponents {
 
 trait HttpFiltersComponent {
   self: BuiltInComponents =>
-  lazy val playApiHttpFilters = new HttpFilters {
+  lazy val playApiHttpFilters: HttpFilters = new HttpFilters {
     override def filters: Seq[EssentialFilter] = self.httpFilters
   }
 }
