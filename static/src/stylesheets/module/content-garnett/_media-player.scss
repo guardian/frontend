@@ -962,12 +962,12 @@ $ima-controls-height: 70px;
 }
 
 .podcast-meta--flagship {
-    @include multiline(4, $brightness-86, top);
+    @include multiline(4, $brightness-46, top);
     padding-top: $gs-baseline;
     padding-bottom: 0;
     margin-top: $gs-baseline / 3 * 8;
     margin-bottom: 0;
-    
+
     .podcast-meta__items {
         line-height: 44px;
         margin: 0;
