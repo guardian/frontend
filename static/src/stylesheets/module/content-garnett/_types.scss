@@ -1284,16 +1284,16 @@ $quote-mark: 35px;
     .submeta__section-labels .submeta__link {
         @include f-textSans;
     }
-    
+
     .content__meta-container {
         border-top: 1px solid $brightness-60;
         padding-top: $gs-baseline / 4;
     }
-    
+
     .content__article-body::before {
         background: $brightness-46;
     }
-    
+
     .element .caption {
         background: transparent;
     }
@@ -1329,20 +1329,6 @@ $quote-mark: 35px;
     }
 
     .content__meta-container .content__dateline {
-        @include mq(leftCol) {
-            display: none;
-        }
-    }
-
-    .content__standfirst-cover {
-        @include mq($until: leftCol) {
-            float: left;
-            height: 120px;
-            margin-right: $gs-gutter / 2;
-            margin-top: $gs-baseline / 3;
-            width: 120px;
-        }
-
         @include mq(leftCol) {
             display: none;
         }
