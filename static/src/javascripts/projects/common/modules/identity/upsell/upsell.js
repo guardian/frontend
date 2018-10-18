@@ -80,7 +80,11 @@ const bindBlockList = (el): void => {
             if (!jsonEl) throw new Error('Missing prefill');
             return JSON.parse(jsonEl.innerText || '');
         })
-        .then(prefill =>
+        .then(prefill => {
+            let accountCreationBlock;
+            if (prefill.hasPassword !== "true" && prefill.hasSocialLinks !== "true") {
+                accountCreationBlock = <AccountCreationBlock {...prefill} />
+            }
             fastdom.write(() => {
                 render(
                     <div>
@@ -88,18 +92,16 @@ const bindBlockList = (el): void => {
                             title="Thank you!"
                             subtitle="You’re now subscribed to your content"
                         />
-                        <div className="identity-upsell-wrapper">
-                            <div className="identity-upsell-layout">
-                                {ConfirmEmailThankYou}
-                                {Optouts}
-                                <AccountCreationBlock {...prefill} />
-                            </div>
+                        <div className="identity-upsell-layout">
+                            {ConfirmEmailThankYou}
+                            {Optouts}
+                            {accountCreationBlock}
                         </div>
                     </div>,
                     el
                 );
-            })
-        );
+            });
+        });
 };
 
 const enhanceUpsell = (): void => {

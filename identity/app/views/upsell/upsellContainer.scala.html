@@ -12,7 +12,9 @@
     identityRequest: IdentityRequest,
     identityUrlBuilder: IdentityUrlBuilder,
     returnUrl: String,
-    email: String
+    email: String,
+    hasPassword: Boolean,
+    hasSocialLinks: Boolean
 )(implicit requestHeader: RequestHeader, applicationContext: ApplicationContext)
 
 @noJsBehaviour = @{
@@ -43,7 +45,9 @@
     Json.toJson(Map(
         "csrfToken" -> play.filters.csrf.CSRF.getToken.map(_.value),
         "accountToken" -> requestHeader.cookies.get("SC_GU_GUEST_PW_SET").map(_.value),
-        "email" -> Option(email)
+        "email" -> Option(email),
+        "hasPassword" -> Option(hasPassword.toString),
+        "hasSocialLinks" -> Option(hasSocialLinks.toString)
     ).collect{
         case (name, Some(value)) => name -> value
     }
