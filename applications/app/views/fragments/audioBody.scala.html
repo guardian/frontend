@@ -19,13 +19,13 @@
             "content--paid-content paid-content" -> isPaidContent,
             "content--pillar-special-report" -> (toneClass(audio) == "tone-special-report")
         ),
-        "content", 
-        "content--media", 
-        "content--flagship", 
-        s"content--pillar-${audio.metadata.pillar.nameOrDefault}", 
-        s"content--media--audio", 
-        "tonal", 
-        "tonal--tone-media", 
+        "content",
+        "content--media",
+        "content--flagship",
+        s"content--pillar-${audio.metadata.pillar.nameOrDefault}",
+        s"content--media--audio",
+        "tonal",
+        "tonal--tone-media",
         s"tonal--${toneClass(audio)}"
     )"
     itemscope itemtype="@audio.metadata.schemaType" role="main">
@@ -38,16 +38,16 @@
             <div class="gs-container">
                 <div class="content__main-column content__main-column--media content__main-column--audio content__main-column--flagship">
                     <div class="media-body">
-                        
+
                         <div class="content__main-column__body" data-component="body">
-                            
+
                             @fragments.contentMeta(audio, page, false)
-                            
+
                             @if(audio.fields.body.nonEmpty) {
                                 <div class="from-content-api">
                                     @Html(audio.fields.body)
                                 </div>
-                            }                            
+                            }
 
                             @audio.elements.images.map{ img =>
                                 @fragments.imageFigure(img.images)
@@ -103,6 +103,18 @@
                                     Support The Guardian
                                     @fragments.inlineSvg("arrow-right", "icon", List("podcast-support__icon", "podcast-section__icon"))
                                 </a>
+                            </div>
+
+                            <div class="meta__social meta__social--flagship podcast-section" data-component="share">
+                                @fragments.social(audio.sharelinks.pageShares)
+                                <div class="meta__numbers">
+                                    <div class="u-h meta__number js-sharecount">
+                                    </div>
+                                    <div class="u-h meta__number" data-discussion-id="@audio.content.discussionId" data-commentcount-format="content" data-discussion-closed="@{
+                                        !audio.trail.isCommentable
+                                    }">
+                                    </div>
+                                </div>
                             </div>
 
                             @fragments.submeta(audio)

@@ -690,6 +690,39 @@
     padding-top: $gs-baseline / 2;
 }
 
+.meta__social--flagship {
+    border-top: 1px solid #444444;
+    margin-top: $gs-baseline * 1.5;
+    padding-top: 0;
+
+    display: flex;
+    justify-content: space-between;
+
+    .social {
+        padding-top: $gs-baseline / 2;
+    }
+
+    .social-icon__svg.social-icon__svg.social-icon__svg {
+        fill: #ededed;
+    }
+
+    .meta__numbers {
+        border-left: 1px solid #444444;
+        display: flex;
+        width: 35px;
+        flex-direction: column;
+        align-items: center;
+
+        .sharecount__value.sharecount__value.sharecount__value {
+            color: #999999;
+        }
+
+        .inline-share.inline-share.inline-share svg {
+            fill: #999999;
+        }
+    }
+}
+
 .meta__twitter,
 .meta__email {
     margin: (-$gs-baseline*2/3) ($gs-gutter/4) (-$gs-baseline/6) 0;
