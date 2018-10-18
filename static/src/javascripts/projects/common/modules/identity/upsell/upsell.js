@@ -84,7 +84,8 @@ const bindBlockList = (el): void => {
             let accountCreationBlock;
             if (
                 prefill.hasPassword !== 'true' &&
-                prefill.hasSocialLinks !== 'true'
+                prefill.hasSocialLinks !== 'true' &&
+                typeof prefill.accountToken !== 'undefined'
             ) {
                 accountCreationBlock = <AccountCreationBlock {...prefill} />;
             }
