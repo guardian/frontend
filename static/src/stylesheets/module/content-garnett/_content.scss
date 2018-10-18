@@ -691,7 +691,7 @@
 }
 
 .meta__social--flagship {
-    border-top: 1px solid #444444;
+    border-top: 1px solid $brightness-20;
     margin-top: $gs-baseline * 1.5;
     padding-top: 0;
 
@@ -707,18 +707,18 @@
     }
 
     .meta__numbers {
-        border-left: 1px solid #444444;
+        border-left: 1px solid $brightness-20;
         display: flex;
         width: 35px;
         flex-direction: column;
         align-items: center;
 
         .sharecount__value.sharecount__value.sharecount__value {
-            color: #999999;
+            color: $brightness-60;
         }
 
         .inline-share.inline-share.inline-share svg {
-            fill: #999999;
+            fill: $brightness-60;
         }
     }
 }
