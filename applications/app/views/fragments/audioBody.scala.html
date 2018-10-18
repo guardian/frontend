@@ -34,103 +34,110 @@
 
         @fragments.headTonal(audio, page)
 
-        <div class="content__main tonal__main tonal__main--@toneClass(audio)">
-            <div class="gs-container">
-                <div class="content__main-column content__main-column--media content__main-column--audio content__main-column--flagship">
-                    <div class="media-body">
+        <div class="podcast gs-container">
+            @for( series <- audio.tags.tags.find(_.properties.podcast.nonEmpty)
+            ; podcast <- series.properties.podcast
+            ; image <- podcast.image
+            ) {
+                <div class="podcast__cover">
+                    <a href="#"><img src="@image" class="podcast__cover-image" alt></a>
+                </div>
+            }
 
-                        <div class="content__main-column__body" data-component="body">
+            @if(audio.fields.standfirst.isDefined) {
+                <div class="podcast__standfirst">
+                    @fragments.standfirst(audio)
+                </div>
+            }
 
-                            @fragments.contentMeta(audio, page, false)
+            @fragments.contentMeta(audio, page, false)
 
-                            @if(audio.fields.body.nonEmpty) {
-                                <div class="from-content-api">
-                                    @Html(audio.fields.body)
-                                </div>
-                            }
+            <div class="from-content-api podcast__body">
+                @if(audio.fields.body.nonEmpty) {
+                    @Html(audio.fields.body)
+                }
+                @audio.elements.images.map{ img =>
+                    @fragments.imageFigure(img.images)
+                }
+            </div>
 
-                            @audio.elements.images.map{ img =>
-                                @fragments.imageFigure(img.images)
-                            }
+            <div class="podcast__meta podcast__section">
+                <div class="podcast__meta-heading podcast__section-heading">Subscribe for free</div>
+                <ul class="podcast__meta-items">
+                    @audio.iTunesSubscriptionUrl.map { iTunesSubscriptionUrl =>
+                        <li class="podcast__meta-item podcast__meta-item--itunes">
+                            <a class="podcast__meta__item-link podcast__section-link"
+                                href="@iTunesSubscriptionUrl"
+                                data-link-name="@trackingCode("iTunes")"
+                                >
+                                @fragments.inlineSvg("apple-podcasts", "journalism/audio", List("podcast__meta-icon", "podcast__section-icon"))
+                                Apple Podcasts
+                            </a>
+                        </li>
+                    }
+                    @audio.googlePodcastsUrl.map { googlePodcastsUrl =>
+                        <li class="podcast__meta-item podcast__meta-item--googlePodcasts">
+                            <a class="podcast__meta__item-link podcast__section-link"
+                                href="@googlePodcastsUrl"
+                                data-link-name="@trackingCode("googlePodcasts")"
+                                >
+                                @fragments.inlineSvg("google-podcasts", "journalism/audio", List("podcast__meta-icon", "podcast__section-icon"))
+                                Google Podcasts
+                            </a>
+                        </li>
+                    }
+                    @audio.spotifyUrl.map { spotifyUrl =>
+                        <li class="podcast__meta-item podcast__meta-item--spotify">
+                            <a class="podcast__meta__item-link podcast__section-link"
+                                href="@spotifyUrl"
+                                data-link-name="@trackingCode("spotify")"
+                                >
+                                @fragments.inlineSvg("spotify", "journalism/audio", List("podcast__meta-icon", "podcast__section-icon"))
+                                Spotify
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </div>
 
-                            <div class="podcast-meta podcast-meta--flagship podcast-section">
-                                <div class="podcast-meta__heading podcast-section__heading">Subscribe for free</div>
-                                <ul class="podcast-meta__items">
-                                    @audio.iTunesSubscriptionUrl.map { iTunesSubscriptionUrl =>
-                                        <li class="podcast-meta__item podcast-meta__item--itunes">
-                                            <a class="podcast-meta__item__link podcast-section__link"
-                                                href="@iTunesSubscriptionUrl"
-                                                data-link-name="@trackingCode("iTunes")"
-                                                >
-                                                @fragments.inlineSvg("apple-podcasts", "journalism/audio", List("podcast-meta__icon", "podcast-section__icon"))
-                                                Apple Podcasts
-                                            </a>
-                                        </li>
-                                    }
-                                    @audio.googlePodcastsUrl.map { googlePodcastsUrl =>
-                                        <li class="podcast-meta__item podcast-meta__item--googlePodcasts">
-                                            <a class="podcast-meta__item__link podcast-section__link"
-                                                href="@googlePodcastsUrl"
-                                                data-link-name="@trackingCode("googlePodcasts")"
-                                                >
-                                                @fragments.inlineSvg("google-podcasts", "journalism/audio", List("podcast-meta__icon", "podcast-section__icon"))
-                                                Google Podcasts
-                                            </a>
-                                        </li>
-                                    }
-                                    @audio.spotifyUrl.map { spotifyUrl =>
-                                        <li class="podcast-meta__item podcast-meta__item--spotify">
-                                            <a class="podcast-meta__item__link podcast-section__link"
-                                                href="@spotifyUrl"
-                                                data-link-name="@trackingCode("spotify")"
-                                                >
-                                                @fragments.inlineSvg("spotify", "journalism/audio", List("podcast-meta__icon", "podcast-section__icon"))
-                                                Spotify
-                                            </a>
-                                        </li>
-                                    }
-                                </ul>
-                            </div>
+            <div class="podcast__support from-content-api podcast__section">
+                <div class="podcast__support-heading podcast__section-heading">Support The Guardian</div>
+                <p>The Guardian is editorially independent. And we want to keep our journalism,
+                    including our podcasts, open and accessible to all. But we increasingly
+                    need our readers to fund our work. You can support The Guardian from as
+                    little as £1 – and it only takes a minute.
+                </p>
+                <a href="https://support.theguardian.com/" class="podcast__support-link podcast__section-link">
+                    Support The Guardian
+                    @fragments.inlineSvg("arrow-right", "icon", List("podcast-support__icon", "podcast__section-icon"))
+                </a>
+            </div>
 
-                            <div class="podcast-support from-content-api podcast-section">
-                                <div class="podcast-support__heading podcast-section__heading">Support The Guardian</div>
-                                <p>The Guardian is editorially independent. And we want to keep our journalism,
-                                    including our podcasts, open and accessible to all. But we increasingly
-                                    need our readers to fund our work. You can support The Guardian from as
-                                    little as £1 – and it only takes a minute.
-                                </p>
-                                <a href="https://support.theguardian.com/" class="podcast-support__link podcast-section__link">
-                                    Support The Guardian
-                                    @fragments.inlineSvg("arrow-right", "icon", List("podcast-support__icon", "podcast-section__icon"))
-                                </a>
-                            </div>
-
-                            <div class="meta__social meta__social--flagship podcast-section" data-component="share">
-                                @fragments.social(audio.sharelinks.pageShares)
-                                <div class="meta__numbers">
-                                    <div class="u-h meta__number js-sharecount">
-                                    </div>
-                                    <div class="u-h meta__number" data-discussion-id="@audio.content.discussionId" data-commentcount-format="content" data-discussion-closed="@{
-                                        !audio.trail.isCommentable
-                                    }">
-                                    </div>
-                                </div>
-                            </div>
-
-                            @fragments.submeta(audio)
-                        </div>
+            <div class="meta__social meta__social--flagship podcast__section" data-component="share">
+                @fragments.social(audio.sharelinks.pageShares)
+                <div class="meta__numbers">
+                    <div class="u-h meta__number js-sharecount">
                     </div>
-                    <div class="content__secondary-column content__secondary-column--media content__secondary-column--audio hide-on-childrens-books-site"
-                        aria-hidden="true"
-                        >
-                        <div class="js-audio-components-container"></div>
-                        @if(audio.fields.body.nonEmpty) {
-                            @fragments.commercial.standardAd("right", Seq("dark"), Map("desktop" -> Seq("300,250", "300,274", "fluid")))
-                        }
+                    <div class="u-h meta__number" data-discussion-id="@audio.content.discussionId" data-commentcount-format="content" data-discussion-closed="@{
+                        !audio.trail.isCommentable
+                    }">
                     </div>
                 </div>
             </div>
+
+            <div class="podcast__secondary">
+                <div class="js-audio-components-container"></div>
+                @if(audio.fields.body.nonEmpty) {
+                    <div class="hide-on-childrens-books-site">
+                        @fragments.commercial.standardAd("right", Seq("dark"), Map("desktop" -> Seq("300,250", "300,274", "fluid")))
+                    </div>
+                }
+            </div>
+
+            @fragments.submeta(audio)
+
         </div>
+
     </article>
 
 </div>
