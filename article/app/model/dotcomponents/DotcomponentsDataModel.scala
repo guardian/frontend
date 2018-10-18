@@ -49,7 +49,10 @@ case class PageData(
     toneIds: Option[String],
     seriesId: Option[String],
     isHosted: Boolean,
-    beaconUrl: String
+    beaconUrl: String,
+    edition: String,
+    contentType: Option[String],
+    commissioningDesks: Option[String]
 )
 
 case class Config(
@@ -61,7 +64,7 @@ case class Config(
 case class ContentFields(
     standfirst: Option[String],
     main: String,
-    body: String, 
+    body: String,
     blocks: Blocks
 )
 
@@ -141,7 +144,10 @@ object DotcomponentsDataModel {
       jsConfig("toneIds"),     // source: meta.scala
       jsConfig("seriesId"),    // source: content.scala
       article.metadata.isHosted,
-      Configuration.debug.beaconUrl
+      Configuration.debug.beaconUrl,
+      Edition(request).displayName,
+      jsConfig("contentType"),
+      jsConfig("commissioningDesks")
     )
 
     val tags = article.tags.tags.map(
