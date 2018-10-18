@@ -50,7 +50,7 @@ class UpsellController(
     authenticatedActions.consentAuthWithIdapiUserAction.async { implicit request =>
       val returnUrl = returnUrlVerifier.getVerifiedReturnUrl(request)
       val email = request.user.primaryEmailAddress
-      val hasPassword = request.user.hasPassword.getOrElse(true)
+      val hasPassword = request.user.hasPassword
       val hasSocialLinks = request.user.socialLinks.nonEmpty
       val view = views.html.upsell.upsellContainer(
         ConfirmEmailThankYou, idRequestParser(request), idUrlBuilder, returnUrl.getOrElse(returnUrlVerifier.defaultReturnUrl), email, hasPassword, hasSocialLinks)
