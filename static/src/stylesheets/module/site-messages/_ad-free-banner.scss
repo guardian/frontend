@@ -11,6 +11,7 @@ $btn-height: ($gs-baseline*3.5);
 .site-message--ad-free-banner {
     color: $brightness-100;
     background: $sport-dark;
+    overflow: hidden;
 
     .site-message__close {
         padding-top: 0;
