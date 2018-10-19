@@ -387,3 +387,35 @@
     }
 }
 
+.podcast__share {
+    border-top: 1px solid $brightness-20;
+    margin-top: $gs-baseline * 1.5;
+    padding-top: 0;
+
+    display: flex;
+    justify-content: space-between;
+
+    .social {
+        padding-top: $gs-baseline / 2;
+    }
+
+    .social-icon__svg.social-icon__svg.social-icon__svg {
+        fill: #ededed;
+    }
+
+    .meta__numbers {
+        border-left: 1px solid $brightness-20;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .sharecount__value.sharecount__value.sharecount__value {
+            color: $brightness-60;
+        }
+
+        .inline-share.inline-share.inline-share svg {
+            fill: $brightness-60;
+        }
+    }
+}
+
