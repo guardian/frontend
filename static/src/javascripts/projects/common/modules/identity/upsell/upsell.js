@@ -81,14 +81,6 @@ const bindBlockList = (el): void => {
             return JSON.parse(jsonEl.innerText || '');
         })
         .then(prefill => {
-            let accountCreationBlock;
-            if (
-                prefill.hasPassword !== 'true' &&
-                prefill.hasSocialLinks !== 'true' &&
-                typeof prefill.accountToken !== 'undefined'
-            ) {
-                accountCreationBlock = <AccountCreationBlock {...prefill} />;
-            }
             fastdom.write(() => {
                 render(
                     <div>
@@ -99,7 +91,11 @@ const bindBlockList = (el): void => {
                         <div className="identity-upsell-layout">
                             {ConfirmEmailThankYou}
                             {Optouts}
-                            {accountCreationBlock}
+                            {prefill.hasPassword !== 'true' &&
+                            prefill.hasSocialLinks !== 'true' &&
+                            typeof prefill.accountToken !== 'undefined' ? (
+                                <AccountCreationBlock {...prefill} />
+                            ) : null}
                         </div>
                     </div>,
                     el
