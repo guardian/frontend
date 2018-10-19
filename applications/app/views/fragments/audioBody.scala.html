@@ -50,7 +50,9 @@
                 </div>
             }
 
-            @fragments.contentMeta(audio, page, false)
+            <div class="podcast__byline">
+                @fragments.contentMeta(audio, page, false)
+            </div>
 
             <div class="from-content-api podcast__body">
                 @if(audio.fields.body.nonEmpty) {
@@ -134,7 +136,9 @@
                 }
             </div>
 
-            @fragments.submeta(audio)
+            <div class="podcast__submeta">
+                @fragments.submeta(audio)
+            </div>
 
         </div>
 
