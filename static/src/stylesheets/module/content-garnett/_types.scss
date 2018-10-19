@@ -1298,39 +1298,3 @@ $quote-mark: 35px;
         background: transparent;
     }
 }
-
-// *************** Flagship ***************
-.content--flagship.content--flagship.content--flagship.content--flagship {
-    .content__meta-container {
-        background: none;
-        padding-top: 0;
-
-        @include mq(leftCol) {
-            position: static;
-            margin: 0;
-            width: auto;
-        }
-    }
-
-    .meta__contact-wrap {
-        max-width: none;
-        padding: 0;
-    }
-
-    .content__standfirst,
-    .content__standfirst a,
-    .byline,
-    .byline a {
-        color: #ffffff;
-    }
-
-    .content__dateline {
-        color: #969696;
-    }
-
-    .content__meta-container .content__dateline {
-        @include mq(leftCol) {
-            display: none;
-        }
-    }
-}
