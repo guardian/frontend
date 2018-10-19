@@ -297,14 +297,15 @@
 .podcast {
     @include mq(leftCol) {
         display: grid;
-        grid-template: '.         standfirst .    '
-                       '.         byline     .    '
-                       'cover     main       right'
-                       'subscribe main       right'
-                       'share     main       right'
-                       'date      main       right'
-                       '.         tags       right'
-                       '.         support    right' / 150px 620px 1fr;
+        grid-template:
+        '.         standfirst .    '
+        '.         byline     .    '
+        'cover     main       right'
+        'subscribe main       right'
+        'share     main       right'
+        'date      main       right'
+        '.         tags       right'
+        '.         support    right' / 150px 620px 1fr;
 
         .podcast__standfirst {
             grid-area: standfirst;
