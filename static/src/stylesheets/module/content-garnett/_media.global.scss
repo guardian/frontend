@@ -300,6 +300,7 @@
         grid-template:
         '.         standfirst .    '
         '.         byline     .    '
+        'cover     player     right'
         'cover     main       right'
         'subscribe main       right'
         'share     main       right'
@@ -329,6 +330,10 @@
 
         .podcast__date {
             grid-area: date;
+        }
+
+        .podcast__player {
+            grid-area: player;
         }
 
         .podcast__body {
@@ -391,10 +396,37 @@
             background-image: none;
         }
     }
+
+    .meta__contact-wrap {
+        float: none;
+        max-width: none;
+        padding: 0;
+    }
 }
 
 .podcast__body {
     max-width: 620px;
+}
+
+.podcast__player {
+    // Temporary stuff for the existing audio player
+    .podcast-meta {
+        display: none;
+    }
+
+    .gu-media-wrapper--audio {
+        padding-top: 0;
+
+        @include mq($until: leftCol) {
+            margin-top: $gs-baseline;
+        }
+
+        @include mq(leftCol) {
+            border-left: 1px solid $brightness-46;
+            margin-right: $gs-gutter / 2;
+            padding-bottom: $gs-baseline / 2;
+        }
+    }
 }
 
 .podcast__cover-image {
