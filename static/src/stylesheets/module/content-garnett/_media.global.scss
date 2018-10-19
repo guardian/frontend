@@ -401,6 +401,16 @@
 
 .podcast__body {
     max-width: 620px;
+
+    // Temporary stuff for the existing audio player
+    .podcast-meta {
+        display: none;
+    }
+
+    .gu-media-wrapper--audio {
+        padding-top: 0;
+        margin-bottom: $gs-baseline / 2;
+    }
 }
 
 .podcast__cover-image {

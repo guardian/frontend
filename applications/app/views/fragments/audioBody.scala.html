@@ -1,5 +1,5 @@
 
-@import model.{Audio}
+@import model.{Audio, AudioPlayer}
 @import views.support.Commercial.{isPaidContent, isAdFree}
 @import views.support.TrailCssClasses.toneClass
 @import views.support.{RenderClasses}
@@ -55,6 +55,19 @@
             </div>
 
             <div class="from-content-api podcast__body">
+                <figure data-component="main audio">
+                    @audio.elements.mainAudio.map { audioElement =>
+                        @fragments.media.audio(
+                            AudioPlayer(
+                                audio,
+                                audioElement,
+                                audio.trail.headline,
+                                autoPlay = false
+                            ),
+                            isAdFree
+                        )
+                    }
+                </figure>
                 @if(audio.fields.body.nonEmpty) {
                     @Html(audio.fields.body)
                 }
