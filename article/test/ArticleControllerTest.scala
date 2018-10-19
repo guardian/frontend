@@ -1,17 +1,42 @@
 package test
 
-import controllers.ArticleController
+import controllers.{ArticleController, ArticlePage}
+import model.Cached.RevalidatableResult
+import model.{ApplicationContext, Cached, PageWithStoryPackage}
 import org.apache.commons.codec.digest.DigestUtils
+import org.mockito.Matchers._
+import org.mockito.Mockito._
+import org.scalatest.mockito.MockitoSugar
 import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
+import play.api.libs.ws.WSClient
+import play.api.mvc.{RequestHeader, Result}
+import play.twirl.api.Html
+import renderers.RemoteRender
+import services.dotcomponents.{RemoteRender, RenderType, RenderingTierPicker}
 
 import scala.collection.JavaConverters._
+import scala.concurrent.{ExecutionContext, Future}
+
+class FakePicker extends RenderingTierPicker {
+  override def getRenderTierFor(page: PageWithStoryPackage)(implicit request: RequestHeader): RenderType = {
+    RemoteRender
+  }
+}
+
+class FakeRemoteRender(implicit context: ApplicationContext) extends RemoteRender {
+  override def remoteRenderArticle(ws:WSClient, path: String, article: ArticlePage)(implicit request: RequestHeader): Future[Result] = {
+    implicit val ec = ExecutionContext.global
+    Future(Cached(article)(RevalidatableResult.Ok(Html("OK"))))
+  }
+}
 
 @DoNotDiscover class ArticleControllerTest
   extends FlatSpec
   with Matchers
   with ConfiguredTestSuite
+  with MockitoSugar
   with BeforeAndAfterAll
   with WithMaterializer
   with WithTestWsClient
@@ -20,6 +45,7 @@ import scala.collection.JavaConverters._
  {
 
   val articleUrl = "environment/2012/feb/22/capitalise-low-carbon-future"
+  val guuiArticle = "world/2018/sep/13/give-pizza-a-chance-south-koreans-pa-weight-to-thwart-conscription"
   val liveBlogUrl = "global/middle-east-live/2013/sep/09/syria-crisis-russia-kerry-us-live"
   val sudokuUrl = "lifeandstyle/2013/sep/09/sudoku-2599-easy"
 
@@ -29,8 +55,21 @@ import scala.collection.JavaConverters._
     wsClient
   )
 
+  lazy val guuiController = new ArticleController(
+    testContentApiClient,
+    play.api.test.Helpers.stubControllerComponents(),
+    wsClient
+  )
+
   "Article Controller" should "200 when content type is article" in {
     val result = articleController.renderArticle(articleUrl)(TestRequest(articleUrl))
+    status(result) should be(200)
+  }
+
+  "Article Controller" should "200 for guui articles" in {
+    guuiController.renderingTierPicker = new FakePicker()
+    guuiController.remoteRender = new FakeRemoteRender()
+    val result = guuiController.renderArticle(guuiArticle)(TestRequest(guuiArticle))
     status(result) should be(200)
   }
 
@@ -114,4 +153,5 @@ import scala.collection.JavaConverters._
     import browser._
     $(".media-primary > .element-interactive").attributes("data-interactive").asScala.head should endWith ("boot.js")
   }
+
 }

@@ -24,7 +24,8 @@ case class ArticlePage(article: Article, related: RelatedContent) extends PageWi
 class ArticleController(contentApiClient: ContentApiClient, val controllerComponents: ControllerComponents, ws: WSClient)(implicit context: ApplicationContext) extends BaseController with RendersItemResponse with Logging with ImplicitControllerExecutionContext {
 
   val capiLookup: CAPILookup = new CAPILookup(contentApiClient)
-  val remoteRender: RemoteRender = new RemoteRender()
+  var remoteRender: RemoteRender = new RemoteRender()
+  var renderingTierPicker: RenderingTierPicker = new RenderingTierPicker()
 
   private def isSupported(c: ApiContent) = c.isArticle || c.isLiveBlog || c.isSudoku
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
@@ -41,7 +42,7 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
   def renderArticle(path: String): Action[AnyContent] = {
     Action.async { implicit request =>
       mapModel(path, ArticleBlocks)( article => {
-        RenderingTierPicker.getRenderTierFor(article) match {
+        renderingTierPicker.getRenderTierFor(article) match {
           case RemoteRender => remoteRender.render(ws, path, article)
           case LocalRender => render(path, article)
           case _ => render(path, article)
