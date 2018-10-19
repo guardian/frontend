@@ -111,12 +111,11 @@
         </div>
     </div>
 
+    @if(!item.tags.isAudio || !ActiveExperiments.isParticipating(AudioPageChange)){
     <div class="tonal__standfirst u-cf">
         @if(item.fields.standfirst.isDefined) {
             <div class="gs-container">
-                <div class="@RenderClasses(Map(
-                    "content__main-column--flagship" -> (item.tags.isAudio && ActiveExperiments.isParticipating(AudioPageChange))
-                ), "content__main-column")">
+                <div class="content__main-column">
                     @if(showBadge && isPaidContent(page)) {
                         <div class="content__meta-container js-content-meta js-football-meta u-cf">
                             @fragments.commercial.badge(item, page)
@@ -129,4 +128,5 @@
             </div>
         }
     </div>
+    }
 </header>
