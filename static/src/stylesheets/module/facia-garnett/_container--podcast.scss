@@ -37,15 +37,6 @@
 
 .fc-podcast-container__episode {
     display: flex;
-    height: 119px;
-
-    @include mq(tablet) {
-        height: 160px;
-    }
-
-    @include mq(desktop) {
-        height: 220px;
-    }
 }
 
 .fc-podcast-container__episode,
@@ -97,7 +88,7 @@
 .fc-podcast-container__episode-details .fc-item__standfirst {
     @include mq(desktop) {
         display: block;
-        margin-bottom: 15.5px;
+        margin-bottom: $gs-baseline/2;
         font-size: 14px;
     }
 }
@@ -107,20 +98,25 @@
     color: #FF6A56;
 }
 
+.fc-podcast-container__episode-image,
 .fc-podcast-container__episode-image img {
     width: 119px;
+    height: 119px;
 
     @include mq(tablet) {
         width: 160px;
+        height: 160px;
     }
 
     @include mq(desktop) {
         width: 220px;
+        height: 220px;
     }
 }
 
 .fc-podcast-container__subscribe-small {
-    padding: 5px;
+    padding: 5px 5px 2px;
+    display: block;
 
     @include mq(mobileLandscape) {
         display: none;
@@ -129,7 +125,7 @@
 
 .fc-podcast-container__subscribe-large {
     background-color: transparent;
-    padding: 7px 0;
+    padding: 6px 0 3px 0;
     display: none;
 
     @include mq(mobileLandscape) {
@@ -138,12 +134,17 @@
 }
 
 .fc-podcast-container__subscribe-links {
-    @include mq($from: desktop) {
-        display: inline-block;
-        position: relative;
-        top: -8px;
-        margin-left: 2px;
+    display: inline-block;
+    vertical-align: top;
+    padding-top: 3px;
+
+    span:first-child {
+        display: none;
+        @include mq(mobileLandscape) {
+            display: inline-block;
+        }
     }
+
 }
 
 .fc-podcast-container__subscribe {
@@ -151,15 +152,9 @@
     font-family: $f-sans-serif-text;
     font-size: 11px;
     border-top: solid 1px #777777;
-    height: 15px;
-
-    @include mq(mobileLandscape) {
-        font-size: 12px;
-        height: 25px;
-    }
 
     @include mq(desktop) {
-        height: 30px;
+        font-size: 12px;
     }
 
     span {
@@ -182,15 +177,16 @@
     }
 }
 
+.fc-podcast-container__audio-icon-container {
+    display: inline-block;
+}
+
 .fc-podcast-container__audio-icon {
     width: 23px;
     height: 23px;
     display: inline-block;
     background-color: #FF6A56;
     border-radius: 50%;
-    position: absolute;
-    margin-left: 119px;
-    bottom: 30px;
 
     svg {
         fill: #333333;
@@ -200,16 +196,6 @@
         margin-right: auto;
         margin-top: 6px;
         display: block;
-    }
-
-    @include mq(mobileLandscape) {
-        bottom: 40px;
-        margin-left: 0;
-    }
-
-    @include mq(desktop) {
-        position: relative;
-        bottom: 0;
     }
 }
 

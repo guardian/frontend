@@ -77,13 +77,17 @@
                                         </div>
                                     </div>
                                     <div class="fc-podcast-container__subscribe fc-podcast-container__subscribe-large">
-                                        @fragments.inlineSvg("volume-high", "icon",  Seq("fc-podcast-container__audio-icon"))
+                                        <div class="fc-podcast-container__audio-icon-container" data-link-name="audio-icon">
+                                            @fragments.inlineSvg("volume-high", "icon",  Seq("fc-podcast-container__audio-icon"))
+                                        </div>
                                         @subscriptionLinks
                                     </div>
                                 </div>
                             </div>
                             <div class="fc-podcast-container__subscribe fc-podcast-container__subscribe-small">
-                                @fragments.inlineSvg("volume-high", "icon",  Seq("fc-podcast-container__audio-icon"))
+                                <div class="fc-podcast-container__audio-icon-container" data-link-name="audio-icon">
+                                    @fragments.inlineSvg("volume-high", "icon",  Seq("fc-podcast-container__audio-icon"))
+                                </div>
                                 @subscriptionLinks
                             </div>
                             <a class="fc-podcast-container__track u-faux-block-link__overlay js-headline-text" @Html(card.header.url.hrefWithRel) data-link-name="article" tabindex="-1" aria-hidden="true">
