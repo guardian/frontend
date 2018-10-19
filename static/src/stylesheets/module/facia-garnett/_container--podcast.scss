@@ -95,7 +95,7 @@
 
 .fc-podcast-container__episode-details .fc-item__kicker,
 .fc-podcast-container__series .fc-item__kicker {
-    color: #FF6A56;
+    color: #ff6a56;
 }
 
 .fc-podcast-container__episode-image,
@@ -125,7 +125,7 @@
 
 .fc-podcast-container__subscribe-large {
     background-color: transparent;
-    padding: 6px 0 3px 0;
+    padding: 6px 0 3px;
     display: none;
 
     @include mq(mobileLandscape) {
@@ -185,7 +185,7 @@
     width: 23px;
     height: 23px;
     display: inline-block;
-    background-color: #FF6A56;
+    background-color: #ff6a56;
     border-radius: 50%;
 
     svg {
