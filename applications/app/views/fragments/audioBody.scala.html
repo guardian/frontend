@@ -35,6 +35,20 @@
         @fragments.headTonal(audio, page)
 
         <div class="podcast gs-container">
+            <figure class="podcast__player" data-component="main audio">
+                @audio.elements.mainAudio.map { audioElement =>
+                    @fragments.media.audio(
+                        AudioPlayer(
+                            audio,
+                            audioElement,
+                            audio.trail.headline,
+                            autoPlay = false
+                        ),
+                        isAdFree
+                    )
+                }
+            </figure>
+
             @for( series <- audio.tags.tags.find(_.properties.podcast.nonEmpty)
             ; podcast <- series.properties.podcast
             ; image <- podcast.image
@@ -55,19 +69,6 @@
             </div>
 
             <div class="from-content-api podcast__body">
-                <figure data-component="main audio">
-                    @audio.elements.mainAudio.map { audioElement =>
-                        @fragments.media.audio(
-                            AudioPlayer(
-                                audio,
-                                audioElement,
-                                audio.trail.headline,
-                                autoPlay = false
-                            ),
-                            isAdFree
-                        )
-                    }
-                </figure>
                 @if(audio.fields.body.nonEmpty) {
                     @Html(audio.fields.body)
                 }
