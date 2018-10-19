@@ -80,7 +80,7 @@ const bindBlockList = (el): void => {
             if (!jsonEl) throw new Error('Missing prefill');
             return JSON.parse(jsonEl.innerText || '');
         })
-        .then(prefill => {
+        .then(prefill =>
             fastdom.write(() => {
                 render(
                     <div>
@@ -100,8 +100,8 @@ const bindBlockList = (el): void => {
                     </div>,
                     el
                 );
-            });
-        });
+            })
+        );
 };
 
 const enhanceUpsell = (): void => {
