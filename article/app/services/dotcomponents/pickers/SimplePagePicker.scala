@@ -53,6 +53,8 @@ object PageChecks {
 
   def isNotAMP(request: RequestHeader): Boolean = ! request.isAmp
 
+  def isNotOpinion(page:PageWithStoryPackage): Boolean = ! page.item.tags.isComment
+
 }
 
 class SimplePagePicker extends RenderTierPickerStrategy {
@@ -72,7 +74,8 @@ class SimplePagePicker extends RenderTierPickerStrategy {
       ("isNotLiveBlog", PageChecks.isNotLiveBlog(page)),
       ("isNotAReview", PageChecks.isNotAReview(page)),
       ("isNotAGallery", PageChecks.isNotAGallery(page)),
-      ("isNotAMP", PageChecks.isNotAMP(request))
+      ("isNotAMP", PageChecks.isNotAMP(request)),
+      ("isNotAMP", PageChecks.isNotOpinion(page))
     )
 
     val success = ! results.exists{!_._2}
