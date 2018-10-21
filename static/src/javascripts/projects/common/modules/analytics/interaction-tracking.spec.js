@@ -12,6 +12,7 @@ import interactionTracking from './interaction-tracking';
 
 jest.mock('lib/mediator');
 jest.mock('lib/storage');
+jest.mock('lib/raven');
 
 jest.mock('common/modules/analytics/google', () => ({
     trackSamePageLinkClick: jest.fn(),

@@ -14,6 +14,7 @@ import {
     getDaysSinceLastOneOffContribution,
 } from './user-features.js';
 
+jest.mock('lib/raven');
 jest.mock('projects/common/modules/identity/api', () => ({
     isUserLoggedIn: jest.fn(),
 }));

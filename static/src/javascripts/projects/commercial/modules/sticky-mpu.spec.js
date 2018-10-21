@@ -3,6 +3,8 @@ import mediator from 'lib/mediator';
 import fastdom from 'lib/fastdom-promise';
 import { stickyMpu, stickyCommentsMpu } from 'commercial/modules/sticky-mpu';
 
+jest.mock('lib/raven');
+
 // Workaround to fix issue where dataset is missing from jsdom, and solve the
 // 'cannot set property [...] which has only a getter' TypeError
 Object.defineProperty(HTMLElement.prototype, 'dataset', {

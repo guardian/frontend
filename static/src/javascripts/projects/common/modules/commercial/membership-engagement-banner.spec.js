@@ -14,6 +14,7 @@ import { shouldShowReaderRevenue } from 'common/modules/commercial/contributions
 const defaultEngagementBannerParams: any = defaultEngagementBannerParams_;
 const getUserVariantParams: any = getUserVariantParams_;
 
+jest.mock('lib/raven');
 jest.mock('lib/mediator');
 jest.mock('lib/storage', () => ({
     local: {

@@ -2,6 +2,8 @@
 
 import { initTechFeedback } from './tech-feedback';
 
+jest.mock('lib/raven');
+
 describe('Tech-feedback', () => {
     beforeEach(() => {
         if (document.body) {
