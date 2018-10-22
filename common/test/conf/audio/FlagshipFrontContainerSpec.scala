@@ -4,7 +4,7 @@ import org.joda.time.format.DateTimeFormat
 import org.joda.time.DateTimeConstants._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 
-class FlagshipFrontContainerSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
+@DoNotDiscover class FlagshipFrontContainerSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
   private val formatter = DateTimeFormat.forPattern("yyyy/MM/dd HH:mm")
 
   override def beforeAll {
