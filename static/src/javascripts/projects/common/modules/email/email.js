@@ -15,9 +15,13 @@ import userPrefs from 'common/modules/user-prefs';
 import uniq from 'lodash/uniq';
 import envelope from 'svgs/icon/envelope.svg';
 import crossIcon from 'svgs/icon/cross.svg';
+import { loadScript } from 'lib/load-script';
 
 import type { IdentityUser } from 'common/modules/identity/api';
 import type { bonzo } from 'bonzo';
+
+const recaptchaJsLib = 'https://www.google.com/recaptcha/api.js';
+const recaptchaApiKey = '6LfvU3MUAAAAAFMDYT2sgAUSYn8dDnjB65w8jAmn';
 
 type Analytics = {
     formType: string,
@@ -27,6 +31,7 @@ type Analytics = {
 
 const state = {
     submitting: false,
+    captchaRendered: false,
 };
 
 const messages = {
@@ -39,6 +44,7 @@ const classes = {
     form: 'js-email-sub__form',
     inlineLabel: 'js-email-sub__inline-label',
     textInput: 'js-email-sub__text-input',
+    button: 'email-sub__submit-button',
     dummyInput: 'js-email-sub__text-name',
     listNameHiddenInput: 'js-email-sub__listname-input',
 };
@@ -241,24 +247,62 @@ const handleSubmit = (isSuccess: boolean, $form: bonzo): (() => void) => () => {
 };
 
 const submitForm = (
+    event: Event,
     $form: bonzo,
     url: string,
     analytics: Analytics
-): (Event => ?Promise<any>) => {
+): void => {
     // simplistic email address validation to prevent misfired omniture events
     const validate = (emailAddress: string): boolean =>
         emailAddress.includes('@');
 
-    return event => {
-        const emailAddress = $(`.${classes.textInput}`, $form).val();
-        const csrfToken = $(`input[name=csrfToken]`, $form).val();
-        const dummy = $(`.${classes.dummyInput}`, $form).val();
-        const listName = $(`.${classes.listNameHiddenInput}`, $form);
+    const emailAddress = $(`.${classes.textInput}`, $form).val();
+    const csrfToken = $(`input[name=csrfToken]`, $form).val();
+    const dummy = $(`.${classes.dummyInput}`, $form).val();
+    const listName = $(`.${classes.listNameHiddenInput}`, $form);
+    const button = $(`.${classes.button}`, $form)[0];
 
-        let analyticsInfo;
+    const recaptchaHolder = document.createElement('div');
+    if (document.body) document.body.appendChild(recaptchaHolder);
 
-        event.preventDefault();
-        if (!state.submitting && validate(emailAddress)) {
+    if (button) {
+        button.innerText = 'Hang on...';
+        button.disabled = true;
+    }
+
+    let analyticsInfo;
+
+    event.preventDefault();
+
+    const onCaptchaSolved = () =>
+        new Promise((accept, reject) => {
+            if (!config.get('switches.idNewsletterRecaptcha', false)) {
+                accept('-');
+            } else {
+                loadScript(recaptchaJsLib, { async: true })
+                    .then(() => {
+                        if (!window.grecaptcha) {
+                            throw new Error(`Couldn't load recaptcha js`);
+                        }
+                        window.grecaptcha.ready(() => {
+                            if (!state.captchaRendered) {
+                                window.grecaptcha.render(recaptchaHolder, {
+                                    sitekey: recaptchaApiKey,
+                                    size: 'invisible',
+                                    errorCallback: reject,
+                                    callback: accept,
+                                });
+                                state.captchaRendered = true;
+                            }
+                            window.grecaptcha.execute();
+                        });
+                    })
+                    .catch(reject);
+            }
+        });
+
+    if (!state.submitting && validate(emailAddress)) {
+        onCaptchaSolved().then(captchaToken => {
             const formData = $form.data('formData');
             const data = `email=${encodeURIComponent(
                 emailAddress
@@ -266,6 +310,8 @@ const submitForm = (
                 formData.campaignCode
             }&referrer=${formData.referrer}&csrfToken=${encodeURIComponent(
                 csrfToken
+            )}&g-recaptcha-response=${encodeURIComponent(
+                captchaToken
             )}&listName=${listName.val()}`;
 
             analyticsInfo = `rtrt | email form inline | ${
@@ -314,14 +360,21 @@ const submitForm = (
                         handleSubmit(false, $form)();
                     });
             });
-        }
-    };
+        });
+    }
 };
 
 const bindSubmit = ($form: bonzo, analytics: Analytics): void => {
     const url = '/email';
 
-    bean.on($form[0], 'submit', submitForm($form, url, analytics));
+    if (config.get('switches.idNewsletterRecaptcha', false)) {
+        bean.on($form[0], 'mouseover', () => {
+            loadScript(recaptchaJsLib);
+        });
+    }
+    bean.on($form[0], 'submit', ev => {
+        submitForm(ev, $form, url, analytics);
+    });
 };
 
 const setup = (
