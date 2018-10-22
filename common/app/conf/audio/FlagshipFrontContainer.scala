@@ -11,13 +11,14 @@ object FlagshipFrontContainer {
     "c57a70c8-a00a-4a15-93a2-035b9221622b"  //CODE
   )
 
-  private val cutoffTime = "03:15"
-  private val cutoffTimeMillis: Int = DateTimeFormat.forPattern("HH:mm").parseDateTime(cutoffTime).getMillisOfDay
+  private val GoLiveDateTime = DateTimeFormat.forPattern("yyyy/MM/dd HH:mm").parseDateTime(s"2018/11/01 03:15")
 
-  private val GoLiveDateTime = DateTimeFormat.forPattern("yyyy/MM/dd HH:mm").parseDateTime(s"2018/11/01 $cutoffTime")
+  //The container should appear at 3:15 on Monday, and disappear at 3:15 on Saturday
+  private def isWeekend(dateTime: DateTime): Boolean = {
+    val day = dateTime.minusHours(3).minusMinutes(15).getDayOfWeek
+    day == SATURDAY || day == SUNDAY
+  }
 
-  private val disabledOnMonday: DateTime => Boolean = d => d.getDayOfWeek == MONDAY && d.getMillisOfDay < cutoffTimeMillis
-  private val disabledOnSaturday: DateTime => Boolean = d => d.getDayOfWeek == SATURDAY && d.getMillisOfDay > cutoffTimeMillis
 
   def isFlagshipContainer(id: String): Boolean =
     FrontContainerIds.contains(id)
@@ -25,9 +26,7 @@ object FlagshipFrontContainer {
   def displayFlagshipContainer(now: DateTime = DateTime.now): Boolean =
     FlagshipFrontContainerSwitch.isSwitchedOn &&
       now.isAfter(GoLiveDateTime) &&
-      now.getDayOfWeek != SUNDAY &&
-      !disabledOnMonday(now) &&
-      !disabledOnSaturday(now)
+      !isWeekend(now)
 
   //TODO - update
   val AlbumArtUrl = "https://media.guim.co.uk/79284468f1b259db7d713dc24ea9af2a3f5c9937/0_0_800_800/500.png"
