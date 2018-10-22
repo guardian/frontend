@@ -10,6 +10,7 @@ import config from 'lib/config';
 import bean from 'bean';
 import arrowRight from 'svgs/icon/arrow-right.svg';
 import type { Banner } from 'common/modules/ui/bannerPicker';
+import { isUserLoggedIn } from 'common/modules/identity/api';
 import userPrefs from 'common/modules/user-prefs';
 
 const accountDataUpdateLink = accountDataUpdateWarningLink => {
@@ -111,6 +112,7 @@ const canShow: () => Promise<boolean> = () => {
     );
     return Promise.resolve(
         updateLink !== null &&
+            isUserLoggedIn() &&
             !(
                 bannerCanBeLoadedAgainAfter &&
                 new Date(bannerCanBeLoadedAgainAfter) > new Date()
