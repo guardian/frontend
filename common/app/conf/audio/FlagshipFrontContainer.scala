@@ -3,6 +3,7 @@ package conf.audio
 import org.joda.time.DateTime
 import org.joda.time.DateTimeConstants._
 import org.joda.time.format.DateTimeFormat
+import scala.concurrent.duration._
 import conf.switches.Switches.FlagshipFrontContainerSwitch
 
 object FlagshipFrontContainer {
@@ -14,8 +15,9 @@ object FlagshipFrontContainer {
   private val GoLiveDateTime = DateTimeFormat.forPattern("yyyy/MM/dd HH:mm").parseDateTime(s"2018/11/01 03:15")
 
   //The container should appear at 3:15 on Monday, and disappear at 3:15 on Saturday
+  private val threeHoursFifteenMinutes: Long = (3.hours + 15.minutes).toMillis
   private def isWeekend(dateTime: DateTime): Boolean = {
-    val day = dateTime.minusHours(3).minusMinutes(15).getDayOfWeek
+    val day = dateTime.minus(threeHoursFifteenMinutes).getDayOfWeek
     day == SATURDAY || day == SUNDAY
   }
 
