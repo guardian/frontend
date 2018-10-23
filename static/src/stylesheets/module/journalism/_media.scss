@@ -318,6 +318,10 @@
         margin-top: 0;
     }
 
+    @include mq($until: leftCol) {
+        margin-top: $gs-baseline;
+    }
+
     @include mq(leftCol) {
         padding-bottom: 0;
 
