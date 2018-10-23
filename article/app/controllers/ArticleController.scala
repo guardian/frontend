@@ -3,24 +3,24 @@ package controllers
 import com.gu.contentapi.client.model.v1.{ItemResponse, Content => ApiContent}
 import common._
 import contentapi.ContentApiClient
-import model.{ContentType, PageWithStoryPackage, _}
-import pages.{ArticleEmailHtmlPage, ArticleHtmlPage}
-import play.api.libs.ws.WSClient
-import play.api.mvc._
-import views.support._
-import metrics.TimingMetric
-import play.api.libs.json.Json
-import services.CAPILookup
 import implicits.{AmpFormat, EmailFormat, HtmlFormat, JsonFormat}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model.dotcomponents.DotcomponentsDataModel
-import services.dotcomponents.{LocalRender, RemoteRender, RenderType, RenderingTierPicker}
+import model.{ContentType, PageWithStoryPackage, _}
+import pages.{ArticleEmailHtmlPage, ArticleHtmlPage}
+import play.api.libs.json.Json
+import play.api.libs.ws.WSClient
+import play.api.mvc._
+import renderers.RemoteRenderer
+import services.CAPILookup
+import services.dotcomponents._
+import views.support._
 
 import scala.concurrent.Future
 
 case class ArticlePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
 
-class ArticleController(contentApiClient: ContentApiClient, val controllerComponents: ControllerComponents, ws: WSClient, remoteRender: renderers.RemoteRender = new renderers.RemoteRender(), renderingTierPicker: RenderingTierPicker = new RenderingTierPicker())(implicit context: ApplicationContext) extends BaseController with RendersItemResponse with Logging with ImplicitControllerExecutionContext {
+class ArticleController(contentApiClient: ContentApiClient, val controllerComponents: ControllerComponents, ws: WSClient, remoteRenderer: renderers.RemoteRenderer = RemoteRenderer(), renderingTierPicker: RenderingTierPicker = RenderingTierPicker())(implicit context: ApplicationContext) extends BaseController with RendersItemResponse with Logging with ImplicitControllerExecutionContext {
 
   val capiLookup: CAPILookup = new CAPILookup(contentApiClient)
 
@@ -39,8 +39,9 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
   def renderArticle(path: String): Action[AnyContent] = {
     Action.async { implicit request =>
       mapModel(path, ArticleBlocks)( article => {
-        renderingTierPicker.getRenderTierFor(article) match {
-          case RemoteRender => remoteRender.render(ws, path, article)
+        renderingTierPicker.getTier(article) match {
+          case RemoteRender => remoteRenderer.getArticle(ws, path, article)
+          case RemoteRenderAMP => remoteRenderer.getAMPArticle(ws, path, article)
           case LocalRender => render(path, article)
           case _ => render(path, article)
         }
