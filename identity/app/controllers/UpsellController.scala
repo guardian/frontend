@@ -46,7 +46,7 @@ class UpsellController(
     with SafeLogging
     with IdentitySwitches {
 
-  def confirmEmailThankYou(returnUrl: Option[String]): Action[AnyContent] = if (IdentityUseFollowSwitches.isSwitchedOn) csrfAddToken {
+  def confirmEmailThankYou(returnUrl: Option[String]): Action[AnyContent] = if (IdentityEnableUpsellJourneysSwitch.isSwitchedOn) csrfAddToken {
     authenticatedActions.consentAuthWithIdapiUserAction.async { implicit request =>
       val returnUrl = returnUrlVerifier.getVerifiedReturnUrl(request)
       val email = request.user.primaryEmailAddress
