@@ -30,8 +30,7 @@ object FlagshipFrontContainer {
       now.isAfter(GoLiveDateTime) &&
       !isWeekend(now)
 
-  //TODO - update
-  val AlbumArtUrl = "https://media.guim.co.uk/79284468f1b259db7d713dc24ea9af2a3f5c9937/0_0_800_800/500.png"
+  val AlbumArtUrl = "https://media.guim.co.uk/e1c686325e7a35c618126d749807a75450f6011e/0_0_800_800/500.png"
 
   object SubscriptionUrls {
     //TODO - update
