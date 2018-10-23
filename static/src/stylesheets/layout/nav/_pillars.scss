@@ -1,7 +1,28 @@
 .pillars {
     clear: right;
     margin: 0;
-    padding: 0 $gs-gutter / 2;
+    padding: 0 0 0 ($gs-gutter / 2);
+
+    @include mq($until: mobileLandscape) {
+        display: flex;
+    }
+
+    .new-header:not(.new-header--slim) & {
+        &:after {
+            content: '';
+            border: 1px solid $nav-border-colour;
+            border-bottom: 0;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: $pillar-height - $gs-baseline / 2;
+
+            @include mq(desktop) {
+                height: $pillar-height;
+            }
+        }
+    }
 
     @include mq(mobileLandscape) {
         padding-left: $gs-gutter;
@@ -24,6 +45,11 @@
     display: block;
     float: left;
 
+    @include mq($until: mobileLandscape) {
+        flex-grow: 1;
+        text-align: center;
+    }
+
     @include mq(desktop) {
         width: $pillar-width--desktop;
     }
@@ -34,11 +60,25 @@
         }
     }
 
-    &:first-child .pillar-link {
-        padding-left: 0;
+    &:first-child {
+        margin-left: -$gs-gutter;
 
-        &:before {
-            content: none;
+        @include mq(desktop) {
+            width: $pillar-width--desktop + ($gs-gutter / 2);
+        }
+
+        body:not(.has-page-skin) & {
+            @include mq(leftCol) {
+                width: $pillar-width--leftCol + ($gs-gutter / 2);
+            }
+        }
+
+        .pillar-link {
+            padding-left: $gs-gutter;
+
+            &:before {
+                content: none;
+            }
         }
     }
 }

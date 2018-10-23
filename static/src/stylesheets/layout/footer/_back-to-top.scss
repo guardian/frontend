@@ -1,19 +1,16 @@
 .footer__back-to-top-container {
     @include content-gutter();
-    background-color: $brightness-97;
-    border-top: 1px solid $brightness-86;
 }
 
 .footer__back-to-top {
-    @include fs-textSans(4);
-    font-size: 16px;
+    @include fs-textSans(5);
     position: relative;
     text-align: right;
 }
 
 .back-to-top__text {
     display: inline-block;
-    color: $brightness-7;
+    color: $brightness-100;
     line-height: 42px;
     padding-right: $gs-gutter / 2;
 }
@@ -21,28 +18,21 @@
 .back-to-top__icon-container {
     position: relative;
     float: right;
-    margin-top: -($gs-baseline / 2);
+    margin-right: $gs-gutter;
+    margin-top: $gs-baseline / 4;
     border-radius: 100%;
-    background-color: $brightness-7;
+    background-color: $highlight-main;
     cursor: pointer;
-    height: $veggie-burger-medium;
-    min-width: $veggie-burger-medium;
-}
+    height: 36px;
+    min-width: 36px;
 
-.back-to-top__icon {
-    &:before {
+    .inline-arrow-up {
         position: absolute;
         top: $gs-baseline / 2;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        margin: auto;
-        border: 2px solid #ffffff;
-        border-bottom: 0;
-        border-right: 0;
-        content: '';
-        height: 9px;
-        width: 9px;
-        transform: rotate(45deg);
+        left: 6px;
+
+        path {
+            fill: $brightness-7;
+        }
     }
 }

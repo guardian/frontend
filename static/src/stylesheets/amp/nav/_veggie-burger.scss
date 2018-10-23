@@ -3,8 +3,8 @@
     top: $gs-baseline * 2;
     box-shadow: 0 0 0 1px rgba(0, 0, 0, .08);
     color: $brightness-97;
-    height: $veggie-burger-small;
-    min-width: $veggie-burger-small;
+    height: $veggie-burger;
+    min-width: $veggie-burger;
     position: absolute;
     border: 0;
     border-radius: 50%;
@@ -14,8 +14,8 @@
 
     @include mq(mobileMedium) {
         bottom: -$gs-baseline / 2;
-        height: $veggie-burger-medium;
-        min-width: $veggie-burger-medium;
+        height: $veggie-burger;
+        min-width: $veggie-burger;
         top: auto;
     }
 

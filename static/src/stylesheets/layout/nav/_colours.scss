@@ -13,19 +13,6 @@
             color: $colourOne;
         }
     }
-
-    .top-bar__item--cta {
-        &:hover,
-        &:focus {
-            & .top-bar__item--cta--circle:before {
-                background-color: $colourOne;
-            }
-        }
-    }
-
-    &.new-header--slim .veggie-burger {
-        background-color: $colourOne;
-    }
 }
 
 .pillar-scheme--News {
@@ -50,74 +37,62 @@
 
 .menu-group {
     .menu-item:first-child > .menu-group .menu-item__title:hover,
-    .menu-item:first-child > .menu-group .menu-item__title:focus,
-    .menu-item__title--News {
-        color: $news-main;
+    .menu-item:first-child > .menu-group .menu-item__title:focus {
+        color: $news-pastel;
     }
 
     .menu-item:nth-child(2) > .menu-group .menu-item__title:hover,
-    .menu-item:nth-child(2) > .menu-group .menu-item__title:focus,
-    .menu-item__title--Opinion {
-        color: $opinion-main;
+    .menu-item:nth-child(2) > .menu-group .menu-item__title:focus {
+        color: $opinion-pastel;
     }
 
     .menu-item:nth-child(3) > .menu-group .menu-item__title:hover,
-    .menu-item:nth-child(3) > .menu-group .menu-item__title:focus,
-    .menu-item__title--Sport {
-        color: $sport-main;
+    .menu-item:nth-child(3) > .menu-group .menu-item__title:focus {
+        color: $sport-pastel;
     }
 
     .menu-item:nth-child(4) > .menu-group .menu-item__title:hover,
-    .menu-item:nth-child(4) > .menu-group .menu-item__title:focus,
-    .menu-item__title--Culture {
-        color: $culture-main;
+    .menu-item:nth-child(4) > .menu-group .menu-item__title:focus {
+        color: $culture-pastel;
     }
 
     .menu-item:nth-child(5) > .menu-group .menu-item__title:hover,
-    .menu-item:nth-child(5) > .menu-group .menu-item__title:focus,
-    .menu-item__title--Lifestyle {
-        color: $lifestyle-main;
+    .menu-item:nth-child(5) > .menu-group .menu-item__title:focus {
+        color: $lifestyle-pastel;
+    }
+}
+
+@mixin PillarLinks ($colourOne, $colourTwo) {
+    .new-header--open & {
+        &:hover,
+        &:focus {
+            color: $colourTwo;
+        }
+    }
+
+    &:after {
+        border-color: $colourOne;
     }
 }
 
 .pillar-link {
     &.pillar-link--News {
-        color: $news-main;
-
-        &:after {
-            border-color: $news-dark;
-        }
+        @include PillarLinks($news-bright, $news-pastel);
     }
 
     &.pillar-link--Opinion {
-        color: $opinion-main;
-
-        &:after {
-            border-color: $opinion-dark;
-        }
+        @include PillarLinks($opinion-bright, $opinion-pastel);
     }
 
     &.pillar-link--Sport {
-        color: $sport-main;
-
-        &:after {
-            border-color: $sport-dark;
-        }
+        @include PillarLinks($sport-bright, $sport-pastel);
     }
 
     &.pillar-link--Culture {
-        color: $culture-main;
-
-        &:after {
-            border-color: $culture-dark;
-        }
+        @include PillarLinks($culture-bright, $culture-pastel);
     }
 
     &.pillar-link--Lifestyle {
-        color: $lifestyle-main;
-
-        &:after {
-            border-color: $lifestyle-dark;
-        }
+        @include PillarLinks($lifestyle-bright, $lifestyle-pastel);
     }
 }

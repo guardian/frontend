@@ -8,14 +8,13 @@ $menu-spacing-left-medium: $gs-gutter * 2 + $gs-gutter;
 
 $search-and-edition-height-desktop: 42px;
 
+$veggie-burger: 42px;
+
+$pillar-height: 42px;
+$pillar-width--desktop: 128px;
+$pillar-width--leftCol: 160px;
+$pillar-padding: $gs-gutter / 2;
 
 
-$veggie-burger-small: 40px;
-$veggie-burger-medium: 48px;
-$veggie-burger-large: 56px;
-
-$slim-nav-height: $veggie-burger-large - $gs-baseline;
-
-$pillar-width--desktop: 118px;
-$pillar-width--leftCol: 140px;
-$pillar-padding: 5px;
+$nav-border-colour: rgba($brightness-100, .3);
+$header-blue: #052962;

@@ -8,6 +8,9 @@
     box-sizing: border-box;
     padding-right: $gs-gutter / 2;
     padding-left: $gs-gutter / 2;
+    border: 1px solid $footer-line-colour;
+    border-bottom: 0;
+    margin-bottom: $gs-baseline * 3;
 
     @include mq(mobileLandscape) {
         padding-left: $gs-gutter;
@@ -16,6 +19,6 @@
 
     &,
     a {
-        color: $brightness-86;
+        color: $brightness-100;
     }
 }

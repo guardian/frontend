@@ -1,32 +1,43 @@
 .pillar-link {
+    box-sizing: border-box;
     font-family: $f-serif-headline;
     font-weight: 900;
-    color: currentColor;
+    color: $brightness-100;
     cursor: pointer;
     display: block;
     // Weird number to get the most out of available space
     font-size: 15.4px;
-    height: $gs-baseline * 2 + $gs-baseline / 2;
+    height: $pillar-height - $gs-baseline / 2;
     line-height: 1;
-    padding: 0 4px;
+    padding: 9px 0 0;
     position: relative;
     overflow: hidden;
+    z-index: 1;
+
+    @include mq(mobileMedium) {
+        font-size: 18px;
+        padding: 7px 0 0;
+    }
 
     @include mq(tablet) {
         font-size: 22px;
-        height: $gs-baseline * 3 + $gs-baseline / 2;
         padding-right: $gs-gutter;
         padding-left: $pillar-padding;
     }
 
     @include mq(desktop) {
-        height: $gs-baseline * 3 + $gs-baseline / 2;
+        height: $pillar-height;
+        padding-top: $gs-baseline - 5px;
+        transition: color .3s ease-in-out;
     }
 
     body:not(.has-page-skin) & {
         @include mq(leftCol) {
+            font-size: 22px;
+        }
+
+        @include mq(wide) {
             font-size: 24px;
-            height: $gs-baseline * 4;
         }
     }
 
@@ -41,55 +52,51 @@
 
     &:before {
         // Dividing lines
-        border-left: 1px solid $brightness-86;
-        top: $gs-baseline / 4;
+        border-left: 1px solid $nav-border-colour;
+        top: 0;
         z-index: 1;
 
         @include mq(tablet) {
-            top: $gs-baseline / 4;
+            bottom: .7em;
+            top: 0;
+
+            .new-header--open & {
+                bottom: 0;
+            }
         }
     }
 
     &:not(.pillar-link--dropdown):after {
-        // Underlines
-        border-bottom: 4px solid currentColor;
+        // Overlines
+        border-top: 4px solid currentColor;
+        left: 1px;
         right: 0;
-        bottom: -4px;
+        top: -4px;
         transition: transform 150ms ease-out;
     }
 
     &:hover,
-    &:focus {
+    &:focus{
+        color: $brightness-100;
         text-decoration: none;
 
         &:after {
-            transform: translateY(-4px)
+            transform: translateY(4px)
         }
     }
 
     .new-header--open & {
-        &:not(.pillar-link--dropdown):hover,
-        &:not(.pillar-link--dropdown):focus {
-            text-decoration: underline;
-        }
-    }
-
-    // Ugly specificity to override body:not(.has-page-skin)
-    body .new-header--slim & {
-        font-size: 20px;
-        height: $slim-nav-height;
-        line-height: $slim-nav-height;
-        padding-top: 0;
-
-        &:before {
-            top: 17px;
+        @include mq(desktop) {
+            &:after {
+                transform: translateY(4px)
+            }
         }
     }
 }
 
 .pillar-link--current-section {
     &:after {
-        transform: translateY(-4px)
+        transform: translateY(4px)
     }
 }
 
@@ -119,14 +126,14 @@
 }
 
 .pillar-link--sections {
-    color: $brightness-20;
-    font-weight: 400;
+    color: $brightness-100;
+    font-weight: 300;
     float: left;
     padding-right: $gs-gutter / 4;
     transition: color 250ms ease-out;
 
     &:hover,
     &:focus {
-        color: $brightness-7;
+        color: $brightness-100;
     }
 }
