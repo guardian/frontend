@@ -524,6 +524,7 @@
     border-top: 1px solid $brightness-20;
     margin-top: $gs-baseline * 1.5;
     padding-top: 0;
+    padding-right: $gs-gutter / 2;
 
     display: flex;
     justify-content: space-between;
@@ -537,9 +538,7 @@
     }
 
     .meta__numbers {
-        border-left: 1px solid $brightness-20;
         display: flex;
-        flex-direction: column;
         align-items: center;
 
         .sharecount__value.sharecount__value.sharecount__value {
@@ -549,6 +548,18 @@
         .inline-share.inline-share.inline-share svg {
             fill: $brightness-60;
         }
+    }
+
+    .meta__number {
+        padding-left: $gs-gutter / 4;
+    }
+
+    .commentcount2__heading.commentcount2__heading.commentcount2__heading span {
+        fill: $brightness-60;
+    }
+
+    .commentcount2__value {
+        color: $brightness-60;
     }
 }
 
