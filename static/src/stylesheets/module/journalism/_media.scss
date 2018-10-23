@@ -1,13 +1,4 @@
 .podcast {
-    @include mq(tablet) {
-        margin: auto;
-        width: 700px;
-    }
-
-    @include mq(desktop) {
-        margin-left: 0;
-    }
-
     @include mq(leftCol) {
         display: grid;
         grid-template:
@@ -19,9 +10,8 @@
         'share     main       right'
         '.         main       right'
         '.         support    right'
-        '.         tags       right' / 158px 620px 1fr;
+        '.         tags       right' / 150px 620px 1fr;
         grid-column-gap: 0;
-        width: auto;
     }
 
     .podcast__standfirst {
@@ -76,6 +66,7 @@
 .podcast__standfirst {
     .content__standfirst {
         font: 400 18px/22px $f-serif-headline;
+        max-width: none;
     }
 
     .u-underline.u-underline {
@@ -137,13 +128,26 @@
 
 .podcast__standfirst,
 .podcast__support,
+.podcast__meta,
+.podcast__share,
+.podcast__byline,
+.podcast__secondary,
 .podcast__submeta,
 .podcast__body {
+    box-sizing: border-box;
     max-width: 620px;
+}
+
+.podcast__player {
+    @include mq($until: leftCol) {
+        max-width: 620px;
+    }
 }
 
 .podcast__body {
     .media-primary {
+        margin-left: 0;
+        margin-right: 0;
         margin-bottom: 0;
     }
 
@@ -188,7 +192,7 @@
 }
 
 .podcast__section {
-    @include mq($until: desktop) {
+    @include mq($until: phablet) {
         margin-left: $gs-gutter / -2;
         margin-right: $gs-gutter / -2;
         padding-left: $gs-gutter / 2;
@@ -229,6 +233,12 @@
 
     @include mq($until: leftCol) {
         margin-top: $gs-baseline / 3 * 8;
+    }
+
+    @include mq(leftCol, wide) {
+        .podcast__meta-heading {
+            font-size: 16px;
+        }
     }
 }
 
@@ -290,6 +300,16 @@
         margin-top: $gs-baseline;
     }
 
+    @include mq(leftCol, wide) {
+        flex-direction: column;
+
+        .meta__numbers.meta__numbers.meta__numbers.meta__numbers {
+            border-top: 1px solid $brightness-46;
+            margin-right: $gs-gutter / -2;
+            padding-right: $gs-gutter / 2;
+        }
+    }
+
     .social {
         padding-top: $gs-baseline / 2;
     }
@@ -311,8 +331,9 @@
         }
     }
 
-    .meta__number {
+    .meta__number.meta__number.meta__number.meta__number {
         padding-left: $gs-gutter / 4;
+        border-color: $brightness-46;
     }
 
     .commentcount2__heading.commentcount2__heading.commentcount2__heading span {
@@ -362,6 +383,10 @@
 
     @include mq(leftCol) {
         padding-left: $gs-gutter / 2;
+
+        .most-viewed-container--media {
+            border-top-color: $brightness-46;
+        }
     }
 
     .most-viewed--media {
