@@ -15,25 +15,11 @@
 <footer class="l-footer u-cf" data-link-name="footer" data-component="footer">
 
     <div class="footer__primary">
-
         @if(!isAmp) {
             @defining(NavMenu(page, Edition(request))) { navMenu: NavMenu =>
                 @fragments.nav.subNav(navMenu, isFooter = true)
             }
         }
-
-        <a data-link-name="back to top" href="#top">
-            <div class="footer__back-to-top-container">
-                <div class="gs-container">
-                    <div class="footer__back-to-top">
-                        <span class="back-to-top__text">back to top</span>
-                        <span class="back-to-top__icon-container">
-                            <i class="back-to-top__icon"></i>
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </a>
     </div>
 
     <div class="l-footer__secondary js-footer__secondary @if(EmailInlineInFooterSwitch.isSwitchedOff) {l-footer__secondary--no-email} gs-container" role="contentinfo">
@@ -65,16 +51,16 @@
                     case Uk => {
                         <ul class="colophon__list">
                             <li class="colophon__item"><a data-link-name="uk : footer : jobs" href="https://jobs.theguardian.com/?INTCMP=NGW_FOOTER_UK_GU_JOBS">
-                                search jobs</a>
+                                Search jobs</a>
                             </li>
                             <li class="colophon__item"><a data-link-name="uk : footer : soulmates" href="https://soulmates.theguardian.com/?INTCMP=NGW_FOOTER_UK_GU_SOULMATES">
-                                dating</a>
+                                Dating</a>
                             </li>
                             <li class="colophon__item"><a data-link-name="uk : footer : contribute" class="js-acquisition-link" href="@getReaderRevenueUrl(SupportContribute, Footer)">
-                                make a contribution</a>
+                                Make a contribution</a>
                             </li>
                             <li class="colophon__item"><a data-link-name="uk : footer : membership" class="js-acquisition-link" href="@getReaderRevenueUrl(SupportSubscribe, Footer)">
-                                subscribe</a>
+                                Subscribe</a>
                             </li>
                             <li class="colophon__item"><a data-link-name="uk : footer : guardian labs" href="@LinkTo {/guardian-labs}">
                                 Guardian labs</a>
@@ -83,52 +69,52 @@
 
                         <ul class="colophon__list">
                             <li class="colophon__item"><a data-link-name="uk : footer : about us" href="@LinkTo {/about}">
-                                about us</a>
+                                About us</a>
                             </li>
                             <li class="colophon__item"><a data-link-name="uk : footer : work for us" href="https://workforus.theguardian.com/locations/london">
-                                work for us</a>
+                                Work for us</a>
                             </li>
                             <li class="colophon__item"><a data-link-name="uk : footer : advertise with us" href="https://advertising.theguardian.com">
-                                advertise with us</a>
+                                Advertise with us</a>
                             </li>
                             <li class="colophon__item"><a data-link-name="uk : footer : contact us" href="@LinkTo {/help/contact-us}">
-                                contact us</a>
+                                Contact us</a>
                             </li>
                             <li class="colophon__item"><a data-link-name="uk : footer : tech feedback" class="js-tech-feedback-report" href="@LinkTo {/help}">
-                                help</a>
+                                Help</a>
                             </li>
                         </ul>
 
                         <ul class="colophon__list">
                             <li class="colophon__item"><a data-link-name="terms" href="@LinkTo {/help/terms-of-service}">
-                                terms &amp; conditions</a>
+                                Terms &amp; conditions</a>
                             </li>
                             <li class="colophon__item"><a data-link-name="privacy" href="@LinkTo {/info/privacy}">
-                                privacy policy</a>
+                                Privacy policy</a>
                             </li>
                             <li class="colophon__item"><a data-link-name="cookie" href="@LinkTo {/info/cookies}">
-                                cookie policy</a>
+                                Cookie policy</a>
                             </li>
                             <li class="colophon__item"><a data-link-name="securedrop" href="https://securedrop.theguardian.com/">
-                                securedrop</a>
+                                Securedrop</a>
                             </li>
                             <li class="colophon__item"><a data-link-name="digital newspaper archive" href="https://theguardian.newspapers.com">
-                                digital newspaper archive</a>
+                                Digital newspaper archive</a>
                             </li>
                             <li class="colophon__item"><a data-link-name="complaints" href="@LinkTo {/info/complaints-and-corrections}">
-                                complaints &amp; corrections</a>
+                                Complaints &amp; corrections</a>
                             </li>
                         </ul>
 
                         <ul class="colophon__list">
                             <li class="colophon__item"><a data-link-name="uk : footer : all topics" href="@LinkTo {/index/subjects/a}">
-                                all topics</a>
+                                All topics</a>
                             </li>
                             <li class="colophon__item"><a data-link-name="uk : footer : all contributors" href="@LinkTo {/index/contributors}">
-                                all contributors</a>
+                                All contributors</a>
                             </li>
                             <li class="colophon__item"><a data-link-name="uk : footer : modern slavery act statement" href="@LinkTo {/info/2016/jul/27/modern-slavery-and-our-supply-chains?INTCMP=NGW_FOOTER_UK_GU_MODERN_SLAVERY_ACT}">
-                                modern slavery act</a>
+                                Modern slavery act</a>
                             </li>
                             <li class="colophon__item"><a data-link-name="uk : footer : facebook" href="https://www.facebook.com/theguardian">
                                 Facebook</a>
@@ -142,63 +128,63 @@
                     case Us => {
                         <ul class="colophon__list">
                             <li class="colophon__item"><a data-link-name="us : footer : jobs" href="https://jobs.theguardian.com/?INTCMP=NGW_FOOTER_US_GU_JOBS">
-                                search jobs</a>
+                                Search jobs</a>
                             </li>
                             <li class="colophon__item"><a data-link-name="uk : footer : contribute" class="js-acquisition-link" href="@getReaderRevenueUrl(SupportContribute, Footer)">
-                                make a contribution</a>
+                                Make a contribution</a>
                             </li>
                             <li class="colophon__item"><a data-link-name="uk : footer : membership" class="js-acquisition-link" href="@getReaderRevenueUrl(SupportSubscribe, Footer)">
-                                subscribe</a>
+                                Subscribe</a>
                             </li>
                             <li class="colophon__item"><a data-link-name="us : footer : guardian labs" href="@LinkTo {/guardian-labs-us}">
-                                guardian labs</a>
+                                Guardian labs</a>
                             </li>
                         </ul>
 
 
                         <ul class="colophon__list">
                             <li class="colophon__item"><a data-link-name="us : footer : about us" href="@LinkTo {/info/about-guardian-us}">
-                                about us</a>
+                                About us</a>
                             </li>
                             <li class="colophon__item"><a data-link-name="us : footer : work for us" href="https://workforus.theguardian.com/locations/new-york">
-                                work for us</a>
+                                Work for us</a>
                             </li>
                             <li class="colophon__item"><a data-link-name="us : footer : contact us" href="@LinkTo {/info/about-guardian-us/contact}">
-                                contact us</a>
+                                Contact us</a>
                             </li>
                             <li class="colophon__item"><a data-link-name="us : footer : advertise with us" href="https://advertising.theguardian.com">
-                                advertise with us</a>
+                                Advertise with us</a>
                             </li>
                         </ul>
 
 
                         <ul class="colophon__list">
                             <li class="colophon__item"><a data-link-name="us : footer : tech feedback" class="js-tech-feedback-report" href="@LinkTo {/help}">
-                                help</a>
+                                Help</a>
                             </li>
                             <li class="colophon__item"><a data-link-name="terms" href="@LinkTo {/help/terms-of-service}">
-                                terms &amp; conditions</a>
+                                Terms &amp; conditions</a>
                             </li>
                             <li class="colophon__item"><a data-link-name="privacy" href="@LinkTo {/info/privacy}">
-                                privacy policy</a>
+                                Privacy policy</a>
                             </li>
                             <li class="colophon__item"><a data-link-name="cookie" href="@LinkTo {/info/cookies}">
-                                cookie policy</a>
+                                Cookie policy</a>
                             </li>
                             <li class="colophon__item"><a data-link-name="securedrop" href="https://securedrop.theguardian.com/">
-                                securedrop</a>
+                                Securedrop</a>
                             </li>
                             <li class="colophon__item"><a data-link-name="complaints" href="@LinkTo {/info/complaints-and-corrections}">
-                                complaints &amp; corrections</a>
+                                Complaints &amp; corrections</a>
                             </li>
                         </ul>
 
                         <ul class="colophon__list">
                             <li class="colophon__item"><a data-link-name="us : footer : all topics" href="@LinkTo {/index/subjects/a}">
-                                all topics</a>
+                                All topics</a>
                             </li>
                             <li class="colophon__item"><a data-link-name="us : footer : all contributors" href="@LinkTo {/index/contributors}">
-                                all contributors</a>
+                                All contributors</a>
                             </li>
                             <li class="colophon__item"><a data-link-name="us : footer : facebook" href="https://www.facebook.com/GuardianUs">
                                 Facebook</a>
@@ -207,7 +193,7 @@
                                 Twitter</a>
                             </li>
                             <li class="colophon__item"><a data-link-name="digital newspaper archive" href="https://theguardian.newspapers.com">
-                                digital newspaper archive</a>
+                                Digital newspaper archive</a>
                             </li>
                         </ul>
 
@@ -216,16 +202,16 @@
                     case Au => {
                         <ul class="colophon__list">
                             <li class="colophon__item"><a data-link-name="uk : footer : contribute" class="js-acquisition-link" href="@getReaderRevenueUrl(SupportContribute, Footer)">
-                                make a contribution</a>
+                                Make a contribution</a>
                             </li>
                             <li class="colophon__item"><a data-link-name="us : footer : subscribe" class="js-acquisition-link" href="@getReaderRevenueUrl(SupportSubscribe, Footer)">
-                                subscribe</a>
+                                Subscribe</a>
                             </li>
                             <li class="colophon__item"><a data-link-name="au : footer : uk-jobs" href="https://jobs.theguardian.com/?INTCMP=NGW_FOOTER_AU_GU_JOBS">
-                                search UK jobs</a>
+                                Search UK jobs</a>
                             </li>
                             <li class="colophon__item"><a data-link-name="au : footer : vacancies" href="https://www.theguardian.com/info/2015/aug/04/guardian-australia-job-vacancies">
-                                vacancies</a>
+                                Vacancies</a>
                             </li>
                             <li class="colophon__item"><a data-link-name="au : footer : masterclasses" href="@LinkTo {/guardian-masterclasses/guardian-masterclasses-australia}">
                                 Events</a>
@@ -234,17 +220,17 @@
 
                         <ul class="colophon__list">
                             <li class="colophon__item"><a data-link-name="au : footer : about us" href="@LinkTo {/info/about-guardian-australia}">
-                                about us</a>
+                                About us</a>
                             </li>
                             <li class="colophon__item"><a data-link-name="au : footer : contact us" href="@LinkTo {/info/2013/may/26/contact-guardian-australia}">
-                                contact us</a>
+                                Contact us</a>
                             </li>
                             <li class="colophon__item"><a data-link-name="au : footer : advertise with us" href="https://advertising.theguardian.com">
-                                advertise with us</a>
+                                Advertise with us</a>
                             </li>
 
                             <li class="colophon__item"><a data-link-name="au : footer : advertising" href="@LinkTo {/advertising/guardian-australia-advertising}">
-                                advertising</a>
+                                Advertising</a>
                             </li>
                             <li class="colophon__item"><a data-link-name="au : footer : guardian labs" href="@LinkTo {/guardian-labs-australia}">
                                 Guardian labs</a>
@@ -253,31 +239,31 @@
 
                         <ul class="colophon__list">
                             <li class="colophon__item"><a data-link-name="terms" href="@LinkTo {/help/terms-of-service}">
-                                terms &amp; conditions</a>
+                                Terms &amp; conditions</a>
                             </li>
                             <li class="colophon__item"><a data-link-name="privacy" href="@LinkTo {/info/privacy}">
-                                privacy policy</a>
+                                Privacy policy</a>
                             </li>
                             <li class="colophon__item"><a data-link-name="cookie" href="@LinkTo {/info/cookies}">
-                                cookie policy</a>
+                                Cookie policy</a>
                             </li>
                             <li class="colophon__item"><a data-link-name="securedrop" href="https://securedrop.theguardian.com/">
-                                securedrop</a>
+                                Securedrop</a>
                             </li>
                             <li class="colophon__item"><a data-link-name="au : footer : tech feedback" class="js-tech-feedback-report" href="@LinkTo {/help}">
-                                help</a>
+                                Help</a>
                             </li>
                             <li class="colophon__item"><a data-link-name="au : footer : information" href="@LinkTo {/info}">
-                                information</a>
+                                Information</a>
                             </li>
                         </ul>
 
                         <ul class="colophon__list">
                             <li class="colophon__item"><a data-link-name="au : footer : all topics" href="@LinkTo {/index/subjects/a}">
-                                all topics</a>
+                                All topics</a>
                             </li>
                             <li class="colophon__item"><a data-link-name="au : footer : all contributors" href="@LinkTo {/index/contributors}">
-                                all contributors</a>
+                                All contributors</a>
                             </li>
                             <li class="colophon__item"><a data-link-name="au : footer : facebook" href="https://www.facebook.com/theguardianaustralia">
                                 Facebook</a>
@@ -286,7 +272,7 @@
                                 Twitter</a>
                             </li>
                             <li class="colophon__item"><a data-link-name="digital newspaper archive" href="https://theguardian.newspapers.com">
-                                digital newspaper archive</a>
+                                Digital newspaper archive</a>
                             </li>
                         </ul>
                     }
@@ -294,57 +280,57 @@
                     case International => {
                         <ul class="colophon__list">
                             <li class="colophon__item"><a data-link-name="uk : footer : contribute" class="js-acquisition-link" href="@getReaderRevenueUrl(SupportContribute, Footer)">
-                                make a contribution</a>
+                                Make a contribution</a>
                             </li>
                             <li class="colophon__item"><a data-link-name="uk : footer : membership" class="js-acquisition-link" href="@getReaderRevenueUrl(SupportSubscribe, Footer)">
-                                subscribe</a>
+                                Subscribe</a>
                             </li>
                             <li class="colophon__item"><a data-link-name="int : footer : uk-jobs" href="https://jobs.theguardian.com/?INTCMP=NGW_FOOTER_INT_GU_JOBS">
-                                search UK jobs</a>
+                                Search UK jobs</a>
                             </li>
                             <li class="colophon__item"><a data-link-name="securedrop" href="https://securedrop.theguardian.com/">
-                                securedrop</a>
+                                Securedrop</a>
                             </li>
                             <li class="colophon__item"><a data-link-name="tech feedback" class="international : footer : js-tech-feedback-report" href="@LinkTo {/help}">
-                                help</a>
+                                Help</a>
                             </li>
                         </ul>
 
                         <ul class="colophon__list">
                             <li class="colophon__item"><a data-link-name="international : footer : advertise with us" href="https://advertising.theguardian.com">
-                                advertise with us</a>
+                                Aadvertise with us</a>
                             </li>
                             <li class="colophon__item"><a data-link-name="international : footer : work for us" href="https://workforus.theguardian.com">
-                                work for us</a>
+                                Work for us</a>
                             </li>
                             <li class="colophon__item"><a data-link-name="international : footer : contact us" href="@LinkTo {/help/contact-us}">
-                                contact us</a>
+                                Contact us</a>
                             </li>
                             <li class="colophon__item"><a data-link-name="complaints" href="@LinkTo {/info/complaints-and-corrections}">
-                                complaints &amp; corrections</a>
+                                Complaints &amp; corrections</a>
                             </li>
                         </ul>
 
                         <ul class="colophon__list">
                             <li class="colophon__item"><a data-link-name="terms" href="@LinkTo {/help/terms-of-service}">
-                                terms &amp; conditions</a>
+                                Terms &amp; conditions</a>
                             </li>
                             <li class="colophon__item"><a data-link-name="privacy" href="@LinkTo {/info/privacy}">
-                                privacy policy</a></li>
+                                Privacy policy</a></li>
                             <li class="colophon__item"><a data-link-name="cookie" href="@LinkTo {/info/cookies}">
-                                cookie policy</a>
+                                Cookie policy</a>
                             </li>
                             <li class="colophon__item"><a data-link-name="digital newspaper archive" href="https://theguardian.newspapers.com">
-                                digital newspaper archive</a>
+                                Digital newspaper archive</a>
                             </li>
                         </ul>
 
                         <ul class="colophon__list">
                             <li class="colophon__item"><a data-link-name="international : footer : all topics" href="@LinkTo {/index/subjects/a}">
-                                all topics</a>
+                                All topics</a>
                             </li>
                             <li class="colophon__item"><a data-link-name="international : footer : all contributors" href="@LinkTo {/index/contributors}">
-                                all contributors</a>
+                                All contributors</a>
                             </li>
                             <li class="colophon__item"><a data-link-name="international : footer : facebook" href="https://www.facebook.com/theguardian">
                                 Facebook</a>
@@ -359,6 +345,12 @@
             </div>
         </div>
         <div class="copyright-container">
+            <a class="footer__back-to-top" data-link-name="back to top" href="#top">
+                <span class="back-to-top__text">Back to top</span>
+                <span class="back-to-top__icon-container">
+                    @fragments.inlineSvg("arrow-up", "icon")
+                </span>
+            </a>
             <div class="really-serious-copyright">© @{new DateTime().year.getAsText} Guardian News and Media Limited or its affiliated companies. All rights reserved.</div>
         </div>
     </div>

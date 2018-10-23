@@ -1,0 +1,113 @@
+.new-header__cta-bar {
+    position: absolute;
+    top: 30px;
+    left: $gs-gutter / 2;
+
+    @include mq(mobileMedium) {
+        top: 37px;
+    }
+
+    @include mq(mobileLandscape) {
+        left: $gs-gutter;
+    }
+
+    @include mq(tablet) {
+        top: 0;
+    }
+
+    .new-header--slim & {
+        top: 10px;
+
+        @include mq(tablet) {
+            display: none;
+        }
+    }
+}
+
+.cta-bar__message {
+    color: $highlight-main;
+    display: block;
+    font-family: $f-serif-headline;
+    font-size: 30px;
+    font-weight: 800;
+    line-height: 1;
+    margin: ($gs-baseline / 4) 0 $gs-baseline;
+
+    @include mq(desktop) {
+        font-size: 32px;
+        width: gs-span(5) - $gs-gutter * 2;
+        margin: ($gs-baseline / 4) 0 $gs-baseline;
+    }
+}
+
+.cta-bar__cta {
+    @include fs-textSans(5);
+    font-weight: 700;
+    background-color: $highlight-main;
+    border-radius: 18px;
+    box-sizing: border-box;
+    color: $brightness-7;
+    display: block;
+    line-height: 1;
+    height: 28px;
+    padding: 6px 10px 0;
+    position: relative;
+    float: left;
+
+    @include mq(mobileMedium) {
+        padding: 6px 30px 0 10px;
+    }
+
+    .inline-arrow-right {
+        margin: 0 -2px 0 0;
+    }
+
+    @include mq(tablet) {
+        height: 32px;
+        padding: 8px 34px 0 12px;
+        margin-right: $gs-gutter / 2;
+    }
+
+    .inline-arrow-right {
+        position: absolute;
+        height: 32px;
+        width: 32px;
+        right: 3px;
+        top: 50%;
+        transform: translate(0, -50%);
+        transition: transform .3s ease-in-out;
+
+        @include mq($until: mobileMedium) {
+            display: none;
+        }
+    }
+
+    .inline-arrow-right__svg {
+        fill: currentColor;
+        height: 32px;
+        width: 32px;
+    }
+
+    &:hover,
+    &:focus {
+        color: $brightness-7;
+        text-decoration: none;
+
+        .inline-arrow-right {
+            transform: translate(3px, -50%);
+        }
+    }
+}
+
+.cta-bar__cta--hollow {
+    background-color: transparent;
+    border: 1px solid $nav-border-colour;
+    color: $highlight-main;
+    padding-top: 7px;
+
+    &:hover,
+    &:focus {
+        background-color: rgba($brightness-100, .08);
+        color: $highlight-main;
+    }
+}

@@ -3,10 +3,9 @@
 @import common.{LinkTo, Edition}
 @import views.support.RenderClasses
 @import navigation.NavMenu
-@import navigation.UrlHelpers.{getJobUrl, Header, getReaderRevenueUrl, getSoulmatesUrl, headerTestURLSubscribe, headerTestURLSupport }
+@import navigation.UrlHelpers.{getJobUrl, Header, getReaderRevenueUrl, getSoulmatesUrl }
 @import navigation.ReaderRevenueSite.{Support, SupportSubscribe}
 @import conf.switches.Switches.{ IdentityProfileNavigationSwitch, SearchSwitch }
-@import experiments.{ActiveExperiments, HeaderSubscribeUKTest}
 
 @defining(NavMenu(page, Edition(request))) { navMenu: NavMenu =>
     <header class="@RenderClasses(Map(
@@ -36,77 +35,41 @@
                 }
             </a>
 
+
+            <div class="new-header__cta-bar hide-until-mobile">
+                @defining(Edition(request).id.toLowerCase()) { editionId =>
+                    @if(!page.metadata.hasSlimHeader) {
+                        <div class="cta-bar__message hide-until-tablet">
+                            @if(editionId == "us") {
+                                Make a contribution
+                            } else {
+                                Support The Guardian
+                            }
+                        </div>
+                    }
+
+                    <a class="cta-bar__cta js-change-become-member-link js-acquisition-link"
+                        data-link-name="nav2 : supporter-cta"
+                        data-edition="@{editionId}"
+                        href="@getReaderRevenueUrl(Support, Header)">
+                        Contribute
+                        @fragments.inlineSvg("arrow-right", "icon")
+                    </a>
+
+                    <a class="cta-bar__cta cta-bar__cta--hollow hide-until-tablet js-subscribe js-acquisition-link"
+                        data-link-name="nav2 : subscribe-cta"
+                        data-edition="@{editionId}"
+                        href="@getReaderRevenueUrl(SupportSubscribe,Header)">
+                        Subscribe
+                        @fragments.inlineSvg("arrow-right", "icon")
+                    </a>
+                }
+            </div>
+
             <div class="new-header__top-bar hide-until-mobile">
                 @defining(Edition(request).id.toLowerCase()) { editionId =>
-
                     @if(!page.metadata.hasSlimHeader) {
-                    @if( editionId == "uk" && ActiveExperiments.isParticipating(HeaderSubscribeUKTest)){
-                        <a class="top-bar__item top-bar__item--cta js-change-become-member-link js-acquisition-link"
-                            data-link-name="nav2 : supporter-cta"
-                            data-edition="@{editionId}"
-                            href="@headerTestURLSubscribe">
-
-                            <span class="top-bar__item--cta--circle"></span>
-                            <span class="top-bar__item--cta--text">
-                                
-                                    Subscribe to The <br>Guardian
-
-                            </span>
-                        </a>
-                        <a class="top-bar__item hide-until-tablet js-subscribe js-acquisition-link"
-                                data-link-name="nav2 : subscribe-cta"
-                                data-edition="@{editionId}"
-                                href="@headerTestURLSupport">
-
-                                Contribute
-                        </a>
-                    } else {
-                        <a class="top-bar__item top-bar__item--cta js-change-become-member-link js-acquisition-link"
-                                data-link-name="nav2 : supporter-cta"
-                                data-edition="@{editionId}"
-                                href="@getReaderRevenueUrl(Support, Header)">
-
-                                <span class="top-bar__item--cta--circle"></span>
-                                <span class="top-bar__item--cta--text">
-                                    @if(editionId == "us") {
-                                        Make a <br>contribution
-                                    } else {
-                                        Support The <br>Guardian
-                                    }
-
-                                </span>
-                            </a>
-
-                            <a class="top-bar__item hide-until-tablet js-subscribe js-acquisition-link"
-                                data-link-name="nav2 : subscribe-cta"
-                                data-edition="@{editionId}"
-                                href="@getReaderRevenueUrl(SupportSubscribe,Header)">
-
-                                Subscribe
-                            </a>
-                }           
-
-                        @if(editionId != "au") {
-                            <a class="top-bar__item hide-until-tablet"
-                            data-link-name="nav2 : job-cta"
-                            data-edition="@{editionId}"
-                            href="@getJobUrl(editionId)">
-
-                                <span class="hide-until-tablet">Search jobs</span>
-                                <span class="hide-from-tablet">Jobs</span>
-                            </a>
-                        }
-
-                        @if(editionId == "uk") {
-                            <a class="top-bar__item hide-until-desktop"
-                            data-link-name="nav2 : soulmates-cta"
-                            data-edition="@{editionId}"
-                            href="@getSoulmatesUrl">
-                                Dating
-                            </a>
-                        }
-
-
+                        <span class="top-bar__item__seperator hide-until-tablet"></span>
                         @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
                             @fragments.nav.userAccountDropdown()
                         }
@@ -120,6 +83,29 @@
                             >
                                 Search
                             </a>
+                        }
+
+                        @if(editionId != "au" || editionId == "uk") {
+                            <div class="top-bar__commercial-items">
+                                <span class="top-bar__item__seperator hide-until-desktop"></span>
+                                @if(editionId != "au") {
+                                    <a class="top-bar__item hide-until-desktop"
+                                    data-link-name="nav2 : job-cta"
+                                    data-edition="@{editionId}"
+                                    href="@getJobUrl(editionId)">
+                                        Search jobs
+                                    </a>
+                                }
+
+                                @if(editionId == "uk") {
+                                    <a class="top-bar__item hide-until-desktop"
+                                    data-link-name="nav2 : soulmates-cta"
+                                    data-edition="@{editionId}"
+                                    href="@getSoulmatesUrl">
+                                        Dating
+                                    </a>
+                                }
+                            </div>
                         }
                     }
                 }
@@ -180,6 +166,10 @@
 
         @if(!page.metadata.hasSlimHeader) {
             @fragments.nav.subNav(navMenu)
+
+            <div class="new-header__multiline">
+                <div class="gs-container"></div>
+            </div>
         }
     </header>
 }

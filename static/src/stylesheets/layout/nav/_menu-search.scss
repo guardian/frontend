@@ -8,7 +8,7 @@
 
     @include mq($until: desktop) {
         margin-bottom: $gs-baseline * 2;
-        margin-right: $veggie-burger-medium / 2 + $gs-gutter;
+        margin-right: $veggie-burger / 2 + $gs-gutter;
     }
 
     @include mq(tablet) {
