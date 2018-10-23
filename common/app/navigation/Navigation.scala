@@ -36,7 +36,8 @@ case class NavMenu(
   currentNavLink: Option[NavLink],
   currentParent: Option[NavLink],
   currentPillar: Option[NavLink],
-  subNavSections: Option[Subnav]
+  subNavSections: Option[Subnav],
+  readerRevenueLinks: Seq[NavLink],
 )
 
 object NavMenu {
@@ -67,7 +68,8 @@ object NavMenu {
       currentNavLink = currentNavLink,
       currentParent = currentParent,
       currentPillar = currentPillar,
-      subNavSections = getSubnav(page.metadata.customSignPosting, currentNavLink, currentParent, currentPillar)
+      subNavSections = getSubnav(page.metadata.customSignPosting, currentNavLink, currentParent, currentPillar),
+      readerRevenueLinks = UrlHelpers.readerRevenueLinks.map( section => navSectionLink(section))
     )
   }
 
