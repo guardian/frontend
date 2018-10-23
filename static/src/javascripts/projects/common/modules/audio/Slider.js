@@ -3,14 +3,13 @@
 import { React, styled } from '@guardian/dotcom-rendering/packages/guui';
 
 const Scrubber = styled('div')(({ left }) => ({
-    backgroundColor: '#ffffff',
-    borderRadius: '100%',
-    height: '14px',
+    backgroundColor: '#ffe500',
+    height: '50px',
     left: `${left}px`,
-    position: 'absolute',
-    top: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: '14px',
+    position: 'relative',
+    top: '0',
+    transform: 'translate(-50%, -76%)',
+    width: '5px',
 }));
 
 type Props = {

@@ -19,7 +19,6 @@ import {
     desktop,
 } from '@guardian/dotcom-rendering/packages/pasteup/breakpoints';
 
-import download from 'svgs/journalism/audio-player/download.svg';
 import pauseBtn from 'svgs/journalism/audio-player/pause-btn.svg';
 import playBtn from 'svgs/journalism/audio-player/play-btn.svg';
 import volume from 'svgs/journalism/audio-player/volume.svg';
@@ -33,20 +32,19 @@ import { formatTime, sendToOphan, checkForTimeEvents } from './utils';
 
 import ProgressBar from './ProgressBar';
 import Time from './Time';
-import config from '../../../../lib/config';
-
-const applePodcastImage =
-    config.get('images.journalism.apple-podcast-logo') || '';
 
 const AudioGrid = styled('div')({
-    borderTop: '1px solid #767676',
+    borderBottom: '1px solid #767676',
     display: 'grid',
     backgroundColor: palette.neutral[1],
     color: palette.neutral[5],
+    marginTop: '10px',
     gridTemplateColumns: '6fr 4fr',
     gridTemplateRows: '30px 50px 94px 50px 1fr',
     gridTemplateAreas:
-        '"currentTime duration" "wave wave" "controls controls" "volume download" "links links"',
+        '"currentTime duration" "wave wave"' +
+        '"controls controls"' +
+        '"download volume"',
 
     [mobile]: {
         gridTemplateColumns: '1fr 1fr',
@@ -56,13 +54,18 @@ const AudioGrid = styled('div')({
         gridTemplateColumns: '150px 1fr 1fr',
         gridTemplateRows: '30px 50px 90px 1fr 1fr',
         gridTemplateAreas:
-            '"currentTime currentTime duration" "wave wave wave" "controls controls controls" "volume volume volume" "download links links"',
+            '"currentTime currentTime duration"' +
+            ' "wave wave wave"' +
+            ' "controls controls controls"' +
+            ' "download volume volume"',
     },
 
     [leftCol]: {
         gridTemplateRows: '30px 60px 1fr 1fr',
         gridTemplateAreas:
-            '". currentTime duration" "controls wave wave" "volume . ." "download links links"',
+            '". currentTime duration" ' +
+            '"controls wave wave" ' +
+            '"download . volume"',
     },
 
     [wide]: {
@@ -72,11 +75,7 @@ const AudioGrid = styled('div')({
 });
 
 const TimeContainer = styled('div')(({ area }) => ({
-    [area === 'currentTime'
-        ? 'borderLeft'
-        : 'borderRight']: '1px solid #767676',
     [area === 'currentTime' ? 'paddingLeft' : 'paddingRight']: '4px',
-    [area === 'currentTime' ? 'marginLeft' : 'marginRight']: '10px',
     gridArea: area,
     paddingTop: '4px',
     fontFamily: 'Guardian Text Sans Web',
@@ -84,6 +83,7 @@ const TimeContainer = styled('div')(({ area }) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: area === 'duration' ? 'flex-end' : 'flex-start',
+    backgroundColor: '#333333',
 
     [leftCol]: {
         marginLeft: '0',
@@ -97,7 +97,7 @@ const Controls = styled('div')({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    padding: '33px 0',
+    padding: '60px 0',
 });
 
 const WaveAndTrack = styled('div')({
@@ -105,9 +105,10 @@ const WaveAndTrack = styled('div')({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'stretch',
-    padding: '0 9px',
     cursor: 'pointer',
     maxWidth: '100%',
+    backgroundColor: '#333333',
+    borderTop: '1px solid #797979',
 });
 
 const Track = styled('div')({
@@ -150,10 +151,8 @@ const Volume = styled('div')({
     display: 'flex',
     alignItems: 'center',
     padding: '0 10px',
-    borderTop: '1px solid #797979',
-    borderRight: '1px solid #797979',
     svg: {
-        fill: '#dcdcdc',
+        fill: '#ffe500',
     },
     [tablet]: {
         borderRight: 'none',
@@ -176,12 +175,11 @@ const Volume = styled('div')({
 });
 
 const Download = styled('div')({
-    borderTop: '1px solid #767676',
     gridArea: 'download',
     fontFamily: 'Guardian Text Sans Web',
     fontWeight: 'bold',
     display: 'flex',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
     [tablet]: {
         justifyContent: 'flex-start',
@@ -193,11 +191,11 @@ const Download = styled('div')({
     },
     a: {
         color: '#cbcbcb', // TODO: add to the palette
-        border: '1px solid rgba(118, 118, 118, 0.7)',
+        backgroundColor: '#333333',
         borderRadius: '15px',
         display: 'inline-flex',
         alignItems: 'center',
-        padding: '0px 9px',
+        padding: '5px 9px',
         fontSize: '12px',
         textDecoration: 'none',
 
@@ -205,68 +203,9 @@ const Download = styled('div')({
             borderColor: '#ffffff',
         },
     },
-    svg: {
-        height: '18px',
-        width: '18px',
-        marginLeft: '6px',
-        fill: '#dcdcdc',
-    },
 });
 
-const Links = styled('div')({
-    borderTop: '1px solid #767676',
-    gridArea: 'links',
-    padding: '10px 10px 0',
-    fontWeight: 'bold',
-    display: 'flex',
-    flexDirection: 'column',
-
-    [mobile]: {
-        alignItems: 'baseline',
-        flexDirection: 'row',
-        paddingTop: 0,
-        ul: {
-            display: 'flex',
-        },
-        li: {
-            marginLeft: '30px',
-        },
-    },
-    [tablet]: {
-        borderLeft: '1px solid #767676',
-        alignItems: 'baseline',
-        flexDirection: 'row',
-        paddingTop: 0,
-        ul: {
-            display: 'flex',
-        },
-        li: {
-            marginLeft: '30px',
-        },
-    },
-    b: {
-        fontSize: '16px',
-        fontFamily: '"Guardian Egyptian Web",Georgia,serif',
-        fontWeight: '900',
-    },
-    ul: {
-        fontFamily: 'Guardian Text Sans Web',
-        fontSize: '14px',
-    },
-    a: {
-        color: '#cbcbcb', // TODO: add to the palette
-    },
-    li: {
-        marginTop: '12px',
-    },
-    img: {
-        marginRight: '6px',
-        verticalAlign: 'middle',
-        height: '18px',
-    },
-});
-
-const Button = styled('button')(({ isPlay, pillarColor }) => ({
+const Button = styled('button')(({ isPlay }) => ({
     background: 'none',
     border: 0,
     cursor: 'pointer',
@@ -278,10 +217,6 @@ const Button = styled('button')(({ isPlay, pillarColor }) => ({
     svg: {
         width: isPlay ? '60px' : '26px',
         height: isPlay ? '60px' : '26px',
-    },
-    circle: {
-        fill: pillarColor,
-        stroke: pillarColor,
     },
 
     [leftCol]: {
@@ -305,7 +240,6 @@ type Props = {
     sourceUrl: string,
     mediaId: string,
     downloadUrl: string,
-    iTunesUrl: string,
     pillar: string,
 };
 
@@ -328,7 +262,7 @@ export default class AudioPlayer extends Component<Props, State> {
             ready: false,
             playing: false,
             currentTime: 0,
-            duration: NaN,
+            duration: 3000,
             volume: NaN,
             bins: null,
             interval: NaN,
@@ -352,10 +286,12 @@ export default class AudioPlayer extends Component<Props, State> {
             },
             () => {
                 if (Number.isNaN(this.audio.duration)) {
+                    console.log('if branch ran');
                     this.audio.addEventListener('durationchange', this.ready, {
                         once: true,
                     });
                 } else {
+                    console.log('else branch ran');
                     this.ready();
                 }
             }
@@ -407,6 +343,7 @@ export default class AudioPlayer extends Component<Props, State> {
     wave: HTMLElement;
 
     ready = () => {
+        console.log('ready fired this.audio.duration', this.audio.duration);
         const duration = this.audio.duration;
         if (this.state.bins) {
             const interval = duration / this.state.bins.length;
@@ -463,6 +400,7 @@ export default class AudioPlayer extends Component<Props, State> {
     };
 
     updatePlayerTime = (currTime: number) => {
+        console.log('curr time =>', currTime);
         this.audio.currentTime = currTime;
         this.incrementBlock(currTime);
 
@@ -517,7 +455,7 @@ export default class AudioPlayer extends Component<Props, State> {
                 <audio
                     ref={this.setAudio}
                     data-media-id={this.props.mediaId}
-                    preload="metadata">
+                    preload="none">
                     <source src={this.props.sourceUrl} type="audio/mpeg" />
                 </audio>
                 <Controls>
@@ -575,7 +513,7 @@ export default class AudioPlayer extends Component<Props, State> {
                             formattedValue={formatTime(
                                 this.state.currentOffset
                             )}
-                            barHeight={4}
+                            barHeight={2}
                             trackColor={
                                 pillarsHighlight[`${this.props.pillar}`]
                             }
@@ -587,54 +525,26 @@ export default class AudioPlayer extends Component<Props, State> {
                         />
                     </Track>
                 </WaveAndTrack>
-                {Number.isNaN(this.state.volume) ? (
-                    ''
-                ) : (
-                    <Volume>
-                        <span
-                            dangerouslySetInnerHTML={{ __html: volume.markup }}
-                        />
-                        <ProgressBar
-                            barContext="volume"
-                            value={this.state.volume * 100}
-                            formattedValue={`Volume set to ${
-                                this.state.volume
-                            }`}
-                            barHeight={2}
-                            trackColor={palette.neutral[7]}
-                            highlightColor={
-                                pillarsHighlight[`${this.props.pillar}`]
-                            }
-                            backgroundColor={palette.neutral[4]}
-                            onChange={this.updateVolume}
-                        />
-                    </Volume>
-                )}
+
+                <Volume>
+                    <span dangerouslySetInnerHTML={{ __html: volume.markup }} />
+                    <ProgressBar
+                        barContext="volume"
+                        value={this.state.volume * 100}
+                        formattedValue={`Volume set to ${this.state.volume}`}
+                        barHeight={2}
+                        trackColor={palette.neutral[7]}
+                        highlightColor={
+                            pillarsHighlight[`${this.props.pillar}`]
+                        }
+                        backgroundColor={palette.neutral[4]}
+                        onChange={this.updateVolume}
+                    />
+                </Volume>
+
                 <Download>
-                    <a href={this.props.downloadUrl}>
-                        Download MP3
-                        <span
-                            dangerouslySetInnerHTML={{
-                                __html: download.markup,
-                            }}
-                        />
-                    </a>
+                    <a href={this.props.downloadUrl}>Download MP3</a>
                 </Download>
-                <Links>
-                    <b>Subscribe for free</b>
-                    <ul>
-                        <li>
-                            <a href={this.props.iTunesUrl}>
-                                <img
-                                    src={applePodcastImage}
-                                    height="20px"
-                                    alt=""
-                                />
-                                Apple Podcasts
-                            </a>
-                        </li>
-                    </ul>
-                </Links>
             </AudioGrid>
         );
     }
