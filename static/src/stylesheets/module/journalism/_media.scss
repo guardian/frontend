@@ -1,4 +1,13 @@
 .podcast {
+    @include mq(tablet) {
+        margin: auto;
+        width: 700px;
+    }
+
+    @include mq(desktop) {
+        margin-left: 0;
+    }
+
     @include mq(leftCol) {
         display: grid;
         grid-template:
@@ -8,53 +17,53 @@
         'subscribe main       right'
         'byline    main       right'
         'share     main       right'
-        'date      main       right'
         '.         support    right'
         '.         tags       right' / 150px 620px 1fr;
+        grid-column-gap: 0;
+    }
 
-        .podcast__standfirst {
-            grid-area: standfirst;
-        }
+    .podcast__standfirst {
+        grid-area: standfirst;
+    }
 
-        .podcast__byline {
-            grid-area: byline;
-        }
+    .podcast__byline {
+        grid-area: byline;
+    }
 
-        .podcast__cover {
-            grid-area: cover;
-        }
+    .podcast__cover {
+        grid-area: cover;
+    }
 
-        .podcast__meta {
-            grid-area: subscribe;
-        }
+    .podcast__meta {
+        grid-area: subscribe;
+    }
 
-        .podcast__share {
-            grid-area: share;
-        }
+    .podcast__share {
+        grid-area: share;
+    }
 
-        .podcast__date {
-            grid-area: date;
-        }
+    .podcast__date {
+        grid-area: date;
+    }
 
-        .podcast__player {
-            grid-area: player;
-        }
+    .podcast__player {
+        grid-area: player;
+    }
 
-        .podcast__body {
-            grid-area: main;
-        }
+    .podcast__body {
+        grid-area: main;
+    }
 
-        .podcast__submeta {
-            grid-area: tags;
-        }
+    .podcast__submeta {
+        grid-area: tags;
+    }
 
-        .podcast__support {
-            grid-area: support;
-        }
+    .podcast__support {
+        grid-area: support;
+    }
 
-        .podcast__secondary {
-            grid-area: right;
-        }
+    .podcast__secondary {
+        grid-area: right;
     }
 
     @include mq(wide) {
@@ -175,7 +184,7 @@
 }
 
 .podcast__section {
-    @include mq($until: leftCol) {
+    @include mq($until: desktop) {
         margin-left: $gs-gutter / -2;
         margin-right: $gs-gutter / -2;
         padding-left: $gs-gutter / 2;
@@ -343,4 +352,22 @@
             margin-top: 0;
         }
     }
+
+    .most-viewed--media {
+        .fc-item--media {
+            @include mq(tablet, leftCol) {
+                width: 33.3%;
+
+                &:nth-child(4n),
+                &:nth-child(4n)::before {
+                    display: none;
+                }
+
+                &:nth-child(1n+4) {
+                    margin-bottom: 0;
+                }
+            }
+        }
+    }
+
 }
