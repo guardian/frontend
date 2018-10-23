@@ -17,9 +17,11 @@
         'subscribe main       right'
         'byline    main       right'
         'share     main       right'
+        '.         main       right'
         '.         support    right'
-        '.         tags       right' / 150px 620px 1fr;
+        '.         tags       right' / 158px 620px 1fr;
         grid-column-gap: 0;
+        width: auto;
     }
 
     .podcast__standfirst {
@@ -172,7 +174,9 @@
 }
 
 .podcast__cover-image {
-    max-width: 220px;
+    @include mq(leftCol) {
+        max-width: calc(100% - 10px);
+    }
 
     @include mq($until: leftCol) {
         float: left;
@@ -221,8 +225,11 @@
     @include multiline(4, $brightness-46, top);
     padding-top: $gs-baseline;
     padding-bottom: 0;
-    margin-top: $gs-baseline / 3 * 8;
     margin-bottom: 0;
+
+    @include mq($until: leftCol) {
+        margin-top: $gs-baseline / 3 * 8;
+    }
 }
 
 .podcast__meta-items {
@@ -351,6 +358,10 @@
             border-top: none;
             margin-top: 0;
         }
+    }
+
+    @include mq(leftCol) {
+        padding-left: $gs-gutter / 2;
     }
 
     .most-viewed--media {
