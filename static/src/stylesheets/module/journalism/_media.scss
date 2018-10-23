@@ -363,7 +363,7 @@
         padding-bottom: 0;
 
         .submeta__keywords {
-            border: none;
+            border: 0;
             margin-bottom: 0;
             padding-bottom: $gs-baseline * 3;
         }
@@ -376,7 +376,7 @@
         margin-top: $gs-baseline;
 
         .most-viewed-container--media {
-            border-top: none;
+            border-top: 0;
             margin-top: 0;
         }
     }
