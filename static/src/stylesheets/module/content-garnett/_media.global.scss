@@ -362,6 +362,12 @@
     .content__standfirst {
         font: 400 18px/22px $f-serif-headline;
     }
+
+    .u-underline.u-underline {
+        &:hover, &:focus {
+            border-bottom-color: $brightness-86;
+        }
+    }
 }
 
 .podcast__standfirst,
@@ -384,6 +390,10 @@
         .content__meta-container {
             margin-bottom: 0;
         }
+    }
+
+    .byline {
+        font-style: normal;
     }
 
     .content__dateline {
@@ -486,6 +496,7 @@
     &:hover,
     &:focus {
         background: $brightness-7;
+        text-decoration: none;
     }
 }
 
