@@ -299,10 +299,10 @@
         display: grid;
         grid-template:
         '.         standfirst .    '
-        '.         byline     .    '
         'cover     player     right'
         'cover     main       right'
         'subscribe main       right'
+        'byline    main       right'
         'share     main       right'
         'date      main       right'
         '.         support    right'
@@ -365,19 +365,25 @@
 }
 
 .podcast__standfirst,
-.podcast__byline,
 .podcast__body,
 .podcast__submeta,
 .podcast__support {
     @include mq(leftCol) {
         padding-left: $gs-gutter / 2;
+        padding-bottom: $gs-baseline;
         border-left: 1px solid $brightness-46;
     }
 }
 
 .podcast__byline {
     @include mq(leftCol) {
-        padding-bottom: $gs-baseline * 3;
+        border-top: 1px solid $brightness-46;
+        margin-top: $gs-baseline;
+        padding: ($gs-baseline/2) ($gs-gutter/2) 0 0;
+
+        .content__meta-container {
+            margin-bottom: 0;
+        }
     }
 
     .content__dateline {
@@ -502,7 +508,7 @@
 }
 
 .podcast__support {
-    border-top: 1px solid $brightness-20;
+    border-top: 1px solid $brightness-46;
 
     @include mq($until: leftCol) {
         margin-top: $gs-baseline;
@@ -524,13 +530,17 @@
 }
 
 .podcast__share {
-    border-top: 1px solid $brightness-20;
+    border-top: 1px solid $brightness-46;
     margin-top: $gs-baseline * 1.5;
     padding-top: 0;
     padding-right: $gs-gutter / 2;
 
     display: flex;
     justify-content: space-between;
+
+    @include mq(leftCol) {
+        margin-top: $gs-baseline;
+    }
 
     .social {
         padding-top: $gs-baseline / 2;
@@ -567,6 +577,15 @@
 }
 
 .podcast__submeta {
+    @include multiline(4, $brightness-46, top);
+    padding-top: $gs-baseline * 1.5;
+
+    .submeta.submeta.submeta.submeta {
+        background: none;
+        padding-top: 0;
+        margin-top: 0;
+    }
+
     @include mq(leftCol) {
         .submeta__keywords {
             border: none;
