@@ -5,6 +5,7 @@ import _root_.model.{NavItem, Page, Tags}
 import common.{Edition, editions}
 import navigation.NavLinks._
 import play.api.libs.json.{Json, Writes}
+import play.api.mvc.RequestHeader
 
 import scala.annotation.tailrec
 
@@ -53,7 +54,7 @@ object NavMenu {
 
   private[navigation] case class NavRoot(children: Seq[NavLink], otherLinks: Seq[NavLink], brandExtensions: Seq[NavLink])
 
-  def apply(page: Page, edition: Edition): NavMenu = {
+  def apply(page: Page, edition: Edition)(implicit request: RequestHeader ): NavMenu = {
     val root = navRoot(edition)
     val currentUrl = getSectionOrPageUrl(page, edition)
     val currentNavLink = findDescendantByUrl(currentUrl, edition, root.children, root.otherLinks)
@@ -69,7 +70,7 @@ object NavMenu {
       currentParent = currentParent,
       currentPillar = currentPillar,
       subNavSections = getSubnav(page.metadata.customSignPosting, currentNavLink, currentParent, currentPillar),
-      readerRevenueLinks = UrlHelpers.readerRevenueLinks.map( section => navSectionLink(section))
+      readerRevenueLinks = UrlHelpers.readerRevenueLinks
     )
   }
 

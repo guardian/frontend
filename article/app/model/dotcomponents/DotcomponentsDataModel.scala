@@ -161,7 +161,7 @@ object DotcomponentsDataModel {
       )
     )
 
-    val navMenu = NavMenu(articlePage, Edition(request))
+    val navMenu = NavMenu(articlePage, Edition(request))(request)
 
     val config = Config(
       article.isImmersive,
