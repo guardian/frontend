@@ -305,8 +305,8 @@
         'subscribe main       right'
         'share     main       right'
         'date      main       right'
-        '.         tags       right'
-        '.         support    right' / 150px 620px 1fr;
+        '.         support    right'
+        '.         tags       right' / 150px 620px 1fr;
 
         .podcast__standfirst {
             grid-area: standfirst;
@@ -503,7 +503,10 @@
 
 .podcast__support {
     border-top: 1px solid $brightness-20;
-    margin-top: $gs-baseline;
+
+    @include mq($until: leftCol) {
+        margin-top: $gs-baseline;
+    }
 }
 
 .podcast__support-icon {
@@ -563,3 +566,12 @@
     }
 }
 
+.podcast__submeta {
+    @include mq(leftCol) {
+        .submeta__keywords {
+            border: none;
+            margin-bottom: 0;
+            padding-bottom: $gs-baseline * 3;
+        }
+    }
+}
