@@ -417,6 +417,16 @@
     max-width: 620px;
 }
 
+.podcast__body {
+    .media-primary {
+        margin-bottom: 0;
+    }
+
+    .caption {
+        padding-bottom: 0;
+    }
+}
+
 .podcast__player {
     // Temporary stuff for the existing audio player
     .podcast-meta {
@@ -516,6 +526,10 @@
     @include mq($until: leftCol) {
         margin-top: $gs-baseline;
     }
+
+    @include mq(leftCol) {
+        padding-bottom: $gs-baseline;
+    }
 }
 
 .podcast__support-icon {
@@ -590,6 +604,8 @@
     }
 
     @include mq(leftCol) {
+        padding-bottom: 0;
+
         .submeta__keywords {
             border: none;
             margin-bottom: 0;
