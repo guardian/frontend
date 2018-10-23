@@ -6,13 +6,7 @@
 
             @fragments.meta.metaInline(item)
 
-            <h1 class="content__headline js-score" itemprop="headline">
-                @if(item.tags.isInteractive) {
-                    <span>@Html(item.trail.headline)</span>
-                } else {
-                    @Html(item.trail.headline)
-                }
-            </h1>
+            <h1 class="content__headline js-score" itemprop="headline">@Html(item.trail.headline)</h1>
 
             @if(!item.tags.isVideo && !item.tags.isGallery) {
                 @fragments.standfirst(item)
