@@ -328,3 +328,15 @@
         }
     }
 }
+
+.podcast__secondary {
+    @include mq($until: leftCol) {
+        border-top: 1px solid $brightness-46;
+        margin-top: $gs-baseline;
+
+        .most-viewed-container--media {
+            border-top: none;
+            margin-top: 0;
+        }
+    }
+}
