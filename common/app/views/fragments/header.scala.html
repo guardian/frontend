@@ -40,7 +40,7 @@
                 @defining(Edition(request).id.toLowerCase()) { editionId =>
 
                     @if(!page.metadata.hasSlimHeader) {
-                    @if( ActiveExperiments.isParticipating(HeaderSubscribeUKTest)){
+                    @if( editionId == "uk" && ActiveExperiments.isParticipating(HeaderSubscribeUKTest)){
                         <a class="top-bar__item top-bar__item--cta js-change-become-member-link js-acquisition-link"
                             data-link-name="nav2 : supporter-cta"
                             data-edition="@{editionId}"
@@ -48,46 +48,48 @@
 
                             <span class="top-bar__item--cta--circle"></span>
                             <span class="top-bar__item--cta--text">
-                                @if(editionId == "us") {
-                                    Make a <br>contribution
-                                } else {
+                                
                                     Subscribe to The <br>Guardian
-                                }
 
                             </span>
                         </a>
                         <a class="top-bar__item hide-until-tablet js-subscribe js-acquisition-link"
-                            data-link-name="nav2 : subscribe-cta"
-                            data-edition="@{editionId}"
-                            href="@headerTestURLSupport">
+                                data-link-name="nav2 : subscribe-cta"
+                                data-edition="@{editionId}"
+                                href="@headerTestURLSupport">
 
-                            Contribute
+                                Support
                         </a>
-                } else {
-                    <a class="top-bar__item top-bar__item--cta js-change-become-member-link js-acquisition-link"
-                        data-link-name="nav2 : supporter-cta"
-                        data-edition="@{editionId}"
-                        href="@getReaderRevenueUrl(Support, Header)">
+                    } else {
+                        <a class="top-bar__item top-bar__item--cta js-change-become-member-link js-acquisition-link"
+                                data-link-name="nav2 : supporter-cta"
+                                data-edition="@{editionId}"
+                                href="@getReaderRevenueUrl(Support, Header)">
 
-                        <span class="top-bar__item--cta--circle"></span>
-                        <span class="top-bar__item--cta--text">
-                            @if(editionId == "us") {
-                                Make a <br>contribution
-                            } else {
-                                Support The <br>Guardian
-                            }
+                                <span class="top-bar__item--cta--circle"></span>
+                                <span class="top-bar__item--cta--text">
+                                    @if(editionId == "us") {
+                                        Make a <br>contribution
+                                    } else {
+                                        Support The <br>Guardian
+                                    }
 
-                        </span>
-                    </a>  
-                    <a class="top-bar__item hide-until-tablet js-subscribe js-acquisition-link"
-                            data-link-name="nav2 : subscribe-cta"
-                            data-edition="@{editionId}"
-                            href="@getReaderRevenueUrl(SupportSubscribe,Header)">
+                                </span>
+                            </a>
 
-                            Subscribe
-                        </a>
+                            <a class="top-bar__item hide-until-tablet js-subscribe js-acquisition-link"
+                                data-link-name="nav2 : subscribe-cta"
+                                data-edition="@{editionId}"
+                                href="@getReaderRevenueUrl(SupportSubscribe,Header)">
+
+                                Subscribe
+                            </a>
                 }
 
+
+
+
+                        
 
                         @if(editionId != "au") {
                             <a class="top-bar__item hide-until-tablet"
