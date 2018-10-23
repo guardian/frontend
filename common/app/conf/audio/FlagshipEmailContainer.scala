@@ -21,6 +21,5 @@ object FlagshipEmailContainer {
       now.getDayOfWeek != SATURDAY && now.getDayOfWeek != SUNDAY &&
       !(now.getDayOfWeek == MONDAY && now.getHourOfDay < 4)
 
-  //TODO - update with actual art
-  val AlbumArtUrl = "https://media.guim.co.uk/60478bdc559fa72fe4fe0ac09636f78df9f3cdb9/3_170_3910_2345/500.jpg"
+  val AlbumArtUrl = "https://media.guim.co.uk/26bb29790c63ac3374470d116e54a036581bbeda/0_0_2000_1200/500.png"
 }
