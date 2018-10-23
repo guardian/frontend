@@ -13,6 +13,7 @@ import { loadAdvert } from 'commercial/modules/dfp/load-advert';
 
 const getBreakpoint: any = getBreakpoint_;
 
+jest.mock('lib/raven');
 jest.mock('common/modules/identity/api', () => ({
     isUserLoggedIn: () => true,
     getUserFromCookie: jest.fn(),

@@ -5,6 +5,7 @@ import fetchJson from 'lib/fetch-json';
 import userPrefs from 'common/modules/user-prefs';
 import { Weather } from 'facia/modules/onwards/weather';
 
+jest.mock('lib/raven');
 jest.mock('lib/config');
 jest.mock('common/modules/user-prefs');
 jest.mock('lib/fetch-json', () => jest.fn());

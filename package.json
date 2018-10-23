@@ -145,7 +145,6 @@
       "node_modules"
     ],
     "moduleNameMapper": {
-      "raven": "raven-js",
       "videojs": "video.js",
       "^svgs/(.*)$": "<rootDir>/__mocks__/svgMock.js",
       "^(.*)\\.svg$": "<rootDir>/__mocks__/svgMock.js",

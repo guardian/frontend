@@ -4,6 +4,8 @@ import { init, _ } from './third-party-tags';
 
 const { insertScripts, loadOther } = _;
 
+jest.mock('lib/raven');
+
 beforeEach(() => {
     const firstScript = document.createElement('script');
     if (document.body && firstScript) {
