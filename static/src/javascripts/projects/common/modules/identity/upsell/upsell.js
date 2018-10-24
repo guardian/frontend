@@ -15,6 +15,7 @@ import {
 import { LegalTextBlock } from 'common/modules/identity/upsell/block/LegalTextBlock';
 import { AccountCreationBlock } from 'common/modules/identity/upsell/account-creation/AccountCreationBlock';
 import { Header } from 'common/modules/identity/upsell/header/Header';
+import config from 'lib/config';
 
 const ConfirmEmailThankYou = (
     <Block title="Guardian favourites:">
@@ -37,13 +38,16 @@ const ConfirmEmailThankYou = (
 );
 
 const Optouts = (
-    <Block
-        sideBySideBackwards
-        title="One more thing..."
-        subtitle="These are your privacy settings. You’re in full control of them.">
+    <Block sideBySideBackwards title="Your communication preferences">
         <LegalTextBlock>
-            You can also change these settings any time by visiting our Emails &
-            marketing section of your account.
+            You can change these preferences at any time via the&nbsp;
+            <a
+                data-link-name="upsell-optout-preferences-link"
+                className="u-underline identity-upsell-consent-card__link"
+                href={`${config.get('page.idUrl')}/email-prefs`}>
+                Emails & marketing
+            </a>
+            &nbsp;section of your account.
         </LegalTextBlock>
         <OptOutsList />
     </Block>
@@ -86,7 +90,7 @@ const bindBlockList = (el): void => {
                     <div>
                         <Header
                             title="Thank you!"
-                            subtitle="You’re now subscribed to your content"
+                            subtitle="You’re now subscribed"
                         />
                         <div className="identity-upsell-layout">
                             {ConfirmEmailThankYou}
