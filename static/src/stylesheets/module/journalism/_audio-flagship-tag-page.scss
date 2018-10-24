@@ -148,6 +148,17 @@
                     svg {
                         width: 100%;
                     }
+                    @include mq($from: desktop) {
+                        width: 100%;
+                        top: 0;
+
+                    }
+                    @include mq($from: phablet, $until: desktop) {
+                        width: 60%;
+                        float: right;
+                        top: 38px;
+                        position: relative;
+                    }
                     @include mq($from: mobile, $until: phablet) {
                         padding: 0 $gs-gutter/2;
                         margin-bottom: -36px;

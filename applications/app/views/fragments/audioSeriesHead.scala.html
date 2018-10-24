@@ -2,7 +2,7 @@
 @(seriesId: String, title: String, subscribeLinks: Map[String, String], description: String)
 
 
-<section class="fc-container fc-container--first flagship-audio" >
+<section class="fc-container fc-container--first flagship-audio @seriesId">
     <div class="fc-container__inner">
     <div class="flagship-audio__thrasher">
 
@@ -16,8 +16,8 @@
             <div class="flagship-audio__content-main">
                 <div class="flagship-audio__content-text">
                 <h1 class="flagship-audio__title">
-                    Stories that <br />
-                    <span class="red-highlight"> speak to you</span>
+                    Today in <br />
+                    <span class="red-highlight"> Focus </span>
                 </h1>
                 <p class="flagship-audio__description">
                     <span class="regular-description">
@@ -27,17 +27,20 @@
                 </div>
 
                 <ul class="flagship-audio__content-buttons">
-                    <p class="flagship-audio__subscribe-label">Subscribe for free</p>
-                    @for((name: String, link : String) <- subscribeLinks) {
-                        @defining(name.toLowerCase().replace(" ", "-")) { nameHyphen =>
+                    @if(!subscribeLinks.isEmpty){
+                        <p class="flagship-audio__subscribe-label">Subscribe for free</p>
 
-                            <a class="flagship-audio__link" href="@link" target="_blank" data-link="podcast-subscribe">
-                                <li class="flagship-audio__button flagship-audio__button--@name">
-                                    @fragments.inlineSvg(nameHyphen, "journalism/audio")
-                                        &nbsp;
-                                    @name
-                                </li>
-                            </a>
+                        @for((name: String, link : String) <- subscribeLinks) {
+                            @defining(name.toLowerCase().replace(" ", "-")) { nameHyphen =>
+
+                                <a class="flagship-audio__link" href="@link" target="_blank" data-link="podcast-subscribe">
+                                    <li class="flagship-audio__button flagship-audio__button--@name">
+                                        @fragments.inlineSvg(nameHyphen, "journalism/audio")
+                                            &nbsp;
+                                        @name
+                                    </li>
+                                </a>
+                            }
                         }
                     }
                 </ul>
@@ -55,7 +58,10 @@
 
 <div id="flagship-audio__mobile-only">
     <ul class="flagship-audio__content-buttons">
-        <p class="flagship-audio__subscribe-label">Subscribe for free</p>
+        @if(!subscribeLinks.isEmpty){
+            <p class="flagship-audio__subscribe-label">Subscribe for free</p>
+        }
+
         @for((name: String, link : String) <- subscribeLinks) {
             @defining(name.toLowerCase().replace(" ", "-")) { nameHyphen =>
 
