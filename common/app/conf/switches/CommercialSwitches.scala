@@ -283,7 +283,7 @@ trait CommercialSwitches {
     description = "Turn on to include the analytics ONLY for Oriel. Turn off to include the FULL integration script. Depends on AB test switch.",
     owners = group(Commercial),
     safeState = On,
-    sellByDate = new LocalDate(2018, 10, 31),
+    sellByDate = new LocalDate(2018, 11, 29),
     exposeClientSide = false
   )
 
