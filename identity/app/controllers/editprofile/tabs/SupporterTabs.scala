@@ -17,8 +17,12 @@ trait SupporterTabs
       MOVED_PERMANENTLY)
   }
 
-  /** GET /contribution/recurring/edit */
-  def displayRecurringContributionForm: Action[AnyContent] = displayForm(recurringContributionPage)
+  /** Redirect /contribution/recurring/edit to manage.theguardian.com/contributions */
+  def redirectToManageContributions: Action[AnyContent] = Action { implicit request =>
+    Redirect(
+      url = "https://manage.theguardian.com/contributions",
+      MOVED_PERMANENTLY)
+  }
 
   /** GET /digitalpack/edit */
   def displayDigitalPackForm: Action[AnyContent] = displayForm(DigiPackEditProfilePage)
