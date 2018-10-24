@@ -7,6 +7,7 @@ import model.{Content, ContentPage, ContentType, Page, MetaData}
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, WithTestWsClient}
+import play.api.test.FakeRequest
 
 
 @DoNotDiscover class NavigationTest
@@ -30,6 +31,8 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
       webTitle = ""
     )
   }
+
+  val request = FakeRequest()
 
   "Simple menu" should "just return the 5 primary links" in {
     NavMenu(Uk).pillars should be(Seq(ukNewsPillar, ukOpinionPillar, ukSportPillar, ukCulturePillar, ukLifestylePillar))
@@ -205,7 +208,7 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
     whenReady(response) { item: ItemResponse =>
       item.content.map { apiContent =>
         val page = TestPage(Content(apiContent))
-        val menu = NavMenu(page, edition)
+        val menu = NavMenu(page, edition)(request)
         val currentNavLink = menu.currentNavLink
         val pillar = menu.currentPillar
 
@@ -225,7 +228,7 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
     whenReady(response) { item: ItemResponse =>
       item.content.map { apiContent =>
         val page = TestPage(Content(apiContent))
-        val menu = NavMenu(page, edition)
+        val menu = NavMenu(page, edition)(request)
         val currentNavLink = menu.currentNavLink
         val pillar = menu.currentPillar
 
