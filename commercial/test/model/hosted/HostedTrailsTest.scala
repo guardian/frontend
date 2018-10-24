@@ -53,6 +53,7 @@ class HostedTrailsTest extends FlatSpec with Matchers {
         }
       )
     )
+    val charts = None
   }
 
   private def mkSponsorship(): Sponsorship = new Sponsorship {
