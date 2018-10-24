@@ -524,7 +524,7 @@ const getDummyServerSideBidders = (): Array<PrebidBidder> => {
         dummyServerSideBidders.push(appnexusServerSideBidder);
 
         // Remove this switch after initial pangaea release
-        if (config.get('switches.ozonePangaea')) {
+        if (inPbTestOr(config.get('switches.ozonePangaea'))) {
             dummyServerSideBidders.push(pangaeaServerSideBidder);
         }
     }
