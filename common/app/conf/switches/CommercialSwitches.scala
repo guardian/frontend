@@ -293,7 +293,7 @@ trait CommercialSwitches {
     description = "Include the blockthrough script for testing the vendors effectiveness at circumventing ad-blocking.",
     owners = group(Commercial),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 10, 25),
+    sellByDate = new LocalDate(2018, 11, 29),
     exposeClientSide = false
    )
 
@@ -506,7 +506,7 @@ trait PrebidSwitches {
     description = "Include Ozone Pangaea connection",
     owners = group(Commercial),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 10, 24),
+    sellByDate = new LocalDate(2018, 11, 29),
     exposeClientSide = true
   )
 }
