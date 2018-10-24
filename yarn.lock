@@ -123,9 +123,9 @@
   version "0.7.1"
   resolved "https://registry.yarnpkg.com/@emotion/utils/-/utils-0.7.1.tgz#e44e596d03c9f16ba3b127ad333a8a072bcb5a0a"
 
-"@guardian/atom-renderer@0.14.6":
-  version "0.14.6"
-  resolved "https://registry.yarnpkg.com/@guardian/atom-renderer/-/atom-renderer-0.14.6.tgz#b43a6f3459330888ab9e43d992251a6c21c47912"
+"@guardian/atom-renderer@0.15.0":
+  version "0.15.0"
+  resolved "https://registry.yarnpkg.com/@guardian/atom-renderer/-/atom-renderer-0.15.0.tgz#e633223b01261fe8e86eccf1a18bb60dc8a931e2"
   dependencies:
     autoprefixer "^8.2.0"
     css-loader "^0.28.7"

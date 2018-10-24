@@ -29,18 +29,33 @@ final case class Atoms(
   guides: Seq[GuideAtom],
   profiles: Seq[ProfileAtom],
   timelines: Seq[TimelineAtom],
-  commonsdivisions: Seq[CommonsDivisionAtom]
+  commonsdivisions: Seq[CommonsDivisionAtom],
+  charts: Seq[ChartAtom]
 ) {
-  val all: Seq[Atom] = quizzes ++ media ++ interactives ++ recipes ++ reviews ++ storyquestions ++ explainers ++ qandas ++ guides ++ profiles ++ timelines ++ commonsdivisions
+  val all: Seq[Atom] =
+    quizzes ++
+    media ++
+    interactives ++
+    recipes ++
+    reviews ++
+    storyquestions ++
+    explainers ++
+    qandas ++
+    guides ++
+    profiles ++
+    timelines ++
+    commonsdivisions ++
+    charts
 
   def atomTypes: Map[String, Boolean] = Map(
-    "guide" -> !guides.isEmpty,
-    "qanda" -> !qandas.isEmpty,
-    "profile" -> !profiles.isEmpty,
-    "timeline" -> !timelines.isEmpty,
-    "storyquestions" -> !storyquestions.isEmpty,
-    "explainer" -> !explainers.isEmpty,
-    "commonsdivision" -> !commonsdivisions.isEmpty
+    "guide" -> guides.nonEmpty,
+    "qanda" -> qandas.nonEmpty,
+    "profile" -> profiles.nonEmpty,
+    "timeline" -> timelines.nonEmpty,
+    "storyquestions" -> storyquestions.nonEmpty,
+    "explainer" -> explainers.nonEmpty,
+    "commonsdivision" -> commonsdivisions.nonEmpty,
+    "chart" -> charts.nonEmpty
   )
 }
 
@@ -218,6 +233,12 @@ final case class CommonsDivisionAtom(
   data: atomapi.commonsdivision.CommonsDivision
 ) extends Atom
 
+final case class ChartAtom(
+  override val id: String,
+  atom: AtomApiAtom,
+  data: atomapi.chart.ChartAtom
+) extends Atom
+
 object Atoms extends common.Logging {
 
   def articleConfig = ArticleConfiguration(
@@ -271,6 +292,8 @@ object Atoms extends common.Logging {
 
       val commonsdivisions = extract(atoms.commonsdivisions, atom => {CommonsDivisionAtom.make(atom)})
 
+      val charts = extract(atoms.charts, atom => {ChartAtom.make(atom)})
+
       Atoms(
         quizzes = quizzes,
         media = media,
@@ -283,7 +306,8 @@ object Atoms extends common.Logging {
         guides = guides,
         profiles = profiles,
         timelines = timelines,
-        commonsdivisions = commonsdivisions
+        commonsdivisions = commonsdivisions,
+        charts = charts
       )
     }
   }
@@ -635,5 +659,12 @@ object CommonsDivisionAtom {
   def make(atom: AtomApiAtom): CommonsDivisionAtom = {
     val commonsdivision = atom.data.asInstanceOf[AtomData.CommonsDivision].commonsDivision
     CommonsDivisionAtom(atom.id, atom, commonsdivision)
+  }
+}
+
+object ChartAtom {
+  def make(atom: AtomApiAtom): ChartAtom = {
+    val chart = atom.data.asInstanceOf[AtomData.Chart].chart
+    ChartAtom(atom.id, atom, chart)
   }
 }
