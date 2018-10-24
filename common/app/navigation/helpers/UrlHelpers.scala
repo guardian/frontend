@@ -7,6 +7,9 @@ import navigation.ReaderRevenueSite._
 import PartialFunction.condOpt
 
 object UrlHelpers {
+  val headerTestURLSubscribe: String = "https://support.theguardian.com/uk/subscribe?INTCMP=header_subscribe_main&acquisitionData=%7B%22source%22%3A%22GUARDIAN_WEB%22%2C%22componentType%22%3A%22ACQUISITIONS_HEADER%22%2C%22componentId%22%3A%22header_subscribe%22%7D"
+  val headerTestURLSupport: String = "https://support.theguardian.com/contribute?INTCMP=header_contribute&acquisitionData=%7B%22source%22%3A%22GUARDIAN_WEB%22%2C%22componentType%22%3A%22ACQUISITIONS_HEADER%22%2C%22componentId%22%3A%22header_contribute%22%7D"
+
 
   sealed trait Position
   case object Header extends Position
@@ -36,7 +39,7 @@ object UrlHelpers {
 
       case (_, ManageMyAccountUpsell) => "manage_my_account_upsell"
     }
-  }
+  }   
 
   def readerRevenueLinks(implicit request: RequestHeader) = List(
     NavLink("Make a contribution", getReaderRevenueUrl(SupportContribute, SideMenu)),

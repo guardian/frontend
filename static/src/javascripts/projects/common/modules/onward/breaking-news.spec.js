@@ -1,6 +1,7 @@
 // @flow
 import { breakingNews } from 'common/modules/onward/breaking-news';
 
+jest.mock('lib/raven');
 jest.mock('lib/storage', () => ({
     local: {
         get: jest.fn(key => {

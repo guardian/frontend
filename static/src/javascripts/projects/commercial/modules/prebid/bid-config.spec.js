@@ -25,6 +25,7 @@ import {
     shouldIncludeOzone as shouldIncludeOzone_,
     shouldIncludeTrustX as shouldIncludeTrustX_,
     stripMobileSuffix as stripMobileSuffix_,
+    isInAuRegion as isInAuRegion_,
 } from './utils';
 
 const getLargestSize: any = getLargestSize_;
@@ -44,12 +45,10 @@ const getBreakpointKey: any = getBreakpointKey_;
 const getParticipations: any = getParticipations_;
 const getVariant: any = getVariant_;
 const isInVariant: any = isInVariant_;
+const isInAuRegion: any = isInAuRegion_;
 
 const {
     getAdYouLikePlacementId,
-    getAppNexusInvCode,
-    getAppNexusBidParams,
-    getAppNexusPlacementId,
     getDummyServerSideBidders,
     getIndexSiteId,
     getImprovePlacementId,
@@ -89,181 +88,16 @@ const resetConfig = () => {
     config.set('page.edition', 'UK');
 };
 
-describe('getAppNexusInvCode', () => {
-    beforeEach(() => {
-        resetConfig();
-        [[300, 250], [300, 600], [970, 250], [728, 90]].map(
-            getLargestSize.mockReturnValueOnce
-        );
-    });
-
-    afterEach(() => {
-        jest.resetAllMocks();
-        resetConfig();
-    });
-
-    test('should return the magic strings for mobile breakpoints', () => {
-        getBreakpointKey.mockReturnValue('M');
-        const invCodes = [
-            [[300, 250]],
-            [[300, 600]],
-            [[970, 250]],
-            [[728, 90]],
-        ].map(getAppNexusInvCode);
-
-        expect(invCodes).toEqual([
-            'Mmagic300x250',
-            'Mmagic300x600',
-            'Mmagic970x250',
-            'Mmagic728x90',
-        ]);
-    });
-
-    test('should return the magic strings for other breakpoints', () => {
-        getBreakpointKey.mockReturnValue('D');
-        const invCodes = [
-            [[300, 250]],
-            [[300, 600]],
-            [[970, 250]],
-            [[728, 90]],
-        ].map(getAppNexusInvCode);
-        expect(invCodes).toEqual([
-            'Dmagic300x250',
-            'Dmagic300x600',
-            'Dmagic970x250',
-            'Dmagic728x90',
-        ]);
-    });
-});
-
-describe('getAppNexusBidParams', () => {
-    beforeEach(() => {
-        resetConfig();
-        getLargestSize.mockReturnValueOnce([300, 250]);
-    });
-
-    afterEach(() => {
-        jest.resetAllMocks();
-        resetConfig();
-    });
-
-    test('should include placementId when invCode switch is off', () => {
-        getBreakpointKey.mockReturnValue('M');
-        expect(getAppNexusBidParams([[300, 250]])).toEqual({
-            keywords: 'someAppNexusTargetingObject',
-            placementId: '9251752',
-        });
-    });
-
-    test('should exclude placementId when including member and invCode', () => {
-        config.set('switches.prebidAppnexusInvcode', true);
-        getBreakpointKey.mockReturnValue('M');
-        expect(getAppNexusBidParams([[300, 250]])).toEqual({
-            keywords: 'someAppNexusTargetingObject',
-            member: '7012',
-            invCode: 'Mmagic300x250',
-        });
-    });
-});
-
-describe('getAppNexusPlacementId', () => {
-    beforeEach(() => {
-        resetConfig();
-        window.OzoneLotameData = { some: 'lotamedata' };
-
-        [[300, 250], [300, 600], [970, 250], [728, 90]].map(
-            getLargestSize.mockReturnValueOnce
-        );
-    });
-
-    afterEach(() => {
-        jest.resetAllMocks();
-        resetConfig();
-    });
-
-    const generateTestIds = (): Array<string> => {
-        const prebidSizes: Array<Array<PrebidSize>> = [
-            [[300, 250]],
-            [[300, 600]],
-            [[970, 250]],
-            [[728, 90]],
-            [[1, 2]],
-        ];
-        return prebidSizes.map(getAppNexusPlacementId);
-    };
-
-    test('should return the expected values when on UK Edition and desktop device', () => {
-        getBreakpointKey.mockReturnValue('D');
-        containsMpuOrDmpu.mockReturnValueOnce(true);
-        containsMpuOrDmpu.mockReturnValueOnce(true);
-        containsMpuOrDmpu.mockReturnValue(false);
-        containsLeaderboardOrBillboard.mockReturnValueOnce(true);
-        containsLeaderboardOrBillboard.mockReturnValueOnce(true);
-        containsLeaderboardOrBillboard.mockReturnValue(false);
-        expect(generateTestIds()).toEqual([
-            '13366606',
-            '13366606',
-            '13366615',
-            '13366615',
-            '13915593',
-        ]);
-    });
-
-    test('should return the expected values when on UK Edition and tablet device', () => {
-        getBreakpointKey.mockReturnValue('T');
-        containsMpu.mockReturnValueOnce(true);
-        containsMpu.mockReturnValue(false);
-        containsLeaderboard.mockReturnValueOnce(false);
-        containsLeaderboard.mockReturnValueOnce(false);
-        containsLeaderboard.mockReturnValueOnce(true);
-        containsLeaderboard.mockReturnValue(false);
-        expect(generateTestIds()).toEqual([
-            '13366913',
-            '13915593',
-            '13915593',
-            '13366916',
-            '13915593',
-        ]);
-    });
-
-    test('should return the expected values when on UK Edition and mobile device', () => {
-        getBreakpointKey.mockReturnValue('M');
-        containsMpu.mockReturnValueOnce(true);
-        containsMpu.mockReturnValue(false);
-        expect(generateTestIds()).toEqual([
-            '13366904',
-            '13915593',
-            '13915593',
-            '13915593',
-            '13915593',
-        ]);
-    });
-
-    test('should return the default value on all other editions', () => {
-        const editions = ['AU', 'US', 'INT'];
-        const expected = [
-            '13915593',
-            '13915593',
-            '13915593',
-            '13915593',
-            '13915593',
-        ];
-
-        editions.forEach(edition => {
-            config.set('page.edition', edition);
-            expect(generateTestIds()).toEqual(expected);
-        });
-    });
-});
-
 describe('getDummyServerSideBidders', () => {
     beforeEach(() => {
         config.set('switches.prebidS2sozone', true);
+        window.OzoneLotameData = { some: 'lotamedata' };
     });
 
     afterEach(() => {
         jest.resetAllMocks();
         resetConfig();
+        window.OzoneLotameData = undefined;
     });
 
     test('should return an empty array if the switch is off', () => {
@@ -668,7 +502,6 @@ describe('bids', () => {
         containsMpuOrDmpu.mockReturnValue(false);
         shouldIncludeAdYouLike.mockReturnValue(true);
         shouldIncludeAppNexus.mockReturnValue(false);
-        shouldIncludeAppNexus.mockReturnValue(false);
         shouldIncludeTrustX.mockReturnValue(false);
         stripMobileSuffix.mockImplementation(str => str);
         getVariant.mockReturnValue(CommercialPrebidAdYouLike.variants[0]);
@@ -730,6 +563,7 @@ describe('bids', () => {
 
     test('should include AppNexus directly if in target geolocation', () => {
         shouldIncludeAppNexus.mockReturnValue(true);
+        isInAuRegion.mockReturnValue(true);
         expect(bidders()).toEqual([
             'ix',
             'sonobi',

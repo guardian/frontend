@@ -135,7 +135,8 @@ class IdApiClient(
 
   def setPasswordGuest(password: String, token: String): Future[Response[CookiesResponse]] = {
     val body: JObject = "password" -> password
-    put("guest/password", None, None, Some(compactRender(body)), List("X-Guest-Registration-Token" -> token, "Content-Type" -> "application/json"), List("validate-email" -> "0")).map(extract(jsonField("cookies")))
+    put("guest/password", None, None, Some(compactRender(body)), List("X-Guest-Registration-Token" -> token, "Content-Type" -> "application/json", "X-GU-ID-Client-Access-Token" -> conf.apiClientToken), List("validate-email" -> "0")).map(extract(jsonField
+    ("cookies")))
   }
 
   def resendEmailValidationEmail(auth: Auth, trackingParameters: TrackingData, returnUrlOpt: Option[String]): Future[Response[Unit]] = {

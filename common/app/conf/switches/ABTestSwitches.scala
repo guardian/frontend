@@ -142,7 +142,7 @@ trait ABTestSwitches {
     "Test the rendering of Prebid ads served by AdYouLike",
     owners = Owner.group(Commercial),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 10, 24),
+    sellByDate = new LocalDate(2018, 10, 31),
     exposeClientSide = true
   )
 

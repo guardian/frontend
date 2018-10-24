@@ -31,7 +31,6 @@ import type {
     PrebidXaxisParams,
 } from './types';
 import {
-    getLargestSize,
     containsBillboard,
     containsDmpu,
     containsLeaderboard,
@@ -50,6 +49,7 @@ import {
     isInAuRegion,
     stripDfpAdPrefixFrom,
 } from './utils';
+import { getAppNexusPlacementId, getAppNexusDirectBidParams } from './appnexus';
 
 const isInSafeframeTestVariant = (): boolean => {
     const variant = getVariant(commercialPrebidSafeframe, 'variant');
@@ -219,98 +219,6 @@ const getImprovePlacementId = (sizes: PrebidSize[]): number => {
     }
 };
 
-const getAppNexusInvCode = (sizes: Array<PrebidSize>): ?string => {
-    const device: string = getBreakpointKey();
-    const section: string = config.get('page.section', 'unknown');
-    const slotSize: PrebidSize | null = getLargestSize(sizes);
-    if (slotSize) {
-        return `${device}${section.toLowerCase()}${slotSize.join('x')}`;
-    }
-};
-
-const getAppNexusDirectPlacementId = (sizes: PrebidSize[]): string => {
-    if (isInAuRegion()) {
-        return '11016434';
-    }
-
-    const defaultPlacementId: string = '9251752';
-    switch (getBreakpointKey()) {
-        case 'D':
-            if (containsMpuOrDmpu(sizes)) {
-                return '9251752';
-            }
-            if (containsLeaderboardOrBillboard(sizes)) {
-                return '9926678';
-            }
-            return defaultPlacementId;
-        case 'M':
-            if (containsMpu(sizes)) {
-                return '4298191';
-            }
-            return defaultPlacementId;
-        case 'T':
-            if (containsMpu(sizes)) {
-                return '11600568';
-            }
-            if (containsLeaderboard(sizes)) {
-                return '11600778';
-            }
-            return defaultPlacementId;
-        default:
-            return defaultPlacementId;
-    }
-};
-
-const getAppNexusBidParams = (sizes: PrebidSize[]): PrebidAppNexusParams => {
-    if (config.get('switches.prebidAppnexusInvcode', false)) {
-        const invCode = getAppNexusInvCode(sizes);
-        // flowlint sketchy-null-string:warn
-        if (invCode) {
-            return {
-                invCode,
-                member: '7012',
-                keywords: buildAppNexusTargetingObject(buildPageTargeting()),
-            };
-        }
-    }
-    return {
-        placementId: getAppNexusDirectPlacementId(sizes),
-        keywords: buildAppNexusTargetingObject(buildPageTargeting()),
-    };
-};
-
-const getAppNexusPlacementId = (sizes: PrebidSize[]): string => {
-    const defaultPlacementId: string = '13915593';
-    if (isInUsRegion() || isInAuRegion()) {
-        return defaultPlacementId;
-    }
-    switch (getBreakpointKey()) {
-        case 'D':
-            if (containsMpuOrDmpu(sizes)) {
-                return '13366606';
-            }
-            if (containsLeaderboardOrBillboard(sizes)) {
-                return '13366615';
-            }
-            return defaultPlacementId;
-        case 'M':
-            if (containsMpu(sizes)) {
-                return '13366904';
-            }
-            return defaultPlacementId;
-        case 'T':
-            if (containsMpu(sizes)) {
-                return '13366913';
-            }
-            if (containsLeaderboard(sizes)) {
-                return '13366916';
-            }
-            return defaultPlacementId;
-        default:
-            return defaultPlacementId;
-    }
-};
-
 const getAdYouLikePlacementId = (): string => {
     const test = commercialPrebidAdYouLike;
     const participations = getParticipations();
@@ -436,7 +344,7 @@ const appNexusBidder: PrebidBidder = {
     name: 'and',
     switchName: 'prebidAppnexus',
     bidParams: (slotId: string, sizes: PrebidSize[]): PrebidAppNexusParams =>
-        getAppNexusBidParams(sizes),
+        getAppNexusDirectBidParams(sizes, isInAuRegion()),
 };
 
 const openxClientSideBidder: PrebidBidder = {
@@ -689,9 +597,6 @@ export const bids: (string, PrebidSize[]) => PrebidBid[] = (
 
 export const _ = {
     getAdYouLikePlacementId,
-    getAppNexusInvCode,
-    getAppNexusBidParams,
-    getAppNexusPlacementId,
     getDummyServerSideBidders,
     getIndexSiteId,
     getImprovePlacementId,

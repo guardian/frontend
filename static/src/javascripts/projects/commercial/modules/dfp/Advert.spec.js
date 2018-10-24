@@ -3,6 +3,7 @@ import { _ } from 'commercial/modules/dfp/Advert';
 
 const { filterClasses } = _;
 
+jest.mock('lib/raven');
 jest.mock('ophan/ng', () => null);
 
 describe('Filter classes', () => {

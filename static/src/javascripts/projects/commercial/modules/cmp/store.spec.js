@@ -10,6 +10,7 @@ const {
     generateVendorConsentResponse,
 } = _;
 
+jest.mock('lib/raven');
 jest.mock('commercial/modules/cmp/log', () => ({
     log: {
         debug: jest.fn(),

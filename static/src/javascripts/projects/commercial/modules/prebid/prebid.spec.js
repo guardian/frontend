@@ -3,6 +3,8 @@
 import config from 'lib/config';
 import { prebid } from 'commercial/modules/prebid/prebid';
 
+jest.mock('lib/raven');
+
 jest.mock('commercial/modules/dfp/Advert', () =>
     jest.fn().mockImplementation(() => ({ advert: jest.fn() }))
 );

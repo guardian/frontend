@@ -1,3 +1,5 @@
+$btn-height: ($gs-baseline*3.5);
+
 @mixin padding {
     padding: $gs-baseline 0;
 
@@ -9,6 +11,7 @@
 .site-message--ad-free-banner {
     color: $brightness-100;
     background: $sport-dark;
+    overflow: hidden;
 
     .site-message__close {
         padding-top: 0;
@@ -24,6 +27,7 @@
         padding: 0;
         width: auto;
         height: auto;
+        display: none;
 
         .inline-icon {
             fill: $brightness-100;
@@ -32,12 +36,10 @@
             }
         }
 
-        display: block;
-        bottom: $gs-baseline;
-        right: $gs-baseline;
         svg {
             width: 32px;
             height: 32px;
+            display: block;
         }
 
         @include mq(desktop) {
@@ -45,14 +47,7 @@
             left: $gs-gutter;
             right: auto;
             bottom: auto;
-            svg {
-                width: inherit;
-                height: inherit;
-            }
-        }
-
-        @include mq(tablet) {
-            right: $gs-gutter;
+            display: block;
         }
 
     }
@@ -80,12 +75,13 @@
 
     .site-message__image {
         display: block;
+        z-index: 9;
         img {
-            height: $gs-baseline * 12;
+            height: $gs-baseline * 14;
             display: block;
             @include mq($until: desktop) {
                 position: absolute;
-                right: -2em;
+                right: $gs-gutter * -3;
                 bottom: 0;
                 height: $gs-baseline * 8;
             }
@@ -112,6 +108,7 @@
         font-weight: bold;
         padding-bottom: $gs-baseline;
         color: $highlight-main;
+        padding-right: $gs-gutter * 2;
     }
 
     .site-message__copy-text {
@@ -138,32 +135,38 @@
     }
 
     .site-message__copy-button {
+        @include fs-textSans(5);
+        @include circular;
+        height: $btn-height;
+        background: $highlight-main;
         color: $brightness-7;
-        background-color: $highlight-main;
-        border-color: $highlight-main;
-        font-size: 14px;
-        line-height: 36px;
-        height: 36px;
+        padding: 0 ($gs-gutter*1.25) 0 ($gs-gutter*1.25)+($btn-height*.5);
         vertical-align: middle;
         text-decoration: none;
         margin-top: $gs-baseline;
+        border: 0;
+        position: relative;
+        z-index: 10;
         svg {
-            fill: $brightness-7;
-            margin-right: 5px;
-            padding-top: 3px;
-            transform: scale(.9);
-            float: left;
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            margin: auto;
+            width: $btn-height;
+            height: $btn-height;
+            transform: scale(.5);
+            g, path {
+                fill: $brightness-7;
+
+                .site-message--double-banner & {
+                    fill: #ffffff;
+                }
+            }
         }
 
         &:hover, &:focus {
-            border-color: mix($highlight-main, $brightness-7, 80%);
             background-color: mix($highlight-main, $brightness-7, 80%);
-        }
-
-        &:focus {
-            outline: auto;
-            outline-color: $sport-bright;
-            outline-width: 5px;
         }
     }
 

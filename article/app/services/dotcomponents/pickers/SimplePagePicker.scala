@@ -37,7 +37,6 @@ object PageChecks {
   def hasOnlySupportedElements(page: PageWithStoryPackage): Boolean = {
     def unsupportedElement(blockElement: BlockElement) = blockElement match {
       case _: TextBlockElement => false
-      case _: ImageBlockElement => false
       case _ => true
     }
 
@@ -53,6 +52,8 @@ object PageChecks {
   def isNotAGallery(page:PageWithStoryPackage): Boolean = ! page.item.tags.isGallery
 
   def isNotAMP(request: RequestHeader): Boolean = ! request.isAmp
+
+  def isNotOpinion(page:PageWithStoryPackage): Boolean = ! page.item.tags.isComment
 
 }
 
@@ -73,7 +74,8 @@ class SimplePagePicker extends RenderTierPickerStrategy {
       ("isNotLiveBlog", PageChecks.isNotLiveBlog(page)),
       ("isNotAReview", PageChecks.isNotAReview(page)),
       ("isNotAGallery", PageChecks.isNotAGallery(page)),
-      ("isNotAMP", PageChecks.isNotAMP(request))
+      ("isNotAMP", PageChecks.isNotAMP(request)),
+      ("isNotAMP", PageChecks.isNotOpinion(page))
     )
 
     val success = ! results.exists{!_._2}

@@ -88,12 +88,14 @@ const bindBlockList = (el): void => {
                             title="Thank you!"
                             subtitle="You’re now subscribed to your content"
                         />
-                        <div className="identity-upsell-wrapper">
-                            <div className="identity-upsell-layout">
-                                {ConfirmEmailThankYou}
-                                {Optouts}
+                        <div className="identity-upsell-layout">
+                            {ConfirmEmailThankYou}
+                            {Optouts}
+                            {prefill.hasPassword !== 'true' &&
+                            prefill.hasSocialLinks !== 'true' &&
+                            typeof prefill.accountToken !== 'undefined' ? (
                                 <AccountCreationBlock {...prefill} />
-                            </div>
+                            ) : null}
                         </div>
                     </div>,
                     el
