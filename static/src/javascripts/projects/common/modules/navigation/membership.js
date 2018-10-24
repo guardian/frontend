@@ -16,9 +16,13 @@ import userPrefs from 'common/modules/user-prefs';
 const accountDataUpdateLink = accountDataUpdateWarningLink => {
     switch (accountDataUpdateWarningLink) {
         case 'contribution':
-            return `${config.get('page.idUrl')}/contribution/recurring/edit`;
+            return `${config.get(
+                'page.mmaUrl'
+            )}/banner/contributions?INTCMP=BANNER`;
         case 'membership':
-            return `${config.get('page.mmaUrl')}/banner/membership`;
+            return `${config.get(
+                'page.mmaUrl'
+            )}/banner/membership?INTCMP=BANNER`;
         default:
             return `${config.get(
                 'page.idUrl'
