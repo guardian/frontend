@@ -1,6 +1,5 @@
 @(storyquestions: model.content.StoryQuestionsAtom, isAmp: Boolean, inApp: Boolean)(implicit request: RequestHeader)
 
-@import conf.switches.Switches.ReaderAnswersDeliveryMechanism
 @import model.content.StoryQuestionsAtom
 
 @notifcationValue() = @{
@@ -11,71 +10,7 @@
     }
 }
 
-@if(!isAmp && ReaderAnswersDeliveryMechanism.isSwitchedOn) {
-    <div id="user__question-atom-@storyquestions.id" class="js-view-tracking-component submeta user__question">
-
-        <span class="js-storyquestion-atom-id is-hidden" id="@storyquestions.id"></span>
-        <span class="is-hidden" id="js-storyquestion-is-answer-delivery-test-ready" data-is-answer-delivery-test-ready="@ReaderAnswersDeliveryMechanism.isSwitchedOn"></span>
-
-        @for(questions <- storyquestions.data.editorialQuestions) {
-            @for(qs <- questions) {
-                <h2 id="js-question-set-header-@storyquestions.id" class="user__question-title user__question-title-test">
-                    Need something explained?
-                        <span class="user__question-title--secondary">Pick a question: We'll publish an answer to the most popular question shortly</span>
-                </h2>
-                <h2 id="js-delivery-selection-header-@storyquestions.id" class="user__question-title user__question-title-test is-hidden">
-                    Thank you for participating
-                    <span class="user__question-title--secondary">
-                    We'll publish an answer to the most popular question shortly. How would you like to get notified when it's ready?
-                    </span>
-                </h2>
-                <h2 id="js-final-thank-you-header-@storyquestions.id" class="user__question-title user__question-final-thanks is-hidden">
-                    Thank you for your interest
-                    <span class="user__question-title--secondary">
-                    We're actively developing these notification features but they are not yet built. We're using your feedback to understand how you would like to be notified of the answers. Thanks again.
-                    </span>
-                </h2>
-                @for(question <- qs.questions) {
-                    <div id="js-question-set-body-@question.questionId" class="user__question-container js-question-set-body-@storyquestions.id">
-                        <div class="user__questions-text--wrapper js-ask-question-link">
-                            <div class="user__question-text">
-                                <meta class="notranslate" name="js-notranslate-@question.questionId" content="@question.questionText">
-                                <span class="user__questions-text--inner">
-                                @question.questionText
-                                </span>
-                            </div>
-                            <button id="btn-ask-question-@question.questionId" class="user__question-upvote" data-question-id="@question.questionId">
-                                    Ask
-                            </button>
-                        </div>
-                    </div>
-                }
-
-                <div id="js-delivery-selection-body-@storyquestions.id" class="storyquestion-submission-container delivery-selection-container js-storyquestion-submission-container js-delivery-selection-body is-hidden">
-                    <button class="button button--primary-inverse button--large user_answer-delivery btn-answer-delivery-@storyquestions.id" data-delivery-method="email">
-                                    Email
-                    </button>
-                    <button class="button button--primary-inverse button--large user_answer-delivery btn-answer-delivery-@storyquestions.id" data-delivery-method=@notifcationValue()>
-                                    @if(inApp) { App notification } else { Browser notification }
-                    </button>
-                    <button class="button button--primary-inverse button--large user_answer-delivery btn-answer-delivery-@storyquestions.id" data-delivery-method="facebook-messenger">
-                                    Facebook Messenger
-                    </button>
-                </div>
-
-                <div id="js-final-thank-you-body-@storyquestions.id" class="user__question-container user__answer-delivery-container final-thank-you-body is-hidden">
-                    <button id="js-final-thankyou-message-@storyquestions.id" class="button button--primary-inverse button--medium">
-                                    Close
-                    </button>
-                </div>
-            }
-
-        }
-    </div>
-}
-
-
-@if(!isAmp && !ReaderAnswersDeliveryMechanism.isSwitchedOn) {
+@if(!isAmp) {
     <div class="js-view-tracking-component submeta user__question">
         <span class="js-storyquestion-atom-id is-hidden" id="@storyquestions.id"></span>
 
