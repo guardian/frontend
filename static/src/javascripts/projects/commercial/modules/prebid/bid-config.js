@@ -40,10 +40,12 @@ import {
     getBreakpointKey,
     shouldIncludeAdYouLike,
     shouldIncludeAppNexus,
+    shouldIncludeImproveDigital,
     shouldIncludeOpenx,
     shouldIncludeOzone,
     shouldIncludeTrustX,
     shouldIncludePangaea,
+    shouldIncludeXaxis,
     stripMobileSuffix,
     stripTrailingNumbersAbove1,
     isInUsRegion,
@@ -427,7 +429,6 @@ const trustXBidder: PrebidBidder = {
     bidParams: (slotId: string): PrebidTrustXParams => ({
         uid: getTrustXAdUnitId(slotId, isDesktopAndArticle),
     }),
-    labelAll: ['geo-NA'],
 };
 
 const improveDigitalBidder: PrebidBidder = {
@@ -437,7 +438,6 @@ const improveDigitalBidder: PrebidBidder = {
         placementId: getImprovePlacementId(sizes),
         size: getImproveSizeParam(slotId),
     }),
-    labelAny: ['edn-UK', 'edn-INT'],
 };
 
 const xaxisBidder: PrebidBidder = {
@@ -446,7 +446,6 @@ const xaxisBidder: PrebidBidder = {
     bidParams: (slotId: string, sizes: PrebidSize[]): PrebidXaxisParams => ({
         placementId: getXaxisPlacementId(sizes),
     }),
-    labelAll: ['edn-UK', 'deal-FirstLook'],
 };
 
 const adYouLikeBidder: PrebidBidder = {
@@ -560,8 +559,10 @@ const currentBidders: (PrebidSize[]) => PrebidBidder[] = slotSizes => {
         sonobiBidder,
         ...(inPbTestOr(shouldIncludeTrustX()) ? [trustXBidder] : []),
         ...(inPbTestOr(shouldIncludeAppNexus()) ? [appNexusBidder] : []),
-        improveDigitalBidder,
-        xaxisBidder,
+        ...(inPbTestOr(shouldIncludeImproveDigital())
+            ? [improveDigitalBidder]
+            : []),
+        ...(inPbTestOr(shouldIncludeXaxis()) ? [xaxisBidder] : []),
         pubmaticBidder,
         ...(shouldIncludeAdYouLike(slotSizes) ? [adYouLikeBidder] : []),
         ...(shouldIncludeOpenx() ? [openxClientSideBidder] : []),
@@ -584,15 +585,6 @@ export const bids: (string, PrebidSize[]) => PrebidBid[] = (
             bidder: bidder.name,
             params: bidder.bidParams(slotId, slotSizes),
         };
-        if (!isPbTestOn()) {
-            // Label filtering only when not in test mode.
-            if (bidder.labelAny) {
-                bid.labelAny = bidder.labelAny;
-            }
-            if (bidder.labelAll) {
-                bid.labelAll = bidder.labelAll;
-            }
-        }
         return bid;
     });
 
@@ -601,6 +593,7 @@ export const _ = {
     getDummyServerSideBidders,
     getIndexSiteId,
     getImprovePlacementId,
+    getPubmaticPublisherId,
     getTrustXAdUnitId,
     indexExchangeBidders,
 };
