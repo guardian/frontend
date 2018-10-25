@@ -29,9 +29,9 @@
 @subscriptionLinks = {
     <div class="fc-podcast-container__subscribe-links">
     <span>Subscribe:</span>
-    <span><a data-link-name="apple" href="@FlagshipFrontContainer.SubscriptionUrls.apple">Apple Podcasts</a></span>
-    <span><a data-link-name="google" href="@FlagshipFrontContainer.SubscriptionUrls.google">Google Podcasts</a></span>
-    <span><a data-link-name="spotify" href="@FlagshipFrontContainer.SubscriptionUrls.spotify">Spotify</a></span>
+    @FlagshipFrontContainer.SubscriptionUrls.apple.map { url => <span><a data-link-name="apple" href="@url">Apple Podcasts</a></span> }
+    @FlagshipFrontContainer.SubscriptionUrls.google.map { url => <span><a data-link-name="google" href="@url">Google Podcasts</a></span> }
+    @FlagshipFrontContainer.SubscriptionUrls.spotify.map { url => <span><a data-link-name="spotify" href="@url">Spotify</a></span> }
     </div>
 }
 

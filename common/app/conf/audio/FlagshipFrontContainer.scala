@@ -34,8 +34,8 @@ object FlagshipFrontContainer {
 
   object SubscriptionUrls {
     //TODO - update
-    val apple = "https://itunes.apple.com/gb/podcast/the-guardian-long-read/id587347784?mt=2"
-    val google = "https://www.google.com/podcasts?feed=aHR0cHM6Ly93d3cudGhlZ3VhcmRpYW4uY29tL25ld3Mvc2VyaWVzL3RoZS1hdWRpby1sb25nLXJlYWQvcG9kY2FzdC54bWw%3D"
-    val spotify = "https://open.spotify.com/show/0jG1HXr3tGoGorW1ieytRS"
+    val apple: Option[String] = Some("https://itunes.apple.com/gb/podcast/today-in-focus/id1440133626?mt=2")
+    val google: Option[String] = None
+    val spotify: Option[String] = None
   }
 }
