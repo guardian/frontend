@@ -65,7 +65,6 @@
     box-shadow: none !important;
 
     .gsc-input {
-        height: 36px !important;
         padding: 0 !important;
         margin: 0 !important;
         box-sizing: border-box !important;
@@ -87,7 +86,7 @@
         }
 
         &:not(:placeholder-shown) {
-          text-indent: 42px !important;
+            text-indent: 42px !important;
         }
     }
 }
