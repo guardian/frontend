@@ -322,10 +322,9 @@ export const ajaxSignIn = (credentials: PasswordCredential) => {
     });
 };
 
-export const getUserData = (): Promise<Response> => {
-    return fetch(`${idApiRoot || ''}/user/me`, {
+export const getUserData = (): Promise<Response> =>
+    fetch(`${idApiRoot || ''}/user/me`, {
         method: 'GET',
         mode: 'cors',
         credentials: 'include',
     });
-};

@@ -11,11 +11,12 @@ const getUserConsent = (consentId: string): Promise<?UserConsentWithState> =>
         cs.find(consent => consent.consent.id === consentId)
     );
 
-const getUserConsents = (consentIds: string[]): Promise<UserConsentWithState[]> => {
-    return fetchUserConsents.then(consents =>
+const getUserConsents = (
+    consentIds: string[]
+): Promise<UserConsentWithState[]> =>
+    fetchUserConsents.then(consents =>
         consents.filter(consent => consentIds.includes(consent.consent.id))
     );
-};
 
 const getAllNewsletterConsents = (): Promise<ConsentWithState[]> =>
     fetchNewsletters;
@@ -25,11 +26,12 @@ const getNewsletterConsent = (consentId: string): Promise<?ConsentWithState> =>
         cs.find(consent => consent.consent.id === consentId)
     );
 
-const getNewsLetterConsents = (consentIds: string[]): Promise<UserConsentWithState[]> => {
-    return fetchNewsletters.then(consents =>
+const getNewsLetterConsents = (
+    consentIds: string[]
+): Promise<UserConsentWithState[]> =>
+    fetchNewsletters.then(consents =>
         consents.filter(consent => consentIds.includes(consent.consent.id))
     );
-};
 
 const setConsentsInApi = (consents: ConsentWithState[]): Promise<any> => {
     /*

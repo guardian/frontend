@@ -2,14 +2,16 @@
 import React from 'preact-compat';
 import config from 'lib/config';
 import { FollowCard } from 'common/modules/identity/upsell/consent-card/FollowCard';
+import {
+    setConsentsInApi,
+    getNewsLetterConsents,
+    getUserConsents,
+} from 'common/modules/identity/upsell/store/consents';
 import type { ConsentWithState } from '../store/types';
-import { setConsentsInApi } from '../store/consents';
 import { ErrorBar, genericErrorStr } from '../error-bar/ErrorBar';
 import { ExpanderButton } from '../button/ExpanderButton';
-import {getNewsLetterConsents, getUserConsents} from "common/modules/identity/upsell/store/consents";
 
 const getConsents = (): Promise<ConsentWithState[]> => {
-
     const userConsents = getUserConsents([
         'supporter',
         'holidays',
@@ -18,7 +20,7 @@ const getConsents = (): Promise<ConsentWithState[]> => {
         'jobs',
     ]);
 
-    const newsLetterConsents =  getNewsLetterConsents([
+    const newsLetterConsents = getNewsLetterConsents([
         'today-uk',
         'the-long-read',
         'bookmarks',
@@ -27,8 +29,9 @@ const getConsents = (): Promise<ConsentWithState[]> => {
         'lab-notes',
     ]);
 
-    return Promise.all([userConsents, newsLetterConsents])
-        .then(consents => consents[0].concat(consents[1]))
+    return Promise.all([userConsents, newsLetterConsents]).then(consents =>
+        consents[0].concat(consents[1])
+    );
 };
 
 type Props = {
@@ -40,11 +43,10 @@ type State = {
     isLoading: boolean,
     isExpanded: boolean,
     errors: string[],
-}
+};
 
 // TODO: seperate this into a stateless component and a stateful wrapper.
 class FollowCardList extends React.Component<Props, State> {
-
     constructor(props: Props) {
         super(props);
         this.setState({
@@ -56,13 +58,12 @@ class FollowCardList extends React.Component<Props, State> {
     }
 
     componentDidMount() {
-        getConsents()
-            .then(consents =>
-                this.setState({
-                    consents,
-                    isLoading: false,
-                })
-            )
+        getConsents().then(consents =>
+            this.setState({
+                consents,
+                isLoading: false,
+            })
+        );
     }
 
     updateConsentState(consent: ConsentWithState) {
@@ -97,7 +98,9 @@ class FollowCardList extends React.Component<Props, State> {
         const { consents, isLoading, isExpanded, errors } = this.state;
         const { cutoff } = this.props;
 
-        const displayables = isExpanded ? consents : [...consents].splice(0, cutoff);
+        const displayables = isExpanded
+            ? consents
+            : [...consents].splice(0, cutoff);
 
         return (
             <div>

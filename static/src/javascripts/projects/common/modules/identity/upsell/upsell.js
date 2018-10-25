@@ -5,7 +5,7 @@ import fastdom from 'lib/fastdom-promise';
 import ophan from 'ophan/ng';
 import loadEnhancers from 'common/modules/identity/modules/loadEnhancers';
 import { AccountCreationCompleteConsentsFlow } from 'common/modules/identity/upsell/account-creation/AccountCreationCompleteConsentsFlow';
-import {StatefulConfirmEmailPage} from "./page/StatefulConfirmEmailPage";
+import { StatefulConfirmEmailPage } from './page/StatefulConfirmEmailPage';
 
 const trackInteraction = (interaction: string): void => {
     ophan.record({
@@ -35,36 +35,33 @@ type Prefill = {
     email: string,
     hasPassword: boolean,
     hasSocialLinks: boolean,
-}
+};
 
-const getPrefill = (el: HTMLElement): Prefill => {
+const getPrefill = (el: HTMLElement): Prefill =>
     // TODO: stricter implementation
-    return {
+    ({
         csrfToken: el.dataset.csrfToken,
         accountToken: el.dataset.accountToken,
         email: el.dataset.email,
-        hasPassword: el.dataset.hasPassword === "true",
-        hasSocialLinks: el.dataset.hasSocialLinks === "true",
-    }
-};
+        hasPassword: el.dataset.hasPassword === 'true',
+        hasSocialLinks: el.dataset.hasSocialLinks === 'true',
+    });
 
 const bindBlockList = (el): void => {
-    fastdom
-        .read(() => getPrefill(el))
-        .then(prefill =>
-            fastdom.write(() => {
-                render(
-                    <StatefulConfirmEmailPage
-                        csrfToken={prefill.csrfToken}
-                        accountToken={prefill.accountToken}
-                        email={prefill.email}
-                        hasPassword={prefill.hasPassword}
-                        hasSocialLinks={prefill.hasSocialLinks}
-                    />,
-                    el
-                );
-            })
-        );
+    fastdom.read(() => getPrefill(el)).then(prefill =>
+        fastdom.write(() => {
+            render(
+                <StatefulConfirmEmailPage
+                    csrfToken={prefill.csrfToken}
+                    accountToken={prefill.accountToken}
+                    email={prefill.email}
+                    hasPassword={prefill.hasPassword}
+                    hasSocialLinks={prefill.hasSocialLinks}
+                />,
+                el
+            );
+        })
+    );
 };
 
 const enhanceUpsell = (): void => {

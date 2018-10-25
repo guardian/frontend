@@ -1,9 +1,9 @@
 // @flow
 
 import React from 'preact-compat';
-import {Block} from "../block/Block";
-import {LegalTextBlock} from "../block/LegalTextBlock";
-import {OptOutsList} from "../opt-outs/OptOutsList";
+import { Block } from '../block/Block';
+import { LegalTextBlock } from '../block/LegalTextBlock';
+import { OptOutsList } from '../opt-outs/OptOutsList';
 
 export const OptOuts = (): React.Component => (
     <Block
