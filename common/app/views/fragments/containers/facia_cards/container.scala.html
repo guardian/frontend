@@ -2,10 +2,12 @@
 @import layout.MetaDataHeader
 @import layout.slices.{Dynamic, Fixed, MostPopular, NavList, NavMediaList, Video}
 @import views.html.fragments.commercial.containers.paidContainer
+@import views.html.fragments.audio.containers.flagshipContainer
 @import views.html.fragments.containers.facia_cards._
 @import views.support.Commercial.container.shouldRenderAsPaidContainer
 @import views.support.GetClasses
 @import conf.switches.Switches.MostViewedFronts
+@import conf.audio.FlagshipFrontContainer
 
 @(containerDefinition: layout.FaciaContainer,
   frontProperties: model.FrontProperties = model.FrontProperties.empty,
@@ -33,6 +35,22 @@
                     @paidContainer(frontId.getOrElse(""), containerDefinition.index, containerModel)
                 }
                 case None => {}
+            }
+        }
+
+        case _ if FlagshipFrontContainer.isFlagshipContainer(containerDefinition.dataId) => {
+            @if(FlagshipFrontContainer.displayFlagshipContainer()) {
+                <section id="@componentName"
+                    class="@GetClasses.forContainerDefinition(containerDefinition)"
+                    data-link-name="container-@{containerDefinition.index + 1} | @componentName"
+                    data-id="@containerDefinition.dataId"
+                    data-component="@componentName"
+                    aria-expanded="true">
+
+                    <div class="fc-container__inner">
+                        @flagshipContainer(containerDefinition, frontProperties)
+                    </div>
+                </section>
             }
         }
 

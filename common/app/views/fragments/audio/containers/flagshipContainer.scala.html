@@ -1,0 +1,135 @@
+@import model.FrontProperties
+@import views.support.RemoveOuterParaHtml
+@import views.html.fragments.items.elements.facia_cards._
+@import views.html.fragments.containers.facia_cards.containerHeader
+@import views.support.RenderClasses
+@import common.Localisation
+@import model.InlineImage
+@import layout.SliceWithCards
+@import conf.audio.FlagshipFrontContainer
+
+@(containerDefinition: layout.FaciaContainer, frontProperties: FrontProperties)(implicit request: RequestHeader)
+
+
+@getAllCards(slice: SliceWithCards) = @{
+    for {
+        column <- slice.columns
+        card <- column.cards
+    } yield card
+}
+
+@getLatestEpisode(allCards: Seq[layout.FaciaCardAndIndex]) = @{
+    allCards.collectFirst { case layout.FaciaCardAndIndex(_, card: layout.ContentCard, _) if card.snapStuff.isEmpty => card }
+}
+
+@getSnapLink(allCards: Seq[layout.FaciaCardAndIndex]) = @{
+    allCards.collectFirst { case layout.FaciaCardAndIndex(_, card: layout.ContentCard, _) if card.snapStuff.nonEmpty => card }
+}
+
+@subscriptionLinks = {
+    <div class="fc-podcast-container__subscribe-links">
+    <span>Subscribe:</span>
+    @FlagshipFrontContainer.SubscriptionUrls.apple.map { url => <span><a data-link-name="apple" href="@url">Apple Podcasts</a></span> }
+    @FlagshipFrontContainer.SubscriptionUrls.google.map { url => <span><a data-link-name="google" href="@url">Google Podcasts</a></span> }
+    @FlagshipFrontContainer.SubscriptionUrls.spotify.map { url => <span><a data-link-name="spotify" href="@url">Spotify</a></span> }
+    </div>
+}
+
+
+@containerHeader(containerDefinition, frontProperties)
+
+@for(containerLayout <- containerDefinition.containerLayout) {
+    <div class="@RenderClasses(Map(
+        ("fc-container__body", true),
+        ("fc-container--rolled-up-hide", true),
+        ("fc-show-more--hidden", containerDefinition.addShowMoreClasses),
+        ("js-container--fc-show-more", containerDefinition.addShowMoreClasses),
+        ("fc-show-more--mobile-only", containerDefinition.hasMobileOnlyShowMore)
+    ))"
+        data-title="@Localisation(containerDefinition.displayName getOrElse "")"
+        data-id="@containerDefinition.dataId">
+
+        @for(slice <- containerLayout.slices.headOption) {
+
+            <div class="fc-slice-wrapper fc-podcast-container__main">
+                @defining(getAllCards(slice)) { allCards =>
+                    @getLatestEpisode(allCards).map { card =>
+                        <div class="fc-item--type-media">
+                            <div class="fc-podcast-container__episode">
+                                <div class="fc-podcast-container__episode-image">
+                                    <img src="@FlagshipFrontContainer.AlbumArtUrl"/>
+                                </div>
+                                <div class="fc-podcast-container__episode-details">
+                                    <div class="fc-item__header">
+                                        <h2 class="fc-item__title">
+                                            <a @Html(card.header.url.hrefWithRel) class="fc-item__link" data-link-name="article">
+                                                <div class="fc-item__kicker">Today in Focus</div>
+                                                <div class="u-faux-block-link__cta fc-item__headline">
+                                                    <span class="js-headline-text">@RemoveOuterParaHtml(card.header.headline)</span>
+                                                </div>
+                                            </a>
+                                        </h2>
+                                    </div>
+                                    <div class="fc-item__standfirst-wrapper">
+                                        <div class="fc-item__standfirst">
+                                            @card.trailText.map { standfirst => @RemoveOuterParaHtml(standfirst) }
+                                            <br>
+                                        </div>
+                                    </div>
+                                    <div class="fc-podcast-container__subscribe fc-podcast-container__subscribe-large">
+                                        <div class="fc-podcast-container__audio-icon-container" data-link-name="audio-icon">
+                                            @fragments.inlineSvg("volume-high", "icon",  Seq("fc-podcast-container__audio-icon"))
+                                        </div>
+                                        @subscriptionLinks
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="fc-podcast-container__subscribe fc-podcast-container__subscribe-small">
+                                <div class="fc-podcast-container__audio-icon-container" data-link-name="audio-icon">
+                                    @fragments.inlineSvg("volume-high", "icon",  Seq("fc-podcast-container__audio-icon"))
+                                </div>
+                                @subscriptionLinks
+                            </div>
+                            <a class="fc-podcast-container__track u-faux-block-link__overlay js-headline-text" @Html(card.header.url.hrefWithRel) data-link-name="article" tabindex="-1" aria-hidden="true">
+                                @RemoveOuterParaHtml(card.header.headline)
+                            </a>
+                        </div>
+                    }
+                    @getSnapLink(allCards).map { card =>
+                        <div class="fc-podcast-container__series fc-item--type-media">
+                            <div class="fc-item__container">
+                                @card.displayElement match {
+                                    case Some(InlineImage(images)) => {
+                                        <div class="fc-item__media-wrapper">
+                                            @itemImage(
+                                                images,
+                                                inlineImage = true,
+                                                widthsByBreakpoint = Some(card.mediaWidthsByBreakpoint)
+                                            )
+                                        </div>
+                                    }
+                                    case _ => {}
+                                }
+                                <div class="fc-item__content ">
+                                    <div class="fc-item__header">
+                                        <h2 class="fc-item__title">
+                                            <a @Html(card.header.url.hrefWithRel) class="fc-item__link" data-link-name="series">
+                                                <span class="fc-item__kicker">Today in Focus</span>
+                                                <span class="u-faux-block-link__cta fc-item__headline">
+                                                    <span class="js-headline-text">Listen to previous episodes</span>
+                                                </span>
+                                            </a>
+                                        </h2>
+                                    </div>
+                                </div>
+                                <a @Html(card.header.url.hrefWithRel) class="u-faux-block-link__overlay js-headline-text" data-link-name="series" tabindex="-1" aria-hidden="true">
+                                    More from the series
+                                </a>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        }
+    </div>
+}
