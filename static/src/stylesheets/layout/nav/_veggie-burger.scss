@@ -21,15 +21,6 @@
     x:-o-prefocus & {
         display: none;
     }
-
-    .new-header--slim & {
-        height: $veggie-burger;
-        width: $veggie-burger;
-    }
-
-    .new-header--open.new-header--slim & {
-        background-color: $brightness-7;
-    }
 }
 
 .veggie-burger__icon {

@@ -5,7 +5,7 @@
     position: relative;
 
     .pillar-scheme--Opinion & {
-        background-color: $opinion-faded;
+        // background-color: $opinion-faded;
     }
 
     @include mq(tablet) {

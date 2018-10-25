@@ -65,30 +65,27 @@ from scrolling */
 
     @include mq($until: desktop) {
         position: absolute;
-        right: $gutter-small;
-        top: 17px;
+        right: $gs-gutter / 4;
+        top: 18px;
 
         @include mq(mobileMedium) {
+            right: ($gs-gutter / 2) - 2px;
             top: 29px;
         }
 
-        .new-header--slim & {
-            right: $gs-gutter / 2;
-            top: $gs-baseline / 4;
-        }
-
         @include mq(mobileLandscape) {
-            right: $gutter-medium;
-
-            .new-header--slim & {
-                right: $gs-gutter;
-            }
+            right: $gs-gutter - 2px;
         }
 
         @include mq(tablet) {
-            right: $gutter-large;
+            top: 42px;
+        }
+
+        .new-header--slim & {
+            top: $gs-baseline / 4;
         }
     }
+
 
     &:active {
         outline: 0;
@@ -97,17 +94,18 @@ from scrolling */
 
 .new-header__logo {
     float: right;
-    margin-right: ($gs-gutter / 2) + $veggie-burger;
     margin-top: $gs-baseline / 2;
+    margin-right: $veggie-burger + 12px;
     margin-bottom: $gs-baseline * 2;
 
     @include mq(mobileLandscape) {
-        margin-right: $gs-gutter - 3;
+        margin-right: $veggie-burger + 22px;
     }
 
     @include mq(desktop) {
-        margin-bottom: $gs-baseline + ($gs-baseline / 2);
         margin-top: 5px;
+        margin-bottom: $gs-baseline + ($gs-baseline / 2);
+        margin-right: $gs-gutter;
         position: relative;
         z-index: $zindex-main-menu + 1;
     }
@@ -121,7 +119,7 @@ from scrolling */
     .new-header--slim & {
         position: absolute;
         margin: 0;
-        right: $veggie-burger + 3px;
+        right: $veggie-burger ;
         top: $gs-baseline / 4;
         z-index: $zindex-main-menu;
 
@@ -159,14 +157,6 @@ from scrolling */
     @include mq(desktop) {
         height: $veggie-burger + $gs-baseline / 2;
         width: $veggie-burger + $gs-baseline / 2;
-
-        & path:nth-child(1) {
-            fill: $brightness-100;
-        }
-
-        & path:nth-child(2) {
-            fill: $header-blue;
-        }
     }
 }
 
@@ -218,15 +208,5 @@ from scrolling */
 }
 
 .new-header--slim {
-    height: $pillar-height + $gs-baseline + $gs-baseline / 2;
-
-    .immersive-header-container & {
-        @include mq($until: tablet) {
-            height: 0;
-        }
-    }
-
-    @include mq(tablet) {
-        height: $pillar-height;
-    }
+    height: $pillar-height + $gs-baseline / 2;
 }
