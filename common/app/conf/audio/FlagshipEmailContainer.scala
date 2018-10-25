@@ -3,6 +3,8 @@ import org.joda.time.DateTime
 import org.joda.time.DateTimeConstants.{SATURDAY, SUNDAY, MONDAY}
 import org.joda.time.format.DateTimeFormat
 import conf.switches.Switches.FlagshipEmailContainerSwitch
+import model.pressed.{ ItemKicker, TagKicker }
+import com.gu.facia.api.utils.{ TagKicker => FapiTagKicker }
 
 object FlagshipEmailContainer {
   private val EmailContainerIds = Seq(
@@ -22,4 +24,12 @@ object FlagshipEmailContainer {
       !(now.getDayOfWeek == MONDAY && now.getHourOfDay < 4)
 
   val AlbumArtUrl = "https://media.guim.co.uk/26bb29790c63ac3374470d116e54a036581bbeda/0_0_2000_1200/500.png"
+
+  object SeriesTag {
+    val title = "Today in Focus"
+    val url = "https://www.theguardian.com/news/series/todayinfocus"
+    val id = "news/series/todayinfocus"
+  }
+
+  def kicker: TagKicker = ItemKicker.makeTagKicker(FapiTagKicker(name = SeriesTag.title, url= SeriesTag.url, id = SeriesTag.id))
 }

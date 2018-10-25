@@ -8,6 +8,8 @@
 @import layout.ContentCard
 @import model.EmailAddons.EmailContentType
 @import model.pressed.{ExternalLink, Feature}
+@import model.pressed.ItemKicker
+@import com.gu.facia.api.utils.TagKicker
 @import views.support.EmailHelpers.{icon, imgFromCard, imgForFront, classesForCard}
 @import views.support.RemoveOuterParaHtml
 @import fragments.email._
@@ -225,7 +227,7 @@
                     </a>
                 }
 
-                @headline(card, isLarge = true, isTrailText = true)
+                @headline(card.setKicker(Some(FlagshipEmailContainer.kicker)), isLarge = true, isTrailText = true)
             }
         }
     }
