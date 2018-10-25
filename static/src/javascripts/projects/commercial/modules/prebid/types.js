@@ -55,16 +55,14 @@ export type PrebidAdYouLikeParams = {
     placement: string,
 };
 
-export type PrebidSlotKey =
-    | 'top-above-nav'
-    | 'right'
-    | 'inline1'
-    | 'inline'
-    | 'mostpop'
-    | 'comments';
-
 export type PrebidSlot = {
-    key: PrebidSlotKey,
+    key:
+        | 'top-above-nav'
+        | 'right'
+        | 'inline1'
+        | 'inline'
+        | 'mostpop'
+        | 'comments',
     sizes: PrebidSize[],
 };
 
@@ -111,10 +109,8 @@ export type PrebidPriceGranularity = {
     buckets: PrebidPriceBucket[],
 };
 
-export type PrebidBanner = {
-    sizes: PrebidSize[],
-};
-
 export type PrebidMediaTypes = {
-    banner: PrebidBanner,
+    banner: {
+        sizes: PrebidSize[],
+    },
 };
