@@ -35,41 +35,7 @@
     @include PillarColourOne($lifestyle-main);
 }
 
-.menu-group {
-    .menu-item:first-child > .menu-group .menu-item__title:hover,
-    .menu-item:first-child > .menu-group .menu-item__title:focus {
-        color: $news-pastel;
-    }
-
-    .menu-item:nth-child(2) > .menu-group .menu-item__title:hover,
-    .menu-item:nth-child(2) > .menu-group .menu-item__title:focus {
-        color: $opinion-pastel;
-    }
-
-    .menu-item:nth-child(3) > .menu-group .menu-item__title:hover,
-    .menu-item:nth-child(3) > .menu-group .menu-item__title:focus {
-        color: $sport-pastel;
-    }
-
-    .menu-item:nth-child(4) > .menu-group .menu-item__title:hover,
-    .menu-item:nth-child(4) > .menu-group .menu-item__title:focus {
-        color: $culture-pastel;
-    }
-
-    .menu-item:nth-child(5) > .menu-group .menu-item__title:hover,
-    .menu-item:nth-child(5) > .menu-group .menu-item__title:focus {
-        color: $lifestyle-pastel;
-    }
-}
-
-@mixin PillarLinks ($colourOne, $colourTwo) {
-    .new-header--open & {
-        &:hover,
-        &:focus {
-            color: $colourTwo;
-        }
-    }
-
+@mixin PillarLinks ($colourOne) {
     &:after {
         border-color: $colourOne;
     }
@@ -77,22 +43,22 @@
 
 .pillar-link {
     &.pillar-link--News {
-        @include PillarLinks($news-bright, $news-pastel);
+        @include PillarLinks($news-bright);
     }
 
     &.pillar-link--Opinion {
-        @include PillarLinks($opinion-bright, $opinion-pastel);
+        @include PillarLinks($opinion-bright);
     }
 
     &.pillar-link--Sport {
-        @include PillarLinks($sport-bright, $sport-pastel);
+        @include PillarLinks($sport-bright);
     }
 
     &.pillar-link--Culture {
-        @include PillarLinks($culture-bright, $culture-pastel);
+        @include PillarLinks($culture-bright);
     }
 
     &.pillar-link--Lifestyle {
-        @include PillarLinks($lifestyle-bright, $lifestyle-pastel);
+        @include PillarLinks($lifestyle-bright);
     }
 }

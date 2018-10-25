@@ -16,7 +16,7 @@
 
     @include mq(mobileMedium) {
         font-size: 18px;
-        padding: 7px 0 0;
+        padding: 7px 4px 0;
     }
 
     @include mq(tablet) {
@@ -57,7 +57,7 @@
         z-index: 1;
 
         @include mq(tablet) {
-            bottom: .7em;
+            bottom: .6em;
             top: 0;
 
             .new-header--open & {
@@ -66,13 +66,13 @@
         }
     }
 
-    &:not(.pillar-link--dropdown):after {
+    &:after {
         // Overlines
         border-top: 4px solid currentColor;
         left: 1px;
         right: 0;
         top: -4px;
-        transition: transform 150ms ease-out;
+        transition: transform .3s ease-in-out;
     }
 
     &:hover,
@@ -87,6 +87,11 @@
 
     .new-header--open & {
         @include mq(desktop) {
+            &:hover,
+            &:focus {
+                color: $highlight-main;
+            }
+
             &:after {
                 transform: translateY(4px)
             }
@@ -101,7 +106,7 @@
 }
 
 .pillar-link--dropdown__icon {
-    border: 2px solid currentColor;
+    border: 1px solid currentColor;
     border-left: transparent;
     border-top: transparent;
     display: inline-block;

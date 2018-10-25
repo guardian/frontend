@@ -38,7 +38,7 @@
     @include mq(desktop) {
         display: none;
         position: absolute;
-        padding-bottom: $gs-baseline * 4;
+        padding-bottom: 0;
         padding-top: 0;
         top: 100%;
         // Left, right and width values are fallback for if vw is not supported

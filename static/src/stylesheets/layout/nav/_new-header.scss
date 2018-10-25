@@ -24,13 +24,6 @@ from scrolling */
         display: block;
     }
 
-    @include mq(desktop) {
-
-        &.new-header--open {
-            // background-color: $brightness-97;
-        }
-    }
-
     .has-page-skin & .gs-container {
         @include mq(wide) {
             width: gs-span(12) + ($gs-gutter * 2);
@@ -54,13 +47,13 @@ from scrolling */
         width: 100px;
     }
 
-    @include mq(leftCol) {
-        right: 120px;
-    }
-
     body:not(.has-page-skin) & {
+        @include mq(leftCol) {
+            right: 120px;
+        }
+
         @include mq(wide) {
-            right: 200px;
+            right: 208px;
             width: auto;
         }
     }
@@ -76,7 +69,7 @@ from scrolling */
         top: 17px;
 
         @include mq(mobileMedium) {
-            top: 28px;
+            top: 29px;
         }
 
         .new-header--slim & {
@@ -104,16 +97,16 @@ from scrolling */
 
 .new-header__logo {
     float: right;
-    margin-bottom: $gs-baseline;
     margin-right: ($gs-gutter / 2) + $veggie-burger;
     margin-top: $gs-baseline / 2;
+    margin-bottom: $gs-baseline * 2;
 
     @include mq(mobileLandscape) {
         margin-right: $gs-gutter - 3;
     }
 
     @include mq(desktop) {
-        margin-bottom: $gs-baseline;
+        margin-bottom: $gs-baseline + ($gs-baseline / 2);
         margin-top: 5px;
         position: relative;
         z-index: $zindex-main-menu + 1;
@@ -236,17 +229,4 @@ from scrolling */
     @include mq(tablet) {
         height: $pillar-height;
     }
-}
-
-.new-header .popup--search {
-    background-color: #ffffff;
-    border-radius: $gs-baseline / 4;
-    box-shadow: 0 0 0 1px rgba(0, 0, 0, .1);
-    padding: $gs-baseline 0;
-    top: $gs-baseline * 2 + $gs-baseline / 2;
-}
-
-// Don't show trapezoid on opera mini: https://wp-mix.com/css-target-opera/
-x:-o-prefocus, .new-header__cta-container  {
-    display: none;
 }

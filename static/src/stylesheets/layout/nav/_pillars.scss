@@ -4,7 +4,7 @@
     padding: 0 0 0 ($gs-gutter / 2);
 
     @include mq($until: mobileLandscape) {
-        display: flex;
+        // display: flex;
     }
 
     .new-header:not(.new-header--slim) & {

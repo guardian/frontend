@@ -1,0 +1,100 @@
+.new-header .popup--search {
+    background-color: $brightness-100;
+    border-radius: $gs-baseline / 4;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, .1);
+    padding: $gs-baseline $gs-gutter 0;
+    top: ($gs-baseline * 2) + $gs-baseline / 2;
+    z-index: $zindex-modal;
+    outline: 0;
+    width: gs-span(7);
+    left: 160px;
+
+    body:not(.has-page-skin) & {
+        @include mq(leftCol) {
+            left: 270px;
+        }
+
+        @include mq(wide) {
+            left: 340px;
+        }
+    }
+}
+
+// Google search overrides
+.gsc-search-box {
+    position: relative !important;
+}
+
+.gsc-search-button,
+.gsib_a {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 0 !important;
+}
+
+.gsc-search-button-v2 {
+    padding: 7px 9px 8px !important;
+    left: 0 !important;
+
+    svg {
+        fill: $header-blue !important;
+        height: 20px !important;
+        width: 20px !important;
+    }
+}
+
+.gsst_a {
+    padding: 13px 0 0 11px !important;
+}
+
+.gsib_b,
+.gsc-search-button-v2 {
+    border: 0 !important;
+    box-sizing: border-box !important;
+    height: 42px !important;
+    width: 42px !important;
+    margin: 0 !important;
+    background-color: transparent !important;
+    position: absolute !important;
+    right: 0 !important;
+    top: 0 !important;
+}
+
+.gsc-input-box {
+    border: 0 !important;
+    box-shadow: none !important;
+
+    .gsc-input {
+        height: 36px !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        box-sizing: border-box !important;
+        background-position-x: 40px !important;
+        text-indent: 90px !important;
+        border: 1px solid $brightness-86 !important;
+        height: 42px !important;
+        box-shadow: none !important;
+        transition: box-shadow .2s ease-in-out !important;
+
+        &:hover {
+            box-shadow: 0 0 0 3px rgba(#ededed, 1) !important;
+        }
+
+        &:focus {
+            outline: 0;
+            box-shadow: 0 0 0 3px rgba(#ffe500, 1) !important;
+            text-indent: 42px !important;
+        }
+
+        &:not(:placeholder-shown) {
+          text-indent: 42px !important;
+        }
+    }
+}
+
+.gsc-completion-container,
+.gsc-input {
+    font-family: $f-sans-serif-text;
+    padding: 0 !important;
+    margin: 0 !important
+}

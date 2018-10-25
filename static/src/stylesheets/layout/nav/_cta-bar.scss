@@ -1,20 +1,28 @@
 .new-header__cta-bar {
     position: absolute;
     top: 0;
-    left: $gs-gutter;
+    left: $gs-gutter / 2;
+
+    @include mq(mobileLandscape) {
+        left: $gs-gutter;
+    }
 }
 
 .cta-bar__message {
-    // background-color: $highlight-main;
-    color: $brightness-100;
     color: #c5eaff;
     display: block;
     font-family: $f-serif-headline;
-    font-size: 32px;
+    font-size: 18px;
     font-weight: 800;
     line-height: 1;
-    padding: 3px 4px;
-    // margin-bottom: $gs-baseline;
+    margin: ($gs-baseline / 4) 0 ($gs-baseline / 2);
+    max-width: 120px;
+
+    @include mq(desktop) {
+        font-size: 32px;
+        max-width: gs-span(6);
+        margin: ($gs-baseline / 4) 0 $gs-baseline;
+    }
 }
 
 .cta-bar__cta {

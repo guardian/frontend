@@ -9,7 +9,7 @@
         data-link-name="nav2 : topbar : signin"
         href="@Configuration.id.url/signin?INTCMP=DOTCOM_NEWHEADER_SIGNIN">
 
-        @fragments.inlineSvg("profile", "icon", List("my-account--icon"))
+        @fragments.inlineSvg("profile", "icon", List("my-account--icon", "hide-from-tablet"))
         <span class="hide-until-tablet">Sign in</span>
     </a>
 
@@ -24,7 +24,7 @@
         for="my-account-toggle"
         data-link-name="nav2 : topbar: my account">
 
-        @fragments.inlineSvg("profile", "icon", List("my-account--icon"))
+        @fragments.inlineSvg("profile", "icon", List("my-account--icon", "hide-from-tablet"))
         <span class="hide-until-tablet">My account</span>
     </label>
     <div class="my-account__overlay"></div>
