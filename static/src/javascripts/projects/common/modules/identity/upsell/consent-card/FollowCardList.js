@@ -1,41 +1,68 @@
 // @flow
-import React, { Component } from 'preact-compat';
+import React from 'preact-compat';
 import config from 'lib/config';
 import { FollowCard } from 'common/modules/identity/upsell/consent-card/FollowCard';
 import type { ConsentWithState } from '../store/types';
 import { setConsentsInApi } from '../store/consents';
 import { ErrorBar, genericErrorStr } from '../error-bar/ErrorBar';
 import { ExpanderButton } from '../button/ExpanderButton';
+import {getNewsLetterConsents, getUserConsents} from "common/modules/identity/upsell/store/consents";
 
-type FollowCardListProps = {
-    consents: Promise<ConsentWithState>[],
+const getConsents = (): Promise<ConsentWithState[]> => {
+
+    const userConsents = getUserConsents([
+        'supporter',
+        'holidays',
+        'events',
+        'offers',
+        'jobs',
+    ]);
+
+    const newsLetterConsents =  getNewsLetterConsents([
+        'today-uk',
+        'the-long-read',
+        'bookmarks',
+        'brexit-briefing',
+        'green-light',
+        'lab-notes',
+    ]);
+
+    return Promise.all([userConsents, newsLetterConsents])
+        .then(consents => consents[0].concat(consents[1]))
+};
+
+type Props = {
     cutoff: number,
 };
 
-class FollowCardList extends Component<
-    FollowCardListProps,
-    {
-        consents: ConsentWithState[],
-        isExpanded: boolean,
-    }
-> {
-    constructor(props: FollowCardListProps) {
+type State = {
+    consents: ConsentWithState[],
+    isLoading: boolean,
+    isExpanded: boolean,
+    errors: string[],
+}
+
+// TODO: seperate this into a stateless component and a stateful wrapper.
+class FollowCardList extends React.Component<Props, State> {
+
+    constructor(props: Props) {
         super(props);
         this.setState({
             consents: [],
-            errors: [],
-            isExpanded: false,
             isLoading: true,
+            isExpanded: false,
+            errors: [],
         });
     }
 
     componentDidMount() {
-        Promise.all(this.props.consents).then(consents => {
-            this.setState({
-                consents,
-                isLoading: false,
-            });
-        });
+        getConsents()
+            .then(consents =>
+                this.setState({
+                    consents,
+                    isLoading: false,
+                })
+            )
     }
 
     updateConsentState(consent: ConsentWithState) {
@@ -67,12 +94,10 @@ class FollowCardList extends Component<
     };
 
     render() {
-        const { consents, isExpanded, errors, isLoading } = this.state;
+        const { consents, isLoading, isExpanded, errors } = this.state;
         const { cutoff } = this.props;
 
-        const displayables = isExpanded
-            ? consents
-            : [...consents].splice(0, cutoff);
+        const displayables = isExpanded ? consents : [...consents].splice(0, cutoff);
 
         return (
             <div>

@@ -321,3 +321,11 @@ export const ajaxSignIn = (credentials: PasswordCredential) => {
         credentials: 'include',
     });
 };
+
+export const getUserData = (): Promise<Response> => {
+    return fetch(`${idApiRoot || ''}/user/me`, {
+        method: 'GET',
+        mode: 'cors',
+        credentials: 'include',
+    });
+};
