@@ -222,7 +222,7 @@
         @collection.cards.headOption.map { card =>
             @faciaCard(classesForCard(card, withImage = true)) {
                 @row(Seq("no-pad")){
-                    <a class="fc-link" href="@card.header.url.hrefWithRel">
+                    <a class="fc-link" href="@card.header.url.get">
                         <img class="full-width" src="@FlagshipEmailContainer.AlbumArtUrl" alt="@card.header.headline">
                     </a>
                 }
