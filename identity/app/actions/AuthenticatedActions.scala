@@ -3,11 +3,9 @@ package actions
 import actions.AuthenticatedActions.AuthRequest
 import idapiclient.IdApiClient
 import play.api.mvc.Security.AuthenticatedRequest
-import play.api.mvc.{request, _}
-
+import play.api.mvc._
 import services._
 import utils.Logging
-
 import scala.concurrent.{ExecutionContext, Future}
 
 object AuthenticatedActions {
@@ -107,8 +105,7 @@ class AuthenticatedActions(
     new ActionRefiner[AuthRequest, AuthRequest] {
       override val executionContext = ec
 
-      def refine[A](request: AuthRequest[A]) = {
-        val r = request
+      def refine[A](request: AuthRequest[A]) =
         identityApiClient.me(request.user.auth).map {
           _.fold(
             errors => {
@@ -121,8 +118,6 @@ class AuthenticatedActions(
             }
           )
         }
-      }
-
     }
 
   private def recentlyAuthenticatedRefiner: ActionRefiner[AuthRequest, AuthRequest] =
