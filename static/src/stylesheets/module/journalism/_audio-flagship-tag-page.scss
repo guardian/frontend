@@ -138,7 +138,6 @@
                 @include mq($from: phablet) {
                     position: absolute;
                     right: 0;
-                    bottom: 0;
                     z-index: 8;
                 }
                 .artwork-holder {
