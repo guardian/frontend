@@ -4,6 +4,7 @@ import fetchJson from 'lib/fetch-json';
 import { _, init } from './cmp';
 import { log as log_ } from './log';
 
+jest.mock('lib/raven');
 jest.mock('lib/fetch-json', () => jest.fn());
 const fetchJsonMock: JestMockFn<*, *> = (fetchJson: any);
 

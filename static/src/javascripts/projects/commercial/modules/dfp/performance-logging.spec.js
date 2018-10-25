@@ -1,6 +1,7 @@
 // @flow
 import { defer, wrap } from 'commercial/modules/dfp/performance-logging';
 
+jest.mock('lib/raven');
 jest.mock('common/modules/analytics/beacon', () => ({
     postJson: jest.fn(),
 }));

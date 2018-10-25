@@ -1,11 +1,18 @@
 // @flow
 
-import raven from 'raven';
 import reportError from './report-error';
 
-jest.mock('raven', () => ({
+jest.mock('raven-js', () => ({
+    config() {
+        return this;
+    },
+    install() {
+        return this;
+    },
     captureException: jest.fn(),
 }));
+
+const fakeRaven: any = require('raven-js');
 
 describe('report-error', () => {
     const error = new Error('Something broke.');
@@ -17,7 +24,7 @@ describe('report-error', () => {
             reportError(error, metaData, false);
         }).not.toThrowError(error);
 
-        expect(raven.captureException).toHaveBeenCalledWith(
+        expect(fakeRaven.captureException).toHaveBeenCalledWith(
             error,
             ravenMetaData
         );
@@ -28,7 +35,7 @@ describe('report-error', () => {
             reportError(error, metaData);
         }).toThrowError(error);
 
-        expect(raven.captureException).toHaveBeenCalledWith(
+        expect(fakeRaven.captureException).toHaveBeenCalledWith(
             error,
             ravenMetaData
         );

@@ -1,0 +1,78 @@
+
+@(seriesId: String, title: String, subscribeLinks: Map[String, String], description: String)
+
+
+<section class="fc-container fc-container--first flagship-audio @seriesId">
+    <div class="fc-container__inner">
+    <div class="flagship-audio__thrasher">
+
+        <div class="flagship-audio__logo">
+            @fragments.inlineSvg("podcast-white", "journalism/audio")
+        </div>
+
+
+        <div class="flagship-audio__content fc-container--rolled-up-hide fc-container__body">
+
+            <div class="flagship-audio__content-main">
+                <div class="flagship-audio__content-text">
+                <h1 class="flagship-audio__title">
+                    Today in <br />
+                    <span class="red-highlight"> Focus </span>
+                </h1>
+                <p class="flagship-audio__description">
+                    <span class="regular-description">
+                    @Html(description)
+                    </span>
+                </p>
+                </div>
+
+                <ul class="flagship-audio__content-buttons">
+                    @if(!subscribeLinks.isEmpty){
+                        <p class="flagship-audio__subscribe-label">Subscribe for free</p>
+
+                        @for((name: String, link : String) <- subscribeLinks) {
+                            @defining(name.toLowerCase().replace(" ", "-")) { nameHyphen =>
+
+                                <a class="flagship-audio__link" href="@link" target="_blank" data-link="podcast-subscribe">
+                                    <li class="flagship-audio__button flagship-audio__button--@name">
+                                        @fragments.inlineSvg(nameHyphen, "journalism/audio")
+                                            &nbsp;
+                                        @name
+                                    </li>
+                                </a>
+                            }
+                        }
+                    }
+                </ul>
+            </div>
+
+            <div class="flagship-audio__artwork">
+                <div class="artwork-holder">
+                @fragments.inlineSvg("flagship-audio-series-header", "journalism/audio-flagship")
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+
+<div id="flagship-audio__mobile-only">
+    <ul class="flagship-audio__content-buttons">
+        @if(!subscribeLinks.isEmpty){
+            <p class="flagship-audio__subscribe-label">Subscribe for free</p>
+        }
+
+        @for((name: String, link : String) <- subscribeLinks) {
+            @defining(name.toLowerCase().replace(" ", "-")) { nameHyphen =>
+
+                <a class="flagship-audio__link" href="@link" target="_blank" data-link="podcast-subscribe">
+                    <li class="flagship-audio__button flagship-audio__button--@name">
+                        @fragments.inlineSvg(nameHyphen, "journalism/audio")
+                            &nbsp;
+                        @name
+                    </li>
+                </a>
+            }
+        }
+    </ul>
+</div>

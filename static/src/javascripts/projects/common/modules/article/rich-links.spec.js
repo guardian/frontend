@@ -9,6 +9,7 @@ import { commercialFeatures } from 'common/modules/commercial/commercial-feature
 
 let mockParas: ?NodeList<HTMLParagraphElement>;
 
+jest.mock('lib/raven');
 jest.mock('lib/config');
 jest.mock('common/modules/article/space-filler', () => ({
     spaceFiller: {

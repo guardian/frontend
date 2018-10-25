@@ -11,6 +11,8 @@ import {
 
 const { isValidCookieValue } = _;
 
+jest.mock('lib/raven');
+
 // Mock the Date constructor to always return the beginning of time
 const OriginalDate = global.Date;
 global.Date = jest.fn(() => new OriginalDate(0));

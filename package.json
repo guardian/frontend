@@ -27,7 +27,7 @@
     "ophan-tracker-js": "1.3.13",
     "preact": "^8.2.9",
     "preact-compat": "^3.18.0",
-    "prebid.js": "https://github.com/guardian/Prebid.js.git#4c219c6",
+    "prebid.js": "https://github.com/guardian/Prebid.js.git#72fdc4e",
     "qwery": "3.4.2",
     "rangefix": "^0.2.5",
     "raven-js": "^3.19.1",
@@ -145,7 +145,6 @@
       "node_modules"
     ],
     "moduleNameMapper": {
-      "raven": "raven-js",
       "videojs": "video.js",
       "^svgs/(.*)$": "<rootDir>/__mocks__/svgMock.js",
       "^(.*)\\.svg$": "<rootDir>/__mocks__/svgMock.js",

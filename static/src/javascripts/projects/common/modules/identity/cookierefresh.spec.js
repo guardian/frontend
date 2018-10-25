@@ -2,6 +2,8 @@
 
 import { shouldRefreshCookie } from './cookierefresh.js';
 
+jest.mock('lib/raven');
+
 const now = new Date().getTime();
 
 test('should return true for a user who has never refreshed cookies', () => {

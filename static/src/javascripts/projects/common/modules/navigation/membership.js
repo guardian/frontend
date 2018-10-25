@@ -10,14 +10,19 @@ import config from 'lib/config';
 import bean from 'bean';
 import arrowRight from 'svgs/icon/arrow-right.svg';
 import type { Banner } from 'common/modules/ui/bannerPicker';
+import { isUserLoggedIn } from 'common/modules/identity/api';
 import userPrefs from 'common/modules/user-prefs';
 
 const accountDataUpdateLink = accountDataUpdateWarningLink => {
     switch (accountDataUpdateWarningLink) {
         case 'contribution':
-            return `${config.get('page.idUrl')}/contribution/recurring/edit`;
+            return `${config.get(
+                'page.mmaUrl'
+            )}/banner/contributions?INTCMP=BANNER`;
         case 'membership':
-            return `${config.get('page.mmaUrl')}/banner/membership`;
+            return `${config.get(
+                'page.mmaUrl'
+            )}/banner/membership?INTCMP=BANNER`;
         default:
             return `${config.get(
                 'page.idUrl'
@@ -111,6 +116,7 @@ const canShow: () => Promise<boolean> = () => {
     );
     return Promise.resolve(
         updateLink !== null &&
+            isUserLoggedIn() &&
             !(
                 bannerCanBeLoadedAgainAfter &&
                 new Date(bannerCanBeLoadedAgainAfter) > new Date()

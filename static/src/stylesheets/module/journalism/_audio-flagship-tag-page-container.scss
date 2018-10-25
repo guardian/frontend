@@ -1,0 +1,119 @@
+/* ---------------- ARTICLE CONTAINER ------------------- */
+
+#flagship-audio {
+    .fc-container {
+
+        .fc-date-headline {
+            color: $brightness-100;
+        }
+
+        .fc-container__inner {
+            border-color: $brightness-46;
+
+            .fc-container__header {
+                font-size: 26px;
+
+                &::after {
+                    display: none;
+                    @include mq($from: leftCol) {
+                        display: block;
+                        content: '';
+                        position: absolute;
+                        height: 30px;
+                        width: 1px;
+                        background-color: $brightness-46;
+                        right: -11px;
+                        top: -6px;
+                    }
+                }
+
+            }
+        }
+
+        .fc-item__container {
+            flex-direction: row;
+
+            &::before {
+                background-color: #ff6a56;
+            }
+
+            .fc-date-headline {
+                color: $brightness-100;
+            }
+
+            .fc-item__media-wrapper {
+                flex-basis: 20%;
+                @include mq($from: mobile , $until: phablet) {
+                    margin: 0;
+                }
+
+                .u-responsive-ratio {
+                    padding-bottom: 100%; /* this is horrible but it works */
+                    height: 100%;
+                    width: auto;
+
+                    @include mq($from: desktop) {
+                        width: 230px;
+                    }
+                }
+
+                img {
+                    object-fit: cover;
+                }
+
+            }
+            .fc-item__content {
+                max-width: 100%;
+                justify-content: flex-start;
+                @include mq($from: tablet , $until: wide) {
+                    padding: 0 $gs-gutter $gs-gutter;
+                }
+
+                .fc-item__header {
+                    flex: 0 1 auto;
+                }
+
+                .fc-item__standfirst {
+                    flex: 0 1 auto;
+                }
+
+                .fc-item__title {
+                    .fc-item__kicker {
+                        color: #ff6a56;
+                    }
+                }
+                .fc-item__footer-meta-wrapper {
+                    margin-top: auto;
+                    .fc-item__media-meta {
+                        .inline-icon {
+                            background-color: #ff6a56;
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+
+    /* ---------------- CONTRIBUTIONS ------------------- */
+
+    .flagship-audio__contributions-banner {
+        background-color: #333333;
+        color: $brightness-100;
+
+        .fc-container__body {
+
+            h2 {
+                font-size: 26px;
+                line-height: 28px;
+            }
+            p {
+                font-size: 18px;
+                line-height: 20px;
+            }
+            a {
+                background-color: #121212;
+            }
+        }
+    }
+}
