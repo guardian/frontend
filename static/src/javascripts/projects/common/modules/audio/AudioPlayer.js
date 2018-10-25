@@ -21,7 +21,8 @@ import {
 
 import pauseBtn from 'svgs/journalism/audio-player/pause-btn.svg';
 import playBtn from 'svgs/journalism/audio-player/play-btn.svg';
-import volume from 'svgs/journalism/audio-player/volume.svg';
+import volumeOn from 'svgs/journalism/audio-player/volume-on.svg';
+import volumeOff from 'svgs/journalism/audio-player/volume-on.svg';
 import fastBackward from 'svgs/journalism/audio-player/fast-backward.svg';
 import fastForward from 'svgs/journalism/audio-player/fast-forward.svg';
 import fastBackwardActive from 'svgs/journalism/audio-player/fast-backward-active.svg';
@@ -34,62 +35,34 @@ import ProgressBar from './ProgressBar';
 import Time from './Time';
 
 const AudioGrid = styled('div')({
-    borderBottom: '1px solid #767676',
     display: 'grid',
     backgroundColor: palette.neutral[1],
     color: palette.neutral[5],
-    marginTop: '10px',
-    gridTemplateColumns: '6fr 4fr',
-    gridTemplateRows: '30px 50px 94px 50px 1fr',
-    gridTemplateAreas:
-        '"currentTime duration" "wave wave"' +
-        '"controls controls"' +
-        '"download volume"',
-
-    [mobile]: {
-        gridTemplateColumns: '1fr 1fr',
-    },
-
-    [tablet]: {
-        gridTemplateColumns: '150px 1fr 1fr',
-        gridTemplateRows: '30px 50px 90px 1fr 1fr',
-        gridTemplateAreas:
-            '"currentTime currentTime duration"' +
-            ' "wave wave wave"' +
-            ' "controls controls controls"' +
-            ' "download volume volume"',
-    },
+    gridTemplateRows: '30px 40px 120px 45px',
+    gridTemplateAreas: `"currentTime duration"
+         "wave wave"
+         "controls controls"
+         "download volume"
+        `,
 
     [leftCol]: {
-        gridTemplateRows: '30px 60px 1fr 1fr',
-        gridTemplateAreas:
-            '". currentTime duration" ' +
-            '"controls wave wave" ' +
-            '"download . volume"',
-    },
-
-    [wide]: {
-        gridTemplateRows: '30px 60px 2fr 1fr',
-        gridTemplateColumns: '230px 1fr 1fr',
+        position: 'relative',
+        gridTemplateColumns: '90px 1fr 90px',
+        gridTemplateRows: '50px 110px',
+        gridTemplateAreas: `"currentTime wave duration"
+        "controls controls controls"`,
     },
 });
 
 const TimeContainer = styled('div')(({ area }) => ({
-    [area === 'currentTime' ? 'paddingLeft' : 'paddingRight']: '4px',
+    [area === 'currentTime' ? 'paddingLeft' : 'paddingRight']: '10px',
     gridArea: area,
     paddingTop: '4px',
     fontFamily: 'Guardian Text Sans Web',
-    fontWeight: 'bold',
     display: 'flex',
     alignItems: 'center',
     justifyContent: area === 'duration' ? 'flex-end' : 'flex-start',
     backgroundColor: '#333333',
-
-    [leftCol]: {
-        marginLeft: '0',
-        marginRight: '0',
-        [area === 'currentTime' ? 'paddingLeft' : 'paddingRight']: '8px',
-    },
 }));
 
 const Controls = styled('div')({
@@ -108,69 +81,69 @@ const WaveAndTrack = styled('div')({
     cursor: 'pointer',
     maxWidth: '100%',
     backgroundColor: '#333333',
-    borderTop: '1px solid #797979',
-});
+    borderTop: '1px solid #767676',
 
-const Track = styled('div')({
-    height: '12px',
-    position: 'relative',
-    top: '-4px',
+    [leftCol]: {
+        background: '#4a4a4a',
+        borderTop: '0',
+    },
 });
 
 const FakeWave = styled('div')({
-    flex: 1,
+    height: '100%',
+    paddingLeft: '10px',
+    paddingRight: '10px',
+
+    '.wave-holder': {
+        height: '100%',
+    },
+
+    '.inline-wave-wide': {
+        display: 'block',
+        height: '100%',
+    },
+
     svg: {
         width: '100%',
-        transform: `translate(0px, 20px)`,
-        [mobileMedium]: {
-            transform: `translate(0px, 18px)`,
-        },
-        [mobileLandscape]: {
-            transform: `translate(0px, 16px)`,
-        },
-        [phablet]: {
-            transform: `translate(0px, 11px)`,
-        },
-        [tablet]: {
-            transform: `translate(0px, 8px)`,
-        },
-        [desktop]: {
-            transform: `translate(0px, 10px)`,
-        },
-        [leftCol]: {
-            transform: `translate(0px, 15px)`,
-        },
-        [wide]: {
-            transform: `translate(0px, 16px)`,
-        },
+        height: '100%',
+    },
+
+    path: {
+        fill: '#767676',
+    },
+
+    [leftCol]: {
+        paddingLeft: '0',
+        paddingRight: '0',
     },
 });
 
 const Volume = styled('div')({
     gridArea: 'volume',
     display: 'flex',
-    alignItems: 'center',
-    padding: '0 10px',
+    alignItems: 'stretch',
+    justifyContent: 'flex-end',
     svg: {
         fill: '#ffe500',
+        width: '23px',
+        height: '18px',
     },
-    [tablet]: {
-        borderRight: 'none',
+    span: {
+        display: 'inline-flex',
+        alignItems: 'center',
+        paddingLeft: '5px',
+        paddingRight: '5px',
     },
-    [desktop]: {
-        padding: '0 10px',
+
+    'span + span': {
+        borderLeft: '1px solid #767676',
     },
+
     [leftCol]: {
-        border: 'none',
-    },
-    [wide]: {
-        padding: '30px 30px 24px 30px',
-    },
-    '> img': {
-        marginRight: '6px',
-    },
-    'div[role="progressbar"]': {
-        flex: 1,
+        position: 'absolute',
+        bottom: '0',
+        right: '0',
+        height: '45px',
     },
 });
 
@@ -180,28 +153,29 @@ const Download = styled('div')({
     fontWeight: 'bold',
     display: 'flex',
     justifyContent: 'flex-start',
-    alignItems: 'center',
-    [tablet]: {
-        justifyContent: 'flex-start',
-        paddingLeft: '10px',
-        paddingTop: '8px',
-    },
-    [wide]: {
-        paddingLeft: '28px',
-    },
+    alignItems: 'flex-start',
+    paddingLeft: '10px',
     a: {
         color: '#cbcbcb', // TODO: add to the palette
         backgroundColor: '#333333',
-        borderRadius: '15px',
+        borderRadius: '17px',
         display: 'inline-flex',
         alignItems: 'center',
-        padding: '5px 9px',
-        fontSize: '12px',
+        padding: '8px 14px',
+        fontSize: '14px',
+        fontWeight: 'bold',
         textDecoration: 'none',
 
         ':hover': {
             borderColor: '#ffffff',
         },
+    },
+
+    [leftCol]: {
+        position: 'absolute',
+        bottom: '0',
+        left: '0',
+        marginBottom: '9px',
     },
 });
 
@@ -215,23 +189,23 @@ const Button = styled('button')(({ isPlay }) => ({
     },
     padding: isPlay ? '0 45px' : 0,
     svg: {
-        width: isPlay ? '60px' : '26px',
-        height: isPlay ? '60px' : '26px',
+        width: isPlay ? '70px' : '31px',
+        height: isPlay ? '70px' : '30px',
     },
 
     [leftCol]: {
         padding: isPlay ? '0 12px' : 0,
         svg: {
-            width: isPlay ? '50px' : '24px',
-            height: isPlay ? '50px' : '24px',
+            width: isPlay ? '60px' : '31px',
+            height: isPlay ? '60px' : '30px',
         },
     },
 
     [wide]: {
         padding: isPlay ? '0 20px' : 0,
         svg: {
-            width: isPlay ? '74px' : '26px',
-            height: isPlay ? '74px' : '26px',
+            width: isPlay ? '60px' : '31px',
+            height: isPlay ? '60px' : '30px',
         },
     },
 }));
@@ -255,7 +229,7 @@ type State = {
     hasBeenPlayed: boolean,
 };
 
-export default class AudioPlayer extends Component<Props, State> {
+export class AudioPlayer extends Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
@@ -286,12 +260,10 @@ export default class AudioPlayer extends Component<Props, State> {
             },
             () => {
                 if (Number.isNaN(this.audio.duration)) {
-                    console.log('if branch ran');
                     this.audio.addEventListener('durationchange', this.ready, {
                         once: true,
                     });
                 } else {
-                    console.log('else branch ran');
                     this.ready();
                 }
             }
@@ -343,7 +315,6 @@ export default class AudioPlayer extends Component<Props, State> {
     wave: HTMLElement;
 
     ready = () => {
-        console.log('ready fired this.audio.duration', this.audio.duration);
         const duration = this.audio.duration;
         if (this.state.bins) {
             const interval = duration / this.state.bins.length;
@@ -458,6 +429,21 @@ export default class AudioPlayer extends Component<Props, State> {
                     preload="none">
                     <source src={this.props.sourceUrl} type="audio/mpeg" />
                 </audio>
+                <TimeContainer area="currentTime">
+                    <Time t={this.state.currentTime} />
+                </TimeContainer>
+                <TimeContainer area="duration">
+                    {this.state.ready ? <Time t={this.state.duration} /> : ''}
+                </TimeContainer>
+                <WaveAndTrack>
+                    <FakeWave onClick={this.seekWave} className="fake-wave">
+                        <div
+                            ref={this.setWave}
+                            className="wave-holder"
+                            dangerouslySetInnerHTML={{ __html: waveW.markup }}
+                        />
+                    </FakeWave>
+                </WaveAndTrack>
                 <Controls>
                     <Button
                         isPlay={false}
@@ -492,54 +478,10 @@ export default class AudioPlayer extends Component<Props, State> {
                         />
                     </Button>
                 </Controls>
-                <TimeContainer area="currentTime">
-                    <Time t={this.state.currentTime} />
-                </TimeContainer>
-                <TimeContainer area="duration">
-                    {this.state.ready ? <Time t={this.state.duration} /> : ''}
-                </TimeContainer>
-                <WaveAndTrack>
-                    <FakeWave onClick={this.seekWave} className="fake-wave">
-                        <span
-                            ref={this.setWave}
-                            className="wave-holder"
-                            dangerouslySetInnerHTML={{ __html: waveW.markup }}
-                        />
-                    </FakeWave>
-                    <Track>
-                        <ProgressBar
-                            barContext="playTime"
-                            value={this.state.currentOffset}
-                            formattedValue={formatTime(
-                                this.state.currentOffset
-                            )}
-                            barHeight={2}
-                            trackColor={
-                                pillarsHighlight[`${this.props.pillar}`]
-                            }
-                            highlightColor={
-                                pillarsHighlight[`${this.props.pillar}`]
-                            }
-                            backgroundColor={palette.neutral[4]}
-                            onChange={this.seek}
-                        />
-                    </Track>
-                </WaveAndTrack>
 
                 <Volume>
-                    <span dangerouslySetInnerHTML={{ __html: volume.markup }} />
-                    <ProgressBar
-                        barContext="volume"
-                        value={this.state.volume * 100}
-                        formattedValue={`Volume set to ${this.state.volume}`}
-                        barHeight={2}
-                        trackColor={palette.neutral[7]}
-                        highlightColor={
-                            pillarsHighlight[`${this.props.pillar}`]
-                        }
-                        backgroundColor={palette.neutral[4]}
-                        onChange={this.updateVolume}
-                    />
+                    <span dangerouslySetInnerHTML={{ __html: volumeOn.markup }} />
+                    <span dangerouslySetInnerHTML={{ __html: volumeOff.markup }} />
                 </Volume>
 
                 <Download>

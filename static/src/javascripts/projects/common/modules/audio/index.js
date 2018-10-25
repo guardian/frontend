@@ -5,7 +5,7 @@ import {
     React,
     render,
 } from '@guardian/dotcom-rendering/packages/guui';
-import Player from './AudioPlayer';
+import { AudioPlayer } from './AudioPlayer';
 import { sendToOphan } from './utils';
 
 type Props = {
@@ -18,7 +18,7 @@ type Props = {
 class AudioContainer extends Component<Props, *> {
     render() {
         return (
-            <Player
+            <AudioPlayer
                 sourceUrl={this.props.source}
                 mediaId={this.props.mediaId}
                 downloadUrl={this.props.downloadUrl}
