@@ -432,7 +432,7 @@
     margin-bottom: 3px;
     border-bottom: 1px solid $brightness-46;
 
-    @include mq(leftCol){
+    @include mq(leftCol) {
         border-left: 1px solid $brightness-46;
         border-top: 1px solid $brightness-46;
         margin: 0;

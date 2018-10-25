@@ -9,29 +9,22 @@ import palette, {
     pillarsHighlight,
 } from '@guardian/dotcom-rendering/packages/pasteup/palette';
 import {
-    mobileMedium,
-    mobileLandscape,
-    phablet,
-    tablet,
     leftCol,
     wide,
-    mobile,
-    desktop,
 } from '@guardian/dotcom-rendering/packages/pasteup/breakpoints';
 
 import pauseBtn from 'svgs/journalism/audio-player/pause-btn.svg';
 import playBtn from 'svgs/journalism/audio-player/play-btn.svg';
-import volumeOn from 'svgs/journalism/audio-player/volume-on.svg';
-import volumeOff from 'svgs/journalism/audio-player/volume-on.svg';
+import volumeOn from 'svgs/journalism/audio-player/volume-on.svg'; // eslint-disable-line
+import volumeOff from 'svgs/journalism/audio-player/volume-on.svg'; // eslint-disable-line
 import fastBackward from 'svgs/journalism/audio-player/fast-backward.svg';
 import fastForward from 'svgs/journalism/audio-player/fast-forward.svg';
 import fastBackwardActive from 'svgs/journalism/audio-player/fast-backward-active.svg';
 import fastForwardActive from 'svgs/journalism/audio-player/fast-forward-active.svg';
 
 import waveW from 'svgs/journalism/audio-player/wave-wide.svg';
-import { formatTime, sendToOphan, checkForTimeEvents } from './utils';
+import { /* formatTime, */ sendToOphan, checkForTimeEvents } from './utils';
 
-import ProgressBar from './ProgressBar';
 import Time from './Time';
 
 const AudioGrid = styled('div')({
@@ -222,7 +215,6 @@ type State = {
     playing: boolean,
     currentTime: number,
     duration: number,
-    volume: number,
     bins: ?NodeList<HTMLElement>,
     interval: number,
     currentOffset: number,
@@ -237,7 +229,6 @@ export class AudioPlayer extends Component<Props, State> {
             playing: false,
             currentTime: 0,
             duration: 3000,
-            volume: NaN,
             bins: null,
             interval: NaN,
             currentOffset: 0,
@@ -248,7 +239,6 @@ export class AudioPlayer extends Component<Props, State> {
     componentDidMount() {
         const bins = this.wave.querySelectorAll('#Rectangle-path rect');
 
-        this.audio.addEventListener('volumechange', this.onVolumeChange);
         this.audio.addEventListener('timeupdate', this.onTimeUpdate);
         // this should fire on Firefox
         this.audio.addEventListener('ended', this.resetAudio);
@@ -269,10 +259,6 @@ export class AudioPlayer extends Component<Props, State> {
             }
         );
     }
-
-    onVolumeChange = () => {
-        this.setState({ volume: this.audio.volume });
-    };
 
     onTimeUpdate = () => {
         const percentPlayed = Math.round(
@@ -322,7 +308,6 @@ export class AudioPlayer extends Component<Props, State> {
                 ready: true,
                 duration,
                 interval,
-                volume: this.audio.volume,
             });
         }
     };
@@ -396,10 +381,6 @@ export class AudioPlayer extends Component<Props, State> {
     backward = () => {
         const chosenTime = Math.max(this.state.currentTime - 15, 0);
         this.updatePlayerTime(chosenTime);
-    };
-
-    updateVolume = (v: number) => {
-        this.audio.volume = v / 100;
     };
 
     incrementBlock = (currentTime: number) => {
@@ -480,8 +461,12 @@ export class AudioPlayer extends Component<Props, State> {
                 </Controls>
 
                 <Volume>
-                    <span dangerouslySetInnerHTML={{ __html: volumeOn.markup }} />
-                    <span dangerouslySetInnerHTML={{ __html: volumeOff.markup }} />
+                    <span
+                        dangerouslySetInnerHTML={{ __html: volumeOn.markup }}
+                    />
+                    <span
+                        dangerouslySetInnerHTML={{ __html: volumeOff.markup }}
+                    />
                 </Volume>
 
                 <Download>
