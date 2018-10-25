@@ -43,6 +43,7 @@ import {
     shouldIncludeOpenx,
     shouldIncludeOzone,
     shouldIncludeTrustX,
+    shouldIncludePangaea,
     stripMobileSuffix,
     stripTrailingNumbersAbove1,
     isInUsRegion,
@@ -524,7 +525,7 @@ const getDummyServerSideBidders = (): Array<PrebidBidder> => {
         dummyServerSideBidders.push(appnexusServerSideBidder);
 
         // Remove this switch after initial pangaea release
-        if (inPbTestOr(config.get('switches.ozonePangaea'))) {
+        if (inPbTestOr(shouldIncludePangaea())) {
             dummyServerSideBidders.push(pangaeaServerSideBidder);
         }
     }

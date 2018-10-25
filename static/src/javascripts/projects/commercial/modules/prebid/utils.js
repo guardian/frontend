@@ -124,6 +124,10 @@ export const shouldIncludeAppNexus = (): boolean =>
     ((config.get('switches.prebidAppnexusUkRow') && !isInUsRegion()) ||
         !!pbTestNameMap().and);
 
+export const shouldIncludePangaea = (): boolean =>
+    config.get('switches.ozonePangaea') &&
+    config.get('page.section', '').toLowerCase() === 'technology';
+
 export const stripMobileSuffix = (s: string): string =>
     stripSuffix(s, '--mobile');
 
