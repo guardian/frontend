@@ -21,7 +21,6 @@ import type {
     PrebidBid,
     PrebidBidder,
     PrebidImproveParams,
-    PrebidImproveSizeParam,
     PrebidIndexExchangeParams,
     PrebidOpenXParams,
     PrebidPubmaticParams,
@@ -234,7 +233,7 @@ const getAdYouLikePlacementId = (): string => {
 
 // Improve has to have single size as parameter if slot doesn't accept multiple sizes,
 // because it uses same placement ID for multiple slot sizes and has no other size information
-const getImproveSizeParam = (slotId: string): PrebidImproveSizeParam => {
+const getImproveSizeParam = (slotId: string): { w?: number, h?: number } => {
     const key = stripTrailingNumbersAbove1(stripMobileSuffix(slotId));
     return key &&
         (key.endsWith('mostpop') ||
