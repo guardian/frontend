@@ -25,25 +25,25 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
     FlagshipEmailContainer.displayFlagshipContainer(dateTime) should be(true)
   }
 
-  it should "return false if Saturday and after 04:00" in {
-    val dateTime = formatter.parseDateTime("2018/11/10 04:00")
+  it should "return false if Saturday and after 03:15" in {
+    val dateTime = formatter.parseDateTime("2018/11/10 03:15")
     dateTime.getDayOfWeek should be(SATURDAY)
     FlagshipEmailContainer.displayFlagshipContainer(dateTime) should be(false)
   }
 
-  it should "return true if Saturday and before 04:00" in {
+  it should "return true if Saturday and before 03:15" in {
     val dateTime = formatter.parseDateTime("2018/11/10 03:00")
     dateTime.getDayOfWeek should be(SATURDAY)
     FlagshipEmailContainer.displayFlagshipContainer(dateTime) should be(true)
   }
 
-  it should "return true if Monday and after 04:00" in {
-    val dateTime = formatter.parseDateTime("2018/11/05 04:00")
+  it should "return true if Monday and after 03:15" in {
+    val dateTime = formatter.parseDateTime("2018/11/05 03:15")
     dateTime.getDayOfWeek should be(MONDAY)
     FlagshipEmailContainer.displayFlagshipContainer(dateTime) should be(true)
   }
 
-  it should "return false if Monday and before 04:00" in {
+  it should "return false if Monday and before 03:15" in {
     val dateTime = formatter.parseDateTime("2018/11/05 03:00")
     dateTime.getDayOfWeek should be(MONDAY)
     FlagshipEmailContainer.displayFlagshipContainer(dateTime) should be(false)

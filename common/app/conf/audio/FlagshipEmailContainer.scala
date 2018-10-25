@@ -13,12 +13,12 @@ object FlagshipEmailContainer {
     "7050d39f-7e84-4894-a69d-449c359b9d54"  //CODE
   )
 
-  private val GoLiveDateTime = DateTimeFormat.forPattern("yyyy/MM/dd HH:mm").parseDateTime("2018/11/01 04:00")
+  private val GoLiveDateTime = DateTimeFormat.forPattern("yyyy/MM/dd HH:mm").parseDateTime("2018/11/01 03:15")
 
-  //The container should appear at 4:00 on Monday, and disappear at 4:00 on Saturday
-  private val fourHours: Long = 4.hours.toMillis
+  //The container should appear at 03:15 on Monday, and disappear at 03:15 on Saturday
+  private val threeHoursFifteenMinutes: Long = (3.hours + 15.minutes).toMillis
   private def isWeekend(dateTime: DateTime): Boolean = {
-    val day = dateTime.minus(fourHours).getDayOfWeek
+    val day = dateTime.minus(threeHoursFifteenMinutes).getDayOfWeek
     day == SATURDAY || day == SUNDAY
   }
 
