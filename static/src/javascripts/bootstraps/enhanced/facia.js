@@ -15,6 +15,7 @@ import { init as initSnaps } from 'facia/modules/ui/snaps';
 import { Weather } from 'facia/modules/onwards/weather';
 import partial from 'lodash/partial';
 import { videoContainerInit } from 'common/modules/video/video-container';
+import { addContributionsBanner } from 'journalism/modules/audio-series-add-contributions';
 
 const showSnaps = (): void => {
     initSnaps();
@@ -82,6 +83,13 @@ const finished = (): void => {
     mediator.emit('page:front:ready');
 };
 
+const addContributionBannerToAudioSeries = (): void => {
+    const isFlagshipPage = $('#flagship-audio').length > 0;
+    if (isFlagshipPage) {
+        addContributionsBanner();
+    }
+};
+
 const init = (): void => {
     catchErrorsWithContext([
         ['f-accessibility', shouldHideFlashingElements],
@@ -94,6 +102,7 @@ const init = (): void => {
         ['f-weather', showWeather],
         ['f-live-blog-updates', showLiveblogUpdates],
         ['f-video-playlists', upgradeVideoPlaylists],
+        ['f-audio-flagship-contributions', addContributionBannerToAudioSeries],
         ['f-finished', finished],
     ]);
 };

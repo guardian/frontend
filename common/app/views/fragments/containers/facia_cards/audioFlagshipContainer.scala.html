@@ -1,0 +1,51 @@
+@import common.commercial.ContainerModel
+@import common.{Localisation}
+@import views.support.RenderClasses
+@import views.support.GetClasses
+@import views.html.fragments.containers.facia_cards._
+
+@(containerDefinition: layout.FaciaContainer,
+    frontProperties: model.FrontProperties = model.FrontProperties.empty,
+    frontId: Option[String] = None
+)(implicit request: RequestHeader, context: model.ApplicationContext)
+
+
+@defining((containerDefinition.displayName, containerDefinition.faciaComponentName)) { case ( _, componentName) =>
+
+    @for(containerLayout <- containerDefinition.containerLayout) {
+
+        <section id="@componentName"
+            class="@GetClasses.forContainerDefinition(containerDefinition) @GetClasses.forFrontId(frontId)"
+            data-link-name="container-@{
+                containerDefinition.index + 1
+            } | @componentName"
+            data-id="@containerDefinition.dataId"
+            data-component="@componentName"
+            aria-expanded="true">
+
+
+            <div class="fc-container__inner">
+
+                @containerHeader(containerDefinition, frontProperties)
+
+                <div class="@RenderClasses(Map(
+                    ("fc-container__body", true),
+                    ("fc-container--rolled-up-hide", true)
+                ))"
+                data-title="@Localisation(containerDefinition.displayName getOrElse "")"
+                data-id="@containerDefinition.dataId">
+
+
+                    @for(sliceWithCards <- containerLayout.slices.headOption) {
+                        @audioFlagshipSlice(sliceWithCards, containerDefinition.index, frontProperties = Some(frontProperties), containerDefinition.displayName, frontId)
+                    }
+
+                    @showMore(
+                        containerDefinition.containerLayout.map(_.remainingCards).getOrElse(Nil),
+                        containerDefinition.index
+                    )
+                </div>
+            </div>
+        </section>
+    }
+}

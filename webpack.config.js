@@ -65,7 +65,6 @@ module.exports = {
             journalism: 'projects/journalism',
 
             // #wp-rjs weird old aliasing from requirejs
-            raven: 'raven-js',
             videojs: 'video.js',
 
             svgs: path.join(__dirname, 'static', 'src', 'inline-svgs'),

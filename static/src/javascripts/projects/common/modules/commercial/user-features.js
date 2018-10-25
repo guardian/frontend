@@ -31,6 +31,7 @@ const forcedAdFreeMode: boolean = !!window.location.hash.match(
 
 const userHasData = (): boolean => {
     const cookie =
+        getCookie(ACTION_REQUIRED_FOR_COOKIE) ||
         getCookie(USER_FEATURES_EXPIRY_COOKIE) ||
         getCookie(PAYING_MEMBER_COOKIE) ||
         getCookie(RECURRING_CONTRIBUTOR_COOKIE) ||
