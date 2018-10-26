@@ -3,10 +3,6 @@
     margin: 0;
     padding: 0 0 0 ($gs-gutter / 2);
 
-    @include mq($until: mobileLandscape) {
-        // display: flex;
-    }
-
     .new-header:not(.new-header--slim) & {
         &:after {
             content: '';
@@ -18,7 +14,12 @@
             right: 0;
             height: $pillar-height - $gs-baseline / 2;
 
-            @include mq(desktop) {
+            @include mq($until: tablet) {
+                border-left: 0;
+                border-right: 0;
+            }
+
+            @include mq(tablet) {
                 height: $pillar-height;
             }
         }

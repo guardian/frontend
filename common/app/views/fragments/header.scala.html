@@ -93,7 +93,7 @@
             <div class="new-header__top-bar hide-until-mobile">
                 @defining(Edition(request).id.toLowerCase()) { editionId =>
                     @if(!page.metadata.hasSlimHeader) {
-                        <span class="top-bar__item__seperator"></span>
+                        <span class="top-bar__item__seperator hide-until-tablet"></span>
                         @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
                             @fragments.nav.userAccountDropdown()
                         }

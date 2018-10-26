@@ -34,7 +34,7 @@
 
 .menu-group--secondary {
     // background-color: $brightness-93;
-    background-color: darken($header-blue, 4%);
+    background-color: darken($nav-blue, 4%);
     // border-bottom: 1px solid $nav-border-colour;
     margin-top: 0;
     padding-top: 0;
@@ -104,8 +104,9 @@
     right: $gs-gutter + $gs-gutter / 2;
     top: -$pillar-height;
     bottom: 0;
-    padding: ($gs-baseline / 2) $gs-gutter ($gs-baseline) $pillar-padding;
-    width: 171px;
+    padding: ($pillar-height + $gs-baseline / 2) $gs-gutter ($gs-baseline) $pillar-padding;
+    width: gs-span(2) - ($gs-gutter / 2);
+
 
     body:not(.has-page-skin) & {
         @include mq(leftCol) {
@@ -113,11 +114,8 @@
         }
 
         @include mq(wide) {
+            padding-top: $gs-baseline;
             width: gs-span(4);
         }
-    }
-
-    .new-header--slim & {
-        top: $gs-baseline * 2;
     }
 }

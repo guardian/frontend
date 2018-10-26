@@ -13,7 +13,7 @@ from scrolling */
 }
 
 .new-header {
-    background-color: $header-blue;
+    background-color: $nav-blue;
     position: relative;
 
     &:not(.new-header--slim) {
@@ -43,19 +43,19 @@ from scrolling */
     transform: translateX(100%);
 
     @include mq(desktop) {
-        right: 107px;
-        width: 100px;
+        right: 120px;
+        width: 120px;
     }
 
     body:not(.has-page-skin) & {
-        @include mq(leftCol) {
-            right: 120px;
-        }
-
         @include mq(wide) {
-            right: 208px;
-            width: auto;
+            right: 197px;
+            width: 197px;
         }
+    }
+
+    .top-bar__item__seperator {
+        margin-left: 0;
     }
 }
 
@@ -66,11 +66,11 @@ from scrolling */
     @include mq($until: desktop) {
         position: absolute;
         right: $gs-gutter / 4;
-        top: 18px;
+        top: 22px;
 
         @include mq(mobileMedium) {
             right: ($gs-gutter / 2) - 2px;
-            top: 29px;
+            top: 32px;
         }
 
         @include mq(mobileLandscape) {
@@ -78,14 +78,13 @@ from scrolling */
         }
 
         @include mq(tablet) {
-            top: 42px;
+            top: 45px;
         }
 
         .new-header--slim & {
             top: $gs-baseline / 4;
         }
     }
-
 
     &:active {
         outline: 0;
@@ -94,7 +93,7 @@ from scrolling */
 
 .new-header__logo {
     float: right;
-    margin-top: $gs-baseline / 2;
+    margin-top: 10px;
     margin-right: $veggie-burger + 12px;
     margin-bottom: $gs-baseline * 2;
 
@@ -119,17 +118,17 @@ from scrolling */
     .new-header--slim & {
         position: absolute;
         margin: 0;
-        right: $veggie-burger ;
+        right: $veggie-burger;
         top: $gs-baseline / 4;
         z-index: $zindex-main-menu;
 
-        @include mq(mobileLandscape) {
-            right: $veggie-burger + $gs-gutter / 2;
-        }
-
         body:not(.has-page-skin) & {
+            @include mq(mobileLandscape) {
+                margin-right: 0;
+                right: $veggie-burger + ($gs-gutter / 2);
+            }
+
             @include mq(desktop) {
-                margin: 0;
                 right: $gs-gutter;
             }
         }
@@ -153,11 +152,6 @@ from scrolling */
     & path:nth-child(2) {
         fill: $brightness-7;
     }
-
-    @include mq(desktop) {
-        height: $veggie-burger + $gs-baseline / 2;
-        width: $veggie-burger + $gs-baseline / 2;
-    }
 }
 
 .inline-the-guardian-logo__svg {
@@ -176,15 +170,8 @@ from scrolling */
     }
 
     @include mq(desktop) {
-        height: 80px;
-        width: 249px;
-    }
-
-    body:not(.has-page-skin) & {
-        @include mq(leftCol) {
-            height: 95px;
-            width: 295px;
-        }
+        height: 95px;
+        width: 295px;
     }
 
     path {

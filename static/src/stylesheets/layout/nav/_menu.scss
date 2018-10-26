@@ -1,5 +1,5 @@
 .menu {
-    background-color: $header-blue;
+    background-color: $nav-blue;
     box-sizing: border-box;
     font-size: 20px;
     left: 0;
@@ -82,12 +82,16 @@
     }
 
     @include mq(desktop) {
-        background-color: $header-blue;
+        background-color: $nav-blue;
         border: 1px solid $nav-border-colour;
         border-bottom: 0;
         border-top: 0;
         box-sizing: border-box;
         padding: 0 $gs-gutter;
+
+        .new-header--slim & {
+            border-color: transparent;
+        }
     }
 }
 

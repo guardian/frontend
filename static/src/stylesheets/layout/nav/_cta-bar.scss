@@ -1,10 +1,26 @@
 .new-header__cta-bar {
     position: absolute;
-    top: 0;
+    top: 30px;
     left: $gs-gutter / 2;
+
+    @include mq(mobileMedium) {
+        top: 37px;
+    }
 
     @include mq(mobileLandscape) {
         left: $gs-gutter;
+    }
+
+    @include mq(tablet) {
+        top: 0;
+    }
+
+    .new-header--slim & {
+        top: 10px;
+        
+        @include mq(tablet) {
+            display: none;
+        }
     }
 }
 
@@ -12,47 +28,64 @@
     color: #c5eaff;
     display: block;
     font-family: $f-serif-headline;
-    font-size: 18px;
+    font-size: 30px;
     font-weight: 800;
     line-height: 1;
-    margin: ($gs-baseline / 4) 0 ($gs-baseline / 2);
-    max-width: 120px;
+    margin: ($gs-baseline / 4) 0 $gs-baseline;
 
     @include mq(desktop) {
         font-size: 32px;
-        max-width: gs-span(6);
+        width: gs-span(5) - $gs-gutter * 2;
         margin: ($gs-baseline / 4) 0 $gs-baseline;
     }
 }
 
 .cta-bar__cta {
-    @include fs-textSans(3);
+    @include fs-textSans(5);
     font-weight: 700;
     background-color: $highlight-main;
     border-radius: 18px;
     box-sizing: border-box;
     color: $brightness-7;
     display: block;
-    height: 24px;
     line-height: 1;
-    margin-right: $gs-gutter / 2;
-    padding: 5px 30px 0 10px;
+    height: 28px;
+    padding: 6px 10px 0 10px;
     position: relative;
     float: left;
 
+    @include mq(mobileMedium) {
+        padding: 6px 30px 0 10px;
+    }
+
+    .inline-arrow-right {
+        margin: 0 -2px 0 0;
+    }
+
+    @include mq(tablet) {
+        height: 32px;
+        padding: 8px 34px 0 12px;
+        margin-right: $gs-gutter / 2;
+    }
+
     .inline-arrow-right {
         position: absolute;
-        height: 24px;
-        width: 24px;
-        right: 4px;
-        top: 0;
+        height: 32px;
+        width: 32px;
+        right: 3px;
+        top: 50%;
+        transform: translate(0, -50%);
         transition: transform .3s ease-in-out;
+
+        @include mq($until: mobileMedium) {
+            display: none;
+        }
     }
 
     .inline-arrow-right__svg {
         fill: currentColor;
-        height: 24px;
-        width: 24px;
+        height: 32px;
+        width: 32px;
     }
 
     &:hover,
@@ -61,7 +94,7 @@
         text-decoration: none;
 
         .inline-arrow-right {
-            transform: translateX(3px);
+            transform: translate(3px, -50%);
         }
     }
 }

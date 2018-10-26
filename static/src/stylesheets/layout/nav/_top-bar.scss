@@ -1,14 +1,22 @@
 .new-header__top-bar {
     position: absolute;
-    top: 0;
-    right: 202px;
+    left: $gs-gutter / 2;
+
+    @include mq(mobileLandscape) {
+        left: $gs-gutter;
+    }
+
+    @include mq(tablet) {
+        left: auto;
+        right: 237px;
+    }
 
     @include mq(desktop) {
-        right: 224px;
+        right: 266px;
     }
 
     body:not(.has-page-skin) & {
-        @include mq(leftCol) {
+        @include mq(wide) {
             right: 342px;
         }
     }
@@ -16,11 +24,12 @@
 
 .top-bar__item {
     @include fs-textSans(2);
+    font-size: 16px;
     color: $brightness-100;
     float: left;
     line-height: 1;
+    padding-top: $gs-baseline / 2;
     position: relative;
-    transition: color .3s ease-in-out;
     z-index: $zindex-main-menu + 2;
 
     &:hover,
@@ -29,29 +38,28 @@
         text-decoration: none;
     }
 
-    @include mq($until: tablet) {
-        &.popup__toggle:after {
-            content: none;
-        }
-    }
-
     @include mq(mobileMedium) {
         padding-top: $gs-baseline;
     }
 
     @include mq(tablet) {
-        font-size: 15px;
         padding: 9px ($gs-gutter / 3);
+        transition: color .3s ease-in-out;
     }
+}
+
+.top-bar__commercial-items {
+    position: relative;
+    display: inline-block;
+    margin-left: $gs-gutter / 2;
 }
 
 .top-bar__item__seperator {
     border-left: 1px solid $nav-border-colour;
+    position: absolute;
     left: 0;
     top: 0;
     height: 22px;
-    float: left;
-    margin-left: $gs-gutter / 2;
 }
 
 .new-header__user-account-container {

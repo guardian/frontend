@@ -1,26 +1,23 @@
 .veggie-burger {
-    background-color: $brightness-7;
+    background-color: $highlight-main;
     top: $gs-baseline * 2;
-    box-shadow: 0 0 0 1px rgba(0, 0, 0, .08);
-    color: $brightness-97;
+    color: $brightness-7;
     height: $veggie-burger;
     min-width: $veggie-burger;
     position: absolute;
     border: 0;
     border-radius: 50%;
     outline: none;
-    right: $gutter-small;
+    right: $gs-gutter / 2;
     z-index: 1;
 
     @include mq(mobileMedium) {
         bottom: -$gs-baseline / 2;
-        height: $veggie-burger;
-        min-width: $veggie-burger;
         top: auto;
     }
 
     @include mq(mobileLandscape) {
-        right: $gutter-medium + $gs-gutter / 4;
+        right: $gs-gutter / 4;
     }
 }
 

@@ -9,7 +9,7 @@
     font-size: 15.4px;
     height: $pillar-height - $gs-baseline / 2;
     line-height: 1;
-    padding: 9px 0 0;
+    padding: 9px 5px 0;
     position: relative;
     overflow: hidden;
     z-index: 1;
@@ -21,21 +21,22 @@
 
     @include mq(tablet) {
         font-size: 22px;
+        padding-top: $gs-baseline - 5px;
         padding-right: $gs-gutter;
         padding-left: $pillar-padding;
+        height: $pillar-height;
+
+        .new-header--slim & {
+            height: $pillar-height + ($gs-baseline / 2);
+            padding-top: $gs-baseline - 2px;
+        }
     }
 
     @include mq(desktop) {
-        height: $pillar-height;
-        padding-top: $gs-baseline - 5px;
         transition: color .3s ease-in-out;
     }
 
     body:not(.has-page-skin) & {
-        @include mq(leftCol) {
-            font-size: 22px;
-        }
-
         @include mq(wide) {
             font-size: 24px;
         }

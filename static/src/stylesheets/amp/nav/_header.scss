@@ -1,6 +1,5 @@
 .header {
-    background-color: $brightness-97;
-    border-bottom: 1px solid $brightness-86;
+    background-color: $nav-blue;
     color: $brightness-7;
     position: relative;
     max-width: 600px;
@@ -30,6 +29,10 @@
     margin-bottom: $gs-baseline + $gs-baseline / 4;
     margin-right: $gs-gutter / 4 + $veggie-burger;
     margin-top: $gs-baseline / 4;
+
+    path {
+        fill: $brightness-100;
+    }
 
     @include mq(mobileMedium) {
         height: 57px;
