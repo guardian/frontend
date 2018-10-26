@@ -138,6 +138,7 @@ const WaveAndTrack = styled('div')({
     maxWidth: '100%',
     backgroundColor: '#333333',
     borderTop: '1px solid #767676',
+    position: 'relative',
 
     [leftCol]: {
         background: '#4a4a4a',
@@ -173,6 +174,18 @@ const FakeWave = styled('div')({
         paddingRight: '0',
     },
 });
+
+const ScrubberButton = styled(Button)(({ position }) => ({
+    position: 'absolute',
+    background: '#ffe500',
+    width: '4px',
+    height: '40px',
+    transform: `translate(${position}px,0)`,
+
+    [leftCol]: {
+        height: '50px',
+    },
+}));
 
 const Volume = styled('div')({
     gridArea: 'volume',
@@ -249,6 +262,7 @@ type State = {
     ready: boolean,
     playing: boolean,
     muted: boolean,
+    scrubbing: boolean,
     currentTime: number,
     duration: number,
     bins: ?NodeList<HTMLElement>,
@@ -264,6 +278,7 @@ export class AudioPlayer extends Component<Props, State> {
             ready: false,
             playing: false,
             muted: false,
+            scrubbing: true,
             currentTime: 0,
             duration: 3000,
             bins: null,
@@ -446,6 +461,10 @@ export class AudioPlayer extends Component<Props, State> {
         this.audio.volume = 1;
     };
 
+    isScrubbing = (scrubbing: boolean) => () => {
+        this.setState({ scrubbing });
+    };
+
     render() {
         return (
             <AudioGrid>
@@ -470,6 +489,11 @@ export class AudioPlayer extends Component<Props, State> {
                             dangerouslySetInnerHTML={{ __html: waveW.markup }}
                         />
                     </FakeWave>
+                    <ScrubberButton
+                        onMouseDown={this.isScrubbing(true)}
+                        onMouseUp={this.isScrubbing(false)}
+                        position={this.state.currentOffset}
+                    />
                 </WaveAndTrack>
                 <Controls>
                     <JumpButton
