@@ -98,6 +98,11 @@ const JumpButton = styled(Button)({
 });
 
 const VolumeButton = styled(Button)(({ isActive }) => ({
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '38px',
+
     svg: {
         fill: isActive ? '#ffe500' : '#767676',
         width: '23px',
@@ -194,6 +199,10 @@ const Volume = styled('div')({
         bottom: '0',
         right: '0',
         height: '45px',
+    },
+
+    'button + button': {
+        borderLeft: '1px solid #767676',
     },
 });
 
