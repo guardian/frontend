@@ -38,7 +38,6 @@ type Prefill = {
 };
 
 const getPrefill = (el: HTMLElement): Prefill =>
-    // TODO: stricter implementation
     ({
         csrfToken: el.dataset.csrfToken,
         accountToken: el.dataset.accountToken,
