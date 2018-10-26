@@ -345,7 +345,7 @@ export class AudioPlayer extends Component<Props, State> {
     setGeometry = (el: ?HTMLElement) => {
         if (el) {
             this.setState({
-                waveWidthPx: el.getBoundingClientRect().width
+                waveWidthPx: el.getBoundingClientRect().width,
             });
         }
     };
@@ -385,18 +385,16 @@ export class AudioPlayer extends Component<Props, State> {
     };
 
     seekWave = (e: any) => {
-        // if (document.querySelector('.fake-wave')) {
-        //     // $FlowFixMe
-        //     const boxW = document.querySelector('.fake-wave').offsetWidth;
-        //     const svg = document.querySelector('.fake-wave svg');
-        //     // $FlowFixMe
-        //     const leftOffset = svg.getBoundingClientRect().left;
-
-        //     const clickedPos = e.clientX - leftOffset;
-        //     const posPercentage = (clickedPos / boxW) * 100;
-
-        //     this.seek(posPercentage);
-        // }
+        if (document.querySelector('.fake-wave')) {
+            // $FlowFixMe
+            const boxW = document.querySelector('.fake-wave').offsetWidth;
+            const svg = document.querySelector('.fake-wave svg');
+            // $FlowFixMe
+            const leftOffset = svg.getBoundingClientRect().left;
+            const clickedPos = e.clientX - leftOffset;
+            const posPercentage = (clickedPos / boxW) * 100;
+            this.seek(posPercentage);
+        }
     };
 
     seek = (chosenPercent: number) => {
@@ -472,7 +470,9 @@ export class AudioPlayer extends Component<Props, State> {
                     {this.state.ready ? <Time t={this.state.duration} /> : ''}
                 </TimeContainer>
                 <WaveAndTrack innerRef={this.setGeometry}>
-                    <FakeWave onClick={this.seekWave} progress={this.state.currentOffsetPx}>
+                    <FakeWave
+                        onClick={this.seekWave}
+                        progress={this.state.currentOffsetPx}>
                         <div
                             className="wave-holder"
                             dangerouslySetInnerHTML={{ __html: waveW.markup }}
