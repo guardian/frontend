@@ -5,9 +5,7 @@ import {
     Component,
     styled,
 } from '@guardian/dotcom-rendering/packages/guui';
-import palette, {
-    pillarsHighlight,
-} from '@guardian/dotcom-rendering/packages/pasteup/palette';
+import palette from '@guardian/dotcom-rendering/packages/pasteup/palette';
 import {
     leftCol,
     wide,
@@ -189,10 +187,11 @@ const ScrubberButton = styled(Button)(({ position }) => ({
     background: '#ffe500',
     width: '4px',
     height: '40px',
-    transform: `translate(${position}px,0)`,
+    transform: `translate(${10 + position}px,0)`,
 
     [leftCol]: {
         height: '50px',
+        transform: `translate(${position}px,0)`,
     },
 }));
 
@@ -264,7 +263,6 @@ type Props = {
     sourceUrl: string,
     mediaId: string,
     downloadUrl: string,
-    pillar: string,
 };
 
 type State = {
@@ -344,8 +342,18 @@ export class AudioPlayer extends Component<Props, State> {
 
     setGeometry = (el: ?HTMLElement) => {
         if (el) {
+            const css = getComputedStyle(el);
+            const waveWidthPx =
+                el.clientWidth -
+                parseInt(css.paddingLeft, 10) -
+                parseInt(css.paddingRight, 10);
+            Array.from(el.getElementsByTagName('svg'))
+                .slice(0, 1)
+                .forEach(svg => {
+                    svg.setAttribute('viewBox', `0 0 ${waveWidthPx} 84`);
+                });
             this.setState({
-                waveWidthPx: el.getBoundingClientRect().width,
+                waveWidthPx,
             });
         }
     };
@@ -454,8 +462,9 @@ export class AudioPlayer extends Component<Props, State> {
                 <TimeContainer area="duration">
                     {this.state.ready ? <Time t={this.state.duration} /> : ''}
                 </TimeContainer>
-                <WaveAndTrack innerRef={this.setGeometry}>
+                <WaveAndTrack>
                     <FakeWave
+                        innerRef={this.setGeometry}
                         onClick={this.seekWave}
                         progress={this.state.currentOffsetPx}>
                         <div
@@ -480,7 +489,6 @@ export class AudioPlayer extends Component<Props, State> {
                         }}
                     />
                     <PlayButton
-                        pillarColor={pillarsHighlight[`${this.props.pillar}`]}
                         onClick={this.play}
                         dangerouslySetInnerHTML={{
                             __html: this.state.playing
