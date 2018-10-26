@@ -37,14 +37,13 @@ type Prefill = {
     hasSocialLinks: boolean,
 };
 
-const getPrefill = (el: HTMLElement): Prefill =>
-    ({
-        csrfToken: el.dataset.csrfToken,
-        accountToken: el.dataset.accountToken,
-        email: el.dataset.email,
-        hasPassword: el.dataset.hasPassword === 'true',
-        hasSocialLinks: el.dataset.hasSocialLinks === 'true',
-    });
+const getPrefill = (el: HTMLElement): Prefill => ({
+    csrfToken: el.dataset.csrfToken,
+    accountToken: el.dataset.accountToken,
+    email: el.dataset.email,
+    hasPassword: el.dataset.hasPassword === 'true',
+    hasSocialLinks: el.dataset.hasSocialLinks === 'true',
+});
 
 const bindBlockList = (el): void => {
     fastdom.read(() => getPrefill(el)).then(prefill =>

@@ -37,10 +37,7 @@ export const ConfirmEmailPage = (props: Props) => {
 
     return (
         <div>
-            <Header
-                title="Thank you!"
-                subtitle="You’re now subscribed"
-            />
+            <Header title="Thank you!" subtitle="You’re now subscribed" />
             <div className="identity-upsell-layout">{components}</div>
         </div>
     );
