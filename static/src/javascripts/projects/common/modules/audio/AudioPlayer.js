@@ -385,25 +385,10 @@ export class AudioPlayer extends Component<Props, State> {
     };
 
     seekWave = (e: any) => {
-        if (document.querySelector('.fake-wave')) {
-            // $FlowFixMe
-            const boxW = document.querySelector('.fake-wave').offsetWidth;
-            const svg = document.querySelector('.fake-wave svg');
-            // $FlowFixMe
-            const leftOffset = svg.getBoundingClientRect().left;
-            const clickedPos = e.clientX - leftOffset;
-            const posPercentage = (clickedPos / boxW) * 100;
-            this.seek(posPercentage);
-        }
-    };
-
-    seek = (chosenPercent: number) => {
-        const chosenTime = (this.audio.duration * chosenPercent) / 100;
-        const checkedTime = Math.max(
-            0,
-            Math.min(this.state.duration, chosenTime)
-        );
-        this.updatePlayerTime(checkedTime);
+        const currentOffsetPx = e.nativeEvent.offsetX;
+        const currentTime =
+            (currentOffsetPx / this.state.waveWidthPx) * this.state.duration;
+        this.audio.currentTime = currentTime;
     };
 
     updatePlayerTime = (currTime: number) => {
