@@ -269,7 +269,6 @@ type State = {
     ready: boolean,
     playing: boolean,
     muted: boolean,
-    scrubbing: boolean,
     currentTime: number,
     duration: number,
     currentOffset: number,
@@ -285,11 +284,10 @@ export class AudioPlayer extends Component<Props, State> {
             ready: false,
             playing: false,
             muted: false,
-            scrubbing: false,
             currentTime: 0,
             currentOffset: 0,
             currentOffsetPx: 0,
-            duration: 3000,
+            duration: 0,
             hasBeenPlayed: false,
             waveWidthPx: 0,
         };
@@ -319,11 +317,6 @@ export class AudioPlayer extends Component<Props, State> {
         // pause when it gets to the end
         if (this.audio.currentTime > this.state.duration - 1) {
             this.resetAudio();
-        } else if (this.state.scrubbing) {
-            this.setState({
-                currentTime: this.audio.currentTime,
-                currentOffset: percentPlayed,
-            });
         } else {
             const currentOffsetPx = this.state.waveWidthPx * percentPlayed;
             this.setState({
@@ -404,19 +397,12 @@ export class AudioPlayer extends Component<Props, State> {
 
         const currentOffset = currTime / this.state.duration;
 
-        if (this.state.scrubbing) {
-            this.setState({
-                currentTime: currTime,
-                currentOffset,
-            });
-        } else {
-            const currentOffsetPx = currentOffset * this.state.waveWidthPx;
-            this.setState({
-                currentTime: currTime,
-                currentOffset,
-                currentOffsetPx,
-            });
-        }
+        const currentOffsetPx = currentOffset * this.state.waveWidthPx;
+        this.setState({
+            currentTime: currTime,
+            currentOffset,
+            currentOffsetPx,
+        });
     };
 
     forward = () => {
@@ -440,10 +426,6 @@ export class AudioPlayer extends Component<Props, State> {
     sound = () => {
         this.setState({ muted: false });
         this.audio.volume = 1;
-    };
-
-    isScrubbing = (scrubbing: boolean) => () => {
-        this.setState({ scrubbing });
     };
 
     render() {
@@ -472,11 +454,7 @@ export class AudioPlayer extends Component<Props, State> {
                             dangerouslySetInnerHTML={{ __html: waveW.markup }}
                         />
                     </FakeWave>
-                    <ScrubberButton
-                        onMouseDown={this.isScrubbing(true)}
-                        onMouseUp={this.isScrubbing(false)}
-                        position={this.state.currentOffsetPx}
-                    />
+                    <ScrubberButton position={this.state.currentOffsetPx} />
                 </WaveAndTrack>
                 <Controls>
                     <JumpButton
