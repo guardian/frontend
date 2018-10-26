@@ -16,29 +16,49 @@ type Props = {
     isUserLoggedIn: boolean,
 };
 
-export const ConfirmEmailPage = (props: Props) => {
-    let components = [<NewsLetterSignUps />, <OptOuts />];
-
-    if (!props.hasPassword && !props.hasSocialLinks && props.accountToken) {
-        components = [
+// If we have one function argument - props: Props -
+// eslint will complain about prop fields not being used :/
+const getComponents = (
+    csrfToken: string,
+    accountToken: ?string,
+    email: string,
+    hasPassword: boolean,
+    hasSocialLinks: boolean,
+    isUserLoggedIn: boolean
+): React.Component[] => {
+    if (!hasPassword && !hasSocialLinks && accountToken) {
+        return [
             <AccountCreationBlock
-                csrfToken={props.csrfToken}
-                accountToken={props.accountToken}
-                email={props.email}
+                csrfToken={csrfToken}
+                accountToken={accountToken}
+                email={email}
             />,
             <NewsLetterSignUps />,
             <OptOuts />,
         ];
-        // TODO: currently we sign them in. Need to resolve this!
-    } else if (!props.isUserLoggedIn) {
-        // TODO: sign in form
-        components = [<NewsLetterSignUps />, <OptOuts />];
     }
 
-    return (
-        <div>
-            <Header title="Thank you!" subtitle="You’re now subscribed" />
-            <div className="identity-upsell-layout">{components}</div>
-        </div>
-    );
+    // TODO: currently we sign them in. Need to resolve this!
+    if (!isUserLoggedIn) {
+        // TODO: sign in form
+        return [<NewsLetterSignUps />, <OptOuts />];
+    }
+
+    return [<NewsLetterSignUps />, <OptOuts />];
 };
+
+export const ConfirmEmailPage = (props: Props) => (
+    <div>
+        <Header title="Thank you!" subtitle="You’re now subscribed" />
+        <div className="identity-upsell-layout">
+            {getComponents(
+                props.csrfToken,
+                props.accountToken,
+                props.email,
+                props.hasPassword,
+                props.hasSocialLinks,
+                props.isUserLoggedIn
+            )}
+        </div>
+    </div>
+);
