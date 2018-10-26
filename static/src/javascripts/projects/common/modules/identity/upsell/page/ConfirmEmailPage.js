@@ -29,10 +29,8 @@ export const ConfirmEmailPage = (props: Props) => {
             <NewsLetterSignUps />,
             <OptOuts />,
         ];
-    }
-
-    // TODO: currently we sign them in. Need to resolve this!
-    if (!props.isUserLoggedIn) {
+        // TODO: currently we sign them in. Need to resolve this!
+    } else if (!props.isUserLoggedIn) {
         // TODO: sign in form
         components = [<NewsLetterSignUps />, <OptOuts />];
     }
@@ -41,7 +39,7 @@ export const ConfirmEmailPage = (props: Props) => {
         <div>
             <Header
                 title="Thank you!"
-                subtitle="You’re now subscribed to your content"
+                subtitle="You’re now subscribed"
             />
             <div className="identity-upsell-layout">{components}</div>
         </div>
