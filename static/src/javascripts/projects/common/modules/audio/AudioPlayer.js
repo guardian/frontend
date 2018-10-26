@@ -21,7 +21,7 @@ import fastBackwardActive from 'svgs/journalism/audio-player/fast-backward-activ
 import fastForwardActive from 'svgs/journalism/audio-player/fast-forward-active.svg';
 
 import waveW from 'svgs/journalism/audio-player/wave-wide.svg';
-import { sendToOphan, checkForTimeEvents } from './utils';
+import { sendToOphan, monitorPercentPlayed, playerObserved } from './utils';
 
 import Time from './Time';
 
@@ -271,7 +271,6 @@ type State = {
     muted: boolean,
     currentTime: number,
     duration: number,
-    currentOffset: number,
     currentOffsetPx: number,
     hasBeenPlayed: boolean,
     waveWidthPx: number,
@@ -285,7 +284,6 @@ export class AudioPlayer extends Component<Props, State> {
             playing: false,
             muted: false,
             currentTime: 0,
-            currentOffset: 0,
             currentOffsetPx: 0,
             duration: 0,
             hasBeenPlayed: false,
@@ -309,10 +307,6 @@ export class AudioPlayer extends Component<Props, State> {
 
     onTimeUpdate = () => {
         const percentPlayed = this.audio.currentTime / this.state.duration;
-        const ophanPercentPlayed = Math.round(percentPlayed * 100);
-        if (ophanPercentPlayed > this.state.currentOffset) {
-            checkForTimeEvents(this.props.mediaId, ophanPercentPlayed);
-        }
 
         // pause when it gets to the end
         if (this.audio.currentTime > this.state.duration - 1) {
@@ -321,7 +315,6 @@ export class AudioPlayer extends Component<Props, State> {
             const currentOffsetPx = this.state.waveWidthPx * percentPlayed;
             this.setState({
                 currentTime: this.audio.currentTime,
-                currentOffset: percentPlayed,
                 currentOffsetPx,
             });
         }
@@ -330,6 +323,16 @@ export class AudioPlayer extends Component<Props, State> {
     setAudio = (el: ?HTMLAudioElement) => {
         if (el) {
             this.audio = el;
+
+            const mediaId = el.getAttribute('data-media-id') || '';
+            monitorPercentPlayed(el, 25, mediaId);
+            monitorPercentPlayed(el, 50, mediaId);
+            monitorPercentPlayed(el, 75, mediaId);
+            monitorPercentPlayed(el, 99, mediaId);
+
+            if (el.parentElement) {
+                playerObserved(el.parentElement, mediaId);
+            }
         }
     };
 
@@ -395,12 +398,10 @@ export class AudioPlayer extends Component<Props, State> {
     updatePlayerTime = (currTime: number) => {
         this.audio.currentTime = currTime;
 
-        const currentOffset = currTime / this.state.duration;
-
-        const currentOffsetPx = currentOffset * this.state.waveWidthPx;
+        const currentOffsetPx =
+            (currTime / this.state.duration) * this.state.waveWidthPx;
         this.setState({
             currentTime: currTime,
-            currentOffset,
             currentOffsetPx,
         });
     };
