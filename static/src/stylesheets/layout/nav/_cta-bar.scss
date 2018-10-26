@@ -17,7 +17,7 @@
 
     .new-header--slim & {
         top: 10px;
-        
+
         @include mq(tablet) {
             display: none;
         }
@@ -50,7 +50,7 @@
     display: block;
     line-height: 1;
     height: 28px;
-    padding: 6px 10px 0 10px;
+    padding: 6px 10px 0;
     position: relative;
     float: left;
 
