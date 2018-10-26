@@ -89,7 +89,7 @@ const JumpButton = styled(Button)({
     },
 
     [wide]: {
-        padding:  0,
+        padding: 0,
         svg: {
             width: '31px',
             height: '30px',
@@ -228,7 +228,6 @@ const Download = styled('div')({
         marginBottom: '9px',
     },
 });
-
 
 type Props = {
     sourceUrl: string,
