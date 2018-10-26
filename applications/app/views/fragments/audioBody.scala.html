@@ -35,18 +35,13 @@
         @fragments.headTonal(audio, page)
 
         <div class="podcast gs-container">
-            <figure class="podcast__player" data-component="main audio">
-                @audio.elements.mainAudio.map { audioElement =>
-                    @fragments.media.audio(
-                        AudioPlayer(
-                            audio,
-                            audioElement,
-                            audio.trail.headline,
-                            autoPlay = false
-                        ),
-                        isAdFree
-                    )
-                }
+            <figure class="podcast__player podcast__section"
+                data-component="main audio"
+                id="audio-component-container"
+                data-media-id="@audio.elements.mainAudio.map{ audioElement => @audioElement.properties.id}"
+                data-source="@audio.downloadUrl.map(Audio.acastUrl(_, false))"
+                data-download-url="@audio.downloadUrl.getOrElse("#")"
+                >
             </figure>
 
             @for( series <- audio.tags.tags.find(_.properties.podcast.nonEmpty)

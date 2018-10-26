@@ -19,13 +19,6 @@ const Progress = styled('div')(
         flexDirection: 'row',
         justifyContent: 'flex-start',
         position: 'relative',
-        '[role="slider"]': {
-            opacity: 0,
-            transition: 'opacity linear 200ms',
-        },
-        ':hover [role="slider"]': {
-            opacity: 1,
-        },
         '&:hover': {
             '.track-foreground': {
                 backgroundColor: highlightColor,
