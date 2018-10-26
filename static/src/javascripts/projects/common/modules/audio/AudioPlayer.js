@@ -146,7 +146,7 @@ const WaveAndTrack = styled('div')({
     },
 });
 
-const FakeWave = styled('div')({
+const FakeWave = styled('div')(({ progress }) => ({
     height: '100%',
     paddingLeft: '10px',
     paddingRight: '10px',
@@ -165,15 +165,24 @@ const FakeWave = styled('div')({
         height: '100%',
     },
 
-    path: {
+    '#WaveRectangleBg': {
         fill: '#767676',
+    },
+
+    '#WaveRectangleActive': {
+        fill: '#ffffff',
+        width: '100px',
+    },
+
+    '#WaveCutOff rect': {
+        width: `${progress}px`,
     },
 
     [leftCol]: {
         paddingLeft: '0',
         paddingRight: '0',
     },
-});
+}));
 
 const ScrubberButton = styled(Button)(({ position }) => ({
     position: 'absolute',
@@ -265,10 +274,10 @@ type State = {
     scrubbing: boolean,
     currentTime: number,
     duration: number,
-    bins: ?NodeList<HTMLElement>,
-    interval: number,
     currentOffset: number,
+    currentOffsetPx: number,
     hasBeenPlayed: boolean,
+    waveWidthPx: number,
 };
 
 export class AudioPlayer extends Component<Props, State> {
@@ -278,56 +287,51 @@ export class AudioPlayer extends Component<Props, State> {
             ready: false,
             playing: false,
             muted: false,
-            scrubbing: true,
+            scrubbing: false,
             currentTime: 0,
-            duration: 3000,
-            bins: null,
-            interval: NaN,
             currentOffset: 0,
+            currentOffsetPx: 0,
+            duration: 3000,
             hasBeenPlayed: false,
+            waveWidthPx: 0,
         };
     }
 
     componentDidMount() {
-        const bins = this.wave.querySelectorAll('#Rectangle-path rect');
-
         this.audio.addEventListener('timeupdate', this.onTimeUpdate);
         // this should fire on Firefox
         this.audio.addEventListener('ended', this.resetAudio);
 
-        // eslint-disable-next-line react/no-did-mount-set-state
-        this.setState(
-            {
-                bins,
-            },
-            () => {
-                if (Number.isNaN(this.audio.duration)) {
-                    this.audio.addEventListener('durationchange', this.ready, {
-                        once: true,
-                    });
-                } else {
-                    this.ready();
-                }
-            }
-        );
+        if (Number.isNaN(this.audio.duration)) {
+            this.audio.addEventListener('durationchange', this.ready, {
+                once: true,
+            });
+        } else {
+            this.ready();
+        }
     }
 
     onTimeUpdate = () => {
-        const percentPlayed = Math.round(
-            (this.audio.currentTime / this.state.duration) * 100
-        );
-        if (percentPlayed > this.state.currentOffset) {
-            checkForTimeEvents(this.props.mediaId, percentPlayed);
+        const percentPlayed = this.audio.currentTime / this.state.duration;
+        const ophanPercentPlayed = Math.round(percentPlayed * 100);
+        if (ophanPercentPlayed > this.state.currentOffset) {
+            checkForTimeEvents(this.props.mediaId, ophanPercentPlayed);
         }
 
         // pause when it gets to the end
         if (this.audio.currentTime > this.state.duration - 1) {
             this.resetAudio();
-        } else {
-            this.incrementBlock(this.audio.currentTime);
+        } else if (this.state.scrubbing) {
             this.setState({
                 currentTime: this.audio.currentTime,
                 currentOffset: percentPlayed,
+            });
+        } else {
+            const currentOffsetPx = this.state.waveWidthPx * percentPlayed;
+            this.setState({
+                currentTime: this.audio.currentTime,
+                currentOffset: percentPlayed,
+                currentOffsetPx,
             });
         }
     };
@@ -338,9 +342,11 @@ export class AudioPlayer extends Component<Props, State> {
         }
     };
 
-    setWave = (el: ?HTMLElement) => {
+    setGeometry = (el: ?HTMLElement) => {
         if (el) {
-            this.wave = el;
+            this.setState({
+                waveWidthPx: el.getBoundingClientRect().width
+            });
         }
     };
 
@@ -350,18 +356,13 @@ export class AudioPlayer extends Component<Props, State> {
     };
 
     audio: HTMLAudioElement;
-    wave: HTMLElement;
 
     ready = () => {
         const duration = this.audio.duration;
-        if (this.state.bins) {
-            const interval = duration / this.state.bins.length;
-            this.setState({
-                ready: true,
-                duration,
-                interval,
-            });
-        }
+        this.setState({
+            ready: true,
+            duration,
+        });
     };
 
     play = () => {
@@ -384,18 +385,18 @@ export class AudioPlayer extends Component<Props, State> {
     };
 
     seekWave = (e: any) => {
-        if (document.querySelector('.fake-wave')) {
-            // $FlowFixMe
-            const boxW = document.querySelector('.fake-wave').offsetWidth;
-            const svg = document.querySelector('.fake-wave svg');
-            // $FlowFixMe
-            const leftOffset = svg.getBoundingClientRect().left;
+        // if (document.querySelector('.fake-wave')) {
+        //     // $FlowFixMe
+        //     const boxW = document.querySelector('.fake-wave').offsetWidth;
+        //     const svg = document.querySelector('.fake-wave svg');
+        //     // $FlowFixMe
+        //     const leftOffset = svg.getBoundingClientRect().left;
 
-            const clickedPos = e.clientX - leftOffset;
-            const posPercentage = (clickedPos / boxW) * 100;
+        //     const clickedPos = e.clientX - leftOffset;
+        //     const posPercentage = (clickedPos / boxW) * 100;
 
-            this.seek(posPercentage);
-        }
+        //     this.seek(posPercentage);
+        // }
     };
 
     seek = (chosenPercent: number) => {
@@ -409,16 +410,22 @@ export class AudioPlayer extends Component<Props, State> {
 
     updatePlayerTime = (currTime: number) => {
         this.audio.currentTime = currTime;
-        this.incrementBlock(currTime);
 
-        const currentOffset = Math.round(
-            (currTime / this.state.duration) * 100
-        );
+        const currentOffset = currTime / this.state.duration;
 
-        this.setState({
-            currentTime: currTime,
-            currentOffset,
-        });
+        if (this.state.scrubbing) {
+            this.setState({
+                currentTime: currTime,
+                currentOffset,
+            });
+        } else {
+            const currentOffsetPx = currentOffset * this.state.waveWidthPx;
+            this.setState({
+                currentTime: currTime,
+                currentOffset,
+                currentOffsetPx,
+            });
+        }
     };
 
     forward = () => {
@@ -432,23 +439,6 @@ export class AudioPlayer extends Component<Props, State> {
     backward = () => {
         const chosenTime = Math.max(this.state.currentTime - 15, 0);
         this.updatePlayerTime(chosenTime);
-    };
-
-    incrementBlock = (currentTime: number) => {
-        const blocksToFill = Math.floor(currentTime / this.state.interval);
-
-        if (this.state.bins) {
-            this.state.bins.forEach((bin, i) => {
-                if (i <= blocksToFill) {
-                    bin.setAttribute(
-                        'fill',
-                        pillarsHighlight[this.props.pillar]
-                    );
-                } else {
-                    bin.setAttribute('fill', palette.neutral[4]);
-                }
-            });
-        }
     };
 
     mute = () => {
@@ -481,10 +471,9 @@ export class AudioPlayer extends Component<Props, State> {
                 <TimeContainer area="duration">
                     {this.state.ready ? <Time t={this.state.duration} /> : ''}
                 </TimeContainer>
-                <WaveAndTrack>
-                    <FakeWave onClick={this.seekWave} className="fake-wave">
+                <WaveAndTrack innerRef={this.setGeometry}>
+                    <FakeWave onClick={this.seekWave} progress={this.state.currentOffsetPx}>
                         <div
-                            ref={this.setWave}
                             className="wave-holder"
                             dangerouslySetInnerHTML={{ __html: waveW.markup }}
                         />
@@ -492,7 +481,7 @@ export class AudioPlayer extends Component<Props, State> {
                     <ScrubberButton
                         onMouseDown={this.isScrubbing(true)}
                         onMouseUp={this.isScrubbing(false)}
-                        position={this.state.currentOffset}
+                        position={this.state.currentOffsetPx}
                     />
                 </WaveAndTrack>
                 <Controls>
