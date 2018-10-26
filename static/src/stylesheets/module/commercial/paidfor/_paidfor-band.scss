@@ -37,5 +37,10 @@
 
     .inline-glabs-logo__svg {
         margin-top: $gs-baseline / 4;
+        margin-right: $gs-column-width * 2;
+
+        @include mq(desktop) {
+            margin-right: 0;
+        }
     }
 }
