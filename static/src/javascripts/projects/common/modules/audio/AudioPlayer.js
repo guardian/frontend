@@ -23,7 +23,7 @@ import fastBackwardActive from 'svgs/journalism/audio-player/fast-backward-activ
 import fastForwardActive from 'svgs/journalism/audio-player/fast-forward-active.svg';
 
 import waveW from 'svgs/journalism/audio-player/wave-wide.svg';
-import { /* formatTime, */ sendToOphan, checkForTimeEvents } from './utils';
+import { sendToOphan, checkForTimeEvents } from './utils';
 
 import Time from './Time';
 
@@ -46,6 +46,64 @@ const AudioGrid = styled('div')({
         "controls controls controls"`,
     },
 });
+
+const Button = styled('button')({
+    background: 'none',
+    border: 0,
+    cursor: 'pointer',
+    margin: 0,
+    ':focus': {
+        outline: 'none', // ಠ_ಠ
+    },
+    padding: 0,
+});
+
+const PlayButton = styled(Button)({
+    padding: '0 50px',
+    svg: {
+        width: '70px',
+        height: '70px',
+    },
+
+    [leftCol]: {
+        padding: '0 60px',
+        svg: {
+            width: '60px',
+            height: '60px',
+        },
+    },
+});
+
+const JumpButton = styled(Button)({
+    svg: {
+        width: '31px',
+        height: '30px',
+    },
+
+    [leftCol]: {
+        padding: 0,
+        svg: {
+            width: '31px',
+            height: '30px',
+        },
+    },
+
+    [wide]: {
+        padding:  0,
+        svg: {
+            width: '31px',
+            height: '30px',
+        },
+    },
+});
+
+const VolumeButton = styled(Button)(({ isActive }) => ({
+    svg: {
+        fill: isActive ? '#ffe500' : '#767676',
+        width: '23px',
+        height: '18px',
+    },
+}));
 
 const TimeContainer = styled('div')(({ area }) => ({
     [area === 'currentTime' ? 'paddingLeft' : 'paddingRight']: '10px',
@@ -117,7 +175,6 @@ const Volume = styled('div')({
     alignItems: 'stretch',
     justifyContent: 'flex-end',
     svg: {
-        fill: '#ffe500',
         width: '23px',
         height: '18px',
     },
@@ -172,36 +229,6 @@ const Download = styled('div')({
     },
 });
 
-const Button = styled('button')(({ isPlay }) => ({
-    background: 'none',
-    border: 0,
-    cursor: 'pointer',
-    margin: 0,
-    ':focus': {
-        outline: 'none', // ಠ_ಠ
-    },
-    padding: isPlay ? '0 45px' : 0,
-    svg: {
-        width: isPlay ? '70px' : '31px',
-        height: isPlay ? '70px' : '30px',
-    },
-
-    [leftCol]: {
-        padding: isPlay ? '0 12px' : 0,
-        svg: {
-            width: isPlay ? '60px' : '31px',
-            height: isPlay ? '60px' : '30px',
-        },
-    },
-
-    [wide]: {
-        padding: isPlay ? '0 20px' : 0,
-        svg: {
-            width: isPlay ? '60px' : '31px',
-            height: isPlay ? '60px' : '30px',
-        },
-    },
-}));
 
 type Props = {
     sourceUrl: string,
@@ -213,6 +240,7 @@ type Props = {
 type State = {
     ready: boolean,
     playing: boolean,
+    muted: boolean,
     currentTime: number,
     duration: number,
     bins: ?NodeList<HTMLElement>,
@@ -227,6 +255,7 @@ export class AudioPlayer extends Component<Props, State> {
         this.state = {
             ready: false,
             playing: false,
+            muted: false,
             currentTime: 0,
             duration: 3000,
             bins: null,
@@ -356,7 +385,6 @@ export class AudioPlayer extends Component<Props, State> {
     };
 
     updatePlayerTime = (currTime: number) => {
-        console.log('curr time =>', currTime);
         this.audio.currentTime = currTime;
         this.incrementBlock(currTime);
 
@@ -400,6 +428,16 @@ export class AudioPlayer extends Component<Props, State> {
         }
     };
 
+    mute = () => {
+        this.setState({ muted: true });
+        this.audio.volume = 0;
+    };
+
+    sound = () => {
+        this.setState({ muted: false });
+        this.audio.volume = 1;
+    };
+
     render() {
         return (
             <AudioGrid>
@@ -426,8 +464,7 @@ export class AudioPlayer extends Component<Props, State> {
                     </FakeWave>
                 </WaveAndTrack>
                 <Controls>
-                    <Button
-                        isPlay={false}
+                    <JumpButton
                         onClick={this.backward}
                         disabled={!this.state.playing}
                         dangerouslySetInnerHTML={{
@@ -436,8 +473,7 @@ export class AudioPlayer extends Component<Props, State> {
                                 : fastBackward.markup,
                         }}
                     />
-                    <Button
-                        isPlay
+                    <PlayButton
                         pillarColor={pillarsHighlight[`${this.props.pillar}`]}
                         onClick={this.play}
                         dangerouslySetInnerHTML={{
@@ -446,8 +482,7 @@ export class AudioPlayer extends Component<Props, State> {
                                 : playBtn.markup,
                         }}
                     />
-                    <Button
-                        isPlay={false}
+                    <JumpButton
                         onClick={this.forward}
                         disabled={!this.state.playing}>
                         <span
@@ -457,14 +492,20 @@ export class AudioPlayer extends Component<Props, State> {
                                     : fastForward.markup,
                             }}
                         />
-                    </Button>
+                    </JumpButton>
                 </Controls>
 
                 <Volume>
-                    <span
+                    <VolumeButton
+                        isVolume
+                        isActive={!this.state.muted}
+                        onClick={this.sound}
                         dangerouslySetInnerHTML={{ __html: volumeOn.markup }}
                     />
-                    <span
+                    <VolumeButton
+                        isVolume
+                        isActive={this.state.muted}
+                        onClick={this.mute}
                         dangerouslySetInnerHTML={{ __html: volumeOff.markup }}
                     />
                 </Volume>
