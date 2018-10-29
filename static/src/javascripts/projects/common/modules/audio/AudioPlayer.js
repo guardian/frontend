@@ -256,6 +256,7 @@ const Volume = styled('div')({
 type Props = {
     sourceUrl: string,
     mediaId: string,
+    duration: string,
 };
 
 type State = {
@@ -490,7 +491,13 @@ export class AudioPlayer extends Component<Props, State> {
                     <Time t={this.state.currentTime} />
                 </TimeContainer>
                 <TimeContainer area="duration">
-                    {this.state.ready ? <Time t={this.state.duration} /> : ''}
+                    <Time
+                        t={
+                            this.state.ready
+                                ? this.state.duration
+                                : parseInt(this.props.duration, 10)
+                        }
+                    />
                 </TimeContainer>
                 <WaveAndTrack>
                     <FakeWave
