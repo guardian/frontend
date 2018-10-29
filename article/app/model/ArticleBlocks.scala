@@ -10,11 +10,12 @@ case object ArticleBlocks extends BlockRange {
 case object Canonical extends BlockRange {
   // sport pagesize is 30 so the first page could be 30+29 if it's one block away from splitting off a page
   // plus we need an extra one to be able to reference the second page if necessary making 30+29+1=60
+  val mainBlock = "main"
   val firstPage = "body:latest:60"
   val oldestPage = "body:oldest:1"
   val timeline = "body:key-events"
   // this only makes sense for liveblogs at the moment, but article use field body not blocks anyway
-  val query = Some(Seq(firstPage, oldestPage, timeline))
+  val query = Some(Seq(mainBlock, firstPage, oldestPage, timeline))
 }
 
 case class PageWithBlock(page: String) extends BlockRange {
@@ -23,7 +24,8 @@ case class PageWithBlock(page: String) extends BlockRange {
 }
 
 case class SinceBlockId(lastUpdate: String) extends BlockRange {
+  val mainBlock = "main"
   val around = s"body:around:$lastUpdate:5"
   // more than 5 could come in (in one go), but unlikely and won't matter as it'll just fetch again soon
-  val query = Some(Seq(around))
+  val query = Some(Seq(mainBlock, around))
 }

@@ -30,6 +30,7 @@ case class Block(
 )
 
 case class Blocks(
+    main: Option[Block],
     body: List[Block]
 )
 
@@ -112,12 +113,16 @@ object DotcomponentsDataModel {
 
     val article = articlePage.article
 
-    val blocks: List[Block] = article.blocks match {
+    val bodyBlocks: List[Block] = article.blocks match {
       case Some(bs) => bs.body.map(bb => Block(bb.bodyHtml, bb.elements.toList)).toList
       case None => List()
     }
 
-    val dcBlocks = Blocks(blocks)
+    val mainBlock: Option[Block] = article.blocks.flatMap(
+      _.main.map(bb=>Block(bb.bodyHtml, bb.elements.toList))
+    )
+
+    val dcBlocks = Blocks(mainBlock, bodyBlocks)
 
     val contentFields = ContentFields(
       article.fields.standfirst,
