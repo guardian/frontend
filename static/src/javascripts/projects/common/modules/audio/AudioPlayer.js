@@ -70,10 +70,19 @@ const PlayButton = styled(Button)({
     },
 });
 
-const JumpButton = styled(Button)({
+const JumpButton = styled(Button)(({ playing }) => ({
     svg: {
         width: '31px',
         height: '30px',
+    },
+
+    path: {
+        fill: playing ? '#ffffff' : '#767676',
+    },
+
+    '.arrow-line': {
+        fill: 'none',
+        stroke: playing ? '#ffffff' : '#767676',
     },
 
     [leftCol]: {
@@ -91,7 +100,7 @@ const JumpButton = styled(Button)({
             height: '30px',
         },
     },
-});
+}));
 
 const VolumeButton = styled(Button)(({ isActive }) => ({
     display: 'inline-flex',
@@ -457,6 +466,7 @@ export class AudioPlayer extends Component<Props, State> {
                 </WaveAndTrack>
                 <Controls>
                     <JumpButton
+                        playing={this.state.playing}
                         onClick={this.backward}
                         disabled={!this.state.playing}
                         dangerouslySetInnerHTML={{
@@ -472,6 +482,7 @@ export class AudioPlayer extends Component<Props, State> {
                         }}
                     />
                     <JumpButton
+                        playing={this.state.playing}
                         onClick={this.forward}
                         disabled={!this.state.playing}>
                         <span
