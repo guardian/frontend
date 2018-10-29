@@ -594,6 +594,8 @@ final case class Audio (override val content: Content) extends ContentType {
   lazy val downloadUrl: Option[String] = elements.mainAudio
     .flatMap(_.audio.encodings.find(_.format == "audio/mpeg").map(_.url))
 
+  lazy val duration: Option[Int] = elements.mainAudio.map(_.audio.duration)
+
   private lazy val podcastTag: Option[Tag] = tags.tags.find(_.properties.podcast.nonEmpty)
   lazy val iTunesSubscriptionUrl: Option[String] = podcastTag.flatMap(_.properties.podcast.flatMap(_.subscriptionUrl))
   lazy val googlePodcastsUrl: Option[String] = podcastTag.flatMap(_.properties.podcast.flatMap(_.googlePodcastsUrl))
