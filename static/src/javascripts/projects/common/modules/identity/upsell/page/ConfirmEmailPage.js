@@ -16,9 +16,11 @@ type Props = {
     isUserLoggedIn: boolean,
 };
 
-const Components = (props: Props): React.Component[] => {
+const Components = (props: Props): React.Component => {
+    let components = [<NewsLetterSignUps />, <OptOuts />];
+
     if (!props.hasPassword && !props.hasSocialLinks && props.accountToken) {
-        return [
+        components = [
             <AccountCreationBlock
                 csrfToken={props.csrfToken}
                 accountToken={props.accountToken}
@@ -28,21 +30,18 @@ const Components = (props: Props): React.Component[] => {
             <OptOuts />,
         ];
     }
-
     // TODO: currently we sign them in. Need to resolve this!
-    if (!props.isUserLoggedIn) {
+    else if (!props.isUserLoggedIn) {
         // TODO: sign in form
-        return [<NewsLetterSignUps />, <OptOuts />];
+        components = [<NewsLetterSignUps />, <OptOuts />];
     }
 
-    return [<NewsLetterSignUps />, <OptOuts />];
+    return <div className="identity-upsell-layout">{components}</div>;
 };
 
 export const ConfirmEmailPage = (props: Props): React.Component => (
     <div>
         <Header title="Thank you!" subtitle="You’re now subscribed" />
-        <div className="identity-upsell-layout">
-            <Components {...props} />
-        </div>
+        <Components {...props} />
     </div>
 );
