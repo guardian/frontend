@@ -370,9 +370,6 @@ export class AudioPlayer extends Component<Props, State> {
     };
 
     audio: HTMLAudioElement;
-    // audioContext: AudioContext;
-    // gainNode: GainNode;
-    // source: MediaElementAudioSourceNode;
 
     ready = () => {
         const duration = this.audio.duration;
@@ -383,21 +380,6 @@ export class AudioPlayer extends Component<Props, State> {
     };
 
     play = () => {
-        // if (!this.audioContext) {
-        //     console.log('hello');
-        //     this.audioContext = window.AudioContext
-        //         ? new AudioContext()
-        //         : new window.webkitAudioContext();
-        //     this.source = this.audioContext.createMediaElementSource(
-        //         this.audio
-        //     );
-        //     this.gainNode = this.audioContext.createGain();
-        //     this.source.connect(this.gainNode);
-        //     this.gainNode.connect(this.audioContext.destination);
-        //     this.sound();
-        //     this.audioContext.resume();
-        // }
-
         this.setState(
             {
                 playing: !this.state.playing,
@@ -449,12 +431,12 @@ export class AudioPlayer extends Component<Props, State> {
 
     mute = () => {
         this.setState({ muted: true });
-        // this.gainNode.gain.setValueAtTime(0, this.audioContext.currentTime);
+        this.audio.volume = 0;
     };
 
     sound = () => {
         this.setState({ muted: false });
-        // this.gainNode.gain.setValueAtTime(1, this.audioContext.currentTime);
+        this.audio.volume = 1;
     };
 
     hovering = (bool) => () => {
