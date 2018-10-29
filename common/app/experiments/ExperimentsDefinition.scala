@@ -33,7 +33,7 @@ trait ExperimentsDefinition {
   }
 
   def isParticipating(experiment: Experiment)(implicit request: RequestHeader): Boolean =
-    if (experiment.name == "audio-page-change") true else isIn(experiment)(_.isParticipating)
+    isIn(experiment)(_.isParticipating)
 
   def isControl(experiment: Experiment)(implicit request: RequestHeader): Boolean =
     isIn(experiment)(_.isControl)
