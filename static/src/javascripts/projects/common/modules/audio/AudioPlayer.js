@@ -52,17 +52,22 @@ const Button = styled('button')({
         outline: 'none', // ಠ_ಠ
     },
     padding: 0,
+
+    ':not(:disabled):hover svg': {
+        opacity: .8,
+    },
 });
 
 const PlayButton = styled(Button)({
-    padding: '0 50px',
+    margin: '0 50px',
+
     svg: {
         width: '70px',
         height: '70px',
     },
 
     [leftCol]: {
-        padding: '0 60px',
+        margin: '0 60px',
         svg: {
             width: '60px',
             height: '60px',
