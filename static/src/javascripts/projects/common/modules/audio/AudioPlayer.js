@@ -27,7 +27,7 @@ const AudioGrid = styled('div')({
     display: 'grid',
     backgroundColor: palette.neutral[1],
     color: palette.neutral[5],
-    gridTemplateRows: '30px 40px 120px 45px',
+    gridTemplateRows: '30px 40px 120px 40px',
     gridTemplateAreas: `"currentTime duration"
          "wave wave"
          "controls controls"
@@ -194,12 +194,17 @@ const FakeWave = styled('div')(({ progress }) => ({
     },
 }));
 
-const ScrubberButton = styled(Button)(({ position }) => ({
+const ScrubberButton = styled(Button)(({ position, action }) => ({
     position: 'absolute',
     background: '#ffe500',
     width: '4px',
     height: '40px',
     transform: `translate(${10 + position}px,0)`,
+    cursor: action === 'hovering' ? 'grab' : action === 'grabbing' ? 'grabbing' : 'pointer',
+
+    ':hover': {
+        transform: 'scaleX(1.6)',
+    },
 
     [leftCol]: {
         height: '50px',
@@ -253,6 +258,7 @@ type State = {
     currentOffsetPx: number,
     hasBeenPlayed: boolean,
     waveWidthPx: number,
+    scrubberAction: 'hovering' | 'grabbing' | 'none',
 };
 
 export class AudioPlayer extends Component<Props, State> {
@@ -267,6 +273,7 @@ export class AudioPlayer extends Component<Props, State> {
             duration: 0,
             hasBeenPlayed: false,
             waveWidthPx: 0,
+            scrubberAction: 'none',
         };
     }
 
@@ -302,6 +309,7 @@ export class AudioPlayer extends Component<Props, State> {
     setAudio = (el: ?HTMLAudioElement) => {
         if (el) {
             this.audio = el;
+            this.audio.crossOrigin = 'anonymous';
 
             const mediaId = el.getAttribute('data-media-id') || '';
             monitorPercentPlayed(el, 25, mediaId);
@@ -339,6 +347,9 @@ export class AudioPlayer extends Component<Props, State> {
     };
 
     audio: HTMLAudioElement;
+    // audioContext: AudioContext;
+    // gainNode: GainNode;
+    // source: MediaElementAudioSourceNode;
 
     ready = () => {
         const duration = this.audio.duration;
@@ -349,6 +360,21 @@ export class AudioPlayer extends Component<Props, State> {
     };
 
     play = () => {
+        // if (!this.audioContext) {
+        //     console.log('hello');
+        //     this.audioContext = window.AudioContext
+        //         ? new AudioContext()
+        //         : new window.webkitAudioContext();
+        //     this.source = this.audioContext.createMediaElementSource(
+        //         this.audio
+        //     );
+        //     this.gainNode = this.audioContext.createGain();
+        //     this.source.connect(this.gainNode);
+        //     this.gainNode.connect(this.audioContext.destination);
+        //     this.sound();
+        //     this.audioContext.resume();
+        // }
+
         this.setState(
             {
                 playing: !this.state.playing,
@@ -399,13 +425,33 @@ export class AudioPlayer extends Component<Props, State> {
     };
 
     mute = () => {
-        this.setState({ muted: true });
-        this.audio.volume = 0;
+        this.setState({ muted: true }, ()=> { console.log(this.state.muted)});
+        // this.gainNode.gain.setValueAtTime(0, this.audioContext.currentTime);
     };
 
     sound = () => {
         this.setState({ muted: false });
-        this.audio.volume = 1;
+        // this.gainNode.gain.setValueAtTime(1, this.audioContext.currentTime);
+    };
+
+    hovering = (bool) => () => {
+        if (bool) {
+            this.setState({ scrubberAction: 'hovering' });
+        } else {
+            this.setState({ scrubberAction: 'none' });
+        }
+    };
+
+    grabbing = (bool) => () => {
+        if (bool) {
+            this.setState({ scrubberAction: 'grabbing' });
+        } else {
+            this.setState({ scrubberAction: 'hovering' });
+        }
+    };
+
+    scrub = () => {
+        null;
     };
 
     render() {
@@ -434,7 +480,15 @@ export class AudioPlayer extends Component<Props, State> {
                             dangerouslySetInnerHTML={{ __html: waveW.markup }}
                         />
                     </FakeWave>
-                    <ScrubberButton position={this.state.currentOffsetPx} />
+                    <ScrubberButton
+                        onMouseEnter={this.hovering(true)}
+                        onMouseDown={this.grabbing(true)}
+                        onMouseUp={this.grabbing(false)}
+                        onMouseLeave={this.hovering(false)}
+                        onMouseMove={this.state.scrubberAction === 'grabbing' ? this.scrub : null}
+                        action={this.state.scrubberAction}
+                        position={this.state.currentOffsetPx}
+                        />
                 </WaveAndTrack>
                 <Controls>
                     <JumpButton
