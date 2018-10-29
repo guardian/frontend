@@ -31,7 +31,7 @@ const AudioGrid = styled('div')({
     gridTemplateAreas: `"currentTime duration"
          "wave wave"
          "controls controls"
-         "download volume"
+         ". volume"
         `,
 
     [leftCol]: {
@@ -231,7 +231,7 @@ const Volume = styled('div')({
         position: 'absolute',
         bottom: '0',
         right: '0',
-        height: '45px',
+        height: '40px',
     },
 
     'button + button': {
@@ -239,42 +239,9 @@ const Volume = styled('div')({
     },
 });
 
-const Download = styled('div')({
-    gridArea: 'download',
-    fontFamily: 'Guardian Text Sans Web',
-    fontWeight: 'bold',
-    display: 'flex',
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
-    paddingLeft: '10px',
-    a: {
-        color: '#cbcbcb', // TODO: add to the palette
-        backgroundColor: '#333333',
-        borderRadius: '17px',
-        display: 'inline-flex',
-        alignItems: 'center',
-        padding: '8px 14px',
-        fontSize: '14px',
-        fontWeight: 'bold',
-        textDecoration: 'none',
-
-        ':hover': {
-            borderColor: '#ffffff',
-        },
-    },
-
-    [leftCol]: {
-        position: 'absolute',
-        bottom: '0',
-        left: '0',
-        marginBottom: '9px',
-    },
-});
-
 type Props = {
     sourceUrl: string,
     mediaId: string,
-    downloadUrl: string,
 };
 
 type State = {
@@ -512,10 +479,6 @@ export class AudioPlayer extends Component<Props, State> {
                         dangerouslySetInnerHTML={{ __html: volumeOff.markup }}
                     />
                 </Volume>
-
-                <Download>
-                    <a href={this.props.downloadUrl}>Download MP3</a>
-                </Download>
             </AudioGrid>
         );
     }
