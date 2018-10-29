@@ -11,14 +11,12 @@ import {
     wide,
 } from '@guardian/dotcom-rendering/packages/pasteup/breakpoints';
 
-import pauseBtn from 'svgs/journalism/audio-player/pause-btn.svg';
-import playBtn from 'svgs/journalism/audio-player/play-btn.svg';
-import volumeOn from 'svgs/journalism/audio-player/volume-on.svg'; // eslint-disable-line
-import volumeOff from 'svgs/journalism/audio-player/volume-on.svg'; // eslint-disable-line
-import fastBackward from 'svgs/journalism/audio-player/fast-backward.svg';
-import fastForward from 'svgs/journalism/audio-player/fast-forward.svg';
-import fastBackwardActive from 'svgs/journalism/audio-player/fast-backward-active.svg';
-import fastForwardActive from 'svgs/journalism/audio-player/fast-forward-active.svg';
+import pauseBtn from 'svgs/journalism/audio-player/pause.svg';
+import playBtn from 'svgs/journalism/audio-player/play.svg';
+import volumeOn from 'svgs/journalism/audio-player/sound-on.svg'; // eslint-disable-line
+import volumeOff from 'svgs/journalism/audio-player/sound-off.svg'; // eslint-disable-line
+import fastBackward from 'svgs/journalism/audio-player/backward.svg';
+import fastForward from 'svgs/journalism/audio-player/forward.svg';
 
 import waveW from 'svgs/journalism/audio-player/wave-wide.svg';
 import { sendToOphan, monitorPercentPlayed, playerObserved } from './utils';
@@ -462,9 +460,7 @@ export class AudioPlayer extends Component<Props, State> {
                         onClick={this.backward}
                         disabled={!this.state.playing}
                         dangerouslySetInnerHTML={{
-                            __html: this.state.playing
-                                ? fastBackwardActive.markup
-                                : fastBackward.markup,
+                            __html: fastBackward.markup,
                         }}
                     />
                     <PlayButton
@@ -480,9 +476,7 @@ export class AudioPlayer extends Component<Props, State> {
                         disabled={!this.state.playing}>
                         <span
                             dangerouslySetInnerHTML={{
-                                __html: this.state.playing
-                                    ? fastForwardActive.markup
-                                    : fastForward.markup,
+                                __html: fastForward.markup,
                             }}
                         />
                     </JumpButton>
