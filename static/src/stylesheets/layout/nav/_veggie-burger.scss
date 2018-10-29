@@ -10,7 +10,7 @@
     border-radius: 50%;
     outline: none;
     user-select: none;
-    z-index: 2;
+    z-index: $zindex-main-menu - 1;
 
     @include mq(mobileMedium) {
         height: $veggie-burger-medium;
