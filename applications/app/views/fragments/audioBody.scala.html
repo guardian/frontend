@@ -41,6 +41,7 @@
                 data-media-id="@audio.elements.mainAudio.map{ audioElement => @audioElement.properties.id}"
                 data-source="@audio.downloadUrl.map(Audio.acastUrl(_, false))"
                 data-download-url="@audio.downloadUrl.getOrElse("#")"
+                data-duration="@audio.duration"
                 >
             </figure>
 
@@ -82,7 +83,7 @@
             </div>
 
             <div class="podcast__meta podcast__section">
-                <div class="podcast__meta-heading podcast__section-heading">Subscribe for free</div>
+                <div class="podcast__meta-heading podcast__section-heading">More ways to listen</div>
                 <ul class="podcast__meta-items">
                     @audio.iTunesSubscriptionUrl.map { iTunesSubscriptionUrl =>
                         <li class="podcast__meta-item podcast__meta-item--itunes">
@@ -114,6 +115,18 @@
                                 >
                                 @fragments.inlineSvg("spotify", "journalism/audio", List("podcast__meta-icon", "podcast__section-icon"))
                                 Spotify
+                            </a>
+                        </li>
+                    }
+                    @audio.downloadUrl.map { downloadUrl =>
+                        <li class="podcast__meta-item podcast__meta-item--download">
+                            <a class="podcast__meta__item-link podcast__section-link"
+                                href="@downloadUrl"
+                                download
+                                data-link-name="@trackingCode("download")"
+                                >
+                                @fragments.inlineSvg("download", "journalism/audio", List("podcast__meta-icon", "podcast__section-icon"))
+                                Download
                             </a>
                         </li>
                     }
