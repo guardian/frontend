@@ -54,7 +54,7 @@ const Button = styled('button')({
     padding: 0,
 
     ':not(:disabled):hover svg': {
-        opacity: .8,
+        opacity: 0.8,
     },
 });
 
@@ -156,7 +156,7 @@ const WaveAndTrack = styled('div')({
     },
 });
 
-const FakeWave = styled('div')(({ progress, buffered }) => ({
+const FakeWave = styled('div')({
     height: '100%',
     paddingLeft: '10px',
     paddingRight: '10px',
@@ -193,7 +193,7 @@ const FakeWave = styled('div')(({ progress, buffered }) => ({
         paddingLeft: '0',
         paddingRight: '0',
     },
-}));
+});
 
 const ScrubberButton = styled(Button)(({ position, hovering, grabbing }) => ({
     position: 'absolute',
@@ -256,7 +256,6 @@ type State = {
     playing: boolean,
     muted: boolean,
     currentTime: number,
-    buffered: number,
     duration: number,
     currentOffsetPx: number,
     hasBeenPlayed: boolean,
@@ -273,7 +272,6 @@ export class AudioPlayer extends Component<Props, State> {
             playing: false,
             muted: false,
             currentTime: 0,
-            buffered: 0,
             currentOffsetPx: 0,
             duration: 0,
             hasBeenPlayed: false,
@@ -330,7 +328,9 @@ export class AudioPlayer extends Component<Props, State> {
             }
 
             const wave = document.getElementById('WaveCutOff-rect');
-            const waveBuffered = document.getElementById('WaveCutOffBuffered-rect');
+            const waveBuffered = document.getElementById(
+                'WaveCutOffBuffered-rect'
+            );
             if (wave && waveBuffered) {
                 this.wave = wave;
                 this.waveBuffered = waveBuffered;
@@ -359,10 +359,13 @@ export class AudioPlayer extends Component<Props, State> {
     buffer = () => {
         if (this.audio.buffered.length > 0) {
             const buffered = this.audio.buffered.end(0);
-            this.setState({
-                buffered:
-                    (buffered / this.state.duration) * this.state.waveWidthPx,
-            });
+            this.waveBuffered.setAttribute(
+                'width',
+                (
+                    (buffered / this.state.duration) *
+                    this.state.waveWidthPx
+                ).toString()
+            );
         }
     };
 
@@ -495,9 +498,7 @@ export class AudioPlayer extends Component<Props, State> {
                     onMouseMove={this.scrub}>
                     <FakeWave
                         innerRef={this.setGeometry}
-                        onClick={this.seekWave}
-                        progress={this.state.currentOffsetPx}
-                        buffered={this.state.buffered}>
+                        onClick={this.seekWave}>
                         <div
                             className="wave-holder"
                             dangerouslySetInnerHTML={{ __html: waveW.markup }}
