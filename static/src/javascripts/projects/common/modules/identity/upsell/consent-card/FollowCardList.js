@@ -29,8 +29,11 @@ const getConsents = (): Promise<ConsentWithState[]> => {
         'lab-notes',
     ]);
 
-    return Promise.all([userConsents, newsLetterConsents]).then(consents =>
-        consents[0].concat(consents[1])
+    return Promise.all([userConsents, newsLetterConsents]).then(
+        ([fetchedUserConsents, fetchedNewsLetterConsents]) => [
+            ...fetchedUserConsents,
+            ...fetchedNewsLetterConsents,
+        ]
     );
 };
 
