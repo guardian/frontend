@@ -156,7 +156,7 @@ const WaveAndTrack = styled('div')({
     },
 });
 
-const FakeWave = styled('div')(({ progress }) => ({
+const FakeWave = styled('div')(({ progress, buffered }) => ({
     height: '100%',
     paddingLeft: '10px',
     paddingRight: '10px',
@@ -176,16 +176,25 @@ const FakeWave = styled('div')(({ progress }) => ({
     },
 
     '#WaveRectangleBg': {
-        fill: '#767676',
+        fill: 'rgba(255,255,255,.2)',
+    },
+
+    '#WaveRectangleBuffered': {
+        fill: 'rgba(255,255,255, .5)',
+        width: '100px',
     },
 
     '#WaveRectangleActive': {
-        fill: '#ffffff',
+        fill: 'rgba(255,255,255, 1)',
         width: '100px',
     },
 
     '#WaveCutOff rect': {
         width: `${progress}px`,
+    },
+
+    '#WaveCutOffBuffered rect': {
+        width: `${buffered}px`,
     },
 
     [leftCol]: {
@@ -254,6 +263,7 @@ type State = {
     playing: boolean,
     muted: boolean,
     currentTime: number,
+    buffered: number,
     duration: number,
     currentOffsetPx: number,
     hasBeenPlayed: boolean,
@@ -269,6 +279,7 @@ export class AudioPlayer extends Component<Props, State> {
             playing: false,
             muted: false,
             currentTime: 0,
+            buffered: 0,
             currentOffsetPx: 0,
             duration: 0,
             hasBeenPlayed: false,
@@ -281,6 +292,7 @@ export class AudioPlayer extends Component<Props, State> {
         this.audio.addEventListener('timeupdate', this.onTimeUpdate);
         // this should fire on Firefox
         this.audio.addEventListener('ended', this.resetAudio);
+        this.audio.addEventListener('progress', this.buffer);
 
         if (Number.isNaN(this.audio.duration)) {
             this.audio.addEventListener('durationchange', this.ready, {
@@ -337,6 +349,16 @@ export class AudioPlayer extends Component<Props, State> {
                 });
             this.setState({
                 waveWidthPx,
+            });
+        }
+    };
+
+    buffer = () => {
+        if (this.audio.buffered.length > 0) {
+            const buffered = this.audio.buffered.end(0);
+            this.setState({
+                buffered:
+                    (buffered / this.state.duration) * this.state.waveWidthPx,
             });
         }
     };
@@ -425,7 +447,7 @@ export class AudioPlayer extends Component<Props, State> {
     };
 
     mute = () => {
-        this.setState({ muted: true }, ()=> { console.log(this.state.muted)});
+        this.setState({ muted: true });
         // this.gainNode.gain.setValueAtTime(0, this.audioContext.currentTime);
     };
 
@@ -474,7 +496,8 @@ export class AudioPlayer extends Component<Props, State> {
                     <FakeWave
                         innerRef={this.setGeometry}
                         onClick={this.seekWave}
-                        progress={this.state.currentOffsetPx}>
+                        progress={this.state.currentOffsetPx}
+                        buffered={this.state.buffered}>
                         <div
                             className="wave-holder"
                             dangerouslySetInnerHTML={{ __html: waveW.markup }}

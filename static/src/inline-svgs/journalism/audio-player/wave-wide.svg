@@ -4,9 +4,13 @@
         <clipPath id="WaveCutOff">
             <rect height="42" />
         </clipPath>
+        <clipPath id="WaveCutOffBuffered">
+            <rect height="42" />
+        </clipPath>
     </defs>
     <g transform="translate(0,42)">
         <use xlink:href="#WaveRectangles" id="WaveRectangleBg" />
+        <use xlink:href="#WaveRectangles" id="WaveRectangleBuffered" clip-path="url(#WaveCutOffBuffered)" />
         <use xlink:href="#WaveRectangles" id="WaveRectangleActive" clip-path="url(#WaveCutOff)" />
     </g>
 </svg>
