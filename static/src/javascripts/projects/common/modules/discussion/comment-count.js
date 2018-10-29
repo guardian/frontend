@@ -61,7 +61,6 @@ const getContentUrl = (el: HTMLElement): string => {
 };
 
 const updateElement = (el: HTMLElement, count: number): Promise<void> => {
-
     const url = el.dataset.discussionUrl || getContentUrl(el);
 
     if (el.dataset.discussionClosed === 'true' && count === 0) {
