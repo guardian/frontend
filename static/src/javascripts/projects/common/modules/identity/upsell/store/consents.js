@@ -3,7 +3,7 @@ import { fetchNewsletters, fetchUserConsents } from './fetch';
 import { consentTypeList, UserConsentWithState } from './types';
 import type { ConsentWithState } from './types';
 
-const getUserConsents = (): Promise<UserConsentWithState[]> =>
+const getAllUserConsents = (): Promise<UserConsentWithState[]> =>
     fetchUserConsents;
 
 const getUserConsent = (consentId: string): Promise<?UserConsentWithState> =>
@@ -11,12 +11,26 @@ const getUserConsent = (consentId: string): Promise<?UserConsentWithState> =>
         cs.find(consent => consent.consent.id === consentId)
     );
 
-const getNewsletterConsents = (): Promise<ConsentWithState[]> =>
+const getUserConsents = (
+    consentIds: string[]
+): Promise<UserConsentWithState[]> =>
+    fetchUserConsents.then(consents =>
+        consents.filter(consent => consentIds.includes(consent.consent.id))
+    );
+
+const getAllNewsletterConsents = (): Promise<ConsentWithState[]> =>
     fetchNewsletters;
 
 const getNewsletterConsent = (consentId: string): Promise<?ConsentWithState> =>
     fetchNewsletters.then(cs =>
         cs.find(consent => consent.consent.id === consentId)
+    );
+
+const getNewsLetterConsents = (
+    consentIds: string[]
+): Promise<UserConsentWithState[]> =>
+    fetchNewsletters.then(consents =>
+        consents.filter(consent => consentIds.includes(consent.consent.id))
     );
 
 const setConsentsInApi = (consents: ConsentWithState[]): Promise<any> => {
@@ -39,7 +53,9 @@ const setConsentsInApi = (consents: ConsentWithState[]): Promise<any> => {
 export {
     getUserConsent,
     getUserConsents,
+    getAllUserConsents,
     getNewsletterConsent,
-    getNewsletterConsents,
+    getNewsLetterConsents,
+    getAllNewsletterConsents,
     setConsentsInApi,
 };
