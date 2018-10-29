@@ -57,11 +57,11 @@ const getContentIds = (indexedElements: IndexedElements): string =>
 
 const getContentUrl = (el: HTMLElement): string => {
     const a = el.getElementsByTagName('a')[0];
-
     return `${a ? a.pathname : ''}#comments`;
 };
 
 const updateElement = (el: HTMLElement, count: number): Promise<void> => {
+
     const url = el.dataset.discussionUrl || getContentUrl(el);
 
     if (el.dataset.discussionClosed === 'true' && count === 0) {
@@ -78,6 +78,7 @@ const updateElement = (el: HTMLElement, count: number): Promise<void> => {
         },
         format
     );
+
     const meta = el.getElementsByClassName('js-item__meta');
     const containers = meta.length ? [...meta] : [el];
 
