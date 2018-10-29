@@ -6,7 +6,7 @@
         </clipPath>
     </defs>
     <g transform="translate(0,42)">
-        <use href="#WaveRectangles" id="WaveRectangleBg" />
-        <use href="#WaveRectangles" id="WaveRectangleActive" clip-path="url(#WaveCutOff)" />
+        <use xlink:href="#WaveRectangles" id="WaveRectangleBg" />
+        <use xlink:href="#WaveRectangles" id="WaveRectangleActive" clip-path="url(#WaveCutOff)" />
     </g>
 </svg>
