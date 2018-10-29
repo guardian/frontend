@@ -189,27 +189,19 @@ const FakeWave = styled('div')(({ progress, buffered }) => ({
         width: '100px',
     },
 
-    '#WaveCutOff rect': {
-        width: `${progress}px`,
-    },
-
-    '#WaveCutOffBuffered rect': {
-        width: `${buffered}px`,
-    },
-
     [leftCol]: {
         paddingLeft: '0',
         paddingRight: '0',
     },
 }));
 
-const ScrubberButton = styled(Button)(({ position, action }) => ({
+const ScrubberButton = styled(Button)(({ position, hovering, grabbing }) => ({
     position: 'absolute',
     background: '#ffe500',
     width: '4px',
     height: '40px',
     transform: `translate(${10 + position}px,0)`,
-    cursor: action === 'hovering' ? 'grab' : action === 'grabbing' ? 'grabbing' : 'pointer',
+    cursor: grabbing ? 'grabbing' : hovering ? 'grab' : 'pointer',
 
     ':hover': {
         transform: 'scaleX(1.6)',
@@ -269,7 +261,8 @@ type State = {
     currentOffsetPx: number,
     hasBeenPlayed: boolean,
     waveWidthPx: number,
-    scrubberAction: 'hovering' | 'grabbing' | 'none',
+    hovering: boolean,
+    grabbing: boolean,
 };
 
 export class AudioPlayer extends Component<Props, State> {
@@ -285,7 +278,8 @@ export class AudioPlayer extends Component<Props, State> {
             duration: 0,
             hasBeenPlayed: false,
             waveWidthPx: 0,
-            scrubberAction: 'none',
+            hovering: false,
+            grabbing: false,
         };
     }
 
@@ -310,8 +304,9 @@ export class AudioPlayer extends Component<Props, State> {
         // pause when it gets to the end
         if (this.audio.currentTime > this.state.duration - 1) {
             this.resetAudio();
-        } else {
+        } else if (!this.state.grabbing) {
             const currentOffsetPx = this.state.waveWidthPx * percentPlayed;
+            this.wave.setAttribute('width', currentOffsetPx.toString());
             this.setState({
                 currentTime: this.audio.currentTime,
                 currentOffsetPx,
@@ -332,6 +327,13 @@ export class AudioPlayer extends Component<Props, State> {
 
             if (el.parentElement) {
                 playerObserved(el.parentElement, mediaId);
+            }
+
+            const wave = document.getElementById('WaveCutOff-rect');
+            const waveBuffered = document.getElementById('WaveCutOffBuffered-rect');
+            if (wave && waveBuffered) {
+                this.wave = wave;
+                this.waveBuffered = waveBuffered;
             }
         }
     };
@@ -370,6 +372,8 @@ export class AudioPlayer extends Component<Props, State> {
     };
 
     audio: HTMLAudioElement;
+    wave: Element;
+    waveBuffered: Element;
 
     ready = () => {
         const duration = this.audio.duration;
@@ -399,10 +403,14 @@ export class AudioPlayer extends Component<Props, State> {
     };
 
     seekWave = (e: any) => {
-        const currentOffsetPx = e.nativeEvent.offsetX;
-        const currentTime =
-            (currentOffsetPx / this.state.waveWidthPx) * this.state.duration;
-        this.audio.currentTime = currentTime;
+        if (!this.state.grabbing) {
+            const currentOffsetPx = e.nativeEvent.offsetX;
+            const currentTime =
+                (currentOffsetPx / this.state.waveWidthPx) *
+                this.state.duration;
+            this.audio.currentTime = currentTime;
+            this.wave.setAttribute('width', currentOffsetPx.toString());
+        }
     };
 
     updatePlayerTime = (currTime: number) => {
@@ -410,6 +418,7 @@ export class AudioPlayer extends Component<Props, State> {
 
         const currentOffsetPx =
             (currTime / this.state.duration) * this.state.waveWidthPx;
+        this.wave.setAttribute('width', currentOffsetPx.toString());
         this.setState({
             currentTime: currTime,
             currentOffsetPx,
@@ -439,24 +448,23 @@ export class AudioPlayer extends Component<Props, State> {
         this.audio.volume = 1;
     };
 
-    hovering = (bool) => () => {
-        if (bool) {
-            this.setState({ scrubberAction: 'hovering' });
-        } else {
-            this.setState({ scrubberAction: 'none' });
+    hovering = (hovering: boolean) => () => {
+        this.setState({ hovering });
+    };
+
+    grabbing = (grabbing: boolean) => () => {
+        if (this.state.hovering) {
+            this.setState({ grabbing });
         }
     };
 
-    grabbing = (bool) => () => {
-        if (bool) {
-            this.setState({ scrubberAction: 'grabbing' });
-        } else {
-            this.setState({ scrubberAction: 'hovering' });
+    scrub = (e: any) => {
+        if (this.state.grabbing) {
+            this.wave.setAttribute('width', e.nativeEvent.offsetX.toString());
+            this.setState({
+                currentOffsetPx: e.nativeEvent.offsetX,
+            });
         }
-    };
-
-    scrub = () => {
-        null;
     };
 
     render() {
@@ -481,7 +489,10 @@ export class AudioPlayer extends Component<Props, State> {
                         }
                     />
                 </TimeContainer>
-                <WaveAndTrack>
+                <WaveAndTrack
+                    onMouseDown={this.grabbing(true)}
+                    onMouseUp={this.grabbing(false)}
+                    onMouseMove={this.scrub}>
                     <FakeWave
                         innerRef={this.setGeometry}
                         onClick={this.seekWave}
@@ -494,13 +505,11 @@ export class AudioPlayer extends Component<Props, State> {
                     </FakeWave>
                     <ScrubberButton
                         onMouseEnter={this.hovering(true)}
-                        onMouseDown={this.grabbing(true)}
-                        onMouseUp={this.grabbing(false)}
                         onMouseLeave={this.hovering(false)}
-                        onMouseMove={this.state.scrubberAction === 'grabbing' ? this.scrub : null}
-                        action={this.state.scrubberAction}
+                        hovering={this.state.hovering}
+                        grabbing={this.state.grabbing}
                         position={this.state.currentOffsetPx}
-                        />
+                    />
                 </WaveAndTrack>
                 <Controls>
                     <JumpButton
