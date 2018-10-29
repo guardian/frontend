@@ -11,11 +11,4 @@ object FlagshipFrontContainer extends FlagshipContainer {
   override val switch = FlagshipFrontContainerSwitch
 
   val AlbumArtUrl = "https://media.guim.co.uk/e1c686325e7a35c618126d749807a75450f6011e/0_0_800_800/500.png"
-
-  object SubscriptionUrls {
-    //TODO - update
-    val apple: Option[String] = Some("https://itunes.apple.com/gb/podcast/today-in-focus/id1440133626?mt=2")
-    val google: Option[String] = None
-    val spotify: Option[String] = None
-  }
 }
