@@ -16,22 +16,13 @@ type Props = {
     isUserLoggedIn: boolean,
 };
 
-// If we have one function argument - props: Props -
-// eslint will complain about prop fields not being used :/
-const getComponents = (
-    csrfToken: string,
-    accountToken: ?string,
-    email: string,
-    hasPassword: boolean,
-    hasSocialLinks: boolean,
-    isUserLoggedIn: boolean
-): React.Component[] => {
-    if (!hasPassword && !hasSocialLinks && accountToken) {
+const Components = (props: Props): React.Component[] => {
+    if (!props.hasPassword && !props.hasSocialLinks && props.accountToken) {
         return [
             <AccountCreationBlock
-                csrfToken={csrfToken}
-                accountToken={accountToken}
-                email={email}
+                csrfToken={props.csrfToken}
+                accountToken={props.accountToken}
+                email={props.email}
             />,
             <NewsLetterSignUps />,
             <OptOuts />,
@@ -39,7 +30,7 @@ const getComponents = (
     }
 
     // TODO: currently we sign them in. Need to resolve this!
-    if (!isUserLoggedIn) {
+    if (!props.isUserLoggedIn) {
         // TODO: sign in form
         return [<NewsLetterSignUps />, <OptOuts />];
     }
@@ -47,18 +38,11 @@ const getComponents = (
     return [<NewsLetterSignUps />, <OptOuts />];
 };
 
-export const ConfirmEmailPage = (props: Props) => (
+export const ConfirmEmailPage = (props: Props): React.Component => (
     <div>
         <Header title="Thank you!" subtitle="You’re now subscribed" />
         <div className="identity-upsell-layout">
-            {getComponents(
-                props.csrfToken,
-                props.accountToken,
-                props.email,
-                props.hasPassword,
-                props.hasSocialLinks,
-                props.isUserLoggedIn
-            )}
+            <Components {...props} />
         </div>
     </div>
 );
