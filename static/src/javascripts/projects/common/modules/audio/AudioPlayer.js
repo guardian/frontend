@@ -10,6 +10,7 @@ import {
     leftCol,
     wide,
 } from '@guardian/dotcom-rendering/packages/pasteup/breakpoints';
+import { isIOS } from 'lib/detect';
 
 import pauseBtn from 'svgs/journalism/audio-player/pause.svg';
 import playBtn from 'svgs/journalism/audio-player/play.svg';
@@ -522,7 +523,8 @@ export class AudioPlayer extends Component<Props, State> {
                         }}
                     />
                     <PlayButton
-                        onClick={this.play}
+                        onClick={!isIOS() ? this.play : null}
+                        onTouchStart={isIOS() ? this.play : null}
                         dangerouslySetInnerHTML={{
                             __html: this.state.playing
                                 ? pauseBtn.markup
