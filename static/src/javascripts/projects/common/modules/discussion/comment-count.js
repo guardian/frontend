@@ -5,7 +5,7 @@ import { integerCommas } from 'lib/formatters';
 import mediator from 'lib/mediator';
 import { inlineSvg } from 'common/views/svgs';
 
-type IndexedElements = { string: Array<HTMLElement> };
+type IndexedElements = { [id: string]: Array<HTMLElement> };
 
 const ATTRIBUTE_NAME: string = 'data-discussion-id';
 const COUNT_URL: string = '/discussion/comment-counts.json?shortUrls=';
@@ -26,7 +26,7 @@ const getTemplate = (
     return `<a class="fc-trail__count fc-trail__count--commentcount" href="${url}" data-link-name="Comment count" aria-label="${count} comments">${icon} ${count}</a>`;
 };
 
-const getElementsIndexedById = (context: HTMLElement): Promise<any> =>
+export const getElementsIndexedById = (context: HTMLElement): Promise<any> =>
     fastdom
         .read(() => context.querySelectorAll(`[${ATTRIBUTE_NAME}]`))
         .then(elements => {
@@ -50,17 +50,20 @@ const getElementsIndexedById = (context: HTMLElement): Promise<any> =>
             );
         });
 
-const getContentIds = (indexedElements: IndexedElements): string =>
+export const getContentIds = (indexedElements: IndexedElements): string =>
     Object.keys(indexedElements)
         .sort()
         .join(',');
 
-const getContentUrl = (el: HTMLElement): string => {
+export const getContentUrl = (el: HTMLElement): string => {
     const a = el.getElementsByTagName('a')[0];
     return `${a ? a.pathname : ''}#comments`;
 };
 
-const updateElement = (el: HTMLElement, count: number): Promise<void> => {
+export const updateElement = (
+    el: HTMLElement,
+    count: number
+): Promise<void> => {
     const url = el.dataset.discussionUrl || getContentUrl(el);
 
     if (el.dataset.discussionClosed === 'true' && count === 0) {
@@ -90,7 +93,7 @@ const updateElement = (el: HTMLElement, count: number): Promise<void> => {
     });
 };
 
-const renderCounts = (
+export const renderCounts = (
     counts: Array<{ id: string, count: number }>,
     indexedElements: IndexedElements
 ): Promise<any> => {
@@ -101,7 +104,7 @@ const renderCounts = (
     return Promise.all(elementUpdates);
 };
 
-const getCommentCounts = (context?: HTMLElement): Promise<void> => {
+export const getCommentCounts = (context?: HTMLElement): Promise<void> => {
     const queryContext: ?HTMLElement = context || document.body;
 
     if (queryContext) {
