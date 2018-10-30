@@ -1,19 +1,16 @@
 .colophon {
-    @include content-gutter();
-    padding-bottom: $gs-baseline * 2;
-    border: 1px solid $nav-border-colour;
-    border-left: 0;
-    border-right: 0;
+    padding-top: $gs-baseline;
+    padding-bottom: $gs-baseline;
 
     @include mq(tablet) {
         padding-bottom: $gs-baseline / 2;
-        border: 1px solid $nav-border-colour;
     }
 }
 
 .colophon__lists-container {
-    @include fs-textSans(5);
-    line-height: 1.2;
+    @include f-textSans();
+    font-size: 14px;
+    line-height: 14px;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -34,30 +31,21 @@
     margin: 0;
 
     @include mq($until: tablet) {
+        padding-right: $gs-gutter / 2;
         width: calc(50% - #{$gs-gutter / 2});
     }
 
     @include mq(tablet) {
-        margin: 0 $gs-gutter $gs-baseline 0;
+        margin: 0 $gs-gutter / 2 $gs-row-height 0;
         // width fallback for browsers which don't fully support flex
         width: 20%;
         flex: 1 0 0;
-
-        &:last-child {
-            margin-right: 0;
-        }
     }
 
     a {
-        color: $brightness-100;
         display: inline-block;
-        padding: ($gs-baseline / 2) 0;
-
-        &:hover,
-        &:focus {
-            color: $highlight-main;
-            text-decoration: none;
-        }
+        padding-bottom: $gs-baseline;
+        text-transform: lowercase;
     }
 
     &:before {
@@ -68,10 +56,11 @@
         left: -$gs-gutter / 2;
         width: 1px;
         display: block;
-        background-color: $nav-border-colour;
+        background-color: $footer-line-colour;
 
         @include mq(tablet) {
-            bottom: $gs-baseline / 2;
+            top: -$gs-baseline;
+            bottom: $gs-baseline;
         }
     }
 

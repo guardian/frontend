@@ -1,19 +1,12 @@
 .subnav {
     background-color: #ffffff;
-    height: $veggie-burger - $gs-baseline / 2;
+    border-top: 1px solid $brightness-86;
+    height: $veggie-burger-medium - $gs-baseline;
     overflow: hidden;
     position: relative;
 
     @include mq(tablet) {
-        height: $pillar-height;
-    }
-
-    .gs-container {
-        @include clearfix();
-        box-sizing: border-box;
-        border: 1px solid $brightness-86;
-        border-top: 0;
-        border-bottom: 0;
+        height: 42px;
     }
 }
 

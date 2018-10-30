@@ -30,18 +30,29 @@
             content: '';
             position: absolute;
             z-index: 1;
-            background: transparent;
+            background: rgba(0, 0, 0,  .03);
             top: 0;
             height: 100%;
             width: 0;
+            pointer-events: none;
+
+            .has-new-navigation & {
+                background: transparent;
+            }
         }
         &:before {
             left: 0;
-            border-right: 1px solid $brightness-86;
+
+            .has-new-navigation & {
+                border-right: 1px solid $brightness-86;
+            }
         }
         &:after {
             right: 0;
-            border-left: 1px solid $brightness-86;
+
+            .has-new-navigation & {
+                border-left: 1px solid $brightness-86;
+            }
         }
         @include side-margins-position(gs-span(9));
     }
@@ -62,9 +73,11 @@
             margin-right: auto;
             width: gs-span(12) + ($gs-gutter*2);
 
-            &:before,
-            &:after {
-                display: none;
+            body:not(.has-new-navigation) & {
+                &:before,
+                &:after {
+                    display: none;
+                }
             }
         }
     }
@@ -73,7 +86,11 @@
     @include mq(tablet) {
         &:after,
         &:before {
-            border-color: $brightness-20;
+            background: rgba(0, 0, 0, .25);
+
+            .has-new-navigation & {
+                border-color: $brightness-20;
+            }
 
             .container__banding + .container__banding & {
                 background: rgba($brightness-7,  .15);
@@ -81,15 +98,30 @@
         }
     }
 }
-.l-side-margins--paidgallery {
-    &:before,
-    &:after {
-        content: none;
+
+body:not(.has-new-navigation) {
+    .l-side-margins--paidgallery {
+        &:after,
+        &:before {
+            content: none;
+        }
     }
 }
-.l-side-margins--flagship {
-    &::before,
-    &::after {
+
+.has-new-navigation {
+    .l-side-margins--paidfor {
+        @include mq(tablet) {
+            &:after,
+            &:before {
+                border-color: $brightness-60;
+            }
+        }
+    }
+}
+
+.l-side-margins--flagship  {
+    &:before,
+    &:after {
         content: none;
     }
 }

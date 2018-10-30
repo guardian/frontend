@@ -1,15 +1,22 @@
 .subnav-link {
-    @include fs-textSans(5);
+    font-family: $f-serif-headline;
+    font-weight: 400;
     color: $brightness-7;
     display: block;
-    height: $pillar-height - $gs-baseline / 2;
-    line-height: $pillar-height - $gs-baseline / 2;
+    font-size: 14px;
+    height: $veggie-burger-medium - $gs-baseline;
+    line-height: $veggie-burger-medium - $gs-baseline;
     padding: 0 ($gs-gutter / 4);
     position: relative;
 
+    @include mq(mobileMedium) {
+        font-size: 15px;
+    }
+
     @include mq(tablet) {
-        height: $pillar-height;
-        line-height: $pillar-height;
+        font-size: 16px;
+        height: 42px;
+        line-height: 42px;
     }
 
     &:after {

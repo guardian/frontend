@@ -193,47 +193,112 @@
 */
 
 // FOOTER MODS
-.footer__email-container .email-sub__iframe {
-    margin-left: 0;
-    width: 100%;
-    max-width: gs-span(6);
+.has-new-navigation {
+    .footer__email-container .email-sub__iframe {
+        max-width: gs-span(4) + $gs-gutter / 2;
+        margin-left: -$gs-gutter / 2;
+        margin-bottom: $gs-baseline;
+    }
+
+    .email-sub__form--footer {
+        padding: 0 0 0 ($gs-gutter / 2);
+
+        .email-sub__submit-button {
+            @include fs-textSans(5);
+            color: $nav-blue;
+            height: 42px;
+            line-height: 40px;
+            background-color: $brightness-100;
+            border: 0;
+            border-radius: 21px;
+            display: block;
+            position: absolute;
+            top: 34px;
+            right: 0;
+            width: auto;
+            padding: 0 $gs-gutter;
+
+            & svg {
+                fill: currentColor;
+                margin-bottom: -1px;
+            }
+
+            &:hover,
+            &:focus,
+            &:active {
+                background-color: $highlight-main;
+
+            }
+        }
+
+        .email-sub__text-input {
+            @include fs-textSans(5);
+            background-color: rgba($brightness-100, .08);
+            border: 1px solid $nav-border-colour;
+            border-radius: 99px;
+            height: 42px;
+            line-height: 42px;
+            color: $brightness-100;
+            display: block;
+            padding-left: $gs-gutter;
+            float: none;
+            width: 100%;
+            overflow: visible;
+            transition: box-shadow .2s ease-in-out;
+        }
+
+        .email-sub__label {
+            @include fs-textSans(5);
+            line-height: 41px;
+            color: rgba($brightness-100, .5);
+            left: $gs-gutter;
+        }
+    }
 }
 
-.email-sub__form--footer {
-    margin-bottom: $gs-baseline;
-    padding: 0 $gs-gutter;
+body:not(.has-new-navigation) {
+    .footer__email-container .email-sub__iframe {
+        margin-left: 0;
+        width: 100%;
+        max-width: gs-span(6);
+    }
 
-    .email-sub__submit-button {
-        background-color: lighten($brightness-7, 5%);
-        border-color: lighten($brightness-7, 5%);
+    .email-sub__form--footer {
         margin-bottom: $gs-baseline;
+        padding: 0;
 
-        &:hover,
-        &:focus,
-        &:active {
-            background-color: $brightness-7;
-            border-color: $brightness-7;
-        }
-    }
+        .email-sub__submit-button {
+            background-color: lighten($brightness-7, 5%);
+            border-color: lighten($brightness-7, 5%);
+            margin-bottom: $gs-baseline;
 
-    .email-sub__text-input {
-        background-color: darken($brightness-46, 20%);
-        border-color: darken($brightness-46, 20%);
-
-        &:hover {
-            background-color: darken($brightness-46, 15%);
-            border-color: darken($brightness-46, 15%);
+            &:hover,
+            &:focus,
+            &:active {
+                background-color: $brightness-7;
+                border-color: $brightness-7;
+            }
         }
 
-        &:active,
-        &:focus {
-            background-color: #ffffff;
-            border-color: #ffffff;
-        }
-    }
+        .email-sub__text-input {
+            background-color: darken($brightness-46, 20%);
+            border-color: darken($brightness-46, 20%);
 
-    .email-sub__label {
-        color: $brightness-86;
+            &:hover {
+                background-color: darken($brightness-46, 15%);
+                border-color: darken($brightness-46, 15%);
+            }
+
+            &:active,
+            &:focus {
+                background-color: #ffffff;
+                border-color: #ffffff;
+            }
+        }
+
+        .email-sub__label {
+            color: $brightness-86;
+        }
     }
 }
 

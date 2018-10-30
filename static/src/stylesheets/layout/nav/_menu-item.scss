@@ -13,16 +13,11 @@
 
             &:first-child {
                 padding-left: 0;
-                width: $pillar-width--desktop -$gs-gutter / 2 - 1px;
             }
         }
 
         body:not(.has-page-skin) & {
             @include mq(leftCol) {
-                &:first-child {
-                    width: $pillar-width--leftCol -$gs-gutter / 2 - 1px;
-                }
-
                 width: $pillar-width--leftCol;
             }
         }
@@ -32,7 +27,7 @@
 .menu-item-divider {
     height: 1px;
     width: 100%;
-    background: $nav-border-colour;
+    background: $brightness-93;
     border: 0;
     margin: $gs-baseline/2 0 0 $menu-spacing-left-small;
 
@@ -46,39 +41,34 @@
 }
 
 .menu-item__title {
-    @include fs-textSans(5);
     background-color: transparent;
     border: 0;
     box-sizing: border-box;
-    color: $brightness-100;
+    color: $brightness-7;
     cursor: pointer;
     display: inline-block;
     font-size: 20px;
+    font-family: $f-serif-headline;
+    font-weight: 400;
     outline: none;
-    padding: 8px $veggie-burger / 2 + $gs-gutter / 2 8px $menu-spacing-left-small;
+    padding: 8px $veggie-burger-medium / 2 + $gs-gutter / 2 8px $menu-spacing-left-small;
     position: relative;
     text-align: left;
     width: 100%;
-    transition: color .3s ease-in-out;
 
     @include mq(tablet) {
         padding-left: $menu-spacing-left-medium;
     }
 
     @include mq(desktop) {
-        font-size: 16px;
+        font-size: 15px;
         line-height: 1.2;
         padding: ($gs-baseline / 2) 0;
     }
 
     &:hover,
     &:focus {
-        color: $highlight-main;
-        text-decoration: none;
-    }
-
-    &:focus {
-        text-decoration: underline;
+        color: $brightness-20;
     }
 
     > * {
@@ -90,7 +80,7 @@
     &[data-link-name='nav2 : facebook'] {
         @include mq($until: desktop) {
             &:not([aria-expanded='true']):after {
-                background-color: $nav-border-colour;
+                background-color: $brightness-86;
                 bottom: 0;
                 content: '';
                 display: block;
@@ -120,12 +110,11 @@
 
     // only match the ones, which are not in --secondary
     .menu-group--primary > .menu-item > & {
-        color: $brightness-100;
-        font-family: $f-serif-headline;
         font-size: 24px;
         font-weight: 700;
         padding-bottom: 18px;
         padding-top: $gs-baseline / 2;
+        text-transform: capitalize; //TODO remove this line
 
         @include mq(desktop) {
             font-size: 32px;
@@ -148,21 +137,14 @@
 }
 
 .menu-item__title--brand-extension {
-    font-family: $f-serif-headline;
-    font-size: 22px;
+    font-size: 24px;
     font-weight: 700;
-    line-height: 1.2;
-
-    body:not(.has-page-skin) & {
-        @include mq(wide) {
-            font-size: 24px;
-            padding-top: 5px;
-        }
-    }
+    line-height: 1.1;
 }
 
 .menu-item__icon,
 .menu-item__toggle {
+    color: $brightness-20;
     left: 25px;
     position: absolute;
 

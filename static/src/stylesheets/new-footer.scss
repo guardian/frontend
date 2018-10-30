@@ -2,11 +2,11 @@
 @import '_mixins';
 @include grid-system;
 
-@import 'layout/nav/_variables';
-@import 'layout/footer/_variables';
+@import 'layout/new-nav/_variables';
+@import 'layout/new-footer/_variables';
 
-@import 'layout/footer/_footer';
-@import 'layout/footer/_back-to-top';
-@import 'layout/footer/_colophon';
-@import 'layout/footer/_copywrite';
-@import 'layout/footer/_email-container';
+@import 'layout/new-footer/_footer';
+@import 'layout/new-footer/_back-to-top';
+@import 'layout/new-footer/_colophon';
+@import 'layout/new-footer/_copywrite';
+@import 'layout/new-footer/_email-container';

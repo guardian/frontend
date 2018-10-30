@@ -1,0 +1,77 @@
+.new-header__top-bar {
+    position: absolute;
+    left: $gs-gutter / 2;
+
+    @include mq(mobileLandscape) {
+        left: $gs-gutter;
+    }
+
+    @include mq(tablet) {
+        left: auto;
+        right: 205px;
+    }
+
+    @include mq(desktop) {
+        right: 266px;
+    }
+
+    body:not(.has-page-skin) & {
+        @include mq(wide) {
+            right: 342px;
+        }
+    }
+}
+
+.top-bar__item {
+    @include fs-textSans(2);
+    font-size: 16px;
+    color: $brightness-100;
+    float: left;
+    line-height: 1;
+    padding-top: $gs-baseline / 2;
+    position: relative;
+    z-index: $zindex-main-menu + 2;
+
+    &:hover,
+    &:focus {
+        color: $highlight-main;
+        text-decoration: none;
+    }
+
+    @include mq(mobileMedium) {
+        padding-top: $gs-baseline;
+    }
+
+    @include mq(tablet) {
+        padding: 9px ($gs-gutter / 3);
+    }
+}
+
+.top-bar__commercial-items {
+    position: relative;
+    float: left;
+    margin-right: $gs-gutter / 2;
+}
+
+.top-bar__item__icon__svg {
+    fill: currentColor;
+    float: left;
+    height: 18px;
+    width: 18px;
+    margin: -1px 4px 0 0;
+}
+
+.top-bar__item__seperator {
+    border-left: 1px solid $nav-border-colour;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: $gs-baseline * 2;
+}
+
+.new-header__user-account-container {
+    float: left;
+    position: relative;
+    // Needs to sit below the menu, and the veggie burger
+    z-index: $zindex-main-menu - 2;
+}

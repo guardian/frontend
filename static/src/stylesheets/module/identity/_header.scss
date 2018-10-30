@@ -7,7 +7,7 @@ $gutter: 5px;
     background-color: $brightness-97;
     padding: ($gutter/2) 0 0;
     color: $brightness-7;
-    height: $pillar-height + 1px;
+    height: $slim-nav-height + 1px;
     overflow: visible;
     position: relative;
     z-index: $zindex-main-menu;
@@ -61,7 +61,7 @@ $gutter: 5px;
 
 .identity-header__links {
     float: left;
-    height: $pillar-height - ($gutter/2);
+    height: $slim-nav-height - ($gutter/2);
     display: flex;
     align-items: center;
 }

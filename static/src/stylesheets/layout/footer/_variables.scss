@@ -1,2 +1,6 @@
-$c-footer-background: #052962;
-$footer-line-colour: rgba($brightness-100, .3);
+$c-footer-background: $brightness-20;
+$footer-line-colour: darken($brightness-46, 20%);
+
+// These two variables can be removed when the new desktop header/footer is live
+$c-primary-footer-background: $guardian-brand;
+$c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff, 90%);

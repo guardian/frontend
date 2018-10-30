@@ -3,6 +3,11 @@
     top: 30px;
     left: $gs-gutter / 2;
 
+    .is-paying-member &,
+    .is-recent-contributor & {
+        display: none;
+    }
+
     @include mq(mobileMedium) {
         top: 37px;
     }
@@ -28,15 +33,24 @@
     color: $highlight-main;
     display: block;
     font-family: $f-serif-headline;
-    font-size: 30px;
+    font-size: 28px;
     font-weight: 800;
     line-height: 1;
     margin: ($gs-baseline / 4) 0 $gs-baseline;
 
+    @include mq($until: tablet) {
+        // These changes are only visible in the footer
+        border-top: 1px solid $nav-border-colour;
+        padding-top: $gs-baseline / 4;
+        font-size: 20px;
+    }
+
     @include mq(desktop) {
-        font-size: 32px;
-        width: gs-span(5) - $gs-gutter * 2;
         margin: ($gs-baseline / 4) 0 $gs-baseline;
+    }
+
+    @include mq(leftCol) {
+        font-size: 32px;
     }
 }
 
@@ -50,12 +64,14 @@
     display: block;
     line-height: 1;
     height: 28px;
-    padding: 6px 10px 0;
+    padding: 5px 10px 0;
+    margin-bottom: $gs-baseline / 2;
+    margin-right: $gs-gutter / 2;
     position: relative;
     float: left;
 
     @include mq(mobileMedium) {
-        padding: 6px 30px 0 10px;
+        padding: 5px 30px 0 10px;
     }
 
     .inline-arrow-right {
@@ -64,8 +80,7 @@
 
     @include mq(tablet) {
         height: 32px;
-        padding: 8px 34px 0 12px;
-        margin-right: $gs-gutter / 2;
+        padding: 7px 34px 0 12px;
     }
 
     .inline-arrow-right {
@@ -103,7 +118,11 @@
     background-color: transparent;
     border: 1px solid $nav-border-colour;
     color: $highlight-main;
-    padding-top: 7px;
+    padding-top: 4px;
+
+    @include mq(tablet) {
+        padding-top: 6px;
+    }
 
     &:hover,
     &:focus {

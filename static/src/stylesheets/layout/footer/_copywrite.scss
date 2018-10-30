@@ -1,14 +1,10 @@
 .copyright-container {
-    @include content-gutter();
-    padding-bottom: $gs-baseline * 2;
+    padding-top: $gs-baseline * .5;
+    padding-bottom: $gs-baseline * 1.5;
+    border-top: 1px solid $footer-line-colour;
 }
 
 .really-serious-copyright {
-    color: $brightness-100;
+    margin-bottom: $gs-baseline/3;
     font-size: 12px;
-    padding-top: $gs-baseline + ($gs-baseline / 2);
-
-    @include mq(tablet) {
-        padding-top: ($gs-baseline / 2);
-    }
 }
