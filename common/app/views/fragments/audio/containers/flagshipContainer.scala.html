@@ -7,6 +7,7 @@
 @import model.InlineImage
 @import layout.SliceWithCards
 @import conf.audio.FlagshipFrontContainer
+@import conf.AudioFlagship
 
 @(containerDefinition: layout.FaciaContainer, frontProperties: FrontProperties)(implicit request: RequestHeader)
 
@@ -29,9 +30,9 @@
 @subscriptionLinks = {
     <div class="fc-podcast-container__subscribe-links">
     <span>Subscribe:</span>
-    @FlagshipFrontContainer.SubscriptionUrls.apple.map { url => <span><a data-link-name="apple" href="@url">Apple Podcasts</a></span> }
-    @FlagshipFrontContainer.SubscriptionUrls.google.map { url => <span><a data-link-name="google" href="@url">Google Podcasts</a></span> }
-    @FlagshipFrontContainer.SubscriptionUrls.spotify.map { url => <span><a data-link-name="spotify" href="@url">Spotify</a></span> }
+    @for((name: String, url: String) <- AudioFlagship.subscribeLinks) {
+        <span><a data-link-name="@{name.split(" ").headOption.map(_.toLowerCase)}" href="@url">@name</a></span>
+    }
     </div>
 }
 
