@@ -138,16 +138,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-commercial-prebid-ad-you-like",
-    "Test the rendering of Prebid ads served by AdYouLike",
-    owners = Owner.group(Commercial),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 10, 31),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-commercial-ad-verification",
     "Test the impact of verifiyng ads",
     owners = Seq(Owner.withGithub("jeteve")),
