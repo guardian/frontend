@@ -17,7 +17,11 @@ import {
 
 jest.mock('common/modules/commercial/build-page-targeting', () => ({
     buildAppNexusTargeting: () => 'someTestAppNexusTargeting',
-    buildAppNexusTargetingObject: () => 'someAppNexusTargetingObject',
+    buildAppNexusTargetingObject: () => ({
+        url: 'gu.com',
+        sens: 'f',
+        edition: 'UK',
+    }),
     buildPageTargeting: () => 'pageTargeting',
 }));
 
@@ -221,7 +225,7 @@ describe('getAppNexusServerSideBidParams', () => {
         getBreakpointKey.mockReturnValue('M');
         window.OzoneLotameData = { some: 'lotamedata' };
         expect(getAppNexusServerSideBidParams([[300, 250]])).toEqual({
-            keywords: 'someAppNexusTargetingObject',
+            keywords: { edition: 'UK', sens: 'f', url: 'gu.com' },
             placementId: '13366904',
             lotame: { some: 'lotamedata' },
         });
@@ -230,7 +234,7 @@ describe('getAppNexusServerSideBidParams', () => {
     test('should excude lotame if data is unavailable', () => {
         getBreakpointKey.mockReturnValue('M');
         expect(getAppNexusServerSideBidParams([[300, 250]])).toEqual({
-            keywords: 'someAppNexusTargetingObject',
+            keywords: { edition: 'UK', sens: 'f', url: 'gu.com' },
             placementId: '13366904',
         });
     });
@@ -249,7 +253,7 @@ describe('getAppNexusDirectBidParams', () => {
     test('should include placementId for AU region when invCode switch is off', () => {
         getBreakpointKey.mockReturnValue('M');
         expect(getAppNexusDirectBidParams([[300, 250]], true)).toEqual({
-            keywords: 'someAppNexusTargetingObject',
+            keywords: { edition: 'UK', sens: 'f', url: 'gu.com' },
             placementId: '11016434',
         });
     });
@@ -258,7 +262,12 @@ describe('getAppNexusDirectBidParams', () => {
         config.set('switches.prebidAppnexusInvcode', true);
         getBreakpointKey.mockReturnValue('M');
         expect(getAppNexusDirectBidParams([[300, 250]], true)).toEqual({
-            keywords: 'someAppNexusTargetingObject',
+            keywords: {
+                edition: 'UK',
+                sens: 'f',
+                url: 'gu.com',
+                invc: ['Mmagic300x250'],
+            },
             member: '7012',
             invCode: 'Mmagic300x250',
         });
@@ -268,7 +277,7 @@ describe('getAppNexusDirectBidParams', () => {
         config.set('switches.prebidAppnexusInvcode', true);
         getBreakpointKey.mockReturnValue('M');
         expect(getAppNexusDirectBidParams([[300, 250]], false)).toEqual({
-            keywords: 'someAppNexusTargetingObject',
+            keywords: { edition: 'UK', sens: 'f', url: 'gu.com' },
             placementId: '4298191',
         });
     });
