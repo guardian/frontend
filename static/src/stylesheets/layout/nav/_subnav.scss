@@ -4,10 +4,6 @@
     overflow: hidden;
     position: relative;
 
-    .pillar-scheme--Opinion & {
-        // background-color: $opinion-faded;
-    }
-
     @include mq(tablet) {
         height: $pillar-height;
     }

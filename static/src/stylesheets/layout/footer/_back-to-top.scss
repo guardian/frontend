@@ -1,30 +1,34 @@
-.footer__back-to-top-container {
-    @include content-gutter();
-}
-
 .footer__back-to-top {
     @include fs-textSans(5);
+    color: $brightness-100;
+    float: right;
+    font-weight: 700;
     position: relative;
     text-align: right;
+    background-color: $nav-blue;
+    padding: 0 $gs-gutter / 4;
+    transform: translateY(-50%);
+
+    &:hover,
+    &:focus {
+        color: $highlight-main;
+    }
 }
 
 .back-to-top__text {
     display: inline-block;
-    color: $brightness-100;
-    line-height: 42px;
-    padding-right: $gs-gutter / 2;
+    line-height: 1;
+    padding: 10px ($gs-gutter / 4) 0;
 }
 
 .back-to-top__icon-container {
     position: relative;
     float: right;
-    margin-right: $gs-gutter;
-    margin-top: $gs-baseline / 4;
     border-radius: 100%;
-    background-color: $highlight-main;
+    background-color: currentColor;
     cursor: pointer;
     height: 36px;
-    min-width: 36px;
+    width: 36px;
 
     .inline-arrow-up {
         position: absolute;
@@ -32,7 +36,7 @@
         left: 6px;
 
         path {
-            fill: $brightness-7;
+            fill: $nav-blue;
         }
     }
 }

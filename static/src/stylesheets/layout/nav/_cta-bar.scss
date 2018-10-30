@@ -25,7 +25,7 @@
 }
 
 .cta-bar__message {
-    color: #c5eaff;
+    color: $highlight-main;
     display: block;
     font-family: $f-serif-headline;
     font-size: 30px;
@@ -96,5 +96,18 @@
         .inline-arrow-right {
             transform: translate(3px, -50%);
         }
+    }
+}
+
+.cta-bar__cta--hollow {
+    background-color: transparent;
+    border: 1px solid $nav-border-colour;
+    color: $highlight-main;
+    padding-top: 7px;
+
+    &:hover,
+    &:focus {
+        background-color: rgba($brightness-100, .08);
+        color: $highlight-main;
     }
 }
