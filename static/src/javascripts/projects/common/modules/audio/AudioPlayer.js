@@ -455,9 +455,15 @@ export class AudioPlayer extends Component<Props, State> {
 
     scrub = (e: any) => {
         if (this.state.grabbing) {
-            this.wave.setAttribute('width', e.nativeEvent.offsetX.toString());
+            const currentOffsetPx = e.nativeEvent.offsetX;
+            const currentTime =
+                (currentOffsetPx / this.state.waveWidthPx) *
+                this.state.duration;
+
+            this.wave.setAttribute('width', currentOffsetPx.toString());
             this.setState({
-                currentOffsetPx: e.nativeEvent.offsetX,
+                currentTime,
+                currentOffsetPx,
             });
         }
     };
