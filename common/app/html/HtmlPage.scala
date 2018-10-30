@@ -43,5 +43,6 @@ object HtmlPageHelpers {
   def ContentCSSFile(implicit request: RequestHeader): String = "content.garnett"
   def RichLinksCSSFile(implicit request: RequestHeader): String = "rich-links.garnett"
   def SignUpCSSFile(implicit request: RequestHeader): String = "signup"
-  def InlineNavigationCSSFile(implicit request: RequestHeader): String = if (conf.switches.Switches.NewNavEnabled.isSwitchedOn) "new.navigation" else "navigation"
+  def InlineNavigationCSSFile(implicit request: RequestHeader): String = if (conf.switches.Switches.NewNavEnabled.isSwitchedOn) "new-navigation" else "navigation"
+  def FooterCSSFile(implicit request: RequestHeader): String = if (conf.switches.Switches.NewNavEnabled.isSwitchedOn) "new-footer" else "footer"
 }

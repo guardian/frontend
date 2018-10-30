@@ -16,7 +16,7 @@ import views.html.fragments.page.head.stylesheets.{criticalStyleInline, critical
 import views.html.fragments.page.{devTakeShot, htmlTag}
 import views.html.fragments._
 import views.html.stacked
-import html.HtmlPageHelpers.ContentCSSFile
+import html.HtmlPageHelpers.{ContentCSSFile, FooterCSSFile}
 
 object InteractiveHtmlPage extends HtmlPage[InteractivePage] {
 
@@ -32,6 +32,7 @@ object InteractiveHtmlPage extends HtmlPage[InteractivePage] {
       Html(common.Assets.css.inlineNavigation)
     )
     override def linkCss: Html = stylesheetLink(s"stylesheets/$ContentCSSFile.css")
+    override def footerCss: Html = stylesheetLink(s"stylesheets/$FooterCSSFile.css")
     override def oldIECriticalCss: Html = stylesheetLink(s"stylesheets/old-ie.head.$ContentCSSFile.css")
     override def oldIELinkCss: Html = stylesheetLink(s"stylesheets/old-ie.$ContentCSSFile.css")
     override def IE9LinkCss: Html = stylesheetLink(s"stylesheets/ie9.head.$ContentCSSFile.css")

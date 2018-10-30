@@ -12,7 +12,7 @@ import views.html.fragments.page._
 import views.html.fragments.page.body._
 import views.html.fragments.page.head.stylesheets.{criticalStyleInline, criticalStyleLink, styles}
 import views.html.fragments.page.head.{fixIEReferenceErrors, headTag, titleTag, weAreHiring}
-import html.HtmlPageHelpers.ContentCSSFile
+import html.HtmlPageHelpers.{ContentCSSFile, FooterCSSFile}
 import views.html.stacked
 
 object IdentityHtmlPage {
@@ -28,6 +28,7 @@ object IdentityHtmlPage {
       stylesheetLink(s"stylesheets/$ContentCSSFile.css"),
       stylesheetLink(s"stylesheets/membership-icons.css")
     ))
+    override def footerCss: Html = stylesheetLink(s"stylesheets/$FooterCSSFile.css")
     override def oldIECriticalCss: Html = stylesheetLink(s"stylesheets/old-ie.head.$ContentCSSFile.css")
     override def oldIELinkCss: Html = stylesheetLink(s"stylesheets/old-ie.$ContentCSSFile.css")
     override def IE9LinkCss: Html = stylesheetLink(s"stylesheets/ie9.head.$ContentCSSFile.css")
