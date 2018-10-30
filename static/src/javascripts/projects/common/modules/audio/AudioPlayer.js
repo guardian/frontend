@@ -260,6 +260,7 @@ type State = {
     duration: number,
     currentOffsetPx: number,
     hasBeenPlayed: boolean,
+    waveX: number,
     waveWidthPx: number,
     hovering: boolean,
     grabbing: boolean,
@@ -275,6 +276,7 @@ export class AudioPlayer extends Component<Props, State> {
             currentOffsetPx: 0,
             duration: parseInt(this.props.duration, 10),
             hasBeenPlayed: false,
+            waveX: 0,
             waveWidthPx: 0,
             hovering: false,
             grabbing: false,
@@ -337,6 +339,7 @@ export class AudioPlayer extends Component<Props, State> {
     setGeometry = (el: ?HTMLElement) => {
         if (el) {
             const css = getComputedStyle(el);
+            const rect = el.getBoundingClientRect();
             const waveWidthPx =
                 el.clientWidth -
                 parseInt(css.paddingLeft, 10) -
@@ -347,6 +350,7 @@ export class AudioPlayer extends Component<Props, State> {
                     svg.setAttribute('viewBox', `0 0 ${waveWidthPx} 84`);
                 });
             this.setState({
+                waveX: rect.left,
                 waveWidthPx,
             });
         }
@@ -445,23 +449,20 @@ export class AudioPlayer extends Component<Props, State> {
     };
 
     hovering = (hovering: boolean) => () => {
-        if (this.state.hovering !== hovering) {
-            this.setState({ hovering });
-        }
+        this.setState({ hovering });
     };
 
     grabbing = (grabbing: boolean) => () => {
-        if (
-            (this.state.hovering && grabbing !== this.state.grabbing) ||
-            !grabbing
-        ) {
-            this.setState({ grabbing });
-        }
+        this.setState({ grabbing });
     };
 
     scrub = (e: any) => {
         if (this.state.grabbing) {
-            const currentOffsetPx = e.nativeEvent.offsetX;
+            const currentOffsetPx = Math.min(
+                this.state.waveWidthPx,
+                Math.max(0, e.nativeEvent.screenX - this.state.waveX)
+            );
+
             const currentTime =
                 (currentOffsetPx / this.state.waveWidthPx) *
                 this.state.duration;
