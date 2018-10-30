@@ -35,7 +35,8 @@ object HtmlPageHelpers {
     Map(
       ("has-page-skin", page.metadata.hasPageSkin(edition)),
       ("has-membership-access-requirement", page.metadata.requiresMembershipAccess),
-      ("childrens-books-site", page.metadata.sectionId == "childrens-books-site"))
+      ("childrens-books-site", page.metadata.sectionId == "childrens-books-site"),
+      ("has-new-navigation", conf.switches.Switches.NewNavEnabled.isSwitchedOn));
   }
 
   def FaciaCSSFile(implicit request: RequestHeader): String = "facia.garnett"
@@ -43,6 +44,4 @@ object HtmlPageHelpers {
   def RichLinksCSSFile(implicit request: RequestHeader): String = "rich-links.garnett"
   def SignUpCSSFile(implicit request: RequestHeader): String = "signup"
   def InlineNavigationCSSFile(implicit request: RequestHeader): String = if (conf.switches.Switches.NewNavEnabled.isSwitchedOn) "new.navigation" else "navigation"
-}
-
 }

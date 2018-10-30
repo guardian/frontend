@@ -58,6 +58,7 @@ object css {
   private val memoizedCss: ConcurrentMap[String, Try[String]] = TrieMap()
 
   def head(projectOverride: Option[String])(implicit context: ApplicationContext, request: RequestHeader): String = inline(cssHead(projectOverride.getOrElse(context.applicationIdentity.name)))
+  def inlineNavigation(implicit request: RequestHeader): String = if (conf.switches.Switches.NewNavEnabled.isSwitchedOn) "head.new-navigation" else "head.navigation"
   def inlineIdentity(implicit request: RequestHeader, context: ApplicationContext): String = inline("head.identity")
   def inlineStoryPackageGarnett(implicit context: ApplicationContext): String = inline("story-package-garnett")
   def inlinePhotoEssayGarnett(implicit context: ApplicationContext): String = inline("article-photo-essay-garnett")
