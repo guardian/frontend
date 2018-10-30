@@ -547,13 +547,17 @@ export class AudioPlayer extends Component<Props, State> {
                             isVolume
                             isActive={!this.state.muted}
                             onClick={this.sound}
-                            dangerouslySetInnerHTML={{ __html: volumeOn.markup }}
+                            dangerouslySetInnerHTML={{
+                                __html: volumeOn.markup,
+                            }}
                         />
                         <VolumeButton
                             isVolume
                             isActive={this.state.muted}
                             onClick={this.mute}
-                            dangerouslySetInnerHTML={{ __html: volumeOff.markup }}
+                            dangerouslySetInnerHTML={{
+                                __html: volumeOff.markup,
+                            }}
                         />
                     </Volume>
                 ) : null}
