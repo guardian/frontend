@@ -458,7 +458,13 @@ export class AudioPlayer extends Component<Props, State> {
     };
 
     grabbing = (grabbing: boolean) => () => {
-        this.setState({ grabbing });
+        if (this.state.hovering || !grabbing) {
+            this.setState({ grabbing }, () => {
+                if (!this.state.grabbing) {
+                    this.audio.currentTime = this.state.currentTime;
+                }
+            });
+        }
     };
 
     scrub = (e: any) => {
@@ -473,7 +479,6 @@ export class AudioPlayer extends Component<Props, State> {
                 this.state.duration;
 
             this.setState({ currentTime, currentOffsetPx }, () => {
-                this.audio.currentTime = currentTime;
                 this.wave.setAttribute('width', currentOffsetPx.toString());
             });
         }
