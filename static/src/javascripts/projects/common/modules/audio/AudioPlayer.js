@@ -10,6 +10,7 @@ import {
     leftCol,
     wide,
 } from '@guardian/dotcom-rendering/packages/pasteup/breakpoints';
+import { isIOS } from 'lib/detect';
 
 import pauseBtn from 'svgs/journalism/audio-player/pause.svg';
 import playBtn from 'svgs/journalism/audio-player/play.svg';
@@ -27,11 +28,11 @@ const AudioGrid = styled('div')({
     display: 'grid',
     backgroundColor: palette.neutral[1],
     color: palette.neutral[5],
-    gridTemplateRows: '30px 40px 120px 45px',
+    gridTemplateRows: '30px 40px 120px 40px',
     gridTemplateAreas: `"currentTime duration"
          "wave wave"
          "controls controls"
-         "download volume"
+         ". volume"
         `,
 
     [leftCol]: {
@@ -52,17 +53,22 @@ const Button = styled('button')({
         outline: 'none', // ಠ_ಠ
     },
     padding: 0,
+
+    ':not(:disabled):hover svg': {
+        opacity: 0.8,
+    },
 });
 
 const PlayButton = styled(Button)({
-    padding: '0 50px',
+    margin: '0 50px',
+
     svg: {
         width: '70px',
         height: '70px',
     },
 
     [leftCol]: {
-        padding: '0 60px',
+        margin: '0 60px',
         svg: {
             width: '60px',
             height: '60px',
@@ -151,7 +157,7 @@ const WaveAndTrack = styled('div')({
     },
 });
 
-const FakeWave = styled('div')(({ progress }) => ({
+const FakeWave = styled('div')({
     height: '100%',
     paddingLeft: '10px',
     paddingRight: '10px',
@@ -171,30 +177,36 @@ const FakeWave = styled('div')(({ progress }) => ({
     },
 
     '#WaveRectangleBg': {
-        fill: '#767676',
+        fill: 'rgba(255,255,255,.2)',
     },
 
-    '#WaveRectangleActive': {
-        fill: '#ffffff',
+    '#WaveRectangleBuffered': {
+        fill: 'rgba(255,255,255, .5)',
         width: '100px',
     },
 
-    '#WaveCutOff rect': {
-        width: `${progress}px`,
+    '#WaveRectangleActive': {
+        fill: 'rgba(255,255,255, 1)',
+        width: '100px',
     },
 
     [leftCol]: {
         paddingLeft: '0',
         paddingRight: '0',
     },
-}));
+});
 
-const ScrubberButton = styled(Button)(({ position }) => ({
+const ScrubberButton = styled(Button)(({ position, hovering, grabbing }) => ({
     position: 'absolute',
     background: '#ffe500',
     width: '4px',
     height: '40px',
     transform: `translate(${10 + position}px,0)`,
+    cursor: grabbing ? 'grabbing' : hovering ? 'grab' : 'pointer',
+
+    ':hover': {
+        transform: 'scaleX(1.6)',
+    },
 
     [leftCol]: {
         height: '50px',
@@ -226,7 +238,7 @@ const Volume = styled('div')({
         position: 'absolute',
         bottom: '0',
         right: '0',
-        height: '45px',
+        height: '40px',
     },
 
     'button + button': {
@@ -234,42 +246,10 @@ const Volume = styled('div')({
     },
 });
 
-const Download = styled('div')({
-    gridArea: 'download',
-    fontFamily: 'Guardian Text Sans Web',
-    fontWeight: 'bold',
-    display: 'flex',
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
-    paddingLeft: '10px',
-    a: {
-        color: '#cbcbcb', // TODO: add to the palette
-        backgroundColor: '#333333',
-        borderRadius: '17px',
-        display: 'inline-flex',
-        alignItems: 'center',
-        padding: '8px 14px',
-        fontSize: '14px',
-        fontWeight: 'bold',
-        textDecoration: 'none',
-
-        ':hover': {
-            borderColor: '#ffffff',
-        },
-    },
-
-    [leftCol]: {
-        position: 'absolute',
-        bottom: '0',
-        left: '0',
-        marginBottom: '9px',
-    },
-});
-
 type Props = {
     sourceUrl: string,
     mediaId: string,
-    downloadUrl: string,
+    duration: string,
 };
 
 type State = {
@@ -281,6 +261,8 @@ type State = {
     currentOffsetPx: number,
     hasBeenPlayed: boolean,
     waveWidthPx: number,
+    hovering: boolean,
+    grabbing: boolean,
 };
 
 export class AudioPlayer extends Component<Props, State> {
@@ -295,6 +277,8 @@ export class AudioPlayer extends Component<Props, State> {
             duration: 0,
             hasBeenPlayed: false,
             waveWidthPx: 0,
+            hovering: false,
+            grabbing: false,
         };
     }
 
@@ -302,6 +286,7 @@ export class AudioPlayer extends Component<Props, State> {
         this.audio.addEventListener('timeupdate', this.onTimeUpdate);
         // this should fire on Firefox
         this.audio.addEventListener('ended', this.resetAudio);
+        this.audio.addEventListener('progress', this.buffer);
 
         if (Number.isNaN(this.audio.duration)) {
             this.audio.addEventListener('durationchange', this.ready, {
@@ -318,8 +303,9 @@ export class AudioPlayer extends Component<Props, State> {
         // pause when it gets to the end
         if (this.audio.currentTime > this.state.duration - 1) {
             this.resetAudio();
-        } else {
+        } else if (!this.state.grabbing) {
             const currentOffsetPx = this.state.waveWidthPx * percentPlayed;
+            this.wave.setAttribute('width', currentOffsetPx.toString());
             this.setState({
                 currentTime: this.audio.currentTime,
                 currentOffsetPx,
@@ -330,6 +316,7 @@ export class AudioPlayer extends Component<Props, State> {
     setAudio = (el: ?HTMLAudioElement) => {
         if (el) {
             this.audio = el;
+            this.audio.crossOrigin = 'anonymous';
 
             const mediaId = el.getAttribute('data-media-id') || '';
             monitorPercentPlayed(el, 25, mediaId);
@@ -339,6 +326,15 @@ export class AudioPlayer extends Component<Props, State> {
 
             if (el.parentElement) {
                 playerObserved(el.parentElement, mediaId);
+            }
+
+            const wave = document.getElementById('WaveCutOff-rect');
+            const waveBuffered = document.getElementById(
+                'WaveCutOffBuffered-rect'
+            );
+            if (wave && waveBuffered) {
+                this.wave = wave;
+                this.waveBuffered = waveBuffered;
             }
         }
     };
@@ -361,12 +357,27 @@ export class AudioPlayer extends Component<Props, State> {
         }
     };
 
+    buffer = () => {
+        if (this.audio.buffered.length > 0) {
+            const buffered = this.audio.buffered.end(0);
+            this.waveBuffered.setAttribute(
+                'width',
+                (
+                    (buffered / this.state.duration) *
+                    this.state.waveWidthPx
+                ).toString()
+            );
+        }
+    };
+
     resetAudio = () => {
         this.setState({ playing: false });
         this.audio.pause();
     };
 
     audio: HTMLAudioElement;
+    wave: Element;
+    waveBuffered: Element;
 
     ready = () => {
         const duration = this.audio.duration;
@@ -396,10 +407,14 @@ export class AudioPlayer extends Component<Props, State> {
     };
 
     seekWave = (e: any) => {
-        const currentOffsetPx = e.nativeEvent.offsetX;
-        const currentTime =
-            (currentOffsetPx / this.state.waveWidthPx) * this.state.duration;
-        this.audio.currentTime = currentTime;
+        if (!this.state.grabbing) {
+            const currentOffsetPx = e.nativeEvent.offsetX;
+            const currentTime =
+                (currentOffsetPx / this.state.waveWidthPx) *
+                this.state.duration;
+            this.audio.currentTime = currentTime;
+            this.wave.setAttribute('width', currentOffsetPx.toString());
+        }
     };
 
     updatePlayerTime = (currTime: number) => {
@@ -407,6 +422,7 @@ export class AudioPlayer extends Component<Props, State> {
 
         const currentOffsetPx =
             (currTime / this.state.duration) * this.state.waveWidthPx;
+        this.wave.setAttribute('width', currentOffsetPx.toString());
         this.setState({
             currentTime: currTime,
             currentOffsetPx,
@@ -436,6 +452,25 @@ export class AudioPlayer extends Component<Props, State> {
         this.audio.volume = 1;
     };
 
+    hovering = (hovering: boolean) => () => {
+        this.setState({ hovering });
+    };
+
+    grabbing = (grabbing: boolean) => () => {
+        if (this.state.hovering) {
+            this.setState({ grabbing });
+        }
+    };
+
+    scrub = (e: any) => {
+        if (this.state.grabbing) {
+            this.wave.setAttribute('width', e.nativeEvent.offsetX.toString());
+            this.setState({
+                currentOffsetPx: e.nativeEvent.offsetX,
+            });
+        }
+    };
+
     render() {
         return (
             <AudioGrid>
@@ -450,19 +485,33 @@ export class AudioPlayer extends Component<Props, State> {
                     <Time t={this.state.currentTime} />
                 </TimeContainer>
                 <TimeContainer area="duration">
-                    {this.state.ready ? <Time t={this.state.duration} /> : ''}
+                    <Time
+                        t={
+                            this.state.ready
+                                ? this.state.duration
+                                : parseInt(this.props.duration, 10)
+                        }
+                    />
                 </TimeContainer>
-                <WaveAndTrack>
+                <WaveAndTrack
+                    onMouseDown={this.grabbing(true)}
+                    onMouseUp={this.grabbing(false)}
+                    onMouseMove={this.scrub}>
                     <FakeWave
                         innerRef={this.setGeometry}
-                        onClick={this.seekWave}
-                        progress={this.state.currentOffsetPx}>
+                        onClick={this.seekWave}>
                         <div
                             className="wave-holder"
                             dangerouslySetInnerHTML={{ __html: waveW.markup }}
                         />
                     </FakeWave>
-                    <ScrubberButton position={this.state.currentOffsetPx} />
+                    <ScrubberButton
+                        onMouseEnter={this.hovering(true)}
+                        onMouseLeave={this.hovering(false)}
+                        hovering={this.state.hovering}
+                        grabbing={this.state.grabbing}
+                        position={this.state.currentOffsetPx}
+                    />
                 </WaveAndTrack>
                 <Controls>
                     <JumpButton
@@ -492,25 +541,26 @@ export class AudioPlayer extends Component<Props, State> {
                         />
                     </JumpButton>
                 </Controls>
-
-                <Volume>
-                    <VolumeButton
-                        isVolume
-                        isActive={!this.state.muted}
-                        onClick={this.sound}
-                        dangerouslySetInnerHTML={{ __html: volumeOn.markup }}
-                    />
-                    <VolumeButton
-                        isVolume
-                        isActive={this.state.muted}
-                        onClick={this.mute}
-                        dangerouslySetInnerHTML={{ __html: volumeOff.markup }}
-                    />
-                </Volume>
-
-                <Download>
-                    <a href={this.props.downloadUrl}>Download MP3</a>
-                </Download>
+                {!isIOS() ? (
+                    <Volume>
+                        <VolumeButton
+                            isVolume
+                            isActive={!this.state.muted}
+                            onClick={this.sound}
+                            dangerouslySetInnerHTML={{
+                                __html: volumeOn.markup,
+                            }}
+                        />
+                        <VolumeButton
+                            isVolume
+                            isActive={this.state.muted}
+                            onClick={this.mute}
+                            dangerouslySetInnerHTML={{
+                                __html: volumeOff.markup,
+                            }}
+                        />
+                    </Volume>
+                ) : null}
             </AudioGrid>
         );
     }

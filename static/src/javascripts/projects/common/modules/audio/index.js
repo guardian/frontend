@@ -11,8 +11,7 @@ import { sendToOphan } from './utils';
 type Props = {
     source: string,
     mediaId: string,
-    downloadUrl: string,
-    pillar: string,
+    duration: string,
 };
 
 class AudioContainer extends Component<Props, *> {
@@ -21,10 +20,7 @@ class AudioContainer extends Component<Props, *> {
             <AudioPlayer
                 sourceUrl={this.props.source}
                 mediaId={this.props.mediaId}
-                downloadUrl={this.props.downloadUrl}
-                barWidth={2}
-                controls="controls"
-                pillar={this.props.pillar}
+                duration={this.props.duration}
             />
         );
     }
@@ -50,6 +46,7 @@ const init = (): void => {
         const source = placeholder.dataset.source;
         const mediaId = placeholder.dataset.mediaId;
         const downloadUrl = placeholder.dataset.downloadUrl;
+        const duration = placeholder.dataset.duration;
 
         if (supportsCSSGrid) {
             sendToOphan(mediaId, 'ready');
@@ -66,6 +63,7 @@ const init = (): void => {
                     source={source}
                     mediaId={mediaId}
                     downloadUrl={downloadUrl}
+                    duration={duration}
                     pillar={pillar}
                 />
             ) : (

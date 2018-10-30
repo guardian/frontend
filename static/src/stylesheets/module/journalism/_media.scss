@@ -265,8 +265,12 @@
 }
 
 .podcast__meta-item {
-    display: inline;
     margin-right: $gs-gutter / 2;
+    display: block;
+
+    @include mq($until: leftCol) {
+        display: inline;
+    }
 }
 
 .podcast__meta-icon {
