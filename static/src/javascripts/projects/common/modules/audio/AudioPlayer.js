@@ -404,6 +404,7 @@ export class AudioPlayer extends Component<Props, State> {
                 this.state.duration;
             this.audio.currentTime = currentTime;
             this.wave.setAttribute('width', currentOffsetPx.toString());
+            this.setState({ currentTime, currentOffsetPx });
         }
     };
 
