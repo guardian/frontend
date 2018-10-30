@@ -64,6 +64,8 @@
     display: inline-block;
     position: relative;
     width: 50%;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .football-match__team--home {
