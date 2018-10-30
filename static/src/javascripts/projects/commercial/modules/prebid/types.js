@@ -98,17 +98,6 @@ export type PrebidBid = {
         | PrebidPubmaticParams,
 };
 
-export type PrebidPriceBucket = {
-    precision?: number,
-    min: number,
-    max: number,
-    increment: number,
-};
-
-export type PrebidPriceGranularity = {
-    buckets: PrebidPriceBucket[],
-};
-
 export type PrebidMediaTypes = {
     banner: {
         sizes: PrebidSize[],
