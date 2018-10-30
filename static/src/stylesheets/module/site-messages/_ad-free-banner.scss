@@ -1,0 +1,173 @@
+$btn-height: ($gs-baseline*3.5);
+
+@mixin padding {
+    padding: $gs-baseline 0;
+
+    @include mq(tablet) {
+        padding: $gs-baseline $gs-gutter 0;
+    }
+}
+
+.site-message--ad-free-banner {
+    color: $brightness-100;
+    background: $sport-dark;
+    overflow: hidden;
+
+    .site-message__close {
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+
+    .site-message__inner {
+        width: auto;
+    }
+
+    .site-message__roundel {
+        position: absolute;
+        padding: 0;
+        width: auto;
+        height: auto;
+        display: none;
+
+        .inline-icon {
+            fill: $brightness-100;
+            path:last-child {
+                fill: $brightness-7;
+            }
+        }
+
+        svg {
+            width: 32px;
+            height: 32px;
+            display: block;
+        }
+
+        @include mq(desktop) {
+            top: $gs-baseline;
+            left: $gs-gutter;
+            right: auto;
+            bottom: auto;
+            display: block;
+        }
+
+    }
+
+    a {
+        color: $brightness-7;
+        font-weight: 900;
+        text-decoration: underline;
+    }
+
+    .site-message__close-btn {
+        position: absolute;
+        top: $gs-baseline;
+        right: $gs-baseline;
+
+        .inline-icon {
+            fill: $brightness-100;
+        }
+
+        @include mq(tablet) {
+            right: $gs-gutter;
+        }
+
+    }
+
+    .site-message__image {
+        display: block;
+        z-index: 9;
+        img {
+            height: $gs-baseline * 14;
+            display: block;
+            @include mq($until: desktop) {
+                position: absolute;
+                right: $gs-gutter * -3;
+                bottom: 0;
+                height: $gs-baseline * 8;
+            }
+        }
+    }
+
+    .site-message__copy {
+        @include padding;
+        @include mq(desktop) {
+            display: flex;
+            align-items: flex-end;
+            margin-left: gs-span(1);
+        }
+        @include mq(leftCol) {
+            margin-left: 0;
+        }
+    }
+
+    .site-message__copy-heading {
+        @include fs-headlineGarnett(4);
+        @include mq(leftCol) {
+            @include fs-headlineGarnett(6, true);
+        }
+        font-weight: bold;
+        padding-bottom: $gs-baseline;
+        color: $highlight-main;
+        padding-right: $gs-gutter * 2;
+    }
+
+    .site-message__copy-text {
+        @include banner-copy-alignment;
+        display: block;
+        margin-bottom: 12px;
+        margin-right: 0;
+        font-size: 16px;
+        line-height: 20px;
+        padding-bottom: $gs-baseline * 2;
+        flex: 0 0 auto;
+        @include mq(phablet) {
+            font-size: 18px;
+            line-height: 24px;
+            width: auto;
+        }
+        @include mq(desktop) {
+            width: gs-span(6) + $gs-gutter*3;
+        }
+        @include mq(leftCol) {
+            margin-bottom: 0;
+            width: gs-span(6) + $gs-gutter*2;
+        }
+    }
+
+    .site-message__copy-button {
+        @include fs-textSans(5);
+        @include circular;
+        height: $btn-height;
+        background: $highlight-main;
+        color: $brightness-7;
+        padding: 0 ($gs-gutter*1.25) 0 ($gs-gutter*1.25)+($btn-height*.5);
+        vertical-align: middle;
+        text-decoration: none;
+        margin-top: $gs-baseline;
+        border: 0;
+        position: relative;
+        z-index: 10;
+        svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            margin: auto;
+            width: $btn-height;
+            height: $btn-height;
+            transform: scale(.5);
+            g, path {
+                fill: $brightness-7;
+
+                .site-message--double-banner & {
+                    fill: #ffffff;
+                }
+            }
+        }
+
+        &:hover, &:focus {
+            background-color: mix($highlight-main, $brightness-7, 80%);
+        }
+    }
+
+}

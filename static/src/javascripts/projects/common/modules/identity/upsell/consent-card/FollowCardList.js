@@ -1,49 +1,72 @@
 // @flow
-import React, { Component } from 'preact-compat';
+import React from 'preact-compat';
+import config from 'lib/config';
 import { FollowCard } from 'common/modules/identity/upsell/consent-card/FollowCard';
+import {
+    setConsentsInApi,
+    getNewsLetterConsents,
+    getUserConsents,
+} from 'common/modules/identity/upsell/store/consents';
 import type { ConsentWithState } from '../store/types';
-import { setConsentsInApi } from '../store/consents';
 import { ErrorBar, genericErrorStr } from '../error-bar/ErrorBar';
 import { ExpanderButton } from '../button/ExpanderButton';
 
-const joinWithOr = arr =>
-    arr.reduce(
-        (acc, val, idx, src) =>
-            idx === 0
-                ? val
-                : [acc, idx + 1 >= src.length ? ', or ' : ', ', val].join(''),
-        ''
-    );
+const getConsents = (): Promise<ConsentWithState[]> => {
+    const userConsents = getUserConsents([
+        'supporter',
+        'holidays',
+        'events',
+        'offers',
+        'jobs',
+    ]);
 
-type FollowCardListProps = {
-    consents: Promise<ConsentWithState>[],
+    const newsLetterConsents = getNewsLetterConsents([
+        'today-uk',
+        'the-long-read',
+        'bookmarks',
+        'brexit-briefing',
+        'green-light',
+        'lab-notes',
+    ]);
+
+    return Promise.all([userConsents, newsLetterConsents]).then(
+        ([fetchedUserConsents, fetchedNewsLetterConsents]) => [
+            ...fetchedUserConsents,
+            ...fetchedNewsLetterConsents,
+        ]
+    );
+};
+
+type Props = {
     cutoff: number,
 };
 
-class FollowCardList extends Component<
-    FollowCardListProps,
-    {
-        consents: ConsentWithState[],
-        isExpanded: boolean,
-    }
-> {
-    constructor(props: FollowCardListProps) {
+type State = {
+    consents: ConsentWithState[],
+    isLoading: boolean,
+    isExpanded: boolean,
+    errors: string[],
+};
+
+// TODO: seperate this into a stateless component and a stateful wrapper.
+class FollowCardList extends React.Component<Props, State> {
+    constructor(props: Props) {
         super(props);
         this.setState({
             consents: [],
-            errors: [],
-            isExpanded: false,
             isLoading: true,
+            isExpanded: false,
+            errors: [],
         });
     }
 
     componentDidMount() {
-        Promise.all(this.props.consents).then(consents => {
+        getConsents().then(consents =>
             this.setState({
                 consents,
                 isLoading: false,
-            });
-        });
+            })
+        );
     }
 
     updateConsentState(consent: ConsentWithState) {
@@ -74,16 +97,8 @@ class FollowCardList extends Component<
         });
     };
 
-    expandableConsentsButtonText = (consents: ConsentWithState[]): string => {
-        const buttonWords = [...consents].splice(0, 2).map(c => c.consent.name);
-        if (consents.length > buttonWords.length) {
-            buttonWords.push('more');
-        }
-        return `Interested in ${joinWithOr(buttonWords)}?`;
-    };
-
     render() {
-        const { consents, isExpanded, errors, isLoading } = this.state;
+        const { consents, isLoading, isExpanded, errors } = this.state;
         const { cutoff } = this.props;
 
         const displayables = isExpanded
@@ -118,12 +133,22 @@ class FollowCardList extends Component<
                             linkName="upsell-follow-expander"
                             onToggle={this.updateExpandState}
                             text={{
-                                more: this.expandableConsentsButtonText(
-                                    [...consents].splice(cutoff)
-                                ),
+                                more: 'See more',
                                 less: 'Less',
                             }}
                         />
+                        {isExpanded && (
+                            <div>
+                                <a
+                                    data-link-name="upsell-newsletter-link"
+                                    className="u-underline identity-upsell-consent-card__link"
+                                    href={`${config.get(
+                                        'page.idUrl'
+                                    )}/email-prefs`}>
+                                    View all Guardian newsletters
+                                </a>
+                            </div>
+                        )}
                     </div>
                 )}
             </div>

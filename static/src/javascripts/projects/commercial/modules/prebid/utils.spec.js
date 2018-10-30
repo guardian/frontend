@@ -214,36 +214,6 @@ describe('Utils', () => {
     test('shouldIncludeAdYouLike when not in any tests', () => {
         testCanBeRun.mockReturnValue(true);
         getParticipations.mockReturnValue(undefined);
-        expect(shouldIncludeAdYouLike([[300, 250]])).toBe(false);
-        expect(shouldIncludeAdYouLike([[300, 600], [300, 250]])).toBe(false);
-        expect(shouldIncludeAdYouLike([[728, 90]])).toBe(false);
-    });
-
-    test('shouldIncludeAdYouLike when not in AdYouLike test', () => {
-        testCanBeRun.mockReturnValue(true);
-        getParticipations.mockReturnValue({
-            CommercialPrebidAdYouLike: { variant: 'notintest' },
-        });
-        expect(shouldIncludeAdYouLike([[300, 250]])).toBe(false);
-        expect(shouldIncludeAdYouLike([[300, 600], [300, 250]])).toBe(false);
-        expect(shouldIncludeAdYouLike([[728, 90]])).toBe(false);
-    });
-
-    test('shouldIncludeAdYouLike when in aylStyle variant', () => {
-        testCanBeRun.mockReturnValue(true);
-        getParticipations.mockReturnValue({
-            CommercialPrebidAdYouLike: { variant: 'aylStyle' },
-        });
-        expect(shouldIncludeAdYouLike([[300, 250]])).toBe(true);
-        expect(shouldIncludeAdYouLike([[300, 600], [300, 250]])).toBe(true);
-        expect(shouldIncludeAdYouLike([[728, 90]])).toBe(false);
-    });
-
-    test('shouldIncludeAdYouLike when in guardianStyle variant', () => {
-        testCanBeRun.mockReturnValue(true);
-        getParticipations.mockReturnValue({
-            CommercialPrebidAdYouLike: { variant: 'guardianStyle' },
-        });
         expect(shouldIncludeAdYouLike([[300, 250]])).toBe(true);
         expect(shouldIncludeAdYouLike([[300, 600], [300, 250]])).toBe(true);
         expect(shouldIncludeAdYouLike([[728, 90]])).toBe(false);

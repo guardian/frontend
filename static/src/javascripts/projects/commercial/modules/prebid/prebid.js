@@ -97,8 +97,8 @@ class PrebidService {
 
         window.pbjs.setConfig(pbjsConfig);
 
-        // gather analytics from 20% (1 in 5) of page views
-        const inSample = getRandomIntInclusive(1, 5) === 1;
+        // gather analytics from 75% (3 in 4) of page views
+        const inSample = getRandomIntInclusive(1, 4) !== 1;
         if (
             config.get('switches.prebidAnalytics', false) &&
             (inSample || config.get('page.isDev', false))
@@ -185,35 +185,6 @@ class PrebidService {
                             window.pbjs.onEvent(
                                 'auctionInit',
                                 auctionInitHandler
-                            );
-
-                            const onAuctionEndHandler = () => {
-                                const getHighestCpm = (auctionBids): number =>
-                                    (auctionBids &&
-                                        auctionBids
-                                            .map(_ => _.cpm)
-                                            .sort()
-                                            .pop()) ||
-                                    0;
-                                const bidResponses = window.pbjs.getBidResponses()[
-                                    advert.id
-                                ];
-
-                                const cpm: number = getHighestCpm(
-                                    (bidResponses && bidResponses.bids) || []
-                                );
-                                if (cpm > 0) {
-                                    advert.slot.setTargeting('hb_cpm', cpm);
-                                }
-                                window.pbjs.offEvent(
-                                    'auctionEnd',
-                                    onAuctionEndHandler
-                                );
-                            };
-
-                            window.pbjs.onEvent(
-                                'auctionEnd',
-                                onAuctionEndHandler
                             );
 
                             window.pbjs.requestBids({

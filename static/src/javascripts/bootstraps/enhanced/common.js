@@ -50,6 +50,7 @@ import { breakingNews } from 'common/modules/onward/breaking-news';
 import { trackConsentCookies } from 'common/modules/analytics/send-privacy-prefs';
 import { getAllAdConsentsWithState } from 'common/modules/commercial/ad-prefs.lib';
 import ophan from 'ophan/ng';
+import { adFreeBanner } from 'common/modules/commercial/ad-free-banner';
 
 const initialiseTopNavItems = (): void => {
     const header: ?HTMLElement = document.getElementById('header');
@@ -274,6 +275,7 @@ const initialiseBanner = (): void => {
         membershipBanner,
         membershipEngagementBanner,
         smartAppBanner,
+        adFreeBanner,
         emailSignInBanner,
     ];
     initBannerPicker(bannerList);

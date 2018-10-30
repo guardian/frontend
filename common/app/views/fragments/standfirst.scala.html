@@ -24,14 +24,6 @@
             <meta itemprop="description" content="@trailText" />
         }
     }
-    @if(item.tags.isAudio && ActiveExperiments.isParticipating(AudioPageChange)) {
-        @for( series <- item.tags.tags.find(_.properties.podcast.nonEmpty)
-            ; podcast <- series.properties.podcast
-            ; image <- podcast.image
-        ) {
-            <img src="@image" class="content__standfirst-cover">
-        }
-    }
     @item.fields.standfirst.map { standfirst =>
         @defining(Edition(request)) { edition =>
             @withJsoup(BulletCleaner(

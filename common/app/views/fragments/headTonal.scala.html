@@ -22,9 +22,7 @@
 
     <div class="content__header tonal__header">
         <div class="gs-container">
-            <div class="@RenderClasses(Map(
-                "content__main-column--flagship" -> (item.tags.isAudio && ActiveExperiments.isParticipating(AudioPageChange))
-            ), "content__main-column", "u-cf")">
+            <div class="content__main-column u-cf">
 
                 @if(showMeta) {
                     @fragments.meta.metaInline(item, amp)
@@ -111,12 +109,11 @@
         </div>
     </div>
 
+    @if(!item.tags.isAudio || !ActiveExperiments.isParticipating(AudioPageChange)){
     <div class="tonal__standfirst u-cf">
         @if(item.fields.standfirst.isDefined) {
             <div class="gs-container">
-                <div class="@RenderClasses(Map(
-                    "content__main-column--flagship" -> (item.tags.isAudio && ActiveExperiments.isParticipating(AudioPageChange))
-                ), "content__main-column")">
+                <div class="content__main-column">
                     @if(showBadge && isPaidContent(page)) {
                         <div class="content__meta-container js-content-meta js-football-meta u-cf">
                             @fragments.commercial.badge(item, page)
@@ -129,4 +126,5 @@
             </div>
         }
     </div>
+    }
 </header>

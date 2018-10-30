@@ -463,17 +463,6 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
-  // Owner: Journalism
-  val ReaderAnswersDeliveryMechanism = Switch(
-    SwitchGroup.Feature,
-    "reader-answers-preferred-delivery-mechanism",
-    "When ON, story questions will give readers the option to indicate their preferred answer delivery medium",
-    owners = Seq(Owner.withGithub("annebyrne")),
-    safeState = On,
-    sellByDate = new LocalDate(2018, 10, 24),
-    exposeClientSide = false
-  )
-
   val WeAreHiring = Switch(
     SwitchGroup.Feature,
     "we-are-hiring",
@@ -493,4 +482,16 @@ trait FeatureSwitches {
     sellByDate = never,
     exposeClientSide = false
   )
+
+  // Simple & Coherent
+  val ScAdFreeBanner = Switch(
+    SwitchGroup.Feature,
+    "sc-ad-free-banner",
+    "If switched on, ad free users will be told they have ad free.",
+    owners = Seq(Owner.withName("simple.and.coherent")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
 }

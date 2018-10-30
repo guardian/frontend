@@ -6,6 +6,8 @@ import fetchJson_ from 'lib/fetch-json';
 import { SearchTool } from 'facia/modules/onwards/search-tool';
 import mediator from 'lib/mediator';
 
+jest.mock('lib/raven');
+
 jest.mock('lib/fetch-json', () => jest.fn());
 
 const fetchJson: JestMockFn<*, *> = (fetchJson_: any);

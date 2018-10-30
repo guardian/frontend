@@ -14,6 +14,7 @@ import renderers.RemoteRender
 import services.CAPILookup
 import implicits.{AmpFormat, EmailFormat, HtmlFormat, JsonFormat}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
+import model.dotcomponents.DotcomponentsDataModel
 import services.dotcomponents.{LocalRender, RemoteRender, RenderType, RenderingTierPicker}
 
 import scala.concurrent.Future
@@ -80,9 +81,13 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
     List(("html", views.html.fragments.articleBody(article))) ++ contentFieldsJson
   }
 
+  private def getGuuiJson(article: ArticlePage)(implicit request: RequestHeader): String =
+    DotcomponentsDataModel.toJsonString(DotcomponentsDataModel.fromArticle(article, request))
+
   private def render(path: String, article: ArticlePage)(implicit request: RequestHeader): Future[Result] = {
     Future {
       request.getRequestFormat match {
+        case JsonFormat if request.isGuui => common.renderJson(getGuuiJson(article), article)
         case JsonFormat => common.renderJson(getJson(article), article)
         case EmailFormat => common.renderEmail(ArticleEmailHtmlPage.html(article), article)
         case HtmlFormat => common.renderHtml(ArticleHtmlPage.html(article), article)

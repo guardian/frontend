@@ -5,6 +5,8 @@ import qwery from 'qwery';
 
 import { _ } from 'facia/modules/ui/container-show-more';
 
+jest.mock('lib/raven');
+
 const { itemsByArticleId, dedupShowMore } = _;
 
 describe('Container Show More', () => {

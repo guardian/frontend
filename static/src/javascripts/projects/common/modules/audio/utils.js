@@ -9,9 +9,7 @@ const formatTime = (t: number) => {
     const second = Math.floor(t % 60);
     const minute = Math.floor((t % 3600) / 60);
     const hour = Math.floor(t / 3600);
-    return hour === 0
-        ? `${format(minute)}:${format(second)}`
-        : `${format(hour)}:${format(minute)}:${format(second)}`;
+    return `${format(hour)}:${format(minute)}:${format(second)}`;
 };
 
 const range = (min: number, max: number) => {
@@ -33,16 +31,46 @@ const sendToOphan = (id: string, eventName: string) => {
     });
 };
 
-const checkForTimeEvents = (id: string, percent: number) => {
-    if (percent === 25) {
-        sendToOphan(id, '25');
-    } else if (percent === 50) {
-        sendToOphan(id, '50');
-    } else if (percent === 75) {
-        sendToOphan(id, '75');
-    } else if (percent === 100) {
-        sendToOphan(id, 'end');
-    }
+const monitorPercentPlayed = (
+    player: HTMLMediaElement,
+    marker: number,
+    id: string
+) => {
+    const eventName = marker === 99 ? 'end' : marker.toLocaleString();
+
+    player.addEventListener('timeupdate', function listener(e) {
+        const percentPlayed = Math.round(
+            (player.currentTime / player.duration) * 100
+        );
+        if (percentPlayed >= marker) {
+            sendToOphan(id, eventName);
+            player.removeEventListener(e.type, listener);
+        }
+    });
 };
 
-export { format, formatTime, range, sendToOphan, checkForTimeEvents };
+const playerObserved = (el: ?Element, id: string) => {
+    const observer = new window.IntersectionObserver(
+        (entries, self) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    sendToOphan(id, 'ready');
+                    self.disconnect();
+                }
+            });
+        },
+        {
+            threshold: 1.0,
+        }
+    );
+    observer.observe(el);
+};
+
+export {
+    format,
+    formatTime,
+    range,
+    sendToOphan,
+    monitorPercentPlayed,
+    playerObserved,
+};

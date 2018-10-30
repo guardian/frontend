@@ -11,7 +11,8 @@ object ActiveExperiments extends ExperimentsDefinition {
     CommercialClientLogging,
     OrielParticipation,
     OldTLSSupportDeprecation,
-    DotcomponentsRendering
+    DotcomponentsRendering,
+    HeaderSubscribeUKTest
   )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
@@ -20,7 +21,7 @@ object CommercialClientLogging extends Experiment(
   name = "commercial-client-logging",
   description = "A slice of the audience who will post their commercial js performance data",
   owners = Owner.group(SwitchGroup.Commercial),
-  sellByDate = new LocalDate(2018, 10, 17),
+  sellByDate = new LocalDate(2018, 11, 21),
   participationGroup = Perc1A
 )
 
@@ -28,7 +29,7 @@ object OrielParticipation extends Experiment(
   name = "oriel-participation",
   description = "A slice of the audience who will participate in Oriel ad-blocking technology",
   owners = Seq(Owner.withGithub("janua")),
-  sellByDate = new LocalDate(2018, 10, 17),
+  sellByDate = new LocalDate(2018, 11, 29),
   participationGroup = Perc20A
 )
 
@@ -45,7 +46,7 @@ object AudioPageChange extends Experiment(
   name = "audio-page-change",
   description = "Show a different version of the audio page to certain people",
   owners = Owner.group(SwitchGroup.Journalism),
-  sellByDate = new LocalDate(2018, 10, 26),
+  sellByDate = new LocalDate(2018, 12, 5),
   participationGroup = Perc0B
 )
 
@@ -54,5 +55,13 @@ object DotcomponentsRendering extends Experiment(
   description = "This will allow rendering of articles to use dotcomponents, if that page is supported",
   owners = Seq(Owner.withGithub("MatthewJWalls")),
   sellByDate = new LocalDate(2018, 12, 31),
+  participationGroup = Perc50
+)
+
+object HeaderSubscribeUKTest extends Experiment(
+  name = "header-subscribe-uk-test",
+  description = "We're changing the order and destination of the contribution and subscribe links in order to see if we can improve the subscription revenue",
+  owners = Seq(Owner.withGithub("rcrphillips")),
+  sellByDate = new LocalDate(2018, 11, 30),
   participationGroup = Perc50
 )

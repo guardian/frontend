@@ -5,25 +5,23 @@ import {
     React,
     render,
 } from '@guardian/dotcom-rendering/packages/guui';
-import Player from './AudioPlayer';
+import { AudioPlayer } from './AudioPlayer';
 import { sendToOphan } from './utils';
 
 type Props = {
     source: string,
     mediaId: string,
     downloadUrl: string,
-    iTunesUrl: string,
     pillar: string,
 };
 
 class AudioContainer extends Component<Props, *> {
     render() {
         return (
-            <Player
+            <AudioPlayer
                 sourceUrl={this.props.source}
                 mediaId={this.props.mediaId}
                 downloadUrl={this.props.downloadUrl}
-                iTunesUrl={this.props.iTunesUrl}
                 barWidth={2}
                 controls="controls"
                 pillar={this.props.pillar}
@@ -52,7 +50,6 @@ const init = (): void => {
         const source = placeholder.dataset.source;
         const mediaId = placeholder.dataset.mediaId;
         const downloadUrl = placeholder.dataset.downloadUrl;
-        const iTunesUrl = placeholder.dataset.itunesUrl;
 
         if (supportsCSSGrid) {
             sendToOphan(mediaId, 'ready');
@@ -69,7 +66,6 @@ const init = (): void => {
                     source={source}
                     mediaId={mediaId}
                     downloadUrl={downloadUrl}
-                    iTunesUrl={iTunesUrl}
                     pillar={pillar}
                 />
             ) : (

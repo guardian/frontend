@@ -35,10 +35,10 @@ object CommercialDfpReporting extends Logging {
 
   private def prebidBidderPerformanceQry = {
     def toGoogleDate(date: LocalDate) = new Date(date.getYear, date.getMonthValue, date.getDayOfMonth)
-    val prebidBegan = LocalDate.of(2018, 1, 22)
+    val weekAgo = LocalDate.now.minusWeeks(1)
     val qry = new ReportQuery()
     qry.setDateRangeType(CUSTOM_DATE)
-    qry.setStartDate(toGoogleDate(prebidBegan.minusDays(1)))
+    qry.setStartDate(toGoogleDate(weekAgo.minusDays(1)))
     qry.setEndDate(toGoogleDate(LocalDate.now))
     qry.setDimensions(Array(DATE, CUSTOM_CRITERIA))
     qry.setColumns(Array(AD_SERVER_IMPRESSIONS, AD_SERVER_WITHOUT_CPD_AVERAGE_ECPM))

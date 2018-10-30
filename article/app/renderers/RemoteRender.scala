@@ -1,23 +1,17 @@
 package renderers
 
-import common.JsonComponent
 import conf.Configuration
 import controllers.ArticlePage
 import model.Cached.RevalidatableResult
-import model.{ApplicationContext, Cached, ContentFields, NoCache, PageWithStoryPackage}
-import play.api.libs.json.Json
+import model.dotcomponents.DotcomponentsDataModel
+import model.{ApplicationContext, Cached}
 import play.api.libs.ws.WSClient
 import play.api.mvc.{RequestHeader, Result}
-import play.api.mvc.Results.InternalServerError
-
-import scala.concurrent.{ExecutionContext, Future}
 import play.twirl.api.Html
 
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 import scala.concurrent.duration._
-import common.RichRequestHeader
-import staticpages.StaticPages
-
-import ExecutionContext.Implicits.global
 
 class RemoteRender(implicit context: ApplicationContext) {
 
@@ -36,14 +30,10 @@ class RemoteRender(implicit context: ApplicationContext) {
 
   def render(ws:WSClient, path: String, article: ArticlePage)(implicit request: RequestHeader): Future[Result] = {
 
-    val contentFieldsJson = List(
-      "contentFields" -> Json.toJson(ContentFields(article.article)),
-      "tags" -> Json.toJson(article.article.tags)
-    )
-    val jsonResponse = List(("html", views.html.fragments.articleBody(article))) ++ contentFieldsJson
-    val jsonPayload = JsonComponent.jsonFor(article, jsonResponse:_*)
+    val dataModel: DotcomponentsDataModel = DotcomponentsDataModel.fromArticle(article, request)
+    val dataString: String = DotcomponentsDataModel.toJsonString(dataModel)
 
-    remoteRenderArticle(ws, jsonPayload, article)
+    remoteRenderArticle(ws, dataString, article)
   }
 
 }

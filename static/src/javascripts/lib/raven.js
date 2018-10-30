@@ -1,6 +1,6 @@
 // @flow
 
-import raven from 'raven';
+import raven from 'raven-js';
 import config from 'lib/config';
 import { adblockInUse } from 'lib/detect';
 

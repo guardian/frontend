@@ -196,6 +196,8 @@ import scala.concurrent.Await
     val (key, html) = jsonResponse.as[Map[String,String]].head
     key shouldBe "body"
     html should include ("<!DOCTYPE html")
+    val responseHeaders = headers(emailJsonResponse)
+    responseHeaders("Surrogate-Control") should include("max-age=60")
   }
 
   it should "render txt email fronts" in {
@@ -207,6 +209,8 @@ import scala.concurrent.Await
     key shouldBe "body"
     text should not include "<!DOCTYPE html"
     text should include ("The Guardian Today | The Guardian")
+    val responseHeaders = headers(emailJsonResponse)
+    responseHeaders("Surrogate-Control") should include("max-age=60")
   }
 
   it should "render email fronts" in {
@@ -216,6 +220,8 @@ import scala.concurrent.Await
     assertThrows[JsonParseException](contentAsJson(emailJsonResponse))
     contentAsString(emailJsonResponse)
     contentAsString(emailJsonResponse) should include ("<!DOCTYPE html")
+    val responseHeaders = headers(emailJsonResponse)
+    responseHeaders("Surrogate-Control") should include("max-age=900")
   }
 
 }

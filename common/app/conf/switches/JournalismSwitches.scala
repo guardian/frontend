@@ -32,4 +32,24 @@ trait JournalismSwitches {
     sellByDate = never,
     exposeClientSide = false
   )
+
+  val FlagshipEmailContainerSwitch = Switch(
+    SwitchGroup.Journalism,
+    "flagship-email-container",
+    "Display the Flagship podcast container in the daily emails",
+    owners = Seq(Owner.withName("journalism team")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+
+  val FlagshipFrontContainerSwitch = Switch(
+    SwitchGroup.Journalism,
+    "flagship-front-container",
+    "Display the Flagship podcast container on the /uk front",
+    owners = Seq(Owner.withName("journalism team")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false
+  )
 }

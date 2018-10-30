@@ -43,7 +43,14 @@ class WhitelistPicker extends RenderTierPickerStrategy {
     "uk-news/2018/oct/14/met-police-damian-collins-no-investigation-leave-campaigners-data-misuse",
     "world/2018/oct/14/nine-climbers-killed-in-storm-in-himalayas-mount-gurja-nepal-south-korea",
     "help/2017/mar/15/computer-security-tips-for-whistleblowers-and-sources",
-    "uk-news/2018/oct/15/cornwall-murder-lyn-bryant-police-new-dna-evidence"
+    "uk-news/2018/oct/15/cornwall-murder-lyn-bryant-police-new-dna-evidence",
+    "uk-news/2018/oct/18/man-beaten-to-death-in-south-west-london",
+    "science/2018/oct/17/chinese-city-plans-to-launch-artificial-moon-to-replace-streetlights",
+    "uk-news/2018/oct/17/no-retrial-for-teacher-accused-of-having-sex-with-student-on-plane-eleanor-wilson",
+    "australia-news/2018/oct/18/queensland-man-charged-with-raping-young-english-woman-on-working-holiday",
+    "business/2018/oct/17/man-falls-from-top-floor-of-westfield-stratford-on-to-another-shopper",
+    "uk-news/2018/oct/17/elizabeth-isherwood-wales-death-locked-cupboard-macdonald-resorts-sued",
+    "us-news/2018/oct/17/high-school-cookies-teen-grandfather-ashes"
   )
 
   override def getRenderTierFor(page: PageWithStoryPackage, request: RequestHeader): (Results, RenderType) = {
