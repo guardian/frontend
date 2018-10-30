@@ -5,9 +5,6 @@ import { getBreakpoint } from 'lib/detect';
 import { pbTestNameMap } from 'lib/url';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
 import config from 'lib/config';
-import { commercialPrebidAdYouLike } from 'common/modules/experiments/tests/commercial-prebid-adyoulike';
-import { testCanBeRun } from 'common/modules/experiments/test-can-run-checks';
-import { getParticipations } from 'common/modules/experiments/utils';
 import type { PrebidSize } from './types';
 
 const stripSuffix = (s: string, suffix: string): string => {
@@ -104,17 +101,8 @@ export const shouldIncludeOpenx = (): boolean =>
 
 export const shouldIncludeTrustX = (): boolean => isInUsRegion();
 
-export const shouldIncludeAdYouLike = (slotSizes: PrebidSize[]): boolean => {
-    const test = commercialPrebidAdYouLike;
-    const participations = getParticipations();
-    return (
-        testCanBeRun(test) &&
-        participations !== undefined &&
-        participations[test.id] !== undefined &&
-        participations[test.id].variant !== 'notintest' &&
-        containsMpu(slotSizes)
-    );
-};
+export const shouldIncludeAdYouLike = (slotSizes: PrebidSize[]): boolean =>
+    containsMpu(slotSizes);
 
 export const shouldIncludeOzone = (): boolean =>
     !isInUsRegion() && !isInAuRegion();

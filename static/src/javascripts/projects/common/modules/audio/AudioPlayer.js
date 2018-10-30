@@ -5,268 +5,46 @@ import {
     Component,
     styled,
 } from '@guardian/dotcom-rendering/packages/guui';
-import palette, {
-    pillarsHighlight,
-} from '@guardian/dotcom-rendering/packages/pasteup/palette';
+import palette from '@guardian/dotcom-rendering/packages/pasteup/palette';
 import {
-    mobileMedium,
-    mobileLandscape,
-    phablet,
-    tablet,
     leftCol,
     wide,
-    mobile,
-    desktop,
 } from '@guardian/dotcom-rendering/packages/pasteup/breakpoints';
+import { isIOS } from 'lib/detect';
 
-import download from 'svgs/journalism/audio-player/download.svg';
-import pauseBtn from 'svgs/journalism/audio-player/pause-btn.svg';
-import playBtn from 'svgs/journalism/audio-player/play-btn.svg';
-import volume from 'svgs/journalism/audio-player/volume.svg';
-import fastBackward from 'svgs/journalism/audio-player/fast-backward.svg';
-import fastForward from 'svgs/journalism/audio-player/fast-forward.svg';
-import fastBackwardActive from 'svgs/journalism/audio-player/fast-backward-active.svg';
-import fastForwardActive from 'svgs/journalism/audio-player/fast-forward-active.svg';
+import pauseBtn from 'svgs/journalism/audio-player/pause.svg';
+import playBtn from 'svgs/journalism/audio-player/play.svg';
+import volumeOn from 'svgs/journalism/audio-player/sound-on.svg'; // eslint-disable-line
+import volumeOff from 'svgs/journalism/audio-player/sound-off.svg'; // eslint-disable-line
+import fastBackward from 'svgs/journalism/audio-player/backward.svg';
+import fastForward from 'svgs/journalism/audio-player/forward.svg';
 
 import waveW from 'svgs/journalism/audio-player/wave-wide.svg';
-import { formatTime, sendToOphan, checkForTimeEvents } from './utils';
+import { sendToOphan, monitorPercentPlayed, playerObserved } from './utils';
 
-import ProgressBar from './ProgressBar';
 import Time from './Time';
-import config from '../../../../lib/config';
-
-const applePodcastImage =
-    config.get('images.journalism.apple-podcast-logo') || '';
 
 const AudioGrid = styled('div')({
-    borderTop: '1px solid #767676',
     display: 'grid',
     backgroundColor: palette.neutral[1],
     color: palette.neutral[5],
-    gridTemplateColumns: '6fr 4fr',
-    gridTemplateRows: '30px 50px 94px 50px 1fr',
-    gridTemplateAreas:
-        '"currentTime duration" "wave wave" "controls controls" "volume download" "links links"',
-
-    [mobile]: {
-        gridTemplateColumns: '1fr 1fr',
-    },
-
-    [tablet]: {
-        gridTemplateColumns: '150px 1fr 1fr',
-        gridTemplateRows: '30px 50px 90px 1fr 1fr',
-        gridTemplateAreas:
-            '"currentTime currentTime duration" "wave wave wave" "controls controls controls" "volume volume volume" "download links links"',
-    },
+    gridTemplateRows: '30px 40px 120px 40px',
+    gridTemplateAreas: `"currentTime duration"
+         "wave wave"
+         "controls controls"
+         ". volume"
+        `,
 
     [leftCol]: {
-        gridTemplateRows: '30px 60px 1fr 1fr',
-        gridTemplateAreas:
-            '". currentTime duration" "controls wave wave" "volume . ." "download links links"',
-    },
-
-    [wide]: {
-        gridTemplateRows: '30px 60px 2fr 1fr',
-        gridTemplateColumns: '230px 1fr 1fr',
+        position: 'relative',
+        gridTemplateColumns: '90px 1fr 90px',
+        gridTemplateRows: '50px 110px',
+        gridTemplateAreas: `"currentTime wave duration"
+        "controls controls controls"`,
     },
 });
 
-const TimeContainer = styled('div')(({ area }) => ({
-    [area === 'currentTime'
-        ? 'borderLeft'
-        : 'borderRight']: '1px solid #767676',
-    [area === 'currentTime' ? 'paddingLeft' : 'paddingRight']: '4px',
-    [area === 'currentTime' ? 'marginLeft' : 'marginRight']: '10px',
-    gridArea: area,
-    paddingTop: '4px',
-    fontFamily: 'Guardian Text Sans Web',
-    fontWeight: 'bold',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: area === 'duration' ? 'flex-end' : 'flex-start',
-
-    [leftCol]: {
-        marginLeft: '0',
-        marginRight: '0',
-        [area === 'currentTime' ? 'paddingLeft' : 'paddingRight']: '8px',
-    },
-}));
-
-const Controls = styled('div')({
-    gridArea: 'controls',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: '33px 0',
-});
-
-const WaveAndTrack = styled('div')({
-    gridArea: 'wave',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'stretch',
-    padding: '0 9px',
-    cursor: 'pointer',
-    maxWidth: '100%',
-});
-
-const Track = styled('div')({
-    height: '12px',
-    position: 'relative',
-    top: '-4px',
-});
-
-const FakeWave = styled('div')({
-    flex: 1,
-    svg: {
-        width: '100%',
-        transform: `translate(0px, 20px)`,
-        [mobileMedium]: {
-            transform: `translate(0px, 18px)`,
-        },
-        [mobileLandscape]: {
-            transform: `translate(0px, 16px)`,
-        },
-        [phablet]: {
-            transform: `translate(0px, 11px)`,
-        },
-        [tablet]: {
-            transform: `translate(0px, 8px)`,
-        },
-        [desktop]: {
-            transform: `translate(0px, 10px)`,
-        },
-        [leftCol]: {
-            transform: `translate(0px, 15px)`,
-        },
-        [wide]: {
-            transform: `translate(0px, 16px)`,
-        },
-    },
-});
-
-const Volume = styled('div')({
-    gridArea: 'volume',
-    display: 'flex',
-    alignItems: 'center',
-    padding: '0 10px',
-    borderTop: '1px solid #797979',
-    borderRight: '1px solid #797979',
-    svg: {
-        fill: '#dcdcdc',
-    },
-    [tablet]: {
-        borderRight: 'none',
-    },
-    [desktop]: {
-        padding: '0 10px',
-    },
-    [leftCol]: {
-        border: 'none',
-    },
-    [wide]: {
-        padding: '30px 30px 24px 30px',
-    },
-    '> img': {
-        marginRight: '6px',
-    },
-    'div[role="progressbar"]': {
-        flex: 1,
-    },
-});
-
-const Download = styled('div')({
-    borderTop: '1px solid #767676',
-    gridArea: 'download',
-    fontFamily: 'Guardian Text Sans Web',
-    fontWeight: 'bold',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    [tablet]: {
-        justifyContent: 'flex-start',
-        paddingLeft: '10px',
-        paddingTop: '8px',
-    },
-    [wide]: {
-        paddingLeft: '28px',
-    },
-    a: {
-        color: '#cbcbcb', // TODO: add to the palette
-        border: '1px solid rgba(118, 118, 118, 0.7)',
-        borderRadius: '15px',
-        display: 'inline-flex',
-        alignItems: 'center',
-        padding: '0px 9px',
-        fontSize: '12px',
-        textDecoration: 'none',
-
-        ':hover': {
-            borderColor: '#ffffff',
-        },
-    },
-    svg: {
-        height: '18px',
-        width: '18px',
-        marginLeft: '6px',
-        fill: '#dcdcdc',
-    },
-});
-
-const Links = styled('div')({
-    borderTop: '1px solid #767676',
-    gridArea: 'links',
-    padding: '10px 10px 0',
-    fontWeight: 'bold',
-    display: 'flex',
-    flexDirection: 'column',
-
-    [mobile]: {
-        alignItems: 'baseline',
-        flexDirection: 'row',
-        paddingTop: 0,
-        ul: {
-            display: 'flex',
-        },
-        li: {
-            marginLeft: '30px',
-        },
-    },
-    [tablet]: {
-        borderLeft: '1px solid #767676',
-        alignItems: 'baseline',
-        flexDirection: 'row',
-        paddingTop: 0,
-        ul: {
-            display: 'flex',
-        },
-        li: {
-            marginLeft: '30px',
-        },
-    },
-    b: {
-        fontSize: '16px',
-        fontFamily: '"Guardian Egyptian Web",Georgia,serif',
-        fontWeight: '900',
-    },
-    ul: {
-        fontFamily: 'Guardian Text Sans Web',
-        fontSize: '14px',
-    },
-    a: {
-        color: '#cbcbcb', // TODO: add to the palette
-    },
-    li: {
-        marginTop: '12px',
-    },
-    img: {
-        marginRight: '6px',
-        verticalAlign: 'middle',
-        height: '18px',
-    },
-});
-
-const Button = styled('button')(({ isPlay, pillarColor }) => ({
+const Button = styled('button')({
     background: 'none',
     border: 0,
     cursor: 'pointer',
@@ -274,114 +52,263 @@ const Button = styled('button')(({ isPlay, pillarColor }) => ({
     ':focus': {
         outline: 'none', // ಠ_ಠ
     },
-    padding: isPlay ? '0 45px' : 0,
-    svg: {
-        width: isPlay ? '60px' : '26px',
-        height: isPlay ? '60px' : '26px',
+    padding: 0,
+
+    ':not(:disabled):hover svg': {
+        opacity: 0.8,
     },
-    circle: {
-        fill: pillarColor,
-        stroke: pillarColor,
+});
+
+const PlayButton = styled(Button)({
+    margin: '0 50px',
+
+    svg: {
+        width: '70px',
+        height: '70px',
     },
 
     [leftCol]: {
-        padding: isPlay ? '0 12px' : 0,
+        margin: '0 60px',
         svg: {
-            width: isPlay ? '50px' : '24px',
-            height: isPlay ? '50px' : '24px',
+            width: '60px',
+            height: '60px',
+        },
+    },
+});
+
+const JumpButton = styled(Button)(({ playing }) => ({
+    svg: {
+        width: '31px',
+        height: '30px',
+    },
+
+    path: {
+        fill: playing ? '#ffffff' : '#767676',
+    },
+
+    '.arrow-line': {
+        fill: 'none',
+        stroke: playing ? '#ffffff' : '#767676',
+    },
+
+    [leftCol]: {
+        padding: 0,
+        svg: {
+            width: '31px',
+            height: '30px',
         },
     },
 
     [wide]: {
-        padding: isPlay ? '0 20px' : 0,
+        padding: 0,
         svg: {
-            width: isPlay ? '74px' : '26px',
-            height: isPlay ? '74px' : '26px',
+            width: '31px',
+            height: '30px',
         },
     },
 }));
 
+const VolumeButton = styled(Button)(({ isActive }) => ({
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '38px',
+
+    svg: {
+        fill: isActive ? '#ffe500' : '#767676',
+        width: '23px',
+        height: '18px',
+    },
+}));
+
+const TimeContainer = styled('div')(({ area }) => ({
+    [area === 'currentTime' ? 'paddingLeft' : 'paddingRight']: '10px',
+    gridArea: area,
+    paddingTop: '4px',
+    fontFamily: 'Guardian Text Sans Web',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: area === 'duration' ? 'flex-end' : 'flex-start',
+    backgroundColor: '#333333',
+}));
+
+const Controls = styled('div')({
+    gridArea: 'controls',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: '60px 0',
+});
+
+const WaveAndTrack = styled('div')({
+    gridArea: 'wave',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'stretch',
+    cursor: 'pointer',
+    maxWidth: '100%',
+    backgroundColor: '#333333',
+    borderTop: '1px solid #767676',
+    position: 'relative',
+
+    [leftCol]: {
+        background: '#4a4a4a',
+        borderTop: '0',
+    },
+});
+
+const FakeWave = styled('div')({
+    height: '100%',
+    paddingLeft: '10px',
+    paddingRight: '10px',
+
+    '.wave-holder': {
+        height: '100%',
+    },
+
+    '.inline-wave-wide': {
+        display: 'block',
+        height: '100%',
+    },
+
+    svg: {
+        width: '100%',
+        height: '100%',
+    },
+
+    '#WaveRectangleBg': {
+        fill: 'rgba(255,255,255,.2)',
+    },
+
+    '#WaveRectangleBuffered': {
+        fill: 'rgba(255,255,255, .5)',
+        width: '100px',
+    },
+
+    '#WaveRectangleActive': {
+        fill: 'rgba(255,255,255, 1)',
+        width: '100px',
+    },
+
+    [leftCol]: {
+        paddingLeft: '0',
+        paddingRight: '0',
+    },
+});
+
+const ScrubberButton = styled(Button)(({ position, hovering, grabbing }) => ({
+    position: 'absolute',
+    background: '#ffe500',
+    width: '4px',
+    height: '40px',
+    transform: `translate(${10 + position}px,0)`,
+    cursor: grabbing ? 'grabbing' : hovering ? 'grab' : 'pointer',
+
+    ':hover': {
+        transform: 'scaleX(1.6)',
+    },
+
+    [leftCol]: {
+        height: '50px',
+        transform: `translate(${position}px,0)`,
+    },
+}));
+
+const Volume = styled('div')({
+    gridArea: 'volume',
+    display: 'flex',
+    alignItems: 'stretch',
+    justifyContent: 'flex-end',
+    svg: {
+        width: '23px',
+        height: '18px',
+    },
+    span: {
+        display: 'inline-flex',
+        alignItems: 'center',
+        paddingLeft: '5px',
+        paddingRight: '5px',
+    },
+
+    'span + span': {
+        borderLeft: '1px solid #767676',
+    },
+
+    [leftCol]: {
+        position: 'absolute',
+        bottom: '0',
+        right: '0',
+        height: '40px',
+    },
+
+    'button + button': {
+        borderLeft: '1px solid #767676',
+    },
+});
+
 type Props = {
     sourceUrl: string,
     mediaId: string,
-    downloadUrl: string,
-    iTunesUrl: string,
-    pillar: string,
+    duration: string,
 };
 
 type State = {
     ready: boolean,
     playing: boolean,
+    muted: boolean,
     currentTime: number,
     duration: number,
-    volume: number,
-    bins: ?NodeList<HTMLElement>,
-    interval: number,
-    currentOffset: number,
+    currentOffsetPx: number,
     hasBeenPlayed: boolean,
+    waveWidthPx: number,
+    hovering: boolean,
+    grabbing: boolean,
 };
 
-export default class AudioPlayer extends Component<Props, State> {
+export class AudioPlayer extends Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
             ready: false,
             playing: false,
+            muted: false,
             currentTime: 0,
-            duration: NaN,
-            volume: NaN,
-            bins: null,
-            interval: NaN,
-            currentOffset: 0,
+            currentOffsetPx: 0,
+            duration: 0,
             hasBeenPlayed: false,
+            waveWidthPx: 0,
+            hovering: false,
+            grabbing: false,
         };
     }
 
     componentDidMount() {
-        const bins = this.wave.querySelectorAll('#Rectangle-path rect');
-
-        this.audio.addEventListener('volumechange', this.onVolumeChange);
         this.audio.addEventListener('timeupdate', this.onTimeUpdate);
         // this should fire on Firefox
         this.audio.addEventListener('ended', this.resetAudio);
+        this.audio.addEventListener('progress', this.buffer);
 
-        // eslint-disable-next-line react/no-did-mount-set-state
-        this.setState(
-            {
-                bins,
-            },
-            () => {
-                if (Number.isNaN(this.audio.duration)) {
-                    this.audio.addEventListener('durationchange', this.ready, {
-                        once: true,
-                    });
-                } else {
-                    this.ready();
-                }
-            }
-        );
+        if (Number.isNaN(this.audio.duration)) {
+            this.audio.addEventListener('durationchange', this.ready, {
+                once: true,
+            });
+        } else {
+            this.ready();
+        }
     }
 
-    onVolumeChange = () => {
-        this.setState({ volume: this.audio.volume });
-    };
-
     onTimeUpdate = () => {
-        const percentPlayed = Math.round(
-            (this.audio.currentTime / this.state.duration) * 100
-        );
-        if (percentPlayed > this.state.currentOffset) {
-            checkForTimeEvents(this.props.mediaId, percentPlayed);
-        }
+        const percentPlayed = this.audio.currentTime / this.state.duration;
 
         // pause when it gets to the end
         if (this.audio.currentTime > this.state.duration - 1) {
             this.resetAudio();
-        } else {
-            this.incrementBlock(this.audio.currentTime);
+        } else if (!this.state.grabbing) {
+            const currentOffsetPx = this.state.waveWidthPx * percentPlayed;
+            this.wave.setAttribute('width', currentOffsetPx.toString());
             this.setState({
                 currentTime: this.audio.currentTime,
-                currentOffset: percentPlayed,
+                currentOffsetPx,
             });
         }
     };
@@ -389,12 +316,57 @@ export default class AudioPlayer extends Component<Props, State> {
     setAudio = (el: ?HTMLAudioElement) => {
         if (el) {
             this.audio = el;
+            this.audio.crossOrigin = 'anonymous';
+
+            const mediaId = el.getAttribute('data-media-id') || '';
+            monitorPercentPlayed(el, 25, mediaId);
+            monitorPercentPlayed(el, 50, mediaId);
+            monitorPercentPlayed(el, 75, mediaId);
+            monitorPercentPlayed(el, 99, mediaId);
+
+            if (el.parentElement) {
+                playerObserved(el.parentElement, mediaId);
+            }
+
+            const wave = document.getElementById('WaveCutOff-rect');
+            const waveBuffered = document.getElementById(
+                'WaveCutOffBuffered-rect'
+            );
+            if (wave && waveBuffered) {
+                this.wave = wave;
+                this.waveBuffered = waveBuffered;
+            }
         }
     };
 
-    setWave = (el: ?HTMLElement) => {
+    setGeometry = (el: ?HTMLElement) => {
         if (el) {
-            this.wave = el;
+            const css = getComputedStyle(el);
+            const waveWidthPx =
+                el.clientWidth -
+                parseInt(css.paddingLeft, 10) -
+                parseInt(css.paddingRight, 10);
+            Array.from(el.getElementsByTagName('svg'))
+                .slice(0, 1)
+                .forEach(svg => {
+                    svg.setAttribute('viewBox', `0 0 ${waveWidthPx} 84`);
+                });
+            this.setState({
+                waveWidthPx,
+            });
+        }
+    };
+
+    buffer = () => {
+        if (this.audio.buffered.length > 0) {
+            const buffered = this.audio.buffered.end(0);
+            this.waveBuffered.setAttribute(
+                'width',
+                (
+                    (buffered / this.state.duration) *
+                    this.state.waveWidthPx
+                ).toString()
+            );
         }
     };
 
@@ -404,19 +376,15 @@ export default class AudioPlayer extends Component<Props, State> {
     };
 
     audio: HTMLAudioElement;
-    wave: HTMLElement;
+    wave: Element;
+    waveBuffered: Element;
 
     ready = () => {
         const duration = this.audio.duration;
-        if (this.state.bins) {
-            const interval = duration / this.state.bins.length;
-            this.setState({
-                ready: true,
-                duration,
-                interval,
-                volume: this.audio.volume,
-            });
-        }
+        this.setState({
+            ready: true,
+            duration,
+        });
     };
 
     play = () => {
@@ -439,40 +407,25 @@ export default class AudioPlayer extends Component<Props, State> {
     };
 
     seekWave = (e: any) => {
-        if (document.querySelector('.fake-wave')) {
-            // $FlowFixMe
-            const boxW = document.querySelector('.fake-wave').offsetWidth;
-            const svg = document.querySelector('.fake-wave svg');
-            // $FlowFixMe
-            const leftOffset = svg.getBoundingClientRect().left;
-
-            const clickedPos = e.clientX - leftOffset;
-            const posPercentage = (clickedPos / boxW) * 100;
-
-            this.seek(posPercentage);
+        if (!this.state.grabbing) {
+            const currentOffsetPx = e.nativeEvent.offsetX;
+            const currentTime =
+                (currentOffsetPx / this.state.waveWidthPx) *
+                this.state.duration;
+            this.audio.currentTime = currentTime;
+            this.wave.setAttribute('width', currentOffsetPx.toString());
         }
-    };
-
-    seek = (chosenPercent: number) => {
-        const chosenTime = (this.audio.duration * chosenPercent) / 100;
-        const checkedTime = Math.max(
-            0,
-            Math.min(this.state.duration, chosenTime)
-        );
-        this.updatePlayerTime(checkedTime);
     };
 
     updatePlayerTime = (currTime: number) => {
         this.audio.currentTime = currTime;
-        this.incrementBlock(currTime);
 
-        const currentOffset = Math.round(
-            (currTime / this.state.duration) * 100
-        );
-
+        const currentOffsetPx =
+            (currTime / this.state.duration) * this.state.waveWidthPx;
+        this.wave.setAttribute('width', currentOffsetPx.toString());
         this.setState({
             currentTime: currTime,
-            currentOffset,
+            currentOffsetPx,
         });
     };
 
@@ -489,23 +442,31 @@ export default class AudioPlayer extends Component<Props, State> {
         this.updatePlayerTime(chosenTime);
     };
 
-    updateVolume = (v: number) => {
-        this.audio.volume = v / 100;
+    mute = () => {
+        this.setState({ muted: true });
+        this.audio.volume = 0;
     };
 
-    incrementBlock = (currentTime: number) => {
-        const blocksToFill = Math.floor(currentTime / this.state.interval);
+    sound = () => {
+        this.setState({ muted: false });
+        this.audio.volume = 1;
+    };
 
-        if (this.state.bins) {
-            this.state.bins.forEach((bin, i) => {
-                if (i <= blocksToFill) {
-                    bin.setAttribute(
-                        'fill',
-                        pillarsHighlight[this.props.pillar]
-                    );
-                } else {
-                    bin.setAttribute('fill', palette.neutral[4]);
-                }
+    hovering = (hovering: boolean) => () => {
+        this.setState({ hovering });
+    };
+
+    grabbing = (grabbing: boolean) => () => {
+        if (this.state.hovering) {
+            this.setState({ grabbing });
+        }
+    };
+
+    scrub = (e: any) => {
+        if (this.state.grabbing) {
+            this.wave.setAttribute('width', e.nativeEvent.offsetX.toString());
+            this.setState({
+                currentOffsetPx: e.nativeEvent.offsetX,
             });
         }
     };
@@ -517,23 +478,51 @@ export default class AudioPlayer extends Component<Props, State> {
                 <audio
                     ref={this.setAudio}
                     data-media-id={this.props.mediaId}
-                    preload="metadata">
+                    preload="none">
                     <source src={this.props.sourceUrl} type="audio/mpeg" />
                 </audio>
+                <TimeContainer area="currentTime">
+                    <Time t={this.state.currentTime} />
+                </TimeContainer>
+                <TimeContainer area="duration">
+                    <Time
+                        t={
+                            this.state.ready
+                                ? this.state.duration
+                                : parseInt(this.props.duration, 10)
+                        }
+                    />
+                </TimeContainer>
+                <WaveAndTrack
+                    onMouseDown={this.grabbing(true)}
+                    onMouseUp={this.grabbing(false)}
+                    onMouseMove={this.scrub}>
+                    <FakeWave
+                        innerRef={this.setGeometry}
+                        onClick={this.seekWave}>
+                        <div
+                            className="wave-holder"
+                            dangerouslySetInnerHTML={{ __html: waveW.markup }}
+                        />
+                    </FakeWave>
+                    <ScrubberButton
+                        onMouseEnter={this.hovering(true)}
+                        onMouseLeave={this.hovering(false)}
+                        hovering={this.state.hovering}
+                        grabbing={this.state.grabbing}
+                        position={this.state.currentOffsetPx}
+                    />
+                </WaveAndTrack>
                 <Controls>
-                    <Button
-                        isPlay={false}
+                    <JumpButton
+                        playing={this.state.playing}
                         onClick={this.backward}
                         disabled={!this.state.playing}
                         dangerouslySetInnerHTML={{
-                            __html: this.state.playing
-                                ? fastBackwardActive.markup
-                                : fastBackward.markup,
+                            __html: fastBackward.markup,
                         }}
                     />
-                    <Button
-                        isPlay
-                        pillarColor={pillarsHighlight[`${this.props.pillar}`]}
+                    <PlayButton
                         onClick={this.play}
                         dangerouslySetInnerHTML={{
                             __html: this.state.playing
@@ -541,100 +530,37 @@ export default class AudioPlayer extends Component<Props, State> {
                                 : playBtn.markup,
                         }}
                     />
-                    <Button
-                        isPlay={false}
+                    <JumpButton
+                        playing={this.state.playing}
                         onClick={this.forward}
                         disabled={!this.state.playing}>
                         <span
                             dangerouslySetInnerHTML={{
-                                __html: this.state.playing
-                                    ? fastForwardActive.markup
-                                    : fastForward.markup,
+                                __html: fastForward.markup,
                             }}
                         />
-                    </Button>
+                    </JumpButton>
                 </Controls>
-                <TimeContainer area="currentTime">
-                    <Time t={this.state.currentTime} />
-                </TimeContainer>
-                <TimeContainer area="duration">
-                    {this.state.ready ? <Time t={this.state.duration} /> : ''}
-                </TimeContainer>
-                <WaveAndTrack>
-                    <FakeWave onClick={this.seekWave} className="fake-wave">
-                        <span
-                            ref={this.setWave}
-                            className="wave-holder"
-                            dangerouslySetInnerHTML={{ __html: waveW.markup }}
-                        />
-                    </FakeWave>
-                    <Track>
-                        <ProgressBar
-                            barContext="playTime"
-                            value={this.state.currentOffset}
-                            formattedValue={formatTime(
-                                this.state.currentOffset
-                            )}
-                            barHeight={4}
-                            trackColor={
-                                pillarsHighlight[`${this.props.pillar}`]
-                            }
-                            highlightColor={
-                                pillarsHighlight[`${this.props.pillar}`]
-                            }
-                            backgroundColor={palette.neutral[4]}
-                            onChange={this.seek}
-                        />
-                    </Track>
-                </WaveAndTrack>
-                {Number.isNaN(this.state.volume) ? (
-                    ''
-                ) : (
+                {!isIOS() ? (
                     <Volume>
-                        <span
-                            dangerouslySetInnerHTML={{ __html: volume.markup }}
+                        <VolumeButton
+                            isVolume
+                            isActive={!this.state.muted}
+                            onClick={this.sound}
+                            dangerouslySetInnerHTML={{
+                                __html: volumeOn.markup,
+                            }}
                         />
-                        <ProgressBar
-                            barContext="volume"
-                            value={this.state.volume * 100}
-                            formattedValue={`Volume set to ${
-                                this.state.volume
-                            }`}
-                            barHeight={2}
-                            trackColor={palette.neutral[7]}
-                            highlightColor={
-                                pillarsHighlight[`${this.props.pillar}`]
-                            }
-                            backgroundColor={palette.neutral[4]}
-                            onChange={this.updateVolume}
+                        <VolumeButton
+                            isVolume
+                            isActive={this.state.muted}
+                            onClick={this.mute}
+                            dangerouslySetInnerHTML={{
+                                __html: volumeOff.markup,
+                            }}
                         />
                     </Volume>
-                )}
-                <Download>
-                    <a href={this.props.downloadUrl}>
-                        Download MP3
-                        <span
-                            dangerouslySetInnerHTML={{
-                                __html: download.markup,
-                            }}
-                        />
-                    </a>
-                </Download>
-                <Links>
-                    <b>Subscribe for free</b>
-                    <ul>
-                        <li>
-                            <a href={this.props.iTunesUrl}>
-                                <img
-                                    src={applePodcastImage}
-                                    height="20px"
-                                    alt=""
-                                />
-                                Apple Podcasts
-                            </a>
-                        </li>
-                    </ul>
-                </Links>
+                ) : null}
             </AudioGrid>
         );
     }

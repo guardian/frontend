@@ -8,13 +8,8 @@ import {
     buildPageTargeting,
     buildAppNexusTargetingObject,
 } from 'common/modules/commercial/build-page-targeting';
-import { commercialPrebidAdYouLike } from 'common/modules/experiments/tests/commercial-prebid-adyoulike';
 import { commercialPrebidSafeframe } from 'common/modules/experiments/tests/commercial-prebid-safeframe';
-import {
-    getParticipations,
-    getVariant,
-    isInVariant,
-} from 'common/modules/experiments/utils';
+import { getVariant, isInVariant } from 'common/modules/experiments/utils';
 import type {
     PrebidAdYouLikeParams,
     PrebidAppNexusParams,
@@ -219,16 +214,6 @@ const getImprovePlacementId = (sizes: PrebidSize[]): number => {
                 return -1;
         }
     }
-};
-
-const getAdYouLikePlacementId = (): string => {
-    const test = commercialPrebidAdYouLike;
-    const participations = getParticipations();
-    const participation = participations ? participations[test.id] : {};
-    const variant = participation
-        ? getVariant(test, participation.variant)
-        : {};
-    return variant && variant.options ? variant.options.placementId : '';
 };
 
 // Improve has to have single size as parameter if slot doesn't accept multiple sizes,
@@ -451,7 +436,7 @@ const adYouLikeBidder: PrebidBidder = {
     name: 'adyoulike',
     switchName: 'prebidAdYouLike',
     bidParams: (): PrebidAdYouLikeParams => ({
-        placement: getAdYouLikePlacementId(),
+        placement: '2b4d757e0ec349583ce704699f1467dd',
     }),
 };
 
@@ -563,7 +548,9 @@ const currentBidders: (PrebidSize[]) => PrebidBidder[] = slotSizes => {
             : []),
         ...(inPbTestOr(shouldIncludeXaxis()) ? [xaxisBidder] : []),
         pubmaticBidder,
-        ...(shouldIncludeAdYouLike(slotSizes) ? [adYouLikeBidder] : []),
+        ...(inPbTestOr(shouldIncludeAdYouLike(slotSizes))
+            ? [adYouLikeBidder]
+            : []),
         ...(shouldIncludeOpenx() ? [openxClientSideBidder] : []),
     ];
 
@@ -588,7 +575,6 @@ export const bids: (string, PrebidSize[]) => PrebidBid[] = (
     });
 
 export const _ = {
-    getAdYouLikePlacementId,
     getDummyServerSideBidders,
     getIndexSiteId,
     getImprovePlacementId,

@@ -2,7 +2,7 @@
 import React, { Component } from 'preact-compat';
 import { Checkbox } from 'common/modules/identity/upsell/checkbox/Checkbox';
 import {
-    getUserConsents,
+    getAllUserConsents,
     setConsentsInApi,
 } from 'common/modules/identity/upsell/store/consents';
 import type { ConsentWithState } from 'common/modules/identity/upsell/store/types';
@@ -28,7 +28,7 @@ export class OptOutsList extends Component<
     }
 
     componentDidMount() {
-        getUserConsents().then(consents => {
+        getAllUserConsents().then(consents => {
             this.setState({
                 consents: consents.filter(c => c.consent.isOptOut),
             });

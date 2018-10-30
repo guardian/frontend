@@ -2,9 +2,7 @@
 /* global jsdom */
 
 import config from 'lib/config';
-import { commercialPrebidAdYouLike as CommercialPrebidAdYouLike } from 'common/modules/experiments/tests/commercial-prebid-adyoulike';
 import {
-    getParticipations as getParticipations_,
     getVariant as getVariant_,
     isInVariant as isInVariant_,
 } from 'common/modules/experiments/utils';
@@ -44,14 +42,11 @@ const shouldIncludeOzone: any = shouldIncludeOzone_;
 const shouldIncludeTrustX: any = shouldIncludeTrustX_;
 const shouldIncludeXaxis: any = shouldIncludeXaxis_;
 const stripMobileSuffix: any = stripMobileSuffix_;
-
-const getParticipations: any = getParticipations_;
+const getBreakpointKey: any = getBreakpointKey_;
 const getVariant: any = getVariant_;
 const isInVariant: any = isInVariant_;
-const getBreakpointKey: any = getBreakpointKey_;
 
 const {
-    getAdYouLikePlacementId,
     getDummyServerSideBidders,
     getIndexSiteId,
     getImprovePlacementId,
@@ -360,36 +355,6 @@ describe('getTrustXAdUnitId', () => {
     });
 });
 
-describe('getAdYouLikePlacementId', () => {
-    beforeEach(() => {
-        resetConfig();
-    });
-
-    afterEach(() => {
-        jest.resetAllMocks();
-    });
-
-    test('should serve expected style when in aylStyle variant', () => {
-        getParticipations.mockReturnValue({
-            CommercialPrebidAdYouLike: { variant: 'aylStyle' },
-        });
-        getVariant.mockReturnValue(CommercialPrebidAdYouLike.variants[0]);
-        expect(getAdYouLikePlacementId()).toBe(
-            '0da4f71dbe8e1af5c0e4739f53366020'
-        );
-    });
-
-    test('should serve expected style when in guardianStyle variant', () => {
-        getParticipations.mockReturnValue({
-            CommercialPrebidAdYouLike: { variant: 'aylStyle' },
-        });
-        getVariant.mockReturnValue(CommercialPrebidAdYouLike.variants[1]);
-        expect(getAdYouLikePlacementId()).toBe(
-            '2b4d757e0ec349583ce704699f1467dd'
-        );
-    });
-});
-
 describe('indexExchangeBidders', () => {
     beforeEach(() => {
         resetConfig();
@@ -512,7 +477,6 @@ describe('bids', () => {
         shouldIncludeAppNexus.mockReturnValue(false);
         shouldIncludeTrustX.mockReturnValue(false);
         stripMobileSuffix.mockImplementation(str => str);
-        getVariant.mockReturnValue(CommercialPrebidAdYouLike.variants[0]);
 
         [[300, 250], [300, 600], [970, 250], [728, 90]].map(
             getLargestSize.mockReturnValueOnce

@@ -3,51 +3,9 @@ import { trackNonClickInteraction } from 'common/modules/analytics/google';
 import React, { render } from 'preact-compat';
 import fastdom from 'lib/fastdom-promise';
 import ophan from 'ophan/ng';
-import { FollowCardList } from 'common/modules/identity/upsell/consent-card/FollowCardList';
 import loadEnhancers from 'common/modules/identity/modules/loadEnhancers';
 import { AccountCreationCompleteConsentsFlow } from 'common/modules/identity/upsell/account-creation/AccountCreationCompleteConsentsFlow';
-import { OptOutsList } from 'common/modules/identity/upsell/opt-outs/OptOutsList';
-import { Block } from 'common/modules/identity/upsell/block/Block';
-import {
-    getUserConsent,
-    getNewsletterConsent,
-} from 'common/modules/identity/upsell/store/consents';
-import { LegalTextBlock } from 'common/modules/identity/upsell/block/LegalTextBlock';
-import { AccountCreationBlock } from 'common/modules/identity/upsell/account-creation/AccountCreationBlock';
-import { Header } from 'common/modules/identity/upsell/header/Header';
-
-const ConfirmEmailThankYou = (
-    <Block title="Guardian favourites:">
-        <FollowCardList
-            consents={[
-                getUserConsent('supporter'),
-                getNewsletterConsent('the-long-read'),
-                getUserConsent('holidays'),
-                getNewsletterConsent('bookmarks'),
-                getUserConsent('events'),
-                getNewsletterConsent('brexit-briefing'),
-                getUserConsent('offers'),
-                getUserConsent('jobs'),
-                getNewsletterConsent('green-light'),
-                getNewsletterConsent('lab-notes'),
-            ]}
-            cutoff={2}
-        />
-    </Block>
-);
-
-const Optouts = (
-    <Block
-        sideBySideBackwards
-        title="One more thing..."
-        subtitle="These are your privacy settings. You’re in full control of them.">
-        <LegalTextBlock>
-            You can also change these settings any time by visiting our Emails &
-            marketing section of your account.
-        </LegalTextBlock>
-        <OptOutsList />
-    </Block>
-);
+import { StatefulConfirmEmailPage } from './page/StatefulConfirmEmailPage';
 
 const trackInteraction = (interaction: string): void => {
     ophan.record({
@@ -71,37 +29,37 @@ const bindAccountCreation = (el): void => {
     });
 };
 
+type Prefill = {
+    csrfToken: string,
+    accountToken: ?string,
+    email: string,
+    hasPassword: boolean,
+    hasSocialLinks: boolean,
+};
+
+const getPrefill = (el: HTMLElement): Prefill => ({
+    csrfToken: el.dataset.csrfToken,
+    accountToken: el.dataset.accountToken,
+    email: el.dataset.email,
+    hasPassword: el.dataset.hasPassword === 'true',
+    hasSocialLinks: el.dataset.hasSocialLinks === 'true',
+});
+
 const bindBlockList = (el): void => {
-    fastdom
-        .read(() => {
-            const jsonEl: HTMLScriptElement = el.querySelector(
-                'script[data-for-prefill]'
+    fastdom.read(() => getPrefill(el)).then(prefill =>
+        fastdom.write(() => {
+            render(
+                <StatefulConfirmEmailPage
+                    csrfToken={prefill.csrfToken}
+                    accountToken={prefill.accountToken}
+                    email={prefill.email}
+                    hasPassword={prefill.hasPassword}
+                    hasSocialLinks={prefill.hasSocialLinks}
+                />,
+                el
             );
-            if (!jsonEl) throw new Error('Missing prefill');
-            return JSON.parse(jsonEl.innerText || '');
         })
-        .then(prefill =>
-            fastdom.write(() => {
-                render(
-                    <div>
-                        <Header
-                            title="Thank you!"
-                            subtitle="You’re now subscribed to your content"
-                        />
-                        <div className="identity-upsell-layout">
-                            {ConfirmEmailThankYou}
-                            {Optouts}
-                            {prefill.hasPassword !== 'true' &&
-                            prefill.hasSocialLinks !== 'true' &&
-                            typeof prefill.accountToken !== 'undefined' ? (
-                                <AccountCreationBlock {...prefill} />
-                            ) : null}
-                        </div>
-                    </div>,
-                    el
-                );
-            })
-        );
+    );
 };
 
 const enhanceUpsell = (): void => {

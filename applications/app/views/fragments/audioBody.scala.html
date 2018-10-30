@@ -22,7 +22,6 @@
         ),
         "content",
         "content--media",
-        "content--flagship",
         s"content--pillar-${audio.metadata.pillar.nameOrDefault}",
         s"content--media--audio",
         "tonal",
@@ -36,18 +35,14 @@
         @fragments.headTonal(audio, page)
 
         <div class="podcast gs-container">
-            <figure class="podcast__player" data-component="main audio">
-                @audio.elements.mainAudio.map { audioElement =>
-                    @fragments.media.audio(
-                        AudioPlayer(
-                            audio,
-                            audioElement,
-                            audio.trail.headline,
-                            autoPlay = false
-                        ),
-                        isAdFree
-                    )
-                }
+            <figure class="podcast__player podcast__section"
+                data-component="main audio"
+                id="audio-component-container"
+                data-media-id="@audio.elements.mainAudio.map{ audioElement => @audioElement.properties.id}"
+                data-source="@audio.downloadUrl.map(Audio.acastUrl(_, false))"
+                data-download-url="@audio.downloadUrl.getOrElse("#")"
+                data-duration="@audio.duration"
+                >
             </figure>
 
             @for( series <- audio.tags.tags.find(_.properties.podcast.nonEmpty)
@@ -79,7 +74,7 @@
             </div>
 
             <div class="podcast__meta podcast__section">
-                <div class="podcast__meta-heading podcast__section-heading">Subscribe for free</div>
+                <div class="podcast__meta-heading podcast__section-heading">More ways to listen</div>
                 <ul class="podcast__meta-items">
                     @audio.iTunesSubscriptionUrl.map { iTunesSubscriptionUrl =>
                         <li class="podcast__meta-item podcast__meta-item--itunes">
@@ -114,7 +109,28 @@
                             </a>
                         </li>
                     }
+                    @audio.downloadUrl.map { downloadUrl =>
+                        <li class="podcast__meta-item podcast__meta-item--download">
+                            <a class="podcast__meta__item-link podcast__section-link"
+                                href="@downloadUrl"
+                                download
+                                data-link-name="@trackingCode("download")"
+                                >
+                                @fragments.inlineSvg("download", "journalism/audio", List("podcast__meta-icon", "podcast__section-icon"))
+                                Download
+                            </a>
+                        </li>
+                    }
                 </ul>
+            </div>
+
+            <div class="podcast__secondary podcast__section">
+                <div class="js-audio-components-container"></div>
+                @if(audio.fields.body.nonEmpty) {
+                    <div class="hide-on-childrens-books-site">
+                        @fragments.commercial.standardAd("right", Seq("dark"), Map("desktop" -> Seq("300,250", "300,274", "fluid")))
+                    </div>
+                }
             </div>
 
             <div class="podcast__support from-content-api podcast__section">
@@ -142,16 +158,7 @@
                 </div>
             </div>
 
-            <div class="podcast__secondary">
-                <div class="js-audio-components-container"></div>
-                @if(audio.fields.body.nonEmpty) {
-                    <div class="hide-on-childrens-books-site">
-                        @fragments.commercial.standardAd("right", Seq("dark"), Map("desktop" -> Seq("300,250", "300,274", "fluid")))
-                    </div>
-                }
-            </div>
-
-            <div class="podcast__submeta">
+            <div class="podcast__submeta podcast__section">
                 @fragments.submeta(audio)
             </div>
 
