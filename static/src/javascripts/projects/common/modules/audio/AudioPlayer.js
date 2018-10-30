@@ -470,7 +470,10 @@ export class AudioPlayer extends Component<Props, State> {
 
     render() {
         return (
-            <AudioGrid>
+            <AudioGrid
+                onMouseDown={this.grabbing(true)}
+                onMouseUp={this.grabbing(false)}
+                onMouseMove={this.scrub}>
                 {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
                 <audio
                     ref={this.setAudio}
@@ -484,10 +487,7 @@ export class AudioPlayer extends Component<Props, State> {
                 <TimeContainer area="duration">
                     <Time t={this.state.duration} />
                 </TimeContainer>
-                <WaveAndTrack
-                    onMouseDown={this.grabbing(true)}
-                    onMouseUp={this.grabbing(false)}
-                    onMouseMove={this.scrub}>
+                <WaveAndTrack>
                     <FakeWave
                         innerRef={this.setGeometry}
                         onClick={this.seek}>
