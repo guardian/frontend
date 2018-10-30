@@ -882,7 +882,7 @@ object Interactive {
       contentType = Some(contentType),
       adUnitSuffix = section + "/" + contentType.name.toLowerCase,
       twitterPropertiesOverrides = Map( "twitter:title" -> fields.linkText ),
-      contentWithSlimHeader = true
+      contentWithSlimHeader = false
     )
     val contentOverrides = content.copy(
       metadata = metadata
