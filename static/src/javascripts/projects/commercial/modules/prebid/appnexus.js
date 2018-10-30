@@ -107,7 +107,10 @@ export const getAppNexusDirectBidParams = (
             return {
                 invCode,
                 member: '7012',
-                keywords: buildAppNexusTargetingObject(buildPageTargeting()),
+                keywords: {
+                    invc: [invCode],
+                    ...buildAppNexusTargetingObject(buildPageTargeting()),
+                },
             };
         }
     }
