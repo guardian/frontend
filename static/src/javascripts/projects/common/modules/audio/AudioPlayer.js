@@ -324,15 +324,12 @@ export class AudioPlayer extends Component<Props, State> {
     setAudio = (el: ?HTMLAudioElement) => {
         if (el) {
             this.audio = el;
-
-            const wave = document.getElementById('WaveCutOff-rect');
-            const waveBuffered = document.getElementById(
-                'WaveCutOffBuffered-rect'
-            );
-            if (wave && waveBuffered) {
-                this.wave = wave;
-                this.waveBuffered = waveBuffered;
-            }
+        }
+        const wave = document.getElementById('WaveCutOff-rect');
+        const waveBuffered = document.getElementById('WaveCutOffBuffered-rect');
+        if (wave && waveBuffered) {
+            this.wave = wave;
+            this.waveBuffered = waveBuffered;
         }
     };
 
