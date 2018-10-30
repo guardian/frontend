@@ -396,7 +396,7 @@ export class AudioPlayer extends Component<Props, State> {
         }
     };
 
-    seekWave = (e: any) => {
+    seek = (e: any) => {
         if (!this.state.grabbing) {
             const currentOffsetPx = e.nativeEvent.offsetX;
             const currentTime =
@@ -483,7 +483,7 @@ export class AudioPlayer extends Component<Props, State> {
                     onMouseMove={this.scrub}>
                     <FakeWave
                         innerRef={this.setGeometry}
-                        onClick={this.seekWave}>
+                        onClick={this.seek}>
                         <div
                             className="wave-holder"
                             dangerouslySetInnerHTML={{ __html: waveW.markup }}
