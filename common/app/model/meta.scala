@@ -686,6 +686,7 @@ object SubMetaLinks {
 
     val keywordSubMetaLinks = tags.keywords
       .filterNot(_.isSectionTag)
+      .filterNot(_.name == sectionLabelName)
       .filterNot(t => blogOrSeriesTag.exists(s => s.id == t.id))
       .take(6)
       .map(tag => SubMetaLink(tag.metadata.url, makeKeywordName(tag, tags.keywords), Some(s"keyword: ${tag.id}")))
