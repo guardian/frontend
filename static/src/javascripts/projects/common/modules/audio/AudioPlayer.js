@@ -10,7 +10,7 @@ import {
     leftCol,
     wide,
 } from '@guardian/dotcom-rendering/packages/pasteup/breakpoints';
-import { isIOS } from 'lib/detect';
+import { isIOS, isAndroid } from 'lib/detect';
 
 import pauseBtn from 'svgs/journalism/audio-player/pause.svg';
 import playBtn from 'svgs/journalism/audio-player/play.svg';
@@ -28,7 +28,8 @@ const AudioGrid = styled('div')({
     display: 'grid',
     backgroundColor: palette.neutral[1],
     color: palette.neutral[5],
-    gridTemplateRows: '30px 40px 120px 40px',
+    gridTemplateRows:
+        isIOS() || isAndroid() ? '30px 40px 120px' : '30px 40px 120px 40px',
     gridTemplateAreas: `"currentTime duration"
          "wave wave"
          "controls controls"
@@ -538,7 +539,7 @@ export class AudioPlayer extends Component<Props, State> {
                         />
                     </JumpButton>
                 </Controls>
-                {!isIOS() ? (
+                {!(isIOS() || isAndroid()) ? (
                     <Volume>
                         <VolumeButton
                             isVolume
