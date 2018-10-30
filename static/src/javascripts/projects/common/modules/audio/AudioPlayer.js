@@ -175,6 +175,7 @@ const FakeWave = styled('div')({
     svg: {
         width: '100%',
         height: '100%',
+        pointerEvents: 'none',
     },
 
     '#WaveRectangleBg': {
@@ -206,12 +207,16 @@ const ScrubberButton = styled(Button)(({ position, hovering, grabbing }) => ({
     cursor: grabbing ? 'grabbing' : hovering ? 'grab' : 'pointer',
 
     ':hover': {
-        transform: 'scaleX(1.6)',
+        transform: `translate(${10 + position}px,0) scaleX(1.6)`,
     },
 
     [leftCol]: {
         height: '50px',
         transform: `translate(${position}px,0)`,
+
+        ':hover': {
+            transform: `translate(${position}px,0) scaleX(1.6)`,
+        },
     },
 }));
 
@@ -467,11 +472,9 @@ export class AudioPlayer extends Component<Props, State> {
                 (currentOffsetPx / this.state.waveWidthPx) *
                 this.state.duration;
 
-            this.audio.currentTime = currentTime;
-            this.wave.setAttribute('width', currentOffsetPx.toString());
-            this.setState({
-                currentTime,
-                currentOffsetPx,
+            this.setState({ currentTime, currentOffsetPx }, () => {
+                this.audio.currentTime = currentTime;
+                this.wave.setAttribute('width', currentOffsetPx.toString());
             });
         }
     };
