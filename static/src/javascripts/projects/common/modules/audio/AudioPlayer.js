@@ -286,6 +286,16 @@ export class AudioPlayer extends Component<Props, State> {
         this.audio.addEventListener('ended', this.resetAudio);
         this.audio.addEventListener('progress', this.buffer);
 
+        const mediaId = this.audio.getAttribute('data-media-id') || '';
+        monitorPercentPlayed(this.audio, 25, mediaId);
+        monitorPercentPlayed(this.audio, 50, mediaId);
+        monitorPercentPlayed(this.audio, 75, mediaId);
+        monitorPercentPlayed(this.audio, 99, mediaId);
+
+        if (this.audio.parentElement) {
+            playerObserved(this.audio.parentElement, mediaId);
+        }
+
         if (Number.isNaN(this.audio.duration)) {
             this.audio.addEventListener('durationchange', this.ready, {
                 once: true,
@@ -314,17 +324,6 @@ export class AudioPlayer extends Component<Props, State> {
     setAudio = (el: ?HTMLAudioElement) => {
         if (el) {
             this.audio = el;
-            this.audio.crossOrigin = 'anonymous';
-
-            const mediaId = el.getAttribute('data-media-id') || '';
-            monitorPercentPlayed(el, 25, mediaId);
-            monitorPercentPlayed(el, 50, mediaId);
-            monitorPercentPlayed(el, 75, mediaId);
-            monitorPercentPlayed(el, 99, mediaId);
-
-            if (el.parentElement) {
-                playerObserved(el.parentElement, mediaId);
-            }
 
             const wave = document.getElementById('WaveCutOff-rect');
             const waveBuffered = document.getElementById(
