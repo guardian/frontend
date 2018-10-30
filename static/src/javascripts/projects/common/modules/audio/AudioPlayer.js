@@ -253,7 +253,6 @@ type Props = {
 };
 
 type State = {
-    ready: boolean,
     playing: boolean,
     muted: boolean,
     currentTime: number,
@@ -269,12 +268,11 @@ export class AudioPlayer extends Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
-            ready: false,
             playing: false,
             muted: false,
             currentTime: 0,
             currentOffsetPx: 0,
-            duration: 0,
+            duration: parseInt(this.props.duration, 10),
             hasBeenPlayed: false,
             waveWidthPx: 0,
             hovering: false,
@@ -380,11 +378,7 @@ export class AudioPlayer extends Component<Props, State> {
     waveBuffered: Element;
 
     ready = () => {
-        const duration = this.audio.duration;
-        this.setState({
-            ready: true,
-            duration,
-        });
+        this.setState({ duration: this.audio.duration });
     };
 
     play = () => {
@@ -485,13 +479,7 @@ export class AudioPlayer extends Component<Props, State> {
                     <Time t={this.state.currentTime} />
                 </TimeContainer>
                 <TimeContainer area="duration">
-                    <Time
-                        t={
-                            this.state.ready
-                                ? this.state.duration
-                                : parseInt(this.props.duration, 10)
-                        }
-                    />
+                    <Time t={this.state.duration} />
                 </TimeContainer>
                 <WaveAndTrack
                     onMouseDown={this.grabbing(true)}
