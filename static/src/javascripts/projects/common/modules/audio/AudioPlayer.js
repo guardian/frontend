@@ -523,8 +523,7 @@ export class AudioPlayer extends Component<Props, State> {
                         }}
                     />
                     <PlayButton
-                        onClick={!isIOS() ? this.play : null}
-                        onTouchStart={isIOS() ? this.play : null}
+                        onClick={this.play}
                         dangerouslySetInnerHTML={{
                             __html: this.state.playing
                                 ? pauseBtn.markup
@@ -542,21 +541,22 @@ export class AudioPlayer extends Component<Props, State> {
                         />
                     </JumpButton>
                 </Controls>
-
-                <Volume>
-                    <VolumeButton
-                        isVolume
-                        isActive={!this.state.muted}
-                        onClick={this.sound}
-                        dangerouslySetInnerHTML={{ __html: volumeOn.markup }}
-                    />
-                    <VolumeButton
-                        isVolume
-                        isActive={this.state.muted}
-                        onClick={this.mute}
-                        dangerouslySetInnerHTML={{ __html: volumeOff.markup }}
-                    />
-                </Volume>
+                {!isIOS() ? (
+                    <Volume>
+                        <VolumeButton
+                            isVolume
+                            isActive={!this.state.muted}
+                            onClick={this.sound}
+                            dangerouslySetInnerHTML={{ __html: volumeOn.markup }}
+                        />
+                        <VolumeButton
+                            isVolume
+                            isActive={this.state.muted}
+                            onClick={this.mute}
+                            dangerouslySetInnerHTML={{ __html: volumeOff.markup }}
+                        />
+                    </Volume>
+                ) : null}
             </AudioGrid>
         );
     }
