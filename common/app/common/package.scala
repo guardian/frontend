@@ -61,7 +61,7 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
 
   /*
     NOTE: The htmlResponse & jsonResponse are () => Html functions so that you do not do all the rendering twice.
-          Only the once you actually render is used
+          Only the one you actually render is used
    */
 
   def renderFormat(htmlResponse: () => Html, jsonResponse: () => Html, page: model.Page)(implicit request: RequestHeader): Result =
