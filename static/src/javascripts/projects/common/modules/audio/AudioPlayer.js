@@ -444,11 +444,16 @@ export class AudioPlayer extends Component<Props, State> {
     };
 
     hovering = (hovering: boolean) => () => {
-        this.setState({ hovering });
+        if (this.state.hovering !== hovering) {
+            this.setState({ hovering });
+        }
     };
 
     grabbing = (grabbing: boolean) => () => {
-        if (this.state.hovering) {
+        if (
+            (this.state.hovering && grabbing !== this.state.grabbing) ||
+            !grabbing
+        ) {
             this.setState({ grabbing });
         }
     };
@@ -460,6 +465,7 @@ export class AudioPlayer extends Component<Props, State> {
                 (currentOffsetPx / this.state.waveWidthPx) *
                 this.state.duration;
 
+            this.audio.currentTime = currentTime;
             this.wave.setAttribute('width', currentOffsetPx.toString());
             this.setState({
                 currentTime,
