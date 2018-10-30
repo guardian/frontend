@@ -86,8 +86,7 @@ object InlineStyles {
     // Outlook ignores styles with !important so we need to strip that out.
     // So this doesn't change which styles take effect, we also sort styles
     // so that all important styles appear to the right of all non-important styles.
-    document.getAllElements.asScala.filter(el => el.attr("style") != "")
-      .foreach { el =>
+    document.getAllElements.asScala.filter(el => el.attr("style") != "").foreach { el =>
       el.attr("style", sortStyles(el.attr("style")).replace(" !important", ""))
     }
 
