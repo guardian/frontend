@@ -47,7 +47,7 @@ class MostPopularController(contentApiClient: ContentApiClient,
 
     val mostCards = mostPopularAgent.mostSingleCards.get().mapValues(ContentCard.fromApiContent(_))
 
-    log.info(s"Rendering MostPopular with path = $path Most cards is $mostCards"  )
+    log.info(s"Rendering MostPopular with path = $path Most cards is $mostCards")
 
 
     // map is not on a list, but on a Future
