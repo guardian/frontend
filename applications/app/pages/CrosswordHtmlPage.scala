@@ -32,7 +32,10 @@ object CrosswordHtmlPage extends HtmlPage[CrosswordPage] {
     override def footerCss: Html = stylesheetLink(s"stylesheets/$FooterCSSFile.css", true)
     override def oldIECriticalCss: Html = stylesheetLink(s"stylesheets/old-ie.head.$ContentCSSFile.css", true)
     override def oldIELinkCss: Html = stylesheetLink(s"stylesheets/old-ie.$ContentCSSFile.css", true)
-    override def IE9LinkCss: Html = stylesheetLink(s"stylesheets/ie9.head.$ContentCSSFile.css", true)
+    override def IE9LinkCss: Html = stacked(
+      stylesheetLink(s"stylesheets/ie9.head.$ContentCSSFile.css"),
+      stylesheetLink(s"stylesheets/head.$InlineNavigationCSSFile.css")
+    )
     override def IE9CriticalCss: Html = stylesheetLink(s"stylesheets/ie9.$ContentCSSFile.css", true)
   }
 

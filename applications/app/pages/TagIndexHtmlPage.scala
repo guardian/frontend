@@ -31,7 +31,10 @@ object TagIndexHtmlPage extends HtmlPage[StandalonePage] {
     override def footerCss: Html = stylesheetLink(s"stylesheets/$FooterCSSFile.css")
     override def oldIECriticalCss: Html = stylesheetLink("stylesheets/old-ie.head.index.css")
     override def oldIELinkCss: Html = stylesheetLink(s"stylesheets/old-ie.$ContentCSSFile.css")
-    override def IE9LinkCss: Html = stylesheetLink("stylesheets/ie9.head.index.css")
+    override def IE9LinkCss: Html = stacked(
+      stylesheetLink(s"stylesheets/ie9.head.index.css"),
+      stylesheetLink(s"stylesheets/head.$InlineNavigationCSSFile.css")
+    )
     override def IE9CriticalCss: Html = stylesheetLink(s"stylesheets/ie9.$ContentCSSFile.css")
   }
 
