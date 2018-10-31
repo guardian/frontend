@@ -22,12 +22,12 @@ import views.html.stacked
 object ContentHtmlPage extends HtmlPage[Page] {
 
   def allStyles(implicit applicationContext: ApplicationContext, request: RequestHeader): Styles = new Styles {
-      override def criticalCssLink: Html = stacked(
-        criticalStyleLink(ContentCSSFile),
-        criticalStyleLink(InlineNavigationCSSFile))
-      override def criticalCssInline: Html = criticalStyleInline(
-        Html(common.Assets.css.head(None)),
-        Html(common.Assets.css.inlineNavigation))
+    override def criticalCssLink: Html = stacked(
+      criticalStyleLink(ContentCSSFile),
+      criticalStyleLink(InlineNavigationCSSFile))
+    override def criticalCssInline: Html = criticalStyleInline(
+      Html(common.Assets.css.head(None)),
+      Html(common.Assets.css.inlineNavigation))
     override def linkCss: Html = stylesheetLink(s"stylesheets/$ContentCSSFile.css")
     override def footerCss: Html = stylesheetLink(s"stylesheets/$FooterCSSFile.css")
     override def oldIECriticalCss: Html = stylesheetLink(s"stylesheets/old-ie.head.$ContentCSSFile.css")
