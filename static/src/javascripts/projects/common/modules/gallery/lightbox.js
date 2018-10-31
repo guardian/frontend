@@ -315,7 +315,8 @@ class GalleryLightbox {
             );
     }
 
-    loadOrOpen(newGalleryJson: GalleryJson): void {
+    loadOrOpen(newGalleryJson: GalleryJson, index: number): void {
+        this.index = index;
         if (
             this.galleryJson &&
             newGalleryJson.id === this.galleryJson.id &&
@@ -327,11 +328,7 @@ class GalleryLightbox {
         }
     }
 
-    loadGalleryfromJson(
-        galleryJson: GalleryJson,
-        defaultIndex: number,
-        jumpToStartImage: boolean
-    ): void {
+    fetchSurroundingJson(galleryJson: GalleryJson): Promise<Object> {
         // if this is an image page, load series of images into the lightbox
         if (
             config.get('page.contentType') === 'ImageContent' &&
@@ -340,7 +337,7 @@ class GalleryLightbox {
             // store current path with leading slash removed
             const currentId = window.location.pathname.substring(1);
             // fetch next and previous images and load them
-            Promise.all([
+            return Promise.all([
                 GalleryLightbox.loadNextOrPrevious(currentId, 'forwards'),
                 GalleryLightbox.loadNextOrPrevious(currentId, 'backwards'),
             ])
@@ -362,19 +359,13 @@ class GalleryLightbox {
                     }
 
                     galleryJson.images = allImages;
-                    // start index is in the middle of the two lists we just concatenated
                     this.startIndex = previous.length + 1;
-                    if (jumpToStartImage) {
-                        this.index = this.startIndex;
-                    } else {
-                        this.index = defaultIndex;
-                    }
-                    this.loadOrOpen(galleryJson);
+
+                    return galleryJson;
                 });
-        } else {
-            this.index = this.startIndex ? this.startIndex : defaultIndex;
-            this.loadOrOpen(galleryJson);
         }
+
+        return Promise.resolve(galleryJson);
     }
 
     loadHtml(json: GalleryJson): void {
@@ -674,10 +665,8 @@ const init = (): void => {
         const images = config.get('page.lightboxImages');
 
         if (images && images.images.length > 0) {
-            let lightbox;
+            const lightbox = new GalleryLightbox();
             const galleryHash = window.location.hash;
-
-            let res;
 
             bean.on(document.body, 'click', '.js-gallerythumbs', (e: Event) => {
                 e.preventDefault();
@@ -690,33 +679,33 @@ const init = (): void => {
                 const galleryIndex = Number.isNaN(parsedGalleryIndex)
                     ? 1
                     : parsedGalleryIndex; // 1-based index
-                lightbox = lightbox || new GalleryLightbox();
 
-                lightbox.loadGalleryfromJson(images, galleryIndex, true);
+                lightbox.fetchSurroundingJson(images).then(allImages => {
+                    const startIndex = lightbox.startIndex
+                        ? lightbox.startIndex
+                        : galleryIndex;
+                    lightbox.loadOrOpen(allImages, startIndex);
+                });
             });
 
-            lightbox = lightbox || new GalleryLightbox();
             const galleryId = `/${config.get('page.pageId')}`;
             const match = /\?index=(\d+)/.exec(document.location.href);
+            const res = /^#(?:img-)?(\d+)$/.exec(galleryHash);
+
+            let lightboxIndex = 0;
 
             if (match) {
                 // index specified so launch lightbox at that index
                 pushUrl({}, document.title, galleryId, true); // lets back work properly
-                lightbox.loadGalleryfromJson(
-                    images,
-                    parseInt(match[1], 10),
-                    false
-                );
-            } else {
-                res = /^#(?:img-)?(\d+)$/.exec(galleryHash);
+                lightboxIndex = parseInt(match[1], 10);
+            } else if (res) {
+                lightboxIndex = parseInt(res[1], 10);
+            }
 
-                if (res) {
-                    lightbox.loadGalleryfromJson(
-                        images,
-                        parseInt(res[1], 10),
-                        false
-                    );
-                }
+            if (lightboxIndex > 0) {
+                lightbox.fetchSurroundingJson(images).then(allImages => {
+                    lightbox.loadOrOpen(allImages, lightboxIndex);
+                });
             }
         }
     });
