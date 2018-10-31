@@ -76,7 +76,7 @@ export class OptOutsList extends Component<
                         {consents.map(consent => (
                             <Checkbox
                                 title={consent.consent.description}
-                                key={consent.uniqueId}
+                                uniqueId={consent.uniqueId}
                                 checkboxHtmlProps={{
                                     checked: consent.hasConsented,
                                     onChange: ev => {
