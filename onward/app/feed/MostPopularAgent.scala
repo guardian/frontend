@@ -2,10 +2,11 @@ package feed
 
 import com.gu.Box
 import contentapi.ContentApiClient
-import com.gu.contentapi.client.model.v1.{Content, ContentType}
+import com.gu.contentapi.client.model.v1.{Content, ContentFields, ContentType}
 import common._
 import services.OphanApi
 import model.RelatedContentItem
+import play.api.libs.ws.WSClient
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -33,21 +34,43 @@ class MostPopularAgent(contentApiClient: ContentApiClient) extends Logging {
 
   def mostPopular(edition: Edition): Seq[RelatedContentItem] = agent().getOrElse(edition.id, Nil)
 
-  def refresh()(implicit ec: ExecutionContext): Future[Map[String, Seq[RelatedContentItem]]] = {
-    log.info("Refreshing most shared, commented and popular.")
-    // Note that here we're not in pure functional land here.
-    refreshGlobal()
+  // Note that here we are in procedural land here (not functional)
+  def refresh()(implicit ec: ExecutionContext): Unit = {
     MostPopularRefresh.all(Edition.all)(refresh)
+    refreshGlobal()
   }
 
   private def refreshGlobal()(implicit ec: ExecutionContext): Future[Map[String,Content]] = {
-    val mostShared: Content = Content.apply("most_shared_id", ContentType.Article, Some("some_section"), Some("Some Section"),
-      None, "Most Shared Web Title" , "/most_shared_web_url" , "most_shared_api_url" )
-    val mostCommented: Content = mostShared
+//    val fields: Option[ContentFields] = Some(ContentFields(
+//      headline = Some("Some Headline"),
+//      standfirst = Some("Stand first"),
+//      trailText = Some("Trail Text"),
+//      byline = Some("By Line"),
+//      body = Some("Body"),
+//      secureThumbnail = Some("https://placekitten.com/200/300"),
+//      thumbnail = Some("https://placekitten.com/200/300")
+//    ))
+//    val mostShared: Content =
+//        Content("most_shared_id",
+//                      ContentType.Article,
+//                      Some("some_section"),
+//                      Some("Some Section"),
+//                      None,
+//                      "Most Shared Web Title",
+//                      "/most_shared_web_url",
+//                      "most_shared_api_url",
+//                      fields
+//                )
+    log.info("Setting Most shared and most commented (simulate to most viewed in UK")
 
-    log.info("Setting Most shared and most viewed")
-
-    mostSingleCards.alter( _ + ( "most_shared" -> mostShared ) + ( "most_commented" -> mostCommented ))
+    val mostViewedQuery = contentApiClient.item("/", "UK")
+      .showMostViewed(true)
+    val futureMostViewed = contentApiClient.getResponse(mostViewedQuery)
+    for {
+      mostViewResponse <- futureMostViewed
+      oneContentItem = mostViewResponse.mostViewed.getOrElse(Nil).take(1).head
+      newMap <- mostSingleCards.alter( _ + ( "most_shared" -> oneContentItem ) + ( "most_commented" -> oneContentItem ))
+    } yield newMap
   }
 
   private def refresh(edition: Edition)(implicit ec: ExecutionContext): Future[Map[String, Seq[RelatedContentItem]]] = {
