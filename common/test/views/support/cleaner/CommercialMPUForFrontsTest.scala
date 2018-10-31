@@ -12,7 +12,7 @@ class CommercialMPUForFrontsTest extends FlatSpec with Matchers {
     try source.mkString finally source.close()
   }
 
-  val body = getFileContent("fixtures/CommercialMPUForFronts.html").cleanWith(CommercialMPUForFronts(true)(FakeRequest()))
+  val body = getFileContent("fixtures/CommercialMPUForFronts.html").cleanWith(CommercialMPUForFronts()(FakeRequest()))
 
   it should "insert MPUs into applicable slices, and give them unique IDs" in {
     val desktopMPUs = body.getElementsByClass("fc-slice__item--mpu-candidate")
@@ -28,7 +28,7 @@ class CommercialMPUForFrontsTest extends FlatSpec with Matchers {
     mobileMPUs.last.toString should include ("dfp-ad--inline1--mobile")
   }
 
-  it should "not count the first container, if it is a thrasher on a Network Front, when adding mobile MPUs" in {
+  it should "not count the first container, if it is a thrasher, when adding mobile MPUs" in {
     val thrasher = body.getElementsByClass("fc-container--first").first
     thrasher.id should be ("thrasher")
 

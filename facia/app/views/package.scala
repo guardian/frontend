@@ -12,7 +12,7 @@ object FrontsCleaner {
     val edition = Edition(request)
     withJsoup(BulletCleaner(html.toString))(
       CommercialComponentHigh(page.frontProperties.isPaidContent, page.isNetworkFront, page.metadata.hasPageSkin(edition)),
-      CommercialMPUForFronts(page.isNetworkFront)
+      CommercialMPUForFronts()
     )
   }
 }
