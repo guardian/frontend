@@ -16,7 +16,7 @@ import views.html.fragments.page.{devTakeShot, htmlTag}
 import views.html.{newspaperContent, quizAnswerContent}
 import html.HtmlPageHelpers.ContentCSSFile
 import conf.switches.Switches.WeAreHiring
-import experiments.{ActiveExperiments, AudioPageChange, OldTLSSupportDeprecation}
+import experiments.{ActiveExperiments, OldAudioPage, OldTLSSupportDeprecation}
 
 object ContentHtmlPage extends HtmlPage[Page] {
 
@@ -35,7 +35,7 @@ object ContentHtmlPage extends HtmlPage[Page] {
 
     def mediaOrAudioBody(page: MediaPage): Html  = {
         page.media match {
-          case audio: Audio if ActiveExperiments.isParticipating(AudioPageChange) => audioBody(page, audio)
+          case audio: Audio if !ActiveExperiments.isParticipating(OldAudioPage) => audioBody(page, audio)
           case _ => mediaBody(page, displayCaption = false)
         }
     }
