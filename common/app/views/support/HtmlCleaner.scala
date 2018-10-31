@@ -714,7 +714,7 @@ object setSvgClasses {
 case class CommercialMPUForFronts()(implicit val request: RequestHeader) extends HtmlCleaner {
   override def clean(document: Document): Document = {
 
-    def isFrontWithThrasher(element: Element, index: Int): Boolean = {
+    def hasFirstContainerThrasher(element: Element, index: Int): Boolean = {
       index == 0 && element.hasClass("fc-container--thrasher")
     }
 
@@ -735,7 +735,7 @@ case class CommercialMPUForFronts()(implicit val request: RequestHeader) extends
     // we also exclude any containers that are directly before a thrasher
     // then we take every other container, up to a maximum of 10, for targeting MPU insertion
     val containersForCommercialMPUs = containers.zipWithIndex.collect {
-      case (x, i) if !isFrontWithThrasher(x, i) && !hasAdjacentCommercialContainer(x) && !hasAdjacentThrasher(x) => x
+      case (x, i) if !hasFirstContainerThrasher(x, i) && !hasAdjacentCommercialContainer(x) && !hasAdjacentThrasher(x) => x
     }.zipWithIndex.collect {
       case (x, i) if i % 2 == 0 => x
     }.take(10)
