@@ -8,10 +8,9 @@ import { OptOutsList } from '../opt-outs/OptOutsList';
 export const OptOuts = (): React.Component => (
     <Block
         sideBySideBackwards
-        title="One more thing..."
-        subtitle="These are your privacy settings. You’re in full control of them.">
+        title="Your communication preferences">
         <LegalTextBlock>
-            You can also change these settings any time by visiting our Emails &
+            You can also change these settings later by visiting the Emails &
             marketing section of your account.
         </LegalTextBlock>
         <OptOutsList />
