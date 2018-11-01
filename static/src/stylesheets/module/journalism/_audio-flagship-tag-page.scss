@@ -127,13 +127,11 @@
             /* ---------------- HEADER ARTWORK ------------------- */
             .flagship-audio__artwork {
 
-                @include mq($from: mobile, $until: phablet) {
+                @include mq($until: phablet) {
                     flex: 1 1 auto;
-                    justify-self: flex-end;
                     display: flex;
                     flex-direction: row;
-                    align-items: flex-end;
-                    justify-content: flex-end;
+                    justify-content: center;
                 }
                 @include mq($from: phablet) {
                     position: absolute;
@@ -142,27 +140,30 @@
                     z-index: 8;
                 }
                 .artwork-holder {
-                    margin-bottom: -8px;
+                    margin-bottom: -$gs-baseline*3;
                     width: 100%;
                     top: 0;
-
-                    @include mq($from: desktop) {
+                    @include mq($from: mobileLandscape) {
+                        margin-bottom: -$gs-baseline/2;
                     }
                     @include mq($from: phablet, $until: desktop) {
                         float: right;
                         position: relative;
                     }
+                    span {
+                        display: inline-block;
+                        text-align: center;
+                    }
                     svg {
-                        @include mq($until: phablet) {
+                        overflow: visible;
+                        width: 97%;
+                        @include mq($from: phablet) {
                             width: 100%;
                         }
                     }
 
                 }
 
-                @include mq($from: mobile, $until: phablet) {
-                    justify-content: center;
-                }
             }
 
         }
