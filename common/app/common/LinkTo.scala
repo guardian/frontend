@@ -38,7 +38,7 @@ trait LinkTo extends Logging {
     case `url` if url.startsWith("//") => ProcessedUrl(url)
     case RssPath(path, format) => ProcessedUrl(urlFor(path, edition) + format)
     case GuardianUrl(_, path) => ProcessedUrl(urlFor(path, edition))
-    case otherUrl => ProcessedUrl(otherUrl, true)
+    case otherUrl => ProcessedUrl(otherUrl, shouldNoFollow = true)
   }
 
   private def urlFor(path: String, edition: Edition): String = {

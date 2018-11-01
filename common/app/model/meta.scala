@@ -7,7 +7,7 @@ import com.gu.contentapi.client.utils.CapiModelEnrichment.RichContent
 import implicits.Dates.CapiRichDateTime
 import common.commercial.{AdUnitMaker, CommercialProperties}
 import common.dfp._
-import common.{Edition, ManifestData, Pagination}
+import common.{Edition, LinkTo, Localisation, ManifestData, Pagination}
 import conf.Configuration
 import conf.cricketPa.CricketTeams
 import model.content._
@@ -20,6 +20,8 @@ import play.api.libs.json._
 import play.api.libs.json.JodaWrites.JodaDateTimeWrites
 import play.api.mvc.RequestHeader
 import play.twirl.api.Html
+
+import scala.util.matching.Regex
 
 object Commercial {
 
@@ -645,6 +647,71 @@ final case class Elements(elements: Seq[Element]) {
   }
 }
 
+final case class SubMetaLink(
+  link: String,
+  text: String,
+  dataLinkName: Option[String] = None
+)
+
+object SubMetaLink {
+  implicit val writes: OWrites[SubMetaLink] = Json.writes[SubMetaLink]
+}
+
+final case class SubMetaLinks(
+  sectionLabels: List[SubMetaLink],
+  keywords: List[SubMetaLink]
+)
+
+object SubMetaLinks {
+
+  implicit val writes: OWrites[SubMetaLinks] = Json.writes[SubMetaLinks]
+
+  def makeKeywordName(keywordTag: Tag, keywords: List[Tag]): String = {
+    if (keywords.count(_.name == keywordTag.name) > 1){
+      s"${keywordTag.name} (${keywordTag.properties.sectionName})"
+    } else {
+      keywordTag.name
+    }
+  }
+
+  def make(isImmersive: Boolean, tags: Tags, blogOrSeriesTag: Option[Tag], isFromTheObserver: Boolean,
+    sectionLabelLink: String, sectionLabelName: String): SubMetaLinks = {
+    val sectionLink = if (!(isImmersive && tags.isArticle)) {
+      Some(SubMetaLink(s"/$sectionLabelLink", sectionLabelName, Some("article section")))
+    } else None
+
+    val secondaryLink = if (blogOrSeriesTag.isDefined) {
+      blogOrSeriesTag.map(t => SubMetaLink(t.id, t.name))
+    } else if (isFromTheObserver) {
+      Some(SubMetaLink("https://www.theguardian.com/observer", "The Observer"))
+    } else {
+      None
+    }
+
+    val sectionLabels = List(sectionLink, secondaryLink).flatten
+
+    val keywordSubMetaLinks = tags.keywords
+      .filterNot(_.isSectionTag)
+      .filterNot(_.name == sectionLabelName)
+      .filterNot(t => blogOrSeriesTag.exists(s => s.id == t.id))
+      .take(6)
+      .map(tag => SubMetaLink(tag.metadata.url, makeKeywordName(tag, tags.keywords), Some(s"keyword: ${tag.id}")))
+
+
+    val toneTag = if (tags.isArticle && !tags.isLiveBlog) {
+      List(tags.tones.headOption.map(tone => SubMetaLink(
+        tone.metadata.url,
+        tone.name.toLowerCase,
+        Some(s"tone: ${tone.name.toLowerCase}"))))
+    } else List()
+
+    val subMetaLinks = keywordSubMetaLinks ++ toneTag.flatten
+
+    SubMetaLinks(sectionLabels, subMetaLinks)
+
+  }
+}
+
 /**
  * Tags lets you extract meaning from tags on a page.
  */
@@ -681,20 +748,20 @@ final case class Tags(
   def isNews: Boolean = !(isLiveBlog || isComment || isFeature)
 
   lazy val isLiveBlog: Boolean = tones.exists(t => Tags.liveMappings.contains(t.id))
-  lazy val isComment = tones.exists(t => Tags.commentMappings.contains(t.id))
-  lazy val isFeature = tones.exists(t => Tags.featureMappings.contains(t.id))
-  lazy val isInterview = tones.exists(t => Tags.interviewMappings.contains(t.id))
-  lazy val isReview = tones.exists(t => Tags.reviewMappings.contains(t.id))
-  lazy val isMedia = types.exists(t => Tags.mediaTypes.contains(t.id))
-  lazy val isAnalysis = tones.exists(_.id == Tags.Analysis)
-  lazy val isPodcast = isAudio && (types.exists(_.id == Tags.Podcast) || tags.exists(_.properties.podcast.isDefined))
-  lazy val isAudio = types.exists(_.id == Tags.Audio)
-  lazy val isEditorial = tones.exists(_.id == Tags.Editorial)
-  lazy val isCartoon = types.exists(_.id == Tags.Cartoon)
-  lazy val isLetters = tones.exists(_.id == Tags.Letters)
-  lazy val isCrossword = types.exists(_.id == Tags.Crossword)
-  lazy val isMatchReport = tones.exists(_.id == Tags.MatchReports)
-  lazy val isQuiz = tones.exists(_.id == Tags.quizzes)
+  lazy val isComment: Boolean = tones.exists(t => Tags.commentMappings.contains(t.id))
+  lazy val isFeature: Boolean = tones.exists(t => Tags.featureMappings.contains(t.id))
+  lazy val isInterview: Boolean = tones.exists(t => Tags.interviewMappings.contains(t.id))
+  lazy val isReview: Boolean = tones.exists(t => Tags.reviewMappings.contains(t.id))
+  lazy val isMedia: Boolean = types.exists(t => Tags.mediaTypes.contains(t.id))
+  lazy val isAnalysis: Boolean = tones.exists(_.id == Tags.Analysis)
+  lazy val isPodcast: Boolean = isAudio && (types.exists(_.id == Tags.Podcast) || tags.exists(_.properties.podcast.isDefined))
+  lazy val isAudio: Boolean = types.exists(_.id == Tags.Audio)
+  lazy val isEditorial: Boolean = tones.exists(_.id == Tags.Editorial)
+  lazy val isCartoon: Boolean = types.exists(_.id == Tags.Cartoon)
+  lazy val isLetters: Boolean = tones.exists(_.id == Tags.Letters)
+  lazy val isCrossword: Boolean = types.exists(_.id == Tags.Crossword)
+  lazy val isMatchReport: Boolean = tones.exists(_.id == Tags.MatchReports)
+  lazy val isQuiz: Boolean = tones.exists(_.id == Tags.quizzes)
 
   lazy val isArticle: Boolean = tags.exists { _.id == Tags.Article }
   lazy val isSudoku: Boolean = tags.exists { _.id == Tags.Sudoku } || tags.exists(t => t.id == "lifeandstyle/series/sudoku")
@@ -706,23 +773,27 @@ final case class Tags(
 
   lazy val hasLargeContributorImage: Boolean = tagsOfType("Contributor").exists(_.properties.contributorLargeImagePath.nonEmpty)
 
-  lazy val isCricketLiveBlog = isLiveBlog &&
+  lazy val isCricketLiveBlog: Boolean = isLiveBlog &&
     tags.map(_.id).exists(tagId => CricketTeams.teamTagIds.contains(tagId)) &&
     tags.map(_.id).contains("sport/over-by-over-reports")
 
-  lazy val isRugbyMatch = (isMatchReport || isLiveBlog) &&
+  lazy val isRugbyMatch: Boolean = (isMatchReport || isLiveBlog) &&
     tags.exists(t => t.id == "sport/rugby-union")
 
-  lazy val isClimateChangeSeries = tags.exists(t => t.id =="environment/series/keep-it-in-the-ground")
-  lazy val isTheMinuteArticle = tags.exists(t => t.id == "tone/minute")
+  lazy val isClimateChangeSeries: Boolean = tags.exists(t => t.id =="environment/series/keep-it-in-the-ground")
+  lazy val isTheMinuteArticle: Boolean = tags.exists(t => t.id == "tone/minute")
   //this is for the immersive header to access this info
-  lazy val isPaidContent = tags.exists( t => t.id == "tone/advertisement-features" )
+  lazy val isPaidContent: Boolean = tags.exists( t => t.id == "tone/advertisement-features" )
 
-  lazy val isPolitics = tags.exists(t => t.id=="politics/politics")
 
-  lazy val keywordIds = keywords.map { _.id }
+  lazy val isPolitics: Boolean = tags.exists(t => t.id=="politics/politics")
 
-  lazy val commissioningDesks = tracking.map(_.id).collect { case Tags.CommissioningDesk(desk) => desk }
+  lazy val keywordIds: List[String] = keywords.map { _.id }
+
+  lazy val commissioningDesks: List[String] = tracking.map(_.id).collect { case Tags.CommissioningDesk(desk) => desk }
+  lazy val blogOrSeriesTag: Option[Tag] = {
+    tags.find( tag => tag.showSeriesInMeta && (tag.isBlog || tag.isSeries ))
+  }
 
   def javascriptConfig: Map[String, JsValue] = Map(
     ("keywords", JsString(keywords.map { _.name }.mkString(","))),
@@ -790,7 +861,7 @@ object Tags {
     "tone/reviews"
   )
 
-  val CommissioningDesk = """tracking/commissioningdesk/(.*)""".r
+  val CommissioningDesk: Regex = """tracking/commissioningdesk/(.*)""".r
 
   def make(apiContent: contentapi.Content): Tags = {
     Tags(apiContent.tags.toList map { Tag.make(_) })
