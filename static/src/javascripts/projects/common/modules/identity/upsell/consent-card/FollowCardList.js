@@ -12,7 +12,7 @@ import type { ConsentWithState } from '../store/types';
 import { ErrorBar, genericErrorStr } from '../error-bar/ErrorBar';
 import { ExpanderButton } from '../button/ExpanderButton';
 
-const getConsents = (): Promise<ConsentWithState[]> =>
+const getConsents = (): Promise<(?ConsentWithState)[]> =>
     Promise.all([
         getUserConsent('supporter'),
         getNewsletterConsent('the-long-read'),
