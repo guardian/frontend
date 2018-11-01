@@ -21,7 +21,7 @@ import views.support._
 import scala.collection.JavaConverters._
 import scala.util.Try
 import implicits.Booleans._
-import conf.switches.Switches.interactiveHeaderSwitch
+import conf.switches.Switches.InteractiveHeaderSwitch
 
 sealed trait ContentType {
   def content: Content
@@ -878,12 +878,11 @@ object Interactive {
     val contentType = DotcomContentType.Interactive
     val fields = content.fields
     val section = content.metadata.sectionId
-
     val metadata = content.metadata.copy(
       contentType = Some(contentType),
       adUnitSuffix = section + "/" + contentType.name.toLowerCase,
       twitterPropertiesOverrides = Map( "twitter:title" -> fields.linkText ),
-      contentWithSlimHeader = if(interactiveHeaderSwitch.isSwitchedOn) false else true
+      contentWithSlimHeader = !InteractiveHeaderSwitch.isSwitchedOn
     )
     val contentOverrides = content.copy(
       metadata = metadata

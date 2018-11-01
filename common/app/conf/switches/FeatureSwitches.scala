@@ -495,7 +495,7 @@ trait FeatureSwitches {
   )
 
   // Midterms interactive header switch
-  val interactiveHeaderSwitch = Switch(
+  val InteractiveHeaderSwitch = Switch(
     SwitchGroup.Feature,
     "interactive-header-switch",
     "If switched on, the header on all interctives will display in full.",
