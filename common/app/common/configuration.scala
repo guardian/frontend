@@ -212,6 +212,8 @@ class GuardianConfiguration extends Logging {
         ).flatten: _*
       )
     }
+
+    lazy val nextPreviousPageSize: Int = configuration.getIntegerProperty("content.api.nextPreviousPageSize").getOrElse(50)
   }
 
   object ophanApi {

@@ -843,7 +843,9 @@ case class GenericLightbox(
         "srcsets" -> JsString(ImgSrc.srcset(container.images, GalleryMedia.lightbox)),
         "sizes" -> JsString(GalleryMedia.lightbox.sizes),
         "ratio" -> Try(JsNumber(img.width.toDouble / img.height.toDouble)).getOrElse(JsNumber(1)),
-        "role" -> JsString(img.role.toString)
+        "role" -> JsString(img.role.toString),
+        "parentContentId" -> JsString(properties.id),
+        "id" ->JsString(properties.id) //duplicated to simplify lightbox logic
       ))
     }
     JsObject(Seq(
