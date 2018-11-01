@@ -33,13 +33,14 @@ export class Block extends Component<BlockProps> {
                         ? 'identity-upsell-block--side-by-side identity-upsell-block--side-by-side--backwards'
                         : '',
                 ].join(' ')}>
-                <div className={
-                    halfWidth
-                        ? 'identity-upsell-block--half-width'
-                        : ''
-                }>
+                <div
+                    className={
+                        halfWidth ? 'identity-upsell-block--half-width' : ''
+                    }>
                     <div className="identity-upsell-title">
-                        <h2 className="identity-upsell-title__title">{title}</h2>
+                        <h2 className="identity-upsell-title__title">
+                            {title}
+                        </h2>
                         {subtitle && (
                             <h3 className="identity-upsell-title__subtitle">
                                 {subtitle}

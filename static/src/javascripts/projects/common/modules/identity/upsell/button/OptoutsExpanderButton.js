@@ -1,13 +1,13 @@
 // @flow
 import React from 'preact-compat';
-import plus from "svgs/icon/plus.svg";
-import minus from "svgs/icon/minus.svg";
+import plus from 'svgs/icon/plus.svg';
+import minus from 'svgs/icon/minus.svg';
 
 type OptoutsExpanderButtonProps = {
     isExpanded: boolean,
     onToggle: (state: boolean) => void,
     linkName: ?string,
-    text: ?string
+    text: ?string,
 };
 
 const OptoutsExpanderButton = ({
