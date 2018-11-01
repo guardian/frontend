@@ -6,13 +6,10 @@ import { LegalTextBlock } from '../block/LegalTextBlock';
 import { OptOutsList } from '../opt-outs/OptOutsList';
 
 export const OptOuts = (): React.Component => (
-    <Block
-        sideBySideBackwards
-        title="One more thing..."
-        subtitle="These are your privacy settings. You’re in full control of them.">
+    <Block sideBySideBackwards title="Your communication preferences">
         <LegalTextBlock>
-            You can also change these settings any time by visiting our Emails &
-            marketing section of your account.
+            You can always change these preferences later by visiting your
+            account settings.
         </LegalTextBlock>
         <OptOutsList />
     </Block>
