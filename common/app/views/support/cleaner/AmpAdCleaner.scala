@@ -1,6 +1,7 @@
 package views.support.cleaner
 
 import common.Edition
+import conf.Configuration.commercial.prebidServerUrl
 import model.Article
 import org.jsoup.nodes.{Document, Element}
 import views.support.{AmpAd, AmpAdDataSlot, AmpAdRtcConfig, HtmlCleaner}
@@ -95,7 +96,7 @@ case class AmpAdCleaner(edition: Edition, uri: String, article: Article) extends
                    data-loading-strategy="prefer-viewability-over-views"
                    json={AmpAd(article, uri, edition.id.toLowerCase()).toString()}
                    data-slot={AmpAdDataSlot(article).toString()}
-                   rtc-config={AmpAdRtcConfig.toJsonString}
+                   rtc-config={AmpAdRtcConfig.toJsonString(prebidServerUrl)}
                 ></amp-ad>
 
     val ampAdString = {
