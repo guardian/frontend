@@ -27,7 +27,7 @@ class ToolPressQueueWorker(liveFapiFrontPress: LiveFapiFrontPress, draftFapiFron
   // log a warning if facia press is taking too long to pick up messages
   private def checkAndLogLatency(processTime: Long, messageId: String, creationTime: DateTime, startTime: DateTime): Unit = {
     val messageLatency = startTime.getMillis - creationTime.getMillis
-    if (messageLatency > 4 || processTime > 3500) {
+    if (messageLatency > 4000 || processTime > 3500) {
       val stopWatch = new StopWatch()
       logWarningWithCustomFields(
         s"Facia press took $messageLatency ms to pick up and $processTime time to process $messageId. Message creation time $creationTime, process start time $startTime",
