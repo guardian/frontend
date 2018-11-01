@@ -22,7 +22,6 @@ const getConsents = (): Promise<ConsentWithState[]> => {
     ]);
 
     const newsLetterConsents = getNewsLetterConsents([
-        'today-uk',
         'the-long-read',
         'bookmarks',
         'brexit-briefing',
@@ -30,11 +29,26 @@ const getConsents = (): Promise<ConsentWithState[]> => {
         'lab-notes',
     ]);
 
+    const consentOrder = [
+        'supporter',
+        'the-long-read',
+        'holidays',
+        'bookmarks',
+        'events',
+        'brexit-briefing',
+        'offers',
+        'jobs',
+        'green-light',
+        'lab-notes',
+    ];
+
     return Promise.all([userConsents, newsLetterConsents]).then(
-        ([fetchedUserConsents, fetchedNewsLetterConsents]) => [
-            ...fetchedUserConsents,
-            ...fetchedNewsLetterConsents,
-        ]
+        ([fetchedUserConsents, fetchedNewsLetterConsents]) =>
+            consentOrder.map(consentId =>
+                [...fetchedUserConsents, ...fetchedNewsLetterConsents].find(
+                    consent => consentId === consent.consent.id
+                )
+            )
     );
 };
 
