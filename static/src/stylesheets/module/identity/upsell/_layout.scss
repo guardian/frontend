@@ -4,10 +4,6 @@
     position: relative;
     padding-bottom: $gs-baseline * 4;
     padding-top: $gs-baseline;
-    & .identity-upsell-layout {
-        position: relative;
-        z-index: 10;
-    }
     & .identity-upsell-subheader__graphics {
         position: absolute;
         top: 0;
@@ -53,6 +49,7 @@
 
 .identity-upsell-wrapper {
     background: #ffffff;
+    border-bottom: 1px solid $brightness-86;
 }
 
 .identity-upsell-layout {
@@ -105,6 +102,11 @@
             }
         }
     }
+    .identity-upsell-block--half-width {
+        @include mq(tablet) {
+            width: 60%;
+        }
+    }
 }
 
 .identity-upsell-title {
@@ -125,9 +127,9 @@
         font-weight: 100;
         margin-top: $gs-baseline / 6;
     }
-}
-
-.identity-upsell-legal-text-block {
-    @include fs-textSans(5);
-    color: $brightness-46;
+    .identity-upsell-title__subtext {
+        @include fs-bodyCopy(2);
+        margin-top: $gs-baseline;
+        font-weight: 100;
+    }
 }

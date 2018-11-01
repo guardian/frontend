@@ -68,6 +68,13 @@
         border: 0;
     }
 
+    &.manage-account__button--long {
+        width: 100%;
+        box-shadow: none;
+        border-radius: 0;
+        float: none;
+    }
+
     .inline-icon {
         transition: .125s;
         vertical-align: middle;
