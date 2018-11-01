@@ -653,12 +653,18 @@ final case class SubMetaLink(
   dataLinkName: Option[String] = None
 )
 
+object SubMetaLink {
+  implicit val writes: OWrites[SubMetaLink] = Json.writes[SubMetaLink]
+}
+
 final case class SubMetaLinks(
   sectionLabels: List[SubMetaLink],
   keywords: List[SubMetaLink]
 )
 
 object SubMetaLinks {
+
+  implicit val writes: OWrites[SubMetaLinks] = Json.writes[SubMetaLinks]
 
   def makeKeywordName(keywordTag: Tag, keywords: List[Tag]): String = {
     if (keywords.count(_.name == keywordTag.name) > 1){
