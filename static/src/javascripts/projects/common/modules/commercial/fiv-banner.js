@@ -14,7 +14,7 @@ import bean from "bean";
 import mediator from "../../../../lib/mediator";
 
 const messageCode = 'fiv-banner';
-const minArticles = 3;
+const maxArticles = 3;
 const fivFirstSeenAtKey = 'fivFirstSeenAt';
 
 const getVisitCount = (): number => local.get('gu.alreadyVisited') || 0;
@@ -32,7 +32,7 @@ const defaultEngagementBannerParams = () => {
 };
 
 const hideBanner = () => {
-    userPrefs.set(fivFirstSeenAtKey, minArticles * -1);
+    userPrefs.set(fivFirstSeenAtKey, maxArticles * -1);
 };
 
 const showBanner = (params: EngagementBannerParams): void => {
@@ -116,8 +116,8 @@ const canShow = (): Promise<boolean> => {
             userPrefs.set(fivFirstSeenAtKey, visitCount);
             return Promise.resolve(true);
         } else {
-            const notSeen3TimesYet = (visitCount - fivFirstSeenAt) < minArticles;
-            return Promise.resolve(notSeen3TimesYet);
+            const notSeenEnoughTimesYet = (visitCount - fivFirstSeenAt) < maxArticles;
+            return Promise.resolve(notSeenEnoughTimesYet);
         }
     }
     return Promise.resolve(false);
