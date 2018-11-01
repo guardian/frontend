@@ -44,11 +44,13 @@ const getConsents = (): Promise<ConsentWithState[]> => {
 
     return Promise.all([userConsents, newsLetterConsents]).then(
         ([fetchedUserConsents, fetchedNewsLetterConsents]) =>
-            consentOrder.map(consentId =>
-                [...fetchedUserConsents, ...fetchedNewsLetterConsents].find(
-                    consent => consentId === consent.consent.id
+            consentOrder
+                .map(consentId =>
+                    [...fetchedUserConsents, ...fetchedNewsLetterConsents].find(
+                        consent => consentId === consent.consent.id
+                    )
                 )
-            )
+                .filter(Boolean)
     );
 };
 
