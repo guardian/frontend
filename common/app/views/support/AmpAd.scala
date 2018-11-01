@@ -4,7 +4,6 @@ import com.gu.commercial.display.AdTargetParam.toMap
 import com.gu.commercial.display.{AdTargetParamValue, MultipleValues, SingleValue}
 import common.Edition
 import common.commercial.AdUnitMaker
-import conf.Configuration.commercial.prebidServerHost
 import conf.Configuration.environment
 import conf.switches.Switches.KruxSwitch
 import conf.switches.{Switch, Switches}
@@ -38,7 +37,7 @@ case class AmpAdDataSlot(article: Article) {
 
 object AmpAdRtcConfig {
 
-  def toJsonString: String = {
+  def toJsonString(prebidServerUrl: String): String = {
 
     val urls: Seq[(String, JsValueWrapper)] = {
 
@@ -56,18 +55,17 @@ object AmpAdRtcConfig {
        * See https://github.com/ampproject/amphtml/pull/14155
        * and https://github.com/prebid/prebid-server/blob/master/docs/endpoints/openrtb2/amp.md#query-parameters
        */
-      val prebidServerUrl = {
-        val url = s"$prebidServerHost/openrtb2/amp?tag_id=1&w=ATTR(width)&h=ATTR(height)&ow=ATTR(data-override-width)" +
-          "&oh=ATTR(data-override-height)&slot=ATTR(data-slot)" +
-          "&targeting=TGT&curl=CANONICAL_URL&timeout=TIMEOUT" +
-          s"&adcid=ADCID&purl=HREF"
+      val ampPrebidUrl = {
+        val url = s"$prebidServerUrl/openrtb2/amp?tag_id=1&w=ATTR(width)&h=ATTR(height)" +
+          "&ow=ATTR(data-override-width)&oh=ATTR(data-override-height)&ms=ATTR(data-multi-size)" +
+          "&slot=ATTR(data-slot)&targeting=TGT&curl=CANONICAL_URL&timeout=TIMEOUT&adcid=ADCID&purl=HREF"
         urlValue(
           if (environment.isProd) url else s"$url&debug=1",
-          Switches.prebidServer
+          Switches.ampPrebid
         )
       }
 
-      val urlValues = (kruxUrl ++ prebidServerUrl).toSeq
+      val urlValues = (kruxUrl ++ ampPrebidUrl).toSeq
       if (urlValues.nonEmpty) Seq("urls" -> urlValues)
       else Nil
     }
