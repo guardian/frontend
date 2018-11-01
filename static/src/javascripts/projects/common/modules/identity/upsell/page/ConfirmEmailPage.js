@@ -29,8 +29,7 @@ const Components = (props: Props): React.Component => {
             <NewsLetterSignUps />,
             <OptOuts />,
         ];
-    }
-    else if (!props.isUserLoggedIn) {
+    } else if (!props.isUserLoggedIn) {
         // TODO: sign in form
         components = [<NewsLetterSignUps />, <OptOuts />];
     }
@@ -39,7 +38,7 @@ const Components = (props: Props): React.Component => {
 };
 
 export const ConfirmEmailPage = (props: Props): React.Component => (
-    <div>
+    <div className="identity-upsell-wrapper">
         <Header title="Thank you!" subtitle="You’re now subscribed." />
         <Components {...props} />
     </div>
