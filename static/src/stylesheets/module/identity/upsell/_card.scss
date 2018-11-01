@@ -36,6 +36,7 @@
 
 .identity-upsell-consent-card-footer {
     margin-top: $gs-baseline;
+    margin-bottom: $gs-baseline;
     display: flex;
     flex-direction: column;
     @include mq(tablet) {

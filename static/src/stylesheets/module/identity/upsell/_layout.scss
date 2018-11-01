@@ -105,6 +105,9 @@
             }
         }
     }
+    a.u-underline {
+        color: $brightness-7;
+    }
 }
 
 .identity-upsell-title {
@@ -128,6 +131,6 @@
 }
 
 .identity-upsell-legal-text-block {
-    @include fs-textSans(5);
+    @include fs-textSans(4);
     color: $brightness-46;
 }

@@ -10,6 +10,7 @@ import {
 import type { ConsentWithState } from '../store/types';
 import { ErrorBar, genericErrorStr } from '../error-bar/ErrorBar';
 import { ExpanderButton } from '../button/ExpanderButton';
+import {LegalTextBlock} from "common/modules/identity/upsell/block/LegalTextBlock";
 
 const getConsents = (): Promise<ConsentWithState[]> => {
     const userConsents = getUserConsents([
@@ -151,6 +152,19 @@ class FollowCardList extends React.Component<Props, State> {
                         )}
                     </div>
                 )}
+                <LegalTextBlock>
+                    By subscribing, you confirm that you are 13 years or older. The
+                    Guardian’s newsletters may include advertising and messages about
+                    the Guardian’s other products and services, such as Jobs and
+                    Masterclasses. To find out what personal data we collect and how we
+                    use it, please visit our&nbsp;
+                    <a
+                        data-link-name="upsell-privacy-link"
+                        className="u-underline identity-upsell-consent-card__link"
+                        href={`https://www.theguardian.com/info/privacy`}>
+                        Privacy Policy.
+                    </a>
+                </LegalTextBlock>
             </div>
         );
     }
