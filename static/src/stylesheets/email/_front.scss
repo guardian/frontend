@@ -13,18 +13,14 @@ $container-color: #ffffff;
 
 @font-face {
     font-family: 'Guardian Egyptian Web Header';
-    src: url('https://interactive.guim.co.uk/fonts/garnett/GHGuardianHeadline-Bold.woff2') format('woff2'),
-    url('https://interactive.guim.co.uk/fonts/garnett/GHGuardianHeadline-Bold.woff') format('woff'),
-    url('https://interactive.guim.co.uk/fonts/garnett/GHGuardianHeadline-Bold.ttf') format('truetype');
+    src: url('https://interactive.guim.co.uk/fonts/garnett/GHGuardianHeadline-Bold.woff') format('woff');
     font-weight: 700;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Guardian Egyptian Web Headline';
-    src: url('https://interactive.guim.co.uk/fonts/garnett/GHGuardianHeadline-Medium.woff2') format('woff2'),
-    url('https://interactive.guim.co.uk/fonts/garnett/GHGuardianHeadline-Medium.woff') format('woff'),
-    url('https://interactive.guim.co.uk/fonts/garnett/GHGuardianHeadline-Medium.ttf') format('truetype');
+    src: url('https://interactive.guim.co.uk/fonts/garnett/GHGuardianHeadline-Medium.woff') format('woff');
     font-weight: 500;
     font-style: normal;
 }
@@ -79,7 +75,7 @@ $container-color: #ffffff;
 
 // td
 .ct__padding {
-    font-family: 'Guardian Egyptian Web Header', 'Guardian Egyptian Web Headline', Georgia, serif;
+    font-family: 'Guardian Egyptian Web Header', Georgia, serif;
     font-size: 26px;
     color: #121212;
     padding: 4px 12px 0;
