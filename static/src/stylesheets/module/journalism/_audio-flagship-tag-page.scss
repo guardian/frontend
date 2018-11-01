@@ -142,17 +142,23 @@
                     z-index: 8;
                 }
                 .artwork-holder {
-                    margin-bottom: -8px;
                     width: 100%;
                     top: 0;
-
-                    @include mq($from: desktop) {
+                    @include mq($until: mobileMedium) {
+                        margin-bottom: -$gs-baseline*4;
+                    }
+                    @include mq($from: mobileMedium, $until: mobileLandscape) {
+                        margin-bottom: -$gs-baseline*3;
+                    }
+                    @include mq($from: mobileLandscape) {
+                        margin-bottom: -$gs-baseline/2;
                     }
                     @include mq($from: phablet, $until: desktop) {
                         float: right;
                         position: relative;
                     }
                     svg {
+                        overflow: visible;
                         @include mq($until: phablet) {
                             width: 100%;
                         }
@@ -181,7 +187,7 @@
         display: block;
         margin: 0;
 
-        @include mq($from: mobile, $until: phablet) {
+        @include mq($until: phablet) {
             display: none;
         }
         .flagship-audio__subscribe-label {
@@ -223,7 +229,7 @@
     #flagship-audio__mobile-only {
         display: none;
 
-        @include mq($from: mobile, $until: phablet) {
+        @include mq($until: phablet) {
             display: block;
             padding: 0;
 
