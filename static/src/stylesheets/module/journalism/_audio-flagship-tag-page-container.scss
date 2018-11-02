@@ -42,11 +42,19 @@
             }
 
             .fc-item__media-wrapper {
-                flex-basis: 20%;
-                @include mq($from: mobile , $until: phablet) {
+                @include mq($until: phablet) {
                     margin: 0;
                 }
-
+                /*hack to maintain square images */
+                @include mq($until: tablet) {
+                    flex-basis: 15%;
+                }
+                @include mq($from: tablet, $until: desktop) {
+                    flex-basis: 30%;
+                }
+                @include mq($from: desktop) {
+                    flex-basis: 20%;
+                }
                 .u-responsive-ratio {
                     padding-bottom: 100%; /* this is horrible but it works */
                     height: 100%;
@@ -65,6 +73,7 @@
             .fc-item__content {
                 max-width: 100%;
                 justify-content: flex-start;
+                min-height: 120px; /*hack to mantain square images at smaller breakpoints */
                 @include mq($from: tablet , $until: wide) {
                     padding: 0 $gs-gutter $gs-gutter;
                 }
