@@ -3,7 +3,6 @@ package model.dotcomponents
 import common.Edition
 import conf.Configuration
 import controllers.ArticlePage
-import model.{SubMetaLink, SubMetaLinks}
 import model.liveblog.BlockElement
 import navigation.NavMenu
 import play.api.libs.json.{JsValue, Json, Writes}
@@ -53,8 +52,7 @@ case class PageData(
     beaconUrl: String,
     edition: String,
     contentType: Option[String],
-    commissioningDesks: Option[String],
-    subMetaLinks: SubMetaLinks
+    commissioningDesks: Option[String]
 )
 
 case class Config(
@@ -149,8 +147,7 @@ object DotcomponentsDataModel {
       Configuration.debug.beaconUrl,
       Edition(request).displayName,
       jsConfig("contentType"),
-      jsConfig("commissioningDesks"),
-      article.content.submetaLinks
+      jsConfig("commissioningDesks")
     )
 
     val tags = article.tags.tags.map(
