@@ -428,7 +428,7 @@ case class MediaAtomPage(
   override val withVerticalScrollbar: Boolean
 )(implicit request: RequestHeader) extends AtomPage {
   override val atomType = "media"
-  override val body = views.html.fragments.atoms.media(atom, displayCaption = false, mediaWrapper = Some(MediaWrapper.EmbedPage))
+  override val body = views.html.fragments.atoms.media(atom, displayCaption = false, mediaWrapper = Some(MediaWrapper.EmbedPage), posterImageOverride = None)
   override val javascriptModule = "youtube-embed"
   override val metadata = MetaData.make(
     id = atom.id,

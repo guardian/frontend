@@ -12,7 +12,17 @@
 @import model.VideoFaciaProperties
 @import views.html.fragments.items.elements.facia_cards.title
 
-@(media: model.content.MediaAtom, displayCaption: Boolean, displayDuration: Boolean = true, displayEndSlate: Boolean = true, playable: Boolean = true, posterImageOverride: Option[ImageMedia] = None, cardStyle: Option[CardStyle] = None, mediaWrapper: Option[MediaWrapper] = None, faciaHeaderProperties: Option[VideoFaciaProperties] = None)(implicit request: RequestHeader)
+@(
+    media: model.content.MediaAtom,
+    displayCaption: Boolean,
+    displayDuration: Boolean = true,
+    displayEndSlate: Boolean = true,
+    playable: Boolean = true,
+    posterImageOverride: Option[ImageMedia] = None,
+    cardStyle: Option[CardStyle] = None,
+    mediaWrapper: Option[MediaWrapper] = None,
+    faciaHeaderProperties: Option[VideoFaciaProperties] = None
+)(implicit request: RequestHeader)
 
 @videoJsError() = @{
     <div class="vjs-error-display vjs-modal-dialog">
@@ -69,8 +79,8 @@
                 }
             }
         }
-        @defining(posterImageOverride.filter(_ => !playable) orElse media.posterImage) { bestPosterImage =>
-            @if(!bestPosterImage.isDefined && expired) {
+        @defining(posterImageOverride orElse media.posterImage) { bestPosterImage =>
+            @if(bestPosterImage.isEmpty && expired) {
                 <div class="youtube-media-atom__overlay">
                     @videoJsError()
                 </div>
