@@ -6,24 +6,24 @@ import { shouldShowReaderRevenue } from 'common/modules/commercial/contributions
 import type { Banner } from 'common/modules/ui/bannerPicker';
 import { acquisitionsBannerFivTemplate } from 'common/modules/commercial/templates/acquisitions-banner-fiv';
 import userPrefs from 'common/modules/user-prefs';
-import {getSync as getGeoLocation} from "../../../../lib/geolocation";
-import {supportContributeURL} from "common/modules/commercial/support-utilities";
-import {addTrackingCodesToUrl, submitComponentEvent} from "common/modules/commercial/acquisitions-ophan";
-import {Message} from "common/modules/ui/message";
-import bean from "bean";
-import mediator from "../../../../lib/mediator";
+import {getSync as getGeoLocation} from 'lib/geolocation';
+import {supportContributeURL} from 'common/modules/commercial/support-utilities';
+import {addTrackingCodesToUrl, submitComponentEvent} from 'common/modules/commercial/acquisitions-ophan';
+import {Message} from 'common/modules/ui/message';
+import bean from 'bean';
+import mediator from 'lib/mediator';
 
 const messageCode = 'fiv-banner';
 const maxArticles = 3;
-const fivFirstSeenAtKey = 'fivFirstSeenAt';
+const fivImpressionsRemainingKey = 'fivImpressionsRemaining';
 
 const getVisitCount = (): number => local.get('gu.alreadyVisited') || 0;
 
 const defaultEngagementBannerParams = () => {
-    const linkUrl = "https://www.theguardian.com/"; // FIXME
+    const linkUrl = 'https://www.theguardian.com/'; // TODO
 
     return {
-        campaignCode: 'gdnwb_copts_fiv_banner',
+        campaignCode: 'gdnwb_copts_fiv_banner',// TODO check these values are ok
         pageviewId: config.get('ophan.pageViewId', 'not_found'),
         products: ['CONTRIBUTION', 'RECURRING_CONTRIBUTION'],
         linkUrl: supportContributeURL,
@@ -32,7 +32,7 @@ const defaultEngagementBannerParams = () => {
 };
 
 const hideBanner = () => {
-    userPrefs.set(fivFirstSeenAtKey, maxArticles * -1);
+    userPrefs.set(fivImpressionsRemainingKey, 0);
 };
 
 const showBanner = (params: EngagementBannerParams): void => {
@@ -96,28 +96,32 @@ const canShow = (): Promise<boolean> => {
 
     // always show if they put #fiv in the url hash
     if (window.location.hash.match(/[#&]fiv(&.*)?$/)) {
-        console.log("fiv force ON");
         return Promise.resolve(true);
     }
 
-    if (!config.get('switches.fivBanner')/*TODO create the switch*/ || isBlocked()/*TODO CHECK THIS*/) {
-        return Promise.resolve(false);
+    if (!window.location.hash.match(/[#&]fivtest(&.*)?$/)) {
+        if (!config.get('switches.fivBanner')/*TODO create the switch*/ || isBlocked()/*TODO CHECK THIS*/) {
+            return Promise.resolve(false);
+        }
     }
 
     if (
         shouldShowReaderRevenue()
     ) {
-        const fivFirstSeenAt = userPrefs.get(
-            fivFirstSeenAtKey
-        );
+        const fivImpressionsRemaining = userPrefs.get(fivImpressionsRemainingKey);
         const visitCount = getVisitCount();
 
-        if (!fivFirstSeenAt) {
-            userPrefs.set(fivFirstSeenAtKey, visitCount);
+        if (fivImpressionsRemaining == null) {
+            userPrefs.set(fivImpressionsRemainingKey, maxArticles - 1);
             return Promise.resolve(true);
-        } else {
-            const notSeenEnoughTimesYet = (visitCount - fivFirstSeenAt) < maxArticles;
+        } else if (fivImpressionsRemaining > 0) {
+            const notSeenEnoughTimesYet = fivImpressionsRemaining > 0;
+            if (notSeenEnoughTimesYet) {
+                userPrefs.set(fivImpressionsRemainingKey, fivImpressionsRemaining - 1);
+            }
             return Promise.resolve(notSeenEnoughTimesYet);
+        } else {
+            return Promise.resolve(false);
         }
     }
     return Promise.resolve(false);
