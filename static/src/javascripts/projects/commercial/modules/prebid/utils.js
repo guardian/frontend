@@ -22,7 +22,7 @@ const stripPrefix = (s: string, prefix: string): string => {
     return s.replace(re, '');
 };
 
-const ozonePangaeaSectionBlacklist = [
+export const ozonePangaeaSectionBlacklist = [
     'business',
     'culture',
     'uk',
