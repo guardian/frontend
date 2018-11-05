@@ -12,7 +12,6 @@ import type {
     PrebidMediaTypes,
     PrebidSlot,
 } from 'commercial/modules/prebid/types';
-import { getRandomIntInclusive } from 'commercial/modules/prebid/utils';
 
 const bidderTimeout = 1500;
 
@@ -79,12 +78,7 @@ class PrebidService {
 
         window.pbjs.setConfig(pbjsConfig);
 
-        // gather analytics from 75% (3 in 4) of page views
-        const inSample = getRandomIntInclusive(1, 4) !== 1;
-        if (
-            config.get('switches.prebidAnalytics', false) &&
-            (inSample || config.get('page.isDev', false))
-        ) {
+        if (config.get('switches.prebidAnalytics', false)) {
             window.pbjs.enableAnalytics([
                 {
                     provider: 'gu',
