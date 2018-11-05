@@ -136,3 +136,10 @@
         font-weight: 100;
     }
 }
+
+.identity-upsell-legal-text-block {
+    @include fs-textSans(4);
+    color: $brightness-46;
+}
+
+
