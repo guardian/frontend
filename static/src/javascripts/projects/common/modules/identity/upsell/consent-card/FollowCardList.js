@@ -4,39 +4,27 @@ import config from 'lib/config';
 import { FollowCard } from 'common/modules/identity/upsell/consent-card/FollowCard';
 import {
     setConsentsInApi,
-    getNewsLetterConsents,
-    getUserConsents,
+    getNewsletterConsent,
+    getUserConsent,
 } from 'common/modules/identity/upsell/store/consents';
 import { LegalTextBlock } from 'common/modules/identity/upsell/block/LegalTextBlock';
 import type { ConsentWithState } from '../store/types';
 import { ErrorBar, genericErrorStr } from '../error-bar/ErrorBar';
 import { ExpanderButton } from '../button/ExpanderButton';
 
-const getConsents = (): Promise<ConsentWithState[]> => {
-    const userConsents = getUserConsents([
-        'supporter',
-        'holidays',
-        'events',
-        'offers',
-        'jobs',
+const getConsents = (): Promise<(?ConsentWithState)[]> =>
+    Promise.all([
+        getUserConsent('supporter'),
+        getNewsletterConsent('the-long-read'),
+        getUserConsent('holidays'),
+        getNewsletterConsent('bookmarks'),
+        getUserConsent('events'),
+        getNewsletterConsent('brexit-briefing'),
+        getUserConsent('offers'),
+        getUserConsent('jobs'),
+        getNewsletterConsent('green-light'),
+        getNewsletterConsent('lab-notes'),
     ]);
-
-    const newsLetterConsents = getNewsLetterConsents([
-        'today-uk',
-        'the-long-read',
-        'bookmarks',
-        'brexit-briefing',
-        'green-light',
-        'lab-notes',
-    ]);
-
-    return Promise.all([userConsents, newsLetterConsents]).then(
-        ([fetchedUserConsents, fetchedNewsLetterConsents]) => [
-            ...fetchedUserConsents,
-            ...fetchedNewsLetterConsents,
-        ]
-    );
-};
 
 type Props = {
     cutoff: number,
