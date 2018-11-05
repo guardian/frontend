@@ -284,8 +284,8 @@ case object HealthcareProfessionalsNetwork extends FrontEmailMetadata {
   override val banner = Some("healthcare-professionals-network.png")
 }
 
-case object HigherEducationNetwork extends FrontEmailMetadata {
-  val name = "Higher Education Network"
+case object GuardianUniversities extends FrontEmailMetadata {
+  val name = "Guardian Universities"
   override val banner = Some("universities.png")
 }
 
@@ -388,7 +388,7 @@ object EmailAddons {
     USMorningBriefing)
   private val frontEmails = Seq(
     SocialCareNetwork,
-    HigherEducationNetwork,
+    GuardianUniversities,
     GuardianStudents,
     HealthcareProfessionalsNetwork,
     PublicLeadersNetwork,

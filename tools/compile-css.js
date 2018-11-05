@@ -33,10 +33,10 @@ const SASS_SETTINGS = {
 const BROWSERS_LIST = [
     'Firefox >= 45',
     'Explorer >= 10',
-    'Safari >= 9',
+    'Safari >= 7',
     'Chrome >= 50',
 
-    'iOS >= 9',
+    'iOS >= 7',
     'Android >= 5',
     'BlackBerry >= 10',
     'ExplorerMobile >= 10',

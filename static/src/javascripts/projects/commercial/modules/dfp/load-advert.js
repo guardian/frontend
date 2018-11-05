@@ -36,7 +36,7 @@ export const refreshAdvert = (advert: Advert): void => {
                     // possible (mobile/tablet). See prebid/slot-config.js
                     return [prebidSlot];
                 }
-                // Prebid slots only support array sizes (no string litterals).
+                // Prebid slots only support array sizes (no string literals).
                 if (Array.isArray(advert.size)) {
                     return [
                         Object.assign({}, prebidSlot, {

@@ -24,14 +24,12 @@ export type PrebidTrustXParams = {
     uid: string,
 };
 
-export type PrebidImproveSizeParam = {
-    w?: number,
-    h?: number,
-};
-
 export type PrebidImproveParams = {
     placementId: number,
-    size: PrebidImproveSizeParam,
+    size: {
+        w?: number,
+        h?: number,
+    },
 };
 
 export type PrebidXaxisParams = {
@@ -57,30 +55,15 @@ export type PrebidAdYouLikeParams = {
     placement: string,
 };
 
-export type PrebidSlotKey =
-    | 'top-above-nav'
-    | 'right'
-    | 'inline1'
-    | 'inline'
-    | 'mostpop'
-    | 'comments';
-
-export type PrebidSlotLabel =
-    | 'mobile'
-    | 'tablet'
-    | 'desktop'
-    | 'article'
-    | 'non-article';
-
-export type PrebidBidLabel = 'edn-UK' | 'edn-INT' | 'geo-NA' | 'deal-FirstLook';
-
-export type PrebidLabel = PrebidSlotLabel | PrebidBidLabel;
-
 export type PrebidSlot = {
-    key: PrebidSlotKey,
+    key:
+        | 'top-above-nav'
+        | 'right'
+        | 'inline1'
+        | 'inline'
+        | 'mostpop'
+        | 'comments',
     sizes: PrebidSize[],
-    labelAny?: PrebidSlotLabel[],
-    labelAll?: PrebidSlotLabel[],
 };
 
 export type PrebidBidder = {
@@ -99,8 +82,6 @@ export type PrebidBidder = {
         | PrebidOpenXParams
         | PrebidAdYouLikeParams
         | PrebidPubmaticParams,
-    labelAny?: PrebidBidLabel[],
-    labelAll?: PrebidBidLabel[],
 };
 
 export type PrebidBid = {
@@ -115,25 +96,10 @@ export type PrebidBid = {
         | PrebidOpenXParams
         | PrebidAdYouLikeParams
         | PrebidPubmaticParams,
-    labelAny?: PrebidBidLabel[],
-    labelAll?: PrebidBidLabel[],
-};
-
-export type PrebidPriceBucket = {
-    precision?: number,
-    min: number,
-    max: number,
-    increment: number,
-};
-
-export type PrebidPriceGranularity = {
-    buckets: PrebidPriceBucket[],
-};
-
-export type PrebidBanner = {
-    sizes: PrebidSize[],
 };
 
 export type PrebidMediaTypes = {
-    banner: PrebidBanner,
+    banner: {
+        sizes: PrebidSize[],
+    },
 };

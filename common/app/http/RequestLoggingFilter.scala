@@ -9,7 +9,7 @@ import scala.util.{Failure, Success}
 
 class RequestLoggingFilter(implicit val mat: Materializer, executionContext: ExecutionContext) extends Filter with Logging {
 
-  override def apply(next: (RequestHeader) => Future[Result])(rh: RequestHeader): Future[Result] = {
+  override def apply(next: RequestHeader => Future[Result])(rh: RequestHeader): Future[Result] = {
 
     val stopWatch = new StopWatch
     val result = next(rh)
@@ -25,7 +25,10 @@ class RequestLoggingFilter(implicit val mat: Materializer, executionContext: Exe
               case _ => ""
             }
           }
-        requestLogger.withResponse(response).info(s"${rh.method} ${rh.uri}$additionalInfo")
+        // don't log uncacheable /commercial/api/hb POST requests due to the volume of them
+        if (rh.method != "POST" || rh.path != "/commercial/api/hb") {
+          requestLogger.withResponse(response).info(s"${rh.method} ${rh.uri}$additionalInfo")
+        }
       case Failure(error) =>
         requestLogger.warn(s"${rh.method} ${rh.uri} failed", error)
     }

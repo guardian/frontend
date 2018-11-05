@@ -212,6 +212,8 @@ class GuardianConfiguration extends Logging {
         ).flatten: _*
       )
     }
+
+    lazy val nextPreviousPageSize: Int = configuration.getIntegerProperty("content.api.nextPreviousPageSize").getOrElse(50)
   }
 
   object ophanApi {
@@ -462,8 +464,8 @@ class GuardianConfiguration extends Logging {
     lazy val prebidAnalyticsStream = configuration.getMandatoryStringProperty("commercial.prebid.analytics.stream")
     lazy val pageViewAnalyticsStream = configuration.getMandatoryStringProperty("commercial.pv.analytics.stream")
 
-    lazy val prebidServerHost =
-      configuration.getStringProperty("commercial.prebid.server.host") getOrElse "http://localhost:8000"
+    lazy val prebidServerUrl =
+      configuration.getStringProperty("commercial.prebid.server.url") getOrElse "http://localhost:8000"
   }
 
   object journalism {

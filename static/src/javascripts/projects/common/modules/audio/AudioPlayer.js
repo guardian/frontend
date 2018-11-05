@@ -10,7 +10,7 @@ import {
     leftCol,
     wide,
 } from '@guardian/dotcom-rendering/packages/pasteup/breakpoints';
-import { isIOS } from 'lib/detect';
+import { isIOS, isAndroid } from 'lib/detect';
 
 import pauseBtn from 'svgs/journalism/audio-player/pause.svg';
 import playBtn from 'svgs/journalism/audio-player/play.svg';
@@ -28,7 +28,8 @@ const AudioGrid = styled('div')({
     display: 'grid',
     backgroundColor: palette.neutral[1],
     color: palette.neutral[5],
-    gridTemplateRows: '30px 40px 120px 40px',
+    gridTemplateRows:
+        isIOS() || isAndroid() ? '30px 40px 120px' : '30px 40px 120px 40px',
     gridTemplateAreas: `"currentTime duration"
          "wave wave"
          "controls controls"
@@ -174,6 +175,7 @@ const FakeWave = styled('div')({
     svg: {
         width: '100%',
         height: '100%',
+        pointerEvents: 'none',
     },
 
     '#WaveRectangleBg': {
@@ -205,12 +207,16 @@ const ScrubberButton = styled(Button)(({ position, hovering, grabbing }) => ({
     cursor: grabbing ? 'grabbing' : hovering ? 'grab' : 'pointer',
 
     ':hover': {
-        transform: 'scaleX(1.6)',
+        transform: `translate(${10 + position}px,0) scaleX(1.6)`,
     },
 
     [leftCol]: {
         height: '50px',
         transform: `translate(${position}px,0)`,
+
+        ':hover': {
+            transform: `translate(${position}px,0) scaleX(1.6)`,
+        },
     },
 }));
 
@@ -253,13 +259,13 @@ type Props = {
 };
 
 type State = {
-    ready: boolean,
     playing: boolean,
     muted: boolean,
     currentTime: number,
     duration: number,
     currentOffsetPx: number,
     hasBeenPlayed: boolean,
+    waveX: number,
     waveWidthPx: number,
     hovering: boolean,
     grabbing: boolean,
@@ -269,13 +275,13 @@ export class AudioPlayer extends Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
-            ready: false,
             playing: false,
             muted: false,
             currentTime: 0,
             currentOffsetPx: 0,
-            duration: 0,
+            duration: parseInt(this.props.duration, 10),
             hasBeenPlayed: false,
+            waveX: 0,
             waveWidthPx: 0,
             hovering: false,
             grabbing: false,
@@ -287,6 +293,16 @@ export class AudioPlayer extends Component<Props, State> {
         // this should fire on Firefox
         this.audio.addEventListener('ended', this.resetAudio);
         this.audio.addEventListener('progress', this.buffer);
+
+        const mediaId = this.audio.getAttribute('data-media-id') || '';
+        monitorPercentPlayed(this.audio, 25, mediaId);
+        monitorPercentPlayed(this.audio, 50, mediaId);
+        monitorPercentPlayed(this.audio, 75, mediaId);
+        monitorPercentPlayed(this.audio, 99, mediaId);
+
+        if (this.audio.parentElement) {
+            playerObserved(this.audio.parentElement, mediaId);
+        }
 
         if (Number.isNaN(this.audio.duration)) {
             this.audio.addEventListener('durationchange', this.ready, {
@@ -316,32 +332,19 @@ export class AudioPlayer extends Component<Props, State> {
     setAudio = (el: ?HTMLAudioElement) => {
         if (el) {
             this.audio = el;
-            this.audio.crossOrigin = 'anonymous';
-
-            const mediaId = el.getAttribute('data-media-id') || '';
-            monitorPercentPlayed(el, 25, mediaId);
-            monitorPercentPlayed(el, 50, mediaId);
-            monitorPercentPlayed(el, 75, mediaId);
-            monitorPercentPlayed(el, 99, mediaId);
-
-            if (el.parentElement) {
-                playerObserved(el.parentElement, mediaId);
-            }
-
-            const wave = document.getElementById('WaveCutOff-rect');
-            const waveBuffered = document.getElementById(
-                'WaveCutOffBuffered-rect'
-            );
-            if (wave && waveBuffered) {
-                this.wave = wave;
-                this.waveBuffered = waveBuffered;
-            }
+        }
+        const wave = document.getElementById('WaveCutOff-rect');
+        const waveBuffered = document.getElementById('WaveCutOffBuffered-rect');
+        if (wave && waveBuffered) {
+            this.wave = wave;
+            this.waveBuffered = waveBuffered;
         }
     };
 
     setGeometry = (el: ?HTMLElement) => {
         if (el) {
             const css = getComputedStyle(el);
+            const rect = el.getBoundingClientRect();
             const waveWidthPx =
                 el.clientWidth -
                 parseInt(css.paddingLeft, 10) -
@@ -352,6 +355,7 @@ export class AudioPlayer extends Component<Props, State> {
                     svg.setAttribute('viewBox', `0 0 ${waveWidthPx} 84`);
                 });
             this.setState({
+                waveX: rect.left,
                 waveWidthPx,
             });
         }
@@ -380,11 +384,7 @@ export class AudioPlayer extends Component<Props, State> {
     waveBuffered: Element;
 
     ready = () => {
-        const duration = this.audio.duration;
-        this.setState({
-            ready: true,
-            duration,
-        });
+        this.setState({ duration: this.audio.duration });
     };
 
     play = () => {
@@ -406,7 +406,7 @@ export class AudioPlayer extends Component<Props, State> {
         }
     };
 
-    seekWave = (e: any) => {
+    seek = (e: any) => {
         if (!this.state.grabbing) {
             const currentOffsetPx = e.nativeEvent.offsetX;
             const currentTime =
@@ -414,6 +414,7 @@ export class AudioPlayer extends Component<Props, State> {
                 this.state.duration;
             this.audio.currentTime = currentTime;
             this.wave.setAttribute('width', currentOffsetPx.toString());
+            this.setState({ currentTime, currentOffsetPx });
         }
     };
 
@@ -457,23 +458,38 @@ export class AudioPlayer extends Component<Props, State> {
     };
 
     grabbing = (grabbing: boolean) => () => {
-        if (this.state.hovering) {
-            this.setState({ grabbing });
+        if (this.state.hovering || !grabbing) {
+            this.setState({ grabbing }, () => {
+                if (!this.state.grabbing) {
+                    this.audio.currentTime = this.state.currentTime;
+                }
+            });
         }
     };
 
     scrub = (e: any) => {
         if (this.state.grabbing) {
-            this.wave.setAttribute('width', e.nativeEvent.offsetX.toString());
-            this.setState({
-                currentOffsetPx: e.nativeEvent.offsetX,
+            const currentOffsetPx = Math.min(
+                this.state.waveWidthPx,
+                Math.max(0, e.nativeEvent.screenX - this.state.waveX)
+            );
+
+            const currentTime =
+                (currentOffsetPx / this.state.waveWidthPx) *
+                this.state.duration;
+
+            this.setState({ currentTime, currentOffsetPx }, () => {
+                this.wave.setAttribute('width', currentOffsetPx.toString());
             });
         }
     };
 
     render() {
         return (
-            <AudioGrid>
+            <AudioGrid
+                onMouseDown={this.grabbing(true)}
+                onMouseUp={this.grabbing(false)}
+                onMouseMove={this.scrub}>
                 {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
                 <audio
                     ref={this.setAudio}
@@ -485,21 +501,10 @@ export class AudioPlayer extends Component<Props, State> {
                     <Time t={this.state.currentTime} />
                 </TimeContainer>
                 <TimeContainer area="duration">
-                    <Time
-                        t={
-                            this.state.ready
-                                ? this.state.duration
-                                : parseInt(this.props.duration, 10)
-                        }
-                    />
+                    <Time t={this.state.duration} />
                 </TimeContainer>
-                <WaveAndTrack
-                    onMouseDown={this.grabbing(true)}
-                    onMouseUp={this.grabbing(false)}
-                    onMouseMove={this.scrub}>
-                    <FakeWave
-                        innerRef={this.setGeometry}
-                        onClick={this.seekWave}>
+                <WaveAndTrack>
+                    <FakeWave innerRef={this.setGeometry} onClick={this.seek}>
                         <div
                             className="wave-holder"
                             dangerouslySetInnerHTML={{ __html: waveW.markup }}
@@ -541,7 +546,7 @@ export class AudioPlayer extends Component<Props, State> {
                         />
                     </JumpButton>
                 </Controls>
-                {!isIOS() ? (
+                {!(isIOS() || isAndroid()) ? (
                     <Volume>
                         <VolumeButton
                             isVolume
