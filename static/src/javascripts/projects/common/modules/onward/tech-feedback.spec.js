@@ -24,42 +24,42 @@ describe('Tech-feedback', () => {
     });
 
     it('Should place the extra information into the form', () => {
-        initTechFeedback();
+        initTechFeedback().then(() => {
+            const extra: HTMLInputElement = (document.querySelector(
+                '#feedback__form input[name=extra]'
+            ): any);
 
-        const extra: HTMLInputElement = (document.querySelector(
-            '#feedback__form input[name=extra]'
-        ): any);
-
-        expect(extra.value).toContain('browser');
+            expect(extra.value).toContain('browser');
+        });
     });
 
     it('Should start off with the inputs disabled', () => {
-        initTechFeedback();
+        initTechFeedback().then(() => {
+            const extra: HTMLInputElement = (document.querySelector(
+                '#feedback__form input[name=extra]'
+            ): any);
 
-        const extra: HTMLInputElement = (document.querySelector(
-            '#feedback__form input[name=extra]'
-        ): any);
-
-        expect(extra.disabled).toBeTruthy();
+            expect(extra.disabled).toBeTruthy();
+        });
     });
 
     it('Should enable inputs after we choose something from the category select', () => {
-        initTechFeedback();
+        initTechFeedback().then(() => {
+            const extra: HTMLInputElement = (document.querySelector(
+                '#feedback__form input[name=extra]'
+            ): any);
+            const feedback: HTMLInputElement = (document.getElementById(
+                'feedback-category'
+            ): any);
+            const testoption: HTMLElement = (document.getElementById(
+                'testoption'
+            ): any);
 
-        const extra: HTMLInputElement = (document.querySelector(
-            '#feedback__form input[name=extra]'
-        ): any);
-        const feedback: HTMLInputElement = (document.getElementById(
-            'feedback-category'
-        ): any);
-        const testoption: HTMLElement = (document.getElementById(
-            'testoption'
-        ): any);
+            testoption.setAttribute('selected', 'selected');
+            feedback.value = 'feedback-form-website';
+            feedback.dispatchEvent(new Event('change'));
 
-        testoption.setAttribute('selected', 'selected');
-        feedback.value = 'feedback-form-website';
-        feedback.dispatchEvent(new Event('change'));
-
-        expect(extra.disabled).toBeFalsy();
+            expect(extra.disabled).toBeFalsy();
+        });
     });
 });
