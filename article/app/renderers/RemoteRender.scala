@@ -21,7 +21,7 @@ import Version7._
 
 import scala.io.{BufferedSource, Source}
 
-class RemoteRender(implicit context: ApplicationContext) {
+class RemoteRender {
 
   val SCHEMA = "schema/dotcomponentsDataModelV1.jsonschema"
 
@@ -57,4 +57,8 @@ class RemoteRender(implicit context: ApplicationContext) {
 
   }
 
+}
+
+object RemoteRender {
+  def apply(): RemoteRender = new RemoteRender()
 }

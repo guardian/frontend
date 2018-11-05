@@ -48,3 +48,7 @@ class RenderingTierPicker {
   }
 
 }
+
+object RenderingTierPicker {
+  def apply: RenderingTierPicker = new RenderingTierPicker()
+}
