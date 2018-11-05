@@ -237,6 +237,11 @@ describe('Utils', () => {
         expect(shouldIncludePangaea()).toBe(true);
     });
 
+    test('shouldIncludePangaea should return false if section is in blacklist', () => {
+        config.set('page.section', 'culture');
+        expect(shouldIncludePangaea()).toBe(false);
+    });
+
     test('shouldIncludeXaxis should always return false on INT, AU and US editions', () => {
         const editions = ['AU', 'INT', 'US'];
         const result = editions.map(edition => {
