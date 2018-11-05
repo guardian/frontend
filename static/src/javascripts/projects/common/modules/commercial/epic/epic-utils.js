@@ -8,6 +8,7 @@ import mediator from 'lib/mediator';
 
 import { googleDocEpicControl } from 'common/modules/commercial/contributions-google-docs';
 import { epicButtonsTemplate } from 'common/modules/commercial/templates/acquisitions-epic-buttons';
+import { epicButtonsOneMillionTemplate } from 'common/modules/commercial/templates/acquisitions-epic-one-million-buttons';
 import { supportContributeURL } from 'common/modules/commercial/support-utilities';
 import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templates/acquisitions-epic-control';
 import {
