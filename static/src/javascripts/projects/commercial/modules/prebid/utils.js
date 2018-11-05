@@ -22,6 +22,20 @@ const stripPrefix = (s: string, prefix: string): string => {
     return s.replace(re, '');
 };
 
+export const ozonePangaeaSectionBlacklist = [
+    'business',
+    'culture',
+    'uk',
+    'us',
+    'au',
+    'news',
+    'money',
+    'sport',
+    'lifeandstyle',
+    'environment',
+    'travel',
+];
+
 export const removeFalseyValues = (o: {
     [string]: string,
 }): { [string]: string } =>
@@ -112,9 +126,13 @@ export const shouldIncludeAppNexus = (): boolean =>
     ((config.get('switches.prebidAppnexusUkRow') && !isInUsRegion()) ||
         !!pbTestNameMap().and);
 
-export const shouldIncludePangaea = (): boolean =>
-    config.get('switches.ozonePangaea') &&
-    config.get('page.section', '').toLowerCase() === 'technology';
+export const shouldIncludePangaea = (): boolean => {
+    const section = config.get('page.section', '').toLowerCase();
+    return (
+        config.get('switches.ozonePangaea', false) &&
+        !ozonePangaeaSectionBlacklist.includes(section)
+    );
+};
 
 export const shouldIncludeXaxis = (): boolean => {
     const hasFirstLook =
