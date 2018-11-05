@@ -9,10 +9,8 @@ const supportsPushState = hasPushStateSupport();
 // Returns a map { <bidderName>: true } of bidders
 // according to the pbtest URL parameter
 
-type TestNameMap = { [string]: boolean };
-
-const pbTestNameMap: () => TestNameMap = memoize(
-    (): TestNameMap =>
+const pbTestNameMap: () => { [string]: boolean } = memoize(
+    (): { [string]: boolean } =>
         new URLSearchParams(window.location.search)
             .getAll('pbtest')
             .reduce((acc, value) => {
