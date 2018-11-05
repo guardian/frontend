@@ -1,6 +1,6 @@
 // @flow strict
 
-export type PrebidPriceGranularity = {
+type PrebidPriceGranularity = {
     buckets: Array<{
         precision?: number,
         min: number,
