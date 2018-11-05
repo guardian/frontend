@@ -114,7 +114,6 @@ const initForms = (): Promise<any> => {
     // insert hidden extra data into forms
 
     return getExtraDataInformation().then(extraData => {
-        console.log(extraData);
         $.forEachElement('#feedback__form input[name=extra]', elem => {
             elem.value = JSON.stringify(extraData, null, '  ');
         });
