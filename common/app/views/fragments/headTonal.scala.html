@@ -5,7 +5,7 @@
 @import views.support.Commercial.isPaidContent
 @import views.support.{ContributorLinks, RenderClasses}
 @import views.support.TrailCssClasses.toneClass
-@import experiments.{ActiveExperiments, AudioPageChange}
+@import experiments.{ActiveExperiments, OldAudioPage}
 
 <header class="@RenderClasses(
         Map(
@@ -13,7 +13,7 @@
             "content__head--is-badged"  -> badgeFor(item).nonEmpty,
             badgeFor(item).flatMap(_.classModifier.map(modifier => s"content__head--$modifier")).getOrElse("")
                                         -> badgeFor(item).exists(_.classModifier.nonEmpty),
-            "content__head--flagship"   -> (item.tags.isAudio && ActiveExperiments.isParticipating(AudioPageChange))
+            "content__head--flagship"   -> (item.tags.isAudio && !ActiveExperiments.isParticipating(OldAudioPage))
         ),
         "content__head",
         "tonal__head",
@@ -30,9 +30,9 @@
 
                 <h1 class="@RenderClasses(Map(
                     "content__headline"            -> true,
-                    "content__headline--flagship"  -> (item.tags.isAudio && ActiveExperiments.isParticipating(AudioPageChange))
+                    "content__headline--flagship"  -> (item.tags.isAudio && !ActiveExperiments.isParticipating(OldAudioPage))
                 ))" itemprop="headline" @langAttributes(item.content)>
-                    @if(item.tags.isMedia && !ActiveExperiments.isParticipating(AudioPageChange)) {
+                    @if(item.tags.isMedia && ActiveExperiments.isParticipating(OldAudioPage)) {
                         @defining(
                             item match {
                                 case video: model.Video => "video-icon"
@@ -109,7 +109,7 @@
         </div>
     </div>
 
-    @if(!item.tags.isAudio || !ActiveExperiments.isParticipating(AudioPageChange)){
+    @if(!item.tags.isAudio || ActiveExperiments.isParticipating(OldAudioPage)){
     <div class="tonal__standfirst u-cf">
         @if(item.fields.standfirst.isDefined) {
             <div class="gs-container">

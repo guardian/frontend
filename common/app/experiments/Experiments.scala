@@ -7,7 +7,7 @@ import play.api.mvc.RequestHeader
 
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] = Set(
-    AudioPageChange,
+    OldAudioPage,
     CommercialClientLogging,
     OrielParticipation,
     OldTLSSupportDeprecation,
@@ -41,12 +41,12 @@ object OldTLSSupportDeprecation extends Experiment(
   participationGroup = TLSSupport
 )
 
-object AudioPageChange extends Experiment(
-  name = "audio-page-change",
-  description = "Show a different version of the audio page to certain people",
+object OldAudioPage extends Experiment(
+  name = "old-audio-page",
+  description = "Show the older version of the audio episode page",
   owners = Owner.group(SwitchGroup.Journalism),
   sellByDate = new LocalDate(2018, 12, 5),
-  participationGroup = Perc0B
+  participationGroup = Perc5A
 )
 
 object HeaderSubscribeUKTest extends Experiment(
