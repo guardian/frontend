@@ -14,11 +14,9 @@ const renderContributionsBanner = el => {
 };
 
 export const addContributionsBanner = () => {
-    const fifthEpisode = document.querySelector(
-        'section.fc-container--tag:nth-of-type(5)'
-    );
+    const allEpisodes = document.querySelectorAll('section.fc-container--tag');
 
-    if (fifthEpisode) {
-        renderContributionsBanner(fifthEpisode);
+    if (allEpisodes.length >= 5) {
+        renderContributionsBanner(allEpisodes[4]);
     }
 };
