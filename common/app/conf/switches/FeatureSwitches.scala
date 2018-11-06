@@ -460,7 +460,7 @@ trait FeatureSwitches {
     "When ON show YouTube related video suggestions in YouTube media atoms",
     owners = Seq(Owner.withGithub("siadcock")),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 1, 7),
+    sellByDate = new LocalDate(2019, 1, 7),
     exposeClientSide = true
   )
 
