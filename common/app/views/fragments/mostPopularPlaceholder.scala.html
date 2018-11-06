@@ -1,7 +1,10 @@
 @(section: String)(implicit request: RequestHeader)
 
+@import conf.switches.Switches
 @import common.LinkTo
-@import commercial.adSlot
+@import fragments.commercial.adSlot
+
+@import common.commercial.AdSlot.mostPopularSizes
 
 @defining(Some(section).filter{ section => section.nonEmpty && !section.equals("global")}.map{ section => s"/most-read/$section" }.getOrElse("/most-read")){ url =>
     <section
@@ -17,17 +20,19 @@
             <div class="fc-container__body fc-container--rolled-up-hide popular-trails">
                 <div class="popular-trails__content js-popular-trails">
                 </div>
+                @defining(Switches.ExtendedMostPopular.isSwitchedOn){ isExtended =>
                 <div class="popular-trails__mpu">
                     <div class="fc-slice__popular-mpu fc-slice__item--mpu-candidate">
                         @adSlot(
                         "mostpop",
                         Seq("container-inline"),
-                        Map("mobile" -> Seq("1,1", "2,2", "300,250", "300,274", "fluid")),
+                        mostPopularSizes(isExtended),
                         optId = None,
                         optClassNames = None
                         ){ }
                     </div>
                 </div>
+                }
             </div>
 
         </div>
