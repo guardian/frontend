@@ -118,7 +118,14 @@ object AuFriendlyFormat {
   def apply(date: DateTime)(implicit request: RequestHeader): String = {
     val edition = Edition(request)
     val timezone = edition.timezone
-
+    edition.id match {
+      case "AU" => date.toString(DateTimeFormat.forPattern("HH.mm").withZone(timezone)) + " " + timezone.getShortName(date.getMillis)
+      case _ => date.toString(DateTimeFormat.forPattern("HH.mm z").withZone(timezone))
+    }
+  }
+  def getDateDisplaySuffix(date: DateTime, request: RequestHeader): String = {
+    val edition = Edition(request)
+    val timezone = edition.timezone
     edition.id match {
       case "AU" => date.toString(DateTimeFormat.forPattern("HH.mm").withZone(timezone)) + " " + timezone.getShortName(date.getMillis)
       case _ => date.toString(DateTimeFormat.forPattern("HH.mm z").withZone(timezone))

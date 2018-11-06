@@ -5,8 +5,10 @@ import conf.Configuration
 import controllers.ArticlePage
 import model.liveblog.BlockElement
 import navigation.NavMenu
+import org.joda.time.format.DateTimeFormat
 import play.api.libs.json.{JsValue, Json, Writes}
 import play.api.mvc.RequestHeader
+import views.support.{AuFriendlyFormat, Format}
 
 // We have introduced our own set of objects for serializing data to the DotComponents API,
 // because we don't want people changing the core frontend models and as a side effect,
@@ -40,6 +42,7 @@ case class PageData(
     pillar: Option[String],
     ajaxUrl: String,
     webPublicationDate: Long,
+    webPublicationDateDisplay: String,
     section: Option[String],
     headline: String,
     webTitle: String,
@@ -133,12 +136,15 @@ object DotcomponentsDataModel {
 
     val jsConfig = (k: String) => articlePage.getJavascriptConfig.get(k).map(_.as[String])
 
+    val webPublicationDateTimeDisplay: String = s"${Format(article.trail.webPublicationDate, Edition(request), "E d MMM yyyy", None)} ${AuFriendlyFormat.getDateDisplaySuffix(article.trail.webPublicationDate, request)}"
+
     val pageData = PageData(
       article.tags.contributors.map(_.name).mkString(","),
       article.metadata.id,
       article.metadata.pillar.map(_.toString),
       Configuration.ajax.url,
       article.trail.webPublicationDate.getMillis,
+      webPublicationDateTimeDisplay,
       article.metadata.section.map(_.value),
       article.trail.headline,
       article.metadata.webTitle,
