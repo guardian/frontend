@@ -182,11 +182,19 @@ describe('Utils', () => {
         }
     });
 
-    test('shouldIncludeOpenx should return false if within AU/US region', () => {
-        const testGeos = ['NZ', 'CA', 'US', 'AU'];
+    test('shouldIncludeOpenx should return false if within US region', () => {
+        const testGeos = ['CA', 'US'];
         for (let i = 0; i < testGeos.length; i += 1) {
             getSync.mockReturnValue(testGeos[i]);
             expect(shouldIncludeOpenx()).toBe(false);
+        }
+    });
+
+    test('shouldIncludeOpenx should return true if within AU region', () => {
+        const testGeos = ['NZ', 'AU'];
+        for (let i = 0; i < testGeos.length; i += 1) {
+            getSync.mockReturnValue(testGeos[i]);
+            expect(shouldIncludeOpenx()).toBe(true);
         }
     });
 
