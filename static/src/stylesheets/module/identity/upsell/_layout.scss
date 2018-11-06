@@ -104,7 +104,7 @@
     }
     .identity-upsell-block--half-width {
         @include mq(tablet) {
-            width: 50%;
+            width: gs-span(5);
         }
     }
     a.u-underline {
