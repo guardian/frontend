@@ -4,6 +4,7 @@ import java.time.Instant
 import java.time.temporal.ChronoUnit
 
 import common._
+import conf.switches.Switches
 import contentapi.ContentApiClient
 import feed.{DayMostPopularAgent, GeoMostPopularAgent, MostPopularAgent}
 import layout.ContentCard
@@ -45,10 +46,7 @@ class MostPopularController(contentApiClient: ContentApiClient,
     // Async section specific most Popular.
     val sectionPopular: Future[List[MostPopular]] = if (path.nonEmpty) lookup(edition, path).map(_.toList) else Future(Nil)
 
-    val mostCards = mostPopularAgent.mostSingleCards.get().mapValues(ContentCard.fromApiContent(_))
-
-    log.info(s"Rendering MostPopular with path = $path Most cards is $mostCards")
-
+    lazy val mostCards = mostPopularAgent.mostSingleCards.get().mapValues(ContentCard.fromApiContent(_))
 
     // map is not on a list, but on a Future
     sectionPopular.map { sectionPopular =>
@@ -62,9 +60,15 @@ class MostPopularController(contentApiClient: ContentApiClient,
         case popular if !request.isJson => Cached(900) {
           RevalidatableResult.Ok(views.html.mostPopular(page, popular))
         }
-        case popular => Cached(900) {
+        case popular => Cached(2) {
           JsonComponent(
-            "html" -> views.html.fragments.collections.popularExtended(popular, mostCards),
+            "html" -> {
+              if (Switches.ExtendedMostPopular.isSwitchedOn) {
+                views.html.fragments.collections.popularExtended(popular, mostCards)
+              } else {
+                views.html.fragments.collections.popular(popular)
+              }
+            },
             "rightHtml" -> views.html.fragments.rightMostPopular(globalPopular)
           )
         }
