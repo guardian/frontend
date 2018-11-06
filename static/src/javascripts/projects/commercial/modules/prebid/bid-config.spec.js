@@ -19,11 +19,12 @@ import {
     getBreakpointKey as getBreakpointKey_,
     shouldIncludeAdYouLike as shouldIncludeAdYouLike_,
     shouldIncludeAppNexus as shouldIncludeAppNexus_,
+    shouldIncludeImproveDigital as shouldIncludeImproveDigital_,
     shouldIncludeOpenx as shouldIncludeOpenx_,
     shouldIncludeOzone as shouldIncludeOzone_,
     shouldIncludeTrustX as shouldIncludeTrustX_,
+    shouldIncludeXaxis as shouldIncludeXaxis_,
     stripMobileSuffix as stripMobileSuffix_,
-    isInAuRegion as isInAuRegion_,
 } from './utils';
 
 const getLargestSize: any = getLargestSize_;
@@ -35,14 +36,15 @@ const containsMpu: any = containsMpu_;
 const containsMpuOrDmpu: any = containsMpuOrDmpu_;
 const shouldIncludeAdYouLike: any = shouldIncludeAdYouLike_;
 const shouldIncludeAppNexus: any = shouldIncludeAppNexus_;
+const shouldIncludeImproveDigital: any = shouldIncludeImproveDigital_;
 const shouldIncludeOpenx: any = shouldIncludeOpenx_;
 const shouldIncludeOzone: any = shouldIncludeOzone_;
 const shouldIncludeTrustX: any = shouldIncludeTrustX_;
+const shouldIncludeXaxis: any = shouldIncludeXaxis_;
 const stripMobileSuffix: any = stripMobileSuffix_;
 const getBreakpointKey: any = getBreakpointKey_;
 const getVariant: any = getVariant_;
 const isInVariant: any = isInVariant_;
-const isInAuRegion: any = isInAuRegion_;
 
 const {
     getDummyServerSideBidders,
@@ -74,25 +76,26 @@ const resetConfig = () => {
     config.set('switches.prebidImproveDigital', true);
     config.set('switches.prebidIndexExchange', true);
     config.set('switches.prebidSonobi', true);
-    config.set('switches.prebidS2sozone', true);
     config.set('switches.prebidTrustx', true);
     config.set('switches.prebidXaxis', true);
     config.set('switches.prebidAdYouLike', true);
+    config.set('switches.prebidS2sozone', true);
+    config.set('switches.ozonePangaea', true);
     config.set('ophan', { pageViewId: 'pvid' });
     config.set('page.contentType', 'Article');
     config.set('page.section', 'Magic');
     config.set('page.edition', 'UK');
+    config.set('page.isDev', false);
 };
 
 describe('getDummyServerSideBidders', () => {
     beforeEach(() => {
-        config.set('switches.prebidS2sozone', true);
+        resetConfig();
         window.OzoneLotameData = { some: 'lotamedata' };
     });
 
     afterEach(() => {
         jest.resetAllMocks();
-        resetConfig();
         window.OzoneLotameData = undefined;
     });
 
@@ -134,12 +137,12 @@ describe('getDummyServerSideBidders', () => {
 
 describe('getImprovePlacementId', () => {
     beforeEach(() => {
+        resetConfig();
         getBreakpointKey.mockReturnValue('D');
     });
 
     afterEach(() => {
         jest.resetAllMocks();
-        resetConfig();
     });
 
     const generateTestIds = (): Array<number> => {
@@ -354,6 +357,7 @@ describe('getTrustXAdUnitId', () => {
 
 describe('indexExchangeBidders', () => {
     beforeEach(() => {
+        resetConfig();
         getBreakpointKey.mockReturnValue('D');
         config.set('page.pbIndexSites', [
             { bp: 'D', id: 123456 },
@@ -364,7 +368,6 @@ describe('indexExchangeBidders', () => {
 
     afterEach(() => {
         jest.resetAllMocks();
-        resetConfig();
     });
 
     test('should return an IX bidder for every size that the slot can take', () => {
@@ -463,6 +466,7 @@ describe('getIndexSiteId', () => {
 
 describe('bids', () => {
     beforeEach(() => {
+        resetConfig();
         containsBillboard.mockReturnValue(false);
         containsDmpu.mockReturnValue(false);
         containsLeaderboard.mockReturnValue(false);
@@ -473,7 +477,6 @@ describe('bids', () => {
         shouldIncludeAppNexus.mockReturnValue(false);
         shouldIncludeTrustX.mockReturnValue(false);
         stripMobileSuffix.mockImplementation(str => str);
-        resetConfig();
 
         [[300, 250], [300, 600], [970, 250], [728, 90]].map(
             getLargestSize.mockReturnValueOnce
@@ -499,6 +502,7 @@ describe('bids', () => {
     test('should only include bidders that are switched on if no bidders being tested', () => {
         config.set('switches.prebidXaxis', false);
         shouldIncludeOzone.mockReturnValueOnce(true);
+        shouldIncludeImproveDigital.mockReturnValueOnce(true);
         expect(bidders()).toEqual([
             'ix',
             'sonobi',
@@ -511,72 +515,33 @@ describe('bids', () => {
 
     test('should not include Ozone bidders when fate is against them', () => {
         config.set('switches.prebidXaxis', false);
-        expect(bidders()).toEqual([
-            'ix',
-            'sonobi',
-            'improvedigital',
-            'adyoulike',
-        ]);
+        expect(bidders()).toEqual(['ix', 'sonobi', 'adyoulike']);
     });
 
     test('should not include ix bidders when switched off', () => {
         config.set('switches.prebidIndexExchange', false);
-        expect(bidders()).toEqual([
-            'sonobi',
-            'improvedigital',
-            'xhb',
-            'adyoulike',
-        ]);
+        expect(bidders()).toEqual(['sonobi', 'adyoulike']);
     });
 
     test('should include AppNexus directly if in target geolocation', () => {
         shouldIncludeAppNexus.mockReturnValue(true);
-        isInAuRegion.mockReturnValue(true);
-        expect(bidders()).toEqual([
-            'ix',
-            'sonobi',
-            'and',
-            'improvedigital',
-            'xhb',
-            'adyoulike',
-        ]);
+        expect(bidders()).toEqual(['ix', 'sonobi', 'and', 'adyoulike']);
     });
 
     test('should include OpenX directly if in target geolocation', () => {
         shouldIncludeOpenx.mockReturnValue(true);
-        expect(bidders()).toEqual([
-            'ix',
-            'sonobi',
-            'improvedigital',
-            'xhb',
-            'adyoulike',
-            'oxd',
-        ]);
+        expect(bidders()).toEqual(['ix', 'sonobi', 'adyoulike', 'oxd']);
     });
 
     test('should include TrustX if in target geolocation', () => {
         shouldIncludeTrustX.mockReturnValue(true);
-        expect(bidders()).toEqual([
-            'ix',
-            'sonobi',
-            'trustx',
-            'improvedigital',
-            'xhb',
-            'adyoulike',
-        ]);
+        expect(bidders()).toEqual(['ix', 'sonobi', 'trustx', 'adyoulike']);
     });
 
     test('should include ix bidder for each size that slot can take', () => {
         const rightSlotBidders = () =>
             bids('dfp-right', [[300, 600], [300, 250]]).map(bid => bid.bidder);
-        expect(rightSlotBidders()).toEqual([
-            'ix',
-            'ix',
-            'sonobi',
-            'improvedigital',
-            'xhb',
-            'adyoulike',
-        ]);
+        expect(rightSlotBidders()).toEqual(['ix', 'ix', 'sonobi', 'adyoulike']);
     });
 
     test('should only include bidder being tested', () => {
@@ -587,6 +552,12 @@ describe('bids', () => {
     test('should only include bidder being tested, even when its switch is off', () => {
         setQueryString('pbtest=xhb');
         config.set('switches.prebidXaxis', false);
+        expect(bidders()).toEqual(['xhb']);
+    });
+
+    test('should only include bidder being tested, even when it should not be included', () => {
+        setQueryString('pbtest=xhb');
+        shouldIncludeXaxis.mockReturnValue(false);
         expect(bidders()).toEqual(['xhb']);
     });
 

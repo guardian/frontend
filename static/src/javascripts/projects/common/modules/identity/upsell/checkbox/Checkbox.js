@@ -8,20 +8,19 @@ type CheckboxHtmlProps = {
 
 type CheckboxProps = {
     title: string,
-    subtitle: ?string,
+    uniqueId: string,
     checkboxHtmlProps: CheckboxHtmlProps,
 };
 
-const Checkbox = ({ title, subtitle, checkboxHtmlProps }: CheckboxProps) => (
+const Checkbox = ({ title, uniqueId, checkboxHtmlProps }: CheckboxProps) => (
     <label
-        data-link-name={`upsell-consent : checkbox : ${title} : ${
+        data-link-name={`upsell-consent : checkbox : ${uniqueId} : ${
             checkboxHtmlProps.checked ? 'untick' : 'tick'
         }`}
         className="identity-upsell-checkbox"
-        htmlFor={title}>
+        htmlFor={uniqueId}>
         <span className="identity-upsell-checkbox__title">{title}</span>
-        {subtitle && <span>{subtitle}</span>}
-        <input type="checkbox" id={title} {...checkboxHtmlProps} />
+        <input type="checkbox" id={uniqueId} {...checkboxHtmlProps} />
         <span className="identity-upsell-checkbox__checkmark">
             <span className="identity-upsell-checkbox__checkmark_tick" />
         </span>

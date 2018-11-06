@@ -21,6 +21,7 @@ import views.support._
 import scala.collection.JavaConverters._
 import scala.util.Try
 import implicits.Booleans._
+import conf.switches.Switches.InteractiveHeaderSwitch
 
 sealed trait ContentType {
   def content: Content
@@ -843,7 +844,9 @@ case class GenericLightbox(
         "srcsets" -> JsString(ImgSrc.srcset(container.images, GalleryMedia.lightbox)),
         "sizes" -> JsString(GalleryMedia.lightbox.sizes),
         "ratio" -> Try(JsNumber(img.width.toDouble / img.height.toDouble)).getOrElse(JsNumber(1)),
-        "role" -> JsString(img.role.toString)
+        "role" -> JsString(img.role.toString),
+        "parentContentId" -> JsString(properties.id),
+        "id" ->JsString(properties.id) //duplicated to simplify lightbox logic
       ))
     }
     JsObject(Seq(
@@ -879,12 +882,11 @@ object Interactive {
     val contentType = DotcomContentType.Interactive
     val fields = content.fields
     val section = content.metadata.sectionId
-
     val metadata = content.metadata.copy(
       contentType = Some(contentType),
       adUnitSuffix = section + "/" + contentType.name.toLowerCase,
       twitterPropertiesOverrides = Map( "twitter:title" -> fields.linkText ),
-      contentWithSlimHeader = true
+      contentWithSlimHeader = InteractiveHeaderSwitch.isSwitchedOff
     )
     val contentOverrides = content.copy(
       metadata = metadata

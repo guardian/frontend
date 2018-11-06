@@ -7,11 +7,15 @@ import { getParticipations as getParticipations_ } from 'common/modules/experime
 import {
     getLargestSize,
     getBreakpointKey,
+    ozonePangaeaSectionBlacklist,
     shouldIncludeAdYouLike,
     shouldIncludeAppNexus,
+    shouldIncludeImproveDigital,
     shouldIncludeOpenx,
     shouldIncludeOzone,
+    shouldIncludePangaea,
     shouldIncludeTrustX,
+    shouldIncludeXaxis,
     stripMobileSuffix,
     stripTrailingNumbersAbove1,
     stripDfpAdPrefixFrom,
@@ -37,10 +41,30 @@ jest.mock('lib/detect', () => ({
 jest.mock('common/modules/experiments/test-can-run-checks');
 jest.mock('common/modules/experiments/utils');
 
+/* eslint-disable guardian-frontend/no-direct-access-config */
+const resetConfig = () => {
+    config.set('switches.prebidAppnexusUkRow', undefined);
+    config.set('switches.prebidAppnexus', true);
+    config.set('switches.prebidAppnexusInvcode', false);
+    config.set('switches.prebidOpenx', true);
+    config.set('switches.prebidImproveDigital', true);
+    config.set('switches.prebidIndexExchange', true);
+    config.set('switches.prebidSonobi', true);
+    config.set('switches.prebidTrustx', true);
+    config.set('switches.prebidXaxis', true);
+    config.set('switches.prebidAdYouLike', true);
+    config.set('switches.prebidS2sozone', true);
+    config.set('switches.ozonePangaea', true);
+    config.set('page.contentType', 'Article');
+    config.set('page.section', 'Magic');
+    config.set('page.edition', 'UK');
+    config.set('page.isDev', false);
+};
+
 describe('Utils', () => {
     beforeEach(() => {
         jest.resetAllMocks();
-        config.switches.prebidAppnexusUkRow = undefined;
+        resetConfig();
     });
 
     test('stripPrefix correctly strips valid cases', () => {
@@ -179,7 +203,7 @@ describe('Utils', () => {
         }
     });
 
-    xtest('shouldIncludeOzone should return false for excluded geolocations', () => {
+    test('shouldIncludeOzone should return false for excluded geolocations', () => {
         const excludedGeos = ['US', 'CA', 'NZ', 'AU'];
         for (let i = 0; i < excludedGeos.length; i += 1) {
             getSync.mockReturnValue(excludedGeos[i]);
@@ -187,12 +211,47 @@ describe('Utils', () => {
         }
     });
 
-    xtest('shouldIncludeOzone should return true for UK and ROW', () => {
+    test('shouldIncludeOzone should return true for UK and ROW', () => {
         const includedGeos = ['UK', 'FR', 'SA'];
         for (let i = 0; i < includedGeos.length; i += 1) {
             getSync.mockReturnValueOnce(includedGeos[i]);
             expect(shouldIncludeOzone()).toBe(true);
         }
+    });
+
+    test('shouldIncludeImproveDigital should return true if edition is UK or INT', () => {
+        config.set('page.edition', 'UK');
+        expect(shouldIncludeImproveDigital()).toBe(true);
+        config.set('page.edition', 'INT');
+        expect(shouldIncludeImproveDigital()).toBe(true);
+    });
+
+    test('shouldIncludeImproveDigital should return false if edition is AU or US', () => {
+        config.set('page.edition', 'AU');
+        expect(shouldIncludeImproveDigital()).toBe(false);
+        config.set('page.edition', 'US');
+        expect(shouldIncludeImproveDigital()).toBe(false);
+    });
+
+    test('shouldIncludePangaea should return true if section is technology', () => {
+        config.set('page.section', 'technology');
+        expect(shouldIncludePangaea()).toBe(true);
+    });
+
+    test('shouldIncludePangaea should return false if section is in blacklist', () => {
+        for (let i = 0; i < ozonePangaeaSectionBlacklist.length; i += 1) {
+            config.set('page.section', ozonePangaeaSectionBlacklist[i]);
+            expect(shouldIncludePangaea()).toBe(false);
+        }
+    });
+
+    test('shouldIncludeXaxis should always return false on INT, AU and US editions', () => {
+        const editions = ['AU', 'INT', 'US'];
+        const result = editions.map(edition => {
+            config.set('page.edition', edition);
+            return shouldIncludeXaxis();
+        });
+        expect(result).toEqual([false, false, false]);
     });
 
     test('stripMobileSuffix', () => {

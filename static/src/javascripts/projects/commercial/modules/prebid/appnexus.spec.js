@@ -53,6 +53,7 @@ const resetConfig = () => {
     config.set('ophan', { pageViewId: 'pvid' });
     config.set('page.contentType', 'Article');
     config.set('page.section', 'Magic');
+    config.set('page.sectionName', 'More Magic');
     config.set('page.edition', 'UK');
 };
 
@@ -98,6 +99,11 @@ describe('getAppNexusInvCode', () => {
             'Dmagic970x250',
             'Dmagic728x90',
         ]);
+    });
+
+    test('should use sectionName, replacing whitespace with hyphens, when section is an empty string', () => {
+        config.set('page.section', '');
+        expect(getAppNexusInvCode([[300, 250]])).toEqual('Dmore-magic300x250');
     });
 });
 

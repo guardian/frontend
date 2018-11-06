@@ -4,6 +4,17 @@ import conf.switches.Expiry.never
 import org.joda.time.LocalDate
 
 trait FeatureSwitches {
+
+  val DotcomRendering = Switch(
+    SwitchGroup.Feature,
+    "dotcom-rendering",
+    "If this switch is on, we will use the dotcom rendering tier for articles which are supported by it",
+    owners = Seq(Owner.withGithub("MatthewJWalls")),
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+
   val ShareCounts = Switch(
     SwitchGroup.Feature,
     "server-share-counts",
@@ -491,6 +502,17 @@ trait FeatureSwitches {
     owners = Seq(Owner.withName("simple.and.coherent")),
     safeState = Off,
     sellByDate = never,
+    exposeClientSide = true
+  )
+
+  // Midterms interactive header switch
+  val InteractiveHeaderSwitch = Switch(
+    SwitchGroup.Feature,
+    "interactive-header-switch",
+    "If switched on, the header on all interctives will display in full.",
+    owners = Seq(Owner.withName("dotcom.platform")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 11, 8),
     exposeClientSide = true
   )
 

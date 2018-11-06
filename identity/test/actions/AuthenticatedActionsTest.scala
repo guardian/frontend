@@ -88,7 +88,7 @@ class AuthenticatedActionsTest extends WordSpecLike with MockitoSugar with Scala
       when(authService.fullyAuthenticatedUser(any[RequestHeader])).thenReturn(None)
       when(authService.consentCookieAuthenticatedUser(any[RequestHeader])).thenReturn(None)
 
-      val result = actions.consentAuthWithIdapiUserWithEmailValidation().apply(failTest)(request)
+      val result = actions.consentAuthWithIdapiUserWithEmailValidation.apply(failTest)(request)
       val expectedLocation = s"/signin?returnUrl=${URLEncoder.encode(originalUrl, "utf-8")}"
       whenReady(result) { res =>
         res.header.status shouldBe 303
@@ -108,7 +108,7 @@ class AuthenticatedActionsTest extends WordSpecLike with MockitoSugar with Scala
       when(mockFunc.apply(1)) thenReturn mock[Result]
       def callMock: AuthRequest[AnyContent] => Result = _ => mockFunc.apply(1)
 
-      val result = actions.consentAuthWithIdapiUserWithEmailValidation().apply(callMock)(request)
+      val result = actions.consentAuthWithIdapiUserWithEmailValidation.apply(callMock)(request)
       whenReady(result) { res =>
         verify(mockFunc).apply(1)
       }
@@ -126,7 +126,7 @@ class AuthenticatedActionsTest extends WordSpecLike with MockitoSugar with Scala
       when(mockFunc.apply(1)) thenReturn mock[Result]
       def callMock: AuthRequest[AnyContent] => Result = _ => mockFunc.apply(1)
 
-      val result = actions.consentAuthWithIdapiUserWithEmailValidation().apply(callMock)(request)
+      val result = actions.consentAuthWithIdapiUserWithEmailValidation.apply(callMock)(request)
       whenReady(result) { res =>
         verify(mockFunc).apply(1)
       }
@@ -139,7 +139,7 @@ class AuthenticatedActionsTest extends WordSpecLike with MockitoSugar with Scala
       when(authService.fullyAuthenticatedUser(any[RequestHeader])).thenReturn(Some(notRecentlyAuthedUser))
       when(authService.consentCookieAuthenticatedUser(any[RequestHeader])).thenReturn(None)
 
-      val result = actions.consentAuthWithIdapiUserWithEmailValidation().apply(failTest)(request)
+      val result = actions.consentAuthWithIdapiUserWithEmailValidation.apply(failTest)(request)
       val expectedLocation = s"/reauthenticate?returnUrl=${URLEncoder.encode(originalUrl, "utf-8")}"
       whenReady(result) { res =>
         res.header.status shouldBe 303

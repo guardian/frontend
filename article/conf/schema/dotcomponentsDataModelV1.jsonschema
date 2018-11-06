@@ -1,0 +1,232 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://example.com/product.schema.json",
+    "title": "Product",
+    "description": "The Guardian Dotcomponents Configuration",
+    "type": "object",
+    "definitions": {
+        "Link": {
+            "type": "object",
+            "properties": {
+                "title": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                },
+                "longTitle": {
+                    "type": "string"
+                },
+                "iconName": {
+                    "type": "string"
+                },
+                "children": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Link"
+                    }
+                },
+                "classList": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "required": [
+                "title",
+                "url",
+                "longTitle",
+                "children",
+                "classList"
+            ]
+        },
+        "Nav": {
+            "type": "object",
+            "properties": {
+                "currentUrl": {
+                    "type": "string"
+                },
+                "pillars": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Link"
+                    }
+                },
+                "otherLinks": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Link"
+                    }
+                },
+                "brandExtensions": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Link"
+                    }
+                },
+                "currentNavLink": {
+                    "$ref": "#/definitions/Link"
+                },
+                "currentParent": {
+                    "$ref": "#/definitions/Link"
+                }
+            },
+            "required": [
+                "currentUrl",
+                "pillars",
+                "otherLinks",
+                "brandExtensions"
+            ]
+        },
+        "Page": {
+            "type": "object",
+            "properties": {
+                "author": {
+                    "type": "string"
+                },
+                "pageId": {
+                    "type": "string"
+                },
+                "pillar": {
+                    "type": "string"
+                },
+                "ajaxUrl": {
+                    "type": "string"
+                },
+                "webPublicationDate": {
+                    "type": "integer"
+                },
+                "section": {
+                    "type": "string"
+                },
+                "headline": {
+                    "type": "string"
+                },
+                "webTitle": {
+                    "type": "string"
+                },
+                "byline": {
+                    "type": "string"
+                },
+                "contentId": {
+                    "type": "string"
+                },
+                "authorIds": {
+                    "type": "string"
+                },
+                "keywordIds": {
+                    "type": "string"
+                },
+                "toneIds": {
+                    "type": "string"
+                },
+                "seriesId": {
+                    "type": "string"
+                },
+                "isHosted": {
+                    "type": "boolean"
+                },
+                "beaconUrl": {
+                    "type": "string"
+                },
+                "contentType": {
+                    "type": "string"
+                },
+                "edition": {
+                    "type": "string"
+                },
+                "commissioningDesks": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "author",
+                "pageId",
+                "ajaxUrl",
+                "webPublicationDate",
+                "headline",
+                "webTitle",
+                "byline",
+                "edition",
+                "isHosted",
+                "beaconUrl"
+            ]
+        },
+        "Config": {
+            "type": "object",
+            "properties": {
+                "isImmersive": {
+                    "type": "boolean"
+                },
+                "page": {
+                    "$ref": "#/definitions/Page"
+                },
+                "nav": {
+                    "$ref": "#/definitions/Nav"
+                }
+            }
+        },
+        "Block": {
+            "type": "object"
+        },
+        "ContentFields": {
+            "type": "object",
+            "properties": {
+                "fields": {
+                    "type": "object",
+                    "properties": {
+                        "standfirst": {
+                            "type": "string"
+                        },
+                        "main": {
+                            "type": "string"
+                        },
+                        "body": {
+                            "type": "string"
+                        },
+                        "blocks": {
+                            "type": "object",
+                            "properties": {
+                                "body": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/Block"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "required": [
+                        "main",
+                        "body",
+                        "blocks"
+                    ]
+                }
+            }
+        },
+        "Tags": {
+            "type": "object"
+        }
+    },
+    "properties": {
+        "config": {
+            "$ref": "#/definitions/Config"
+        },
+        "contentFields": {
+            "$ref": "#/definitions/ContentFields"
+        },
+        "tags": {
+            "$ref": "#/definitions/Tags"
+        },
+        "version": {
+            "type": "integer"
+        }
+    },
+    "required": [
+        "config",
+        "contentFields",
+        "tags",
+        "version"
+    ]
+}
