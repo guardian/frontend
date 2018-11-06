@@ -116,7 +116,8 @@ object GuardianConfiguration extends Logging {
     }
 
     def getMandatoryProperty[T](get: String => T)(property: String): T = getProperty(get)(property)
-      .getOrElse(throw new BadConfigurationException(s"$property not configured"))
+      .getOrElse(throw new BadConfigurationException(s"$property not configured for $stage"))
+
     def getProperty[T](get: String => T)(property: String): Option[T] =
       Try(get(property)) match {
           case Success(value) => Some(value)

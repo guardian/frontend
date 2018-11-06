@@ -19,7 +19,7 @@ case class TagProperties(
     tagType: String,
     webTitle: String,
     twitterHandle: Option[String]
-                        )
+)
 case class Tag(
     properties: TagProperties
 )
@@ -178,7 +178,7 @@ object DotcomponentsDataModel {
 
   }
 
-  def toJsonString(model: DotcomponentsDataModel): String = {
+  def toJson(model: DotcomponentsDataModel): JsValue = {
 
     // make what we have look a bit closer to what dotcomponents currently expects
 
@@ -195,8 +195,13 @@ object DotcomponentsDataModel {
       )
     }
 
-    Json.prettyPrint(Json.toJson(model))
+    Json.toJson(model)
 
+  }
+
+
+  def toJsonString(model: DotcomponentsDataModel): String = {
+    Json.prettyPrint(toJson(model))
   }
 
 }

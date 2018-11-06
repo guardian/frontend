@@ -10,7 +10,6 @@ import play.api.mvc._
 import views.support._
 import metrics.TimingMetric
 import play.api.libs.json.Json
-import renderers.RemoteRender
 import services.CAPILookup
 import implicits.{AmpFormat, EmailFormat, HtmlFormat, JsonFormat}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
@@ -21,10 +20,9 @@ import scala.concurrent.Future
 
 case class ArticlePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
 
-class ArticleController(contentApiClient: ContentApiClient, val controllerComponents: ControllerComponents, ws: WSClient)(implicit context: ApplicationContext) extends BaseController with RendersItemResponse with Logging with ImplicitControllerExecutionContext {
+class ArticleController(contentApiClient: ContentApiClient, val controllerComponents: ControllerComponents, ws: WSClient, remoteRender: renderers.RemoteRender = new renderers.RemoteRender(), renderingTierPicker: RenderingTierPicker = new RenderingTierPicker())(implicit context: ApplicationContext) extends BaseController with RendersItemResponse with Logging with ImplicitControllerExecutionContext {
 
   val capiLookup: CAPILookup = new CAPILookup(contentApiClient)
-  val remoteRender: RemoteRender = new RemoteRender()
 
   private def isSupported(c: ApiContent) = c.isArticle || c.isLiveBlog || c.isSudoku
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
@@ -41,7 +39,7 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
   def renderArticle(path: String): Action[AnyContent] = {
     Action.async { implicit request =>
       mapModel(path, ArticleBlocks)( article => {
-        RenderingTierPicker.getRenderTierFor(article) match {
+        renderingTierPicker.getRenderTierFor(article) match {
           case RemoteRender => remoteRender.render(ws, path, article)
           case LocalRender => render(path, article)
           case _ => render(path, article)

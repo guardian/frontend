@@ -5,7 +5,7 @@ import play.api.mvc.RequestHeader
 import services.dotcomponents.pickers.{RenderTierPickerStrategy, SimplePagePicker, WhitelistPicker}
 import implicits.Requests._
 
-object RenderingTierPicker {
+class RenderingTierPicker {
 
   val picker: RenderTierPickerStrategy = new SimplePagePicker()
   val whitelist: RenderTierPickerStrategy = new WhitelistPicker()
@@ -45,4 +45,8 @@ object RenderingTierPicker {
 
   }
 
+}
+
+object RenderingTierPicker {
+  def apply: RenderingTierPicker = new RenderingTierPicker()
 }
