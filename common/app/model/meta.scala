@@ -681,15 +681,14 @@ object SubMetaLinks {
     } else None
 
     val secondaryLink = if (blogOrSeriesTag.isDefined) {
-      blogOrSeriesTag.map(t => SubMetaLink(t.id, t.name))
+      blogOrSeriesTag.map(t => SubMetaLink(s"${Configuration.site.host}/${t.id}", t.name))
     } else if (isFromTheObserver) {
-      Some(SubMetaLink("https://www.theguardian.com/observer", "The Observer"))
+      Some(SubMetaLink(s"${Configuration.site.host}/observer", "The Observer"))
     } else {
       None
     }
 
     val sectionLabels = List(sectionLink, secondaryLink).flatten
-
     val keywordSubMetaLinks = tags.keywords
       .filterNot(_.isSectionTag)
       .filterNot(_.name == sectionLabelName)
