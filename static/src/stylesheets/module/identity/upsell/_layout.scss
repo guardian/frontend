@@ -103,7 +103,7 @@
         }
     }
     .identity-upsell-block--half-width {
-        @include mq(tablet) {
+        @include mq(desktop) {
             width: gs-span(5);
         }
     }
