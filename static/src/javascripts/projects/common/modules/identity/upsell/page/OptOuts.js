@@ -2,15 +2,16 @@
 
 import React from 'preact-compat';
 import { Block } from '../block/Block';
-import { LegalTextBlock } from '../block/LegalTextBlock';
 import { OptOutsList } from '../opt-outs/OptOutsList';
 
 export const OptOuts = (): React.Component => (
-    <Block sideBySideBackwards title="Your communication preferences">
-        <LegalTextBlock>
-            You can always change these preferences later by visiting your
-            account settings.
-        </LegalTextBlock>
+    <Block
+        halfWidth
+        sideBySideBackwards
+        title="Your marketing preferences"
+        subtext="We may contact you by telephone and post about our products and services (if you've previously given
+        us your number and address). We may also contact you for market research purposes and use your data for
+        marketing analysis.">
         <OptOutsList />
     </Block>
 );
