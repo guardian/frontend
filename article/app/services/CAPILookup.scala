@@ -20,7 +20,7 @@ class CAPILookup(contentApiClient: ContentApiClient) {
       .showAtoms("all")
 
     val capiItemWithBlocks = range.map { blockRange =>
-      val blocksParam = blockRange.query.map(_.mkString(",")).getOrElse("body")
+      val blocksParam = blockRange.query.map(_.mkString(",")).getOrElse("all")
       capiItem.showBlocks(blocksParam)
     }.getOrElse(capiItem)
 
