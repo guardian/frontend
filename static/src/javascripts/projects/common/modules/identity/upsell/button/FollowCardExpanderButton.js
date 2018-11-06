@@ -20,7 +20,7 @@ const defaultExpanderButtonText = {
     less: 'Less',
 };
 
-const ExpanderButton = ({
+const FollowCardExpanderButton = ({
     isExpanded,
     onToggle,
     linkName,
@@ -49,4 +49,4 @@ const ExpanderButton = ({
             />
         </button>
     );
-export { ExpanderButton };
+export { FollowCardExpanderButton };

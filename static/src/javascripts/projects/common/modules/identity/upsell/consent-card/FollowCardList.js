@@ -10,7 +10,7 @@ import {
 import { LegalTextBlock } from 'common/modules/identity/upsell/block/LegalTextBlock';
 import type { ConsentWithState } from '../store/types';
 import { ErrorBar, genericErrorStr } from '../error-bar/ErrorBar';
-import { ExpanderButton } from '../button/ExpanderButton';
+import { FollowCardExpanderButton } from '../button/FollowCardExpanderButton';
 
 const getConsents = (): Promise<ConsentWithState[]> => {
     const userConsents = getUserConsents([
@@ -129,7 +129,7 @@ class FollowCardList extends React.Component<Props, State> {
                 </div>
                 {[...consents].splice(cutoff).length > 0 && (
                     <div className="identity-upsell-consent-card-footer">
-                        <ExpanderButton
+                        <FollowCardExpanderButton
                             isExpanded={isExpanded}
                             linkName="upsell-follow-expander"
                             onToggle={this.updateExpandState}
