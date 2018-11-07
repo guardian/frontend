@@ -3,6 +3,8 @@
 
     overflow: hidden;
     padding: 0;
+    display: flex;
+    flex: 1 1 auto;
 
     // Generic
     &.facia-snap-embed {
@@ -16,8 +18,7 @@
     // Matches and tables
     // =============================================================================
     .c-football-table {
-        // this works as a min-height
-        height: $gs-baseline*14;
+        min-height: $gs-baseline*14;
         overflow: visible;
         position: relative;
     }
@@ -229,10 +230,6 @@ $footballBadgeSizeDesktop: 120px;
         vertical-align: middle;
     }
 
-}
-
-.facia-snap.facia-snap--football.facia-snap-embed {
-    height: auto !important; // height is normally set on the parent snap element in Facia
 }
 
 .facia-snap--football .inline-icon {

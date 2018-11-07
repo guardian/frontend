@@ -380,10 +380,10 @@ trait PrebidSwitches {
     exposeClientSide = true
   )
 
-  val prebidServer: Switch = Switch(
+  val ampPrebid: Switch = Switch(
     group = CommercialPrebid,
-    name = "prebid-server",
-    description = "In-house Prebid server is available",
+    name = "amp-prebid",
+    description = "Amp inventory is being auctioned through Prebid",
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,

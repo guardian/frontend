@@ -1,24 +1,30 @@
 package controllers
 
+import com.gu.contentapi.client.Parameter
+import com.gu.contentapi.client.model.SearchQueryBase
 import com.gu.contentapi.client.model.v1.{ItemResponse, Content => ApiContent}
 import common._
 import conf.switches.Switches
 import contentapi.ContentApiClient
 import model._
 import pages.ContentHtmlPage
+import play.api.libs.ws.WSClient
 import play.api.mvc._
 import services.ImageQuery
 import views.support.RenderOtherStatus
+import play.api.libs.json._
+import conf.Configuration.contentApi
 
 import scala.concurrent.Future
 
 case class ImageContentPage(image: ImageContent, related: RelatedContent) extends ContentPage {
-  override lazy val item = image
+  override lazy val item: ImageContent = image
 }
 
 class ImageContentController(
   val contentApiClient: ContentApiClient,
-  val controllerComponents: ControllerComponents
+  val controllerComponents: ControllerComponents,
+  wsClient: WSClient
 )(implicit context: ApplicationContext)
   extends BaseController with RendersItemResponse with ImageQuery with Logging with ImplicitControllerExecutionContext {
 
@@ -39,4 +45,26 @@ class ImageContentController(
 
   private def isSupported(c: ApiContent) = c.isImageContent
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
+
+  def getNextLightboxJson(path: String, tag: String, direction: String): Action[AnyContent] = Action.async { implicit request =>
+
+    val capiQuery: ContentApiNavQuery = ContentApiNavQuery(currentId = path, direction=direction)
+      .tag(tag).showTags("all").showElements("image").pageSize(contentApi.nextPreviousPageSize)
+
+    contentApiClient.thriftClient.getResponse(capiQuery).map {
+      response =>
+        val lightboxJson = response.results.flatMap(result => Content(result) match {
+          case content: ImageContent => Some(content.lightBox.javascriptConfig)
+          case _ => None
+        })
+        Cached(CacheTime.Default)(JsonComponent(JsArray(lightboxJson)))
+    }
+  }
+}
+
+case class ContentApiNavQuery(parameterHolder: Map[String, Parameter] = Map.empty, currentId: String, direction: String)
+  extends SearchQueryBase[ContentApiNavQuery] {
+  def withParameters(parameterMap: Map[String, Parameter]): ContentApiNavQuery = copy(parameterMap)
+
+  override def pathSegment: String = s"content/$currentId/$direction"
 }

@@ -1,14 +1,29 @@
-@import model.content.MediaWrapper
+@import model.{ApplicationContext, ImageMedia}
+@import model.content.{Atom, MediaWrapper}
 @import com.gu.contentatom.renderer.{ArticleAtomRenderer, ArticleConfiguration}
 @import conf.switches.Switches.AtomRendererSwitch
-@(model: _root_.model.content.Atom, config: ArticleConfiguration, shouldFence: Boolean, amp: Boolean, mediaWrapper: Option[MediaWrapper])(implicit request: RequestHeader, context: _root_.model.ApplicationContext)
+@(
+    model: Atom,
+    config: ArticleConfiguration,
+    shouldFence: Boolean,
+    amp: Boolean,
+    mediaWrapper: Option[MediaWrapper],
+    posterImageOverride: Option[ImageMedia]
+)(implicit request: RequestHeader, context: ApplicationContext)
 
 @import _root_.model.ShareLinkMeta
 @import _root_.model.content.{InteractiveAtom, MediaAtom, Quiz, StoryQuestionsAtom, TimelineAtom, GuideAtom, ProfileAtom, QandaAtom, ExplainerAtom, CommonsDivisionAtom}
 @{
     model match {
         case quiz: Quiz => views.html.fragments.atoms.quiz(quiz, maybeResults = None, showResults = false, sharelinks = quiz.shareLinks)
-        case media: MediaAtom => views.html.fragments.atoms.media(media = media, amp = amp, displayCaption = true, displayEndSlate = true, mediaWrapper = mediaWrapper)
+        case media: MediaAtom => views.html.fragments.atoms.media(
+            media = media,
+            amp = amp,
+            displayCaption = true,
+            displayEndSlate = true,
+            mediaWrapper = mediaWrapper,
+            posterImageOverride = posterImageOverride
+        )
         case interactive: InteractiveAtom => views.html.fragments.atoms.interactive(interactive, shouldFence)
         case storyquestions: StoryQuestionsAtom if !amp => Html(ArticleAtomRenderer.getHTML(storyquestions.atom, config))
         case storyquestions: StoryQuestionsAtom => views.html.fragments.atoms.storyquestions(storyquestions, isAmp = amp, inApp = false)

@@ -64,7 +64,7 @@ sealed trait ElementProfile {
 
 }
 
-case class Profile(
+case class ImageProfile(
   override val width: Option[Int] = None,
   override val height: Option[Int] = None,
   override val hidpi: Boolean = false,
@@ -90,22 +90,22 @@ case class VideoProfile(
 }
 
 // Configuration of our different image profiles
-object Contributor extends Profile(width = Some(140), height = Some(140))
-object RichLinkContributor extends Profile(width = Some(173))
-object Item120 extends Profile(width = Some(120))
-object Item140 extends Profile(width = Some(140))
-object Item300 extends Profile(width = Some(300))
-object Item460 extends Profile(width = Some(460))
-object Item620 extends Profile(width = Some(620))
-object Item640 extends Profile(width = Some(640))
-object Item700 extends Profile(width = Some(700))
-object Item1200 extends Profile(width = Some(1200))
+object Contributor extends ImageProfile(width = Some(140), height = Some(140))
+object RichLinkContributor extends ImageProfile(width = Some(173))
+object Item120 extends ImageProfile(width = Some(120))
+object Item140 extends ImageProfile(width = Some(140))
+object Item300 extends ImageProfile(width = Some(300))
+object Item460 extends ImageProfile(width = Some(460))
+object Item620 extends ImageProfile(width = Some(620))
+object Item640 extends ImageProfile(width = Some(640))
+object Item700 extends ImageProfile(width = Some(700))
+object Item1200 extends ImageProfile(width = Some(1200))
 object Video640 extends VideoProfile(width = Some(640), height = Some(360)) // 16:9
 object Video700 extends VideoProfile(width = Some(700), height = Some(394)) // 16:9
 object Video1280 extends VideoProfile(width = Some(1280), height = Some(720)) // 16:9
-object GoogleStructuredData extends Profile(width = Some(300), height = Some(300)) // 1:1
+object GoogleStructuredData extends ImageProfile(width = Some(300), height = Some(300)) // 1:1
 
-class ShareImage(overlayUrlParam: String, shouldIncludeOverlay: Boolean) extends Profile(width = Some(1200)) {
+class ShareImage(overlayUrlParam: String, shouldIncludeOverlay: Boolean) extends ImageProfile(width = Some(1200)) {
   override val heightParam = "height=630"
   override val fitParam = "fit=crop"
   val overlayAlignParam = "overlay-align=bottom%2Cleft"
@@ -190,12 +190,12 @@ object FacebookOpenGraphImage extends OverlayBase64 {
     val opinionsObserver = new ShareImage(s"overlay-base64=${overlayUrlBase64("to-opinions.png")}", FacebookShareImageLogoOverlay.isSwitchedOn)
 }
 
-object EmailImage extends Profile(width = Some(580), autoFormat = false) {
+object EmailImage extends ImageProfile(width = Some(580), autoFormat = false) {
   override val qualityparam = "quality=60"
   val knownWidth = width.get
 }
 
-object EmailVideoImage extends Profile(width = Some(580), autoFormat = false) with OverlayBase64 {
+object EmailVideoImage extends ImageProfile(width = Some(580), autoFormat = false) with OverlayBase64 {
   override val qualityparam = "quality=60"
   val overlayAlignParam = "overlay-align=center"
   val overlayUrlParam = s"overlay-base64=${overlayUrlBase64("play.png")}"
@@ -206,7 +206,7 @@ object EmailVideoImage extends Profile(width = Some(580), autoFormat = false) wi
   }
 }
 
-object FrontEmailImage extends Profile(width = Some(500), autoFormat = false) {
+object FrontEmailImage extends ImageProfile(width = Some(500), autoFormat = false) {
   override val qualityparam = "quality=60"
   val knownWidth = width.get
 }
@@ -214,15 +214,15 @@ object FrontEmailImage extends Profile(width = Some(500), autoFormat = false) {
 object SmallFrontEmailImage {
   def apply(customWidth: Int): SmallFrontEmailImage = new SmallFrontEmailImage(customWidth)
 }
-class SmallFrontEmailImage(customWidth: Int) extends Profile(Some(customWidth), autoFormat = false) {
+class SmallFrontEmailImage(customWidth: Int) extends ImageProfile(Some(customWidth), autoFormat = false) {
   override val qualityparam = "quality=60"
 }
 
 // The imager/images.js base image.
-object SeoOptimisedContentImage extends Profile(width = Some(460))
+object SeoOptimisedContentImage extends ImageProfile(width = Some(460))
 
 // Just degrade the image quality without adjusting the width/height
-object Naked extends Profile(None, None)
+object Naked extends ImageProfile(None, None)
 
 object ImgSrc extends Logging with implicits.Strings {
 
@@ -272,7 +272,7 @@ object ImgSrc extends Logging with implicits.Strings {
   ): String = {
     val isPng = maybePath.exists(path => path.toLowerCase.endsWith("png"))
     breakpointWidth.toPixels(breakpointWidths)
-      .map(browserWidth => Profile(width = Some(browserWidth), hidpi = hidpi, isPng = isPng))
+      .map(browserWidth => ImageProfile(width = Some(browserWidth), hidpi = hidpi, isPng = isPng))
       .map { profile => {
         maybePath
           .map(url => srcsetForProfile(profile, url, hidpi))
@@ -283,13 +283,13 @@ object ImgSrc extends Logging with implicits.Strings {
   }
 
   def srcsetForProfile(
-    profile: Profile,
+    profile: ImageProfile,
     imageContainer: ImageMedia,
     hidpi: Boolean
   ): String =
     s"${profile.bestSrcFor(imageContainer).get} ${profile.width.get * (if (hidpi) 2 else 1)}w"
 
-  def srcsetForProfile(profile: Profile, path: String, hidpi: Boolean): String =
+  def srcsetForProfile(profile: ImageProfile, path: String, hidpi: Boolean): String =
     s"${ImgSrc(path, profile)} ${profile.width.get * (if (hidpi) 2 else 1)}w"
 
   def getFallbackUrl(ImageElement: ImageMedia): Option[String] =

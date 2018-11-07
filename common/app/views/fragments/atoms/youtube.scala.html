@@ -8,12 +8,21 @@
 @import model.content.MediaWrapper._
 @import model.content.MediaWrapper
 @import model.content.MediaAsset
-@import conf.switches.Switches.YouTubePosterOverride
 @import conf.switches.Switches.YouTubeRelatedVideos
 @import model.VideoFaciaProperties
 @import views.html.fragments.items.elements.facia_cards.title
 
-@(media: model.content.MediaAtom, displayCaption: Boolean, displayDuration: Boolean = true, displayEndSlate: Boolean = true, playable: Boolean = true, posterImageOverride: Option[ImageMedia] = None, cardStyle: Option[CardStyle] = None, mediaWrapper: Option[MediaWrapper] = None, faciaHeaderProperties: Option[VideoFaciaProperties] = None)(implicit request: RequestHeader)
+@(
+    media: model.content.MediaAtom,
+    displayCaption: Boolean,
+    displayDuration: Boolean = true,
+    displayEndSlate: Boolean = true,
+    playable: Boolean = true,
+    posterImageOverride: Option[ImageMedia] = None,
+    cardStyle: Option[CardStyle] = None,
+    mediaWrapper: Option[MediaWrapper] = None,
+    faciaHeaderProperties: Option[VideoFaciaProperties] = None
+)(implicit request: RequestHeader)
 
 @videoJsError() = @{
     <div class="vjs-error-display vjs-modal-dialog">
@@ -25,7 +34,7 @@
 
 @defining(media.activeAssets.headOption) { activeAsset: Option[MediaAsset] =>
 @defining(media.expired.getOrElse(false)){expired: Boolean =>
-    @defining(playable && !posterImageOverride.exists(_ => YouTubePosterOverride.isSwitchedOn)){sixteenByNine: Boolean =>
+    @defining(playable){sixteenByNine: Boolean =>
         @defining(
             if (YouTubeRelatedVideos.isSwitchedOn) {
                 media.channelId.getOrElse("")
@@ -37,7 +46,7 @@
                 ("u-responsive-ratio--hd", sixteenByNine),
                 ("youtube-media-atom", true),
                 ("no-player", !playable || expired ),
-                ("youtube-related-videos", YouTubePosterOverride.isSwitchedOn)
+                ("youtube-related-videos", YouTubeRelatedVideos.isSwitchedOn)
             ))"
             @for(endSlatePath <- media.endSlatePath if displayEndSlate && YouTubeRelatedVideos.isSwitchedOff)  {
               data-end-slate="@endSlatePath"
@@ -70,8 +79,8 @@
                 }
             }
         }
-        @defining(posterImageOverride.filter(_ => !playable || YouTubePosterOverride.isSwitchedOn) orElse media.posterImage) { bestPosterImage =>
-            @if(!bestPosterImage.isDefined && expired) {
+        @defining(posterImageOverride orElse media.posterImage) { bestPosterImage =>
+            @if(bestPosterImage.isEmpty && expired) {
                 <div class="youtube-media-atom__overlay">
                     @videoJsError()
                 </div>

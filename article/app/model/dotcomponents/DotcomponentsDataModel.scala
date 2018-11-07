@@ -3,10 +3,13 @@ package model.dotcomponents
 import common.Edition
 import conf.Configuration
 import controllers.ArticlePage
+import model.{SubMetaLink, SubMetaLinks}
 import model.liveblog.BlockElement
 import navigation.NavMenu
+import org.joda.time.format.DateTimeFormat
 import play.api.libs.json.{JsValue, Json, Writes}
 import play.api.mvc.RequestHeader
+import views.support.{GUDateTimeFormat, Format}
 
 // We have introduced our own set of objects for serializing data to the DotComponents API,
 // because we don't want people changing the core frontend models and as a side effect,
@@ -19,7 +22,7 @@ case class TagProperties(
     tagType: String,
     webTitle: String,
     twitterHandle: Option[String]
-                        )
+)
 case class Tag(
     properties: TagProperties
 )
@@ -30,6 +33,7 @@ case class Block(
 )
 
 case class Blocks(
+    main: Option[Block],
     body: List[Block]
 )
 
@@ -39,6 +43,7 @@ case class PageData(
     pillar: Option[String],
     ajaxUrl: String,
     webPublicationDate: Long,
+    webPublicationDateDisplay: String,
     section: Option[String],
     headline: String,
     webTitle: String,
@@ -52,7 +57,8 @@ case class PageData(
     beaconUrl: String,
     edition: String,
     contentType: Option[String],
-    commissioningDesks: Option[String]
+    commissioningDesks: Option[String],
+    subMetaLinks: SubMetaLinks
 )
 
 case class Config(
@@ -112,12 +118,16 @@ object DotcomponentsDataModel {
 
     val article = articlePage.article
 
-    val blocks: List[Block] = article.blocks match {
+    val bodyBlocks: List[Block] = article.blocks match {
       case Some(bs) => bs.body.map(bb => Block(bb.bodyHtml, bb.elements.toList)).toList
       case None => List()
     }
 
-    val dcBlocks = Blocks(blocks)
+    val mainBlock: Option[Block] = article.blocks.flatMap(
+      _.main.map(bb=>Block(bb.bodyHtml, bb.elements.toList))
+    )
+
+    val dcBlocks = Blocks(mainBlock, bodyBlocks)
 
     val contentFields = ContentFields(
       article.fields.standfirst,
@@ -134,6 +144,7 @@ object DotcomponentsDataModel {
       article.metadata.pillar.map(_.toString),
       Configuration.ajax.url,
       article.trail.webPublicationDate.getMillis,
+      GUDateTimeFormat.formatDateTimeForDisplay(article.trail.webPublicationDate, request),
       article.metadata.section.map(_.value),
       article.trail.headline,
       article.metadata.webTitle,
@@ -147,7 +158,8 @@ object DotcomponentsDataModel {
       Configuration.debug.beaconUrl,
       Edition(request).displayName,
       jsConfig("contentType"),
-      jsConfig("commissioningDesks")
+      jsConfig("commissioningDesks"),
+      article.content.submetaLinks
     )
 
     val tags = article.tags.tags.map(
@@ -178,7 +190,7 @@ object DotcomponentsDataModel {
 
   }
 
-  def toJsonString(model: DotcomponentsDataModel): String = {
+  def toJson(model: DotcomponentsDataModel): JsValue = {
 
     // make what we have look a bit closer to what dotcomponents currently expects
 
@@ -195,8 +207,13 @@ object DotcomponentsDataModel {
       )
     }
 
-    Json.prettyPrint(Json.toJson(model))
+    Json.toJson(model)
 
+  }
+
+
+  def toJsonString(model: DotcomponentsDataModel): String = {
+    Json.prettyPrint(toJson(model))
   }
 
 }

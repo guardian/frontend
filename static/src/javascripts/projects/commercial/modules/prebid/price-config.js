@@ -1,6 +1,13 @@
 // @flow strict
 
-import type { PrebidPriceGranularity } from 'commercial/modules/prebid/types';
+type PrebidPriceGranularity = {
+    buckets: Array<{
+        precision?: number,
+        min: number,
+        max: number,
+        increment: number,
+    }>,
+};
 
 export const priceGranularity: PrebidPriceGranularity = {
     buckets: [

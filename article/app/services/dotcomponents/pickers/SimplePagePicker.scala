@@ -34,13 +34,26 @@ object PageChecks {
     }
   }
 
-  def hasOnlySupportedElements(page: PageWithStoryPackage): Boolean = {
+  def hasOnlySupportedMainElement(page: PageWithStoryPackage): Boolean = {
+
+    def unsupportedElement(blockElement: BlockElement) = blockElement match {
+      case _: ImageBlockElement => false
+      case _ => true
+    }
+
+    !page.article.blocks.exists(_.main.exists(_.elements.exists(unsupportedElement)))
+
+  }
+
+  def hasOnlySupportedBodyElements(page: PageWithStoryPackage): Boolean = {
+
     def unsupportedElement(blockElement: BlockElement) = blockElement match {
       case _: TextBlockElement => false
       case _ => true
     }
 
     !page.article.blocks.exists(_.body.exists(_.elements.exists(unsupportedElement)))
+
   }
 
   def isNotImmersive(page: PageWithStoryPackage): Boolean = ! page.item.isImmersive
@@ -67,7 +80,8 @@ class SimplePagePicker extends RenderTierPickerStrategy {
     val results: Results = List(
       ("isSupportedType", PageChecks.isSupportedType(page)),
       ("hasBlocks", PageChecks.hasBlocks(page)),
-      ("hasOnlySupportedElements", PageChecks.hasOnlySupportedElements(page)),
+      ("hasOnlySupportedBodyElements", PageChecks.hasOnlySupportedBodyElements(page)),
+      ("hasOnlySupportedMainElement", PageChecks.hasOnlySupportedMainElement(page)),
       ("isDiscussionDisabled", PageChecks.isDiscussionDisabled(page)),
       ("isAdFree", PageChecks.isAdFree(page, request)),
       ("isNotImmersive", PageChecks.isNotImmersive(page)),

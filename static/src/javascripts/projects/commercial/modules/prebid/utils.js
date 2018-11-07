@@ -22,6 +22,20 @@ const stripPrefix = (s: string, prefix: string): string => {
     return s.replace(re, '');
 };
 
+export const ozonePangaeaSectionBlacklist = [
+    'business',
+    'culture',
+    'uk',
+    'us',
+    'au',
+    'news',
+    'money',
+    'sport',
+    'lifeandstyle',
+    'environment',
+    'travel',
+];
+
 export const removeFalseyValues = (o: {
     [string]: string,
 }): { [string]: string } =>
@@ -96,8 +110,7 @@ export const getRandomIntInclusive = (
     return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
-export const shouldIncludeOpenx = (): boolean =>
-    !isInUsRegion() && !isInAuRegion();
+export const shouldIncludeOpenx = (): boolean => !isInUsRegion();
 
 export const shouldIncludeTrustX = (): boolean => isInUsRegion();
 
@@ -112,9 +125,27 @@ export const shouldIncludeAppNexus = (): boolean =>
     ((config.get('switches.prebidAppnexusUkRow') && !isInUsRegion()) ||
         !!pbTestNameMap().and);
 
-export const shouldIncludePangaea = (): boolean =>
-    config.get('switches.ozonePangaea') &&
-    config.get('page.section', '').toLowerCase() === 'technology';
+export const shouldIncludePangaea = (): boolean => {
+    const section = config.get('page.section', '').toLowerCase();
+    return (
+        config.get('switches.ozonePangaea', false) &&
+        !ozonePangaeaSectionBlacklist.includes(section)
+    );
+};
+
+export const shouldIncludeXaxis = (): boolean => {
+    const hasFirstLook =
+        config.get('page.isDev') || getRandomIntInclusive(1, 10) === 1;
+    if (config.get('page.edition') === 'UK') {
+        return hasFirstLook;
+    }
+    return false;
+};
+
+export const shouldIncludeImproveDigital = (): boolean => {
+    const edition: ?string = config.get('page.edition');
+    return edition === 'UK' || edition === 'INT';
+};
 
 export const stripMobileSuffix = (s: string): string =>
     stripSuffix(s, '--mobile');

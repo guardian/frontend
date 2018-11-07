@@ -5,9 +5,9 @@
 @import model.Badges.badgeFor
 @import views.support.ContentLayout.ContentLayout
 @import views.support.Seq2zipWithRowInfo
-@import experiments.{ActiveExperiments, AudioPageChange}
+@import experiments.{ActiveExperiments, OldAudioPage}
 
-<div class="submeta @if(content.content.tags.isAudio && ActiveExperiments.isParticipating(AudioPageChange)){podcast-section}">
+<div class="submeta @if(content.content.tags.isAudio && !ActiveExperiments.isParticipating(OldAudioPage)){podcast-section}">
     <span class="submeta__label">Topics</span>
 
     <div class="submeta__section-labels">
@@ -24,65 +24,28 @@
         }
 
         <ul class="submeta__links">
-            @if(!(content.content.isImmersive && content.content.tags.isArticle)) {
+            @content.content.submetaLinks.sectionLabels.map { label =>
                 <li class="submeta__link-item">
                     <a class="submeta__link"
-                        data-link-name="article section"
-                        href="@LinkTo {/@content.content.sectionLabelLink}">
-                            @Html(Localisation(content.content.sectionLabelName))
+                    data-link-name="@label.dataLinkName.getOrElse("")"
+                    href="@LinkTo {@label.link}">
+                    @Html(Localisation(label.text ))
                     </a>
                 </li>
-            }
-
-            @content.content.blogOrSeriesTag.map { series =>
-                <li class="submeta__link-item">
-                    <a class="submeta__link"
-                       href="@LinkTo {/@series.id}">
-                            @series.name
-                    </a>
-                </li>
-            }.getOrElse {
-                @if(content.content.isFromTheObserver) {
-                    <li class="submeta__link-item">
-                        <a class="submeta__link"
-                           href="https://www.theguardian.com/observer">
-                               The Observer
-                        </a>
-                    </li>
-                }
             }
         </ul>
     </div>
 
     <div class="submeta__keywords">
         <ul class="submeta__links">
-            @if(content.tags.keywords.filterNot(_.isSectionTag).nonEmpty) {
-                @defining(content.tags.keywords.filterNot(_.isSectionTag).slice(1, 6)) { shownKeywords =>
-                    @if(shownKeywords.nonEmpty) {
-                        @shownKeywords.zipWithRowInfo.map{ case(keyword, row) =>
-                            <li class="submeta__link-item">
-                                <a class="submeta__link"
-                                    href="@LinkTo(keyword.metadata.url)"
-                                    data-link-name="keyword: @keyword.id">
-                                        @keyword.name
-                                        @if(content.tags.keywords.filter(_ != keyword).find(_.name == keyword.name)){ (@keyword.properties.sectionName) }
-                                </a>
-                            </li>
-                        }
-                    }
-                }
-
-                @if(content.tags.isArticle && !content.tags.isLiveBlog) {
-                    @content.tags.tones.headOption.map { tone =>
-                        <li class="submeta__link-item">
-                            <a class="submeta__link"
-                                href="@LinkTo(tone.metadata.url)"
-                                data-link-name="tone: @tone.name">
-                                    @tone.name.toLowerCase
-                            </a>
-                        </li>
-                    }
-                }
+            @content.content.submetaLinks.keywords.map { keyword =>
+                <li class="submeta__link-item">
+                    <a class="submeta__link"
+                    href="@LinkTo(keyword.link)"
+                    data-link-name="@keyword.dataLinkName.getOrElse("")">
+                        @keyword.text
+                    </a>
+                </li>
             }
         </ul>
     </div>

@@ -4,6 +4,17 @@ import conf.switches.Expiry.never
 import org.joda.time.LocalDate
 
 trait FeatureSwitches {
+
+  val DotcomRendering = Switch(
+    SwitchGroup.Feature,
+    "dotcom-rendering",
+    "If this switch is on, we will use the dotcom rendering tier for articles which are supported by it",
+    owners = Seq(Owner.withGithub("MatthewJWalls")),
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+
   val ShareCounts = Switch(
     SwitchGroup.Feature,
     "server-share-counts",
@@ -443,23 +454,13 @@ trait FeatureSwitches {
     exposeClientSide = false
   )
 
-  val YouTubePosterOverride = Switch(
-    SwitchGroup.Feature,
-    "youtube-poster-override",
-    "When ON show trail image on YouTube atom playable content cards instead of the poster image",
-    owners = Seq(Owner.withGithub("gidsg")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false
-  )
-
   val YouTubeRelatedVideos = Switch(
     SwitchGroup.Feature,
     "youtube-related-videos",
     "When ON show YouTube related video suggestions in YouTube media atoms",
     owners = Seq(Owner.withGithub("siadcock")),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 11, 6),
+    sellByDate = new LocalDate(2019, 1, 7),
     exposeClientSide = true
   )
 
@@ -491,6 +492,17 @@ trait FeatureSwitches {
     owners = Seq(Owner.withName("simple.and.coherent")),
     safeState = Off,
     sellByDate = never,
+    exposeClientSide = true
+  )
+
+  // Midterms interactive header switch
+  val InteractiveHeaderSwitch = Switch(
+    SwitchGroup.Feature,
+    "interactive-header-switch",
+    "If switched on, the header on all interctives will display in full.",
+    owners = Seq(Owner.withName("dotcom.platform")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 11, 9),
     exposeClientSide = true
   )
 

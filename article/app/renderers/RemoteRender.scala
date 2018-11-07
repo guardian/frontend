@@ -12,10 +12,20 @@ import play.twirl.api.Html
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.concurrent.duration._
+import com.eclipsesource.schema._
+import com.eclipsesource.schema.drafts.Version7
+import com.osinka.i18n.{Lang, Messages}
+import play.api.libs.json._
 
-class RemoteRender(implicit context: ApplicationContext) {
+import Version7._
 
-  private def remoteRenderArticle(ws:WSClient, payload: String, article: ArticlePage)(implicit request: RequestHeader): Future[Result] = ws.url(Configuration.rendering.renderingEndpoint)
+import scala.io.{BufferedSource, Source}
+
+class RemoteRender {
+
+  val SCHEMA = "schema/dotcomponentsDataModelV1.jsonschema"
+
+  def remoteRenderArticle(ws:WSClient, payload: String, article: ArticlePage)(implicit request: RequestHeader): Future[Result] = ws.url(Configuration.rendering.renderingEndpoint)
     .withRequestTimeout(2000.millis)
     .addHttpHeaders("Content-Type" -> "application/json")
     .post(payload)
@@ -28,12 +38,27 @@ class RemoteRender(implicit context: ApplicationContext) {
       }
     })
 
+  private def validate(model: DotcomponentsDataModel) = {
+    val rawschema: String = Source.fromResource(SCHEMA).getLines.mkString("\n")
+    val schema = Json.fromJson[SchemaType](Json.parse(rawschema)).get
+    val validator = new SchemaValidator(Some(Version7))(Lang.Default)
+    validator.validate(schema, DotcomponentsDataModel.toJson(model))
+  }
+
   def render(ws:WSClient, path: String, article: ArticlePage)(implicit request: RequestHeader): Future[Result] = {
 
     val dataModel: DotcomponentsDataModel = DotcomponentsDataModel.fromArticle(article, request)
     val dataString: String = DotcomponentsDataModel.toJsonString(dataModel)
 
-    remoteRenderArticle(ws, dataString, article)
+    validate(dataModel) match {
+      case JsSuccess(_,_) => remoteRenderArticle(ws, dataString, article)
+      case JsError(e) => throw new Exception(Json.prettyPrint(JsError.toJson(e)))
+    }
+
   }
 
+}
+
+object RemoteRender {
+  def apply(): RemoteRender = new RemoteRender()
 }
