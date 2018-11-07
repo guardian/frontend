@@ -19,6 +19,16 @@ You can run the Jasmine unit test suite with
 make test
 ```
 
+### Things to do before you commit
+```
+make fix
+make validate
+```
+These will fix up the linting issues and check all the flow types to make sure you won't have any issue
+trying to push or with the simple parts of the build.
+
+If you are wondering what other options make has, you can simply type `make` at the comment line.
+
 ## Server-side development
 
 ### Clean all projects
