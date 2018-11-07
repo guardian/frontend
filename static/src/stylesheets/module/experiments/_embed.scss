@@ -26,26 +26,13 @@
     }
 }
 
-
 .contributions__title {
     @include fs-header(2);
     margin: 0;
- }
-
-.contributions__title--epic {
-    margin-bottom: 0;
 }
 
-.contributions__paragraph  {
-    font-size: 1em;
-    line-height: 20px;
-    font-family: $f-serif-headline;
-    margin-bottom: $gs-baseline;
-    margin-top: $gs-baseline;
-}
-
-.contributions__paragraph--extra-copy {
-    margin-bottom: 0;
+.contributions__paragraph {
+    @include fs-bodyCopy(2);
 }
 
 .contributions__highlight {
@@ -56,11 +43,6 @@
 .contributions__hidden {
     display: none;
 }
-
-.contributions__paragraph--epic {
-    @include fs-bodyCopy(2);
-}
-
 .contributions__epic-link {
     text-decoration: underline;
 }
