@@ -502,7 +502,7 @@ trait FeatureSwitches {
     "If switched on, the header on all interctives will display in full.",
     owners = Seq(Owner.withName("dotcom.platform")),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 11, 8),
+    sellByDate = new LocalDate(2018, 11, 9),
     exposeClientSide = true
   )
 
