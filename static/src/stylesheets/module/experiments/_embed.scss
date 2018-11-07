@@ -1,5 +1,20 @@
 @import 'svg';
 
+.contributions__one-million-large-heading {
+    font-family: 'GuardianTitlepieceWeb', sans-serif;
+    font-size: 32px;
+    //font-weight: bold;
+    //font-style: normal;
+    //font-stretch: normal;
+    line-height: 0.94;
+    //letter-spacing: normal;
+    color: #333333;
+}
+
+.contributions__one-million-footer {
+
+}
+
 .contributions__embed  {
     border-top: 1px solid $sport-bright;
     background-color: $brightness-93;

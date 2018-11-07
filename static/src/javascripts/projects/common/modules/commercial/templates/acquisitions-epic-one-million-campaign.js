@@ -17,8 +17,8 @@ export const acquisitionsEpicOneMillionCampaignTemplate = ({
     `<div class="contributions__epic ${epicClass}" data-component="${componentName}" data-link-name="epic">
         <div class="${wrapperClass}">
             <div>
-                <h2 class="contributions__title contributions__title--epic">
-                    NEW TEMPLATE. ${heading}
+                <h2 class="contributions__one-million-large-heading">
+                    ${heading}
                 </h2>
                 ${appendToLastElement(
                     paragraphs,
@@ -26,11 +26,16 @@ export const acquisitionsEpicOneMillionCampaignTemplate = ({
                 )
                     .map(
                         paragraph =>
-                            `<p class="contributions__paragraph contributions__paragraph--epic">${paragraph}</p>`
+                            `<p class="contributions__paragraph">${paragraph}</p>`
                     )
                     .join('')}
             </div>
     
             ${buttonTemplate}
+            
+            <div class="contributions__one-million-footer">
+                <h2 class="contributions__one-million-large-heading"><span class="contributions-blue">Your</span> support counts.</h2>
+                <h2 class="contributions__one-million-large-heading"><span class="contributions-blue">Together</span> we can be a force for change.</h2>
+            </div>
         </div>
     </div>`;
