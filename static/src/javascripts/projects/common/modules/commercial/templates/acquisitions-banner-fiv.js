@@ -6,7 +6,7 @@ import config from 'lib/config';
 
 export const acquisitionsBannerFivTemplate = (
     location: string,
-    linkUrl: string,
+    linkUrl: string
 ): string =>
     `
     <div class="fiv-banner__close">
@@ -23,9 +23,7 @@ export const acquisitionsBannerFivTemplate = (
             This is a test banner for FIV - if you see it please email userhelp@theguardian.com
         </div>
         <div class="fiv-banner__cta">
-            <button class="button fiv-banner__button" href="${
-                linkUrl
-            }">
+            <button class="button fiv-banner__button" href="${linkUrl}">
                 Go${arrowWhiteRight.markup}
             </button>
             <img
