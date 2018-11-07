@@ -114,7 +114,7 @@ object `package` {
   }
 }
 
-object AuFriendlyFormat {
+object GUDateTimeSuffixFormat {
   def apply(date: DateTime)(implicit request: RequestHeader): String = {
     val edition = Edition(request)
     val timezone = edition.timezone
