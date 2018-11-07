@@ -114,16 +114,14 @@ object `package` {
   }
 }
 
-object GUDateTimeSuffixFormat {
-  def apply(date: DateTime)(implicit request: RequestHeader): String = {
-    val edition = Edition(request)
-    val timezone = edition.timezone
-    edition.id match {
-      case "AU" => date.toString(DateTimeFormat.forPattern("HH.mm").withZone(timezone)) + " " + timezone.getShortName(date.getMillis)
-      case _ => date.toString(DateTimeFormat.forPattern("HH.mm z").withZone(timezone))
-    }
+object GUDateTimeFormat {
+  def formatDateTimeForDisplay(date: DateTime, request: RequestHeader): String = {
+    s"${formatDateForDisplay(date, request)} ${formatTimeForDisplay(date, request)}"
   }
-  def getDateDisplaySuffix(date: DateTime, request: RequestHeader): String = {
+  def formatDateForDisplay(date: DateTime, request: RequestHeader): String = {
+    date.toString("E d MMM yyyy")
+  }
+  def formatTimeForDisplay(date: DateTime, request: RequestHeader): String = {
     val edition = Edition(request)
     val timezone = edition.timezone
     edition.id match {

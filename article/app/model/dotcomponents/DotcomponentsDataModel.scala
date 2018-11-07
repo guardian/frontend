@@ -9,7 +9,7 @@ import navigation.NavMenu
 import org.joda.time.format.DateTimeFormat
 import play.api.libs.json.{JsValue, Json, Writes}
 import play.api.mvc.RequestHeader
-import views.support.{GUDateTimeSuffixFormat, Format}
+import views.support.{GUDateTimeFormat, Format}
 
 // We have introduced our own set of objects for serializing data to the DotComponents API,
 // because we don't want people changing the core frontend models and as a side effect,
@@ -138,15 +138,13 @@ object DotcomponentsDataModel {
 
     val jsConfig = (k: String) => articlePage.getJavascriptConfig.get(k).map(_.as[String])
 
-    val webPublicationDateTimeDisplay: String = s"${Format(article.trail.webPublicationDate, Edition(request), "E d MMM yyyy", None)} ${GUDateTimeSuffixFormat.getDateDisplaySuffix(article.trail.webPublicationDate, request)}"
-
     val pageData = PageData(
       article.tags.contributors.map(_.name).mkString(","),
       article.metadata.id,
       article.metadata.pillar.map(_.toString),
       Configuration.ajax.url,
       article.trail.webPublicationDate.getMillis,
-      webPublicationDateTimeDisplay,
+      GUDateTimeFormat.formatDateTimeForDisplay(article.trail.webPublicationDate, request),
       article.metadata.section.map(_.value),
       article.trail.headline,
       article.metadata.webTitle,

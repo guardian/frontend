@@ -1,6 +1,5 @@
-@import common.RichRequestHeader
 @import org.joda.time.DateTime
-@import views.support.{GUDateTimeSuffixFormat, Format}
+@import views.support.{GUDateTimeFormat, Format}
 
 @(webPublicationDate: DateTime, lastModified: DateTime, hasBeenModified: Boolean, firstPublicationDate: Option[DateTime], isLiveBlog: Boolean = false, isLive: Boolean = false, isMinute: Boolean = false)(implicit request: RequestHeader)
 
@@ -10,7 +9,7 @@
         @if(isMinute) {
             <span class="content__dateline-time">@Format(webPublicationDate, "E d MMM yyyy")</span>
         } else {
-            @Format(webPublicationDate, "E d MMM yyyy") <span class="content__dateline-time">@GUDateTimeSuffixFormat(webPublicationDate)</span>
+            @Format(webPublicationDate, "E d MMM yyyy") <span class="content__dateline-time">@GUDateTimeFormat.formatTimeForDisplay(webPublicationDate, request)</span>
         }
     </time>
     @if(isLiveBlog) {
@@ -22,7 +21,7 @@
         data-timestamp="@date.getMillis" class="content__dateline-lm js-lm u-h"
         @optItemProp.map { itemProp => itemprop="@itemProp" }
         >
-            @label @Format(date, "E d MMM yyyy") <span class="content__dateline-time">@GUDateTimeSuffixFormat(date)</span>
+            @label @Format(date, "E d MMM yyyy") <span class="content__dateline-time">@GUDateTimeFormat.formatTimeForDisplay(date, request)</span>
         </time>
     }
 
