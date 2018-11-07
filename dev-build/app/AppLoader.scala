@@ -86,24 +86,24 @@ trait AppComponents
   override def appIdentity: ApplicationIdentity = ApplicationIdentity("dev-build")
 
   override def lifecycleComponents: List[LifecycleComponent] = List(
-    wire[LogstashLifecycle],
-    wire[AdminLifecycle],
-    wire[DiagnosticsLifecycle],
-    wire[OnwardJourneyLifecycle],
-    wire[CommercialLifecycle],
-    wire[DfpDataCacheLifecycle],
-    wire[FaciaDfpAgentLifecycle],
-    wire[ConfigAgentLifecycle],
-    wire[SurgingContentAgentLifecycle],
-    wire[SectionsLookUpLifecycle],
-    wire[MostPopularFacebookAutoRefreshLifecycle],
-    wire[SwitchboardLifecycle],
-    wire[FootballLifecycle],
-    wire[CricketLifecycle],
-    wire[RugbyLifecycle],
-    wire[TargetingLifecycle],
-    wire[DiscussionExternalAssetsLifecycle],
-    wire[StocksDataLifecycle]
+//    wire[LogstashLifecycle],
+//    wire[AdminLifecycle],
+//    wire[DiagnosticsLifecycle],
+      wire[OnwardJourneyLifecycle],
+//    wire[CommercialLifecycle],
+//    wire[DfpDataCacheLifecycle],
+//    wire[FaciaDfpAgentLifecycle],
+//    wire[ConfigAgentLifecycle],
+//    wire[SurgingContentAgentLifecycle],
+//    wire[SectionsLookUpLifecycle],
+//    wire[MostPopularFacebookAutoRefreshLifecycle],
+//    wire[SwitchboardLifecycle],
+//    wire[FootballLifecycle],
+//    wire[CricketLifecycle],
+//    wire[RugbyLifecycle],
+//    wire[TargetingLifecycle],
+//    wire[DiscussionExternalAssetsLifecycle],
+//    wire[StocksDataLifecycle]
   )
 
   override lazy val httpFilters = wire[DevFilters].filters
