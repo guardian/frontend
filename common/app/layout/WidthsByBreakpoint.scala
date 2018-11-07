@@ -2,7 +2,7 @@ package layout
 
 import cards._
 import BrowserWidth._
-import views.support.Profile
+import views.support.ImageProfile
 
 object FaciaWidths {
   private val MediaMobile = Map[CardType, BrowserWidth](
@@ -405,9 +405,9 @@ case class WidthsByBreakpoint(
       s"(min-width: ${breakpoint.minWidth.get}px) $imageWidth"
   } mkString ", "
 
-  def profiles: Seq[Profile] = (breakpoints flatMap(_.toPixels(breakpoints)))
+  def profiles: Seq[ImageProfile] = (breakpoints flatMap(_.toPixels(breakpoints)))
     .distinct
-    .map((browserWidth: Int) => Profile(width = Some(browserWidth)))
+    .map((browserWidth: Int) => ImageProfile(width = Some(browserWidth)))
 }
 
 case class BreakpointWidth(breakpoint: Breakpoint, width: BrowserWidth) {

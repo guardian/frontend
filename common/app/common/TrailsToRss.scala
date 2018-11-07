@@ -14,7 +14,7 @@ import model.pressed.PressedStory
 import org.joda.time.DateTime
 import org.jsoup.Jsoup
 import play.api.mvc.RequestHeader
-import views.support.{Item140, Item460, Profile}
+import views.support.{Item140, Item460, ImageProfile}
 
 import scala.collection.JavaConverters._
 import scala.collection.JavaConverters._
@@ -81,7 +81,7 @@ object TrailsToRss extends implicits.Collections {
       description.setValue(stripInvalidXMLCharacters(standfirst + intro + readMore))
 
       val mediaModules: Seq[MediaEntryModuleImpl] = for {
-        profile: Profile <- List(Item140, Item460)
+        profile: ImageProfile <- List(Item140, Item460)
         trailPicture: ImageMedia <- trail.trailPicture
         trailAsset: ImageAsset <- profile.bestFor(trailPicture)
         resizedImage <- profile.bestSrcFor(trailPicture)
@@ -188,7 +188,7 @@ object TrailsToRss extends implicits.Collections {
       description.setValue(stripInvalidXMLCharacters(standfirst + intro + readMore))
 
       val mediaModules: Seq[MediaEntryModuleImpl] = for {
-        profile: Profile <- List(Item140, Item460)
+        profile: ImageProfile <- List(Item140, Item460)
         trailPicture: ImageMedia <- faciaContent.trail.trailPicture
         trailAsset: ImageAsset <- profile.bestFor(trailPicture)
         resizedImage <- profile.bestSrcFor(trailPicture)
