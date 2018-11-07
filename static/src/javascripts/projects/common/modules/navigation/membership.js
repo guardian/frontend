@@ -99,7 +99,7 @@ const showAccountDataUpdateWarningMessage = accountDataUpdateWarningLink => {
 
     newMessage.show(
         `<div class="site-message__copy-heading">
-            An action is needed on your Guardian&nbsp;account
+            Action is needed on your Guardian account
         </div>
         <div class="site-message__copy-text">
             Please review and update your details as&nbsp;soon&nbsp;as&nbsp;you&nbsp;can. Thank&nbsp;you.
