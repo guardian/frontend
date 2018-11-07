@@ -27,7 +27,7 @@ import {
     googleDocEpicControl,
 } from 'common/modules/commercial/contributions-google-docs';
 
-type EpicTemplate = (Variant, AcquisitionsEpicTemplateCopy) => string;
+export type EpicTemplate = (Variant, AcquisitionsEpicTemplateCopy) => string;
 
 export type CtaUrls = {
     supportUrl: string,
