@@ -495,15 +495,4 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
-  // Midterms interactive header switch
-  val InteractiveHeaderSwitch = Switch(
-    SwitchGroup.Feature,
-    "interactive-header-switch",
-    "If switched on, the header on all interctives will display in full.",
-    owners = Seq(Owner.withName("dotcom.platform")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 11, 8),
-    exposeClientSide = true
-  )
-
 }
