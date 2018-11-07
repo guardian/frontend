@@ -1,12 +1,15 @@
 package feed
 
 import com.gu.Box
+import conf.Configuration
 import contentapi.ContentApiClient
 import com.gu.contentapi.client.model.v1.{Content, ContentFields, ContentType}
 import common._
-import services.OphanApi
+import services.{MostReadItem, OphanApi}
 import model.RelatedContentItem
-import play.api.libs.ws.WSClient
+
+import play.api.libs.json._
+import play.api.libs.ws.{WSClient, WSResponse}
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -25,9 +28,15 @@ object MostPopularRefresh {
   }
 }
 
-class MostPopularAgent(contentApiClient: ContentApiClient) extends Logging {
+class MostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi, wsClient: WSClient) extends Logging {
 
   private val agent = Box[Map[String, Seq[RelatedContentItem]]](Map.empty)
+
+  // Helper case class to read from the most/comments discussion API call.
+  private case class MostDiscussedItem(key: String, url: String, numberOfComments: Int)
+  private object MostDiscussedItem {
+    implicit val format = Json.format[MostDiscussedItem]
+  }
 
   // Container for most_shared and most_commented
   val mostSingleCards = Box[Map[String,Content]](Map.empty)
@@ -41,36 +50,51 @@ class MostPopularAgent(contentApiClient: ContentApiClient) extends Logging {
   }
 
   private def refreshGlobal()(implicit ec: ExecutionContext): Future[Map[String,Content]] = {
-//    val fields: Option[ContentFields] = Some(ContentFields(
-//      headline = Some("Some Headline"),
-//      standfirst = Some("Stand first"),
-//      trailText = Some("Trail Text"),
-//      byline = Some("By Line"),
-//      body = Some("Body"),
-//      secureThumbnail = Some("https://placekitten.com/200/300"),
-//      thumbnail = Some("https://placekitten.com/200/300")
-//    ))
-//    val mostShared: Content =
-//        Content("most_shared_id",
-//                      ContentType.Article,
-//                      Some("some_section"),
-//                      Some("Some Section"),
-//                      None,
-//                      "Most Shared Web Title",
-//                      "/most_shared_web_url",
-//                      "most_shared_api_url",
-//                      fields
-//                )
-    log.info("Setting Most shared and most commented (simulate to most viewed in UK")
 
-    val mostViewedQuery = contentApiClient.item("/", "UK")
-      .showMostViewed(true)
-    val futureMostViewed = contentApiClient.getResponse(mostViewedQuery)
+    log.info("Pulling most social media shared from Ophan")
+
+    val sinceHours = 3
+    val sinceTimestamp = System.currentTimeMillis - sinceHours * 60 * 60 * 1000
+
+    val futureMostFaceBook = ophanApi.getMostReadFacebook(sinceHours)
+    val futureMostCommented = mostCommented(wsClient, sinceTimestamp)
+
     for {
-      mostViewResponse <- futureMostViewed
-      oneContentItem = mostViewResponse.mostViewed.getOrElse(Nil).take(1).head
-      newMap <- mostSingleCards.alter( _ + ( "most_shared" -> oneContentItem ) + ( "most_commented" -> oneContentItem ))
-    } yield newMap
+        mostFacebook <- futureMostFaceBook
+        oneFacebookMostRead = mostFacebook.headOption.get
+        oneFacebookContent <- contentFromUrl(oneFacebookMostRead.url, contentApiClient)
+        _ <- mostSingleCards.alter(_ + ("most_shared" -> oneFacebookContent))
+
+        oneMostCommentedItem <- futureMostCommented
+        oneMostCommentedContent <- contentFromUrl(oneMostCommentedItem.url, contentApiClient)
+        newMap <- mostSingleCards.alter( _ + ("most_commented" -> oneMostCommentedContent))
+      } yield newMap
+  }
+
+  private def mostCommented(wsClient: WSClient, since: Long)(implicit ec: ExecutionContext): Future[MostDiscussedItem] = {
+    val dapiURL = Configuration.discussion.apiRoot
+    val params = List("api-key" -> "dotcom", "pageSize" -> "10", "sinceTimestamp" -> since.toString )
+
+    val fResponse = wsClient.url(dapiURL + "/most/comments")
+      .addQueryStringParameters(params: _*)
+      .get()
+
+    fResponse.map{ r =>
+      val json = r.json
+      ( json \ "discussions" ).as[List[MostDiscussedItem]]
+        // Avoiding live blogs
+        .filter{ item => ! item.url.contains("/live/") }
+        .head
+    }
+  }
+
+  private def contentFromUrl(url: String, capi: ContentApiClient)(implicit ec: ExecutionContext): Future[Content] = {
+    capi
+      .getResponse(capi.item(urlToContentPath(url), ""))
+          .map{
+            itemResponse =>
+              itemResponse.content.get
+          }
   }
 
   private def refresh(edition: Edition)(implicit ec: ExecutionContext): Future[Map[String, Seq[RelatedContentItem]]] = {
