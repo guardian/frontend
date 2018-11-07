@@ -8,10 +8,13 @@
 @import layout.ContentCard
 @import model.EmailAddons.EmailContentType
 @import model.pressed.{ExternalLink, Feature}
+@import model.pressed.ItemKicker
+@import com.gu.facia.api.utils.TagKicker
 @import views.support.EmailHelpers.{icon, imgFromCard, imgForFront, classesForCard}
 @import views.support.RemoveOuterParaHtml
 @import fragments.email._
 @import common.LinkTo
+@import conf.audio.FlagshipEmailContainer
 
 
 @headline(card: ContentCard, isLarge: Boolean = false, isTrailText: Boolean = false) = {
@@ -206,6 +209,30 @@
     }
 }
 
+@renderFlagshipContainer(collection: EmailContentContainer) = {
+    @if(FlagshipEmailContainer.displayFlagshipContainer()) {
+        @containerTitle(Seq("ct--not-top")) {
+            @collection.href.map { href =>
+                <a class="ct-link" href="@LinkTo {/@Html(href)}">@collection.displayName</a>
+            }.getOrElse {
+                @collection.displayName
+            }
+        }
+
+        @collection.cards.headOption.map { card =>
+            @faciaCard(classesForCard(card, withImage = true)) {
+                @row(Seq("no-pad")){
+                    <a class="fc-link" href="@card.header.url.get">
+                        <img class="full-width" src="@FlagshipEmailContainer.AlbumArtUrl" alt="@card.header.headline">
+                    </a>
+                }
+
+                @headline(card.setKicker(Some(FlagshipEmailContainer.kicker)), isLarge = true, isTrailText = true)
+            }
+        }
+    }
+}
+
 @renderMarquee(marquee: LiveIntentMarquee) = {
     <table align="center" border="0" cellpadding="0" cellspacing="0" style="margin-left:auto; margin-right:auto;">
         <tr>
@@ -286,6 +313,7 @@
 }
 
 @layout.CollectionEmail.fromPressedPage(page).collections.zipWithIndex.map {
+    case (collection: EmailContentContainer, index) if FlagshipEmailContainer.isFlagshipContainer(collection.containerId) => { @renderFlagshipContainer(collection) }
     case (collection: EmailContentContainer, index) => { @renderContentContainer(collection, index) }
     case (marquee: LiveIntentMarquee, _) => { @renderMarquee(marquee) }
     case (mpu: LiveIntentMPU, _) => { @renderMPU(mpu) }

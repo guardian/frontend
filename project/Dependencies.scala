@@ -73,6 +73,7 @@ object Dependencies {
   val supportInternationalisation = "com.gu" %% "support-internationalisation" % "0.9"
   val capiAws = "com.gu" %% "content-api-client-aws" % "0.5"
   val okhttp = "com.squareup.okhttp3" % "okhttp" % "3.10.0"
+  val jsonSchema = "com.eclipsesource"  %% "play-json-schema-validator" % "0.9.5-M4"
 
   // Fixing transient dependency issue
   // AWS SDK (1.11.181), which kinesis-logback-appender depends on, brings com.fasterxml.jackson.core and com.fasterxml.jackson.dataformat libs in version 2.6.9

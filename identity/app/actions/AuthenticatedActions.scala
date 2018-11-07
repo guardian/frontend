@@ -159,6 +159,6 @@ class AuthenticatedActions(
     noOpActionBuilder andThen consentAuthRefiner andThen retrieveUserFromIdapiRefiner
 
   /** Enforce a validated email */
-  def consentAuthWithIdapiUserWithEmailValidation(): ActionBuilder[AuthRequest, AnyContent] =
+  def consentAuthWithIdapiUserWithEmailValidation: ActionBuilder[AuthRequest, AnyContent] =
     consentAuthWithIdapiUserAction andThen emailValidationFilter
 }

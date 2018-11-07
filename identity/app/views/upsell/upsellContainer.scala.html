@@ -19,7 +19,7 @@
 
 @noJsBehaviour = @{
     pageVariant match {
-        case ConfirmEmailThankYou => "Thank you! You’re now subscribed"
+        case ConfirmEmailThankYou => "Thank you! You’re now subscribed."
     }
 }
 
@@ -40,24 +40,14 @@
     }
 }
 
-
-@prefill = @{
-    Json.toJson(Map(
-        "csrfToken" -> play.filters.csrf.CSRF.getToken.map(_.value),
-        "accountToken" -> requestHeader.cookies.get("SC_GU_GUEST_PW_SET").map(_.value),
-        "email" -> Option(email),
-        "hasPassword" -> Option(hasPassword.toString),
-        "hasSocialLinks" -> Option(hasSocialLinks.toString)
-    ).collect{
-        case (name, Some(value)) => name -> value
-    }
-    ).toString()
-}
-
-<div class="js-identity-block-list" data-page-variant="@{pageVariant.jsName}">
-    <script type="text/json" data-for-prefill="true">
-        @Html(prefill)
-    </script>
+<div class="js-identity-block-list"
+    data-page-variant="@{pageVariant.jsName}"
+    data-csrf-token="@{play.filters.csrf.CSRF.getToken.fold("")(_.value)}"
+    data-account-token="@{requestHeader.cookies.get("SC_GU_GUEST_PW_SET").fold("")(_.value)}"
+    data-email="@email"
+    data-has-password="@{hasPassword}"
+    data-has-social-links="@{hasSocialLinks}"
+>
     <noscript>
         @spinnerError(
             "noscriptError",

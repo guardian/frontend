@@ -42,11 +42,19 @@
             }
 
             .fc-item__media-wrapper {
-                flex-basis: 20%;
-                @include mq($from: mobile , $until: phablet) {
+                @include mq($until: phablet) {
                     margin: 0;
                 }
-
+                /*hack to maintain square images */
+                @include mq($until: tablet) {
+                    flex-basis: 15%;
+                }
+                @include mq($from: tablet, $until: desktop) {
+                    flex-basis: 30%;
+                }
+                @include mq($from: desktop) {
+                    flex-basis: 20%;
+                }
                 .u-responsive-ratio {
                     padding-bottom: 100%; /* this is horrible but it works */
                     height: 100%;
@@ -65,6 +73,7 @@
             .fc-item__content {
                 max-width: 100%;
                 justify-content: flex-start;
+                min-height: 120px; /*hack to mantain square images at smaller breakpoints */
                 @include mq($from: tablet , $until: wide) {
                     padding: 0 $gs-gutter $gs-gutter;
                 }
@@ -95,17 +104,20 @@
         }
     }
 
-    /* ---------------- CONTRIBUTIONS ------------------- */
+    /* ---------------- CONTRIBUTIONS BANNER ------------------- */
 
     .flagship-audio__contributions-banner {
-        background-color: #333333;
-        color: $brightness-100;
+        background-color: #f0dbbc;
+        padding-bottom: 0;
 
-        .fc-container__body {
+        .flagship-audio__contributions-banner-holder {
+            display: flex;
+            flex-direction: row;
 
             h2 {
                 font-size: 26px;
                 line-height: 28px;
+                color: #ff6a56;
             }
             p {
                 font-size: 18px;
@@ -113,6 +125,41 @@
             }
             a {
                 background-color: #121212;
+                max-width: 170px;
+            }
+            .flagship-audio__contributions-banner-text {
+                display: flex;
+                flex-direction: column;
+                flex: 0 0 300px;
+                z-index: 10;
+            }
+            .flagship-audio__contributions-banner-image {
+                flex: 1 1 auto;
+                display: flex;
+                justify-content: center;
+                z-index: 5;
+                svg {
+                    justify-content: center;
+                    position: absolute;
+                    bottom: 0;
+                    height: auto;
+                    width: auto;
+                    @include mq($until: phablet) {
+                        height: 60%;
+                        width: 60%;
+                    }
+                }
+            }
+        }
+
+        /* override height and color of line separating fc-container__header & fc-container__body  */
+        .fc-container__inner {
+            .fc-container__header {
+                &::after {
+                    background-color: rgba(0, 0, 0, .1);
+                    height: 300px;
+                }
+
             }
         }
     }

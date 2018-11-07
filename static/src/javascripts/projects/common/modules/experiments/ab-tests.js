@@ -2,7 +2,6 @@
 import { isExpired } from 'common/modules/experiments/test-can-run-checks';
 import { removeParticipation } from 'common/modules/experiments/utils';
 import { getTest as getAcquisitionTest } from 'common/modules/experiments/acquisition-test-selector';
-import { commercialPrebidAdYouLike } from 'common/modules/experiments/tests/commercial-prebid-adyoulike.js';
 import { commercialPrebidSafeframe } from 'common/modules/experiments/tests/commercial-prebid-safeframe.js';
 import { commercialAdVerification } from 'common/modules/experiments/tests/commercial-ad-verification.js';
 import { commercialCmpCustomise } from 'common/modules/experiments/tests/commercial-cmp-customise.js';
@@ -10,7 +9,6 @@ import { commercialCmpCustomise } from 'common/modules/experiments/tests/commerc
 export const TESTS: $ReadOnlyArray<ABTest> = [
     getAcquisitionTest(),
     commercialPrebidSafeframe,
-    commercialPrebidAdYouLike,
     commercialAdVerification,
     commercialCmpCustomise,
 ].filter(Boolean);

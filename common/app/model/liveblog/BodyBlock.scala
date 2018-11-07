@@ -18,13 +18,15 @@ object Blocks {
       blocks.sortBy(-_.publishedCreatedTimestamp().getOrElse(0L)) // Negate rather than reverse result: leaves
                                                                   // order unchanged when there are no timestamps
 
-    val bodyBlocks = orderBlocks(blocks.body.toSeq.flatMap(BodyBlock.make))
+    val mainBlock: Option[BodyBlock] = blocks.main.map(BodyBlock.make)
+    val bodyBlocks: Seq[BodyBlock] = orderBlocks(blocks.body.toSeq.flatMap(BodyBlock.make))
     val reqBlocks: Map[String, Seq[BodyBlock]] = blocks.requestedBodyBlocks.map { map =>
       map.toMap.mapValues(blocks => orderBlocks(BodyBlock.make(blocks)))
     }.getOrElse(Map())
     Blocks(
       totalBodyBlocks = blocks.totalBodyBlocks.getOrElse(bodyBlocks.length),
       body = bodyBlocks,
+      main = mainBlock,
       requestedBodyBlocks = reqBlocks
     )
   }
@@ -35,26 +37,29 @@ object Blocks {
 case class Blocks(
   totalBodyBlocks: Int,
   body: Seq[BodyBlock],
+  main: Option[BodyBlock],
   requestedBodyBlocks: Map[String, Seq[BodyBlock]]
 )
 
 object BodyBlock {
 
   def make(blocks: Seq[Block]): Seq[BodyBlock] =
-    blocks.map { bodyBlock =>
-        BodyBlock(bodyBlock.id,
-          bodyBlock.bodyHtml,
-          bodyBlock.bodyTextSummary,
-          bodyBlock.title,
-          BlockAttributes.make(bodyBlock.attributes),
-          bodyBlock.published,
-          bodyBlock.createdDate.map(_.toJoda),
-          bodyBlock.firstPublishedDate.map(_.toJoda),
-          bodyBlock.publishedDate.map(_.toJoda),
-          bodyBlock.lastModifiedDate.map(_.toJoda),
-          bodyBlock.contributors,
-          bodyBlock.elements.flatMap(BlockElement.make))
-      }
+    blocks.map(make)
+
+  def make(bodyBlock: Block): BodyBlock =
+      BodyBlock(bodyBlock.id,
+        bodyBlock.bodyHtml,
+        bodyBlock.bodyTextSummary,
+        bodyBlock.title,
+        BlockAttributes.make(bodyBlock.attributes),
+        bodyBlock.published,
+        bodyBlock.createdDate.map(_.toJoda),
+        bodyBlock.firstPublishedDate.map(_.toJoda),
+        bodyBlock.publishedDate.map(_.toJoda),
+        bodyBlock.lastModifiedDate.map(_.toJoda),
+        bodyBlock.contributors,
+        bodyBlock.elements.flatMap(BlockElement.make))
+
 
   sealed trait EventType
   case object KeyEvent extends EventType

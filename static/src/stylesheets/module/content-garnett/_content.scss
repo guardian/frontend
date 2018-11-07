@@ -84,12 +84,6 @@
             margin-right: gs-span(1) + $gs-gutter;
         }
     }
-
-    &.content__main-column--flagship {
-        @include mq(leftCol) {
-            border-left: 1px solid $brightness-46;
-        }
-    }
 }
 
 // % used for padding-bottom isn't supported on Grid items in FireFox <53
@@ -212,7 +206,7 @@
     .content--pillar-news &      { .content__label__link { color: $news-bright; } }
     .content--pillar-sport &     { .content__label__link { color: $sport-bright; } }
     .content--pillar-opinion &   { .content__label__link { color: $opinion-bright; } }
-    .content--pillar-culture &   { .content__label__link { color: $culture-bright; } }
+    .content--pillar-arts &      { .content__label__link { color: $culture-bright; } }
     .content--pillar-lifestyle & { .content__label__link { color: $lifestyle-bright; } }
 }
 
@@ -298,6 +292,14 @@
 
 .content__headline--flagship {
     padding-top: 0;
+
+    @include mq(leftCol) {
+        .content.content:not(.paid-content) & {
+            padding-left: $gs-gutter / 2;
+            margin-left: $gs-gutter / -2;
+            border-left: 1px solid $brightness-46;
+        }
+    }
 }
 
 .content__head--byline-pic {

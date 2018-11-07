@@ -8,20 +8,14 @@ import {
     buildPageTargeting,
     buildAppNexusTargetingObject,
 } from 'common/modules/commercial/build-page-targeting';
-import { commercialPrebidAdYouLike } from 'common/modules/experiments/tests/commercial-prebid-adyoulike';
 import { commercialPrebidSafeframe } from 'common/modules/experiments/tests/commercial-prebid-safeframe';
-import {
-    getParticipations,
-    getVariant,
-    isInVariant,
-} from 'common/modules/experiments/utils';
+import { getVariant, isInVariant } from 'common/modules/experiments/utils';
 import type {
     PrebidAdYouLikeParams,
     PrebidAppNexusParams,
     PrebidBid,
     PrebidBidder,
     PrebidImproveParams,
-    PrebidImproveSizeParam,
     PrebidIndexExchangeParams,
     PrebidOpenXParams,
     PrebidPubmaticParams,
@@ -40,9 +34,12 @@ import {
     getBreakpointKey,
     shouldIncludeAdYouLike,
     shouldIncludeAppNexus,
+    shouldIncludeImproveDigital,
     shouldIncludeOpenx,
     shouldIncludeOzone,
     shouldIncludeTrustX,
+    shouldIncludePangaea,
+    shouldIncludeXaxis,
     stripMobileSuffix,
     stripTrailingNumbersAbove1,
     isInUsRegion,
@@ -219,19 +216,9 @@ const getImprovePlacementId = (sizes: PrebidSize[]): number => {
     }
 };
 
-const getAdYouLikePlacementId = (): string => {
-    const test = commercialPrebidAdYouLike;
-    const participations = getParticipations();
-    const participation = participations ? participations[test.id] : {};
-    const variant = participation
-        ? getVariant(test, participation.variant)
-        : {};
-    return variant && variant.options ? variant.options.placementId : '';
-};
-
 // Improve has to have single size as parameter if slot doesn't accept multiple sizes,
 // because it uses same placement ID for multiple slot sizes and has no other size information
-const getImproveSizeParam = (slotId: string): PrebidImproveSizeParam => {
+const getImproveSizeParam = (slotId: string): { w?: number, h?: number } => {
     const key = stripTrailingNumbersAbove1(stripMobileSuffix(slotId));
     return key &&
         (key.endsWith('mostpop') ||
@@ -256,6 +243,7 @@ const getPangaeaPlacementId = (sizes: PrebidSize[]): number => {
         mmpu: number,
         dmpu: number,
     };
+    // todo: why does culture appear twice?
     const pangaeaList: Array<PangaeaSection> = [
         {
             sections: ['business'],
@@ -426,7 +414,6 @@ const trustXBidder: PrebidBidder = {
     bidParams: (slotId: string): PrebidTrustXParams => ({
         uid: getTrustXAdUnitId(slotId, isDesktopAndArticle),
     }),
-    labelAll: ['geo-NA'],
 };
 
 const improveDigitalBidder: PrebidBidder = {
@@ -436,7 +423,6 @@ const improveDigitalBidder: PrebidBidder = {
         placementId: getImprovePlacementId(sizes),
         size: getImproveSizeParam(slotId),
     }),
-    labelAny: ['edn-UK', 'edn-INT'],
 };
 
 const xaxisBidder: PrebidBidder = {
@@ -445,14 +431,13 @@ const xaxisBidder: PrebidBidder = {
     bidParams: (slotId: string, sizes: PrebidSize[]): PrebidXaxisParams => ({
         placementId: getXaxisPlacementId(sizes),
     }),
-    labelAll: ['edn-UK', 'deal-FirstLook'],
 };
 
 const adYouLikeBidder: PrebidBidder = {
     name: 'adyoulike',
     switchName: 'prebidAdYouLike',
     bidParams: (): PrebidAdYouLikeParams => ({
-        placement: getAdYouLikePlacementId(),
+        placement: '2b4d757e0ec349583ce704699f1467dd',
     }),
 };
 
@@ -524,7 +509,7 @@ const getDummyServerSideBidders = (): Array<PrebidBidder> => {
         dummyServerSideBidders.push(appnexusServerSideBidder);
 
         // Remove this switch after initial pangaea release
-        if (inPbTestOr(config.get('switches.ozonePangaea'))) {
+        if (inPbTestOr(shouldIncludePangaea())) {
             dummyServerSideBidders.push(pangaeaServerSideBidder);
         }
     }
@@ -559,10 +544,14 @@ const currentBidders: (PrebidSize[]) => PrebidBidder[] = slotSizes => {
         sonobiBidder,
         ...(inPbTestOr(shouldIncludeTrustX()) ? [trustXBidder] : []),
         ...(inPbTestOr(shouldIncludeAppNexus()) ? [appNexusBidder] : []),
-        improveDigitalBidder,
-        xaxisBidder,
+        ...(inPbTestOr(shouldIncludeImproveDigital())
+            ? [improveDigitalBidder]
+            : []),
+        ...(inPbTestOr(shouldIncludeXaxis()) ? [xaxisBidder] : []),
         pubmaticBidder,
-        ...(shouldIncludeAdYouLike(slotSizes) ? [adYouLikeBidder] : []),
+        ...(inPbTestOr(shouldIncludeAdYouLike(slotSizes))
+            ? [adYouLikeBidder]
+            : []),
         ...(shouldIncludeOpenx() ? [openxClientSideBidder] : []),
     ];
 
@@ -583,23 +572,14 @@ export const bids: (string, PrebidSize[]) => PrebidBid[] = (
             bidder: bidder.name,
             params: bidder.bidParams(slotId, slotSizes),
         };
-        if (!isPbTestOn()) {
-            // Label filtering only when not in test mode.
-            if (bidder.labelAny) {
-                bid.labelAny = bidder.labelAny;
-            }
-            if (bidder.labelAll) {
-                bid.labelAll = bidder.labelAll;
-            }
-        }
         return bid;
     });
 
 export const _ = {
-    getAdYouLikePlacementId,
     getDummyServerSideBidders,
     getIndexSiteId,
     getImprovePlacementId,
+    getPubmaticPublisherId,
     getTrustXAdUnitId,
     indexExchangeBidders,
 };

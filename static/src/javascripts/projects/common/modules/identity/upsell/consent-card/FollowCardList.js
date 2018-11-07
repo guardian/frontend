@@ -1,41 +1,61 @@
 // @flow
-import React, { Component } from 'preact-compat';
+import React from 'preact-compat';
 import config from 'lib/config';
 import { FollowCard } from 'common/modules/identity/upsell/consent-card/FollowCard';
+import {
+    setConsentsInApi,
+    getNewsletterConsent,
+    getUserConsent,
+} from 'common/modules/identity/upsell/store/consents';
+import { LegalTextBlock } from 'common/modules/identity/upsell/block/LegalTextBlock';
 import type { ConsentWithState } from '../store/types';
-import { setConsentsInApi } from '../store/consents';
 import { ErrorBar, genericErrorStr } from '../error-bar/ErrorBar';
-import { ExpanderButton } from '../button/ExpanderButton';
+import { FollowCardExpanderButton } from '../button/FollowCardExpanderButton';
 
-type FollowCardListProps = {
-    consents: Promise<ConsentWithState>[],
+const getConsents = (): Promise<(?ConsentWithState)[]> =>
+    Promise.all([
+        getUserConsent('supporter'),
+        getNewsletterConsent('the-long-read'),
+        getUserConsent('holidays'),
+        getNewsletterConsent('bookmarks'),
+        getUserConsent('events'),
+        getNewsletterConsent('brexit-briefing'),
+        getUserConsent('offers'),
+        getUserConsent('jobs'),
+        getNewsletterConsent('green-light'),
+        getNewsletterConsent('lab-notes'),
+    ]);
+
+type Props = {
     cutoff: number,
 };
 
-class FollowCardList extends Component<
-    FollowCardListProps,
-    {
-        consents: ConsentWithState[],
-        isExpanded: boolean,
-    }
-> {
-    constructor(props: FollowCardListProps) {
+type State = {
+    consents: ConsentWithState[],
+    isLoading: boolean,
+    isExpanded: boolean,
+    errors: string[],
+};
+
+// TODO: seperate this into a stateless component and a stateful wrapper.
+class FollowCardList extends React.Component<Props, State> {
+    constructor(props: Props) {
         super(props);
         this.setState({
             consents: [],
-            errors: [],
-            isExpanded: false,
             isLoading: true,
+            isExpanded: false,
+            errors: [],
         });
     }
 
     componentDidMount() {
-        Promise.all(this.props.consents).then(consents => {
+        getConsents().then(consents =>
             this.setState({
                 consents,
                 isLoading: false,
-            });
-        });
+            })
+        );
     }
 
     updateConsentState(consent: ConsentWithState) {
@@ -67,7 +87,7 @@ class FollowCardList extends Component<
     };
 
     render() {
-        const { consents, isExpanded, errors, isLoading } = this.state;
+        const { consents, isLoading, isExpanded, errors } = this.state;
         const { cutoff } = this.props;
 
         const displayables = isExpanded
@@ -97,7 +117,7 @@ class FollowCardList extends Component<
                 </div>
                 {[...consents].splice(cutoff).length > 0 && (
                     <div className="identity-upsell-consent-card-footer">
-                        <ExpanderButton
+                        <FollowCardExpanderButton
                             isExpanded={isExpanded}
                             linkName="upsell-follow-expander"
                             onToggle={this.updateExpandState}
@@ -120,6 +140,19 @@ class FollowCardList extends Component<
                         )}
                     </div>
                 )}
+                <LegalTextBlock>
+                    By subscribing, you confirm that you are 13 years or older.
+                    The Guardian’s newsletters may include advertising and
+                    messages about the Guardian’s other products and services,
+                    such as Jobs and Masterclasses. To find out what personal
+                    data we collect and how we use it, please visit our&nbsp;
+                    <a
+                        data-link-name="upsell-privacy-link"
+                        className="u-underline identity-upsell-consent-card__link"
+                        href="https://www.theguardian.com/info/privacy">
+                        Privacy Policy.
+                    </a>
+                </LegalTextBlock>
             </div>
         );
     }

@@ -22,6 +22,7 @@ import play.api.mvc.EssentialFilter
 import play.api.routing.Router
 import services.{NewspaperBooksAndSectionsAutoRefresh, OphanApi, SkimLinksCacheLifeCycle}
 import router.Routes
+import services.dotcomponents.RenderingTierPicker
 
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents = new BuiltInComponentsFromContext(context) with AppComponents
@@ -36,6 +37,9 @@ trait AppComponents extends FrontendComponents with ArticleControllers {
   lazy val healthCheck = wire[HealthCheck]
   lazy val devAssetsController = wire[DevAssetsController]
   lazy val logbackOperationsPool = wire[LogbackOperationsPool]
+
+  lazy val remoteRender = wire[renderers.RemoteRender]
+  lazy val renderingTierPicker = wire[RenderingTierPicker]
 
   override lazy val lifecycleComponents = List(
     wire[LogstashLifecycle],

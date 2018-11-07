@@ -37,7 +37,7 @@
                 position: absolute;
                 top: $gs-baseline/2;
 
-                @include mq($from: mobile, $until: mobileLandscape) {
+                @include mq($until: mobileLandscape) {
                     right: 0;
                 }
 
@@ -49,7 +49,7 @@
                     flex: 1 0 auto;
                 }
 
-                @include mq($from: mobile, $until: phablet) {
+                @include mq($until: phablet) {
                     svg {
                         transform-origin: top right;
                         transform: scale(.8);
@@ -85,7 +85,7 @@
                     }
                 }
 
-                @include mq($from: mobile, $until: desktop) {
+                @include mq($until: desktop) {
                     flex-direction: column;
                     border: 0;
                     padding: 0;
@@ -138,32 +138,30 @@
                 @include mq($from: phablet) {
                     position: absolute;
                     right: 0;
+                    bottom: 0;
                     z-index: 8;
                 }
                 .artwork-holder {
-                    margin-bottom: -8px;
                     width: 100%;
-
-                    svg {
-                        width: 100%;
+                    top: 0;
+                    @include mq($until: mobileMedium) {
+                        margin-bottom: -$gs-baseline*4;
                     }
-                    @include mq($from: desktop) {
-                        width: 100%;
-                        top: 0;
-
+                    @include mq($from: mobileMedium, $until: mobileLandscape) {
+                        margin-bottom: -$gs-baseline*3;
+                    }
+                    @include mq($from: mobileLandscape) {
+                        margin-bottom: -$gs-baseline/2;
                     }
                     @include mq($from: phablet, $until: desktop) {
-                        width: 60%;
                         float: right;
-                        top: 38px;
                         position: relative;
                     }
-                    @include mq($from: mobile, $until: phablet) {
-                        padding: 0 $gs-gutter/2;
-                        margin-bottom: -36px;
-                    }
-                    @include mq($from: mobile, $until: mobileMedium) {
-                        margin-bottom: -50px;
+                    svg {
+                        overflow: visible;
+                        @include mq($until: phablet) {
+                            width: 100%;
+                        }
                     }
 
                 }
@@ -189,7 +187,7 @@
         display: block;
         margin: 0;
 
-        @include mq($from: mobile, $until: phablet) {
+        @include mq($until: phablet) {
             display: none;
         }
         .flagship-audio__subscribe-label {
@@ -231,7 +229,7 @@
     #flagship-audio__mobile-only {
         display: none;
 
-        @include mq($from: mobile, $until: phablet) {
+        @include mq($until: phablet) {
             display: block;
             padding: 0;
 

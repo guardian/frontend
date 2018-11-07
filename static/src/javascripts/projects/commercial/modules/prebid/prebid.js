@@ -5,20 +5,13 @@ import config from 'lib/config';
 import { Advert } from 'commercial/modules/dfp/Advert';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import { bids } from 'commercial/modules/prebid/bid-config';
-import { labels } from 'commercial/modules/prebid/labels';
 import { slots } from 'commercial/modules/prebid/slot-config';
 import { priceGranularity } from 'commercial/modules/prebid/price-config';
 import type {
     PrebidBid,
     PrebidMediaTypes,
     PrebidSlot,
-    PrebidSlotLabel,
 } from 'commercial/modules/prebid/types';
-import {
-    getRandomIntInclusive,
-    stripMobileSuffix,
-    stripTrailingNumbersAbove1,
-} from 'commercial/modules/prebid/utils';
 
 const bidderTimeout = 1500;
 
@@ -42,11 +35,7 @@ const userSync = {
 const s2sConfig = {
     accountId: '1',
     enabled: true,
-    bidders: [
-        'appnexus',
-        'openx', // Defined in the doc.
-        'pangaea',
-    ],
+    bidders: ['appnexus', 'openx', 'pangaea'],
     timeout: bidderTimeout,
     adapter: 'prebidServer',
     is_debug: 'false',
@@ -60,19 +49,11 @@ class PrebidAdUnit {
     code: ?string;
     bids: ?(PrebidBid[]);
     mediaTypes: ?PrebidMediaTypes;
-    labelAny: ?(PrebidSlotLabel[]);
-    labelAll: ?(PrebidSlotLabel[]);
 
     constructor(advert: Advert, slot: PrebidSlot) {
         this.code = advert.id;
         this.bids = bids(advert.id, slot.sizes);
         this.mediaTypes = { banner: { sizes: slot.sizes } };
-        if (slot.labelAny) {
-            this.labelAny = slot.labelAny;
-        }
-        if (slot.labelAll) {
-            this.labelAll = slot.labelAll;
-        }
     }
 
     isEmpty() {
@@ -97,12 +78,7 @@ class PrebidService {
 
         window.pbjs.setConfig(pbjsConfig);
 
-        // gather analytics from 20% (1 in 5) of page views
-        const inSample = getRandomIntInclusive(1, 5) === 1;
-        if (
-            config.get('switches.prebidAnalytics', false) &&
-            (inSample || config.get('page.isDev', false))
-        ) {
+        if (config.get('switches.prebidAnalytics', false)) {
             window.pbjs.enableAnalytics([
                 {
                     provider: 'gu',
@@ -147,12 +123,9 @@ class PrebidService {
             return PrebidService.requestQueue;
         }
 
-        const adUnits: Array<PrebidAdUnit> = slots
-            .filter(slot =>
-                stripTrailingNumbersAbove1(
-                    stripMobileSuffix(advert.id)
-                ).endsWith(slot.key)
-            )
+        const isArticle = config.get('page.contentType') === 'Article';
+
+        const adUnits: Array<PrebidAdUnit> = slots(advert.id, isArticle)
             .map(effectiveSlotFlatMap)
             .reduce((acc, elt) => acc.concat(elt), []) // the "flat" in "flatMap"
             .map(slot => new PrebidAdUnit(advert, slot))
@@ -187,35 +160,6 @@ class PrebidService {
                                 auctionInitHandler
                             );
 
-                            const onAuctionEndHandler = () => {
-                                const getHighestCpm = (auctionBids): number =>
-                                    (auctionBids &&
-                                        auctionBids
-                                            .map(_ => _.cpm)
-                                            .sort()
-                                            .pop()) ||
-                                    0;
-                                const bidResponses = window.pbjs.getBidResponses()[
-                                    advert.id
-                                ];
-
-                                const cpm: number = getHighestCpm(
-                                    (bidResponses && bidResponses.bids) || []
-                                );
-                                if (cpm > 0) {
-                                    advert.slot.setTargeting('hb_cpm', cpm);
-                                }
-                                window.pbjs.offEvent(
-                                    'auctionEnd',
-                                    onAuctionEndHandler
-                                );
-                            };
-
-                            window.pbjs.onEvent(
-                                'auctionEnd',
-                                onAuctionEndHandler
-                            );
-
                             window.pbjs.requestBids({
                                 adUnits,
                                 bidsBackHandler() {
@@ -224,7 +168,6 @@ class PrebidService {
                                     ]);
                                     resolve();
                                 },
-                                labels,
                             });
                         });
                     })

@@ -4,8 +4,10 @@ import React, { Component } from 'preact-compat';
 type BlockProps = {
     title: string,
     subtitle: ?string,
+    subtext: ?string,
     sideBySide: ?boolean,
     sideBySideBackwards: ?boolean,
+    halfWidth: ?boolean,
     children: any,
 };
 
@@ -14,9 +16,11 @@ export class Block extends Component<BlockProps> {
         const {
             title,
             subtitle,
+            subtext,
             children,
             sideBySide,
             sideBySideBackwards,
+            halfWidth,
         } = this.props;
         return (
             <section
@@ -29,16 +33,28 @@ export class Block extends Component<BlockProps> {
                         ? 'identity-upsell-block--side-by-side identity-upsell-block--side-by-side--backwards'
                         : '',
                 ].join(' ')}>
-                <div className="identity-upsell-title">
-                    <h2 className="identity-upsell-title__title">{title}</h2>
-                    {subtitle && (
-                        <h3 className="identity-upsell-title__subtitle">
-                            {subtitle}
-                        </h3>
-                    )}
-                </div>
-                <div className="identity-upsell-block__container">
-                    {children}
+                <div
+                    className={
+                        halfWidth ? 'identity-upsell-block--half-width' : ''
+                    }>
+                    <div className="identity-upsell-title">
+                        <h2 className="identity-upsell-title__title">
+                            {title}
+                        </h2>
+                        {subtitle && (
+                            <h3 className="identity-upsell-title__subtitle">
+                                {subtitle}
+                            </h3>
+                        )}
+                        {subtext && (
+                            <p className="identity-upsell-title__subtext">
+                                {subtext}
+                            </p>
+                        )}
+                    </div>
+                    <div className="identity-upsell-block__container">
+                        {children}
+                    </div>
                 </div>
             </section>
         );

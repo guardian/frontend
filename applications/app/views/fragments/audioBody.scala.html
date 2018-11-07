@@ -9,6 +9,8 @@
 
 @trackingCode(target: String) = {@if(page.media.tags.isPodcast){podcast:subscribe:}@target:@page.media.metadata.webTitle}
 
+@seriesId() = {@audio.tags.tags.find(_.properties.podcast.nonEmpty).map(s => s.id.substring(s.id.lastIndexOf("/") + 1))}
+
 @defining(isPaidContent(page), isAdFree(request)) { case (isPaidContent, isAdFree) =>
 
 <div class="@RenderClasses(Map(
@@ -22,7 +24,6 @@
         ),
         "content",
         "content--media",
-        "content--flagship",
         s"content--pillar-${audio.metadata.pillar.nameOrDefault}",
         s"content--media--audio",
         "tonal",
@@ -36,18 +37,14 @@
         @fragments.headTonal(audio, page)
 
         <div class="podcast gs-container">
-            <figure class="podcast__player" data-component="main audio">
-                @audio.elements.mainAudio.map { audioElement =>
-                    @fragments.media.audio(
-                        AudioPlayer(
-                            audio,
-                            audioElement,
-                            audio.trail.headline,
-                            autoPlay = false
-                        ),
-                        isAdFree
-                    )
-                }
+            <figure class="podcast__player podcast__section"
+                data-component="main audio"
+                id="audio-component-container"
+                data-media-id="@audio.elements.mainAudio.map(_.properties.id)"
+                data-source="@audio.downloadUrl.map(Audio.acastUrl(_, false))"
+                data-download-url="@audio.downloadUrl.getOrElse("#")"
+                data-duration="@audio.duration"
+                >
             </figure>
 
             @for( series <- audio.tags.tags.find(_.properties.podcast.nonEmpty)
@@ -79,7 +76,7 @@
             </div>
 
             <div class="podcast__meta podcast__section">
-                <div class="podcast__meta-heading podcast__section-heading">Subscribe for free</div>
+                <div class="podcast__meta-heading podcast__section-heading">More ways to listen</div>
                 <ul class="podcast__meta-items">
                     @audio.iTunesSubscriptionUrl.map { iTunesSubscriptionUrl =>
                         <li class="podcast__meta-item podcast__meta-item--itunes">
@@ -114,17 +111,37 @@
                             </a>
                         </li>
                     }
+                    @audio.downloadUrl.map { downloadUrl =>
+                        <li class="podcast__meta-item podcast__meta-item--download">
+                            <a class="podcast__meta__item-link podcast__section-link"
+                                href="@downloadUrl"
+                                download
+                                data-link-name="@trackingCode("download")"
+                                >
+                                @fragments.inlineSvg("download", "journalism/audio", List("podcast__meta-icon", "podcast__section-icon"))
+                                Download
+                            </a>
+                        </li>
+                    }
                 </ul>
+            </div>
+
+            <div class="podcast__secondary podcast__section">
+                <div class="js-audio-components-container"></div>
+                @if(audio.fields.body.nonEmpty) {
+                    <div class="hide-on-childrens-books-site">
+                        @fragments.commercial.standardAd("right", Seq("dark"), Map("desktop" -> Seq("300,250", "300,274", "fluid")))
+                    </div>
+                }
             </div>
 
             <div class="podcast__support from-content-api podcast__section">
                 <div class="podcast__support-heading podcast__section-heading">Support The Guardian</div>
-                <p>The Guardian is editorially independent. And we want to keep our journalism,
-                    including our podcasts, open and accessible to all. But we increasingly
-                    need our readers to fund our work. You can support The Guardian from as
-                    little as £1 – and it only takes a minute.
+                <p>The Guardian is editorially independent.
+                    And we want to keep our journalism open and accessible to all.
+                    But we increasingly need our readers to fund our work.
                 </p>
-                <a href="https://support.theguardian.com/" class="podcast__support-link podcast__section-link">
+                <a href="https://support.theguardian.com/contribute?acquisitionData=%7B%22componentType%22%3A%22ACQUISITIONS_OTHER%22%2C%22source%22%3A%22DIRECT%22%2C%22campaignCode%22%3A%22@seriesId()%22%2C%22componentId%22%3A%22episode_page%22%7D&INTCMP=@seriesId()" class="podcast__support-link podcast__section-link">
                     Support The Guardian
                     @fragments.inlineSvg("arrow-right", "icon", List("podcast-support__icon", "podcast__section-icon"))
                 </a>
@@ -142,16 +159,7 @@
                 </div>
             </div>
 
-            <div class="podcast__secondary">
-                <div class="js-audio-components-container"></div>
-                @if(audio.fields.body.nonEmpty) {
-                    <div class="hide-on-childrens-books-site">
-                        @fragments.commercial.standardAd("right", Seq("dark"), Map("desktop" -> Seq("300,250", "300,274", "fluid")))
-                    </div>
-                }
-            </div>
-
-            <div class="podcast__submeta">
+            <div class="podcast__submeta podcast__section">
                 @fragments.submeta(audio)
             </div>
 

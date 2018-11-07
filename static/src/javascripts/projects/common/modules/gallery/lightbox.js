@@ -18,6 +18,7 @@ import endslateTpl from 'raw-loader!common/views/content/endslate.html';
 import loaderTpl from 'raw-loader!common/views/content/loader.html';
 import shareButtonTpl from 'raw-loader!common/views/content/share-button.html';
 import { loadCssPromise } from 'lib/load-css-promise';
+import fetch from 'lib/fetch';
 
 type ImageJson = {
     caption: string,
@@ -81,6 +82,7 @@ class GalleryLightbox {
     bodyScrollPosition: number;
     endslateEl: bonzo;
     endslate: Object;
+    startIndex: number;
 
     constructor(): void {
         // CONFIG
@@ -295,14 +297,85 @@ class GalleryLightbox {
         this.fsm.trigger(event, data);
     }
 
-    loadGalleryfromJson(galleryJson: GalleryJson, startIndex: number): void {
-        this.index = startIndex;
+    static loadNextOrPrevious(
+        currentImageId: string,
+        direction: string
+    ): Promise<Object> {
+        const pathPrefix = direction === 'forwards' ? 'getnext' : 'getprev';
+        const seriesTag = config
+            .get('page.nonKeywordTagIds', '')
+            .split(',')
+            .filter(tag => tag.includes('series'))[0];
+        const fetchUrl = `/${pathPrefix}/${seriesTag}/${currentImageId}`;
+        return fetch(fetchUrl)
+            .then(response => response.json())
+            .then(json =>
+                // filter out non-lightbox items in the series
+                json.filter(image => image.images.length > 0)
+            );
+    }
 
-        if (this.galleryJson && galleryJson.id === this.galleryJson.id) {
+    loadOrOpen(newGalleryJson: GalleryJson, index: number): void {
+        this.index = index;
+        if (
+            this.galleryJson &&
+            newGalleryJson.id === this.galleryJson.id &&
+            newGalleryJson.images.length === this.galleryJson.images.length
+        ) {
             this.trigger('open');
         } else {
-            this.trigger('loadJson', galleryJson);
+            this.trigger('loadJson', newGalleryJson);
         }
+    }
+
+    fetchSurroundingJson(galleryJson: GalleryJson): Promise<Object> {
+        // if this is an image page, load series of images into the lightbox
+        if (
+            config.get('page.contentType') === 'ImageContent' &&
+            galleryJson.images.length < 2
+        ) {
+            // store current path with leading slash removed
+            const currentId = window.location.pathname.substring(1);
+            // fetch next and previous images and load them
+            return Promise.all([
+                GalleryLightbox.loadNextOrPrevious(currentId, 'forwards'),
+                GalleryLightbox.loadNextOrPrevious(currentId, 'backwards'),
+            ])
+                .then(([nextResult, previousResult]) => ({
+                    next: nextResult.map(e => e.images[0]),
+                    previous: previousResult.map(e => e.images[0]),
+                }))
+                .then(({ next, previous }) => {
+                    // combine this image, and the ones before and after it, into one big array
+                    const allImages = previous
+                        .reverse()
+                        .concat(galleryJson.images, next);
+                    if (allImages.length < 2) {
+                        bonzo([this.nextBtn, this.prevBtn]).hide();
+                        $(
+                            '.gallery-lightbox__progress',
+                            this.lightboxEl
+                        ).hide();
+                    }
+
+                    galleryJson.images = allImages;
+                    this.startIndex = previous.length + 1;
+
+                    return galleryJson;
+                });
+        }
+
+        return Promise.resolve(galleryJson);
+    }
+
+    loadHtml(json: GalleryJson): void {
+        this.images = json.images || [];
+        const imagesHtml = json.images
+            .map((img, i) => this.generateImgHTML(img, i + 1))
+            .join('');
+        this.$contentEl.html(imagesHtml);
+        this.$images = $('.js-gallery-lightbox-img', this.$contentEl[0]);
+        this.$countEl.text(this.images.length);
     }
 
     loadSurroundingImages(index: number, count: number): void {
@@ -435,19 +508,7 @@ class GalleryLightbox {
                 },
                 loadJson(json: GalleryJson): void {
                     this.galleryJson = json;
-                    this.images = json.images || [];
-                    this.$countEl.text(this.images.length);
-
-                    const imagesHtml = this.images
-                        .map((img, i) => this.generateImgHTML(img, i + 1))
-                        .join('');
-
-                    this.$contentEl.html(imagesHtml);
-
-                    this.$images = $(
-                        '.js-gallery-lightbox-img',
-                        this.$contentEl[0]
-                    );
+                    this.loadHtml(json);
 
                     if (this.showEndslate) {
                         this.loadEndslate();
@@ -457,14 +518,6 @@ class GalleryLightbox {
 
                     if (this.useSwipe) {
                         this.initSwipe();
-                    }
-
-                    if (this.galleryJson.images.length < 2) {
-                        bonzo([this.nextBtn, this.prevBtn]).hide();
-                        $(
-                            '.gallery-lightbox__progress',
-                            this.lightboxEl
-                        ).hide();
                     }
 
                     this.state = 'image';
@@ -612,10 +665,8 @@ const init = (): void => {
         const images = config.get('page.lightboxImages');
 
         if (images && images.images.length > 0) {
-            let lightbox;
+            const lightbox = new GalleryLightbox();
             const galleryHash = window.location.hash;
-
-            let res;
 
             bean.on(document.body, 'click', '.js-gallerythumbs', (e: Event) => {
                 e.preventDefault();
@@ -628,25 +679,33 @@ const init = (): void => {
                 const galleryIndex = Number.isNaN(parsedGalleryIndex)
                     ? 1
                     : parsedGalleryIndex; // 1-based index
-                lightbox = lightbox || new GalleryLightbox();
 
-                lightbox.loadGalleryfromJson(images, galleryIndex);
+                lightbox.fetchSurroundingJson(images).then(allImages => {
+                    const startIndex = lightbox.startIndex
+                        ? lightbox.startIndex
+                        : galleryIndex;
+                    lightbox.loadOrOpen(allImages, startIndex);
+                });
             });
 
-            lightbox = lightbox || new GalleryLightbox();
             const galleryId = `/${config.get('page.pageId')}`;
             const match = /\?index=(\d+)/.exec(document.location.href);
+            const res = /^#(?:img-)?(\d+)$/.exec(galleryHash);
+
+            let lightboxIndex = 0;
 
             if (match) {
                 // index specified so launch lightbox at that index
                 pushUrl({}, document.title, galleryId, true); // lets back work properly
-                lightbox.loadGalleryfromJson(images, parseInt(match[1], 10));
-            } else {
-                res = /^#(?:img-)?(\d+)$/.exec(galleryHash);
+                lightboxIndex = parseInt(match[1], 10);
+            } else if (res) {
+                lightboxIndex = parseInt(res[1], 10);
+            }
 
-                if (res) {
-                    lightbox.loadGalleryfromJson(images, parseInt(res[1], 10));
-                }
+            if (lightboxIndex > 0) {
+                lightbox.fetchSurroundingJson(images).then(allImages => {
+                    lightbox.loadOrOpen(allImages, lightboxIndex);
+                });
             }
         }
     });

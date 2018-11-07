@@ -21,10 +21,14 @@ import type { PrebidAppNexusParams, PrebidSize } from './types';
 
 const getAppNexusInvCode = (sizes: Array<PrebidSize>): ?string => {
     const device: string = getBreakpointKey() === 'M' ? 'M' : 'D';
-    const section: string = config.get('page.section', 'unknown');
+    // section is optional and makes it through to the config object as an empty string... OTL
+    const sectionName =
+        config.get('page.section', '') ||
+        config.get('page.sectionName', '').replace(/ /g, '-');
+
     const slotSize: PrebidSize | null = getLargestSize(sizes);
     if (slotSize) {
-        return `${device}${section.toLowerCase()}${slotSize.join('x')}`;
+        return `${device}${sectionName.toLowerCase()}${slotSize.join('x')}`;
     }
 };
 
@@ -107,7 +111,10 @@ export const getAppNexusDirectBidParams = (
             return {
                 invCode,
                 member: '7012',
-                keywords: buildAppNexusTargetingObject(buildPageTargeting()),
+                keywords: {
+                    invc: [invCode],
+                    ...buildAppNexusTargetingObject(buildPageTargeting()),
+                },
             };
         }
     }
