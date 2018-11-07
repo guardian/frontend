@@ -20,13 +20,13 @@ export const acquisitionsBannerFivTemplate = (
     </div>
     <div class="fiv-banner__container">
         <div class="fiv-banner__text">
-            WOOWOOWOO${location}
+            This is a test banner for FIV - if you see it please email userhelp@theguardian.com
         </div>
         <div class="fiv-banner__cta">
             <button class="button fiv-banner__button" href="${
                 linkUrl
             }">
-                Caption${arrowWhiteRight.markup}
+                Go${arrowWhiteRight.markup}
             </button>
             <img
                 class="fiv-banner__payment-logos"

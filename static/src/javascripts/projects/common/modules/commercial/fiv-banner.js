@@ -23,7 +23,7 @@ const defaultEngagementBannerParams = () => {
     const linkUrl = 'https://www.theguardian.com/'; // TODO
 
     return {
-        campaignCode: 'gdnwb_copts_fiv_banner',// TODO check these values are ok
+        campaignCode: 'gdnwb_copts_fiv_banner',
         pageviewId: config.get('ophan.pageViewId', 'not_found'),
         products: ['CONTRIBUTION', 'RECURRING_CONTRIBUTION'],
         linkUrl: supportContributeURL,
@@ -39,7 +39,7 @@ const showBanner = (params: EngagementBannerParams): void => {
 
     const linkUrl = addTrackingCodesToUrl({
         base: params.linkUrl,
-        componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
+        componentType: 'ACQUISITIONS_FIV_BANNER',
         componentId: params.campaignCode,
         campaignCode: params.campaignCode,
     });
@@ -100,7 +100,7 @@ const canShow = (): Promise<boolean> => {
     }
 
     if (!window.location.hash.match(/[#&]fivtest(&.*)?$/)) {
-        if (!config.get('switches.fivBanner')/*TODO create the switch*/ || isBlocked()/*TODO CHECK THIS*/) {
+        if (!config.get('switches.fivBanner') || isBlocked()/*not important but see pr#17062*/) {
             return Promise.resolve(false);
         }
     }
