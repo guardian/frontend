@@ -53,6 +53,6 @@ object HeaderSubscribeUKTest extends Experiment(
   name = "header-subscribe-uk-test",
   description = "We're changing the order and destination of the contribution and subscribe links in order to see if we can improve the subscription revenue",
   owners = Seq(Owner.withGithub("rcrphillips")),
-  sellByDate = new LocalDate(2018, 11, 30),
+  sellByDate = new LocalDate(2018, 11, 11),
   participationGroup = Perc50
 )
