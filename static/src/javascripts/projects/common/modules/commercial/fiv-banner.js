@@ -29,6 +29,9 @@ const defaultEngagementBannerParams = () => ({
     products: ['CONTRIBUTION', 'RECURRING_CONTRIBUTION'],
     linkUrl: supportContributeURL,
     hideBanner,
+    buttonCaption: 'n/a',
+    ctaText: 'n/a',
+    messageText: 'n/a',
 });
 
 const showBanner = (params: EngagementBannerParams): void => {
