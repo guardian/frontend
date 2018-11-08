@@ -51,7 +51,7 @@
 
 .contributions__title--one-million {
     font-size: 32px;
-    line-height: 0.94;
+    line-height: .94;
 }
 
 .contributions__highlight {
@@ -146,7 +146,7 @@ a[href].contributions__contribute.contributions__contribute--epic {
     }
 
     &.contributions__contribute--subscribe {
-        border: 1px solid rgba(118, 118, 118, 0.4);
+        border: 1px solid rgba(118, 118, 118, .4);
         background-color: transparent;
 
         &:hover {
@@ -156,7 +156,7 @@ a[href].contributions__contribute.contributions__contribute--epic {
 }
 
 .contributions__contribute--subscribe {
-    border: 1px solid rgba(118, 118, 118, 0.4);
+    border: 1px solid rgba(118, 118, 118, .4);
     background-color: transparent;
 
     &:hover {
