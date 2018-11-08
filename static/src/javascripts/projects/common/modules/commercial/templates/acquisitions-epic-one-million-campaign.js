@@ -26,7 +26,7 @@ export const acquisitionsEpicOneMillionCampaignTemplate = ({
                 )
                     .map(
                         paragraph =>
-                            `<p class="contributions__paragraph">${paragraph}</p>`
+                            `<p>${paragraph}</p>`
                     )
                     .join('')}
             </div>
