@@ -27,12 +27,8 @@
 }
 
 .contributions__title {
-    @include fs-header(2);
-    margin: 0;
-}
-
-.contributions__paragraph {
-    @include fs-bodyCopy(2);
+    @include fs-header(3);
+    margin-bottom: $gs-baseline;
 }
 
 .contributions__highlight {
@@ -129,6 +125,23 @@ a[href].contributions__contribute.contributions__contribute--epic {
 
 .contributions__contribute--epic-member {
     margin: $gs-baseline/3 $gs-gutter/2 $gs-baseline/3 0;
+}
+
+.contributions__buttons {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    margin-top: $gs-baseline * 2;
+
+    // Horizontal alignment
+    align-items: flex-start;
+
+    @include mq($from: mobileLandscape) {
+        flex-direction: row;
+
+        // Now vertical alignment, because the flex-direction is row
+        align-items: center;
+    }
 }
 
 .acquisitions-epic-iframe {

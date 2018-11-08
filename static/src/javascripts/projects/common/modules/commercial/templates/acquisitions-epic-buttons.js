@@ -18,7 +18,7 @@ export const epicButtonsTemplate = ({ supportUrl = '' }: CtaUrls) => {
     )}" alt="Paypal and credit card">`;
 
     return `
-        <div class="contributions__amount-field">
+        <div class="contributions__buttons">
             ${supportButtonSupport}
             ${paymentLogos}
         </div>`;
