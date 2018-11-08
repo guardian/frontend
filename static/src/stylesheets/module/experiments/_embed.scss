@@ -28,6 +28,7 @@
 
 .contributions__title {
     @include fs-header(2);
+    margin-bottom: $gs-baseline;
 }
 
 .contributions__highlight {
