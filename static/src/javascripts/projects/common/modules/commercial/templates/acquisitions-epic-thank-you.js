@@ -11,7 +11,7 @@ export const acquisitionsEpicThankYouTemplate = ({
             <h2 class="contributions__title">
                 Thank you …
             </h2>
-            <p class="contributions__paragraph">
+            <p>
                 … for supporting us, by funding our independent journalism and helping to keep it open.
                 Your contribution and the similar pledges of more than 800,000 readers around the world
                 enables the Guardian’s journalists to find things out, reveal new information and challenge
