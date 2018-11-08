@@ -4,11 +4,11 @@ import com.softwaremill.macwire._
 import commercial.CommercialLifecycle
 import commercial.controllers.CommercialControllers
 import commercial.targeting.TargetingLifecycle
-import common.{ApplicationMetrics, CloudWatchMetricsLifecycle, ContentApiMetrics}
 import common.Logback.{LogbackOperationsPool, LogstashLifecycle}
 import common.dfp.FaciaDfpAgentLifecycle
-import conf.{CachedHealthCheckLifeCycle, FootballLifecycle}
+import common.{ApplicationMetrics, CloudWatchMetricsLifecycle, ContentApiMetrics}
 import conf.switches.SwitchboardLifecycle
+import conf.{CachedHealthCheckLifeCycle, FootballLifecycle}
 import contentapi._
 import controllers._
 import controllers.front.FrontJsonFapiDraft
@@ -20,11 +20,11 @@ import football.controllers.FootballControllers
 import http.PreviewFilters
 import model.ApplicationIdentity
 import play.api.ApplicationLoader.Context
-import play.api.{BuiltInComponents, BuiltInComponentsFromContext}
 import play.api.http.HttpErrorHandler
 import play.api.libs.ws.WSClient
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router
+import play.api.{BuiltInComponents, BuiltInComponentsFromContext}
 import router.Routes
 import rugby.conf.RugbyLifecycle
 import rugby.controllers.RugbyControllers
@@ -92,7 +92,7 @@ trait AppComponents
   override lazy val contentApiClient = wire[PreviewContentApi]
   override lazy val ophanApi = wire[OphanApi]
 
-  lazy val remoteRender = wire[renderers.RemoteRender]
+  lazy val remoteRender = wire[renderers.RemoteRenderer]
   lazy val renderingTierPicker = wire[RenderingTierPicker]
 
   override lazy val appMetrics = ApplicationMetrics(

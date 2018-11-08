@@ -8,7 +8,7 @@
 
 .site-message--membership-action-required {
     color: $brightness-100;
-    background: $sport-dark;
+    background: $news-dark;
 
     .site-message__inner {
         width: auto;
@@ -29,23 +29,21 @@
         .inline-icon {
             fill: $brightness-100;
             path:last-child {
-                fill: $brightness-7;
+                fill: $news-dark;
             }
         }
 
         display: block;
-        bottom: $gs-baseline;
-        right: $gs-baseline;
+        top: $gs-baseline/2;
+        right: $gs-baseline + 36px;
         svg {
-            width: 32px;
-            height: 32px;
+            width: 36px;
+            height: 36px;
         }
 
         @include mq(desktop) {
-            top: $gs-baseline;
             left: $gs-gutter;
             right: auto;
-            bottom: auto;
             svg {
                 width: inherit;
                 height: inherit;
@@ -53,16 +51,18 @@
         }
 
         @include mq(tablet) {
-            right: $gs-gutter;
+            right: $gs-gutter + 36px;
         }
 
     }
 
     .site-message__close-btn {
         position: absolute;
-        top: $gs-baseline;
+        top: $gs-baseline/2;
         right: $gs-baseline;
-
+        height: 36px;
+        width: 36px;
+        
         .inline-icon {
             fill: $brightness-100;
         }
@@ -75,8 +75,8 @@
 
     .site-message__copy {
         @include padding;
+        padding-top: $gs-baseline/4 !important;
         @include mq(desktop) {
-            display: flex;
             margin-left: gs-span(1);
         }
         @include mq(leftCol) {
@@ -84,46 +84,54 @@
         }
     }
 
-    .site-message__copy-text {
+    .site-message__copy-text, .site-message__copy-heading {
         @include banner-copy-alignment;
         display: block;
-        margin-bottom: 12px;
         margin-right: 24px;
-        font-size: 16px;
-        line-height: 20px;
+        font-size: 17px;
+        line-height: 22px;
         @include mq(phablet) {
-            font-size: 18px;
-            line-height: 24px;
             width: auto;
             margin-right: gs-span(1);
         }
         @include mq(desktop) {
-            flex-basis: gs-span(6) + $gs-gutter*3;
             margin-right: gs-span(2);
+            padding-left: 36px + $gs-gutter
         }
         @include mq(leftCol) {
-            margin-bottom: 0;
             margin-right: gs-span(3);
-            flex-basis: gs-span(6) + $gs-gutter*2;
+            padding-left: 0;
         }
+    }
+
+    .site-message__copy-heading {
+        font-size: 24px;
+        line-height: 28px;
+        font-weight: bold;
+        margin-bottom: 5px;
+        margin-right: 72px;
     }
 
     .site-message__copy-button {
         color: $brightness-7;
         background-color: $highlight-main;
         border-color: $highlight-main;
-        font-size: 14px;
-        line-height: 36px;
-        height: 36px;
+        font-size: 16px;
+        line-height: 40px;
+        height: 42px;
+        font-weight: bold;
         vertical-align: middle;
         padding-right: 0;
         text-decoration: none;
+        margin-top: 10px;
+        padding-left: 1rem;
         svg {
             fill: $brightness-7;
             float: right;
             margin-left: 36px;
-            padding-top: 3px;
-}
+            height: 2.5rem;
+            width: 2.5rem;
+        }
 
         &:hover, &:focus {
             border-color: mix($highlight-main, $brightness-7, 80%);

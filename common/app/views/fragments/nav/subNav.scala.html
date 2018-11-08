@@ -1,6 +1,7 @@
 @import common.{ Edition, LinkTo }
 @import navigation.{ NavLink, NavMenu, FlatSubnav, ParentSubnav }
 @import views.support.RenderClasses
+@import conf.switches.Switches.{ NewNavEnabled }
 
 @(navMenu: NavMenu, isFooter: Boolean = false)(implicit request: RequestHeader)
 
@@ -50,4 +51,9 @@
             }
         </div>
     </div>
+    @if(NewNavEnabled.isSwitchedOn) {
+        <div class="new-header__multiline">
+            <div class="gs-container"></div>
+        </div>
+    }
 }

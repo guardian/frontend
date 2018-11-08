@@ -2,163 +2,165 @@
    Site wide search
    ========================================================================== */
 
-.search-placeholder {
-    min-height: 50px;
-    padding-top: $gs-baseline/2;
-}
-.search-box {
-    margin: 0 $gs-gutter/2;
-
-    @include mq(mobileLandscape) {
-        margin-left: $gs-gutter;
-        margin-right: $gs-gutter;
+body:not(.has-new-navigation) {
+    .search-placeholder {
+        min-height: 50px;
+        padding-top: $gs-baseline/2;
     }
-}
-.gsc-control-cse {
-    padding: 0 $gs-gutter/2 !important;
+    .search-box {
+        margin: 0 $gs-gutter/2;
 
-    @include mq(mobileLandscape) {
-        padding: 0 $gs-gutter !important;
+        @include mq(mobileLandscape) {
+            margin-left: $gs-gutter;
+            margin-right: $gs-gutter;
+        }
     }
-}
-// Align "×" icon (cancel search button)
-span.gscb_a {
-    position: relative;
-    font: normal 24px/16px Georgia, serif !important;
-    top: 2px;
-    font-size: 24px;
-    line-height: 16px;
-}
-.gsc-search-box {
-    padding: 0;
-    max-width: none;
-}
-.gsc-search-box .gsc-input-box {
-    height: 28px;
-}
-.gsc-search-box .gsc-input {
-    padding: 0 !important;
-    margin: 0 !important;
-}
-td.gsc-search-button {
-    margin: 0 !important;
-    padding: 0 !important;
-}
-.gsc-search-button-v2 {
-    border-radius: 0 !important;
-    margin: 0 !important;
-    padding: 7px 9px 8px !important;
-}
-.gsc-completion-container,
-.gsc-input {
-    font-family: $f-sans-serif-text;
-}
+    .gsc-control-cse {
+        padding: 0 $gs-gutter/2 !important;
 
-.gsc-result-info {
-    padding-left: 0; // Remove space before "About x results (x seconds)"
-}
-// Stack "About … results" and "Sort by" on mobile
-@include mq($until: mobileLandscape) {
-    .gsc-result-info-container,
-    .gsc-orderby-container {
+        @include mq(mobileLandscape) {
+            padding: 0 $gs-gutter !important;
+        }
+    }
+    // Align "×" icon (cancel search button)
+    span.gscb_a {
+        position: relative;
+        font: normal 24px/16px Georgia, serif !important;
+        top: 2px;
+        font-size: 24px;
+        line-height: 16px;
+    }
+    .gsc-search-box {
+        padding: 0;
+        max-width: none;
+    }
+    .gsc-search-box .gsc-input-box {
+        height: 28px;
+    }
+    .gsc-search-box .gsc-input {
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    td.gsc-search-button {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    .gsc-search-button-v2 {
+        border-radius: 0 !important;
+        margin: 0 !important;
+        padding: 7px 9px 8px !important;
+    }
+    .gsc-completion-container,
+    .gsc-input {
+        font-family: $f-sans-serif-text;
+    }
+
+    .gsc-result-info {
+        padding-left: 0; // Remove space before "About x results (x seconds)"
+    }
+    // Stack "About … results" and "Sort by" on mobile
+    @include mq($until: mobileLandscape) {
+        .gsc-result-info-container,
+        .gsc-orderby-container {
+            display: block;
+        }
+    }
+
+    .gsc-results .gsc-thumbnail-inside,
+    .gsc-results .gsc-url-top {
+        padding-left: 0;
+    }
+    .gsc-results .gs-visibleUrl-long {
+        white-space: nowrap;
+    }
+    .gsc-result .gs-title,
+    .gsc-result .gs-title * {
+        height: inherit !important;
+        overflow: visible !important;
+        text-decoration: none !important;
+    }
+    /*Add space between pagination links to make them more touch friendly*/
+    .gsc-results .gsc-cursor-box {
+        margin: 0 0 ($gs-baseline/3)*4 !important;
+    }
+    .gsc-results .gsc-cursor-box .gsc-cursor-page {
+        margin-right: 22px !important;
+    }
+
+    // Remove border on thumbnails
+    .gs-result img.gs-image,
+    .gs-result img.gs-promotion-image {
+        border: 0 !important;
+    }
+    // Thumbnails are on the grid
+    .gs-web-image-box-landscape img.gs-image {
+        margin-top: 1px; // align with top of text
+        width: gs-span(2) !important;
+        height: 84px !important;
+        max-width: none !important;
+        max-height: none !important;
+    }
+    .gs-image-box.gs-web-image-box.gs-web-image-box-landscape {
+        width: gs-span(2) + $gs-gutter/2 !important;
+    }
+    // Float image to the left
+    .gsc-table-result {
+        > tr > td,
+        > tbody > tr > td {
+            display: inline;
+        }
+        .gsc-table-cell-thumbnail {
+            float: left;
+        }
+    }
+    // Make snippet look like a standfirst
+    .gs-webResult .gs-snippet,
+    .gs-imageResult .gs-snippet {
+        @include f-headline;
+        font-size: get-font-size(headline, 1) !important;
+        line-height: get-line-height(headline, 1) !important;
+        color: $brightness-46 !important;
+    }
+    // Hide URLs
+    .gsc-url-top {
+        display: none !important;
+    }
+    /* Make titles look like story headlines*/
+    .gsc-thumbnail-inside a.gs-title {
+        @include fs-headline(2);
         display: block;
+        padding-bottom: 10px;
     }
-}
-
-.gsc-results .gsc-thumbnail-inside,
-.gsc-results .gsc-url-top {
-    padding-left: 0;
-}
-.gsc-results .gs-visibleUrl-long {
-    white-space: nowrap;
-}
-.gsc-result .gs-title,
-.gsc-result .gs-title * {
-    height: inherit !important;
-    overflow: visible !important;
-    text-decoration: none !important;
-}
-/*Add space between pagination links to make them more touch friendly*/
-.gsc-results .gsc-cursor-box {
-    margin: 0 0 ($gs-baseline/3)*4 !important;
-}
-.gsc-results .gsc-cursor-box .gsc-cursor-page {
-    margin-right: 22px !important;
-}
-
-// Remove border on thumbnails
-.gs-result img.gs-image,
-.gs-result img.gs-promotion-image {
-    border: 0 !important;
-}
-// Thumbnails are on the grid
-.gs-web-image-box-landscape img.gs-image {
-    margin-top: 1px; // align with top of text
-    width: gs-span(2) !important;
-    height: 84px !important;
-    max-width: none !important;
-    max-height: none !important;
-}
-.gs-image-box.gs-web-image-box.gs-web-image-box-landscape {
-    width: gs-span(2) + $gs-gutter/2 !important;
-}
-// Float image to the left
-.gsc-table-result {
-    > tr > td,
-    > tbody > tr > td {
-        display: inline;
-    }
-    .gsc-table-cell-thumbnail {
-        float: left;
-    }
-}
-// Make snippet look like a standfirst
-.gs-webResult .gs-snippet,
-.gs-imageResult .gs-snippet {
-    @include f-headline;
-    font-size: get-font-size(headline, 1) !important;
-    line-height: get-line-height(headline, 1) !important;
-    color: $brightness-46 !important;
-}
-// Hide URLs
-.gsc-url-top {
-    display: none !important;
-}
-/* Make titles look like story headlines*/
-.gsc-thumbnail-inside a.gs-title {
-    @include fs-headline(2);
-    display: block;
-    padding-bottom: 10px;
-}
-.gs-webResult.gs-result a.gs-title,
-.gs-imageResult a.gs-title {
-    &,
-    b {
-        color: $brightness-7 !important;
-    }
-
-    &:visited {
+    .gs-webResult.gs-result a.gs-title,
+    .gs-imageResult a.gs-title {
         &,
         b {
-            color: $brightness-46;
+            color: $brightness-7 !important;
+        }
+
+        &:visited {
+            &,
+            b {
+                color: $brightness-46;
+            }
+        }
+
+        &:active {
+            &,
+            b {
+                color: $brightness-7;
+            }
+        }
+
+        &:hover {
+            text-decoration: underline !important;
         }
     }
-
-    &:active {
-        &,
-        b {
-            color: $brightness-7;
-        }
+    .gsc-expansionArea .gsc-result {
+        border-top: 1px solid $brightness-86 !important;
     }
-
-    &:hover {
-        text-decoration: underline !important;
+    .gsc-webResult .gsc-result {
+        padding-top: 2px;
+        padding-bottom: 20px;
     }
-}
-.gsc-expansionArea .gsc-result {
-    border-top: 1px solid $brightness-86 !important;
-}
-.gsc-webResult .gsc-result {
-    padding-top: 2px;
-    padding-bottom: 20px;
 }

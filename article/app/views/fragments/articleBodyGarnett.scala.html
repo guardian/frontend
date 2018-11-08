@@ -17,7 +17,9 @@
 @defining(model.article) { article =>
   @defining(isPaidContent(model)) { isPaidContent =>
 
-    <div class="l-side-margins">
+    <div class="@RenderClasses(Map(
+        "l-side-margins--paidfor" ->  isPaidContent
+    ), "l-side-margins")">
         <article id="article" data-test-id="article-root"
 
         class="@RenderClasses(Map(

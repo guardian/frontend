@@ -17,7 +17,7 @@ export const acquisitionsEpicControlTemplate = ({
     `<div class="contributions__epic ${epicClass}" data-component="${componentName}" data-link-name="epic">
         <div class="${wrapperClass}">
             <div>
-                <h2 class="contributions__title contributions__title--epic">
+                <h2 class="contributions__title">
                     ${heading}
                 </h2>
                 ${appendToLastElement(
@@ -26,7 +26,7 @@ export const acquisitionsEpicControlTemplate = ({
                 )
                     .map(
                         paragraph =>
-                            `<p class="contributions__paragraph contributions__paragraph--epic">${paragraph}</p>`
+                            `<p class="contributions__paragraph">${paragraph}</p>`
                     )
                     .join('')}
             </div>

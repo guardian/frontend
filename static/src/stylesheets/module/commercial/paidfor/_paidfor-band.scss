@@ -35,6 +35,12 @@
     justify-content: space-between;
     box-sizing: border-box;
 
+    @include mq(tablet) {
+        border: 1px solid $brightness-60;
+        border-bottom: 0;
+        border-top: 0;
+    }
+
     .inline-glabs-logo__svg {
         margin-top: $gs-baseline / 4;
         margin-right: $gs-column-width * 2;

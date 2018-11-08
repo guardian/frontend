@@ -3,8 +3,9 @@ package model.liveblog
 import java.util.Locale
 
 import implicits.Dates.CapiRichDateTime
-import com.gu.contentapi.client.model.v1.{Block, MembershipPlaceholder => ApiMembershipPlaceholder, BlockAttributes => ApiBlockAttributes, Blocks => ApiBlocks}
+import com.gu.contentapi.client.model.v1.{Block, BlockAttributes => ApiBlockAttributes, Blocks => ApiBlocks, MembershipPlaceholder => ApiMembershipPlaceholder}
 import model.liveblog.BodyBlock._
+import model.dotcomrendering.pageElements.PageElement
 import org.joda.time.format.{DateTimeFormat, ISODateTimeFormat}
 import org.joda.time.{DateTime, DateTimeZone}
 import org.jsoup.Jsoup
@@ -32,6 +33,7 @@ object Blocks {
   }
 
   implicit val blocksWrites: Writes[Blocks] = Json.writes[Blocks]
+
 }
 
 case class Blocks(
@@ -58,7 +60,9 @@ object BodyBlock {
         bodyBlock.publishedDate.map(_.toJoda),
         bodyBlock.lastModifiedDate.map(_.toJoda),
         bodyBlock.contributors,
-        bodyBlock.elements.flatMap(BlockElement.make))
+        bodyBlock.elements.flatMap(BlockElement.make),
+        bodyBlock.elements.flatMap(PageElement.make)
+      )
 
 
   sealed trait EventType
@@ -68,6 +72,7 @@ object BodyBlock {
 
   implicit val dateWrites =  play.api.libs.json.JodaWrites.JodaDateTimeNumberWrites
   implicit val blockElementWrites = BlockElement.blockElementWrites
+  implicit val pageElementsWrites = PageElement.blockElementWrites
   implicit val bodyBlockWrites: Writes[BodyBlock] = Json.writes[BodyBlock]
 }
 
@@ -83,7 +88,8 @@ case class BodyBlock(
   publishedDate: Option[DateTime],
   lastModifiedDate: Option[DateTime],
   contributors: Seq[String],
-  elements: Seq[BlockElement]
+  elements: Seq[BlockElement],
+  dotcomponentsPageElements: Seq[PageElement]
 ) {
   lazy val eventType: EventType =
     if (attributes.keyEvent) KeyEvent

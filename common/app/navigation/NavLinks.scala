@@ -180,13 +180,14 @@ object NavLinks {
   val podcasts = NavLink("Podcasts", "/podcasts")
   val pictures = NavLink("Pictures", "/inpictures")
   val newsletters = NavLink("Newsletters", "/email-newsletters")
-  val jobs = NavLink("Jobs", "https://jobs.theguardian.com")
+  val jobs = NavLink("Search jobs", "https://jobs.theguardian.com")
   val dating = NavLink("Dating", "https://soulmates.theguardian.com")
   val apps = NavLink("The Guardian app", "https://www.theguardian.com/mobile/2014/may/29/the-guardian-for-mobile-and-tablet")
   val ukMasterClasses = NavLink("Masterclasses", "https://membership.theguardian.com/masterclasses?INTCMP=masterclasses_uk_web_newheader")
   val auEvents = NavLink("Events", "/guardian-live-australia")
   var holidays = NavLink("Holidays", "https://holidays.theguardian.com")
   val ukPatrons = NavLink("Patrons", "https://patrons.theguardian.com/?INTCMP=header_patrons")
+  val ukDiscountCode = NavLink("Discount Codes", "https://discountcode.theguardian.com/uk")
   val guardianMasterClasses = NavLink("Guardian Masterclasses", "/guardian-masterclasses",
     children = List(
       NavLink("Journalism", "/guardian-masterclasses/journalism"),
@@ -505,7 +506,8 @@ object NavLinks {
     holidays.copy(url = holidays.url + "?INTCMP=holidays_uk_web_newheader"),
     ukMasterClasses,
     digitalNewspaperArchive,
-    ukPatrons
+    ukPatrons,
+    ukDiscountCode
   )
   val auBrandExtensions = List(
     auEvents,
