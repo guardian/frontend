@@ -9,7 +9,7 @@
 
 @defining(page.media, page.media match { case _: Audio => "audio" case _ => "video" }) { case (media, mediaType) =>
     @defining(isPaidContent(page), isAdFree(request)) { case (isPaidContent, isAdFree) =>
-        <div class="l-side-margins @if(!isPaidContent) {l-side-margins--media}">
+        <div class="l-side-margins @if(!isPaidContent) {l-side-margins--media} @if(isPaidContent) {l-side-margins--paidfor}">
 
             <article id="article" class="@RenderClasses(
                 Map(

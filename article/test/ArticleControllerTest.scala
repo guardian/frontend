@@ -20,13 +20,13 @@ import scala.concurrent.{ExecutionContext, Future}
 // these
 
 class FakePicker extends RenderingTierPicker {
-  override def getRenderTierFor(page: PageWithStoryPackage)(implicit request: RequestHeader): RenderType = {
+  override def getTier(page: PageWithStoryPackage)(implicit request: RequestHeader): RenderType = {
     RemoteRender
   }
 }
 
-class FakeRemoteRender(implicit context: ApplicationContext) extends renderers.RemoteRender {
-  override def remoteRenderArticle(ws:WSClient, path: String, article: ArticlePage)(implicit request: RequestHeader): Future[Result] = {
+class FakeRemoteRender(implicit context: ApplicationContext) extends renderers.RemoteRenderer {
+  override def getArticle(ws:WSClient, path: String, article: ArticlePage)(implicit request: RequestHeader): Future[Result] = {
     implicit val ec = ExecutionContext.global
     Future(Cached(article)(RevalidatableResult.Ok(Html("OK"))))
   }

@@ -56,7 +56,7 @@ object AmpAdRtcConfig {
        * and https://github.com/prebid/prebid-server/blob/master/docs/endpoints/openrtb2/amp.md#query-parameters
        */
       val ampPrebidUrl = {
-        val placementId = 11016434
+        val placementId = 14351413
         val url = s"$prebidServerUrl/openrtb2/amp?tag_id=$placementId&w=ATTR(width)&h=ATTR(height)" +
           "&ow=ATTR(data-override-width)&oh=ATTR(data-override-height)&ms=ATTR(data-multi-size)" +
           "&slot=ATTR(data-slot)&targeting=TGT&curl=CANONICAL_URL&timeout=TIMEOUT&adcid=ADCID&purl=HREF"
