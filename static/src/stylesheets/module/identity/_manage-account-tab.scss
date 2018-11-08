@@ -16,7 +16,7 @@
     ========================================================================== */
     .manage-account-warning {
         border: 0;
-        padding: $gutter 0 0;
+        padding: $gs-baseline/2 0 0;
         height: auto;
         &:after {
             @include multiline(4, $brightness-86, top);
@@ -25,7 +25,7 @@
             height: 4px * 4; /*height of multiline (4px) times the number of lines (4)*/
             background-color: #ffffff;
             margin-bottom: -1px;
-            margin-top: $gutter;
+            margin-top: $gs-baseline/2;
             width: 100%;
         }
     }

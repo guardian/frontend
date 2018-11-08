@@ -1,5 +1,5 @@
 .identity-dropdown {
-    @include fs-textSans(4);
+    @include fs-textSans(5);
     @include mq(desktop) {
         font-size: 15px;
         min-width: gs-span(2.5);
