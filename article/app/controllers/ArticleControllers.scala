@@ -5,7 +5,7 @@ import contentapi.ContentApiClient
 import model.ApplicationContext
 import play.api.libs.ws.WSClient
 import play.api.mvc.ControllerComponents
-import renderers.RemoteRender
+import renderers.RemoteRenderer
 import services.dotcomponents.RenderingTierPicker
 import services.{NewspaperBookSectionTagAgent, NewspaperBookTagAgent}
 
@@ -13,7 +13,7 @@ trait ArticleControllers {
   def contentApiClient: ContentApiClient
   def controllerComponents: ControllerComponents
   def wsClient: WSClient
-  def remoteRender: RemoteRender
+  def remoteRender: RemoteRenderer
   def renderingTierPicker: RenderingTierPicker
   implicit def appContext: ApplicationContext
   lazy val bookAgent: NewspaperBookTagAgent = wire[NewspaperBookTagAgent]

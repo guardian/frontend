@@ -28,14 +28,14 @@ case class DotcomponentsLogger(request: Option[RequestHeader]) extends Logging {
 
   private def customFields: List[LogField] = DotcomponentsLoggerFields(request).customFields
 
-  def fieldsFromResults(results: List[(String, Boolean)]):List[LogField] =
-    results.map(x => LogFieldString(x._1, x._2.toString))
+  def fieldsFromResults(results: Map[String, Boolean]):List[LogField] =
+    results.map({ case (k, v) => LogFieldString(k, v.toString)}).toList
 
   def withRequestHeaders(rh: RequestHeader): DotcomponentsLogger = {
     copy(Some(rh))
   }
 
-  def results(message: String, results: List[(String, Boolean)]): Unit = {
+  def results(message: String, results: Map[String, Boolean]): Unit = {
     logInfoWithCustomFields(message, customFields ++ fieldsFromResults(results))
   }
 
