@@ -125,20 +125,3 @@
         }
     }
 }
-
-.cta-bar__cta--hollow {
-    background-color: transparent;
-    border: 1px solid $nav-border-colour;
-    color: $highlight-main;
-    padding-top: 4px;
-
-    @include mq(tablet) {
-        padding-top: 6px;
-    }
-
-    &:hover,
-    &:focus {
-        background-color: rgba($brightness-100, .08);
-        color: $highlight-main;
-    }
-}
