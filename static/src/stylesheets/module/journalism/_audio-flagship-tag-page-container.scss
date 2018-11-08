@@ -8,7 +8,7 @@
         }
 
         .fc-container__inner {
-            border-color: $brightness-46;
+            border-color: $brightness-20;
 
             .fc-container__header {
                 font-size: 26px;
@@ -21,7 +21,7 @@
                         position: absolute;
                         height: 30px;
                         width: 1px;
-                        background-color: $brightness-46;
+                        background-color: $brightness-20;
                         right: -11px;
                         top: -6px;
                     }
@@ -105,6 +105,34 @@
     }
 
     /* ---------------- CONTRIBUTIONS BANNER ------------------- */
+
+    .flagship-audio__contributions-banner,
+    section.flagship-audio {
+        position: relative;
+        z-index: $zindex-ui;
+
+        & > .fc-container__inner {
+            @include mq(tablet) {
+                &:before,
+                &:after {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    bottom: 0;
+                    width: 1px;
+                    background-color: rgba(0, 0, 0, .1);
+                }
+
+                &:before {
+                    left: 0;
+                }
+
+                &:after {
+                    right: 0;
+                }
+            }
+        }
+    }
 
     .flagship-audio__contributions-banner {
         background-color: #f0dbbc;
