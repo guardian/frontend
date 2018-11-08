@@ -40,20 +40,20 @@ import conf.Configuration
       Given("I am on any guardian.co.uk page")
       US("/world/2012/aug/23/australia-mining-boom-end") { browser =>
 
-        Then("I should see a link to the contributors section")
-        val contributors = browser.find(".l-footer li a", withText().contains("contributors"))
+        Then("I should see a link to the contributors section!!")
+        val contributors = browser.find("[data-link-name='us : footer : all contributors']")
         contributors.asScala.length should be > 0
 
         And("a link to the contact us page")
-        val contact = browser.find(".l-footer li a", withText().contains("contact"))
+        val contact = browser.find("[data-link-name='us : footer : contact us']")
         contact.asScala.length should be > 0
 
         And("a link to the about us page")
-        val info = browser.find(".l-footer li a", withText().contains("about us"))
+        val info = browser.find("[data-link-name='us : footer : about us']")
         info.asScala.length should be > 0
 
         And("a link to the complaints and corrections")
-        val complaints = browser.find(".l-footer li a", withText().contains("complaints & corrections"))
+        val complaints = browser.find("[data-link-name='complaints']")
         complaints.asScala.length should be > 0
       }
     }
@@ -64,15 +64,12 @@ import conf.Configuration
 
         Then("I should see a link to the terms & Conditions in the page footer")
 
-        val terms = browser.find(".l-footer li a", withText().contains("terms"))
+        val terms = browser.find("[data-link-name='terms']")
         terms.asScala.length should be > 0
 
         And("a link to the privacy policy page")
-        val privacy = browser.find(".l-footer li a", withText().contains("privacy"))
-
-        privacy.asScala.length should be > 0
-
+        val privacy = browser.find("[data-link-name='privacy']")
+        privacy.asScala.length should be > 0}
       }
     }
-  }
 }

@@ -17,17 +17,26 @@ import views.html.fragments.page.body.{bodyTag, breakingNewsDiv, mainContent, sk
 import views.html.fragments.page.head.stylesheets.{criticalStyleInline, criticalStyleLink, styles}
 import views.html.fragments.page.head._
 import views.html.fragments.page.{devTakeShot, htmlTag}
-import html.HtmlPageHelpers.ContentCSSFile
+import html.HtmlPageHelpers.{ContentCSSFile, FooterCSSFile}
+import views.html.stacked
 
 object IndexHtml {
 
   def allStyles(implicit applicationContext: ApplicationContext, request: RequestHeader): Styles = new Styles {
-    override def criticalCssLink: Html = criticalStyleLink(FaciaCSSFile)
-    override def criticalCssInline: Html = criticalStyleInline(Html(common.Assets.css.head(Some("facia"))))
+    override def criticalCssLink: Html = stacked(
+      criticalStyleLink(FaciaCSSFile),
+      criticalStyleLink(InlineNavigationCSSFile))
+    override def criticalCssInline: Html = criticalStyleInline(
+      Html(common.Assets.css.head(Some("facia"))),
+      Html(common.Assets.css.inlineNavigation))
     override def linkCss: Html = stylesheetLink(s"stylesheets/$FaciaCSSFile.css")
+    override def footerCss: Html = stylesheetLink(s"stylesheets/$FooterCSSFile.css")
     override def oldIECriticalCss: Html = stylesheetLink(s"stylesheets/old-ie.head.$FaciaCSSFile.css")
     override def oldIELinkCss: Html = stylesheetLink(s"stylesheets/old-ie.$ContentCSSFile.css")
-    override def IE9LinkCss: Html = stylesheetLink(s"stylesheets/ie9.head.$FaciaCSSFile.css")
+    override def IE9LinkCss: Html = stacked(
+      stylesheetLink(s"stylesheets/ie9.head.$FaciaCSSFile.css"),
+      stylesheetLink(s"stylesheets/head.$InlineNavigationCSSFile.css")
+    )
     override def IE9CriticalCss: Html = stylesheetLink(s"stylesheets/ie9.$ContentCSSFile.css")
   }
 

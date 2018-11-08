@@ -3,13 +3,12 @@ package model.dotcomponents
 import common.Edition
 import conf.Configuration
 import controllers.ArticlePage
-import model.{SubMetaLink, SubMetaLinks}
-import model.liveblog.BlockElement
+import model.SubMetaLinks
+import model.dotcomrendering.pageElements.PageElement
 import navigation.NavMenu
-import org.joda.time.format.DateTimeFormat
 import play.api.libs.json.{JsValue, Json, Writes}
 import play.api.mvc.RequestHeader
-import views.support.{GUDateTimeFormat, Format}
+import views.support.GUDateTimeFormat
 
 // We have introduced our own set of objects for serializing data to the DotComponents API,
 // because we don't want people changing the core frontend models and as a side effect,
@@ -29,7 +28,7 @@ case class Tag(
 
 case class Block(
     bodyHtml: String,
-    elements: List[BlockElement]
+    elements: List[PageElement]
 )
 
 case class Blocks(
@@ -82,7 +81,7 @@ case class DotcomponentsDataModel(
 )
 
 object Block {
-  implicit val blockElementWrites: Writes[BlockElement] = Json.writes[BlockElement]
+  implicit val blockElementWrites: Writes[PageElement] = Json.writes[PageElement]
   implicit val writes = Json.writes[Block]
 }
 
@@ -119,12 +118,12 @@ object DotcomponentsDataModel {
     val article = articlePage.article
 
     val bodyBlocks: List[Block] = article.blocks match {
-      case Some(bs) => bs.body.map(bb => Block(bb.bodyHtml, bb.elements.toList)).toList
+      case Some(bs) => bs.body.map(bb => Block(bb.bodyHtml, bb.dotcomponentsPageElements.toList)).toList
       case None => List()
     }
 
     val mainBlock: Option[Block] = article.blocks.flatMap(
-      _.main.map(bb=>Block(bb.bodyHtml, bb.elements.toList))
+      _.main.map(bb=>Block(bb.bodyHtml, bb.dotcomponentsPageElements.toList))
     )
 
     val dcBlocks = Blocks(mainBlock, bodyBlocks)

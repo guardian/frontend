@@ -14,6 +14,7 @@
 @import 'module/site-messages/_first-pv-consent';
 @import 'module/site-messages/_email-sign-in-banner';
 @import 'module/site-messages/_engagement-banner';
+@import 'module/site-messages/_fiv-banner';
 @import 'module/site-messages/_ad-free-banner';
 @import 'module/tls-warning';
 @import 'module/onward-garnett/_breaking-news';
@@ -21,7 +22,8 @@
 @import 'module/facia/_facia-show-more';
 @import 'module/_tag-list';
 @import 'module/_submeta';
-@import 'layout/_footer';
+// TODO: uncomment this line after new-navigation switch removed
+// @import 'layout/_footer';
 @import 'module/content-garnett/_media-player';
 @import 'module/atoms/_youtube';
 @import 'module/atoms/_media';

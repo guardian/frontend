@@ -506,4 +506,13 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
+  val NewNavEnabled = Switch(
+    SwitchGroup.Feature,
+    "new-nav-enabled",
+    "If this is switched on then the new navigation will be enabled",
+    owners = Seq(Owner.withGithub("GHaberis")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 11, 19),
+    exposeClientSide = false
+  )
 }
