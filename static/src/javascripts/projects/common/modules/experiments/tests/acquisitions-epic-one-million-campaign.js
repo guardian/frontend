@@ -3,7 +3,10 @@ import { makeABTest } from 'common/modules/commercial/contributions-utilities';
 import { acquisitionsEpicOneMillionCampaignTemplate } from 'common/modules/commercial/templates/acquisitions-epic-one-million-campaign';
 import { oneMillionCampaignButtonsTemplate } from 'common/modules/commercial/templates/acquisitions-epic-one-million-campaign-buttons';
 import type { EpicTemplate } from 'common/modules/commercial/contributions-utilities';
-import { getSync as geolocationGetSync, getLocalCurrencySymbol } from 'lib/geolocation';
+import {
+    getSync as geolocationGetSync,
+    getLocalCurrencySymbol,
+} from 'lib/geolocation';
 
 const abTestName = 'AcquisitionsEpicOneMillionCampaign';
 
@@ -15,8 +18,7 @@ const australiaCopy = {
         'Sustained support from our readers enables us to continue pursuing difficult stories in challenging times of political upheaval, when factual reporting has never been more critical. The Guardian is editorially independent – our journalism is free from commercial bias and not influenced by billionaire owners, politicians or shareholders. No one edits our editor. No one steers our opinion. This is important because it enables us to give a voice to the voiceless, challenge the powerful and hold them to account. Readers’ support means we can continue bringing The Guardian’s independent journalism to the world.',
         'If everyone who reads our reporting, who likes it, helps to support it, our future would be much more secure.',
     ],
-    highlightedText:
-        `For as little as ${getLocalCurrencySymbol()}1, you can support the Guardian – and it only takes a minute. Thank you.`,
+    highlightedText: `For as little as ${getLocalCurrencySymbol()}1, you can support the Guardian – and it only takes a minute. Thank you.`,
 };
 
 const everywhereExceptAustraliaCopy = {
@@ -27,12 +29,13 @@ const everywhereExceptAustraliaCopy = {
         'Sustained support from our readers enables us to continue pursuing difficult stories in challenging times of political upheaval, when factual reporting has never been more critical. The Guardian is editorially independent – our journalism is free from commercial bias and not influenced by billionaire owners, politicians or shareholders. No one edits our editor. No one steers our opinion. This is important because it enables us to give a voice to the voiceless, challenge the powerful and hold them to account. Readers’ support means we can continue bringing The Guardian’s independent journalism to the world.',
         'If everyone who reads our reporting, who likes it, helps to support it, our future would be much more secure.',
     ],
-    highlightedText:
-        `For as little as ${getLocalCurrencySymbol()}1, you can support the Guardian – and it only takes a minute. Thank you.`,
+    highlightedText: `For as little as ${getLocalCurrencySymbol()}1, you can support the Guardian – and it only takes a minute. Thank you.`,
 };
 
 const oneMillionCampaignCopy = (): AcquisitionsEpicTemplateCopy =>
-    geolocationGetSync() === 'AU' ? australiaCopy : everywhereExceptAustraliaCopy;
+    geolocationGetSync() === 'AU'
+        ? australiaCopy
+        : everywhereExceptAustraliaCopy;
 
 const oneMillionCampaignTemplate: EpicTemplate = (
     { options = {} },
@@ -70,7 +73,7 @@ export const acquisitionsEpicOneMillionCampaign: EpicABTest = makeABTest({
             options: {
                 // TODO: REMOVE
                 isUnlimited: true,
-            }
+            },
         },
         {
             id: 'just_copy',
