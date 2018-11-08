@@ -98,15 +98,19 @@ const showAccountDataUpdateWarningMessage = accountDataUpdateWarningLink => {
     });
 
     newMessage.show(
-        `<span class="site-message__copy-text">
-            An action is needed on your Guardian account. 
-            Please review and update your details as soon as you can. Thank you.
-        </span>
-        <a class="button site-message__copy-button js-mma-update-details-button" href="${accountDataUpdateLink(
-            accountDataUpdateWarningLink
-        )}">
-            Update details ${arrowRight.markup}
-        </a>`
+        `<div class="site-message__copy-heading">
+            Action is needed on your Guardian account
+        </div>
+        <div class="site-message__copy-text">
+            Please review and update your details as&nbsp;soon&nbsp;as&nbsp;you&nbsp;can. Thank&nbsp;you.
+        </div>
+        <div class="site-message__copy-text">
+            <a class="button site-message__copy-button js-mma-update-details-button" href="${accountDataUpdateLink(
+                accountDataUpdateWarningLink
+            )}">
+                Update details ${arrowRight.markup}
+            </a>
+        </div>`
     );
 };
 
