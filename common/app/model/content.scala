@@ -496,7 +496,7 @@ object Article {
       javascriptConfigOverrides = javascriptConfig,
       opengraphPropertiesOverrides = opengraphProperties,
       shouldHideHeaderAndTopAds = (content.tags.isTheMinuteArticle || (content.isImmersive && (content.elements.hasMainMedia || content.fields.main.nonEmpty))) && content.tags.isArticle,
-      contentWithSlimHeader = content.isImmersive && content.tags.isArticle
+      contentWithSlimHeader = content.isImmersive && content.tags.isArticle || content.isPaidContent
     )
   }
 
