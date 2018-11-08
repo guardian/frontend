@@ -17,7 +17,7 @@
     <div class="footer__primary">
         @if(!isAmp) {
             @defining(NavMenu(page, Edition(request))) { navMenu: NavMenu =>
-                @fragments.nav.subNav(navMenu, isFooter = true)
+                @fragments.nav.subNav(navMenu, page.metadata.designType, isFooter = true)
             }
         }
         @if(!NewNavEnabled.isSwitchedOn) {

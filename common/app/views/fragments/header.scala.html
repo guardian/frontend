@@ -269,7 +269,7 @@
         </nav>
 
         @if(!page.metadata.hasSlimHeader) {
-            @fragments.nav.subNav(navMenu)
+            @fragments.nav.subNav(navMenu, page.metadata.designType)
         }
     </header>
 }

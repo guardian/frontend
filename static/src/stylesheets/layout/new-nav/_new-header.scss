@@ -184,25 +184,6 @@ from scrolling */
     }
 }
 
-.new-header__multiline {
-    background: $brightness-100;
-
-    .footer__primary & {
-        display: none;
-    }
-
-    & .gs-container:after {
-        @include multiline(4, $brightness-86, bottom);
-        background-color: #ffffff;
-        content: '';
-        display: block;
-        height: 13px;
-        border: 1px solid $brightness-86;
-        border-top: 0;
-        border-bottom: 0;
-    }
-}
-
 .new-header--slim {
     height: $pillar-height + $gs-baseline / 2;
 }
