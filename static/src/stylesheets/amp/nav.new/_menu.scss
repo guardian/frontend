@@ -1,0 +1,10 @@
+.menu {
+    background-color: $nav-blue;
+    color: $brightness-100;
+    // This is the max width AMP allows
+    width: 80vw;
+
+    div:first-of-type {
+        overflow-y: scroll;
+    }
+}
