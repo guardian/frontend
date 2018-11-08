@@ -1,5 +1,5 @@
 .site-message--fiv-banner {
-    background-color: $green-bold;
+    background-color: #34aae0;
     max-height: 80%;
 
     // we have our own close button - see .fiv-banner__close-button
@@ -51,6 +51,7 @@
 
 .fiv-banner__text {
     @include banner-copy-alignment;
+    display: block !important;
 
     color: $brightness-7;
     font-size: 14px;
@@ -61,9 +62,17 @@
         line-height: 22px;
     }
 
-    @include mq(desktop) {
-        display: inline-block;
-    }
+}
+
+.fiv-banner__headline {
+
+}
+.fiv-banner__text_bold {
+    font-weight: bold;
+    font-size: 20px;
+}
+.fiv-banner__text_normal {
+    font-size: 20px;
 }
 
 .fiv-banner__highlight {
@@ -77,6 +86,8 @@
 }
 
 .fiv-banner__cta {
+    margin-right: -200px;
+    float: right;
     margin-top: $gs-baseline / 2;
 
     @include mq(tablet) {
@@ -87,6 +98,17 @@
         display: inline-block;
         vertical-align: bottom;
     }
+}
+.fiv-banner__button_contribute {
+
+    background-color: $highlight-main;
+    border-color: $highlight-main;
+}
+
+.fiv-banner__button_subscribe {
+
+    background-color: white;
+    border-color: white;
 }
 
 .fiv-banner__button {
@@ -100,11 +122,11 @@
     font-size: 14px;
     line-height: 36px;
 
-    background-color: $brightness-7;
-    border-color: $brightness-7;
+    color: black;
 
     .inline-icon {
         float: right;
+        fill: black;
 
         svg {
             // weirdly needed for vertical centering
@@ -117,6 +139,10 @@
         margin-bottom: 8px;
         font-size: 16px;
     }
+}
+
+.fiv-banner__onwards {
+    font-size: 16px;
 }
 
 .fiv-banner__payment-logos {
@@ -132,8 +158,19 @@
     }
 }
 
-.fiv-banner__close {
+.fiv-banner__background {
     float: right;
+    position: relative;
+    width: 436px;
+    height: 369px;
+}
+
+.fiv-banner__circles {
+    position: absolute;
+}
+
+.fiv-banner__close {
+    float: left;
 
     // we want the close button above the link overlay
     // z-index only applies to positioned elements
@@ -146,6 +183,7 @@
 
 .fiv-banner__close-button,
 .fiv-banner__roundel {
+    display: inline-block;
     display: inline-block;
     vertical-align: middle;
 

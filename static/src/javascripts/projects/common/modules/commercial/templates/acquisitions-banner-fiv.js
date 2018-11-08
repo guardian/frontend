@@ -1,14 +1,20 @@
 // @flow
+import potentialTitleWide from 'svgs/fivbanner/potential-title-wide.svg';
+import circles from 'svgs/fivbanner/circles.svg';
 import marque36icon from 'svgs/icon/marque-36.svg';
 import closeCentralIcon from 'svgs/icon/close-central.svg';
-import arrowWhiteRight from 'svgs/icon/arrow-white-right.svg';
-import config from 'lib/config';
+import arrowRight from 'svgs/icon/arrow-right.svg';
 
 export const acquisitionsBannerFivTemplate = (
     location: string,
     linkUrl: string
 ): string =>
     `
+    <div class="fiv-banner__background">
+        <div class="fiv-banner__circles"
+            ${circles.markup}
+        </div>
+    </div>
     <div class="fiv-banner__close">
         <div class="fiv-banner__roundel">
             ${marque36icon.markup}
@@ -20,20 +26,28 @@ export const acquisitionsBannerFivTemplate = (
     </div>
     <div class="fiv-banner__container">
         <div class="fiv-banner__text">
-            This is a test banner for FIV - if you see it please email userhelp@theguardian.com
+            <div class="fiv-banner__headline fiv_banner__potential">
+                ${potentialTitleWide.markup}
+            </div>
+            <div class="fiv-banner__text_bold">
+                …we remain editorially independent, our journalism free from commercial bias and our reporting open and accessible to all.
+            </div>
+            <div class="fiv-banner__text_normal">
+                Imagine what we could continue to achieve with the support of many more of you. Together we can be a force for change.
+            </div>
+        </div>
+        <div class="fiv-banner__onwards">
+            <a class="fiv-banner__onwards" href="${linkUrl}">
+                Read our story${arrowRight.markup}
+            </a>
         </div>
         <div class="fiv-banner__cta">
-            <button class="button fiv-banner__button" href="${linkUrl}">
-                Go${arrowWhiteRight.markup}
+            <button class="button fiv-banner__button fiv-banner__button_contribute" href="${linkUrl}">
+                Contribute${arrowRight.markup}
             </button>
-            <img
-                class="fiv-banner__payment-logos"
-                src="${config.get(
-                    'images.acquisitions.paypal-and-credit-card',
-                    ''
-                )}"
-                alt="PayPal and credit card"
-            >
+            <button class="button fiv-banner__button fiv-banner__button_subscribe" href="${linkUrl}">
+                Subscribe${arrowRight.markup}
+            </button>
         </div>
     </div>
     <a
