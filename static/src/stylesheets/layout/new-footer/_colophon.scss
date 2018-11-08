@@ -31,6 +31,7 @@
         &:first-child,
         &:nth-child(3) {
             margin-left: 0;
+            margin-right: $gs-gutter;
 
             &:before {
                 content: none;
