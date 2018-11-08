@@ -69,20 +69,12 @@ export const acquisitionsEpicOneMillionCampaign: EpicABTest = makeABTest({
         {
             id: 'control',
             products: [],
-
-            options: {
-                // TODO: REMOVE
-                isUnlimited: true,
-            },
         },
         {
             id: 'just_copy',
             products: [],
             options: {
                 copy: oneMillionCampaignCopy,
-
-                // TODO: REMOVE
-                isUnlimited: true,
             },
         },
         {
@@ -92,9 +84,6 @@ export const acquisitionsEpicOneMillionCampaign: EpicABTest = makeABTest({
                 template: oneMillionCampaignTemplate,
                 copy: oneMillionCampaignCopy,
                 buttonTemplate: oneMillionCampaignButtonsTemplate,
-
-                // TODO: REMOVE
-                isUnlimited: true,
             },
         },
     ],
