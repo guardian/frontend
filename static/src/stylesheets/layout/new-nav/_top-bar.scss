@@ -72,6 +72,10 @@
 .new-header__user-account-container {
     float: left;
     position: relative;
-    // Needs to sit below the menu, and the veggie burger
-    z-index: $zindex-main-menu - 2;
+    z-index: $zindex-main-menu + 2;
+
+    .new-header--open & {
+        // Needs to sit below the menu, and the veggie burger
+        z-index: $zindex-main-menu - 2;
+    }
 }
