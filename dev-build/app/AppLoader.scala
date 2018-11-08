@@ -78,7 +78,7 @@ trait AppComponents
   override lazy val blockingOperations = wire[BlockingOperations]
   lazy val logbackOperationsPool = wire[LogbackOperationsPool]
 
-  lazy val remoteRender = wire[renderers.RemoteRender]
+  lazy val remoteRender = wire[renderers.RemoteRenderer]
   lazy val renderingTierPicker = wire[RenderingTierPicker]
 
   def actorSystem: ActorSystem
