@@ -1,18 +1,17 @@
 @import 'svg';
 
-.contributions__one-million-large-heading {
-    @include fs-header(5);
-    font-size: 32px;
-    line-height: 30px;
-    margin-bottom: $gs-baseline;
-}
-
 .contributions-blue {
     color: #00b2ff
 }
 
 .contributions__one-million-footer {
     margin: ($gs-baseline * 1.5) 0;
+
+    h2 {
+        @include fs-header(5);
+        font-size: 32px;
+        line-height: 0.94;
+    }
 }
 
 .contributions__embed--one-million {
@@ -48,6 +47,11 @@
 .contributions__title {
     @include fs-header(3);
     margin-bottom: $gs-baseline;
+}
+
+.contributions__title--one-million {
+    font-size: 32px;
+    line-height: 0.94;
 }
 
 .contributions__highlight {

@@ -13,7 +13,7 @@ export const acquisitionsEpicOneMillionCampaignTemplate = ({
     `<div class="contributions__epic contributions__epic--one-million" data-component="${componentName}" data-link-name="epic">
         <div>
             <div>
-                <h2 class="contributions__one-million-large-heading">
+                <h2 class="contributions__title contributions__title--one-million">
                     ${heading}
                 </h2>
                 ${appendToLastElement(
@@ -30,8 +30,8 @@ export const acquisitionsEpicOneMillionCampaignTemplate = ({
             ${buttonTemplate}
             
             <div class="contributions__one-million-footer">
-                <h2 class="contributions__one-million-large-heading"><span class="contributions-blue">Your</span> support counts.</h2>
-                <h2 class="contributions__one-million-large-heading"><span class="contributions-blue">Together</span> we can be a force for change.</h2>
+                <h2><span class="contributions-blue">Your</span> support counts.</h2>
+                <h2><span class="contributions-blue">Together</span> we can be a force for change.</h2>
             </div>
         </div>
     </div>`;
