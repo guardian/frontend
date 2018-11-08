@@ -23,7 +23,8 @@ At the time of writing, Google is trialling wide roll-outs of AMP blue links in 
 ### Running AMP
 AMP content can be reached in various ways:
 * **Production** - `amp.theguardian.com/<path>`
-* **Code & local** - append an `amp` parameter to your query string e.g. `localhost:9000/an-article?amp`
+* **Code** - `amp.code.dev-theguardian.com/<path>`
+* **Local** - append an `amp` parameter to your query string e.g. `localhost:9000/an-article?amp`
 * **Beta** - `beta.amp.theguardian.com/<path>`
 
 ### Validation
@@ -60,3 +61,8 @@ in common/app/views/fragments/amp/customStyles.scala.html.
 
 When validating locally please comment out the <link> as this will always fail validation.
 This change was made to improve the experience of developing and styling amp pages. If there is a better way please suggest it!
+
+## Ads in Amp
+
+* [Prebid](https://prebid.org/) in Amp uses a Prebid server and is documented in a separate repo [here](https://github.com/guardian/prebid-server/tree/master/amp).
+* Ads are served in the `amp-ad` element, which is documented [here](https://www.ampproject.org/docs/ads/introduction_ads).
