@@ -5,17 +5,13 @@ export const acquisitionsEpicOneMillionCampaignTemplate = ({
     copy: { heading = '', paragraphs, highlightedText },
     componentName,
     buttonTemplate,
-    epicClass = '',
-    wrapperClass = '',
 }: {
     copy: AcquisitionsEpicTemplateCopy,
     componentName: string,
     buttonTemplate: string,
-    epicClass?: string,
-    wrapperClass?: string,
 }) =>
-    `<div class="contributions__epic ${epicClass}" data-component="${componentName}" data-link-name="epic">
-        <div class="${wrapperClass}">
+    `<div class="contributions__epic contributions__epic--one-million" data-component="${componentName}" data-link-name="epic">
+        <div>
             <div>
                 <h2 class="contributions__one-million-large-heading">
                     ${heading}
