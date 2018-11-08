@@ -1,0 +1,48 @@
+.my-account {
+    .dropdown--open & {
+        @include mq($until: tablet) {
+            z-index: $zindex-main-menu + 1;
+        }
+    }
+}
+
+.my-account--icon {
+    svg {
+        height: 18px;
+        width: 18px;
+
+        @include mq(mobileMedium) {
+            height: 23px;
+            width: 23px;
+        }
+    }
+}
+
+.dropdown--open .my-account--icon {
+    @include mq($until: tablet) {
+        &:before,
+        &:after {
+            content: '';
+            display: block;
+            position: absolute;
+            left: 50%;
+            bottom: 7px;
+            width: 0;
+            height: 0;
+            transform: translateX(-50%);
+            z-index: $zindex-main-menu + 1;
+        }
+
+        &:before {
+            border-left: 7px solid transparent;
+            border-right: 7px solid transparent;
+            border-bottom: 7px solid rgba(0, 0, 0, .1);
+        }
+
+        &:after {
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-bottom: 6px solid $brightness-100;
+        }
+    }
+}

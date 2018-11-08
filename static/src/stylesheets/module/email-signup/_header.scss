@@ -50,14 +50,29 @@
 
 
 // FOOTER MODS
-.email-sub__header--footer {
-    .email-sub__heading {
-        @include fs-textSans(3);
-        font-weight: 300;
-        color: $brightness-86;
-        margin-bottom: $gs-baseline / 2;
+.has-new-navigation {
+    .email-sub__header--footer {
+        .email-sub__heading {
+            @include fs-textSans(5);
+            font-weight: 700;
+            color: $brightness-100;
+            margin: ($gs-baseline / 2) ($gs-gutter / 2);
+        }
     }
 }
+
+body:not(.has-new-navigation) {
+    .email-sub__header--footer {
+        .email-sub__heading {
+            @include fs-textSans(3);
+            font-weight: 300;
+            color: $brightness-86;
+            margin-bottom: $gs-baseline / 2;
+        }
+    }
+}
+
+
 
 // PLAIN MODS
 .email-sub--plain {
@@ -82,4 +97,3 @@
         line-height: 2rem;
     }
 }
-
