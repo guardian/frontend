@@ -41,6 +41,7 @@ import { smartAppBanner } from 'common/modules/ui/smartAppBanner';
 import { init as initTabs } from 'common/modules/ui/tabs';
 import { Toggles } from 'common/modules/ui/toggles';
 import { initPinterest } from 'common/modules/social/pinterest';
+import { fivBanner } from 'common/modules/commercial/fiv-banner';
 import { membershipEngagementBanner } from 'common/modules/commercial/membership-engagement-banner';
 import { initEmail } from 'common/modules/email/email';
 import { init as initEmailArticle } from 'common/modules/email/email-article';
@@ -273,6 +274,7 @@ const initialiseBanner = (): void => {
         firstPvConsentBanner,
         breakingNews,
         membershipBanner,
+        fivBanner,
         membershipEngagementBanner,
         smartAppBanner,
         adFreeBanner,

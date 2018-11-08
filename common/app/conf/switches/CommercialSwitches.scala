@@ -227,6 +227,16 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
+  val FivBanner = Switch(
+    Commercial,
+    "fiv-banner",
+    "Master switch for the first (three) impressions visual banner.",
+    owners = Seq(Owner.withGithub("johnduffell")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
   val MembershipEngagementBannerBlockUK = Switch(
     Commercial,
     "membership-engagement-banner-block-uk",
