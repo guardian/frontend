@@ -195,14 +195,12 @@
 // FOOTER MODS
 .has-new-navigation {
     .footer__email-container .email-sub__iframe {
-        max-width: gs-span(4) + $gs-gutter / 2;
-        margin-left: -$gs-gutter / 2;
-        margin-bottom: $gs-baseline;
+        max-width: gs-span(4);
+        min-height: 90px;
+        margin: 0 0 $gs-baseline;
     }
 
     .email-sub__form--footer {
-        padding: 0 0 0 ($gs-gutter / 2);
-
         .email-sub__submit-button {
             @include fs-textSans(5);
             color: $nav-blue;
@@ -212,11 +210,14 @@
             border: 0;
             border-radius: 21px;
             display: block;
-            position: absolute;
-            top: 34px;
-            right: 0;
             width: auto;
             padding: 0 $gs-gutter;
+
+            &:not(.email-sub__submit-button--solo) {
+                position: absolute;
+                right: 0;
+                top: 34px;
+            }
 
             & svg {
                 fill: currentColor;
@@ -252,6 +253,8 @@
             line-height: 41px;
             color: rgba($brightness-100, .5);
             left: $gs-gutter;
+            position: absolute;
+            pointer-events: none;
         }
     }
 }

@@ -17,7 +17,7 @@
     <div class="footer__primary">
         @if(!isAmp) {
             @defining(NavMenu(page, Edition(request))) { navMenu: NavMenu =>
-                @fragments.nav.subNav(navMenu, isFooter = true)
+                @fragments.nav.subNav(navMenu, page.metadata.designType, isFooter = true)
             }
         }
         @if(!NewNavEnabled.isSwitchedOn) {
@@ -130,7 +130,7 @@
                                 <li class="colophon__item"><a data-link-name="uk : footer : patrons" href="https://patrons.theguardian.com/?INTCMP=footer_patrons">
                                     Patrons</a>
                                 </li>
-                                <li class="colophon__item"><a data-link-name="uk : footer : discount code" href="https://discountcode.theguardian.com/uk">
+                                <li class="colophon__item"><a data-link-name="uk : footer : discount code" href="https://discountcode.theguardian.com/uk?INTCMP=guardian_footer">
                                     Discount Codes</a>
                                 </li>
                             </ul>
@@ -149,7 +149,7 @@
                                         @fragments.inlineSvg("arrow-right", "icon")
                                     </a>
 
-                                    <a class="cta-bar__cta cta-bar__cta--hollow js-subscribe js-acquisition-link"
+                                    <a class="cta-bar__cta js-subscribe js-acquisition-link"
                                         data-link-name="footer : subscribe-cta"
                                         data-edition="@{editionId}"
                                         href="@getReaderRevenueUrl(SupportSubscribe,Footer)">
@@ -237,7 +237,7 @@
                                         @fragments.inlineSvg("arrow-right", "icon")
                                     </a>
 
-                                    <a class="cta-bar__cta cta-bar__cta--hollow js-subscribe js-acquisition-link"
+                                    <a class="cta-bar__cta js-subscribe js-acquisition-link"
                                         data-link-name="footer : subscribe-cta"
                                         data-edition="@{editionId}"
                                         href="@getReaderRevenueUrl(SupportSubscribe,Footer)">
@@ -330,7 +330,7 @@
                                         @fragments.inlineSvg("arrow-right", "icon")
                                     </a>
 
-                                    <a class="cta-bar__cta cta-bar__cta--hollow js-subscribe js-acquisition-link"
+                                    <a class="cta-bar__cta js-subscribe js-acquisition-link"
                                         data-link-name="footer : subscribe-cta"
                                         data-edition="@{editionId}"
                                         href="@getReaderRevenueUrl(SupportSubscribe,Footer)">
@@ -410,7 +410,7 @@
                                         @fragments.inlineSvg("arrow-right", "icon")
                                     </a>
 
-                                    <a class="cta-bar__cta cta-bar__cta--hollow js-subscribe js-acquisition-link"
+                                    <a class="cta-bar__cta js-subscribe js-acquisition-link"
                                         data-link-name="footer : subscribe-cta"
                                         data-edition="@{editionId}"
                                         href="@getReaderRevenueUrl(SupportSubscribe,Footer)">
@@ -441,6 +441,9 @@
                                 </li>
                                 <li class="colophon__item"><a data-link-name="uk : footer : guardian labs" href="@LinkTo {/guardian-labs}">
                                     Guardian labs</a>
+                                </li>
+                                <li class="colophon__item"><a data-link-name="uk : footer : discount code" href="https://discountcode.theguardian.com/uk?INTCMP=guardian_footer">
+                                    Discount Codes</a>
                                 </li>
                             </ul>
 

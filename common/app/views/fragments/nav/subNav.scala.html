@@ -2,8 +2,10 @@
 @import navigation.{ NavLink, NavMenu, FlatSubnav, ParentSubnav }
 @import views.support.RenderClasses
 @import conf.switches.Switches.{ NewNavEnabled }
+@import com.gu.contentapi.client.utils.DesignType
+@import _root_.model.ContentDesignType.RichContentDesignType
 
-@(navMenu: NavMenu, isFooter: Boolean = false)(implicit request: RequestHeader)
+@(navMenu: NavMenu, designType: Option[DesignType], isFooter: Boolean = false)(implicit request: RequestHeader)
 
 
 @subNavItem(link: NavLink, url: String, isParent: Boolean = false) = {
@@ -23,7 +25,9 @@
 }
 
 @navMenu.subNavSections.map { subnav =>
-    <div class="subnav js-expand-subnav">
+    <div class="@RenderClasses(Map(
+        s"subnav--${designType.nameOrDefault}" -> !isFooter
+    ), "subnav", "js-expand-subnav")">
         <div class="gs-container">
             <ul class="subnav__list js-get-last-child-subnav"
             data-pillar-title="@navMenu.currentPillar.map(_.title).getOrElse("")">
@@ -51,7 +55,7 @@
             }
         </div>
     </div>
-    @if(NewNavEnabled.isSwitchedOn) {
+    @if(NewNavEnabled.isSwitchedOn && !isFooter) {
         <div class="new-header__multiline">
             <div class="gs-container"></div>
         </div>

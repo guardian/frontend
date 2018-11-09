@@ -44,7 +44,7 @@ from scrolling */
 
     @include mq(desktop) {
         right: 120px;
-        width: 120px;
+        width: 110px;
     }
 
     body:not(.has-page-skin) & {
@@ -181,25 +181,6 @@ from scrolling */
 
     path {
         fill: $brightness-100;
-    }
-}
-
-.new-header__multiline {
-    background: $brightness-100;
-
-    .footer__primary & {
-        display: none;
-    }
-
-    & .gs-container:after {
-        @include multiline(4, $brightness-86, bottom);
-        background-color: #ffffff;
-        content: '';
-        display: block;
-        height: 13px;
-        border: 1px solid $brightness-86;
-        border-top: 0;
-        border-bottom: 0;
     }
 }
 

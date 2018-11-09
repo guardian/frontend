@@ -119,9 +119,11 @@ body:not(.has-new-navigation) {
     }
 }
 
-.l-side-margins--flagship  {
-    &:before,
-    &:after {
-        content: none;
+body:not(.has-new-navigation) {
+    .l-side-margins--flagship {
+        &:before,
+        &:after {
+            content: none;
+        }
     }
 }

@@ -84,13 +84,13 @@
     @include mq(leftCol) {
         padding-left: $gs-gutter / 2;
         padding-bottom: $gs-baseline;
-        border-left: 1px solid $brightness-46;
+        border-left: 1px solid $brightness-20;
     }
 }
 
 .podcast__byline {
     @include mq($until: leftCol) {
-        @include multiline(4, $brightness-46, $position: top);
+        @include multiline(4, $brightness-20, $position: top);
         padding-top: $gs-baseline;
     }
 
@@ -99,7 +99,7 @@
     }
 
     @include mq(leftCol) {
-        border-top: 1px solid $brightness-46;
+        border-top: 1px solid $brightness-20;
         margin-top: $gs-baseline;
         padding: ($gs-baseline/2) ($gs-gutter/2) 0 0;
 
@@ -186,7 +186,7 @@
         }
 
         @include mq(leftCol) {
-            border-left: 1px solid $brightness-46;
+            border-left: 1px solid $brightness-20;
             margin-right: $gs-gutter / 2;
             padding-bottom: $gs-baseline / 2;
         }
@@ -243,7 +243,7 @@
 }
 
 .podcast__meta {
-    @include multiline(4, $brightness-46, top);
+    @include multiline(4, $brightness-20, top);
     padding-top: $gs-baseline;
     padding-bottom: 0;
     margin-bottom: 0;
@@ -283,7 +283,7 @@
 }
 
 .podcast__support {
-    border-top: 1px solid $brightness-46;
+    border-top: 1px solid $brightness-20;
 
     @include mq($until: leftCol) {
         margin-top: $gs-baseline;
@@ -309,7 +309,7 @@
 }
 
 .podcast__share {
-    border-top: 1px solid $brightness-46;
+    border-top: 1px solid $brightness-20;
     margin-top: $gs-baseline * 1.5;
     padding-top: 0;
     padding-right: $gs-gutter / 2;
@@ -325,7 +325,7 @@
         flex-direction: column;
 
         .meta__numbers.meta__numbers.meta__numbers.meta__numbers {
-            border-top: 1px solid $brightness-46;
+            border-top: 1px solid $brightness-20;
             margin-right: $gs-gutter / -2;
             padding-right: $gs-gutter / 2;
         }
@@ -354,7 +354,7 @@
 
     .meta__number.meta__number.meta__number.meta__number {
         padding-left: $gs-gutter / 4;
-        border-color: $brightness-46;
+        border-color: $brightness-20;
     }
 
     .commentcount2__heading.commentcount2__heading.commentcount2__heading span {
@@ -367,7 +367,7 @@
 }
 
 .podcast__submeta {
-    @include multiline(4, $brightness-46, top);
+    @include multiline(4, $brightness-20, top);
     padding-top: $gs-baseline * 1.5;
 
     .submeta.submeta.submeta.submeta {
@@ -393,7 +393,7 @@
 
 .podcast__secondary {
     @include mq($until: leftCol) {
-        border-top: 1px solid $brightness-46;
+        border-top: 1px solid $brightness-20;
         margin-top: $gs-baseline;
 
         .most-viewed-container--media {
@@ -406,7 +406,7 @@
         padding-left: $gs-gutter / 2;
 
         .most-viewed-container--media {
-            border-top-color: $brightness-46;
+            border-top-color: $brightness-20;
         }
     }
 
@@ -434,11 +434,11 @@
     padding-right: 0;
     margin-top: 12px;
     margin-bottom: 3px;
-    border-bottom: 1px solid $brightness-46;
+    border-bottom: 1px solid $brightness-20;
 
     @include mq(leftCol) {
-        border-left: 1px solid $brightness-46;
-        border-top: 1px solid $brightness-46;
+        border-left: 1px solid $brightness-20;
+        border-top: 1px solid $brightness-20;
         margin: 0;
     }
 }

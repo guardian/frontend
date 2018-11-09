@@ -187,7 +187,7 @@ object NavLinks {
   val auEvents = NavLink("Events", "/guardian-live-australia")
   var holidays = NavLink("Holidays", "https://holidays.theguardian.com")
   val ukPatrons = NavLink("Patrons", "https://patrons.theguardian.com/?INTCMP=header_patrons")
-  val ukDiscountCode = NavLink("Discount Codes", "https://discountcode.theguardian.com/uk")
+  val ukDiscountCode = NavLink("Discount Codes", "https://discountcode.theguardian.com/uk?INTCMP=guardian_header")
   val guardianMasterClasses = NavLink("Guardian Masterclasses", "/guardian-masterclasses",
     children = List(
       NavLink("Journalism", "/guardian-masterclasses/journalism"),

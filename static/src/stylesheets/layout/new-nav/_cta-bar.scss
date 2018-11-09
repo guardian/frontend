@@ -20,6 +20,16 @@
         top: 0;
     }
 
+    @include mq(desktop) {
+        max-width: 300px;
+    }
+
+    @include mq(leftCol) {
+        body:not(.has-page-skin) & {
+            max-width: 500px;
+        }
+    }
+
     .new-header--slim & {
         top: 10px;
 
@@ -33,7 +43,7 @@
     color: $highlight-main;
     display: block;
     font-family: $f-serif-headline;
-    font-size: 28px;
+    font-size: 20px;
     font-weight: 800;
     line-height: 1;
     margin: ($gs-baseline / 4) 0 $gs-baseline;
@@ -42,15 +52,17 @@
         // These changes are only visible in the footer
         border-top: 1px solid $nav-border-colour;
         padding-top: $gs-baseline / 4;
-        font-size: 20px;
     }
 
     @include mq(desktop) {
+        font-size: 26px;
         margin: ($gs-baseline / 4) 0 $gs-baseline;
     }
 
-    @include mq(leftCol) {
-        font-size: 32px;
+    body:not(.has-page-skin) & {
+        @include mq(leftCol) {
+            font-size: 32px;
+        }
     }
 }
 
@@ -111,22 +123,5 @@
         .inline-arrow-right {
             transform: translate(3px, -50%);
         }
-    }
-}
-
-.cta-bar__cta--hollow {
-    background-color: transparent;
-    border: 1px solid $nav-border-colour;
-    color: $highlight-main;
-    padding-top: 4px;
-
-    @include mq(tablet) {
-        padding-top: 6px;
-    }
-
-    &:hover,
-    &:focus {
-        background-color: rgba($brightness-100, .08);
-        color: $highlight-main;
     }
 }
