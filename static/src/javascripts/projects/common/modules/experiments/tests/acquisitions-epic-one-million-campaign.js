@@ -22,7 +22,7 @@ const australiaCopy = {
 };
 
 const everywhereExceptAustraliaCopy = {
-    heading: 'We’ve got some news &hellip;',
+    heading: 'We have some news &hellip;',
     paragraphs: [
         '…  three years ago, we knew we had to try and make The Guardian sustainable by deepening our relationship with our readers. The revenues from our newspaper had diminished and the technologies that connected us with a global audience had moved advertising money away from news organisations. We knew we needed to find a way to keep our journalism open and accessible to everyone, regardless of where they live or what they can afford.',
         'And so, we have an update for you on some good news. Thanks to all the readers who have supported our independent, investigative journalism through contributions, membership or subscriptions, we are starting to overcome the urgent financial situation we were faced with. Today we have been supported by more than a million readers around the world. Our future is starting to look brighter. But we have to maintain and build on that level of support for every year to come, which means we still need to ask for your help.',
