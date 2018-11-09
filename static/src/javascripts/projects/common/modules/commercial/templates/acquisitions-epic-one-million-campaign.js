@@ -27,8 +27,8 @@ export const acquisitionsEpicOneMillionCampaignTemplate = ({
             ${buttonTemplate}
             
             <div class="contributions__one-million-footer">
-                <h2><span class="contributions-blue">Your</span> support counts.</h2>
-                <h2><span class="contributions-blue">Together</span> we can be a force for change.</h2>
+                <h2><span class="one-million-blue">Your</span> support counts.</h2>
+                <h2><span class="one-million-blue">Together</span> we can be a force for change.</h2>
             </div>
         </div>
     </div>`;

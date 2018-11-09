@@ -1,23 +1,5 @@
 @import 'svg';
 
-.contributions-blue {
-    color: #00b2ff
-}
-
-.contributions__one-million-footer {
-    margin: ($gs-baseline * 1.5) 0;
-
-    h2 {
-        @include fs-header(5);
-        font-size: 32px;
-        line-height: .94;
-    }
-}
-
-.contributions__embed--one-million {
-    border-top: 2px solid $sport-bright;
-}
-
 .contributions__embed  {
     border-top: 1px solid $sport-bright;
     background-color: $brightness-93;
@@ -47,11 +29,6 @@
 .contributions__title {
     @include fs-header(3);
     margin-bottom: $gs-baseline;
-}
-
-.contributions__title--one-million {
-    font-size: 32px;
-    line-height: .94;
 }
 
 .contributions__highlight {
@@ -190,3 +167,37 @@ a[href].contributions__contribute.contributions__contribute--epic {
     width: 100%;
     max-width: 620px;
 }
+
+
+// ONE MILLION CAMPAIGN
+
+.contributions__embed--one-million {
+    border-top: 2px solid $sport-bright;
+    margin-top: 0;
+}
+
+.contributions__title--one-million {
+    font-size: 32px;
+    line-height: 36px;
+    margin-bottom: $gs-baseline;
+}
+
+.contributions__buttons--one-million {
+    margin: ($gs-baseline * 2) 0 $gs-baseline 0;
+}
+
+.one-million-blue {
+    color: #00b2ff
+}
+
+.contributions__one-million-footer {
+    margin: 0;
+
+    h2 {
+        @include fs-header(5);
+        font-size: 32px;
+        line-height: 36px;
+    }
+}
+
+

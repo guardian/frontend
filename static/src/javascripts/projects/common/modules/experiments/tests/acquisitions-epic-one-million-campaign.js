@@ -21,7 +21,7 @@ const australiaCopy = {
 };
 
 const everywhereExceptAustraliaCopy = {
-    heading: 'Since you’re not in Australia, we’ve got some news &hellip;',
+    heading: 'Since you’re not in Australia &hellip;',
     paragraphs: [
         '… three years ago, we set out to make The Guardian sustainable by deepening our relationship with our readers. The revenues provided by our print newspaper had diminished. The same technologies that connected us with a global audience also shifted advertising revenues away from news publishers. We decided to seek an approach that would allow us to keep our journalism open and accessible to everyone, regardless of where they live or what they can afford.',
         'Sustained support from our readers enables us to continue pursuing difficult stories in challenging times of political upheaval, when factual reporting has never been more critical. The Guardian is editorially independent – our journalism is free from commercial bias and not influenced by billionaire owners, politicians or shareholders. No one edits our editor. No one steers our opinion. This is important because it enables us to give a voice to the voiceless, challenge the powerful and hold them to account. Readers’ support means we can continue bringing The Guardian’s independent journalism to the world.',
