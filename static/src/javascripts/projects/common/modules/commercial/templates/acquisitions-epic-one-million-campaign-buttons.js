@@ -7,7 +7,7 @@ export const oneMillionCampaignButtonsTemplate = () =>
         ${
             geolocationGetSync() === 'GB'
                 ? `<div>
-                       <a class="contributions__option-button contributions__contribute contributions__contribute--epic contributions__contribute--epic-member contributions__contribute--subscribe"
+                       <a class="contributions__option-button contributions__contribute contributions__contribute--epic contributions__contribute--epic-member contributions__contribute--one-million-subscribe"
                          href="https://support.theguardian.com/subscribe"
                          target="_blank">
                          Subscribe
