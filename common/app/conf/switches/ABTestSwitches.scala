@@ -222,7 +222,7 @@ trait ABTestSwitches {
     "Tests an epic with custom copy and design for the One Million campaign",
     owners = Seq(Owner.withGithub("joelochlann")),
     safeState = Off,
-    sellByDate = new LocalDate(2019, 6, 6),
+    sellByDate = new LocalDate(2018, 11, 23),
     exposeClientSide = true
   )
 }
