@@ -11,7 +11,8 @@ import { shouldSeeReaderRevenue } from 'common/modules/commercial/user-features'
 
 export const acquisitionsBannerFivTemplate = (
     location: string,
-    linkUrl: string
+    linkUrl: string,
+    subscribeUrl: string
 ): string =>
     `
     <div class="fiv-banner__background">
@@ -63,22 +64,17 @@ export const acquisitionsBannerFivTemplate = (
         </div>
     </div>
     <div class="fiv-banner__cta">
-        <button class="button fiv-banner__button fiv-banner__button_contribute" href="${linkUrl}">
+        <a class="button fiv-banner__button fiv-banner__button_contribute" href="${linkUrl}">
             Contribute${arrowRight.markup}
-        </button>
+        </a>
         ${
             window.location.hash.match(/[#&]fiv-gb(&.*)?$/) ||
             (geolocationGetSync() === 'GB' &&
                 !window.location.hash.match(/[#&]fiv-row(&.*)?$/))
-                ? `<button class="button fiv-banner__button fiv-banner__button_subscribe" href="${linkUrl}">
+                ? `<a class="button fiv-banner__button fiv-banner__button_subscribe" href="${subscribeUrl}">
                 Subscribe${arrowRight.markup}
-            </button>`
+            </a>`
                 : ``
         }
     </div>
-    <a
-        class="u-faux-block-link__overlay"
-        target="_blank"
-        href="${linkUrl}"
-    ></a>
     `;
