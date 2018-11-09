@@ -27,7 +27,7 @@ const hideBanner = () => {
 };
 
 const defaultEngagementBannerParams = () => ({
-    campaignCode: 'gdnwb_copts_fiv_banner',
+    campaignCode: 'onemillion',
     pageviewId: config.get('ophan.pageViewId', 'not_found'),
     products: ['CONTRIBUTION', 'RECURRING_CONTRIBUTION'],
     linkUrl: supportContributeURL,
@@ -37,17 +37,19 @@ const defaultEngagementBannerParams = () => ({
     messageText: 'n/a',
 });
 
+const componentId = 'fiv_banner';
+
 const getBannerHtml = (params: EngagementBannerParams) => {
     const linkUrl = addTrackingCodesToUrl({
         base: params.linkUrl,
-        componentType: 'ACQUISITIONS_FIV_BANNER',
-        componentId: params.campaignCode,
+        componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
+        componentId,
         campaignCode: params.campaignCode,
     });
     const subscribeUrl = addTrackingCodesToUrl({
         base: supportSubscribeURL,
-        componentType: 'ACQUISITIONS_FIV_BANNER',
-        componentId: params.campaignCode,
+        componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
+        componentId,
         campaignCode: params.campaignCode,
     });
 
