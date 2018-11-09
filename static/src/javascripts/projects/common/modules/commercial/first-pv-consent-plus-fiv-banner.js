@@ -1,7 +1,6 @@
 // @flow
 import { Message } from 'common/modules/ui/message';
 import type { Banner } from 'common/modules/ui/bannerPicker';
-import { acquisitionsBannerFivTemplate } from 'common/modules/commercial/templates/acquisitions-banner-fiv';
 import {
     messageCode as fivMessageCode,
     canShow as canShowFivBanner,
@@ -21,8 +20,8 @@ const messageCode: string = 'first-pv-consent-plus-fiv-banner';
 
 const bannerParams: EngagementBannerParams = defaultEngagementBannerParams();
 
-const getBannerHtml = (params: EngagementBannerParams) => {
-    return `<div class="site-message js-site-message js-double-site-message site-message--banner site-message--double-banner" tabindex="-1" role="dialog" aria-label="welcome" aria-describedby="site-message__message" data-component="AcquisitionsEngagementBannerStylingTweaks_control">
+const getBannerHtml = (acquisitionsBannerFivHtml: string) => `
+    <div class="site-message js-site-message js-double-site-message site-message--banner site-message--double-banner" tabindex="-1" role="dialog" aria-label="welcome" aria-describedby="site-message__message" data-component="AcquisitionsEngagementBannerStylingTweaks_control">
         <div class="js-fiv-banner-site-message site-message--engagement-banner site-message--fiv-banner">
             <div class="gs-container">
                 <div class="site-message__inner js-site-message-inner">
@@ -30,7 +29,7 @@ const getBannerHtml = (params: EngagementBannerParams) => {
                         ${marque36icon.markup}
                     </div>
                     <div class="site-message__copy js-site-message-copy u-cf">
-                        ${acquisitionsBannerFivTemplate(params)}
+                        ${acquisitionsBannerFivHtml}
                     </div>
                 </div>
             </div>
@@ -48,8 +47,8 @@ const getBannerHtml = (params: EngagementBannerParams) => {
                 </div>
             </div>
         </div>
-    </div>`
-}
+    </div>
+`;
 
 class SubMessage extends Message {
     elementSelector: string;
@@ -103,7 +102,7 @@ const firstPvConsentMessage = new SubMessage(
 const fivMessage = new SubMessage(
     fivMessageCode,
     '.js-fiv-banner-site-message',
-    firstPvFivPlusfivMessage,
+    firstPvFivPlusfivMessage
 );
 
 const show = (): Promise<boolean> => {

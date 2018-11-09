@@ -147,4 +147,10 @@ const fivBanner: Banner = {
     canShow,
 };
 
-export { fivBanner, canShow, messageCode, defaultEngagementBannerParams, getBannerHtml };
+export {
+    fivBanner,
+    canShow,
+    messageCode,
+    defaultEngagementBannerParams,
+    getBannerHtml,
+};
