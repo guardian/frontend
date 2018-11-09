@@ -63,7 +63,13 @@
 
 }
 
-.fiv-banner__headline {
+.fiv-banner__headline-existing {
+    width: 199px;
+    @include mq(tablet) {
+        width: 390px;
+    }
+}
+.fiv-banner__headline-potential {
 
 }
 .fiv-banner__u-show-from-tablet {
@@ -98,9 +104,17 @@
     padding: 1px;
 }
 
-.fiv-banner__container {
+.fiv-banner__container-potential {
     position: relative;
     height: 485px;
+    @include mq(tablet) {
+        height: 350px;
+    }
+}
+
+.fiv-banner__container-existing {
+    position: relative;
+    height: 360px;
     @include mq(tablet) {
         height: 350px;
     }
