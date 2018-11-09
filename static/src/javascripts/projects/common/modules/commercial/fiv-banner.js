@@ -6,7 +6,10 @@ import type { Banner } from 'common/modules/ui/bannerPicker';
 import { acquisitionsBannerFivTemplate } from 'common/modules/commercial/templates/acquisitions-banner-fiv';
 import userPrefs from 'common/modules/user-prefs';
 import { getSync as getGeoLocation } from 'lib/geolocation';
-import { supportContributeURL } from 'common/modules/commercial/support-utilities';
+import {
+    supportContributeURL,
+    supportSubscribeURL,
+} from 'common/modules/commercial/support-utilities';
 import {
     addTrackingCodesToUrl,
     submitComponentEvent,
@@ -41,11 +44,18 @@ const showBanner = (params: EngagementBannerParams): void => {
         componentId: params.campaignCode,
         campaignCode: params.campaignCode,
     });
+    const subscribeUrl = addTrackingCodesToUrl({
+        base: supportSubscribeURL,
+        componentType: 'ACQUISITIONS_FIV_BANNER',
+        componentId: params.campaignCode,
+        campaignCode: params.campaignCode,
+    });
 
     const location = getGeoLocation();
     const renderedBanner: string = acquisitionsBannerFivTemplate(
         location,
-        linkUrl
+        linkUrl,
+        subscribeUrl
     );
     const messageShown = new Message(messageCode, {
         siteMessageLinkName: 'membership message',

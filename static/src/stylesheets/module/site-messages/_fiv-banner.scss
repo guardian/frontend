@@ -1,5 +1,5 @@
 .site-message--fiv-banner {
-    background-color: $green-bold;
+    background-color: #34aae0;
     max-height: 80%;
 
     // we have our own close button - see .fiv-banner__close-button
@@ -61,9 +61,23 @@
         line-height: 22px;
     }
 
-    @include mq(desktop) {
-        display: inline-block;
-    }
+}
+
+.fiv-banner__headline {
+
+}
+.fiv-banner__wide {
+    display: block;
+}
+.fiv-banner__mobile {
+    display: none;
+}
+.fiv-banner__text_bold {
+    font-weight: bold;
+    font-size: 20px;
+}
+.fiv-banner__text_normal {
+    font-size: 20px;
 }
 
 .fiv-banner__highlight {
@@ -74,9 +88,14 @@
 
 .fiv-banner__container {
     position: relative;
+    height: 350px;
 }
 
 .fiv-banner__cta {
+    position: absolute;
+    top: 310px;
+    right: 80px;
+
     margin-top: $gs-baseline / 2;
 
     @include mq(tablet) {
@@ -88,10 +107,22 @@
         vertical-align: bottom;
     }
 }
+.fiv-banner__button_contribute {
+
+    background-color: $highlight-main;
+    border-color: $highlight-main;
+}
+
+.fiv-banner__button_subscribe {
+
+    background-color: #ffffff;
+    border-color: #ffffff;
+}
 
 .fiv-banner__button {
     display: inline-block;
     vertical-align: middle;
+    float: left;
 
     height: 36px;
     padding-right: 0;
@@ -100,11 +131,11 @@
     font-size: 14px;
     line-height: 36px;
 
-    background-color: $brightness-7;
-    border-color: $brightness-7;
+    color: #000000;
 
     .inline-icon {
         float: right;
+        fill: #000000;
 
         svg {
             // weirdly needed for vertical centering
@@ -117,6 +148,10 @@
         margin-bottom: 8px;
         font-size: 16px;
     }
+}
+
+.fiv-banner__onwards {
+    font-size: 16px;
 }
 
 .fiv-banner__payment-logos {
@@ -132,8 +167,20 @@
     }
 }
 
+.fiv-banner__background {
+    position: absolute;
+    top: 1px;
+    right: -40px;
+    width: 436px;
+    height: 357px;
+}
+
+.fiv-banner__circles {
+    position: absolute;
+}
+
 .fiv-banner__close {
-    float: right;
+    float: left;
 
     // we want the close button above the link overlay
     // z-index only applies to positioned elements
