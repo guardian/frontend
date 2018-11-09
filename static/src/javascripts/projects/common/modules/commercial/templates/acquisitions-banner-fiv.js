@@ -12,7 +12,7 @@ import { shouldSeeReaderRevenue } from 'common/modules/commercial/user-features'
 
 const isPotential =
     window.location.hash.match(/[#&]fiv-potential(&.*)?$/) ||
-    (shouldSeeReaderRevenue &&
+    (shouldSeeReaderRevenue() &&
         !window.location.hash.match(/[#&]fiv-existing(&.*)?$/));
 
 export const acquisitionsBannerFivTemplate = (
