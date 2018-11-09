@@ -52,11 +52,7 @@ const getBannerHtml = (params: EngagementBannerParams) => {
     });
 
     const location = getGeoLocation();
-    return acquisitionsBannerFivTemplate(
-        location,
-        linkUrl,
-        subscribeUrl
-    );
+    return acquisitionsBannerFivTemplate(location, linkUrl, subscribeUrl);
 };
 
 const showBanner = (params: EngagementBannerParams): void => {
