@@ -1,0 +1,24 @@
+.pillars {
+    border-top: 1px solid $nav-border-colour;
+    height: $pillar-height - $gs-baseline / 2;
+    margin: 0;
+    padding: 0 $gs-gutter / 2;
+
+    @include mq(mobileLandscape) {
+        padding-left: $gs-gutter;
+    }
+}
+
+.pillars__item {
+    color: $brightness-100;
+    display: block;
+    float: left;
+
+    &:first-child .pillar-link {
+        padding-left: 0;
+
+        &:before {
+            content: none;
+        }
+    }
+}

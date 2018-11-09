@@ -1,0 +1,29 @@
+// This affects the ctas in the footer also
+.cta-bar__cta {
+    background-color: $highlight-main;
+    border-radius: 18px;
+    box-sizing: border-box;
+    color: $brightness-7;
+    display: block;
+    line-height: 1;
+    height: 28px;
+    padding: 6px 30px 0 10px;
+    position: relative;
+    margin-bottom: $gs-baseline / 2;
+
+    .inline-arrow-right {
+        position: absolute;
+        height: 32px;
+        width: 32px;
+        right: -2px;
+        top: -1px;
+
+        path {
+            fill: currentColor;
+        }
+    }
+
+    .guardian-text-sans-loaded & {
+        font-family: 'Guardian Text Sans Web', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
+    }
+}

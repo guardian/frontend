@@ -1,0 +1,45 @@
+.header {
+    background-color: $nav-blue;
+    position: relative;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.header__cta-container {
+    left: $gs-gutter / 2;
+    position: absolute;
+    top: $gs-baseline;
+
+    @include mq(mobileLandscape) {
+        left: $gs-gutter;
+    }
+}
+
+.header__logo {
+    display: flex;
+    float: none;
+    margin-left: auto;
+}
+
+.header__logo__svg {
+    display: block;
+    height: 44px;
+    width: 135px;
+    margin-bottom: $gs-baseline * 2;
+    margin-right: $gs-gutter / 2 + $veggie-burger;
+    margin-top: 9px;
+
+    path {
+        fill: $brightness-100;
+    }
+
+    @include mq(mobileMedium) {
+        height: 57px;
+        margin-right: $gs-gutter / 2;
+        width: 175px;
+    }
+
+    @include mq(mobileLandscape) {
+        margin-right: $gs-gutter;
+    }
+}

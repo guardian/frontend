@@ -1,0 +1,26 @@
+.l-footer {
+    position: absolute;
+    padding: 0;
+    margin-top: $gs-baseline * 2;
+    z-index: $zindex-content;
+    width: 100%;
+    max-width: 600px;
+    clear: both;
+}
+
+.l-footer__secondary {
+    @include content-gutter();
+    line-height: 1;
+    font-family: 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
+    background: $nav-blue;
+    z-index: 1;
+    color: $brightness-100;
+
+    a:not(.cta-bar__cta):not(.footer__back-to-top) {
+        font-size: 14px;
+        line-height: 14px;
+        color: $brightness-100;
+        display: inline-block;
+        padding-bottom: $gs-baseline;
+    }
+}
