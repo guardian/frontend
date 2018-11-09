@@ -195,7 +195,7 @@
 // FOOTER MODS
 .has-new-navigation {
     .footer__email-container .email-sub__iframe {
-        max-width: gs-span(4) + $gs-gutter / 2;
+        max-width: gs-span(4);
         margin: 0 0 $gs-baseline;
     }
 
