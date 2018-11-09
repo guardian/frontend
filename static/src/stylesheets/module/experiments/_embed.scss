@@ -168,16 +168,14 @@ a[href].contributions__contribute.contributions__contribute--epic {
     margin: ($gs-baseline * 2) 0 $gs-baseline;
 }
 
+// Specificity needed to override an inline rule in _pillars.scss that's messing with the epic link colour.
+a[href].contributions__contribute.contributions__contribute--epic.contributions__contribute--one-million-subscribe,
 .contributions__contribute--one-million-subscribe {
-    // Specificity needed to override an inline rule in _pillars.scss that's messing with the epic link colour.
-    &,
-    a[href].contributions__contribute.contributions__contribute--epic.& {
-        border: 1px solid rgba(118, 118, 118, .4);
-        background-color: transparent;
+    border: 1px solid rgba(118, 118, 118, .4);
+    background-color: transparent;
 
-        &:hover {
-            background-color: darken($brightness-97, 5%);
-        }
+    &:hover {
+        background-color: darken($brightness-97, 5%);
     }
 }
 
