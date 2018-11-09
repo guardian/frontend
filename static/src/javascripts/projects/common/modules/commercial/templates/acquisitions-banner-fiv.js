@@ -3,6 +3,7 @@ import potentialTitleWide from 'svgs/fivbanner/potential-title-wide.svg';
 import potentialTitleMobile from 'svgs/fivbanner/potential-title-mobile.svg';
 import existingTitle from 'svgs/fivbanner/existing-title.svg';
 import circles from 'svgs/fivbanner/circles.svg';
+import circlesMobile from 'svgs/fivbanner/circles-mobile.svg';
 import marque36icon from 'svgs/icon/marque-36.svg';
 import closeCentralIcon from 'svgs/icon/close-central.svg';
 import arrowRight from 'svgs/icon/arrow-right.svg';
@@ -15,10 +16,11 @@ export const acquisitionsBannerFivTemplate = (
     subscribeUrl: string
 ): string =>
     `
-    <div class="fiv-banner__background">
-        <div class="fiv-banner__circles"
+    <div class="fiv-banner__background_desktop fiv-banner__wide">
             ${circles.markup}
-        </div>
+    </div>
+    <div class="fiv-banner__background_mobile fiv-banner__mobile">
+            ${circlesMobile.markup}
     </div>
     <div class="fiv-banner__close">
         <div class="fiv-banner__roundel">
@@ -62,19 +64,19 @@ export const acquisitionsBannerFivTemplate = (
                 Read our story${arrowRight.markup}
             </a>
         </div>
-    </div>
-    <div class="fiv-banner__cta">
-        <a class="button fiv-banner__button fiv-banner__button_contribute" href="${linkUrl}">
-            Contribute${arrowRight.markup}
-        </a>
-        ${
-            window.location.hash.match(/[#&]fiv-gb(&.*)?$/) ||
-            (geolocationGetSync() === 'GB' &&
-                !window.location.hash.match(/[#&]fiv-row(&.*)?$/))
-                ? `<a class="button fiv-banner__button fiv-banner__button_subscribe" href="${subscribeUrl}">
-                Subscribe${arrowRight.markup}
-            </a>`
-                : ``
-        }
+        <div class="fiv-banner__cta">
+            <a class="button fiv-banner__button fiv-banner__button_contribute" href="${linkUrl}">
+                Contribute${arrowRight.markup}
+            </a>
+            ${
+                window.location.hash.match(/[#&]fiv-gb(&.*)?$/) ||
+                (geolocationGetSync() === 'GB' &&
+                    !window.location.hash.match(/[#&]fiv-row(&.*)?$/))
+                    ? `<a class="button fiv-banner__button fiv-banner__button_subscribe" href="${subscribeUrl}">
+                    Subscribe${arrowRight.markup}
+                </a>`
+                    : ``
+            }
+        </div>
     </div>
     `;

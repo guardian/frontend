@@ -67,17 +67,31 @@
 
 }
 .fiv-banner__wide {
-    display: block;
+    display: none;
+    @include mq(tablet) {
+        display: block;
+    }
 }
 .fiv-banner__mobile {
-    display: none;
+    @include mq(mobile) {
+        display: block;
+    }
+    @include mq(tablet) {
+        display: none;
+    }
 }
 .fiv-banner__text_bold {
     font-weight: bold;
-    font-size: 20px;
+    @include mq(tablet) {
+        font-size: 20px;
+    }
+    font-size: 16px;
 }
 .fiv-banner__text_normal {
-    font-size: 20px;
+    @include mq(tablet) {
+        font-size: 20px;
+    }
+    font-size: 16px;
 }
 
 .fiv-banner__highlight {
@@ -88,11 +102,17 @@
 
 .fiv-banner__container {
     position: relative;
-    height: 350px;
+    @include mq(tablet) {
+        height: 350px;
+    }
+    height: 485px;
 }
 
 .fiv-banner__cta {
-    position: absolute;
+
+    @include mq(tablet) {
+        position: absolute;
+    }
     top: 310px;
     right: 80px;
 
@@ -167,7 +187,7 @@
     }
 }
 
-.fiv-banner__background {
+.fiv-banner__background_desktop {
     position: absolute;
     top: 1px;
     right: -40px;
@@ -175,16 +195,20 @@
     height: 357px;
 }
 
-.fiv-banner__circles {
+.fiv-banner__background_mobile {
     position: absolute;
+    bottom: 1px;
+    right: -8px;
+    width: 291px;
+    height: 145px;
 }
 
 .fiv-banner__close {
-    float: left;
+    right: 0;
 
     // we want the close button above the link overlay
     // z-index only applies to positioned elements
-    position: relative;
+    position: absolute;
     z-index: 1;
 
     // to remove the space between inline-block children
