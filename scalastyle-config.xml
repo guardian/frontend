@@ -1,4 +1,4 @@
-\<scalastyle>
+<scalastyle>
     <name>Scalastyle standard configuration</name>
     <check level="warning" class="org.scalastyle.scalariform.CyclomaticComplexityChecker" enabled="true">
         <parameters>
