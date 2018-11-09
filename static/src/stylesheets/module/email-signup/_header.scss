@@ -56,7 +56,7 @@
             @include fs-textSans(5);
             font-weight: 700;
             color: $brightness-100;
-            margin: ($gs-baseline / 2) ($gs-gutter / 2);
+            margin: ($gs-baseline / 2) 0;
         }
     }
 }

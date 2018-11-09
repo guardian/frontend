@@ -196,13 +196,10 @@
 .has-new-navigation {
     .footer__email-container .email-sub__iframe {
         max-width: gs-span(4) + $gs-gutter / 2;
-        margin-left: -$gs-gutter / 2;
-        margin-bottom: $gs-baseline;
+        margin: 0 0 $gs-baseline;
     }
 
     .email-sub__form--footer {
-        padding: 0 0 0 ($gs-gutter / 2);
-
         .email-sub__submit-button {
             @include fs-textSans(5);
             color: $nav-blue;
@@ -255,6 +252,8 @@
             line-height: 41px;
             color: rgba($brightness-100, .5);
             left: $gs-gutter;
+            position: absolute;
+            pointer-events: none;
         }
     }
 }
