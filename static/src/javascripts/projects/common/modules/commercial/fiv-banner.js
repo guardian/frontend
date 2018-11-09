@@ -39,7 +39,7 @@ const defaultEngagementBannerParams = () => ({
 
 const componentId = 'fiv_banner';
 
-const showBanner = (params: EngagementBannerParams): void => {
+const getBannerHtml = (params: EngagementBannerParams) => {
     const linkUrl = addTrackingCodesToUrl({
         base: params.linkUrl,
         componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
@@ -54,11 +54,12 @@ const showBanner = (params: EngagementBannerParams): void => {
     });
 
     const location = getGeoLocation();
-    const renderedBanner: string = acquisitionsBannerFivTemplate(
-        location,
-        linkUrl,
-        subscribeUrl
-    );
+    return acquisitionsBannerFivTemplate(location, linkUrl, subscribeUrl);
+};
+
+const showBanner = (params: EngagementBannerParams): void => {
+    const renderedBanner = getBannerHtml(params);
+
     const messageShown = new Message(messageCode, {
         siteMessageLinkName: 'membership message',
         siteMessageCloseBtn: 'hide',
@@ -144,4 +145,10 @@ const fivBanner: Banner = {
     canShow,
 };
 
-export { fivBanner, canShow, messageCode };
+export {
+    fivBanner,
+    canShow,
+    messageCode,
+    defaultEngagementBannerParams,
+    getBannerHtml,
+};
