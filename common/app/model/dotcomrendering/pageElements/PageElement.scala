@@ -6,6 +6,7 @@ import model.{AudioAsset, ImageAsset, ImageMedia, VideoAsset}
 import play.api.libs.json._
 import org.jsoup.Jsoup
 import scala.collection.JavaConverters._
+import views.support.ImageUrlSigner
 
 /*
   These elements are used for the Dotcom Rendering, they are essentially the new version of the
@@ -75,7 +76,6 @@ object Sponsorship {
 }
 
 object PageElement {
-
   def make(element: ApiBlockElement): List[PageElement] = {
 
     element.`type` match {
@@ -105,12 +105,19 @@ object PageElement {
         element.richLinkTypeData.flatMap(_.sponsorship).map(Sponsorship(_))
       ))
 
-      case Image => List(ImageBlockElement(
-        ImageMedia(element.assets.zipWithIndex.map { case (a, i) => ImageAsset.make(a, i) }),
-        imageDataFor(element),
-        element.imageTypeData.flatMap(_.displayCredit),
-        Role(element.imageTypeData.flatMap(_.role))
-      ))
+      case Image => {
+        val signedAssets = element.assets.zipWithIndex
+          .map { case (a, i) => ImageAsset.make(a, i) }
+          .map { asset =>
+            asset.copy(url = asset.url.map(url => ImageUrlSigner.sign(url)))
+          }
+        List(ImageBlockElement(
+          ImageMedia(signedAssets),
+          imageDataFor(element),
+          element.imageTypeData.flatMap(_.displayCredit),
+          Role(element.imageTypeData.flatMap(_.role))
+        ))
+      }
 
       case Audio => List(AudioBlockElement(element.assets.map(AudioAsset.make)))
 
