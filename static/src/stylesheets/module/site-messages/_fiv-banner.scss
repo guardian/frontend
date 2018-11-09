@@ -73,25 +73,23 @@
     }
 }
 .fiv-banner__mobile {
-    @include mq(mobile) {
-        display: block;
-    }
+    display: block;
     @include mq(tablet) {
         display: none;
     }
 }
 .fiv-banner__text_bold {
     font-weight: bold;
+    font-size: 16px;
     @include mq(tablet) {
         font-size: 20px;
     }
-    font-size: 16px;
 }
 .fiv-banner__text_normal {
+    font-size: 16px;
     @include mq(tablet) {
         font-size: 20px;
     }
-    font-size: 16px;
 }
 
 .fiv-banner__highlight {
@@ -102,10 +100,10 @@
 
 .fiv-banner__container {
     position: relative;
+    height: 485px;
     @include mq(tablet) {
         height: 350px;
     }
-    height: 485px;
 }
 
 .fiv-banner__cta {
