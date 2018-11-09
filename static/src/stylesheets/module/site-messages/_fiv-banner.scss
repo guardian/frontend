@@ -67,6 +67,12 @@
 .fiv-banner__headline {
 
 }
+.fiv-banner__wide {
+    display: block;
+}
+.fiv-banner__mobile {
+    display: none;
+}
 .fiv-banner__text_bold {
     font-weight: bold;
     font-size: 20px;
@@ -83,11 +89,14 @@
 
 .fiv-banner__container {
     position: relative;
+    height: 350px;
 }
 
 .fiv-banner__cta {
-    margin-right: -200px;
-    float: right;
+    position: absolute;
+    top: 310px;
+    right: 80px;
+
     margin-top: $gs-baseline / 2;
 
     @include mq(tablet) {
@@ -114,6 +123,7 @@
 .fiv-banner__button {
     display: inline-block;
     vertical-align: middle;
+    float: left;
 
     height: 36px;
     padding-right: 0;
@@ -159,10 +169,11 @@
 }
 
 .fiv-banner__background {
-    float: right;
-    position: relative;
+    position: absolute;
+    top: 1px;
+    right: -40px;
     width: 436px;
-    height: 369px;
+    height: 357px;
 }
 
 .fiv-banner__circles {
@@ -183,7 +194,6 @@
 
 .fiv-banner__close-button,
 .fiv-banner__roundel {
-    display: inline-block;
     display: inline-block;
     vertical-align: middle;
 
