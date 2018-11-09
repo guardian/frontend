@@ -196,6 +196,7 @@
 .has-new-navigation {
     .footer__email-container .email-sub__iframe {
         max-width: gs-span(4);
+        min-height: 90px;
         margin: 0 0 $gs-baseline;
     }
 
