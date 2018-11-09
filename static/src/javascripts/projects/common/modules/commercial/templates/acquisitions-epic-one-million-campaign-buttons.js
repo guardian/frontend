@@ -24,7 +24,7 @@ export const oneMillionCampaignButtonsTemplate = ({ supportUrl, subscribeUrl }: 
                        <a class="contributions__option-button contributions__contribute contributions__contribute--epic contributions__contribute--epic-member"
                          href="${supportUrl}"
                          target="_blank">
-                         Support the Guardian
+                         Support The Guardian
                        </a>
                    </div>`
         }
