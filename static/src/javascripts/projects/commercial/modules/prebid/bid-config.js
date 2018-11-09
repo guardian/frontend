@@ -243,7 +243,6 @@ const getPangaeaPlacementId = (sizes: PrebidSize[]): number => {
         mmpu: number,
         dmpu: number,
     };
-    // todo: why does culture appear twice?
     const pangaeaList: Array<PangaeaSection> = [
         {
             sections: ['business'],
@@ -282,7 +281,7 @@ const getPangaeaPlacementId = (sizes: PrebidSize[]): number => {
             dmpu: 13892373,
         },
         {
-            sections: ['lifeandstyle', 'culture'],
+            sections: ['lifeandstyle', 'fashion'],
             lb: 13892411,
             mmpu: 13892436,
             dmpu: 13892437,

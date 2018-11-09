@@ -7,7 +7,6 @@ import { getParticipations as getParticipations_ } from 'common/modules/experime
 import {
     getLargestSize,
     getBreakpointKey,
-    ozonePangaeaSectionBlacklist,
     shouldIncludeAdYouLike,
     shouldIncludeAppNexus,
     shouldIncludeImproveDigital,
@@ -241,16 +240,13 @@ describe('Utils', () => {
         expect(shouldIncludeImproveDigital()).toBe(false);
     });
 
-    test('shouldIncludePangaea should return true if section is technology', () => {
-        config.set('page.section', 'technology');
+    test('shouldIncludePangaea should return true if switch is on', () => {
         expect(shouldIncludePangaea()).toBe(true);
     });
 
-    test('shouldIncludePangaea should return false if section is in blacklist', () => {
-        for (let i = 0; i < ozonePangaeaSectionBlacklist.length; i += 1) {
-            config.set('page.section', ozonePangaeaSectionBlacklist[i]);
-            expect(shouldIncludePangaea()).toBe(false);
-        }
+    test('shouldIncludePangaea should return false if switch is off', () => {
+        config.set('switches.ozonePangaea', false);
+        expect(shouldIncludePangaea()).toBe(false);
     });
 
     test('shouldIncludeXaxis should always return false on INT, AU and US editions', () => {
