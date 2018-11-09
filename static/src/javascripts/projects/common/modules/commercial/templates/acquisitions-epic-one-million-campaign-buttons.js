@@ -2,7 +2,13 @@
 import config from 'lib/config';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
 
-export const oneMillionCampaignButtonsTemplate = ({ supportUrl, subscribeUrl }: { supportUrl: string, subscribeUrl: string }) =>
+export const oneMillionCampaignButtonsTemplate = ({
+    supportUrl,
+    subscribeUrl,
+}: {
+    supportUrl: string,
+    subscribeUrl: string,
+}) =>
     `<div class="contributions__buttons contributions__buttons--one-million">
         ${
             geolocationGetSync() === 'GB' || geolocationGetSync() === 'AU'
