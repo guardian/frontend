@@ -46,6 +46,7 @@ const oneMillionCampaignTemplate: EpicTemplate = (
         componentName: options.componentName,
         buttonTemplate: options.buttonTemplate({
             supportUrl: options.supportURL,
+            subscribeUrl: options.subscribeURL,
         }),
     });
 
