@@ -2,29 +2,35 @@
 import config from 'lib/config';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
 
-export const oneMillionCampaignButtonsTemplate = () =>
+export const oneMillionCampaignButtonsTemplate = ({
+    supportUrl,
+    subscribeUrl,
+}: {
+    supportUrl: string,
+    subscribeUrl: string,
+}) =>
     `<div class="contributions__buttons contributions__buttons--one-million">
         ${
-            geolocationGetSync() === 'GB'
+            geolocationGetSync() === 'GB' || geolocationGetSync() === 'AU'
                 ? `<div>
                        <a class="contributions__option-button contributions__contribute contributions__contribute--epic contributions__contribute--epic-member contributions__contribute--one-million-subscribe"
-                         href="https://support.theguardian.com/subscribe"
+                         href="${subscribeUrl}"
                          target="_blank">
                          Subscribe
                        </a>
                    </div>
                    <div>
                        <a class="contributions__option-button contributions__contribute contributions__contribute--epic contributions__contribute--epic-member"
-                         href="https://support.theguardian.com/contribute"
+                         href="${supportUrl}"
                          target="_blank">
                          Contribute
                        </a>
                    </div>`
                 : `<div>
                        <a class="contributions__option-button contributions__contribute contributions__contribute--epic contributions__contribute--epic-member"
-                         href="https://support.theguardian.com/contribute"
+                         href="${supportUrl}"
                          target="_blank">
-                         Support the Guardian
+                         Support The Guardian
                        </a>
                    </div>`
         }

@@ -56,6 +56,7 @@ const controlTemplate: EpicTemplate = (
         componentName: options.componentName,
         buttonTemplate: options.buttonTemplate({
             supportUrl: options.supportURL,
+            subscribeUrl: options.subscribeURL,
         }),
     });
 
@@ -125,7 +126,7 @@ const shouldShowEpic = (test: EpicABTest): boolean => {
     );
 };
 
-const getCampaignCode = (campaignCodePrefix, campaignID, id) =>
+const createTestAndVariantId = (campaignCodePrefix, campaignID, id) =>
     `${campaignCodePrefix}_${campaignID}_${id}`;
 
 const makeEvent = (id: string, event: string): string => `${id}:${event}`;
@@ -155,13 +156,18 @@ const makeABTestVariant = (
     parentTest: EpicABTest
 ): Variant => {
     const trackingCampaignId = `epic_${parentTest.campaignId}`;
+    const componentId = createTestAndVariantId(
+        parentTest.campaignPrefix,
+        parentTest.campaignId,
+        id
+    );
     const iframeId = `${parentTest.campaignId}_iframe`;
 
     // defaults for options
     const {
         maxViews = defaultMaxViews,
         isUnlimited = false,
-        campaignCode = getCampaignCode(
+        campaignCode = createTestAndVariantId(
             parentTest.campaignPrefix,
             parentTest.campaignId,
             id
@@ -169,7 +175,17 @@ const makeABTestVariant = (
         supportURL = addTrackingCodesToUrl({
             base: `${options.supportBaseURL || supportContributeURL}`,
             componentType: parentTest.componentType,
-            componentId: campaignCode,
+            componentId,
+            campaignCode,
+            abTest: {
+                name: parentTest.id,
+                variant: id,
+            },
+        }),
+        subscribeURL = addTrackingCodesToUrl({
+            base: 'https://support.theguardian.com/subscribe',
+            componentType: parentTest.componentType,
+            componentId,
             campaignCode,
             abTest: {
                 name: parentTest.id,
@@ -239,6 +255,7 @@ const makeABTestVariant = (
             products,
             campaignCode,
             supportURL,
+            subscribeURL,
             template,
             buttonTemplate,
             blockEngagementBanner,
