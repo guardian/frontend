@@ -51,7 +51,6 @@
 
 .fiv-banner__text {
     @include banner-copy-alignment;
-    display: block !important;
 
     color: $brightness-7;
     font-size: 14px;
