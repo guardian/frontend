@@ -10,6 +10,11 @@ import arrowRight from 'svgs/icon/arrow-right.svg';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
 import { shouldSeeReaderRevenue } from 'common/modules/commercial/user-features';
 
+const isPotential =
+    window.location.hash.match(/[#&]fiv-potential(&.*)?$/) ||
+    (shouldSeeReaderRevenue &&
+        !window.location.hash.match(/[#&]fiv-existing(&.*)?$/));
+
 export const acquisitionsBannerFivTemplate = (
     location: string,
     linkUrl: string,
@@ -31,15 +36,15 @@ export const acquisitionsBannerFivTemplate = (
             ${closeCentralIcon.markup}
         </button>
     </div>
-    <div class="fiv-banner__container">
+    <div class="fiv-banner__container-${
+        isPotential ? `potential` : `existing`
+    }">
         <div class="fiv-banner__text">
         ${
-            window.location.hash.match(/[#&]fiv-potential(&.*)?$/) ||
-            (shouldSeeReaderRevenue &&
-                !window.location.hash.match(/[#&]fiv-existing(&.*)?$/))
-                ? `<div class="fiv-banner__headline fiv-banner__u-show-from-tablet">
+            isPotential
+                ? `<div class="fiv-banner__headline-potential fiv-banner__u-show-from-tablet">
                 ${potentialTitleWide.markup}
-            </div><div class="fiv-banner__headline fiv-banner__u-hide-from-tablet">
+            </div><div class="fiv-banner__headline-potential fiv-banner__u-hide-from-tablet">
                 ${potentialTitleMobile.markup}
             </div>
             <div class="fiv-banner__text_bold">
@@ -48,7 +53,7 @@ export const acquisitionsBannerFivTemplate = (
             <div class="fiv-banner__text_normal">
                 Imagine what we could continue to achieve with the support of many more of you. Together we can be a force for change.
             </div>`
-                : `<div class="fiv-banner__headline">
+                : `<div class="fiv-banner__headline-existing">
                 ${existingTitle.markup}
             </div>
             <div class="fiv-banner__text_bold">
