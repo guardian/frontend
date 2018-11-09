@@ -16,10 +16,10 @@ export const acquisitionsBannerFivTemplate = (
     subscribeUrl: string
 ): string =>
     `
-    <div class="fiv-banner__background_desktop fiv-banner__wide">
+    <div class="fiv-banner__background_desktop fiv-banner__u-show-from-tablet">
             ${circles.markup}
     </div>
-    <div class="fiv-banner__background_mobile fiv-banner__mobile">
+    <div class="fiv-banner__background_mobile fiv-banner__u-hide-from-tablet">
             ${circlesMobile.markup}
     </div>
     <div class="fiv-banner__close">
@@ -37,9 +37,9 @@ export const acquisitionsBannerFivTemplate = (
             window.location.hash.match(/[#&]fiv-potential(&.*)?$/) ||
             (shouldSeeReaderRevenue &&
                 !window.location.hash.match(/[#&]fiv-existing(&.*)?$/))
-                ? `<div class="fiv-banner__headline fiv-banner__wide">
+                ? `<div class="fiv-banner__headline fiv-banner__u-show-from-tablet">
                 ${potentialTitleWide.markup}
-            </div><div class="fiv-banner__headline fiv-banner__mobile">
+            </div><div class="fiv-banner__headline fiv-banner__u-hide-from-tablet">
                 ${potentialTitleMobile.markup}
             </div>
             <div class="fiv-banner__text_bold">

@@ -66,13 +66,13 @@
 .fiv-banner__headline {
 
 }
-.fiv-banner__wide {
+.fiv-banner__u-show-from-tablet {
     display: none;
     @include mq(tablet) {
         display: block;
     }
 }
-.fiv-banner__mobile {
+.fiv-banner__u-hide-from-tablet {
     display: block;
     @include mq(tablet) {
         display: none;
