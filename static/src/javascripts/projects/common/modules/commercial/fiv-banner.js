@@ -43,13 +43,13 @@ const showBanner = (params: EngagementBannerParams): void => {
     const linkUrl = addTrackingCodesToUrl({
         base: params.linkUrl,
         componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
-        componentId: componentId,
+        componentId,
         campaignCode: params.campaignCode,
     });
     const subscribeUrl = addTrackingCodesToUrl({
         base: supportSubscribeURL,
         componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
-        componentId: componentId,
+        componentId,
         campaignCode: params.campaignCode,
     });
 
