@@ -1,6 +1,7 @@
 .site-message--fiv-banner {
     background-color: #34aae0;
     max-height: 80%;
+    overflow: hidden;
 
     // we have our own close button - see .fiv-banner__close-button
     .site-message__close {
@@ -47,6 +48,7 @@
 
         display: block;
     }
+
 }
 
 .fiv-banner__text {
@@ -59,6 +61,27 @@
     @include mq(tablet) {
         font-size: 17px;
         line-height: 22px;
+        width: 580px;
+    }
+
+    @include mq(leftCol) {
+        font-size: 17px;
+        line-height: 22px;
+    }
+
+}
+.fiv-banner__text-potential {
+
+    @include mq(leftCol) {
+        width: 620px;
+    }
+
+}
+
+.fiv-banner__text-existing {
+
+    @include mq(leftCol) {
+        width: 509px;
     }
 
 }
@@ -122,9 +145,6 @@
 
 .fiv-banner__cta {
 
-    @include mq(tablet) {
-        position: absolute;
-    }
     top: 310px;
     right: 80px;
 
@@ -134,7 +154,8 @@
         margin-top: $gs-baseline;
     }
 
-    @include mq(desktop) {
+    @include mq(leftCol) {
+        position: absolute;
         display: inline-block;
         vertical-align: bottom;
     }
@@ -158,9 +179,10 @@
 
     height: 36px;
     padding-right: 0;
+    padding-left: 14px;
     margin-right: $gs-gutter / 4;
 
-    font-size: 14px;
+    font-size: 16px;
     line-height: 36px;
 
     color: #000000;
@@ -178,12 +200,53 @@
     @include mq(tablet) {
         display: block;
         margin-bottom: 8px;
-        font-size: 16px;
+    }
+}
+
+.fiv-banner__text-paragraph {
+    margin-top: $gs-baseline;
+    @include mq(tablet) {
+        margin-top: $gs-baseline * 2;
+    }
+}
+
+.fiv-banner__text-paragraph-existing {
+    @include mq(leftCol) {
+        margin-top: $gs-baseline * 3;
     }
 }
 
 .fiv-banner__onwards {
-    font-size: 16px;
+    @include fs-textSans(5);
+    font-weight: bold;
+    color: #000000;
+    vertical-align: top;
+    display: block;
+    margin-top: $gs-baseline;
+
+    &:hover {
+        text-decoration: none;
+        .inline-arrow-right {
+            margin-left: 9px;
+        }
+    }
+
+    .inline-arrow-right {
+
+        display: inline-block;
+        vertical-align: top;
+        margin-left: 5px;
+
+        transition: margin 240ms;
+
+        svg {
+            border: 1px solid #000000;
+            border-radius: 200px;
+            fill: #000000;
+            width: 20px;
+            height: 20px;
+        }
+    }
 }
 
 .fiv-banner__payment-logos {
@@ -202,21 +265,44 @@
 .fiv-banner__background_desktop {
     position: absolute;
     top: 1px;
-    right: -40px;
     width: 436px;
     height: 357px;
+    right: -130px;
+    @include mq(wide) {
+        right: -40px;
+    }
+
+    display: none;
+    @include mq(leftCol) {
+        display: block;
+    }
 }
 
 .fiv-banner__background_mobile {
     position: absolute;
     bottom: 1px;
-    right: -8px;
     width: 291px;
     height: 145px;
+
+    right: -8px;
+    @include mq(tablet) {
+        right: 0;
+    }
+
+    display: block;
+    @include mq(leftCol) {
+        display: none;
+    }
 }
 
 .fiv-banner__close {
-    right: 0;
+
+    @include mq($until: leftCol) {
+        right: 0;
+    }
+    @include mq(leftCol) {
+        left: 56px;
+    }
 
     // we want the close button above the link overlay
     // z-index only applies to positioned elements
