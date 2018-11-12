@@ -18,9 +18,8 @@ const isPotential =
 
 const showSubscribe =
     window.location.hash.match(/[#&]fiv-gb(&.*)?$/) ||
-    ((geolocationGetSync() === 'GB' ||
-        geolocationGetSync() === 'AU') &&
-        !window.location.hash.match(/[#&]fiv-row(&.*)?$/))
+    ((geolocationGetSync() === 'GB' || geolocationGetSync() === 'AU') &&
+        !window.location.hash.match(/[#&]fiv-row(&.*)?$/));
 
 export const acquisitionsBannerFivTemplate = (
     location: string,
@@ -86,7 +85,7 @@ export const acquisitionsBannerFivTemplate = (
                 Contribute${arrowRight.markup}
             </a>
             ${
-        showSubscribe
+                showSubscribe
                     ? `<a class="button fiv-banner__button fiv-banner__button_subscribe" href="${subscribeUrl}" target="_blank">
                     Subscribe${arrowRight.markup}
                 </a>`
