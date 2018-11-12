@@ -40,6 +40,8 @@ export const acquisitionsEpicOneMillionCampaign: EpicABTest = makeABTest({
     id: abTestName,
     campaignId: abTestName,
 
+    useLocalViewLog: true,
+
     start: '2018-04-17',
     expiry: '2019-06-05',
 
