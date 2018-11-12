@@ -20,6 +20,7 @@ import { acquisitionsEpicFromGoogleDocFiveVariants } from 'common/modules/experi
 import { acquisitionsEpicIframeTestV2 } from 'common/modules/experiments/tests/acquisitions-iframe-epic-v2';
 import { acquisitionsEpicAusFairfax } from 'common/modules/experiments/tests/acquisitions-epic-aus-fairfax';
 import { acquisitionsEpicOneMillionCampaign } from 'common/modules/experiments/tests/acquisitions-epic-one-million-campaign';
+import { acquisitionsEpicOneMillionCampaignAu } from 'common/modules/experiments/tests/acquisitions-epic-one-million-campaign-au';
 
 const isViewable = (v: Variant, t: ABTest): boolean => {
     if (!v.options) return false;
@@ -49,6 +50,7 @@ const isViewable = (v: Variant, t: ABTest): boolean => {
  */
 export const acquisitionsTests: $ReadOnlyArray<AcquisitionsABTest> = [
     acquisitionsEpicOneMillionCampaign,
+    acquisitionsEpicOneMillionCampaignAu,
     acquisitionsEpicAusFairfax,
     acquisitionsEpicIframeTestV2,
     acquisitionsEpicFromGoogleDocOneVariant,
