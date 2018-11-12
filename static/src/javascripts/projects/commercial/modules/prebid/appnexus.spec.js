@@ -144,7 +144,7 @@ describe('getAppNexusDirectPlacementId', () => {
         getBreakpointKey.mockReturnValue('T');
         expect(
             prebidSizes.map(size => getAppNexusDirectPlacementId(size, false))
-        ).toEqual(['11600568', '9251752', '9251752', '11600778', '9251752']);
+        ).toEqual(['4371641', '9251752', '9251752', '4371640', '9251752']);
     });
 });
 
