@@ -107,7 +107,8 @@ This is useful for tests where the path to the page matters. For instance any te
 This is more relevant to testing on production where you might often be looking at the flow from
 google-search result to the amp page. The following will indicate you are on an amp page:
     - In prod the url starts with `amp.` instead of `www.`
-    - On code and on local, the url has the `?amp` querystring described above
+    - The code host is `amp.code.dev-theguardian.com`
+    - On local, the url has the `?amp` querystring described above
     - The styling of the nav header is different
     - The developer tools console has a message "Powered by AMP"
 2) That ads display ok.
