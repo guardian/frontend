@@ -127,8 +127,11 @@
     padding: 1px;
 }
 
-.fiv-banner__container-potential {
+.fiv-banner__container {
     position: relative;
+}
+
+.fiv-banner__container-potential {
     height: 485px;
     @include mq(tablet) {
         height: 350px;
@@ -136,10 +139,26 @@
 }
 
 .fiv-banner__container-existing {
-    position: relative;
     height: 360px;
     @include mq(tablet) {
         height: 350px;
+    }
+}
+
+.fiv-banner__container-potential-aus {
+    height: 505px;
+    @include mq(tablet) {
+        height: 442px;
+    }
+    @include mq(leftCol) {
+        height: 380px;
+    }
+}
+
+.fiv-banner__container-existing-aus {
+    height: 400px;
+    @include mq(tablet) {
+        height: 370px;
     }
 }
 
@@ -185,11 +204,11 @@
     font-size: 16px;
     line-height: 36px;
 
-    color: #000000;
+    color: $brightness-7;
 
     .inline-icon {
         float: right;
-        fill: #000000;
+        fill: $brightness-7;
 
         svg {
             // weirdly needed for vertical centering
@@ -219,7 +238,7 @@
 .fiv-banner__onwards {
     @include fs-textSans(5);
     font-weight: bold;
-    color: #000000;
+    color: $brightness-7;
     vertical-align: top;
     display: block;
     margin-top: $gs-baseline;
@@ -240,9 +259,9 @@
         transition: margin 240ms;
 
         svg {
-            border: 1px solid #000000;
+            border: 1px solid $brightness-7;
             border-radius: 200px;
-            fill: #000000;
+            fill: $brightness-7;
             width: 20px;
             height: 20px;
         }
