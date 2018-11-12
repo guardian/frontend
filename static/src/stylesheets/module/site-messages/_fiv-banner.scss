@@ -123,9 +123,6 @@
 
 .fiv-banner__cta {
 
-    @include mq(leftCol) {
-        position: absolute;
-    }
     top: 310px;
     right: 80px;
 
@@ -136,6 +133,7 @@
     }
 
     @include mq(leftCol) {
+        position: absolute;
         display: inline-block;
         vertical-align: bottom;
     }
