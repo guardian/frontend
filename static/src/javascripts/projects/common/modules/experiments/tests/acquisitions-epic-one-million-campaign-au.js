@@ -1,8 +1,6 @@
 // @flow
 import { makeABTest } from 'common/modules/commercial/contributions-utilities';
-import { acquisitionsEpicOneMillionCampaignTemplate } from 'common/modules/commercial/templates/acquisitions-epic-one-million-campaign';
 import { oneMillionCampaignButtonsTemplate } from 'common/modules/commercial/templates/acquisitions-epic-one-million-campaign-buttons';
-import type { EpicTemplate } from 'common/modules/commercial/contributions-utilities';
 import {
     getSync as geolocationGetSync,
     getLocalCurrencySymbol,
