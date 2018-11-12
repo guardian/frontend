@@ -10,7 +10,7 @@ $btn-height: ($gs-baseline*3.5);
 
 .site-message--ad-free-banner {
     color: $brightness-100;
-    background: $sport-dark;
+    background: $lifestyle-dark;
     overflow: hidden;
 
     .site-message__close {
@@ -32,13 +32,13 @@ $btn-height: ($gs-baseline*3.5);
         .inline-icon {
             fill: $brightness-100;
             path:last-child {
-                fill: $brightness-7;
+                fill: $lifestyle-dark;
             }
         }
 
         svg {
-            width: 32px;
-            height: 32px;
+            width: 36px;
+            height: 36px;
             display: block;
         }
 
@@ -62,6 +62,9 @@ $btn-height: ($gs-baseline*3.5);
         position: absolute;
         top: $gs-baseline;
         right: $gs-baseline;
+
+        height: 36px;
+        width: 36px;
 
         .inline-icon {
             fill: $brightness-100;
@@ -107,7 +110,7 @@ $btn-height: ($gs-baseline*3.5);
         }
         font-weight: bold;
         padding-bottom: $gs-baseline;
-        color: $highlight-main;
+        color: $brightness-100;
         padding-right: $gs-gutter * 2;
     }
 
