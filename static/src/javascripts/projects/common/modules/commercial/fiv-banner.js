@@ -37,7 +37,7 @@ const defaultEngagementBannerParams = () => ({
     messageText: 'n/a',
 });
 
-const componentId = 'fiv_banner';
+const componentId = 'onemillion_fiv';
 
 const getBannerHtml = (params: EngagementBannerParams) => {
     const linkUrl = addTrackingCodesToUrl({

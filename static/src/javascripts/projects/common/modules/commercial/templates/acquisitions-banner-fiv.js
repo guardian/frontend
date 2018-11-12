@@ -4,6 +4,7 @@ import potentialTitleMobile from 'svgs/fivbanner/potential-title-mobile.svg';
 import existingTitle from 'svgs/fivbanner/existing-title.svg';
 import circles from 'svgs/fivbanner/circles.svg';
 import circlesMobile from 'svgs/fivbanner/circles-mobile.svg';
+import circlesMobileRow from 'svgs/fivbanner/circles-mobile-row.svg';
 import marque36icon from 'svgs/icon/marque-36.svg';
 import closeCentralIcon from 'svgs/icon/close-central.svg';
 import arrowRight from 'svgs/icon/arrow-right.svg';
@@ -15,6 +16,12 @@ const isPotential =
     (shouldSeeReaderRevenue &&
         !window.location.hash.match(/[#&]fiv-existing(&.*)?$/));
 
+const showSubscribe =
+    window.location.hash.match(/[#&]fiv-gb(&.*)?$/) ||
+    ((geolocationGetSync() === 'GB' ||
+        geolocationGetSync() === 'AU') &&
+        !window.location.hash.match(/[#&]fiv-row(&.*)?$/))
+
 export const acquisitionsBannerFivTemplate = (
     location: string,
     linkUrl: string,
@@ -25,7 +32,7 @@ export const acquisitionsBannerFivTemplate = (
             ${circles.markup}
     </div>
     <div class="fiv-banner__background_mobile">
-            ${circlesMobile.markup}
+            ${showSubscribe ? circlesMobile.markup : circlesMobileRow.markup}
     </div>
     <div class="fiv-banner__close">
         <div class="fiv-banner__roundel">
@@ -39,24 +46,27 @@ export const acquisitionsBannerFivTemplate = (
     <div class="fiv-banner__container-${
         isPotential ? `potential` : `existing`
     }">
-        <div class="fiv-banner__text">
         ${
             isPotential
-                ? `<div class="fiv-banner__headline-potential fiv-banner__u-show-from-tablet">
+                ? `<div class="fiv-banner__text fiv-banner__text-potential">
+        <div class="fiv-banner__headline-potential fiv-banner__u-show-from-tablet">
                 ${potentialTitleWide.markup}
             </div><div class="fiv-banner__headline-potential fiv-banner__u-hide-from-tablet">
                 ${potentialTitleMobile.markup}
             </div>
-            <div class="fiv-banner__text_bold">
-                …we remain editorially independent, our journalism free from commercial bias and our reporting open and accessible to all.
-            </div>
-            <div class="fiv-banner__text_normal">
-                Imagine what we could continue to achieve with the support of many more of you. Together we can be a force for change.
-            </div>`
-                : `<div class="fiv-banner__headline-existing">
+            <p class="fiv-banner__text-paragraph">
+                <span class="fiv-banner__text_bold">
+                    …we remain editorially independent, our journalism free from commercial bias and our reporting open and accessible to all.
+                </span>
+                <span class="fiv-banner__text_normal">
+                    Imagine what we could continue to achieve with the support of many more of you. Together we can be a force for change.
+                </span>
+            </p>`
+                : `<div class="fiv-banner__text fiv-banner__text-existing">
+        <div class="fiv-banner__headline-existing">
                 ${existingTitle.markup}
             </div>
-            <p class="fiv-banner__text-paragraph">
+            <p class="fiv-banner__text-paragraph fiv-banner__text-paragraph-existing">
                 <span class="fiv-banner__text_bold">
                     …to the 1,000,000 readers who have helped to keep The&nbsp;Guardian’s independent journalism open and accessible to all.
                 </span>
@@ -66,7 +76,7 @@ export const acquisitionsBannerFivTemplate = (
             </p>`
         }
             <div>
-                <a class="fiv-banner__onwards" href="https://www.theguardian.com/membership/2018/nov/12/katharine-viner-guardian-million-reader-funding?INTCMP=onemillion_fiv_kath">
+                <a class="fiv-banner__onwards" href="https://www.theguardian.com/membership/2018/nov/12/katharine-viner-guardian-million-reader-funding?INTCMP=onemillion_fiv">
                     Read our story${arrowRight.markup}
                 </a>
             </div>
@@ -76,10 +86,7 @@ export const acquisitionsBannerFivTemplate = (
                 Contribute${arrowRight.markup}
             </a>
             ${
-                window.location.hash.match(/[#&]fiv-gb(&.*)?$/) ||
-                ((geolocationGetSync() === 'GB' ||
-                    geolocationGetSync() === 'AU') &&
-                    !window.location.hash.match(/[#&]fiv-row(&.*)?$/))
+        showSubscribe
                     ? `<a class="button fiv-banner__button fiv-banner__button_subscribe" href="${subscribeUrl}" target="_blank">
                     Subscribe${arrowRight.markup}
                 </a>`

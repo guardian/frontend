@@ -1,6 +1,7 @@
 .site-message--fiv-banner {
     background-color: #34aae0;
     max-height: 80%;
+    overflow: hidden;
 
     // we have our own close button - see .fiv-banner__close-button
     .site-message__close {
@@ -47,6 +48,7 @@
 
         display: block;
     }
+
 }
 
 .fiv-banner__text {
@@ -60,6 +62,26 @@
         font-size: 17px;
         line-height: 22px;
         width: 580px;
+    }
+
+    @include mq(leftCol) {
+        font-size: 17px;
+        line-height: 22px;
+    }
+
+}
+.fiv-banner__text-potential {
+
+    @include mq(leftCol) {
+        width: 620px;
+    }
+
+}
+
+.fiv-banner__text-existing {
+
+    @include mq(leftCol) {
+        width: 509px;
     }
 
 }
@@ -157,9 +179,10 @@
 
     height: 36px;
     padding-right: 0;
+    padding-left: 14px;
     margin-right: $gs-gutter / 4;
 
-    font-size: 14px;
+    font-size: 16px;
     line-height: 36px;
 
     color: #000000;
@@ -177,7 +200,6 @@
     @include mq(tablet) {
         display: block;
         margin-bottom: 8px;
-        font-size: 16px;
     }
 }
 
@@ -186,6 +208,9 @@
     @include mq(tablet) {
         margin-top: $gs-baseline * 2;
     }
+}
+
+.fiv-banner__text-paragraph-existing {
     @include mq(leftCol) {
         margin-top: $gs-baseline * 3;
     }
@@ -199,11 +224,20 @@
     display: block;
     margin-top: $gs-baseline;
 
+    &:hover {
+        text-decoration: none;
+        .inline-arrow-right {
+            margin-left: 9px;
+        }
+    }
+
     .inline-arrow-right {
 
         display: inline-block;
         vertical-align: top;
         margin-left: 5px;
+
+        transition: margin 240ms;
 
         svg {
             border: 1px solid #000000;
@@ -233,7 +267,10 @@
     top: 1px;
     width: 436px;
     height: 357px;
-    right: 0;
+    right: -130px;
+    @include mq(wide) {
+        right: -40px;
+    }
 
     display: none;
     @include mq(leftCol) {
