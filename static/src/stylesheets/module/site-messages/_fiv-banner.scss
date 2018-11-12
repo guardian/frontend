@@ -127,8 +127,11 @@
     padding: 1px;
 }
 
-.fiv-banner__container-potential {
+.fiv-banner__container {
     position: relative;
+}
+
+.fiv-banner__container-potential {
     height: 485px;
     @include mq(tablet) {
         height: 350px;
@@ -136,10 +139,26 @@
 }
 
 .fiv-banner__container-existing {
-    position: relative;
     height: 360px;
     @include mq(tablet) {
         height: 350px;
+    }
+}
+
+.fiv-banner__container-potential-aus {
+    height: 505px;
+    @include mq(tablet) {
+        height: 442px;
+    }
+    @include mq(leftCol) {
+        height: 380px;
+    }
+}
+
+.fiv-banner__container-existing-aus {
+    height: 400px;
+    @include mq(tablet) {
+        height: 370px;
     }
 }
 
