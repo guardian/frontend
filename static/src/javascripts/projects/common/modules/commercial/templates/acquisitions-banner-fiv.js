@@ -63,11 +63,11 @@ export const acquisitionsBannerFivTemplate = (
                 Imagine what the next million could achieve. Please read this update from our editor-in-chief and continue supporting us.
             </div>`
         }
-        </div>
-        <div class="fiv-banner__onwards">
-            <a class="fiv-banner__onwards" href="${linkUrl}">
-                Read our story${arrowRight.markup}
-            </a>
+            <div class="fiv-banner__onwards">
+                <a class="fiv-banner__onwards" href="https://www.theguardian.com/membership/2018/nov/12/katharine-viner-guardian-million-reader-funding">
+                    Read our story${arrowRight.markup}
+                </a>
+            </div>
         </div>
         <div class="fiv-banner__cta">
             <a class="button fiv-banner__button fiv-banner__button_contribute" href="${linkUrl}" target="_blank">
