@@ -204,11 +204,11 @@
     font-size: 16px;
     line-height: 36px;
 
-    color: #000000;
+    color: $brightness-7;
 
     .inline-icon {
         float: right;
-        fill: #000000;
+        fill: $brightness-7;
 
         svg {
             // weirdly needed for vertical centering
@@ -238,7 +238,7 @@
 .fiv-banner__onwards {
     @include fs-textSans(5);
     font-weight: bold;
-    color: #000000;
+    color: $brightness-7;
     vertical-align: top;
     display: block;
     margin-top: $gs-baseline;
@@ -259,9 +259,9 @@
         transition: margin 240ms;
 
         svg {
-            border: 1px solid #000000;
+            border: 1px solid $brightness-7;
             border-radius: 200px;
-            fill: #000000;
+            fill: $brightness-7;
             width: 20px;
             height: 20px;
         }
