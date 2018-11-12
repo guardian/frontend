@@ -59,6 +59,7 @@
     @include mq(tablet) {
         font-size: 17px;
         line-height: 22px;
+        width: 580px;
     }
 
 }
@@ -122,7 +123,7 @@
 
 .fiv-banner__cta {
 
-    @include mq(tablet) {
+    @include mq(leftCol) {
         position: absolute;
     }
     top: 310px;
@@ -134,7 +135,7 @@
         margin-top: $gs-baseline;
     }
 
-    @include mq(desktop) {
+    @include mq(leftCol) {
         display: inline-block;
         vertical-align: bottom;
     }
@@ -182,8 +183,38 @@
     }
 }
 
+.fiv-banner__text-paragraph {
+    margin-top: $gs-baseline;
+    @include mq(tablet) {
+        margin-top: $gs-baseline * 2;
+    }
+    @include mq(leftCol) {
+        margin-top: $gs-baseline * 3;
+    }
+}
+
 .fiv-banner__onwards {
-    font-size: 16px;
+    @include fs-textSans(5);
+    font-weight: bold;
+    color: #000000;
+    vertical-align: top;
+    display: block;
+    margin-top: $gs-baseline;
+
+    .inline-arrow-right {
+
+        display: inline-block;
+        vertical-align: top;
+        margin-left: 5px;
+
+        svg {
+            border: 1px solid #000;
+            border-radius: 200px;
+            fill: #000;
+            width: 20px;
+            height: 20px;
+        }
+    }
 }
 
 .fiv-banner__payment-logos {
@@ -202,21 +233,41 @@
 .fiv-banner__background_desktop {
     position: absolute;
     top: 1px;
-    right: -40px;
     width: 436px;
     height: 357px;
+    right: 0;
+
+    display: none;
+    @include mq(leftCol) {
+        display: block;
+    }
 }
 
 .fiv-banner__background_mobile {
     position: absolute;
     bottom: 1px;
-    right: -8px;
     width: 291px;
     height: 145px;
+
+    right: -8px;
+    @include mq(tablet) {
+        right: 0;
+    }
+
+    display: block;
+    @include mq(leftCol) {
+        display: none;
+    }
 }
 
 .fiv-banner__close {
-    right: 0;
+
+    @include mq($until: leftCol) {
+        right: 0;
+    }
+    @include mq(leftCol) {
+        left: 56px;
+    }
 
     // we want the close button above the link overlay
     // z-index only applies to positioned elements

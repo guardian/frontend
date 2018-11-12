@@ -21,10 +21,10 @@ export const acquisitionsBannerFivTemplate = (
     subscribeUrl: string
 ): string =>
     `
-    <div class="fiv-banner__background_desktop fiv-banner__u-show-from-tablet">
+    <div class="fiv-banner__background_desktop">
             ${circles.markup}
     </div>
-    <div class="fiv-banner__background_mobile fiv-banner__u-hide-from-tablet">
+    <div class="fiv-banner__background_mobile">
             ${circlesMobile.markup}
     </div>
     <div class="fiv-banner__close">
@@ -56,14 +56,16 @@ export const acquisitionsBannerFivTemplate = (
                 : `<div class="fiv-banner__headline-existing">
                 ${existingTitle.markup}
             </div>
-            <div class="fiv-banner__text_bold">
-                …to the 1,000,000 readers who have helped to keep The Guardian’s independent journalism open and accessible to all.
-            </div>
-            <div class="fiv-banner__text_normal">
-                Imagine what the next million could achieve. Please read this update from our editor-in-chief and continue supporting us.
-            </div>`
+            <p class="fiv-banner__text-paragraph">
+                <span class="fiv-banner__text_bold">
+                    …to the 1,000,000 readers who have helped to keep The&nbsp;Guardian’s independent journalism open and accessible to all.
+                </span>
+                <span class="fiv-banner__text_normal">
+                    Imagine what the next million could achieve. Please read this update from our editor-in-chief and continue supporting us.
+                </span>
+            </p>`
         }
-            <div class="fiv-banner__onwards">
+            <div>
                 <a class="fiv-banner__onwards" href="https://www.theguardian.com/membership/2018/nov/12/katharine-viner-guardian-million-reader-funding?INTCMP=onemillion_fiv_kath">
                     Read our story${arrowRight.markup}
                 </a>
