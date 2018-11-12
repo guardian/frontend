@@ -75,7 +75,8 @@ export const acquisitionsBannerFivTemplate = (
             </a>
             ${
                 window.location.hash.match(/[#&]fiv-gb(&.*)?$/) ||
-                (geolocationGetSync() === 'GB' &&
+                ((geolocationGetSync() === 'GB' ||
+                    geolocationGetSync() === 'AU') &&
                     !window.location.hash.match(/[#&]fiv-row(&.*)?$/))
                     ? `<a class="button fiv-banner__button fiv-banner__button_subscribe" href="${subscribeUrl}" target="_blank">
                     Subscribe${arrowRight.markup}
