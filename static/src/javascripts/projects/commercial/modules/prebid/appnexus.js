@@ -89,10 +89,10 @@ export const getAppNexusDirectPlacementId = (
             return defaultPlacementId;
         case 'T':
             if (containsMpu(sizes)) {
-                return '11600568';
+                return '4371641';
             }
             if (containsLeaderboard(sizes)) {
-                return '11600778';
+                return '4371640';
             }
             return defaultPlacementId;
         default:
