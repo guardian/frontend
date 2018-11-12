@@ -7,8 +7,10 @@ import conf.Configuration
 import play.api.mvc.{Cookie, DiscardingCookie, Result}
 
 object DiscardingIdentityCookies {
-  private def discardingCookieForRootDomain(name: String): DiscardingCookie =
+
+  def discardingCookieForRootDomain(name: String): DiscardingCookie =
     DiscardingCookie(name, secure = true, domain = Some(Configuration.id.domain))
+
   def apply(result: Result): Result = result.discardingCookies(
     discardingCookieForRootDomain("SC_GU_U"),
     discardingCookieForRootDomain("GU_U"),

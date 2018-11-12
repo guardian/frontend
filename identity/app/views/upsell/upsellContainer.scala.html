@@ -43,7 +43,7 @@
 <div class="js-identity-block-list"
     data-page-variant="@{pageVariant.jsName}"
     data-csrf-token="@{play.filters.csrf.CSRF.getToken.fold("")(_.value)}"
-    data-account-token="@{requestHeader.cookies.get("SC_GU_GUEST_PW_SET").fold("")(_.value)}"
+    data-account-token="@{requestHeader.cookies.get(UpsellController.passwordResetCookie).fold("")(_.value)}"
     data-email="@email"
     data-has-password="@{hasPassword}"
     data-has-social-links="@{hasSocialLinks}"
