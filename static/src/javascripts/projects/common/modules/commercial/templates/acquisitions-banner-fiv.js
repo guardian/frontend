@@ -64,7 +64,7 @@ export const acquisitionsBannerFivTemplate = (
             </div>`
         }
             <div class="fiv-banner__onwards">
-                <a class="fiv-banner__onwards" href="https://www.theguardian.com/membership/2018/nov/12/katharine-viner-guardian-million-reader-funding">
+                <a class="fiv-banner__onwards" href="https://www.theguardian.com/membership/2018/nov/12/katharine-viner-guardian-million-reader-funding?INTCMP=onemillion_fiv_kath">
                     Read our story${arrowRight.markup}
                 </a>
             </div>
