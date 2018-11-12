@@ -61,10 +61,10 @@ export const acquisitionsBannerFivTemplate = (
                 inAus
                     ? `<p class="fiv-banner__text-paragraph">
                 <span class="fiv-banner__text_bold">
-                    …we remain editorially independent, our journalism free from commercial bias and our reporting open and accessible to all. Imagine what we could continue to achieve with the support of many more of you.
+                    …we remain editorially independent, our journalism free from commercial bias and our reporting open and accessible to all.
                 </span>
                 <span class="fiv-banner__text_normal">
-                    Together we can be a force for change. Please consider supporting us today
+                    Imagine what we could continue to achieve with the support of many more of you. Together we can be a force for change. Please consider supporting us today.
                 </span>
             </p>`
                     : `<p class="fiv-banner__text-paragraph">
