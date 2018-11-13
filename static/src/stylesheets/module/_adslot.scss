@@ -63,14 +63,6 @@
     // Needed for compatibility with IE11/Edge.
     top: 0;
 
-    .has-new-navigation & {
-        border-bottom: 0;
-    }
-
-    .ad-slot__label {
-        background: transparent;
-    }
-
     &:not(.top-banner-ad-container--not-sticky) {
         position: sticky;
         z-index: $zindex-sticky;
@@ -102,10 +94,6 @@
     text-align: center;
 
     .ad-slot__label {
-        border-top: 0;
-        padding: 0;
-        height: $gs-row-height/2;
-
         @include mq(wide) {
             margin: 0;
         }
