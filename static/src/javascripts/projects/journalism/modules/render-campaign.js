@@ -2,7 +2,7 @@
 import fastdom from 'lib/fastdom-promise';
 import template from 'lodash/template';
 import campaignForm from 'raw-loader!journalism/views/campaignForm.html';
-import { getCampaign } from 'journalism/modules/get-campaign';
+import { getCampaigns } from 'journalism/modules/get-campaign';
 import { submitForm } from 'journalism/modules/submit-form';
 
 const renderCampaign = (anchorNode: HTMLElement, calloutData): void => {
@@ -24,11 +24,20 @@ const renderCampaign = (anchorNode: HTMLElement, calloutData): void => {
 };
 
 export const initCampaign = () => {
-    const calloutData = getCampaign();
+    const calloutDatasets = getCampaigns();
+    console.log(calloutDatasets);
 
-    const fourthParagraph = document.querySelector(
-        '.content__article-body p:nth-of-type(4)'
-    );
-    if (calloutData && fourthParagraph)
-        renderCampaign(fourthParagraph, calloutData);
+    const calloutContainers = document.querySelectorAll('div[data-callout-id]');
+    console.log(calloutContainers);
+
+    // loop through containers and if id is found in a campaign data object, put that one in there
+
+    calloutContainers.forEach(container => {
+        const cId = container.getAttribute('data-callout-id');
+        calloutDatasets.forEach(callout => {
+            if (callout.id === cId) {
+                renderCampaign(container, callout);
+            }
+        });
+    });
 };
