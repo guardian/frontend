@@ -54,6 +54,7 @@ case class PageData(
     seriesId: Option[String],
     isHosted: Boolean,
     beaconUrl: String,
+    editionId: String,
     edition: String,
     contentType: Option[String],
     commissioningDesks: Option[String],
@@ -155,6 +156,7 @@ object DotcomponentsDataModel {
       jsConfig("seriesId"),    // source: content.scala
       article.metadata.isHosted,
       Configuration.debug.beaconUrl,
+      Edition(request).id,
       Edition(request).displayName,
       jsConfig("contentType"),
       jsConfig("commissioningDesks"),
