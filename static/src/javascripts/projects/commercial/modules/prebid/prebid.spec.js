@@ -97,7 +97,7 @@ describe('initialise', () => {
                 syncEnabled: true,
                 syncsPerBidder: 999,
                 filterSettings: {
-                    all: {
+                    image: {
                         bidders: '*',
                         filter: 'include',
                     },
