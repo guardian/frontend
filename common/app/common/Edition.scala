@@ -55,7 +55,7 @@ object Edition {
 
   def isEditionFront(implicit request: RequestHeader): Boolean = editionFronts.contains(request.path)
 
-  private def editionCookieValue(request: RequestHeader): String = {
+  private def editionFromRequest(request: RequestHeader): String = {
     // override for Ajax calls
     val editionFromParameter = request.getQueryString("_edition")
 
@@ -73,7 +73,7 @@ object Edition {
   }
 
   def apply(request: RequestHeader): Edition = {
-    val cookieValue = editionCookieValue(request)
+    val cookieValue = editionFromRequest(request)
     all.find(_.matchesCookie(cookieValue)).getOrElse(defaultEdition)
   }
 
