@@ -4,6 +4,8 @@ import com.gu.contentapi.client.model.v1.ElementType.{Map => _, _}
 import com.gu.contentapi.client.model.v1.{ElementType, SponsorshipType, BlockElement => ApiBlockElement, Sponsorship => ApiSponsorship}
 import model.{AudioAsset, ImageAsset, ImageMedia, VideoAsset}
 import play.api.libs.json._
+import org.jsoup.Jsoup
+import scala.collection.JavaConverters._
 
 /*
   These elements are used for the Dotcom Rendering, they are essentially the new version of the
@@ -11,7 +13,7 @@ import play.api.libs.json._
  */
 
 sealed trait PageElement
-case class TextBlockElement(html: Option[String]) extends PageElement
+case class TextBlockElement(html: String) extends PageElement
 case class TweetBlockElement(html: Option[String]) extends PageElement
 case class PullquoteBlockElement(html: Option[String]) extends PageElement
 case class ImageBlockElement(media: ImageMedia, data: Map[String, String], displayCredit: Option[Boolean]) extends PageElement
@@ -73,32 +75,36 @@ object Sponsorship {
 
 object PageElement {
 
-  def make(element: ApiBlockElement): Option[PageElement] = {
+  def make(element: ApiBlockElement): List[PageElement] = {
 
     element.`type` match {
 
-      case Text => Some(TextBlockElement(element.textTypeData.flatMap(_.html)))
+      case Text => (for {
+        block <- element.textTypeData.toList
+        text <- block.html.toList
+        element <- Cleaner.split(text)
+      } yield {TextBlockElement(element)})
 
-      case Tweet => Some(TweetBlockElement(element.tweetTypeData.flatMap(_.html)))
+      case Tweet => List(TweetBlockElement(element.tweetTypeData.flatMap(_.html)))
 
-      case RichLink => Some(RichLinkBlockElement(
+      case RichLink => List(RichLinkBlockElement(
         element.richLinkTypeData.flatMap(_.originalUrl),
         element.richLinkTypeData.flatMap(_.linkText),
         element.richLinkTypeData.flatMap(_.linkPrefix),
         element.richLinkTypeData.flatMap(_.sponsorship).map(Sponsorship(_))
       ))
 
-      case Image => Some(ImageBlockElement(
+      case Image => List(ImageBlockElement(
         ImageMedia(element.assets.zipWithIndex.map { case (a, i) => ImageAsset.make(a, i) }),
         imageDataFor(element),
         element.imageTypeData.flatMap(_.displayCredit)
       ))
 
-      case Audio => Some(AudioBlockElement(element.assets.map(AudioAsset.make)))
+      case Audio => List(AudioBlockElement(element.assets.map(AudioAsset.make)))
 
       case Video =>
         if (element.assets.nonEmpty) {
-          Some(GuVideoBlockElement(
+          List(GuVideoBlockElement(
             element.assets.map(VideoAsset.make),
             ImageMedia(element.assets.filter(_.mimeType.exists(_.startsWith("image"))).zipWithIndex.map {
               case (a, i) => ImageAsset.make(a, i)
@@ -106,7 +112,7 @@ object PageElement {
             videoDataFor(element))
           )
         }
-        else Some(VideoBlockElement(videoDataFor(element)))
+        else List(VideoBlockElement(videoDataFor(element)))
 
       case Membership => element.membershipTypeData.map(m => MembershipBlockElement(
         m.originalUrl,
@@ -118,25 +124,24 @@ object PageElement {
         m.identifier,
         m.image,
         m.price
-      ))
+      )).toList
 
-      case Embed => element.embedTypeData.map(d => EmbedBlockElement(d.html, d.safeEmbedCode, d.alt))
+      case Embed => element.embedTypeData.map(d => EmbedBlockElement(d.html, d.safeEmbedCode, d.alt)).toList
 
-      case Contentatom => element.contentAtomTypeData.map(d => ContentAtomBlockElement(d.atomId))
+      case Contentatom => element.contentAtomTypeData.map(d => ContentAtomBlockElement(d.atomId)).toList
 
-      case Pullquote => element.pullquoteTypeData.map(d => PullquoteBlockElement(d.html))
-      case Interactive => element.interactiveTypeData.map(d => InteractiveBlockElement(d.html))
-      case Comment => element.commentTypeData.map(d => CommentBlockElement(d.html))
-      case Table => element.tableTypeData.map(d => TableBlockElement(d.html))
-      case Witness => element.witnessTypeData.map(d => WitnessBlockElement(d.html))
-      case Document => element.documentTypeData.map(d => DocumentBlockElement(d.html))
-      case Instagram => element.instagramTypeData.map(d => InstagramBlockElement(d.originalUrl,d.html,d.caption.isDefined))
-      case Vine => element.vineTypeData.map(d => VineBlockElement(d.html))
-      case ElementType.Map => element.mapTypeData.map(d => MapBlockElement(d.html))
-      case Code => Some(CodeBlockElement(None))
-      case Form => Some(FormBlockElement(None))
-
-      case EnumUnknownElementType(f) => Some(UnknownBlockElement(None))
+      case Pullquote => element.pullquoteTypeData.map(d => PullquoteBlockElement(d.html)).toList
+      case Interactive => element.interactiveTypeData.map(d => InteractiveBlockElement(d.html)).toList
+      case Comment => element.commentTypeData.map(d => CommentBlockElement(d.html)).toList
+      case Table => element.tableTypeData.map(d => TableBlockElement(d.html)).toList
+      case Witness => element.witnessTypeData.map(d => WitnessBlockElement(d.html)).toList
+      case Document => element.documentTypeData.map(d => DocumentBlockElement(d.html)).toList
+      case Instagram => element.instagramTypeData.map(d => InstagramBlockElement(d.html)).toList
+      case Vine => element.vineTypeData.map(d => VineBlockElement(d.html)).toList
+      case ElementType.Map => element.mapTypeData.map(d => MapBlockElement(d.html)).toList
+      case Code => List(CodeBlockElement(None))
+      case Form => List(FormBlockElement(None))
+      case EnumUnknownElementType(f) => List(UnknownBlockElement(None))
 
     }
   }
@@ -192,4 +197,16 @@ object PageElement {
   implicit val RichLinkBlockElementWrites: Writes[RichLinkBlockElement] = Json.writes[RichLinkBlockElement]
   val blockElementWrites: Writes[PageElement] = Json.writes[PageElement]
 
+}
+
+object Cleaner{
+  def split(html: String):List[String] = {
+    Jsoup
+      .parseBodyFragment(html)
+      .body()
+      .children()
+      .asScala
+      .toList
+      .map(_.outerHtml())
+  }
 }
