@@ -20,7 +20,7 @@ import mediator from 'lib/mediator';
 
 const messageCode = 'fiv-banner';
 const maxArticles = 3;
-const fivImpressionsRemainingKey = 'fivImpressionsRemaining';
+const fivImpressionsRemainingKey = 'fivImpressionsRemaining2';
 
 const hideBanner = () => {
     userPrefs.set(fivImpressionsRemainingKey, 0);
@@ -40,6 +40,21 @@ const defaultEngagementBannerParams = () => ({
 const componentId = 'onemillion_fiv';
 
 const getBannerHtml = (params: EngagementBannerParams) => {
+    // hack to decrement, that makes this function not a pure function
+    const fivImpressionsRemaining = userPrefs.get(fivImpressionsRemainingKey);
+
+    if (fivImpressionsRemaining == null) {
+        userPrefs.set(fivImpressionsRemainingKey, maxArticles - 1);
+    } else if (fivImpressionsRemaining > 0) {
+        const notSeenEnoughTimesYet = fivImpressionsRemaining > 0;
+        if (notSeenEnoughTimesYet) {
+            userPrefs.set(
+                fivImpressionsRemainingKey,
+                fivImpressionsRemaining - 1
+            );
+        }
+    }
+
     const linkUrl = addTrackingCodesToUrl({
         base: params.linkUrl,
         componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
@@ -116,22 +131,17 @@ const canShow = (): Promise<boolean> => {
         }
     }
 
-    if (shouldShowReaderRevenue()) {
+    if (shouldShowReaderRevenue(true)) {
         const fivImpressionsRemaining = userPrefs.get(
             fivImpressionsRemainingKey
         );
 
         if (fivImpressionsRemaining == null) {
-            userPrefs.set(fivImpressionsRemainingKey, maxArticles - 1);
-            return Promise.resolve(true);
+            userPrefs.set(fivImpressionsRemainingKey, maxArticles);
+            const tryReadingBack = userPrefs.get(fivImpressionsRemainingKey);
+            return Promise.resolve(tryReadingBack != null);
         } else if (fivImpressionsRemaining > 0) {
             const notSeenEnoughTimesYet = fivImpressionsRemaining > 0;
-            if (notSeenEnoughTimesYet) {
-                userPrefs.set(
-                    fivImpressionsRemainingKey,
-                    fivImpressionsRemaining - 1
-                );
-            }
             return Promise.resolve(notSeenEnoughTimesYet);
         }
         return Promise.resolve(false);
