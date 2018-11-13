@@ -19,7 +19,7 @@ import { acquisitionsEpicFromGoogleDocFourVariants } from 'common/modules/experi
 import { acquisitionsEpicFromGoogleDocFiveVariants } from 'common/modules/experiments/tests/acquisitions-epic-from-google-doc-five-variants';
 import { acquisitionsEpicIframeTestV2 } from 'common/modules/experiments/tests/acquisitions-iframe-epic-v2';
 import { acquisitionsEpicAusFairfax } from 'common/modules/experiments/tests/acquisitions-epic-aus-fairfax';
-import { acquisitionsEpicOneMillionCampaign } from 'common/modules/experiments/tests/acquisitions-epic-one-million-campaign';
+import { acquisitionsEpicOneMillionCampaignNoControl } from 'common/modules/experiments/tests/acquisitions-epic-one-million-campaign-no-control';
 import { acquisitionsEpicOneMillionCampaignAu } from 'common/modules/experiments/tests/acquisitions-epic-one-million-campaign-au';
 
 const isViewable = (v: Variant, t: ABTest): boolean => {
@@ -49,7 +49,7 @@ const isViewable = (v: Variant, t: ABTest): boolean => {
  * acquisition tests in priority order (highest to lowest)
  */
 export const acquisitionsTests: $ReadOnlyArray<AcquisitionsABTest> = [
-    acquisitionsEpicOneMillionCampaign,
+    acquisitionsEpicOneMillionCampaignNoControl,
     acquisitionsEpicOneMillionCampaignAu,
     acquisitionsEpicAusFairfax,
     acquisitionsEpicIframeTestV2,

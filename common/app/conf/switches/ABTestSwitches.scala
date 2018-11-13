@@ -218,7 +218,7 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-acquisitions-epic-one-million-campaign",
+    "ab-acquisitions-epic-one-million-campaign-no-control",
     "Tests an epic with custom copy and design for the One Million campaign",
     owners = Seq(Owner.withGithub("joelochlann")),
     safeState = Off,

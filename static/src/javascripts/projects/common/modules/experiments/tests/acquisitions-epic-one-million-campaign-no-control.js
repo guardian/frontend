@@ -8,7 +8,7 @@ import {
     getLocalCurrencySymbol,
 } from 'lib/geolocation';
 
-const abTestName = 'AcquisitionsEpicOneMillionCampaign';
+const abTestName = 'AcquisitionsEpicOneMillionCampaignNoControl';
 
 const everywhereExceptAustraliaCopy = {
     heading: 'We have some news &hellip;',
@@ -36,53 +36,47 @@ const oneMillionCampaignTemplate: EpicTemplate = (
 
 const campaignCode = 'onemillion';
 
-export const acquisitionsEpicOneMillionCampaign: EpicABTest = makeABTest({
-    id: abTestName,
-    campaignId: abTestName,
+export const acquisitionsEpicOneMillionCampaignNoControl: EpicABTest = makeABTest(
+    {
+        id: abTestName,
+        campaignId: abTestName,
 
-    useLocalViewLog: true,
+        useLocalViewLog: true,
 
-    start: '2018-04-17',
-    expiry: '2019-06-05',
+        start: '2018-04-17',
+        expiry: '2019-06-05',
 
-    author: 'Joseph Smith',
-    description: 'Test copy fetched from a Google Doc',
-    successMeasure: 'Conversion rate',
-    idealOutcome: 'Alternative copy makes more money than the control',
+        author: 'Joseph Smith',
+        description: 'Test copy fetched from a Google Doc',
+        successMeasure: 'Conversion rate',
+        idealOutcome: 'Alternative copy makes more money than the control',
 
-    audienceCriteria: 'All',
-    audience: 1,
-    audienceOffset: 0,
+        audienceCriteria: 'All',
+        audience: 1,
+        audienceOffset: 0,
 
-    canRun: () => geolocationGetSync() !== 'AU',
+        canRun: () => geolocationGetSync() !== 'AU',
 
-    variants: [
-        {
-            id: 'control',
-            products: [],
-            options: {
-                buttonTemplate: oneMillionCampaignButtonsTemplate,
-                campaignCode,
+        variants: [
+            {
+                id: 'just_copy',
+                products: [],
+                options: {
+                    copy: everywhereExceptAustraliaCopy,
+                    buttonTemplate: oneMillionCampaignButtonsTemplate,
+                    campaignCode,
+                },
             },
-        },
-        {
-            id: 'just_copy',
-            products: [],
-            options: {
-                copy: everywhereExceptAustraliaCopy,
-                buttonTemplate: oneMillionCampaignButtonsTemplate,
-                campaignCode,
+            {
+                id: 'copy_and_design',
+                products: [],
+                options: {
+                    template: oneMillionCampaignTemplate,
+                    copy: everywhereExceptAustraliaCopy,
+                    buttonTemplate: oneMillionCampaignButtonsTemplate,
+                    campaignCode,
+                },
             },
-        },
-        {
-            id: 'copy_and_design',
-            products: [],
-            options: {
-                template: oneMillionCampaignTemplate,
-                copy: everywhereExceptAustraliaCopy,
-                buttonTemplate: oneMillionCampaignButtonsTemplate,
-                campaignCode,
-            },
-        },
-    ],
-});
+        ],
+    }
+);
