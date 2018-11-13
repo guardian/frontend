@@ -17,23 +17,25 @@
 // Using the string `dumathoin` gives zero chance of classname collisions, so
 // changing/rotating these classnames becomes as straightforward as possible.
 .dumathoin {
-    padding: 0 $gs-gutter / 2;
+    margin: 0 $gs-gutter / 2;
     position: relative;
 
     @include mq(tablet) {
-        padding: 0 calc(50% - 370px);
+        margin: 0 calc(50% - 370px);
     }
 
     @include mq(desktop) {
-        padding: 0 calc(50% - 490px);
+        margin: 0 calc(50% - 490px);
     }
 
-    @include mq(leftCol) {
-        padding: 0 calc(50% - 570px);
-    }
+    body:not(.has-page-skin) & {
+        @include mq(leftCol) {
+            margin: 0 calc(50% - 570px);
+        }
 
-    @include mq(wide) {
-        padding: 0 calc(50% - 650px);
+        @include mq(wide) {
+            margin: 0 calc(50% - 650px);
+        }
     }
 
     .button {
