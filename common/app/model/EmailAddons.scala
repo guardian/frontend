@@ -67,7 +67,7 @@ case object MorningBriefing extends ArticleEmailMetadata {
 }
 
 case object TheUSMinute extends ArticleEmailMetadata {
-  val name = "The campaign minute 2016"
+  val name = "The US Politics Minute"
   override val banner = Some("midterms-minute.png")
   def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "us-news/series/the-campaign-minute-2016")
 }
