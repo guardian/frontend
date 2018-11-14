@@ -1,5 +1,5 @@
 @import common.InlineJs
-@import conf.switches.Switches.{IdentityProfileNavigationSwitch, enableConsentManagementService}
+@import conf.switches.Switches.{IdentityProfileNavigationSwitch, enableConsentManagementService, LotameSwitch}
 @import conf.Configuration
 @import model.Page
 @import templates.inlineJS.nonBlocking.js._
@@ -27,6 +27,12 @@
     // add CMP stub and attach main script to the head
     @InlineJs(prepareCmp().body, "prepareCmp.js")
 }
+
+@if(LotameSwitch.isSwitchedOn) {
+    // add Lotame
+    @InlineJs(prepareLotame().body, "prepareLotame.js")
+}
+
 
 // ************* ANALYTICS *************
 
