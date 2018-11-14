@@ -10,8 +10,7 @@ object ActiveExperiments extends ExperimentsDefinition {
     OldAudioPage,
     CommercialClientLogging,
     OrielParticipation,
-    OldTLSSupportDeprecation,
-    HeaderSubscribeUKTest
+    OldTLSSupportDeprecation
   )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
@@ -49,10 +48,3 @@ object OldAudioPage extends Experiment(
   participationGroup = Perc5A
 )
 
-object HeaderSubscribeUKTest extends Experiment(
-  name = "header-subscribe-uk-test",
-  description = "We're changing the order and destination of the contribution and subscribe links in order to see if we can improve the subscription revenue",
-  owners = Seq(Owner.withGithub("rcrphillips")),
-  sellByDate = new LocalDate(2018, 11, 30),
-  participationGroup = Perc50
-)
