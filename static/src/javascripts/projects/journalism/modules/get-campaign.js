@@ -19,4 +19,6 @@ export const getCampaigns = () => {
             }
         });
     }
+
+    // return empty array?
 };
