@@ -52,6 +52,8 @@ object Trail {
     metadata: MetaData,
     apiContent: contentapi.Content): Trail = {
 
+    val byline: Option[String] = apiContent.fields.flatMap(_.byline)
+
     Trail(
       webPublicationDate = apiContent.webPublicationDate.map(_.toJoda).getOrElse(DateTime.now),
       headline = apiContent.fields.flatMap(_.headline).getOrElse(""),
@@ -59,7 +61,8 @@ object Trail {
       thumbnailPath = apiContent.fields.flatMap(_.thumbnail).map(ImgSrc(_, Naked)),
       isCommentable = apiContent.fields.flatMap(_.commentable).exists(b => b),
       isClosedForComments = !apiContent.fields.flatMap(_.commentCloseDate).map(_.toJoda).exists(_.isAfterNow),
-      byline = apiContent.fields.flatMap(_.byline).map(stripHtml),
+      byline = byline.map(stripHtml),
+      bylineWithTags = Content.getStructuredByline(byline, tags.contributors),
       trailPicture = findTrailImages(elements),
       tags = tags,
       commercial = commercial,
@@ -79,6 +82,7 @@ final case class Trail (
   webPublicationDate: DateTime,
   headline: String,
   byline: Option[String],
+  bylineWithTags: List[BylineElement],
   sectionName: String,
   trailPicture: Option[ImageMedia],
   thumbnailPath: Option[String] = None,

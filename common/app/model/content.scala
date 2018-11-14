@@ -426,7 +426,21 @@ object Content {
           .orElse(trail.trailPicture.flatMap(_.largestImage))
     )
   }
+
+  // this crazy function is responsible for turning a byline such as 'Cedric Diggory and Lucius Malfoy in Little Whinging'
+  // into List(BylineElement('Cedric Diggory', Some(<Tag>)), BylineElement(' and ', None), BylineElement('Lucius Malfoy', Some(<Tag>)).....
+  // so that it can be correctly rendered with the correct bits linked to contributor pages
+  def getStructuredByline(byline: Option[String], contributors: List[Tag]): List[BylineElement] = {
+    val contributorRegex = if (contributors.nonEmpty) s"(${contributors.map(c => s"${c.name}").mkString("|")})" else ""
+
+    byline.map(stripHtml).map { byline =>
+      val split = byline.replaceAll(contributorRegex, "-###-$1-###-")
+        split.split("-###-").map(token => BylineElement(token, contributors.find(_.name == token))).toList
+    }.getOrElse(List())
+  }
 }
+
+case class BylineElement(text: String, tag: Option[Tag])
 
 object ArticleSchemas {
   val NewsArticle = "http://schema.org/NewsArticle"

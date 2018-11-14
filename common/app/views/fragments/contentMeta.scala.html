@@ -8,8 +8,8 @@
 
 @byline() = {
     @item match {
-        case v: Video   => { @fragments.meta.byline(v.bylineWithSource, v.tags) }
-        case c          => { @fragments.meta.byline(c.trail.byline, c.tags) }
+        case v: Video   => { @fragments.meta.byline(Content.getStructuredByline(v.bylineWithSource, v.tags.contributors)) }
+        case c          => { @fragments.meta.byline(c.trail.bylineWithTags) }
     }
 }
 
