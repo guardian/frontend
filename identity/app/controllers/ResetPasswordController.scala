@@ -1,23 +1,23 @@
 package controllers
 
-import java.nio.file.Paths
-
+import com.netaporter.uri.Uri
 import common.ImplicitControllerExecutionContext
-import model.{ApplicationContext, IdentityPage, NoCache}
-import play.api.data.{Form, Forms}
-import play.api.mvc._
+import form.Mappings
 import idapiclient.IdApiClient
-import services._
-import play.api.i18n.{Messages, MessagesProvider}
-import play.api.data.validation._
+import model.{ApplicationContext, IdentityPage, NoCache}
+import pages.IdentityHtmlPage
 import play.api.data.Forms._
 import play.api.data.format.Formats._
-import form.Mappings
-import pages.IdentityHtmlPage
+import play.api.data.validation._
+import play.api.data.{Form, Forms}
 import play.api.http.HttpConfiguration
+import play.api.i18n.{Messages, MessagesProvider}
+import play.api.mvc._
+import services._
 import utils.SafeLogging
 
 import scala.concurrent.Future
+import scala.util.Try
 
 class ResetPasswordController(
   api : IdApiClient,
@@ -71,11 +71,20 @@ class ResetPasswordController(
   }
 
   def renderResetPassword(token: String, returnUrl: Option[String]): Action[AnyContent] = Action{ implicit request =>
+
+    val isPaymentFailure = (for {
+      url <- returnUrl
+      parsedUrl <- Try(Uri.parse(url)).toOption
+      intcmp <- parsedUrl.query.param("INTCMP")
+    } yield {
+      intcmp.contains("PF") || intcmp.contains("CCX")
+    }).getOrElse(false)
+
     val idRequest = idRequestParser(request)
     val boundForm = passwordResetForm.bindFromFlash.getOrElse(passwordResetForm)
     NoCache(Ok(
       IdentityHtmlPage.html(
-        views.html.password.resetPassword(page, idRequest, idUrlBuilder, boundForm, token, returnUrl.getOrElse(""))
+        views.html.password.resetPassword(page, idRequest, idUrlBuilder, boundForm, token, returnUrl.getOrElse(""), isPaymentFailure)
       )(page, request, context)
     ))
   }
