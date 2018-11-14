@@ -6,6 +6,7 @@ import {
     canShow as canShowFivBanner,
     defaultEngagementBannerParams,
     getBannerHtml as getFivBannerHtml,
+    hideBanner as hideFivBanner,
 } from 'common/modules/commercial/fiv-banner';
 import {
     track as trackFirstPvConsent,
@@ -79,13 +80,13 @@ class SubMessage extends Message {
         this.parent.remember();
     }
 
-    bindCloseHandler(): void {
+    bindCloseHandler(close: (banner: Message) => void): void {
         const element = document.querySelector(this.elementSelector);
         if (element) {
             const closeButton = element.querySelector('.js-site-message-close');
             if (closeButton) {
                 closeButton.addEventListener('click', () => {
-                    this.acknowledge();
+                    close(this);
                 });
             }
         }
@@ -114,7 +115,7 @@ const show = (): Promise<boolean> => {
         document.body.insertAdjacentHTML('beforeend', bannerHtml);
     }
     bindFirstPvConsentClickHandlers(firstPvConsentMessage);
-    fivMessage.bindCloseHandler();
+    fivMessage.bindCloseHandler(hideFivBanner);
 
     return Promise.resolve(true);
 };
@@ -124,11 +125,7 @@ const firstPvConsentPlusFivBanner: Banner = {
     canShow: (): Promise<boolean> =>
         Promise.all([canShowFirstPvConsent(), canShowFivBanner()]).then(
             (canShowBanners: Array<boolean>) =>
-                canShowBanners.every(canShowBanner => canShowBanner === true) &&
-                !(
-                    firstPvConsentMessage.isRemembered() ||
-                    fivMessage.isRemembered()
-                )
+                canShowBanners.every(canShowBanner => canShowBanner === true)
         ),
     show,
 };

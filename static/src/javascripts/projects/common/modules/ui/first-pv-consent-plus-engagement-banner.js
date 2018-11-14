@@ -7,6 +7,7 @@ import { addTrackingCodesToUrl } from 'common/modules/commercial/acquisitions-op
 import {
     messageCode as engagementMessageCode,
     canShow as canShowEngagementBanner,
+    hideBanner as hideEngagementBanner,
 } from 'common/modules/commercial/membership-engagement-banner';
 import {
     track as trackFirstPvConsent,
@@ -93,13 +94,13 @@ class SubMessage extends Message {
         this.parent.remember();
     }
 
-    bindCloseHandler(): void {
+    bindCloseHandler(close: (banner: Message) => void): void {
         const element = document.querySelector(this.elementSelector);
         if (element) {
             const closeButton = element.querySelector('.js-site-message-close');
             if (closeButton) {
                 closeButton.addEventListener('click', () => {
-                    this.acknowledge();
+                    close(this);
                 });
             }
         }
@@ -125,7 +126,7 @@ const show = (): Promise<boolean> => {
         document.body.insertAdjacentHTML('beforeend', bannerHtml);
     }
     bindFirstPvConsentClickHandlers(firstPvConsentMessage);
-    engagementMessage.bindCloseHandler();
+    engagementMessage.bindCloseHandler(hideEngagementBanner);
 
     return Promise.resolve(true);
 };
@@ -135,11 +136,7 @@ const firstPvConsentPlusEngagementBanner: Banner = {
     canShow: (): Promise<boolean> =>
         Promise.all([canShowFirstPvConsent(), canShowEngagementBanner()]).then(
             (canShowBanners: Array<boolean>) =>
-                canShowBanners.every(canShowBanner => canShowBanner === true) &&
-                !(
-                    firstPvConsentMessage.isRemembered() ||
-                    engagementMessage.isRemembered()
-                )
+                canShowBanners.every(canShowBanner => canShowBanner === true)
         ),
     show,
 };
