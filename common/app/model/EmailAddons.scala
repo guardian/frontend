@@ -73,7 +73,7 @@ case object TheUSMinute extends ArticleEmailMetadata {
 }
 
 case object EuReferendum extends ArticleEmailMetadata {
-  val name = "EU Referendum Morning Briefing"
+  val name = "Brexit Briefing"
   override val banner = Some("brexit-briefing.png")
   def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "politics/series/eu-referendum-morning-briefing")
 }
