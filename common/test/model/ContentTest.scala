@@ -13,6 +13,7 @@ import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import views.support.JavaScriptPage
 import common.Edition
 import play.api.libs.json.JsBoolean
+import model.{Tag => ContentTag}
 
 
 class ContentTest extends FlatSpec with Matchers with GuiceOneAppPerSuite with implicits.Dates with MockitoSugar with BeforeAndAfter {
@@ -269,5 +270,42 @@ class ContentTest extends FlatSpec with Matchers with GuiceOneAppPerSuite with i
     Video(contentWithByline, None, mediaAtomWithNoSource).bylineWithSource should be (byline)
     Video(contentWithByline, None, mediaAtomWithEmptySource).bylineWithSource should be (byline)
     Video(contentWithByline, Some("guardian.co.uk"), None).bylineWithSource should be (Some(s"${byline.get}, theguardian.com"))
+  }
+
+
+  "getStructuredByline" should "return a structured byline" in {
+
+    def getTag(name: String): ContentTag = ContentTag(TagProperties(
+      id = "",
+      url = "",
+      tagType = "",
+      sectionId = "",
+      sectionName = "",
+      webTitle = name,
+      webUrl = "",
+      twitterHandle = None,
+      bio = None,
+      description = None,
+      emailAddress = None,
+      contributorLargeImagePath = None,
+      bylineImageUrl = None,
+      podcast = None,
+      references = Seq(),
+      paidContentType = None,
+      commercial = None
+    ), pagination = None, richLinkId = None)
+
+    val byline = "Bellatrix Lestrange and Boris Johnson in the Hunger Games"
+    val tags = List(
+      getTag("Bellatrix Lestrange"),
+      getTag("Boris Johnson")
+    )
+
+    val sb = Content.getStructuredByline(Some(byline), tags)
+    println(sb)
+    sb.length should be (5)
+    sb(1).tag.get.name should be ("Bellatrix Lestrange")
+    sb(2).text should be (" and ")
+
   }
 }
