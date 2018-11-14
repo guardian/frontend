@@ -1,6 +1,5 @@
 // @flow
 import { makeABTest } from 'common/modules/commercial/contributions-utilities';
-import { oneMillionCampaignButtonsTemplate } from 'common/modules/commercial/templates/acquisitions-epic-one-million-campaign-buttons';
 import {
     getSync as geolocationGetSync,
     getLocalCurrencySymbol,
@@ -47,7 +46,6 @@ export const acquisitionsEpicOneMillionCampaignAu: EpicABTest = makeABTest({
             products: [],
             options: {
                 copy: australiaCopy,
-                buttonTemplate: oneMillionCampaignButtonsTemplate,
                 campaignCode,
             },
         },
