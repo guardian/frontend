@@ -435,12 +435,19 @@ object Content {
 
     byline.map(stripHtml).map { byline =>
       val split = byline.replaceAll(contributorRegex, "-###-$1-###-")
-        split.split("-###-").map(token => BylineElement(token, contributors.find(_.name == token))).toList
+        split.split("-###-").filter(_ != "").map(token => {
+          val tag = contributors.find(_.name == token)
+          BylineElement(token, tag.map(t => BylineTagData(t.id, t.name)))
+        }).toList
     }.getOrElse(List())
   }
 }
 
-case class BylineElement(text: String, tag: Option[Tag])
+case class BylineTagData(id: String, name: String)
+object BylineTagData {
+  implicit val bylineTagDataWrites: Writes[BylineTagData] = Json.writes[BylineTagData]
+}
+case class BylineElement(text: String, tag: Option[BylineTagData])
 object BylineElement {
   implicit val bylineElementWrites: Writes[BylineElement] = Json.writes[BylineElement]
 }

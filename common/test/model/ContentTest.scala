@@ -302,9 +302,9 @@ class ContentTest extends FlatSpec with Matchers with GuiceOneAppPerSuite with i
     )
 
     val structuredByline: Seq[BylineElement] = Content.getStructuredByline(Some(byline), tags)
-    structuredByline.length should be (5)
-    structuredByline(1).tag.get.name should be ("Bellatrix Lestrange")
-    structuredByline(2).text should be (" and ")
+    structuredByline.length should be (4)
+    structuredByline.head.tag.get.name should be ("Bellatrix Lestrange")
+    structuredByline(1).text should be (" and ")
 
   }
 }
