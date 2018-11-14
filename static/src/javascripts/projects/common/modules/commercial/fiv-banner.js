@@ -22,7 +22,8 @@ const messageCode = 'fiv-banner';
 const maxArticles = 3;
 const fivImpressionsRemainingKey = 'fivImpressionsRemaining2';
 
-const hideBanner = () => {
+const hideBanner = (banner: Message) => {
+    banner.hide();
     userPrefs.set(fivImpressionsRemainingKey, 0);
 };
 
@@ -82,10 +83,9 @@ const showBanner = (params: EngagementBannerParams): void => {
         trackDisplay: true,
         cssModifierClass: 'fiv-banner',
         customJs() {
-            bean.on(document, 'click', '.js-fiv-banner-close-button', () => {
-                this.hide();
-                hideBanner();
-            });
+            bean.on(document, 'click', '.js-fiv-banner-close-button', () =>
+                hideBanner(this)
+            );
         },
     }).show(renderedBanner);
 
@@ -161,4 +161,5 @@ export {
     messageCode,
     defaultEngagementBannerParams,
     getBannerHtml,
+    hideBanner,
 };
