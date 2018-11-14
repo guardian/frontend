@@ -1,5 +1,6 @@
-// @flow
+// @flow strict
 import { local } from 'lib/storage';
+import type { VendorConsentResponse } from './types';
 
 type LotameError = {
     error: number,
@@ -46,20 +47,21 @@ const lotameCallback = (isConsenting: boolean) => (
     }
 };
 
-const isConsentingData = (consentData): boolean => {
-    try {
+const isConsentingData = (
+    consentData: VendorConsentResponse | null
+): boolean => {
+    if (consentData) {
         const vendorConsents = consentData.vendorConsents;
         const purposeConsents = consentData.purposeConsents;
         return (
             Object.keys(vendorConsents).every(k => vendorConsents[k]) &&
             Object.keys(purposeConsents).every(k => purposeConsents[k])
         );
-    } catch (e) {
-        return false;
     }
+    return false;
 };
 
-const getLotameAdConsentFromCmp = (): Promise<any> =>
+const getLotameAdConsentFromCmp = (): Promise<VendorConsentResponse | null> =>
     new Promise((resolve, reject) => {
         if ('__cmp' in window) {
             /*eslint-disable */
