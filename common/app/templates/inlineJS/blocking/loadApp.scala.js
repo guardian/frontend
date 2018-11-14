@@ -8,7 +8,7 @@
 // to es5 but we do not provide any polyfills for missing methods.
 // for that, we use polyfill.io.
 //
-// since that's a possbile point of failure, we have a checked-in copy of
+// since that's a possible point of failure, we have a checked-in copy of
 // the pf.io response for *all* polyfills that we may serve to everyone
 // as a worst-case back up. This fallback will be loaded if the PolyfillIO
 // switch is off.

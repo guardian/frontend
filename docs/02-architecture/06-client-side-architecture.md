@@ -133,9 +133,13 @@ Secrets.
 
 [Puts the user's username](https://github.com/guardian/frontend/blob/master/common/app/templates/inlineJS/nonBlocking/showUserName.scala.js) into the header (increases perceived rendering speed as their username is there before the app.js has to download and parse).
 
-#### editionaliseMenu
+#### prepareCmp
 
-The [editonaliseMenu JS](https://github.com/guardian/frontend/blob/d4bc1349f981cdc8f2508b3f0df61b00420ca219/common/app/templates/inlineJS/nonBlocking/editionaliseMenu.scala.js) updates the menu to show and hide the sub-menus in the current edition.
+The [prepareCmp JS](https://github.com/guardian/frontend/blob/master/common/app/templates/inlineJS/nonBlocking/prepareCmp.scala.js) is a stub that will be enhanced by the cmp module loaded in the Commercial bootstrap. Importantly, prepareCmp will create a command queue so that calls to the CMP can be processed once it is fully loaded. it will also define the stub postMessage handler for cross-origin iframe requests.
+
+#### prepareLotame
+
+The [prepareLotame JS](https://github.com/guardian/frontend/blob/master/common/app/templates/inlineJS/nonBlocking/prepareLotame.scala.js) is depended upon by modules within the commercial bootstrap and they are not happy when it is missing, so it needs to load and run ASAP.
 
 #### Ophan config
 
