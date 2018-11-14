@@ -1,7 +1,6 @@
 // @flow
 import { makeABTest } from 'common/modules/commercial/contributions-utilities';
 import { acquisitionsEpicOneMillionCampaignTemplate } from 'common/modules/commercial/templates/acquisitions-epic-one-million-campaign';
-import { oneMillionCampaignButtonsTemplate } from 'common/modules/commercial/templates/acquisitions-epic-one-million-campaign-buttons';
 import type { EpicTemplate } from 'common/modules/commercial/contributions-utilities';
 import {
     getSync as geolocationGetSync,
@@ -63,7 +62,6 @@ export const acquisitionsEpicOneMillionCampaignNoControl: EpicABTest = makeABTes
                 products: [],
                 options: {
                     copy: everywhereExceptAustraliaCopy,
-                    buttonTemplate: oneMillionCampaignButtonsTemplate,
                     campaignCode,
                 },
             },
@@ -73,7 +71,6 @@ export const acquisitionsEpicOneMillionCampaignNoControl: EpicABTest = makeABTes
                 options: {
                     template: oneMillionCampaignTemplate,
                     copy: everywhereExceptAustraliaCopy,
-                    buttonTemplate: oneMillionCampaignButtonsTemplate,
                     campaignCode,
                 },
             },
