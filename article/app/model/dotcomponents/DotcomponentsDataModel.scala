@@ -3,7 +3,7 @@ package model.dotcomponents
 import common.Edition
 import conf.Configuration
 import controllers.ArticlePage
-import model.SubMetaLinks
+import model.{BylineElement, Content, SubMetaLinks}
 import model.dotcomrendering.pageElements.PageElement
 import navigation.NavMenu
 import play.api.libs.json.{JsValue, Json, Writes}
@@ -47,6 +47,7 @@ case class PageData(
     headline: String,
     webTitle: String,
     byline: String,
+    bylineElements: List[BylineElement],
     contentId: Option[String],
     authorIds: Option[String],
     keywordIds: Option[String],
@@ -136,6 +137,7 @@ object DotcomponentsDataModel {
     )
 
     val jsConfig = (k: String) => articlePage.getJavascriptConfig.get(k).map(_.as[String])
+    val byline = article.trail.byline
 
     val pageData = PageData(
       article.tags.contributors.map(_.name).mkString(","),
@@ -147,7 +149,8 @@ object DotcomponentsDataModel {
       article.metadata.section.map(_.value),
       article.trail.headline,
       article.metadata.webTitle,
-      article.trail.byline.getOrElse(""),
+      byline.getOrElse(""),
+      Content.getStructuredByline(byline, article.tags.contributors),
       jsConfig("contentId"),   // source: content.scala
       jsConfig("authorIds"),   // source: meta.scala
       jsConfig("keywordIds"),  // source: tags.scala and meta.scala

@@ -441,6 +441,9 @@ object Content {
 }
 
 case class BylineElement(text: String, tag: Option[Tag])
+object BylineElement {
+  implicit val bylineElementWrites: Writes[BylineElement] = Json.writes[BylineElement]
+}
 
 object ArticleSchemas {
   val NewsArticle = "http://schema.org/NewsArticle"
