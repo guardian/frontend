@@ -136,7 +136,7 @@ object PageElement {
       case Table => element.tableTypeData.map(d => TableBlockElement(d.html)).toList
       case Witness => element.witnessTypeData.map(d => WitnessBlockElement(d.html)).toList
       case Document => element.documentTypeData.map(d => DocumentBlockElement(d.html)).toList
-      case Instagram => element.instagramTypeData.map(d => InstagramBlockElement(d.originalUrl,d.html,d.caption.isDefined)).toList
+      case Instagram => element.instagramTypeData.map(d => InstagramBlockElement(d.originalUrl, d.html, d.caption.isDefined)).toList
       case Vine => element.vineTypeData.map(d => VineBlockElement(d.html)).toList
       case ElementType.Map => element.mapTypeData.map(d => MapBlockElement(d.html)).toList
       case Code => List(CodeBlockElement(None))
