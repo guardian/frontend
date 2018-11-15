@@ -32,7 +32,7 @@ class ResetPasswordController(
 
   private val page = IdentityPage("/reset-password", "Reset Password", isFlow = true)
 
-  private val paymentFailureJourneys = Set("PF", "PF1", "PF2", "PF3", "PF4", "CCX")
+  private val paymentFailureCodes = Set("PF", "PF1", "PF2", "PF3", "PF4", "CCX")
 
   private val requestPasswordResetForm = Form(
     Forms.single(
@@ -79,21 +79,20 @@ class ResetPasswordController(
   // redirect all links to /signin
   // TODO: remove logic associated to paymentFailure parameter in frontend and identity-frontend when manage.theguardian redirect all links to signin
 
-  def paymentFailureParameterCheck(url: Uri): Option[String] = {
+  def getPaymentFailureCode(url: Uri): Option[String] = {
     val queryString = url.query
     queryString
       .param("paymentFailure")
       .orElse(queryString.param("INTCMP"))
+      .filter(paymentFailureCodes.contains)
   }
 
   def renderResetPassword(token: String, returnUrl: Option[String]): Action[AnyContent] = Action{ implicit request =>
     val isPaymentFailure = (for {
       url <- returnUrl
       parsedUrl <- Try(Uri.parse(url)).toOption
-      intcmp <- paymentFailureParameterCheck(parsedUrl)
-    } yield {
-      paymentFailureJourneys.contains(intcmp)
-    }).getOrElse(false)
+      _ <- getPaymentFailureCode(parsedUrl)
+    } yield true).getOrElse(false)
 
     val idRequest = idRequestParser(request)
     val boundForm = passwordResetForm.bindFromFlash.getOrElse(passwordResetForm)
