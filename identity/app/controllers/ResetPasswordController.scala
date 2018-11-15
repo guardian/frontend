@@ -32,6 +32,8 @@ class ResetPasswordController(
 
   private val page = IdentityPage("/reset-password", "Reset Password", isFlow = true)
 
+  private val paymentFailureJourneys = Set("PF", "PF1", "PF2", "PF3", "PF4", "CCX")
+
   private val requestPasswordResetForm = Form(
     Forms.single(
       "email-address" -> Forms.text
@@ -71,13 +73,12 @@ class ResetPasswordController(
   }
 
   def renderResetPassword(token: String, returnUrl: Option[String]): Action[AnyContent] = Action{ implicit request =>
-
     val isPaymentFailure = (for {
       url <- returnUrl
       parsedUrl <- Try(Uri.parse(url)).toOption
       intcmp <- parsedUrl.query.param("INTCMP")
     } yield {
-      intcmp.contains("PF") || intcmp.contains("CCX")
+      paymentFailureJourneys.contains(intcmp)
     }).getOrElse(false)
 
     val idRequest = idRequestParser(request)
