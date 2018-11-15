@@ -25,7 +25,7 @@ case class CommentBlockElement(html: Option[String]) extends PageElement
 case class TableBlockElement(html: Option[String]) extends PageElement
 case class WitnessBlockElement(html: Option[String]) extends PageElement
 case class DocumentBlockElement(html: Option[String]) extends PageElement
-case class InstagramBlockElement(html: Option[String]) extends PageElement
+case class InstagramBlockElement(url: String, html: Option[String], hasCaption: Boolean) extends PageElement
 case class VineBlockElement(html: Option[String]) extends PageElement
 case class MapBlockElement(html: Option[String]) extends PageElement
 case class UnknownBlockElement(html: Option[String]) extends PageElement
@@ -130,7 +130,7 @@ object PageElement {
       case Table => element.tableTypeData.map(d => TableBlockElement(d.html))
       case Witness => element.witnessTypeData.map(d => WitnessBlockElement(d.html))
       case Document => element.documentTypeData.map(d => DocumentBlockElement(d.html))
-      case Instagram => element.instagramTypeData.map(d => InstagramBlockElement(d.html))
+      case Instagram => element.instagramTypeData.map(d => InstagramBlockElement(d.originalUrl,d.html,d.caption.isDefined))
       case Vine => element.vineTypeData.map(d => VineBlockElement(d.html))
       case ElementType.Map => element.mapTypeData.map(d => MapBlockElement(d.html))
       case Code => Some(CodeBlockElement(None))
