@@ -431,10 +431,13 @@ object Content {
   // into List(BylineElement('Cedric Diggory', Some(<Tag>)), BylineElement(' and ', None), BylineElement('Lucius Malfoy', Some(<Tag>)).....
   // so that it can be correctly rendered with the correct bits linked to contributor pages
   def getStructuredByline(byline: Option[String], contributors: List[Tag]): List[BylineElement] = {
-    val contributorRegex = if (contributors.nonEmpty) s"(${contributors.map(c => s"${c.name}").mkString("|")})" else ""
+    val contributorRegex = if (contributors.nonEmpty) s"(${contributors.map(c => s"${c.name}").mkString("|")})".r else "".r
 
     byline.map(stripHtml).map { byline =>
-      val split = byline.replaceAll(contributorRegex, "-###-$1-###-")
+      val split = contributorRegex.replaceAllIn(byline, _ match {
+        case contributorRegex(contributor) => s"-###-$contributor-###-"
+        case _ => ""
+      })
         split.split("-###-").filter(_ != "").map(token => {
           val tag = contributors.find(_.name == token)
           BylineElement(token, tag.map(t => BylineTagData(t.id, t.name)))
