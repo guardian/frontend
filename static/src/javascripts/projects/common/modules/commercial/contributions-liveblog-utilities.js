@@ -54,7 +54,7 @@ const getBlocksToInsertEpicAfter = (): Promise<Array<HTMLElement>> =>
             return [...blocksToInsertManualEpicAfter];
         }
 
-        const autoBlockNum = Math.floor(Math.random() * 3) + 1;
+        const autoBlockNum = Math.floor(Math.random() * 3);
         const blockToInsertAutoEpicAfter = blocks[autoBlockNum];
 
         return [...blocksToInsertManualEpicAfter].concat(
