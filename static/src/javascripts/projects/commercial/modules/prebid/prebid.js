@@ -21,19 +21,6 @@ const consentManagement = {
     allowAuctionWithoutConsent: true,
 };
 
-const userSync = config.get('switches.prebidUserSync', false)
-    ? {
-          // syncsPerBidder: 0, // allow all syncs - bug https://github.com/prebid/Prebid.js/issues/2781
-          syncsPerBidder: 999, // temporarily until above bug fixed
-          filterSettings: {
-              all: {
-                  bidders: '*', // allow all bidders to sync by iframe or image beacons
-                  filter: 'include',
-              },
-          },
-      }
-    : { syncEnabled: false };
-
 const s2sConfig = {
     accountId: '1',
     enabled: true,
@@ -65,6 +52,19 @@ class PrebidAdUnit {
 
 class PrebidService {
     static initialise(): void {
+        const userSync = config.get('switches.prebidUserSync', false)
+            ? {
+                  // syncsPerBidder: 0, // allow all syncs - bug https://github.com/prebid/Prebid.js/issues/2781
+                  syncsPerBidder: 999, // temporarily until above bug fixed
+                  filterSettings: {
+                      all: {
+                          bidders: '*', // allow all bidders to sync by iframe or image beacons
+                          filter: 'include',
+                      },
+                  },
+              }
+            : { syncEnabled: false };
+
         const pbjsConfig = Object.assign(
             {},
             {
