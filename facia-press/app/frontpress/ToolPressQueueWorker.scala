@@ -25,17 +25,17 @@ class ToolPressQueueWorker(liveFapiFrontPress: LiveFapiFrontPress, draftFapiFron
   override def shouldRetryPress(message: Message[PressJob]): Boolean = false
 
   // log a warning if facia press is taking too long to pick up messages
-  private def checkAndLogLatency(processTime: Long, messageId: String, creationTime: DateTime, startTime: DateTime): Unit = {
+  private def checkAndLogLatency(frontPath: String, processTime: Long, messageId: String, creationTime: DateTime, startTime: DateTime): Unit = {
     val messageLatency = startTime.getMillis - creationTime.getMillis
     if (messageLatency > 4000 || processTime > 3500) {
-      val stopWatch = new StopWatch()
       logWarningWithCustomFields(
-        s"Facia press took $messageLatency ms to pick up and $processTime time to process $messageId. Message creation time $creationTime, process start time $startTime",
+        s"Facia press took $messageLatency ms to pick up and $processTime time to process $frontPath. Message creation time $creationTime, process start time $startTime",
         null,
         customFields = List(
           LogFieldLong("pressReceiveDelay", messageLatency),
           LogFieldLong("pressProcessDelay", processTime),
           LogFieldString("messageId", messageId),
+          LogFieldString("pressPath", frontPath),
           LogFieldString("pressStartTime", startTime.toString)))
     }
   }
@@ -51,8 +51,8 @@ class ToolPressQueueWorker(liveFapiFrontPress: LiveFapiFrontPress, draftFapiFron
     val stopWatch = new StopWatch
 
     lazy val pressFuture: Future[Unit] = pressType match {
-      case Draft => draftFapiFrontPress.pressByPathId(path)
-      case Live => liveFapiFrontPress.pressByPathId(path)}
+      case Draft => draftFapiFrontPress.pressByPathId(path, messageId)
+      case Live => liveFapiFrontPress.pressByPathId(path, messageId)}
 
     lazy val forceConfigUpdateFuture: Future[_] =
       if (forceConfigUpdate.exists(identity)) {
@@ -65,7 +65,7 @@ class ToolPressQueueWorker(liveFapiFrontPress: LiveFapiFrontPress, draftFapiFron
       press <- pressFuture
     } yield {
       val processTime = stopWatch.elapsed
-      checkAndLogLatency(processTime, messageId, creationTime, processStartTime)
+      checkAndLogLatency(path, processTime, messageId, creationTime, processStartTime)
       press
     }
 

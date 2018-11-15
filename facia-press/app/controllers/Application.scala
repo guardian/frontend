@@ -43,10 +43,10 @@ class Application(liveFapiFrontPress: LiveFapiFrontPress, draftFapiFrontPress: D
       )
   }
 
-  private def handlePressRequest(path: String, liveOrDraft: String)(f: (String) => Future[_]): Future[Result] =
+  private def handlePressRequest(path: String, liveOrDraft: String)(f: (String, String) => Future[_]): Future[Result] =
     if (FaciaPressOnDemand.isSwitchedOn) {
       val stage = Configuration.facia.stage.toUpperCase
-      f(path)
+      f(path, "manualPress")
         .map(_ => NoCache(Ok(s"Successfully pressed $path on $liveOrDraft for $stage")))
         .recover { case t => NoCache(InternalServerError(t.getMessage))}}
     else {
