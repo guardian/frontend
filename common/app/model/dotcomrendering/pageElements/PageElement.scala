@@ -14,7 +14,7 @@ import scala.collection.JavaConverters._
 
 sealed trait PageElement
 case class TextBlockElement(html: String) extends PageElement
-case class TweetBlockElement(html: Option[String]) extends PageElement
+case class TweetBlockElement(html: String, url: String, id: String, hasMedia: Boolean) extends PageElement
 case class PullquoteBlockElement(html: Option[String]) extends PageElement
 case class ImageBlockElement(media: ImageMedia, data: Map[String, String], displayCredit: Option[Boolean]) extends PageElement
 case class AudioBlockElement(assets: Seq[AudioAsset]) extends PageElement
@@ -85,7 +85,16 @@ object PageElement {
         element <- Cleaner.split(text)
       } yield {TextBlockElement(element)})
 
-      case Tweet => List(TweetBlockElement(element.tweetTypeData.flatMap(_.html)))
+      case Tweet => {
+        (for {
+          data <- element.tweetTypeData
+            id <- data.id
+          html <- data.html
+          url <- data.originalUrl
+        } yield {
+          TweetBlockElement( html,url,id, element.assets.nonEmpty)
+        }).toList
+      }
 
       case RichLink => List(RichLinkBlockElement(
         element.richLinkTypeData.flatMap(_.originalUrl),
