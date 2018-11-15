@@ -3,7 +3,7 @@ import { appendToLastElement } from 'lib/array-utils';
 
 const lastSentenceTemplate = (highlightedText: string, supportURL: string) =>
     `<span class="contributions__highlight">${highlightedText}</span>
-    <a href="${supportURL}" target="_blank" class="u-underline">Make a contribution</a>. - Guardian HQ`;
+    <a href="${supportURL}" target="_blank" class="u-underline">Make a contribution</a>. - The Guardian`;
 
 export const epicLiveBlogTemplate = ({
     copy,

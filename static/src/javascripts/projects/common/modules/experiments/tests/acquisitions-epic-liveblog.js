@@ -2,7 +2,7 @@
 import { makeABTest } from 'common/modules/commercial/contributions-utilities';
 import { setupEpicInLiveblog } from 'common/modules/commercial/contributions-liveblog-utilities';
 import { epicLiveBlogTemplate } from 'common/modules/commercial/templates/acquisitions-epic-liveblog';
-import { liveblogCopy } from 'common/modules/commercial/acquisitions-copy';
+import { liveblogMillionCopy } from 'common/modules/commercial/acquisitions-copy';
 
 export const acquisitionsEpicLiveblog: EpicABTest = makeABTest({
     id: 'AcquisitionsEpicLiveblog',
@@ -35,7 +35,7 @@ export const acquisitionsEpicLiveblog: EpicABTest = makeABTest({
 
                 template(variant) {
                     return epicLiveBlogTemplate({
-                        copy: liveblogCopy,
+                        copy: liveblogMillionCopy,
                         componentName: variant.options.componentName,
                         supportURL: variant.options.supportURL,
                     });
