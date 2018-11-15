@@ -1,3 +1,4 @@
+@import model.Content
 @(gallery: model.GalleryPage)(implicit request: RequestHeader)
 
 @import views.support.TrailCssClasses.toneClass
@@ -20,7 +21,7 @@
 
             <div class="content__meta-container gallery__meta-container">
                 @if(!gallery.item.content.hasTonalHeaderByline) {
-                    @fragments.meta.byline(gallery.item.trail.byline, gallery.item.tags)
+                    @fragments.meta.byline(gallery.item.trail.bylineWithTags)
                 }
 
                 @if(gallery.item.content.tags.contributors.length == 1) {
