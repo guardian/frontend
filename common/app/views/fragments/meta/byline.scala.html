@@ -10,7 +10,7 @@
         @element.tag.map{ tag =>
         <span itemscope="" itemtype="http://schema.org/Person" itemprop="author">
             <a rel="author" class="tone-colour" itemprop="sameAs" data-link-name="auto tag link"
-            href="@LinkTo(tag.id)"><span itemprop="name">@tag.name</span></a></span>
+            href="@LinkTo(s"/${tag.id}")"><span itemprop="name">@tag.name</span></a></span>
       }.getOrElse(element.text)
     }</p>
 }
