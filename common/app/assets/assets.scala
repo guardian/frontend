@@ -58,13 +58,12 @@ object css {
   private val memoizedCss: ConcurrentMap[String, Try[String]] = TrieMap()
 
   def head(projectOverride: Option[String])(implicit context: ApplicationContext, request: RequestHeader): String = inline(cssHead(projectOverride.getOrElse(context.applicationIdentity.name)))
-  def inlineNavigation(implicit request: RequestHeader, context: ApplicationContext): String = if (conf.switches.Switches.NewNavEnabled.isSwitchedOn) inline("head.new-navigation") else inline("head.navigation")
-  def inlineIdentity(implicit request: RequestHeader, context: ApplicationContext): String = if (conf.switches.Switches.NewNavEnabled.isSwitchedOn) inline("head.new-identity") else inline("head.identity")
+  def inlineIdentity(implicit request: RequestHeader, context: ApplicationContext): String = inline("head.new-identity")
   def inlineStoryPackageGarnett(implicit context: ApplicationContext): String = inline("story-package-garnett")
   def inlinePhotoEssayGarnett(implicit context: ApplicationContext): String = inline("article-photo-essay-garnett")
-  def amp(implicit context: ApplicationContext): String = if (conf.switches.Switches.NewNavEnabled.isSwitchedOn) inline("head.amp-new") else inline("head.amp")
+  def amp(implicit context: ApplicationContext): String = inline("head.amp-new")
   def hostedAmp(implicit context: ApplicationContext): String = inline("head.hosted-amp")
-  def liveblogAmp(implicit context: ApplicationContext): String = if (conf.switches.Switches.NewNavEnabled.isSwitchedOn) inline("head.amp-liveblog-new") else inline("head.amp-liveblog")
+  def liveblogAmp(implicit context: ApplicationContext): String = inline("head.amp-liveblog-new")
   def emailArticle(implicit context: ApplicationContext): String = inline("head.email-article")
   def emailFront(implicit context: ApplicationContext): String = inline("head.email-front")
   def interactive(implicit context: ApplicationContext): String = inline("head.interactive")
@@ -95,7 +94,7 @@ object css {
     project match {
       case "footballSnaps" => "head.footballSnaps"
       case "facia" => s"head.$FaciaCSSFile"
-      case "identity" => "head.identity"
+      case "identity" => "head.new-identity"
       case "football" => "head.football"
       case "index" => "head.index"
       case "rich-links" => s"head.$RichLinksCSSFile"

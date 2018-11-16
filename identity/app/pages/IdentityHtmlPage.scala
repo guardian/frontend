@@ -18,12 +18,8 @@ import views.html.stacked
 object IdentityHtmlPage {
 
   def allStyles(implicit applicationContext: ApplicationContext, request: RequestHeader): Styles = new Styles {
-    override def criticalCssLink: Html = stacked(
-      if (conf.switches.Switches.NewNavEnabled.isSwitchedOn) criticalStyleLink("new-identity") else criticalStyleLink("identity"),
-      criticalStyleLink(InlineNavigationCSSFile))
-    override def criticalCssInline: Html = criticalStyleInline(
-      Html(common.Assets.css.inlineIdentity),
-      Html(common.Assets.css.inlineNavigation))
+    override def criticalCssLink: Html = criticalStyleLink("new-identity")
+    override def criticalCssInline: Html = criticalStyleInline(Html(common.Assets.css.inlineIdentity))
     override def linkCss: Html = HtmlFormat.fill(List(
       stylesheetLink(s"stylesheets/$ContentCSSFile.css"),
       stylesheetLink(s"stylesheets/membership-icons.css")
@@ -31,10 +27,7 @@ object IdentityHtmlPage {
     override def footerCss: Html = stylesheetLink(s"stylesheets/$FooterCSSFile.css")
     override def oldIECriticalCss: Html = stylesheetLink(s"stylesheets/old-ie.head.$ContentCSSFile.css")
     override def oldIELinkCss: Html = stylesheetLink(s"stylesheets/old-ie.$ContentCSSFile.css")
-    override def IE9LinkCss: Html = stacked(
-      stylesheetLink(s"stylesheets/ie9.head.$ContentCSSFile.css"),
-      stylesheetLink(s"stylesheets/head.$InlineNavigationCSSFile.css")
-    )
+    override def IE9LinkCss: Html = stylesheetLink(s"stylesheets/ie9.head.$ContentCSSFile.css")
     override def IE9CriticalCss: Html = stylesheetLink(s"stylesheets/ie9.$ContentCSSFile.css")
   }
 

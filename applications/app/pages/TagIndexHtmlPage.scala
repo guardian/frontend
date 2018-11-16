@@ -21,20 +21,13 @@ import views.html.stacked
 object TagIndexHtmlPage extends HtmlPage[StandalonePage] {
 
   def allStyles(implicit applicationContext: ApplicationContext, request: RequestHeader): Styles = new Styles {
-    override def criticalCssLink: Html = stacked(
-      criticalStyleLink("index"),
-      criticalStyleLink(InlineNavigationCSSFile))
-    override def criticalCssInline: Html = criticalStyleInline(
-      Html(common.Assets.css.head(Some("index"))),
-      Html(common.Assets.css.inlineNavigation))
+    override def criticalCssLink: Html = criticalStyleLink("index")
+    override def criticalCssInline: Html = criticalStyleInline(Html(common.Assets.css.head(Some("index"))))
     override def linkCss: Html = stylesheetLink(s"stylesheets/$ContentCSSFile.css")
     override def footerCss: Html = stylesheetLink(s"stylesheets/$FooterCSSFile.css")
     override def oldIECriticalCss: Html = stylesheetLink("stylesheets/old-ie.head.index.css")
     override def oldIELinkCss: Html = stylesheetLink(s"stylesheets/old-ie.$ContentCSSFile.css")
-    override def IE9LinkCss: Html = stacked(
-      stylesheetLink(s"stylesheets/ie9.head.index.css"),
-      stylesheetLink(s"stylesheets/head.$InlineNavigationCSSFile.css")
-    )
+    override def IE9LinkCss: Html = stylesheetLink(s"stylesheets/ie9.head.index.css")
     override def IE9CriticalCss: Html = stylesheetLink(s"stylesheets/ie9.$ContentCSSFile.css")
   }
 
