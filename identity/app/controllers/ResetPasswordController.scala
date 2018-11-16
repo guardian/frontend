@@ -1,23 +1,23 @@
 package controllers
 
-import java.nio.file.Paths
-
+import com.netaporter.uri.Uri
 import common.ImplicitControllerExecutionContext
-import model.{ApplicationContext, IdentityPage, NoCache}
-import play.api.data.{Form, Forms}
-import play.api.mvc._
+import form.Mappings
 import idapiclient.IdApiClient
-import services._
-import play.api.i18n.{Messages, MessagesProvider}
-import play.api.data.validation._
+import model.{ApplicationContext, IdentityPage, NoCache}
+import pages.IdentityHtmlPage
 import play.api.data.Forms._
 import play.api.data.format.Formats._
-import form.Mappings
-import pages.IdentityHtmlPage
+import play.api.data.validation._
+import play.api.data.{Form, Forms}
 import play.api.http.HttpConfiguration
+import play.api.i18n.{Messages, MessagesProvider}
+import play.api.mvc._
+import services._
 import utils.SafeLogging
 
 import scala.concurrent.Future
+import scala.util.Try
 
 class ResetPasswordController(
   api : IdApiClient,
@@ -31,6 +31,8 @@ class ResetPasswordController(
   extends BaseController with ImplicitControllerExecutionContext with SafeLogging with Mappings with implicits.Forms {
 
   private val page = IdentityPage("/reset-password", "Reset Password", isFlow = true)
+
+  private val paymentFailureCodes = Set("PF", "PF1", "PF2", "PF3", "PF4", "CCX")
 
   private val requestPasswordResetForm = Form(
     Forms.single(
@@ -122,11 +124,32 @@ class ResetPasswordController(
     boundForm.fold[Future[Result]](onError, onSuccess)
   }
 
+  // Checks for INTCMP parameter in returnUrl after manage.theguardian redirects to signin with this parameter for payment failure flows
+  // Checks for paymentFailure parameter because two payment failure flows go straight to sign in with INTCMP as a parameter
+  // on the profile.theguardian url. In this case, it is appended to the returnUrl under the name "paymentFailure" to ensure
+  // it doesn't interfere with possible INTCMP logic used in other projects. This will soon be irrelevant as manage.theguardian plans to
+  // redirect all links to /signin
+  // TODO: remove logic associated to paymentFailure parameter in frontend and identity-frontend when manage.theguardian redirect all links to signin
+
+  def getPaymentFailureCode(url: Uri): Option[String] = {
+    val queryString = url.query
+    queryString
+      .param("paymentFailure")
+      .orElse(queryString.param("INTCMP"))
+      .filter(paymentFailureCodes.contains)
+  }
+
   def renderPasswordResetConfirmation(returnUrl: Option[String]): Action[AnyContent] = Action{ implicit request =>
+    val isPaymentFailure = (for {
+      url <- returnUrl
+      parsedUrl <- Try(Uri.parse(url)).toOption
+      paymentFailure <- getPaymentFailureCode(parsedUrl)
+    } yield paymentFailure).orElse(None)
+
     val idRequest = idRequestParser(request)
     val userIsLoggedIn = authenticationService.userIsFullyAuthenticated(request)
     Ok(IdentityHtmlPage.html(
-      views.html.password.passwordResetConfirmation(page, idRequest, idUrlBuilder, userIsLoggedIn, returnUrl)
+      views.html.password.passwordResetConfirmation(page, idRequest, idUrlBuilder, userIsLoggedIn, returnUrl, isPaymentFailure)
     )(page, request, context))
   }
 
