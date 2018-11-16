@@ -43,5 +43,4 @@ object HtmlPageHelpers {
   def ContentCSSFile(implicit request: RequestHeader): String = "content.garnett"
   def RichLinksCSSFile(implicit request: RequestHeader): String = "rich-links.garnett"
   def SignUpCSSFile(implicit request: RequestHeader): String = "signup"
-  def FooterCSSFile(implicit request: RequestHeader): String = "new-footer"
 }

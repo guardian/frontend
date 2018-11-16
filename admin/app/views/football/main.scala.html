@@ -4,7 +4,7 @@
 @import controllers.admin.routes.UncachedWebAssets
 @import play.api.Mode.Dev
 @import conf.Static
-@import html.HtmlPageHelpers.{ContentCSSFile, FooterCSSFile}
+@import html.HtmlPageHelpers.{ContentCSSFile}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -20,7 +20,6 @@
             <!--[if (gt IE 9)|(IEMobile)]><!-->
         @if(context.environment.mode == Dev) {
             <link rel="stylesheet" type="text/css" href="@Static(s"stylesheets/head.$ContentCSSFile.css")" />
-            <link rel="stylesheet" type="text/css" href="@Static(s"stylesheets/head.$FooterCSSFile.css")" />
         } else {
             <style>
             @Html(common.Assets.css.head(None))

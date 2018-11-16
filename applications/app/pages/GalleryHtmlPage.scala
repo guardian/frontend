@@ -14,7 +14,7 @@ import views.html.fragments.page.head._
 import views.html.fragments.page.head.stylesheets.{criticalStyleInline, criticalStyleLink, styles}
 import views.html.fragments.page.{devTakeShot, htmlTag}
 import views.html.fragments._
-import html.HtmlPageHelpers.{ContentCSSFile, FooterCSSFile}
+import html.HtmlPageHelpers.{ContentCSSFile}
 import views.html.stacked
 
 object GalleryHtmlPage extends HtmlPage[GalleryPage] {
@@ -23,7 +23,6 @@ object GalleryHtmlPage extends HtmlPage[GalleryPage] {
     override def criticalCssLink: Html = criticalStyleLink(ContentCSSFile)
     override def criticalCssInline: Html = criticalStyleInline(Html(common.Assets.css.head(None)))
     override def linkCss: Html = stylesheetLink(s"stylesheets/$ContentCSSFile.css")
-    override def footerCss: Html = stylesheetLink(s"stylesheets/$FooterCSSFile.css")
     override def oldIECriticalCss: Html = stylesheetLink(s"stylesheets/old-ie.head.$ContentCSSFile.css")
     override def oldIELinkCss: Html = stylesheetLink(s"stylesheets/old-ie.$ContentCSSFile.css")
     override def IE9LinkCss: Html = stylesheetLink(s"stylesheets/ie9.head.$ContentCSSFile.css")

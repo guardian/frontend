@@ -15,7 +15,7 @@ import views.html.fragments.page.head.stylesheets.{criticalStyleInline, critical
 import views.html.fragments.page.head._
 import views.html.fragments.page.{devTakeShot, htmlTag}
 import views.html.preferences.index
-import html.HtmlPageHelpers.{ContentCSSFile, FooterCSSFile}
+import html.HtmlPageHelpers.{ContentCSSFile}
 import views.html.stacked
 
 object TagIndexHtmlPage extends HtmlPage[StandalonePage] {
@@ -24,7 +24,6 @@ object TagIndexHtmlPage extends HtmlPage[StandalonePage] {
     override def criticalCssLink: Html = criticalStyleLink("index")
     override def criticalCssInline: Html = criticalStyleInline(Html(common.Assets.css.head(Some("index"))))
     override def linkCss: Html = stylesheetLink(s"stylesheets/$ContentCSSFile.css")
-    override def footerCss: Html = stylesheetLink(s"stylesheets/$FooterCSSFile.css")
     override def oldIECriticalCss: Html = stylesheetLink("stylesheets/old-ie.head.index.css")
     override def oldIELinkCss: Html = stylesheetLink(s"stylesheets/old-ie.$ContentCSSFile.css")
     override def IE9LinkCss: Html = stylesheetLink(s"stylesheets/ie9.head.index.css")

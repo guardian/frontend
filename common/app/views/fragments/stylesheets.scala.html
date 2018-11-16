@@ -3,7 +3,7 @@
 @import conf.switches.Switches._
 @import play.api.Mode.Dev
 @import conf.Static
-@import html.HtmlPageHelpers.{ContentCSSFile, FooterCSSFile}
+@import html.HtmlPageHelpers.{ContentCSSFile}
 
 @* any images in head need to go here (or they'll be relative to the page)} *@
 <style class="js-loggable">
@@ -69,7 +69,6 @@
     </style>
 }
 @fragments.stylesheetLink(common.Assets.css.projectCss(projectName), isCrossword)
-@fragments.stylesheetLink(s"stylesheets/$FooterCSSFile.css")
 
 <!--<![endif]-->
 <link rel="stylesheet" media="print" type="text/css" href="@Static("stylesheets/print.css")" />

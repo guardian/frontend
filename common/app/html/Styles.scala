@@ -7,7 +7,6 @@ trait Styles {
   def criticalCssLink: Html
   def criticalCssInline: Html
   def linkCss: Html
-  def footerCss: Html
   def oldIECriticalCss: Html
   def oldIELinkCss: Html
   def IE9CriticalCss: Html
