@@ -72,33 +72,12 @@ class ResetPasswordController(
     )(page, request, context))
   }
 
-  // Checks for INTCMP parameter in returnUrl after manage.theguardian redirects to signin with this parameter for payment failure flows
-  // Checks for paymentFailure parameter because two payment failure flows go straight to sign in with INTCMP as a parameter
-  // on the profile.theguardian url. In this case, it is appended to the returnUrl under the name "paymentFailure" to ensure
-  // it doesn't interfere with possible INTCMP logic used in other projects. This will soon be irrelevant as manage.theguardian plans to
-  // redirect all links to /signin
-  // TODO: remove logic associated to paymentFailure parameter in frontend and identity-frontend when manage.theguardian redirect all links to signin
-
-  def getPaymentFailureCode(url: Uri): Option[String] = {
-    val queryString = url.query
-    queryString
-      .param("paymentFailure")
-      .orElse(queryString.param("INTCMP"))
-      .filter(paymentFailureCodes.contains)
-  }
-
   def renderResetPassword(token: String, returnUrl: Option[String]): Action[AnyContent] = Action{ implicit request =>
-    val isPaymentFailure = (for {
-      url <- returnUrl
-      parsedUrl <- Try(Uri.parse(url)).toOption
-      _ <- getPaymentFailureCode(parsedUrl)
-    } yield true).getOrElse(false)
-
     val idRequest = idRequestParser(request)
     val boundForm = passwordResetForm.bindFromFlash.getOrElse(passwordResetForm)
     NoCache(Ok(
       IdentityHtmlPage.html(
-        views.html.password.resetPassword(page, idRequest, idUrlBuilder, boundForm, token, returnUrl.getOrElse(""), isPaymentFailure)
+        views.html.password.resetPassword(page, idRequest, idUrlBuilder, boundForm, token, returnUrl.getOrElse(""))
       )(page, request, context)
     ))
   }
@@ -145,11 +124,32 @@ class ResetPasswordController(
     boundForm.fold[Future[Result]](onError, onSuccess)
   }
 
+  // Checks for INTCMP parameter in returnUrl after manage.theguardian redirects to signin with this parameter for payment failure flows
+  // Checks for paymentFailure parameter because two payment failure flows go straight to sign in with INTCMP as a parameter
+  // on the profile.theguardian url. In this case, it is appended to the returnUrl under the name "paymentFailure" to ensure
+  // it doesn't interfere with possible INTCMP logic used in other projects. This will soon be irrelevant as manage.theguardian plans to
+  // redirect all links to /signin
+  // TODO: remove logic associated to paymentFailure parameter in frontend and identity-frontend when manage.theguardian redirect all links to signin
+
+  def getPaymentFailureCode(url: Uri): Option[String] = {
+    val queryString = url.query
+    queryString
+      .param("paymentFailure")
+      .orElse(queryString.param("INTCMP"))
+      .filter(paymentFailureCodes.contains)
+  }
+
   def renderPasswordResetConfirmation(returnUrl: Option[String]): Action[AnyContent] = Action{ implicit request =>
+    val isPaymentFailure = (for {
+      url <- returnUrl
+      parsedUrl <- Try(Uri.parse(url)).toOption
+      paymentFailure <- getPaymentFailureCode(parsedUrl)
+    } yield paymentFailure).orElse(None)
+
     val idRequest = idRequestParser(request)
     val userIsLoggedIn = authenticationService.userIsFullyAuthenticated(request)
     Ok(IdentityHtmlPage.html(
-      views.html.password.passwordResetConfirmation(page, idRequest, idUrlBuilder, userIsLoggedIn, returnUrl)
+      views.html.password.passwordResetConfirmation(page, idRequest, idUrlBuilder, userIsLoggedIn, returnUrl, isPaymentFailure)
     )(page, request, context))
   }
 
