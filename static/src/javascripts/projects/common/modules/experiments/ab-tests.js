@@ -5,12 +5,14 @@ import { getTest as getAcquisitionTest } from 'common/modules/experiments/acquis
 import { commercialPrebidSafeframe } from 'common/modules/experiments/tests/commercial-prebid-safeframe.js';
 import { commercialAdVerification } from 'common/modules/experiments/tests/commercial-ad-verification.js';
 import { commercialCmpCustomise } from 'common/modules/experiments/tests/commercial-cmp-customise.js';
+import { commercialAdMobileWebIncrease } from 'common/modules/experiments/tests/commercial-ad-mobile-web-increase.js';
 
 export const TESTS: $ReadOnlyArray<ABTest> = [
     getAcquisitionTest(),
     commercialPrebidSafeframe,
     commercialAdVerification,
     commercialCmpCustomise,
+    commercialAdMobileWebIncrease
 ].filter(Boolean);
 
 export const getActiveTests = (): $ReadOnlyArray<ABTest> =>

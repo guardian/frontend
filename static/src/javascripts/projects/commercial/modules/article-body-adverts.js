@@ -10,6 +10,8 @@ import { trackAdRender } from 'commercial/modules/dfp/track-ad-render';
 import { createSlots } from 'commercial/modules/dfp/create-slots';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { initCarrot } from 'commercial/modules/carrot-traffic-driver';
+import { getVariant, isInVariant } from 'common/modules/experiments/utils';
+import { commercialAdMobileWebIncrease } from 'common/modules/experiments/tests/commercial-ad-mobile-web-increase.js';
 
 type AdSize = {
     width: number,
@@ -20,6 +22,11 @@ type AdSize = {
 type Sizes = { desktop: Array<AdSize> };
 
 const isPaidContent = config.get('page.isPaidContent', false);
+
+const isInAdMobileWebVariant = (): boolean => {
+    const variant = getVariant(commercialAdMobileWebIncrease, 'variant');
+    return variant ? isInVariant(commercialAdMobileWebIncrease, variant) : false;
+};
 
 const adSlotClassSelectorSizes = {
     minAbove: 500,
@@ -142,12 +149,12 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<number> => {
     });
 };
 
-const addMobileInlineAds = (): Promise<number> => {
+const addMobileInlineAds = (isInVariant: boolean): Promise<number> => {
     const rules = {
         bodySelector: '.js-article__body',
         slotSelector: ' > p',
-        minAbove: 300,
-        minBelow: 300,
+        minAbove: isInVariant ? 300 : 200,
+        minBelow: isInVariant ? 300 : 200,
         selectors: {
             ' > h2': {
                 minAbove: 100,
@@ -156,7 +163,7 @@ const addMobileInlineAds = (): Promise<number> => {
             ' .ad-slot': adSlotClassSelectorSizes,
             ' > :not(p):not(h2):not(.ad-slot)': {
                 minAbove: 35,
-                minBelow: 400,
+                minBelow: isInVariant ? 400 : 200,
             },
         },
         filter: filterNearbyCandidates(adSizes.mpu.height),
@@ -189,7 +196,7 @@ const addInlineAds = (): Promise<number> => {
     });
 
     if (isMobile) {
-        return addMobileInlineAds();
+        return addMobileInlineAds(isInAdMobileWebVariant());
     }
     if (isPaidContent) {
         return addDesktopInlineAds(false);
