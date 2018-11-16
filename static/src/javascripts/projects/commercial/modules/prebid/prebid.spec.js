@@ -16,6 +16,7 @@ jest.mock('commercial/modules/prebid/bid-config', () => ({
 describe('initialise', () => {
     beforeEach(() => {
         config.set('switches.enableConsentManagementService', true);
+        config.set('switches.prebidUserSync', true);
         config.set('switches.prebidAppNexus', true);
         config.set('switches.prebidS2sozone', true);
         config.set('switches.prebidSonobi', true);
@@ -49,7 +50,7 @@ describe('initialise', () => {
             _priceGranularity: 'custom',
             _publisherDomain: 'null',
             _sendAllBids: true,
-            _timoutBuffer: 200,
+            _timeoutBuffer: 400,
             bidderSequence: 'random',
             bidderTimeout: 1500,
             consentManagement: {
@@ -90,14 +91,14 @@ describe('initialise', () => {
                 syncEndpoint: 'https://elb.the-ozone-project.com/cookie_sync',
                 timeout: 1500,
             },
-            timeoutBuffer: 200,
+            timeoutBuffer: 400,
             userSync: {
                 pixelEnabled: true,
                 syncDelay: 3000,
                 syncEnabled: true,
                 syncsPerBidder: 999,
                 filterSettings: {
-                    image: {
+                    all: {
                         bidders: '*',
                         filter: 'include',
                     },
@@ -134,5 +135,11 @@ describe('initialise', () => {
         config.set('switches.prebidXaxis', false);
         prebid.initialise();
         expect(window.pbjs.bidderSettings).toEqual({});
+    });
+
+    test('should generate correct Prebid config when user-sync off', () => {
+        config.set('switches.prebidUserSync', false);
+        prebid.initialise();
+        expect(window.pbjs.getConfig().userSync.syncEnabled).toEqual(false);
     });
 });

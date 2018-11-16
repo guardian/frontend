@@ -390,6 +390,16 @@ trait PrebidSwitches {
     exposeClientSide = false
   )
 
+  val prebidUserSync: Switch = Switch(
+    group = CommercialPrebid,
+    name = "prebid-user-sync",
+    description = "Enable bidders to sync their user data with iframe or image beacons",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
   val prebidSonobi: Switch = Switch(
     group = CommercialPrebid,
     name = "prebid-sonobi",
