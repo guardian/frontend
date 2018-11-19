@@ -1,7 +1,6 @@
 @import common.{ Edition, LinkTo }
 @import navigation.{ NavLink, NavMenu, FlatSubnav, ParentSubnav }
 @import views.support.RenderClasses
-@import conf.switches.Switches.{ NewNavEnabled }
 @import com.gu.contentapi.client.utils.DesignType
 @import _root_.model.ContentDesignType.RichContentDesignType
 
@@ -55,7 +54,7 @@
             }
         </div>
     </div>
-    @if(NewNavEnabled.isSwitchedOn && !isFooter) {
+    @if(!isFooter) {
         <div class="new-header__multiline">
             <div class="gs-container"></div>
         </div>

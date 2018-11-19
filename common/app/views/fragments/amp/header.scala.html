@@ -4,33 +4,19 @@
 @import navigation.NavMenu
 @import navigation.UrlHelpers.{getReaderRevenueUrl, Header}
 @import navigation.ReaderRevenueSite.Support
-@import conf.switches.Switches.NewNavEnabled
 
 <header class="header"
         role="banner">
     <nav class="header__inner">
 
         <div class="header__cta-container">
-            @if(NewNavEnabled.isSwitchedOn) {
-                @defining(Edition(request).id.toLowerCase()) { editionId =>
-                    <a class="cta-bar__cta js-acquisition-link"
-                    data-link-name="amp : nav : supporter-cta"
-                    href="@getReaderRevenueUrl(Support, Header)">
-                        Support us
-                        @fragments.inlineSvg("arrow-right", "icon")
-                    </a>
-                }
-            } else {
-                @defining(Edition(request).id.toLowerCase()) { editionId =>
-                    <a class="header-cta-item js-acquisition-link"
-                    data-link-name="amp : nav : supporter-cta"
-                    href="@getReaderRevenueUrl(Support, Header)">
-                        <span class="header-cta-item--circle"></span>
-                        <span class="header-cta-item--text">
-                            Support The <br>Guardian</span>
-                        </span>
-                    </a>
-                }
+            @defining(Edition(request).id.toLowerCase()) { editionId =>
+                <a class="cta-bar__cta js-acquisition-link"
+                data-link-name="amp : nav : supporter-cta"
+                href="@getReaderRevenueUrl(Support, Header)">
+                    Support us
+                    @fragments.inlineSvg("arrow-right", "icon")
+                </a>
             }
         </div>
 
