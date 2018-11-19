@@ -32,7 +32,7 @@
 .menu-item-divider {
     height: 1px;
     width: 100%;
-    background: $nav-border-colour;
+    background: $brand-pastel;
     border: 0;
     margin: $gs-baseline/2 0 0 $menu-spacing-left-small;
 
@@ -96,7 +96,7 @@
     .menu-group--membership > *:first-child & {
         @include mq($until: desktop) {
             &:not([aria-expanded='true']):after {
-                background-color: $nav-border-colour;
+                background-color: $brand-pastel;
                 bottom: 0;
                 content: '';
                 display: block;

@@ -10,7 +10,7 @@
 
     .menu-group--primary > & {
         &:not(:last-child):after {
-            background-color: $nav-border-colour;
+            background-color: $brand-pastel;
             bottom: 0;
             content: '';
             display: block;

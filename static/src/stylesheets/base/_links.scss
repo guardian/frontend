@@ -1,6 +1,6 @@
 a,
 .u-fauxlink {
-    color: $sport-dark;
+    color: $brand-main;
     cursor: pointer;
     text-decoration: none;
 
@@ -9,7 +9,6 @@ a,
         text-decoration: underline;
     }
     &:active {
-        color: $sport-bright;
         text-decoration: none;
     }
 }

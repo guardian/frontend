@@ -1,5 +1,5 @@
 .menu {
-    background-color: $nav-blue;
+    background-color: $brand-main;
     box-sizing: border-box;
     font-size: 20px;
     left: 0;
@@ -82,8 +82,8 @@
     }
 
     @include mq(desktop) {
-        background-color: $nav-blue;
-        border: 1px solid $nav-border-colour;
+        background-color: $brand-main;
+        border: 1px solid $brand-pastel;
         border-bottom: 0;
         border-top: 0;
         box-sizing: border-box;

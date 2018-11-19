@@ -50,7 +50,7 @@
 
     @include mq($until: tablet) {
         // These changes are only visible in the footer
-        border-top: 1px solid $nav-border-colour;
+        border-top: 1px solid $brand-pastel;
         padding-top: $gs-baseline / 4;
     }
 
