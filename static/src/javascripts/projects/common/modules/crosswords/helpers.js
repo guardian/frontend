@@ -131,7 +131,7 @@ const cellsForEntry = (entry: Clue): Array<Position> =>
 
 const checkClueHasBeenAnswered = (grid: Grid, entry: Clue): boolean =>
     cellsForEntry(entry).every(position =>
-        /^[A-Z]$/.test(grid[position.x][position.y].value)
+        /^.$/.test(grid[position.x][position.y].value)
     );
 
 const otherDirection = (direction: Direction): Direction =>
