@@ -1,6 +1,7 @@
 package controllers
 
 import common.{Edition, JsonComponent, LinkTo}
+import conf.Configuration
 import model.Cached
 import navigation.{NavLink, NavMenu, UrlHelpers}
 import play.api.libs.json.{JsValue, Json, Writes}
@@ -41,6 +42,7 @@ class NavigationController(val controllerComponents: ControllerComponents) exten
         def writes(edition: Edition): JsValue = Json.obj(
           "id" -> edition.id,
           "displayName" -> edition.displayName,
+          "optInLink" -> s"${Configuration.id.url}/preference/edition/${edition.id.toLowerCase}"
         )
       }
 
