@@ -35,7 +35,7 @@ object HtmlPageHelpers {
     Map(
       ("has-page-skin", page.metadata.hasPageSkin(edition)),
       ("has-membership-access-requirement", page.metadata.requiresMembershipAccess),
-      ("childrens-books-site", page.metadata.sectionId == "childrens-books-site");
+      ("childrens-books-site", page.metadata.sectionId == "childrens-books-site"))
   }
 
   def FaciaCSSFile(implicit request: RequestHeader): String = "facia.garnett"
