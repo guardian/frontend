@@ -8,9 +8,9 @@
 
     // Generic
     &.facia-snap-embed {
-        height: auto;
-        margin: 0;
-        padding: 0 $gs-gutter/2;
+        height: 14rem;
+        margin: 0 $gs-gutter/2;
+        padding: 0;
         position: relative;
         background: #ffffff;
     }
@@ -32,6 +32,7 @@
     .c-football-matches,
     .football-embed {
         overflow: visible; // ensure height expands in container
+        height: 100%;
     }
 
     .table,
