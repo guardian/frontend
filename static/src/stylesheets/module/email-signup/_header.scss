@@ -3,13 +3,13 @@
 }
 
 .email-sub__heading-emph {
-    color: $guardian-brand;
+    color: $brand-main;
 }
 
 .email-sub__description {
     border-top: 3px solid $form-secondary-colour;
     color: $form-primary-colour;
-    background-color: $guardian-brand;
+    background-color: $brand-main;
 }
 
 .email-sub__description-emph {
@@ -59,7 +59,7 @@
 // PLAIN MODS
 .email-sub--plain {
     .email-sub__message__headline {
-        color: $guardian-brand;
+        color: $brand-main;
         line-height: 2rem;
     }
 

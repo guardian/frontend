@@ -118,7 +118,7 @@
 
 .email-sub__small {
     @include fs-textSans(1, $size-only: true);
-    color: $guardian-brand;
+    color: $brand-main;
     display: block;
     padding-left: $gs-baseline / 3;
     position: relative;
@@ -202,7 +202,7 @@
 .email-sub__form--footer {
     .email-sub__submit-button {
         @include fs-textSans(5);
-        color: $nav-blue;
+        color: $brand-main;
         height: 42px;
         line-height: 40px;
         background-color: $brightness-100;
@@ -234,7 +234,7 @@
     .email-sub__text-input {
         @include fs-textSans(5);
         background-color: rgba($brightness-100, .08);
-        border: 1px solid $nav-border-colour;
+        border: 1px solid $brand-pastel;
         border-radius: 99px;
         height: 42px;
         line-height: 42px;
@@ -259,7 +259,7 @@
 
 // LANDING PAGE MODS
 .email-sub--landing {
-    background-color: $guardian-brand;
+    background-color: $brand-main;
 
     .email-sub__description {
         padding: $gs-baseline $gs-gutter;
@@ -301,8 +301,8 @@
     }
 
     .email-sub__submit-button {
-        background-color: $guardian-brand;
-        border-color: $guardian-brand;
+        background-color: $brand-main;
+        border-color: $brand-main;
     }
 
     .email-sub__label,
@@ -321,7 +321,7 @@
     padding: 0;
 
     .email-sub__text-input {
-        border-color: $guardian-brand;
+        border-color: $brand-main;
     }
 }
 

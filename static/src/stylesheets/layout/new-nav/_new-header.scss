@@ -13,7 +13,7 @@ from scrolling */
 }
 
 .new-header {
-    background-color: $nav-blue;
+    background-color: $brand-main;
     position: relative;
 
     &:not(.new-header--slim) {
@@ -155,7 +155,7 @@ from scrolling */
     }
 
     & path:nth-child(2) {
-        fill: $nav-blue;
+        fill: $brand-main;
     }
 }
 

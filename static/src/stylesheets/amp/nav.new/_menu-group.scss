@@ -10,7 +10,7 @@
 }
 
 .menu-group--secondary {
-    background-color: darken($nav-blue, 5%);
+    background-color: $brand-dark;
     margin-top: 0;
     padding-top: 0;
 }
@@ -21,5 +21,5 @@
 }
 
 .menu-group--editions .menu-group {
-    background-color: darken($nav-blue, 5%);
+    background-color: $brand-dark;
 }

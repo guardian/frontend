@@ -67,15 +67,10 @@ $mq-breakpoints: (
 $guss-column-rule: none;
 
 
-// Legacy colours to be removed ================================================
-$guardian-brand:         #005689;
-$guardian-brand-light:   #94b1ca;
-$guardian-brand-dark:    #00456e;
-
-// Nav colours =================================================================
-$nav-blue:               #052962;
-$nav-border-colour:      rgba(#ffffff, .3);
-
+// Brand  ======================================================================
+$brand-dark:             #041f4a;
+$brand-main:             #052962;
+$brand-pastel:           #506991;
 
 // Neutrals ====================================================================
 $brightness-7:           #121212;
@@ -94,35 +89,35 @@ $highlight-main:         #ffe500;
 
 
 // Pillars =====================================================================
-// News (Red)
+// News (red)
 $news-dark:              #ab0613;
 $news-main:              #c70000;
 $news-bright:            #ff4e36;
 $news-pastel:            #ffbac8;
 $news-faded:             #fff4f2;
 
-// Opinion (Orange)
+// Opinion (orange)
 $opinion-dark:           #bd5318;
 $opinion-main:           #e05e00;
 $opinion-bright:         #ff7f0f;
 $opinion-pastel:         #f9b376;
 $opinion-faded:          #fef9f5;
 
-// Sport (Blue)
+// Sport (blue)
 $sport-dark:             #005689;
 $sport-main:             #0084c6;
 $sport-bright:           #00b2ff;
 $sport-pastel:           #90dcff;
 $sport-faded:            #f1f8fc;
 
-// Culture (Brown)
+// Culture (brown)
 $culture-dark:           #6b5840;
 $culture-main:           #a1845c;
 $culture-bright:         #eacca0;
 $culture-pastel:         #e7d4b9;
 $culture-faded:          #fbf6ef;
 
-// Lifestyle (Magenta)
+// Lifestyle (magenta)
 $lifestyle-dark:         #7d0068;
 $lifestyle-main:         #bb3b80;
 $lifestyle-bright:       #ffabdb;

@@ -4,7 +4,7 @@ $padding: 3px;
 
 .identity-header {
     @include clearfix;
-    background-color: $nav-blue;
+    background-color: $brand-main;
     padding: $padding 0;
     color: $brightness-100;
     overflow: visible;

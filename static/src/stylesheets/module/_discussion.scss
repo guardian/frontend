@@ -684,7 +684,7 @@ $avatarPadding: $gs-gutter / 2;
 .d-show-more-replies__button.button--show-more {
     padding-left: $gs-baseline * 2;
     svg {
-        fill: $guardian-brand;
+        fill: $brand-main;
         height: 14px;
         width: 14px;
         left: $gs-gutter / 2;
@@ -700,7 +700,7 @@ $avatarPadding: $gs-gutter / 2;
     margin-top: $gs-baseline / 1.5;
 
     a {
-        color: $guardian-brand-light;
+        color: $brand-pastel;
     }
 }
 
@@ -939,7 +939,7 @@ $comment-recommend-button-size: 19px;
 }
 
 .comment-share-icon {
-    fill: $guardian-brand;
+    fill: $brand-main;
 }
 
 .comment-share-icon svg {
@@ -1494,7 +1494,7 @@ $comment-recommend-button-size: 19px;
     line-height: 17px;
 
     &:hover {
-        border-color: $guardian-brand;
+        border-color: $brand-main;
     }
 }
 
