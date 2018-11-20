@@ -50,8 +50,8 @@ export const acquisitionsEpicUsPreEndOfYear: EpicABTest = makeABTest({
                     ],
                     highlightedText:
                         'For as little as $1, you can support the Guardian – and it only takes a minute. Thank you.',
-                }
-            }
+                },
+            },
         },
         {
             id: 'freedom_of_the_press',
@@ -100,8 +100,8 @@ export const acquisitionsEpicUsPreEndOfYear: EpicABTest = makeABTest({
                     ],
                     highlightedText:
                         'Help us continue reporting on the stories that matter in 2019 and beyond by making a year-end contribution to The Guardian. Thank you.',
-                }
-            }
-        }
+                },
+            },
+        },
     ],
 });

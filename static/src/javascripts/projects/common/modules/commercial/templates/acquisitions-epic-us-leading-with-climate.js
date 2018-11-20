@@ -22,20 +22,16 @@ const gridImage = `
 `;
 
 export const acquisitionsEpicUsLeadingWithClimateTemplate = ({
-    copy: { heading = '', paragraphs, highlightedText },
+    copy: { paragraphs, highlightedText },
     componentName,
     buttonTemplate,
-    epicClass = '',
-    wrapperClass = '',
 }: {
     copy: AcquisitionsEpicTemplateCopy,
     componentName: string,
     buttonTemplate: string,
-    epicClass?: string,
-    wrapperClass?: string,
 }) =>
     `<div class="contributions__epic contributions__epic--us-leading-with-climate" data-component="${componentName}" data-link-name="epic">
-        <div class="${wrapperClass}">
+        <div>
             <div>
                 <h2 class="contributions__title contributions__title--us-leading-with-climate">
                     This is a photo of America’s future &hellip;
