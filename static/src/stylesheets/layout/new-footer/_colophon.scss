@@ -1,11 +1,11 @@
 .colophon {
     @include content-gutter();
     padding-bottom: $gs-baseline * 2;
-    border-bottom: 1px solid $nav-border-colour;
+    border-bottom: 1px solid $brand-pastel;
 
     @include mq(tablet) {
         padding-bottom: $gs-baseline / 2;
-        border: 1px solid $nav-border-colour;
+        border: 1px solid $brand-pastel;
         border-top: 0;
     }
 }
@@ -87,7 +87,7 @@
         left: -$gs-gutter / 2;
         width: 1px;
         display: block;
-        background-color: $nav-border-colour;
+        background-color: $brand-pastel;
 
         @include mq(tablet) {
             bottom: $gs-baseline / 2;

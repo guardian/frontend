@@ -5,7 +5,7 @@
     position: absolute;
     right: $gs-gutter / 2;
     text-align: right;
-    background-color: $nav-blue;
+    background-color: $brand-main;
     padding: 0 $gs-gutter / 4;
     transform: translateY(-50%);
 
@@ -40,7 +40,7 @@
         left: 9px;
 
         path {
-            fill: $nav-blue;
+            fill: $brand-main;
         }
     }
 }
