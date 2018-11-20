@@ -14,8 +14,16 @@ object NavLinks {
   val indigenousAustralia = NavLink("Indigenous Australia", "/australia-news/indigenous-australians")
   val indigenousAustraliaOpinion = NavLink("Indigenous", "/commentisfree/series/indigenousx")
   val usNews = NavLink("US", "/us-news", longTitle = "US news")
-  val usPolitics = NavLink("US politics", "/us-news/us-politics", longTitle = "US politics")
-  val education = NavLink("Education", "/education")
+  val usPolitics = NavLink("US midterms 2018", "/us-news/us-midterm-elections-2018", longTitle = "US politics")
+
+  val education = {
+    val teachers = NavLink("Teachers", "/teacher-network")
+    val universities = NavLink("Universities", "/education/universities")
+    val schools = NavLink("Schools", "/education/schools")
+    val students = NavLink("Students", "/education/students")
+    NavLink("Education", "/education", children = List(schools, teachers, universities, students))
+  }
+
   val society = NavLink("Society", "/society")
   val law = NavLink("Law", "/law")
   val scotland = NavLink("Scotland", "/uk/scotland")
@@ -55,7 +63,6 @@ object NavLinks {
   val ukBusiness = NavLink("Business", "/business", children = List(economics, banking, money, markets, projectSyndicate, businessToBusiness))
   val usBusiness = ukBusiness.copy(children = List(economics, sustainableBusiness, diversityEquality, smallBusiness))
   val auBusiness = ukBusiness.copy(children = List(markets, money, projectSyndicate))
-  val homelessness = NavLink("Homelessness", "/us-news/series/outside-in-america")
 
   /* OPINION */
   val columnists = NavLink("Columnists", "/index/contributors")
@@ -67,18 +74,15 @@ object NavLinks {
 
   /* SPORT */
 
-  // TODO remove after world cup
-  val worldCup2018 = NavLink("World Cup 2018", "/football/world-cup-2018")
-
   val football = NavLink("Football", "/football",
     children = List(
-      worldCup2018,
       NavLink("Live scores", "/football/live", "football/live"),
       NavLink("Tables", "/football/tables", "football/tables"),
       NavLink("Fixtures", "/football/fixtures", "football/fixtures"),
       NavLink("Results", "/football/results", "football/results"),
       NavLink("Competitions", "/football/competitions", "football/competitions"),
-      NavLink("Clubs", "/football/teams", "football/teams")
+      NavLink("Clubs", "/football/teams", "football/teams"),
+      NavLink("World Cup 2018", "/football/world-cup-2018")
     )
   )
   val soccer = football.copy(title = "Soccer")
@@ -116,8 +120,8 @@ object NavLinks {
   /* LIFE */
   val fashion = NavLink("Fashion", "/fashion")
   val fashionAu = NavLink("Fashion", "/au/lifeandstyle/fashion")
-  val food = NavLink("Food", "/lifeandstyle/food-and-drink")
-  val foodAu = NavLink("Food", "/au/lifeandstyle/food-and-drink")
+  val food = NavLink("Food", "/food")
+  val foodAu = NavLink("Food", "/au/food")
   val relationshipsAu = NavLink("Relationships", "/au/lifeandstyle/relationships")
   val loveAndSex = NavLink("Love & sex", "/lifeandstyle/love-and-sex")
   val family = NavLink("Family", "/lifeandstyle/family")
@@ -155,7 +159,8 @@ object NavLinks {
       NavLink("Observer Magazine", "/theobserver/magazine")
     )
   )
-  val digitalNewspaperArchive = NavLink("Digital archive", "https://theguardian.newspapers.com")
+  val weekly = NavLink("Guardian Weekly", "https://www.theguardian.com/weekly")
+  val digitalNewspaperArchive = NavLink("Digital Archive", "https://theguardian.newspapers.com")
   val crosswords = NavLink("Crosswords", "/crosswords",
     children = List(
       NavLink("Blog", "/crosswords/crossword-blog"),
@@ -175,12 +180,14 @@ object NavLinks {
   val podcasts = NavLink("Podcasts", "/podcasts")
   val pictures = NavLink("Pictures", "/inpictures")
   val newsletters = NavLink("Newsletters", "/email-newsletters")
-  val jobs = NavLink("Jobs", "https://jobs.theguardian.com")
+  val jobs = NavLink("Search jobs", "https://jobs.theguardian.com")
   val dating = NavLink("Dating", "https://soulmates.theguardian.com")
   val apps = NavLink("The Guardian app", "https://www.theguardian.com/mobile/2014/may/29/the-guardian-for-mobile-and-tablet")
   val ukMasterClasses = NavLink("Masterclasses", "https://membership.theguardian.com/masterclasses?INTCMP=masterclasses_uk_web_newheader")
   val auEvents = NavLink("Events", "/guardian-live-australia")
   var holidays = NavLink("Holidays", "https://holidays.theguardian.com")
+  val ukPatrons = NavLink("Patrons", "https://patrons.theguardian.com/?INTCMP=header_patrons")
+  val ukDiscountCode = NavLink("Discount Codes", "https://discountcode.theguardian.com/uk?INTCMP=guardian_header")
   val guardianMasterClasses = NavLink("Guardian Masterclasses", "/guardian-masterclasses",
     children = List(
       NavLink("Journalism", "/guardian-masterclasses/journalism"),
@@ -188,7 +195,7 @@ object NavLinks {
       NavLink("Business", "/guardian-masterclasses/business"),
       NavLink("Creative writing", "/guardian-masterclasses/writing-and-publishing"),
       NavLink("Wellbeing & Culture", "/guardian-masterclasses/culture"),
-      NavLink("Corporate training", "/guardian-masterclasses/corporate-training"),
+      NavLink("Bespoke training", "/guardian-masterclasses/corporate-training"),
       NavLink("Calendar", "/guardian-masterclasses/calendar")
     )
   )
@@ -203,6 +210,7 @@ object NavLinks {
       politics,
       ukEnvironment,
       education,
+      society,
       science,
       tech,
       globalDevelopment,
@@ -233,8 +241,7 @@ object NavLinks {
       usPolitics,
       usBusiness,
       tech,
-      science,
-      homelessness
+      science
     )
   )
   val intNewsPillar = ukNewsPillar.copy(
@@ -293,7 +300,7 @@ object NavLinks {
   //Sport Pillar
   val ukSportPillar = NavLink("Sport", "/sport", longTitle = "Sport home", iconName = "home",
     List(
-      worldCup2018,
+      football,
       rugbyUnion,
       cricket,
       tennis,
@@ -304,44 +311,40 @@ object NavLinks {
       rugbyLeague,
       racing,
       usSports,
-      football
     )
   )
   val auSportPillar = ukSportPillar.copy(
     children = List(
-      worldCup2018,
+      football,
       AFL,
       NRL,
       aLeague,
       cricket,
       rugbyUnion,
-      tennis,
-      football
+      tennis
     )
   )
   val usSportPillar = ukSportPillar.copy(
     children = List(
-      worldCup2018,
+      soccer,
       NFL,
       tennis,
       MLB,
       MLS,
       NBA,
-      NHL,
-      soccer
+      NHL
     )
   )
   val intSportPillar = ukSportPillar.copy(
     children = List(
-      worldCup2018,
+      football,
       rugbyUnion,
       cricket,
       tennis,
       cycling,
       formulaOne,
       golf,
-      usSports,
-      football
+      usSports
     )
   )
 
@@ -459,7 +462,7 @@ object NavLinks {
     todaysPaper,
     insideTheGuardian,
     observer,
-    digitalNewspaperArchive,
+    weekly.copy(url = s"${weekly.url}?INTCMP=gdnwb_mawns_editorial_gweekly_GW_TopNav_UK"),
     NavLink("Professional networks", "/guardian-professional"),
     crosswords,
     guardianMasterClasses
@@ -471,7 +474,7 @@ object NavLinks {
     pictures,
     newsletters,
     insideTheGuardian,
-    digitalNewspaperArchive,
+    weekly.copy(url = s"${weekly.url}?INTCMP=gdnwb_mawns_editorial_gweekly_GW_TopNav_Aus"),
     crosswords
   )
   val usOtherLinks = List(
@@ -481,7 +484,7 @@ object NavLinks {
     pictures,
     newsletters,
     insideTheGuardian,
-    digitalNewspaperArchive,
+    weekly.copy(url = s"${weekly.url}?INTCMP=gdnwb_mawns_editorial_gweekly_GW_TopNav_US"),
     crosswords
   )
   val intOtherLinks = List(
@@ -493,7 +496,7 @@ object NavLinks {
     todaysPaper,
     insideTheGuardian,
     observer,
-    digitalNewspaperArchive,
+    weekly.copy(url = s"${weekly.url}?INTCMP=gdnwb_mawns_editorial_gweekly_GW_TopNav_Int"),
     crosswords
   )
 
@@ -501,21 +504,30 @@ object NavLinks {
     jobs.copy(url = jobs.url + "?INTCMP=jobs_uk_web_newheader"),
     dating.copy(url = dating.url + "?INTCMP=soulmates_uk_web_newheader"),
     holidays.copy(url = holidays.url + "?INTCMP=holidays_uk_web_newheader"),
-    ukMasterClasses
+    ukMasterClasses,
+    digitalNewspaperArchive,
+    ukPatrons,
+    ukDiscountCode
   )
   val auBrandExtensions = List(
-    auEvents
+    auEvents,
+    digitalNewspaperArchive
   )
   val usBrandExtensions= List(
-    jobs.copy(url = jobs.url + "?INTCMP=jobs_us_web_newheader")
+    jobs.copy(url = jobs.url + "?INTCMP=jobs_us_web_newheader"),
+    digitalNewspaperArchive
   )
   val intBrandExtensions = List(
     jobs.copy(url = jobs.url + "?INTCMP=jobs_int_web_newheader"),
     dating.copy(url = dating.url + "?INTCMP=soulmates_int_web_newheader"),
-    holidays.copy(url = holidays.url + "?INTCMP=holidays_int_web_newheader")
+    holidays.copy(url = holidays.url + "?INTCMP=holidays_int_web_newheader"),
+    digitalNewspaperArchive
   )
 
   // Tertiary Navigation
+  // NOTE: content with tags from this list will have the navigation set to the tag in this list, rather than its
+  // section tag. e.g. Content in technology section with world/europe-news will appear in the world section in
+  // the navigation. The workaround for this is to add the section to this list,as has been done with CiF and education
   val tagPages = List(
     "us-news/us-politics",
     "australia-news/australian-politics",
@@ -571,7 +583,7 @@ object NavLinks {
     "football/a-league",
     "sport/nrl",
     "music/classicalmusicandopera",
-    "lifeandstyle/food-and-drink",
+    "food",
     "tone/recipes",
     "lifeandstyle/health-and-wellbeing",
     "lifeandstyle/family",
@@ -594,7 +606,6 @@ object NavLinks {
     "football/competitions",
     "football/results",
     "football/fixtures",
-    "education",
     "crosswords/crossword-blog",
     "crosswords/series/crossword-editor-update",
     "crosswords/series/quick",
@@ -607,6 +618,10 @@ object NavLinks {
     "crosswords/series/everyman",
     "crosswords/series/azed",
     "fashion/beauty",
-    "technology/motoring"
+    "technology/motoring",
+    // these last two are here to ensure that content in education and CiF always appear as such in the navigation
+    // even if they also have a tag from this list
+    "commentisfree/commentisfree",
+    "education/education"
   )
 }

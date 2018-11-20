@@ -16,10 +16,10 @@
     margin-bottom: $gs-baseline * 2;
 }
 .ad-slot--dark {
-    background-color: lighten($media-background, 2.5%);
+    background-color: lighten($brightness-7,  2.5%);
 }
 
-.ad-slot--right {
+.ad-slot--right, .ad-slot--comments {
     position: sticky;
     top: 0;
 
@@ -37,28 +37,18 @@
     @include font-size(12, 20);
     position: relative;
     height: $mpu-ad-label-height;
-    background-color: $neutral-8;
+    background-color: $brightness-97;
     padding: 0 ($gs-baseline/3)*2;
-    border-top: 1px solid $neutral-5;
-    color: $neutral-2-contrasted;
+    border-top: 1px solid $brightness-86;
+    color: $brightness-46;
     text-align: left;
     box-sizing: border-box;
     font-family: $f-sans-serif-text;
 
     .ad-slot--dark & {
-        color: $neutral-3;
-        border-top-color: $media-mute;
+        color: $brightness-86;
+        border-top-color: $brightness-20;
         background-color: transparent;
-    }
-
-    &.feedback-submitted .ad-feedback,
-    .ad-feedback__thanks-message {
-        display: none;
-    }
-
-    &.feedback-submitted .ad-feedback__thanks-message {
-        display: inline-block;
-        float: right;
     }
 }
 
@@ -67,7 +57,9 @@
  */
 
 .top-banner-ad-container {
-    background-color: $neutral-8;
+    background-color: $brightness-100;
+    border-bottom: 1px solid $brightness-86;
+
     // Needed for compatibility with IE11/Edge.
     top: 0;
 
@@ -102,10 +94,6 @@
     text-align: center;
 
     .ad-slot__label {
-        border-top: 0;
-        padding: 0;
-        height: $gs-row-height/2;
-
         @include mq(wide) {
             margin: 0;
         }
@@ -203,7 +191,7 @@
     }
 }
 .ad-slot--gallery-inline {
-    background-color: $media-background;
+    background-color: $brightness-7;
     margin-left: 0;
 
     @include mq(mobileLandscape) {
@@ -221,7 +209,7 @@
 }
 .ad-slot--inline,
 .ad-slot--container-inline {
-    background-color: $neutral-8;
+    background-color: $brightness-97;
 
     @include mq(tablet) {
         width: 300px;
@@ -283,11 +271,11 @@
     }
 }
 .ad-slot--liveblog-inline {
-    background-color: $neutral-6;
+    background-color: $brightness-93;
 
     .ad-slot__label {
-        color: $neutral-2;
-        border-top-color: $neutral-3;
+        color: $brightness-46;
+        border-top-color: $brightness-86;
     }
 }
 .ad-slot--mpu-banner-ad {
@@ -302,7 +290,7 @@
 }
 
 .ad-slot--adfeature {
-    background-color: $paid-article-mpu;
+    background-color: $brightness-86;
 }
 
 .ad-slot--outstream {
@@ -393,7 +381,7 @@
     padding: 0;
     margin: 0;
 
-    &:not(.ad-slot--im):not(.ad-slot--carrot) {
+    &:not(.ad-slot--im):not(.ad-slot--carrot):not(.ad-slot--offset-right) {
         width: 100%;
     }
 
@@ -418,7 +406,7 @@
 }
 
 .ad-slot--carrot {
-    min-height: 250px;
+    min-height: 0px;
     padding: 0;
     margin: 5px $gs-gutter $gs-baseline 0;
 
@@ -433,10 +421,6 @@
 
     @include mq(mobileLandscape) {
         width: gs-span(3);
-    }
-
-    @include mq(leftCol) {
-        margin-left: -1 * (gs-span(2) + $gs-gutter);
     }
 
     @include mq(wide) {

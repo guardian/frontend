@@ -6,13 +6,16 @@ import { getBreakpoint as getBreakpoint_ } from 'lib/detect';
 import { isUserLoggedIn as isUserLoggedIn_ } from 'common/modules/identity/api';
 import {
     isPayingMember as isPayingMember_,
-    isRecentContributor as isRecentContributor_,
+    isRecentOneOffContributor as isRecentOneOffContributor_,
     shouldSeeReaderRevenue as shouldSeeReaderRevenue_,
     isAdFreeUser as isAdFreeUser_,
 } from 'common/modules/commercial/user-features';
 
 const isPayingMember: JestMockFn<*, *> = (isPayingMember_: any);
-const isRecentContributor: JestMockFn<*, *> = (isRecentContributor_: any);
+const isRecentOneOffContributor: JestMockFn<
+    *,
+    *
+> = (isRecentOneOffContributor_: any);
 const shouldSeeReaderRevenue: JestMockFn<*, *> = (shouldSeeReaderRevenue_: any);
 const isAdFreeUser: JestMockFn<*, *> = (isAdFreeUser_: any);
 const getBreakpoint: any = getBreakpoint_;
@@ -29,7 +32,7 @@ jest.mock('lib/config', () => ({
 
 jest.mock('common/modules/commercial/user-features', () => ({
     isPayingMember: jest.fn(),
-    isRecentContributor: jest.fn(),
+    isRecentOneOffContributor: jest.fn(),
     shouldSeeReaderRevenue: jest.fn(),
     isAdFreeUser: jest.fn(),
 }));
@@ -62,7 +65,6 @@ describe('Commercial features', () => {
             outbrain: true,
             commercial: true,
             enableDiscussionSwitch: true,
-            adFreeSubscriptionTrial: false,
         };
 
         config.get.mockReturnValue('');
@@ -73,7 +75,7 @@ describe('Commercial features', () => {
 
         getBreakpoint.mockReturnValue('desktop');
         isPayingMember.mockReturnValue(false);
-        isRecentContributor.mockReturnValue(false);
+        isRecentOneOffContributor.mockReturnValue(false);
         shouldSeeReaderRevenue.mockReturnValue(true);
         isAdFreeUser.mockReturnValue(false);
         isUserLoggedIn.mockReturnValue(true);
@@ -108,6 +110,13 @@ describe('Commercial features', () => {
             const features = new CommercialFeatures();
             expect(features.dfpAdvertising).toBe(false);
         });
+
+        it('Is enabled for speedcurve tests of ad-free mode', () => {
+            window.location.hash = '#noadsaf';
+            const features = new CommercialFeatures();
+            expect(features.dfpAdvertising).toBe(true);
+            expect(features.adFree).toBe(true);
+        });
     });
 
     describe('Article body adverts', () => {
@@ -138,7 +147,6 @@ describe('Commercial features', () => {
     describe('Article body adverts under ad-free', () => {
         // LOL grammar
         it('are disabled', () => {
-            config.switches.adFreeSubscriptionTrial = true;
             isAdFreeUser.mockReturnValue(true);
             const features = new CommercialFeatures();
             expect(features.articleBodyAdverts).toBe(false);
@@ -154,7 +162,6 @@ describe('Commercial features', () => {
 
     describe('Video prerolls under ad-free', () => {
         it('are disabled', () => {
-            config.switches.adFreeSubscriptionTrial = true;
             isAdFreeUser.mockReturnValue(true);
             const features = new CommercialFeatures();
             expect(features.videoPreRolls).toBe(false);
@@ -183,7 +190,6 @@ describe('Commercial features', () => {
 
     describe('High-relevance commercial component under ad-free', () => {
         beforeEach(() => {
-            config.switches.adFreeSubscriptionTrial = true;
             isAdFreeUser.mockReturnValue(true);
         });
 
@@ -242,7 +248,6 @@ describe('Commercial features', () => {
 
     describe('Third party tags under ad-free', () => {
         beforeEach(() => {
-            config.switches.adFreeSubscriptionTrial = true;
             isAdFreeUser.mockReturnValue(true);
         });
 
@@ -300,7 +305,6 @@ describe('Commercial features', () => {
 
     describe('Outbrain / Plista under ad-free', () => {
         beforeEach(() => {
-            config.switches.adFreeSubscriptionTrial = true;
             isAdFreeUser.mockReturnValue(true);
         });
 
@@ -338,23 +342,22 @@ describe('Commercial features', () => {
     describe('Comment adverts', () => {
         beforeEach(() => {
             config.page.commentable = true;
-            // isAdFreeUser.mockReturnValue(true);
             isUserLoggedIn.mockReturnValue(true);
         });
 
-        it('Displays when page has comments and user is signed in', () => {
+        it('Displays when page has comments', () => {
+            const features = new CommercialFeatures();
+            expect(features.commentAdverts).toBe(true);
+        });
+
+        it('Will also display when the user is not logged in', () => {
+            isUserLoggedIn.mockReturnValue(false);
             const features = new CommercialFeatures();
             expect(features.commentAdverts).toBe(true);
         });
 
         it('Does not display on minute articles', () => {
             config.page.isMinuteArticle = true;
-            const features = new CommercialFeatures();
-            expect(features.commentAdverts).toBe(false);
-        });
-
-        it('Does not appear when user signed out', () => {
-            isUserLoggedIn.mockReturnValue(false);
             const features = new CommercialFeatures();
             expect(features.commentAdverts).toBe(false);
         });
@@ -386,7 +389,6 @@ describe('Commercial features', () => {
 
     describe('Comment adverts under ad-free', () => {
         beforeEach(() => {
-            config.switches.adFreeSubscriptionTrial = true;
             config.page.commentable = true;
             isAdFreeUser.mockReturnValue(true);
         });

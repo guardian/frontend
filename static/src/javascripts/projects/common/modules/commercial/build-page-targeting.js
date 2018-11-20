@@ -1,4 +1,4 @@
-// @flow
+// @flow strict
 import config from 'lib/config';
 import { getCookie, removeCookie } from 'lib/cookies';
 import { getReferrer as detectGetReferrer, getBreakpoint } from 'lib/detect';
@@ -12,14 +12,18 @@ import {
     getAdConsentState,
     thirdPartyTrackingAdConsent,
 } from 'common/modules/commercial/ad-prefs.lib';
+import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { getParticipations } from 'common/modules/experiments/utils';
-import flatten from 'lodash/arrays/flatten';
-import once from 'lodash/functions/once';
-import pick from 'lodash/objects/pick';
+import { removeFalseyValues } from 'commercial/modules/prebid/utils';
+import flattenDeep from 'lodash/flattenDeep';
+import once from 'lodash/once';
+import pick from 'lodash/pick';
+import pickBy from 'lodash/pickBy';
 
 const format = (keyword: string): string =>
     keyword.replace(/[+\s]+/g, '-').toLowerCase();
 
+// flowlint sketchy-null-string:warn
 const formatTarget = (target: ?string): ?string =>
     target
         ? format(target)
@@ -28,7 +32,7 @@ const formatTarget = (target: ?string): ?string =>
         : null;
 
 const abParam = (): Array<string> => {
-    const abParticipations: Object = getParticipations();
+    const abParticipations: Participations = getParticipations();
     const abParams: Array<string> = [];
 
     const pushAbParams = (testName: string, testValue: mixed): void => {
@@ -118,26 +122,43 @@ const getReferrer = (): ?string => {
     return matchedRef.id;
 };
 
-const getWhitelistedQueryParams = (): Object => {
+const getWhitelistedQueryParams = (): {} => {
     const whiteList: Array<string> = ['0p19G'];
     return pick(getUrlVars(), whiteList);
 };
 
-const formatAppNexusTargeting = (obj: Object): string =>
-    flatten(
+const formatAppNexusTargeting = (obj: { [string]: string }): string =>
+    flattenDeep(
         Object.keys(obj)
             .filter((key: string) => obj[key] !== '' && obj[key] !== null)
             .map((key: string) => {
-                const value: any = obj[key];
+                const value: Array<string> | string = obj[key];
                 return Array.isArray(value)
                     ? value.map(nestedValue => `${key}=${nestedValue}`)
                     : `${key}=${value}`;
             })
     ).join(',');
 
-const buildAppNexusTargeting = once(
-    (pageTargeting: Object): string =>
-        formatAppNexusTargeting({
+type PageTargeting = {
+    sens: string,
+    url: string,
+    edition: string,
+    ct: string,
+    p: string,
+    k: string,
+    su: string,
+    bp: string,
+    x: string,
+    gdncrm: string,
+    pv: string,
+    co: string,
+    tn: string,
+    slot: string,
+};
+
+const buildAppNexusTargetingObject = once(
+    (pageTargeting: PageTargeting): {} =>
+        removeFalseyValues({
             sens: pageTargeting.sens,
             pt1: pageTargeting.url,
             pt2: pageTargeting.edition,
@@ -146,7 +167,7 @@ const buildAppNexusTargeting = once(
             pt5: pageTargeting.k,
             pt6: pageTargeting.su,
             pt7: pageTargeting.bp,
-            pt8: pageTargeting.x,
+            pt8: pageTargeting.x, // OpenX cannot handle this being undefined
             pt9: [
                 pageTargeting.gdncrm,
                 pageTargeting.pv,
@@ -157,22 +178,30 @@ const buildAppNexusTargeting = once(
         })
 );
 
+const buildAppNexusTargeting = once(
+    (pageTargeting: PageTargeting): string =>
+        formatAppNexusTargeting(buildAppNexusTargetingObject(pageTargeting))
+);
+
 const buildPageTargeting = once(
-    (adFree: ?boolean): Object => {
-        const page: Object = config.page;
-        const adConsentState: ?boolean = getAdConsentState(
+    (): {} => {
+        const page = config.page;
+        //
+        const adConsentState: boolean | null = getAdConsentState(
             thirdPartyTrackingAdConsent
         );
 
         // personalised ads targeting
-        const paTargeting: Object =
+        const paTargeting: {} =
             adConsentState !== null ? { pa: adConsentState ? 't' : 'f' } : {};
-        const adFreeTargeting: Object = adFree ? { af: 't' } : {};
-        const pageTargets: Object = Object.assign(
+        const adFreeTargeting: {} = commercialFeatures.adFree
+            ? { af: 't' }
+            : {};
+        const pageTargets: PageTargeting = Object.assign(
             {
                 sens: page.isSensitive ? 't' : 'f',
                 x: getKruxSegments(),
-                pv: config.ophan.pageViewId,
+                pv: config.get('ophan.pageViewId'),
                 bp: getBreakpoint(),
                 at: adtestParams(),
                 si: isUserLoggedIn() ? 't' : 'f',
@@ -186,6 +215,7 @@ const buildPageTargeting = once(
                     ? (Math.ceil(page.videoDuration / 30.0) * 30).toString()
                     : undefined,
                 cc: geolocationGetSync(),
+                s: page.section, // for reference in a macro, so cannot be extracted from ad unit
             },
             page.sharedAdTargeting,
             paTargeting,
@@ -194,7 +224,7 @@ const buildPageTargeting = once(
         );
 
         // filter out empty values
-        const pageTargeting: Object = pick(pageTargets, target => {
+        const pageTargeting: {} = pickBy(pageTargets, target => {
             if (Array.isArray(target)) {
                 return target.length > 0;
             }
@@ -211,4 +241,8 @@ const buildPageTargeting = once(
     }
 );
 
-export { buildPageTargeting, buildAppNexusTargeting };
+export {
+    buildPageTargeting,
+    buildAppNexusTargeting,
+    buildAppNexusTargetingObject,
+};

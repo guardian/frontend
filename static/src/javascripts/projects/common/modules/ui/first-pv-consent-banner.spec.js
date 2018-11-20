@@ -10,7 +10,6 @@ const setAdConsentState: any = require('common/modules/commercial/ad-prefs.lib')
     .setAdConsentState;
 const Message: any = require('common/modules/ui/message').Message;
 const getCookie: any = require('lib/cookies').getCookie;
-const config: any = require('lib/config');
 const {
     upAlertViewCount,
 }: any = require('common/modules/analytics/send-privacy-prefs');
@@ -44,6 +43,7 @@ jest.mock('lib/config', () => ({
 
 jest.mock('common/modules/ui/message', () => ({
     Message: jest.fn(),
+    hasUserAcknowledgedBanner: jest.fn(() => false),
 }));
 
 jest.mock('common/modules/analytics/google', () => ({
@@ -85,17 +85,6 @@ describe('First PV consents banner', () => {
         expect(Message.prototype.show.mock.calls[0][0]).toMatch(
             test.bindableClassNames.agree
         );
-    });
-
-    describe('When blocking the page', () => {
-        it('should not block info or help pages', () => {
-            config.get.mockImplementation(() => 'info');
-            expect(test.canBlockThePage()).toBeFalsy();
-            config.get.mockImplementation(() => 'help');
-            expect(test.canBlockThePage()).toBeFalsy();
-            config.get.mockImplementation(() => 'sport');
-            expect(test.canBlockThePage()).toBeTruthy();
-        });
     });
 
     describe('With consents', () => {

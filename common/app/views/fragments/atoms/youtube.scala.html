@@ -8,11 +8,21 @@
 @import model.content.MediaWrapper._
 @import model.content.MediaWrapper
 @import model.content.MediaAsset
-@import conf.switches.Switches.YouTubePosterOverride
+@import conf.switches.Switches.YouTubeRelatedVideos
 @import model.VideoFaciaProperties
 @import views.html.fragments.items.elements.facia_cards.title
 
-@(media: model.content.MediaAtom, displayCaption: Boolean, displayDuration: Boolean = true, displayEndSlate: Boolean = true, playable: Boolean = true, posterImageOverride: Option[ImageMedia] = None, cardStyle: Option[CardStyle] = None, mediaWrapper: Option[MediaWrapper] = None, faciaHeaderProperties: Option[VideoFaciaProperties] = None)(implicit request: RequestHeader)
+@(
+    media: model.content.MediaAtom,
+    displayCaption: Boolean,
+    displayDuration: Boolean = true,
+    displayEndSlate: Boolean = true,
+    playable: Boolean = true,
+    posterImageOverride: Option[ImageMedia] = None,
+    cardStyle: Option[CardStyle] = None,
+    mediaWrapper: Option[MediaWrapper] = None,
+    faciaHeaderProperties: Option[VideoFaciaProperties] = None
+)(implicit request: RequestHeader)
 
 @videoJsError() = @{
     <div class="vjs-error-display vjs-modal-dialog">
@@ -24,36 +34,31 @@
 
 @defining(media.activeAssets.headOption) { activeAsset: Option[MediaAsset] =>
 @defining(media.expired.getOrElse(false)){expired: Boolean =>
-@defining(playable && !posterImageOverride.exists(_ => YouTubePosterOverride.isSwitchedOn)){sixteenByNine: Boolean =>
-
-
-    <div data-media-atom-id="@media.id" class="@RenderClasses(Map(
-        ("u-responsive-ratio", true),
-        ("u-responsive-ratio--hd", sixteenByNine),
-        ("youtube-media-atom", true),
-        ("no-player", !playable || expired )
-    ))"
-    @for(endSlatePath <- media.endSlatePath if displayEndSlate)  {
-      data-end-slate="@endSlatePath"
+    @defining(playable){sixteenByNine: Boolean =>
+        @defining(
+            if (YouTubeRelatedVideos.isSwitchedOn) {
+                media.channelId.getOrElse("")
+            } else {
+                ""
+            }){channelId: String =>
+            <div data-media-atom-id="@media.id" class="@RenderClasses(Map(
+                ("u-responsive-ratio", true),
+                ("u-responsive-ratio--hd", sixteenByNine),
+                ("youtube-media-atom", true),
+                ("no-player", !playable || expired ),
+                ("youtube-related-videos", YouTubeRelatedVideos.isSwitchedOn)
+            ))"
+            @for(endSlatePath <- media.endSlatePath if displayEndSlate && YouTubeRelatedVideos.isSwitchedOff)  {
+              data-end-slate="@endSlatePath"
+            }
+                data-channel-id="@channelId"
+            >
+        }
     }
-    >
-}
 
         @for(asset <- activeAsset if playable && !expired) {
-            @defining(s"https://www.youtube.com/embed${
-                asset.id
-                    .addParams(List(
-                    "enablejsapi" -> 1,
-                    "rel" -> 0,
-                    "showinfo" -> 0,
-                    "origin" -> (if(mediaWrapper.contains(EmbedPage)) Some(Media.externalEmbedHost) else if(!host.isEmpty) Some(host) else None)
-                )).toString
-            }") { embedUri: String  =>
-                <iframe class="youtube-media-atom__iframe" id="youtube-@asset.id" width="100%" height="100%"
-                src="@embedUri" frameborder="0"
-                allowfullscreen="">
-                </iframe>
-            }
+
+            <div id="youtube-@asset.id" data-asset-id="@asset.id" class="youtube-media-atom__iframe"></div>
 
             @if(mediaWrapper.contains(MediaWrapper.VideoContainer)){
                 <div class="video-overlay">
@@ -74,8 +79,8 @@
                 }
             }
         }
-        @defining(posterImageOverride.filter(_ => !playable || YouTubePosterOverride.isSwitchedOn) orElse media.posterImage) { bestPosterImage =>
-            @if(!bestPosterImage.isDefined && expired) {
+        @defining(posterImageOverride orElse media.posterImage) { bestPosterImage =>
+            @if(bestPosterImage.isEmpty && expired) {
                 <div class="youtube-media-atom__overlay">
                     @videoJsError()
                 </div>

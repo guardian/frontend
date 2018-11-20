@@ -1,6 +1,7 @@
 // @flow
 import { local } from 'lib/storage';
 
+import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { buildPageTargeting } from 'common/modules/commercial/build-page-targeting';
 import config from 'lib/config';
 import { getCookie as getCookie_ } from 'lib/cookies';
@@ -27,7 +28,7 @@ const isUserLoggedIn: any = isUserLoggedIn_;
 const getSync: any = getSync_;
 
 jest.mock('lib/storage');
-jest.mock('lib/config', () => ({}));
+jest.mock('lib/config');
 jest.mock('lib/cookies', () => ({
     getCookie: jest.fn(),
 }));
@@ -51,10 +52,14 @@ jest.mock('common/modules/experiments/utils', () => ({
 jest.mock('common/modules/commercial/krux', () => ({
     getKruxSegments: jest.fn(),
 }));
-jest.mock('lodash/functions/once', () => fn => fn);
+jest.mock('lodash/once', () => fn => fn);
 
 jest.mock('common/modules/commercial/ad-prefs.lib', () => ({
     getAdConsentState: jest.fn(),
+}));
+
+jest.mock('common/modules/commercial/commercial-features', () => ({
+    commercialFeatures() {},
 }));
 
 describe('Build Page Targeting', () => {
@@ -89,10 +94,9 @@ describe('Build Page Targeting', () => {
             },
             isSensitive: false,
         };
+        config.ophan = { pageViewId: 'presetOphanPageViewId' };
 
-        config.ophan = {
-            pageViewId: 'presetOphanPageViewId',
-        };
+        commercialFeatures.adFree = false;
 
         // Reset mocking to default values.
         getAdConsentState.mockReturnValue(null);
@@ -193,21 +197,13 @@ describe('Build Page Targeting', () => {
         expect(buildPageTargeting().br).toEqual('p');
     });
 
-    it('should set the ad-free param to t when enabled', () => {
-        expect(buildPageTargeting(true).af).toBe('t');
-    });
-
-    it('should not contain an ad-free param when disabled', () => {
-        expect(buildPageTargeting(false).af).toBeUndefined();
-    });
-
-    it('should not contain an ad-free param when not specified', () => {
+    it('should not contain an ad-free targeting value', () => {
         expect(buildPageTargeting().af).toBeUndefined();
     });
 
     it('should remove empty values', () => {
         config.page = {};
-        config.ophan.pageViewId = '123456';
+        config.ophan = { pageViewId: '123456' };
         getUserSegments.mockReturnValue([]);
         getKruxSegments.mockReturnValue([]);
 
@@ -220,6 +216,13 @@ describe('Build Page Targeting', () => {
             pv: '123456',
             fr: '0',
             cc: 'US',
+        });
+    });
+
+    describe('Build Page Targeting (ad-free)', () => {
+        it('should set the ad-free param to t when enabled', () => {
+            commercialFeatures.adFree = true;
+            expect(buildPageTargeting().af).toBe('t');
         });
     });
 
@@ -246,10 +249,6 @@ describe('Build Page Targeting', () => {
     });
 
     describe('Referrer', () => {
-        afterEach(() => {
-            getReferrer.mockReturnValue('');
-        });
-
         it('should set ref to Facebook', () => {
             getReferrer.mockReturnValue(
                 'https://www.facebook.com/feel-the-force'

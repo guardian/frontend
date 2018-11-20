@@ -4,7 +4,7 @@ import mediator from 'lib/mediator';
 import { ScrollDepth } from 'common/modules/analytics/scrollDepth';
 
 jest.mock(
-    'lodash/functions/debounce',
+    'lodash/debounce',
     (): Function => fn => {
         fn();
     }

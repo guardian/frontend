@@ -4,6 +4,12 @@
 
 GET            /commercial/test-page                                                                                             commercial.controllers.CreativeTestPage.allComponents(k: List[String])
 
+# Reader Revenue
+GET            /reader-revenue                                                                                                   controllers.admin.ReaderRevenueAdminController.renderReaderRevenueMenu()
+GET            /reader-revenue/contributions-banner                                                                              controllers.admin.ReaderRevenueAdminController.renderContributionsBannerAdmin()
+POST           /reader-revenue/redeploy-contributions-banner                                                                     controllers.admin.ReaderRevenueAdminController.redeployContributionsBanner()
+GET            /reader-revenue/contributions-banner-deploy-log                                                                   controllers.ReaderRevenueAppController.contributionsBannerDeployLog()
+
 GET            /email-newsletters                                                                                                controllers.SignupPageController.renderNewslettersPage()
 
 GET            /survey/:formName/show                                                                                            controllers.SurveyPageController.renderFormStackSurvey(formName)
@@ -77,7 +83,6 @@ GET            /discussion/profile/:id/search/:q.json                           
 GET            /discussion/profile/:id/discussions.json                                                                          controllers.ProfileActivityController.profileDiscussions(id: String)
 GET            /discussion/profile/:id/replies.json                                                                              controllers.ProfileActivityController.profileReplies(id: String)
 GET            /discussion/profile/:id/picks.json                                                                                controllers.ProfileActivityController.profilePicks(id: String)
-GET            /discussion/profile/:id/witness.json                                                                              controllers.WitnessActivityController.witnessActivity(id: String)
 GET            /discussion/report-abuse/:commentId/thankyou                                                                      controllers.CommentsController.reportAbuseThankYou(commentId: Int)
 GET            /discussion/report-abuse/*commentId                                                                               controllers.CommentsController.reportAbuseForm(commentId: Int)
 POST           /discussion/report-abuse/*commentId                                                                               controllers.CommentsController.reportAbuseSubmission(commentId: Int)
@@ -97,7 +102,6 @@ GET            /related/*path                                                   
 GET            /popular-in-tag/*tag.json                                                                                         controllers.PopularInTag.render(tag)
 
 GET            /preference/edition/:edition                                                                                      controllers.ChangeEditionController.render(edition)
-GET            /preference/front-alphas/:optAction                                                                               controllers.ChangeAlphaController.render(optAction, page)
 
 GET            /cards/opengraph/*path.json                                                                                       controllers.CardController.opengraph(path)
 GET            /tagged.json                                                                                                      controllers.TaggedContentController.renderJson(tag: String)
@@ -275,8 +279,9 @@ GET            /advertiser-content/:campaignName/:pageName/autoplay.json        
 GET            /commercial/anx/anxresize.js                                                                                      commercial.controllers.PiggybackPixelController.resize
 GET            /ads.txt                                                                                                          commercial.controllers.AdsDotTextViewController.renderTextFile()
 GET            /commercial/prebid/revenue                                                                                        controllers.admin.commercial.TeamKPIController.renderPrebidDashboard()
-PUT            /commercial/api/hb                                                                                                commercial.controllers.PrebidAnalyticsController.insert()
-OPTIONS        /commercial/api/hb                                                                                                commercial.controllers.PrebidAnalyticsController.getOptions
+POST           /commercial/api/hb                                                                                                commercial.controllers.PrebidAnalyticsController.insert()
+POST           /commercial/api/pv                                                                                                commercial.controllers.PageViewAnalyticsController.insert()
+GET            /commercial/ias-passback/:size                                                                                    commercial.controllers.PassbackController.renderIasPassback(size)
 
 # Commercial Admin
 GET         /commercial                                                                                                          controllers.admin.CommercialController.renderCommercialMenu()
@@ -329,6 +334,7 @@ GET            /football-mf2/api/match-summary/:year/:month/:day/:home/:away.jso
 GET            /editionalised-nav.json                                                                                           controllers.NavigationController.renderAmpNav()
 
 # Onward journeys
+GET            /audio/series/*path.json                                                                                          controllers.SeriesController.renderPodcastEpisodes(path)
 GET            /series/*path.json                                                                                                controllers.SeriesController.renderSeriesStories(path)
 
 # opt-in/out routes
@@ -369,6 +375,9 @@ GET            /$path<theguardian|theobserver>/$year<\d\d\d\d>/$month<\w\w\w>/$d
 GET            /$path<.+/\d\d\d\d/\w\w\w/\d\d>                                                                                   controllers.AllIndexController.on(path)
 GET            /$path<.+>/latest                                                                                                 controllers.LatestIndexController.latest(path)
 GET            /$path<.+>/latest/email                                                                                           controllers.LatestIndexController.latest(path)
+GET            /$path<.+>/latest/email/headline.txt                                                                              controllers.LatestIndexController.latest(path)
+GET            /$path<.+>/latest/email.emailjson                                                                                 controllers.LatestIndexController.latest(path)
+GET            /$path<.+>/latest/email.emailtxt                                                                                  controllers.LatestIndexController.latest(path)
 GET            /$path<.+>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/all                                                          controllers.AllIndexController.allOn(path, day, month, year)
 GET            /$path<.+>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/altdate                                                      controllers.AllIndexController.altDate(path, day, month, year)
 GET            /$path<.+>/all                                                                                                    controllers.AllIndexController.all(path)
@@ -393,6 +402,9 @@ GET            /rss                                                             
 GET            /$path<(uk|au|us|international)(/(culture|sport|commentisfree|business|money|travel|rss))?>                       controllers.FaciaController.renderFrontPress(path)
 GET            /$path<email/.*>                                                                                                  controllers.FaciaController.renderFrontPress(path)
 GET            /*path/lite.json                                                                                                  controllers.FaciaController.renderFrontJsonLite(path)
+GET            /*path/headline.txt                                                                                               controllers.FaciaController.renderFrontHeadline(path)
+GET            /*path.emailjson                                                                                                  controllers.FaciaController.renderFrontJson(path)
+GET            /*path.emailtxt                                                                                                   controllers.FaciaController.renderFrontJson(path)
 GET            /container/use-layout/*id.json                                                                                    controllers.FaciaController.renderContainerJsonWithFrontsLayout(id)
 GET            /container/*id.json                                                                                               controllers.FaciaController.renderContainerJson(id)
 GET            /most-relevant-container/*path.json                                                                               controllers.FaciaController.renderMostRelevantContainerJson(path)
@@ -429,13 +441,22 @@ GET            /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>.json                    
 GET            /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>                                                                          controllers.IndexController.render(path)
 GET            /$leftSide<[^+]+>+*rightSide                                                                                      controllers.IndexController.renderCombiner(leftSide, rightSide)
 
-# Articles
-GET            /$path<[^/]+/([^/]+/)?live/.*>.json                                                                               controllers.ArticleController.renderLiveBlogJson(path, lastUpdate: Option[String], rendered: Option[Boolean], isLivePage: Option[Boolean])
-GET            /*path.json                                                                                                       controllers.ArticleController.renderJson(path)
-GET            /*path/email                                                                                                      controllers.ArticleController.renderArticle(path)
-# temp route for live blogs so we can paginate without getting the blocks for all articles
-GET            /$path<[^/]+/([^/]+/)?live/.*>                                                                                    controllers.ArticleController.renderLiveBlog(path, page: Option[String], format: Option[String])
-GET            /*path                                                                                                            controllers.ArticleController.renderArticle(path)
+# Live Blogs
+GET     /$path<[^/]+/([^/]+/)?live/.*>.json                                                                                      controllers.LiveBlogController.renderJson(path, lastUpdate: Option[String], rendered: Option[Boolean], isLivePage: Option[Boolean])
+GET     /$path<[^/]+/([^/]+/)?live/.*>/email                                                                                     controllers.LiveBlogController.renderEmail(path)
+GET     /$path<[^/]+/([^/]+/)?live/.*>/email/headline.txt                                                                        controllers.ArticleController.renderHeadline(path)
+GET     /$path<[^/]+/([^/]+/)?live/.*>/email.emailjson                                                                           controllers.LiveBlogController.renderEmail(path)
+GET     /$path<[^/]+/([^/]+/)?live/.*>/email.emailtxt                                                                            controllers.LiveBlogController.renderEmail(path)
+GET     /$path<[^/]+/([^/]+/)?live/.*>                                                                                           controllers.LiveBlogController.renderArticle(path, page: Option[String], format: Option[String])
+
+# articles, finished liveblogs
+
+GET     /*path.json                                                                                                              controllers.ArticleController.renderJson(path)
+GET     /*path/email                                                                                                             controllers.ArticleController.renderEmail(path)
+GET     /*path/email/headline.txt                                                                                                controllers.ArticleController.renderHeadline(path)
+GET     /*path/email.emailjson                                                                                                   controllers.ArticleController.renderEmail(path)
+GET     /*path/email.emailtxt                                                                                                    controllers.ArticleController.renderEmail(path)
+GET     /*path                                                                                                                   controllers.ArticleController.renderArticle(path)
 
 # Formstack form submission
 POST      /formstack-campaign/submit                                                                                             controllers.CampaignsController.formSubmit()

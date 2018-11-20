@@ -1,0 +1,51 @@
+.colophon {
+    border-bottom: 1px solid $brand-pastel;
+    padding-bottom: $gs-baseline * 3;
+}
+
+.colophon__lists-container {
+    padding-top: $gs-baseline;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: calc(50% - #{$gs-gutter / 2});
+        width: 1px;
+        display: block;
+        background-color: $footer-line-colour;
+    }
+}
+
+.colophon__list {
+    @include clearfix();
+    list-style: none;
+    position: relative;
+    margin: 0;
+    padding-right: $gs-gutter / 2;
+    width: calc(50% - #{$gs-gutter / 2});
+    display: inline-block;
+}
+
+.cta-bar__message {
+    color: $highlight-main;
+    font-size: 20px;
+    line-height: 1;
+    padding-bottom: $gs-baseline / 2;
+
+    .guardian-egyptian-loaded & {
+        font-family: 'Guardian Egyptian Web', Georgia, serif;
+        font-weight: 500;
+    }
+}
+
+.really-serious-copyright {
+    font-size: 12px;
+    line-height: 14px;
+    padding: ($gs-baseline * 2) 0 $gs-baseline;
+}

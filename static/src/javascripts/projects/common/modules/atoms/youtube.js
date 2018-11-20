@@ -10,7 +10,7 @@ import { Component } from 'common/modules/component';
 import $ from 'lib/$';
 import config from 'lib/config';
 import { isIOS, isAndroid, isBreakpoint } from 'lib/detect';
-import debounce from 'lodash/functions/debounce';
+import debounce from 'lodash/debounce';
 import { isOn as accessibilityIsOn } from 'common/modules/accessibility/main';
 
 declare class YoutubePlayerTarget extends EventTarget {
@@ -24,14 +24,14 @@ declare class YoutubePlayerEvent {
 }
 
 const players = {};
-const iframes = [];
+const playerDivs = [];
 
 document.addEventListener('focusout', () => {
-    iframes.forEach(iframe => {
+    playerDivs.forEach(playerDiv => {
         fastdom
             .read(() => {
-                if (document.activeElement === iframe) {
-                    return $('.vjs-big-play-button', iframe.parentElement);
+                if (document.activeElement === playerDiv) {
+                    return $('.vjs-big-play-button', playerDiv.parentElement);
                 }
             })
             .then(($playButton: ?bonzo) => {
@@ -96,14 +96,20 @@ const setProgressTracker = (atomId: string): IntervalID => {
 
 const onPlayerPlaying = (atomId: string): void => {
     const player = players[atomId];
+    const currentVideo = player.player.getVideoUrl().split('?v=')[1];
+    const originalVideo = player.iframe.dataset.assetId;
 
     if (!player) {
         return;
     }
 
     killProgressTracker(atomId);
-    setProgressTracker(atomId);
-    trackYoutubeEvent('play', getTrackingId(atomId));
+
+    // TODO: implement progress tracking for related videos
+    if (currentVideo === originalVideo) {
+        setProgressTracker(atomId);
+        trackYoutubeEvent('play', getTrackingId(atomId));
+    }
 
     const mainMedia =
         (player.iframe && player.iframe.closest('.immersive-main-media')) ||
@@ -171,11 +177,15 @@ const shouldAutoplay = (atomId: string): boolean => {
     const flashingElementsAllowed = () =>
         accessibilityIsOn('flashing-elements');
 
+    const isVideoArticle = () =>
+        config.get('page.contentType', '').toLowerCase() === 'video';
+
+    const isFront = () => config.get('page.isFront');
+
     return (
-        config.get('page.contentType') === 'Video' &&
-        isInternalReferrer() &&
+        ((isVideoArticle() && isInternalReferrer() && isMainVideo()) ||
+            isFront()) &&
         !isAutoplayBlockingPlatform() &&
-        isMainVideo() &&
         flashingElementsAllowed()
     );
 };
@@ -241,6 +251,7 @@ const onPlayerReady = (
 
         if (
             !!config.get('page.section') &&
+            !config.get('switches.youtubeRelatedVideos') &&
             isBreakpoint({
                 min: 'desktop',
             })
@@ -261,43 +272,59 @@ const onPlayerReady = (
 const onPlayerStateChange = (atomId: string, event: YoutubePlayerEvent): void =>
     Object.keys(STATES).forEach(checkState.bind(null, atomId, event.data));
 
+const initYoutubePlayerForElem = (el: ?HTMLElement, index: number): void => {
+    fastdom.read(() => {
+        if (!el) return;
+
+        const playerDiv = el.querySelector('div');
+
+        if (!playerDiv) {
+            return;
+        }
+
+        playerDivs.push(playerDiv);
+
+        // append index of atom as atomId must be unique
+        const atomId = `${el.getAttribute('data-media-atom-id') ||
+            ''}/${index}`;
+        // need data attribute with index for unique lookup
+        el.setAttribute('data-unique-atom-id', atomId);
+        const overlay = el.querySelector('.youtube-media-atom__overlay');
+        const channelId = el.getAttribute('data-channel-id') || '';
+
+        initYoutubeEvents(getTrackingId(atomId));
+
+        initYoutubePlayer(
+            playerDiv,
+            {
+                onPlayerReady: onPlayerReady.bind(
+                    null,
+                    atomId,
+                    overlay,
+                    playerDiv
+                ),
+                onPlayerStateChange: onPlayerStateChange.bind(null, atomId),
+            },
+            playerDiv.dataset.assetId,
+            channelId
+        );
+    });
+};
+
 const checkElemForVideo = (elem: ?HTMLElement): void => {
     if (!elem) return;
 
     fastdom.read(() => {
-        $('.youtube-media-atom', elem).each((el, index) => {
-            const iframe = el.querySelector('iframe');
-
-            if (!iframe) {
-                return;
-            }
-
-            iframes.push(iframe);
-
-            // append index of atom as iframe.id must be unique
-            iframe.id += `/${index}`;
-
-            // append index of atom as atomId must be unique
-            const atomId = `${el.getAttribute('data-media-atom-id')}/${index}`;
-            // need data attribute with index for unique lookup
-            el.setAttribute('data-unique-atom-id', atomId);
+        $('.youtube-media-atom:not(.no-player)', elem).each((el, index) => {
             const overlay = el.querySelector('.youtube-media-atom__overlay');
 
-            initYoutubeEvents(getTrackingId(atomId));
-
-            initYoutubePlayer(
-                iframe,
-                {
-                    onPlayerReady: onPlayerReady.bind(
-                        null,
-                        atomId,
-                        overlay,
-                        iframe
-                    ),
-                    onPlayerStateChange: onPlayerStateChange.bind(null, atomId),
-                },
-                iframe.id
-            );
+            if (config.get('page.isFront')) {
+                overlay.addEventListener('click', () => {
+                    initYoutubePlayerForElem(el, index);
+                });
+            } else {
+                initYoutubePlayerForElem(el, index);
+            }
         });
     });
 };

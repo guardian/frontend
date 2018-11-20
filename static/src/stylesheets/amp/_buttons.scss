@@ -20,7 +20,7 @@
     bottom: 0;
     left: 0;
     right: 0;
-    color: $neutral-1;
+    color: $brightness-7;
     background-color: #ffffff;
 
     svg {
@@ -28,12 +28,12 @@
         height: 18px;
         vertical-align: middle;
         margin: -2px auto auto;
-        fill: $neutral-2;
+        fill: $brightness-46;
     }
 
     &::after {
         content: '';
-        background-color: $neutral-5;
+        background-color: $brightness-86;
         border-radius: 18px;
         position: absolute;
         top: 0;
@@ -46,7 +46,7 @@
 }
 
 .cta--comments {
-    background-color: $garnett-neutral-1;
+    background-color: $brightness-7;
     color: #ffffff;
     border-radius: 18px;
 
@@ -57,7 +57,7 @@
 }
 
 .main-site-link {
-    color: $garnett-neutral-1;
+    color: $brightness-7;
     padding: 0;
     float: right;
 
@@ -75,7 +75,7 @@
 .witness-cta-wrapper {
     overflow: hidden;
     padding: 4px 0;
-    border-top: 1px dotted $neutral-4;
+    border-top: 1px dotted $brightness-86;
 }
 
 .witness__button {
@@ -84,14 +84,14 @@
     height: $gs-row-height;
     padding-left: 38px;
     padding-right: 12px;
-    background-color: $news-main-1;
-    color: $news-support-1;
+    background-color: $sport-dark;
+    color: $sport-pastel;
     border: 0;
     border-radius: 9999px;
     line-height: $gs-row-height;
 
     &:hover {
-        background-color: $guardian-brand-dark;
+        background-color: $brand-dark;
     }
 
     .inline-plus__svg {
@@ -112,5 +112,5 @@
 
 .witness-logo__witness {
     margin-left: -.1875rem;
-    color: $news-support-1;
+    color: $sport-pastel;
 }

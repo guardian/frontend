@@ -3,8 +3,9 @@ package model.liveblog
 import java.util.Locale
 
 import implicits.Dates.CapiRichDateTime
-import com.gu.contentapi.client.model.v1.{Block, MembershipPlaceholder => ApiMembershipPlaceholder, BlockAttributes => ApiBlockAttributes, Blocks => ApiBlocks}
+import com.gu.contentapi.client.model.v1.{Block, BlockAttributes => ApiBlockAttributes, Blocks => ApiBlocks, MembershipPlaceholder => ApiMembershipPlaceholder}
 import model.liveblog.BodyBlock._
+import model.dotcomrendering.pageElements.PageElement
 import org.joda.time.format.{DateTimeFormat, ISODateTimeFormat}
 import org.joda.time.{DateTime, DateTimeZone}
 import org.jsoup.Jsoup
@@ -18,43 +19,51 @@ object Blocks {
       blocks.sortBy(-_.publishedCreatedTimestamp().getOrElse(0L)) // Negate rather than reverse result: leaves
                                                                   // order unchanged when there are no timestamps
 
-    val bodyBlocks = orderBlocks(blocks.body.toSeq.flatMap(BodyBlock.make))
+    val mainBlock: Option[BodyBlock] = blocks.main.map(BodyBlock.make)
+    val bodyBlocks: Seq[BodyBlock] = orderBlocks(blocks.body.toSeq.flatMap(BodyBlock.make))
     val reqBlocks: Map[String, Seq[BodyBlock]] = blocks.requestedBodyBlocks.map { map =>
       map.toMap.mapValues(blocks => orderBlocks(BodyBlock.make(blocks)))
     }.getOrElse(Map())
     Blocks(
       totalBodyBlocks = blocks.totalBodyBlocks.getOrElse(bodyBlocks.length),
       body = bodyBlocks,
+      main = mainBlock,
       requestedBodyBlocks = reqBlocks
     )
   }
 
   implicit val blocksWrites: Writes[Blocks] = Json.writes[Blocks]
+
 }
 
 case class Blocks(
   totalBodyBlocks: Int,
   body: Seq[BodyBlock],
+  main: Option[BodyBlock],
   requestedBodyBlocks: Map[String, Seq[BodyBlock]]
 )
 
 object BodyBlock {
 
   def make(blocks: Seq[Block]): Seq[BodyBlock] =
-    blocks.map { bodyBlock =>
-        BodyBlock(bodyBlock.id,
-          bodyBlock.bodyHtml,
-          bodyBlock.bodyTextSummary,
-          bodyBlock.title,
-          BlockAttributes.make(bodyBlock.attributes),
-          bodyBlock.published,
-          bodyBlock.createdDate.map(_.toJoda),
-          bodyBlock.firstPublishedDate.map(_.toJoda),
-          bodyBlock.publishedDate.map(_.toJoda),
-          bodyBlock.lastModifiedDate.map(_.toJoda),
-          bodyBlock.contributors,
-          bodyBlock.elements.flatMap(BlockElement.make))
-      }
+    blocks.map(make)
+
+  def make(bodyBlock: Block): BodyBlock =
+      BodyBlock(bodyBlock.id,
+        bodyBlock.bodyHtml,
+        bodyBlock.bodyTextSummary,
+        bodyBlock.title,
+        BlockAttributes.make(bodyBlock.attributes),
+        bodyBlock.published,
+        bodyBlock.createdDate.map(_.toJoda),
+        bodyBlock.firstPublishedDate.map(_.toJoda),
+        bodyBlock.publishedDate.map(_.toJoda),
+        bodyBlock.lastModifiedDate.map(_.toJoda),
+        bodyBlock.contributors,
+        bodyBlock.elements.flatMap(BlockElement.make),
+        bodyBlock.elements.flatMap(PageElement.make)
+      )
+
 
   sealed trait EventType
   case object KeyEvent extends EventType
@@ -63,6 +72,7 @@ object BodyBlock {
 
   implicit val dateWrites =  play.api.libs.json.JodaWrites.JodaDateTimeNumberWrites
   implicit val blockElementWrites = BlockElement.blockElementWrites
+  implicit val pageElementsWrites = PageElement.blockElementWrites
   implicit val bodyBlockWrites: Writes[BodyBlock] = Json.writes[BodyBlock]
 }
 
@@ -78,7 +88,8 @@ case class BodyBlock(
   publishedDate: Option[DateTime],
   lastModifiedDate: Option[DateTime],
   contributors: Seq[String],
-  elements: Seq[BlockElement]
+  elements: Seq[BlockElement],
+  dotcomponentsPageElements: Seq[PageElement]
 ) {
   lazy val eventType: EventType =
     if (attributes.keyEvent) KeyEvent

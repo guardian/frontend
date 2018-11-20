@@ -64,9 +64,9 @@ class ChangePasswordController(
         val form = passwordForm.bindFromFlash.getOrElse(passwordForm)
 
         val idRequest = idRequestParser(request)
-        api.passwordExists(request.user.auth) map {
+        api.passwordExists(request.user.auth, idRequest.trackingData) map {
           result =>
-            val pwdExists = result.right.toOption exists {_ == true}
+            val pwdExists = result.right.toOption contains true
             NoCache(Ok(
                 IdentityHtmlPage.html(
                   views.html.password.changePassword(page = page, idRequest = idRequest, idUrlBuilder = idUrlBuilder, passwordForm = form, passwordExists =  pwdExists)
@@ -76,13 +76,15 @@ class ChangePasswordController(
     }
   }
 
-  def renderPasswordConfirmation: Action[AnyContent] = Action{ implicit request =>
+  def renderPasswordConfirmation(returnUrl: Option[String]): Action[AnyContent] = Action { implicit request =>
     val idRequest = idRequestParser(request)
     val userIsLoggedIn = authenticationService.userIsFullyAuthenticated(request)
-    NoCache(Ok(
-      IdentityHtmlPage.html(
-        views.html.password.passwordResetConfirmation(page, idRequest, idUrlBuilder, userIsLoggedIn)
-      )(page, request, context)
+    NoCache(DiscardingIdentityCookies(
+      Ok(
+        IdentityHtmlPage.html(
+          views.html.password.passwordResetConfirmation(page, idRequest, idUrlBuilder, userIsLoggedIn, returnUrl, None)
+        )(page, request, context)
+      )
     ))
   }
 
@@ -112,7 +114,7 @@ class ChangePasswordController(
             )
           } else {
             val userIsLoggedIn = authenticationService.userIsFullyAuthenticated(request)
-            NoCache(SeeOther(routes.ChangePasswordController.renderPasswordConfirmation().url))
+            NoCache(SeeOther(routes.ChangePasswordController.renderPasswordConfirmation(None).url))
           }
         }
     }

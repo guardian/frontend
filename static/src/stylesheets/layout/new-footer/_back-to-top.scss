@@ -1,0 +1,46 @@
+.footer__back-to-top {
+    @include fs-textSans(5);
+    color: $brightness-100;
+    font-weight: 700;
+    position: absolute;
+    right: $gs-gutter / 2;
+    text-align: right;
+    background-color: $brand-main;
+    padding: 0 $gs-gutter / 4;
+    transform: translateY(-50%);
+
+    @include mq(mobileLandscape) {
+        right: $gs-gutter;
+    }
+
+    &:hover,
+    &:focus {
+        color: $highlight-main;
+    }
+}
+
+.back-to-top__text {
+    display: inline-block;
+    line-height: 1;
+    padding: $gs-baseline ($gs-gutter / 4) 0 0;
+}
+
+.back-to-top__icon-container {
+    position: relative;
+    float: right;
+    border-radius: 100%;
+    background-color: currentColor;
+    cursor: pointer;
+    height: 42px;
+    width: 42px;
+
+    .inline-arrow-up {
+        position: absolute;
+        top: 9px;
+        left: 9px;
+
+        path {
+            fill: $brand-main;
+        }
+    }
+}

@@ -1,20 +1,16 @@
 /* Button styles
 ========================================================================== */
-@mixin identity-button($color) {
-    background-color: $color;
+@mixin identity-button($bg, $bg-hover, $font: $brightness-7) {
+    background-color: $bg;
     &, &:hover, &:active, &:focus {
-        @if (lightness($color) < 50) {
+        @if ($font == $brightness-7 and lightness($bg) < 50) {
             color: #ffffff;
         } @else {
-            color: $garnett-neutral-1;
+            color: $font;
         }
     }
     &:not(.is-updating, .is-disabled):hover {
-        @if (lightness($color) < 50) {
-            background-color: lighten($color, 20%);
-        } @else {
-            background-color: darken($color, 5%);
-        }
+        background-color: $bg-hover;
     }
 }
 
@@ -26,18 +22,18 @@
 
 .manage-account__button {
     $font-size: 5;
-    $height: $gs-baseline * 3;
+    $height: $gs-baseline * 3.5;
     $padding-vertical: ($height - get-line-height(textSans, $font-size))/2;
-    $padding-horizontal: $gs-gutter * .9;
+    $padding-horizontal: $gs-gutter;
     @include fs-textSans($font-size);
-    @include identity-button($identity-main)
+    @include identity-button($brightness-7, lighten($brightness-7, 10%));
+    @include circular;
+    font-weight: 600;
     height: $height;
-    border-radius: 100px;
     border: 0;
     cursor: pointer;
     float: left;
     padding: $padding-vertical * 1.1 $padding-horizontal $padding-vertical * .9;
-    min-width: $gs-baseline * 14;
     white-space: nowrap;
     text-overflow: clip;
     appearance: none;
@@ -46,7 +42,6 @@
     -ms-appearance: none;
     box-sizing: border-box;
     transition: .15s linear;
-    text-align: left;
 
     &, & > .manage-account__button-flexwrap {
         justify-content: space-between;
@@ -73,23 +68,48 @@
         border: 0;
     }
 
+    &.manage-account__button--long {
+        width: 100%;
+        box-shadow: none;
+        border-radius: 0;
+        float: none;
+        padding: 0 $gs-gutter / 2;
+    }
+
     .inline-icon {
         transition: .125s;
-        display: inline-block;
-        height: 28px;
-        width: 28px;
         vertical-align: middle;
-        margin: 0 ($gs-gutter / 2 * -1) 0 ($gs-gutter/2);
+        margin: 0 0 0 ($gs-gutter / 2);
+        display: inline-flex;
         &, & * {
             fill: currentColor;
         }
-        svg {
-            width: 100%;
-            height: 100%;
+        &.inline-arrow-right {
+            margin-right: $gs-gutter / 2 * -1;
         }
         &.inline-cross {
             transform: scale(.5);
         }
+        &.inline-arrow-down {
+            transform: scale(.9);
+        }
+        &.inline-arrow-up {
+            transform: translateY(-10%) scale(.9);
+        }
+        &.inline-tick {
+            transform: scale(2) translateY(-10%);
+            svg {
+                width: 22px;
+            }
+        }
+        &.inline-envelope-add,
+        &.inline-envelope-remove {
+            transform: translateY(-10%);
+        }
+    }
+
+    &.manage-account__button--icon-left .inline-icon {
+        margin: 0 ($gs-gutter / 4) 0 0;
     }
 
     &.manage-account__button--center {
@@ -123,7 +143,11 @@
     }
 
     .disabled {
-        background-color: $garnett-neutral-4;
+        background-color: $brightness-86;
+    }
+
+    &[disabled] {
+        pointer-events: none;
     }
 }
 
@@ -138,18 +162,33 @@
     }
 }
 
-.manage-account__button--icon {
+.manage-account__button--icon,
+.manage-account__button--icon-left {
     padding-top: 0;
     padding-bottom: 0;
 }
 
 .manage-account__button--main {
-    @include identity-button($news-garnett-highlight)
+    @include identity-button($highlight-main, darken($highlight-main, 5%));
+}
+
+.manage-account__button--danger {
+    @include identity-button($news-main, darken($news-main, 5%));
 }
 
 .manage-account__button--secondary {
-    @include identity-button(hsla(0, 100%, 100%, 0));
-    border: 1px solid $garnett-neutral-4;
+    @include identity-button(hsla(0, 100%, 100%, 0), $brightness-97);
+    box-shadow: inset 0 0 0 1px $brightness-86;
+}
+
+.manage-account__button--green-secondary {
+    @include identity-button(hsla(0, 100%, 100%, 0), $brightness-97, $green-dark);
+    box-shadow: inset 0 0 0 1px rgba($green-dark, .25);
+}
+
+.manage-account__button--green {
+    @include identity-button($green-dark, darken($green-dark, 5%));
+    font-weight: 600;
 }
 
 .manage-account__button--light {
@@ -157,16 +196,16 @@
 }
 
 %manage-account__button--light {
-    color: $identity-main;
+    color: $brightness-7;
     background-color: transparent;
     text-decoration: underline;
     @supports (box-shadow: 0 0 0 red) {
         text-decoration: none;
-        box-shadow: inset 0 0 0 1px lighten($identity-main, 75%);
+        box-shadow: inset 0 0 0 1px lighten($brightness-7, 75%);
     }
     &:hover, &:focus, &:active {
         background-color: transparent!important;
-        color: $identity-main;
-        box-shadow: inset 0 0 0 1px $identity-main;
+        color: $brightness-7;
+        box-shadow: inset 0 0 0 1px $brightness-7;
     }
 }

@@ -1,12 +1,12 @@
 // @flow
 import fastdom from 'lib/fastdom-promise';
-import template from 'lodash/utilities/template';
+import template from 'lodash/template';
 import campaignForm from 'raw-loader!journalism/views/campaignForm.html';
 import { getCampaign } from 'journalism/modules/get-campaign';
 import { submitForm } from 'journalism/modules/submit-form';
 
 const renderCampaign = (anchorNode: HTMLElement, calloutData): void => {
-    const campaign = template(campaignForm, { data: calloutData });
+    const campaign = template(campaignForm)({ data: calloutData });
     const campaignDiv = `<figure class="element element-campaign">${campaign}</figure>`;
 
     fastdom

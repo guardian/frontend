@@ -49,17 +49,17 @@
 .fc-container {
     .button--primary {
         @include button-colour(
-            $garnett-neutral-1,
+            $brightness-7,
             #ffffff
         );
         @include button-hover-colour(
-            darken($garnett-neutral-1, 10%)
+            darken($brightness-7,  10%)
         );
     }
 }
 
 .fc-container--outbrain {
-    background-color: $neutral-8;
+    background-color: $brightness-97;
     display: none;
 
     .fc-container__inner {
@@ -92,7 +92,7 @@
     margin-top: 0;
     margin-bottom: $gs-baseline * 2;
     padding-bottom: 0;
-    background: $neutral-7;
+    background: $brightness-97;
 
     .fc-container__inner {
         border-top: 0;

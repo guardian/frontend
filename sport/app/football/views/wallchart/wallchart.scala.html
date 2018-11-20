@@ -6,49 +6,6 @@
 @(competition: Competition, competitionStages: List[CompetitionStageLike], next: Option[pa.FootballMatch])(implicit request: RequestHeader)
 <div class="l-side-margins wc-overview">
 
-    @* Remove once switch expires (temporary addition for world cup 2018 - competition '700'). *@
-    @if(Switches.WorldCupNextMatchSwitch.isSwitchedOn && competition.id == "700") {
-        <div class="facia-container facia-container--layout-content facia-header">
-            <div class="facia-header__inner gs-container">
-                <div class="facia-header__column">
-                    @fragments.inlineSvg("world_cup_badge", "badges", List("world__cup-svg", "world__cup-badge"))
-                    <h1 class="container__title"><span class="container__title__label">World cup 2018</span></h1>
-                </div>
-
-                @next.map { nextMatch =>
-                <div class="facia-header__column">
-                    <div class="wc-match__date">
-                        <div class="wc-label wc-label__title">Next match</div>
-                        <div class="wc-label">@nextMatch.date.toString("HH:ss EE d MMM z")</div>
-                    </div>
-                </div>
-                <div class="facia-header__column facia-header__column-flags">
-                    <div class="wc-match__badges">
-                        <span class="wc-label wc-badge__flag">
-                            <img class="team-crest" alt="" src="@Configuration.staticSport.path/football/crests/120/@{nextMatch.homeTeam.id}.png" />
-                        </span>
-                        <span class="wc-label wc-badge__flag">
-                            <img class="team-crest" alt="" src="@Configuration.staticSport.path/football/crests/120/@{nextMatch.awayTeam.id}.png" />
-                        </span>
-                    </div>
-                    <div class="wc-match__teams">
-                        <div class="wc-label wc-label__title">@nextMatch.round.name.getOrElse(nextMatch.round.roundNumber)</div>
-                        <div class="wc-label">@pa.TeamCodes.codeFor(nextMatch.homeTeam) vs @pa.TeamCodes.codeFor(nextMatch.awayTeam)</div>
-                    </div>
-                </div>
-                }.getOrElse{
-                <div class="facia-header__column"></div>
-                <div class="facia-header__column"></div>
-                }
-
-                <div class="facia-header__column">
-                    <span class="wc-player-image wc-player-image__offset"><img src="https://uploads.guim.co.uk/2018/05/24/world_cup_cut_out_1.png"></span>
-                    <span class="wc-player-image"><img src="https://uploads.guim.co.uk/2018/05/24/world_cup_cut_out_2.png"></span>
-                </div>
-            </div>
-        </div>
-    }
-
     @competitionStages.map {
         case knockoutStage: _root_.football.model.KnockoutSpider => {
             <div class="facia-container facia-container--layout-content">

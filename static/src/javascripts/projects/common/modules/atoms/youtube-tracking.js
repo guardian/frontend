@@ -61,6 +61,13 @@ const initYoutubeEvents = (videoId: string): void => {
             );
         });
     });
+
+    ophanRecord({
+        mediaId: videoId,
+        mediaType: 'video',
+        eventType: 'ready',
+        isPreroll: false,
+    });
 };
 
 const trackYoutubeEvent = (event: string, id: string): void => {

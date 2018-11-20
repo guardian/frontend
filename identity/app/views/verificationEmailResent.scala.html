@@ -11,7 +11,7 @@
 
 @emailBlock = {
     <div class="identity-forms-email-wrap">
-        <header>@user.getPrimaryEmailAddress</header>
+        <header>@user.primaryEmailAddress</header>
         <aside>
             Is the email not correct? <a href="@idUrlBuilder.buildUrl(controllers.editprofile.routes.EditProfileController.displayAccountForm.url, idRequest)" data-link-name="mma : verify-email : update-email-from-error">Change it here</a>
         </aside>
@@ -21,20 +21,20 @@
 <div class="identity-wrapper monocolumn-wrapper">
     <section class="identity-forms-message">
         @if(isSignupFlow) {
-            <h1 class="identity-title">Please look in your email inbox</h1>
+            <h1 class="identity-title">Please check your inbox</h1>
         } else {
             <h1 class="identity-title">To continue, you must confirm this is your email address</h1>
         }
+        @emailBlock
         <div class="identity-forms-message__body">
             @if(isSignupFlow) {
-                <p>We have sent you a message because we need to confirm your email address. Please click the link in it.</p>
+                <p>We've sent you an email – please open it up and click on the button. This is so we can verify it's you and help you create a password to complete your Guardian account.</p>
             } else {
                 <p>We have sent a link to this email address. Please check your inbox and follow the instructions.</p>
             }
-            @emailBlock
         </div>
         <aside class="identity-forms-message__body">
-            <p class="identity-forms-message__explainer">The link in the email is valid for 30 mins. If you haven’t received an email from us, please check your spam folder, or click below to resend.</p>
+            <p class="identity-forms-message__explainer">Note that the link is only valid for 30 minutes, so be sure to open it soon!</p>
             <a class="manage-account__button manage-account__button--center js-id-send-validation-email" data-link-name="mma : verify-email : resent">Resend confirmation email</a>
         </aside>
         @if(isSignupFlow) {

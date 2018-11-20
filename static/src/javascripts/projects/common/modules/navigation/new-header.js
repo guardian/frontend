@@ -1,6 +1,6 @@
 // @flow
 
-import debounce from 'lodash/functions/debounce';
+import debounce from 'lodash/debounce';
 import ophan from 'ophan/ng';
 import { isBreakpoint } from 'lib/detect';
 import mediator from 'lib/mediator';
@@ -8,6 +8,7 @@ import fastdom from 'lib/fastdom-promise';
 import { local } from 'lib/storage';
 import { scrollToElement } from 'lib/scroller';
 import { addEventListener } from 'lib/events';
+import { signInWithSavedCredentials } from 'common/modules/identity/credentials-api-sign-in';
 import { showMyAccountIfNecessary } from './user-account';
 
 type MenuAndTriggerEls = {
@@ -232,6 +233,8 @@ const toggleMenu = (): void => {
 };
 
 const toggleDropdown = (menuAndTriggerEls: MenuAndTriggerEls): void => {
+    const documentElement = document.documentElement;
+    const globalOpenClass = 'dropdown--open';
     const openClass = 'dropdown-menu--open';
 
     fastdom.read(() => menuAndTriggerEls).then(els => {
@@ -252,13 +255,21 @@ const toggleDropdown = (menuAndTriggerEls: MenuAndTriggerEls): void => {
 
             menu.setAttribute('aria-hidden', hiddenAttr);
             menu.classList.toggle(openClass, !isOpen);
-            if (!isOpen) {
+
+            if (documentElement) {
+                documentElement.classList.toggle(globalOpenClass, !isOpen);
+            }
+
+            if (!isOpen && document.body) {
+                // Prevents menu from being disconnected with trigger
+                (document.documentElement || document.body).scrollTop = 0;
+
                 const menuId = menu.getAttribute('id');
                 const triggerToggle = clickSpec => {
                     const elem = clickSpec ? clickSpec.target : null;
-
                     if (elem !== menu) {
                         toggleDropdown(menuAndTriggerEls);
+
                         // remove event listener when the dropdown closes
                         if (menuId) {
                             removeClickstreamListener(menuId);
@@ -425,9 +436,9 @@ const enhanceCheckbox = (checkbox: HTMLElement): void => {
 };
 
 const enhanceMenuToggles = (): void => {
-    const checkboxs = [
+    const checkboxs: Array<HTMLInputElement> = ([
         ...document.getElementsByClassName('js-enhance-checkbox'),
-    ];
+    ]: Array<any>);
 
     checkboxs.forEach(checkbox => {
         if (!enhanced[checkbox.id] && !checkbox.checked) {
@@ -481,18 +492,26 @@ const showMoreButton = (): void => {
                 return { moreButton, lastChildRect, subnavRect };
             }
         })
-        .then(els => {
-            if (els) {
-                const { moreButton, lastChildRect, subnavRect } = els;
+        .then(
+            (els: {
+                moreButton: ?HTMLElement,
+                lastChildRect: ClientRect,
+                subnavRect: ClientRect,
+            }) => {
+                if (els) {
+                    const { moreButton, lastChildRect, subnavRect } = els;
 
-                // +1 to compensate for the border top on the subnav
-                if (subnavRect.top + 1 === lastChildRect.top) {
-                    fastdom.write(() => {
-                        moreButton.classList.add('is-hidden');
-                    });
+                    // +1 to compensate for the border top on the subnav
+                    if (subnavRect.top + 1 === lastChildRect.top) {
+                        fastdom.write(() => {
+                            if (moreButton) {
+                                moreButton.classList.add('is-hidden');
+                            }
+                        });
+                    }
                 }
             }
-        });
+        );
 };
 
 const toggleSubnavSections = (moreButton: HTMLElement): void => {
@@ -530,6 +549,7 @@ const addEventHandler = (): void => {
 
                 if (parent) {
                     event.preventDefault();
+                    event.stopPropagation();
                     toggleMenuSection(parent);
                 }
             }
@@ -556,11 +576,40 @@ const addEventHandler = (): void => {
     }
 };
 
+const bindCredentialsApiSignIn = (): void => {
+    fastdom
+        .read(() => ({
+            signInLinks: [
+                ...document.querySelectorAll('.js-navigation-sign-in'),
+            ],
+        }))
+        .then(({ signInLinks }) => {
+            signInLinks.forEach(signInLink => {
+                signInLink.addEventListener(
+                    'click',
+                    e => {
+                        e.preventDefault();
+                        signInWithSavedCredentials().then(wasSignedIn => {
+                            if (!wasSignedIn) {
+                                window.location =
+                                    signInLink.getAttribute('href') ||
+                                    '/signin';
+                            }
+                            return showMyAccountIfNecessary();
+                        });
+                    },
+                    false
+                );
+            });
+        });
+};
+
 export const newHeaderInit = (): void => {
     enhanceMenuToggles();
     showMoreButton();
     addEventHandler();
     showMyAccountIfNecessary();
+    bindCredentialsApiSignIn();
     initiateUserAccountDropdown();
     closeAllMenuSections();
     trackRecentSearch();

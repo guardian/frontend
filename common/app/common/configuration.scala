@@ -116,7 +116,8 @@ object GuardianConfiguration extends Logging {
     }
 
     def getMandatoryProperty[T](get: String => T)(property: String): T = getProperty(get)(property)
-      .getOrElse(throw new BadConfigurationException(s"$property not configured"))
+      .getOrElse(throw new BadConfigurationException(s"$property not configured for $stage"))
+
     def getProperty[T](get: String => T)(property: String): Option[T] =
       Try(get(property)) match {
           case Success(value) => Some(value)
@@ -142,10 +143,12 @@ class GuardianConfiguration extends Logging {
 
   object feedback {
     lazy val feedpipeEndpoint = configuration.getMandatoryStringProperty("feedback.feedpipeEndpoint")
+    lazy val feedbackHelpConfig = configuration.getMandatoryStringProperty("feedback.helpconfig")
   }
 
   object rendering {
     lazy val renderingEndpoint = configuration.getMandatoryStringProperty("rendering.endpoint")
+    lazy val AMPArticleEndpoint = configuration.getMandatoryStringProperty("rendering.AMPArticleEndpoint")
   }
 
   object weather {
@@ -211,6 +214,8 @@ class GuardianConfiguration extends Logging {
         ).flatten: _*
       )
     }
+
+    lazy val nextPreviousPageSize: Int = configuration.getIntegerProperty("content.api.nextPreviousPageSize").getOrElse(50)
   }
 
   object ophanApi {
@@ -243,9 +248,15 @@ class GuardianConfiguration extends Logging {
     lazy val orielCacheTimeInMinutes: Int = if (environment.isProd) 60 else 5
   }
 
+  object lotame {
+    val lotameScriptUrl: String = "//tags.crwdcntrl.net/c/12666/cc.js"
+  }
+
   object affiliatelinks {
     lazy val skimlinksId = configuration.getMandatoryStringProperty("skimlinks.id")
     lazy val affiliateLinkSections: Set[String] = configuration.getStringProperty("affiliatelinks.sections").getOrElse("").split(",").toSet
+    lazy val defaultOffTags: Set[String] = configuration.getStringProperty("affiliatelinks.default.off.tags").getOrElse("").split(",").toSet
+    lazy val alwaysOffTags: Set[String] = configuration.getStringProperty("affiliatelinks.always.off.tags").getOrElse("").split(",").toSet
   }
 
   object frontend {
@@ -314,8 +325,10 @@ class GuardianConfiguration extends Logging {
     lazy val domain = """^https?://(?:profile\.)?([^/:]+)""".r.unapplySeq(url).flatMap(_.headOption).getOrElse("theguardian.com")
     lazy val apiClientToken = configuration.getStringProperty("id.apiClientToken").getOrElse("")
     lazy val oauthUrl = configuration.getStringProperty("id.oauth.url").getOrElse("")
+    lazy val mmaUrl = configuration.getStringProperty("id.manage.url").getOrElse("https://manage.theguardian.com")
     lazy val membershipUrl = configuration.getStringProperty("id.membership.url").getOrElse("https://membership.theguardian.com")
     lazy val supportUrl = configuration.getStringProperty("id.support.url").getOrElse("https://support.theguardian.com")
+    lazy val optimizeEpicUrl = configuration.getStringProperty("id.support.optimize-epic-url").getOrElse("https://support.theguardian.com/epic/control/index.html")
     lazy val subscribeUrl = configuration.getStringProperty("id.digitalpack.url").getOrElse("https://subscribe.theguardian.com")
     lazy val contributeUrl = configuration.getStringProperty("id.contribute.url").getOrElse("https://contribute.theguardian.com")
     lazy val membersDataApiUrl = configuration.getStringProperty("id.members-data-api.url").getOrElse("https://members-data-api.theguardian.com")
@@ -325,13 +338,9 @@ class GuardianConfiguration extends Logging {
   }
 
   object images {
-    lazy val path = configuration.getMandatoryStringProperty("images.path")
+    lazy val host = configuration.getMandatoryStringProperty("fastly-io.host")
+    lazy val signatureSalt: String  = configuration.getMandatoryStringProperty("images.signature-salt")
     val fallbackLogo = Static("images/fallback-logo.png")
-    object backends {
-      lazy val mediaToken: String = configuration.getMandatoryStringProperty("images.media.token")
-      lazy val staticToken: String = configuration.getMandatoryStringProperty("images.static.token")
-      lazy val uploadsToken: String = configuration.getMandatoryStringProperty("images.uploads.token")
-    }
   }
 
   object headlines {
@@ -387,8 +396,11 @@ class GuardianConfiguration extends Logging {
     lazy val frontendAssetsVersion = "v1.5.0"
   }
 
-  object witness {
-    lazy val witnessApiRoot = configuration.getMandatoryStringProperty("witness.apiRoot")
+  object readerRevenue {
+    private lazy val readerRevenueRoot = {
+      configuration.getStringProperty("readerRevenue.s3.root") getOrElse s"${environment.stage.toUpperCase}/reader-revenue"
+    }
+    lazy val contributionsBannerDeployLogKey = s"$readerRevenueRoot/contributions-banner-deploy-log.json"
   }
 
   object commercial {
@@ -413,7 +425,7 @@ class GuardianConfiguration extends Logging {
     private lazy val dfpRoot = s"$commercialRoot/dfp"
     lazy val dfpInlineMerchandisingTagsDataKey = s"$dfpRoot/inline-merchandising-tags-v3.json"
     lazy val dfpHighMerchandisingTagsDataKey = s"$dfpRoot/high-merchandising-tags.json"
-    lazy val dfpPageSkinnedAdUnitsKey = s"$dfpRoot/pageskinned-adunits-v8.json"
+    lazy val dfpPageSkinnedAdUnitsKey = s"$dfpRoot/pageskinned-adunits-v9.json"
     lazy val dfpNonRefreshableLineItemIdsKey = s"$dfpRoot/non-refreshable-lineitem-ids-v1.json"
     lazy val dfpLineItemsKey = s"$dfpRoot/lineitems-v7.json"
     lazy val dfpActiveAdUnitListKey = s"$dfpRoot/active-ad-units.csv"
@@ -452,6 +464,14 @@ class GuardianConfiguration extends Logging {
     lazy val expiredPaidContentUrl = s"${site.host}/info/2015/feb/06/paid-content-removal-policy"
 
     lazy val prebidAnalyticsStream = configuration.getMandatoryStringProperty("commercial.prebid.analytics.stream")
+    lazy val pageViewAnalyticsStream = configuration.getMandatoryStringProperty("commercial.pv.analytics.stream")
+
+    lazy val prebidServerUrl =
+      configuration.getStringProperty("commercial.prebid.server.url") getOrElse "http://localhost:8000"
+  }
+
+  object journalism {
+    lazy val calloutsUrl = configuration.getMandatoryStringProperty("journalism.callouts.url")
   }
 
   object interactive {
@@ -474,7 +494,8 @@ class GuardianConfiguration extends Logging {
       ("membershipUrl", id.membershipUrl),
       ("supportUrl", id.supportUrl),
       ("stripePublicToken", id.stripePublicToken),
-      ("sonobiHeaderBiddingJsUrl", sonobi.jsLocation)
+      ("sonobiHeaderBiddingJsUrl", sonobi.jsLocation),
+      ("optimizeEpicUrl", id.optimizeEpicUrl)
     )
 
     lazy val pageData: Map[String, String] = {
@@ -598,7 +619,6 @@ class GuardianConfiguration extends Logging {
   object formstack {
     val url = configuration.getMandatoryStringProperty("formstack.url")
     val identityOauthToken = configuration.getMandatoryStringProperty("formstack.oauthToken")
-    val editorialOauthToken = configuration.getMandatoryStringProperty("formstack.editorial.oauthToken")
   }
 
   object standalone {

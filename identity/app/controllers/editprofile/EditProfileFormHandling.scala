@@ -8,7 +8,7 @@ import model.{IdentityPage, NoCache}
 import pages.IdentityHtmlPage
 import play.api.data.Form
 import play.api.mvc.{Action, AnyContent, Result}
-import services.{EmailPrefsData, ProfileRedirect}
+import services.EmailPrefsData
 import utils.ConsentOrder.userWithOrderedConsents
 
 import scala.concurrent.Future
@@ -18,12 +18,21 @@ trait EditProfileFormHandling extends EditProfileControllerComponents {
   import authenticatedActions._
 
   def displayForm(
-                   page: IdentityPage,
-                   consentsUpdated: Boolean = false,
-                   consentHint: Option[String] = None): Action[AnyContent] = {
+    page: IdentityPage,
+    consentsUpdated: Boolean = false,
+    consentHint: Option[String] = None,
+    emailValidationRequired: Boolean = false
+  ): Action[AnyContent] = {
+
+    def authAction =
+      if (emailValidationRequired)
+        recentFullAuthWithIdapiUserAction andThen emailValidationFilter
+      else
+        recentFullAuthWithIdapiUserAction
+
 
     csrfAddToken {
-      manageAccountRedirectAction(page.id).async { implicit request =>
+      authAction.async { implicit request =>
         val user = {
           val originalUser = request.user
           val originalUserUser = originalUser.user
@@ -86,10 +95,12 @@ trait EditProfileFormHandling extends EditProfileControllerComponents {
             case formData: UserFormData =>
               identityApiClient.saveUser(userDO.id, formData.toUserUpdateDTO(userDO), userDO.auth) flatMap {
                 case Left(idapiErrors) =>
-                  logger.error(s"Failed to process ${page.id} form submission for user ${userDO.getId}: $idapiErrors")
+                  logger.error(s"Failed to process ${page.id} form submission for user ${userDO.id}: $idapiErrors")
                   profileFormsView(page, boundProfileForms.withErrors(idapiErrors), userDO)
 
-                case Right(updatedUser) => profileFormsView(page, boundProfileForms.bindForms(updatedUser), updatedUser)
+                case Right(updatedUser) =>
+                  val userChangedEmail: Option[String] = formData.toUserUpdateDTO(userDO).primaryEmailAddress
+                  profileFormsView(page, boundProfileForms.bindForms(updatedUser), updatedUser, changedEmail = userChangedEmail)
               }
           } // end of success
         ) // end fold
@@ -101,12 +112,12 @@ trait EditProfileFormHandling extends EditProfileControllerComponents {
     forms: ProfileForms,
     user: User,
     consentsUpdated: Boolean = false,
-    consentHint: Option[String] = None)
+    consentHint: Option[String] = None,
+    changedEmail: Option[String] = None)
     (implicit request: AuthRequest[AnyContent]): Future[Result] = {
 
     val emailFilledForm: Future[Form[EmailPrefsData]] =
-      newsletterService.subscriptions(request.user.getId, idRequestParser(request).trackingData)
-    val redirectDecision: ProfileRedirect = redirectDecisionService.toProfileRedirect(user, request)
+      newsletterService.subscriptions(request.user.id, idRequestParser(request).trackingData)
 
     emailFilledForm.map { emailFilledForm =>
       NoCache(Ok(
@@ -117,12 +128,12 @@ trait EditProfileFormHandling extends EditProfileControllerComponents {
             forms,
             idRequestParser(request),
             idUrlBuilder,
-            redirectDecision,
             emailFilledForm,
             newsletterService.getEmailSubscriptions(emailFilledForm),
             EmailNewsletters.all,
             consentsUpdated,
-            consentHint
+            consentHint,
+            changedEmail
           )
         )(page, request, context)
       ))

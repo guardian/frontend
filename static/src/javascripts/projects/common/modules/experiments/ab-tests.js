@@ -2,13 +2,15 @@
 import { isExpired } from 'common/modules/experiments/test-can-run-checks';
 import { removeParticipation } from 'common/modules/experiments/utils';
 import { getTest as getAcquisitionTest } from 'common/modules/experiments/acquisition-test-selector';
-import { signInEngagementBannerDisplay } from './tests/sign-in-engagement-banner-display';
-import { firstPvConsentBlocker } from './tests/first-pv-consent-blocker';
+import { commercialPrebidSafeframe } from 'common/modules/experiments/tests/commercial-prebid-safeframe.js';
+import { commercialAdVerification } from 'common/modules/experiments/tests/commercial-ad-verification.js';
+import { commercialCmpCustomise } from 'common/modules/experiments/tests/commercial-cmp-customise.js';
 
 export const TESTS: $ReadOnlyArray<ABTest> = [
     getAcquisitionTest(),
-    signInEngagementBannerDisplay,
-    firstPvConsentBlocker,
+    commercialPrebidSafeframe,
+    commercialAdVerification,
+    commercialCmpCustomise,
 ].filter(Boolean);
 
 export const getActiveTests = (): $ReadOnlyArray<ABTest> =>

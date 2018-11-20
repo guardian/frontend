@@ -16,5 +16,13 @@ object Switch {
     }
   }
 
+  def switchBehaviour(behaviour: SwitchBehaviour): String = {
+    behaviour match {
+      case ConsentSwitch => "consent"
+      case NewsletterSwitch => "newsletter"
+      case _ => ""
+    }
+  }
+
 }
 

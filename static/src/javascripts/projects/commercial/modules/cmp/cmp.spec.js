@@ -1,6 +1,12 @@
 // @flow
+import fetchJson from 'lib/fetch-json';
+
 import { _, init } from './cmp';
 import { log as log_ } from './log';
+
+jest.mock('lib/raven');
+jest.mock('lib/fetch-json', () => jest.fn());
+const fetchJsonMock: JestMockFn<*, *> = (fetchJson: any);
 
 const { CmpService } = _;
 
@@ -14,6 +20,35 @@ jest.mock('commercial/modules/cmp/log', () => ({
         info: jest.fn(),
     },
 }));
+
+const shortVendorList = {
+    version: 1,
+    purposeIDs: [1, 2, 3, 4],
+    purposesByVID: {
+        '1': [],
+        '2': [],
+        '3': [],
+        '4': [],
+        '5': [],
+        '6': [],
+    },
+    legIntPurposesByVID: {
+        '1': [],
+        '2': [],
+        '3': [],
+        '4': [],
+        '5': [],
+        '6': [],
+    },
+    featuresIdsByVID: {
+        '1': [],
+        '2': [],
+        '3': [],
+        '4': [],
+        '5': [],
+        '6': [],
+    },
+};
 
 const globalVendorList = {
     vendorListVersion: 1,
@@ -64,10 +99,10 @@ const globalVendorList = {
 };
 
 class StoreMock {
-    vendorList: Object;
+    shortVendorList: {};
 
-    constructor(vendorList) {
-        this.vendorList = vendorList;
+    constructor(shortVendorListData) {
+        this.shortVendorList = shortVendorListData;
     }
     getVendorConsentsObject = jest.fn(() => {});
 }
@@ -77,8 +112,11 @@ describe('cmp', () => {
 
     beforeEach(() => {
         // $FlowFixMe I know the Store is a Mock Flow... this is a test
-        cmp = new CmpService(new StoreMock(globalVendorList));
+        cmp = new CmpService(new StoreMock(shortVendorList));
         jest.resetAllMocks();
+        fetchJsonMock.mockImplementation(
+            () => new Promise(resolve => resolve(globalVendorList))
+        );
     });
 
     it('exists', () => {
@@ -86,14 +124,16 @@ describe('cmp', () => {
     });
 
     it('ping executes', () => {
-        cmp.processCommand('ping', log.info('ping called!'), result => {
-            expect(log.info.mock.calls[0][0]).toMatch('ping called!');
+        cmp.processCommand('ping', log.info('ping called!'), (result: any) => {
             expect(result.cmpLoaded).toEqual(true);
         });
+        expect(log.info.mock.calls[0][0]).toMatch('ping called!');
     });
 
     it('will log error on invalid use of processCommand', () => {
-        cmp.processCommand('fakeCommand');
+        cmp.processCommand('fakeCommand', null, result => {
+            expect(result).toBe(undefined);
+        });
         expect(log.error.mock.calls[0][0]).toMatch('Invalid CMP command');
     });
 
@@ -108,7 +148,7 @@ describe('cmp', () => {
     });
 
     it('getVendorList executes', () => {
-        cmp.processCommand('getVendorList', null, result => {
+        cmp.processCommand('getVendorList', null, (result: any) => {
             expect(result.purposes).toEqual(globalVendorList.purposes);
             expect(result.vendors).toEqual(globalVendorList.vendors);
         });
@@ -125,17 +165,15 @@ describe('cmp', () => {
     });
 
     it('processes messages from iframes', () => {
-        const source = {
-            postMessage: jest.fn(),
-        };
         const processSpy = jest.spyOn(cmp, 'processCommand');
-        cmp.receiveMessage({
+        const message: any = {
             data: {
                 __cmpCall: { command: 'showConsentTool' },
             },
-            origin: {},
-            source,
-        });
+            origin: 'example',
+            source: { postMessage: jest.fn() },
+        };
+        cmp.receiveMessage(message);
         expect(processSpy.mock.calls[0][0]).toMatch('showConsentTool');
     });
 });

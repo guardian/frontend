@@ -10,7 +10,7 @@ export type CmpConfig = {
 export type ConsentDataResponse = {
     gdprApplies: boolean,
     hasGlobalScope: boolean,
-    consentData: string,
+    consentData?: string,
 };
 
 export type Purpose = {
@@ -34,8 +34,15 @@ export type VendorList = {
     vendors: Array<Vendor>,
 };
 
-export type VendorData = {
-    vendorList: VendorList,
+export type ShortVendorList = {
+    version: number,
+    purposeIDs: Array<number>,
+    purposesByVID: { [string]: Array<number> },
+    legIntPurposesByVID: { [string]: Array<number> },
+    featuresIdsByVID: { [string]: Array<number> },
+};
+
+export type SelectedData = {
     selectedPurposeIds: Array<number>,
     selectedVendorIds: Array<number>,
     maxVendorId: number,
@@ -62,4 +69,27 @@ export type VendorConsentResponse = ConsentData & {
     maxVendorId: number,
     purposeConsents: { [string]: number },
     vendorConsents: { [string]: number },
+};
+
+export type Range = {
+    isRange: boolean,
+    startVendorId: number,
+    endVendorId: number,
+};
+
+export type VendorCookieData = {
+    cookieVersion: number,
+    cmpId: number,
+    cmpVersion: number,
+    consentScreen: number,
+    consentLanguage: string,
+    vendorListVersion: number,
+    purposeIdBitString: string,
+    maxVendorId: number,
+    created: Date,
+    lastUpdated: Date,
+    isRange: boolean,
+    defaultConsent: boolean,
+    vendorIdBitString: string,
+    vendorRangeList: Array<Range>,
 };

@@ -126,7 +126,7 @@ class AccountProfile {
             event.target instanceof HTMLElement &&
             event.target.nodeName.toLowerCase() === 'a'
         ) {
-            const eventTarget: HTMLElement = event.target;
+            const eventTarget: HTMLAnchorElement = (event.target: any);
             if (eventTarget.dataset.tabsIgnore) {
                 if (eventTarget.href) window.location.assign(eventTarget.href);
                 event.preventDefault();
@@ -229,7 +229,9 @@ class AccountProfile {
      */
     bindInputs(form: ?HTMLElement) {
         if (form instanceof HTMLFormElement) {
-            const inputs = [...form.querySelectorAll(classes.textInput)];
+            const inputs: Array<HTMLInputElement> = ([
+                ...form.querySelectorAll(classes.textInput),
+            ]: Array<any>);
             inputs
                 .concat([...form.querySelectorAll('select')])
                 .forEach(input => {

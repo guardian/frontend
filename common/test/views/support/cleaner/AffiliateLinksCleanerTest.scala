@@ -11,11 +11,15 @@ class AffiliateLinksCleanerTest extends FlatSpec with Matchers {
   }
 
   "shouldAddAffiliateLinks" should "correctly determine when to add affiliate links" in {
-    val supportedSections = Set("film", "books")
-    shouldAddAffiliateLinks(switchedOn = false, "film", None, supportedSections) should be (false)
-    shouldAddAffiliateLinks(switchedOn = true, "film", None, supportedSections) should be (true)
-    shouldAddAffiliateLinks(switchedOn = true, "film", Some(false), supportedSections) should be (false)
-    shouldAddAffiliateLinks(switchedOn = true, "news", Some(true), supportedSections) should be (true)
-
+    val supportedSections = Set("film", "books", "fashion")
+    shouldAddAffiliateLinks(switchedOn = false, "film", None, supportedSections, Set.empty, Set.empty, List.empty ) should be (false)
+    shouldAddAffiliateLinks(switchedOn = true, "film", None, supportedSections, Set.empty, Set.empty, List.empty) should be (true)
+    shouldAddAffiliateLinks(switchedOn = true, "film", Some(false), supportedSections, Set.empty, Set.empty, List.empty) should be (false)
+    shouldAddAffiliateLinks(switchedOn = true, "news", Some(true), supportedSections, Set.empty, Set.empty, List.empty) should be (true)
+    shouldAddAffiliateLinks(switchedOn = true, "news", None, supportedSections, Set("bereavement"), Set.empty, List("bereavement")) should be (false)
+    shouldAddAffiliateLinks(switchedOn = true, "news", None, supportedSections, Set("bereavement"), Set.empty, List("tech")) should be (false)
+    shouldAddAffiliateLinks(switchedOn = true, "fashion", None, supportedSections, Set("bereavement"), Set.empty, List("tech")) should be (true)
+    shouldAddAffiliateLinks(switchedOn = true, "fashion", Some(true), supportedSections, Set.empty, Set("bereavement"), List("bereavement")) should be (false)
+    shouldAddAffiliateLinks(switchedOn = true, "fashion", Some(true), supportedSections, Set.empty, Set("bereavement"), List("tech")) should be (true)
   }
 }

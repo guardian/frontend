@@ -2,7 +2,7 @@ package conf.switches
 
 import conf.switches.Expiry.never
 import conf.switches.Owner.group
-import conf.switches.SwitchGroup.Commercial
+import conf.switches.SwitchGroup.{Commercial, CommercialPrebid}
 import org.joda.time.LocalDate
 
 trait CommercialSwitches {
@@ -52,16 +52,6 @@ trait CommercialSwitches {
     "block-ias",
     "Controls whether the Service Worker can filter out IAS calls",
     owners = Seq(Owner.withGithub("regiskuckaertz")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
-  val AdFreeTrialSwitch = Switch(
-    Commercial,
-    "ad-free-subscription-trial",
-    "Master switch for trialling ad-free subscription",
-    owners = Seq(Owner.withGithub("JustinPinner")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true
@@ -237,6 +227,16 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
+  val FivBanner = Switch(
+    Commercial,
+    "fiv-banner",
+    "Master switch for the first (three) impressions visual banner.",
+    owners = Seq(Owner.withGithub("johnduffell")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
   val MembershipEngagementBannerBlockUK = Switch(
     Commercial,
     "membership-engagement-banner-block-uk",
@@ -262,16 +262,6 @@ trait CommercialSwitches {
     "membership-engagement-banner-block-au",
     "If this switch is turned on, the engagement banner will NOT show up on AU fronts for readers in AU",
     owners = Seq(Owner.withGithub("desbo")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
-  val AdBlockMessage = Switch(
-    Commercial,
-    "adblock",
-    "Switch for the Adblock Message.",
-    owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true
@@ -303,7 +293,7 @@ trait CommercialSwitches {
     description = "Turn on to include the analytics ONLY for Oriel. Turn off to include the FULL integration script. Depends on AB test switch.",
     owners = group(Commercial),
     safeState = On,
-    sellByDate = new LocalDate(2018, 6, 28),
+    sellByDate = new LocalDate(2018, 11, 29),
     exposeClientSide = false
   )
 
@@ -313,89 +303,19 @@ trait CommercialSwitches {
     description = "Include the blockthrough script for testing the vendors effectiveness at circumventing ad-blocking.",
     owners = group(Commercial),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 6, 20),
+    sellByDate = new LocalDate(2018, 11, 29),
     exposeClientSide = false
    )
 
-  val prebidSwitch: Switch = Switch(
-    group = Commercial,
-    name = "prebid-header-bidding",
-    description = "Turn on Prebid header bidding (takes priority over Sonobi)",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false
-  )
-
-  val prebidAnalytics: Switch = Switch(
-    group = Commercial,
-    name = "prebid-analytics",
-    description = "Gather analytics from Prebid auctions",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
-  val prebidSonobi: Switch = Switch(
-    group = Commercial,
-    name = "prebid-sonobi",
-    description = "Include Sonobi adapter in Prebid auctions",
-    owners = group(Commercial),
-    safeState = On,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
-  val prebidIndexExchange: Switch = Switch(
-    group = Commercial,
-    name = "prebid-index-exchange",
-    description = "Include Index Exchange adapter in Prebid auctions",
-    owners = group(Commercial),
-    safeState = On,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
-  val prebidTrustx: Switch = Switch(
-    group = Commercial,
-    name = "prebid-trustx",
-    description = "Include TrustX adapter in Prebid auctions",
-    owners = group(Commercial),
-    safeState = On,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
-  val prebidImproveDigital: Switch = Switch(
-    group = Commercial,
-    name = "prebid-improve-digital",
-    description = "Include Improve Digital adapter in Prebid auctions",
-    owners = group(Commercial),
-    safeState = On,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
-  val prebidXaxis: Switch = Switch(
-    group = Commercial,
-    name = "prebid-xaxis",
-    description = "Include Xaxis adapter in Prebid auctions",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
-  val orielSonobiIntegration: Switch = Switch(
-    group = Commercial,
-    name = "oriel-sonobi-integration-test",
-    description = "This is a short test to test the integration between Oriel and Sonobi",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 6, 28),
-    exposeClientSide = false
-  )
+   val LotameSwitch: Switch = Switch(
+     group = Commercial,
+     name = "lotame",
+     description = "When this is switched on the Lotame script will be included in the commercial bootstrap",
+     owners = group(Commercial),
+     safeState = Off,
+     sellByDate = never,
+     exposeClientSide = true
+   )
 
   val AffiliateLinks: Switch = Switch(
     group = Commercial,
@@ -423,7 +343,190 @@ trait CommercialSwitches {
     description = "Enable our CMP service to run on each page, so that vendors can query the consent status.",
     owners = group(Commercial),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 8, 23),
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
+  val commercialPageViewAnalytics: Switch = Switch(
+    group = Commercial,
+    name = "commercial-page-view-analytics",
+    description = "Gather commercial analytics from page views",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+}
+
+trait PrebidSwitches {
+
+  val prebidSwitch: Switch = Switch(
+    group = CommercialPrebid,
+    name = "prebid-header-bidding",
+    description = "Turn on Prebid header bidding (takes priority over Sonobi)",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+
+  val prebidAnalytics: Switch = Switch(
+    group = CommercialPrebid,
+    name = "prebid-analytics",
+    description = "Gather analytics from Prebid auctions",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
+  val ampPrebid: Switch = Switch(
+    group = CommercialPrebid,
+    name = "amp-prebid",
+    description = "Amp inventory is being auctioned through Prebid",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+
+  val prebidUserSync: Switch = Switch(
+    group = CommercialPrebid,
+    name = "prebid-user-sync",
+    description = "Enable bidders to sync their user data with iframe or image beacons",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
+  val prebidSonobi: Switch = Switch(
+    group = CommercialPrebid,
+    name = "prebid-sonobi",
+    description = "Include Sonobi adapter in Prebid auctions",
+    owners = group(Commercial),
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
+  val prebidAppNexus: Switch = Switch(
+    group = CommercialPrebid,
+    name = "prebid-appnexus",
+    description = "Include AppNexus adapter in Prebid auctions",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
+  val prebidAppNexusUKROW: Switch = Switch(
+    group = CommercialPrebid,
+    name = "prebid-appnexus-uk-row",
+    description = "Include AppNexus adapter in Prebid auctions in UK/ROW",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
+  val prebidAppNexusInvcode: Switch = Switch(
+    group = CommercialPrebid,
+    name = "prebid-appnexus-invcode",
+    description = "Swap placementId for invCode in the bid params",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
+  val prebidIndexExchange: Switch = Switch(
+    group = CommercialPrebid,
+    name = "prebid-index-exchange",
+    description = "Include Index Exchange adapter in Prebid auctions",
+    owners = group(Commercial),
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
+  val prebidOpenx: Switch = Switch(
+    group = CommercialPrebid,
+    name = "prebid-openx",
+    description = "Include OpenX adapter in Prebid auctions",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
+  val prebidPubmatic: Switch = Switch(
+    group = CommercialPrebid,
+    name = "prebid-pubmatic",
+    description = "Include Pubmatic adapter in Prebid auctions",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
+  val prebidTrustx: Switch = Switch(
+    group = CommercialPrebid,
+    name = "prebid-trustx",
+    description = "Include TrustX adapter in Prebid auctions",
+    owners = group(Commercial),
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
+  val prebidImproveDigital: Switch = Switch(
+    group = CommercialPrebid,
+    name = "prebid-improve-digital",
+    description = "Include Improve Digital adapter in Prebid auctions",
+    owners = group(Commercial),
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
+  val prebidXaxis: Switch = Switch(
+    group = CommercialPrebid,
+    name = "prebid-xaxis",
+    description = "Include Xaxis adapter in Prebid auctions",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
+  val prebidAdYouLike: Switch = Switch(
+    group = CommercialPrebid,
+    name = "prebid-ad-you-like",
+    description = "Include AdYouLike adapter in Prebid auctions",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
+  val prebidS2SOzoneBidder: Switch = Switch(
+    group = CommercialPrebid,
+    name = "prebid-s2sozone",
+    description = "Include S2S Ozone project adapter in Prebid auctions",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
+  val ozonePangaeaSwitch: Switch = Switch(
+    group = CommercialPrebid,
+    name = "ozone-pangaea",
+    description = "Include Ozone Pangaea connection",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 11, 29),
     exposeClientSide = true
   )
 }

@@ -1,0 +1,250 @@
+// header styling
+
+#flagship-audio {
+    @include fs-headlineGarnett(1);
+    padding-top: 0;
+    margin-bottom: 0;
+
+
+    .ad-slot,
+    .ad-slot--paid-for-badge {
+        display: none !important;
+    }
+
+    .content--media {
+        background-color: $brightness-7;
+        .submeta__link {
+            color: $brightness-100;
+        }
+    }
+
+    /* ---------------- HEADER ------------------- */
+
+    section.flagship-audio {
+        background-color: #f0dbbc;
+        padding: 0;
+
+        .flagship-audio__thrasher {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            .flagship-audio__content {
+                padding-top: $gs-baseline/2;
+            }
+
+            /* ---------------- HEADER LOGO ------------------- */
+            .flagship-audio__logo {
+                position: absolute;
+                top: $gs-baseline/2;
+
+                @include mq($until: mobileLandscape) {
+                    right: 0;
+                }
+
+                @include mq($from: mobileLandscape, $until: leftCol) {
+                    right: $gs-gutter /2;
+                }
+
+                @include mq($from: leftCol, $until: wide) {
+                    flex: 1 0 auto;
+                }
+
+                @include mq($until: phablet) {
+                    svg {
+                        transform-origin: top right;
+                        transform: scale(.8);
+                    }
+                }
+            }
+
+
+            /* ---------------- HEADER CONTENT ------------------- */
+
+            .flagship-audio__content-main {
+                z-index: 9;
+            }
+
+            .flagship-audio__content {
+                padding: 0;
+                flex: 1 1 auto; /* what is width here */
+                display: flex;
+                flex-direction: row;
+
+
+                &::before {
+                    display: none;
+                    @include mq($from: leftCol) {
+                        display: block;
+                        content: '';
+                        position: relative;
+                        width: 1px;
+                        background-color: rgba(0, 0, 0, .1);
+                        top: 0;
+                        bottom: 0;
+                        left: -10px;
+                    }
+                }
+
+                @include mq($until: desktop) {
+                    flex-direction: column;
+                    border: 0;
+                    padding: 0;
+                }
+
+                .flagship-audio__description,
+                .flagship-audio__title {
+                    max-width: 460px;
+                }
+
+                .flagship-audio__description {
+                    padding-top: 6px;
+                    margin-top: 2px;
+                    margin-bottom: 2px;
+                    line-height: 22px;
+                    font-weight: normal;
+                    font-size: 18px;
+                }
+
+                .flagship-audio__title {
+                    font-weight: 700;
+                    font-size: 42px;
+                    line-height: 1;
+                    color: #000000;
+                    margin-bottom: 0;
+
+                    .red-highlight {
+                        color: #ff6a56;
+                    }
+
+                    @include mq($from: mobile, $until: phablet) {
+                        font-size: 36px;
+                    }
+                }
+
+            }
+
+
+            /* ---------------- HEADER ARTWORK ------------------- */
+            .flagship-audio__artwork {
+
+                @include mq($from: mobile, $until: phablet) {
+                    flex: 1 1 auto;
+                    justify-self: flex-end;
+                    display: flex;
+                    flex-direction: row;
+                    align-items: flex-end;
+                    justify-content: flex-end;
+                }
+                @include mq($from: phablet) {
+                    position: absolute;
+                    right: 0;
+                    bottom: 0;
+                    z-index: 8;
+                }
+                .artwork-holder {
+                    width: 100%;
+                    top: 0;
+                    @include mq($until: mobileMedium) {
+                        margin-bottom: -$gs-baseline*4;
+                    }
+                    @include mq($from: mobileMedium, $until: mobileLandscape) {
+                        margin-bottom: -$gs-baseline*3;
+                    }
+                    @include mq($from: mobileLandscape) {
+                        margin-bottom: -$gs-baseline/2;
+                    }
+                    @include mq($from: phablet, $until: desktop) {
+                        float: right;
+                        position: relative;
+                    }
+                    svg {
+                        overflow: visible;
+                        @include mq($until: phablet) {
+                            width: 100%;
+                        }
+                    }
+
+                }
+
+                @include mq($from: mobile, $until: phablet) {
+                    justify-content: center;
+                }
+            }
+
+        }
+
+    }
+
+
+    /* ---------------- HEADER BUTTONS ------------------- */
+    .flagship-audio__content-buttons {
+        list-style: none;
+        line-height: 1;
+        padding: $gs-baseline*2 0 5px;
+        background-color: transparent;
+        color: $brightness-7;
+        overflow: auto;
+        display: block;
+        margin: 0;
+
+        @include mq($until: phablet) {
+            display: none;
+        }
+        .flagship-audio__subscribe-label {
+            margin-bottom: 6px;
+            color: $brightness-20;
+            font-weight: 800;
+            font-size: 18px;
+        }
+    }
+
+    .flagship-audio__button {
+        @include fs-textSans(1);
+        align-items: center;
+        display: inline-flex;
+        background-color: $brightness-20;
+        color: $brightness-100;
+        padding: 10px 12px;
+        border-radius: 20px;
+        font-weight: 600;
+        font-family: 'Guardian Text Sans Web';
+        font-size: 14px;
+        margin: 0 4px 8px 0;
+        span {
+            display: inline-flex;
+        }
+
+    }
+
+    .flagship-audio__link:hover {
+        text-decoration: none;
+
+        .flagship-audio__button {
+            background-color: $brightness-7;
+        }
+    }
+
+
+    /* ---------------- HEADER BUTTTONS HACK FOR MOBILE ------------------- */
+    #flagship-audio__mobile-only {
+        display: none;
+
+        @include mq($until: phablet) {
+            display: block;
+            padding: 0;
+
+            ul.flagship-audio__content-buttons {
+                display: block;
+                background-color: #121212;
+                margin: 0;
+                padding: $gs-gutter/4 $gs-gutter;
+
+                .flagship-audio__subscribe-label {
+                    color: $brightness-100;
+                }
+            }
+        }
+    }
+
+
+}

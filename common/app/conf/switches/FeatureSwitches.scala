@@ -4,6 +4,17 @@ import conf.switches.Expiry.never
 import org.joda.time.LocalDate
 
 trait FeatureSwitches {
+
+  val DotcomRendering = Switch(
+    SwitchGroup.Feature,
+    "dotcom-rendering",
+    "If this switch is on, we will use the dotcom rendering tier for articles which are supported by it",
+    owners = Seq(Owner.withGithub("MatthewJWalls")),
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+
   val ShareCounts = Switch(
     SwitchGroup.Feature,
     "server-share-counts",
@@ -21,16 +32,6 @@ trait FeatureSwitches {
     owners = Seq(Owner.withGithub("johnduffell")),
     safeState = On,
     sellByDate = never,
-    exposeClientSide = false
-  )
-
-  val WorldCupNextMatchSwitch = Switch(
-    SwitchGroup.Feature,
-    "world-cup-next-match",
-    "Used to toggle display of next match banner on world cup overview pages",
-    owners = Seq(Owner.withGithub("nicl")),
-    safeState = On,
-    sellByDate = new LocalDate(2018, 8, 14),
     exposeClientSide = false
   )
 
@@ -79,6 +80,16 @@ trait FeatureSwitches {
     "geo-most-popular",
     "If this is switched on users then 'most popular' will be upgraded to geo targeted",
     owners = Seq(Owner.withGithub("johnduffell")),
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
+  val MostViewedFronts = Switch(
+    SwitchGroup.Feature,
+    "most-viewed-fronts",
+    "If this is switched off, most viewed will not show on fronts",
+    owners = Seq(Owner.withName("dotcom platform")),
     safeState = On,
     sellByDate = never,
     exposeClientSide = true
@@ -165,13 +176,13 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
-  val EnhancedVideoPlayerSwitch = Switch(
+  val VideoJSSwitch = Switch(
     SwitchGroup.Feature,
-    "enhanced-video-player",
-    "If this is switched on then videos are enhanced using our JavaScript player",
+    "videojs",
+    "If this is switched on then videos are enhanced using VideoJS",
     owners = Seq(Owner.withGithub("siadcock")),
     safeState = On,
-    sellByDate = new LocalDate(2018, 7, 19),
+    sellByDate = new LocalDate(2019, 1, 29),
     exposeClientSide = true
   )
 
@@ -443,25 +454,14 @@ trait FeatureSwitches {
     exposeClientSide = false
   )
 
-  val YouTubePosterOverride = Switch(
+  val YouTubeRelatedVideos = Switch(
     SwitchGroup.Feature,
-    "youtube-poster-override",
-    "When ON show trail image on YouTube atom playable content cards instead of the poster image",
-    owners = Seq(Owner.withGithub("gidsg")),
+    "youtube-related-videos",
+    "When ON show YouTube related video suggestions in YouTube media atoms",
+    owners = Seq(Owner.withGithub("siadcock")),
     safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false
-  )
-
-  // Owner: Journalism
-  val ReaderAnswersDeliveryMechanism = Switch(
-    SwitchGroup.Feature,
-    "reader-answers-preferred-delivery-mechanism",
-    "When ON, story questions will give readers the option to indicate their preferred answer delivery medium",
-    owners = Seq(Owner.withGithub("annebyrne")),
-    safeState = On,
-    sellByDate = new LocalDate(2018, 10, 24),
-    exposeClientSide = false
+    sellByDate = new LocalDate(2019, 1, 7),
+    exposeClientSide = true
   )
 
   val WeAreHiring = Switch(
@@ -469,6 +469,27 @@ trait FeatureSwitches {
     "we-are-hiring",
     "When ON, hiring messages will appear in browser console and HTML source",
     owners = Seq(Owner.withName("dotcom.platform")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
+  val Acast = Switch(
+    SwitchGroup.Feature,
+    "acast",
+    "When ON, requests to audio files will be routed to Acast if advertising is enabled",
+    owners = Seq(Owner.withName("journalism team")),
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+
+  // Simple & Coherent
+  val ScAdFreeBanner = Switch(
+    SwitchGroup.Feature,
+    "sc-ad-free-banner",
+    "If switched on, ad free users will be told they have ad free.",
+    owners = Seq(Owner.withName("simple.and.coherent")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true

@@ -1,0 +1,114 @@
+/* Header wrapper (for mma tabs)
+   ========================================================================== */
+.identity-wrapper-header {
+    border-bottom: 1px solid $brightness-86;
+    background: $brightness-97;
+    .identity-wrapper {
+        padding-bottom: 0;
+    }
+    .identity-title {
+        margin-bottom: ($gs-gutter * 1.5);
+    }
+    .tabs__container {
+        margin: 0 auto 0 -1px;
+        border-right: 1px solid $brightness-86;
+        grid-column-gap: 0;
+        padding: 0 1px;
+        overflow: visible;
+        .tabs__tab {
+            border-left: 1px solid $brightness-86;
+            border-top: 1px solid $brightness-86;
+            border-bottom: 0;
+            border-right: 0;
+            &.tabs__tab--selected {
+                @include mq(desktop) {
+                    box-shadow: 0 1px 0 0 $brightness-100;
+                }
+            }
+        }
+        .tabs__tab a {
+            background: $brightness-97;
+            font-weight: 400!important;
+            /*text can't fit otherwise*/
+        }
+        .tabs__tab--selected a {
+            background: $brightness-100;
+        }
+    }
+}
+
+
+/* Normal wrapper
+   ========================================================================== */
+
+.identity-wrapper {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: gs-span(6);
+    padding-bottom: $gs-gutter * 2;
+    padding-top: $gs-gutter / 4;
+
+    @include mq(desktop) {
+        max-width: gs-span(10);
+    }
+
+    &.identity-wrapper--mma-body {
+        .tabs__content {
+            border: 0;
+        }
+    }
+
+    &.identity-wrapper--no-padding {
+        padding: 0;
+    }
+
+    &.identity-wrapper--wide {
+        max-width: gs-span(8);
+
+        @include mq(desktop) {
+            max-width: gs-span(12);
+        }
+    }
+
+    &.identity-wrapper--stretched {
+        max-width: gs-span(16);
+    }
+
+    a.u-underline {
+        color: $brand-main;
+    }
+}
+
+
+
+
+
+
+/* Flex wrap around the whole page (to stick the footer at the end)
+   ========================================================================== */
+.identity-wrapper-page-flex {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    align-items: stretch;
+    &.identity-wrapper-page-flex--flow {
+        background: $brightness-97;
+        .manage-account-small-divider {
+            border-color: $brightness-86;
+        }
+    }
+    & > .identity-wrapper-page-flex__content {
+        flex: 1 1 auto;
+    }
+}
+
+
+
+/* Account Edit page
+   ========================================================================== */
+
+.identity-wrapper .tabs {
+    .fieldset:first-of-type {
+        border-top: 0; // Included so as not to break tabs metaphor
+    }
+}

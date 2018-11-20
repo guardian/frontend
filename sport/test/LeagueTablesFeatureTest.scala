@@ -40,7 +40,7 @@ import org.scalatest._
 
         Then("The <h1> Should be tables")
         val h2 = $("h2")
-        $("h1").texts should contain("tables")
+        $("h1").texts should contain("Football tables")
         h2.texts should contain("Premier League")
         h2.texts should contain("Champions League")
       }

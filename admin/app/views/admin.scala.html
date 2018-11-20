@@ -25,13 +25,14 @@
                 <div class="panel-body">
                     <ul>
                         <li><a href="/dev/switchboard">Switchboard</a></li>
-                        <li><a href="@Configuration.Elk.kibanaUrl/goto/643979153f817c4bb1b64f7d56a395a7">Deploy dashboard</a></li>
+                        <li><a href="@Configuration.Elk.kibanaUrl/goto/0614b5aa7094c4a17a3d5d9779f36a69">Deploy dashboard</a></li>
                         @if(R2PagePressServiceSwitch.isSwitchedOn) {
                             <li><a href="@controllers.admin.routes.R2PressController.pressForm()">Press-a-page</a></li>
                         }
                         <li><a href="@controllers.admin.routes.RedirectController.redirect()">Redirects</a></li>
                         <li><a href="@controllers.cache.routes.ImageDecacheController.renderImageDecacheForm()">Clear cache (images)</a></li>
                         <li><a href="@controllers.cache.routes.PageDecacheController.renderPageDecache()">Clear cache (content)</a></li>
+                        <li><a href="@controllers.cache.routes.PageDecacheController.renderAjaxDecache()">Clear cache (ajax - guardianapps.co.uk)</a></li>
                         <li><a href="@controllers.routes.AppConfigController.renderAppConfig()">App Config</a></li>
                     </ul>
                 </div>
@@ -44,6 +45,7 @@
                 <div class="panel-heading">Ops metrics (is the site healthy?).</div>
                 <div class="panel-body">
                     <ul>
+                        <li><a href="https://eu-west-1.console.aws.amazon.com/cloudwatch/home?region=eu-west-1#dashboards:name=OKR">OKR dashboard (requires AWS access)</a></li>
                         <li><a href="@Configuration.Elk.kibanaUrl">Kibana (Server side logs)</a></li>
                         <li><a href="@controllers.admin.routes.MetricsController.renderLoadBalancers()">Load Balancers</a></li>
                         <li><a href="@controllers.admin.routes.FastlyController.renderFastly()">Fastly</a></li>
@@ -97,12 +99,13 @@
         </div>
 
         <div class="col-md-4">
-            <h3>Commercial Tools</h3>
+            <h3>Commercial and Reader Revenue Tools</h3>
             <div class="panel panel-default well--front">
-                <div class="panel-heading">Tools for the commercial team</div>
+                <div class="panel-heading">Tools for the teams that make money</div>
                 <div class="panel-body">
                     <ul>
-                        <li><a href="@controllers.admin.routes.CommercialController.renderCommercialMenu()">Main page</a></li>
+                        <li><a href="@controllers.admin.routes.CommercialController.renderCommercialMenu()">Commercial Tools</a></li>
+                        <li><a href="@controllers.admin.routes.ReaderRevenueAdminController.renderReaderRevenueMenu()">Reader Revenue Tools</a></li>
                     </ul>
                 </div>
             </div>

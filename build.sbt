@@ -54,7 +54,8 @@ val common = library("common").settings(
     atomRenderer,
     identityModel,
     capiAws,
-    okhttp
+    okhttp,
+    jsonSchema
   )
 ).settings(
     mappings in TestAssets ~= filterAssets

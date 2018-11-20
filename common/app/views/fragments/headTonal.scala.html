@@ -3,14 +3,22 @@
 @import views.html.fragments.langAttributes
 @import model.Badges.badgeFor
 @import views.support.Commercial.isPaidContent
-@import views.support.ContributorLinks
+@import views.support.{ContributorLinks, RenderClasses}
 @import views.support.TrailCssClasses.toneClass
+@import experiments.{ActiveExperiments, OldAudioPage}
 
-<header class="content__head tonal__head tonal__head--@toneClass(item)
-    @if(item.content.hasTonalHeaderByline && item.tags.hasLargeContributorImage) { content__head--byline-pic}
-    @badgeFor(item).map { badge => content__head--is-badged
-        @badge.classModifier.map(modifier => s"content__head--$modifier")
-    }">
+<header class="@RenderClasses(
+        Map(
+            "content__head--byline-pic" -> (item.content.hasTonalHeaderByline && item.tags.hasLargeContributorImage),
+            "content__head--is-badged"  -> badgeFor(item).nonEmpty,
+            badgeFor(item).flatMap(_.classModifier.map(modifier => s"content__head--$modifier")).getOrElse("")
+                                        -> badgeFor(item).exists(_.classModifier.nonEmpty),
+            "content__head--flagship"   -> (item.tags.isAudio && !ActiveExperiments.isParticipating(OldAudioPage))
+        ),
+        "content__head",
+        "tonal__head",
+        s"tonal__head--${toneClass(item)}"
+    )">
 
     <div class="content__header tonal__header">
         <div class="gs-container">
@@ -20,8 +28,11 @@
                     @fragments.meta.metaInline(item, amp)
                 }
 
-                <h1 class="content__headline" itemprop="headline" @langAttributes(item.content)>
-                    @if(item.tags.isMedia) {
+                <h1 class="@RenderClasses(Map(
+                    "content__headline"            -> true,
+                    "content__headline--flagship"  -> (item.tags.isAudio && !ActiveExperiments.isParticipating(OldAudioPage))
+                ))" itemprop="headline" @langAttributes(item.content)>
+                    @if(item.tags.isMedia && ActiveExperiments.isParticipating(OldAudioPage)) {
                         @defining(
                             item match {
                                 case video: model.Video => "video-icon"
@@ -98,6 +109,7 @@
         </div>
     </div>
 
+    @if(!item.tags.isAudio || ActiveExperiments.isParticipating(OldAudioPage)){
     <div class="tonal__standfirst u-cf">
         @if(item.fields.standfirst.isDefined) {
             <div class="gs-container">
@@ -114,4 +126,5 @@
             </div>
         }
     </div>
+    }
 </header>

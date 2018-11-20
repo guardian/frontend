@@ -12,12 +12,13 @@ import views.html.fragments.page._
 import views.html.fragments.page.body._
 import views.html.fragments.page.head.stylesheets.{criticalStyleInline, criticalStyleLink, styles}
 import views.html.fragments.page.head.{fixIEReferenceErrors, headTag, titleTag, weAreHiring}
-import html.HtmlPageHelpers.ContentCSSFile
+import html.HtmlPageHelpers.{ContentCSSFile}
+import views.html.stacked
 
 object IdentityHtmlPage {
 
   def allStyles(implicit applicationContext: ApplicationContext, request: RequestHeader): Styles = new Styles {
-    override def criticalCssLink: Html = criticalStyleLink("identity")
+    override def criticalCssLink: Html = criticalStyleLink("new-identity")
     override def criticalCssInline: Html = criticalStyleInline(Html(common.Assets.css.inlineIdentity))
     override def linkCss: Html = HtmlFormat.fill(List(
       stylesheetLink(s"stylesheets/$ContentCSSFile.css"),
@@ -53,7 +54,7 @@ object IdentityHtmlPage {
           inlineJSNonBlocking(),
           views.html.layout.identitySkinnyFooter() when page.isFlow,
           footer() when !page.isFlow,
-          analytics.base()
+          analytics.google(page)
         )
       ),
       devTakeShot()

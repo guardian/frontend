@@ -34,4 +34,6 @@ trait CommercialControllers {
   lazy val piggybackPixelController = wire[PiggybackPixelController]
   lazy val adsDotTextFileController = wire[AdsDotTextViewController]
   lazy val prebidAnalyticsController = wire[PrebidAnalyticsController]
+  lazy val pageViewAnalyticsController = wire[PageViewAnalyticsController]
+  lazy val passbackController = wire[PassbackController]
 }

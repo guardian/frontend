@@ -51,6 +51,7 @@ class ArchiveController(redirects: RedirectService, val controllerComponents: Co
       .flatMap(_.map(Future.successful).getOrElse(getLocal404Page))
   }
 
+  // Note this code is duplicated in R2PressedController - changes here should be reflected there
   // Our redirects are 'normalised' Vignette URLs, Ie. path/to/0,<n>,123,<n>.html -> path/to/0,,123,.html
   def normalise(path: String, zeros: String = ""): String = path match {
     case R1ArtifactUrl(p, artifactOrContextId, extension) =>
@@ -84,7 +85,7 @@ class ArchiveController(redirects: RedirectService, val controllerComponents: Co
     }
   }
 
-  private def destinationFor(path: String): Future[Option[Destination]] = redirects.destinationFor(normalise(path))
+  private def destinationFor(path: String): Future[Option[Destination]] = redirects.getDestination(normalise(path))
 
   private object Combiner {
     def unapply(path: String): Option[String] = {

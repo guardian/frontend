@@ -4,7 +4,7 @@ import actions.AuthenticatedActions.AuthRequest
 import idapiclient.IdApiClient
 import play.api.mvc.Security.AuthenticatedRequest
 import play.api.mvc._
-import services.{ProfileRedirect, _}
+import services._
 import utils.Logging
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -19,7 +19,7 @@ class AuthenticatedActions(
     controllerComponents: ControllerComponents,
     newsletterService: NewsletterService,
     idRequestParser: IdRequestParser,
-    redirectService: ProfileRedirectService) extends Logging with Results {
+) extends Logging with Results {
 
   private lazy val anyContentParser: BodyParser[AnyContent] = controllerComponents.parsers.anyContent
   private implicit lazy val ec: ExecutionContext = controllerComponents.executionContext
@@ -45,8 +45,8 @@ class AuthenticatedActions(
   def sendUserToRegister(request: RequestHeader): Result =
     redirectWithReturn(request, "/register")
 
-  def sendUserToUserRedirectDecision(request: RequestHeader, decision: ProfileRedirect): Result =
-    redirectWithReturn(request, decision.url)
+  def sendUserToValidateEmail(request: RequestHeader): Result =
+    redirectWithReturn(request, "/verify-email")
 
   private def checkIdApiForUserAndRedirect(request: RequestHeader) = {
     request.getQueryString("email") match {
@@ -120,19 +120,6 @@ class AuthenticatedActions(
         }
     }
 
-  private def decideManageAccountRedirectFilter(pageId: String = ""): ActionFilter[AuthRequest] =
-    new ActionFilter[AuthRequest] {
-      override val executionContext = ec
-
-      def filter[A](request: AuthRequest[A]): Future[Option[Result]] = Future.successful {
-        val redirect = redirectService.toProfileRedirect(request.user, request)
-        if (redirect.isAllowedFrom(pageId))
-          Some(sendUserToUserRedirectDecision(request, redirect))
-        else
-          None
-      }
-    }
-
   private def recentlyAuthenticatedRefiner: ActionRefiner[AuthRequest, AuthRequest] =
     new ActionRefiner[AuthRequest, AuthRequest] {
       override val executionContext = ec
@@ -140,16 +127,15 @@ class AuthenticatedActions(
       def refine[A](request: AuthRequest[A]) = checkRecentAuthenticationAndRedirect(request)
     }
 
-  private def decideConsentsRedirectFilter: ActionFilter[AuthRequest] =
+  def emailValidationFilter: ActionFilter[AuthRequest] =
     new ActionFilter[AuthRequest] {
       override val executionContext = ec
 
       def filter[A](request: AuthRequest[A]): Future[Option[Result]] = Future.successful {
-        val redirect = redirectService.toConsentsRedirect(request.user, request)
-        if (redirect.isAllowedFrom(request.path))
-          Some(sendUserToUserRedirectDecision(request, redirect))
-        else
+        if (request.user.statusFields.isUserEmailValidated)
           None
+        else
+          Some(sendUserToValidateEmail(request))
       }
     }
 
@@ -173,10 +159,6 @@ class AuthenticatedActions(
     noOpActionBuilder andThen consentAuthRefiner andThen retrieveUserFromIdapiRefiner
 
   /** Enforce a validated email */
-  def consentsRedirectAction(): ActionBuilder[AuthRequest, AnyContent] =
-    consentAuthWithIdapiUserAction andThen decideConsentsRedirectFilter
-
-  /** Redirects for the account page */
-  def manageAccountRedirectAction(pageId: String = ""): ActionBuilder[AuthRequest, AnyContent] =
-    recentFullAuthWithIdapiUserAction andThen decideManageAccountRedirectFilter(pageId)
+  def consentAuthWithIdapiUserWithEmailValidation: ActionBuilder[AuthRequest, AnyContent] =
+    consentAuthWithIdapiUserAction andThen emailValidationFilter
 }

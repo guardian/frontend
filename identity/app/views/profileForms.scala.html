@@ -1,24 +1,20 @@
-@import conf.Static
 @import views.support.RenderClasses
-@import model.{ApplicationContext, IdentityPage}
 @import com.gu.identity.model.EmailNewsletters
 @import services.EmailPrefsData
-@import services.{ProfileRedirect}
 @import controllers.editprofile.ProfileForms
 
-@import services.NoRedirect
 @(
     activeUrl: String,
     user: com.gu.identity.model.User,
     forms: ProfileForms,
     idRequest: services.IdentityRequest,
     idUrlBuilder: services.IdentityUrlBuilder,
-    redirectDecision: ProfileRedirect,
     emailPrefsForm: Form[EmailPrefsData],
     emailSubscriptions: List[String],
     availableLists: EmailNewsletters,
     consentsUpdated: Boolean,
-    consentHint: Option[String]
+    consentHint: Option[String],
+    changedEmail: Option[String] = None
 )(implicit request: RequestHeader, messages: play.api.i18n.Messages, context: model.ApplicationContext)
 
 @*
@@ -31,7 +27,7 @@
     bypassing it.
 *@
 
-@tab(i: Int, name: String, url: String, dataTestId: Option[String], hidden: Boolean = false, optionalClass: String = "", redirect: ProfileRedirect = NoRedirect) = {
+@tab(i: Int, name: String, url: String, dataTestId: Option[String], hidden: Boolean = false, optionalClass: String = "", disableClientSideRouting: Boolean = false, requiresValidation: Boolean = false) = {
 
     <li class="tabs__tab @if(hidden){is-hidden} @if(activeUrl == url){tabs__tab--selected tone-colour tone-accent-border} @optionalClass" role="tab" id="tabs-account-profile-@i-tab" aria-selected="@(activeUrl == url)" aria-controls="tabs-account-profile-@i">
         <a
@@ -40,8 +36,10 @@
             data-pushstate-url="@url"
             @dataTestId.map{idValue => data-test-id="@idValue"}
             @{
-                if(redirect.isAllowedFrom(url))
-                Html(s"href='${idUrlBuilder.buildUrl(redirect.url, ("returnUrl", idUrlBuilder.buildUrl(url)))}' data-tabs-ignore='true'")
+                if(disableClientSideRouting)
+                    Html(s"href='$url' data-tabs-ignore='true'")
+                else if(requiresValidation)
+                    Html(s"href='${idUrlBuilder.buildUrl(routes.EmailVerificationController.resendEmailValidationEmail().url, ("returnUrl", idUrlBuilder.buildUrl(url)))}' data-tabs-ignore='true'")
                 else
                     Html(s"href='$url'")
             }
@@ -51,7 +49,7 @@
     </li>
 }
 
-@content(i: Int, url: String, optionalClass: String = "")(body: => Html) = {
+@content(i: Int, url: String, requiresValidation: Boolean = false)(body: => Html) = {
     <div id="tabs-account-profile-@i"
          class="@RenderClasses(Map(
             "u-h" -> (activeUrl != url)
@@ -61,13 +59,15 @@
          data-link-name="Public Profile"
          data-link-context="Identity/profile"
     >
-        @(if(redirectDecision.isAllowedFrom(url)) {
-            Html("<div class='identity-forms-loading u-identity-forms-padded'><div class='identity-forms-loading__spinner is-updating'></div></div>")
-        } else {
-            body
-        })
+    @(if(requiresValidation) {
+        Html("<div class='identity-forms-loading u-identity-forms-padded'><div class='identity-forms-loading__spinner is-updating'></div></div>")
+    } else {
+        body
+    })
     </div>
 }
+
+@requiresValidation = @{!user.statusFields.userEmailValidated.getOrElse(false)}
 
 <div class="tabs">
 
@@ -75,17 +75,17 @@
         <div class="identity-wrapper identity-wrapper--wide monocolumn-wrapper">
                 <h1 class="identity-title" data-test-id="edit-profile-header">Edit your profile</h1>
                 <ol class="tabs__container tabs__container--multiple js-tabs js-account-profile-tabs" id="js-account-profile-tabs" role="tablist" data-is-bound="true">
-                    @tab(1, "Public profile", "/public/edit", None, redirect = redirectDecision)
+                    @tab(1, "Public profile", "/public/edit", None)
 
-                    @tab(2, "Account details", "/account/edit", Some("edit-account-details"), optionalClass="qa-account-details-tab", redirect = redirectDecision)
+                    @tab(2, "Account details", "/account/edit", Some("edit-account-details"), optionalClass="qa-account-details-tab")
 
-                    @tab(3, "Membership", "/membership/edit", None, optionalClass="qa-membership-tab", redirect = redirectDecision)
+                    @tab(3, "Membership", "/membership/edit", None, optionalClass="qa-membership-tab", disableClientSideRouting = true)
 
-                    @tab(4, "Digital Pack", "/digitalpack/edit", None, optionalClass="qa-digitalpack-tab", redirect = redirectDecision)
+                    @tab(4, "Digital Pack", "/digitalpack/edit", None, optionalClass="qa-digitalpack-tab")
 
-                    @tab(5, "Contributions", "/contribution/recurring/edit", None, optionalClass="qa-contributions-tab", redirect = redirectDecision)
+                    @tab(5, "Contributions", "/contribution/recurring/edit", None, optionalClass="qa-contributions-tab", requiresValidation = requiresValidation, disableClientSideRouting = true)
 
-                    @tab(6, "Emails & marketing", "/email-prefs", None, optionalClass="qa-privacy-tab", redirect = redirectDecision)
+                    @tab(6, "Emails & marketing", "/email-prefs", None, optionalClass="qa-privacy-tab", requiresValidation = requiresValidation)
                 </ol>
         </div>
     </div>
@@ -96,15 +96,15 @@
                     <div class="tabs__content">
                         @content(1, "/public/edit")(profile.publicProfileForm(idUrlBuilder, idRequest, user, forms.publicForm))
 
-                        @content(2, "/account/edit")(profile.accountDetailsForm(idUrlBuilder, idRequest, user, forms.accountForm))
+                        @content(2, "/account/edit")(profile.accountDetailsForm(idUrlBuilder, idRequest, user, forms.accountForm, changedEmail))
 
                         @content(3, "/membership/edit")(profile.membershipDetailsForm(idUrlBuilder, idRequest, user))
 
                         @content(4, "/digitalpack/edit")(profile.digitalPackDetailsForm(idUrlBuilder, idRequest, user))
 
-                        @content(5, "/contribution/recurring/edit")(profile.recurringContributionDetailsForm(idUrlBuilder, idRequest, user))
+                        @content(5, "/contribution/recurring/edit", requiresValidation)(profile.recurringContributionDetailsForm(idUrlBuilder, idRequest, user))
 
-                        @content(6, "/email-prefs")(profile.privacyForm(idUrlBuilder, idRequest, user, forms.privacyForm, emailPrefsForm, emailSubscriptions, availableLists, consentsUpdated, consentHint))
+                        @content(6, "/email-prefs", requiresValidation)(profile.privacyForm(idUrlBuilder, idRequest, user, forms.privacyForm, emailPrefsForm, emailSubscriptions, availableLists, consentsUpdated, consentHint))
                     </div>
                 </div>
     </div>

@@ -29,17 +29,17 @@
     @include ellipsis();
     @include button-colour(
         #ffffff,
-        $garnett-neutral-1,
-        $garnett-neutral-4
+        $brightness-7, 
+        $brightness-86
     );
     @include button-hover-colour(
         #ffffff,
-        darken($neutral-3, 10%)
+        darken($brightness-86, 10%)
     );
     box-sizing: border-box;
     display: inline-block;
     vertical-align: top;
-    font-weight: 700;
+    font-weight: 400;
     border-width: 1px;
     border-style: solid;
     border-right-style: none;
@@ -61,7 +61,7 @@
     &:hover,
     &:focus,
     &:active {
-        color: $neutral-1;
+        color: $brightness-7;
         text-decoration: none;
     }
 }
@@ -85,8 +85,8 @@
     &:focus,
     &:active {
         .treats__treat {
-            color: $neutral-1;
-            border-color: darken($neutral-3, 10%);
+            color: $brightness-7;
+            border-color: darken($brightness-86, 10%);
         }
     }
 }

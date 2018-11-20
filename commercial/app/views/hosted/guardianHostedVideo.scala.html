@@ -56,13 +56,13 @@
             <div class="host hosted__container--full">
                 <div class="u-responsive-ratio u-responsive-ratio--hd">
                     @page.video.youtubeId.map { youtubeId =>
-                        <iframe id="hosted-video-@youtubeId"
+                        <div id="youtube-@youtubeId"
                         data-media-id="@{page.video.mediaId}"
                         data-duration="@{page.video.duration}"
                         class="js-hosted-youtube-video hosted__youtube-video"
-                        src="https://www.youtube.com/embed/@youtubeId?modestbranding=1&showinfo=0&rel=0&enablejsapi=1@{if(ConfigEnvironment.isProd && !context.isPreview) "&origin=https://www.theguardian.com" else if(host != "") s"&origin=$host" else ""}"
                         frameborder="0"
-                        allowfullscreen=""></iframe>
+                        allowfullscreen=""
+                        data-asset-id="@youtubeId"></div>
                         @guardianHostedControlButtons(page)
                     }.getOrElse {
                         <video
@@ -78,11 +78,6 @@
                                 <source type="@source.format" src="@source.url">
                             }
                         </video>
-                    }
-                    @if(page.video.youtubeId.isDefined && !Option(page.video.posterUrl).getOrElse("").isEmpty){
-                        <div class="hosted__youtube-poster-image" style="background-image: url(@page.video.posterUrl);">
-                            <div class="hosted__youtube-play-button"></div>
-                        </div>
                     }
                     <div class="hosted-fading js-hosted-fading">
                         <div class="hosted__video-overlay"></div>

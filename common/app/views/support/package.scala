@@ -114,11 +114,16 @@ object `package` {
   }
 }
 
-object AuFriendlyFormat {
-  def apply(date: DateTime)(implicit request: RequestHeader): String = {
+object GUDateTimeFormat {
+  def formatDateTimeForDisplay(date: DateTime, request: RequestHeader): String = {
+    s"${formatDateForDisplay(date, request)} ${formatTimeForDisplay(date, request)}"
+  }
+  def formatDateForDisplay(date: DateTime, request: RequestHeader): String = {
+    date.toString("E d MMM yyyy")
+  }
+  def formatTimeForDisplay(date: DateTime, request: RequestHeader): String = {
     val edition = Edition(request)
     val timezone = edition.timezone
-
     edition.id match {
       case "AU" => date.toString(DateTimeFormat.forPattern("HH.mm").withZone(timezone)) + " " + timezone.getShortName(date.getMillis)
       case _ => date.toString(DateTimeFormat.forPattern("HH.mm z").withZone(timezone))
@@ -189,7 +194,10 @@ object RenderOtherStatus {
   def apply(result: Result)(implicit request: RequestHeader, context: ApplicationContext): Result = result.header.status match {
     case 404 => NoCache(NotFound)
     case 410 if request.isJson => Cached(60)(JsonComponent(gonePage, "status" -> "GONE"))
-    case 410 => Cached(60)(WithoutRevalidationResult(Gone(views.html.expired(gonePage))))
+    case 410 => Cached(60)(WithoutRevalidationResult(Gone(views.html.gone(
+      gonePage,
+      "Sorry - this page has been removed.",
+      "This could be, for example, because content associated with it is not yet published, or due to legal reasons such as the expiry of our rights to publish the content."))))
     case _ => result
   }
 }

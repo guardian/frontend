@@ -2,7 +2,7 @@
 
 <div data-component="football-matches-embed" class="football-matches">
     @matchesList.matchesGroupedByDateAndCompetition.map { case (date, competitionMatches) =>
-    <div class="football-matches__day">
+    <div class="football-embed football-matches__day">
         <div class="date-divider">@date.toString("EEEE d MMMM yyyy")</div>
         @competitionMatches.map { case (competition, matches) =>
         <div class="football-table__container">

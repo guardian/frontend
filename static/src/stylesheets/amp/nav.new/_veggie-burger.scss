@@ -1,0 +1,49 @@
+.veggie-burger {
+    background-color: $highlight-main;
+    bottom: 50px;
+    color: $brightness-7;
+    height: $veggie-burger;
+    width: $veggie-burger;
+    position: absolute;
+    border: 0;
+    border-radius: 50%;
+    outline: none;
+    right: $gs-gutter / 4;
+    z-index: 1;
+
+    @include mq(mobileMedium) {
+        bottom: -$gs-baseline / 4;
+        right: $gs-gutter / 2;
+        top: auto;
+    }
+
+    @include mq(mobileLandscape) {
+        right: $gs-gutter;
+    }
+}
+
+.veggie-burger__icon {
+    margin-top: -1px;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+
+    &,
+    &:before,
+    &:after {
+        background-color: currentColor;
+        content: '';
+        height: $gs-baseline / 6;
+        left: 0;
+        position: absolute;
+        width: $gs-gutter;
+    }
+
+    &:before {
+        top: -$gs-baseline / 2;
+    }
+
+    &:after {
+        bottom: -$gs-baseline / 2;
+    }
+}

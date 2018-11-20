@@ -1,18 +1,148 @@
-.site-message--membership-action-required {
-    color: $garnett-neutral-5;
-    background: $garnett-neutral-1;
-    &:after {
-        @include multiline(3, $garnett-neutral-7, top);
-        content: '';
-        display: block;
-        height: 4px * 3; /*height of multiline (4px) times the number of lines (3)*/
-        margin-bottom: -1px;
-        width: 100%;
+@mixin padding {
+    padding: $gs-baseline 0;
+
+    @include mq(tablet) {
+        padding: $gs-baseline $gs-gutter;
     }
+}
+
+.site-message--membership-action-required {
+    color: $brightness-100;
+    background: $news-dark;
+
+    .site-message__inner {
+        width: auto;
+    }
+
     a {
-        color: $garnett-neutral-5;
+        color: $brightness-7;
         font-weight: 900;
         text-decoration: underline;
+    }
+
+    .site-message__roundel {
+        position: absolute;
+        padding: 0;
+        width: auto;
+        height: auto;
+
+        .inline-icon {
+            fill: $brightness-100;
+            path:last-child {
+                fill: $news-dark;
+            }
+        }
+
+        display: block;
+        top: $gs-baseline/2;
+        right: $gs-baseline + 36px;
+        svg {
+            width: 36px;
+            height: 36px;
+        }
+
+        @include mq(desktop) {
+            left: $gs-gutter;
+            right: auto;
+            svg {
+                width: inherit;
+                height: inherit;
+            }
+        }
+
+        @include mq(tablet) {
+            right: $gs-gutter + 36px;
+        }
+
+    }
+
+    .site-message__close-btn {
+        position: absolute;
+        top: $gs-baseline/2;
+        right: $gs-baseline;
+        height: 36px;
+        width: 36px;
+        
+        .inline-icon {
+            fill: $brightness-100;
+        }
+
+        @include mq(tablet) {
+            right: $gs-gutter;
+        }
+
+    }
+
+    .site-message__copy {
+        @include padding;
+        padding-top: $gs-baseline/4 !important;
+        @include mq(desktop) {
+            margin-left: gs-span(1);
+        }
+        @include mq(leftCol) {
+            margin-left: 0;
+        }
+    }
+
+    .site-message__copy-text, .site-message__copy-heading {
+        @include banner-copy-alignment;
+        display: block;
+        margin-right: 24px;
+        font-size: 17px;
+        line-height: 22px;
+        @include mq(phablet) {
+            width: auto;
+            margin-right: gs-span(1);
+        }
+        @include mq(desktop) {
+            margin-right: gs-span(2);
+            padding-left: 36px + $gs-gutter
+        }
+        @include mq(leftCol) {
+            margin-right: gs-span(3);
+            padding-left: 0;
+        }
+    }
+
+    .site-message__copy-heading {
+        font-size: 24px;
+        line-height: 28px;
+        font-weight: bold;
+        margin-bottom: 5px;
+        margin-right: 72px;
+    }
+
+    .site-message__copy-button {
+        color: $brightness-7;
+        background-color: $highlight-main;
+        border-color: $highlight-main;
+        font-size: 16px;
+        line-height: 40px;
+        height: 42px;
+        font-weight: bold;
+        vertical-align: middle;
+        padding-right: 0;
+        text-decoration: none;
+        margin-top: 10px;
+        padding-left: 1rem;
+        svg {
+            fill: $brightness-7;
+            float: right;
+            margin-left: 36px;
+            height: 2.5rem;
+            width: 2.5rem;
+        }
+
+        &:hover, &:focus {
+            border-color: mix($highlight-main, $brightness-7, 80%);
+            background-color: mix($highlight-main, $brightness-7, 80%);
+        }
+
+        &:focus {
+            outline: auto;
+            outline-color: $sport-bright;
+            outline-width: 5px; 
+        }
     }
 
 }

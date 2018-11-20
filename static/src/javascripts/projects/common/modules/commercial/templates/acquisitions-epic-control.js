@@ -1,32 +1,31 @@
 // @flow
+import { appendToLastElement } from 'lib/array-utils';
+
 export const acquisitionsEpicControlTemplate = ({
-    copy: { heading = '', p1, p2 },
+    copy: { heading = '', paragraphs, highlightedText },
     componentName,
     buttonTemplate,
-    testimonialBlock = '',
     epicClass = '',
     wrapperClass = '',
 }: {
     copy: AcquisitionsEpicTemplateCopy,
     componentName: string,
     buttonTemplate: string,
-    testimonialBlock?: string,
     epicClass?: string,
     wrapperClass?: string,
 }) =>
-    `<div class="contributions__epic ${epicClass}" data-component="${componentName}">
+    `<div class="contributions__epic ${epicClass}" data-component="${componentName}" data-link-name="epic">
         <div class="${wrapperClass}">
             <div>
-                <h2 class="contributions__title contributions__title--epic">
+                <h2 class="contributions__title">
                     ${heading}
                 </h2>
-                <p class="contributions__paragraph contributions__paragraph--epic">
-                    ${p1}
-                </p>
-                ${testimonialBlock}
-                <p class="contributions__paragraph contributions__paragraph--epic">
-                    ${p2}
-                </p>
+                ${appendToLastElement(
+                    paragraphs,
+                    ` <strong><span class="contributions__highlight">${highlightedText}</span></strong>`
+                )
+                    .map(paragraph => `<p>${paragraph}</p>`)
+                    .join('')}
             </div>
     
             ${buttonTemplate}

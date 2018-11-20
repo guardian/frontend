@@ -1,26 +1,45 @@
 // @flow
+import marque36icon from 'svgs/icon/marque-36.svg';
+import closeCentralIcon from 'svgs/icon/close-central.svg';
+import arrowWhiteRight from 'svgs/icon/arrow-white-right.svg';
+import config from 'lib/config';
+
 export const acquisitionsBannerControlTemplate = (
     params: EngagementBannerTemplateParams
-) =>
-    `<div id="site-message__message">
-        <div class="site-message__message site-message__message--membership">
-            <div class="membership__message-text-long">
-                <span class = "membership__message-text">
-                    ${params.messageText}${params.ctaText}
-                </span>
-            </div>
-            <span class="membership__paypal-container">
-                <img class="membership__paypal-logo" src="${
-                    params.paypalAndCreditCardImage
-                }" alt="Paypal and credit card">
-                <span class="membership__support-button"><a class="message-button-rounded__cta ${
-                    params.colourClass
-                }" href="${params.linkUrl}">${params.buttonCaption}${
-        params.buttonSvg
-    }</a></span>
-            </span>
+): string =>
+    `
+    <div class="engagement-banner__close">
+        <div class="engagement-banner__roundel">
+            ${marque36icon.markup}
         </div>
-        <a class="u-faux-block-link__overlay js-engagement-message-link" target="_blank" href="${
-            params.linkUrl
-        }" data-link-name="Read more link"></a>
-    </div>`;
+        <button class="button engagement-banner__close-button js-site-message-close js-engagement-banner-close-button" data-link-name="hide release message">
+            <span class="u-h">Close</span>
+            ${closeCentralIcon.markup}
+        </button>
+    </div>
+    <div class="engagement-banner__container">
+        <div class="engagement-banner__text">
+            ${params.messageText}${params.ctaText}
+        </div>
+        <div class="engagement-banner__cta">
+            <button class="button engagement-banner__button" href="${
+                params.linkUrl
+            }">
+                ${params.buttonCaption}${arrowWhiteRight.markup}
+            </button>
+            <img
+                class="engagement-banner__payment-logos"
+                src="${config.get(
+                    'images.acquisitions.paypal-and-credit-card',
+                    ''
+                )}"
+                alt="PayPal and credit card"
+            >
+        </div>
+    </div>
+    <a
+        class="u-faux-block-link__overlay"
+        target="_blank"
+        href="${params.linkUrl}"
+    ></a>
+    `;

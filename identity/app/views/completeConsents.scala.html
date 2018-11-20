@@ -1,21 +1,26 @@
 @import com.gu.identity.model.EmailNewsletters
 @import services.EmailPrefsData
 
+@import controllers.editprofile.GuestPasswordFormData
 @(
     idRequest: services.IdentityRequest,
     idUrlBuilder: services.IdentityUrlBuilder,
     returnUrl: String,
+    email: String,
     emailPrefsForm: Form[EmailPrefsData],
+    setPasswordForm: Form[GuestPasswordFormData],
     emailSubscriptions: List[String],
     availableLists: EmailNewsletters,
 )(implicit request: RequestHeader, messages: play.api.i18n.Messages)
 
 @import common.LinkTo
+@import form.IdFormHelpers._
+@import views.html.fragments.form.inputField
+@import views.html.fragments.registrationFooter
 
 @buildIdentityUrl(endpoint: String) = {
 @idUrlBuilder.buildUrl(s"/$endpoint", idRequest)
 }
-
 <div class="identity-wrapper monocolumn-wrapper">
     <section class="identity-forms-message">
         <h1 class="identity-title">Thank you! We've got your preferences</h1>
@@ -29,7 +34,7 @@
             <form>
                 @views.html.helper.CSRF.formField
                 <div>
-                    <h1 class="identity-title--small">Before you go...</h1>
+                    <h1 class="identity-upsell-title">Before you go...</h1>
                     <div class="identity-forms-message__body">
                         <p>Did you know that we have <b>more than 40</b> different email newsletters that focus on a range of diverse topics - from politics and the latest tech to documentaries, sport and scientific breakthroughs.</p>
                         <p>Why not take a few seconds to see whether there is anything here for you?</p>
@@ -43,11 +48,25 @@
                 </div>
             </form>
         }
+
+        @request.cookies.get("SC_GU_GUEST_PW_SET").map { passwordSetToken =>
+            <div
+                class="js-identity-upsell-account-creation"
+                data-email="@{email}"
+                data-account-token="@{passwordSetToken.value}"
+                data-csrf="@{play.filters.csrf.CSRF.getToken.map(_.value)}"
+            ></div>
+        }
+
         <aside class="identity-forms-message__body">
-            <a class="manage-account__button manage-account__button--secondary" data-link-name="complete-consents : cta-bottom" href="@LinkTo(returnUrl)">
-                Go to the theguardian.com
-                @fragments.inlineSvg("arrow-right", "icon")
+            <hr class="manage-account-small-divider" />
+            <a
+            class="manage-account__button manage-account__button--light"
+            data-link-name="complete-consents : cta-bottom"
+            href="@{returnUrl}">
+                Go to The Guardian
             </a>
         </aside>
+
     </section>
 </div>

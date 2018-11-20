@@ -3,6 +3,7 @@
 @import views.support.Commercial.isPaidContent
 @import views.support.ContentOldAgeDescriber
 @import _root_.model.ContentDesignType.RichContentDesignType
+@import views.support.RenderClasses
 
 
 @byline() = {
@@ -77,16 +78,15 @@
     }
 }
 
-<div class="content__meta-container js-content-meta js-football-meta u-cf
-    @if(item.trail.byline.isEmpty){ content__meta-container--no-byline}
-    @if(item.tags.isLiveBlog) { content__meta-container--liveblog}
-    @if(item.elements.hasShowcaseMainElement && !item.content.isImmersive){ content__meta-container--showcase}
-    @if(item.content.hasTonalHeaderByline && item.metadata.designType.nameOrDefault != "analysis"){ content__meta-container--tonal-header}
-    @item.content.contributorBio.map { bio => content__meta-container--bio}
-    @if(item.tags.contributors.length == 1 && item.tags.contributors.headOption.exists(_.properties.twitterHandle.nonEmpty)) { content__meta-container--twitter}
-    @if(item.tags.contributors.length == 1 && item.tags.contributors.headOption.exists(_.properties.emailAddress.nonEmpty)) { content__meta-container--email}">
-
-
+<div class="@RenderClasses(Map(
+        "content__meta-container--no-byline"    -> item.trail.byline.isEmpty,
+        "content__meta-container--liveblog"     -> item.tags.isLiveBlog,
+        "content__meta-container--showcase"     -> (item.elements.hasShowcaseMainElement && !item.content.isImmersive),
+        "content__meta-container--tonal-header" -> (item.content.hasTonalHeaderByline && item.metadata.designType.nameOrDefault != "analysis"),
+        "content__meta-container--twitter"      -> (item.tags.contributors.length == 1 && item.tags.contributors.headOption.exists(_.properties.twitterHandle.nonEmpty)),
+        "content__meta-container--email"        -> (item.tags.contributors.length == 1 && item.tags.contributors.headOption.exists(_.properties.emailAddress.nonEmpty)),
+    ), "content__meta-container", "js-content-meta", "u-cf", item.content.contributorBio.map("content__meta-container--" ++ _).getOrElse(""))
+    ">
     @if(
         item.tags.isVideo ||
         item.tags.isAudio ||

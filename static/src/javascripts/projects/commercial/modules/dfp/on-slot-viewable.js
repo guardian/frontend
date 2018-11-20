@@ -1,6 +1,5 @@
 // @flow
 
-import config from 'lib/config';
 import { getUrlVars } from 'lib/url';
 
 import type {
@@ -14,7 +13,7 @@ import { enableLazyLoad } from 'commercial/modules/dfp/lazy-load';
 
 const setSlotAdRefresh = (event: ImpressionViewableEvent): void => {
     const advert: ?Advert = getAdvertById(event.slot.getSlotElementId());
-    const viewabilityThresholdMs = 30000; // 30 seconds
+    const viewabilityThresholdMs = 30000; // 30 seconds refresh
 
     if (advert && advert.shouldRefresh) {
         const onDocumentVisible = () => {
@@ -49,16 +48,13 @@ const setSlotAdRefresh = (event: ImpressionViewableEvent): void => {
 
   Returns a function to be used as a callback for GTP 'impressionViewable' event
 
-  Uses the global config and URL parameters.
+  Uses URL parameters.
 
  */
 export const onSlotViewableFunction = (): ImpressionViewableEventCallback => {
     const queryParams = getUrlVars();
 
-    if (
-        queryParams.adrefresh !== 'false' &&
-        config.get('tests.commercialAdRefreshVariant')
-    ) {
+    if (queryParams.adrefresh !== 'false') {
         return setSlotAdRefresh;
     }
 

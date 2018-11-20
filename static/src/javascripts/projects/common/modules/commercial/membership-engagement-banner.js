@@ -1,30 +1,61 @@
 // @flow
 import config from 'lib/config';
 import { local } from 'lib/storage';
-import { adblockInUse } from 'lib/detect';
 import { Message } from 'common/modules/ui/message';
 import mediator from 'lib/mediator';
 import { membershipEngagementBannerTests } from 'common/modules/experiments/tests/membership-engagement-banner-tests';
-import { inlineSvg } from 'common/views/svgs';
 import { testCanBeRun } from 'common/modules/experiments/test-can-run-checks';
 import { isInTest, variantFor } from 'common/modules/experiments/segment-util';
-import { engagementBannerParams } from 'common/modules/commercial/membership-engagement-banner-parameters';
+import {
+    defaultEngagementBannerParams,
+    getUserVariantParams,
+    getControlEngagementBannerParams,
+} from 'common/modules/commercial/membership-engagement-banner-parameters';
 import { isBlocked } from 'common/modules/commercial/membership-engagement-banner-block';
-import { getSync as getGeoLocation } from 'lib/geolocation';
 import { shouldShowReaderRevenue } from 'common/modules/commercial/contributions-utilities';
 import type { Banner } from 'common/modules/ui/bannerPicker';
+import bean from 'bean';
+import fetchJson from 'lib/fetch-json';
+import reportError from 'lib/report-error';
 
 import {
     submitComponentEvent,
     addTrackingCodesToUrl,
 } from 'common/modules/commercial/acquisitions-ophan';
 import { acquisitionsBannerControlTemplate } from 'common/modules/commercial/templates/acquisitions-banner-control';
+import userPrefs from 'common/modules/user-prefs';
 
-// change messageCode to force redisplay of the message to users who already closed it.
-const messageCode = 'engagement-banner-2018-05-18';
+type BannerDeployLog = {
+    time: string,
+};
 
-const canDisplayMembershipEngagementBanner = (): Promise<boolean> =>
-    adblockInUse.then(adblockUsed => !adblockUsed && shouldShowReaderRevenue());
+const messageCode = 'engagement-banner';
+const minArticles = 3;
+
+const getTimestampOfLastBannerDeploy = (): Promise<string> =>
+    fetchJson('/reader-revenue/contributions-banner-deploy-log', {
+        mode: 'cors',
+    }).then((resp: BannerDeployLog) => resp && resp.time);
+
+const hasBannerBeenRedeployedSinceClosed = (
+    userLastClosedBannerAt: string
+): Promise<boolean> =>
+    getTimestampOfLastBannerDeploy()
+        .then(timestamp => {
+            const bannerLastDeployedAt = new Date(timestamp);
+            return bannerLastDeployedAt > new Date(userLastClosedBannerAt);
+        })
+        .catch(err => {
+            // Capture in sentry
+            reportError(
+                new Error(
+                    `Unable to get contributions banner deploy log: ${err}`
+                ),
+                { feature: 'reader-revenue-contributions-banner' },
+                false
+            );
+            return false;
+        });
 
 const getUserTest = (): ?AcquisitionsABTest =>
     membershipEngagementBannerTests.find(
@@ -33,37 +64,6 @@ const getUserTest = (): ?AcquisitionsABTest =>
 
 const getUserVariant = (test: ?ABTest): ?Variant =>
     test ? variantFor(test) : undefined;
-
-const buildCampaignCode = (campaignId: string, variantId: string): string =>
-    `${campaignId}_${variantId}`;
-
-const getUserVariantParams = (
-    userVariant: ?Variant,
-    campaignId: ?string
-): EngagementBannerParams | {} => {
-    if (
-        campaignId &&
-        userVariant &&
-        userVariant.options &&
-        userVariant.options.engagementBannerParams
-    ) {
-        const userVariantParams = userVariant.options.engagementBannerParams;
-
-        if (!userVariantParams.campaignCode) {
-            userVariantParams.campaignCode = buildCampaignCode(
-                campaignId,
-                userVariant.id
-            );
-        }
-
-        return userVariantParams;
-    } else if (campaignId && userVariant) {
-        return {
-            campaignCode: buildCampaignCode(campaignId, userVariant.id),
-        };
-    }
-    return {};
-};
 
 /*
  * Params for the banner are overlaid in this order, earliest taking precedence:
@@ -82,28 +82,64 @@ const getUserVariantParams = (
  * otherwise a populated params object that looks like this:
  *
  *  {
- *    minArticles: 5, // how many articles should the user see before they get the engagement banner?
  *    messageText: "..."
- *    colourStrategy: // a function to determine what css class to use for the banner's colour
  *    buttonCaption: "Become a Supporter"
  *  }
  *
  */
-const deriveBannerParams = (location: string): ?EngagementBannerParams => {
-    const defaultParams = engagementBannerParams(location);
-    const userTest = getUserTest();
-    const campaignId = userTest ? userTest.campaignId : undefined;
-    const userVariant = getUserVariant(userTest);
 
-    if (userVariant && userVariant.blockEngagementBanner) {
-        return;
+const buildCampaignCode = (
+    userTest: ?AcquisitionsABTest,
+    userVariant: ?Variant
+): ?{ campaignCode: string } => {
+    if (userTest && userVariant) {
+        const params = userVariant.engagementBannerParams;
+        if (params && params.campaignCode) {
+            return params.campaignCode;
+        }
+        return { campaignCode: `${userTest.campaignId}_${userVariant.id}` };
+    }
+};
+
+const deriveBannerParams = (): Promise<?EngagementBannerParams> => {
+    const userTest: ?AcquisitionsABTest = getUserTest();
+    const userVariant: ?Variant = getUserVariant(userTest);
+    const defaultParams: EngagementBannerParams = defaultEngagementBannerParams();
+
+    // if the user isn't in a test variant, use the control in google docs
+    if (!userVariant) {
+        return getControlEngagementBannerParams().then(controlParams => ({
+            ...defaultParams,
+            ...controlParams,
+        }));
     }
 
-    return Object.assign(
-        {},
-        defaultParams,
-        getUserVariantParams(userVariant, campaignId)
+    const campaignCode: ?{ campaignCode: string } = buildCampaignCode(
+        userTest,
+        userVariant
     );
+
+    return getUserVariantParams(userVariant)
+        .then(variantParams => ({
+            ...defaultParams,
+            ...variantParams,
+            ...campaignCode,
+        }))
+        .catch(() => defaultParams);
+};
+
+const userVariantCanShow = (): boolean => {
+    const userTest = getUserTest();
+    const userVariant = getUserVariant(userTest);
+
+    if (
+        userVariant &&
+        userVariant.options &&
+        userVariant.options.blockEngagementBanner
+    ) {
+        return false;
+    }
+    return true;
 };
 
 const getVisitCount = (): number => local.get('gu.alreadyVisited') || 0;
@@ -111,23 +147,16 @@ const getVisitCount = (): number => local.get('gu.alreadyVisited') || 0;
 const selectSequentiallyFrom = (array: Array<string>): string =>
     array[getVisitCount() % array.length];
 
-const messageModifierClass = (
-    colourClass: string,
-    modifierClass: ?string
-): string => {
-    if (modifierClass) {
-        return `${colourClass} ${modifierClass}`;
-    }
+const hideBanner = (banner: Message) => {
+    banner.hide();
 
-    return colourClass;
+    // Store timestamp in localStorage
+    userPrefs.set('engagementBannerLastClosedAt', new Date().toISOString());
 };
 
 const showBanner = (params: EngagementBannerParams): void => {
     const test = getUserTest();
     const variant = getUserVariant(test);
-    const paypalAndCreditCardImage =
-        config.get('images.acquisitions.paypal-and-credit-card') || '';
-    const colourClass = params.colourStrategy();
     const messageText = Array.isArray(params.messageText)
         ? selectSequentiallyFrom(params.messageText)
         : params.messageText;
@@ -144,15 +173,11 @@ const showBanner = (params: EngagementBannerParams): void => {
                 : undefined,
     });
     const buttonCaption = params.buttonCaption;
-    const buttonSvg = inlineSvg('arrowWhiteRight');
     const templateParams = {
         messageText,
         ctaText,
-        paypalAndCreditCardImage,
-        colourClass,
         linkUrl,
         buttonCaption,
-        buttonSvg,
     };
 
     const renderedBanner: string = params.template
@@ -163,10 +188,15 @@ const showBanner = (params: EngagementBannerParams): void => {
         siteMessageCloseBtn: 'hide',
         siteMessageComponentName: params.campaignCode,
         trackDisplay: true,
-        cssModifierClass: messageModifierClass(
-            colourClass,
-            params.bannerModifierClass
-        ),
+        cssModifierClass: params.bannerModifierClass || 'engagement-banner',
+        customJs() {
+            bean.on(
+                document,
+                'click',
+                '.js-engagement-banner-close-button',
+                () => hideBanner(this)
+            );
+        },
     }).show(renderedBanner);
 
     if (messageShown) {
@@ -194,25 +224,37 @@ const showBanner = (params: EngagementBannerParams): void => {
     }
 };
 
-let bannerParams;
-
-const show = (): void => {
-    if (bannerParams) {
-        showBanner(bannerParams);
-    }
-};
+const show = (): Promise<boolean> =>
+    deriveBannerParams().then(params => {
+        if (params) {
+            showBanner(params);
+            return Promise.resolve(true);
+        }
+        return Promise.resolve(false);
+    });
 
 const canShow = (): Promise<boolean> => {
     if (!config.get('switches.membershipEngagementBanner') || isBlocked()) {
         return Promise.resolve(false);
     }
 
-    bannerParams = deriveBannerParams(getGeoLocation());
+    const hasSeenEnoughArticles: boolean = getVisitCount() >= minArticles;
 
-    if (bannerParams && getVisitCount() >= bannerParams.minArticles) {
-        return canDisplayMembershipEngagementBanner();
+    if (
+        hasSeenEnoughArticles &&
+        shouldShowReaderRevenue() &&
+        userVariantCanShow()
+    ) {
+        const userLastClosedBannerAt = userPrefs.get(
+            'engagementBannerLastClosedAt'
+        );
+
+        if (!userLastClosedBannerAt) {
+            // show the banner if we can't get a value for this
+            return Promise.resolve(true);
+        }
+        return hasBannerBeenRedeployedSinceClosed(userLastClosedBannerAt);
     }
-
     return Promise.resolve(false);
 };
 
@@ -222,4 +264,4 @@ const membershipEngagementBanner: Banner = {
     canShow,
 };
 
-export { membershipEngagementBanner };
+export { membershipEngagementBanner, canShow, messageCode, hideBanner };

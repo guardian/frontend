@@ -11,11 +11,10 @@ import model._
 import play.api.http.HttpConfiguration
 import play.api.mvc._
 import play.filters.csrf.{CSRFAddToken, CSRFCheck}
-import services.{IdRequestParser, IdentityUrlBuilder, ReturnUrlVerifier, ProfileRedirectService, _}
+import services.{IdRequestParser, IdentityUrlBuilder, ReturnUrlVerifier, _}
 
 class EditProfileController(
     override val idUrlBuilder: IdentityUrlBuilder,
-    override val redirectDecisionService: ProfileRedirectService,
     override val authenticatedActions: AuthenticatedActions,
     override val identityApiClient: IdApiClient,
     override val idRequestParser: IdRequestParser,
@@ -23,6 +22,7 @@ class EditProfileController(
     override val csrfAddToken: CSRFAddToken,
     override val returnUrlVerifier: ReturnUrlVerifier,
     override val newsletterService: NewsletterService,
+    override val signinService: PlaySigninService,
     override implicit val profileFormsMapping: ProfileFormsMapping,
     override implicit val context: ApplicationContext,
     val httpConfiguration: HttpConfiguration,

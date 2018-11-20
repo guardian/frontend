@@ -2,7 +2,7 @@
 // If you have other styles, but would like to maintain the functionality,
 // just apply .dropdown
 .dropdown-styled {
-    border-top: 1px solid $neutral-4;
+    border-top: 1px solid $brightness-86;
     position: relative;
 
     .dropdown__toggle,
@@ -24,21 +24,21 @@
 
     .dropdown__button {
         padding: $gs-baseline/2 0;
-        color: $neutral-1;
+        color: $brightness-7;
         text-align: left;
 
         &:focus {
-            color: $guardian-brand;
+            color: $brand-main;
         }
 
         .control {
-            border-color: $neutral-5;
+            border-color: $brightness-86;
             float: right;
             position: relative;
         }
 
         .inline-icon {
-            background-color: $neutral-2;
+            background-color: $brightness-46;
 
             svg {
                 display: block;

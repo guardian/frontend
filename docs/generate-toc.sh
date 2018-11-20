@@ -53,5 +53,6 @@ done
 echo ""
 echo "---"
 cat how-to-create-a-doc-file.md
+echo ""
 
 popd > /dev/null

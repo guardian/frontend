@@ -10,7 +10,8 @@
     idUrlBuilder: services.IdentityUrlBuilder,
     idRequest: services.IdentityRequest,
     user: com.gu.identity.model.User,
-    accountDetailsForm: Form[_root_.form.AccountFormData])(implicit request: RequestHeader, messages: play.api.i18n.Messages)
+    accountDetailsForm: Form[_root_.form.AccountFormData],
+    changedEmail: Option[String]= None)(implicit request: RequestHeader, messages: play.api.i18n.Messages)
 
 @buildIdentityUrl(endpoint: String) = {
     @idUrlBuilder.buildUrl(s"/$endpoint", idRequest)
@@ -24,8 +25,8 @@
     <button type="submit" class="is-hidden"></button>
     @views.html.helper.CSRF.formField
 
-    @if(accountDetailsForm.globalError.isDefined) {
-        <div class="form__error">@accountDetailsForm.globalErrors.map(_.message).mkString(", ")</div>
+    @if(accountDetailsForm.hasErrors) {
+        <div class="form__error">There was a problem processing the form: @accountDetailsForm.errors.map(_.message)</div>
     }
 
     <fieldset class="fieldset">
@@ -43,6 +44,15 @@
 
                 @inputField(Input(accountDetailsForm("primaryEmailAddress"), ('_label, "Email address"),
                     Symbol("data-test-id") -> "email-address"))
+
+                @changedEmail.map { email =>
+                    <li class="form-field form-field--email-change">
+                        @fragments.inlineSvg("envelope", "icon")
+                        <p class="form__note">
+                            To verify your new email address <b>@email</b> please check your inbox - the confirmation email is on its way. In the meantime you should keep using your old credentials to sign in.<br />
+                        </p>
+                    </li>
+                }
 
                 <li class="form-field form-field--email-validation">
                     @if(!user.statusFields.userEmailValidated.getOrElse(false)){
@@ -120,36 +130,6 @@
                 )
                 @inputField(Input(accountDetailsForm("firstName"), ('_label, "First name"), Symbol("data-test-id") -> "first-name"))
                 @inputField(Input(accountDetailsForm("secondName"), ('_label, "Last name"), Symbol("data-test-id") -> "last-name"))
-
-                <li class="form-field form-fields__inline form-fields--date-of-birth">
-                    <span class="form-fields__heading">Date of birth</span>
-                    <ul class="u-unstyled">
-                        @if(accountDetailsForm("birthDate").hasErrors) {
-                            <div class="form__error">@accountDetailsForm("birthDate").errors.map(_.message).mkString(", ")</div>
-                        }
-                        @select(
-                            accountDetailsForm("birthDate.day"),
-                            options((1 to 31).toList map {_.toString}),
-                            ('_label, "Day"),
-                            ('_showConstraints, false),
-                            ('_default, "")
-                        )
-                        @select(
-                            accountDetailsForm("birthDate.month"),
-                            options((1 to 12).toList map {_.toString}),
-                            ('_label, "Month"),
-                            ('_showConstraints, false),
-                            ('_default, "")
-                        )
-                        @select(
-                            accountDetailsForm("birthDate.year"),
-                            options((1850 to now.getYear).reverse.toList map {_.toString}),
-                            ('_label, "Year"),
-                            ('_showConstraints, false),
-                            ('_default, "")
-                        )
-                    </ul>
-                </li>
             </ul>
         </div>
     </fieldset>

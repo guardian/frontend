@@ -1,4 +1,12 @@
 // @flow
+import reportError from 'lib/report-error';
+
+const ERR_INVALID_COOKIE_NAME = `Cookie must not contain invalid characters (space, tab and the following characters: '()<>@,;"/[]?={}')`;
+
+// subset of https://github.com/guzzle/guzzle/pull/1131
+const isValidCookieValue = (name: string): boolean =>
+    !/[()<>@,;"\\/[\]?={} \t]/g.test(name);
+
 const getShortDomain = ({
     isCrossSubdomain = false,
 }: { isCrossSubdomain: boolean } = {}): string => {
@@ -41,6 +49,14 @@ const addCookie = (
 ): void => {
     const expires = new Date();
 
+    if (!isValidCookieValue(name) || !isValidCookieValue(value)) {
+        reportError(
+            new Error(`${ERR_INVALID_COOKIE_NAME} .${name}=${value}`),
+            {},
+            false
+        );
+    }
+
     if (daysToLive) {
         expires.setDate(expires.getDate() + daysToLive);
     } else {
@@ -68,11 +84,26 @@ const addForMinutes = (
 ): void => {
     const expires = new Date();
 
+    if (!isValidCookieValue(name) || !isValidCookieValue(value)) {
+        reportError(
+            new Error(`${ERR_INVALID_COOKIE_NAME} .${name}=${value}`),
+            {},
+            false
+        );
+    }
+
     expires.setMinutes(expires.getMinutes() + minutesToLive);
     document.cookie = `${name}=${value}; path=/; expires=${expires.toUTCString()};${getDomainAttribute()}`;
 };
 
 const addSessionCookie = (name: string, value: string): void => {
+    if (!isValidCookieValue(name) || !isValidCookieValue(value)) {
+        reportError(
+            new Error(`${ERR_INVALID_COOKIE_NAME} .${name}=${value}`),
+            {},
+            false
+        );
+    }
     document.cookie = `${name}=${value}; path=/;${getDomainAttribute()}`;
 };
 
@@ -100,6 +131,10 @@ const getCookie = (name: string): ?string => {
         return cookieVal[0];
     }
     return null;
+};
+
+export const _ = {
+    isValidCookieValue,
 };
 
 export {

@@ -1,10 +1,20 @@
 package conf.switches
 
 import common.editions._
-import conf.switches.SwitchGroup.ABTests
+import conf.switches.SwitchGroup.{ABTests, Commercial}
 import org.joda.time.LocalDate
 
 trait ABTestSwitches {
+
+  Switch(
+    ABTests,
+    "ab-commercial-cmp-customise",
+    "change the location and format of your CMP data",
+    owners = Seq(Owner.withGithub("katebee")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 9, 30),
+    exposeClientSide = true
+  )
 
   Switch(
     ABTests,
@@ -23,26 +33,6 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("joelochlann")),
     safeState = Off,
     sellByDate = new LocalDate(2019, 1, 24),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-sign-in-engagement-banner-display",
-    "This test will show a sign in engagement banner to non signed in users",
-    owners = Seq(Owner.withGithub("walaura")),
-    safeState = Off,
-    sellByDate = new LocalDate(2019, 1, 24),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-first-pv-consent-blocker",
-    "This test will make the cookie consent banner blocking",
-    owners = Seq(Owner.withGithub("walaura")),
-    safeState = Off,
-    sellByDate = new LocalDate(2019,5, 31),
     exposeClientSide = true
   )
 
@@ -88,41 +78,161 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-acquisitions-epic-always-ask-april-story",
-    "turn on always ask for this story",
-    owners = Seq(Owner.withGithub("jranks123")),
+    "ab-acquisitions-epic-from-google-doc-one-variant",
+    "Serves an epic with copy from a Google Doc",
+    owners = Seq(Owner.withGithub("joelochlann")),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 6, 29),
+    sellByDate = new LocalDate(2019, 6, 5),
     exposeClientSide = true
   )
 
   Switch(
     ABTests,
-    "ab-acquisitions-epic-border-thankyou",
-    "Try 2 variants - one adding a border to the epic and one with copy thanking our readers",
-    owners = Seq(Owner.withGithub("jranks123")),
+    "ab-acquisitions-epic-from-google-doc-two-variants",
+    "Serves an epic with copy from a Google Doc",
+    owners = Seq(Owner.withGithub("joelochlann")),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 6, 29),
+    sellByDate = new LocalDate(2019, 6, 5),
     exposeClientSide = true
   )
 
   Switch(
     ABTests,
-    "ab-acquisitions-engagement-banner-highlight",
-    "Hihglight a line in the banner",
-    owners = Seq(Owner.withGithub("jranks123")),
+    "ab-acquisitions-epic-from-google-doc-three-variants",
+    "Serves an epic with copy from a Google Doc",
+    owners = Seq(Owner.withGithub("joelochlann")),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 6, 29),
+    sellByDate = new LocalDate(2019, 6, 5),
     exposeClientSide = true
   )
 
   Switch(
     ABTests,
-    "ab-acquisitions-epic-native-vs-dfp",
-    "See if there is any difference in annualised value between serving the Epic natively vs DFP",
-    owners = Seq(Owner.withGithub("Mullefa")),
-    safeState = On,
-    sellByDate = new LocalDate(2018, 6, 19), // Tuesday
+    "ab-acquisitions-epic-from-google-doc-four-variants",
+    "Serves an epic with copy from a Google Doc",
+    owners = Seq(Owner.withGithub("joelochlann")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 6, 5),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-from-google-doc-five-variants",
+    "Serves an epic with copy from a Google Doc",
+    owners = Seq(Owner.withGithub("joelochlann")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 6, 5),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-commercial-prebid-safeframe",
+    "Test the impact of serving prebid ads in safeframes",
+    owners = Seq(Owner.withGithub("jeteve")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 9, 30),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-commercial-ad-verification",
+    "Test the impact of verifiyng ads",
+    owners = Seq(Owner.withGithub("jeteve")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 9, 30),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-iframe-test-v2",
+    "Test displaying the Epic inside an iframe (with no Google javascript running)",
+    owners = Seq(Owner.withGithub("joelochlann")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 7, 31),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-banner-from-google-doc-one-variant",
+    "serves an banner with copy from a google doc",
+    owners = Seq(Owner.withGithub("tsop14")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 6, 6),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-banner-from-google-doc-two-variants",
+    "Serves an banner with copy from a Google Doc",
+    owners = Seq(Owner.withGithub("tsop14")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 6, 6),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-banner-from-google-doc-three-variants",
+    "Serves an banner with copy from a Google Doc",
+    owners = Seq(Owner.withGithub("tsop14")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 6, 6),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-banner-from-google-doc-four-variants",
+    "Serves an banner with copy from a Google Doc",
+    owners = Seq(Owner.withGithub("tsop14")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 6, 6),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-banner-from-google-doc-five-variants",
+    "Serves an banner with copy from a Google Doc",
+    owners = Seq(Owner.withGithub("tsop14")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 6, 6),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-aus-fairfax",
+    "Tests an epic with custom copy in Australia which alludes to Fairfax Media takeover",
+    owners = Seq(Owner.withGithub("joelochlann")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 6, 6),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-one-million-campaign-no-control",
+    "Tests an epic with custom copy and design for the One Million campaign",
+    owners = Seq(Owner.withGithub("joelochlann")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 11, 23),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-one-million-campaign-au",
+    "Tests an epic with custom copy and design for the One Million campaign",
+    owners = Seq(Owner.withGithub("joelochlann")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 11, 23),
     exposeClientSide = true
   )
 

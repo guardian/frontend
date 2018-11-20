@@ -55,9 +55,8 @@ import scala.concurrent.Future
     val authenticatedUser = AuthenticatedUser(user, testAuth, true)
     val phoneNumbers = PhoneNumbers
 
-    val redirectDecisionService = new ProfileRedirectService(newsletterService, idRequestParser, controllerComponent)
-    val authenticatedActions = new AuthenticatedActions(authService, api, mock[IdentityUrlBuilder], controllerComponent, newsletterService, idRequestParser, redirectDecisionService)
-
+    val authenticatedActions = new AuthenticatedActions(authService, api, mock[IdentityUrlBuilder], controllerComponent, newsletterService, idRequestParser)
+    val signinService = mock[PlaySigninService]
     val profileFormsMapping = ProfileFormsMapping(
       new AccountDetailsMapping,
       new PrivacyMapping,
@@ -72,11 +71,9 @@ import scala.concurrent.Future
     when(idRequest.returnUrl) thenReturn None
 
     when(api.userEmails(MockitoMatchers.anyString(), MockitoMatchers.any[TrackingData])) thenReturn Future.successful(Right(Subscriber("Text", List(EmailList("37")))))
-    when(api.updateUserEmails(MockitoMatchers.anyString(), MockitoMatchers.any[Subscriber], MockitoMatchers.any[Auth], MockitoMatchers.any[TrackingData])) thenReturn Future.successful(Right(()))
 
     lazy val controller = new EditProfileController(
       idUrlBuilder,
-      redirectDecisionService,
       authenticatedActions,
       api,
       idRequestParser,
@@ -84,6 +81,7 @@ import scala.concurrent.Future
       csrfAddToken,
       returnUrlVerifier,
       newsletterService,
+      signinService,
       profileFormsMapping,
       testApplicationContext,
       httpConfiguration,
@@ -134,38 +132,6 @@ import scala.concurrent.Future
       }
     }
 
-
-    "submitPrivacyForm method is called with valid CSRF request" should {
-      "post UserUpdateDTO with consent to IDAPI" in new EditProfileFixture {
-        val consent = Consent(Supporter.id, "user", false)
-
-        val fakeRequest = FakeCSRFRequest(csrfAddToken)
-          .withFormUrlEncodedBody(
-            "consents[0].actor" -> consent.actor,
-            "consents[0].id" -> consent.id,
-            "consents[0].consented" -> consent.consented.toString,
-            "consents[0].privacyPolicyVersion" -> consent.privacyPolicyVersion.toString,
-            "consents[0].timestamp" -> consent.timestamp.toString(ISODateTimeFormat.dateTimeNoMillis.withZoneUTC()),
-            "consents[0].version" -> consent.version.toString
-          )
-
-        when(api.saveUser(MockitoMatchers.any[String], MockitoMatchers.any[UserUpdateDTO], MockitoMatchers.any[Auth]))
-          .thenReturn(Future.successful(Right(user.copy(consents = List(consent)))))
-
-        val result = controller.saveConsentPreferences().apply(fakeRequest)
-
-        status(result) should be(200)
-
-        val userUpdateDTOCapture = ArgumentCaptor.forClass(classOf[UserUpdateDTO])
-        verify(api).saveUser(MockitoMatchers.eq(userId), userUpdateDTOCapture.capture(), MockitoMatchers.eq(testAuth))
-        val userUpdateDTO = userUpdateDTOCapture.getValue
-
-        userUpdateDTO.consents.value.head.actor should equal(consent.actor)
-        userUpdateDTO.consents.value.head.id should equal(consent.id)
-        userUpdateDTO.consents.value.head.consented should equal(consent.consented)
-      }
-    }
-
     "The submitAccountForm method" should {
       object FakeRequestAccountData {
         val primaryEmailAddress = "john.smith@bobmail.com"
@@ -176,7 +142,7 @@ import scala.concurrent.Future
         val address2 = "London"
         val address3 = ""
         val address4 = ""
-        val postcode = "N1 9GU"
+        val postcode = "N1 9GU "
         val country = Countries.UK
         val billingAddress1 = "Buckingham Palace"
         val billingAddress2 = "London"
@@ -438,44 +404,14 @@ import scala.concurrent.Future
       }
     }
 
-    "saveEmailPreferences method is called with valid form body" should {
-      "respond with success body if IDAPI post email endpoint returns 200" in new EditProfileFixture {
-        val fakeRequestEmailPrefs = FakeCSRFRequest(csrfAddToken)
-        when(api.updateUserEmails(MockitoMatchers.anyString(), MockitoMatchers.any[Subscriber], MockitoMatchers.any[Auth], MockitoMatchers.any[TrackingData])) thenReturn Future.successful(Right(()))
-
-        val result = controller.saveEmailPreferencesAjax().apply(fakeRequestEmailPrefs)
-        status(result) should be(200)
-        contentAsString(result) should include ("updated")
-
-        verify(api).updateUserEmails(userId, Subscriber("HTML", Nil), testAuth, trackingData)
-      }
-
-      "respond with error body if IDAPI post email endpoint returns error" in new EditProfileFixture {
-        val fakeRequestEmailPrefs = FakeCSRFRequest(csrfAddToken)
-        val errors = List(Error("Test message", "Test description", 500))
-        when(api.updateUserEmails(MockitoMatchers.anyString(), MockitoMatchers.any[Subscriber], MockitoMatchers.any[Auth], MockitoMatchers.any[TrackingData])) thenReturn Future.successful(Left(errors))
-
-        val result = controller.saveEmailPreferencesAjax().apply(fakeRequestEmailPrefs)
-        status(result) should not be(200)
-        contentAsString(result) should include ("There was an error saving your preferences")
-
-        verify(api).updateUserEmails(userId, Subscriber("HTML", Nil), testAuth, trackingData)
-      }
-    }
-
     "displayEmailPrefsForm method" should {
-      "Redirect non repermissioned users" in new EditProfileFixture {
-        user.statusFields.setHasRepermissioned(false)
-        val userEmailSubscriptions = List(EmailList(EmailNewsletters.guardianTodayUk.listId.toString))
-        when(api.userEmails(MockitoMatchers.anyString(), MockitoMatchers.any[TrackingData]))
-          .thenReturn(Future.successful(Right(Subscriber("HTML", userEmailSubscriptions))))
-
-        val result = controller.displayEmailPrefsForm(false, None).apply(FakeCSRFRequest(csrfAddToken))
-        status(result) should be(303)
-        contentAsString(result) should not include (EmailNewsletters.guardianTodayUk.name)
-      }
       "display Guardian Today UK newsletter" in new EditProfileFixture {
-        user.statusFields.setHasRepermissioned(true)
+        override val user = User("test@example.com", userId, statusFields = StatusFields(userEmailValidated = Some(true), hasRepermissioned = Some(true)))
+        override val testAuth = ScGuU("abc", GuUCookieData(user, 0, None))
+        override val authenticatedUser = AuthenticatedUser(user, testAuth, true)
+        when(authService.fullyAuthenticatedUser(MockitoMatchers.any[RequestHeader])) thenReturn Some(authenticatedUser)
+        when(api.me(testAuth)) thenReturn Future.successful(Right(user))
+
         val userEmailSubscriptions = List(EmailList(EmailNewsletters.guardianTodayUk.listId.toString))
         when(api.userEmails(MockitoMatchers.anyString(), MockitoMatchers.any[TrackingData]))
           .thenReturn(Future.successful(Right(Subscriber("HTML", userEmailSubscriptions))))

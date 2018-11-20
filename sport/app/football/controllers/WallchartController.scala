@@ -3,7 +3,7 @@ package football.controllers
 import feed.CompetitionsService
 import model.Cached.RevalidatableResult
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
-import common.{ImplicitControllerExecutionContext, Logging}
+import common.{ImplicitControllerExecutionContext, JsonComponent, Logging}
 import model.{ApplicationContext, Cached}
 import football.model.{CompetitionStage, KnockoutSpider}
 import org.joda.time.DateTime
@@ -35,6 +35,21 @@ class WallchartController(
     }.getOrElse(NotFound)
   }
 
+  def renderWallchartJson(competitionTag: String): Action[AnyContent] = Action { implicit request =>
+    competitionsService.competitionsWithTag(competitionTag) match {
+      case Some(competition) if KnockoutSpider.orderings.contains(competition.id) => {
+        new CompetitionStage(competitionsService.competitions)
+          .stagesFromCompetition(competition, KnockoutSpider.orderings)
+          .collectFirst({ case spider: KnockoutSpider => spider })
+          .map(spider=>
+            Cached(60) {
+              JsonComponent(football.views.html.wallchart.wallchartComponent(competition, spider))
+            }
+          ).getOrElse(NotFound)
+      }
+      case _ => NotFound
+    }
+  }
 }
 
 object WallchartController {

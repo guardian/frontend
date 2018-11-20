@@ -6,8 +6,8 @@ import mediator from 'lib/mediator';
 import { isIOS, isBreakpoint } from 'lib/detect';
 import { scrollTo } from 'lib/scroller';
 import { AnagramHelper } from 'common/modules/crosswords/anagram-helper/main';
-import debounce from 'lodash/functions/debounce';
-import zip from 'lodash/arrays/zip';
+import debounce from 'lodash/debounce';
+import zip from 'lodash/zip';
 import { Clues } from 'common/modules/crosswords/clues';
 import { Controls } from 'common/modules/crosswords/controls';
 import { HiddenInput } from 'common/modules/crosswords/hidden-input';
@@ -69,9 +69,9 @@ class Crossword extends Component<*, CrosswordState> {
 
     componentDidMount(): void {
         // Sticky clue
-        const $stickyClueWrapper = $(findDOMNode(this.refs.stickyClueWrapper));
-        const $grid = $(findDOMNode(this.refs.grid));
-        const $game = $(findDOMNode(this.refs.game));
+        const $stickyClueWrapper = $(findDOMNode(this.stickyClueWrapper));
+        const $grid = $(findDOMNode(this.grid));
+        const $game = $(findDOMNode(this.game));
 
         mediator.on(
             'window:resize',
@@ -129,7 +129,7 @@ class Crossword extends Component<*, CrosswordState> {
         }
     }
 
-    onKeyDown(event: Event): void {
+    onKeyDown(event: KeyboardEvent): void {
         const cell = this.state.cellInFocus;
 
         if (event.keyCode === keycodes.tab) {
@@ -317,7 +317,7 @@ class Crossword extends Component<*, CrosswordState> {
 
     setGridHeight(): void {
         if (!this.$gridWrapper) {
-            this.$gridWrapper = $(findDOMNode(this.refs.gridWrapper));
+            this.$gridWrapper = $(findDOMNode(this.gridWrapper));
         }
 
         if (
@@ -371,9 +371,14 @@ class Crossword extends Component<*, CrosswordState> {
     returnPosition: ?number;
 
     insertCharacter(character: string): void {
+        const characterUppercase = character.toUpperCase();
         const cell = this.state.cellInFocus;
-        if (/[A-Z]/.test(character) && character.length === 1 && cell) {
-            this.setCellValue(cell.x, cell.y, character);
+        if (
+            /[A-Za-zÀ-ÿ]/.test(characterUppercase) &&
+            characterUppercase.length === 1 &&
+            cell
+        ) {
+            this.setCellValue(cell.x, cell.y, characterUppercase);
             this.save();
             this.focusNext();
         }
@@ -516,7 +521,7 @@ class Crossword extends Component<*, CrosswordState> {
 
     focusHiddenInput(x: number, y: number): void {
         const wrapper: HTMLElement = (findDOMNode(
-            this.refs.hiddenInputComponent.refs.wrapper
+            this.hiddenInputComponent.wrapper
         ): any);
         const left = gridSize(x);
         const top = gridSize(y);
@@ -527,7 +532,7 @@ class Crossword extends Component<*, CrosswordState> {
         wrapper.style.top = `${position.y}%`;
 
         const hiddenInputNode: HTMLElement = (findDOMNode(
-            this.refs.hiddenInputComponent.refs.input
+            this.hiddenInputComponent.input
         ): any);
 
         if (document.activeElement !== hiddenInputNode) {
@@ -659,7 +664,7 @@ class Crossword extends Component<*, CrosswordState> {
         const cells = cellsForEntry(entry);
 
         if (entry.solution) {
-            const badCells = zip(cells, entry.solution)
+            const badCells = zip(cells, entry.solution.split(''))
                 .filter(cellAndSolution => {
                     const coords = cellAndSolution[0];
                     const cell = this.state.grid[coords.x][coords.y];
@@ -748,7 +753,9 @@ class Crossword extends Component<*, CrosswordState> {
             separators: buildSeparatorMap(this.props.data.entries),
             crossword: this,
             focussedCell: this.state.cellInFocus,
-            ref: 'grid',
+            ref: grid => {
+                this.grid = grid;
+            },
         };
 
         return (
@@ -757,16 +764,21 @@ class Crossword extends Component<*, CrosswordState> {
                     this.props.data.crosswordType
                 } crossword__container--react`}
                 data-link-name="Crosswords">
-                <div className="crossword__container__game" ref="game">
+                <div
+                    className="crossword__container__game"
+                    ref={game => {
+                        this.game = game;
+                    }}>
                     <div
                         className="crossword__sticky-clue-wrapper"
-                        ref="stickyClueWrapper">
+                        ref={stickyClueWrapper => {
+                            this.stickyClueWrapper = stickyClueWrapper;
+                        }}>
                         <div
                             className={classNames({
                                 'crossword__sticky-clue': true,
                                 'is-hidden': !focused,
-                            })}
-                            ref="stickyClue">
+                            })}>
                             {focused && (
                                 <div className="crossword__sticky-clue__inner">
                                     <div className="crossword__sticky-clue__inner__inner">
@@ -784,12 +796,16 @@ class Crossword extends Component<*, CrosswordState> {
                     </div>
                     <div
                         className="crossword__container__grid-wrapper"
-                        ref="gridWrapper">
+                        ref={gridWrapper => {
+                            this.gridWrapper = gridWrapper;
+                        }}>
                         {Grid(gridProps)}
                         <HiddenInput
                             crossword={this}
                             value={this.hiddenInputValue()}
-                            ref="hiddenInputComponent"
+                            ref={hiddenInputComponent => {
+                                this.hiddenInputComponent = hiddenInputComponent;
+                            }}
                         />
                         {anagramHelper}
                     </div>

@@ -21,7 +21,7 @@
         .team-name {
             display: inline;
             overflow: hidden;
-            white-space: nowrap;
+            white-space: normal;
             max-width: 100%;
         }
     }
@@ -109,7 +109,7 @@
             width: $left-column;
             background: none;
             border-bottom: 0;
-            border-top: 1px dotted $neutral-5;
+            border-top: 1px dotted $brightness-86;
             padding-left: 0;
             padding-right: 0;
             position: absolute;
@@ -127,6 +127,7 @@
 
 .c-football-table {
     @include table-football--medium;
+    width: 100%;
 }
 
 .football__group {
@@ -142,4 +143,10 @@
         top: 2px;
         float: right;
     }
+}
+
+.table__caption--bottom {
+    padding: 0;
+    margin: 0;
+    line-height: 1;
 }

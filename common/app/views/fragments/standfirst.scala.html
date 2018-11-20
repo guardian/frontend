@@ -1,5 +1,7 @@
 @import common.Edition
+@import common.LinkTo
 @import model.ContentType
+@import com.gu.contentapi.client.model.v1.TagType
 @import views.support.{BulletCleaner, ContributorLinks, InBodyLinkCleaner, RenderClasses, withJsoup}
 
 @(item: ContentType)(implicit request: RequestHeader)
@@ -37,5 +39,17 @@
                 InBodyLinkCleaner("in standfirst link")
             )
         }
+    }
+    @if(item.tags.isAudio) {
+        <p class="content__standfirst">
+            <span class="bullet"></span>
+
+            <a href="@LinkTo("/media/2017/oct/07/how-to-listen-to-podcasts-everything-you-need-to-know?CMP=podcast-help")"
+            data-component="podcast-help"
+            data-link-name="podcast-help-link"
+            class="u-underline">
+                How to listen to podcasts: everything you need to know
+            </a>
+        </p>
     }
 </div>

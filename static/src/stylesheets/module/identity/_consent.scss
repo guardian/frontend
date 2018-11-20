@@ -14,14 +14,14 @@
             margin-top: $gs-gutter * 1.5;
         }
         &:not(:first-of-type) {
-            border-top: 1px solid $garnett-neutral-4;
+            border-top: 1px solid $brightness-86;
         }
     }
     .identity-consent-journey__controls {
         padding: $gs-gutter 0;
         background: #ffffff;
         margin-top: $gs-gutter * 2;
-        border-top: 1px solid $garnett-neutral-4;
+        border-top: 1px solid $brightness-86;
         @include mq($until: tablet) {
             padding: $gs-gutter * .5;
             margin-left: $gs-gutter * -.5;
@@ -82,7 +82,7 @@
 .identity-consent-hero {
     $multiline-height: 4px * 3 + 1px; /*height of multiline (4px) times the number of lines (3)*/
     background-color: #1e8dcd;
-    border-bottom: 1px solid $garnett-neutral-4;
+    border-bottom: 1px solid $brightness-86;
     background-repeat: no-repeat;
     overflow: visible;
     margin-bottom: $multiline-height;
@@ -105,7 +105,7 @@
         }
     }
     &:after {
-        @include multiline(4, $garnett-neutral-4, top);
+        @include multiline(4, $brightness-86, top);
         content: '';
         position: absolute;
         left: 0;
@@ -113,7 +113,7 @@
         bottom: ($multiline-height - 1) * -1;
         height: $multiline-height;
         margin-bottom: -1px;
-        margin-top: $gutter;
+        margin-top: $gs-baseline/2;
         width: 100%;
     }
 }

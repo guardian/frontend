@@ -2,11 +2,13 @@ package controllers
 
 import com.gu.contentapi.client.model.v1.ItemResponse
 import common._
+import common.`package`.Gone
 import model.Cached.WithoutRevalidationResult
 import model._
 import play.api.mvc._
 import services.{Index, IndexPage}
 import views.support.RenderOtherStatus
+import views.support.RenderOtherStatus.gonePage
 
 import scala.concurrent.Future
 import scala.concurrent.Future.successful
@@ -66,7 +68,16 @@ trait IndexControllerCommon extends BaseController with Index with RendersItemRe
     case _ =>
       logGoogleBot(request)
       index(Edition(request), path, inferPage(request), request.isRss) map {
-        case Left(model) => renderFaciaFront(model)
+        case Left(model) if model.contents.nonEmpty => renderFaciaFront(model)
+        // if no content is returned (as often happens with old/expired/migrated microsites) return 404 rather than an empty page
+        case Left(model) if model.contents.isEmpty =>
+
+          Cached(60)(WithoutRevalidationResult(Gone(
+            views.html.gone(
+              gonePage,
+              "Sorry - there is no content here",
+              "This could be, for example, because content associated with it is not yet published, or due to legal reasons such as the expiry of our rights to publish the content.",
+              ))))
         case Right(other) => RenderOtherStatus(other)
       }
   }

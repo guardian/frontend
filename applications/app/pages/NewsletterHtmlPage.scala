@@ -15,7 +15,8 @@ import views.html.fragments.page.head.stylesheets.{criticalStyleInline, critical
 import views.html.fragments.page.head.{fixIEReferenceErrors, headTag, titleTag, weAreHiring}
 import views.html.fragments.page.{devTakeShot, htmlTag}
 import views.html.signup.newsletterContent
-import html.HtmlPageHelpers.{ContentCSSFile, SignUpCSSFile}
+import html.HtmlPageHelpers.{ContentCSSFile}
+import views.html.stacked
 
 object NewsletterHtmlPage extends HtmlPage[SimplePage] {
 

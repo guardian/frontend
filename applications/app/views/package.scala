@@ -24,16 +24,22 @@ object IndexCleaner {
     val edition = Edition(request)
     withJsoup(BulletCleaner(html.toString))(
       CommercialComponentHigh(isPaidContent = false, isNetworkFront = false, hasPageSkin = page.page.metadata.hasPageSkin(edition)),
-      CommercialMPUForFronts(isNetworkFront = false)
+      CommercialMPUForFronts()
     )
   }
 }
 
 object GalleryCaptionCleaners {
-  def apply(page: GalleryPage, caption: String, rowNum: Int)(implicit request: RequestHeader, context: ApplicationContext): Html = {
+  def apply(page: GalleryPage, caption: String, isFirstRow: Boolean)(implicit request: RequestHeader, context: ApplicationContext): Html = {
     val cleaners = List(
       GalleryCaptionCleaner,
-      AffiliateLinksCleaner(request.uri, page.gallery.content.metadata.sectionId, page.gallery.content.fields.showAffiliateLinks, "gallery", appendDisclaimer = rowNum == 1))
+      AffiliateLinksCleaner(
+        request.uri,
+        page.gallery.content.metadata.sectionId,
+        page.gallery.content.fields.showAffiliateLinks,
+        "gallery",
+        appendDisclaimer = Some(isFirstRow && page.item.lightbox.containsAffiliateableLinks),
+        tags = page.gallery.content.tags.tags.map(_.id)))
 
     val cleanedHtml = cleaners.foldLeft(Jsoup.parseBodyFragment(caption)) { case (html, cleaner) => cleaner.clean(html) }
     Html(cleanedHtml.toString)

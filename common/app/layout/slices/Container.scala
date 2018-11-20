@@ -9,11 +9,11 @@ import scala.collection.immutable.Iterable
 
 object Container extends Logging {
   /** This is THE top level resolver for containers */
-  val all: Map[String, Container] = Map(
+  def all(adFree: Boolean = false): Map[String, Container] = Map(
     ("dynamic/fast", Dynamic(DynamicFast)),
     ("dynamic/slow", Dynamic(DynamicSlow)),
     ("dynamic/package", Dynamic(DynamicPackage)),
-    ("dynamic/slow-mpu", Dynamic(DynamicSlowMPU(omitMPU = false, adFree = false))),
+    ("dynamic/slow-mpu", Dynamic(DynamicSlowMPU(omitMPU = false, adFree = adFree))),
     ("fixed/video", Video),
     ("nav/list", NavList),
     ("nav/media-list", NavMediaList),
@@ -24,7 +24,7 @@ object Container extends Logging {
   /** So that we don't blow up at runtime, which would SUCK */
   val default = Fixed(FixedContainers.fixedSmallSlowIV)
 
-  def resolve(id: String): Container = all.getOrElse(id, default)
+  def resolve(id: String, adFree: Boolean = false): Container = all(adFree).getOrElse(id, default)
 
   def fromConfig(collectionConfig: CollectionConfig): Container =
     resolve(collectionConfig.collectionType)
@@ -58,7 +58,7 @@ object Container extends Logging {
   }
 
   def fromPressedCollection(pressedCollection: PressedCollection, omitMPU: Boolean, adFree: Boolean): Container = {
-    val container = resolve(pressedCollection.collectionType)
+    val container = resolve(pressedCollection.collectionType, adFree)
     container match {
       case Fixed(definition) if omitMPU || adFree =>
         Fixed(definition.copy(slices = definition.slicesWithoutMPU))

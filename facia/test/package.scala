@@ -4,7 +4,7 @@ import java.io.File
 
 import concurrent.BlockingOperations
 import controllers.front.FrontJsonFapiLive
-import model.PressedPage
+import model.{PressedPage, PressedPageType}
 import org.fluentlenium.core.domain.FluentWebElement
 import org.scalatest.Suites
 import play.api.libs.json.Json
@@ -25,16 +25,9 @@ object `package` {
   class TestFrontJsonFapi(override val blockingOperations: BlockingOperations)
     extends FrontJsonFapiLive(blockingOperations) {
 
-    override def get(path: String)(implicit executionContext: ExecutionContext): Future[Option[PressedPage]] = {
+    override def get(path: String, pageType: PressedPageType)(implicit executionContext: ExecutionContext): Future[Option[PressedPage]] = {
       recorder.load(path, Map()) {
-        super.get(path)
-      }
-    }
-
-
-    override def getLite(path: String)(implicit executionContext: ExecutionContext): Future[Option[PressedPage]] = {
-      recorder.load(path, Map()) {
-        super.getLite(path)
+        super.get(path, pageType)
       }
     }
 

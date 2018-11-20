@@ -1,0 +1,371 @@
+.site-message--fiv-banner {
+    background-color: #34aae0;
+    max-height: 80%;
+    overflow: hidden;
+
+    // we have our own close button - see .fiv-banner__close-button
+    .site-message__close {
+        display: none;
+    }
+
+    @mixin padding {
+        padding: $gs-baseline/1.5 0;
+
+        @include mq(tablet) {
+            padding: $gs-baseline/1.5 $gs-gutter $gs-baseline*1.5;
+        }
+    }
+
+    .site-message__roundel {
+        @include padding;
+
+        display: none;
+        position: absolute;
+        svg {
+            fill: $brightness-7;
+        }
+
+        // Because this roundel "jumps" from the right to left
+        // at leftCol width, we display this one and hide the other
+        // one at this point. See also: .fiv-banner__roundel
+        @include mq(leftCol) {
+            display: block;
+        }
+    }
+
+    .site-message__close-btn {
+        display: inline-block;
+        border-color: $brightness-7;
+    }
+
+    .site-message__inner {
+        display: block;
+        width: auto;
+    }
+
+    .site-message__copy {
+        @include padding;
+
+        display: block;
+    }
+
+}
+
+.fiv-banner__text {
+    @include banner-copy-alignment;
+
+    color: $brightness-7;
+    font-size: 14px;
+    line-height: 18px;
+
+    @include mq(tablet) {
+        font-size: 17px;
+        line-height: 22px;
+        width: 580px;
+    }
+
+    @include mq(leftCol) {
+        font-size: 17px;
+        line-height: 22px;
+    }
+
+}
+.fiv-banner__text-potential {
+
+    @include mq(leftCol) {
+        width: 620px;
+    }
+
+}
+
+.fiv-banner__text-existing {
+
+    @include mq(leftCol) {
+        width: 509px;
+    }
+
+}
+
+.fiv-banner__headline-existing {
+    width: 199px;
+    @include mq(tablet) {
+        width: 390px;
+    }
+}
+.fiv-banner__headline-potential {
+
+}
+.fiv-banner__u-show-from-tablet {
+    display: none;
+    @include mq(tablet) {
+        display: block;
+    }
+}
+.fiv-banner__u-hide-from-tablet {
+    display: block;
+    @include mq(tablet) {
+        display: none;
+    }
+}
+.fiv-banner__text_bold {
+    font-weight: bold;
+    font-size: 16px;
+    @include mq(tablet) {
+        font-size: 20px;
+    }
+}
+.fiv-banner__text_normal {
+    font-size: 16px;
+    @include mq(tablet) {
+        font-size: 20px;
+    }
+}
+
+.fiv-banner__highlight {
+    font-weight: bold;
+    background-color: #ffffff;
+    padding: 1px;
+}
+
+.fiv-banner__container {
+    position: relative;
+}
+
+.fiv-banner__container-potential {
+    height: 485px;
+    @include mq(tablet) {
+        height: 350px;
+    }
+}
+
+.fiv-banner__container-existing {
+    height: 360px;
+    @include mq(tablet) {
+        height: 350px;
+    }
+}
+
+.fiv-banner__container-potential-aus {
+    height: 505px;
+    @include mq(tablet) {
+        height: 442px;
+    }
+    @include mq(leftCol) {
+        height: 380px;
+    }
+}
+
+.fiv-banner__container-existing-aus {
+    height: 400px;
+    @include mq(tablet) {
+        height: 370px;
+    }
+}
+
+.fiv-banner__cta {
+
+    top: 310px;
+    right: 80px;
+
+    margin-top: $gs-baseline / 2;
+
+    @include mq(tablet) {
+        margin-top: $gs-baseline;
+    }
+
+    @include mq(leftCol) {
+        position: absolute;
+        display: inline-block;
+        vertical-align: bottom;
+    }
+}
+.fiv-banner__button_contribute {
+
+    background-color: $highlight-main;
+    border-color: $highlight-main;
+}
+
+.fiv-banner__button_subscribe {
+
+    background-color: #ffffff;
+    border-color: #ffffff;
+}
+
+.fiv-banner__button {
+    display: inline-block;
+    vertical-align: middle;
+    float: left;
+
+    height: 36px;
+    padding-right: 0;
+    padding-left: 14px;
+    margin-right: $gs-gutter / 4;
+
+    font-size: 16px;
+    line-height: 36px;
+
+    color: $brightness-7;
+
+    .inline-icon {
+        float: right;
+        fill: $brightness-7;
+
+        svg {
+            // weirdly needed for vertical centering
+            padding-top: 3px;
+        }
+    }
+
+    @include mq(tablet) {
+        display: block;
+        margin-bottom: 8px;
+    }
+}
+
+.fiv-banner__text-paragraph {
+    margin-top: $gs-baseline;
+    @include mq(tablet) {
+        margin-top: $gs-baseline * 2;
+    }
+}
+
+.fiv-banner__text-paragraph-existing {
+    @include mq(leftCol) {
+        margin-top: $gs-baseline * 3;
+    }
+}
+
+.fiv-banner__onwards {
+    @include fs-textSans(5);
+    font-weight: bold;
+    color: $brightness-7;
+    vertical-align: top;
+    display: block;
+    margin-top: $gs-baseline;
+
+    &:hover {
+        text-decoration: none;
+        .inline-arrow-right {
+            margin-left: 9px;
+        }
+    }
+
+    .inline-arrow-right {
+
+        display: inline-block;
+        vertical-align: top;
+        margin-left: 5px;
+
+        transition: margin 240ms;
+
+        svg {
+            border: 1px solid $brightness-7;
+            border-radius: 200px;
+            fill: $brightness-7;
+            width: 20px;
+            height: 20px;
+        }
+    }
+}
+
+.fiv-banner__payment-logos {
+    display: inline-block;
+    vertical-align: middle;
+
+    height: auto;
+    width: 114px;
+
+    @include mq(tablet) {
+        display: block;
+        width: 121px;
+    }
+}
+
+.fiv-banner__background_desktop {
+    position: absolute;
+    top: 1px;
+    width: 436px;
+    height: 357px;
+    right: -130px;
+    @include mq(wide) {
+        right: -40px;
+    }
+
+    display: none;
+    @include mq(leftCol) {
+        display: block;
+    }
+}
+
+.fiv-banner__background_mobile {
+    position: absolute;
+    bottom: 1px;
+    width: 291px;
+    height: 145px;
+
+    right: -8px;
+    @include mq(tablet) {
+        right: 0;
+    }
+
+    display: block;
+    @include mq(leftCol) {
+        display: none;
+    }
+}
+
+.fiv-banner__close {
+
+    @include mq($until: leftCol) {
+        right: 0;
+    }
+    @include mq(leftCol) {
+        left: 56px;
+    }
+
+    // we want the close button above the link overlay
+    // z-index only applies to positioned elements
+    position: absolute;
+    z-index: 1;
+
+    // to remove the space between inline-block children
+    font-size: 0;
+}
+
+.fiv-banner__close-button,
+.fiv-banner__roundel {
+    display: inline-block;
+    vertical-align: middle;
+
+    height: 36px;
+    width: 36px;
+}
+
+.fiv-banner__roundel {
+    // Because this roundel "jumps" from the right to left
+    // at leftCol width, we hide this one and display the other
+    // one at this point. See also: .site-message__roundel
+    @include mq(leftCol) {
+        display: none;
+    }
+}
+
+.fiv-banner__close-button {
+    // for some reason, it's more centered with this 2px on top
+    padding: 2px 0 0;
+    margin: 0;
+
+    background: transparent;
+    border: 1px solid rgba($brightness-7,  .3);
+    color: $brightness-7;
+
+    svg {
+        fill: $brightness-7;
+    }
+
+    &:hover,
+    &:focus,
+    &:active {
+        border-color: $brightness-7;
+    }
+}

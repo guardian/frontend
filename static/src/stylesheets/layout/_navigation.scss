@@ -1,25 +1,28 @@
-@import 'nav/_variables';
+@import 'new-nav/_variables';
 
-@import 'nav/_new-header';
+@import 'new-nav/_new-header';
 
-@import 'nav/_menu';
-@import 'nav/_menu-group';
-@import 'nav/_menu-item';
-@import 'nav/_menu-search';
+@import 'new-nav/_menu';
+@import 'new-nav/_menu-group';
+@import 'new-nav/_menu-item';
+@import 'new-nav/_menu-search';
 
-@import 'nav/_pillars';
-@import 'nav/_pillar-link';
+@import 'new-nav/_pillars';
+@import 'new-nav/_pillar-link';
 
-@import 'nav/_top-bar';
-@import 'nav/_top-bar-dropdown';
+@import 'new-nav/_cta-bar';
+@import 'new-nav/_top-bar';
+@import 'new-nav/_top-bar-dropdown';
+@import 'new-nav/_search-dropdown';
 
-@import 'nav/_subnav';
-@import 'nav/_subnav-link';
+@import 'new-nav/_subnav';
+@import 'new-nav/_subnav-link';
 
-@import 'nav/_veggie-burger';
-@import 'nav/_veggie-burger-fallback';
+@import 'new-nav/_veggie-burger';
+@import 'new-nav/_veggie-burger-fallback';
 
-@import 'nav/_main-menu-toggle';
-@import 'nav/_edition-picker-toggle';
+@import 'new-nav/_main-menu-toggle';
+@import 'new-nav/_edition-picker-toggle';
+@import 'new-nav/_my-account';
 
-@import 'nav/_colours';
+@import 'new-nav/_colours';

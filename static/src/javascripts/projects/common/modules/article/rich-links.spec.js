@@ -5,9 +5,11 @@ import {
     richLinkTag,
     insertTagRichLink,
 } from 'common/modules/article/rich-links';
+import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 
 let mockParas: ?NodeList<HTMLParagraphElement>;
 
+jest.mock('lib/raven');
 jest.mock('lib/config');
 jest.mock('common/modules/article/space-filler', () => ({
     spaceFiller: {
@@ -20,6 +22,9 @@ jest.mock('common/modules/article/space-filler', () => ({
                 resolve(true);
             }),
     },
+}));
+jest.mock('common/modules/commercial/commercial-features', () => ({
+    commercialFeatures() {},
 }));
 
 describe('rich-links', () => {
@@ -39,6 +44,8 @@ describe('rich-links', () => {
             showRelatedContent: true,
             shouldHideAdverts: false,
         };
+
+        commercialFeatures.adFree = false;
     });
 
     afterEach(() => {

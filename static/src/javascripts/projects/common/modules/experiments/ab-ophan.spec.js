@@ -13,13 +13,13 @@ import config from 'lib/config';
 
 import { genAbTest } from './__fixtures__/ab-test';
 
+jest.mock('lib/raven');
 jest.mock('lib/storage');
 jest.mock('lib/report-error');
 jest.mock('common/modules/analytics/mvt-cookie');
 jest.mock('common/modules/experiments/ab-tests');
-jest.mock('lodash/functions/memoize', () => f => f);
+jest.mock('lodash/memoize', () => f => f);
 jest.mock('ophan/ng', () => null);
-jest.mock('raven-js', () => null);
 
 describe('A/B Ophan analytics', () => {
     beforeEach(() => {

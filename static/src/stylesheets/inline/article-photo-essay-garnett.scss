@@ -28,10 +28,10 @@
     }
 
     a.u-underline.in-body-link--immersive {
-        color: $news-main-1;
+        color: $sport-dark;
 
         &:hover {
-            border-bottom: 1px solid $news-main-2;
+            border-bottom: 1px solid $sport-bright;
         }
     }
 
@@ -41,12 +41,12 @@
         margin: 0 0 $gs-baseline * 2;
 
         &:not(.quoted) {
-            background-color: $neutral-6;
+            background-color: $brightness-93;
             padding: $gs-baseline / 1.5  $gs-baseline $gs-baseline;
         }
 
         .inline-icon {
-            fill: $news-main-1;
+            fill: $sport-dark;
         }
 
         .quoted__contents {
@@ -54,19 +54,19 @@
         }
 
         h2 {
-            color: $news-main-1;
+            color: $sport-dark;
             font-weight: 100;
             font-size: 38px;
             line-height: 1;
         }
 
         &.quoted {
-            color: $news-main-1;
+            color: $sport-dark;
             font-size: 26px;
             line-height: 28px;
 
             .inline-icon {
-                fill: $news-main-2;
+                fill: $sport-bright;
                 width: $gs-baseline * 2;
                 display: block;
                 margin-bottom: $gs-baseline;
@@ -89,10 +89,10 @@
 
         .caption {
             max-width: 100%;
-            color: $news-main-1;
+            color: $sport-dark;
 
             .inline-information.reveal-caption-icon {
-                background-color: $news-main-1;
+                background-color: $sport-dark;
             }
         }
 
@@ -101,7 +101,7 @@
             background: linear-gradient(transparent, rgb(0, 0, 0));
 
             &:before {
-                background-color: $news-main-2;
+                background-color: $sport-bright;
                 display: block;
                 content: '';
                 width: gs-span(2);
@@ -164,13 +164,13 @@
 
     .element-pullquote--photo-essay {
         .pullquote-paragraph {
-            color: $news-main-1;
+            color: $sport-dark;
             font-size: 26px;
         }
 
         //important because it is important elsewhere
         .pullquote-cite {
-            color: $neutral-2 !important;
+            color: $brightness-46 !important;
             font-size: 26px;
         }
 
@@ -184,7 +184,7 @@
         }
 
         .inline-icon {
-            fill: $news-main-2;
+            fill: $sport-bright;
             width: $gs-baseline * 2;
             display: block;
             margin-bottom: $gs-baseline;
@@ -197,7 +197,7 @@
     }
 }
 
-.content__series-label--photo-essay .content__series-label__link {
+.content__series-label--photo-essay .content__label__link {
     color: #ffffff;
 }
 
@@ -207,10 +207,9 @@
     line-height: 24px;
     font-weight: 900;
     margin: 0;
-    padding-top: $gs-baseline / 2;
 
     .content__section-label__link--advertisement {
-        color: $paid-article-brand;
+        color: $labs-main;
     }
 }
 
@@ -224,13 +223,14 @@
 
     & > li {
         @include fs-textSans(3);
-        color: $guardian-brand;
+        color: $brand-main;
         font-size: 12px;
         width: 100%;
         margin-right: 1%;
         line-height: 14px;
         padding-top: $gs-baseline / 2;
-        border-top: 1px solid $guardian-brand;
+        padding-left: 0 !important; // override padding applied in from-content-api.scss
+        border-top: 1px solid $brand-main;
 
         &::before {
             display: none !important;

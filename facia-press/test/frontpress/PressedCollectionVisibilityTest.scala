@@ -43,7 +43,7 @@ class PressedCollectionVisibilityTest extends FlatSpec with Matchers with FaciaT
     val collectionVisibility: PressedCollectionVisibility = PressedCollectionVisibility(pressedCollection.copy(hasMore = false), 3)
     val liteCollection = pressedCollection.copy(curated = pressedCollection.curated.take(3), hasMore = true)
     val fullCollection = pressedCollection.copy(hasMore = true)
-    collectionVisibility.pressedCollectionVersions shouldBe PressedCollectionVersions(liteCollection, fullCollection)
+    collectionVisibility.pressedCollectionVersions shouldBe PressedCollectionVersions(liteCollection, fullCollection, liteCollection, fullCollection)
   }
 
   it should "identify web collections" in new PressedCollectionVisibilityScope {

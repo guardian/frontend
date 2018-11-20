@@ -32,7 +32,11 @@
                         "content--foundation-supported" -> isFoundationFundedContent(page),
                         "paid-content" -> isPaidContent
                     ),
-                    "content", "content--interactive", "tonal", s"tonal--${toneClass(interactive)}"
+                    "content",
+                    "content--interactive",
+                    "tonal",
+                    s"tonal--${toneClass(interactive)}",
+                    s"content--pillar-${interactive.metadata.pillar.nameOrDefault}"
                 )"
                 itemscope itemtype="@interactive.metadata.schemaType" role="main">
 

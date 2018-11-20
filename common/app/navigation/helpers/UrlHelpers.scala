@@ -36,7 +36,7 @@ object UrlHelpers {
 
       case (_, ManageMyAccountUpsell) => "manage_my_account_upsell"
     }
-  }
+  }   
 
   def readerRevenueLinks(implicit request: RequestHeader) = List(
     NavLink("Make a contribution", getReaderRevenueUrl(SupportContribute, SideMenu)),
@@ -74,4 +74,6 @@ object UrlHelpers {
     } else {
       s"https://jobs.theguardian.com?INTCMP=jobs_${editionId}_web_newheader"
     }
+
+  def getSoulmatesUrl: String = "https://soulmates.theguardian.com/?INTCMP=soulmates_uk_web_newheader"
 }

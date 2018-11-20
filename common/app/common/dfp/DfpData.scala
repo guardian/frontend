@@ -85,8 +85,6 @@ case class CustomTarget(name: String, op: String, values: Seq[String]) {
   val isSeriesTag = isPositive("se")
   val isContributorTag = isPositive("co")
   val isEditionTag = isPositive("edition")
-
-  val targetsR2Only: Boolean = isPlatform("r2") || isNotPlatform("ng")
 }
 
 object CustomTarget {
@@ -108,8 +106,6 @@ case class CustomTargetSet(op: String, targets: Seq[CustomTarget]) {
   val inlineMerchandisingTargetedContributors = filterTags(tag => tag.isContributorTag)(_.isInlineMerchandisingSlot)
 
   val highMerchandisingTargets = filterTags(tag => tag.isKeywordTag || tag.isSeriesTag || tag.isContributorTag)(_.isHighMerchandisingSlot)
-
-  val targetsR2Only: Boolean = targets exists (_.targetsR2Only)
 }
 
 object CustomTargetSet {
@@ -204,8 +200,6 @@ case class GuTargeting(adUnitsIncluded: Seq[GuAdUnit],
   }
 
   val hasAdTestTargetting: Boolean = adTestValue.isDefined
-
-  val targetsR2Only: Boolean = customTargetSets exists (_.targetsR2Only)
 
   def targetsSectionFrontDirectly(sectionId: String): Boolean = {
     adUnitsIncluded.exists { adUnit =>

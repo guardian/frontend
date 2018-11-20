@@ -5,7 +5,7 @@ import common.{ImplicitControllerExecutionContext, LinkTo, Logging}
 import conf.Configuration
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
-import com.gu.identity.model.{EmailNewsletter, EmailNewsletters}
+import com.gu.identity.model.EmailNewsletter
 import com.typesafe.scalalogging.LazyLogging
 import play.api.data.Forms._
 import play.api.data._
@@ -15,10 +15,10 @@ import play.api.libs.json._
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc._
 import play.filters.csrf.{CSRFAddToken, CSRFCheck}
+import utils.RemoteAddress
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
-import scala.util.{Failure, Success, Try}
 
 object emailLandingPage extends StandalonePage {
   private val id = "email-landing-page"
@@ -44,18 +44,22 @@ case class EmailForm(
   }
 }
 
-class EmailFormService(wsClient: WSClient) extends LazyLogging {
+class EmailFormService(wsClient: WSClient) extends LazyLogging with RemoteAddress {
 
-  def submit(form: EmailForm): Future[WSResponse] = if (form.isLikelyBotSubmission) {
+  def submit(form: EmailForm)(implicit request: Request[AnyContent]): Future[WSResponse] = if (form.isLikelyBotSubmission) {
     Future.failed(new IllegalAccessException("Form was likely submitted by a bot."))
   } else {
     val idAccessClientToken = Configuration.id.apiClientToken
     val consentMailerUrl = s"${Configuration.id.apiRoot}/consent-email"
     val consentMailerPayload = JsObject(Json.obj("email" -> form.email, "set-lists" -> List(form.listName)).fields)
+    val headers = clientIp(request)
+      .map(ip => List("X-Forwarded-For" -> ip))
+      .getOrElse(List.empty) :+ "X-GU-ID-Client-Access-Token" -> s"Bearer $idAccessClientToken"
 
+    //FIXME: this should go via the identity api client / app
     wsClient
       .url(consentMailerUrl)
-      .addHttpHeaders("X-GU-ID-Client-Access-Token" -> s"Bearer $idAccessClientToken")
+      .addHttpHeaders(headers: _*)
       .post(consentMailerPayload)
   }
 }
@@ -85,7 +89,7 @@ class EmailSignupController(wsClient: WSClient, val controllerComponents: Contro
 
       identityName match {
         case Some(listName) => Cached(1.day)(RevalidatableResult.Ok(views.html.emailFragment(emailLandingPage, emailType, listName)))
-        case _ => Cached(15.minute)(WithoutRevalidationResult(NotFound))
+        case _ => Cached(15.minute)(WithoutRevalidationResult(NoContent))
       }
     }
   }
@@ -95,7 +99,7 @@ class EmailSignupController(wsClient: WSClient, val controllerComponents: Contro
       val id = EmailNewsletter.fromIdentityName(listName).map(_.listIdV1)
       id match {
         case Some(listId) => Cached(1.day)(RevalidatableResult.Ok(views.html.emailFragment(emailLandingPage, emailType, listName)))
-        case _            => Cached(15.minute)(WithoutRevalidationResult(NotFound))
+        case _            => Cached(15.minute)(WithoutRevalidationResult(NoContent))
       }
     }
   }
@@ -139,24 +143,34 @@ class EmailSignupController(wsClient: WSClient, val controllerComponents: Contro
         EmailFormError.increment()
         Future.successful(respond(InvalidEmail))},
 
-      form => emailFormService.submit(form).map(_.status match {
-        case 200 | 201 =>
-          EmailSubmission.increment()
-          respond(Subscribed)
+      form => {
+        log.info(
+          "Post request received to /email/ - " +
+          s"email: ${form.email}, " +
+          s"referer: ${request.headers.get("referer").getOrElse("unknown")}, " +
+          s"user-agent: ${request.headers.get("user-agent").getOrElse("unknown")}, " +
+          s"x-requested-with: ${request.headers.get("x-requested-with").getOrElse("unknown")}"
+        )
+        emailFormService.submit(form).map(_.status match {
+          case 200 | 201 =>
+            EmailSubmission.increment()
+            respond(Subscribed)
 
-        case status =>
-          log.error(s"Error posting to ExactTarget: HTTP $status")
-          APIHTTPError.increment()
-          respond(OtherError)
+          case status =>
+            log.error(s"Error posting to ExactTarget: HTTP $status")
+            APIHTTPError.increment()
+            respond(OtherError)
 
-      }) recover {
-        case _: IllegalAccessException =>
-          respond(Subscribed)
-        case e: Exception =>
-          log.error(s"Error posting to ExactTarget: ${e.getMessage}")
-          APINetworkError.increment()
-          respond(OtherError)
-      })
+        }) recover {
+          case _: IllegalAccessException =>
+            respond(Subscribed)
+          case e: Exception =>
+            log.error(s"Error posting to ExactTarget: ${e.getMessage}")
+            APINetworkError.increment()
+            respond(OtherError)
+        }
+      }
+    )
   }
 
   def options(): Action[AnyContent] = Action { implicit request =>

@@ -16,6 +16,7 @@ import play.api.mvc.RequestHeader
 import play.twirl.api.HtmlFormat
 import services.SkimLinksCache
 import conf.Configuration.affiliatelinks._
+import conf.Configuration.site.host
 import views.html.fragments.affiliateLinksDisclaimer
 
 import scala.collection.JavaConverters._
@@ -588,8 +589,6 @@ object GalleryCaptionCleaner extends HtmlCleaner {
     captionTitle.addClass("gallery__caption__title")
     captionTitle.text(captionTitleText)
 
-    // There should be one br after the title
-    galleryCaption.prependElement("br")
     galleryCaption.prependChild(captionTitle)
 
     galleryCaption
@@ -665,7 +664,13 @@ object MembershipEventCleaner extends HtmlCleaner {
     }
 }
 
-case class AtomsCleaner(atoms: Option[Atoms], shouldFence: Boolean = true, amp: Boolean = false, mediaWrapper: Option[MediaWrapper] = None)(implicit val request: RequestHeader, context: ApplicationContext) extends HtmlCleaner {
+case class AtomsCleaner(
+  atoms: Option[Atoms],
+  shouldFence: Boolean = true,
+  amp: Boolean = false,
+  mediaWrapper: Option[MediaWrapper] = None,
+  posterImageOverride: Option[ImageMedia] = None
+)(implicit val request: RequestHeader, context: ApplicationContext) extends HtmlCleaner {
   private def findAtom(id: String): Option[Atom] = {
     atoms.flatMap(_.all.find(_.id == id))
   }
@@ -691,7 +696,7 @@ case class AtomsCleaner(atoms: Option[Atoms], shouldFence: Boolean = true, amp: 
           atomContainer.attr("data-atom-id", atomId)
           atomContainer.attr("data-atom-type", atomType)
 
-          val html = views.html.fragments.atoms.atom(atomData, Atoms.articleConfig, shouldFence, amp, mediaWrapper).toString()
+          val html = views.html.fragments.atoms.atom(atomData, Atoms.articleConfig, shouldFence, amp, mediaWrapper, posterImageOverride).toString()
           bodyElement.remove()
           atomContainer.append(html)
         }
@@ -712,11 +717,11 @@ object setSvgClasses {
   }
 }
 
-case class CommercialMPUForFronts(isNetworkFront: Boolean)(implicit val request: RequestHeader) extends HtmlCleaner {
+case class CommercialMPUForFronts()(implicit val request: RequestHeader) extends HtmlCleaner {
   override def clean(document: Document): Document = {
 
-    def isNetworkFrontWithThrasher(element: Element, index: Int): Boolean = {
-      index == 0 && isNetworkFront && element.hasClass("fc-container--thrasher")
+    def hasFirstContainerThrasher(element: Element, index: Int): Boolean = {
+      index == 0 && element.hasClass("fc-container--thrasher")
     }
 
     def hasAdjacentCommercialContainer(element: Element): Boolean = {
@@ -724,15 +729,19 @@ case class CommercialMPUForFronts(isNetworkFront: Boolean)(implicit val request:
       element.hasClass("fc-container--commercial") || maybeNextEl.exists(_.hasClass("fc-container--commercial"))
     }
 
+    def hasAdjacentThrasher(element: Element): Boolean =
+      Option(element.nextElementSibling()).exists(_.hasClass("fc-container--thrasher"))
+
     val sliceSlot = views.html.fragments.items.facia_cards.sliceSlot
 
     val containers: List[Element] = document.getElementsByClass("fc-container").asScala.toList
 
-    // On mobile, we remove the first container if it is a thrasher on a Network Front
+    // On mobile, we remove the first container if it is a thrasher
     // and remove a container if it, or the next sibling, is a commercial container
+    // we also exclude any containers that are directly before a thrasher
     // then we take every other container, up to a maximum of 10, for targeting MPU insertion
     val containersForCommercialMPUs = containers.zipWithIndex.collect {
-      case (x, i) if !isNetworkFrontWithThrasher(x, i) && !hasAdjacentCommercialContainer(x) => x
+      case (x, i) if !hasFirstContainerThrasher(x, i) && !hasAdjacentCommercialContainer(x) && !hasAdjacentThrasher(x) => x
     }.zipWithIndex.collect {
       case (x, i) if i % 2 == 0 => x
     }.take(10)
@@ -799,25 +808,35 @@ object GarnettQuoteCleaner extends HtmlCleaner {
   }
 }
 
-case class AffiliateLinksCleaner(pageUrl: String, sectionId: String, showAffiliateLinks: Option[Boolean],
-  contentType: String, appendDisclaimer: Boolean = true) extends HtmlCleaner with Logging {
+case class AffiliateLinksCleaner(
+                                  pageUrl: String,
+                                  sectionId: String,
+                                  showAffiliateLinks: Option[Boolean],
+                                  contentType: String,
+                                  appendDisclaimer: Option[Boolean] = None,
+                                  tags: List[String]) extends HtmlCleaner with Logging {
 
   override def clean(document: Document): Document = {
-    if (AffiliateLinks.isSwitchedOn && AffiliateLinksCleaner.shouldAddAffiliateLinks(AffiliateLinkSections.isSwitchedOn,
-      sectionId, showAffiliateLinks, affiliateLinkSections)) {
+    if (AffiliateLinks.isSwitchedOn && AffiliateLinksCleaner.shouldAddAffiliateLinks(AffiliateLinks.isSwitchedOn,
+      sectionId, showAffiliateLinks, affiliateLinkSections, defaultOffTags, alwaysOffTags, tags)) {
       AffiliateLinksCleaner.replaceLinksInHtml(document, pageUrl, appendDisclaimer, contentType, skimlinksId)
     } else document
   }
 }
 
 object AffiliateLinksCleaner {
-  def replaceLinksInHtml(html: Document, pageUrl: String, appendDisclaimer: Boolean, contentType: String, skimlinksId: String): Document = {
-    val links = html.getElementsByAttribute("href")
 
-    val supportedLinks: mutable.Seq[Element] = links.asScala.filter(isAffiliatable)
-    supportedLinks.foreach{el => el.attr("href", linkToSkimLink(el.attr("href"), pageUrl, skimlinksId))}
+  def getAffiliateableLinks(html:Document): mutable.Seq[Element] =
+    html.getElementsByAttribute("href").asScala.filter(isAffiliatable)
 
-    if (supportedLinks.nonEmpty) insertAffiliateDisclaimer(html, contentType)
+  def replaceLinksInHtml(html: Document, pageUrl: String, appendDisclaimer: Option[Boolean], contentType: String, skimlinksId: String): Document = {
+
+    val linksToReplace: mutable.Seq[Element] = getAffiliateableLinks(html)
+    linksToReplace.foreach{el => el.attr("href", linkToSkimLink(el.attr("href"), pageUrl, skimlinksId))}
+
+    // respect appendDisclaimer, or if it's not set then always add the disclaimer if affilate links have been added
+    val shouldAppendDisclaimer = appendDisclaimer.getOrElse(linksToReplace.nonEmpty)
+    if (shouldAppendDisclaimer) insertAffiliateDisclaimer(html, contentType)
     else html
   }
 
@@ -831,14 +850,32 @@ object AffiliateLinksCleaner {
 
   def linkToSkimLink(link: String, pageUrl: String, skimlinksId: String): String = {
     val urlEncodedLink = URLEncode(link)
-    s"http://go.theguardian.com/?id=$skimlinksId&url=$urlEncodedLink&sref=$pageUrl"
+    s"http://go.theguardian.com/?id=$skimlinksId&url=$urlEncodedLink&sref=$host$pageUrl"
   }
 
-  def shouldAddAffiliateLinks(switchedOn: Boolean, section: String, showAffiliateLinks: Option[Boolean], supportedSections: Set[String]): Boolean = {
-    if (showAffiliateLinks.isDefined) {
-      showAffiliateLinks.contains(true)
-    } else {
-      switchedOn && supportedSections.contains(section)
-    }
+  def contentHasAlwaysOffTag(tagPaths: List[String], alwaysOffTags: Set[String]): Boolean = {
+    tagPaths.exists(path => alwaysOffTags.contains(path))
+  }
+
+  def shouldAddAffiliateLinks(
+    switchedOn: Boolean,
+    section: String,
+    showAffiliateLinks: Option[Boolean],
+    supportedSections: Set[String],
+    defaultOffTags: Set[String],
+    alwaysOffTags: Set[String],
+    tagPaths: List[String]
+  ): Boolean = {
+    if (!contentHasAlwaysOffTag(tagPaths, alwaysOffTags)) {
+      if (showAffiliateLinks.isDefined) {
+        showAffiliateLinks.contains(true)
+      } else {
+        switchedOn && supportedSections.contains(section) && !tagPaths.exists(path => defaultOffTags.contains(path))
+      }
+    } else false
+  }
+
+  def stringContainsAffiliateableLinks(s: String): Boolean = {
+    getAffiliateableLinks(Jsoup.parseBodyFragment(s)).nonEmpty
   }
 }

@@ -6,8 +6,9 @@ import commercial.controllers.CommercialControllers
 import commercial.targeting.TargetingLifecycle
 import common.Logback.{LogbackOperationsPool, LogstashLifecycle}
 import common.dfp.FaciaDfpAgentLifecycle
-import conf.{CachedHealthCheckLifeCycle, FootballLifecycle}
+import common.{ApplicationMetrics, CloudWatchMetricsLifecycle, ContentApiMetrics}
 import conf.switches.SwitchboardLifecycle
+import conf.{CachedHealthCheckLifeCycle, FootballLifecycle}
 import contentapi._
 import controllers._
 import controllers.front.FrontJsonFapiDraft
@@ -19,14 +20,15 @@ import football.controllers.FootballControllers
 import http.PreviewFilters
 import model.ApplicationIdentity
 import play.api.ApplicationLoader.Context
-import play.api.{BuiltInComponents, BuiltInComponentsFromContext}
 import play.api.http.HttpErrorHandler
 import play.api.libs.ws.WSClient
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router
+import play.api.{BuiltInComponents, BuiltInComponentsFromContext}
 import router.Routes
 import rugby.conf.RugbyLifecycle
 import rugby.controllers.RugbyControllers
+import services.dotcomponents.RenderingTierPicker
 import services.{ConfigAgentLifecycle, OphanApi, SkimLinksCacheLifeCycle}
 
 trait PreviewLifecycleComponents extends SportServices with CommercialServices with FapiServices with OnwardServices {
@@ -49,7 +51,8 @@ trait PreviewLifecycleComponents extends SportServices with CommercialServices w
     wire[CricketLifecycle],
     wire[RugbyLifecycle],
     wire[TargetingLifecycle],
-    wire[SkimLinksCacheLifeCycle]
+    wire[SkimLinksCacheLifeCycle],
+    wire[CloudWatchMetricsLifecycle]
   )
 
   def actorSystem: ActorSystem
@@ -80,14 +83,24 @@ trait PreviewControllerComponents
 
 trait AppComponents
   extends FrontendComponents
-  with PreviewControllerComponents
-  with PreviewLifecycleComponents
-  with OnwardServices
-  with ApplicationsServices {
+    with PreviewControllerComponents
+    with PreviewLifecycleComponents
+    with OnwardServices
+    with ApplicationsServices {
 
   override lazy val capiHttpClient: HttpClient = new CapiHttpClient(wsClient) { override val signer = Some(PreviewSigner()) }
   override lazy val contentApiClient = wire[PreviewContentApi]
   override lazy val ophanApi = wire[OphanApi]
+
+  lazy val remoteRender = wire[renderers.RemoteRenderer]
+  lazy val renderingTierPicker = wire[RenderingTierPicker]
+
+  override lazy val appMetrics = ApplicationMetrics(
+    ContentApiMetrics.HttpLatencyTimingMetric,
+    ContentApiMetrics.HttpTimeoutCountMetric,
+    ContentApiMetrics.ContentApiErrorMetric,
+    ContentApiMetrics.ContentApiRequestsMetric
+  )
 
   lazy val healthCheck = wire[HealthCheck]
   lazy val responsiveViewerController = wire[ResponsiveViewerController]

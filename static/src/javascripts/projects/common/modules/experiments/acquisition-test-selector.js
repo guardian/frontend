@@ -12,15 +12,23 @@ import { acquisitionsEpicAlwaysAskIfTagged } from 'common/modules/experiments/te
 import { acquisitionsEpicThankYou } from 'common/modules/experiments/tests/acquisitions-epic-thank-you';
 import { acquisitionsEpicUSGunCampaign } from 'common/modules/experiments/tests/acquisitions-epic-us-gun-campaign';
 import { acquisitionsEpicAusEnvCampaign } from 'common/modules/experiments/tests/acquisitions-epic-aus-env-campaign';
-import { acquisitionsEpicAlwaysAskAprilStory } from 'common/modules/experiments/tests/acquisitions-epic-always-ask-april-story';
-import { AcquisitionsEpicBorderThankyou } from 'common/modules/experiments/tests/acquisitions-epic-border-thankyou';
-import { acquisitionsEpicNativeVsDfp } from 'common/modules/experiments/tests/acquisitions-epic-native-vs-dfp';
+import { acquisitionsEpicFromGoogleDocOneVariant } from 'common/modules/experiments/tests/acquisitions-epic-from-google-doc-one-variant';
+import { acquisitionsEpicFromGoogleDocTwoVariants } from 'common/modules/experiments/tests/acquisitions-epic-from-google-doc-two-variants';
+import { acquisitionsEpicFromGoogleDocThreeVariants } from 'common/modules/experiments/tests/acquisitions-epic-from-google-doc-three-variants';
+import { acquisitionsEpicFromGoogleDocFourVariants } from 'common/modules/experiments/tests/acquisitions-epic-from-google-doc-four-variants';
+import { acquisitionsEpicFromGoogleDocFiveVariants } from 'common/modules/experiments/tests/acquisitions-epic-from-google-doc-five-variants';
+import { acquisitionsEpicIframeTestV2 } from 'common/modules/experiments/tests/acquisitions-iframe-epic-v2';
+import { acquisitionsEpicAusFairfax } from 'common/modules/experiments/tests/acquisitions-epic-aus-fairfax';
+import { acquisitionsEpicOneMillionCampaignNoControl } from 'common/modules/experiments/tests/acquisitions-epic-one-million-campaign-no-control';
+import { acquisitionsEpicOneMillionCampaignAu } from 'common/modules/experiments/tests/acquisitions-epic-one-million-campaign-au';
 import { acquisitionsEpicPaymentRequest } from 'common/modules/experiments/tests/acquisitions-epic-payment-request';
 import { acquisitionsEpicPaymentRequestLive } from 'common/modules/experiments/tests/acquisitions-epic-payment-request-live';
 
 
 const isViewable = (v: Variant, t: ABTest): boolean => {
-    if (!v.options || !v.options.maxViews) return false;
+    if (!v.options) return false;
+    if (v.options.isUnlimited) return true;
+    if (!v.options.maxViews) return false;
 
     const {
         count: maxViewCount,
@@ -29,6 +37,8 @@ const isViewable = (v: Variant, t: ABTest): boolean => {
     } = v.options.maxViews;
 
     const isUnlimited = v.options.isUnlimited;
+    // Should all acquisition tests be of type EpicABTest?
+    // $FlowFixMe
     const testId = t.useLocalViewLog ? t.id : undefined;
 
     const withinViewLimit =
@@ -44,18 +54,24 @@ const isViewable = (v: Variant, t: ABTest): boolean => {
 export const acquisitionsTests: $ReadOnlyArray<AcquisitionsABTest> = [
     acquisitionsEpicPaymentRequest,
     acquisitionsEpicPaymentRequestLive,
-    acquisitionsEpicAlwaysAskAprilStory,
+    acquisitionsEpicOneMillionCampaignNoControl,
+    acquisitionsEpicOneMillionCampaignAu,
+    acquisitionsEpicAusFairfax,
+    acquisitionsEpicIframeTestV2,
+    acquisitionsEpicFromGoogleDocOneVariant,
+    acquisitionsEpicFromGoogleDocTwoVariants,
+    acquisitionsEpicFromGoogleDocThreeVariants,
+    acquisitionsEpicFromGoogleDocFourVariants,
+    acquisitionsEpicFromGoogleDocFiveVariants,
     acquisitionsEpicAusEnvCampaign,
     acquisitionsEpicUSGunCampaign,
-    AcquisitionsEpicBorderThankyou,
-    acquisitionsEpicNativeVsDfp,
     askFourEarning,
     acquisitionsEpicAlwaysAskIfTagged,
     acquisitionsEpicLiveblog,
     acquisitionsEpicThankYou,
 ];
 
-export const getTest = (): ?ABTest => {
+export const getTest = (): ?AcquisitionsABTest => {
     const forcedTests = getForcedTests()
         .map(({ testId }) => acquisitionsTests.find(t => t.id === testId))
         .filter(Boolean);
@@ -68,8 +84,12 @@ export const getTest = (): ?ABTest => {
 
     return acquisitionsTests.find(t => {
         const variant: ?Variant = variantFor(t);
-        return (
-            variant && testCanBeRun(t) && isInTest(t) && isViewable(variant, t)
-        );
+        if (variant) {
+            const isTestRunnable = testCanBeRun(t);
+            const isUserInTest = isInTest(t);
+            const isEpicViewable = isViewable(variant, t);
+            return isTestRunnable && isUserInTest && isEpicViewable;
+        }
+        return false;
     });
 };

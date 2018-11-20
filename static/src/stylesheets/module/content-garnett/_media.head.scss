@@ -37,12 +37,25 @@
 
     .social-icon {
         background-color: transparent;
-        fill: $neutral-3;
-        color: $neutral-3;
-        border: 1px solid $neutral-2;
+        fill: $brightness-86;
+        color: $brightness-86;
+        border: 1px solid $brightness-46;
     }
 
     .social-icon__svg {
         fill: #bdbdbd;
     }
+}
+
+/* Styling fix for special topic label */
+.content--media {
+    header {
+        .content__labels.content__labels--immersive {
+            background: none;
+            .badge-slot {
+                margin-bottom: 16px;
+            }
+        }
+    }
+
 }

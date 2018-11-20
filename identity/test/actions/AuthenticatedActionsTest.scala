@@ -13,7 +13,7 @@ import org.scalatest.{Matchers, WordSpecLike}
 import org.mockito.Matchers.any
 import play.api.mvc.{AnyContent, _}
 import play.api.test.{FakeRequest, Helpers, Injecting}
-import services.{ProfileRedirect, _}
+import services._
 import test.{WithTestExecutionContext, WithTestIdConfig}
 import idapiclient.Response
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
@@ -28,7 +28,7 @@ class AuthenticatedActionsTest extends WordSpecLike with MockitoSugar with Scala
     val client: IdApiClient = mock[IdApiClient]
     val idRequestParser: IdRequestParser = mock[IdRequestParser]
     val controllerComponents: ControllerComponents = mock[ControllerComponents]
-    val user = User("test@example.com", statusFields = new StatusFields(userEmailValidated = Some(true), hasRepermissioned = Some(true)))
+    val user = User("", "test@example.com", statusFields = new StatusFields(userEmailValidated = Some(true), hasRepermissioned = Some(true)))
     val newsletterService: NewsletterService = mock[NewsletterService]
     val rpCookie = mock[ScGuRp]
     val guUCookie = mock[ScGuU]
@@ -36,8 +36,7 @@ class AuthenticatedActionsTest extends WordSpecLike with MockitoSugar with Scala
     val notRecentlyAuthedUser = AuthenticatedUser(user, guUCookie, false)
     val mockResponse = mock[Response[User]]
 
-    val profileRedirectService = mock[ProfileRedirectService]
-    val actions = new AuthenticatedActions(authService, client, new IdentityUrlBuilder(testIdConfig), Helpers.stubControllerComponents(), mock[NewsletterService], mock[IdRequestParser], profileRedirectService)
+    val actions = new AuthenticatedActions(authService, client, new IdentityUrlBuilder(testIdConfig), Helpers.stubControllerComponents(), mock[NewsletterService], mock[IdRequestParser])
     val userWithRpCookie = AuthenticatedUser(user, rpCookie)
 
   }
@@ -51,7 +50,7 @@ class AuthenticatedActionsTest extends WordSpecLike with MockitoSugar with Scala
 
       when(authService.fullyAuthenticatedUser(any[RequestHeader])).thenReturn(Some(notRecentlyAuthedUser))
 
-      val result = actions.manageAccountRedirectAction(originalUrl).apply(failTest)(request)
+      val result = actions.consentAuthWithIdapiUserWithEmailValidation.apply(failTest)(request)
       val expectedLocation = s"/reauthenticate?returnUrl=${URLEncoder.encode(originalUrl, "utf-8")}"
       whenReady(result) { res =>
         res.header.status shouldBe 303
@@ -69,9 +68,8 @@ class AuthenticatedActionsTest extends WordSpecLike with MockitoSugar with Scala
       when(authService.fullyAuthenticatedUser(any[RequestHeader])).thenReturn(Some(recentlyAuthedUser))
       when(client.me(any[Auth])).thenReturn(Future(Right(user)))
       when(mockFunc.apply(1)) thenReturn mock[Result]
-      when(profileRedirectService.toProfileRedirect(any[User], any[RequestHeader])).thenReturn(NoRedirect)
 
-      val result = actions.manageAccountRedirectAction(originalUrl).apply(callMock)(request)
+      val result = actions.consentAuthWithIdapiUserWithEmailValidation.apply(callMock)(request)
 
       // We get a mock result back so we just want to ensure the mockFunc has been run rather than check its content
       whenReady(result)(res => {
@@ -90,7 +88,7 @@ class AuthenticatedActionsTest extends WordSpecLike with MockitoSugar with Scala
       when(authService.fullyAuthenticatedUser(any[RequestHeader])).thenReturn(None)
       when(authService.consentCookieAuthenticatedUser(any[RequestHeader])).thenReturn(None)
 
-      val result = actions.consentsRedirectAction().apply(failTest)(request)
+      val result = actions.consentAuthWithIdapiUserWithEmailValidation.apply(failTest)(request)
       val expectedLocation = s"/signin?returnUrl=${URLEncoder.encode(originalUrl, "utf-8")}"
       whenReady(result) { res =>
         res.header.status shouldBe 303
@@ -105,13 +103,12 @@ class AuthenticatedActionsTest extends WordSpecLike with MockitoSugar with Scala
       when(authService.fullyAuthenticatedUser(any[RequestHeader])).thenReturn(None)
       when(authService.consentCookieAuthenticatedUser(any[RequestHeader])).thenReturn(Some(userWithRpCookie))
       when(client.me(any[Auth])).thenReturn(Future(Right(user)))
-      when(profileRedirectService.toConsentsRedirect(any[User], any[RequestHeader])).thenReturn(NoRedirect)
 
       val mockFunc = mock[Int => Result]
       when(mockFunc.apply(1)) thenReturn mock[Result]
       def callMock: AuthRequest[AnyContent] => Result = _ => mockFunc.apply(1)
 
-      val result = actions.consentsRedirectAction().apply(callMock)(request)
+      val result = actions.consentAuthWithIdapiUserWithEmailValidation.apply(callMock)(request)
       whenReady(result) { res =>
         verify(mockFunc).apply(1)
       }
@@ -124,13 +121,12 @@ class AuthenticatedActionsTest extends WordSpecLike with MockitoSugar with Scala
       when(authService.fullyAuthenticatedUser(any[RequestHeader])).thenReturn(Some(recentlyAuthedUser))
       when(authService.consentCookieAuthenticatedUser(any[RequestHeader])).thenReturn(None)
       when(client.me(any[Auth])).thenReturn(Future(Right(user)))
-      when(profileRedirectService.toConsentsRedirect(any[User], any[RequestHeader])).thenReturn(NoRedirect)
 
       val mockFunc = mock[Int => Result]
       when(mockFunc.apply(1)) thenReturn mock[Result]
       def callMock: AuthRequest[AnyContent] => Result = _ => mockFunc.apply(1)
 
-      val result = actions.consentsRedirectAction().apply(callMock)(request)
+      val result = actions.consentAuthWithIdapiUserWithEmailValidation.apply(callMock)(request)
       whenReady(result) { res =>
         verify(mockFunc).apply(1)
       }
@@ -143,7 +139,7 @@ class AuthenticatedActionsTest extends WordSpecLike with MockitoSugar with Scala
       when(authService.fullyAuthenticatedUser(any[RequestHeader])).thenReturn(Some(notRecentlyAuthedUser))
       when(authService.consentCookieAuthenticatedUser(any[RequestHeader])).thenReturn(None)
 
-      val result = actions.consentsRedirectAction().apply(failTest)(request)
+      val result = actions.consentAuthWithIdapiUserWithEmailValidation.apply(failTest)(request)
       val expectedLocation = s"/reauthenticate?returnUrl=${URLEncoder.encode(originalUrl, "utf-8")}"
       whenReady(result) { res =>
         res.header.status shouldBe 303

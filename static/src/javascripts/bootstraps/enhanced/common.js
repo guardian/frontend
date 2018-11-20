@@ -13,13 +13,13 @@ import interactionTracking from 'common/modules/analytics/interaction-tracking';
 import { initAnalyticsRegister } from 'common/modules/analytics/register';
 import { ScrollDepth } from 'common/modules/analytics/scrollDepth';
 import { requestUserSegmentsFromId } from 'common/modules/commercial/user-ad-targeting';
-import { initDonotUseAdblock } from 'common/modules/commercial/donot-use-adblock';
 import { refresh as refreshUserFeatures } from 'common/modules/commercial/user-features';
 import { initCommentCount } from 'common/modules/discussion/comment-count';
 import { init as initCookieRefresh } from 'common/modules/identity/cookierefresh';
 import { initNavigation } from 'common/modules/navigation/navigation';
 import { Profile } from 'common/modules/navigation/profile';
 import { Search } from 'common/modules/navigation/search';
+import { emailSignInBanner } from 'common/modules/identity/email-sign-in-banner/index';
 import {
     initMembership,
     membershipBanner,
@@ -34,14 +34,16 @@ import { initAccessibilityPreferences } from 'common/modules/ui/accessibility-pr
 import { initClickstream } from 'common/modules/ui/clickstream';
 import { init as initDropdowns } from 'common/modules/ui/dropdowns';
 import { fauxBlockLink } from 'common/modules/ui/faux-block-link';
+import { firstPvConsentPlusEngagementBanner } from 'common/modules/ui/first-pv-consent-plus-engagement-banner';
 import { firstPvConsentBanner } from 'common/modules/ui/first-pv-consent-banner';
 import { init as initRelativeDates } from 'common/modules/ui/relativedates';
 import { smartAppBanner } from 'common/modules/ui/smartAppBanner';
 import { init as initTabs } from 'common/modules/ui/tabs';
 import { Toggles } from 'common/modules/ui/toggles';
 import { initPinterest } from 'common/modules/social/pinterest';
+import { fivBanner } from 'common/modules/commercial/fiv-banner';
+import { firstPvConsentPlusFivBanner } from 'common/modules/commercial/first-pv-consent-plus-fiv-banner';
 import { membershipEngagementBanner } from 'common/modules/commercial/membership-engagement-banner';
-import { signInEngagementBanner } from 'common/modules/identity/global/sign-in-engagement-banner';
 import { initEmail } from 'common/modules/email/email';
 import { init as initEmailArticle } from 'common/modules/email/email-article';
 import { init as initIdentity } from 'bootstraps/enhanced/identity-common';
@@ -50,6 +52,7 @@ import { breakingNews } from 'common/modules/onward/breaking-news';
 import { trackConsentCookies } from 'common/modules/analytics/send-privacy-prefs';
 import { getAllAdConsentsWithState } from 'common/modules/commercial/ad-prefs.lib';
 import ophan from 'ophan/ng';
+import { adFreeBanner } from 'common/modules/commercial/ad-free-banner';
 
 const initialiseTopNavItems = (): void => {
     const header: ?HTMLElement = document.getElementById('header');
@@ -95,10 +98,6 @@ const initialiseClickstream = (): void => {
     });
 };
 
-const showAdblockMessage = (): void => {
-    initDonotUseAdblock();
-};
-
 const loadAnalytics = (): void => {
     interactionTracking.init();
     if (config.switches.ophan) {
@@ -122,7 +121,6 @@ const cleanupCookies = (): void => {
         'GU_ALPHA',
         'GU_ME',
         'at',
-        'gu_adfree_user',
         'gu_join_date',
     ]);
 };
@@ -273,12 +271,16 @@ const initialiseEmail = (): void => {
 const initialiseBanner = (): void => {
     // ordered by priority
     const bannerList = [
+        firstPvConsentPlusFivBanner,
+        firstPvConsentPlusEngagementBanner,
         firstPvConsentBanner,
         breakingNews,
         membershipBanner,
+        fivBanner,
         membershipEngagementBanner,
-        signInEngagementBanner,
         smartAppBanner,
+        adFreeBanner,
+        emailSignInBanner,
     ];
     initBannerPicker(bannerList);
 };
@@ -308,7 +310,6 @@ const init = (): void => {
         ['c-id-cookie-refresh', idCookieRefresh],
         ['c-history-nav', showHistoryInMegaNav],
         ['c-start-register', startRegister],
-        ['c-adblock', showAdblockMessage],
         ['c-cookies', cleanupCookies],
         ['c-localStorage', cleanupLocalStorage],
         ['c-overlay', initOpenOverlayOnClick],

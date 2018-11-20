@@ -21,47 +21,44 @@ class ImageDecacheController(
   extends BaseController with Logging with ImplicitControllerExecutionContext with AdminAuthController {
     import ImageDecacheController._
 
-  val imageServices = new ImageServices(wsClient)
-
-  private val iGuim = """i.guim.co.uk/img/(static|media|uploads)(/.*)""".r
-  private val Origin = """(static|media).guim.co.uk/.*""".r
+  private val iGuim = """i.(guim|guimcode).co.uk/img/(static|media|uploads|sport)(/.*)""".r
+  private val Origin = """(static|media|sport|uploads).guim.co.uk/.*""".r
 
   def renderImageDecacheForm(): Action[AnyContent] = Action { implicit request =>
     NoCache(Ok(views.html.cache.imageDecache()))
   }
 
   def decache(): Action[AnyContent] = AdminAuthAction.async { implicit request =>
-    getSubmittedImage(request).map(new URI(_)).map{ image =>
+    getSubmittedImage(request).map(new URI(_)).map{ imageUri =>
 
-      val originUrl: String = s"${image.getHost}${image.getPath}" match {
-        case iGuim(host, path) => s"${image.getScheme}://$host.guim.co.uk$path"
-        case Origin(_) => s"${image.getScheme}://${image.getHost}${image.getPath}"
+      // here we limit the url to ones for which purging is supported
+      val originUrl: String = s"${imageUri.getHost}${imageUri.getPath}" match {
+        case iGuim(_, host, path) => s"${imageUri.getScheme}://$host.guim.co.uk$path"
+        case Origin(_) => s"${imageUri.getScheme}://${imageUri.getHost}${imageUri.getPath}"
 
-        case _ => throw new RuntimeException(image.toString)
+        case _ => throw new RuntimeException(imageUri.toString)
       }
 
       val cacheBust = UUID.randomUUID()
-
       val originUri = new URI(originUrl)
 
-      imageServices.clearFastly(originUri)
-      imageServices.clearImgix(originUri)
+      ImageServices.clearFastly(originUri, wsClient)
 
       val decacheRequest: Future[WSResponse] = wsClient.url(s"$originUrl?cachebust=$cacheBust").get
       decacheRequest.map(_.status).map{
         case NOT_FOUND => Ok(views.html.cache.imageDecache(
           messageType = Cleared,
-          image = image.toString,
+          image = imageUri.toString,
           originImage = Some(originUrl)
         ))
         case OK => Ok(views.html.cache.imageDecache(
           messageType = ImageStillOnOrigin,
-          image = image.toString,
+          image = imageUri.toString,
           originImage = Some(originUrl)
         ))
         case status => Ok(views.html.cache.imageDecache(
           messageType = Error,
-          image = image.toString,
+          image = imageUri.toString,
           originImage = Some(originUrl)
         ))
       }.map(NoCache(_))

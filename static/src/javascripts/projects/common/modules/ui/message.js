@@ -6,7 +6,7 @@ import userPrefs from 'common/modules/user-prefs';
 import mediator from 'lib/mediator';
 import { isBreakpoint } from 'lib/detect';
 import { begin } from 'common/modules/analytics/register';
-import uniq from 'lodash/arrays/uniq';
+import uniq from 'lodash/uniq';
 
 type MessagePosition = 'top' | 'bottom';
 
@@ -198,9 +198,18 @@ class Message {
     }
 
     remember(): void {
+        if (this.isRemembered()) {
+            return;
+        }
+
         const messageStates = userPrefs.get(this.prefs) || [];
         messageStates.push(this.id);
         userPrefs.set(this.prefs, uniq(messageStates));
+    }
+
+    isRemembered(): boolean {
+        const messageStates = userPrefs.get(this.prefs) || [];
+        return messageStates.includes(this.id);
     }
 
     acknowledge(): void {
@@ -237,5 +246,10 @@ class Message {
     }
 }
 
+const hasUserAcknowledgedBanner = (id: string): boolean => {
+    const messageStates = userPrefs.get('messages');
+    return messageStates && messageStates.includes(id);
+};
+
 export type { MessagePosition };
-export { Message };
+export { Message, hasUserAcknowledgedBanner };

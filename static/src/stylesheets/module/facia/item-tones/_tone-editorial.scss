@@ -1,7 +1,7 @@
 .tone-editorial--item {
     $c-headline: #ffffff;
 
-    background-color: $editorial-default;
+    background-color: $sport-dark;
 
     &,
     .rich-link__link,
@@ -12,62 +12,62 @@
 
     .u-faux-block-link--hover,
     .fc-item__image-container {
-        background-color: darken($editorial-default, 5%);
+        background-color: darken($sport-dark, 5%);
     }
 
     .fc-item__link,
     .fc-sublink__link {
         &:visited {
-            color: mix($c-headline, $editorial-default, 80%);
+            color: mix($c-headline, $sport-dark, 80%);
         }
     }
 
     .inline-quote,
     .fc-item__meta .inline-icon {
-        fill: $editorial-accent;
+        fill: $sport-pastel;
     }
 
     .fc-item__container:before,
     .rich-link__container:before {
-        background-color: $editorial-accent;
+        background-color: $sport-pastel;
     }
 
     .fc-item__kicker,
     .fc-item__byline,
     .fc-item__standfirst,
     .rich-link__read-more-text {
-        color: $editorial-accent;
+        color: $sport-pastel;
     }
 
     .fc-item__kicker--dreamsnap {
-        background-color: mix(#000000, $editorial-default, 10%);
+        background-color: mix(#000000, $sport-dark, 10%);
     }
 
     .rich-link__arrow-icon {
-        fill: $editorial-accent;
+        fill: $sport-pastel;
     }
 
     .fc-item__meta {
-        color: $editorial-accent;
+        color: $sport-pastel;
     }
 
     .fc-sublink__title:before {
-        border-color: mix($c-headline, $editorial-default, 20%);
+        border-color: mix($c-headline, $sport-dark, 20%);
     }
 }
 
 .tone-editorial--sublink {
     .fc-sublink__kicker {
-        color: $editorial-default;
+        color: $sport-dark;
     }
 
     @include sublink-style(editorial, feature, live, media, review) {
         .fc-sublink__kicker {
-            color: $editorial-accent;
+            color: $sport-pastel;
         }
     }
 }
 
 .tone-editorial--most-popular .fc-item__kicker {
-    color: $editorial-default;
+    color: $sport-dark;
 }

@@ -15,8 +15,7 @@ import {
 } from 'common/modules/commercial/ad-prefs.lib';
 import { buildPageTargeting } from 'common/modules/commercial/build-page-targeting';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
-
-import { adFreeSlotRemove } from 'commercial/modules/close-disabled-slots';
+import { adFreeSlotRemove } from 'commercial/modules/ad-free-slot-remove';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import { fillAdvertSlots } from 'commercial/modules/dfp/fill-advert-slots';
 import { getUserFromCookie } from 'common/modules/identity/api';
@@ -92,7 +91,7 @@ const setPersonalisedAds = (): void => {
 const setPageTargeting = (): void => {
     const pubads = window.googletag.pubads();
     // because commercialFeatures may export itself as {} in the event of an exception during construction
-    const targeting = buildPageTargeting(commercialFeatures.adFree || false);
+    const targeting = buildPageTargeting();
     Object.keys(targeting).forEach(key => {
         pubads.setTargeting(key, targeting[key]);
     });
@@ -147,16 +146,12 @@ export const init = (start: () => void, stop: () => void): Promise<void> => {
     };
 
     if (commercialFeatures.dfpAdvertising) {
-        if (commercialFeatures.adFree) {
-            setupAdvertising()
-                .then(adFreeSlotRemove)
-                .catch(removeAdSlots);
-            return Promise.resolve();
-        }
         // A promise error here, from a failed module load,
         // could be a network problem or an intercepted request.
         // Abandon the init sequence.
-        setupAdvertising().catch(removeAdSlots);
+        setupAdvertising()
+            .then(adFreeSlotRemove)
+            .catch(removeAdSlots);
         return Promise.resolve();
     }
     return removeAdSlots().then(stop);

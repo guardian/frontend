@@ -32,7 +32,7 @@ class ReauthenticationController(
   with Mappings
   with Forms {
 
-  val page = IdentityPage("/reauthenticate", "Re-authenticate")
+  val page = IdentityPage("/reauthenticate", "Re-authenticate", isFlow = true)
 
   val form = Form(
     Forms.single(
@@ -52,7 +52,7 @@ class ReauthenticationController(
 
     logger.trace("Rendering reauth form")
     val idRequest = idRequestParser(request)
-    val googleId = request.user.socialLinks.find(_.getNetwork == "google").map(_.getSocialId)
+    val googleId = request.user.socialLinks.find(_.network == "google").map(_.socialId)
 
     NoCache(Ok(
       IdentityHtmlPage.html(

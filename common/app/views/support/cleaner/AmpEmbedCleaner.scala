@@ -2,14 +2,16 @@ package views.support.cleaner
 
 import java.net.URLDecoder
 
-import model.{Article, VideoAsset}
+import common.Logging
+import conf.switches.Switches
+import model.{Article, Content, VideoAsset}
 import org.jsoup.nodes.{Document, Element}
 import views.support.{AmpSrcCleaner, HtmlCleaner}
 
 import scala.collection.JavaConverters._
 import scala.collection.mutable
 
-case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
+case class AmpEmbedCleaner(article: Article) extends HtmlCleaner with Logging {
 
 
   def cleanAmpVideos(document: Document): Unit = {
@@ -121,6 +123,12 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
   }
 
 
+  def logAmpRemoval: String => Unit = {message =>
+    if (Switches.LogRemovedAmpElements.isSwitchedOn)
+      log.logger.info(message)
+  }
+
+
   object AmpAudioElements {
     def createAmpIframeElement(document: Document, src: String, width: String, height: String, frameborder: String): Element = {
       val ampIframe = document.createElement("amp-iframe")
@@ -152,10 +160,12 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
             val src = iframeElement.attr("src")
             val width = iframeElement.attr("width")
             val height = iframeElement.attr("height")
-            val frameBorder = iframeElement.attr("frameborder")
+            val frameBorder = iframeElement.attr("frameborder") // This is default as 0 in amp and deprecated in HTML5, I don't think it's needed
             iframeElement.replaceWith(createAmpIframeElement(document, src, width, height, frameBorder))
           } else {
             iframeElement.remove()
+            val attrs  = iframeElement.attributes().asList().asScala.map(_.getKey).mkString(", ")
+            logAmpRemoval(s"AMP cleaner an audio element iframe with src ${iframeElement.attr("src")} and attributes ${attrs} was removed as it was missing attributes.  ${article.content.metadata.id}")
           }
         }
       }
@@ -230,6 +240,7 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
           interactive.appendChild(iframe)
         } else {
           interactive.remove()
+          logAmpRemoval(s"AMP cleaner an interactive was removed. ${article.content.metadata.id}")
         }
     }
   }
@@ -285,6 +296,9 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
           image.replaceWith(ampImg)
         } else {
           image.remove()
+
+          logAmpRemoval(s"AMP cleaner a comment image was removed as it was missing attributes. ${article.content.metadata.id}")
+
         }
       }
     }
@@ -302,6 +316,8 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
             iframeElement.replaceWith(soundcloudElement.get)
           } else
             iframeElement.remove()
+            val src = iframeElement.attr("src")
+            logAmpRemoval(s"AMP cleaner an embed was removed with an src of ${src}. ${article.content.metadata.id}")
       })
   }
 

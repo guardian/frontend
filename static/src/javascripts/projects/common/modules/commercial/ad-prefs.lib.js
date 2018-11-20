@@ -28,7 +28,7 @@ const setAdConsentState = (provider: AdConsent, state: boolean): void => {
     onConsentSet(provider, state);
 };
 
-const getAdConsentState = (provider: AdConsent): ?boolean => {
+const getAdConsentState = (provider: AdConsent): boolean | null => {
     const cookieRaw = getCookie(provider.cookie);
     if (!cookieRaw) return null;
     const cookieParsed = cookieRaw.split('.')[0];

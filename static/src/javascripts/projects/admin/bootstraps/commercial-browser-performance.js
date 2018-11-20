@@ -2,14 +2,14 @@
 
 import config from 'lib/config';
 import fetchJson from 'lib/fetch-json';
-import template from 'lodash/utilities/template';
-import countBy from 'lodash/collections/countBy';
+import template from 'lodash/template';
+import countBy from 'lodash/countBy';
 
 // Globals that aren't imported
 declare var $: any;
 declare var Epoch: any;
 
-type HeatmapDatapoint = { time: number, histogram: Array<Array<number>> };
+type HeatmapDatapoint = { time: number, histogram: { [string]: number } };
 type Chart = { push: (_: Array<HeatmapDatapoint>) => void };
 
 let chart: Chart;
@@ -53,7 +53,7 @@ const updateAverageStartTime = (startTimes: Array<number>): void => {
 const fetchData = (): void => {
     const currentDate: Date = new Date();
     currentDate.setSeconds(currentDate.getSeconds() - FETCH_DELAY);
-    const fetchUrl: string = template(reportTemplateUrl, {
+    const fetchUrl: string = template(reportTemplateUrl)({
         isoDate: currentDate.toISOString(),
     });
 

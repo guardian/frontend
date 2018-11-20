@@ -1,6 +1,7 @@
 package conf.switches
 
 import conf.switches.Expiry.never
+import org.joda.time.LocalDate
 
 trait MonitoringSwitches {
   // Monitoring
@@ -73,6 +74,16 @@ trait MonitoringSwitches {
     safeState = Off,
     never,
     exposeClientSide = true
+  )
+
+  val LogRemovedAmpElements = Switch(
+    SwitchGroup.Monitoring,
+    "log-removed-amp-elements",
+    "Sends log messages to kibana whenever an element is removed from an AMP article.",
+    Seq(Owner.withGithub("aware")),
+    Off,
+    never,
+    false
   )
 
 }

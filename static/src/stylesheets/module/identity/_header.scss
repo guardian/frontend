@@ -4,9 +4,9 @@ $gutter: 5px;
 
 .identity-header {
     @include clearfix;
-    background-color: $nav-background-colour;
+    background-color: $brightness-97;
     padding: ($gutter/2) 0 0;
-    color: $nav-primary-colour;
+    color: $brightness-7;
     height: $slim-nav-height + 1px;
     overflow: visible;
     position: relative;
@@ -21,8 +21,7 @@ $gutter: 5px;
         height: 1px;
         display: block;
         z-index: 0;
-        background: #000000;
-        opacity: .14;
+        background: $brightness-86;
     }
 
     .identity-dropdown {
@@ -52,18 +51,11 @@ $gutter: 5px;
 
     .identity-header__container {
         display: flex;
-        box-sizing: border-box;
         flex-direction: row-reverse;
         justify-content: space-between;
         align-items: flex-start;
-        padding: 0;
-    }
-}
-
-.identity-wrapper-page-flex.identity-wrapper-page-flex--flow {
-    .identity-header, .identity-header:after {
-        background-color: transparent;
-        border-color: $garnett-neutral-4;
+        padding-top: 0;
+        padding-bottom: 0;
     }
 }
 
@@ -149,7 +141,7 @@ label[for=identity-header-account-menu-fallback]:focus {
     &:focus,
     label[for=identity-header-account-menu-fallback]:focus & {
         outline: 0;
-        color: $nav-secondary-colour;
+        color: $brightness-20;
         &:after {
             transform: translateY(0px) rotate(45deg);
         }

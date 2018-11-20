@@ -6,7 +6,7 @@
     width: 100%;
     height: 100%;
     padding-top: 2.5%;
-    background: $neutral-8;
+    background: $brightness-97;
     text-align: center;
 
     .button:last-of-type {
@@ -14,24 +14,24 @@
     }
 
     .button--large {
-        background: $lifestyle-garnett-main-1;
-        border: 1px solid $lifestyle-garnett-main-1;
+        background: $lifestyle-main;
+        border: 1px solid $lifestyle-main;
         &:hover,
         &:visited,
         &:focus {
-            background-color: darken($lifestyle-garnett-main-1, 10%);
-            border-color: darken($lifestyle-garnett-main-1, 10%);
+            background-color: darken($lifestyle-main, 10%);
+            border-color: darken($lifestyle-main, 10%);
         }
     }
 
     .button--tertiary {
         background: transparent;
-        border: 1px solid $garnett-neutral-4;
+        border: 1px solid $brightness-86;
         &:hover,
         &:visited,
         &:focus {
             background-color: transparent;
-            border-color: darken($garnett-neutral-4, 15%);
+            border-color: darken($brightness-86, 15%);
         }
     }
 
@@ -92,8 +92,8 @@
     width: $xword-cell-width;
     height: $xword-cell-width;
     line-height: $xword-cell-width;
-    border: 1px solid $neutral-3;
-    border-left: 1px solid $neutral-3;
+    border: 1px solid $brightness-86;
+    border-left: 1px solid $brightness-86;
 
     @include mq($until: mobileLandscape) {
         width: $xword-cell-width-small;
@@ -108,17 +108,16 @@
     }
 
     &:first-of-type {
-        border-left: 1px solid $neutral-3;
+        border-left: 1px solid $brightness-86;
     }
 
     &.has-value {
-        background: $neutral-4;
-        color: $neutral-3;
+        background: $brightness-86;
     }
 }
 
 .crossword__anagram-helper__cell--with-space {
-    border-right: 1px solid $neutral-1;
+    border-right: 1px solid $brightness-7;
 }
 
 .crossword__anagram-helper__cell--with-hyphen::after {
@@ -151,7 +150,7 @@
     position: absolute;
 
     &.entered {
-        color: $neutral-3;
+        color: $brightness-86;
     }
 }
 
@@ -165,6 +164,6 @@
         position: relative;
         top: 2px;
         left: 3px;
-        fill: $neutral-1;
+        fill: $brightness-7;
     }
 }

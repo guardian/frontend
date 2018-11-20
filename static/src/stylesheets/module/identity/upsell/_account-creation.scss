@@ -1,0 +1,31 @@
+.identity-upsell-account-creation-bullets {
+    @include fs-bodyCopy(2);
+    list-style: none;
+    margin-bottom: $gs-baseline;
+    margin-top: $gs-baseline / 3;
+    .identity-upsell-account-creation-bullets__title {
+        @include fs-headlineGarnett(0);
+        margin-bottom: $gs-baseline / 4;
+        font-weight: 600;
+    }
+    li {
+        @include clearfix;
+        position: relative;
+        margin-bottom: $gs-baseline;
+        &:before {
+            @include circular;
+            position: absolute;
+            content: '';
+            background-color: $green-dark;
+            width: .9em;
+            height: .9em;
+            margin-left: -$gs-gutter;
+            margin-top: $gs-baseline / 3;
+        }
+    }
+    &.identity-upsell-account-creation-bullets--super {
+        li {
+            margin-bottom: $gs-baseline * 2;
+        }
+    }
+}

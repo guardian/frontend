@@ -1,10 +1,5 @@
 // @flow
-const loadScript = (src: string, props?: Object): Promise<any> => {
-    // #? type checks like this should be redundant post es6/flow conversion
-    if (typeof src !== 'string') {
-        return Promise.reject(new Error('no src supplied'));
-    }
-
+const loadScript = (src: string, props?: Object): Promise<void> => {
     if (document.querySelector(`script[src="${src}"]`)) {
         return Promise.resolve();
     }
@@ -17,7 +12,9 @@ const loadScript = (src: string, props?: Object): Promise<any> => {
             Object.assign(script, props);
         }
         script.onload = resolve;
-        script.onerror = reject;
+        script.onerror = () => {
+            reject(new Error(`Failed to load script ${src}`));
+        };
         if (ref.parentNode) {
             ref.parentNode.insertBefore(script, ref);
         }

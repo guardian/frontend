@@ -1,6 +1,7 @@
 @(page: MediaPage, displayCaption: Boolean)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @import common.LinkTo
+@import conf.switches.Switches.SurveySwitch
 @import model.{Audio, AudioPlayer, Video, VideoPlayer}
 @import views.support.Commercial.{isPaidContent, isAdFree}
 @import views.support.TrailCssClasses.toneClass
@@ -8,7 +9,7 @@
 
 @defining(page.media, page.media match { case _: Audio => "audio" case _ => "video" }) { case (media, mediaType) =>
     @defining(isPaidContent(page), isAdFree(request)) { case (isPaidContent, isAdFree) =>
-        <div class="l-side-margins @if(!isPaidContent) {l-side-margins--media}">
+        <div class="l-side-margins @if(!isPaidContent) {l-side-margins--media} @if(isPaidContent) {l-side-margins--paidfor}">
 
             <article id="article" class="@RenderClasses(
                 Map(
@@ -19,6 +20,10 @@
                 "content", "content--media", s"content--pillar-${media.metadata.pillar.nameOrDefault}", s"content--media--$mediaType", "tonal", "tonal--tone-media", s"tonal--${toneClass(media)}"
             )"
             itemscope itemtype="@media.metadata.schemaType" role="main">
+
+                @if(!page.metadata.isFront && SurveySwitch.isSwitchedOn) {
+                    @fragments.commercial.survey()
+                }
 
                 @if(isPaidContent) {
                     @fragments.guBand()
@@ -34,10 +39,8 @@
                                 @media match {
                                     case audio: Audio => {
 
-                                        @audio.elements.images.map { img =>
-                                            @fragments.imageFigure(
-                                                img.images
-                                            )
+                                        @audio.elements.images.map{ img =>
+                                            @fragments.imageFigure(img.images)
                                         }
 
                                         <figure data-component="main audio">
@@ -93,7 +96,7 @@
                                             }
 
                                             @video.mediaAtom.map { mediaAtom =>
-                                                @fragments.atoms.media(mediaAtom, displayCaption = displayCaption, displayEndSlate = true, mediaWrapper = None)
+                                                @fragments.atoms.media(mediaAtom, displayCaption = displayCaption, displayEndSlate = true, mediaWrapper = None, posterImageOverride = None)
                                             }
 
                                             @video.elements.mainVideo.map { videoElement =>
@@ -151,6 +154,17 @@
                                     </div>
                                 }
                             }
+                            case a: Audio if conf.switches.Switches.AudioOnwardJourneySwitch.isSwitchedOn => {
+                                <div class="content__secondary-column content__secondary-column--media content__secondary-column--audio hide-on-childrens-books-site"
+                                aria-hidden="true">
+                                    <div class="js-audio-components-container"></div>
+                                    @if(a.fields.body.nonEmpty) {
+                                        <br/>
+                                        @fragments.commercial.standardAd("right", Seq("dark"), Map("desktop" -> Seq("300,250", "300,274", "fluid")))
+                                    }
+                                </div>
+                            }
+
                             case a: Audio if a.fields.body.nonEmpty => {
                                 <div class="content__secondary-column content__secondary-column--media content__secondary-column--audio hide-on-childrens-books-site"
                                 aria-hidden="true">

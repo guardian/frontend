@@ -53,6 +53,14 @@
     margin-top: $gs-baseline;
 }
 
+.crossword__spacer--ad {
+    @include mq(wide) {
+        margin-right: gs-span(4) + $gs-baseline;
+        min-height: 600px + $mpu-ad-label-height;
+        margin-bottom: $gs-baseline;
+    }
+}
+
 .crossword__controls {
     margin-top: $gs-baseline;
     float: left;
@@ -168,7 +176,7 @@
 
 .crossword__meta {
     .crossword__links & {
-        border-top: 1px dotted $neutral-5;
+        border-top: 1px dotted $brightness-86;
         @include mq($from: leftCol) {
             display: none;
         }

@@ -19,13 +19,7 @@ class LatestIndexController(
   def latest(path: String): Action[AnyContent] = Action.async { implicit request =>
     loadLatest(path).map { _.map { index =>
       index.page match {
-        case tag: Tag if tag.isSeries || tag.isBlog => index.trails.headOption.map(latest => {
-          if (request.isEmail) {
-            Redirect(latest.metadata.url + "/email", request.campaignCode.fold(Map[String, Seq[String]]())(c => Map("CMP" -> Seq(c))))
-          }
-          else Found(latest.metadata.url)
-        }).getOrElse(NotFound)
-
+        case tag: Tag if tag.isSeries || tag.isBlog => handleSeriesBlogs(index)
         case tag: Tag => MovedPermanently(s"${tag.metadata.url}/all")
         case section: Section =>
           val url = if (section.isEditionalised) Paths.stripEditionIfPresent(section.metadata.url) else section.metadata.url
@@ -33,6 +27,34 @@ class LatestIndexController(
         case _ => NotFound
       }
     }.getOrElse(NotFound)}.map(r => Cached(300)(WithoutRevalidationResult(r)))
+  }
+
+  private def handleSeriesBlogs(index: IndexPage)(implicit request: RequestHeader) = index.trails.headOption match {
+    case Some(latest) if request.isEmailJson || request.isEmailTxt || request.isHeadlineText =>
+      // We perform an internal redirect for Braze. It cannot handle 30Xs
+      emailInternalRedirect(latest)
+
+    case Some(latest) if request.isEmail =>
+      val queryString = request.campaignCode.fold(Map.empty[String, Seq[String]])(c => Map("CMP" -> Seq(c)))
+      val url = s"${latest.metadata.url}/email"
+      Redirect(url, queryString)
+
+    case Some(latest) =>
+      Found(latest.metadata.url)
+
+    case None =>
+      NotFound
+  }
+
+  private def emailInternalRedirect(latest: Content)(implicit request: RequestHeader) = {
+    val emailJsonSuffix = if (request.isEmailJson) EMAIL_JSON_SUFFIX else ""
+    val emailTxtSuffix = if (request.isEmailTxt) EMAIL_TXT_SUFFIX else ""
+    val headlineSuffix = if (request.isHeadlineText) HEADLINE_SUFFIX else ""
+
+    val url = s"${latest.metadata.url}/email$emailTxtSuffix$emailJsonSuffix$headlineSuffix"
+    val urlWithoutSlash = if (url.startsWith("/")) url.drop(1) else url
+
+    InternalRedirect.internalRedirect("type/article", urlWithoutSlash, None)
   }
 
   // this is simply the latest by date. No lead content, editors picks, or anything else

@@ -4,11 +4,14 @@ import $ from 'lib/$';
 import { adblockInUse } from 'lib/detect';
 import { getParticipations as getABParticipations } from 'common/modules/experiments/utils';
 import { getCookie } from 'lib/cookies';
+import fetchJson from 'lib/fetch-json';
 
 let adblockBeingUsed = false;
 const DISABLED_ELEMENTS =
     '#feedback__form input, #feedback__form textarea, #feedback__form button';
 const MANDATORY_ELEMENTS = '#feedback__form input, #feedback__form textarea';
+const MEMBERS_DATA_API_ENDPOINT =
+    'https://members-data-api.theguardian.com/user-attributes/me';
 
 const summariseAbTests = (testParticipations: Participations): string => {
     const tests = Object.keys(testParticipations);
@@ -25,7 +28,7 @@ const summariseAbTests = (testParticipations: Participations): string => {
         .join(', ');
 };
 
-const getExtraDataInformation = (): Object => ({
+const getBaseExtraData = (): Object => ({
     browser: window.navigator.userAgent,
     referrer: document.referrer,
     page: window.location,
@@ -36,6 +39,18 @@ const getExtraDataInformation = (): Object => ({
     payingMember: getCookie('gu_paying_member'),
     abTests: summariseAbTests(getABParticipations()),
 });
+
+const getExtraDataInformation = (): Promise<Object> =>
+    fetchJson(MEMBERS_DATA_API_ENDPOINT, {
+        mode: 'cors',
+    })
+        .then(membershipData => ({
+            basicInformation: getBaseExtraData(),
+            subscriptionInformation: membershipData,
+        }))
+        .catch(() => ({
+            basicInformation: getBaseExtraData(),
+        }));
 
 const toggleFormVisibility = (evt: Event): void => {
     const evtTarget: HTMLInputElement = (evt.target: any);
@@ -60,7 +75,7 @@ const toggleFormVisibility = (evt: Event): void => {
 
 const isInputFilled = (elem: HTMLInputElement): boolean => elem.value === '';
 
-const initForms = (): void => {
+const initForms = (): Promise<any> => {
     const warning = document.getElementById('feedback__explainer');
     const feedback = document.getElementById('feedback-category');
     const onSubmitChecks = (elem: HTMLElement): void => {
@@ -97,19 +112,24 @@ const initForms = (): void => {
     }
 
     // insert hidden extra data into forms
-    $.forEachElement('#feedback__form input[name=extra]', elem => {
-        elem.value = JSON.stringify(getExtraDataInformation(), null, '  ');
+
+    return getExtraDataInformation().then(extraData => {
+        $.forEachElement('#feedback__form input[name=extra]', elem => {
+            elem.value = JSON.stringify(extraData, null, '  ');
+        });
     });
 };
 
-const initTechFeedback = (): void => {
+const initTechFeedback = (): Promise<any> => {
     if (document.getElementById('feedback-category')) {
         adblockInUse.then(inUse => {
             adblockBeingUsed = inUse;
         });
 
-        initForms();
+        return initForms();
     }
+
+    return Promise.resolve();
 };
 
 export { initTechFeedback };

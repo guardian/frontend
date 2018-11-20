@@ -1,8 +1,7 @@
 package common.dfp
 
-import com.gu.contentapi.client.model.v1.{ Tag, TagType }
 import com.gu.commercial.display.{AdTargetParam, KeywordParam, SeriesParam}
-
+import com.gu.contentapi.client.model.v1.{Tag, TagType}
 import common.Edition.defaultEdition
 import common.commercial.{CommercialProperties, EditionAdTargeting}
 import common.editions.{Au, Uk, Us}
@@ -42,6 +41,8 @@ class PageskinAdAgentTest extends FlatSpec with Matchers {
   val sportIndexFrontMeta = MetaData.make("", None, "The title", None, isFront = true, commercial = Some(commercialProperties))
   val articleMeta = MetaData.make("", None, "The title", None)
 
+  val keywordPressedFrontMeta = MetaData.make("", None, "The title", None, isFront = true, isPressedPage = true, commercial = Some(commercialProperties))
+
   val examplePageSponsorships = Seq(
     PageSkinSponsorship(
       "lineItemName",
@@ -49,7 +50,6 @@ class PageskinAdAgentTest extends FlatSpec with Matchers {
       Seq("business/front"),
       Seq(Uk),
       Seq("United Kingdom"),
-      isR2Only = false,
       targetsAdTest = false,
       adTestValue = None,
       keywords = Seq.empty,
@@ -61,7 +61,6 @@ class PageskinAdAgentTest extends FlatSpec with Matchers {
       Seq("music/front"),
       Nil,
       Nil,
-      isR2Only = false,
       targetsAdTest = false,
       adTestValue = None,
       keywords = Seq.empty,
@@ -73,7 +72,6 @@ class PageskinAdAgentTest extends FlatSpec with Matchers {
       Seq("sport"),
       Nil,
       Nil,
-      isR2Only = false,
       targetsAdTest = false,
       adTestValue = None,
       keywords = Seq.empty,
@@ -85,7 +83,6 @@ class PageskinAdAgentTest extends FlatSpec with Matchers {
       Seq("testSport/front"),
       Seq(Uk),
       Seq("United Kingdom"),
-      isR2Only = false,
       targetsAdTest = true,
       adTestValue = Some("6"),
       keywords = Seq.empty,
@@ -97,7 +94,6 @@ class PageskinAdAgentTest extends FlatSpec with Matchers {
       Seq("sport-index"),
       Seq(Uk),
       Nil,
-      isR2Only = false,
       targetsAdTest = false,
       adTestValue = None,
       keywords = Seq("sport-keyword"),
@@ -111,7 +107,6 @@ class PageskinAdAgentTest extends FlatSpec with Matchers {
       Seq("fake-series-adunit"),
       Seq(Uk),
       Nil,
-      isR2Only = false,
       targetsAdTest = false,
       adTestValue = None,
       keywords = Seq.empty,
@@ -171,5 +166,25 @@ class PageskinAdAgentTest extends FlatSpec with Matchers {
     NotProductionTestPageskinAdAgent.hasPageSkin(s"$dfpAdUnitGuRoot/testSport/front", pressedFrontMeta,
       defaultEdition) should be(
       true)
+  }
+
+  "findSponsorships" should "find keyword-targeted sponsorship when keyword page has been overwritten by a pressed front" in {
+    TestPageskinAdAgent.findSponsorships(
+      adUnitPath = "/123456/root/technology/subsection/ng",
+      metaData = keywordPressedFrontMeta,
+      edition = Uk
+    ) shouldBe Seq(
+      PageSkinSponsorship(
+        lineItemName = "lineItemName5",
+        lineItemId = 123458,
+        adUnits = Seq("sport-index"),
+        editions = Seq(Uk),
+        countries = Nil,
+        targetsAdTest = false,
+        adTestValue = None,
+        keywords = Seq("sport-keyword"),
+        series = Nil
+      )
+    )
   }
 }

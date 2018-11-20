@@ -46,7 +46,9 @@ class LeagueTableController(
         "Scottish Cup",
         "Scottish League Cup",
         "World Cup 2018 Qualifiers",
-        "International friendlies"
+        "International friendlies",
+        "Women's Super League",
+        "Women's FA Cup"
     )
 
   def sortedCompetitions:Seq[Competition] = tableOrder.flatMap(leagueName => competitionsService.competitions.find(_.fullName == leagueName))
@@ -110,7 +112,7 @@ class LeagueTableController(
 
       val smallTableGroup = table.copy(groups = table.groups.map { group => group.copy(entries = group.entries.take(10)) }).groups(0)
       val htmlResponse = () => football.views.html.tablesList.tablesPage(TablesPage(page, Seq(table), table.competition.url, filters, Some(table.competition)))
-      val jsonResponse = () => football.views.html.tablesList.tablesComponent(table.competition, smallTableGroup, multiGroup = table.multiGroup)
+      val jsonResponse = () => football.views.html.tablesList.tablesComponent(table.competition, smallTableGroup, table.competition.fullName, multiGroup = table.multiGroup)
 
       renderFormat(htmlResponse, jsonResponse, page)
 
@@ -136,9 +138,14 @@ class LeagueTableController(
         "football",
         s"${table.competition.fullName} table"
       )
+
+      val heading = group.round.name
+        .map(name => s"${table.competition.fullName} - $name")
+        .getOrElse(table.competition.fullName)
+
       val groupTable = Table(table.competition, Seq(group), hasGroups = true)
       val htmlResponse = () => football.views.html.tablesList.tablesPage(TablesPage(page, Seq(groupTable), table.competition.url, filters, Some(table.competition)))
-      val jsonResponse = () => football.views.html.tablesList.tablesComponent(table.competition, group, multiGroup = false)
+      val jsonResponse = () => football.views.html.tablesList.tablesComponent(table.competition, group, heading, multiGroup = false, linkToCompetition = true)
       renderFormat(htmlResponse, jsonResponse, page)
     }
     response.getOrElse {

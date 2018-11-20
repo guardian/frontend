@@ -115,15 +115,15 @@
 }
 
 .dumathoin--tone-paidfor {
-    background-color: $neutral-6;
+    background-color: $brightness-93;
     position: relative;
 
     .dumathoin__header {
-        background: $paidfor-background;
+        background: $labs-main;
     }
 
     .inline-icon__svg {
-        fill: $paid-article-brand;
+        fill: $labs-main;
     }
 
     .adverts__logo {
@@ -139,26 +139,26 @@
     .dumathoin__2cols::after,
     .dumathoin__3cols::before,
     .dumathoin__3cols::after {
-        background: $paid-article-subheader-bg;
+        background: $brightness-86;
     }
 
     .button {
-        @include button-colour($paid-article-brand, null);
+        @include button-colour($labs-main, null);
 
         &:hover,
         &:focus,
         &:active {
-            @include button-colour(darken($paid-article-brand, 5%), null);
+            @include button-colour(darken($labs-main, 5%), null);
         }
     }
 }
 
 .dumathoin-more__button {
-    background: $paidfor-background;
-    border-color: $paidfor-background;
+    background: $labs-main;
+    border-color: $labs-main;
 
     .inline-icon__svg {
-        fill: $neutral-2;
+        fill: $brightness-46;
     }
 
     @include mq(desktop) {
@@ -174,8 +174,8 @@
 
     .dumathoin-more__button {
         background: none;
-        border-color: $neutral-4;
-        color: $neutral-1;
+        border-color: $brightness-86;
+        color: $brightness-7;
     }
 }
 
@@ -189,7 +189,7 @@
         left: 50%;
         right: 0;
         transform: translate(-50%, 0);
-        border-top: 1px solid $news-main-2;
+        border-top: 1px solid $sport-bright;
 
         @include mq(tablet) {
             width: 740px;
@@ -209,11 +209,11 @@
     }
 
     .adverts__logo {
-        color: $guardian-brand-dark;
+        color: $brand-dark;
     }
 
     .badge__help {
-        color: $neutral-2-contrasted;
+        color: $brightness-46;
     }
 }
 
@@ -290,18 +290,18 @@
 
 .vergadain--paidfor {
     @include f-textSans;
-    background: $paid-article-card-bg;
-    border-top-color: $paid-article-brand;
+    background: $brightness-97;
+    border-top-color: $labs-main;
     width: 100%;
 
     &:hover,
     &:focus {
-        background: darken($paid-article-subheader, 7%);
+        background: darken($brightness-86, 7%);
     }
 
     .advert__title {
         .inline-icon__svg {
-            fill: $paid-article-icon;
+            fill: $brightness-46;
         }
     }
 
@@ -310,7 +310,7 @@
         border-top: 0;
 
         &::after {
-            background-color: $paid-article-icon;
+            background-color: $brightness-46;
         }
 
         .advert__image-container {
@@ -321,28 +321,28 @@
 
 .vergadain--supported {
     &.vergadain--text {
-        border-top-color: $news-main-2;
-        background: $neutral-8;
+        border-top-color: $sport-bright;
+        background: $brightness-97;
 
         &:hover,
         &:focus {
-            background: $neutral-6;
+            background: $brightness-93;
         }
     }
 
     &.vergadain--media {
-        border-top-color: $multimedia-main-2;
-        background: $multimedia-main-1;
+        border-top-color: $highlight-main;
+        background: $brightness-20;
         color: #ffffff;
 
         &:hover,
         &:focus {
-            background: darken($media-background, 7.5%);
+            background: darken($brightness-7, 7.5%);
         }
 
         .advert__title {
             > .inline-icon .inline-icon__svg {
-                fill: $multimedia-main-2;
+                fill: $highlight-main;
             }
         }
     }
@@ -367,22 +367,22 @@
 
 .adverts--within-unbranded:not(.fc-item--paid-content) {
     .fc-item__container {
-        background-color: $paid-article-card-bg;
+        background-color: $brightness-97;
         &:hover,
         &.u-faux-block-link--hover {
-            background-color: $neutral-6;
+            background-color: $brightness-93;
         }
     }
     .fc-item__container:before {
-        background-color: $paid-article-brand !important;
+        background-color: $labs-main !important;
     }
     .inline-icon__svg {
-        fill: $paid-article-brand !important;
+        fill: $labs-main !important;
     }
     .fc-item__title {
         @include f-textSans;
         font-weight: 600;
-        color: $neutral-1;
+        color: $brightness-7;
     }
 
     .fc-item__link,
@@ -393,7 +393,7 @@
     }
 
     .fc-item__kicker {
-        color: $paid-article-brand;
+        color: $labs-main;
     }
 
     .fc-item__content {
@@ -455,7 +455,7 @@
 
     .badge__sponsor-name {
         @include f-textSans;
-        color: $neutral-1;
+        color: $brightness-7;
     }
 
     .inline-icon__svg {

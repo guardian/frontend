@@ -1,22 +1,25 @@
 // @flow
 
 import reqwest from 'reqwest';
-import debounce from 'debounce-promise';
 import fastdom from 'lib/fastdom-promise';
+import config from 'lib/config';
 import loadEnhancers from './modules/loadEnhancers';
 
 import { push as pushError } from './modules/show-errors';
 import {
     addSpinner,
-    removeSpinner,
+    bindAnalyticsEventsOnce as bindCheckboxAnalyticsEventsOnce,
     flip as flipCheckbox,
     getInfo as getCheckboxInfo,
-    bindAnalyticsEventsOnce as bindCheckboxAnalyticsEventsOnce,
+    removeSpinner,
 } from './modules/switch';
-import { getCsrfTokenFromElement } from './modules/fetchFormFields';
-import { show as showModal } from './modules/modal';
-
 import { prependSuccessMessage } from './modules/prependMessage';
+import {
+    buildNewsletterUpdatePayload,
+    setConsent,
+    updateNewsletter,
+} from './api';
+import type { SettableConsent } from './api';
 
 const consentCheckboxClassName = 'js-manage-account__consentCheckbox';
 const newsletterCheckboxClassName = 'js-manage-account__newsletterCheckbox';
@@ -28,103 +31,45 @@ const isLoadingClassName = 'loading';
 const optOutClassName = 'fieldset__fields--opt-out';
 const optInClassName = 'fieldset__fields--opt-in';
 
-const requestDebounceTimeout = 150;
-
 const LC_CHECK_ALL = 'Select all';
 const LC_UNCHECK_ALL = 'Deselect all';
 const UNSUBSCRIPTION_SUCCESS_MESSAGE =
     "You've been unsubscribed from all Guardian marketing newsletters and emails.";
 const ERR_MALFORMED_HTML = 'Something went wrong';
 
-const submitPartialConsentFormDebouncedRq: ({}) => Promise<void> = debounce(
-    formData =>
-        reqwest({
-            url: '/privacy/edit-ajax',
-            method: 'POST',
-            data: formData,
-        }),
-    requestDebounceTimeout
-);
-const submitPartialConsentFormData = {};
+const updateConsent = (consent: SettableConsent): Promise<void> =>
+    setConsent([consent]);
 
-const submitPartialConsentForm = (formData: {}): Promise<void> => {
-    Object.assign(submitPartialConsentFormData, formData);
-    return submitPartialConsentFormDebouncedRq(
-        submitPartialConsentFormData
-    ).then(() => {
-        Object.keys(submitPartialConsentFormData).forEach(_ => {
-            delete submitPartialConsentFormData[_];
-        });
-    });
-};
-
-const submitNewsletterAction = (
-    csrfToken: string,
-    action: string = 'none',
-    newsletters: Array<string> = []
-): Promise<void> => {
-    const formData = new FormData();
-    formData.append('csrfToken', csrfToken);
-
-    switch (action) {
-        case 'add':
-            newsletters.map(id =>
-                formData.append('addEmailSubscriptions[]', id)
-            );
-            break;
-        case 'remove':
-            newsletters.map(id =>
-                formData.append('removeEmailSubscriptions[]', id)
-            );
-            break;
-        default:
-            throw new Error(`Undefined newsletter action type (${action})`);
-    }
-
-    return reqwest({
-        url: '/email-prefs',
-        method: 'POST',
-        data: formData,
-        processData: false,
-    });
-};
-
-const buildFormDataForFields = (
-    csrfToken: string,
+const buildConsentUpdatePayload = (
     fields: NodeList<any> = new NodeList()
-): {} => {
-    const formData: { csrfToken: string } = {
-        csrfToken,
-    };
+): SettableConsent => {
+    const consent = {};
     [...fields].forEach((field: HTMLInputElement) => {
         switch (field.type) {
             case 'checkbox':
-                formData[field.name] = field.checked.toString();
+                consent.consented = field.checked;
                 break;
             default:
-                formData[field.name] = field.value.toString();
+                if (field.name.includes('.id')) {
+                    consent.id = field.value;
+                }
                 break;
         }
     });
 
-    return formData;
+    return consent;
 };
 
 const getInputFields = (labelEl: HTMLElement): Promise<NodeList<HTMLElement>> =>
     fastdom.read(() => labelEl.querySelectorAll('[name][value]'));
 
-const unsubscribeFromAll = (
-    buttonEl: HTMLButtonElement,
-    csrfToken: string
-): Promise<void> => {
+const unsubscribeFromAll = (buttonEl: HTMLButtonElement): Promise<void> => {
     buttonEl.classList.add(isLoadingClassName);
     return reqwest({
-        url: `/user/email-subscriptions`,
-        method: 'DELETE',
+        url: `${config.get('page.idApiUrl')}/remove/consent/all`,
+        method: 'POST',
         withCredentials: true,
-        headers: {
-            'Csrf-Token': csrfToken,
-        },
+        crossOrigin: true,
     });
 };
 
@@ -172,10 +117,7 @@ const showUnsubscribeConfirmation = (): Promise<void> => {
 const bindUnsubscribeFromAll = (buttonEl: HTMLButtonElement) => {
     buttonEl.addEventListener('click', () => {
         toggleInputsWithSelector(newsletterCheckboxClassName, false);
-        return getCsrfTokenFromElement(
-            document.getElementsByClassName(newsletterCheckboxClassName)[0]
-        )
-            .then(csrfToken => unsubscribeFromAll(buttonEl, csrfToken))
+        unsubscribeFromAll(buttonEl)
             .then(() =>
                 Promise.all([
                     showUnsubscribeConfirmation(),
@@ -191,25 +133,15 @@ const bindUnsubscribeFromAll = (buttonEl: HTMLButtonElement) => {
     });
 };
 
-const bindUnsubscribeFromAllModalConfirmation = (
-    buttonEl: HTMLButtonElement
-) => {
-    buttonEl.addEventListener('click', () => {
-        showModal('confirm-unsubscribe-all');
-    });
-};
-
 const updateNewsletterSwitch = (labelEl: HTMLElement): Promise<void> =>
-    Promise.all([
-        getCsrfTokenFromElement(labelEl),
-        getCheckboxInfo(labelEl),
-        addSpinner(labelEl),
-    ])
-        .then(([token, info]) =>
-            submitNewsletterAction(token, info.checked ? 'add' : 'remove', [
-                info.name,
-            ])
+    Promise.all([getCheckboxInfo(labelEl), addSpinner(labelEl)])
+        .then(([checkbox]) =>
+            buildNewsletterUpdatePayload(
+                checkbox.checked ? 'add' : 'remove',
+                checkbox.name
+            )
         )
+        .then(newsletter => updateNewsletter(newsletter))
         .catch((err: Error) => {
             pushError(err, 'reload').then(() => {
                 window.scrollTo(0, 0);
@@ -238,13 +170,9 @@ const bindNewsletterSwitch = (labelEl: HTMLElement): void => {
 };
 
 const updateConsentSwitch = (labelEl: HTMLElement): Promise<void> =>
-    Promise.all([
-        getCsrfTokenFromElement(labelEl),
-        getInputFields(labelEl),
-        addSpinner(labelEl),
-    ])
-        .then(([token, fields]) => buildFormDataForFields(token, fields))
-        .then((formData: {}) => submitPartialConsentForm(formData))
+    Promise.all([getInputFields(labelEl), addSpinner(labelEl)])
+        .then(([fields]) => buildConsentUpdatePayload(fields))
+        .then(consent => updateConsent(consent))
         .catch((err: Error) => {
             pushError(err, 'reload').then(() => {
                 window.scrollTo(0, 0);
@@ -366,11 +294,7 @@ const enhanceConsents = (): void => {
         [`.${checkAllCheckboxClassName}`, bindCheckAllSwitch],
         [`.${consentCheckboxClassName}`, bindConsentSwitch],
         [`.${newsletterCheckboxClassName}`, bindNewsletterSwitch],
-        [
-            `.${unsubscribeButtonClassName}`,
-            bindUnsubscribeFromAllModalConfirmation,
-        ],
-        ['.js-confirm-unsubscribe-all', bindUnsubscribeFromAll],
+        [`.${unsubscribeButtonClassName}`, bindUnsubscribeFromAll],
     ];
     loadEnhancers(loaders);
 };

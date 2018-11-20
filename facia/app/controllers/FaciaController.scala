@@ -1,12 +1,13 @@
 package controllers
 
 import common._
+import _root_.html.{BrazeEmailFormatter, HtmlTextExtractor}
 import controllers.front._
-import layout.{CollectionEssentials, FaciaCard, FaciaContainer, Front, ContentCard, FaciaCardAndIndex}
-import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
+import layout.{CollectionEssentials, ContentCard, FaciaCard, FaciaCardAndIndex, FaciaContainer, Front}
+import model.Cached.{CacheableResult, RevalidatableResult, WithoutRevalidationResult}
 import model._
 import model.facia.PressedCollection
-import model.pressed.CollectionConfig
+import model.pressed.{CollectionConfig, PressedContent}
 import play.api.libs.json._
 import play.api.mvc._
 import play.twirl.api.Html
@@ -72,7 +73,6 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
   // Needed as aliases for reverse routing
   def renderRootFrontRss(): Action[AnyContent] = renderFrontRss(path = "")
   def renderFrontRss(path: String): Action[AnyContent] = Action.async { implicit  request =>
-    log.info(s"Serving RSS Path: $path")
     if (shouldEditionRedirect(path))
       redirectTo(s"${Editionalise(path, Edition(request))}/rss")
     else if (!ConfigAgent.shouldServeFront(path))
@@ -82,8 +82,18 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
   }
 
   def rootEditionRedirect(): Action[AnyContent] = renderFront(path = "")
+
+  def renderFrontHeadline(path: String): Action[AnyContent] = Action.async { implicit request =>
+    def notFound() = {
+      FrontHeadline.headlineNotFound
+    }
+
+    frontJsonFapi.get(path, liteRequestType)
+      .map(_.fold[CacheableResult](notFound())(FrontHeadline.renderEmailHeadline))
+      .map(Cached(CacheTime.Facia))
+  }
+
   def renderFront(path: String): Action[AnyContent] = Action.async { implicit request =>
-    log.info(s"Serving Path: $path")
     if (shouldEditionRedirect(path))
       redirectTo(Editionalise(path, Edition(request)))
     else if (!ConfigAgent.shouldServeFront(path) || request.getQueryString("page").isDefined)
@@ -103,51 +113,79 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
   }
 
   def renderFrontJsonLite(path: String): Action[AnyContent] = Action.async { implicit request =>
-    frontJsonFapi.getLite(path).map {
+    frontJsonFapi.get(path, liteRequestType).map {
         case Some(pressedPage) => Cached(CacheTime.Facia)(JsonComponent(FapiFrontJsonLite.get(pressedPage)))
         case None => Cached(CacheTime.Facia)(JsonComponent(JsObject(Nil)))}
   }
 
+  private def nonHtmlEmail(request: RequestHeader) = (request.isEmail && request.isHeadlineText) || request.isEmailJson || request.isEmailTxt
+
   private[controllers] def renderFrontPressResult(path: String)(implicit request: RequestHeader) = {
-    val futureResult = frontJsonFapi.getLite(path).flatMap {
-      case Some(faciaPage) =>
-        successful(
+    val futureFaciaPage: Future[Option[PressedPage]] = frontJsonFapi.get(path, liteRequestType).flatMap {
+        case Some(faciaPage: PressedPage) =>
+          if(faciaPage.collections.isEmpty && liteRequestType == LiteAdFreeType) {
+            frontJsonFapi.get(path, LiteType)
+          }
+          else Future.successful(Some(faciaPage))
+        case None => Future.successful(None)
+    }
+
+    val futureResult = futureFaciaPage.flatMap {
+      case Some(faciaPage) if nonHtmlEmail(request) =>
+        successful(Cached(CacheTime.RecentlyUpdated)(renderEmail(faciaPage)))
+      case Some(faciaPage: PressedPage) =>
+        successful(Cached(CacheTime.Facia)(
           if (request.isRss) {
             val body = TrailsToRss.fromPressedPage(faciaPage)
-            Cached(CacheTime.Facia) {
-              RevalidatableResult(Ok(body).as("text/xml; charset=utf-8"), body)
-            }
+            RevalidatableResult(Ok(body).as("text/xml; charset=utf-8"), body)
           }
           else if (request.isJson)
-            Cached(CacheTime.Facia)(JsonFront(faciaPage))
+            JsonFront(faciaPage)
           else if (request.isEmail || ConfigAgent.isEmailFront(path)) {
-            val htmlResponse = FrontEmailHtmlPage.html(faciaPage)
-            Cached(CacheTime.Facia) {
-              RevalidatableResult.Ok(if (InlineEmailStyles.isSwitchedOn) InlineStyles(htmlResponse) else htmlResponse)
-            }
+            renderEmail(faciaPage)
           }
           else {
-            Cached(CacheTime.Facia) {
-                RevalidatableResult.Ok(FrontHtmlPage.html(faciaPage))
-            }
+            RevalidatableResult.Ok(FrontHtmlPage.html(faciaPage))
           }
-        )
+        ))
       case None => successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))}
 
     futureResult.failed.foreach { t: Throwable => log.error(s"Failed rendering $path with $t", t)}
     futureResult
   }
 
+  private def renderEmail(faciaPage: PressedPage)(implicit request: RequestHeader) = {
+    if (request.isHeadlineText) {
+      FrontHeadline.renderEmailHeadline(faciaPage)
+    } else {
+      renderEmailFront(faciaPage)
+    }
+  }
+
+  private def renderEmailFront(faciaPage: PressedPage)(implicit request: RequestHeader) = {
+    val htmlResponse = FrontEmailHtmlPage.html(faciaPage)
+    val htmResponseInlined = if (InlineEmailStyles.isSwitchedOn) InlineStyles(htmlResponse) else htmlResponse
+
+    if (request.isEmailJson) {
+      val htmlWithUtmLinks = BrazeEmailFormatter(htmResponseInlined)
+      val emailJson = JsObject(Map("body" -> JsString(htmlWithUtmLinks.toString)))
+      RevalidatableResult.Ok(emailJson)
+    } else if (request.isEmailTxt) {
+      val htmlWithUtmLinks = BrazeEmailFormatter(htmResponseInlined)
+      val emailTxtJson = JsObject(Map("body" -> JsString(HtmlTextExtractor(htmlWithUtmLinks))))
+      RevalidatableResult.Ok(emailTxtJson)
+    } else {
+      RevalidatableResult.Ok(htmResponseInlined)
+    }
+  }
+
   def renderFrontPress(path: String): Action[AnyContent] = Action.async { implicit request => renderFrontPressResult(path) }
 
   def renderContainer(id: String, preserveLayout: Boolean = false): Action[AnyContent] = Action.async { implicit request =>
-    log.info(s"Serving collection ID: $id")
     renderContainerView(id, preserveLayout)
   }
 
   def renderMostRelevantContainerJson(path: String): Action[AnyContent] = Action.async { implicit request =>
-    log.info(s"Serving most relevant container for $path")
-
     val canonicalId = ConfigAgent.getCanonicalIdForFront(path).orElse (
       alternativeEndpoints(path).map(ConfigAgent.getCanonicalIdForFront).headOption.flatten
     )
@@ -160,7 +198,6 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
   def alternativeEndpoints(path: String): Seq[String] = path.split("/").toList.take(2).reverse
 
   private def renderContainerView(collectionId: String, preserveLayout: Boolean = false)(implicit request: RequestHeader): Future[Result] = {
-    log.info(s"Rendering container view for collection id $collectionId")
     getPressedCollection(collectionId).map { collectionOption =>
       collectionOption.map { collection =>
 
@@ -190,8 +227,15 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
     }
   }
 
+  def checkIfPaid(faciaCard: FaciaCard): Boolean = {
+    faciaCard match {
+      case c: ContentCard => c.properties.exists(_.isPaidFor)
+      case _ => false
+    }
+  }
+
   def renderShowMore(path: String, collectionId: String): Action[AnyContent] = Action.async { implicit request =>
-    frontJsonFapi.get(path).flatMap {
+    frontJsonFapi.get(path, fullRequestType).flatMap {
       case Some(pressedPage) =>
         val containers = Front.fromPressedPage(pressedPage, Edition(request), adFree = request.isAdFree).containers
         val maybeResponse =
@@ -199,14 +243,21 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
             (container, index) <- containers.zipWithIndex.find(_._1.dataId == collectionId)
             containerLayout <- container.containerLayout
           } yield {
-            val withFrom = containerLayout.remainingCards.map(_.withFromShowMore)
+            val remainingCards: Seq[FaciaCardAndIndex] = containerLayout.remainingCards.map(_.withFromShowMore)
+            val adFreeFilteredCards : Seq[FaciaCardAndIndex] = if (request.isAdFree) {
+              remainingCards.filter( c => !checkIfPaid(c.item) )
+            } else {
+              remainingCards
+            }
             successful(Cached(CacheTime.Facia) {
-              JsonComponent(views.html.fragments.containers.facia_cards.showMore(withFrom, index))
+              JsonComponent(views.html.fragments.containers.facia_cards.showMore(adFreeFilteredCards, index))
             })
           }
 
         maybeResponse getOrElse successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))
-      case None => successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))}}
+      case None => successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))
+    }
+  }
 
 
   private object JsonCollection{
@@ -220,15 +271,15 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
     )
   }
 
-  private def getPressedCollection(collectionId: String): Future[Option[PressedCollection]] =
+  private def getPressedCollection(collectionId: String)(implicit request: RequestHeader): Future[Option[PressedCollection]] =
     ConfigAgent.getConfigsUsingCollectionId(collectionId).headOption.map { path =>
-      frontJsonFapi.get(path).map(_.flatMap{ faciaPage =>
+      frontJsonFapi.get(path, fullRequestType).map(_.flatMap{ faciaPage =>
         faciaPage.collections.find{ c => c.id == collectionId}
       })
     }.getOrElse(successful(None))
 
-  private def getSomeCollections(path: String, num: Int, offset: Int = 0, containerNameToFilter: String): Future[List[PressedCollection]] =
-    frontJsonFapi.get(path).map { maybePage =>
+  private def getSomeCollections(path: String, num: Int, offset: Int = 0, containerNameToFilter: String)(implicit requestHeader: RequestHeader): Future[List[PressedCollection]] =
+    frontJsonFapi.get(path, fullRequestType).map { maybePage =>
       maybePage.map { faciaPage =>
         // To-do: change the filter to only exclude thrashers and empty collections, not items such as the big picture
         faciaPage
@@ -261,6 +312,9 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
   def renderAgentContents: Action[AnyContent] = Action {
     Ok(ConfigAgent.contentsAsJsonString)
   }
+
+  def fullRequestType(implicit request: RequestHeader): PressedPageType = if (request.isAdFree) FullAdFreeType else FullType
+  def liteRequestType(implicit request: RequestHeader): PressedPageType = if (request.isAdFree) LiteAdFreeType else LiteType
 }
 
 class FaciaControllerImpl(

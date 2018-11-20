@@ -22,9 +22,11 @@ class DfpDataCacheJob(adUnitAgent: AdUnitAgent,
     log.info("Refreshing data cache")
     val start = System.currentTimeMillis
     val data = loadLineItems()
+    val sponsorshipLineItemIds = dfpApi.readSponsorshipLineItemIds()
     val duration = System.currentTimeMillis - start
     log.info(s"Loading DFP data took $duration ms")
     write(data)
+    Store.putNonRefreshableLineItemIds(sponsorshipLineItemIds)
   }
 
   /*
@@ -88,7 +90,7 @@ class DfpDataCacheJob(adUnitAgent: AdUnitAgent,
       val recentlyModified = lineItemsModifiedSince(threshold)
 
       // Update existing items with a patch of new items.
-      def updateCachedContent(existingItems: Seq[GuLineItem], newItems: Seq[GuLineItem], logging: Boolean = true): Seq[GuLineItem] = {
+      def updateCachedContent(existingItems: Seq[GuLineItem], newItems: Seq[GuLineItem]): Seq[GuLineItem] = {
 
         // Create a combined map of all the line items, preferring newer items over old ones (equality is based on id).
         val updatedLineItemMap = GuLineItem.asMap(existingItems) ++ GuLineItem.asMap(newItems)
@@ -120,7 +122,7 @@ class DfpDataCacheJob(adUnitAgent: AdUnitAgent,
 
       LineItemLoadSummary(
         validLineItems = updateCachedContent(cachedLineItems.validItems, recentlyModified.validItems),
-        invalidLineItems = updateCachedContent(cachedLineItems.invalidItems, recentlyModified.invalidItems, logging = false)
+        invalidLineItems = updateCachedContent(cachedLineItems.invalidItems, recentlyModified.invalidItems)
       )
     }
   }
@@ -141,9 +143,6 @@ class DfpDataCacheJob(adUnitAgent: AdUnitAgent,
       val pageSkinSponsorships = data.pageSkinSponsorships
       Store.putDfpPageSkinAdUnits(stringify(toJson(PageSkinSponsorshipReport(now,
         pageSkinSponsorships))))
-
-      val sponsorshipLineItemIds: List[Long] = data.lineItems.filter(_.lineItemType == Sponsorship).map(_.id).toList
-      Store.putNonRefreshableLineItemIds(stringify(toJson(sponsorshipLineItemIds)))
 
       Store.putDfpLineItemsReport(stringify(toJson(LineItemReport(now, data.lineItems, data.invalidLineItems))))
 

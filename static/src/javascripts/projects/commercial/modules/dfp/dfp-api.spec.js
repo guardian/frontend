@@ -13,6 +13,7 @@ import { loadAdvert } from 'commercial/modules/dfp/load-advert';
 
 const getBreakpoint: any = getBreakpoint_;
 
+jest.mock('lib/raven');
 jest.mock('common/modules/identity/api', () => ({
     isUserLoggedIn: () => true,
     getUserFromCookie: jest.fn(),
@@ -64,7 +65,7 @@ jest.mock('commercial/modules/dfp/apply-creative-template', () => ({
 jest.mock('lib/load-script', () => ({
     loadScript: jest.fn(() => Promise.resolve()),
 }));
-jest.mock('lodash/functions/once', () => fn => fn);
+jest.mock('lodash/once', () => fn => fn);
 jest.mock('commercial/modules/dfp/performance-logging', () => ({
     setListeners: jest.fn(),
     addTag: jest.fn(),

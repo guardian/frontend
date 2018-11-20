@@ -18,7 +18,7 @@
 }
 
 .search-tool__btn {
-    background-color: $guardian-brand;
+    background-color: $brand-main;
     border: 0;
     width: 28px;
     height: 28px;
@@ -32,7 +32,7 @@
 }
 
 .search-tool__item {
-    border-top: 1px solid $neutral-5;
+    border-top: 1px solid $brightness-86;
 
     &:first-of-type {
         border-top: 0;
@@ -42,7 +42,7 @@
 .search-tool__link {
     @include fs-headline(2);
     box-sizing: border-box;
-    color: $neutral-1;
+    color: $brightness-7;
     padding-top: $gs-baseline / 3;
     padding-bottom: $gs-baseline;
     width: 100%;
@@ -60,14 +60,14 @@
 
     &:hover,
     &.active {
-        background-color: $neutral-4;
+        background-color: $brightness-86;
         text-decoration: none;
     }
 }
 
 .search-tool__meta {
     @include fs-textSans(2);
-    color: $neutral-2;
+    color: $brightness-46;
     display: block;
     line-height: 16px;
 }

@@ -1,6 +1,6 @@
 // @flow
 import fetchJson from 'lib/fetch-json';
-import flatten from 'lodash/arrays/flatten';
+import flattenDeep from 'lodash/flattenDeep';
 
 const initRadiator = (): void => {
     // riff raff - requires you to be on the guardian network
@@ -119,7 +119,7 @@ const initRadiator = (): void => {
     fetchJson(`//${window.location.host}/ophan/pageviews`).then(data => {
         const pluckedData = data.seriesData.map(dataObj => dataObj.data);
 
-        const todayData = flatten(pluckedData).reduce((days, day) => {
+        const todayData = flattenDeep(pluckedData).reduce((days, day) => {
             const dateTime = day.dateTime;
 
             if (!days[dateTime]) {

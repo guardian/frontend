@@ -1,5 +1,7 @@
 package common
 
+import play.api.libs.json.{Json, Writes}
+
 case class Pagination(currentPage: Int, lastPage: Int, totalContent: Int) {
 
   val next: Option[Int] = if (lastPage > currentPage) Some(currentPage + 1) else None
@@ -54,4 +56,8 @@ case class Pagination(currentPage: Int, lastPage: Int, totalContent: Int) {
   def getOffset: Int = {
     if (lastPage > 5) 1 else 0
   }
+}
+
+object Pagination {
+  implicit val paginationWrites: Writes[Pagination] = Json.writes[Pagination]
 }

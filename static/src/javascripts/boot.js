@@ -16,6 +16,11 @@ import { capturePerfTimings } from 'lib/capture-perf-timings';
 // eslint-disable-next-line camelcase,no-undef
 __webpack_public_path__ = `${config.get('page.assetsPath')}javascripts/`;
 
+// Debug preact in DEV
+if (process.env.NODE_ENV !== 'production') {
+    import('preact/debug');
+}
+
 // kick off the app
 const go = () => {
     domready(() => {

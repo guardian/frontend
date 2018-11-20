@@ -9,7 +9,7 @@
 
     h1, h2 {
         @include fs-headline(4);
-        color: $guardian-brand;
+        color: $brand-main;
     }
 
     h1 {
@@ -43,7 +43,7 @@
     }
 
     .fsError {
-        color: $error;
+        color: $news-main;
         background-color: unset;
         border: 0;
         text-align: left;
@@ -54,9 +54,9 @@
         @include fs-textSans(2);
         @include button-height($base-size * 5);
         @include button-colour(
-            $guardian-brand,
+            $brand-main,
             #ffffff,
-            $guardian-brand
+            $brand-main
         );
         font-size: .8125rem !important;
         display: inline-block;

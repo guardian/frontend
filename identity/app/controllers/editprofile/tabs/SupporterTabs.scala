@@ -10,11 +10,19 @@ trait SupporterTabs
     extends EditProfileControllerComponents
     with EditProfileFormHandling {
 
-  /** GET /membership/edit */
-  def displayMembershipForm: Action[AnyContent] = displayForm(MembershipEditProfilePage)
+  /** Redirect /membership/edit to manage.theguardian.com/membership */
+  def redirectToManageMembership: Action[AnyContent] = Action { implicit request =>
+    Redirect(
+      url = "https://manage.theguardian.com/membership",
+      MOVED_PERMANENTLY)
+  }
 
-  /** GET /contribution/recurring/edit */
-  def displayRecurringContributionForm: Action[AnyContent] = displayForm(recurringContributionPage)
+  /** Redirect /contribution/recurring/edit to manage.theguardian.com/contributions */
+  def redirectToManageContributions: Action[AnyContent] = Action { implicit request =>
+    Redirect(
+      url = "https://manage.theguardian.com/contributions",
+      MOVED_PERMANENTLY)
+  }
 
   /** GET /digitalpack/edit */
   def displayDigitalPackForm: Action[AnyContent] = displayForm(DigiPackEditProfilePage)

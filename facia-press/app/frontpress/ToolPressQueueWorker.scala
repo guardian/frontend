@@ -1,14 +1,17 @@
 package frontpress
 
 import com.amazonaws.services.sqs.AmazonSQSAsyncClient
+import com.gu.facia.api.models.faciapress.{Draft, FrontPath, Live, PressJob}
+import common.LoggingField.{LogFieldLong, LogFieldString}
 import common._
 import conf.Configuration
+import org.joda.time.DateTime
 import services._
 
 import scala.concurrent.{ExecutionContext, Future}
 
 class ToolPressQueueWorker(liveFapiFrontPress: LiveFapiFrontPress, draftFapiFrontPress: DraftFapiFrontPress)(implicit executionContext: ExecutionContext) extends JsonQueueWorker[PressJob] with Logging {
-  override lazy val queue = (Configuration.faciatool.frontPressToolQueue map { queueUrl =>
+  override lazy val queue: JsonMessageQueue[PressJob] = (Configuration.faciatool.frontPressToolQueue map { queueUrl =>
     val credentials = Configuration.aws.mandatoryCredentials
 
     JsonMessageQueue[PressJob](
@@ -19,10 +22,33 @@ class ToolPressQueueWorker(liveFapiFrontPress: LiveFapiFrontPress, draftFapiFron
     throw new RuntimeException("Required property 'frontpress.sqs.tool_queue_url' not set")
   }
 
+  override def shouldRetryPress(message: Message[PressJob]): Boolean = false
+
+  // log a warning if facia press is taking too long to pick up messages
+  private def checkAndLogLatency(processTime: Long, messageId: String, creationTime: DateTime, startTime: DateTime): Unit = {
+    val messageLatency = startTime.getMillis - creationTime.getMillis
+    if (messageLatency > 4000 || processTime > 3500) {
+      val stopWatch = new StopWatch()
+      logWarningWithCustomFields(
+        s"Facia press took $messageLatency ms to pick up and $processTime time to process $messageId. Message creation time $creationTime, process start time $startTime",
+        null,
+        customFields = List(
+          LogFieldLong("pressReceiveDelay", messageLatency),
+          LogFieldLong("pressProcessDelay", processTime),
+          LogFieldString("messageId", messageId),
+          LogFieldString("pressStartTime", startTime.toString)))
+    }
+  }
+
   override def process(message: Message[PressJob]): Future[Unit] = {
     val PressJob(FrontPath(path), pressType, creationTime, forceConfigUpdate) = message.get
 
-    log.info(s"Processing job from tool to update $path on $pressType")
+    val messageId = message.id.get
+
+    val processStartTime = DateTime.now()
+    log.info(s"Processing job from tool to update $path on $pressType at time $creationTime. MessageId: $messageId")
+
+    val stopWatch = new StopWatch
 
     lazy val pressFuture: Future[Unit] = pressType match {
       case Draft => draftFapiFrontPress.pressByPathId(path)
@@ -37,7 +63,11 @@ class ToolPressQueueWorker(liveFapiFrontPress: LiveFapiFrontPress, draftFapiFron
     for {
       _ <- forceConfigUpdateFuture
       press <- pressFuture
-    } yield press
+    } yield {
+      val processTime = stopWatch.elapsed
+      checkAndLogLatency(processTime, messageId, creationTime, processStartTime)
+      press
+    }
 
   }
 }

@@ -1,8 +1,8 @@
-$tls-warning-rule: darken($garnett-nav-background, 20%);
+$tls-warning-rule: darken($brightness-97, 20%);
 
 .tls-warning {
-    background-color: $garnett-nav-background;
-    color: $neutral-1;
+    background-color: $brightness-97;
+    color: $brightness-7;
     border-bottom: 1px solid $tls-warning-rule;
 
     .gs-container {
@@ -23,11 +23,11 @@ $tls-warning-rule: darken($garnett-nav-background, 20%);
         vertical-align: middle;
 
         circle {
-            fill: $neutral-1;
+            fill: $brightness-7;
         }
 
         path {
-            fill: $garnett-nav-background;
+            fill: $brightness-97;
         }
     }
 }
@@ -57,7 +57,7 @@ $tls-warning-rule: darken($garnett-nav-background, 20%);
 }
 
 .tls-warning__browser-link {
-    color: $neutral-1;
+    color: $brightness-7;
     display: block;
     position: relative;
     font-size: 0;

@@ -3,6 +3,7 @@ import { handle, closeTooltip } from 'common/modules/discussion/upvote';
 import { recommendComment as recommendComment_ } from 'common/modules/discussion/api';
 import fakeConfig from 'lib/config';
 
+jest.mock('lib/raven');
 jest.mock('common/modules/discussion/api', () => ({
     recommendComment: jest.fn(),
 }));

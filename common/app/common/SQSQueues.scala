@@ -40,6 +40,9 @@ object SQSQueues {
 
     def sendMessageFuture(request: SendMessageRequest): Future[SendMessageResult] =
       asFuture[SendMessageRequest, SendMessageResult](client.sendMessageAsync(request, _))
+
+    def changeMessageVisibilityFuture(request: ChangeMessageVisibilityRequest): Future[ChangeMessageVisibilityResult] =
+      asFuture[ChangeMessageVisibilityRequest, ChangeMessageVisibilityResult](client.changeMessageVisibilityAsync(request, _))
   }
 }
 
@@ -53,6 +56,10 @@ class MessageQueue[A](client: AmazonSQSAsync, queueUrl: String)(implicit executi
 
   protected def sendMessage(sendRequest: SendMessageRequest): Future[SendMessageResult] = {
     client.sendMessageFuture(sendRequest)
+  }
+
+  def retryMessageAfter(handle: ReceiptHandle, timeoutSeconds: Int): Future[ChangeMessageVisibilityResult] = {
+    client.changeMessageVisibilityFuture(new ChangeMessageVisibilityRequest(queueUrl, handle.get, timeoutSeconds))
   }
 
   protected def receiveMessages(receiveRequest: ReceiveMessageRequest): Future[mutable.Buffer[AWSMessage]] = {

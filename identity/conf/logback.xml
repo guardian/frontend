@@ -16,6 +16,8 @@
     </appender>
 
     <logger name="exactTarget" level="DEBUG" />
+    <logger name="org.apache.http.wire" level="WARN" />
+    <logger name="org.apache.http.headers" level="WARN" />
 
     <root level="INFO">
         <appender-ref ref="LOGFILE"/>

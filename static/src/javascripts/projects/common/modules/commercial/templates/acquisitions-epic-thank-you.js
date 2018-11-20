@@ -8,10 +8,10 @@ export const acquisitionsEpicThankYouTemplate = ({
 }) =>
     `<div class="contributions__epic" data-component="${componentName}">
         <div>
-            <h2 class="contributions__title contributions__title--epic">
+            <h2 class="contributions__title">
                 Thank you …
             </h2>
-            <p class="contributions__paragraph contributions__paragraph--epic">
+            <p>
                 … for supporting us, by funding our independent journalism and helping to keep it open.
                 Your contribution and the similar pledges of more than 800,000 readers around the world
                 enables the Guardian’s journalists to find things out, reveal new information and challenge

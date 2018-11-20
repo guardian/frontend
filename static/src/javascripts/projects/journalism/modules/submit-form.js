@@ -5,15 +5,41 @@ import fetch from 'lib/fetch';
 const isCheckbox = element => element.type === 'checkbox';
 const isNamed = element => element.name > '';
 
-const showConfirmation = cForm => {
-    fastdom.write(() => {
-        cForm.textContent = 'Thank you for your contribution';
-    });
+const disableButton = button => {
+    button.disabled = true;
+};
+
+const enableButton = form => {
+    const button = form.querySelector('button');
+    button.disabled = false;
+    button.textContent = 'Share with the Guardian';
+};
+
+const showConfirmation = () => {
+    const callout = document.querySelector('.element-campaign');
+    if (callout) {
+        fastdom.write(() => {
+            callout.classList.add('success');
+        });
+    }
 };
 
 const showError = cForm => {
+    const errorField = cForm.querySelector('.error_box');
     fastdom.write(() => {
-        cForm.append('Sorry, there was an error submitting your contribution');
+        errorField.innerHTML =
+            '<p class="error">Sorry, there was a problem submitting your form. Please try again later.</p>';
+    });
+    enableButton(cForm);
+};
+
+const showWaiting = cForm => {
+    const button = cForm.querySelector('button');
+    const errorField = cForm.querySelector('.error_box');
+    fastdom.write(() => {
+        button.textContent = 'Sending...';
+        disableButton(button);
+        errorField.innerHTML = '';
     });
 };
 
@@ -39,6 +65,7 @@ export const submitForm = (e: any) => {
     e.preventDefault();
     const cForm = e.target;
     const data = formatData(cForm.elements);
+    showWaiting(cForm);
 
     return fetch('/formstack-campaign/submit', {
         method: 'post',
@@ -49,7 +76,7 @@ export const submitForm = (e: any) => {
         },
     }).then(res => {
         if (res.ok) {
-            showConfirmation(cForm);
+            showConfirmation();
         } else {
             showError(cForm);
         }

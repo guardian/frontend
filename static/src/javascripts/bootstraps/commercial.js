@@ -7,10 +7,14 @@ import { init as initHighMerch } from 'commercial/modules/high-merch';
 import { init as initArticleAsideAdverts } from 'commercial/modules/article-aside-adverts';
 import { init as initArticleBodyAdverts } from 'commercial/modules/article-body-adverts';
 import { closeDisabledSlots } from 'commercial/modules/close-disabled-slots';
+import { adFreeSlotRemove } from 'commercial/modules/ad-free-slot-remove';
 import { init as initCmpService } from 'commercial/modules/cmp/cmp';
+import { init as initLotameCmp } from 'commercial/modules/cmp/lotame-cmp';
+import { init as initLotameDataExtract } from 'commercial/modules/lotame-data-extract';
+import { trackConsent as trackCmpConsent } from 'commercial/modules/cmp/consent-tracker';
+import { init as prepareAdVerification } from 'commercial/modules/ad-verification/prepare-ad-verification';
 import { init as prepareGoogletag } from 'commercial/modules/dfp/prepare-googletag';
 import { init as prepareSonobiTag } from 'commercial/modules/dfp/prepare-sonobi-tag';
-import { init as initCarrotTrafficDriver } from 'commercial/modules/carrot-traffic-driver';
 import { init as initLiveblogAdverts } from 'commercial/modules/liveblog-adverts';
 import { init as initStickyTopBanner } from 'commercial/modules/sticky-top-banner';
 import { init as initThirdPartyTags } from 'commercial/modules/third-party-tags';
@@ -26,28 +30,32 @@ import {
 import { trackPerformance } from 'common/modules/analytics/google';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { initCheckDispatcher } from 'commercial/modules/check-dispatcher';
-import commentAdverts from 'commercial/modules/comment-adverts';
+import { initCommentAdverts } from 'commercial/modules/comment-adverts';
 
 const commercialModules: Array<Array<any>> = [
-    ['cm-prepare-cmp', initCmpService],
-    ['cm-thirdPartyTags', initThirdPartyTags],
-    ['cm-prepare-googletag', prepareGoogletag, true],
+    ['cm-adFreeSlotRemove', adFreeSlotRemove],
     ['cm-closeDisabledSlots', closeDisabledSlots],
-    ['cm-carrot', initCarrotTrafficDriver], // TODO: check if this should move into non-ad-free specifically
+    ['cm-prepare-cmp', initCmpService],
+    ['cm-track-cmp-consent', trackCmpConsent],
+    ['cm-thirdPartyTags', initThirdPartyTags],
+    ['cm-prepare-sonobi-tag', prepareSonobiTag, true],
+    ['cm-prepare-googletag', prepareGoogletag, true],
     ['cm-checkDispatcher', initCheckDispatcher],
+    ['cm-lotame-cmp', initLotameCmp],
+    ['cm-lotame-data-extract', initLotameDataExtract, true],
 ];
 
 if (!commercialFeatures.adFree) {
     commercialModules.push(
+        ['cm-prepare-adverification', prepareAdVerification, true],
         ['cm-highMerch', initHighMerch],
-        ['cm-prepare-sonobi-tag', prepareSonobiTag, true],
         ['cm-articleAsideAdverts', initArticleAsideAdverts, true],
         ['cm-articleBodyAdverts', initArticleBodyAdverts, true],
         ['cm-liveblogAdverts', initLiveblogAdverts, true],
         ['cm-stickyTopBanner', initStickyTopBanner],
         ['cm-paidContainers', paidContainers],
         ['cm-paidforBand', initPaidForBand],
-        ['cm-commentAdverts', commentAdverts]
+        ['cm-commentAdverts', initCommentAdverts]
     );
 }
 

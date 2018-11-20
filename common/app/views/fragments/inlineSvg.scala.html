@@ -1,8 +1,8 @@
-@(file: String, path: String = "", classes: Seq[String] = List(), title: Option[String] = None)
+@(file: String, path: String = "", classes: Seq[String] = List(), title: Option[String] = None, isPresentation: Boolean = false)
 
 @import views.support.setSvgClasses
 
-<span @title.map{ t => title="@t" } class="inline-@file @if(path){inline-@path} @classes.mkString(" ")">
+<span @title.map{ t => title="@t" } class="inline-@file @if(path){inline-@path} @classes.mkString(" ")" @if(isPresentation){role="presentation" aria-hidden="true"}>
     @defining((
         path + "/" + file + ".svg",
         classes ++ Seq("inline-" + file, "inline-" + path)

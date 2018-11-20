@@ -8,13 +8,16 @@
 @import layout.ContentCard
 @import model.EmailAddons.EmailContentType
 @import model.pressed.{ExternalLink, Feature}
+@import model.pressed.ItemKicker
+@import com.gu.facia.api.utils.TagKicker
 @import views.support.EmailHelpers.{icon, imgFromCard, imgForFront, classesForCard}
 @import views.support.RemoveOuterParaHtml
 @import fragments.email._
 @import common.LinkTo
+@import conf.audio.FlagshipEmailContainer
 
 
-@headline(card: ContentCard, isLarge: Boolean = false, isLast: Boolean) = {
+@headline(card: ContentCard, isLarge: Boolean = false, isTrailText: Boolean = false) = {
 
     @row(Seq("headline")) {
         <a @Html(card.header.url.hrefWithRel) class="fc-link">
@@ -37,9 +40,8 @@
             @RemoveOuterParaHtml(card.header.headline)
         </a>
     }
-    @if(card.header.quoted) {
-        @card.bylineText.map { byline => @row(Seq("byline")){@byline} }
-    }
+
+    @card.bylineText.map { byline => @row(Seq("byline")){@byline} }
 
     @card.starRating.map { numberOfStars =>
         @row(Seq("review-stars")) {
@@ -51,10 +53,6 @@
                 }
             </span>
         }
-    }
-
-    @if(isLast) {
-        @row(Seq("fc__pad")) { }
     }
 
     @card.mediaTypeIcon.map { mediaType: String =>
@@ -71,6 +69,12 @@
             })
         }
     }
+
+    @if(isTrailText) {
+        @trailText(card)
+    }
+
+    @row(Seq("fc__pad")) { }
 }
 
 @trailText(card: ContentCard) = {
@@ -82,8 +86,7 @@
 }
 
 @headlineAndTrailWithCutout(card: ContentCard, withImage: Boolean) = {
-    @headline(card, isLarge = withImage, isLast = false)
-    @trailText(card)
+    @headline(card, isLarge = withImage, isTrailText = true)
 }
 
 
@@ -92,7 +95,7 @@
         @if(withImage) {
             @row(Seq("no-pad")){@imgFromCard(card)}
         }
-        @headline(card, isLast = true)
+        @headline(card)
     }
 }
 
@@ -104,8 +107,7 @@
         @if(card.header.quoted) {
             @headlineAndTrailWithCutout(card, withImage)
         } else {
-            @headline(card, isLarge = largeHeadline, isLast = false)
-            @trailText(card)
+            @headline(card, isLarge = largeHeadline, isTrailText = true)
         }
     }
 }
@@ -113,12 +115,12 @@
 @faciaCardWithoutTrailText(card: ContentCard, withImage: Boolean, largeHeadline: Boolean, isBranded: Boolean) = {
     @imgFromCard(card, 5).filter(_ => withImage).fold {
         @faciaCard(classesForCard(card), isBranded) {
-            @headline(card, largeHeadline, isLast = true)
+            @headline(card, largeHeadline)
         }
     } { img =>
         @faciaCard(classesForCard(card), isBranded) {
             <tr valign="top">
-                <td class="left-col"><table>@headline(card, isLast = true)</table></td>
+                <td class="left-col"><table>@headline(card)</table></td>
                 <td class="right-col no-pad">@img</td>
             </tr>
         }
@@ -207,6 +209,30 @@
     }
 }
 
+@renderFlagshipContainer(collection: EmailContentContainer) = {
+    @if(FlagshipEmailContainer.displayFlagshipContainer()) {
+        @containerTitle(Seq("ct--not-top")) {
+            @collection.href.map { href =>
+                <a class="ct-link" href="@LinkTo {/@Html(href)}">@collection.displayName</a>
+            }.getOrElse {
+                @collection.displayName
+            }
+        }
+
+        @collection.cards.headOption.map { card =>
+            @faciaCard(classesForCard(card, withImage = true)) {
+                @row(Seq("no-pad")){
+                    <a class="fc-link" href="@card.header.url.get">
+                        <img class="full-width" src="@FlagshipEmailContainer.AlbumArtUrl" alt="@card.header.headline">
+                    </a>
+                }
+
+                @headline(card.setKicker(Some(FlagshipEmailContainer.kicker)), isLarge = true, isTrailText = true)
+            }
+        }
+    }
+}
+
 @renderMarquee(marquee: LiveIntentMarquee) = {
     <table align="center" border="0" cellpadding="0" cellspacing="0" style="margin-left:auto; margin-right:auto;">
         <tr>
@@ -287,6 +313,7 @@
 }
 
 @layout.CollectionEmail.fromPressedPage(page).collections.zipWithIndex.map {
+    case (collection: EmailContentContainer, index) if FlagshipEmailContainer.isFlagshipContainer(collection.containerId) => { @renderFlagshipContainer(collection) }
     case (collection: EmailContentContainer, index) => { @renderContentContainer(collection, index) }
     case (marquee: LiveIntentMarquee, _) => { @renderMarquee(marquee) }
     case (mpu: LiveIntentMPU, _) => { @renderMPU(mpu) }

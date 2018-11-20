@@ -50,7 +50,7 @@ object OnwardCollection {
         byline = content.properties.byline,
         image = content.trailPicture.flatMap(ImgSrc.getFallbackUrl),
         ageWarning = ageWarning(content),
-        isLiveBlog = false
+        isLiveBlog = content.properties.isLiveBlog
       )
     )
   }

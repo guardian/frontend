@@ -3,9 +3,18 @@ package implicits
 import conf.Configuration
 import play.api.mvc.RequestHeader
 
+sealed trait RequestFormat
+case object HtmlFormat extends RequestFormat
+case object JsonFormat extends RequestFormat
+case object EmailFormat extends RequestFormat
+case object AmpFormat extends RequestFormat
+
 trait Requests {
 
   val EMAIL_SUFFIX = "/email"
+  val HEADLINE_SUFFIX = "/headline.txt"
+  val EMAIL_JSON_SUFFIX = ".emailjson"
+  val EMAIL_TXT_SUFFIX = ".emailtxt"
 
   implicit class RichRequestHeader(r: RequestHeader) {
 
@@ -17,7 +26,13 @@ trait Requests {
 
     def getBooleanParameter(name: String): Option[Boolean] = getParameter(name).map(_.toBoolean)
 
+    def getRequestFormat: RequestFormat = if(isJson) JsonFormat else if (isEmail) EmailFormat else if(isAmp) AmpFormat else HtmlFormat
+
     lazy val isJson: Boolean = r.getQueryString("callback").isDefined || r.path.endsWith(".json")
+
+    lazy val isEmailJson: Boolean = r.path.endsWith(EMAIL_JSON_SUFFIX)
+
+    lazy val isEmailTxt: Boolean = r.path.endsWith(EMAIL_TXT_SUFFIX)
 
     // parameters for moon/guui new rendering layer project.
     lazy val isGuuiJson: Boolean = isJson && isGuui
@@ -28,9 +43,11 @@ trait Requests {
 
     lazy val isAmp: Boolean = r.getQueryString("amp").isDefined || (!r.host.isEmpty && r.host == Configuration.amp.host)
 
-    lazy val isEmail: Boolean = r.getQueryString("format").exists(_.contains("email")) || r.path.endsWith(EMAIL_SUFFIX)
+    lazy val isEmail: Boolean = r.getQueryString("format").exists(_.contains("email")) || r.path.endsWith(EMAIL_SUFFIX) || isEmailJson || isEmailTxt
 
-    lazy val isModified = isJson || isRss || isEmail
+    lazy val isHeadlineText: Boolean = r.getQueryString("format").contains("email-headline") || r.path.endsWith(HEADLINE_SUFFIX)
+
+    lazy val isModified = isJson || isRss || isEmail || isHeadlineText
 
     lazy val pathWithoutModifiers: String =
       if (isEmail) r.path.stripSuffix(EMAIL_SUFFIX)

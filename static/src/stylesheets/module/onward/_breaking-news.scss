@@ -25,7 +25,7 @@ $breaking-news-close-icon-width: 32px;
         border-color: #ffffff;
 
         @include mq(tablet) {
-            border-color: $live-mute;
+            border-color: $news-pastel;
         }
 
         &:hover {
@@ -46,11 +46,11 @@ $breaking-news-close-icon-width: 32px;
 .breaking-news__item {
     display: block;
     padding: 0 0 $gs-baseline;
-    background: fade-out($live-default, 1 - .95);
+    background: fade-out($news-dark, 1 - .95);
     transition: background-color .25s ease;
 
     &:hover {
-        background-color: darken($live-default, 2%);
+        background-color: darken($news-dark, 2%);
     }
 
     & + & {
@@ -92,7 +92,7 @@ $breaking-news-close-icon-width: 32px;
 }
 
 .breaking-news__item-kicker {
-    color: $live-mute;
+    color: $news-pastel;
     font-style: normal;
 }
 

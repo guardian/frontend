@@ -6,7 +6,7 @@ declare type Variant = {
     impression?: ListenerFunction,
     success?: ListenerFunction,
     options?: Object,
-    engagementBannerParams?: EngagementBannerParams,
+    engagementBannerParams?: () => Promise<EngagementBannerParams>,
 };
 
 declare type ABTest = {
@@ -34,7 +34,6 @@ declare type AcquisitionsABTest = ABTest & {
 
 declare type EpicABTest = AcquisitionsABTest & {
     campaignPrefix: string,
-    campaignSuffix: string,
     useLocalViewLog: boolean,
     overrideCanRun: boolean,
     showToContributorsAndSupporters: boolean,
@@ -50,6 +49,12 @@ declare type InitEpicABTestVariant = {
     id: string,
     products: $ReadOnlyArray<OphanProduct>,
     options?: Object
+};
+
+declare type InitBannerABTestVariant = {
+    id: string,
+    products: $ReadOnlyArray<OphanProduct>,
+    engagementBannerParams: () => Promise<?EngagementBannerTemplateParams>
 };
 
 declare type InitEpicABTest = {
@@ -71,7 +76,6 @@ declare type InitEpicABTest = {
     locationCheck?: () => boolean,
     dataLinkNames?: string,
     campaignPrefix?: string,
-    campaignSuffix?: string,
     useLocalViewLog?: boolean,
     overrideCanRun?: boolean,
     useTargetingTool?: boolean,

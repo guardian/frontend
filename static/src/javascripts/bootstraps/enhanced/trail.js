@@ -16,6 +16,7 @@ import { related } from 'common/modules/onward/related';
 import { TonalComponent } from 'common/modules/onward/tonal';
 import { loadShareCounts } from 'common/modules/social/share-count';
 import { onwardVideo } from 'common/modules/video/onward-container';
+import { onwardAudio } from 'common/modules/audio/onward-container';
 import { moreInSeriesContainerInit } from 'common/modules/video/more-in-series-container';
 
 const initMoreInSection = (): void => {
@@ -28,7 +29,8 @@ const initMoreInSection = (): void => {
     } = config.get('page', {});
 
     if (
-        !config.get('isMedia') ||
+        (config.get('page.contentType') !== 'Audio' &&
+            config.get('page.contentType') !== 'Video') ||
         !showRelatedContent ||
         isPaidContent ||
         !section
@@ -95,7 +97,10 @@ const initRelated = () => {
 };
 
 const initOnwardVideoContainer = (): void => {
-    if (!config.get('isMedia')) {
+    if (
+        config.get('page.contentType') !== 'Audio' &&
+        config.get('page.contentType') !== 'Video'
+    ) {
         return;
     }
 
@@ -109,6 +114,12 @@ const initOnwardVideoContainer = (): void => {
     els.each(el => {
         onwardVideo(el, mediaType);
     });
+};
+
+const initOnwardAudioContainer = (): void => {
+    if (config.get('page.contentType') === 'Audio') {
+        $('.js-audio-components-container').each(el => onwardAudio(el));
+    }
 };
 
 const initOnwardContent = () => {
@@ -128,7 +139,9 @@ const initOnwardContent = () => {
                 });
         }
     });
+
     initOnwardVideoContainer();
+    initOnwardAudioContainer();
 };
 
 const initDiscussion = () => {

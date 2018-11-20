@@ -34,7 +34,7 @@ import { markTime } from 'lib/user-timing';
 import config from 'lib/config';
 import { newHeaderInit } from 'common/modules/navigation/new-header';
 import { trackPerformance } from 'common/modules/analytics/google';
-import debounce from 'lodash/functions/debounce';
+import debounce from 'lodash/debounce';
 import ophan from 'ophan/ng';
 import { initAtoms } from './atoms';
 
@@ -203,12 +203,23 @@ const bootStandard = (): void => {
     // Set adtest query if url param declares it
     setAdTestCookie();
 
-    // Remove the old ad-free cookie - we can delete this line in a few days
-    removeCookie('GU_AFU');
-
-    // If we turn off the ad-free trial, immediately remove the cookie
-    if (!config.get('switches.adFreeSubscriptionTrial')) {
-        removeCookie('GU_AF1');
+    // set a short-lived cookie to trigger server-side ad-freeness
+    // if the user is genuinely ad-free, this one will be overwritten
+    // in user-features
+    if (window.location.hash.match(/[#&]noadsaf(&.*)?$/)) {
+        const daysToLive = 1;
+        const isCrossSubDomain = true;
+        const forcedAdFreeValidSeconds = 30;
+        const forcedAdFreeExpiryTime = new Date();
+        forcedAdFreeExpiryTime.setTime(
+            forcedAdFreeExpiryTime.getTime() + forcedAdFreeValidSeconds * 1000
+        );
+        addCookie(
+            'GU_AF1',
+            forcedAdFreeExpiryTime.getTime().toString(),
+            daysToLive,
+            isCrossSubDomain
+        );
     }
 
     // set local storage: gu.alreadyVisited

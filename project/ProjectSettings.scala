@@ -25,7 +25,7 @@ object ProjectSettings {
     publishArtifact in (Compile, packageDoc) := false,
     sources in (Compile,doc) := Seq.empty,
     doc in Compile := target.map(_ / "none").value,
-    scalaVersion := "2.12.4",
+    scalaVersion := "2.12.7",
     initialize := {
       val _ = initialize.value
       assert(sys.props("java.specification.version") == "1.8",
@@ -49,7 +49,8 @@ object ProjectSettings {
       "Guardian Frontend Bintray" at "https://dl.bintray.com/guardian/frontend",
       "Guardian Editorial Tools Bintray" at "https://dl.bintray.com/guardian/editorial-tools",
       Resolver.bintrayRepo("guardian", "ophan"),
-      "Spy" at "https://files.couchbase.com/maven2/"
+      "Spy" at "https://files.couchbase.com/maven2/",
+      "emueller-bintray" at "http://dl.bintray.com/emueller/maven"
     ),
 
     evictionWarningOptions in update := EvictionWarningOptions.default

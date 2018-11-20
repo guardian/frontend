@@ -34,12 +34,8 @@ class LocationsController(weatherApi: WeatherApi, val controllerComponents: Cont
     val maybeRegion = getEncodedHeader(RegionHeader).filter(_.nonEmpty)
     val maybeCountry = getEncodedHeader(CountryHeader).filter(_.nonEmpty)
 
-    log.info(s"What is my city request with headers $maybeCity $maybeRegion $maybeCountry")
-
     (maybeCity, maybeRegion, maybeCountry) match {
       case (Some(city), Some(region), Some(country)) =>
-        log.info(s"Received what is my city? request. Geo info: City=$city Region=$region Country=$country")
-
         CitiesLookUp.getLatitudeLongitude(CityRef(city, region, country)) match {
           case Some(latitudeLongitude) =>
             log.info(s"Matched $city, $region, $country to $latitudeLongitude")
@@ -60,7 +56,6 @@ class LocationsController(weatherApi: WeatherApi, val controllerComponents: Cont
               cities.headOption.fold {
                 Cached(CacheTime.NotFound)(JsonNotFound())
               } { weatherCity =>
-                log.info(s"Resolved geo info (City=$city Region=$region Country=$country) to city $weatherCity")
                 Cached(1 hour)(JsonComponent(weatherCity))
               }
             }

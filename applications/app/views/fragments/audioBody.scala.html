@@ -1,0 +1,176 @@
+
+@import common.LinkTo
+@import model.{Audio, AudioPlayer}
+@import views.support.Commercial.{isPaidContent, isAdFree}
+@import views.support.TrailCssClasses.toneClass
+@import views.support.{RenderClasses}
+
+@(page: MediaPage, audio: Audio)(implicit request: RequestHeader, context: model.ApplicationContext)
+
+@trackingCode(target: String) = {@if(page.media.tags.isPodcast){podcast:subscribe:}@target:@page.media.metadata.webTitle}
+
+@seriesId() = {@audio.tags.tags.find(_.properties.podcast.nonEmpty).map(s => s.id.substring(s.id.lastIndexOf("/") + 1))}
+
+@defining(isPaidContent(page), isAdFree(request)) { case (isPaidContent, isAdFree) =>
+
+<div class="@RenderClasses(Map(
+    "l-side-margins--media" ->  !isPaidContent,
+    "l-side-margins--paidfor" ->  isPaidContent
+), "l-side-margins", "l-side-margins--flagship")">
+    <article id="article" class="@RenderClasses(
+        Map(
+            "content--has-body" -> audio.fields.body.nonEmpty,
+            "content--paid-content paid-content" -> isPaidContent,
+            "content--pillar-special-report" -> (toneClass(audio) == "tone-special-report")
+        ),
+        "content",
+        "content--media",
+        s"content--pillar-${audio.metadata.pillar.nameOrDefault}",
+        s"content--media--audio",
+        "tonal",
+        "tonal--tone-media",
+        s"tonal--${toneClass(audio)}"
+    )"
+    itemscope itemtype="@audio.metadata.schemaType" role="main">
+
+        @if(isPaidContent) { @fragments.guBand() }
+
+        @fragments.headTonal(audio, page)
+
+        <div class="podcast gs-container">
+            <figure class="podcast__player podcast__section"
+                data-component="main audio"
+                id="audio-component-container"
+                data-media-id="@audio.elements.mainAudio.map(_.properties.id)"
+                data-source="@audio.downloadUrl.map(Audio.acastUrl(_, false))"
+                data-download-url="@audio.downloadUrl.getOrElse("#")"
+                data-duration="@audio.duration"
+                >
+            </figure>
+
+            @for( series <- audio.tags.tags.find(_.properties.podcast.nonEmpty)
+            ; podcast <- series.properties.podcast
+            ; image <- podcast.image
+            ) {
+                <div class="podcast__cover">
+                    <a href="@LinkTo {/@series.id}"><img src="@image" class="podcast__cover-image" alt></a>
+                </div>
+            }
+
+            @if(audio.fields.standfirst.isDefined) {
+                <div class="podcast__standfirst">
+                    @fragments.standfirst(audio)
+                </div>
+            }
+
+            <div class="podcast__byline">
+                @fragments.contentMeta(audio, page, false)
+            </div>
+
+            <div class="from-content-api podcast__body">
+                @if(audio.fields.body.nonEmpty) {
+                    @Html(audio.fields.body)
+                }
+                @audio.elements.images.map{ img =>
+                    @fragments.imageFigure(img.images)
+                }
+            </div>
+
+            <div class="podcast__meta podcast__section">
+                <div class="podcast__meta-heading podcast__section-heading">More ways to listen</div>
+                <ul class="podcast__meta-items">
+                    @audio.iTunesSubscriptionUrl.map { iTunesSubscriptionUrl =>
+                        <li class="podcast__meta-item podcast__meta-item--itunes">
+                            <a class="podcast__meta__item-link podcast__section-link"
+                                href="@iTunesSubscriptionUrl"
+                                data-link-name="@trackingCode("iTunes")"
+                                >
+                                @fragments.inlineSvg("apple-podcasts", "journalism/audio", List("podcast__meta-icon", "podcast__section-icon"))
+                                Apple Podcasts
+                            </a>
+                        </li>
+                    }
+                    @audio.googlePodcastsUrl.map { googlePodcastsUrl =>
+                        <li class="podcast__meta-item podcast__meta-item--googlePodcasts">
+                            <a class="podcast__meta__item-link podcast__section-link"
+                                href="@googlePodcastsUrl"
+                                data-link-name="@trackingCode("googlePodcasts")"
+                                >
+                                @fragments.inlineSvg("google-podcasts", "journalism/audio", List("podcast__meta-icon", "podcast__section-icon"))
+                                Google Podcasts
+                            </a>
+                        </li>
+                    }
+                    @audio.spotifyUrl.map { spotifyUrl =>
+                        <li class="podcast__meta-item podcast__meta-item--spotify">
+                            <a class="podcast__meta__item-link podcast__section-link"
+                                href="@spotifyUrl"
+                                data-link-name="@trackingCode("spotify")"
+                                >
+                                @fragments.inlineSvg("spotify", "journalism/audio", List("podcast__meta-icon", "podcast__section-icon"))
+                                Spotify
+                            </a>
+                        </li>
+                    }
+                    @audio.downloadUrl.map { downloadUrl =>
+                        <li class="podcast__meta-item podcast__meta-item--download">
+                            <a class="podcast__meta__item-link podcast__section-link"
+                                href="@downloadUrl"
+                                download
+                                data-link-name="@trackingCode("download")"
+                                >
+                                @fragments.inlineSvg("download", "journalism/audio", List("podcast__meta-icon", "podcast__section-icon"))
+                                Download
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </div>
+
+            <div class="podcast__secondary podcast__section">
+                <div class="js-audio-components-container"></div>
+                @if(audio.fields.body.nonEmpty) {
+                    <div class="hide-on-childrens-books-site">
+                        @fragments.commercial.standardAd("right", Seq("dark"), Map("desktop" -> Seq("300,250", "300,274", "fluid")))
+                    </div>
+                }
+            </div>
+
+            <div class="podcast__support from-content-api podcast__section">
+                <div class="podcast__support-heading podcast__section-heading">Support The Guardian</div>
+                <p>The Guardian is editorially independent.
+                    And we want to keep our journalism open and accessible to all.
+                    But we increasingly need our readers to fund our work.
+                </p>
+                <a href="https://support.theguardian.com/contribute?acquisitionData=%7B%22componentType%22%3A%22ACQUISITIONS_OTHER%22%2C%22source%22%3A%22DIRECT%22%2C%22campaignCode%22%3A%22@seriesId()%22%2C%22componentId%22%3A%22episode_page%22%7D&INTCMP=@seriesId()" class="podcast__support-link podcast__section-link">
+                    Support The Guardian
+                    @fragments.inlineSvg("arrow-right", "icon", List("podcast-support__icon", "podcast__section-icon"))
+                </a>
+            </div>
+
+            <div class="meta__social podcast__share podcast__section" data-component="share">
+                @fragments.social(audio.sharelinks.pageShares)
+                <div class="meta__numbers">
+                    <div class="u-h meta__number js-sharecount">
+                    </div>
+                    <div class="u-h meta__number" data-discussion-id="@audio.content.discussionId" data-commentcount-format="content" data-discussion-closed="@{
+                        !audio.trail.isCommentable
+                    }">
+                    </div>
+                </div>
+            </div>
+
+            <div class="podcast__submeta podcast__section">
+                @fragments.submeta(audio)
+            </div>
+
+        </div>
+
+    </article>
+
+</div>
+
+<div class="l-side-margins">
+    @fragments.contentFooter(audio, page.related, "media", isPaidContent)
+</div>
+}

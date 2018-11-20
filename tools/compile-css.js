@@ -31,15 +31,15 @@ const SASS_SETTINGS = {
 };
 
 const BROWSERS_LIST = [
-    'Firefox >= 26',
+    'Firefox >= 45',
     'Explorer >= 10',
-    'Safari >= 5',
-    'Chrome >= 36',
+    'Safari >= 7',
+    'Chrome >= 50',
 
-    'iOS >= 5',
-    'Android >= 2',
-    'BlackBerry >= 6',
-    'ExplorerMobile >= 7',
+    'iOS >= 7',
+    'Android >= 5',
+    'BlackBerry >= 10',
+    'ExplorerMobile >= 10',
 
     '> 2% in US',
     '> 2% in AU',

@@ -1,0 +1,55 @@
+.pillars {
+    border-top: 1px solid $brand-pastel;
+    height: $pillar-height - $gs-baseline / 2;
+    margin: 0;
+    padding: 0 $gs-gutter / 2;
+
+    @include mq(mobileLandscape) {
+        padding-left: $gs-gutter;
+    }
+}
+
+.pillars__item {
+    color: $brightness-100;
+    display: block;
+    float: left;
+    position: relative;
+
+    &:first-child .pillar-link {
+        padding-left: 0;
+
+        &:before {
+            content: none;
+        }
+    }
+
+    &:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+    }
+
+    &:nth-child(1):after {
+        background-color: $news-bright;
+        left: -$gs-gutter;
+    }
+
+    &:nth-child(2):after {
+        background-color: $opinion-bright;
+    }
+
+    &:nth-child(3):after {
+        background-color: $sport-bright;
+    }
+
+    &:nth-child(4):after {
+        background-color: $culture-bright;
+    }
+
+    &:nth-child(5):after {
+        background-color: $lifestyle-bright;
+    }
+}

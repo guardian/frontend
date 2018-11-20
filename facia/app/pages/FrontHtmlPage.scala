@@ -15,6 +15,7 @@ import views.html.fragments.page.head._
 import views.html.fragments.page.head.stylesheets.{criticalStyleInline, criticalStyleLink, styles}
 import views.html.fragments.page.{devTakeShot, htmlTag}
 import views.html.stacked
+import html.HtmlPageHelpers.{ContentCSSFile, FaciaCSSFile}
 
 object FrontHtmlPage extends HtmlPage[PressedPage] {
 
@@ -25,7 +26,7 @@ object FrontHtmlPage extends HtmlPage[PressedPage] {
     val edition = Edition(request)
     withJsoup(BulletCleaner(html.toString))(
       CommercialComponentHigh(page.frontProperties.isPaidContent, page.isNetworkFront, page.metadata.hasPageSkin(edition)),
-      CommercialMPUForFronts(page.isNetworkFront)
+      CommercialMPUForFronts()
     )
   }
 
@@ -33,10 +34,8 @@ object FrontHtmlPage extends HtmlPage[PressedPage] {
     override def criticalCssLink: Html = criticalStyleLink(FaciaCSSFile)
     override def criticalCssInline: Html = criticalStyleInline(Html(common.Assets.css.head(Some("facia"))))
     override def linkCss: Html = stylesheetLink(s"stylesheets/$FaciaCSSFile.css")
-
     override def oldIECriticalCss: Html = stylesheetLink(s"stylesheets/old-ie.head.$FaciaCSSFile.css")
     override def oldIELinkCss: Html = stylesheetLink(s"stylesheets/old-ie.$ContentCSSFile.css")
-
     override def IE9LinkCss: Html = stylesheetLink(s"stylesheets/ie9.head.$FaciaCSSFile.css")
     override def IE9CriticalCss: Html = stylesheetLink(s"stylesheets/ie9.$ContentCSSFile.css")
   }

@@ -41,7 +41,10 @@ GET         /images/clear                                                       
 POST        /images/clear                                                                           controllers.cache.ImageDecacheController.decache()
 
 GET         /page/clear                                                                             controllers.cache.PageDecacheController.renderPageDecache()
-POST        /page/clear                                                                             controllers.cache.PageDecacheController.decache()
+POST        /page/clear                                                                             controllers.cache.PageDecacheController.decachePage()
+
+GET         /ajax/clear                                                                             controllers.cache.PageDecacheController.renderAjaxDecache()
+POST        /ajax/clear                                                                             controllers.cache.PageDecacheController.decacheAjax()
 
 # Development endpoints
 GET         /dev/switchboard                                                                        controllers.admin.SwitchboardController.renderSwitchboard()
@@ -52,7 +55,12 @@ POST        /dev/switchboard-plista                                             
 
 # Analytics
 GET         /analytics/abtests                                                                      controllers.admin.AnalyticsController.abtests()
-GET         /analytics/confidence                                                                   controllers.admin.AnalyticsConfidenceController.renderConfidence()
+GET         /analytics/confidence                                                                controllers.admin.AnalyticsConfidenceController.renderConfidence()
+
+# Reader Revenue
+GET         /reader-revenue                                                                         controllers.admin.ReaderRevenueAdminController.renderReaderRevenueMenu()
+GET         /reader-revenue/contributions-banner                                                    controllers.admin.ReaderRevenueAdminController.renderContributionsBannerAdmin()
+POST        /reader-revenue/redeploy-contributions-banner                                           controllers.admin.ReaderRevenueAdminController.redeployContributionsBanner()
 
 # Commercial
 GET         /commercial                                                                             controllers.admin.CommercialController.renderCommercialMenu()

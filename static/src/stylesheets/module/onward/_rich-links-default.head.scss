@@ -2,7 +2,7 @@
 //----------------------------------
 
 .rich-link {
-    background-color: $neutral-6;
+    background-color: $brightness-93;
     margin: 0;
     position: relative;
     overflow: hidden;
@@ -13,7 +13,7 @@
 }
 
 .rich-link .u-faux-block-link--hover {
-    background-color: $neutral-6;
+    background-color: $brightness-93;
 }
 
 .rich-link__title {
@@ -56,7 +56,7 @@
     position: relative;
 
     &:before {
-        background-color: $news-main-2;
+        background-color: $sport-bright;
         content: '';
         position: absolute;
         top: 0;

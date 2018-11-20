@@ -24,7 +24,7 @@ $stocks-icon-height: 10px;
     width: 50%;
 
     @include mq(leftCol) {
-        border-top: 1px dotted $neutral-3;
+        border-top: 1px dotted $brightness-86;
     }
 
     @include mq(wide) {
@@ -53,16 +53,16 @@ $stocks-icon-height: 10px;
     }
 }
 
-@include stock('positive', status-positive, up);
-@include stock('negative', status-negative, down);
-@include stock('level', status-neutral, same);
+@include stock('positive', green-bold, up);
+@include stock('negative', news-main, down);
+@include stock('level', brightness-46, same);
 
 .stocks__stock-value {
     display: inline-block;
     padding-left: 6px;
     padding-right: $gs-gutter;
     min-width: 60%;
-    border-right: 1px dotted $neutral-3;
+    border-right: 1px dotted $brightness-86;
 
     @include mq(mobileLandscape) {
         min-width: 35%;
@@ -86,7 +86,7 @@ $stocks-icon-height: 10px;
             padding-left: 6px;
             padding-right: $gs-gutter;
             min-width: 150px;
-            border-right: 1px dotted $neutral-3;
+            border-right: 1px dotted $brightness-86;
         }
     }
 
@@ -109,7 +109,7 @@ $stocks-icon-height: 10px;
 
 .stocks__closed,
 .stocks__closed--inline {
-    color: $neutral-2;
+    color: $brightness-46;
 }
 
 .stocks__closed {

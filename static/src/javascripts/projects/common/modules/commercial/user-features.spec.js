@@ -9,8 +9,12 @@ import {
     isPayingMember,
     isRecurringContributor,
     accountDataUpdateWarning,
+    isDigitalSubscriber,
+    getLastOneOffContributionDate,
+    getDaysSinceLastOneOffContribution,
 } from './user-features.js';
 
+jest.mock('lib/raven');
 jest.mock('projects/common/modules/identity/api', () => ({
     isUserLoggedIn: jest.fn(),
 }));
@@ -18,7 +22,6 @@ jest.mock('lib/fetch-json', () => jest.fn(() => Promise.resolve()));
 
 jest.mock('lib/config', () => ({
     switches: {
-        adFreeSubscriptionTrial: true,
         adFreeStrictExpiryEnforcement: true,
     },
     page: {
@@ -35,6 +38,8 @@ const PERSISTENCE_KEYS = {
     RECURRING_CONTRIBUTOR_COOKIE: 'gu_recurring_contributor',
     AD_FREE_USER_COOKIE: 'GU_AF1',
     ACTION_REQUIRED_FOR_COOKIE: 'gu_action_required_for',
+    DIGITAL_SUBSCRIBER_COOKIE: 'gu_digital_subscriber',
+    SUPPORT_ONE_OFF_CONTRIBUTION_COOKIE: 'gu.contributions.contrib-timestamp',
 };
 
 const setAllFeaturesData = opts => {
@@ -48,6 +53,7 @@ const setAllFeaturesData = opts => {
         : new Date(currentTime + msInOneDay * 2);
     addCookie(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE, 'true');
     addCookie(PERSISTENCE_KEYS.RECURRING_CONTRIBUTOR_COOKIE, 'true');
+    addCookie(PERSISTENCE_KEYS.DIGITAL_SUBSCRIBER_COOKIE, 'true');
     addCookie(
         PERSISTENCE_KEYS.AD_FREE_USER_COOKIE,
         adFreeExpiryDate.getTime().toString()
@@ -72,6 +78,7 @@ const setExpiredAdFreeData = () => {
 const deleteAllFeaturesData = () => {
     removeCookie(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE);
     removeCookie(PERSISTENCE_KEYS.RECURRING_CONTRIBUTOR_COOKIE);
+    removeCookie(PERSISTENCE_KEYS.DIGITAL_SUBSCRIBER_COOKIE);
     removeCookie(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE);
     removeCookie(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE);
     removeCookie(PERSISTENCE_KEYS.ACTION_REQUIRED_FOR_COOKIE);
@@ -165,6 +172,9 @@ describe('Refreshing the features data', () => {
                 getCookie(PERSISTENCE_KEYS.RECURRING_CONTRIBUTOR_COOKIE)
             ).toBeNull();
             expect(
+                getCookie(PERSISTENCE_KEYS.DIGITAL_SUBSCRIBER_COOKIE)
+            ).toBeNull();
+            expect(
                 getCookie(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE)
             ).toBeNull();
         });
@@ -185,8 +195,8 @@ describe('The account data update warning getter', () => {
         });
 
         it('Is the same when the user has an account data update link cookie', () => {
-            addCookie(PERSISTENCE_KEYS.ACTION_REQUIRED_FOR_COOKIE, 'the same');
-            expect(accountDataUpdateWarning()).toBe('the same');
+            addCookie(PERSISTENCE_KEYS.ACTION_REQUIRED_FOR_COOKIE, 'the-same');
+            expect(accountDataUpdateWarning()).toBe('the-same');
         });
 
         it('Is null when the user does not have an account data update link cookie', () => {
@@ -266,6 +276,36 @@ describe('The isRecurringContributor getter', () => {
     });
 });
 
+describe('The isDigitalSubscriber getter', () => {
+    it('Is false when the user is logged out', () => {
+        jest.resetAllMocks();
+        isUserLoggedIn.mockReturnValue(false);
+        expect(isDigitalSubscriber()).toBe(false);
+    });
+
+    describe('When the user is logged in', () => {
+        beforeEach(() => {
+            jest.resetAllMocks();
+            isUserLoggedIn.mockReturnValue(true);
+        });
+
+        it('Is true when the user has a `true` digital subscriber cookie', () => {
+            addCookie(PERSISTENCE_KEYS.DIGITAL_SUBSCRIBER_COOKIE, 'true');
+            expect(isDigitalSubscriber()).toBe(true);
+        });
+
+        it('Is false when the user has a `false` digital subscriber cookie', () => {
+            addCookie(PERSISTENCE_KEYS.DIGITAL_SUBSCRIBER_COOKIE, 'false');
+            expect(isDigitalSubscriber()).toBe(false);
+        });
+
+        it('Is false when the user has no digital subscriber cookie', () => {
+            removeCookie(PERSISTENCE_KEYS.DIGITAL_SUBSCRIBER_COOKIE);
+            expect(isDigitalSubscriber()).toBe(false);
+        });
+    });
+});
+
 describe('Storing new feature data', () => {
     beforeEach(() => {
         jest.resetAllMocks();
@@ -280,6 +320,7 @@ describe('Storing new feature data', () => {
                 contentAccess: {
                     paidMember: false,
                     recurringContributor: false,
+                    digitalPack: false,
                 },
                 adFree: false,
             })
@@ -291,6 +332,9 @@ describe('Storing new feature data', () => {
             expect(
                 getCookie(PERSISTENCE_KEYS.RECURRING_CONTRIBUTOR_COOKIE)
             ).toBe('false');
+            expect(getCookie(PERSISTENCE_KEYS.DIGITAL_SUBSCRIBER_COOKIE)).toBe(
+                'false'
+            );
             expect(getCookie(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE)).toBeNull();
         });
     });
@@ -301,6 +345,7 @@ describe('Storing new feature data', () => {
                 contentAccess: {
                     paidMember: true,
                     recurringContributor: true,
+                    digitalPack: true,
                 },
                 adFree: true,
             })
@@ -312,6 +357,9 @@ describe('Storing new feature data', () => {
             expect(
                 getCookie(PERSISTENCE_KEYS.RECURRING_CONTRIBUTOR_COOKIE)
             ).toBe('true');
+            expect(getCookie(PERSISTENCE_KEYS.DIGITAL_SUBSCRIBER_COOKIE)).toBe(
+                'true'
+            );
             expect(
                 getCookie(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE)
             ).toBeTruthy();
@@ -344,4 +392,45 @@ describe('Storing new feature data', () => {
             const currentTimeEpoch = new Date().getTime();
             expect(currentTimeEpoch < expiryDateEpoch).toBe(true);
         }));
+});
+
+const setOneOffContributionCookie = (value: any): void =>
+    addCookie(PERSISTENCE_KEYS.SUPPORT_ONE_OFF_CONTRIBUTION_COOKIE, value);
+
+describe('getting the last one-off contribution date of a user', () => {
+    const contributionDateTimeISO8601 = '2018-01-06T09:30:14Z';
+    const contributionDateTimeEpoch = Date.parse(contributionDateTimeISO8601);
+
+    it("returns null if the user hasn't previously contributed", () => {
+        expect(getLastOneOffContributionDate()).toBe(null);
+    });
+
+    it('returns the correct date if the user last contributed on contributions frontend', () => {
+        setOneOffContributionCookie(contributionDateTimeISO8601);
+        expect(getLastOneOffContributionDate()).toBe(contributionDateTimeEpoch);
+    });
+
+    it('return the correct date if the user last contributed on support frontend', () => {
+        setOneOffContributionCookie(contributionDateTimeEpoch.toString());
+        expect(getLastOneOffContributionDate()).toBe(contributionDateTimeEpoch);
+    });
+
+    it('returns null if the cookie has been set with an invalid value', () => {
+        setOneOffContributionCookie('invalid value');
+        expect(getLastOneOffContributionDate()).toBe(null);
+    });
+});
+
+describe('getting the days since last contribution', () => {
+    const contributionDateTimeEpoch = Date.parse('2018-08-01T12:00:30Z');
+
+    it('returns null if the last one-off contribution date is null', () => {
+        expect(getDaysSinceLastOneOffContribution()).toBe(null);
+    });
+
+    it('returns the difference in days between the last contribution date and now if the last contribution date is set', () => {
+        global.Date.now = jest.fn(() => Date.parse('2018-08-07T10:50:34'));
+        setOneOffContributionCookie(contributionDateTimeEpoch);
+        expect(getDaysSinceLastOneOffContribution()).toBe(5);
+    });
 });

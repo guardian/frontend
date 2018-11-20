@@ -3,6 +3,7 @@ module.exports = {
     task: [
         require('./conf/clean'),
         require('./css'),
+        require('./data'),
         require('./javascript'),
         require('./fonts'),
         require('./hash'),

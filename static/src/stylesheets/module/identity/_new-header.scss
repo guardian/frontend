@@ -1,0 +1,129 @@
+$padding: 3px;
+
+@import '../../layout/nav/_variables';
+
+.identity-header {
+    @include clearfix;
+    background-color: $brand-main;
+    padding: $padding 0;
+    color: $brightness-100;
+    overflow: visible;
+    position: relative;
+    z-index: $zindex-main-menu;
+
+    .identity-dropdown {
+        position: absolute;
+        display: none;
+        left: 0;
+        top: get-line-height(textSans, 3)*1.25;
+        z-index: $zindex-main-menu + 1;
+        li {
+            display: block;
+        }
+    }
+
+    .identity-dropdown.is-active,
+    .identity-header__nav-fallback:checked ~ .identity-dropdown {
+        display: block;
+    }
+
+    .identity-header__nav-name {
+        max-width: gs-span(2);
+        display: inline-flex;
+        align-items: center;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .identity-header__container {
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: space-between;
+        align-items: flex-start;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+}
+
+.identity-header__links {
+    float: left;
+    height: 40px;
+    display: flex;
+    align-items: center;
+}
+
+.identity-header__link {
+    float: left;
+    position: relative;
+}
+
+html body .identity-header__logo {
+    float: right;
+    order: -99;
+    z-index: 1;
+
+    .inline-the-guardian-logo {
+        display: none;
+    }
+
+    .inline-the-guardian-roundel__svg {
+        display: block;
+        height: 42px;
+        width: 42px;
+    }
+}
+
+label[for=identity-header-account-menu-fallback]:focus {
+    outline: none;
+}
+
+.identity-header__nav {
+    @include fs-textSans(5);
+    background: none;
+    border: 0;
+    cursor: pointer;
+    padding: 0;
+    white-space: nowrap;
+    display: block;
+    transition: .25s ease-out;
+
+    .inline-icon {
+        vertical-align: middle;
+        display: inline-block;
+        line-height: 0;
+        &, & > svg {
+            height: $gs-baseline * 1.25;
+            width: $gs-baseline * 1.25;
+            * {
+                fill: currentColor;
+            }
+        }
+    }
+
+    &:after {
+        content: '';
+        display: inline-block;
+        width: 4px;
+        height: 4px;
+        transform: translateY(-2px) rotate(45deg);
+        border: 1px solid currentColor;
+        border-left: transparent;
+        border-top: transparent;
+        margin-left: 2px;
+        vertical-align: middle;
+        transition: .25s ease-out;
+    }
+
+
+    &:hover,
+    &:focus,
+    label[for=identity-header-account-menu-fallback]:focus & {
+        outline: 0;
+        color: $highlight-main;
+        &:after {
+            transform: translateY(0px) rotate(45deg);
+        }
+    }
+
+}

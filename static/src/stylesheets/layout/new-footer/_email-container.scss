@@ -1,0 +1,24 @@
+.footer__email-container {
+    border-bottom: 1px solid $footer-line-colour;
+
+    @include mq(leftCol) {
+        float: left;
+        padding-top: $gs-baseline / 4;
+        border: 0;
+        width: gs-span(4);
+    }
+
+    .button {
+        border-color: $brightness-46;
+
+        &:hover {
+            border-color: $brightness-86;
+        }
+
+        @include mq(tablet) {
+            display: inline-block;
+            margin-bottom: $gs-baseline;
+            width: auto;
+        }
+    }
+}

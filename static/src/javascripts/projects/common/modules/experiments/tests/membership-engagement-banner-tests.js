@@ -1,6 +1,18 @@
-// @flow
-import { AcquisitionsEngagementBannerHighlight } from 'common/modules/experiments/tests/acquisitions-engagement-banner-highlight';
+// @flow strict
+import {
+    AcquisitionsBannerGoogleDocTestOneVariant,
+    AcquisitionsBannerGoogleDocTestTwoVariants,
+    AcquisitionsBannerGoogleDocTestThreeVariants,
+    AcquisitionsBannerGoogleDocTestFourVariants,
+    AcquisitionsBannerGoogleDocTestFiveVariants,
+} from 'common/modules/experiments/tests/acquisitions-banner-from-google-doc';
 
 export const membershipEngagementBannerTests: $ReadOnlyArray<
     AcquisitionsABTest
-> = [AcquisitionsEngagementBannerHighlight];
+> = [
+    AcquisitionsBannerGoogleDocTestOneVariant,
+    AcquisitionsBannerGoogleDocTestTwoVariants,
+    AcquisitionsBannerGoogleDocTestThreeVariants,
+    AcquisitionsBannerGoogleDocTestFourVariants,
+    AcquisitionsBannerGoogleDocTestFiveVariants,
+];

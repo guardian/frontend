@@ -3,9 +3,9 @@ import fastdom from 'fastdom';
 import $ from 'lib/$';
 import { getCookie, addCookie } from 'lib/cookies';
 import { isIOS, isAndroid, getBreakpoint, getUserAgent } from 'lib/detect';
-import template from 'lodash/utilities/template';
+import template from 'lodash/template';
 import { loadCssPromise } from 'lib/load-css-promise';
-import { Message } from 'common/modules/ui/message';
+import { Message, hasUserAcknowledgedBanner } from 'common/modules/ui/message';
 import config from 'lib/config';
 import type { Banner } from 'common/modules/ui/bannerPicker';
 
@@ -64,16 +64,19 @@ const canUseSmartBanner = (): boolean =>
 const canShow = (): Promise<boolean> =>
     new Promise(resolve => {
         const result =
-            !canUseSmartBanner() && isDevice() && validImpressionCount();
+            !canUseSmartBanner() &&
+            isDevice() &&
+            validImpressionCount() &&
+            !hasUserAcknowledgedBanner(messageCode);
         resolve(result);
     });
 
-const show = (): void => {
+const show = (): Promise<boolean> =>
     loadCssPromise.then(() => {
         const msg = new Message(messageCode, { position: 'top' });
         const fullTemplate = tmp + (getBreakpoint() === 'mobile' ? '' : tablet);
 
-        msg.show(template(fullTemplate, DATA[messageCode.toUpperCase()]));
+        msg.show(template(fullTemplate)(DATA[messageCode.toUpperCase()]));
 
         addCookie(COOKIE_IMPRESSION_KEY, String(impressions + 1));
 
@@ -84,8 +87,9 @@ const show = (): void => {
                 window.scrollTo(window.scrollX, window.scrollY + bannerHeight);
             }
         });
+
+        return true;
     });
-};
 
 const smartAppBanner: Banner = {
     id: messageCode,

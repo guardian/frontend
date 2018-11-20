@@ -35,7 +35,6 @@ GET        /related/*path.json                        controllers.RelatedControl
 GET        /popular-in-tag/*tag.json                  controllers.PopularInTag.render(tag)
 
 GET        /preference/edition/:edition               controllers.ChangeEditionController.render(edition)
-GET        /preference/front-alphas/:optAction        controllers.ChangeAlphaController.render(optAction, page)
 
 GET        /:mediaType/section/:sectionId/*seriesId.json   controllers.MediaInSectionController.renderSectionMediaWithSeries(mediaType, sectionId, seriesId)
 GET        /:mediaType/section/:sectionId.json             controllers.MediaInSectionController.renderSectionMedia(mediaType, sectionId)
@@ -62,6 +61,7 @@ GET        /gallery/most-viewed                       controllers.MostViewedGall
 # Experimental
 GET        /cards/opengraph/*path.json                controllers.CardController.opengraph(path)
 GET        /tagged.json                               controllers.TaggedContentController.renderJson(tag: String)
+GET        /audio/series/*path.json                   controllers.SeriesController.renderPodcastEpisodes(path)
 GET        /series/*path.json                         controllers.SeriesController.renderSeriesStories(path)
 
 # Business data

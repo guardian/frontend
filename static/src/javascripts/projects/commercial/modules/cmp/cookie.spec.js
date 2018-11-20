@@ -19,11 +19,13 @@ const {
     convertVendorsToRanges,
 } = _;
 
+jest.mock('lib/raven');
 jest.mock('commercial/modules/cmp/log', () => ({
     log: {
         debug: jest.fn(),
         error: jest.fn(),
         warn: jest.fn(),
+        info: jest.fn(),
     },
 }));
 
@@ -31,56 +33,39 @@ jest.mock('commercial/modules/cmp/log', () => ({
 const OriginalDate = global.Date;
 global.Date = jest.fn(() => new OriginalDate(0));
 
-const vendorList = {
-    vendorListVersion: 1,
-    purposes: [
-        {
-            id: 1,
-            name: 'Accessing a Device or Browser',
-        },
-        {
-            id: 2,
-            name: 'Advertising Personalisation',
-        },
-        {
-            id: 3,
-            name: 'Analytics',
-        },
-        {
-            id: 4,
-            name: 'Content Personalisation',
-        },
-    ],
-    vendors: [
-        {
-            id: 1,
-            name: 'Globex',
-        },
-        {
-            id: 2,
-            name: 'Initech',
-        },
-        {
-            id: 3,
-            name: 'CRS',
-        },
-        {
-            id: 4,
-            name: 'Umbrella',
-        },
-        {
-            id: 8,
-            name: 'Aperture',
-        },
-        {
-            id: 10,
-            name: 'Pierce and Pierce',
-        },
-    ],
+const shortVendorList = {
+    version: 1,
+    purposeIDs: [1, 2, 3, 4],
+    purposesByVID: {
+        '1': [], // name:Globex
+        '2': [], // name:Initech
+        '3': [], // name:CRS
+        '4': [], // name:Umbrella
+        '8': [], // name:Aperture
+        '10': [], // Pierce and Pierce
+    },
+    legIntPurposesByVID: {
+        '1': [], // name:Globex
+        '2': [], // name:Initech
+        '3': [], // name:CRS
+        '4': [], // name:Umbrella
+        '8': [], // name:Aperture
+        '10': [], // Pierce and Pierce
+    },
+    featuresIdsByVID: {
+        '1': [], // name:Globex
+        '2': [], // name:Initech
+        '3': [], // name:CRS
+        '4': [], // name:Umbrella
+        '8': [], // name:Aperture
+        '10': [], // Pierce and Pierce
+    },
 };
 
 const aDate = new Date('2018-07-15 PDT');
-const maxVendorId = vendorList.vendors[vendorList.vendors.length - 1].id;
+const maxVendorId = Math.max(
+    ...Object.keys(shortVendorList.purposesByVID).map(s => parseInt(s, 10))
+);
 
 const vendorConsentData: VendorConsentData = {
     cookieVersion: 1,
@@ -126,19 +111,12 @@ describe('CMP cookie', () => {
         cookieValue = '';
     });
 
-    it('can encodePurposeIdsToBits', () => {
-        const purposes = [
-            {
-                id: 1,
-                name: 'Accessing a Device or Browser',
-            },
-            {
-                id: 2,
-                name: 'Advertising Personalisation',
-            },
-        ];
+    it('max ID is 10', () => {
+        expect(maxVendorId).toBe(10);
+    });
 
-        const result = encodePurposeIdsToBits(purposes, [1, 2]);
+    it('can encodePurposeIdsToBits', () => {
+        const result = encodePurposeIdsToBits([1, 2], [1, 2]);
         expect(result).toBe('11');
     });
 
@@ -164,12 +142,12 @@ describe('CMP cookie', () => {
             consentScreen: 0,
         };
         // $FlowFixMe I know fields are missing, Flow... this is a test
-        expect(encodeVendorConsentData({ ...consentData, vendorList })).toEqual(
+        expect(encodeVendorConsentData(consentData, shortVendorList)).toEqual(
             'BAAAAAAAAAAAAABABAAAABAAAAAAAA'
         );
 
         expect(
-            encodeVendorConsentData({ ...vendorConsentData, vendorList })
+            encodeVendorConsentData(vendorConsentData, shortVendorList)
         ).toEqual('BAAAAAAAAAAAAABABBENABwAAAAApoA');
     });
 
@@ -199,22 +177,17 @@ describe('CMP cookie', () => {
         ).toEqual(vendorConsentData);
     });
 
-    it('writes and reads the local cookie', () =>
-        writeVendorConsentCookie({
-            ...vendorConsentData,
-            vendorList,
-        }).then(() =>
-            readVendorConsentCookie().then(fromCookie => {
-                expect(document.cookie).toEqual(
-                    'euconsent=BAAAAAAAAAAAAABABBENABwAAAAApoA; path=/; expires=Fri, 07 Jul 94226 23:00:00 GMT; domain=.theguardian.com'
-                );
-                expect(fromCookie).toEqual(vendorConsentData);
-            })
-        ));
+    it('writes and reads the local cookie', () => {
+        writeVendorConsentCookie(vendorConsentData).then(() => {
+            expect(document.cookie).toEqual(
+                'euconsent=BAAAAAAAAAAAAABABBENABwAAAAApoA; path=/; expires=Fri, 07 Jul 94226 23:00:00 GMT; domain=.theguardian.com'
+            );
+            expect(readVendorConsentCookie()).toEqual(vendorConsentData);
+        });
+    });
 
     it('converts selected vendor list to a range', () => {
-        const maxId = Math.max(...vendorList.vendors.map(vendor => vendor.id));
-        const ranges = convertVendorsToRanges(maxId, [2, 3, 4]);
+        const ranges = convertVendorsToRanges(maxVendorId, [2, 3, 4]);
 
         expect(ranges).toEqual([
             {
@@ -226,8 +199,7 @@ describe('CMP cookie', () => {
     });
 
     it('converts selected vendor list to multiple ranges', () => {
-        const maxId = Math.max(...vendorList.vendors.map(vendor => vendor.id));
-        const ranges = convertVendorsToRanges(maxId, [2, 3, 5, 6, 10]);
+        const ranges = convertVendorsToRanges(maxVendorId, [2, 3, 5, 6, 10]);
 
         expect(ranges).toEqual([
             {

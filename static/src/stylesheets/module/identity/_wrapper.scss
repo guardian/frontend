@@ -1,7 +1,7 @@
 /* Header wrapper (for mma tabs)
    ========================================================================== */
 .identity-wrapper-header {
-    border-bottom: 1px solid $garnett-neutral-4;
+    border-bottom: 1px solid $brightness-86;
     .identity-wrapper {
         padding-bottom: 0;
     }
@@ -38,6 +38,10 @@
         }
     }
 
+    &.identity-wrapper--no-padding {
+        padding: 0;
+    }
+
     &.identity-wrapper--wide {
         max-width: gs-span(8);
 
@@ -51,7 +55,7 @@
     }
 
     a.u-underline {
-        color: $identity-main;
+        color: $brightness-7;
     }
 }
 
@@ -68,7 +72,10 @@
     min-height: 100vh;
     align-items: stretch;
     &.identity-wrapper-page-flex--flow {
-        background: $garnett-neutral-3;
+        background: $brightness-97;
+        .manage-account-small-divider {
+            border-color: $brightness-86;
+        }
     }
     & > .identity-wrapper-page-flex__content {
         flex: 1 1 auto;

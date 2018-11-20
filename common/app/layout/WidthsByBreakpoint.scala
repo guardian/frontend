@@ -2,7 +2,7 @@ package layout
 
 import cards._
 import BrowserWidth._
-import views.support.Profile
+import views.support.ImageProfile
 
 object FaciaWidths {
   private val MediaMobile = Map[CardType, BrowserWidth](
@@ -252,11 +252,11 @@ object ContentWidths {
     override val showcase = WidthsByBreakpoint(
       mobile =          Some(465.px),
       mobileLandscape = Some(645.px),
-      phablet =         Some(620.px),
+      phablet =         Some(660.px),
       tablet =          Some(700.px),
-      desktop =         Some(620.px),
-      leftCol =         Some(780.px),
-      wide =            Some(860.px))
+      desktop =         Some(700.px),
+      leftCol =         Some(940.px),
+      wide =            Some(1020.px))
 
     /**
      * main image is showcase on a feature article, e.g.
@@ -405,9 +405,9 @@ case class WidthsByBreakpoint(
       s"(min-width: ${breakpoint.minWidth.get}px) $imageWidth"
   } mkString ", "
 
-  def profiles: Seq[Profile] = (breakpoints flatMap(_.toPixels(breakpoints)))
+  def profiles: Seq[ImageProfile] = (breakpoints flatMap(_.toPixels(breakpoints)))
     .distinct
-    .map((browserWidth: Int) => Profile(width = Some(browserWidth)))
+    .map((browserWidth: Int) => ImageProfile(width = Some(browserWidth)))
 }
 
 case class BreakpointWidth(breakpoint: Breakpoint, width: BrowserWidth) {

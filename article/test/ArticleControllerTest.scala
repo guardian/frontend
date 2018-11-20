@@ -1,17 +1,42 @@
 package test
 
-import controllers.ArticleController
+import controllers.{ArticleController, ArticlePage}
+import model.Cached.RevalidatableResult
+import model.{ApplicationContext, Cached, PageWithStoryPackage}
 import org.apache.commons.codec.digest.DigestUtils
-import play.api.test._
-import play.api.test.Helpers._
+import org.scalatest.mockito.MockitoSugar
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
+import play.api.libs.ws.WSClient
+import play.api.mvc.{RequestHeader, Result}
+import play.api.test.Helpers._
+import play.api.test._
+import play.twirl.api.Html
+import services.dotcomponents.{RemoteRender, RenderType, RenderingTierPicker}
 
 import scala.collection.JavaConverters._
+import scala.concurrent.{ExecutionContext, Future}
+
+// I had trouble getting Mockito to play nicely with how scala is using implicits and consts so I've introduced
+// these
+
+class FakePicker extends RenderingTierPicker {
+  override def getTier(page: PageWithStoryPackage)(implicit request: RequestHeader): RenderType = {
+    RemoteRender
+  }
+}
+
+class FakeRemoteRender(implicit context: ApplicationContext) extends renderers.RemoteRenderer {
+  override def getArticle(ws:WSClient, path: String, article: ArticlePage)(implicit request: RequestHeader): Future[Result] = {
+    implicit val ec = ExecutionContext.global
+    Future(Cached(article)(RevalidatableResult.Ok(Html("OK"))))
+  }
+}
 
 @DoNotDiscover class ArticleControllerTest
   extends FlatSpec
   with Matchers
   with ConfiguredTestSuite
+  with MockitoSugar
   with BeforeAndAfterAll
   with WithMaterializer
   with WithTestWsClient
@@ -20,6 +45,7 @@ import scala.collection.JavaConverters._
  {
 
   val articleUrl = "environment/2012/feb/22/capitalise-low-carbon-future"
+  val guuiArticle = "world/2018/sep/13/give-pizza-a-chance-south-koreans-pa-weight-to-thwart-conscription"
   val liveBlogUrl = "global/middle-east-live/2013/sep/09/syria-crisis-russia-kerry-us-live"
   val sudokuUrl = "lifeandstyle/2013/sep/09/sudoku-2599-easy"
 
@@ -29,9 +55,28 @@ import scala.collection.JavaConverters._
     wsClient
   )
 
+  lazy val guuiController = new ArticleController(
+    testContentApiClient,
+    play.api.test.Helpers.stubControllerComponents(),
+    wsClient,
+    new FakeRemoteRender(),
+    new FakePicker()
+  )
+
   "Article Controller" should "200 when content type is article" in {
     val result = articleController.renderArticle(articleUrl)(TestRequest(articleUrl))
     status(result) should be(200)
+  }
+
+  "Article Controller" should "200 for guui articles" in {
+    val result = guuiController.renderArticle(guuiArticle)(TestRequest(guuiArticle))
+    status(result) should be(200)
+  }
+
+  it should "return article headline" in {
+    val result = articleController.renderHeadline(articleUrl)(TestRequest(articleUrl))
+    status(result) should be(200)
+    contentAsString(result) shouldBe "We must capitalise on a low-carbon future | Norman Baker"
   }
 
   it should "200 when content type is live blog" in {
@@ -81,29 +126,6 @@ import scala.collection.JavaConverters._
 
   val expiredArticle = "football/2012/sep/14/zlatan-ibrahimovic-paris-st-germain-toulouse"
 
-  it should "return the latest blocks of a live blog" in {
-    val lastUpdateBlock = "block-56d03169e4b074a9f6b35baa"
-    val fakeRequest = FakeRequest(GET, s"/football/live/2016/feb/26/fifa-election-who-will-succeed-sepp-blatter-president-live.json?lastUpdate=$lastUpdateBlock")
-      .withHeaders("host" -> "localhost:9000")
-
-    val result = articleController.renderLiveBlogJson("/football/live/2016/feb/26/fifa-election-who-will-succeed-sepp-blatter-president-live", Some(lastUpdateBlock), None, Some(true))(fakeRequest)
-    status(result) should be(200)
-
-    val content = contentAsString(result)
-
-    // newer blocks
-    content should include("block-56d03894e4b0bd5a0524cbab")
-    content should include("block-56d039fce4b0d38537b1f61e")
-    content should not include "56d04877e4b0bd5a0524cbe2" // at the moment it only tries 5 either way, reverse this test once we use blocks:published-since
-
-    //this block
-    content should not include lastUpdateBlock
-
-    //older block
-    content should not include "block-56d02bd2e4b0d38537b1f5fa"
-
-  }
-
   it should "know which backend served the request" in {
     val result = route(app, TestRequest("/world/2014/sep/24/radical-cleric-islamic-state-release-british-hostage-alan-henning")).head
     status(result) should be (200)
@@ -131,4 +153,5 @@ import scala.collection.JavaConverters._
     import browser._
     $(".media-primary > .element-interactive").attributes("data-interactive").asScala.head should endWith ("boot.js")
   }
+
 }

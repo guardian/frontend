@@ -98,7 +98,7 @@ const bootEnhanced = (): void => {
             catchErrorsWithContext([['geolocation', geolocationInit]]);
 
             // Front
-            if (config.page.isFront) {
+            if (config.get('page.isFront')) {
                 require.ensure(
                     [],
                     require => {
@@ -112,8 +112,8 @@ const bootEnhanced = (): void => {
             }
 
             if (
-                config.page.contentType === 'Article' &&
-                !config.page.isMinuteArticle
+                config.get('page.contentType') === 'Article' &&
+                !config.get('page.isMinuteArticle')
             ) {
                 require.ensure(
                     [],
@@ -131,7 +131,7 @@ const bootEnhanced = (): void => {
                 );
             }
 
-            if (config.page.contentType === 'Crossword') {
+            if (config.get('page.contentType') === 'Crossword') {
                 require.ensure(
                     [],
                     require => {
@@ -144,7 +144,7 @@ const bootEnhanced = (): void => {
                 );
             }
 
-            if (config.page.contentType === 'LiveBlog') {
+            if (config.get('page.contentType') === 'LiveBlog') {
                 require.ensure(
                     [],
                     require => {
@@ -161,7 +161,7 @@ const bootEnhanced = (): void => {
                 );
             }
 
-            if (config.page.isMinuteArticle) {
+            if (config.get('page.isMinuteArticle')) {
                 require.ensure(
                     [],
                     require => {
@@ -178,7 +178,11 @@ const bootEnhanced = (): void => {
                 );
             }
 
-            if (config.isMedia || config.page.contentType === 'Interactive') {
+            if (
+                config.get('page.contentType') === 'Audio' ||
+                config.get('page.contentType') === 'Video' ||
+                config.get('page.contentType') === 'Interactive'
+            ) {
                 require.ensure(
                     [],
                     require => {
@@ -191,11 +195,12 @@ const bootEnhanced = (): void => {
                 );
             }
 
+            // Old VideoJS player
             fastdom
                 .read(() =>
                     qwery(
                         `${
-                            config.switches.enhancedVideoPlayer ? 'video, ' : ''
+                            config.get('switches.videojs') ? 'video, ' : ''
                         } audio`
                     )
                 )
@@ -215,7 +220,26 @@ const bootEnhanced = (): void => {
                     }
                 });
 
-            if (config.page.contentType === 'Gallery') {
+            // Native video player enhancements
+            if (!config.get('switches.videojs')) {
+                fastdom.read(() => qwery('video')).then(els => {
+                    if (els.length) {
+                        require.ensure(
+                            [],
+                            require => {
+                                bootstrapContext(
+                                    'video-player',
+                                    require('bootstraps/enhanced/video-player')
+                                        .initVideoPlayer
+                                );
+                            },
+                            'video-player'
+                        );
+                    }
+                });
+            }
+
+            if (config.get('page.contentType') === 'Gallery') {
                 require.ensure(
                     [],
                     require => {
@@ -232,7 +256,7 @@ const bootEnhanced = (): void => {
                 );
             }
 
-            if (config.page.contentType === 'ImageContent') {
+            if (config.get('page.contentType') === 'ImageContent') {
                 require.ensure(
                     [],
                     require => {
@@ -249,7 +273,7 @@ const bootEnhanced = (): void => {
                 );
             }
 
-            if (config.page.section === 'football') {
+            if (config.get('page.section') === 'football') {
                 require.ensure(
                     [],
                     require => {
@@ -262,12 +286,12 @@ const bootEnhanced = (): void => {
                 );
             }
 
-            if (config.page.section === 'sport') {
+            if (config.get('page.section') === 'sport') {
                 // Leaving this here for now as it's a tiny bootstrap.
                 bootstrapContext('sport', initSport);
             }
 
-            if (config.page.section === 'identity') {
+            if (config.get('page.section') === 'identity') {
                 require.ensure(
                     [],
                     require => {
@@ -280,7 +304,7 @@ const bootEnhanced = (): void => {
                 );
             }
 
-            if (config.page.isPreferencesPage) {
+            if (config.get('page.isPreferencesPage')) {
                 require.ensure(
                     [],
                     require => {
@@ -293,7 +317,7 @@ const bootEnhanced = (): void => {
                 );
             }
 
-            if (config.page.section === 'newsletter-signup-page') {
+            if (config.get('page.section') === 'newsletter-signup-page') {
                 require.ensure(
                     [],
                     require => {
@@ -309,7 +333,7 @@ const bootEnhanced = (): void => {
             // use a #force-sw hash fragment to force service worker registration for local dev
             if (
                 (window.location.protocol === 'https:' &&
-                    config.page.section !== 'identity') ||
+                    config.get('page.section') !== 'identity') ||
                 window.location.hash.indexOf('force-sw') > -1
             ) {
                 const navigator = window.navigator;
@@ -318,7 +342,7 @@ const bootEnhanced = (): void => {
                 }
             }
 
-            if (config.page.pageId === 'help/accessibility-help') {
+            if (config.get('page.pageId') === 'help/accessibility-help') {
                 require.ensure(
                     [],
                     require => {
@@ -360,20 +384,18 @@ const bootEnhanced = (): void => {
                 );
             }
 
-            fastdom.read(() => {
-                if ($('.js-tls-warning').length > 0) {
-                    require.ensure(
-                        [],
-                        require => {
-                            bootstrapContext(
-                                'tls-warning',
-                                require('bootstraps/enhanced/tls-warning').init
-                            );
-                        },
-                        'tls-warning'
-                    );
-                }
-            });
+            if (config.get('page.contentType') === 'Audio') {
+                require.ensure(
+                    [],
+                    require => {
+                        bootstrapContext(
+                            'audio',
+                            require('common/modules/audio').init
+                        );
+                    },
+                    'audio'
+                );
+            }
 
             // Mark the end of synchronous execution.
             markTime('App End');

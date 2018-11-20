@@ -1,137 +1,112 @@
-$weather-small-size: 26px;
-$weather-large-size: 60px;
+$weather-small-size: 32px;
+$weather-large-size: 50px;
 
-@mixin weather-rule() {
-    content: '';
-    position: absolute;
-    right: 0;
-    bottom: $gs-baseline / 2;
-    height: $gs-baseline + 1px;
-    border-right: 1px dotted $neutral-3;
+[data-component='headlines'] {
+    @include mq($until: leftCol) {
+        &.fc-container--first {
+            padding-top: 0;
+        }
+
+        .fc-container__inner {
+            padding-top: 0;
+        }
+
+        .fc-container__header__title {
+            padding-top: $gs-baseline /2;
+        }
+    }
+
+    .has-page-skin & {
+        @include mq(wide) {
+            &.fc-container--first {
+                padding-top: 0;
+            }
+
+            .fc-container__inner {
+                padding-top: 0;
+            }
+
+            .fc-container__header__title {
+                padding-top: $gs-baseline /2;
+            }
+        }
+    }
 }
 
 .weather {
+    @include fs-textSans(6);
     position: relative;
-    color: $neutral-1;
-    text-align: right;
-    padding-top: $gs-baseline / 6;
+    letter-spacing: -.035rem;
+
+    @include mq($until: tablet) {
+        &.is-expanded {
+            padding-top: $weather-small-size + $gs-baseline;
+        }
+    }
 
     @include mq(tablet) {
-        padding-top: ($gs-baseline / 3) * 2;
+        display: flex;
+        justify-content: flex-end;
     }
 
     @include mq(leftCol) {
-        padding-top: $gs-baseline;
-        text-align: left;
+        flex-direction: column;
+        margin-top: $gs-baseline * 2;
     }
 
     .has-page-skin & {
         @include mq(wide) {
-            padding-top: ($gs-baseline / 3) * 2;
-            text-align: right;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+            margin-top: 0;
         }
     }
 }
 
-.weather__current,
-.forecast,
-.weather__location {
-    position: relative;
-    display: inline-block;
-    text-align: left;
-}
-
-.weather__current {
-    @include mq($until: tablet) {
-        margin-right: $gs-gutter * 1.25;
-    }
+.weather__icon {
+    display: block;
 
     @include mq($until: leftCol) {
-        padding-right: $gs-gutter / 2;
-        text-align: right;
-
-        &:after {
-            @include weather-rule;
-        }
+        position: absolute;
+        left: $gs-gutter / 4;
+        top: $gs-baseline / 2 + $gs-baseline / 4;
     }
 
-    @include mq(tablet, leftCol) {
-        text-align: left;
+    @include mq(leftCol) {
+        margin-bottom: $gs-baseline / 4;
     }
 
     .has-page-skin & {
         @include mq(wide) {
-            padding-right: $gs-gutter / 2;
-            text-align: left;
-
-            &:after {
-                @include weather-rule;
-            }
-
-            .weather__icon {
-                right: $gs-gutter / 4;
-            }
-        }
-    }
-
-    .weather__desc {
-        @include mq(leftCol) {
             position: absolute;
-            bottom: $gs-baseline;
-        }
-
-        .has-page-skin & {
-            @include mq(wide) {
-                position: static;
-            }
+            left: $gs-gutter / 4;
+            top: $gs-baseline / 2 + $gs-baseline / 4;
         }
     }
-}
 
-.weather__desc {
-    @include fs-headline(2);
-    display: inline-block;
-    margin: 0;
+    &  > svg {
+        display: block;
+        width: $weather-small-size;
+        height: $weather-small-size;
+    }
 }
 
 .weather__time {
-    @include fs-textSans(1);
-    display: none;
-    color: $neutral-2;
-
-    @include mq(tablet) {
-        display: block;
-    }
+    font-size: 12px;
+    color: $brightness-46;
 }
 
-.weather__icon svg {
-    width: $weather-small-size;
-    height: $weather-small-size;
-    margin: -($gs-baseline / 3) 0 0;
-    vertical-align: middle;
-
-    @include mq(leftCol) {
-        width: $weather-large-size;
-        height: $weather-large-size;
-        display: block;
-        margin: 0 auto ($gs-baseline / 4) ($gs-gutter * 2);
-    }
-
-    .has-page-skin & {
-        @include mq(wide) {
-            width: $weather-small-size;
-            height: $weather-small-size;
-            display: inline-block;
-            margin: -($gs-baseline / 3) 0 0;
-        }
-    }
+.weather__temp {
+    font-weight: 400;
 }
 
 .weather__toggle-forecast {
     position: absolute;
-    right: 0;
-    padding-left: gs-span(2);
+    padding-left: gs-span(1) + $gs-gutter;
     padding-bottom: $gs-baseline;
+    right: 0;
+    top: 0;
 
     @include mq(tablet) {
         display: none;
@@ -143,60 +118,101 @@ $weather-large-size: 60px;
 
     .weather__toggle-icon {
         display: inline-block;
-        margin-bottom: $gs-baseline / 6;
-        fill: $neutral-1;
+        margin-top: $gs-baseline + 2px;
 
-        svg {
-            width: 18px;
-            height: 8px;
+        &:before {
+            margin-right: 5px;
+            content: '';
+            display: block;
+            width: 6px;
+            height: 6px;
+            border: 2px solid $brightness-7;
+            border-top: 0;
+            border-right: 0;
+            transform: translateY(0) rotate(-45deg);
+            transition: transform .3s;
         }
 
-        .is-expanded & {
-            transform: rotate(180deg);
+        .is-expanded &:before {
+            transform: translateY(4px) rotate(135deg);
         }
     }
 }
 
 .weather__location {
+    box-sizing: border-box;
+    order: -1;
+    position: relative;
     width: 100%;
-    border-top: 1px dotted $neutral-3;
 
     @include mq($until: tablet) {
         display: none;
-        padding: ($gs-baseline / 6) 0;
 
         .is-expanded & {
-            display: inline-block;
+            display: block;
+            margin: ($gs-baseline / 2) 0 $gs-baseline;
         }
     }
 
     @include mq(tablet, leftCol) {
+        margin: ($gs-baseline / 4) ($gs-gutter / 2) 0 0;
         width: gs-span(2);
-        border-top-color: transparent;
     }
 
     @include mq(leftCol) {
-        padding-top: $gs-baseline / 6;
+        margin: 0 -2px ($gs-baseline / 4);
+        width: gs-span(2) + 4px;
     }
 
     @include mq(wide) {
-        width: 90%;
+        width: gs-span(3) + 4px;
     }
 
     .has-page-skin & {
         @include mq(wide) {
-            width: gs-span(2);
-            border-top-color: transparent;
-            padding-top: 0;
+            margin: ($gs-baseline / 4) ($gs-gutter / 2) 0 0;
+            width: gs-span(2) + 4px;
         }
     }
 
     .search-tool__input {
-        @include fs-headline(2);
+        @include fs-textSans(5);
+        border-radius: 16px;
+        height: 32px;
+        line-height: 32px;
+        cursor: pointer;
+        font-weight: 400;
         width: 100%;
-        display: inline-block;
-        padding-right: $gs-gutter;
+        display: block;
+        padding: 0 35px 0 30px;
         box-sizing: border-box;
+        transition: background-color .2s ease-in-out;
+
+        &:focus {
+            background-color: $brightness-97;
+        }
+
+        @include mq(tablet, leftCol) {
+            background-color: $brightness-97;
+
+            &:focus {
+                background-color: $brightness-93;
+            }
+        }
+
+        .has-page-skin & {
+            @include mq(wide) {
+                background-color: $brightness-97;
+
+                &:focus {
+                    background-color: $brightness-93;
+                }
+            }
+        }
+    }
+
+    .is-editing .search-tool__input {
+        background-color: $brightness-97;
     }
 
     .search-tool__btn {
@@ -204,160 +220,248 @@ $weather-large-size: 60px;
     }
 
     .search-tool__list {
-        text-align: left;
+        .search-tool__link {
+            padding-left: $gs-gutter +  $gs-gutter / 2;
+        }
 
         @include mq($until: tablet) {
             position: static;
         }
-    }
-
-    &.is-editing {
-        border-bottom: 1px solid $neutral-3;
     }
 }
 
 .weather__close-location,
 .weather__edit-location {
     position: absolute;
-    top: $gs-baseline / 2.4;
-    right: 0;
+    top: ($gs-baseline / 2) + 2px;
     display: block;
     z-index: 5;
-    line-height: inherit;
 
     &:focus {
         outline: 0;
     }
 }
 
-.weather__search-icon,
-.weather__close-icon {
-    width: 16px;
-    height: 16px;
-    fill: $neutral-2;
+.weather__close-location {
+    right: 8px;
 }
 
 .weather__edit-location {
-    z-index: 0;
+    left: 8px;
+    pointer-events: none;
+}
+
+.weather__search-icon,
+.weather__close-icon {
+    fill: $brightness-46;
+
+    svg {
+        width: 16px;
+        height: 16px;
+    }
+}
+
+.weather__close-icon:hover {
+    fill: $brightness-7;
 }
 
 .forecast {
+    display: flex;
     margin: 0;
-    padding: ($gs-baseline / 3) 0 ($gs-baseline / 2);
+    padding: 0;
     list-style: none;
-    width: 100%;
 
     @include mq($until: tablet) {
         display: none;
 
         .is-expanded & {
-            display: table;
+            border-bottom: 1px solid $brightness-86;
+            border-top: 1px solid $brightness-86;
+            padding: 0 0 ($gs-baseline / 2);
+            display: flex;
+            align-content: flex-end;
+            position: relative;
+            width: 100%;
         }
     }
 
     @include mq(tablet, leftCol) {
-        padding: 0;
-        width: auto;
+        margin-right: -$gs-gutter / 2;
     }
 
     @include mq(leftCol) {
-        display: table;
-        padding-top: 0;
-    }
-
-    @include mq(wide) {
-        width: 90%;
+        border-top: 1px solid $brightness-86;
     }
 
     .has-page-skin & {
         @include mq(wide) {
-            width: auto;
-            display: inline-block;
+            border-top: 0;
+            margin-right: -$gs-gutter / 2;
         }
     }
 }
 
 .forecast__item {
+    box-sizing: border-box;
+    min-height: $weather-small-size + $gs-baseline;
+    padding: 2px ($gs-gutter / 2) 0 ($weather-small-size + $gs-gutter / 2);
     position: relative;
-    display: table-cell;
-    border-left: 1px dotted $neutral-3;
-    padding: 0 ($gs-gutter / 2) 0 ($gs-gutter / 4);
 
-    @include mq(tablet, leftCol) {
-        border-left: 0;
-        display: inline-block;
+    &:before {
+        border-left: 1px solid $brightness-86;
+        bottom: 10px;
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
 
-        &:after {
-            @include weather-rule;
-        }
+    @include mq($until: tablet) {
+        flex: 1;
     }
 
     @include mq(leftCol) {
-        padding-right: 0;
-    }
+        flex: 1;
+        padding-left: $gs-gutter / 4;
 
-    @include mq(leftCol, wide) {
-        width: 33%;
+        &:before {
+            bottom: $gs-baseline / 4;
+        }
     }
 
     .has-page-skin & {
         @include mq(wide) {
-            display: inline-block;
-            border-left: 0;
-            padding-right: $gs-gutter / 2;
+            flex: none;
+            padding-left: $weather-small-size + $gs-gutter / 2;
 
-            &:after {
-                @include weather-rule;
+            &:before {
+                bottom: 10px;
             }
         }
     }
 
     &.forecast__item--0 {
-        border-left: 0;
-        padding-left: 0;
+        @include mq($until: tablet) {
+            &:before {
+                content: none;
+            }
+        }
+
+        @include mq(leftCol) {
+            &:before {
+                content: none;
+            }
+        }
+
+        .has-page-skin & {
+            @include mq(wide) {
+                &:before {
+                    content: '';
+                }
+            }
+        }
     }
 
     &.forecast__item--2 {
         @include mq(tablet, desktop) {
             display: none;
         }
-
-        @include mq(leftCol, wide) {
-            border-right: 0;
-        }
     }
 
     &.forecast__item--3 {
-        @include mq(tablet, wide) {
+        @include mq($until: mobileMedium) {
             display: none;
         }
-    }
 
-    .weather__time {
-        display: block;
-    }
-
-    .weather__icon {
-        display: inline-block;
-        vertical-align: bottom;
-    }
-
-    .weather__icon svg {
-        display: block;
-
-        @include mq(mobileLandscape, leftCol) {
-            display: inline-block;
-        }
-
-        @include mq(leftCol) {
-            width: $weather-small-size;
-            height: $weather-small-size;
-            margin-left: 0;
+        @include mq(tablet, wide) {
+            display: none;
         }
 
         .has-page-skin & {
             @include mq(wide) {
-                display: inline-block;
+                display: none;
+            }
+        }
+    }
+}
+
+.forecast__item--current {
+    @include mq($until: tablet) {
+        margin-right: $gs-gutter / 2;
+        position: absolute;
+        top: 0;
+        right: 0;
+
+        .weather__time,
+        &:before {
+            display: none;
+        }
+
+        .weather__temp {
+            padding-top: $gs-baseline - 1px;
+        }
+
+        .weather__icon {
+            top: ($gs-baseline / 4) - 1px;
+        }
+    }
+
+    @include mq(leftCol) {
+        border-top: 1px solid $brightness-86;
+        position: relative;
+        min-height: $weather-large-size + $gs-baseline * 2;
+        padding-left: $weather-large-size + $gs-gutter / 2;
+
+        &:before {
+            content: none;
+        }
+
+        .weather__icon {
+            position: absolute;
+            top: $gs-baseline / 4;
+            left: 0;
+
+            svg {
+                height: $weather-large-size;
+                width: $weather-large-size;
+            }
+        }
+
+        .weather__time {
+            padding-top: $gs-baseline / 2;
+        }
+
+        .weather__temp {
+            font-size: 22px;
+        }
+    }
+
+    .has-page-skin & {
+        @include mq(wide) {
+            border-top: 0;
+            min-height: auto;
+            padding: 2px ($gs-gutter / 2) 0 ($weather-small-size + $gs-gutter / 2);
+
+            &:before {
+                content: '';
+            }
+
+            .weather__icon {
+                left: $gs-gutter / 4;
+                top: $gs-baseline / 2 + $gs-baseline / 4;
+
+                svg {
+                    height: $weather-small-size;
+                    width: $weather-small-size;
+                }
+            }
+
+            .weather__time {
+                padding-top: 0;
+            }
+
+            .weather__temp {
+                font-size: 18px;
             }
         }
     }

@@ -1,31 +1,65 @@
-// @flow
+// @flow strict
 
 import config from 'lib/config';
+import { pbTestNameMap } from 'lib/url';
+import isEmpty from 'lodash/isEmpty';
 import {
     buildAppNexusTargeting,
     buildPageTargeting,
+    buildAppNexusTargetingObject,
 } from 'common/modules/commercial/build-page-targeting';
+import { commercialPrebidSafeframe } from 'common/modules/experiments/tests/commercial-prebid-safeframe';
+import { getVariant, isInVariant } from 'common/modules/experiments/utils';
 import type {
+    PrebidAdYouLikeParams,
+    PrebidAppNexusParams,
     PrebidBid,
     PrebidBidder,
     PrebidImproveParams,
-    PrebidImproveSizeParam,
     PrebidIndexExchangeParams,
+    PrebidOpenXParams,
+    PrebidPubmaticParams,
     PrebidSize,
     PrebidSonobiParams,
     PrebidTrustXParams,
     PrebidXaxisParams,
-} from 'commercial/modules/prebid/types';
+} from './types';
 import {
+    containsBillboard,
+    containsDmpu,
+    containsLeaderboard,
+    containsLeaderboardOrBillboard,
+    containsMpu,
+    containsMpuOrDmpu,
     getBreakpointKey,
+    shouldIncludeAdYouLike,
+    shouldIncludeAppNexus,
+    shouldIncludeImproveDigital,
+    shouldIncludeOpenx,
+    shouldIncludeOzone,
+    shouldIncludeTrustX,
+    shouldIncludePangaea,
+    shouldIncludeXaxis,
     stripMobileSuffix,
     stripTrailingNumbersAbove1,
-} from 'commercial/modules/prebid/utils';
+    isInUsRegion,
+    isInAuRegion,
+    stripDfpAdPrefixFrom,
+} from './utils';
+import { getAppNexusPlacementId, getAppNexusDirectBidParams } from './appnexus';
 
-const isDesktopArticle =
-    getBreakpointKey() === 'D' && config.page.contentType === 'Article';
+const isInSafeframeTestVariant = (): boolean => {
+    const variant = getVariant(commercialPrebidSafeframe, 'variant');
+    return variant ? isInVariant(commercialPrebidSafeframe, variant) : false;
+};
 
-const getTrustXAdUnitId = (slotId: string): string => {
+const isDesktopAndArticle =
+    getBreakpointKey() === 'D' && config.get('page.contentType') === 'Article';
+
+const getTrustXAdUnitId = (
+    slotId: string,
+    isDesktopArticle: boolean
+): string => {
     switch (stripMobileSuffix(slotId)) {
         case 'dfp-ad--inline1':
             return '2960';
@@ -67,6 +101,7 @@ const getTrustXAdUnitId = (slotId: string): string => {
                 if (isDesktopArticle) return '3840';
                 return '3841';
             }
+            // eslint-disable-next-line no-console
             console.log(
                 `PREBID: Failed to get TrustX ad unit for slot ${slotId}.`
             );
@@ -75,185 +110,475 @@ const getTrustXAdUnitId = (slotId: string): string => {
 };
 
 const getIndexSiteId = (): string => {
-    const site = config.page.pbIndexSites.find(
-        s => s.bp === getBreakpointKey()
-    );
-    return site && site.id ? site.id.toString() : '';
+    if (isInSafeframeTestVariant()) {
+        switch (getBreakpointKey()) {
+            case 'D':
+                return '287246';
+            case 'T':
+                return '287247';
+            case 'M':
+                return '287248';
+            default:
+                return '-1';
+        }
+    } else {
+        const site = config
+            .get('page.pbIndexSites', [])
+            .find(s => s.bp === getBreakpointKey());
+        return site && site.id ? site.id.toString() : '';
+    }
 };
 
-const contains = (sizes: PrebidSize[], size: PrebidSize): boolean =>
-    Boolean(sizes.find(s => s[0] === size[0] && s[1] === size[1]));
-
-const containsMpuOrDmpu = (sizes: PrebidSize[]): boolean =>
-    contains(sizes, [300, 250]) || contains(sizes, [300, 600]);
-
-const containsLeaderboardOrBillboard = (sizes: PrebidSize[]): boolean =>
-    contains(sizes, [728, 90]) || contains(sizes, [970, 250]);
-
 const getImprovePlacementId = (sizes: PrebidSize[]): number => {
-    switch (config.page.edition) {
-        case 'UK':
-            switch (getBreakpointKey()) {
-                case 'D':
-                    if (containsMpuOrDmpu(sizes)) {
-                        return 1116396;
-                    }
-                    if (containsLeaderboardOrBillboard(sizes)) {
-                        return 1116397;
-                    }
-                    return -1;
-                case 'M':
-                    if (containsMpuOrDmpu(sizes)) {
-                        return 1116400;
-                    }
-                    return -1;
-                case 'T':
-                    if (containsMpuOrDmpu(sizes)) {
-                        return 1116398;
-                    }
-                    if (containsLeaderboardOrBillboard(sizes)) {
-                        return 1116399;
-                    }
-                    return -1;
-                default:
-                    return -1;
-            }
-        case 'INT':
-            switch (getBreakpointKey()) {
-                case 'D':
-                    if (containsMpuOrDmpu(sizes)) {
-                        return 1116420;
-                    }
-                    if (containsLeaderboardOrBillboard(sizes)) {
-                        return 1116421;
-                    }
-                    return -1;
-                case 'M':
-                    if (containsMpuOrDmpu(sizes)) {
-                        return 1116424;
-                    }
-                    return -1;
-                case 'T':
-                    if (containsMpuOrDmpu(sizes)) {
-                        return 1116422;
-                    }
-                    if (containsLeaderboardOrBillboard(sizes)) {
-                        return 1116423;
-                    }
-                    return -1;
-                default:
-                    return -1;
-            }
-        default:
-            return -1;
+    if (isInSafeframeTestVariant()) {
+        switch (getBreakpointKey()) {
+            case 'D':
+                if (containsDmpu(sizes)) {
+                    return 1116408;
+                }
+                if (containsMpu(sizes)) {
+                    return 1116407;
+                }
+                if (containsLeaderboardOrBillboard(sizes)) {
+                    return 1116409;
+                }
+                return -1;
+            case 'T':
+                if (containsMpu(sizes)) {
+                    return 1116410;
+                }
+                if (containsLeaderboard(sizes)) {
+                    return 1116411;
+                }
+                return -1;
+            case 'M':
+                return 1116412;
+            default:
+                return -1;
+        }
+    } else {
+        switch (config.get('page.edition')) {
+            case 'UK':
+                switch (getBreakpointKey()) {
+                    case 'D':
+                        if (containsMpuOrDmpu(sizes)) {
+                            return 1116396;
+                        }
+                        if (containsLeaderboardOrBillboard(sizes)) {
+                            return 1116397;
+                        }
+                        return -1;
+                    case 'M':
+                        if (containsMpuOrDmpu(sizes)) {
+                            return 1116400;
+                        }
+                        return -1;
+                    case 'T':
+                        if (containsMpuOrDmpu(sizes)) {
+                            return 1116398;
+                        }
+                        if (containsLeaderboardOrBillboard(sizes)) {
+                            return 1116399;
+                        }
+                        return -1;
+                    default:
+                        return -1;
+                }
+            case 'INT':
+                switch (getBreakpointKey()) {
+                    case 'D':
+                        if (containsMpuOrDmpu(sizes)) {
+                            return 1116420;
+                        }
+                        if (containsLeaderboardOrBillboard(sizes)) {
+                            return 1116421;
+                        }
+                        return -1;
+                    case 'M':
+                        if (containsMpuOrDmpu(sizes)) {
+                            return 1116424;
+                        }
+                        return -1;
+                    case 'T':
+                        if (containsMpuOrDmpu(sizes)) {
+                            return 1116422;
+                        }
+                        if (containsLeaderboardOrBillboard(sizes)) {
+                            return 1116423;
+                        }
+                        return -1;
+                    default:
+                        return -1;
+                }
+            default:
+                return -1;
+        }
     }
 };
 
 // Improve has to have single size as parameter if slot doesn't accept multiple sizes,
 // because it uses same placement ID for multiple slot sizes and has no other size information
-const getImproveSizeParam = (slotId: string): PrebidImproveSizeParam => {
+const getImproveSizeParam = (slotId: string): { w?: number, h?: number } => {
     const key = stripTrailingNumbersAbove1(stripMobileSuffix(slotId));
-    return key.endsWith('mostpop') ||
-        key.endsWith('comments') ||
-        key.endsWith('inline1') ||
-        (key.endsWith('inline') && !isDesktopArticle)
+    return key &&
+        (key.endsWith('mostpop') ||
+            key.endsWith('comments') ||
+            key.endsWith('inline1') ||
+            (key.endsWith('inline') && !isDesktopAndArticle))
         ? { w: 300, h: 250 }
         : {};
 };
 
 const getXaxisPlacementId = (sizes: PrebidSize[]): number => {
-    if (contains(sizes, [970, 250])) return 13218365;
-    if (contains(sizes, [300, 600])) return 12984524;
-    return 13218372;
+    if (containsDmpu(sizes)) return 13663297;
+    if (containsMpu(sizes)) return 13663304;
+    if (containsBillboard(sizes)) return 13663284;
+    return 13663304;
+};
+
+const getPangaeaPlacementId = (sizes: PrebidSize[]): number => {
+    type PangaeaSection = {
+        sections: Array<string>,
+        lb: number,
+        mmpu: number,
+        dmpu: number,
+    };
+    const pangaeaList: Array<PangaeaSection> = [
+        {
+            sections: ['business'],
+            lb: 13892359,
+            mmpu: 13892404,
+            dmpu: 13892360,
+        },
+        {
+            sections: ['culture'],
+            lb: 13892361,
+            mmpu: 13892405,
+            dmpu: 13892362,
+        },
+        {
+            sections: ['uk', 'us', 'au'],
+            lb: 13892363,
+            mmpu: 13892406,
+            dmpu: 13892364,
+        },
+        {
+            sections: ['news'],
+            lb: 13892365,
+            mmpu: 13892407,
+            dmpu: 13892366,
+        },
+        {
+            sections: ['money'],
+            lb: 13892367,
+            mmpu: 13892408,
+            dmpu: 13892368,
+        },
+        {
+            sections: ['sport'],
+            lb: 13892372,
+            mmpu: 13892410,
+            dmpu: 13892373,
+        },
+        {
+            sections: ['lifeandstyle', 'fashion'],
+            lb: 13892411,
+            mmpu: 13892436,
+            dmpu: 13892437,
+        },
+        {
+            sections: ['technology', 'environment'],
+            lb: 13892376,
+            mmpu: 13892414,
+            dmpu: 13892377,
+        },
+        {
+            sections: ['travel'],
+            lb: 13892378,
+            mmpu: 13892415,
+            dmpu: 13892379,
+        },
+    ];
+
+    const section: string = config.get('page.section', '').toLowerCase();
+    const placementIdsForSection: PangaeaSection = pangaeaList.find(
+        ({ sections }) => sections.includes(section)
+    ) || {
+        sections: ['other'],
+        lb: 13892369,
+        mmpu: 13892409,
+        dmpu: 13892370,
+    };
+
+    const breakpointKey: string = getBreakpointKey();
+    // Mobile MPU
+    if (containsMpu(sizes) && breakpointKey === 'M')
+        return placementIdsForSection.mmpu;
+    // Double/Single MPU
+    if (containsMpuOrDmpu(sizes)) return placementIdsForSection.dmpu;
+    // Leaderboard/Billboard
+    if (containsLeaderboardOrBillboard(sizes)) return placementIdsForSection.lb;
+    return 13892409; // Other Section MPU as fallback
+};
+
+// Is pbtest being used?
+const isPbTestOn = (): boolean => !isEmpty(pbTestNameMap());
+// Helper for conditions
+const inPbTestOr = (liveClause: boolean): boolean => isPbTestOn() || liveClause;
+
+/* Bidders */
+const appNexusBidder: PrebidBidder = {
+    name: 'and',
+    switchName: 'prebidAppnexus',
+    bidParams: (slotId: string, sizes: PrebidSize[]): PrebidAppNexusParams =>
+        getAppNexusDirectBidParams(sizes, isInAuRegion()),
+};
+
+const openxClientSideBidder: PrebidBidder = {
+    name: 'oxd',
+    switchName: 'prebidOpenx',
+    bidParams: (): PrebidOpenXParams => {
+        switch (config.get('page.edition')) {
+            case 'US':
+                return {
+                    delDomain: 'guardian-us-d.openx.net',
+                    unit: '540279544',
+                    customParams: buildAppNexusTargetingObject(
+                        buildPageTargeting()
+                    ),
+                };
+            case 'AU':
+                return {
+                    delDomain: 'guardian-aus-d.openx.net',
+                    unit: '540279542',
+                    customParams: buildAppNexusTargetingObject(
+                        buildPageTargeting()
+                    ),
+                };
+            default:
+                // UK and ROW
+                return {
+                    delDomain: 'guardian-d.openx.net',
+                    unit: '540279541',
+                    customParams: buildAppNexusTargetingObject(
+                        buildPageTargeting()
+                    ),
+                };
+        }
+    },
 };
 
 const sonobiBidder: PrebidBidder = {
     name: 'sonobi',
-    bidParams: (slotId: string): PrebidSonobiParams => ({
-        ad_unit: config.page.adUnit,
-        dom_id: slotId,
-        appNexusTargeting: buildAppNexusTargeting(buildPageTargeting()),
-        pageViewId: config.ophan.pageViewId,
-    }),
+    switchName: 'prebidSonobi',
+    bidParams: (slotId: string): PrebidSonobiParams =>
+        Object.assign(
+            {},
+            {
+                ad_unit: config.get('page.adUnit'),
+                dom_id: slotId,
+                appNexusTargeting: buildAppNexusTargeting(buildPageTargeting()),
+                pageViewId: config.get('ophan.pageViewId'),
+            },
+            isInSafeframeTestVariant() ? { render: 'safeframe' } : {}
+        ),
+};
+
+const getPubmaticPublisherId = (): string => {
+    if (isInUsRegion()) {
+        return '157206';
+    }
+    if (isInAuRegion()) {
+        return '157203';
+    }
+    return '157207';
+};
+
+const pubmaticBidder: PrebidBidder = {
+    name: 'pubmatic',
+    switchName: 'prebidPubmatic',
+    bidParams: (slotId: string): PrebidPubmaticParams =>
+        Object.assign(
+            {},
+            {
+                publisherId: getPubmaticPublisherId(),
+                adSlot: stripDfpAdPrefixFrom(slotId),
+            }
+        ),
 };
 
 const trustXBidder: PrebidBidder = {
     name: 'trustx',
+    switchName: 'prebidTrustx',
     bidParams: (slotId: string): PrebidTrustXParams => ({
-        uid: getTrustXAdUnitId(slotId),
+        uid: getTrustXAdUnitId(slotId, isDesktopAndArticle),
     }),
-    labelAll: ['geo-NA'],
 };
 
 const improveDigitalBidder: PrebidBidder = {
     name: 'improvedigital',
+    switchName: 'prebidImproveDigital',
     bidParams: (slotId: string, sizes: PrebidSize[]): PrebidImproveParams => ({
         placementId: getImprovePlacementId(sizes),
         size: getImproveSizeParam(slotId),
     }),
-    labelAny: ['edn-UK', 'edn-INT'],
 };
 
 const xaxisBidder: PrebidBidder = {
     name: 'xhb',
+    switchName: 'prebidXaxis',
     bidParams: (slotId: string, sizes: PrebidSize[]): PrebidXaxisParams => ({
         placementId: getXaxisPlacementId(sizes),
     }),
-    labelAll: ['edn-UK', 'deal-FirstLook'],
+};
+
+const adYouLikeBidder: PrebidBidder = {
+    name: 'adyoulike',
+    switchName: 'prebidAdYouLike',
+    bidParams: (): PrebidAdYouLikeParams => ({
+        placement: '2b4d757e0ec349583ce704699f1467dd',
+    }),
+};
+
+// Dummy bidders for the whitehorse project (https://trello.com/c/KbeBLyYZ)
+const getDummyServerSideBidders = (): Array<PrebidBidder> => {
+    const dummyServerSideBidders: Array<PrebidBidder> = [];
+
+    const appnexusServerSideBidder: PrebidBidder = {
+        name: 'appnexus',
+        switchName: 'prebidS2sozone',
+        bidParams: (
+            slotId: string,
+            sizes: PrebidSize[]
+        ): PrebidAppNexusParams =>
+            Object.assign(
+                {},
+                {
+                    placementId: getAppNexusPlacementId(sizes),
+                    keywords: buildAppNexusTargetingObject(
+                        buildPageTargeting()
+                    ), // Ok to duplicate call. Lodash 'once' is used.
+                },
+                window.OzoneLotameData ? { lotame: window.OzoneLotameData } : {}
+            ),
+    };
+
+    const openxServerSideBidder: PrebidBidder = {
+        name: 'openx',
+        switchName: 'prebidS2sozone',
+        bidParams: (): PrebidOpenXParams =>
+            Object.assign(
+                {},
+                (() => ({
+                    delDomain: 'guardian-d.openx.net',
+                    unit: '539997090',
+                    customParams: buildAppNexusTargetingObject(
+                        buildPageTargeting()
+                    ),
+                }))(),
+                window.OzoneLotameData ? { lotame: window.OzoneLotameData } : {}
+            ),
+    };
+
+    const pangaeaServerSideBidder: PrebidBidder = {
+        name: 'pangaea',
+        switchName: 'prebidS2sozone',
+        bidParams: (
+            slotId: string,
+            sizes: PrebidSize[]
+        ): PrebidAppNexusParams =>
+            Object.assign(
+                {},
+                {
+                    placementId: getPangaeaPlacementId(sizes).toString(),
+                    keywords: buildAppNexusTargetingObject(
+                        buildPageTargeting()
+                    ), // Ok to duplicate call. Lodash 'once' is used.
+                },
+                window.OzoneLotameData ? { lotame: window.OzoneLotameData } : {}
+            ),
+    };
+
+    if (
+        inPbTestOr(
+            config.get('switches.prebidS2sozone') && shouldIncludeOzone()
+        )
+    ) {
+        dummyServerSideBidders.push(openxServerSideBidder);
+        dummyServerSideBidders.push(appnexusServerSideBidder);
+
+        // Remove this switch after initial pangaea release
+        if (inPbTestOr(shouldIncludePangaea())) {
+            dummyServerSideBidders.push(pangaeaServerSideBidder);
+        }
+    }
+
+    return dummyServerSideBidders;
 };
 
 // There's an IX bidder for every size that the slot can take
 const indexExchangeBidders: (PrebidSize[]) => PrebidBidder[] = slotSizes => {
-    if (config.switches.prebidIndexExchange) {
-        const indexSiteId = getIndexSiteId();
-        return slotSizes.map(size => ({
-            name: 'ix',
-            bidParams: (): PrebidIndexExchangeParams => ({
-                siteId: indexSiteId,
-                size,
-            }),
-        }));
-    }
-    return [];
+    const indexSiteId = getIndexSiteId();
+    return slotSizes.map(size => ({
+        name: 'ix',
+        switchName: 'prebidIndexExchange',
+        bidParams: (): PrebidIndexExchangeParams => ({
+            siteId: indexSiteId,
+            size,
+        }),
+    }));
 };
 
-const otherBidders: PrebidBidder[] = [];
-if (config.switches.prebidSonobi) {
-    otherBidders.push(sonobiBidder);
-}
-if (config.switches.prebidTrustx) {
-    otherBidders.push(trustXBidder);
-}
-if (config.switches.prebidImproveDigital) {
-    otherBidders.push(improveDigitalBidder);
-}
-if (config.switches.prebidXaxis) {
-    otherBidders.push(xaxisBidder);
-}
+const biddersBeingTested: (PrebidBidder[]) => PrebidBidder[] = allBidders =>
+    allBidders.filter(bidder => pbTestNameMap()[bidder.name]);
 
-const bidders: (PrebidSize[]) => PrebidBidder[] = slotSizes => {
-    const combinedBidders = otherBidders.slice();
-    Array.prototype.push.apply(
-        combinedBidders,
-        indexExchangeBidders(slotSizes)
-    );
-    return combinedBidders;
+const biddersSwitchedOn: (PrebidBidder[]) => PrebidBidder[] = allBidders => {
+    const isSwitchedOn: PrebidBidder => boolean = bidder =>
+        config.get(`switches.${bidder.switchName}`);
+    return allBidders.filter(bidder => isSwitchedOn(bidder));
+};
+
+const currentBidders: (PrebidSize[]) => PrebidBidder[] = slotSizes => {
+    const otherBidders: PrebidBidder[] = [
+        sonobiBidder,
+        ...(inPbTestOr(shouldIncludeTrustX()) ? [trustXBidder] : []),
+        ...(inPbTestOr(shouldIncludeAppNexus()) ? [appNexusBidder] : []),
+        ...(inPbTestOr(shouldIncludeImproveDigital())
+            ? [improveDigitalBidder]
+            : []),
+        ...(inPbTestOr(shouldIncludeXaxis()) ? [xaxisBidder] : []),
+        pubmaticBidder,
+        ...(inPbTestOr(shouldIncludeAdYouLike(slotSizes))
+            ? [adYouLikeBidder]
+            : []),
+        ...(shouldIncludeOpenx() ? [openxClientSideBidder] : []),
+    ];
+
+    const allBidders = indexExchangeBidders(slotSizes)
+        .concat(otherBidders)
+        .concat(getDummyServerSideBidders());
+    return isPbTestOn()
+        ? biddersBeingTested(allBidders)
+        : biddersSwitchedOn(allBidders);
 };
 
 export const bids: (string, PrebidSize[]) => PrebidBid[] = (
     slotId,
     slotSizes
 ) =>
-    bidders(slotSizes).map((bidder: PrebidBidder) => {
+    currentBidders(slotSizes).map((bidder: PrebidBidder) => {
         const bid: PrebidBid = {
             bidder: bidder.name,
             params: bidder.bidParams(slotId, slotSizes),
         };
-        if (bidder.labelAny) {
-            bid.labelAny = bidder.labelAny;
-        }
-        if (bidder.labelAll) {
-            bid.labelAll = bidder.labelAll;
-        }
         return bid;
     });
+
+export const _ = {
+    getDummyServerSideBidders,
+    getIndexSiteId,
+    getImprovePlacementId,
+    getPubmaticPublisherId,
+    getTrustXAdUnitId,
+    indexExchangeBidders,
+};

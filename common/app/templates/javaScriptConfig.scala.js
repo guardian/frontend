@@ -5,10 +5,12 @@
 @import play.api.libs.json.Json
 @import views.support.{CamelCase, JavaScriptPage, GoogleAnalyticsAccount}
 @import conf.Configuration.environment
+@import navigation.NavMenu
 
 @defining(Edition(request)) { edition =>
     {
         "page": @JavaScript(StringEncodings.jsonToJS(Json.stringify(JavaScriptPage.get(item, Edition(request), context.isPreview)))),
+        "nav": @JavaScript(Json.stringify(Json.toJson(NavMenu(item, edition)))),
         "switches" : { @{JavaScript(conf.switches.Switches.all.filter(_.exposeClientSide).map{ switch =>
             s""""${CamelCase.fromHyphenated(switch.name)}":${switch.isSwitchedOn}"""}.mkString(","))}
         },
@@ -24,18 +26,18 @@
                 "abp-icon": "@Static("images/commercial/abp-icon.png")",
                 "abp-whitelist-instruction-chrome": "@Static("images/commercial/ad-block-instructions-chrome.png")"
             },
-            "membership": {
-                "adblock-coins": "@Static("images/membership/adblock-coins.png")",
-                "adblock-coins-us": "@Static("images/membership/adblock-coins-us.png")"
-            },
             "acquisitions": {
                 "paypal-and-credit-card": "@Static("images/acquisitions/paypal-and-credit-card.png")",
-                "info-logo": "@Static("images/acquisitions/info-logo.svg")"
+                "info-logo": "@Static("images/acquisitions/info-logo.svg")",
+                "ad-free": "@Static("images/acquisitions/ad-free.svg")"
+            },
+            "journalism": {
+                "apple-podcast-logo": "@Static("images/journalism/apple-podcast-icon-48.png")"
 
             }
         },
         "stylesheets": {
-            "fonts": {
+           "fonts": {
                 "hintingCleartype": {
                     "kerningOn": "@Static("stylesheets/webfonts-hinting-cleartype-kerning-on.css")"
                 },
@@ -57,7 +59,8 @@
         },
         "libs": {
             "googletag": "@{Configuration.javascript.config("googletagJsUrl")}",
-            "sonobi": "@{Configuration.javascript.config("sonobiHeaderBiddingJsUrl")}"
+            "sonobi": "@{Configuration.javascript.config("sonobiHeaderBiddingJsUrl")}",
+            "cmp": { "fullVendorDataUrl": "@Static("data/vendor/cmp_vendorlist.json")" }
         }
     }
 }

@@ -26,12 +26,17 @@ object MainMediaWidths {
 
 object MainCleaner {
  def apply(article: Article, amp: Boolean)(implicit request: RequestHeader, context: ApplicationContext): Html = {
-      implicit val edition = Edition(request)
+      implicit val edition: Edition = Edition(request)
       withJsoup(BulletCleaner(article.fields.main))(
         if (amp) AmpEmbedCleaner(article) else VideoEmbedCleaner(article),
         PictureCleaner(article, amp),
         MainFigCaptionCleaner,
-        AtomsCleaner(atoms = article.content.atoms, amp = amp, mediaWrapper = Some(MediaWrapper.MainMedia))
+        AtomsCleaner(
+          atoms = article.content.atoms,
+          amp = amp,
+          mediaWrapper = Some(MediaWrapper.MainMedia),
+          posterImageOverride = article.elements.thumbnail.map(_.images)
+        )
       )
   }
 }
@@ -39,7 +44,7 @@ object MainCleaner {
 object BodyCleaner {
 
   def cleaners(article: Article, amp: Boolean)(implicit request: RequestHeader, context: ApplicationContext): List[HtmlCleaner] = {
-    implicit val edition = Edition(request)
+    implicit val edition: Edition = Edition(request)
 
     val shouldShowAds = !article.content.shouldHideAdverts && article.metadata.sectionId != "childrens-books-site"
     def ListIf[T](condition: Boolean)(value: => T): List[T] = if(condition) List(value) else Nil
@@ -51,11 +56,11 @@ object BodyCleaner {
       BlockNumberCleaner,
       new TweetCleaner(article.content, amp),
       WitnessCleaner,
-      TagLinker(article),
       TableEmbedComplimentaryToP,
       R2VideoCleaner,
       PictureCleaner(article, amp),
       DropCaps(article.tags.isComment || article.tags.isFeature, article.isImmersive),
+      TagLinker(article),
       ImmersiveHeaders(article.isImmersive),
       FigCaptionCleaner,
       RichLinkCleaner(amp),
@@ -72,7 +77,7 @@ object BodyCleaner {
       TimestampCleaner(article),
       MinuteCleaner(article),
       GarnettQuoteCleaner,
-      AffiliateLinksCleaner(request.uri, article.content.metadata.sectionId, article.content.fields.showAffiliateLinks, "article")
+      AffiliateLinksCleaner(request.uri, article.content.metadata.sectionId, article.content.fields.showAffiliateLinks, "article", tags = article.content.tags.tags.map(_.id))
     ) ++
       ListIf(!amp)(VideoEmbedCleaner(article)) ++
       ListIf(amp)(AmpEmbedCleaner(article)) ++

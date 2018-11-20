@@ -7,25 +7,25 @@ import userPrefs from 'common/modules/user-prefs';
 
 // Having a constructor means we can easily re-instantiate the object in a test
 class CommercialFeatures {
-    dfpAdvertising: any;
-    stickyTopBannerAd: any;
-    articleBodyAdverts: any;
-    articleAsideAdverts: any;
-    carrotTrafficDriver: any;
-    videoPreRolls: any;
-    highMerch: any;
-    thirdPartyTags: any;
-    outbrain: any;
-    commentAdverts: any;
-    liveblogAdverts: any;
-    paidforBand: any;
-    asynchronous: any;
-    adFeedback: any;
-    adFree: any;
+    dfpAdvertising: boolean;
+    stickyTopBannerAd: boolean;
+    articleBodyAdverts: boolean;
+    articleAsideAdverts: boolean;
+    carrotTrafficDriver: boolean;
+    videoPreRolls: boolean;
+    highMerch: boolean;
+    thirdPartyTags: boolean;
+    outbrain: boolean;
+    commentAdverts: boolean;
+    liveblogAdverts: boolean;
+    paidforBand: boolean;
+    asynchronous: boolean;
+    adFree: boolean;
 
     constructor(config: any = defaultConfig) {
         // this is used for SpeedCurve tests
         const noadsUrl = window.location.hash.match(/[#&]noads(&.*)?$/);
+        const forceAdFree = window.location.hash.match(/[#&]noadsaf(&.*)?$/);
         const externalAdvertising = !noadsUrl && !userPrefs.isOff('adverts');
         const sensitiveContent =
             config.page.shouldHideAdverts ||
@@ -52,13 +52,13 @@ class CommercialFeatures {
             );
 
         // Feature switches
-        this.adFree =
-            switches.commercial &&
-            switches.adFreeSubscriptionTrial &&
-            isAdFreeUser();
+        this.adFree = !!forceAdFree || isAdFreeUser();
 
         this.dfpAdvertising =
-            switches.commercial && externalAdvertising && !sensitiveContent;
+            switches.commercial &&
+            externalAdvertising &&
+            !sensitiveContent &&
+            !isIdentityPage;
 
         this.stickyTopBannerAd =
             !this.adFree &&
@@ -75,6 +75,7 @@ class CommercialFeatures {
             !newRecipeDesign;
 
         this.carrotTrafficDriver =
+            !this.adFree &&
             this.articleBodyAdverts &&
             config.get('switches.carrotTrafficDriver', false) &&
             !config.page.isPaidContent;
@@ -110,18 +111,12 @@ class CommercialFeatures {
             !isMinuteArticle &&
             config.switches.enableDiscussionSwitch &&
             config.page.commentable &&
-            isUserLoggedIn() &&
             (!isLiveBlog || isWidePage);
 
         this.liveblogAdverts =
             isLiveBlog && this.dfpAdvertising && !this.adFree;
 
-        this.paidforBand =
-            config.page.isPaidContent &&
-            !config.page.hasSuperStickyBanner &&
-            !supportsSticky;
-
-        this.adFeedback = false;
+        this.paidforBand = config.page.isPaidContent && !supportsSticky;
     }
 }
 
