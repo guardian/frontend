@@ -112,6 +112,15 @@
         padding-left: 14px;
     }
 
+    .football-match--result {
+        .football-match__team--home {
+            padding-right: 20px;
+        }
+        .football-match__team--away {
+            padding-left: 20px;
+        }
+    }
+
 
     .football-matches__day:last-child {
         .table__caption--bottom {
