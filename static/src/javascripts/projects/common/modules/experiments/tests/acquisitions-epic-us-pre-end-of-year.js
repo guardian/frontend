@@ -66,7 +66,7 @@ export const acquisitionsEpicUsPreEndOfYear: EpicABTest = makeABTest({
                         'At a time when journalists are under attack, we need your ongoing support to continue bringing The Guardian’s independent journalism to the world.',
                     ],
                     highlightedText:
-                        'Support the free the press by making a year-end contribution to The Guardian. Thank you.',
+                        'Support the free press by making a year-end contribution to The Guardian. Thank you.',
                 },
             },
         },
