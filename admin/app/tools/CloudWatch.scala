@@ -90,7 +90,7 @@ object CloudWatch extends Logging {
     "head.content.css",
     "head.facia.css",
     "head.football.css",
-    "head.identity.css",
+    "head.new-identity.css",
     "head.index.css"
   )
 

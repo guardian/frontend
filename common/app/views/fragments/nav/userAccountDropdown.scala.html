@@ -2,7 +2,6 @@
 
 @import conf.Configuration
 @import views.support.DropdownMenus.accountDropdownMenu
-@import conf.switches.Switches.{ NewNavEnabled }
 
 <div class="new-header__user-account-container">
     <span class="top-bar__item__seperator hide-until-tablet"></span>
@@ -10,13 +9,8 @@
     <a class="top-bar__item js-navigation-sign-in my-account"
         data-link-name="nav2 : topbar : signin"
         href="@Configuration.id.url/signin?INTCMP=DOTCOM_NEWHEADER_SIGNIN">
-        @if(NewNavEnabled.isSwitchedOn) {
-            @fragments.inlineSvg("profile", "icon", List("top-bar__item__icon"))
-            Sign in
-        } else {
-            @fragments.inlineSvg("profile", "icon", List("hide-from-tablet", "my-account--icon"))
-            <span class="hide-until-tablet">Sign in</span>
-        }
+        @fragments.inlineSvg("profile", "icon", List("top-bar__item__icon"))
+        Sign in
     </a>
 
     <button class="dropdown-menu-fallback js-user-account-trigger"
@@ -29,13 +23,8 @@
     <label class="top-bar__item popup__toggle my-account is-hidden js-navigation-account-actions"
         for="my-account-toggle"
         data-link-name="nav2 : topbar: my account">
-        @if(NewNavEnabled.isSwitchedOn) {
-            @fragments.inlineSvg("profile", "icon", List("top-bar__item__icon"))
-            My account
-        } else {
-            @fragments.inlineSvg("profile", "icon", List("hide-from-tablet", "my-account--icon"))
-            <span class="hide-until-tablet">My account</span>
-        }
+        @fragments.inlineSvg("profile", "icon", List("top-bar__item__icon"))
+        My account
     </label>
     <div class="my-account__overlay"></div>
 

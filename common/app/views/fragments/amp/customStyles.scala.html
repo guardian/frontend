@@ -2,7 +2,6 @@
 
 @import conf.Static
 @import play.api.Mode.Dev
-@import conf.switches.Switches.NewNavEnabled
 
 <style amp-custom>
     @* TODO: these two stylesheets should be refactored into SCSS *@
@@ -36,17 +35,9 @@
         <link rel="stylesheet" id="head-css" data-reload="head.hosted-amp" type="text/css" href="@Static("stylesheets/head.hosted-amp.css")" />
     } else {
         @if(page.metadata.contentType.contains(model.DotcomContentType.LiveBlog)){
-            @if(NewNavEnabled.isSwitchedOn) {
-                <link rel="stylesheet" id="head-css" data-reload="head.amp-liveblog" type="text/css" href="@Static("stylesheets/head.amp-liveblog-new.css")" />
-            } else {
-                <link rel="stylesheet" id="head-css" data-reload="head.amp-liveblog" type="text/css" href="@Static("stylesheets/head.amp-liveblog.css")" />
-            }
+            <link rel="stylesheet" id="head-css" data-reload="head.amp-liveblog" type="text/css" href="@Static("stylesheets/head.amp-liveblog-new.css")" />
         } else {
-            @if(NewNavEnabled.isSwitchedOn) {
-                <link rel="stylesheet" id="head-css" data-reload="head.amp" type="text/css" href="@Static("stylesheets/head.amp-new.css")" />
-            } else {
-                <link rel="stylesheet" id="head-css" data-reload="head.amp" type="text/css" href="@Static("stylesheets/head.amp.css")" />
-            }
+            <link rel="stylesheet" id="head-css" data-reload="head.amp" type="text/css" href="@Static("stylesheets/head.amp-new.css")" />
         }
     }
 }
