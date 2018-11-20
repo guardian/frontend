@@ -21,6 +21,7 @@ import { acquisitionsEpicIframeTestV2 } from 'common/modules/experiments/tests/a
 import { acquisitionsEpicAusFairfax } from 'common/modules/experiments/tests/acquisitions-epic-aus-fairfax';
 import { acquisitionsEpicOneMillionCampaignNoControl } from 'common/modules/experiments/tests/acquisitions-epic-one-million-campaign-no-control';
 import { acquisitionsEpicOneMillionCampaignAu } from 'common/modules/experiments/tests/acquisitions-epic-one-million-campaign-au';
+import { acquisitionsEpicUsPreEndOfYear } from 'common/modules/experiments/tests/acquisitions-epic-us-pre-end-of-year';
 
 const isViewable = (v: Variant, t: ABTest): boolean => {
     if (!v.options) return false;
@@ -49,6 +50,7 @@ const isViewable = (v: Variant, t: ABTest): boolean => {
  * acquisition tests in priority order (highest to lowest)
  */
 export const acquisitionsTests: $ReadOnlyArray<AcquisitionsABTest> = [
+    acquisitionsEpicUsPreEndOfYear,
     acquisitionsEpicOneMillionCampaignNoControl,
     acquisitionsEpicOneMillionCampaignAu,
     acquisitionsEpicAusFairfax,
