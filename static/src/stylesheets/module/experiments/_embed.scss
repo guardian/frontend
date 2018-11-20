@@ -202,16 +202,6 @@ a[href].contributions__contribute.contributions__contribute--epic.contributions_
     div.u-responsive-ratio {
         margin-bottom: 4px;
     }
-
-    a[href].contributions__contribute.contributions__contribute--epic {
-        background-color: #121212;
-        color: #ffffff;
-
-        // This is literally just to make the SVG arrow white
-        &:after {
-            background-image: svg-url('<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><path fill="white" stroke="white" d="M22.8 14.6L15.2 7l-.7.7 5.5 6.6H6v1.5h14l-5.5 6.6.7.7 7.6-7.6v-.9"/></svg>');
-        }
-    }
 }
 
 .contributions__title--us-leading-with-climate {
