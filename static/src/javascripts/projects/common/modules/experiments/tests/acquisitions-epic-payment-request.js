@@ -21,6 +21,7 @@ export const acquisitionsEpicPaymentRequest: EpicABTest = makeABTest({
     audienceCriteria: 'All',
     audience: 1,
     audienceOffset: 0,
+    // TODO: make the canRun dependent on Payment Request Button availability
     canRun: () => config.get('page.contentId', '') === 'environment/2016/apr/29/revitalised-and-calmed-by-an-english-wood-in-spring',
 
     variants: [

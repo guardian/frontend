@@ -21,6 +21,7 @@ export const acquisitionsEpicPaymentRequestLive: EpicABTest = makeABTest({
     audienceCriteria: 'All',
     audience: 1,
     audienceOffset: 0,
+    // TODO: make the canRun dependent on Payment Request Button availability
     canRun: () => config.get('page.contentId', '') === 'environment/2018/apr/23/country-diary-perplexed-by-a-sign-of-the-tides',
 
     variants: [

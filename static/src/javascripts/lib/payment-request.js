@@ -25,8 +25,12 @@ export const initPaymentRequest = (stripeKey: string, paymentApiUrl: string) => 
         currency: 'gbp',
         total: {
             label: 'One-off contribution to The Guardian',
+            // TODO: allow user to choose amount!
             amount: 100,
         },
+        requestPayerEmail: true,
+        // we don't need the below since we don't send this for one-off payments
+        // requestPayerName: true,
     });
 
     const elements = stripe.elements();
@@ -61,7 +65,7 @@ export const initPaymentRequest = (stripeKey: string, paymentApiUrl: string) => 
                 currency: 'GBP',
                 amount: 1,
                 token: ev.token.id,
-                email: 'joseph.smith@theguardian.com'
+                email: ev.payerEmail,
             }),
             headers: {'content-type': 'application/json'},
         })
