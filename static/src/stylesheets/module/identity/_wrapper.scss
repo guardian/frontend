@@ -2,6 +2,7 @@
    ========================================================================== */
 .identity-wrapper-header {
     border-bottom: 1px solid $brightness-86;
+    background: $brightness-97;
     .identity-wrapper {
         padding-bottom: 0;
     }
@@ -10,9 +11,28 @@
     }
     .tabs__container {
         margin: 0 auto 0 -1px;
+        border-right: 1px solid $brightness-86;
+        grid-column-gap: 0;
+        padding: 0 1px;
+        overflow: visible;
+        .tabs__tab {
+            border-left: 1px solid $brightness-86;
+            border-top: 1px solid $brightness-86;
+            border-bottom: 0;
+            border-right: 0;
+            &.tabs__tab--selected {
+                @include mq(desktop) {
+                    box-shadow: 0 1px 0 0 $brightness-100;
+                }
+            }
+        }
         .tabs__tab a {
+            background: $brightness-97;
             font-weight: 400!important;
             /*text can't fit otherwise*/
+        }
+        .tabs__tab--selected a {
+            background: $brightness-100;
         }
     }
 }
@@ -55,7 +75,7 @@
     }
 
     a.u-underline {
-        color: $brightness-7;
+        color: $nav-blue;
     }
 }
 

@@ -1,28 +1,15 @@
-$gutter: 5px;
+$padding: 3px;
 
 @import '../../layout/nav/_variables';
 
 .identity-header {
     @include clearfix;
-    background-color: $brightness-97;
-    padding: ($gutter/2) 0 0;
-    color: $brightness-7;
-    height: $slim-nav-height + 1px;
+    background-color: $nav-blue;
+    padding: $padding 0;
+    color: $brightness-100;
     overflow: visible;
     position: relative;
     z-index: $zindex-main-menu;
-
-    &:before {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: 1px;
-        display: block;
-        z-index: 0;
-        background: $brightness-86;
-    }
 
     .identity-dropdown {
         position: absolute;
@@ -42,8 +29,8 @@ $gutter: 5px;
 
     .identity-header__nav-name {
         max-width: gs-span(2);
-        vertical-align: middle;
-        display: inline-block;
+        display: inline-flex;
+        align-items: center;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -61,7 +48,7 @@ $gutter: 5px;
 
 .identity-header__links {
     float: left;
-    height: $slim-nav-height - ($gutter/2);
+    height: 40px;
     display: flex;
     align-items: center;
 }
@@ -76,22 +63,14 @@ html body .identity-header__logo {
     order: -99;
     z-index: 1;
 
-    .inline-the-guardian-roundel {
-        display: block;
-    }
     .inline-the-guardian-logo {
         display: none;
     }
 
-    .inline-the-guardian-logo__svg {
-        display: block;
-        height: 57px;
-        width: 175px;
-    }
     .inline-the-guardian-roundel__svg {
         display: block;
-        height: 56px;
-        width: 56px;
+        height: 42px;
+        width: 42px;
     }
 }
 
@@ -100,7 +79,7 @@ label[for=identity-header-account-menu-fallback]:focus {
 }
 
 .identity-header__nav {
-    @include fs-textSans(3);
+    @include fs-textSans(5);
     background: none;
     border: 0;
     cursor: pointer;
@@ -141,7 +120,7 @@ label[for=identity-header-account-menu-fallback]:focus {
     &:focus,
     label[for=identity-header-account-menu-fallback]:focus & {
         outline: 0;
-        color: $brightness-20;
+        color: $highlight-main;
         &:after {
             transform: translateY(0px) rotate(45deg);
         }
