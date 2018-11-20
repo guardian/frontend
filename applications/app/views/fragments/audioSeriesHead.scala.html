@@ -33,7 +33,7 @@
                         @for((name: String, link : String) <- subscribeLinks) {
                             @defining(name.toLowerCase().replace(" ", "-")) { nameHyphen =>
 
-                                <a class="flagship-audio__link" href="@link" target="_blank" data-link="podcast-subscribe">
+                                <a class="flagship-audio__link" href="@link" target="_blank" data-link-name="podcast-subscribe">
                                     <li class="flagship-audio__button flagship-audio__button--@name">
                                         @fragments.inlineSvg(nameHyphen, "journalism/audio")
                                             &nbsp;
@@ -65,7 +65,7 @@
         @for((name: String, link : String) <- subscribeLinks) {
             @defining(name.toLowerCase().replace(" ", "-")) { nameHyphen =>
 
-                <a class="flagship-audio__link" href="@link" target="_blank" data-link="podcast-subscribe">
+                <a class="flagship-audio__link" href="@link" target="_blank" data-link-name="podcast-subscribe">
                     <li class="flagship-audio__button flagship-audio__button--@name">
                         @fragments.inlineSvg(nameHyphen, "journalism/audio")
                             &nbsp;
