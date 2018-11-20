@@ -66,6 +66,27 @@ const playerObserved = (el: ?Element, id: string) => {
     observer.observe(el);
 };
 
+const registerOphanListeners = (el: HTMLMediaElement): void => {
+    const mediaId = el.getAttribute('data-media-id') || '';
+
+    el.addEventListener(
+        'play',
+        () => {
+            sendToOphan(mediaId, 'play');
+        },
+        { once: true }
+    );
+
+    monitorPercentPlayed(el, 25, mediaId);
+    monitorPercentPlayed(el, 50, mediaId);
+    monitorPercentPlayed(el, 75, mediaId);
+    monitorPercentPlayed(el, 99, mediaId);
+
+    if (el.parentElement) {
+        playerObserved(el.parentElement, mediaId);
+    }
+};
+
 export {
     format,
     formatTime,
@@ -73,4 +94,5 @@ export {
     sendToOphan,
     monitorPercentPlayed,
     playerObserved,
+    registerOphanListeners,
 };
