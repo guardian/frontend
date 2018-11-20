@@ -35,9 +35,9 @@
         <link rel="stylesheet" id="head-css" data-reload="head.hosted-amp" type="text/css" href="@Static("stylesheets/head.hosted-amp.css")" />
     } else {
         @if(page.metadata.contentType.contains(model.DotcomContentType.LiveBlog)){
-            <link rel="stylesheet" id="head-css" data-reload="head.amp-liveblog" type="text/css" href="@Static("stylesheets/head.amp-liveblog-new.css")" />
+            <link rel="stylesheet" id="head-css" data-reload="head.amp-liveblog" type="text/css" href="@Static("stylesheets/amp-liveblog.css")" />
         } else {
-            <link rel="stylesheet" id="head-css" data-reload="head.amp" type="text/css" href="@Static("stylesheets/head.amp-new.css")" />
+            <link rel="stylesheet" id="head-css" data-reload="head.amp" type="text/css" href="@Static("stylesheets/head.amp.css")" />
         }
     }
 }
