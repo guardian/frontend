@@ -9,7 +9,7 @@ const onLoad = () => {
         if (surveyAvailable) {
             if (window && window.googletag) {
                 window.googletag.cmd.push(() => {
-                    window.googletag.pubads().setTargeting('brandmetrics', 't');
+                    window.googletag.pubads().setTargeting('inizio', 't');
                 });
             }
             console.log(`surveyAvailable: ${survey.measurementId}`);
