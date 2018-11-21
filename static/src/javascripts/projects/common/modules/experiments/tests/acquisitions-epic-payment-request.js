@@ -11,7 +11,7 @@ export const acquisitionsEpicPaymentRequest: EpicABTest = makeABTest({
     campaignId: abTestName,
 
     start: '2018-04-17',
-    expiry: '2018-11-05',
+    expiry: '2019-11-05',
 
     author: 'Joseph Smith',
     description: 'Payment Request API',

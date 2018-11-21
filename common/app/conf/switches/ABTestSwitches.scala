@@ -242,7 +242,7 @@ trait ABTestSwitches {
     "Use Payment Request API for slick payment flow",
     owners = Seq(Owner.withGithub("joelochlann")),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 6, 5),
+    sellByDate = new LocalDate(2019, 6, 5),
     exposeClientSide = true
   )
 
@@ -252,7 +252,7 @@ trait ABTestSwitches {
     "Use Payment Request API for slick payment flow",
     owners = Seq(Owner.withGithub("joelochlann")),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 6, 5),
+    sellByDate = new LocalDate(2019, 6, 5),
     exposeClientSide = true
   )
 }

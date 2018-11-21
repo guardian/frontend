@@ -26,6 +26,8 @@ export const initPaymentRequest = (stripeKey: string, paymentApiUrl: string) => 
         total: {
             label: 'One-off contribution to The Guardian',
             // TODO: allow user to choose amount!
+            // You can update the amount later by using:
+            // https://stripe.com/docs/stripe-js/reference#payment-request-update
             amount: 100,
         },
         requestPayerEmail: true,
