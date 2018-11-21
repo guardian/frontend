@@ -134,10 +134,6 @@ class CommercialController(val controllerComponents: ControllerComponents,
     }
   }
 
-  def renderBrowserPerformanceDashboard(): Action[AnyContent] = Action { implicit request =>
-    Ok(views.html.commercial.performance.browserDashboard())
-  }
-
   def renderKeyValues(): Action[AnyContent] = Action { implicit request =>
     Ok(views.html.commercial.customTargetingKeyValues(Store.getDfpCustomTargetingKeyValues))
   }
