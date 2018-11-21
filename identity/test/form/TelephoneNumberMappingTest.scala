@@ -1,5 +1,6 @@
 package form
 
+import com.google.i18n.phonenumbers.PhoneNumberUtil
 import org.scalatest.{Matchers, WordSpec}
 
 class TelephoneNumberMappingTest extends WordSpec with Matchers {
@@ -11,6 +12,13 @@ class TelephoneNumberMappingTest extends WordSpec with Matchers {
 
     "be valid if a valid international number is provided" in {
       TelephoneNumberFormData(Some("44"), Some("020 3353 2000")).isValid shouldBe true
+    }
+
+    // This test addresses a user's complaint that this number was being determined invalid. This was fixed with
+    // libphonenumber library updates in both Identity Api and Frontend
+
+    "be valid if a Solomon Island number is used starting 71" in {
+      TelephoneNumberFormData(Some("677"), Some("7135649")).isValid shouldBe true
     }
 
     "be invalid if country code is provided and local number is not" in {
