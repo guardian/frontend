@@ -94,7 +94,7 @@ export const acquisitionsEpicUsPreEndOfYear: EpicABTest = makeABTest({
                 copy: {
                     paragraphs: [
                         'Help us do that by supporting our high impact reporting that holds our leaders accountable. Just when the need is more critical than ever, and the signs more obvious, millions of Americans – and most powerful political leaders – still question established climate science. The Guardian reports on the environment as a matter of urgent priority, giving the most important stories the space they need.',
-                        'And this is not the only important story we need to tell. In 2018, The Guardian broke the story of Cambridge Analytica’s Facebook data breach; we recorded the human fallout from family separations; we charted the rise of the far right, and documented the growing impact of gun violence on Americans’ lives. We reported daily on climate change as a matter of urgent priority.',
+                        'And this is not the only important story we need to tell. In 2018, The Guardian broke the story of Cambridge Analytica’s Facebook data breach; we recorded the human fallout from family separations; we charted the rise of the far right, and documented the growing impact of gun violence on Americans’ lives.',
                         'We need your ongoing support to continue bringing The Guardian’s independent, high impact journalism to the world.',
                     ],
                     highlightedText:
