@@ -3,7 +3,7 @@ package com.gu
 import sbt._
 
 object Dependencies {
-  val identityLibVersion = "3.173"
+  val identityLibVersion = "3.174"
   val awsVersion = "1.11.240"
   val capiVersion = "12.10"
   val faciaVersion = "2.6.3"
