@@ -41,7 +41,7 @@ export const acquisitionsEpicUsPreEndOfYear: EpicABTest = makeABTest({
             products: [],
             options: {
                 copy: {
-                    heading: 'In case you missed it &hellip;',
+                    heading: 'We’ve got some news &hellip;',
                     paragraphs: [
                         '&hellip; we recently posted some good news. Three years ago we set out to make The Guardian sustainable by deepening our relationship with our readers. The same technologies that connected us with a global audience had also shifted advertising revenues away from news publishers. We decided to seek an approach that would allow us to keep our journalism open and accessible to everyone, regardless of where they live or what they can afford.',
                         'More than one million readers have now supported our independent, investigative journalism through contributions, membership or subscriptions, which has played such an important part in helping the Guardian has overcome a perilous financial situation globally. We want to thank you for all of your support.  But we have to maintain and build on that support for every year to come.',
