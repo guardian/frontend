@@ -22,7 +22,6 @@
 }
 
 .menu-group--primary {
-    @include clearfix();
     padding-top: 0;
 
     @include mq(desktop) {
