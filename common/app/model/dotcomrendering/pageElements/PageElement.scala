@@ -20,16 +20,16 @@ case class ImageBlockElement(media: ImageMedia, data: Map[String, String], displ
 case class AudioBlockElement(assets: Seq[AudioAsset]) extends PageElement
 case class GuVideoBlockElement(assets: Seq[VideoAsset], imageMedia: ImageMedia, data: Map[String, String]) extends PageElement
 case class VideoBlockElement(data: Map[String, String]) extends PageElement
-case class EmbedBlockElement(html: Option[String], safe: Option[Boolean], alt: Option[String]) extends PageElement
+case class EmbedBlockElement(html: Option[String], safe: Option[Boolean], alt: Option[String], isMandatory: Option[Boolean]) extends PageElement
 case class ContentAtomBlockElement(atomId: String) extends PageElement
-case class InteractiveBlockElement(html: Option[String]) extends PageElement
-case class CommentBlockElement(body: String, avatarURL: String, profileURL: String, profileName: String, permalink: String, dateTime: String) extends PageElement
-case class TableBlockElement(html: Option[String]) extends PageElement
+case class InteractiveBlockElement(html: Option[String], role: Option[String], isMandatory: Option[Boolean]) extends PageElement
+case class CommentBlockElement(html: Option[String]) extends PageElement
+case class TableBlockElement(html: Option[String], role: Option[String], isMandatory: Option[Boolean]) extends PageElement
 case class WitnessBlockElement(html: Option[String]) extends PageElement
-case class DocumentBlockElement(html: Option[String]) extends PageElement
+case class DocumentBlockElement(html: Option[String], role: Option[String], isMandatory: Option[Boolean]) extends PageElement
 case class InstagramBlockElement(url: String, html: Option[String], hasCaption: Boolean) extends PageElement
 case class VineBlockElement(html: Option[String]) extends PageElement
-case class MapBlockElement(html: Option[String]) extends PageElement
+case class MapBlockElement(html: Option[String],  role: Option[String], isMandatory: Option[Boolean]) extends PageElement
 case class UnknownBlockElement(html: Option[String]) extends PageElement
 
 case class MembershipBlockElement(
@@ -79,11 +79,11 @@ object PageElement {
 
     element.`type` match {
 
-      case Text => (for {
+      case Text => for {
         block <- element.textTypeData.toList
         text <- block.html.toList
         element <- Cleaner.split(text)
-      } yield {TextBlockElement(element)})
+      } yield {TextBlockElement(element)}
 
       case Tweet => {
         (for {
@@ -154,13 +154,14 @@ object PageElement {
       case Contentatom => element.contentAtomTypeData.map(d => ContentAtomBlockElement(d.atomId)).toList
 
       case Pullquote => element.pullquoteTypeData.map(d => PullquoteBlockElement(d.html)).toList
-      case Interactive => element.interactiveTypeData.map(d => InteractiveBlockElement(d.html)).toList
-      case Table => element.tableTypeData.map(d => TableBlockElement(d.html)).toList
+      case Interactive => element.interactiveTypeData.map(d => InteractiveBlockElement(d.html, d.role, d.isMandatory)).toList
+      case Comment => element.commentTypeData.map(d => CommentBlockElement(d.html)).toList
+      case Table => element.tableTypeData.map(d => TableBlockElement(d.html, d.role, d.isMandatory)).toList
       case Witness => element.witnessTypeData.map(d => WitnessBlockElement(d.html)).toList
-      case Document => element.documentTypeData.map(d => DocumentBlockElement(d.html)).toList
+      case Document => element.documentTypeData.map(d => DocumentBlockElement(d.html, d.role, d.isMandatory)).toList
       case Instagram => element.instagramTypeData.map(d => InstagramBlockElement(d.originalUrl, d.html, d.caption.isDefined)).toList
       case Vine => element.vineTypeData.map(d => VineBlockElement(d.html)).toList
-      case ElementType.Map => element.mapTypeData.map(d => MapBlockElement(d.html)).toList
+      case ElementType.Map => element.mapTypeData.map(d => MapBlockElement(d.html, d.role, d.isMandatory)).toList
       case Code => List(CodeBlockElement(None))
       case Form => List(FormBlockElement(None))
       case EnumUnknownElementType(f) => List(UnknownBlockElement(None))

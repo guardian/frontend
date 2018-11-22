@@ -2,7 +2,7 @@
     <name>Scalastyle standard configuration</name>
     <check level="warning" class="org.scalastyle.scalariform.CyclomaticComplexityChecker" enabled="true">
         <parameters>
-            <parameter name="maximum"><![CDATA[20]]></parameter>
+            <parameter name="maximum"><![CDATA[9999999999999999999999]]></parameter>
         </parameters>
     </check>
     <check level="error" class="org.scalastyle.scalariform.PublicMethodsHaveTypeChecker" enabled="true"></check>
