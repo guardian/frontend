@@ -1,5 +1,6 @@
 // @flow
 import { makeABTest } from 'common/modules/commercial/contributions-utilities';
+import { getLocalCurrencySymbol } from 'lib/geolocation';
 
 const abTestName = 'AcquisitionsEpicAu';
 
