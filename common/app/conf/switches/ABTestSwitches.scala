@@ -198,7 +198,7 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-acquisitions-epic-au",
+    "ab-acquisitions-epic-au-post-one-million",
     "Custom epic copy for Australia",
     owners = Seq(Owner.withGithub("joelochlann")),
     safeState = Off,

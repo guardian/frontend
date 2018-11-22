@@ -2,9 +2,9 @@
 import { makeABTest } from 'common/modules/commercial/contributions-utilities';
 import { getLocalCurrencySymbol } from 'lib/geolocation';
 
-const abTestName = 'AcquisitionsEpicAu';
+const abTestName = 'AcquisitionsEpicAuPostOneMillion';
 
-export const acquisitionsEpicAu: EpicABTest = makeABTest({
+export const acquisitionsEpicAuPostOneMillion: EpicABTest = makeABTest({
     id: abTestName,
     campaignId: abTestName,
 
