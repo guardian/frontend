@@ -25,7 +25,9 @@ const isPaidContent = config.get('page.isPaidContent', false);
 
 const isInAdMobileWebVariant = (): boolean => {
     const variant = getVariant(commercialAdMobileWebIncrease, 'variant');
-    return variant ? isInVariant(commercialAdMobileWebIncrease, variant) : false;
+    return variant
+        ? isInVariant(commercialAdMobileWebIncrease, variant)
+        : false;
 };
 
 const adSlotClassSelectorSizes = {
