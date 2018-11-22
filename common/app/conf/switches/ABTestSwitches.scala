@@ -208,16 +208,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-acquisitions-epic-aus-fairfax",
-    "Tests an epic with custom copy in Australia which alludes to Fairfax Media takeover",
-    owners = Seq(Owner.withGithub("joelochlann")),
-    safeState = Off,
-    sellByDate = new LocalDate(2019, 6, 6),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-acquisitions-epic-one-million-campaign-no-control",
     "Tests an epic with custom copy and design for the One Million campaign",
     owners = Seq(Owner.withGithub("joelochlann")),
