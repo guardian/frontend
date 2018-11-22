@@ -228,11 +228,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-acquisitions-epic-one-million-campaign-au",
-    "Tests an epic with custom copy and design for the One Million campaign",
+    "ab-acquisitions-epic-au",
+    "Custom epic copy for Australia",
     owners = Seq(Owner.withGithub("joelochlann")),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 11, 23),
+    sellByDate = new LocalDate(2019, 11, 23),
     exposeClientSide = true
   )
 
