@@ -18,7 +18,7 @@ import views.html.stacked
 object IdentityHtmlPage {
 
   def allStyles(implicit applicationContext: ApplicationContext, request: RequestHeader): Styles = new Styles {
-    override def criticalCssLink: Html = criticalStyleLink("new-identity")
+    override def criticalCssLink: Html = criticalStyleLink("identity")
     override def criticalCssInline: Html = criticalStyleInline(Html(common.Assets.css.inlineIdentity))
     override def linkCss: Html = HtmlFormat.fill(List(
       stylesheetLink(s"stylesheets/$ContentCSSFile.css"),
