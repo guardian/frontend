@@ -202,7 +202,7 @@ trait ABTestSwitches {
     "Custom epic copy for Australia",
     owners = Seq(Owner.withGithub("joelochlann")),
     safeState = Off,
-    sellByDate = new LocalDate(2019, 11, 23),
+    sellByDate = new LocalDate(2019, 11, 25),
     exposeClientSide = true
   )
 
