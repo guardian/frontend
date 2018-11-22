@@ -14,7 +14,7 @@ export const acquisitionsEpicAu: EpicABTest = makeABTest({
     author: 'Joseph Smith',
     description: 'Test copy fetched from a Google Doc',
     successMeasure: 'Conversion rate',
-    idealOutcome: 'Alternative copy makes more money than the control',
+    idealOutcome: 'Money',
 
     audienceCriteria: 'All',
     audience: 1,
