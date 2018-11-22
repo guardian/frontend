@@ -87,6 +87,16 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
+    val InizioSwitch = Switch(
+    Commercial,
+    "inizio",
+    "Include the Inizio script on page so that creatives can show a survey.",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
   val AdomikSwitch = Switch(
     Commercial,
     "adomik",
