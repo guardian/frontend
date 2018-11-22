@@ -208,16 +208,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-acquisitions-epic-one-million-campaign-no-control",
-    "Tests an epic with custom copy and design for the One Million campaign",
-    owners = Seq(Owner.withGithub("joelochlann")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 11, 23),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-acquisitions-epic-au",
     "Custom epic copy for Australia",
     owners = Seq(Owner.withGithub("joelochlann")),
