@@ -1,27 +1,22 @@
 .colophon {
-    padding-top: $gs-baseline;
-    padding-bottom: $gs-baseline;
+    @include content-gutter();
+    padding-bottom: $gs-baseline * 2;
+    border-bottom: 1px solid $brand-pastel;
 
     @include mq(tablet) {
         padding-bottom: $gs-baseline / 2;
+        border: 1px solid $brand-pastel;
+        border-top: 0;
     }
 }
 
 .colophon__lists-container {
-    @include f-textSans();
-    font-size: 14px;
-    line-height: 14px;
+    @include fs-textSans(5);
+    line-height: 1.2;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-
-    @include mq(leftCol) {
-        max-width: gs-span(8) + $gs-gutter;
-
-        .l-footer__secondary--no-email & {
-            max-width: none;
-        }
-    }
+    justify-content: flex-end;
 }
 
 .colophon__list {
@@ -31,21 +26,57 @@
     margin: 0;
 
     @include mq($until: tablet) {
-        padding-right: $gs-gutter / 2;
         width: calc(50% - #{$gs-gutter / 2});
+
+        &:first-child,
+        &:nth-child(3) {
+            margin-left: 0;
+            margin-right: $gs-gutter;
+
+            &:before {
+                content: none;
+            }
+        }
     }
 
     @include mq(tablet) {
-        margin: 0 $gs-gutter / 2 $gs-row-height 0;
-        // width fallback for browsers which don't fully support flex
-        width: 20%;
-        flex: 1 0 0;
+        margin: 0 $gs-gutter $gs-baseline 0;
+        width: gs-span(2);
+
+        &:last-child {
+            width: gs-span(3) - 2px;
+        }
     }
 
-    a {
-        display: inline-block;
-        padding-bottom: $gs-baseline;
-        text-transform: lowercase;
+    @include mq($from: tablet, $until: leftCol) {
+        &:first-child {
+            margin-left: 0;
+
+            &:before {
+                content: none;
+            }
+        }
+    }
+
+    @include mq(desktop) {
+        &:last-child {
+            width: gs-span(6) - 2px;
+        }
+    }
+
+    @include mq(leftCol) {
+        &:last-child {
+            width: gs-span(4);
+        }
+    }
+
+    &:last-child {
+        margin-right: 0;
+
+        .is-paying-member & > *,
+        .is-recent-contributor & > * {
+            display: none;
+        }
     }
 
     &:before {
@@ -56,27 +87,22 @@
         left: -$gs-gutter / 2;
         width: 1px;
         display: block;
-        background-color: $footer-line-colour;
+        background-color: $brand-pastel;
 
         @include mq(tablet) {
-            top: -$gs-baseline;
-            bottom: $gs-baseline;
+            bottom: $gs-baseline / 2;
         }
     }
+}
 
-    @include mq($until: tablet) {
-        &:nth-of-type(3) {
-            &:before {
-                content: none;
-            }
-        }
-    }
+.colophon__item a {
+    color: $brightness-100;
+    display: inline-block;
+    padding: ($gs-baseline / 2) 0;
 
-    @include mq($until: leftCol) {
-        &:first-of-type {
-            &:before {
-                content: none;
-            }
-        }
+    &:hover,
+    &:focus {
+        color: $highlight-main;
+        text-decoration: none;
     }
 }

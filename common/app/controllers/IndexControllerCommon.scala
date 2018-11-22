@@ -76,7 +76,7 @@ trait IndexControllerCommon extends BaseController with Index with RendersItemRe
             views.html.gone(
               gonePage,
               "Sorry - there is no content here",
-              "This could be because the content on this tag page hasn't been published yet or has expired, there was a legal issue, or for another reason.",
+              "This could be, for example, because content associated with it is not yet published, or due to legal reasons such as the expiry of our rights to publish the content.",
               ))))
         case Right(other) => RenderOtherStatus(other)
       }

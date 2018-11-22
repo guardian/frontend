@@ -3,13 +3,13 @@
 }
 
 .email-sub__heading-emph {
-    color: $guardian-brand;
+    color: $brand-main;
 }
 
 .email-sub__description {
     border-top: 3px solid $form-secondary-colour;
     color: $form-primary-colour;
-    background-color: $guardian-brand;
+    background-color: $brand-main;
 }
 
 .email-sub__description-emph {
@@ -35,7 +35,6 @@
 
 
 // TONE SPECIFIC MODS
-
 @each $tone-class, $tone-colour-accent, $tone-colour-headline in $tones {
     .email-sub--tone-#{$tone-class} {
 
@@ -47,37 +46,20 @@
     }
 }
 
-
-
 // FOOTER MODS
-.has-new-navigation {
-    .email-sub__header--footer {
-        .email-sub__heading {
-            @include fs-textSans(5);
-            font-weight: 700;
-            color: $brightness-100;
-            margin: ($gs-baseline / 2) 0;
-        }
+.email-sub__header--footer {
+    .email-sub__heading {
+        @include fs-textSans(5);
+        font-weight: 700;
+        color: $brightness-100;
+        margin: ($gs-baseline / 2) 0;
     }
 }
-
-body:not(.has-new-navigation) {
-    .email-sub__header--footer {
-        .email-sub__heading {
-            @include fs-textSans(3);
-            font-weight: 300;
-            color: $brightness-86;
-            margin-bottom: $gs-baseline / 2;
-        }
-    }
-}
-
-
 
 // PLAIN MODS
 .email-sub--plain {
     .email-sub__message__headline {
-        color: $guardian-brand;
+        color: $brand-main;
         line-height: 2rem;
     }
 

@@ -1,12 +1,23 @@
 .subnav {
     background-color: #ffffff;
-    border-top: 1px solid $brightness-86;
-    height: $veggie-burger-medium - $gs-baseline;
+    height: $veggie-burger - $gs-baseline / 2;
     overflow: hidden;
     position: relative;
 
     @include mq(tablet) {
-        height: 42px;
+        height: $pillar-height;
+    }
+
+    .gs-container {
+        @include clearfix();
+        box-sizing: border-box;
+        border: 1px solid $brightness-86;
+        border-top: 0;
+        border-bottom: 0;
+
+        .footer__primary & {
+            border-top: 1px solid $brightness-86;
+        }
     }
 }
 
@@ -53,4 +64,49 @@
     border-top: 6px solid transparent;
     border-bottom: 6px solid transparent;
     border-left: 10px solid $brightness-7;
+}
+
+.new-header__multiline {
+    background: $brightness-100;
+
+    & .gs-container:after {
+        @include multiline(4, $brightness-86, bottom);
+        background-color: #ffffff;
+        content: '';
+        display: block;
+        height: 13px;
+        border: 1px solid $brightness-86;
+        border-top: 0;
+        border-bottom: 0;
+    }
+}
+
+@mixin subnavScheme ($colourOne, $colourTwo) {
+    background-color: $colourOne;
+
+    .gs-container {
+        border-color: $colourTwo;
+    }
+
+    & ~ .new-header__multiline {
+        background-color: $colourOne;
+
+        .gs-container:after {
+            @include multiline(4, $colourTwo, bottom);
+            background-color: $colourOne;
+            border-color: $colourTwo;
+        }
+    }
+}
+
+.subnav--comment {
+    @include subnavScheme($opinion-faded, $brightness-86);
+}
+
+.subnav--media {
+    @include subnavScheme($brightness-7, $brightness-20);
+
+    .subnav-link  {
+        color: $brightness-100;
+    }
 }

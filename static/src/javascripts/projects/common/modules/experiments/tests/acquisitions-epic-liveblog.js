@@ -2,10 +2,7 @@
 import { makeABTest } from 'common/modules/commercial/contributions-utilities';
 import { setupEpicInLiveblog } from 'common/modules/commercial/contributions-liveblog-utilities';
 import { epicLiveBlogTemplate } from 'common/modules/commercial/templates/acquisitions-epic-liveblog';
-import {
-    liveblogCopy,
-    liveblogMillionCopy,
-} from 'common/modules/commercial/acquisitions-copy';
+import { liveblogMillionCopy } from 'common/modules/commercial/acquisitions-copy';
 
 export const acquisitionsEpicLiveblog: EpicABTest = makeABTest({
     id: 'AcquisitionsEpicLiveblog',
@@ -29,27 +26,6 @@ export const acquisitionsEpicLiveblog: EpicABTest = makeABTest({
     },
 
     variants: [
-        {
-            id: 'control',
-            products: ['CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
-
-            options: {
-                isUnlimited: true,
-
-                template(variant) {
-                    return epicLiveBlogTemplate({
-                        copy: liveblogCopy,
-                        componentName: variant.options.componentName,
-                        supportURL: variant.options.supportURL,
-                    });
-                },
-
-                test(renderFn, variant, test) {
-                    const epicHtml = variant.options.template(variant);
-                    setupEpicInLiveblog(epicHtml, test);
-                },
-            },
-        },
         {
             id: 'million',
             products: ['CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],

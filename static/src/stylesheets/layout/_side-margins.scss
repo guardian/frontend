@@ -30,29 +30,18 @@
             content: '';
             position: absolute;
             z-index: 1;
-            background: rgba(0, 0, 0,  .03);
             top: 0;
             height: 100%;
             width: 0;
             pointer-events: none;
-
-            .has-new-navigation & {
-                background: transparent;
-            }
         }
         &:before {
             left: 0;
-
-            .has-new-navigation & {
-                border-right: 1px solid $brightness-86;
-            }
+            border-right: 1px solid rgba($brightness-46, .3);
         }
         &:after {
             right: 0;
-
-            .has-new-navigation & {
-                border-left: 1px solid $brightness-86;
-            }
+            border-left: 1px solid rgba($brightness-46, .3);
         }
         @include side-margins-position(gs-span(9));
     }
@@ -72,13 +61,6 @@
             margin-left: auto;
             margin-right: auto;
             width: gs-span(12) + ($gs-gutter*2);
-
-            body:not(.has-new-navigation) & {
-                &:before,
-                &:after {
-                    display: none;
-                }
-            }
         }
     }
 }
@@ -87,10 +69,7 @@
         &:after,
         &:before {
             background: rgba(0, 0, 0, .25);
-
-            .has-new-navigation & {
-                border-color: $brightness-20;
-            }
+            border-color: $brightness-20;
 
             .container__banding + .container__banding & {
                 background: rgba($brightness-7,  .15);
@@ -98,32 +77,11 @@
         }
     }
 }
-
-body:not(.has-new-navigation) {
-    .l-side-margins--paidgallery {
+.l-side-margins--paidfor {
+    @include mq(tablet) {
         &:after,
         &:before {
-            content: none;
-        }
-    }
-}
-
-.has-new-navigation {
-    .l-side-margins--paidfor {
-        @include mq(tablet) {
-            &:after,
-            &:before {
-                border-color: $brightness-60;
-            }
-        }
-    }
-}
-
-body:not(.has-new-navigation) {
-    .l-side-margins--flagship {
-        &:before,
-        &:after {
-            content: none;
+            border-color: $brightness-60;
         }
     }
 }

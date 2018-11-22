@@ -87,6 +87,16 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
+    val InizioSwitch = Switch(
+    Commercial,
+    "inizio",
+    "Include the Inizio script on page so that creatives can show a survey.",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
   val AdomikSwitch = Switch(
     Commercial,
     "adomik",
@@ -223,16 +233,6 @@ trait CommercialSwitches {
     "Master switch for the membership engagement banner.",
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = On,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
-  val FivBanner = Switch(
-    Commercial,
-    "fiv-banner",
-    "Master switch for the first (three) impressions visual banner.",
-    owners = Seq(Owner.withGithub("johnduffell")),
-    safeState = Off,
     sellByDate = never,
     exposeClientSide = true
   )

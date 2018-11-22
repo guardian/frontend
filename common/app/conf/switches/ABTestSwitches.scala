@@ -245,4 +245,14 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2018, 11, 23),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-us-pre-end-of-year",
+    "Tests an epic with custom copy in US",
+    owners = Seq(Owner.withGithub("joelochlann")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 6, 6),
+    exposeClientSide = true
+  )
 }

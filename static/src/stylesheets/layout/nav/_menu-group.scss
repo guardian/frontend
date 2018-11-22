@@ -22,7 +22,6 @@
 }
 
 .menu-group--primary {
-    @include clearfix();
     padding-top: 0;
 
     @include mq(desktop) {
@@ -33,7 +32,7 @@
 }
 
 .menu-group--secondary {
-    background-color: $brightness-93;
+    background-color: $brand-dark;
     margin-top: 0;
     padding-top: 0;
 
@@ -42,11 +41,6 @@
         padding-bottom: 0;
         width: 100%;
     }
-}
-
-.menu-group--membership,
-.menu-group--editions {
-    background-color: $brightness-93;
 }
 
 .menu-group--membership {
@@ -59,17 +53,14 @@
     padding-bottom: 0;
 
     .menu-group {
-        background-color: darken($brightness-97, 10%);
-        .menu-item-divider {
-            background-color: darken($brightness-97, 20%);
-        }
+        background-color: $brand-dark;
     }
 }
 
 .menu-group--footer {
     @include mq(desktop) {
         bottom: 0;
-        left: $pillar-width--desktop * 5 + $gs-gutter;
+        left: $pillar-width--desktop * 5 + $gs-gutter / 2 - 1px;
         padding-left: $pillar-padding;
         position: absolute;
         top: 0;
@@ -78,43 +69,43 @@
 
     body:not(.has-page-skin) & {
         @include mq(leftCol) {
-            left: $pillar-width--leftCol * 5 + $gs-gutter;
+            left: $pillar-width--leftCol * 5 + $gs-gutter / 2 - 1px;
             width: $pillar-width--leftCol;
         }
     }
 }
 
 .menu-group--footer,
-.menu-group--primary > .menu-item:not(:first-child) {
+.menu-group--primary > .menu-item:not(:first-child),
+.menu-group--brand-extensions {
     &:before {
-        content: '';
-        position: absolute;
-        left: 0;
-        top: 0;
-        bottom: 0;
-        border-left: 1px solid $brightness-86;
+        @include mq(desktop) {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            border-left: 1px solid $brand-pastel;
+        }
     }
 }
 
 .menu-group--brand-extensions {
     position: absolute;
-    right: $gs-gutter;
-    top: $gs-baseline * 2;
+    right: $gs-gutter + $gs-gutter / 2;
+    top: -$pillar-height;
     bottom: 0;
-    // Specific number for aligmnent with logo
-    width: 186px;
+    padding: $pillar-height $gs-gutter $gs-baseline $pillar-padding;
+    width: 131px;
 
     body:not(.has-page-skin) & {
         @include mq(leftCol) {
-            width: gs-span(3);
+            width: gs-span(2);
         }
 
         @include mq(wide) {
             width: gs-span(4);
+            padding-top: 10px;
         }
-    }
-
-    .new-header--slim & {
-        top: $gs-baseline * 2;
     }
 }

@@ -6,7 +6,7 @@ import {
     render,
 } from '@guardian/dotcom-rendering/packages/guui';
 import { AudioPlayer } from './AudioPlayer';
-import { sendToOphan } from './utils';
+import { sendToOphan, registerOphanListeners } from './utils';
 
 type Props = {
     source: string,
@@ -48,9 +48,7 @@ const init = (): void => {
         const downloadUrl = placeholder.dataset.downloadUrl;
         const duration = placeholder.dataset.duration;
 
-        if (supportsCSSGrid) {
-            sendToOphan(mediaId, 'ready');
-        }
+        sendToOphan(mediaId, 'ready');
 
         const pillarClassName = Array.from(article.classList).filter(x =>
             x.includes('pillar')
@@ -67,7 +65,13 @@ const init = (): void => {
                     pillar={pillar}
                 />
             ) : (
-                <audio src={source} controls mediaId={mediaId}>
+                <audio
+                    src={source}
+                    controls
+                    data-media-id={mediaId}
+                    ref={el => {
+                        if (el) registerOphanListeners(el);
+                    }}>
                     <track
                         src={source}
                         kind="captions"

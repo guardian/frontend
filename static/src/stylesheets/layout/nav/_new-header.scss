@@ -13,30 +13,15 @@ from scrolling */
 }
 
 .new-header {
-    background-color: $brightness-97;
+    background-color: $brand-main;
     position: relative;
 
     &:not(.new-header--slim) {
         margin-bottom: 0;
-
-        &:after {
-            @include multiline(4, $brightness-86, bottom);
-            background-color: #ffffff;
-            content: '';
-            display: block;
-            height: 13px;
-        }
     }
 
     @include mq(tablet) {
         display: block;
-    }
-
-    @include mq(desktop) {
-
-        &.new-header--open {
-            background-color: $brightness-97;
-        }
     }
 
     .has-page-skin & .gs-container {
@@ -58,63 +43,48 @@ from scrolling */
     transform: translateX(100%);
 
     @include mq(desktop) {
-        right: 107px;
-        width: 100px;
-    }
-
-    @include mq(leftCol) {
         right: 120px;
+        width: 110px;
     }
 
     body:not(.has-page-skin) & {
         @include mq(wide) {
-            right: 200px;
-            width: auto;
+            right: 197px;
+            width: 197px;
         }
     }
-}
 
-.new-header__user-account-container {
-    float: left;
-    position: relative;
-    // Needs to sit below the menu, and the veggie burger
-    z-index: $zindex-main-menu - 2;
-}
-
-.new-header__top-bar {
-    left: 0;
-    position: absolute;
-    top: 0;
+    .top-bar__item__seperator {
+        margin-left: 0;
+    }
 }
 
 .new-header__menu-toggle {
     display: block;
+    outline: 0;
+    position: relative;
 
     @include mq($until: desktop) {
         position: absolute;
-        right: $gutter-small;
-        top: 17px;
+        right: $gs-gutter / 4;
+        bottom: 48px;
 
         @include mq(mobileMedium) {
-            bottom: -$gs-baseline / 2;
-            top: auto;
-        }
-
-        .new-header--slim & {
-            right: $gs-gutter / 2;
-            top: $gs-baseline / 4;
+            right: $gs-gutter / 4;
+            bottom: -$gs-baseline / 4;
         }
 
         @include mq(mobileLandscape) {
-            right: $gutter-medium;
-
-            .new-header--slim & {
-                right: $gs-gutter;
-            }
+            right: $gs-gutter - 2px;
         }
 
         @include mq(tablet) {
-            right: $gutter-large;
+            bottom: $gs-baseline / 4;
+        }
+
+        .new-header--slim & {
+            top: $gs-baseline / 4;
+            bottom: auto;
         }
     }
 
@@ -125,30 +95,26 @@ from scrolling */
 
 .new-header__logo {
     float: right;
-    margin-bottom: 20px;
-    margin-right: ($gs-gutter / 2) + $veggie-burger-small;
-    margin-top: $gs-baseline / 4;
+    margin-top: 10px;
+    margin-right: $veggie-burger + 12px;
+    margin-bottom: $gs-baseline * 2;
 
     @include mq(mobileMedium) {
-        margin-right: 6px;
+        margin-right: $gs-gutter / 2;
     }
 
     @include mq(mobileLandscape) {
-        margin-right: $gs-gutter - 3;
+        margin-right: $gs-gutter;
     }
 
     @include mq(desktop) {
-        margin-bottom: -34px;
         margin-top: 5px;
+        margin-bottom: $gs-baseline + ($gs-baseline / 2);
         position: relative;
         z-index: $zindex-main-menu + 1;
     }
 
     body:not(.has-page-skin) & {
-        @include mq(leftCol) {
-            margin-bottom: -40px;
-        }
-
         @include mq(wide) {
             margin-right: 96px;
         }
@@ -157,29 +123,19 @@ from scrolling */
     .new-header--slim & {
         position: absolute;
         margin: 0;
-        right: $veggie-burger-large;
+        right: $veggie-burger;
         top: $gs-baseline / 4;
         z-index: $zindex-main-menu;
 
-        @include mq(mobileLandscape) {
-            right: $veggie-burger-large + $gs-gutter / 2;
-        }
+        body:not(.has-page-skin) & {
+            @include mq(mobileLandscape) {
+                margin-right: 0;
+                right: $veggie-burger + ($gs-gutter / 2);
+            }
 
-        @include mq(desktop) {
-            left: gs-span(10) - $gs-gutter + $gs-gutter / 4;
-            right: auto;
-        }
-    }
-
-    body:not(.has-page-skin) .new-header--slim & {
-        margin: 0;
-
-        @include mq(leftCol) {
-            left: gs-span(11) + $gs-gutter + $gs-gutter / 2;
-        }
-
-        @include mq(wide) {
-            left: gs-span(12) + $gs-gutter + $gs-gutter / 2;
+            @include mq(desktop) {
+                right: $gs-gutter;
+            }
         }
     }
 
@@ -191,8 +147,16 @@ from scrolling */
 }
 
 .inline-the-guardian-roundel__svg {
-    height: $veggie-burger-large;
-    width: $veggie-burger-large;
+    height: $veggie-burger;
+    width: $veggie-burger;
+
+    & path:nth-child(1) {
+        fill: $brightness-100;
+    }
+
+    & path:nth-child(2) {
+        fill: $brand-main;
+    }
 }
 
 .inline-the-guardian-logo__svg {
@@ -211,45 +175,15 @@ from scrolling */
     }
 
     @include mq(desktop) {
-        height: 80px;
-        width: 249px;
+        height: 95px;
+        width: 295px;
     }
 
-    body:not(.has-page-skin) & {
-        @include mq(leftCol) {
-            height: 95px;
-            width: 295px;
-        }
+    path {
+        fill: $brightness-100;
     }
 }
 
 .new-header--slim {
-    border-bottom: 1px solid $brightness-86;
-    height: $slim-nav-height + $gs-baseline + $gs-baseline / 2;
-
-    .immersive-header-container & {
-        @include mq($until: tablet) {
-            border-bottom: 0;
-            height: 0;
-        }
-    }
-
-    @include mq(tablet) {
-        border-bottom: 1px solid $brightness-86;
-        height: $slim-nav-height;
-    }
-}
-
-
-.new-header .popup--search {
-    background-color: #ffffff;
-    border-radius: $gs-baseline / 4;
-    box-shadow: 0 0 0 1px rgba(0, 0, 0, .1);
-    padding: $gs-baseline 0;
-    top: $gs-baseline * 2 + $gs-baseline / 2;
-}
-
-// Don't show trapezoid on opera mini: https://wp-mix.com/css-target-opera/
-x:-o-prefocus, .new-header__cta-container  {
-    display: none;
+    height: $pillar-height + $gs-baseline / 2;
 }

@@ -49,21 +49,21 @@ const monitorPercentPlayed = (
     });
 };
 
-const playerObserved = (el: ?Element, id: string) => {
-    const observer = new window.IntersectionObserver(
-        (entries, self) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    sendToOphan(id, 'ready');
-                    self.disconnect();
-                }
-            });
+const registerOphanListeners = (el: HTMLMediaElement): void => {
+    const mediaId = el.getAttribute('data-media-id') || '';
+
+    el.addEventListener(
+        'play',
+        () => {
+            sendToOphan(mediaId, 'play');
         },
-        {
-            threshold: 1.0,
-        }
+        { once: true }
     );
-    observer.observe(el);
+
+    monitorPercentPlayed(el, 25, mediaId);
+    monitorPercentPlayed(el, 50, mediaId);
+    monitorPercentPlayed(el, 75, mediaId);
+    monitorPercentPlayed(el, 99, mediaId);
 };
 
 export {
@@ -72,5 +72,5 @@ export {
     range,
     sendToOphan,
     monitorPercentPlayed,
-    playerObserved,
+    registerOphanListeners,
 };

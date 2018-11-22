@@ -1,28 +1,41 @@
+.new-header__top-bar {
+    position: absolute;
+    left: $gs-gutter / 2;
+
+    @include mq(mobileLandscape) {
+        left: $gs-gutter;
+    }
+
+    @include mq(tablet) {
+        left: auto;
+        right: 205px;
+    }
+
+    @include mq(desktop) {
+        right: 266px;
+    }
+
+    body:not(.has-page-skin) & {
+        @include mq(wide) {
+            right: 342px;
+        }
+    }
+}
+
 .top-bar__item {
     @include fs-textSans(2);
-    color: $brightness-7;
+    font-size: 16px;
+    color: $brightness-100;
     float: left;
-    line-height: 1.2;
+    line-height: 1;
+    padding-top: $gs-baseline / 2;
     position: relative;
-    transition: color 80ms ease-out;
-    padding: 10px ($gs-gutter / 2);
-    margin-left: -8px;
-
-    .is-paying-member &:nth-child(2),
-    .is-recent-contributor &:nth-child(2) {
-        padding-left: 0;
-        margin-left: $gs-gutter;
-    }
+    z-index: $zindex-main-menu + 2;
 
     &:hover,
     &:focus {
-        color: $brightness-20;
-    }
-
-    @include mq($until: tablet) {
-        &.popup__toggle:after {
-            content: none;
-        }
+        color: $highlight-main;
+        text-decoration: none;
     }
 
     @include mq(mobileMedium) {
@@ -30,67 +43,39 @@
     }
 
     @include mq(tablet) {
-        font-size: 14px;
-        margin: 0;
-        padding: ($gs-baseline / 2) ($gs-gutter / 2);
+        padding: 9px ($gs-gutter / 3);
     }
 }
 
-.top-bar__item--cta {
-    color: $brightness-97;
-    font-family: $f-serif-headline;
-    font-weight: 800;
-    padding: 0;
-    margin: 0;
-
-    @include mq($until: mobileLandscape) {
-        margin-left: -$gs-gutter / 2;
-    }
-
-    .is-paying-member &,
-    .is-recent-contributor & {
-        display: none;
-    }
-
-    &:hover,
-    &:focus {
-        color: $brightness-97;
-        text-decoration: none;
-
-        & .top-bar__item--cta--circle {
-            transform: scale(1.05);
-        }
-    }
-}
-
-.top-bar__item--cta--circle {
-    bottom: -$gs-baseline;
-    left: 0;
-    overflow: hidden;
-    position: absolute;
-    right: 0;
-    top: 0;
-    transition: transform 250ms ease-out;
-    transform-origin: top center;
-
-    &:before {
-        background: $brightness-7;
-        border-radius: 50%;
-        bottom: 0;
-        content: '';
-        display: block;
-        left: 0;
-        padding-top: 100%;
-        position: absolute;
-        right: 0;
-        transition: background-color 250ms ease-out;
-    }
-}
-
-.top-bar__item--cta--text {
-    box-sizing: border-box;
-    display: block;
-    padding: ($gs-baseline / 2) ($gs-gutter) ($gs-baseline / 4);
+.top-bar__commercial-items {
     position: relative;
-    text-align: center;
+    float: left;
+    margin-right: $gs-gutter / 2;
+}
+
+.top-bar__item__icon__svg {
+    fill: currentColor;
+    float: left;
+    height: 18px;
+    width: 18px;
+    margin: -1px 4px 0 0;
+}
+
+.top-bar__item__seperator {
+    border-left: 1px solid $brand-pastel;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: $gs-baseline * 2;
+}
+
+.new-header__user-account-container {
+    float: left;
+    position: relative;
+    z-index: $zindex-main-menu + 2;
+
+    .new-header--open & {
+        // Needs to sit below the menu, and the veggie burger
+        z-index: $zindex-main-menu - 2;
+    }
 }

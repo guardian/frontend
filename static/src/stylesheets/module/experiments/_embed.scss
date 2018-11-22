@@ -33,7 +33,7 @@
 
 .contributions__highlight {
     background-color: $highlight-main;
-    padding: 4px 2px;
+    padding: 2px;
 }
 
 .contributions__hidden {
@@ -191,6 +191,23 @@ a[href].contributions__contribute.contributions__contribute--epic.contributions_
         font-size: 32px;
         line-height: 36px;
     }
+}
+
+// US LEADING WITH CLIMATE VARIANT
+
+.contributions__epic--us-leading-with-climate {
+    padding-left: 10px;
+    padding-right: 10px;
+
+    div.u-responsive-ratio {
+        margin-bottom: 4px;
+    }
+}
+
+.contributions__title--us-leading-with-climate {
+    font-size: 32px;
+    line-height: 1.13;
+    padding-top: 3px;
 }
 
 

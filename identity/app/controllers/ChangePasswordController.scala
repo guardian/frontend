@@ -82,7 +82,7 @@ class ChangePasswordController(
     NoCache(DiscardingIdentityCookies(
       Ok(
         IdentityHtmlPage.html(
-          views.html.password.passwordResetConfirmation(page, idRequest, idUrlBuilder, userIsLoggedIn, returnUrl)
+          views.html.password.passwordResetConfirmation(page, idRequest, idUrlBuilder, userIsLoggedIn, returnUrl, None)
         )(page, request, context)
       )
     ))

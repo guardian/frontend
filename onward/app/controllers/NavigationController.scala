@@ -1,9 +1,10 @@
 package controllers
 
 import common.{Edition, JsonComponent, LinkTo}
-import navigation.{NavLink, NavMenu, UrlHelpers}
+import conf.Configuration
 import model.Cached
-import play.api.libs.json.{Json, Writes}
+import navigation.{NavLink, NavMenu, UrlHelpers}
+import play.api.libs.json.{JsValue, Json, Writes}
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 
 class NavigationController(val controllerComponents: ControllerComponents) extends BaseController {
@@ -37,12 +38,21 @@ class NavigationController(val controllerComponents: ControllerComponents) exten
         )
       }
 
+      implicit val editionWrites: Writes[Edition] = new Writes[Edition] {
+        def writes(edition: Edition): JsValue = Json.obj(
+          "id" -> edition.id,
+          "displayName" -> edition.displayName,
+          "optInLink" -> s"${Configuration.id.url}/preference/edition/${edition.id.toLowerCase}"
+        )
+      }
+
       JsonComponent(
         "items" -> Json.arr(
           Json.obj(
             "topLevelSections" -> menu.pillars.map( section => topLevelNavItems(section) ),
             "readerRevenueLinks" -> UrlHelpers.readerRevenueLinks.map( section => navSectionLink(section)),
-            "secondarySections" -> navSecondarySections
+            "secondarySections" -> navSecondarySections,
+            "editions" -> Edition.all
           )
         )
       )

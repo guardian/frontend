@@ -1,8 +1,6 @@
 .edition-picker-toggle-button {
     border: 0;
+    outline: 0;
     background: none;
-
-    &::after {
-        margin-left: 5px;
-    }
+    text-align: left;
 }

@@ -46,7 +46,7 @@
 .veggie-burger-fallback {
     &:focus {
         & ~ .new-header__menu-toggle .pillar-link {
-            color: $brightness-7;
+            color: $brightness-100;
         }
     }
 }

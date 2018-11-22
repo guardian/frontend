@@ -20,7 +20,7 @@ import fastBackward from 'svgs/journalism/audio-player/backward.svg';
 import fastForward from 'svgs/journalism/audio-player/forward.svg';
 
 import waveW from 'svgs/journalism/audio-player/wave-wide.svg';
-import { sendToOphan, monitorPercentPlayed, playerObserved } from './utils';
+import { registerOphanListeners } from './utils';
 
 import Time from './Time';
 
@@ -294,15 +294,7 @@ export class AudioPlayer extends Component<Props, State> {
         this.audio.addEventListener('ended', this.resetAudio);
         this.audio.addEventListener('progress', this.buffer);
 
-        const mediaId = this.audio.getAttribute('data-media-id') || '';
-        monitorPercentPlayed(this.audio, 25, mediaId);
-        monitorPercentPlayed(this.audio, 50, mediaId);
-        monitorPercentPlayed(this.audio, 75, mediaId);
-        monitorPercentPlayed(this.audio, 99, mediaId);
-
-        if (this.audio.parentElement) {
-            playerObserved(this.audio.parentElement, mediaId);
-        }
+        registerOphanListeners(this.audio);
 
         if (Number.isNaN(this.audio.duration)) {
             this.audio.addEventListener('durationchange', this.ready, {
@@ -401,7 +393,6 @@ export class AudioPlayer extends Component<Props, State> {
             }
         );
         if (!this.state.hasBeenPlayed) {
-            sendToOphan(this.props.mediaId, 'play');
             this.setState({ hasBeenPlayed: true });
         }
     };

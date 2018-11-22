@@ -14,7 +14,7 @@ import views.html.fragments.page.head.stylesheets.{criticalStyleInline, critical
 import views.html.fragments.page.head.{fixIEReferenceErrors, headTag, orielScriptTag, titleTag, weAreHiring}
 import views.html.fragments.page.{devTakeShot, htmlTag}
 import views.html.{newspaperContent, quizAnswerContent}
-import html.HtmlPageHelpers.{ContentCSSFile, FooterCSSFile}
+import html.HtmlPageHelpers.{ContentCSSFile}
 import conf.switches.Switches.WeAreHiring
 import experiments.{ActiveExperiments, OldAudioPage, OldTLSSupportDeprecation}
 import views.html.stacked
@@ -22,20 +22,12 @@ import views.html.stacked
 object ContentHtmlPage extends HtmlPage[Page] {
 
   def allStyles(implicit applicationContext: ApplicationContext, request: RequestHeader): Styles = new Styles {
-    override def criticalCssLink: Html = stacked(
-      criticalStyleLink(ContentCSSFile),
-      criticalStyleLink(InlineNavigationCSSFile))
-    override def criticalCssInline: Html = criticalStyleInline(
-      Html(common.Assets.css.head(None)),
-      Html(common.Assets.css.inlineNavigation))
+    override def criticalCssLink: Html = criticalStyleLink(ContentCSSFile)
+    override def criticalCssInline: Html = criticalStyleInline(Html(common.Assets.css.head(None)))
     override def linkCss: Html = stylesheetLink(s"stylesheets/$ContentCSSFile.css")
-    override def footerCss: Html = stylesheetLink(s"stylesheets/$FooterCSSFile.css")
     override def oldIECriticalCss: Html = stylesheetLink(s"stylesheets/old-ie.head.$ContentCSSFile.css")
     override def oldIELinkCss: Html = stylesheetLink(s"stylesheets/old-ie.$ContentCSSFile.css")
-    override def IE9LinkCss: Html = stacked(
-      stylesheetLink(s"stylesheets/ie9.head.$ContentCSSFile.css"),
-      stylesheetLink(s"stylesheets/head.$InlineNavigationCSSFile.css")
-    )
+    override def IE9LinkCss: Html = stylesheetLink(s"stylesheets/ie9.head.$ContentCSSFile.css")
     override def IE9CriticalCss: Html = stylesheetLink(s"stylesheets/ie9.$ContentCSSFile.css")
   }
 

@@ -3,7 +3,7 @@
 @import conf.switches.Switches._
 @import play.api.Mode.Dev
 @import conf.Static
-@import html.HtmlPageHelpers.{ContentCSSFile, FooterCSSFile}
+@import html.HtmlPageHelpers.{ContentCSSFile}
 
 @* any images in head need to go here (or they'll be relative to the page)} *@
 <style class="js-loggable">
@@ -57,26 +57,18 @@
 
     <link rel="stylesheet" id="head-css" data-reload="head@projectName.map("." + _).getOrElse(s".$ContentCSSFile")" type="text/css" href="@Static("stylesheets/head" + projectName.map("." + _).getOrElse(s".$ContentCSSFile") + ".css")" />
 
-    @if(NewNavEnabled.isSwitchedOn) {
-        <link rel="stylesheet" id="head-navigation" data-reload="head.navigation" type="text/css" href="@Static("stylesheets/head.new-navigation.css")" />
-    } else {
-        <link rel="stylesheet" id="head-navigation" data-reload="head.navigation" type="text/css" href="@Static("stylesheets/head.navigation.css")" />
-    }
-
     @if(isInteractive) {
         <link rel="stylesheet" id="head-interactive" data-reload="head.interactive" type="text/css" href="@Static("stylesheets/head.interactive.css")" />
     }
 } else {
     <style class="js-loggable">
         @Html(common.Assets.css.head(projectName))
-        @Html(common.Assets.css.inlineNavigation)
         @if(isInteractive) {
             @Html(common.Assets.css.interactive)
         }
     </style>
 }
 @fragments.stylesheetLink(common.Assets.css.projectCss(projectName), isCrossword)
-@fragments.stylesheetLink(s"stylesheets/$FooterCSSFile.css")
 
 <!--<![endif]-->
 <link rel="stylesheet" media="print" type="text/css" href="@Static("stylesheets/print.css")" />
