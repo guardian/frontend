@@ -24,7 +24,7 @@ export const acquisitionsEpicAu: EpicABTest = makeABTest({
 
     variants: [
         {
-            id: 'copy',
+            id: 'control',
             products: [],
             options: {
                 copy: {
