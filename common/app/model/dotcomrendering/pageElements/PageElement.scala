@@ -18,8 +18,8 @@ sealed trait PageElement
 case class TextBlockElement(html: String) extends PageElement
 case class TweetBlockElement(html: String, url: String, id: String, hasMedia: Boolean, role: Role) extends PageElement
 case class PullquoteBlockElement(html: Option[String], role: Role) extends PageElement
-case class ImageBlockElement(media: ImageMedia, data: Map[String, String], displayCredit: Option[Boolean], role: Role, weightings: Seq[ImageWeighting]) extends PageElement
-case class ImageWeighting(weighting: String, srcSet: Seq[SrcSet])
+case class ImageBlockElement(media: ImageMedia, data: Map[String, String], displayCredit: Option[Boolean], role: Role, imageSources: Seq[ImageSource]) extends PageElement
+case class ImageSource(weighting: String, srcSet: Seq[SrcSet])
 case class AudioBlockElement(assets: Seq[AudioAsset]) extends PageElement
 case class GuVideoBlockElement(assets: Seq[VideoAsset], imageMedia: ImageMedia, data: Map[String, String], role: Role) extends PageElement
 case class VideoBlockElement(data: Map[String, String], role: Role) extends PageElement
@@ -113,12 +113,12 @@ object PageElement {
       case Image =>
         val signedAssets = element.assets.zipWithIndex
           .map { case (a, i) => ImageAsset.make(a, i) }
-        val weightings: Seq[ImageWeighting] = BodyMedia.all.map {
+        val imageSources: Seq[ImageSource] = BodyMedia.all.map {
           case (weighting, widths) =>
             val srcSet = widths.breakpoints.map { b =>
               ImgSrc.srcsetForBreakpoint(b, BodyMedia.inline.breakpoints, maybeImageMedia = Some(ImageMedia(signedAssets)))
             }
-            ImageWeighting(weighting, srcSet.flatten)
+            ImageSource(weighting, srcSet.flatten)
         }.toSeq
 
         List(ImageBlockElement(
@@ -126,7 +126,7 @@ object PageElement {
           imageDataFor(element),
           element.imageTypeData.flatMap(_.displayCredit),
           Role(element.imageTypeData.flatMap(_.role)),
-          weightings
+          imageSources
         ))
 
       case Audio => List(AudioBlockElement(element.assets.map(AudioAsset.make)))
@@ -207,7 +207,7 @@ object PageElement {
     } getOrElse Map()
   }
 
-  implicit val imageWeightingWrites: Writes[ImageWeighting] = Json.writes[ImageWeighting]
+  implicit val imageWeightingWrites: Writes[ImageSource] = Json.writes[ImageSource]
   implicit val textBlockElementWrites: Writes[TextBlockElement] = Json.writes[TextBlockElement]
   implicit val ImageBlockElementWrites: Writes[ImageBlockElement] = Json.writes[ImageBlockElement]
   implicit val AudioBlockElementWrites: Writes[AudioBlockElement] = Json.writes[AudioBlockElement]
