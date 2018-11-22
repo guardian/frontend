@@ -12,7 +12,7 @@ export const TESTS: $ReadOnlyArray<ABTest> = [
     commercialPrebidSafeframe,
     commercialAdVerification,
     commercialCmpCustomise,
-    commercialAdMobileWebIncrease
+    commercialAdMobileWebIncrease,
 ].filter(Boolean);
 
 export const getActiveTests = (): $ReadOnlyArray<ABTest> =>

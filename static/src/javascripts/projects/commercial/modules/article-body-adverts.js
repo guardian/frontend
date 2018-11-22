@@ -149,12 +149,12 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<number> => {
     });
 };
 
-const addMobileInlineAds = (isInVariant: boolean): Promise<number> => {
+const addMobileInlineAds = (isVariant: boolean): Promise<number> => {
     const rules = {
         bodySelector: '.js-article__body',
         slotSelector: ' > p',
-        minAbove: isInVariant ? 300 : 200,
-        minBelow: isInVariant ? 300 : 200,
+        minAbove: isVariant ? 200 : 300,
+        minBelow: isVariant ? 200 : 300,
         selectors: {
             ' > h2': {
                 minAbove: 100,
@@ -163,8 +163,9 @@ const addMobileInlineAds = (isInVariant: boolean): Promise<number> => {
             ' .ad-slot': adSlotClassSelectorSizes,
             ' > :not(p):not(h2):not(.ad-slot)': {
                 minAbove: 35,
-                minBelow: isInVariant ? 400 : 200,
+                minBelow: isVariant ? 200 : 400,
             },
+            fromBottom: true,
         },
         filter: filterNearbyCandidates(adSizes.mpu.height),
     };
