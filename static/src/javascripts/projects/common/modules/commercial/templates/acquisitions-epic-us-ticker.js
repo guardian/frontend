@@ -18,7 +18,11 @@ export const acquisitionsEpicUsTickerTemplate = ({
     `<div class="contributions__epic contributions__epic--with-ticker" data-component="${componentName}" data-link-name="epic">
         <div>
             <div>
-                ${tickerPosition === 'TOP' ? acquisitionsEpicTickerTemplate : ''}
+                ${
+                    tickerPosition === 'TOP'
+                        ? acquisitionsEpicTickerTemplate
+                        : ''
+                }
 
                 <h2 class="contributions__title contributions__title--big">
                     ${heading}
