@@ -7,7 +7,7 @@ import type { TickerPosition } from 'common/modules/commercial/templates/acquisi
 
 const abTestName = 'AcquisitionsEpicUsEndOfYearRound2';
 
-function createTemplate(tickerPosition: TickerPosition): EpicTemplate {
+const createTemplate = (tickerPosition: TickerPosition): EpicTemplate => {
     return ({ options = {} }, copy: AcquisitionsEpicTemplateCopy) =>
         acquisitionsEpicUsTickerTemplate({
             copy,
@@ -17,7 +17,7 @@ function createTemplate(tickerPosition: TickerPosition): EpicTemplate {
             }),
             tickerPosition,
         });
-}
+};
 
 const copy = {
     heading: 'There’s something you can do &hellip;',
