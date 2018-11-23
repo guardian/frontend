@@ -7,17 +7,18 @@ import type { TickerPosition } from 'common/modules/commercial/templates/acquisi
 
 const abTestName = 'AcquisitionsEpicUsEndOfYearRound2';
 
-const createTemplate = (tickerPosition: TickerPosition): EpicTemplate => {
-    return ({ options = {} }, copy: AcquisitionsEpicTemplateCopy) =>
-        acquisitionsEpicUsTickerTemplate({
-            copy,
-            componentName: options.componentName,
-            buttonTemplate: options.buttonTemplate({
-                supportUrl: options.supportURL,
-            }),
-            tickerPosition,
-        });
-};
+const createTemplate = (tickerPosition: TickerPosition): EpicTemplate => (
+    { options = {} },
+    copy: AcquisitionsEpicTemplateCopy
+) =>
+    acquisitionsEpicUsTickerTemplate({
+        copy,
+        componentName: options.componentName,
+        buttonTemplate: options.buttonTemplate({
+            supportUrl: options.supportURL,
+        }),
+        tickerPosition,
+    });
 
 const copy = {
     heading: 'There’s something you can do &hellip;',
@@ -48,6 +49,8 @@ export const acquisitionsEpicUsEndOfYearRound2: EpicABTest = makeABTest({
     audienceOffset: 0,
 
     locations: ['US'],
+
+    useLocalViewLog: true,
 
     variants: [
         {

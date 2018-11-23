@@ -13,22 +13,24 @@ const percentageTotalAsNegative = () => {
 };
 
 const animateBar = () => {
-    const progressBar = document.querySelector('.epic-ticker__filled-progress');
+    const progressBarElement = document.querySelector('.epic-ticker__filled-progress');
 
-    if (progressBar && progressBar instanceof HTMLElement) {
-        progressBar.style.transform = `translateX(${percentageTotalAsNegative()}%)`;
+    if (progressBarElement && progressBarElement instanceof HTMLElement) {
+        progressBarElement.style.transform = `translateX(${percentageTotalAsNegative()}%)`;
     }
 };
 
 const increaseCounter = () => {
     count += Math.floor(total / 100);
-    const counter = document.querySelector('.epic-ticker__so-far .epic-ticker__count');
+    const counterElement = document.querySelector(
+        '.epic-ticker__so-far .epic-ticker__count'
+    );
 
-    if (counter && counter instanceof HTMLElement) {
-        counter.innerHTML = `$${count.toLocaleString()}`;
+    if (counterElement && counterElement instanceof HTMLElement) {
+        counterElement.innerHTML = `$${count.toLocaleString()}`;
         if (count >= total) {
             clearInterval(interval);
-            counter.innerHTML = `$${total.toLocaleString()}`;
+            counterElement.innerHTML = `$${total.toLocaleString()}`;
         }
     }
 };
@@ -40,10 +42,12 @@ const animateCount = () => {
 };
 
 const populateText = () => {
-    const goal = document.querySelector('.epic-ticker__goal .epic-ticker__count');
+    const goalElement = document.querySelector(
+        '.epic-ticker__goal .epic-ticker__count'
+    );
 
-    if (goal && goal instanceof HTMLElement) {
-        goal.innerHTML = `$${goal.toLocaleString()}`;
+    if (goalElement && goalElement instanceof HTMLElement) {
+        goalElement.innerHTML = `$${goalElement.toLocaleString()}`;
     }
 };
 
