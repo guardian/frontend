@@ -1,0 +1,83 @@
+.contributions__epic--with-ticker {
+    .contributions__buttons {
+        margin-bottom: 25px;
+    }
+}
+
+.epic-ticker {
+    position: relative;
+    height: 70px;
+    margin-bottom: 25px;
+}
+
+.epic-ticker__count {
+    @include fs-header(5);
+    font-size: 32px;
+    font-weight: 800;
+    color: #333;
+}
+
+.epic-ticker__count-label {
+    font-size: 17px;
+    line-height: 1.4;
+}
+
+$progess-bar-height: 10px;
+
+.epic-ticker__progress {
+    width: 100%;
+    height: $progess-bar-height;
+    border-radius: 5px;
+    overflow: hidden;
+    background-color: #dcdcdc;
+    position: absolute;
+    bottom: 0;
+    margin-top: 40px;
+}
+
+.epic-ticker__filled-progress {
+    background-color: #ffe500;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    transform: translateX(-100%);
+    transition: transform 3s cubic-bezier(0.25, 0.55, 0.2, 0.85);
+}
+
+.epic-ticker__progress-labels {
+    position: relative;
+    width: 100%;
+    height: 16px;
+}
+
+.epic-ticker__label {
+    @include fs-textSans(4);
+    color: #676767;
+    position: absolute;
+    top: 5px;
+}
+
+.epic-ticker__goal {
+    position: absolute;
+    right: 0;
+    bottom: $progess-bar-height + 5px;
+    text-align: right;
+}
+
+.epic-ticker__so-far {
+    position: absolute;
+    left: 0;
+    bottom: $progess-bar-height + 5px;
+}
+
+.epic-ticker__caption {
+    @include fs-textSans(4);
+    position: absolute;
+    bottom: 6px;
+    left: 10px;
+    right: 10px;
+    color: #fff;
+    opacity: .7;
+}
