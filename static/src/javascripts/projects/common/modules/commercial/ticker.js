@@ -13,7 +13,9 @@ const percentageTotalAsNegative = () => {
 };
 
 const animateBar = () => {
-    const progressBarElement = document.querySelector('.epic-ticker__filled-progress');
+    const progressBarElement = document.querySelector(
+        '.epic-ticker__filled-progress'
+    );
 
     if (progressBarElement && progressBarElement instanceof HTMLElement) {
         progressBarElement.style.transform = `translateX(${percentageTotalAsNegative()}%)`;
