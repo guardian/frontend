@@ -14,7 +14,7 @@
     @include fs-header(5);
     font-size: 32px;
     font-weight: 800;
-    color: #333;
+    color: #333333;
 }
 
 .epic-ticker__count-label {
@@ -43,7 +43,7 @@ $progess-bar-height: 10px;
     right: 0;
     bottom: 0;
     transform: translateX(-100%);
-    transition: transform 3s cubic-bezier(0.25, 0.55, 0.2, 0.85);
+    transition: transform 3s cubic-bezier(.25, .55, .2, .85);
 }
 
 .epic-ticker__progress-labels {
@@ -78,6 +78,6 @@ $progess-bar-height: 10px;
     bottom: 6px;
     left: 10px;
     right: 10px;
-    color: #fff;
+    color: #ffffff;
     opacity: .7;
 }
