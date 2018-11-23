@@ -23,7 +23,7 @@ case class VideoBlockElement(data: Map[String, String]) extends PageElement
 case class EmbedBlockElement(html: Option[String], safe: Option[Boolean], alt: Option[String]) extends PageElement
 case class ContentAtomBlockElement(atomId: String) extends PageElement
 case class InteractiveBlockElement(html: Option[String]) extends PageElement
-case class CommentBlockElement(html: Option[String]) extends PageElement
+case class CommentBlockElement(body: String, avatarURL: String, profileURL: String, profileName: String, permalink: String, dateTime: String) extends PageElement
 case class TableBlockElement(html: Option[String]) extends PageElement
 case class WitnessBlockElement(html: Option[String]) extends PageElement
 case class DocumentBlockElement(html: Option[String]) extends PageElement
@@ -135,13 +135,26 @@ object PageElement {
         m.price
       )).toList
 
+      case Comment => (for {
+        c <- element.commentTypeData
+        html <- c.html
+      } yield {
+        CommentBlockElement(
+          body = CommentCleaner.getBody(html),
+          avatarURL = CommentCleaner.getAvatar(html),
+          dateTime = CommentCleaner.getDateTime(html),
+          permalink = c.originalUrl.getOrElse(""),
+          profileURL = c.authorUrl.getOrElse(""),
+          profileName = c.authorName.getOrElse("")
+        )
+      }).toList
+
       case Embed => element.embedTypeData.map(d => EmbedBlockElement(d.html, d.safeEmbedCode, d.alt)).toList
 
       case Contentatom => element.contentAtomTypeData.map(d => ContentAtomBlockElement(d.atomId)).toList
 
       case Pullquote => element.pullquoteTypeData.map(d => PullquoteBlockElement(d.html)).toList
       case Interactive => element.interactiveTypeData.map(d => InteractiveBlockElement(d.html)).toList
-      case Comment => element.commentTypeData.map(d => CommentBlockElement(d.html)).toList
       case Table => element.tableTypeData.map(d => TableBlockElement(d.html)).toList
       case Witness => element.witnessTypeData.map(d => WitnessBlockElement(d.html)).toList
       case Document => element.documentTypeData.map(d => DocumentBlockElement(d.html)).toList
@@ -217,5 +230,28 @@ object Cleaner{
       .asScala
       .toList
       .map(_.outerHtml())
+  }
+}
+
+object CommentCleaner {
+  def getBody(html: String): String = {
+    Jsoup
+      .parseBodyFragment(html)
+      .getElementsByClass("d2-body")
+      .html()
+  }
+
+  def getAvatar(html: String): String = {
+    Jsoup
+      .parseBodyFragment(html)
+      .getElementsByClass("d2-avatar")
+      .attr("src")
+  }
+
+  def getDateTime(html: String): String = {
+    Jsoup
+      .parseBodyFragment(html)
+      .getElementsByClass("d2-datetime")
+      .html()
   }
 }
