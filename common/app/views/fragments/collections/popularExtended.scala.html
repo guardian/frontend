@@ -3,20 +3,20 @@
 @import common.Localisation
 @import layout.FaciaCardHeader
 @import views.html.fragments.items.elements.facia_cards.title
-@import views.html.fragments.items.facia_cards.contentCard
+@import views.html.fragments.items.facia_cards.simpleContentCard
 @import views.support._
 @import views.support.TrailCssClasses.toneClass
 @import views.support.MostPopular.{isAdFree, showMPU, tabsPaneCssClass}
-@import views.support.GetClasses
+@import views.support.{GetClasses, RemoveOuterParaHtml}
 @import model.Pillar.RichPillar
 
 @defining(popular.size > 1){ isTabbed =>
-    <div id="popular-trails" class="fc-slice fc-slice--popular" data-link-name="most popular Test" data-test-id="popular-in">
+    <div id="popular-trails" class="fc-slice fc-slice--most-popular" data-link-name="most popular Test" data-test-id="popular-in">
         @if(isTabbed) {
-            <div class="tabs tabs--mostpop u-cf @if(isAdFree(containerDefinition) && isFront){tabs--mostpop--without-mpu}">
+            <div class="tabs tabs--mostpop u-cf @if(isAdFree(containerDefinition) && isFront){tabs--mostpop--withoutye-mpu}">
                 <ol class="tabs__container js-tabs" id="js-popular-tabs" role="tablist">
                 @popular.zipWithRowInfo.map{ case (section, info) =>
-                <li class="tabs__tab@if(info.isFirst){ tabs__tab--selected tone-colour tone-accent-border}" role="tab" id="tabs-popular-@info.rowNum-tab"@if(info.isFirst){ aria-selected="true"} aria-controls="tabs-popular-@info.rowNum">
+                <li class="tabs__tab--most-popular@if(info.isFirst){ tabs__tab--selected}" role="tab" id="tabs-popular-@info.rowNum-tab"@if(info.isFirst){ aria-selected="true"} aria-controls="tabs-popular-@info.rowNum">
                     <a href="#tabs-popular-@info.rowNum" data-link-name="tab @info.rowNum @section.heading"><span class="u-h">Most viewed </span>@Html(Localisation(section.heading.stripPrefix("popular ")))</a>
                 </li>
                 }
@@ -34,23 +34,24 @@
         data-link-name="@section.heading"
         data-link-context="most-read/@section.section">
 
-            <ul class="u-unstyled headline-list headline-list--large headline-column headline-column--tablet headline-column--desktop">
+            <ul class="u-unstyled most-popular">
             @section.trails.zipWithRowInfo.map{ case (trail, info) =>
-            <li class="headline-list__item headline-column__item headline-column--tablet__item headline-column--desktop__item @toneClass(trail)--most-popular fc-item--pillar-@trail.maybePillar.nameOrDefault">
-                <div class="headline-list__link" data-link-name="@info.rowNum | text">
-                    <span class="most-popular__number-@info.rowNum">
-                    @fragments.inlineSvg(s"number-${info.rowNum}", "numbers")
-                    </span>
-                    <div class="headline-list__text">
-                        @title(FaciaCardHeader.fromTrail(trail, None), 2, 2, "headline-list__body")
-                        @trail.properties.maybeContent.map { content =>
-                            @if(content.tags.tags.exists(_.id == "tone/news")) {
-                                @fragments.contentAgeNotice(ContentOldAgeDescriber(content))
+                <li class="most-popular__item @toneClass(trail)--most-popular fc-item--pillar-@trail.maybePillar.nameOrDefault">
+                    <div class="most-popular__link" data-link-name="@info.rowNum | text">
+                        <span class="most-popular__number most-popular__number--@info.rowNum">
+                            @fragments.inlineSvg(s"number-${info.rowNum}", "numbers")
+                        </span>
+                        <div class="most-popular__headline">
+                            @title(FaciaCardHeader.fromTrail(trail, None), 2, 2, "headline-list__body")
+                            @trail.properties.maybeContent.map { content =>
+                                @if(content.tags.tags.exists(_.id == "tone/news")) {
+                                    @fragments.contentAgeNotice(ContentOldAgeDescriber(content))
+                                }
                             }
-                        }
-            </div>
-            </div>
-            </li>
+                        </div>
+                    </div>
+                    <a href="urlgoeshere" class="u-faux-block-link__overlay js-headline-text" data-link-name="article" tabindex="-1" aria-hidden="true">blah</a>
+                </li>
             }
         </ul>
         </div>
@@ -64,25 +65,20 @@
         </div>
         }
 
-    @mostCards.getOrElse("most_commented", None).map { mostCommented =>
-    <div>
-        <h2>Most Commented</h2>
-        <div>
-            @contentCard(mostCommented, 0, 0, "", false, false)
+    <div class="most-popular__second-tier">
+        @mostCards.getOrElse("most_commented", None).map { mostCommented =>
+        <div class="second-tier__item">
+            @simpleContentCard(mostCommented, 0, 0, "", false, false)
         </div>
-    </div>
-    }
+        }
 
-    @mostCards.getOrElse("most_shared", None).map { mostShared =>
-    <div>
-        <h2>Most Shared</h2>
-        <div>
-            @contentCard(mostShared, 0, 0, "", false, false)
+        @mostCards.getOrElse("most_shared", None).map { mostShared =>
+        <div class="second-tier__item">
+            @simpleContentCard(mostShared, 0, 0, "", false, false)
         </div>
+        }
     </div>
-    }
 
 
 </div>
 }
-

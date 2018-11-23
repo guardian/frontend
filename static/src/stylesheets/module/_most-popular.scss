@@ -1,0 +1,280 @@
+.most-popular__container {
+    margin-top: $gs-baseline * 3 + ($gs-baseline / 2);
+    clear: both;
+
+    @include mq(desktop) {
+        display: flex;
+
+    }
+
+    @include mq(leftCol) {
+        margin-top: -$gs-baseline / 2;
+        clear: none;
+    }
+
+    @include mq(wide) {
+        margin-left: gs-span(3) + $gs-gutter / 2;
+    }
+}
+
+.most-popular__content {
+    margin-top: -1px;
+    border: 1px solid $brightness-86;
+    border-bottom: 0;
+}
+
+.most-popular {
+    @include mq(tablet) {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto;
+
+        li:nth-child(2) {grid-column-start: 1; grid-row-start: 2;}
+        li:nth-child(3) {grid-column-start: 1; grid-row-start: 3;}
+        li:nth-child(4) {grid-column-start: 1; grid-row-start: 4;}
+        li:nth-child(5) {grid-column-start: 1; grid-row-start: 5;}
+        li:nth-child(6) {grid-column-start: 2; grid-row-start: 1; border-left: 1px solid $brightness-86;}
+        li:nth-child(7) {grid-column-start: 2; grid-row-start: 2; border-left: 1px solid $brightness-86;}
+        li:nth-child(8) {grid-column-start: 2; grid-row-start: 3; border-left: 1px solid $brightness-86;}
+        li:nth-child(9) {grid-column-start: 2; grid-row-start: 4; border-left: 1px solid $brightness-86;}
+        li:nth-child(10) {grid-column-start: 2; grid-row-start: 5; border-left: 1px solid $brightness-86;}
+    }
+}
+
+.most-popular__item {
+    background: transparent !important;
+    border-top: 1px solid $brightness-86;
+    position: relative;
+
+    &:hover,
+    &:focus {
+        background: $brightness-97 !important;
+    }
+
+    .live-pulse-icon:before {
+        background-color: currentColor;
+    }
+}
+
+.most-popular__number {
+    position: absolute;
+    top: $gs-baseline / 2;
+    left: $gs-gutter / 2;
+}
+
+.most-popular__headline,
+.most-popular__container .tabs__tab--most-popular a,
+.simple-content-card__headline,
+.second-tier__title {
+    font-family: $f-serif-headline;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 20px;
+
+    @include mq(tablet) {
+        font-size: 18px;
+        line-height: 22px;
+    }
+}
+
+.most-popular__headline {
+    padding: ($gs-baseline / 4) ($gs-gutter / 2) ($gs-baseline + $gs-baseline / 2) 75px;
+
+    .fc-item__link {
+        &:hover {
+            background: transparent !important;
+        }
+    }
+
+    .fc-item__title {
+        padding: 0;
+    }
+}
+
+.most-popular__mpu {
+    #dfp-ad--mostpop {
+        margin: $gs-baseline auto 0;
+
+        @include mq(desktop) {
+            margin: 0 0 0 $gs-gutter;
+        }
+
+        @include mq(leftCol) {
+            margin: ($gs-baseline / 2) 0 0 ($gs-gutter / 2);
+        }
+    }
+}
+
+.most-popular__container {
+    .tabs__container {
+        background: $brightness-100;
+        margin-bottom: 0;
+        display: flex;
+        max-width: gs-span(9) + $gs-gutter / 2;
+        width: 100%;
+
+        &.u-h ~ .tabs__content {
+            // Hides top line when there are no tabs
+            margin-top: -1px;
+        }
+    }
+
+    .tabs__content {
+        border-top: 0;
+    }
+
+    .tabs__tab--most-popular {
+        position: relative;
+        width: gs-span(3) + $gs-gutter;
+
+        &:after {
+            background-color: $brightness-93;
+            content: '';
+            display: block;
+            height: 4px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            transform: translateY(-4px);
+            transition: transform .3s ease-in-out;
+        }
+
+        &:hover:after {
+            transform: translateY(0);
+        }
+
+        &:nth-child(2) {
+            &:before {
+                content: '';
+                width: 1px;
+                background: $brightness-86;
+                position: absolute;
+                left: 0;
+                top: 0;
+                bottom: 18px;
+            }
+        }
+    }
+
+    .tabs__tab--most-popular a {
+        font-weight: 700;
+        line-height: 1.1;
+        background-color: transparent;
+        box-sizing: border-box;
+        color: $brightness-7;
+        text-transform: capitalize;
+        height: 48px;
+        padding: ($gs-baseline / 2) ($gs-gutter / 2) 0;
+        display: block;
+        width: auto;
+
+        &:hover,
+        &:focus {
+            text-decoration: none;
+        }
+    }
+
+    .tabs__tab--selected {
+        background-color: $brightness-100;
+
+        &:after {
+            background-color: $brightness-46;
+            transform: translateY(0);
+        }
+    }
+}
+
+.most-popular__second-tier {
+    margin-top: $gs-baseline * 2;
+
+    @include mq(tablet) {
+        border-top: 1px solid $brightness-86;
+        display: flex !important;
+    }
+}
+
+.second-tier__item {
+    @include mq($until: tablet) {
+        border-top: 1px solid $brightness-86;
+    }
+
+    @include mq(tablet) {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+
+        & ~ * {
+            border-left: 1px solid $brightness-86;
+        }
+    }
+}
+
+// Simple content card
+.simple-content-card {
+    background-color: transparent !important;
+    color: $brightness-7;
+    padding: 0 ($gs-gutter / 2) $gs-baseline;
+    position: relative;
+    display: flex;
+
+    &:hover,
+    &:focus {
+        color: $brightness-7;
+        text-decoration: none;
+        background-color: $brightness-97 !important;
+
+        .fc-item__byline {
+            text-decoration: none;
+        }
+    }
+}
+
+.second-tier__item {
+    // Pseudo elements so the entire card is clickable
+    &:nth-child(1) .simple-content-card__headline:before,
+    &:nth-child(2) .simple-content-card__headline:before {
+            content: 'Most commented';
+            display: block;
+            font-weight: 700;
+            padding: ($gs-gutter / 6) 0 0;
+    }
+
+    &:nth-child(2) .simple-content-card__headline:before {
+        content: 'Most shared';
+    }
+}
+
+.simple-content-card__headline {
+    display: block;
+
+    .fc-item__byline {
+        display: block;
+    }
+}
+
+.simple-content-card__headline .js-headline-text {
+    color: $brightness-7;
+}
+
+.simple-content-card__image {
+    border-radius: 50%;
+    width: 90px;
+    height: 90px;
+    flex-basis: 90px;
+    flex-grow: 0;
+    flex-shrink: 0;
+    overflow: hidden;
+    margin-top: $gs-baseline * 2;
+    margin-left: $gs-gutter / 4;
+
+    .fc-item__image-container {
+        overflow: visible;
+    }
+
+    img {
+        object-fit: cover;
+        width: 90px;
+        height: 90px;
+    }
+}

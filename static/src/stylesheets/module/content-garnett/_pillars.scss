@@ -45,7 +45,6 @@
     .commentcount2__heading span,
     .inline-close svg,
     .inline-triangle,
-    .old-article-message .old-article-message--clock svg,
     .social-icon svg,
     .social-icon__svg {
         fill: $kickerColor;
@@ -135,6 +134,10 @@
     ._underline_1lj47_3:focus,
     ._underline_1lj47_3:hover {
         border-color: $kickerColor;
+    }
+
+    .tabs__tab--selected:after {
+        background-color: $kickerColor;
     }
 
     .comment-share-icon,
