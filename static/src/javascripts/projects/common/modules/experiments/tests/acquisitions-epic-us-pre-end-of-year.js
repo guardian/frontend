@@ -1,21 +1,7 @@
 // @flow
 import { makeABTest } from 'common/modules/commercial/contributions-utilities';
-import { acquisitionsEpicUsLeadingWithClimateTemplate } from 'common/modules/commercial/templates/acquisitions-epic-us-leading-with-climate';
-import type { EpicTemplate } from 'common/modules/commercial/contributions-utilities';
 
 const abTestName = 'AcquisitionsEpicUsPreEndOfYear';
-
-const usEndOfYearCampaignTemplate: EpicTemplate = (
-    { options = {} },
-    copy: AcquisitionsEpicTemplateCopy
-) =>
-    acquisitionsEpicUsLeadingWithClimateTemplate({
-        copy,
-        componentName: options.componentName,
-        buttonTemplate: options.buttonTemplate({
-            supportUrl: options.supportURL,
-        }),
-    });
 
 export const acquisitionsEpicUsPreEndOfYear: EpicABTest = makeABTest({
     id: abTestName,
@@ -71,22 +57,6 @@ export const acquisitionsEpicUsPreEndOfYear: EpicABTest = makeABTest({
                     ],
                     highlightedText:
                         'Help us defend the truth in 2019 and beyond by making a year-end contribution to The Guardian. Thank you.',
-                },
-            },
-        },
-        {
-            id: 'leading_with_climate',
-            products: [],
-            options: {
-                template: usEndOfYearCampaignTemplate,
-                copy: {
-                    paragraphs: [
-                        'Help us do that by supporting our high impact reporting that holds our leaders accountable. Just when the need is more critical than ever, and the signs more obvious, millions of Americans – and most powerful political leaders – still question established climate science. The Guardian reports on the environment as a matter of urgent priority, giving the most important stories the space they need.',
-                        'And this is not the only important story we need to tell. In 2018, The Guardian broke the story of Cambridge Analytica’s Facebook data breach; we recorded the human fallout from family separations; we charted the rise of the far right, and documented the growing impact of gun violence on Americans’ lives.',
-                        'We need your ongoing support to continue bringing The Guardian’s independent, high impact journalism to the world.',
-                    ],
-                    highlightedText:
-                        'Help us continue reporting on the stories that matter in 2019 and beyond by making a year-end contribution to The Guardian. Thank you.',
                 },
             },
         },
