@@ -1,21 +1,7 @@
 // @flow
 import { makeABTest } from 'common/modules/commercial/contributions-utilities';
-import { acquisitionsEpicUsLeadingWithClimateTemplate } from 'common/modules/commercial/templates/acquisitions-epic-us-leading-with-climate';
-import type { EpicTemplate } from 'common/modules/commercial/contributions-utilities';
 
 const abTestName = 'AcquisitionsEpicUsPreEndOfYear';
-
-const usEndOfYearCampaignTemplate: EpicTemplate = (
-    { options = {} },
-    copy: AcquisitionsEpicTemplateCopy
-) =>
-    acquisitionsEpicUsLeadingWithClimateTemplate({
-        copy,
-        componentName: options.componentName,
-        buttonTemplate: options.buttonTemplate({
-            supportUrl: options.supportURL,
-        }),
-    });
 
 export const acquisitionsEpicUsPreEndOfYear: EpicABTest = makeABTest({
     id: abTestName,
