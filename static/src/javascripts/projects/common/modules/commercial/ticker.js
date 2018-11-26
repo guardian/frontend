@@ -1,6 +1,6 @@
 // @flow
 let count = 0;
-let interval;
+let raf;
 let goal;
 let total;
 
@@ -31,15 +31,17 @@ const increaseCounter = () => {
     if (counterElement && counterElement instanceof HTMLElement) {
         counterElement.innerHTML = `$${count.toLocaleString()}`;
         if (count >= total) {
-            clearInterval(interval);
+            cancelAnimationFrame(raf);
             counterElement.innerHTML = `$${total.toLocaleString()}`;
+        } else {
+            requestAnimationFrame(increaseCounter);
         }
     }
 };
 
 const animateCount = () => {
-    if (interval === undefined) {
-        interval = setInterval(increaseCounter, 30);
+    if (raf === undefined) {
+        raf = requestAnimationFrame(increaseCounter);
     }
 };
 

@@ -80,6 +80,8 @@ export const acquisitionsEpicUsEndOfYearRound2: EpicABTest = makeABTest({
                 onInsert: () => {
                     initTicker();
                 },
+                // TODO remove
+                isUnlimited: true,
             },
         },
         {
@@ -91,6 +93,8 @@ export const acquisitionsEpicUsEndOfYearRound2: EpicABTest = makeABTest({
                 onInsert: () => {
                     initTicker();
                 },
+                // TODO remove
+                isUnlimited: true,
             },
         },
         {
@@ -102,6 +106,8 @@ export const acquisitionsEpicUsEndOfYearRound2: EpicABTest = makeABTest({
                 onInsert: () => {
                     initTicker();
                 },
+                // TODO remove
+                isUnlimited: true,
             },
         },
     ],
