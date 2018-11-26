@@ -49,8 +49,9 @@ object Badges {
   val midterm = Badge("us-news/us-midterm-elections-2018", Static("images/badges/midterm.svg"))
   val theAgeOfExtinction = Badge("environment/series/the-age-of-extinction", Static("images/badges/the-age-of-extinction.svg"))
   val theNewPopulism = Badge("world/series/the-new-populism", Static("images/badges/the-new-populism.svg"))
+  val theImplantFiles = Badge("society/series/the-implant-files", Static("images/badges/the-implant-files.svg"))
 
-  val allBadges = Seq(newArrivals, brexitGamble, beyondTheBlade, britainsDebt, paradisePapers, cambridgeAnalytica, specialReport, worldCup2018, nhs70, midterm, theAgeOfExtinction, theNewPopulism)
+  val allBadges = Seq(newArrivals, brexitGamble, beyondTheBlade, britainsDebt, paradisePapers, cambridgeAnalytica, specialReport, worldCup2018, nhs70, midterm, theAgeOfExtinction, theNewPopulism, theImplantFiles)
 
   def badgeFor(c: ContentType): Option[Badge] = {
     badgeForTags(c.tags.tags.map(_.id))

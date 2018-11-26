@@ -34,7 +34,7 @@ const criticalTimesCopy: AcquisitionsEpicTemplateCopy = {
 };
 
 const somethingYouCanDoCopy: AcquisitionsEpicTemplateCopy = {
-    heading: 'There’s something you can do &hellip;',
+    heading: 'There’s something you can do &hellip',
     paragraphs: [
         '&hellip; to protect independent journalism at a time when factual, trustworthy journalism is under threat. Please make a year-end gift to support The Guardian’s independent journalism. We’re asking our US readers to help us raise one million dollars by the new year to report on the stories that matter in 2019. Small or big, every contribution will help us reach our goal.',
         'The Guardian’s independence means that we can report on the stories that matter and pursue difficult investigations, challenging the powerful and holding them to account. No one edits our editor. No one steers our opinion. Our journalists have the freedom to report on the facts, with no commercial bias and without politicians or shareholders influencing their work.',
@@ -80,6 +80,9 @@ export const acquisitionsEpicUsEndOfYearRound2: EpicABTest = makeABTest({
                 onInsert: () => {
                     initTicker();
                 },
+
+                // TODO: remove
+                isUnlimited: true,
             },
         },
         {
@@ -91,6 +94,9 @@ export const acquisitionsEpicUsEndOfYearRound2: EpicABTest = makeABTest({
                 onInsert: () => {
                     initTicker();
                 },
+
+                // TODO: remove
+                isUnlimited: true,
             },
         },
         {
@@ -102,6 +108,9 @@ export const acquisitionsEpicUsEndOfYearRound2: EpicABTest = makeABTest({
                 onInsert: () => {
                     initTicker();
                 },
+
+                // TODO: remove
+                isUnlimited: true,
             },
         },
     ],
