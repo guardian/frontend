@@ -302,9 +302,19 @@
     border-radius: 30px;
     height: 34px;
 
-    .from-content-api.from-content-api {
+    .from-content-api.from-content-api & {
         border-bottom: 0;
-        color: #ffffff;
+        background: $highlight-main;
+        color: $brightness-7;
+
+        &:hover,
+        &:focus {
+            background: darken($highlight-main, 5);
+        }
+
+        .inline-icon {
+            fill: currentColor;
+        }
     }
 }
 
