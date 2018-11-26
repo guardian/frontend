@@ -16,7 +16,6 @@ try {
             return false;
         }
         if (shouldServeLotame()) {
-            // could we host the lotame tag instead? or maybe use a queue?
             var script = document.createElement('script');
             script.src = "https://tags.crwdcntrl.net/c/12666/cc.js";
             document.body.appendChild(script);
