@@ -115,10 +115,10 @@ object PageElement {
           .map { case (a, i) => ImageAsset.make(a, i) }
         val imageSources: Seq[ImageSource] = BodyMedia.all.map {
           case (weighting, widths) =>
-            val srcSet = widths.breakpoints.map { b =>
+            val srcSet = widths.breakpoints.flatMap { b =>
               ImgSrc.srcsetForBreakpoint(b, BodyMedia.inline.breakpoints, maybeImageMedia = Some(ImageMedia(signedAssets)))
             }
-            ImageSource(weighting, srcSet.flatten)
+            ImageSource(weighting, srcSet)
         }.toSeq
 
         List(ImageBlockElement(
