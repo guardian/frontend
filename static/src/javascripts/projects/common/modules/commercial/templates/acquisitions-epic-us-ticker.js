@@ -1,5 +1,4 @@
 // @flow
-import { appendToLastElement } from 'lib/array-utils';
 import { acquisitionsEpicTickerTemplate } from 'common/modules/commercial/templates/acquisitions-epic-ticker';
 
 export type TickerPosition = 'TOP' | 'BOTTOM';

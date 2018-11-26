@@ -43,7 +43,7 @@ const animateCount = () => {
     }
 };
 
-const populateText = (goal: number) => {
+const populateText = () => {
     const goalElement = document.querySelector(
         '.epic-ticker__goal .epic-ticker__count'
     );
@@ -64,7 +64,7 @@ const getData = () => {
             goal = parseInt(data.sheets.Sheet1[0].goal, 10);
 
             if (showCount) {
-                populateText(goal);
+                populateText();
                 setTimeout(() => {
                     animateCount();
                     animateBar();
