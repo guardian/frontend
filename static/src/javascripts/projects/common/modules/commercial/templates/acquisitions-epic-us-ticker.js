@@ -27,16 +27,14 @@ export const acquisitionsEpicUsTickerTemplate = ({
                 <h2 class="contributions__title contributions__title--big">
                     ${heading}
                 </h2>
-                ${appendToLastElement(
-                    paragraphs,
-                    ` <strong><span class="contributions__highlight">${highlightedText}</span></strong>`
-                )
-                    .map(paragraph => `<p>${paragraph}</p>`)
-                    .join('')}
+                ${paragraphs.map(paragraph => `<p>${paragraph}</p>`).join('')}
+                <p>
+                    <strong><span class="contributions__highlight">${highlightedText}</span></strong>
+                </p>
             </div>
-    
+
             ${buttonTemplate}
-            
+
             ${tickerPosition === 'BOTTOM' ? acquisitionsEpicTickerTemplate : ''}
         </div>
     </div>`;

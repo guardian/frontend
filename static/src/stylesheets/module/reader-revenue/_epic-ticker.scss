@@ -2,6 +2,16 @@
     .contributions__buttons {
         margin-bottom: 25px;
     }
+
+    // black button
+    a[href].contributions__contribute.contributions__contribute--epic {
+        background-color: #121212;
+        color: #ffffff;
+        // This is literally just to make the SVG arrow white
+        &:after {
+            background-image: svg-url('<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><path fill="white" stroke="white" d="M22.8 14.6L15.2 7l-.7.7 5.5 6.6H6v1.5h14l-5.5 6.6.7.7 7.6-7.6v-.9"/></svg>');
+        }
+    }
 }
 
 .epic-ticker {
@@ -22,12 +32,11 @@
     line-height: 1.4;
 }
 
-$progess-bar-height: 10px;
+$progress-bar-height: 10px;
 
 .epic-ticker__progress {
     width: 100%;
-    height: $progess-bar-height;
-    border-radius: 5px;
+    height: $progress-bar-height;
     overflow: hidden;
     background-color: #dcdcdc;
     position: absolute;
@@ -62,14 +71,14 @@ $progess-bar-height: 10px;
 .epic-ticker__goal {
     position: absolute;
     right: 0;
-    bottom: $progess-bar-height + 5px;
+    bottom: $progress-bar-height + 5px;
     text-align: right;
 }
 
 .epic-ticker__so-far {
     position: absolute;
     left: 0;
-    bottom: $progess-bar-height + 5px;
+    bottom: $progress-bar-height + 5px;
 }
 
 .epic-ticker__caption {

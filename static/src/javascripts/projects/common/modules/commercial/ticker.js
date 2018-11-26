@@ -43,13 +43,13 @@ const animateCount = () => {
     }
 };
 
-const populateText = () => {
+const populateText = (goal: number) => {
     const goalElement = document.querySelector(
         '.epic-ticker__goal .epic-ticker__count'
     );
 
     if (goalElement && goalElement instanceof HTMLElement) {
-        goalElement.innerHTML = `$${goalElement.toLocaleString()}`;
+        goalElement.innerHTML = `$${goal.toLocaleString()}`;
     }
 };
 
@@ -64,7 +64,7 @@ const getData = () => {
             goal = parseInt(data.sheets.Sheet1[0].goal, 10);
 
             if (showCount) {
-                populateText();
+                populateText(goal);
                 setTimeout(() => {
                     animateCount();
                     animateBar();
