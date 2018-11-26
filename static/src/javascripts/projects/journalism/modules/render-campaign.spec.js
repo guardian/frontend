@@ -8,7 +8,7 @@ const mock = (mockFn: any) => mockFn;
 jest.mock('journalism/modules/get-campaign');
 mock(getCampaign).mockImplementation(() => ({ title: 'A great campaign' }));
 
-describe('Create a campaign element and insert into an article', () => {
+describe('Create a campaign element and insert into an article in the right place', () => {
     beforeEach(() => {
         if (document.body) {
             document.body.innerHTML =
