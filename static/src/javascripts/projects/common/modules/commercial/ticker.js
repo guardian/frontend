@@ -49,7 +49,7 @@ const populateText = () => {
     );
 
     if (goalElement && goalElement instanceof HTMLElement) {
-        goalElement.innerHTML = `$${goalElement.toLocaleString()}`;
+        goalElement.innerHTML = `$${goal.toLocaleString()}`;
     }
 };
 
