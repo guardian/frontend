@@ -300,10 +300,11 @@ object ImgSrc extends Logging with implicits.Strings {
     imageContainer: ImageMedia,
     hidpi: Boolean
   ): SrcSet =
-    SrcSet(profile.bestSrcFor(imageContainer).get, profile.width.get * (if (hidpi) 2 else 1))
+    SrcSet(profile.bestSrcFor(imageContainer).getOrElse("unknown"), profile.width.get * (if (hidpi) 2 else 1))
 
+  // profile.width really shouldn't be None, but if it is use the inline image desktop default width
   def srcsetForProfile(profile: ImageProfile, path: String, hidpi: Boolean): SrcSet =
-    SrcSet(ImgSrc(path, profile), profile.width.get * (if (hidpi) 2 else 1))
+    SrcSet(ImgSrc(path, profile), profile.width.getOrElse(620) * (if (hidpi) 2 else 1))
 
   def getFallbackUrl(ImageElement: ImageMedia): Option[String] =
     Item300.bestSrcFor(ImageElement)
