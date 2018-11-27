@@ -32,7 +32,7 @@ const increaseCounter = () => {
         if (count >= total) {
             counterElement.innerHTML = `$${total.toLocaleString()}`;
         } else {
-            requestAnimationFrame(increaseCounter);
+            window.requestAnimationFrame(increaseCounter);
         }
     }
 };
@@ -59,8 +59,8 @@ const fetchDataAndAnimate = () => {
 
             if (showCount) {
                 populateText();
-                setTimeout(() => {
-                    requestAnimationFrame(increaseCounter);
+                window.setTimeout(() => {
+                    window.requestAnimationFrame(increaseCounter);
                     animateBar();
                 }, 500);
             }
