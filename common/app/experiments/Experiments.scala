@@ -54,5 +54,5 @@ object FakeShowcase extends Experiment(
   description = "upgrades an article to showcase to see what that does",
   owners = Seq(Owner.withGithub("aware")),
   sellByDate = new LocalDate(2019, 6, 6),
-  participationGroup = Perc20A
+  participationGroup = Perc10A
 )
