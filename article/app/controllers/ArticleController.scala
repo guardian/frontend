@@ -3,6 +3,7 @@ package controllers
 import com.gu.contentapi.client.model.v1.{ItemResponse, Content => ApiContent}
 import common._
 import contentapi.ContentApiClient
+import experiments.{ActiveExperiments, FakeShowcase, Participant}
 import implicits.{AmpFormat, EmailFormat, HtmlFormat, JsonFormat}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model.dotcomponents.DotcomponentsDataModel
@@ -85,12 +86,16 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
 
   private def render(path: String, article: ArticlePage)(implicit request: RequestHeader): Future[Result] = {
     Future {
+      val articleCopy = ActiveExperiments.groupFor(FakeShowcase) match {
+        case Participant => article.copy(article = article.article.copy(article.article.content.copy(isImmersiveOverride = true)))
+        case _ => article
+      }
       request.getRequestFormat match {
         case JsonFormat if request.isGuui => common.renderJson(getGuuiJson(article), article).as("application/json")
-        case JsonFormat => common.renderJson(getJson(article), article)
-        case EmailFormat => common.renderEmail(ArticleEmailHtmlPage.html(article), article)
-        case HtmlFormat => common.renderHtml(ArticleHtmlPage.html(article), article)
-        case AmpFormat => common.renderHtml(views.html.articleAMP(article), article)
+        case JsonFormat => common.renderJson(getJson(articleCopy), articleCopy)
+        case EmailFormat => common.renderEmail(ArticleEmailHtmlPage.html(articleCopy), articleCopy)
+        case HtmlFormat => common.renderHtml(ArticleHtmlPage.html(articleCopy), articleCopy)
+        case AmpFormat => common.renderHtml(views.html.articleAMP(articleCopy), articleCopy)
       }
     }
   }
