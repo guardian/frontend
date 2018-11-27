@@ -40,7 +40,7 @@
         <meta name="msapplication-TileColor" content="#005689" />
         <meta name="msapplication-TileImage" content="@UncachedAssets.at("images/windows_tile_144_b.png")" />
 
-        <link href="@UncachedWebAssets.at("lib/bootstrap/css/bootstrap.min.css")" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="@Static("stylesheets/head.admin.css")" />
         <link href="@UncachedAssets.at("css/admin.css")" rel="stylesheet">
         <style>
             .ajax-loading { background-image: url('@UncachedAssets.at("images/ajax-loader.gif")'); }
@@ -56,27 +56,8 @@
 
     </head>
     <body>
+        @admin_head(isAuthed)
         <div class="container-fluid container--global @{container.map{ cssContainer => s"container--$cssContainer"}} ">
-
-            <div class="global-nav navbar navbar-default">
-                <div class="container-fluid">
-                    <div class="navbar-header">
-                        <a class="navbar-brand" href="/admin">Home</a>
-                    </div>
-                    <p class="navbar-text label label-warning">Environment: @Configuration.environment.stage</p>
-                    @if(isAuthed){
-                        <ul class="nav navbar-nav navbar-right">
-                            <li>
-                                <a href="/logout" id="logout-button">Logout</a>
-                            </li>
-                        </ul>
-                    } else {
-                        <form action="@controllers.admin.routes.OAuthLoginAdminController.login()" method="post" class="navbar-form navbar-right">
-                            <input value="Log In" class="btn btn-primary" type="submit" id="login-button">
-                        </form>
-                    }
-                </div>
-            </div>
 
             @content
 
