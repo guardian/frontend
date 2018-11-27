@@ -86,17 +86,23 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
 
   private def render(path: String, article: ArticlePage)(implicit request: RequestHeader): Future[Result] = {
     Future {
-      println(request.path)
-      val articleCopy = ActiveExperiments.groupFor(FakeShowcase) match {
-        case Participant if FakeShowcase.switch.isSwitchedOn && request.path == "/travel/2018/nov/26/locals-guide-to-jamaica-10-top-tips-rasta-food-ganja-coffee" => article.copy(article = article.article.copy(article.article.content.copy(isImmersiveOverride = true)))
-        case _ => article
-      }
       request.getRequestFormat match {
         case JsonFormat if request.isGuui => common.renderJson(getGuuiJson(article), article).as("application/json")
-        case JsonFormat => common.renderJson(getJson(articleCopy), articleCopy)
-        case EmailFormat => common.renderEmail(ArticleEmailHtmlPage.html(articleCopy), articleCopy)
-        case HtmlFormat => common.renderHtml(ArticleHtmlPage.html(articleCopy), articleCopy)
-        case AmpFormat => common.renderHtml(views.html.articleAMP(articleCopy), articleCopy)
+        case JsonFormat => common.renderJson(getJson(article), article)
+        case EmailFormat => common.renderEmail(ArticleEmailHtmlPage.html(article), article)
+        case HtmlFormat => {
+          if(
+            FakeShowcase.switch.isSwitchedOn &&
+             ActiveExperiments.isParticipating(FakeShowcase)
+            && request.path == "/travel/2018/nov/26/locals-guide-to-jamaica-10-top-tips-rasta-food-ganja-coffee") {
+            val articleCopy = article.copy(article = article.article.copy(article.article.content.copy(isImmersiveOverride = true)))
+            common.renderHtml(ArticleHtmlPage.html(articleCopy), articleCopy)
+          }
+          else {
+          common.renderHtml(ArticleHtmlPage.html(article), article)
+          }
+        }
+        case AmpFormat => common.renderHtml(views.html.articleAMP(article), article)
       }
     }
   }
