@@ -57,7 +57,7 @@ const populateText = () => {
     }
 };
 
-const getData = () => {
+const fetchDataAndAnimate = () => {
     fetch(
         'https://interactive.guim.co.uk/docsdata-test/1ySn7Ol2NQLvvSw_eAnVrPuuRnaGOxUmaUs6svtu_irU.json'
     )
@@ -78,5 +78,5 @@ const getData = () => {
 };
 
 export const initTicker = () => {
-    getData();
+    fetchDataAndAnimate();
 };
