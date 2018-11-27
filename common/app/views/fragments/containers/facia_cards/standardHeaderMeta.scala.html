@@ -7,7 +7,7 @@
 @import model.Badges.badgeFor
 
 @defining((containerDefinition.displayName, containerDefinition.href)) { case (title, href) =>
-    <div class="fc-container__header
+    <header class="fc-container__header
                 @if(containerDefinition.customHeader.isEmpty) {js-container__header}
                 @badgeFor(containerDefinition).map { badge => fc-container__header--is-badged
 	                @badge.classModifier.map(modifier => s"fc-container__header--$modifier")
@@ -25,10 +25,10 @@
                                 <img class="badge-slot__img" src="@badge.imageUrl" alt="" />
                             </div>
                         }
-                        <span class="fc-container__title__text">@Localisation(title)</span>
+                        <h2 class="fc-container__title__text">@Localisation(title)</h2>
                     </a>
                     }.getOrElse {
-                        <span tabindex="0">@Localisation(title)</span>
+                        <h2 tabindex="0">@Localisation(title)</h2>
                     }
 
                     @if(containerDefinition.showDateHeader) {
@@ -61,5 +61,5 @@
                 }
             }
         }
-    </div>
+    </header>
 }

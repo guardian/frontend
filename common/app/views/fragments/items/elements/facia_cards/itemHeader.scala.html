@@ -7,9 +7,5 @@
     "fc-item__title" -> true,
     "fc-item__title--quoted" -> showQuote
 ))) { case (innerHtml, classes) =>
-    @if(isFirstItemOnPage) {
-        <h1 class="@classes">@innerHtml</h1>
-    } else {
-        <h2 class="@classes">@innerHtml</h2>
-    }
+    <h3 class="@classes">@innerHtml</h3>
 }
