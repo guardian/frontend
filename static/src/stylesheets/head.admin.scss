@@ -1,3 +1,5 @@
+@import 'admin/drama';
+
 $brand-primary: #052962;
 $brand-secondary: #ffe500;
 $panel-body-padding: 5px 10px 7.5px;
@@ -9,7 +11,7 @@ $headings-font-weight: 700;
 $border-radius-base: 0;
 $border-radius-large: 0;
 $border-radius-small: 0;
-$grid-gutter-width: 15px;
+$grid-gutter-width: 20px;
 $panel-default-heading-bg: #f7f7f7;
 $panel-bg: $panel-default-heading-bg;
 $nav-pills-active-link-hover-color: #121212;
@@ -62,12 +64,14 @@ $nav-pills-active-link-hover-bg: $brand-secondary;
         display: flex;
     }
     .nav {
-        border-left: 1px solid #ffffff;
+        border-left: 1px solid #506991;
     }
 }
 
-.navbar-header {
+.navbar-right {
     flex: 1 1 0;
+    display: flex;
+    justify-content: flex-end;
 }
 
 .navbar-brand {
@@ -110,6 +114,7 @@ $nav-pills-active-link-hover-bg: $brand-secondary;
 
 .navbar-dark .nav>li>a {
     color: #ffffff;
+    border-left: 1px solid #506991;
 }
 
 .navbar-dark .nav>li>a:focus, .navbar-dark .nav>li>a:hover {
@@ -196,7 +201,7 @@ $nav-pills-active-link-hover-bg: $brand-secondary;
         height: calc(100vh - 50px);
         top: 50px;
         left: 0;
-        flex: 1 1 250px;
+        flex: 1 1 300px;
         background: $panel-default-heading-bg;
         border-right: 1px solid $gray-lighter;
         padding: $grid-gutter-width/2 $grid-gutter-width;
