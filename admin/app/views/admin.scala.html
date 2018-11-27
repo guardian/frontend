@@ -6,11 +6,13 @@
     <div class="springboard">
 
         <div>
-            <h3>Analytics</h3>
             <div class="panel panel-default well--front">
-                <div class="panel-heading">Monitoring, analytics and performance.</div>
+                <div class="panel-heading">
+                    <h3>Analytics</h3>
+                    Monitoring, analytics and performance.
+                </div>
                 <div class="panel-body">
-                    <ul>
+                    <ul class="nav nav-pills nav-stacked nav-bleed">
                         <li><a href="@controllers.admin.routes.AnalyticsController.abtests()">A/B Tests</a></li>
                         <li><a href="@controllers.admin.routes.AnalyticsConfidenceController.renderConfidence()">Confidence</a></li>
                     </ul>
@@ -19,11 +21,13 @@
         </div>
 
         <div>
-            <h3>Development tools</h3>
             <div class="panel panel-default well--front">
-                <div class="panel-heading">Tools for the development team.</div>
+                <div class="panel-heading">
+                    <h3>Development tools</h3>
+                    Tools for the development team.
+                </div>
                 <div class="panel-body">
-                    <ul>
+                    <ul class="nav nav-pills nav-stacked nav-bleed">
                         <li><a href="/dev/switchboard">Switchboard</a></li>
                         <li><a href="@Configuration.Elk.kibanaUrl/goto/0614b5aa7094c4a17a3d5d9779f36a69">Deploy dashboard</a></li>
                         @if(R2PagePressServiceSwitch.isSwitchedOn) {
@@ -40,18 +44,20 @@
         </div>
 
         <div>
-            <h3>Metrics</h3>
             <div class="panel panel-default well--front">
-                <div class="panel-heading">Ops metrics (is the site healthy?).</div>
+                <div class="panel-heading">
+                    <h3>Metrics</h3>
+                    Ops metrics (is the site healthy?).
+                </div>
                 <div class="panel-body">
-                    <ul>
+                    <ul class="nav nav-pills nav-stacked nav-bleed">
                         <li><a href="https://eu-west-1.console.aws.amazon.com/cloudwatch/home?region=eu-west-1#dashboards:name=OKR">OKR dashboard (requires AWS access)</a></li>
                         <li><a href="@Configuration.Elk.kibanaUrl">Kibana (Server side logs)</a></li>
                         <li><a href="@controllers.admin.routes.MetricsController.renderLoadBalancers()">Load Balancers</a></li>
                         <li><a href="@controllers.admin.routes.FastlyController.renderFastly()">Fastly</a></li>
                         <li>
                             <a href="@controllers.admin.routes.MetricsController.renderErrors()">Errors</a>
-                            <ul>
+                            <ul class="nav nav-pills nav-stacked nav-bleed">
                                 <li><a href="@controllers.admin.routes.MetricsController.render4XX()">4XX</a></li>
                                 <li><a href="@controllers.admin.routes.MetricsController.render5XX()">5XX</a></li>
                                 <li><a href="@controllers.admin.routes.MetricsController.renderGooglebot404s()">Googlebot 404s</a></li>
@@ -66,11 +72,13 @@
         </div>
 
         <div>
-            <h3>Troubleshoot</h3>
             <div class="panel panel-default well--front">
-                <div class="panel-heading">Diagnose problems with features.</div>
+                <div class="panel-heading">
+                    <h3>Troubleshoot</h3>
+                    Diagnose problems with features.
+                </div>
                 <div class="panel-body">
-                    <ul>
+                    <ul class="nav nav-pills nav-stacked nav-bleed">
                         <li><a href="@controllers.admin.routes.TroubleshooterController.index()">Check a path</a></li>
                         <li><a href="@controllers.admin.routes.SportTroubleshooterController.renderFootballTroubleshooter()">Football feeds</a></li>
                         <li><a href="@controllers.admin.routes.SportTroubleshooterController.renderCricketTroubleshooter()">Cricket feeds</a></li>
@@ -80,11 +88,13 @@
         </div>
 
         <div>
-            <h3>Football admin</h3>
             <div class="panel panel-default well--front">
-                <div class="panel-heading">Tools for including football statistics on pages.</div>
+                <div class="panel-heading">
+                    <h3>Football admin</h3>
+                    Tools for including football statistics on pages.
+                </div>
                 <div class="panel-body">
-                    <ul>
+                    <ul class="nav nav-pills nav-stacked nav-bleed">
                         <li><a href="@controllers.admin.routes.SiteController.index()">Main page</a></li>
                         <li><a href="@controllers.admin.routes.TablesController.tablesIndex()">League tables</a></li>
                         <li><a href="@controllers.admin.routes.PlayerController.playerIndex()">Players</a></li>
@@ -95,11 +105,13 @@
         </div>
 
         <div>
-            <h3>Commercial & RR Tools</h3>
             <div class="panel panel-default well--front">
-                <div class="panel-heading">Tools for the teams that make money</div>
+                <div class="panel-heading">
+                    <h3>Commercial & RR Tools</h3>
+                    Tools for the teams that make money
+                </div>
                 <div class="panel-body">
-                    <ul>
+                    <ul class="nav nav-pills nav-stacked nav-bleed">
                         <li><a href="@controllers.admin.routes.CommercialController.renderCommercialMenu()">Commercial Tools</a></li>
                         <li><a href="@controllers.admin.routes.ReaderRevenueAdminController.renderReaderRevenueMenu()">Reader Revenue Tools</a></li>
                     </ul>

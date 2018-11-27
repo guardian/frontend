@@ -2,25 +2,25 @@
 @(lastModified: Long)(implicit flash: Flash, request: RequestHeader, context: model.ApplicationContext)
 @import controllers.admin.routes.UncachedAssets
 @defining(conf.switches.Switches.grouped){ switchGroups =>
-    @admin_main("Switchboard", isAuthed = true) {
+    @admin_main("Switchboard", isAuthed = true, container = Some("with-nav")) {
     <link href="@UncachedAssets.at("css/switchboard.css")" rel="stylesheet">
     <link href="@UncachedAssets.at("css/radiator.css")" rel="stylesheet">
-    @if(flash.get("error").isDefined) { <h1 style="color:#bd362f">@flash.get("error").get</h1> }
+        <div class="container__nav">
+            <h3 class="h4">Switch Groups</h3>
+            <ul class="nav nav-pills nav-stacked nav-bleed">
+            @for((group, _) <- switchGroups){
+                <li><a href="#@views.support.URLEncode(group.name)">@group.name</a></li>
+            }
+            </ul>
+        </div>
+        <div class="container__main">
+        @if(flash.get("error").isDefined) { <h1 style="color:#bd362f">@flash.get("error").get</h1> }
     <p>
         <blockquote>
             <em>"Death by switches."</em>
             <footer>Nick Haley</footer>
         </blockquote>
     </p>
-    <div>
-        <h3>Switch Groups</h3>
-        <ul class="multi-column--3">
-        @for((group, _) <- switchGroups){
-            <li><a href="#@views.support.URLEncode(group.name)">@group.name</a></li>
-        }
-        </ul>
-    </div>
-    <hr>
 
     <div class="row-fluid">
         <form id="switchboard" action="/dev/switchboard" method="POST">
@@ -55,5 +55,6 @@
             </footer>
         </form>
     </div>
+        </div>
     }
 }
