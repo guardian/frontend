@@ -77,7 +77,7 @@ export const acquisitionsEpicUsEndOfYearRound2: EpicABTest = makeABTest({
             options: {
                 copy: criticalTimesCopy,
                 template: createTemplate('TOP'),
-                onInsert: () => {
+                onView: () => {
                     initTicker();
                 },
             },
@@ -88,7 +88,7 @@ export const acquisitionsEpicUsEndOfYearRound2: EpicABTest = makeABTest({
             options: {
                 copy: criticalTimesCopy,
                 template: createTemplate('BOTTOM'),
-                onInsert: () => {
+                onView: () => {
                     initTicker();
                 },
             },
@@ -99,7 +99,7 @@ export const acquisitionsEpicUsEndOfYearRound2: EpicABTest = makeABTest({
             options: {
                 copy: somethingYouCanDoCopy,
                 template: createTemplate('BOTTOM'),
-                onInsert: () => {
+                onView: () => {
                     initTicker();
                 },
             },
