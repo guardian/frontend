@@ -48,3 +48,10 @@ object OldAudioPage extends Experiment(
   participationGroup = Perc5A
 )
 
+object FakeShowcase extends Experiment(
+  name = "ab-aw-article",
+  description = "upgrades an article to showcase to see what that does",
+  owners = Seq(Owner.withGithub("aware")),
+  sellByDate = new LocalDate(2019, 6, 6),
+  participationGroup = Perc20A
+)

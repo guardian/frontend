@@ -16,6 +16,7 @@ import model.pressed._
 import org.jsoup.{Jsoup, nodes}
 import org.jsoup.safety.Whitelist
 import com.github.nscala_time.time.Imports._
+import experiments.{ActiveExperiments, FakeShowcase, Participant}
 import play.api.libs.json._
 import views.support._
 
@@ -80,7 +81,8 @@ final case class Content(
   lazy val isGallery = metadata.contentType.contains(DotcomContentType.Gallery)
   lazy val isPhotoEssay = fields.displayHint.contains("photoEssay")
   lazy val isColumn = fields.displayHint.contains("column")
-  lazy val isImmersive = fields.displayHint.contains("immersive") || isGallery || tags.isTheMinuteArticle || isPhotoEssay
+  lazy val isImmersive = fields.displayHint.contains("immersive") || isGallery || tags.isTheMinuteArticle || isPhotoEssay || isImmersiveOverride
+  lazy val isImmersiveOverride =  ActiveExperiments.groupFor(FakeShowcase) == Participant
   lazy val isPaidContent: Boolean = tags.tags.exists{ tag => tag.id == "tone/advertisement-features" }
   lazy val campaigns: List[Campaign] = _root_.commercial.targeting.CampaignAgent.getCampaignsForTags(tags.tags.map(_.id))
 
