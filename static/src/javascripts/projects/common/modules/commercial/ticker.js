@@ -18,9 +18,7 @@ const animateBar = () => {
     );
 
     if (progressBarElement && progressBarElement instanceof HTMLElement) {
-        requestAnimationFrame(() => {
-            progressBarElement.style.transform = `translateX(${percentageTotalAsNegative()}%)`;
-        });
+        progressBarElement.style.transform = `translateX(${percentageTotalAsNegative()}%)`;
     }
 };
 
