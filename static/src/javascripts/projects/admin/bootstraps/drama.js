@@ -1,5 +1,5 @@
 // @flow
-const typewrite = (message, $target) =>
+const typewrite = (message: string, $target: Element) =>
     new Promise(yay => {
         let i = 0;
         const len = message.length;
@@ -18,7 +18,7 @@ const typewrite = (message, $target) =>
         }, 10);
     });
 
-const timeout = (to, $target) =>
+const timeout = (to: number, $target: Element) =>
     new Promise(yay => {
         const target = Date.now() + to * 1000;
         const loop = () =>
@@ -39,7 +39,7 @@ const timeout = (to, $target) =>
         loop();
     });
 
-const RawMessage = title => {
+const RawMessage = (title: string) => {
     const $wrapper = document.createElement('div');
     $wrapper.classList.add('admin-drama__message');
     const $title = document.createElement('span');
@@ -53,13 +53,13 @@ const RawMessage = title => {
         $subtitle,
         $title,
         destroy: () => {
-            $wrapper.dataset.out = true;
+            $wrapper.dataset.out = 'true';
             // setTimeout(()=>{$wrapper.remove()},200);
         },
     };
 };
 
-const Message = (title, subtitle) => {
+const Message = (title: string, subtitle: string) => {
     const { $wrapper, $title, $subtitle, destroy } = RawMessage(title);
     return {
         $wrapper,
@@ -72,7 +72,7 @@ const Message = (title, subtitle) => {
 
 const Timeout = (title, to) => {
     const { $wrapper, $title, $subtitle, destroy } = RawMessage(title);
-    $wrapper.dataset.critical = true;
+    $wrapper.dataset.critical = 'true';
     return {
         $wrapper,
         $title,
@@ -84,7 +84,7 @@ const Timeout = (title, to) => {
 
 const Line = (line, isHead = false) => {
     const $wrapper = document.createElement('div');
-    if(isHead) $wrapper.classList.add('admin-drama__head');
+    if (isHead) $wrapper.classList.add('admin-drama__head');
     return {
         $wrapper,
         type: () => typewrite(line, $wrapper),
@@ -104,22 +104,32 @@ const text = [
     Line('Input launch passphrase now'),
 ];
 
-const start = ($switchboard, $holder) => {
+const start = ($switchboard: HTMLFormElement, $holder: Element) => {
     window.scrollTo(0, 0);
 
     const $drama = $holder.querySelector('.admin-drama-innermost');
     const $bg = $holder.querySelector('.admin-drama');
+    const $html = document.documentElement;
+
+    if (!$drama || !$bg || !$html) {
+        throw Error('missing elements');
+    }
+
     const $input = $drama.querySelector('.admin-drama__input');
+
+    if (!$input) {
+        throw Error('missing elements');
+    }
 
     const $form = document.createElement('form');
     const $txt = document.createElement('input');
     const $status = Message('Status report', 'access granted');
     const $countdown = Timeout('Launch in', 5);
 
+    $txt.type = 'password';
     $form.appendChild($txt);
-    $input.type = 'password';
 
-    document.documentElement.classList.add('drama-init');
+    $html.classList.add('drama-init');
 
     setTimeout(() => {
         $switchboard.append($holder);
@@ -142,9 +152,9 @@ const start = ($switchboard, $holder) => {
             $txt.focus();
             $form.addEventListener('submit', ev => {
                 ev.preventDefault();
-                $input.dataset.disabled = true;
+                $input.dataset.disabled = 'true';
                 setTimeout(() => {
-                    $bg.dataset.white = true;
+                    $bg.dataset.white = 'true';
                     $drama.appendChild($status.$wrapper);
                     $status.type().then(() => {
                         $status.destroy();
@@ -161,8 +171,13 @@ const start = ($switchboard, $holder) => {
 };
 
 const init = () => {
-    const $switchboard = document.querySelector('#switchboard');
+    const $switchboard = ((document.querySelector(
+        '#switchboard'
+    ): any): HTMLFormElement);
+    if (!$switchboard || !$switchboard.submit) return;
     const $trigger = $switchboard.querySelector('.drama-trigger');
+    if (!$trigger) return;
+
     const $holder = document.createElement('div');
     $holder.innerHTML = `
         <div class="admin-drama admin-drama"><div class="admin-drama__shaker admin-drama-innermost">
