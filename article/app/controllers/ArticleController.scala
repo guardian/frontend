@@ -86,8 +86,9 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
 
   private def render(path: String, article: ArticlePage)(implicit request: RequestHeader): Future[Result] = {
     Future {
+      println(request.path)
       val articleCopy = ActiveExperiments.groupFor(FakeShowcase) match {
-        case Participant => article.copy(article = article.article.copy(article.article.content.copy(isImmersiveOverride = true)))
+        case Participant if FakeShowcase.switch.isSwitchedOn && request.path == "/travel/2018/nov/26/locals-guide-to-jamaica-10-top-tips-rasta-food-ganja-coffee" => article.copy(article = article.article.copy(article.article.content.copy(isImmersiveOverride = true)))
         case _ => article
       }
       request.getRequestFormat match {
