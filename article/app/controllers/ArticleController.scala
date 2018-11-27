@@ -95,7 +95,15 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
             FakeShowcase.switch.isSwitchedOn &&
              ActiveExperiments.isParticipating(FakeShowcase)
             && request.path == "/travel/2018/nov/26/locals-guide-to-jamaica-10-top-tips-rasta-food-ganja-coffee") {
-            val articleCopy = article.copy(article = article.article.copy(article.article.content.copy(isImmersiveOverride = true)))
+            val articleCopy = article.copy(
+              article = article.article.copy(
+                article.article.content.copy(
+                  isImmersiveOverride = true,
+                  metadata = article.article.content.metadata.copy(
+                    contentWithSlimHeader = true)
+                )
+              )
+            )
             common.renderHtml(ArticleHtmlPage.html(articleCopy), articleCopy)
           }
           else {
