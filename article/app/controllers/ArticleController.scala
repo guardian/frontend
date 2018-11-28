@@ -94,7 +94,7 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
           if(
             FakeShowcase.switch.isSwitchedOn &&
              ActiveExperiments.isParticipating(FakeShowcase)
-            && request.path == "/travel/2018/nov/26/locals-guide-to-jamaica-10-top-tips-rasta-food-ganja-coffee") {
+            && request.path == "/world/2018/nov/28/people-of-african-descent-face-dire-picture-of-racism-in-eu") {
             val articleCopy = article.copy(
               article = article.article.copy(
                 article.article.content.copy(
