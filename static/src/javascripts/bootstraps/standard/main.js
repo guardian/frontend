@@ -58,7 +58,7 @@ const showHiringMessage = (): void => {
                     '%cWe are hiring – ever thought about joining us? \n' +
                     '%chttps://workforus.theguardian.com/careers/digital-development%c \n' +
                     '\n',
-                'font-family: Georgia, serif; font-size: 32px; color: #005689',
+                'font-family: Georgia, serif; font-size: 32px; color: #052962',
                 'font-family: Georgia, serif; font-size: 16px; color: #767676',
                 'font-family: Helvetica Neue, sans-serif; font-size: 11px; text-decoration: underline; line-height: 1.2rem; color: #767676',
                 ''
