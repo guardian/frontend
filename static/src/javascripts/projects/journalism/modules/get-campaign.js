@@ -7,13 +7,15 @@ export const getCampaigns = () => {
     const allCampaigns = config.get('page.campaigns');
     const allCallouts = allCampaigns.filter(isCallout);
 
-    console.log('allcallouts', allCallouts);
-
-    return allCallouts.map(callout => ({
-        name: callout.name,
-        title: callout.fields.callout,
-        description: callout.fields.description || `<p>&nbsp;</p>`,
-        formFields: callout.fields.formFields,
-        formId: callout.fields.formId,
-    }));
+    return allCallouts.reduce((acc, curr) => {
+        acc[curr.fields.tagName] = {
+            name: curr.name,
+            title: curr.fields.callout,
+            description: curr.fields.description || '',
+            formFields: curr.fields.formFields,
+            formId: curr.fields.formId,
+            tagName: curr.fields.tagName,
+        };
+        return acc;
+    }, {});
 };

@@ -1,6 +1,6 @@
 // @flow
 
-import { getCampaign } from 'journalism/modules/get-campaign';
+import { getCampaigns } from 'journalism/modules/get-campaign';
 import config from 'lib/config';
 
 jest.mock('lib/config');
@@ -19,6 +19,7 @@ const twoCampaigns = [
             description: 'Tell us your story and upload a file',
             formFields: [],
             _type: 'callout',
+            tagName: 'callout-1',
         },
     },
     {
@@ -45,6 +46,7 @@ const twoCampaigns = [
             description: 'How far away is it?',
             formFields: [],
             _type: 'callout',
+            tagName: 'exciting-callout-tagname',
         },
     },
 ];
@@ -74,6 +76,7 @@ const oneCampaign = [
             description: 'How far away is it?',
             formFields: [],
             _type: 'callout',
+            tagName: 'exciting-callout-tagname',
         },
     },
 ];
@@ -91,29 +94,45 @@ describe('Finding the callouts to display ', () => {
 
     it('it shows a callout campaign if there is one present', () => {
         const callout1 = {
-            title: 'Do you have a supermarket near you?',
-            description: 'How far away is it?',
-            formFields: [],
-            formId: 3028078,
+            'exciting-callout-tagname': {
+                name: 'Exciting callout number 3',
+                title: 'Do you have a supermarket near you?',
+                description: 'How far away is it?',
+                formFields: [],
+                formId: 3028078,
+                tagName: 'exciting-callout-tagname',
+            },
         };
 
-        expect(getCampaign()).toEqual(callout1);
+        expect(getCampaigns()).toEqual(callout1);
     });
 
     // change this when new targeting rules come in
-    it('if there are two or more callout campaigns, it shows the last one', () => {
+    it('if there are two or more callouts, all of them are returned', () => {
         config.page.campaigns = twoCampaigns;
         const callout2 = {
-            title: 'Do you have a supermarket near you?',
-            description: 'How far away is it?',
-            formFields: [],
-            formId: 3028078,
+            'callout-1': {
+                description: 'Tell us your story and upload a file',
+                formFields: [],
+                formId: 2994970,
+                name: 'Callout 1',
+                tagName: 'callout-1',
+                title: 'Has this happened to you?',
+            },
+            'exciting-callout-tagname': {
+                name: 'Exciting callout number 3',
+                title: 'Do you have a supermarket near you?',
+                description: 'How far away is it?',
+                formFields: [],
+                formId: 3028078,
+                tagName: 'exciting-callout-tagname',
+            },
         };
-        expect(getCampaign()).toEqual(callout2);
+        expect(getCampaigns()).toEqual(callout2);
     });
 
     it('if there are no callout campaigns, nothing is shown', () => {
         config.page.campaigns = [];
-        expect(getCampaign()).toEqual(undefined);
+        expect(getCampaigns()).toEqual({});
     });
 });
