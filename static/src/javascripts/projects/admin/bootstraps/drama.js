@@ -15,7 +15,7 @@ const typewrite = (message: string, $target: Element) =>
                     yay();
                 }, 400);
             }
-        }, 10);
+        }, 25);
     });
 
 const timeout = (to: number, $target: Element) =>
@@ -70,7 +70,7 @@ const Message = (title: string, subtitle: string) => {
     };
 };
 
-const Timeout = (title, to) => {
+const Timeout = (title: string, to: number) => {
     const { $wrapper, $title, $subtitle, destroy } = RawMessage(title);
     $wrapper.dataset.critical = 'true';
     return {
@@ -124,7 +124,7 @@ const start = ($switchboard: HTMLFormElement, $holder: Element) => {
     const $form = document.createElement('form');
     const $txt = document.createElement('input');
     const $status = Message('Status report', 'access granted');
-    const $countdown = Timeout('Launch in', 5);
+    const $countdown = Timeout('Launch in', 3);
 
     $txt.type = 'password';
     $form.appendChild($txt);

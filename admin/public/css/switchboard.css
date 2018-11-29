@@ -2,31 +2,6 @@ html {
     overflow-y: scroll;
 }
 
-.multi-column--3 {
-    -moz-column-count: 3;
-    -moz-column-gap: 20px;
-    -webkit-column-count: 3;
-    -webkit-column-gap: 20px;
-    column-count: 3;
-    column-gap: 20px;
-    list-style-position: inside;
-}
-
-.dropdown-menu {
-    position: absolute;
-    display: block;
-    top: auto;
-    margin-top: -10px;
-}
-
-.row, .dropdown-menu {
-    margin-left: 20px;
-}
-
-.row {
-    margin: 20px;
-}
-
 .sub-heading {
     font-style: italic;
 }
@@ -46,25 +21,4 @@ input[type=text] {
 #clear-frontend {
     position: absolute;
     right: 0;
-}
-
-#switchboard label:hover {
-    color: #699;
-    cursor: pointer;
-}
-
-#switchboard .checkbox:nth-child(odd) {
-    background-color: #E9E9E9;
-}
-
-.actions {
-    position: sticky;
-    bottom: 0;
-    left:0;
-    right:0;
-    padding: 20px 0;
-    background: #fff;
-    border-top: 1px solid #eee;
-    display: flex;
-    justify-content: space-between;
 }

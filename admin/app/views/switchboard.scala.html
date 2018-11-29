@@ -5,14 +5,6 @@
     @admin_main("Switchboard", isAuthed = true, container = Some("with-nav")) {
     <link href="@UncachedAssets.at("css/switchboard.css")" rel="stylesheet">
     <link href="@UncachedAssets.at("css/radiator.css")" rel="stylesheet">
-        <div class="container__nav">
-            <h3 class="h4">Switch Groups</h3>
-            <ul class="nav nav-pills nav-stacked nav-bleed">
-            @for((group, _) <- switchGroups){
-                <li><a href="#@views.support.URLEncode(group.name)">@group.name</a></li>
-            }
-            </ul>
-        </div>
         <div class="container__main">
         @if(flash.get("error").isDefined) { <h1 style="color:#bd362f">@flash.get("error").get</h1> }
     <p>
@@ -57,5 +49,14 @@
         </form>
     </div>
         </div>
+        <div class="container__nav">
+            <h3 class="h4">Switch Groups</h3>
+            <ul class="nav nav-pills nav-stacked nav-bleed">
+            @for((group, _) <- switchGroups){
+                <li><a href="#@views.support.URLEncode(group.name)">@group.name</a></li>
+            }
+            </ul>
+        </div>
+
     }
 }

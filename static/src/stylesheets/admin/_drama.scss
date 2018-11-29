@@ -19,7 +19,7 @@ html.drama-init {
         background: #ffffff;
         height: 100vh;
         overflow: hidden;
-        animation: drama-off 2s linear both;
+        animation: drama-off 1s linear both;
     }
 }
 
@@ -109,7 +109,7 @@ html .admin-drama__input {
     line-height: 1;
     padding: 20px;
     width: 800px;
-    animation: drama-message .25s;
+    animation: drama-message .15s;
     filter: blur(.5px);
     &[data-out] {
         animation: drama-message-out .15s both;
