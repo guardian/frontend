@@ -27,7 +27,7 @@ html.drama-init {
     color: #00f6ff;
     text-shadow: 1px 0 3px rgba(255, 255, 255, .2);
     font-family: 'Roboto Mono', monospace;
-    z-index: 99999999999999;
+    z-index: $z-index-overlay;
     font-size: 14px;
     letter-spacing: 2px;
     line-height: 2;

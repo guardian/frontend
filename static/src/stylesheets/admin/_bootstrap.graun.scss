@@ -1,3 +1,5 @@
+$brightness-7: #121212;
+
 $brand-primary: #052962;
 $brand-secondary: #ffe500;
 $panel-body-padding: 5px 10px 7.5px;
@@ -12,8 +14,11 @@ $border-radius-small: 0;
 $grid-gutter-width: 20px;
 $panel-default-heading-bg: #f7f7f7;
 $panel-bg: $panel-default-heading-bg;
-$nav-pills-active-link-hover-color: #121212;
+$nav-pills-active-link-hover-color: $brightness-7;
 $nav-pills-active-link-hover-bg: $brand-secondary;
+$btn-primary-color: $brightness-7;
+$btn-primary-bg: $brand-secondary;
+$btn-primary-border: $brand-secondary;
 
 @import '../../../../node_modules/bootstrap-sass/assets/stylesheets/_bootstrap.scss';
 
@@ -28,13 +33,10 @@ $nav-pills-active-link-hover-bg: $brand-secondary;
 }
 
 .global-nav {
-    position: sticky;
-    top: 0;
     font-size: 14px;
     background: $brand-primary;
     color: #ffffff;
     border: 0;
-    z-index: 9999999;
     margin: 0;
     .container-fluid {
         display: flex;

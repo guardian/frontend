@@ -1,10 +1,17 @@
 @import 'admin/bootstrap.graun';
+@import 'admin/z-index';
 @import 'admin/switchboard';
 @import 'admin/drama';
 
 :root {
     font-size: 1rem;
     letter-spacing: 1.1;
+}
+
+.global-nav {
+    position: sticky;
+    top: 0;
+    z-index: $z-index-nav;
 }
 
 .springboard {
@@ -72,4 +79,29 @@
     text-align: center;
     padding: 10px 0;
     margin-top: 10px;
+}
+
+.admin-login {
+    position: absolute;
+    z-index: $z-index-content;
+    left: -1em;
+    right: -1em;
+    bottom: -1em;
+    height: 200vh;
+    background: url(https://media.guim.co.uk/da45d26f6ddee058454df73e9b93bee8cb19c975/0_0_905_789/905.jpg) center bottom;
+    background-size: cover;
+    animation: admin-login 60s both;
+}
+
+@keyframes admin-login {
+    from {
+        transform: translateY(100vh);
+        filter: grayscale(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        filter: grayscale(0);
+        opacity: 1;
+    }
 }

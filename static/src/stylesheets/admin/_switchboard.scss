@@ -1,5 +1,5 @@
 #switchboard label:hover {
-    color: #699;
+    color: #669999;
     cursor: pointer;
 }
 
@@ -20,11 +20,11 @@
 #switchboard .actions {
     position: sticky;
     bottom: 0;
-    left:0;
-    right:0;
+    left: 0;
+    right: 0;
     padding: 10px 0;
-    background: #fff;
-    border-top: 1px solid #eee;
+    background: #ffffff;
+    border-top: 1px solid #eeeeee;
     display: flex;
     justify-content: space-between;
 }
