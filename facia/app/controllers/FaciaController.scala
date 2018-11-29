@@ -7,7 +7,7 @@ import layout.{CollectionEssentials, ContentCard, FaciaCard, FaciaCardAndIndex, 
 import model.Cached.{CacheableResult, RevalidatableResult, WithoutRevalidationResult}
 import model._
 import model.facia.PressedCollection
-import model.pressed.{CollectionConfig, PressedContent}
+import model.pressed.CollectionConfig
 import play.api.libs.json._
 import play.api.mvc._
 import play.twirl.api.Html
@@ -120,14 +120,20 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
 
   private def nonHtmlEmail(request: RequestHeader) = (request.isEmail && request.isHeadlineText) || request.isEmailJson || request.isEmailTxt
 
+  import PressedPage.pressedPageFormat
   private[controllers] def renderFrontPressResult(path: String)(implicit request: RequestHeader) = {
-    val futureFaciaPage: Future[Option[PressedPage]] = frontJsonFapi.get(path, liteRequestType).flatMap {
+    val futureFaciaPage: Future[Option[PressedPage]] = frontJsonFapi.get(path, liteRequestType).flatMap { frontJson =>
+      frontJson match {
         case Some(faciaPage: PressedPage) =>
+          if (conf.Configuration.environment.stage == "CODE") {
+            logInfoWithCustomFields(s"Rendering front $path, frontjson: ${Json.stringify(Json.toJson(faciaPage)(pressedPageFormat))}", List())
+          }
           if(faciaPage.collections.isEmpty && liteRequestType == LiteAdFreeType) {
             frontJsonFapi.get(path, LiteType)
           }
           else Future.successful(Some(faciaPage))
         case None => Future.successful(None)
+      }
     }
 
     val futureResult = futureFaciaPage.flatMap {

@@ -9,7 +9,8 @@ import com.gu.facia.api.models.{Collection, Front}
 import com.gu.facia.api.{FAPI, Response}
 import com.gu.facia.client.ApiClient
 import com.gu.facia.client.models.{Breaking, Canonical, ConfigJson, Metadata, Special}
-import common._
+import common.LoggingField.LogFieldString
+import common.{LoggingField, _}
 import common.commercial.CommercialProperties
 import conf.Configuration
 import conf.switches.Switches
@@ -25,6 +26,7 @@ import play.api.libs.ws.WSClient
 import services.{ConfigAgent, S3FrontsApi}
 import implicits.Booleans._
 import layout.slices.Container
+
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success}
 
@@ -190,10 +192,10 @@ trait FapiFrontPress extends EmailFrontPress with Logging {
       .showReferences(QueryDefaults.references)
       .showAtoms("media")
 
-  def pressByPathId(path: String)(implicit executionContext: ExecutionContext): Future[Unit] = {
+  def pressByPathId(path: String, messageId: String)(implicit executionContext: ExecutionContext): Future[Unit] = {
     def pressDependentPaths(paths: Seq[String]): Future[Unit] = {
       Future
-        .traverse(paths)(pressPath)
+        .traverse(paths)(p => pressPath(p, messageId))
         .recover {
           case e => log.error(s"Error when pressing $paths", e)
         }
@@ -201,17 +203,26 @@ trait FapiFrontPress extends EmailFrontPress with Logging {
     }
 
     for {
-     _ <- pressPath(path)
+     _ <- pressPath(path, messageId)
      _ <- pressDependentPaths(dependentFrontPaths.getOrElse(path, Nil))
     } yield ()
   }
 
-  private def pressPath(path: String)(implicit executionContext: ExecutionContext): Future[Unit] = {
+  private def pressPath(path: String, messageId: String)(implicit executionContext: ExecutionContext): Future[Unit] = {
 
     val stopWatch: StopWatch = new StopWatch
 
     val pressFuture = getPressedFrontForPath(path)
       .map { pressedFronts: PressedPageVersions =>
+        // temporary logging to investigate fronts weirdness on code - log entire front out
+        if (Configuration.environment.stage == "CODE") {
+          logInfoWithCustomFields(
+            s"Pressed data for front $path : ${Json.stringify(Json.toJson(pressedFronts.full))} ",
+            customFields = List(
+              LogFieldString("messageId", messageId),
+              LogFieldString("pressPath", path)
+            ))
+        }
         putPressedPage(path, pressedFronts.full, FullType)
         putPressedPage(path, pressedFronts.lite, LiteType)
         putPressedPage(path, pressedFronts.fullAdFree, FullAdFreeType)
