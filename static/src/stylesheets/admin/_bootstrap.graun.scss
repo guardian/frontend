@@ -1,12 +1,48 @@
 $brightness-7: #121212;
 
+@font-face {
+    font-family: 'Guardian Headline';
+    src: url('https://interactive.guim.co.uk/fonts/garnett/GHGuardianHeadline-Bold.woff2') format('woff2'),
+    url('https://interactive.guim.co.uk/fonts/garnett/GHGuardianHeadline-Bold.woff') format('woff');
+    font-style: normal;
+    font-weight: 700;
+}
+@font-face {
+    font-family: 'Guardian Headline';
+    src: url('https://interactive.guim.co.uk/fonts/garnett/GHGuardianHeadline-Regular.woff2') format('woff2'),
+    url('https://interactive.guim.co.uk/fonts/garnett/GHGuardianHeadline-Regular.woff') format('woff');
+    font-style: normal;
+    font-weight: 400;
+}
+@font-face {
+    font-family: 'Guardian Text Sans';
+    src: url('https://interactive.guim.co.uk/fonts/sep2018/noalts_not_hinted_webmetrics/textsans/GuardianTextSans-RegularItalic.woff2') format('woff2'),
+    url('https://interactive.guim.co.uk/fonts/sep2018/noalts_not_hinted_webmetrics/textsans/GuardianTextSans-RegularItalic.woff') format('woff');
+    font-style: italic;
+    font-weight: 400;
+}
+@font-face {
+    font-family: 'Guardian Text Sans';
+    src: url('https://interactive.guim.co.uk/fonts/sep2018/noalts_not_hinted_webmetrics/textsans/GuardianTextSans-Regular.woff2') format('woff2'),
+    url('https://interactive.guim.co.uk/fonts/sep2018/noalts_not_hinted_webmetrics/textsans/GuardianTextSans-Regular.woff') format('woff');
+    font-style: normal;
+    font-weight: 400;
+}
+@font-face {
+    font-family: 'Guardian Text Sans';
+    src: url('https://interactive.guim.co.uk/fonts/sep2018/noalts_not_hinted_webmetrics/textsans/GuardianTextSans-Bold.woff2') format('woff2'),
+    url('https://interactive.guim.co.uk/fonts/sep2018/noalts_not_hinted_webmetrics/textsans/GuardianTextSans-Bold.woff') format('woff');
+    font-style: normal;
+    font-weight: 700;
+}
+
 $brand-primary: #052962;
 $brand-secondary: #ffe500;
 $panel-body-padding: 5px 10px 7.5px;
 $panel-heading-padding: $panel-body-padding;
 $font-family-sans-serif: DS3DisplaySans, sans-serif;
 $font-size-base: 15px;
-$headings-font-family: 'GH Guardian Headline', sans-serif;
+$headings-font-family: 'Guardian Headline', sans-serif;
 $headings-font-weight: 700;
 $border-radius-base: 0;
 $border-radius-large: 0;
@@ -59,10 +95,13 @@ $btn-primary-border: $brand-secondary;
     padding: 0;
     justify-content: center;
     align-items: center;
-    color: #ffffff;
+    fill: #ffffff;
     background: rgba(0, 0, 0, .5);
     font-family: $headings-font-family;
     font-size: 36px;
+    svg {
+        width: 50%;
+    }
 }
 
 .navbar-env {
@@ -77,7 +116,7 @@ $btn-primary-border: $brand-secondary;
 
 .navbar-brand:focus, .navbar-brand:hover {
     background: $brand-secondary;
-    color: #121212;
+    fill: #121212;
 }
 
 .navbar-brand span {
