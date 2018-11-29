@@ -5,7 +5,7 @@ import type { EpicTemplate } from 'common/modules/commercial/contributions-utili
 import { initTicker } from 'common/modules/commercial/ticker';
 import type { TickerPosition } from 'common/modules/commercial/templates/acquisitions-epic-us-ticker';
 
-const abTestName = 'AcquisitionsEpicUsEndOfYearRound2';
+const abTestName = 'AcquisitionsEpicUsTopTicker';
 
 const createTemplate = (tickerPosition: TickerPosition): EpicTemplate => (
     { options = {} },
@@ -46,7 +46,7 @@ const somethingYouCanDoCopy: AcquisitionsEpicTemplateCopy = {
         'By giving a year-end gift – however big or small – you are supporting The Guardian’s independence and ensuring we can keep delivering factual, trustworthy journalism for the years to come. Thank you.',
 };
 
-export const acquisitionsEpicUsEndOfYearRound2: EpicABTest = makeABTest({
+export const acquisitionsEpicUsTopTicker: EpicABTest = makeABTest({
     id: abTestName,
     campaignId: abTestName,
 
@@ -68,38 +68,23 @@ export const acquisitionsEpicUsEndOfYearRound2: EpicABTest = makeABTest({
 
     variants: [
         {
-            id: 'control',
-            products: [],
-        },
-        {
             id: 'us_eoy_critical_times_top_ticker',
             products: [],
             options: {
                 copy: criticalTimesCopy,
                 template: createTemplate('TOP'),
-                onInsert: () => {
+                onView: () => {
                     initTicker();
                 },
             },
         },
         {
-            id: 'us_eoy_critical_times_bottom_ticker',
-            products: [],
-            options: {
-                copy: criticalTimesCopy,
-                template: createTemplate('BOTTOM'),
-                onInsert: () => {
-                    initTicker();
-                },
-            },
-        },
-        {
-            id: 'us_eoy_something_you_can_do_bottom_ticker',
+            id: 'us_eoy_something_you_can_do_top_ticker',
             products: [],
             options: {
                 copy: somethingYouCanDoCopy,
-                template: createTemplate('BOTTOM'),
-                onInsert: () => {
+                template: createTemplate('TOP'),
+                onView: () => {
                     initTicker();
                 },
             },

@@ -3,6 +3,7 @@ package controllers
 import com.gu.contentapi.client.model.v1.{ItemResponse, Content => ApiContent}
 import common._
 import contentapi.ContentApiClient
+import experiments.{ActiveExperiments, FakeShowcase, Participant}
 import implicits.{AmpFormat, EmailFormat, HtmlFormat, JsonFormat}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model.dotcomponents.DotcomponentsDataModel
@@ -89,7 +90,26 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
         case JsonFormat if request.isGuui => common.renderJson(getGuuiJson(article), article).as("application/json")
         case JsonFormat => common.renderJson(getJson(article), article)
         case EmailFormat => common.renderEmail(ArticleEmailHtmlPage.html(article), article)
-        case HtmlFormat => common.renderHtml(ArticleHtmlPage.html(article), article)
+        case HtmlFormat => {
+          if(
+            FakeShowcase.switch.isSwitchedOn &&
+             ActiveExperiments.isParticipating(FakeShowcase)
+            && request.path == "/world/2018/nov/28/argentina-g20-summit-buenos-aires-public-holiday-leave-town") {
+            val articleCopy = article.copy(
+              article = article.article.copy(
+                article.article.content.copy(
+                  isImmersiveOverride = true,
+                  metadata = article.article.content.metadata.copy(
+                    contentWithSlimHeader = true)
+                )
+              )
+            )
+            common.renderHtml(ArticleHtmlPage.html(articleCopy), articleCopy)
+          }
+          else {
+          common.renderHtml(ArticleHtmlPage.html(article), article)
+          }
+        }
         case AmpFormat => common.renderHtml(views.html.articleAMP(article), article)
       }
     }
