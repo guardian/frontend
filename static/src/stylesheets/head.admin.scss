@@ -1,0 +1,107 @@
+@import 'admin/bootstrap.graun';
+@import 'admin/z-index';
+@import 'admin/switchboard';
+@import 'admin/drama';
+
+:root {
+    font-size: 1rem;
+    letter-spacing: .25px;
+}
+
+.global-nav {
+    position: sticky;
+    top: 0;
+    z-index: $z-index-nav;
+}
+
+.springboard {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-column-gap: $grid-gutter-width;
+    grid-row-gap: $grid-gutter-width;
+
+    > * {
+        align-items: stretch;
+        justify-content: stretch;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .panel {
+        flex: 1 1 auto;
+        margin-bottom: 0;
+    }
+}
+
+.chart {
+    margin-bottom: 20px;
+}
+
+.table--asset .table__head {
+    background-color: #f5f5f5;
+    font-size: 14px;
+    color: #000000;
+}
+
+.table--asset th {
+    font-size: 12px;
+    font-weight: bold;
+    color: #9da0a4;
+}
+
+.table-r thead th {
+    background-color: #f5f5f5;
+    font-size: 14px;
+}
+
+.label-warning {
+    color: #ffffff !important;
+}
+
+.big-metric {
+    font-weight: bold;
+    font-size: 24px;
+    text-align: center;
+}
+.big-metric-value {
+    color: #005689;
+}
+.big-metric-name {
+    color: #00456e;
+}
+
+.img-url {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.purge-message {
+    text-align: center;
+    padding: 10px 0;
+    margin-top: 10px;
+}
+
+.admin-login {
+    position: absolute;
+    z-index: $z-index-content;
+    left: -1em;
+    right: -1em;
+    bottom: -1em;
+    height: 200vh;
+    background: url(https://media.guim.co.uk/da45d26f6ddee058454df73e9b93bee8cb19c975/0_0_905_789/905.jpg) center bottom;
+    background-size: cover;
+    animation: admin-login 60s both;
+}
+
+@keyframes admin-login {
+    from {
+        transform: translateY(100vh);
+        filter: grayscale(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        filter: grayscale(50%);
+        opacity: .25;
+    }
+}
