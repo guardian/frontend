@@ -101,7 +101,7 @@
     }
     to {
         transform: translateY(0);
-        filter: grayscale(0);
-        opacity: 1;
+        filter: grayscale(50%);
+        opacity: .25;
     }
 }

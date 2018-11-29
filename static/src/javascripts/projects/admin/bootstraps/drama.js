@@ -93,16 +93,68 @@ const Line = (line, isHead = false) => {
 
 const LineHead = line => Line(line, true);
 
-const text = [
-    LineHead('System online'),
-    Line('User authenticated'),
-    Line('... Initiating launch routine'),
-    Line('OK'),
-    Line('Launch routine initiated'),
-    LineHead('Action required'),
-    Line('Confirm launch procedure'),
-    Line('Input launch passphrase now'),
-];
+const writeTextLines = ($repl:Element): Promise<void> => {
+    const text = [
+        LineHead('System online'),
+        Line('User authenticated'),
+        Line('... Initiating launch routine'),
+        Line('OK'),
+        Line('Launch routine initiated'),
+        LineHead('Action required'),
+        Line('Confirm launch procedure'),
+        Line('Input launch passphrase now'),
+    ];
+    return text.reduce(
+        (promiseChain, currentTask) =>
+            promiseChain.then(() => {
+                const { $wrapper, type } = currentTask;
+                $repl.appendChild($wrapper);
+                return type();
+            }),
+        Promise.resolve()
+    )
+};
+
+const awaitForFormInput = ({$repl}): Promise<void> => new Promise(yay=> {
+    const $txt = document.createElement('input');
+    const $form = document.createElement('form');
+    $txt.type = 'password';
+    $form.appendChild($txt);
+    $repl.appendChild($form);
+    $txt.focus();
+    $form.addEventListener('submit', ev => {
+        ev.preventDefault();
+        $repl.dataset.disabled = 'true';
+        yay();
+    })
+});
+
+const showSuccessMsg = ({$bg, $drama}):Promise<void> => new Promise(yay=> {
+    const $status = Message('Status report', 'access granted');
+    setTimeout(() => {
+        $bg.dataset.white = 'true';
+        $drama.appendChild($status.$wrapper);
+        setTimeout(() => {
+            $status.type().then(()=>{
+                $status.destroy();
+                yay();
+            })
+        });
+    }, 500);
+});
+
+const showCountdownMsg = ({$drama}):Promise<void> => new Promise(yay=> {
+    const $countdown = Timeout('Launch in', 5);
+    setTimeout(() => {
+        $drama.appendChild($countdown.$wrapper);
+        setTimeout(() => {
+            $countdown.type().then(()=>{
+                $countdown.destroy();
+                yay();
+            })
+        });
+    }, 500);
+});
 
 const start = ($switchboard: HTMLFormElement, $holder: Element) => {
     window.scrollTo(0, 0);
@@ -115,19 +167,11 @@ const start = ($switchboard: HTMLFormElement, $holder: Element) => {
         throw Error('missing elements');
     }
 
-    const $input = $drama.querySelector('.admin-drama__input');
+    const $repl = $drama.querySelector('.admin-drama__input');
 
-    if (!$input) {
+    if (!$repl) {
         throw Error('missing elements');
     }
-
-    const $form = document.createElement('form');
-    const $txt = document.createElement('input');
-    const $status = Message('Status report', 'access granted');
-    const $countdown = Timeout('Launch in', 3);
-
-    $txt.type = 'password';
-    $form.appendChild($txt);
 
     $html.classList.add('drama-init');
 
@@ -136,37 +180,18 @@ const start = ($switchboard: HTMLFormElement, $holder: Element) => {
     }, 500);
 
     setTimeout(() => {
-        text.reduce(
-            (promiseChain, currentTask) =>
-                promiseChain.then(chainResults => {
-                    const { $wrapper, type } = currentTask;
-                    $input.appendChild($wrapper);
-                    return type().then(currentResult => [
-                        ...chainResults,
-                        currentResult,
-                    ]);
-                }),
-            Promise.resolve([])
-        ).then(() => {
-            $input.appendChild($form);
-            $txt.focus();
-            $form.addEventListener('submit', ev => {
-                ev.preventDefault();
-                $input.dataset.disabled = 'true';
-                setTimeout(() => {
-                    $bg.dataset.white = 'true';
-                    $drama.appendChild($status.$wrapper);
-                    $status.type().then(() => {
-                        $status.destroy();
-                        $drama.appendChild($countdown.$wrapper);
-                        $countdown.type().then(() => {
-                            $countdown.destroy();
-                            $switchboard.submit();
-                        });
-                    });
-                }, 500);
+        writeTextLines($repl)
+            .then(() => awaitForFormInput({$repl}))
+            .then(() => showSuccessMsg({$bg, $drama}))
+            .then(() => showCountdownMsg({$drama}))
+            .then(() => {
+                $holder.remove();
+                $html.classList.remove('drama-init');
+                $html.classList.add('drama-outro');
+                setTimeout(()=>{
+                    $switchboard.submit();
+                },1000)
             });
-        });
     }, 2000);
 };
 

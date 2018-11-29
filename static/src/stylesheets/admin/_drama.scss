@@ -23,6 +23,25 @@ html.drama-init {
     }
 }
 
+html.drama-outro {
+    body {
+        &:after {
+            content: '';
+            display: block;
+            position: absolute;
+            bottom: -7.5em;
+            left: -7.5em;
+            background: url(https://uploads.guim.co.uk/2018/11/29/tumblr_p1wli7n7021vpf6ddo1_400.gif) center center;
+            background-size: contain;
+            width: 20em;
+            height: 20em;
+        }
+    }
+    .btn-success {
+        filter: brightness(50%);
+    }
+}
+
 .admin-drama {
     color: #00f6ff;
     text-shadow: 1px 0 3px rgba(255, 255, 255, .2);
@@ -40,7 +59,7 @@ html.drama-init {
         content: '';
         display: block;
         z-index: 9;
-        transition: .25s;
+        transition: 2.5s;
         filter: invert(0);
     }
     &[data-white]:after {
