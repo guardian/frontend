@@ -50,7 +50,6 @@ export const acquisitionsEpicUsEndOfYearRoundFour: EpicABTest = makeABTest({
             options: {
                 copy: {
                     heading: 'In these critical times &hellip;',
-                    // TODO make section highlighted in yellow
                     paragraphs: [
                         '&hellip; help us protect independent journalism at a time when factual, trustworthy reporting is under threat by making a year-end gift to support The Guardian. We’re asking our US readers to help us raise one million dollars by the new year so that we can report on the stories that matter in 2019. Small or big, every contribution you give will help us reach our goal.',
                         'The Guardian’s editorial independence means that we can pursue difficult investigations, challenging the powerful and holding them to account. No one edits our editor and no one steers our opinion.',
