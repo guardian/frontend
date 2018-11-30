@@ -22,8 +22,15 @@ import {
     getForcedTests,
 } from 'common/modules/experiments/utils';
 
+const allocateUserToTest = test => {
+    // Only allocate the user if the test is valid and they're not already participating.
+    if (testCanBeRun(test) && !isParticipating(test)) {
+        addParticipation(test, variantIdFor(test));
+    }
+};
+
 // Finds variant in specific tests and runs it
-const runTest = (test: ABTest): void => {
+export const runTest = (test: ABTest): void => {
     if (isParticipating(test) && testCanBeRun(test)) {
         const participations = getParticipations();
         const variantId = participations[test.id].variant;
@@ -34,13 +41,6 @@ const runTest = (test: ABTest): void => {
         } else if (!isInTest(test) && test.notInTest) {
             test.notInTest();
         }
-    }
-};
-
-const allocateUserToTest = test => {
-    // Only allocate the user if the test is valid and they're not already participating.
-    if (testCanBeRun(test) && !isParticipating(test)) {
-        addParticipation(test, variantIdFor(test));
     }
 };
 

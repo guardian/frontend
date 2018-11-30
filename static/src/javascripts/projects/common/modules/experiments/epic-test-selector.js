@@ -20,6 +20,7 @@ import { acquisitionsEpicFromGoogleDocFiveVariants } from 'common/modules/experi
 import { acquisitionsEpicAuPostOneMillion } from 'common/modules/experiments/tests/acquisitions-epic-au-post-one-million';
 import { acquisitionsEpicUsPreEndOfYear } from 'common/modules/experiments/tests/acquisitions-epic-us-pre-end-of-year';
 import { acquisitionsEpicUsTopTicker } from 'common/modules/experiments/tests/acquisitions-epic-us-top-ticker';
+import { acquisitionsEpicUsFromGoogleDoc } from 'common/modules/experiments/tests/acquisitions-epic-us-from-google-doc';
 
 const isViewable = (v: Variant, t: ABTest): boolean => {
     if (!v.options) return false;
@@ -47,7 +48,7 @@ const isViewable = (v: Variant, t: ABTest): boolean => {
 /**
  * acquisition tests in priority order (highest to lowest)
  */
-export const acquisitionsTests: $ReadOnlyArray<AcquisitionsABTest> = [
+export const hardcodedEpicTests: $ReadOnlyArray<AcquisitionsABTest> = [
     acquisitionsEpicUsTopTicker,
     acquisitionsEpicUsPreEndOfYear,
     acquisitionsEpicAuPostOneMillion,
@@ -64,25 +65,37 @@ export const acquisitionsTests: $ReadOnlyArray<AcquisitionsABTest> = [
     acquisitionsEpicThankYou,
 ];
 
-export const getTest = (): ?AcquisitionsABTest => {
+export const asyncEpicTests: $ReadOnlyArray<Promise<AcquisitionsABTest>> = [
+    acquisitionsEpicUsFromGoogleDoc,
+];
+
+export const getAllEpicTests = (): Promise<$ReadOnlyArray<AcquisitionsABTest>> => Promise.all(asyncEpicTests)
+    .then(fetchedEpicTests => [...fetchedEpicTests, ...hardcodedEpicTests]);
+
+export const getEpicTestToDisplay = (): Promise<AcquisitionsABTest> => getAllEpicTests().then(epicTests => {
     const forcedTests = getForcedTests()
-        .map(({ testId }) => acquisitionsTests.find(t => t.id === testId))
+        .map(({ testId }) => epicTests.find(t => t.id === testId))
         .filter(Boolean);
 
-    if (forcedTests.length)
-        return forcedTests.find(t => {
+    let epicTest;
+
+    if (forcedTests.length) {
+        epicTest = forcedTests.find(t => {
             const variant: ?Variant = getForcedVariant(t);
             return variant && testCanBeRun(t) && isViewable(variant, t);
         });
+    } else {
+        epicTest = epicTests.find(t => {
+            const variant: ?Variant = variantFor(t);
+            if (variant) {
+                const isTestRunnable = testCanBeRun(t);
+                const isUserInTest = isInTest(t);
+                const isEpicViewable = isViewable(variant, t);
+                return isTestRunnable && isUserInTest && isEpicViewable;
+            }
+            return false;
+        });
+    }
 
-    return acquisitionsTests.find(t => {
-        const variant: ?Variant = variantFor(t);
-        if (variant) {
-            const isTestRunnable = testCanBeRun(t);
-            const isUserInTest = isInTest(t);
-            const isEpicViewable = isViewable(variant, t);
-            return isTestRunnable && isUserInTest && isEpicViewable;
-        }
-        return false;
-    });
-};
+    return epicTest || Promise.reject(null);
+});

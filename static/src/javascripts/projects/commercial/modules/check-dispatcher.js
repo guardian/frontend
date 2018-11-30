@@ -6,7 +6,7 @@ import { trackAdRender } from 'commercial/modules/dfp/track-ad-render';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { checks } from 'common/modules/check-mediator-checks';
 import { resolveCheck, waitForCheck } from 'common/modules/check-mediator';
-import { getTest as getAcquisitionTest } from 'common/modules/experiments/acquisition-test-selector';
+import { getEpicTestToDisplay } from 'common/modules/experiments/epic-test-selector';
 
 const someCheckPassed = (results): boolean => results.includes(true);
 
@@ -26,7 +26,7 @@ const checksToDispatch = {
     },
 
     isUserInContributionsAbTest(): Promise<boolean> {
-        return Promise.resolve(!!getAcquisitionTest());
+        return Promise.resolve(!!getEpicTestToDisplay());
     },
 
     isUserNotInContributionsAbTest(): Promise<boolean> {

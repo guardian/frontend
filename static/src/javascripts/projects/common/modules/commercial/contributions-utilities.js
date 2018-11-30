@@ -24,7 +24,7 @@ import { awaitEpicButtonClicked } from 'common/modules/commercial/epic/epic-util
 import {
     getEpicGoogleDoc,
     getBannerGoogleDoc,
-    googleDocEpicControl,
+    googleDocEpicControl, getGoogleDoc, getVariants,
 } from 'common/modules/commercial/contributions-google-docs';
 
 export type EpicTemplate = (Variant, AcquisitionsEpicTemplateCopy) => string;
@@ -454,6 +454,93 @@ const makeABTest = ({
     return test;
 };
 
+const makeAsyncABTest = ({
+    id,
+    start,
+    expiry,
+    author,
+    idealOutcome,
+    campaignId,
+    description,
+    audience,
+    audienceOffset,
+    successMeasure,
+    audienceCriteria,
+    variants,
+
+    // optional params
+    // locations is a filter where empty is taken to mean 'all'
+    locations = [],
+    locationCheck = () => true,
+    dataLinkNames = '',
+    campaignPrefix = 'gdnwb_copts_memco',
+    useLocalViewLog = false,
+    overrideCanRun = false,
+    useTargetingTool = false,
+    showToContributorsAndSupporters = false,
+    canRun = () => true,
+    pageCheck = isCompatibleWithEpic,
+}: InitEpicABTest, googleDocSource: string): Promise<EpicABTest> => {
+    // TODO: would be nice not to have to duplicate all this
+    const test = {
+        // this is true because we use the reader revenue flag rather than sensitive
+        // to disable contributions asks for a particular piece of content
+        showForSensitive: true,
+        canRun() {
+            if (overrideCanRun) {
+                return doTagsMatch(this) && canRun(this);
+            }
+
+            const testCanRun =
+                typeof canRun === 'function' ? canRun(this) : true;
+            const canEpicBeDisplayed = shouldShowEpic(this);
+
+            return testCanRun && canEpicBeDisplayed;
+        },
+        componentType: 'ACQUISITIONS_EPIC',
+        insertEvent: makeEvent(id, 'insert'),
+        viewEvent: makeEvent(id, 'view'),
+
+        variants: [],
+
+        id,
+        start,
+        expiry,
+        author,
+        description,
+        audience,
+        audienceOffset,
+        successMeasure,
+        audienceCriteria,
+        idealOutcome,
+        dataLinkNames,
+        campaignId,
+        campaignPrefix,
+        useLocalViewLog,
+        overrideCanRun,
+        showToContributorsAndSupporters,
+        pageCheck,
+        locations,
+        locationCheck,
+        useTargetingTool,
+    };
+
+    return getGoogleDoc(googleDocSource)
+        .then(getVariants)
+        .then(variants => variants.map(variant =>
+            makeABTestVariant(
+                variant.id,
+                [],
+                variant.options || {},
+                test
+            )
+        ))
+        .then((variants: $ReadOnlyArray<Variant>) => ({
+            ...test,
+            variants
+        }))
+};
+
 const makeBannerABTestVariants = (
     variants: Array<Object>
 ): $ReadOnlyArray<Variant> =>
@@ -511,6 +598,7 @@ const makeGoogleDocBannerControl = (): InitBannerABTestVariant => ({
 export {
     shouldShowReaderRevenue,
     shouldShowEpic,
+    makeAsyncABTest,
     makeABTest,
     defaultButtonTemplate,
     makeBannerABTestVariants,

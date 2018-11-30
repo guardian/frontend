@@ -6,7 +6,8 @@ import $ from 'lib/$';
 import config from 'lib/config';
 import { markTime } from 'lib/user-timing';
 import { catchErrorsWithContext } from 'lib/robust';
-import { segmentUser, run as abRun } from 'common/modules/experiments/ab';
+import { getEpicTestToDisplay } from 'common/modules/experiments/epic-test-selector';
+import { segmentUser, run as runSynchronousAbTests, runTest } from 'common/modules/experiments/ab';
 import { getActiveTests } from 'common/modules/experiments/ab-tests';
 import {
     registerImpressionEvents,
@@ -17,6 +18,7 @@ import { initSport } from 'bootstraps/enhanced/sport';
 import { trackPerformance } from 'common/modules/analytics/google';
 import { init as geolocationInit } from 'lib/geolocation';
 import { init as initAcquisitionsLinkEnrichment } from 'common/modules/commercial/acquisitions-link-enrichment';
+import { variantFor } from '../../projects/common/modules/experiments/segment-util';
 
 const bootEnhanced = (): void => {
     const bootstrapContext = (featureName, bootstrap) => {
@@ -59,7 +61,22 @@ const bootEnhanced = (): void => {
                     [
                         'ab-tests-run',
                         () => {
-                            abRun(tests);
+                            runSynchronousAbTests(tests);
+
+                            // This is a continuation of the madness whereby sometimes we take
+                            // localStorage into account when deciding test participations,
+                            // and sometimes we compute directly from the GU_mvt_id cookie.
+                            // getEpicTestToDisplay() does not depend on any of the localStorage
+                            // code (which is all in common/modules/experiments/utils.js).
+                            // So we have to bypass the normal A/B test run function, which does.
+                            // If we rip out the dependency on localStorage everywhere, things
+                            // would be a lot nicer.
+                            getEpicTestToDisplay().then(test => {
+                                const variant = variantFor(test);
+                                if (variant) {
+                                    variant.test(variant.options || {});
+                                }
+                            });
                         },
                     ],
                     [

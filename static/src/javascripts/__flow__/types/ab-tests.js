@@ -1,3 +1,14 @@
+import {
+    addTrackingCodesToUrl,
+    submitInsertEvent,
+    submitViewEvent
+} from 'common/modules/commercial/acquisitions-ophan';
+import { supportContributeURL } from 'common/modules/commercial/support-utilities';
+import { noop } from '../../lib/noop';
+import mediator from '../../lib/mediator';
+import { defaultButtonTemplate, defaultMaxViews } from 'common/modules/commercial/contributions-utilities';
+import type { EpicTemplate } from 'common/modules/commercial/contributions-utilities';
+
 type ListenerFunction = (f: () => void) => void;
 
 declare type Variant = {
@@ -44,6 +55,35 @@ declare type EpicABTest = AcquisitionsABTest & {
     insertEvent: string,
     viewEvent: string,
 };
+
+// declare type EpicABTestOptions = {|
+//     maxViews?: {
+//         count: number,
+//         days: number,
+//         minDaysBetweenViews: number,
+//     } ,
+//     isUnlimited?: boolean,
+//     campaignCode?: string,
+//     supportURL?: stirng,
+//     subscribeURL?: string,
+//     // TODO ?
+//     template?: EpicTemplate,
+//     // TODO ?
+//     buttonTemplate?: ButtonTemplate,
+//     blockEngagementBanner?: boolean,
+//     // TODO?
+//     engagementBannerParams?: Object,
+//     isOutbrainCompliant?: boolean,
+//     usesIframe?: boolean,
+//     onInsert?: () => void,
+//     onView?: () => void,
+//     insertAtSelector?: string,
+//     insertMultiple?: false,
+//     insertAfter?: false,
+//     test?: () => void,
+//     impression?: () => void,
+//     success?: () => void,
+// |};
 
 declare type InitEpicABTestVariant = {
     id: string,

@@ -7,7 +7,7 @@ import config from 'lib/config';
 import overlay from 'raw-loader!common/views/experiments/overlay.html';
 import styles from 'raw-loader!common/views/experiments/styles.css';
 import { TESTS } from 'common/modules/experiments/ab-tests';
-import { acquisitionsTests } from 'common/modules/experiments/acquisition-test-selector';
+import { asyncEpicTests, getAllEpicTests, hardcodedEpicTests } from 'common/modules/experiments/epic-test-selector';
 import { isExpired } from 'common/modules/experiments/test-can-run-checks';
 
 const getSelectedAbTests = () =>
@@ -80,12 +80,15 @@ const appendOverlay = () => {
         isSwitchedOn: config.get(`switches.ab${id}`),
         isExpired: isExpired(expiry),
     });
-    const data = {
-        tests: TESTS.map(extractData),
-        acquisitionsTests: acquisitionsTests.map(extractData),
-    };
 
-    $('body').prepend(template(overlay)(data));
+    getAllEpicTests().then(epicTests => {
+        const data = {
+            tests: TESTS.map(extractData),
+            acquisitionsTests: epicTests.map(extractData),
+        };
+
+        $('body').prepend(template(overlay)(data));
+    });
 };
 
 export const showExperiments = () => {

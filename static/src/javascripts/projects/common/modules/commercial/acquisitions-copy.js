@@ -51,15 +51,27 @@ export const liveblogMillionCopy: AcquisitionsEpicTemplateCopy = {
     highlightedText: `For as little as ${getLocalCurrencySymbol()}1, you can support the Guardian – and it only takes a minute. Thank you.`,
 };
 
+export const copyFromGoogleDocRows = (
+    firstRow: AcquisitionsEpicTemplateCopy,
+    allRows: $ReadOnlyArray<{paragraphs: string}>,
+): AcquisitionsEpicTemplateCopy => ({
+    heading: firstRow.heading,
+    paragraphs: allRows.map(row => row.paragraphs),
+    highlightedText: firstRow.highlightedText.replace(
+        /%%CURRENCY_SYMBOL%%/g,
+        getLocalCurrencySymbol()
+    ),
+});
+
 export const getEpicParams = (
     googleDocJson: any,
     sheetName: string
 ): AcquisitionsEpicTemplateCopy => {
-    const rows =
+    const allRows =
         googleDocJson &&
         googleDocJson.sheets &&
         googleDocJson.sheets[sheetName];
-    const firstRow = rows && rows[0];
+    const firstRow = allRows && allRows[0];
 
     if (
         !(
@@ -77,7 +89,7 @@ export const getEpicParams = (
 
     return {
         heading: firstRow.heading,
-        paragraphs: rows.map(row => row.paragraphs),
+        paragraphs: allRows.map(row => row.paragraphs),
         highlightedText: firstRow.highlightedText.replace(
             /%%CURRENCY_SYMBOL%%/g,
             getLocalCurrencySymbol()
