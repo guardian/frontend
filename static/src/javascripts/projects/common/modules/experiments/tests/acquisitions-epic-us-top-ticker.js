@@ -5,7 +5,7 @@ import type { EpicTemplate } from 'common/modules/commercial/contributions-utili
 import { initTicker } from 'common/modules/commercial/ticker';
 import type { TickerPosition } from 'common/modules/commercial/templates/acquisitions-epic-us-ticker';
 
-const abTestName = 'AcquisitionsEpicUsTopTicker';
+const abTestName = 'AcquisitionsEpicUsTopTickerRoundFour';
 
 const createTemplate = (tickerPosition: TickerPosition): EpicTemplate => (
     { options = {} },
