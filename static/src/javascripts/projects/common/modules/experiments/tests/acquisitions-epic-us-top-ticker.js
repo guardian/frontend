@@ -61,7 +61,7 @@ const shorterCopy: AcquisitionsEpicTemplateCopy = {
 
 const goalCopy: AcquisitionsEpicTemplateCopy = {
     heading: 'Hi there, we’re off to a great start &hellip;',
-        paragraphs: [
+    paragraphs: [
         '&hellip; but we need your help to hit our goal! At a time when factual, trustworthy journalism is under threat, we’re asking our readers to help us raise one million dollars by the new year. We’ve made great progress in the first few days of this campaign – and with your help we can push this over the line by the New Year! Small or big, every contribution you give will help us tell the stories that matter most in 2019.',
         'The Guardian’s editorial independence means that we can pursue difficult investigations, challenging the powerful and holding them to account. No one edits our editor and no one steers our opinion.',
         'In 2018, The Guardian broke the story of Cambridge Analytica’s Facebook data breach; we recorded the human fallout from family separations; we charted the rise of the far right, and documented the growing impact of gun violence on Americans’ lives. We reported daily on climate change as a matter of urgent priority. It was readers’ support that made this work possible.',
@@ -71,7 +71,6 @@ const goalCopy: AcquisitionsEpicTemplateCopy = {
     highlightedText:
         'Please invest in our independent journalism today by making a year-end gift.',
 };
-
 
 export const acquisitionsEpicUsTopTicker: EpicABTest = makeABTest({
     id: abTestName,
