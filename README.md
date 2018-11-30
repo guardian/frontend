@@ -1,5 +1,7 @@
 [![Known Vulnerabilities](https://snyk.io/test/github/guardian/frontend/badge.svg)](https://snyk.io/test/github/guardian/frontend)
 
+NOP
+    
 ## We're hiring!
 Ever thought about joining us?
 https://workforus.theguardian.com/careers/digital-development/
