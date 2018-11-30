@@ -1,10 +1,11 @@
 @(content: model.ContentType, page: model.Page)(implicit request: RequestHeader)
 @import common.Edition
 @import views.html.fragments.commercial.pageLogo
+@import views.support.Commercial.{isPaidContent, onDarkBackground}
 
 @for(commercial <- page.metadata.commercial; branding <- commercial.branding(Edition(request))) {
     @pageLogo(branding,
               content.tags.isInteractive,
-              onDarkBackground = content.tags.isAudio || content.tags.isVideo || content.tags.isGallery
+              onDarkBackground(content) && !isPaidContent(page)
     )
 }
