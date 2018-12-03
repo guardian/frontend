@@ -10,8 +10,7 @@ object ActiveExperiments extends ExperimentsDefinition {
     OldAudioPage,
     CommercialClientLogging,
     OrielParticipation,
-    OldTLSSupportDeprecation,
-    FakeShowcase
+    OldTLSSupportDeprecation
   )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
@@ -49,10 +48,3 @@ object OldAudioPage extends Experiment(
   participationGroup = Perc5A
 )
 
-object FakeShowcase extends Experiment(
-  name = "fake-showcase",
-  description = "upgrades an article to showcase to see what that does",
-  owners = Seq(Owner.withGithub("aware")),
-  sellByDate = new LocalDate(2018, 12, 3),
-  participationGroup = Perc50
-)
