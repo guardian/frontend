@@ -366,7 +366,7 @@
     @include footerPalette($sport-main);
 }
 
-.content--media.content--pillar-news,
+.content--media:not(.paid-content).content--pillar-news,
 .immersive-main-media__headline-container.content--pillar-news,
 .immersive-main-media__headline-container--gallery.content--pillar-news {
     @include mediaPalatte($news-bright, $news-main, news);
