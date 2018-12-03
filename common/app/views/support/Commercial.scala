@@ -21,7 +21,7 @@ object Commercial {
     }
   }
 
-  def onDarkBackground(content: ContentType): Boolean = {
+  def isOnDarkBackground(content: ContentType): Boolean = {
     content.tags.isAudio || content.tags.isVideo || content.tags.isGallery
   }
 
