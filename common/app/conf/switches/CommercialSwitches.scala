@@ -390,6 +390,16 @@ trait PrebidSwitches {
     exposeClientSide = false
   )
 
+  val ampAppnexusAlias: Switch = Switch(
+    group = CommercialPrebid,
+    name = "amp-appnexus-alias",
+    description = "AppNexus has an alias in Amp Prebid auctions",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 1, 9),
+    exposeClientSide = false
+  )
+
   val prebidUserSync: Switch = Switch(
     group = CommercialPrebid,
     name = "prebid-user-sync",

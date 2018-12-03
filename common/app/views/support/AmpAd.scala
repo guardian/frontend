@@ -5,7 +5,7 @@ import com.gu.commercial.display.{AdTargetParamValue, MultipleValues, SingleValu
 import common.Edition
 import common.commercial.AdUnitMaker
 import common.editions._
-import conf.switches.Switches.KruxSwitch
+import conf.switches.Switches.{KruxSwitch, ampAppnexusAlias}
 import conf.switches.{Switch, Switches}
 import model.Article
 import play.api.libs.json.Json.JsValueWrapper
@@ -64,6 +64,7 @@ object AmpAdRtcConfig {
         val placementId = edition match {
           case Us => 14401433
           case Au => 14400184
+          case _ if ampAppnexusAlias.isSwitchedOn => 4
           case _ => 14351413
         }
         val url = s"$prebidServerUrl/openrtb2/amp?tag_id=$placementId&w=ATTR(width)&h=ATTR(height)" +

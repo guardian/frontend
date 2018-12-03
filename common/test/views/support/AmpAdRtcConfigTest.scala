@@ -1,7 +1,7 @@
 package views.support
 
 import common.editions._
-import conf.switches.Switches.{KruxSwitch, ampPrebid}
+import conf.switches.Switches.{KruxSwitch, ampAppnexusAlias, ampPrebid}
 import org.scalatest.{BeforeAndAfter, FlatSpec, Matchers}
 import play.api.libs.json.{JsNull, Json}
 
@@ -20,6 +20,7 @@ class AmpAdRtcConfigTest extends FlatSpec with Matchers with BeforeAndAfter {
   before {
     KruxSwitch.switchOff()
     ampPrebid.switchOff()
+    ampAppnexusAlias.switchOff()
   }
 
   "toJsonString" should "hold Prebid server and Krux config when both switches are on" in {
@@ -113,5 +114,14 @@ class AmpAdRtcConfigTest extends FlatSpec with Matchers with BeforeAndAfter {
       prebidServerUrl, edition = International, debug = false
     ))
     Json.stringify(json) should include ("tag_id=14351413")
+  }
+
+  it should "have correct placement ID for UK edition when using alias for AppNexus" in {
+    ampPrebid.switchOn()
+    ampAppnexusAlias.switchOn()
+    val json = Json.parse(AmpAdRtcConfig.toJsonString(
+      prebidServerUrl, edition = Uk, debug = false
+    ))
+    Json.stringify(json) should include ("tag_id=4")
   }
 }
