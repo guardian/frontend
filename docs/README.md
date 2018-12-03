@@ -40,7 +40,6 @@
 - [Apply the special report tone](03-dev-howtos/18-apply-the-special-report-tone.md)
 - [Tracking components in the Data Lake](03-dev-howtos/19-tracking-components-in-the-data-lake.md)
 - [Updating Social Media Overlay Images](03-dev-howtos/20-update-overlay-images.md)
-- [Display Reader Revenue components (the epic and banner)](03-dev-howtos/21-display-reader-revenue-components.md)
 
 ## [Quality](04-quality/)
 - [Browsers support](04-quality/01-browser-support.md)
