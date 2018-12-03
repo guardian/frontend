@@ -51,6 +51,7 @@ import { trackConsentCookies } from 'common/modules/analytics/send-privacy-prefs
 import { getAllAdConsentsWithState } from 'common/modules/commercial/ad-prefs.lib';
 import ophan from 'ophan/ng';
 import { adFreeBanner } from 'common/modules/commercial/ad-free-banner';
+import { init as initReaderRevenueDevUtils } from 'common/modules/commercial/reader-revenue-dev-utils';
 
 const initialiseTopNavItems = (): void => {
     const header: ?HTMLElement = document.getElementById('header');
@@ -318,6 +319,7 @@ const init = (): void => {
         ['c-user-features', refreshUserFeatures],
         ['c-membership', initMembership],
         ['c-banner-picker', initialiseBanner],
+        ['c-reader-revenue-dev-utils', initReaderRevenueDevUtils],
     ]);
 };
 

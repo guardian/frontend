@@ -30,6 +30,10 @@ const viewsInPreviousDays = (days: number, testId: ?string): number => {
     ).length;
 };
 
+const clearViewLog = (): void => {
+    local.remove(viewKey);
+};
+
 const overallNumberOfViews = () => viewLog.length;
 
-export { logView, viewsInPreviousDays, overallNumberOfViews };
+export { logView, viewsInPreviousDays, overallNumberOfViews, clearViewLog };
