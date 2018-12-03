@@ -1,6 +1,6 @@
 [![Known Vulnerabilities](https://snyk.io/test/github/guardian/frontend/badge.svg)](https://snyk.io/test/github/guardian/frontend)
 
-NOP
+NOP2
     
 ## We're hiring!
 Ever thought about joining us?
