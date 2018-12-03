@@ -5,7 +5,7 @@ import common.Edition
 import common.commercial._
 import layout.{ColumnAndCards, ContentCard, FaciaContainer, PaidCard}
 import model.DotcomContentType.Signup
-import model.{Page, PressedPage, ContentType}
+import model.{ContentType, Page, PressedPage}
 import org.apache.commons.lang.StringEscapeUtils._
 import play.api.libs.json.JsBoolean
 import play.api.mvc.RequestHeader
@@ -21,8 +21,9 @@ object Commercial {
     }
   }
 
-  def isOnDarkBackground(content: ContentType): Boolean = {
-    content.tags.isAudio || content.tags.isVideo || content.tags.isGallery
+  def isOnDarkBackground(content: ContentType, isPaidContent: Boolean): Boolean = {
+    content.tags.isGallery ||
+      (!isPaidContent && (content.tags.isAudio || content.tags.isVideo))
   }
 
   def shouldShowAds(page: Page): Boolean = page match {

@@ -6,6 +6,6 @@
 @for(commercial <- page.metadata.commercial; branding <- commercial.branding(Edition(request))) {
     @pageLogo(branding,
               content.tags.isInteractive,
-              isOnDarkBackground(content) && !isPaidContent(page)
+              isOnDarkBackground(content, isPaidContent(page))
     )
 }
