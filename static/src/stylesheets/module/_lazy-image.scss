@@ -1,0 +1,14 @@
+.lazy-load-img img {
+    animation-duration: .5s;
+    animation-name: fadeIn;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}

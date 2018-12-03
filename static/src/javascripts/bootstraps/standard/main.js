@@ -35,6 +35,7 @@ import config from 'lib/config';
 import { newHeaderInit } from 'common/modules/navigation/new-header';
 import { fixSecondaryColumn } from 'common/modules/fix-secondary-column';
 import { trackPerformance } from 'common/modules/analytics/google';
+import { lazyLoadImages } from 'common/modules/ui/lazy-load-images';
 import debounce from 'lodash/debounce';
 import ophan from 'ophan/ng';
 import { initAtoms } from './atoms';
@@ -203,6 +204,10 @@ const bootStandard = (): void => {
 
     // Set adtest query if url param declares it
     setAdTestCookie();
+
+    if (config.get('switches.lazyLoadImages')) {
+        lazyLoadImages();
+    }
 
     // set a short-lived cookie to trigger server-side ad-freeness
     // if the user is genuinely ad-free, this one will be overwritten
