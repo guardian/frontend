@@ -11,7 +11,6 @@ import model._
 import org.apache.commons.math3.fraction.Fraction
 import org.apache.commons.math3.util.Precision
 import common.Environment.{app, awsRegion, stage}
-import play.api.libs.json.{Json, Writes}
 
 import Function.const
 
@@ -88,20 +87,6 @@ case class VideoProfile(
   lazy val isRatioHD: Boolean = Precision.compareTo(VideoProfile.ratioHD.doubleValue, aspectRatio.doubleValue, 0.1d) == 0
 
   private lazy val aspectRatio: Fraction = new Fraction(width.get, height.get)
-}
-
-case class SrcSet(src: String, width: Int) {
-  def asSrcSetString: String = {
-    s"$src, ${width}w"
-  }
-
-}
-object SrcSet {
-  implicit val srcSetWrites: Writes[SrcSet] = Json.writes[SrcSet]
-
-  def asSrcSetString(srcSets: Seq[SrcSet]): String = {
-    srcSets.map(_.asSrcSetString).mkString(", ")
-  }
 }
 
 // Configuration of our different image profiles
@@ -284,27 +269,28 @@ object ImgSrc extends Logging with implicits.Strings {
     maybePath: Option[String] = None,
     maybeImageMedia: Option[ImageMedia] = None,
     hidpi: Boolean = false
-  ): Seq[SrcSet] = {
+  ): String = {
     val isPng = maybePath.exists(path => path.toLowerCase.endsWith("png"))
     breakpointWidth.toPixels(breakpointWidths)
       .map(browserWidth => ImageProfile(width = Some(browserWidth), hidpi = hidpi, isPng = isPng))
-      .flatMap { profile => {
+      .map { profile => {
         maybePath
           .map(url => srcsetForProfile(profile, url, hidpi))
           .orElse(maybeImageMedia.map(imageContainer => srcsetForProfile(profile, imageContainer, hidpi)))
+          .getOrElse("")
       } }
+      .mkString(", ")
   }
 
   def srcsetForProfile(
     profile: ImageProfile,
     imageContainer: ImageMedia,
     hidpi: Boolean
-  ): SrcSet =
-    SrcSet(profile.bestSrcFor(imageContainer).getOrElse("unknown"), profile.width.get * (if (hidpi) 2 else 1))
+  ): String =
+    s"${profile.bestSrcFor(imageContainer).get} ${profile.width.get * (if (hidpi) 2 else 1)}w"
 
-  // profile.width really shouldn't be None, but if it is use the inline image desktop default width
-  def srcsetForProfile(profile: ImageProfile, path: String, hidpi: Boolean): SrcSet =
-    SrcSet(ImgSrc(path, profile), profile.width.getOrElse(620) * (if (hidpi) 2 else 1))
+  def srcsetForProfile(profile: ImageProfile, path: String, hidpi: Boolean): String =
+    s"${ImgSrc(path, profile)} ${profile.width.get * (if (hidpi) 2 else 1)}w"
 
   def getFallbackUrl(ImageElement: ImageMedia): Option[String] =
     Item300.bestSrcFor(ImageElement)
