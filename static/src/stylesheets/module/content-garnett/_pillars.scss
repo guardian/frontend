@@ -366,37 +366,37 @@
     @include footerPalette($sport-main);
 }
 
-.content--media:not(.paid-content).content--pillar-news,
+.content--media--video:not(.paid-content).content--pillar-news,
 .immersive-main-media__headline-container.content--pillar-news,
 .immersive-main-media__headline-container--gallery.content--pillar-news {
     @include mediaPalatte($news-bright, $news-main, news);
 }
 
-.content--media:not(.paid-content).content--pillar-opinion,
+.content--media--video:not(.paid-content).content--pillar-opinion,
 .immersive-main-media__headline-container.content--pillar-opinion,
 .immersive-main-media__headline-container--gallery.content--pillar-opinion {
     @include mediaPalatte($opinion-bright, $opinion-main, opinion);
 }
 
-.content--media:not(.paid-content).content--pillar-arts,
+.content--media--video:not(.paid-content).content--pillar-arts,
 .immersive-main-media__headline-container.content--pillar-arts
 .immersive-main-media__headline-container--gallery.content--pillar-arts  {
     @include mediaPalatte($culture-bright, $culture-main, culture);
 }
 
-.content--media:not(.paid-content).content--pillar-lifestyle,
+.content--media--video:not(.paid-content).content--pillar-lifestyle,
 .immersive-main-media__headline-container.content--pillar-lifestyle,
 .immersive-main-media__headline-container--gallery.content--pillar-lifestyle {
     @include mediaPalatte($lifestyle-bright, $lifestyle-main, lifestyle);
 }
 
-.content--media:not(.paid-content).content--pillar-sport,
+.content--media--video:not(.paid-content).content--pillar-sport,
 .immersive-main-media__headline-container.content--pillar-sport,
 .immersive-main-media__headline-container-gallery.content--pillar-lifestyle {
     @include mediaPalatte($sport-bright, $sport-main, sport);
 }
 
-.content--media:not(.paid-content).content--pillar-special-report,
+.content--media--video:not(.paid-content).content--pillar-special-report,
 .immersive-main-media__headline-container.content--pillar-special-report,
 .immersive-main-media__headline-container--gallery.content--pillar-special-report {
     @include mediaPalatte($news-bright, $news-main, pink);
