@@ -1,6 +1,6 @@
 package commercial.model.capi
 
-import views.support.{ImgSrc, SrcSet}
+import views.support.ImgSrc
 import layout.cards.{Half, Standard, Third}
 import com.gu.contentapi.client.model.v1.{Asset, AssetType}
 import layout.{FaciaWidths, ItemClasses}
@@ -36,10 +36,10 @@ object CapiImages {
       ImageSource(
         breakpointWidth.breakpoint.minWidth.getOrElse("0").toString,
         breakpointWidth.width.toString,
-        SrcSet.asSrcSetString(ImgSrc.srcsetForBreakpoint(breakpointWidth, breakpointWidths, None,
-          imageData, hidpi = true)),
-        SrcSet.asSrcSetString(ImgSrc.srcsetForBreakpoint(breakpointWidth, breakpointWidths, None,
-          imageData))
+        ImgSrc.srcsetForBreakpoint(breakpointWidth, breakpointWidths, None,
+          imageData, hidpi = true),
+        ImgSrc.srcsetForBreakpoint(breakpointWidth, breakpointWidths, None,
+          imageData)
       )
     }
 
