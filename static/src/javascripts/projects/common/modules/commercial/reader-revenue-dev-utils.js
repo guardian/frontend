@@ -24,8 +24,15 @@ const clearCommonReaderRevenueStateAndReload = () => {
     clearEpicViewLog();
 
     if (isUserLoggedIn()) {
-        // TODO: vary according to environment
-        window.location.assign('https://profile.theguardian.com/signout');
+        if (window.location.origin.includes('localhost')) {
+            // Assume they don't have identity running locally
+            // So try and remove cookies manually
+            removeCookie('GU_U');
+            removeCookie('SC_GU_U');
+        } else {
+            const profileUrl = window.location.origin.replace(/(www\.|m\.)/, 'profile');
+            window.location.assign(`${profileUrl}/signout`);
+        }
     } else {
         window.location.reload();
     }
