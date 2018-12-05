@@ -19,7 +19,7 @@ object CommercialClientLogging extends Experiment(
   name = "commercial-client-logging",
   description = "A slice of the audience who will post their commercial js performance data",
   owners = Owner.group(SwitchGroup.Commercial),
-  sellByDate = new LocalDate(2018, 12, 5),
+  sellByDate = new LocalDate(2019, 1, 9),
   participationGroup = Perc1A
 )
 
@@ -27,7 +27,7 @@ object OrielParticipation extends Experiment(
   name = "oriel-participation",
   description = "A slice of the audience who will participate in Oriel ad-blocking technology",
   owners = Seq(Owner.withGithub("janua")),
-  sellByDate = new LocalDate(2018, 12, 5),
+  sellByDate = new LocalDate(2019, 1, 9),
   participationGroup = Perc20A
 )
 
