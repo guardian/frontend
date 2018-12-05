@@ -75,7 +75,7 @@ install_jdk() {
     if linux; then
       sudo apt-get install -y openjdk-7-jdk
     elif mac; then
-      EXTRA_STEPS+=("Download the JDK from http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html")
+      EXTRA_STEPS+=("Download the JDK from https://adoptopenjdk.net")
     fi
   fi
 }
