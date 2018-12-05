@@ -275,7 +275,7 @@ object ImgSrc extends Logging with implicits.Strings {
   }
 
   def srcset(imageContainer: ImageMedia, widths: WidthsByBreakpoint): String = {
-    widths.profiles.map { profile => srcsetForProfile(profile, imageContainer, hidpi = false) } mkString ", "
+    widths.profiles.map { profile => srcsetForProfile(profile, imageContainer, hidpi = false).asSrcSetString } mkString ", "
   }
 
   def srcsetForBreakpoint(
