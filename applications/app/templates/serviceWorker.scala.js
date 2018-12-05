@@ -53,21 +53,13 @@ var isRequestForAsset = (function () {
     }
 })();
 
-const cacheReadTimes = {};
-
 var handleAssetRequest = function (event) {
     // Default fetch behaviour
     // Cache first for all other requests
 
-    const cacheStart = performance.now();
-
     event.respondWith(
         caches.match(event.request)
             .then(function (response) {
-                const cacheReadTime = performance.now() - cacheStart;
-
-                console.log('***', event.request.url, response, cacheReadTime);
-
                 // Workaround Firefox bug which drops cookies
                 // https://github.com/guardian/frontend/issues/12012
                 return response || fetch(event.request, needCredentialsWorkaround(event.request.url) ? {
@@ -100,12 +92,4 @@ this.addEventListener('fetch', function (event) {
     } else if (blockIAS && isIASRequest(event.request)) {
         event.respondWith(forbidden);
     }
-});
-
-this.addEventListener('install', function (event) {
-    console.log('*** install ***');
-});
-
-this.addEventListener('activate', function (event) {
-    console.log('*** activate ***');
 });
