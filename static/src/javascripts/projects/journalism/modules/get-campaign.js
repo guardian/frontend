@@ -1,27 +1,21 @@
 // @flow
 import config from 'lib/config';
 
-export const getCampaign = () => {
+export const getCampaigns = () => {
     // eslint-disable-next-line
     const isCallout = campaign => campaign.fields._type === 'callout';
     const allCampaigns = config.get('page.campaigns');
-
-    // take the last added campaign as campaign to show
     const allCallouts = allCampaigns.filter(isCallout);
-    const campaignToShow = allCallouts[allCallouts.length - 1];
 
-    if (campaignToShow) {
-        const {
-            callout,
-            description,
-            formFields,
-            formId,
-        } = campaignToShow.fields;
-        return {
-            title: callout,
-            description: description || `<p>&nbsp;</p>`,
-            formFields,
-            formId,
+    return allCallouts.reduce((acc, curr) => {
+        acc[curr.fields.tagName] = {
+            name: curr.name,
+            title: curr.fields.callout,
+            description: curr.fields.description || '',
+            formFields: curr.fields.formFields,
+            formId: curr.fields.formId,
+            tagName: curr.fields.tagName,
         };
-    }
+        return acc;
+    }, {});
 };
