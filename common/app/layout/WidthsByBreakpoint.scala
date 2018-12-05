@@ -211,6 +211,14 @@ object ContentWidths {
     def thumbnail: WidthsByBreakpoint = unused
     def immersive: WidthsByBreakpoint = unused
     def halfwidth: WidthsByBreakpoint = unused
+
+    def all: Map[String, WidthsByBreakpoint] = Map(
+      "inline" -> inline,
+      "supporting" -> supporting,
+      "showcase" -> showcase,
+      "thumbnail" -> thumbnail,
+      "immersive" -> immersive,
+      "halfwidth" -> halfwidth)
   }
 
   object BodyMedia extends ContentRelation {
