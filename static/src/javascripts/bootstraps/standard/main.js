@@ -229,7 +229,11 @@ const bootStandard = (): void => {
         storage.set(key, alreadyVisited + 1);
     }
 
-    if (config.get('switches.blockIas') && navigator.serviceWorker) {
+    if (
+        config.get('switches.blockIas') &&
+        !config.get('switches.serviceWorkerDisabled') &&
+        navigator.serviceWorker
+    ) {
         navigator.serviceWorker.ready.then(swreg => {
             const sw = swreg.active;
             const ias = window.location.hash.includes('noias');
