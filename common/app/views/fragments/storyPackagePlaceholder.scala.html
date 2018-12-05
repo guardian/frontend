@@ -14,11 +14,11 @@
 
 @defining(Seq("related") ++ (if(isPaidContent) Seq("paid-content") else Nil)) { classes =>
     @if(related.hasStoryPackage) {
-        <aside class="@classes.mkString(" ") more-on-this-story js-outbrain-anchor" role="complementary" aria-labelledby="related-content-head">
+        <aside class="@classes.mkString(" ") more-on-this-story js-outbrain-anchor" aria-labelledby="related-content-head">
             @container("more on this story", "more-on-this-story", href = None)
         </aside>
     } else {
-        <aside class="@classes.mkString(" ") js-related hide-on-childrens-books-site" role="complementary" data-test-id="related-content">
+        <aside class="@classes.mkString(" ") js-related hide-on-childrens-books-site" data-test-id="related-content">
         @*
             We are not doing progressive enhancement here. The related content query is expensive and crawlers
             were having too much fun with the links that used to be here. Also, nobody was actually reading those pages.

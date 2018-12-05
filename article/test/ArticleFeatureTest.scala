@@ -492,8 +492,6 @@ import collection.JavaConverters._
         import browser._
 
         Then("I should see the main ARIA roles described")
-        $(".related").attribute("role") should be("complementary")
-        $("aside").attribute("role") should be("complementary")
         $("header").attribute("role") should be("banner")
         $(".l-footer__secondary").attribute("role") should be("contentinfo")
         $("nav").attribute("aria-label") should not be empty
