@@ -48,7 +48,7 @@
 }
 
 /* Styling fix for special topic label */
-.content--media {
+.content--media:not(.paid-content) {
     header {
         .content__labels.content__labels--immersive {
             background: none;
@@ -57,5 +57,4 @@
             }
         }
     }
-
 }
