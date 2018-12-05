@@ -44,7 +44,7 @@ object OldAudioPage extends Experiment(
   name = "old-audio-page",
   description = "Show the older version of the audio episode page",
   owners = Owner.group(SwitchGroup.Journalism),
-  sellByDate = new LocalDate(2018, 12, 5),
+  sellByDate = new LocalDate(2018, 12, 19),
   participationGroup = Perc5A
 )
 
