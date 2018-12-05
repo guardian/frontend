@@ -234,10 +234,10 @@
     // Pseudo elements so the entire card is clickable
     &:nth-child(1) .simple-content-card__headline:before,
     &:nth-child(2) .simple-content-card__headline:before {
-            content: 'Most commented';
-            display: block;
-            font-weight: 700;
-            padding: ($gs-gutter / 6) 0 0;
+        content: 'Most commented';
+        display: block;
+        font-weight: 700;
+        padding: ($gs-gutter / 6) 0 0;
     }
 
     &:nth-child(2) .simple-content-card__headline:before {
