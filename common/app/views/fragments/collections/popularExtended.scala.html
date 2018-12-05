@@ -36,22 +36,24 @@
 
             <ul class="u-unstyled most-popular">
             @section.trails.zipWithRowInfo.map{ case (trail, info) =>
-                <li class="most-popular__item @toneClass(trail)--most-popular fc-item--pillar-@trail.maybePillar.nameOrDefault">
-                    <div class="most-popular__link" data-link-name="@info.rowNum | text">
-                        <span class="most-popular__number most-popular__number--@info.rowNum">
+                @defining(FaciaCardHeader.fromTrail(trail, None)) { header =>
+                    <li class="most-popular__item @toneClass(trail)--most-popular fc-item--pillar-@trail.maybePillar.nameOrDefault">
+                        <div class="most-popular__link" data-link-name="@info.rowNum | text">
+                            <span class="most-popular__number most-popular__number--@info.rowNum">
                             @fragments.inlineSvg(s"number-${info.rowNum}", "numbers")
-                        </span>
-                        <div class="most-popular__headline">
-                            @title(FaciaCardHeader.fromTrail(trail, None), 2, 2, "headline-list__body")
-                            @trail.properties.maybeContent.map { content =>
-                                @if(content.tags.tags.exists(_.id == "tone/news")) {
-                                    @fragments.contentAgeNotice(ContentOldAgeDescriber(content))
+                            </span>
+                            <div class="most-popular__headline">
+                                @title(header, 2, 2, "headline-list__body")
+                                @trail.properties.maybeContent.map { content =>
+                                    @if(content.tags.tags.exists(_.id == "tone/news")) {
+                                        @fragments.contentAgeNotice(ContentOldAgeDescriber(content))
+                                    }
                                 }
-                            }
+                            </div>
                         </div>
-                    </div>
-                    <a href="urlgoeshere" class="u-faux-block-link__overlay js-headline-text" data-link-name="article" tabindex="-1" aria-hidden="true">blah</a>
-                </li>
+                        <a href="@header.url.get(request)" class="u-faux-block-link__overlay js-headline-text" data-link-name="article" tabindex="-1" aria-hidden="true">@RemoveOuterParaHtml(header.headline)</a>
+                    </li>
+                }
             }
         </ul>
         </div>
