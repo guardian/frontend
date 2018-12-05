@@ -494,4 +494,15 @@ trait FeatureSwitches {
     sellByDate = never,
     exposeClientSide = true
   )
+
+  // Service Worker
+  val ServiceWorkerDisabled = Switch(
+    SwitchGroup.Feature,
+    "service-worker-disabled",
+    "If switched on the service worker will be disabled",
+    owners = Seq(Owner.withName("dotcom.platform")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
 }
