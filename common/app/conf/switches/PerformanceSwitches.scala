@@ -166,4 +166,15 @@ trait PerformanceSwitches {
     sellByDate = never,
     exposeClientSide = false
   )
+
+  // Service Worker
+  val ServiceWorkerEnabled = Switch(
+    SwitchGroup.Feature,
+    "service-worker-enabled",
+    "If switched on the service worker will be enabled",
+    owners = Seq(Owner.withName("dotcom.platform")),
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = true
+  )
 }
