@@ -339,7 +339,7 @@ const bootEnhanced = (): void => {
                 const navigator = window.navigator;
 
                 if (navigator && navigator.serviceWorker) {
-                    if (!config.get('switches.serviceWorkerDisabled')) {
+                    if (config.get('switches.serviceWorkerEnabled')) {
                         navigator.serviceWorker.register('/service-worker.js');
                     } else {
                         navigator.serviceWorker

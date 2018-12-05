@@ -231,7 +231,7 @@ const bootStandard = (): void => {
 
     if (
         config.get('switches.blockIas') &&
-        !config.get('switches.serviceWorkerDisabled') &&
+        config.get('switches.serviceWorkerEnabled') &&
         navigator.serviceWorker
     ) {
         navigator.serviceWorker.ready.then(swreg => {

@@ -496,12 +496,12 @@ trait FeatureSwitches {
   )
 
   // Service Worker
-  val ServiceWorkerDisabled = Switch(
+  val ServiceWorkerEnabled = Switch(
     SwitchGroup.Feature,
-    "service-worker-disabled",
-    "If switched on the service worker will be disabled",
+    "service-worker-enabled",
+    "If switched on the service worker will be enabled",
     owners = Seq(Owner.withName("dotcom.platform")),
-    safeState = Off,
+    safeState = On,
     sellByDate = never,
     exposeClientSide = true
   )
