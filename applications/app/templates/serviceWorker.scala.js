@@ -56,7 +56,6 @@ var isRequestForAsset = (function () {
 var handleAssetRequest = function (event) {
     // Default fetch behaviour
     // Cache first for all other requests
-
     event.respondWith(
         caches.match(event.request)
             .then(function (response) {
