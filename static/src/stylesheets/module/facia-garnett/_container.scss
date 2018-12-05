@@ -122,6 +122,8 @@ $header-image-size-desktop: 100px;
 }
 
 .fc-container__header__title,
+.fc-container__header__title > h2,
+.fc-container__title__text,
 .fc-container__header__title--sticky,
 .container__title {
     @include fs-header(4);
