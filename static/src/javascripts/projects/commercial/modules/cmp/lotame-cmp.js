@@ -32,9 +32,10 @@ const lotameConsentData = (isConsenting: boolean) => ({
     targeting: isConsenting,
 });
 
-const getLotameConsent = (): boolean => local.get(lotameConsentKey);
+// local.get actually returns any... so convert to boolean
+const getLotameConsent = (): boolean => !!local.get(lotameConsentKey);
 
-const setLotameConsent = (consent: boolean) =>
+const setLotameConsent = (consent: boolean): void =>
     local.set(lotameConsentKey, consent);
 
 const lotameCallback = (isConsenting: boolean) => (
@@ -47,10 +48,15 @@ const lotameCallback = (isConsenting: boolean) => (
     }
 };
 
+// TODO: what should happen when GDPR applies = false? consent data will not exist
 const isConsentingData = (
     consentData: VendorConsentResponse | null
 ): boolean => {
-    if (consentData) {
+    if (
+        consentData &&
+        consentData.vendorConsents &&
+        consentData.purposeConsents
+    ) {
         const vendorConsents = consentData.vendorConsents;
         const purposeConsents = consentData.purposeConsents;
         return (
@@ -79,13 +85,13 @@ const getLotameAdConsentFromCmp = (): Promise<VendorConsentResponse | null> =>
         }
     });
 
-const init = (): void => {
+const init = (): Promise<void> => {
     if ('LOTCC' in window && 'setConsent' in window.LOTCC) {
         getLotameAdConsentFromCmp()
             .then(isConsentingData)
             .then(isConsenting => {
-                const localConsenting: boolean = !!getLotameConsent();
-                if (localConsenting !== isConsenting) {
+                // lotame consent is stored but may need to be updated:
+                if (getLotameConsent() !== isConsenting) {
                     return window.LOTCC.setConsent(
                         lotameCallback(isConsenting),
                         clientId,
@@ -99,6 +105,7 @@ const init = (): void => {
                 )
             );
     }
+    return Promise.resolve();
 };
 
 export { init };
