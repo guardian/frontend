@@ -17,12 +17,12 @@
                     <a href="@LinkTo(url)" data-link-name="Most viewed @section">Most popular</a>
                 </h2>
             </div>
-            <div class="fc-container--rolled-up-hide @if(Switches.ExtendedMostPopular.isSwitchedOn) {most-popular__container} else {fc-container__body popular-trails}">
-                <div class="@if(Switches.ExtendedMostPopular.isSwitchedOn) {most-popular__content} else {popular-trails__content} js-popular-trails">
+            @defining(Switches.ExtendedMostPopular.isSwitchedOn){ isExtended =>
+                <div class="fc-container--rolled-up-hide @if(isExtended) {most-popular__container} else {fc-container__body popular-trails}">
+                <div class="@if(isExtended) {most-popular__content} else {popular-trails__content} js-popular-trails">
                 </div>
-                @defining(Switches.ExtendedMostPopular.isSwitchedOn){ isExtended =>
-                <div class="@if(Switches.ExtendedMostPopular.isSwitchedOn) {most-popular__mpu} else {popular-trails__mpu}">
-                    <div class="@if(!Switches.ExtendedMostPopular.isSwitchedOn) {fc-slice__popular-mpu fc-slice__item--mpu-candidate}">
+                <div class="@if(isExtended) {most-popular__mpu} else {popular-trails__mpu}">
+                    <div class="@if(!isExtended) {fc-slice__popular-mpu fc-slice__item--mpu-candidate}">
                         @adSlot(
                         "mostpop",
                         Seq("container-inline"),
@@ -32,7 +32,7 @@
                         ){ }
                     </div>
                 </div>
-                }
+            }
             </div>
 
         </div>

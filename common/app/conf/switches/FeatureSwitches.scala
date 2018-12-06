@@ -92,7 +92,7 @@ trait FeatureSwitches {
     "extended-most-popular",
     "Extended 'Most Popular' component with space for DPMUs",
     owners = group(Commercial),
-    safeState = On,
+    safeState = Off,
     sellByDate = never,
     exposeClientSide = true
   )

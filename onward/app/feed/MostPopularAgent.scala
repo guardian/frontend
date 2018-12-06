@@ -33,7 +33,9 @@ class MostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi, w
   private val agent = Box[Map[String, Seq[RelatedContentItem]]](Map.empty)
 
   // Helper case class to read from the most/comments discussion API call.
-  private case class MostDiscussedItem(key: String, url: String, numberOfComments: Int)
+  private case class MostDiscussedItem(key: String, url: String, numberOfComments: Int) {
+    def isLiveBlog: Boolean = url.contains("/live/")
+  }
   private object MostDiscussedItem {
     implicit val format = Json.format[MostDiscussedItem]
   }
@@ -82,8 +84,7 @@ class MostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi, w
     fResponse.map{ r =>
       val json = r.json
       ( json \ "discussions" ).as[List[MostDiscussedItem]]
-        // Avoiding live blogs
-        .filter{ item => ! item.url.contains("/live/") }
+        .filterNot { _.isLiveBlog }
         .head
     }
   }

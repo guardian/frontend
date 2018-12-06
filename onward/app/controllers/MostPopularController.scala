@@ -86,10 +86,6 @@ class MostPopularController(contentApiClient: ContentApiClient,
     val headers = request.headers.toSimpleMap
     val countryCode = headers.getOrElse("X-GU-GeoLocation","country:row").replace("country:","")
 
-
-    log.info(s"Rendering MostPopular with countryCode = $countryCode"  )
-
-
     val countryPopular = MostPopular("across the guardian", "", geoMostPopularAgent.mostPopular(countryCode).map(_.faciaContent))
 
     if (request.isGuui) {
