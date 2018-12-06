@@ -22,7 +22,9 @@ export const acquisitionsEpicLiveblog: EpicABTest = makeABTest({
     audienceOffset: 0,
 
     pageCheck(page) {
-        return page.contentType === 'LiveBlog';
+        return page.contentType === 'LiveBlog'
+            && page.section !== 'sport'
+            && page.section !== 'football';
     },
 
     variants: [
