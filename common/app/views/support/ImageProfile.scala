@@ -92,7 +92,7 @@ case class VideoProfile(
 
 case class SrcSet(src: String, width: Int) {
   def asSrcSetString: String = {
-    s"$src, ${width}w"
+    s"$src ${width}w"
   }
 
 }
