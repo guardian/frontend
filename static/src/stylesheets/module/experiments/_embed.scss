@@ -31,6 +31,12 @@
     margin-bottom: $gs-baseline;
 }
 
+.contributions__title--big {
+    font-size: 32px;
+    padding-bottom: $gs-baseline/2;
+    padding-top: $gs-baseline/2;
+}
+
 .contributions__highlight {
     background-color: $highlight-main;
     padding: 2px;
@@ -148,66 +154,6 @@ a[href].contributions__contribute.contributions__contribute--epic {
     border: 0;
     width: 100%;
     max-width: 620px;
-}
-
-
-// ONE MILLION CAMPAIGN
-
-.contributions__embed--one-million {
-    border-top: 2px solid $sport-bright;
-    margin-top: 0;
-}
-
-.contributions__title--one-million {
-    font-size: 32px;
-    line-height: 36px;
-    margin-bottom: $gs-baseline;
-}
-
-.contributions__buttons--one-million {
-    margin: ($gs-baseline * 2) 0 $gs-baseline;
-}
-
-// Specificity needed to override an inline rule in _pillars.scss that's messing with the epic link colour.
-a[href].contributions__contribute.contributions__contribute--epic.contributions__contribute--one-million-subscribe,
-.contributions__contribute--one-million-subscribe {
-    border: 1px solid rgba(118, 118, 118, .4);
-    background-color: transparent;
-
-    &:hover {
-        background-color: darken($brightness-97, 5%);
-    }
-}
-
-.one-million-blue {
-    color: #00b2ff
-}
-
-.contributions__one-million-footer {
-    margin: 0;
-
-    h2 {
-        @include fs-header(5);
-        font-size: 32px;
-        line-height: 36px;
-    }
-}
-
-// US LEADING WITH CLIMATE VARIANT
-
-.contributions__epic--us-leading-with-climate {
-    padding-left: 10px;
-    padding-right: 10px;
-
-    div.u-responsive-ratio {
-        margin-bottom: 4px;
-    }
-}
-
-.contributions__title--us-leading-with-climate {
-    font-size: 32px;
-    line-height: 1.13;
-    padding-top: 3px;
 }
 
 

@@ -1,12 +1,11 @@
 @(error: Option[String] = None)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @admin_main("Login") {
-        @if(error.isDefined) {
-            <div class="alert alert-error">
-                <p>@error.get</p>
-            </div>
-        }
-    </div>
-
-</div>
+    @if(error.isDefined) {
+        <div class="alert alert-error">
+            <p>@error.get</p>
+        </div>
+    } else {
+        <div class="admin-login"></div>
+    }
 }

@@ -1,0 +1,28 @@
+@(
+    isAuthed: Boolean = false
+)(implicit request: RequestHeader, context: model.ApplicationContext)
+
+@import conf.Configuration
+
+<div class="global-nav navbar navbar-dark">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/admin" title="Menu">
+                    <svg alt="Menu" viewBox="0 0 20 22" xmlns="http://www.w3.org/2000/svg"><path d="M6.804 10.236l4.32-.828v-2.628c0-3.996-.864-5.292-3.06-5.292-.252 0-.468.036-.72.072l-4.86 6.588h-.612l.144-6.12c1.872-.576 4.212-1.224 7.308-1.224 5.328 0 8.424 1.476 8.424 5.94v12.816l1.908.504v.504c-.756.468-2.268.9-3.924.9-2.628 0-3.888-.864-4.464-2.304h-.18c-1.116 1.512-2.7 2.376-5.184 2.376-3.168 0-5.328-1.98-5.328-5.4 0-3.312 2.052-5.112 6.228-5.904zm2.664 8.712c.828 0 1.296-.252 1.656-.684v-7.92l-1.332.108c-2.088.18-2.844 1.512-2.844 4.464 0 3.204 1.044 4.032 2.52 4.032z"/></svg>
+
+                </a>
+            </div>
+            <p class="navbar-text navbar-env" data-env="@Configuration.environment.stage.toLowerCase()">Environment: @Configuration.environment.stage</p>
+            @if(isAuthed){
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/logout" id="logout-button">Logout</a>
+                    </li>
+                </ul>
+            } else {
+                <form action="@controllers.admin.routes.OAuthLoginAdminController.login()" method="post" class="navbar-form navbar-right">
+                    <input value="Log In" class="btn btn-primary" type="submit" id="login-button">
+                </form>
+            }
+        </div>
+    </div>

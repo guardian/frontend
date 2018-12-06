@@ -14,22 +14,22 @@ import scala.collection.JavaConverters._
 
 sealed trait PageElement
 case class TextBlockElement(html: String) extends PageElement
-case class TweetBlockElement(html: String, url: String, id: String, hasMedia: Boolean) extends PageElement
-case class PullquoteBlockElement(html: Option[String]) extends PageElement
-case class ImageBlockElement(media: ImageMedia, data: Map[String, String], displayCredit: Option[Boolean]) extends PageElement
+case class TweetBlockElement(html: String, url: String, id: String, hasMedia: Boolean, role: Role) extends PageElement
+case class PullquoteBlockElement(html: Option[String], role: Role) extends PageElement
+case class ImageBlockElement(media: ImageMedia, data: Map[String, String], displayCredit: Option[Boolean], role: Role) extends PageElement
 case class AudioBlockElement(assets: Seq[AudioAsset]) extends PageElement
-case class GuVideoBlockElement(assets: Seq[VideoAsset], imageMedia: ImageMedia, data: Map[String, String]) extends PageElement
-case class VideoBlockElement(data: Map[String, String]) extends PageElement
-case class EmbedBlockElement(html: Option[String], safe: Option[Boolean], alt: Option[String]) extends PageElement
+case class GuVideoBlockElement(assets: Seq[VideoAsset], imageMedia: ImageMedia, data: Map[String, String], role: Role) extends PageElement
+case class VideoBlockElement(data: Map[String, String], role: Role) extends PageElement
+case class EmbedBlockElement(html: Option[String], safe: Option[Boolean], alt: Option[String], isMandatory: Option[Boolean]) extends PageElement
 case class ContentAtomBlockElement(atomId: String) extends PageElement
-case class InteractiveBlockElement(html: Option[String]) extends PageElement
-case class CommentBlockElement(html: Option[String]) extends PageElement
-case class TableBlockElement(html: Option[String]) extends PageElement
+case class InteractiveBlockElement(html: Option[String], role: Role, isMandatory: Option[Boolean]) extends PageElement
+case class CommentBlockElement(body: String, avatarURL: String, profileURL: String, profileName: String, permalink: String, dateTime: String) extends PageElement
+case class TableBlockElement(html: Option[String], role: Role, isMandatory: Option[Boolean]) extends PageElement
 case class WitnessBlockElement(html: Option[String]) extends PageElement
-case class DocumentBlockElement(html: Option[String]) extends PageElement
+case class DocumentBlockElement(html: Option[String], role: Role, isMandatory: Option[Boolean]) extends PageElement
 case class InstagramBlockElement(url: String, html: Option[String], hasCaption: Boolean) extends PageElement
 case class VineBlockElement(html: Option[String]) extends PageElement
-case class MapBlockElement(html: Option[String]) extends PageElement
+case class MapBlockElement(html: Option[String],  role: Role, isMandatory: Option[Boolean]) extends PageElement
 case class UnknownBlockElement(html: Option[String]) extends PageElement
 
 case class MembershipBlockElement(
@@ -52,6 +52,7 @@ case class RichLinkBlockElement(
   url: Option[String],
   text: Option[String],
   prefix: Option[String],
+  role: Role,
   sponsorship: Option[Sponsorship]
 ) extends PageElement
 
@@ -79,11 +80,11 @@ object PageElement {
 
     element.`type` match {
 
-      case Text => (for {
+      case Text => for {
         block <- element.textTypeData.toList
         text <- block.html.toList
         element <- Cleaner.split(text)
-      } yield {TextBlockElement(element)})
+      } yield {TextBlockElement(element)}
 
       case Tweet => {
         (for {
@@ -92,7 +93,7 @@ object PageElement {
           html <- data.html
           url <- data.originalUrl
         } yield {
-          TweetBlockElement( html,url,id, element.assets.nonEmpty)
+          TweetBlockElement( html,url,id, element.assets.nonEmpty, Role(data.role))
         }).toList
       }
 
@@ -100,13 +101,15 @@ object PageElement {
         element.richLinkTypeData.flatMap(_.originalUrl),
         element.richLinkTypeData.flatMap(_.linkText),
         element.richLinkTypeData.flatMap(_.linkPrefix),
+        Role(element.richLinkTypeData.flatMap(_.role)),
         element.richLinkTypeData.flatMap(_.sponsorship).map(Sponsorship(_))
       ))
 
       case Image => List(ImageBlockElement(
         ImageMedia(element.assets.zipWithIndex.map { case (a, i) => ImageAsset.make(a, i) }),
         imageDataFor(element),
-        element.imageTypeData.flatMap(_.displayCredit)
+        element.imageTypeData.flatMap(_.displayCredit),
+        Role(element.imageTypeData.flatMap(_.role))
       ))
 
       case Audio => List(AudioBlockElement(element.assets.map(AudioAsset.make)))
@@ -118,10 +121,11 @@ object PageElement {
             ImageMedia(element.assets.filter(_.mimeType.exists(_.startsWith("image"))).zipWithIndex.map {
               case (a, i) => ImageAsset.make(a, i)
             }),
-            videoDataFor(element))
+            videoDataFor(element),
+            Role(element.videoTypeData.flatMap(_.role)))
           )
         }
-        else List(VideoBlockElement(videoDataFor(element)))
+        else List(VideoBlockElement(videoDataFor(element), Role(element.videoTypeData.flatMap(_.role))))
 
       case Membership => element.membershipTypeData.map(m => MembershipBlockElement(
         m.originalUrl,
@@ -135,19 +139,32 @@ object PageElement {
         m.price
       )).toList
 
-      case Embed => element.embedTypeData.map(d => EmbedBlockElement(d.html, d.safeEmbedCode, d.alt)).toList
+      case Comment => (for {
+        c <- element.commentTypeData
+        html <- c.html
+      } yield {
+        CommentBlockElement(
+          body = CommentCleaner.getBody(html),
+          avatarURL = CommentCleaner.getAvatar(html),
+          dateTime = CommentCleaner.getDateTime(html),
+          permalink = c.originalUrl.getOrElse(""),
+          profileURL = c.authorUrl.getOrElse(""),
+          profileName = c.authorName.getOrElse("")
+        )
+      }).toList
+
+      case Embed => element.embedTypeData.map(d => EmbedBlockElement(d.html, d.safeEmbedCode, d.alt, d.isMandatory)).toList
 
       case Contentatom => element.contentAtomTypeData.map(d => ContentAtomBlockElement(d.atomId)).toList
 
-      case Pullquote => element.pullquoteTypeData.map(d => PullquoteBlockElement(d.html)).toList
-      case Interactive => element.interactiveTypeData.map(d => InteractiveBlockElement(d.html)).toList
-      case Comment => element.commentTypeData.map(d => CommentBlockElement(d.html)).toList
-      case Table => element.tableTypeData.map(d => TableBlockElement(d.html)).toList
+      case Pullquote => element.pullquoteTypeData.map(d => PullquoteBlockElement(d.html, Role(None))).toList
+      case Interactive => element.interactiveTypeData.map(d => InteractiveBlockElement(d.html, Role(d.role), d.isMandatory)).toList
+      case Table => element.tableTypeData.map(d => TableBlockElement(d.html, Role(d.role), d.isMandatory)).toList
       case Witness => element.witnessTypeData.map(d => WitnessBlockElement(d.html)).toList
-      case Document => element.documentTypeData.map(d => DocumentBlockElement(d.html)).toList
+      case Document => element.documentTypeData.map(d => DocumentBlockElement(d.html, Role(d.role), d.isMandatory)).toList
       case Instagram => element.instagramTypeData.map(d => InstagramBlockElement(d.originalUrl, d.html, d.caption.isDefined)).toList
       case Vine => element.vineTypeData.map(d => VineBlockElement(d.html)).toList
-      case ElementType.Map => element.mapTypeData.map(d => MapBlockElement(d.html)).toList
+      case ElementType.Map => element.mapTypeData.map(d => MapBlockElement(d.html, Role(d.role), d.isMandatory)).toList
       case Code => List(CodeBlockElement(None))
       case Form => List(FormBlockElement(None))
       case EnumUnknownElementType(f) => List(UnknownBlockElement(None))
@@ -217,5 +234,28 @@ object Cleaner{
       .asScala
       .toList
       .map(_.outerHtml())
+  }
+}
+
+object CommentCleaner {
+  def getBody(html: String): String = {
+    Jsoup
+      .parseBodyFragment(html)
+      .getElementsByClass("d2-body")
+      .html()
+  }
+
+  def getAvatar(html: String): String = {
+    Jsoup
+      .parseBodyFragment(html)
+      .getElementsByClass("d2-avatar")
+      .attr("src")
+  }
+
+  def getDateTime(html: String): String = {
+    Jsoup
+      .parseBodyFragment(html)
+      .getElementsByClass("d2-datetime")
+      .html()
   }
 }

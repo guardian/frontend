@@ -39,6 +39,7 @@ case class SpecialBadge(salt: String, hashedTag: String, imageUrl: String) exten
 object Badges {
   val newArrivals = Badge("world/series/the-new-arrivals", Static("images/badges/new-arrivals.png"), Some("new-arrivals"))
   val brexitGamble = Badge("uk-news/series/the-brexit-gamble", Static("images/badges/EUReferendumBadge.svg"))
+  val roadToTheVote = Badge("politics/series/road-to-the-vote", Static("images/badges/EUReferendumBadge.svg"))
   val beyondTheBlade = Badge("membership/series/beyond-the-blade", Static("images/badges/beyondthebladebadge.svg"))
   val britainsDebt = Badge("business/series/britains-debt-timebomb", Static("images/badges/uk-debt.svg"))
   val paradisePapers = Badge("news/series/paradise-papers", Static("images/badges/pp_web.svg"))
@@ -49,8 +50,10 @@ object Badges {
   val midterm = Badge("us-news/us-midterm-elections-2018", Static("images/badges/midterm.svg"))
   val theAgeOfExtinction = Badge("environment/series/the-age-of-extinction", Static("images/badges/the-age-of-extinction.svg"))
   val theNewPopulism = Badge("world/series/the-new-populism", Static("images/badges/the-new-populism.svg"))
+  val theImplantFiles = Badge("society/series/the-implant-files", Static("images/badges/the-implant-files.svg"))
+  val biasInBritain = Badge("uk-news/series/bias-in-britain", Static("images/badges/bias-in-britain.svg"))
 
-  val allBadges = Seq(newArrivals, brexitGamble, beyondTheBlade, britainsDebt, paradisePapers, cambridgeAnalytica, specialReport, worldCup2018, nhs70, midterm, theAgeOfExtinction, theNewPopulism)
+  val allBadges = Seq(newArrivals, brexitGamble, roadToTheVote, beyondTheBlade, britainsDebt, paradisePapers, cambridgeAnalytica, specialReport, worldCup2018, nhs70, midterm, theAgeOfExtinction, theNewPopulism, theImplantFiles, biasInBritain)
 
   def badgeFor(c: ContentType): Option[Badge] = {
     badgeForTags(c.tags.tags.map(_.id))

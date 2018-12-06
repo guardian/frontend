@@ -18,6 +18,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-commercial-ad-mobile-web-increase",
+    "increase ads on mobile web",
+    owners = Seq(Owner.withGithub("frankie297")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 12, 14),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-contributions-epic-ask-four-earning",
     "This places the epic on all articles for all users, with a limit of 4 impressions in any given 30 days",
     owners = Seq(Owner.withGithub("jranks123")),
@@ -148,16 +158,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-acquisitions-epic-iframe-test-v2",
-    "Test displaying the Epic inside an iframe (with no Google javascript running)",
-    owners = Seq(Owner.withGithub("joelochlann")),
-    safeState = Off,
-    sellByDate = new LocalDate(2019, 7, 31),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-acquisitions-banner-from-google-doc-one-variant",
     "serves an banner with copy from a google doc",
     owners = Seq(Owner.withGithub("tsop14")),
@@ -208,8 +208,18 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-acquisitions-epic-aus-fairfax",
-    "Tests an epic with custom copy in Australia which alludes to Fairfax Media takeover",
+    "ab-acquisitions-epic-au-post-one-million",
+    "Custom epic copy for Australia",
+    owners = Seq(Owner.withGithub("joelochlann")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 11, 25),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-us-pre-end-of-year",
+    "Tests an epic with custom copy in US",
     owners = Seq(Owner.withGithub("joelochlann")),
     safeState = Off,
     sellByDate = new LocalDate(2019, 6, 6),
@@ -218,28 +228,8 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-acquisitions-epic-one-million-campaign-no-control",
-    "Tests an epic with custom copy and design for the One Million campaign",
-    owners = Seq(Owner.withGithub("joelochlann")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 11, 23),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-acquisitions-epic-one-million-campaign-au",
-    "Tests an epic with custom copy and design for the One Million campaign",
-    owners = Seq(Owner.withGithub("joelochlann")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 11, 23),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-acquisitions-epic-us-pre-end-of-year",
-    "Tests an epic with custom copy in US",
+    "ab-acquisitions-epic-us-top-ticker-round-five",
+    "Tests an epic with top ticker in US",
     owners = Seq(Owner.withGithub("joelochlann")),
     safeState = Off,
     sellByDate = new LocalDate(2019, 6, 6),

@@ -1,21 +1,7 @@
 // @flow
 import { makeABTest } from 'common/modules/commercial/contributions-utilities';
-import { acquisitionsEpicUsLeadingWithClimateTemplate } from 'common/modules/commercial/templates/acquisitions-epic-us-leading-with-climate';
-import type { EpicTemplate } from 'common/modules/commercial/contributions-utilities';
 
 const abTestName = 'AcquisitionsEpicUsPreEndOfYear';
-
-const usEndOfYearCampaignTemplate: EpicTemplate = (
-    { options = {} },
-    copy: AcquisitionsEpicTemplateCopy
-) =>
-    acquisitionsEpicUsLeadingWithClimateTemplate({
-        copy,
-        componentName: options.componentName,
-        buttonTemplate: options.buttonTemplate({
-            supportUrl: options.supportURL,
-        }),
-    });
 
 export const acquisitionsEpicUsPreEndOfYear: EpicABTest = makeABTest({
     id: abTestName,
@@ -39,18 +25,6 @@ export const acquisitionsEpicUsPreEndOfYear: EpicABTest = makeABTest({
         {
             id: 'control',
             products: [],
-            options: {
-                copy: {
-                    heading: 'We have some news &hellip;',
-                    paragraphs: [
-                        '&hellip; three years ago, we knew we had to try to make The Guardian sustainable by deepening our relationship with our readers. The revenues from our newspaper had diminished and the technologies that connected us with a global audience had moved advertising money away from news organisations. We knew we needed to find a way to keep our journalism open and accessible to everyone, regardless of where they live or what they can afford.',
-                        'And so, we have an update for you on some good news. Thanks to all the readers who have supported our independent, investigative journalism through contributions, membership or subscriptions, we are starting to overcome the urgent financial situation we were faced with. Today we have been supported by more than a million readers around the world. Our future is starting to look brighter. But we have to maintain and build on that level of support for every year to come, which means we still need to ask for your help.',
-                        'Ongoing financial support from our readers means we can continue pursuing difficult stories in the challenging times we are living through, when factual reporting has never been more critical. The Guardian is editorially independent – our journalism is free from commercial bias and not influenced by billionaire owners, politicians or shareholders. This is important because it enables us to challenge the powerful and hold them to account. With your support, we can continue bringing The Guardian’s independent journalism to the world.',
-                        'If everyone who reads our reporting, who likes it, enjoys it, helps to support it, our future would be so much more secure.',
-                    ],
-                    highlightedText: `For as little as $1, you can support The Guardian – and it only takes a minute. Thank you.`,
-                },
-            },
         },
         {
             id: 'freedom_of_the_press',
@@ -83,22 +57,6 @@ export const acquisitionsEpicUsPreEndOfYear: EpicABTest = makeABTest({
                     ],
                     highlightedText:
                         'Help us defend the truth in 2019 and beyond by making a year-end contribution to The Guardian. Thank you.',
-                },
-            },
-        },
-        {
-            id: 'leading_with_climate',
-            products: [],
-            options: {
-                template: usEndOfYearCampaignTemplate,
-                copy: {
-                    paragraphs: [
-                        'Help us do that by supporting our high impact reporting that holds our leaders accountable. Just when the need is more critical than ever, and the signs more obvious, millions of Americans – and most powerful political leaders – still question established climate science. The Guardian reports on the environment as a matter of urgent priority, giving the most important stories the space they need.',
-                        'And this is not the only important story we need to tell. In 2018, The Guardian broke the story of Cambridge Analytica’s Facebook data breach; we recorded the human fallout from family separations; we charted the rise of the far right, and documented the growing impact of gun violence on Americans’ lives.',
-                        'We need your ongoing support to continue bringing The Guardian’s independent, high impact journalism to the world.',
-                    ],
-                    highlightedText:
-                        'Help us continue reporting on the stories that matter in 2019 and beyond by making a year-end contribution to The Guardian. Thank you.',
                 },
             },
         },

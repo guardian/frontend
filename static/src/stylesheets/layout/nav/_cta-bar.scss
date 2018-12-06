@@ -75,15 +75,15 @@
     color: $brightness-7;
     display: block;
     line-height: 1;
-    height: 28px;
-    padding: 5px 10px 0;
+    height: 29px;
+    padding: 6px 11px 0;
     margin-bottom: $gs-baseline / 2;
     margin-right: $gs-gutter / 2;
     position: relative;
     float: left;
 
     @include mq(mobileMedium) {
-        padding: 5px 30px 0 10px;
+        padding: 6px 32px 0 10px;
     }
 
     .inline-arrow-right {
