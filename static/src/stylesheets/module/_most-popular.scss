@@ -20,9 +20,9 @@
 }
 
 .most-popular__content {
-    margin-top: -1px;
     border: 1px solid $brightness-86;
     border-bottom: 0;
+    border-top: 0;
 }
 
 .most-popular {
@@ -117,11 +117,6 @@
         display: flex;
         max-width: gs-span(9) + $gs-gutter / 2;
         width: 100%;
-
-        &.u-h ~ .tabs__content {
-            // Hides top line when there are no tabs
-            margin-top: -1px;
-        }
     }
 
     .tabs__content {
