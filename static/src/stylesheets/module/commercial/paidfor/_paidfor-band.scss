@@ -5,6 +5,13 @@
     top: 0;
     z-index: $zindex-sticky;
 
+    .popup__toggle,
+    .popup--paidfor__link,
+    .paidfor-band__inner > a {
+        // keyboard navigation should have highly visible focus
+        outline-color: $highlight-main;
+    }
+
     .has-super-sticky-banner & {
         position: static;
     }
@@ -17,6 +24,12 @@
 
     .paidfor-meta__label {
         align-items: center;
+    }
+
+    // TODO: switch to focus-visible when browsers support it
+    .popup__toggle:focus:not(:hover) {
+        outline-style: auto;
+        outline-width: 5px;
     }
 
     .paidfor-meta__label,
