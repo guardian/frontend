@@ -26,9 +26,8 @@ const clearCommonReaderRevenueStateAndReload = () => {
     if (isUserLoggedIn()) {
         if (window.location.origin.includes('localhost')) {
             // Assume they don't have identity running locally
-            // So try and remove cookies manually
+            // So try and remove the identity cookie manually
             removeCookie('GU_U');
-            removeCookie('SC_GU_U');
         } else {
             const profileUrl = window.location.origin.replace(/(www\.|m\.)/, 'profile');
             window.location.assign(`${profileUrl}/signout`);
