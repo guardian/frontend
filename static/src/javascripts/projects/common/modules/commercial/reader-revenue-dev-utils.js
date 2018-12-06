@@ -7,10 +7,14 @@ import { clearViewLog as clearEpicViewLog } from 'common/modules/commercial/acqu
 import { clearParticipations } from 'common/modules/experiments/utils';
 import {
     clearBannerHistory,
-    minArticlesBeforeShowingBanner
+    minArticlesBeforeShowingBanner,
 } from 'common/modules/commercial/membership-engagement-banner';
 import { local } from 'lib/storage';
-import { initMvtCookie, decrementMvtCookie, incrementMvtCookie } from 'common/modules/analytics/mvt-cookie';
+import {
+    initMvtCookie,
+    decrementMvtCookie,
+    incrementMvtCookie,
+} from 'common/modules/analytics/mvt-cookie';
 import { setGeolocation } from 'lib/geolocation';
 
 const clearCommonReaderRevenueStateAndReload = () => {
@@ -29,7 +33,10 @@ const clearCommonReaderRevenueStateAndReload = () => {
             // So try and remove the identity cookie manually
             removeCookie('GU_U');
         } else {
-            const profileUrl = window.location.origin.replace(/(www\.|m\.)/, 'profile');
+            const profileUrl = window.location.origin.replace(
+                /(www\.|m\.)/,
+                'profile'
+            );
             window.location.assign(`${profileUrl}/signout`);
         }
     } else {

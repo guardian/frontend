@@ -244,7 +244,8 @@ const canShow = (): Promise<boolean> => {
         return Promise.resolve(false);
     }
 
-    const hasSeenEnoughArticles: boolean = getVisitCount() >= minArticlesBeforeShowingBanner;
+    const hasSeenEnoughArticles: boolean =
+        getVisitCount() >= minArticlesBeforeShowingBanner;
 
     if (
         hasSeenEnoughArticles &&
