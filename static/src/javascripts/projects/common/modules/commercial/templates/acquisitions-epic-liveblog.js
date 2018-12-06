@@ -20,7 +20,12 @@ export const epicLiveBlogTemplate = ({
             </a>
         </p>
         <div class="block-elements block-elements--no-byline">
-            ${copy.paragraphs.map(paragraph => `<p><em>${paragraph}</em></p>`).join('')}
-            <p><em>${lastSentenceTemplate(copy.highlightedText, supportURL)}</em></p>
+            ${copy.paragraphs
+                .map(paragraph => `<p><em>${paragraph}</em></p>`)
+                .join('')}
+            <p><em>${lastSentenceTemplate(
+                copy.highlightedText,
+                supportURL
+            )}</em></p>
         </div>
     </div>`;
