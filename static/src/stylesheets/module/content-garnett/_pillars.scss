@@ -61,7 +61,8 @@
 
     .bullet::before,
     .content__headline-column-wrapper--column,
-    .content__labels--column {
+    .content__labels--column,
+    .content__labels--panel {
         background-color: $kickerColor;
     }
 
@@ -265,10 +266,6 @@
     .content__section-label__link,
     .youtube-media-atom__bottom-bar__duration {
         color: $mediaColor;
-    }
-
-    .content__labels--immersive {
-        background: $pillarColor;
     }
 
     .gu-media--show-controls-at-start.vjs-paused .vjs-big-play-button .vjs-control-text:before,

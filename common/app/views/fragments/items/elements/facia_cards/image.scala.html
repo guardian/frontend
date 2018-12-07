@@ -1,6 +1,6 @@
 @import layout.WidthsByBreakpoint
 @import model.ImageMedia
-@import views.support.{ImgSrc, RenderClasses}
+@import views.support.{ImgSrc, RenderClasses, SrcSet}
 
 @(
     classes: Seq[String],
@@ -16,10 +16,10 @@
     @widths.breakpoints.map { breakpointWidth =>
         <source media="(min-width: @breakpointWidth.breakpoint.minWidth.getOrElse("0")px) and (-webkit-min-device-pixel-ratio: 1.25), (min-width: @breakpointWidth.breakpoint.minWidth.getOrElse("0")px) and (min-resolution: 120dpi)"
                 sizes="@breakpointWidth.width"
-                srcset="@ImgSrc.srcsetForBreakpoint(breakpointWidth, widths.breakpoints, maybePath, maybeImageMedia, hidpi = true)" />
+                srcset="@SrcSet.asSrcSetString(ImgSrc.srcsetForBreakpoint(breakpointWidth, widths.breakpoints, maybePath, maybeImageMedia, hidpi = true))" />
         <source media="(min-width: @breakpointWidth.breakpoint.minWidth.getOrElse("0")px)"
                 sizes="@breakpointWidth.width"
-                srcset="@ImgSrc.srcsetForBreakpoint(breakpointWidth, widths.breakpoints, maybePath, maybeImageMedia)" />
+                srcset="@SrcSet.asSrcSetString(ImgSrc.srcsetForBreakpoint(breakpointWidth, widths.breakpoints, maybePath, maybeImageMedia))" />
     }
     <!--[if IE 9]></video><![endif]-->
     @maybeImageMedia.map(ImgSrc.getFallbackUrl(_)).orElse(maybeSrc).orElse(maybePath).map { src =>

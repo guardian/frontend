@@ -467,6 +467,7 @@
     figure.element--immersive {
         margin-left: -$gs-gutter / 2;
         margin-right: -$gs-gutter / 2;
+        z-index: 1;
 
         @include mq(mobileLandscape) {
             margin-left: -$gs-gutter;
@@ -633,6 +634,27 @@
             margin-left: -$gs-gutter / 2;
         }
     }
+
+    .content__labels--immersive {
+        margin-left: -$gs-gutter;
+        padding: ($gs-baseline / 4) ($gs-gutter / 2) ($gs-baseline / 4) $gs-gutter;
+        display: inline-block;
+
+        @include mq($from: tablet) {
+            margin-left: -($gs-gutter / 2);
+            max-width: gs-span(4) + ($gs-gutter / 2);
+            padding: ($gs-baseline / 2) ($gs-gutter / 2);
+
+            .badge-slot {
+                width: auto;
+            }
+        }
+    }
+
+    .content__label__link {
+        color: #ffffff;
+    }
+
     .immersive-main-media__headline-container {
         margin-top: -100px;
         position: relative;
@@ -654,25 +676,13 @@
             }
         }
 
-        .gs-container {
-            padding: 0;
-        }
-
         .content__labels--immersive {
-            margin-left: -$gs-gutter;
-            padding: ($gs-baseline / 4) ($gs-gutter / 2) ($gs-baseline / 4) $gs-gutter;
             position: absolute;
             transform: translateY(-100%);
+        }
 
-            @include mq($from: tablet) {
-                margin-left: -($gs-gutter / 2);
-                max-width: gs-span(4) + ($gs-gutter / 2);
-                padding: ($gs-baseline / 2) ($gs-gutter / 2);
-
-                .badge-slot {
-                    width: auto;
-                }
-            }
+        .gs-container {
+            padding: 0;
         }
 
         .badge-slot {
@@ -684,9 +694,6 @@
             }
         }
 
-        .content__label__link {
-            color: #ffffff;
-        }
         .content__main-column {
             &::before {
                 display: none;
@@ -732,22 +739,6 @@
         @include mq(desktop) {
             font-size: 50px;
             line-height: 54px;
-        }
-
-        //This is the line when there is no image that connetcs to the body
-        &:before {
-            position: absolute;
-            top: -$gs-baseline / 2;
-            bottom: -$gs-baseline * 2;
-            left: -$gs-gutter / 2;
-            width: 1px;
-            background-color: $brightness-86;
-            content: '';
-            display: none;
-            @include mq($from: leftCol) {
-                display: block;
-                bottom: -$gs-baseline * 3;
-            }
         }
     }
 
@@ -889,9 +880,6 @@
 
 @mixin immersivePillarColours($pillar, $color, $color2) {
     .content--pillar-#{$pillar}.content--immersive-article:not(.paid-content) {
-        .content__labels--immersive {
-            background-color: $color2;
-        }
         .u-underline {
             color: $color2;
             border-bottom: 1px solid rgba($color2, .4);
