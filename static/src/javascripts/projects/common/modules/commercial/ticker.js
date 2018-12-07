@@ -1,5 +1,5 @@
 // @flow
-let count = {};
+const count = {};
 let showCount;
 let goal;
 let total;
@@ -22,7 +22,10 @@ const animateBar = (parentElement: HTMLElement) => {
     }
 };
 
-const increaseCounter = (parentElement: HTMLElement, parentElementSelector: string) => {
+const increaseCounter = (
+    parentElement: HTMLElement,
+    parentElementSelector: string
+) => {
     // Count is local to the parent element
     count[parentElementSelector] += Math.floor(total / 100);
     const counterElement = parentElement.querySelector(
@@ -30,11 +33,15 @@ const increaseCounter = (parentElement: HTMLElement, parentElementSelector: stri
     );
 
     if (counterElement && counterElement instanceof HTMLElement) {
-        counterElement.innerHTML = `$${count[parentElementSelector].toLocaleString()}`;
+        counterElement.innerHTML = `$${count[
+            parentElementSelector
+        ].toLocaleString()}`;
         if (count[parentElementSelector] >= total) {
             counterElement.innerHTML = `$${total.toLocaleString()}`;
         } else {
-            window.requestAnimationFrame(() => increaseCounter(parentElement, parentElementSelector));
+            window.requestAnimationFrame(() =>
+                increaseCounter(parentElement, parentElementSelector)
+            );
         }
     }
 };
@@ -56,7 +63,9 @@ const animate = (parentElementSelector: string) => {
         populateText(parentElement);
         window.setTimeout(() => {
             count[parentElementSelector] = 0;
-            window.requestAnimationFrame(() => increaseCounter(parentElement, parentElementSelector));
+            window.requestAnimationFrame(() =>
+                increaseCounter(parentElement, parentElementSelector)
+            );
             animateBar(parentElement);
         }, 500);
     }
