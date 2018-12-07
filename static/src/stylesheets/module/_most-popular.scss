@@ -157,7 +157,11 @@
                 position: absolute;
                 left: 0;
                 top: 0;
-                bottom: 18px;
+                bottom: 10px;
+
+                @include mq(tablet) {
+                    bottom: 18px;
+                }
             }
         }
     }
@@ -170,9 +174,13 @@
         color: $brightness-7;
         text-transform: capitalize;
         height: 48px;
-        padding: ($gs-baseline / 2) ($gs-gutter / 2) 0;
+        padding: 7px ($gs-gutter / 2) 0;
         display: block;
         width: auto;
+
+        @include mq(tablet) {
+            padding: $gs-baseline ($gs-gutter / 2) 0;
+        }
 
         &:hover,
         &:focus {
