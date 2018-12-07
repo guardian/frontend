@@ -1,7 +1,10 @@
 // @flow
 import { isAbTestTargeted } from 'common/modules/commercial/targeting-tool';
 import { getEpicParams } from 'common/modules/commercial/acquisitions-copy';
-import { getAcquisitionsBannerParams, defaultEngagementBannerParams } from 'common/modules/commercial/membership-engagement-banner-parameters';
+import {
+    getAcquisitionsBannerParams,
+    defaultEngagementBannerParams,
+} from 'common/modules/commercial/membership-engagement-banner-parameters';
 import { logView } from 'common/modules/commercial/acquisitions-view-log';
 import {
     submitClickEvent,

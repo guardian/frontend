@@ -1,10 +1,12 @@
 // @flow strict
 import {
     makeBannerABTestVariants,
-    makeGoogleDocBannerControl,
     makeEngagementBannerVariant,
 } from 'common/modules/commercial/contributions-utilities';
-import { getSync as geolocationGetSync, geolocationString } from 'lib/geolocation';
+import {
+    getSync as geolocationGetSync,
+    type geolocationString,
+} from 'lib/geolocation';
 
 const componentType: OphanComponentType = 'ACQUISITIONS_ENGAGEMENT_BANNER';
 const abTestName = 'AcquisitionsBannerAustraliaPostOneMillion';
