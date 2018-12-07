@@ -15,14 +15,11 @@ declare type EngagementBannerTemplateParams = {
     ctaText: string,
     buttonCaption: string,
     linkUrl: string,
+    hasTicker: boolean,
 };
 
-declare type EngagementBannerParams = {
+declare type EngagementBannerParams = EngagementBannerTemplateParams & {
     campaignCode: string,
-    buttonCaption: string,
-    linkUrl: string,
-    messageText: string,
-    ctaText: string,
     pageviewId: string,
     products: OphanProduct[],
     paypalClass?: string,
