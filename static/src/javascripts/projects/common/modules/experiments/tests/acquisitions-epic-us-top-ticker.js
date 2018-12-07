@@ -61,7 +61,7 @@ export const acquisitionsEpicUsTopTicker: EpicABTest = makeABTest({
                 copy: shorterCopy,
                 template: createTemplate('TOP'),
                 onView: () => {
-                    initTicker();
+                    initTicker('.js-epic-ticker');
                 },
             },
         },

@@ -208,6 +208,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-acquisitions-banner-us-eoy",
+    "Serves an banner with ticker and copy for US end of year campaign",
+    owners = Seq(Owner.withGithub("joelochlann")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 6, 6),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-acquisitions-epic-au-post-one-million",
     "Custom epic copy for Australia",
     owners = Seq(Owner.withGithub("joelochlann")),

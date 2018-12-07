@@ -1,5 +1,8 @@
 // @flow
-let count = 0;
+import { getLocalCurrencySymbol } from 'lib/geolocation';
+
+const count = {};
+let showCount;
 let goal;
 let total;
 
@@ -11,9 +14,9 @@ const percentageTotalAsNegative = () => {
     return percentage;
 };
 
-const animateBar = () => {
-    const progressBarElement = document.querySelector(
-        '.epic-ticker__filled-progress'
+const animateBar = (parentElement: HTMLElement) => {
+    const progressBarElement = parentElement.querySelector(
+        '.js-ticker-filled-progress'
     );
 
     if (progressBarElement && progressBarElement instanceof HTMLElement) {
@@ -21,52 +24,77 @@ const animateBar = () => {
     }
 };
 
-const increaseCounter = () => {
-    count += Math.floor(total / 100);
-    const counterElement = document.querySelector(
-        '.epic-ticker__so-far .epic-ticker__count'
+const increaseCounter = (
+    parentElement: HTMLElement,
+    parentElementSelector: string
+) => {
+    // Count is local to the parent element
+    count[parentElementSelector] += Math.floor(total / 100);
+    const counterElement = parentElement.querySelector(
+        '.js-ticker-so-far .js-ticker-count'
     );
 
     if (counterElement && counterElement instanceof HTMLElement) {
-        counterElement.innerHTML = `$${count.toLocaleString()}`;
-        if (count >= total) {
-            counterElement.innerHTML = `$${total.toLocaleString()}`;
+        counterElement.innerHTML = `${getLocalCurrencySymbol()}${count[
+            parentElementSelector
+        ].toLocaleString()}`;
+        if (count[parentElementSelector] >= total) {
+            counterElement.innerHTML = `${getLocalCurrencySymbol()}${total.toLocaleString()}`;
         } else {
-            window.requestAnimationFrame(increaseCounter);
+            window.requestAnimationFrame(() =>
+                increaseCounter(parentElement, parentElementSelector)
+            );
         }
     }
 };
 
-const populateText = () => {
-    const goalElement = document.querySelector(
-        '.epic-ticker__goal .epic-ticker__count'
+const populateText = (parentElement: HTMLElement) => {
+    const goalElement = parentElement.querySelector(
+        '.js-ticker-goal .js-ticker-count'
     );
 
     if (goalElement && goalElement instanceof HTMLElement) {
-        goalElement.innerHTML = `$${goal.toLocaleString()}`;
+        goalElement.innerHTML = `${getLocalCurrencySymbol()}${goal.toLocaleString()}`;
     }
 };
 
-const fetchDataAndAnimate = () => {
-    fetch(
-        'https://interactive.guim.co.uk/docsdata-test/1ySn7Ol2NQLvvSw_eAnVrPuuRnaGOxUmaUs6svtu_irU.json'
-    )
-        .then(resp => resp.json())
-        .then(data => {
-            const showCount = data.sheets.Sheet1[0].showCount === 'TRUE';
-            total = parseInt(data.sheets.Sheet1[0].total, 10);
-            goal = parseInt(data.sheets.Sheet1[0].goal, 10);
+const animate = (parentElementSelector: string) => {
+    const parentElement = document.querySelector(parentElementSelector);
 
-            if (showCount) {
-                populateText();
-                window.setTimeout(() => {
-                    window.requestAnimationFrame(increaseCounter);
-                    animateBar();
-                }, 500);
-            }
-        });
+    if (parentElement && parentElement instanceof HTMLElement) {
+        populateText(parentElement);
+        window.setTimeout(() => {
+            count[parentElementSelector] = 0;
+            window.requestAnimationFrame(() =>
+                increaseCounter(parentElement, parentElementSelector)
+            );
+            animateBar(parentElement);
+        }, 500);
+    }
 };
 
-export const initTicker = () => {
-    fetchDataAndAnimate();
+const dataSuccessfullyFetched = () => total && goal && showCount;
+
+const fetchDataAndAnimate = (parentElementSelector: string) => {
+    if (dataSuccessfullyFetched()) {
+        animate(parentElementSelector);
+    } else {
+        fetch(
+            'https://interactive.guim.co.uk/docsdata-test/1ySn7Ol2NQLvvSw_eAnVrPuuRnaGOxUmaUs6svtu_irU.json'
+        )
+            .then(resp => resp.json())
+            .then(data => {
+                showCount = data.sheets.Sheet1[0].showCount === 'TRUE';
+                total = parseInt(data.sheets.Sheet1[0].total, 10);
+                goal = parseInt(data.sheets.Sheet1[0].goal, 10);
+
+                if (dataSuccessfullyFetched()) {
+                    animate(parentElementSelector);
+                }
+            });
+    }
+};
+
+export const initTicker = (parentElementSelector: string) => {
+    fetchDataAndAnimate(parentElementSelector);
 };
