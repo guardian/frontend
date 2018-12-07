@@ -42,15 +42,6 @@ export const AcquisitionsBannerUsEoy = {
 
     variants: makeBannerABTestVariants([
         {
-            id: 'control',
-            products: [],
-            engagementBannerParams: () =>
-                Promise.resolve({
-                    ...controlParams,
-                    hasTicker: false,
-                }),
-        },
-        {
             id: 'control_copy_with_ticker',
             products: [],
             engagementBannerParams: () =>
