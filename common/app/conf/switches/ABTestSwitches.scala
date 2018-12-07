@@ -235,4 +235,14 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2019, 6, 6),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-banner-australia-post-one-million",
+    "Tests an engagement banner with custom copy in Australia",
+    owners = Seq(Owner.withGithub("tsop14")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 6, 6),
+    exposeClientSide = true
+  )
 }
