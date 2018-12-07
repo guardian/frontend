@@ -8,7 +8,8 @@ object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] = Set(
     OldAudioPage,
     OrielParticipation,
-    OldTLSSupportDeprecation
+    OldTLSSupportDeprecation,
+    PodcastImage
   )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
@@ -37,3 +38,12 @@ object OldAudioPage extends Experiment(
   sellByDate = new LocalDate(2018, 12, 19),
   participationGroup = Perc5A
 )
+
+object PodcastImage extends Experiment(
+  name = "podcast-image",
+  description = "For the Fronts container for the Today in Focus podcast, show either the logo or a unique story photo",
+  owners = Owner.group(SwitchGroup.Journalism),
+  sellByDate = new LocalDate(2019, 1, 9),
+  participationGroup = Perc50
+)
+

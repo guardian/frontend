@@ -8,6 +8,7 @@
 @import layout.SliceWithCards
 @import conf.audio.FlagshipFrontContainer
 @import conf.AudioFlagship
+@import experiments.{ActiveExperiments, PodcastImage}
 
 @(containerDefinition: layout.FaciaContainer, frontProperties: FrontProperties)(implicit request: RequestHeader)
 
@@ -36,7 +37,6 @@
     </div>
 }
 
-
 @containerHeader(containerDefinition, frontProperties)
 
 @for(containerLayout <- containerDefinition.containerLayout) {
@@ -57,9 +57,26 @@
                     @getLatestEpisode(allCards).map { card =>
                         <div class="fc-item--type-media">
                             <div class="fc-podcast-container__episode">
-                                <div class="fc-podcast-container__episode-image">
-                                    <img src="@FlagshipFrontContainer.AlbumArtUrl"/>
-                                </div>
+
+                                @if(ActiveExperiments.isParticipating(PodcastImage)){
+                                    @card.displayElement match {
+                                        case Some(InlineImage(image)) => {
+                                            <div class="fc-podcast-container__episode-image-story">
+                                                @itemImage(
+                                                    image,
+                                                    inlineImage = true,
+                                                    widthsByBreakpoint = Some(card.mediaWidthsByBreakpoint)
+                                                )
+                                            </div>
+                                        }
+                                        case _ => {}
+                                    }
+                                } else{
+                                    <div class="fc-podcast-container__episode-image-generic">
+                                        <img src="@FlagshipFrontContainer.AlbumArtUrl"/>
+                                    </div>
+                                }
+
                                 <div class="fc-podcast-container__episode-details">
                                     <div class="fc-item__header">
                                         <h2 class="fc-item__title">
@@ -91,8 +108,9 @@
                                 </div>
                                 @subscriptionLinks
                             </div>
-                            <a class="fc-podcast-container__track u-faux-block-link__overlay js-headline-text" @Html(card.header.url.hrefWithRel) data-link-name="article" tabindex="-1" aria-hidden="true">
-                                @RemoveOuterParaHtml(card.header.headline)
+                            <a class="fc-podcast-container__track u-faux-block-link__overlay js-headline-text"
+                                @Html(card.header.url.hrefWithRel) data-link-name="article" tabindex="-1" aria-hidden="true">
+                                @RemoveOuterParaHtml(card.header.headline)>
                             </a>
                         </div>
                     }
