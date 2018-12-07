@@ -1,4 +1,6 @@
 // @flow
+import { getLocalCurrencySymbol } from 'lib/geolocation';
+
 const count = {};
 let showCount;
 let goal;
@@ -33,11 +35,11 @@ const increaseCounter = (
     );
 
     if (counterElement && counterElement instanceof HTMLElement) {
-        counterElement.innerHTML = `$${count[
+        counterElement.innerHTML = `${getLocalCurrencySymbol()}${count[
             parentElementSelector
         ].toLocaleString()}`;
         if (count[parentElementSelector] >= total) {
-            counterElement.innerHTML = `$${total.toLocaleString()}`;
+            counterElement.innerHTML = `${getLocalCurrencySymbol()}${total.toLocaleString()}`;
         } else {
             window.requestAnimationFrame(() =>
                 increaseCounter(parentElement, parentElementSelector)
@@ -52,7 +54,7 @@ const populateText = (parentElement: HTMLElement) => {
     );
 
     if (goalElement && goalElement instanceof HTMLElement) {
-        goalElement.innerHTML = `$${goal.toLocaleString()}`;
+        goalElement.innerHTML = `${getLocalCurrencySymbol()}${goal.toLocaleString()}`;
     }
 };
 
