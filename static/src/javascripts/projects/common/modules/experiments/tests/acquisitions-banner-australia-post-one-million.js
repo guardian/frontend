@@ -1,7 +1,7 @@
 // @flow strict
 import {
     makeBannerABTestVariants,
-    makeEngagementBannerVariant,
+    makeBannerABTestVariant,
 } from 'common/modules/commercial/contributions-utilities';
 import {
     getSync as geolocationGetSync,
@@ -32,6 +32,6 @@ export const AcquisitionsBannerAustraliaPostOneMillionTest: AcquisitionsABTest =
     canRun: () => geolocationGetSync() === ('AU': geolocationString),
 
     variants: makeBannerABTestVariants([
-        makeEngagementBannerVariant('AU2018_POST_1M_EB', variantAParams),
+        makeBannerABTestVariant('AU2018_POST_1M_EB', variantAParams),
     ]),
 };

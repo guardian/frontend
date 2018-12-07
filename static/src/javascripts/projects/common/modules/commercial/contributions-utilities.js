@@ -499,7 +499,7 @@ const makeGoogleDocBannerVariants = (
     return variants;
 };
 
-const makeEngagementBannerVariant = (
+const makeBannerABTestVariant = (
     id: string,
     engagementBannerParams: Object
 ): InitBannerABTestVariant => ({
@@ -526,7 +526,7 @@ export {
     makeGoogleDocEpicVariants,
     makeGoogleDocBannerVariants,
     makeGoogleDocBannerControl,
-    makeEngagementBannerVariant,
+    makeBannerABTestVariant,
     defaultMaxViews,
     isEpicDisplayable,
 };
