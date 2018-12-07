@@ -2,10 +2,12 @@ package model.dotcomrendering.pageElements
 
 import com.gu.contentapi.client.model.v1.ElementType.{Map => _, _}
 import com.gu.contentapi.client.model.v1.{ElementType, SponsorshipType, BlockElement => ApiBlockElement, Sponsorship => ApiSponsorship}
+import layout.ContentWidths.BodyMedia
 import model.{AudioAsset, ImageAsset, ImageMedia, VideoAsset}
 import play.api.libs.json._
 import org.jsoup.Jsoup
 import scala.collection.JavaConverters._
+import views.support.{ImageProfile, ImageUrlSigner, ImgSrc, Item120, Item1200, Item140, Item300, Item640, Item700, SrcSet}
 
 /*
   These elements are used for the Dotcom Rendering, they are essentially the new version of the
@@ -16,7 +18,8 @@ sealed trait PageElement
 case class TextBlockElement(html: String) extends PageElement
 case class TweetBlockElement(html: String, url: String, id: String, hasMedia: Boolean, role: Role) extends PageElement
 case class PullquoteBlockElement(html: Option[String], role: Role) extends PageElement
-case class ImageBlockElement(media: ImageMedia, data: Map[String, String], displayCredit: Option[Boolean], role: Role) extends PageElement
+case class ImageBlockElement(media: ImageMedia, data: Map[String, String], displayCredit: Option[Boolean], role: Role, imageSources: Seq[ImageSource]) extends PageElement
+case class ImageSource(weighting: String, srcSet: Seq[SrcSet])
 case class AudioBlockElement(assets: Seq[AudioAsset]) extends PageElement
 case class GuVideoBlockElement(assets: Seq[VideoAsset], imageMedia: ImageMedia, data: Map[String, String], role: Role) extends PageElement
 case class VideoBlockElement(data: Map[String, String], role: Role) extends PageElement
@@ -74,7 +77,9 @@ object Sponsorship {
   }
 }
 
+//noinspection ScalaStyle
 object PageElement {
+  val dotComponentsImageProfiles = List(Item1200, Item700, Item640, Item300, Item140, Item120)
 
   def make(element: ApiBlockElement): List[PageElement] = {
 
@@ -105,12 +110,24 @@ object PageElement {
         element.richLinkTypeData.flatMap(_.sponsorship).map(Sponsorship(_))
       ))
 
-      case Image => List(ImageBlockElement(
-        ImageMedia(element.assets.zipWithIndex.map { case (a, i) => ImageAsset.make(a, i) }),
-        imageDataFor(element),
-        element.imageTypeData.flatMap(_.displayCredit),
-        Role(element.imageTypeData.flatMap(_.role))
-      ))
+      case Image =>
+        val signedAssets = element.assets.zipWithIndex
+          .map { case (a, i) => ImageAsset.make(a, i) }
+        val imageSources: Seq[ImageSource] = BodyMedia.all.map {
+          case (weighting, widths) =>
+            val srcSet = widths.breakpoints.flatMap { b =>
+              ImgSrc.srcsetForBreakpoint(b, BodyMedia.inline.breakpoints, maybeImageMedia = Some(ImageMedia(signedAssets)))
+            }
+            ImageSource(weighting, srcSet)
+        }.toSeq
+
+        List(ImageBlockElement(
+          ImageMedia(signedAssets),
+          imageDataFor(element),
+          element.imageTypeData.flatMap(_.displayCredit),
+          Role(element.imageTypeData.flatMap(_.role)),
+          imageSources
+        ))
 
       case Audio => List(AudioBlockElement(element.assets.map(AudioAsset.make)))
 
@@ -190,6 +207,7 @@ object PageElement {
     } getOrElse Map()
   }
 
+  implicit val imageWeightingWrites: Writes[ImageSource] = Json.writes[ImageSource]
   implicit val textBlockElementWrites: Writes[TextBlockElement] = Json.writes[TextBlockElement]
   implicit val ImageBlockElementWrites: Writes[ImageBlockElement] = Json.writes[ImageBlockElement]
   implicit val AudioBlockElementWrites: Writes[AudioBlockElement] = Json.writes[AudioBlockElement]

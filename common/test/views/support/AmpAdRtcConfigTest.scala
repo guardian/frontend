@@ -13,7 +13,7 @@ class AmpAdRtcConfigTest extends FlatSpec with Matchers with BeforeAndAfter {
   private val prebidServerUrl = "http://localhost:8000"
 
   private val ampPrebidUrl =
-    "http://localhost:8000/openrtb2/amp?tag_id=14351413&w=ATTR(width)&h=ATTR(height)&ow=ATTR(data-override-width)" +
+    "http://localhost:8000/openrtb2/amp?tag_id=4&w=ATTR(width)&h=ATTR(height)&ow=ATTR(data-override-width)" +
       "&oh=ATTR(data-override-height)&ms=ATTR(data-multi-size)&slot=ATTR(data-slot)" +
       "&targeting=TGT&curl=CANONICAL_URL&timeout=TIMEOUT&adcid=ADCID&purl=HREF&debug=1"
 
@@ -88,7 +88,7 @@ class AmpAdRtcConfigTest extends FlatSpec with Matchers with BeforeAndAfter {
     val json = Json.parse(AmpAdRtcConfig.toJsonString(
       prebidServerUrl, edition = Uk, debug = false
     ))
-    Json.stringify(json) should include ("tag_id=14351413")
+    Json.stringify(json) should include ("tag_id=4")
   }
 
   it should "have correct placement ID for US edition" in {
@@ -96,7 +96,7 @@ class AmpAdRtcConfigTest extends FlatSpec with Matchers with BeforeAndAfter {
     val json = Json.parse(AmpAdRtcConfig.toJsonString(
       prebidServerUrl, edition = Us, debug = false
     ))
-    Json.stringify(json) should include ("tag_id=14401433")
+    Json.stringify(json) should include ("tag_id=7")
   }
 
   it should "have correct placement ID for AU edition" in {
@@ -104,7 +104,7 @@ class AmpAdRtcConfigTest extends FlatSpec with Matchers with BeforeAndAfter {
     val json = Json.parse(AmpAdRtcConfig.toJsonString(
       prebidServerUrl, edition = Au, debug = false
     ))
-    Json.stringify(json) should include ("tag_id=14400184")
+    Json.stringify(json) should include ("tag_id=6")
   }
 
   it should "have correct placement ID for International edition" in {
@@ -112,6 +112,6 @@ class AmpAdRtcConfigTest extends FlatSpec with Matchers with BeforeAndAfter {
     val json = Json.parse(AmpAdRtcConfig.toJsonString(
       prebidServerUrl, edition = International, debug = false
     ))
-    Json.stringify(json) should include ("tag_id=14351413")
+    Json.stringify(json) should include ("tag_id=4")
   }
 }

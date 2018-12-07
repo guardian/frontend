@@ -46,16 +46,3 @@
         fill: #bdbdbd;
     }
 }
-
-/* Styling fix for special topic label */
-.content--media {
-    header {
-        .content__labels.content__labels--immersive {
-            background: none;
-            .badge-slot {
-                margin-bottom: 16px;
-            }
-        }
-    }
-
-}

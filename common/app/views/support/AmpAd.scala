@@ -62,9 +62,9 @@ object AmpAdRtcConfig {
        */
       val ampPrebidUrl = {
         val placementId = edition match {
-          case Us => 14401433
-          case Au => 14400184
-          case _ => 14351413
+          case Us => 7
+          case Au => 6
+          case _ => 4
         }
         val url = s"$prebidServerUrl/openrtb2/amp?tag_id=$placementId&w=ATTR(width)&h=ATTR(height)" +
           "&ow=ATTR(data-override-width)&oh=ATTR(data-override-height)&ms=ATTR(data-multi-size)" +

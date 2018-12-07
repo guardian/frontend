@@ -10,8 +10,7 @@ object ActiveExperiments extends ExperimentsDefinition {
     OldAudioPage,
     CommercialClientLogging,
     OrielParticipation,
-    OldTLSSupportDeprecation,
-    FakeShowcase
+    OldTLSSupportDeprecation
   )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
@@ -20,7 +19,7 @@ object CommercialClientLogging extends Experiment(
   name = "commercial-client-logging",
   description = "A slice of the audience who will post their commercial js performance data",
   owners = Owner.group(SwitchGroup.Commercial),
-  sellByDate = new LocalDate(2018, 12, 5),
+  sellByDate = new LocalDate(2019, 1, 9),
   participationGroup = Perc1A
 )
 
@@ -28,7 +27,7 @@ object OrielParticipation extends Experiment(
   name = "oriel-participation",
   description = "A slice of the audience who will participate in Oriel ad-blocking technology",
   owners = Seq(Owner.withGithub("janua")),
-  sellByDate = new LocalDate(2018, 12, 5),
+  sellByDate = new LocalDate(2019, 1, 9),
   participationGroup = Perc20A
 )
 
@@ -45,14 +44,7 @@ object OldAudioPage extends Experiment(
   name = "old-audio-page",
   description = "Show the older version of the audio episode page",
   owners = Owner.group(SwitchGroup.Journalism),
-  sellByDate = new LocalDate(2018, 12, 5),
+  sellByDate = new LocalDate(2018, 12, 19),
   participationGroup = Perc5A
 )
 
-object FakeShowcase extends Experiment(
-  name = "fake-showcase",
-  description = "upgrades an article to showcase to see what that does",
-  owners = Seq(Owner.withGithub("aware")),
-  sellByDate = new LocalDate(2018, 12, 3),
-  participationGroup = Perc50
-)
