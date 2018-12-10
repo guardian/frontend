@@ -61,7 +61,11 @@ case class PageData(
     contentType: Option[String],
     commissioningDesks: Option[String],
     subMetaLinks: SubMetaLinks,
+
+    // AMP specific
     guardianBaseURL: String,
+    webURL: String,
+    shouldHideAds: Boolean,
 )
 
 case class Config(
@@ -169,7 +173,9 @@ object DotcomponentsDataModel {
       jsConfig("contentType"),
       jsConfig("commissioningDesks"),
       article.content.submetaLinks,
-      Configuration.site.host
+      Configuration.site.host,
+      article.metadata.webUrl,
+      article.content.shouldHideAdverts,
     )
 
     val tags = article.tags.tags.map(
