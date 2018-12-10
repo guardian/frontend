@@ -7940,9 +7940,9 @@ preact@^8.2.9:
   version "8.2.9"
   resolved "https://registry.yarnpkg.com/preact/-/preact-8.2.9.tgz#813ba9dd45e5d97c5ea0d6c86d375b3be711cc40"
 
-"prebid.js@https://github.com/guardian/Prebid.js.git#31a508c":
+"prebid.js@https://github.com/guardian/Prebid.js.git#13498e3":
   version "1.32.0"
-  resolved "https://github.com/guardian/Prebid.js.git#31a508c8be2cdc5a48948937b25d016a2969b444"
+  resolved "https://github.com/guardian/Prebid.js.git#13498e37f8eb1b7c68c85e0eb2edb1b621145210"
   dependencies:
     ansi-regex "^4.0.0"
     ansi-styles "^3.2.1"
