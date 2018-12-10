@@ -3,25 +3,15 @@ package experiments
 import conf.switches.{Owner, SwitchGroup}
 import experiments.ParticipationGroups._
 import org.joda.time.LocalDate
-import play.api.mvc.RequestHeader
 
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] = Set(
     OldAudioPage,
-    CommercialClientLogging,
     OrielParticipation,
     OldTLSSupportDeprecation
   )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
-
-object CommercialClientLogging extends Experiment(
-  name = "commercial-client-logging",
-  description = "A slice of the audience who will post their commercial js performance data",
-  owners = Owner.group(SwitchGroup.Commercial),
-  sellByDate = new LocalDate(2019, 1, 9),
-  participationGroup = Perc1A
-)
 
 object OrielParticipation extends Experiment(
   name = "oriel-participation",
@@ -47,4 +37,3 @@ object OldAudioPage extends Experiment(
   sellByDate = new LocalDate(2018, 12, 19),
   participationGroup = Perc5A
 )
-
