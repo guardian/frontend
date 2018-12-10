@@ -9,6 +9,8 @@ import navigation.NavMenu
 import play.api.libs.json.{JsValue, Json, Writes}
 import play.api.mvc.RequestHeader
 import views.support.GUDateTimeFormat
+import ai.x.play.json.Jsonx
+import ai.x.play.json.implicits.optionWithNull // Note, required despite Intellij saying otherwise
 
 // We have introduced our own set of objects for serializing data to the DotComponents API,
 // because we don't want people changing the core frontend models and as a side effect,
@@ -58,7 +60,8 @@ case class PageData(
     edition: String,
     contentType: Option[String],
     commissioningDesks: Option[String],
-    subMetaLinks: SubMetaLinks
+    subMetaLinks: SubMetaLinks,
+    guardianBaseURL: String,
 )
 
 case class Config(
@@ -103,7 +106,12 @@ object Tag {
 }
 
 object PageData {
-  implicit val writes = Json.writes[PageData]
+  // We use Jsonx here because PageData exceeds 22 fields and
+  // regular Play JSON is unable to serialise this. See, e.g.
+  //
+  // * https://github.com/playframework/play-json/issues/3
+  // * https://stackoverflow.com/questions/23571677/22-fields-limit-in-scala-2-11-play-framework-2-3-case-classes-and-functions/23588132#23588132
+  implicit val formats = Jsonx.formatCaseClass[PageData]
 }
 
 object Config {
@@ -160,7 +168,8 @@ object DotcomponentsDataModel {
       Edition(request).displayName,
       jsConfig("contentType"),
       jsConfig("commissioningDesks"),
-      article.content.submetaLinks
+      article.content.submetaLinks,
+      Configuration.site.host
     )
 
     val tags = article.tags.tags.map(

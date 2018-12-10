@@ -654,7 +654,7 @@ final case class SubMetaLink(
 )
 
 object SubMetaLink {
-  implicit val writes: OWrites[SubMetaLink] = Json.writes[SubMetaLink]
+  implicit val formats: OFormat[SubMetaLink] = Json.format[SubMetaLink]
 }
 
 final case class SubMetaLinks(
@@ -664,7 +664,7 @@ final case class SubMetaLinks(
 
 object SubMetaLinks {
 
-  implicit val writes: OWrites[SubMetaLinks] = Json.writes[SubMetaLinks]
+  implicit val formats: OFormat[SubMetaLinks] = Json.format[SubMetaLinks]
 
   def makeKeywordName(keywordTag: Tag, keywords: List[Tag]): String = {
     if (keywords.count(_.name == keywordTag.name) > 1){
