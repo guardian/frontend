@@ -203,8 +203,8 @@ object PageElement {
     }
   }
 
-  private def extractEmbed(element: ApiBlockElement) = {
-    for {
+  private def extractEmbed(element: ApiBlockElement): Option[PageElement] = {
+      for {
       d <- element.embedTypeData
       html <- d.html
       mandatory = d.isMandatory.getOrElse(false)
@@ -216,11 +216,19 @@ object PageElement {
   }
 
   private def extractSoundcloud(html: String, isMandatory: Boolean): Option[SoundcloudBlockElement] = {
+
     val doc = Jsoup.parseBodyFragment(html)
-    doc.getElementsByTag("iframe").asScala.headOption.map {
+    doc.getElementsByTag("iframe").asScala.headOption.flatMap {
       iframe =>
         val src = iframe.attr("src")
-        SoundcloudBlockElement(html, AmpSoundcloud.getTrackIdFromUrl(src), AmpSoundcloud.getPlaylistIdFromUrl(src), isMandatory)
+        val maybeTrack = AmpSoundcloud.getTrackIdFromUrl(src)
+        val maybePlaylist = AmpSoundcloud.getPlaylistIdFromUrl(src)
+        if (maybeTrack.isEmpty && maybePlaylist.isEmpty) {
+          None
+        }
+        else {
+          Some(SoundcloudBlockElement(html, maybeTrack, maybePlaylist, isMandatory))
+        }
     }
   }
 
