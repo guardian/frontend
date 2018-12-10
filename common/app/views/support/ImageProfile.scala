@@ -206,12 +206,12 @@ object FacebookOpenGraphImage extends OverlayBase64 {
 }
 
 object EmailImage extends ImageProfile(width = Some(580), autoFormat = false) {
-  override val qualityparam = "quality=60"
+  override val qualityparam = "quality=85"
   val knownWidth = width.get
 }
 
 object EmailVideoImage extends ImageProfile(width = Some(580), autoFormat = false) with OverlayBase64 {
-  override val qualityparam = "quality=60"
+  override val qualityparam = "quality=85"
   val overlayAlignParam = "overlay-align=center"
   val overlayUrlParam = s"overlay-base64=${overlayUrlBase64("play.png")}"
 
