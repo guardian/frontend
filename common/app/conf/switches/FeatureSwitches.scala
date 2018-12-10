@@ -2,6 +2,8 @@ package conf.switches
 
 import conf.switches.Expiry.never
 import org.joda.time.LocalDate
+import conf.switches.Owner.group
+import conf.switches.SwitchGroup.Commercial
 
 trait FeatureSwitches {
 
@@ -81,6 +83,16 @@ trait FeatureSwitches {
     "If this is switched on users then 'most popular' will be upgraded to geo targeted",
     owners = Seq(Owner.withGithub("johnduffell")),
     safeState = On,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
+  val ExtendedMostPopular = Switch(
+    SwitchGroup.Feature,
+    "extended-most-popular",
+    "Extended 'Most Popular' component with space for DPMUs",
+    owners = group(Commercial),
+    safeState = Off,
     sellByDate = never,
     exposeClientSide = true
   )

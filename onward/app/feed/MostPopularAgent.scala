@@ -1,10 +1,15 @@
 package feed
 
 import com.gu.Box
+import conf.Configuration
 import contentapi.ContentApiClient
+import com.gu.contentapi.client.model.v1.{Content, ContentFields, ContentType}
 import common._
-import services.OphanApi
+import services.{MostReadItem, OphanApi}
 import model.RelatedContentItem
+
+import play.api.libs.json._
+import play.api.libs.ws.{WSClient, WSResponse}
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -23,25 +28,90 @@ object MostPopularRefresh {
   }
 }
 
-class MostPopularAgent(contentApiClient: ContentApiClient) extends Logging {
+class MostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi, wsClient: WSClient) extends Logging {
 
   private val agent = Box[Map[String, Seq[RelatedContentItem]]](Map.empty)
 
-  def mostPopular(edition: Edition): Seq[RelatedContentItem] = agent().getOrElse(edition.id, Nil)
-
-  def refresh()(implicit ec: ExecutionContext): Future[Map[String, Seq[RelatedContentItem]]] = {
-    log.info("Refreshing most popular.")
-    MostPopularRefresh.all(Edition.all)(refresh)
+  // Helper case class to read from the most/comments discussion API call.
+  private case class MostDiscussedItem(key: String, url: String, numberOfComments: Int) {
+    def isLiveBlog: Boolean = url.contains("/live/")
+  }
+  private object MostDiscussedItem {
+    implicit val format = Json.format[MostDiscussedItem]
   }
 
-  private def refresh(edition: Edition)(implicit ec: ExecutionContext): Future[Map[String, Seq[RelatedContentItem]]] =
-    contentApiClient.getResponse(contentApiClient.item("/", edition)
-      .showMostViewed(true)
-    ).flatMap { response =>
-      val mostViewed = response.mostViewed.getOrElse(Nil).take(10).map(RelatedContentItem(_))
-      agent.alter(_ + (edition.id -> mostViewed))
-    }
+  // Container for most_shared and most_commented
+  val mostSingleCards = Box[Map[String,Content]](Map.empty)
 
+  def mostPopular(edition: Edition): Seq[RelatedContentItem] = agent().getOrElse(edition.id, Nil)
+
+  // Note that here we are in procedural land here (not functional)
+  def refresh()(implicit ec: ExecutionContext): Unit = {
+    MostPopularRefresh.all(Edition.all)(refresh)
+    refreshGlobal()
+  }
+
+  private def refreshGlobal()(implicit ec: ExecutionContext): Future[Map[String,Content]] = {
+
+    log.info("Pulling most social media shared from Ophan")
+
+    val sinceHours = 3
+    val sinceTimestamp = System.currentTimeMillis - sinceHours * 60 * 60 * 1000
+
+    val futureMostFaceBook = ophanApi.getMostReadFacebook(sinceHours)
+    val futureMostCommented = mostCommented(wsClient, sinceTimestamp)
+
+    for {
+        mostFacebook <- futureMostFaceBook
+        oneFacebookMostRead = mostFacebook.headOption.get
+        oneFacebookContent <- contentFromUrl(oneFacebookMostRead.url, contentApiClient)
+        _ <- mostSingleCards.alter(_ + ("most_shared" -> oneFacebookContent))
+
+        oneMostCommentedItem <- futureMostCommented
+        oneMostCommentedContent <- contentFromUrl(oneMostCommentedItem.url, contentApiClient)
+        newMap <- mostSingleCards.alter( _ + ("most_commented" -> oneMostCommentedContent))
+      } yield newMap
+  }
+
+  private def mostCommented(wsClient: WSClient, since: Long)(implicit ec: ExecutionContext): Future[MostDiscussedItem] = {
+    val dapiURL = Configuration.discussion.apiRoot
+    val params = List("api-key" -> "dotcom", "pageSize" -> "10", "sinceTimestamp" -> since.toString )
+
+    val fResponse = wsClient.url(dapiURL + "/most/comments")
+      .addQueryStringParameters(params: _*)
+      .get()
+
+    fResponse.map{ r =>
+      val json = r.json
+      ( json \ "discussions" ).as[List[MostDiscussedItem]]
+        .filterNot { _.isLiveBlog }
+        .head
+    }
+  }
+
+  private def contentFromUrl(url: String, capi: ContentApiClient)(implicit ec: ExecutionContext): Future[Content] = {
+    capi
+      .getResponse(capi.item(urlToContentPath(url), ""))
+          .map{
+            itemResponse =>
+              itemResponse.content.get
+          }
+  }
+
+  private def refresh(edition: Edition)(implicit ec: ExecutionContext): Future[Map[String, Seq[RelatedContentItem]]] = {
+
+    val mostViewedQuery = contentApiClient.item("/", edition)
+      .showMostViewed(true)
+
+    val futureMostViewed = contentApiClient.getResponse(mostViewedQuery)
+
+    for {
+      mostViewedResponse <- futureMostViewed
+
+      mostViewed = mostViewedResponse.mostViewed.getOrElse(Nil).take(10).map(RelatedContentItem(_))
+      newMap <- agent.alter(_ + (edition.id -> mostViewed) )
+    } yield newMap
+  }
 }
 
 case class Country(code: String, edition: Edition)
