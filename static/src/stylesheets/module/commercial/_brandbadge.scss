@@ -97,6 +97,15 @@
     }
 }
 
+// This solves a badging problem but in a very in-elegant way. Live blog templates need to be re-built using CCS grid
+.content__head--is-badged {
+    .content__headline {
+        @include mq(leftCol) {
+            min-height: 110px;
+        }
+    }
+}
+
 .badge--interactive {
     border-top: 1px dotted $brightness-46;
 
