@@ -5,6 +5,9 @@ import {
     stripTrailingNumbersAbove1,
 } from 'commercial/modules/prebid/utils';
 
+import config from 'lib/config';
+import memoize from 'lodash/memoize';
+
 import type { PrebidSlot } from 'commercial/modules/prebid/types';
 
 const filterByAdvertId = (advertId: string, slots: Array<PrebidSlot>) => {
@@ -16,11 +19,19 @@ const filterByAdvertId = (advertId: string, slots: Array<PrebidSlot>) => {
     return adUnits;
 };
 
+const getMostPopularSizes = memoize((isArticle: boolean) => {
+    // Only works for articles for now.
+    if (isArticle && config.get('switches.extendedMostPopular')) {
+        return [[300, 600], [300, 250]];
+    }
+    return [[300, 250]];
+});
+
 const getSlots = (isArticle: boolean): Array<PrebidSlot> => {
     const commonSlots: Array<PrebidSlot> = [
         {
             key: 'mostpop',
-            sizes: [[300, 250]],
+            sizes: getMostPopularSizes(isArticle),
         },
         {
             key: 'right',
