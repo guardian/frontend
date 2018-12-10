@@ -17,7 +17,7 @@ import {
 } from 'common/modules/analytics/mvt-cookie';
 import { setGeolocation } from 'lib/geolocation';
 
-const clearCommonReaderRevenueStateAndReload = () => {
+const clearCommonReaderRevenueStateAndReload = (): void => {
     readerRevenueRelevantCookies.forEach(cookie => removeCookie(cookie));
 
     initMvtCookie();
@@ -44,12 +44,12 @@ const clearCommonReaderRevenueStateAndReload = () => {
     }
 };
 
-const showMeTheEpic = () => {
+const showMeTheEpic = (): void => {
     // Clearing out the epic view log happens before all reloads
     clearCommonReaderRevenueStateAndReload();
 };
 
-const showMeTheBanner = () => {
+const showMeTheBanner = (): void => {
     clearBannerHistory();
     local.set('gu.alreadyVisited', minArticlesBeforeShowingBanner + 1);
     clearCommonReaderRevenueStateAndReload();
@@ -59,17 +59,17 @@ const showMeTheBanner = () => {
 // they want to display. So we don't clear out the banner history since
 // we don't necessarily want the banner popping up if someone's working
 // with the epic.
-const showNextVariant = () => {
+const showNextVariant = (): void => {
     incrementMvtCookie();
     clearCommonReaderRevenueStateAndReload();
 };
 
-const showPreviousVariant = () => {
+const showPreviousVariant = (): void => {
     decrementMvtCookie();
     clearCommonReaderRevenueStateAndReload();
 };
 
-const changeGeolocation = () => {
+const changeGeolocation = (): void => {
     const geo = window.prompt('Enter two-letter geolocation code:');
     setGeolocation(geo);
     clearCommonReaderRevenueStateAndReload();
