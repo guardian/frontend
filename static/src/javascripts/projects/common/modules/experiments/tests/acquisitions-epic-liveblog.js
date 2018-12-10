@@ -2,7 +2,7 @@
 import { makeABTest } from 'common/modules/commercial/contributions-utilities';
 import { setupEpicInLiveblog } from 'common/modules/commercial/contributions-liveblog-utilities';
 import { epicLiveBlogTemplate } from 'common/modules/commercial/templates/acquisitions-epic-liveblog';
-import { liveblogMillionCopy } from 'common/modules/commercial/acquisitions-copy';
+import { liveblogCopy } from 'common/modules/commercial/acquisitions-copy';
 
 export const acquisitionsEpicLiveblog: EpicABTest = makeABTest({
     id: 'AcquisitionsEpicLiveblog',
@@ -22,7 +22,11 @@ export const acquisitionsEpicLiveblog: EpicABTest = makeABTest({
     audienceOffset: 0,
 
     pageCheck(page) {
-        return page.contentType === 'LiveBlog';
+        return (
+            page.contentType === 'LiveBlog' &&
+            page.section !== 'sport' &&
+            page.section !== 'football'
+        );
     },
 
     variants: [
@@ -35,7 +39,7 @@ export const acquisitionsEpicLiveblog: EpicABTest = makeABTest({
 
                 template(variant) {
                     return epicLiveBlogTemplate({
-                        copy: liveblogMillionCopy,
+                        copy: liveblogCopy,
                         componentName: variant.options.componentName,
                         supportURL: variant.options.supportURL,
                     });

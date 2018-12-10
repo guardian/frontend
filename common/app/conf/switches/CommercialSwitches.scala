@@ -293,7 +293,7 @@ trait CommercialSwitches {
     description = "Turn on to include the analytics ONLY for Oriel. Turn off to include the FULL integration script. Depends on AB test switch.",
     owners = group(Commercial),
     safeState = On,
-    sellByDate = new LocalDate(2018, 12, 5),
+    sellByDate = new LocalDate(2019, 1, 9),
     exposeClientSide = false
   )
 
@@ -303,7 +303,7 @@ trait CommercialSwitches {
     description = "Include the blockthrough script for testing the vendors effectiveness at circumventing ad-blocking.",
     owners = group(Commercial),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 12, 5),
+    sellByDate = new LocalDate(2019, 1, 9),
     exposeClientSide = false
    )
 
@@ -387,16 +387,6 @@ trait PrebidSwitches {
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = false
-  )
-
-  val ampAppnexusAlias: Switch = Switch(
-    group = CommercialPrebid,
-    name = "amp-appnexus-alias",
-    description = "AppNexus has an alias in Amp Prebid auctions",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = new LocalDate(2019, 1, 9),
     exposeClientSide = false
   )
 
@@ -536,7 +526,7 @@ trait PrebidSwitches {
     description = "Include Ozone Pangaea connection",
     owners = group(Commercial),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 12, 5),
+    sellByDate = new LocalDate(2019, 1, 9),
     exposeClientSide = true
   )
 }

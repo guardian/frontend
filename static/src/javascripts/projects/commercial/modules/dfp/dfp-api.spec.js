@@ -66,11 +66,6 @@ jest.mock('lib/load-script', () => ({
     loadScript: jest.fn(() => Promise.resolve()),
 }));
 jest.mock('lodash/once', () => fn => fn);
-jest.mock('commercial/modules/dfp/performance-logging', () => ({
-    setListeners: jest.fn(),
-    addTag: jest.fn(),
-    updateAdvertMetric: jest.fn(),
-}));
 jest.mock('commercial/modules/dfp/refresh-on-resize', () => ({
     refreshOnResize: jest.fn(),
 }));

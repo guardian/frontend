@@ -69,6 +69,7 @@ export const defaultEngagementBannerParams = (): EngagementBannerParams => {
         ctaText: supporterEngagementCtaCopyControl(location),
         pageviewId: config.get('ophan.pageViewId', 'not_found'),
         products: ['CONTRIBUTION', 'RECURRING_CONTRIBUTION'],
+        hasTicker: false,
     };
 };
 
@@ -114,6 +115,7 @@ export const getAcquisitionsBannerParams = (
         ),
         buttonCaption: firstRow.buttonCaption,
         linkUrl: firstRow.linkUrl,
+        hasTicker: false,
     };
 
     return paramsFromGoogleDoc;

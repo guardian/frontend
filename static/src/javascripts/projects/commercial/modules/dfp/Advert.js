@@ -4,7 +4,6 @@ import type { AdSize, AdSizes } from 'commercial/types';
 import { breakpoints } from 'lib/detect';
 import { getCurrentTime } from 'lib/user-timing';
 import { defineSlot } from 'commercial/modules/dfp/define-slot';
-import { updateAdvertMetric } from 'commercial/modules/dfp/performance-logging';
 import { breakpointNameToAttribute } from 'commercial/modules/dfp/breakpoint-name-to-attribute';
 
 type Resolver = (x: boolean) => void;
@@ -108,8 +107,6 @@ class Advert {
         );
 
         this.extraNodeClasses = [];
-
-        updateAdvertMetric(this, 'createTime', getCurrentTime());
     }
 
     startLoading() {
@@ -135,7 +132,6 @@ class Advert {
         if (this.whenRenderedResolver) {
             this.whenRenderedResolver(isRendered);
         }
-        updateAdvertMetric(this, 'stopRendering', getCurrentTime());
     }
 
     static filterClasses = (

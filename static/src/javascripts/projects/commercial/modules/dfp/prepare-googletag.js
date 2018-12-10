@@ -23,10 +23,6 @@ import { onSlotLoad } from 'commercial/modules/dfp/on-slot-load';
 import { onSlotRender } from 'commercial/modules/dfp/on-slot-render';
 import { onSlotViewableFunction } from 'commercial/modules/dfp/on-slot-viewable';
 import { onSlotVisibilityChanged } from 'commercial/modules/dfp/on-slot-visibility-changed';
-import {
-    addTag,
-    setListeners,
-} from 'commercial/modules/dfp/performance-logging';
 import { refreshOnResize } from 'commercial/modules/dfp/refresh-on-resize';
 import { init as initMessenger } from 'commercial/modules/messenger';
 import { init as background } from 'commercial/modules/messenger/background';
@@ -54,8 +50,6 @@ initMessenger(
 );
 
 const setDfpListeners = (): void => {
-    setListeners(window.googletag);
-
     const pubads = window.googletag.pubads();
     pubads.addEventListener('slotRenderEnded', raven.wrap(onSlotRender));
     pubads.addEventListener('slotOnload', raven.wrap(onSlotLoad));
@@ -119,12 +113,6 @@ const setPublisherProvidedId = (): void => {
 
 export const init = (start: () => void, stop: () => void): Promise<void> => {
     const setupAdvertising = (): Promise<void> => {
-        addTag(
-            dfpEnv.externalDemand === 'none'
-                ? 'waterfall'
-                : dfpEnv.externalDemand
-        );
-
         start();
 
         // note: fillAdvertSlots isn't synchronous like most buffered cmds, it's a promise. It's put in here to ensure

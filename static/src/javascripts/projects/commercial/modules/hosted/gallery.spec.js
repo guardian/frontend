@@ -15,10 +15,6 @@ jest.mock('common/modules/analytics/interaction-tracking', () => ({
 jest.mock('lib/load-css-promise', () => ({
     loadCssPromise: Promise.resolve(),
 }));
-jest.mock('commercial/modules/dfp/performance-logging', () => ({
-    moduleStart: jest.fn(),
-    moduleEnd: jest.fn(),
-}));
 
 let gallery: any;
 

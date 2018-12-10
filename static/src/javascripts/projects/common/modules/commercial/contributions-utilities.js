@@ -499,6 +499,15 @@ const makeGoogleDocBannerVariants = (
     return variants;
 };
 
+const makeBannerABTestVariant = (
+    id: string,
+    engagementBannerParams: Object
+): InitBannerABTestVariant => ({
+    id,
+    products: [],
+    engagementBannerParams: () => Promise.resolve(engagementBannerParams),
+});
+
 const makeGoogleDocBannerControl = (): InitBannerABTestVariant => ({
     id: 'control',
     products: [],
@@ -517,6 +526,7 @@ export {
     makeGoogleDocEpicVariants,
     makeGoogleDocBannerVariants,
     makeGoogleDocBannerControl,
+    makeBannerABTestVariant,
     defaultMaxViews,
     isEpicDisplayable,
 };

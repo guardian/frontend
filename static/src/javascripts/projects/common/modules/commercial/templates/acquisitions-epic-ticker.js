@@ -1,19 +1,21 @@
 // @flow
 
+import { getLocalCurrencySymbol } from 'lib/geolocation';
+
 export const acquisitionsEpicTickerTemplate = `
-    <div class="epic-ticker">
-        <div class="epic-ticker__so-far">
-            <div class="epic-ticker__count">$0</div>
+    <div id="epic-ticker" class="js-epic-ticker epic-ticker">
+        <div class="js-ticker-so-far epic-ticker__so-far">
+            <div class="js-ticker-count epic-ticker__count">${getLocalCurrencySymbol()}0</div>
             <div class="epic-ticker__count-label">contributed</div>
         </div>
         
-        <div class="epic-ticker__goal">
-            <div class="epic-ticker__count">$0</div>
+        <div class="js-ticker-goal epic-ticker__goal">
+            <div class="js-ticker-count epic-ticker__count">${getLocalCurrencySymbol()}0</div>
             <div class="epic-ticker__count-label">our goal</div>
         </div>
         
         <div class="epic-ticker__progress">
-            <div class="epic-ticker__filled-progress"></div>
+            <div class="js-ticker-filled-progress epic-ticker__filled-progress"></div>
         </div>
     </div>
 `;

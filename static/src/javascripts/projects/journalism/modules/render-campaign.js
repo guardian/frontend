@@ -2,16 +2,16 @@
 import fastdom from 'lib/fastdom-promise';
 import template from 'lodash/template';
 import campaignForm from 'raw-loader!journalism/views/campaignForm.html';
-import { getCampaign } from 'journalism/modules/get-campaign';
+import { getCampaigns } from 'journalism/modules/get-campaign';
 import { submitForm } from 'journalism/modules/submit-form';
 
-const renderCampaign = (anchorNode: HTMLElement, calloutData): void => {
+const renderCampaign = (calloutNode: HTMLElement, calloutData): void => {
     const campaign = template(campaignForm)({ data: calloutData });
     const campaignDiv = `<figure class="element element-campaign">${campaign}</figure>`;
 
     fastdom
         .write(() => {
-            anchorNode.insertAdjacentHTML('afterend', campaignDiv);
+            calloutNode.innerHTML = campaignDiv;
         })
         .then(() => {
             const cForm = document.querySelector(
@@ -23,12 +23,35 @@ const renderCampaign = (anchorNode: HTMLElement, calloutData): void => {
         });
 };
 
-export const initCampaign = () => {
-    const calloutData = getCampaign();
+const getCalloutContainers = () => {
+    // callout container is a figure with data-alt property in the format: 'Callout callout-tag-name' eg. 'Callout new-campaign-with-a-callout'
+    const allEmbeds = document.querySelectorAll('figure[data-alt]');
 
-    const fourthParagraph = document.querySelector(
-        '.content__article-body p:nth-of-type(4)'
-    );
-    if (calloutData && fourthParagraph)
-        renderCampaign(fourthParagraph, calloutData);
+    return Array.from(allEmbeds).filter(el => {
+        const dataAlt = el.getAttribute('data-alt');
+        if (!dataAlt) return false;
+        return dataAlt.toLowerCase().startsWith('callout');
+    });
+};
+
+const clearEmptyCallout = calloutContainer => {
+    calloutContainer.innerHTML = '';
+};
+
+export const initCampaign = () => {
+    const calloutData = getCampaigns();
+    const calloutContainers = getCalloutContainers();
+
+    // put the data into the correct container by matching up tagName on the data with the tagName on the container
+    calloutContainers.forEach(container => {
+        const dataAlt = container.getAttribute('data-alt');
+        if (!dataAlt) return;
+        const tagName = dataAlt.toLowerCase().split(' ')[1];
+
+        if (tagName in calloutData) {
+            renderCampaign(container, calloutData[tagName]);
+        } else {
+            clearEmptyCallout(container);
+        }
+    });
 };
