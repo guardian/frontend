@@ -100,7 +100,7 @@ export const getForcedTests = (): Array<{
         });
     }
 
-    return JSON.parse(local.get('guF.experiments.ab') || '[]') || [];
+    return JSON.parse(local.get('gu.experiments.ab') || '[]') || [];
 };
 
 export const getForcedVariant = (test: ABTest): ?Variant => {
