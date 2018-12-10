@@ -142,26 +142,6 @@ class PrebidService {
                 () =>
                     new Promise(resolve => {
                         window.pbjs.que.push(() => {
-                            // Capture this specific auction starting
-                            // to set this slot pbaid targeting value
-                            const auctionInitHandler = (data: {
-                                auctionId: string,
-                            }) => {
-                                // Get rid of this handler now.
-                                window.pbjs.offEvent(
-                                    'auctionInit',
-                                    auctionInitHandler
-                                );
-                                advert.slot.setTargeting(
-                                    'hb_auction',
-                                    data.auctionId
-                                );
-                            };
-                            window.pbjs.onEvent(
-                                'auctionInit',
-                                auctionInitHandler
-                            );
-
                             window.pbjs.requestBids({
                                 adUnits,
                                 bidsBackHandler() {
