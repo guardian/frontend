@@ -45,7 +45,6 @@
     .commentcount2__heading span,
     .inline-close svg,
     .inline-triangle,
-    .old-article-message .old-article-message--clock svg,
     .social-icon svg,
     .social-icon__svg {
         fill: $kickerColor;
@@ -61,7 +60,8 @@
 
     .bullet::before,
     .content__headline-column-wrapper--column,
-    .content__labels--column {
+    .content__labels--column,
+    .content__labels--panel {
         background-color: $kickerColor;
     }
 
@@ -135,6 +135,10 @@
     ._underline_1lj47_3:focus,
     ._underline_1lj47_3:hover {
         border-color: $kickerColor;
+    }
+
+    .tabs__tab--selected:after {
+        background-color: $kickerColor;
     }
 
     .comment-share-icon,
@@ -267,10 +271,6 @@
         color: $mediaColor;
     }
 
-    .content__labels--immersive {
-        background: $pillarColor;
-    }
-
     .gu-media--show-controls-at-start.vjs-paused .vjs-big-play-button .vjs-control-text:before,
     .vjs-play-progress,
     .vjs-volume-level,
@@ -366,7 +366,7 @@
     @include footerPalette($sport-main);
 }
 
-.content--media.content--pillar-news,
+.content--media:not(.paid-content).content--pillar-news,
 .immersive-main-media__headline-container.content--pillar-news,
 .immersive-main-media__headline-container--gallery.content--pillar-news {
     @include mediaPalatte($news-bright, $news-main, news);

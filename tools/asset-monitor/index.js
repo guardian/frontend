@@ -19,7 +19,7 @@ const files = [].concat(
         nodir: true,
     }),
     glob.sync(`${target}/stylesheets/**/*`, {
-        ignore: '**/*head.new-identity.css',
+        ignore: '**/*head.identity.css',
         nodir: true,
     })
 );

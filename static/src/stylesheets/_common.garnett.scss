@@ -5,6 +5,7 @@
 @import 'module/tabs-garnett.head';
 @import 'module/tabs-garnett';
 @import 'module/_headline-list-garnett';
+@import 'module/_most-popular';
 @import 'module/onward-garnett/rich-links-enhanced';
 @import 'module/_tooltip';
 @import 'pasteup/buttons/styles';
@@ -13,7 +14,6 @@
 @import 'module/site-messages/_first-pv-consent';
 @import 'module/site-messages/_email-sign-in-banner';
 @import 'module/site-messages/_engagement-banner';
-@import 'module/site-messages/_fiv-banner';
 @import 'module/site-messages/_ad-free-banner';
 @import 'module/tls-warning';
 @import 'module/onward-garnett/_breaking-news';
@@ -21,7 +21,6 @@
 @import 'module/facia/_facia-show-more';
 @import 'module/_tag-list';
 @import 'module/_submeta';
-// TODO: uncomment this line after new-navigation switch removed
 @import 'layout/_footer';
 @import 'module/content-garnett/_media-player';
 @import 'module/atoms/_youtube';
@@ -33,8 +32,8 @@
 @import 'module/email-signup/_main';
 @import 'module/_accessibility';
 @import 'module/experiments/embed';
+@import 'module/reader-revenue/epic-ticker';
+@import 'module/reader-revenue/banner-ticker';
 @import 'module/experiments/svg';
 @import 'module/experiments/_acquisitions-epic-testimonials';
 @import 'module/experiments/_update-account';
-// Temporary css added for a test of in-article audio players on Football pages
-@import 'module/journalism/_inline-audio-player.scss';

@@ -513,7 +513,7 @@ describe('Helpers', () => {
             ['', '', '', '', '', ''].map(stubCellWithValue),
             ['', '', '', '', '', ''].map(stubCellWithValue),
             ['', '', '', '', '', ''].map(stubCellWithValue),
-            ['', '', '', '', '', ''].map(stubCellWithValue),
+            ['', 'T', '2', '0', '', ''].map(stubCellWithValue),
             ['', '', '', '', '', ''].map(stubCellWithValue),
         ];
 
@@ -523,6 +523,13 @@ describe('Helpers', () => {
             position: { x: 0, y: 0 },
             direction: 'down',
             length: 5,
+        });
+        const answeredEntryWithNumbersFixture = stubClue({
+            id: '2-down',
+            solution: 'T20',
+            position: { x: 4, y: 1 },
+            direction: 'down',
+            length: 3,
         });
         const unAnsweredEntryFixture = stubClue({
             id: '1-across',
@@ -535,6 +542,15 @@ describe('Helpers', () => {
         it('should return true when the clue has been answered', () => {
             expect(
                 checkClueHasBeenAnswered(gridFixture, answeredEntryFixture)
+            ).toBe(true);
+        });
+
+        it('should return true when a clue that contains numbers has been answered', () => {
+            expect(
+                checkClueHasBeenAnswered(
+                    gridFixture,
+                    answeredEntryWithNumbersFixture
+                )
             ).toBe(true);
         });
 

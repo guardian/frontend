@@ -4,6 +4,7 @@ import com.gu.commercial.display.AdTargetParam.toMap
 import com.gu.commercial.display.{AdTargetParamValue, MultipleValues, SingleValue}
 import common.Edition
 import common.commercial.AdUnitMaker
+import common.editions._
 import conf.switches.Switches.KruxSwitch
 import conf.switches.{Switch, Switches}
 import model.Article
@@ -37,7 +38,11 @@ case class AmpAdDataSlot(article: Article) {
 object AmpAdRtcConfig {
 
   // if debug, give additional debug output in RTC responses
-  def toJsonString(prebidServerUrl: String, debug: Boolean): String = {
+  def toJsonString(
+    prebidServerUrl: String,
+    edition: Edition,
+    debug: Boolean
+  ): String = {
 
     val urls: Seq[(String, JsValueWrapper)] = {
 
@@ -56,7 +61,11 @@ object AmpAdRtcConfig {
        * and https://github.com/prebid/prebid-server/blob/master/docs/endpoints/openrtb2/amp.md#query-parameters
        */
       val ampPrebidUrl = {
-        val placementId = 14351413
+        val placementId = edition match {
+          case Us => 7
+          case Au => 6
+          case _ => 4
+        }
         val url = s"$prebidServerUrl/openrtb2/amp?tag_id=$placementId&w=ATTR(width)&h=ATTR(height)" +
           "&ow=ATTR(data-override-width)&oh=ATTR(data-override-height)&ms=ATTR(data-multi-size)" +
           "&slot=ATTR(data-slot)&targeting=TGT&curl=CANONICAL_URL&timeout=TIMEOUT&adcid=ADCID&purl=HREF"

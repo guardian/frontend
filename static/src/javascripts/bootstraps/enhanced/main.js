@@ -337,8 +337,19 @@ const bootEnhanced = (): void => {
                 window.location.hash.indexOf('force-sw') > -1
             ) {
                 const navigator = window.navigator;
+
                 if (navigator && navigator.serviceWorker) {
-                    navigator.serviceWorker.register('/service-worker.js');
+                    if (config.get('switches.serviceWorkerEnabled')) {
+                        navigator.serviceWorker.register('/service-worker.js');
+                    } else {
+                        navigator.serviceWorker
+                            .getRegistrations()
+                            .then(registrations => {
+                                [...registrations].forEach(registration => {
+                                    registration.unregister();
+                                });
+                            });
+                    }
                 }
             }
 

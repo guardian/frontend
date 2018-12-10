@@ -1,8 +1,3 @@
-
-body {
-    padding: 10px 40px;
-}
-
 .charts {
     margin-bottom: 50px;
 }
@@ -11,7 +6,6 @@ header {
     color: #95B1CA;
     font-size: 18px;
 }
-.navbar { display: none; }
 #riffraff li { font-size: 30px; line-height: 30px; }
 #riffraff small { font-size: 20px; }
 
@@ -112,11 +106,6 @@ h2 small {
 
 #logo .white {
     color: #333;
-}
-
-a {
-    color: #005689;
-    text-decoration: none;
 }
 
 .pageviews-per-second {

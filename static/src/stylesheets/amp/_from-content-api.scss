@@ -98,7 +98,7 @@
 .from-content-api pre {
     // Unset from `.from-content-api`
     word-wrap: normal;
-    $x: lighten($guardian-brand-light, 30%);
+    $x: lighten($brand-pastel, 30%);
     background-color: $x;
     border: 1px solid darken($x, 10%);
     padding: $gs-baseline*.75 $gs-gutter*.75;

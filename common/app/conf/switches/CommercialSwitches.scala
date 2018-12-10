@@ -87,6 +87,16 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
+    val InizioSwitch = Switch(
+    Commercial,
+    "inizio",
+    "Include the Inizio script on page so that creatives can show a survey.",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
   val AdomikSwitch = Switch(
     Commercial,
     "adomik",
@@ -227,16 +237,6 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-  val FivBanner = Switch(
-    Commercial,
-    "fiv-banner",
-    "Master switch for the first (three) impressions visual banner.",
-    owners = Seq(Owner.withGithub("johnduffell")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
   val MembershipEngagementBannerBlockUK = Switch(
     Commercial,
     "membership-engagement-banner-block-uk",
@@ -293,7 +293,7 @@ trait CommercialSwitches {
     description = "Turn on to include the analytics ONLY for Oriel. Turn off to include the FULL integration script. Depends on AB test switch.",
     owners = group(Commercial),
     safeState = On,
-    sellByDate = new LocalDate(2018, 11, 29),
+    sellByDate = new LocalDate(2019, 1, 9),
     exposeClientSide = false
   )
 
@@ -303,7 +303,7 @@ trait CommercialSwitches {
     description = "Include the blockthrough script for testing the vendors effectiveness at circumventing ad-blocking.",
     owners = group(Commercial),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 11, 29),
+    sellByDate = new LocalDate(2019, 1, 9),
     exposeClientSide = false
    )
 
@@ -526,7 +526,7 @@ trait PrebidSwitches {
     description = "Include Ozone Pangaea connection",
     owners = group(Commercial),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 11, 29),
+    sellByDate = new LocalDate(2019, 1, 9),
     exposeClientSide = true
   )
 }

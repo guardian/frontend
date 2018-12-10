@@ -146,7 +146,6 @@ trait PerformanceSwitches {
     exposeClientSide = true
   )
 
-
   val DiscussionPageSizeSwitch = Switch(
     SwitchGroup.Performance,
     "discussion-page-size",
@@ -165,5 +164,15 @@ trait PerformanceSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = false
+  )
+
+  val ServiceWorkerEnabled = Switch(
+    SwitchGroup.Performance,
+    "service-worker-enabled",
+    "If switched on the service worker will be enabled",
+    owners = Seq(Owner.withName("dotcom.platform")),
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = true
   )
 }

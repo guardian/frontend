@@ -31,6 +31,7 @@ const bannerTemplateParams: EngagementBannerTemplateParams = {
         componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
         componentId: 'first_pv_consent_plus_support_the_guardian_banner',
     }),
+    hasTicker: false,
 };
 
 const bannerHtml = `

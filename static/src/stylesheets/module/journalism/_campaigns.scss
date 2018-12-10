@@ -153,6 +153,7 @@
     .campaign--kicker {
         display: flex;
         flex-direction: row;
+        min-height: 70px;
 
         > .campaign--snippet__heading-logo {
             flex: initial;

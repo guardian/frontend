@@ -24,6 +24,7 @@ import {
 } from 'common/modules/commercial/acquisitions-ophan';
 import { acquisitionsBannerControlTemplate } from 'common/modules/commercial/templates/acquisitions-banner-control';
 import userPrefs from 'common/modules/user-prefs';
+import { initTicker } from 'common/modules/commercial/ticker';
 
 type BannerDeployLog = {
     time: string,
@@ -178,6 +179,7 @@ const showBanner = (params: EngagementBannerParams): void => {
         ctaText,
         linkUrl,
         buttonCaption,
+        hasTicker: params.hasTicker,
     };
 
     const renderedBanner: string = params.template
@@ -219,6 +221,10 @@ const showBanner = (params: EngagementBannerParams): void => {
                     : {}),
             });
         });
+
+        if (params.hasTicker) {
+            initTicker('.js-engagement-banner-ticker');
+        }
 
         mediator.emit('membership-message:display');
     }

@@ -1,0 +1,30 @@
+#switchboard label:hover {
+    color: #669999;
+    cursor: pointer;
+}
+
+#switchboard .checkbox:nth-child(odd) {
+    background-color: rgba(255, 255, 255, .75);
+}
+
+#switchboard .well {
+    padding: 0;
+    margin-bottom: 20px;
+}
+
+#switchboard .checkbox {
+    padding: 5px 10px;
+    margin: 0;
+}
+
+#switchboard .actions {
+    position: sticky;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 10px 0;
+    background: #ffffff;
+    border-top: 1px solid #eeeeee;
+    display: flex;
+    justify-content: space-between;
+}

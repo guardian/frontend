@@ -36,12 +36,12 @@
 
 .button--primary {
     @include button-colour(
-        $guardian-brand,
+        $brand-main,
         #ffffff
     );
 
     @include button-hover-colour(
-        darken($guardian-brand, 10%)
+        darken($brand-main, 10%)
     );
 }
 

@@ -1,0 +1,32 @@
+@charset 'UTF-8';
+
+/* ==========================================================================
+   Common head
+   ========================================================================== */
+
+@import '_head.common';
+
+/* ==========================================================================
+   Identity core
+   ========================================================================== */
+
+@import 'pasteup/forms/styles';
+@import 'module/tabs.head';
+
+@import 'module/identity/identity';
+
+@import 'module/identity/header';
+@import 'module/identity/wrapper';
+@import 'module/identity/button';
+@import 'module/identity/forms';
+@import 'module/identity/footer';
+@import 'module/identity/manage-account-tab';
+@import 'module/identity/formstack';
+@import 'module/identity/dropdown';
+@import 'module/identity/switches';
+@import 'module/identity/ad-prefs';
+@import 'module/identity/consent';
+@import 'module/identity/upsell/_base';
+@import 'module/identity/upsell/_card';
+@import 'module/identity/upsell/_layout';
+@import 'module/identity/upsell/_account-creation';

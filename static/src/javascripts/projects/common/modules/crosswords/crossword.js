@@ -374,7 +374,7 @@ class Crossword extends Component<*, CrosswordState> {
         const characterUppercase = character.toUpperCase();
         const cell = this.state.cellInFocus;
         if (
-            /[A-Za-zÀ-ÿ]/.test(characterUppercase) &&
+            /[A-Za-zÀ-ÿ0-9]/.test(characterUppercase) &&
             characterUppercase.length === 1 &&
             cell
         ) {

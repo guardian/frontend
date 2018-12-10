@@ -1,0 +1,99 @@
+.contributions__epic--with-ticker {
+    .contributions__buttons {
+        margin-bottom: 25px;
+    }
+
+    // black button
+    a[href].contributions__contribute.contributions__contribute--epic {
+        svg path {
+            fill: #ffffff;
+        }
+
+        &, &:hover {
+            background-color: #121212;
+            color: #ffffff;
+        }
+
+        // This is literally just to make the SVG arrow white
+        &:after {
+            background-image: svg-url('<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><path fill="white" stroke="white" d="M22.8 14.6L15.2 7l-.7.7 5.5 6.6H6v1.5h14l-5.5 6.6.7.7 7.6-7.6v-.9"/></svg>');
+        }
+    }
+}
+
+.epic-ticker {
+    position: relative;
+    height: 70px;
+    margin-bottom: 25px;
+}
+
+.epic-ticker__count {
+    @include fs-header(5);
+    font-size: 32px;
+    font-weight: 800;
+    color: #333333;
+}
+
+.epic-ticker__count-label {
+    font-size: 17px;
+    line-height: 1.4;
+}
+
+$progress-bar-height: 10px;
+
+.epic-ticker__progress {
+    width: 100%;
+    height: $progress-bar-height;
+    overflow: hidden;
+    background-color: #dcdcdc;
+    position: absolute;
+    bottom: 0;
+    margin-top: 40px;
+}
+
+.epic-ticker__filled-progress {
+    background-color: #ffe500;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    transform: translateX(-100%);
+    transition: transform 3s cubic-bezier(.25, .55, .2, .85);
+}
+
+.epic-ticker__progress-labels {
+    position: relative;
+    width: 100%;
+    height: 16px;
+}
+
+.epic-ticker__label {
+    @include fs-textSans(4);
+    color: #676767;
+    position: absolute;
+    top: 5px;
+}
+
+.epic-ticker__goal {
+    position: absolute;
+    right: 0;
+    bottom: $progress-bar-height + 5px;
+    text-align: right;
+}
+
+.epic-ticker__so-far {
+    position: absolute;
+    left: 0;
+    bottom: $progress-bar-height + 5px;
+}
+
+.epic-ticker__caption {
+    @include fs-textSans(4);
+    position: absolute;
+    bottom: 6px;
+    left: 10px;
+    right: 10px;
+    color: #ffffff;
+    opacity: .7;
+}

@@ -23,16 +23,6 @@ trait JournalismSwitches {
     exposeClientSide = true
   )
 
-  val InArticlePlayerTest = Switch(
-    SwitchGroup.Journalism,
-    "in-article-player-test",
-    "Test in-article player in relevant tagged content",
-    owners = Seq(Owner.withName("journalism team")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false
-  )
-
   val FlagshipEmailContainerSwitch = Switch(
     SwitchGroup.Journalism,
     "flagship-email-container",

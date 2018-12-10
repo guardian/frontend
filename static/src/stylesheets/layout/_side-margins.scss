@@ -30,7 +30,6 @@
             content: '';
             position: absolute;
             z-index: 1;
-            background: transparent;
             top: 0;
             height: 100%;
             width: 0;
@@ -38,11 +37,11 @@
         }
         &:before {
             left: 0;
-            border-right: 1px solid $brightness-86;
+            border-right: 1px solid rgba($brightness-46, .3);
         }
         &:after {
             right: 0;
-            border-left: 1px solid $brightness-86;
+            border-left: 1px solid rgba($brightness-46, .3);
         }
         @include side-margins-position(gs-span(9));
     }

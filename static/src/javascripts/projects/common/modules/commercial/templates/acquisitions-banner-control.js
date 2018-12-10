@@ -3,6 +3,7 @@ import marque36icon from 'svgs/icon/marque-36.svg';
 import closeCentralIcon from 'svgs/icon/close-central.svg';
 import arrowWhiteRight from 'svgs/icon/arrow-white-right.svg';
 import config from 'lib/config';
+import { acquisitionsBannerTickerTemplate } from 'common/modules/commercial/templates/acquisitions-banner-ticker';
 
 export const acquisitionsBannerControlTemplate = (
     params: EngagementBannerTemplateParams
@@ -20,6 +21,7 @@ export const acquisitionsBannerControlTemplate = (
     <div class="engagement-banner__container">
         <div class="engagement-banner__text">
             ${params.messageText}${params.ctaText}
+            ${params.hasTicker ? acquisitionsBannerTickerTemplate : ''}
         </div>
         <div class="engagement-banner__cta">
             <button class="button engagement-banner__button" href="${

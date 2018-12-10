@@ -97,7 +97,11 @@ case class AmpAdCleaner(edition: Edition, uri: String, article: Article) extends
                    data-loading-strategy="prefer-viewability-over-views"
                    json={AmpAd(article, uri, edition.id.toLowerCase()).toString()}
                    data-slot={AmpAdDataSlot(article).toString()}
-                   rtc-config={AmpAdRtcConfig.toJsonString(prebidServerUrl, debug = environment.isNonProd)}
+                   rtc-config={AmpAdRtcConfig.toJsonString(
+                     prebidServerUrl,
+                     edition,
+                     debug = environment.isNonProd
+                   )}
                 ></amp-ad>
 
     val ampAdString = {

@@ -17,7 +17,7 @@ object OrielParticipation extends Experiment(
   name = "oriel-participation",
   description = "A slice of the audience who will participate in Oriel ad-blocking technology",
   owners = Seq(Owner.withGithub("janua")),
-  sellByDate = new LocalDate(2018, 11, 29),
+  sellByDate = new LocalDate(2019, 1, 9),
   participationGroup = Perc20A
 )
 
@@ -34,6 +34,6 @@ object OldAudioPage extends Experiment(
   name = "old-audio-page",
   description = "Show the older version of the audio episode page",
   owners = Owner.group(SwitchGroup.Journalism),
-  sellByDate = new LocalDate(2018, 12, 5),
+  sellByDate = new LocalDate(2018, 12, 19),
   participationGroup = Perc5A
 )

@@ -3,7 +3,7 @@ package com.gu
 import sbt._
 
 object Dependencies {
-  val identityLibVersion = "3.173"
+  val identityLibVersion = "3.174"
   val awsVersion = "1.11.240"
   val capiVersion = "12.10"
   val faciaVersion = "2.6.3"
@@ -59,10 +59,10 @@ object Dependencies {
   val jerseyCore = "com.sun.jersey" % "jersey-core" % jerseyVersion
   val jerseyClient = "com.sun.jersey" % "jersey-client" % jerseyVersion
   val w3cSac = "org.w3c.css" % "sac" % "1.3"
-  val libPhoneNumber = "com.googlecode.libphonenumber" % "libphonenumber" % "7.2.4"
+  val libPhoneNumber = "com.googlecode.libphonenumber" % "libphonenumber" % "8.10.0"
   val logback = "net.logstash.logback" % "logstash-logback-encoder" % "4.6"
   val kinesisLogbackAppender = "com.gu" % "kinesis-logback-appender" % "1.4.0"
-  val targetingClient = "com.gu" %% "targeting-client-play26" % "0.14.5"
+  val targetingClient = "com.gu" %% "targeting-client-play26" % "0.14.7"
   val scanamo = "com.gu" %% "scanamo" % "0.9.5"
   val enumeratumPlayJson = "com.beachape" %% "enumeratum-play-json" % "1.5.12"
   val commercialShared = "com.gu" %% "commercial-shared" % "6.1.2"

@@ -24,7 +24,7 @@ import services.OphanApi
     testContentApiClient,
     new GeoMostPopularAgent(testContentApiClient, ophanApi),
     new DayMostPopularAgent(testContentApiClient, ophanApi),
-    new MostPopularAgent(testContentApiClient),
+    new MostPopularAgent(testContentApiClient, ophanApi, wsClient ),
     play.api.test.Helpers.stubControllerComponents()
   )
 

@@ -9,7 +9,7 @@
   optBadge: Option[Html] = None
  )(title: Html)(innards: Html)
 
-<aside class="dumathoin @classNames.map(c => s"dumathoin--$c").mkString(" ")"
+<section class="dumathoin @classNames.map(c => s"dumathoin--$c").mkString(" ")"
     @for(dln <- dataLinkName){data-link-name="@dln"}
     >
     <header class="dumathoin__header">
@@ -28,4 +28,4 @@
             @for(badge        <- optBadge)   {<div class="badge">@badge</div>}
         }
     </div>
-</aside>
+</section>

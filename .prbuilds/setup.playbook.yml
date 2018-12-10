@@ -26,23 +26,23 @@
     - name: preinstall nvm part II
       shell: . ~/.nvm/nvm.sh; nvm install
       args:
-        chdir: ~/workspace
+        chdir: ~/workspace/frontend/
         executable: /bin/bash
     
     - name: run setup.py
-      command: ~/workspace/setup.sh
+      command: ~/workspace/frontend/setup.sh
       args:
-        chdir: ~/workspace/
+        chdir: ~/workspace/frontend/
     
     - name: sbt compile
-      command: ~/workspace/sbt "project article" "compile"
+      command: ~/workspace/frontend/sbt "project article" "compile"
       args:
-        chdir: ~/workspace
+        chdir: ~/workspace/frontend/
     
     - name: run the article project
-      command: screen -S trousers-build -d -m ~/workspace/sbt "project article" "run"
+      command: screen -S trousers-build -d -m ~/workspace/frontend/sbt "project article" "run"
       args:
-        chdir: ~/workspace
+        chdir: ~/workspace/frontend/
     
     - name: wait for the application to become available
       wait_for:
