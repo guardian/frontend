@@ -75,7 +75,7 @@ const changeGeolocation = (): void => {
     clearCommonReaderRevenueStateAndReload();
 };
 
-export const init = () => {
+export const init = (): void => {
     // Expose functions so they can be called on the console and within bookmarklets
     window.guardian.readerRevenue = {
         showMeTheEpic,
