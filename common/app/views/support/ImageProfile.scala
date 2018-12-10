@@ -222,7 +222,7 @@ object EmailVideoImage extends ImageProfile(width = Some(580), autoFormat = fals
 }
 
 object FrontEmailImage extends ImageProfile(width = Some(500), autoFormat = false) {
-  override val qualityparam = "quality=60"
+  override val qualityparam = "quality=85"
   val knownWidth = width.get
 }
 
@@ -230,7 +230,7 @@ object SmallFrontEmailImage {
   def apply(customWidth: Int): SmallFrontEmailImage = new SmallFrontEmailImage(customWidth)
 }
 class SmallFrontEmailImage(customWidth: Int) extends ImageProfile(Some(customWidth), autoFormat = false) {
-  override val qualityparam = "quality=60"
+  override val qualityparam = "quality=85"
 }
 
 // The imager/images.js base image.
