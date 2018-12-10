@@ -42,7 +42,7 @@ class NavigationController(val controllerComponents: ControllerComponents) exten
         def writes(edition: Edition): JsValue = Json.obj(
           "id" -> edition.id,
           "displayName" -> edition.displayName,
-          "optInLink" -> s"${Configuration.id.url}/preference/edition/${edition.id.toLowerCase}"
+          "optInLink" -> s"${Configuration.site.host}/preference/edition/${edition.id.toLowerCase}"
         )
       }
 
