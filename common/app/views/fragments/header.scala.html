@@ -18,10 +18,6 @@
             role="navigation"
             aria-label="Guardian sections">
 
-            @if(!page.metadata.hasSlimHeader) {
-                @fragments.nav.editionPickerDropdown()
-            }
-
             <a href="@LinkTo{/}"
                 class="new-header__logo"
                 data-link-name="nav2 : logo">
@@ -132,6 +128,10 @@
                 >
                     <div class="js-search-placeholder"></div>
                 </div>
+            }
+
+            @if(!page.metadata.hasSlimHeader) {
+                @fragments.nav.editionPickerDropdown()
             }
 
             <ul class="pillars">
