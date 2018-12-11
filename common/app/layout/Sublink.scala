@@ -354,6 +354,9 @@ case class ContentCard(
   def mediaWidthsByBreakpoint(implicit requestHeader: RequestHeader) : WidthsByBreakpoint =
       GarnettFaciaWidths.mediaFromItemClasses(cardTypes)
 
+  def squareImageWidthsByBreakpoint(implicit requestHeader: RequestHeader) : WidthsByBreakpoint =
+      GarnettFaciaWidths.squareFront()
+
   def showTimestamp: Boolean = timeStampDisplay.isDefined && webPublicationDate.isDefined
 
   val analyticsPrefix = s"${cardStyle.toneString} | group-$group${if(displaySettings.isBoosted) "+" else ""}"

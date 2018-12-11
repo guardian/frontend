@@ -167,6 +167,10 @@ object GarnettFaciaWidths {
     (FullMedia100, 331.px)
   )
 
+  private val SquareImageFronts = Map[CardType, BrowserWidth](
+    (Standard, 660.px),
+  )
+
   def mediaFromItemClasses(itemClasses: ItemClasses): WidthsByBreakpoint = {
     val desktopClass = itemClasses.desktop.getOrElse(itemClasses.tablet)
 
@@ -174,6 +178,14 @@ object GarnettFaciaWidths {
       mobile          = MediaMobile.get(itemClasses.mobile),
       tablet          = MediaTablet.get(itemClasses.tablet),
       desktop         = MediaDesktop.get(desktopClass)
+    )
+  }
+
+  def squareFront(): WidthsByBreakpoint = {
+    WidthsByBreakpoint(
+      mobile          = SquareImageFronts.get(Standard),
+      tablet          = SquareImageFronts.get(Standard),
+      desktop         = SquareImageFronts.get(Standard)
     )
   }
 
