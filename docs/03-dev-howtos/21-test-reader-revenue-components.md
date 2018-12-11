@@ -15,7 +15,7 @@ The components which drive the most traffic are:
 ## The epic
 - Sits in the document flow, at the bottom of article copy
 - Typically only displays for a certain number of views in a given time window (normally 4 in 30 days)
-- Won't display to people who are giving us money in any way
+Won't display to people who we know are giving us money in any way (logged in, or recent one off contribution cookie)
 - Won't display on pages which have the `window.guardian.config.page.shouldHideReaderRevenue` flag set (this is set by editorial in Composer)
 
 ![picture 416](https://user-images.githubusercontent.com/5122968/49798164-891ad380-fd39-11e8-9835-cbd4c2050bc0.png)
