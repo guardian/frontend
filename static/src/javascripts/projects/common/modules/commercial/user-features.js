@@ -214,13 +214,24 @@ const isDigitalSubscriber = (): boolean =>
 /*
     Whenever the checks are updated, please make sure to update
     applyRenderConditions.scala.js too, where the global CSS class, indicating
-    the user should not see the revenue messages, is added to the body
+    the user should not see the revenue messages, is added to the body.
+    Please also update readerRevenueRelevantCookies below, if changing the cookies
+    which this function is dependent on.
 */
 const shouldSeeReaderRevenue = (): boolean =>
     !isPayingMember() &&
     !isRecentOneOffContributor() &&
     !isRecurringContributor() &&
     !isDigitalSubscriber();
+
+const readerRevenueRelevantCookies = [
+    PAYING_MEMBER_COOKIE,
+    DIGITAL_SUBSCRIBER_COOKIE,
+    RECURRING_CONTRIBUTOR_COOKIE,
+    SUPPORT_RECURRING_CONTRIBUTOR_MONTHLY_COOKIE,
+    SUPPORT_RECURRING_CONTRIBUTOR_ANNUAL_COOKIE,
+    SUPPORT_ONE_OFF_CONTRIBUTION_COOKIE,
+];
 
 const isAdFreeUser = (): boolean =>
     isDigitalSubscriber() || (adFreeDataIsPresent() && !adFreeDataIsOld());
@@ -237,4 +248,5 @@ export {
     deleteOldData,
     getLastOneOffContributionDate,
     getDaysSinceLastOneOffContribution,
+    readerRevenueRelevantCookies,
 };

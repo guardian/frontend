@@ -31,7 +31,9 @@ type BannerDeployLog = {
 };
 
 const messageCode = 'engagement-banner';
-const minArticles = 3;
+const minArticlesBeforeShowingBanner = 3;
+
+const lastClosedAtKey = 'engagementBannerLastClosedAt';
 
 const getTimestampOfLastBannerDeploy = (): Promise<string> =>
     fetchJson('/reader-revenue/contributions-banner-deploy-log', {
@@ -152,7 +154,11 @@ const hideBanner = (banner: Message) => {
     banner.hide();
 
     // Store timestamp in localStorage
-    userPrefs.set('engagementBannerLastClosedAt', new Date().toISOString());
+    userPrefs.set(lastClosedAtKey, new Date().toISOString());
+};
+
+const clearBannerHistory = (): void => {
+    userPrefs.remove(lastClosedAtKey);
 };
 
 const showBanner = (params: EngagementBannerParams): void => {
@@ -244,16 +250,15 @@ const canShow = (): Promise<boolean> => {
         return Promise.resolve(false);
     }
 
-    const hasSeenEnoughArticles: boolean = getVisitCount() >= minArticles;
+    const hasSeenEnoughArticles: boolean =
+        getVisitCount() >= minArticlesBeforeShowingBanner;
 
     if (
         hasSeenEnoughArticles &&
         shouldShowReaderRevenue() &&
         userVariantCanShow()
     ) {
-        const userLastClosedBannerAt = userPrefs.get(
-            'engagementBannerLastClosedAt'
-        );
+        const userLastClosedBannerAt = userPrefs.get(lastClosedAtKey);
 
         if (!userLastClosedBannerAt) {
             // show the banner if we can't get a value for this
@@ -270,4 +275,11 @@ const membershipEngagementBanner: Banner = {
     canShow,
 };
 
-export { membershipEngagementBanner, canShow, messageCode, hideBanner };
+export {
+    membershipEngagementBanner,
+    canShow,
+    messageCode,
+    hideBanner,
+    clearBannerHistory,
+    minArticlesBeforeShowingBanner,
+};

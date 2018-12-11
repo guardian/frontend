@@ -12,6 +12,11 @@ export const setParticipations = (participations: Participations): void => {
     local.set(participationsKey, participations);
 };
 
+// Wipes all participations
+export const clearParticipations = (): void => {
+    local.remove(participationsKey);
+};
+
 export const removeParticipation = (toRemove: { id: string }): void => {
     const participations = getParticipations();
     const filteredParticipations = Object.keys(participations)
