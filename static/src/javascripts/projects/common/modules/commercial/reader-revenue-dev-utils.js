@@ -17,7 +17,6 @@ import {
 } from 'common/modules/analytics/mvt-cookie';
 import { setGeolocation, getSync as geolocationGetSync } from 'lib/geolocation';
 
-
 const clearCommonReaderRevenueStateAndReload = (): void => {
     readerRevenueRelevantCookies.forEach(cookie => removeCookie(cookie));
 
@@ -71,7 +70,9 @@ const showPreviousVariant = (): void => {
 };
 
 const changeGeolocation = (): void => {
-    const geo = window.prompt(`Enter two-letter geolocation code (e.g. GB, US, AU). Current is ${geolocationGetSync()}.`);
+    const geo = window.prompt(
+        `Enter two-letter geolocation code (e.g. GB, US, AU). Current is ${geolocationGetSync()}.`
+    );
     setGeolocation(geo);
     clearCommonReaderRevenueStateAndReload();
 };
