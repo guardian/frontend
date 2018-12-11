@@ -35,7 +35,7 @@ const clearCommonReaderRevenueStateAndReload = (): void => {
         } else {
             const profileUrl = window.location.origin.replace(
                 /(www\.|m\.)/,
-                'profile'
+                'profile.'
             );
             window.location.assign(`${profileUrl}/signout`);
         }
