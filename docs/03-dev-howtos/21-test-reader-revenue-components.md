@@ -17,6 +17,7 @@ The components which drive the most traffic are:
 - Typically only displays for a certain number of views in a given time window (normally 4 in 30 days)
 - Won't display to people who are giving us money in any way
 - Won't display on pages which have the `window.guardian.config.page.shouldHideReaderRevenue` flag set (this is set by editorial in Composer)
+
 ![picture 416](https://user-images.githubusercontent.com/5122968/49798164-891ad380-fd39-11e8-9835-cbd4c2050bc0.png)
 
 
@@ -26,6 +27,7 @@ The components which drive the most traffic are:
 - Will not re-display after it's closed, until we "redeploy" (globally force a re-display) via this tool: https://frontend.gutools.co.uk/reader-revenue/contributions-banner
 - Won't display to people who are giving us money in any way
 - Won't display on pages which have the `window.guardian.config.page.shouldHideReaderRevenue` flag set (this is set by editorial in Composer)
+
 ![picture 417](https://user-images.githubusercontent.com/5122968/49798163-891ad380-fd39-11e8-8645-5f07c389e4f1.png)
 
 
