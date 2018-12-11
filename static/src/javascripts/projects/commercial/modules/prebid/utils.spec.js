@@ -13,6 +13,7 @@ import {
     shouldIncludeOpenx,
     shouldIncludeOzone,
     shouldIncludePangaea,
+    shouldIncludeSonobi,
     shouldIncludeTrustX,
     shouldIncludeXaxis,
     stripMobileSuffix,
@@ -256,6 +257,22 @@ describe('Utils', () => {
             return shouldIncludeXaxis();
         });
         expect(result).toEqual([false, false, false]);
+    });
+
+    test('shouldIncludeSonobi should return true if geolocation is US', () => {
+        const testGeos = ['US', 'CA'];
+        for (let i = 0; i < testGeos.length; i += 1) {
+            getSync.mockReturnValueOnce(testGeos[i]);
+            expect(shouldIncludeSonobi()).toBe(true);
+        }
+    });
+
+    test('shouldIncludeSonobi should otherwise return false', () => {
+        const testGeos = ['FK', 'GI', 'GG', 'IM', 'JE', 'SH', 'AU'];
+        for (let i = 0; i < testGeos.length; i += 1) {
+            getSync.mockReturnValueOnce(testGeos[i]);
+            expect(shouldIncludeSonobi()).toBe(false);
+        }
     });
 
     test('stripMobileSuffix', () => {

@@ -96,6 +96,8 @@ export const getRandomIntInclusive = (
     return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
+export const shouldIncludeSonobi = (): boolean => isInUsRegion();
+
 export const shouldIncludeOpenx = (): boolean => !isInUsRegion();
 
 export const shouldIncludeTrustX = (): boolean => isInUsRegion();

@@ -5,8 +5,8 @@ import { pbTestNameMap } from 'lib/url';
 import isEmpty from 'lodash/isEmpty';
 import {
     buildAppNexusTargeting,
-    buildPageTargeting,
     buildAppNexusTargetingObject,
+    buildPageTargeting,
 } from 'common/modules/commercial/build-page-targeting';
 import { commercialPrebidSafeframe } from 'common/modules/experiments/tests/commercial-prebid-safeframe';
 import { getVariant, isInVariant } from 'common/modules/experiments/utils';
@@ -32,21 +32,22 @@ import {
     containsMpu,
     containsMpuOrDmpu,
     getBreakpointKey,
+    isInAuRegion,
+    isInUsRegion,
     shouldIncludeAdYouLike,
     shouldIncludeAppNexus,
     shouldIncludeImproveDigital,
     shouldIncludeOpenx,
     shouldIncludeOzone,
-    shouldIncludeTrustX,
     shouldIncludePangaea,
+    shouldIncludeSonobi,
+    shouldIncludeTrustX,
     shouldIncludeXaxis,
+    stripDfpAdPrefixFrom,
     stripMobileSuffix,
     stripTrailingNumbersAbove1,
-    isInUsRegion,
-    isInAuRegion,
-    stripDfpAdPrefixFrom,
 } from './utils';
-import { getAppNexusPlacementId, getAppNexusDirectBidParams } from './appnexus';
+import { getAppNexusDirectBidParams, getAppNexusPlacementId } from './appnexus';
 
 const isInSafeframeTestVariant = (): boolean => {
     const variant = getVariant(commercialPrebidSafeframe, 'variant');
@@ -540,7 +541,7 @@ const biddersSwitchedOn: (PrebidBidder[]) => PrebidBidder[] = allBidders => {
 
 const currentBidders: (PrebidSize[]) => PrebidBidder[] = slotSizes => {
     const otherBidders: PrebidBidder[] = [
-        sonobiBidder,
+        ...(inPbTestOr(shouldIncludeSonobi()) ? [sonobiBidder] : []),
         ...(inPbTestOr(shouldIncludeTrustX()) ? [trustXBidder] : []),
         ...(inPbTestOr(shouldIncludeAppNexus()) ? [appNexusBidder] : []),
         ...(inPbTestOr(shouldIncludeImproveDigital())
@@ -566,19 +567,15 @@ export const bids: (string, PrebidSize[]) => PrebidBid[] = (
     slotId,
     slotSizes
 ) =>
-    currentBidders(slotSizes).map((bidder: PrebidBidder) => {
-        const bid: PrebidBid = {
-            bidder: bidder.name,
-            params: bidder.bidParams(slotId, slotSizes),
-        };
-        return bid;
-    });
+    currentBidders(slotSizes).map((bidder: PrebidBidder) => ({
+        bidder: bidder.name,
+        params: bidder.bidParams(slotId, slotSizes),
+    }));
 
 export const _ = {
     getDummyServerSideBidders,
     getIndexSiteId,
     getImprovePlacementId,
-    getPubmaticPublisherId,
     getTrustXAdUnitId,
     indexExchangeBidders,
 };

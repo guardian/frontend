@@ -24,6 +24,7 @@ import {
     shouldIncludeOzone as shouldIncludeOzone_,
     shouldIncludeTrustX as shouldIncludeTrustX_,
     shouldIncludeXaxis as shouldIncludeXaxis_,
+    shouldIncludeSonobi as shouldIncludeSonobi_,
     stripMobileSuffix as stripMobileSuffix_,
 } from './utils';
 
@@ -41,6 +42,7 @@ const shouldIncludeOpenx: any = shouldIncludeOpenx_;
 const shouldIncludeOzone: any = shouldIncludeOzone_;
 const shouldIncludeTrustX: any = shouldIncludeTrustX_;
 const shouldIncludeXaxis: any = shouldIncludeXaxis_;
+const shouldIncludeSonobi: any = shouldIncludeSonobi_;
 const stripMobileSuffix: any = stripMobileSuffix_;
 const getBreakpointKey: any = getBreakpointKey_;
 const getVariant: any = getVariant_;
@@ -505,7 +507,6 @@ describe('bids', () => {
         shouldIncludeImproveDigital.mockReturnValueOnce(true);
         expect(bidders()).toEqual([
             'ix',
-            'sonobi',
             'improvedigital',
             'adyoulike',
             'openx',
@@ -513,35 +514,35 @@ describe('bids', () => {
         ]);
     });
 
-    test('should not include Ozone bidders when fate is against them', () => {
-        config.set('switches.prebidXaxis', false);
-        expect(bidders()).toEqual(['ix', 'sonobi', 'adyoulike']);
-    });
-
     test('should not include ix bidders when switched off', () => {
         config.set('switches.prebidIndexExchange', false);
-        expect(bidders()).toEqual(['sonobi', 'adyoulike']);
+        expect(bidders()).toEqual(['adyoulike']);
+    });
+
+    test('should include Sonobi if in target geolocation', () => {
+        shouldIncludeSonobi.mockReturnValue(true);
+        expect(bidders()).toEqual(['ix', 'sonobi', 'adyoulike']);
     });
 
     test('should include AppNexus directly if in target geolocation', () => {
         shouldIncludeAppNexus.mockReturnValue(true);
-        expect(bidders()).toEqual(['ix', 'sonobi', 'and', 'adyoulike']);
+        expect(bidders()).toEqual(['ix', 'and', 'adyoulike']);
     });
 
     test('should include OpenX directly if in target geolocation', () => {
         shouldIncludeOpenx.mockReturnValue(true);
-        expect(bidders()).toEqual(['ix', 'sonobi', 'adyoulike', 'oxd']);
+        expect(bidders()).toEqual(['ix', 'adyoulike', 'oxd']);
     });
 
     test('should include TrustX if in target geolocation', () => {
         shouldIncludeTrustX.mockReturnValue(true);
-        expect(bidders()).toEqual(['ix', 'sonobi', 'trustx', 'adyoulike']);
+        expect(bidders()).toEqual(['ix', 'trustx', 'adyoulike']);
     });
 
     test('should include ix bidder for each size that slot can take', () => {
         const rightSlotBidders = () =>
             bids('dfp-right', [[300, 600], [300, 250]]).map(bid => bid.bidder);
-        expect(rightSlotBidders()).toEqual(['ix', 'ix', 'sonobi', 'adyoulike']);
+        expect(rightSlotBidders()).toEqual(['ix', 'ix', 'adyoulike']);
     });
 
     test('should only include bidder being tested', () => {
