@@ -23,8 +23,10 @@ const clearCommonReaderRevenueStateAndReload = (): void => {
     initMvtCookie();
     clearParticipations();
 
-    // Always clear out the epic view log, since otherwise this
-    // reload might mean the epic no longer appears on the next page view
+    // Most versions of the epic only display for a certain number of pageviews in
+    // a given time window (typically, 4 per 30 days).
+    // We always want to clear out this view log, since otherwise this
+    // reload might mean the epic no longer appears on the next page view.
     clearEpicViewLog();
 
     if (isUserLoggedIn()) {
@@ -51,6 +53,8 @@ const showMeTheEpic = (): void => {
 
 const showMeTheBanner = (): void => {
     clearBannerHistory();
+
+    // The banner only displays after a certain number of pageviews. So let's get there quick!
     local.set('gu.alreadyVisited', minArticlesBeforeShowingBanner + 1);
     clearCommonReaderRevenueStateAndReload();
 };
