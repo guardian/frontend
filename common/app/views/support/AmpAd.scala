@@ -4,7 +4,6 @@ import com.gu.commercial.display.AdTargetParam.toMap
 import com.gu.commercial.display.{AdTargetParamValue, MultipleValues, SingleValue}
 import common.Edition
 import common.commercial.AdUnitMaker
-import common.editions._
 import conf.switches.Switches.KruxSwitch
 import conf.switches.{Switch, Switches}
 import model.Article
@@ -40,7 +39,7 @@ object AmpAdRtcConfig {
   // if debug, give additional debug output in RTC responses
   def toJsonString(
     prebidServerUrl: String,
-    edition: Edition,
+    adRegion: AdRegion,
     debug: Boolean
   ): String = {
 
@@ -61,9 +60,9 @@ object AmpAdRtcConfig {
        * and https://github.com/prebid/prebid-server/blob/master/docs/endpoints/openrtb2/amp.md#query-parameters
        */
       val ampPrebidUrl = {
-        val placementId = edition match {
-          case Us => 7
-          case Au => 6
+        val placementId = adRegion match {
+          case UsAdRegion => 7
+          case AuAdRegion => 6
           case _ => 4
         }
         val url = s"$prebidServerUrl/openrtb2/amp?tag_id=$placementId&w=ATTR(width)&h=ATTR(height)" +
@@ -88,4 +87,17 @@ object AmpAdRtcConfig {
 
     rtc.toString()
   }
+}
+
+sealed trait AdRegion {
+  def cssClassSuffix: String
+}
+case object UsAdRegion extends AdRegion {
+  val cssClassSuffix = "us"
+}
+case object AuAdRegion extends AdRegion {
+  val cssClassSuffix = "au"
+}
+case object RowAdRegion extends AdRegion {
+  val cssClassSuffix = "row"
 }

@@ -1,6 +1,5 @@
 package views.support
 
-import common.editions._
 import conf.switches.Switches.{KruxSwitch, ampPrebid}
 import org.scalatest.{BeforeAndAfter, FlatSpec, Matchers}
 import play.api.libs.json.{JsNull, Json}
@@ -26,7 +25,7 @@ class AmpAdRtcConfigTest extends FlatSpec with Matchers with BeforeAndAfter {
     KruxSwitch.switchOn()
     ampPrebid.switchOn()
     val json = Json.parse(AmpAdRtcConfig.toJsonString(
-      prebidServerUrl, edition = Uk, debug = true
+      prebidServerUrl, RowAdRegion, debug = true
     ))
     json shouldBe Json.obj(
       "urls" -> Json.arr(
@@ -38,7 +37,7 @@ class AmpAdRtcConfigTest extends FlatSpec with Matchers with BeforeAndAfter {
 
   it should "hold no real-time config when both switches are off" in {
     val json = Json.parse(AmpAdRtcConfig.toJsonString(
-      prebidServerUrl, edition = Uk, debug = true
+      prebidServerUrl, RowAdRegion, debug = true
     ))
     json shouldBe JsNull
   }
@@ -46,7 +45,7 @@ class AmpAdRtcConfigTest extends FlatSpec with Matchers with BeforeAndAfter {
   it should "hold Krux config when Krux switch is on" in {
     KruxSwitch.switchOn()
     val json = Json.parse(AmpAdRtcConfig.toJsonString(
-      prebidServerUrl, edition = Uk, debug = true
+      prebidServerUrl, RowAdRegion, debug = true
     ))
     json shouldBe Json.obj(
       "urls" -> Json.arr(
@@ -58,7 +57,7 @@ class AmpAdRtcConfigTest extends FlatSpec with Matchers with BeforeAndAfter {
   it should "hold Prebid server config when Prebid server switch is on" in {
     ampPrebid.switchOn()
     val json = Json.parse(AmpAdRtcConfig.toJsonString(
-      prebidServerUrl, edition = Uk, debug = true
+      prebidServerUrl, RowAdRegion, debug = true
     ))
     json shouldBe Json.obj(
       "urls" -> Json.arr(
@@ -70,7 +69,7 @@ class AmpAdRtcConfigTest extends FlatSpec with Matchers with BeforeAndAfter {
   it should "hold debug param in Amp Prebid URL if debugging" in {
     ampPrebid.switchOn()
     val json = Json.parse(AmpAdRtcConfig.toJsonString(
-      prebidServerUrl, edition = Uk, debug = true
+      prebidServerUrl, RowAdRegion, debug = true
     ))
     Json.stringify(json) should include("&debug=1")
   }
@@ -78,40 +77,32 @@ class AmpAdRtcConfigTest extends FlatSpec with Matchers with BeforeAndAfter {
   it should "not hold debug param in Amp Prebid URL if not debugging" in {
     ampPrebid.switchOn()
     val json = Json.parse(AmpAdRtcConfig.toJsonString(
-      prebidServerUrl, edition = Uk, debug = false
+      prebidServerUrl, RowAdRegion, debug = false
     ))
     Json.stringify(json) should not include "&debug=1"
   }
 
-  it should "have correct placement ID for UK edition" in {
+  it should "have correct placement ID for ROW ad region" in {
     ampPrebid.switchOn()
     val json = Json.parse(AmpAdRtcConfig.toJsonString(
-      prebidServerUrl, edition = Uk, debug = false
+      prebidServerUrl, RowAdRegion, debug = false
     ))
     Json.stringify(json) should include ("tag_id=4")
   }
 
-  it should "have correct placement ID for US edition" in {
+  it should "have correct placement ID for US ad region" in {
     ampPrebid.switchOn()
     val json = Json.parse(AmpAdRtcConfig.toJsonString(
-      prebidServerUrl, edition = Us, debug = false
+      prebidServerUrl, UsAdRegion, debug = false
     ))
     Json.stringify(json) should include ("tag_id=7")
   }
 
-  it should "have correct placement ID for AU edition" in {
+  it should "have correct placement ID for AU ad region" in {
     ampPrebid.switchOn()
     val json = Json.parse(AmpAdRtcConfig.toJsonString(
-      prebidServerUrl, edition = Au, debug = false
+      prebidServerUrl, AuAdRegion, debug = false
     ))
     Json.stringify(json) should include ("tag_id=6")
-  }
-
-  it should "have correct placement ID for International edition" in {
-    ampPrebid.switchOn()
-    val json = Json.parse(AmpAdRtcConfig.toJsonString(
-      prebidServerUrl, edition = International, debug = false
-    ))
-    Json.stringify(json) should include ("tag_id=4")
   }
 }
