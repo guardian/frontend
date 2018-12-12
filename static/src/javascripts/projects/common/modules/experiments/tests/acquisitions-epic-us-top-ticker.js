@@ -69,7 +69,7 @@ const noteFromRebecca: AcquisitionsEpicTemplateCopy = {
         'The Guardian is asking our US readers to help us raise $1 million dollars by the new year to report on the most important stories in 2019. Every contribution, big or small, will help us hit our goal.',
     ],
     highlightedText:
-        'I hope you’ll consider making a year-end gift today to show your ongoing support for our independent journalism.Thank you.',
+        'I hope you’ll consider making a year-end gift today to show your ongoing support for our independent journalism. Thank you.',
 };
 const noteFromJohn: AcquisitionsEpicTemplateCopy = {
     heading: 'In these critical times &hellip;',
@@ -79,10 +79,10 @@ const noteFromJohn: AcquisitionsEpicTemplateCopy = {
         'In normal times we might not be making this appeal. But these are not normal times. Many of the values and beliefs we hold dear at The Guardian are under threat both here in the US and around the world. Facts, science, humanity, diversity and equality are being challenged daily. As is truth. Which is why we need your help.',
         'Powerful public figures choose lies over truths, prefer supposition over science; and select hate over humanity. The US administration is foremost among them; whether in denying climate science or hating on immigrants; giving succor to racists or targeting journalists and the media. Many of these untruths and attacks find fertile ground on social media where tech platforms seem unable to cauterise lies. As a result, fake is in danger of overriding fact.',
         'Almost 100 years ago, in 1921, the editor of The Guardian argued that the principal role of a newspaper was accurate reporting, insisting that &ldquo;facts are sacred.&rdquo; We still hold that to be true. The need for a robust, independent press has never been greater, but the challenge is more intense than ever as digital disruption threatens traditional media’s business model. We pride ourselves on not having a paywall because we believe truth should not come at a price for anyone. Our journalism remains open and accessible to everyone and with your help we can keep it that way.',
-        'The Guardian is asking our US readers to help us raise $1 million dollars by the new year to report on the most important stories in 2019. Every contribution, big or small, will help us hit our goal',
+        'The Guardian is asking our US readers to help us raise $1 million dollars by the new year to report on the most important stories in 2019. Every contribution, big or small, will help us hit our goal.',
     ],
     highlightedText:
-        'I hope you’ll consider making a year-end gift today to show your ongoing support for our independent journalism.Thank you.',
+        'I hope you’ll consider making a year-end gift today to show your ongoing support for our independent journalism. Thank you.',
 };
 export const acquisitionsEpicUsTopTicker: EpicABTest = makeABTest({
     id: abTestName,
