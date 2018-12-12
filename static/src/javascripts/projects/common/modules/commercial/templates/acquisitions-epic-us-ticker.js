@@ -1,5 +1,6 @@
 // @flow
 import { acquisitionsEpicTickerTemplate } from 'common/modules/commercial/templates/acquisitions-epic-ticker';
+import { appendToLastElement } from 'lib/array-utils';
 
 export type TickerPosition = 'TOP' | 'BOTTOM';
 
@@ -26,10 +27,12 @@ export const acquisitionsEpicUsTickerTemplate = ({
                 <h2 class="contributions__title contributions__title--big">
                     ${heading}
                 </h2>
-                ${paragraphs.map(paragraph => `<p>${paragraph}</p>`).join('')}
-                <p>
-                    <strong><span class="contributions__highlight">${highlightedText}</span></strong>
-                </p>
+                ${appendToLastElement(
+                    paragraphs,
+                    ` <strong><span class="contributions__highlight">${highlightedText}</span></strong>`
+                )
+                    .map(paragraph => `<p>${paragraph}</p>`)
+                    .join('')}
             </div>
 
             ${buttonTemplate}

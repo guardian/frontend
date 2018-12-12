@@ -238,7 +238,7 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-acquisitions-epic-us-top-ticker-round-five",
+    "ab-acquisitions-epic-us-top-ticker-round-six",
     "Tests an epic with top ticker in US",
     owners = Seq(Owner.withGithub("joelochlann")),
     safeState = Off,
