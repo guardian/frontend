@@ -33,6 +33,16 @@ export type CtaUrls = {
     supportUrl: string,
 };
 
+export type ReaderRevenueRegion = 'gb' | 'us' | 'au' | 'row';
+
+const getReaderRevenueRegion = (geolocation: string): ReaderRevenueRegion => {
+    const location = geolocation.toLowerCase();
+    if (location === 'gb' || location === 'us' || location === 'au') {
+        return location;
+    }
+    return 'row';
+};
+
 // How many times the user can see the Epic,
 // e.g. 6 times within 7 days with minimum of 1 day in between views.
 const defaultMaxViews: {
@@ -529,4 +539,5 @@ export {
     makeBannerABTestVariant,
     defaultMaxViews,
     isEpicDisplayable,
+    getReaderRevenueRegion,
 };

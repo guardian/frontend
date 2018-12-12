@@ -27,7 +27,7 @@ GET        /advertiser-content/:campaignName/:pageName/:cType/onward.json       
 GET        /advertiser-content/:campaignName/:pageName/autoplay.json                           commercial.controllers.HostedContentController.renderAutoplayComponent(campaignName, pageName)
 
 # Reader revenue
-GET       /reader-revenue/contributions-banner-deploy-log                                      controllers.ReaderRevenueAppController.contributionsBannerDeployLog()
+GET        /reader-revenue/contributions-banner-deploy-log/$region<gb|us|au|row>               controllers.ReaderRevenueAppController.contributionsBannerDeployLog(region: String)
 
 # Onward
 GET        /most-read.json                                                                     controllers.MostPopularController.render(path = "")

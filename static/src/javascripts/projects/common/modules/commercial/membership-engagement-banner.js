@@ -3,6 +3,7 @@ import config from 'lib/config';
 import { local } from 'lib/storage';
 import { Message } from 'common/modules/ui/message';
 import mediator from 'lib/mediator';
+import { getSync as geolocationGetSync } from 'lib/geolocation';
 import { membershipEngagementBannerTests } from 'common/modules/experiments/tests/membership-engagement-banner-tests';
 import { testCanBeRun } from 'common/modules/experiments/test-can-run-checks';
 import { isInTest, variantFor } from 'common/modules/experiments/segment-util';
@@ -12,7 +13,11 @@ import {
     getControlEngagementBannerParams,
 } from 'common/modules/commercial/membership-engagement-banner-parameters';
 import { isBlocked } from 'common/modules/commercial/membership-engagement-banner-block';
-import { shouldShowReaderRevenue } from 'common/modules/commercial/contributions-utilities';
+import {
+    type ReaderRevenueRegion,
+    shouldShowReaderRevenue,
+    getReaderRevenueRegion,
+} from 'common/modules/commercial/contributions-utilities';
 import type { Banner } from 'common/modules/ui/bannerPicker';
 import bean from 'bean';
 import fetchJson from 'lib/fetch-json';
@@ -33,17 +38,20 @@ type BannerDeployLog = {
 const messageCode = 'engagement-banner';
 const minArticlesBeforeShowingBanner = 3;
 
-const lastClosedAtKey = 'engagementBannerLastClosedAt';
+const bannersLastClosedAtKey = 'engagementBannersLastClosedAt';
 
-const getTimestampOfLastBannerDeploy = (): Promise<string> =>
-    fetchJson('/reader-revenue/contributions-banner-deploy-log', {
+const getTimestampOfLastBannerDeployForLocation = (
+    region: ReaderRevenueRegion
+): Promise<string> =>
+    fetchJson(`/reader-revenue/contributions-banner-deploy-log/${region}`, {
         mode: 'cors',
     }).then((resp: BannerDeployLog) => resp && resp.time);
 
 const hasBannerBeenRedeployedSinceClosed = (
-    userLastClosedBannerAt: string
+    userLastClosedBannerAt: string,
+    region: ReaderRevenueRegion
 ): Promise<boolean> =>
-    getTimestampOfLastBannerDeploy()
+    getTimestampOfLastBannerDeployForLocation(region)
         .then(timestamp => {
             const bannerLastDeployedAt = new Date(timestamp);
             return bannerLastDeployedAt > new Date(userLastClosedBannerAt);
@@ -152,13 +160,23 @@ const selectSequentiallyFrom = (array: Array<string>): string =>
 
 const hideBanner = (banner: Message) => {
     banner.hide();
+    const geolocation = geolocationGetSync();
+    const region: ReaderRevenueRegion = getReaderRevenueRegion(geolocation);
 
-    // Store timestamp in localStorage
-    userPrefs.set(lastClosedAtKey, new Date().toISOString());
+    // Store timestamp for this geolocation banner in localStorage
+    const allEngagementBannerLastClosedAtTimestamps =
+        userPrefs.get(bannersLastClosedAtKey) || {};
+    allEngagementBannerLastClosedAtTimestamps[
+        region
+    ] = new Date().toISOString();
+    userPrefs.set(
+        bannersLastClosedAtKey,
+        allEngagementBannerLastClosedAtTimestamps
+    );
 };
 
 const clearBannerHistory = (): void => {
-    userPrefs.remove(lastClosedAtKey);
+    userPrefs.remove(bannersLastClosedAtKey);
 };
 
 const showBanner = (params: EngagementBannerParams): void => {
@@ -252,19 +270,31 @@ const canShow = (): Promise<boolean> => {
 
     const hasSeenEnoughArticles: boolean =
         getVisitCount() >= minArticlesBeforeShowingBanner;
+    const geolocation: string = geolocationGetSync();
+    const region: ReaderRevenueRegion = getReaderRevenueRegion(geolocation);
 
     if (
         hasSeenEnoughArticles &&
         shouldShowReaderRevenue() &&
         userVariantCanShow()
     ) {
-        const userLastClosedBannerAt = userPrefs.get(lastClosedAtKey);
+        const allEngagementBannerLastClosedAt = userPrefs.get(
+            bannersLastClosedAtKey
+        );
+
+        const userLastClosedBannerAt = allEngagementBannerLastClosedAt
+            ? allEngagementBannerLastClosedAt[region]
+            : false;
 
         if (!userLastClosedBannerAt) {
             // show the banner if we can't get a value for this
             return Promise.resolve(true);
         }
-        return hasBannerBeenRedeployedSinceClosed(userLastClosedBannerAt);
+
+        return hasBannerBeenRedeployedSinceClosed(
+            userLastClosedBannerAt,
+            region
+        );
     }
     return Promise.resolve(false);
 };

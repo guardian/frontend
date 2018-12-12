@@ -60,7 +60,7 @@ GET         /analytics/confidence                                               
 # Reader Revenue
 GET         /reader-revenue                                                                         controllers.admin.ReaderRevenueAdminController.renderReaderRevenueMenu()
 GET         /reader-revenue/contributions-banner                                                    controllers.admin.ReaderRevenueAdminController.renderContributionsBannerAdmin()
-POST        /reader-revenue/redeploy-contributions-banner                                           controllers.admin.ReaderRevenueAdminController.redeployContributionsBanner()
+POST        /reader-revenue/redeploy-contributions-banner/$region<gb|us|au|row>                     controllers.admin.ReaderRevenueAdminController.redeployContributionsBanner(region)
 
 # Commercial
 GET         /commercial                                                                             controllers.admin.CommercialController.renderCommercialMenu()

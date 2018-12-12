@@ -7,7 +7,7 @@ GET         /assets/*path                                                       
 
 GET        /_healthcheck                                                        controllers.HealthCheck.healthCheck()
 
-GET        /reader-revenue/contributions-banner-deploy-log                      controllers.ReaderRevenueAppController.contributionsBannerDeployLog()
+GET        /reader-revenue/contributions-banner-deploy-log/$region<gb|us|au|row>                    controllers.ReaderRevenueAppController.contributionsBannerDeployLog(region: String)
 
 GET        /sitemaps/news.xml                                                   controllers.SiteMapController.renderNewsSiteMap()
 GET        /sitemaps/video.xml                                                  controllers.SiteMapController.renderVideoSiteMap()
