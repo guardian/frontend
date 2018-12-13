@@ -35,7 +35,10 @@ export const defaultExclusionRules: pagePropertiesRelevantToEpic[] = [
     { keywordIds: ['guardian-masterclasses/guardian-masterclasses'] },
 ];
 
-export const isArticleWorthAnEpicImpression = (page: Object, exclusionRules: pagePropertiesRelevantToEpic[]) =>
+export const isArticleWorthAnEpicImpression = (
+    page: Object,
+    exclusionRules: pagePropertiesRelevantToEpic[]
+) =>
     !exclusionRules.some(propertiesToExclude => {
         const sectionsMatch = propertiesToExclude.section
             ? propertiesToExclude.section === page.section

@@ -28,7 +28,7 @@ import {
 } from 'common/modules/commercial/contributions-google-docs';
 import {
     isArticleWorthAnEpicImpression,
-    defaultExclusionRules
+    defaultExclusionRules,
 } from 'common/modules/commercial/epic/epic-exclusion-rules';
 
 export type EpicTemplate = (Variant, AcquisitionsEpicTemplateCopy) => string;
