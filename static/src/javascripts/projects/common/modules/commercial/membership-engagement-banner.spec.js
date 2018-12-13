@@ -115,6 +115,7 @@ jest.mock('lib/config', () => ({
 }));
 jest.mock('common/modules/commercial/contributions-utilities', () => ({
     shouldShowReaderRevenue: jest.fn(() => true),
+    getReaderRevenueRegion: jest.fn(() => 'gb'),
 }));
 jest.mock('lib/fetch-json', () => jest.fn());
 jest.mock('common/modules/user-prefs', () => ({
@@ -200,7 +201,9 @@ describe('Membership engagement banner', () => {
         });
 
         it('should return false if redeploy before last closed', () => {
-            fakeUserPrefs.mockReturnValueOnce('2018-07-26T17:05:46+0000');
+            fakeUserPrefs.mockReturnValueOnce({
+                gb: '2018-07-26T17:05:46+0000',
+            });
 
             return membershipEngagementBanner.canShow().then(canShow => {
                 expect(canShow).toBe(false);
