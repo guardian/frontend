@@ -1,0 +1,10 @@
+.geo-amp-ad {
+    display: none;
+}
+
+.amp-geo-group-us .geo-amp-ad--us,
+.amp-geo-group-au .geo-amp-ad--au,
+.amp-geo-group-eea .geo-amp-ad--row,
+.amp-geo-no-group .geo-amp-ad--row {
+    display: block;
+}
