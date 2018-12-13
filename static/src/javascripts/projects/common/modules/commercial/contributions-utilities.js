@@ -26,6 +26,10 @@ import {
     getBannerGoogleDoc,
     googleDocEpicControl,
 } from 'common/modules/commercial/contributions-google-docs';
+import {
+    isArticleWorthAnEpicImpression,
+    defaultExclusionRules,
+} from 'common/modules/commercial/epic/epic-exclusion-rules';
 
 export type EpicTemplate = (Variant, AcquisitionsEpicTemplateCopy) => string;
 
@@ -83,32 +87,18 @@ const getTargets = (
 };
 
 const isCompatibleWithEpic = (page: Object): boolean =>
-    page.contentType === 'Article' && !page.isMinuteArticle;
+    page.contentType === 'Article' &&
+    !page.isMinuteArticle &&
+    isArticleWorthAnEpicImpression(page, defaultExclusionRules);
 
 const shouldShowReaderRevenue = (
     showToContributorsAndSupporters: boolean = false
-): boolean => {
-    const isMasterclassesPage = config
-        .get('page.keywordIds', '')
-        .includes('guardian-masterclasses/guardian-masterclasses');
-
-    return (
-        (userShouldSeeReaderRevenue() || showToContributorsAndSupporters) &&
-        !isMasterclassesPage &&
-        !config.get('page.shouldHideReaderRevenue')
-    );
-};
-
-const isEpicDisplayable = (): boolean => {
-    const page = config.get('page');
-    if (!page) {
-        return false;
-    }
-    return isCompatibleWithEpic(page) && shouldShowReaderRevenue();
-};
+): boolean =>
+    (userShouldSeeReaderRevenue() || showToContributorsAndSupporters) &&
+    !config.get('page.shouldHideReaderRevenue');
 
 const shouldShowEpic = (test: EpicABTest): boolean => {
-    const worksWellWithPageTemplate = test.pageCheck(config.get('page'));
+    const onCompatiblePage = test.pageCheck(config.get('page'));
 
     const storedGeolocation = geolocationGetSync();
     const inCompatibleLocation = test.locations.length
@@ -119,7 +109,7 @@ const shouldShowEpic = (test: EpicABTest): boolean => {
 
     return (
         shouldShowReaderRevenue(test.showToContributorsAndSupporters) &&
-        worksWellWithPageTemplate &&
+        onCompatiblePage &&
         inCompatibleLocation &&
         test.locationCheck(storedGeolocation) &&
         tagsMatch
@@ -528,5 +518,4 @@ export {
     makeGoogleDocBannerControl,
     makeBannerABTestVariant,
     defaultMaxViews,
-    isEpicDisplayable,
 };
