@@ -5,9 +5,10 @@ import conf.Configuration.commercial.prebidServerUrl
 import conf.Configuration.environment
 import model.Article
 import org.jsoup.nodes.{Document, Element}
-import views.support.{AmpAd, AmpAdDataSlot, AmpAdRtcConfig, HtmlCleaner}
+import views.support.{AdRegion, AmpAd, AmpAdDataSlot, AmpAdRtcConfig, AuAdRegion, HtmlCleaner, RowAdRegion, UsAdRegion}
 
 import scala.collection.JavaConverters._
+import scala.xml.Elem
 
 object AmpAdCleaner {
   val AD_LIMIT = 8
@@ -89,20 +90,21 @@ object AmpAdCleaner {
 case class AmpAdCleaner(edition: Edition, uri: String, article: Article) extends HtmlCleaner {
 
   def adAfter(element: Element): Element = {
-    val ampAd = <amp-ad
-                   data-npa-on-unknown-consent="true"
-                   layout="responsive"
-                   width="300" height="250"
-                   type="doubleclick"
-                   data-loading-strategy="prefer-viewability-over-views"
-                   json={AmpAd(article, uri, edition.id.toLowerCase()).toString()}
-                   data-slot={AmpAdDataSlot(article).toString()}
-                   rtc-config={AmpAdRtcConfig.toJsonString(
-                     prebidServerUrl,
-                     edition,
-                     debug = environment.isNonProd
-                   )}
-                ></amp-ad>
+    def ampAd(adRegion: AdRegion): Elem =
+      <amp-ad
+      class={s"geo-amp-ad geo-amp-ad--${adRegion.cssClassSuffix}"}
+      data-npa-on-unknown-consent="true"
+      layout="responsive"
+      width="300" height="250"
+      type="doubleclick"
+      data-loading-strategy="prefer-viewability-over-views"
+      json={AmpAd(article, uri, edition.id.toLowerCase()).toString()}
+      data-slot={AmpAdDataSlot(article).toString()}
+      rtc-config={AmpAdRtcConfig.toJsonString(
+        prebidServerUrl,
+        adRegion,
+        debug = environment.isNonProd
+      )}></amp-ad>
 
     val ampAdString = {
       // data-block-on-consent should not have ANY value
@@ -113,7 +115,10 @@ case class AmpAdCleaner(edition: Edition, uri: String, article: Article) extends
       // or gather it in AMP.
       // ( ampAd % Attribute(null, "data-block-on-consent", "PLEASEREMOVEME", Null) ).toString().replaceFirst("=\"PLEASEREMOVEME\"", "")
       // Falling back to
-      ampAd.toString()
+      val usAdRegionSlot = ampAd(UsAdRegion).toString()
+      val auAdRegionSlot = ampAd(AuAdRegion).toString()
+      val rowAdRegionSlot = ampAd(RowAdRegion).toString()
+      s"$usAdRegionSlot$auAdRegionSlot$rowAdRegionSlot"
     }
 
     element.after( "<div class=\"amp-ad-container\">" ++ ampAdString ++ "</div>" )
