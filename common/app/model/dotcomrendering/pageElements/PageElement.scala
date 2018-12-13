@@ -26,7 +26,7 @@ case class AudioBlockElement(assets: Seq[AudioAsset]) extends PageElement
 case class GuVideoBlockElement(assets: Seq[VideoAsset], imageMedia: ImageMedia, data: Map[String, String], role: Role) extends PageElement
 case class VideoBlockElement(data: Map[String, String], role: Role) extends PageElement
 case class EmbedBlockElement(html: String, safe: Option[Boolean], alt: Option[String], isMandatory: Boolean) extends PageElement
-case class SoundcloudBlockElement(html: String, track: Option[String], playlist: Option[String], isMandatory: Boolean) extends PageElement
+case class SoundcloudBlockElement(html: String, id: String, isTrack: Boolean, isMandatory: Boolean) extends PageElement
 case class ContentAtomBlockElement(atomId: String) extends PageElement
 case class InteractiveBlockElement(html: Option[String], role: Role, isMandatory: Option[Boolean]) extends PageElement
 case class CommentBlockElement(body: String, avatarURL: String, profileURL: String, profileName: String, permalink: String, dateTime: String) extends PageElement
@@ -221,13 +221,10 @@ object PageElement {
     doc.getElementsByTag("iframe").asScala.headOption.flatMap {
       iframe =>
         val src = iframe.attr("src")
-        val maybeTrack = AmpSoundcloud.getTrackIdFromUrl(src)
-        val maybePlaylist = AmpSoundcloud.getPlaylistIdFromUrl(src)
-        if (maybeTrack.isEmpty && maybePlaylist.isEmpty) {
-          None
-        }
-        else {
-          Some(SoundcloudBlockElement(html, maybeTrack, maybePlaylist, isMandatory))
+        (AmpSoundcloud.getTrackIdFromUrl(src), AmpSoundcloud.getPlaylistIdFromUrl(src)) match {
+          case (Some(track), _) => Some(SoundcloudBlockElement(html, track, isTrack = true, isMandatory))
+          case (_, Some(playlist)) => Some(SoundcloudBlockElement(html, playlist, isTrack = false, isMandatory))
+          case _ => None
         }
     }
   }
