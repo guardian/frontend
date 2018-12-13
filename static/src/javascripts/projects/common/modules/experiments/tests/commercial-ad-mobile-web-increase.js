@@ -3,7 +3,7 @@
 export const commercialAdMobileWebIncrease: ABTest = {
     id: 'CommercialAdMobileWebIncrease',
     start: '2018-11-16',
-    expiry: '2018-12-14',
+    expiry: '2018-12-20',
     author: 'Francesca Hammond',
     description: 'This test will increase ads on mobile web',
     audience: 0.1,
