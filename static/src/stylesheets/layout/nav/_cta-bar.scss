@@ -70,8 +70,8 @@
 }
 
 .cta-bar__subheading {
-    color: $brightness-100;
     @include fs-textSans(5);
+    color: $brightness-100;
     font-weight: 400;
     line-height: 1.2;
     margin-top: $gs-baseline / 4;
