@@ -26,7 +26,10 @@ import {
     getBannerGoogleDoc,
     googleDocEpicControl,
 } from 'common/modules/commercial/contributions-google-docs';
-import { isArticleWorthAnEpicImpression } from 'common/modules/commercial/epic/epic-exclusion-list';
+import {
+    isArticleWorthAnEpicImpression,
+    defaultExclusionRules
+} from 'common/modules/commercial/epic/epic-exclusion-rules';
 
 export type EpicTemplate = (Variant, AcquisitionsEpicTemplateCopy) => string;
 
@@ -86,7 +89,7 @@ const getTargets = (
 const isCompatibleWithEpic = (page: Object): boolean =>
     page.contentType === 'Article' &&
     !page.isMinuteArticle &&
-    isArticleWorthAnEpicImpression(page);
+    isArticleWorthAnEpicImpression(page, defaultExclusionRules);
 
 const shouldShowReaderRevenue = (
     showToContributorsAndSupporters: boolean = false
