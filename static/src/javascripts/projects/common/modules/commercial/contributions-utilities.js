@@ -84,7 +84,9 @@ const getTargets = (
 };
 
 const isCompatibleWithEpic = (page: Object): boolean =>
-    page.contentType === 'Article' && !page.isMinuteArticle && isArticleWorthAnEpicImpression(page);
+    page.contentType === 'Article' &&
+    !page.isMinuteArticle &&
+    isArticleWorthAnEpicImpression(page);
 
 const shouldShowReaderRevenue = (
     showToContributorsAndSupporters: boolean = false
