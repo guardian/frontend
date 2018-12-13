@@ -12,7 +12,6 @@ import {
     shouldIncludeImproveDigital,
     shouldIncludeOpenx,
     shouldIncludeOzone,
-    shouldIncludePangaea,
     shouldIncludeSonobi,
     shouldIncludeTrustX,
     shouldIncludeXaxis,
@@ -54,7 +53,6 @@ const resetConfig = () => {
     config.set('switches.prebidXaxis', true);
     config.set('switches.prebidAdYouLike', true);
     config.set('switches.prebidS2sozone', true);
-    config.set('switches.ozonePangaea', true);
     config.set('page.contentType', 'Article');
     config.set('page.section', 'Magic');
     config.set('page.edition', 'UK');
@@ -239,15 +237,6 @@ describe('Utils', () => {
         expect(shouldIncludeImproveDigital()).toBe(false);
         config.set('page.edition', 'US');
         expect(shouldIncludeImproveDigital()).toBe(false);
-    });
-
-    test('shouldIncludePangaea should return true if switch is on', () => {
-        expect(shouldIncludePangaea()).toBe(true);
-    });
-
-    test('shouldIncludePangaea should return false if switch is off', () => {
-        config.set('switches.ozonePangaea', false);
-        expect(shouldIncludePangaea()).toBe(false);
     });
 
     test('shouldIncludeXaxis should always return false on INT, AU and US editions', () => {

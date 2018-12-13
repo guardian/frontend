@@ -82,7 +82,6 @@ const resetConfig = () => {
     config.set('switches.prebidXaxis', true);
     config.set('switches.prebidAdYouLike', true);
     config.set('switches.prebidS2sozone', true);
-    config.set('switches.ozonePangaea', true);
     config.set('ophan', { pageViewId: 'pvid' });
     config.set('page.contentType', 'Article');
     config.set('page.section', 'Magic');
@@ -115,7 +114,7 @@ describe('getDummyServerSideBidders', () => {
         const bidderNames = getDummyServerSideBidders().map(
             bidder => bidder.name
         );
-        expect(bidderNames).toEqual(['openx', 'appnexus']);
+        expect(bidderNames).toEqual(['openx', 'appnexus', 'pangaea']);
     });
 
     test('should include methods in the response that generate the correct bid params', () => {
@@ -511,6 +510,7 @@ describe('bids', () => {
             'adyoulike',
             'openx',
             'appnexus',
+            'pangaea',
         ]);
     });
 

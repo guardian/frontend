@@ -113,9 +113,6 @@ export const shouldIncludeAppNexus = (): boolean =>
     ((config.get('switches.prebidAppnexusUkRow') && !isInUsRegion()) ||
         !!pbTestNameMap().and);
 
-export const shouldIncludePangaea = (): boolean =>
-    config.get('switches.ozonePangaea', false);
-
 export const shouldIncludeXaxis = (): boolean => {
     // 50% of UK page views
     const hasFirstLook =
