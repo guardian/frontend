@@ -127,16 +127,9 @@ final case class CircuitBreakingContentApiClient(
   private val circuitBreaker = new CircuitBreaker(
     scheduler = circuitBreakerActorSystem.scheduler,
     maxFailures = contentApi.circuitBreakerErrorThreshold,
-    callTimeout = contentApi.timeout,
+    callTimeout = contentApi.timeout + Duration.create(400, MILLISECONDS), // +400 to differentiate between circuit breaker and capi timeouts
     resetTimeout = contentApi.circuitBreakerResetTimeout
   )
-
-  val http: OkHttpClient = new OkHttpClient.Builder()
-    .connectTimeout(2, TimeUnit.SECONDS)
-    .readTimeout(2, TimeUnit.SECONDS)
-    .followRedirects(true)
-    .connectionPool(new ConnectionPool(10, 60, TimeUnit.SECONDS))
-    .build()
 
   circuitBreaker.onOpen(
     log.error(s"CAPI circuit breaker: reached error threshold (${contentApi.circuitBreakerErrorThreshold}). Breaker is OPEN!")
