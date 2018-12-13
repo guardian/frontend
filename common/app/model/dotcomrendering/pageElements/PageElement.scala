@@ -197,21 +197,18 @@ object PageElement {
       d <- element.audioTypeData
       html <- d.html
       mandatory = true
-      s = extractSoundcloud(html, mandatory)
     } yield {
-      s getOrElse AudioBlockElement(element.assets.map(AudioAsset.make))
+      extractSoundcloud(html, mandatory) getOrElse AudioBlockElement(element.assets.map(AudioAsset.make))
     }
   }
 
   private def extractEmbed(element: ApiBlockElement): Option[PageElement] = {
-      for {
+    for {
       d <- element.embedTypeData
       html <- d.html
       mandatory = d.isMandatory.getOrElse(false)
-      e = EmbedBlockElement(html, d.safeEmbedCode, d.alt, mandatory)
-      s = extractSoundcloud(html, mandatory)
     } yield {
-      s getOrElse e
+      extractSoundcloud(html, mandatory) getOrElse EmbedBlockElement(html, d.safeEmbedCode, d.alt, mandatory)
     }
   }
 
