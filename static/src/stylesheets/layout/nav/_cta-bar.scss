@@ -39,24 +39,27 @@
     }
 }
 
-.cta-bar__message {
-    color: $highlight-main;
+
+.cta-bar__text {
     display: block;
-    font-family: $f-serif-headline;
-    font-size: 20px;
-    font-weight: 800;
-    line-height: 1;
-    margin: ($gs-baseline / 4) 0 $gs-baseline;
+    margin: ($gs-baseline / 4) 0 9px;
 
     @include mq($until: tablet) {
         // These changes are only visible in the footer
         border-top: 1px solid $brand-pastel;
         padding-top: $gs-baseline / 4;
     }
+}
+
+.cta-bar__heading {
+    color: $highlight-main;
+    font-family: $f-serif-headline;
+    font-size: 20px;
+    font-weight: 800;
+    line-height: 1;
 
     @include mq(desktop) {
         font-size: 26px;
-        margin: ($gs-baseline / 4) 0 $gs-baseline;
     }
 
     body:not(.has-page-skin) & {
@@ -64,6 +67,14 @@
             font-size: 32px;
         }
     }
+}
+
+.cta-bar__subheading {
+    @include fs-textSans(5);
+    color: $brightness-100;
+    font-weight: 400;
+    line-height: 1.2;
+    margin-top: $gs-baseline / 4;
 }
 
 .cta-bar__cta {
@@ -123,5 +134,27 @@
         .inline-arrow-right {
             transform: translate(3px, -50%);
         }
+    }
+}
+
+.cta-bar__cta--hollow {
+    color: $highlight-main;
+    background-color: transparent;
+    border: 1px solid $brand-pastel;
+    padding: 6px 11px 0;
+
+    @include mq(mobileMedium) {
+        padding: 5px 32px 0 10px;
+    }
+
+    @include mq(tablet) {
+        height: 32px;
+        padding: 6px 34px 0 12px;
+    }
+
+    &:hover,
+    &:focus {
+        color: $highlight-main;
+        background-color: rgba($brightness-100, .08);
     }
 }
