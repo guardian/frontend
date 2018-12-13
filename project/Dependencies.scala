@@ -11,6 +11,7 @@ object Dependencies {
   val romeVersion = "1.0"
   val jerseyVersion = "1.19.4"
   val playJsonVersion = "2.6.3"
+  val playJsonExtensionsVersion = "0.10.0"
   val guBox = "com.gu" %% "box" %  "0.1.0"
   val akkaContrib = "com.typesafe.akka" %% "akka-contrib" % "2.5.6"
   val apacheCommonsMath3 = "org.apache.commons" % "commons-math3" % "3.6.1"
@@ -67,6 +68,7 @@ object Dependencies {
   val enumeratumPlayJson = "com.beachape" %% "enumeratum-play-json" % "1.5.12"
   val commercialShared = "com.gu" %% "commercial-shared" % "6.1.2"
   val playJson = "com.typesafe.play" %% "play-json" % playJsonVersion
+  val playJsonExtensions = "ai.x" %% "play-json-extensions" % playJsonExtensionsVersion
   val playJsonJoda = "com.typesafe.play" %% "play-json-joda" % playJsonVersion
   val playIteratees = "com.typesafe.play" %% "play-iteratees" % "2.6.1"
   val atomRenderer = "com.gu" %% "atom-renderer" % "0.14.6"
