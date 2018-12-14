@@ -103,9 +103,7 @@ object InlineStyles {
       Retry(3)(cssParser.parseStyleSheet(source, null, null)) { (exception, attemptNumber) =>
         Logger.error(s"Attempt $attemptNumber to parse stylesheet failed", exception)
       } match {
-        case Failure(_) => {
-          (inline, head :+ element.html)
-        }
+        case Failure(_) => (inline, head :+ element.html)
         case Success(sheet) =>
           val (styles, others) = seq(sheet.getCssRules).partition(isStyleRule)
           val (inlineStyles, headStyles) = styles.flatMap(CSSRule.fromW3).flatten.partition(_.canInline)
