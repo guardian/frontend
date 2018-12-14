@@ -13,19 +13,18 @@ object ContributionsBannerDeploy {
 }
 
 sealed trait ReaderRevenueRegion { val name: String }
-case object GB extends ReaderRevenueRegion { val name = "gb"}
-case object US extends ReaderRevenueRegion { val name = "us"}
-case object AU extends ReaderRevenueRegion { val name = "au"}
-case object ROW extends ReaderRevenueRegion { val name = "row"}
-
+case object UK extends ReaderRevenueRegion { val name = "united-kingdom"}
+case object US extends ReaderRevenueRegion { val name = "united-states"}
+case object AU extends ReaderRevenueRegion { val name = "australia"}
+case object ROW extends ReaderRevenueRegion { val name = "rest-of-world"}
 
 object ReaderRevenueRegion {
   def fromString(region: String): Option[ReaderRevenueRegion] = {
     region.toLowerCase() match {
-      case "gb" => Some(GB)
-      case "us" => Some(US)
-      case "au" => Some(AU)
-      case "row" => Some(ROW)
+      case "united-kingdom" => Some(UK)
+      case "united-states" => Some(US)
+      case "australia" => Some(AU)
+      case "rest-of-world" => Some(ROW)
       case _ => None
     }
   }
@@ -34,6 +33,6 @@ object ReaderRevenueRegion {
     contributionsBannerDeployLogKey + "-" + region.name + ".json"
   }
 
-  val allRegions: List[ReaderRevenueRegion] = List(GB, US, AU, ROW)
+  val allRegions: List[ReaderRevenueRegion] = List(UK, US, AU, ROW)
 }
 

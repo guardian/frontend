@@ -37,14 +37,19 @@ export type CtaUrls = {
     supportUrl: string,
 };
 
-export type ReaderRevenueRegion = 'gb' | 'us' | 'au' | 'row';
+export type ReaderRevenueRegion = 'united-kingdom' | 'united-states' | 'australia' | 'rest-of-world';
 
 const getReaderRevenueRegion = (geolocation: string): ReaderRevenueRegion => {
-    const location = geolocation.toLowerCase();
-    if (location === 'gb' || location === 'us' || location === 'au') {
-        return location;
+    switch (geolocation) {
+        case 'GB':
+            return 'united-kingdom';
+        case 'US':
+            return  'united-states';
+        case 'AU':
+            return 'australia';
+        default:
+            return 'rest-of-world';
     }
-    return 'row';
 };
 
 // How many times the user can see the Epic,
