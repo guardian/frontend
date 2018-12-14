@@ -278,13 +278,19 @@ const canShow = (): Promise<boolean> => {
         shouldShowReaderRevenue() &&
         userVariantCanShow()
     ) {
+        const oldGlobalTimestamp = userPrefs.get(
+            'engagementBannerLastClosedAt'
+        );
+
         const allEngagementBannerLastClosedAt = userPrefs.get(
             bannersLastClosedAtKey
         );
 
+        // as we swap over to regional banner deploys
+        // use global timestamp if no value set for a region
         const userLastClosedBannerAt = allEngagementBannerLastClosedAt
             ? allEngagementBannerLastClosedAt[region]
-            : false;
+            : oldGlobalTimestamp;
 
         if (!userLastClosedBannerAt) {
             // show the banner if we can't get a value for this

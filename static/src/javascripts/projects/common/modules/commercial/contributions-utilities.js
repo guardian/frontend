@@ -37,14 +37,18 @@ export type CtaUrls = {
     supportUrl: string,
 };
 
-export type ReaderRevenueRegion = 'united-kingdom' | 'united-states' | 'australia' | 'rest-of-world';
+export type ReaderRevenueRegion =
+    | 'united-kingdom'
+    | 'united-states'
+    | 'australia'
+    | 'rest-of-world';
 
 const getReaderRevenueRegion = (geolocation: string): ReaderRevenueRegion => {
     switch (geolocation) {
         case 'GB':
             return 'united-kingdom';
         case 'US':
-            return  'united-states';
+            return 'united-states';
         case 'AU':
             return 'australia';
         default:
