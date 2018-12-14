@@ -119,7 +119,7 @@ jest.mock('common/modules/commercial/contributions-utilities', () => ({
 }));
 jest.mock('lib/fetch-json', () => jest.fn());
 jest.mock('common/modules/user-prefs', () => ({
-    get: jest.fn(() => '2018-07-24T17:05:46+0000'),
+    get: jest.fn(() => ({ 'united-kingdom': '2018-07-24T17:05:46+0000' })),
 }));
 
 const FakeMessage: any = require('common/modules/ui/message').Message;
@@ -200,10 +200,24 @@ describe('Membership engagement banner', () => {
             });
         });
 
-        it('should return false if redeploy before last closed', () => {
+        it('should return false if new redeploy before last closed', () => {
+            // mock fetching old timestamp
+            fakeUserPrefs.mockReturnValueOnce('2018-07-26T17:05:46+0000');
+            // mock fetching new timestamp
             fakeUserPrefs.mockReturnValueOnce({
-                gb: '2018-07-26T17:05:46+0000',
+                'united-kingdom': '2018-07-26T17:05:46+0000',
             });
+
+            return membershipEngagementBanner.canShow().then(canShow => {
+                expect(canShow).toBe(false);
+            });
+        });
+
+        it('should return false if old redeploy before last closed', () => {
+            // mock fetching old timestamp
+            fakeUserPrefs.mockReturnValueOnce('2018-07-26T17:05:46+0000');
+            // mock fetching new timestamp
+            fakeUserPrefs.mockReturnValueOnce(null);
 
             return membershipEngagementBanner.canShow().then(canShow => {
                 expect(canShow).toBe(false);
