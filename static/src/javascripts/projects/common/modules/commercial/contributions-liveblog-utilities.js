@@ -16,51 +16,49 @@ type TimeData = {
     time: string,
 };
 
-const getLiveblogEntryTimeData = (el: Element): Promise<TimeData> =>
-    fastdom.read(() => {
-        const timeEl = el.querySelector('time');
-        const absoluteTimeEl = el.querySelector('.block-time__absolute');
+const getLiveblogEntryTimeData = (el: Element): ?TimeData => {
+    const timeEl = el.querySelector('time');
+    const absoluteTimeEl = el.querySelector('.block-time__absolute');
 
-        if (timeEl && absoluteTimeEl) {
-            const link = timeEl.parentNode;
-            const blockHref =
-                link instanceof HTMLAnchorElement ? link.href : '';
+    if (timeEl && absoluteTimeEl) {
+        const link = timeEl.parentNode;
+        const blockHref =
+            link instanceof HTMLAnchorElement ? link.href : '';
 
-            return {
-                datetime: timeEl.getAttribute('datetime'),
-                title: timeEl.getAttribute('title'),
-                date: timeEl.innerHTML,
-                time: absoluteTimeEl.innerHTML,
-                blockHref,
-            };
-        }
-    });
+        return {
+            datetime: timeEl.getAttribute('datetime') || '',
+            title: timeEl.getAttribute('title') || '',
+            date: timeEl.innerHTML,
+            time: absoluteTimeEl.innerHTML,
+            blockHref,
+        };
+    }
+};
 
-const getBlocksToInsertEpicAfter = (): Promise<Array<HTMLElement>> =>
-    fastdom.read(() => {
-        const blocks = document.getElementsByClassName('block');
-        const blocksToInsertManualEpicAfter = document.getElementsByClassName(
-            INSERT_EPIC_AFTER_CLASS
-        );
-        const epicsAlreadyOnPage = document.getElementsByClassName('is-epic');
+const getBlocksToInsertEpicAfter = (): Array<HTMLElement> => {
+    const blocks = document.getElementsByClassName('block');
+    const blocksToInsertManualEpicAfter = document.getElementsByClassName(
+        INSERT_EPIC_AFTER_CLASS
+    );
+    const epicsAlreadyOnPage = document.getElementsByClassName('is-epic');
 
-        const isLiveblogLongEnoughYet = blocks.length > 4;
+    const isLiveblogLongEnoughYet = blocks.length > 4;
 
-        if (
-            blocksToInsertManualEpicAfter.length ||
-            epicsAlreadyOnPage.length ||
-            !isLiveblogLongEnoughYet
-        ) {
-            return [...blocksToInsertManualEpicAfter];
-        }
+    if (
+        blocksToInsertManualEpicAfter.length ||
+        epicsAlreadyOnPage.length ||
+        !isLiveblogLongEnoughYet
+    ) {
+        return [...blocksToInsertManualEpicAfter];
+    }
 
-        const autoBlockNum = Math.floor(Math.random() * 3);
-        const blockToInsertAutoEpicAfter = blocks[autoBlockNum];
+    const autoBlockNum = Math.floor(Math.random() * 3);
+    const blockToInsertAutoEpicAfter = blocks[autoBlockNum];
 
-        return [...blocksToInsertManualEpicAfter].concat(
-            blockToInsertAutoEpicAfter
-        );
-    });
+    return [...blocksToInsertManualEpicAfter].concat(
+        blockToInsertAutoEpicAfter
+    );
+};
 
 const setEpicLiveblogEntryTimeData = (
     el: Element,
@@ -94,21 +92,26 @@ const setupViewTracking = (el: HTMLElement, test: EpicABTest): void => {
     });
 };
 
-const addEpicToBlocks = (epicHtml: string, test: EpicABTest): Promise<void> =>
-    getBlocksToInsertEpicAfter().then(blocksToInsertEpicAfter => {
-        blocksToInsertEpicAfter.forEach(el => {
-            getLiveblogEntryTimeData(el).then((timeData: TimeData) => {
-                fastdom.write(() => {
-                    const $epic = $.create(epicHtml);
-                    $epic.insertAfter(el);
-                    mediator.emit(test.insertEvent);
-                    $(el).removeClass(INSERT_EPIC_AFTER_CLASS);
-                    setEpicLiveblogEntryTimeData($epic[0], timeData);
-                    setupViewTracking(el, test);
-                });
-            });
+const addEpicToBlocks = (epicHtml: string, test: EpicABTest): Promise<void> => {
+    const elementsWithTimeData = getBlocksToInsertEpicAfter().map(el =>
+        [el, getLiveblogEntryTimeData(el)]
+    );
+
+    return fastdom.write(() => {
+        elementsWithTimeData.forEach(([el, timeData]) => {
+            if (!timeData) {
+                return;
+            }
+
+            const $epic = $.create(epicHtml);
+            $epic.insertAfter(el);
+            mediator.emit(test.insertEvent);
+            $(el).removeClass(INSERT_EPIC_AFTER_CLASS);
+            setEpicLiveblogEntryTimeData($epic[0], timeData);
+            setupViewTracking(el, test);
         });
-    });
+    })
+};
 
 export const setupEpicInLiveblog = (
     epicHtml: string,
