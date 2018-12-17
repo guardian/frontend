@@ -9,6 +9,7 @@ import { isUserLoggedIn } from 'common/modules/identity/api';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { createSlots } from 'commercial/modules/dfp/create-slots';
 import { getAdvertById } from 'commercial/modules/dfp/get-advert-by-id';
+import { refreshAdvert } from 'commercial/modules/dfp/load-advert.js';
 import type bonzo from 'bonzo';
 
 const createCommentSlots = (
@@ -54,10 +55,8 @@ const insertCommentAd = (
 
 const refreshCommentAd = () => {
     const commentAdvert = getAdvertById('dfp-ad--comments');
-    if (window && window.googletag && commentAdvert) {
-        window.googletag.cmd.push(() => {
-            window.googletag.pubads().refresh([commentAdvert.slot]);
-        });
+    if (commentAdvert) {
+        refreshAdvert(commentAdvert);
     }
 };
 
@@ -83,7 +82,7 @@ export const initCommentAdverts = (): ?boolean => {
                         mainColHeight >= 800 ||
                         (isLoggedIn && mainColHeight >= 600)
                     ) {
-                        mediator.once(
+                        mediator.on(
                             'discussion:comments:get-more-replies',
                             () => {
                                 refreshCommentAd();
@@ -95,7 +94,7 @@ export const initCommentAdverts = (): ?boolean => {
                             true
                         );
                     } else if (isLoggedIn) {
-                        mediator.once(
+                        mediator.on(
                             'discussion:comments:get-more-replies',
                             () => {
                                 refreshCommentAd();

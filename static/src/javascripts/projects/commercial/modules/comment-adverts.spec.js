@@ -5,6 +5,8 @@ import { addSlot } from 'commercial/modules/dfp/add-slot';
 import { isUserLoggedIn as isUserLoggedIn_ } from 'common/modules/identity/api';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { initCommentAdverts, _ } from 'commercial/modules/comment-adverts';
+import { refreshAdvert } from 'commercial/modules/dfp/load-advert';
+import { getAdvertById } from 'commercial/modules/dfp/get-advert-by-id';
 
 // Workaround to fix issue where dataset is missing from jsdom, and solve the
 // 'cannot set property [...] which has only a getter' TypeError
@@ -17,6 +19,14 @@ jest.mock('lib/config', () => ({ page: {}, get: () => false }));
 
 jest.mock('commercial/modules/dfp/add-slot', () => ({
     addSlot: jest.fn(),
+}));
+
+jest.mock('commercial/modules/dfp/load-advert', () => ({
+    refreshAdvert: jest.fn(),
+}));
+
+jest.mock('commercial/modules/dfp/get-advert-by-id', () => ({
+    getAdvertById: jest.fn(),
 }));
 
 jest.mock('common/modules/commercial/commercial-features', () => ({
