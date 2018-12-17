@@ -208,10 +208,10 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-acquisitions-banner-us-eoy",
+    "ab-acquisitions-banner-us-eoy-final",
     "Serves an banner with ticker and copy for US end of year campaign",
     owners = Seq(Owner.withGithub("joelochlann")),
-    safeState = Off,
+    safeState = On,
     sellByDate = new LocalDate(2019, 6, 6),
     exposeClientSide = true
   )
