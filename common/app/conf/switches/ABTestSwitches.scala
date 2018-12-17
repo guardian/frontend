@@ -238,10 +238,10 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-acquisitions-epic-us-top-ticker-round-six",
+    "ab-acquisitions-epic-us-top-ticker-final",
     "Tests an epic with top ticker in US",
     owners = Seq(Owner.withGithub("joelochlann")),
-    safeState = Off,
+    safeState = On,
     sellByDate = new LocalDate(2019, 6, 6),
     exposeClientSide = true
   )
