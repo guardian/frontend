@@ -22,8 +22,7 @@ const getLiveblogEntryTimeData = (el: Element): ?TimeData => {
 
     if (timeEl && absoluteTimeEl) {
         const link = timeEl.parentNode;
-        const blockHref =
-            link instanceof HTMLAnchorElement ? link.href : '';
+        const blockHref = link instanceof HTMLAnchorElement ? link.href : '';
 
         return {
             datetime: timeEl.getAttribute('datetime') || '',
@@ -93,9 +92,10 @@ const setupViewTracking = (el: HTMLElement, test: EpicABTest): void => {
 };
 
 const addEpicToBlocks = (epicHtml: string, test: EpicABTest): Promise<void> => {
-    const elementsWithTimeData = getBlocksToInsertEpicAfter().map(el =>
-        [el, getLiveblogEntryTimeData(el)]
-    );
+    const elementsWithTimeData = getBlocksToInsertEpicAfter().map(el => [
+        el,
+        getLiveblogEntryTimeData(el),
+    ]);
 
     return fastdom.write(() => {
         elementsWithTimeData.forEach(([el, timeData]) => {
@@ -110,7 +110,7 @@ const addEpicToBlocks = (epicHtml: string, test: EpicABTest): Promise<void> => {
             setEpicLiveblogEntryTimeData($epic[0], timeData);
             setupViewTracking(el, test);
         });
-    })
+    });
 };
 
 export const setupEpicInLiveblog = (
