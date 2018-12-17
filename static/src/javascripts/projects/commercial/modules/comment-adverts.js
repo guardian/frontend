@@ -8,6 +8,8 @@ import { adSizes } from 'commercial/modules/ad-sizes';
 import { isUserLoggedIn } from 'common/modules/identity/api';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { createSlots } from 'commercial/modules/dfp/create-slots';
+import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
+import { getAdvertById } from 'commercial/modules/dfp/get-advert-by-id';
 import type bonzo from 'bonzo';
 
 const createCommentSlots = (
@@ -76,8 +78,23 @@ export const initCommentAdverts = (): ?boolean => {
                         mediator.once(
                             'discussion:comments:get-more-replies',
                             () => {
-                                window.googletag.pubads().refresh();
-                            });
+                                const commentAdvert = getAdvertById(
+                                    'dfp-ad--comments'
+                                );
+
+                                if (
+                                    window &&
+                                    window.googletag &&
+                                    commentAdvert
+                                ) {
+                                    window.googletag.cmd.push(() => {
+                                        window.googletag
+                                            .pubads()
+                                            .refresh([commentAdvert.slot]);
+                                    });
+                                }
+                            }
+                        );
                         insertCommentAd(
                             $commentMainColumn,
                             $adSlotContainer,
@@ -87,8 +104,23 @@ export const initCommentAdverts = (): ?boolean => {
                         mediator.once(
                             'discussion:comments:get-more-replies',
                             () => {
-                                window.googletag.pubads().refresh();
-                            });
+                                const commentAdvert = getAdvertById(
+                                    'dfp-ad--comments'
+                                );
+
+                                if (
+                                    window &&
+                                    window.googletag &&
+                                    commentAdvert
+                                ) {
+                                    window.googletag.cmd.push(() => {
+                                        window.googletag
+                                            .pubads()
+                                            .refresh([commentAdvert.slot]);
+                                    });
+                                }
+                            }
+                        );
                         insertCommentAd(
                             $commentMainColumn,
                             $adSlotContainer,
