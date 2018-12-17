@@ -73,12 +73,22 @@ export const initCommentAdverts = (): ?boolean => {
                         mainColHeight >= 800 ||
                         (isLoggedIn && mainColHeight >= 600)
                     ) {
+                        mediator.once(
+                            'discussion:comments:get-more-replies',
+                            () => {
+                                window.googletag.pubads().refresh();
+                            });
                         insertCommentAd(
                             $commentMainColumn,
                             $adSlotContainer,
                             true
                         );
                     } else if (isLoggedIn) {
+                        mediator.once(
+                            'discussion:comments:get-more-replies',
+                            () => {
+                                window.googletag.pubads().refresh();
+                            });
                         insertCommentAd(
                             $commentMainColumn,
                             $adSlotContainer,
