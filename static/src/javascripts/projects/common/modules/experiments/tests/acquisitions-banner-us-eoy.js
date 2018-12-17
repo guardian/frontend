@@ -4,7 +4,7 @@ import { getSync as geolocationGetSync } from 'lib/geolocation';
 
 const componentType: OphanComponentType = 'ACQUISITIONS_ENGAGEMENT_BANNER';
 
-const abTestName = 'AcquisitionsBannerUsEoy';
+const abTestName = 'AcquisitionsBannerUsEoyFinal';
 
 const criticalTimesParams = {
     messageText:
