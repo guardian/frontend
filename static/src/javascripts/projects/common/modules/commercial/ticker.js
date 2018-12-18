@@ -79,15 +79,12 @@ const fetchDataAndAnimate = (parentElementSelector: string) => {
     if (dataSuccessfullyFetched()) {
         animate(parentElementSelector);
     } else {
-        fetchJSON(
-            'https://support.theguardian.com/ticker.json',
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                mode: 'cors',
-            }
-        ).then(data => {
+        fetchJSON('https://support.theguardian.com/ticker.json', {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            mode: 'cors',
+        }).then(data => {
             total = parseInt(data.total, 10);
             goal = parseInt(data.goal, 10);
 
