@@ -39,7 +39,7 @@ jest.mock('common/modules/identity/api', () => ({
     isUserLoggedIn: jest.fn(),
 }));
 
-const { createCommentSlots } = _;
+const { createCommentSlots, refreshCommentAd } = _;
 
 const commercialFeaturesMock: any = commercialFeatures;
 const isUserLoggedIn: any = isUserLoggedIn_;
@@ -91,6 +91,7 @@ describe('createCommentSlots', () => {
 
 describe('initCommentAdverts', () => {
     beforeEach(() => {
+        jest.resetAllMocks();
         isUserLoggedIn.mockReturnValue(false);
         commercialFeaturesMock.commentAdverts = true;
         if (document.body) {
@@ -176,6 +177,37 @@ describe('initCommentAdverts', () => {
         mediator.emit('modules:comments:renderComments:rendered');
         mediator.once('page:defaultcommercial:comments', () => {
             const adSlot: HTMLDivElement = (document.querySelector(
+                '.js-ad-slot'
+            ): any);
+            expect(addSlot).toHaveBeenCalledTimes(1);
+            expect(adSlot.getAttribute('data-desktop')).toBe(
+                '1,1|2,2|300,250|620,1|620,350|300,274|fluid|300,600'
+            );
+            done();
+        });
+    });
+
+    it('should refresh comments slot when more comments is clicked', done => {
+        mockHeight(800);
+        initCommentAdverts();
+        getAdvertById.mockReturnValue(true);
+        mediator.emit('modules:comments:renderComments:rendered');
+        // mediator.emit('discussion:comments:get-more-replies');
+        mediator.once('page:defaultcommercial:comments', () => {
+            expect(getAdvertById).toHaveBeenCalledTimes(1);
+            expect(refreshAdvert).toHaveBeenCalledTimes(1);
+            done();
+        });
+    });
+
+    it('should upgrade an MPU to a DMPU when more comments is clicked', done => {
+        mockHeight(400);
+        isUserLoggedIn.mockReturnValue(true);
+        initCommentAdverts();
+        mediator.emit('modules:comments:renderComments:rendered');
+        mediator.emit('discussion:comments:get-more-replies');
+        mediator.once('page:defaultcommercial:comments', () => {
+            const adSlot: HTMLElement = (document.querySelector(
                 '.js-ad-slot'
             ): any);
             expect(addSlot).toHaveBeenCalledTimes(1);

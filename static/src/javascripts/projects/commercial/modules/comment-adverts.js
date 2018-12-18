@@ -122,4 +122,4 @@ export const initCommentAdverts = (): ?boolean => {
     );
 };
 
-export const _ = { createCommentSlots, insertCommentAd };
+export const _ = { createCommentSlots, insertCommentAd, refreshCommentAd };
