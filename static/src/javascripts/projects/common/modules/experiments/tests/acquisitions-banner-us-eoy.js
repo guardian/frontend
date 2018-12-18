@@ -4,16 +4,7 @@ import { getSync as geolocationGetSync } from 'lib/geolocation';
 
 const componentType: OphanComponentType = 'ACQUISITIONS_ENGAGEMENT_BANNER';
 
-const abTestName = 'AcquisitionsBannerUsEoy';
-
-const controlParams = {
-    messageText:
-        '<strong>The Guardian is editorially independent – our journalism is free from the influence of billionaire owners or politicians. No one edits our editor. No one steers our opinion.</strong> And unlike many others, we haven’t put up a paywall as we want to keep our journalism open and accessible. But the revenue we get from advertising is falling, so we increasingly need our readers to help fund us. By contributing to The Guardian, you are helping sustain the long term future of independent, investigative journalism and ensuring it remains available to all.',
-    buttonCaption: 'Support The Guardian',
-    ctaText:
-        ' <span class="engagement-banner__highlight">Support The Guardian from as little as $1 and help us reach our end of year goal.</span>',
-    linkUrl: 'https://support.theguardian.com/contribute',
-};
+const abTestName = 'AcquisitionsBannerUsEoyFinal';
 
 const criticalTimesParams = {
     messageText:
@@ -24,6 +15,8 @@ const criticalTimesParams = {
     linkUrl: 'https://support.theguardian.com/contribute',
 };
 
+// This is no longer really a test,
+// but it's the simplest way of doing region-specific banner copy.
 export const AcquisitionsBannerUsEoy = {
     id: abTestName,
     campaignId: abTestName,
@@ -41,15 +34,6 @@ export const AcquisitionsBannerUsEoy = {
     canRun: () => geolocationGetSync() === 'US',
 
     variants: makeBannerABTestVariants([
-        {
-            id: 'control_copy_with_ticker',
-            products: [],
-            engagementBannerParams: () =>
-                Promise.resolve({
-                    ...controlParams,
-                    hasTicker: true,
-                }),
-        },
         {
             id: 'critical_times_with_ticker',
             products: [],

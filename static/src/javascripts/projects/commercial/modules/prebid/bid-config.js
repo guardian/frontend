@@ -39,7 +39,6 @@ import {
     shouldIncludeImproveDigital,
     shouldIncludeOpenx,
     shouldIncludeOzone,
-    shouldIncludePangaea,
     shouldIncludeSonobi,
     shouldIncludeTrustX,
     shouldIncludeXaxis,
@@ -507,11 +506,7 @@ const getDummyServerSideBidders = (): Array<PrebidBidder> => {
     ) {
         dummyServerSideBidders.push(openxServerSideBidder);
         dummyServerSideBidders.push(appnexusServerSideBidder);
-
-        // Remove this switch after initial pangaea release
-        if (inPbTestOr(shouldIncludePangaea())) {
-            dummyServerSideBidders.push(pangaeaServerSideBidder);
-        }
+        dummyServerSideBidders.push(pangaeaServerSideBidder);
     }
 
     return dummyServerSideBidders;

@@ -6,6 +6,8 @@ import layout.ContentWidths.BodyMedia
 import model.{AudioAsset, ImageAsset, ImageMedia, VideoAsset}
 import play.api.libs.json._
 import org.jsoup.Jsoup
+import views.support.cleaner.AmpSoundcloud
+
 import scala.collection.JavaConverters._
 import views.support.{ImageProfile, ImageUrlSigner, ImgSrc, Item120, Item1200, Item140, Item300, Item640, Item700, SrcSet}
 
@@ -23,7 +25,8 @@ case class ImageSource(weighting: String, srcSet: Seq[SrcSet])
 case class AudioBlockElement(assets: Seq[AudioAsset]) extends PageElement
 case class GuVideoBlockElement(assets: Seq[VideoAsset], imageMedia: ImageMedia, data: Map[String, String], role: Role) extends PageElement
 case class VideoBlockElement(data: Map[String, String], role: Role) extends PageElement
-case class EmbedBlockElement(html: Option[String], safe: Option[Boolean], alt: Option[String], isMandatory: Option[Boolean]) extends PageElement
+case class EmbedBlockElement(html: String, safe: Option[Boolean], alt: Option[String], isMandatory: Boolean) extends PageElement
+case class SoundcloudBlockElement(html: String, id: String, isTrack: Boolean, isMandatory: Boolean) extends PageElement
 case class ContentAtomBlockElement(atomId: String) extends PageElement
 case class InteractiveBlockElement(html: Option[String], role: Role, isMandatory: Option[Boolean]) extends PageElement
 case class CommentBlockElement(body: String, avatarURL: String, profileURL: String, profileName: String, permalink: String, dateTime: String) extends PageElement
@@ -129,7 +132,7 @@ object PageElement {
           imageSources
         ))
 
-      case Audio => List(AudioBlockElement(element.assets.map(AudioAsset.make)))
+      case Audio => extractAudio(element).toList
 
       case Video =>
         if (element.assets.nonEmpty) {
@@ -170,7 +173,7 @@ object PageElement {
         )
       }).toList
 
-      case Embed => element.embedTypeData.map(d => EmbedBlockElement(d.html, d.safeEmbedCode, d.alt, d.isMandatory)).toList
+      case Embed => extractEmbed(element).toList
 
       case Contentatom => element.contentAtomTypeData.map(d => ContentAtomBlockElement(d.atomId)).toList
 
@@ -186,6 +189,40 @@ object PageElement {
       case Form => List(FormBlockElement(None))
       case EnumUnknownElementType(f) => List(UnknownBlockElement(None))
 
+    }
+  }
+
+  private def extractAudio(element: ApiBlockElement) = {
+    for {
+      d <- element.audioTypeData
+      html <- d.html
+      mandatory = true
+    } yield {
+      extractSoundcloud(html, mandatory) getOrElse AudioBlockElement(element.assets.map(AudioAsset.make))
+    }
+  }
+
+  private def extractEmbed(element: ApiBlockElement): Option[PageElement] = {
+    for {
+      d <- element.embedTypeData
+      html <- d.html
+      mandatory = d.isMandatory.getOrElse(false)
+    } yield {
+      extractSoundcloud(html, mandatory) getOrElse EmbedBlockElement(html, d.safeEmbedCode, d.alt, mandatory)
+    }
+  }
+
+  private def extractSoundcloud(html: String, isMandatory: Boolean): Option[SoundcloudBlockElement] = {
+
+    val doc = Jsoup.parseBodyFragment(html)
+    doc.getElementsByTag("iframe").asScala.headOption.flatMap {
+      iframe =>
+        val src = iframe.attr("src")
+        (AmpSoundcloud.getTrackIdFromUrl(src), AmpSoundcloud.getPlaylistIdFromUrl(src)) match {
+          case (Some(track), _) => Some(SoundcloudBlockElement(html, track, isTrack = true, isMandatory))
+          case (_, Some(playlist)) => Some(SoundcloudBlockElement(html, playlist, isTrack = false, isMandatory))
+          case _ => None
+        }
     }
   }
 
@@ -215,6 +252,7 @@ object PageElement {
   implicit val VideoBlockElementWrites: Writes[VideoBlockElement] = Json.writes[VideoBlockElement]
   implicit val TweetBlockElementWrites: Writes[TweetBlockElement] = Json.writes[TweetBlockElement]
   implicit val EmbedBlockElementWrites: Writes[EmbedBlockElement] = Json.writes[EmbedBlockElement]
+  implicit val SoundCloudBlockElementWrites: Writes[SoundcloudBlockElement] = Json.writes[SoundcloudBlockElement]
   implicit val ContentAtomBlockElementWrites: Writes[ContentAtomBlockElement] = Json.writes[ContentAtomBlockElement]
   implicit val PullquoteBlockElementWrites: Writes[PullquoteBlockElement] = Json.writes[PullquoteBlockElement]
   implicit val InteractiveBlockElementWrites: Writes[InteractiveBlockElement] = Json.writes[InteractiveBlockElement]

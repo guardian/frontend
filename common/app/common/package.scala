@@ -126,7 +126,6 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
 
   def renderEmail(html: Html, page: model.Page)(implicit request: RequestHeader, context: ApplicationContext): Result = {
     val htmlWithInlineStyles = if (InlineEmailStyles.isSwitchedOn) InlineStyles(html) else html
-
     if (request.isEmailJson) {
       val htmlWithUtmLinks = BrazeEmailFormatter(htmlWithInlineStyles)
       Cached(RecentlyUpdated)(RevalidatableResult.Ok(JsObject(Map("body" -> JsString(htmlWithUtmLinks.toString)))))
