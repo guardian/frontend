@@ -24,20 +24,15 @@ const init = (start: () => void): Promise<void> => {
     if (!shouldLoadLotame) {
         return Promise.resolve();
     }
-    return new Promise(resolve => {
-        loadScript('//ad.crwdcntrl.net/5/c=13271/pe=y/var=OzoneLotameData')
-            .then(() => {
-                setTimeout(resolve, 1000);
-            })
-            .then(() => {
-                if ('LOTCC' in window && 'bcp' in window.LOTCC) {
-                    Promise.resolve(window.LOTCC.bcp());
-                } else {
-                    return Promise.reject(Error('No LOTCC in window'));
-                }
-            })
-            .catch(errorHandler);
-    });
+    return loadScript('//ad.crwdcntrl.net/5/c=13271/pe=y/var=OzoneLotameData')
+        .then(() => {
+            if ('LOTCC' in window && 'bcp' in window.LOTCC) {
+                Promise.resolve(window.LOTCC.bcp());
+            } else {
+                return Promise.reject(Error('No LOTCC in window'));
+            }
+        })
+        .catch(errorHandler);
 };
 
 export { init };
