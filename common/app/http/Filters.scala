@@ -128,9 +128,17 @@ object Filters {
     new Gzipper,
     new BackendHeaderFilter,
     new SurrogateKeyFilter,
-    new AmpFilter,
+    new AmpFilter
+  )
+
+  def preload(
+     implicit materializer: Materializer,
+     applicationContext: ApplicationContext,
+     executionContext: ExecutionContext
+   ): List[EssentialFilter] = List(
     new H2PreloadFilter
   )
+
 }
 
 class CommonFilters(
@@ -139,6 +147,14 @@ class CommonFilters(
   executionContext: ExecutionContext
 ) extends HttpFilters {
   val filters = Filters.common
+}
+
+class PreloadFilters(
+   implicit mat: Materializer,
+   applicationContext: ApplicationContext,
+   executionContext: ExecutionContext
+ ) extends HttpFilters {
+  val filters = Filters.preload
 }
 
 class CommonGzipFilter @Inject() (

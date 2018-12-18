@@ -16,8 +16,10 @@ import play.api.Logger
 import play.api.libs.json.{JsObject, JsString}
 import play.api.mvc.{RequestHeader, Result}
 import play.twirl.api.Html
+import model.ApplicationContext
+import http.ResultWithPreload
 
-object `package` extends implicits.Strings with implicits.Requests with play.api.mvc.Results {
+object `package` extends implicits.Strings with implicits.Requests with play.api.mvc.Results with ResultWithPreload {
 
   def isCommercialExpiry(error: ErrorResponse): Boolean = {
     error.message == "The requested resource has expired for commercial reason."
@@ -108,8 +110,10 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
         RevalidatableResult.Ok(htmlResponse())
     }
 
-  def renderHtml(html: Html, page: model.Page)(implicit request: RequestHeader, context: ApplicationContext): Result = Cached(page){
-    RevalidatableResult.Ok(html)
+  def renderHtml(html: Html, page: model.Page)(implicit request: RequestHeader, context: ApplicationContext): Result = {
+    Cached(page)(RevalidatableResult.Ok(html)).withPreload(
+      Preload.config(request).getOrElse(context.applicationIdentity, Seq.empty)
+    )(context, request)
   }
 
   def renderJson(json: List[(String, Any)], page: model.Page)(implicit request: RequestHeader, context: ApplicationContext): Result = Cached(page){
