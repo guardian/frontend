@@ -88,16 +88,15 @@ const fetchDataAndAnimate = (parentElementSelector: string) => {
                 },
                 mode: 'cors',
             }
-        )
-            .then(data => {
-                showCount = data.sheets.Sheet1[0].showCount === 'TRUE';
-                total = parseInt(data.sheets.Sheet1[0].total, 10);
-                goal = parseInt(data.sheets.Sheet1[0].goal, 10);
+        ).then(data => {
+            showCount = data.sheets.Sheet1[0].showCount === 'TRUE';
+            total = parseInt(data.sheets.Sheet1[0].total, 10);
+            goal = parseInt(data.sheets.Sheet1[0].goal, 10);
 
-                if (dataSuccessfullyFetched()) {
-                    animate(parentElementSelector);
-                }
-            });
+            if (dataSuccessfullyFetched()) {
+                animate(parentElementSelector);
+            }
+        });
     }
 };
 
