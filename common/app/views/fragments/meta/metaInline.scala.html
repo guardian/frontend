@@ -3,7 +3,6 @@
 @import common.{LinkTo, Localisation}
 @import model.Badges.badgeFor
 @import views.support.RenderClasses
-@import experiments.{ActiveExperiments, OldAudioPage}
 
 <div class="@RenderClasses(Map(
         "content__labels--gallery" -> item.content.isGallery,
@@ -12,7 +11,7 @@
         "content__labels--column" -> item.content.isColumn,
         "content__labels--immersive" -> (item.content.isImmersive && item.content.blogOrSeriesTag.isDefined || badgeFor(item).isDefined),
         "content__labels--panel" -> (item.content.isImmersive && item.content.blogOrSeriesTag.isDefined || item.content.isGallery),
-        "content__labels--flagship"  -> (item.tags.isAudio && !ActiveExperiments.isParticipating(OldAudioPage))
+        "content__labels--flagship"  -> item.tags.isAudio
     ), "content__labels")
 ">
     @if(!amp) {
