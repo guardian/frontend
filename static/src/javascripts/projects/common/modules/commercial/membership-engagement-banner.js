@@ -38,7 +38,7 @@ type BannerDeployLog = {
 const messageCode = 'engagement-banner';
 const minArticlesBeforeShowingBanner = 3;
 
-const bannersLastClosedAtKey = 'engagementBannersLastClosedAt';
+const bannerLastClosedAtKey = 'engagementBannerLastClosedAt';
 
 const getTimestampOfLastBannerDeployForLocation = (
     region: ReaderRevenueRegion
@@ -165,18 +165,18 @@ const hideBanner = (banner: Message) => {
 
     // Store timestamp for this geolocation banner in localStorage
     const allEngagementBannerLastClosedAtTimestamps =
-        userPrefs.get(bannersLastClosedAtKey) || {};
+        userPrefs.get(bannerLastClosedAtKey) || {};
     allEngagementBannerLastClosedAtTimestamps[
         region
     ] = new Date().toISOString();
     userPrefs.set(
-        bannersLastClosedAtKey,
+        bannerLastClosedAtKey,
         allEngagementBannerLastClosedAtTimestamps
     );
 };
 
 const clearBannerHistory = (): void => {
-    userPrefs.remove(bannersLastClosedAtKey);
+    userPrefs.remove(bannerLastClosedAtKey);
 };
 
 const showBanner = (params: EngagementBannerParams): void => {
@@ -278,19 +278,9 @@ const canShow = (): Promise<boolean> => {
         shouldShowReaderRevenue() &&
         userVariantCanShow()
     ) {
-        const oldGlobalTimestamp = userPrefs.get(
-            'engagementBannerLastClosedAt'
+        const userLastClosedBannerAt = userPrefs.get(
+            bannerLastClosedAtKey
         );
-
-        const allEngagementBannerLastClosedAt = userPrefs.get(
-            bannersLastClosedAtKey
-        );
-
-        // as we swap over to regional banner deploys
-        // use global timestamp if no value set for a region
-        const userLastClosedBannerAt = allEngagementBannerLastClosedAt
-            ? allEngagementBannerLastClosedAt[region]
-            : oldGlobalTimestamp;
 
         if (!userLastClosedBannerAt) {
             // show the banner if we can't get a value for this
