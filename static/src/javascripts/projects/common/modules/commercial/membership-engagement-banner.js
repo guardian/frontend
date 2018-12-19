@@ -38,7 +38,7 @@ type BannerDeployLog = {
 const messageCode = 'engagement-banner';
 const minArticlesBeforeShowingBanner = 3;
 
-const bannerLastClosedAtKey = 'engagementBannerLastClosedAt';
+const lastClosedAtKey = 'engagementBannerLastClosedAt';
 
 const getTimestampOfLastBannerDeployForLocation = (
     region: ReaderRevenueRegion
@@ -160,23 +160,13 @@ const selectSequentiallyFrom = (array: Array<string>): string =>
 
 const hideBanner = (banner: Message) => {
     banner.hide();
-    const geolocation = geolocationGetSync();
-    const region: ReaderRevenueRegion = getReaderRevenueRegion(geolocation);
 
-    // Store timestamp for this geolocation banner in localStorage
-    const allEngagementBannerLastClosedAtTimestamps =
-        userPrefs.get(bannerLastClosedAtKey) || {};
-    allEngagementBannerLastClosedAtTimestamps[
-        region
-    ] = new Date().toISOString();
-    userPrefs.set(
-        bannerLastClosedAtKey,
-        allEngagementBannerLastClosedAtTimestamps
-    );
+    // Store timestamp in localStorage
+    userPrefs.set(lastClosedAtKey, new Date().toISOString());
 };
 
 const clearBannerHistory = (): void => {
-    userPrefs.remove(bannerLastClosedAtKey);
+    userPrefs.remove(lastClosedAtKey);
 };
 
 const showBanner = (params: EngagementBannerParams): void => {
@@ -278,7 +268,7 @@ const canShow = (): Promise<boolean> => {
         shouldShowReaderRevenue() &&
         userVariantCanShow()
     ) {
-        const userLastClosedBannerAt = userPrefs.get(bannerLastClosedAtKey);
+        const userLastClosedBannerAt = userPrefs.get(lastClosedAtKey);
 
         if (!userLastClosedBannerAt) {
             // show the banner if we can't get a value for this
