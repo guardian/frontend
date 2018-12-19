@@ -278,9 +278,7 @@ const canShow = (): Promise<boolean> => {
         shouldShowReaderRevenue() &&
         userVariantCanShow()
     ) {
-        const userLastClosedBannerAt = userPrefs.get(
-            bannerLastClosedAtKey
-        );
+        const userLastClosedBannerAt = userPrefs.get(bannerLastClosedAtKey);
 
         if (!userLastClosedBannerAt) {
             // show the banner if we can't get a value for this
