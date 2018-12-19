@@ -248,10 +248,6 @@ class GuardianConfiguration extends Logging {
     lazy val orielCacheTimeInMinutes: Int = if (environment.isProd) 60 else 5
   }
 
-  object lotame {
-    val lotameScriptUrl: String = "//tags.crwdcntrl.net/c/12666/cc.js"
-  }
-
   object affiliatelinks {
     lazy val skimlinksId = configuration.getMandatoryStringProperty("skimlinks.id")
     lazy val affiliateLinkSections: Set[String] = configuration.getStringProperty("affiliatelinks.sections").getOrElse("").split(",").toSet

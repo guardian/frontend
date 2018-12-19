@@ -1,5 +1,6 @@
-// @flow
+// @flow strict
 import { local } from 'lib/storage';
+import type { VendorConsentResponse } from './types';
 
 type LotameError = {
     error: number,
@@ -31,9 +32,10 @@ const lotameConsentData = (isConsenting: boolean) => ({
     targeting: isConsenting,
 });
 
-const getLotameConsent = (): boolean => local.get(lotameConsentKey);
+// local.get actually returns any... so convert to boolean
+const getLotameConsent = (): boolean => !!local.get(lotameConsentKey);
 
-const setLotameConsent = (consent: boolean) =>
+const setLotameConsent = (consent: boolean): void =>
     local.set(lotameConsentKey, consent);
 
 const lotameCallback = (isConsenting: boolean) => (
@@ -46,20 +48,26 @@ const lotameCallback = (isConsenting: boolean) => (
     }
 };
 
-const isConsentingData = (consentData): boolean => {
-    try {
+// TODO: what should happen when GDPR applies = false? consent data will not exist
+const isConsentingData = (
+    consentData: VendorConsentResponse | null
+): boolean => {
+    if (
+        consentData &&
+        consentData.vendorConsents &&
+        consentData.purposeConsents
+    ) {
         const vendorConsents = consentData.vendorConsents;
         const purposeConsents = consentData.purposeConsents;
         return (
             Object.keys(vendorConsents).every(k => vendorConsents[k]) &&
             Object.keys(purposeConsents).every(k => purposeConsents[k])
         );
-    } catch (e) {
-        return false;
     }
+    return false;
 };
 
-const getLotameAdConsentFromCmp = (): Promise<any> =>
+const getLotameAdConsentFromCmp = (): Promise<VendorConsentResponse | null> =>
     new Promise((resolve, reject) => {
         if ('__cmp' in window) {
             /*eslint-disable */
@@ -77,13 +85,13 @@ const getLotameAdConsentFromCmp = (): Promise<any> =>
         }
     });
 
-const init = (): void => {
+const init = (): Promise<void> => {
     if ('LOTCC' in window && 'setConsent' in window.LOTCC) {
         getLotameAdConsentFromCmp()
             .then(isConsentingData)
             .then(isConsenting => {
-                const localConsenting: boolean = !!getLotameConsent();
-                if (localConsenting !== isConsenting) {
+                // lotame consent is stored but may need to be updated:
+                if (getLotameConsent() !== isConsenting) {
                     return window.LOTCC.setConsent(
                         lotameCallback(isConsenting),
                         clientId,
@@ -97,6 +105,7 @@ const init = (): void => {
                 )
             );
     }
+    return Promise.resolve();
 };
 
 export { init };
