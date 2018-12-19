@@ -857,7 +857,11 @@ object Tags {
   )
 
   val foundationMappings = Seq(
-    "the-guardian-foundation/the-guardian-foundation"
+    "the-guardian-foundation/the-guardian-foundation",
+    "gnmeducationcentre/gnmeducationcentre",
+    "newswise/newswise",
+    "gnm-archive/gnm-archive",
+    "the-guardian-foundation/series/guardian-exhibitions"
   )
 
   val interviewMappings = Seq(
