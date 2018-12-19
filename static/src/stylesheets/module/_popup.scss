@@ -1,14 +1,13 @@
 /* ==========================================================================
    Pop-up
    ========================================================================== */
-$popup-top: $headerHeight + $gs-baseline/2 + 3;
 
+$popup-top: $headerHeight+$gs-baseline/2+3;
 // Popups align with the label, so if there's a control icon, we need to account
 // for it. The number is derived from the icon size on the control.
 // TODO:
 // use a proper icon size variabe when the icons are redrawn at mulptile sizes
-$control-offset: 36 + $gs-gutter/2;
-
+$control-offset: 36+$gs-gutter/2;
 .popup--default {
     background: $brightness-100;
     border-radius: $gs-baseline / 4;
@@ -24,23 +23,20 @@ $control-offset: 36 + $gs-gutter/2;
     margin: 0;
     list-style: none;
     min-width: gs-span(2);
-
     @include mq(mobileLandscape) {
         right: auto;
         bottom: auto;
         top: $popup-top;
     }
-
     .brand-bar__item--has-control & {
         @include mq(tablet) {
             left: $control-offset;
-        };
-
+        }
+        ;
         .l-header--is-slim & {
             left: 0;
         }
     }
-
     .brand-bar__item--right & {
         @include mq(tablet) {
             left: auto;
@@ -62,7 +58,6 @@ $control-offset: 36 + $gs-gutter/2;
     border-top: 1px solid $brightness-86;
     padding-bottom: 0;
     margin: 0;
-
     &:first-of-type {
         border-top: 0;
     }
@@ -79,9 +74,7 @@ $control-offset: 36 + $gs-gutter/2;
 }
 
 .popup__toggle {
-    cursor: pointer;
-
-    // disclosure arrow
+    cursor: pointer; // disclosure arrow
     &:after {
         content: '';
         display: inline-block;
@@ -92,31 +85,26 @@ $control-offset: 36 + $gs-gutter/2;
         border-left: transparent;
         border-top: transparent;
         margin-left: 2px;
-        vertical-align: middle;
-        // Prevents wobble on webkit browsers
+        vertical-align: middle; // Prevents wobble on webkit browsers
         -webkit-backface-visibility: hidden;
         transition: transform 250ms ease-out;
     }
-
     &:hover,
     &:focus {
         text-decoration: none;
-
         &:after {
             transform: translateY(0) rotate(45deg);
         }
     }
-
     &.is-active,
-    .is-active > &,
+    .is-active>&,
     &[aria-expanded=true],
-    [aria-expanded=true] ~ &,
+    [aria-expanded=true]~&,
     .is-not-modern .brand-bar__item--has-control:hover &,
     .is-not-modern .is-signed-in.brand-bar__item--profile:hover & {
         &:after {
             transform: translateY(1px) rotate(-135deg);
         }
-
         &:hover {
             &:after {
                 transform: translateY(-1px) rotate(-135deg);
@@ -129,7 +117,8 @@ $control-offset: 36 + $gs-gutter/2;
     &:after {
         @include mq($until: tablet) {
             display: none;
-        };
+        }
+        ;
     }
 }
 
@@ -143,14 +132,13 @@ $control-offset: 36 + $gs-gutter/2;
 .popup__item {
     display: block;
     line-height: 36px;
-
     a {
         border-bottom: 1px solid $brightness-86;
     }
-
     &:last-child {
         border-bottom: 0;
-    };
+    }
+    ;
 }
 
 .popup__item,
@@ -166,19 +154,18 @@ $control-offset: 36 + $gs-gutter/2;
         color: $brightness-7;
         line-height: $gs-baseline * 3;
     }
-
     .brand-bar__item--inline-action {
         display: inline-block !important;
         margin-right: $gs-gutter * .25;
     }
 }
 
-
 /* Profile Menu
    ========================================================================== */
+
 .brand-bar__item--profile {
     // stupid having to reset this, but :not was :not available to all in 2009
-    @if ($old-ie == true) {
+    @if ($old-ie==true) {
         .popup__toggle:hover:before,
         .popup__toggle:after {
             display: none !important;
@@ -186,7 +173,8 @@ $control-offset: 36 + $gs-gutter/2;
         &.is-signed-in .popup__toggle {
             display: inline-block;
         }
-    } @else {
+    }
+    @else {
         &:not(.is-signed-in) .popup__toggle {
             &:before,
             &:after {
@@ -198,6 +186,7 @@ $control-offset: 36 + $gs-gutter/2;
 
 /* Search Menu
    ========================================================================== */
+
 .popup--search {
     background-color: $brightness-100;
     border-radius: $gs-baseline / 4;
@@ -206,7 +195,6 @@ $control-offset: 36 + $gs-gutter/2;
     top: ($gs-baseline * 2) + $gs-baseline / 2;
     z-index: $zindex-main-menu + 1;
     outline: 0;
-    width: gs-span(7);
     left: auto;
     right: 250px;
 }
