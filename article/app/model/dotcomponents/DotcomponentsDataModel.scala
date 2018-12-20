@@ -8,8 +8,9 @@ import model.dotcomrendering.pageElements.PageElement
 import navigation.NavMenu
 import play.api.libs.json.{JsValue, Json, Writes}
 import play.api.mvc.RequestHeader
-import views.support.GUDateTimeFormat
+import views.support.{CamelCase, GUDateTimeFormat}
 import ai.x.play.json.Jsonx
+import common.Maps.RichMap
 import ai.x.play.json.implicits.optionWithNull // Note, required despite Intellij saying otherwise
 
 // We have introduced our own set of objects for serializing data to the DotComponents API,
@@ -61,7 +62,8 @@ case class PageData(
     contentType: Option[String],
     commissioningDesks: Option[String],
     subMetaLinks: SubMetaLinks,
-
+    sentryHost: Option[String],
+    sentryPublicApiKey: Option[String],
     // AMP specific
     guardianBaseURL: String,
     webURL: String,
@@ -150,6 +152,11 @@ object DotcomponentsDataModel {
 
     val jsConfig = (k: String) => articlePage.getJavascriptConfig.get(k).map(_.as[String])
 
+
+    val jsPageData = Configuration.javascript.pageData mapKeys { key =>
+      CamelCase.fromHyphenated(key.split('.').lastOption.getOrElse(""))
+    }
+
     val pageData = PageData(
       article.tags.contributors.map(_.name).mkString(","),
       article.metadata.id,
@@ -173,6 +180,8 @@ object DotcomponentsDataModel {
       jsConfig("contentType"),
       jsConfig("commissioningDesks"),
       article.content.submetaLinks,
+      jsPageData.get("sentryHost"),
+      jsPageData.get("sentryPublicApiKey"),
       Configuration.site.host,
       article.metadata.webUrl,
       article.content.shouldHideAdverts,
