@@ -67,7 +67,7 @@ const load = (
     const $container = $(selectors.outbrain.container, $outbrain[0]);
     const breakpoint = getBreakpoint();
 
-    const useNewOutbrainCodes =
+    const shouldUseNewOutbrainCodes: boolean =
         getTestVariantId('CommercialOutbrainNewids') === 'variant';
 
     const widgetCodes = ((): {
@@ -75,22 +75,22 @@ const load = (
         image?: string,
         text?: string,
     } => {
-        if (useNewOutbrainCodes) {
+        if (shouldUseNewOutbrainCodes) {
             return getNewCode({
                 outbrainType,
                 contributionEpicVisible,
-                section: config.page.section,
+                section: config.get('page.section', ''),
                 breakpoint,
             });
         }
         return getCode({
             outbrainType,
-            section: config.page.section,
+            section: config.get('page.section', ''),
             breakpoint,
         });
     })();
 
-    if (useNewOutbrainCodes) {
+    if (shouldUseNewOutbrainCodes) {
         console.log('OUTBRAIN -NEW widget code is ', widgetCodes);
     }
 
