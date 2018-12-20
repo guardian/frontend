@@ -2,6 +2,7 @@ package model.dotcomponents
 
 import common.Edition
 import conf.Configuration
+import conf.Configuration.environment
 import controllers.ArticlePage
 import model.SubMetaLinks
 import model.dotcomrendering.pageElements.PageElement
@@ -64,6 +65,7 @@ case class PageData(
     subMetaLinks: SubMetaLinks,
     sentryHost: Option[String],
     sentryPublicApiKey: Option[String],
+    isDev: Boolean,
     // AMP specific
     guardianBaseURL: String,
     webURL: String,
@@ -182,6 +184,7 @@ object DotcomponentsDataModel {
       article.content.submetaLinks,
       jsPageData.get("sentryHost"),
       jsPageData.get("sentryPublicApiKey"),
+      !environment.isProd,
       Configuration.site.host,
       article.metadata.webUrl,
       article.content.shouldHideAdverts,
