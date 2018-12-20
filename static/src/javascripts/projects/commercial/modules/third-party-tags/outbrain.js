@@ -94,16 +94,17 @@ export const initOutbrain = (): Promise<void> =>
             return;
         }
 
+        const contributionVisible = pageConditions.contributionsTestVisible;
         const editorialTests =
-            pageConditions.contributionsTestVisible ||
+            contributionVisible ||
             pageConditions.emailTestVisible ||
             pageConditions.storyQuestionsVisible;
 
         if (pageConditions.noMerchSlotsExpected) {
             if (editorialTests) {
-                load('nonCompliant');
+                load('nonCompliant', contributionVisible);
             } else {
-                load();
+                load('defaults');
             }
         } else {
             // only wait for dfp conditions if we really have to.
@@ -115,9 +116,9 @@ export const initOutbrain = (): Promise<void> =>
                 if (dfpConditions.useMerchandiseAdSlot) {
                     load('merchandising');
                 } else if (editorialTests) {
-                    load('nonCompliant');
+                    load('nonCompliant', contributionVisible);
                 } else {
-                    load();
+                    load('defaults');
                 }
             });
         }

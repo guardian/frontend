@@ -50,9 +50,14 @@ export const getEpicParams = (
             firstRow.highlightedText
         )
     ) {
-        reportError(new Error('Could not fetch epic copy from Google Doc'), {
-            feature: 'epic-test',
-        });
+        reportError(
+            new Error(
+                `Could not find epic properties for sheetName=${sheetName}`
+            ),
+            {
+                feature: 'epic-test',
+            }
+        );
         return articleCopy;
     }
 

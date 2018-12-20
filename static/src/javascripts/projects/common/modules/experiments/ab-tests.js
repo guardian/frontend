@@ -6,6 +6,7 @@ import { commercialPrebidSafeframe } from 'common/modules/experiments/tests/comm
 import { commercialAdVerification } from 'common/modules/experiments/tests/commercial-ad-verification.js';
 import { commercialCmpCustomise } from 'common/modules/experiments/tests/commercial-cmp-customise.js';
 import { commercialAdMobileWebIncrease } from 'common/modules/experiments/tests/commercial-ad-mobile-web-increase.js';
+import { commercialOutbrainNewids } from 'common/modules/experiments/tests/commercial-outbrain-newids.js';
 
 export const TESTS: $ReadOnlyArray<ABTest> = [
     getAcquisitionTest(),
@@ -13,6 +14,7 @@ export const TESTS: $ReadOnlyArray<ABTest> = [
     commercialAdVerification,
     commercialCmpCustomise,
     commercialAdMobileWebIncrease,
+    commercialOutbrainNewids,
 ].filter(Boolean);
 
 export const getActiveTests = (): $ReadOnlyArray<ABTest> =>
