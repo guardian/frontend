@@ -32,7 +32,7 @@ trait ABTestSwitches {
     "Enable the outbrain new IDs (Jan 2019) AB Test",
     owners = Seq(Owner.withGithub("jeteve")),
     safeState = Off,
-    sellByDate = new LocalDate(2019, 6, 1),
+    sellByDate = new LocalDate(2019, 6, 3),
     exposeClientSide = true
   )
 

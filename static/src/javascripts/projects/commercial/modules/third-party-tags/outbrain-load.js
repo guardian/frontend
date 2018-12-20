@@ -5,6 +5,8 @@ import config from 'lib/config';
 import fastdom from 'lib/fastdom-promise';
 import { getBreakpoint } from 'lib/detect';
 import { loadScript } from 'lib/load-script';
+import { getTestVariantId } from 'common/modules/experiments/utils.js';
+
 import { getCode } from './outbrain-codes';
 import { getCode as getNewCode } from './outbrain-codes-new';
 import { tracking } from './outbrain-tracking';
@@ -65,7 +67,8 @@ const load = (
     const $container = $(selectors.outbrain.container, $outbrain[0]);
     const breakpoint = getBreakpoint();
 
-    const useNewOutbrainCodes = false;
+    const useNewOutbrainCodes =
+        getTestVariantId('CommercialOutbrainNewids') === 'variant';
 
     const widgetCodes = ((): {
         code?: string,

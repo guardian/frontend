@@ -69,6 +69,8 @@ const getCode = function(args: {
         return outbrainCode('nonCompliant', normalizedBreakpoint);
     }
     // No other possibility as normalizedType can only have this set of values.
+    // note that for flow, we still need to return something
+    return outbrainCode('nonCompliant', normalizedBreakpoint);
 };
 
 export { getCode };

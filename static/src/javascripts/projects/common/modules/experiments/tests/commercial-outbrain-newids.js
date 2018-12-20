@@ -5,7 +5,8 @@ export const commercialOutbrainNewids: ABTest = {
     start: '2018-11-18',
     expiry: '2019-06-01',
     author: 'Jerome Eteve',
-    description: 'Zero size AB test to allow testing new Outbrain Ids Scheme',
+    description:
+        '0% participation AB test to allow testing new Outbrain Ids Scheme',
     audience: 0,
     audienceOffset: 0,
     successMeasure: 'n/a',
