@@ -190,9 +190,9 @@ describe('initCommentAdverts', () => {
     it('should refresh comments slot when more comments is clicked', done => {
         mockHeight(800);
         initCommentAdverts();
-        getAdvertById.mockReturnValue(true);
+        getAdvertById.mockReturnValue('x');
         mediator.emit('modules:comments:renderComments:rendered');
-        // mediator.emit('discussion:comments:get-more-replies');
+        mediator.emit('discussion:comments:get-more-replies');
         mediator.once('page:defaultcommercial:comments', () => {
             expect(getAdvertById).toHaveBeenCalledTimes(1);
             expect(refreshAdvert).toHaveBeenCalledTimes(1);

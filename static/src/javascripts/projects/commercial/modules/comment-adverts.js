@@ -93,6 +93,18 @@ export const initCommentAdverts = (): ?boolean => {
                             $adSlotContainer,
                             true
                         );
+                    } else if (isLoggedIn && mainColHeight >= 400) {
+                        mediator.on(
+                            'discussion:comments:get-more-replies',
+                            () => {
+                                refreshCommentAd();
+                            }
+                        );
+                        insertCommentAd(
+                            $commentMainColumn,
+                            $adSlotContainer,
+                            true
+                        );
                     } else if (isLoggedIn) {
                         mediator.on(
                             'discussion:comments:get-more-replies',
