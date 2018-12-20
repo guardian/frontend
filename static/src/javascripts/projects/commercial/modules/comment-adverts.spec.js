@@ -6,7 +6,7 @@ import { isUserLoggedIn as isUserLoggedIn_ } from 'common/modules/identity/api';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { initCommentAdverts, _ } from 'commercial/modules/comment-adverts';
 import { refreshAdvert } from 'commercial/modules/dfp/load-advert';
-import { getAdvertById } from 'commercial/modules/dfp/get-advert-by-id';
+import { getAdvertById as getAdvertById_ } from 'commercial/modules/dfp/get-advert-by-id';
 
 // Workaround to fix issue where dataset is missing from jsdom, and solve the
 // 'cannot set property [...] which has only a getter' TypeError
@@ -39,10 +39,11 @@ jest.mock('common/modules/identity/api', () => ({
     isUserLoggedIn: jest.fn(),
 }));
 
-const { createCommentSlots, refreshCommentAd } = _;
+const { createCommentSlots } = _;
 
 const commercialFeaturesMock: any = commercialFeatures;
 const isUserLoggedIn: any = isUserLoggedIn_;
+const getAdvertById: any = getAdvertById_;
 
 const mockHeight = (height: number) => {
     jest.spyOn(fastdom, 'read').mockReturnValue(Promise.resolve(height));
@@ -190,7 +191,7 @@ describe('initCommentAdverts', () => {
     it('should refresh comments slot when more comments is clicked', done => {
         mockHeight(800);
         initCommentAdverts();
-        getAdvertById.mockReturnValue('x');
+        getAdvertById.mockReturnValue(null);
         mediator.emit('modules:comments:renderComments:rendered');
         mediator.emit('discussion:comments:get-more-replies');
         mediator.once('page:defaultcommercial:comments', () => {
