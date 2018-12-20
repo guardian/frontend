@@ -310,6 +310,9 @@ POST        /commercial/adops/ads-txt                                           
 GET            /news-alert/alerts                                                                                                controllers.NewsAlertController.alerts()
 POST           /news-alert/alert                                                                                                 controllers.NewsAlertController.create()
 
+# Youtube Atom ID
+GET     /youtube/:id.json                                                                                                        controllers.YoutubeController.getAtomId(id: String)
+
 # dev-build only
 GET            /commercial/magento/token                                                                                         controllers.commercial.magento.AccessTokenGenerator.generate
 GET            /commercial/magento/resource                                                                                      controllers.commercial.magento.ApiSandbox.getResource(t: String)

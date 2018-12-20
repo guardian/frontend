@@ -81,3 +81,6 @@ GET        /story-package-mf2/*path.json              controllers.StoryPackageCo
 ## Breaking-news
 GET     /news-alert/alerts                            controllers.NewsAlertController.alerts()
 POST    /news-alert/alert                             controllers.NewsAlertController.create()
+
+# Youtube Atom ID
+GET     /youtube/:id.json                                                                                                        controllers.YoutubeController.getAtomId(id: String)
