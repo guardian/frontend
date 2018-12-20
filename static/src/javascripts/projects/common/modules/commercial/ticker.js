@@ -1,8 +1,8 @@
 // @flow
 import { getLocalCurrencySymbol } from 'lib/geolocation';
+import fetchJSON from 'lib/fetch-json';
 
 const count = {};
-let showCount;
 let goal;
 let total;
 
@@ -73,25 +73,25 @@ const animate = (parentElementSelector: string) => {
     }
 };
 
-const dataSuccessfullyFetched = () => total && goal && showCount;
+const dataSuccessfullyFetched = () => total && goal;
 
 const fetchDataAndAnimate = (parentElementSelector: string) => {
     if (dataSuccessfullyFetched()) {
         animate(parentElementSelector);
     } else {
-        fetch(
-            'https://interactive.guim.co.uk/docsdata-test/1ySn7Ol2NQLvvSw_eAnVrPuuRnaGOxUmaUs6svtu_irU.json'
-        )
-            .then(resp => resp.json())
-            .then(data => {
-                showCount = data.sheets.Sheet1[0].showCount === 'TRUE';
-                total = parseInt(data.sheets.Sheet1[0].total, 10);
-                goal = parseInt(data.sheets.Sheet1[0].goal, 10);
+        fetchJSON('https://support.theguardian.com/ticker.json', {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            mode: 'cors',
+        }).then(data => {
+            total = parseInt(data.total, 10);
+            goal = parseInt(data.goal, 10);
 
-                if (dataSuccessfullyFetched()) {
-                    animate(parentElementSelector);
-                }
-            });
+            if (dataSuccessfullyFetched()) {
+                animate(parentElementSelector);
+            }
+        });
     }
 };
 

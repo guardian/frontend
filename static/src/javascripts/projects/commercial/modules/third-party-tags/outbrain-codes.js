@@ -39,7 +39,7 @@ const outbrainCodes = {
             },
         },
     },
-
+    // This is the same as 'nonCompliant'
     merchandising: {
         mobile: {
             code: 'MB_10',
@@ -65,23 +65,25 @@ const outbrainCodes = {
     },
 };
 
-const getCode = function(data: {
-    slot: string,
+const getCode = function(args: {
+    outbrainType: string,
     breakpoint: string,
     section: string,
 }): { code?: string, image?: string, text?: string } {
-    if (!(data.slot in outbrainCodes) || data.slot === 'defaults') {
-        return outbrainCodes.defaults[getSection(data.section)][
-            data.breakpoint === 'wide' ? 'desktop' : data.breakpoint
+    const normalizedBreakpoint =
+        args.breakpoint === 'wide' ? 'desktop' : args.breakpoint;
+
+    if (
+        !(args.outbrainType in outbrainCodes) ||
+        args.outbrainType === 'defaults'
+    ) {
+        return outbrainCodes.defaults[getSection(args.section)][
+            normalizedBreakpoint
         ];
-    } else if (data.slot === 'nonCompliant') {
-        return outbrainCodes.nonCompliant[
-            data.breakpoint === 'wide' ? 'desktop' : data.breakpoint
-        ];
+    } else if (args.outbrainType === 'nonCompliant') {
+        return outbrainCodes.nonCompliant[normalizedBreakpoint];
     }
-    return outbrainCodes.merchandising[
-        data.breakpoint === 'wide' ? 'desktop' : data.breakpoint
-    ];
+    return outbrainCodes.merchandising[normalizedBreakpoint];
 };
 
 export { getCode };

@@ -111,7 +111,7 @@ object CompetitionsProvider {
     Competition("122", "/football/scottish-league-one", "Scottish League One", "Scottish League One", "Scottish", showInTeamsList = true, tableDividers = List(1, 4, 8, 9)),
     Competition("123", "/football/scottish-league-two", "Scottish League Two", "Scottish League Two", "Scottish", showInTeamsList = true, tableDividers = List(1, 4)),
     Competition("750", "/football/euro-2016", "Euro 2016", "Euro", "Internationals"),
-    Competition("751", "/football/euro-2016-qualifiers", "Euro 2016 qualifying", "Euro 2016 qual.", "Internationals"),
+    Competition("751", "/football/euro-2020-qualifiers", "Euro 2020 qualifying", "Euro 2020 qual.", "Internationals"),
     Competition("501", "/football/champions-league-qualifying", "Champions League qualifying", "Champions League qual.", "European"),
     Competition("510", "/football/uefa-europa-league", "Europa League", "Europa League", "European", tableDividers = List(2)),
     Competition("301", "/football/carabao-cup", "Carabao Cup", "Carabao Cup", "English"),
@@ -122,7 +122,7 @@ object CompetitionsProvider {
     Competition("700", "/football/world-cup-2018", "World Cup 2018", "World Cup 2018", "Internationals", showInTeamsList = true, tableDividers = List(2), startDate = Some(new LocalDate(2018, 6, 1))),
     Competition("701", "/football/world-cup-2018-qualifiers", "World Cup 2018 Qualifiers", "World Cup 2018 qual.", "Internationals", showInTeamsList = true, tableDividers = List(2)),
 
-    Competition("870", "/football/women-s-world-cup-2015", "Women's World Cup 2015", "Women's World Cup", "Internationals", showInTeamsList = true, tableDividers = List(2)),
+    Competition("870", "/football/women-s-world-cup-2019", "Women's World Cup 2019", "Women's World Cup", "Internationals", showInTeamsList = true, tableDividers = List(2)),
     Competition("423", "/football/women-euro-2017", "Women's Euro 2017", "Women's Euro", "Internationals", showInTeamsList = true, tableDividers = List(2)),
     Competition("970", "/football/women-s-champions-league", "Women's Champions League", "Women's Champions League", "European"),
     Competition("333", "/football/womens-fa-cup", "Women's FA Cup", "Women's FA Cup", "English"),

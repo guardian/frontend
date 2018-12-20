@@ -9,17 +9,17 @@ const disableButton = button => {
     button.disabled = true;
 };
 
-const enableButton = form => {
-    const button = form.querySelector('button');
+const enableButton = cForm => {
+    const button = cForm.querySelector('button');
     button.disabled = false;
     button.textContent = 'Share with the Guardian';
 };
 
-const showConfirmation = () => {
-    const callout = document.querySelector('.element-campaign');
-    if (callout) {
+const showConfirmation = cForm => {
+    const calloutWrapper = cForm.closest('.element-campaign');
+    if (calloutWrapper) {
         fastdom.write(() => {
-            callout.classList.add('success');
+            calloutWrapper.classList.add('success');
         });
     }
 };
@@ -76,7 +76,7 @@ export const submitForm = (e: any) => {
         },
     }).then(res => {
         if (res.ok) {
-            showConfirmation();
+            showConfirmation(cForm);
         } else {
             showError(cForm);
         }

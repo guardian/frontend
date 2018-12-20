@@ -135,7 +135,7 @@ describe('Outbrain', () => {
             resolveCheck('isStoryQuestionsOnPage', false);
 
             return initOutbrain().then(() => {
-                expect(load).toHaveBeenCalledWith('nonCompliant');
+                expect(load).toHaveBeenCalledWith('nonCompliant', true);
             });
         });
 
@@ -150,7 +150,7 @@ describe('Outbrain', () => {
             resolveCheck('isStoryQuestionsOnPage', true);
 
             return initOutbrain().then(() => {
-                expect(load).toHaveBeenCalledWith('nonCompliant');
+                expect(load).toHaveBeenCalledWith('nonCompliant', false);
             });
         });
 

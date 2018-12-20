@@ -75,7 +75,7 @@ object FaciaWidths {
   )
 
   private val SquareImageFronts = Map[CardType, BrowserWidth](
-    (Standard, 660.px),
+    (Standard, 368.px),
   )
 
   def mediaFromItemClasses(itemClasses: ItemClasses): WidthsByBreakpoint = {

@@ -2,12 +2,12 @@
 
 @import common.LinkTo
 @import conf.switches.Switches.SurveySwitch
-@import model.{Audio, AudioPlayer, Video, VideoPlayer}
+@import model.{Video, VideoPlayer}
 @import views.support.Commercial.{isPaidContent, isAdFree}
 @import views.support.TrailCssClasses.toneClass
 @import views.support.{RenderClasses, SeoOptimisedContentImage, StripHtmlTags, Video640, Video1280}
 
-@defining(page.media, page.media match { case _: Audio => "audio" case _ => "video" }) { case (media, mediaType) =>
+@defining(page.media, "video") { case (media, mediaType) =>
     @defining(isPaidContent(page), isAdFree(request)) { case (isPaidContent, isAdFree) =>
         <div class="l-side-margins @if(!isPaidContent) {l-side-margins--media} @if(isPaidContent) {l-side-margins--paidfor}">
 
@@ -37,26 +37,6 @@
 
                                 <div class="media-primary player">
                                 @media match {
-                                    case audio: Audio => {
-
-                                        @audio.elements.images.map{ img =>
-                                            @fragments.imageFigure(img.images)
-                                        }
-
-                                        <figure data-component="main audio">
-                                        @audio.elements.mainAudio.map { audioElement =>
-                                            @fragments.media.audio(
-                                                AudioPlayer(
-                                                    audio,
-                                                    audioElement,
-                                                    audio.trail.headline,
-                                                    autoPlay = false
-                                                ),
-                                                isAdFree
-                                            )
-                                        }
-                                        </figure>
-                                    }
                                     case video: Video => {
                                         <figure data-component="main video">
                                             <meta itemprop="name" content="@Html(video.trail.headline)"/>
@@ -130,45 +110,16 @@
                                     }
 
                                     @fragments.contentMeta(media, page)
-
-                                    @media match {
-                                        case a: Audio if a.fields.body.nonEmpty => {
-                                            <div class="from-content-api">
-                                            @Html(a.fields.body)
-                                            </div>
-                                        }
-                                        case _ => {}
-                                    }
-
                                     @fragments.submeta(media)
                                 </div>
                             </div>
                         </div>
 
                         @media match {
-                            case v: Video => {
-                                @if(!isPaidContent) {
-                                    <div class="content__secondary-column content__secondary-column--media content__secondary-column--video hide-on-childrens-books-site"
-                                    aria-hidden="true">
-                                        <div class="js-video-components-container"></div>
-                                    </div>
-                                }
-                            }
-                            case a: Audio if conf.switches.Switches.AudioOnwardJourneySwitch.isSwitchedOn => {
-                                <div class="content__secondary-column content__secondary-column--media content__secondary-column--audio hide-on-childrens-books-site"
+                            case v: Video if !isPaidContent => {
+                                <div class="content__secondary-column content__secondary-column--media content__secondary-column--video hide-on-childrens-books-site"
                                 aria-hidden="true">
-                                    <div class="js-audio-components-container"></div>
-                                    @if(a.fields.body.nonEmpty) {
-                                        <br/>
-                                        @fragments.commercial.standardAd("right", Seq("dark"), Map("desktop" -> Seq("300,250", "300,274", "fluid")))
-                                    }
-                                </div>
-                            }
-
-                            case a: Audio if a.fields.body.nonEmpty => {
-                                <div class="content__secondary-column content__secondary-column--media content__secondary-column--audio hide-on-childrens-books-site"
-                                aria-hidden="true">
-                                @fragments.commercial.standardAd("right", Seq("dark"), Map("desktop" -> Seq("300,250", "300,274", "fluid")))
+                                    <div class="js-video-components-container"></div>
                                 </div>
                             }
                             case _ => {}

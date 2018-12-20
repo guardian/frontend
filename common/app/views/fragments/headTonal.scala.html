@@ -5,7 +5,6 @@
 @import views.support.Commercial.isPaidContent
 @import views.support.{ContributorLinks, RenderClasses}
 @import views.support.TrailCssClasses.toneClass
-@import experiments.{ActiveExperiments, OldAudioPage}
 
 <header class="@RenderClasses(
         Map(
@@ -13,7 +12,7 @@
             "content__head--is-badged"  -> badgeFor(item).nonEmpty,
             badgeFor(item).flatMap(_.classModifier.map(modifier => s"content__head--$modifier")).getOrElse("")
                                         -> badgeFor(item).exists(_.classModifier.nonEmpty),
-            "content__head--flagship"   -> (item.tags.isAudio && !ActiveExperiments.isParticipating(OldAudioPage))
+            "content__head--flagship"   -> item.tags.isAudio
         ),
         "content__head",
         "tonal__head",
@@ -30,20 +29,8 @@
 
                 <h1 class="@RenderClasses(Map(
                     "content__headline"            -> true,
-                    "content__headline--flagship"  -> (item.tags.isAudio && !ActiveExperiments.isParticipating(OldAudioPage))
+                    "content__headline--flagship"  -> item.tags.isAudio
                 ))" itemprop="headline" @langAttributes(item.content)>
-                    @if(item.tags.isMedia && ActiveExperiments.isParticipating(OldAudioPage)) {
-                        @defining(
-                            item match {
-                                case video: model.Video => "video-icon"
-                                case audio: model.Audio => "volume-high"
-                                // The only other 2 media types: gallery and picture both use camera icon
-                                case _ => "camera"
-                            }
-                        ) { mediaIcon =>
-                            @fragments.inlineSvg(mediaIcon, "icon", List("inline-tone-fill", "inline-icon--media"))
-                        }
-                    }
                     @Html(item.trail.headline)
                 </h1>
 
@@ -109,7 +96,7 @@
         </div>
     </div>
 
-    @if(!item.tags.isAudio || ActiveExperiments.isParticipating(OldAudioPage)){
+    @if(!item.tags.isAudio){
     <div class="tonal__standfirst u-cf">
         @if(item.fields.standfirst.isDefined) {
             <div class="gs-container">
