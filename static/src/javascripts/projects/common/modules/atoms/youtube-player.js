@@ -1,14 +1,14 @@
 // @flow
-import fastdom from 'fastdom';
+import fastdom from "fastdom";
 
-import config from 'lib/config';
-import { loadScript } from 'lib/load-script';
+import config from "lib/config";
+import { loadScript } from "lib/load-script";
 import {
     getAdConsentState,
-    thirdPartyTrackingAdConsent,
-} from 'common/modules/commercial/ad-prefs.lib';
+    thirdPartyTrackingAdConsent
+} from "common/modules/commercial/ad-prefs.lib";
 
-const scriptSrc = 'https://www.youtube.com/iframe_api';
+const scriptSrc = "https://www.youtube.com/iframe_api";
 const promise = new Promise(resolve => {
     if (window.YT && window.YT.Player) {
         resolve();
@@ -23,13 +23,13 @@ const loadYoutubeJs = () => {
 
 const addVideoStartedClass = (el: ?HTMLElement) => {
     if (el) {
-        el.classList.add('youtube__video-started');
+        el.classList.add("youtube__video-started");
     }
 };
 
 type Handlers = {
     onPlayerReady: (event: Object) => void,
-    onPlayerStateChange: (event: Object) => void,
+    onPlayerStateChange: (event: Object) => void
 };
 
 const onPlayerStateChangeEvent = (
@@ -37,7 +37,7 @@ const onPlayerStateChangeEvent = (
     handlers: Handlers,
     el: ?HTMLElement
 ) => {
-    if (el && config.get('page.isDev')) {
+    if (el && config.get("page.isDev")) {
         const states = window.YT.PlayerState;
         const state: ?string = Object.keys(states).find(
             key => states[key] === event.data
@@ -50,7 +50,7 @@ const onPlayerStateChangeEvent = (
     // change class according to the current state
     // TODO: Fix this so we can add poster image.
     fastdom.write(() => {
-        ['ENDED', 'PLAYING', 'PAUSED', 'BUFFERING', 'CUED'].forEach(status => {
+        ["ENDED", "PLAYING", "PAUSED", "BUFFERING", "CUED"].forEach(status => {
             if (el) {
                 el.classList.toggle(
                     `youtube__video-${status.toLocaleLowerCase()}`,
@@ -61,7 +61,7 @@ const onPlayerStateChangeEvent = (
         });
     });
 
-    if (handlers && typeof handlers.onPlayerStateChange === 'function') {
+    if (handlers && typeof handlers.onPlayerStateChange === "function") {
         handlers.onPlayerStateChange(event);
     }
 };
@@ -69,12 +69,12 @@ const onPlayerStateChangeEvent = (
 const onPlayerReadyEvent = (event, handlers: Handlers, el: ?HTMLElement) => {
     fastdom.write(() => {
         if (el) {
-            el.classList.add('youtube__video-ready');
+            el.classList.add("youtube__video-ready");
         }
     });
 
     // we should be able to remove this check once everything is using flow/ES^
-    if (handlers && typeof handlers.onPlayerReady === 'function') {
+    if (handlers && typeof handlers.onPlayerReady === "function") {
         handlers.onPlayerReady(event);
     }
 };
@@ -89,27 +89,31 @@ const setupPlayer = (
 ) => {
     const wantPersonalisedAds: boolean =
         getAdConsentState(thirdPartyTrackingAdConsent) !== false;
-    const disableRelatedVideos = !config.get('switches.youtubeRelatedVideos');
+    const disableRelatedVideos = !config.get("switches.youtubeRelatedVideos");
     // relatedChannels needs to be an array, as per YouTube's IFrame Embed Config API
     const relatedChannels =
         !disableRelatedVideos && channelId ? [channelId] : [];
 
+    console.log("relatedChannels -->", relatedChannels);
+    console.log("videoId -->", videoId);
+    console.log("disableRelatedVideos -->", disableRelatedVideos);
+
     return new window.YT.Player(eltId, {
         videoId,
-        width: '100%',
-        height: '100%',
+        width: "100%",
+        height: "100%",
         events: {
             onReady,
             onStateChange,
-            onError,
+            onError
         },
         embedConfig: {
             adsConfig: {
-                nonPersonalizedAd: !wantPersonalisedAds,
+                nonPersonalizedAd: !wantPersonalisedAds
             },
             relatedChannels,
-            disableRelatedVideos,
-        },
+            disableRelatedVideos
+        }
     });
 };
 
