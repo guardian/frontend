@@ -37,6 +37,25 @@ export type CtaUrls = {
     supportUrl: string,
 };
 
+export type ReaderRevenueRegion =
+    | 'united-kingdom'
+    | 'united-states'
+    | 'australia'
+    | 'rest-of-world';
+
+const getReaderRevenueRegion = (geolocation: string): ReaderRevenueRegion => {
+    switch (geolocation) {
+        case 'GB':
+            return 'united-kingdom';
+        case 'US':
+            return 'united-states';
+        case 'AU':
+            return 'australia';
+        default:
+            return 'rest-of-world';
+    }
+};
+
 // How many times the user can see the Epic,
 // e.g. 6 times within 7 days with minimum of 1 day in between views.
 const defaultMaxViews: {
@@ -518,4 +537,5 @@ export {
     makeGoogleDocBannerControl,
     makeBannerABTestVariant,
     defaultMaxViews,
+    getReaderRevenueRegion,
 };

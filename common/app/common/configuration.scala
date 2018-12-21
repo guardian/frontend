@@ -396,7 +396,7 @@ class GuardianConfiguration extends Logging {
     private lazy val readerRevenueRoot = {
       configuration.getStringProperty("readerRevenue.s3.root") getOrElse s"${environment.stage.toUpperCase}/reader-revenue"
     }
-    lazy val contributionsBannerDeployLogKey = s"$readerRevenueRoot/contributions-banner-deploy-log.json"
+    lazy val contributionsBannerDeployLogKey = s"$readerRevenueRoot/contributions-banner-deploy-log"
   }
 
   object commercial {

@@ -3,10 +3,7 @@ import {
     makeBannerABTestVariants,
     makeBannerABTestVariant,
 } from 'common/modules/commercial/contributions-utilities';
-import {
-    getSync as geolocationGetSync,
-    type geolocationString,
-} from 'lib/geolocation';
+import { getSync as geolocationGetSync } from 'lib/geolocation';
 
 const componentType: OphanComponentType = 'ACQUISITIONS_ENGAGEMENT_BANNER';
 const abTestName = 'AcquisitionsBannerAustraliaPostOneMillion';
@@ -29,7 +26,7 @@ export const AcquisitionsBannerAustraliaPostOneMillionTest: AcquisitionsABTest =
     idealOutcome: 'Increase in overall AV, and AV from recurring',
     componentType,
     showForSensitive: true,
-    canRun: () => geolocationGetSync() === ('AU': geolocationString),
+    canRun: () => geolocationGetSync() === 'AU',
 
     variants: makeBannerABTestVariants([
         makeBannerABTestVariant('AU2018_POST_1M_EB', variantAParams),
