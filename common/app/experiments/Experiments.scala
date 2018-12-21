@@ -6,7 +6,6 @@ import org.joda.time.LocalDate
 
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] = Set(
-    OldAudioPage,
     OrielParticipation,
     OldTLSSupportDeprecation,
     PodcastImage
@@ -29,14 +28,6 @@ object OldTLSSupportDeprecation extends Experiment(
   sellByDate = new LocalDate(2019, 1,15),
   // Custom group based on header set in Fastly
   participationGroup = TLSSupport
-)
-
-object OldAudioPage extends Experiment(
-  name = "old-audio-page",
-  description = "Show the older version of the audio episode page",
-  owners = Owner.group(SwitchGroup.Journalism),
-  sellByDate = new LocalDate(2018, 12, 19),
-  participationGroup = Perc5A
 )
 
 object PodcastImage extends Experiment(

@@ -26,8 +26,8 @@ export const liveblogCopy: AcquisitionsEpicTemplateCopy = {
     paragraphs: [
         'Since you’re here &hellip; we have a small favour to ask. Three years ago we set out to make The Guardian sustainable by deepening our relationship with our readers. We decided to seek an approach that would allow us to keep our journalism open and accessible to everyone, regardless of where they live or what they can afford.',
         'More than one million readers have now supported our independent, investigative journalism through contributions, membership or subscriptions. We want to thank you for all of your support. But we have to maintain and build on that support for every year to come.',
-        'The Guardian is editorially independent – our journalism is free from commercial bias and not influenced by billionaire owners, politicians or shareholders. No one edits our editor. No one steers our opinion.' +
-            'If everyone who reads our reporting, who likes it, helps to support it, our future would be much more secure.',
+        'The Guardian is editorially independent – our journalism is free from commercial bias and not influenced by billionaire owners, politicians or shareholders. No one edits our editor. No one steers our opinion.',
+        'If everyone who reads our reporting, who likes it, helps to support it, our future would be much more secure.',
     ],
     highlightedText: `For as little as ${getLocalCurrencySymbol()}1, you can support the Guardian – and it only takes a minute. Thank you.`,
 };
@@ -50,9 +50,14 @@ export const getEpicParams = (
             firstRow.highlightedText
         )
     ) {
-        reportError(new Error('Could not fetch epic copy from Google Doc'), {
-            feature: 'epic-test',
-        });
+        reportError(
+            new Error(
+                `Could not find epic properties for sheetName=${sheetName}`
+            ),
+            {
+                feature: 'epic-test',
+            }
+        );
         return articleCopy;
     }
 

@@ -5,9 +5,8 @@
 @import model.Badges.badgeFor
 @import views.support.ContentLayout.ContentLayout
 @import views.support.Seq2zipWithRowInfo
-@import experiments.{ActiveExperiments, OldAudioPage}
 
-<div class="submeta @if(content.content.tags.isAudio && !ActiveExperiments.isParticipating(OldAudioPage)){podcast-section}">
+<div class="submeta @if(content.content.tags.isAudio){podcast-section}">
     <span class="submeta__label">Topics</span>
 
     <div class="submeta__section-labels">

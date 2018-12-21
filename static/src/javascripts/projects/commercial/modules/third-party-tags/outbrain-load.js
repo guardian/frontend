@@ -5,7 +5,10 @@ import config from 'lib/config';
 import fastdom from 'lib/fastdom-promise';
 import { getBreakpoint } from 'lib/detect';
 import { loadScript } from 'lib/load-script';
+import { getTestVariantId } from 'common/modules/experiments/utils.js';
+
 import { getCode } from './outbrain-codes';
+import { getCode as getNewCode } from './outbrain-codes-new';
 import { tracking } from './outbrain-tracking';
 
 const outbrainUrl = '//widgets.outbrain.com/outbrain.js';
@@ -35,6 +38,8 @@ const build = (
     let html = outbrainTpl({
         widgetCode: codes.code || codes.image || '',
     });
+
+    // Add another line containing text only
     if (breakpoint !== 'mobile' && codes.text) {
         html += outbrainTpl({
             widgetCode: codes.text,
@@ -43,25 +48,59 @@ const build = (
     return html;
 };
 
-const load = (target?: string): Promise<void> => {
-    const slot = target && target in selectors ? target : 'defaults';
+/*
+  Load the outbrain widget according to target and to the visibility of
+  the contribution epic
+
+  Valid values for target are 'defaults', 'merchandising', 'nonCompliant'
+  
+  When the target is nonCompliant, you are encouraged to pass the contributionEpicVisible
+  parameter as this will have an effect on the new outbrain ID mapping (as of end 2018).
+
+ */
+const load = (
+    target: string,
+    contributionEpicVisible?: boolean = false
+): Promise<void> => {
+    const outbrainType = target && target in selectors ? target : 'defaults';
     const $outbrain = $(selectors.outbrain.widget);
     const $container = $(selectors.outbrain.container, $outbrain[0]);
     const breakpoint = getBreakpoint();
 
-    const widgetCodes = getCode({
-        slot,
-        section: config.page.section,
-        breakpoint,
-    });
+    const shouldUseNewOutbrainCodes: boolean =
+        getTestVariantId('CommercialOutbrainNewids') === 'variant';
+
+    const widgetCodes = ((): {
+        code?: string,
+        image?: string,
+        text?: string,
+    } => {
+        if (shouldUseNewOutbrainCodes) {
+            return getNewCode({
+                outbrainType,
+                contributionEpicVisible,
+                section: config.get('page.section', ''),
+                breakpoint,
+            });
+        }
+        return getCode({
+            outbrainType,
+            section: config.get('page.section', ''),
+            breakpoint,
+        });
+    })();
+
+    if (shouldUseNewOutbrainCodes) {
+        console.log('OUTBRAIN -NEW widget code is ', widgetCodes);
+    }
 
     const widgetHtml = build(widgetCodes, breakpoint);
 
     if ($container.length) {
         return fastdom
             .write(() => {
-                if (slot === 'merchandising') {
-                    $(selectors[slot].widget).replaceWith($outbrain[0]);
+                if (outbrainType === 'merchandising') {
+                    $(selectors.merchandising.widget).replaceWith($outbrain[0]);
                 }
                 $container.append(widgetHtml);
                 $outbrain.css('display', 'block');

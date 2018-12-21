@@ -14,7 +14,7 @@ const renderCampaign = (calloutNode: HTMLElement, calloutData): void => {
             calloutNode.innerHTML = campaignDiv;
         })
         .then(() => {
-            const cForm = document.querySelector(
+            const cForm = calloutNode.querySelector(
                 '.element-campaign .campaign .campaign--snippet__body'
             );
             if (cForm) {
