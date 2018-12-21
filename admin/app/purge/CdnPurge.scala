@@ -18,9 +18,8 @@ object CdnPurge extends Dates with Logging {
 
   // Performs soft purge which will still serve stale if there is an error
   def soft(wsClient: WSClient, key:String, fastlyService: FastlyService)(implicit executionContext: ExecutionContext): Future[String] = {
-    // under normal circumstances we only ever want this called from PROD.
-    // Don't want too much decaching going on.
-    val result: Future[WSResponse] = if (environment.isProd ) {
+    // Fastly is in front of PROD and CODE but not locally running dev instances
+    val result: Future[WSResponse] = if (environment.isProd || environment.isCode) {
       val serviceId = fastlyService.serviceId
       wsClient.url(s"https://api.fastly.com/service/$serviceId/purge/$key")
         .withHttpHeaders(
