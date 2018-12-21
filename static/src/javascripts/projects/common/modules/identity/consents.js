@@ -283,6 +283,8 @@ const bindCheckAllSwitch = (labelEl: HTMLElement): void => {
                     checkboxInputs.map(buildConsentUpdatePayload)
                 )
                 .then(setConsent);
+
+            updateCheckStatus();
         };
 
         if (getCheckedAllStatus(wrappedCheckboxEls) === false) {
