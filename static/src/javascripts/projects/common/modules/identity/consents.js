@@ -238,14 +238,15 @@ const bindCheckAllSwitch = (labelEl: HTMLElement): void => {
         fetchWrappedCheckboxes(),
         bindCheckboxAnalyticsEventsOnce(labelEl),
     ]).then(([[checkboxEl, titleEl], wrappedCheckboxEls]) => {
+        if (!(checkboxEl instanceof HTMLInputElement)) {
+            throw new Error(ERR_MALFORMED_HTML);
+        }
+
         const getTextForStatus = (status: boolean) =>
             status ? LC_UNCHECK_ALL : LC_CHECK_ALL;
 
         const updateCheckStatus = () =>
             fastdom.write(() => {
-                if (!(checkboxEl instanceof HTMLInputElement)) {
-                    throw new Error(ERR_MALFORMED_HTML);
-                }
                 checkboxEl.checked = getCheckedAllStatus(wrappedCheckboxEls);
                 titleEl.innerHTML = getTextForStatus(checkboxEl.checked);
                 labelEl.style.visibility = 'visible';
@@ -273,9 +274,6 @@ const bindCheckAllSwitch = (labelEl: HTMLElement): void => {
 
             checkboxesToUpdate.forEach(wrappedCheckboxEl => {
                 fastdom.write(() => {
-                    if (!(checkboxEl instanceof HTMLInputElement)) {
-                        throw new Error(ERR_MALFORMED_HTML);
-                    }
                     wrappedCheckboxEl.checked = checkboxEl.checked;
                 });
             });
