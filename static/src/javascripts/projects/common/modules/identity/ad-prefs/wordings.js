@@ -17,7 +17,7 @@ const ThirdPartyConsentWording: ConsentWording = {
     question:
         'We use cookies to improve your experience on our site and to show you personalised advertising.',
     yesCheckbox: {
-        title: 'I\'m OK with that',
+        title: "I'm OK with that",
         text: `You can change your mind at any time by taking the steps set out in our <a class="u-underline" href="https://www.theguardian.com/info/cookies">cookie policy</a>, where you can also learn more about what cookies are and how they are used by The Guardian.`,
     },
     noCheckbox: {
