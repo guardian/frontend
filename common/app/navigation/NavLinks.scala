@@ -131,6 +131,7 @@ object NavLinks {
   val health = NavLink("Health & fitness", "/lifeandstyle/health-and-wellbeing")
   val healthAu = NavLink("Health & fitness", "/au/lifeandstyle/health-and-wellbeing")
   val women = NavLink("Women", "/lifeandstyle/women")
+  val men = NavLink("Men", "/lifeandstyle/men")
   val recipes = NavLink("Recipes", "/tone/recipes")
   val travelUk = NavLink("UK", "/travel/uk")
   val travelEurope = NavLink("Europe", "/travel/europe")
@@ -406,6 +407,7 @@ object NavLinks {
       ukTravel,
       health,
       women,
+      men,
       loveAndSex,
       beauty,
       home,
@@ -447,6 +449,7 @@ object NavLinks {
       health,
       home,
       women,
+      men,
       family,
       ukTravel,
       money
