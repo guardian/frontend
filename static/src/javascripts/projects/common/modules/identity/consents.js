@@ -37,9 +37,6 @@ const UNSUBSCRIPTION_SUCCESS_MESSAGE =
     "You've been unsubscribed from all Guardian marketing newsletters and emails.";
 const ERR_MALFORMED_HTML = 'Something went wrong';
 
-const updateConsent = (consent: SettableConsent): Promise<void> =>
-    setConsent([consent]);
-
 const buildConsentUpdatePayload = (
     fields: NodeList<any> = new NodeList()
 ): SettableConsent => {
@@ -172,7 +169,7 @@ const bindNewsletterSwitch = (labelEl: HTMLElement): void => {
 const updateConsentSwitch = (labelEl: HTMLElement): Promise<void> =>
     Promise.all([getInputFields(labelEl), addSpinner(labelEl)])
         .then(([fields]) => buildConsentUpdatePayload(fields))
-        .then(consent => updateConsent(consent))
+        .then(consent => setConsent([consent]))
         .catch((err: Error) => {
             pushError(err, 'reload').then(() => {
                 window.scrollTo(0, 0);
@@ -255,24 +252,39 @@ const bindCheckAllSwitch = (labelEl: HTMLElement): void => {
                 labelEl.style.pointerEvents = 'all';
             });
 
+        const getInputFieldsFromCheckboxes = checkboxesToUpdate =>
+            checkboxesToUpdate.map(checkboxElToUpdate => {
+                const checkboxLabelEl = checkboxElToUpdate.labels[0];
+                if (!(checkboxLabelEl instanceof HTMLLabelElement)) {
+                    throw new Error(ERR_MALFORMED_HTML);
+                }
+                return getInputFields(checkboxLabelEl);
+            });
+
         const handleChangeEvent = () => {
             addSpinner(labelEl, 9999)
                 .then(() => new Promise(accept => setTimeout(accept, 300)))
                 .then(() => removeSpinner(labelEl));
-            wrappedCheckboxEls.forEach(wrappedCheckboxEl => {
-                fastdom
-                    .write(() => {
-                        if (!(checkboxEl instanceof HTMLInputElement)) {
-                            throw new Error(ERR_MALFORMED_HTML);
-                        }
-                        wrappedCheckboxEl.checked = checkboxEl.checked;
-                    })
-                    .then(() => {
-                        wrappedCheckboxEl.dispatchEvent(
-                            new Event('change', { bubbles: true })
-                        );
-                    });
+
+            const checkboxesToUpdate = wrappedCheckboxEls.filter(
+                wrappedCheckboxEl =>
+                    wrappedCheckboxEl.checked !== checkboxEl.checked
+            );
+
+            checkboxesToUpdate.forEach(wrappedCheckboxEl => {
+                fastdom.write(() => {
+                    if (!(checkboxEl instanceof HTMLInputElement)) {
+                        throw new Error(ERR_MALFORMED_HTML);
+                    }
+                    wrappedCheckboxEl.checked = checkboxEl.checked;
+                });
             });
+
+            Promise.all(getInputFieldsFromCheckboxes(checkboxesToUpdate))
+                .then(checkboxInputs =>
+                    checkboxInputs.map(buildConsentUpdatePayload)
+                )
+                .then(setConsent);
         };
 
         if (getCheckedAllStatus(wrappedCheckboxEls) === false) {
