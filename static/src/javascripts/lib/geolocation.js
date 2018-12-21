@@ -4,7 +4,6 @@ import config from 'lib/config';
 import { local as storage } from 'lib/storage';
 
 const storageKey = 'gu.geolocation';
-export type geolocationString = 'GB' | 'US' | 'AU';
 const editionToGeolocationMap = {
     UK: 'GB',
     US: 'US',

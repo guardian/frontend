@@ -37,7 +37,7 @@ class Lookup(contentApiClient: ContentApiClient) extends Logging with implicits.
   def latestContentByKeyword(keywordId: String, maxItemCount: Int)(implicit executionContext: ExecutionContext): Future[Seq[ContentType]] = {
     contentApiClient.getResponse(contentApiClient.item(keywordId.stringDecoded, defaultEdition)
       .pageSize(maxItemCount)
-      .showTags("type,series")
+      .showTags("type,series,paid-content")
       .orderBy("newest")
     ) map {
       _.results.getOrElse(Nil) map (Content(_))

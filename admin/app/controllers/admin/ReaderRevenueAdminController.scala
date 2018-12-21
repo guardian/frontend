@@ -3,12 +3,11 @@ package controllers.admin
 import com.gu.googleauth.UserIdentity
 import common.{ImplicitControllerExecutionContext, Logging}
 import model.{ApplicationContext, NoCache}
-import model.readerRevenue.ContributionsBannerDeploy
+import model.readerRevenue._
 import org.joda.time.DateTime
 import play.api.libs.json.{JsValue, Json}
 import play.api.mvc._
 import services.S3
-import conf.Configuration.readerRevenue._
 import org.apache.commons.codec.digest.DigestUtils
 import play.api.libs.ws.{WSClient, WSResponse}
 import purge.{AjaxHost, CdnPurge}
@@ -24,37 +23,41 @@ class ReaderRevenueAdminController(wsClient: WSClient, val controllerComponents:
   }
 
   def renderContributionsBannerAdmin: Action[AnyContent] = Action { implicit request =>
-    NoCache(Ok(views.html.readerRevenue.bannerDeploys()))
+    NoCache(Ok(views.html.readerRevenue.bannerDeploys(ReaderRevenueRegion.allRegions)))
   }
 
-  def redeployContributionsBanner: Action[AnyContent] = Action.async { implicit request =>
-    val requester: String = UserIdentity.fromRequest(request) map(_.fullName) getOrElse "unknown user (dev-build?)"
-    val time = DateTime.now
-    val jsonLog: JsValue = Json.toJson(ContributionsBannerDeploy(time))
-    val message = s"Contributions banner redeploy by $requester at ${time.toString}}"
+  def redeployContributionsBanner(strRegion: String): Action[AnyContent] = Action.async { implicit request =>
+    ReaderRevenueRegion.fromString(strRegion).fold(Future(redeployFailed(new Throwable("attempted to redeploy banner in unknown region")))){ region: ReaderRevenueRegion =>
+      val requester: String = UserIdentity.fromRequest(request) map(_.fullName) getOrElse "unknown user (dev-build?)"
+      val time = DateTime.now
+      val jsonLog: JsValue = Json.toJson(ContributionsBannerDeploy(time))
+      val message = s"Contributions banner in ${region.name} redeploy by $requester at ${time.toString}}"
 
-   val result = for {
-      _ <- updateContributionsBannerDeployLog(jsonLog.toString)
-      _ <- purgeDeployLogCache()
-    } yield bannerRedeploySuccessful(message)
+      val result = for {
+        _ <- updateContributionsBannerDeployLog(region, jsonLog.toString)
+        _ <- purgeDeployLogCache(region)
+      } yield bannerRedeploySuccessful(message, region)
 
-    result.recover { case e => redeployFailed(e)}
+      result.recover { case e => redeployFailed(e)}
+    }
+
   }
 
-  private def updateContributionsBannerDeployLog(bannerDeployLogJson: String): Future[Unit] = {
+  private def updateContributionsBannerDeployLog(region: ReaderRevenueRegion, bannerDeployLogJson: String): Future[Unit] = {
     val defaultJsonEncoding: String = "application/json;charset=utf-8"
-    Future(S3.putPublic(contributionsBannerDeployLogKey, bannerDeployLogJson, defaultJsonEncoding))
+    val bucketKey = ReaderRevenueRegion.getBucketKey(region)
+    Future(S3.putPublic(bucketKey, bannerDeployLogJson, defaultJsonEncoding))
   }
 
-  private def purgeDeployLogCache(): Future[String] = {
-    val path = "/reader-revenue/contributions-banner-deploy-log"
+  private def purgeDeployLogCache(region: ReaderRevenueRegion): Future[String] = {
+    val path = "/reader-revenue/contributions-banner-deploy-log/" + region.name
     CdnPurge.soft(wsClient, DigestUtils.md5Hex(path), AjaxHost)
   }
 
-  private def bannerRedeploySuccessful(message: String): Result = {
+  private def bannerRedeploySuccessful(message: String, region: ReaderRevenueRegion): Result = {
     log.info(s"$message: SUCCESSFUL")
     Redirect(routes.ReaderRevenueAdminController.renderContributionsBannerAdmin()).flashing(
-      "success" -> ("Banner redeployed"))
+      "success" -> (s"Banner redeployed in ${region.name}"))
   }
 
   private def redeployFailed(error: Throwable): Result = {

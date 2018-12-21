@@ -7,8 +7,8 @@ GET            /commercial/test-page                                            
 # Reader Revenue
 GET            /reader-revenue                                                                                                   controllers.admin.ReaderRevenueAdminController.renderReaderRevenueMenu()
 GET            /reader-revenue/contributions-banner                                                                              controllers.admin.ReaderRevenueAdminController.renderContributionsBannerAdmin()
-POST           /reader-revenue/redeploy-contributions-banner                                                                     controllers.admin.ReaderRevenueAdminController.redeployContributionsBanner()
-GET            /reader-revenue/contributions-banner-deploy-log                                                                   controllers.ReaderRevenueAppController.contributionsBannerDeployLog()
+POST           /reader-revenue/redeploy-contributions-banner/$region<united-kingdom|united-states|australia|rest-of-world>                                               controllers.admin.ReaderRevenueAdminController.redeployContributionsBanner(region)
+GET            /reader-revenue/contributions-banner-deploy-log/$region<united-kingdom|united-states|australia|rest-of-world>                                             controllers.ReaderRevenueAppController.contributionsBannerDeployLog(region: String)
 
 GET            /email-newsletters                                                                                                controllers.SignupPageController.renderNewslettersPage()
 
