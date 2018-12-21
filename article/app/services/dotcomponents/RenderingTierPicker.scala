@@ -1,14 +1,17 @@
 package services.dotcomponents
 
+import common.Logging
 import controllers.ArticlePage
 import implicits.Requests._
 import model.PageWithStoryPackage
-import model.liveblog.{BlockElement, TextBlockElement}
+import model.liveblog._
 import play.api.mvc.RequestHeader
 import views.support.Commercial
 
 
 class RenderingTierPicker {
+
+  val logger =  DotcomponentsLogger()
 
   private[this] val whitelist = Set(
     "world/2018/oct/14/british-man-shot-dead-by-hunter-in-france",
@@ -70,8 +73,16 @@ class RenderingTierPicker {
     )
   }
 
+  private[this] def ampFeatureWhitelist(page: PageWithStoryPackage, request: RequestHeader): Map[String, Boolean] = {
+    Map(
+      ("isBasicArticle", AMPPageChecks.isBasicArticle(page)),
+      ("hasOnlySupportedElements", AMPPageChecks.hasOnlySupportedElements(page)),
+      ("isDiscussionDisabled", AMPPageChecks.isNotCommentable(page)),
+    )
+  }
+
   private[this] def logRequest(msg:String, results: Map[String, Boolean])(implicit request: RequestHeader): Unit = {
-    DotcomponentsLogger().withRequestHeaders(request).results(msg, results)
+    logger.withRequestHeaders(request).results(msg, results)
   }
 
   def getTier(page: PageWithStoryPackage)(implicit request: RequestHeader): RenderType = {
@@ -86,11 +97,53 @@ class RenderingTierPicker {
       logRequest("Article was only locally renderable", features)
     }
 
-    if (request.isAmp && request.isGuui) RemoteRenderAMP
+    val AMPFeatures = ampFeatureWhitelist(page, request)
+    val isAMPSupported = AMPFeatures.forall({ case (test, isMet) => isMet})
+    if (request.isAmp && isAMPSupported) {
+      logRequest(s"AMP - path supported by dotcomponents", Map.empty)
+    } else {
+      logRequest(s"AMP - path unsupported by dotcomponents", Map.empty)
+    }
+
+    if (request.isAmp && (request.isGuui)) RemoteRenderAMP
     else if (request.isGuui || (isEnabled && isSupported && isWhitelisted)) RemoteRender
     else LocalRender
   }
 }
+
+object AMPPageChecks extends Logging {
+
+  def isBasicArticle(page: PageWithStoryPackage): Boolean = {
+    page.isInstanceOf[ArticlePage] &&
+    !page.item.isLiveBlog &&
+    !page.item.isPhotoEssay
+  }
+
+  def isNotCommentable(page: PageWithStoryPackage): Boolean = {
+    !page.article.content.trail.isCommentable
+  }
+
+  def hasOnlySupportedElements(page: PageWithStoryPackage): Boolean = {
+    // See: https://github.com/guardian/dotcom-rendering/blob/master/packages/frontend/amp/components/lib/Elements.tsx
+    def supported(block: BlockElement): Boolean = block match {
+      case _: TextBlockElement => true
+      case _: ImageBlockElement => true
+      case _: InstagramBlockElement => true
+      case _: TweetBlockElement => true
+      case _: RichLinkBlockElement => true
+      case _: CommentBlockElement => true
+      case _ => false
+    }
+
+    page.article.blocks match {
+      case Some(blocks) => {
+        blocks.body.exists(bodyBlock => bodyBlock.elements.forall(supported))
+      }
+      case None => true
+    }
+  }
+}
+
 
 object PageChecks {
 
