@@ -11,7 +11,7 @@ import conf.CachedHealthCheckLifeCycle
 import controllers.front.{FrontJsonFapiDraft, FrontJsonFapiLive}
 import controllers.{FaciaControllers, HealthCheck}
 import dev.{DevAssetsController, DevParametersHttpRequestHandler}
-import http.CommonFilters
+import http.{CommonFilters, PreloadFilters}
 import model.ApplicationIdentity
 import services.ophan.SurgingContentAgentLifecycle
 import play.api.ApplicationLoader.Context
@@ -63,7 +63,7 @@ trait AppComponents extends FrontendComponents with FaciaControllers with FapiSe
     FaciaPressMetrics.FrontDownloadLatency
   )
 
-  override lazy val httpFilters: Seq[EssentialFilter] = wire[CommonFilters].filters
+  override lazy val httpFilters: Seq[EssentialFilter] = wire[CommonFilters].filters ++ wire[PreloadFilters].filters
   override lazy val httpRequestHandler: HttpRequestHandler = wire[DevParametersHttpRequestHandler]
 
   def actorSystem: ActorSystem
