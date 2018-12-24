@@ -33,7 +33,7 @@ $pillars: (
             .fc-slice--q-q-q-q {
                 .fc-item--pillar-#{$pillar}.fc-item--type-analysis {
                     &.fc-item--standard-tablet {
-                        @include mq(tablet, desktop) {
+                        @include mq(tablet) {
                             @include garnett-underline($pillarColor, 20px);
                         }
                     }
@@ -44,7 +44,7 @@ $pillars: (
         .fc-slice--t-t-mpu {
             .fc-item--pillar-#{$pillar}.fc-item--type-analysis {
                 &.fc-item--third-tablet {
-                    @include mq(tablet, desktop) {
+                    @include mq(tablet) {
                         @include garnett-underline($pillarColor, 20px);
                     }
                 }
