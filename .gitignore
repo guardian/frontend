@@ -72,8 +72,14 @@ static/src/stylesheets/pasteup/.npmrc
 .ensime
 .ensime_cache/
 
+# VSCODE
+.vscode/settings.json
+
+# metal/bloop
+.bloop/
+.metals/
+
 # SSL certificates
 *.crt
 *.key
-.vscode/settings.json
 
