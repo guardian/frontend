@@ -173,7 +173,7 @@
         box-sizing: border-box;
         color: $brightness-7;
         text-transform: capitalize;
-        height: 48px;
+        height: $gs-baseline * 4;
         padding: 7px ($gs-gutter / 2) 0;
         display: block;
         width: auto;
