@@ -54,7 +54,7 @@ const getSlots = (isArticle: boolean): Array<PrebidSlot> => {
         },
         {
             key: 'comments',
-            sizes: [[300, 250]],
+            sizes: [[300, 250], [300, 600]],
         },
     ];
 

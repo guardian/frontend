@@ -9,7 +9,9 @@ import { isUserLoggedIn } from 'common/modules/identity/api';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { createSlots } from 'commercial/modules/dfp/create-slots';
 import { getAdvertById } from 'commercial/modules/dfp/get-advert-by-id';
-import { refreshAdvert } from 'commercial/modules/dfp/load-advert.js';
+import { refreshAdvert } from 'commercial/modules/dfp/load-advert';
+
+import type { Advert } from 'commercial/modules/dfp/Advert';
 import type bonzo from 'bonzo';
 
 const createCommentSlots = (
@@ -28,35 +30,59 @@ const insertCommentAd = (
     $commentMainColumn: bonzo,
     $adSlotContainer: bonzo,
     canBeDmpu: boolean
-): void => {
+): Promise<void> => {
     const commentSlots = createCommentSlots(canBeDmpu);
 
-    fastdom
-        .write(() => {
-            $commentMainColumn.addClass('discussion__ad-wrapper');
-            if (
-                !config.get('page.isLiveBlog') &&
-                !config.get('page.isMinuteArticle')
-            ) {
-                $commentMainColumn.addClass('discussion__ad-wrapper-wider');
-            }
-            // Append each slot into the adslot container...
-            commentSlots.forEach(adSlot => {
-                $adSlotContainer.append(adSlot);
-            });
-            return commentSlots[0];
-        })
-        // Add only the fist slot (DFP slot) to GTP
-        .then((adSlot: HTMLElement) => {
-            addSlot(adSlot, false);
-            mediator.emit('page:defaultcommercial:comments');
-        });
+    return (
+        fastdom
+            .write(() => {
+                $commentMainColumn.addClass('discussion__ad-wrapper');
+                if (
+                    !config.get('page.isLiveBlog') &&
+                    !config.get('page.isMinuteArticle')
+                ) {
+                    $commentMainColumn.addClass('discussion__ad-wrapper-wider');
+                }
+                // Append each slot into the adslot container...
+                commentSlots.forEach(adSlot => {
+                    $adSlotContainer.append(adSlot);
+                });
+                return commentSlots[0];
+            })
+            // Add only the fist slot (DFP slot) to GTP
+            .then((adSlot: HTMLElement) => {
+                addSlot(adSlot, false);
+                Promise.resolve(mediator.emit('page:commercial:comments'));
+            })
+    );
 };
 
-const refreshCommentAd = () => {
+const containsDMPU = (ad: Advert): boolean =>
+    ad.sizes.desktop.some(el => el[0] === 300 && el[1] === 600);
+
+const maybeUpgradeSlot = (ad: Advert, $adSlot: bonzo): Promise<void> => {
+    // No need to do anything if slot is already a DMPU; resolve immediately
+    if (containsDMPU(ad)) {
+        return Promise.resolve();
+    }
+    return fastdom.write(() => {
+        ad.sizes.desktop.push([300, 600]);
+        ad.slot.defineSizeMapping([[[0, 0], ad.sizes.desktop]]);
+        $adSlot[0].setAttribute(
+            'data-desktop',
+            '1,1|2,2|300,250|300,274|fluid|300,600'
+        );
+    });
+};
+
+const refreshCommentAd = ($adSlotContainer: bonzo): void => {
+    const $adSlot: bonzo = $('.js-ad-slot', $adSlotContainer);
     const commentAdvert = getAdvertById('dfp-ad--comments');
-    if (commentAdvert) {
-        refreshAdvert(commentAdvert);
+
+    if (commentAdvert && $adSlot.length) {
+        maybeUpgradeSlot(commentAdvert, $adSlot).then(() => {
+            refreshAdvert(commentAdvert);
+        });
     }
 };
 
@@ -70,6 +96,7 @@ export const initCommentAdverts = (): ?boolean => {
     mediator.once(
         'modules:comments:renderComments:rendered',
         (): void => {
+            const isLoggedIn: boolean = isUserLoggedIn();
             const $commentMainColumn: bonzo = $(
                 '.js-comments .content__main-column'
             );
@@ -77,58 +104,44 @@ export const initCommentAdverts = (): ?boolean => {
             fastdom
                 .read(() => $commentMainColumn.dim().height)
                 .then((mainColHeight: number) => {
-                    const isLoggedIn: boolean = isUserLoggedIn();
+                    // always insert an MPU/DMPU if the user is logged in, since the
+                    // containers are reordered, and comments are further from most-pop
                     if (
                         mainColHeight >= 800 ||
                         (isLoggedIn && mainColHeight >= 600)
                     ) {
-                        mediator.on(
-                            'discussion:comments:get-more-replies',
-                            () => {
-                                refreshCommentAd();
-                            }
-                        );
-                        insertCommentAd(
+                        return insertCommentAd(
                             $commentMainColumn,
                             $adSlotContainer,
                             true
                         );
-                    } else if (isLoggedIn && mainColHeight >= 400) {
-                        mediator.on(
-                            'discussion:comments:get-more-replies',
-                            () => {
-                                refreshCommentAd();
-                            }
-                        );
-                        insertCommentAd(
-                            $commentMainColumn,
-                            $adSlotContainer,
-                            true
-                        );
-                    } else if (isLoggedIn) {
-                        mediator.on(
-                            'discussion:comments:get-more-replies',
-                            () => {
-                                refreshCommentAd();
-                            }
-                        );
-                        insertCommentAd(
+                    }
+                    // this is the tricky one since we need to upgrade it to a DMPU asap
+                    if (isLoggedIn) {
+                        return insertCommentAd(
                             $commentMainColumn,
                             $adSlotContainer,
                             false
                         );
-                    } else {
-                        mediator.once(
-                            'discussion:comments:get-more-replies',
-                            () => {
-                                insertCommentAd(
-                                    $commentMainColumn,
-                                    $adSlotContainer,
-                                    true
-                                );
-                            }
-                        );
                     }
+                    mediator.once(
+                        'discussion:comments:get-more-replies',
+                        () => {
+                            insertCommentAd(
+                                $commentMainColumn,
+                                $adSlotContainer,
+                                true
+                            );
+                        }
+                    );
+                    return Promise.resolve();
+                })
+                .then(() => {
+                    mediator.on('discussion:comments:get-more-replies', () => {
+                        // when we refresh the slot, the sticky behavior runs again
+                        // this means the sticky-scroll height is corrected!
+                        refreshCommentAd($adSlotContainer);
+                    });
                 });
         }
     );
