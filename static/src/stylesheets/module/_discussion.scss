@@ -237,6 +237,10 @@ $avatarPadding: $gs-gutter / 2;
             }
         }
     }
+    // prevents DMPU from overlapping container below if it refreshes before the next page loads
+    .discussion__loader {
+        padding-bottom: 500px;
+    }
 }
 
 /* Toolbar
