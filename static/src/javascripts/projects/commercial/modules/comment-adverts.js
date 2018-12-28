@@ -74,12 +74,21 @@ const maybeUpgradeSlot = (ad: Advert, $adSlot: bonzo): Advert => {
     return ad;
 };
 
-const refreshCommentAd = ($adSlotContainer: bonzo): void => {
+const runSecondStage = (
+    $commentMainColumn: bonzo,
+    $adSlotContainer: bonzo
+): void => {
     const $adSlot: bonzo = $('.js-ad-slot', $adSlotContainer);
     const commentAdvert = getAdvertById('dfp-ad--comments');
 
     if (commentAdvert && $adSlot.length) {
+        // when we refresh the slot, the sticky behavior runs again
+        // this means the sticky-scroll height is corrected!
         refreshAdvert(maybeUpgradeSlot(commentAdvert, $adSlot));
+    }
+
+    if (!commentAdvert) {
+        insertCommentAd($commentMainColumn, $adSlotContainer, true);
     }
 };
 
@@ -121,23 +130,11 @@ export const initCommentAdverts = (): Promise<boolean> => {
                             false
                         );
                     }
-                    mediator.once(
-                        'discussion:comments:get-more-replies',
-                        () => {
-                            insertCommentAd(
-                                $commentMainColumn,
-                                $adSlotContainer,
-                                true
-                            );
-                        }
-                    );
                     return Promise.resolve();
                 })
                 .then(() => {
                     mediator.on('discussion:comments:get-more-replies', () => {
-                        // when we refresh the slot, the sticky behavior runs again
-                        // this means the sticky-scroll height is corrected!
-                        refreshCommentAd($adSlotContainer);
+                        runSecondStage($commentMainColumn, $adSlotContainer);
                     });
                 });
         }
@@ -149,6 +146,6 @@ export const _ = {
     maybeUpgradeSlot,
     createCommentSlots,
     insertCommentAd,
-    refreshCommentAd,
+    runSecondStage,
     containsDMPU,
 };

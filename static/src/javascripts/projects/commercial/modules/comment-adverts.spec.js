@@ -41,7 +41,7 @@ jest.mock('common/modules/identity/api', () => ({
     isUserLoggedIn: jest.fn(),
 }));
 
-const { createCommentSlots, refreshCommentAd } = _;
+const { createCommentSlots, runSecondStage, maybeUpgradeSlot } = _;
 const commercialFeaturesMock: any = commercialFeatures;
 const isUserLoggedIn: any = isUserLoggedIn_;
 const getAdvertById: any = getAdvertById_;
@@ -49,6 +49,23 @@ const refreshAdvert: any = refreshAdvert_;
 
 const mockHeight = (height: number) => {
     jest.spyOn(fastdom, 'read').mockReturnValue(Promise.resolve(height));
+};
+
+const generateInnerHtmlWithAdSlot = () => {
+    if (document.body) {
+        document.body.innerHTML = `
+            <div class="js-comments">
+                <div class="content__main-column">
+                    <div class="js-discussion__ad-slot">
+                        <div id="dfp-ad--comments"
+                            class="js-ad-slot ad-slot ad-slot--comments js-sticky-mpu
+                            data-mobile="1,1|2,2|300,250|300,274|fluid"
+                            data-desktop="1,1|2,2|300,250|300,274|fluid">
+                        </div>
+                    </div>
+                </div>
+            </div>`;
+    }
 };
 
 describe('createCommentSlots', () => {
@@ -92,6 +109,71 @@ describe('createCommentSlots', () => {
         const commentDmpu: HTMLElement = createCommentSlots(true)[0];
         expect(commentMpu.classList).toContain('js-sticky-mpu');
         expect(commentDmpu.classList).toContain('js-sticky-mpu');
+    });
+});
+
+describe('maybeUpgradeSlot', () => {
+    beforeEach(() => {
+        generateInnerHtmlWithAdSlot();
+    });
+
+    afterEach(() => {
+        if (document.body) {
+            document.body.innerHTML = '';
+        }
+        jest.resetAllMocks();
+    });
+
+    it('should upgrade the MPU to a DMPU where necessary', () => {
+        const advert: any = {
+            sizes: { desktop: [[300, 250]] },
+            slot: { defineSizeMapping: jest.fn() },
+        };
+        expect(advert.sizes.desktop).toEqual([[300, 250]]);
+
+        maybeUpgradeSlot(advert, $('.js-discussion__ad-slot'));
+        expect(advert.sizes.desktop).toEqual([[300, 250], [300, 600]]);
+        expect(advert.slot.defineSizeMapping).toHaveBeenCalledTimes(1);
+    });
+
+    it('should not alter the slot if the slot is already a DMPU', () => {
+        const advert: any = {
+            sizes: { desktop: [[300, 250], [300, 600]] },
+            slot: { defineSizeMapping: jest.fn() },
+        };
+        expect(advert.sizes.desktop).toEqual([[300, 250], [300, 600]]);
+
+        maybeUpgradeSlot(advert, $('.js-discussion__ad-slot'));
+        expect(advert.sizes.desktop).toEqual([[300, 250], [300, 600]]);
+        expect(advert.slot.defineSizeMapping).toHaveBeenCalledTimes(0);
+    });
+});
+
+describe('runSecondStage', () => {
+    beforeEach(() => {
+        generateInnerHtmlWithAdSlot();
+    });
+
+    afterEach(() => {
+        if (document.body) {
+            document.body.innerHTML = '';
+        }
+        jest.resetAllMocks();
+    });
+
+    it('should upgrade a MPU to DMPU and immediately refresh the slot', () => {
+        const $adSlotContainer = $('.js-discussion__ad-slot');
+        const $commentMainColumn = $('.js-comments .content__main-column');
+        const advert: any = {
+            sizes: { desktop: [[300, 250]] },
+            slot: { defineSizeMapping: jest.fn() },
+        };
+        getAdvertById.mockReturnValue(advert);
+
+        runSecondStage($commentMainColumn, $adSlotContainer);
+        expect(advert.slot.defineSizeMapping).toHaveBeenCalledTimes(1);
+        expect(getAdvertById.mock.calls).toEqual([['dfp-ad--comments']]);
+        expect(refreshAdvert).toHaveBeenCalledTimes(1);
     });
 });
 
@@ -231,71 +313,5 @@ describe('initCommentAdverts', () => {
                     }
                 );
             });
-    });
-});
-
-describe('refreshCommentAd', () => {
-    beforeEach(() => {
-        if (document.body) {
-            document.body.innerHTML = `
-                <div class="js-comments">
-                    <div class="content__main-column">
-                        <div class="js-discussion__ad-slot">
-                            <div id="dfp-ad--comments"
-                                class="js-ad-slot ad-slot ad-slot--comments js-sticky-mpu
-                                data-mobile="1,1|2,2|300,250|300,274|fluid"
-                                data-desktop="1,1|2,2|300,250|300,274|fluid">
-                            </div>
-                        </div>
-                    </div>
-                </div>`;
-        }
-    });
-
-    afterEach(() => {
-        if (document.body) {
-            document.body.innerHTML = '';
-        }
-        jest.resetAllMocks();
-    });
-
-    it('should call refreshAdvert once', () => {
-        getAdvertById.mockReturnValue({
-            sizes: { desktop: [[300, 250]] },
-            slot: { defineSizeMapping: jest.fn() },
-        });
-        refreshCommentAd($('.js-discussion__ad-slot'));
-        expect(getAdvertById.mock.calls).toEqual([['dfp-ad--comments']]);
-        expect(refreshAdvert).toHaveBeenCalledTimes(1);
-    });
-
-    it('should upgrade the MPU to a DMPU where necessary', () => {
-        const adSlot = (document.querySelector('.js-ad-slot'): any);
-        const advert = {
-            sizes: { desktop: [[300, 250]] },
-            slot: { defineSizeMapping: jest.fn() },
-        };
-        getAdvertById.mockReturnValue(advert);
-
-        refreshCommentAd($('.js-discussion__ad-slot'));
-        expect(advert.sizes.desktop).toEqual([[300, 250], [300, 600]]);
-        expect(advert.slot.defineSizeMapping).toHaveBeenCalledTimes(1);
-        expect(adSlot.getAttribute('data-desktop')).toBe(
-            '1,1|2,2|300,250|300,274|fluid|300,600'
-        );
-    });
-
-    it('should not alter the slot if the slot is already a DMPU', () => {
-        const advert = {
-            sizes: { desktop: [[300, 250], [300, 600]] },
-            slot: { defineSizeMapping: jest.fn() },
-        };
-        getAdvertById.mockReturnValue(advert);
-        expect(advert.sizes.desktop).toEqual([[300, 250], [300, 600]]);
-
-        refreshCommentAd($('.js-discussion__ad-slot'));
-        expect(advert.slot.defineSizeMapping).toHaveBeenCalledTimes(0);
-        expect(getAdvertById.mock.calls).toEqual([['dfp-ad--comments']]);
-        expect(refreshAdvert).toHaveBeenCalledTimes(1);
     });
 });
