@@ -175,6 +175,21 @@ describe('runSecondStage', () => {
         expect(getAdvertById.mock.calls).toEqual([['dfp-ad--comments']]);
         expect(refreshAdvert).toHaveBeenCalledTimes(1);
     });
+
+    it('should not upgrade a DMPU yet still immediately refresh the slot', () => {
+        const $adSlotContainer = $('.js-discussion__ad-slot');
+        const $commentMainColumn = $('.js-comments .content__main-column');
+        const advert: any = {
+            sizes: { desktop: [[300, 250]] },
+            slot: { defineSizeMapping: jest.fn() },
+        };
+        getAdvertById.mockReturnValue(advert);
+
+        runSecondStage($commentMainColumn, $adSlotContainer);
+        expect(advert.slot.defineSizeMapping).toHaveBeenCalledTimes(1);
+        expect(getAdvertById.mock.calls).toEqual([['dfp-ad--comments']]);
+        expect(refreshAdvert).toHaveBeenCalledTimes(1);
+    });
 });
 
 describe('initCommentAdverts', () => {
@@ -268,50 +283,39 @@ describe('initCommentAdverts', () => {
         });
     });
 
-    it('should otherwise set an EventListener that will insert the slot when comments are expanded', done => {
+    it('should otherwise set the EventListener that can insert the slot', done => {
+        const spyOn = jest.spyOn(fakeMediator, 'on');
         mockHeight(300);
-        initCommentAdverts().then(() => {
-            fakeMediator.emit('modules:comments:renderComments:rendered');
-            fakeMediator.emit('discussion:comments:get-more-replies');
-            fakeMediator.once('page:commercial:comments', () => {
-                const adSlot: HTMLElement = (document.querySelector(
-                    '.js-ad-slot'
-                ): any);
-                expect(addSlot).toHaveBeenCalledTimes(1);
-                expect(adSlot.getAttribute('data-desktop')).toBe(
-                    '1,1|2,2|300,250|620,1|620,350|300,274|fluid'
+        initCommentAdverts()
+            .then(result => {
+                fakeMediator.emit('modules:comments:renderComments:rendered');
+                expect(result).toBe(true);
+            })
+            .then(() => {
+                expect(spyOn.mock.calls[0]).toEqual(
+                    expect.arrayContaining([
+                        'discussion:comments:get-more-replies',
+                    ])
                 );
                 done();
             });
-        });
     });
 
-    it('should refresh the comments slot when more comments is clicked', done => {
+    it('should always set the EventListener', done => {
+        const spyOn = jest.spyOn(fakeMediator, 'on');
         mockHeight(800);
-        getAdvertById.mockReturnValue({
-            sizes: { desktop: [[300, 600]] },
-            slot: { defineSizeMapping: jest.fn() },
-        });
-
         initCommentAdverts()
-            .then(() => {
+            .then(result => {
                 fakeMediator.emit('modules:comments:renderComments:rendered');
-                fakeMediator.once('page:commercial:comments', () => {
-                    fakeMediator.emit('discussion:comments:get-more-replies');
-                });
+                expect(result).toBe(true);
             })
             .then(() => {
-                fakeMediator.emit('discussion:comments:get-more-replies');
-                fakeMediator.once(
-                    'discussion:comments:get-more-replies',
-                    () => {
-                        expect(getAdvertById.mock.calls).toEqual([
-                            ['dfp-ad--comments'],
-                        ]);
-                        expect(refreshAdvert).toHaveBeenCalledTimes(1);
-                        done();
-                    }
+                expect(spyOn.mock.calls[0]).toEqual(
+                    expect.arrayContaining([
+                        'discussion:comments:get-more-replies',
+                    ])
                 );
+                done();
             });
     });
 });

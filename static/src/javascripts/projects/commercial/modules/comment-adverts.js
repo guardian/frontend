@@ -116,23 +116,18 @@ export const initCommentAdverts = (): Promise<boolean> => {
                         mainColHeight >= 800 ||
                         (isLoggedIn && mainColHeight >= 600)
                     ) {
-                        return insertCommentAd(
+                        insertCommentAd(
                             $commentMainColumn,
                             $adSlotContainer,
                             true
                         );
-                    }
-                    // this is the tricky one since we need to upgrade it to a DMPU asap
-                    if (isLoggedIn) {
-                        return insertCommentAd(
+                    } else if (isLoggedIn) {
+                        insertCommentAd(
                             $commentMainColumn,
                             $adSlotContainer,
                             false
                         );
                     }
-                    return Promise.resolve();
-                })
-                .then(() => {
                     mediator.on('discussion:comments:get-more-replies', () => {
                         runSecondStage($commentMainColumn, $adSlotContainer);
                     });
