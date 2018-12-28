@@ -60,19 +60,18 @@ const insertCommentAd = (
 const containsDMPU = (ad: Advert): boolean =>
     ad.sizes.desktop.some(el => el[0] === 300 && el[1] === 600);
 
-const maybeUpgradeSlot = (ad: Advert, $adSlot: bonzo): Promise<void> => {
-    // No need to do anything if slot is already a DMPU; resolve immediately
-    if (containsDMPU(ad)) {
-        return Promise.resolve();
-    }
-    return fastdom.write(() => {
+const maybeUpgradeSlot = (ad: Advert, $adSlot: bonzo): Advert => {
+    if (!containsDMPU(ad)) {
         ad.sizes.desktop.push([300, 600]);
         ad.slot.defineSizeMapping([[[0, 0], ad.sizes.desktop]]);
-        $adSlot[0].setAttribute(
-            'data-desktop',
-            '1,1|2,2|300,250|300,274|fluid|300,600'
-        );
-    });
+        fastdom.write(() => {
+            $adSlot[0].setAttribute(
+                'data-desktop',
+                '1,1|2,2|300,250|300,274|fluid|300,600'
+            );
+        });
+    }
+    return ad;
 };
 
 const refreshCommentAd = ($adSlotContainer: bonzo): void => {
@@ -80,17 +79,15 @@ const refreshCommentAd = ($adSlotContainer: bonzo): void => {
     const commentAdvert = getAdvertById('dfp-ad--comments');
 
     if (commentAdvert && $adSlot.length) {
-        maybeUpgradeSlot(commentAdvert, $adSlot).then(() => {
-            refreshAdvert(commentAdvert);
-        });
+        refreshAdvert(maybeUpgradeSlot(commentAdvert, $adSlot));
     }
 };
 
-export const initCommentAdverts = (): ?boolean => {
+export const initCommentAdverts = (): Promise<boolean> => {
     const $adSlotContainer: bonzo = $('.js-discussion__ad-slot');
 
     if (!commercialFeatures.commentAdverts || !$adSlotContainer.length) {
-        return false;
+        return Promise.resolve(false);
     }
 
     mediator.once(
@@ -145,6 +142,13 @@ export const initCommentAdverts = (): ?boolean => {
                 });
         }
     );
+    return Promise.resolve(true);
 };
 
-export const _ = { createCommentSlots, insertCommentAd, refreshCommentAd };
+export const _ = {
+    maybeUpgradeSlot,
+    createCommentSlots,
+    insertCommentAd,
+    refreshCommentAd,
+    containsDMPU,
+};

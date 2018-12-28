@@ -1,11 +1,12 @@
 // @flow
-import mediator from 'lib/mediator';
+import $ from 'lib/$';
+import fakeMediator from 'lib/mediator';
 import fastdom from 'lib/fastdom-promise';
 import { addSlot } from 'commercial/modules/dfp/add-slot';
 import { isUserLoggedIn as isUserLoggedIn_ } from 'common/modules/identity/api';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { initCommentAdverts, _ } from 'commercial/modules/comment-adverts';
-import { refreshAdvert } from 'commercial/modules/dfp/load-advert';
+import { refreshAdvert as refreshAdvert_ } from 'commercial/modules/dfp/load-advert';
 import { getAdvertById as getAdvertById_ } from 'commercial/modules/dfp/get-advert-by-id';
 
 // Workaround to fix issue where dataset is missing from jsdom, and solve the
@@ -15,6 +16,7 @@ Object.defineProperty(HTMLElement.prototype, 'dataset', {
     value: {},
 });
 
+jest.mock('lib/mediator');
 jest.mock('lib/config', () => ({ page: {}, get: () => false }));
 
 jest.mock('commercial/modules/dfp/add-slot', () => ({
@@ -39,11 +41,11 @@ jest.mock('common/modules/identity/api', () => ({
     isUserLoggedIn: jest.fn(),
 }));
 
-const { createCommentSlots } = _;
-
+const { createCommentSlots, refreshCommentAd } = _;
 const commercialFeaturesMock: any = commercialFeatures;
 const isUserLoggedIn: any = isUserLoggedIn_;
 const getAdvertById: any = getAdvertById_;
+const refreshAdvert: any = refreshAdvert_;
 
 const mockHeight = (height: number) => {
     jest.spyOn(fastdom, 'read').mockReturnValue(Promise.resolve(height));
@@ -51,6 +53,8 @@ const mockHeight = (height: number) => {
 
 describe('createCommentSlots', () => {
     beforeEach(() => {
+        isUserLoggedIn.mockReturnValue(false);
+        commercialFeaturesMock.commentAdverts = true;
         if (document.body) {
             document.body.innerHTML = `<div class="js-comments">
             <div class="content__main-column">
@@ -63,6 +67,7 @@ describe('createCommentSlots', () => {
             document.body.innerHTML = '';
         }
         jest.resetAllMocks();
+        fakeMediator.removeAllListeners();
     });
 
     it('should return an ad slot with the correct sizes', () => {
@@ -92,7 +97,6 @@ describe('createCommentSlots', () => {
 
 describe('initCommentAdverts', () => {
     beforeEach(() => {
-        jest.resetAllMocks();
         isUserLoggedIn.mockReturnValue(false);
         commercialFeaturesMock.commentAdverts = true;
         if (document.body) {
@@ -107,115 +111,191 @@ describe('initCommentAdverts', () => {
             document.body.innerHTML = '';
         }
         jest.resetAllMocks();
+        fakeMediator.removeAllListeners();
     });
 
-    it('should return false if commentAdverts are switched off', () => {
+    it('should return false if commentAdverts are switched off', done => {
         commercialFeaturesMock.commentAdverts = false;
-        expect(initCommentAdverts()).toBe(false);
+        initCommentAdverts().then(result => {
+            expect(result).toBe(false);
+            done();
+        });
     });
 
-    it('should return false if there is no comments ad slot container', () => {
+    it('should return false if there is no comments ad slot container', done => {
         if (document.body) {
             document.body.innerHTML = `<div class="js-comments">
                 <div class="content__main-column"></div></div>`;
         }
-        expect(initCommentAdverts()).toBe(false);
+        initCommentAdverts().then(result => {
+            expect(result).toBe(false);
+            done();
+        });
     });
 
     it('should insert a DMPU slot if there is enough space', done => {
-        mockHeight(800);
-        initCommentAdverts();
-        mediator.emit('modules:comments:renderComments:rendered');
-        mediator.once('page:defaultcommercial:comments', () => {
-            const adSlot: HTMLElement = (document.querySelector(
-                '.js-ad-slot'
-            ): any);
-            expect(addSlot).toHaveBeenCalledTimes(1);
-            expect(adSlot.getAttribute('data-desktop')).toBe(
-                '1,1|2,2|300,250|620,1|620,350|300,274|fluid|300,600'
-            );
-            done();
+        mockHeight(800); // at 800px we insert a DMPU regardless
+        initCommentAdverts().then(() => {
+            fakeMediator.emit('modules:comments:renderComments:rendered');
+            fakeMediator.once('page:commercial:comments', () => {
+                const adSlot: HTMLElement = (document.querySelector(
+                    '.js-ad-slot'
+                ): any);
+                expect(addSlot).toHaveBeenCalledTimes(1);
+                expect(adSlot.getAttribute('data-desktop')).toBe(
+                    '1,1|2,2|300,250|620,1|620,350|300,274|fluid|300,600'
+                );
+                done();
+            });
         });
     });
 
     it('should insert a DMPU slot if there is space, and the user is logged in', done => {
-        mockHeight(600);
+        mockHeight(600); // at 600px we can insert a DMPU if the user is logged in
         isUserLoggedIn.mockReturnValue(true);
-        initCommentAdverts();
-        mediator.emit('modules:comments:renderComments:rendered');
-        mediator.once('page:defaultcommercial:comments', () => {
-            const adSlot: HTMLElement = (document.querySelector(
-                '.js-ad-slot'
-            ): any);
-            expect(addSlot).toHaveBeenCalledTimes(1);
-            expect(adSlot.getAttribute('data-desktop')).toBe(
-                '1,1|2,2|300,250|620,1|620,350|300,274|fluid|300,600'
-            );
-            done();
+        initCommentAdverts().then(() => {
+            fakeMediator.emit('modules:comments:renderComments:rendered');
+            fakeMediator.once('page:commercial:comments', () => {
+                const adSlot: HTMLElement = (document.querySelector(
+                    '.js-ad-slot'
+                ): any);
+                expect(addSlot).toHaveBeenCalledTimes(1);
+                expect(adSlot.getAttribute('data-desktop')).toBe(
+                    '1,1|2,2|300,250|620,1|620,350|300,274|fluid|300,600'
+                );
+                done();
+            });
         });
     });
 
-    it('should insert a MPU if a DMPU does not fit, and the user is logged in', done => {
+    it('should insert an MPU if the user is logged in, and the DMPU will not fit', done => {
+        mockHeight(300); // at 300px we can insert an MPU if the user is logged in
+        isUserLoggedIn.mockReturnValue(true);
+        initCommentAdverts().then(() => {
+            fakeMediator.emit('modules:comments:renderComments:rendered');
+            fakeMediator.once('page:commercial:comments', () => {
+                const adSlot: HTMLElement = (document.querySelector(
+                    '.js-ad-slot'
+                ): any);
+                expect(addSlot).toHaveBeenCalledTimes(1);
+                expect(adSlot.getAttribute('data-desktop')).toBe(
+                    '1,1|2,2|300,250|620,1|620,350|300,274|fluid'
+                );
+                done();
+            });
+        });
+    });
+
+    it('should otherwise set an EventListener that will insert the slot when comments are expanded', done => {
         mockHeight(300);
-        isUserLoggedIn.mockReturnValue(true);
-        initCommentAdverts();
-        mediator.emit('modules:comments:renderComments:rendered');
-        mediator.once('page:defaultcommercial:comments', () => {
-            const adSlot: HTMLElement = (document.querySelector(
-                '.js-ad-slot'
-            ): any);
-            expect(addSlot).toHaveBeenCalledTimes(1);
-            expect(adSlot.getAttribute('data-desktop')).toBe(
-                '1,1|2,2|300,250|620,1|620,350|300,274|fluid'
-            );
-            done();
+        initCommentAdverts().then(() => {
+            fakeMediator.emit('modules:comments:renderComments:rendered');
+            fakeMediator.emit('discussion:comments:get-more-replies');
+            fakeMediator.once('page:commercial:comments', () => {
+                const adSlot: HTMLElement = (document.querySelector(
+                    '.js-ad-slot'
+                ): any);
+                expect(addSlot).toHaveBeenCalledTimes(1);
+                expect(adSlot.getAttribute('data-desktop')).toBe(
+                    '1,1|2,2|300,250|620,1|620,350|300,274|fluid'
+                );
+                done();
+            });
         });
     });
 
-    it('should upgrade the MPU to a DMPU when there is space', done => {
+    it('should refresh the comments slot when more comments is clicked', done => {
         mockHeight(800);
-        initCommentAdverts();
-        mediator.emit('modules:comments:renderComments:rendered');
-        mediator.once('page:defaultcommercial:comments', () => {
-            const adSlot: HTMLDivElement = (document.querySelector(
-                '.js-ad-slot'
-            ): any);
-            expect(addSlot).toHaveBeenCalledTimes(1);
-            expect(adSlot.getAttribute('data-desktop')).toBe(
-                '1,1|2,2|300,250|620,1|620,350|300,274|fluid|300,600'
-            );
-            done();
+        getAdvertById.mockReturnValue({
+            sizes: { desktop: [[300, 600]] },
+            slot: { defineSizeMapping: jest.fn() },
         });
+
+        initCommentAdverts()
+            .then(() => {
+                fakeMediator.emit('modules:comments:renderComments:rendered');
+                fakeMediator.once('page:commercial:comments', () => {
+                    fakeMediator.emit('discussion:comments:get-more-replies');
+                });
+            })
+            .then(() => {
+                fakeMediator.emit('discussion:comments:get-more-replies');
+                fakeMediator.once(
+                    'discussion:comments:get-more-replies',
+                    () => {
+                        expect(getAdvertById.mock.calls).toEqual([
+                            ['dfp-ad--comments'],
+                        ]);
+                        expect(refreshAdvert).toHaveBeenCalledTimes(1);
+                        done();
+                    }
+                );
+            });
+    });
+});
+
+describe('refreshCommentAd', () => {
+    beforeEach(() => {
+        if (document.body) {
+            document.body.innerHTML = `
+                <div class="js-comments">
+                    <div class="content__main-column">
+                        <div class="js-discussion__ad-slot">
+                            <div id="dfp-ad--comments"
+                                class="js-ad-slot ad-slot ad-slot--comments js-sticky-mpu
+                                data-mobile="1,1|2,2|300,250|300,274|fluid"
+                                data-desktop="1,1|2,2|300,250|300,274|fluid">
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+        }
     });
 
-    it('should refresh comments slot when more comments is clicked', done => {
-        mockHeight(800);
-        initCommentAdverts();
-        getAdvertById.mockReturnValue(null);
-        mediator.emit('modules:comments:renderComments:rendered');
-        mediator.emit('discussion:comments:get-more-replies');
-        mediator.once('page:defaultcommercial:comments', () => {
-            expect(getAdvertById).toHaveBeenCalledTimes(1);
-            expect(refreshAdvert).toHaveBeenCalledTimes(1);
-            done();
-        });
+    afterEach(() => {
+        if (document.body) {
+            document.body.innerHTML = '';
+        }
+        jest.resetAllMocks();
     });
 
-    it('should upgrade an MPU to a DMPU when more comments is clicked', done => {
-        mockHeight(400);
-        isUserLoggedIn.mockReturnValue(true);
-        initCommentAdverts();
-        mediator.emit('modules:comments:renderComments:rendered');
-        mediator.emit('discussion:comments:get-more-replies');
-        mediator.once('page:defaultcommercial:comments', () => {
-            const adSlot: HTMLElement = (document.querySelector(
-                '.js-ad-slot'
-            ): any);
-            expect(addSlot).toHaveBeenCalledTimes(1);
-            expect(adSlot.getAttribute('data-desktop')).toBe(
-                '1,1|2,2|300,250|620,1|620,350|300,274|fluid|300,600'
-            );
-            done();
+    it('should call refreshAdvert once', () => {
+        getAdvertById.mockReturnValue({
+            sizes: { desktop: [[300, 250]] },
+            slot: { defineSizeMapping: jest.fn() },
         });
+        refreshCommentAd($('.js-discussion__ad-slot'));
+        expect(getAdvertById.mock.calls).toEqual([['dfp-ad--comments']]);
+        expect(refreshAdvert).toHaveBeenCalledTimes(1);
+    });
+
+    it('should upgrade the MPU to a DMPU where necessary', () => {
+        const adSlot = (document.querySelector('.js-ad-slot'): any);
+        const advert = {
+            sizes: { desktop: [[300, 250]] },
+            slot: { defineSizeMapping: jest.fn() },
+        };
+        getAdvertById.mockReturnValue(advert);
+
+        refreshCommentAd($('.js-discussion__ad-slot'));
+        expect(advert.sizes.desktop).toEqual([[300, 250], [300, 600]]);
+        expect(advert.slot.defineSizeMapping).toHaveBeenCalledTimes(1);
+        expect(adSlot.getAttribute('data-desktop')).toBe(
+            '1,1|2,2|300,250|300,274|fluid|300,600'
+        );
+    });
+
+    it('should not alter the slot if the slot is already a DMPU', () => {
+        const advert = {
+            sizes: { desktop: [[300, 250], [300, 600]] },
+            slot: { defineSizeMapping: jest.fn() },
+        };
+        getAdvertById.mockReturnValue(advert);
+        expect(advert.sizes.desktop).toEqual([[300, 250], [300, 600]]);
+
+        refreshCommentAd($('.js-discussion__ad-slot'));
+        expect(advert.slot.defineSizeMapping).toHaveBeenCalledTimes(0);
+        expect(getAdvertById.mock.calls).toEqual([['dfp-ad--comments']]);
+        expect(refreshAdvert).toHaveBeenCalledTimes(1);
     });
 });
