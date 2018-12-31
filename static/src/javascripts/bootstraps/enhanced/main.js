@@ -6,7 +6,7 @@ import $ from 'lib/$';
 import config from 'lib/config';
 import { markTime } from 'lib/user-timing';
 import { catchErrorsWithContext } from 'lib/robust';
-import { segmentUser, run as abRun } from 'common/modules/experiments/ab';
+import { segmentUser, run as abRun } from 'common/modules/experiments/ab-old';
 import { getActiveTests } from 'common/modules/experiments/ab-tests';
 import {
     registerImpressionEvents,

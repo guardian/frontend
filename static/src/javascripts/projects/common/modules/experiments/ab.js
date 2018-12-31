@@ -1,101 +1,80 @@
 // @flow
 
-import { noop } from 'lib/noop';
 import {
-    getActiveTests,
-    getTest,
-    TESTS,
-} from 'common/modules/experiments/ab-tests';
-import { buildOphanSubmitter } from 'common/modules/experiments/ab-ophan';
-import {
-    isInTest,
-    variantIdFor,
-} from 'common/modules/experiments/segment-util';
-import { testCanBeRun } from 'common/modules/experiments/test-can-run-checks';
-import {
-    isParticipating,
-    getParticipations,
-    getVariant,
-    addParticipation,
-    getTestVariantId,
-    cleanParticipations,
-    getForcedTests,
-} from 'common/modules/experiments/utils';
+    getMvtNumValues,
+    getMvtValue,
+} from 'common/modules/analytics/mvt-cookie';
+import config from 'lib/config';
 
-// Finds variant in specific tests and runs it
-const runTest = (test: ABTest): void => {
-    if (isParticipating(test) && testCanBeRun(test)) {
-        const participations = getParticipations();
-        const variantId = participations[test.id].variant;
-        const variant = getVariant(test, variantId);
+const isTestSwitchedOn = (test: ABTest): boolean =>
+    config.switches[`ab${test.id}`];
 
-        if (variant) {
-            variant.test(variant.options || {});
-        } else if (!isInTest(test) && test.notInTest) {
-            test.notInTest();
-        }
-    }
+const isExpired = (testExpiry: string): boolean => {
+    // new Date(test.expiry) sets the expiry time to 00:00:00
+    // Using SetHours allows a test to run until the END of the expiry day
+    const startOfToday = new Date().setHours(0, 0, 0, 0);
+    return startOfToday > new Date(testExpiry);
 };
 
-const allocateUserToTest = test => {
-    // Only allocate the user if the test is valid and they're not already participating.
-    if (testCanBeRun(test) && !isParticipating(test)) {
-        addParticipation(test, variantIdFor(test));
-    }
-};
-
-export const shouldRunTest = (testId: string, variantName: string) => {
-    const test = getTest(testId);
+const testCanBeRun = (test: ABTest): boolean => {
+    const expired = isExpired(test.expiry);
+    const isSensitive = config.page.isSensitive;
+    const shouldShowForSensitive = !!test.showForSensitive;
+    const isTestOn = isTestSwitchedOn(test);
+    const canTestBeRun = !test.canRun || test.canRun();
 
     return (
-        test &&
-        isParticipating(test) &&
-        getTestVariantId(testId) === variantName &&
-        testCanBeRun(test)
+        (isSensitive ? shouldShowForSensitive : true) &&
+        isTestOn &&
+        !expired &&
+        canTestBeRun
     );
 };
 
-export const segment = (tests: $ReadOnlyArray<ABTest>) =>
-    tests.forEach(allocateUserToTest);
+/**
+ * Determine whether the user is in the test or not and return the associated
+ * variant ID.
+ *
+ * The test population is just a subset of mvt ids. A test population must
+ * begin from a specific value. Overlapping test ranges are permitted.
+ *
+ * @return {String} variant ID
+ */
+const computeVariantFromMvtCookie = (test: ABTest): ?Variant => {
+    const smallestTestId = getMvtNumValues() * test.audienceOffset;
+    const largestTestId = smallestTestId + getMvtNumValues() * test.audience;
+    const mvtCookieId = Number(getMvtValue());
 
-export const forceSegment = (testId: string, variantName: string) => {
-    const test: ?ABTest = getActiveTests().find(t => t.id === testId);
-    if (test) addParticipation(test, variantName);
-};
-
-export const forceVariantCompleteFunctions = (
-    testId: string,
-    variantId: string
-) => {
-    const test = getTest(testId);
-
-    if (test) {
-        const variant =
-            test &&
-            test.variants.filter(
-                v => v.id.toLowerCase() === variantId.toLowerCase()
-            )[0];
-        const impression = (variant && variant.impression) || noop;
-        const complete = (variant && variant.success) || noop;
-
-        impression(buildOphanSubmitter(test, variantId, false));
-        complete(buildOphanSubmitter(test, variantId, true));
-    }
-};
-
-export const segmentUser = () => {
-    const forcedIntoTests = getForcedTests();
-
-    if (forcedIntoTests.length) {
-        forcedIntoTests.forEach(test => {
-            forceSegment(test.testId, test.variantId);
-            forceVariantCompleteFunctions(test.testId, test.variantId);
-        });
-    } else {
-        segment(getActiveTests());
+    if (
+        mvtCookieId &&
+        mvtCookieId > smallestTestId &&
+        mvtCookieId <= largestTestId
+    ) {
+        // This mvt test id is in the test range, so allocate it to a test variant.
+        return test.variants[mvtCookieId % test.variants.length];
     }
 
-    cleanParticipations(TESTS);
+    return null;
 };
 
-export const run = (tests: $ReadOnlyArray<ABTest>) => tests.forEach(runTest);
+export const runnableTest = (test: ABTest): ?RunnableABTest => {
+    const variantToRun = computeVariantFromMvtCookie(test);
+
+    if (testCanBeRun(test) && variantToRun) {
+        return {
+            ...test,
+            variantToRun
+        }
+    }
+
+    return null;
+};
+
+export const allRunnableTests = (tests: ABTest[]): RunnableABTest[] =>
+    tests.reduce((accumulator, currentValue) => {
+        const rt = runnableTest(currentValue);
+        return rt ? [...accumulator, rt] : accumulator;
+    }, []);
+
+export const firstRunnableTest = (tests: $ReadOnlyArray<ABTest>): ?RunnableABTest =>
+    tests.map(test => runnableTest(test)).find(runnableTest => runnableTest !== null);

@@ -27,6 +27,10 @@ declare type ABTest = {
     notInTest?: () => void,
 };
 
+declare type RunnableABTest = ABTest & {
+    variantToRun: Variant,
+};
+
 declare type AcquisitionsABTest = ABTest & {
     campaignId: string,
     componentType: OphanComponentType,

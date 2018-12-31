@@ -1,5 +1,5 @@
 // @flow
-import { segment, forceSegment, run } from 'common/modules/experiments/ab';
+import { segment, forceSegment, run } from 'common/modules/experiments/ab-old';
 import {
     getParticipations,
     isParticipating,

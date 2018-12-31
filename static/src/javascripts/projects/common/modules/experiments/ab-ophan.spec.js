@@ -1,5 +1,5 @@
 // @flow
-import { segment } from 'common/modules/experiments/ab';
+import { segment } from 'common/modules/experiments/ab-old';
 import {
     registerCompleteEvents,
     registerImpressionEvents,
