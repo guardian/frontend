@@ -12,7 +12,6 @@ import throttle from 'lodash/throttle';
 import interactionTracking from 'common/modules/analytics/interaction-tracking';
 import { loadCssPromise } from 'lib/load-css-promise';
 
-
 class HostedGallery {
     useSwipe: boolean;
     swipeThreshold: number;
@@ -475,7 +474,6 @@ class HostedGallery {
     }
 }
 
-HostedGallery.prototype.foo = 'hello'
 HostedGallery.prototype.states = {
     image: {
         enter() {
