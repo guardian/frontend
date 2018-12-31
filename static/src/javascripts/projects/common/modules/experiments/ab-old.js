@@ -11,7 +11,7 @@ import {
     isInTest,
     variantIdFor,
 } from 'common/modules/experiments/segment-util';
-import { testCanBeRun } from 'common/modules/experiments/test-can-run-checks';
+import { testCanBeRun, variantCanBeRun } from 'common/modules/experiments/test-can-run-checks';
 import {
     isParticipating,
     getParticipations,
@@ -29,7 +29,7 @@ const runTest = (test: ABTest): void => {
         const variantId = participations[test.id].variant;
         const variant = getVariant(test, variantId);
 
-        if (variant) {
+        if (variant && variantCanBeRun(variant)) {
             variant.test(variant.options || {});
         } else if (!isInTest(test) && test.notInTest) {
             test.notInTest();

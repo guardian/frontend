@@ -11,6 +11,11 @@ export const isExpired = (testExpiry: string): boolean => {
     return startOfToday > new Date(testExpiry);
 };
 
+// If variant has a canRun, we should take into account.
+// If not, assume it can run.
+export const variantCanBeRun = (variant: Variant): boolean =>
+    !(variant.canRun && !variant.canRun());
+
 export const testCanBeRun = (test: ABTest): boolean => {
     const expired = isExpired(test.expiry);
     const isSensitive = config.page.isSensitive;

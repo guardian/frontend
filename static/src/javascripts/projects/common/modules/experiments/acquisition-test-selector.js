@@ -4,8 +4,7 @@ import {
     getForcedTests,
     getForcedVariant,
 } from 'common/modules/experiments/utils';
-import { testCanBeRun } from 'common/modules/experiments/test-can-run-checks';
-import { viewsInPreviousDays } from 'common/modules/commercial/acquisitions-view-log';
+import { testCanBeRun, variantCanBeRun } from 'common/modules/experiments/test-can-run-checks';
 import { askFourEarning } from 'common/modules/experiments/tests/contributions-epic-ask-four-earning';
 import { acquisitionsEpicLiveblog } from 'common/modules/experiments/tests/acquisitions-epic-liveblog';
 import { acquisitionsEpicAlwaysAskIfTagged } from 'common/modules/experiments/tests/acquisitions-epic-always-ask-if-tagged';
@@ -20,28 +19,6 @@ import { acquisitionsEpicFromGoogleDocFiveVariants } from 'common/modules/experi
 import { acquisitionsEpicAuPostOneMillion } from 'common/modules/experiments/tests/acquisitions-epic-au-post-one-million';
 import { acquisitionsEpicUsTopTicker } from 'common/modules/experiments/tests/acquisitions-epic-us-top-ticker';
 
-const isViewable = (v: Variant, t: ABTest): boolean => {
-    if (!v.options) return false;
-    if (v.options.isUnlimited) return true;
-    if (!v.options.maxViews) return false;
-
-    const {
-        count: maxViewCount,
-        days: maxViewDays,
-        minDaysBetweenViews: minViewDays,
-    } = v.options.maxViews;
-
-    const isUnlimited = v.options.isUnlimited;
-    // Should all acquisition tests be of type EpicABTest?
-    // $FlowFixMe
-    const testId = t.useLocalViewLog ? t.id : undefined;
-
-    const withinViewLimit =
-        viewsInPreviousDays(maxViewDays, testId) < maxViewCount;
-    const enoughDaysBetweenViews =
-        viewsInPreviousDays(minViewDays, testId) === 0;
-    return (withinViewLimit && enoughDaysBetweenViews) || isUnlimited;
-};
 
 /**
  * acquisition tests in priority order (highest to lowest)
@@ -70,7 +47,8 @@ export const getTest = (): ?AcquisitionsABTest => {
     if (forcedTests.length)
         return forcedTests.find(t => {
             const variant: ?Variant = getForcedVariant(t);
-            return variant && testCanBeRun(t) && isViewable(variant, t);
+
+            return variant && variantCanBeRun(variant) && testCanBeRun(t);
         });
 
     return acquisitionsTests.find(t => {
@@ -78,8 +56,8 @@ export const getTest = (): ?AcquisitionsABTest => {
         if (variant) {
             const isTestRunnable = testCanBeRun(t);
             const isUserInTest = isInTest(t);
-            const isEpicViewable = isViewable(variant, t);
-            return isTestRunnable && isUserInTest && isEpicViewable;
+            const isVariantRunnable = variantCanBeRun(variant);
+            return isTestRunnable && isUserInTest && isVariantRunnable;
         }
         return false;
     });
