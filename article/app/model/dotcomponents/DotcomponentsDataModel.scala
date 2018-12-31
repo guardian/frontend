@@ -11,8 +11,7 @@ import play.api.mvc.RequestHeader
 import views.support.{CamelCase, GUDateTimeFormat}
 import ai.x.play.json.Jsonx
 import common.Maps.RichMap
-import ai.x.play.json.implicits.optionWithNull
-import conf.switches.Switch // Note, required despite Intellij saying otherwise
+import ai.x.play.json.implicits.optionWithNull // Note, required despite Intellij saying otherwise
 
 // We have introduced our own set of objects for serializing data to the DotComponents API,
 // because we don't want people changing the core frontend models and as a side effect,
