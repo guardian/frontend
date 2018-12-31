@@ -2,7 +2,6 @@ package model.dotcomponents
 
 import common.Edition
 import conf.Configuration
-import conf.Configuration.environment
 import controllers.ArticlePage
 import model.SubMetaLinks
 import model.dotcomrendering.pageElements.PageElement
@@ -12,7 +11,8 @@ import play.api.mvc.RequestHeader
 import views.support.{CamelCase, GUDateTimeFormat}
 import ai.x.play.json.Jsonx
 import common.Maps.RichMap
-import ai.x.play.json.implicits.optionWithNull // Note, required despite Intellij saying otherwise
+import ai.x.play.json.implicits.optionWithNull
+import conf.switches.Switch // Note, required despite Intellij saying otherwise
 
 // We have introduced our own set of objects for serializing data to the DotComponents API,
 // because we don't want people changing the core frontend models and as a side effect,
@@ -65,11 +65,11 @@ case class PageData(
     subMetaLinks: SubMetaLinks,
     sentryHost: Option[String],
     sentryPublicApiKey: Option[String],
-    isDev: Boolean,
     // AMP specific
     guardianBaseURL: String,
     webURL: String,
     shouldHideAds: Boolean,
+    switches: Map[String,Boolean]
 )
 
 case class Config(
@@ -159,6 +159,10 @@ object DotcomponentsDataModel {
       CamelCase.fromHyphenated(key.split('.').lastOption.getOrElse(""))
     }
 
+    val switches = conf.switches.Switches.all.filter(_.exposeClientSide).foldLeft(Map.empty[String,Boolean])( (acc, switch) => {
+      acc + (CamelCase.fromHyphenated(switch.name) -> switch.isSwitchedOn)
+    })
+
     val pageData = PageData(
       article.tags.contributors.map(_.name).mkString(","),
       article.metadata.id,
@@ -184,10 +188,10 @@ object DotcomponentsDataModel {
       article.content.submetaLinks,
       jsPageData.get("sentryHost"),
       jsPageData.get("sentryPublicApiKey"),
-      !environment.isProd,
       Configuration.site.host,
       article.metadata.webUrl,
       article.content.shouldHideAdverts,
+      switches
     )
 
     val tags = article.tags.tags.map(
