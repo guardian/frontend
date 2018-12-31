@@ -1,15 +1,15 @@
 // @flow
 
-import {
-    getMvtNumValues,
-    getMvtValue,
-} from 'common/modules/analytics/mvt-cookie';
+import { getMvtNumValues, getMvtValue, } from 'common/modules/analytics/mvt-cookie';
 import config from 'lib/config';
 
 const isTestSwitchedOn = (test: ABTest): boolean =>
     config.switches[`ab${test.id}`];
 
-const isExpired = (testExpiry: string): boolean => {
+const variantCanBeRun = (variant: Variant): boolean =>
+    !(variant.canRun && !variant.canRun());
+
+export const isExpired = (testExpiry: string): boolean => {
     // new Date(test.expiry) sets the expiry time to 00:00:00
     // Using SetHours allows a test to run until the END of the expiry day
     const startOfToday = new Date().setHours(0, 0, 0, 0);
@@ -60,7 +60,7 @@ const computeVariantFromMvtCookie = (test: ABTest): ?Variant => {
 export const runnableTest = (test: ABTest): ?RunnableABTest => {
     const variantToRun = computeVariantFromMvtCookie(test);
 
-    if (testCanBeRun(test) && variantToRun) {
+    if (testCanBeRun(test) && variantToRun && variantCanBeRun(variantToRun)) {
         return {
             ...test,
             variantToRun
@@ -70,11 +70,29 @@ export const runnableTest = (test: ABTest): ?RunnableABTest => {
     return null;
 };
 
-export const allRunnableTests = (tests: ABTest[]): RunnableABTest[] =>
+export const allRunnableTests = (tests: $ReadOnlyArray<ABTest>): $ReadOnlyArray<RunnableABTest> =>
     tests.reduce((accumulator, currentValue) => {
         const rt = runnableTest(currentValue);
         return rt ? [...accumulator, rt] : accumulator;
     }, []);
 
-export const firstRunnableTest = (tests: $ReadOnlyArray<ABTest>): ?RunnableABTest =>
+export const firstRunnableTest = (tests: $ReadOnlyArray<AcquisitionsABTest>): ?RunnableAcquisitionsABTest =>
     tests.map(test => runnableTest(test)).find(runnableTest => runnableTest !== null);
+
+/**
+ * returns whether the caller should treat the user as being in that variant.
+ */
+export const isInVariant = (test: ABTest, variant: Variant): boolean => {
+    const rt = runnableTest(test);
+    if (!rt) {
+        return false;
+    }
+    return rt.variantToRun.id === variant.id
+};
+
+export const getVariant = (test: ABTest, variantId: string): ?Variant => {
+    const variantIds = test.variants.map(variant => variant.id);
+    const index = variantIds.indexOf(variantId);
+    return index > -1 ? test.variants[index] : null;
+};
+

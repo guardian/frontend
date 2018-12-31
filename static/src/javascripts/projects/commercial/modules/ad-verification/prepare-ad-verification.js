@@ -1,7 +1,7 @@
 // @flow
 
 import { loadScript } from 'lib/load-script';
-import { getTestVariantId } from 'common/modules/experiments/utils.js';
+import { getTestVariantId } from 'common/modules/experiments/ab-tests.js';
 
 export const init = (start: () => void): Promise<void> => {
     const host = 'clarium.global.ssl.fastly.net';

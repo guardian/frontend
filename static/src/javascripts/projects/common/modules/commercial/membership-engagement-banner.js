@@ -4,9 +4,6 @@ import { local } from 'lib/storage';
 import { Message } from 'common/modules/ui/message';
 import mediator from 'lib/mediator';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
-import { membershipEngagementBannerTests } from 'common/modules/experiments/tests/membership-engagement-banner-tests';
-import { testCanBeRun } from 'common/modules/experiments/test-can-run-checks';
-import { isInTest, variantFor } from 'common/modules/experiments/segment-util';
 import {
     defaultEngagementBannerParams,
     getUserVariantParams,
@@ -30,6 +27,8 @@ import {
 import { acquisitionsBannerControlTemplate } from 'common/modules/commercial/templates/acquisitions-banner-control';
 import userPrefs from 'common/modules/user-prefs';
 import { initTicker } from 'common/modules/commercial/ticker';
+import { engagementBannerTests } from 'common/modules/experiments/ab-tests';
+import { firstRunnableTest } from 'common/modules/experiments/ab';
 
 type BannerDeployLog = {
     time: string,
@@ -68,14 +67,6 @@ const hasBannerBeenRedeployedSinceClosed = (
             return false;
         });
 
-const getUserTest = (): ?AcquisitionsABTest =>
-    membershipEngagementBannerTests.find(
-        test => testCanBeRun(test) && isInTest(test)
-    );
-
-const getUserVariant = (test: ?ABTest): ?Variant =>
-    test ? variantFor(test) : undefined;
-
 /*
  * Params for the banner are overlaid in this order, earliest taking precedence:
  *
@@ -113,8 +104,8 @@ const buildCampaignCode = (
 };
 
 const deriveBannerParams = (): Promise<?EngagementBannerParams> => {
-    const userTest: ?AcquisitionsABTest = getUserTest();
-    const userVariant: ?Variant = getUserVariant(userTest);
+    const userTest: ?RunnableAcquisitionsABTest = firstRunnableTest(engagementBannerTests);
+    const userVariant: ?Variant = userTest && userTest.variantToRun;
     const defaultParams: EngagementBannerParams = defaultEngagementBannerParams();
 
     // if the user isn't in a test variant, use the control in google docs
@@ -140,8 +131,8 @@ const deriveBannerParams = (): Promise<?EngagementBannerParams> => {
 };
 
 const userVariantCanShow = (): boolean => {
-    const userTest = getUserTest();
-    const userVariant = getUserVariant(userTest);
+    const userTest: ?RunnableAcquisitionsABTest = firstRunnableTest(engagementBannerTests);
+    const userVariant: ?Variant = userTest && userTest.variantToRun;
 
     if (
         userVariant &&
@@ -170,8 +161,9 @@ const clearBannerHistory = (): void => {
 };
 
 const showBanner = (params: EngagementBannerParams): void => {
-    const test = getUserTest();
-    const variant = getUserVariant(test);
+    const test: ?RunnableAcquisitionsABTest = firstRunnableTest(engagementBannerTests);
+    const variant: ?Variant = test && test.variantToRun;
+
     const messageText = Array.isArray(params.messageText)
         ? selectSequentiallyFrom(params.messageText)
         : params.messageText;

@@ -1,18 +1,14 @@
 // @flow
 
 import { noop } from 'lib/noop';
-import { getActiveTests } from 'common/modules/experiments/ab-tests';
-import { testCanBeRun } from 'common/modules/experiments/test-can-run-checks';
-import { isInTest } from 'common/modules/experiments/segment-util';
+import { concurrentTests } from 'common/modules/experiments/ab-tests';
 import {
-    getVariant,
     getTestVariantId,
-    isParticipating,
-    getAssignedVariant,
-} from 'common/modules/experiments/utils';
+} from 'common/modules/experiments/ab-tests';
 import config from 'lib/config';
 import reportError from 'lib/report-error';
 import ophan from 'ophan/ng';
+import { allRunnableTests, getVariant } from 'common/modules/experiments/ab';
 
 const not = f => (...args: any[]): boolean => !f(...args);
 const and = (f, g) => (...args: any[]): boolean => f(...args) && g(...args);
@@ -104,16 +100,13 @@ export const buildOphanPayload = (): OphanABPayload => {
             test => !!config.tests[test]
         );
 
-        getActiveTests()
-            .filter(
-                and(not(defersImpression), and(isParticipating, testCanBeRun))
-            )
+        // Epic/banner tests are not included here because we don't
+        // use A/B test participation data to track impressions.
+        // (We use component events instead.)
+        allRunnableTests(concurrentTests)
+            .filter(not(defersImpression))
             .forEach(test => {
-                const variant = getAssignedVariant(test);
-
-                if (variant && isInTest(test)) {
-                    log[test.id] = makeABEvent(variant, 'false');
-                }
+                log[test.id] = makeABEvent(test.variantToRun, 'false');
             });
 
         serverSideTests.forEach(test => {

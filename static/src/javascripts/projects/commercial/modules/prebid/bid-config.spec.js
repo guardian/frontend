@@ -4,8 +4,7 @@
 import config from 'lib/config';
 import {
     getVariant as getVariant_,
-    isInVariant as isInVariant_,
-} from 'common/modules/experiments/utils';
+    } from 'common/modules/experiments/ab';
 import { _, bids } from './bid-config';
 import type { PrebidBidder, PrebidSize } from './types';
 import {
@@ -27,6 +26,7 @@ import {
     shouldIncludeSonobi as shouldIncludeSonobi_,
     stripMobileSuffix as stripMobileSuffix_,
 } from './utils';
+import { isInVariant } from 'common/modules/experiments/ab';
 
 const getLargestSize: any = getLargestSize_;
 const containsBillboard: any = containsBillboard_;
@@ -46,7 +46,6 @@ const shouldIncludeSonobi: any = shouldIncludeSonobi_;
 const stripMobileSuffix: any = stripMobileSuffix_;
 const getBreakpointKey: any = getBreakpointKey_;
 const getVariant: any = getVariant_;
-const isInVariant: any = isInVariant_;
 
 const {
     getDummyServerSideBidders,
@@ -263,7 +262,6 @@ describe('getImprovePlacementId', () => {
             id: 'variant',
             test: (): void => {},
         });
-        isInVariant.mockReturnValue(true);
         getBreakpointKey.mockReturnValue('D');
         containsMpu.mockReturnValue(true);
         expect(getImprovePlacementId([[300, 250]])).toEqual(1116407);
@@ -274,7 +272,6 @@ describe('getImprovePlacementId', () => {
             id: 'variant',
             test: (): void => {},
         });
-        isInVariant.mockReturnValue(true);
         getBreakpointKey.mockReturnValue('D');
         containsDmpu.mockReturnValue(true);
         expect(getImprovePlacementId([[300, 600]])).toEqual(1116408);
@@ -285,7 +282,6 @@ describe('getImprovePlacementId', () => {
             id: 'variant',
             test: (): void => {},
         });
-        isInVariant.mockReturnValue(true);
         getBreakpointKey.mockReturnValue('D');
         containsLeaderboardOrBillboard.mockReturnValue(true);
         expect(getImprovePlacementId([[970, 250]])).toEqual(1116409);
@@ -296,7 +292,6 @@ describe('getImprovePlacementId', () => {
             id: 'variant',
             test: (): void => {},
         });
-        isInVariant.mockReturnValue(true);
         getBreakpointKey.mockReturnValue('D');
         containsLeaderboardOrBillboard.mockReturnValue(true);
         expect(getImprovePlacementId([[728, 90]])).toEqual(1116409);
@@ -307,7 +302,6 @@ describe('getImprovePlacementId', () => {
             id: 'variant',
             test: (): void => {},
         });
-        isInVariant.mockReturnValue(true);
         getBreakpointKey.mockReturnValue('T');
         containsMpu.mockReturnValue(true);
         expect(getImprovePlacementId([[300, 250]])).toEqual(1116410);
@@ -318,7 +312,6 @@ describe('getImprovePlacementId', () => {
             id: 'variant',
             test: (): void => {},
         });
-        isInVariant.mockReturnValue(true);
         getBreakpointKey.mockReturnValue('T');
         containsLeaderboard.mockReturnValue(true);
         expect(getImprovePlacementId([[728, 90]])).toEqual(1116411);
@@ -329,7 +322,6 @@ describe('getImprovePlacementId', () => {
             id: 'variant',
             test: (): void => {},
         });
-        isInVariant.mockReturnValue(true);
         getBreakpointKey.mockReturnValue('M');
         expect(getImprovePlacementId([[300, 250]])).toEqual(1116412);
     });
@@ -439,7 +431,6 @@ describe('getIndexSiteId', () => {
             id: 'variant',
             test: (): void => {},
         });
-        isInVariant.mockReturnValue(true);
         getBreakpointKey.mockReturnValue('D');
         expect(getIndexSiteId()).toEqual('287246');
     });
@@ -449,7 +440,6 @@ describe('getIndexSiteId', () => {
             id: 'variant',
             test: (): void => {},
         });
-        isInVariant.mockReturnValue(true);
         getBreakpointKey.mockReturnValue('T');
         expect(getIndexSiteId()).toEqual('287247');
     });
@@ -459,7 +449,6 @@ describe('getIndexSiteId', () => {
             id: 'variant',
             test: (): void => {},
         });
-        isInVariant.mockReturnValue(true);
         getBreakpointKey.mockReturnValue('M');
         expect(getIndexSiteId()).toEqual('287248');
     });

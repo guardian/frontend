@@ -6,9 +6,8 @@ import bean from 'bean';
 import config from 'lib/config';
 import overlay from 'raw-loader!common/views/experiments/overlay.html';
 import styles from 'raw-loader!common/views/experiments/styles.css';
-import { TESTS } from 'common/modules/experiments/ab-tests';
-import { acquisitionsTests } from 'common/modules/experiments/acquisition-test-selector';
-import { isExpired } from 'common/modules/experiments/test-can-run-checks';
+import { concurrentTests, epicTests, engagementBannerTests } from 'common/modules/experiments/ab-tests';
+import { isExpired } from 'common/modules/experiments/ab';
 
 const getSelectedAbTests = () =>
     JSON.parse(storage.get('gu.experiments.ab')) || [];
@@ -81,8 +80,9 @@ const appendOverlay = () => {
         isExpired: isExpired(expiry),
     });
     const data = {
-        tests: TESTS.map(extractData),
-        acquisitionsTests: acquisitionsTests.map(extractData),
+        tests: concurrentTests.map(extractData),
+        epicTests: epicTests.map(extractData),
+        engagementBannerTests: engagementBannerTests.map(extractData),
     };
 
     $('body').prepend(template(overlay)(data));

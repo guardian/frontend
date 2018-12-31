@@ -13,7 +13,7 @@ import {
     thirdPartyTrackingAdConsent,
 } from 'common/modules/commercial/ad-prefs.lib';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
-import { getParticipations } from 'common/modules/experiments/utils';
+import { getParticipations } from 'common/modules/experiments/ab-tests';
 import { removeFalseyValues } from 'commercial/modules/prebid/utils';
 import flattenDeep from 'lodash/flattenDeep';
 import once from 'lodash/once';

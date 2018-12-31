@@ -1,5 +1,4 @@
 // @flow
-import { segment } from 'common/modules/experiments/ab-old';
 import {
     registerCompleteEvents,
     registerImpressionEvents,
@@ -8,7 +7,7 @@ import {
 
 import { local } from 'lib/storage';
 
-import { TESTS } from 'common/modules/experiments/ab-tests';
+import { concurrentTests } from 'common/modules/experiments/ab-tests';
 import config from 'lib/config';
 
 import { genAbTest } from './__fixtures__/ab-test';
@@ -24,7 +23,7 @@ jest.mock('ophan/ng', () => null);
 describe('A/B Ophan analytics', () => {
     beforeEach(() => {
         // enable all test switches
-        TESTS.forEach(test => {
+        concurrentTests.forEach(test => {
             config.switches[`ab${test.id}`] = true;
         });
 
@@ -37,8 +36,6 @@ describe('A/B Ophan analytics', () => {
     });
 
     test('Ophan data structure contains the correct values', () => {
-        segment(TESTS);
-
         expect(buildOphanPayload()).toEqual({
             DummyTest: {
                 variantName: 'control',
@@ -57,7 +54,6 @@ describe('A/B Ophan analytics', () => {
         dummy.variants[0].success = () => undefined;
         const spy = jest.spyOn(dummy.variants[0], 'success');
 
-        segment([dummy]);
         registerCompleteEvents([dummy]);
 
         expect(spy).toHaveBeenCalled();
@@ -68,7 +64,6 @@ describe('A/B Ophan analytics', () => {
         dummy.variants[0].success = () => undefined;
         const spy = jest.spyOn(dummy.variants[0], 'success');
 
-        segment([dummy]);
         dummy.canRun = () => false;
         registerCompleteEvents([dummy]);
 
@@ -88,7 +83,6 @@ describe('A/B Ophan analytics', () => {
         const controlSpy = jest.spyOn(dummy.variants[0], 'impression');
         const variantSpy = jest.spyOn(dummy.variants[1], 'impression');
 
-        segment([dummy]);
         registerImpressionEvents([dummy]);
 
         expect(

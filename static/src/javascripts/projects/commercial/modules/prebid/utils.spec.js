@@ -2,8 +2,7 @@
 import { getSync as getSync_ } from 'lib/geolocation';
 import { getBreakpoint as getBreakpoint_ } from 'lib/detect';
 import config from 'lib/config';
-import { testCanBeRun as testCanBeRun_ } from 'common/modules/experiments/test-can-run-checks';
-import { getParticipations as getParticipations_ } from 'common/modules/experiments/utils';
+import { getParticipations as getParticipations_ } from 'common/modules/experiments/ab-tests';
 import {
     getLargestSize,
     getBreakpointKey,
@@ -23,7 +22,6 @@ import {
 
 const getSync: any = getSync_;
 const getBreakpoint: any = getBreakpoint_;
-const testCanBeRun: any = testCanBeRun_;
 const getParticipations: any = getParticipations_;
 
 jest.mock('lodash/once', () => a => a);
@@ -281,7 +279,6 @@ describe('Utils', () => {
     });
 
     test('shouldIncludeAdYouLike when not in any tests', () => {
-        testCanBeRun.mockReturnValue(true);
         getParticipations.mockReturnValue(undefined);
         expect(shouldIncludeAdYouLike([[300, 250]])).toBe(true);
         expect(shouldIncludeAdYouLike([[300, 600], [300, 250]])).toBe(true);

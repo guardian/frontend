@@ -4,7 +4,6 @@ import { removeCookie } from 'lib/cookies';
 import { isUserLoggedIn } from 'common/modules/identity/api';
 import { readerRevenueRelevantCookies } from 'common/modules/commercial/user-features';
 import { clearViewLog as clearEpicViewLog } from 'common/modules/commercial/acquisitions-view-log';
-import { clearParticipations } from 'common/modules/experiments/utils';
 import {
     clearBannerHistory,
     minArticlesBeforeShowingBanner,
@@ -21,7 +20,6 @@ const clearCommonReaderRevenueStateAndReload = (): void => {
     readerRevenueRelevantCookies.forEach(cookie => removeCookie(cookie));
 
     initMvtCookie();
-    clearParticipations();
 
     // Most versions of the epic only display for a certain number of pageviews in
     // a given time window (typically, 4 per 30 days).

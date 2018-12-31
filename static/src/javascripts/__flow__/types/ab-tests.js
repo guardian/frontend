@@ -37,6 +37,8 @@ declare type AcquisitionsABTest = ABTest & {
     componentType: OphanComponentType,
 };
 
+declare type RunnableAcquisitionsABTest = RunnableABTest & AcquisitionsABTest;
+
 declare type EpicABTest = AcquisitionsABTest & {
     campaignPrefix: string,
     useLocalViewLog: boolean,

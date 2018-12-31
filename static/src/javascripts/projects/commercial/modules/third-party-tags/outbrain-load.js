@@ -5,7 +5,7 @@ import config from 'lib/config';
 import fastdom from 'lib/fastdom-promise';
 import { getBreakpoint } from 'lib/detect';
 import { loadScript } from 'lib/load-script';
-import { getTestVariantId } from 'common/modules/experiments/utils.js';
+import { getTestVariantId } from 'common/modules/experiments/ab-tests.js';
 
 import { getCode } from './outbrain-codes';
 import { getCode as getNewCode } from './outbrain-codes-new';
@@ -53,7 +53,7 @@ const build = (
   the contribution epic
 
   Valid values for target are 'defaults', 'merchandising', 'nonCompliant'
-  
+
   When the target is nonCompliant, you are encouraged to pass the contributionEpicVisible
   parameter as this will have an effect on the new outbrain ID mapping (as of end 2018).
 

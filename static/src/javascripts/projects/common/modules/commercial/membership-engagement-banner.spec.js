@@ -124,8 +124,7 @@ jest.mock('common/modules/user-prefs', () => ({
 }));
 
 const FakeMessage: any = require('common/modules/ui/message').Message;
-const fakeVariantFor: any = require('common/modules/experiments/segment-util')
-    .variantFor;
+
 const fakeConstructQuery: any = require('lib/url').constructQuery;
 const fakeIsBlocked: any = require('common/modules/commercial/membership-engagement-banner-block')
     .isBlocked;
@@ -140,7 +139,6 @@ beforeEach(() => {
     FakeMessage.mockReset();
     FakeMessage.prototype.show = jest.fn(() => true);
     fakeIsBlocked.mockClear();
-    fakeVariantFor.mockClear();
     fakeGet.mockClear();
     fakeShouldShowReaderRevenue.mockClear();
     fakeConfig.get.mockClear();
@@ -174,12 +172,6 @@ describe('Membership engagement banner', () => {
         });
 
         it('should return false user variant is blocked for test', () => {
-            fakeVariantFor.mockImplementationOnce(() => ({
-                options: {
-                    blockEngagementBanner: true,
-                },
-            }));
-
             return membershipEngagementBanner.canShow().then(canShow => {
                 expect(canShow).toBe(false);
             });

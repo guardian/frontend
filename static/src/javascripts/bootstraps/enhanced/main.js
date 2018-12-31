@@ -6,8 +6,7 @@ import $ from 'lib/$';
 import config from 'lib/config';
 import { markTime } from 'lib/user-timing';
 import { catchErrorsWithContext } from 'lib/robust';
-import { segmentUser, run as abRun } from 'common/modules/experiments/ab-old';
-import { getActiveTests } from 'common/modules/experiments/ab-tests';
+import { concurrentTests, epicTests } from 'common/modules/experiments/ab-tests';
 import {
     registerImpressionEvents,
     registerCompleteEvents,
@@ -17,6 +16,7 @@ import { initSport } from 'bootstraps/enhanced/sport';
 import { trackPerformance } from 'common/modules/analytics/google';
 import { init as geolocationInit } from 'lib/geolocation';
 import { init as initAcquisitionsLinkEnrichment } from 'common/modules/commercial/acquisitions-link-enrichment';
+import { allRunnableTests, firstRunnableTest } from 'common/modules/experiments/ab';
 
 const bootEnhanced = (): void => {
     const bootstrapContext = (featureName, bootstrap) => {
@@ -52,26 +52,31 @@ const bootEnhanced = (): void => {
         [
             'ab-tests',
             () => {
-                const tests = getActiveTests();
-                segmentUser();
+                const runnableConcurrentTests = allRunnableTests(concurrentTests);
+                const runnableEpicTest = firstRunnableTest(epicTests);
 
                 catchErrorsWithContext([
                     [
                         'ab-tests-run',
                         () => {
-                            abRun(tests);
+                            runnableConcurrentTests.forEach(test =>
+                                test.variantToRun.test(test)
+                            );
+                            if (runnableEpicTest) {
+                                runnableEpicTest.variantToRun.test(test);
+                            }
                         },
                     ],
                     [
                         'ab-tests-registerImpressionEvents',
                         () => {
-                            registerImpressionEvents(tests);
+                            registerImpressionEvents(runnableConcurrentTests);
                         },
                     ],
                     [
                         'ab-tests-registerCompleteEvents',
                         () => {
-                            registerCompleteEvents(tests);
+                            registerCompleteEvents(runnableConcurrentTests);
                         },
                     ],
                 ]);
