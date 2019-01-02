@@ -52,8 +52,8 @@ const bootEnhanced = (): void => {
         [
             'ab-tests',
             () => {
-                const runnableConcurrentTests = allRunnableTests(concurrentTests);
-                const runnableEpicTest = firstRunnableTest(epicTests);
+                const runnableConcurrentTests: $ReadOnlyArray<Runnable<ABTest>> = allRunnableTests(concurrentTests);
+                const runnableEpicTest: ?Runnable<AcquisitionsABTest> = firstRunnableTest(epicTests);
 
                 catchErrorsWithContext([
                     [

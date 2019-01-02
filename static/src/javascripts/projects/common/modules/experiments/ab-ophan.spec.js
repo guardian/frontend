@@ -10,7 +10,7 @@ import { local } from 'lib/storage';
 import { concurrentTests } from 'common/modules/experiments/ab-tests';
 import config from 'lib/config';
 
-import { genAbTest } from './__fixtures__/ab-test';
+import { getRunnableAbTest } from './__fixtures__/ab-test';
 
 jest.mock('lib/raven');
 jest.mock('lib/storage');
@@ -50,7 +50,7 @@ describe('A/B Ophan analytics', () => {
     });
 
     test('success function fires when canRun is true', () => {
-        const dummy = genAbTest('DummyTest');
+        const dummy = getRunnableAbTest('DummyTest');
         dummy.variants[0].success = () => undefined;
         const spy = jest.spyOn(dummy.variants[0], 'success');
 
@@ -60,7 +60,7 @@ describe('A/B Ophan analytics', () => {
     });
 
     test('success function fires when canRun is false', () => {
-        const dummy = genAbTest('DummyTest');
+        const dummy = getRunnableAbTest('DummyTest');
         dummy.variants[0].success = () => undefined;
         const spy = jest.spyOn(dummy.variants[0], 'success');
 
@@ -71,7 +71,7 @@ describe('A/B Ophan analytics', () => {
     });
 
     test('defer firing the impression when the function is provided', () => {
-        const dummy = genAbTest('DummyTest');
+        const dummy = getRunnableAbTest('DummyTest');
 
         /**
          * impression events are only registered if every variant has an `impression` function
