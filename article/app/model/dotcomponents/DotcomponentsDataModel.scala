@@ -64,11 +64,15 @@ case class PageData(
     subMetaLinks: SubMetaLinks,
     sentryHost: Option[String],
     sentryPublicApiKey: Option[String],
+    switches: Map[String,Boolean],
+
+
     // AMP specific
     guardianBaseURL: String,
     webURL: String,
     shouldHideAds: Boolean,
-    switches: Map[String,Boolean]
+    hasStoryPackage: Boolean,
+    hasRelated: Boolean,
 )
 
 case class Config(
@@ -187,10 +191,12 @@ object DotcomponentsDataModel {
       article.content.submetaLinks,
       jsPageData.get("sentryHost"),
       jsPageData.get("sentryPublicApiKey"),
+      switches,
       Configuration.site.host,
       article.metadata.webUrl,
       article.content.shouldHideAdverts,
-      switches
+      hasStoryPackage = article.content.hasStoryPackage,
+      hasRelated = article.content.showInRelated,
     )
 
     val tags = article.tags.tags.map(
