@@ -73,7 +73,7 @@ const bootEnhanced = (): void => {
                                 test.variantToRun.test(test)
                             );
                             if (runnableEpicTest) {
-                                runnableEpicTest.variantToRun.test(test);
+                                runnableEpicTest.variantToRun.test(runnableEpicTest);
                             }
                         },
                     ],
