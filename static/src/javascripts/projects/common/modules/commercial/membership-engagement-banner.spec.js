@@ -10,6 +10,7 @@ import {
 } from 'common/modules/commercial/membership-engagement-banner-parameters';
 import { membershipEngagementBanner } from 'common/modules/commercial/membership-engagement-banner';
 import { shouldShowReaderRevenue } from 'common/modules/commercial/contributions-utilities';
+// import { firstRunnableTest } from 'common/modules/experiments/ab';
 
 const defaultEngagementBannerParams: any = defaultEngagementBannerParams_;
 const getUserVariantParams: any = getUserVariantParams_;
@@ -30,8 +31,8 @@ jest.mock('lib/geolocation', () => ({
     getSync: jest.fn(() => 'GB'),
     getLocalCurrencySymbol: () => '£',
 }));
-jest.mock('common/modules/experiments/acquisition-test-selector', () => ({
-    getTest: jest.fn(() => ({
+jest.mock('common/modules/experiments/ab', () => ({
+    firstRunnableTest: jest.fn(() => ({
         campaignId: 'fake-campaign-id',
         id: 'fake-test-id',
         start: '2017-01-01',
@@ -43,14 +44,15 @@ jest.mock('common/modules/experiments/acquisition-test-selector', () => ({
         successMeasure: 'fake success measure',
         audienceCriteria: 'fake audience criteria',
         variants: [{ id: 'fake-variant-id' }],
+        variantToRun: {id: 'fake-variant-id'},
         canRun: () => true,
         componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
     })),
 }));
 jest.mock(
-    'common/modules/experiments/tests/membership-engagement-banner-tests',
+    'common/modules/experiments/ab-tests',
     () => ({
-        membershipEngagementBannerTests: [
+        engagementBannerTests: [
             {
                 campaignId: 'fake-campaign-id',
                 id: 'fake-test-id',
@@ -91,13 +93,6 @@ jest.mock(
         ),
     })
 );
-jest.mock('common/modules/experiments/test-can-run-checks', () => ({
-    testCanBeRun: jest.fn(() => true),
-}));
-jest.mock('common/modules/experiments/segment-util', () => ({
-    isInTest: jest.fn(() => true),
-    variantFor: jest.fn(() => ({ id: 'fake-variant-id' })),
-}));
 jest.mock(
     'common/modules/commercial/membership-engagement-banner-block',
     () => ({
@@ -125,6 +120,8 @@ jest.mock('common/modules/user-prefs', () => ({
 
 const FakeMessage: any = require('common/modules/ui/message').Message;
 
+// const fakeFirstRunnableTest: any = require('common/modules/experiments/ab').firstRunnableTest;
+
 const fakeConstructQuery: any = require('lib/url').constructQuery;
 const fakeIsBlocked: any = require('common/modules/commercial/membership-engagement-banner-block')
     .isBlocked;
@@ -140,6 +137,7 @@ beforeEach(() => {
     FakeMessage.prototype.show = jest.fn(() => true);
     fakeIsBlocked.mockClear();
     fakeGet.mockClear();
+    // fakeFirstRunnableTest.mockClear();
     fakeShouldShowReaderRevenue.mockClear();
     fakeConfig.get.mockClear();
     fetchJsonMock.mockImplementation(() =>
