@@ -174,8 +174,7 @@ describe('Membership engagement banner', () => {
         it('should return false user variant is blocked for test', () =>
             membershipEngagementBanner.canShow().then(canShow => {
                 expect(canShow).toBe(false);
-            })
-        );
+            }));
 
         it('should return false user visit count less than minArticles for banner', () => {
             fakeGet.mockReturnValueOnce(0); // gu.alreadyVisited
