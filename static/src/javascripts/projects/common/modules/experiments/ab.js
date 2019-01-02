@@ -8,7 +8,7 @@ import config from 'lib/config';
 import { isExpired } from 'lib/time-utils';
 
 const isTestSwitchedOn = (test: ABTest): boolean =>
-    config.switches[`ab${test.id}`];
+    config.get(`switches.ab${test.id}`, false);
 
 const variantCanBeRun = (variant: Variant): boolean =>
     !(variant.canRun && !variant.canRun());
@@ -77,8 +77,8 @@ export const firstRunnableTest = <T: ABTest>(
     tests: $ReadOnlyArray<T>
 ): ?Runnable<T> =>
     tests
-        .map(test => runnableTest(test))
-        .find(runnableTest => runnableTest !== null);
+        .map((test: T) => runnableTest(test))
+        .find((rt: ?Runnable<T>) => rt !== null);
 
 export const isInVariant = (test: ABTest, variant: Variant): boolean => {
     const rt = runnableTest(test);

@@ -50,6 +50,8 @@ const getTestAndVariant = (): {
     return { test, variant };
 };
 
+const getVariant = (): ?Variant => getTestAndVariant().variant;
+
 const getTimestampOfLastBannerDeployForLocation = (
     region: ReaderRevenueRegion
 ): Promise<string> =>
@@ -141,7 +143,7 @@ const deriveBannerParams = (): Promise<?EngagementBannerParams> => {
 };
 
 const userVariantCanShow = (): boolean => {
-    const { test: _, variant } = getTestAndVariant();
+    const variant = getVariant();
 
     if (variant && variant.options && variant.options.blockEngagementBanner) {
         return false;
