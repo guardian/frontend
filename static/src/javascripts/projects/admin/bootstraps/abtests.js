@@ -2,7 +2,7 @@
 import { ABTestReportItem as ReportItem } from 'admin/modules/abtests/abtest-report-item';
 import { Audience } from 'admin/modules/abtests/audience';
 import { concurrentTests } from 'common/modules/experiments/ab-tests';
-import { isExpired } from 'common/modules/experiments/ab';
+import { isExpired } from 'lib/time-utils';
 
 const renderTests = (
     tests: $ReadOnlyArray<ABTest>,

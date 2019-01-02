@@ -7,7 +7,7 @@ import config from 'lib/config';
 import overlay from 'raw-loader!common/views/experiments/overlay.html';
 import styles from 'raw-loader!common/views/experiments/styles.css';
 import { concurrentTests, epicTests, engagementBannerTests } from 'common/modules/experiments/ab-tests';
-import { isExpired } from 'common/modules/experiments/ab';
+import { isExpired } from 'lib/time-utils';
 
 const getSelectedAbTests = () =>
     JSON.parse(storage.get('gu.experiments.ab')) || [];
