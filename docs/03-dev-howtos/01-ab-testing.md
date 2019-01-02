@@ -146,7 +146,7 @@ When choosing your audience offset, it is good to avoid overlapping tests. You c
 
 You will also need to mark the module as a dependency of the AB testing module.
 
-Do that here, `./common/app/assets/javascripts/modules/experiments/ab-old.js`
+Do that here, `static/src/javascripts/projects/common/modules/experiments/ab-tests.js`
 
 ```
 define([
