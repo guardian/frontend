@@ -104,12 +104,11 @@ const buildCampaignCode = (
 };
 
 const deriveBannerParams = (): Promise<?EngagementBannerParams> => {
-    const userTest: ?RunnableAcquisitionsABTest = firstRunnableTest(engagementBannerTests);
-    const userVariant: ?Variant = userTest && userTest.variantToRun;
+    const { test, variant } = getTestAndVariant();
     const defaultParams: EngagementBannerParams = defaultEngagementBannerParams();
 
     // if the user isn't in a test variant, use the control in google docs
-    if (!userVariant) {
+    if (!test) {
         return getControlEngagementBannerParams().then(controlParams => ({
             ...defaultParams,
             ...controlParams,
@@ -117,11 +116,11 @@ const deriveBannerParams = (): Promise<?EngagementBannerParams> => {
     }
 
     const campaignCode: ?{ campaignCode: string } = buildCampaignCode(
-        userTest,
-        userVariant
+        test,
+        variant
     );
 
-    return getUserVariantParams(userVariant)
+    return getUserVariantParams(variant)
         .then(variantParams => ({
             ...defaultParams,
             ...variantParams,
@@ -131,13 +130,12 @@ const deriveBannerParams = (): Promise<?EngagementBannerParams> => {
 };
 
 const userVariantCanShow = (): boolean => {
-    const userTest: ?RunnableAcquisitionsABTest = firstRunnableTest(engagementBannerTests);
-    const userVariant: ?Variant = userTest && userTest.variantToRun;
+    const { test: _, variant } = getTestAndVariant();
 
     if (
-        userVariant &&
-        userVariant.options &&
-        userVariant.options.blockEngagementBanner
+        variant &&
+        variant.options &&
+        variant.options.blockEngagementBanner
     ) {
         return false;
     }
@@ -161,8 +159,7 @@ const clearBannerHistory = (): void => {
 };
 
 const showBanner = (params: EngagementBannerParams): void => {
-    const test: ?RunnableAcquisitionsABTest = firstRunnableTest(engagementBannerTests);
-    const variant: ?Variant = test && test.variantToRun;
+    const { test, variant } = getTestAndVariant();
 
     const messageText = Array.isArray(params.messageText)
         ? selectSequentiallyFrom(params.messageText)
@@ -273,6 +270,12 @@ const canShow = (): Promise<boolean> => {
         );
     }
     return Promise.resolve(false);
+};
+
+const getTestAndVariant = (): {test: ?Runnable<AcquisitionsABTest>, variant: ?Variant} => {
+    const test: ?Runnable<AcquisitionsABTest> = firstRunnableTest(engagementBannerTests);
+    const variant: ?Variant = test && test.variantToRun;
+    return { test, variant };
 };
 
 const membershipEngagementBanner: Banner = {

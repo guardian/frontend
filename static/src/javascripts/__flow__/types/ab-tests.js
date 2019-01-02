@@ -28,16 +28,14 @@ declare type ABTest = {
     notInTest?: () => void,
 };
 
-declare type RunnableABTest = ABTest & {
-    variantToRun: Variant,
+declare type Runnable<T> = T & {
+    variantToRun: Variant;
 };
 
 declare type AcquisitionsABTest = ABTest & {
     campaignId: string,
     componentType: OphanComponentType,
 };
-
-declare type RunnableAcquisitionsABTest = RunnableABTest & AcquisitionsABTest;
 
 declare type EpicABTest = AcquisitionsABTest & {
     campaignPrefix: string,

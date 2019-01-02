@@ -57,7 +57,7 @@ const computeVariantFromMvtCookie = (test: ABTest): ?Variant => {
     return null;
 };
 
-export const runnableTest = (test: ABTest): ?RunnableABTest => {
+export const runnableTest = <T: ABTest>(test: T): ?Runnable<T> => {
     const variantToRun = computeVariantFromMvtCookie(test);
 
     if (testCanBeRun(test) && variantToRun && variantCanBeRun(variantToRun)) {
@@ -70,13 +70,13 @@ export const runnableTest = (test: ABTest): ?RunnableABTest => {
     return null;
 };
 
-export const allRunnableTests = (tests: $ReadOnlyArray<ABTest>): $ReadOnlyArray<RunnableABTest> =>
+export const allRunnableTests = <T: ABTest>(tests: $ReadOnlyArray<T>): $ReadOnlyArray<Runnable<T>> =>
     tests.reduce((accumulator, currentValue) => {
         const rt = runnableTest(currentValue);
         return rt ? [...accumulator, rt] : accumulator;
     }, []);
 
-export const firstRunnableTest = (tests: $ReadOnlyArray<AcquisitionsABTest>): ?RunnableAcquisitionsABTest =>
+export const firstRunnableTest = <T: ABTest>(tests: $ReadOnlyArray<T>): ?Runnable<T> =>
     tests.map(test => runnableTest(test)).find(runnableTest => runnableTest !== null);
 
 /**
