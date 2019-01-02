@@ -44,38 +44,35 @@ jest.mock('common/modules/experiments/ab', () => ({
         successMeasure: 'fake success measure',
         audienceCriteria: 'fake audience criteria',
         variants: [{ id: 'fake-variant-id' }],
-        variantToRun: {id: 'fake-variant-id'},
+        variantToRun: { id: 'fake-variant-id' },
         canRun: () => true,
         componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
     })),
 }));
-jest.mock(
-    'common/modules/experiments/ab-tests',
-    () => ({
-        engagementBannerTests: [
-            {
-                campaignId: 'fake-campaign-id',
-                id: 'fake-test-id',
-                start: '2017-01-01',
-                expiry: '2027-01-01',
-                author: 'fake-author',
-                description: 'fake-description',
-                audience: 1,
-                audienceOffset: 0,
-                successMeasure: 'fake success measure',
-                audienceCriteria: 'fake audience criteria',
-                variants: [
-                    {
-                        id: 'fake-variant-id',
-                        engagementBannerParams: {},
-                    },
-                ],
-                canRun: () => true,
-                componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
-            },
-        ],
-    })
-);
+jest.mock('common/modules/experiments/ab-tests', () => ({
+    engagementBannerTests: [
+        {
+            campaignId: 'fake-campaign-id',
+            id: 'fake-test-id',
+            start: '2017-01-01',
+            expiry: '2027-01-01',
+            author: 'fake-author',
+            description: 'fake-description',
+            audience: 1,
+            audienceOffset: 0,
+            successMeasure: 'fake success measure',
+            audienceCriteria: 'fake audience criteria',
+            variants: [
+                {
+                    id: 'fake-variant-id',
+                    engagementBannerParams: {},
+                },
+            ],
+            canRun: () => true,
+            componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
+        },
+    ],
+}));
 jest.mock(
     'common/modules/commercial/membership-engagement-banner-parameters',
     () => ({
