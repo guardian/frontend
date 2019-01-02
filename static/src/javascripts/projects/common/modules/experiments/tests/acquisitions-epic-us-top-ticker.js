@@ -23,7 +23,7 @@ const createTemplate = (tickerPosition: TickerPosition): EpicTemplate => (
 const noteFromJohn: AcquisitionsEpicTemplateCopy = {
     heading: 'In these critical times &hellip;',
     paragraphs: [
-        '&hellip; The Guardian’s US editor John Mulholland urges you to show your support for independent journalism with a year-end gift to The Guardian. We are asking our US readers to help us raise $1 million dollars by early January 2019 to report on the most important stories in 2019.',
+        '&hellip; The Guardian’s US editor John Mulholland urges you to show your support for independent journalism with a year-end gift to The Guardian. We are asking our US readers to help us raise $1 million dollars by early January to report on the most important stories in 2019.',
         'A note from John:',
         'In normal times we might not be making this appeal. But these are not normal times. Many of the values and beliefs we hold dear at The Guardian are under threat both here in the US and around the world. Facts, science, humanity, diversity and equality are being challenged daily. As is truth. Which is why we need your help.',
         'Powerful public figures choose lies over truths, prefer supposition over science; and select hate over humanity. The US administration is foremost among them; whether in denying climate science or hating on immigrants; giving succor to racists or targeting journalists and the media. Many of these untruths and attacks find fertile ground on social media where tech platforms seem unable to cauterise lies. As a result, fake is in danger of overriding fact.',
