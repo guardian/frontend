@@ -6,7 +6,7 @@ import $ from 'lib/$';
 import config from 'lib/config';
 import { markTime } from 'lib/user-timing';
 import { catchErrorsWithContext } from 'lib/robust';
-import { init as abInit } from 'common/modules/experiments/ab';
+import { runAndTrackAbTests } from 'common/modules/experiments/ab-tests';
 import { initSport } from 'bootstraps/enhanced/sport';
 import { trackPerformance } from 'common/modules/analytics/google';
 import { init as geolocationInit } from 'lib/geolocation';
@@ -50,7 +50,7 @@ const bootEnhanced = (): void => {
                     [
                         'ab-tests-run',
                         () => {
-                            abInit();
+                            runAndTrackAbTests();
                         },
                     ],
                 ]);

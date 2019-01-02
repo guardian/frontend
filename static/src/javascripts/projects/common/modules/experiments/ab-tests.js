@@ -31,6 +31,7 @@ import {
     firstRunnableTest,
     runnableTest,
 } from 'common/modules/experiments/ab';
+import { registerCompleteEvents, registerImpressionEvents, trackABTests } from 'common/modules/experiments/ab-ophan';
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialPrebidSafeframe,
@@ -92,8 +93,37 @@ export const getParticipations = (): Participations => {
 
     const participations = {};
     runnableTests.forEach(test => {
-        participations[test.id] = test.variantToRun;
+        participations[test.id] = test.variantToRun.id;
     });
 
     return participations;
+};
+
+export const runAndTrackAbTests = () => {
+    const runnableConcurrentTests: $ReadOnlyArray<
+        Runnable<ABTest>
+    > = allRunnableTests(concurrentTests);
+
+    const runnableEpicTest: ?Runnable<
+        AcquisitionsABTest
+    > = firstRunnableTest(epicTests);
+
+    runnableConcurrentTests.forEach(test =>
+        test.variantToRun.test(test)
+    );
+    if (runnableEpicTest) {
+        runnableEpicTest.variantToRun.test(
+            runnableEpicTest
+        );
+    }
+
+    // Epic/banner tests are not included here because we don't
+    // use A/B test participation data to track impressions.
+    // (We use component events instead.)
+    registerImpressionEvents(runnableConcurrentTests);
+    registerCompleteEvents(runnableConcurrentTests);
+    trackABTests(runnableConcurrentTests);
+
+    // For debugging
+    window.guardian.abTestParticipations = getParticipations();
 };

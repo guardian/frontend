@@ -6,8 +6,6 @@ import {
 } from 'common/modules/analytics/mvt-cookie';
 import config from 'lib/config';
 import { isExpired } from 'lib/time-utils';
-import { concurrentTests, epicTests } from 'common/modules/experiments/ab-tests';
-import { registerCompleteEvents, registerImpressionEvents, trackABTests } from 'common/modules/experiments/ab-ophan';
 
 const isTestSwitchedOn = (test: ABTest): boolean =>
     config.get(`switches.ab${test.id}`, false);
@@ -96,28 +94,4 @@ export const getVariant = (test: ABTest, variantId: string): ?Variant => {
     const variantIds = test.variants.map(variant => variant.id);
     const index = variantIds.indexOf(variantId);
     return index > -1 ? test.variants[index] : null;
-};
-
-export const init = () => {
-    const runnableConcurrentTests: $ReadOnlyArray<
-        Runnable<ABTest>
-    > = allRunnableTests(concurrentTests);
-
-    const runnableEpicTest: ?Runnable<
-        AcquisitionsABTest
-    > = firstRunnableTest(epicTests);
-
-    runnableConcurrentTests.forEach(test =>
-        test.variantToRun.test(test)
-    );
-    if (runnableEpicTest) {
-        runnableEpicTest.variantToRun.test(
-            runnableEpicTest
-        );
-    }
-
-    registerImpressionEvents(runnableConcurrentTests);
-    registerCompleteEvents(runnableConcurrentTests);
-
-    trackABTests();
 };

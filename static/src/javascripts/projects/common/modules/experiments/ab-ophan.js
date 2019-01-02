@@ -1,11 +1,9 @@
 // @flow
 
 import { noop } from 'lib/noop';
-import { concurrentTests } from 'common/modules/experiments/ab-tests';
 import config from 'lib/config';
 import reportError from 'lib/report-error';
 import ophan from 'ophan/ng';
-import { allRunnableTests } from 'common/modules/experiments/ab';
 
 const not = f => (...args: any[]): boolean => !f(...args);
 
@@ -83,17 +81,14 @@ export const registerImpressionEvents = (
     tests: $ReadOnlyArray<Runnable<ABTest>>
 ): void => tests.filter(defersImpression).forEach(registerCompleteEvent(false));
 
-export const buildOphanPayload = (): OphanABPayload => {
+export const buildOphanPayload = (tests: $ReadOnlyArray<Runnable<ABTest>>): OphanABPayload => {
     try {
         const log = {};
         const serverSideTests = Object.keys(config.tests).filter(
             test => !!config.tests[test]
         );
 
-        // Epic/banner tests are not included here because we don't
-        // use A/B test participation data to track impressions.
-        // (We use component events instead.)
-        allRunnableTests(concurrentTests)
+        tests
             .filter(not(defersImpression))
             .forEach(test => {
                 log[test.id] = makeABEvent(test.variantToRun, 'false');
@@ -116,6 +111,6 @@ export const buildOphanPayload = (): OphanABPayload => {
     }
 };
 
-export const trackABTests = () => submit(buildOphanPayload());
+export const trackABTests = (tests: $ReadOnlyArray<Runnable<ABTest>>) => submit(buildOphanPayload(tests));
 
 export { buildOphanSubmitter };
