@@ -39,6 +39,17 @@ const minArticlesBeforeShowingBanner = 3;
 
 const lastClosedAtKey = 'engagementBannerLastClosedAt';
 
+const getTestAndVariant = (): {
+    test: ?Runnable<AcquisitionsABTest>,
+    variant: ?Variant,
+} => {
+    const test: ?Runnable<AcquisitionsABTest> = firstRunnableTest(
+        engagementBannerTests
+    );
+    const variant: ?Variant = test && test.variantToRun;
+    return { test, variant };
+};
+
 const getTimestampOfLastBannerDeployForLocation = (
     region: ReaderRevenueRegion
 ): Promise<string> =>
@@ -132,11 +143,7 @@ const deriveBannerParams = (): Promise<?EngagementBannerParams> => {
 const userVariantCanShow = (): boolean => {
     const { test: _, variant } = getTestAndVariant();
 
-    if (
-        variant &&
-        variant.options &&
-        variant.options.blockEngagementBanner
-    ) {
+    if (variant && variant.options && variant.options.blockEngagementBanner) {
         return false;
     }
     return true;
@@ -270,12 +277,6 @@ const canShow = (): Promise<boolean> => {
         );
     }
     return Promise.resolve(false);
-};
-
-const getTestAndVariant = (): {test: ?Runnable<AcquisitionsABTest>, variant: ?Variant} => {
-    const test: ?Runnable<AcquisitionsABTest> = firstRunnableTest(engagementBannerTests);
-    const variant: ?Variant = test && test.variantToRun;
-    return { test, variant };
 };
 
 const membershipEngagementBanner: Banner = {
