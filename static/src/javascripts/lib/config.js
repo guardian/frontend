@@ -3,7 +3,7 @@
 // This should be the only module accessing the window config object directly
 // because this is the one that gets imported to all other modules
 // eslint-disable-next-line guardian-frontend/global-config
-const config: Object = window.guardian.config;
+const config: { [string]: any } = window.guardian.config;
 
 // allows you to safely get items from config using a query of
 // dot or bracket notation, with optional default fallback
