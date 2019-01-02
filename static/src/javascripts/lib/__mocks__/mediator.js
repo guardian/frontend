@@ -6,6 +6,9 @@ export default {
     on(eventName: string, callback: () => void): void {
         events[eventName] = callback;
     },
+    once(eventName: string, callback: () => void): void {
+        events[eventName] = callback;
+    },
     emit(eventName: string, params: Object): void {
         if (events[eventName]) {
             events[eventName](params);
