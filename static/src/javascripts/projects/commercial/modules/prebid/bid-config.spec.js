@@ -2,9 +2,7 @@
 /* global jsdom */
 
 import config from 'lib/config';
-import {
-    getVariant as getVariant_,
-    } from 'common/modules/experiments/ab';
+import { getVariant as getVariant_ } from 'common/modules/experiments/ab';
 import { _, bids } from './bid-config';
 import type { PrebidBidder, PrebidSize } from './types';
 import {

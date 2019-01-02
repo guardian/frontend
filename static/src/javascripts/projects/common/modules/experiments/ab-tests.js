@@ -24,9 +24,13 @@ import {
     AcquisitionsBannerGoogleDocTestFourVariants,
     AcquisitionsBannerGoogleDocTestOneVariant,
     AcquisitionsBannerGoogleDocTestThreeVariants,
-    AcquisitionsBannerGoogleDocTestTwoVariants
+    AcquisitionsBannerGoogleDocTestTwoVariants,
 } from 'common/modules/experiments/tests/acquisitions-banner-from-google-doc';
-import { allRunnableTests, firstRunnableTest, runnableTest } from 'common/modules/experiments/ab';
+import {
+    allRunnableTests,
+    firstRunnableTest,
+    runnableTest,
+} from 'common/modules/experiments/ab';
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialPrebidSafeframe,
@@ -93,4 +97,3 @@ export const getParticipations = (): Participations => {
 
     return participations;
 };
-
