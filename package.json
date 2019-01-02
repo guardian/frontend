@@ -89,7 +89,7 @@
     "eslint-plugin-react": "^7.8.2",
     "execa": "^0.8.0",
     "figures": "^2.0.0",
-    "flow-bin": "^0.79.1",
+    "flow-bin": "^0.89.0",
     "flow-typed": "^2.4.0",
     "glob": "^7.1.2",
     "gzip-size": "^3.0.0",
