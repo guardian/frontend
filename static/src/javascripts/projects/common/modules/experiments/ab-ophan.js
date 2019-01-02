@@ -81,18 +81,18 @@ export const registerImpressionEvents = (
     tests: $ReadOnlyArray<Runnable<ABTest>>
 ): void => tests.filter(defersImpression).forEach(registerCompleteEvent(false));
 
-export const buildOphanPayload = (tests: $ReadOnlyArray<Runnable<ABTest>>): OphanABPayload => {
+export const buildOphanPayload = (
+    tests: $ReadOnlyArray<Runnable<ABTest>>
+): OphanABPayload => {
     try {
         const log = {};
         const serverSideTests = Object.keys(config.tests).filter(
             test => !!config.tests[test]
         );
 
-        tests
-            .filter(not(defersImpression))
-            .forEach(test => {
-                log[test.id] = makeABEvent(test.variantToRun, 'false');
-            });
+        tests.filter(not(defersImpression)).forEach(test => {
+            log[test.id] = makeABEvent(test.variantToRun, 'false');
+        });
 
         serverSideTests.forEach(test => {
             const serverSideVariant: Variant = {
@@ -111,6 +111,7 @@ export const buildOphanPayload = (tests: $ReadOnlyArray<Runnable<ABTest>>): Opha
     }
 };
 
-export const trackABTests = (tests: $ReadOnlyArray<Runnable<ABTest>>) => submit(buildOphanPayload(tests));
+export const trackABTests = (tests: $ReadOnlyArray<Runnable<ABTest>>) =>
+    submit(buildOphanPayload(tests));
 
 export { buildOphanSubmitter };

@@ -31,7 +31,11 @@ import {
     firstRunnableTest,
     runnableTest,
 } from 'common/modules/experiments/ab';
-import { registerCompleteEvents, registerImpressionEvents, trackABTests } from 'common/modules/experiments/ab-ophan';
+import {
+    registerCompleteEvents,
+    registerImpressionEvents,
+    trackABTests,
+} from 'common/modules/experiments/ab-ophan';
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialPrebidSafeframe,
@@ -104,17 +108,13 @@ export const runAndTrackAbTests = () => {
         Runnable<ABTest>
     > = allRunnableTests(concurrentTests);
 
-    const runnableEpicTest: ?Runnable<
-        AcquisitionsABTest
-    > = firstRunnableTest(epicTests);
-
-    runnableConcurrentTests.forEach(test =>
-        test.variantToRun.test(test)
+    const runnableEpicTest: ?Runnable<AcquisitionsABTest> = firstRunnableTest(
+        epicTests
     );
+
+    runnableConcurrentTests.forEach(test => test.variantToRun.test(test));
     if (runnableEpicTest) {
-        runnableEpicTest.variantToRun.test(
-            runnableEpicTest
-        );
+        runnableEpicTest.variantToRun.test(runnableEpicTest);
     }
 
     // Epic/banner tests are not included here because we don't
