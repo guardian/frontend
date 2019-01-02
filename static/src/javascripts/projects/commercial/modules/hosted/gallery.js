@@ -87,6 +87,7 @@ class HostedGallery {
                 initial: 'image',
                 onChangeState() {},
                 context: this,
+                // $FlowFixMe
                 states: this.states,
             });
 
@@ -473,7 +474,8 @@ class HostedGallery {
         }
     }
 }
-
+// TODO: If we add `states` to the list of annotations within the class, it is `undefined` in the constructor. Wat?
+// $FlowFixMe
 HostedGallery.prototype.states = {
     image: {
         enter() {
