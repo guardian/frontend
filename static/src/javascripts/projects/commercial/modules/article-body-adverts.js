@@ -10,9 +10,8 @@ import { trackAdRender } from 'commercial/modules/dfp/track-ad-render';
 import { createSlots } from 'commercial/modules/dfp/create-slots';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { initCarrot } from 'commercial/modules/carrot-traffic-driver';
-import { getVariant} from 'common/modules/experiments/ab';
+import { getVariant, isInVariant } from 'common/modules/experiments/ab';
 import { commercialAdMobileWebIncrease } from 'common/modules/experiments/tests/commercial-ad-mobile-web-increase.js';
-import { isInVariant } from 'common/modules/experiments/ab';
 
 type AdSize = {
     width: number,

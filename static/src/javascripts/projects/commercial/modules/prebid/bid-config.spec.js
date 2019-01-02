@@ -26,7 +26,6 @@ import {
     shouldIncludeSonobi as shouldIncludeSonobi_,
     stripMobileSuffix as stripMobileSuffix_,
 } from './utils';
-import { isInVariant } from 'common/modules/experiments/ab';
 
 const getLargestSize: any = getLargestSize_;
 const containsBillboard: any = containsBillboard_;

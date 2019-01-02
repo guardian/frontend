@@ -66,7 +66,7 @@ export const engagementBannerTests: $ReadOnlyArray<AcquisitionsABTest> = [
 // rather than accepting an array of tests as an argument.
 export const getTestVariantId = (testId: string): ?string => {
     const tests = [...concurrentTests, ...epicTests, ...engagementBannerTests];
-    const test = tests.find(test => test.id === testId);
+    const test = tests.find(t => t.id === testId);
 
     if (test) {
         const rt = runnableTest(test);
