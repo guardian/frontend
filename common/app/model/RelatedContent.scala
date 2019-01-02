@@ -21,7 +21,7 @@ case class RelatedContent (items: Seq[RelatedContentItem]) {
 }
 
 object StoryPackages {
-  def apply(parent: ContentType, response: ItemResponse): RelatedContent = {
+  def apply(parentID: String, response: ItemResponse): RelatedContent = {
 
     val storyPackagesContent: Seq[ApiContent] = response.packages.map { packages =>
       val allContentsPerPackage: Seq[Seq[ApiContent]] = packages.map(_.articles.map(_.content))
@@ -41,6 +41,6 @@ object StoryPackages {
       val frontendContent = Content(item)
       RelatedContentItem(frontendContent, FaciaContentConvert.contentToFaciaContent(item))
     }
-    RelatedContent(items.filterNot(_.content.metadata.id == parent.metadata.id))
+    RelatedContent(items.filterNot(_.content.metadata.id == parentID))
   }
 }
