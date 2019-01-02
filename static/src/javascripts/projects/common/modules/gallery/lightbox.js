@@ -133,7 +133,6 @@ class GalleryLightbox {
         bean.on(this.prevBtn, 'click', this.trigger.bind(this, 'prev'));
         bean.on(this.closeBtn, 'click', this.close.bind(this));
         bean.on(this.infoBtn, 'click', this.trigger.bind(this, 'toggleInfo'));
-        this.handleKeyEvents = this.handleKeyEvents.bind(this); // bound for event handler
         this.resize = this.trigger.bind(this, 'resize');
         this.toggleInfo = (e): void => {
             const infoPanelClick =

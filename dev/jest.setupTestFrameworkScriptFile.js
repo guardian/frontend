@@ -1,4 +1,5 @@
-require('babel-polyfill');
+// Polyfill test environment (done by polyfill.io in production)
+require('core-js');
 
 // Stub global Guardian config
 window.guardian = {
