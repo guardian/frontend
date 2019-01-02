@@ -68,7 +68,9 @@ export const updateAcquisitionData = (
     let existingAcquisitionData;
 
     try {
-        const existingAcquisitionJsonString = url.searchParams.get(ACQUISITION_DATA_FIELD);
+        const existingAcquisitionJsonString = url.searchParams.get(
+            ACQUISITION_DATA_FIELD
+        );
 
         if (!existingAcquisitionJsonString) return url;
 
