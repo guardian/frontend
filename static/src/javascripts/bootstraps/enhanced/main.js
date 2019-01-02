@@ -6,7 +6,10 @@ import $ from 'lib/$';
 import config from 'lib/config';
 import { markTime } from 'lib/user-timing';
 import { catchErrorsWithContext } from 'lib/robust';
-import { concurrentTests, epicTests } from 'common/modules/experiments/ab-tests';
+import {
+    concurrentTests,
+    epicTests,
+} from 'common/modules/experiments/ab-tests';
 import {
     registerImpressionEvents,
     registerCompleteEvents,
@@ -16,7 +19,10 @@ import { initSport } from 'bootstraps/enhanced/sport';
 import { trackPerformance } from 'common/modules/analytics/google';
 import { init as geolocationInit } from 'lib/geolocation';
 import { init as initAcquisitionsLinkEnrichment } from 'common/modules/commercial/acquisitions-link-enrichment';
-import { allRunnableTests, firstRunnableTest } from 'common/modules/experiments/ab';
+import {
+    allRunnableTests,
+    firstRunnableTest,
+} from 'common/modules/experiments/ab';
 
 const bootEnhanced = (): void => {
     const bootstrapContext = (featureName, bootstrap) => {
@@ -52,8 +58,12 @@ const bootEnhanced = (): void => {
         [
             'ab-tests',
             () => {
-                const runnableConcurrentTests: $ReadOnlyArray<Runnable<ABTest>> = allRunnableTests(concurrentTests);
-                const runnableEpicTest: ?Runnable<AcquisitionsABTest> = firstRunnableTest(epicTests);
+                const runnableConcurrentTests: $ReadOnlyArray<
+                    Runnable<ABTest>
+                > = allRunnableTests(concurrentTests);
+                const runnableEpicTest: ?Runnable<
+                    AcquisitionsABTest
+                > = firstRunnableTest(epicTests);
 
                 catchErrorsWithContext([
                     [

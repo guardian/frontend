@@ -2,16 +2,12 @@
 
 import { noop } from 'lib/noop';
 import { concurrentTests } from 'common/modules/experiments/ab-tests';
-import {
-    getTestVariantId,
-} from 'common/modules/experiments/ab-tests';
 import config from 'lib/config';
 import reportError from 'lib/report-error';
 import ophan from 'ophan/ng';
 import { allRunnableTests } from 'common/modules/experiments/ab';
 
 const not = f => (...args: any[]): boolean => !f(...args);
-const and = (f, g) => (...args: any[]): boolean => f(...args) && g(...args);
 
 const submit = (payload: OphanABPayload): void =>
     ophan.record({
@@ -55,7 +51,7 @@ const buildOphanSubmitter = (
     complete: boolean
 ): (() => void) => {
     const data = {
-        [test.id]: makeABEvent(variant, String(complete))
+        [test.id]: makeABEvent(variant, String(complete)),
     };
     return () => submit(data);
 };
@@ -66,10 +62,11 @@ const buildOphanSubmitter = (
  *
  * @see {@link defersImpression}
  */
-const registerCompleteEvent = (complete: boolean) => (test: Runnable<ABTest>): void => {
+const registerCompleteEvent = (complete: boolean) => (
+    test: Runnable<ABTest>
+): void => {
     const variant = test.variantToRun;
-    const listener =
-        (complete ? variant.success : variant.impression) || noop;
+    const listener = (complete ? variant.success : variant.impression) || noop;
 
     try {
         listener(buildOphanSubmitter(test, variant, complete));
@@ -78,11 +75,13 @@ const registerCompleteEvent = (complete: boolean) => (test: Runnable<ABTest>): v
     }
 };
 
-export const registerCompleteEvents = (tests: $ReadOnlyArray<Runnable<ABTest>>): void =>
-    tests.forEach(registerCompleteEvent(true));
+export const registerCompleteEvents = (
+    tests: $ReadOnlyArray<Runnable<ABTest>>
+): void => tests.forEach(registerCompleteEvent(true));
 
-export const registerImpressionEvents = (tests: $ReadOnlyArray<Runnable<ABTest>>): void =>
-    tests.filter(defersImpression).forEach(registerCompleteEvent(false));
+export const registerImpressionEvents = (
+    tests: $ReadOnlyArray<Runnable<ABTest>>
+): void => tests.filter(defersImpression).forEach(registerCompleteEvent(false));
 
 export const buildOphanPayload = (): OphanABPayload => {
     try {

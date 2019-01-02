@@ -21,7 +21,10 @@ export const genAbTest = (id: string, canRun: ?boolean): ABTest => ({
     variants: [genVariant('control'), genVariant('variant')],
 });
 
-export const getRunnableAbTest = (id: string, canRun: ?boolean): Runnable<ABTest> => ({
+export const getRunnableAbTest = (
+    id: string,
+    canRun: ?boolean
+): Runnable<ABTest> => ({
     ...genAbTest(id, canRun),
     variantToRun: genVariant('control'),
 });
