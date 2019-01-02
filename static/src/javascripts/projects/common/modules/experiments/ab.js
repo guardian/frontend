@@ -10,6 +10,8 @@ import { isExpired } from 'lib/time-utils';
 const isTestSwitchedOn = (test: ABTest): boolean =>
     config.get(`switches.ab${test.id}`, false);
 
+// We only take account of a variant's canRun function if it's defined.
+// If it's not, assume the variant can be run.
 const variantCanBeRun = (variant: Variant): boolean =>
     !(variant.canRun && !variant.canRun());
 
