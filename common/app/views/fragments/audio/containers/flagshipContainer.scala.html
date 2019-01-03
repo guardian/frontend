@@ -8,7 +8,6 @@
 @import layout.SliceWithCards
 @import conf.audio.FlagshipFrontContainer
 @import conf.AudioFlagship
-@import experiments.{ActiveExperiments, PodcastImage}
 
 @(containerDefinition: layout.FaciaContainer, frontProperties: FrontProperties)(implicit request: RequestHeader)
 
@@ -59,27 +58,21 @@
                         <div class="fc-item--type-media">
                             <div class="fc-podcast-container__episode">
 
-                                @if(ActiveExperiments.isParticipating(PodcastImage)){
-                                    @card.displayElement match {
-                                        case Some(InlineImage(image)) => {
-                                            <div class="fc-podcast-container__episode-image-story">
-                                                @itemImage(
-                                                    image,
-                                                    inlineImage = true,
-                                                    widthsByBreakpoint = Some(card.squareImageWidthsByBreakpoint)
-                                                )
-                                            </div>
-                                        }
-                                        case _ => {
-                                            <div class="fc-podcast-container__episode-image-generic">
-                                                <img src="@FlagshipFrontContainer.AlbumArtUrl"/>
-                                            </div>
-                                        }
+                                @card.displayElement match {
+                                    case Some(InlineImage(image)) => {
+                                        <div class="fc-podcast-container__episode-image-story">
+                                            @itemImage(
+                                                image,
+                                                inlineImage = true,
+                                                widthsByBreakpoint = Some(card.squareImageWidthsByBreakpoint)
+                                            )
+                                        </div>
                                     }
-                                } else{
-                                    <div class="fc-podcast-container__episode-image-generic">
-                                        <img src="@FlagshipFrontContainer.AlbumArtUrl"/>
-                                    </div>
+                                    case _ => {
+                                        <div class="fc-podcast-container__episode-image-generic">
+                                            <img src="@FlagshipFrontContainer.AlbumArtUrl"/>
+                                        </div>
+                                    }
                                 }
 
                                 <div class="fc-podcast-container__episode-details">
