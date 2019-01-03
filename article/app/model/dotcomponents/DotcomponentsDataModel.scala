@@ -11,6 +11,8 @@ import play.api.mvc.RequestHeader
 import views.support.{CamelCase, GUDateTimeFormat}
 import ai.x.play.json.Jsonx
 import common.Maps.RichMap
+import navigation.UrlHelpers.{Footer, Header, getReaderRevenueUrl}
+import navigation.ReaderRevenueSite.{Support, SupportContribute, SupportSubscribe}
 import ai.x.play.json.implicits.optionWithNull // Note, required despite Intellij saying otherwise
 
 // We have introduced our own set of objects for serializing data to the DotComponents API,
@@ -37,6 +39,17 @@ case class Block(
 case class Blocks(
     main: Option[Block],
     body: List[Block]
+)
+
+case class ReaderRevenueLink(
+  contribute: String,
+  subscribe: String,
+  support: String
+)
+
+case class ReaderRevenueLinks(
+  header: ReaderRevenueLink,
+  footer: ReaderRevenueLink
 )
 
 case class PageData(
@@ -74,7 +87,8 @@ case class PageData(
 case class Config(
     isImmersive: Boolean,
     page: PageData,
-    nav: NavMenu
+    nav: NavMenu,
+    readerRevenueLinks: ReaderRevenueLinks
 )
 
 case class ContentFields(
@@ -110,6 +124,14 @@ object TagProperties {
 
 object Tag {
   implicit val writes = Json.writes[Tag]
+}
+
+object ReaderRevenueLink {
+  implicit val writes = Json.writes[ReaderRevenueLink]
+}
+
+object ReaderRevenueLinks {
+  implicit val writes = Json.writes[ReaderRevenueLinks]
 }
 
 object PageData {
@@ -206,10 +228,28 @@ object DotcomponentsDataModel {
 
     val navMenu = NavMenu(articlePage, Edition(request))
 
+    val headerReaderRevenueLink: ReaderRevenueLink = ReaderRevenueLink(
+      getReaderRevenueUrl(SupportContribute, Header)(request),
+      getReaderRevenueUrl(SupportSubscribe, Header)(request),
+      getReaderRevenueUrl(Support, Header)(request)
+    )
+
+    val footerReaderRevenueLink: ReaderRevenueLink = ReaderRevenueLink(
+      getReaderRevenueUrl(SupportContribute, Footer)(request),
+      getReaderRevenueUrl(SupportSubscribe, Footer)(request),
+      getReaderRevenueUrl(Support, Footer)(request)
+    )
+
+    val readerRevenueLinks = ReaderRevenueLinks(
+      headerReaderRevenueLink,
+      footerReaderRevenueLink
+    )
+
     val config = Config(
       article.isImmersive,
       pageData,
-      navMenu
+      navMenu,
+      readerRevenueLinks
     )
 
     DotcomponentsDataModel(
