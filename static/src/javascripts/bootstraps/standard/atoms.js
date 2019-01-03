@@ -5,25 +5,25 @@ import { services } from 'projects/atoms/services';
 
 const bootstrapAtom = <A>(atomMaker: AtomMaker<A>, atomType: AtomType) => {
     const atomBuilder = atomMaker[atomType].default(services);
-    [...document.querySelectorAll(`[data-atom-type='${atomType}']`)].forEach(
-        atomDom => {
-            const atom = atomBuilder(atomDom).runTry();
-            if (typeof atom === 'string') {
-                // eslint-disable-next-line no-console
-                console.log(
-                    `Failed to initialise atom [${atomType}/${atomDom.getAttribute(
-                        'data-atom-id'
-                    ) || ''}]: ${atom}`
-                );
-            } else if ('requestIdleCallback' in window) {
-                requestIdleCallback(() => {
-                    atom.start();
-                });
-            } else {
+    Array.from(
+        document.querySelectorAll(`[data-atom-type='${atomType}']`)
+    ).forEach(atomDom => {
+        const atom = atomBuilder(atomDom).runTry();
+        if (typeof atom === 'string') {
+            // eslint-disable-next-line no-console
+            console.log(
+                `Failed to initialise atom [${atomType}/${atomDom.getAttribute(
+                    'data-atom-id'
+                ) || ''}]: ${atom}`
+            );
+        } else if ('requestIdleCallback' in window) {
+            requestIdleCallback(() => {
                 atom.start();
-            }
+            });
+        } else {
+            atom.start();
         }
-    );
+    });
 };
 
 const initAtoms = () => {

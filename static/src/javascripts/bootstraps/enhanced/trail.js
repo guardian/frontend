@@ -131,9 +131,9 @@ const initOnwardContent = () => {
             new OnwardContent(qwery('.js-onward'));
         } else if (config.get('page.tones', '') !== '') {
             fastdom
-                .read(() => document.querySelectorAll('.js-onward'))
+                .read(() => Array.from(document.querySelectorAll('.js-onward')))
                 .then(els => {
-                    [...els].forEach(c => {
+                    els.forEach(c => {
                         new TonalComponent().fetch(c, 'html');
                     });
                 });

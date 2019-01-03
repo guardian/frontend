@@ -67,15 +67,15 @@ const makeHtml = (): string => `
         .join('')}
     </div>
     <div class="site-message--first-pv-consent__actions">
-        <button 
-            data-link-name="first-pv-consent : agree" 
+        <button
+            data-link-name="first-pv-consent : agree"
             class="site-message--first-pv-consent__button site-message--first-pv-consent__button--main ${
                 bindableClassNames.agree
             }"
         >${checkIcon.markup}<span>${template.agreeButton}</span></button>
-        <a 
-            href="${template.linkToPreferences}" 
-            data-link-name="first-pv-consent : to-prefs" 
+        <a
+            href="${template.linkToPreferences}"
+            data-link-name="first-pv-consent : to-prefs"
             class="site-message--first-pv-consent__link u-underline"
         >${template.choicesButton}</a>
     </div>
@@ -116,11 +116,11 @@ const track = (): void => {
 };
 
 const bindClickHandlers = (msg: Message): void => {
-    [...document.querySelectorAll(`.${bindableClassNames.agree}`)].forEach(
-        agreeButtonEl => {
-            agreeButtonEl.addEventListener('click', () => onAgree(msg));
-        }
-    );
+    Array.from(
+        document.querySelectorAll(`.${bindableClassNames.agree}`)
+    ).forEach(agreeButtonEl => {
+        agreeButtonEl.addEventListener('click', () => onAgree(msg));
+    });
 };
 
 const show = (): Promise<boolean> => {

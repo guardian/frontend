@@ -8,9 +8,9 @@ const launchOverlay = (event: Event): void => {
 
     const scriptUrl = 'https://assets.pinterest.com/js/pinmarklet.js';
     const cachePurge = new Date().getTime();
-    const images = [
-        ...document.querySelectorAll('img:not(.gu-image):not(.responsive-img)'),
-    ];
+    const images = Array.from(
+        document.querySelectorAll('img:not(.gu-image):not(.responsive-img)')
+    );
 
     fastdom.write(() => {
         images.forEach(img => {
@@ -22,7 +22,9 @@ const launchOverlay = (event: Event): void => {
 };
 
 const initPinterest = (): void => {
-    const buttons = [...document.querySelectorAll('.social__item--pinterest')];
+    const buttons = Array.from(
+        document.querySelectorAll('.social__item--pinterest')
+    );
 
     fastdom.write(() => {
         buttons.forEach(el => {

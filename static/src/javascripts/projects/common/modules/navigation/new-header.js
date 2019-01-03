@@ -40,7 +40,9 @@ const closeMenuSection = (section: HTMLElement): void => {
 };
 
 const closeAllMenuSections = (exclude?: Node): void => {
-    const sections = [...document.querySelectorAll('.js-navigation-item')];
+    const sections = Array.from(
+        document.querySelectorAll('.js-navigation-item')
+    );
 
     sections.forEach(section => {
         if (section !== exclude) {
@@ -112,7 +114,9 @@ const toggleMenu = (): void => {
     }
 
     const resetItemOrder = (): void => {
-        const items = [...document.querySelectorAll('.js-navigation-item')];
+        const items = Array.from(
+            document.querySelectorAll('.js-navigation-item')
+        );
 
         items.forEach(item => {
             const listItem = item;
@@ -579,9 +583,9 @@ const addEventHandler = (): void => {
 const bindCredentialsApiSignIn = (): void => {
     fastdom
         .read(() => ({
-            signInLinks: [
-                ...document.querySelectorAll('.js-navigation-sign-in'),
-            ],
+            signInLinks: Array.from(
+                document.querySelectorAll('.js-navigation-sign-in')
+            ),
         }))
         .then(({ signInLinks }) => {
             signInLinks.forEach(signInLink => {

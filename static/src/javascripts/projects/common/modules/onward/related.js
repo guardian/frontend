@@ -135,7 +135,7 @@ const related = (opts: Object): void => {
                 });
         }
     } else {
-        [...document.querySelectorAll('.js-related')].forEach(el =>
+        Array.from(document.querySelectorAll('.js-related')).forEach(el =>
             el.classList.add('u-h')
         );
     }

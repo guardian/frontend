@@ -118,7 +118,7 @@ class AdPrefsWrapper extends Component<
 
 const enhanceAdPrefs = (): void => {
     fastdom
-        .read(() => [...document.querySelectorAll(rootSelector)])
+        .read(() => Array.from(document.querySelectorAll(rootSelector)))
         .then((wrapperEls: HTMLElement[]) => {
             wrapperEls.forEach(_ => {
                 fastdom.write(() => {

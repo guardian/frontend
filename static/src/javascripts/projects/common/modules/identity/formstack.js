@@ -112,10 +112,10 @@ class Formstack {
 
         Object.keys(this.config.fsSelectors).forEach(key => {
             const selector = this.config.fsSelectors[key];
-            const elems = this.form.querySelectorAll(selector);
+            const elems = Array.from(this.form.querySelectorAll(selector));
             const classNames = this.config.idClasses[key].split(' ');
 
-            [...elems].forEach(elem => {
+            elems.forEach(elem => {
                 classNames.forEach(className => {
                     elem.classList.add(className);
                 });
