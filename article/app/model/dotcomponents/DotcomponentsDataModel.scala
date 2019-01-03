@@ -11,7 +11,7 @@ import play.api.mvc.RequestHeader
 import views.support.{CamelCase, GUDateTimeFormat}
 import ai.x.play.json.Jsonx
 import common.Maps.RichMap
-import navigation.UrlHelpers.{Footer, Header, getReaderRevenueUrl}
+import navigation.UrlHelpers.{Footer, Header, SideMenu, getReaderRevenueUrl}
 import navigation.ReaderRevenueSite.{Support, SupportContribute, SupportSubscribe}
 import ai.x.play.json.implicits.optionWithNull // Note, required despite Intellij saying otherwise
 
@@ -49,7 +49,8 @@ case class ReaderRevenueLink(
 
 case class ReaderRevenueLinks(
   header: ReaderRevenueLink,
-  footer: ReaderRevenueLink
+  footer: ReaderRevenueLink,
+  sideMenu: ReaderRevenueLink
 )
 
 case class PageData(
@@ -240,9 +241,16 @@ object DotcomponentsDataModel {
       getReaderRevenueUrl(Support, Footer)(request)
     )
 
+    val sideMenuReaderRevenueLink: ReaderRevenueLink = ReaderRevenueLink(
+      getReaderRevenueUrl(SupportContribute, SideMenu)(request),
+      getReaderRevenueUrl(SupportSubscribe, SideMenu)(request),
+      getReaderRevenueUrl(Support, SideMenu)(request)
+    )
+
     val readerRevenueLinks = ReaderRevenueLinks(
       headerReaderRevenueLink,
-      footerReaderRevenueLink
+      footerReaderRevenueLink,
+      sideMenuReaderRevenueLink
     )
 
     val config = Config(
