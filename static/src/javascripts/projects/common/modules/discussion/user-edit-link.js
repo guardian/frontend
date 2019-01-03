@@ -28,7 +28,9 @@ const addEditLink = (containerEl: HTMLElement): void => {
 
 const initUserEditLink = (): Promise<void> =>
     fastdom
-        .read(() => [...document.getElementsByClassName('user-profile__name')])
+        .read(() =>
+            Array.from(document.getElementsByClassName('user-profile__name'))
+        )
         .then(names => {
             names.forEach(addEditLink);
         });

@@ -248,37 +248,39 @@ class FormstackEmbedIframe {
         setTimeout(() => {
             // Remove any existing errors
             const formErrorClass = this.config.idClasses.formError;
-            const formErrors = document.getElementsByClassName(formErrorClass);
+            const formErrors = Array.from(
+                document.getElementsByClassName(formErrorClass)
+            );
 
-            [...formErrors].forEach(formError => {
+            formErrors.forEach(formError => {
                 formError.classList.remove(formErrorClass);
             });
 
             const fieldErrorClass = this.config.idClasses.fieldError;
-            const fieldErrors = document.getElementsByClassName(
-                fieldErrorClass
+            const fieldErrors = Array.from(
+                document.getElementsByClassName(fieldErrorClass)
             );
 
-            [...fieldErrors].forEach(fieldError => {
+            fieldErrors.forEach(fieldError => {
                 fieldError.classList.remove(fieldErrorClass);
             });
 
             // Handle new errors
             const fsFormErrorClass = this.config.fsSelectors.formError;
-            const fsFormErrors = this.form.getElementsByClassName(
-                fsFormErrorClass
+            const fsFormErrors = Array.from(
+                this.form.getElementsByClassName(fsFormErrorClass)
             );
 
-            [...fsFormErrors].forEach(fsFormError => {
+            fsFormErrors.forEach(fsFormError => {
                 fsFormError.classList.add(formErrorClass);
             });
 
             const fsFieldErrorClass = this.config.fsSelectors.fieldError;
-            const fsFieldErrors = this.form.getElementsByClassName(
-                fsFieldErrorClass
+            const fsFieldErrors = Array.from(
+                this.form.getElementsByClassName(fsFieldErrorClass)
             );
 
-            [...fsFieldErrors].forEach(fsFieldError => {
+            fsFieldErrors.forEach(fsFieldError => {
                 fsFieldError.classList.add(fieldErrorClass);
             });
 

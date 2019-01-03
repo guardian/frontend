@@ -36,7 +36,7 @@ Promise.all([
     updateHeight();
 
     // Brittle but will work
-    [...document.getElementsByClassName('user__question')]
+    Array.from(document.getElementsByClassName('user__question'))
         .slice(0, 1)
         .forEach((sq: Element) => {
             new MutationObserver(updateHeight).observe(sq, {

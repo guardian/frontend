@@ -9,7 +9,7 @@ import { initHostedCarousel } from './onward-journey-carousel';
 const getPlaceholderFromDom = (
     dom: typeof document = document
 ): Array<HTMLElement> =>
-    [...dom.getElementsByClassName('js-onward-placeholder')].slice(0, 1);
+    Array.from(dom.getElementsByClassName('js-onward-placeholder')).slice(0, 1);
 
 const generateUrlFromConfig = (
     c: {

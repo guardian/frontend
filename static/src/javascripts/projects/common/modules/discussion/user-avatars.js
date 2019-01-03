@@ -45,7 +45,7 @@ const initUserAvatars = (): Promise<void> =>
         .read(() => document.getElementsByClassName('user-avatar'))
         .then(avatars => {
             if (avatars) {
-                [...avatars].forEach(avatarify);
+                Array.from(avatars).forEach(avatarify);
             }
         });
 
