@@ -158,9 +158,9 @@ class FormstackEmbedIframe {
         // loop their selectors and add our own classes instead
         this.form.classList.add(this.config.idClasses.form);
 
-        const links = this.el.getElementsByTagName('link');
+        const links = Array.from(this.el.getElementsByTagName('link'));
 
-        [...links].forEach(link => {
+        links.forEach(link => {
             link.remove();
         });
 
