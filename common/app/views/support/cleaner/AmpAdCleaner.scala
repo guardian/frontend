@@ -12,84 +12,80 @@ import scala.xml.Elem
 
 object AmpAdCleaner {
   val AD_LIMIT = 8
-  val CHARS_BETWEEN_ADS = 700
-  val DONT_INTERLEAVE_SMALL_PARA = 50
+  val SMALL_PARA_CHARS = 50
+  val MIN_CHAR_BUFFER = 700
+  val IMG_BUFFER_FWD = 300 // really any non-p element type
+  val IMG_BUFFER_BWD = 200
 
-  def findElementsNeedingAdsAfter(children: List[Element]): List[Element] = {
+  /**
+    * Find ad slots
+    *
+    * Returns a list of elements *after* which ads should be directly
+    * placed.
+    *
+    * Ads are placed:
+    *
+    * * sufficiently far from other ads (MIN_CHAR_BUFFER characters away)
+    * * sufficiently far from non-text (p) elements (IMG_BUFFER_[FWD|BWD])
+    * * non adjacent to small (SMALL_PARA_CHARS) paragraphs
+    *
+    * These tests apply forwards and backwards, though in the case of
+    * non-text buffers, the values differ.
+    *
+    * Where the above tests are met, we say there is adequate 'buffer'
+    * around the ad and it can be placed.
+    */
+  def findAdSlots(elems: Vector[Element]): List[Element] = {
+    def isPara(elem: Element): Boolean = elem.tagName() == "p"
+    def suitableAdNeighbour(elem: Element): Boolean = isPara(elem) && elem.text.length > SMALL_PARA_CHARS
 
-    val ALLOWED = 0
-    val DISALLOWED = 1
-
-    // create the constraints for each paragraph how far before and after we can have it
-    val constraints = children.map { element =>
-
-      def para = element.tagName() != "p"
-      def short = element.text().length < DONT_INTERLEAVE_SMALL_PARA
-
-      if (para) {
-        // don't put an ad before or too close after an embed
-        AdRepel(300, 200, element)
-      } else if (short) {
-        // don't interleave ads between small paragraphs
-        AdRepel(DISALLOWED, DISALLOWED, element)
-      } else {
-        AdRepel(ALLOWED, ALLOWED, element)
+    def hasForwardBuffer(elems: Vector[Element], index: Int): Boolean = {
+      val enoughCharsFwd = {
+        val fwdElems = elems.drop(index + 1)
+        val meetsThreshold = fwdElems.takeWhile(_.tagName == "p").map(_.text.length).sum >= IMG_BUFFER_FWD
+        meetsThreshold || !fwdElems.exists(_.tagName != "p")
       }
+
+      val neighbourSuitable = elems.lift(index + 1).exists(suitableAdNeighbour)
+
+      enoughCharsFwd && neighbourSuitable
     }
 
-    // propagate the constraints across the paragraphs forwards and then backwards
-    val propagatedConstraints = constraints.foldLeft((Nil: List[AdRepel], CHARS_BETWEEN_ADS)){ case ((accu, charsTilAd), currentElement) =>
-
-      val newCharsTilAd = charsTilAd - currentElement.length
-      def carryForwardRepel = currentElement.after < newCharsTilAd
-
-      if (carryForwardRepel) {
-        (currentElement.copy(after = newCharsTilAd) :: accu, newCharsTilAd)
-      } else {
-        (currentElement :: accu, currentElement.after)
+    def hasBackwardBuffer(elems: Vector[Element], index: Int, textSinceLastAd: Int): Boolean = {
+      val enoughCharsBwd = {
+        val bwdElems = elems.take(index + 1).reverse // include element itself as ad will be placed after
+        val meetsThreshold = bwdElems.takeWhile(_.tagName == "p").map(_.text.length).sum >= IMG_BUFFER_BWD
+        meetsThreshold || !elems.exists(_.tagName != "p")
       }
 
-    }._1.foldLeft((Nil: List[AdRepel], 0)){ case ((accu, charsTilAd), currentElement) =>
+      suitableAdNeighbour(elems(index)) && textSinceLastAd >= MIN_CHAR_BUFFER && enoughCharsBwd
+    }
 
-      val newCharsTilAd = charsTilAd - currentElement.length
-      def carryBackwardRepel = currentElement.before < newCharsTilAd
+    var charsScannedSinceLastAd = 0
+    var adSlots = List[Element]()
+    var adCount = 0
 
-      if (carryBackwardRepel) {
-        (currentElement.copy(before = newCharsTilAd) :: accu, newCharsTilAd)
-      } else {
-        (currentElement :: accu, currentElement.before)
-      }
+    elems.zipWithIndex.foreach { case (elem, i) =>
+      if (adCount < AD_LIMIT) {
+        if (isPara(elem)) {
+          charsScannedSinceLastAd += elem.text.length
 
-    }._1
-
-    // now if the repel forward and backward is zero (or less) then we can put in an ad
-    Some(propagatedConstraints).filter(_.length > 1).map {
-      _.sliding(2).foldLeft((Nil: List[Element], 0)){
-        case ((accu, charsTilAd), List(firstElement, secondElement)) =>
-
-          if (accu.length < AD_LIMIT && charsTilAd <= 0 && firstElement.after <= 0 && secondElement.before <= 0) {
-            (firstElement.element :: accu, CHARS_BETWEEN_ADS)
-          } else {
-            (accu, charsTilAd - firstElement.length)
+          if (hasBackwardBuffer(elems, i, charsScannedSinceLastAd) && hasForwardBuffer(elems, i)) {
+            adSlots = elem :: adSlots
+            charsScannedSinceLastAd = 0 // reset
+            adCount += 1
           }
-
-      }._1
-    }.getOrElse(Nil)
-
-  }
-
-  object AdRepel {
-    def apply(before: Int, after: Int, element: Element): AdRepel = {
-      AdRepel(before, after, element.text().length, element)
+        }
+      }
     }
-  }
-  case class AdRepel(before: Int, after: Int, length: Int, element: Element)
 
+    adSlots
+  }
 }
 
 case class AmpAdCleaner(edition: Edition, uri: String, article: Article) extends HtmlCleaner {
 
-  def adAfter(element: Element): Element = {
+  def insertAdAfter(element: Element): Element = {
     def ampAd(adRegion: AdRegion): Elem =
       <amp-ad
       class={s"geo-amp-ad geo-amp-ad--${adRegion.cssClassSuffix}"}
@@ -126,8 +122,8 @@ case class AmpAdCleaner(edition: Edition, uri: String, article: Article) extends
 
   override def clean(document: Document): Document = {
     val children = document.body().children().asScala.toList
-    val adsAfterAndEnd = AmpAdCleaner.findElementsNeedingAdsAfter(children)
-    adsAfterAndEnd.foreach(adAfter) // side effects =(
+    val slots = AmpAdCleaner.findAdSlots(children.toVector)
+    slots.foreach(insertAdAfter)
     document
   }
 }
