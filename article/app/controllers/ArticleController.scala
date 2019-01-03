@@ -110,7 +110,7 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
     val supportedContent: Option[ContentType] = response.content.filter(isSupported).map(Content(_))
 
     ModelOrResult(supportedContent, response) match {
-      case Left(article:Article) => Left(ArticlePage(article, StoryPackages(article, response)))
+      case Left(article:Article) => Left(ArticlePage(article, StoryPackages(article.metadata.id, response)))
       case Right(r) => Right(r)
       case _ => Right(NotFound)
     }
