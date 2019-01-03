@@ -10,7 +10,7 @@ const initCrosswords = (): void => {
     fastdom
         .read(() => document.getElementsByClassName('js-crossword'))
         .then(elements => {
-            [...elements].forEach(element => {
+            Array.from(elements).forEach(element => {
                 const data = element.getAttribute('data-crossword-data');
 
                 if (!data) {

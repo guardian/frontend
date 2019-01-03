@@ -35,9 +35,9 @@ const getState = (): Promise<{
     isMobile: boolean,
 }> =>
     fastdom.read(() => {
-        const elements = [
-            ...document.getElementsByClassName('js-is-fixed-height'),
-        ];
+        const elements = Array.from(
+            document.getElementsByClassName('js-is-fixed-height')
+        );
 
         return { elements, isMobile: getBreakpoint() === 'mobile' };
     });

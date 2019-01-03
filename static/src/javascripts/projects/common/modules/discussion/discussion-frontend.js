@@ -39,11 +39,13 @@ const loadDiscussionFrontend = (
                     /* By the time discussion frontent loads, the number of comments
                    might have changed. If there are other comment counts element
                    in the page refresh their value. */
-                    const otherValues = document.getElementsByClassName(
-                        'js_commentcount_actualvalue'
+                    const otherValues = Array.from(
+                        document.getElementsByClassName(
+                            'js_commentcount_actualvalue'
+                        )
                     );
 
-                    [...otherValues].forEach(el => {
+                    otherValues.forEach(el => {
                         updateCommentCount(el, value);
                     });
                 }

@@ -78,8 +78,8 @@ const updateElement = (el: HTMLElement, count: number): Promise<void> => {
         },
         format
     );
-    const meta = el.getElementsByClassName('js-item__meta');
-    const containers = meta.length ? [...meta] : [el];
+    const meta = Array.from(el.getElementsByClassName('js-item__meta'));
+    const containers = meta.length ? meta : [el];
 
     return fastdom.write(() => {
         containers.forEach(container => {

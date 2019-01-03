@@ -35,9 +35,11 @@ const getActivityStream = (cb: Function): void => {
 };
 
 const selectTab = (el: HTMLElement): void => {
-    const selectedTabs = document.getElementsByClassName('tabs__tab--selected');
+    const selectedTabs = Array.from(
+        document.getElementsByClassName('tabs__tab--selected')
+    );
 
-    [...selectedTabs].forEach(selectedTab => {
+    selectedTabs.forEach(selectedTab => {
         selectedTab.classList.remove('tabs__tab--selected');
     });
 

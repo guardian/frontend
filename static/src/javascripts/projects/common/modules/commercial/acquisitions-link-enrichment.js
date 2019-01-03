@@ -52,7 +52,9 @@ const addReferrerDataToAcquisitionLink = (rawUrl: string): string => {
 const ACQUISITION_LINK_CLASS = 'js-acquisition-link';
 
 const addReferrerDataToAcquisitionLinksOnPage = (): void => {
-    const links = [...document.getElementsByClassName(ACQUISITION_LINK_CLASS)];
+    const links = Array.from(
+        document.getElementsByClassName(ACQUISITION_LINK_CLASS)
+    );
 
     links.forEach(el => {
         fastdom.read(() => el.getAttribute('href')).then(link => {
