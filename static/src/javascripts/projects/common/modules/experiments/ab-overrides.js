@@ -5,7 +5,7 @@ import { local } from 'lib/storage';
 
 const filterOutDeletedTests = (overrides: Overrides): Overrides => {
     const nonDeletedTestIds = Object.keys(overrides).filter(
-        testId => typeof config.switches[`ab${testId}`] !== 'undefined'
+        testId => config.get(`ab${testId}`, 'NOT_FOUND') !== 'NOT_FOUND'
     );
 
     const nonDeletedOverrides = {};
