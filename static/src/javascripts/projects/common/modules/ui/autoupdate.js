@@ -94,7 +94,7 @@ const autoUpdate = (opts?: autoUpdateOptions): void => {
 
         fastdom.write(() => {
             bonzo(resultHtml.children).addClass('autoupdate--hidden');
-            elementsToAdd = [...resultHtml.children];
+            elementsToAdd = Array.from(resultHtml.children);
 
             // Insert new blocks
             $liveblogBody.prepend(elementsToAdd);

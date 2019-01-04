@@ -140,9 +140,9 @@ const onInteractivesLoaded = memoize((rules: SpacefinderRules): Promise<
         rules.body
     ).filter(
         (interactive: Element): boolean => {
-            const iframe: HTMLIFrameElement[] = ([
-                ...interactive.children,
-            ].filter(isIframe): any[]);
+            const iframe: HTMLIFrameElement[] = (Array.from(
+                interactive.children
+            ).filter(isIframe): any[]);
             return !(iframe.length && isIframeLoaded(iframe[0]));
         }
     );

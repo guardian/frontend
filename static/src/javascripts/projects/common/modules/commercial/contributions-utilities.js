@@ -94,10 +94,10 @@ const getTargets = (
     insertAtSelector: string,
     isMultiple: boolean
 ): Array<HTMLElement> => {
-    const els = document.querySelectorAll(insertAtSelector);
+    const els = Array.from(document.querySelectorAll(insertAtSelector));
 
     if (isMultiple) {
-        return [...els];
+        return els;
     } else if (els.length) {
         return [els[0]];
     }

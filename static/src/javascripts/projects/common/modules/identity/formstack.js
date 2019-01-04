@@ -104,18 +104,18 @@ class Formstack {
         // loop their selectors and add our own classes instead
         this.form.classList.add(this.config.idClasses.form);
 
-        const links = this.el.getElementsByTagName('link');
+        const links = Array.from(this.el.getElementsByTagName('link'));
 
-        [...links].forEach(link => {
+        links.forEach(link => {
             link.remove();
         });
 
         Object.keys(this.config.fsSelectors).forEach(key => {
             const selector = this.config.fsSelectors[key];
-            const elems = this.form.querySelectorAll(selector);
+            const elems = Array.from(this.form.querySelectorAll(selector));
             const classNames = this.config.idClasses[key].split(' ');
 
-            [...elems].forEach(elem => {
+            elems.forEach(elem => {
                 classNames.forEach(className => {
                     elem.classList.add(className);
                 });
@@ -215,11 +215,11 @@ class Formstack {
             });
 
             // Update character count absolute positions
-            const textAreas = this.el.querySelectorAll(
-                this.config.fsSelectors.textArea
+            const textAreas = Array.from(
+                this.el.querySelectorAll(this.config.fsSelectors.textArea)
             );
 
-            [...textAreas].forEach(textArea => {
+            textAreas.forEach(textArea => {
                 triggerKeyUp(textArea);
             });
 

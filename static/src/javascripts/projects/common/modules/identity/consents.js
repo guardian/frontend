@@ -41,7 +41,7 @@ const buildConsentUpdatePayload = (
     fields: NodeList<any> = new NodeList()
 ): SettableConsent => {
     const consent = {};
-    [...fields].forEach((field: HTMLInputElement) => {
+    Array.from(fields).forEach((field: HTMLInputElement) => {
         switch (field.type) {
             case 'checkbox':
                 consent.consented = field.checked;
@@ -72,11 +72,13 @@ const unsubscribeFromAll = (buttonEl: HTMLButtonElement): Promise<void> => {
 
 const toggleInputsWithSelector = (className: string, checked: boolean) =>
     fastdom
-        .read(() => [
-            ...document.querySelectorAll(
-                `.${className} input[type="checkbox"]`
-            ),
-        ])
+        .read(() =>
+            Array.from(
+                document.querySelectorAll(
+                    `.${className} input[type="checkbox"]`
+                )
+            )
+        )
         .then(boxes =>
             boxes.forEach(b => {
                 b.checked = checked;
@@ -218,11 +220,11 @@ const bindCheckAllSwitch = (labelEl: HTMLElement): void => {
                 fastdom.read(() => {
                     const nearestWrapperEl = labelEl.closest(selector);
                     if (!nearestWrapperEl) throw new Error(ERR_MALFORMED_HTML);
-                    return [
-                        ...nearestWrapperEl.querySelectorAll(
+                    return Array.from(
+                        nearestWrapperEl.querySelectorAll(
                             'input[type=checkbox]'
-                        ),
-                    ].filter(
+                        )
+                    ).filter(
                         $checkbox =>
                             $checkbox.closest(
                                 `.${checkAllCheckboxClassName}`
