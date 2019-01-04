@@ -36,11 +36,9 @@ const bindEvents = () => {
             const variantId = label.getAttribute('data-ab-variant');
             const overrides = getOverridesFromLocalStorage();
 
-            if (!overrides[testId]) {
-                overrides[testId] = {};
-            }
-
-            overrides[testId].variant = variantId;
+            overrides[testId] = {
+                variant: variantId
+            };
 
             setOverridesInLocalStorage(overrides);
         });
