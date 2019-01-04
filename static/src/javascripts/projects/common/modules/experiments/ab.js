@@ -23,6 +23,12 @@ const testCanBeRun = (test: ABTest): boolean => {
     const isTestOn = isTestSwitchedOn(test);
     const canTestBeRun = !test.canRun || test.canRun();
 
+    // console.log('expired', expired);
+    // console.log('isSensitive', isSensitive);
+    // console.log('shouldShowForSensitive', shouldShowForSensitive);
+    // console.log('isTestOn', isTestOn);
+    // console.log('canTestBeRun', canTestBeRun);
+
     return (
         (isSensitive ? shouldShowForSensitive : true) &&
         isTestOn &&
@@ -59,6 +65,11 @@ export const runnableTest = <T: ABTest>(test: T): ?Runnable<T> => {
     const overridenVariant = getOverridenVariant(test);
     const variantFromCookie = computeVariantFromMvtCookie(test);
     const variantToRun = overridenVariant || variantFromCookie;
+
+    // console.log('overridenVariant', overridenVariant);
+    // console.log('variantFromCookie', variantFromCookie);
+    // console.log('variantToRun', variantToRun);
+    // console.log('variantCanBeRun(variantToRun)', variantToRun && variantCanBeRun(variantToRun));
 
     if (testCanBeRun(test) && variantToRun && variantCanBeRun(variantToRun)) {
         return {
