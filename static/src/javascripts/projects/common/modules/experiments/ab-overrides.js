@@ -2,7 +2,6 @@
 import config from 'lib/config';
 import { local } from 'lib/storage';
 
-
 const filterOutDeletedTests = (overrides: Overrides): Overrides => {
     const nonDeletedTestIds = Object.keys(overrides).filter(
         testId => config.get(`ab${testId}`, 'NOT_FOUND') !== 'NOT_FOUND'
@@ -38,7 +37,7 @@ export const getOverridesFromUrl = (): Overrides => {
         tokens.forEach(token => {
             const [testId, variantId] = token.split('=');
             overrides[testId] = {
-                variant: variantId
+                variant: variantId,
             };
         });
 

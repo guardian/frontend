@@ -37,7 +37,7 @@ const bindEvents = () => {
             const overrides = getOverridesFromLocalStorage();
 
             overrides[testId] = {
-                variant: variantId
+                variant: variantId,
             };
 
             setOverridesInLocalStorage(overrides);
