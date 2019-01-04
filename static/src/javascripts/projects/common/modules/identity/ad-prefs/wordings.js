@@ -4,12 +4,12 @@ import { thirdPartyTrackingAdConsent } from 'common/modules/commercial/ad-prefs.
 
 type CheckboxWording = {
     title: string,
-    text: string,
+    text?: string,
 };
 
 type QuestionWording = {
     title: string,
-    text: string,
+    text?: string,
 };
 
 type ConsentWording = {
@@ -19,9 +19,10 @@ type ConsentWording = {
 };
 
 const ThirdPartyConsentWording: ConsentWording = {
-    question:{
+    question: {
         title: 'Set your personalised ads preferences',
-        text: '<p>We work with <a class="u-underline" href="https://www.theguardian.com/info/cookies">advertising partners</a> (including Google and the Ozone project) to show you ads for things you might beinterested in. You can manage whether the ads you see on our sites are personalised by selecting one of the options below.</p><p>Don\'t worry, you can always revisit these settings by following the link on our <a class="u-underline" href="https://www.theguardian.com/info/cookies">cookies policy</a> page.</p>',
+        text:
+            '<p>We work with <a class="u-underline" href="https://www.theguardian.com/info/cookies">advertising partners</a> (including Google and the Ozone project) to show you ads for things you might beinterested in. You can manage whether the ads you see on our sites are personalised by selecting one of the options below.</p><p>Don\'t worry, you can always revisit these settings by following the link on our <a class="u-underline" href="https://www.theguardian.com/info/cookies">cookies policy</a> page.</p>',
     },
     yesCheckbox: {
         title: 'I am OK with personalised ads',
@@ -37,7 +38,7 @@ const getConsentWording = (consent: AdConsent): ConsentWording => {
     if (consent.cookie === thirdPartyTrackingAdConsent.cookie)
         return ThirdPartyConsentWording;
     return {
-        question: consent.label,
+        question: { title: consent.label },
         yesCheckbox: {
             title: 'yes',
         },
@@ -47,5 +48,5 @@ const getConsentWording = (consent: AdConsent): ConsentWording => {
     };
 };
 
-export type { ConsentWording, CheckboxWording };
+export type { ConsentWording, CheckboxWording, QuestionWording };
 export { getConsentWording };

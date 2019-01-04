@@ -69,11 +69,12 @@ class ConsentBox extends Component<ConsentBoxProps, {}> {
                 <legend className="identity-title identity-title--small">
                     {wording.question.title}
                 </legend>
-                <div className="identity-ad-prefs-input__wording"
-                        dangerouslySetInnerHTML={{
-                            __html: wording.question.text,
-                        }}>                             
-                    </div>
+                <div
+                    className="identity-ad-prefs-input__wording"
+                    dangerouslySetInnerHTML={{
+                        __html: wording.question.text,
+                    }}
+                />
                 <div>
                     <ConsentRadioButton
                         value="true"
