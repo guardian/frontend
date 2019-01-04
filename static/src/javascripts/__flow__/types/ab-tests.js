@@ -103,8 +103,3 @@ declare type Overrides = {
         variant: string,
     },
 };
-
-declare type OverridesArray = {|
-    testId: string,
-    variantId: string,
-|}[];

@@ -12,7 +12,10 @@ import {
     engagementBannerTests,
 } from 'common/modules/experiments/ab-tests';
 import { isExpired } from 'lib/time-utils';
-import { getOverridesFromLocalStorage, setOverridesInLocalStorage } from 'common/modules/experiments/ab-overrides';
+import {
+    getOverridesFromLocalStorage,
+    setOverridesInLocalStorage,
+} from 'common/modules/experiments/ab-overrides';
 
 const selectRadios = () => {
     const overrides = getOverridesFromLocalStorage();
