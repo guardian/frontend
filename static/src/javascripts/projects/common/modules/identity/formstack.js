@@ -215,11 +215,11 @@ class Formstack {
             });
 
             // Update character count absolute positions
-            const textAreas = this.el.querySelectorAll(
-                this.config.fsSelectors.textArea
+            const textAreas = Array.from(
+                this.el.querySelectorAll(this.config.fsSelectors.textArea)
             );
 
-            [...textAreas].forEach(textArea => {
+            textAreas.forEach(textArea => {
                 triggerKeyUp(textArea);
             });
 

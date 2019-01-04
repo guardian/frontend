@@ -41,7 +41,7 @@ const buildConsentUpdatePayload = (
     fields: NodeList<any> = new NodeList()
 ): SettableConsent => {
     const consent = {};
-    [...fields].forEach((field: HTMLInputElement) => {
+    Array.from(fields).forEach((field: HTMLInputElement) => {
         switch (field.type) {
             case 'checkbox':
                 consent.consented = field.checked;

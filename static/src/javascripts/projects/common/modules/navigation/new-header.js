@@ -27,7 +27,7 @@ const getMenu = (): ?HTMLElement =>
     document.getElementsByClassName('js-main-menu')[0];
 
 const getSectionToggleMenuItem = (section: HTMLElement): ?HTMLElement => {
-    const children = [...section.children];
+    const children = Array.from(section.children);
     return children.find(child => child.classList.contains('menu-item__title'));
 };
 
