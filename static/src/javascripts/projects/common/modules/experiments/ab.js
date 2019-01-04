@@ -6,6 +6,7 @@ import {
 } from 'common/modules/analytics/mvt-cookie';
 import config from 'lib/config';
 import { isExpired } from 'lib/time-utils';
+import { getOverridenVariant } from 'common/modules/experiments/ab-overrides';
 
 const isTestSwitchedOn = (test: ABTest): boolean =>
     config.get(`switches.ab${test.id}`, false);
@@ -55,7 +56,9 @@ const computeVariantFromMvtCookie = (test: ABTest): ?Variant => {
 };
 
 export const runnableTest = <T: ABTest>(test: T): ?Runnable<T> => {
-    const variantToRun = computeVariantFromMvtCookie(test);
+    const overridenVariant = getOverridenVariant(test);
+    const variantFromCookie = computeVariantFromMvtCookie(test);
+    const variantToRun = overridenVariant || variantFromCookie;
 
     if (testCanBeRun(test) && variantToRun && variantCanBeRun(variantToRun)) {
         return {

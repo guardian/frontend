@@ -15,11 +15,13 @@ import {
     incrementMvtCookie,
 } from 'common/modules/analytics/mvt-cookie';
 import { setGeolocation, getSync as geolocationGetSync } from 'lib/geolocation';
+import { clearOverrides as clearAbTestOverrides } from 'common/modules/experiments/ab-overrides';
 
 const clearCommonReaderRevenueStateAndReload = (): void => {
     readerRevenueRelevantCookies.forEach(cookie => removeCookie(cookie));
 
     initMvtCookie();
+    clearAbTestOverrides();
 
     // Most versions of the epic only display for a certain number of pageviews in
     // a given time window (typically, 4 per 30 days).

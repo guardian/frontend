@@ -32,7 +32,7 @@ const formatTarget = (target: ?string): ?string =>
         : null;
 
 const abParam = (): Array<string> => {
-    const abParticipations: Participations = getParticipations();
+    const abParticipations: Overrides = getParticipations();
     const abParams: Array<string> = [];
 
     const pushAbParams = (testName: string, testValue: mixed): void => {

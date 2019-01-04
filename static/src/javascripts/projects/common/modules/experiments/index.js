@@ -12,19 +12,17 @@ import {
     engagementBannerTests,
 } from 'common/modules/experiments/ab-tests';
 import { isExpired } from 'lib/time-utils';
-
-const getSelectedAbTests = () =>
-    JSON.parse(storage.get('gu.experiments.ab')) || [];
+import { getOverridesFromLocalStorage, setOverridesInLocalStorage } from 'common/modules/experiments/ab-overrides';
 
 const selectRadios = () => {
-    const abTests = getSelectedAbTests();
+    const overrides = getOverridesFromLocalStorage();
 
     $('.js-experiments-radio').each(radio => {
         $(radio).attr('checked', false);
     });
 
-    abTests.forEach(test => {
-        $(`#${test.testId}-${test.variantId}`).attr('checked', true);
+    Object.keys(overrides).forEach(testId => {
+        $(`#${testId}-${overrides[testId].variant}`).attr('checked', true);
     });
 };
 
@@ -33,17 +31,15 @@ const bindEvents = () => {
         bean.on(label, 'click', () => {
             const testId = label.getAttribute('data-ab-test');
             const variantId = label.getAttribute('data-ab-variant');
-            const abTests = getSelectedAbTests();
-            const existingVariantForThisTest = abTests.find(
-                test => test.testId === testId
-            );
+            const overrides = getOverridesFromLocalStorage();
 
-            if (existingVariantForThisTest) {
-                existingVariantForThisTest.variantId = variantId;
-            } else {
-                abTests.push({ testId, variantId });
+            if (!overrides[testId]) {
+                overrides[testId] = {};
             }
-            storage.set('gu.experiments.ab', JSON.stringify(abTests));
+
+            overrides[testId].variant = variantId;
+
+            setOverridesInLocalStorage(overrides);
         });
     });
 

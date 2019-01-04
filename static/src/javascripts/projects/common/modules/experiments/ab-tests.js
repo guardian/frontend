@@ -36,6 +36,7 @@ import {
     registerImpressionEvents,
     trackABTests,
 } from 'common/modules/experiments/ab-ophan';
+import { initManualOverrides } from 'common/modules/experiments/ab-overrides';
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialPrebidSafeframe,
@@ -85,7 +86,7 @@ export const getTestVariantId = (testId: string): ?string => {
     return null;
 };
 
-export const getParticipations = (): Participations => {
+export const getParticipations = (): Overrides => {
     const epicTest = firstRunnableTest(epicTests);
     const engagementBannerTest = firstRunnableTest(engagementBannerTests);
 
@@ -104,6 +105,8 @@ export const getParticipations = (): Participations => {
 };
 
 export const runAndTrackAbTests = () => {
+    initManualOverrides();
+
     const runnableConcurrentTests: $ReadOnlyArray<
         Runnable<ABTest>
     > = allRunnableTests(concurrentTests);
