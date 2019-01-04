@@ -86,7 +86,7 @@ export const getTestVariantId = (testId: string): ?string => {
     return null;
 };
 
-export const getParticipations = (): Overrides => {
+export const getParticipations = (): Participations => {
     const epicTest = firstRunnableTest(epicTests);
     const engagementBannerTest = firstRunnableTest(engagementBannerTests);
 

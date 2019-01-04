@@ -13,7 +13,7 @@ const MANDATORY_ELEMENTS = '#feedback__form input, #feedback__form textarea';
 const MEMBERS_DATA_API_ENDPOINT =
     'https://members-data-api.theguardian.com/user-attributes/me';
 
-const summariseAbTests = (testParticipations: Overrides): string => {
+const summariseAbTests = (testParticipations: Participations): string => {
     const tests = Object.keys(testParticipations);
 
     if (tests.length === 0) {

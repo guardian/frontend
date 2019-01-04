@@ -3,7 +3,7 @@ import config from 'lib/config';
 import { local } from 'lib/storage';
 
 const overridesToArray = (
-    overrides: Overrides
+    overrides: Participations
 ): { testId: string, variantId: string }[] =>
     Object.keys(overrides).map(testId => ({
         testId,
@@ -12,8 +12,8 @@ const overridesToArray = (
 
 const arrayToOverrides = (
     arr: { testId: string, variantId: string }[]
-): Overrides => {
-    const overrides: Overrides = {};
+): Participations => {
+    const overrides: Participations = {};
     arr.forEach(({ testId, variantId }) => {
         overrides[testId] = { variant: variantId };
     });
@@ -22,16 +22,16 @@ const arrayToOverrides = (
 };
 
 const filterOverrides = (
-    overrides: Overrides,
+    overrides: Participations,
     filter: ({ testId: string, variantId: string }) => boolean
-): Overrides => arrayToOverrides(overridesToArray(overrides).filter(filter));
+): Participations => arrayToOverrides(overridesToArray(overrides).filter(filter));
 
 export const overridesKey = 'gu.ab.overrides';
 
-export const getOverridesFromLocalStorage = (): Overrides =>
+export const getOverridesFromLocalStorage = (): Participations =>
     local.get(overridesKey) || {};
 
-export const setOverridesInLocalStorage = (overrides: Overrides): void => {
+export const setOverridesInLocalStorage = (overrides: Participations): void => {
     local.set(overridesKey, overrides);
 };
 
@@ -40,11 +40,11 @@ export const clearOverrides = (): void => {
     local.remove(overridesKey);
 };
 
-export const getOverridesFromUrl = (): Overrides => {
+export const getOverridesFromUrl = (): Participations => {
     if (window.location.hash.startsWith('#ab')) {
         const tokens = window.location.hash.replace('#ab-', '').split(',');
 
-        const overrides: Overrides = {};
+        const overrides: Participations = {};
         tokens.forEach(token => {
             const [testId, variantId] = token.split('=');
             overrides[testId] = {
@@ -73,15 +73,15 @@ export const getOverridenVariant = (test: ABTest): ?Variant => {
 // setting a URL hash. This value is then stored in localStorage and will persist until
 // replaced by another override for that test, or until the test switch is deleted from the backend.
 export const initManualOverrides = () => {
-    const currentOverrides: Overrides = getOverridesFromLocalStorage();
-    const overridesFromUrl: Overrides = getOverridesFromUrl();
+    const currentOverrides: Participations = getOverridesFromLocalStorage();
+    const overridesFromUrl: Participations = getOverridesFromUrl();
 
-    const newOverrides: Overrides = {
+    const newOverrides: Participations = {
         ...currentOverrides,
         ...overridesFromUrl,
     };
 
-    const newOverridesWithoutDeletedTestsOrNotInTest: Overrides = filterOverrides(
+    const newOverridesWithoutDeletedTestsOrNotInTest: Participations = filterOverrides(
         newOverrides,
         ({ testId, variantId }) =>
             // Don't bother cleaning out the expired tests.
