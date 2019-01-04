@@ -16,7 +16,7 @@ jest.mock('lib/raven');
 jest.mock('lib/storage');
 jest.mock('lib/report-error');
 jest.mock('common/modules/analytics/mvt-cookie');
-jest.mock('common/modules/experiments/ab-tests');
+// jest.mock('common/modules/experiments/ab-tests');
 jest.mock('lodash/memoize', () => f => f);
 jest.mock('ophan/ng', () => null);
 
@@ -36,7 +36,10 @@ describe('A/B Ophan analytics', () => {
     });
 
     test('Ophan data structure contains the correct values', () => {
-        expect(buildOphanPayload([getRunnableAbTest('DummyTest')])).toEqual({
+        expect(buildOphanPayload([
+            getRunnableAbTest('DummyTest'),
+            getRunnableAbTest('DummyTest2')
+        ])).toEqual({
             DummyTest: {
                 variantName: 'control',
                 complete: 'false',
