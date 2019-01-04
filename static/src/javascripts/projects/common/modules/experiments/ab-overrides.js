@@ -2,18 +2,20 @@
 import config from 'lib/config';
 import { local } from 'lib/storage';
 
-const filterOutDeletedTests = (overrides: Overrides): Overrides => {
-    const nonDeletedTestIds = Object.keys(overrides).filter(
-        testId => config.get(`ab${testId}`, 'NOT_FOUND') !== 'NOT_FOUND'
-    );
+const overridesToArray = (overrides: Overrides): {testId: string, variantId: string}[] =>
+    Object.keys(overrides).map(testId => ({testId, variantId: overrides[testId].variant}));
 
-    const nonDeletedOverrides = {};
-    nonDeletedTestIds.forEach(testId => {
-        nonDeletedOverrides[testId] = overrides[testId].variant;
+const arrayToOverrides = (arr: {testId: string, variantId: string}[]): Overrides => {
+    const overrides: Overrides = {};
+    arr.forEach(({testId, variantId}) => {
+        overrides[testId] = {variant: variantId};
     });
 
-    return nonDeletedOverrides;
+    return overrides;
 };
+
+const filterOverrides = (overrides: Overrides, filter: {testId: string, variantId: string} => boolean): Overrides =>
+    arrayToOverrides(overridesToArray(overrides).filter(filter));
 
 export const overridesKey = 'gu.ab.overrides';
 
@@ -70,12 +72,16 @@ export const initManualOverrides = () => {
         ...overridesFromUrl,
     };
 
-    // Don't bother cleaning out the expired tests.
-    // The switch will have an expiry too and once that happens the test & switch will be deleted.
-    // In the meantime, expired tests will still not run, even through an override. (see testCanBeRun() in ab.js)
-    const newOverridesWithoutDeletedTests: Overrides = filterOutDeletedTests(
-        newOverrides
+    const newOverridesWithoutDeletedTestsOrNotInTest: Overrides = filterOverrides(
+        newOverrides,
+        ({testId, variantId}) =>
+            // Don't bother cleaning out the expired tests.
+            // The switch will have an expiry too and once that happens the test & switch will be deleted.
+            // In the meantime, expired tests will still not run, even through an override. (see testCanBeRun() in ab.js)
+            config.get(`ab${testId}`, 'NOT_FOUND') !== 'NOT_FOUND' &&
+            // this provides a way to remove an override via the URL hash
+            variantId !== 'notintest'
     );
 
-    setOverridesInLocalStorage(newOverridesWithoutDeletedTests);
+    setOverridesInLocalStorage(newOverridesWithoutDeletedTestsOrNotInTest);
 };
