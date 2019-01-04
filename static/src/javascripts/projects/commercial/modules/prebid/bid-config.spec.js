@@ -64,7 +64,10 @@ jest.mock('common/modules/commercial/ad-prefs.lib', () => ({
 
 jest.mock('./utils');
 
-jest.mock('common/modules/experiments/utils');
+jest.mock('common/modules/experiments/ab', () => ({
+    isInVariant: () => true,
+    getVariant: jest.fn(),
+}));
 
 /* eslint-disable guardian-frontend/no-direct-access-config */
 const resetConfig = () => {
