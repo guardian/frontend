@@ -45,7 +45,7 @@ export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialOutbrainNewids,
 ];
 
-export const epicTests: $ReadOnlyArray<AcquisitionsABTest> = [
+export const epicTests: $ReadOnlyArray<EpicABTest> = [
     acquisitionsEpicUsTopTicker,
     acquisitionsEpicAuPostOneMillion,
     acquisitionsEpicFromGoogleDocOneVariant,
@@ -108,7 +108,7 @@ export const runAndTrackAbTests = () => {
         Runnable<ABTest>
     > = allRunnableTests(concurrentTests);
 
-    const runnableEpicTest: ?Runnable<AcquisitionsABTest> = firstRunnableTest(
+    const runnableEpicTest: ?Runnable<EpicABTest> = firstRunnableTest(
         epicTests
     );
 
