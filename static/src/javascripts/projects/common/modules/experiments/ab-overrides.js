@@ -2,19 +2,6 @@
 import config from 'lib/config';
 import { local } from 'lib/storage';
 
-export const overridesKey = 'gu.ab.overrides';
-
-export const getOverridesFromLocalStorage = (): Overrides =>
-    local.get(overridesKey) || {};
-
-export const setOverridesInLocalStorage = (overrides: Overrides): void => {
-    local.set(overridesKey, overrides);
-};
-
-// Wipes all overrides
-export const clearOverrides = (): void => {
-    local.remove(overridesKey);
-};
 
 const filterOutDeletedTests = (overrides: Overrides): Overrides => {
     const nonDeletedTestIds = Object.keys(overrides).filter(
@@ -27,6 +14,20 @@ const filterOutDeletedTests = (overrides: Overrides): Overrides => {
     });
 
     return nonDeletedOverrides;
+};
+
+export const overridesKey = 'gu.ab.overrides';
+
+export const getOverridesFromLocalStorage = (): Overrides =>
+    local.get(overridesKey) || {};
+
+export const setOverridesInLocalStorage = (overrides: Overrides): void => {
+    local.set(overridesKey, overrides);
+};
+
+// Wipes all overrides
+export const clearOverrides = (): void => {
+    local.remove(overridesKey);
 };
 
 export const getOverridesFromUrl = (): Overrides => {
