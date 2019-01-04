@@ -33,7 +33,7 @@ const getConsentWording = (consent: AdConsent): ConsentWording => {
     if (consent.cookie === thirdPartyTrackingAdConsent.cookie)
         return ThirdPartyConsentWording;
     return {
-        question: consent.label,
+        questionHeading: consent.label,
         yesCheckbox: {
             title: 'yes',
         },
