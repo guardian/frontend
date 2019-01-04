@@ -16,7 +16,6 @@ jest.mock('lib/raven');
 jest.mock('lib/storage');
 jest.mock('lib/report-error');
 jest.mock('common/modules/analytics/mvt-cookie');
-// jest.mock('common/modules/experiments/ab-tests');
 jest.mock('lodash/memoize', () => f => f);
 jest.mock('ophan/ng', () => null);
 
