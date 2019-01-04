@@ -2,20 +2,29 @@
 import config from 'lib/config';
 import { local } from 'lib/storage';
 
-const overridesToArray = (overrides: Overrides): {testId: string, variantId: string}[] =>
-    Object.keys(overrides).map(testId => ({testId, variantId: overrides[testId].variant}));
+const overridesToArray = (
+    overrides: Overrides
+): { testId: string, variantId: string }[] =>
+    Object.keys(overrides).map(testId => ({
+        testId,
+        variantId: overrides[testId].variant,
+    }));
 
-const arrayToOverrides = (arr: {testId: string, variantId: string}[]): Overrides => {
+const arrayToOverrides = (
+    arr: { testId: string, variantId: string }[]
+): Overrides => {
     const overrides: Overrides = {};
-    arr.forEach(({testId, variantId}) => {
-        overrides[testId] = {variant: variantId};
+    arr.forEach(({ testId, variantId }) => {
+        overrides[testId] = { variant: variantId };
     });
 
     return overrides;
 };
 
-const filterOverrides = (overrides: Overrides, filter: {testId: string, variantId: string} => boolean): Overrides =>
-    arrayToOverrides(overridesToArray(overrides).filter(filter));
+const filterOverrides = (
+    overrides: Overrides,
+    filter: ({ testId: string, variantId: string }) => boolean
+): Overrides => arrayToOverrides(overridesToArray(overrides).filter(filter));
 
 export const overridesKey = 'gu.ab.overrides';
 
@@ -74,7 +83,7 @@ export const initManualOverrides = () => {
 
     const newOverridesWithoutDeletedTestsOrNotInTest: Overrides = filterOverrides(
         newOverrides,
-        ({testId, variantId}) =>
+        ({ testId, variantId }) =>
             // Don't bother cleaning out the expired tests.
             // The switch will have an expiry too and once that happens the test & switch will be deleted.
             // In the meantime, expired tests will still not run, even through an override. (see testCanBeRun() in ab.js)
