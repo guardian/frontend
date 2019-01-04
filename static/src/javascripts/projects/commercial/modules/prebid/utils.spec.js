@@ -2,7 +2,6 @@
 import { getSync as getSync_ } from 'lib/geolocation';
 import { getBreakpoint as getBreakpoint_ } from 'lib/detect';
 import config from 'lib/config';
-import { getParticipations as getParticipations_ } from 'common/modules/experiments/ab-tests';
 import {
     getLargestSize,
     getBreakpointKey,
