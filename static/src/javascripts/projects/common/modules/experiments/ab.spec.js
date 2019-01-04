@@ -16,9 +16,7 @@ describe('A/B tests', () => {
         config.switches.abDummyTest = true;
     });
 
-    afterEach(() => {
-    });
-
+    afterEach(() => {});
 
     describe('runnableTest', () => {
         test('should return a test with variantToRun if test is runnable', () => {
@@ -27,9 +25,8 @@ describe('A/B tests', () => {
             const rt = runnableTest(test);
             expect(rt).not.toBeNull();
 
-
             if (rt) {
-                expect(rt.variantToRun).toHaveProperty('id', 'control')
+                expect(rt.variantToRun).toHaveProperty('id', 'control');
             }
         });
 

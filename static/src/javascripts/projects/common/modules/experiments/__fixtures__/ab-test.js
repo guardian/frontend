@@ -4,7 +4,11 @@ export const genVariant = (id: string): Variant => ({
     test: () => undefined,
 });
 
-export const genAbTest = (id: string, canRun: ?boolean, expiry: ?string): ABTest => ({
+export const genAbTest = (
+    id: string,
+    canRun: ?boolean,
+    expiry: ?string
+): ABTest => ({
     id,
     audienceCriteria: 'n/a',
     audienceOffset: 0,
@@ -16,7 +20,7 @@ export const genAbTest = (id: string, canRun: ?boolean, expiry: ?string): ABTest
     },
     description: 'n/a',
     start: '0001-01-01',
-    expiry: expiry ? expiry : '9999-12-12',
+    expiry: expiry || '9999-12-12',
     successMeasure: 'n/a',
     variants: [genVariant('control'), genVariant('variant')],
 });

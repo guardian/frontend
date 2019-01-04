@@ -22,7 +22,6 @@ import {
 
 const getSync: any = getSync_;
 const getBreakpoint: any = getBreakpoint_;
-const getParticipations: any = getParticipations_;
 
 jest.mock('lodash/once', () => a => a);
 

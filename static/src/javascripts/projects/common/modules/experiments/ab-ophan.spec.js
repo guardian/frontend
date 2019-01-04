@@ -35,10 +35,12 @@ describe('A/B Ophan analytics', () => {
     });
 
     test('Ophan data structure contains the correct values', () => {
-        expect(buildOphanPayload([
-            getRunnableAbTest('DummyTest'),
-            getRunnableAbTest('DummyTest2')
-        ])).toEqual({
+        expect(
+            buildOphanPayload([
+                getRunnableAbTest('DummyTest'),
+                getRunnableAbTest('DummyTest2'),
+            ])
+        ).toEqual({
             DummyTest: {
                 variantName: 'control',
                 complete: 'false',

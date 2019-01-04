@@ -4,7 +4,7 @@ import { initTechFeedback } from './tech-feedback';
 
 jest.mock('lib/raven');
 jest.mock('common/modules/experiments/ab-tests', () => ({
-    getTestVariantId: () => null
+    getTestVariantId: () => null,
 }));
 
 describe('Tech-feedback', () => {
