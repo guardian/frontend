@@ -67,11 +67,11 @@ class ConsentBox extends Component<ConsentBoxProps, {}> {
         return (
             <fieldset>
                 <legend className="identity-title identity-title--small">
-                    {wording.questionHeading}
+                    {wording.question.title}
                 </legend>
                 <div className="identity-ad-prefs-input__wording"
                         dangerouslySetInnerHTML={{
-                            __html: wording.questionBody,
+                            __html: wording.question.text,
                         }}>                             
                     </div>
                 <div>
