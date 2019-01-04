@@ -87,7 +87,7 @@ export const initManualOverrides = () => {
             // Don't bother cleaning out the expired tests.
             // The switch will have an expiry too and once that happens the test & switch will be deleted.
             // In the meantime, expired tests will still not run, even through an override. (see testCanBeRun() in ab.js)
-            config.get(`ab${testId}`, 'NOT_FOUND') !== 'NOT_FOUND' &&
+            config.get(`switches.ab${testId}`, 'NOT_FOUND') !== 'NOT_FOUND' &&
             // this provides a way to remove an override via the URL hash
             variantId !== 'notintest'
     );
