@@ -117,8 +117,6 @@ jest.mock('common/modules/user-prefs', () => ({
 
 const FakeMessage: any = require('common/modules/ui/message').Message;
 
-// const fakeFirstRunnableTest: any = require('common/modules/experiments/ab-core').firstRunnableTest;
-
 const fakeConstructQuery: any = require('lib/url').constructQuery;
 const fakeIsBlocked: any = require('common/modules/commercial/membership-engagement-banner-block')
     .isBlocked;
@@ -134,7 +132,6 @@ beforeEach(() => {
     FakeMessage.prototype.show = jest.fn(() => true);
     fakeIsBlocked.mockClear();
     fakeGet.mockClear();
-    // fakeFirstRunnableTest.mockClear();
     fakeShouldShowReaderRevenue.mockClear();
     fakeConfig.get.mockClear();
     fetchJsonMock.mockImplementation(() =>
