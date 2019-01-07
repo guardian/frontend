@@ -85,16 +85,18 @@ const addReferrerDataToAcquisitionLinksInInteractiveIframes = (): void => {
         // https://github.com/guardian/iframe-messenger
         if (data.type === 'enrich-acquisition-links' && data.id) {
             data.referrerData = addReferrerData({});
-            [...document.getElementsByTagName('iframe')].forEach(iframe => {
-                iframe.contentWindow.postMessage(
-                    JSON.stringify(data),
-                    'https://interactive.guim.co.uk'
-                );
-            });
+            Array.from(document.getElementsByTagName('iframe')).forEach(
+                iframe => {
+                    iframe.contentWindow.postMessage(
+                        JSON.stringify(data),
+                        'https://interactive.guim.co.uk'
+                    );
+                }
+            );
         }
 
         if (data.type === 'acquisition-data-request') {
-            [...document.getElementsByTagName('iframe')].forEach(el => {
+            Array.from(document.getElementsByTagName('iframe')).forEach(el => {
                 const iframeSrc = el.getAttribute('src');
                 if (iframeSrc && isCurrentCampaign(iframeSrc)) {
                     el.contentWindow.postMessage(

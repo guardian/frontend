@@ -11,6 +11,8 @@ import play.api.mvc.RequestHeader
 import views.support.{CamelCase, GUDateTimeFormat}
 import ai.x.play.json.Jsonx
 import common.Maps.RichMap
+import navigation.UrlHelpers.{Footer, Header, SideMenu, getReaderRevenueUrl}
+import navigation.ReaderRevenueSite.{Support, SupportContribute, SupportSubscribe}
 import ai.x.play.json.implicits.optionWithNull // Note, required despite Intellij saying otherwise
 
 // We have introduced our own set of objects for serializing data to the DotComponents API,
@@ -39,6 +41,18 @@ case class Blocks(
     body: List[Block]
 )
 
+case class ReaderRevenueLink(
+  contribute: String,
+  subscribe: String,
+  support: String
+)
+
+case class ReaderRevenueLinks(
+  header: ReaderRevenueLink,
+  footer: ReaderRevenueLink,
+  sideMenu: ReaderRevenueLink
+)
+
 case class PageData(
     author: String,
     pageId: String,
@@ -64,17 +78,22 @@ case class PageData(
     subMetaLinks: SubMetaLinks,
     sentryHost: Option[String],
     sentryPublicApiKey: Option[String],
+    switches: Map[String,Boolean],
+
+
     // AMP specific
     guardianBaseURL: String,
     webURL: String,
     shouldHideAds: Boolean,
-    switches: Map[String,Boolean]
+    hasStoryPackage: Boolean,
+    hasRelated: Boolean,
 )
 
 case class Config(
     isImmersive: Boolean,
     page: PageData,
-    nav: NavMenu
+    nav: NavMenu,
+    readerRevenueLinks: ReaderRevenueLinks
 )
 
 case class ContentFields(
@@ -110,6 +129,14 @@ object TagProperties {
 
 object Tag {
   implicit val writes = Json.writes[Tag]
+}
+
+object ReaderRevenueLink {
+  implicit val writes = Json.writes[ReaderRevenueLink]
+}
+
+object ReaderRevenueLinks {
+  implicit val writes = Json.writes[ReaderRevenueLinks]
 }
 
 object PageData {
@@ -187,10 +214,12 @@ object DotcomponentsDataModel {
       article.content.submetaLinks,
       jsPageData.get("sentryHost"),
       jsPageData.get("sentryPublicApiKey"),
+      switches,
       Configuration.site.host,
       article.metadata.webUrl,
       article.content.shouldHideAdverts,
-      switches
+      hasStoryPackage = article.content.hasStoryPackage,
+      hasRelated = article.content.showInRelated,
     )
 
     val tags = article.tags.tags.map(
@@ -206,10 +235,35 @@ object DotcomponentsDataModel {
 
     val navMenu = NavMenu(articlePage, Edition(request))
 
+    val headerReaderRevenueLink: ReaderRevenueLink = ReaderRevenueLink(
+      getReaderRevenueUrl(SupportContribute, Header)(request),
+      getReaderRevenueUrl(SupportSubscribe, Header)(request),
+      getReaderRevenueUrl(Support, Header)(request)
+    )
+
+    val footerReaderRevenueLink: ReaderRevenueLink = ReaderRevenueLink(
+      getReaderRevenueUrl(SupportContribute, Footer)(request),
+      getReaderRevenueUrl(SupportSubscribe, Footer)(request),
+      getReaderRevenueUrl(Support, Footer)(request)
+    )
+
+    val sideMenuReaderRevenueLink: ReaderRevenueLink = ReaderRevenueLink(
+      getReaderRevenueUrl(SupportContribute, SideMenu)(request),
+      getReaderRevenueUrl(SupportSubscribe, SideMenu)(request),
+      getReaderRevenueUrl(Support, SideMenu)(request)
+    )
+
+    val readerRevenueLinks = ReaderRevenueLinks(
+      headerReaderRevenueLink,
+      footerReaderRevenueLink,
+      sideMenuReaderRevenueLink
+    )
+
     val config = Config(
       article.isImmersive,
       pageData,
-      navMenu
+      navMenu,
+      readerRevenueLinks
     )
 
     DotcomponentsDataModel(

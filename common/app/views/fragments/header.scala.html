@@ -35,15 +35,8 @@
             <div class="new-header__cta-bar hide-until-mobile">
                 @defining(Edition(request).id.toLowerCase()) { editionId =>
                     @if(!page.metadata.hasSlimHeader) {
-                        <div class="cta-bar__text hide-until-tablet">
-                            <div class="cta-bar__heading">
-                                Support The&nbsp;Guardian
-                            </div>
-                            @if(editionId == "us") {
-                                <div class="cta-bar__subheading">
-                                    Please make a year-end gift
-                                </div>
-                            }
+                        <div class="cta-bar__message hide-until-tablet">
+                            Support The&nbsp;Guardian
                         </div>
                     }
 
@@ -55,7 +48,7 @@
                         @fragments.inlineSvg("arrow-right", "icon")
                     </a>
 
-                    <a class="cta-bar__cta hide-until-tablet @if(editionId == "us") {cta-bar__cta--hollow} js-subscribe js-acquisition-link"
+                    <a class="cta-bar__cta hide-until-tablet js-subscribe js-acquisition-link"
                         data-link-name="nav2 : subscribe-cta"
                         data-edition="@{editionId}"
                         href="@getReaderRevenueUrl(SupportSubscribe,Header)">

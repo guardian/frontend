@@ -154,9 +154,9 @@ class LiveBlogController(contentApiClient: ContentApiClient, val controllerCompo
 
     val content: Either[PageWithStoryPackage, Result] = supportedContentResult.left.flatMap {
       case minute: Article if minute.isTheMinute =>
-        Left(MinutePage(minute, StoryPackages(minute, response)))
+        Left(MinutePage(minute, StoryPackages(minute.metadata.id, response)))
       case liveBlog: Article if liveBlog.isLiveBlog && request.isEmail =>
-        Left(MinutePage(liveBlog, StoryPackages(liveBlog, response)))
+        Left(MinutePage(liveBlog, StoryPackages(liveBlog.metadata.id, response)))
       case liveBlog: Article if liveBlog.isLiveBlog =>
         createLiveBlogModel(liveBlog, response, range)
     }

@@ -77,7 +77,7 @@ object LiveBlogHelpers {
         content = liveBlog.content.copy(
           metadata = liveBlog.content.metadata.copy(
             cacheTime = cacheTime)))
-      Left(LiveBlogPage(liveBlogCache, pageModel, StoryPackages(liveBlog, response)))
+      Left(LiveBlogPage(liveBlogCache, pageModel, StoryPackages(liveBlog.metadata.id, response)))
 
     }.getOrElse(Right(NotFound))
 

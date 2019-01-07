@@ -34,7 +34,7 @@ Promise.all([
     new Promise(comready),
 ]).then(() => {
     updateHeight();
-    [...document.getElementsByTagName('details')]
+    Array.from(document.getElementsByTagName('details'))
         .slice(0, 1)
         .forEach(details => {
             new MutationObserver(updateHeight).observe(details, {
