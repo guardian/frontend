@@ -24,10 +24,11 @@ const getForcedParticipationsFromUrl = (): Participations => {
     return {};
 };
 
+// If the given test has a variant which is forced by the URL, return it
 export const getVariantFromUrl = (test: ABTest): ?Variant =>
     variantFromParticipations(test, getForcedParticipationsFromUrl());
 
-export const getNotInTestsFromUrl = (): Participations =>
+export const getTestExclusionsFromUrl = (): Participations =>
     filterParticipations(
         getForcedParticipationsFromUrl(),
         ({ variantId }) => variantId === NOT_IN_TEST

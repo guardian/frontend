@@ -50,6 +50,10 @@ describe('A/B tests', () => {
         // test('should return the variantToRun specified by localStorage, overriding cookie')
 
         // test('should return the variantToRun specified by the cookie, iff URL and localStorage are absent')
+
+        // test('should give the same result whether it's called before or after persisting to localStorage (runAndTrackAbTests)')
+
+        // test('should return null if notintest is specified in localStorage or in the URL hash')
     });
 
     // test('expired tests should be removed from localStorage')
@@ -57,6 +61,8 @@ describe('A/B tests', () => {
     // test('renamed/deleted tests should be removed from localStorage')
 
     // test('should return null for a test which is switched off')
+
+    // test('tests with notintest participations should not run, but this should be persisted to localStorage')
 
     // allRunnableTests
 

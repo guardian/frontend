@@ -40,6 +40,8 @@ export const setParticipationsInLocalStorage = (
     local.set(participationsKey, participations);
 };
 
+// If the given test has a variant which is specified in the participations, return it.
+// Also return a 'notintest' variant, if such a participation is present for the supplied test.
 export const variantFromParticipations = (
     test: ABTest,
     participations: Participations
@@ -76,11 +78,12 @@ export const clearParticipations = (): void => {
     local.remove(participationsKey);
 };
 
-export const getNotInTestsFromLocalStorage = (): Participations =>
+export const getTestExclusionsFromLocalStorage = (): Participations =>
     filterParticipations(
         getParticipationsFromLocalStorage(),
         ({ variantId }) => variantId === NOT_IN_TEST
     );
 
+// If the given test has a variant specified in localStorage, return it.
 export const getVariantFromLocalStorage = (test: ABTest): ?Variant =>
     variantFromParticipations(test, getParticipationsFromLocalStorage());

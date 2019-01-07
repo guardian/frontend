@@ -63,6 +63,8 @@ const computeVariantFromMvtCookie = (test: ABTest): ?Variant => {
     return null;
 };
 
+// This function can be called at any time, before or after participations are
+// persisted to localStorage. It should always give the same result for a given pageview.
 export const runnableTest = <T: ABTest>(test: T): ?Runnable<T> => {
     const fromUrl = getVariantFromUrl(test);
     const fromLocalStorage = getVariantFromLocalStorage(test);
