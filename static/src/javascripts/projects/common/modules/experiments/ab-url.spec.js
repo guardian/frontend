@@ -7,8 +7,8 @@ describe('A/B URL', () => {
         window.location.hash = '#ab-Test=Variant,Test2=Variant2';
 
         expect(getForcedParticipationsFromUrl()).toEqual({
-            Test: {variant: 'Variant'},
-            Test2: {variant: 'Variant2'},
+            Test: { variant: 'Variant' },
+            Test2: { variant: 'Variant2' },
         });
     });
 });

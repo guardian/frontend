@@ -13,8 +13,8 @@ export const getForcedParticipationsFromUrl = (): Participations => {
             const [testId, variantId] = token.split('=');
             return {
                 ...obj,
-                [testId]: {variant: variantId}
-            }
+                [testId]: { variant: variantId },
+            };
         }, {});
     }
 
