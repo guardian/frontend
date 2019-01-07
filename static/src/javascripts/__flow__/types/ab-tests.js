@@ -28,7 +28,7 @@ declare type ABTest = {
     notInTest?: () => void,
 };
 
-declare type Runnable<T> = T & {
+declare type Runnable<T: ABTest> = T & {
     variantToRun: Variant;
 };
 
