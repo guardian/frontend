@@ -64,7 +64,6 @@ final case class Content(
   javascriptReferences: Seq[JsObject],
   wordCount: Int,
   showByline: Boolean,
-  hasStoryPackage: Boolean,
   rawOpenGraphImage: Option[ImageAsset]
 ) {
 
@@ -249,7 +248,6 @@ final case class Content(
     ("contentId", JsString(metadata.id)),
     ("publication", JsString(publication)),
     ("hasShowcaseMainElement", JsBoolean(elements.hasShowcaseMainElement)),
-    ("hasStoryPackage", JsBoolean(hasStoryPackage)),
     ("pageCode", JsString(internalPageCode)),
     ("isContent", JsBoolean(true)),
     ("wordCount", JsNumber(wordCount)),
@@ -353,8 +351,6 @@ final case class Content(
   val quizzes: Seq[Quiz] = atoms.map(_.quizzes).getOrElse(Nil)
   val media: Seq[MediaAtom] = atoms.map(_.media).getOrElse(Nil)
 
-  val nonCompliantOutbrainAmp: Boolean = (hasStoryPackage && tags.series.nonEmpty) || (tags.series.length > 1)
-
   lazy val submetaLinks: SubMetaLinks =
     SubMetaLinks.make(isImmersive, tags, blogOrSeriesTag, isFromTheObserver, sectionLabelLink, sectionLabelName)
 }
@@ -417,7 +413,6 @@ object Content {
       javascriptReferences = apiContent.references.map(ref => Reference.toJavaScript(ref.id)),
       wordCount = Jsoup.clean(fields.body, Whitelist.none()).split("\\s+").length,
       showByline = fapiutils.ResolvedMetaData.fromContentAndTrailMetaData(apiContent, TrailMetaData.empty, cardStyle).showByline,
-      hasStoryPackage = apifields.flatMap(_.hasStoryPackage).getOrElse(false),
       rawOpenGraphImage =
         FacebookShareUseTrailPicFirstSwitch.isSwitchedOn
           .toOption(trail.trailPicture.flatMap(_.largestImage))
