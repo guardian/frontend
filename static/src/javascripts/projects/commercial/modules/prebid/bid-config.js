@@ -9,6 +9,7 @@ import {
     buildPageTargeting,
 } from 'common/modules/commercial/build-page-targeting';
 import { commercialPrebidSafeframe } from 'common/modules/experiments/tests/commercial-prebid-safeframe';
+import { isInVariant } from 'common/modules/experiments/ab-tests';
 import type {
     PrebidAdYouLikeParams,
     PrebidAppNexusParams,
@@ -46,7 +47,6 @@ import {
     stripTrailingNumbersAbove1,
 } from './utils';
 import { getAppNexusDirectBidParams, getAppNexusPlacementId } from './appnexus';
-import { isInVariant } from 'common/modules/experiments/ab-tests';
 
 const isInSafeframeTestVariant = (): boolean =>
     isInVariant(commercialPrebidSafeframe, 'variant');
