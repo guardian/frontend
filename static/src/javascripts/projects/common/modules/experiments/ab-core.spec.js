@@ -34,9 +34,36 @@ describe('A/B tests', () => {
             const expiredTest = genAbTest('DummyTest', true, '2000-01-01');
             expect(runnableTest(expiredTest)).toEqual(null);
         });
+
+        // test('should return null for a test which is switched off')
+
+        // test('should return null if the test cannot be run')
+
+        // test('should return null if the test can be run but the variant cannot')
+
+        // test('should return a different variantToRun if the MVT cookie is different and localStorage is cleared')
+
+        // test('should return the same variantToRun if the MVT cookie is different but the localStorage participations are preserved')
+
+        // test('should return the variantToRun specified by the URL, overriding localStorage and cookie')
+
+        // test('should return the variantToRun specified by localStorage, overriding cookie')
+
+        // test('should return the variantToRun specified by the cookie, iff URL and localStorage are absent')
+
     });
+
+    // test('expired tests should be removed from localStorage')
+
+    // test('renamed/deleted tests should be removed from localStorage')
 
     // test('should return null for a test which is switched off')
 
-    // test('should return ')
+    // allRunnableTests
+
+    // firstRunnableTest
+
+    // isInVariant
+
+    // getVariant
 });
