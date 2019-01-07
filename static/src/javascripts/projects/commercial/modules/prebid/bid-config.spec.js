@@ -4,6 +4,7 @@
 import config from 'lib/config';
 import { _, bids } from './bid-config';
 import type { PrebidBidder, PrebidSize } from './types';
+import { isInVariant as isInVariant_ } from 'common/modules/experiments/ab-tests';
 import {
     getLargestSize as getLargestSize_,
     containsBillboard as containsBillboard_,
@@ -41,6 +42,7 @@ const shouldIncludeXaxis: any = shouldIncludeXaxis_;
 const shouldIncludeSonobi: any = shouldIncludeSonobi_;
 const stripMobileSuffix: any = stripMobileSuffix_;
 const getBreakpointKey: any = getBreakpointKey_;
+const isInVariant: any = isInVariant_;
 
 const {
     getDummyServerSideBidders,
@@ -63,7 +65,7 @@ jest.mock('common/modules/commercial/ad-prefs.lib', () => ({
 jest.mock('./utils');
 
 jest.mock('common/modules/experiments/ab-tests', () => ({
-    isInVariant: () => true,
+    isInVariant: jest.fn(),
 }));
 
 /* eslint-disable guardian-frontend/no-direct-access-config */
@@ -255,71 +257,49 @@ describe('getImprovePlacementId', () => {
     });
 
     test('should use test placement ID when participating in CommercialPrebidSafeframe test in desktop MPU', () => {
-        // TODO: mock tests correctly
-        getVariant.mockReturnValue({
-            id: 'variant',
-            test: (): void => {},
-        });
+        isInVariant.mockImplementationOnce((_, variantId) => variantId === 'variant');
         getBreakpointKey.mockReturnValue('D');
         containsMpu.mockReturnValue(true);
         expect(getImprovePlacementId([[300, 250]])).toEqual(1116407);
     });
 
     test('should use test placement ID when participating in CommercialPrebidSafeframe test in desktop DMPU', () => {
-        getVariant.mockReturnValue({
-            id: 'variant',
-            test: (): void => {},
-        });
+        isInVariant.mockImplementationOnce((_, variantId) => variantId === 'variant');
         getBreakpointKey.mockReturnValue('D');
         containsDmpu.mockReturnValue(true);
         expect(getImprovePlacementId([[300, 600]])).toEqual(1116408);
     });
 
     test('should use test placement ID when participating in CommercialPrebidSafeframe test in desktop billboard', () => {
-        getVariant.mockReturnValue({
-            id: 'variant',
-            test: (): void => {},
-        });
+        isInVariant.mockImplementationOnce((_, variantId) => variantId === 'variant');
         getBreakpointKey.mockReturnValue('D');
         containsLeaderboardOrBillboard.mockReturnValue(true);
         expect(getImprovePlacementId([[970, 250]])).toEqual(1116409);
     });
 
     test('should use test placement ID when participating in CommercialPrebidSafeframe test in desktop leaderboard', () => {
-        getVariant.mockReturnValue({
-            id: 'variant',
-            test: (): void => {},
-        });
+        isInVariant.mockImplementationOnce((_, variantId) => variantId === 'variant');
         getBreakpointKey.mockReturnValue('D');
         containsLeaderboardOrBillboard.mockReturnValue(true);
         expect(getImprovePlacementId([[728, 90]])).toEqual(1116409);
     });
 
     test('should use test placement ID when participating in CommercialPrebidSafeframe test in tablet MPU', () => {
-        getVariant.mockReturnValue({
-            id: 'variant',
-            test: (): void => {},
-        });
+        isInVariant.mockImplementationOnce((_, variantId) => variantId === 'variant');
         getBreakpointKey.mockReturnValue('T');
         containsMpu.mockReturnValue(true);
         expect(getImprovePlacementId([[300, 250]])).toEqual(1116410);
     });
 
     test('should use test placement ID when participating in CommercialPrebidSafeframe test in tablet leaderboard', () => {
-        getVariant.mockReturnValue({
-            id: 'variant',
-            test: (): void => {},
-        });
+        isInVariant.mockImplementationOnce((_, variantId) => variantId === 'variant');
         getBreakpointKey.mockReturnValue('T');
         containsLeaderboard.mockReturnValue(true);
         expect(getImprovePlacementId([[728, 90]])).toEqual(1116411);
     });
 
     test('should use test placement ID when participating in CommercialPrebidSafeframe test in mobile MPU', () => {
-        getVariant.mockReturnValue({
-            id: 'variant',
-            test: (): void => {},
-        });
+        isInVariant.mockImplementationOnce((_, variantId) => variantId === 'variant');
         getBreakpointKey.mockReturnValue('M');
         expect(getImprovePlacementId([[300, 250]])).toEqual(1116412);
     });
@@ -425,28 +405,19 @@ describe('getIndexSiteId', () => {
     });
 
     test('should use test site ID when participating in CommercialPrebidSafeframe test on desktop', () => {
-        getVariant.mockReturnValue({
-            id: 'variant',
-            test: (): void => {},
-        });
+        isInVariant.mockImplementationOnce((_, variantId) => variantId === 'variant');
         getBreakpointKey.mockReturnValue('D');
         expect(getIndexSiteId()).toEqual('287246');
     });
 
     test('should use test site ID when participating in CommercialPrebidSafeframe test on tablet', () => {
-        getVariant.mockReturnValue({
-            id: 'variant',
-            test: (): void => {},
-        });
+        isInVariant.mockImplementationOnce((_, variantId) => variantId === 'variant');
         getBreakpointKey.mockReturnValue('T');
         expect(getIndexSiteId()).toEqual('287247');
     });
 
     test('should use test site ID when participating in CommercialPrebidSafeframe test on mobile', () => {
-        getVariant.mockReturnValue({
-            id: 'variant',
-            test: (): void => {},
-        });
+        isInVariant.mockImplementationOnce((_, variantId) => variantId === 'variant');
         getBreakpointKey.mockReturnValue('M');
         expect(getIndexSiteId()).toEqual('287248');
     });
