@@ -13,19 +13,19 @@ import {
 } from 'common/modules/experiments/ab-tests';
 import { isExpired } from 'lib/time-utils';
 import {
-    getParticipationsFromLocalStorage,
+    getParticipationsFromLocalStorage, participationsToArray,
     setParticipationsInLocalStorage,
 } from 'common/modules/experiments/ab-local-storage';
 
 const selectRadios = () => {
-    const overrides = getParticipationsFromLocalStorage();
+    const participationArray = participationsToArray(getParticipationsFromLocalStorage());
 
     $('.js-experiments-radio').each(radio => {
         $(radio).attr('checked', false);
     });
 
-    Object.keys(overrides).forEach(testId => {
-        $(`#${testId}-${overrides[testId].variant}`).attr('checked', true);
+    participationArray.forEach(({testId, variantId}) => {
+        $(`#${testId}-${variantId}`).attr('checked', true);
     });
 };
 

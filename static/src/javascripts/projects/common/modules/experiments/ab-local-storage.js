@@ -6,7 +6,7 @@ import {
     participationsKey,
 } from 'common/modules/experiments/ab-constants';
 
-const participationsToArray = (
+export const participationsToArray = (
     participations: Participations
 ): { testId: string, variantId: string }[] =>
     Object.keys(participations).map(testId => ({
@@ -14,7 +14,7 @@ const participationsToArray = (
         variantId: participations[testId].variant,
     }));
 
-const arrayToParticipations = (
+export const arrayToParticipations = (
     arr: { testId: string, variantId: string }[]
 ): Participations => {
     const participations: Participations = {};
