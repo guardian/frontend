@@ -5,7 +5,8 @@ import config from 'lib/config';
 import fastdom from 'lib/fastdom-promise';
 import { getBreakpoint } from 'lib/detect';
 import { loadScript } from 'lib/load-script';
-import { getTestVariantId } from 'common/modules/experiments/ab-tests.js';
+import { commercialOutbrainNewids } from 'common/modules/experiments/tests/commercial-outbrain-newids.js';
+import { isInVariant } from 'common/modules/experiments/ab-tests';
 
 import { getCode } from './outbrain-codes';
 import { getCode as getNewCode } from './outbrain-codes-new';
@@ -67,8 +68,7 @@ const load = (
     const $container = $(selectors.outbrain.container, $outbrain[0]);
     const breakpoint = getBreakpoint();
 
-    const shouldUseNewOutbrainCodes: boolean =
-        getTestVariantId('CommercialOutbrainNewids') === 'variant';
+    const shouldUseNewOutbrainCodes: boolean = isInVariant(commercialOutbrainNewids, 'variant');
 
     const widgetCodes = ((): {
         code?: string,

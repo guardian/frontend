@@ -2,7 +2,6 @@
 /* global jsdom */
 
 import config from 'lib/config';
-import { getVariant as getVariant_ } from 'common/modules/experiments/ab-core';
 import { _, bids } from './bid-config';
 import type { PrebidBidder, PrebidSize } from './types';
 import {
@@ -42,7 +41,6 @@ const shouldIncludeXaxis: any = shouldIncludeXaxis_;
 const shouldIncludeSonobi: any = shouldIncludeSonobi_;
 const stripMobileSuffix: any = stripMobileSuffix_;
 const getBreakpointKey: any = getBreakpointKey_;
-const getVariant: any = getVariant_;
 
 const {
     getDummyServerSideBidders,
@@ -64,9 +62,8 @@ jest.mock('common/modules/commercial/ad-prefs.lib', () => ({
 
 jest.mock('./utils');
 
-jest.mock('common/modules/experiments/ab-core', () => ({
+jest.mock('common/modules/experiments/ab-tests', () => ({
     isInVariant: () => true,
-    getVariant: jest.fn(),
 }));
 
 /* eslint-disable guardian-frontend/no-direct-access-config */
@@ -258,6 +255,7 @@ describe('getImprovePlacementId', () => {
     });
 
     test('should use test placement ID when participating in CommercialPrebidSafeframe test in desktop MPU', () => {
+        // TODO: mock tests correctly
         getVariant.mockReturnValue({
             id: 'variant',
             test: (): void => {},

@@ -5,7 +5,6 @@ import { getCookie } from 'lib/cookies';
 import { getUrlVars } from 'lib/url';
 import fetchJSON from 'lib/fetch-json';
 
-import { getVariant, isInVariant } from 'common/modules/experiments/ab-core';
 import { commercialCmpCustomise } from 'common/modules/experiments/tests/commercial-cmp-customise';
 import { log } from './log';
 import { CmpStore } from './store';
@@ -27,6 +26,7 @@ import type {
     VendorList,
     VendorConsentResponse,
 } from './types';
+import { isInVariant } from 'common/modules/experiments/ab-tests';
 
 type MessageData = {
     __cmpCall: ?{
@@ -62,10 +62,8 @@ const readConsentCookie = (cookieName: string): boolean | null => {
     return null;
 };
 
-const isInCmpCustomiseTest = (): boolean => {
-    const variant = getVariant(commercialCmpCustomise, 'variant');
-    return variant ? isInVariant(commercialCmpCustomise, variant) : false;
-};
+const isInCmpCustomiseTest = (): boolean =>
+    isInVariant(commercialCmpCustomise, 'variant');
 
 const generateStore = (isInTest: boolean): CmpStore => {
     const store = new CmpStore(

@@ -26,16 +26,8 @@ import {
     AcquisitionsBannerGoogleDocTestThreeVariants,
     AcquisitionsBannerGoogleDocTestTwoVariants,
 } from 'common/modules/experiments/tests/acquisitions-banner-from-google-doc';
-import {
-    allRunnableTests,
-    firstRunnableTest,
-    runnableTest,
-} from 'common/modules/experiments/ab-core';
-import {
-    registerCompleteEvents,
-    registerImpressionEvents,
-    trackABTests,
-} from 'common/modules/experiments/ab-ophan';
+import { allRunnableTests, firstRunnableTest } from 'common/modules/experiments/ab-core';
+import { registerCompleteEvents, registerImpressionEvents, trackABTests, } from 'common/modules/experiments/ab-ophan';
 import {
     getNotInTestsFromLocalStorage,
     runnableTestsToParticipations,
@@ -77,20 +69,6 @@ export const engagementBannerTests: $ReadOnlyArray<AcquisitionsABTest> = [
     AcquisitionsBannerGoogleDocTestFiveVariants,
 ];
 
-// This one is here because it depends on the hard-coded test arrays,
-// rather than accepting an array of tests as an argument.
-export const getTestVariantId = (testId: string): ?string => {
-    const tests = [...concurrentTests, ...epicTests, ...engagementBannerTests];
-    const test = tests.find(t => t.id === testId);
-
-    if (test) {
-        const rt = runnableTest(test);
-        return rt && rt.variantToRun.id;
-    }
-
-    return null;
-};
-
 export const getRunnableTests = (): $ReadOnlyArray<Runnable<ABTest>> => {
     const epicTest = firstRunnableTest(epicTests);
     const engagementBannerTest = firstRunnableTest(engagementBannerTests);
@@ -104,6 +82,9 @@ export const getRunnableTests = (): $ReadOnlyArray<Runnable<ABTest>> => {
 
 export const getParticipations = (): Participations =>
     runnableTestsToParticipations(getRunnableTests());
+
+export const isInVariant = (test: ABTest, variantId: string): boolean =>
+    getParticipations()[test.id] === {variantId};
 
 export const runAndTrackAbTests = () => {
     const runnableTests = getRunnableTests();

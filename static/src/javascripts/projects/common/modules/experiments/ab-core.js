@@ -1,9 +1,6 @@
 // @flow
 
-import {
-    getMvtNumValues,
-    getMvtValue,
-} from 'common/modules/analytics/mvt-cookie';
+import { getMvtNumValues, getMvtValue, } from 'common/modules/analytics/mvt-cookie';
 import config from 'lib/config';
 import { isExpired } from 'lib/time-utils';
 import { getVariantFromLocalStorage } from 'common/modules/experiments/ab-local-storage';
@@ -98,17 +95,3 @@ export const firstRunnableTest = <T: ABTest>(
     tests
         .map((test: T) => runnableTest(test))
         .find((rt: ?Runnable<T>) => rt !== null);
-
-export const isInVariant = (test: ABTest, variant: Variant): boolean => {
-    const rt = runnableTest(test);
-    if (!rt) {
-        return false;
-    }
-    return rt.variantToRun.id === variant.id;
-};
-
-export const getVariant = (test: ABTest, variantId: string): ?Variant => {
-    const variantIds = test.variants.map(variant => variant.id);
-    const index = variantIds.indexOf(variantId);
-    return index > -1 ? test.variants[index] : null;
-};
