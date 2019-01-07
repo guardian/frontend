@@ -14,7 +14,7 @@ const isTestSwitchedOn = (test: ABTest): boolean =>
 // We only take account of a variant's canRun function if it's defined.
 // If it's not, assume the variant can be run.
 const variantCanBeRun = (variant: Variant): boolean =>
-    !(variant.canRun && !variant.canRun());
+    !(variant.canRun && !variant.canRun()) && variant.id !== NOT_IN_TEST;
 
 const testCanBeRun = (test: ABTest): boolean => {
     const expired = isExpired(test.expiry);
@@ -109,3 +109,5 @@ export const getVariant = (test: ABTest, variantId: string): ?Variant => {
     const index = variantIds.indexOf(variantId);
     return index > -1 ? test.variants[index] : null;
 };
+
+export const NOT_IN_TEST = 'notintest';
