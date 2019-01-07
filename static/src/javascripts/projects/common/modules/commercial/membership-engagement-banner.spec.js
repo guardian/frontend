@@ -10,7 +10,7 @@ import {
 } from 'common/modules/commercial/membership-engagement-banner-parameters';
 import { membershipEngagementBanner } from 'common/modules/commercial/membership-engagement-banner';
 import { shouldShowReaderRevenue } from 'common/modules/commercial/contributions-utilities';
-// import { firstRunnableTest } from 'common/modules/experiments/ab';
+// import { firstRunnableTest } from 'common/modules/experiments/ab-core';
 
 const defaultEngagementBannerParams: any = defaultEngagementBannerParams_;
 const getUserVariantParams: any = getUserVariantParams_;
@@ -31,7 +31,7 @@ jest.mock('lib/geolocation', () => ({
     getSync: jest.fn(() => 'GB'),
     getLocalCurrencySymbol: () => '£',
 }));
-jest.mock('common/modules/experiments/ab', () => ({
+jest.mock('common/modules/experiments/ab-core', () => ({
     firstRunnableTest: jest.fn(() => ({
         campaignId: 'fake-campaign-id',
         id: 'fake-test-id',
@@ -117,7 +117,7 @@ jest.mock('common/modules/user-prefs', () => ({
 
 const FakeMessage: any = require('common/modules/ui/message').Message;
 
-// const fakeFirstRunnableTest: any = require('common/modules/experiments/ab').firstRunnableTest;
+// const fakeFirstRunnableTest: any = require('common/modules/experiments/ab-core').firstRunnableTest;
 
 const fakeConstructQuery: any = require('lib/url').constructQuery;
 const fakeIsBlocked: any = require('common/modules/commercial/membership-engagement-banner-block')

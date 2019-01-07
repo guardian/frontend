@@ -1,7 +1,7 @@
 // @flow
 
 import { genAbTest } from 'common/modules/experiments/__fixtures__/ab-test';
-import { runnableTest } from 'common/modules/experiments/ab';
+import { runnableTest } from 'common/modules/experiments/ab-core';
 import config from 'lib/config';
 
 jest.mock('common/modules/analytics/mvt-cookie', () => ({

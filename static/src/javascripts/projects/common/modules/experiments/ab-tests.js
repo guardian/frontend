@@ -30,13 +30,16 @@ import {
     allRunnableTests,
     firstRunnableTest,
     runnableTest,
-} from 'common/modules/experiments/ab';
+} from 'common/modules/experiments/ab-core';
 import {
     registerCompleteEvents,
     registerImpressionEvents,
     trackABTests,
 } from 'common/modules/experiments/ab-ophan';
-import { initManualOverrides } from 'common/modules/experiments/ab-overrides';
+import {
+    runnableTestsToParticipations,
+    saveRunnableTestsToLocalStorage
+} from 'common/modules/experiments/ab-local-storage';
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialPrebidSafeframe,
@@ -86,47 +89,29 @@ export const getTestVariantId = (testId: string): ?string => {
     return null;
 };
 
-export const getParticipations = (): Participations => {
+export const getRunnableTests = (): $ReadOnlyArray<Runnable<ABTest>> => {
     const epicTest = firstRunnableTest(epicTests);
     const engagementBannerTest = firstRunnableTest(engagementBannerTests);
 
-    const runnableTests = [
+    return [
         ...allRunnableTests(concurrentTests),
         ...(epicTest ? [epicTest] : []),
         ...(engagementBannerTest ? [engagementBannerTest] : []),
     ];
-
-    const participations = {};
-    runnableTests.forEach(test => {
-        participations[test.id] = test.variantToRun.id;
-    });
-
-    return participations;
 };
 
+export const getParticipations = (): Participations =>
+    runnableTestsToParticipations(getRunnableTests());
+
 export const runAndTrackAbTests = () => {
-    initManualOverrides();
+    const runnableTests = getRunnableTests();
 
-    const runnableConcurrentTests: $ReadOnlyArray<
-        Runnable<ABTest>
-    > = allRunnableTests(concurrentTests);
+    runnableTests.forEach(test => test.variantToRun.test(test));
 
-    const runnableEpicTest: ?Runnable<EpicABTest> = firstRunnableTest(
-        epicTests
-    );
-
-    runnableConcurrentTests.forEach(test => test.variantToRun.test(test));
-    if (runnableEpicTest) {
-        runnableEpicTest.variantToRun.test(runnableEpicTest);
-    }
-
-    // Epic/banner tests are not included here because we don't
-    // use A/B test participation data to track impressions.
-    // (We use component events instead.)
-    registerImpressionEvents(runnableConcurrentTests);
-    registerCompleteEvents(runnableConcurrentTests);
-    trackABTests(runnableConcurrentTests);
+    registerImpressionEvents(runnableTests);
+    registerCompleteEvents(runnableTests);
+    trackABTests(runnableTests);
 
     // For debugging
-    window.guardian.abTestParticipations = getParticipations();
+    saveRunnableTestsToLocalStorage(runnableTests);
 };

@@ -28,7 +28,7 @@ import { acquisitionsBannerControlTemplate } from 'common/modules/commercial/tem
 import userPrefs from 'common/modules/user-prefs';
 import { initTicker } from 'common/modules/commercial/ticker';
 import { engagementBannerTests } from 'common/modules/experiments/ab-tests';
-import { firstRunnableTest } from 'common/modules/experiments/ab';
+import { firstRunnableTest } from 'common/modules/experiments/ab-core';
 
 type BannerDeployLog = {
     time: string,

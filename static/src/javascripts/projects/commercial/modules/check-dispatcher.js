@@ -7,7 +7,7 @@ import { commercialFeatures } from 'common/modules/commercial/commercial-feature
 import { checks } from 'common/modules/check-mediator-checks';
 import { resolveCheck, waitForCheck } from 'common/modules/check-mediator';
 import { epicTests } from 'common/modules/experiments/ab-tests';
-import { firstRunnableTest } from 'common/modules/experiments/ab';
+import { firstRunnableTest } from 'common/modules/experiments/ab-core';
 
 const someCheckPassed = (results): boolean => results.includes(true);
 

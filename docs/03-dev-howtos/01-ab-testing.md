@@ -181,7 +181,7 @@ if (ab.isInVariant('FaciaSlideshow', 'variant')) {
     ///...
 }
 ```
-The ```ab``` module is defined in ```'common/modules/experiments/ab'```.
+The ```ab``` module is defined in ```'common/modules/experiments/ab-core'```.
 
 ## Running the test
 

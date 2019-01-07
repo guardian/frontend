@@ -15,7 +15,7 @@ import {
     incrementMvtCookie,
 } from 'common/modules/analytics/mvt-cookie';
 import { setGeolocation, getSync as geolocationGetSync } from 'lib/geolocation';
-import { clearOverrides as clearAbTestOverrides } from 'common/modules/experiments/ab-overrides';
+import { clearParticipations as clearAbTestOverrides } from 'common/modules/experiments/ab-local-storage';
 
 const clearCommonReaderRevenueStateAndReload = (): void => {
     readerRevenueRelevantCookies.forEach(cookie => removeCookie(cookie));

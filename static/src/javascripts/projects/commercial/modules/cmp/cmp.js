@@ -5,7 +5,7 @@ import { getCookie } from 'lib/cookies';
 import { getUrlVars } from 'lib/url';
 import fetchJSON from 'lib/fetch-json';
 
-import { getVariant, isInVariant } from 'common/modules/experiments/ab';
+import { getVariant, isInVariant } from 'common/modules/experiments/ab-core';
 import { commercialCmpCustomise } from 'common/modules/experiments/tests/commercial-cmp-customise';
 import { log } from './log';
 import { CmpStore } from './store';

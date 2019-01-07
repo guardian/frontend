@@ -13,12 +13,12 @@ import {
 } from 'common/modules/experiments/ab-tests';
 import { isExpired } from 'lib/time-utils';
 import {
-    getOverridesFromLocalStorage,
-    setOverridesInLocalStorage,
-} from 'common/modules/experiments/ab-overrides';
+    getParticipationsFromLocalStorage,
+    setParticipationsInLocalStorage,
+} from 'common/modules/experiments/ab-local-storage';
 
 const selectRadios = () => {
-    const overrides = getOverridesFromLocalStorage();
+    const overrides = getParticipationsFromLocalStorage();
 
     $('.js-experiments-radio').each(radio => {
         $(radio).attr('checked', false);
@@ -34,13 +34,13 @@ const bindEvents = () => {
         bean.on(label, 'click', () => {
             const testId = label.getAttribute('data-ab-test');
             const variantId = label.getAttribute('data-ab-variant');
-            const overrides = getOverridesFromLocalStorage();
+            const participations = getParticipationsFromLocalStorage();
 
-            overrides[testId] = {
+            participations[testId] = {
                 variant: variantId,
             };
 
-            setOverridesInLocalStorage(overrides);
+            setParticipationsInLocalStorage(participations);
         });
     });
 

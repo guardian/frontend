@@ -6,7 +6,8 @@ import {
 } from 'common/modules/analytics/mvt-cookie';
 import config from 'lib/config';
 import { isExpired } from 'lib/time-utils';
-import { getOverridenVariant } from 'common/modules/experiments/ab-overrides';
+import { getVariantFromLocalStorage } from 'common/modules/experiments/ab-local-storage';
+import { getVariantFromUrl } from 'common/modules/experiments/ab-url';
 
 const isTestSwitchedOn = (test: ABTest): boolean =>
     config.get(`switches.ab${test.id}`, false);
@@ -62,9 +63,10 @@ const computeVariantFromMvtCookie = (test: ABTest): ?Variant => {
 };
 
 export const runnableTest = <T: ABTest>(test: T): ?Runnable<T> => {
-    const overridenVariant = getOverridenVariant(test);
-    const variantFromCookie = computeVariantFromMvtCookie(test);
-    const variantToRun = overridenVariant || variantFromCookie;
+    const fromUrl = getVariantFromUrl(test);
+    const fromLocalStorage = getVariantFromLocalStorage(test);
+    const fromCookie = computeVariantFromMvtCookie(test);
+    const variantToRun = fromUrl || fromLocalStorage || fromCookie;
 
     // console.log('overridenVariant', overridenVariant);
     // console.log('variantFromCookie', variantFromCookie);
