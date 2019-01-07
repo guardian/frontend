@@ -1,5 +1,12 @@
 // @flow
 
+import { NOT_IN_TEST } from 'common/modules/experiments/ab-constants';
+import {
+    filterParticipations,
+    getParticipationsFromLocalStorage,
+    variantFromParticipations
+} from 'common/modules/experiments/ab-local-storage';
+
 const getForcedParticipationsFromUrl = (): Participations => {
     if (window.location.hash.startsWith('#ab')) {
         const tokens = window.location.hash.replace('#ab-', '').split(',');
@@ -18,13 +25,12 @@ const getForcedParticipationsFromUrl = (): Participations => {
     return {};
 };
 
-export const getVariantFromUrl = (test: ABTest): ?Variant => {
-    const forcedParticipationsFromUrl = getForcedParticipationsFromUrl();
-    if (forcedParticipationsFromUrl[test.id]) {
-        return test.variants.find(
-            variant => variant.id === forcedParticipationsFromUrl[test.id].variant
-        );
-    }
+export const getVariantFromUrl = (test: ABTest): ?Variant =>
+    variantFromParticipations(test, getForcedParticipationsFromUrl());
 
-    return null;
-};
+export const getNotInTestsFromUrl = (): Participations =>
+    filterParticipations(
+        getForcedParticipationsFromUrl(),
+        ({testId, variantId}) =>
+            variantId === NOT_IN_TEST
+    );

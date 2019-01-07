@@ -37,9 +37,11 @@ import {
     trackABTests,
 } from 'common/modules/experiments/ab-ophan';
 import {
+    getNotInTestsFromLocalStorage,
     runnableTestsToParticipations,
-    saveRunnableTestsToLocalStorage
+    setParticipationsInLocalStorage
 } from 'common/modules/experiments/ab-local-storage';
+import { getNotInTestsFromUrl } from 'common/modules/experiments/ab-url';
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialPrebidSafeframe,
@@ -112,6 +114,15 @@ export const runAndTrackAbTests = () => {
     registerCompleteEvents(runnableTests);
     trackABTests(runnableTests);
 
-    // For debugging
-    saveRunnableTestsToLocalStorage(runnableTests);
+    // This is just a mechanism for opting someone out of a test.
+    // Typically set by the URL hash, but then persisted by localStorage.
+    const notInTests: Participations = {
+        ...getNotInTestsFromLocalStorage(),
+        ...getNotInTestsFromUrl(),
+    };
+
+    setParticipationsInLocalStorage({
+        ...runnableTestsToParticipations(runnableTests),
+        ...notInTests
+    });
 };

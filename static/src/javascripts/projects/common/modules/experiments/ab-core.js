@@ -1,13 +1,11 @@
 // @flow
 
-import {
-    getMvtNumValues,
-    getMvtValue,
-} from 'common/modules/analytics/mvt-cookie';
+import { getMvtNumValues, getMvtValue, } from 'common/modules/analytics/mvt-cookie';
 import config from 'lib/config';
 import { isExpired } from 'lib/time-utils';
-import { getVariantFromLocalStorage } from 'common/modules/experiments/ab-local-storage';
+import { getVariantFromLocalStorage} from 'common/modules/experiments/ab-local-storage';
 import { getVariantFromUrl } from 'common/modules/experiments/ab-url';
+import { NOT_IN_TEST } from 'common/modules/experiments/ab-constants';
 
 const isTestSwitchedOn = (test: ABTest): boolean =>
     config.get(`switches.ab${test.id}`, false);
@@ -112,4 +110,3 @@ export const getVariant = (test: ABTest, variantId: string): ?Variant => {
     return index > -1 ? test.variants[index] : null;
 };
 
-export const NOT_IN_TEST = 'notintest';
