@@ -76,30 +76,27 @@ export const engagementBannerTests: $ReadOnlyArray<AcquisitionsABTest> = [
     AcquisitionsBannerGoogleDocTestFiveVariants,
 ];
 
+export const epicTestToRun: ?Runnable<EpicABTest> = firstRunnableTest(epicTests);
+export const engagementBannerTestToRun: ?Runnable<AcquisitionsABTest> =
+    firstRunnableTest(engagementBannerTests);
+
 // These are the tests which will actually take effect on this pageview.
 // Note that this is a subset of the potentially runnable tests,
 // because we only run one epic test and one banner test per pageview.
-export const getTestsToRun = (): $ReadOnlyArray<Runnable<ABTest>> => {
-    const epicTest = firstRunnableTest(epicTests);
-    const engagementBannerTest = firstRunnableTest(engagementBannerTests);
+export const testsToRun: $ReadOnlyArray<Runnable<ABTest>> = [
+    ...allRunnableTests(concurrentTests),
+    epicTestToRun,
+    engagementBannerTestToRun,
+].filter(Boolean);
 
-    return [
-        ...allRunnableTests(concurrentTests),
-        ...(epicTest ? [epicTest] : []),
-        ...(engagementBannerTest ? [engagementBannerTest] : []),
-    ];
-};
-
-// The tests which will take effect on this pageview,
-export const getParticipations = (): Participations =>
-    runnableTestsToParticipations(getTestsToRun());
+// The tests which will take effect on this pageview
+export const participations: Participations =
+    runnableTestsToParticipations(testsToRun);
 
 export const isInVariant = (test: ABTest, variantId: string): boolean =>
-    getParticipations()[test.id] === { variantId };
+    participations[test.id] === { variantId };
 
 export const runAndTrackAbTests = () => {
-    const testsToRun = getTestsToRun();
-
     testsToRun.forEach(test => test.variantToRun.test(test));
 
     registerImpressionEvents(testsToRun);
