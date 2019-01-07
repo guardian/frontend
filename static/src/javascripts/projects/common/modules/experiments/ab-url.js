@@ -6,19 +6,16 @@ import {
     variantFromParticipations,
 } from 'common/modules/experiments/ab-local-storage';
 
-const getForcedParticipationsFromUrl = (): Participations => {
+export const getForcedParticipationsFromUrl = (): Participations => {
     if (window.location.hash.startsWith('#ab')) {
         const tokens = window.location.hash.replace('#ab-', '').split(',');
-
-        const forcedParticipations: Participations = {};
-        tokens.forEach(token => {
+        return tokens.reduce((obj, token) => {
             const [testId, variantId] = token.split('=');
-            forcedParticipations[testId] = {
-                variant: variantId,
-            };
-        });
-
-        return forcedParticipations;
+            return {
+                ...obj,
+                [testId]: {variant: variantId}
+            }
+        }, {});
     }
 
     return {};

@@ -16,14 +16,11 @@ export const participationsToArray = (
 
 export const arrayToParticipations = (
     arr: { testId: string, variantId: string }[]
-): Participations => {
-    const participations: Participations = {};
-    arr.forEach(({ testId, variantId }) => {
-        participations[testId] = { variant: variantId };
-    });
-
-    return participations;
-};
+): Participations =>
+    arr.reduce((obj, {testId, variantId}) => ({
+        ...obj,
+        [testId]: {variant: variantId}
+    }), {});
 
 export const filterParticipations = (
     participations: Participations,
