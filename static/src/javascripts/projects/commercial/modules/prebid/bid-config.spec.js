@@ -2,9 +2,9 @@
 /* global jsdom */
 
 import config from 'lib/config';
+import { isInVariant as isInVariant_ } from 'common/modules/experiments/ab-tests';
 import { _, bids } from './bid-config';
 import type { PrebidBidder, PrebidSize } from './types';
-import { isInVariant as isInVariant_ } from 'common/modules/experiments/ab-tests';
 import {
     getLargestSize as getLargestSize_,
     containsBillboard as containsBillboard_,
@@ -257,49 +257,63 @@ describe('getImprovePlacementId', () => {
     });
 
     test('should use test placement ID when participating in CommercialPrebidSafeframe test in desktop MPU', () => {
-        isInVariant.mockImplementationOnce((testId, variantId) => variantId === 'variant');
+        isInVariant.mockImplementationOnce(
+            (testId, variantId) => variantId === 'variant'
+        );
         getBreakpointKey.mockReturnValue('D');
         containsMpu.mockReturnValue(true);
         expect(getImprovePlacementId([[300, 250]])).toEqual(1116407);
     });
 
     test('should use test placement ID when participating in CommercialPrebidSafeframe test in desktop DMPU', () => {
-        isInVariant.mockImplementationOnce((testId, variantId) => variantId === 'variant');
+        isInVariant.mockImplementationOnce(
+            (testId, variantId) => variantId === 'variant'
+        );
         getBreakpointKey.mockReturnValue('D');
         containsDmpu.mockReturnValue(true);
         expect(getImprovePlacementId([[300, 600]])).toEqual(1116408);
     });
 
     test('should use test placement ID when participating in CommercialPrebidSafeframe test in desktop billboard', () => {
-        isInVariant.mockImplementationOnce((testId, variantId) => variantId === 'variant');
+        isInVariant.mockImplementationOnce(
+            (testId, variantId) => variantId === 'variant'
+        );
         getBreakpointKey.mockReturnValue('D');
         containsLeaderboardOrBillboard.mockReturnValue(true);
         expect(getImprovePlacementId([[970, 250]])).toEqual(1116409);
     });
 
     test('should use test placement ID when participating in CommercialPrebidSafeframe test in desktop leaderboard', () => {
-        isInVariant.mockImplementationOnce((testId, variantId) => variantId === 'variant');
+        isInVariant.mockImplementationOnce(
+            (testId, variantId) => variantId === 'variant'
+        );
         getBreakpointKey.mockReturnValue('D');
         containsLeaderboardOrBillboard.mockReturnValue(true);
         expect(getImprovePlacementId([[728, 90]])).toEqual(1116409);
     });
 
     test('should use test placement ID when participating in CommercialPrebidSafeframe test in tablet MPU', () => {
-        isInVariant.mockImplementationOnce((testId, variantId) => variantId === 'variant');
+        isInVariant.mockImplementationOnce(
+            (testId, variantId) => variantId === 'variant'
+        );
         getBreakpointKey.mockReturnValue('T');
         containsMpu.mockReturnValue(true);
         expect(getImprovePlacementId([[300, 250]])).toEqual(1116410);
     });
 
     test('should use test placement ID when participating in CommercialPrebidSafeframe test in tablet leaderboard', () => {
-        isInVariant.mockImplementationOnce((testId, variantId) => variantId === 'variant');
+        isInVariant.mockImplementationOnce(
+            (testId, variantId) => variantId === 'variant'
+        );
         getBreakpointKey.mockReturnValue('T');
         containsLeaderboard.mockReturnValue(true);
         expect(getImprovePlacementId([[728, 90]])).toEqual(1116411);
     });
 
     test('should use test placement ID when participating in CommercialPrebidSafeframe test in mobile MPU', () => {
-        isInVariant.mockImplementationOnce((testId, variantId) => variantId === 'variant');
+        isInVariant.mockImplementationOnce(
+            (testId, variantId) => variantId === 'variant'
+        );
         getBreakpointKey.mockReturnValue('M');
         expect(getImprovePlacementId([[300, 250]])).toEqual(1116412);
     });
@@ -405,19 +419,25 @@ describe('getIndexSiteId', () => {
     });
 
     test('should use test site ID when participating in CommercialPrebidSafeframe test on desktop', () => {
-        isInVariant.mockImplementationOnce((testId, variantId) => variantId === 'variant');
+        isInVariant.mockImplementationOnce(
+            (testId, variantId) => variantId === 'variant'
+        );
         getBreakpointKey.mockReturnValue('D');
         expect(getIndexSiteId()).toEqual('287246');
     });
 
     test('should use test site ID when participating in CommercialPrebidSafeframe test on tablet', () => {
-        isInVariant.mockImplementationOnce((testId, variantId) => variantId === 'variant');
+        isInVariant.mockImplementationOnce(
+            (testId, variantId) => variantId === 'variant'
+        );
         getBreakpointKey.mockReturnValue('T');
         expect(getIndexSiteId()).toEqual('287247');
     });
 
     test('should use test site ID when participating in CommercialPrebidSafeframe test on mobile', () => {
-        isInVariant.mockImplementationOnce((testId, variantId) => variantId === 'variant');
+        isInVariant.mockImplementationOnce(
+            (testId, variantId) => variantId === 'variant'
+        );
         getBreakpointKey.mockReturnValue('M');
         expect(getIndexSiteId()).toEqual('287248');
     });

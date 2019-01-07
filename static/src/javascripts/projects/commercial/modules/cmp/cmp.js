@@ -6,6 +6,7 @@ import { getUrlVars } from 'lib/url';
 import fetchJSON from 'lib/fetch-json';
 
 import { commercialCmpCustomise } from 'common/modules/experiments/tests/commercial-cmp-customise';
+import { isInVariant } from 'common/modules/experiments/ab-tests';
 import { log } from './log';
 import { CmpStore } from './store';
 import { encodeVendorConsentData } from './cookie';
@@ -26,7 +27,6 @@ import type {
     VendorList,
     VendorConsentResponse,
 } from './types';
-import { isInVariant } from 'common/modules/experiments/ab-tests';
 
 type MessageData = {
     __cmpCall: ?{

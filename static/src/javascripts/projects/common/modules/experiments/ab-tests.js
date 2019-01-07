@@ -26,8 +26,15 @@ import {
     AcquisitionsBannerGoogleDocTestThreeVariants,
     AcquisitionsBannerGoogleDocTestTwoVariants,
 } from 'common/modules/experiments/tests/acquisitions-banner-from-google-doc';
-import { allRunnableTests, firstRunnableTest } from 'common/modules/experiments/ab-core';
-import { registerCompleteEvents, registerImpressionEvents, trackABTests, } from 'common/modules/experiments/ab-ophan';
+import {
+    allRunnableTests,
+    firstRunnableTest,
+} from 'common/modules/experiments/ab-core';
+import {
+    registerCompleteEvents,
+    registerImpressionEvents,
+    trackABTests,
+} from 'common/modules/experiments/ab-ophan';
 import {
     getNotInTestsFromLocalStorage,
     runnableTestsToParticipations,
@@ -84,7 +91,7 @@ export const getParticipations = (): Participations =>
     runnableTestsToParticipations(getRunnableTests());
 
 export const isInVariant = (test: ABTest, variantId: string): boolean =>
-    getParticipations()[test.id] === {variantId};
+    getParticipations()[test.id] === { variantId };
 
 export const runAndTrackAbTests = () => {
     const runnableTests = getRunnableTests();

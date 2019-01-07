@@ -1,6 +1,9 @@
 // @flow
 
-import { getMvtNumValues, getMvtValue, } from 'common/modules/analytics/mvt-cookie';
+import {
+    getMvtNumValues,
+    getMvtValue,
+} from 'common/modules/analytics/mvt-cookie';
 import config from 'lib/config';
 import { isExpired } from 'lib/time-utils';
 import { getVariantFromLocalStorage } from 'common/modules/experiments/ab-local-storage';

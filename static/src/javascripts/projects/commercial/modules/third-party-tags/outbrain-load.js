@@ -68,7 +68,10 @@ const load = (
     const $container = $(selectors.outbrain.container, $outbrain[0]);
     const breakpoint = getBreakpoint();
 
-    const shouldUseNewOutbrainCodes: boolean = isInVariant(commercialOutbrainNewids, 'variant');
+    const shouldUseNewOutbrainCodes: boolean = isInVariant(
+        commercialOutbrainNewids,
+        'variant'
+    );
 
     const widgetCodes = ((): {
         code?: string,
