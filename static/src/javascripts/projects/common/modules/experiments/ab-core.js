@@ -6,9 +6,9 @@ import {
 } from 'common/modules/analytics/mvt-cookie';
 import config from 'lib/config';
 import { isExpired } from 'lib/time-utils';
-import { getVariantFromLocalStorage } from 'common/modules/experiments/ab-local-storage';
-import { getVariantFromUrl } from 'common/modules/experiments/ab-url';
-import { NOT_IN_TEST } from 'common/modules/experiments/ab-constants';
+import { getVariantFromLocalStorage } from './ab-local-storage';
+import { getVariantFromUrl } from './ab-url';
+import { NOT_IN_TEST } from './ab-constants';
 
 const isTestSwitchedOn = (test: ABTest): boolean =>
     config.get(`switches.ab${test.id}`, false);
@@ -39,13 +39,11 @@ const testCanBeRun = (test: ABTest): boolean => {
     );
 };
 
-/**
- * Determine whether the user is in the test or not and return the associated
- * variant ID.
- *
- * The test population is just a subset of mvt ids. A test population must
- * begin from a specific value. Overlapping test ranges are permitted.
- */
+// Determine whether the user is in the test or not and return the associated
+// variant ID, based on the MVT cookie segmentation.
+//
+// The test population is just a subset of MVT ids. A test population must
+// begin from a specific value. Overlapping test ranges are permitted.
 const computeVariantFromMvtCookie = (test: ABTest): ?Variant => {
     const smallestTestId = getMvtNumValues() * test.audienceOffset;
     const largestTestId = smallestTestId + getMvtNumValues() * test.audience;
@@ -63,6 +61,10 @@ const computeVariantFromMvtCookie = (test: ABTest): ?Variant => {
     return null;
 };
 
+// This is the heart of the A/B testing framework.
+// It turns an ABTest into a Runnable<ABTest>, if indeed the test
+// actually has a variant which could run on this pageview.
+//
 // This function can be called at any time, before or after participations are
 // persisted to localStorage. It should always give the same result for a given pageview.
 export const runnableTest = <T: ABTest>(test: T): ?Runnable<T> => {

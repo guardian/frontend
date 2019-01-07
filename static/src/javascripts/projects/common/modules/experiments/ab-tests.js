@@ -37,10 +37,10 @@ import {
 } from 'common/modules/experiments/ab-ophan';
 import {
     getTestExclusionsFromLocalStorage,
-    runnableTestsToParticipations,
     setParticipationsInLocalStorage,
-} from 'common/modules/experiments/ab-local-storage';
-import { getTestExclusionsFromUrl } from 'common/modules/experiments/ab-url';
+} from './ab-local-storage';
+import { getTestExclusionsFromUrl } from './ab-url';
+import { runnableTestsToParticipations } from './ab-utils';
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialPrebidSafeframe,
@@ -76,7 +76,10 @@ export const engagementBannerTests: $ReadOnlyArray<AcquisitionsABTest> = [
     AcquisitionsBannerGoogleDocTestFiveVariants,
 ];
 
-export const getRunnableTests = (): $ReadOnlyArray<Runnable<ABTest>> => {
+// These are the tests which will actually take effect on this pageview.
+// Note that this is a subset of the potentially runnable tests,
+// because we only run one epic test and one banner test per pageview.
+export const getTestsToRun = (): $ReadOnlyArray<Runnable<ABTest>> => {
     const epicTest = firstRunnableTest(epicTests);
     const engagementBannerTest = firstRunnableTest(engagementBannerTests);
 
@@ -87,20 +90,21 @@ export const getRunnableTests = (): $ReadOnlyArray<Runnable<ABTest>> => {
     ];
 };
 
+// The tests which will take effect on this pageview,
 export const getParticipations = (): Participations =>
-    runnableTestsToParticipations(getRunnableTests());
+    runnableTestsToParticipations(getTestsToRun());
 
 export const isInVariant = (test: ABTest, variantId: string): boolean =>
     getParticipations()[test.id] === { variantId };
 
 export const runAndTrackAbTests = () => {
-    const runnableTests = getRunnableTests();
+    const testsToRun = getTestsToRun();
 
-    runnableTests.forEach(test => test.variantToRun.test(test));
+    testsToRun.forEach(test => test.variantToRun.test(test));
 
-    registerImpressionEvents(runnableTests);
-    registerCompleteEvents(runnableTests);
-    trackABTests(runnableTests);
+    registerImpressionEvents(testsToRun);
+    registerCompleteEvents(testsToRun);
+    trackABTests(testsToRun);
 
     // If a test has a 'notintest' variant specified in localStorage,
     // it will prevent them from participating in the test.
@@ -112,7 +116,7 @@ export const runAndTrackAbTests = () => {
     };
 
     setParticipationsInLocalStorage({
-        ...runnableTestsToParticipations(runnableTests),
+        ...runnableTestsToParticipations(testsToRun),
         ...testExclusions,
     });
 };

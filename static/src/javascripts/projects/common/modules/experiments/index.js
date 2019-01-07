@@ -14,9 +14,9 @@ import {
 import { isExpired } from 'lib/time-utils';
 import {
     getParticipationsFromLocalStorage,
-    participationsToArray,
     setParticipationsInLocalStorage,
 } from 'common/modules/experiments/ab-local-storage';
+import { participationsToArray } from './ab-utils';
 
 const selectRadios = () => {
     const participationArray = participationsToArray(

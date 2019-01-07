@@ -1,6 +1,6 @@
 // @flow
 
-import { arrayToParticipations } from 'common/modules/experiments/ab-local-storage';
+import { arrayToParticipations } from './ab-utils';
 
 describe('A/B local storage', () => {
     test('arrayToParticipations should correctly convert array to object', () => {
