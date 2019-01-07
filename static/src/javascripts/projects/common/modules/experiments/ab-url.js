@@ -1,7 +1,10 @@
 // @flow
 
 import { NOT_IN_TEST } from 'common/modules/experiments/ab-constants';
-import { testAndParticipationsToVariant, filterParticipations } from './ab-utils';
+import {
+    testAndParticipationsToVariant,
+    filterParticipations,
+} from './ab-utils';
 
 export const getForcedParticipationsFromUrl = (): Participations => {
     if (window.location.hash.startsWith('#ab')) {

@@ -1,7 +1,10 @@
 // @flow
 import { local } from 'lib/storage';
-import { NOT_IN_TEST, participationsKey, } from './ab-constants';
-import { filterParticipations, testAndParticipationsToVariant } from './ab-utils';
+import { NOT_IN_TEST, participationsKey } from './ab-constants';
+import {
+    filterParticipations,
+    testAndParticipationsToVariant,
+} from './ab-utils';
 
 // -------
 // Reading
@@ -18,7 +21,6 @@ export const getTestExclusionsFromLocalStorage = (): Participations =>
 // If the given test has a variant specified in localStorage, return it.
 export const getVariantFromLocalStorage = (test: ABTest): ?Variant =>
     testAndParticipationsToVariant(test, getParticipationsFromLocalStorage());
-
 
 // -------
 // Writing

@@ -14,9 +14,9 @@ export const arrayToParticipations = (
     arr: { testId: string, variantId: string }[]
 ): Participations =>
     arr.reduce(
-        (obj, {testId, variantId}) => ({
+        (obj, { testId, variantId }) => ({
             ...obj,
-            [testId]: {variant: variantId},
+            [testId]: { variant: variantId },
         }),
         {}
     );
@@ -25,8 +25,8 @@ export const runnableTestsToParticipations = (
     runnableTests: $ReadOnlyArray<Runnable<ABTest>>
 ): Participations => {
     const participations: Participations = {};
-    runnableTests.forEach(({id: testId, variantToRun}) => {
-        participations[testId] = {variant: variantToRun.id};
+    runnableTests.forEach(({ id: testId, variantToRun }) => {
+        participations[testId] = { variant: variantToRun.id };
     });
 
     return participations;
