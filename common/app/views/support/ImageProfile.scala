@@ -207,7 +207,7 @@ object FacebookOpenGraphImage extends OverlayBase64 {
 }
 
 object EmailImage extends ImageProfile(width = Some(580), autoFormat = false) {
-  override val qualityparam = "quality=60"
+  override val qualityparam = "quality=70"
   override val sharpenParam = "sharpen=a0.8,r1,t1"
   val knownWidth: Int = width.get
 }
