@@ -14,7 +14,7 @@ object NavLinks {
   val indigenousAustralia = NavLink("Indigenous Australia", "/australia-news/indigenous-australians")
   val indigenousAustraliaOpinion = NavLink("Indigenous", "/commentisfree/series/indigenousx")
   val usNews = NavLink("US", "/us-news", longTitle = "US news")
-  val usPolitics = NavLink("US midterms 2018", "/us-news/us-midterm-elections-2018", longTitle = "US politics")
+  val usPolitics = NavLink("US Politics", "/us-news/us-politics", longTitle = "US politics")
 
   val education = {
     val teachers = NavLink("Teachers", "/teacher-network")
