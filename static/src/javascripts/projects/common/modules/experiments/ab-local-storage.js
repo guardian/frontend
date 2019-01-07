@@ -1,6 +1,10 @@
 // @flow
 import { local } from 'lib/storage';
-import { NOT_IN_TEST, notInTestVariant, participationsKey } from 'common/modules/experiments/ab-constants';
+import {
+    NOT_IN_TEST,
+    notInTestVariant,
+    participationsKey,
+} from 'common/modules/experiments/ab-constants';
 
 const participationsToArray = (
     participations: Participations
@@ -24,12 +28,15 @@ const arrayToParticipations = (
 export const filterParticipations = (
     participations: Participations,
     filter: ({ testId: string, variantId: string }) => boolean
-): Participations => arrayToParticipations(participationsToArray(participations).filter(filter));
+): Participations =>
+    arrayToParticipations(participationsToArray(participations).filter(filter));
 
 export const getParticipationsFromLocalStorage = (): Participations =>
     local.get(participationsKey) || {};
 
-export const setParticipationsInLocalStorage = (participations: Participations): void => {
+export const setParticipationsInLocalStorage = (
+    participations: Participations
+): void => {
     local.set(participationsKey, participations);
 };
 
@@ -72,8 +79,7 @@ export const clearParticipations = (): void => {
 export const getNotInTestsFromLocalStorage = (): Participations =>
     filterParticipations(
         getParticipationsFromLocalStorage(),
-        ({testId, variantId}) =>
-            variantId === NOT_IN_TEST
+        ({ variantId }) => variantId === NOT_IN_TEST
     );
 
 export const getVariantFromLocalStorage = (test: ABTest): ?Variant =>

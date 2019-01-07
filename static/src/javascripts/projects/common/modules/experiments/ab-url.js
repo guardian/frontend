@@ -3,8 +3,7 @@
 import { NOT_IN_TEST } from 'common/modules/experiments/ab-constants';
 import {
     filterParticipations,
-    getParticipationsFromLocalStorage,
-    variantFromParticipations
+    variantFromParticipations,
 } from 'common/modules/experiments/ab-local-storage';
 
 const getForcedParticipationsFromUrl = (): Participations => {
@@ -31,6 +30,5 @@ export const getVariantFromUrl = (test: ABTest): ?Variant =>
 export const getNotInTestsFromUrl = (): Participations =>
     filterParticipations(
         getForcedParticipationsFromUrl(),
-        ({testId, variantId}) =>
-            variantId === NOT_IN_TEST
+        ({ variantId }) => variantId === NOT_IN_TEST
     );

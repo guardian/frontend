@@ -50,7 +50,6 @@ describe('A/B tests', () => {
         // test('should return the variantToRun specified by localStorage, overriding cookie')
 
         // test('should return the variantToRun specified by the cookie, iff URL and localStorage are absent')
-
     });
 
     // test('expired tests should be removed from localStorage')

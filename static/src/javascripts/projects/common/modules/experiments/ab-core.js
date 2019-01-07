@@ -1,9 +1,12 @@
 // @flow
 
-import { getMvtNumValues, getMvtValue, } from 'common/modules/analytics/mvt-cookie';
+import {
+    getMvtNumValues,
+    getMvtValue,
+} from 'common/modules/analytics/mvt-cookie';
 import config from 'lib/config';
 import { isExpired } from 'lib/time-utils';
-import { getVariantFromLocalStorage} from 'common/modules/experiments/ab-local-storage';
+import { getVariantFromLocalStorage } from 'common/modules/experiments/ab-local-storage';
 import { getVariantFromUrl } from 'common/modules/experiments/ab-url';
 import { NOT_IN_TEST } from 'common/modules/experiments/ab-constants';
 
@@ -109,4 +112,3 @@ export const getVariant = (test: ABTest, variantId: string): ?Variant => {
     const index = variantIds.indexOf(variantId);
     return index > -1 ? test.variants[index] : null;
 };
-

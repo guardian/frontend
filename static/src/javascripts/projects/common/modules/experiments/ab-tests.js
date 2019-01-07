@@ -39,7 +39,7 @@ import {
 import {
     getNotInTestsFromLocalStorage,
     runnableTestsToParticipations,
-    setParticipationsInLocalStorage
+    setParticipationsInLocalStorage,
 } from 'common/modules/experiments/ab-local-storage';
 import { getNotInTestsFromUrl } from 'common/modules/experiments/ab-url';
 
@@ -123,6 +123,6 @@ export const runAndTrackAbTests = () => {
 
     setParticipationsInLocalStorage({
         ...runnableTestsToParticipations(runnableTests),
-        ...notInTests
+        ...notInTests,
     });
 };
