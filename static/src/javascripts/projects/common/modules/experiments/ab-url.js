@@ -3,7 +3,8 @@
 import { NOT_IN_TEST } from 'common/modules/experiments/ab-constants';
 import {
     testAndParticipationsToVariant,
-    filterParticipations, testSwitchExists,
+    filterParticipations,
+    testSwitchExists,
 } from './ab-utils';
 
 export const getForcedParticipationsFromUrl = (): Participations => {
