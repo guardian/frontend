@@ -1,17 +1,12 @@
 // @flow
 
-import {
-    getMvtNumValues,
-    getMvtValue,
-} from 'common/modules/analytics/mvt-cookie';
+import { getMvtNumValues, getMvtValue } from 'common/modules/analytics/mvt-cookie';
 import config from 'lib/config';
 import { isExpired } from 'lib/time-utils';
 import { getVariantFromLocalStorage } from './ab-local-storage';
 import { getVariantFromUrl } from './ab-url';
 import { NOT_IN_TEST } from './ab-constants';
-
-const isTestSwitchedOn = (test: ABTest): boolean =>
-    config.get(`switches.ab${test.id}`, false);
+import { isTestSwitchedOn } from './ab-utils';
 
 // We only take account of a variant's canRun function if it's defined.
 // If it's not, assume the variant can be run.
@@ -22,7 +17,7 @@ const testCanBeRun = (test: ABTest): boolean => {
     const expired = isExpired(test.expiry);
     const isSensitive = config.page.isSensitive;
     const shouldShowForSensitive = !!test.showForSensitive;
-    const isTestOn = isTestSwitchedOn(test);
+    const isTestOn = isTestSwitchedOn(test.id);
     const canTestBeRun = !test.canRun || test.canRun();
 
     // console.log('expired', expired);

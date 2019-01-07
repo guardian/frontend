@@ -1,5 +1,6 @@
 // @flow
 
+import config from 'lib/config';
 import { NOT_IN_TEST, notInTestVariant } from './ab-constants';
 
 export const participationsToArray = (
@@ -59,3 +60,9 @@ export const testAndParticipationsToVariant = (
 
     return null;
 };
+
+export const testSwitchExists = (testId: string): boolean =>
+    config.get(`switches.ab${testId}`, 'NOT_FOUND') !== 'NOT_FOUND';
+
+export const isTestSwitchedOn = (testId: string): boolean =>
+    config.get(`switches.ab${testId}`, false);

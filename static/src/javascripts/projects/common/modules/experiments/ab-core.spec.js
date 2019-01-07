@@ -58,7 +58,9 @@ describe('A/B tests', () => {
 
     // test('expired tests should be removed from localStorage')
 
-    // test('renamed/deleted tests should be removed from localStorage')
+    test('renamed/deleted tests should be removed from localStorage', () => {
+        // This should fail if testSwitchExists() check is removed
+    })
 
     // test('should return null for a test which is switched off')
 

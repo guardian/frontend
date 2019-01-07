@@ -3,7 +3,7 @@
 import { NOT_IN_TEST } from 'common/modules/experiments/ab-constants';
 import {
     testAndParticipationsToVariant,
-    filterParticipations,
+    filterParticipations, testSwitchExists,
 } from './ab-utils';
 
 export const getForcedParticipationsFromUrl = (): Participations => {
@@ -28,5 +28,6 @@ export const getVariantFromUrl = (test: ABTest): ?Variant =>
 export const getTestExclusionsFromUrl = (): Participations =>
     filterParticipations(
         getForcedParticipationsFromUrl(),
-        ({ variantId }) => variantId === NOT_IN_TEST
+        ({ testId, variantId }) =>
+            variantId === NOT_IN_TEST && testSwitchExists(testId)
     );
