@@ -79,15 +79,11 @@ object VideoProfile {
 
 case class VideoProfile(
   override val width: Some[Int],
-  override val height: Some[Int],
+  override val height: Option[Int] = None,
   override val hidpi: Boolean = false,
   override val compression: Int = 95,
   override val isPng: Boolean = false,
   override val autoFormat: Boolean = true) extends ElementProfile {
-
-  lazy val isRatioHD: Boolean = Precision.compareTo(VideoProfile.ratioHD.doubleValue, aspectRatio.doubleValue, 0.1d) == 0
-
-  private lazy val aspectRatio: Fraction = new Fraction(width.get, height.get)
 }
 
 case class SrcSet(src: String, width: Int) {
@@ -115,9 +111,9 @@ object Item620 extends ImageProfile(width = Some(620))
 object Item640 extends ImageProfile(width = Some(640))
 object Item700 extends ImageProfile(width = Some(700))
 object Item1200 extends ImageProfile(width = Some(1200))
-object Video640 extends VideoProfile(width = Some(640), height = Some(360)) // 16:9
-object Video700 extends VideoProfile(width = Some(700), height = Some(394)) // 16:9
-object Video1280 extends VideoProfile(width = Some(1280), height = Some(720)) // 16:9
+object Video640 extends VideoProfile(width = Some(640))
+object Video700 extends VideoProfile(width = Some(700))
+object Video1280 extends VideoProfile(width = Some(1280))
 object GoogleStructuredData extends ImageProfile(width = Some(300), height = Some(300)) // 1:1
 
 class ShareImage(overlayUrlParam: String, shouldIncludeOverlay: Boolean) extends ImageProfile(width = Some(1200)) {
