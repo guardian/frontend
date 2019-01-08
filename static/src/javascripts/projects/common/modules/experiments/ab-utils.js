@@ -13,14 +13,11 @@ export const isTestSwitchedOn = (testId: string): boolean =>
 
 export const runnableTestsToParticipations = (
     runnableTests: $ReadOnlyArray<Runnable<ABTest>>
-): Participations => {
-    const participations: Participations = {};
-    runnableTests.forEach(({ id: testId, variantToRun }) => {
-        participations[testId] = { variant: variantToRun.id };
-    });
-
-    return participations;
-};
+): Participations =>
+    runnableTests.reduce((participations: Participations, { id: testId, variantToRun }) => ({
+        ...participations,
+        ...{ [testId]: { variant: variantToRun.id } },
+    }), {});
 
 export const testExclusionsWhoseSwitchExists = (
     participations: Participations
