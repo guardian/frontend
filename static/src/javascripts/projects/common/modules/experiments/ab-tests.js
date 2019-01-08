@@ -40,7 +40,10 @@ import {
     setParticipationsInLocalStorage,
 } from './ab-local-storage';
 import { getForcedParticipationsFromUrl } from './ab-url';
-import { runnableTestsToParticipations, testExclusionsWhoseSwitchExists } from './ab-utils';
+import {
+    runnableTestsToParticipations,
+    testExclusionsWhoseSwitchExists,
+} from './ab-utils';
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialPrebidSafeframe,
@@ -76,9 +79,12 @@ export const engagementBannerTests: $ReadOnlyArray<AcquisitionsABTest> = [
     AcquisitionsBannerGoogleDocTestFiveVariants,
 ];
 
-export const epicTestToRun: ?Runnable<EpicABTest> = firstRunnableTest(epicTests);
-export const engagementBannerTestToRun: ?Runnable<AcquisitionsABTest> =
-    firstRunnableTest(engagementBannerTests);
+export const epicTestToRun: ?Runnable<EpicABTest> = firstRunnableTest(
+    epicTests
+);
+export const engagementBannerTestToRun: ?Runnable<
+    AcquisitionsABTest
+> = firstRunnableTest(engagementBannerTests);
 
 // These are the tests which will actually take effect on this pageview.
 // Note that this is a subset of the potentially runnable tests,
@@ -90,8 +96,9 @@ export const testsToRun: $ReadOnlyArray<Runnable<ABTest>> = [
 ].filter(Boolean);
 
 // The tests which will take effect on this pageview
-export const participations: Participations =
-    runnableTestsToParticipations(testsToRun);
+export const participations: Participations = runnableTestsToParticipations(
+    testsToRun
+);
 
 export const isInVariant = (test: ABTest, variantId: string): boolean =>
     participations[test.id] === { variantId };

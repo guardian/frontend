@@ -5,6 +5,12 @@ import toPairs from 'lodash/toPairs';
 import fromPairs from 'lodash/fromPairs';
 import { NOT_IN_TEST, notInTestVariant } from './ab-constants';
 
+export const testSwitchExists = (testId: string): boolean =>
+    config.get(`switches.ab${testId}`, 'NOT_FOUND') !== 'NOT_FOUND';
+
+export const isTestSwitchedOn = (testId: string): boolean =>
+    config.get(`switches.ab${testId}`, false);
+
 export const runnableTestsToParticipations = (
     runnableTests: $ReadOnlyArray<Runnable<ABTest>>
 ): Participations => {
@@ -16,9 +22,14 @@ export const runnableTestsToParticipations = (
     return participations;
 };
 
-export const testExclusionsWhoseSwitchExists = (participations: Participations): Participations => {
-    const pairs: Array<[string, {variant: string}]> = toPairs(participations).filter(([testId, {variant: variantId}]) =>
-        variantId === NOT_IN_TEST && testSwitchExists(testId)
+export const testExclusionsWhoseSwitchExists = (
+    participations: Participations
+): Participations => {
+    const pairs: Array<[string, { variant: string }]> = toPairs(
+        participations
+    ).filter(
+        ([testId, { variant: variantId }]) =>
+            variantId === NOT_IN_TEST && testSwitchExists(testId)
     );
     return fromPairs(pairs);
 };
@@ -44,9 +55,3 @@ export const testAndParticipationsToVariant = (
 
     return null;
 };
-
-export const testSwitchExists = (testId: string): boolean =>
-    config.get(`switches.ab${testId}`, 'NOT_FOUND') !== 'NOT_FOUND';
-
-export const isTestSwitchedOn = (testId: string): boolean =>
-    config.get(`switches.ab${testId}`, false);

@@ -24,7 +24,7 @@ const selectRadios = () => {
         $(radio).attr('checked', false);
     });
 
-    Object.keys(participations).forEach((testId) => {
+    Object.keys(participations).forEach(testId => {
         $(`#${testId}-${participations[testId].variant}`).attr('checked', true);
     });
 };

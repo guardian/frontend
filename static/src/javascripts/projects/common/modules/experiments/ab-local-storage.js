@@ -1,6 +1,6 @@
 // @flow
 import { local } from 'lib/storage';
-import { NOT_IN_TEST, participationsKey } from './ab-constants';
+import { participationsKey } from './ab-constants';
 import { testAndParticipationsToVariant } from './ab-utils';
 
 // -------
