@@ -1,11 +1,6 @@
 // @flow
 
-import { NOT_IN_TEST } from 'common/modules/experiments/ab-constants';
-import {
-    testAndParticipationsToVariant,
-    filterParticipations,
-    testSwitchExists,
-} from './ab-utils';
+import { testAndParticipationsToVariant } from './ab-utils';
 
 export const getForcedParticipationsFromUrl = (): Participations => {
     if (window.location.hash.startsWith('#ab')) {
@@ -25,10 +20,3 @@ export const getForcedParticipationsFromUrl = (): Participations => {
 // If the given test has a variant which is forced by the URL, return it
 export const getVariantFromUrl = (test: ABTest): ?Variant =>
     testAndParticipationsToVariant(test, getForcedParticipationsFromUrl());
-
-export const getTestExclusionsFromUrl = (): Participations =>
-    filterParticipations(
-        getForcedParticipationsFromUrl(),
-        ({ testId, variantId }) =>
-            variantId === NOT_IN_TEST && testSwitchExists(testId)
-    );

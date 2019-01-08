@@ -16,19 +16,16 @@ import {
     getParticipationsFromLocalStorage,
     setParticipationsInLocalStorage,
 } from 'common/modules/experiments/ab-local-storage';
-import { participationsToArray } from './ab-utils';
 
 const selectRadios = () => {
-    const participationArray = participationsToArray(
-        getParticipationsFromLocalStorage()
-    );
+    const participations = getParticipationsFromLocalStorage();
 
     $('.js-experiments-radio').each(radio => {
         $(radio).attr('checked', false);
     });
 
-    participationArray.forEach(({ testId, variantId }) => {
-        $(`#${testId}-${variantId}`).attr('checked', true);
+    Object.keys(participations).forEach((testId) => {
+        $(`#${testId}-${participations[testId].variant}`).attr('checked', true);
     });
 };
 

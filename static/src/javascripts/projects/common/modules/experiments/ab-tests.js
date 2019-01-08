@@ -36,11 +36,11 @@ import {
     trackABTests,
 } from 'common/modules/experiments/ab-ophan';
 import {
-    getTestExclusionsFromLocalStorage,
+    getParticipationsFromLocalStorage,
     setParticipationsInLocalStorage,
 } from './ab-local-storage';
-import { getTestExclusionsFromUrl } from './ab-url';
-import { runnableTestsToParticipations } from './ab-utils';
+import { getForcedParticipationsFromUrl } from './ab-url';
+import { runnableTestsToParticipations, testExclusionsWhoseSwitchExists } from './ab-utils';
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialPrebidSafeframe,
@@ -107,10 +107,12 @@ export const runAndTrackAbTests = () => {
     // it will prevent them from participating in the test.
     // This is typically set by the URL hash, but we want it to persist for
     // subsequent pageviews so we save it to localStorage.
-    const testExclusions: Participations = {
-        ...getTestExclusionsFromLocalStorage(),
-        ...getTestExclusionsFromUrl(),
-    };
+    // We don't persist those whose switch is gone from the backend,
+    // to ensure that old tests get cleaned out and localStorage doesn't keep growing.
+    const testExclusions: Participations = testExclusionsWhoseSwitchExists({
+        ...getParticipationsFromLocalStorage(),
+        ...getForcedParticipationsFromUrl(),
+    });
 
     setParticipationsInLocalStorage({
         ...runnableTestsToParticipations(testsToRun),
