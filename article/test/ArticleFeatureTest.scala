@@ -405,7 +405,7 @@ import collection.JavaConverters._
 
         And("video meta thumbnailUrl should be set")
         $("[itemprop='associatedMedia video'] [itemprop=thumbnailUrl]").attribute("content") should
-          include("img/static/sys-images/Guardian/Pix/audio/video/2014/5/16/1400240928538/Nigel-Farage-LBC-debate-i-014.jpg?width=640&height=360&quality=85&auto=format&fit=max&s=")
+          include("img/static/sys-images/Guardian/Pix/audio/video/2014/5/16/1400240928538/Nigel-Farage-LBC-debate-i-014.jpg?width=640&quality=85&auto=format&fit=max&s=")
 
         And("video meta uploadDate should be set")
         $("[itemprop='associatedMedia video'] [itemprop=uploadDate]").attribute("content") should be("2014-05-16T16:09:34.000+01:00")
