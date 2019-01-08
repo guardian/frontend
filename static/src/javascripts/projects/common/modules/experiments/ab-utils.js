@@ -17,7 +17,7 @@ export const runnableTestsToParticipations = (
 };
 
 export const testExclusionsWhoseSwitchExists = (participations: Participations): Participations => {
-    const pairs = toPairs(participations).filter(([testId, {variant: variantId}]) =>
+    const pairs: Array<[string, {variant: string}]> = toPairs(participations).filter(([testId, {variant: variantId}]) =>
         variantId === NOT_IN_TEST && testSwitchExists(testId)
     );
     return fromPairs(pairs);
