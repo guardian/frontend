@@ -46,4 +46,3 @@ export const getRunnableAbTestWhereVariantIsRunnable = (
         variantToRun: abTest.variants[1],
     };
 };
-

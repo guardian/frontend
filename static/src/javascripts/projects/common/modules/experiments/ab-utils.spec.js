@@ -1,7 +1,7 @@
 // @flow
 import {
     getRunnableAbTestWhereControlIsRunnable,
-    getRunnableAbTestWhereVariantIsRunnable
+    getRunnableAbTestWhereVariantIsRunnable,
 } from './__fixtures__/ab-test';
 import { runnableTestsToParticipations } from './ab-utils';
 
@@ -14,8 +14,8 @@ describe('A/B utils', () => {
                     getRunnableAbTestWhereControlIsRunnable('b'),
                 ])
             ).toEqual({
-                a: {variant: 'control'},
-                b: {variant: 'control'},
+                a: { variant: 'control' },
+                b: { variant: 'control' },
             });
         });
 
@@ -26,10 +26,9 @@ describe('A/B utils', () => {
                     getRunnableAbTestWhereVariantIsRunnable('d'),
                 ])
             ).toEqual({
-                c: {variant: 'control'},
-                d: {variant: 'variant'},
+                c: { variant: 'control' },
+                d: { variant: 'variant' },
             });
-
         });
-    })
+    });
 });
