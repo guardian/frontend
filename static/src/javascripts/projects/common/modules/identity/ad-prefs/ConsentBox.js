@@ -71,10 +71,9 @@ class ConsentBox extends Component<ConsentBoxProps, {}> {
                 </legend>
                 <div
                     className="identity-ad-prefs-input__wording"
-                    dangerouslySetInnerHTML={{
-                        __html: wording.question.text,
-                    }}
-                />
+                >
+                    {wording.question.text}
+                </div>
                 <div>
                     <ConsentRadioButton
                         value="true"
