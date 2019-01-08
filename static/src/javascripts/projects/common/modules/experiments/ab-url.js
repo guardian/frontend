@@ -4,7 +4,10 @@ import { testAndParticipationsToVariant } from './ab-utils';
 
 export const getForcedParticipationsFromUrl = (): Participations => {
     if (window.location.hash.startsWith('#ab')) {
-        const tokens = window.location.hash.replace('#ab-', '').split(',');
+        const tokens = window.location.hash
+            .replace('#ab-', '')
+            .split(',');
+
         return tokens.reduce((obj, token) => {
             const [testId, variantId] = token.split('=');
             return {
