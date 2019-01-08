@@ -25,7 +25,7 @@ export const genAbTest = (
     variants: [genVariant('control'), genVariant('variant')],
 });
 
-export const getRunnableAbTest = (
+export const getRunnableAbTestWhereControlIsRunnable = (
     id: string,
     canRun: ?boolean
 ): Runnable<ABTest> => {
@@ -35,3 +35,15 @@ export const getRunnableAbTest = (
         variantToRun: abTest.variants[0],
     };
 };
+
+export const getRunnableAbTestWhereVariantIsRunnable = (
+    id: string,
+    canRun: ?boolean
+): Runnable<ABTest> => {
+    const abTest = genAbTest(id, canRun);
+    return {
+        ...abTest,
+        variantToRun: abTest.variants[1],
+    };
+};
+
