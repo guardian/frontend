@@ -13,7 +13,7 @@ import {
     thirdPartyTrackingAdConsent,
 } from 'common/modules/commercial/ad-prefs.lib';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
-import { participations } from 'common/modules/experiments/ab-tests';
+import { participations as abParticipations } from 'common/modules/experiments/ab-tests';
 import { removeFalseyValues } from 'commercial/modules/prebid/utils';
 import flattenDeep from 'lodash/flattenDeep';
 import once from 'lodash/once';
@@ -32,7 +32,6 @@ const formatTarget = (target: ?string): ?string =>
         : null;
 
 const abParam = (): Array<string> => {
-    const abParticipations: Participations = participations();
     const abParams: Array<string> = [];
 
     const pushAbParams = (testName: string, testValue: mixed): void => {
