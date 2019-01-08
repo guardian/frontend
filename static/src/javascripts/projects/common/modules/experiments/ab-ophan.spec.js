@@ -10,7 +10,7 @@ import { local } from 'lib/storage';
 import { concurrentTests } from 'common/modules/experiments/ab-tests';
 import config from 'lib/config';
 
-import { getRunnableAbTestWhereControlIsRunnable } from './__fixtures__/ab-test';
+import { genRunnableAbTestWhereControlIsRunnable } from './__fixtures__/ab-test';
 
 jest.mock('lib/raven');
 jest.mock('lib/storage');
@@ -37,8 +37,8 @@ describe('A/B Ophan analytics', () => {
     test('Ophan data structure contains the correct values', () => {
         expect(
             buildOphanPayload([
-                getRunnableAbTestWhereControlIsRunnable('DummyTest'),
-                getRunnableAbTestWhereControlIsRunnable('DummyTest2'),
+                genRunnableAbTestWhereControlIsRunnable('DummyTest'),
+                genRunnableAbTestWhereControlIsRunnable('DummyTest2'),
             ])
         ).toEqual({
             DummyTest: {
@@ -54,7 +54,7 @@ describe('A/B Ophan analytics', () => {
     });
 
     test('success function fires when canRun is true', () => {
-        const dummy = getRunnableAbTestWhereControlIsRunnable('DummyTest');
+        const dummy = genRunnableAbTestWhereControlIsRunnable('DummyTest');
         dummy.variants[0].success = () => undefined;
         const spy = jest.spyOn(dummy.variants[0], 'success');
 
@@ -64,7 +64,7 @@ describe('A/B Ophan analytics', () => {
     });
 
     test('success function fires when canRun is false', () => {
-        const dummy = getRunnableAbTestWhereControlIsRunnable('DummyTest');
+        const dummy = genRunnableAbTestWhereControlIsRunnable('DummyTest');
         dummy.variants[0].success = () => undefined;
         const spy = jest.spyOn(dummy.variants[0], 'success');
 
@@ -75,7 +75,7 @@ describe('A/B Ophan analytics', () => {
     });
 
     test('defer firing the impression when the function is provided', () => {
-        const dummy = getRunnableAbTestWhereControlIsRunnable('DummyTest');
+        const dummy = genRunnableAbTestWhereControlIsRunnable('DummyTest');
 
         /**
          * impression events are only registered if every variant has an `impression` function
