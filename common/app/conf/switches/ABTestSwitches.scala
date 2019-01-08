@@ -12,7 +12,7 @@ trait ABTestSwitches {
     "increase ads on mobile web",
     owners = Seq(Owner.withGithub("frankie297")),
     safeState = Off,
-    sellByDate = new LocalDate(2019, 1, 9),
+    sellByDate = new LocalDate(2019, 1, 18),
     exposeClientSide = true
   )
 
