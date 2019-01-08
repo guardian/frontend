@@ -298,7 +298,7 @@ object DotcomponentsDataModel {
 
 
   def toJsonString(model: DotcomponentsDataModel): String = {
-    Json.prettyPrint(toJson(model))
+    Json.stringify(toJson(model))
   }
 
 }
