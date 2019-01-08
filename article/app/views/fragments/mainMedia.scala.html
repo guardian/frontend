@@ -3,7 +3,7 @@
 
 @import model.EndSlateComponents
 @import model.{VideoPlayer}
-@import views.support.Video640
+@import views.support.Item640
 @import views.{MainCleaner}
 
 @if(article.elements.hasMainEmbed || article.elements.elements("main").isEmpty) {
@@ -20,7 +20,7 @@
                         @defining(
                             VideoPlayer(
                                 video,
-                                Video640,
+                                Item640,
                                 article.trail.headline,
                                 autoPlay = false,
                                 showControlsAtStart = true,
