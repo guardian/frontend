@@ -2,7 +2,7 @@
 
 import $ from 'lib/$';
 import { adblockInUse } from 'lib/detect';
-import { participations as abParticipations } from 'common/modules/experiments/ab-tests';
+import { getParticipations as getABParticipations } from 'common/modules/experiments/ab-tests';
 import { getCookie } from 'lib/cookies';
 import fetchJson from 'lib/fetch-json';
 
@@ -37,7 +37,7 @@ const getBaseExtraData = (): Object => ({
     devicePixelRatio: window.devicePixelRatio,
     gu_u: getCookie('GU_U'),
     payingMember: getCookie('gu_paying_member'),
-    abTests: summariseAbTests(abParticipations),
+    abTests: summariseAbTests(getABParticipations()),
 });
 
 const getExtraDataInformation = (): Promise<Object> =>

@@ -27,7 +27,8 @@ import {
 import { acquisitionsBannerControlTemplate } from 'common/modules/commercial/templates/acquisitions-banner-control';
 import userPrefs from 'common/modules/user-prefs';
 import { initTicker } from 'common/modules/commercial/ticker';
-import { engagementBannerTestToRun } from '../experiments/ab-tests';
+import { engagementBannerTests } from 'common/modules/experiments/ab-tests';
+import { firstRunnableTest } from 'common/modules/experiments/ab-core';
 
 type BannerDeployLog = {
     time: string,
@@ -42,10 +43,11 @@ const getTestAndVariant = (): {
     test: ?Runnable<AcquisitionsABTest>,
     variant: ?Variant,
 } => {
-    const variant: ?Variant =
-        engagementBannerTestToRun && engagementBannerTestToRun.variantToRun;
-
-    return { test: engagementBannerTestToRun, variant };
+    const test: ?Runnable<AcquisitionsABTest> = firstRunnableTest(
+        engagementBannerTests
+    );
+    const variant: ?Variant = test && test.variantToRun;
+    return { test, variant };
 };
 
 const getVariant = (): ?Variant => getTestAndVariant().variant;
