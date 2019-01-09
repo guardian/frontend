@@ -3,12 +3,13 @@
 import {
     genAbTest,
     genRunnableAbTestWhereControlIsRunnable,
-    genRunnableAbTestWhereVariantIsRunnable, genVariant,
+    genRunnableAbTestWhereVariantIsRunnable,
+    genVariant,
 } from './__fixtures__/ab-test';
 import {
     runnableTestsToParticipations,
     testAndParticipationsToVariant,
-    testExclusionsWhoseSwitchExists
+    testExclusionsWhoseSwitchExists,
 } from './ab-utils';
 import { NOT_IN_TEST } from './ab-constants';
 
@@ -47,25 +48,25 @@ describe('A/B utils', () => {
 
             expect(
                 testExclusionsWhoseSwitchExists({
-                    SwitchExists: {variant: NOT_IN_TEST},
-                    SwitchExists2: {variant: NOT_IN_TEST},
-                    SwitchExists3: {variant: 'real'}
+                    SwitchExists: { variant: NOT_IN_TEST },
+                    SwitchExists2: { variant: NOT_IN_TEST },
+                    SwitchExists3: { variant: 'real' },
                 })
             ).toEqual({
-                SwitchExists: {variant: NOT_IN_TEST},
-                SwitchExists2: {variant: NOT_IN_TEST}
+                SwitchExists: { variant: NOT_IN_TEST },
+                SwitchExists2: { variant: NOT_IN_TEST },
             });
         });
 
         it('should exclude NOT_IN_TEST variants whose switch does not exist', () => {
             expect(
                 testExclusionsWhoseSwitchExists({
-                    SwitchExists: {variant: NOT_IN_TEST},
-                    SwitchExists2: {variant: NOT_IN_TEST},
-                    SwitchExists3: {variant: 'real'}
+                    SwitchExists: { variant: NOT_IN_TEST },
+                    SwitchExists2: { variant: NOT_IN_TEST },
+                    SwitchExists3: { variant: 'real' },
                 })
             ).toEqual({});
-        })
+        });
     });
 
     describe('testAndParticipationsToVariant', () => {
@@ -82,7 +83,7 @@ describe('A/B utils', () => {
                         b: { variant: 'hey' },
                     }
                 )
-            ).toHaveProperty('id', NOT_IN_TEST)
+            ).toHaveProperty('id', NOT_IN_TEST);
         });
 
         it('should return a normal variant if no NOT_IN_TEST variant present', () => {
@@ -98,7 +99,7 @@ describe('A/B utils', () => {
                         b: { variant: 'Variant' },
                     }
                 )
-            ).toEqual(variant)
+            ).toEqual(variant);
         });
     });
 });

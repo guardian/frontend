@@ -8,7 +8,7 @@ export const genAbTest = (
     id: string,
     canRun: ?boolean,
     expiry: ?string,
-    variants: ?Variant[]
+    variants: ?(Variant[])
 ): ABTest => ({
     id,
     audienceCriteria: 'n/a',
