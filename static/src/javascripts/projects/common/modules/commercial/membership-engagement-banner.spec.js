@@ -10,7 +10,6 @@ import {
 } from 'common/modules/commercial/membership-engagement-banner-parameters';
 import { membershipEngagementBanner } from 'common/modules/commercial/membership-engagement-banner';
 import { shouldShowReaderRevenue } from 'common/modules/commercial/contributions-utilities';
-// import { firstRunnableTest } from 'common/modules/experiments/ab-core';
 
 const defaultEngagementBannerParams: any = defaultEngagementBannerParams_;
 const getUserVariantParams: any = getUserVariantParams_;
