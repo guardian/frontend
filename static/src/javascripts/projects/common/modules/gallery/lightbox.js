@@ -68,7 +68,6 @@ class GalleryLightbox {
     closeBtn: HTMLElement;
     infoBtn: HTMLElement;
     $swipeContainer: bonzo;
-    handleKeyEvents: Function;
     resize: Function;
     toggleInfo: Function;
     fsm: FiniteStateMachine;
@@ -133,7 +132,6 @@ class GalleryLightbox {
         bean.on(this.prevBtn, 'click', this.trigger.bind(this, 'prev'));
         bean.on(this.closeBtn, 'click', this.close.bind(this));
         bean.on(this.infoBtn, 'click', this.trigger.bind(this, 'toggleInfo'));
-        this.handleKeyEvents = this.handleKeyEvents.bind(this); // bound for event handler
         this.resize = this.trigger.bind(this, 'resize');
         this.toggleInfo = (e): void => {
             const infoPanelClick =
@@ -423,8 +421,10 @@ class GalleryLightbox {
         this.bodyScrollPosition = $body.scrollTop();
         $body.addClass('has-overlay');
         this.$lightboxEl.addClass('gallery-lightbox--open');
-        bean.off(document.body, 'keydown', this.handleKeyEvents); // prevent double binding
-        bean.on(document.body, 'keydown', this.handleKeyEvents);
+        bean.off(document.body, 'keydown', event =>
+            this.handleKeyEvents(event)
+        ); // prevent double binding
+        bean.on(document.body, 'keydown', event => this.handleKeyEvents(event));
     }
 
     close(): void {

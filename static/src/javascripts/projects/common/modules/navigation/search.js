@@ -12,9 +12,9 @@ class Search {
 
     constructor(): void {
         fastdom
-            .read(() => [
-                ...document.getElementsByClassName('js-search-toggle'),
-            ])
+            .read(() =>
+                Array.from(document.getElementsByClassName('js-search-toggle'))
+            )
             .then(toggles => {
                 const googleSearchSwitch = config.get('switches.googleSearch');
                 const googleSearchUrl = config.get('page.googleSearchUrl');
@@ -155,9 +155,9 @@ class Search {
 
         fastdom
             .read(() => ({
-                allSearchPlaceholders: [
-                    ...document.getElementsByClassName('js-search-placeholder'),
-                ],
+                allSearchPlaceholders: Array.from(
+                    document.getElementsByClassName('js-search-placeholder')
+                ),
                 searchPlaceholder: popup.getElementsByClassName(
                     'js-search-placeholder'
                 )[0],

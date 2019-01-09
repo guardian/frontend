@@ -95,8 +95,7 @@ declare type Interaction = {
 };
 
 /**
- * These are overrides stored in localStorage, which bypass the
- * MVT cookie when determining test participation.
+ * the structure stored in localStorage
  */
 declare type Participations = {
     [testId: string]: {

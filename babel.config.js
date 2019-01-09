@@ -1,57 +1,51 @@
-{
+module.exports = {
     "presets": [
-        "react"
+        "@babel/preset-react",
+        "@babel/preset-flow"
     ],
     "plugins": [
-        "babel-plugin-transform-object-rest-spread",
-        "babel-plugin-syntax-dynamic-import"
+        "@babel/plugin-proposal-object-rest-spread",
+        "@babel/plugin-syntax-dynamic-import"
     ],
     "env": {
         "production": {
             "presets": [
-                ["babel-preset-env", {
+                ["@babel/preset-env", {
                     "modules": false
                 }]
             ],
             "plugins": [
-                ["babel-plugin-transform-runtime", {
-                    "polyfill": false
-                }],
-                "babel-plugin-transform-class-properties",
+                "@babel/plugin-transform-runtime",
+                "@babel/plugin-proposal-class-properties",
             ],
         },
         "development": {
             "presets": [
-                ["babel-preset-env", {
+                ["@babel/preset-env", {
                     "modules": false
                 }]
             ],
             "plugins": [
-                ["babel-plugin-transform-runtime", {
-                    "polyfill": false
-                }],
-                "babel-plugin-transform-class-properties",
+                "@babel/plugin-transform-runtime",
+                "@babel/plugin-proposal-class-properties",
             ],
         },
         "test": {
             "presets": [
-                ["babel-preset-env", {
+                ["@babel/preset-env", {
                     "targets": {
                         "node": "current"
-                    },
-                    "useBuiltIns": true
+                    }
                 }]
             ],
             "plugins": [
-                ["babel-plugin-transform-runtime", {
-                    "polyfill": false
-                }],
-                "babel-plugin-transform-class-properties",
+                "@babel/plugin-transform-runtime",
+                "@babel/plugin-proposal-class-properties",
             ],
         },
         "internal": {
             "presets": [
-                ["babel-preset-env", {
+                ["@babel/preset-env", {
                     "targets": {
                         "browsers": [
                             "last 2 Chrome versions",
@@ -67,4 +61,4 @@
     "ignore": [
         "eslintrc.js",
     ],
-}
+};

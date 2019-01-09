@@ -48,7 +48,7 @@ describe('initialise', () => {
             _disableAjaxTimeout: false,
             _mediaTypePriceGranularity: {},
             _priceGranularity: 'custom',
-            _publisherDomain: 'null',
+            _publisherDomain: 'http://localhost',
             _sendAllBids: true,
             _timeoutBuffer: 400,
             bidderSequence: 'random',
@@ -77,7 +77,7 @@ describe('initialise', () => {
             enableSendAllBids: true,
             mediaTypePriceGranularity: {},
             priceGranularity: 'custom',
-            publisherDomain: 'null',
+            publisherDomain: 'http://localhost',
             s2sConfig: {
                 accountId: '1',
                 adapter: 'prebidServer',

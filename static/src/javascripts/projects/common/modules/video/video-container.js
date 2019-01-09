@@ -77,19 +77,19 @@ const reducers = {
                     max: 'desktop',
                 })
             ) {
-                const youTubeIframes = [
-                    ...state.container.querySelectorAll(
+                const youTubeIframes = Array.from(
+                    state.container.querySelectorAll(
                         '.youtube-media-atom iframe'
-                    ),
-                ];
+                    )
+                );
                 youTubeIframes.forEach(el => {
                     el.remove();
                 });
-                const overlayLinks = [
-                    ...state.container.querySelectorAll(
+                const overlayLinks = Array.from(
+                    state.container.querySelectorAll(
                         '.video-container-overlay-link'
-                    ),
-                ];
+                    )
+                );
                 overlayLinks.forEach(el => {
                     el.classList.add('u-faux-block-link__overlay');
                     // make visible to screen readers / keyboard users
@@ -97,9 +97,9 @@ const reducers = {
                     el.removeAttribute('aria-hidden');
                 });
 
-                const atomWrapper = [
-                    ...state.container.querySelectorAll('.youtube-media-atom'),
-                ];
+                const atomWrapper = Array.from(
+                    state.container.querySelectorAll('.youtube-media-atom')
+                );
                 atomWrapper.forEach(el => {
                     el.classList.add('no-player');
                 });

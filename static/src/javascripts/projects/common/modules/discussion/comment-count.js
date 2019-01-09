@@ -28,13 +28,13 @@ const getTemplate = (
 
 const getElementsIndexedById = (context: HTMLElement): Promise<any> =>
     fastdom
-        .read(() => context.querySelectorAll(`[${ATTRIBUTE_NAME}]`))
+        .read(() => Array.from(context.querySelectorAll(`[${ATTRIBUTE_NAME}]`)))
         .then(elements => {
             if (elements.length === 0) {
                 return;
             }
 
-            return [...elements].reduce(
+            return elements.reduce(
                 (groupedVals: Object, el: HTMLElement): Object => {
                     const attrVal = el.getAttribute(ATTRIBUTE_NAME);
 
@@ -78,8 +78,8 @@ const updateElement = (el: HTMLElement, count: number): Promise<void> => {
         },
         format
     );
-    const meta = el.getElementsByClassName('js-item__meta');
-    const containers = meta.length ? [...meta] : [el];
+    const meta = Array.from(el.getElementsByClassName('js-item__meta'));
+    const containers = meta.length ? meta : [el];
 
     return fastdom.write(() => {
         containers.forEach(container => {

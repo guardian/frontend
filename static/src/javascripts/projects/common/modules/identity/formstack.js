@@ -104,18 +104,18 @@ class Formstack {
         // loop their selectors and add our own classes instead
         this.form.classList.add(this.config.idClasses.form);
 
-        const links = this.el.getElementsByTagName('link');
+        const links = Array.from(this.el.getElementsByTagName('link'));
 
-        [...links].forEach(link => {
+        links.forEach(link => {
             link.remove();
         });
 
         Object.keys(this.config.fsSelectors).forEach(key => {
             const selector = this.config.fsSelectors[key];
-            const elems = this.form.querySelectorAll(selector);
+            const elems = Array.from(this.form.querySelectorAll(selector));
             const classNames = this.config.idClasses[key].split(' ');
 
-            [...elems].forEach(elem => {
+            elems.forEach(elem => {
                 classNames.forEach(className => {
                     elem.classList.add(className);
                 });
@@ -178,46 +178,48 @@ class Formstack {
         setTimeout(() => {
             // Remove any existing errors
             const formErrorClass = this.config.idClasses.formError;
-            const formErrors = document.getElementsByClassName(formErrorClass);
+            const formErrors = Array.from(
+                document.getElementsByClassName(formErrorClass)
+            );
 
-            [...formErrors].forEach(formError => {
+            formErrors.forEach(formError => {
                 formError.classList.remove(formErrorClass);
             });
 
             const fieldErrorClass = this.config.idClasses.fieldError;
-            const fieldErrors = document.getElementsByClassName(
-                fieldErrorClass
+            const fieldErrors = Array.from(
+                document.getElementsByClassName(fieldErrorClass)
             );
 
-            [...fieldErrors].forEach(fieldError => {
+            fieldErrors.forEach(fieldError => {
                 fieldError.classList.remove(fieldErrorClass);
             });
 
             // Handle new errors
             const fsFormErrorClass = this.config.fsSelectors.formError;
-            const fsFormErrors = this.form.getElementsByClassName(
-                fsFormErrorClass
+            const fsFormErrors = Array.from(
+                this.form.getElementsByClassName(fsFormErrorClass)
             );
 
-            [...fsFormErrors].forEach(fsFormError => {
+            fsFormErrors.forEach(fsFormError => {
                 fsFormError.classList.add(formErrorClass);
             });
 
             const fsFieldErrorClass = this.config.fsSelectors.fieldError;
-            const fsFieldErrors = this.form.getElementsByClassName(
-                fsFieldErrorClass
+            const fsFieldErrors = Array.from(
+                this.form.getElementsByClassName(fsFieldErrorClass)
             );
 
-            [...fsFieldErrors].forEach(fsFieldError => {
+            fsFieldErrors.forEach(fsFieldError => {
                 fsFieldError.classList.add(fieldErrorClass);
             });
 
             // Update character count absolute positions
-            const textAreas = this.el.querySelectorAll(
-                this.config.fsSelectors.textArea
+            const textAreas = Array.from(
+                this.el.querySelectorAll(this.config.fsSelectors.textArea)
             );
 
-            [...textAreas].forEach(textArea => {
+            textAreas.forEach(textArea => {
                 triggerKeyUp(textArea);
             });
 

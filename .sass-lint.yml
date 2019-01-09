@@ -38,6 +38,7 @@ rules:
         - background
         - display
         - color
+        - left
   no-empty-rulesets: 0
   no-invalid-hex: 1
   no-mergeable-selectors: 0

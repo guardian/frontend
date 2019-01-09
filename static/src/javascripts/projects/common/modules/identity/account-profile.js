@@ -229,11 +229,11 @@ class AccountProfile {
      */
     bindInputs(form: ?HTMLElement) {
         if (form instanceof HTMLFormElement) {
-            const inputs: Array<HTMLInputElement> = ([
-                ...form.querySelectorAll(classes.textInput),
-            ]: Array<any>);
+            const inputs: Array<HTMLInputElement> = (Array.from(
+                form.querySelectorAll(classes.textInput)
+            ): Array<any>);
             inputs
-                .concat([...form.querySelectorAll('select')])
+                .concat(Array.from(form.querySelectorAll('select')))
                 .forEach(input => {
                     if (input.type === 'select-one') {
                         input.addEventListener('change', event =>

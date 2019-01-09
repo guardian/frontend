@@ -10,7 +10,10 @@ import memoize from 'lodash/memoize';
 
 import type { PrebidSlot } from 'commercial/modules/prebid/types';
 
-const filterByAdvertId = (advertId: string, slots: Array<PrebidSlot>) => {
+const filterByAdvertId = (
+    advertId: string,
+    slots: Array<PrebidSlot>
+): Array<PrebidSlot> => {
     const adUnits = slots.filter(slot =>
         stripTrailingNumbersAbove1(stripMobileSuffix(advertId)).endsWith(
             slot.key
@@ -54,7 +57,7 @@ const getSlots = (isArticle: boolean): Array<PrebidSlot> => {
         },
         {
             key: 'comments',
-            sizes: [[300, 250]],
+            sizes: [[300, 250], [300, 600]],
         },
     ];
 

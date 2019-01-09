@@ -32,7 +32,6 @@
 .experiments__test {
     font-family: "Guardian Text Sans Web","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
     font-size: 20px;
-    margin-top: 18px;
 }
 
 .experiments__description {
@@ -43,6 +42,7 @@
 .experiments__tests {
     list-style: none;
     margin: 0;
+    margin-bottom: 18px;
 }
 
 .experiments__variant {

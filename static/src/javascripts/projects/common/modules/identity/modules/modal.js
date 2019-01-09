@@ -6,7 +6,9 @@ const ERR_MODAL_MALFORMED = 'Modal is malformed';
 
 const bindCloserOnce = (modalEl: HTMLElement): Promise<void[]> =>
     fastdom
-        .read(() => [...modalEl.querySelectorAll('.js-identity-modal__closer')])
+        .read(() =>
+            Array.from(modalEl.querySelectorAll('.js-identity-modal__closer'))
+        )
         .then(buttonEls =>
             buttonEls
                 .filter(buttonEl => !buttonEl.dataset.closeIsBound)
