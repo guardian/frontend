@@ -81,9 +81,11 @@ const appendOverlay = () => {
         isExpired: isExpired(expiry),
     });
     const data = {
-        tests: concurrentTests.map(extractData),
-        epicTests: epicTests.map(extractData),
-        engagementBannerTests: engagementBannerTests.map(extractData),
+        testGroups: [
+            { name: 'Epic', tests: epicTests.map(extractData) },
+            { name: 'Banner', tests: engagementBannerTests.map(extractData) },
+            { name: 'Other', tests: concurrentTests.map(extractData) },
+        ]
     };
 
     $('body').prepend(template(overlay)(data));
