@@ -69,8 +69,6 @@ describe('A/B utils', () => {
                 })
             ).toEqual({});
         });
-        /* eslint guardian-frontend/global-config: "error" */
-        /* eslint guardian-frontend/no-direct-access-config: "warn" */
     });
 
     describe('testAndParticipationsToVariant', () => {
