@@ -4,12 +4,7 @@ export const genVariant = (id: string): Variant => ({
     test: () => undefined,
 });
 
-export const genAbTest = (
-    id: string,
-    canRun: ?boolean,
-    expiry: ?string,
-    variants: ?(Variant[])
-): ABTest => ({
+export const genAbTest = (id: string, canRun: ?boolean): ABTest => ({
     id,
     audienceCriteria: 'n/a',
     audienceOffset: 0,
@@ -21,29 +16,7 @@ export const genAbTest = (
     },
     description: 'n/a',
     start: '0001-01-01',
-    expiry: expiry || '9999-12-12',
+    expiry: '9999-12-12',
     successMeasure: 'n/a',
-    variants: variants || [genVariant('control'), genVariant('variant')],
+    variants: [genVariant('control'), genVariant('variant')],
 });
-
-export const genRunnableAbTestWhereControlIsRunnable = (
-    id: string,
-    canRun: ?boolean
-): Runnable<ABTest> => {
-    const abTest = genAbTest(id, canRun);
-    return {
-        ...abTest,
-        variantToRun: abTest.variants[0],
-    };
-};
-
-export const genRunnableAbTestWhereVariantIsRunnable = (
-    id: string,
-    canRun: ?boolean
-): Runnable<ABTest> => {
-    const abTest = genAbTest(id, canRun);
-    return {
-        ...abTest,
-        variantToRun: abTest.variants[1],
-    };
-};
