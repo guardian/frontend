@@ -1,4 +1,5 @@
 // @flow
+import memoize from 'lodash/memoize';
 import { commercialPrebidSafeframe } from 'common/modules/experiments/tests/commercial-prebid-safeframe.js';
 import { commercialAdVerification } from 'common/modules/experiments/tests/commercial-ad-verification.js';
 import { commercialCmpCustomise } from 'common/modules/experiments/tests/commercial-cmp-customise.js';
@@ -82,7 +83,9 @@ export const engagementBannerTests: $ReadOnlyArray<AcquisitionsABTest> = [
 // These are the tests which will actually take effect on this pageview.
 // Note that this is a subset of the potentially runnable tests,
 // because we only run one epic test and one banner test per pageview.
-export const getTestsToRun = (): $ReadOnlyArray<Runnable<ABTest>> => {
+// We memoize this because it can't change for a given pageview, and because getParticipations()
+// and isInVariant() depend on it and these are called in many places.
+export const getTestsToRun = memoize((): $ReadOnlyArray<Runnable<ABTest>> => {
     const epicTest = firstRunnableTest(epicTests);
     const engagementBannerTest = firstRunnableTest(engagementBannerTests);
 
@@ -91,7 +94,7 @@ export const getTestsToRun = (): $ReadOnlyArray<Runnable<ABTest>> => {
         ...(epicTest ? [epicTest] : []),
         ...(engagementBannerTest ? [engagementBannerTest] : []),
     ];
-};
+});
 
 // The tests which will take effect on this pageview,
 export const getParticipations = (): Participations =>
