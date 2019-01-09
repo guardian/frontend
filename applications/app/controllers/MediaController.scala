@@ -42,7 +42,7 @@ class MediaController(contentApiClient: ContentApiClient, val controllerComponen
 
     val result = response map { response =>
       val mediaOption: Option[ContentType] = response.content.filter(isSupported).map(Content(_))
-      val model = mediaOption map { media => MediaPage(media, StoryPackages(media, response)) }
+      val model = mediaOption map { media => MediaPage(media, StoryPackages(media.metadata.id, response)) }
 
       ModelOrResult(model, response)
     }

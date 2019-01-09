@@ -48,13 +48,13 @@ const getBlocksToInsertEpicAfter = (): Array<HTMLElement> => {
         epicsAlreadyOnPage.length ||
         !isLiveblogLongEnoughYet
     ) {
-        return [...blocksToInsertManualEpicAfter];
+        return Array.from(blocksToInsertManualEpicAfter);
     }
 
     const autoBlockNum = Math.floor(Math.random() * 3);
     const blockToInsertAutoEpicAfter = blocks[autoBlockNum];
 
-    return [...blocksToInsertManualEpicAfter].concat(
+    return Array.from(blocksToInsertManualEpicAfter).concat(
         blockToInsertAutoEpicAfter
     );
 };

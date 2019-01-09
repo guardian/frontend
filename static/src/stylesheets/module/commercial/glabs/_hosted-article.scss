@@ -32,6 +32,8 @@
             }
 
             @include mq(desktop) {
+                // IE 10 and 11 do not recognize 'unset' so will fallback to 'auto' which luckily gives us the desired layout
+                left: auto;
                 left: unset;
                 right: $gs-column-width + 10;
                 width: $gs-column-width * 3 + 40;

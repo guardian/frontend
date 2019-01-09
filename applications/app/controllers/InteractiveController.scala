@@ -59,7 +59,7 @@ class InteractiveController(contentApiClient: ContentApiClient, wsClient: WSClie
 
     val result = response map { response =>
       val interactive = response.content map {Interactive.make}
-      val page = interactive.map(i => InteractivePage(i, StoryPackages(i, response)))
+      val page = interactive.map(i => InteractivePage(i, StoryPackages(i.metadata.id, response)))
 
       ModelOrResult(page, response)
     }

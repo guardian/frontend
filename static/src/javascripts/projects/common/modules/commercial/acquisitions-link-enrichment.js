@@ -27,9 +27,13 @@ const addReferrerDataToAcquisitionLink = (rawUrl: string): string => {
 
     let acquisitionData;
     try {
-        acquisitionData = JSON.parse(
-            url.searchParams.get(acquisitionDataField)
+        const acquisitionDataJsonString = url.searchParams.get(
+            acquisitionDataField
         );
+
+        if (!acquisitionDataJsonString) return rawUrl;
+
+        acquisitionData = JSON.parse(acquisitionDataJsonString);
     } catch (e) {
         return rawUrl;
     }
@@ -48,7 +52,9 @@ const addReferrerDataToAcquisitionLink = (rawUrl: string): string => {
 const ACQUISITION_LINK_CLASS = 'js-acquisition-link';
 
 const addReferrerDataToAcquisitionLinksOnPage = (): void => {
-    const links = [...document.getElementsByClassName(ACQUISITION_LINK_CLASS)];
+    const links = Array.from(
+        document.getElementsByClassName(ACQUISITION_LINK_CLASS)
+    );
 
     links.forEach(el => {
         fastdom.read(() => el.getAttribute('href')).then(link => {
@@ -79,16 +85,18 @@ const addReferrerDataToAcquisitionLinksInInteractiveIframes = (): void => {
         // https://github.com/guardian/iframe-messenger
         if (data.type === 'enrich-acquisition-links' && data.id) {
             data.referrerData = addReferrerData({});
-            [...document.getElementsByTagName('iframe')].forEach(iframe => {
-                iframe.contentWindow.postMessage(
-                    JSON.stringify(data),
-                    'https://interactive.guim.co.uk'
-                );
-            });
+            Array.from(document.getElementsByTagName('iframe')).forEach(
+                iframe => {
+                    iframe.contentWindow.postMessage(
+                        JSON.stringify(data),
+                        'https://interactive.guim.co.uk'
+                    );
+                }
+            );
         }
 
         if (data.type === 'acquisition-data-request') {
-            [...document.getElementsByTagName('iframe')].forEach(el => {
+            Array.from(document.getElementsByTagName('iframe')).forEach(el => {
                 const iframeSrc = el.getAttribute('src');
                 if (iframeSrc && isCurrentCampaign(iframeSrc)) {
                     el.contentWindow.postMessage(

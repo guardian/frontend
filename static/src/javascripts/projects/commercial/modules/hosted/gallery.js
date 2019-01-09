@@ -39,7 +39,6 @@ class HostedGallery {
     resize: (data?: Object) => void;
     resizer: () => void;
     fsm: FiniteStateMachine;
-    states: Object;
     constructor() {
         // CONFIG
         const breakpoint = getBreakpoint();
@@ -88,6 +87,7 @@ class HostedGallery {
                 initial: 'image',
                 onChangeState() {},
                 context: this,
+                // $FlowFixMe
                 states: this.states,
             });
 
@@ -474,7 +474,8 @@ class HostedGallery {
         }
     }
 }
-
+// TODO: If we add `states` to the list of annotations within the class, it is `undefined` in the constructor. Wat?
+// $FlowFixMe
 HostedGallery.prototype.states = {
     image: {
         enter() {

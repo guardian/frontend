@@ -31,13 +31,15 @@ const showMyAccountIfNecessary = (): void => {
 
     fastdom
         .read(() => ({
-            signIns: [...document.querySelectorAll('.js-navigation-sign-in')],
-            accountActionsLists: [
-                ...document.querySelectorAll('.js-navigation-account-actions'),
-            ],
-            commentItems: [
-                ...document.querySelectorAll('.js-show-comment-activity'),
-            ],
+            signIns: Array.from(
+                document.querySelectorAll('.js-navigation-sign-in')
+            ),
+            accountActionsLists: Array.from(
+                document.querySelectorAll('.js-navigation-account-actions')
+            ),
+            commentItems: Array.from(
+                document.querySelectorAll('.js-show-comment-activity')
+            ),
             accountTrigger: document.querySelector('.js-user-account-trigger'),
         }))
         .then(els => {

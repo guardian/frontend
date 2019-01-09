@@ -8,8 +8,11 @@ import model.dotcomrendering.pageElements.PageElement
 import navigation.NavMenu
 import play.api.libs.json.{JsValue, Json, Writes}
 import play.api.mvc.RequestHeader
-import views.support.GUDateTimeFormat
+import views.support.{CamelCase, GUDateTimeFormat}
 import ai.x.play.json.Jsonx
+import common.Maps.RichMap
+import navigation.UrlHelpers.{Footer, Header, SideMenu, getReaderRevenueUrl}
+import navigation.ReaderRevenueSite.{Support, SupportContribute, SupportSubscribe}
 import ai.x.play.json.implicits.optionWithNull // Note, required despite Intellij saying otherwise
 
 // We have introduced our own set of objects for serializing data to the DotComponents API,
@@ -38,6 +41,18 @@ case class Blocks(
     body: List[Block]
 )
 
+case class ReaderRevenueLink(
+  contribute: String,
+  subscribe: String,
+  support: String
+)
+
+case class ReaderRevenueLinks(
+  header: ReaderRevenueLink,
+  footer: ReaderRevenueLink,
+  sideMenu: ReaderRevenueLink
+)
+
 case class PageData(
     author: String,
     pageId: String,
@@ -61,17 +76,24 @@ case class PageData(
     contentType: Option[String],
     commissioningDesks: Option[String],
     subMetaLinks: SubMetaLinks,
+    sentryHost: Option[String],
+    sentryPublicApiKey: Option[String],
+    switches: Map[String,Boolean],
+
 
     // AMP specific
     guardianBaseURL: String,
     webURL: String,
     shouldHideAds: Boolean,
+    hasStoryPackage: Boolean,
+    hasRelated: Boolean,
 )
 
 case class Config(
     isImmersive: Boolean,
     page: PageData,
-    nav: NavMenu
+    nav: NavMenu,
+    readerRevenueLinks: ReaderRevenueLinks
 )
 
 case class ContentFields(
@@ -107,6 +129,14 @@ object TagProperties {
 
 object Tag {
   implicit val writes = Json.writes[Tag]
+}
+
+object ReaderRevenueLink {
+  implicit val writes = Json.writes[ReaderRevenueLink]
+}
+
+object ReaderRevenueLinks {
+  implicit val writes = Json.writes[ReaderRevenueLinks]
 }
 
 object PageData {
@@ -150,6 +180,15 @@ object DotcomponentsDataModel {
 
     val jsConfig = (k: String) => articlePage.getJavascriptConfig.get(k).map(_.as[String])
 
+
+    val jsPageData = Configuration.javascript.pageData mapKeys { key =>
+      CamelCase.fromHyphenated(key.split('.').lastOption.getOrElse(""))
+    }
+
+    val switches = conf.switches.Switches.all.filter(_.exposeClientSide).foldLeft(Map.empty[String,Boolean])( (acc, switch) => {
+      acc + (CamelCase.fromHyphenated(switch.name) -> switch.isSwitchedOn)
+    })
+
     val pageData = PageData(
       article.tags.contributors.map(_.name).mkString(","),
       article.metadata.id,
@@ -173,9 +212,14 @@ object DotcomponentsDataModel {
       jsConfig("contentType"),
       jsConfig("commissioningDesks"),
       article.content.submetaLinks,
+      jsPageData.get("sentryHost"),
+      jsPageData.get("sentryPublicApiKey"),
+      switches,
       Configuration.site.host,
       article.metadata.webUrl,
       article.content.shouldHideAdverts,
+      hasStoryPackage = article.content.hasStoryPackage,
+      hasRelated = article.content.showInRelated,
     )
 
     val tags = article.tags.tags.map(
@@ -191,10 +235,35 @@ object DotcomponentsDataModel {
 
     val navMenu = NavMenu(articlePage, Edition(request))
 
+    val headerReaderRevenueLink: ReaderRevenueLink = ReaderRevenueLink(
+      getReaderRevenueUrl(SupportContribute, Header)(request),
+      getReaderRevenueUrl(SupportSubscribe, Header)(request),
+      getReaderRevenueUrl(Support, Header)(request)
+    )
+
+    val footerReaderRevenueLink: ReaderRevenueLink = ReaderRevenueLink(
+      getReaderRevenueUrl(SupportContribute, Footer)(request),
+      getReaderRevenueUrl(SupportSubscribe, Footer)(request),
+      getReaderRevenueUrl(Support, Footer)(request)
+    )
+
+    val sideMenuReaderRevenueLink: ReaderRevenueLink = ReaderRevenueLink(
+      getReaderRevenueUrl(SupportContribute, SideMenu)(request),
+      getReaderRevenueUrl(SupportSubscribe, SideMenu)(request),
+      getReaderRevenueUrl(Support, SideMenu)(request)
+    )
+
+    val readerRevenueLinks = ReaderRevenueLinks(
+      headerReaderRevenueLink,
+      footerReaderRevenueLink,
+      sideMenuReaderRevenueLink
+    )
+
     val config = Config(
       article.isImmersive,
       pageData,
-      navMenu
+      navMenu,
+      readerRevenueLinks
     )
 
     DotcomponentsDataModel(

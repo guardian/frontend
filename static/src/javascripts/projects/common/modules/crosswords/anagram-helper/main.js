@@ -44,7 +44,10 @@ class AnagramHelper extends Component<*, *> {
      *
      */
     // eslint-disable-next-line class-methods-use-this
-    shuffleWord(word: string, entries: { value: string }[]) {
+    shuffleWord(
+        word: string,
+        entries: { value: string }[]
+    ): Array<{ value: string, entered: boolean }> {
         const wordEntries = entries
             .map(entry => entry.value.toLowerCase())
             .filter(entry => word.includes(entry))

@@ -207,11 +207,13 @@ const initInlinedSnap = (el: HTMLElement): void => {
 
 const init = (): void => {
     // First, init any existing inlined embeds already on the page.
-    const inlinedSnaps = [...$('.facia-snap-embed')];
+    const inlinedSnaps = Array.from(
+        document.querySelectorAll('.facia-snap-embed')
+    );
     inlinedSnaps.forEach(initInlinedSnap);
 
     // Second, init non-inlined embeds.
-    const snaps = [...$('.js-snappable.js-snap')]
+    const snaps = Array.from(document.querySelectorAll('.js-snappable.js-snap'))
         .filter(el => {
             const isInlinedSnap = $(el).hasClass('facia-snap-embed');
             const snapType = el.getAttribute('data-snap-type');

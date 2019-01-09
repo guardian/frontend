@@ -44,45 +44,38 @@ const IO = [
 const testStorage = (storageName, fn) => {
     const engine = fn;
 
-    beforeAll(() => {
-        // jsdom doesn't support localStorage/ sessionStorage
-        window[`${storageName}Storage`] = {
-            getItem: jest.fn(key => {
-                const item = IO.find(io => io.key === key);
-                return item && item.expected;
-            }),
-            setItem: jest.fn(),
-            removeItem: jest.fn(),
-        };
-
-        engine.storage = window[`${storageName}Storage`];
-    });
-
     beforeEach(() => {
         engine.available = true;
+        IO.forEach(({ key, data, options }) => {
+            engine.set(key, data, options);
+        });
+    });
+
+    afterEach(() => {
+        IO.forEach(({ key }) => {
+            engine.remove(key);
+        });
     });
 
     test(`${storageName} - isAvailable()`, () => {
         engine.available = undefined;
         expect(engine.isAvailable()).toBe(true);
         expect(engine.available).toBe(true);
-        expect(engine.storage.setItem).toHaveBeenCalledWith(
-            'local-storage-module-test',
-            'graun'
-        );
     });
 
     test(`${storageName} - is(Not)Available()`, () => {
-        const origSet = engine.storage.setItem;
+        const origStorage = engine.storage;
 
         // not available, if setItem fails
         engine.available = undefined;
-        engine.storage.setItem = () => {
-            throw new Error('Problem!');
+        engine.storage = {
+            setItem() {
+                throw new Error('Problem!');
+            },
         };
         expect(engine.isAvailable()).toBe(false);
 
-        engine.storage.setItem = origSet;
+        engine.storage = origStorage;
     });
 
     test(`${storageName} - isAvailable() cache`, () => {
@@ -93,9 +86,8 @@ const testStorage = (storageName, fn) => {
 
     test(`${storageName} - set()`, () => {
         IO.forEach(({ key, data, expected, options }) => {
-            engine.storage.setItem.mockClear();
             engine.set(key, data, options);
-            expect(engine.storage.setItem).toHaveBeenCalledWith(key, expected);
+            expect(engine.storage.getItem(key)).toBe(expected);
         });
     });
 
@@ -116,8 +108,6 @@ const testStorage = (storageName, fn) => {
                 );
 
                 expect(engine.get(key)).toEqual(null);
-                expect(engine.storage.removeItem).toHaveBeenCalledWith(key);
-                engine.storage.removeItem.mockClear();
 
                 global.Date = OriginalDate;
             }
@@ -126,8 +116,8 @@ const testStorage = (storageName, fn) => {
 
     test(`${storageName} - get() with non-expired item`, () => {
         IO.filter(item => item.options && item.options.expires).forEach(
-            expired => {
-                const { key, data } = expired;
+            nonExpiredItem => {
+                const { key, data } = nonExpiredItem;
                 const OriginalDate = global.Date;
 
                 global.Date = jest.fn(
@@ -135,8 +125,6 @@ const testStorage = (storageName, fn) => {
                 );
 
                 expect(engine.get(key)).toEqual(data);
-                expect(engine.storage.removeItem).not.toHaveBeenCalled();
-                engine.storage.removeItem.mockClear();
 
                 global.Date = OriginalDate;
             }
@@ -144,16 +132,17 @@ const testStorage = (storageName, fn) => {
     });
 
     test(`${storageName} - getRaw()`, () => {
-        IO.forEach(({ key, expected }) => {
-            expect(engine.getRaw(key)).toBe(expected);
-        });
+        IO.filter(item => item.options && !item.options.expires).forEach(
+            ({ key, expected }) => {
+                expect(engine.getRaw(key)).toBe(expected);
+            }
+        );
     });
 
     test(`${storageName} - remove()`, () => {
         IO.forEach(({ key }) => {
-            engine.storage.removeItem.mockClear();
             engine.remove(key);
-            expect(engine.storage.removeItem).toHaveBeenCalledWith(key);
+            expect(engine.storage.getItem(key)).toBeNull();
         });
     });
 };

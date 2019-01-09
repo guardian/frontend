@@ -293,7 +293,7 @@ trait CommercialSwitches {
     description = "Turn on to include the analytics ONLY for Oriel. Turn off to include the FULL integration script. Depends on AB test switch.",
     owners = group(Commercial),
     safeState = On,
-    sellByDate = new LocalDate(2019, 1, 9),
+    sellByDate = new LocalDate(2019, 2, 7),
     exposeClientSide = false
   )
 
@@ -303,7 +303,7 @@ trait CommercialSwitches {
     description = "Include the blockthrough script for testing the vendors effectiveness at circumventing ad-blocking.",
     owners = group(Commercial),
     safeState = Off,
-    sellByDate = new LocalDate(2019, 1, 9),
+    sellByDate = new LocalDate(2019, 2, 7),
     exposeClientSide = false
    )
 

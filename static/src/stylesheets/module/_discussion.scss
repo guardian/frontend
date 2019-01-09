@@ -226,6 +226,7 @@ $avatarPadding: $gs-gutter / 2;
 
 .discussion__ad-wrapper {
     .discussion__ad-slot {
+        width: $mpu-original-width;
         position: absolute;
         top: 10px;
         right: -1 * (gs-span(4) + $gs-gutter);
@@ -236,6 +237,10 @@ $avatarPadding: $gs-gutter / 2;
                 right: -1 * (gs-span(5) + $gs-gutter);
             }
         }
+    }
+    // prevents DMPU from overlapping container below if it refreshes before the next page loads
+    .discussion__loader {
+        padding-bottom: 500px;
     }
 }
 
