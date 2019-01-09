@@ -85,16 +85,18 @@ export const engagementBannerTests: $ReadOnlyArray<AcquisitionsABTest> = [
 // because we only run one epic test and one banner test per pageview.
 // We memoize this because it can't change for a given pageview, and because getParticipations()
 // and isInVariant() depend on it and these are called in many places.
-export const getTestsToRun = memoize((): $ReadOnlyArray<Runnable<ABTest>> => {
-    const epicTest = firstRunnableTest(epicTests);
-    const engagementBannerTest = firstRunnableTest(engagementBannerTests);
+export const getTestsToRun = memoize(
+    (): $ReadOnlyArray<Runnable<ABTest>> => {
+        const epicTest = firstRunnableTest(epicTests);
+        const engagementBannerTest = firstRunnableTest(engagementBannerTests);
 
-    return [
-        ...allRunnableTests(concurrentTests),
-        ...(epicTest ? [epicTest] : []),
-        ...(engagementBannerTest ? [engagementBannerTest] : []),
-    ];
-});
+        return [
+            ...allRunnableTests(concurrentTests),
+            ...(epicTest ? [epicTest] : []),
+            ...(engagementBannerTest ? [engagementBannerTest] : []),
+        ];
+    }
+);
 
 // The tests which will take effect on this pageview,
 export const getParticipations = (): Participations =>
