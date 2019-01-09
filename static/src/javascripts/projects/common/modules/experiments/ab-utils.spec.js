@@ -39,6 +39,8 @@ describe('A/B utils', () => {
     });
 
     describe('testExclusionsWhoseSwitchExists', () => {
+        /* eslint guardian-frontend/global-config: "off" */
+        /* eslint guardian-frontend/no-direct-access-config: "off" */
         beforeEach(() => {
             window.guardian.config.switches = {};
         });
@@ -67,6 +69,8 @@ describe('A/B utils', () => {
                 })
             ).toEqual({});
         });
+        /* eslint guardian-frontend/global-config: "on" */
+        /* eslint guardian-frontend/no-direct-access-config: "on" */
     });
 
     describe('testAndParticipationsToVariant', () => {
