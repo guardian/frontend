@@ -85,7 +85,7 @@ const appendOverlay = () => {
             { name: 'Epic', tests: epicTests.map(extractData) },
             { name: 'Banner', tests: engagementBannerTests.map(extractData) },
             { name: 'Other', tests: concurrentTests.map(extractData) },
-        ]
+        ],
     };
 
     $('body').prepend(template(overlay)(data));
