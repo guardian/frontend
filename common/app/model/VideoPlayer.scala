@@ -27,13 +27,12 @@ case class VideoPlayer(
 ) {
   def poster: String = profile.bestSrcFor(video.images).getOrElse(Static("images/media-holding.jpg"))
 
-  /** Width and height are always defined for video profile, so this is OK. */
+  /** Width is always defined for video profile, so this is OK. */
   def width: Int = profile.width.get
-  def height: Int = profile.width.get
 
   def showEndSlate: Boolean = width >= Video640.width.get
 
-  def isRatioHd: Boolean = overrideIsRatioHd getOrElse profile.isRatioHD
+  def isRatioHd: Boolean = overrideIsRatioHd getOrElse true
 
   def blockVideoAds: Boolean = video.videos.blockVideoAds
 }
