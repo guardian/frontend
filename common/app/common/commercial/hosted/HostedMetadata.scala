@@ -16,6 +16,7 @@ object HostedMetadata {
     val toneIds = toneTags.map(_.id).mkString(",")
     val toneNames = toneTags.map(_.webTitle).mkString(",")
     val description = item.fields.flatMap(_.trailText).getOrElse("")
+    val productionOffice = item.fields.flatMap(_.productionOffice.map(_.name)).getOrElse("")
     val owner = {
       val hostedTag = item.tags.find(_.paidContentType.contains("HostedContent"))
       val sponsorship = hostedTag.flatMap(_.activeSponsorships).map(_.head)
@@ -34,6 +35,7 @@ object HostedMetadata {
       commercial = Some(CommercialProperties.fromContent(item)),
       javascriptConfigOverrides = Map(
         "isHosted" -> JsBoolean(true),
+        "productionOffice" -> JsString(productionOffice),
         "toneIds" -> JsString(toneIds),
         "tones" -> JsString(toneNames),
         "shortUrl" -> JsString(item.fields.flatMap(_.shortUrl).getOrElse(""))
