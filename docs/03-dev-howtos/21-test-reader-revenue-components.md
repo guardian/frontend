@@ -30,8 +30,10 @@ Won't display to people who we know are giving us money in any way (logged in, o
 
 ![picture 417](https://user-images.githubusercontent.com/5122968/49798163-891ad380-fd39-11e8-8645-5f07c389e4f1.png)
 
+## How do I re-deploy the engagement banner?
+https://frontend.gutools.co.uk/reader-revenue/contributions-banner
 
-## Why can't I see them?
+## Why can't I see the epic or banner?
 - The rules which determine whether these display on a given pageview are complex enough that getting them to display can be a pain.
 - On top of this, we are almost always running tests on these components which means there are different variants in production.
 - And on top of that, we often have region-specific copy, either as a test or simply as a region-specific control.
