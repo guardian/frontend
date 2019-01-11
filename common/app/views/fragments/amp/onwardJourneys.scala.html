@@ -17,7 +17,8 @@
     }
 
     @if(!content.shouldHideAdverts) {
-        @fragments.amp.outbrain(page, nonCompliant = content.tags.series.length > 1) // TODO  this logic is probably wrong
+        @* TODO  this logic is probably wrong *@
+        @fragments.amp.outbrain(page, nonCompliant = content.tags.series.length > 1)
     }
 
     @defining({
