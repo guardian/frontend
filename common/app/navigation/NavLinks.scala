@@ -531,7 +531,14 @@ object NavLinks {
   // NOTE: content with tags from this list will have the navigation set to the tag in this list, rather than its
   // section tag. e.g. Content in technology section with world/europe-news will appear in the world section in
   // the navigation. The workaround for this is to add the section to this list,as has been done with CiF and education
+  // this list exists for awkward editorial reasons, as well as legacy reasons, and has been hard to untangle despite
+  // a reasonable amount of dicussion between the audience team and dotcom in 2016 when the nav was last redone
   val tagPages = List(
+     // these first two tags are section tags- they are  here to ensure that content in education and CiF always 
+     // appear as such in the navigation even if they also have a tag from this list
+    "commentisfree/commentisfree",
+    "education/education"
+    // -------------------
     "us-news/us-politics",
     "australia-news/australian-politics",
     "australia-news/australian-immigration-and-asylum",
@@ -621,10 +628,6 @@ object NavLinks {
     "crosswords/series/everyman",
     "crosswords/series/azed",
     "fashion/beauty",
-    "technology/motoring",
-    // these last two are here to ensure that content in education and CiF always appear as such in the navigation
-    // even if they also have a tag from this list
-    "commentisfree/commentisfree",
-    "education/education"
+    "technology/motoring"
   )
 }
