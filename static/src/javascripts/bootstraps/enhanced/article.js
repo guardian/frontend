@@ -17,6 +17,8 @@ import { handleCompletion as handleQuizCompletion } from 'common/modules/atoms/q
 import { init as initLiveblogCommon } from 'bootstraps/enhanced/article-liveblog-common';
 import { initTrails } from 'bootstraps/enhanced/trail';
 import { initCampaign } from 'journalism/modules/render-campaign';
+import { init as initInArticleAudioAtom } from 'common/modules/audio/in-article-atom-player';
+
 import ophan from 'ophan/ng';
 
 const modules = {
@@ -70,6 +72,7 @@ const init = () => {
         ['article-mediator-emit-event', modules.emitReadyEvent],
         ['article-handle-quiz-completion', handleQuizCompletion],
         ['article-campaign', initCampaign],
+        ['article-inline-audio-atom', initInArticleAudioAtom],
     ]);
 };
 

@@ -28,4 +28,3 @@ object OldTLSSupportDeprecation extends Experiment(
   // Custom group based on header set in Fastly
   participationGroup = TLSSupport
 )
-

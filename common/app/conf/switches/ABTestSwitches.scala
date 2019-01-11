@@ -255,4 +255,14 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2019, 6, 6),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-journalism-in-article-audio-atom-zero-percent",
+    "Activate zero percent client-side in-article audio atom rendering (manual opt-in)",
+    owners = Seq(Owner.withGithub("JustinPinner")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 3, 31),
+    exposeClientSide = true
+  )
 }
