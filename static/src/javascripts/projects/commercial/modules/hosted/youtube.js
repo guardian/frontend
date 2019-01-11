@@ -30,6 +30,7 @@ type Page = {
     isDev: boolean,
     contentType: string,
     host: string,
+    productionOffice: string,
 };
 
 const EVENTSFIRED = [];
@@ -41,16 +42,22 @@ const shouldAutoplay = (page: Page): boolean => {
         if (page.isDev) {
             return document.referrer.indexOf(window.location.origin) === 0;
         }
-
         return document.referrer.indexOf(page.host) === 0;
     };
 
     const flashingElementsAllowed = () => isOn('flashing-elements');
-
     const isVideoArticle = () => page.contentType.toLowerCase() === 'video';
+    const isUSContent = () => page.productionOffice.toLowerCase() === 'us';
+
+    if (!page.contentType || !page.productionOffice) {
+        return false;
+    }
 
     return (
-        isVideoArticle() && isInternalReferrer() && flashingElementsAllowed()
+        isUSContent() &&
+        isVideoArticle() &&
+        isInternalReferrer() &&
+        flashingElementsAllowed()
     );
 };
 
