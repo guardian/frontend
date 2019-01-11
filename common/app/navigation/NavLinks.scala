@@ -537,7 +537,7 @@ object NavLinks {
      // these first two tags are section tags- they are  here to ensure that content in education and CiF always 
      // appear as such in the navigation even if they also have a tag from this list
     "commentisfree/commentisfree",
-    "education/education"
+    "education/education",
     // -------------------
     "us-news/us-politics",
     "australia-news/australian-politics",
