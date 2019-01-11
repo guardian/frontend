@@ -22,7 +22,8 @@ object UrlHelpers {
 
   def getComponentId(destination: ReaderRevenueSite, position: Position)(implicit request: RequestHeader): Option[String] = {
     condOpt((destination, position)) {
-      case (Support, Header | AmpHeader | SlimHeaderDropdown) => "header_support"
+      case (Support, Header | SlimHeaderDropdown) => "header_support"
+      case (Support, AmpHeader) => "amp_header_support"
       case (Support, SideMenu) => "side_menu_support"
       case (Support, Footer) => "footer_support"
 
@@ -38,7 +39,7 @@ object UrlHelpers {
     }
   }   
 
-  def readerRevenueLinks(implicit request: RequestHeader) = List(
+  def readerRevenueLinks(implicit request: RequestHeader): List[NavLink] = List(
     NavLink("Make a contribution", getReaderRevenueUrl(SupportContribute, SideMenu)),
     NavLink("Subscribe", getReaderRevenueUrl(SupportSubscribe, SideMenu), classList = Seq("js-subscribe"))
   )
