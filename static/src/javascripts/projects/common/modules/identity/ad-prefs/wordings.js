@@ -5,12 +5,12 @@ import { thirdPartyTrackingAdConsent } from 'common/modules/commercial/ad-prefs.
 
 type CheckboxWording = {
     title: string,
-    text: string,
+    text?: string,
 };
 
 type QuestionWording = {
     title: string,
-    text: Node,
+    text?: Node,
 };
 
 type ConsentWording = {

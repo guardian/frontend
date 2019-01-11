@@ -69,9 +69,12 @@ class ConsentBox extends Component<ConsentBoxProps, {}> {
                 <legend className="identity-title identity-title--small">
                     {wording.question.title}
                 </legend>
-                <div className="identity-ad-prefs-input__wording">
-                    {wording.question.text}
-                </div>
+                {wording.question.text && (
+                    <div className="identity-ad-prefs-input__wording">
+                        {wording.question.text}
+                    </div>
+                )}
+
                 <div>
                     <ConsentRadioButton
                         value="true"
