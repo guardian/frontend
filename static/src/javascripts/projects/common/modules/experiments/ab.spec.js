@@ -2,11 +2,18 @@
 
 import {
     getParticipationsFromLocalStorage,
-    setParticipationsInLocalStorage
+    setParticipationsInLocalStorage,
 } from 'common/modules/experiments/ab-local-storage';
 import { overwriteMvtCookie } from 'common/modules/analytics/mvt-cookie';
-import { getTestsToRun, runAndTrackAbTests } from 'common/modules/experiments/ab';
-import { concurrentTests, epicTests, engagementBannerTests } from 'common/modules/experiments/ab-tests';
+import {
+    getTestsToRun,
+    runAndTrackAbTests,
+} from 'common/modules/experiments/ab';
+import {
+    concurrentTests,
+    epicTests,
+    engagementBannerTests,
+} from 'common/modules/experiments/ab-tests';
 import { NOT_IN_TEST } from 'common/modules/experiments/ab-constants';
 import { runnableTestsToParticipations } from 'common/modules/experiments/ab-utils';
 
@@ -31,7 +38,7 @@ describe('A/B', () => {
         cfg.page = {};
         cfg.page.isSensitive = false;
         cfg.switches = {
-            abDummyTest: true
+            abDummyTest: true,
         };
         overwriteMvtCookie(1234);
         window.location.hash = '';
@@ -42,7 +49,6 @@ describe('A/B', () => {
         delete cfg.page;
         delete cfg.switches;
     });
-
 
     describe('runAndTrackAbTests', () => {
         test('should run all concurrent tests whose canRun is true, but just the first epic test & first banner test', () => {
@@ -74,24 +80,34 @@ describe('A/B', () => {
         });
 
         test('renamed/deleted tests should be removed from localStorage', () => {
-            setParticipationsInLocalStorage({noTestSwitchForThisOne: {variant: 'Control'}});
+            setParticipationsInLocalStorage({
+                noTestSwitchForThisOne: { variant: 'Control' },
+            });
             runAndTrackAbTests();
-            expect(getParticipationsFromLocalStorage()).toEqual({DummyTest: {variant: 'control'}});
+            expect(getParticipationsFromLocalStorage()).toEqual({
+                DummyTest: { variant: 'control' },
+            });
         });
 
         test('tests with notintest participations should not run, but this should be persisted to localStorage', () => {
             const spy = jest.spyOn(concurrentTests[0].variants[0], 'test');
             expect(spy).not.toHaveBeenCalled();
-            setParticipationsInLocalStorage({DummyTest: {variant: NOT_IN_TEST}});
+            setParticipationsInLocalStorage({
+                DummyTest: { variant: NOT_IN_TEST },
+            });
             runAndTrackAbTests();
             expect(spy).not.toHaveBeenCalled();
-            expect(getParticipationsFromLocalStorage()).toEqual({DummyTest: {variant: NOT_IN_TEST}});
+            expect(getParticipationsFromLocalStorage()).toEqual({
+                DummyTest: { variant: NOT_IN_TEST },
+            });
         });
 
         test('URL participations for non-existent variants that are not notintest should not be persisted to localStorage', () => {
             window.location.hash = '#ab-DummyTest=bad_variant';
             runAndTrackAbTests();
-            expect(getParticipationsFromLocalStorage()).toEqual({DummyTest: {variant: 'control'}});
+            expect(getParticipationsFromLocalStorage()).toEqual({
+                DummyTest: { variant: 'control' },
+            });
         });
 
         test('URL participations for tests which cannot be run on this pageview should not be persisted to localStorage', () => {
@@ -103,8 +119,8 @@ describe('A/B', () => {
             window.location.hash = '#ab-DummyTest3CanRunIsFalse=control';
             runAndTrackAbTests();
             expect(getParticipationsFromLocalStorage()).toEqual({
-                DummyTest: {variant: 'control'},
-                DummyTest2: {variant: 'control'},
+                DummyTest: { variant: 'control' },
+                DummyTest2: { variant: 'control' },
             });
         });
 
@@ -117,7 +133,7 @@ describe('A/B', () => {
             window.location.hash = '#ab-DummyTest4ControlCanRunIsFalse=control';
             runAndTrackAbTests();
             expect(getParticipationsFromLocalStorage()).toEqual({
-                DummyTest: {variant: 'control'},
+                DummyTest: { variant: 'control' },
             });
         });
 
@@ -126,13 +142,19 @@ describe('A/B', () => {
             expect(getTestsToRun()[0].variantToRun.id).toEqual('variant');
 
             runAndTrackAbTests();
-            expect(getParticipationsFromLocalStorage()).toEqual({DummyTest: {variant: 'variant'}});
+            expect(getParticipationsFromLocalStorage()).toEqual({
+                DummyTest: { variant: 'variant' },
+            });
         });
 
         test('localStorage participations for non-existent variants that are not notintest should not be preserved in localStorage', () => {
-            setParticipationsInLocalStorage({DummyTest: {variant: 'bad_variant'}});
+            setParticipationsInLocalStorage({
+                DummyTest: { variant: 'bad_variant' },
+            });
             runAndTrackAbTests();
-            expect(getParticipationsFromLocalStorage()).toEqual({DummyTest: {variant: 'control'}});
+            expect(getParticipationsFromLocalStorage()).toEqual({
+                DummyTest: { variant: 'control' },
+            });
         });
 
         test('localStorage participations for tests which cannot be run should not be preserved in localStorage', () => {
@@ -142,11 +164,13 @@ describe('A/B', () => {
                 abDummyTest3CanRunIsFalse: true,
             };
 
-            setParticipationsInLocalStorage({DummyTest3CanRunIsFalse: {variant: 'bad_variant'}});
+            setParticipationsInLocalStorage({
+                DummyTest3CanRunIsFalse: { variant: 'bad_variant' },
+            });
             runAndTrackAbTests();
             expect(getParticipationsFromLocalStorage()).toEqual({
-                DummyTest: {variant: 'control'},
-                DummyTest2: {variant: 'control'},
+                DummyTest: { variant: 'control' },
+                DummyTest2: { variant: 'control' },
             });
         });
 
@@ -156,10 +180,12 @@ describe('A/B', () => {
                 abDummyTest4ControlCanRunIsFalse: true,
             };
 
-            setParticipationsInLocalStorage({DummyTest4ControlCanRunIsFalse: {variant: 'control'}});
+            setParticipationsInLocalStorage({
+                DummyTest4ControlCanRunIsFalse: { variant: 'control' },
+            });
             runAndTrackAbTests();
             expect(getParticipationsFromLocalStorage()).toEqual({
-                DummyTest: {variant: 'control'},
+                DummyTest: { variant: 'control' },
             });
         });
     });
@@ -171,41 +197,51 @@ describe('A/B', () => {
             cfg.switches = {
                 abDummyTest: true,
                 abDummyTest2: true,
-                abEpicTest: true
+                abEpicTest: true,
             };
             setParticipationsInLocalStorage({
                 // this should be overriden by URL
-                DummyTest: {variant: 'control'},
+                DummyTest: { variant: 'control' },
 
                 // this should be respected (overriding the control, which would be the cookie-determined variant)
-                DummyTest2: {variant: 'variant'},
+                DummyTest2: { variant: 'variant' },
 
                 // this should be ignored & deleted
-                NoTestSwitchForThisOne: {variant: 'blah'},
+                NoTestSwitchForThisOne: { variant: 'blah' },
 
                 // ...and we should get an EpicTest added
             });
             window.location.hash = '#ab-DummyTest=variant';
 
             const expectedTestsToRun = {
-                DummyTest: {variant: 'variant'},
-                DummyTest2: {variant: 'variant'},
-                EpicTest: {variant: 'control'},
+                DummyTest: { variant: 'variant' },
+                DummyTest2: { variant: 'variant' },
+                EpicTest: { variant: 'control' },
             };
-            expect(runnableTestsToParticipations(getTestsToRun())).toEqual(expectedTestsToRun);
+            expect(runnableTestsToParticipations(getTestsToRun())).toEqual(
+                expectedTestsToRun
+            );
             runAndTrackAbTests();
-            expect(runnableTestsToParticipations(getTestsToRun())).toEqual(expectedTestsToRun);
+            expect(runnableTestsToParticipations(getTestsToRun())).toEqual(
+                expectedTestsToRun
+            );
 
             // In this case, the localStorage participations should be the same as the tests to run,
             // because there are no 'notintest' participations to preserve
-            expect(getParticipationsFromLocalStorage()).toEqual(expectedTestsToRun);
+            expect(getParticipationsFromLocalStorage()).toEqual(
+                expectedTestsToRun
+            );
 
             runAndTrackAbTests();
-            expect(runnableTestsToParticipations(getTestsToRun())).toEqual(expectedTestsToRun);
+            expect(runnableTestsToParticipations(getTestsToRun())).toEqual(
+                expectedTestsToRun
+            );
 
             // In this case, the localStorage participations should be the same as the tests to run,
             // because there are no 'notintest' participations to preserve
-            expect(getParticipationsFromLocalStorage()).toEqual(expectedTestsToRun);
+            expect(getParticipationsFromLocalStorage()).toEqual(
+                expectedTestsToRun
+            );
         });
-    })
+    });
 });

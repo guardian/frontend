@@ -2,7 +2,7 @@
 export const genVariant = (id: string, canRun: ?boolean): Variant => ({
     id,
     test: () => undefined,
-    ...(canRun != null ? {canRun: () => !!canRun} : {})
+    ...(canRun != null ? { canRun: () => !!canRun } : {}),
 });
 
 export const genAbTest = (

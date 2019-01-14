@@ -1,15 +1,29 @@
 // @flow
 
-import memoize from "lodash/memoize";
-import { allRunnableTests, firstRunnableTest } from 'common/modules/experiments/ab-core';
-import { runnableTestsToParticipations, testExclusionsWhoseSwitchExists } from 'common/modules/experiments/ab-utils';
-import { registerCompleteEvents, registerImpressionEvents, trackABTests } from 'common/modules/experiments/ab-ophan';
+import memoize from 'lodash/memoize';
+import {
+    allRunnableTests,
+    firstRunnableTest,
+} from 'common/modules/experiments/ab-core';
+import {
+    runnableTestsToParticipations,
+    testExclusionsWhoseSwitchExists,
+} from 'common/modules/experiments/ab-utils';
+import {
+    registerCompleteEvents,
+    registerImpressionEvents,
+    trackABTests,
+} from 'common/modules/experiments/ab-ophan';
 import {
     getParticipationsFromLocalStorage,
-    setParticipationsInLocalStorage
+    setParticipationsInLocalStorage,
 } from 'common/modules/experiments/ab-local-storage';
 import { getForcedParticipationsFromUrl } from 'common/modules/experiments/ab-url';
-import { concurrentTests, engagementBannerTests, epicTests } from 'common/modules/experiments/ab-tests';
+import {
+    concurrentTests,
+    engagementBannerTests,
+    epicTests,
+} from 'common/modules/experiments/ab-tests';
 
 // These are the tests which will actually take effect on this pageview.
 // Note that this is a subset of the potentially runnable tests,

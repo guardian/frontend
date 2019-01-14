@@ -1,8 +1,14 @@
 // @flow
 
-import { genAbTest, genVariant } from 'common/modules/experiments/__fixtures__/ab-test';
+import {
+    genAbTest,
+    genVariant,
+} from 'common/modules/experiments/__fixtures__/ab-test';
 import { runnableTest } from 'common/modules/experiments/ab-core';
-import { clearParticipations, setParticipationsInLocalStorage } from 'common/modules/experiments/ab-local-storage';
+import {
+    clearParticipations,
+    setParticipationsInLocalStorage,
+} from 'common/modules/experiments/ab-local-storage';
 import { overwriteMvtCookie } from 'common/modules/analytics/mvt-cookie';
 import { runnableTestsToParticipations } from 'common/modules/experiments/ab-utils';
 
@@ -18,7 +24,7 @@ describe('A/B tests', () => {
         cfg.page = {};
         cfg.page.isSensitive = false;
         cfg.switches = {
-            abDummyTest: true
+            abDummyTest: true,
         };
         overwriteMvtCookie(1234);
         window.location.hash = '';
@@ -44,12 +50,9 @@ describe('A/B tests', () => {
         });
 
         test('should return null if the test can be run but the variant cannot', () => {
-            const test = genAbTest(
-                'DummyTest',
-                true,
-                '9999-12-12',
-                [genVariant('control', false)],
-            );
+            const test = genAbTest('DummyTest', true, '9999-12-12', [
+                genVariant('control', false),
+            ]);
             expect(runnableTest(test)).toBeNull();
         });
 
@@ -59,7 +62,9 @@ describe('A/B tests', () => {
             expect(rt).not.toBeNull();
             if (rt) {
                 expect(rt.variantToRun).toHaveProperty('id', 'control');
-                setParticipationsInLocalStorage(runnableTestsToParticipations([rt]));
+                setParticipationsInLocalStorage(
+                    runnableTestsToParticipations([rt])
+                );
             }
 
             clearParticipations();
@@ -78,7 +83,9 @@ describe('A/B tests', () => {
             expect(rt).not.toBeNull();
             if (rt) {
                 expect(rt.variantToRun).toHaveProperty('id', 'control');
-                setParticipationsInLocalStorage(runnableTestsToParticipations([rt]));
+                setParticipationsInLocalStorage(
+                    runnableTestsToParticipations([rt])
+                );
             }
 
             overwriteMvtCookie(1235);
@@ -92,7 +99,9 @@ describe('A/B tests', () => {
 
         test('should return the variantToRun specified by the URL, overriding localStorage and cookie', () => {
             window.location.hash = '#ab-DummyTest=variant';
-            setParticipationsInLocalStorage({ DummyTest: { variant: 'control' } });
+            setParticipationsInLocalStorage({
+                DummyTest: { variant: 'control' },
+            });
 
             const test = genAbTest('DummyTest');
             const rt = runnableTest(test);
@@ -103,7 +112,9 @@ describe('A/B tests', () => {
         });
 
         test('should return the variantToRun specified by localStorage, overriding cookie', () => {
-            setParticipationsInLocalStorage({ DummyTest: { variant: 'variant' } });
+            setParticipationsInLocalStorage({
+                DummyTest: { variant: 'variant' },
+            });
 
             const test = genAbTest('DummyTest');
             const rt = runnableTest(test);
@@ -131,7 +142,9 @@ describe('A/B tests', () => {
         });
 
         test('should return null if notintest is specified in localStorage', () => {
-            setParticipationsInLocalStorage({ DummyTest: { variant: 'notintest' } });
+            setParticipationsInLocalStorage({
+                DummyTest: { variant: 'notintest' },
+            });
 
             const test = genAbTest('DummyTest');
             const rt = runnableTest(test);
