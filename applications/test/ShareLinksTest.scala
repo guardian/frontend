@@ -31,7 +31,7 @@ import org.scalatest.concurrent.{Futures, ScalaFutures}
         val pageShares = model.Content(apiContent).sharelinks.pageShares
 
         pageShares.visible.map(_.text) should be (List("Facebook", "Twitter", "Email"))
-        pageShares.hidden.map(_.text) should be (List("LinkedIn", "Pinterest", "Google plus", "WhatsApp", "Messenger"))
+        pageShares.hidden.map(_.text) should be (List("LinkedIn", "Pinterest", "WhatsApp", "Messenger"))
         pageShares.visible.map(_.href) should be (List(
           "https://www.facebook.com/dialog/share?app_id=202314643182694&href=https%3A%2F%2Fwww.theguardian.com%2Fpolitics%2Fblog%2Flive%2F2016%2Ffeb%2F03%2Feu-renegotiation-pmqs-cameron-corbyn-he-prepares-to-make-statement-to-mps-politics-live%3FCMP%3Dshare_btn_fb",
           "https://twitter.com/intent/tweet?text=Cameron%20statement%20to%20the%20Commons%20on%20the%20EU%20referendum%20-%20Politics%20live&url=https%3A%2F%2Fwww.theguardian.com%2Fpolitics%2Fblog%2Flive%2F2016%2Ffeb%2F03%2Feu-renegotiation-pmqs-cameron-corbyn-he-prepares-to-make-statement-to-mps-politics-live%3FCMP%3Dshare_btn_tw",
@@ -80,7 +80,7 @@ import org.scalatest.concurrent.{Futures, ScalaFutures}
         val liveblog = model.Content(apiContent)
         val elementShares = liveblog.sharelinks.elementShares("2", None)
 
-        elementShares.map(_.text) should be (List("Facebook", "Twitter", "Google plus"))
+        elementShares.map(_.text) should be (List("Facebook", "Twitter"))
         elementShares.map(_.href) should be (List(
           "https://www.facebook.com/dialog/share?app_id=202314643182694&href=https%3A%2F%2Fwww.theguardian.com%2Fpolitics%2Fblog%2Flive%2F2016%2Ffeb%2F03%2Feu-renegotiation-pmqs-cameron-corbyn-he-prepares-to-make-statement-to-mps-politics-live%3FCMP%3Dshare_btn_fb%26page%3Dwith%3A2%232",
           "https://twitter.com/intent/tweet?text=Cameron%20statement%20to%20the%20Commons%20on%20the%20EU%20referendum%20-%20Politics%20live&url=https%3A%2F%2Fwww.theguardian.com%2Fpolitics%2Fblog%2Flive%2F2016%2Ffeb%2F03%2Feu-renegotiation-pmqs-cameron-corbyn-he-prepares-to-make-statement-to-mps-politics-live%3FCMP%3Dshare_btn_tw%26page%3Dwith%3A2%232",
