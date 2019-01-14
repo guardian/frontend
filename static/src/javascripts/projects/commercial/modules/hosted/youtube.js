@@ -41,13 +41,6 @@ const shouldAutoplay = (
     page: Page,
     switches: { hostedVideoAutoplay: ?boolean }
 ): boolean => {
-    const isInternalReferrer = () => {
-        if (page.isDev) {
-            return document.referrer.indexOf(window.location.origin) === 0;
-        }
-        return document.referrer.indexOf(page.host) === 0;
-    };
-
     const flashingElementsAllowed = () => isOn('flashing-elements');
     const isVideoArticle = () => page.contentType.toLowerCase() === 'video';
     const isUSContent = () => page.productionOffice.toLowerCase() === 'us';
@@ -61,7 +54,6 @@ const shouldAutoplay = (
         isSwitchedOn &&
         isUSContent() &&
         isVideoArticle() &&
-        isInternalReferrer() &&
         flashingElementsAllowed()
     );
 };
