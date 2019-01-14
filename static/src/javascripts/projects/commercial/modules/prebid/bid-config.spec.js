@@ -17,6 +17,10 @@ import {
     containsMpu as containsMpu_,
     containsMpuOrDmpu as containsMpuOrDmpu_,
     getBreakpointKey as getBreakpointKey_,
+    isInAuRegion as isInAuRegion_,
+    isInRowRegion as isInRowRegion_,
+    isInUkRegion as isInUkRegion_,
+    isInUsRegion as isInUsRegion_,
     shouldIncludeAdYouLike as shouldIncludeAdYouLike_,
     shouldIncludeAppNexus as shouldIncludeAppNexus_,
     shouldIncludeImproveDigital as shouldIncludeImproveDigital_,
@@ -46,6 +50,10 @@ const shouldIncludeSonobi: any = shouldIncludeSonobi_;
 const stripMobileSuffix: any = stripMobileSuffix_;
 const getBreakpointKey: any = getBreakpointKey_;
 const getVariant: any = getVariant_;
+const isInAuRegion: any = isInAuRegion_;
+const isInRowRegion: any = isInRowRegion_;
+const isInUkRegion: any = isInUkRegion_;
+const isInUsRegion: any = isInUsRegion_;
 const isInVariant: any = isInVariant_;
 
 const {
@@ -85,7 +93,6 @@ const resetConfig = () => {
     config.set('ophan', { pageViewId: 'pvid' });
     config.set('page.contentType', 'Article');
     config.set('page.section', 'Magic');
-    config.set('page.edition', 'UK');
     config.set('page.isDev', false);
 };
 
@@ -161,7 +168,8 @@ describe('getImprovePlacementId', () => {
         expect(getImprovePlacementId([[1, 2]])).toBe(-1);
     });
 
-    test('should return the expected values when on the UK Edition and desktop device', () => {
+    test('should return the expected values when geolocated in UK and on desktop device', () => {
+        isInUkRegion.mockReturnValue(true);
         getBreakpointKey.mockReturnValue('D');
         containsMpuOrDmpu.mockReturnValueOnce(true);
         containsMpuOrDmpu.mockReturnValueOnce(true);
@@ -178,7 +186,8 @@ describe('getImprovePlacementId', () => {
         ]);
     });
 
-    test('should return the expected values when on the UK Edition and tablet device', () => {
+    test('should return the expected values when geolocated in UK and on tablet device', () => {
+        isInUkRegion.mockReturnValue(true);
         getBreakpointKey.mockReturnValue('T');
         containsMpuOrDmpu.mockReturnValueOnce(true);
         containsMpuOrDmpu.mockReturnValueOnce(true);
@@ -195,7 +204,8 @@ describe('getImprovePlacementId', () => {
         ]);
     });
 
-    test('should return the expected values when on the UK Edition and mobile device', () => {
+    test('should return the expected values when geolocated in UK and on mobile device', () => {
+        isInUkRegion.mockReturnValue(true);
         getBreakpointKey.mockReturnValue('M');
         containsMpuOrDmpu.mockReturnValueOnce(true);
         containsMpuOrDmpu.mockReturnValueOnce(true);
@@ -206,8 +216,8 @@ describe('getImprovePlacementId', () => {
         expect(generateTestIds()).toEqual([1116400, 1116400, -1, -1, -1]);
     });
 
-    test('should return the expected values when on the INT Edition and desktop device', () => {
-        config.set('page.edition', 'INT');
+    test('should return the expected values when geolocated in ROW region and on desktop device', () => {
+        isInRowRegion.mockReturnValue(true);
         getBreakpointKey.mockReturnValue('D');
         containsMpuOrDmpu.mockReturnValueOnce(true);
         containsMpuOrDmpu.mockReturnValueOnce(true);
@@ -224,8 +234,8 @@ describe('getImprovePlacementId', () => {
         ]);
     });
 
-    test('should return the expected values when on the INT Edition and tablet device', () => {
-        config.set('page.edition', 'INT');
+    test('should return the expected values when not geolocated in ROW region and on tablet device', () => {
+        isInRowRegion.mockReturnValue(true);
         getBreakpointKey.mockReturnValue('T');
         containsMpuOrDmpu.mockReturnValueOnce(true);
         containsMpuOrDmpu.mockReturnValueOnce(true);
@@ -242,8 +252,8 @@ describe('getImprovePlacementId', () => {
         ]);
     });
 
-    test('should return the expected values when on the INT Edition and mobile device', () => {
-        config.set('page.edition', 'INT');
+    test('should return the expected values when geolocated in ROW region and on mobile device', () => {
+        isInRowRegion.mockReturnValue(true);
         getBreakpointKey.mockReturnValue('M');
         containsMpuOrDmpu.mockReturnValueOnce(true);
         containsMpuOrDmpu.mockReturnValueOnce(true);
@@ -251,10 +261,10 @@ describe('getImprovePlacementId', () => {
         expect(generateTestIds()).toEqual([1116424, 1116424, -1, -1, -1]);
     });
 
-    test('should return -1 if on the US or AU Editions', () => {
-        config.set('page.edition', 'AU');
+    test('should return -1 if geolocated in US or AU regions', () => {
+        isInUsRegion.mockReturnValue(true);
         expect(generateTestIds()).toEqual([-1, -1, -1, -1, -1]);
-        config.set('page.edition', 'US');
+        isInAuRegion.mockReturnValue(true);
         expect(generateTestIds()).toEqual([-1, -1, -1, -1, -1]);
     });
 

@@ -35,8 +35,7 @@ export const removeFalseyValues = (o: {
 export const stripDfpAdPrefixFrom = (s: string): string =>
     stripPrefix(s, 'dfp-ad--');
 
-export const isInUkRegion = (): boolean =>
-    currentGeoLocation() === 'UK';
+export const isInUkRegion = (): boolean => currentGeoLocation() === 'UK';
 
 export const isInUsRegion = (): boolean =>
     ['US', 'CA'].includes(currentGeoLocation());

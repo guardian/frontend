@@ -33,6 +33,8 @@ import {
     containsMpuOrDmpu,
     getBreakpointKey,
     isInAuRegion,
+    isInRowRegion,
+    isInUkRegion,
     isInUsRegion,
     shouldIncludeAdYouLike,
     shouldIncludeAppNexus,
@@ -156,64 +158,62 @@ const getImprovePlacementId = (sizes: PrebidSize[]): number => {
             default:
                 return -1;
         }
-    } else {
-        switch (config.get('page.edition')) {
-            case 'UK':
-                switch (getBreakpointKey()) {
-                    case 'D':
-                        if (containsMpuOrDmpu(sizes)) {
-                            return 1116396;
-                        }
-                        if (containsLeaderboardOrBillboard(sizes)) {
-                            return 1116397;
-                        }
-                        return -1;
-                    case 'M':
-                        if (containsMpuOrDmpu(sizes)) {
-                            return 1116400;
-                        }
-                        return -1;
-                    case 'T':
-                        if (containsMpuOrDmpu(sizes)) {
-                            return 1116398;
-                        }
-                        if (containsLeaderboardOrBillboard(sizes)) {
-                            return 1116399;
-                        }
-                        return -1;
-                    default:
-                        return -1;
+    }
+    if (isInUkRegion()) {
+        switch (getBreakpointKey()) {
+            case 'D':
+                if (containsMpuOrDmpu(sizes)) {
+                    return 1116396;
                 }
-            case 'INT':
-                switch (getBreakpointKey()) {
-                    case 'D':
-                        if (containsMpuOrDmpu(sizes)) {
-                            return 1116420;
-                        }
-                        if (containsLeaderboardOrBillboard(sizes)) {
-                            return 1116421;
-                        }
-                        return -1;
-                    case 'M':
-                        if (containsMpuOrDmpu(sizes)) {
-                            return 1116424;
-                        }
-                        return -1;
-                    case 'T':
-                        if (containsMpuOrDmpu(sizes)) {
-                            return 1116422;
-                        }
-                        if (containsLeaderboardOrBillboard(sizes)) {
-                            return 1116423;
-                        }
-                        return -1;
-                    default:
-                        return -1;
+                if (containsLeaderboardOrBillboard(sizes)) {
+                    return 1116397;
                 }
+                return -1;
+            case 'M':
+                if (containsMpuOrDmpu(sizes)) {
+                    return 1116400;
+                }
+                return -1;
+            case 'T':
+                if (containsMpuOrDmpu(sizes)) {
+                    return 1116398;
+                }
+                if (containsLeaderboardOrBillboard(sizes)) {
+                    return 1116399;
+                }
+                return -1;
             default:
                 return -1;
         }
     }
+    if (isInRowRegion()) {
+        switch (getBreakpointKey()) {
+            case 'D':
+                if (containsMpuOrDmpu(sizes)) {
+                    return 1116420;
+                }
+                if (containsLeaderboardOrBillboard(sizes)) {
+                    return 1116421;
+                }
+                return -1;
+            case 'M':
+                if (containsMpuOrDmpu(sizes)) {
+                    return 1116424;
+                }
+                return -1;
+            case 'T':
+                if (containsMpuOrDmpu(sizes)) {
+                    return 1116422;
+                }
+                if (containsLeaderboardOrBillboard(sizes)) {
+                    return 1116423;
+                }
+                return -1;
+            default:
+                return -1;
+        }
+    }
+    return -1;
 };
 
 // Improve has to have single size as parameter if slot doesn't accept multiple sizes,
