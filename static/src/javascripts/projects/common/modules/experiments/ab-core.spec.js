@@ -1,76 +1,141 @@
 // @flow
 
-import { genAbTest } from 'common/modules/experiments/__fixtures__/ab-test';
+import { genAbTest, genVariant } from 'common/modules/experiments/__fixtures__/ab-test';
 import { runnableTest } from 'common/modules/experiments/ab-core';
-import config from 'lib/config';
+import { clearParticipations, setParticipationsInLocalStorage } from 'common/modules/experiments/ab-local-storage';
+import { overwriteMvtCookie } from 'common/modules/analytics/mvt-cookie';
+import { runnableTestsToParticipations } from 'common/modules/experiments/ab-utils';
 
-jest.mock('common/modules/analytics/mvt-cookie', () => ({
-    getMvtValue: () => 2,
-    getMvtNumValues: () => 10,
-}));
+jest.mock('common/modules/analytics/mvt-cookie');
+jest.mock('common/modules/experiments/ab-tests');
+
+/* eslint guardian-frontend/global-config: "off" */
+/* eslint guardian-frontend/no-direct-access-config: "off" */
+const cfg = window.guardian.config;
 
 describe('A/B tests', () => {
     beforeEach(() => {
-        config.page = {};
-        config.page.isSensitive = false;
-        config.switches.abDummyTest = true;
+        cfg.page = {};
+        cfg.page.isSensitive = false;
+        cfg.switches = {
+            abDummyTest: true
+        };
+        overwriteMvtCookie(1234);
+        window.location.hash = '';
+        setParticipationsInLocalStorage({});
     });
 
-    afterEach(() => {});
-
     describe('runnableTest', () => {
-        test('should return a test with variantToRun if test is runnable', () => {
-            expect(config.get('switches.abDummyTest')).toEqual(true);
-            const test = genAbTest('DummyTest');
-            const rt = runnableTest(test);
-            expect(rt).not.toBeNull();
-
-            if (rt) {
-                expect(rt.variantToRun).toHaveProperty('id', 'control');
-            }
-        });
-
         test('should return null for an expired test', () => {
             const expiredTest = genAbTest('DummyTest', true, '2000-01-01');
             expect(runnableTest(expiredTest)).toEqual(null);
         });
 
-        // test('should return null for a test which is switched off')
+        test('should return null for a test which is switched off', () => {
+            cfg.switches.abDummyTest = false;
+            const test = genAbTest('DummyTest');
+            const rt = runnableTest(test);
+            expect(rt).toBeNull();
+        });
 
-        // test('should return null if the test cannot be run')
+        test('should return null if the test cannot be run', () => {
+            const test = genAbTest('DummyTest', false);
+            expect(runnableTest(test)).toBeNull();
+        });
 
-        // test('should return null if the test can be run but the variant cannot')
+        test('should return null if the test can be run but the variant cannot', () => {
+            const test = genAbTest(
+                'DummyTest',
+                true,
+                '9999-12-12',
+                [genVariant('control', false)],
+            );
+            expect(runnableTest(test)).toBeNull();
+        });
 
-        // test('should return a different variantToRun if the MVT cookie is different and localStorage is cleared')
+        test('should return a different variantToRun if the MVT cookie is different and localStorage is cleared', () => {
+            const test = genAbTest('DummyTest');
+            const rt = runnableTest(test);
+            expect(rt).not.toBeNull();
+            if (rt) {
+                expect(rt.variantToRun).toHaveProperty('id', 'control');
+                setParticipationsInLocalStorage(runnableTestsToParticipations([rt]));
+            }
 
-        // test('should return the same variantToRun if the MVT cookie is different but the localStorage participations are preserved')
+            clearParticipations();
+            overwriteMvtCookie(1235);
 
-        // test('should return the variantToRun specified by the URL, overriding localStorage and cookie')
+            const rt2 = runnableTest(test);
+            expect(rt2).not.toBeNull();
+            if (rt2) {
+                expect(rt2.variantToRun).toHaveProperty('id', 'variant');
+            }
+        });
 
-        // test('should return the variantToRun specified by localStorage, overriding cookie')
+        test('should return the same variantToRun if the MVT cookie is different but the localStorage participations are preserved', () => {
+            const test = genAbTest('DummyTest');
+            const rt = runnableTest(test);
+            expect(rt).not.toBeNull();
+            if (rt) {
+                expect(rt.variantToRun).toHaveProperty('id', 'control');
+                setParticipationsInLocalStorage(runnableTestsToParticipations([rt]));
+            }
 
-        // test('should return the variantToRun specified by the cookie, iff URL and localStorage are absent')
+            overwriteMvtCookie(1235);
 
-        // test('should give the same result whether it's called before or after persisting to localStorage (runAndTrackAbTests)')
+            const rt2 = runnableTest(test);
+            expect(rt2).not.toBeNull();
+            if (rt2) {
+                expect(rt2.variantToRun).toHaveProperty('id', 'control');
+            }
+        });
 
-        // test('should return null if notintest is specified in localStorage or in the URL hash')
+        test('should return the variantToRun specified by the URL, overriding localStorage and cookie', () => {
+            window.location.hash = '#ab-DummyTest=variant';
+            setParticipationsInLocalStorage({ DummyTest: { variant: 'control' } });
+
+            const test = genAbTest('DummyTest');
+            const rt = runnableTest(test);
+            expect(rt).not.toBeNull();
+            if (rt) {
+                expect(rt.variantToRun).toHaveProperty('id', 'variant');
+            }
+        });
+
+        test('should return the variantToRun specified by localStorage, overriding cookie', () => {
+            setParticipationsInLocalStorage({ DummyTest: { variant: 'variant' } });
+
+            const test = genAbTest('DummyTest');
+            const rt = runnableTest(test);
+            expect(rt).not.toBeNull();
+            if (rt) {
+                expect(rt.variantToRun).toHaveProperty('id', 'variant');
+            }
+        });
+
+        test('should return the variantToRun specified by the cookie, iff URL and localStorage are absent', () => {
+            const test = genAbTest('DummyTest');
+            const rt = runnableTest(test);
+            expect(rt).not.toBeNull();
+            if (rt) {
+                expect(rt.variantToRun).toHaveProperty('id', 'control');
+            }
+        });
+
+        test('should return null if notintest is specified in the URL hash', () => {
+            window.location.hash = '#ab-DummyTest=notintest';
+
+            const test = genAbTest('DummyTest');
+            const rt = runnableTest(test);
+            expect(rt).toBeNull();
+        });
+
+        test('should return null if notintest is specified in localStorage', () => {
+            setParticipationsInLocalStorage({ DummyTest: { variant: 'notintest' } });
+
+            const test = genAbTest('DummyTest');
+            const rt = runnableTest(test);
+            expect(rt).toBeNull();
+        });
     });
-
-    // test('expired tests should be removed from localStorage')
-
-    test('renamed/deleted tests should be removed from localStorage', () => {
-        // This should fail if testSwitchExists() check is removed
-    });
-
-    // test('should return null for a test which is switched off')
-
-    // test('tests with notintest participations should not run, but this should be persisted to localStorage')
-
-    // allRunnableTests
-
-    // firstRunnableTest
-
-    // isInVariant
-
-    // getVariant
 });
