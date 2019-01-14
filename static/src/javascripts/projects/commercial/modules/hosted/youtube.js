@@ -1,7 +1,7 @@
 // @flow strict
 import {
     init as initNextVideoAutoPlay,
-    canAutoplay,
+    canAutoplay as canAutoplayNextVideo,
     addCancelListener,
     triggerAutoplay,
     triggerEndSlate,
@@ -108,7 +108,7 @@ export const initHostedYoutube = (el: HTMLElement): void => {
                 if (event.data === window.YT.PlayerState.ENDED) {
                     trackYoutubeEvent('end', atomId);
                     youtubeTimer.textContent = '0:00';
-                    if (canAutoplay()) {
+                    if (canAutoplayNextVideo()) {
                         // on mobile show the next video link in the end of the currently watching video
                         if (!isDesktop()) {
                             triggerEndSlate();
@@ -142,12 +142,13 @@ export const initHostedYoutube = (el: HTMLElement): void => {
                     shouldAutoplay(
                         config.get('page', {}),
                         config.get('switches', {})
-                    )
+                    ) &&
+                    isDesktop()
                 ) {
                     event.target.playVideo();
                 }
                 initNextVideoAutoPlay().then(() => {
-                    if (canAutoplay() && isDesktop()) {
+                    if (canAutoplayNextVideo() && isDesktop()) {
                         addCancelListener();
                         triggerAutoplay(
                             event.target.getCurrentTime.bind(event.target),
