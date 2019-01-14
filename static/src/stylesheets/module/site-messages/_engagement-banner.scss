@@ -127,6 +127,7 @@
 
     @include mq(tablet) {
         display: block;
+        height: 18px;
     }
 
     svg, img {
