@@ -247,13 +247,30 @@ describe('Utils', () => {
         expect(shouldIncludeImproveDigital()).toBe(false);
     });
 
-    test('shouldIncludeXaxis should always return false on INT, AU and US editions', () => {
-        const editions = ['AU', 'INT', 'US'];
-        const result = editions.map(edition => {
-            config.set('page.edition', edition);
-            return shouldIncludeXaxis();
-        });
-        expect(result).toEqual([false, false, false]);
+    test('shouldIncludeXaxis should be true if geolocation is UK', () => {
+        config.set('page.isDev', true);
+        getSync.mockReturnValue('UK');
+        expect(shouldIncludeXaxis()).toBe(true);
+    });
+
+    test('shouldIncludeXaxis should be false if geolocation is not UK', () => {
+        config.set('page.isDev', true);
+        const testGeos = [
+            'FK',
+            'GI',
+            'GG',
+            'IM',
+            'JE',
+            'SH',
+            'AU',
+            'US',
+            'CA',
+            'NZ',
+        ];
+        for (let i = 0; i < testGeos.length; i += 1) {
+            getSync.mockReturnValue(testGeos[i]);
+            expect(shouldIncludeXaxis()).toBe(false);
+        }
     });
 
     test('shouldIncludeSonobi should return true if geolocation is US', () => {

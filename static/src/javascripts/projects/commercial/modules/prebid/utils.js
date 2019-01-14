@@ -121,8 +121,8 @@ export const shouldIncludeAppNexus = (): boolean =>
 export const shouldIncludeXaxis = (): boolean => {
     // 50% of UK page views
     const hasFirstLook =
-        config.get('page.isDev') || getRandomIntInclusive(1, 2) === 1;
-    if (config.get('page.edition') === 'UK') {
+        config.get('page.isDev', true) || getRandomIntInclusive(1, 2) === 1;
+    if (isInUkRegion()) {
         return hasFirstLook;
     }
     return false;
