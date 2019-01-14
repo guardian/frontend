@@ -35,11 +35,17 @@ export const removeFalseyValues = (o: {
 export const stripDfpAdPrefixFrom = (s: string): string =>
     stripPrefix(s, 'dfp-ad--');
 
+export const isInUkRegion = (): boolean =>
+    currentGeoLocation() === 'UK';
+
 export const isInUsRegion = (): boolean =>
     ['US', 'CA'].includes(currentGeoLocation());
 
 export const isInAuRegion = (): boolean =>
     ['AU', 'NZ'].includes(currentGeoLocation());
+
+export const isInRowRegion = (): boolean =>
+    !isInUkRegion() && !isInUsRegion() && !isInAuRegion();
 
 export const containsMpu = (sizes: PrebidSize[]): boolean =>
     contains(sizes, [300, 250]);

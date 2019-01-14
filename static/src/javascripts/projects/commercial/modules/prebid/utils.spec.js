@@ -7,6 +7,8 @@ import { getParticipations as getParticipations_ } from 'common/modules/experime
 import {
     getLargestSize,
     getBreakpointKey,
+    isInRowRegion,
+    isInUkRegion,
     shouldIncludeAdYouLike,
     shouldIncludeAppNexus,
     shouldIncludeImproveDigital,
@@ -297,5 +299,34 @@ describe('Utils', () => {
         expect(result).toEqual({
             testString: 'non empty string',
         });
+    });
+
+    test('isInUkRegion should return true if geolocation is UK', () => {
+        getSync.mockReturnValue('UK');
+        expect(isInUkRegion()).toBe(true);
+    });
+
+    test('isInUkRegion should return false if geolocation is not UK', () => {
+        const testGeos = ['FK', 'GI', 'GG', 'IM', 'JE', 'SH', 'AU'];
+        for (let i = 0; i < testGeos.length; i += 1) {
+            getSync.mockReturnValue(testGeos[i]);
+            expect(isInUkRegion()).toBe(false);
+        }
+    });
+
+    test('isInRowRegion should return false if geolocation is UK, US, CA, AU or NZ', () => {
+        const testGeos = ['UK', 'US', 'CA', 'AU', 'NZ'];
+        for (let i = 0; i < testGeos.length; i += 1) {
+            getSync.mockReturnValue(testGeos[i]);
+            expect(isInRowRegion()).toBe(false);
+        }
+    });
+
+    test('isInRowRegion should return true if geolocation is not UK, US, CA, AU or NZ', () => {
+        const testGeos = ['FK', 'GI', 'GG', 'IM', 'JE', 'SH'];
+        for (let i = 0; i < testGeos.length; i += 1) {
+            getSync.mockReturnValue(testGeos[i]);
+            expect(isInRowRegion()).toBe(true);
+        }
     });
 });
