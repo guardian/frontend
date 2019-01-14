@@ -6,7 +6,7 @@ import $ from 'lib/$';
 import config from 'lib/config';
 import { markTime } from 'lib/user-timing';
 import { catchErrorsWithContext } from 'lib/robust';
-import { runAndTrackAbTests } from 'common/modules/experiments/ab-tests';
+import { runAndTrackAbTests } from 'common/modules/experiments/ab';
 import { initSport } from 'bootstraps/enhanced/sport';
 import { trackPerformance } from 'common/modules/analytics/google';
 import { init as geolocationInit } from 'lib/geolocation';

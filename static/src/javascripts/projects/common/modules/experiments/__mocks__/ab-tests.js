@@ -1,6 +1,6 @@
 // @flow
 import { genAbTest } from '../__fixtures__/ab-test';
 
-export const TESTS = [genAbTest('DummyTest'), genAbTest('DummyTest2')];
-
-export const getActiveTests = () => TESTS;
+export const concurrentTests = [genAbTest('DummyTest'), genAbTest('DummyTest2')];
+export const epicTests = [genAbTest('EpicTest'), genAbTest('EpicTest2')];
+export const engagementBannerTests = [genAbTest('BannerTest'), genAbTest('BannerTest2')];
