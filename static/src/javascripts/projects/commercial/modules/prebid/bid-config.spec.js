@@ -583,4 +583,48 @@ describe('bids', () => {
         setQueryString('pbtest=nonexistentbidder&pbtest=xhb');
         expect(bidders()).toEqual(['xhb']);
     });
+
+    test('should use correct parameters in OpenX bids geolocated in UK', () => {
+        shouldIncludeOpenx.mockReturnValue(true);
+        isInUkRegion.mockReturnValue(true);
+        const openXBid = bids('dfp-ad--top-above-nav', [[728, 90]])[2];
+        expect(openXBid.params).toEqual({
+            customParams: 'someAppNexusTargetingObject',
+            delDomain: 'guardian-d.openx.net',
+            unit: '540279541',
+        });
+    });
+
+    test('should use correct parameters in OpenX bids geolocated in US', () => {
+        shouldIncludeOpenx.mockReturnValue(true);
+        isInUsRegion.mockReturnValue(true);
+        const openXBid = bids('dfp-ad--top-above-nav', [[728, 90]])[2];
+        expect(openXBid.params).toEqual({
+            customParams: 'someAppNexusTargetingObject',
+            delDomain: 'guardian-us-d.openx.net',
+            unit: '540279544',
+        });
+    });
+
+    test('should use correct parameters in OpenX bids geolocated in AU', () => {
+        shouldIncludeOpenx.mockReturnValue(true);
+        isInAuRegion.mockReturnValue(true);
+        const openXBid = bids('dfp-ad--top-above-nav', [[728, 90]])[2];
+        expect(openXBid.params).toEqual({
+            customParams: 'someAppNexusTargetingObject',
+            delDomain: 'guardian-aus-d.openx.net',
+            unit: '540279542',
+        });
+    });
+
+    test('should use correct parameters in OpenX bids geolocated in FR', () => {
+        shouldIncludeOpenx.mockReturnValue(true);
+        isInRowRegion.mockReturnValue(true);
+        const openXBid = bids('dfp-ad--top-above-nav', [[728, 90]])[2];
+        expect(openXBid.params).toEqual({
+            customParams: 'someAppNexusTargetingObject',
+            delDomain: 'guardian-d.openx.net',
+            unit: '540279541',
+        });
+    });
 });

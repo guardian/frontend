@@ -338,33 +338,30 @@ const openxClientSideBidder: PrebidBidder = {
     name: 'oxd',
     switchName: 'prebidOpenx',
     bidParams: (): PrebidOpenXParams => {
-        switch (config.get('page.edition')) {
-            case 'US':
-                return {
-                    delDomain: 'guardian-us-d.openx.net',
-                    unit: '540279544',
-                    customParams: buildAppNexusTargetingObject(
-                        buildPageTargeting()
-                    ),
-                };
-            case 'AU':
-                return {
-                    delDomain: 'guardian-aus-d.openx.net',
-                    unit: '540279542',
-                    customParams: buildAppNexusTargetingObject(
-                        buildPageTargeting()
-                    ),
-                };
-            default:
-                // UK and ROW
-                return {
-                    delDomain: 'guardian-d.openx.net',
-                    unit: '540279541',
-                    customParams: buildAppNexusTargetingObject(
-                        buildPageTargeting()
-                    ),
-                };
+        if (isInUsRegion()) {
+            return {
+                delDomain: 'guardian-us-d.openx.net',
+                unit: '540279544',
+                customParams: buildAppNexusTargetingObject(
+                    buildPageTargeting()
+                ),
+            };
         }
+        if (isInAuRegion()) {
+            return {
+                delDomain: 'guardian-aus-d.openx.net',
+                unit: '540279542',
+                customParams: buildAppNexusTargetingObject(
+                    buildPageTargeting()
+                ),
+            };
+        }
+        // UK and ROW
+        return {
+            delDomain: 'guardian-d.openx.net',
+            unit: '540279541',
+            customParams: buildAppNexusTargetingObject(buildPageTargeting()),
+        };
     },
 };
 
