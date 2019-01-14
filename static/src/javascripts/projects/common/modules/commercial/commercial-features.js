@@ -25,8 +25,12 @@ class CommercialFeatures {
     constructor(config: any = defaultConfig) {
         // this is used for SpeedCurve tests
         const noadsUrl: boolean = /[#&]noads(&.*)?$/.test(window.location.hash);
-        const forceAdFree: boolean = /[#&]noadsaf(&.*)?$/.test(window.location.hash);
-        const forceAds: boolean = /[?&]forceads(&.*)?$/.test(window.location.search);
+        const forceAdFree: boolean = /[#&]noadsaf(&.*)?$/.test(
+            window.location.hash
+        );
+        const forceAds: boolean = /[?&]forceads(&.*)?$/.test(
+            window.location.search
+        );
         const externalAdvertising = !noadsUrl && !userPrefs.isOff('adverts');
         const sensitiveContent =
             config.page.shouldHideAdverts ||
@@ -57,10 +61,10 @@ class CommercialFeatures {
 
         this.dfpAdvertising =
             forceAds ||
-                switches.commercial &&
+            (switches.commercial &&
                 externalAdvertising &&
                 !sensitiveContent &&
-                !isIdentityPage;
+                !isIdentityPage);
 
         this.stickyTopBannerAd =
             !this.adFree &&
