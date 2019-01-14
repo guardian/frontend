@@ -37,7 +37,10 @@ const EVENTSFIRED = [];
 
 const isDesktop = (): boolean => isBreakpoint({ min: 'desktop' });
 
-const shouldAutoplay = (page: Page): boolean => {
+const shouldAutoplay = (
+    page: Page,
+    switches: { hostedVideoAutoplay: ?boolean }
+): boolean => {
     const isInternalReferrer = () => {
         if (page.isDev) {
             return document.referrer.indexOf(window.location.origin) === 0;
@@ -48,12 +51,14 @@ const shouldAutoplay = (page: Page): boolean => {
     const flashingElementsAllowed = () => isOn('flashing-elements');
     const isVideoArticle = () => page.contentType.toLowerCase() === 'video';
     const isUSContent = () => page.productionOffice.toLowerCase() === 'us';
+    const isSwitchedOn = switches.hostedVideoAutoplay || false;
 
     if (!page.contentType || !page.productionOffice) {
         return false;
     }
 
     return (
+        isSwitchedOn &&
         isUSContent() &&
         isVideoArticle() &&
         isInternalReferrer() &&
@@ -141,7 +146,12 @@ export const initHostedYoutube = (el: HTMLElement): void => {
                 }
             },
             onPlayerReady(event: { target: YouTubePlayer }) {
-                if (shouldAutoplay(config.get('page', {}))) {
+                if (
+                    shouldAutoplay(
+                        config.get('page', {}),
+                        config.get('switches', {})
+                    )
+                ) {
                     event.target.playVideo();
                 }
                 initNextVideoAutoPlay().then(() => {
