@@ -47,11 +47,11 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-  val BlockIASSwitch = Switch(
+  val HostedVideoAutoplay = Switch(
     Commercial,
-    "block-ias",
-    "Controls whether the Service Worker can filter out IAS calls",
-    owners = Seq(Owner.withGithub("regiskuckaertz")),
+    "hosted-video-autoplay",
+    "When ON, hosted video content may be allowed to autoplay",
+    owners = Seq(Owner.withGithub("katebee")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true
