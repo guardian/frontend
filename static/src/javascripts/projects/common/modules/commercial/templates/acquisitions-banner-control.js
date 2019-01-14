@@ -2,6 +2,7 @@
 import marque36icon from 'svgs/icon/marque-36.svg';
 import closeCentralIcon from 'svgs/icon/close-central.svg';
 import arrowWhiteRight from 'svgs/icon/arrow-white-right.svg';
+import applyPayMark from 'svgs/acquisitions/apple-pay-mark.svg';
 import config from 'lib/config';
 import { acquisitionsBannerTickerTemplate } from 'common/modules/commercial/templates/acquisitions-banner-ticker';
 
@@ -29,14 +30,16 @@ export const acquisitionsBannerControlTemplate = (
             }">
                 ${params.buttonCaption}${arrowWhiteRight.markup}
             </button>
-            <img
-                class="engagement-banner__payment-logos"
-                src="${config.get(
-                    'images.acquisitions.paypal-and-credit-card',
-                    ''
-                )}"
-                alt="PayPal and credit card"
-            >
+            <div class="engagement-banner__payment-logos">
+                <img
+                    src="${config.get(
+                        'images.acquisitions.paypal-and-credit-card',
+                        ''
+                    )}"
+                    alt="PayPal and credit card"
+                >
+                ${applyPayMark.markup}
+            </div>
         </div>
     </div>
     <a
