@@ -128,10 +128,8 @@ export const shouldIncludeXaxis = (): boolean => {
     return false;
 };
 
-export const shouldIncludeImproveDigital = (): boolean => {
-    const edition: ?string = config.get('page.edition');
-    return edition === 'UK' || edition === 'INT';
-};
+export const shouldIncludeImproveDigital = (): boolean =>
+    isInUkRegion() || isInRowRegion();
 
 export const stripMobileSuffix = (s: string): string =>
     stripSuffix(s, '--mobile');

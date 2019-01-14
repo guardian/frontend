@@ -227,17 +227,23 @@ describe('Utils', () => {
         }
     });
 
-    test('shouldIncludeImproveDigital should return true if edition is UK or INT', () => {
-        config.set('page.edition', 'UK');
-        expect(shouldIncludeImproveDigital()).toBe(true);
-        config.set('page.edition', 'INT');
+    test('shouldIncludeImproveDigital should return true if geolocation is UK', () => {
+        getSync.mockReturnValue('UK');
         expect(shouldIncludeImproveDigital()).toBe(true);
     });
 
-    test('shouldIncludeImproveDigital should return false if edition is AU or US', () => {
-        config.set('page.edition', 'AU');
+    test('shouldIncludeImproveDigital should return true if geolocation is ROW', () => {
+        getSync.mockReturnValue('FR');
+        expect(shouldIncludeImproveDigital()).toBe(true);
+    });
+
+    test('shouldIncludeImproveDigital should return false if geolocation is AU', () => {
+        getSync.mockReturnValue('AU');
         expect(shouldIncludeImproveDigital()).toBe(false);
-        config.set('page.edition', 'US');
+    });
+
+    test('shouldIncludeImproveDigital should return false if geolocation is US', () => {
+        getSync.mockReturnValue('US');
         expect(shouldIncludeImproveDigital()).toBe(false);
     });
 
