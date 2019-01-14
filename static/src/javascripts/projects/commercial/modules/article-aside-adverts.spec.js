@@ -15,14 +15,12 @@ jest.mock('common/modules/commercial/commercial-features', () => ({
 
 const fastdomReadSpy = jest.spyOn(fastdom, 'read');
 
-jest.mock('lib/config', () => {
-    return {
-        get: jest.fn()
-    }
-});
+jest.mock('lib/config', () => ({
+    get: jest.fn(),
+}));
 const configSpy = jest.spyOn(config, 'get');
 
-const sharedBeforeEach = (domSnippet: string) => (() => {
+const sharedBeforeEach = (domSnippet: string) => () => {
     jest.resetAllMocks();
 
     if (document.body) {
@@ -73,7 +71,7 @@ const sharedBeforeEach = (domSnippet: string) => (() => {
         display: jest.fn(),
     };
     expect.hasAssertions();
-});
+};
 
 const sharedAfterEach = () => {
     if (document.body) {
@@ -126,9 +124,7 @@ describe('Standard Article Aside Adverts', () => {
     });
 });
 
-
 describe('Immersive Article Aside Adverts', () => {
-
     const domSnippet = `
         <div class="js-content-main-column">
             <figure class="element element--immersive"></figure>
@@ -144,7 +140,9 @@ describe('Immersive Article Aside Adverts', () => {
     afterEach(sharedAfterEach);
 
     it('should have correct test elements', () => {
-        expect(qwery('.js-content-main-column .element--immersive').length).toBe(2);
+        expect(
+            qwery('.js-content-main-column .element--immersive').length
+        ).toBe(2);
     });
 
     it('should remove sticky and return all slot sizes when there is enough space', done => {
@@ -153,13 +151,13 @@ describe('Immersive Article Aside Adverts', () => {
 
         mediator.once('page:defaultcommercial:right', adSlot => {
             expect(adSlot.classList).not.toContain('js-sticky-mpu');
-            const sizes = adSlot.getAttribute('data-mobile').split("|");
-            expect(sizes).toContain("1,1");
-            expect(sizes).toContain("2,2");
-            expect(sizes).toContain("300,250");
-            expect(sizes).toContain("300,274");
-            expect(sizes).toContain("300,600");
-            expect(sizes).toContain("fluid");
+            const sizes = adSlot.getAttribute('data-mobile').split('|');
+            expect(sizes).toContain('1,1');
+            expect(sizes).toContain('2,2');
+            expect(sizes).toContain('300,250');
+            expect(sizes).toContain('300,274');
+            expect(sizes).toContain('300,600');
+            expect(sizes).toContain('fluid');
             done();
         });
         init(noop, noop);
@@ -171,13 +169,13 @@ describe('Immersive Article Aside Adverts', () => {
 
         mediator.once('page:defaultcommercial:right', adSlot => {
             expect(adSlot.classList).not.toContain('js-sticky-mpu');
-            const sizes = adSlot.getAttribute('data-mobile').split("|");
-            expect(sizes).toContain("1,1");
-            expect(sizes).toContain("2,2");
-            expect(sizes).toContain("300,250");
-            expect(sizes).not.toContain("300,274");
-            expect(sizes).not.toContain("300,600");
-            expect(sizes).not.toContain("fluid");
+            const sizes = adSlot.getAttribute('data-mobile').split('|');
+            expect(sizes).toContain('1,1');
+            expect(sizes).toContain('2,2');
+            expect(sizes).toContain('300,250');
+            expect(sizes).not.toContain('300,274');
+            expect(sizes).not.toContain('300,600');
+            expect(sizes).not.toContain('fluid');
             done();
         });
         init(noop, noop);
@@ -185,7 +183,6 @@ describe('Immersive Article Aside Adverts', () => {
 });
 
 describe('Immersive Article (no immersive elements) Aside Adverts', () => {
-
     const domSnippet = `
         <div class="js-content-main-column"></div>
         <div class="content__secondary-column js-secondary-column">

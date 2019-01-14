@@ -14,9 +14,8 @@ const calculateAllowedAdSlots = (availableSpace: number): string => {
         return '1,1|2,2|300,250|300,274';
     } else if (availableSpace > 250) {
         return '1,1|2,2|300,250';
-    } else {
-        return '1,1|2,2';
     }
+    return '1,1|2,2';
 };
 
 export const init = (start: () => void, stop: () => void): Promise<boolean> => {
@@ -32,7 +31,7 @@ export const init = (start: () => void, stop: () => void): Promise<boolean> => {
 
     const $mainCol: bonzo = $('.js-content-main-column');
     const $adSlot: bonzo = $('.js-ad-slot', $col);
-    const $immersiveEls: bonzo = $(".element--immersive", $mainCol);
+    const $immersiveEls: bonzo = $('.element--immersive', $mainCol);
 
     if (!$adSlot.length || !$mainCol.length) {
         stop();
@@ -40,11 +39,14 @@ export const init = (start: () => void, stop: () => void): Promise<boolean> => {
     }
 
     return fastdom
-        .read((): [number, number] => {
-            return [$mainCol.dim().height, $immersiveEls.offset().top - $mainCol.offset().top]
-        })
+        .read(
+            (): [number, number] => [
+                $mainCol.dim().height,
+                $immersiveEls.offset().top - $mainCol.offset().top,
+            ]
+        )
         .then(([mainColHeight, immersiveOffset]: [number, number]) => {
-            if (config.get("page.isImmersive") && $immersiveEls.length > 0) {
+            if (config.get('page.isImmersive') && $immersiveEls.length > 0) {
                 // filter ad slot sizes based on the available height
                 return fastdom.write(() => {
                     $adSlot.removeClass('right-sticky js-sticky-mpu is-sticky');
