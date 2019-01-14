@@ -9,7 +9,7 @@ import {
     buildPageTargeting,
 } from 'common/modules/commercial/build-page-targeting';
 import { commercialPrebidSafeframe } from 'common/modules/experiments/tests/commercial-prebid-safeframe';
-import { isInVariant } from 'common/modules/experiments/ab-tests';
+import { isInVariant } from 'common/modules/experiments/ab';
 import type {
     PrebidAdYouLikeParams,
     PrebidAppNexusParams,

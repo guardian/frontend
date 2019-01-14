@@ -2,7 +2,7 @@
 /* global jsdom */
 
 import config from 'lib/config';
-import { isInVariant as isInVariant_ } from 'common/modules/experiments/ab-tests';
+import { isInVariant as isInVariant_ } from 'common/modules/experiments/ab';
 import { _, bids } from './bid-config';
 import type { PrebidBidder, PrebidSize } from './types';
 import {
