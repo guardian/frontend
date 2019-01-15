@@ -36,8 +36,8 @@ export const getEngagementBannerTestToRun = (): ?Runnable<AcquisitionsABTest> =>
 // and isInVariant() depend on it and these are called in many places.
 export const getTestsToRun = memoize(
     (): $ReadOnlyArray<Runnable<ABTest>> => {
-        const epicTest = firstRunnableTest(epicTests);
-        const engagementBannerTest = firstRunnableTest(engagementBannerTests);
+        const epicTest = getEpicTestToRun();
+        const engagementBannerTest = getEngagementBannerTestToRun();
 
         return [
             ...allRunnableTests(concurrentTests),
