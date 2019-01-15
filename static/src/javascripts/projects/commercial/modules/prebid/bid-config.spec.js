@@ -46,7 +46,6 @@ const shouldIncludeXaxis: any = shouldIncludeXaxis_;
 const shouldIncludeSonobi: any = shouldIncludeSonobi_;
 const stripMobileSuffix: any = stripMobileSuffix_;
 const getBreakpointKey: any = getBreakpointKey_;
-const getVariant: any = getVariant_;
 const isInAuRegion: any = isInAuRegion_;
 const isInRowRegion: any = isInRowRegion_;
 const isInUkRegion: any = isInUkRegion_;
