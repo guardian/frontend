@@ -277,16 +277,6 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-  val sonobiSwitch: Switch = Switch(
-    group = Commercial,
-    name = "sonobi-header-bidding",
-    description = "Turn on Sonobi header bidding",
-    owners = Owner.group(SwitchGroup.Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false
-  )
-
   val OrielAnalyticsSwitch: Switch = Switch(
     group = Commercial,
     name = "oriel-analytics-or-full",

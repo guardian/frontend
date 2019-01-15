@@ -52,7 +52,6 @@ object JavaScriptPage {
       "pbIndexSites" -> Json.toJson(metaData.commercial.flatMap(_.prebidIndexSites).getOrElse(Set.empty)),
       "hbImpl" -> {
         if (prebidSwitch.isSwitchedOn) JsString("prebid")
-        else if (sonobiSwitch.isSwitchedOn) JsString("sonobi")
         else JsString("none")
       },
       "isSensitive" -> JsBoolean(page.metadata.sensitive)
