@@ -1,9 +1,9 @@
 // @flow strict
 import {
     makeBannerABTestVariants,
-    makeBannerABTestVariant,
-} from 'common/modules/commercial/contributions-utilities';
+    } from 'common/modules/commercial/contributions-utilities';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
+import { makeBannerABTestVariant } from 'common/modules/commercial/membership-engagement-banner-parameters';
 
 const componentType: OphanComponentType = 'ACQUISITIONS_ENGAGEMENT_BANNER';
 const abTestName = 'AcquisitionsBannerAustraliaPostOneMillion';

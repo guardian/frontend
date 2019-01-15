@@ -1,23 +1,19 @@
 // @flow
 import { isAbTestTargeted } from 'common/modules/commercial/targeting-tool';
 import { getEpicParams } from 'common/modules/commercial/acquisitions-copy';
-import { getAcquisitionsBannerParams } from 'common/modules/commercial/membership-engagement-banner-parameters';
+import { logView, viewsInPreviousDays, } from 'common/modules/commercial/acquisitions-view-log';
 import {
-    logView,
-    viewsInPreviousDays,
-} from 'common/modules/commercial/acquisitions-view-log';
-import {
+    addTrackingCodesToUrl,
     submitClickEvent,
     submitInsertEvent,
     submitViewEvent,
-    addTrackingCodesToUrl,
 } from 'common/modules/commercial/acquisitions-ophan';
 import $ from 'lib/$';
 import config from 'lib/config';
 import { elementInView } from 'lib/element-inview';
 import fastdom from 'lib/fastdom-promise';
 import mediator from 'lib/mediator';
-import { getSync as geolocationGetSync } from 'lib/geolocation';
+import { getLocalCurrencySymbol, getSync as geolocationGetSync } from 'lib/geolocation';
 import { noop } from 'lib/noop';
 import { epicButtonsTemplate } from 'common/modules/commercial/templates/acquisitions-epic-buttons';
 import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templates/acquisitions-epic-control';
@@ -25,13 +21,14 @@ import { shouldSeeReaderRevenue as userShouldSeeReaderRevenue } from 'common/mod
 import { supportContributeURL } from 'common/modules/commercial/support-utilities';
 import { awaitEpicButtonClicked } from 'common/modules/commercial/epic/epic-utils';
 import {
+    epicMultipleTestsGoogleDocUrl,
     getEpicGoogleDoc,
-    getBannerGoogleDoc,
+    getGoogleDoc,
     googleDocEpicControl,
 } from 'common/modules/commercial/contributions-google-docs';
 import {
-    isArticleWorthAnEpicImpression,
     defaultExclusionRules,
+    isArticleWorthAnEpicImpression,
 } from 'common/modules/commercial/epic/epic-exclusion-rules';
 
 export type EpicTemplate = (Variant, AcquisitionsEpicTemplateCopy) => string;
@@ -177,6 +174,12 @@ const makeABTestVariant = (
 
     // defaults for options
     const {
+        // filters, where empty is taken to mean 'all', multiple entries are combined with OR
+        locations = [],
+        keywordIds = [],
+        toneIds = [],
+        sections = [],
+
         maxViews = defaultMaxViews,
         isUnlimited = false,
         campaignCode = createTestAndVariantId(
@@ -301,7 +304,14 @@ const makeABTestVariant = (
             const enoughDaysBetweenViews =
                 viewsInPreviousDays(minViewDays, testId) === 0;
 
-            return (withinViewLimit && enoughDaysBetweenViews) || isUnlimited;
+            const meetsMaxViewsConditions = (withinViewLimit && enoughDaysBetweenViews) || isUnlimited;
+
+            const matchesLocations = (locations.length === 0) || locations.some(region => geolocationGetSync() === region.toUpperCase());
+            const matchesKeywordIds = (keywordIds.length === 0) || keywordIds.some(keywordId => config.get('page.keywordIds').includes(keywordId));
+            const matchesToneIds = (toneIds.length === 0) || toneIds.some(toneId => config.get('page.toneIds').includes(toneId));
+            const matchesSections = (sections.length === 0) || sections.some(section => config.get('page.section') === section);
+
+            return meetsMaxViewsConditions && matchesLocations && matchesKeywordIds && matchesToneIds && matchesSections;
         },
 
         test() {
@@ -512,41 +522,59 @@ const makeGoogleDocEpicVariants = (count: number): Array<Object> => {
     return variants;
 };
 
-const makeGoogleDocBannerVariants = (
-    count: number
-): Array<InitBannerABTestVariant> => {
-    const variants = [];
 
-    for (let i = 1; i <= count; i += 1) {
-        variants.push({
-            id: `variant_${i}`,
-            products: [],
-            engagementBannerParams: () =>
-                getBannerGoogleDoc().then(res =>
-                    getAcquisitionsBannerParams(res, `variant_${i}`)
-                ),
+export const getEpicTestsFromGoogleDoc = (): Promise<$ReadOnlyArray<EpicABTest>> =>
+    getGoogleDoc(epicMultipleTestsGoogleDocUrl).then(googleDocJson => {
+        const sheets =
+            googleDocJson &&
+            googleDocJson.sheets;
+
+        if (!sheets) {
+            return [];
+        }
+
+        const tests = Object.keys(sheets).filter(testName => testName.endsWith('__ON')).map(name => {
+            const testName = name.split('__ON')[0];
+            const rows = sheets[testName];
+            const test = makeABTest({
+                id: testName,
+                campaignId: testName,
+
+                start: '2018-01-01',
+                expiry: '2020-01-01',
+
+                author: 'Google Docs',
+                description: 'Google Docs',
+                successMeasure: 'AV2.0',
+                idealOutcome: 'Google Docs',
+                audienceCriteria: 'All',
+                audience: 1,
+                audienceOffset: 0,
+
+                variants: rows.map(row => ({
+                    id: row.name,
+                    products: [],
+                    options: {
+                        locations: row.locations.split(',').filter(Boolean),
+                        keywordIds: row.keywordIds.split(',').filter(Boolean),
+                        toneIds: row.toneIds.split(',').filter(Boolean),
+                        sections: row.sections.split(',').filter(Boolean),
+                        copy: {
+                            heading: row.heading,
+                            paragraphs: row.paragraphs.split('\n'),
+                            highlightedText: row.highlightedText.replace(
+                                /%%CURRENCY_SYMBOL%%/g,
+                                getLocalCurrencySymbol()
+                            ),
+                        }
+                    }
+                })),
+            });
+            return test;
         });
-    }
-    return variants;
-};
 
-const makeBannerABTestVariant = (
-    id: string,
-    engagementBannerParams: Object
-): InitBannerABTestVariant => ({
-    id,
-    products: [],
-    engagementBannerParams: () => Promise.resolve(engagementBannerParams),
-});
-
-const makeGoogleDocBannerControl = (): InitBannerABTestVariant => ({
-    id: 'control',
-    products: [],
-    engagementBannerParams: () =>
-        getBannerGoogleDoc().then(res =>
-            getAcquisitionsBannerParams(res, 'control')
-        ),
-});
+        return tests;
+    });
 
 export {
     shouldShowReaderRevenue,
@@ -555,9 +583,6 @@ export {
     defaultButtonTemplate,
     makeBannerABTestVariants,
     makeGoogleDocEpicVariants,
-    makeGoogleDocBannerVariants,
-    makeGoogleDocBannerControl,
-    makeBannerABTestVariant,
     defaultMaxViews,
     getReaderRevenueRegion,
 };

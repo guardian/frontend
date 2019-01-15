@@ -2,14 +2,14 @@
 
 import { loadScript } from 'lib/load-script';
 import { commercialAdVerification } from 'common/modules/experiments/tests/commercial-ad-verification.js';
-import { isInVariant } from 'common/modules/experiments/ab';
+import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 
 export const init = (start: () => void): Promise<void> => {
     const host = 'clarium.global.ssl.fastly.net';
 
     start();
 
-    if (isInVariant(commercialAdVerification, 'variant')) {
+    if (isInVariantSynchronous(commercialAdVerification, 'variant')) {
         // vivify the _clrm object
 
         /* eslint-disable no-underscore-dangle */

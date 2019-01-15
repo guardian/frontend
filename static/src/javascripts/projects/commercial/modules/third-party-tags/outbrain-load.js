@@ -6,7 +6,7 @@ import fastdom from 'lib/fastdom-promise';
 import { getBreakpoint } from 'lib/detect';
 import { loadScript } from 'lib/load-script';
 import { commercialOutbrainNewids } from 'common/modules/experiments/tests/commercial-outbrain-newids.js';
-import { isInVariant } from 'common/modules/experiments/ab';
+import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 
 import { getCode } from './outbrain-codes';
 import { getCode as getNewCode } from './outbrain-codes-new';
@@ -68,7 +68,7 @@ const load = (
     const $container = $(selectors.outbrain.container, $outbrain[0]);
     const breakpoint = getBreakpoint();
 
-    const shouldUseNewOutbrainCodes: boolean = isInVariant(
+    const shouldUseNewOutbrainCodes: boolean = isInVariantSynchronous(
         commercialOutbrainNewids,
         'variant'
     );

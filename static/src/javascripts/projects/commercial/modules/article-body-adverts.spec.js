@@ -38,7 +38,7 @@ jest.mock('lib/detect', () => ({
 }));
 jest.mock('lib/config', () => ({ page: {}, get: () => false }));
 jest.mock('common/modules/experiments/ab', () => ({
-    isInVariant: () => false,
+    isInVariantSynchronous: () => false,
 }));
 
 const spaceFillerStub: JestMockFn<*, *> = (spaceFiller.fillSpace: any);

@@ -14,7 +14,7 @@ jest.mock('lib/detect', () => ({
     getBreakpoint: jest.fn(),
 }));
 jest.mock('common/modules/experiments/ab', () => ({
-    isInVariant: () => false,
+    isInVariantSynchronous: () => false,
 }));
 jest.mock('lib/load-script', () => ({ loadScript: jest.fn() }));
 jest.mock('./outbrain-tracking', () => ({ tracking: jest.fn() }));

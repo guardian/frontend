@@ -1,11 +1,7 @@
 // @flow
 import config from 'lib/config';
 import reportError from 'lib/report-error';
-import {
-    getSync as getGeoLocation,
-    getSupporterCountryGroup,
-    extendedCurrencySymbol,
-} from 'lib/geolocation';
+import { extendedCurrencySymbol, getSupporterCountryGroup, getSync as getGeoLocation, } from 'lib/geolocation';
 import { supportContributeURL } from './support-utilities';
 import { getBannerGoogleDoc } from './contributions-google-docs';
 
@@ -135,3 +131,40 @@ export const getUserVariantParams = (
 
     return Promise.resolve();
 };
+
+const makeGoogleDocBannerVariants = (
+    count: number
+): Array<InitBannerABTestVariant> => {
+    const variants = [];
+
+    for (let i = 1; i <= count; i += 1) {
+        variants.push({
+            id: `variant_${i}`,
+            products: [],
+            engagementBannerParams: () =>
+                getBannerGoogleDoc().then(res =>
+                    getAcquisitionsBannerParams(res, `variant_${i}`)
+                ),
+        });
+    }
+    return variants;
+};
+export { makeGoogleDocBannerVariants };
+const makeBannerABTestVariant = (
+    id: string,
+    engagementBannerParams: Object
+): InitBannerABTestVariant => ({
+    id,
+    products: [],
+    engagementBannerParams: () => Promise.resolve(engagementBannerParams),
+});
+export { makeBannerABTestVariant };
+const makeGoogleDocBannerControl = (): InitBannerABTestVariant => ({
+    id: 'control',
+    products: [],
+    engagementBannerParams: () =>
+        getBannerGoogleDoc().then(res =>
+            getAcquisitionsBannerParams(res, 'control')
+        ),
+});
+export { makeGoogleDocBannerControl };

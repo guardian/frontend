@@ -1,9 +1,11 @@
 // @flow strict
 import {
     makeBannerABTestVariants,
-    makeGoogleDocBannerVariants,
+    } from 'common/modules/commercial/contributions-utilities';
+import {
     makeGoogleDocBannerControl,
-} from 'common/modules/commercial/contributions-utilities';
+    makeGoogleDocBannerVariants
+} from 'common/modules/commercial/membership-engagement-banner-parameters';
 
 const componentType: OphanComponentType = 'ACQUISITIONS_ENGAGEMENT_BANNER';
 const getTestName = (variantName: string): string =>

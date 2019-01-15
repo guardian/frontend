@@ -6,7 +6,7 @@ import {
 } from 'common/modules/experiments/ab-local-storage';
 import { overwriteMvtCookie } from 'common/modules/analytics/mvt-cookie';
 import {
-    getTestsToRun,
+    getSynchronousTestsToRun,
     runAndTrackAbTests,
 } from 'common/modules/experiments/ab';
 import {
@@ -139,7 +139,7 @@ describe('A/B', () => {
 
         test('URL participations for tests which can be run on this pageview should be persisted to localStorage', () => {
             window.location.hash = '#ab-DummyTest=variant';
-            expect(getTestsToRun()[0].variantToRun.id).toEqual('variant');
+            expect(getSynchronousTestsToRun()[0].variantToRun.id).toEqual('variant');
 
             runAndTrackAbTests();
             expect(getParticipationsFromLocalStorage()).toEqual({
@@ -218,11 +218,11 @@ describe('A/B', () => {
                 DummyTest2: { variant: 'variant' },
                 EpicTest: { variant: 'control' },
             };
-            expect(runnableTestsToParticipations(getTestsToRun())).toEqual(
+            expect(runnableTestsToParticipations(getSynchronousTestsToRun())).toEqual(
                 expectedTestsToRun
             );
             runAndTrackAbTests();
-            expect(runnableTestsToParticipations(getTestsToRun())).toEqual(
+            expect(runnableTestsToParticipations(getSynchronousTestsToRun())).toEqual(
                 expectedTestsToRun
             );
 
@@ -233,7 +233,7 @@ describe('A/B', () => {
             );
 
             runAndTrackAbTests();
-            expect(runnableTestsToParticipations(getTestsToRun())).toEqual(
+            expect(runnableTestsToParticipations(getSynchronousTestsToRun())).toEqual(
                 expectedTestsToRun
             );
 
