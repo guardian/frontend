@@ -5,7 +5,7 @@ import common.Edition
 import common.Maps.RichMap
 import common.commercial.EditionAdTargeting._
 import conf.Configuration.environment
-import conf.switches.Switches.{sonobiSwitch, prebidSwitch}
+import conf.switches.Switches.prebidSwitch
 import conf.{Configuration, DiscussionAsset}
 import model._
 import play.api.libs.json._

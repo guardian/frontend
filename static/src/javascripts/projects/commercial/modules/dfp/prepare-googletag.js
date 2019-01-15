@@ -129,7 +129,7 @@ export const init = (start: () => void, stop: () => void): Promise<void> => {
             }
         );
 
-        // Just load googletag. Sonobi's wrapper will already be loaded, and googletag is already added to the window by sonobi.
+        // Just load googletag. Prebid will already be loaded, and googletag is already added to the window by Prebid.
         return loadScript(config.libs.googletag, { async: false });
     };
 

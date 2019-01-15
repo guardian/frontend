@@ -25,7 +25,7 @@ export const dfpEnv: DfpEnv = {
     /* adSlotSelector: string. A CSS selector to query ad slots in the DOM */
     adSlotSelector: '.js-ad-slot',
 
-    /* externalDemand: string. Set to 'sonobi' for direct sonobi connection, 'none', or 'prebid' for header-bidding connections. */
+    /* externalDemand: string. Set to 'prebid' for header-bidding connections, or 'none'. */
     externalDemand: config.page.hbImpl,
 
     /* lazyLoadEnabled: boolean. Set to true when adverts are lazy-loaded */
