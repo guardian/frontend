@@ -16,6 +16,7 @@ import {
     getParticipationsFromLocalStorage,
     setParticipationsInLocalStorage,
 } from 'common/modules/experiments/ab-local-storage';
+import { getEpicTestsFromGoogleDoc } from 'common/modules/commercial/contributions-utilities';
 
 const selectRadios = () => {
     const participations = getParticipationsFromLocalStorage();
@@ -72,7 +73,7 @@ const applyCss = () => {
     $('head').append(el);
 };
 
-const appendOverlay = () => {
+const appendOverlay = (): Promise<void> => {
     const extractData = ({ id, variants, description, expiry }) => ({
         id,
         variants,
@@ -80,20 +81,23 @@ const appendOverlay = () => {
         isSwitchedOn: config.get(`switches.ab${id}`),
         isExpired: isExpired(expiry),
     });
-    const data = {
-        testGroups: [
-            { name: 'Epic', tests: epicTests.map(extractData) },
-            { name: 'Banner', tests: engagementBannerTests.map(extractData) },
-            { name: 'Other', tests: concurrentTests.map(extractData) },
-        ],
-    };
+    return getEpicTestsFromGoogleDoc().then(asyncEpicTests => {
+        const data = {
+            testGroups: [
+                { name: 'Epic', tests: [...asyncEpicTests, ...epicTests].map(extractData) },
+                { name: 'Banner', tests: engagementBannerTests.map(extractData) },
+                { name: 'Other', tests: concurrentTests.map(extractData) },
+            ],
+        };
 
-    $('body').prepend(template(overlay)(data));
+        $('body').prepend(template(overlay)(data));
+    });
 };
 
 export const showExperiments = () => {
-    appendOverlay();
-    bindEvents();
-    selectRadios();
-    applyCss();
+    appendOverlay().then(() => {
+        bindEvents();
+        selectRadios();
+        applyCss();
+    });
 };
