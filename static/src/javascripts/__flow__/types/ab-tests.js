@@ -3,6 +3,7 @@ type ListenerFunction = (f: () => void) => void;
 declare type Variant = {
     id: string,
     test: (x: Object) => void,
+    canRun?: () => boolean,
     impression?: ListenerFunction,
     success?: ListenerFunction,
     options?: Object,
@@ -25,6 +26,10 @@ declare type ABTest = {
     variants: $ReadOnlyArray<Variant>,
     canRun: () => boolean,
     notInTest?: () => void,
+};
+
+declare type Runnable<T: ABTest> = T & {
+    variantToRun: Variant;
 };
 
 declare type AcquisitionsABTest = ABTest & {

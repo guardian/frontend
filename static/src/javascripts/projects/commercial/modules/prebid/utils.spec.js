@@ -2,8 +2,6 @@
 import { getSync as getSync_ } from 'lib/geolocation';
 import { getBreakpoint as getBreakpoint_ } from 'lib/detect';
 import config from 'lib/config';
-import { testCanBeRun as testCanBeRun_ } from 'common/modules/experiments/test-can-run-checks';
-import { getParticipations as getParticipations_ } from 'common/modules/experiments/utils';
 import {
     getLargestSize,
     getBreakpointKey,
@@ -25,8 +23,6 @@ import {
 
 const getSync: any = getSync_;
 const getBreakpoint: any = getBreakpoint_;
-const testCanBeRun: any = testCanBeRun_;
-const getParticipations: any = getParticipations_;
 
 jest.mock('lodash/once', () => a => a);
 
@@ -39,8 +35,7 @@ jest.mock('lib/detect', () => ({
     hasPushStateSupport: jest.fn(() => true),
 }));
 
-jest.mock('common/modules/experiments/test-can-run-checks');
-jest.mock('common/modules/experiments/utils');
+jest.mock('common/modules/experiments/ab-tests');
 
 /* eslint-disable guardian-frontend/no-direct-access-config */
 const resetConfig = () => {
@@ -306,8 +301,6 @@ describe('Utils', () => {
     });
 
     test('shouldIncludeAdYouLike when not in any tests', () => {
-        testCanBeRun.mockReturnValue(true);
-        getParticipations.mockReturnValue(undefined);
         expect(shouldIncludeAdYouLike([[300, 250]])).toBe(true);
         expect(shouldIncludeAdYouLike([[300, 600], [300, 250]])).toBe(true);
         expect(shouldIncludeAdYouLike([[728, 90]])).toBe(false);

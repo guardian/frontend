@@ -4,7 +4,6 @@ import { removeCookie } from 'lib/cookies';
 import { isUserLoggedIn } from 'common/modules/identity/api';
 import { readerRevenueRelevantCookies } from 'common/modules/commercial/user-features';
 import { clearViewLog as clearEpicViewLog } from 'common/modules/commercial/acquisitions-view-log';
-import { clearParticipations } from 'common/modules/experiments/utils';
 import {
     clearBannerHistory,
     minArticlesBeforeShowingBanner,
@@ -16,6 +15,7 @@ import {
     incrementMvtCookie,
 } from 'common/modules/analytics/mvt-cookie';
 import { setGeolocation, getSync as geolocationGetSync } from 'lib/geolocation';
+import { clearParticipations } from 'common/modules/experiments/ab-local-storage';
 
 const clearCommonReaderRevenueStateAndReload = (): void => {
     readerRevenueRelevantCookies.forEach(cookie => removeCookie(cookie));

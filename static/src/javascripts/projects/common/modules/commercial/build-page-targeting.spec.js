@@ -12,7 +12,7 @@ import {
 import { getSync as getSync_ } from 'lib/geolocation';
 import { isUserLoggedIn as isUserLoggedIn_ } from 'common/modules/identity/api';
 import { getUserSegments as getUserSegments_ } from 'common/modules/commercial/user-ad-targeting';
-import { getParticipations as getParticipations_ } from 'common/modules/experiments/utils';
+import { getParticipations as getParticipations_ } from 'common/modules/experiments/ab';
 import { getKruxSegments as getKruxSegments_ } from 'common/modules/commercial/krux';
 
 import { getAdConsentState as getAdConsentState_ } from 'common/modules/commercial/ad-prefs.lib';
@@ -46,7 +46,7 @@ jest.mock('common/modules/identity/api', () => ({
 jest.mock('common/modules/commercial/user-ad-targeting', () => ({
     getUserSegments: jest.fn(),
 }));
-jest.mock('common/modules/experiments/utils', () => ({
+jest.mock('common/modules/experiments/ab', () => ({
     getParticipations: jest.fn(),
 }));
 jest.mock('common/modules/commercial/krux', () => ({

@@ -2,7 +2,7 @@
 
 import $ from 'lib/$';
 import { adblockInUse } from 'lib/detect';
-import { getParticipations as getABParticipations } from 'common/modules/experiments/utils';
+import { getParticipations as getABParticipations } from 'common/modules/experiments/ab';
 import { getCookie } from 'lib/cookies';
 import fetchJson from 'lib/fetch-json';
 

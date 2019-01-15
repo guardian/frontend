@@ -9,7 +9,7 @@ import {
     buildPageTargeting,
 } from 'common/modules/commercial/build-page-targeting';
 import { commercialPrebidSafeframe } from 'common/modules/experiments/tests/commercial-prebid-safeframe';
-import { getVariant, isInVariant } from 'common/modules/experiments/utils';
+import { isInVariant } from 'common/modules/experiments/ab';
 import type {
     PrebidAdYouLikeParams,
     PrebidAppNexusParams,
@@ -50,10 +50,8 @@ import {
 } from './utils';
 import { getAppNexusDirectBidParams, getAppNexusPlacementId } from './appnexus';
 
-const isInSafeframeTestVariant = (): boolean => {
-    const variant = getVariant(commercialPrebidSafeframe, 'variant');
-    return variant ? isInVariant(commercialPrebidSafeframe, variant) : false;
-};
+const isInSafeframeTestVariant = (): boolean =>
+    isInVariant(commercialPrebidSafeframe, 'variant');
 
 const isDesktopAndArticle =
     getBreakpointKey() === 'D' && config.get('page.contentType') === 'Article';

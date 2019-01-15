@@ -1,200 +1,247 @@
 // @flow
-import { segment, forceSegment, run } from 'common/modules/experiments/ab';
+
 import {
-    getParticipations,
-    isParticipating,
-    participationsKey,
-    cleanParticipations,
-} from 'common/modules/experiments/utils';
-import { variantIdFor } from 'common/modules/experiments/segment-util';
-import { local } from 'lib/storage';
+    getParticipationsFromLocalStorage,
+    setParticipationsInLocalStorage,
+} from 'common/modules/experiments/ab-local-storage';
 import { overwriteMvtCookie } from 'common/modules/analytics/mvt-cookie';
+import {
+    getTestsToRun,
+    runAndTrackAbTests,
+} from 'common/modules/experiments/ab';
+import {
+    concurrentTests,
+    epicTests,
+    engagementBannerTests,
+} from 'common/modules/experiments/ab-tests';
+import { NOT_IN_TEST } from 'common/modules/experiments/ab-constants';
+import { runnableTestsToParticipations } from 'common/modules/experiments/ab-utils';
 
-import { TESTS } from 'common/modules/experiments/ab-tests';
-import config from 'lib/config';
-
-import { genAbTest } from './__fixtures__/ab-test';
-
-jest.mock('lib/raven');
-jest.mock('lib/storage');
 jest.mock('common/modules/analytics/mvt-cookie');
 jest.mock('common/modules/experiments/ab-tests');
-jest.mock('lodash/memoize', () => f => f);
-jest.mock('ophan/ng', () => null);
+jest.mock('common/modules/experiments/ab-ophan', () => ({
+    registerImpressionEvents: () => {},
+    registerCompleteEvents: () => {},
+    trackABTests: () => {},
+    buildOphanPayload: () => {},
+}));
 
-describe('A/B tests', () => {
+jest.mock('lodash/memoize', () => f => f);
+
+/* eslint guardian-frontend/global-config: "off" */
+/* eslint guardian-frontend/no-direct-access-config: "off" */
+const cfg = window.guardian.config;
+
+describe('A/B', () => {
     beforeEach(() => {
-        // enable all test switches
-        TESTS.forEach(test => {
-            config.switches[`ab${test.id}`] = true;
-        });
+        jest.resetAllMocks();
+        cfg.page = {};
+        cfg.page.isSensitive = false;
+        cfg.switches = {
+            abDummyTest: true,
+        };
+        overwriteMvtCookie(1234);
+        window.location.hash = '';
+        setParticipationsInLocalStorage({});
     });
 
     afterEach(() => {
-        local.storage = {};
+        delete cfg.page;
+        delete cfg.switches;
     });
 
-    describe('User segmentation', () => {
-        test('tests should not run when switched off', () => {
-            const dummyTest = genAbTest('DummyTest');
-            const controlSpy = jest.spyOn(dummyTest.variants[0], 'test');
-            const variantSpy = jest.spyOn(dummyTest.variants[1], 'test');
+    describe('runAndTrackAbTests', () => {
+        test('should run all concurrent tests whose canRun is true, but just the first epic test & first banner test', () => {
+            cfg.switches = {
+                abDummyTest: true,
+                abDummyTest2: true,
+                abDummyTest3CanRunIsFalse: true,
+                abEpicTest: true,
+                abEpicTest2: true,
+                abBannerTest: true,
+                abBannerTest2: true,
+            };
+            const shouldRun = [
+                jest.spyOn(concurrentTests[0].variants[0], 'test'),
+                jest.spyOn(concurrentTests[1].variants[0], 'test'),
+                jest.spyOn(epicTests[0].variants[0], 'test'),
+                jest.spyOn(engagementBannerTests[0].variants[0], 'test'),
+            ];
+            const shouldNotRun = [
+                jest.spyOn(concurrentTests[2].variants[0], 'test'),
+                jest.spyOn(epicTests[1].variants[0], 'test'),
+                jest.spyOn(engagementBannerTests[1].variants[0], 'test'),
+            ];
 
-            config.switches.abDummyTest = false;
+            runAndTrackAbTests();
 
-            segment([dummyTest]);
-            run([dummyTest]);
-
-            expect(controlSpy).not.toHaveBeenCalled();
-            expect(variantSpy).not.toHaveBeenCalled();
+            shouldRun.forEach(spy => expect(spy).toHaveBeenCalled());
+            shouldNotRun.forEach(spy => expect(spy).not.toHaveBeenCalled());
         });
 
-        test('users should be assigned to a variant', () => {
-            segment(TESTS);
-            run(TESTS);
-
-            TESTS.forEach(test => {
-                expect(isParticipating(test)).toBeTruthy();
+        test('renamed/deleted tests should be removed from localStorage', () => {
+            setParticipationsInLocalStorage({
+                noTestSwitchForThisOne: { variant: 'Control' },
+            });
+            runAndTrackAbTests();
+            expect(getParticipationsFromLocalStorage()).toEqual({
+                DummyTest: { variant: 'control' },
             });
         });
 
-        test('all non-participating users should be put in a "not in test" group', () => {
-            const dummyTest = genAbTest('DummyTest');
-            const controlSpy = jest.spyOn(dummyTest.variants[0], 'test');
-            const variantSpy = jest.spyOn(dummyTest.variants[1], 'test');
-
-            dummyTest.audience = 0;
-
-            segment([dummyTest]);
-            run([dummyTest]);
-
-            expect(controlSpy).not.toHaveBeenCalled();
-            expect(variantSpy).not.toHaveBeenCalled();
-            expect(variantIdFor(dummyTest)).toBe('notintest');
+        test('tests with notintest participations should not run, but this should be persisted to localStorage', () => {
+            const spy = jest.spyOn(concurrentTests[0].variants[0], 'test');
+            expect(spy).not.toHaveBeenCalled();
+            setParticipationsInLocalStorage({
+                DummyTest: { variant: NOT_IN_TEST },
+            });
+            runAndTrackAbTests();
+            expect(spy).not.toHaveBeenCalled();
+            expect(getParticipationsFromLocalStorage()).toEqual({
+                DummyTest: { variant: NOT_IN_TEST },
+            });
         });
 
-        test("tests should not segment users when they can't be run", () => {
-            const dummyTest = genAbTest('DummyTest', false);
-
-            segment([dummyTest]);
-            expect(getParticipations()).toEqual({});
+        test('URL participations for non-existent variants that are not notintest should not be persisted to localStorage', () => {
+            window.location.hash = '#ab-DummyTest=bad_variant';
+            runAndTrackAbTests();
+            expect(getParticipationsFromLocalStorage()).toEqual({
+                DummyTest: { variant: 'control' },
+            });
         });
 
-        test('users should not be segmented if the test has expired', () => {
-            const dummyTest = genAbTest('DummyTest', false);
-            dummyTest.expiry = '1999-01-01';
-
-            segment([dummyTest]);
-            expect(getParticipations()).toEqual({});
+        test('URL participations for tests which cannot be run on this pageview should not be persisted to localStorage', () => {
+            cfg.switches = {
+                abDummyTest: true,
+                abDummyTest2: true,
+                abDummyTest3CanRunIsFalse: true,
+            };
+            window.location.hash = '#ab-DummyTest3CanRunIsFalse=control';
+            runAndTrackAbTests();
+            expect(getParticipationsFromLocalStorage()).toEqual({
+                DummyTest: { variant: 'control' },
+                DummyTest2: { variant: 'control' },
+            });
         });
 
-        test('users should not be segmented if the test is switched off', () => {
-            const dummyTest = genAbTest('DummyTest');
-            config.switches.abDummyTest = false;
+        test('URL participations for variants which cannot be run should not be preserved in localStorage', () => {
+            cfg.switches = {
+                abDummyTest: true,
+                abDummyTest4ControlCanRunIsFalse: true,
+            };
 
-            segment([dummyTest]);
-            expect(getParticipations()).toEqual({});
+            window.location.hash = '#ab-DummyTest4ControlCanRunIsFalse=control';
+            runAndTrackAbTests();
+            expect(getParticipationsFromLocalStorage()).toEqual({
+                DummyTest: { variant: 'control' },
+            });
         });
 
-        test("users shouldn't be segmented if they already belong to the test", () => {
-            const dummyTest = genAbTest('DummyTest');
+        test('URL participations for tests which can be run on this pageview should be persisted to localStorage', () => {
+            window.location.hash = '#ab-DummyTest=variant';
+            expect(getTestsToRun()[0].variantToRun.id).toEqual('variant');
 
-            overwriteMvtCookie(1);
-            segment([dummyTest]);
-            expect(getParticipations().DummyTest.variant).toEqual('variant');
+            runAndTrackAbTests();
+            expect(getParticipationsFromLocalStorage()).toEqual({
+                DummyTest: { variant: 'variant' },
+            });
         });
 
-        test('all tests should be retrieved', () => {
-            segment(TESTS);
-
-            expect(Object.keys(getParticipations())).toEqual(
-                TESTS.map(t => t.id)
-            );
+        test('localStorage participations for non-existent variants that are not notintest should not be preserved in localStorage', () => {
+            setParticipationsInLocalStorage({
+                DummyTest: { variant: 'bad_variant' },
+            });
+            runAndTrackAbTests();
+            expect(getParticipationsFromLocalStorage()).toEqual({
+                DummyTest: { variant: 'control' },
+            });
         });
 
-        test('expired tests should be cleaned from participations', () => {
-            const dummyTest = genAbTest('DummyTest');
+        test('localStorage participations for tests which cannot be run should not be preserved in localStorage', () => {
+            cfg.switches = {
+                abDummyTest: true,
+                abDummyTest2: true,
+                abDummyTest3CanRunIsFalse: true,
+            };
 
-            local.set(
-                participationsKey,
-                '{ "value": { "DummyTest": { "variant": "foo" } } }'
-            );
-            dummyTest.expiry = '1999-01-01';
-            segment([dummyTest]);
-            cleanParticipations([dummyTest]);
-
-            expect(getParticipations()).toEqual({});
+            setParticipationsInLocalStorage({
+                DummyTest3CanRunIsFalse: { variant: 'bad_variant' },
+            });
+            runAndTrackAbTests();
+            expect(getParticipationsFromLocalStorage()).toEqual({
+                DummyTest: { variant: 'control' },
+                DummyTest2: { variant: 'control' },
+            });
         });
 
-        test('participations that have been removed/renamed should be removed', () => {
-            const dummyTest = genAbTest('DummyTestNew');
+        test('localStorage participations for variants which cannot be run should not be preserved in localStorage', () => {
+            cfg.switches = {
+                abDummyTest: true,
+                abDummyTest4ControlCanRunIsFalse: true,
+            };
 
-            local.set(
-                participationsKey,
-                '{ "value": { "DummyTest": { "variant": "foo" } } }'
-            );
-            segment([dummyTest]);
-            cleanParticipations([dummyTest]);
-
-            expect(getParticipations()).toEqual({});
-        });
-
-        test('forcing users into tests', () => {
-            const dummyTest = genAbTest('DummyTest');
-
-            segment([dummyTest]);
-            expect(getParticipations().DummyTest.variant).toBe('variant');
-
-            forceSegment('DummyTest', 'control');
-            expect(getParticipations().DummyTest.variant).toBe('control');
+            setParticipationsInLocalStorage({
+                DummyTest4ControlCanRunIsFalse: { variant: 'control' },
+            });
+            runAndTrackAbTests();
+            expect(getParticipationsFromLocalStorage()).toEqual({
+                DummyTest: { variant: 'control' },
+            });
         });
     });
 
-    describe('Running tests', () => {
-        test('starting a test', () => {
-            const dummyTest = genAbTest('DummyTest');
-            const controlSpy = jest.spyOn(dummyTest.variants[0], 'test');
-            const variantSpy = jest.spyOn(dummyTest.variants[1], 'test');
+    describe('getTestsToRun', () => {
+        // Note that memoize has been mocked to just call the function each time!
+        // Otherwise this test would be a bit pointless
+        test('should give the same result whether called before or after runAndTrackAbTests', () => {
+            cfg.switches = {
+                abDummyTest: true,
+                abDummyTest2: true,
+                abEpicTest: true,
+            };
+            setParticipationsInLocalStorage({
+                // this should be overriden by URL
+                DummyTest: { variant: 'control' },
 
-            segment([dummyTest]);
-            run([dummyTest]);
+                // this should be respected (overriding the control, which would be the cookie-determined variant)
+                DummyTest2: { variant: 'variant' },
 
-            expect(
-                controlSpy.mock.calls.length + variantSpy.mock.calls.length
-            ).toEqual(1);
-        });
+                // this should be ignored & deleted
+                NoTestSwitchForThisOne: { variant: 'blah' },
 
-        test('tests should run until the end of the expiry day', () => {
-            // ... we need the current date in 'yyyy-mm-dd' format:
-            const dateString = new Date().toISOString().substring(0, 10);
+                // ...and we should get an EpicTest added
+            });
+            window.location.hash = '#ab-DummyTest=variant';
 
-            const dummyTest = genAbTest('DummyTest');
-            const controlSpy = jest.spyOn(dummyTest.variants[0], 'test');
-            const variantSpy = jest.spyOn(dummyTest.variants[1], 'test');
+            const expectedTestsToRun = {
+                DummyTest: { variant: 'variant' },
+                DummyTest2: { variant: 'variant' },
+                EpicTest: { variant: 'control' },
+            };
+            expect(runnableTestsToParticipations(getTestsToRun())).toEqual(
+                expectedTestsToRun
+            );
+            runAndTrackAbTests();
+            expect(runnableTestsToParticipations(getTestsToRun())).toEqual(
+                expectedTestsToRun
+            );
 
-            dummyTest.expiry = dateString;
+            // In this case, the localStorage participations should be the same as the tests to run,
+            // because there are no 'notintest' participations to preserve
+            expect(getParticipationsFromLocalStorage()).toEqual(
+                expectedTestsToRun
+            );
 
-            segment([dummyTest]);
-            run([dummyTest]);
+            runAndTrackAbTests();
+            expect(runnableTestsToParticipations(getTestsToRun())).toEqual(
+                expectedTestsToRun
+            );
 
-            expect(Object.keys(getParticipations())).toEqual(['DummyTest']);
-            expect(
-                controlSpy.mock.calls.length + variantSpy.mock.calls.length
-            ).toEqual(1);
-        });
-
-        test('tests should not run after the expiry date', () => {
-            const dummyTest = genAbTest('DummyTest');
-            const controlSpy = jest.spyOn(dummyTest.variants[0], 'test');
-            const variantSpy = jest.spyOn(dummyTest.variants[1], 'test');
-
-            dummyTest.expiry = '1999-01-01';
-
-            segment([dummyTest]);
-            run([dummyTest]);
-
-            expect(controlSpy).not.toHaveBeenCalled();
-            expect(variantSpy).not.toHaveBeenCalled();
+            // In this case, the localStorage participations should be the same as the tests to run,
+            // because there are no 'notintest' participations to preserve
+            expect(getParticipationsFromLocalStorage()).toEqual(
+                expectedTestsToRun
+            );
         });
     });
 });

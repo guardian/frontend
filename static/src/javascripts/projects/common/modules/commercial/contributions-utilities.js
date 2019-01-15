@@ -2,7 +2,10 @@
 import { isAbTestTargeted } from 'common/modules/commercial/targeting-tool';
 import { getEpicParams } from 'common/modules/commercial/acquisitions-copy';
 import { getAcquisitionsBannerParams } from 'common/modules/commercial/membership-engagement-banner-parameters';
-import { logView } from 'common/modules/commercial/acquisitions-view-log';
+import {
+    logView,
+    viewsInPreviousDays,
+} from 'common/modules/commercial/acquisitions-view-log';
 import {
     submitClickEvent,
     submitInsertEvent,
@@ -280,6 +283,25 @@ const makeABTestVariant = (
             impression,
             success,
             iframeId,
+        },
+
+        canRun() {
+            const {
+                count: maxViewCount,
+                days: maxViewDays,
+                minDaysBetweenViews: minViewDays,
+            } = maxViews;
+
+            const testId = parentTest.useLocalViewLog
+                ? parentTest.id
+                : undefined;
+
+            const withinViewLimit =
+                viewsInPreviousDays(maxViewDays, testId) < maxViewCount;
+            const enoughDaysBetweenViews =
+                viewsInPreviousDays(minViewDays, testId) === 0;
+
+            return (withinViewLimit && enoughDaysBetweenViews) || isUnlimited;
         },
 
         test() {

@@ -1,101 +1,82 @@
 // @flow
 
-import { noop } from 'lib/noop';
+import memoize from 'lodash/memoize';
 import {
-    getActiveTests,
-    getTest,
-    TESTS,
+    allRunnableTests,
+    firstRunnableTest,
+} from 'common/modules/experiments/ab-core';
+import {
+    runnableTestsToParticipations,
+    testExclusionsWhoseSwitchExists,
+} from 'common/modules/experiments/ab-utils';
+import {
+    registerCompleteEvents,
+    registerImpressionEvents,
+    trackABTests,
+} from 'common/modules/experiments/ab-ophan';
+import {
+    getParticipationsFromLocalStorage,
+    setParticipationsInLocalStorage,
+} from 'common/modules/experiments/ab-local-storage';
+import { getForcedParticipationsFromUrl } from 'common/modules/experiments/ab-url';
+import {
+    concurrentTests,
+    engagementBannerTests,
+    epicTests,
 } from 'common/modules/experiments/ab-tests';
-import { buildOphanSubmitter } from 'common/modules/experiments/ab-ophan';
-import {
-    isInTest,
-    variantIdFor,
-} from 'common/modules/experiments/segment-util';
-import { testCanBeRun } from 'common/modules/experiments/test-can-run-checks';
-import {
-    isParticipating,
-    getParticipations,
-    getVariant,
-    addParticipation,
-    getTestVariantId,
-    cleanParticipations,
-    getForcedTests,
-} from 'common/modules/experiments/utils';
 
-// Finds variant in specific tests and runs it
-const runTest = (test: ABTest): void => {
-    if (isParticipating(test) && testCanBeRun(test)) {
-        const participations = getParticipations();
-        const variantId = participations[test.id].variant;
-        const variant = getVariant(test, variantId);
+export const getEpicTestToRun = (): ?Runnable<EpicABTest> =>
+    firstRunnableTest(epicTests);
+export const getEngagementBannerTestToRun = (): ?Runnable<AcquisitionsABTest> =>
+    firstRunnableTest(engagementBannerTests);
 
-        if (variant) {
-            variant.test(variant.options || {});
-        } else if (!isInTest(test) && test.notInTest) {
-            test.notInTest();
-        }
+// These are the tests which will actually take effect on this pageview.
+// Note that this is a subset of the potentially runnable tests,
+// because we only run one epic test and one banner test per pageview.
+// We memoize this because it can't change for a given pageview, and because getParticipations()
+// and isInVariant() depend on it and these are called in many places.
+export const getTestsToRun = memoize(
+    (): $ReadOnlyArray<Runnable<ABTest>> => {
+        const epicTest = getEpicTestToRun();
+        const engagementBannerTest = getEngagementBannerTestToRun();
+
+        return [
+            ...allRunnableTests(concurrentTests),
+            ...(epicTest ? [epicTest] : []),
+            ...(engagementBannerTest ? [engagementBannerTest] : []),
+        ];
     }
+);
+
+// The tests which will take effect on this pageview,
+export const getParticipations = (): Participations =>
+    runnableTestsToParticipations(getTestsToRun());
+
+export const isInVariant = (test: ABTest, variantId: string): boolean =>
+    getParticipations()[test.id] === { variantId };
+
+export const runAndTrackAbTests = () => {
+    const testsToRun = getTestsToRun();
+
+    testsToRun.forEach(test => test.variantToRun.test(test));
+
+    registerImpressionEvents(testsToRun);
+    registerCompleteEvents(testsToRun);
+    trackABTests(testsToRun);
+
+    // If a test has a 'notintest' variant specified in localStorage,
+    // it will prevent them from participating in the test.
+    // This is typically set by the URL hash, but we want it to persist for
+    // subsequent pageviews so we save it to localStorage.
+    // We don't persist those whose switch is gone from the backend,
+    // to ensure that old tests get cleaned out and localStorage doesn't keep growing.
+    const testExclusions: Participations = testExclusionsWhoseSwitchExists({
+        ...getParticipationsFromLocalStorage(),
+        ...getForcedParticipationsFromUrl(),
+    });
+
+    setParticipationsInLocalStorage({
+        ...runnableTestsToParticipations(testsToRun),
+        ...testExclusions,
+    });
 };
-
-const allocateUserToTest = test => {
-    // Only allocate the user if the test is valid and they're not already participating.
-    if (testCanBeRun(test) && !isParticipating(test)) {
-        addParticipation(test, variantIdFor(test));
-    }
-};
-
-export const shouldRunTest = (testId: string, variantName: string) => {
-    const test = getTest(testId);
-
-    return (
-        test &&
-        isParticipating(test) &&
-        getTestVariantId(testId) === variantName &&
-        testCanBeRun(test)
-    );
-};
-
-export const segment = (tests: $ReadOnlyArray<ABTest>) =>
-    tests.forEach(allocateUserToTest);
-
-export const forceSegment = (testId: string, variantName: string) => {
-    const test: ?ABTest = getActiveTests().find(t => t.id === testId);
-    if (test) addParticipation(test, variantName);
-};
-
-export const forceVariantCompleteFunctions = (
-    testId: string,
-    variantId: string
-) => {
-    const test = getTest(testId);
-
-    if (test) {
-        const variant =
-            test &&
-            test.variants.filter(
-                v => v.id.toLowerCase() === variantId.toLowerCase()
-            )[0];
-        const impression = (variant && variant.impression) || noop;
-        const complete = (variant && variant.success) || noop;
-
-        impression(buildOphanSubmitter(test, variantId, false));
-        complete(buildOphanSubmitter(test, variantId, true));
-    }
-};
-
-export const segmentUser = () => {
-    const forcedIntoTests = getForcedTests();
-
-    if (forcedIntoTests.length) {
-        forcedIntoTests.forEach(test => {
-            forceSegment(test.testId, test.variantId);
-            forceVariantCompleteFunctions(test.testId, test.variantId);
-        });
-    } else {
-        segment(getActiveTests());
-    }
-
-    cleanParticipations(TESTS);
-};
-
-export const run = (tests: $ReadOnlyArray<ABTest>) => tests.forEach(runTest);

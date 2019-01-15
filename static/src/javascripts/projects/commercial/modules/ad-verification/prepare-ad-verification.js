@@ -1,14 +1,15 @@
 // @flow
 
 import { loadScript } from 'lib/load-script';
-import { getTestVariantId } from 'common/modules/experiments/utils.js';
+import { commercialAdVerification } from 'common/modules/experiments/tests/commercial-ad-verification.js';
+import { isInVariant } from 'common/modules/experiments/ab';
 
 export const init = (start: () => void): Promise<void> => {
     const host = 'clarium.global.ssl.fastly.net';
 
     start();
 
-    if (getTestVariantId('CommercialAdVerification') === 'variant') {
+    if (isInVariant(commercialAdVerification, 'variant')) {
         // vivify the _clrm object
 
         /* eslint-disable no-underscore-dangle */

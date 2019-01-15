@@ -50,11 +50,6 @@ jest.mock('common/modules/analytics/google', () => ({
     trackNonClickInteraction: jest.fn(),
 }));
 
-jest.mock('common/modules/experiments/utils', () => ({
-    getVariant: jest.fn(() => ({})),
-    isInVariant: jest.fn(() => true),
-}));
-
 jest.mock('common/modules/commercial/ad-prefs.lib', () => {
     const adConsentsState = [null, null];
     return {
