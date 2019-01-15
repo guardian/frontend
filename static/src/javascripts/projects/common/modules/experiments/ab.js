@@ -73,7 +73,7 @@ export const isInVariantSynchronous = (
     variantId: string
 ): boolean => getSynchronousParticipations()[test.id] === { variantId };
 
-export const runAndTrackAbTests = () => {
+export const runAndTrackAbTests = (): Promise<void> => {
     const testsToRun = getSynchronousTestsToRun();
 
     testsToRun.forEach(test => test.variantToRun.test(test));
@@ -98,7 +98,7 @@ export const runAndTrackAbTests = () => {
         ...testExclusions,
     });
 
-    getAynschronousTestsToRun().then(tests => {
+    return getAynschronousTestsToRun().then(tests => {
         tests.forEach(test => test.variantToRun.test(test));
 
         registerImpressionEvents(tests);
