@@ -1,28 +1,66 @@
-// @flow
+// @flow strict
 import {
-    init,
-    canAutoplay,
+    init as initNextVideoAutoPlay,
+    canAutoplay as canAutoplayNextVideo,
     addCancelListener,
     triggerAutoplay,
     triggerEndSlate,
 } from 'commercial/modules/hosted/next-video-autoplay';
+import { isOn } from 'common/modules/accessibility/main';
 import { initYoutubePlayer } from 'common/modules/atoms/youtube-player';
 import {
     trackYoutubeEvent,
     initYoutubeEvents,
 } from 'common/modules/atoms/youtube-tracking';
+import config from 'lib/config';
 import { isBreakpoint } from 'lib/detect';
 import mediator from 'lib/mediator';
 
-type videoPlayerComponent = { getCurrentTime: () => number };
+// https://developers.google.com/youtube/iframe_api_reference
+type YouTubePlayer = {
+    getCurrentTime: () => number,
+    getDuration: () => number,
+    fullscreener: () => void,
+    playVideo: () => void,
+    pauseVideo: () => void,
+    stopVideo: () => void,
+};
+
+type Page = {
+    isDev: boolean,
+    contentType: string,
+    host: string,
+    productionOffice: string,
+};
 
 const EVENTSFIRED = [];
 
 const isDesktop = (): boolean => isBreakpoint({ min: 'desktop' });
 
+const shouldAutoplay = (
+    page: Page,
+    switches: { hostedVideoAutoplay: ?boolean }
+): boolean => {
+    const flashingElementsAllowed = () => isOn('flashing-elements');
+    const isVideoArticle = () => page.contentType.toLowerCase() === 'video';
+    const isUSContent = () => page.productionOffice.toLowerCase() === 'us';
+    const isSwitchedOn = switches.hostedVideoAutoplay || false;
+
+    if (!page.contentType || !page.productionOffice) {
+        return false;
+    }
+
+    return (
+        isSwitchedOn &&
+        isUSContent() &&
+        isVideoArticle() &&
+        flashingElementsAllowed()
+    );
+};
+
 const sendPercentageCompleteEvents = (
     atomId: string,
-    youtubePlayer: videoPlayerComponent,
+    youtubePlayer: YouTubePlayer,
     playerTotalTime: number
 ): void => {
     const quartile = playerTotalTime / 4;
@@ -46,8 +84,8 @@ const sendPercentageCompleteEvents = (
 };
 
 export const initHostedYoutube = (el: HTMLElement): void => {
-    const atomId: ?string = el.getAttribute('data-media-id');
-    const duration: ?number = Number(el.getAttribute('data-duration'));
+    const atomId = el.getAttribute('data-media-id') || null;
+    const duration = Number(el.getAttribute('data-duration')) || null;
 
     if (!atomId || !duration) {
         return;
@@ -63,14 +101,14 @@ export const initHostedYoutube = (el: HTMLElement): void => {
     initYoutubePlayer(
         el,
         {
-            onPlayerStateChange(event: Object) {
+            onPlayerStateChange(event: { data: mixed, target: YouTubePlayer }) {
                 const player = event.target;
 
                 // show end slate when movie finishes
                 if (event.data === window.YT.PlayerState.ENDED) {
                     trackYoutubeEvent('end', atomId);
                     youtubeTimer.textContent = '0:00';
-                    if (canAutoplay()) {
+                    if (canAutoplayNextVideo()) {
                         // on mobile show the next video link in the end of the currently watching video
                         if (!isDesktop()) {
                             triggerEndSlate();
@@ -99,9 +137,18 @@ export const initHostedYoutube = (el: HTMLElement): void => {
                     window.clearInterval(playTimer);
                 }
             },
-            onPlayerReady(event: Object) {
-                init().then(() => {
-                    if (canAutoplay() && isDesktop()) {
+            onPlayerReady(event: { target: YouTubePlayer }) {
+                if (
+                    shouldAutoplay(
+                        config.get('page', {}),
+                        config.get('switches', {})
+                    ) &&
+                    isDesktop()
+                ) {
+                    event.target.playVideo();
+                }
+                initNextVideoAutoPlay().then(() => {
+                    if (canAutoplayNextVideo() && isDesktop()) {
                         addCancelListener();
                         triggerAutoplay(
                             event.target.getCurrentTime.bind(event.target),

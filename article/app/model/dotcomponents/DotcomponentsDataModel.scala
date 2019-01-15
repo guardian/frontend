@@ -218,7 +218,7 @@ object DotcomponentsDataModel {
       Configuration.site.host,
       article.metadata.webUrl,
       article.content.shouldHideAdverts,
-      hasStoryPackage = article.content.hasStoryPackage,
+      hasStoryPackage = articlePage.related.hasStoryPackage,
       hasRelated = article.content.showInRelated,
     )
 
@@ -298,7 +298,7 @@ object DotcomponentsDataModel {
 
 
   def toJsonString(model: DotcomponentsDataModel): String = {
-    Json.prettyPrint(toJson(model))
+    Json.stringify(toJson(model))
   }
 
 }

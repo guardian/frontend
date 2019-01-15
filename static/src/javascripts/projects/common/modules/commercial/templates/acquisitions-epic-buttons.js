@@ -1,6 +1,7 @@
 // @flow
 import type { CtaUrls } from 'common/modules/commercial/contributions-utilities';
 import config from 'lib/config';
+import applyPayMark from 'svgs/acquisitions/apple-pay-mark.svg';
 
 export const epicButtonsTemplate = ({ supportUrl = '' }: CtaUrls) => {
     const supportButtonSupport = `
@@ -12,10 +13,13 @@ export const epicButtonsTemplate = ({ supportUrl = '' }: CtaUrls) => {
             </a>
         </div>`;
 
-    const paymentLogos = `<img class="contributions__payment-logos contributions__contribute--epic-member" src="${config.get(
-        'images.acquisitions.paypal-and-credit-card',
-        ''
-    )}" alt="Paypal and credit card">`;
+    const paymentLogos = `<div class="contributions__payment-logos contributions__contribute--epic-member">
+        <img src="${config.get(
+            'images.acquisitions.paypal-and-credit-card',
+            ''
+        )}" alt="Paypal and credit card">
+        ${applyPayMark.markup}
+    </div>`;
 
     return `
         <div class="contributions__buttons">

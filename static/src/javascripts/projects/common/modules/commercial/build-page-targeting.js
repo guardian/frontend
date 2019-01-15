@@ -101,10 +101,6 @@ const getReferrer = (): ?string => {
             match: 't.co/',
         }, // added (/) because without slash it is picking up reddit.com too
         {
-            id: 'googleplus',
-            match: 'plus.url.google',
-        },
-        {
             id: 'reddit',
             match: 'reddit.com',
         },

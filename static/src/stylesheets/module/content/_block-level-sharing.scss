@@ -50,21 +50,6 @@
     }
 }
 
-.block-share__item--gplus {
-    border-color: $social-gplus;
-    color: $social-gplus;
-    .inline-icon {
-        fill: $social-gplus;
-    }
-
-    &:hover {
-        border-color: darken($social-gplus, 15%);
-        .inline-icon {
-            fill: darken($social-gplus, 15%);
-        }
-    }
-}
-
 .block-share__item--linkedin {
     border-color: $social-linkedin;
     color: $social-linkedin;
@@ -115,15 +100,6 @@
 
     &:hover {
         background-color: darken($social-twitter, 15%);
-    }
-}
-
-.share-modal__item--gplus {
-    background-color: $social-gplus;
-    color: #ffffff;
-
-    &:hover {
-        background-color: darken($social-gplus, 15%);
     }
 }
 

@@ -35,11 +35,16 @@ export const removeFalseyValues = (o: {
 export const stripDfpAdPrefixFrom = (s: string): string =>
     stripPrefix(s, 'dfp-ad--');
 
+export const isInUkRegion = (): boolean => currentGeoLocation() === 'UK';
+
 export const isInUsRegion = (): boolean =>
     ['US', 'CA'].includes(currentGeoLocation());
 
 export const isInAuRegion = (): boolean =>
     ['AU', 'NZ'].includes(currentGeoLocation());
+
+export const isInRowRegion = (): boolean =>
+    !isInUkRegion() && !isInUsRegion() && !isInAuRegion();
 
 export const containsMpu = (sizes: PrebidSize[]): boolean =>
     contains(sizes, [300, 250]);
@@ -116,17 +121,15 @@ export const shouldIncludeAppNexus = (): boolean =>
 export const shouldIncludeXaxis = (): boolean => {
     // 50% of UK page views
     const hasFirstLook =
-        config.get('page.isDev') || getRandomIntInclusive(1, 2) === 1;
-    if (config.get('page.edition') === 'UK') {
+        config.get('page.isDev', true) || getRandomIntInclusive(1, 2) === 1;
+    if (isInUkRegion()) {
         return hasFirstLook;
     }
     return false;
 };
 
-export const shouldIncludeImproveDigital = (): boolean => {
-    const edition: ?string = config.get('page.edition');
-    return edition === 'UK' || edition === 'INT';
-};
+export const shouldIncludeImproveDigital = (): boolean =>
+    isInUkRegion() || isInRowRegion();
 
 export const stripMobileSuffix = (s: string): string =>
     stripSuffix(s, '--mobile');

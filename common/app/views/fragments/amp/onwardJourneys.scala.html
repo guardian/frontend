@@ -17,7 +17,7 @@
     }
 
     @if(!content.shouldHideAdverts) {
-        @fragments.amp.outbrain(page, nonCompliant = content.nonCompliantOutbrainAmp)
+        @fragments.amp.outbrain(page, nonCompliant = content.tags.series.length > 1)
     }
 
     @defining({

@@ -10,7 +10,7 @@
         "content__labels--not-immersive" -> !item.content.isImmersive,
         "content__labels--column" -> item.content.isColumn,
         "content__labels--immersive" -> (item.content.isImmersive && item.content.blogOrSeriesTag.isDefined || badgeFor(item).isDefined),
-        "content__labels--panel" -> (item.content.isImmersive && item.content.blogOrSeriesTag.isDefined || item.content.isGallery),
+        "content__labels--panel" -> (item.content.isImmersive && item.content.blogOrSeriesTag.isDefined || item.content.isGallery && item.content.blogOrSeriesTag.isDefined),
         "content__labels--flagship"  -> item.tags.isAudio
     ), "content__labels")
 ">
