@@ -656,7 +656,7 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                 {
                     feature: 'epic-test',
                 },
-                false,
+                false
             );
             return [];
         });
