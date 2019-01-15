@@ -59,8 +59,9 @@ export const getSynchronousTestsToRun = memoize(
 export const getAynschronousTestsToRun = (): Promise<
     $ReadOnlyArray<Runnable<ABTest>>
 > =>
-    getEpicTestToRun()
-        .then((epicTest: ?Runnable<EpicABTest>) => (epicTest ? [epicTest] : []))
+    getEpicTestToRun().then(
+        (epicTest: ?Runnable<EpicABTest>) => (epicTest ? [epicTest] : [])
+    );
 
 // This excludes epic tests
 export const getSynchronousParticipations = (): Participations =>
