@@ -632,7 +632,7 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                                 sections: splitAndTrim(row.sections, ','),
                                 copy: {
                                     heading: row.heading,
-                                    paragraphs: row.paragraphs.split('\n'),
+                                    paragraphs: splitAndTrim(row.paragraphs, '\n'),
                                     highlightedText: row.highlightedText.replace(
                                         /%%CURRENCY_SYMBOL%%/g,
                                         getLocalCurrencySymbol()

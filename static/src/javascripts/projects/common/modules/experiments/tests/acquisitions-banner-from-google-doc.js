@@ -2,6 +2,7 @@
 import {
     makeBannerABTestVariants,
     makeGoogleDocBannerControl,
+    makeGoogleDocBannerVariants,
 } from 'common/modules/commercial/contributions-utilities';
 
 const componentType: OphanComponentType = 'ACQUISITIONS_ENGAGEMENT_BANNER';
