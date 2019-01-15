@@ -25,7 +25,8 @@ import {
     epicTests,
 } from 'common/modules/experiments/ab-tests';
 
-export const getEpicTestToRun = (): ?Runnable<EpicABTest> => firstRunnableTest(epicTests);
+export const getEpicTestToRun = (): ?Runnable<EpicABTest> =>
+    firstRunnableTest(epicTests);
 export const getEngagementBannerTestToRun = (): ?Runnable<AcquisitionsABTest> =>
     firstRunnableTest(engagementBannerTests);
 
