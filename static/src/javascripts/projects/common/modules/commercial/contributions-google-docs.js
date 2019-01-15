@@ -21,4 +21,3 @@ export const getBannerGoogleDoc = (): Promise<any> =>
 
 export const googleDocEpicControl = (): Promise<AcquisitionsEpicTemplateCopy> =>
     getGoogleDoc(epicGoogleDocUrl).then(res => getEpicParams(res, 'control'));
-

@@ -139,7 +139,9 @@ describe('A/B', () => {
 
         test('URL participations for tests which can be run on this pageview should be persisted to localStorage', () => {
             window.location.hash = '#ab-DummyTest=variant';
-            expect(getSynchronousTestsToRun()[0].variantToRun.id).toEqual('variant');
+            expect(getSynchronousTestsToRun()[0].variantToRun.id).toEqual(
+                'variant'
+            );
 
             runAndTrackAbTests();
             expect(getParticipationsFromLocalStorage()).toEqual({
@@ -218,13 +220,13 @@ describe('A/B', () => {
                 DummyTest2: { variant: 'variant' },
                 EpicTest: { variant: 'control' },
             };
-            expect(runnableTestsToParticipations(getSynchronousTestsToRun())).toEqual(
-                expectedTestsToRun
-            );
+            expect(
+                runnableTestsToParticipations(getSynchronousTestsToRun())
+            ).toEqual(expectedTestsToRun);
             runAndTrackAbTests();
-            expect(runnableTestsToParticipations(getSynchronousTestsToRun())).toEqual(
-                expectedTestsToRun
-            );
+            expect(
+                runnableTestsToParticipations(getSynchronousTestsToRun())
+            ).toEqual(expectedTestsToRun);
 
             // In this case, the localStorage participations should be the same as the tests to run,
             // because there are no 'notintest' participations to preserve
@@ -233,9 +235,9 @@ describe('A/B', () => {
             );
 
             runAndTrackAbTests();
-            expect(runnableTestsToParticipations(getSynchronousTestsToRun())).toEqual(
-                expectedTestsToRun
-            );
+            expect(
+                runnableTestsToParticipations(getSynchronousTestsToRun())
+            ).toEqual(expectedTestsToRun);
 
             // In this case, the localStorage participations should be the same as the tests to run,
             // because there are no 'notintest' participations to preserve

@@ -27,18 +27,17 @@ import {
 } from 'common/modules/experiments/ab-tests';
 import { getEpicTestsFromGoogleDoc } from 'common/modules/commercial/contributions-utilities';
 
-
 export const getEpicTestToRun = (): Promise<?Runnable<EpicABTest>> =>
-    getEpicTestsFromGoogleDoc().then(asyncEpicTests => {
-        asyncEpicTests.forEach(test => config.set(`switches.ab${test.id}`, true));
-        const tests = [
-            ...asyncEpicTests,
-            ...epicTests,
-        ];
-        const testToRun: ?Runnable<EpicABTest> = firstRunnableTest(tests);
-        return testToRun;
-    }).catch(err => null);
-
+    getEpicTestsFromGoogleDoc()
+        .then(asyncEpicTests => {
+            asyncEpicTests.forEach(test =>
+                config.set(`switches.ab${test.id}`, true)
+            );
+            const tests = [...asyncEpicTests, ...epicTests];
+            const testToRun: ?Runnable<EpicABTest> = firstRunnableTest(tests);
+            return testToRun;
+        })
+        .catch(err => null);
 
 export const getEngagementBannerTestToRun = (): ?Runnable<AcquisitionsABTest> =>
     firstRunnableTest(engagementBannerTests);
@@ -59,18 +58,22 @@ export const getSynchronousTestsToRun = memoize(
     }
 );
 
-export const getAynschronousTestsToRun = (): Promise<$ReadOnlyArray<Runnable<ABTest>>> =>
-    getEpicTestToRun().then((epicTest: ?Runnable<EpicABTest>) =>
-        epicTest ? [epicTest]: []
-    ).catch(err => []);
+export const getAynschronousTestsToRun = (): Promise<
+    $ReadOnlyArray<Runnable<ABTest>>
+> =>
+    getEpicTestToRun()
+        .then((epicTest: ?Runnable<EpicABTest>) => (epicTest ? [epicTest] : []))
+        .catch(err => []);
 
 // This excludes epic tests
 export const getSynchronousParticipations = (): Participations =>
     runnableTestsToParticipations(getSynchronousTestsToRun());
 
 // This excludes epic tests
-export const isInVariantSynchronous = (test: ABTest, variantId: string): boolean =>
-    getSynchronousParticipations()[test.id] === { variantId };
+export const isInVariantSynchronous = (
+    test: ABTest,
+    variantId: string
+): boolean => getSynchronousParticipations()[test.id] === { variantId };
 
 export const runAndTrackAbTests = () => {
     const testsToRun = getSynchronousTestsToRun();
@@ -97,7 +100,7 @@ export const runAndTrackAbTests = () => {
         ...testExclusions,
     });
 
-    getAynschronousTestsToRun().then((tests) => {
+    getAynschronousTestsToRun().then(tests => {
         tests.forEach(test => test.variantToRun.test(test));
 
         registerImpressionEvents(tests);

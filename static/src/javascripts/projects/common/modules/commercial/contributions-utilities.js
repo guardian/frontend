@@ -1,7 +1,10 @@
 // @flow
 import { isAbTestTargeted } from 'common/modules/commercial/targeting-tool';
 import { getEpicParams } from 'common/modules/commercial/acquisitions-copy';
-import { logView, viewsInPreviousDays, } from 'common/modules/commercial/acquisitions-view-log';
+import {
+    logView,
+    viewsInPreviousDays,
+} from 'common/modules/commercial/acquisitions-view-log';
 import {
     addTrackingCodesToUrl,
     submitClickEvent,
@@ -13,7 +16,10 @@ import config from 'lib/config';
 import { elementInView } from 'lib/element-inview';
 import fastdom from 'lib/fastdom-promise';
 import mediator from 'lib/mediator';
-import { getLocalCurrencySymbol, getSync as geolocationGetSync } from 'lib/geolocation';
+import {
+    getLocalCurrencySymbol,
+    getSync as geolocationGetSync,
+} from 'lib/geolocation';
 import { noop } from 'lib/noop';
 import { epicButtonsTemplate } from 'common/modules/commercial/templates/acquisitions-epic-buttons';
 import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templates/acquisitions-epic-control';
@@ -304,14 +310,37 @@ const makeABTestVariant = (
             const enoughDaysBetweenViews =
                 viewsInPreviousDays(minViewDays, testId) === 0;
 
-            const meetsMaxViewsConditions = (withinViewLimit && enoughDaysBetweenViews) || isUnlimited;
+            const meetsMaxViewsConditions =
+                (withinViewLimit && enoughDaysBetweenViews) || isUnlimited;
 
-            const matchesLocations = (locations.length === 0) || locations.some(region => geolocationGetSync() === region.toUpperCase());
-            const matchesKeywordIds = (keywordIds.length === 0) || keywordIds.some(keywordId => config.get('page.keywordIds').includes(keywordId));
-            const matchesToneIds = (toneIds.length === 0) || toneIds.some(toneId => config.get('page.toneIds').includes(toneId));
-            const matchesSections = (sections.length === 0) || sections.some(section => config.get('page.section') === section);
+            const matchesLocations =
+                locations.length === 0 ||
+                locations.some(
+                    region => geolocationGetSync() === region.toUpperCase()
+                );
+            const matchesKeywordIds =
+                keywordIds.length === 0 ||
+                keywordIds.some(keywordId =>
+                    config.get('page.keywordIds').includes(keywordId)
+                );
+            const matchesToneIds =
+                toneIds.length === 0 ||
+                toneIds.some(toneId =>
+                    config.get('page.toneIds').includes(toneId)
+                );
+            const matchesSections =
+                sections.length === 0 ||
+                sections.some(
+                    section => config.get('page.section') === section
+                );
 
-            return meetsMaxViewsConditions && matchesLocations && matchesKeywordIds && matchesToneIds && matchesSections;
+            return (
+                meetsMaxViewsConditions &&
+                matchesLocations &&
+                matchesKeywordIds &&
+                matchesToneIds &&
+                matchesSections
+            );
         },
 
         test() {
@@ -522,56 +551,59 @@ const makeGoogleDocEpicVariants = (count: number): Array<Object> => {
     return variants;
 };
 
-
-export const getEpicTestsFromGoogleDoc = (): Promise<$ReadOnlyArray<EpicABTest>> =>
+export const getEpicTestsFromGoogleDoc = (): Promise<
+    $ReadOnlyArray<EpicABTest>
+> =>
     getGoogleDoc(epicMultipleTestsGoogleDocUrl).then(googleDocJson => {
-        const sheets =
-            googleDocJson &&
-            googleDocJson.sheets;
+        const sheets = googleDocJson && googleDocJson.sheets;
 
         if (!sheets) {
             return [];
         }
 
-        const tests = Object.keys(sheets).filter(testName => testName.endsWith('__ON')).map(name => {
-            const testName = name.split('__ON')[0];
-            const rows = sheets[testName];
-            const test = makeABTest({
-                id: testName,
-                campaignId: testName,
+        const tests = Object.keys(sheets)
+            .filter(testName => testName.endsWith('__ON'))
+            .map(name => {
+                const testName = name.split('__ON')[0];
+                const rows = sheets[testName];
+                const test = makeABTest({
+                    id: testName,
+                    campaignId: testName,
 
-                start: '2018-01-01',
-                expiry: '2020-01-01',
+                    start: '2018-01-01',
+                    expiry: '2020-01-01',
 
-                author: 'Google Docs',
-                description: 'Google Docs',
-                successMeasure: 'AV2.0',
-                idealOutcome: 'Google Docs',
-                audienceCriteria: 'All',
-                audience: 1,
-                audienceOffset: 0,
+                    author: 'Google Docs',
+                    description: 'Google Docs',
+                    successMeasure: 'AV2.0',
+                    idealOutcome: 'Google Docs',
+                    audienceCriteria: 'All',
+                    audience: 1,
+                    audienceOffset: 0,
 
-                variants: rows.map(row => ({
-                    id: row.name,
-                    products: [],
-                    options: {
-                        locations: row.locations.split(',').filter(Boolean),
-                        keywordIds: row.keywordIds.split(',').filter(Boolean),
-                        toneIds: row.toneIds.split(',').filter(Boolean),
-                        sections: row.sections.split(',').filter(Boolean),
-                        copy: {
-                            heading: row.heading,
-                            paragraphs: row.paragraphs.split('\n'),
-                            highlightedText: row.highlightedText.replace(
-                                /%%CURRENCY_SYMBOL%%/g,
-                                getLocalCurrencySymbol()
-                            ),
-                        }
-                    }
-                })),
+                    variants: rows.map(row => ({
+                        id: row.name,
+                        products: [],
+                        options: {
+                            locations: row.locations.split(',').filter(Boolean),
+                            keywordIds: row.keywordIds
+                                .split(',')
+                                .filter(Boolean),
+                            toneIds: row.toneIds.split(',').filter(Boolean),
+                            sections: row.sections.split(',').filter(Boolean),
+                            copy: {
+                                heading: row.heading,
+                                paragraphs: row.paragraphs.split('\n'),
+                                highlightedText: row.highlightedText.replace(
+                                    /%%CURRENCY_SYMBOL%%/g,
+                                    getLocalCurrencySymbol()
+                                ),
+                            },
+                        },
+                    })),
+                });
+                return test;
             });
-            return test;
-        });
 
         return tests;
     });

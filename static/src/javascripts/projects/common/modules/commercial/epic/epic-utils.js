@@ -56,8 +56,4 @@ const awaitEpicButtonClicked = (): Promise<void> =>
             }
         });
     });
-export {
-    reportEpicError,
-    insertAtSubmeta,
-    awaitEpicButtonClicked,
-};
+export { reportEpicError, insertAtSubmeta, awaitEpicButtonClicked };
