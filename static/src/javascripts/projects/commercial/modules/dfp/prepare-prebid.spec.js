@@ -3,7 +3,7 @@
 import { prebid } from 'commercial/modules/prebid/prebid';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
-import { init } from './prepare-sonobi-tag';
+import { init } from './prepare-prebid';
 
 jest.mock('common/modules/commercial/commercial-features', () => ({
     commercialFeatures: {},

@@ -6,7 +6,7 @@ import { Advert } from 'commercial/modules/dfp/Advert';
 import { queueAdvert } from 'commercial/modules/dfp/queue-advert';
 import { displayLazyAds } from 'commercial/modules/dfp/display-lazy-ads';
 import { displayAds } from 'commercial/modules/dfp/display-ads';
-import { setupPrebid } from 'commercial/modules/dfp/prepare-sonobi-tag';
+import { setupPrebid } from 'commercial/modules/dfp/prepare-prebid';
 import { closeDisabledSlots } from 'commercial/modules/close-disabled-slots';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 
