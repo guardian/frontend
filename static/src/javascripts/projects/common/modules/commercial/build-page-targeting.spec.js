@@ -46,7 +46,7 @@ jest.mock('common/modules/identity/api', () => ({
 jest.mock('common/modules/commercial/user-ad-targeting', () => ({
     getUserSegments: jest.fn(),
 }));
-jest.mock('common/modules/experiments/ab-tests', () => ({
+jest.mock('common/modules/experiments/ab', () => ({
     getParticipations: jest.fn(),
 }));
 jest.mock('common/modules/commercial/krux', () => ({

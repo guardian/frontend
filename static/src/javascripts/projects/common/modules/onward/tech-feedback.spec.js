@@ -3,8 +3,8 @@
 import { initTechFeedback } from './tech-feedback';
 
 jest.mock('lib/raven');
-jest.mock('common/modules/experiments/ab-tests', () => ({
-    getTestVariantId: () => null,
+jest.mock('common/modules/experiments/ab', () => ({
+    getParticipations: () => ({}),
 }));
 
 describe('Tech-feedback', () => {

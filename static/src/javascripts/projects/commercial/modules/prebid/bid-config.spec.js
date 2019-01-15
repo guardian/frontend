@@ -64,7 +64,7 @@ jest.mock('common/modules/commercial/ad-prefs.lib', () => ({
 
 jest.mock('./utils');
 
-jest.mock('common/modules/experiments/ab-tests', () => ({
+jest.mock('common/modules/experiments/ab', () => ({
     isInVariant: jest.fn(),
 }));
 
