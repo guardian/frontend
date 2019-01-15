@@ -25,8 +25,8 @@ import {
     epicTests,
 } from 'common/modules/experiments/ab-tests';
 
-export const getEpicTestToRun = (): EpicABTest => firstRunnableTest(epicTests);
-export const getEngagementBannerTest = (): AcquisitionsABTest =>
+export const getEpicTestToRun = (): ?Runnable<EpicABTest> => firstRunnableTest(epicTests);
+export const getEngagementBannerTestToRun = (): ?Runnable<AcquisitionsABTest> =>
     firstRunnableTest(engagementBannerTests);
 
 // These are the tests which will actually take effect on this pageview.
