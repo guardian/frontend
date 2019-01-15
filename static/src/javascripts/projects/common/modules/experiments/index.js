@@ -84,8 +84,14 @@ const appendOverlay = (): Promise<void> => {
     return getEpicTestsFromGoogleDoc().then(asyncEpicTests => {
         const data = {
             testGroups: [
-                { name: 'Epic', tests: [...asyncEpicTests, ...epicTests].map(extractData) },
-                { name: 'Banner', tests: engagementBannerTests.map(extractData) },
+                {
+                    name: 'Epic',
+                    tests: [...asyncEpicTests, ...epicTests].map(extractData),
+                },
+                {
+                    name: 'Banner',
+                    tests: engagementBannerTests.map(extractData),
+                },
                 { name: 'Other', tests: concurrentTests.map(extractData) },
             ],
         };
