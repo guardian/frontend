@@ -1,10 +1,7 @@
 // @flow
 import { isAbTestTargeted } from 'common/modules/commercial/targeting-tool';
 import { getEpicParams } from 'common/modules/commercial/acquisitions-copy';
-import {
-    logView,
-    viewsInPreviousDays,
-} from 'common/modules/commercial/acquisitions-view-log';
+import { logView, viewsInPreviousDays, } from 'common/modules/commercial/acquisitions-view-log';
 import {
     addTrackingCodesToUrl,
     submitClickEvent,
@@ -15,12 +12,11 @@ import $ from 'lib/$';
 import config from 'lib/config';
 import { elementInView } from 'lib/element-inview';
 import fastdom from 'lib/fastdom-promise';
+import reportError from 'lib/report-error';
 import mediator from 'lib/mediator';
-import {
-    getLocalCurrencySymbol,
-    getSync as geolocationGetSync,
-} from 'lib/geolocation';
+import { getLocalCurrencySymbol, getSync as geolocationGetSync, } from 'lib/geolocation';
 import { noop } from 'lib/noop';
+import { splitAndTrim } from 'lib/string-utils';
 import { epicButtonsTemplate } from 'common/modules/commercial/templates/acquisitions-epic-buttons';
 import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templates/acquisitions-epic-control';
 import { shouldSeeReaderRevenue as userShouldSeeReaderRevenue } from 'common/modules/commercial/user-features';
@@ -28,6 +24,7 @@ import { supportContributeURL } from 'common/modules/commercial/support-utilitie
 import { awaitEpicButtonClicked } from 'common/modules/commercial/epic/epic-utils';
 import {
     epicMultipleTestsGoogleDocUrl,
+    getBannerGoogleDoc,
     getEpicGoogleDoc,
     getGoogleDoc,
     googleDocEpicControl,
@@ -36,6 +33,7 @@ import {
     defaultExclusionRules,
     isArticleWorthAnEpicImpression,
 } from 'common/modules/commercial/epic/epic-exclusion-rules';
+import { getAcquisitionsBannerParams } from 'common/modules/commercial/membership-engagement-banner-parameters';
 
 export type EpicTemplate = (Variant, AcquisitionsEpicTemplateCopy) => string;
 
@@ -551,6 +549,43 @@ const makeGoogleDocEpicVariants = (count: number): Array<Object> => {
     return variants;
 };
 
+
+const makeGoogleDocBannerVariants = (
+    count: number
+): Array<InitBannerABTestVariant> => {
+    const variants = [];
+
+    for (let i = 1; i <= count; i += 1) {
+        variants.push({
+            id: `variant_${i}`,
+            products: [],
+            engagementBannerParams: () =>
+                getBannerGoogleDoc().then(res =>
+                    getAcquisitionsBannerParams(res, `variant_${i}`)
+                ),
+        });
+    }
+    return variants;
+};
+
+const makeBannerABTestVariant = (
+    id: string,
+    engagementBannerParams: Object
+): InitBannerABTestVariant => ({
+    id,
+    products: [],
+    engagementBannerParams: () => Promise.resolve(engagementBannerParams),
+});
+
+const makeGoogleDocBannerControl = (): InitBannerABTestVariant => ({
+    id: 'control',
+    products: [],
+    engagementBannerParams: () =>
+        getBannerGoogleDoc().then(res =>
+            getAcquisitionsBannerParams(res, 'control')
+        ),
+});
+
 export const getEpicTestsFromGoogleDoc = (): Promise<
     $ReadOnlyArray<EpicABTest>
 > =>
@@ -561,12 +596,12 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
             return [];
         }
 
-        const tests = Object.keys(sheets)
+        return Object.keys(sheets)
             .filter(testName => testName.endsWith('__ON'))
             .map(name => {
                 const testName = name.split('__ON')[0];
                 const rows = sheets[testName];
-                const test = makeABTest({
+                return makeABTest({
                     id: testName,
                     campaignId: testName,
 
@@ -585,12 +620,10 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                         id: row.name,
                         products: [],
                         options: {
-                            locations: row.locations.split(',').filter(Boolean),
-                            keywordIds: row.keywordIds
-                                .split(',')
-                                .filter(Boolean),
-                            toneIds: row.toneIds.split(',').filter(Boolean),
-                            sections: row.sections.split(',').filter(Boolean),
+                            locations: splitAndTrim(row.locations, ','),
+                            keywordIds: splitAndTrim(row.keywordIds, ','),
+                            toneIds: splitAndTrim(row.toneIds, ','),
+                            sections: splitAndTrim(row.sections, ','),
                             copy: {
                                 heading: row.heading,
                                 paragraphs: row.paragraphs.split('\n'),
@@ -602,10 +635,17 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                         },
                     })),
                 });
-                return test;
             });
-
-        return tests;
+    }).catch((err: Error) => {
+        reportError(
+            new Error(
+                `Error getting multiple epic tests from Google Docs. ${err.message}`
+            ),
+            {
+                feature: 'epic-test',
+            }
+        );
+        return [];
     });
 
 export {
@@ -617,4 +657,7 @@ export {
     makeGoogleDocEpicVariants,
     defaultMaxViews,
     getReaderRevenueRegion,
+    makeGoogleDocBannerControl,
+    makeBannerABTestVariant,
+    makeGoogleDocBannerVariants
 };

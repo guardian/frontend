@@ -36,8 +36,7 @@ export const getEpicTestToRun = (): Promise<?Runnable<EpicABTest>> =>
             const tests = [...asyncEpicTests, ...epicTests];
             const testToRun: ?Runnable<EpicABTest> = firstRunnableTest(tests);
             return testToRun;
-        })
-        .catch(err => null);
+        });
 
 export const getEngagementBannerTestToRun = (): ?Runnable<AcquisitionsABTest> =>
     firstRunnableTest(engagementBannerTests);
