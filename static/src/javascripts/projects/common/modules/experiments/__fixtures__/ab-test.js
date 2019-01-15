@@ -1,7 +1,8 @@
 // @flow
-export const genVariant = (id: string): Variant => ({
+export const genVariant = (id: string, canRun: ?boolean): Variant => ({
     id,
     test: () => undefined,
+    ...(canRun != null ? { canRun: () => !!canRun } : {}),
 });
 
 export const genAbTest = (

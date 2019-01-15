@@ -13,7 +13,7 @@ jest.mock('lib/detect', () => ({
     adblockInUse: Promise.resolve(false),
     getBreakpoint: jest.fn(),
 }));
-jest.mock('common/modules/experiments/ab-tests', () => ({
+jest.mock('common/modules/experiments/ab', () => ({
     isInVariant: () => false,
 }));
 jest.mock('lib/load-script', () => ({ loadScript: jest.fn() }));

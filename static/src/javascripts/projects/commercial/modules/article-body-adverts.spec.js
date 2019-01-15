@@ -37,7 +37,7 @@ jest.mock('lib/detect', () => ({
     getViewport: jest.fn(),
 }));
 jest.mock('lib/config', () => ({ page: {}, get: () => false }));
-jest.mock('common/modules/experiments/ab-tests', () => ({
+jest.mock('common/modules/experiments/ab', () => ({
     isInVariant: () => false,
 }));
 

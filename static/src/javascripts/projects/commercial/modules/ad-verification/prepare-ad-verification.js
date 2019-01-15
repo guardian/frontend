@@ -2,7 +2,7 @@
 
 import { loadScript } from 'lib/load-script';
 import { commercialAdVerification } from 'common/modules/experiments/tests/commercial-ad-verification.js';
-import { isInVariant } from 'common/modules/experiments/ab-tests';
+import { isInVariant } from 'common/modules/experiments/ab';
 
 export const init = (start: () => void): Promise<void> => {
     const host = 'clarium.global.ssl.fastly.net';

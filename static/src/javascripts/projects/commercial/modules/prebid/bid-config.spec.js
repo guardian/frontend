@@ -2,7 +2,7 @@
 /* global jsdom */
 
 import config from 'lib/config';
-import { isInVariant as isInVariant_ } from 'common/modules/experiments/ab-tests';
+import { isInVariant as isInVariant_ } from 'common/modules/experiments/ab';
 import { _, bids } from './bid-config';
 import type { PrebidBidder, PrebidSize } from './types';
 import {
@@ -64,7 +64,7 @@ jest.mock('common/modules/commercial/ad-prefs.lib', () => ({
 
 jest.mock('./utils');
 
-jest.mock('common/modules/experiments/ab-tests', () => ({
+jest.mock('common/modules/experiments/ab', () => ({
     isInVariant: jest.fn(),
 }));
 
