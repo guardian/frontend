@@ -6,7 +6,7 @@ import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import once from 'lodash/once';
 import { prebid } from 'commercial/modules/prebid/prebid';
 
-const setupPrebid: () => Promise<void> = once(() => {
+export const setupPrebid: () => Promise<void> = once(() => {
     if (
         dfpEnv.externalDemand === 'prebid' &&
         commercialFeatures.dfpAdvertising &&

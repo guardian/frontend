@@ -28,7 +28,7 @@ describe('init', () => {
 
     beforeEach(() => {
         mockInitialise = jest.fn();
-        prebid.initialise = mockInitialise.bind(prebid);
+        (prebid: any).initialise = mockInitialise.bind(prebid);
     });
 
     it('should initialise Prebid when external demand is Prebid and advertising is on and ad-free is off', () => {
