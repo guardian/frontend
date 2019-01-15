@@ -145,6 +145,18 @@ $identity-header-height: 48px;
         border-radius: 9999px;
     }
 
+    .social-signin__icon {
+        position: absolute;
+        top: 5px;
+        left: 10px;
+
+        svg {
+            float: left;
+            width: 30px;
+            height: 30px;
+        }
+    }
+
     .social-signin__action--fb {
         background-color: #3b5998;
 
@@ -166,18 +178,7 @@ $identity-header-height: 48px;
             border-radius: 100%;
             width: 23px;
             height: 23px;
-        }
-    }
-
-    .social-signin__icon {
-        position: absolute;
-        top: 5px;
-        left: 10px;
-
-        svg {
-            float: left;
-            width: 30px;
-            height: 30px;
+            top: 7px;
         }
     }
 }
