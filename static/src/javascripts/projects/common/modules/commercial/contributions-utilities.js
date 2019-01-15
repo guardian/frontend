@@ -605,8 +605,8 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
             return Object.keys(sheets)
                 .filter(testName => testName.endsWith('__ON'))
                 .map(name => {
+                    const rows = sheets[name];
                     const testName = name.split('__ON')[0];
-                    const rows = sheets[testName];
                     return makeABTest({
                         id: testName,
                         campaignId: testName,
@@ -651,11 +651,12 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                 new Error(
                     `Error getting multiple epic tests from Google Docs. ${
                         err.message
-                    }`
+                    }. Stack: ${err.stack}`
                 ),
                 {
                     feature: 'epic-test',
-                }
+                },
+                false,
             );
             return [];
         });
