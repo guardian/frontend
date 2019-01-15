@@ -3,7 +3,7 @@ package services.dotcomponents
 import controllers.ArticlePage
 import model.PageWithStoryPackage
 import implicits.Requests._
-import model.liveblog.{BlockElement, TextBlockElement}
+import model.liveblog.{BlockElement, TextBlockElement, ImageBlockElement}
 import play.api.mvc.RequestHeader
 import views.support.Commercial
 
@@ -32,9 +32,10 @@ object ArticlePageChecks {
   }
 
   def hasOnlySupportedElements(page: PageWithStoryPackage): Boolean = {
-    // See: https://github.com/guardian/dotcom-rendering/blob/master/packages/frontend/amp/components/lib/Elements.tsx
+    // See: https://github.com/guardian/dotcom-rendering/blob/master/packages/frontend/web/components/lib/ArticleRenderer.tsx
     def unsupportedElement(blockElement: BlockElement) = blockElement match {
       case _: TextBlockElement => false
+      case _: ImageBlockElement => false
       case _ => true
     }
 
