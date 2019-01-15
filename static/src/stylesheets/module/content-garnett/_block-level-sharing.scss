@@ -50,21 +50,6 @@
     }
 }
 
-.block-share__item--gplus {
-    border-color: $social-gplus;
-    color: $social-gplus;
-    .inline-icon {
-        fill: $social-gplus;
-    }
-
-    &:hover {
-        border-color: darken($social-gplus, 15%);
-        .inline-icon {
-            fill: darken($social-gplus, 15%);
-        }
-    }
-}
-
 .block-share__item--linkedin {
     border-color: $social-linkedin;
     color: $social-linkedin;

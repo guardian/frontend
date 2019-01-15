@@ -9,10 +9,6 @@
     @include social-icon($social-facebook);
 }
 
-.social-icon--gplus {
-    @include social-icon($social-gplus);
-}
-
 .social-icon--whatsapp {
     @include social-icon($social-whatsapp);
 }

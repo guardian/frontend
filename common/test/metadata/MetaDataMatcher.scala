@@ -27,7 +27,7 @@ object MetaDataMatcher extends Matchers  {
 
     val socialNetworks = (organisation \ "sameAs").as[List[String]]
 
-    socialNetworks.size should be(4)
+    socialNetworks.size should be(3)
   }
 
   def ensureWebPage(result: Future[Result], articleUrl: String) {

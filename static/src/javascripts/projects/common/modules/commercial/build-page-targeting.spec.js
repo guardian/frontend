@@ -263,13 +263,6 @@ describe('Build Page Targeting', () => {
             expect(buildPageTargeting().ref).toEqual('twitter');
         });
 
-        it('should set ref to Googleplus', () => {
-            getReferrer.mockReturnValue(
-                'https://plus.url.google.com/always-pass-on-what-you-have-learned'
-            );
-            expect(buildPageTargeting().ref).toEqual('googleplus');
-        });
-
         it('should set ref to reddit', () => {
             getReferrer.mockReturnValue(
                 'https://www.reddit.com/its-not-my-fault'
