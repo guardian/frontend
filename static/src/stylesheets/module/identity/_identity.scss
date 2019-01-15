@@ -161,12 +161,18 @@ $identity-header-height: 48px;
             margin-left: $gs-gutter/2;
             width: gs-span(3);
         }
+        .social-signin__icon--google {
+            background-color: #fff;
+            border-radius: 100%;
+            width: 23px;
+            height: 23px;
+        }
     }
 
     .social-signin__icon {
         position: absolute;
-        top: 3px;
-        left: 6px;
+        top: 5px;
+        left: 10px;
 
         svg {
             float: left;
