@@ -1,7 +1,10 @@
 // @flow
 import { isAbTestTargeted } from 'common/modules/commercial/targeting-tool';
 import { getEpicParams } from 'common/modules/commercial/acquisitions-copy';
-import { logView, viewsInPreviousDays, } from 'common/modules/commercial/acquisitions-view-log';
+import {
+    logView,
+    viewsInPreviousDays,
+} from 'common/modules/commercial/acquisitions-view-log';
 import {
     addTrackingCodesToUrl,
     submitClickEvent,
@@ -14,7 +17,10 @@ import { elementInView } from 'lib/element-inview';
 import fastdom from 'lib/fastdom-promise';
 import reportError from 'lib/report-error';
 import mediator from 'lib/mediator';
-import { getLocalCurrencySymbol, getSync as geolocationGetSync, } from 'lib/geolocation';
+import {
+    getLocalCurrencySymbol,
+    getSync as geolocationGetSync,
+} from 'lib/geolocation';
 import { noop } from 'lib/noop';
 import { splitAndTrim } from 'lib/string-utils';
 import { epicButtonsTemplate } from 'common/modules/commercial/templates/acquisitions-epic-buttons';
@@ -549,7 +555,6 @@ const makeGoogleDocEpicVariants = (count: number): Array<Object> => {
     return variants;
 };
 
-
 const makeGoogleDocBannerVariants = (
     count: number
 ): Array<InitBannerABTestVariant> => {
@@ -589,64 +594,68 @@ const makeGoogleDocBannerControl = (): InitBannerABTestVariant => ({
 export const getEpicTestsFromGoogleDoc = (): Promise<
     $ReadOnlyArray<EpicABTest>
 > =>
-    getGoogleDoc(epicMultipleTestsGoogleDocUrl).then(googleDocJson => {
-        const sheets = googleDocJson && googleDocJson.sheets;
+    getGoogleDoc(epicMultipleTestsGoogleDocUrl)
+        .then(googleDocJson => {
+            const sheets = googleDocJson && googleDocJson.sheets;
 
-        if (!sheets) {
-            return [];
-        }
-
-        return Object.keys(sheets)
-            .filter(testName => testName.endsWith('__ON'))
-            .map(name => {
-                const testName = name.split('__ON')[0];
-                const rows = sheets[testName];
-                return makeABTest({
-                    id: testName,
-                    campaignId: testName,
-
-                    start: '2018-01-01',
-                    expiry: '2020-01-01',
-
-                    author: 'Google Docs',
-                    description: 'Google Docs',
-                    successMeasure: 'AV2.0',
-                    idealOutcome: 'Google Docs',
-                    audienceCriteria: 'All',
-                    audience: 1,
-                    audienceOffset: 0,
-
-                    variants: rows.map(row => ({
-                        id: row.name,
-                        products: [],
-                        options: {
-                            locations: splitAndTrim(row.locations, ','),
-                            keywordIds: splitAndTrim(row.keywordIds, ','),
-                            toneIds: splitAndTrim(row.toneIds, ','),
-                            sections: splitAndTrim(row.sections, ','),
-                            copy: {
-                                heading: row.heading,
-                                paragraphs: row.paragraphs.split('\n'),
-                                highlightedText: row.highlightedText.replace(
-                                    /%%CURRENCY_SYMBOL%%/g,
-                                    getLocalCurrencySymbol()
-                                ),
-                            },
-                        },
-                    })),
-                });
-            });
-    }).catch((err: Error) => {
-        reportError(
-            new Error(
-                `Error getting multiple epic tests from Google Docs. ${err.message}`
-            ),
-            {
-                feature: 'epic-test',
+            if (!sheets) {
+                return [];
             }
-        );
-        return [];
-    });
+
+            return Object.keys(sheets)
+                .filter(testName => testName.endsWith('__ON'))
+                .map(name => {
+                    const testName = name.split('__ON')[0];
+                    const rows = sheets[testName];
+                    return makeABTest({
+                        id: testName,
+                        campaignId: testName,
+
+                        start: '2018-01-01',
+                        expiry: '2020-01-01',
+
+                        author: 'Google Docs',
+                        description: 'Google Docs',
+                        successMeasure: 'AV2.0',
+                        idealOutcome: 'Google Docs',
+                        audienceCriteria: 'All',
+                        audience: 1,
+                        audienceOffset: 0,
+
+                        variants: rows.map(row => ({
+                            id: row.name,
+                            products: [],
+                            options: {
+                                locations: splitAndTrim(row.locations, ','),
+                                keywordIds: splitAndTrim(row.keywordIds, ','),
+                                toneIds: splitAndTrim(row.toneIds, ','),
+                                sections: splitAndTrim(row.sections, ','),
+                                copy: {
+                                    heading: row.heading,
+                                    paragraphs: row.paragraphs.split('\n'),
+                                    highlightedText: row.highlightedText.replace(
+                                        /%%CURRENCY_SYMBOL%%/g,
+                                        getLocalCurrencySymbol()
+                                    ),
+                                },
+                            },
+                        })),
+                    });
+                });
+        })
+        .catch((err: Error) => {
+            reportError(
+                new Error(
+                    `Error getting multiple epic tests from Google Docs. ${
+                        err.message
+                    }`
+                ),
+                {
+                    feature: 'epic-test',
+                }
+            );
+            return [];
+        });
 
 export {
     shouldShowReaderRevenue,
@@ -659,5 +668,5 @@ export {
     getReaderRevenueRegion,
     makeGoogleDocBannerControl,
     makeBannerABTestVariant,
-    makeGoogleDocBannerVariants
+    makeGoogleDocBannerVariants,
 };

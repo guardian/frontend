@@ -28,15 +28,14 @@ import {
 import { getEpicTestsFromGoogleDoc } from 'common/modules/commercial/contributions-utilities';
 
 export const getEpicTestToRun = (): Promise<?Runnable<EpicABTest>> =>
-    getEpicTestsFromGoogleDoc()
-        .then(asyncEpicTests => {
-            asyncEpicTests.forEach(test =>
-                config.set(`switches.ab${test.id}`, true)
-            );
-            const tests = [...asyncEpicTests, ...epicTests];
-            const testToRun: ?Runnable<EpicABTest> = firstRunnableTest(tests);
-            return testToRun;
-        });
+    getEpicTestsFromGoogleDoc().then(asyncEpicTests => {
+        asyncEpicTests.forEach(test =>
+            config.set(`switches.ab${test.id}`, true)
+        );
+        const tests = [...asyncEpicTests, ...epicTests];
+        const testToRun: ?Runnable<EpicABTest> = firstRunnableTest(tests);
+        return testToRun;
+    });
 
 export const getEngagementBannerTestToRun = (): ?Runnable<AcquisitionsABTest> =>
     firstRunnableTest(engagementBannerTests);
@@ -62,7 +61,6 @@ export const getAynschronousTestsToRun = (): Promise<
 > =>
     getEpicTestToRun()
         .then((epicTest: ?Runnable<EpicABTest>) => (epicTest ? [epicTest] : []))
-        .catch(err => []);
 
 // This excludes epic tests
 export const getSynchronousParticipations = (): Participations =>
