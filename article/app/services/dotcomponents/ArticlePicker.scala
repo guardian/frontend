@@ -132,10 +132,10 @@ object ArticlePicker {
 
     val tier = if ((isSupported && isWhitelisted && isEnabled) || request.isGuui) RemoteRender else LocalRender
 
-    if (tier != RemoteRender) {
+    if (tier == RemoteRender) {
       logRequest(s"path executing in dotcomponents", features, page)
     } else {
-      logRequest(s"path executing in dotcomponents", features, page)
+      logRequest(s"path executing in web", features, page)
     }
 
     tier
