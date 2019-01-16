@@ -27,15 +27,18 @@ import {
 } from 'common/modules/experiments/ab-tests';
 import { getEpicTestsFromGoogleDoc } from 'common/modules/commercial/contributions-utilities';
 
-export const getEpicTestToRun = (): Promise<?Runnable<EpicABTest>> =>
-    getEpicTestsFromGoogleDoc().then(asyncEpicTests => {
-        asyncEpicTests.forEach(test =>
-            config.set(`switches.ab${test.id}`, true)
-        );
-        const tests = [...asyncEpicTests, ...epicTests];
-        const testToRun: ?Runnable<EpicABTest> = firstRunnableTest(tests);
-        return testToRun;
-    });
+export const getEpicTestToRun = (): Promise<?Runnable<EpicABTest>> => {
+    if (config.get('switches.epicTestsFromGoogleDoc')) {
+        return getEpicTestsFromGoogleDoc().then(asyncEpicTests => {
+            asyncEpicTests.forEach(test =>
+                config.set(`switches.ab${test.id}`, true)
+            );
+            return firstRunnableTest<EpicABTest>([...asyncEpicTests, ...epicTests]);
+        });
+    } else {
+        return Promise.resolve(firstRunnableTest<EpicABTest>(epicTests));
+    }
+};
 
 export const getEngagementBannerTestToRun = (): ?Runnable<AcquisitionsABTest> =>
     firstRunnableTest(engagementBannerTests);

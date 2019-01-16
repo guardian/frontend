@@ -237,6 +237,17 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
+
+  val EpicTestsFromGoogleDocs = Switch(
+    Commercial,
+    "epic-tests-from-google-docs",
+    "Fetches epic tests from Google Docs. These take priority over hardcoded epic tests.",
+    owners = Seq(Owner.withGithub("joelochlann")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
   val MembershipEngagementBannerBlockUK = Switch(
     Commercial,
     "membership-engagement-banner-block-uk",
