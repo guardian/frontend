@@ -9,16 +9,16 @@
             href="@idUrlBuilder.buildOAuthUrl("/facebook/" + route.facebook.path, idRequest, ThirdPartyConditions.optParams(idRequest, idUrlBuilder))
             ">
             <span>@route.facebook.name with Facebook</span>
-            @fragments.inlineSvg("share-facebook", "icon", List("social-signin__icon", "social-signin__icon--fb"))
+            @fragments.inlineSvg("share-facebook-square", "icon", List("social-signin__icon", "social-signin__icon--fb"))
         </a>
     </li>
     <li class="social-signin__item">
-        <a class="social-signin__action social-signin__action--gplus"
+        <a class="social-signin__action social-signin__action--google"
             data-link-name="Register/Sign in with Google" data-test-id="google-sign-in"
             href="@idUrlBuilder.buildOAuthUrl("/google/" + route.google.path, idRequest, ThirdPartyConditions.optParams(idRequest, idUrlBuilder, loginHint))
             ">
             <span>@route.google.name with Google</span>
-            @fragments.inlineSvg("share-gplus", "icon", List("social-signin__icon", "social-signin__icon--gplus"))
+            @fragments.inlineSvg("share-google", "icon", List("social-signin__icon", "social-signin__icon--google"))
         </a>
     </li>
 </ul>

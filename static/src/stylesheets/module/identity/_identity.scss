@@ -145,6 +145,18 @@ $identity-header-height: 48px;
         border-radius: 9999px;
     }
 
+    .social-signin__icon {
+        position: absolute;
+        top: 5px;
+        left: 10px;
+
+        svg {
+            float: left;
+            width: 30px;
+            height: 30px;
+        }
+    }
+
     .social-signin__action--fb {
         background-color: #3b5998;
 
@@ -154,24 +166,19 @@ $identity-header-height: 48px;
         }
     }
 
-    .social-signin__action--gplus {
+    .social-signin__action--google {
         background-color: #4285f4;
 
         @include mq(tablet) {
             margin-left: $gs-gutter/2;
             width: gs-span(3);
         }
-    }
-
-    .social-signin__icon {
-        position: absolute;
-        top: 3px;
-        left: 6px;
-
-        svg {
-            float: left;
-            width: 30px;
-            height: 30px;
+        .social-signin__icon--google {
+            background-color: $brightness-100;
+            border-radius: 100%;
+            width: 23px;
+            height: 23px;
+            top: 7px;
         }
     }
 }
