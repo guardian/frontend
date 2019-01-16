@@ -43,8 +43,8 @@ object AMPPicker {
 
   val logger = DotcomponentsLogger()
 
-  private[this] def logRequest(msg:String, results: Map[String, Boolean])(implicit request: RequestHeader): Unit = {
-    logger.withRequestHeaders(request).results(msg, results)
+  private[this] def logRequest(msg:String, results: Map[String, Boolean], page: PageWithStoryPackage)(implicit request: RequestHeader): Unit = {
+    logger.withRequestHeaders(request).results(msg, results, page)
   }
 
 
@@ -109,10 +109,10 @@ object AMPPicker {
 
     val tier = if ((isSupported && isEnabled && isWhitelisted) || request.isGuui) RemoteRenderAMP else LocalRender
 
-    if (tier != RemoteRender) {
-      logRequest(s"path executing in dotcomponents", features)
+    if (tier == RemoteRender) {
+      logRequest(s"path executing in dotcomponents AMP", features, page)
     } else {
-      logRequest(s"path executing in dotcomponents", features)
+      logRequest(s"path executing in web AMP", features, page)
     }
 
     tier
