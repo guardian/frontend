@@ -2,6 +2,7 @@ package services.dotcomponents
 
 import common.Logging
 import common.LoggingField._
+import model.PageWithStoryPackage
 import play.api.mvc.RequestHeader
 
 import scala.util.Random
@@ -31,12 +32,25 @@ case class DotcomponentsLogger(request: Option[RequestHeader]) extends Logging {
   def fieldsFromResults(results: Map[String, Boolean]):List[LogField] =
     results.map({ case (k, v) => LogFieldString(k, v.toString)}).toList
 
+  def elementsLogFieldFromPage(page: PageWithStoryPackage): List[LogField] = List(
+    LogFieldString(
+      "page.elements",
+      (
+        page.article.blocks match {
+          case Some(blocks) => blocks.body.flatMap(bblock => bblock.elements) map (be => be.getClass.getSimpleName)
+          case None => Seq()
+        }
+      ).distinct.mkString(", ")
+    )
+  )
+
   def withRequestHeaders(rh: RequestHeader): DotcomponentsLogger = {
     copy(Some(rh))
   }
 
-  def results(message: String, results: Map[String, Boolean]): Unit = {
-    logInfoWithCustomFields(message, customFields ++ fieldsFromResults(results))
+
+  def results(message: String, results: Map[String, Boolean], page: PageWithStoryPackage): Unit = {
+    logInfoWithCustomFields(message, customFields ++ fieldsFromResults(results) ++ elementsLogFieldFromPage(page))
   }
 
   def info(message: String): Unit = {

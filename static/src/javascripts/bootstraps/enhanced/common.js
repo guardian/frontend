@@ -175,6 +175,20 @@ const checkIframe = (): void => {
     }
 };
 
+const normalise = (): void => {
+    if (document.location.hash === '#nfn') {
+        localStorage.set('nfn', true);
+    }
+    if (document.location.hash === '#nnfn') {
+        localStorage.remove('nfn');
+    }
+    if (localStorage.get('nfn')) {
+        import('common/modules/ui/normalise').then(({ go }) => {
+            go();
+        });
+    }
+};
+
 const startRegister = (): void => {
     initAnalyticsRegister();
 };
@@ -297,6 +311,7 @@ const init = (): void => {
         ['c-event-listeners', windowEventListeners],
         ['c-block-link', fauxBlockLink],
         ['c-iframe', checkIframe],
+        ['c-normalise', normalise],
         ['c-tabs', showTabs],
         ['c-top-nav', initialiseTopNavItems],
         ['c-init-nav', initialiseNavigation],
