@@ -110,9 +110,9 @@ object AMPPicker {
     val tier = if ((isSupported && isEnabled && isWhitelisted) || request.isGuui) RemoteRenderAMP else LocalRender
 
     if (tier != RemoteRender) {
-      logRequest(s"path executing in dotcomponents", features, page)
+      logRequest(s"path executing in dotcomponents AMP", features, page)
     } else {
-      logRequest(s"path executing in dotcomponents", features, page)
+      logRequest(s"path executing in dotcomponents AMP", features, page)
     }
 
     tier
