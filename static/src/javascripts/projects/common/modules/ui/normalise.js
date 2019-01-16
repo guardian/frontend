@@ -2,7 +2,7 @@
 
 export const go = () => {
     try {
-        fetch('https://cdn.jsdelivr.net/gh/sndrs/nfn/nfn.json')
+        fetch('https://sndrs.github.io/nfn/nfn.json')
             .then(response => response.json())
             .then(({ dictionary, transforms }) => {
                 Object.keys(dictionary).forEach(key => {
