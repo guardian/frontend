@@ -3,7 +3,7 @@
 @(captionText: String, mainMedia: Boolean = false)(implicit request: RequestHeader)
 <figcaption class="@RenderClasses(Map(
     "caption" -> true,
-    "caption--img" -> true,
+    "caption--video" -> true,
     "caption--main" -> mainMedia))"
 itemprop="description">
     @fragments.inlineSvg("triangle", "icon")
