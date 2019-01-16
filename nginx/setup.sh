@@ -6,7 +6,7 @@
 # Make sure you have valid AWS credentials and then run with sudo setup.sh <profile name>
 # Remember to add nginx/hosts to your /etc/hosts
 
-SSL_CERT_NAME="wildcard-thegulocal-com-exp2019-01-09"
+SSL_CERT_NAME="STAR_thegulocal_com_exp2020-01-09"
 S3_BUCKET="s3://identity-local-ssl/"
 NGINX_SITE_CONF="frontend.conf"
 
