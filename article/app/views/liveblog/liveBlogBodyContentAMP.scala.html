@@ -6,7 +6,25 @@
 @import common.Edition
 @import conf.Configuration
 @import org.joda.time.DateTimeZone
-@import views.support.{AmpAd, AmpAdDataSlot, AmpAdRtcConfig, RowAdRegion}
+@import views.support.{AdRegion, AmpAd, AmpAdDataSlot, AmpAdRtcConfig, AuAdRegion, RowAdRegion, UsAdRegion}
+
+@ad(article:Article, adRegion: AdRegion) = {
+    <amp-ad
+        class="geo-amp-ad liveblog-geo-amp-ad--@{adRegion.cssClassSuffix}"
+        width="300"
+        height="250"
+        type="doubleclick"
+        data-loading-strategy="prefer-viewability-over-views"
+        data-npa-on-unknown-consent="true"
+        json=@AmpAd(article, request.path, Edition(request).id.toLowerCase()).toString()
+        data-slot=@AmpAdDataSlot(article).toString()
+        rtc-config=@AmpAdRtcConfig.toJsonString(
+            Configuration.commercial.prebidServerUrl,
+            adRegion,
+            debug = Configuration.environment.isNonProd
+        )>
+    </amp-ad>
+}
 
 @liveBlogBlocksAMP(article: Article, timezone: DateTimeZone) = {
     @model.currentPage.currentPage.blocks.sliding(5, 5).zipWithIndex.map { case (blockGroup, index) =>
@@ -15,20 +33,10 @@
         @* Add advert every 5 blog posts, up to a maximum of 8 *@
         @if(shouldShowAds(model) && blockGroup.length == 5 && index < 8) {
             <div id="amp-ad-@index" data-sort-time="1" class="block amp-ad-container amp-ad-container--live-blog">
-                <amp-ad
-                    width="300"
-                    height="250"
-                    type="doubleclick"
-                    data-loading-strategy="prefer-viewability-over-views"
-                    data-npa-on-unknown-consent="true"
-                    json=@AmpAd(article, request.path, Edition(request).id.toLowerCase()).toString()
-                    data-slot=@AmpAdDataSlot(article).toString()
-                    rtc-config=@AmpAdRtcConfig.toJsonString(
-                        Configuration.commercial.prebidServerUrl,
-                        RowAdRegion,
-                        debug = Configuration.environment.isNonProd
-                    )>
-                </amp-ad>
+                @* An ad per ad region in template but only one will be active at runtime *@
+                @ad(article, RowAdRegion)
+                @ad(article, UsAdRegion)
+                @ad(article, AuAdRegion)
             </div>
         }
     }
