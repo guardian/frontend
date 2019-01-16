@@ -33,11 +33,13 @@ export const getEpicTestToRun = (): Promise<?Runnable<EpicABTest>> => {
             asyncEpicTests.forEach(test =>
                 config.set(`switches.ab${test.id}`, true)
             );
-            return firstRunnableTest<EpicABTest>([...asyncEpicTests, ...epicTests]);
+            return firstRunnableTest<EpicABTest>([
+                ...asyncEpicTests,
+                ...epicTests,
+            ]);
         });
-    } else {
-        return Promise.resolve(firstRunnableTest<EpicABTest>(epicTests));
     }
+    return Promise.resolve(firstRunnableTest<EpicABTest>(epicTests));
 };
 
 export const getEngagementBannerTestToRun = (): ?Runnable<AcquisitionsABTest> =>
