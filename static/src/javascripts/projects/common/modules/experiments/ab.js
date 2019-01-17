@@ -28,7 +28,7 @@ import {
 import { getEpicTestsFromGoogleDoc } from 'common/modules/commercial/contributions-utilities';
 
 export const getEpicTestToRun = (): Promise<?Runnable<EpicABTest>> => {
-    if (config.get('switches.epicTestsFromGoogleDoc')) {
+    if (config.get('switches.epicTestsFromGoogleDocs')) {
         return getEpicTestsFromGoogleDoc().then(asyncEpicTests => {
             asyncEpicTests.forEach(test =>
                 config.set(`switches.ab${test.id}`, true)
