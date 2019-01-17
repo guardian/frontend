@@ -20,14 +20,21 @@ trait PageskinAdAgent {
     edition: Edition
   ): Seq[PageSkinSponsorship] = {
 
+    val nextGenSuffix = "/ng"
+
+    def containsAdUnit(adUnits: Seq[String], adUnit: String): Boolean =
+      adUnits.map { _.stripSuffix(nextGenSuffix) }
+      .exists { adUnitPath.stripSuffix(nextGenSuffix).endsWith }
+
+    def hasMatchingAdUnit(sponsorship: PageSkinSponsorship): Boolean =
+      containsAdUnit(sponsorship.adUnits, adUnitPath)
+
     val candidates = pageSkinSponsorships filter { sponsorship =>
       sponsorship.editions.contains(edition)
     }
 
     if (PageSkin.isValidAdUnit(adUnitPath)) {
-      candidates filter { sponsorship =>
-        sponsorship.adUnits.exists(adUnitPath.endsWith)
-      }
+      candidates filter hasMatchingAdUnit
     } else {
       val targetingMap = toMap(metaData.commercial.map(_.adTargeting(edition)).getOrElse(Set.empty))
 
