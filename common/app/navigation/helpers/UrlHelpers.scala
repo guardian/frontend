@@ -17,6 +17,7 @@ object UrlHelpers {
   case object SideMenu extends Position
   case object AmpHeader extends Position
   case object Footer extends Position
+  case object AmpFooter extends Position
   case object ManageMyAccountUpsell extends Position
   case object ManageMyAccountCancel extends Position
 
@@ -30,14 +31,22 @@ object UrlHelpers {
       case (SupportContribute, Header | AmpHeader | SlimHeaderDropdown) => "header_support_contribute"
       case (SupportContribute, SideMenu) => "side_menu_support_contribute"
       case (SupportContribute, Footer) => "footer_support_contribute"
+      case (SupportContribute, AmpFooter) => "amp_footer_support_contribute"
 
       case (SupportSubscribe, Header | AmpHeader | SlimHeaderDropdown) => "header_support_subscribe"
       case (SupportSubscribe, SideMenu) => "side_menu_support_subscribe"
       case (SupportSubscribe, Footer) => "footer_support_subscribe"
+      case (SupportSubscribe, AmpFooter) => "amp_footer_support_subscribe"
 
       case (_, ManageMyAccountUpsell) => "manage_my_account_upsell"
     }
-  }   
+  }
+
+  def getComponentType(position: Position): String = position match {
+    case Header | AmpHeader | SideMenu | SlimHeaderDropdown => "ACQUISITIONS_HEADER"
+    case ManageMyAccountUpsell | ManageMyAccountCancel => "ACQUISITIONS_MANAGE_MY_ACCOUNT"
+    case Footer | AmpFooter => "ACQUISITIONS_FOOTER"
+  }
 
   def readerRevenueLinks(implicit request: RequestHeader): List[NavLink] = List(
     NavLink("Make a contribution", getReaderRevenueUrl(SupportContribute, SideMenu)),
@@ -46,6 +55,7 @@ object UrlHelpers {
 
   def getReaderRevenueUrl(destination: ReaderRevenueSite, position: Position)(implicit request: RequestHeader): String = {
     val componentId = getComponentId(destination, position)
+    val componentType = getComponentType(position)
 
     val acquisitionData = Json.obj(
       // GUARDIAN_WEB corresponds to a value in the Thrift enum
@@ -53,11 +63,7 @@ object UrlHelpers {
       // ACQUISITIONS_HEADER and ACQUISITIONS_FOOTER correspond to values in the Thrift enum
       // https://dashboard.ophan.co.uk/docs/thrift/componentevent.html#Enum_ComponentType
       "source" -> "GUARDIAN_WEB",
-      "componentType" -> (position match {
-        case Header | AmpHeader | SideMenu | SlimHeaderDropdown => "ACQUISITIONS_HEADER"
-        case ManageMyAccountUpsell | ManageMyAccountCancel => "ACQUISITIONS_MANAGE_MY_ACCOUNT"
-        case Footer => "ACQUISITIONS_FOOTER"
-      })
+      "componentType" -> componentType
     ) ++ componentId.fold(Json.obj())(c => Json.obj(
       "componentId" -> c
     ))
