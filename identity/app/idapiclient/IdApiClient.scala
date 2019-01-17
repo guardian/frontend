@@ -89,11 +89,11 @@ class IdApiClient(
     response map extract[Boolean](jsonField("passwordExists"))
   }
 
-  def updatePassword(pwdUpdate: PasswordUpdate, auth: Auth, trackingData: TrackingData ): Future[Response[Unit]] = {
+  def updatePassword(pwdUpdate: PasswordUpdate, auth: Auth, trackingData: TrackingData ): Future[Response[CookiesResponse]] = {
     val apiPath = urlJoin("user", "password")
     val body = write(pwdUpdate)
     val response = post(apiPath, Some(auth), Some(trackingData), Some(body))
-    response map extractUnit
+    response map extract(jsonField("cookies"))
   }
 
   def userForToken( token : String ): Future[Response[User]] = {

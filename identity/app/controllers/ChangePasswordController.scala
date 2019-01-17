@@ -26,6 +26,7 @@ class ChangePasswordController(
   idUrlBuilder: IdentityUrlBuilder,
   csrfCheck: CSRFCheck,
   csrfAddToken: CSRFAddToken,
+  signInService: PlaySigninService,
   val controllerComponents: ControllerComponents,
   val httpConfiguration: HttpConfiguration
 )(implicit context: ApplicationContext)
@@ -93,30 +94,34 @@ class ChangePasswordController(
       implicit request =>
         val idRequest = idRequestParser(request)
         val boundForm = passwordFormWithConstraints.bindFromRequest()
-        val futureFormOpt = boundForm.value map {
-          data =>
-            val update = PasswordUpdate(data.oldPassword, data.newPassword1)
-            api.updatePassword(update, request.user.auth, idRequest.trackingData) map {
-              case Left(errors) =>
-                boundForm.withError("oldPassword", Messages("error.wrongPassword"))
 
-              case Right(result) =>
-                boundForm
+        def onError(formWithErrors: Form[PasswordFormData]): Future[Result] = {
+          logger.info("form errors in change password attempt")
+          Future.successful(
+            NoCache(
+              SeeOther(routes.ChangePasswordController.displayForm().url).flashing(clearPasswords(formWithErrors).toFlash)
+            )
+          )
+        }
+
+        def onSuccess(form: PasswordFormData): Future[Result] = {
+            val update = PasswordUpdate(form.oldPassword, form.newPassword1)
+            val authResponse = api.updatePassword(update, request.user.auth, idRequest.trackingData)
+
+            signInService.getCookies(authResponse, true) map {
+              case Left(errors) =>
+                val formWithErrors = errors.foldLeft(boundForm){ (form, error) =>
+                  form.withError(error.context.getOrElse(""), error.description)
+                }
+                NoCache(
+                  SeeOther(routes.ChangePasswordController.displayForm().url).flashing(clearPasswords(formWithErrors).toFlash)
+                )
+              case Right(cookies) =>
+                NoCache(SeeOther(routes.ChangePasswordController.renderPasswordConfirmation(None).url)).withCookies(cookies:_*)
             }
         }
 
-        val futureForms = futureFormOpt getOrElse Future.successful(boundForm)
-        futureForms map { form =>
-          if(form.hasErrors){
-            val pwdExists = request.getQueryString("passwordExists") exists { _.toBoolean }
-            NoCache(
-              SeeOther(routes.ChangePasswordController.displayForm().url).flashing(clearPasswords(form).toFlash)
-            )
-          } else {
-            val userIsLoggedIn = authenticationService.userIsFullyAuthenticated(request)
-            NoCache(SeeOther(routes.ChangePasswordController.renderPasswordConfirmation(None).url))
-          }
-        }
+        boundForm.fold[Future[Result]](onError, onSuccess)
     }
   }
 
