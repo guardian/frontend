@@ -54,7 +54,7 @@ POST        /account/edit                           controllers.editprofile.Edit
 
 GET         /membership/edit                        controllers.editprofile.EditProfileController.redirectToManageMembership
 GET         /contribution/recurring/edit            controllers.editprofile.EditProfileController.redirectToManageContributions
-GET         /digitalpack/edit                       controllers.editprofile.EditProfileController.displayDigitalPackForm
+GET         /digitalpack/edit                       controllers.editprofile.EditProfileController.redirectToManageDigitalPack
 
 GET         /email-prefs                            controllers.editprofile.EditProfileController.displayEmailPrefsForm(consentsUpdated: Boolean ?= false, consentHint: Option[String])
 

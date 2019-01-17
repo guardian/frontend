@@ -13,16 +13,16 @@ import type { Banner } from 'common/modules/ui/bannerPicker';
 import { isUserLoggedIn } from 'common/modules/identity/api';
 import userPrefs from 'common/modules/user-prefs';
 
+const createManageBannerLink = manageProductKeyword =>
+    `${config.get('page.mmaUrl')}/banner/${manageProductKeyword}?INTCMP=BANNER`;
+
 const accountDataUpdateLink = accountDataUpdateWarningLink => {
     switch (accountDataUpdateWarningLink) {
         case 'contribution':
-            return `${config.get(
-                'page.mmaUrl'
-            )}/banner/contributions?INTCMP=BANNER`;
+            return createManageBannerLink('contributions');
         case 'membership':
-            return `${config.get(
-                'page.mmaUrl'
-            )}/banner/membership?INTCMP=BANNER`;
+        case 'digitalpack':
+            return createManageBannerLink(accountDataUpdateWarningLink);
         default:
             return `${config.get(
                 'page.idUrl'
