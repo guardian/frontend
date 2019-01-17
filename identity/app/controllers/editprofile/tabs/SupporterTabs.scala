@@ -24,7 +24,11 @@ trait SupporterTabs
       MOVED_PERMANENTLY)
   }
 
-  /** GET /digitalpack/edit */
-  def displayDigitalPackForm: Action[AnyContent] = displayForm(DigiPackEditProfilePage)
+  /** Redirect /digitalpack/edit to manage.theguardian.com/digitalpack */
+  def redirectToManageDigitalPack: Action[AnyContent] = Action { implicit request =>
+    Redirect(
+      url = "https://manage.theguardian.com/digitalpack",
+      MOVED_PERMANENTLY)
+  }
 
 }
