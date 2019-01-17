@@ -74,7 +74,7 @@ const updateElement = (el: HTMLElement, count: number): Promise<void> => {
         {
             url,
             icon: inlineSvg('commentCount16icon', ['inline-tone-fill']),
-            count: integerCommas(count) || '',
+            count: integerCommas(count, true) || '',
         },
         format
     );
