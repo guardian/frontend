@@ -1,7 +1,7 @@
 // @flow strict
 import {
-    makeBannerABTestVariants,
     makeBannerABTestVariant,
+    makeBannerABTestVariants,
 } from 'common/modules/commercial/contributions-utilities';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
 

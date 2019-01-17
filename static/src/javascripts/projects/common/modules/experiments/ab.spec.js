@@ -6,7 +6,8 @@ import {
 } from 'common/modules/experiments/ab-local-storage';
 import { overwriteMvtCookie } from 'common/modules/analytics/mvt-cookie';
 import {
-    getTestsToRun,
+    getAynschronousTestsToRun,
+    getSynchronousTestsToRun,
     runAndTrackAbTests,
 } from 'common/modules/experiments/ab';
 import {
@@ -16,6 +17,9 @@ import {
 } from 'common/modules/experiments/ab-tests';
 import { NOT_IN_TEST } from 'common/modules/experiments/ab-constants';
 import { runnableTestsToParticipations } from 'common/modules/experiments/ab-utils';
+import { getEpicTestsFromGoogleDoc as getEpicTestsFromGoogleDoc_ } from 'common/modules/commercial/contributions-utilities';
+
+const getEpicTestsFromGoogleDoc: any = getEpicTestsFromGoogleDoc_;
 
 jest.mock('common/modules/analytics/mvt-cookie');
 jest.mock('common/modules/experiments/ab-tests');
@@ -24,6 +28,9 @@ jest.mock('common/modules/experiments/ab-ophan', () => ({
     registerCompleteEvents: () => {},
     trackABTests: () => {},
     buildOphanPayload: () => {},
+}));
+jest.mock('common/modules/commercial/contributions-utilities', () => ({
+    getEpicTestsFromGoogleDoc: jest.fn(),
 }));
 
 jest.mock('lodash/memoize', () => f => f);
@@ -43,6 +50,7 @@ describe('A/B', () => {
         overwriteMvtCookie(1234);
         window.location.hash = '';
         setParticipationsInLocalStorage({});
+        getEpicTestsFromGoogleDoc.mockReturnValue(Promise.resolve(null));
     });
 
     afterEach(() => {
@@ -73,10 +81,10 @@ describe('A/B', () => {
                 jest.spyOn(engagementBannerTests[1].variants[0], 'test'),
             ];
 
-            runAndTrackAbTests();
-
-            shouldRun.forEach(spy => expect(spy).toHaveBeenCalled());
-            shouldNotRun.forEach(spy => expect(spy).not.toHaveBeenCalled());
+            runAndTrackAbTests().then(() => {
+                shouldRun.forEach(spy => expect(spy).toHaveBeenCalled());
+                shouldNotRun.forEach(spy => expect(spy).not.toHaveBeenCalled());
+            });
         });
 
         test('renamed/deleted tests should be removed from localStorage', () => {
@@ -139,7 +147,9 @@ describe('A/B', () => {
 
         test('URL participations for tests which can be run on this pageview should be persisted to localStorage', () => {
             window.location.hash = '#ab-DummyTest=variant';
-            expect(getTestsToRun()[0].variantToRun.id).toEqual('variant');
+            expect(getSynchronousTestsToRun()[0].variantToRun.id).toEqual(
+                'variant'
+            );
 
             runAndTrackAbTests();
             expect(getParticipationsFromLocalStorage()).toEqual({
@@ -218,30 +228,45 @@ describe('A/B', () => {
                 DummyTest2: { variant: 'variant' },
                 EpicTest: { variant: 'control' },
             };
-            expect(runnableTestsToParticipations(getTestsToRun())).toEqual(
-                expectedTestsToRun
-            );
-            runAndTrackAbTests();
-            expect(runnableTestsToParticipations(getTestsToRun())).toEqual(
-                expectedTestsToRun
-            );
 
-            // In this case, the localStorage participations should be the same as the tests to run,
-            // because there are no 'notintest' participations to preserve
-            expect(getParticipationsFromLocalStorage()).toEqual(
-                expectedTestsToRun
-            );
+            getAynschronousTestsToRun().then(tests => {
+                expect(
+                    runnableTestsToParticipations([
+                        ...tests,
+                        ...getSynchronousTestsToRun(),
+                    ])
+                ).toEqual(expectedTestsToRun);
+            });
 
-            runAndTrackAbTests();
-            expect(runnableTestsToParticipations(getTestsToRun())).toEqual(
-                expectedTestsToRun
-            );
+            runAndTrackAbTests()
+                .then(() => {
+                    expect(
+                        runnableTestsToParticipations(
+                            getSynchronousTestsToRun()
+                        )
+                    ).toEqual(expectedTestsToRun);
 
-            // In this case, the localStorage participations should be the same as the tests to run,
-            // because there are no 'notintest' participations to preserve
-            expect(getParticipationsFromLocalStorage()).toEqual(
-                expectedTestsToRun
-            );
+                    // In this case, the localStorage participations should be the same as the tests to run,
+                    // because there are no 'notintest' participations to preserve
+                    expect(getParticipationsFromLocalStorage()).toEqual(
+                        expectedTestsToRun
+                    );
+
+                    return runAndTrackAbTests();
+                })
+                .then(() => {
+                    expect(
+                        runnableTestsToParticipations(
+                            getSynchronousTestsToRun()
+                        )
+                    ).toEqual(expectedTestsToRun);
+
+                    // In this case, the localStorage participations should be the same as the tests to run,
+                    // because there are no 'notintest' participations to preserve
+                    expect(getParticipationsFromLocalStorage()).toEqual(
+                        expectedTestsToRun
+                    );
+                });
         });
     });
 });

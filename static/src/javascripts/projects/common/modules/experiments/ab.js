@@ -1,5 +1,6 @@
 // @flow
 
+import config from 'lib/config';
 import memoize from 'lodash/memoize';
 import {
     allRunnableTests,
@@ -24,9 +25,23 @@ import {
     engagementBannerTests,
     epicTests,
 } from 'common/modules/experiments/ab-tests';
+import { getEpicTestsFromGoogleDoc } from 'common/modules/commercial/contributions-utilities';
 
-export const getEpicTestToRun = (): ?Runnable<EpicABTest> =>
-    firstRunnableTest(epicTests);
+export const getEpicTestToRun = (): Promise<?Runnable<EpicABTest>> => {
+    if (config.get('switches.epicTestsFromGoogleDoc')) {
+        return getEpicTestsFromGoogleDoc().then(asyncEpicTests => {
+            asyncEpicTests.forEach(test =>
+                config.set(`switches.ab${test.id}`, true)
+            );
+            return firstRunnableTest<EpicABTest>([
+                ...asyncEpicTests,
+                ...epicTests,
+            ]);
+        });
+    }
+    return Promise.resolve(firstRunnableTest<EpicABTest>(epicTests));
+};
+
 export const getEngagementBannerTestToRun = (): ?Runnable<AcquisitionsABTest> =>
     firstRunnableTest(engagementBannerTests);
 
@@ -34,29 +49,37 @@ export const getEngagementBannerTestToRun = (): ?Runnable<AcquisitionsABTest> =>
 // Note that this is a subset of the potentially runnable tests,
 // because we only run one epic test and one banner test per pageview.
 // We memoize this because it can't change for a given pageview, and because getParticipations()
-// and isInVariant() depend on it and these are called in many places.
-export const getTestsToRun = memoize(
+// and isInVariantSynchronous() depend on it and these are called in many places.
+export const getSynchronousTestsToRun = memoize(
     (): $ReadOnlyArray<Runnable<ABTest>> => {
-        const epicTest = getEpicTestToRun();
         const engagementBannerTest = getEngagementBannerTestToRun();
 
         return [
             ...allRunnableTests(concurrentTests),
-            ...(epicTest ? [epicTest] : []),
             ...(engagementBannerTest ? [engagementBannerTest] : []),
         ];
     }
 );
 
-// The tests which will take effect on this pageview,
-export const getParticipations = (): Participations =>
-    runnableTestsToParticipations(getTestsToRun());
+export const getAynschronousTestsToRun = (): Promise<
+    $ReadOnlyArray<Runnable<ABTest>>
+> =>
+    getEpicTestToRun().then(
+        (epicTest: ?Runnable<EpicABTest>) => (epicTest ? [epicTest] : [])
+    );
 
-export const isInVariant = (test: ABTest, variantId: string): boolean =>
-    getParticipations()[test.id] === { variantId };
+// This excludes epic tests
+export const getSynchronousParticipations = (): Participations =>
+    runnableTestsToParticipations(getSynchronousTestsToRun());
 
-export const runAndTrackAbTests = () => {
-    const testsToRun = getTestsToRun();
+// This excludes epic tests
+export const isInVariantSynchronous = (
+    test: ABTest,
+    variantId: string
+): boolean => getSynchronousParticipations()[test.id] === { variantId };
+
+export const runAndTrackAbTests = (): Promise<void> => {
+    const testsToRun = getSynchronousTestsToRun();
 
     testsToRun.forEach(test => test.variantToRun.test(test));
 
@@ -78,5 +101,18 @@ export const runAndTrackAbTests = () => {
     setParticipationsInLocalStorage({
         ...runnableTestsToParticipations(testsToRun),
         ...testExclusions,
+    });
+
+    return getAynschronousTestsToRun().then(tests => {
+        tests.forEach(test => test.variantToRun.test(test));
+
+        registerImpressionEvents(tests);
+        registerCompleteEvents(tests);
+        trackABTests(tests);
+
+        setParticipationsInLocalStorage({
+            ...getParticipationsFromLocalStorage(),
+            ...runnableTestsToParticipations(tests),
+        });
     });
 };

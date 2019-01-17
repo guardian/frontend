@@ -2,7 +2,7 @@
 /* global jsdom */
 
 import config from 'lib/config';
-import { isInVariant as isInVariant_ } from 'common/modules/experiments/ab';
+import { isInVariantSynchronous as isInVariantSynchronous_ } from 'common/modules/experiments/ab';
 import { _, bids } from './bid-config';
 import type { PrebidBidder, PrebidSize } from './types';
 import {
@@ -50,7 +50,7 @@ const isInAuRegion: any = isInAuRegion_;
 const isInRowRegion: any = isInRowRegion_;
 const isInUkRegion: any = isInUkRegion_;
 const isInUsRegion: any = isInUsRegion_;
-const isInVariant: any = isInVariant_;
+const isInVariantSynchronous: any = isInVariantSynchronous_;
 
 const {
     getDummyServerSideBidders,
@@ -73,7 +73,7 @@ jest.mock('common/modules/commercial/ad-prefs.lib', () => ({
 jest.mock('./utils');
 
 jest.mock('common/modules/experiments/ab', () => ({
-    isInVariant: jest.fn(),
+    isInVariantSynchronous: jest.fn(),
 }));
 
 /* eslint-disable guardian-frontend/no-direct-access-config */
@@ -267,7 +267,7 @@ describe('getImprovePlacementId', () => {
     });
 
     test('should use test placement ID when participating in CommercialPrebidSafeframe test in desktop MPU', () => {
-        isInVariant.mockImplementationOnce(
+        isInVariantSynchronous.mockImplementationOnce(
             (testId, variantId) => variantId === 'variant'
         );
         getBreakpointKey.mockReturnValue('D');
@@ -276,7 +276,7 @@ describe('getImprovePlacementId', () => {
     });
 
     test('should use test placement ID when participating in CommercialPrebidSafeframe test in desktop DMPU', () => {
-        isInVariant.mockImplementationOnce(
+        isInVariantSynchronous.mockImplementationOnce(
             (testId, variantId) => variantId === 'variant'
         );
         getBreakpointKey.mockReturnValue('D');
@@ -285,7 +285,7 @@ describe('getImprovePlacementId', () => {
     });
 
     test('should use test placement ID when participating in CommercialPrebidSafeframe test in desktop billboard', () => {
-        isInVariant.mockImplementationOnce(
+        isInVariantSynchronous.mockImplementationOnce(
             (testId, variantId) => variantId === 'variant'
         );
         getBreakpointKey.mockReturnValue('D');
@@ -294,7 +294,7 @@ describe('getImprovePlacementId', () => {
     });
 
     test('should use test placement ID when participating in CommercialPrebidSafeframe test in desktop leaderboard', () => {
-        isInVariant.mockImplementationOnce(
+        isInVariantSynchronous.mockImplementationOnce(
             (testId, variantId) => variantId === 'variant'
         );
         getBreakpointKey.mockReturnValue('D');
@@ -303,7 +303,7 @@ describe('getImprovePlacementId', () => {
     });
 
     test('should use test placement ID when participating in CommercialPrebidSafeframe test in tablet MPU', () => {
-        isInVariant.mockImplementationOnce(
+        isInVariantSynchronous.mockImplementationOnce(
             (testId, variantId) => variantId === 'variant'
         );
         getBreakpointKey.mockReturnValue('T');
@@ -312,7 +312,7 @@ describe('getImprovePlacementId', () => {
     });
 
     test('should use test placement ID when participating in CommercialPrebidSafeframe test in tablet leaderboard', () => {
-        isInVariant.mockImplementationOnce(
+        isInVariantSynchronous.mockImplementationOnce(
             (testId, variantId) => variantId === 'variant'
         );
         getBreakpointKey.mockReturnValue('T');
@@ -321,7 +321,7 @@ describe('getImprovePlacementId', () => {
     });
 
     test('should use test placement ID when participating in CommercialPrebidSafeframe test in mobile MPU', () => {
-        isInVariant.mockImplementationOnce(
+        isInVariantSynchronous.mockImplementationOnce(
             (testId, variantId) => variantId === 'variant'
         );
         getBreakpointKey.mockReturnValue('M');
@@ -429,7 +429,7 @@ describe('getIndexSiteId', () => {
     });
 
     test('should use test site ID when participating in CommercialPrebidSafeframe test on desktop', () => {
-        isInVariant.mockImplementationOnce(
+        isInVariantSynchronous.mockImplementationOnce(
             (testId, variantId) => variantId === 'variant'
         );
         getBreakpointKey.mockReturnValue('D');
@@ -437,7 +437,7 @@ describe('getIndexSiteId', () => {
     });
 
     test('should use test site ID when participating in CommercialPrebidSafeframe test on tablet', () => {
-        isInVariant.mockImplementationOnce(
+        isInVariantSynchronous.mockImplementationOnce(
             (testId, variantId) => variantId === 'variant'
         );
         getBreakpointKey.mockReturnValue('T');
@@ -445,7 +445,7 @@ describe('getIndexSiteId', () => {
     });
 
     test('should use test site ID when participating in CommercialPrebidSafeframe test on mobile', () => {
-        isInVariant.mockImplementationOnce(
+        isInVariantSynchronous.mockImplementationOnce(
             (testId, variantId) => variantId === 'variant'
         );
         getBreakpointKey.mockReturnValue('M');

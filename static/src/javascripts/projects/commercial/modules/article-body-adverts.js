@@ -11,7 +11,7 @@ import { createSlots } from 'commercial/modules/dfp/create-slots';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { initCarrot } from 'commercial/modules/carrot-traffic-driver';
 import { commercialAdMobileWebIncrease } from 'common/modules/experiments/tests/commercial-ad-mobile-web-increase.js';
-import { isInVariant } from 'common/modules/experiments/ab';
+import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 
 type AdSize = {
     width: number,
@@ -24,7 +24,7 @@ type Sizes = { desktop: Array<AdSize> };
 const isPaidContent = config.get('page.isPaidContent', false);
 
 const isInAdMobileWebVariant = (): boolean =>
-    isInVariant(commercialAdMobileWebIncrease, 'variant');
+    isInVariantSynchronous(commercialAdMobileWebIncrease, 'variant');
 
 const adSlotClassSelectorSizes = {
     minAbove: 500,
