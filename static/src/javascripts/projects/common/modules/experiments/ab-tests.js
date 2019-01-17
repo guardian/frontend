@@ -7,7 +7,6 @@ import { commercialAdVerification } from 'common/modules/experiments/tests/comme
 import { commercialCmpCustomise } from 'common/modules/experiments/tests/commercial-cmp-customise.js';
 import { commercialAdMobileWebIncrease } from 'common/modules/experiments/tests/commercial-ad-mobile-web-increase.js';
 import { commercialOutbrainNewids } from 'common/modules/experiments/tests/commercial-outbrain-newids.js';
-import { journalismInArticleAudioAtomZeroPercent } from 'common/modules/experiments/tests/journalism-in-article-audio-atom-zero-percent';
 
 export const TESTS: $ReadOnlyArray<ABTest> = [
     getAcquisitionTest(),
@@ -16,7 +15,6 @@ export const TESTS: $ReadOnlyArray<ABTest> = [
     commercialCmpCustomise,
     commercialAdMobileWebIncrease,
     commercialOutbrainNewids,
-    journalismInArticleAudioAtomZeroPercent,
 ].filter(Boolean);
 
 export const getActiveTests = (): $ReadOnlyArray<ABTest> =>
