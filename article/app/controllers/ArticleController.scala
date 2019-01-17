@@ -43,7 +43,6 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
           case RemoteRender => remoteRenderer.getArticle(ws, path, article)
           case RemoteRenderAMP => remoteRenderer.getAMPArticle(ws, path, article)
           case LocalRender => render(path, article)
-          case _ => render(path, article)
         }
       })
     }

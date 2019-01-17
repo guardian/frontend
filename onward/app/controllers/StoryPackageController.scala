@@ -17,7 +17,8 @@ class StoryPackageController(val contentApiClient: ContentApiClient, val control
     with ImplicitControllerExecutionContext {
 
   def render(path: String): Action[AnyContent] = Action.async { implicit request =>
-    val query = contentApiClient.item(path).showPackages(true)
+    val fields = "headline,standfirst,shortUrl,webUrl,byline,trailText,liveBloggingNow,commentCloseDate,commentable"
+    val query = contentApiClient.item(path).showPackages(true).showFields(fields)
     val resp = contentApiClient.getResponse(query)
 
     for {
