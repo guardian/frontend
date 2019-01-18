@@ -1,6 +1,6 @@
 package navigation.helpers
 
-import org.scalatest.{WordSpec  , Matchers}
+import org.scalatest.{WordSpec, Matchers}
 import test.TestRequest
 import navigation.ReaderRevenueSite.{Support, SupportContribute, SupportSubscribe}
 import navigation.UrlHelpers
