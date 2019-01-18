@@ -1,35 +1,45 @@
 // @flow
 import { isAbTestTargeted } from 'common/modules/commercial/targeting-tool';
 import { getEpicParams } from 'common/modules/commercial/acquisitions-copy';
-import { getAcquisitionsBannerParams } from 'common/modules/commercial/membership-engagement-banner-parameters';
-import { logView } from 'common/modules/commercial/acquisitions-view-log';
 import {
+    logView,
+    viewsInPreviousDays,
+} from 'common/modules/commercial/acquisitions-view-log';
+import {
+    addTrackingCodesToUrl,
     submitClickEvent,
     submitInsertEvent,
     submitViewEvent,
-    addTrackingCodesToUrl,
 } from 'common/modules/commercial/acquisitions-ophan';
 import $ from 'lib/$';
 import config from 'lib/config';
 import { elementInView } from 'lib/element-inview';
 import fastdom from 'lib/fastdom-promise';
+import reportError from 'lib/report-error';
 import mediator from 'lib/mediator';
-import { getSync as geolocationGetSync } from 'lib/geolocation';
+import {
+    getLocalCurrencySymbol,
+    getSync as geolocationGetSync,
+} from 'lib/geolocation';
 import { noop } from 'lib/noop';
+import { splitAndTrim } from 'lib/string-utils';
 import { epicButtonsTemplate } from 'common/modules/commercial/templates/acquisitions-epic-buttons';
 import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templates/acquisitions-epic-control';
 import { shouldSeeReaderRevenue as userShouldSeeReaderRevenue } from 'common/modules/commercial/user-features';
 import { supportContributeURL } from 'common/modules/commercial/support-utilities';
 import { awaitEpicButtonClicked } from 'common/modules/commercial/epic/epic-utils';
 import {
-    getEpicGoogleDoc,
+    epicMultipleTestsGoogleDocUrl,
     getBannerGoogleDoc,
+    getEpicGoogleDoc,
+    getGoogleDoc,
     googleDocEpicControl,
 } from 'common/modules/commercial/contributions-google-docs';
 import {
-    isArticleWorthAnEpicImpression,
     defaultExclusionRules,
+    isArticleWorthAnEpicImpression,
 } from 'common/modules/commercial/epic/epic-exclusion-rules';
+import { getAcquisitionsBannerParams } from 'common/modules/commercial/membership-engagement-banner-parameters';
 
 export type EpicTemplate = (Variant, AcquisitionsEpicTemplateCopy) => string;
 
@@ -174,6 +184,12 @@ const makeABTestVariant = (
 
     // defaults for options
     const {
+        // filters, where empty is taken to mean 'all', multiple entries are combined with OR
+        locations = [],
+        keywordIds = [],
+        toneIds = [],
+        sections = [],
+
         maxViews = defaultMaxViews,
         isUnlimited = false,
         campaignCode = createTestAndVariantId(
@@ -280,6 +296,55 @@ const makeABTestVariant = (
             impression,
             success,
             iframeId,
+        },
+
+        canRun() {
+            const {
+                count: maxViewCount,
+                days: maxViewDays,
+                minDaysBetweenViews: minViewDays,
+            } = maxViews;
+
+            const testId = parentTest.useLocalViewLog
+                ? parentTest.id
+                : undefined;
+
+            const withinViewLimit =
+                viewsInPreviousDays(maxViewDays, testId) < maxViewCount;
+            const enoughDaysBetweenViews =
+                viewsInPreviousDays(minViewDays, testId) === 0;
+
+            const meetsMaxViewsConditions =
+                (withinViewLimit && enoughDaysBetweenViews) || isUnlimited;
+
+            const matchesLocations =
+                locations.length === 0 ||
+                locations.some(
+                    region => geolocationGetSync() === region.toUpperCase()
+                );
+            const matchesKeywordIds =
+                keywordIds.length === 0 ||
+                keywordIds.some(keywordId =>
+                    config.get('page.keywordIds').includes(keywordId)
+                );
+            const matchesToneIds =
+                toneIds.length === 0 ||
+                toneIds.some(toneId =>
+                    config.get('page.toneIds').includes(toneId)
+                );
+            const matchesSections =
+                sections.length === 0 ||
+                sections.some(
+                    section => config.get('page.section') === section
+                );
+
+            return (
+                meetsMaxViewsConditions &&
+                matchesLocations &&
+                matchesKeywordIds &&
+                matchesToneIds &&
+                matchesSections
+            );
         },
 
         test() {
@@ -526,6 +591,76 @@ const makeGoogleDocBannerControl = (): InitBannerABTestVariant => ({
         ),
 });
 
+export const getEpicTestsFromGoogleDoc = (): Promise<
+    $ReadOnlyArray<EpicABTest>
+> =>
+    getGoogleDoc(epicMultipleTestsGoogleDocUrl)
+        .then(googleDocJson => {
+            const sheets = googleDocJson && googleDocJson.sheets;
+
+            if (!sheets) {
+                return [];
+            }
+
+            return Object.keys(sheets)
+                .filter(testName => testName.endsWith('__ON'))
+                .map(name => {
+                    const rows = sheets[name];
+                    const testName = name.split('__ON')[0];
+                    return makeABTest({
+                        id: testName,
+                        campaignId: testName,
+
+                        start: '2018-01-01',
+                        expiry: '2020-01-01',
+
+                        author: 'Google Docs',
+                        description: 'Google Docs',
+                        successMeasure: 'AV2.0',
+                        idealOutcome: 'Google Docs',
+                        audienceCriteria: 'All',
+                        audience: 1,
+                        audienceOffset: 0,
+
+                        variants: rows.map(row => ({
+                            id: row.name,
+                            products: [],
+                            options: {
+                                locations: splitAndTrim(row.locations, ','),
+                                keywordIds: splitAndTrim(row.keywordIds, ','),
+                                toneIds: splitAndTrim(row.toneIds, ','),
+                                sections: splitAndTrim(row.sections, ','),
+                                copy: {
+                                    heading: row.heading,
+                                    paragraphs: splitAndTrim(
+                                        row.paragraphs,
+                                        '\n'
+                                    ),
+                                    highlightedText: row.highlightedText.replace(
+                                        /%%CURRENCY_SYMBOL%%/g,
+                                        getLocalCurrencySymbol()
+                                    ),
+                                },
+                            },
+                        })),
+                    });
+                });
+        })
+        .catch((err: Error) => {
+            reportError(
+                new Error(
+                    `Error getting multiple epic tests from Google Docs. ${
+                        err.message
+                    }. Stack: ${err.stack}`
+                ),
+                {
+                    feature: 'epic-test',
+                },
+                false
+            );
+            return [];
+        });
+
 export {
     shouldShowReaderRevenue,
     shouldShowEpic,
@@ -533,9 +668,9 @@ export {
     defaultButtonTemplate,
     makeBannerABTestVariants,
     makeGoogleDocEpicVariants,
-    makeGoogleDocBannerVariants,
-    makeGoogleDocBannerControl,
-    makeBannerABTestVariant,
     defaultMaxViews,
     getReaderRevenueRegion,
+    makeGoogleDocBannerControl,
+    makeBannerABTestVariant,
+    makeGoogleDocBannerVariants,
 };

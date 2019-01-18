@@ -5,8 +5,8 @@ import { getCookie } from 'lib/cookies';
 import { getUrlVars } from 'lib/url';
 import fetchJSON from 'lib/fetch-json';
 
-import { getVariant, isInVariant } from 'common/modules/experiments/utils';
 import { commercialCmpCustomise } from 'common/modules/experiments/tests/commercial-cmp-customise';
+import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import { log } from './log';
 import { CmpStore } from './store';
 import { encodeVendorConsentData } from './cookie';
@@ -62,10 +62,8 @@ const readConsentCookie = (cookieName: string): boolean | null => {
     return null;
 };
 
-const isInCmpCustomiseTest = (): boolean => {
-    const variant = getVariant(commercialCmpCustomise, 'variant');
-    return variant ? isInVariant(commercialCmpCustomise, variant) : false;
-};
+const isInCmpCustomiseTest = (): boolean =>
+    isInVariantSynchronous(commercialCmpCustomise, 'variant');
 
 const generateStore = (isInTest: boolean): CmpStore => {
     const store = new CmpStore(

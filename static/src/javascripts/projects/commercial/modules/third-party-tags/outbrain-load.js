@@ -5,7 +5,8 @@ import config from 'lib/config';
 import fastdom from 'lib/fastdom-promise';
 import { getBreakpoint } from 'lib/detect';
 import { loadScript } from 'lib/load-script';
-import { getTestVariantId } from 'common/modules/experiments/utils.js';
+import { commercialOutbrainNewids } from 'common/modules/experiments/tests/commercial-outbrain-newids.js';
+import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 
 import { getCode } from './outbrain-codes';
 import { getCode as getNewCode } from './outbrain-codes-new';
@@ -53,7 +54,7 @@ const build = (
   the contribution epic
 
   Valid values for target are 'defaults', 'merchandising', 'nonCompliant'
-  
+
   When the target is nonCompliant, you are encouraged to pass the contributionEpicVisible
   parameter as this will have an effect on the new outbrain ID mapping (as of end 2018).
 
@@ -67,8 +68,10 @@ const load = (
     const $container = $(selectors.outbrain.container, $outbrain[0]);
     const breakpoint = getBreakpoint();
 
-    const shouldUseNewOutbrainCodes: boolean =
-        getTestVariantId('CommercialOutbrainNewids') === 'variant';
+    const shouldUseNewOutbrainCodes: boolean = isInVariantSynchronous(
+        commercialOutbrainNewids,
+        'variant'
+    );
 
     const widgetCodes = ((): {
         code?: string,

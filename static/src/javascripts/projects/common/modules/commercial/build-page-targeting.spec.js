@@ -12,7 +12,7 @@ import {
 import { getSync as getSync_ } from 'lib/geolocation';
 import { isUserLoggedIn as isUserLoggedIn_ } from 'common/modules/identity/api';
 import { getUserSegments as getUserSegments_ } from 'common/modules/commercial/user-ad-targeting';
-import { getParticipations as getParticipations_ } from 'common/modules/experiments/utils';
+import { getSynchronousParticipations as getSynchronousParticipations_ } from 'common/modules/experiments/ab';
 import { getKruxSegments as getKruxSegments_ } from 'common/modules/commercial/krux';
 
 import { getAdConsentState as getAdConsentState_ } from 'common/modules/commercial/ad-prefs.lib';
@@ -20,7 +20,7 @@ import { getAdConsentState as getAdConsentState_ } from 'common/modules/commerci
 const getAdConsentState: any = getAdConsentState_;
 const getCookie: any = getCookie_;
 const getUserSegments: any = getUserSegments_;
-const getParticipations: any = getParticipations_;
+const getSynchronousParticipations: any = getSynchronousParticipations_;
 const getKruxSegments: any = getKruxSegments_;
 const getReferrer: any = getReferrer_;
 const getBreakpoint: any = getBreakpoint_;
@@ -46,8 +46,8 @@ jest.mock('common/modules/identity/api', () => ({
 jest.mock('common/modules/commercial/user-ad-targeting', () => ({
     getUserSegments: jest.fn(),
 }));
-jest.mock('common/modules/experiments/utils', () => ({
-    getParticipations: jest.fn(),
+jest.mock('common/modules/experiments/ab', () => ({
+    getSynchronousParticipations: jest.fn(),
 }));
 jest.mock('common/modules/commercial/krux', () => ({
     getKruxSegments: jest.fn(),
@@ -109,7 +109,7 @@ describe('Build Page Targeting', () => {
 
         getUserSegments.mockReturnValue(['seg1', 'seg2']);
 
-        getParticipations.mockReturnValue({
+        getSynchronousParticipations.mockReturnValue({
             MtMaster: {
                 variant: 'variantName',
             },
@@ -261,13 +261,6 @@ describe('Build Page Targeting', () => {
                 'https://www.t.co/you-must-unlearn-what-you-have-learned'
             );
             expect(buildPageTargeting().ref).toEqual('twitter');
-        });
-
-        it('should set ref to Googleplus', () => {
-            getReferrer.mockReturnValue(
-                'https://plus.url.google.com/always-pass-on-what-you-have-learned'
-            );
-            expect(buildPageTargeting().ref).toEqual('googleplus');
         });
 
         it('should set ref to reddit', () => {

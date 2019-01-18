@@ -56,6 +56,7 @@ class DevParametersHttpRequestHandler(
     "adtest", // used to set ad-test cookie from admin domain
     "pbtest", // used to test Prebid adapters in isolation
     "adrefresh", // force adrefresh to be off with adrefresh=false in the URL
+    "forceads", // shows ads even if they have been disabled for this content
     "google_console", // two params for dfp console
     "googfc",
     "k", // keywords in commercial component requests

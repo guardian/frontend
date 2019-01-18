@@ -37,6 +37,9 @@ jest.mock('lib/detect', () => ({
     getViewport: jest.fn(),
 }));
 jest.mock('lib/config', () => ({ page: {}, get: () => false }));
+jest.mock('common/modules/experiments/ab', () => ({
+    isInVariantSynchronous: () => false,
+}));
 
 const spaceFillerStub: JestMockFn<*, *> = (spaceFiller.fillSpace: any);
 

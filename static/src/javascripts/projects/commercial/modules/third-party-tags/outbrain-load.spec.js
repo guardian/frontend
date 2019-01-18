@@ -13,6 +13,9 @@ jest.mock('lib/detect', () => ({
     adblockInUse: Promise.resolve(false),
     getBreakpoint: jest.fn(),
 }));
+jest.mock('common/modules/experiments/ab', () => ({
+    isInVariantSynchronous: () => false,
+}));
 jest.mock('lib/load-script', () => ({ loadScript: jest.fn() }));
 jest.mock('./outbrain-tracking', () => ({ tracking: jest.fn() }));
 

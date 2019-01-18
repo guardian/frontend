@@ -146,42 +146,63 @@ When choosing your audience offset, it is good to avoid overlapping tests. You c
 
 You will also need to mark the module as a dependency of the AB testing module.
 
-Do that here, `./common/app/assets/javascripts/modules/experiments/ab.js`
+Do that here, `static/src/javascripts/projects/common/modules/experiments/ab-tests.js`. If your test can run alongside any other tests, add it to `concurrentTests`:
 
 ```
-define([
+export const concurrentTests: $ReadOnlyArray<ABTest> = [
+    commercialPrebidSafeframe,
+    commercialAdVerification,
+    commercialCmpCustomise,
+    commercialAdMobileWebIncrease,
+    commercialOutbrainNewids,
+];
+```
 
-    // Current tests
-    'modules/experiments/tests/geo-most-popular'  //  add your module here.
-], function (
+But for engagement banner and epic tests, only one of each runs per pageview. So if you're adding one of these, add it to the appropriate array:
 
-    GeoMostPopular) {
+```
+export const epicTests: $ReadOnlyArray<EpicABTest> = [
+    acquisitionsEpicUsTopTicker,
+    acquisitionsEpicAuPostOneMillion,
+    acquisitionsEpicFromGoogleDocOneVariant,
+    acquisitionsEpicFromGoogleDocTwoVariants,
+    acquisitionsEpicFromGoogleDocThreeVariants,
+    acquisitionsEpicFromGoogleDocFourVariants,
+    acquisitionsEpicFromGoogleDocFiveVariants,
+    acquisitionsEpicAusEnvCampaign,
+    acquisitionsEpicUSGunCampaign,
+    askFourEarning,
+    acquisitionsEpicAlwaysAskIfTagged,
+    acquisitionsEpicLiveblog,
+    acquisitionsEpicThankYou,
+];
 
-    var TESTS = [
-            new GeoMostPopular()    //  and here.
-        ];
-
-    ...
-
-    })
+export const engagementBannerTests: $ReadOnlyArray<AcquisitionsABTest> = [
+    AcquisitionsBannerUsEoy,
+    AcquisitionsBannerAustraliaPostOneMillionTest,
+    AcquisitionsBannerGoogleDocTestOneVariant,
+    AcquisitionsBannerGoogleDocTestTwoVariants,
+    AcquisitionsBannerGoogleDocTestThreeVariants,
+    AcquisitionsBannerGoogleDocTestFourVariants,
+    AcquisitionsBannerGoogleDocTestFiveVariants,
+];
 ```
 
 ### Forcing yourself into a test
 Add #ab-<TestName>=<VariantName> to the end of your URL (in dev or prod) to force yourself into a test.
-e.g. www.theguardian.com/news#ab-MyGreatTest=GreenButton
+e.g. www.theguardian.com/news#ab-MyGreatTest=GreenButton. **Note that this will only work if the `canRun` of your test and variant is true on that pageview.**
 
 #### Firing complete events in dev mode
 In prod, the completion events are fired based on the MVT ID cookie. This doesn't exist in dev, so if you need to test a complete event, force yourself into the test using the #ab-<TestName>=<VariantName> pattern described above.
 This way, the `success` function of the test and variant you specify will be run, so you can test your completion behaviour.
 
 ### Detecting a user's bucket
-You can use this code to check anywhere in your JS whether you're in a test bucket.
+You can use this code to check anywhere in your JS whether you're in a test bucket. You need to import `isInVariant` from ```'common/modules/experiments/ab'``` and your test object (in this example `FaciaSlideshowTest`).
 ```
-if (ab.isInVariant('FaciaSlideshow', 'variant')) {
+if (isInVariant(FaciaSlideshowTest, 'variant')) {
     ///...
 }
 ```
-The ```ab``` module is defined in ```'common/modules/experiments/ab'```.
 
 ## Running the test
 
@@ -192,7 +213,7 @@ You can stop and start the test using our [switchboard](https://frontend.gutools
 
 To see the test in action locally: `localhost:9000/[articleId]#ab-[testName]=[variantName]`
 
-To see the tests you are part of using Google Chrome: open the Dev Console -> Resources -> Local Storage -> choose `http://[domain]` (e.g. localhost or www.theguardian.com)  -> check the `gu.ab.participations` row. ~~Alternatively, if you're using Chrome, use the [extension](https://chrome.google.com/webstore/detail/guardian-ab-tests/nehbenedinjacnhlkjbdneedibcagmno).~~ (currently broken as it does not support our new Webpack-bundled application)
+To see the tests you are part of using Google Chrome: open the Dev Console -> Resources -> Local Storage -> choose `http://[domain]` (e.g. localhost or www.theguardian.com)  -> check the `gu.ab.participations` row. You can also add `#experiments` to the URL to get an overlay on the left-hand side which shows the contents of `gu.ab.participations` and allows you to change them. **Note that if a test's `canRun` is false on that pageview, the participation will be removed from `gu.ab.participations` and therefore not appear in the `#experiments` overlay.**
 
 ## Analysis of the test data
 

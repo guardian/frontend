@@ -1,10 +1,8 @@
 // @flow
-import {
-    getActiveTests,
-    getExpiredTests,
-} from 'common/modules/experiments/ab-tests';
 import { ABTestReportItem as ReportItem } from 'admin/modules/abtests/abtest-report-item';
 import { Audience } from 'admin/modules/abtests/audience';
+import { concurrentTests } from 'common/modules/experiments/ab-tests';
+import { isExpired } from 'lib/time-utils';
 
 const renderTests = (
     tests: $ReadOnlyArray<ABTest>,
@@ -26,20 +24,20 @@ const renderTests = (
 
 const initABTests = (): void => {
     renderTests(
-        getActiveTests(),
+        concurrentTests.filter(test => !isExpired(test.expiry)),
         true,
         document.querySelector('.abtests-report__data')
     );
 
     const expiredTestItems = renderTests(
-        getExpiredTests(),
+        concurrentTests.filter(test => isExpired(test.expiry)),
         false,
         document.querySelector('.abtests-expired')
     );
 
     // Display audience breakdown.
     const audience = new Audience({
-        tests: getActiveTests(),
+        tests: concurrentTests.filter(test => !isExpired(test.expiry)),
     });
     audience.render(document.querySelector('.abtests-audience'));
 

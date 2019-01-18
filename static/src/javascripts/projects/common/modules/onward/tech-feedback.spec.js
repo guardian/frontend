@@ -3,6 +3,9 @@
 import { initTechFeedback } from './tech-feedback';
 
 jest.mock('lib/raven');
+jest.mock('common/modules/experiments/ab', () => ({
+    getSynchronousParticipations: () => ({}),
+}));
 
 describe('Tech-feedback', () => {
     beforeEach(() => {

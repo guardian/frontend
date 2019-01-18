@@ -47,11 +47,11 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-  val BlockIASSwitch = Switch(
+  val HostedVideoAutoplay = Switch(
     Commercial,
-    "block-ias",
-    "Controls whether the Service Worker can filter out IAS calls",
-    owners = Seq(Owner.withGithub("regiskuckaertz")),
+    "hosted-video-autoplay",
+    "When ON, hosted video content may be allowed to autoplay",
+    owners = Seq(Owner.withGithub("katebee")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true
@@ -233,6 +233,17 @@ trait CommercialSwitches {
     "Master switch for the membership engagement banner.",
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = On,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
+
+  val EpicTestsFromGoogleDocs = Switch(
+    Commercial,
+    "epic-tests-from-google-docs",
+    "Fetches epic tests from Google Docs. These take priority over hardcoded epic tests.",
+    owners = Seq(Owner.withGithub("joelochlann")),
+    safeState = Off,
     sellByDate = never,
     exposeClientSide = true
   )

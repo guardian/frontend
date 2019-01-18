@@ -4,9 +4,6 @@ import { local } from 'lib/storage';
 import { Message } from 'common/modules/ui/message';
 import mediator from 'lib/mediator';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
-import { membershipEngagementBannerTests } from 'common/modules/experiments/tests/membership-engagement-banner-tests';
-import { testCanBeRun } from 'common/modules/experiments/test-can-run-checks';
-import { isInTest, variantFor } from 'common/modules/experiments/segment-util';
 import {
     defaultEngagementBannerParams,
     getUserVariantParams,
@@ -30,6 +27,7 @@ import {
 import { acquisitionsBannerControlTemplate } from 'common/modules/commercial/templates/acquisitions-banner-control';
 import userPrefs from 'common/modules/user-prefs';
 import { initTicker } from 'common/modules/commercial/ticker';
+import { getEngagementBannerTestToRun } from 'common/modules/experiments/ab';
 
 type BannerDeployLog = {
     time: string,
@@ -39,6 +37,17 @@ const messageCode = 'engagement-banner';
 const minArticlesBeforeShowingBanner = 3;
 
 const lastClosedAtKey = 'engagementBannerLastClosedAt';
+
+const getTestAndVariant = (): {
+    test: ?Runnable<AcquisitionsABTest>,
+    variant: ?Variant,
+} => {
+    const test: ?Runnable<AcquisitionsABTest> = getEngagementBannerTestToRun();
+    const variant: ?Variant = test && test.variantToRun;
+    return { test, variant };
+};
+
+const getVariant = (): ?Variant => getTestAndVariant().variant;
 
 const getTimestampOfLastBannerDeployForLocation = (
     region: ReaderRevenueRegion
@@ -67,14 +76,6 @@ const hasBannerBeenRedeployedSinceClosed = (
             );
             return false;
         });
-
-const getUserTest = (): ?AcquisitionsABTest =>
-    membershipEngagementBannerTests.find(
-        test => testCanBeRun(test) && isInTest(test)
-    );
-
-const getUserVariant = (test: ?ABTest): ?Variant =>
-    test ? variantFor(test) : undefined;
 
 /*
  * Params for the banner are overlaid in this order, earliest taking precedence:
@@ -113,12 +114,11 @@ const buildCampaignCode = (
 };
 
 const deriveBannerParams = (): Promise<?EngagementBannerParams> => {
-    const userTest: ?AcquisitionsABTest = getUserTest();
-    const userVariant: ?Variant = getUserVariant(userTest);
+    const { test, variant } = getTestAndVariant();
     const defaultParams: EngagementBannerParams = defaultEngagementBannerParams();
 
     // if the user isn't in a test variant, use the control in google docs
-    if (!userVariant) {
+    if (!test) {
         return getControlEngagementBannerParams().then(controlParams => ({
             ...defaultParams,
             ...controlParams,
@@ -126,11 +126,11 @@ const deriveBannerParams = (): Promise<?EngagementBannerParams> => {
     }
 
     const campaignCode: ?{ campaignCode: string } = buildCampaignCode(
-        userTest,
-        userVariant
+        test,
+        variant
     );
 
-    return getUserVariantParams(userVariant)
+    return getUserVariantParams(variant)
         .then(variantParams => ({
             ...defaultParams,
             ...variantParams,
@@ -140,14 +140,9 @@ const deriveBannerParams = (): Promise<?EngagementBannerParams> => {
 };
 
 const userVariantCanShow = (): boolean => {
-    const userTest = getUserTest();
-    const userVariant = getUserVariant(userTest);
+    const variant = getVariant();
 
-    if (
-        userVariant &&
-        userVariant.options &&
-        userVariant.options.blockEngagementBanner
-    ) {
+    if (variant && variant.options && variant.options.blockEngagementBanner) {
         return false;
     }
     return true;
@@ -170,8 +165,8 @@ const clearBannerHistory = (): void => {
 };
 
 const showBanner = (params: EngagementBannerParams): void => {
-    const test = getUserTest();
-    const variant = getUserVariant(test);
+    const { test, variant } = getTestAndVariant();
+
     const messageText = Array.isArray(params.messageText)
         ? selectSequentiallyFrom(params.messageText)
         : params.messageText;

@@ -2,11 +2,11 @@
 import { getSync as getSync_ } from 'lib/geolocation';
 import { getBreakpoint as getBreakpoint_ } from 'lib/detect';
 import config from 'lib/config';
-import { testCanBeRun as testCanBeRun_ } from 'common/modules/experiments/test-can-run-checks';
-import { getParticipations as getParticipations_ } from 'common/modules/experiments/utils';
 import {
     getLargestSize,
     getBreakpointKey,
+    isInRowRegion,
+    isInUkRegion,
     shouldIncludeAdYouLike,
     shouldIncludeAppNexus,
     shouldIncludeImproveDigital,
@@ -23,8 +23,6 @@ import {
 
 const getSync: any = getSync_;
 const getBreakpoint: any = getBreakpoint_;
-const testCanBeRun: any = testCanBeRun_;
-const getParticipations: any = getParticipations_;
 
 jest.mock('lodash/once', () => a => a);
 
@@ -37,8 +35,7 @@ jest.mock('lib/detect', () => ({
     hasPushStateSupport: jest.fn(() => true),
 }));
 
-jest.mock('common/modules/experiments/test-can-run-checks');
-jest.mock('common/modules/experiments/utils');
+jest.mock('common/modules/experiments/ab-tests');
 
 /* eslint-disable guardian-frontend/no-direct-access-config */
 const resetConfig = () => {
@@ -225,27 +222,50 @@ describe('Utils', () => {
         }
     });
 
-    test('shouldIncludeImproveDigital should return true if edition is UK or INT', () => {
-        config.set('page.edition', 'UK');
-        expect(shouldIncludeImproveDigital()).toBe(true);
-        config.set('page.edition', 'INT');
+    test('shouldIncludeImproveDigital should return true if geolocation is UK', () => {
+        getSync.mockReturnValue('UK');
         expect(shouldIncludeImproveDigital()).toBe(true);
     });
 
-    test('shouldIncludeImproveDigital should return false if edition is AU or US', () => {
-        config.set('page.edition', 'AU');
-        expect(shouldIncludeImproveDigital()).toBe(false);
-        config.set('page.edition', 'US');
+    test('shouldIncludeImproveDigital should return true if geolocation is ROW', () => {
+        getSync.mockReturnValue('FR');
+        expect(shouldIncludeImproveDigital()).toBe(true);
+    });
+
+    test('shouldIncludeImproveDigital should return false if geolocation is AU', () => {
+        getSync.mockReturnValue('AU');
         expect(shouldIncludeImproveDigital()).toBe(false);
     });
 
-    test('shouldIncludeXaxis should always return false on INT, AU and US editions', () => {
-        const editions = ['AU', 'INT', 'US'];
-        const result = editions.map(edition => {
-            config.set('page.edition', edition);
-            return shouldIncludeXaxis();
-        });
-        expect(result).toEqual([false, false, false]);
+    test('shouldIncludeImproveDigital should return false if geolocation is US', () => {
+        getSync.mockReturnValue('US');
+        expect(shouldIncludeImproveDigital()).toBe(false);
+    });
+
+    test('shouldIncludeXaxis should be true if geolocation is UK', () => {
+        config.set('page.isDev', true);
+        getSync.mockReturnValue('UK');
+        expect(shouldIncludeXaxis()).toBe(true);
+    });
+
+    test('shouldIncludeXaxis should be false if geolocation is not UK', () => {
+        config.set('page.isDev', true);
+        const testGeos = [
+            'FK',
+            'GI',
+            'GG',
+            'IM',
+            'JE',
+            'SH',
+            'AU',
+            'US',
+            'CA',
+            'NZ',
+        ];
+        for (let i = 0; i < testGeos.length; i += 1) {
+            getSync.mockReturnValue(testGeos[i]);
+            expect(shouldIncludeXaxis()).toBe(false);
+        }
     });
 
     test('shouldIncludeSonobi should return true if geolocation is US', () => {
@@ -281,8 +301,6 @@ describe('Utils', () => {
     });
 
     test('shouldIncludeAdYouLike when not in any tests', () => {
-        testCanBeRun.mockReturnValue(true);
-        getParticipations.mockReturnValue(undefined);
         expect(shouldIncludeAdYouLike([[300, 250]])).toBe(true);
         expect(shouldIncludeAdYouLike([[300, 600], [300, 250]])).toBe(true);
         expect(shouldIncludeAdYouLike([[728, 90]])).toBe(false);
@@ -297,5 +315,34 @@ describe('Utils', () => {
         expect(result).toEqual({
             testString: 'non empty string',
         });
+    });
+
+    test('isInUkRegion should return true if geolocation is UK', () => {
+        getSync.mockReturnValue('UK');
+        expect(isInUkRegion()).toBe(true);
+    });
+
+    test('isInUkRegion should return false if geolocation is not UK', () => {
+        const testGeos = ['FK', 'GI', 'GG', 'IM', 'JE', 'SH', 'AU'];
+        for (let i = 0; i < testGeos.length; i += 1) {
+            getSync.mockReturnValue(testGeos[i]);
+            expect(isInUkRegion()).toBe(false);
+        }
+    });
+
+    test('isInRowRegion should return false if geolocation is UK, US, CA, AU or NZ', () => {
+        const testGeos = ['UK', 'US', 'CA', 'AU', 'NZ'];
+        for (let i = 0; i < testGeos.length; i += 1) {
+            getSync.mockReturnValue(testGeos[i]);
+            expect(isInRowRegion()).toBe(false);
+        }
+    });
+
+    test('isInRowRegion should return true if geolocation is not UK, US, CA, AU or NZ', () => {
+        const testGeos = ['FK', 'GI', 'GG', 'IM', 'JE', 'SH'];
+        for (let i = 0; i < testGeos.length; i += 1) {
+            getSync.mockReturnValue(testGeos[i]);
+            expect(isInRowRegion()).toBe(true);
+        }
     });
 });

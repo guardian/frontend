@@ -13,7 +13,7 @@ import {
     thirdPartyTrackingAdConsent,
 } from 'common/modules/commercial/ad-prefs.lib';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
-import { getParticipations } from 'common/modules/experiments/utils';
+import { getSynchronousParticipations } from 'common/modules/experiments/ab';
 import { removeFalseyValues } from 'commercial/modules/prebid/utils';
 import flattenDeep from 'lodash/flattenDeep';
 import once from 'lodash/once';
@@ -32,7 +32,7 @@ const formatTarget = (target: ?string): ?string =>
         : null;
 
 const abParam = (): Array<string> => {
-    const abParticipations: Participations = getParticipations();
+    const abParticipations: Participations = getSynchronousParticipations();
     const abParams: Array<string> = [];
 
     const pushAbParams = (testName: string, testValue: mixed): void => {
@@ -100,10 +100,6 @@ const getReferrer = (): ?string => {
             id: 'twitter',
             match: 't.co/',
         }, // added (/) because without slash it is picking up reddit.com too
-        {
-            id: 'googleplus',
-            match: 'plus.url.google',
-        },
         {
             id: 'reddit',
             match: 'reddit.com',

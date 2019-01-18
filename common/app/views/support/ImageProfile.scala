@@ -45,21 +45,22 @@ sealed trait ElementProfile {
     bestFor(image).flatMap(_.altText)
 
   // NOTE - if you modify this in any way there is a decent chance that you decache all our images :(
-  val qualityparam = if (hidpi) {"quality=45"} else {"quality=85"}
-  val autoParam = if (autoFormat) "auto=format" else ""
+  val qualityparam: String = if (hidpi) {"quality=45"} else {"quality=85"}
+  val autoParam: String = if (autoFormat) "auto=format" else ""
   val fitParam = "fit=max"
-  val dprParam = if (hidpi) {
+  val dprParam: String = if (hidpi) {
     if (isPng) {
       "dpr=1.3"
     } else {
       "dpr=2"
     }
   } else {""}
-  val heightParam = height.map(pixels => s"height=$pixels").getOrElse("")
-  val widthParam = width.map(pixels => s"width=$pixels").getOrElse("")
+  val heightParam: String = height.map(pixels => s"height=$pixels").getOrElse("")
+  val widthParam: String = width.map(pixels => s"width=$pixels").getOrElse("")
+  val sharpenParam: String = ""
 
   def resizeString: String = {
-    val params = Seq(widthParam, heightParam, qualityparam, autoParam, fitParam, dprParam).filter(_.nonEmpty).mkString("&")
+    val params = Seq(widthParam, heightParam, qualityparam, autoParam, fitParam, dprParam, sharpenParam).filter(_.nonEmpty).mkString("&")
     s"?$params"
   }
 
@@ -203,11 +204,12 @@ object FacebookOpenGraphImage extends OverlayBase64 {
 
 object EmailImage extends ImageProfile(width = Some(580), autoFormat = false) {
   override val qualityparam = "quality=60"
-  val knownWidth = width.get
+  override val sharpenParam = "sharpen=a0.8,r1,t1"
+  val knownWidth: Int = width.get
 }
 
 object EmailVideoImage extends ImageProfile(width = Some(580), autoFormat = false) with OverlayBase64 {
-  override val qualityparam = "quality=60"
+  override val qualityparam: String = EmailImage.qualityparam
   val overlayAlignParam = "overlay-align=center"
   val overlayUrlParam = s"overlay-base64=${overlayUrlBase64("play.png")}"
 
@@ -218,15 +220,17 @@ object EmailVideoImage extends ImageProfile(width = Some(580), autoFormat = fals
 }
 
 object FrontEmailImage extends ImageProfile(width = Some(500), autoFormat = false) {
-  override val qualityparam = "quality=60"
-  val knownWidth = width.get
+  override val qualityparam: String = EmailImage.qualityparam
+  override val sharpenParam: String = EmailImage.sharpenParam
+  val knownWidth: Int = width.get
 }
 
 object SmallFrontEmailImage {
   def apply(customWidth: Int): SmallFrontEmailImage = new SmallFrontEmailImage(customWidth)
 }
 class SmallFrontEmailImage(customWidth: Int) extends ImageProfile(Some(customWidth), autoFormat = false) {
-  override val qualityparam = "quality=60"
+  override val qualityparam: String = EmailImage.qualityparam
+  override val sharpenParam: String = EmailImage.sharpenParam
 }
 
 // The imager/images.js base image.

@@ -304,7 +304,6 @@ class TweetCleaner(content: Content, amp: Boolean) extends HtmlCleaner {
             element.empty()
             element.tagName("amp-twitter")
             element.attr("data-tweetId", elem.id)
-            element.attr("data-cards", "hidden")
             element.attr("layout", "responsive")
             element.attr("width", "486")
             element.attr("data-conversation","none")
