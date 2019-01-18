@@ -5,7 +5,7 @@
 @import common.LinkTo
 @import navigation.NavMenu
 @import navigation.ReaderRevenueSite.{Support, SupportSubscribe, SupportContribute}
-@import navigation.UrlHelpers.{getReaderRevenueUrl, Footer}
+@import navigation.UrlHelpers.{getReaderRevenueUrl, Footer, AmpFooter}
 @import common.editions.{Au, Uk, Us, International}
 @import model.Page
 @import conf.switches.Switches.{ EmailInlineInFooterSwitch }
@@ -129,7 +129,7 @@
                                     <a class="cta-bar__cta js-change-become-member-link js-acquisition-link"
                                         data-link-name="footer : contribute-cta"
                                         data-edition="@{editionId}"
-                                        href="@getReaderRevenueUrl(SupportContribute, Footer)">
+                                        href="@getReaderRevenueUrl(SupportContribute, if (isAmp) AmpFooter else Footer)">
                                         Contribute
                                         @fragments.inlineSvg("arrow-right", "icon")
                                     </a>
@@ -137,7 +137,7 @@
                                     <a class="cta-bar__cta js-subscribe js-acquisition-link"
                                         data-link-name="footer : subscribe-cta"
                                         data-edition="@{editionId}"
-                                        href="@getReaderRevenueUrl(SupportSubscribe,Footer)">
+                                        href="@getReaderRevenueUrl(SupportSubscribe, if (isAmp) AmpFooter else Footer)">
                                         Subscribe
                                         @fragments.inlineSvg("arrow-right", "icon")
                                     </a>
@@ -217,7 +217,7 @@
                                     <a class="cta-bar__cta js-change-become-member-link js-acquisition-link"
                                         data-link-name="footer : contribute-cta"
                                         data-edition="@{editionId}"
-                                        href="@getReaderRevenueUrl(SupportContribute, Footer)">
+                                        href="@getReaderRevenueUrl(SupportContribute, if (isAmp) AmpFooter else Footer)">
                                         Contribute
                                         @fragments.inlineSvg("arrow-right", "icon")
                                     </a>
@@ -225,7 +225,7 @@
                                     <a class="cta-bar__cta js-subscribe js-acquisition-link"
                                         data-link-name="footer : subscribe-cta"
                                         data-edition="@{editionId}"
-                                        href="@getReaderRevenueUrl(SupportSubscribe,Footer)">
+                                        href="@getReaderRevenueUrl(SupportSubscribe, if (isAmp) AmpFooter else Footer)">
                                         Subscribe
                                         @fragments.inlineSvg("arrow-right", "icon")
                                     </a>
@@ -310,7 +310,7 @@
                                     <a class="cta-bar__cta js-change-become-member-link js-acquisition-link"
                                         data-link-name="footer : contribute-cta"
                                         data-edition="@{editionId}"
-                                        href="@getReaderRevenueUrl(SupportContribute, Footer)">
+                                        href="@getReaderRevenueUrl(SupportContribute, if (isAmp) AmpFooter else Footer)">
                                         Contribute
                                         @fragments.inlineSvg("arrow-right", "icon")
                                     </a>
@@ -318,7 +318,7 @@
                                     <a class="cta-bar__cta js-subscribe js-acquisition-link"
                                         data-link-name="footer : subscribe-cta"
                                         data-edition="@{editionId}"
-                                        href="@getReaderRevenueUrl(SupportSubscribe,Footer)">
+                                        href="@getReaderRevenueUrl(SupportSubscribe, if (isAmp) AmpFooter else Footer)">
                                         Subscribe
                                         @fragments.inlineSvg("arrow-right", "icon")
                                     </a>
@@ -390,7 +390,7 @@
                                     <a class="cta-bar__cta js-change-become-member-link js-acquisition-link"
                                         data-link-name="footer : contribute-cta"
                                         data-edition="@{editionId}"
-                                        href="@getReaderRevenueUrl(SupportContribute, Footer)">
+                                        href="@getReaderRevenueUrl(SupportContribute, if (isAmp) AmpFooter else Footer)">
                                         Contribute
                                         @fragments.inlineSvg("arrow-right", "icon")
                                     </a>
@@ -398,7 +398,7 @@
                                     <a class="cta-bar__cta js-subscribe js-acquisition-link"
                                         data-link-name="footer : subscribe-cta"
                                         data-edition="@{editionId}"
-                                        href="@getReaderRevenueUrl(SupportSubscribe,Footer)">
+                                        href="@getReaderRevenueUrl(SupportSubscribe, if (isAmp) AmpFooter else Footer)">
                                         Subscribe
                                         @fragments.inlineSvg("arrow-right", "icon")
                                     </a>
