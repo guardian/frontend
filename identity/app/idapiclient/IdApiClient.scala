@@ -92,7 +92,8 @@ class IdApiClient(
   def updatePassword(pwdUpdate: PasswordUpdate, auth: Auth, trackingData: TrackingData ): Future[Response[CookiesResponse]] = {
     val apiPath = urlJoin("user", "password")
     val body = write(pwdUpdate)
-    val response = post(apiPath, Some(auth), Some(trackingData), Some(body))
+    val headers = buildHeaders(Some(auth), extra = xForwardedForHeader(trackingData))
+    val response = httpClient.POST(apiUrl(apiPath), Some(body), clientAuth.parameters, headers)
     response map extract(jsonField("cookies"))
   }
 
