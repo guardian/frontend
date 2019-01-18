@@ -336,11 +336,25 @@ object DotcomponentsDataModel {
       getReaderRevenueUrl(SupportSubscribe, SideMenu)(request),
       getReaderRevenueUrl(Support, SideMenu)(request)
     )
+    
+    val ampHeaderReaderRevenueLink: ReaderRevenueLink = ReaderRevenueLink(
+      getReaderRevenueUrl(SupportContribute, AmpHeader)(request),
+      getReaderRevenueUrl(SupportSubscribe, AmpHeader)(request),
+      getReaderRevenueUrl(Support, AmpHeader)(request)
+    )
+
+    val ampFooterReaderRevenueLink: ReaderRevenueLink = ReaderRevenueLink(
+      getReaderRevenueUrl(SupportContribute, AmpFooter)(request),
+      getReaderRevenueUrl(SupportSubscribe, AmpFooter)(request),
+      getReaderRevenueUrl(Support, AmpFooter)(request)
+    )
 
     val readerRevenueLinks = ReaderRevenueLinks(
       headerReaderRevenueLink,
       footerReaderRevenueLink,
-      sideMenuReaderRevenueLink
+      sideMenuReaderRevenueLink,
+      ampHeaderReaderRevenueLink,
+      ampFooterReaderRevenueLink
     )
 
     val config = Config(
