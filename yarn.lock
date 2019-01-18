@@ -716,9 +716,9 @@
   version "0.7.1"
   resolved "https://registry.yarnpkg.com/@emotion/utils/-/utils-0.7.1.tgz#e44e596d03c9f16ba3b127ad333a8a072bcb5a0a"
 
-"@guardian/atom-renderer@0.15.1-justinpinner.test.4":
-  version "0.15.1-justinpinner.test.4"
-  resolved "https://registry.yarnpkg.com/@guardian/atom-renderer/-/atom-renderer-0.15.1-justinpinner.test.4.tgz#c3de3a16e116bfefc041ccdf2aa8da336872a44f"
+"@guardian/atom-renderer@0.15.1-justinpinner.test.8":
+  version "0.15.1-justinpinner.test.8"
+  resolved "https://registry.yarnpkg.com/@guardian/atom-renderer/-/atom-renderer-0.15.1-justinpinner.test.8.tgz#e1622d2901e5e0b54e2fc557fb8aa5bee0ad63e8"
   dependencies:
     autoprefixer "^8.2.0"
     css-loader "^0.28.7"
