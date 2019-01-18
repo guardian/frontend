@@ -5,7 +5,6 @@ import { commercialCmpCustomise } from 'common/modules/experiments/tests/commerc
 import { commercialAdMobileWebIncrease } from 'common/modules/experiments/tests/commercial-ad-mobile-web-increase.js';
 import { commercialOutbrainNewids } from 'common/modules/experiments/tests/commercial-outbrain-newids.js';
 import { acquisitionsEpicUsTopTicker } from 'common/modules/experiments/tests/acquisitions-epic-us-top-ticker';
-import { acquisitionsEpicAuPostOneMillion } from 'common/modules/experiments/tests/acquisitions-epic-au-post-one-million';
 import { acquisitionsEpicFromGoogleDocOneVariant } from 'common/modules/experiments/tests/acquisitions-epic-from-google-doc-one-variant';
 import { acquisitionsEpicFromGoogleDocTwoVariants } from 'common/modules/experiments/tests/acquisitions-epic-from-google-doc-two-variants';
 import { acquisitionsEpicFromGoogleDocThreeVariants } from 'common/modules/experiments/tests/acquisitions-epic-from-google-doc-three-variants';
@@ -18,7 +17,6 @@ import { acquisitionsEpicAlwaysAskIfTagged } from 'common/modules/experiments/te
 import { acquisitionsEpicLiveblog } from 'common/modules/experiments/tests/acquisitions-epic-liveblog';
 import { acquisitionsEpicThankYou } from 'common/modules/experiments/tests/acquisitions-epic-thank-you';
 import { AcquisitionsBannerUsEoy } from 'common/modules/experiments/tests/acquisitions-banner-us-eoy';
-import { AcquisitionsBannerAustraliaPostOneMillionTest } from 'common/modules/experiments/tests/acquisitions-banner-australia-post-one-million';
 import {
     AcquisitionsBannerGoogleDocTestFiveVariants,
     AcquisitionsBannerGoogleDocTestFourVariants,
@@ -37,7 +35,6 @@ export const concurrentTests: $ReadOnlyArray<ABTest> = [
 
 export const epicTests: $ReadOnlyArray<EpicABTest> = [
     acquisitionsEpicUsTopTicker,
-    acquisitionsEpicAuPostOneMillion,
     acquisitionsEpicFromGoogleDocOneVariant,
     acquisitionsEpicFromGoogleDocTwoVariants,
     acquisitionsEpicFromGoogleDocThreeVariants,
@@ -53,7 +50,6 @@ export const epicTests: $ReadOnlyArray<EpicABTest> = [
 
 export const engagementBannerTests: $ReadOnlyArray<AcquisitionsABTest> = [
     AcquisitionsBannerUsEoy,
-    AcquisitionsBannerAustraliaPostOneMillionTest,
     AcquisitionsBannerGoogleDocTestOneVariant,
     AcquisitionsBannerGoogleDocTestTwoVariants,
     AcquisitionsBannerGoogleDocTestThreeVariants,
