@@ -80,13 +80,12 @@ class ChangePasswordController(
   def renderPasswordConfirmation(returnUrl: Option[String]): Action[AnyContent] = Action { implicit request =>
     val idRequest = idRequestParser(request)
     val userIsLoggedIn = authenticationService.userIsFullyAuthenticated(request)
-    NoCache(DiscardingIdentityCookies(
+    NoCache(
       Ok(
         IdentityHtmlPage.html(
           views.html.password.passwordResetConfirmation(page, idRequest, idUrlBuilder, userIsLoggedIn, returnUrl, None)
         )(page, request, context)
-      )
-    ))
+      ))
   }
 
   def submitForm(): Action[AnyContent] = csrfCheck {
