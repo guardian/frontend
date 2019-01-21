@@ -10,12 +10,6 @@ type pagePropertiesRelevantToEpic = {|
 // less money than others, so we don't want to waste an epic impression on them.
 // Especially since that epic impression deprives us of Outbrain money.
 export const defaultExclusionRules: pagePropertiesRelevantToEpic[] = [
-    // e.g. https://www.theguardian.com/football/blog/2018/dec/12/spurs-fans-wallow-in-afterglow-un-spursy-ending
-    { section: 'football', toneIds: ['tone/features'] },
-
-    // e.g. https://www.theguardian.com/football/2018/dec/12/valencia-manchester-united-champions-league-match-report
-    { section: 'football', toneIds: ['tone/matchreports'] },
-
     // e.g. https://www.theguardian.com/money/2018/dec/13/slime-toys-tested-fail-meet-eu-safety-standards-hamleys-christmas
     { section: 'money' },
 
