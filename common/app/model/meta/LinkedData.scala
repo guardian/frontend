@@ -1,6 +1,7 @@
 package model.meta
 
 import conf.Static
+import play.api.libs.json.{Json, OFormat}
 
 class LinkedData(
   val `@type`: String,
@@ -27,6 +28,10 @@ case class Guardian(
   )
 ) extends LinkedData("Organization")
 
+object Guardian {
+  implicit val formats: OFormat[Guardian] = Json.format[Guardian]
+}
+
 // https://developers.google.com/app-indexing/webmasters/server#schemaorg-markup-for-viewaction
 case class WebPage(
   `@id`: String,
@@ -37,6 +42,10 @@ case class PotentialAction(
   `@type`: String = "ViewAction",
   target: String
 )
+
+object PotentialAction {
+  implicit val formats: OFormat[PotentialAction] = Json.format[PotentialAction]
+}
 
 case class ItemList(
   url: String,

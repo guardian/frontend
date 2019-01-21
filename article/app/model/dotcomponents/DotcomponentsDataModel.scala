@@ -6,13 +6,14 @@ import controllers.ArticlePage
 import model.SubMetaLinks
 import model.dotcomrendering.pageElements.PageElement
 import navigation.NavMenu
-import play.api.libs.json.{JsValue, Json, Writes}
+import play.api.libs.json.{JsValue, Json, OFormat, Writes}
 import play.api.mvc.RequestHeader
 import views.support.{CamelCase, GUDateTimeFormat}
 import ai.x.play.json.Jsonx
 import common.Maps.RichMap
 import navigation.UrlHelpers.{Footer, Header, SideMenu, getReaderRevenueUrl}
 import navigation.ReaderRevenueSite.{Support, SupportContribute, SupportSubscribe}
+import model.meta.{Guardian, LinkedData, PotentialAction}
 import ai.x.play.json.implicits.optionWithNull // Note, required despite Intellij saying otherwise
 
 // We have introduced our own set of objects for serializing data to the DotComponents API,
@@ -53,6 +54,17 @@ case class ReaderRevenueLinks(
   sideMenu: ReaderRevenueLink
 )
 
+case class NewsArticle(
+  `@id`: String,
+  publisher: Guardian = Guardian(),
+  isAccessibleForFree: Boolean = true,
+  potentialAction: PotentialAction
+) extends LinkedData("NewsArticle")
+
+object NewsArticle {
+  implicit val formats: OFormat[NewsArticle] = Json.format[NewsArticle]
+}
+
 case class PageData(
     author: String,
     pageId: String,
@@ -79,7 +91,7 @@ case class PageData(
     sentryHost: Option[String],
     sentryPublicApiKey: Option[String],
     switches: Map[String,Boolean],
-
+    linkedData: NewsArticle,
 
     // AMP specific
     guardianBaseURL: String,
@@ -189,6 +201,10 @@ object DotcomponentsDataModel {
       acc + (CamelCase.fromHyphenated(switch.name) -> switch.isSwitchedOn)
     })
 
+    val webUrl = article.metadata.webUrl
+    val potentialAction = PotentialAction(target = "android-app://com.guardian/" + webUrl.replace("://", "/"))
+    val linkedData = NewsArticle(`@id` = webUrl, potentialAction = potentialAction)
+
     val pageData = PageData(
       article.tags.contributors.map(_.name).mkString(","),
       article.metadata.id,
@@ -215,8 +231,9 @@ object DotcomponentsDataModel {
       jsPageData.get("sentryHost"),
       jsPageData.get("sentryPublicApiKey"),
       switches,
+      linkedData,
       Configuration.site.host,
-      article.metadata.webUrl,
+      webUrl,
       article.content.shouldHideAdverts,
       hasStoryPackage = articlePage.related.hasStoryPackage,
       hasRelated = article.content.showInRelated,
