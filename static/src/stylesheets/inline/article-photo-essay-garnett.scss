@@ -2,6 +2,7 @@
 @import '../_mixins';
 
 .content--photo-essay .immersive-main-media__headline-container {
+    display: none;
     margin-top: 0;
     bottom: 0;
 
@@ -223,9 +224,9 @@
 
     & > li {
         @include fs-textSans(3);
-        color: $brand-main;
         font-size: 12px;
         width: 100%;
+        color: green;
         margin-right: 1%;
         line-height: 14px;
         padding-top: $gs-baseline / 2;
