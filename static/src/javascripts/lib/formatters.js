@@ -10,7 +10,8 @@ const integerCommas = (
     }
 
     if (!!truncate && num > 9999) {
-        return `${num.toString().slice(0, -3)}k`;
+        const thousands = ~~(num/1000)
+        return `${thousands.toLocaleString()}k`;
     }
 
     return num.toLocaleString();
