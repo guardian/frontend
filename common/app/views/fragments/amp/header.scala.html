@@ -2,7 +2,7 @@
 
 @import common.{Edition, LinkTo}
 @import navigation.NavMenu
-@import navigation.UrlHelpers.{getReaderRevenueUrl, Header}
+@import navigation.UrlHelpers.{getReaderRevenueUrl, AmpHeader}
 @import navigation.ReaderRevenueSite.Support
 
 <header class="header"
@@ -13,7 +13,7 @@
             @defining(Edition(request).id.toLowerCase()) { editionId =>
                 <a class="cta-bar__cta js-acquisition-link"
                 data-link-name="amp : nav : supporter-cta"
-                href="@getReaderRevenueUrl(Support, Header)">
+                href="@getReaderRevenueUrl(Support, AmpHeader)">
                     Support us
                     @fragments.inlineSvg("arrow-right", "icon")
                 </a>

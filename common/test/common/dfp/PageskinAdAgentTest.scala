@@ -187,4 +187,24 @@ class PageskinAdAgentTest extends FlatSpec with Matchers {
       )
     )
   }
+
+  it should "find section-targeted sponsorship without needing an 'ng' ad unit suffix" in {
+    NotProductionTestPageskinAdAgent.findSponsorships(
+      adUnitPath = "/123456/root/testSport/front/ng",
+      metaData = keywordPressedFrontMeta,
+      edition = Uk
+    ) shouldBe Seq(
+      PageSkinSponsorship(
+        lineItemName = "lineItemName4",
+        lineItemId = 1234567,
+        adUnits = Seq("testSport/front"),
+        editions = Seq(Uk),
+        countries = Seq("United Kingdom"),
+        targetsAdTest = true,
+        adTestValue = Some("6"),
+        keywords = Nil,
+        series = Nil
+      )
+    )
+  }
 }

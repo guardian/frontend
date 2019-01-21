@@ -2,10 +2,7 @@
 /* global jsdom */
 
 import config from 'lib/config';
-import {
-    getVariant as getVariant_,
-    isInVariant as isInVariant_,
-} from 'common/modules/experiments/utils';
+import { isInVariantSynchronous as isInVariantSynchronous_ } from 'common/modules/experiments/ab';
 import { _, bids } from './bid-config';
 import type { PrebidBidder, PrebidSize } from './types';
 import {
@@ -17,6 +14,10 @@ import {
     containsMpu as containsMpu_,
     containsMpuOrDmpu as containsMpuOrDmpu_,
     getBreakpointKey as getBreakpointKey_,
+    isInAuRegion as isInAuRegion_,
+    isInRowRegion as isInRowRegion_,
+    isInUkRegion as isInUkRegion_,
+    isInUsRegion as isInUsRegion_,
     shouldIncludeAdYouLike as shouldIncludeAdYouLike_,
     shouldIncludeAppNexus as shouldIncludeAppNexus_,
     shouldIncludeImproveDigital as shouldIncludeImproveDigital_,
@@ -45,8 +46,11 @@ const shouldIncludeXaxis: any = shouldIncludeXaxis_;
 const shouldIncludeSonobi: any = shouldIncludeSonobi_;
 const stripMobileSuffix: any = stripMobileSuffix_;
 const getBreakpointKey: any = getBreakpointKey_;
-const getVariant: any = getVariant_;
-const isInVariant: any = isInVariant_;
+const isInAuRegion: any = isInAuRegion_;
+const isInRowRegion: any = isInRowRegion_;
+const isInUkRegion: any = isInUkRegion_;
+const isInUsRegion: any = isInUsRegion_;
+const isInVariantSynchronous: any = isInVariantSynchronous_;
 
 const {
     getDummyServerSideBidders,
@@ -68,7 +72,9 @@ jest.mock('common/modules/commercial/ad-prefs.lib', () => ({
 
 jest.mock('./utils');
 
-jest.mock('common/modules/experiments/utils');
+jest.mock('common/modules/experiments/ab', () => ({
+    isInVariantSynchronous: jest.fn(),
+}));
 
 /* eslint-disable guardian-frontend/no-direct-access-config */
 const resetConfig = () => {
@@ -85,7 +91,6 @@ const resetConfig = () => {
     config.set('ophan', { pageViewId: 'pvid' });
     config.set('page.contentType', 'Article');
     config.set('page.section', 'Magic');
-    config.set('page.edition', 'UK');
     config.set('page.isDev', false);
 };
 
@@ -161,7 +166,8 @@ describe('getImprovePlacementId', () => {
         expect(getImprovePlacementId([[1, 2]])).toBe(-1);
     });
 
-    test('should return the expected values when on the UK Edition and desktop device', () => {
+    test('should return the expected values when geolocated in UK and on desktop device', () => {
+        isInUkRegion.mockReturnValue(true);
         getBreakpointKey.mockReturnValue('D');
         containsMpuOrDmpu.mockReturnValueOnce(true);
         containsMpuOrDmpu.mockReturnValueOnce(true);
@@ -178,7 +184,8 @@ describe('getImprovePlacementId', () => {
         ]);
     });
 
-    test('should return the expected values when on the UK Edition and tablet device', () => {
+    test('should return the expected values when geolocated in UK and on tablet device', () => {
+        isInUkRegion.mockReturnValue(true);
         getBreakpointKey.mockReturnValue('T');
         containsMpuOrDmpu.mockReturnValueOnce(true);
         containsMpuOrDmpu.mockReturnValueOnce(true);
@@ -195,7 +202,8 @@ describe('getImprovePlacementId', () => {
         ]);
     });
 
-    test('should return the expected values when on the UK Edition and mobile device', () => {
+    test('should return the expected values when geolocated in UK and on mobile device', () => {
+        isInUkRegion.mockReturnValue(true);
         getBreakpointKey.mockReturnValue('M');
         containsMpuOrDmpu.mockReturnValueOnce(true);
         containsMpuOrDmpu.mockReturnValueOnce(true);
@@ -206,8 +214,8 @@ describe('getImprovePlacementId', () => {
         expect(generateTestIds()).toEqual([1116400, 1116400, -1, -1, -1]);
     });
 
-    test('should return the expected values when on the INT Edition and desktop device', () => {
-        config.set('page.edition', 'INT');
+    test('should return the expected values when geolocated in ROW region and on desktop device', () => {
+        isInRowRegion.mockReturnValue(true);
         getBreakpointKey.mockReturnValue('D');
         containsMpuOrDmpu.mockReturnValueOnce(true);
         containsMpuOrDmpu.mockReturnValueOnce(true);
@@ -224,8 +232,8 @@ describe('getImprovePlacementId', () => {
         ]);
     });
 
-    test('should return the expected values when on the INT Edition and tablet device', () => {
-        config.set('page.edition', 'INT');
+    test('should return the expected values when not geolocated in ROW region and on tablet device', () => {
+        isInRowRegion.mockReturnValue(true);
         getBreakpointKey.mockReturnValue('T');
         containsMpuOrDmpu.mockReturnValueOnce(true);
         containsMpuOrDmpu.mockReturnValueOnce(true);
@@ -242,8 +250,8 @@ describe('getImprovePlacementId', () => {
         ]);
     });
 
-    test('should return the expected values when on the INT Edition and mobile device', () => {
-        config.set('page.edition', 'INT');
+    test('should return the expected values when geolocated in ROW region and on mobile device', () => {
+        isInRowRegion.mockReturnValue(true);
         getBreakpointKey.mockReturnValue('M');
         containsMpuOrDmpu.mockReturnValueOnce(true);
         containsMpuOrDmpu.mockReturnValueOnce(true);
@@ -251,85 +259,71 @@ describe('getImprovePlacementId', () => {
         expect(generateTestIds()).toEqual([1116424, 1116424, -1, -1, -1]);
     });
 
-    test('should return -1 if on the US or AU Editions', () => {
-        config.set('page.edition', 'AU');
+    test('should return -1 if geolocated in US or AU regions', () => {
+        isInUsRegion.mockReturnValue(true);
         expect(generateTestIds()).toEqual([-1, -1, -1, -1, -1]);
-        config.set('page.edition', 'US');
+        isInAuRegion.mockReturnValue(true);
         expect(generateTestIds()).toEqual([-1, -1, -1, -1, -1]);
     });
 
     test('should use test placement ID when participating in CommercialPrebidSafeframe test in desktop MPU', () => {
-        getVariant.mockReturnValue({
-            id: 'variant',
-            test: (): void => {},
-        });
-        isInVariant.mockReturnValue(true);
+        isInVariantSynchronous.mockImplementationOnce(
+            (testId, variantId) => variantId === 'variant'
+        );
         getBreakpointKey.mockReturnValue('D');
         containsMpu.mockReturnValue(true);
         expect(getImprovePlacementId([[300, 250]])).toEqual(1116407);
     });
 
     test('should use test placement ID when participating in CommercialPrebidSafeframe test in desktop DMPU', () => {
-        getVariant.mockReturnValue({
-            id: 'variant',
-            test: (): void => {},
-        });
-        isInVariant.mockReturnValue(true);
+        isInVariantSynchronous.mockImplementationOnce(
+            (testId, variantId) => variantId === 'variant'
+        );
         getBreakpointKey.mockReturnValue('D');
         containsDmpu.mockReturnValue(true);
         expect(getImprovePlacementId([[300, 600]])).toEqual(1116408);
     });
 
     test('should use test placement ID when participating in CommercialPrebidSafeframe test in desktop billboard', () => {
-        getVariant.mockReturnValue({
-            id: 'variant',
-            test: (): void => {},
-        });
-        isInVariant.mockReturnValue(true);
+        isInVariantSynchronous.mockImplementationOnce(
+            (testId, variantId) => variantId === 'variant'
+        );
         getBreakpointKey.mockReturnValue('D');
         containsLeaderboardOrBillboard.mockReturnValue(true);
         expect(getImprovePlacementId([[970, 250]])).toEqual(1116409);
     });
 
     test('should use test placement ID when participating in CommercialPrebidSafeframe test in desktop leaderboard', () => {
-        getVariant.mockReturnValue({
-            id: 'variant',
-            test: (): void => {},
-        });
-        isInVariant.mockReturnValue(true);
+        isInVariantSynchronous.mockImplementationOnce(
+            (testId, variantId) => variantId === 'variant'
+        );
         getBreakpointKey.mockReturnValue('D');
         containsLeaderboardOrBillboard.mockReturnValue(true);
         expect(getImprovePlacementId([[728, 90]])).toEqual(1116409);
     });
 
     test('should use test placement ID when participating in CommercialPrebidSafeframe test in tablet MPU', () => {
-        getVariant.mockReturnValue({
-            id: 'variant',
-            test: (): void => {},
-        });
-        isInVariant.mockReturnValue(true);
+        isInVariantSynchronous.mockImplementationOnce(
+            (testId, variantId) => variantId === 'variant'
+        );
         getBreakpointKey.mockReturnValue('T');
         containsMpu.mockReturnValue(true);
         expect(getImprovePlacementId([[300, 250]])).toEqual(1116410);
     });
 
     test('should use test placement ID when participating in CommercialPrebidSafeframe test in tablet leaderboard', () => {
-        getVariant.mockReturnValue({
-            id: 'variant',
-            test: (): void => {},
-        });
-        isInVariant.mockReturnValue(true);
+        isInVariantSynchronous.mockImplementationOnce(
+            (testId, variantId) => variantId === 'variant'
+        );
         getBreakpointKey.mockReturnValue('T');
         containsLeaderboard.mockReturnValue(true);
         expect(getImprovePlacementId([[728, 90]])).toEqual(1116411);
     });
 
     test('should use test placement ID when participating in CommercialPrebidSafeframe test in mobile MPU', () => {
-        getVariant.mockReturnValue({
-            id: 'variant',
-            test: (): void => {},
-        });
-        isInVariant.mockReturnValue(true);
+        isInVariantSynchronous.mockImplementationOnce(
+            (testId, variantId) => variantId === 'variant'
+        );
         getBreakpointKey.mockReturnValue('M');
         expect(getImprovePlacementId([[300, 250]])).toEqual(1116412);
     });
@@ -435,31 +429,25 @@ describe('getIndexSiteId', () => {
     });
 
     test('should use test site ID when participating in CommercialPrebidSafeframe test on desktop', () => {
-        getVariant.mockReturnValue({
-            id: 'variant',
-            test: (): void => {},
-        });
-        isInVariant.mockReturnValue(true);
+        isInVariantSynchronous.mockImplementationOnce(
+            (testId, variantId) => variantId === 'variant'
+        );
         getBreakpointKey.mockReturnValue('D');
         expect(getIndexSiteId()).toEqual('287246');
     });
 
     test('should use test site ID when participating in CommercialPrebidSafeframe test on tablet', () => {
-        getVariant.mockReturnValue({
-            id: 'variant',
-            test: (): void => {},
-        });
-        isInVariant.mockReturnValue(true);
+        isInVariantSynchronous.mockImplementationOnce(
+            (testId, variantId) => variantId === 'variant'
+        );
         getBreakpointKey.mockReturnValue('T');
         expect(getIndexSiteId()).toEqual('287247');
     });
 
     test('should use test site ID when participating in CommercialPrebidSafeframe test on mobile', () => {
-        getVariant.mockReturnValue({
-            id: 'variant',
-            test: (): void => {},
-        });
-        isInVariant.mockReturnValue(true);
+        isInVariantSynchronous.mockImplementationOnce(
+            (testId, variantId) => variantId === 'variant'
+        );
         getBreakpointKey.mockReturnValue('M');
         expect(getIndexSiteId()).toEqual('287248');
     });
@@ -572,5 +560,49 @@ describe('bids', () => {
     test('should ignore bidder that does not exist', () => {
         setQueryString('pbtest=nonexistentbidder&pbtest=xhb');
         expect(bidders()).toEqual(['xhb']);
+    });
+
+    test('should use correct parameters in OpenX bids geolocated in UK', () => {
+        shouldIncludeOpenx.mockReturnValue(true);
+        isInUkRegion.mockReturnValue(true);
+        const openXBid = bids('dfp-ad--top-above-nav', [[728, 90]])[2];
+        expect(openXBid.params).toEqual({
+            customParams: 'someAppNexusTargetingObject',
+            delDomain: 'guardian-d.openx.net',
+            unit: '540279541',
+        });
+    });
+
+    test('should use correct parameters in OpenX bids geolocated in US', () => {
+        shouldIncludeOpenx.mockReturnValue(true);
+        isInUsRegion.mockReturnValue(true);
+        const openXBid = bids('dfp-ad--top-above-nav', [[728, 90]])[2];
+        expect(openXBid.params).toEqual({
+            customParams: 'someAppNexusTargetingObject',
+            delDomain: 'guardian-us-d.openx.net',
+            unit: '540279544',
+        });
+    });
+
+    test('should use correct parameters in OpenX bids geolocated in AU', () => {
+        shouldIncludeOpenx.mockReturnValue(true);
+        isInAuRegion.mockReturnValue(true);
+        const openXBid = bids('dfp-ad--top-above-nav', [[728, 90]])[2];
+        expect(openXBid.params).toEqual({
+            customParams: 'someAppNexusTargetingObject',
+            delDomain: 'guardian-aus-d.openx.net',
+            unit: '540279542',
+        });
+    });
+
+    test('should use correct parameters in OpenX bids geolocated in FR', () => {
+        shouldIncludeOpenx.mockReturnValue(true);
+        isInRowRegion.mockReturnValue(true);
+        const openXBid = bids('dfp-ad--top-above-nav', [[728, 90]])[2];
+        expect(openXBid.params).toEqual({
+            customParams: 'someAppNexusTargetingObject',
+            delDomain: 'guardian-d.openx.net',
+            unit: '540279541',
+        });
     });
 });

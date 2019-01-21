@@ -23,7 +23,6 @@ case class Guardian(
   sameAs: List[String] = List(
     "https://www.facebook.com/theguardian",
     "https://twitter.com/guardian",
-    "https://plus.google.com/+theGuardian",
     "https://www.youtube.com/user/TheGuardian"
   )
 ) extends LinkedData("Organization")

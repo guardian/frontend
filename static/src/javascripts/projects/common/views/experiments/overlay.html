@@ -5,9 +5,10 @@
         <button type="button" class="js-experiments-reload">Reload</button>
         <button type="button" class="js-experiments-toggle experiments__controls__toggle">&gt;</button>
     </div>
-    <h2>Acquisitions tests</h2>
+    <% testGroups.forEach(function(testGroup) { %>
+    <h2><%=testGroup.name%> tests</h2>
     <ul class="experiments__tests experiments__tests--acquisitions">
-        <% acquisitionsTests.forEach(function(test) { %>
+        <% testGroup.tests.forEach(function(test) { %>
         <li>
             <div class="experiments__test">
                 <%= test.id %>
@@ -55,54 +56,5 @@
         </li>
         <% }); %>
     </ul>
-    <h2>Other tests</h2>
-    <ul class="experiments__tests">
-        <% tests.forEach(function(test) { %>
-            <li>
-                <div class="experiments__test">
-                    <%= test.id %>
-                </div>
-                <div class="experiments__description">
-                    <%= test.description %>
-                </div>
-                <%
-                if (test.isSwitchedOn && !test.isExpired) {
-                    test.variants.forEach(function(variant) {
-                %>
-                    <div class="experiments__variant">
-                        <input
-                            type="radio"
-                            id="<%=test.id%>-<%=variant.id%>"
-                            name="<%= test.id %>"
-                            class="js-experiments-radio experiments__variant__button"
-                        >
-                        <label
-                            data-ab-test="<%= test.id %>"
-                            data-ab-variant="<%= variant.id %>"
-                            class="js-experiments-force-ab experiments__variant__label"
-                            for="<%=test.id%>-<%=variant.id%>"
-                        >
-                            <%= variant.id %>
-                        </label>
-                    </div>
-                <%
-                    });
-                }
-                if (!test.isSwitchedOn) {
-                %>
-                <div class="experiments__alert">
-                    You can turn this switch on using the Frontend Switchboard
-                </div>
-                <%
-                } if (test.isExpired) {
-                %>
-                <div class="experiments__alert">
-                    This test has expired
-                </div>
-                <%
-                }
-                %>
-            </li>
-        <% }); %>
-    </ul>
+    <% }); %>
 </div>

@@ -44,12 +44,6 @@ object Messenger extends SharePlatform {
   override val userMessage = "Share on Messenger"
 }
 
-object GooglePlus extends SharePlatform {
-  override val campaign = Some("sgp")
-  override val text = "Google plus"
-  override val css =  "gplus"
-  override val userMessage = "Share on Google+"
-}
 object Email extends SharePlatform {
   override val campaign = Some("sbl")
   override val text = "Email"
@@ -109,7 +103,6 @@ object ShareLinks {
     lazy val twitterText = title.replace("Leave.EU", "Leave. EU").encodeURIComponent
 
     val fullLink = platform match {
-      case GooglePlus => s"https://plus.google.com/share?url=$encodedHref&amp;hl=en-GB&amp;wwc=1"
       case WhatsApp => s"""whatsapp://send?text=${("\"" + title + "\" " + href).encodeURIComponent}"""
       case PinterestBlock => s"http://www.pinterest.com/pin/create/button/?description=${title.urlEncoded}&url=$encodedHref&media=${fullMediaPath.getOrElse("").urlEncoded}"
       case PinterestPage => s"http://www.pinterest.com/pin/find/?url=$encodedHref"
@@ -149,7 +142,7 @@ final case class ShareLinks(
 ) {
 
   private val elementShareOrder: List[SharePlatform] = if (tags.isLiveBlog) {
-    List(Facebook, Twitter, GooglePlus)
+    List(Facebook, Twitter)
   } else {
     List(Facebook, Twitter, PinterestBlock)
   }
@@ -178,6 +171,6 @@ final case class ShareLinks(
 
   val pageShares: ShareLinkMeta = ShareLinkMeta(
       sharesToLinks(List(Facebook, Twitter, Email)),
-      sharesToLinks(List(LinkedIn, PinterestPage, GooglePlus, WhatsApp, Messenger))
+      sharesToLinks(List(LinkedIn, PinterestPage, WhatsApp, Messenger))
     )
 }

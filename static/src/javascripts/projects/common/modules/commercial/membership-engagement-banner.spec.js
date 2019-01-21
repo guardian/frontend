@@ -30,8 +30,8 @@ jest.mock('lib/geolocation', () => ({
     getSync: jest.fn(() => 'GB'),
     getLocalCurrencySymbol: () => '£',
 }));
-jest.mock('common/modules/experiments/acquisition-test-selector', () => ({
-    getTest: jest.fn(() => ({
+jest.mock('common/modules/experiments/ab-core', () => ({
+    firstRunnableTest: jest.fn(() => ({
         campaignId: 'fake-campaign-id',
         id: 'fake-test-id',
         start: '2017-01-01',
@@ -43,37 +43,35 @@ jest.mock('common/modules/experiments/acquisition-test-selector', () => ({
         successMeasure: 'fake success measure',
         audienceCriteria: 'fake audience criteria',
         variants: [{ id: 'fake-variant-id' }],
+        variantToRun: { id: 'fake-variant-id' },
         canRun: () => true,
         componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
     })),
 }));
-jest.mock(
-    'common/modules/experiments/tests/membership-engagement-banner-tests',
-    () => ({
-        membershipEngagementBannerTests: [
-            {
-                campaignId: 'fake-campaign-id',
-                id: 'fake-test-id',
-                start: '2017-01-01',
-                expiry: '2027-01-01',
-                author: 'fake-author',
-                description: 'fake-description',
-                audience: 1,
-                audienceOffset: 0,
-                successMeasure: 'fake success measure',
-                audienceCriteria: 'fake audience criteria',
-                variants: [
-                    {
-                        id: 'fake-variant-id',
-                        engagementBannerParams: {},
-                    },
-                ],
-                canRun: () => true,
-                componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
-            },
-        ],
-    })
-);
+jest.mock('common/modules/experiments/ab-tests', () => ({
+    engagementBannerTests: [
+        {
+            campaignId: 'fake-campaign-id',
+            id: 'fake-test-id',
+            start: '2017-01-01',
+            expiry: '2027-01-01',
+            author: 'fake-author',
+            description: 'fake-description',
+            audience: 1,
+            audienceOffset: 0,
+            successMeasure: 'fake success measure',
+            audienceCriteria: 'fake audience criteria',
+            variants: [
+                {
+                    id: 'fake-variant-id',
+                    engagementBannerParams: {},
+                },
+            ],
+            canRun: () => true,
+            componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
+        },
+    ],
+}));
 jest.mock(
     'common/modules/commercial/membership-engagement-banner-parameters',
     () => ({
@@ -91,13 +89,6 @@ jest.mock(
         ),
     })
 );
-jest.mock('common/modules/experiments/test-can-run-checks', () => ({
-    testCanBeRun: jest.fn(() => true),
-}));
-jest.mock('common/modules/experiments/segment-util', () => ({
-    isInTest: jest.fn(() => true),
-    variantFor: jest.fn(() => ({ id: 'fake-variant-id' })),
-}));
 jest.mock(
     'common/modules/commercial/membership-engagement-banner-block',
     () => ({
@@ -124,8 +115,7 @@ jest.mock('common/modules/user-prefs', () => ({
 }));
 
 const FakeMessage: any = require('common/modules/ui/message').Message;
-const fakeVariantFor: any = require('common/modules/experiments/segment-util')
-    .variantFor;
+
 const fakeConstructQuery: any = require('lib/url').constructQuery;
 const fakeIsBlocked: any = require('common/modules/commercial/membership-engagement-banner-block')
     .isBlocked;
@@ -140,7 +130,6 @@ beforeEach(() => {
     FakeMessage.mockReset();
     FakeMessage.prototype.show = jest.fn(() => true);
     fakeIsBlocked.mockClear();
-    fakeVariantFor.mockClear();
     fakeGet.mockClear();
     fakeShouldShowReaderRevenue.mockClear();
     fakeConfig.get.mockClear();
@@ -173,17 +162,10 @@ describe('Membership engagement banner', () => {
             });
         });
 
-        it('should return false user variant is blocked for test', () => {
-            fakeVariantFor.mockImplementationOnce(() => ({
-                options: {
-                    blockEngagementBanner: true,
-                },
-            }));
-
-            return membershipEngagementBanner.canShow().then(canShow => {
+        it('should return false user variant is blocked for test', () =>
+            membershipEngagementBanner.canShow().then(canShow => {
                 expect(canShow).toBe(false);
-            });
-        });
+            }));
 
         it('should return false user visit count less than minArticles for banner', () => {
             fakeGet.mockReturnValueOnce(0); // gu.alreadyVisited

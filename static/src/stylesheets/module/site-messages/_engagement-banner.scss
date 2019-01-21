@@ -123,12 +123,16 @@
     display: inline-block;
     vertical-align: middle;
 
-    height: auto;
-    width: 114px;
+    height: 17px;
 
     @include mq(tablet) {
         display: block;
-        width: 121px;
+        height: 18px;
+    }
+
+    svg, img {
+        height: 100%;
+        width: auto;
     }
 }
 

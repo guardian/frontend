@@ -6,22 +6,27 @@ import bean from 'bean';
 import config from 'lib/config';
 import overlay from 'raw-loader!common/views/experiments/overlay.html';
 import styles from 'raw-loader!common/views/experiments/styles.css';
-import { TESTS } from 'common/modules/experiments/ab-tests';
-import { acquisitionsTests } from 'common/modules/experiments/acquisition-test-selector';
-import { isExpired } from 'common/modules/experiments/test-can-run-checks';
-
-const getSelectedAbTests = () =>
-    JSON.parse(storage.get('gu.experiments.ab')) || [];
+import {
+    concurrentTests,
+    epicTests,
+    engagementBannerTests,
+} from 'common/modules/experiments/ab-tests';
+import { isExpired } from 'lib/time-utils';
+import {
+    getParticipationsFromLocalStorage,
+    setParticipationsInLocalStorage,
+} from 'common/modules/experiments/ab-local-storage';
+import { getEpicTestsFromGoogleDoc } from 'common/modules/commercial/contributions-utilities';
 
 const selectRadios = () => {
-    const abTests = getSelectedAbTests();
+    const participations = getParticipationsFromLocalStorage();
 
     $('.js-experiments-radio').each(radio => {
         $(radio).attr('checked', false);
     });
 
-    abTests.forEach(test => {
-        $(`#${test.testId}-${test.variantId}`).attr('checked', true);
+    Object.keys(participations).forEach(testId => {
+        $(`#${testId}-${participations[testId].variant}`).attr('checked', true);
     });
 };
 
@@ -30,17 +35,13 @@ const bindEvents = () => {
         bean.on(label, 'click', () => {
             const testId = label.getAttribute('data-ab-test');
             const variantId = label.getAttribute('data-ab-variant');
-            const abTests = getSelectedAbTests();
-            const existingVariantForThisTest = abTests.find(
-                test => test.testId === testId
-            );
+            const participations = getParticipationsFromLocalStorage();
 
-            if (existingVariantForThisTest) {
-                existingVariantForThisTest.variantId = variantId;
-            } else {
-                abTests.push({ testId, variantId });
-            }
-            storage.set('gu.experiments.ab', JSON.stringify(abTests));
+            participations[testId] = {
+                variant: variantId,
+            };
+
+            setParticipationsInLocalStorage(participations);
         });
     });
 
@@ -72,7 +73,7 @@ const applyCss = () => {
     $('head').append(el);
 };
 
-const appendOverlay = () => {
+const appendOverlay = (): Promise<void> => {
     const extractData = ({ id, variants, description, expiry }) => ({
         id,
         variants,
@@ -80,17 +81,29 @@ const appendOverlay = () => {
         isSwitchedOn: config.get(`switches.ab${id}`),
         isExpired: isExpired(expiry),
     });
-    const data = {
-        tests: TESTS.map(extractData),
-        acquisitionsTests: acquisitionsTests.map(extractData),
-    };
+    return getEpicTestsFromGoogleDoc().then(asyncEpicTests => {
+        const data = {
+            testGroups: [
+                {
+                    name: 'Epic',
+                    tests: [...asyncEpicTests, ...epicTests].map(extractData),
+                },
+                {
+                    name: 'Banner',
+                    tests: engagementBannerTests.map(extractData),
+                },
+                { name: 'Other', tests: concurrentTests.map(extractData) },
+            ],
+        };
 
-    $('body').prepend(template(overlay)(data));
+        $('body').prepend(template(overlay)(data));
+    });
 };
 
 export const showExperiments = () => {
-    appendOverlay();
-    bindEvents();
-    selectRadios();
-    applyCss();
+    appendOverlay().then(() => {
+        bindEvents();
+        selectRadios();
+        applyCss();
+    });
 };

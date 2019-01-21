@@ -8,3 +8,10 @@
 .amp-geo-no-group .geo-amp-ad--row {
     display: block;
 }
+
+.amp-geo-group-us .liveblog-geo-amp-ad--us,
+.amp-geo-group-au .liveblog-geo-amp-ad--au,
+.amp-geo-group-eea .liveblog-geo-amp-ad--row,
+.amp-geo-no-group .liveblog-geo-amp-ad--row {
+    display: inline-block;
+}

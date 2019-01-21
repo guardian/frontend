@@ -80,6 +80,7 @@
 
 .contributions__payment-logos {
     height: 25px;
+    svg, img { height: 100%; width: auto; }
 }
 
 .contributions__contribute {
