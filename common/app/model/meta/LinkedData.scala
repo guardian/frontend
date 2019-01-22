@@ -1,7 +1,7 @@
 package model.meta
 
 import conf.Static
-import play.api.libs.json.{Json, OFormat}
+import play.api.libs.json._
 
 class LinkedData(
   val `@type`: String,
@@ -18,6 +18,8 @@ object LinkedData {
 }
 
 case class Guardian(
+  override val `@type`: String,
+  override val `@context`: String,
   name: String = "The Guardian",
   url: String = "http://www.theguardian.com/",
   logo: String = Static("images/favicons/152x152.png"),
@@ -26,9 +28,10 @@ case class Guardian(
     "https://twitter.com/guardian",
     "https://www.youtube.com/user/TheGuardian"
   )
-) extends LinkedData("Organization")
+) extends LinkedData(`@type`, `@context`)
 
 object Guardian {
+  def apply(): Guardian = new Guardian("Organization", "http://schema.org")
   implicit val formats: OFormat[Guardian] = Json.format[Guardian]
 }
 

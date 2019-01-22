@@ -6,7 +6,7 @@ import controllers.ArticlePage
 import model.SubMetaLinks
 import model.dotcomrendering.pageElements.PageElement
 import navigation.NavMenu
-import play.api.libs.json.{JsValue, Json, OFormat, Writes}
+import play.api.libs.json._
 import play.api.mvc.RequestHeader
 import views.support.{CamelCase, GUDateTimeFormat}
 import ai.x.play.json.Jsonx
@@ -55,13 +55,25 @@ case class ReaderRevenueLinks(
 )
 
 case class NewsArticle(
+  override val `@type`: String,
+  override val `@context`: String,
   `@id`: String,
+  potentialAction: PotentialAction,
   publisher: Guardian = Guardian(),
   isAccessibleForFree: Boolean = true,
-  potentialAction: PotentialAction
-) extends LinkedData("NewsArticle")
+) extends LinkedData(`@type`, `@context`)
 
 object NewsArticle {
+  def apply(
+   `@id`: String,
+   potentialAction: PotentialAction
+ ): NewsArticle = new NewsArticle(
+    "NewsArticle",
+    "http://schema.org",
+    `@id`,
+    potentialAction,
+  )
+
   implicit val formats: OFormat[NewsArticle] = Json.format[NewsArticle]
 }
 
@@ -203,7 +215,7 @@ object DotcomponentsDataModel {
 
     val webUrl = article.metadata.webUrl
     val potentialAction = PotentialAction(target = "android-app://com.guardian/" + webUrl.replace("://", "/"))
-    val linkedData = NewsArticle(`@id` = webUrl, potentialAction = potentialAction)
+    val linkedData = NewsArticle(webUrl, potentialAction)
 
     val pageData = PageData(
       article.tags.contributors.map(_.name).mkString(","),
