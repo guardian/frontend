@@ -122,6 +122,5 @@ const initAtoms = () => {
             'audio-atom'
         );
     }
-
 };
 export { initAtoms };
