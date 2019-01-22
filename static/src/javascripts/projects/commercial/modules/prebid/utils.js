@@ -118,15 +118,10 @@ export const shouldIncludeAppNexus = (): boolean =>
     ((config.get('switches.prebidAppnexusUkRow') && !isInUsRegion()) ||
         !!pbTestNameMap().and);
 
-export const shouldIncludeXaxis = (): boolean => {
-    // 50% of UK page views
-    const hasFirstLook =
-        config.get('page.isDev', true) || getRandomIntInclusive(1, 2) === 1;
-    if (isInUkRegion()) {
-        return hasFirstLook;
-    }
-    return false;
-};
+export const shouldIncludeXaxis = (): boolean =>
+    // 10% of UK page views
+    isInUkRegion() &&
+    (config.get('page.isDev', true) || getRandomIntInclusive(1, 10) === 1);
 
 export const shouldIncludeImproveDigital = (): boolean =>
     isInUkRegion() || isInRowRegion();
