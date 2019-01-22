@@ -19,7 +19,7 @@ const acquisitionsBannerGoogleDocTest = (
         id: abTestName,
         campaignId: abTestName,
         start: '2018-08-06',
-        expiry: '2019-06-06',
+        expiry: '2020-01-27',
         author: 'Emma Milner',
         description: 'Tests a banner with copy defined in google doc',
         audience: 1,

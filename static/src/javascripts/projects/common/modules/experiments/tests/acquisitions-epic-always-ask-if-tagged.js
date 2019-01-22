@@ -6,7 +6,7 @@ export const acquisitionsEpicAlwaysAskIfTagged = makeABTest({
     campaignId: 'epic_always_ask_if_tagged',
 
     start: '2017-05-23',
-    expiry: '2019-01-24',
+    expiry: '2020-01-27',
 
     author: 'Jonathan Rankin',
     description:
