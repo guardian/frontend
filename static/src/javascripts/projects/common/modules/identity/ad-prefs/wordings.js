@@ -37,16 +37,17 @@ const ThirdPartyConsentWording: ConsentWording = {
                     by selecting one of the options below.
                 </p>
                 <p>
-                    Don't worry, you can always revisit these settings by following the link
-                    on our{' '}
+                    Don&apos;t worry, you can always revisit these settings by
+                    following the link on our{' '}
                     <a
                         className="u-underline"
                         href="https://www.theguardian.com/info/cookies">
                         cookies policy page.
                     </a>
                 </p>
-            </div>)
-        },
+            </div>
+        ),
+    },
     yesCheckbox: {
         title: 'I am OK with personalised ads',
         text: `We and our advertising partners will use your data to show you ads that you might be interested in.`,
