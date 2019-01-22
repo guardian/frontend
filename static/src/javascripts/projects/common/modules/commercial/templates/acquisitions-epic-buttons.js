@@ -1,9 +1,13 @@
 // @flow
 import type { CtaUrls } from 'common/modules/commercial/contributions-utilities';
 import config from 'lib/config';
+import { isSafari } from 'lib/detect';
 import applyPayMark from 'svgs/acquisitions/apple-pay-mark.svg';
 
 export const epicButtonsTemplate = ({ supportUrl = '' }: CtaUrls) => {
+
+    const applePayLogo = isSafari ? applyPayMark.markup: '';
+
     const supportButtonSupport = `
         <div>
             <a class="contributions__option-button contributions__contribute contributions__contribute--epic contributions__contribute--epic-member"
@@ -18,7 +22,7 @@ export const epicButtonsTemplate = ({ supportUrl = '' }: CtaUrls) => {
             'images.acquisitions.paypal-and-credit-card',
             ''
         )}" alt="Paypal and credit card">
-        ${applyPayMark.markup}
+        ${applePayLogo}
     </div>`;
 
     return `

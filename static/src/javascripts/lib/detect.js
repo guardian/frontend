@@ -219,6 +219,13 @@ const hasCrossedBreakpoint = (includeTweakpoint: boolean): Function => {
     };
 };
 
+// Will return true for any Safari browser (including Mobile Safari)
+// For an explanation of this solution, see https://stackoverflow.com/questions/7944460/detect-safari-browser/42189492
+const isSafari = navigator.vendor && navigator.vendor.indexOf('Apple') > -1 &&
+    navigator.userAgent &&
+    navigator.userAgent.indexOf('CriOS') == -1 &&
+    navigator.userAgent.indexOf('FxiOS') == -1;
+
 const isIOS = (): boolean =>
     /(iPad|iPhone|iPod touch)/i.test(navigator.userAgent);
 
@@ -353,6 +360,7 @@ export {
     getUserAgent,
     getViewport,
     isIOS,
+    isSafari,
     isAndroid,
     isBreakpoint,
     initPageVisibility,
