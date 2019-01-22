@@ -110,5 +110,18 @@ const initAtoms = () => {
             'commonsdivision-atom'
         );
     }
+
+    if (config.get('page.atomTypes.audio')) {
+        require.ensure(
+            [],
+            require => {
+                require('@guardian/atom-renderer/dist/audio/article/index.css');
+                const atomMaker = require('@guardian/atom-renderer/dist/audio/article/index');
+                bootstrapAtom(atomMaker, 'audio');
+            },
+            'audio-atom'
+        );
+    }
+
 };
 export { initAtoms };
