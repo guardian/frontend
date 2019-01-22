@@ -33,20 +33,20 @@ const ThirdPartyConsentWording: ConsentWording = {
                     </a>{' '}
                     (including Google and the Ozone project) to show you ads for
                     products and services you might be interested in. You can
-                    manage whether the ads you see on our sites are personalised
+                    choose whether the ads you see on our sites are personalised
                     by selecting one of the options below.
                 </p>
                 <p>
-                    Don't worry, you can always revisit these settings by following the link on our 
+                    Don't worry, you can always revisit these settings by following the link
+                    on our{' '}
                     <a
                         className="u-underline"
                         href="https://www.theguardian.com/info/cookies">
                         cookies policy page.
                     </a>
                 </p>
-            </div>
-        ),
-    },
+            </div>)
+        },
     yesCheckbox: {
         title: 'I am OK with personalised ads',
         text: `We and our advertising partners will use your data to show you ads that you might be interested in.`,
