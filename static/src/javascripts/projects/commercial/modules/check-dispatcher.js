@@ -26,7 +26,7 @@ const checksToDispatch = {
     },
 
     isUserInContributionsAbTest(): Promise<boolean> {
-        return Promise.resolve(!!getEpicTestToRun());
+        return getEpicTestToRun().then(Boolean);
     },
 
     isUserNotInContributionsAbTest(): Promise<boolean> {
