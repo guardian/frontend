@@ -18,8 +18,8 @@ object LinkedData {
 }
 
 case class Guardian(
-  override val `@type`: String,
-  override val `@context`: String,
+  override val `@type`: String = "Organization",
+  override val `@context`: String = "http://schema.org",
   name: String = "The Guardian",
   url: String = "http://www.theguardian.com/",
   logo: String = Static("images/favicons/152x152.png"),
@@ -31,7 +31,6 @@ case class Guardian(
 ) extends LinkedData(`@type`, `@context`)
 
 object Guardian {
-  def apply(): Guardian = new Guardian("Organization", "http://schema.org")
   implicit val formats: OFormat[Guardian] = Json.format[Guardian]
 }
 

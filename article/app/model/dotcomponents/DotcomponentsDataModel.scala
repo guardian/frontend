@@ -65,13 +65,14 @@ case class NewsArticle(
 
 object NewsArticle {
   def apply(
-   `@id`: String,
-   potentialAction: PotentialAction
- ): NewsArticle = new NewsArticle(
+   `@id`: String
+ ): NewsArticle = NewsArticle(
     "NewsArticle",
     "http://schema.org",
     `@id`,
-    potentialAction,
+    PotentialAction(
+      target = s"android-app://com.guardian/${`@id`.replace("://", "/")}"
+    ),
   )
 
   implicit val formats: OFormat[NewsArticle] = Json.format[NewsArticle]
@@ -213,9 +214,7 @@ object DotcomponentsDataModel {
       acc + (CamelCase.fromHyphenated(switch.name) -> switch.isSwitchedOn)
     })
 
-    val webUrl = article.metadata.webUrl
-    val potentialAction = PotentialAction(target = "android-app://com.guardian/" + webUrl.replace("://", "/"))
-    val linkedData = NewsArticle(webUrl, potentialAction)
+    val linkedData = NewsArticle(article.metadata.webUrl)
 
     val pageData = PageData(
       article.tags.contributors.map(_.name).mkString(","),
@@ -245,7 +244,7 @@ object DotcomponentsDataModel {
       switches,
       linkedData,
       Configuration.site.host,
-      webUrl,
+      article.metadata.webUrl,
       article.content.shouldHideAdverts,
       hasStoryPackage = articlePage.related.hasStoryPackage,
       hasRelated = article.content.showInRelated,
