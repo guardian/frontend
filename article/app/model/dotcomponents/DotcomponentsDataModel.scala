@@ -118,6 +118,7 @@ case class PageData(
     sentryPublicApiKey: Option[String],
     switches: Map[String,Boolean],
     linkedData: NewsArticle,
+    subscribeWithGoogleApiUrl: String,
 
     // AMP specific
     guardianBaseURL: String,
@@ -258,6 +259,7 @@ object DotcomponentsDataModel {
       jsPageData.get("sentryPublicApiKey"),
       switches,
       linkedData,
+      Configuration.google.subscribeWithGoogleApiUrl,
       Configuration.site.host,
       article.metadata.webUrl,
       article.content.shouldHideAdverts,
