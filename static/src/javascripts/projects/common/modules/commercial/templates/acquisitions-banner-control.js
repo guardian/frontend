@@ -5,13 +5,13 @@ import closeCentralIcon from 'svgs/icon/close-central.svg';
 import arrowWhiteRight from 'svgs/icon/arrow-white-right.svg';
 import applyPayMark from 'svgs/acquisitions/apple-pay-mark.svg';
 import config from 'lib/config';
-import { isSafari } from 'lib/detect';
+import { applePayApiAvailable } from 'lib/detect';
 import { acquisitionsBannerTickerTemplate } from 'common/modules/commercial/templates/acquisitions-banner-ticker';
 
 export const acquisitionsBannerControlTemplate = (
     params: EngagementBannerTemplateParams
 ): string => {
-    const applePayLogo = isSafari ? applyPayMark.markup : '';
+    const applePayLogo = applePayApiAvailable ? applyPayMark.markup : '';
     return `
         <div class="engagement-banner__close">
             <div class="engagement-banner__roundel">

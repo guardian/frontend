@@ -1,11 +1,11 @@
 // @flow
 import type { CtaUrls } from 'common/modules/commercial/contributions-utilities';
 import config from 'lib/config';
-import { isSafari } from 'lib/detect';
+import { applePayApiAvailable } from 'lib/detect';
 import applyPayMark from 'svgs/acquisitions/apple-pay-mark.svg';
 
 export const epicButtonsTemplate = ({ supportUrl = '' }: CtaUrls) => {
-    const applePayLogo = isSafari ? applyPayMark.markup : '';
+    const applePayLogo = applePayApiAvailable ? applyPayMark.markup : '';
 
     const supportButtonSupport = `
         <div>
