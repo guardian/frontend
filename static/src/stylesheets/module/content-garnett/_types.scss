@@ -362,7 +362,7 @@ $quote-mark: 35px;
     }
 
     // *************** Quote Styles ***************
-    .element-pullquote {
+    .element-pullquote:not(.element-pullquote--photo-essay) {
         background-color: $brightness-97;
         margin: $gs-gutter/4 0 $gs-baseline*2;
         padding: $gs-baseline/2 $gs-gutter/2 $gs-baseline;
@@ -431,7 +431,7 @@ $quote-mark: 35px;
         }
     }
     // Quote supporting
-    .element-pullquote.element--supporting {
+    .element-pullquote.element--supporting:not(.element-pullquote--photo-essay) {
         @include mq(mobileMedium) {
             clear: left;
             float: left;
@@ -464,7 +464,7 @@ $quote-mark: 35px;
         }
     }
     // Quote halfWidth
-    .element-pullquote.element--halfWidth {
+    .element-pullquote.element--halfWidth:not(.element-pullquote--photo-essay) {
         @include mq(mobileMedium) {
             clear: left;
             float: left;
@@ -484,7 +484,7 @@ $quote-mark: 35px;
         }
     }
     // Quote inline
-    .element-pullquote.element--inline {
+    .element-pullquote.element--inline:not(.element-pullquote--photo-essay) {
         width: gs-span(4);
         @include mq(mobileLandscape) {
             width: gs-span(5);
@@ -502,7 +502,7 @@ $quote-mark: 35px;
         }
     }
     // Quote showcase
-    .element-pullquote.element--showcase {
+    .element-pullquote.element--showcase:not(.element-pullquote--photo-essay) {
         @include mq(mobileLandscape) {
             margin-left: -$gs-gutter;
         }
@@ -1176,7 +1176,7 @@ $quote-mark: 35px;
 }
 // *************** Feature quote weight overrides ***************
 
-.content--type-article {
+.content--type-article:not(.content--photo-essay) {
     .element-pullquote.element--supporting .pullquote-cite,
     .element-pullquote.element--supporting .pullquote-paragraph {
         font-weight: 400;

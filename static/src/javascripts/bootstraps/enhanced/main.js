@@ -16,6 +16,7 @@ const bootEnhanced = (): void => {
     const bootstrapContext = (featureName, bootstrap) => {
         raven.context(
             {
+
                 tags: {
                     feature: featureName,
                 },

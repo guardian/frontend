@@ -622,6 +622,114 @@
     }
 }
 
+.content--photo-essay {
+
+    .element--halfWidth {
+        width: 49%;
+        display: inline-block;
+        margin-top: 0;
+    }
+
+    .element--halfWidth.half-width-odd {
+        margin-right: 2%;
+    }
+
+    .from-content-api ul:not(.submeta__links):not(.social--bottom):not(.syndication--bottom) {
+        display: inline-block;
+        width: 98%;
+        margin-top: 0;
+        @include mq($until: mobileLandscape) {
+            margin-top: -$gs-baseline / 2;
+        }
+
+        & > li {
+            @include fs-textSans(3);
+            font-size: 12px;
+            width: 100%;
+            margin-right: 1%;
+            line-height: 14px;
+            padding-top: $gs-baseline / 2;
+            padding-left: 0 !important; // override padding applied in from-content-api.scss
+            color: $brand-main;
+            border-top: 1px solid $brand-main;
+
+            &::before {
+                display: none !important;
+            }
+
+            @include mq($until: mobileLandscape) {
+                width: 98%;
+            }
+        }
+    }
+
+    .element--immersive + ul:not(.submeta__links):not(.social--bottom):not(.syndication--bottom),
+    .element--showcase + ul:not(.submeta__links):not(.social--bottom):not(.syndication--bottom) {
+        width: 150px;
+        margin-left: -170px;
+        float: left;
+
+        & > li {
+            width: 100%;
+        }
+
+        @include mq($until: leftCol) {
+            width: 98%;
+            margin-left: 0;
+            float: none;
+        }
+
+        @include mq($until: mobileLandscape) {
+            width: 98%;
+            float: none;
+            margin-left: 0;
+        }
+    }
+
+    .element-pullquote--photo-essay {
+        @include fs-headlineGarnett(2);
+
+        .pullquote-paragraph {
+            font-weight: bold;
+        }
+
+    }
+
+    .element--halfWidth.element-pullquote--photo-essay {
+        width: 45%;
+        float: none;
+        margin-right: $gs-gutter;
+        border-bottom: 0;
+        margin-top: 0;
+        clear: none;
+        margin-left: 0;
+        margin-bottom: $gs-baseline/2;
+        border-top: 1px solid #f6f6f6;
+        vertical-align: top;
+
+    }
+
+    .inline-garnett-quote {
+        .inline-icon {
+            fill: $sport-bright;
+                  width: $gs-baseline * 2;
+                  display: block;
+                  margin-bottom: $gs-baseline;
+              }
+
+        .inline-icon .inline-garnett-quote__svg {
+                  width: 100%;
+                  height: auto;
+              }
+
+    }
+
+    .element-image.element--showcase {
+        margin-bottom: $gs-baseline!important;
+    }
+
+}
+
 //overides the immersive article — done like this to keep gallery's and photo eassy in ok shape
 .content--immersive:not(.immersive-main-media__gallery):not(.paid-content):not(.content--gallery):not(.content--minute-article) {
     &.immersive-main-media {

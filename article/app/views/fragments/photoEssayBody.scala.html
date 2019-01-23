@@ -18,6 +18,7 @@
             ),
                 "content",
                 "content--article",
+                "content--photo-essay",
                 s"content--pillar-${article.metadata.pillar.nameOrDefault}",
                 s"content--type-${article.metadata.designType.nameOrDefault}",
                 "tonal",
@@ -43,7 +44,7 @@
                     </div>
                 </div>
             </div>
-            <div class="content__main tonal__main tonal__main--@toneClass(article)">
+            <div class="content__main tonal__main tonal__main--@toneClass(article) content--photo-essay">
                 <div class="gs-container">
                     <div class="content__main-column content__main-column--article js-content-main-column @if(article.tags.isSudoku) {sudoku}">
                         @defining(model.article.elements.mainPicture.flatMap(_.images.masterImage)) {
