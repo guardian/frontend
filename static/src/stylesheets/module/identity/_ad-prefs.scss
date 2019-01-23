@@ -56,9 +56,9 @@
 }
 
 
-.identity-ad-prefs-options {
-    max-width: gs-span(8);
-}
+// .identity-ad-prefs-options {
+//     max-width: gs-span(8);
+// }
 
 
 .identity-ad-prefs-manager__footer {
@@ -108,9 +108,17 @@
 }
 
 .identity-ad-prefs-input {
-
+    @include mq($from: mobile, $until: tablet) {
+        margin: $gs-baseline;
+        max-width: 100%;
+        display:block;
+    }
     $left-padding: $gs-gutter / 1.5 + 16px + $gs-gutter / 1.5;
     margin-top: $gs-gutter;
+    max-width: 40%;
+    display: inline-grid;
+    margin-right: 10%;
+    
 
     .identity-ad-prefs-input__wording {
         margin: $gs-baseline/2 $left-padding 0;
