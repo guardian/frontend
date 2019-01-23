@@ -220,7 +220,7 @@ const hasCrossedBreakpoint = (includeTweakpoint: boolean): Function => {
 };
 
 // https://developer.apple.com/documentation/apple_pay_on_the_web/apple_pay_js_api/checking_for_apple_pay_availability
-const applePayApiAvailable = window.ApplePaySession;
+const applePayApiAvailable = !!window.ApplePaySession;
 
 const isIOS = (): boolean =>
     /(iPad|iPhone|iPod touch)/i.test(navigator.userAgent);
