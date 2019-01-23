@@ -14,7 +14,7 @@ import { init as initLotameDataExtract } from 'commercial/modules/lotame-data-ex
 import { trackConsent as trackCmpConsent } from 'commercial/modules/cmp/consent-tracker';
 import { init as prepareAdVerification } from 'commercial/modules/ad-verification/prepare-ad-verification';
 import { init as prepareGoogletag } from 'commercial/modules/dfp/prepare-googletag';
-import { init as prepareSonobiTag } from 'commercial/modules/dfp/prepare-sonobi-tag';
+import { init as preparePrebid } from 'commercial/modules/dfp/prepare-prebid';
 import { init as initLiveblogAdverts } from 'commercial/modules/liveblog-adverts';
 import { init as initStickyTopBanner } from 'commercial/modules/sticky-top-banner';
 import { init as initThirdPartyTags } from 'commercial/modules/third-party-tags';
@@ -38,7 +38,7 @@ const commercialModules: Array<Array<any>> = [
     ['cm-prepare-cmp', initCmpService],
     ['cm-track-cmp-consent', trackCmpConsent],
     ['cm-thirdPartyTags', initThirdPartyTags],
-    ['cm-prepare-sonobi-tag', prepareSonobiTag, true],
+    ['cm-prepare-prebid', preparePrebid, true],
     ['cm-prepare-googletag', prepareGoogletag, true],
     ['cm-checkDispatcher', initCheckDispatcher],
     ['cm-lotame-cmp', initLotameCmp],

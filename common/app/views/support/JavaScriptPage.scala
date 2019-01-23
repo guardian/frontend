@@ -5,7 +5,7 @@ import common.Edition
 import common.Maps.RichMap
 import common.commercial.EditionAdTargeting._
 import conf.Configuration.environment
-import conf.switches.Switches.{sonobiSwitch, prebidSwitch}
+import conf.switches.Switches.prebidSwitch
 import conf.{Configuration, DiscussionAsset}
 import model._
 import play.api.libs.json._
@@ -52,7 +52,6 @@ object JavaScriptPage {
       "pbIndexSites" -> Json.toJson(metaData.commercial.flatMap(_.prebidIndexSites).getOrElse(Set.empty)),
       "hbImpl" -> {
         if (prebidSwitch.isSwitchedOn) JsString("prebid")
-        else if (sonobiSwitch.isSwitchedOn) JsString("sonobi")
         else JsString("none")
       },
       "isSensitive" -> JsBoolean(page.metadata.sensitive)
