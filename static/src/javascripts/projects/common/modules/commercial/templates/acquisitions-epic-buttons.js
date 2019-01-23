@@ -5,8 +5,7 @@ import { isSafari } from 'lib/detect';
 import applyPayMark from 'svgs/acquisitions/apple-pay-mark.svg';
 
 export const epicButtonsTemplate = ({ supportUrl = '' }: CtaUrls) => {
-
-    const applePayLogo = isSafari ? applyPayMark.markup: '';
+    const applePayLogo = isSafari ? applyPayMark.markup : '';
 
     const supportButtonSupport = `
         <div>

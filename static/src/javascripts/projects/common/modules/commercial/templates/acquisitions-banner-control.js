@@ -1,20 +1,18 @@
-import { isSafari } from 'lib/detect';
-
 // @flow
+
 import marque36icon from 'svgs/icon/marque-36.svg';
 import closeCentralIcon from 'svgs/icon/close-central.svg';
 import arrowWhiteRight from 'svgs/icon/arrow-white-right.svg';
 import applyPayMark from 'svgs/acquisitions/apple-pay-mark.svg';
 import config from 'lib/config';
+import { isSafari } from 'lib/detect';
 import { acquisitionsBannerTickerTemplate } from 'common/modules/commercial/templates/acquisitions-banner-ticker';
 
 export const acquisitionsBannerControlTemplate = (
     params: EngagementBannerTemplateParams
 ): string => {
-
     const applePayLogo = isSafari ? applyPayMark.markup : '';
-    return (
-        `
+    return `
         <div class="engagement-banner__close">
             <div class="engagement-banner__roundel">
                 ${marque36icon.markup}
@@ -31,13 +29,16 @@ export const acquisitionsBannerControlTemplate = (
             </div>
             <div class="engagement-banner__cta">
                 <button class="button engagement-banner__button" href="${
-                params.linkUrl
+                    params.linkUrl
                 }">
                     ${params.buttonCaption}${arrowWhiteRight.markup}
                 </button>
                 <div class="engagement-banner__payment-logos">
                     <img
-                        src="${config.get('images.acquisitions.paypal-and-credit-card', '')}"
+                        src="${config.get(
+                            'images.acquisitions.paypal-and-credit-card',
+                            ''
+                        )}"
                         alt="PayPal and credit card"
                     >
                     ${applePayLogo}
@@ -49,5 +50,5 @@ export const acquisitionsBannerControlTemplate = (
             target="_blank"
             href="${params.linkUrl}"
         ></a>
-    `);
-}
+    `;
+};
