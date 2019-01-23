@@ -111,7 +111,7 @@
     @include mq($from: mobile, $until: tablet) {
         margin: $gs-baseline;
         max-width: 100%;
-        display:block;
+        display: block;
     }
     $left-padding: $gs-gutter / 1.5 + 16px + $gs-gutter / 1.5;
     margin-top: $gs-gutter;
