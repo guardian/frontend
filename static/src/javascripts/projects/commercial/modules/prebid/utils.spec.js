@@ -112,19 +112,19 @@ describe('Utils', () => {
 
     test('shouldIncludeAppNexus should return false if geolocation is US', () => {
         config.switches.prebidAppnexusUkRow = true;
-        getSync.mockReturnValue('UK');
-        expect(shouldIncludeAppNexus()).toBe(true);
+        getSync.mockReturnValue('US');
+        expect(shouldIncludeAppNexus()).toBe(false);
     });
 
-    test('shouldIncludeAppNexus should return true if geolocation is CA', () => {
+    test('shouldIncludeAppNexus should return false if geolocation is CA', () => {
         config.switches.prebidAppnexusUkRow = true;
-        getSync.mockReturnValue('UK');
-        expect(shouldIncludeAppNexus()).toBe(true);
+        getSync.mockReturnValue('CA');
+        expect(shouldIncludeAppNexus()).toBe(false);
     });
 
-    test('shouldIncludeAppNexus should return true if geolocation is UK', () => {
+    test('shouldIncludeAppNexus should return true if geolocation is GB', () => {
         config.switches.prebidAppnexusUkRow = true;
-        getSync.mockReturnValue('UK');
+        getSync.mockReturnValue('GB');
         expect(shouldIncludeAppNexus()).toBe(true);
     });
 
@@ -139,7 +139,7 @@ describe('Utils', () => {
 
     test('shouldIncludeAppNexus should return false for UK region if UK switched off', () => {
         config.switches.prebidAppnexusUkRow = false;
-        getSync.mockReturnValue('UK');
+        getSync.mockReturnValue('GB');
         expect(shouldIncludeAppNexus()).toBe(false);
     });
 
@@ -164,8 +164,8 @@ describe('Utils', () => {
         expect(shouldIncludeAppNexus()).toBe(true);
     });
 
-    test('shouldIncludeOpenx should return true if geolocation is UK', () => {
-        getSync.mockReturnValueOnce('UK');
+    test('shouldIncludeOpenx should return true if geolocation is GB', () => {
+        getSync.mockReturnValueOnce('GB');
         expect(shouldIncludeOpenx()).toBe(true);
     });
 
@@ -214,16 +214,16 @@ describe('Utils', () => {
         }
     });
 
-    test('shouldIncludeOzone should return true for UK and ROW', () => {
-        const includedGeos = ['UK', 'FR', 'SA'];
+    test('shouldIncludeOzone should return true for GB and ROW', () => {
+        const includedGeos = ['GB', 'FR', 'SA'];
         for (let i = 0; i < includedGeos.length; i += 1) {
             getSync.mockReturnValueOnce(includedGeos[i]);
             expect(shouldIncludeOzone()).toBe(true);
         }
     });
 
-    test('shouldIncludeImproveDigital should return true if geolocation is UK', () => {
-        getSync.mockReturnValue('UK');
+    test('shouldIncludeImproveDigital should return true if geolocation is GB', () => {
+        getSync.mockReturnValue('GB');
         expect(shouldIncludeImproveDigital()).toBe(true);
     });
 
@@ -242,13 +242,13 @@ describe('Utils', () => {
         expect(shouldIncludeImproveDigital()).toBe(false);
     });
 
-    test('shouldIncludeXaxis should be true if geolocation is UK', () => {
+    test('shouldIncludeXaxis should be true if geolocation is GB', () => {
         config.set('page.isDev', true);
-        getSync.mockReturnValue('UK');
+        getSync.mockReturnValue('GB');
         expect(shouldIncludeXaxis()).toBe(true);
     });
 
-    test('shouldIncludeXaxis should be false if geolocation is not UK', () => {
+    test('shouldIncludeXaxis should be false if geolocation is not GB', () => {
         config.set('page.isDev', true);
         const testGeos = [
             'FK',
@@ -317,12 +317,12 @@ describe('Utils', () => {
         });
     });
 
-    test('isInUkRegion should return true if geolocation is UK', () => {
-        getSync.mockReturnValue('UK');
+    test('isInUkRegion should return true if geolocation is GB', () => {
+        getSync.mockReturnValue('GB');
         expect(isInUkRegion()).toBe(true);
     });
 
-    test('isInUkRegion should return false if geolocation is not UK', () => {
+    test('isInUkRegion should return false if geolocation is not GB', () => {
         const testGeos = ['FK', 'GI', 'GG', 'IM', 'JE', 'SH', 'AU'];
         for (let i = 0; i < testGeos.length; i += 1) {
             getSync.mockReturnValue(testGeos[i]);
@@ -330,15 +330,15 @@ describe('Utils', () => {
         }
     });
 
-    test('isInRowRegion should return false if geolocation is UK, US, CA, AU or NZ', () => {
-        const testGeos = ['UK', 'US', 'CA', 'AU', 'NZ'];
+    test('isInRowRegion should return false if geolocation is GB, US, CA, AU or NZ', () => {
+        const testGeos = ['GB', 'US', 'CA', 'AU', 'NZ'];
         for (let i = 0; i < testGeos.length; i += 1) {
             getSync.mockReturnValue(testGeos[i]);
             expect(isInRowRegion()).toBe(false);
         }
     });
 
-    test('isInRowRegion should return true if geolocation is not UK, US, CA, AU or NZ', () => {
+    test('isInRowRegion should return true if geolocation is not GB, US, CA, AU or NZ', () => {
         const testGeos = ['FK', 'GI', 'GG', 'IM', 'JE', 'SH'];
         for (let i = 0; i < testGeos.length; i += 1) {
             getSync.mockReturnValue(testGeos[i]);
