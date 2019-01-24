@@ -8,7 +8,7 @@ import model.dotcomrendering.pageElements.PageElement
 import navigation.NavMenu
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
-import views.support.{CamelCase, GUDateTimeFormat}
+import views.support.{CamelCase, GUDateTimeFormat, ImgSrc, Item1200}
 import ai.x.play.json.Jsonx
 import common.Maps.RichMap
 import navigation.UrlHelpers.{Footer, Header, SideMenu, getReaderRevenueUrl}
@@ -72,11 +72,13 @@ case class NewsArticle(
   publisher: Guardian = Guardian(),
   isAccessibleForFree: Boolean = true,
   isPartOf: IsPartOf = IsPartOf(),
+  image: Seq[String],
 ) extends LinkedData(`@type`, `@context`)
 
 object NewsArticle {
   def apply(
-   `@id`: String
+   `@id`: String,
+    images: Seq[String]
  ): NewsArticle = NewsArticle(
     "NewsArticle",
     "http://schema.org",
@@ -84,6 +86,7 @@ object NewsArticle {
     PotentialAction(
       target = s"android-app://com.guardian/${`@id`.replace("://", "/")}"
     ),
+    image = images
   )
 
   implicit val formats: OFormat[NewsArticle] = Json.format[NewsArticle]
@@ -228,7 +231,25 @@ object DotcomponentsDataModel {
       acc + (CamelCase.fromHyphenated(switch.name) -> switch.isSwitchedOn)
     })
 
-    val linkedData = NewsArticle(article.metadata.webUrl)
+
+    // See https://developers.google.com/search/docs/data-types/article (and the AMP info too)
+    // For example, we need to provide an image of at least 1200px width to be valid here
+    val linkedData = {
+      val mainImageURL = {
+        val main = for {
+          elem <- article.trail.trailPicture
+          master <- elem.masterImage
+          url <- master.url
+        } yield url
+
+        main.getOrElse(Configuration.images.fallbackLogo)
+      }
+
+      NewsArticle(
+        `@id` = article.metadata.webUrl,
+        images = Seq(ImgSrc(mainImageURL, Item1200))
+      )
+    }
 
     val pageData = PageData(
       article.tags.contributors.map(_.name).mkString(","),
