@@ -6,11 +6,15 @@ import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import once from 'lodash/once';
 import { prebid } from 'commercial/modules/prebid/prebid';
 
+const isGoogleWebPreview: () => boolean = () =>
+    navigator.userAgent.indexOf('Google Web Preview') > -1;
+
 export const setupPrebid: () => Promise<void> = once(() => {
     if (
         dfpEnv.externalDemand === 'prebid' &&
         commercialFeatures.dfpAdvertising &&
-        !commercialFeatures.adFree
+        !commercialFeatures.adFree &&
+        !isGoogleWebPreview()
     ) {
         buildPageTargeting();
         prebid.initialise();
