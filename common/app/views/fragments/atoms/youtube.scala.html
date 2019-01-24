@@ -71,9 +71,11 @@
                         }
 
                     </div>
-                        <span class="video-overlay__duration">
-                            @media.formattedDuration
-                        </span>
+                        @if(media.formattedDuration.get != "0:00") {
+                            <span class="video-overlay__duration">
+                                @media.formattedDuration
+                            </span>
+                        }
                     </div>
                     <a href="@f.header.url.get(request)" class="video-container-overlay-link" tabindex="-1" aria-hidden="true"></a>
                 }
