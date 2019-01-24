@@ -54,6 +54,16 @@ case class ReaderRevenueLinks(
   sideMenu: ReaderRevenueLink
 )
 
+case class IsPartOf(
+  `@type`: List[String] = List("CreativeWork", "Product"),
+  name: String = "The Guardian",
+  productID: String = "theguardian.com:basic"
+)
+
+object IsPartOf {
+  implicit val formats: OFormat[IsPartOf] = Json.format[IsPartOf]
+}
+
 case class NewsArticle(
   override val `@type`: String,
   override val `@context`: String,
@@ -61,6 +71,7 @@ case class NewsArticle(
   potentialAction: PotentialAction,
   publisher: Guardian = Guardian(),
   isAccessibleForFree: Boolean = true,
+  isPartOf: IsPartOf = IsPartOf(),
 ) extends LinkedData(`@type`, `@context`)
 
 object NewsArticle {
@@ -107,6 +118,7 @@ case class PageData(
     sentryPublicApiKey: Option[String],
     switches: Map[String,Boolean],
     linkedData: NewsArticle,
+    subscribeWithGoogleApiUrl: String,
 
     // AMP specific
     guardianBaseURL: String,
@@ -247,6 +259,7 @@ object DotcomponentsDataModel {
       jsPageData.get("sentryPublicApiKey"),
       switches,
       linkedData,
+      Configuration.google.subscribeWithGoogleApiUrl,
       Configuration.site.host,
       article.metadata.webUrl,
       article.content.shouldHideAdverts,

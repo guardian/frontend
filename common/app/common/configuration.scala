@@ -238,6 +238,10 @@ class GuardianConfiguration extends Logging {
     lazy val jsLocation = configuration.getStringProperty("googletag.js.location").getOrElse("//www.googletagservices.com/tag/js/gpt.js")
   }
 
+  object google {
+    lazy val subscribeWithGoogleApiUrl = configuration.getStringProperty("google.subscribeWithGoogleApiUrl").getOrElse("https://swg.theguardian.com")
+  }
+
   object oriel {
     lazy val orielApiKey = configuration.getStringProperty("oriel.api.key")
     lazy val orielCacheTimeInMinutes: Int = if (environment.isProd) 60 else 5
@@ -471,7 +475,7 @@ class GuardianConfiguration extends Logging {
   }
 
   object javascript {
-    // This is config that is avaliable to both Javascript and Scala
+    // This is config that is available to both Javascript and Scala
     // But does not change across environments.
     lazy val config: Map[String, String] = Map(
       ("googleSearchUrl", "//www.google.co.uk/cse/cse.js"),
