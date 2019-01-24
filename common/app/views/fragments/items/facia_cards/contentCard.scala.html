@@ -51,13 +51,9 @@ data-test-id="facia-card"
                 case Some(media@InlineYouTubeMediaAtom(youTubeAtom, _)) => {
                     <div class="fc-item__media-meta">
                         @inlineSvg("video-icon", "icon")
-<<<<<<< HEAD
-                        <span class="fc-item__video-duration">@youTubeAtom.formattedDuration</span>
-=======
                         @if(youTubeAtom.formattedDuration.getOrElse("0:00") != "0:00") {
                             <span class="fc-item__video-duration">@youTubeAtom.formattedDuration</span>
                         }
->>>>>>> Add getOrElse instead of just get
                     </div>
                 }
 
