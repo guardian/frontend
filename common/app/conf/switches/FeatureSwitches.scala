@@ -17,6 +17,16 @@ trait FeatureSwitches {
     exposeClientSide = false
   )
 
+  val DotcomRenderingAMP = Switch(
+    SwitchGroup.Feature,
+    "dotcom-rendering-amp",
+    "If this switch is on, we will use the dotcom rendering tier for AMP articles which are supported by it",
+    owners = Seq(Owner.withGithub("nicl")),
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+
   val ShareCounts = Switch(
     SwitchGroup.Feature,
     "server-share-counts",
