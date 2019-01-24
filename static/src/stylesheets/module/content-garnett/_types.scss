@@ -563,7 +563,7 @@ $quote-mark: 35px;
         }
     }
 
-    .element-image.element--showcase {
+    .element-image.element--showcase:not(.element-image--photo-essay) {
         @include mq(leftCol) {
             margin-bottom: $gs-baseline * 3;
         }
