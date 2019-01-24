@@ -104,9 +104,11 @@
                     } else {
                         <div class="youtube-media-atom__play-button vjs-control-text">Play Video @fragments.inlineSvg("play", "icon")</div>
                         @for(duration <- media.formattedDuration.filter(_ => displayDuration)) {
-                            <div class="youtube-media-atom__bottom-bar">
-                                <div class="youtube-media-atom__bottom-bar__duration">@duration</div>
-                            </div>
+                            @if(duration != "0:00") {
+                                <div class="youtube-media-atom__bottom-bar">
+                                    <div class="youtube-media-atom__bottom-bar__duration">@duration</div>
+                                </div>
+                            }
                         }
                     }
                 } else {
