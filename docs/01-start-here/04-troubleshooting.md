@@ -6,10 +6,16 @@
 
 Sometimes, especially if you've not worked on Frontend for a while, things can get out of sync and it's worth have a spring clean.
 
-You can do this by running `clean` in your project folders:
+Clean everything with `cleanAll` in `root`.
 
 ```
 ./sbt
+[root] cleanAll
+```
+
+Or you can run `clean` in your project folders:
+
+```
 [root] project dev-build
 [dev-build] clean
 ```
