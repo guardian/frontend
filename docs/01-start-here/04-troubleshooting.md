@@ -2,6 +2,33 @@
 
 ## Frequent Issues
 
+### Start clean
+
+Sometimes, especially if you've not worked on Frontend for a while, things can get out of sync and it's worth have a spring clean.
+
+You can do this by running `clean` in your project folders:
+
+```
+./sbt
+[root] project dev-build
+[dev-build] clean
+```
+
+And then running `compile`:
+
+```
+[dev-build] compile
+```
+
+If you're still seeing errors, try clearing out your target folders:
+
+```
+cd www/frontend/dev-build
+rm -rf target/
+```
+
+And compile again.
+
 ### The changes are not showing when running locally
 
 To make sure your code is compiled try `make compile-dev` before running `./sbt`. This might save you lots of time debugging why your changes don't show.
