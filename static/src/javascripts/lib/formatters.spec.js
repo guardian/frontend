@@ -21,3 +21,24 @@ describe('integerCommas', () => {
         }
     });
 });
+
+describe('integerCommas', () => {
+    it('should correctly add a comma for >=4 digit numbers', () => {
+        const tests = [
+            [1, '1'],
+            [12, '12'],
+            [123, '123'],
+            [1234, '1,234'],
+            [12345, '12k'],
+            [123456, '123k'],
+            [1234567, '1,234k'],
+            [12345678, '12,345k'],
+            [123456789, '123,456k'],
+            [1234567890, '1,234,567k'],
+        ];
+
+        for (let i = 0; i < tests.length; i += 1) {
+            expect(integerCommas(tests[i][0], true)).toBe(tests[i][1]);
+        }
+    });
+});
