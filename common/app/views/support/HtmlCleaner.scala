@@ -682,22 +682,24 @@ case class AtomsCleaner(
         atomId <- Some(bodyElement.attr("data-atom-id"))
         atomType <- Some(bodyElement.attr("data-atom-type"))
       } {
-        findAtom(atomId).fold {
-          atomContainer.remove()
-        } { atomData =>
-          if(mediaWrapper.contains(MediaWrapper.MainMedia)){
-            atomContainer.addClass("element-atom--main-media")
-          }
-          if(atomData.isInstanceOf[MediaAtom]){
-            atomContainer.addClass("element-atom--media")
-          }
+        if (atomType != "audio" || (atomType == "audio" && RenderInArticleAudioAtomSwitch.isSwitchedOn)) {
+          findAtom(atomId).fold {
+            atomContainer.remove()
+          } { atomData =>
+            if(mediaWrapper.contains(MediaWrapper.MainMedia)){
+              atomContainer.addClass("element-atom--main-media")
+            }
+            if(atomData.isInstanceOf[MediaAtom]){
+              atomContainer.addClass("element-atom--media")
+            }
 
-          atomContainer.attr("data-atom-id", atomId)
-          atomContainer.attr("data-atom-type", atomType)
+            atomContainer.attr("data-atom-id", atomId)
+            atomContainer.attr("data-atom-type", atomType)
 
-          val html = views.html.fragments.atoms.atom(atomData, Atoms.articleConfig, shouldFence, amp, mediaWrapper, posterImageOverride).toString()
-          bodyElement.remove()
-          atomContainer.append(html)
+            val html = views.html.fragments.atoms.atom(atomData, Atoms.articleConfig, shouldFence, amp, mediaWrapper, posterImageOverride).toString()
+            bodyElement.remove()
+            atomContainer.append(html)
+          }
         }
       }
     }

@@ -13,6 +13,16 @@ trait JournalismSwitches {
     exposeClientSide = false
   )
 
+  val RenderInArticleAudioAtomSwitch = Switch(
+    SwitchGroup.Journalism,
+    "render-in-article-audio-atoms",
+    "controls whether in-article audio atoms are displayed",
+    owners = Seq(Owner.withGithub("JustinPinner")),
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+
   val AudioOnwardJourneySwitch = Switch(
     SwitchGroup.Journalism,
     "audio-onward-journey-switch",
