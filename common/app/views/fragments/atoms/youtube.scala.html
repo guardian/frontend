@@ -71,7 +71,7 @@
                         }
 
                     </div>
-                        @if(media.formattedDuration.get != "0:00") {
+                        @if(media.formattedDuration.getOrElse("0:00") != "0:00") {
                             <span class="video-overlay__duration">
                                 @media.formattedDuration
                             </span>
