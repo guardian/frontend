@@ -513,7 +513,7 @@ trait FeatureSwitches {
     "If switched on, a Subscribe with Google button will appear on AMP articles.",
     owners = Seq(Owner.withName("adem.gaygusuz")),
     safeState = Off,
-    sellByDate = never,
+    sellByDate = new LocalDate(2019, 3, 29),
     exposeClientSide = true
   )
 }
