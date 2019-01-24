@@ -6,13 +6,14 @@ import controllers.ArticlePage
 import model.SubMetaLinks
 import model.dotcomrendering.pageElements.PageElement
 import navigation.NavMenu
-import play.api.libs.json.{JsValue, Json, Writes}
+import play.api.libs.json._
 import play.api.mvc.RequestHeader
 import views.support.{CamelCase, GUDateTimeFormat}
 import ai.x.play.json.Jsonx
 import common.Maps.RichMap
 import navigation.UrlHelpers.{Footer, Header, SideMenu, getReaderRevenueUrl}
 import navigation.ReaderRevenueSite.{Support, SupportContribute, SupportSubscribe}
+import model.meta.{Guardian, LinkedData, PotentialAction}
 import ai.x.play.json.implicits.optionWithNull // Note, required despite Intellij saying otherwise
 
 // We have introduced our own set of objects for serializing data to the DotComponents API,
@@ -53,6 +54,30 @@ case class ReaderRevenueLinks(
   sideMenu: ReaderRevenueLink
 )
 
+case class NewsArticle(
+  override val `@type`: String,
+  override val `@context`: String,
+  `@id`: String,
+  potentialAction: PotentialAction,
+  publisher: Guardian = Guardian(),
+  isAccessibleForFree: Boolean = true,
+) extends LinkedData(`@type`, `@context`)
+
+object NewsArticle {
+  def apply(
+   `@id`: String
+ ): NewsArticle = NewsArticle(
+    "NewsArticle",
+    "http://schema.org",
+    `@id`,
+    PotentialAction(
+      target = s"android-app://com.guardian/${`@id`.replace("://", "/")}"
+    ),
+  )
+
+  implicit val formats: OFormat[NewsArticle] = Json.format[NewsArticle]
+}
+
 case class PageData(
     author: String,
     pageId: String,
@@ -61,6 +86,8 @@ case class PageData(
     webPublicationDate: Long,
     webPublicationDateDisplay: String,
     section: Option[String],
+    sectionLabel: String,
+    sectionUrl: String,
     headline: String,
     webTitle: String,
     byline: String,
@@ -79,7 +106,7 @@ case class PageData(
     sentryHost: Option[String],
     sentryPublicApiKey: Option[String],
     switches: Map[String,Boolean],
-
+    linkedData: NewsArticle,
 
     // AMP specific
     guardianBaseURL: String,
@@ -189,6 +216,8 @@ object DotcomponentsDataModel {
       acc + (CamelCase.fromHyphenated(switch.name) -> switch.isSwitchedOn)
     })
 
+    val linkedData = NewsArticle(article.metadata.webUrl)
+
     val pageData = PageData(
       article.tags.contributors.map(_.name).mkString(","),
       article.metadata.id,
@@ -197,6 +226,8 @@ object DotcomponentsDataModel {
       article.trail.webPublicationDate.getMillis,
       GUDateTimeFormat.formatDateTimeForDisplay(article.trail.webPublicationDate, request),
       article.metadata.section.map(_.value),
+      article.content.sectionLabelName,
+      article.content.sectionLabelLink,
       article.trail.headline,
       article.metadata.webTitle,
       article.trail.byline.getOrElse(""),
@@ -215,6 +246,7 @@ object DotcomponentsDataModel {
       jsPageData.get("sentryHost"),
       jsPageData.get("sentryPublicApiKey"),
       switches,
+      linkedData,
       Configuration.site.host,
       article.metadata.webUrl,
       article.content.shouldHideAdverts,

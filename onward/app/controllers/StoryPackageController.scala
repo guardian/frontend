@@ -17,7 +17,7 @@ class StoryPackageController(val contentApiClient: ContentApiClient, val control
     with ImplicitControllerExecutionContext {
 
   def render(path: String): Action[AnyContent] = Action.async { implicit request =>
-    val fields = "headline,standfirst,shortUrl,webUrl,byline,trailText,liveBloggingNow,commentCloseDate,commentable"
+    val fields = "headline,standfirst,shortUrl,webUrl,byline,trailText,liveBloggingNow,commentCloseDate,commentable,thumbnail"
     val query = contentApiClient.item(path).showPackages(true).showFields(fields)
     val resp = contentApiClient.getResponse(query)
 
@@ -30,7 +30,7 @@ class StoryPackageController(val contentApiClient: ContentApiClient, val control
             Json.obj(
               "displayName" -> "More on this story",
               "showContent" -> items.nonEmpty,
-              "content" -> items.map( collection => isCuratedContent(collection.faciaContent))
+              "content" -> items.take(6).map( collection => isCuratedContent(collection.faciaContent))
             )
           ))
         )

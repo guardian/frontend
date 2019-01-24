@@ -13,7 +13,7 @@ export const acquisitionsEpicThankYou = makeABTest({
     componentType: 'ACQUISITIONS_THANK_YOU_EPIC',
 
     start: '2017-06-01',
-    expiry: '2019-01-24',
+    expiry: '2020-01-27',
 
     author: 'Guy Dawson',
     description:

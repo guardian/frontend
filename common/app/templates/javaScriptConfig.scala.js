@@ -59,7 +59,6 @@
         },
         "libs": {
             "googletag": "@{Configuration.javascript.config("googletagJsUrl")}",
-            "sonobi": "@{Configuration.javascript.config("sonobiHeaderBiddingJsUrl")}",
             "cmp": { "fullVendorDataUrl": "@Static("data/vendor/cmp_vendorlist.json")" }
         }
     }

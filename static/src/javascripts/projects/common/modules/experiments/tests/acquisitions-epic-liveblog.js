@@ -8,7 +8,7 @@ export const acquisitionsEpicLiveblog: EpicABTest = makeABTest({
     id: 'AcquisitionsEpicLiveblog',
     campaignId: 'epic_liveblog',
     start: '2017-04-01',
-    expiry: '2019-01-24',
+    expiry: '2020-01-27',
 
     author: 'Joseph Smith',
     description:
