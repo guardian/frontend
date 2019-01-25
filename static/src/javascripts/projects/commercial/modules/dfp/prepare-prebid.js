@@ -14,6 +14,10 @@ const isGoogleWebPreview: () => boolean = () => {
     }
 };
 
+if (!isGoogleWebPreview()) {
+    import('prebid.js/build/dist/prebid');
+}
+
 export const setupPrebid: () => Promise<void> = once(() => {
     if (
         dfpEnv.externalDemand === 'prebid' &&
