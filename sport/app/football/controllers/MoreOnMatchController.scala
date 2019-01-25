@@ -7,7 +7,7 @@ import feed.CompetitionsService
 import football.model.FootballMatchTrail
 import implicits.{Football, Requests}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
-import model.{Cached, Content, ContentType}
+import model.{Cached, Content, ContentType, NoCache}
 import org.joda.time.LocalDate
 import org.joda.time.format.DateTimeFormat
 import com.github.nscala_time.time.Imports
@@ -194,8 +194,13 @@ class MoreOnMatchController(
     maybeMatch.map { theMatch =>
       loadMoreOn(request, theMatch).map { related =>
         val (matchReport, minByMin, preview, stats) = fetchRelatedMatchContent(theMatch, related)
-        val canonicalPage = matchReport.orElse(minByMin).orElse { if (theMatch.isFixture) preview else None }.getOrElse(stats)
-        Cached(60)(WithoutRevalidationResult(Found(canonicalPage.url)))
+        val canonicalPage = matchReport.orElse(minByMin).orElse { if (theMatch.isFixture) preview else None }
+
+        canonicalPage match {
+          case Some(footballMatch) =>  Cached(60)(WithoutRevalidationResult(Found(footballMatch.url)))
+          case None if stats.isLive =>  Cached(60)(WithoutRevalidationResult(Found(stats.url)))
+          case _ => NoCache(NotFound("Match is in the future"))
+        }
       }
     }.getOrElse {
       // we do not keep historical data, so just redirect old stuff to the results page (see also MatchController)
