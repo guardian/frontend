@@ -90,8 +90,10 @@ const changeGeolocation = (asExistingSupporter: boolean = false): void => {
     const geo = window.prompt(
         `Enter two-letter geolocation code (e.g. GB, US, AU). Current is ${geolocationGetSync()}.`
     );
-    setGeolocation(geo);
-    clearCommonReaderRevenueStateAndReload(asExistingSupporter);
+    if (geo) {
+        setGeolocation(geo);
+        clearCommonReaderRevenueStateAndReload(asExistingSupporter);
+    }
 };
 
 export const init = (): void => {
