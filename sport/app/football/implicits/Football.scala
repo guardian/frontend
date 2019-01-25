@@ -62,7 +62,7 @@ trait Football extends Collections {
 
     lazy val hasStarted = m.isLive || m.isResult
 
-    val smartUrl: String = MatchUrl.smartUrl(m)
+    val smartUrl: Option[String] = MatchUrl.smartUrl(m)
 
     def hasTeam(teamId: String): Boolean = m.homeTeam.id == teamId || m.awayTeam.id == teamId
 

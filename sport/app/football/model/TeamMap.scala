@@ -4,6 +4,7 @@ import common._
 import contentapi.ContentApiClient
 import _root_.feed.Competitions
 import com.gu.Box
+import org.joda.time.{DateTime, Days}
 import pa._
 
 import scala.concurrent.ExecutionContext
@@ -147,7 +148,8 @@ object MatchUrl {
     }).getOrElse(s"/football/match/${theMatch.id}")
   }
 
-  def smartUrl(theMatch: FootballMatch): String = {
-    s"/football/match-redirect/${theMatch.id}"
+  def smartUrl(theMatch: FootballMatch): Option[String] = {
+    if (Days.daysBetween(DateTime.now.toLocalDate, theMatch.date.toLocalDate).getDays > 7) None
+    else Some(s"/football/match-redirect/${theMatch.id}")
   }
 }
