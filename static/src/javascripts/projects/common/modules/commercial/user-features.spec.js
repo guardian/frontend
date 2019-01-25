@@ -12,7 +12,7 @@ import {
     isDigitalSubscriber,
     getLastOneOffContributionDate,
     getDaysSinceLastOneOffContribution,
-    isRecentOneOffContributor
+    isRecentOneOffContributor,
 } from './user-features.js';
 
 jest.mock('lib/raven');
@@ -400,7 +400,6 @@ const setOneOffContributionCookie = (value: any): void =>
 
 const removeOneOffContributionCookie = (): void =>
     removeCookie(PERSISTENCE_KEYS.SUPPORT_ONE_OFF_CONTRIBUTION_COOKIE);
-
 
 describe('getting the last one-off contribution date of a user', () => {
     beforeEach(() => {

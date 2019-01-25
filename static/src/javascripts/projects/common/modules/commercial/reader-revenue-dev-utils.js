@@ -2,7 +2,10 @@
 
 import { removeCookie } from 'lib/cookies';
 import { isUserLoggedIn } from 'common/modules/identity/api';
-import { fakeOneOffContributor, readerRevenueRelevantCookies } from 'common/modules/commercial/user-features';
+import {
+    fakeOneOffContributor,
+    readerRevenueRelevantCookies,
+} from 'common/modules/commercial/user-features';
 import { clearViewLog as clearEpicViewLog } from 'common/modules/commercial/acquisitions-view-log';
 import {
     clearBannerHistory,
@@ -17,7 +20,9 @@ import {
 import { setGeolocation, getSync as geolocationGetSync } from 'lib/geolocation';
 import { clearParticipations } from 'common/modules/experiments/ab-local-storage';
 
-const clearCommonReaderRevenueStateAndReload = (asExistingSupporter: boolean): void => {
+const clearCommonReaderRevenueStateAndReload = (
+    asExistingSupporter: boolean
+): void => {
     readerRevenueRelevantCookies.forEach(cookie => removeCookie(cookie));
 
     initMvtCookie();
