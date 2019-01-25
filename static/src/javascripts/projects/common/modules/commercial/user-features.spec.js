@@ -397,7 +397,15 @@ describe('Storing new feature data', () => {
 const setOneOffContributionCookie = (value: any): void =>
     addCookie(PERSISTENCE_KEYS.SUPPORT_ONE_OFF_CONTRIBUTION_COOKIE, value);
 
+const removeOneOffContributionCookie = (): void =>
+    removeCookie(PERSISTENCE_KEYS.SUPPORT_ONE_OFF_CONTRIBUTION_COOKIE);
+
+
 describe('getting the last one-off contribution date of a user', () => {
+    beforeEach(() => {
+        removeOneOffContributionCookie();
+    });
+
     const contributionDateTimeISO8601 = '2018-01-06T09:30:14Z';
     const contributionDateTimeEpoch = Date.parse(contributionDateTimeISO8601);
 
@@ -422,6 +430,10 @@ describe('getting the last one-off contribution date of a user', () => {
 });
 
 describe('getting the days since last contribution', () => {
+    beforeEach(() => {
+        removeOneOffContributionCookie();
+    });
+
     const contributionDateTimeEpoch = Date.parse('2018-08-01T12:00:30Z');
 
     it('returns null if the last one-off contribution date is null', () => {
@@ -432,5 +444,35 @@ describe('getting the days since last contribution', () => {
         global.Date.now = jest.fn(() => Date.parse('2018-08-07T10:50:34'));
         setOneOffContributionCookie(contributionDateTimeEpoch);
         expect(getDaysSinceLastOneOffContribution()).toBe(5);
+    });
+});
+
+describe('isRecentOneOffContributor', () => {
+    beforeEach(() => {
+        removeOneOffContributionCookie();
+    });
+
+    const contributionDateTimeEpoch = Date.parse('2018-08-01T12:00:30Z');
+
+    it('returns false if there is no one-off contribution cookie', () => {
+        expect(isRecentOneOffContributor()).toBe(false);
+    });
+
+    it('returns true if there are 5 days between the last contribution date and now', () => {
+        global.Date.now = jest.fn(() => Date.parse('2018-08-07T10:50:34'));
+        setOneOffContributionCookie(contributionDateTimeEpoch);
+        expect(isRecentOneOffContributor()).toBe(true);
+    });
+
+    it('returns true if there are 0 days between the last contribution date and now', () => {
+        global.Date.now = jest.fn(() => Date.parse('2018-08-01T13:00:30'));
+        setOneOffContributionCookie(contributionDateTimeEpoch);
+        expect(isRecentOneOffContributor()).toBe(true);
+    });
+
+    it('returns false if the one-off contribution was more than 6 months ago', () => {
+        global.Date.now = jest.fn(() => Date.parse('2019-08-01T13:00:30'));
+        setOneOffContributionCookie(contributionDateTimeEpoch);
+        expect(isRecentOneOffContributor()).toBe(false);
     });
 });
