@@ -41,7 +41,7 @@ const ThirdPartyConsentWording: ConsentWording = {
                     following the link on our{' '}
                     <a
                         className="u-underline"
-                        href="https://www.theguardian.com/info/cookies">
+                        href="https://www.theguardian.com/info/cookies#nav4">
                         cookies policy page.
                     </a>
                 </p>
