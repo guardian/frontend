@@ -232,6 +232,11 @@ const readerRevenueRelevantCookies = [
     SUPPORT_ONE_OFF_CONTRIBUTION_COOKIE,
 ];
 
+// For debug/test purposes
+const fakeOneOffContributor = (): void => {
+    addCookie(SUPPORT_ONE_OFF_CONTRIBUTION_COOKIE, Date.now().toString());
+};
+
 const isAdFreeUser = (): boolean =>
     isDigitalSubscriber() || (adFreeDataIsPresent() && !adFreeDataIsOld());
 
@@ -248,4 +253,5 @@ export {
     getLastOneOffContributionDate,
     getDaysSinceLastOneOffContribution,
     readerRevenueRelevantCookies,
+    fakeOneOffContributor,
 };

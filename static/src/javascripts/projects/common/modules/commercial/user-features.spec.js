@@ -13,6 +13,7 @@ import {
     getLastOneOffContributionDate,
     getDaysSinceLastOneOffContribution,
 } from './user-features.js';
+import { isRecentOneOffContributor } from 'common/modules/commercial/user-features';
 
 jest.mock('lib/raven');
 jest.mock('projects/common/modules/identity/api', () => ({

@@ -2,7 +2,7 @@
 
 import { removeCookie } from 'lib/cookies';
 import { isUserLoggedIn } from 'common/modules/identity/api';
-import { readerRevenueRelevantCookies } from 'common/modules/commercial/user-features';
+import { fakeOneOffContributor, readerRevenueRelevantCookies } from 'common/modules/commercial/user-features';
 import { clearViewLog as clearEpicViewLog } from 'common/modules/commercial/acquisitions-view-log';
 import {
     clearBannerHistory,
@@ -17,7 +17,7 @@ import {
 import { setGeolocation, getSync as geolocationGetSync } from 'lib/geolocation';
 import { clearParticipations } from 'common/modules/experiments/ab-local-storage';
 
-const clearCommonReaderRevenueStateAndReload = (): void => {
+const clearCommonReaderRevenueStateAndReload = (asExistingSupporter: boolean): void => {
     readerRevenueRelevantCookies.forEach(cookie => removeCookie(cookie));
 
     initMvtCookie();
@@ -29,7 +29,15 @@ const clearCommonReaderRevenueStateAndReload = (): void => {
     // reload might mean the epic no longer appears on the next page view.
     clearEpicViewLog();
 
-    if (isUserLoggedIn()) {
+    if (asExistingSupporter) {
+        // We use the one-off contributions cookie since the others
+        // get updated based on AJAX calls.
+        // This mechanism will break when start sending data on one-off contributions
+        // from the members-data-api and updating cookies based on that.
+        fakeOneOffContributor();
+    }
+
+    if (isUserLoggedIn() && !asExistingSupporter) {
         if (window.location.origin.includes('localhost')) {
             // Assume they don't have identity running locally
             // So try and remove the identity cookie manually
@@ -46,39 +54,39 @@ const clearCommonReaderRevenueStateAndReload = (): void => {
     }
 };
 
-const showMeTheEpic = (): void => {
+const showMeTheEpic = (asExistingSupporter: boolean = false): void => {
     // Clearing out the epic view log happens before all reloads
-    clearCommonReaderRevenueStateAndReload();
+    clearCommonReaderRevenueStateAndReload(asExistingSupporter);
 };
 
-const showMeTheBanner = (): void => {
+const showMeTheBanner = (asExistingSupporter: boolean = false): void => {
     clearBannerHistory();
 
     // The banner only displays after a certain number of pageviews. So let's get there quick!
     local.set('gu.alreadyVisited', minArticlesBeforeShowingBanner + 1);
-    clearCommonReaderRevenueStateAndReload();
+    clearCommonReaderRevenueStateAndReload(asExistingSupporter);
 };
 
 // For the below functions, assume the user can currently see the thing
 // they want to display. So we don't clear out the banner history since
 // we don't necessarily want the banner popping up if someone's working
 // with the epic.
-const showNextVariant = (): void => {
+const showNextVariant = (asExistingSupporter: boolean = false): void => {
     incrementMvtCookie();
-    clearCommonReaderRevenueStateAndReload();
+    clearCommonReaderRevenueStateAndReload(asExistingSupporter);
 };
 
-const showPreviousVariant = (): void => {
+const showPreviousVariant = (asExistingSupporter: boolean = false): void => {
     decrementMvtCookie();
-    clearCommonReaderRevenueStateAndReload();
+    clearCommonReaderRevenueStateAndReload(asExistingSupporter);
 };
 
-const changeGeolocation = (): void => {
+const changeGeolocation = (asExistingSupporter: boolean = false): void => {
     const geo = window.prompt(
         `Enter two-letter geolocation code (e.g. GB, US, AU). Current is ${geolocationGetSync()}.`
     );
     setGeolocation(geo);
-    clearCommonReaderRevenueStateAndReload();
+    clearCommonReaderRevenueStateAndReload(asExistingSupporter);
 };
 
 export const init = (): void => {
