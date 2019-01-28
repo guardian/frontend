@@ -125,9 +125,10 @@ class PrebidService {
             return PrebidService.requestQueue;
         }
 
-        const isArticle = config.get('page.contentType') === 'Article';
-
-        const adUnits: Array<PrebidAdUnit> = slots(advert.id, isArticle)
+        const adUnits: Array<PrebidAdUnit> = slots(
+            advert.id,
+            config.get('page.contentType', '')
+        )
             .map(effectiveSlotFlatMap)
             .reduce((acc, elt) => acc.concat(elt), []) // the "flat" in "flatMap"
             .map(slot => new PrebidAdUnit(advert, slot))

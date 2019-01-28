@@ -30,7 +30,9 @@ const getMostPopularSizes = memoize((isArticle: boolean) => {
     return [[300, 250]];
 });
 
-const getSlots = (isArticle: boolean): Array<PrebidSlot> => {
+const getSlots = (contentType: string): Array<PrebidSlot> => {
+    const isArticle = contentType === 'Article';
+    const isCrossword = contentType === 'Crossword';
     const commonSlots: Array<PrebidSlot> = [
         {
             key: 'mostpop',
@@ -42,7 +44,7 @@ const getSlots = (isArticle: boolean): Array<PrebidSlot> => {
         },
         {
             key: 'inline1',
-            sizes: [[300, 250]],
+            sizes: isCrossword ? [[728, 90]] : [[300, 250]],
         },
     ];
 
@@ -93,7 +95,7 @@ const getSlots = (isArticle: boolean): Array<PrebidSlot> => {
     }
 };
 
-export const slots = (advertId: string, isArticle: boolean) =>
-    filterByAdvertId(advertId, getSlots(isArticle));
+export const slots = (advertId: string, contentType: string) =>
+    filterByAdvertId(advertId, getSlots(contentType));
 
 export const _ = { getSlots };
