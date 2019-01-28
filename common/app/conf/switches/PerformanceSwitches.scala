@@ -100,7 +100,7 @@ trait PerformanceSwitches {
     "inline-critical-css",
     "If this switch is on critical CSS will be inlined into the head of the document.",
     owners = Seq(Owner.withGithub("johnduffell")),
-    safeState = Off,
+    safeState = On,
     sellByDate = never,
     exposeClientSide = false
   )

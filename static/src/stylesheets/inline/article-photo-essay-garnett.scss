@@ -22,6 +22,7 @@
 
     .element--halfWidth.half-width-odd {
         margin-right: 2%;
+
         &:before {
             content: '';
             display: block;
@@ -54,12 +55,14 @@
             @include mq(leftCol) {
                 width: gs-span(2) + $gs-gutter;
             }
+
             @include mq(wide) {
                 width: gs-span(3) + $gs-gutter;
             }
+
             .pullquote-paragraph {
                 @include fs-headlineGarnett(1);
-                font-weight: bold;
+                font-weight: 900;
             }
       }
 
@@ -76,14 +79,12 @@
                 }
             }
         }
-
     }
 
     .photo-essay-block-quote {
         font-style: normal;
         display: inline;
         float: left;
-
 
         .inline-garnett-quote.inline-icon {
             position: relative;
@@ -104,7 +105,6 @@
                 font-weight: 900;
             }
         }
-
     }
 
     .element--halfWidth.element-pullquote--photo-essay {
@@ -117,7 +117,6 @@
         margin-bottom: $gs-baseline/2;
         border-top: 1px solid $brightness-86;
         vertical-align: top;
-
     }
 
     .element-pullquote svg {
@@ -132,6 +131,7 @@
         display: inline-block;
         width: 98%;
         margin-top: 0;
+
         @include mq($until: mobileLandscape) {
             margin-top: -$gs-baseline / 2;
         }
@@ -159,7 +159,6 @@
         margin-left: -170px;
         float: left;
 
-
         & > li {
             width: 100%;
         }
@@ -176,5 +175,4 @@
             margin-left: 0;
         }
     }
-
 }
