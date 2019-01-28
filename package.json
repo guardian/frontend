@@ -22,7 +22,7 @@
     "domready": "^1.0.8",
     "emotion": "^9.2.4",
     "emotion-server": "^9.2.4",
-    "fastdom": "0.8.5",
+    "fastdom": "1.0.8",
     "fence": "guardian/fence#0.2.11",
     "lodash": "^4.17.11",
     "object-fit-videos": "^1.0.3",

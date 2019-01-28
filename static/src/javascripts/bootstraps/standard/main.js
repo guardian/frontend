@@ -16,6 +16,8 @@
 */
 
 import fastdom from 'fastdom';
+import 'fastdom/fastdom-strict';
+
 import raven from 'lib/raven';
 import userPrefs from 'common/modules/user-prefs';
 import { local as storage } from 'lib/storage';
