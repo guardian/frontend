@@ -322,7 +322,7 @@ const makeABTestVariant = (
             const matchesTags =
                 tagIds.length === 0 ||
                 tagIds.some(tagId =>
-                    (config.get('page.keywordIds') + ',' + config.get('page.nonKeywordIds')).includes(tagId)
+                    `${config.get('page.keywordIds')},${config.get('page.nonKeywordIds')}`.includes(tagId)
                 );
             const matchesSections =
                 sections.length === 0 ||
