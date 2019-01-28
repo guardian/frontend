@@ -157,7 +157,7 @@ const isPayingMember = (): boolean =>
 
 // number returned is Epoch time in milliseconds.
 // null value signifies no last contribution date.
-const getLastOneOffContributionDate = (): ?number => {
+const getLastOneOffContributionDate = (): number | null => {
     const cookie = getCookie(SUPPORT_ONE_OFF_CONTRIBUTION_COOKIE);
 
     if (!cookie) {
@@ -185,9 +185,9 @@ const getLastOneOffContributionDate = (): ?number => {
     return null;
 };
 
-const getDaysSinceLastOneOffContribution = (): ?number => {
+const getDaysSinceLastOneOffContribution = (): number | null => {
     const lastContributionDate = getLastOneOffContributionDate();
-    if (!lastContributionDate) {
+    if (lastContributionDate === null) {
         return null;
     }
     return dateDiffDays(lastContributionDate, Date.now());
@@ -196,7 +196,7 @@ const getDaysSinceLastOneOffContribution = (): ?number => {
 // in last six months
 const isRecentOneOffContributor = (): boolean => {
     const daysSinceLastContribution = getDaysSinceLastOneOffContribution();
-    if (!daysSinceLastContribution) {
+    if (daysSinceLastContribution === null) {
         return false;
     }
     return daysSinceLastContribution <= 180;
@@ -232,6 +232,11 @@ const readerRevenueRelevantCookies = [
     SUPPORT_ONE_OFF_CONTRIBUTION_COOKIE,
 ];
 
+// For debug/test purposes
+const fakeOneOffContributor = (): void => {
+    addCookie(SUPPORT_ONE_OFF_CONTRIBUTION_COOKIE, Date.now().toString());
+};
+
 const isAdFreeUser = (): boolean =>
     isDigitalSubscriber() || (adFreeDataIsPresent() && !adFreeDataIsOld());
 
@@ -248,4 +253,5 @@ export {
     getLastOneOffContributionDate,
     getDaysSinceLastOneOffContribution,
     readerRevenueRelevantCookies,
+    fakeOneOffContributor,
 };

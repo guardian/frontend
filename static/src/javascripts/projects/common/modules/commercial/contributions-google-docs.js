@@ -16,8 +16,6 @@ export const getGoogleDoc = (url: string): Promise<any> =>
         mode: 'cors',
     });
 
-export const getEpicGoogleDoc = (): Promise<any> =>
-    getGoogleDoc(epicGoogleDocUrl);
 export const getBannerGoogleDoc = (): Promise<any> =>
     getGoogleDoc(bannerGoogleDocUrl);
 

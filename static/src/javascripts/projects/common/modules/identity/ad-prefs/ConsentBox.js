@@ -32,7 +32,7 @@ class ConsentRadioButton extends Component<ConsentRadioButtonProps, {}> {
         const name = `gu-ad-prefs-${this.props.consent.cookie}`;
 
         return (
-            <div className="identity-ad-prefs-input">
+            <div className="identity-ad-prefs-input identity-ad-prefs-manager">
                 <label className="identity-ad-prefs-input__label" htmlFor={id}>
                     <input
                         type="radio"
@@ -67,9 +67,15 @@ class ConsentBox extends Component<ConsentBoxProps, {}> {
         return (
             <fieldset>
                 <legend className="identity-title identity-title--small">
-                    {wording.question}
+                    {wording.question.title}
                 </legend>
-                <div>
+                {wording.question.text && (
+                    <div className="identity-ad-prefs-input__wording">
+                        {wording.question.text}
+                    </div>
+                )}
+
+                <div className="identity-ad-prefs-options">
                     <ConsentRadioButton
                         value="true"
                         wording={wording.yesCheckbox}

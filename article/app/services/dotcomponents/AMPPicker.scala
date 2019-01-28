@@ -105,7 +105,7 @@ object AMPPicker {
     val features = ampFeatureWhitelist(page, request)
     val isSupported = features.forall({ case (test, isMet) => isMet})
     val isWhitelisted = whitelist(page.metadata.id)
-    val isEnabled = conf.switches.Switches.DotcomRendering.isSwitchedOn
+    val isEnabled = conf.switches.Switches.DotcomRenderingAMP.isSwitchedOn
 
     val tier = if ((isSupported && isEnabled && isWhitelisted) || request.isGuui) RemoteRenderAMP else LocalRender
 

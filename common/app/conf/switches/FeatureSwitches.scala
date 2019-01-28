@@ -17,6 +17,16 @@ trait FeatureSwitches {
     exposeClientSide = false
   )
 
+  val DotcomRenderingAMP = Switch(
+    SwitchGroup.Feature,
+    "dotcom-rendering-amp",
+    "If this switch is on, we will use the dotcom rendering tier for AMP articles which are supported by it",
+    owners = Seq(Owner.withGithub("nicl")),
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+
   val ShareCounts = Switch(
     SwitchGroup.Feature,
     "server-share-counts",
@@ -504,6 +514,16 @@ trait FeatureSwitches {
     owners = Seq(Owner.withName("simple.and.coherent")),
     safeState = Off,
     sellByDate = never,
+    exposeClientSide = true
+  )
+
+  val SubscribeWithGoogle = Switch(
+    SwitchGroup.Feature,
+    "subscribe-with-google",
+    "If switched on, a Subscribe with Google button will appear on AMP articles.",
+    owners = Seq(Owner.withName("adem.gaygusuz")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 3, 20),
     exposeClientSide = true
   )
 }

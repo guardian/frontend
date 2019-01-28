@@ -71,9 +71,11 @@
                         }
 
                     </div>
-                        <span class="video-overlay__duration">
-                            @media.formattedDuration
-                        </span>
+                        @if(media.formattedDuration.getOrElse("0:00") != "0:00") {
+                            <span class="video-overlay__duration">
+                                @media.formattedDuration
+                            </span>
+                        }
                     </div>
                     <a href="@f.header.url.get(request)" class="video-container-overlay-link" tabindex="-1" aria-hidden="true"></a>
                 }
@@ -104,9 +106,11 @@
                     } else {
                         <div class="youtube-media-atom__play-button vjs-control-text">Play Video @fragments.inlineSvg("play", "icon")</div>
                         @for(duration <- media.formattedDuration.filter(_ => displayDuration)) {
-                            <div class="youtube-media-atom__bottom-bar">
-                                <div class="youtube-media-atom__bottom-bar__duration">@duration</div>
-                            </div>
+                            @if(duration != "0:00") {
+                                <div class="youtube-media-atom__bottom-bar">
+                                    <div class="youtube-media-atom__bottom-bar__duration">@duration</div>
+                                </div>
+                            }
                         }
                     }
                 } else {
