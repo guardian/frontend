@@ -7,7 +7,7 @@ import {
 import { overwriteMvtCookie } from 'common/modules/analytics/mvt-cookie';
 import {
     getAynschronousTestsToRun,
-    getSynchronousTestsToRun,
+    getSynchronousTestsToRun, isInVariantSynchronous,
     runAndTrackAbTests,
 } from 'common/modules/experiments/ab';
 import {
@@ -269,4 +269,53 @@ describe('A/B', () => {
                 });
         });
     });
+
+    describe('isInVariantSynchronous', () => {
+        test('should respect the URL hash', () => {
+            window.location.hash = '#ab-DummyTest=variant';
+            expect(isInVariantSynchronous(concurrentTests[0], 'variant')).toEqual(
+                true
+            );
+        });
+
+        test('should respect localStorage and MVT cookie', () => {
+            cfg.switches = {
+                abDummyTest: true,
+                abDummyTest2: true,
+                abEpicTest: true,
+            };
+            setParticipationsInLocalStorage({
+                // this should be overriden by URL
+                DummyTest: { variant: 'variant' },
+
+                // this should be respected (overriding the control, which would be the cookie-determined variant)
+                DummyTest2: { variant: 'variant' },
+
+                // this should be ignored & deleted
+                NoTestSwitchForThisOne: { variant: 'blah' },
+
+                // ...and we should get an EpicTest added
+            });
+            expect(isInVariantSynchronous(concurrentTests[0], 'variant')).toEqual(
+                true
+            );
+            expect(isInVariantSynchronous(concurrentTests[1], 'variant')).toEqual(
+                true
+            );
+
+            // TODO: why doesn't this one work?
+            // expect(isInVariantSynchronous(epicTests[0], 'control')).toEqual(
+            //     true
+            // );
+
+
+            expect(isInVariantSynchronous(concurrentTests[2], 'variant')).toEqual(
+                false
+            );
+
+            expect(isInVariantSynchronous(concurrentTests[1], 'control')).toEqual(
+                false
+            );
+        })
+    })
 });
