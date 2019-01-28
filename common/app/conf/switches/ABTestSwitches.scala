@@ -8,16 +8,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-commercial-ad-mobile-web-increase",
-    "increase ads on mobile web",
-    owners = Seq(Owner.withGithub("frankie297")),
-    safeState = Off,
-    sellByDate = new LocalDate(2019, 1, 29),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-commercial-cmp-customise",
     "change the location and format of your CMP data",
     owners = Seq(Owner.withGithub("katebee")),
