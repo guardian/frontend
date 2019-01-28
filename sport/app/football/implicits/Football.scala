@@ -2,9 +2,10 @@ package implicits
 
 import football.model.FootballMatchTrail
 import model._
-import org.joda.time.LocalDate
+import org.joda.time.{DateTime, Days, LocalDate}
 import pa._
 import views.MatchStatus
+
 import scala.language.implicitConversions
 
 trait Football extends Collections {
@@ -111,5 +112,11 @@ trait Football extends Collections {
   def groupTag(competitionId: String, round: Round): Option[String] = roundLinks.get(competitionId).flatMap(_(round))
 }
 
-object Football extends Football
+object Football extends Football {
+  def isOver3DaysAway(theMatch: FootballMatch): Boolean = {
+    val noDays = Days.daysBetween(DateTime.now.toLocalDate, theMatch.date.toLocalDate).getDays
+    noDays >= 3
+  }
+
+}
 

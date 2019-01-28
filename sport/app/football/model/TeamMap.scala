@@ -4,6 +4,7 @@ import common._
 import contentapi.ContentApiClient
 import _root_.feed.Competitions
 import com.gu.Box
+import implicits.Football
 import org.joda.time.{DateTime, Days}
 import pa._
 
@@ -149,7 +150,7 @@ object MatchUrl {
   }
 
   def smartUrl(theMatch: FootballMatch): Option[String] = {
-    if (Days.daysBetween(DateTime.now.toLocalDate, theMatch.date.toLocalDate).getDays > 7) None
+    if (Football.isOver3DaysAway(theMatch)) None
     else Some(s"/football/match-redirect/${theMatch.id}")
   }
 }
