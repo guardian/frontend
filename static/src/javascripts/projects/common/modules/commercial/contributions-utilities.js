@@ -184,8 +184,7 @@ const makeABTestVariant = (
     const {
         // filters, where empty is taken to mean 'all', multiple entries are combined with OR
         locations = [],
-        keywordIds = [],
-        toneIds = [],
+        tagIds = [],
         sections = [],
 
         maxViews = defaultMaxViews,
@@ -320,15 +319,10 @@ const makeABTestVariant = (
                 locations.some(
                     region => geolocationGetSync() === region.toUpperCase()
                 );
-            const matchesKeywordIds =
-                keywordIds.length === 0 ||
-                keywordIds.some(keywordId =>
-                    config.get('page.keywordIds').includes(keywordId)
-                );
-            const matchesToneIds =
-                toneIds.length === 0 ||
-                toneIds.some(toneId =>
-                    config.get('page.toneIds').includes(toneId)
+            const matchesTags =
+                tagIds.length === 0 ||
+                tagIds.some(tagId =>
+                    (config.get('page.keywordIds') + ',' + config.get('page.nonKeywordIds')).includes(tagId)
                 );
             const matchesSections =
                 sections.length === 0 ||
@@ -339,8 +333,7 @@ const makeABTestVariant = (
             return (
                 meetsMaxViewsConditions &&
                 matchesLocations &&
-                matchesKeywordIds &&
-                matchesToneIds &&
+                matchesTags &&
                 matchesSections
             );
         },
@@ -597,8 +590,7 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                             products: [],
                             options: {
                                 locations: splitAndTrim(row.locations, ','),
-                                keywordIds: splitAndTrim(row.keywordIds, ','),
-                                toneIds: splitAndTrim(row.toneIds, ','),
+                                tagIds: splitAndTrim(row.tagIds, ','),
                                 sections: splitAndTrim(row.sections, ','),
                                 copy: {
                                     heading: row.heading,
