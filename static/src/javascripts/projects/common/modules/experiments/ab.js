@@ -77,8 +77,8 @@ export const isInVariantSynchronous = (
     test: ABTest,
     variantId: string
 ): boolean =>
-    getSynchronousTestsToRun().some(t =>
-        t.id === test.id && t.variantToRun.id === variantId
+    getSynchronousTestsToRun().some(
+        t => t.id === test.id && t.variantToRun.id === variantId
     );
 
 export const runAndTrackAbTests = (): Promise<void> => {

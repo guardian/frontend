@@ -7,7 +7,8 @@ import {
 import { overwriteMvtCookie } from 'common/modules/analytics/mvt-cookie';
 import {
     getAynschronousTestsToRun,
-    getSynchronousTestsToRun, isInVariantSynchronous,
+    getSynchronousTestsToRun,
+    isInVariantSynchronous,
     runAndTrackAbTests,
 } from 'common/modules/experiments/ab';
 import {
@@ -273,9 +274,9 @@ describe('A/B', () => {
     describe('isInVariantSynchronous', () => {
         test('should respect the URL hash', () => {
             window.location.hash = '#ab-DummyTest=variant';
-            expect(isInVariantSynchronous(concurrentTests[0], 'variant')).toEqual(
-                true
-            );
+            expect(
+                isInVariantSynchronous(concurrentTests[0], 'variant')
+            ).toEqual(true);
         });
 
         test('should respect localStorage and MVT cookie', () => {
@@ -296,26 +297,25 @@ describe('A/B', () => {
 
                 // ...and we should get an EpicTest added
             });
-            expect(isInVariantSynchronous(concurrentTests[0], 'variant')).toEqual(
-                true
-            );
-            expect(isInVariantSynchronous(concurrentTests[1], 'variant')).toEqual(
-                true
-            );
+            expect(
+                isInVariantSynchronous(concurrentTests[0], 'variant')
+            ).toEqual(true);
+            expect(
+                isInVariantSynchronous(concurrentTests[1], 'variant')
+            ).toEqual(true);
 
             // TODO: why doesn't this one work?
             // expect(isInVariantSynchronous(epicTests[0], 'control')).toEqual(
             //     true
             // );
 
+            expect(
+                isInVariantSynchronous(concurrentTests[2], 'variant')
+            ).toEqual(false);
 
-            expect(isInVariantSynchronous(concurrentTests[2], 'variant')).toEqual(
-                false
-            );
-
-            expect(isInVariantSynchronous(concurrentTests[1], 'control')).toEqual(
-                false
-            );
-        })
-    })
+            expect(
+                isInVariantSynchronous(concurrentTests[1], 'control')
+            ).toEqual(false);
+        });
+    });
 });
