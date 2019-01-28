@@ -1,17 +1,17 @@
 // @flow
-import fastdom from "lib/fastdom-promise";
-import bonzo from "bonzo";
-import { initYoutubePlayer } from "common/modules/atoms/youtube-player";
+import fastdom from 'lib/fastdom-promise';
+import bonzo from 'bonzo';
+import { initYoutubePlayer } from 'common/modules/atoms/youtube-player';
 import {
     trackYoutubeEvent,
-    initYoutubeEvents
-} from "common/modules/atoms/youtube-tracking";
-import { Component } from "common/modules/component";
-import $ from "lib/$";
-import config from "lib/config";
-import { isIOS, isAndroid, isBreakpoint } from "lib/detect";
-import debounce from "lodash/debounce";
-import { isOn as accessibilityIsOn } from "common/modules/accessibility/main";
+    initYoutubeEvents,
+} from 'common/modules/atoms/youtube-tracking';
+import { Component } from 'common/modules/component';
+import $ from 'lib/$';
+import config from 'lib/config';
+import { isIOS, isAndroid, isBreakpoint } from 'lib/detect';
+import debounce from 'lodash/debounce';
+import { isOn as accessibilityIsOn } from 'common/modules/accessibility/main';
 
 declare class YoutubePlayerTarget extends EventTarget {
     playVideo: () => void;
@@ -26,38 +26,38 @@ declare class YoutubePlayerEvent {
 const players = {};
 const playerDivs = [];
 
-document.addEventListener("focusout", () => {
+document.addEventListener('focusout', () => {
     playerDivs.forEach(playerDiv => {
         fastdom
             .read(() => {
                 if (document.activeElement === playerDiv) {
-                    return $(".vjs-big-play-button", playerDiv.parentElement);
+                    return $('.vjs-big-play-button', playerDiv.parentElement);
                 }
             })
             .then(($playButton: ?bonzo) => {
                 fastdom.write(() => {
                     if ($playButton) {
-                        $playButton.addClass("youtube-play-btn-focussed");
+                        $playButton.addClass('youtube-play-btn-focussed');
                     }
                 });
             });
     });
 });
 
-document.addEventListener("focusin", () => {
+document.addEventListener('focusin', () => {
     fastdom
-        .read(() => $(".vjs-big-play-button"))
+        .read(() => $('.vjs-big-play-button'))
         .then(($playButton: ?bonzo) => {
             fastdom.write(() => {
                 if ($playButton) {
-                    $playButton.removeClass("youtube-play-btn-focussed");
+                    $playButton.removeClass('youtube-play-btn-focussed');
                 }
             });
         });
 });
 
 // retrieves actual id of atom without appended index
-const getTrackingId = (atomId: string): string => atomId.split("/")[0];
+const getTrackingId = (atomId: string): string => atomId.split('/')[0];
 
 const recordPlayerProgress = (atomId: string): void => {
     const player = players[atomId].player;
@@ -96,7 +96,7 @@ const setProgressTracker = (atomId: string): IntervalID => {
 
 const onPlayerPlaying = (atomId: string): void => {
     const player = players[atomId];
-    const currentVideo = player.player.getVideoUrl().split("?v=")[1];
+    const currentVideo = player.player.getVideoUrl().split('?v=')[1];
     const originalVideo = player.iframe.dataset.assetId;
 
     if (!player) {
@@ -108,22 +108,22 @@ const onPlayerPlaying = (atomId: string): void => {
     // TODO: implement progress tracking for related videos
     if (currentVideo === originalVideo) {
         setProgressTracker(atomId);
-        trackYoutubeEvent("play", getTrackingId(atomId));
+        trackYoutubeEvent('play', getTrackingId(atomId));
     }
 
     const mainMedia =
-        (player.iframe && player.iframe.closest(".immersive-main-media")) ||
+        (player.iframe && player.iframe.closest('.immersive-main-media')) ||
         null;
     const parentNode = player.overlay && player.overlay.parentNode;
     const endSlateContainer =
-        parentNode && parentNode.querySelector(".end-slate-container");
+        parentNode && parentNode.querySelector('.end-slate-container');
 
     if (mainMedia) {
-        mainMedia.classList.add("atom-playing");
+        mainMedia.classList.add('atom-playing');
     }
 
     if (player.endSlate && !endSlateContainer) {
-        player.endSlate.fetch(parentNode, "html");
+        player.endSlate.fetch(parentNode, 'html');
     }
 };
 
@@ -133,21 +133,21 @@ const onPlayerEnded = (atomId: string): void => {
     const player = players[atomId];
 
     killProgressTracker(atomId);
-    trackYoutubeEvent("end", getTrackingId(atomId));
+    trackYoutubeEvent('end', getTrackingId(atomId));
     player.pendingTrackingCalls = [25, 50, 75];
 
     const mainMedia =
-        (player.iframe && player.iframe.closest(".immersive-main-media")) ||
+        (player.iframe && player.iframe.closest('.immersive-main-media')) ||
         null;
     if (mainMedia) {
-        mainMedia.classList.remove("atom-playing");
+        mainMedia.classList.remove('atom-playing');
     }
 };
 
 const STATES = {
     ENDED: onPlayerEnded,
     PLAYING: onPlayerPlaying,
-    PAUSED: onPlayerPaused
+    PAUSED: onPlayerPaused,
 };
 
 const checkState = (atomId: string, state: number, status: string): void => {
@@ -160,11 +160,11 @@ const shouldAutoplay = (atomId: string): boolean => {
     const isAutoplayBlockingPlatform = () => isIOS() || isAndroid();
 
     const isInternalReferrer = () => {
-        if (config.get("page.isDev")) {
+        if (config.get('page.isDev')) {
             return document.referrer.indexOf(window.location.origin) === 0;
         }
 
-        return document.referrer.indexOf(config.get("page.host")) === 0;
+        return document.referrer.indexOf(config.get('page.host')) === 0;
     };
 
     const isMainVideo = () =>
@@ -175,12 +175,12 @@ const shouldAutoplay = (atomId: string): boolean => {
         false;
 
     const flashingElementsAllowed = () =>
-        accessibilityIsOn("flashing-elements");
+        accessibilityIsOn('flashing-elements');
 
     const isVideoArticle = () =>
-        config.get("page.contentType", "").toLowerCase() === "video";
+        config.get('page.contentType', '').toLowerCase() === 'video';
 
-    const isFront = () => config.get("page.isFront");
+    const isFront = () => config.get('page.isFront');
 
     return (
         ((isVideoArticle() && isInternalReferrer() && isMainVideo()) ||
@@ -213,16 +213,16 @@ const getEndSlate = (overlay: HTMLElement): ?Component => {
 
 const updateImmersiveButtonPos = (): void => {
     const player = document.querySelector(
-        ".immersive-main-media__media .youtube-media-atom"
+        '.immersive-main-media__media .youtube-media-atom'
     );
     const playerHeight = player ? player.offsetHeight : 0;
     const headline = document.querySelector(
-        ".immersive-main-media__headline-container"
+        '.immersive-main-media__headline-container'
     );
     const headlineHeight = headline ? headline.offsetHeight : 0;
     const buttonOffset = playerHeight - headlineHeight;
     const immersiveInterface = document.querySelector(
-        ".youtube-media-atom__immersive-interface"
+        '.youtube-media-atom__immersive-interface'
     );
 
     if (immersiveInterface) {
@@ -239,7 +239,7 @@ const onPlayerReady = (
     players[atomId] = {
         player: event.target,
         pendingTrackingCalls: [25, 50, 75],
-        iframe
+        iframe,
     };
 
     if (shouldAutoplay(atomId)) {
@@ -250,20 +250,20 @@ const onPlayerReady = (
         players[atomId].overlay = overlay;
 
         if (
-            !!config.get("page.section") &&
-            !config.get("switches.youtubeRelatedVideos") &&
+            !!config.get('page.section') &&
+            !config.get('switches.youtubeRelatedVideos') &&
             isBreakpoint({
-                min: "desktop"
+                min: 'desktop',
             })
         ) {
             players[atomId].endSlate = getEndSlate(overlay);
         }
     }
 
-    if (iframe && iframe.closest(".immersive-main-media__media")) {
+    if (iframe && iframe.closest('.immersive-main-media__media')) {
         updateImmersiveButtonPos();
         window.addEventListener(
-            "resize",
+            'resize',
             debounce(updateImmersiveButtonPos.bind(null), 200)
         );
     }
@@ -273,7 +273,7 @@ const onPlayerStateChange = (
     atomId: string,
     event: YoutubePlayerEvent
 ): void => {
-    console.log("onPlayerStateChange --->", event);
+    console.log('onPlayerStateChange --->', event);
 
     Object.keys(STATES).forEach(checkState.bind(null, atomId, event.data));
 };
@@ -282,7 +282,7 @@ const initYoutubePlayerForElem = (el: ?HTMLElement, index: number): void => {
     fastdom.read(() => {
         if (!el) return;
 
-        const playerDiv = el.querySelector("div");
+        const playerDiv = el.querySelector('div');
 
         if (!playerDiv) {
             return;
@@ -291,12 +291,12 @@ const initYoutubePlayerForElem = (el: ?HTMLElement, index: number): void => {
         playerDivs.push(playerDiv);
 
         // append index of atom as atomId must be unique
-        const atomId = `${el.getAttribute("data-media-atom-id") ||
-            ""}/${index}`;
+        const atomId = `${el.getAttribute('data-media-atom-id') ||
+            ''}/${index}`;
         // need data attribute with index for unique lookup
-        el.setAttribute("data-unique-atom-id", atomId);
-        const overlay = el.querySelector(".youtube-media-atom__overlay");
-        const channelId = el.getAttribute("data-channel-id") || "";
+        el.setAttribute('data-unique-atom-id', atomId);
+        const overlay = el.querySelector('.youtube-media-atom__overlay');
+        const channelId = el.getAttribute('data-channel-id') || '';
 
         initYoutubeEvents(getTrackingId(atomId));
 
@@ -309,7 +309,7 @@ const initYoutubePlayerForElem = (el: ?HTMLElement, index: number): void => {
                     overlay,
                     playerDiv
                 ),
-                onPlayerStateChange: onPlayerStateChange.bind(null, atomId)
+                onPlayerStateChange: onPlayerStateChange.bind(null, atomId),
             },
             playerDiv.dataset.assetId,
             channelId
@@ -321,11 +321,11 @@ const checkElemForVideo = (elem: ?HTMLElement): void => {
     if (!elem) return;
 
     fastdom.read(() => {
-        $(".youtube-media-atom:not(.no-player)", elem).each((el, index) => {
-            const overlay = el.querySelector(".youtube-media-atom__overlay");
+        $('.youtube-media-atom:not(.no-player)', elem).each((el, index) => {
+            const overlay = el.querySelector('.youtube-media-atom__overlay');
 
-            if (config.get("page.isFront")) {
-                overlay.addEventListener("click", () => {
+            if (config.get('page.isFront')) {
+                overlay.addEventListener('click', () => {
                     initYoutubePlayerForElem(el, index);
                 });
             } else {
