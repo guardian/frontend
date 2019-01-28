@@ -31,16 +31,8 @@
             margin: 0 $gs-gutter;
         }
 
-        .identity-ad-prefs-manager {
-            max-width: gs-span(8);
-        }
-
-        & + .identity-ad-prefs-area__section {
-            margin-top: $gs-baseline * 4;
-        }
-
         &.identity-ad-prefs-area__section--help {
-            margin-top: $gs-baseline * 2;
+            margin-top: $gs-baseline;
             opacity: .75;
         }
 
@@ -64,7 +56,7 @@
 }
 
 .identity-ad-prefs-manager__footer {
-    margin-top: $gs-gutter * 2;
+    margin-top: $gs-baseline;
     display: flex;
     flex-direction: column;
     align-items: stretch;
@@ -110,9 +102,17 @@
 }
 
 .identity-ad-prefs-input {
-
+    @include mq($from: mobile, $until: tablet) {
+        margin: $gs-baseline;
+        max-width: 100%;
+        display: block;
+    }
     $left-padding: $gs-gutter / 1.5 + 16px + $gs-gutter / 1.5;
     margin-top: $gs-gutter;
+    max-width: 40%;
+    display: inline-grid;
+    margin-right: 10%;
+    
 
     .identity-ad-prefs-input__wording {
         margin: $gs-baseline/2 $left-padding 0;

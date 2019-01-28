@@ -11,11 +11,12 @@
 ## Header Bidding
 Header bidding works along similar lines to the typical DFP flow, but with an extra step before we make the request to DFP:
 
-* We load a header bidding library by Sonobi (morpheus.theguardian.nnnn.js) to help us auction our adverts. This script wraps the DFP client library (Google tag) and intercepts calls to it to show an advert.
-* For every advert, we make a request to Sonobi, asking the exchanges behind Sonobi what they're prepared to pay for that particular slot
+
+* We load the Prebid header bidding library to help us auction our adverts. This script wraps the DFP client library (Google tag) and intercepts calls to it to show an advert.
+* For every advert, we make a request to Prebid, asking the exchanges behind Prebid what they're prepared to pay for that particular slot
 * This information is added to the adslot via ad-level targeting
 * When we make the request to DFP, it can read that information and act upon it
-* Line items are set up in DFP (by Sonobi programmatically, they have API access) to match particular header bidding price points and bidders. DFP can use the value data on these to see if the winning bid has higher value than other running campaigns. (DFP isn't smart enough to simply read the winning bid price on the advert, sadly)
+* Line items are set up in DFP to match particular header bidding price points and bidders. DFP can use the value data on these to see if the winning bid has higher value than other running campaigns. (DFP isn't smart enough to simply read the winning bid price on the advert, sadly)
 * If the winning bid has a higher value than any existing campaign, DFP sends back a 'dummy creative' that contains nothing more than a `<script>` tag telling the browser to render whichever advert won the auction.
 * The browser requests the creative and renders it itself.
 

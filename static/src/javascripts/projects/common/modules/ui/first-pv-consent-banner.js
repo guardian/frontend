@@ -42,15 +42,15 @@ const links: Links = {
 const template: Template = {
     heading: `Your privacy`,
     consentText: [
-        `We use cookies to improve your experience on our site and to show you relevant&nbsp;advertising.`,
-        `To find out more, read our updated <a class="u-underline" data-link-name="first-pv-consent : to-privacy" href="${
+        `We use cookies to improve your experience on our site and to show you personalised advertising.`,
+        `To find out more, read our <a class="u-underline" data-link-name="first-pv-consent : to-privacy" href="${
             links.privacy
         }">privacy policy</a> and <a class="u-underline" data-link-name="first-pv-consent : to-cookies" href="${
             links.cookies
         }">cookie policy</a>.`,
     ],
-    agreeButton: 'OK',
-    choicesButton: 'More information',
+    agreeButton: "I'm OK with that",
+    choicesButton: 'My options',
     linkToPreferences: `${config.get('page.idUrl')}/privacy-settings`,
 };
 

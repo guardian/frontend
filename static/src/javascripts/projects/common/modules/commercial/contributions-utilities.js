@@ -1,6 +1,5 @@
 // @flow
 import { isAbTestTargeted } from 'common/modules/commercial/targeting-tool';
-import { getEpicParams } from 'common/modules/commercial/acquisitions-copy';
 import {
     logView,
     viewsInPreviousDays,
@@ -31,7 +30,6 @@ import { awaitEpicButtonClicked } from 'common/modules/commercial/epic/epic-util
 import {
     epicMultipleTestsGoogleDocUrl,
     getBannerGoogleDoc,
-    getEpicGoogleDoc,
     getGoogleDoc,
     googleDocEpicControl,
 } from 'common/modules/commercial/contributions-google-docs';
@@ -536,25 +534,6 @@ const makeBannerABTestVariants = (
         return x;
     });
 
-const makeGoogleDocEpicVariants = (count: number): Array<Object> => {
-    const variants = [];
-
-    // wtf, our linter dislikes i++ AND i = i + 1
-    for (let i = 1; i <= count; i += 1) {
-        variants.push({
-            id: `variant_${i}`,
-            products: [],
-            options: {
-                copy: () =>
-                    getEpicGoogleDoc().then(res =>
-                        getEpicParams(res, `variant_${i}`)
-                    ),
-            },
-        });
-    }
-    return variants;
-};
-
 const makeGoogleDocBannerVariants = (
     count: number
 ): Array<InitBannerABTestVariant> => {
@@ -572,15 +551,6 @@ const makeGoogleDocBannerVariants = (
     }
     return variants;
 };
-
-const makeBannerABTestVariant = (
-    id: string,
-    engagementBannerParams: Object
-): InitBannerABTestVariant => ({
-    id,
-    products: [],
-    engagementBannerParams: () => Promise.resolve(engagementBannerParams),
-});
 
 const makeGoogleDocBannerControl = (): InitBannerABTestVariant => ({
     id: 'control',
@@ -667,10 +637,8 @@ export {
     makeABTest,
     defaultButtonTemplate,
     makeBannerABTestVariants,
-    makeGoogleDocEpicVariants,
     defaultMaxViews,
     getReaderRevenueRegion,
     makeGoogleDocBannerControl,
-    makeBannerABTestVariant,
     makeGoogleDocBannerVariants,
 };

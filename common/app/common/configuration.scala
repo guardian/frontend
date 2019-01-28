@@ -238,9 +238,8 @@ class GuardianConfiguration extends Logging {
     lazy val jsLocation = configuration.getStringProperty("googletag.js.location").getOrElse("//www.googletagservices.com/tag/js/gpt.js")
   }
 
-  object sonobi {
-    //You can test your branch on CODE
-    lazy val jsLocation = "//api.nextgen.guardianapps.co.uk/morpheus.theguardian.12919.js"
+  object google {
+    lazy val subscribeWithGoogleApiUrl = configuration.getStringProperty("google.subscribeWithGoogleApiUrl").getOrElse("https://swg.theguardian.com")
   }
 
   object oriel {
@@ -476,7 +475,7 @@ class GuardianConfiguration extends Logging {
   }
 
   object javascript {
-    // This is config that is avaliable to both Javascript and Scala
+    // This is config that is available to both Javascript and Scala
     // But does not change across environments.
     lazy val config: Map[String, String] = Map(
       ("googleSearchUrl", "//www.google.co.uk/cse/cse.js"),
@@ -490,7 +489,6 @@ class GuardianConfiguration extends Logging {
       ("membershipUrl", id.membershipUrl),
       ("supportUrl", id.supportUrl),
       ("stripePublicToken", id.stripePublicToken),
-      ("sonobiHeaderBiddingJsUrl", sonobi.jsLocation),
       ("optimizeEpicUrl", id.optimizeEpicUrl)
     )
 

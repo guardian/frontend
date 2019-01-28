@@ -3,14 +3,20 @@ import $ from 'lib/$';
 import config from 'lib/config';
 import mediator from 'lib/mediator';
 import fastdom from 'lib/fastdom-promise';
-
 import type { bonzo } from 'bonzo';
 
 const minArticleHeight: number = 1300;
-const minImmersiveArticleHeight: number = 600;
 
-const minContentHeight = (): number =>
-    config.page.isImmersive ? minImmersiveArticleHeight : minArticleHeight;
+const calculateAllowedAdSlots = (availableSpace: number): string => {
+    if (availableSpace > 600) {
+        return '1,1|2,2|300,250|300,274|300,600|fluid';
+    } else if (availableSpace > 274) {
+        return '1,1|2,2|300,250|300,274';
+    } else if (availableSpace > 250) {
+        return '1,1|2,2|300,250';
+    }
+    return '1,1|2,2';
+};
 
 export const init = (start: () => void, stop: () => void): Promise<boolean> => {
     start();
@@ -25,6 +31,7 @@ export const init = (start: () => void, stop: () => void): Promise<boolean> => {
 
     const $mainCol: bonzo = $('.js-content-main-column');
     const $adSlot: bonzo = $('.js-ad-slot', $col);
+    const $immersiveEls: bonzo = $('.element--immersive', $mainCol);
 
     if (!$adSlot.length || !$mainCol.length) {
         stop();
@@ -32,10 +39,26 @@ export const init = (start: () => void, stop: () => void): Promise<boolean> => {
     }
 
     return fastdom
-        .read((): number => $mainCol.dim().height)
-        .then((mainColHeight: number) => {
-            // Should switch to 'right-small' MPU for short articles
-            if (mainColHeight < minContentHeight()) {
+        .read(
+            (): [number, number] => [
+                $mainCol.dim().height,
+                $immersiveEls.offset().top - $mainCol.offset().top,
+            ]
+        )
+        .then(([mainColHeight, immersiveOffset]: [number, number]) => {
+            if (config.get('page.isImmersive') && $immersiveEls.length > 0) {
+                // filter ad slot sizes based on the available height
+                return fastdom.write(() => {
+                    $adSlot.removeClass('right-sticky js-sticky-mpu is-sticky');
+                    $adSlot[0].setAttribute(
+                        'data-mobile',
+                        calculateAllowedAdSlots(immersiveOffset)
+                    );
+                    return $adSlot[0];
+                });
+                // remove sticky
+            } else if (mainColHeight < minArticleHeight) {
+                // Should switch to 'right-small' MPU for short articles
                 return fastdom.write(() => {
                     $adSlot.removeClass('right-sticky js-sticky-mpu is-sticky');
                     $adSlot[0].setAttribute(

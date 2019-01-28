@@ -44,14 +44,18 @@ data-test-id="facia-card"
                 case Some(InlineVideo(videoElement, _, _, _)) => {
                     <div class="fc-item__media-meta">
                         @inlineSvg("video-icon", "icon")
-                        <span class="fc-item__video-duration">@videoElement.videos.formattedDuration</span>
+                        @if(videoElement.videos.formattedDuration != "0:00") {
+                            <span class="fc-item__video-duration">@videoElement.videos.formattedDuration</span>
+                        }
                     </div>
                 }
 
                 case Some(media@InlineYouTubeMediaAtom(youTubeAtom, _)) => {
                     <div class="fc-item__media-meta">
                         @inlineSvg("video-icon", "icon")
-                        <span class="fc-item__video-duration">@youTubeAtom.formattedDuration</span>
+                        @if(youTubeAtom.formattedDuration.getOrElse("0:00") != "0:00") {
+                            <span class="fc-item__video-duration">@youTubeAtom.formattedDuration</span>
+                        }
                     </div>
                 }
 

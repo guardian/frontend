@@ -6,13 +6,14 @@ import controllers.ArticlePage
 import model.SubMetaLinks
 import model.dotcomrendering.pageElements.PageElement
 import navigation.NavMenu
-import play.api.libs.json.{JsValue, Json, Writes}
+import play.api.libs.json._
 import play.api.mvc.RequestHeader
-import views.support.{CamelCase, GUDateTimeFormat}
+import views.support.{CamelCase, GUDateTimeFormat, ImgSrc, Item1200}
 import ai.x.play.json.Jsonx
 import common.Maps.RichMap
 import navigation.UrlHelpers.{Footer, Header, SideMenu, getReaderRevenueUrl}
 import navigation.ReaderRevenueSite.{Support, SupportContribute, SupportSubscribe}
+import model.meta.{Guardian, LinkedData, PotentialAction}
 import ai.x.play.json.implicits.optionWithNull // Note, required despite Intellij saying otherwise
 
 // We have introduced our own set of objects for serializing data to the DotComponents API,
@@ -53,6 +54,44 @@ case class ReaderRevenueLinks(
   sideMenu: ReaderRevenueLink
 )
 
+case class IsPartOf(
+  `@type`: List[String] = List("CreativeWork", "Product"),
+  name: String = "The Guardian",
+  productID: String = "theguardian.com:basic"
+)
+
+object IsPartOf {
+  implicit val formats: OFormat[IsPartOf] = Json.format[IsPartOf]
+}
+
+case class NewsArticle(
+  override val `@type`: String,
+  override val `@context`: String,
+  `@id`: String,
+  potentialAction: PotentialAction,
+  publisher: Guardian = Guardian(),
+  isAccessibleForFree: Boolean = true,
+  isPartOf: IsPartOf = IsPartOf(),
+  image: Seq[String],
+) extends LinkedData(`@type`, `@context`)
+
+object NewsArticle {
+  def apply(
+   `@id`: String,
+    images: Seq[String]
+ ): NewsArticle = NewsArticle(
+    "NewsArticle",
+    "http://schema.org",
+    `@id`,
+    PotentialAction(
+      target = s"android-app://com.guardian/${`@id`.replace("://", "/")}"
+    ),
+    image = images
+  )
+
+  implicit val formats: OFormat[NewsArticle] = Json.format[NewsArticle]
+}
+
 case class PageData(
     author: String,
     pageId: String,
@@ -61,6 +100,8 @@ case class PageData(
     webPublicationDate: Long,
     webPublicationDateDisplay: String,
     section: Option[String],
+    sectionLabel: String,
+    sectionUrl: String,
     headline: String,
     webTitle: String,
     byline: String,
@@ -79,7 +120,8 @@ case class PageData(
     sentryHost: Option[String],
     sentryPublicApiKey: Option[String],
     switches: Map[String,Boolean],
-
+    linkedData: NewsArticle,
+    subscribeWithGoogleApiUrl: String,
 
     // AMP specific
     guardianBaseURL: String,
@@ -189,6 +231,26 @@ object DotcomponentsDataModel {
       acc + (CamelCase.fromHyphenated(switch.name) -> switch.isSwitchedOn)
     })
 
+
+    // See https://developers.google.com/search/docs/data-types/article (and the AMP info too)
+    // For example, we need to provide an image of at least 1200px width to be valid here
+    val linkedData = {
+      val mainImageURL = {
+        val main = for {
+          elem <- article.trail.trailPicture
+          master <- elem.masterImage
+          url <- master.url
+        } yield url
+
+        main.getOrElse(Configuration.images.fallbackLogo)
+      }
+
+      NewsArticle(
+        `@id` = article.metadata.webUrl,
+        images = Seq(ImgSrc(mainImageURL, Item1200))
+      )
+    }
+
     val pageData = PageData(
       article.tags.contributors.map(_.name).mkString(","),
       article.metadata.id,
@@ -197,6 +259,8 @@ object DotcomponentsDataModel {
       article.trail.webPublicationDate.getMillis,
       GUDateTimeFormat.formatDateTimeForDisplay(article.trail.webPublicationDate, request),
       article.metadata.section.map(_.value),
+      article.content.sectionLabelName,
+      article.content.sectionLabelLink,
       article.trail.headline,
       article.metadata.webTitle,
       article.trail.byline.getOrElse(""),
@@ -215,6 +279,8 @@ object DotcomponentsDataModel {
       jsPageData.get("sentryHost"),
       jsPageData.get("sentryPublicApiKey"),
       switches,
+      linkedData,
+      Configuration.google.subscribeWithGoogleApiUrl,
       Configuration.site.host,
       article.metadata.webUrl,
       article.content.shouldHideAdverts,
