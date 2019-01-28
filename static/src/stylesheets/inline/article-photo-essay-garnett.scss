@@ -1,290 +1,180 @@
-// @import '../_vars';
-// @import '../_mixins';
-//
-// .content--photo-essay .immersive-main-media__headline-container {
-//     display: none;
-//     margin-top: 0;
-//     bottom: 0;
-//
-//     .content__standfirst--immersive-article {
-//
-//         @include mq(desktop) {
-//             padding-bottom: 1rem;
-//
-//             &:before {
-//                 content: '';
-//                 position: absolute;
-//                 top: 0;
-//                 height: 2px;
-//                 width: gs-span(2);
-//                 background-color: rgba(255, 255, 255, .2);
-//             }
-//         }
-//     }
-// }
-//
-// .content--article.content--immersive-article {
-//     .content__article-body {
-//         margin: 0;
-//     }
-//
-//     blockquote.photo-essay-block-quote {
-//         font-family: $f-serif-headline;
-//         font-style: normal;
-//         margin: 0 0 $gs-baseline * 2;
-//
-//         &:not(.quoted) {
-//             background-color: $brightness-93;
-//             padding: $gs-baseline / 1.5  $gs-baseline $gs-baseline;
-//         }
-//
-//         .inline-icon {
-//             fill: $sport-dark;
-//         }
-//
-//         .quoted__contents {
-//             margin: 0;
-//         }
-//
-//         h2 {
-//             color: $sport-dark;
-//             font-weight: 100;
-//             font-size: 38px;
-//             line-height: 1;
-//         }
-//
-//         &.quoted {
-//             color: $sport-dark;
-//             font-size: 26px;
-//             line-height: 28px;
-//
-//             .inline-icon {
-//                 fill: $sport-bright;
-//                 width: $gs-baseline * 2;
-//                 display: block;
-//                 margin-bottom: $gs-baseline;
-//             }
-//
-//             .inline-icon .inline-garnett-quote__svg {
-//                 width: 100%;
-//                 height: auto;
-//             }
-//         }
-//     }
-//     .element-image--photo-essay {
-//         padding-bottom: 0;
-//         margin-bottom: $gs-baseline;
-//
-//         //importants here to overide previously set !important
-//         &.fig--no-caption.fig--has-shares {
-//             padding-bottom: 0px !important;
-//         }
-//
-//         .caption {
-//             max-width: 100%;
-//             color: $sport-dark;
-//
-//             .inline-information.reveal-caption-icon {
-//                 background-color: $sport-dark;
-//             }
-//         }
-//
-//         .section-title {
-//             background-color: rgb(0, 0, 0);
-//             background: linear-gradient(transparent, rgb(0, 0, 0));
-//
-//             &:before {
-//                 background-color: $sport-bright;
-//                 display: block;
-//                 content: '';
-//                 width: gs-span(2);
-//                 height: $gs-baseline;
-//                 margin-bottom: calc(#{$gs-gutter} / 3);
-//             }
-//         }
-//
-//         &.element--supporting {
-//             .caption {
-//                 max-width: 100%;
-//             }
-//         }
-//
-//         &.element--halfWidth {
-//             width: 49%;
-//             float: left;
-//             margin-top: 0;
-//             margin-bottom: 2%;
-//
-//             .inline-expand-image {
-//                 display: none;
-//             }
-//
-//             &:before {
-//                 content: '';
-//                 display: block;
-//                 width: 2px;
-//                 top: 0;
-//                 bottom: 0;
-//                 z-index: 300;
-//                 position: absolute;
-//                 background-color: #ffffff;
-//             }
-//
-//             // Makes sure that elements which come after the block of images are no longer floating
-//             & + p, & + blockquote, & + .element-pullquote:not(.element--halfWidth) {
-//                 clear: both;
-//                 padding-top: $gs-baseline / 2;
-//             }
-//             // changes the padding for a half width quote after directly after a half width image
-//             & + .element-pullquote.element--halfWidth {
-//                 margin-top: 0;
-//             }
-//
-//             & + .element-image:not(.element--halfWidth) {
-//                 clear: left;
-//             }
-//         }
-//         &.element--halfWidth.half-width-odd {
-//             margin-right: 2%;
-//         }
-//     }
-//
-//     .element-pullquote--photo-essay.element--supporting {
-//         .pullquote-paragraph {
-//             text-indent: 0;
-//         }
-//     }
-//
-//     .element-pullquote--photo-essay {
-//         .pullquote-paragraph {
-//             color: $sport-dark;
-//             font-size: 26px;
-//         }
-//
-//         //important because it is important elsewhere
-//         .pullquote-cite {
-//             color: $brightness-46 !important;
-//             font-size: 26px;
-//         }
-//
-//         &.element--halfWidth {
-//             width: 45%;
-//             float: left;
-//             margin-right: $gs-gutter;
-//             border-bottom: 0;
-//             margin-top: $gs-baseline / 2;
-//             clear: none;
-//         }
-//
-//         .inline-icon {
-//             fill: $sport-bright;
-//             width: $gs-baseline * 2;
-//             display: block;
-//             margin-bottom: $gs-baseline;
-//
-//             .inline-garnett-quote__svg {
-//                 width: 100%;
-//                 height: auto;
-//             }
-//         }
-//     }
-// }
-//
-// .content__series-label--photo-essay .content__label__link {
-//     color: #ffffff;
-// }
-//
-// .content__section-label--advertisement {
-//     @include f-textSans;
-//     font-size: 20px;
-//     line-height: 24px;
-//     font-weight: 900;
-//     margin: 0;
-//
-//     .content__section-label__link--advertisement {
-//         color: $labs-main;
-//     }
-// }
-//
-// .from-content-api ul {
-//     display: inline-block;
-//     width: 98%;
-//     margin-top: 0;
-//     @include mq($until: mobileLandscape) {
-//         margin-top: -$gs-baseline / 2;
-//     }
-//
-//     & > li {
-//         @include fs-textSans(3);
-//         font-size: 12px;
-//         width: 100%;
-//         margin-right: 1%;
-//         line-height: 14px;
-//         padding-top: $gs-baseline / 2;
-//         padding-left: 0 !important; // override padding applied in from-content-api.scss
-//         border-top: 1px solid $brand-main;
-//
-//         &::before {
-//             display: none !important;
-//         }
-//
-//         @include mq($until: mobileLandscape) {
-//             width: 98%;
-//         }
-//     }
-// }
-//
-//
-// .from-content-api ul:not(.submeta__links):not(.social--bottom):not(.syndication--bottom) {
-//     display: inline-block;
-//     width: 98%;
-//     margin-top: 0;
-//     @include mq($until: mobileLandscape) {
-//         margin-top: -$gs-baseline / 2;
-//     }
-//
-//     & > li {
-//         @include fs-textSans(3);
-//         font-size: 12px;
-//         width: 100%;
-//         margin-right: 1%;
-//         line-height: 14px;
-//         padding-top: $gs-baseline / 2;
-//         padding-left: 0 !important; // override padding applied in from-content-api.scss
-//         color: $brand-main;
-//         border-top: 1px solid $brand-main;
-//
-//         &::before {
-//             display: none !important;
-//         }
-//
-//         @include mq($until: mobileLandscape) {
-//             width: 98%;
-//         }
-//     }
-// }
-//
-// //changes the style of the list item when it comes directly after an immersive or showcase element.
-// //Pulls the list item into the leftColumn on wide.
-//
-// .element--immersive + ul, .element--showcase + ul {
-//     width: 150px;
-//     margin-left: -170px;
-//     float: left;
-//
-//     & > li {
-//         width: 100%;
-//     }
-//
-//     @include mq($until: leftCol) {
-//         width: 98%;
-//         margin-left: 0;
-//         float: none;
-//     }
-//
-//     @include mq($until: mobileLandscape) {
-//         width: 98%;
-//         float: none;
-//         margin-left: 0;
-//     }
-// }
+@import '../_vars';
+@import '../_mixins';
+
+.content--photo-essay {
+    h2 {
+        margin-bottom: $gs-baseline;
+    }
+
+    .section-title {
+        background-color: rgb(0, 0, 0);
+        background: linear-gradient(transparent, rgb(0, 0, 0));
+        font-weight: 900;
+        margin-bottom: 0;
+    }
+
+    .element--halfWidth {
+        width: 49%;
+        float: left;
+        margin-top: 0;
+        margin-bottom: 2%;
+    }
+
+    .element--halfWidth.half-width-odd {
+        margin-right: 2%;
+        &:before {
+            content: '';
+            display: block;
+            width: 2px;
+            top: 0;
+            bottom: 0;
+            z-index: 300;
+            position: absolute;
+            background-color: #ffffff;
+       }
+    }
+
+    .element-image--photo-essay {
+        // Makes sure that elements which come after the block of images are no longer floating
+        & + p, & + blockquote, & + .element-pullquote:not(.element--halfWidth) {
+            clear: both;
+        }
+    }
+
+
+    .element-pullquote--photo-essay {
+        &.element--inline,
+        &.element--showcase {
+            width: 100%;
+            margin: 0;
+        }
+
+        &.element--supporting {
+            width: 100%;
+            @include mq(leftCol) {
+                width: gs-span(2) + $gs-gutter;
+            }
+            @include mq(wide) {
+                width: gs-span(3) + $gs-gutter;
+            }
+            .pullquote-paragraph {
+                @include fs-headlineGarnett(1);
+                font-weight: bold;
+            }
+      }
+
+        &.element--halfWidth,
+        &.element--inline,
+        &.element--showcase {
+            .pullquote-paragraph {
+                @include fs-headlineGarnett(2);
+                font-weight: 900;
+
+                @include mq($from: desktop) {
+                    @include fs-headlineGarnett(4);
+                    font-weight: 900;
+                }
+            }
+        }
+
+    }
+
+    .photo-essay-block-quote {
+        font-style: normal;
+        display: inline;
+        float: left;
+
+
+        .inline-garnett-quote.inline-icon {
+            position: relative;
+            top: $gs-gutter/2;
+            svg {
+                width: 50px;
+                height: auto;
+            }
+        }
+
+        .quoted__contents {
+            @include fs-headlineGarnett(2);
+            margin: 0;
+            font-weight: 900;
+
+            @include mq($from: desktop) {
+                @include fs-headlineGarnett(4);
+                font-weight: 900;
+            }
+        }
+
+    }
+
+    .element--halfWidth.element-pullquote--photo-essay {
+        width: 45%;
+        margin-right: $gs-gutter;
+        border-bottom: 0;
+        margin-top: 0;
+        clear: none;
+        margin-left: 0;
+        margin-bottom: $gs-baseline/2;
+        border-top: 1px solid $brightness-86;
+        vertical-align: top;
+
+    }
+
+    .element-pullquote svg {
+        width: 18px;
+    }
+
+    .element-image.element--showcase {
+        margin-bottom: $gs-baseline;
+    }
+
+    .from-content-api ul:not(.submeta__links):not(.social--bottom):not(.syndication--bottom) {
+        display: inline-block;
+        width: 98%;
+        margin-top: 0;
+        @include mq($until: mobileLandscape) {
+            margin-top: -$gs-baseline / 2;
+        }
+
+        & > li {
+            @include fs-textSans(1);
+            width: 100%;
+            margin-right: 1%;
+            padding-top: $gs-baseline / 2;
+            padding-left: 0 !important; // override padding applied in from-content-api.scss, blame BEN
+            border-top: 1px solid $brightness-86;
+            color: $brightness-46;
+
+            @include mq($until: mobileLandscape) {
+                width: 98%;
+            }
+        }
+    }
+
+    //changes the style of the list item when it comes directly after an immersive or showcase element.
+    //Pulls the list item into the leftColumn on wide.
+    .element--immersive + ul:not(.submeta__links):not(.social--bottom):not(.syndication--bottom),
+    .element--showcase + ul:not(.submeta__links):not(.social--bottom):not(.syndication--bottom) {
+        width: 150px;
+        margin-left: -170px;
+        float: left;
+
+
+        & > li {
+            width: 100%;
+        }
+
+        @include mq($until: leftCol) {
+            width: 98%;
+            margin-left: 0;
+            float: none;
+        }
+
+        @include mq($until: mobileLandscape) {
+            width: 98%;
+            float: none;
+            margin-left: 0;
+        }
+    }
+
+}
