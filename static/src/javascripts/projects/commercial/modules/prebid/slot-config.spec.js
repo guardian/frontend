@@ -24,7 +24,7 @@ describe('getSlots', () => {
 
     test('should return the correct slots at breakpoint M', () => {
         getBreakpointKey.mockReturnValue('M');
-        expect(getSlots(true)).toEqual([
+        expect(getSlots('Article')).toEqual([
             {
                 key: 'mostpop',
                 sizes: [[300, 250]],
@@ -50,7 +50,7 @@ describe('getSlots', () => {
 
     test('should return the correct slots at breakpoint T', () => {
         getBreakpointKey.mockReturnValue('T');
-        expect(getSlots(true)).toEqual([
+        expect(getSlots('Article')).toEqual([
             {
                 key: 'mostpop',
                 sizes: [[300, 250]],
@@ -76,7 +76,7 @@ describe('getSlots', () => {
 
     test('should return the correct slots at breakpoint D on article pages', () => {
         getBreakpointKey.mockReturnValue('D');
-        const desktopSlots = getSlots(true);
+        const desktopSlots = getSlots('Article');
         expect(desktopSlots).toContainEqual({
             key: 'inline',
             sizes: [[300, 600], [300, 250]],
@@ -87,9 +87,18 @@ describe('getSlots', () => {
         });
     });
 
+    test('should return the correct slots at breakpoint T on crossword pages', () => {
+        getBreakpointKey.mockReturnValue('T');
+        const tabletSlots = getSlots('Crossword');
+        expect(tabletSlots).toContainEqual({
+            key: 'inline1',
+            sizes: [[728, 90]],
+        });
+    });
+
     test('should return the correct slots at breakpoint D on other pages', () => {
         getBreakpointKey.mockReturnValue('D');
-        const desktopSlots = getSlots(false);
+        const desktopSlots = getSlots('');
         expect(desktopSlots).toContainEqual({
             key: 'inline',
             sizes: [[300, 250]],
@@ -108,7 +117,7 @@ describe('slots', () => {
 
     test('should return the correct top-above-nav slot at breakpoint D', () => {
         getBreakpointKey.mockReturnValue('D');
-        expect(slots('top-above-nav', false)).toEqual([
+        expect(slots('top-above-nav', '')).toEqual([
             {
                 key: 'top-above-nav',
                 sizes: [[970, 250], [728, 90]],
@@ -118,7 +127,7 @@ describe('slots', () => {
 
     test('should return the correct top-above-nav slot at breakpoint T', () => {
         getBreakpointKey.mockReturnValue('T');
-        expect(slots('top-above-nav', false)).toEqual([
+        expect(slots('top-above-nav', '')).toEqual([
             {
                 key: 'top-above-nav',
                 sizes: [[728, 90]],
@@ -128,7 +137,7 @@ describe('slots', () => {
 
     test('should return the correct top-above-nav slot at breakpoint M', () => {
         getBreakpointKey.mockReturnValue('M');
-        expect(slots('top-above-nav', false)).toEqual([
+        expect(slots('top-above-nav', '')).toEqual([
             {
                 key: 'top-above-nav',
                 sizes: [[300, 250]],

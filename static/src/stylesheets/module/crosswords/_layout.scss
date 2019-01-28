@@ -61,6 +61,12 @@
     }
 }
 
+.crossword-banner {
+    margin-top: $gs-baseline;
+    // 90px is the height of a leaderboard
+    height: 90px + $mpu-ad-label-height + $gs-row-height / 2;
+}
+
 .crossword__controls {
     margin-top: $gs-baseline;
     float: left;
