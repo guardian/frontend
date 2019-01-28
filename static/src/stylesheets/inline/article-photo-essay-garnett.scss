@@ -18,6 +18,11 @@
         float: left;
         margin-top: 0;
         margin-bottom: 2%;
+
+        // Makes sure that elements which come after the block of images are no longer floating
+        & + p, & + blockquote, & + .element-pullquote:not(.element--halfWidth) {
+            clear: both;
+        }
     }
 
     .element--halfWidth.half-width-odd {
@@ -34,14 +39,6 @@
             background-color: #ffffff;
        }
     }
-
-    .element-image--photo-essay {
-        // Makes sure that elements which come after the block of images are no longer floating
-        & + p, & + blockquote, & + .element-pullquote:not(.element--halfWidth) {
-            clear: both;
-        }
-    }
-
 
     .element-pullquote--photo-essay {
         &.element--inline,
