@@ -51,6 +51,7 @@ describe('initialise', () => {
             _publisherDomain: 'http://localhost',
             _sendAllBids: true,
             _timeoutBuffer: 400,
+            _useBidCache: true,
             bidderSequence: 'random',
             bidderTimeout: 1500,
             consentManagement: {
@@ -81,6 +82,7 @@ describe('initialise', () => {
             s2sConfig: {
                 accountId: '1',
                 adapter: 'prebidServer',
+                adapterOptions: {},
                 bidders: ['appnexus', 'openx', 'pangaea'],
                 cookieSet: true,
                 cookiesetUrl: 'https://acdn.adnxs.com/cookieset/cs.js',
@@ -92,6 +94,7 @@ describe('initialise', () => {
                 timeout: 1500,
             },
             timeoutBuffer: 400,
+            useBidCache: true,
             userSync: {
                 pixelEnabled: true,
                 syncDelay: 3000,
@@ -118,6 +121,7 @@ describe('initialise', () => {
         prebid.initialise();
         expect(window.pbjs.getConfig().s2sConfig).toEqual({
             adapter: 'prebidServer',
+            adapterOptions: {},
             enabled: false,
             maxBids: 1,
             timeout: 1000,
