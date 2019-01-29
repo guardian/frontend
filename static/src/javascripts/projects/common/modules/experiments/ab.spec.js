@@ -285,12 +285,13 @@ describe('A/B', () => {
                 abDummyTest2: true,
             };
             setParticipationsInLocalStorage({
-                // this should be overriden by URL
                 DummyTest: { variant: 'variant' },
             });
+            
             expect(
                 isInVariantSynchronous(concurrentTests[0], 'variant')
             ).toEqual(true);
+            
             expect(
                 isInVariantSynchronous(concurrentTests[1], 'control')
             ).toEqual(true);
