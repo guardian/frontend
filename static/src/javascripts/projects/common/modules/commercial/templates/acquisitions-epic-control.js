@@ -22,12 +22,14 @@ export const acquisitionsEpicControlTemplate = ({
                 </h2>
                 ${appendToLastElement(
                     paragraphs,
-                    highlightedText ? ` <strong><span class="contributions__highlight">${highlightedText}</span></strong>` : ''
+                    highlightedText
+                        ? ` <strong><span class="contributions__highlight">${highlightedText}</span></strong>`
+                        : ''
                 )
                     .map(paragraph => `<p>${paragraph}</p>`)
                     .join('')}
             </div>
     
-            ${buttonTemplate ? buttonTemplate : ""}
+            ${buttonTemplate || ''}
         </div>
     </div>`;

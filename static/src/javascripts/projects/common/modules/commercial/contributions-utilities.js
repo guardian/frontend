@@ -85,10 +85,12 @@ const controlTemplate: EpicTemplate = (
     acquisitionsEpicControlTemplate({
         copy,
         componentName: options.componentName,
-        buttonTemplate: options.buttonTemplate ? options.buttonTemplate({
-            supportUrl: options.supportURL,
-            subscribeUrl: options.subscribeURL,
-        }) : null,
+        buttonTemplate: options.buttonTemplate
+            ? options.buttonTemplate({
+                  supportUrl: options.supportURL,
+                  subscribeUrl: options.subscribeURL,
+              })
+            : null,
     });
 
 const doTagsMatch = (test: EpicABTest): boolean =>
@@ -121,8 +123,9 @@ const isCompatibleWithEpic = (page: Object): boolean =>
 const shouldShowReaderRevenue = (
     onlyShowToSupporters: boolean = false
 ): boolean =>
-    !config.get('page.shouldHideReaderRevenue') &&
-    onlyShowToSupporters ? userIsSupporter() : !userIsSupporter();
+    !config.get('page.shouldHideReaderRevenue') && onlyShowToSupporters
+        ? userIsSupporter()
+        : !userIsSupporter();
 
 const shouldShowEpic = (test: EpicABTest): boolean => {
     const onCompatiblePage = test.pageCheck(config.get('page'));
@@ -486,7 +489,7 @@ const makeABTest = ({
         viewEvent: makeEvent(id, 'view'),
 
         variants: [],
-        maxViews: maxViews ? maxViews : defaultMaxViews,
+        maxViews: maxViews || defaultMaxViews,
 
         id,
         start,
@@ -590,24 +593,27 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                         audience: 1,
                         audienceOffset: 0,
 
-                        //Special settings for the "thank you" epic
-                        ...(isThankYou ? {
-                            showToContributorsAndSupporters: true,
-                            maxViews: {
-                                days: 365, // Arbitrarily high number - reader should only see the thank-you for one 'cycle'.
-                                count: 1,
-                                minDaysBetweenViews: 0,
-                            },
-                            useLocalViewLog: true,
-                        } : {
-                            maxViews: defaultMaxViews,
-                        }),
-
+                        // Special settings for the "thank you" epic
+                        ...(isThankYou
+                            ? {
+                                  showToContributorsAndSupporters: true,
+                                  maxViews: {
+                                      days: 365, // Arbitrarily high number - reader should only see the thank-you for one 'cycle'.
+                                      count: 1,
+                                      minDaysBetweenViews: 0,
+                                  },
+                                  useLocalViewLog: true,
+                              }
+                            : {
+                                  maxViews: defaultMaxViews,
+                              }),
                         variants: rows.map(row => ({
                             id: row.name,
                             products: [],
                             options: {
-                                buttonTemplate: isThankYou ? undefined : defaultButtonTemplate,
+                                buttonTemplate: isThankYou
+                                    ? undefined
+                                    : defaultButtonTemplate,
                                 locations: splitAndTrim(row.locations, ','),
                                 tagIds: splitAndTrim(row.tagIds, ','),
                                 sections: splitAndTrim(row.sections, ','),
