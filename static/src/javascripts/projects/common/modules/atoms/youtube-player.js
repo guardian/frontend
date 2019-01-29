@@ -7,6 +7,7 @@ import {
     getAdConsentState,
     thirdPartyTrackingAdConsent,
 } from 'common/modules/commercial/ad-prefs.lib';
+import { showInMegaNav } from '../onward/history';
 
 const scriptSrc = 'https://www.youtube.com/iframe_api';
 const promise = new Promise(resolve => {
@@ -94,10 +95,6 @@ const setupPlayer = (
     const relatedChannels =
         !disableRelatedVideos && channelId ? [channelId] : [];
 
-    console.log('relatedChannels -->', relatedChannels);
-    console.log('videoId -->', videoId);
-    console.log('disableRelatedVideos -->', disableRelatedVideos);
-
     return new window.YT.Player(eltId, {
         videoId,
         width: '100%',
@@ -111,7 +108,13 @@ const setupPlayer = (
             adsConfig: {
                 nonPersonalizedAd: !wantPersonalisedAds,
             },
-            relatedChannels,
+            /**
+             * There's an issue with relatedChannels where
+             * if we pass a populated array no related videos are
+             * shown. Therefore for the time being we will pass an
+             * empty array.
+             */
+            relatedChannels: [],
             disableRelatedVideos,
         },
     });

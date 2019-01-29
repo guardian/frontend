@@ -12,6 +12,7 @@ import config from 'lib/config';
 import { isIOS, isAndroid, isBreakpoint } from 'lib/detect';
 import debounce from 'lodash/debounce';
 import { isOn as accessibilityIsOn } from 'common/modules/accessibility/main';
+import fetchJson from 'lib/fetch-json';
 
 declare class YoutubePlayerTarget extends EventTarget {
     playVideo: () => void;
@@ -25,6 +26,7 @@ declare class YoutubePlayerEvent {
 
 const players = {};
 const playerDivs = [];
+let activeAtomId;
 
 document.addEventListener('focusout', () => {
     playerDivs.forEach(playerDiv => {
@@ -94,66 +96,74 @@ const setProgressTracker = (atomId: string): IntervalID => {
     return players[atomId].progressTracker;
 };
 
-const onPlayerPlaying = (atomId: string): void => {
-    const player = players[atomId];
-    const currentVideo = player.player.getVideoUrl().split('?v=')[1];
-    const originalVideo = player.iframe.dataset.assetId;
+const onPlayerPlaying = (youtubeId: string): void => {
+    console.log('onPlayerPlaying --->', youtubeId);
 
-    if (!player) {
-        return;
-    }
+    // if (!activeAtomId) {
+    //     fetchJson(`/youtube/${youtubeId}`).then(resp => {
+    //         console.log('resp --------->', resp);
+    //     });
+    // }
 
-    killProgressTracker(atomId);
+    // const player = players[atomId];
+    // const currentVideo = player.player.getVideoUrl().split('?v=')[1];
+    // const originalVideo = player.iframe.dataset.assetId;
 
-    // TODO: implement progress tracking for related videos
-    if (currentVideo === originalVideo) {
-        setProgressTracker(atomId);
-        trackYoutubeEvent('play', getTrackingId(atomId));
-    }
+    // if (!player) {
+    //     return;
+    // }
 
-    const mainMedia =
-        (player.iframe && player.iframe.closest('.immersive-main-media')) ||
-        null;
-    const parentNode = player.overlay && player.overlay.parentNode;
-    const endSlateContainer =
-        parentNode && parentNode.querySelector('.end-slate-container');
+    // killProgressTracker(atomId);
 
-    if (mainMedia) {
-        mainMedia.classList.add('atom-playing');
-    }
+    // // TODO: implement progress tracking for related videos
+    // if (currentVideo === originalVideo) {
+    //     setProgressTracker(atomId);
+    //     trackYoutubeEvent('play', getTrackingId(atomId));
+    // }
 
-    if (player.endSlate && !endSlateContainer) {
-        player.endSlate.fetch(parentNode, 'html');
-    }
+    // const mainMedia =
+    //     (player.iframe && player.iframe.closest('.immersive-main-media')) ||
+    //     null;
+    // const parentNode = player.overlay && player.overlay.parentNode;
+    // // const endSlateContainer =
+    // //     parentNode && parentNode.querySelector('.end-slate-container');
+
+    // if (mainMedia) {
+    //     mainMedia.classList.add('atom-playing');
+    // }
+
+    // // if (player.endSlate && !endSlateContainer) {
+    // //     player.endSlate.fetch(parentNode, 'html');
+    // // }
 };
 
-const onPlayerPaused = (atomId: string): void => killProgressTracker(atomId);
+const onPlayerPaused = (youtubeId: string): void => {
+    console.log('onPlayerPaused --->', youtubeId);
 
-const onPlayerEnded = (atomId: string): void => {
-    const player = players[atomId];
+    // killProgressTracker(atomId);
+};
 
-    killProgressTracker(atomId);
-    trackYoutubeEvent('end', getTrackingId(atomId));
-    player.pendingTrackingCalls = [25, 50, 75];
+const onPlayerEnded = (youtubeId: string): void => {
+    console.log('onPlayerEnded --->', youtubeId);
 
-    const mainMedia =
-        (player.iframe && player.iframe.closest('.immersive-main-media')) ||
-        null;
-    if (mainMedia) {
-        mainMedia.classList.remove('atom-playing');
-    }
+    // const player = players[atomId];
+
+    // killProgressTracker(atomId);
+    // trackYoutubeEvent('end', getTrackingId(atomId));
+    // player.pendingTrackingCalls = [25, 50, 75];
+
+    // const mainMedia =
+    //     (player.iframe && player.iframe.closest('.immersive-main-media')) ||
+    //     null;
+    // if (mainMedia) {
+    //     mainMedia.classList.remove('atom-playing');
+    // }
 };
 
 const STATES = {
     ENDED: onPlayerEnded,
     PLAYING: onPlayerPlaying,
     PAUSED: onPlayerPaused,
-};
-
-const checkState = (atomId: string, state: number, status: string): void => {
-    if (state === window.YT.PlayerState[status] && STATES[status]) {
-        STATES[status](atomId);
-    }
 };
 
 const shouldAutoplay = (atomId: string): boolean => {
@@ -190,26 +200,26 @@ const shouldAutoplay = (atomId: string): boolean => {
     );
 };
 
-const getEndSlate = (overlay: HTMLElement): ?Component => {
-    const overlayParent = overlay.parentNode;
+// const getEndSlate = (overlay: HTMLElement): ?Component => {
+//     const overlayParent = overlay.parentNode;
 
-    if (overlayParent instanceof HTMLElement) {
-        const dataset = overlayParent.dataset || {};
-        const endSlate = dataset.endSlate;
+//     if (overlayParent instanceof HTMLElement) {
+//         const dataset = overlayParent.dataset || {};
+//         const endSlate = dataset.endSlate;
 
-        if (endSlate) {
-            const component = new Component();
+//         if (endSlate) {
+//             const component = new Component();
 
-            component.endpoint = endSlate;
+//             component.endpoint = endSlate;
 
-            return component;
-        }
+//             return component;
+//         }
 
-        return undefined;
-    }
+//         return undefined;
+//     }
 
-    return undefined;
-};
+//     return undefined;
+// };
 
 const updateImmersiveButtonPos = (): void => {
     const player = document.querySelector(
@@ -256,7 +266,7 @@ const onPlayerReady = (
                 min: 'desktop',
             })
         ) {
-            players[atomId].endSlate = getEndSlate(overlay);
+            // players[atomId].endSlate = getEndSlate(overlay);
         }
     }
 
@@ -270,12 +280,20 @@ const onPlayerReady = (
 };
 
 const onPlayerStateChange = (
-    atomId: string,
+    // atomId: string,
     event: YoutubePlayerEvent
 ): void => {
-    console.log('onPlayerStateChange --->', event);
+    const youtubeId = event.target.getVideoData().video_id;
 
-    Object.keys(STATES).forEach(checkState.bind(null, atomId, event.data));
+    const stateId = event.data;
+
+    const stateKey = Object.keys(STATES).find(
+        key => stateId === window.YT.PlayerState[key]
+    );
+
+    if (stateKey) {
+        STATES[stateKey](youtubeId);
+    }
 };
 
 const initYoutubePlayerForElem = (el: ?HTMLElement, index: number): void => {
@@ -309,7 +327,8 @@ const initYoutubePlayerForElem = (el: ?HTMLElement, index: number): void => {
                     overlay,
                     playerDiv
                 ),
-                onPlayerStateChange: onPlayerStateChange.bind(null, atomId),
+                onPlayerStateChange,
+                // onPlayerStateChange: onPlayerStateChange.bind(null, atomId),
             },
             playerDiv.dataset.assetId,
             channelId
