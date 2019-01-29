@@ -24,7 +24,7 @@ import { noop } from 'lib/noop';
 import { splitAndTrim } from 'lib/string-utils';
 import { epicButtonsTemplate } from 'common/modules/commercial/templates/acquisitions-epic-buttons';
 import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templates/acquisitions-epic-control';
-import { shouldSeeReaderRevenue as userShouldSeeReaderRevenue } from 'common/modules/commercial/user-features';
+import { userIsSupporter } from 'common/modules/commercial/user-features';
 import { supportContributeURL } from 'common/modules/commercial/support-utilities';
 import { awaitEpicButtonClicked } from 'common/modules/commercial/epic/epic-utils';
 import {
@@ -85,10 +85,10 @@ const controlTemplate: EpicTemplate = (
     acquisitionsEpicControlTemplate({
         copy,
         componentName: options.componentName,
-        buttonTemplate: options.buttonTemplate({
+        buttonTemplate: options.buttonTemplate ? options.buttonTemplate({
             supportUrl: options.supportURL,
             subscribeUrl: options.subscribeURL,
-        }),
+        }) : null,
     });
 
 const doTagsMatch = (test: EpicABTest): boolean =>
@@ -119,10 +119,10 @@ const isCompatibleWithEpic = (page: Object): boolean =>
     isArticleWorthAnEpicImpression(page, defaultExclusionRules);
 
 const shouldShowReaderRevenue = (
-    showToContributorsAndSupporters: boolean = false
+    onlyShowToSupporters: boolean = false
 ): boolean =>
-    (userShouldSeeReaderRevenue() || showToContributorsAndSupporters) &&
-    !config.get('page.shouldHideReaderRevenue');
+    !config.get('page.shouldHideReaderRevenue') &&
+    onlyShowToSupporters ? userIsSupporter() : !userIsSupporter();
 
 const shouldShowEpic = (test: EpicABTest): boolean => {
     const onCompatiblePage = test.pageCheck(config.get('page'));
@@ -187,7 +187,6 @@ const makeABTestVariant = (
         tagIds = [],
         sections = [],
 
-        maxViews = defaultMaxViews,
         isUnlimited = false,
         campaignCode = createTestAndVariantId(
             parentTest.campaignPrefix,
@@ -215,7 +214,7 @@ const makeABTestVariant = (
             },
         }),
         template = controlTemplate,
-        buttonTemplate = options.buttonTemplate || defaultButtonTemplate,
+        buttonTemplate = options.buttonTemplate,
         blockEngagementBanner = false,
         engagementBannerParams = {},
         isOutbrainCompliant = false,
@@ -272,7 +271,7 @@ const makeABTestVariant = (
             componentName: `mem_acquisition_${trackingCampaignId}_${id}`,
             campaignCodes: [campaignCode],
 
-            maxViews,
+            maxViews: parentTest.maxViews,
             isUnlimited,
             products,
             campaignCode,
@@ -300,7 +299,7 @@ const makeABTestVariant = (
                 count: maxViewCount,
                 days: maxViewDays,
                 minDaysBetweenViews: minViewDays,
-            } = maxViews;
+            } = parentTest.maxViews;
 
             const testId = parentTest.useLocalViewLog
                 ? parentTest.id
@@ -452,6 +451,7 @@ const makeABTest = ({
     successMeasure,
     audienceCriteria,
     variants,
+    maxViews,
 
     // optional params
     // locations is a filter where empty is taken to mean 'all'
@@ -486,6 +486,7 @@ const makeABTest = ({
         viewEvent: makeEvent(id, 'view'),
 
         variants: [],
+        maxViews: maxViews ? maxViews : defaultMaxViews,
 
         id,
         start,
@@ -570,6 +571,8 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
             return Object.keys(sheets)
                 .filter(testName => testName.endsWith('__ON'))
                 .map(name => {
+                    const isThankYou = name.includes('__thank_you');
+
                     const rows = sheets[name];
                     const testName = name.split('__ON')[0];
                     return makeABTest({
@@ -587,10 +590,24 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                         audience: 1,
                         audienceOffset: 0,
 
+                        //Special settings for the "thank you" epic
+                        ...(isThankYou ? {
+                            showToContributorsAndSupporters: true,
+                            maxViews: {
+                                days: 365, // Arbitrarily high number - reader should only see the thank-you for one 'cycle'.
+                                count: 1,
+                                minDaysBetweenViews: 0,
+                            },
+                            useLocalViewLog: true,
+                        } : {
+                            maxViews: defaultMaxViews,
+                        }),
+
                         variants: rows.map(row => ({
                             id: row.name,
                             products: [],
                             options: {
+                                buttonTemplate: isThankYou ? undefined : defaultButtonTemplate,
                                 locations: splitAndTrim(row.locations, ','),
                                 tagIds: splitAndTrim(row.tagIds, ','),
                                 sections: splitAndTrim(row.sections, ','),
