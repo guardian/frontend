@@ -93,6 +93,17 @@ sizeCallbacks[adSizes.halfPage] = (_, advert) =>
         return fastdom.write(() => advert.updateExtraSlotClasses());
     });
 
+sizeCallbacks[adSizes.skyscraper] = (_, advert) =>
+fastdom.read(() => {
+    if (advert.node.classList.contains('ad-slot--right')) {
+        stickyMpu(advert.node);
+    }
+    if (advert.node.classList.contains('ad-slot--comments')) {
+        stickyCommentsMpu(advert.node);
+    }
+    return fastdom.write(() => advert.updateExtraSlotClasses());
+});
+
 sizeCallbacks[adSizes.video] = (_, advert) =>
     fastdom.write(() => {
         advert.updateExtraSlotClasses('u-h');
