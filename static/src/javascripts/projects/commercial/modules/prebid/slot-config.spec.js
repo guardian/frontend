@@ -1,5 +1,6 @@
 // @flow
 
+import config from 'lib/config';
 import { slots, _ } from './slot-config';
 import { getBreakpointKey as getBreakpointKey_ } from './utils';
 
@@ -18,6 +19,10 @@ jest.mock('./utils', () => {
 
 /* eslint-disable guardian-frontend/no-direct-access-config */
 describe('getSlots', () => {
+    beforeEach(() => {
+        config.set('switches.extendedMostPopular', true);
+    });
+
     afterEach(() => {
         jest.resetAllMocks();
     });

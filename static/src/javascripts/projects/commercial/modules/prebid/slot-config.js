@@ -24,7 +24,11 @@ const filterByAdvertId = (
 
 const getMostPopularSizes = memoize((isArticle: boolean) => {
     // Only works for articles for now.
-    if (isArticle && config.get('switches.extendedMostPopular')) {
+    if (
+        getBreakpointKey() === 'D' &&
+        isArticle &&
+        config.get('switches.extendedMostPopular')
+    ) {
         return [[300, 600], [300, 250]];
     }
     return [[300, 250]];
