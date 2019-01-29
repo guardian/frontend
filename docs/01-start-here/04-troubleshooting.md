@@ -6,14 +6,7 @@
 
 Sometimes, especially if you've not worked on Frontend for a while, things can get out of sync and it's worth have a spring clean.
 
-Clean everything with `cleanAll` in `root`.
-
-```
-./sbt
-[root] cleanAll
-```
-
-Or you can run `clean` in your project folders:
+If you want to clean a specific project, you can run `clean` in your project folders:
 
 ```
 [root] project dev-build
@@ -26,12 +19,22 @@ And then running `compile`:
 [dev-build] compile
 ```
 
-If you're still seeing errors, try clearing out your target folders:
+If this doesn't work, you can clean everything with `cleanAll` in `root`.
 
 ```
-cd www/frontend/dev-build
-rm -rf target/
+./sbt
+[root] cleanAll
 ```
+
+If you're still seeing errors, try clearing out all build and `.gitignore`d folders, which includes `target` folders:
+
+```
+git clean -fxd
+```
+
+> - `-d` will remove `untracked directories in addition to untracked files.`
+> - `-x` will not use `ignore rules read from .gitignore` (clean will usually listen to `.gitignore`)
+> - `-f` will force deletion
 
 And compile again.
 
