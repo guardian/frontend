@@ -283,39 +283,26 @@ describe('A/B', () => {
             cfg.switches = {
                 abDummyTest: true,
                 abDummyTest2: true,
-                abEpicTest: true,
             };
             setParticipationsInLocalStorage({
                 // this should be overriden by URL
                 DummyTest: { variant: 'variant' },
-
-                // this should be respected (overriding the control, which would be the cookie-determined variant)
-                DummyTest2: { variant: 'variant' },
-
-                // this should be ignored & deleted
-                NoTestSwitchForThisOne: { variant: 'blah' },
-
-                // ...and we should get an EpicTest added
             });
             expect(
                 isInVariantSynchronous(concurrentTests[0], 'variant')
             ).toEqual(true);
             expect(
-                isInVariantSynchronous(concurrentTests[1], 'variant')
+                isInVariantSynchronous(concurrentTests[1], 'control')
             ).toEqual(true);
-
-            // TODO: why doesn't this one work?
-            // expect(isInVariantSynchronous(epicTests[0], 'control')).toEqual(
-            //     true
-            // );
 
             expect(
                 isInVariantSynchronous(concurrentTests[2], 'variant')
             ).toEqual(false);
 
             expect(
-                isInVariantSynchronous(concurrentTests[1], 'control')
+                isInVariantSynchronous(concurrentTests[1], 'variant')
             ).toEqual(false);
         });
+
     });
 });
