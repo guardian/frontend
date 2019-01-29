@@ -287,11 +287,11 @@ describe('A/B', () => {
             setParticipationsInLocalStorage({
                 DummyTest: { variant: 'variant' },
             });
-            
+
             expect(
                 isInVariantSynchronous(concurrentTests[0], 'variant')
             ).toEqual(true);
-            
+
             expect(
                 isInVariantSynchronous(concurrentTests[1], 'control')
             ).toEqual(true);
