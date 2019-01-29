@@ -196,8 +196,7 @@ class MoreOnMatchController(
         val (matchReport, minByMin, preview, stats) = fetchRelatedMatchContent(theMatch, related)
         val canonicalPage = matchReport.orElse(minByMin).orElse { if (theMatch.isFixture) preview else None }.getOrElse(stats)
 
-        if(Football.isOver3DaysAway(theMatch)) NoCache(NotFound("Match is in the future"))
-        else Cached(60)(WithoutRevalidationResult(Found(canonicalPage.url)))
+        Cached(60)(WithoutRevalidationResult(Found(canonicalPage.url)))
       }
     }.getOrElse {
       // we do not keep historical data, so just redirect old stuff to the results page (see also MatchController)

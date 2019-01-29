@@ -2,7 +2,7 @@ package implicits
 
 import football.model.FootballMatchTrail
 import model._
-import org.joda.time.{DateTime, Days, LocalDate}
+import org.joda.time.{DateTime, Days, Hours, LocalDate}
 import pa._
 import views.MatchStatus
 
@@ -113,10 +113,9 @@ trait Football extends Collections {
 }
 
 object Football extends Football {
-  def isOver3DaysAway(theMatch: FootballMatch): Boolean = {
-    val noDays = Days.daysBetween(DateTime.now.toLocalDate, theMatch.date.toLocalDate).getDays
-    noDays >= 3
-  }
+
+  def hoursTillMatch(theMatch: FootballMatch): Int =
+    Hours.hoursBetween(DateTime.now, theMatch.date).getHours
 
 }
 
