@@ -303,6 +303,5 @@ describe('A/B', () => {
                 isInVariantSynchronous(concurrentTests[1], 'variant')
             ).toEqual(false);
         });
-
     });
 });
