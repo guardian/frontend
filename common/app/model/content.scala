@@ -472,6 +472,12 @@ object Article {
       "videoDuration" -> videoDuration
     ) ++ bookReviewIsbn ++ AtomProperties(content.atoms)
 
+    val author = if (tags.contributors.nonEmpty) {
+      tags.contributors.map(_.metadata.webUrl).mkString(",")
+    } else {
+      content.trail.byline.getOrElse("Guardian Staff")
+    }
+
     val opengraphProperties: Map[String, String] = Map(
       ("og:type", "article"),
       ("article:published_time", trail.webPublicationDate.toString()),
@@ -479,7 +485,7 @@ object Article {
       ("article:tag", tags.keywords.map(_.name).mkString(",")),
       ("article:section", trail.sectionName),
       ("article:publisher", "https://www.facebook.com/theguardian"),
-      ("article:author", tags.contributors.map(_.metadata.webUrl).mkString(","))
+      ("article:author", author)
     )
 
     content.metadata.copy(
