@@ -1,5 +1,5 @@
 // @flow
-import lozad from 'lozad';
+import lozad from './lozad';
 
 const isIE = typeof document !== 'undefined' && document.documentMode;
 
