@@ -22,7 +22,7 @@
 
     <tbody>
         @matchesList.map{ theMatch =>
-            <tr data-link-to="@theMatch.smartUrl.map(url=>LinkTo(url)).getOrElse("")"
+            <tr @(theMatch.smartUrl.map(url=>s"data-link-to=${LinkTo(url)}").getOrElse(""))
                 data-match-id="@theMatch.id"
                 data-score-home="@theMatch.homeTeam.score"
                 data-score-away="@theMatch.awayTeam.score"
@@ -47,7 +47,7 @@
                     <img class="team-crest" alt="" src="@Configuration.staticSport.path/football/crests/60/@{theMatch.homeTeam.id}.png" />
                 </td>
                 <td class="football-match__teams table-column--main">
-                    <a href="@theMatch.smartUrl.map(url => LinkTo(url)).getOrElse("")" class="u-unstyled football-teams u-cf" data-link-name="match-redirect">
+                    <a @(theMatch.smartUrl.map(url => s"href=${LinkTo(url)}").getOrElse("")) class="u-unstyled football-teams u-cf" data-link-name="match-redirect">
                         <div class="football-match__team football-match__team--home football-team">
                             <div class="football-team__name team-name" data-abbr="@pa.TeamCodes.codeFor(theMatch.homeTeam)">
                                 <span class="team-name__long">@theMatch.homeTeam.name</span>

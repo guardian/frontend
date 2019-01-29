@@ -150,7 +150,7 @@ object MatchUrl {
   }
 
   def smartUrl(theMatch: FootballMatch): Option[String] = {
-    if (Football.isOver3DaysAway(theMatch)) None
+    if (Football.hoursTillMatch(theMatch) > 72) None
     else Some(s"/football/match-redirect/${theMatch.id}")
   }
 }
