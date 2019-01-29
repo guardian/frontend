@@ -31,10 +31,6 @@ describe('getSlots', () => {
         getBreakpointKey.mockReturnValue('M');
         expect(getSlots('Article')).toEqual([
             {
-                key: 'mostpop',
-                sizes: [[300, 250]],
-            },
-            {
                 key: 'right',
                 sizes: [[300, 600], [300, 250]],
             },
@@ -50,16 +46,16 @@ describe('getSlots', () => {
                 key: 'inline',
                 sizes: [[300, 250]],
             },
+            {
+                key: 'mostpop',
+                sizes: [[300, 250]],
+            },
         ]);
     });
 
     test('should return the correct slots at breakpoint T', () => {
         getBreakpointKey.mockReturnValue('T');
         expect(getSlots('Article')).toEqual([
-            {
-                key: 'mostpop',
-                sizes: [[300, 250]],
-            },
             {
                 key: 'right',
                 sizes: [[300, 600], [300, 250]],
@@ -74,6 +70,10 @@ describe('getSlots', () => {
             },
             {
                 key: 'inline',
+                sizes: [[300, 250]],
+            },
+            {
+                key: 'mostpop',
                 sizes: [[300, 250]],
             },
         ]);

@@ -22,13 +22,9 @@ const filterByAdvertId = (
     return adUnits;
 };
 
-const getMostPopularSizes = memoize((isArticle: boolean) => {
+const getMostPopularDesktopSizes = memoize((isArticle: boolean) => {
     // Only works for articles for now.
-    if (
-        getBreakpointKey() === 'D' &&
-        isArticle &&
-        config.get('switches.extendedMostPopular')
-    ) {
+    if (isArticle && config.get('switches.extendedMostPopular')) {
         return [[300, 600], [300, 250]];
     }
     return [[300, 250]];
@@ -38,10 +34,6 @@ const getSlots = (contentType: string): Array<PrebidSlot> => {
     const isArticle = contentType === 'Article';
     const isCrossword = contentType === 'Crossword';
     const commonSlots: Array<PrebidSlot> = [
-        {
-            key: 'mostpop',
-            sizes: getMostPopularSizes(isArticle),
-        },
         {
             key: 'right',
             sizes: [[300, 600], [300, 250]],
@@ -62,6 +54,10 @@ const getSlots = (contentType: string): Array<PrebidSlot> => {
             sizes: isArticle ? [[300, 600], [300, 250]] : [[300, 250]],
         },
         {
+            key: 'mostpop',
+            sizes: getMostPopularDesktopSizes(isArticle),
+        },
+        {
             key: 'comments',
             sizes: [[300, 250], [300, 600]],
         },
@@ -76,6 +72,10 @@ const getSlots = (contentType: string): Array<PrebidSlot> => {
             key: 'inline',
             sizes: [[300, 250]],
         },
+        {
+            key: 'mostpop',
+            sizes: [[300, 250]],
+        },
     ];
 
     const mobileSlots: Array<PrebidSlot> = [
@@ -85,6 +85,10 @@ const getSlots = (contentType: string): Array<PrebidSlot> => {
         },
         {
             key: 'inline',
+            sizes: [[300, 250]],
+        },
+        {
+            key: 'mostpop',
             sizes: [[300, 250]],
         },
     ];
