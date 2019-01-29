@@ -54,7 +54,7 @@ declare type EpicABTest = AcquisitionsABTest & {
     useTargetingTool: boolean,
     insertEvent: string,
     viewEvent: string,
-    maxViews?: MaxViews,
+    maxViews: MaxViews,
 };
 
 declare type InitEpicABTestVariant = {
@@ -82,9 +82,9 @@ declare type InitEpicABTest = {
     idealOutcome: string,
     campaignId: string,
     variants: $ReadOnlyArray<InitEpicABTestVariant>,
-    maxViews: MaxViews,
 
     // locations is a filter where empty is taken to mean 'all'
+    maxViews?: MaxViews,
     locations?: string[],
     locationCheck?: () => boolean,
     dataLinkNames?: string,

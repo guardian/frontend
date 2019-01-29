@@ -90,7 +90,7 @@ const controlTemplate: EpicTemplate = (
                   supportUrl: options.supportURL,
                   subscribeUrl: options.subscribeURL,
               })
-            : null,
+            : undefined,
     });
 
 const doTagsMatch = (test: EpicABTest): boolean =>
@@ -189,6 +189,7 @@ const makeABTestVariant = (
         locations = [],
         tagIds = [],
         sections = [],
+        maxViews = parentTest.maxViews,
 
         isUnlimited = false,
         campaignCode = createTestAndVariantId(
@@ -274,7 +275,7 @@ const makeABTestVariant = (
             componentName: `mem_acquisition_${trackingCampaignId}_${id}`,
             campaignCodes: [campaignCode],
 
-            maxViews: parentTest.maxViews,
+            maxViews,
             isUnlimited,
             products,
             campaignCode,
@@ -302,7 +303,7 @@ const makeABTestVariant = (
                 count: maxViewCount,
                 days: maxViewDays,
                 minDaysBetweenViews: minViewDays,
-            } = parentTest.maxViews;
+            } = maxViews;
 
             const testId = parentTest.useLocalViewLog
                 ? parentTest.id
@@ -454,10 +455,10 @@ const makeABTest = ({
     successMeasure,
     audienceCriteria,
     variants,
-    maxViews,
 
     // optional params
     // locations is a filter where empty is taken to mean 'all'
+    maxViews = defaultMaxViews,
     locations = [],
     locationCheck = () => true,
     dataLinkNames = '',
