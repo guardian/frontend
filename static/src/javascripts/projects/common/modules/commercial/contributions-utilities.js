@@ -133,7 +133,7 @@ const shouldShowEpic = (test: EpicABTest): boolean => {
 
     const tagsMatch = doTagsMatch(test);
 
-    const isCompatibleUser = test.showToContributorsAndSupporters
+    const isCompatibleUser = test.onlyShowToExistingSupporters
         ? userIsSupporter()
         : !userIsSupporter();
 
@@ -465,7 +465,7 @@ const makeABTest = ({
     useLocalViewLog = false,
     overrideCanRun = false,
     useTargetingTool = false,
-    showToContributorsAndSupporters = false,
+    onlyShowToExistingSupporters = false,
     canRun = () => true,
     pageCheck = isCompatibleWithEpic,
 }: InitEpicABTest): EpicABTest => {
@@ -506,7 +506,7 @@ const makeABTest = ({
         campaignPrefix,
         useLocalViewLog,
         overrideCanRun,
-        showToContributorsAndSupporters,
+        onlyShowToExistingSupporters,
         pageCheck,
         locations,
         useTargetingTool,
@@ -595,7 +595,7 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                         // Special settings for the "thank you" epic
                         ...(isThankYou
                             ? {
-                                  showToContributorsAndSupporters: true,
+                                  onlyShowToExistingSupporters: true,
                                   maxViews: {
                                       days: 365, // Arbitrarily high number - reader should only see the thank-you for one 'cycle'.
                                       count: 1,

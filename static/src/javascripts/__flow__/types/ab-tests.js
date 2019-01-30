@@ -47,7 +47,7 @@ declare type EpicABTest = AcquisitionsABTest & {
     campaignPrefix: string,
     useLocalViewLog: boolean,
     overrideCanRun: boolean,
-    showToContributorsAndSupporters: boolean,
+    onlyShowToExistingSupporters: boolean,
     pageCheck: (page: Object) => boolean,
     locations: $ReadOnlyArray<string>,
     useTargetingTool: boolean,
@@ -90,7 +90,7 @@ declare type InitEpicABTest = {
     useLocalViewLog?: boolean,
     overrideCanRun?: boolean,
     useTargetingTool?: boolean,
-    showToContributorsAndSupporters?: boolean,
+    onlyShowToExistingSupporters?: boolean,
     canRun?: (test: EpicABTest) => boolean,
     pageCheck?: (page: Object) => boolean,
 }
