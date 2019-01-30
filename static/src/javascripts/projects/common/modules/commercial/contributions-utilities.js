@@ -120,12 +120,8 @@ const isCompatibleWithEpic = (page: Object): boolean =>
     !page.isMinuteArticle &&
     isArticleWorthAnEpicImpression(page, defaultExclusionRules);
 
-const shouldShowReaderRevenue = (
-    onlyShowToSupporters: boolean = false
-): boolean =>
-    !config.get('page.shouldHideReaderRevenue') && onlyShowToSupporters
-        ? userIsSupporter()
-        : !userIsSupporter();
+const shouldHideReaderRevenue = () =>
+    config.get('page.shouldHideReaderRevenue');
 
 const shouldShowEpic = (test: EpicABTest): boolean => {
     const onCompatiblePage = test.pageCheck(config.get('page'));
@@ -137,13 +133,13 @@ const shouldShowEpic = (test: EpicABTest): boolean => {
 
     const tagsMatch = doTagsMatch(test);
 
-    return (
-        shouldShowReaderRevenue(test.showToContributorsAndSupporters) &&
-        onCompatiblePage &&
-        inCompatibleLocation &&
-        test.locationCheck(storedGeolocation) &&
-        tagsMatch
-    );
+    return !shouldHideReaderRevenue && test.showToContributorsAndSupporters
+        ? userIsSupporter()
+        : !userIsSupporter() &&
+              onCompatiblePage &&
+              inCompatibleLocation &&
+              test.locationCheck(storedGeolocation) &&
+              tagsMatch;
 };
 
 const createTestAndVariantId = (campaignCodePrefix, campaignID, id) =>
@@ -650,7 +646,7 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
         });
 
 export {
-    shouldShowReaderRevenue,
+    shouldHideReaderRevenue,
     shouldShowEpic,
     makeABTest,
     defaultButtonTemplate,

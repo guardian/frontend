@@ -9,7 +9,7 @@ import {
     getUserVariantParams as getUserVariantParams_,
 } from 'common/modules/commercial/membership-engagement-banner-parameters';
 import { membershipEngagementBanner } from 'common/modules/commercial/membership-engagement-banner';
-import { shouldShowReaderRevenue } from 'common/modules/commercial/contributions-utilities';
+import { shouldHideReaderRevenue } from 'common/modules/commercial/contributions-utilities';
 
 const defaultEngagementBannerParams: any = defaultEngagementBannerParams_;
 const getUserVariantParams: any = getUserVariantParams_;
@@ -106,8 +106,11 @@ jest.mock('lib/config', () => ({
     get: jest.fn(() => true),
 }));
 jest.mock('common/modules/commercial/contributions-utilities', () => ({
-    shouldShowReaderRevenue: jest.fn(() => true),
+    shouldHideReaderRevenue: jest.fn(() => false),
     getReaderRevenueRegion: jest.fn(() => 'united-kingdom'),
+}));
+jest.mock('common/modules/commercial/user-features', () => ({
+    userIsSupporter: jest.fn(() => false),
 }));
 jest.mock('lib/fetch-json', () => jest.fn());
 jest.mock('common/modules/user-prefs', () => ({
@@ -120,8 +123,8 @@ const fakeConstructQuery: any = require('lib/url').constructQuery;
 const fakeIsBlocked: any = require('common/modules/commercial/membership-engagement-banner-block')
     .isBlocked;
 const fakeGet: any = require('lib/storage').local.get;
-const fakeShouldShowReaderRevenue: any = require('common/modules/commercial/contributions-utilities')
-    .shouldShowReaderRevenue;
+const fakeShouldHideReaderRevenue: any = require('common/modules/commercial/contributions-utilities')
+    .shouldHideReaderRevenue;
 
 const fetchJsonMock: JestMockFn<*, *> = (fetchJson: any);
 const fakeUserPrefs: JestMockFn<*, *> = (userPrefs.get: any);
@@ -131,7 +134,7 @@ beforeEach(() => {
     FakeMessage.prototype.show = jest.fn(() => true);
     fakeIsBlocked.mockClear();
     fakeGet.mockClear();
-    fakeShouldShowReaderRevenue.mockClear();
+    fakeShouldHideReaderRevenue.mockClear();
     fakeConfig.get.mockClear();
     fetchJsonMock.mockImplementation(() =>
         Promise.resolve({ time: '2018-07-25T17:05:46+0000' })
@@ -175,8 +178,8 @@ describe('Membership engagement banner', () => {
             });
         });
 
-        it('should return false if shouldShowReaderRevenue false', () => {
-            fakeShouldShowReaderRevenue.mockReturnValueOnce(false);
+        it('should return false if shouldHideReaderRevenue true', () => {
+            fakeShouldHideReaderRevenue.mockReturnValueOnce(true);
 
             return membershipEngagementBanner.canShow().then(canShow => {
                 expect(canShow).toBe(false);
@@ -264,7 +267,7 @@ describe('Membership engagement banner', () => {
 
     describe('If user already member', () => {
         it('should not show any messages even to engaged readers', () => {
-            (shouldShowReaderRevenue: any).mockImplementationOnce(() => false);
+            (shouldHideReaderRevenue: any).mockImplementationOnce(() => true);
 
             return membershipEngagementBanner.canShow().then(canShow => {
                 expect(canShow).toBe(false);
