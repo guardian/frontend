@@ -21,7 +21,7 @@ import type { bonzo } from 'bonzo';
 
 type Analytics = {
     formType: string,
-    listId: string,
+    listName: string,
     signedIn: string,
 };
 
@@ -75,7 +75,7 @@ const removeAndRemember = (
     const currentListPrefs =
         userPrefs.get(`email-sign-up-${analytics.formType}`) || [];
 
-    currentListPrefs.push(`${analytics.listId}`);
+    currentListPrefs.push(`${analytics.listName}`);
     userPrefs.set(
         `email-sign-up-${analytics.formType}`,
         uniq(currentListPrefs)
@@ -85,7 +85,7 @@ const removeAndRemember = (
 
     trackNonClickInteraction(
         `rtrt | email form inline | ${analytics.formType} | ${
-            analytics.listId
+            analytics.listName
         } | ${analytics.signedIn} | form hidden`
     );
 };
@@ -270,7 +270,7 @@ const submitForm = (
 
             analyticsInfo = `rtrt | email form inline | ${
                 analytics.formType
-            } | ${analytics.signedIn} | %action%`;
+            } | ${analytics.listName} | ${analytics.signedIn} | %action%`;
 
             state.submitting = true;
 
@@ -344,7 +344,7 @@ const setup = (
         const $formEl = $(`.${classes.form}`, el);
         const analytics = {
             formType: $formEl.data('email-form-type'),
-            listId: $formEl.data('email-list-id'),
+            listName: $formEl.data('email-list-name'),
             signedIn: isUserLoggedIn()
                 ? 'user signed-in'
                 : 'user not signed-in',

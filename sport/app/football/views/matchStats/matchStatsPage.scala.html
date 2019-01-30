@@ -1,9 +1,14 @@
 @import common.LinkTo
 @import implicits.Football._
 
+@import implicits.Football
 @(page: football.controllers.MatchPage, competition: Option[model.Competition])(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @mainLegacy(page, Some("football")){
+    @* If this is just a placeholder page for a future match with no useful information, hide from search engines *@
+    @if(!page.hasPaStats && !page.hasLineUp && !page.matchStarted && !page.theMatch.isLive && Football.hoursTillMatch(page.theMatch) > 72 ) {
+        <meta name="robots" content="noindex">
+    }
 } {
 
 <article class="content content--football-stats">

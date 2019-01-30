@@ -1,4 +1,4 @@
-// @flow
+// @flow strict
 import config from 'lib/config';
 import { isBreakpoint } from 'lib/detect';
 import fastdom from 'lib/fastdom-promise';
@@ -10,8 +10,6 @@ import { trackAdRender } from 'commercial/modules/dfp/track-ad-render';
 import { createSlots } from 'commercial/modules/dfp/create-slots';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { initCarrot } from 'commercial/modules/carrot-traffic-driver';
-import { commercialAdMobileWebIncrease } from 'common/modules/experiments/tests/commercial-ad-mobile-web-increase.js';
-import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 
 type AdSize = {
     width: number,
@@ -22,9 +20,6 @@ type AdSize = {
 type Sizes = { desktop: Array<AdSize> };
 
 const isPaidContent = config.get('page.isPaidContent', false);
-
-const isInAdMobileWebVariant = (): boolean =>
-    isInVariantSynchronous(commercialAdMobileWebIncrease, 'variant');
 
 const adSlotClassSelectorSizes = {
     minAbove: 500,
@@ -147,12 +142,12 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<number> => {
     });
 };
 
-const addMobileInlineAds = (isVariant: boolean): Promise<number> => {
+const addMobileInlineAds = (): Promise<number> => {
     const rules = {
         bodySelector: '.js-article__body',
         slotSelector: ' > p',
-        minAbove: isVariant ? 200 : 300,
-        minBelow: isVariant ? 200 : 300,
+        minAbove: 200,
+        minBelow: 200,
         selectors: {
             ' > h2': {
                 minAbove: 100,
@@ -161,7 +156,7 @@ const addMobileInlineAds = (isVariant: boolean): Promise<number> => {
             ' .ad-slot': adSlotClassSelectorSizes,
             ' > :not(p):not(h2):not(.ad-slot)': {
                 minAbove: 35,
-                minBelow: isVariant ? 200 : 400,
+                minBelow: 200,
             },
             fromBottom: true,
         },
@@ -195,7 +190,7 @@ const addInlineAds = (): Promise<number> => {
     });
 
     if (isMobile) {
-        return addMobileInlineAds(isInAdMobileWebVariant());
+        return addMobileInlineAds();
     }
     if (isPaidContent) {
         return addDesktopInlineAds(false);
@@ -245,11 +240,11 @@ const attemptToAddInlineMerchAd = (): Promise<boolean> => {
     );
 };
 
-export const init = (start: () => void, stop: () => void): Promise<any> => {
+export const init = (start: () => void, stop: () => void): Promise<boolean> => {
     start();
     if (!commercialFeatures.articleBodyAdverts) {
         stop();
-        return Promise.resolve();
+        return Promise.resolve(false);
     }
 
     const im = config.page.hasInlineMerchandise
