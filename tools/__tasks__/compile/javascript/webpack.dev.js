@@ -6,7 +6,8 @@ const Observable = require('any-observable');
 const webpack = require('webpack');
 const chalk = require('chalk');
 
-const webpackConfig = require('../../../../webpack.config.dev.js')
+const webpackConfig = require('../../../../webpack.config.dev.js');
+
 const config = webpackConfig();
 
 module.exports = {
