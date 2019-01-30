@@ -133,13 +133,16 @@ const shouldShowEpic = (test: EpicABTest): boolean => {
 
     const tagsMatch = doTagsMatch(test);
 
-    return !shouldHideReaderRevenue && test.showToContributorsAndSupporters
+    const isCompatibleUser = test.showToContributorsAndSupporters
         ? userIsSupporter()
-        : !userIsSupporter() &&
-              onCompatiblePage &&
-              inCompatibleLocation &&
-              test.locationCheck(storedGeolocation) &&
-              tagsMatch;
+        : !userIsSupporter();
+
+    return !shouldHideReaderRevenue &&
+        onCompatiblePage &&
+        isCompatibleUser &&
+        inCompatibleLocation &&
+        test.locationCheck(storedGeolocation) &&
+        tagsMatch;
 };
 
 const createTestAndVariantId = (campaignCodePrefix, campaignID, id) =>
