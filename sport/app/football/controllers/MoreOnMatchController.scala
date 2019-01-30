@@ -7,8 +7,8 @@ import feed.CompetitionsService
 import football.model.FootballMatchTrail
 import implicits.{Football, Requests}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
-import model.{Cached, Content, ContentType}
-import org.joda.time.LocalDate
+import model.{Cached, Content, ContentType, NoCache}
+import org.joda.time.{DateTime, Days, LocalDate}
 import org.joda.time.format.DateTimeFormat
 import com.github.nscala_time.time.Imports
 import com.github.nscala_time.time.Imports._
@@ -195,6 +195,7 @@ class MoreOnMatchController(
       loadMoreOn(request, theMatch).map { related =>
         val (matchReport, minByMin, preview, stats) = fetchRelatedMatchContent(theMatch, related)
         val canonicalPage = matchReport.orElse(minByMin).orElse { if (theMatch.isFixture) preview else None }.getOrElse(stats)
+
         Cached(60)(WithoutRevalidationResult(Found(canonicalPage.url)))
       }
     }.getOrElse {
