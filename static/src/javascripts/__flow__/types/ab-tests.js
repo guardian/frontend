@@ -50,7 +50,6 @@ declare type EpicABTest = AcquisitionsABTest & {
     showToContributorsAndSupporters: boolean,
     pageCheck: (page: Object) => boolean,
     locations: $ReadOnlyArray<string>,
-    locationCheck: (location: string) => boolean,
     useTargetingTool: boolean,
     insertEvent: string,
     viewEvent: string,
@@ -86,7 +85,6 @@ declare type InitEpicABTest = {
     // locations is a filter where empty is taken to mean 'all'
     maxViews?: MaxViews,
     locations?: string[],
-    locationCheck?: () => boolean,
     dataLinkNames?: string,
     campaignPrefix?: string,
     useLocalViewLog?: boolean,

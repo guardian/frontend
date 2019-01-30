@@ -142,7 +142,6 @@ const shouldShowEpic = (test: EpicABTest): boolean => {
         onCompatiblePage &&
         isCompatibleUser &&
         inCompatibleLocation &&
-        test.locationCheck(storedGeolocation) &&
         tagsMatch
     );
 };
@@ -461,7 +460,6 @@ const makeABTest = ({
     // locations is a filter where empty is taken to mean 'all'
     maxViews = defaultMaxViews,
     locations = [],
-    locationCheck = () => true,
     dataLinkNames = '',
     campaignPrefix = 'gdnwb_copts_memco',
     useLocalViewLog = false,
@@ -511,7 +509,6 @@ const makeABTest = ({
         showToContributorsAndSupporters,
         pageCheck,
         locations,
-        locationCheck,
         useTargetingTool,
     };
 
