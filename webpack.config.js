@@ -3,7 +3,7 @@ const path = require('path');
 const CircularDependencyPlugin = require('circular-dependency-plugin');
 const webpack = require('webpack');
 
-module.exports = {
+module.exports = (babelOverride) =>({
     entry: {
         standard: path.join(
             __dirname,
@@ -90,6 +90,7 @@ module.exports = {
                 // transpile it as part of the frontend build step for now
                 exclude: /(node_modules(?!\/@guardian\/dotcom-rendering)|vendor\/)/,
                 loader: 'babel-loader',
+                ...babelOverride
             },
             {
                 test: /\.svg$/,
@@ -127,4 +128,4 @@ module.exports = {
     externals: {
         xhr2: {},
     },
-};
+})

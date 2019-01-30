@@ -12,10 +12,10 @@ module.exports = {
     description: 'Create Webpack bundles',
     task: () =>
         new Observable(observer => {
-            config.plugins = [
-                require('../../../webpack-progress-reporter')(observer),
-                ...config.plugins,
-            ];
+            // config.plugins = [
+            //     require('../../../webpack-progress-reporter')(observer),
+            //     ...config.plugins,
+            // ];
 
             const bundler = webpack(config);
 
@@ -29,5 +29,5 @@ module.exports = {
                 }
                 observer.complete();
             });
-        }),
+        })
 };

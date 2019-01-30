@@ -11,7 +11,10 @@ module.exports = {
         "production": {
             "presets": [
                 ["@babel/preset-env", {
-                    "modules": false
+                    "modules": false,
+                      "targets": {
+                        "esmodules": true
+                    }
                 }]
             ],
             "plugins": [
@@ -22,7 +25,10 @@ module.exports = {
         "development": {
             "presets": [
                 ["@babel/preset-env", {
-                    "modules": false
+                    "modules": false,
+                      "targets": {
+                        "esmodules": true
+                    }
                 }]
             ],
             "plugins": [
@@ -43,20 +49,7 @@ module.exports = {
                 "@babel/plugin-proposal-class-properties",
             ],
         },
-        "internal": {
-            "presets": [
-                ["@babel/preset-env", {
-                    "targets": {
-                        "browsers": [
-                            "last 2 Chrome versions",
-                            "last 1 Safari version",
-                            "last 2 Firefox versions",
-                            "last 2 Edge versions",
-                        ],
-                    }
-                }],
-            ],
-        },
+
     },
     "ignore": [
         "eslintrc.js",

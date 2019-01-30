@@ -29,8 +29,9 @@ function guardianPolyfilled() {
 // Load the app and try to patch the env with polyfill.io
 // Adapted from https://www.html5rocks.com/en/tutorials/speed/script-loading/#toc-aggressive-optimisation
 (function (document, window) {
-    var src;
     var script;
+    var polyfillScript;
+
     var pendingScripts = [];
     var firstScript = document.scripts[0];
 
@@ -39,11 +40,12 @@ function guardianPolyfilled() {
     } else {
       Static("javascripts/vendor/polyfillio.fallback.js")
     }) { polyfillioUrl =>
-        var scripts = [
-            '@polyfillioUrl',
-            '@Static(s"javascripts/graun.$bootModule.js")'
-        ];
+        var polyfill = '@polyfillioUrl';
+
+
     }
+    var bundle = '@Static(s"javascripts/graun.$bootModule.js")'
+    var ie11bundle = '@Static(s"javascripts/graun.$bootModule.ie11.js")'
 
     function stateChange() {
         var pendingScript;
@@ -55,22 +57,28 @@ function guardianPolyfilled() {
     }
 
     if (window.location.hash !== '#nojs') {
-        while (src = scripts.shift()) {
-            if ('async' in firstScript) { // modern browsers
+            if ('nomodule' in firstScript) { // modern browsers
                 script = document.createElement('script');
                 script.async = false;
-                script.src = src;
+                script.type = "module"
+                script.src = bundle;
                 document.head.appendChild(script);
+
+                polyfillScript = document.createElement('script');
+                polyfillScript.async = false;
+                polyfillScript.src = polyfill;
+                document.head.appendChild(polyfillScript);
             }
-            else if (firstScript.readyState) { // IE<10
-                script = document.createElement('script');
-                pendingScripts.push(script);
-                script.onreadystatechange = stateChange;
-                script.src = src;
-            }
+            // else if (firstScript.readyState) { // IE<10
+            //     script = document.createElement('script');
+            //     pendingScripts.push(script);
+            //     script.onreadystatechange = stateChange;
+            //     script.src = src;
+            // }
             else { // fall back to defer
-                document.write('<script src="' + src + '" defer></'+'script>');
+                document.write('<script src="' + ie11bundle + '" defer></'+'script>');
+                document.write('<script src="' + polyfillScript + '" defer></'+'script>');
             }
-        }
+
     }
 })(document, window);

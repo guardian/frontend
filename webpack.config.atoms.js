@@ -4,7 +4,8 @@ const path = require('path');
 const webpackMerge = require('webpack-merge');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
-const config = require('./webpack.config.js');
+const webpackConfig =require('./webpack.config.js');
+const config = webpackConfig()
 
 // Blatantly override JS entry points
 config.entry = {
