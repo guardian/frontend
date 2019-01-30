@@ -24,6 +24,6 @@ trait SupporterTabs
   def redirectToManageContributions: Action[AnyContent] = redirectToManage("contributions")
 
   /** Redirect /digitalpack/edit to manage.theguardian.com/digitalpack */
-  def redirectToManageDigitalPack: Action[AnyContent] = redirectToManage("digitalpack")
+  def redirectToManageSubscriptions: Action[AnyContent] = redirectToManage("subscriptions")
 
 }
