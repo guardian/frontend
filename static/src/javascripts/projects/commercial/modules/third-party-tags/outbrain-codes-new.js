@@ -50,8 +50,6 @@ const getCode = function(args: {
     breakpoint: string,
     section: string,
 }): { code?: string, image?: string, text?: string } {
-    console.log('OUTBRAIN -NEW getCode arguments', args);
-
     const normalizedType = normalizedTypes[args.outbrainType];
     if (!normalizedType) {
         throw new Error(`Unknown outbrainType (${args.outbrainType})`);
