@@ -37,6 +37,17 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
+  val OutbrainNewIdsSwitch = Switch(
+    Commercial,
+    "commercial-outbrain-newids",
+    "Enable the Outbrain new IDs (Late Jan 2019)",
+    owners = Seq(Owner.withGithub("jeteve")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
+
   val SurveySwitch = Switch(
     Commercial,
     "surveys",
