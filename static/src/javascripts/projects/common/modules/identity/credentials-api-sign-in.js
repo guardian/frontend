@@ -23,7 +23,7 @@ export const signInWithSavedCredentials = (): Promise<boolean> => {
         return navigator.credentials
             .get({
                 password: true,
-                mediation: 'required',
+                mediation: 'optional',
             })
             .then(creds => {
                 if (creds) {
