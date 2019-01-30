@@ -50,7 +50,8 @@ class AtomCleanerTest extends FlatSpec
     guides = Nil,
     profiles = Nil,
     timelines = Nil,
-    commonsdivisions = Nil
+    commonsdivisions = Nil,
+    audio = Nil
   )
 )
   def doc: Document = Jsoup.parse( s"""<figure class="element element-atom">

@@ -8,7 +8,7 @@ import conf.switches.Switches._
 import layout.ContentWidths
 import layout.ContentWidths._
 import model._
-import model.content.{Atom, Atoms, MediaAtom, MediaWrapper}
+import model.content._
 import navigation.ReaderRevenueSite
 import org.jsoup.Jsoup
 import org.jsoup.nodes.{Document, Element, TextNode}
@@ -18,6 +18,7 @@ import services.SkimLinksCache
 import conf.Configuration.affiliatelinks._
 import conf.Configuration.site.host
 import views.html.fragments.affiliateLinksDisclaimer
+import views.support.Commercial.isAdFree
 
 import scala.collection.JavaConverters._
 import scala.collection.mutable
@@ -696,7 +697,12 @@ case class AtomsCleaner(
             atomContainer.attr("data-atom-id", atomId)
             atomContainer.attr("data-atom-type", atomType)
 
-            val html = views.html.fragments.atoms.atom(atomData, Atoms.articleConfig, shouldFence, amp, mediaWrapper, posterImageOverride).toString()
+            val html = if(atomData.isInstanceOf[AudioAtom] && isAdFree(request)) {
+              views.html.fragments.atoms.atom(atomData, Atoms.articleConfig, shouldFence, amp, mediaWrapper, posterImageOverride).toString().replaceAll("flex.acast.com/", "")
+            } else {
+              views.html.fragments.atoms.atom(atomData, Atoms.articleConfig, shouldFence, amp, mediaWrapper, posterImageOverride).toString()
+            }
+
             bodyElement.remove()
             atomContainer.append(html)
           }
