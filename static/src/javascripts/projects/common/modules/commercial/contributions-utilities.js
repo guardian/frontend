@@ -137,12 +137,14 @@ const shouldShowEpic = (test: EpicABTest): boolean => {
         ? userIsSupporter()
         : !userIsSupporter();
 
-    return !shouldHideReaderRevenue &&
+    return (
+        !shouldHideReaderRevenue &&
         onCompatiblePage &&
         isCompatibleUser &&
         inCompatibleLocation &&
         test.locationCheck(storedGeolocation) &&
-        tagsMatch;
+        tagsMatch
+    );
 };
 
 const createTestAndVariantId = (campaignCodePrefix, campaignID, id) =>
