@@ -95,6 +95,50 @@
     }
 }
 
+.colophon__lists-container--foundation {
+    .colophon__list {
+        &:nth-child(1) {
+            flex: none;
+            width: 100%;
+            margin: ($gs-baseline / 2) 0 $gs-baseline;
+
+            @include mq(tablet) {
+                flex: 1;
+            }
+
+            &:before {
+                display: none;
+            }
+
+            .inline-guardian-foundation-logo__svg {
+                height: 95px;
+                width: 295px;
+            }
+        }
+
+        @include mq($until: tablet) {
+            &:nth-child(n+2) {
+                flex: 1;
+                margin: 0;
+                border-top: 1px solid $brand-pastel;
+                padding-left: ($gs-baseline / 2);
+            }
+
+            &:nth-child(2) {
+                border-right: 1px solid $brand-pastel;
+
+                &:before {
+                    display: none;
+                }
+            }
+
+            .cta-bar__message {
+                border: none;
+            }
+        }
+    }
+}
+
 .colophon__item a {
     color: $brightness-100;
     display: inline-block;

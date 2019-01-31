@@ -11,6 +11,7 @@
 @import conf.switches.Switches.{ EmailInlineInFooterSwitch }
 @import com.gu.identity.model.EmailNewsletters
 @import model.NoCache
+@import views.support.{RenderClasses}
 
 <footer class="l-footer u-cf" data-link-name="footer" data-component="footer">
 
@@ -45,7 +46,9 @@
                     </div>
                 }
 
-                <div class="colophon__lists-container">
+                <div class="@RenderClasses(Map(
+                    "colophon__lists-container--foundation" ->  page.metadata.isFoundation,
+                ), "colophon__lists-container")">
                     @if(!page.metadata.isFoundation) {
                         @currentEdition match {
                             case Uk => {
@@ -320,6 +323,10 @@
                             }
                         }
                     } else {
+                        <div class="colophon__list">
+                            @fragments.inlineSvg("guardian-foundation", "logo")
+                        </div>
+
                         <ul class="colophon__list">
                             <li class="colophon__item">
                                 <a data-link-name="foundation : footer : about us" href="@LinkTo {/the-guardian-foundation/2016/dec/21/who-we-are-and-what-we-do}">
