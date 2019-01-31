@@ -201,16 +201,17 @@ const makeABTestVariant = (
 
     // defaults for options
 
-    const supportUrlWithTrackingCodes = (campaignCode: string) => addTrackingCodesToUrl({
-        base: `${options.supportBaseURL || supportContributeURL}`,
-        componentType: parentTest.componentType,
-        componentId,
-        campaignCode,
-        abTest: {
-            name: parentTest.id,
-            variant: id,
-        },
-    });
+    const supportUrlWithTrackingCodes = (campaignCode: string) =>
+        addTrackingCodesToUrl({
+            base: `${options.supportBaseURL || supportContributeURL}`,
+            componentType: parentTest.componentType,
+            componentId,
+            campaignCode,
+            abTest: {
+                name: parentTest.id,
+                variant: id,
+            },
+        });
 
     const {
         // filters, where empty is taken to mean 'all', multiple entries are combined with OR
