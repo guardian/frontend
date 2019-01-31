@@ -1,24 +1,29 @@
 package controllers
 
-// import scala.concurrent.ExecutionContext.Implicits.global
-
-import com.gu.contentapi.client.model.AtomUsageQuery
-import com.gu.contentapi.client.model.v1.AtomUsageResponse
-import com.gu.contentatom.thrift.AtomType.Media
-import common.{ImplicitControllerExecutionContext, Logging}
-import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
+import com.gu.contentapi.client.model.v1.ItemResponse
+import common._
 import contentapi.ContentApiClient
-import model.Cached
+import model.{CacheTime, Cached}
 import model.Cached.RevalidatableResult
+import play.api.libs.ws.WSClient
+import play.api.libs.json.Json
+import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 
 import scala.concurrent.Future
 
-class YoutubeController(contentApiClient: ContentApiClient, val controllerComponents: ControllerComponents)  extends BaseController with Logging with ImplicitControllerExecutionContext {
+class YoutubeController(contentApiClient: ContentApiClient, wsClient: WSClient, val controllerComponents: ControllerComponents) extends BaseController with Logging with ImplicitControllerExecutionContext {
+
   def getAtomId(id: String): Action[AnyContent] = Action.async { implicit request =>
-    contentApiClient.getResponse(AtomUsageQuery(Media, id)).map{ response: AtomUsageResponse =>
-      Cached(0)(RevalidatableResult.Ok(response.userTier))
+    val capiQuery = contentApiClient.item(s"atom/media/youtube-$id")
+
+    val response: Future[ItemResponse] = contentApiClient.getResponse(capiQuery)
+
+    response.map{item =>
+      val atomId = item.media.map(media => Cached(CacheTime.Default)(RevalidatableResult.Ok(
+        Json.obj("atomId" -> media.id)
+      )))
+
+      atomId.get
     }
   }
 }
-
-

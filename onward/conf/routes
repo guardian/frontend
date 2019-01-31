@@ -83,4 +83,4 @@ GET     /news-alert/alerts                            controllers.NewsAlertContr
 POST    /news-alert/alert                             controllers.NewsAlertController.create()
 
 # Youtube Atom ID
-GET     /youtube/:id.json                                                                                                        controllers.YoutubeController.getAtomId(id: String)
+GET     /youtube/:id.json                             controllers.YoutubeController.getAtomId(id: String)
