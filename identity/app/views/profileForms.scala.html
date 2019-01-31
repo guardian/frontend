@@ -98,16 +98,8 @@
 
                         @content(2, "/account/edit")(profile.accountDetailsForm(idUrlBuilder, idRequest, user, forms.accountForm, changedEmail))
 
-                        @content(3, "/membership/edit")(profile.membershipDetailsForm(idUrlBuilder, idRequest, user))
-
-                        @content(4, "/digitalpack/edit")(profile.digitalPackDetailsForm(idUrlBuilder, idRequest, user))
-
-                        @content(5, "/contribution/recurring/edit", requiresValidation)(profile.recurringContributionDetailsForm(idUrlBuilder, idRequest, user))
-
                         @content(6, "/email-prefs", requiresValidation)(profile.privacyForm(idUrlBuilder, idRequest, user, forms.privacyForm, emailPrefsForm, emailSubscriptions, availableLists, consentsUpdated, consentHint))
                     </div>
                 </div>
     </div>
-
-    <script src="https://checkout.stripe.com/checkout.js" async></script>
 </div>
