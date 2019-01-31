@@ -5,7 +5,8 @@ export const supportServerSideRendering: ABTest = {
     start: '2019-01-30',
     expiry: '2019-05-22',
     author: 'Jonathan Rankin',
-    description: 'Send half of the audience to the server-side rendered version of the support site',
+    description:
+        'Send half of the audience to the server-side rendered version of the support site',
     audience: 100,
     audienceOffset: 0,
     successMeasure: '£AV/impression',

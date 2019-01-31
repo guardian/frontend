@@ -180,11 +180,7 @@ const addServerSideRenderingTestParameterToLink = (rawUrl: string): string => {
         return rawUrl;
     }
     if (paramValue) {
-
-        url.searchParams.set(
-            serverSideRenderingField,
-            paramValue
-        );
+        url.searchParams.set(serverSideRenderingField, paramValue);
     }
     return url.toString();
 };
@@ -216,7 +212,9 @@ const makeABTestVariant = (
         },
     });
 
-    const supportUrl = addServerSideRenderingTestParameterToLink(supportUrlWithTrackingCodes);
+    const supportUrl = addServerSideRenderingTestParameterToLink(
+        supportUrlWithTrackingCodes
+    );
 
     const {
         // filters, where empty is taken to mean 'all', multiple entries are combined with OR
@@ -231,7 +229,7 @@ const makeABTestVariant = (
             parentTest.campaignId,
             id
         ),
-        supportURL = addServerSideRenderingTestParameterToLink(supportUrlWithTrackingCodes),
+        supportURL = supportUrl,
         subscribeURL = addTrackingCodesToUrl({
             base: 'https://support.theguardian.com/subscribe',
             componentType: parentTest.componentType,
