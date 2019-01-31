@@ -11,20 +11,24 @@ const normalizedTypes = {
     nonCompliant: 'nonCompliant',
 };
 
+/*
+  Note that outbrain has asked the same codes as desktop
+  for the tablet breakpoint.
+*/
 const outbrainCodes = {
     defaults: {
         desktop: { code: 'AR_12' },
-        tablet: { code: 'MB_6' },
+        tablet: { code: 'AR_12' },
         mobile: { code: 'MB_4' },
     },
     epic: {
         desktop: { code: 'AR_13' },
-        tablet: { code: 'MB_7' },
+        tablet: { code: 'AR_13' },
         mobile: { code: 'MB_5' },
     },
     nonCompliant: {
         desktop: { code: 'AR_14' },
-        tablet: { code: 'MB_8' },
+        tablet: { code: 'AR_14' },
         mobile: { code: 'MB_10' },
     },
 };
