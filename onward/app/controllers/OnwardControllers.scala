@@ -54,5 +54,4 @@ trait OnwardControllers {
   lazy val techFeedbackController = wire[TechFeedbackController]
   lazy val newsAlertController = wire[NewsAlertController]
   lazy val storyPackageController = wire[StoryPackageController]
-  lazy val youtubeController = wire[YoutubeController]
 }
