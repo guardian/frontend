@@ -201,7 +201,7 @@ const makeABTestVariant = (
 
     // defaults for options
 
-    const supportUrlWithTrackingCodes = addTrackingCodesToUrl({
+    const supportUrlWithTrackingCodes = (campaignCode: string) => addTrackingCodesToUrl({
         base: `${options.supportBaseURL || supportContributeURL}`,
         componentType: parentTest.componentType,
         componentId,
@@ -211,10 +211,6 @@ const makeABTestVariant = (
             variant: id,
         },
     });
-
-    const supportUrl = addServerSideRenderingTestParameterToLink(
-        supportUrlWithTrackingCodes
-    );
 
     const {
         // filters, where empty is taken to mean 'all', multiple entries are combined with OR
@@ -229,7 +225,9 @@ const makeABTestVariant = (
             parentTest.campaignId,
             id
         ),
-        supportURL = supportUrl,
+        supportURL = addServerSideRenderingTestParameterToLink(
+            supportUrlWithTrackingCodes(campaignCode)
+        ),
         subscribeURL = addTrackingCodesToUrl({
             base: 'https://support.theguardian.com/subscribe',
             componentType: parentTest.componentType,
