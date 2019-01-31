@@ -1,5 +1,8 @@
 // @flow
 import { addReferrerData } from 'common/modules/commercial/acquisitions-ophan';
+import { isInVariantSynchronous } from 'common/modules/experiments/ab';
+import { commercialCmpCustomise } from 'common/modules/experiments/tests/commercial-cmp-customise';
+import { supportServerSideRendering } from 'common/modules/experiments/tests/support-server-side-rendering';
 import fastdom from 'lib/fastdom-promise';
 
 // Currently the only acquisition components on the site are
@@ -14,6 +17,40 @@ const isCurrentCampaign = (iframeSrc: string): boolean =>
     validIframeUrls.some(validIframeUrl =>
         iframeSrc.startsWith(validIframeUrl)
     );
+
+const serverSideTestParameterValue = () => {
+    if (isInVariantSynchronous(supportServerSideRendering, 'variant')) {
+        return 'on';
+    }
+    if (isInVariantSynchronous(supportServerSideRendering, 'control')) {
+        return 'off'
+    }
+    return 'test';
+};
+
+
+const addServerSideRenderingTestParameterToLink = (rawUrl: string): string => {
+    const serverSideRenderingField = 'ssr';
+    const randomNumber = Math.random();
+    if (randomNumber === undefined) {
+        return rawUrl;
+    }
+    const paramValue = randomNumber >= 0.5 ? 'on' : 'off';
+    let url;
+    try {
+        url = new URL(rawUrl);
+    } catch (e) {
+        return rawUrl;
+    }
+    if (paramValue) {
+
+        url.searchParams.set(
+            serverSideRenderingField,
+            paramValue
+        );
+    }
+    return url.toString();
+};
 
 const addReferrerDataToAcquisitionLink = (rawUrl: string): string => {
     const acquisitionDataField = 'acquisitionData';
@@ -60,9 +97,12 @@ const addReferrerDataToAcquisitionLinksOnPage = (): void => {
         fastdom.read(() => el.getAttribute('href')).then(link => {
             if (link) {
                 fastdom.write(() => {
+                    const linkWithAcquisitionData = addReferrerDataToAcquisitionLink(link);
+                    const linkWithAcquisitionDataAndServerSideRenderingTestData =
+                        addServerSideRenderingTestParameterToLink(linkWithAcquisitionData);
                     el.setAttribute(
                         'href',
-                        addReferrerDataToAcquisitionLink(link)
+                        linkWithAcquisitionDataAndServerSideRenderingTestData
                     );
                 });
             }

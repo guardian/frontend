@@ -166,6 +166,29 @@ const registerIframeListener = (iframeId: string) => {
     });
 };
 
+const addServerSideRenderingTestParameterToLink = (rawUrl: string): string => {
+    const serverSideRenderingField = 'ssr';
+    const randomNumber = Math.random();
+    if (randomNumber === undefined) {
+        return rawUrl;
+    }
+    const paramValue = randomNumber >= 0.5 ? 'on' : 'off';
+    let url;
+    try {
+        url = new URL(rawUrl);
+    } catch (e) {
+        return rawUrl;
+    }
+    if (paramValue) {
+
+        url.searchParams.set(
+            serverSideRenderingField,
+            paramValue
+        );
+    }
+    return url.toString();
+};
+
 const makeABTestVariant = (
     id: string,
     products: $ReadOnlyArray<OphanProduct>,
@@ -181,6 +204,20 @@ const makeABTestVariant = (
     const iframeId = `${parentTest.campaignId}_iframe`;
 
     // defaults for options
+
+    const supportUrlWithTrackingCodes = addTrackingCodesToUrl({
+        base: `${options.supportBaseURL || supportContributeURL}`,
+        componentType: parentTest.componentType,
+        componentId,
+        campaignCode,
+        abTest: {
+            name: parentTest.id,
+            variant: id,
+        },
+    });
+
+    const supportUrl = addServerSideRenderingTestParameterToLink(supportUrlWithTrackingCodes);
+
     const {
         // filters, where empty is taken to mean 'all', multiple entries are combined with OR
         locations = [],
@@ -194,16 +231,7 @@ const makeABTestVariant = (
             parentTest.campaignId,
             id
         ),
-        supportURL = addTrackingCodesToUrl({
-            base: `${options.supportBaseURL || supportContributeURL}`,
-            componentType: parentTest.componentType,
-            componentId,
-            campaignCode,
-            abTest: {
-                name: parentTest.id,
-                variant: id,
-            },
-        }),
+        supportURL = addServerSideRenderingTestParameterToLink(supportUrlWithTrackingCodes),
         subscribeURL = addTrackingCodesToUrl({
             base: 'https://support.theguardian.com/subscribe',
             componentType: parentTest.componentType,
