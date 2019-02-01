@@ -61,15 +61,16 @@ const addReferrerDataToAcquisitionLinksOnPage = (): void => {
         fastdom.read(() => el.getAttribute('href')).then(link => {
             if (link) {
                 fastdom.write(() => {
-                    const linkWithAcquisitionData = addReferrerDataToAcquisitionLink(
+                    let linkWithAcquisitionData = addReferrerDataToAcquisitionLink(
                         link
                     );
-                    const linkWithAcquisitionDataAndServerSideRenderingTestData = addServerSideRenderingTestParameterToLink(
+                    if (link.contains("support.theguardian.com/contribute"))
+                        linkWithAcquisitionData = addServerSideRenderingTestParameterToLink(
                         linkWithAcquisitionData
                     );
                     el.setAttribute(
                         'href',
-                        linkWithAcquisitionDataAndServerSideRenderingTestData
+                        linkWithAcquisitionData
                     );
                 });
             }
