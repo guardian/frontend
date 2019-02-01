@@ -148,7 +148,8 @@ object MetaData {
     opengraphPropertiesOverrides: Map[String, String] = Map(),
     isHosted: Boolean = false,
     twitterPropertiesOverrides: Map[String, String] = Map(),
-    commercial: Option[CommercialProperties] = None
+    commercial: Option[CommercialProperties] = None,
+    isFoundation: Boolean = false
   ): MetaData = {
 
     val resolvedUrl = url.getOrElse(s"/$id")
@@ -204,7 +205,8 @@ object MetaData {
       },
       isHosted = apiContent.isHosted,
       commercial = Some(CommercialProperties.fromContent(apiContent)),
-      sensitive = fields.sensitive.getOrElse(false)
+      sensitive = fields.sensitive.getOrElse(false),
+      isFoundation = Tags.make(apiContent).isFoundation
     )
   }
 }
@@ -242,7 +244,8 @@ final case class MetaData (
   contentWithSlimHeader: Boolean = false,
   commercial: Option[CommercialProperties],
   isNewRecipeDesign: Boolean = false,
-  sensitive: Boolean = false
+  sensitive: Boolean = false,
+  isFoundation: Boolean = false
 ){
   val sectionId = section map (_.value) getOrElse ""
   lazy val neilsenApid: String = Nielsen.apidFromString(sectionId)
@@ -761,6 +764,7 @@ final case class Tags(
   lazy val isCrossword: Boolean = types.exists(_.id == Tags.Crossword)
   lazy val isMatchReport: Boolean = tones.exists(_.id == Tags.MatchReports)
   lazy val isQuiz: Boolean = tones.exists(_.id == Tags.quizzes)
+  lazy val isFoundation: Boolean = tags.exists(t => Tags.foundationMappings.contains(t.id))
 
   lazy val isArticle: Boolean = tags.exists { _.id == Tags.Article }
   lazy val isSudoku: Boolean = tags.exists { _.id == Tags.Sudoku } || tags.exists(t => t.id == "lifeandstyle/series/sudoku")
@@ -850,6 +854,14 @@ object Tags {
     "tone/albumreview",
     "tone/livereview",
     "tone/childrens-user-reviews"
+  )
+
+  val foundationMappings = Seq(
+    "the-guardian-foundation/the-guardian-foundation",
+    "gnmeducationcentre/gnmeducationcentre",
+    "newswise/newswise",
+    "gnm-archive/gnm-archive",
+    "the-guardian-foundation/series/guardian-exhibitions"
   )
 
   val interviewMappings = Seq(
