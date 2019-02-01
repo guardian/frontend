@@ -524,7 +524,7 @@ trait FeatureSwitches {
     "If switched on, half of links to support.theguardian.com/contribute will have ssr=on and half will have ssr=off added to the query string",
     owners = Seq(Owner.withName("jranks123")),
     safeState = Off,
-    sellByDate = never,
+    sellByDate = new LocalDate(2019, 3, 20),
     exposeClientSide = true
   )
 

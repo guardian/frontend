@@ -64,10 +64,11 @@ const addReferrerDataToAcquisitionLinksOnPage = (): void => {
                     let linkWithAcquisitionData = addReferrerDataToAcquisitionLink(
                         link
                     );
-                    if (link.contains('support.theguardian.com/contribute'))
+                    if (link.contains('support.theguardian.com/contribute')) {
                         linkWithAcquisitionData = addServerSideRenderingTestParameterToLink(
                             linkWithAcquisitionData
                         );
+                    }
                     el.setAttribute('href', linkWithAcquisitionData);
                 });
             }
