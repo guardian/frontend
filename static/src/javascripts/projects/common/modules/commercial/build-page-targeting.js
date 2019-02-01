@@ -59,16 +59,6 @@ const abParam = (): Array<string> => {
     return abParams;
 };
 
-const adtestParams = (): ?string => {
-    const cookieAdtest: ?string = getCookie('adtest');
-    if (cookieAdtest) {
-        if (cookieAdtest.substring(0, 4) === 'demo') {
-            removeCookie('adtest');
-        }
-        return cookieAdtest;
-    }
-};
-
 const getVisitedValue = (): string => {
     const visitCount: number = local.get('gu.alreadyVisited') || 0;
 
@@ -199,7 +189,7 @@ const buildPageTargeting = once(
                 x: getKruxSegments(),
                 pv: config.get('ophan.pageViewId'),
                 bp: getBreakpoint(),
-                at: adtestParams(),
+                at: getCookie('adtest') || undefined,
                 si: isUserLoggedIn() ? 't' : 'f',
                 gdncrm: getUserSegments(),
                 ab: abParam(),
