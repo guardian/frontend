@@ -17,7 +17,7 @@ trait JournalismSwitches {
     SwitchGroup.Journalism,
     "render-in-article-audio-atoms",
     "controls whether in-article audio atoms are displayed",
-    owners = Seq(Owner.withGithub("JustinPinner")),
+    owners = Seq(Owner.withName("journalism team")),
     safeState = On,
     sellByDate = never,
     exposeClientSide = false
