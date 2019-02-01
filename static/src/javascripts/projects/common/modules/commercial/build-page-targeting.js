@@ -1,6 +1,6 @@
 // @flow strict
 import config from 'lib/config';
-import { getCookie, removeCookie } from 'lib/cookies';
+import { getCookie } from 'lib/cookies';
 import { getReferrer as detectGetReferrer, getBreakpoint } from 'lib/detect';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
 import { local } from 'lib/storage';
