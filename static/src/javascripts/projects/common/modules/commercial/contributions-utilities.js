@@ -168,10 +168,11 @@ const registerIframeListener = (iframeId: string) => {
 
 const addServerSideRenderingTestParameterToLink = (rawUrl: string): string => {
     const serverSideRenderingField = 'ssr';
+    const switchIsOn = config.get('switches.contributionsServerSideRenderingSwitch', false);
     const randomNumber = Math.random();
     if (
         randomNumber === undefined ||
-        config.get('switches.contributionsServerSideRenderingSwitch', false)
+        !switchIsOn
     ) {
         return rawUrl;
     }

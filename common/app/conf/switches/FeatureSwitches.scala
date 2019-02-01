@@ -521,7 +521,7 @@ trait FeatureSwitches {
   val ContributionsServerSideRenderingSwitch = Switch(
     SwitchGroup.Feature,
     "contributions-server-side-rendering-switch",
-    "If switched on, half of links to supoport.theguardian.com/contribute will have ?ssr=on ",
+    "If switched on, half of links to support.theguardian.com/contribute will have ssr=on and half will have ssr=off added to the query string",
     owners = Seq(Owner.withName("jranks123")),
     safeState = Off,
     sellByDate = never,
