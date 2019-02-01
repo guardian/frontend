@@ -9,7 +9,7 @@ const minArticleHeight: number = 1300;
 
 const calculateAllowedAdSlots = (availableSpace: number): string => {
     if (availableSpace > 600) {
-        return '1,1|2,2|300,250|300,274|300,600|fluid|160,600';
+        return '1,1|2,2|160,600|300,250|300,274|300,600|fluid';
     } else if (availableSpace > 274) {
         return '1,1|2,2|300,250|300,274';
     } else if (availableSpace > 250) {

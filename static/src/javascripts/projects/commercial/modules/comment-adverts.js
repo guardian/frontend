@@ -17,7 +17,7 @@ import type bonzo from 'bonzo';
 const createCommentSlots = (
     canBeDmpu: boolean
 ): Array<HTMLDivElement | HTMLSpanElement> => {
-    const sizes = canBeDmpu ? { desktop: [adSizes.halfPage] } : {};
+    const sizes = canBeDmpu ? { desktop: [adSizes.halfPage, adSizes.skyscraper] } : {};
     const adSlots = createSlots('comments', { sizes });
 
     adSlots.forEach(adSlot => {
@@ -58,16 +58,16 @@ const insertCommentAd = (
 };
 
 const containsDMPU = (ad: Advert): boolean =>
-    ad.sizes.desktop.some(el => el[0] === 300 && el[1] === 600);
+    ad.sizes.desktop.some((el => el[0] === 300 && el[1] === 600) || (el => el[0] === 160 && el[1] === 600));
 
 const maybeUpgradeSlot = (ad: Advert, $adSlot: bonzo): Advert => {
     if (!containsDMPU(ad)) {
-        ad.sizes.desktop.push([300, 600]);
+        ad.sizes.desktop.push([300, 600], [160, 600]);
         ad.slot.defineSizeMapping([[[0, 0], ad.sizes.desktop]]);
         fastdom.write(() => {
             $adSlot[0].setAttribute(
                 'data-desktop',
-                '1,1|2,2|300,250|300,274|fluid|300,600'
+                '1,1|2,2|300,250|300,274|fluid|300,600|160,600'
             );
         });
     }

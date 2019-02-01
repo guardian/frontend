@@ -25,7 +25,7 @@ const filterByAdvertId = (
 const getMostPopularSizes = memoize((isArticle: boolean) => {
     // Only works for articles for now.
     if (isArticle && config.get('switches.extendedMostPopular')) {
-        return [[300, 600], [300, 250]];
+        return [[160,600], [300, 600], [300, 250]];
     }
     return [[300, 250]];
 });
@@ -40,7 +40,7 @@ const getSlots = (contentType: string): Array<PrebidSlot> => {
         },
         {
             key: 'right',
-            sizes: [[300, 600], [300, 250]],
+            sizes: [[160,600], [300, 600], [300, 250]],
         },
         {
             key: 'inline1',
@@ -55,11 +55,11 @@ const getSlots = (contentType: string): Array<PrebidSlot> => {
         },
         {
             key: 'inline',
-            sizes: isArticle ? [[300, 600], [300, 250]] : [[300, 250]],
+            sizes: isArticle ? [[160,600], [300, 600], [300, 250]] : [[300, 250]],
         },
         {
             key: 'comments',
-            sizes: [[300, 250], [300, 600]],
+            sizes: [[160,600], [300, 250], [300, 600]],
         },
     ];
 

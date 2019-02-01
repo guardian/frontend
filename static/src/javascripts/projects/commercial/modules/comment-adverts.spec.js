@@ -97,7 +97,7 @@ describe('createCommentSlots', () => {
             '1,1|2,2|300,250|300,274|fluid'
         );
         expect(commentDmpu.getAttribute('data-desktop')).toBe(
-            '1,1|2,2|300,250|620,1|620,350|300,274|fluid|300,600'
+            '1,1|2,2|300,250|620,1|620,350|300,274|fluid|300,600|160,600'
         );
         expect(commentDmpu.getAttribute('data-mobile')).toBe(
             '1,1|2,2|300,250|300,274|fluid'
@@ -132,19 +132,19 @@ describe('maybeUpgradeSlot', () => {
         expect(advert.sizes.desktop).toEqual([[300, 250]]);
 
         maybeUpgradeSlot(advert, $('.js-discussion__ad-slot'));
-        expect(advert.sizes.desktop).toEqual([[300, 250], [300, 600]]);
+        expect(advert.sizes.desktop).toEqual([[300, 250], [300, 600], [160, 600]]);
         expect(advert.slot.defineSizeMapping).toHaveBeenCalledTimes(1);
     });
 
     it('should not alter the slot if the slot is already a DMPU', () => {
         const advert: any = {
-            sizes: { desktop: [[300, 250], [300, 600]] },
+            sizes: { desktop: [[160, 600], [300, 250], [300, 600]] },
             slot: { defineSizeMapping: jest.fn() },
         };
-        expect(advert.sizes.desktop).toEqual([[300, 250], [300, 600]]);
+        expect(advert.sizes.desktop).toEqual([[160, 600], [300, 250], [300, 600]]);
 
         maybeUpgradeSlot(advert, $('.js-discussion__ad-slot'));
-        expect(advert.sizes.desktop).toEqual([[300, 250], [300, 600]]);
+        expect(advert.sizes.desktop).toEqual([[160, 600], [300, 250], [300, 600]]);
         expect(advert.slot.defineSizeMapping).toHaveBeenCalledTimes(0);
     });
 });
@@ -240,7 +240,7 @@ describe('initCommentAdverts', () => {
                 ): any);
                 expect(addSlot).toHaveBeenCalledTimes(1);
                 expect(adSlot.getAttribute('data-desktop')).toBe(
-                    '1,1|2,2|300,250|620,1|620,350|300,274|fluid|300,600'
+                    '1,1|2,2|300,250|620,1|620,350|300,274|fluid|300,600|160,600'
                 );
                 done();
             });
@@ -258,7 +258,7 @@ describe('initCommentAdverts', () => {
                 ): any);
                 expect(addSlot).toHaveBeenCalledTimes(1);
                 expect(adSlot.getAttribute('data-desktop')).toBe(
-                    '1,1|2,2|300,250|620,1|620,350|300,274|fluid|300,600'
+                    '1,1|2,2|300,250|620,1|620,350|300,274|fluid|300,600|160,600'
                 );
                 done();
             });
