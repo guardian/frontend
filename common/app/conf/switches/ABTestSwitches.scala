@@ -18,16 +18,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-support-server-side-rendering",
-    "Send half the audience to the server side rendered version of support",
-    owners = Seq(Owner.withGithub("katebee")),
-    safeState = On,
-    sellByDate = new LocalDate(2019, 9, 30),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-commercial-outbrain-newids",
     "Enable the outbrain new IDs (Jan 2019) AB Test",
     owners = Seq(Owner.withGithub("jeteve")),

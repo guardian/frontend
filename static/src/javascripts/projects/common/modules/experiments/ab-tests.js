@@ -14,10 +14,8 @@ import {
     AcquisitionsBannerGoogleDocTestThreeVariants,
     AcquisitionsBannerGoogleDocTestTwoVariants,
 } from 'common/modules/experiments/tests/acquisitions-banner-from-google-doc';
-import { supportServerSideRendering } from 'common/modules/experiments/tests/support-server-side-rendering';
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
-    supportServerSideRendering,
     commercialPrebidSafeframe,
     commercialAdVerification,
     commercialCmpCustomise,

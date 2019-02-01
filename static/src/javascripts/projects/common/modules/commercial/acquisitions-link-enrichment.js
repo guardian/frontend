@@ -1,5 +1,6 @@
 // @flow
 import { addReferrerData } from 'common/modules/commercial/acquisitions-ophan';
+import { addServerSideRenderingTestParameterToLink } from 'common/modules/commercial/contributions-utilities';
 import fastdom from 'lib/fastdom-promise';
 
 // Currently the only acquisition components on the site are
@@ -14,25 +15,6 @@ const isCurrentCampaign = (iframeSrc: string): boolean =>
     validIframeUrls.some(validIframeUrl =>
         iframeSrc.startsWith(validIframeUrl)
     );
-
-const addServerSideRenderingTestParameterToLink = (rawUrl: string): string => {
-    const serverSideRenderingField = 'ssr';
-    const randomNumber = Math.random();
-    if (randomNumber === undefined) {
-        return rawUrl;
-    }
-    const paramValue = randomNumber >= 0.5 ? 'on' : 'off';
-    let url;
-    try {
-        url = new URL(rawUrl);
-    } catch (e) {
-        return rawUrl;
-    }
-    if (paramValue) {
-        url.searchParams.set(serverSideRenderingField, paramValue);
-    }
-    return url.toString();
-};
 
 const addReferrerDataToAcquisitionLink = (rawUrl: string): string => {
     const acquisitionDataField = 'acquisitionData';
