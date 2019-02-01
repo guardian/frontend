@@ -8,31 +8,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-commercial-ad-mobile-web-increase",
-    "increase ads on mobile web",
-    owners = Seq(Owner.withGithub("frankie297")),
-    safeState = Off,
-    sellByDate = new LocalDate(2019, 1, 29),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-commercial-cmp-customise",
     "change the location and format of your CMP data",
     owners = Seq(Owner.withGithub("katebee")),
     safeState = Off,
     sellByDate = new LocalDate(2019, 9, 30),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-commercial-outbrain-newids",
-    "Enable the outbrain new IDs (Jan 2019) AB Test",
-    owners = Seq(Owner.withGithub("jeteve")),
-    safeState = Off,
-    sellByDate = new LocalDate(2019, 6, 3),
     exposeClientSide = true
   )
 

@@ -8,6 +8,7 @@ import { overwriteMvtCookie } from 'common/modules/analytics/mvt-cookie';
 import {
     getAynschronousTestsToRun,
     getSynchronousTestsToRun,
+    isInVariantSynchronous,
     runAndTrackAbTests,
 } from 'common/modules/experiments/ab';
 import {
@@ -267,6 +268,41 @@ describe('A/B', () => {
                         expectedTestsToRun
                     );
                 });
+        });
+    });
+
+    describe('isInVariantSynchronous', () => {
+        test('should respect the URL hash', () => {
+            window.location.hash = '#ab-DummyTest=variant';
+            expect(
+                isInVariantSynchronous(concurrentTests[0], 'variant')
+            ).toEqual(true);
+        });
+
+        test('should respect localStorage and MVT cookie', () => {
+            cfg.switches = {
+                abDummyTest: true,
+                abDummyTest2: true,
+            };
+            setParticipationsInLocalStorage({
+                DummyTest: { variant: 'variant' },
+            });
+
+            expect(
+                isInVariantSynchronous(concurrentTests[0], 'variant')
+            ).toEqual(true);
+
+            expect(
+                isInVariantSynchronous(concurrentTests[1], 'control')
+            ).toEqual(true);
+
+            expect(
+                isInVariantSynchronous(concurrentTests[2], 'variant')
+            ).toEqual(false);
+
+            expect(
+                isInVariantSynchronous(concurrentTests[1], 'variant')
+            ).toEqual(false);
         });
     });
 });

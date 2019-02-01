@@ -2,9 +2,10 @@ package implicits
 
 import football.model.FootballMatchTrail
 import model._
-import org.joda.time.LocalDate
+import org.joda.time.{DateTime, Days, Hours, LocalDate}
 import pa._
 import views.MatchStatus
+
 import scala.language.implicitConversions
 
 trait Football extends Collections {
@@ -62,7 +63,7 @@ trait Football extends Collections {
 
     lazy val hasStarted = m.isLive || m.isResult
 
-    val smartUrl: String = MatchUrl.smartUrl(m)
+    val smartUrl: Option[String] = MatchUrl.smartUrl(m)
 
     def hasTeam(teamId: String): Boolean = m.homeTeam.id == teamId || m.awayTeam.id == teamId
 
@@ -111,5 +112,10 @@ trait Football extends Collections {
   def groupTag(competitionId: String, round: Round): Option[String] = roundLinks.get(competitionId).flatMap(_(round))
 }
 
-object Football extends Football
+object Football extends Football {
+
+  def hoursTillMatch(theMatch: FootballMatch): Int =
+    Hours.hoursBetween(DateTime.now, theMatch.date).getHours
+
+}
 

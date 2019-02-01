@@ -39,20 +39,20 @@ object DropdownMenus {
       label = "Emails & marketing"
     ),
     DropdownMenuItem(
-      href = Some(s"${Configuration.id.url}/membership/edit"),
+      href = Some(s"${Configuration.id.mmaUrl}/membership"),
       linkName = Some("membership"),
       label = "Membership",
       divider = true,
     ),
     DropdownMenuItem(
-      href = Some(s"${Configuration.id.url}/contribution/recurring/edit"),
+      href = Some(s"${Configuration.id.mmaUrl}/contributions"),
       linkName = Some("contributions"),
       label = "Contributions",
     ),
     DropdownMenuItem(
-      href = Some(s"${Configuration.id.url}/digitalpack/edit"),
+      href = Some(s"${Configuration.id.mmaUrl}/subscriptions"),
       linkName = Some("subscriptions"),
-      label = "Digital Pack",
+      label = "Subscriptions",
     ),
     DropdownMenuItem(
       href = Some(s"${Configuration.id.url}/signout"),
