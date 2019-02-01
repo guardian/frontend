@@ -517,11 +517,11 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
-  // Simple & Coherent
-  val ServerSideRenderingSwitch = Switch(
+  // Contributions
+  val ContributionsServerSideRenderingSwitch = Switch(
     SwitchGroup.Feature,
-    "server-side-rendering-switch",
-    "If switched on, half of links to supoport.theguardian.co/<country code>/contributions will have ?ssr=on ",
+    "contributions-server-side-rendering-switch",
+    "If switched on, half of links to supoport.theguardian.com/contribute will have ?ssr=on ",
     owners = Seq(Owner.withName("simple.and.coherent")),
     safeState = Off,
     sellByDate = never,

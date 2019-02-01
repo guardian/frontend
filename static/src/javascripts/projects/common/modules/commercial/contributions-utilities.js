@@ -171,7 +171,7 @@ const addServerSideRenderingTestParameterToLink = (rawUrl: string): string => {
     const randomNumber = Math.random();
     if (
         randomNumber === undefined ||
-        config.get('switches.serverSideRenderingSwitch') === false
+        config.get('switches.contributionsServerSideRenderingSwitch') === false
     ) {
         return rawUrl;
     }
