@@ -1,5 +1,6 @@
 // @flow
 import { addReferrerData } from 'common/modules/commercial/acquisitions-ophan';
+import { addServerSideRenderingTestParameterToLink } from 'common/modules/commercial/contributions-utilities';
 import fastdom from 'lib/fastdom-promise';
 
 // Currently the only acquisition components on the site are
@@ -60,10 +61,15 @@ const addReferrerDataToAcquisitionLinksOnPage = (): void => {
         fastdom.read(() => el.getAttribute('href')).then(link => {
             if (link) {
                 fastdom.write(() => {
-                    el.setAttribute(
-                        'href',
-                        addReferrerDataToAcquisitionLink(link)
+                    let linkWithAcquisitionData = addReferrerDataToAcquisitionLink(
+                        link
                     );
+                    if (link.contains('support.theguardian.com/contribute')) {
+                        linkWithAcquisitionData = addServerSideRenderingTestParameterToLink(
+                            linkWithAcquisitionData
+                        );
+                    }
+                    el.setAttribute('href', linkWithAcquisitionData);
                 });
             }
         });
