@@ -522,7 +522,7 @@ trait FeatureSwitches {
     SwitchGroup.Feature,
     "contributions-server-side-rendering-switch",
     "If switched on, half of links to supoport.theguardian.com/contribute will have ?ssr=on ",
-    owners = Seq(Owner.withName("simple.and.coherent")),
+    owners = Seq(Owner.withName("jranks123")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true
