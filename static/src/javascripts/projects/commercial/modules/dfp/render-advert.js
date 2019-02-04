@@ -101,7 +101,7 @@ fastdom.read(() => {
     if (advert.node.classList.contains('ad-slot--comments')) {
         stickyCommentsMpu(advert.node);
     }
-    return fastdom.write(() => advert.updateExtraSlotClasses());
+    return fastdom.write(() => advert.updateExtraSlotClasses('ad-slot--sky'));
 });
 
 sizeCallbacks[adSizes.video] = (_, advert) =>
