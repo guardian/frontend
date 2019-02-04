@@ -47,8 +47,15 @@ object AMPPicker {
     logger.withRequestHeaders(request).results(msg, results, page)
   }
 
+  private[this] val sectionsWhitelist: Set[String] = Set(
 
-  private[this] val whitelist = Set(
+  )
+
+  private[this] val tagsWhitelist: Set[String] = Set(
+
+  )
+
+  private[this] val pageWhitelist: Set[String] = Set(
     "world/2018/oct/14/british-man-shot-dead-by-hunter-in-france",
     "politics/2018/oct/14/brexit-dominic-raab-rushes-to-brussels-before-eu-crunch-talks",
     "politics/2018/oct/14/eu-leaders-line-up-no-deal-emergency-brexit-summit-for-november",
@@ -102,9 +109,13 @@ object AMPPicker {
 
   def getTier(page: PageWithStoryPackage)(implicit request: RequestHeader): RenderType = {
 
+    val isWhitelisted =
+      pageWhitelist(page.metadata.id) ||
+      page.metadata.section.exists((s) => sectionsWhitelist(s.value)) ||
+      page.item.tags.tags.exists((s)=>tagsWhitelist(s.id))
+
     val features = ampFeatureWhitelist(page, request)
     val isSupported = features.forall({ case (test, isMet) => isMet})
-    val isWhitelisted = whitelist(page.metadata.id)
     val isEnabled = conf.switches.Switches.DotcomRenderingAMP.isSwitchedOn
 
     val tier = if ((isSupported && isEnabled && isWhitelisted) || request.isGuui) RemoteRenderAMP else LocalRender
