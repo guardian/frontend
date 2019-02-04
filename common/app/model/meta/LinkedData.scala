@@ -17,12 +17,24 @@ object LinkedData {
   def toJson(list: LinkedData): String = write(list)
 }
 
+case class Logo(
+  `@type`: String = "ImageObject",
+  url: String = "https://uploads.guim.co.uk/2018/01/31/TheGuardian_AMP.png",
+  width: Int = 190,
+  height: Int = 60,
+)
+
+object Logo {
+  implicit val formats: OFormat[Logo] = Json.format[Logo]
+}
+
 case class Guardian(
   override val `@type`: String = "Organization",
   override val `@context`: String = "http://schema.org",
+  `@id`: String = "https://www.theguardian.com#publisher",
   name: String = "The Guardian",
   url: String = "http://www.theguardian.com/",
-  logo: String = Static("images/favicons/152x152.png"),
+  logo: Logo = Logo(),
   sameAs: List[String] = List(
     "https://www.facebook.com/theguardian",
     "https://twitter.com/guardian",
