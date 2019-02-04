@@ -1015,7 +1015,7 @@
         display: block;
         margin-left: 0;
     }
-    .content__labels:not(.content__labels--paidgallery),
+    .content__labels,
     .content__meta-container {
         @include deport-left;
         @include reduce-left;
@@ -1052,18 +1052,12 @@
         }
     }
     a.in-body-link--immersive {
-        color: $brightness-7;
-        border-color: $brightness-60;
-
-        &:hover,
-        &:focus {
-            border-color: $brightness-7;
-        }
+        color: $labs-main;
     }
     .inline-expand-image {
         fill: $brightness-100;
     }
-    &.content--article:not(.content--photo-essay),
+    &.content--article,
     &.content--interactive,
     &.tonal--tone-media {
         background-color: $brightness-86;
