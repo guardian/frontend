@@ -1,7 +1,7 @@
 // @flow
 import formInlineLabels from 'lib/formInlineLabels';
 import bean from 'bean';
-import fastdom from 'fastdom';
+import fastdom from 'lib/fastdom-promise';
 import $ from 'lib/$';
 import config from 'lib/config';
 import { getUserAgent } from 'lib/detect';
@@ -226,13 +226,14 @@ const setIframeHeight = (
     iFrameEl: HTMLIFrameElement,
     callback: () => void
 ): (() => void) => () => {
-    fastdom.write(() => {
-        iFrameEl.height = '';
-        iFrameEl.height = `${
-            iFrameEl.contentWindow.document.body.clientHeight
-        }px`;
-        callback();
-    });
+    fastdom
+        .read(() => iFrameEl.contentWindow.document.body.clientHeight)
+        .then(height =>
+            fastdom.write(() => {
+                iFrameEl.height = `${height}px`;
+            })
+        )
+        .then(callback());
 };
 
 const handleSubmit = (isSuccess: boolean, $form: bonzo): (() => void) => () => {
