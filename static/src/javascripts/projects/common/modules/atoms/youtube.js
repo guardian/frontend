@@ -37,6 +37,7 @@ interface AtomPlayer {
     youtubeId: string;
     youtubePlayer: YoutubePlayer;
     pendingTrackingCalls: Array<number>;
+    paused: boolean;
     overlay?: HTMLElement;
     endSlate?: Component;
     duration?: number;
@@ -127,7 +128,13 @@ const handlePlay = (atomId: string, player: AtomPlayer) => {
 
     killProgressTracker(atomId);
     setProgressTracker(atomId);
-    trackYoutubeEvent('play', trackingId);
+
+    // don't track play if resumed from a paused state
+    if (player.paused) {
+        player.paused = false;
+    } else {
+        trackYoutubeEvent('play', trackingId);
+    }
 
     const mainMedia = iframe.closest('.immersive-main-media');
 
@@ -189,6 +196,10 @@ const onPlayerPlaying = (atomId: string): void => {
 };
 
 const onPlayerPaused = (atomId: string): void => {
+    const player = players[atomId];
+
+    player.paused = true;
+
     killProgressTracker(atomId);
 };
 
@@ -316,6 +327,7 @@ const onPlayerReady = (
         youtubeId,
         duration,
         youtubePlayer,
+        paused: false,
         pendingTrackingCalls: [25, 50, 75],
     };
 
