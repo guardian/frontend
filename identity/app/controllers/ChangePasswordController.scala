@@ -107,7 +107,7 @@ class ChangePasswordController(
             val update = PasswordUpdate(form.oldPassword, form.newPassword1)
             val authResponse = api.updatePassword(update, request.user.auth, idRequest.trackingData)
 
-            signInService.getCookies(authResponse, true) map {
+            signInService.getCookies(authResponse, rememberMe = true) map {
               case Left(errors) =>
                 val formWithErrors = errors.foldLeft(boundForm){ (form, error) =>
                   form.withError(error.context.getOrElse(""), error.description)
