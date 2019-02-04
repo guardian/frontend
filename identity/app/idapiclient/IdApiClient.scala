@@ -94,7 +94,7 @@ class IdApiClient(
     val body = write(pwdUpdate)
     val headers = buildHeaders(Some(auth), extra = xForwardedForHeader(trackingData))
     val response = httpClient.POST(apiUrl(apiPath), Some(body), clientAuth.parameters, headers)
-    response map extract(jsonField("cookies"))
+    response map extract[CookiesResponse](jsonField("cookies"))
   }
 
   def userForToken( token : String ): Future[Response[User]] = {
