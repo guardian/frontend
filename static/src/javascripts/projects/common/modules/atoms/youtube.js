@@ -91,11 +91,6 @@ const recordPlayerProgress = (atomId: string): void => {
     }
 
     const youtubePlayer = player.player;
-
-    if (!player.duration) {
-        player.duration = youtubePlayer.getDuration();
-    }
-
     const currentTime = youtubePlayer.getCurrentTime();
 
     if (player.duration) {
@@ -133,8 +128,6 @@ const setProgressTracker = (atomId: string): IntervalID => {
 };
 
 const onPlayerPlaying = (atomId: string): void => {
-    // console.log('onPlayerPlaying --------->', atomId);
-
     const player = players[atomId];
 
     if (!player) {
@@ -148,13 +141,16 @@ const onPlayerPlaying = (atomId: string): void => {
         .then(resp => {
             const activeAtomId = resp.atomId;
 
-            console.log('activeAtomId --------->', activeAtomId);
+            // console.log('onPlayerPlaying --------->', atomId);
 
             if (!activeAtomId) {
                 return;
             }
 
             player.trackingId = activeAtomId;
+            player.duration = youtubePlayer.getDuration();
+
+            console.log('***', player.duration);
 
             killProgressTracker(atomId);
             setProgressTracker(atomId);
@@ -351,7 +347,7 @@ const onPlayerStateChange = (
     );
 
     if (stateKey) {
-        console.log('onPlayerStateChange --->', stateKey);
+        // console.log('onPlayerStateChange --->', stateKey);
         STATES[stateKey](atomId);
     }
 };
