@@ -16,7 +16,6 @@ artifacts.zip
 .node-version
 .sbt
 .sbt.*
-package-lock.json
 
 log
 logs
