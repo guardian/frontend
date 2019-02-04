@@ -197,8 +197,13 @@
     }
 }
 
-.content__series-label--photo-essay .content__label__link {
-    color: #ffffff;
+//changes the style of the list item when it comes directly after an immersive or showcase element.
+//Pulls the list item into the leftColumn on wide.
+.element--immersive + ul:not(.submeta__links):not(.social--bottom):not(.syndication--bottom),
+.element--showcase + ul:not(.submeta__links):not(.social--bottom):not(.syndication--bottom) {
+    width: 140px;
+    margin-left: -170px;
+    float: left;
 }
 
 .content__section-label--advertisement {
