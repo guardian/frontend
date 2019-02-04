@@ -9,7 +9,7 @@ import {
     getUserVariantParams as getUserVariantParams_,
 } from 'common/modules/commercial/membership-engagement-banner-parameters';
 import { membershipEngagementBanner } from 'common/modules/commercial/membership-engagement-banner';
-import { shouldHideReaderRevenue } from 'common/modules/commercial/contributions-utilities';
+import { pageShouldHideReaderRevenue } from 'common/modules/commercial/contributions-utilities';
 
 const defaultEngagementBannerParams: any = defaultEngagementBannerParams_;
 const getUserVariantParams: any = getUserVariantParams_;
@@ -106,7 +106,7 @@ jest.mock('lib/config', () => ({
     get: jest.fn(() => true),
 }));
 jest.mock('common/modules/commercial/contributions-utilities', () => ({
-    shouldHideReaderRevenue: jest.fn(() => false),
+    pageShouldHideReaderRevenue: jest.fn(() => false),
     getReaderRevenueRegion: jest.fn(() => 'united-kingdom'),
 }));
 jest.mock('common/modules/commercial/user-features', () => ({
@@ -124,7 +124,7 @@ const fakeIsBlocked: any = require('common/modules/commercial/membership-engagem
     .isBlocked;
 const fakeGet: any = require('lib/storage').local.get;
 const fakeShouldHideReaderRevenue: any = require('common/modules/commercial/contributions-utilities')
-    .shouldHideReaderRevenue;
+    .pageShouldHideReaderRevenue;
 
 const fetchJsonMock: JestMockFn<*, *> = (fetchJson: any);
 const fakeUserPrefs: JestMockFn<*, *> = (userPrefs.get: any);
@@ -178,7 +178,7 @@ describe('Membership engagement banner', () => {
             });
         });
 
-        it('should return false if shouldHideReaderRevenue true', () => {
+        it('should return false if pageShouldHideReaderRevenue true', () => {
             fakeShouldHideReaderRevenue.mockReturnValueOnce(true);
 
             return membershipEngagementBanner.canShow().then(canShow => {
@@ -267,7 +267,7 @@ describe('Membership engagement banner', () => {
 
     describe('If user already member', () => {
         it('should not show any messages even to engaged readers', () => {
-            (shouldHideReaderRevenue: any).mockImplementationOnce(() => true);
+            (pageShouldHideReaderRevenue: any).mockImplementationOnce(() => true);
 
             return membershipEngagementBanner.canShow().then(canShow => {
                 expect(canShow).toBe(false);

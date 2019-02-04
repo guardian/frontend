@@ -12,7 +12,7 @@ import {
 import { isBlocked } from 'common/modules/commercial/membership-engagement-banner-block';
 import {
     type ReaderRevenueRegion,
-    shouldHideReaderRevenue,
+    pageShouldHideReaderRevenue,
     getReaderRevenueRegion,
 } from 'common/modules/commercial/contributions-utilities';
 import { userIsSupporter } from 'common/modules/commercial/user-features';
@@ -261,7 +261,7 @@ const canShow = (): Promise<boolean> => {
 
     if (
         hasSeenEnoughArticles &&
-        !shouldHideReaderRevenue &&
+        !pageShouldHideReaderRevenue &&
         !userIsSupporter() &&
         userVariantCanShow()
     ) {

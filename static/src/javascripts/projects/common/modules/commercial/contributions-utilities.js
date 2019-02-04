@@ -120,7 +120,7 @@ const isCompatibleWithEpic = (page: Object): boolean =>
     !page.isMinuteArticle &&
     isArticleWorthAnEpicImpression(page, defaultExclusionRules);
 
-const shouldHideReaderRevenue = () =>
+const pageShouldHideReaderRevenue = () =>
     config.get('page.shouldHideReaderRevenue');
 
 const shouldShowEpic = (test: EpicABTest): boolean => {
@@ -138,7 +138,7 @@ const shouldShowEpic = (test: EpicABTest): boolean => {
         : !userIsSupporter();
 
     return (
-        !shouldHideReaderRevenue &&
+        !pageShouldHideReaderRevenue &&
         onCompatiblePage &&
         isCompatibleUser &&
         inCompatibleLocation &&
@@ -648,7 +648,7 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
         });
 
 export {
-    shouldHideReaderRevenue,
+    pageShouldHideReaderRevenue,
     shouldShowEpic,
     makeABTest,
     defaultButtonTemplate,
