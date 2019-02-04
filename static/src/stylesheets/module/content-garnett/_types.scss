@@ -14,7 +14,7 @@ $quote-mark: 35px;
 .content--type-feature,
 .content--type-recipe,
 .content--type-guardianview,
-.content--type-immersive:not(.content--minute-article),
+.content--type-immersive:not(.content--minute-article):not(.paid-content),
 .content--type-interview,
 .content--type-live,
 .content--type-matchreport,
@@ -315,7 +315,7 @@ $quote-mark: 35px;
         }
     }
 
-    .content__standfirst:not(.content__standfirst--advertisement) {
+    .content__standfirst {
         @include fs-bodyCopy(2);
         font-weight: 700;
         font-size: 17px;
