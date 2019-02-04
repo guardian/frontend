@@ -2,6 +2,7 @@
 import fastdom from 'lib/fastdom-promise';
 import bonzo from 'bonzo';
 import fetchJson from 'lib/fetch-json';
+import reportError from 'lib/report-error';
 import { initYoutubePlayer } from 'common/modules/atoms/youtube-player';
 import {
     trackYoutubeEvent,
@@ -110,16 +111,12 @@ const recordPlayerProgress = (atomId: string): void => {
 };
 
 const killProgressTracker = (atomId: string): void => {
-    // console.log('killProgressTracker --------->', atomId, players);
-
     if (players[atomId].progressTracker) {
         clearInterval(players[atomId].progressTracker);
     }
 };
 
 const setProgressTracker = (atomId: string): IntervalID => {
-    // console.log('setProgressTracker --------->', atomId);
-
     players[atomId].progressTracker = setInterval(
         recordPlayerProgress.bind(null, atomId),
         1000
@@ -141,16 +138,12 @@ const onPlayerPlaying = (atomId: string): void => {
         .then(resp => {
             const activeAtomId = resp.atomId;
 
-            // console.log('onPlayerPlaying --------->', atomId);
-
             if (!activeAtomId) {
                 return;
             }
 
             player.trackingId = activeAtomId;
             player.duration = youtubePlayer.getDuration();
-
-            console.log('***', player.duration);
 
             killProgressTracker(atomId);
             setProgressTracker(atomId);
@@ -173,19 +166,21 @@ const onPlayerPlaying = (atomId: string): void => {
             }
         })
         .catch(err => {
-            // console.log('err --------->', err);
+            reportError(
+                Error(
+                    `Failed to get atom ID for youtube ID ${youtubeId}. ${err}`
+                ),
+                { feature: 'youtube' },
+                false
+            );
         });
 };
 
 const onPlayerPaused = (atomId: string): void => {
-    // console.log('onPlayerPaused --------->', atomId);
-
     killProgressTracker(atomId);
 };
 
 const onPlayerEnded = (atomId: string): void => {
-    // console.log('onPlayerEnded --------->', atomId);
-
     const player = players[atomId];
 
     killProgressTracker(atomId);
@@ -289,8 +284,6 @@ const onPlayerReady = (
     overlay: ?HTMLElement,
     event: YoutubePlayerEvent
 ): void => {
-    // console.log('onPlayerReady --------->', atomId);
-
     const iframe = ((document.getElementById(
         iframeId
     ): any): HTMLIFrameElement);
@@ -347,7 +340,6 @@ const onPlayerStateChange = (
     );
 
     if (stateKey) {
-        // console.log('onPlayerStateChange --->', stateKey);
         STATES[stateKey](atomId);
     }
 };
