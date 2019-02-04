@@ -315,7 +315,7 @@ $quote-mark: 35px;
         }
     }
 
-    .content__standfirst {
+    .content__standfirst:not(.content__standfirst--advertisement) {
         @include fs-bodyCopy(2);
         font-weight: 700;
         font-size: 17px;
@@ -1285,16 +1285,18 @@ $quote-mark: 35px;
         @include f-textSans;
     }
 
-    .content__meta-container {
-        border-top: 1px solid $brightness-60;
-        padding-top: $gs-baseline / 4;
-    }
-
     .content__article-body::before {
         background: $brightness-46;
     }
 
     .element .caption {
         background: transparent;
+    }
+}
+
+.paid-content:not(.content--photo-essay) {
+    .content__meta-container {
+        border-top: 1px solid $brightness-60;
+        padding-top: $gs-baseline / 4;
     }
 }
