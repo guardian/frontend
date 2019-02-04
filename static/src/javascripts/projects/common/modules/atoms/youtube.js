@@ -34,10 +34,11 @@ declare class YoutubePlayerEvent {
 interface AtomPlayer {
     iframe: HTMLIFrameElement;
     trackingId: string;
-    player: YoutubePlayer;
+    youtubeId: string;
+    youtubePlayer: YoutubePlayer;
     pendingTrackingCalls: Array<number>;
     overlay?: HTMLElement;
-    endSlate?: HTMLElement;
+    endSlate?: Component;
     duration?: number;
     progressTracker?: ?IntervalID;
 }
@@ -85,26 +86,23 @@ const recordPlayerProgress = (atomId: string): void => {
         return;
     }
 
-    const pendingTrackingCalls = player.pendingTrackingCalls;
+    const { pendingTrackingCalls } = player;
 
     if (!pendingTrackingCalls.length) {
         return;
     }
 
-    const youtubePlayer = player.player;
+    const { youtubePlayer, duration, trackingId } = player;
     const currentTime = youtubePlayer.getCurrentTime();
 
-    if (player.duration) {
-        const percentPlayed = Math.round((currentTime / player.duration) * 100);
+    if (duration) {
+        const percentPlayed = Math.round((currentTime / duration) * 100);
 
         if (
             pendingTrackingCalls.length &&
             percentPlayed >= pendingTrackingCalls[0]
         ) {
-            trackYoutubeEvent(
-                pendingTrackingCalls[0].toString(),
-                player.trackingId
-            );
+            trackYoutubeEvent(pendingTrackingCalls[0].toString(), trackingId);
             pendingTrackingCalls.shift();
         }
     }
@@ -124,6 +122,28 @@ const setProgressTracker = (atomId: string): IntervalID => {
     return players[atomId].progressTracker;
 };
 
+const handlePlay = (atomId: string, player: AtomPlayer) => {
+    const { trackingId, iframe, overlay, endSlate } = player;
+
+    killProgressTracker(atomId);
+    setProgressTracker(atomId);
+    trackYoutubeEvent('play', trackingId);
+
+    const mainMedia = iframe.closest('.immersive-main-media');
+
+    if (mainMedia) {
+        mainMedia.classList.add('atom-playing');
+    }
+
+    if (overlay && endSlate) {
+        const parentElem = overlay.parentElement;
+
+        if (parentElem) {
+            endSlate.fetch(parentElem, 'html');
+        }
+    }
+};
+
 const onPlayerPlaying = (atomId: string): void => {
     const player = players[atomId];
 
@@ -131,49 +151,41 @@ const onPlayerPlaying = (atomId: string): void => {
         return;
     }
 
-    const youtubePlayer = players[atomId].player;
-    const youtubeId = youtubePlayer.getVideoData().video_id;
+    const { youtubePlayer, youtubeId } = players[atomId];
 
-    fetchJson(`/atom/youtube/${youtubeId}.json`)
-        .then(resp => {
-            const activeAtomId = resp.atomId;
+    /**
+     * Get the youtube video id from the video currently playing.
+     * We want to compare with the youtube ID in memory. If they differ
+     * a related video has begun playing, so we need to get the atom ID
+     * for tracking.
+     */
+    const latestYoutubeId = youtubePlayer.getVideoData().video_id;
 
-            if (!activeAtomId) {
-                return;
-            }
-
-            player.trackingId = activeAtomId;
-            player.duration = youtubePlayer.getDuration();
-
-            killProgressTracker(atomId);
-            setProgressTracker(atomId);
-            trackYoutubeEvent('play', player.trackingId);
-
-            const mainMedia =
-                (player.iframe &&
-                    player.iframe.closest('.immersive-main-media')) ||
-                null;
-            const parentNode = player.overlay && player.overlay.parentNode;
-            const endSlateContainer =
-                parentNode && parentNode.querySelector('.end-slate-container');
-
-            if (mainMedia) {
-                mainMedia.classList.add('atom-playing');
-            }
-
-            if (player.endSlate && !endSlateContainer) {
-                player.endSlate.fetch(parentNode, 'html');
-            }
-        })
-        .catch(err => {
-            reportError(
-                Error(
-                    `Failed to get atom ID for youtube ID ${youtubeId}. ${err}`
-                ),
-                { feature: 'youtube' },
-                false
-            );
-        });
+    if (youtubeId !== latestYoutubeId) {
+        fetchJson(`/atom/youtube/${latestYoutubeId}.json`)
+            .then(resp => {
+                const activeAtomId = resp.atomId;
+                if (!activeAtomId) {
+                    return;
+                }
+                // Update trackingId, youtubeId and duration for new youtube video.
+                player.trackingId = activeAtomId;
+                player.youtubeId = latestYoutubeId;
+                player.duration = youtubePlayer.getDuration();
+                handlePlay(atomId, player);
+            })
+            .catch(err => {
+                reportError(
+                    Error(
+                        `Failed to get atom ID for youtube ID ${youtubeId}. ${err}`
+                    ),
+                    { feature: 'youtube' },
+                    false
+                );
+            });
+    } else {
+        handlePlay(atomId, player);
+    }
 };
 
 const onPlayerPaused = (atomId: string): void => {
@@ -294,10 +306,16 @@ const onPlayerReady = (
 
     iframes.push(iframe);
 
+    const youtubePlayer = event.target;
+    const youtubeId = youtubePlayer.getVideoData().video_id;
+    const duration = youtubePlayer.getDuration();
+
     players[atomId] = {
         iframe,
         trackingId,
-        player: event.target,
+        youtubeId,
+        duration,
+        youtubePlayer,
         pendingTrackingCalls: [25, 50, 75],
     };
 
@@ -401,7 +419,7 @@ const checkElemForVideo = (elem: ?HTMLElement): void => {
     if (!elem) return;
 
     fastdom.read(() => {
-        $('.youtube-media-atom:not(.no-player)', elem).each((el, index) => {
+        $('.youtube-media-atom:not(.no-player)', elem).each(el => {
             const overlay = el.querySelector('.youtube-media-atom__overlay');
 
             if (config.get('page.isFront')) {
@@ -426,6 +444,6 @@ export const checkElemsForVideos = (elems: ?Array<HTMLElement>): void => {
 export const onVideoContainerNavigation = (atomId: string): void => {
     const player = players[atomId];
     if (player) {
-        player.player.pauseVideo();
+        player.youtubePlayer.pauseVideo();
     }
 };
