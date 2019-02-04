@@ -123,7 +123,7 @@ const setProgressTracker = (atomId: string): IntervalID => {
     return players[atomId].progressTracker;
 };
 
-const handlePlay = (atomId: string, player: AtomPlayer) => {
+const handlePlay = (atomId: string, player: AtomPlayer): void => {
     const { trackingId, iframe, overlay, endSlate } = player;
 
     killProgressTracker(atomId);
@@ -229,7 +229,7 @@ const STATES = {
 const shouldAutoplay = (atomId: string): boolean => {
     const isAutoplayBlockingPlatform = () => isIOS() || isAndroid();
 
-    const isInternalReferrer = () => {
+    const isInternalReferrer = (): boolean => {
         if (config.get('page.isDev')) {
             return document.referrer.indexOf(window.location.origin) === 0;
         }
@@ -237,17 +237,17 @@ const shouldAutoplay = (atomId: string): boolean => {
         return document.referrer.indexOf(config.get('page.host')) === 0;
     };
 
-    const isMainVideo = () =>
+    const isMainVideo = (): boolean =>
         (players[atomId].iframe &&
-            players[atomId].iframe.closest(
+            !!players[atomId].iframe.closest(
                 'figure[data-component="main video"]'
             )) ||
         false;
 
-    const flashingElementsAllowed = () =>
+    const flashingElementsAllowed = (): boolean =>
         accessibilityIsOn('flashing-elements');
 
-    const isVideoArticle = () =>
+    const isVideoArticle = (): boolean =>
         config.get('page.contentType', '').toLowerCase() === 'video';
 
     const isFront = () => config.get('page.isFront');
@@ -374,11 +374,10 @@ const onPlayerStateChange = (
     }
 };
 
-const getUniqueAtomId = (atomId: string): string => {
-    return `${atomId}/${Math.random()
+const getUniqueAtomId = (atomId: string): string =>
+    `${atomId}/${Math.random()
         .toString(36)
         .substr(2, 9)}`;
-};
 
 const initYoutubePlayerForElem = (el: ?HTMLElement): void => {
     fastdom.read(() => {

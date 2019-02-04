@@ -7,7 +7,6 @@ import {
     getAdConsentState,
     thirdPartyTrackingAdConsent,
 } from 'common/modules/commercial/ad-prefs.lib';
-import { showInMegaNav } from '../onward/history';
 
 const scriptSrc = 'https://www.youtube.com/iframe_api';
 const promise = new Promise(resolve => {
@@ -92,8 +91,14 @@ const setupPlayer = (
         getAdConsentState(thirdPartyTrackingAdConsent) !== false;
     const disableRelatedVideos = !config.get('switches.youtubeRelatedVideos');
     // relatedChannels needs to be an array, as per YouTube's IFrame Embed Config API
-    const relatedChannels =
-        !disableRelatedVideos && channelId ? [channelId] : [];
+    const relatedChannels = [];
+    /**
+     * There's an issue with relatedChannels where
+     * if we pass a populated array no related videos are
+     * shown. Therefore for the time being we will pass an
+     * empty array.
+     */
+    // const relatedChannels = !disableRelatedVideos && channelId ? [channelId] : [];
 
     return new window.YT.Player(eltId, {
         videoId,
@@ -105,17 +110,11 @@ const setupPlayer = (
             onError,
         },
         embedConfig: {
+            relatedChannels,
+            disableRelatedVideos,
             adsConfig: {
                 nonPersonalizedAd: !wantPersonalisedAds,
             },
-            /**
-             * There's an issue with relatedChannels where
-             * if we pass a populated array no related videos are
-             * shown. Therefore for the time being we will pass an
-             * empty array.
-             */
-            relatedChannels: [],
-            disableRelatedVideos,
         },
     });
 };
