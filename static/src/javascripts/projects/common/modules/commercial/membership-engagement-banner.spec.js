@@ -267,7 +267,9 @@ describe('Membership engagement banner', () => {
 
     describe('If user already member', () => {
         it('should not show any messages even to engaged readers', () => {
-            (pageShouldHideReaderRevenue: any).mockImplementationOnce(() => true);
+            (pageShouldHideReaderRevenue: any).mockImplementationOnce(
+                () => true
+            );
 
             return membershipEngagementBanner.canShow().then(canShow => {
                 expect(canShow).toBe(false);
