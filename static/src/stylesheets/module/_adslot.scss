@@ -34,19 +34,7 @@
 }
 
 .ad-slot--sky {
-    position: sticky;
-    top: 0;
-
-    // Sorry but no other choice :=(
-    .has-sticky .paidfor-band ~ .content__main & {
-        top: 46px;
-    }
-
-    &.is-sticky {
-        width: $mpu-skyscraper-width;
-    }
-
-    &.ad-slot--comments, &.ad-slot--right, &.ad-slot--mostpop {
+    &.ad-slot--comments, &.ad-slot--right {
         width: $mpu-skyscraper-width;
     }
 }
