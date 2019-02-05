@@ -29,7 +29,9 @@ export const acquisitionsEpicUsTickerTemplate = ({
                 </h2>
                 ${appendToLastElement(
                     paragraphs,
-                    ` <strong><span class="contributions__highlight">${highlightedText}</span></strong>`
+                    highlightedText
+                        ? ` <strong><span class="contributions__highlight">${highlightedText}</span></strong>`
+                        : ''
                 )
                     .map(paragraph => `<p>${paragraph}</p>`)
                     .join('')}

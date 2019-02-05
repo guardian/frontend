@@ -24,7 +24,7 @@ import { noop } from 'lib/noop';
 import { splitAndTrim } from 'lib/string-utils';
 import { epicButtonsTemplate } from 'common/modules/commercial/templates/acquisitions-epic-buttons';
 import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templates/acquisitions-epic-control';
-import { shouldSeeReaderRevenue as userShouldSeeReaderRevenue } from 'common/modules/commercial/user-features';
+import { userIsSupporter } from 'common/modules/commercial/user-features';
 import { supportContributeURL } from 'common/modules/commercial/support-utilities';
 import { awaitEpicButtonClicked } from 'common/modules/commercial/epic/epic-utils';
 import {
@@ -85,10 +85,12 @@ const controlTemplate: EpicTemplate = (
     acquisitionsEpicControlTemplate({
         copy,
         componentName: options.componentName,
-        buttonTemplate: options.buttonTemplate({
-            supportUrl: options.supportURL,
-            subscribeUrl: options.subscribeURL,
-        }),
+        buttonTemplate: options.buttonTemplate
+            ? options.buttonTemplate({
+                  supportUrl: options.supportURL,
+                  subscribeUrl: options.subscribeURL,
+              })
+            : undefined,
     });
 
 const doTagsMatch = (test: EpicABTest): boolean =>
@@ -118,11 +120,8 @@ const isCompatibleWithEpic = (page: Object): boolean =>
     !page.isMinuteArticle &&
     isArticleWorthAnEpicImpression(page, defaultExclusionRules);
 
-const shouldShowReaderRevenue = (
-    showToContributorsAndSupporters: boolean = false
-): boolean =>
-    (userShouldSeeReaderRevenue() || showToContributorsAndSupporters) &&
-    !config.get('page.shouldHideReaderRevenue');
+const pageShouldHideReaderRevenue = () =>
+    config.get('page.shouldHideReaderRevenue');
 
 const shouldShowEpic = (test: EpicABTest): boolean => {
     const onCompatiblePage = test.pageCheck(config.get('page'));
@@ -134,11 +133,15 @@ const shouldShowEpic = (test: EpicABTest): boolean => {
 
     const tagsMatch = doTagsMatch(test);
 
+    const isCompatibleUser = test.onlyShowToExistingSupporters
+        ? userIsSupporter()
+        : !userIsSupporter();
+
     return (
-        shouldShowReaderRevenue(test.showToContributorsAndSupporters) &&
+        !pageShouldHideReaderRevenue() &&
         onCompatiblePage &&
+        isCompatibleUser &&
         inCompatibleLocation &&
-        test.locationCheck(storedGeolocation) &&
         tagsMatch
     );
 };
@@ -186,8 +189,8 @@ const makeABTestVariant = (
         locations = [],
         tagIds = [],
         sections = [],
+        maxViews = parentTest.maxViews,
 
-        maxViews = defaultMaxViews,
         isUnlimited = false,
         campaignCode = createTestAndVariantId(
             parentTest.campaignPrefix,
@@ -215,7 +218,7 @@ const makeABTestVariant = (
             },
         }),
         template = controlTemplate,
-        buttonTemplate = options.buttonTemplate || defaultButtonTemplate,
+        buttonTemplate = options.buttonTemplate,
         blockEngagementBanner = false,
         engagementBannerParams = {},
         isOutbrainCompliant = false,
@@ -455,14 +458,14 @@ const makeABTest = ({
 
     // optional params
     // locations is a filter where empty is taken to mean 'all'
+    maxViews = defaultMaxViews,
     locations = [],
-    locationCheck = () => true,
     dataLinkNames = '',
     campaignPrefix = 'gdnwb_copts_memco',
     useLocalViewLog = false,
     overrideCanRun = false,
     useTargetingTool = false,
-    showToContributorsAndSupporters = false,
+    onlyShowToExistingSupporters = false,
     canRun = () => true,
     pageCheck = isCompatibleWithEpic,
 }: InitEpicABTest): EpicABTest => {
@@ -486,6 +489,7 @@ const makeABTest = ({
         viewEvent: makeEvent(id, 'view'),
 
         variants: [],
+        maxViews: maxViews || defaultMaxViews,
 
         id,
         start,
@@ -502,10 +506,9 @@ const makeABTest = ({
         campaignPrefix,
         useLocalViewLog,
         overrideCanRun,
-        showToContributorsAndSupporters,
+        onlyShowToExistingSupporters,
         pageCheck,
         locations,
-        locationCheck,
         useTargetingTool,
     };
 
@@ -570,6 +573,8 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
             return Object.keys(sheets)
                 .filter(testName => testName.endsWith('__ON'))
                 .map(name => {
+                    const isThankYou = name.includes('__thank_you');
+
                     const rows = sheets[name];
                     const testName = name.split('__ON')[0];
                     return makeABTest({
@@ -587,10 +592,27 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                         audience: 1,
                         audienceOffset: 0,
 
+                        // Special settings for the "thank you" epic
+                        ...(isThankYou
+                            ? {
+                                  onlyShowToExistingSupporters: true,
+                                  maxViews: {
+                                      days: 365, // Arbitrarily high number - reader should only see the thank-you for one 'cycle'.
+                                      count: 1,
+                                      minDaysBetweenViews: 0,
+                                  },
+                                  useLocalViewLog: true,
+                              }
+                            : {
+                                  maxViews: defaultMaxViews,
+                              }),
                         variants: rows.map(row => ({
                             id: row.name,
                             products: [],
                             options: {
+                                buttonTemplate: isThankYou
+                                    ? undefined
+                                    : defaultButtonTemplate,
                                 locations: splitAndTrim(row.locations, ','),
                                 tagIds: splitAndTrim(row.tagIds, ','),
                                 sections: splitAndTrim(row.sections, ','),
@@ -626,7 +648,7 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
         });
 
 export {
-    shouldShowReaderRevenue,
+    pageShouldHideReaderRevenue,
     shouldShowEpic,
     makeABTest,
     defaultButtonTemplate,

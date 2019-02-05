@@ -6,7 +6,7 @@ declare type AcquisitionsEpicTestimonialCopy = {
 declare type AcquisitionsEpicTemplateCopy = {
     heading?: string,
     paragraphs: Array<string>,
-    highlightedText: string,
+    highlightedText?: string,
     testimonial?: AcquisitionsEpicTestimonialCopy
 };
 

@@ -5,7 +5,6 @@ import { commercialCmpCustomise } from 'common/modules/experiments/tests/commerc
 import { askFourEarning } from 'common/modules/experiments/tests/contributions-epic-ask-four-earning';
 import { acquisitionsEpicAlwaysAskIfTagged } from 'common/modules/experiments/tests/acquisitions-epic-always-ask-if-tagged';
 import { acquisitionsEpicLiveblog } from 'common/modules/experiments/tests/acquisitions-epic-liveblog';
-import { acquisitionsEpicThankYou } from 'common/modules/experiments/tests/acquisitions-epic-thank-you';
 import {
     AcquisitionsBannerGoogleDocTestFiveVariants,
     AcquisitionsBannerGoogleDocTestFourVariants,
@@ -24,7 +23,6 @@ export const epicTests: $ReadOnlyArray<EpicABTest> = [
     askFourEarning,
     acquisitionsEpicAlwaysAskIfTagged,
     acquisitionsEpicLiveblog,
-    acquisitionsEpicThankYou,
 ];
 
 export const engagementBannerTests: $ReadOnlyArray<AcquisitionsABTest> = [

@@ -37,17 +37,23 @@ declare type AcquisitionsABTest = ABTest & {
     componentType: OphanComponentType,
 };
 
+declare type MaxViews = {
+    days: number,
+    count: number,
+    minDaysBetweenViews: number,
+};
+
 declare type EpicABTest = AcquisitionsABTest & {
     campaignPrefix: string,
     useLocalViewLog: boolean,
     overrideCanRun: boolean,
-    showToContributorsAndSupporters: boolean,
+    onlyShowToExistingSupporters: boolean,
     pageCheck: (page: Object) => boolean,
     locations: $ReadOnlyArray<string>,
-    locationCheck: (location: string) => boolean,
     useTargetingTool: boolean,
     insertEvent: string,
     viewEvent: string,
+    maxViews: MaxViews,
 };
 
 declare type InitEpicABTestVariant = {
@@ -77,14 +83,14 @@ declare type InitEpicABTest = {
     variants: $ReadOnlyArray<InitEpicABTestVariant>,
 
     // locations is a filter where empty is taken to mean 'all'
+    maxViews?: MaxViews,
     locations?: string[],
-    locationCheck?: () => boolean,
     dataLinkNames?: string,
     campaignPrefix?: string,
     useLocalViewLog?: boolean,
     overrideCanRun?: boolean,
     useTargetingTool?: boolean,
-    showToContributorsAndSupporters?: boolean,
+    onlyShowToExistingSupporters?: boolean,
     canRun?: (test: EpicABTest) => boolean,
     pageCheck?: (page: Object) => boolean,
 }
