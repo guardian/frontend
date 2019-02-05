@@ -274,11 +274,7 @@ const getEndSlate = (overlay: HTMLElement): ?Component => {
 
             return component;
         }
-
-        return undefined;
     }
-
-    return undefined;
 };
 
 const updateImmersiveButtonPos = (): void => {
@@ -345,7 +341,11 @@ const onPlayerReady = (
                 min: 'desktop',
             })
         ) {
-            players[atomId].endSlate = getEndSlate(overlay);
+            const endSlate = getEndSlate(overlay);
+
+            if (endSlate) {
+                players[atomId].endSlate = endSlate;
+            }
         }
     }
 
