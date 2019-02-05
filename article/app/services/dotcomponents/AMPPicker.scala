@@ -19,6 +19,10 @@ object AMPPageChecks extends Logging {
     !page.article.content.trail.isCommentable
   }
 
+  def isNotOpinion(page:PageWithStoryPackage): Boolean = ! page.item.tags.isComment
+
+  def isNotAReview(page:PageWithStoryPackage): Boolean = ! page.item.tags.isReview
+
   def hasOnlySupportedElements(page: PageWithStoryPackage): Boolean = {
     // See: https://github.com/guardian/dotcom-rendering/blob/master/packages/frontend/amp/components/lib/Elements.tsx
     def supported(block: BlockElement): Boolean = block match {
@@ -103,7 +107,9 @@ object AMPPicker {
     Map(
       ("isBasicArticle", AMPPageChecks.isBasicArticle(page)),
       ("hasOnlySupportedElements", AMPPageChecks.hasOnlySupportedElements(page)),
-      ("isDiscussionDisabled", AMPPageChecks.isNotCommentable(page))
+      ("isDiscussionDisabled", AMPPageChecks.isNotCommentable(page)),
+      ("isNotOpinionP", AMPPageChecks.isNotOpinion(page)),
+      ("isNotAReview", AMPPageChecks.isNotAReview(page))
     )
   }
 
