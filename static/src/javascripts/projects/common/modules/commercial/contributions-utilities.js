@@ -613,7 +613,7 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
 
 
 export const getEngagementBannerTestsFromGoogleDoc = (): Promise<
-    $ReadOnlyArray<EpicABTest>
+    $ReadOnlyArray<AcquisitionsABTest>
 > =>
     getGoogleDoc(bannerMultipleTestsGoogleDocUrl)
         .then(googleDocJson => {
@@ -628,9 +628,10 @@ export const getEngagementBannerTestsFromGoogleDoc = (): Promise<
                 .map(name => {
                     const rows = sheets[name];
                     const testName = name.split('__ON')[0];
-                    return makeABTest({
+                    return {
                         id: testName,
                         campaignId: testName,
+                        componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
 
                         start: '2018-01-01',
                         expiry: '2020-01-01',
@@ -643,9 +644,13 @@ export const getEngagementBannerTestsFromGoogleDoc = (): Promise<
                         audience: 1,
                         audienceOffset: 0,
 
+                        // TODO: do we need to refine this?
+                        canRun: () => true,
+
                         variants: rows.map(row => ({
                             id: row.name,
                             products: [],
+                            test: () => {},
 
                             engagementBannerParams: {
                                 messageText: row.messageText.trim(),
@@ -659,7 +664,7 @@ export const getEngagementBannerTestsFromGoogleDoc = (): Promise<
                             },
 
                         })),
-                    });
+                    };
                 });
         })
         .catch((err: Error) => {

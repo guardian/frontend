@@ -44,7 +44,7 @@ export const getAcquisitionsBannerParams = (
             firstRow &&
             firstRow.messageText &&
             firstRow.ctaText &&
-            firstRow.askAmount &&
+            // TODO: remove askAmount from the existing spreadsheet
             firstRow.buttonCaption &&
             firstRow.linkUrl
         )
@@ -63,7 +63,7 @@ export const getAcquisitionsBannerParams = (
         ctaText: `<span class="engagement-banner__highlight"> ${firstRow.ctaText.replace(
             /%%CURRENCY_SYMBOL%%/g,
             getLocalCurrencySymbol()
-        )}</span>`,
+        )}1</span>`,
         buttonCaption: firstRow.buttonCaption,
         linkUrl: firstRow.linkUrl,
         hasTicker: false,

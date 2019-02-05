@@ -189,15 +189,15 @@ const canShow = (): Promise<boolean> => {
         return Promise.resolve(false);
     }
 
-    const hasSeenEnoughArticles: boolean =
+    const userHasSeenEnoughArticles: boolean =
         getVisitCount() >= minArticlesBeforeShowingBanner;
-    const geolocation: string = geolocationGetSync();
-    const region: ReaderRevenueRegion = getReaderRevenueRegion(geolocation);
+    const userAlreadyGivesUsMoney = userIsSupporter();
+    const bannerIsBlockedForEditorialReasons = pageShouldHideReaderRevenue();
 
     if (
-        hasSeenEnoughArticles &&
-        !pageShouldHideReaderRevenue() &&
-        !userIsSupporter()
+        userHasSeenEnoughArticles &&
+        !userAlreadyGivesUsMoney &&
+        !bannerIsBlockedForEditorialReasons
     ) {
         const userLastClosedBannerAt = userPrefs.get(lastClosedAtKey);
 
@@ -208,7 +208,7 @@ const canShow = (): Promise<boolean> => {
 
         return hasBannerBeenRedeployedSinceClosed(
             userLastClosedBannerAt,
-            region
+            getReaderRevenueRegion(geolocationGetSync())
         );
     }
     return Promise.resolve(false);
