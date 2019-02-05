@@ -261,7 +261,7 @@ const canShow = (): Promise<boolean> => {
 
     if (
         hasSeenEnoughArticles &&
-        !pageShouldHideReaderRevenue &&
+        !pageShouldHideReaderRevenue() &&
         !userIsSupporter() &&
         userVariantCanShow()
     ) {
