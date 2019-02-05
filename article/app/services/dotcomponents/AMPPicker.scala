@@ -15,10 +15,6 @@ object AMPPageChecks extends Logging {
       !page.item.isPhotoEssay
   }
 
-  def isNotCommentable(page: PageWithStoryPackage): Boolean = {
-    !page.article.content.trail.isCommentable
-  }
-
   def isNotOpinion(page:PageWithStoryPackage): Boolean = ! page.item.tags.isComment
 
   def isNotAReview(page:PageWithStoryPackage): Boolean = ! page.item.tags.isReview
@@ -107,7 +103,6 @@ object AMPPicker {
     Map(
       ("isBasicArticle", AMPPageChecks.isBasicArticle(page)),
       ("hasOnlySupportedElements", AMPPageChecks.hasOnlySupportedElements(page)),
-      ("isDiscussionDisabled", AMPPageChecks.isNotCommentable(page)),
       ("isNotOpinionP", AMPPageChecks.isNotOpinion(page)),
       ("isNotAReview", AMPPageChecks.isNotAReview(page))
     )
