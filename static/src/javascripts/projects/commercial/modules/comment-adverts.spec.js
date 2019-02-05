@@ -132,7 +132,11 @@ describe('maybeUpgradeSlot', () => {
         expect(advert.sizes.desktop).toEqual([[300, 250]]);
 
         maybeUpgradeSlot(advert, $('.js-discussion__ad-slot'));
-        expect(advert.sizes.desktop).toEqual([[300, 250], [300, 600], [160, 600]]);
+        expect(advert.sizes.desktop).toEqual([
+            [300, 250],
+            [300, 600],
+            [160, 600],
+        ]);
         expect(advert.slot.defineSizeMapping).toHaveBeenCalledTimes(1);
     });
 
@@ -141,10 +145,18 @@ describe('maybeUpgradeSlot', () => {
             sizes: { desktop: [[160, 600], [300, 250], [300, 600]] },
             slot: { defineSizeMapping: jest.fn() },
         };
-        expect(advert.sizes.desktop).toEqual([[160, 600], [300, 250], [300, 600]]);
+        expect(advert.sizes.desktop).toEqual([
+            [160, 600],
+            [300, 250],
+            [300, 600],
+        ]);
 
         maybeUpgradeSlot(advert, $('.js-discussion__ad-slot'));
-        expect(advert.sizes.desktop).toEqual([[160, 600], [300, 250], [300, 600]]);
+        expect(advert.sizes.desktop).toEqual([
+            [160, 600],
+            [300, 250],
+            [300, 600],
+        ]);
         expect(advert.slot.defineSizeMapping).toHaveBeenCalledTimes(0);
     });
 });

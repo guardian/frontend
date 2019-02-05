@@ -17,7 +17,9 @@ import type bonzo from 'bonzo';
 const createCommentSlots = (
     canBeDmpu: boolean
 ): Array<HTMLDivElement | HTMLSpanElement> => {
-    const sizes = canBeDmpu ? { desktop: [adSizes.halfPage, adSizes.skyscraper] } : {};
+    const sizes = canBeDmpu
+        ? { desktop: [adSizes.halfPage, adSizes.skyscraper] }
+        : {};
     const adSlots = createSlots('comments', { sizes });
 
     adSlots.forEach(adSlot => {
@@ -58,7 +60,10 @@ const insertCommentAd = (
 };
 
 const containsDMPU = (ad: Advert): boolean =>
-    ad.sizes.desktop.some((el => el[0] === 300 && el[1] === 600) || (el => el[0] === 160 && el[1] === 600));
+    ad.sizes.desktop.some(
+        (el => el[0] === 300 && el[1] === 600) ||
+            (el => el[0] === 160 && el[1] === 600)
+    );
 
 const maybeUpgradeSlot = (ad: Advert, $adSlot: bonzo): Advert => {
     if (!containsDMPU(ad)) {

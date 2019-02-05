@@ -40,7 +40,7 @@ const getSlots = (contentType: string): Array<PrebidSlot> => {
         },
         {
             key: 'right',
-            sizes: [[160,600], [300, 600], [300, 250]],
+            sizes: [[160, 600], [300, 600], [300, 250]],
         },
         {
             key: 'inline1',
@@ -55,11 +55,13 @@ const getSlots = (contentType: string): Array<PrebidSlot> => {
         },
         {
             key: 'inline',
-            sizes: isArticle ? [[160,600], [300, 600], [300, 250]] : [[300, 250]],
+            sizes: isArticle
+                ? [[160, 600], [300, 600], [300, 250]]
+                : [[300, 250]],
         },
         {
             key: 'comments',
-            sizes: [[160,600], [300, 250], [300, 600]],
+            sizes: [[160, 600], [300, 250], [300, 600]],
         },
     ];
 
