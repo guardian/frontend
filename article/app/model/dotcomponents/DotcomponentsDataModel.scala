@@ -51,7 +51,9 @@ case class ReaderRevenueLink(
 case class ReaderRevenueLinks(
   header: ReaderRevenueLink,
   footer: ReaderRevenueLink,
-  sideMenu: ReaderRevenueLink
+  sideMenu: ReaderRevenueLink,
+  ampHeader: ReaderRevenueLink,
+  ampFooter: ReaderRevenueLink
 )
 
 case class IsPartOf(
