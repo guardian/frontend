@@ -38,7 +38,6 @@ const minArticlesBeforeShowingBanner = 3;
 
 const lastClosedAtKey = 'engagementBannerLastClosedAt';
 
-
 const getTimestampOfLastBannerDeployForLocation = (
     region: ReaderRevenueRegion
 ): Promise<string> =>
@@ -67,7 +66,9 @@ const hasBannerBeenRedeployedSinceClosed = (
             return false;
         });
 
-const deriveBannerParams = (testToRun: ?Runnable<AcquisitionsABTest>): Promise<EngagementBannerParams> => {
+const deriveBannerParams = (
+    testToRun: ?Runnable<AcquisitionsABTest>
+): Promise<EngagementBannerParams> => {
     const defaultParams: EngagementBannerParams = defaultEngagementBannerParams();
 
     // if the user isn't in a test variant, use the control in google docs
@@ -101,7 +102,10 @@ const clearBannerHistory = (): void => {
     userPrefs.remove(lastClosedAtKey);
 };
 
-const showBanner = (params: EngagementBannerParams, runningBannerTest: ?Runnable<AcquisitionsABTest>): void => {
+const showBanner = (
+    params: EngagementBannerParams,
+    runningBannerTest: ?Runnable<AcquisitionsABTest>
+): void => {
     const messageText = Array.isArray(params.messageText)
         ? selectSequentiallyFrom(params.messageText)
         : params.messageText;
@@ -113,7 +117,10 @@ const showBanner = (params: EngagementBannerParams, runningBannerTest: ?Runnable
         componentId: params.campaignCode,
         campaignCode: params.campaignCode,
         abTest: runningBannerTest
-            ? { name: runningBannerTest.id, variant: runningBannerTest.variantToRun.id }
+            ? {
+                  name: runningBannerTest.id,
+                  variant: runningBannerTest.variantToRun.id,
+              }
             : undefined,
     });
     const buttonCaption = params.buttonCaption;
@@ -181,8 +188,7 @@ const show = (): Promise<boolean> =>
                 return true;
             })
         )
-        .catch(err => false);
-
+        .catch(() => false);
 
 const canShow = (): Promise<boolean> => {
     if (!config.get('switches.membershipEngagementBanner') || isBlocked()) {

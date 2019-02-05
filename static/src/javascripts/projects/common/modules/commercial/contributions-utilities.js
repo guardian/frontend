@@ -30,7 +30,6 @@ import { awaitEpicButtonClicked } from 'common/modules/commercial/epic/epic-util
 import {
     bannerMultipleTestsGoogleDocUrl,
     epicMultipleTestsGoogleDocUrl,
-    getBannerGoogleDoc,
     getGoogleDoc,
     googleDocEpicControl,
 } from 'common/modules/commercial/contributions-google-docs';
@@ -38,7 +37,6 @@ import {
     defaultExclusionRules,
     isArticleWorthAnEpicImpression,
 } from 'common/modules/commercial/epic/epic-exclusion-rules';
-import { getAcquisitionsBannerParams } from 'common/modules/commercial/membership-engagement-banner-parameters';
 
 export type EpicTemplate = (Variant, AcquisitionsEpicTemplateCopy) => string;
 
@@ -611,7 +609,6 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
             return [];
         });
 
-
 export const getEngagementBannerTestsFromGoogleDoc = (): Promise<
     $ReadOnlyArray<AcquisitionsABTest>
 > =>
@@ -662,7 +659,6 @@ export const getEngagementBannerTestsFromGoogleDoc = (): Promise<
                                 linkUrl: row.linkUrl.trim(),
                                 hasTicker: false,
                             },
-
                         })),
                     };
                 });

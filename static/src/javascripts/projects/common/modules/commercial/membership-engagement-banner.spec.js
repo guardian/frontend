@@ -4,10 +4,11 @@ import fakeConfig from 'lib/config';
 import fakeOphan from 'ophan/ng';
 import fetchJson from 'lib/fetch-json';
 import userPrefs from 'common/modules/user-prefs';
+import { defaultEngagementBannerParams as defaultEngagementBannerParams_ } from 'common/modules/commercial/membership-engagement-banner-parameters';
 import {
-    defaultEngagementBannerParams as defaultEngagementBannerParams_,
-} from 'common/modules/commercial/membership-engagement-banner-parameters';
-import { membershipEngagementBanner, deriveBannerParams as deriveBannerParams_ } from 'common/modules/commercial/membership-engagement-banner';
+    membershipEngagementBanner,
+    deriveBannerParams as deriveBannerParams_,
+} from 'common/modules/commercial/membership-engagement-banner';
 import { pageShouldHideReaderRevenue } from 'common/modules/commercial/contributions-utilities';
 
 const defaultEngagementBannerParams: any = defaultEngagementBannerParams_;
@@ -72,7 +73,7 @@ jest.mock('common/modules/experiments/ab-tests', () => ({
     ],
 }));
 jest.mock('common/modules/experiments/ab', () => ({
-    getEngagementBannerTestToRun: jest.fn(() => Promise.resolve(null))
+    getEngagementBannerTestToRun: jest.fn(() => Promise.resolve(null)),
 }));
 jest.mock(
     'common/modules/commercial/membership-engagement-banner-parameters',

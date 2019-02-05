@@ -18,7 +18,7 @@ import {
 } from 'common/modules/experiments/ab-local-storage';
 import {
     getEngagementBannerTestsFromGoogleDoc,
-    getEpicTestsFromGoogleDoc
+    getEpicTestsFromGoogleDoc,
 } from 'common/modules/commercial/contributions-utilities';
 
 const selectRadios = () => {
@@ -96,7 +96,9 @@ const appendOverlay = (): Promise<void> => {
                 },
                 {
                     name: 'Banner',
-                    tests: [...asyncBannerTests, ...engagementBannerTests].map(extractData),
+                    tests: [...asyncBannerTests, ...engagementBannerTests].map(
+                        extractData
+                    ),
                 },
                 { name: 'Other', tests: concurrentTests.map(extractData) },
             ],
