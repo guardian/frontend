@@ -6,13 +6,12 @@ import fetchJson from 'lib/fetch-json';
 import userPrefs from 'common/modules/user-prefs';
 import {
     defaultEngagementBannerParams as defaultEngagementBannerParams_,
-    getUserVariantParams as getUserVariantParams_,
 } from 'common/modules/commercial/membership-engagement-banner-parameters';
-import { membershipEngagementBanner } from 'common/modules/commercial/membership-engagement-banner';
+import { membershipEngagementBanner, deriveBannerParams as deriveBannerParams_ } from 'common/modules/commercial/membership-engagement-banner';
 import { pageShouldHideReaderRevenue } from 'common/modules/commercial/contributions-utilities';
 
 const defaultEngagementBannerParams: any = defaultEngagementBannerParams_;
-const getUserVariantParams: any = getUserVariantParams_;
+const deriveBannerParams: any = deriveBannerParams_;
 
 jest.mock('lib/raven');
 jest.mock('lib/mediator');
@@ -72,6 +71,9 @@ jest.mock('common/modules/experiments/ab-tests', () => ({
         },
     ],
 }));
+jest.mock('common/modules/experiments/ab', () => ({
+    getEngagementBannerTestToRun: jest.fn(() => Promise.resolve(null))
+}));
 jest.mock(
     'common/modules/commercial/membership-engagement-banner-parameters',
     () => ({
@@ -79,7 +81,7 @@ jest.mock(
             products: ['CONTRIBUTION'],
             linkUrl: 'fake-link-url',
         })),
-        getUserVariantParams: jest.fn(() =>
+        deriveBannerParams: jest.fn(() =>
             Promise.resolve({
                 buttonCaption: 'test-button-caption',
                 linkUrl: 'test-link-url',
@@ -282,7 +284,7 @@ describe('Membership engagement banner', () => {
             defaultEngagementBannerParams.mockImplementationOnce(() => ({
                 linkUrl: 'fake-link-url',
             }));
-            getUserVariantParams.mockImplementationOnce(() =>
+            deriveBannerParams.mockImplementationOnce(() =>
                 Promise.resolve({
                     id: 'fake-variant-id',
                     engagementBannerParams: {},
@@ -316,7 +318,7 @@ describe('Membership engagement banner', () => {
                 linkUrl: 'fake-link-url',
                 buttonCaption: 'fake-button-caption',
             }));
-            getUserVariantParams.mockImplementationOnce(() =>
+            deriveBannerParams.mockImplementationOnce(() =>
                 Promise.resolve({})
             );
             fakeConfig.get.mockImplementationOnce(() => true);

@@ -28,6 +28,7 @@ import { userIsSupporter } from 'common/modules/commercial/user-features';
 import { supportContributeURL } from 'common/modules/commercial/support-utilities';
 import { awaitEpicButtonClicked } from 'common/modules/commercial/epic/epic-utils';
 import {
+    bannerMultipleTestsGoogleDocUrl,
     epicMultipleTestsGoogleDocUrl,
     getBannerGoogleDoc,
     getGoogleDoc,
@@ -219,7 +220,6 @@ const makeABTestVariant = (
         }),
         template = controlTemplate,
         buttonTemplate = options.buttonTemplate,
-        blockEngagementBanner = false,
         engagementBannerParams = {},
         isOutbrainCompliant = false,
         usesIframe = false,
@@ -283,7 +283,6 @@ const makeABTestVariant = (
             subscribeURL,
             template,
             buttonTemplate,
-            blockEngagementBanner,
             engagementBannerParams,
             isOutbrainCompliant,
             usesIframe,
@@ -524,41 +523,6 @@ const makeABTest = ({
     return test;
 };
 
-const makeBannerABTestVariants = (
-    variants: Array<Object>
-): $ReadOnlyArray<Variant> =>
-    variants.map(x => {
-        x.test = noop;
-        return x;
-    });
-
-const makeGoogleDocBannerVariants = (
-    count: number
-): Array<InitBannerABTestVariant> => {
-    const variants = [];
-
-    for (let i = 1; i <= count; i += 1) {
-        variants.push({
-            id: `variant_${i}`,
-            products: [],
-            engagementBannerParams: () =>
-                getBannerGoogleDoc().then(res =>
-                    getAcquisitionsBannerParams(res, `variant_${i}`)
-                ),
-        });
-    }
-    return variants;
-};
-
-const makeGoogleDocBannerControl = (): InitBannerABTestVariant => ({
-    id: 'control',
-    products: [],
-    engagementBannerParams: () =>
-        getBannerGoogleDoc().then(res =>
-            getAcquisitionsBannerParams(res, 'control')
-        ),
-});
-
 export const getEpicTestsFromGoogleDoc = (): Promise<
     $ReadOnlyArray<EpicABTest>
 > =>
@@ -647,14 +611,77 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
             return [];
         });
 
+
+export const getEngagementBannerTestsFromGoogleDoc = (): Promise<
+    $ReadOnlyArray<EpicABTest>
+> =>
+    getGoogleDoc(bannerMultipleTestsGoogleDocUrl)
+        .then(googleDocJson => {
+            const sheets = googleDocJson && googleDocJson.sheets;
+
+            if (!sheets) {
+                return [];
+            }
+
+            return Object.keys(sheets)
+                .filter(testName => testName.endsWith('__ON'))
+                .map(name => {
+                    const rows = sheets[name];
+                    const testName = name.split('__ON')[0];
+                    return makeABTest({
+                        id: testName,
+                        campaignId: testName,
+
+                        start: '2018-01-01',
+                        expiry: '2020-01-01',
+
+                        author: 'Google Docs',
+                        description: 'Google Docs',
+                        successMeasure: 'AV2.0',
+                        idealOutcome: 'Google Docs',
+                        audienceCriteria: 'All',
+                        audience: 1,
+                        audienceOffset: 0,
+
+                        variants: rows.map(row => ({
+                            id: row.name,
+                            products: [],
+
+                            engagementBannerParams: {
+                                messageText: row.messageText.trim(),
+                                ctaText: `<span class="engagement-banner__highlight"> ${row.ctaText.replace(
+                                    /%%CURRENCY_SYMBOL%%/g,
+                                    getLocalCurrencySymbol()
+                                )}</span>`,
+                                buttonCaption: row.buttonCaption.trim(),
+                                linkUrl: row.linkUrl.trim(),
+                                hasTicker: false,
+                            },
+
+                        })),
+                    });
+                });
+        })
+        .catch((err: Error) => {
+            reportError(
+                new Error(
+                    `Error getting multiple engagement banner tests from Google Docs. ${
+                        err.message
+                    }. Stack: ${err.stack}`
+                ),
+                {
+                    feature: 'engagement-banner-test',
+                },
+                false
+            );
+            return [];
+        });
+
 export {
     pageShouldHideReaderRevenue,
     shouldShowEpic,
     makeABTest,
     defaultButtonTemplate,
-    makeBannerABTestVariants,
     defaultMaxViews,
     getReaderRevenueRegion,
-    makeGoogleDocBannerControl,
-    makeGoogleDocBannerVariants,
 };

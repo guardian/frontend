@@ -8,15 +8,18 @@ import overlay from 'raw-loader!common/views/experiments/overlay.html';
 import styles from 'raw-loader!common/views/experiments/styles.css';
 import {
     concurrentTests,
-    epicTests,
     engagementBannerTests,
+    epicTests,
 } from 'common/modules/experiments/ab-tests';
 import { isExpired } from 'lib/time-utils';
 import {
     getParticipationsFromLocalStorage,
     setParticipationsInLocalStorage,
 } from 'common/modules/experiments/ab-local-storage';
-import { getEpicTestsFromGoogleDoc } from 'common/modules/commercial/contributions-utilities';
+import {
+    getEngagementBannerTestsFromGoogleDoc,
+    getEpicTestsFromGoogleDoc
+} from 'common/modules/commercial/contributions-utilities';
 
 const selectRadios = () => {
     const participations = getParticipationsFromLocalStorage();
@@ -81,7 +84,10 @@ const appendOverlay = (): Promise<void> => {
         isSwitchedOn: config.get(`switches.ab${id}`),
         isExpired: isExpired(expiry),
     });
-    return getEpicTestsFromGoogleDoc().then(asyncEpicTests => {
+    return Promise.all([
+        getEpicTestsFromGoogleDoc(),
+        getEngagementBannerTestsFromGoogleDoc(),
+    ]).then(([asyncEpicTests, asyncBannerTests]) => {
         const data = {
             testGroups: [
                 {
@@ -90,7 +96,7 @@ const appendOverlay = (): Promise<void> => {
                 },
                 {
                     name: 'Banner',
-                    tests: engagementBannerTests.map(extractData),
+                    tests: [...asyncBannerTests, ...engagementBannerTests].map(extractData),
                 },
                 { name: 'Other', tests: concurrentTests.map(extractData) },
             ],

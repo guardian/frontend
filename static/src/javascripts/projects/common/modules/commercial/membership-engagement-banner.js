@@ -6,7 +6,6 @@ import mediator from 'lib/mediator';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
 import {
     defaultEngagementBannerParams,
-    getUserVariantParams,
     getControlEngagementBannerParams,
 } from 'common/modules/commercial/membership-engagement-banner-parameters';
 import { isBlocked } from 'common/modules/commercial/membership-engagement-banner-block';
@@ -39,16 +38,6 @@ const minArticlesBeforeShowingBanner = 3;
 
 const lastClosedAtKey = 'engagementBannerLastClosedAt';
 
-const getTestAndVariant = (): {
-    test: ?Runnable<AcquisitionsABTest>,
-    variant: ?Variant,
-} => {
-    const test: ?Runnable<AcquisitionsABTest> = getEngagementBannerTestToRun();
-    const variant: ?Variant = test && test.variantToRun;
-    return { test, variant };
-};
-
-const getVariant = (): ?Variant => getTestAndVariant().variant;
 
 const getTimestampOfLastBannerDeployForLocation = (
     region: ReaderRevenueRegion
@@ -78,75 +67,22 @@ const hasBannerBeenRedeployedSinceClosed = (
             return false;
         });
 
-/*
- * Params for the banner are overlaid in this order, earliest taking precedence:
- *
- *  * Variant (if the user is in an A/B testing variant)
- *  * Edition
- *  * Offering ('membership' or 'contributions')
- *  * Default
- *
- * The 'offering' in use comes from either:
- *
- *  * Variant (if the user is in an A/B testing variant)
- *  * Edition (only one offering can be the default for a given Edition)
- *
- * Returns either 'null' if no banner is available for this edition,
- * otherwise a populated params object that looks like this:
- *
- *  {
- *    messageText: "..."
- *    buttonCaption: "Become a Supporter"
- *  }
- *
- */
-
-const buildCampaignCode = (
-    userTest: ?AcquisitionsABTest,
-    userVariant: ?Variant
-): ?{ campaignCode: string } => {
-    if (userTest && userVariant) {
-        const params = userVariant.engagementBannerParams;
-        if (params && params.campaignCode) {
-            return params.campaignCode;
-        }
-        return { campaignCode: `${userTest.campaignId}_${userVariant.id}` };
-    }
-};
-
-const deriveBannerParams = (): Promise<?EngagementBannerParams> => {
-    const { test, variant } = getTestAndVariant();
+const deriveBannerParams = (testToRun: ?Runnable<AcquisitionsABTest>): Promise<EngagementBannerParams> => {
     const defaultParams: EngagementBannerParams = defaultEngagementBannerParams();
 
     // if the user isn't in a test variant, use the control in google docs
-    if (!test) {
+    if (!testToRun) {
         return getControlEngagementBannerParams().then(controlParams => ({
             ...defaultParams,
             ...controlParams,
         }));
     }
 
-    const campaignCode: ?{ campaignCode: string } = buildCampaignCode(
-        test,
-        variant
-    );
-
-    return getUserVariantParams(variant)
-        .then(variantParams => ({
-            ...defaultParams,
-            ...variantParams,
-            ...campaignCode,
-        }))
-        .catch(() => defaultParams);
-};
-
-const userVariantCanShow = (): boolean => {
-    const variant = getVariant();
-
-    if (variant && variant.options && variant.options.blockEngagementBanner) {
-        return false;
-    }
-    return true;
+    return Promise.resolve({
+        ...defaultParams,
+        ...testToRun.variantToRun.engagementBannerParams,
+        campaignCode: `${testToRun.id}_${testToRun.variantToRun.id}`,
+    });
 };
 
 const getVisitCount = (): number => local.get('gu.alreadyVisited') || 0;
@@ -165,9 +101,7 @@ const clearBannerHistory = (): void => {
     userPrefs.remove(lastClosedAtKey);
 };
 
-const showBanner = (params: EngagementBannerParams): void => {
-    const { test, variant } = getTestAndVariant();
-
+const showBanner = (params: EngagementBannerParams, runningBannerTest: ?Runnable<AcquisitionsABTest>): void => {
     const messageText = Array.isArray(params.messageText)
         ? selectSequentiallyFrom(params.messageText)
         : params.messageText;
@@ -178,10 +112,9 @@ const showBanner = (params: EngagementBannerParams): void => {
         componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
         componentId: params.campaignCode,
         campaignCode: params.campaignCode,
-        abTest:
-            test && variant
-                ? { name: test.id, variant: variant.id }
-                : undefined,
+        abTest: runningBannerTest
+            ? { name: runningBannerTest.id, variant: runningBannerTest.variantToRun.id }
+            : undefined,
     });
     const buttonCaption = params.buttonCaption;
     const templateParams = {
@@ -221,11 +154,11 @@ const showBanner = (params: EngagementBannerParams): void => {
                     id: params.campaignCode,
                 },
                 action,
-                ...(test && variant
+                ...(runningBannerTest
                     ? {
                           abTest: {
-                              name: test.id,
-                              variant: variant.id,
+                              name: runningBannerTest.id,
+                              variant: runningBannerTest.variantToRun.id,
                           },
                       }
                     : {}),
@@ -241,13 +174,15 @@ const showBanner = (params: EngagementBannerParams): void => {
 };
 
 const show = (): Promise<boolean> =>
-    deriveBannerParams().then(params => {
-        if (params) {
-            showBanner(params);
-            return Promise.resolve(true);
-        }
-        return Promise.resolve(false);
-    });
+    getEngagementBannerTestToRun()
+        .then(testToRun =>
+            deriveBannerParams(testToRun).then(params => {
+                showBanner(params, testToRun);
+                return true;
+            })
+        )
+        .catch(err => false);
+
 
 const canShow = (): Promise<boolean> => {
     if (!config.get('switches.membershipEngagementBanner') || isBlocked()) {
@@ -262,8 +197,7 @@ const canShow = (): Promise<boolean> => {
     if (
         hasSeenEnoughArticles &&
         !pageShouldHideReaderRevenue() &&
-        !userIsSupporter() &&
-        userVariantCanShow()
+        !userIsSupporter()
     ) {
         const userLastClosedBannerAt = userPrefs.get(lastClosedAtKey);
 
@@ -293,4 +227,5 @@ export {
     hideBanner,
     clearBannerHistory,
     minArticlesBeforeShowingBanner,
+    deriveBannerParams,
 };

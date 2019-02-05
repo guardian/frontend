@@ -10,6 +10,9 @@ export const bannerGoogleDocUrl: string =
 export const epicMultipleTestsGoogleDocUrl: string = config.get('page.isDev')
     ? 'https://interactive.guim.co.uk/docsdata/1THvo7I36Npb9GbKFAk6veIku3Hz5tBhpHobxrl0SoUc.json'
     : 'https://interactive.guim.co.uk/docsdata/1VQ6yn2thnkFzjxIKt-AfOB_gJnX8omLNodkRyX7_Qbg.json';
+export const bannerMultipleTestsGoogleDocUrl: string = config.get('page.isDev')
+    ? 'https://interactive.guim.co.uk/docsdata/19AGJYaPL8XpchykYlzqdKqNHxrHBILFktzM8vc5iShc.json'
+    : 'https://interactive.guim.co.uk/docsdata/1IEVVHU5ZObCzyPV-BLQczaSzxe7pawLcH8_lvFD0Csk.json';
 
 export const getGoogleDoc = (url: string): Promise<any> =>
     fetchJSON(url, {

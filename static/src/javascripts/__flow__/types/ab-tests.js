@@ -7,7 +7,7 @@ declare type Variant = {
     impression?: ListenerFunction,
     success?: ListenerFunction,
     options?: Object,
-    engagementBannerParams?: () => Promise<EngagementBannerParams>,
+    engagementBannerParams?: EngagementBannerParams,
 };
 
 declare type ABTest = {
