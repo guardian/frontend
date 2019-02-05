@@ -138,7 +138,7 @@ const shouldShowEpic = (test: EpicABTest): boolean => {
         : !userIsSupporter();
 
     return (
-        !pageShouldHideReaderRevenue &&
+        !pageShouldHideReaderRevenue() &&
         onCompatiblePage &&
         isCompatibleUser &&
         inCompatibleLocation &&
