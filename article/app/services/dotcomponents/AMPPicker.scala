@@ -15,10 +15,6 @@ object AMPPageChecks extends Logging {
       !page.item.isPhotoEssay
   }
 
-  def isNotCommentable(page: PageWithStoryPackage): Boolean = {
-    !page.article.content.trail.isCommentable
-  }
-
   def hasOnlySupportedElements(page: PageWithStoryPackage): Boolean = {
     // See: https://github.com/guardian/dotcom-rendering/blob/master/packages/frontend/amp/components/lib/Elements.tsx
     def supported(block: BlockElement): Boolean = block match {
@@ -103,12 +99,10 @@ object AMPPicker {
     Map(
       ("isBasicArticle", AMPPageChecks.isBasicArticle(page)),
       ("hasOnlySupportedElements", AMPPageChecks.hasOnlySupportedElements(page)),
-      ("isDiscussionDisabled", AMPPageChecks.isNotCommentable(page))
     )
   }
 
   def getTier(page: PageWithStoryPackage)(implicit request: RequestHeader): RenderType = {
-
     val isWhitelisted =
       pageWhitelist(page.metadata.id) ||
       page.metadata.section.exists((s) => sectionsWhitelist(s.value)) ||
@@ -127,7 +121,5 @@ object AMPPicker {
     }
 
     tier
-
   }
-
 }
