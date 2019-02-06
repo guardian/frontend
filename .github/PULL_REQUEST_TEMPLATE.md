@@ -31,6 +31,14 @@
 - [ ] It did, but tests caught it and I fixed it
 - [ ] It did, but there was no test coverage so I added that then fixed it
 
+### Does this change update the version of CAPI we're using?
+
+<!-- Changing CAPI versions renders the existing local database files useless -->
+<!-- Please see the notes linked below if you need further info. -->
+
+- [ ] No, all the existing database files are just fine
+- [ ] Yes, and I have [re-run all the tests locally and checked in all the updated data/database/xyz files](https://github.com/guardian/frontend/blob/master/docs/03-dev-howtos/15-updating-test-database.md)
+
 ### Accessibility test checklist
 
 <!-- for changes that affect how a page appears in the browser -->

@@ -17,6 +17,7 @@ import { handleCompletion as handleQuizCompletion } from 'common/modules/atoms/q
 import { init as initLiveblogCommon } from 'bootstraps/enhanced/article-liveblog-common';
 import { initTrails } from 'bootstraps/enhanced/trail';
 import { initCampaign } from 'journalism/modules/render-campaign';
+
 import ophan from 'ophan/ng';
 
 const modules = {
