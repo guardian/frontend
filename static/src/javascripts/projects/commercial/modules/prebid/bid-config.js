@@ -430,9 +430,27 @@ const xaxisBidder: PrebidBidder = {
 const adYouLikeBidder: PrebidBidder = {
     name: 'adyoulike',
     switchName: 'prebidAdYouLike',
-    bidParams: (): PrebidAdYouLikeParams => ({
-        placement: '2b4d757e0ec349583ce704699f1467dd',
-    }),
+    bidParams: (): PrebidAdYouLikeParams => {
+        if (isInUkRegion()) {
+            return {
+                placement: '2b4d757e0ec349583ce704699f1467dd',
+            };
+        }
+        if (isInUsRegion()) {
+            return {
+                placement: '7fdf0cd05e1d4bf39a2d3df9c61b3495',
+            };
+        }
+        if (isInAuRegion()) {
+            return {
+                placement: '5cf05e1705a2d57ba5d51e03f2af9208',
+            };
+        }
+        // ROW
+        return {
+            placement: 'c1853ee8bfe0d4e935cbf2db9bb76a8b',
+        };
+    },
 };
 
 // Dummy bidders for the whitehorse project (https://trello.com/c/KbeBLyYZ)

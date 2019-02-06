@@ -22,4 +22,5 @@ const promisify = fdaction => (fn: Function, ctx: ?Object): Promise<any> =>
 export default {
     read: promisify(fastdom.read.bind(fastdom)),
     write: promisify(fastdom.write.bind(fastdom)),
+    defer: promisify(fastdom.defer.bind(fastdom)),
 };

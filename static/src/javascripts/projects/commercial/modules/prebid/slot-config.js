@@ -6,7 +6,6 @@ import {
 } from 'commercial/modules/prebid/utils';
 
 import config from 'lib/config';
-import memoize from 'lodash/memoize';
 
 import type { PrebidSlot } from 'commercial/modules/prebid/types';
 
@@ -22,22 +21,13 @@ const filterByAdvertId = (
     return adUnits;
 };
 
-const getMostPopularSizes = memoize((isArticle: boolean) => {
-    // Only works for articles for now.
-    if (isArticle && config.get('switches.extendedMostPopular')) {
-        return [[300, 600], [300, 250]];
-    }
-    return [[300, 250]];
-});
-
 const getSlots = (contentType: string): Array<PrebidSlot> => {
     const isArticle = contentType === 'Article';
     const isCrossword = contentType === 'Crossword';
+    const hasExtendedMostPop =
+        isArticle && config.get('switches.extendedMostPopular');
+
     const commonSlots: Array<PrebidSlot> = [
-        {
-            key: 'mostpop',
-            sizes: getMostPopularSizes(isArticle),
-        },
         {
             key: 'right',
             sizes: [[160, 600], [300, 600], [300, 250]],
@@ -60,6 +50,10 @@ const getSlots = (contentType: string): Array<PrebidSlot> => {
                 : [[300, 250]],
         },
         {
+            key: 'mostpop',
+            sizes: hasExtendedMostPop ? [[300, 600], [300, 250]] : [[300, 250]],
+        },
+        {
             key: 'comments',
             sizes: [[160, 600], [300, 250], [300, 600]],
         },
@@ -74,6 +68,12 @@ const getSlots = (contentType: string): Array<PrebidSlot> => {
             key: 'inline',
             sizes: [[300, 250]],
         },
+        {
+            key: 'mostpop',
+            sizes: hasExtendedMostPop
+                ? [[300, 600], [300, 250], [728, 90]]
+                : [[300, 250]],
+        },
     ];
 
     const mobileSlots: Array<PrebidSlot> = [
@@ -83,6 +83,10 @@ const getSlots = (contentType: string): Array<PrebidSlot> => {
         },
         {
             key: 'inline',
+            sizes: [[300, 250]],
+        },
+        {
+            key: 'mostpop',
             sizes: [[300, 250]],
         },
     ];

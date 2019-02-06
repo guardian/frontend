@@ -217,11 +217,11 @@ const isDigitalSubscriber = (): boolean =>
     Please also update readerRevenueRelevantCookies below, if changing the cookies
     which this function is dependent on.
 */
-const shouldSeeReaderRevenue = (): boolean =>
-    !isPayingMember() &&
-    !isRecentOneOffContributor() &&
-    !isRecurringContributor() &&
-    !isDigitalSubscriber();
+const userIsSupporter = (): boolean =>
+    isPayingMember() ||
+    isRecentOneOffContributor() ||
+    isRecurringContributor() ||
+    isDigitalSubscriber();
 
 const readerRevenueRelevantCookies = [
     PAYING_MEMBER_COOKIE,
@@ -247,7 +247,7 @@ export {
     isRecentOneOffContributor,
     isRecurringContributor,
     isDigitalSubscriber,
-    shouldSeeReaderRevenue,
+    userIsSupporter,
     refresh,
     deleteOldData,
     getLastOneOffContributionDate,

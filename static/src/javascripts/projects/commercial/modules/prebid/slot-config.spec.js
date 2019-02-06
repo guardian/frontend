@@ -1,5 +1,6 @@
 // @flow
 
+import config from 'lib/config';
 import { slots, _ } from './slot-config';
 import { getBreakpointKey as getBreakpointKey_ } from './utils';
 
@@ -18,6 +19,10 @@ jest.mock('./utils', () => {
 
 /* eslint-disable guardian-frontend/no-direct-access-config */
 describe('getSlots', () => {
+    beforeEach(() => {
+        config.set('switches.extendedMostPopular', true);
+    });
+
     afterEach(() => {
         jest.resetAllMocks();
     });
@@ -25,10 +30,6 @@ describe('getSlots', () => {
     test('should return the correct slots at breakpoint M', () => {
         getBreakpointKey.mockReturnValue('M');
         expect(getSlots('Article')).toEqual([
-            {
-                key: 'mostpop',
-                sizes: [[300, 250]],
-            },
             {
                 key: 'right',
                 sizes: [[160, 600], [300, 600], [300, 250]],
@@ -45,16 +46,16 @@ describe('getSlots', () => {
                 key: 'inline',
                 sizes: [[300, 250]],
             },
+            {
+                key: 'mostpop',
+                sizes: [[300, 250]],
+            },
         ]);
     });
 
     test('should return the correct slots at breakpoint T', () => {
         getBreakpointKey.mockReturnValue('T');
         expect(getSlots('Article')).toEqual([
-            {
-                key: 'mostpop',
-                sizes: [[300, 250]],
-            },
             {
                 key: 'right',
                 sizes: [[160, 600], [300, 600], [300, 250]],
@@ -70,6 +71,10 @@ describe('getSlots', () => {
             {
                 key: 'inline',
                 sizes: [[300, 250]],
+            },
+            {
+                key: 'mostpop',
+                sizes: [[300, 600], [300, 250], [728, 90]],
             },
         ]);
     });

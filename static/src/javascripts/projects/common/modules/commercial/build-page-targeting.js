@@ -1,6 +1,6 @@
 // @flow strict
 import config from 'lib/config';
-import { getCookie, removeCookie } from 'lib/cookies';
+import { getCookie } from 'lib/cookies';
 import { getReferrer as detectGetReferrer, getBreakpoint } from 'lib/detect';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
 import { local } from 'lib/storage';
@@ -57,16 +57,6 @@ const abParam = (): Array<string> => {
     }
 
     return abParams;
-};
-
-const adtestParams = (): ?string => {
-    const cookieAdtest: ?string = getCookie('adtest');
-    if (cookieAdtest) {
-        if (cookieAdtest.substring(0, 4) === 'demo') {
-            removeCookie('adtest');
-        }
-        return cookieAdtest;
-    }
 };
 
 const getVisitedValue = (): string => {
@@ -199,7 +189,7 @@ const buildPageTargeting = once(
                 x: getKruxSegments(),
                 pv: config.get('ophan.pageViewId'),
                 bp: getBreakpoint(),
-                at: adtestParams(),
+                at: getCookie('adtest') || undefined,
                 si: isUserLoggedIn() ? 't' : 'f',
                 gdncrm: getUserSegments(),
                 ab: abParam(),

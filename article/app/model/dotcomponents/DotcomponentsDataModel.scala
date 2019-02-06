@@ -73,12 +73,20 @@ case class NewsArticle(
   isAccessibleForFree: Boolean = true,
   isPartOf: IsPartOf = IsPartOf(),
   image: Seq[String],
+  author: String,
+  datePublished: String,
+  headline: String,
+  dateModified: String,
 ) extends LinkedData(`@type`, `@context`)
 
 object NewsArticle {
   def apply(
    `@id`: String,
-    images: Seq[String]
+    images: Seq[String],
+    author: String,
+    datePublished: String,
+    headline: String,
+    dateModified: String,
  ): NewsArticle = NewsArticle(
     "NewsArticle",
     "http://schema.org",
@@ -86,7 +94,11 @@ object NewsArticle {
     PotentialAction(
       target = s"android-app://com.guardian/${`@id`.replace("://", "/")}"
     ),
-    image = images
+    image = images,
+    author = author,
+    headline = headline,
+    datePublished = datePublished,
+    dateModified = dateModified,
   )
 
   implicit val formats: OFormat[NewsArticle] = Json.format[NewsArticle]
@@ -129,6 +141,7 @@ case class PageData(
     shouldHideAds: Boolean,
     hasStoryPackage: Boolean,
     hasRelated: Boolean,
+    isCommentable: Boolean,
 )
 
 case class Config(
@@ -247,7 +260,11 @@ object DotcomponentsDataModel {
 
       NewsArticle(
         `@id` = article.metadata.webUrl,
-        images = Seq(ImgSrc(mainImageURL, Item1200))
+        images = Seq(ImgSrc(mainImageURL, Item1200)),
+        author = article.tags.contributors.mkString(", "),
+        datePublished = article.trail.webPublicationDate.toString(),
+        dateModified = article.fields.lastModified.toString(),
+        headline = article.trail.headline,
       )
     }
 
@@ -286,6 +303,7 @@ object DotcomponentsDataModel {
       article.content.shouldHideAdverts,
       hasStoryPackage = articlePage.related.hasStoryPackage,
       hasRelated = article.content.showInRelated,
+      isCommentable = article.trail.isCommentable
     )
 
     val tags = article.tags.tags.map(

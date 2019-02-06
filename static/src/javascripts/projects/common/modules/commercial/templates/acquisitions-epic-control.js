@@ -10,7 +10,7 @@ export const acquisitionsEpicControlTemplate = ({
 }: {
     copy: AcquisitionsEpicTemplateCopy,
     componentName: string,
-    buttonTemplate: string,
+    buttonTemplate?: string,
     epicClass?: string,
     wrapperClass?: string,
 }) =>
@@ -22,12 +22,14 @@ export const acquisitionsEpicControlTemplate = ({
                 </h2>
                 ${appendToLastElement(
                     paragraphs,
-                    ` <strong><span class="contributions__highlight">${highlightedText}</span></strong>`
+                    highlightedText
+                        ? ` <strong><span class="contributions__highlight">${highlightedText}</span></strong>`
+                        : ''
                 )
                     .map(paragraph => `<p>${paragraph}</p>`)
                     .join('')}
             </div>
     
-            ${buttonTemplate}
+            ${buttonTemplate || ''}
         </div>
     </div>`;

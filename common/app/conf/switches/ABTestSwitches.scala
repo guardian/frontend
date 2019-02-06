@@ -18,16 +18,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-commercial-outbrain-newids",
-    "Enable the outbrain new IDs (Jan 2019) AB Test",
-    owners = Seq(Owner.withGithub("jeteve")),
-    safeState = Off,
-    sellByDate = new LocalDate(2019, 6, 3),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-contributions-epic-ask-four-earning",
     "This places the epic on all articles for all users, with a limit of 4 impressions in any given 30 days",
     owners = Seq(Owner.withGithub("jranks123")),
@@ -51,16 +41,6 @@ trait ABTestSwitches {
     "ab-acquisitions-epic-always-ask-if-tagged",
     "This guarantees that any on any article that is tagged with a tag that is on the allowed list of tags as set by the tagging tool, the epic will be displayed",
     owners = Seq(Owner.withGithub("jranks123")),
-    safeState = On,
-    sellByDate = new LocalDate(2020, 1, 27),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-acquisitions-epic-thank-you",
-    "Bootstrap the AB test framework to use the Epic to thank readers who have already supported the Guardian",
-    owners = Seq(Owner.withGithub("Mullefa")),
     safeState = On,
     sellByDate = new LocalDate(2020, 1, 27),
     exposeClientSide = true
