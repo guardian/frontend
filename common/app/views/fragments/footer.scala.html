@@ -27,7 +27,7 @@
         <div class="colophon u-cf">
 
             @defining(Edition(request)) { currentEdition =>
-                @if(EmailInlineInFooterSwitch.isSwitchedOn && !isAmp) {
+                @if(EmailInlineInFooterSwitch.isSwitchedOn && !isAmp && !page.metadata.isFoundation) {
                     <div class="footer__email-container js-footer__email-container">
                     @currentEdition match {
                         case Uk => {
