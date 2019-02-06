@@ -12,8 +12,6 @@ const engagementBannerControl: string = `<strong>The Guardian is editorially ind
     advertising is falling, so we increasingly need our readers to fund our independent, investigative reporting.`;
 
 export const defaultEngagementBannerParams = (): EngagementBannerParams => ({
-    // TODO: put a campaign code in the control Google Doc,
-    // to distinguish fallback hardcoded banner from control from Google Doc
     campaignCode: 'fallback_hardcoded_banner',
     buttonCaption: 'Support The Guardian',
     linkUrl: supportContributeURL,
@@ -54,6 +52,7 @@ export const getAcquisitionsBannerParams = (
     }
 
     return {
+        campaignCode: 'control_banner_from_google_doc',
         messageText: firstRow.messageText,
         ctaText: `<span class="engagement-banner__highlight"> ${firstRow.ctaText.replace(
             /%%CURRENCY_SYMBOL%%/g,

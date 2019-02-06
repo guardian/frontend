@@ -641,7 +641,6 @@ export const getEngagementBannerTestsFromGoogleDoc = (): Promise<
                         audience: 1,
                         audienceOffset: 0,
 
-                        // TODO: do we need to refine this?
                         canRun: () => true,
 
                         variants: rows.map(row => ({
