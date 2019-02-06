@@ -16,7 +16,7 @@ object OrielParticipation extends Experiment(
   name = "oriel-participation",
   description = "A slice of the audience who will participate in Oriel ad-blocking technology",
   owners = Seq(Owner.withGithub("janua")),
-  sellByDate = new LocalDate(2019, 2, 7),
+  sellByDate = new LocalDate(2019, 2, 13),
   participationGroup = Perc20A
 )
 
