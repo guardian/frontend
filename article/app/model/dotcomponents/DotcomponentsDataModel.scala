@@ -129,6 +129,7 @@ case class PageData(
     shouldHideAds: Boolean,
     hasStoryPackage: Boolean,
     hasRelated: Boolean,
+    isCommentable: Boolean,
 )
 
 case class Config(
@@ -286,6 +287,7 @@ object DotcomponentsDataModel {
       article.content.shouldHideAdverts,
       hasStoryPackage = articlePage.related.hasStoryPackage,
       hasRelated = article.content.showInRelated,
+      isCommentable = article.trail.isCommentable
     )
 
     val tags = article.tags.tags.map(
