@@ -14,12 +14,11 @@ import config from 'lib/config';
 import { isIOS, isAndroid, isBreakpoint } from 'lib/detect';
 import debounce from 'lodash/debounce';
 import { isOn as accessibilityIsOn } from 'common/modules/accessibility/main';
+import { getUrlVars } from 'lib/url';
 
 declare class YoutubePlayer extends EventTarget {
     playVideo: () => void;
-    getVideoData: () => {
-        video_id: string,
-    };
+    getVideoUrl: () => string;
     pauseVideo: () => void;
     getCurrentTime: () => number;
     getDuration: () => number;
@@ -151,6 +150,19 @@ const handlePlay = (atomId: string, player: AtomPlayer): void => {
     }
 };
 
+const getYoutubeIdFromUrl = (url: string): string => {
+    const youtubeIdKey = 'v';
+    const splitUrl = url.split('?');
+
+    if (splitUrl.length === 1) {
+        return '';
+    }
+
+    const queryParams = getUrlVars(splitUrl[1]);
+
+    return queryParams[youtubeIdKey] || '';
+};
+
 const onPlayerPlaying = (atomId: string): void => {
     const player = players[atomId];
 
@@ -166,7 +178,7 @@ const onPlayerPlaying = (atomId: string): void => {
      * a related video has begun playing, so we need to get the atom ID
      * for tracking.
      */
-    const latestYoutubeId = youtubePlayer.getVideoData().video_id;
+    const latestYoutubeId = getYoutubeIdFromUrl(youtubePlayer.getVideoUrl());
 
     if (youtubeId !== latestYoutubeId) {
         fetchJson(`/atom/youtube/${latestYoutubeId}.json`)
@@ -314,7 +326,7 @@ const onPlayerReady = (
     iframes.push(iframe);
 
     const youtubePlayer = event.target;
-    const youtubeId = youtubePlayer.getVideoData().video_id;
+    const youtubeId = getYoutubeIdFromUrl(youtubePlayer.getVideoUrl());
     const duration = youtubePlayer.getDuration();
 
     players[atomId] = {
