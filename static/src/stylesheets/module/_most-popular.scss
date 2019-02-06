@@ -7,6 +7,7 @@
         justify-content: flex-end;
     }
 
+
     body:not(.has-page-skin) & {
         @include mq(leftCol) {
             margin-top: -$gs-baseline / 2;
@@ -100,6 +101,12 @@
 
         @include mq(desktop) {
             margin: 0 0 0 $gs-gutter;
+        }
+
+        @include mq($from: tablet, $until: desktop) {
+            min-height: $leaderboard-height + $mpu-ad-label-height;
+            width: $leaderboard-width;
+            left: - ($gs-gutter / 2);
         }
 
         body:not(.has-page-skin) & {
