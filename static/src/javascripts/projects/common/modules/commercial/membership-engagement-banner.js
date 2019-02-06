@@ -71,20 +71,25 @@ const deriveBannerParams = (
 ): Promise<EngagementBannerParams> => {
     const defaultParams: EngagementBannerParams = defaultEngagementBannerParams();
 
-    // if the user isn't in a test variant, use the control in google docs
-    if (!testToRun) {
-        return getControlEngagementBannerParams().then(controlParams => ({
+    if (testToRun) {
+        return Promise.resolve({
             ...defaultParams,
-            ...controlParams,
-        }));
+            ...testToRun.variantToRun.engagementBannerParams,
+            campaignCode: `${testToRun.id}_${testToRun.variantToRun.id}`,
+        });
     }
 
-    return Promise.resolve({
+    // if the user isn't in a test variant, use the control in google docs
+    return getControlEngagementBannerParams().then(controlParams => ({
         ...defaultParams,
-        ...testToRun.variantToRun.engagementBannerParams,
-        campaignCode: `${testToRun.id}_${testToRun.variantToRun.id}`,
+        ...controlParams,
+    })).catch(() => {
+        console.log('caught');
+        // TODO: move to getControlEngagementBannerParams()
+        // and if that fails too, just use the hardcoded params
+        return defaultParams;
     });
-};
+}
 
 const getVisitCount = (): number => local.get('gu.alreadyVisited') || 0;
 
