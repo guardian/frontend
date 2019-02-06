@@ -11,7 +11,7 @@ import play.api.mvc.RequestHeader
 import views.support.{CamelCase, GUDateTimeFormat, ImgSrc, Item1200}
 import ai.x.play.json.Jsonx
 import common.Maps.RichMap
-import navigation.UrlHelpers.{Footer, Header, SideMenu, getReaderRevenueUrl}
+import navigation.UrlHelpers.{Footer, Header, SideMenu, getReaderRevenueUrl, AmpHeader, AmpFooter}
 import navigation.ReaderRevenueSite.{Support, SupportContribute, SupportSubscribe}
 import model.meta.{Guardian, LinkedData, PotentialAction}
 import ai.x.play.json.implicits.optionWithNull // Note, required despite Intellij saying otherwise
@@ -338,7 +338,7 @@ object DotcomponentsDataModel {
       getReaderRevenueUrl(SupportSubscribe, SideMenu)(request),
       getReaderRevenueUrl(Support, SideMenu)(request)
     )
-    
+
     val ampHeaderReaderRevenueLink: ReaderRevenueLink = ReaderRevenueLink(
       getReaderRevenueUrl(SupportContribute, AmpHeader)(request),
       getReaderRevenueUrl(SupportSubscribe, AmpHeader)(request),
