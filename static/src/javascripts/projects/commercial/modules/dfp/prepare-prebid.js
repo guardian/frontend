@@ -6,16 +6,15 @@ import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import once from 'lodash/once';
 import { prebid } from 'commercial/modules/prebid/prebid';
 
-const isGoogleWebPreview: () => boolean = () => {
-    try {
-        return navigator.userAgent.indexOf('Google Web Preview') > -1;
-    } catch (exception) {
-        return false;
-    }
-};
+const isGoogleWebPreview: () => boolean = () =>
+    !!(
+        navigator &&
+        navigator.userAgent &&
+        navigator.userAgent.indexOf('Google Web Preview') > -1
+    );
 
 if (!isGoogleWebPreview()) {
-    require('prebid.js/build/dist/prebid'); // eslint-disable-line global-require
+    import('prebid.js/build/dist/prebid');
 }
 
 export const setupPrebid: () => Promise<void> = once(() => {
@@ -35,4 +34,8 @@ export const init = (start: () => void, stop: () => void): Promise<void> => {
     start();
     setupPrebid().then(stop);
     return Promise.resolve();
+};
+
+export const _ = {
+    isGoogleWebPreview,
 };
