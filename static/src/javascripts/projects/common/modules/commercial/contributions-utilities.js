@@ -324,7 +324,7 @@ const makeABTestVariant = (
                 locations.some(
                     region =>
                         getReaderRevenueRegion(geolocationGetSync()) ===
-                        region.toUpperCase()
+                        region.toLowerCase()
                 );
             const matchesTags =
                 tagIds.length === 0 ||
