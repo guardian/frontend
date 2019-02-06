@@ -298,9 +298,9 @@ object DotcomponentsDataModel {
       switches,
       linkedData,
       Configuration.google.subscribeWithGoogleApiUrl,
-      Configuration.site.host,
-      article.metadata.webUrl,
-      article.content.shouldHideAdverts,
+      guardianBaseURL = Configuration.site.host,
+      webURL = article.metadata.webUrl,
+      shouldHideAds = article.content.shouldHideAdverts,
       hasStoryPackage = articlePage.related.hasStoryPackage,
       hasRelated = article.content.showInRelated,
       isCommentable = article.trail.isCommentable
