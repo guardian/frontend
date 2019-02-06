@@ -44,7 +44,7 @@ class RemoteRenderer {
       .map(response => {
         response.status match {
           case 200 =>
-            Cached(article)(RevalidatableResult.Ok(Html(response.body)))
+            Cached(article)(RevalidatableResult.OkDotcomponents(Html(response.body)))
           case _ =>
             throw new Exception(response.body)
         }
