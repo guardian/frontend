@@ -27,7 +27,7 @@ const adSizes: Object = {
 
     // guardian proprietary ad sizes
     video: getAdSize(620, 1),
-    video2: getAdSize(620, 350),
+    outstream: getAdSize(620, 350),
     merchandisingHighAdFeature: getAdSize(88, 89),
     merchandisingHigh: getAdSize(88, 87),
     merchandising: getAdSize(88, 88),
