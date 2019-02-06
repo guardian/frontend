@@ -11,7 +11,9 @@ import play.api.mvc.RequestHeader
 import views.support.{CamelCase, GUDateTimeFormat, ImgSrc, Item1200}
 import ai.x.play.json.Jsonx
 import common.Maps.RichMap
-import navigation.UrlHelpers.{Footer, Header, SideMenu, getReaderRevenueUrl, AmpHeader, AmpFooter}
+import navigation.UrlHelpers.{AmpHeader, AmpFooter}
+import common.commercial.CommercialProperties
+import navigation.UrlHelpers.{Footer, Header, SideMenu, getReaderRevenueUrl}
 import navigation.ReaderRevenueSite.{Support, SupportContribute, SupportSubscribe}
 import model.meta.{Guardian, LinkedData, PotentialAction}
 import ai.x.play.json.implicits.optionWithNull // Note, required despite Intellij saying otherwise
@@ -144,6 +146,7 @@ case class PageData(
     hasStoryPackage: Boolean,
     hasRelated: Boolean,
     isCommentable: Boolean,
+    commercialProperties: Option[CommercialProperties]
 )
 
 case class Config(
@@ -235,6 +238,8 @@ object DotcomponentsDataModel {
       dcBlocks
     )
 
+    val commercialProperties: Option[CommercialProperties] = article.metadata.commercial
+
     val jsConfig = (k: String) => articlePage.getJavascriptConfig.get(k).map(_.as[String])
 
 
@@ -305,7 +310,8 @@ object DotcomponentsDataModel {
       shouldHideAds = article.content.shouldHideAdverts,
       hasStoryPackage = articlePage.related.hasStoryPackage,
       hasRelated = article.content.showInRelated,
-      isCommentable = article.trail.isCommentable
+      isCommentable = article.trail.isCommentable,
+      commercialProperties
     )
 
     val tags = article.tags.tags.map(
