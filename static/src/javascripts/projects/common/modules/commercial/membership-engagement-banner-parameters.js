@@ -37,7 +37,6 @@ export const getAcquisitionsBannerParams = (
             firstRow &&
             firstRow.messageText &&
             firstRow.ctaText &&
-            // TODO: remove askAmount from the existing spreadsheet and add to ctaText!
             firstRow.buttonCaption &&
             firstRow.linkUrl
         )
