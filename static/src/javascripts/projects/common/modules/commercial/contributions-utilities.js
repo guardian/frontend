@@ -128,7 +128,7 @@ const shouldShowEpic = (test: EpicABTest): boolean => {
 
     const storedGeolocation = geolocationGetSync();
     const inCompatibleLocation = test.locations.length
-        ? test.locations.some(geo => geo === storedGeolocation)
+        ? test.locations.some(geo => geo === getReaderRevenueRegion(storedGeolocation))
         : true;
 
     const tagsMatch = doTagsMatch(test);
@@ -320,7 +320,7 @@ const makeABTestVariant = (
             const matchesLocations =
                 locations.length === 0 ||
                 locations.some(
-                    region => geolocationGetSync() === region.toUpperCase()
+                    region => getReaderRevenueRegion(geolocationGetSync()) === region.toUpperCase()
                 );
             const matchesTags =
                 tagIds.length === 0 ||
