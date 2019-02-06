@@ -26,7 +26,7 @@ object UrlHelpers {
       case (Support, Header | SlimHeaderDropdown) => "header_support"
       case (Support, AmpHeader) => "amp_header_support"
       case (Support, SideMenu) => "side_menu_support"
-      case (Support, Footer) => "footer_support"
+      case (Support, Footer | AmpFooter) => "footer_support"
 
       case (SupportContribute, Header | AmpHeader | SlimHeaderDropdown) => "header_support_contribute"
       case (SupportContribute, SideMenu) => "side_menu_support_contribute"
