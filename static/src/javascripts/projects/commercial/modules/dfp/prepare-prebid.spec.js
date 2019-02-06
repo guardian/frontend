@@ -26,12 +26,10 @@ jest.mock('commercial/modules/prebid/bid-config', () => ({
 }));
 
 const fakeUserAgent = (userAgent: string): void => {
-    Object.defineProperty(navigator, 'userAgent', {
-        get() {
-            return userAgent;
-        },
-        configurable: true,
-    });
+    const userAgentObject = {};
+    userAgentObject.get = () => userAgent;
+    userAgentObject.configurable = true;
+    Object.defineProperty(navigator, 'userAgent', userAgentObject);
 };
 
 describe('init', () => {
