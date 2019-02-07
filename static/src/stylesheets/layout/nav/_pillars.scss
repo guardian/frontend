@@ -1,7 +1,7 @@
 .pillars {
     clear: right;
     margin: 0;
-    padding: 0 0 0 ($gs-gutter / 2);
+    padding-left: ($gs-gutter / 2);
 
     .new-header:not(.new-header--slim) & {
         &:after {
@@ -30,10 +30,15 @@
     }
 
     @include mq(mobileLandscape) {
+        display: flex;
         padding-left: $gs-gutter;
+        padding-right: $veggie-burger + $gs-gutter;
     }
 
     @include mq(desktop) {
+        display: block;
+        padding-right: 0;
+
         .new-header--open & {
             z-index: $zindex-main-menu;
         }
@@ -50,12 +55,12 @@
     display: block;
     float: left;
 
-    @include mq($until: mobileLandscape) {
-        flex-grow: 1;
-        text-align: center;
+    @include mq(mobileLandscape) {
+        flex: 1;
     }
 
     @include mq(desktop) {
+        float: left;
         width: $pillar-width--desktop;
     }
 

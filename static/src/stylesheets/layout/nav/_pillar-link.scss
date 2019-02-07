@@ -21,12 +21,15 @@
 
     @include mq($from: 370px) {
         font-size: 16px;
-        padding: 9px 5px 0;
+    }
+
+    @include mq($from: 410px) {
+        padding-right: 14px;
     }
 
     @include mq(mobileLandscape) {
         font-size: 18px;
-        padding: 7px 4px 0;
+        padding: 7px 15px 0 5px;
     }
 
     @include mq(tablet) {
@@ -66,7 +69,12 @@
         // Dividing lines
         border-left: 1px solid $brand-pastel;
         top: 0;
+        bottom: 8px;
         z-index: 1;
+
+        @include mq(mobileMedium) {
+            bottom: 12px;
+        }
 
         @include mq(tablet) {
             bottom: 17px;
