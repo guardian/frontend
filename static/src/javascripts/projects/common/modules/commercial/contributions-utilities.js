@@ -21,12 +21,14 @@ import {
     getSync as geolocationGetSync,
 } from 'lib/geolocation';
 import { noop } from 'lib/noop';
-import { splitAndTrim } from 'lib/string-utils';
+import { splitAndTrim, optionalSplitAndTrim } from 'lib/string-utils';
 import { epicButtonsTemplate } from 'common/modules/commercial/templates/acquisitions-epic-buttons';
 import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templates/acquisitions-epic-control';
+import { epicLiveBlogTemplate } from 'common/modules/commercial/templates/acquisitions-epic-liveblog';
 import { userIsSupporter } from 'common/modules/commercial/user-features';
 import { supportContributeURL } from 'common/modules/commercial/support-utilities';
 import { awaitEpicButtonClicked } from 'common/modules/commercial/epic/epic-utils';
+import { setupEpicInLiveblog } from 'common/modules/commercial/contributions-liveblog-utilities';
 import {
     epicMultipleTestsGoogleDocUrl,
     getBannerGoogleDoc,
@@ -38,8 +40,6 @@ import {
     isArticleWorthAnEpicImpression,
 } from 'common/modules/commercial/epic/epic-exclusion-rules';
 import { getAcquisitionsBannerParams } from 'common/modules/commercial/membership-engagement-banner-parameters';
-
-export type EpicTemplate = (Variant, AcquisitionsEpicTemplateCopy) => string;
 
 export type CtaUrls = {
     supportUrl: string,
@@ -93,6 +93,16 @@ const controlTemplate: EpicTemplate = (
             : undefined,
     });
 
+const liveBlogTemplate: EpicTemplate = (
+    { options = {} },
+    copy: AcquisitionsEpicTemplateCopy
+) =>
+    epicLiveBlogTemplate({
+        copy,
+        componentName: options.componentName,
+        supportURL: options.supportURL,
+    });
+
 const doTagsMatch = (test: EpicABTest): boolean =>
     test.useTargetingTool ? isAbTestTargeted(test) : true;
 
@@ -115,9 +125,13 @@ const getTargets = (
     return [];
 };
 
-const isCompatibleWithEpic = (page: Object): boolean =>
+const isCompatibleWithArticleEpic = (page: Object): boolean =>
     page.contentType === 'Article' &&
     !page.isMinuteArticle &&
+    isArticleWorthAnEpicImpression(page, defaultExclusionRules);
+
+const isCompatibleWithLiveBlogEpic = (page: Object): boolean =>
+    page.contentType === 'LiveBlog' &&
     isArticleWorthAnEpicImpression(page, defaultExclusionRules);
 
 const pageShouldHideReaderRevenue = () =>
@@ -169,10 +183,22 @@ const registerIframeListener = (iframeId: string) => {
     });
 };
 
+const pageMatchesTags = (tagIds: string[]): boolean =>
+    tagIds.some(tagId =>
+        `${config.get('page.keywordIds')},${config.get(
+            'page.nonKeywordTagIds'
+        )}`.includes(tagId)
+    );
+
+const pageMatchesSections = (sectionIds: string[]): boolean =>
+    sectionIds.some(section => config.get('page.section') === section);
+
 const makeABTestVariant = (
     id: string,
     products: $ReadOnlyArray<OphanProduct>,
+    test?: (html: string, abTest: ABTest) => void,
     options: Object,
+    template: EpicTemplate,
     parentTest: EpicABTest
 ): Variant => {
     const trackingCampaignId = `epic_${parentTest.campaignId}`;
@@ -189,6 +215,8 @@ const makeABTestVariant = (
         locations = [],
         tagIds = [],
         sections = [],
+        excludedTagIds = [],
+        excludedSections = [],
         maxViews = parentTest.maxViews,
 
         isUnlimited = false,
@@ -217,7 +245,6 @@ const makeABTestVariant = (
                 variant: id,
             },
         }),
-        template = controlTemplate,
         buttonTemplate = options.buttonTemplate,
         blockEngagementBanner = false,
         engagementBannerParams = {},
@@ -228,7 +255,6 @@ const makeABTestVariant = (
         insertAtSelector = '.submeta',
         insertMultiple = false,
         insertAfter = false,
-        test = noop,
         impression = submitABTestImpression =>
             mediator.once(parentTest.insertEvent, () => {
                 submitInsertEvent({
@@ -292,7 +318,6 @@ const makeABTestVariant = (
             insertAtSelector,
             insertMultiple,
             insertAfter,
-            test,
             impression,
             success,
             iframeId,
@@ -322,24 +347,20 @@ const makeABTestVariant = (
                 locations.some(
                     region => geolocationGetSync() === region.toUpperCase()
                 );
-            const matchesTags =
-                tagIds.length === 0 ||
-                tagIds.some(tagId =>
-                    `${config.get('page.keywordIds')},${config.get(
-                        'page.nonKeywordTagIds'
-                    )}`.includes(tagId)
-                );
+
+            const matchesTags = tagIds.length === 0 || pageMatchesTags(tagIds);
             const matchesSections =
-                sections.length === 0 ||
-                sections.some(
-                    section => config.get('page.section') === section
-                );
+                sections.length === 0 || pageMatchesSections(sections);
+            const noExcludedTags = !pageMatchesTags(excludedTagIds);
+            const notExcludedSection = !pageMatchesSections(excludedSections);
 
             return (
                 meetsMaxViewsConditions &&
                 matchesLocations &&
                 matchesTags &&
-                matchesSections
+                matchesSections &&
+                noExcludedTags &&
+                notExcludedSection
             );
         },
 
@@ -352,15 +373,15 @@ const makeABTestVariant = (
                 (options.copy && Promise.resolve(options.copy)) ||
                 googleDocEpicControl();
 
-            const render = (templateFn: ?EpicTemplate) =>
-                copyPromise
-                    .then((copy: AcquisitionsEpicTemplateCopy) => {
-                        const renderTemplate: EpicTemplate =
-                            templateFn ||
-                            (this.options && this.options.template);
-                        return renderTemplate(this, copy);
-                    })
-                    .then(renderedTemplate => {
+            copyPromise
+                .then((copy: AcquisitionsEpicTemplateCopy) =>
+                    this.options.template(this, copy)
+                )
+                .then(renderedTemplate => {
+                    if (test) {
+                        test(renderedTemplate, this);
+                    } else {
+                        // Standard epic insertion. TODO - this could do with a refactor
                         const component = $.create(renderedTemplate);
 
                         mediator.emit('register:begin', trackingCampaignId);
@@ -429,13 +450,8 @@ const makeABTestVariant = (
 
                             return component[0];
                         });
-                    });
-
-            if (test !== noop && typeof test === 'function') {
-                test(render.bind(this), this, parentTest);
-            } else {
-                render.apply(this);
-            }
+                    }
+                });
         },
         impression,
         success,
@@ -467,7 +483,8 @@ const makeABTest = ({
     useTargetingTool = false,
     onlyShowToExistingSupporters = false,
     canRun = () => true,
-    pageCheck = isCompatibleWithEpic,
+    pageCheck = isCompatibleWithArticleEpic,
+    template = controlTemplate,
 }: InitEpicABTest): EpicABTest => {
     const test = {
         // this is true because we use the reader revenue flag rather than sensitive
@@ -516,7 +533,9 @@ const makeABTest = ({
         makeABTestVariant(
             variant.id,
             variant.products,
+            variant.test,
             variant.options || {},
+            template,
             test
         )
     );
@@ -574,6 +593,7 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                 .filter(testName => testName.endsWith('__ON'))
                 .map(name => {
                     const isThankYou = name.includes('__thank_you');
+                    const isLiveBlog = name.includes('__liveblog');
 
                     const rows = sheets[name];
                     const testName = name.split('__ON')[0];
@@ -592,7 +612,15 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                         audience: 1,
                         audienceOffset: 0,
 
-                        // Special settings for the "thank you" epic
+                        ...(isLiveBlog
+                            ? {
+                                  template: liveBlogTemplate,
+                                  pageCheck: isCompatibleWithLiveBlogEpic,
+                              }
+                            : {
+                                  template: controlTemplate,
+                                  pageCheck: isCompatibleWithArticleEpic,
+                              }),
                         ...(isThankYou
                             ? {
                                   onlyShowToExistingSupporters: true,
@@ -609,13 +637,30 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                         variants: rows.map(row => ({
                             id: row.name,
                             products: [],
+                            ...(isLiveBlog
+                                ? { test: setupEpicInLiveblog }
+                                : {}),
                             options: {
                                 buttonTemplate: isThankYou
                                     ? undefined
                                     : defaultButtonTemplate,
-                                locations: splitAndTrim(row.locations, ','),
-                                tagIds: splitAndTrim(row.tagIds, ','),
-                                sections: splitAndTrim(row.sections, ','),
+                                locations: optionalSplitAndTrim(
+                                    row.locations,
+                                    ','
+                                ),
+                                tagIds: optionalSplitAndTrim(row.tagIds, ','),
+                                sections: optionalSplitAndTrim(
+                                    row.sections,
+                                    ','
+                                ),
+                                excludedTagIds: optionalSplitAndTrim(
+                                    row.excludedTagIds,
+                                    ','
+                                ),
+                                excludedSections: optionalSplitAndTrim(
+                                    row.excludedSections,
+                                    ','
+                                ),
                                 copy: {
                                     heading: row.heading,
                                     paragraphs: splitAndTrim(

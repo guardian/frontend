@@ -59,6 +59,7 @@ declare type EpicABTest = AcquisitionsABTest & {
 declare type InitEpicABTestVariant = {
     id: string,
     products: $ReadOnlyArray<OphanProduct>,
+    test?: (html: string, abTest: ABTest) => void,
     options?: Object
 };
 
@@ -67,6 +68,8 @@ declare type InitBannerABTestVariant = {
     products: $ReadOnlyArray<OphanProduct>,
     engagementBannerParams: () => Promise<?EngagementBannerTemplateParams>
 };
+
+declare type EpicTemplate = (Variant, AcquisitionsEpicTemplateCopy) => string;
 
 declare type InitEpicABTest = {
     id: string,
@@ -93,6 +96,7 @@ declare type InitEpicABTest = {
     onlyShowToExistingSupporters?: boolean,
     canRun?: (test: EpicABTest) => boolean,
     pageCheck?: (page: Object) => boolean,
+    template?: EpicTemplate,
 }
 
 declare type Interaction = {
