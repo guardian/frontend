@@ -315,16 +315,16 @@ $email-tones: (
         .sup-highlight {
             color: #121212;
             font-weight: bold;
-            background-color:#ffe500;
+            background-color: #ffe500;
             padding-bottom: 2px;
         }
     }
     .sm-btn {
-        background-color:#ffe500;
+        background-color: #ffe500;
         border-radius: 20px;
-        color:#000000;
+        color: #000000;
         display: inline-block;
-        font-family: Georgia,serif;
+        font-family: Georgia, serif;
         font-size: 16px;
         line-height: 40px;
         font-weight: bold;
@@ -349,7 +349,7 @@ $email-tones: (
         }
     }
     .wrap-pad {
-        padding: 20px 10px 0 10px;
+        padding: 20px 10px 0;
         &.text-center {
             text-align: center;
             font-size: 0;
