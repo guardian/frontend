@@ -21,7 +21,7 @@ import {
     getSync as geolocationGetSync,
 } from 'lib/geolocation';
 import { noop } from 'lib/noop';
-import { splitAndTrim } from 'lib/string-utils';
+import { splitAndTrim, optionalSplitAndTrim } from 'lib/string-utils';
 import { epicButtonsTemplate } from 'common/modules/commercial/templates/acquisitions-epic-buttons';
 import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templates/acquisitions-epic-control';
 import { epicLiveBlogTemplate } from 'common/modules/commercial/templates/acquisitions-epic-liveblog';
@@ -185,6 +185,16 @@ const registerIframeListener = (iframeId: string) => {
     });
 };
 
+const pageMatchesTags = (tagIds: string[]): boolean => tagIds.some(tagId =>
+        `${config.get('page.keywordIds')},${config.get(
+            'page.nonKeywordTagIds'
+        )}`.includes(tagId)
+    );
+
+const pageMatchesSections = (sectionIds: string[]): boolean => sectionIds.some(
+        section => config.get('page.section') === section
+    );
+
 const makeABTestVariant = (
     id: string,
     products: $ReadOnlyArray<OphanProduct>,
@@ -207,6 +217,8 @@ const makeABTestVariant = (
         locations = [],
         tagIds = [],
         sections = [],
+        excludedTagIds = [],
+        excludedSections = [],
         maxViews = parentTest.maxViews,
 
         isUnlimited = false,
@@ -337,24 +349,19 @@ const makeABTestVariant = (
                 locations.some(
                     region => geolocationGetSync() === region.toUpperCase()
                 );
-            const matchesTags =
-                tagIds.length === 0 ||
-                tagIds.some(tagId =>
-                    `${config.get('page.keywordIds')},${config.get(
-                        'page.nonKeywordTagIds'
-                    )}`.includes(tagId)
-                );
-            const matchesSections =
-                sections.length === 0 ||
-                sections.some(
-                    section => config.get('page.section') === section
-                );
+
+            const matchesTags = tagIds.length === 0 || pageMatchesTags(tagIds);
+            const matchesSections = sections.length === 0 || pageMatchesSections(sections);
+            const noExcludedTags = !pageMatchesTags(excludedTagIds);
+            const notExcludedSection = !pageMatchesSections(excludedSections);
 
             return (
                 meetsMaxViewsConditions &&
                 matchesLocations &&
                 matchesTags &&
-                matchesSections
+                matchesSections &&
+                noExcludedTags &&
+                notExcludedSection
             );
         },
 
@@ -637,9 +644,10 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                                     ? undefined
                                     : defaultButtonTemplate,
                                 locations: splitAndTrim(row.locations, ','),
-                                // TODO - exclude by tag/section
                                 tagIds: splitAndTrim(row.tagIds, ','),
                                 sections: splitAndTrim(row.sections, ','),
+                                excludedTagIds: optionalSplitAndTrim(row.excludedTagIds, ','),
+                                excludedSections: optionalSplitAndTrim(row.excludedSections, ','),
                                 copy: {
                                     heading: row.heading,
                                     paragraphs: splitAndTrim(
