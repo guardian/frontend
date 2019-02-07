@@ -578,7 +578,9 @@ object GalleryCaptionCleaner extends HtmlCleaner {
   override def clean(galleryCaption: Document): Document = {
     val firstStrong = Option(galleryCaption.getElementsByTag("strong").first())
     val captionTitle = galleryCaption.createElement("h2")
-    val captionTitleText = firstStrong.map(_.text()).getOrElse("")
+    val captionTitleText = firstStrong.map(_.children().toString)
+      .getOrElse("")
+      .replaceAll("<br>", "")
 
     // <strong> is removed in place of having a <h2> element
     firstStrong.foreach(_.remove())
@@ -587,7 +589,7 @@ object GalleryCaptionCleaner extends HtmlCleaner {
     galleryCaption.getElementsByTag("br").remove()
 
     captionTitle.addClass("gallery__caption__title")
-    captionTitle.text(captionTitleText)
+    captionTitle.html(captionTitleText)
 
     galleryCaption.prependChild(captionTitle)
 
