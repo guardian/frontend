@@ -8,7 +8,7 @@ declare type Variant = {
     success?: ListenerFunction,
     options?: Object,
     engagementBannerParams?: () => Promise<EngagementBannerParams>,
-    maxViews: MaxViews,
+    maxViews?: MaxViews,
 };
 
 declare type ABTest = {
