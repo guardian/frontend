@@ -81,29 +81,27 @@ const defaultButtonTemplate = (url: CtaUrls) => epicButtonsTemplate(url);
 const controlTemplate: EpicTemplate = (
     { options = {} },
     copy: AcquisitionsEpicTemplateCopy
-) => {
-    return acquisitionsEpicControlTemplate({
+) =>
+    acquisitionsEpicControlTemplate({
         copy,
         componentName: options.componentName,
         buttonTemplate: options.buttonTemplate
             ? options.buttonTemplate({
-                supportUrl: options.supportURL,
-                subscribeUrl: options.subscribeURL,
-            })
+                  supportUrl: options.supportURL,
+                  subscribeUrl: options.subscribeURL,
+              })
             : undefined,
     });
-}
 
 const liveBlogTemplate: EpicTemplate = (
     { options = {} },
     copy: AcquisitionsEpicTemplateCopy
-) => {
-    return epicLiveBlogTemplate({
+) =>
+    epicLiveBlogTemplate({
         copy,
         componentName: options.componentName,
         supportURL: options.supportURL,
     });
-}
 
 const doTagsMatch = (test: EpicABTest): boolean =>
     test.useTargetingTool ? isAbTestTargeted(test) : true;
@@ -185,15 +183,15 @@ const registerIframeListener = (iframeId: string) => {
     });
 };
 
-const pageMatchesTags = (tagIds: string[]): boolean => tagIds.some(tagId =>
+const pageMatchesTags = (tagIds: string[]): boolean =>
+    tagIds.some(tagId =>
         `${config.get('page.keywordIds')},${config.get(
             'page.nonKeywordTagIds'
         )}`.includes(tagId)
     );
 
-const pageMatchesSections = (sectionIds: string[]): boolean => sectionIds.some(
-        section => config.get('page.section') === section
-    );
+const pageMatchesSections = (sectionIds: string[]): boolean =>
+    sectionIds.some(section => config.get('page.section') === section);
 
 const makeABTestVariant = (
     id: string,
@@ -351,7 +349,8 @@ const makeABTestVariant = (
                 );
 
             const matchesTags = tagIds.length === 0 || pageMatchesTags(tagIds);
-            const matchesSections = sections.length === 0 || pageMatchesSections(sections);
+            const matchesSections =
+                sections.length === 0 || pageMatchesSections(sections);
             const noExcludedTags = !pageMatchesTags(excludedTagIds);
             const notExcludedSection = !pageMatchesSections(excludedSections);
 
@@ -375,10 +374,12 @@ const makeABTestVariant = (
                 googleDocEpicControl();
 
             copyPromise
-                .then((copy: AcquisitionsEpicTemplateCopy) => this.options.template(this, copy))
+                .then((copy: AcquisitionsEpicTemplateCopy) =>
+                    this.options.template(this, copy)
+                )
                 .then(renderedTemplate => {
                     if (test) {
-                        test(renderedTemplate, this)
+                        test(renderedTemplate, this);
                     } else {
                         // Basic epic insertion
                         const component = $.create(renderedTemplate);
@@ -434,7 +435,7 @@ const makeABTestVariant = (
                                         logView(parentTest.id);
                                         mediator.emit(parentTest.viewEvent, {
                                             componentType:
-                                            parentTest.componentType,
+                                                parentTest.componentType,
                                             products,
                                             campaignCode,
                                         });
@@ -450,7 +451,7 @@ const makeABTestVariant = (
                             return component[0];
                         });
                     }
-                })
+                });
         },
         impression,
         success,
@@ -613,14 +614,13 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
 
                         ...(isLiveBlog
                             ? {
-                                template: liveBlogTemplate,
-                                pageCheck: isCompatibleWithLiveBlogEpic,
+                                  template: liveBlogTemplate,
+                                  pageCheck: isCompatibleWithLiveBlogEpic,
                               }
                             : {
-                                template: controlTemplate,
-                                pageCheck: isCompatibleWithArticleEpic,
-                            }),
-
+                                  template: controlTemplate,
+                                  pageCheck: isCompatibleWithArticleEpic,
+                              }),
                         ...(isThankYou
                             ? {
                                   onlyShowToExistingSupporters: true,
@@ -637,8 +637,9 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                         variants: rows.map(row => ({
                             id: row.name,
                             products: [],
-                            ...(isLiveBlog ? { test: setupEpicInLiveblog } : { }),
-
+                            ...(isLiveBlog
+                                ? { test: setupEpicInLiveblog }
+                                : {}),
                             options: {
                                 buttonTemplate: isThankYou
                                     ? undefined
@@ -646,8 +647,14 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                                 locations: splitAndTrim(row.locations, ','),
                                 tagIds: splitAndTrim(row.tagIds, ','),
                                 sections: splitAndTrim(row.sections, ','),
-                                excludedTagIds: optionalSplitAndTrim(row.excludedTagIds, ','),
-                                excludedSections: optionalSplitAndTrim(row.excludedSections, ','),
+                                excludedTagIds: optionalSplitAndTrim(
+                                    row.excludedTagIds,
+                                    ','
+                                ),
+                                excludedSections: optionalSplitAndTrim(
+                                    row.excludedSections,
+                                    ','
+                                ),
                                 copy: {
                                     heading: row.heading,
                                     paragraphs: splitAndTrim(
