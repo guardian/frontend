@@ -622,10 +622,12 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                                         row.paragraphs,
                                         '\n'
                                     ),
-                                    highlightedText: row.highlightedText.replace(
-                                        /%%CURRENCY_SYMBOL%%/g,
-                                        getLocalCurrencySymbol()
-                                    ),
+                                    highlightedText: row.highlightedText
+                                        ? row.highlightedText.replace(
+                                              /%%CURRENCY_SYMBOL%%/g,
+                                              getLocalCurrencySymbol()
+                                          )
+                                        : undefined,
                                 },
                             },
                         })),
