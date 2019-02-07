@@ -197,6 +197,7 @@ const makeABTestVariant = (
     id: string,
     products: $ReadOnlyArray<OphanProduct>,
     test?: (html: string, abTest: ABTest) => void,
+    maxViews: MaxViews = defaultMaxViews,
     options: Object,
     template: EpicTemplate,
     parentTest: EpicABTest
@@ -217,7 +218,6 @@ const makeABTestVariant = (
         sections = [],
         excludedTagIds = [],
         excludedSections = [],
-        maxViews = parentTest.maxViews,
 
         isUnlimited = false,
         campaignCode = createTestAndVariantId(
@@ -301,7 +301,6 @@ const makeABTestVariant = (
             componentName: `mem_acquisition_${trackingCampaignId}_${id}`,
             campaignCodes: [campaignCode],
 
-            maxViews,
             isUnlimited,
             products,
             campaignCode,
@@ -474,7 +473,6 @@ const makeABTest = ({
 
     // optional params
     // locations is a filter where empty is taken to mean 'all'
-    maxViews = defaultMaxViews,
     locations = [],
     dataLinkNames = '',
     campaignPrefix = 'gdnwb_copts_memco',
@@ -506,7 +504,6 @@ const makeABTest = ({
         viewEvent: makeEvent(id, 'view'),
 
         variants: [],
-        maxViews: maxViews || defaultMaxViews,
 
         id,
         start,
@@ -534,6 +531,7 @@ const makeABTest = ({
             variant.id,
             variant.products,
             variant.test,
+            variant.maxViews,
             variant.options || {},
             template,
             test
@@ -624,22 +622,27 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                         ...(isThankYou
                             ? {
                                   onlyShowToExistingSupporters: true,
-                                  maxViews: {
-                                      days: 365, // Arbitrarily high number - reader should only see the thank-you for one 'cycle'.
-                                      count: 1,
-                                      minDaysBetweenViews: 0,
-                                  },
                                   useLocalViewLog: true,
                               }
-                            : {
-                                  maxViews: defaultMaxViews,
-                              }),
+                            : {}),
                         variants: rows.map(row => ({
                             id: row.name,
                             products: [],
                             ...(isLiveBlog
                                 ? { test: setupEpicInLiveblog }
                                 : {}),
+                            maxViews: {
+                                days:
+                                    parseInt(row.maxViewsDays, 10) ||
+                                    defaultMaxViews.days,
+                                count:
+                                    parseInt(row.maxViewsCount, 10) ||
+                                    defaultMaxViews.count,
+                                minDaysBetweenViews:
+                                    parseInt(row.minDaysBetweenViews, 10) ||
+                                    defaultMaxViews.minDaysBetweenViews,
+                            },
+
                             options: {
                                 buttonTemplate: isThankYou
                                     ? undefined

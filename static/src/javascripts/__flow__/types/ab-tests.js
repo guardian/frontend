@@ -8,6 +8,7 @@ declare type Variant = {
     success?: ListenerFunction,
     options?: Object,
     engagementBannerParams?: () => Promise<EngagementBannerParams>,
+    maxViews: MaxViews,
 };
 
 declare type ABTest = {
@@ -53,13 +54,13 @@ declare type EpicABTest = AcquisitionsABTest & {
     useTargetingTool: boolean,
     insertEvent: string,
     viewEvent: string,
-    maxViews: MaxViews,
 };
 
 declare type InitEpicABTestVariant = {
     id: string,
     products: $ReadOnlyArray<OphanProduct>,
     test?: (html: string, abTest: ABTest) => void,
+    maxViews?: MaxViews,
     options?: Object
 };
 
@@ -86,7 +87,6 @@ declare type InitEpicABTest = {
     variants: $ReadOnlyArray<InitEpicABTestVariant>,
 
     // locations is a filter where empty is taken to mean 'all'
-    maxViews?: MaxViews,
     locations?: string[],
     dataLinkNames?: string,
     campaignPrefix?: string,
