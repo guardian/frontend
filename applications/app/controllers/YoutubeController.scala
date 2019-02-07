@@ -12,8 +12,8 @@ import scala.util.{Failure, Success}
 
 class YoutubeController(contentApiClient: ContentApiClient, wsClient: WSClient, val controllerComponents: ControllerComponents) extends BaseController with Logging with ImplicitControllerExecutionContext {
 
-  def getAtomId(id: String): Action[AnyContent] = Action.async { implicit request =>
-    val capiQuery = contentApiClient.item(s"atom/media/youtube-$id")
+  def getAtomId(youtubeId: String): Action[AnyContent] = Action.async { implicit request =>
+    val capiQuery = contentApiClient.item(s"atom/media/youtube-$youtubeId")
 
     val response = contentApiClient.getResponse(capiQuery).map{item =>
       val atomId = item.media.map(media =>
