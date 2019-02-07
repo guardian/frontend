@@ -8,6 +8,7 @@ const inlineDefinition = {
             adSizes.empty,
             adSizes.mpu,
             adSizes.googleCard,
+            adSizes.outstream,
             adSizes.fluid,
         ],
         desktop: [
