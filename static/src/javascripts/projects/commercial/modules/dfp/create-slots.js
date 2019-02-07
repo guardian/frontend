@@ -15,7 +15,7 @@ const inlineDefinition = {
             adSizes.empty,
             adSizes.mpu,
             adSizes.video,
-            adSizes.video2,
+            adSizes.outstream,
             adSizes.googleCard,
             adSizes.fluid,
         ],

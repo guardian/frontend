@@ -6,6 +6,7 @@ import uniqBy from 'lodash/uniqBy';
 import flatten from 'lodash/flatten';
 import once from 'lodash/once';
 import { getOutbrainComplianceTargeting } from 'commercial/modules/third-party-tags/outbrain';
+import type { Slot } from 'commercial/types';
 
 const adUnit = once(() => {
     const urlVars = getUrlVars();
@@ -76,6 +77,18 @@ const adomikClassify = (): string => {
     }
 };
 
+const isEligibleForOutstream = (slotTarget: ?string): boolean =>
+    typeof slotTarget === 'string' && slotTarget === 'inline1';
+
+const allowSafeFrameToExpand = (slot: Slot): Slot => {
+    slot.setSafeFrameConfig({
+        allowOverlayExpansion: false,
+        allowPushExpansion: true,
+        sandbox: true,
+    });
+    return slot;
+};
+
 const defineSlot = (adSlotNode: Element, sizes: Object): Object => {
     const slotTarget = adSlotNode.getAttribute('data-name');
     const sizeOpts = getSizeOpts(sizes);
@@ -92,6 +105,9 @@ const defineSlot = (adSlotNode: Element, sizes: Object): Object => {
         slot = window.googletag
             .defineSlot(adUnit(), sizeOpts.sizes, id)
             .defineSizeMapping(sizeOpts.sizeMapping);
+        if (isEligibleForOutstream(slotTarget)) {
+            allowSafeFrameToExpand(slot);
+        }
         slotReady = setHighMerchSlotTargeting(slot, slotTarget);
     }
 
