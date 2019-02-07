@@ -644,9 +644,15 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                                 buttonTemplate: isThankYou
                                     ? undefined
                                     : defaultButtonTemplate,
-                                locations: splitAndTrim(row.locations, ','),
-                                tagIds: splitAndTrim(row.tagIds, ','),
-                                sections: splitAndTrim(row.sections, ','),
+                                locations: optionalSplitAndTrim(
+                                    row.locations,
+                                    ','
+                                ),
+                                tagIds: optionalSplitAndTrim(row.tagIds, ','),
+                                sections: optionalSplitAndTrim(
+                                    row.sections,
+                                    ','
+                                ),
                                 excludedTagIds: optionalSplitAndTrim(
                                     row.excludedTagIds,
                                     ','
