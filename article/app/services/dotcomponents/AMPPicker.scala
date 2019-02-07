@@ -43,13 +43,25 @@ object AMPPicker {
     logger.withRequestHeaders(request).results(msg, results, page)
   }
 
-  private[this] val sectionsWhitelist: Set[String] = Set(
+  private[this] val sectionsWhitelist: Set[String] = {
+    val safeSections = Set[String]()
 
-  )
+    if (conf.switches.Switches.DotcomRenderingAMPRollout.isSwitchedOn) {
+      Set("music") ++ safeSections
+    } else {
+      safeSections
+    }
+  }
 
-  private[this] val tagsWhitelist: Set[String] = Set(
+  private[this] val tagsWhitelist: Set[String] = {
+    val safeTags = Set[String]()
 
-  )
+    if (conf.switches.Switches.DotcomRenderingAMPRollout.isSwitchedOn) {
+      Set("info/series/digital-blog") ++ safeTags
+    } else {
+      safeTags
+    }
+  }
 
   private[this] val pageWhitelist: Set[String] = Set(
     "world/2018/oct/14/british-man-shot-dead-by-hunter-in-france",
