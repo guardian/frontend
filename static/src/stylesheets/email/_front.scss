@@ -292,4 +292,69 @@ $email-tones: (
     }
 }
 
+// Supporter Merchandising Module
+
+.subscribe {
+    border-collapse:collapse;
+    background-color: #ffffff;
+    &.sc {
+        width: 100%;
+        max-width: 500px;
+    }
+    .padded-divider {
+        display: none;
+    }
+    .sup-copy {
+        display: block;
+        font-family: Georgia, serif;
+        font-size: 14px;
+        line-height: 20px;
+        mso-line-height-rule: exactly;
+        color: #121212;
+        padding-bottom: 15px;
+        .sup-highlight {
+            color: #121212;
+            font-weight: bold;
+            background-color:#ffe500;
+            padding-bottom:2px;
+        }
+    }
+    .sm-btn {
+        background-color:#ffe500;
+        border-radius:20px;
+        color:#000000;
+        display:inline-block;
+        font-family:Georgia,serif;
+        font-size:16px;
+        line-height:40px;
+        font-weight:bold;
+        text-align:center;
+        text-decoration:none;
+        min-width:130px;
+        -webkit-text-size-adjust:none;
+        mso-hide:all;
+    }
+    .cta-pad {
+        padding-bottom: 15px;
+    }
+    .column {
+        width: 100%;
+        display: inline-block;
+        vertical-align: top;
+        &.column-left {
+            max-width: 330px;
+        }
+        &.column-right {
+            max-width: 150px;
+        }
+    }
+    .wrap-pad {
+        padding: 20px 10px 0 10px;
+        &.text-center {
+            text-align: center;
+            font-size: 0;
+        }
+    }
+}
+
 @import '_media-query';
