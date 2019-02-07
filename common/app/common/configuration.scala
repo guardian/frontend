@@ -149,6 +149,8 @@ class GuardianConfiguration extends Logging {
   object rendering {
     lazy val renderingEndpoint = configuration.getMandatoryStringProperty("rendering.endpoint")
     lazy val AMPArticleEndpoint = configuration.getMandatoryStringProperty("rendering.AMPArticleEndpoint")
+    lazy val sentryHost = configuration.getMandatoryStringProperty("rendering.sentryHost")
+    lazy val sentryPublicApiKey = configuration.getMandatoryStringProperty("rendering.sentryPublicApiKey")
   }
 
   object weather {
