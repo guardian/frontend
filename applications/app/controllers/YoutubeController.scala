@@ -26,7 +26,7 @@ class YoutubeController(contentApiClient: ContentApiClient, wsClient: WSClient, 
     response.transform {
       case result @ Success(_) => result
       case Failure(error) =>
-        log.error(s"Failed to get atom ID for youtube ID $id", error)
+        log.error(s"Failed to get atom ID for youtube ID $youtubeId", error)
         Failure(error)
     }
   }
