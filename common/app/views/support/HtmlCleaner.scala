@@ -3,6 +3,7 @@ package views.support
 import java.net.URI
 import java.util.regex.{Matcher, Pattern}
 
+import com.gu.contentatom.renderer.ArticleConfiguration
 import common.{Edition, LinkTo, Logging}
 import conf.switches.Switches._
 import layout.ContentWidths
@@ -17,6 +18,7 @@ import play.twirl.api.HtmlFormat
 import services.SkimLinksCache
 import conf.Configuration.affiliatelinks._
 import conf.Configuration.site.host
+import conf.switches.Switches
 import views.html.fragments.affiliateLinksDisclaimer
 import views.support.Commercial.isAdFree
 
@@ -697,11 +699,20 @@ case class AtomsCleaner(
             atomContainer.attr("data-atom-id", atomId)
             atomContainer.attr("data-atom-type", atomType)
 
-            val html = if(atomData.isInstanceOf[AudioAtom] && isAdFree(request)) {
-              views.html.fragments.atoms.atom(atomData, Atoms.articleConfig, shouldFence, amp, mediaWrapper, posterImageOverride).toString().replaceAll("flex.acast.com/", "")
+            val articleConfig: ArticleConfiguration = if (atomData.isInstanceOf[AudioAtom]) {
+              Atoms.articleConfig(isAdFree(request), Switches.Acast.isSwitchedOn)
             } else {
-              views.html.fragments.atoms.atom(atomData, Atoms.articleConfig, shouldFence, amp, mediaWrapper, posterImageOverride).toString()
+              Atoms.articleConfig()
             }
+
+            val html = views.html.fragments.atoms.atom(
+              atomData,
+              articleConfig,
+              shouldFence,
+              amp,
+              mediaWrapper,
+              posterImageOverride
+            ).toString()
 
             bodyElement.remove()
             atomContainer.append(html)

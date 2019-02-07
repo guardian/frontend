@@ -228,10 +228,15 @@ final case class AudioAtom(
 
 object Atoms extends common.Logging {
 
-  def articleConfig = ArticleConfiguration(
-    ajaxUrl = Configuration.ajax.url,
-    commonsdivisionConfiguration = ArticleConfiguration.CommonsdivisionConfiguration(showMps = true)
-  )
+  def articleConfig(isAdFree: Boolean = false, useAcast: Boolean = false) = {
+    val artConf = ArticleConfiguration(
+      ajaxUrl = Configuration.ajax.url,
+      isAdFree = isAdFree,
+      useAcast = useAcast,
+      commonsdivisionConfiguration = ArticleConfiguration.CommonsdivisionConfiguration(showMps = true)
+    )
+    artConf
+  }
 
   def extract[T](
     atoms: Option[Seq[AtomApiAtom]],
