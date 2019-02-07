@@ -381,7 +381,7 @@ const makeABTestVariant = (
                     if (test) {
                         test(renderedTemplate, this);
                     } else {
-                        // Basic epic insertion
+                        // Standard epic insertion. TODO - this could do with a refactor
                         const component = $.create(renderedTemplate);
 
                         mediator.emit('register:begin', trackingCampaignId);
