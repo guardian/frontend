@@ -238,8 +238,6 @@ object DotcomponentsDataModel {
       dcBlocks
     )
 
-    val commercialProperties: Option[CommercialProperties] = article.metadata.commercial
-
     val jsConfig = (k: String) => articlePage.getJavascriptConfig.get(k).map(_.as[String])
 
 
@@ -311,7 +309,7 @@ object DotcomponentsDataModel {
       hasStoryPackage = articlePage.related.hasStoryPackage,
       hasRelated = article.content.showInRelated,
       isCommentable = article.trail.isCommentable,
-      commercialProperties
+      article.metadata.commercial
     )
 
     val tags = article.tags.tags.map(
