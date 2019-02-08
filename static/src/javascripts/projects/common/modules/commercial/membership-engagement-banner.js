@@ -57,9 +57,7 @@ const hasBannerBeenRedeployedSinceClosed = (
         .catch(err => {
             // Capture in sentry
             reportError(
-                new Error(
-                    `Unable to get engagement banner deploy log: ${err}`
-                ),
+                new Error(`Unable to get engagement banner deploy log: ${err}`),
                 { feature: 'engagement-banner' },
                 false
             );
