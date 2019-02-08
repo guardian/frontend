@@ -61,14 +61,6 @@ jest.mock(
             products: ['CONTRIBUTION'],
             linkUrl: 'fake-link-url',
         })),
-        deriveBannerParams: jest.fn(() =>
-            Promise.resolve({
-                buttonCaption: 'test-button-caption',
-                linkUrl: 'test-link-url',
-                messageText: 'test-message-text',
-                ctaText: 'test-cta-text',
-            })
-        ),
         getControlEngagementBannerParams: jest.fn(() => ({})),
     })
 );
@@ -294,9 +286,6 @@ describe('Membership engagement banner', () => {
                 linkUrl: 'fake-link-url',
                 buttonCaption: 'fake-button-caption',
             }));
-            deriveBannerParams.mockImplementationOnce(() =>
-                Promise.resolve({})
-            );
             fakeConfig.get.mockImplementationOnce(() => true);
             fakeConstructQuery.mockImplementationOnce(
                 () => 'fake-query-parameters'
