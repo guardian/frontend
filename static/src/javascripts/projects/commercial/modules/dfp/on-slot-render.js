@@ -75,6 +75,7 @@ export const onSlotRender = (event: SlotRenderEndedEvent): void => {
         // Set refresh field based on the outcome of the slot render.
         const sizeString = advert.size && advert.size.toString();
         const isNotFluid = sizeString !== '0,0';
+        const isOutstream = sizeString === '620,350';
         const isNonRefreshableLineItem =
             event.lineItemId &&
             config
@@ -82,7 +83,10 @@ export const onSlotRender = (event: SlotRenderEndedEvent): void => {
                 .includes(event.lineItemId);
 
         advert.shouldRefresh =
-            isNotFluid && !config.page.hasPageSkin && !isNonRefreshableLineItem;
+            isNotFluid &&
+            !isOutstream &&
+            !config.page.hasPageSkin &&
+            !isNonRefreshableLineItem;
 
         renderAdvert(advert, event).then(emitRenderEvents);
     }
