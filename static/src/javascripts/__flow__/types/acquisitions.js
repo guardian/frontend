@@ -25,4 +25,8 @@ declare type EngagementBannerParams = EngagementBannerTemplateParams & {
     paypalClass?: string,
     template?: (templateParams: EngagementBannerTemplateParams) => string,
     bannerModifierClass?: string,
+    abTest?: {
+        name: string,
+        variant: string
+    }
 };

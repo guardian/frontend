@@ -83,13 +83,8 @@ const deriveBannerParams = (
     return getControlEngagementBannerParams().then(controlParams => ({
         ...defaultParams,
         ...controlParams,
-    })).catch(() => {
-        console.log('caught');
-        // TODO: move to getControlEngagementBannerParams()
-        // and if that fails too, just use the hardcoded params
-        return defaultParams;
-    });
-}
+    }));
+};
 
 const getVisitCount = (): number => local.get('gu.alreadyVisited') || 0;
 
@@ -109,7 +104,6 @@ const clearBannerHistory = (): void => {
 
 const showBanner = (
     params: EngagementBannerParams,
-    runningBannerTest: ?Runnable<AcquisitionsABTest>
 ): void => {
     const messageText = Array.isArray(params.messageText)
         ? selectSequentiallyFrom(params.messageText)
@@ -121,12 +115,7 @@ const showBanner = (
         componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
         componentId: params.campaignCode,
         campaignCode: params.campaignCode,
-        abTest: runningBannerTest
-            ? {
-                  name: runningBannerTest.id,
-                  variant: runningBannerTest.variantToRun.id,
-              }
-            : undefined,
+        ...(params.abTest ? { abTest: params.abTest } : {}),
     });
     const buttonCaption = params.buttonCaption;
     const templateParams = {
@@ -166,14 +155,7 @@ const showBanner = (
                     id: params.campaignCode,
                 },
                 action,
-                ...(runningBannerTest
-                    ? {
-                          abTest: {
-                              name: runningBannerTest.id,
-                              variant: runningBannerTest.variantToRun.id,
-                          },
-                      }
-                    : {}),
+                ...(params.abTest ? { abTest: params.abTest } : {}),
             });
         });
 
@@ -187,12 +169,8 @@ const showBanner = (
 
 const show = (): Promise<boolean> =>
     getEngagementBannerTestToRun()
-        .then(testToRun =>
-            deriveBannerParams(testToRun).then(params => {
-                showBanner(params, testToRun);
-                return true;
-            })
-        )
+        .then(deriveBannerParams)
+        .then(showBanner)
         .catch(() => false);
 
 const canShow = (): Promise<boolean> => {
