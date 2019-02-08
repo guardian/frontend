@@ -309,7 +309,7 @@ $email-tones: (
         font-family: Georgia, serif;
         font-size: 14px;
         line-height: 20px;
-        mso-line-height-rule: exactly;
+        mso-line-height-rule: exactly; // No result reported
         color: #121212;
         padding-bottom: 15px;
         .sup-highlight {
@@ -332,7 +332,7 @@ $email-tones: (
         text-decoration: none;
         min-width: 130px;
         -webkit-text-size-adjust: none;
-        mso-hide: all;
+        mso-hide: all; // No result reported
     }
     .cta-pad {
         padding-bottom: 15px;
