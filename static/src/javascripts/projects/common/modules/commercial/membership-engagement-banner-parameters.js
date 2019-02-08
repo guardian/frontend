@@ -52,7 +52,7 @@ export const getAcquisitionsBannerParams = (
         ctaText: `<span class="engagement-banner__highlight"> ${firstRow.ctaText.replace(
             /%%CURRENCY_SYMBOL%%/g,
             getLocalCurrencySymbol()
-        )}1</span>`,
+        )}</span>`,
         buttonCaption: firstRow.buttonCaption,
         linkUrl: firstRow.linkUrl,
         hasTicker: false,
