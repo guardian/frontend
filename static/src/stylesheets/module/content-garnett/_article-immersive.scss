@@ -211,6 +211,8 @@
     &.content__standfirst--advertisement {
         font-family: $f-sans-serif-text;
         font-weight: 400;
+        padding-left: 0;
+        margin-left: 0;
     }
 }
 
@@ -649,6 +651,14 @@
             .badge-slot {
                 width: auto;
             }
+        }
+    }
+
+    .content__labels--paidgallery {
+        background: $labs-main;
+
+        .content__section-label__link--advertisement {
+            color: $brightness-7;
         }
     }
 
