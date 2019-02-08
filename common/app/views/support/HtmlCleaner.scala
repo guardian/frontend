@@ -576,18 +576,20 @@ case class DropCaps(isFeature: Boolean, isImmersive: Boolean, isRecipeArticle: B
 // This is a hack to serve the correct html
 object GalleryCaptionCleaner extends HtmlCleaner {
   override def clean(galleryCaption: Document): Document = {
-    val firstStrong = Option(galleryCaption.getElementsByTag("strong").first())
-    val captionTitle = galleryCaption.createElement("h2")
-    val captionTitleText = firstStrong.map(_.text()).getOrElse("")
-
-    // <strong> is removed in place of having a <h2> element
-    firstStrong.foreach(_.remove())
     // There is an inconsistent number of <br> tags in gallery captions.
     // To create some consistency, re will remove them all.
     galleryCaption.getElementsByTag("br").remove()
 
+    val firstStrong = Option(galleryCaption.getElementsByTag("strong").first())
+    val captionTitle = galleryCaption.createElement("h2")
+    val captionTitleText = firstStrong.map(_.children().toString)
+      .getOrElse("")
+
+    // <strong> is removed in place of having a <h2> element
+    firstStrong.foreach(_.remove())
+
     captionTitle.addClass("gallery__caption__title")
-    captionTitle.text(captionTitleText)
+    captionTitle.html(captionTitleText)
 
     galleryCaption.prependChild(captionTitle)
 
