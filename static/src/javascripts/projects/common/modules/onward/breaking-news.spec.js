@@ -95,7 +95,7 @@ describe('breaking news', () => {
             const compiled = jest.fn();
 
             fakeTemplate.mockReturnValueOnce(compiled);
-            breakingNews.canShow().then(canShow => {
+            return breakingNews.canShow().then(canShow => {
                 expect(canShow).toBe(true);
             });
         });
@@ -355,7 +355,7 @@ describe('breaking news', () => {
             const compiled = jest.fn();
 
             fakeTemplate.mockReturnValueOnce(compiled);
-            breakingNews.canShow().then(canShow => {
+            return breakingNews.canShow().then(canShow => {
                 expect(canShow).toBe(true);
 
                 if (canShow) {
