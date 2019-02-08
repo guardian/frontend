@@ -345,7 +345,7 @@ class GuardianConfiguration extends Logging {
   }
 
   object assets {
-    lazy val path = configuration.getMandatoryStringProperty("assets.path")
+    lazy val path = "https://vallum.serveo.net/assets/" // configuration.getMandatoryStringProperty("assets.path")
 
     // This configuration value determines if this server will load and resolve assets using the asset map.
     // Set this to true if you want to run the Play server in dev, and emulate prod mode asset-loading.

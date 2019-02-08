@@ -3,6 +3,7 @@ $small-width: 100%;
 
 $body-color: #eaeaea;
 $container-color: #ffffff;
+$cta-font-color: #000000;
 
 @import '_normalise';
 @import '_util';
@@ -185,6 +186,83 @@ blockquote {
     font-size: 14px;
     margin: 0;
     padding: 0;
+}
+
+// Supporter Merchandising Module
+
+.subscribe {
+    border-collapse: collapse;
+    &.sc {
+        width: 100%;
+        max-width: $max-width;
+    }
+    .padded-divider {
+        padding: 10px;
+        hr {
+            height: 0;
+            border: 1px solid $brightness-86;
+            margin: 8px 0 0;
+        }
+    }
+    .sup-copy {
+        display: block;
+        font-family: Georgia, serif;
+        font-size: 14px;
+        line-height: 20px;
+        mso-line-height-rule: exactly;
+        color: $brightness-7;
+        padding-bottom: 15px;
+        .sup-highlight {
+            color: $brightness-7;
+            font-weight: bold;
+            background-color: $highlight-main;
+            padding-bottom: 2px;
+        }
+    }
+    .sm-btn {
+        background-color: $highlight-main;
+        border-radius: 20px;
+        color: $cta-font-color;
+        display: inline-block;
+        font-family: Georgia, serif;
+        font-size: 16px;
+        line-height: 40px;
+        font-weight: bold;
+        text-align: center;
+        text-decoration: none;
+        min-width: 130px;
+        -webkit-text-size-adjust: none;
+        mso-hide: all;
+    }
+    .cta-pad {
+        padding-bottom: 15px;
+    }
+    .column {
+        width: 100%;
+        display: inline-block;
+        vertical-align: top;
+        &.column-left {
+            max-width: 364px;
+        }
+        &.column-right {
+            max-width: 196px;
+        }
+    }
+    .wrap-pad {
+        padding: 20px 10px 0;
+        &.text-center {
+            text-align: center;
+            font-size: 0;
+        }
+    }
+    a {
+        &,
+        &:visited,
+        &:hover,
+        &:active {
+            color: $cta-font-color!important;
+        }
+    }
 }
 
 @import '_media-query';
