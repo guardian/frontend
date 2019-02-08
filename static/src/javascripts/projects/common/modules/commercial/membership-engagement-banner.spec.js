@@ -232,8 +232,7 @@ describe('Membership engagement banner', () => {
                 .show()
                 .then(() =>
                     expect(FakeMessage.prototype.show).toHaveBeenCalledTimes(1)
-                )
-        );
+                ));
 
         it('should emit a display event', () =>
             membershipEngagementBanner
@@ -242,8 +241,7 @@ describe('Membership engagement banner', () => {
                     expect(emitSpy).toHaveBeenCalledWith(
                         'membership-message:display'
                     )
-                )
-        );
+                ));
 
         it('should record the component event in ophan with a/b test info', () =>
             membershipEngagementBanner.show().then(() =>
