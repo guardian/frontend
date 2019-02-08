@@ -635,7 +635,7 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                                   maxViews: defaultMaxViews,
                               }),
                         variants: rows.map(row => ({
-                            id: row.name,
+                            id: row.name.trim(),
                             products: [],
                             ...(isLiveBlog
                                 ? { test: setupEpicInLiveblog }
