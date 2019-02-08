@@ -209,9 +209,7 @@ blockquote {
         font-family: Georgia, serif;
         font-size: 14px;
         line-height: 20px;
-        // sass-lint:disable
-        mso-line-height-rule: exactly;
-        // sass-lint:enable
+        mso-line-height-rule: exactly; // sass-lint:disable-line no-misspelled-properties
         color: #121212;
         padding-bottom: 15px;
         .sup-highlight {
@@ -234,9 +232,7 @@ blockquote {
         text-decoration: none;
         min-width: 130px;
         -webkit-text-size-adjust: none;
-        // sass-lint:disable
-        mso-hide: all;
-        // sass-lint:enable
+        mso-hide: all; // sass-lint:disable-line no-misspelled-properties
     }
     .cta-pad {
         padding-bottom: 15px;
