@@ -1,9 +1,7 @@
 // @flow
 import { getLocalCurrencySymbol } from 'lib/geolocation';
 import reportError from 'lib/report-error';
-import {
-    getEpicControlFromGoogleDoc
-} from 'common/modules/commercial/contributions-google-docs';
+import { getEpicControlFromGoogleDoc } from 'common/modules/commercial/contributions-google-docs';
 
 const controlCopyParagraphOne =
     '&hellip; we have a small favour to ask. More people are reading the Guardian than ever but advertising revenues across the media are falling fast. And unlike many news organisations, we haven’t put up a paywall &ndash; we want to keep our journalism as open as we can. So you can see why we need to ask for your help.';
@@ -54,7 +52,6 @@ const getEpicParams = (
         ),
     };
 };
-
 
 export const getControlEpicCopy = (): Promise<AcquisitionsEpicTemplateCopy> =>
     getEpicControlFromGoogleDoc()

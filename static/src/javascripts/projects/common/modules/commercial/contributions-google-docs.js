@@ -14,9 +14,9 @@ export const bannerMultipleTestsGoogleDocUrl: string = config.get('page.isDev')
     : 'https://interactive.guim.co.uk/docsdata/1IEVVHU5ZObCzyPV-BLQczaSzxe7pawLcH8_lvFD0Csk.json';
 
 export const getGoogleDoc = (url: string): Promise<any> =>
-    fetchJSON(url, {mode: 'cors'});
+    fetchJSON(url, { mode: 'cors' });
 
-const getSheetFromGoogleDoc = (url: string, sheet: string): Promise<any> =>
+export const getSheetFromGoogleDoc = (url: string, sheet: string): Promise<any> =>
     getGoogleDoc.then(json => json.sheets[sheet]);
 
 // It is the responsibility of any calling code to .catch() when using these promises.
