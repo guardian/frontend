@@ -227,23 +227,23 @@ describe('Membership engagement banner', () => {
             emitSpy.mockRestore();
         });
 
-        it('should show the membership engagement banner', () => {
+        it('should show the membership engagement banner', () =>
             membershipEngagementBanner
                 .show()
                 .then(() =>
                     expect(FakeMessage.prototype.show).toHaveBeenCalledTimes(1)
-                );
-        });
+                )
+        );
 
-        it('should emit a display event', () => {
+        it('should emit a display event', () =>
             membershipEngagementBanner
                 .show()
                 .then(() =>
                     expect(emitSpy).toHaveBeenCalledWith(
                         'membership-message:display'
                     )
-                );
-        });
+                )
+        );
 
         it('should record the component event in ophan with a/b test info', () =>
             membershipEngagementBanner.show().then(() =>
