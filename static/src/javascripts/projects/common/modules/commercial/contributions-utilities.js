@@ -66,11 +66,7 @@ const getReaderRevenueRegion = (geolocation: string): ReaderRevenueRegion => {
 
 // How many times the user can see the Epic,
 // e.g. 6 times within 7 days with minimum of 1 day in between views.
-const defaultMaxViews: {
-    days: number,
-    count: number,
-    minDaysBetweenViews: number,
-} = {
+const defaultMaxViews: MaxViews = {
     days: 30,
     count: 4,
     minDaysBetweenViews: 0,
@@ -197,6 +193,7 @@ const makeABTestVariant = (
     id: string,
     products: $ReadOnlyArray<OphanProduct>,
     test?: (html: string, abTest: ABTest) => void,
+    deploymentRules: DeploymentRules = defaultMaxViews,
     options: Object,
     template: EpicTemplate,
     parentTest: EpicABTest
@@ -217,9 +214,8 @@ const makeABTestVariant = (
         sections = [],
         excludedTagIds = [],
         excludedSections = [],
-        maxViews = parentTest.maxViews,
 
-        isUnlimited = false,
+        isUnlimited = false, // Deprecated in favour of DeploymentRules, TODO - remove later
         campaignCode = createTestAndVariantId(
             parentTest.campaignPrefix,
             parentTest.campaignId,
@@ -301,7 +297,6 @@ const makeABTestVariant = (
             componentName: `mem_acquisition_${trackingCampaignId}_${id}`,
             campaignCodes: [campaignCode],
 
-            maxViews,
             isUnlimited,
             products,
             campaignCode,
@@ -324,23 +319,30 @@ const makeABTestVariant = (
         },
 
         canRun() {
-            const {
-                count: maxViewCount,
-                days: maxViewDays,
-                minDaysBetweenViews: minViewDays,
-            } = maxViews;
+            const checkMaxViews = (maxViews: MaxViews) => {
+                const {
+                    count: maxViewCount,
+                    days: maxViewDays,
+                    minDaysBetweenViews: minViewDays,
+                } = maxViews;
 
-            const testId = parentTest.useLocalViewLog
-                ? parentTest.id
-                : undefined;
+                const testId = parentTest.useLocalViewLog
+                    ? parentTest.id
+                    : undefined;
 
-            const withinViewLimit =
-                viewsInPreviousDays(maxViewDays, testId) < maxViewCount;
-            const enoughDaysBetweenViews =
-                viewsInPreviousDays(minViewDays, testId) === 0;
+                const withinViewLimit =
+                    viewsInPreviousDays(maxViewDays, testId) < maxViewCount;
+                const enoughDaysBetweenViews =
+                    viewsInPreviousDays(minViewDays, testId) === 0;
+
+                return (
+                    (withinViewLimit && enoughDaysBetweenViews) || isUnlimited
+                );
+            };
 
             const meetsMaxViewsConditions =
-                (withinViewLimit && enoughDaysBetweenViews) || isUnlimited;
+                deploymentRules === 'AlwaysAsk' ||
+                checkMaxViews(deploymentRules);
 
             const matchesLocations =
                 locations.length === 0 ||
@@ -474,7 +476,6 @@ const makeABTest = ({
 
     // optional params
     // locations is a filter where empty is taken to mean 'all'
-    maxViews = defaultMaxViews,
     locations = [],
     dataLinkNames = '',
     campaignPrefix = 'gdnwb_copts_memco',
@@ -506,7 +507,6 @@ const makeABTest = ({
         viewEvent: makeEvent(id, 'view'),
 
         variants: [],
-        maxViews: maxViews || defaultMaxViews,
 
         id,
         start,
@@ -534,6 +534,7 @@ const makeABTest = ({
             variant.id,
             variant.products,
             variant.test,
+            variant.deploymentRules,
             variant.options || {},
             template,
             test
@@ -624,22 +625,34 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                         ...(isThankYou
                             ? {
                                   onlyShowToExistingSupporters: true,
-                                  maxViews: {
-                                      days: 365, // Arbitrarily high number - reader should only see the thank-you for one 'cycle'.
-                                      count: 1,
-                                      minDaysBetweenViews: 0,
-                                  },
                                   useLocalViewLog: true,
                               }
-                            : {
-                                  maxViews: defaultMaxViews,
-                              }),
+                            : {}),
                         variants: rows.map(row => ({
                             id: row.name,
                             products: [],
                             ...(isLiveBlog
                                 ? { test: setupEpicInLiveblog }
                                 : {}),
+                            deploymentRules:
+                                row.alwaysAsk &&
+                                row.alwaysAsk.toLowerCase() === 'true'
+                                    ? 'AlwaysAsk'
+                                    : ({
+                                          days:
+                                              parseInt(row.maxViewsDays, 10) ||
+                                              defaultMaxViews.days,
+                                          count:
+                                              parseInt(row.maxViewsCount, 10) ||
+                                              defaultMaxViews.count,
+                                          minDaysBetweenViews:
+                                              parseInt(
+                                                  row.minDaysBetweenViews,
+                                                  10
+                                              ) ||
+                                              defaultMaxViews.minDaysBetweenViews,
+                                      }: MaxViews),
+
                             options: {
                                 buttonTemplate: isThankYou
                                     ? undefined
