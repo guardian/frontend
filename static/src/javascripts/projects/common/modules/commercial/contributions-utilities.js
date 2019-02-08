@@ -215,7 +215,7 @@ const makeABTestVariant = (
         excludedTagIds = [],
         excludedSections = [],
 
-        isUnlimited = false,    // Deprecated in favour of DeploymentRules, TODO - remove later
+        isUnlimited = false, // Deprecated in favour of DeploymentRules, TODO - remove later
         campaignCode = createTestAndVariantId(
             parentTest.campaignPrefix,
             parentTest.campaignId,
@@ -335,10 +335,14 @@ const makeABTestVariant = (
                 const enoughDaysBetweenViews =
                     viewsInPreviousDays(minViewDays, testId) === 0;
 
-                return (withinViewLimit && enoughDaysBetweenViews) || isUnlimited;
+                return (
+                    (withinViewLimit && enoughDaysBetweenViews) || isUnlimited
+                );
             };
 
-            const meetsMaxViewsConditions = deploymentRules === 'AlwaysAsk' ? true : checkMaxViews(deploymentRules);
+            const meetsMaxViewsConditions =
+                deploymentRules === 'AlwaysAsk' ||
+                checkMaxViews(deploymentRules);
 
             const matchesLocations =
                 locations.length === 0 ||
@@ -630,17 +634,24 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                             ...(isLiveBlog
                                 ? { test: setupEpicInLiveblog }
                                 : {}),
-                            deploymentRules: (row.alwaysAsk && row.alwaysAsk.toLowerCase() === 'true') ? 'AlwaysAsk' : ({
-                                days:
-                                    parseInt(row.maxViewsDays, 10) ||
-                                    defaultMaxViews.days,
-                                count:
-                                    parseInt(row.maxViewsCount, 10) ||
-                                    defaultMaxViews.count,
-                                minDaysBetweenViews:
-                                    parseInt(row.minDaysBetweenViews, 10) ||
-                                    defaultMaxViews.minDaysBetweenViews,
-                            }: MaxViews),
+                            deploymentRules:
+                                row.alwaysAsk &&
+                                row.alwaysAsk.toLowerCase() === 'true'
+                                    ? 'AlwaysAsk'
+                                    : ({
+                                          days:
+                                              parseInt(row.maxViewsDays, 10) ||
+                                              defaultMaxViews.days,
+                                          count:
+                                              parseInt(row.maxViewsCount, 10) ||
+                                              defaultMaxViews.count,
+                                          minDaysBetweenViews:
+                                              parseInt(
+                                                  row.minDaysBetweenViews,
+                                                  10
+                                              ) ||
+                                              defaultMaxViews.minDaysBetweenViews,
+                                      }: MaxViews),
 
                             options: {
                                 buttonTemplate: isThankYou
