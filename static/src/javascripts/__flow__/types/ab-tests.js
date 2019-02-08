@@ -8,7 +8,7 @@ declare type Variant = {
     success?: ListenerFunction,
     options?: Object,
     engagementBannerParams?: () => Promise<EngagementBannerParams>,
-    maxViews?: MaxViews,
+    deploymentRules?: DeploymentRules,
 };
 
 declare type ABTest = {
@@ -44,6 +44,8 @@ declare type MaxViews = {
     minDaysBetweenViews: number,
 };
 
+declare type DeploymentRules = 'AlwaysAsk' | MaxViews
+
 declare type EpicABTest = AcquisitionsABTest & {
     campaignPrefix: string,
     useLocalViewLog: boolean,
@@ -60,7 +62,7 @@ declare type InitEpicABTestVariant = {
     id: string,
     products: $ReadOnlyArray<OphanProduct>,
     test?: (html: string, abTest: ABTest) => void,
-    maxViews?: MaxViews,
+    deploymentRules?: DeploymentRules,
     options?: Object
 };
 

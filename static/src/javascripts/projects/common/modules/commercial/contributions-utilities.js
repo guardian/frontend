@@ -66,11 +66,7 @@ const getReaderRevenueRegion = (geolocation: string): ReaderRevenueRegion => {
 
 // How many times the user can see the Epic,
 // e.g. 6 times within 7 days with minimum of 1 day in between views.
-const defaultMaxViews: {
-    days: number,
-    count: number,
-    minDaysBetweenViews: number,
-} = {
+const defaultMaxViews: MaxViews = {
     days: 30,
     count: 4,
     minDaysBetweenViews: 0,
@@ -197,7 +193,7 @@ const makeABTestVariant = (
     id: string,
     products: $ReadOnlyArray<OphanProduct>,
     test?: (html: string, abTest: ABTest) => void,
-    maxViews: MaxViews = defaultMaxViews,
+    deploymentRules: DeploymentRules = defaultMaxViews,
     options: Object,
     template: EpicTemplate,
     parentTest: EpicABTest
@@ -219,7 +215,7 @@ const makeABTestVariant = (
         excludedTagIds = [],
         excludedSections = [],
 
-        isUnlimited = false,
+        isUnlimited = false,    // Deprecated in favour of DeploymentRules, TODO - remove later
         campaignCode = createTestAndVariantId(
             parentTest.campaignPrefix,
             parentTest.campaignId,
@@ -323,23 +319,26 @@ const makeABTestVariant = (
         },
 
         canRun() {
-            const {
-                count: maxViewCount,
-                days: maxViewDays,
-                minDaysBetweenViews: minViewDays,
-            } = maxViews;
+            const checkMaxViews = (maxViews: MaxViews) => {
+                const {
+                    count: maxViewCount,
+                    days: maxViewDays,
+                    minDaysBetweenViews: minViewDays,
+                } = maxViews;
 
-            const testId = parentTest.useLocalViewLog
-                ? parentTest.id
-                : undefined;
+                const testId = parentTest.useLocalViewLog
+                    ? parentTest.id
+                    : undefined;
 
-            const withinViewLimit =
-                viewsInPreviousDays(maxViewDays, testId) < maxViewCount;
-            const enoughDaysBetweenViews =
-                viewsInPreviousDays(minViewDays, testId) === 0;
+                const withinViewLimit =
+                    viewsInPreviousDays(maxViewDays, testId) < maxViewCount;
+                const enoughDaysBetweenViews =
+                    viewsInPreviousDays(minViewDays, testId) === 0;
 
-            const meetsMaxViewsConditions =
-                (withinViewLimit && enoughDaysBetweenViews) || isUnlimited;
+                return (withinViewLimit && enoughDaysBetweenViews) || isUnlimited;
+            };
+
+            const meetsMaxViewsConditions = deploymentRules === 'AlwaysAsk' ? true : checkMaxViews(deploymentRules);
 
             const matchesLocations =
                 locations.length === 0 ||
@@ -531,7 +530,7 @@ const makeABTest = ({
             variant.id,
             variant.products,
             variant.test,
-            variant.maxViews,
+            variant.deploymentRules,
             variant.options || {},
             template,
             test
@@ -631,7 +630,7 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                             ...(isLiveBlog
                                 ? { test: setupEpicInLiveblog }
                                 : {}),
-                            maxViews: {
+                            deploymentRules: (row.alwaysAsk && row.alwaysAsk.toLowerCase() === 'true') ? 'AlwaysAsk' : ({
                                 days:
                                     parseInt(row.maxViewsDays, 10) ||
                                     defaultMaxViews.days,
@@ -641,7 +640,7 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                                 minDaysBetweenViews:
                                     parseInt(row.minDaysBetweenViews, 10) ||
                                     defaultMaxViews.minDaysBetweenViews,
-                            },
+                            }: MaxViews),
 
                             options: {
                                 buttonTemplate: isThankYou
