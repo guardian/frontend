@@ -6,7 +6,6 @@ import mediator from 'lib/mediator';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
 import {
     defaultEngagementBannerParams,
-    getUserVariantParams,
     getControlEngagementBannerParams,
 } from 'common/modules/commercial/membership-engagement-banner-parameters';
 import { isBlocked } from 'common/modules/commercial/membership-engagement-banner-block';
@@ -39,17 +38,6 @@ const minArticlesBeforeShowingBanner = 3;
 
 const lastClosedAtKey = 'engagementBannerLastClosedAt';
 
-const getTestAndVariant = (): {
-    test: ?Runnable<AcquisitionsABTest>,
-    variant: ?Variant,
-} => {
-    const test: ?Runnable<AcquisitionsABTest> = getEngagementBannerTestToRun();
-    const variant: ?Variant = test && test.variantToRun;
-    return { test, variant };
-};
-
-const getVariant = (): ?Variant => getTestAndVariant().variant;
-
 const getTimestampOfLastBannerDeployForLocation = (
     region: ReaderRevenueRegion
 ): Promise<string> =>
@@ -78,75 +66,28 @@ const hasBannerBeenRedeployedSinceClosed = (
             return false;
         });
 
-/*
- * Params for the banner are overlaid in this order, earliest taking precedence:
- *
- *  * Variant (if the user is in an A/B testing variant)
- *  * Edition
- *  * Offering ('membership' or 'contributions')
- *  * Default
- *
- * The 'offering' in use comes from either:
- *
- *  * Variant (if the user is in an A/B testing variant)
- *  * Edition (only one offering can be the default for a given Edition)
- *
- * Returns either 'null' if no banner is available for this edition,
- * otherwise a populated params object that looks like this:
- *
- *  {
- *    messageText: "..."
- *    buttonCaption: "Become a Supporter"
- *  }
- *
- */
-
-const buildCampaignCode = (
-    userTest: ?AcquisitionsABTest,
-    userVariant: ?Variant
-): ?{ campaignCode: string } => {
-    if (userTest && userVariant) {
-        const params = userVariant.engagementBannerParams;
-        if (params && params.campaignCode) {
-            return params.campaignCode;
-        }
-        return { campaignCode: `${userTest.campaignId}_${userVariant.id}` };
-    }
-};
-
-const deriveBannerParams = (): Promise<?EngagementBannerParams> => {
-    const { test, variant } = getTestAndVariant();
+const deriveBannerParams = (
+    testToRun: ?Runnable<AcquisitionsABTest>
+): Promise<EngagementBannerParams> => {
     const defaultParams: EngagementBannerParams = defaultEngagementBannerParams();
 
+    if (testToRun) {
+        return Promise.resolve({
+            ...defaultParams,
+            ...testToRun.variantToRun.engagementBannerParams,
+            abTest: {
+                name: testToRun.id,
+                variant: testToRun.variantToRun.id,
+            },
+            campaignCode: `${testToRun.id}_${testToRun.variantToRun.id}`,
+        });
+    }
+
     // if the user isn't in a test variant, use the control in google docs
-    if (!test) {
-        return getControlEngagementBannerParams().then(controlParams => ({
-            ...defaultParams,
-            ...controlParams,
-        }));
-    }
-
-    const campaignCode: ?{ campaignCode: string } = buildCampaignCode(
-        test,
-        variant
-    );
-
-    return getUserVariantParams(variant)
-        .then(variantParams => ({
-            ...defaultParams,
-            ...variantParams,
-            ...campaignCode,
-        }))
-        .catch(() => defaultParams);
-};
-
-const userVariantCanShow = (): boolean => {
-    const variant = getVariant();
-
-    if (variant && variant.options && variant.options.blockEngagementBanner) {
-        return false;
-    }
-    return true;
+    return getControlEngagementBannerParams().then(controlParams => ({
+        ...defaultParams,
+        ...controlParams,
+    }));
 };
 
 const getVisitCount = (): number => local.get('gu.alreadyVisited') || 0;
@@ -165,9 +106,7 @@ const clearBannerHistory = (): void => {
     userPrefs.remove(lastClosedAtKey);
 };
 
-const showBanner = (params: EngagementBannerParams): void => {
-    const { test, variant } = getTestAndVariant();
-
+const showBanner = (params: EngagementBannerParams): boolean => {
     const messageText = Array.isArray(params.messageText)
         ? selectSequentiallyFrom(params.messageText)
         : params.messageText;
@@ -178,10 +117,7 @@ const showBanner = (params: EngagementBannerParams): void => {
         componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
         componentId: params.campaignCode,
         campaignCode: params.campaignCode,
-        abTest:
-            test && variant
-                ? { name: test.id, variant: variant.id }
-                : undefined,
+        ...(params.abTest ? { abTest: params.abTest } : {}),
     });
     const buttonCaption = params.buttonCaption;
     const templateParams = {
@@ -221,14 +157,7 @@ const showBanner = (params: EngagementBannerParams): void => {
                     id: params.campaignCode,
                 },
                 action,
-                ...(test && variant
-                    ? {
-                          abTest: {
-                              name: test.id,
-                              variant: variant.id,
-                          },
-                      }
-                    : {}),
+                ...(params.abTest ? { abTest: params.abTest } : {}),
             });
         });
 
@@ -237,33 +166,41 @@ const showBanner = (params: EngagementBannerParams): void => {
         }
 
         mediator.emit('membership-message:display');
+        return true;
     }
+
+    return false;
 };
 
 const show = (): Promise<boolean> =>
-    deriveBannerParams().then(params => {
-        if (params) {
-            showBanner(params);
-            return Promise.resolve(true);
-        }
-        return Promise.resolve(false);
-    });
+    getEngagementBannerTestToRun()
+        .then(deriveBannerParams)
+        .then(showBanner)
+        .catch(err => {
+            reportError(
+                new Error(
+                    `Could not show banner. ${err.message}. Stack: ${err.stack}`
+                ),
+                { feature: 'engagement-banner-test' },
+                false
+            );
+            return false;
+        });
 
 const canShow = (): Promise<boolean> => {
     if (!config.get('switches.membershipEngagementBanner') || isBlocked()) {
         return Promise.resolve(false);
     }
 
-    const hasSeenEnoughArticles: boolean =
+    const userHasSeenEnoughArticles: boolean =
         getVisitCount() >= minArticlesBeforeShowingBanner;
-    const geolocation: string = geolocationGetSync();
-    const region: ReaderRevenueRegion = getReaderRevenueRegion(geolocation);
+    const userAlreadyGivesUsMoney = userIsSupporter();
+    const bannerIsBlockedForEditorialReasons = pageShouldHideReaderRevenue();
 
     if (
-        hasSeenEnoughArticles &&
-        !pageShouldHideReaderRevenue() &&
-        !userIsSupporter() &&
-        userVariantCanShow()
+        userHasSeenEnoughArticles &&
+        !userAlreadyGivesUsMoney &&
+        !bannerIsBlockedForEditorialReasons
     ) {
         const userLastClosedBannerAt = userPrefs.get(lastClosedAtKey);
 
@@ -274,7 +211,7 @@ const canShow = (): Promise<boolean> => {
 
         return hasBannerBeenRedeployedSinceClosed(
             userLastClosedBannerAt,
-            region
+            getReaderRevenueRegion(geolocationGetSync())
         );
     }
     return Promise.resolve(false);
@@ -293,4 +230,5 @@ export {
     hideBanner,
     clearBannerHistory,
     minArticlesBeforeShowingBanner,
+    deriveBannerParams,
 };
