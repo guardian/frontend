@@ -133,6 +133,7 @@ $header-image-size-desktop: 100px;
     line-height: get-line-height(header, 2);
     color: $brightness-7;
 
+
     @include mq(leftCol, wide) {
         @include font-size(20px, 24px);
     }
@@ -618,5 +619,18 @@ $header-image-size-desktop: 100px;
             // Unset
             display: block;
         }
+    }
+}
+
+
+.gallery__most-popular h2.fc-container__title__text {
+    color: $brightness-86;
+
+    &:hover {
+        text-decoration: underline;
+    }
+
+    &:after {
+        display: none;
     }
 }

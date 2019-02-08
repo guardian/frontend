@@ -8,6 +8,7 @@ declare type Variant = {
     success?: ListenerFunction,
     options?: Object,
     engagementBannerParams?: EngagementBannerParams,
+    deploymentRules?: DeploymentRules,
 };
 
 declare type ABTest = {
@@ -43,6 +44,8 @@ declare type MaxViews = {
     minDaysBetweenViews: number,
 };
 
+declare type DeploymentRules = 'AlwaysAsk' | MaxViews
+
 declare type EpicABTest = AcquisitionsABTest & {
     campaignPrefix: string,
     useLocalViewLog: boolean,
@@ -53,12 +56,13 @@ declare type EpicABTest = AcquisitionsABTest & {
     useTargetingTool: boolean,
     insertEvent: string,
     viewEvent: string,
-    maxViews: MaxViews,
 };
 
 declare type InitEpicABTestVariant = {
     id: string,
     products: $ReadOnlyArray<OphanProduct>,
+    test?: (html: string, abTest: ABTest) => void,
+    deploymentRules?: DeploymentRules,
     options?: Object
 };
 
@@ -67,6 +71,8 @@ declare type InitBannerABTestVariant = {
     products: $ReadOnlyArray<OphanProduct>,
     engagementBannerParams: () => Promise<?EngagementBannerTemplateParams>
 };
+
+declare type EpicTemplate = (Variant, AcquisitionsEpicTemplateCopy) => string;
 
 declare type InitEpicABTest = {
     id: string,
@@ -83,7 +89,6 @@ declare type InitEpicABTest = {
     variants: $ReadOnlyArray<InitEpicABTestVariant>,
 
     // locations is a filter where empty is taken to mean 'all'
-    maxViews?: MaxViews,
     locations?: string[],
     dataLinkNames?: string,
     campaignPrefix?: string,
@@ -93,6 +98,7 @@ declare type InitEpicABTest = {
     onlyShowToExistingSupporters?: boolean,
     canRun?: (test: EpicABTest) => boolean,
     pageCheck?: (page: Object) => boolean,
+    template?: EpicTemplate,
 }
 
 declare type Interaction = {

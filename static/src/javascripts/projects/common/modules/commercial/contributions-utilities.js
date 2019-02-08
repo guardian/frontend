@@ -21,12 +21,14 @@ import {
     getSync as geolocationGetSync,
 } from 'lib/geolocation';
 import { noop } from 'lib/noop';
-import { splitAndTrim } from 'lib/string-utils';
+import { splitAndTrim, optionalSplitAndTrim } from 'lib/string-utils';
 import { epicButtonsTemplate } from 'common/modules/commercial/templates/acquisitions-epic-buttons';
 import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templates/acquisitions-epic-control';
+import { epicLiveBlogTemplate } from 'common/modules/commercial/templates/acquisitions-epic-liveblog';
 import { userIsSupporter } from 'common/modules/commercial/user-features';
 import { supportContributeURL } from 'common/modules/commercial/support-utilities';
 import { awaitEpicButtonClicked } from 'common/modules/commercial/epic/epic-utils';
+import { setupEpicInLiveblog } from 'common/modules/commercial/contributions-liveblog-utilities';
 import {
     bannerMultipleTestsGoogleDocUrl,
     epicMultipleTestsGoogleDocUrl,
@@ -37,8 +39,6 @@ import {
     defaultExclusionRules,
     isArticleWorthAnEpicImpression,
 } from 'common/modules/commercial/epic/epic-exclusion-rules';
-
-export type EpicTemplate = (Variant, AcquisitionsEpicTemplateCopy) => string;
 
 export type CtaUrls = {
     supportUrl: string,
@@ -65,11 +65,7 @@ const getReaderRevenueRegion = (geolocation: string): ReaderRevenueRegion => {
 
 // How many times the user can see the Epic,
 // e.g. 6 times within 7 days with minimum of 1 day in between views.
-const defaultMaxViews: {
-    days: number,
-    count: number,
-    minDaysBetweenViews: number,
-} = {
+const defaultMaxViews: MaxViews = {
     days: 30,
     count: 4,
     minDaysBetweenViews: 0,
@@ -90,6 +86,16 @@ const controlTemplate: EpicTemplate = (
                   subscribeUrl: options.subscribeURL,
               })
             : undefined,
+    });
+
+const liveBlogTemplate: EpicTemplate = (
+    { options = {} },
+    copy: AcquisitionsEpicTemplateCopy
+) =>
+    epicLiveBlogTemplate({
+        copy,
+        componentName: options.componentName,
+        supportURL: options.supportURL,
     });
 
 const doTagsMatch = (test: EpicABTest): boolean =>
@@ -114,9 +120,13 @@ const getTargets = (
     return [];
 };
 
-const isCompatibleWithEpic = (page: Object): boolean =>
+const isCompatibleWithArticleEpic = (page: Object): boolean =>
     page.contentType === 'Article' &&
     !page.isMinuteArticle &&
+    isArticleWorthAnEpicImpression(page, defaultExclusionRules);
+
+const isCompatibleWithLiveBlogEpic = (page: Object): boolean =>
+    page.contentType === 'LiveBlog' &&
     isArticleWorthAnEpicImpression(page, defaultExclusionRules);
 
 const pageShouldHideReaderRevenue = () =>
@@ -168,10 +178,23 @@ const registerIframeListener = (iframeId: string) => {
     });
 };
 
+const pageMatchesTags = (tagIds: string[]): boolean =>
+    tagIds.some(tagId =>
+        `${config.get('page.keywordIds')},${config.get(
+            'page.nonKeywordTagIds'
+        )}`.includes(tagId)
+    );
+
+const pageMatchesSections = (sectionIds: string[]): boolean =>
+    sectionIds.some(section => config.get('page.section') === section);
+
 const makeABTestVariant = (
     id: string,
     products: $ReadOnlyArray<OphanProduct>,
+    test?: (html: string, abTest: ABTest) => void,
+    deploymentRules: DeploymentRules = defaultMaxViews,
     options: Object,
+    template: EpicTemplate,
     parentTest: EpicABTest
 ): Variant => {
     const trackingCampaignId = `epic_${parentTest.campaignId}`;
@@ -188,9 +211,10 @@ const makeABTestVariant = (
         locations = [],
         tagIds = [],
         sections = [],
-        maxViews = parentTest.maxViews,
+        excludedTagIds = [],
+        excludedSections = [],
 
-        isUnlimited = false,
+        isUnlimited = false, // Deprecated in favour of DeploymentRules, TODO - remove later
         campaignCode = createTestAndVariantId(
             parentTest.campaignPrefix,
             parentTest.campaignId,
@@ -216,7 +240,6 @@ const makeABTestVariant = (
                 variant: id,
             },
         }),
-        template = controlTemplate,
         buttonTemplate = options.buttonTemplate,
         engagementBannerParams = {},
         isOutbrainCompliant = false,
@@ -226,7 +249,6 @@ const makeABTestVariant = (
         insertAtSelector = '.submeta',
         insertMultiple = false,
         insertAfter = false,
-        test = noop,
         impression = submitABTestImpression =>
             mediator.once(parentTest.insertEvent, () => {
                 submitInsertEvent({
@@ -273,7 +295,6 @@ const makeABTestVariant = (
             componentName: `mem_acquisition_${trackingCampaignId}_${id}`,
             campaignCodes: [campaignCode],
 
-            maxViews,
             isUnlimited,
             products,
             campaignCode,
@@ -289,54 +310,56 @@ const makeABTestVariant = (
             insertAtSelector,
             insertMultiple,
             insertAfter,
-            test,
             impression,
             success,
             iframeId,
         },
 
         canRun() {
-            const {
-                count: maxViewCount,
-                days: maxViewDays,
-                minDaysBetweenViews: minViewDays,
-            } = maxViews;
+            const checkMaxViews = (maxViews: MaxViews) => {
+                const {
+                    count: maxViewCount,
+                    days: maxViewDays,
+                    minDaysBetweenViews: minViewDays,
+                } = maxViews;
 
-            const testId = parentTest.useLocalViewLog
-                ? parentTest.id
-                : undefined;
+                const testId = parentTest.useLocalViewLog
+                    ? parentTest.id
+                    : undefined;
 
-            const withinViewLimit =
-                viewsInPreviousDays(maxViewDays, testId) < maxViewCount;
-            const enoughDaysBetweenViews =
-                viewsInPreviousDays(minViewDays, testId) === 0;
+                const withinViewLimit =
+                    viewsInPreviousDays(maxViewDays, testId) < maxViewCount;
+                const enoughDaysBetweenViews =
+                    viewsInPreviousDays(minViewDays, testId) === 0;
+
+                return (
+                    (withinViewLimit && enoughDaysBetweenViews) || isUnlimited
+                );
+            };
 
             const meetsMaxViewsConditions =
-                (withinViewLimit && enoughDaysBetweenViews) || isUnlimited;
+                deploymentRules === 'AlwaysAsk' ||
+                checkMaxViews(deploymentRules);
 
             const matchesLocations =
                 locations.length === 0 ||
                 locations.some(
                     region => geolocationGetSync() === region.toUpperCase()
                 );
-            const matchesTags =
-                tagIds.length === 0 ||
-                tagIds.some(tagId =>
-                    `${config.get('page.keywordIds')},${config.get(
-                        'page.nonKeywordTagIds'
-                    )}`.includes(tagId)
-                );
+
+            const matchesTags = tagIds.length === 0 || pageMatchesTags(tagIds);
             const matchesSections =
-                sections.length === 0 ||
-                sections.some(
-                    section => config.get('page.section') === section
-                );
+                sections.length === 0 || pageMatchesSections(sections);
+            const noExcludedTags = !pageMatchesTags(excludedTagIds);
+            const notExcludedSection = !pageMatchesSections(excludedSections);
 
             return (
                 meetsMaxViewsConditions &&
                 matchesLocations &&
                 matchesTags &&
-                matchesSections
+                matchesSections &&
+                noExcludedTags &&
+                notExcludedSection
             );
         },
 
@@ -349,15 +372,15 @@ const makeABTestVariant = (
                 (options.copy && Promise.resolve(options.copy)) ||
                 googleDocEpicControl();
 
-            const render = (templateFn: ?EpicTemplate) =>
-                copyPromise
-                    .then((copy: AcquisitionsEpicTemplateCopy) => {
-                        const renderTemplate: EpicTemplate =
-                            templateFn ||
-                            (this.options && this.options.template);
-                        return renderTemplate(this, copy);
-                    })
-                    .then(renderedTemplate => {
+            copyPromise
+                .then((copy: AcquisitionsEpicTemplateCopy) =>
+                    this.options.template(this, copy)
+                )
+                .then(renderedTemplate => {
+                    if (test) {
+                        test(renderedTemplate, this);
+                    } else {
+                        // Standard epic insertion. TODO - this could do with a refactor
                         const component = $.create(renderedTemplate);
 
                         mediator.emit('register:begin', trackingCampaignId);
@@ -426,13 +449,8 @@ const makeABTestVariant = (
 
                             return component[0];
                         });
-                    });
-
-            if (test !== noop && typeof test === 'function') {
-                test(render.bind(this), this, parentTest);
-            } else {
-                render.apply(this);
-            }
+                    }
+                });
         },
         impression,
         success,
@@ -455,7 +473,6 @@ const makeABTest = ({
 
     // optional params
     // locations is a filter where empty is taken to mean 'all'
-    maxViews = defaultMaxViews,
     locations = [],
     dataLinkNames = '',
     campaignPrefix = 'gdnwb_copts_memco',
@@ -464,7 +481,8 @@ const makeABTest = ({
     useTargetingTool = false,
     onlyShowToExistingSupporters = false,
     canRun = () => true,
-    pageCheck = isCompatibleWithEpic,
+    pageCheck = isCompatibleWithArticleEpic,
+    template = controlTemplate,
 }: InitEpicABTest): EpicABTest => {
     const test = {
         // this is true because we use the reader revenue flag rather than sensitive
@@ -486,7 +504,6 @@ const makeABTest = ({
         viewEvent: makeEvent(id, 'view'),
 
         variants: [],
-        maxViews: maxViews || defaultMaxViews,
 
         id,
         start,
@@ -513,7 +530,10 @@ const makeABTest = ({
         makeABTestVariant(
             variant.id,
             variant.products,
+            variant.test,
+            variant.deploymentRules,
             variant.options || {},
+            template,
             test
         )
     );
@@ -536,6 +556,7 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                 .filter(testName => testName.endsWith('__ON'))
                 .map(name => {
                     const isThankYou = name.includes('__thank_you');
+                    const isLiveBlog = name.includes('__liveblog');
 
                     const rows = sheets[name];
                     const testName = name.split('__ON')[0];
@@ -554,40 +575,79 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                         audience: 1,
                         audienceOffset: 0,
 
-                        // Special settings for the "thank you" epic
+                        ...(isLiveBlog
+                            ? {
+                                  template: liveBlogTemplate,
+                                  pageCheck: isCompatibleWithLiveBlogEpic,
+                              }
+                            : {
+                                  template: controlTemplate,
+                                  pageCheck: isCompatibleWithArticleEpic,
+                              }),
                         ...(isThankYou
                             ? {
                                   onlyShowToExistingSupporters: true,
-                                  maxViews: {
-                                      days: 365, // Arbitrarily high number - reader should only see the thank-you for one 'cycle'.
-                                      count: 1,
-                                      minDaysBetweenViews: 0,
-                                  },
                                   useLocalViewLog: true,
                               }
-                            : {
-                                  maxViews: defaultMaxViews,
-                              }),
+                            : {}),
                         variants: rows.map(row => ({
-                            id: row.name,
+                            id: row.name.trim(),
                             products: [],
+                            ...(isLiveBlog
+                                ? { test: setupEpicInLiveblog }
+                                : {}),
+                            deploymentRules:
+                                row.alwaysAsk &&
+                                row.alwaysAsk.toLowerCase() === 'true'
+                                    ? 'AlwaysAsk'
+                                    : ({
+                                          days:
+                                              parseInt(row.maxViewsDays, 10) ||
+                                              defaultMaxViews.days,
+                                          count:
+                                              parseInt(row.maxViewsCount, 10) ||
+                                              defaultMaxViews.count,
+                                          minDaysBetweenViews:
+                                              parseInt(
+                                                  row.minDaysBetweenViews,
+                                                  10
+                                              ) ||
+                                              defaultMaxViews.minDaysBetweenViews,
+                                      }: MaxViews),
+
                             options: {
                                 buttonTemplate: isThankYou
                                     ? undefined
                                     : defaultButtonTemplate,
-                                locations: splitAndTrim(row.locations, ','),
-                                tagIds: splitAndTrim(row.tagIds, ','),
-                                sections: splitAndTrim(row.sections, ','),
+                                locations: optionalSplitAndTrim(
+                                    row.locations,
+                                    ','
+                                ),
+                                tagIds: optionalSplitAndTrim(row.tagIds, ','),
+                                sections: optionalSplitAndTrim(
+                                    row.sections,
+                                    ','
+                                ),
+                                excludedTagIds: optionalSplitAndTrim(
+                                    row.excludedTagIds,
+                                    ','
+                                ),
+                                excludedSections: optionalSplitAndTrim(
+                                    row.excludedSections,
+                                    ','
+                                ),
                                 copy: {
                                     heading: row.heading,
                                     paragraphs: splitAndTrim(
                                         row.paragraphs,
                                         '\n'
                                     ),
-                                    highlightedText: row.highlightedText.replace(
-                                        /%%CURRENCY_SYMBOL%%/g,
-                                        getLocalCurrencySymbol()
-                                    ),
+                                    highlightedText: row.highlightedText
+                                        ? row.highlightedText.replace(
+                                              /%%CURRENCY_SYMBOL%%/g,
+                                              getLocalCurrencySymbol()
+                                          )
+                                        : undefined,
                                 },
                             },
                         })),
