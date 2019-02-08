@@ -2,25 +2,14 @@
 import config from 'lib/config';
 import reportError from 'lib/report-error';
 import { getLocalCurrencySymbol } from 'lib/geolocation';
-import { supportContributeURL } from './support-utilities';
 import { getEngagementBannerControlFromGoogleDoc } from 'common/modules/commercial/contributions-google-docs';
+import { supportContributeURL } from './support-utilities';
 
 const fallbackCopy: string = `<strong>The Guardian is editorially independent &ndash;
     our journalism is free from the influence of billionaire owners or politicians.
     No one edits our editor. No one steers our opinion.</strong> And unlike many others, we haven’t put
     up a paywall as we want to keep our journalism open and accessible. But the revenue we get from
     advertising is falling, so we increasingly need our readers to fund our independent, investigative reporting.`;
-
-export const defaultEngagementBannerParams = (): EngagementBannerParams => ({
-    campaignCode: 'fallback_hardcoded_banner',
-    buttonCaption: 'Support The Guardian',
-    linkUrl: supportContributeURL,
-    messageText: fallbackCopy,
-    ctaText: `<span class="engagement-banner__highlight"> Support The Guardian from as little as ${getLocalCurrencySymbol()}1</span>`,
-    pageviewId: config.get('ophan.pageViewId', 'not_found'),
-    products: ['CONTRIBUTION', 'RECURRING_CONTRIBUTION'],
-    hasTicker: false,
-});
 
 const getAcquisitionsBannerParams = (
     rowsFromGoogleDoc: any
@@ -73,5 +62,17 @@ export const getControlEngagementBannerParams = (): Promise<?EngagementBannerTem
             // The banner tests work by overriding built-in parameters.
             // So the default case is override nothing.
             // As opposed to the epic where we return default copy.
+            // TODO: but could we return defaultEngagementBannerParams here?
             return {};
         });
+
+export const defaultEngagementBannerParams = (): EngagementBannerParams => ({
+    campaignCode: 'fallback_hardcoded_banner',
+    buttonCaption: 'Support The Guardian',
+    linkUrl: supportContributeURL,
+    messageText: fallbackCopy,
+    ctaText: `<span class="engagement-banner__highlight"> Support The Guardian from as little as ${getLocalCurrencySymbol()}1</span>`,
+    pageviewId: config.get('ophan.pageViewId', 'not_found'),
+    products: ['CONTRIBUTION', 'RECURRING_CONTRIBUTION'],
+    hasTicker: false,
+});

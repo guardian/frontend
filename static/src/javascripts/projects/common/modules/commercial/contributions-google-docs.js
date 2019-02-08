@@ -16,8 +16,10 @@ export const bannerMultipleTestsGoogleDocUrl: string = config.get('page.isDev')
 export const getGoogleDoc = (url: string): Promise<any> =>
     fetchJSON(url, { mode: 'cors' });
 
-export const getSheetFromGoogleDoc = (url: string, sheet: string): Promise<any> =>
-    getGoogleDoc.then(json => json.sheets[sheet]);
+export const getSheetFromGoogleDoc = (
+    url: string,
+    sheet: string
+): Promise<any> => getGoogleDoc.then(json => json.sheets[sheet]);
 
 // It is the responsibility of any calling code to .catch() when using these promises.
 export const getEpicControlFromGoogleDoc = (): Promise<any> =>
