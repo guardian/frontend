@@ -41,7 +41,9 @@ export const getAcquisitionsBannerParams = (
             firstRow.linkUrl
         )
     ) {
-        throw new Error(`Required data from the Google Doc was missing. Got row: ${firstRow}`);
+        throw new Error(
+            `Required data from the Google Doc was missing. Got row: ${firstRow}`
+        );
     }
 
     return {
@@ -58,20 +60,20 @@ export const getAcquisitionsBannerParams = (
 };
 
 export const getControlEngagementBannerParams = (): Promise<?EngagementBannerTemplateParams> =>
-    getBannerGoogleDoc().then(json =>
-        getAcquisitionsBannerParams(json, 'control')
-    ).catch(err => {
-        reportError(
-            new Error(
-                `Could not fetch control banner copy from Google Doc. ${
-                    err.message
-                }. Stack: ${err.stack}`
-            ),
-            {
-                feature: 'engagement-banner-test',
-            },
-            false
-        );
+    getBannerGoogleDoc()
+        .then(json => getAcquisitionsBannerParams(json, 'control'))
+        .catch(err => {
+            reportError(
+                new Error(
+                    `Could not fetch control banner copy from Google Doc. ${
+                        err.message
+                    }. Stack: ${err.stack}`
+                ),
+                {
+                    feature: 'engagement-banner-test',
+                },
+                false
+            );
 
-        return {};
-    });
+            return {};
+        });

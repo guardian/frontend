@@ -6,13 +6,11 @@ import fetchJson from 'lib/fetch-json';
 import userPrefs from 'common/modules/user-prefs';
 import { defaultEngagementBannerParams as defaultEngagementBannerParams_ } from 'common/modules/commercial/membership-engagement-banner-parameters';
 import {
-    membershipEngagementBanner,
-    deriveBannerParams as deriveBannerParams_,
+    membershipEngagementBanner
 } from 'common/modules/commercial/membership-engagement-banner';
 import { pageShouldHideReaderRevenue } from 'common/modules/commercial/contributions-utilities';
 
 const defaultEngagementBannerParams: any = defaultEngagementBannerParams_;
-const deriveBannerParams: any = deriveBannerParams_;
 
 jest.mock('lib/raven');
 jest.mock('lib/mediator');
@@ -36,7 +34,7 @@ jest.mock('common/modules/experiments/ab', () => ({
             id: 'fake-variant-id',
             engagementBannerParams: {},
         };
-        return Promise.resolve(({
+        return Promise.resolve({
             campaignId: 'fake-campaign-id',
             id: 'fake-test-id',
             start: '2017-01-01',
@@ -51,7 +49,7 @@ jest.mock('common/modules/experiments/ab', () => ({
             variantToRun: variant,
             canRun: () => true,
             componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
-        }))
+        });
     }),
 }));
 jest.mock(
@@ -203,13 +201,10 @@ describe('Membership engagement banner', () => {
         });
 
         it('should show the membership engagement banner', () =>
-            membershipEngagementBanner
-                .show()
-                .then((shown) => {
-                    expect(shown).toBe(true);
-                    expect(FakeMessage.prototype.show).toHaveBeenCalledTimes(1);
-                })
-        );
+            membershipEngagementBanner.show().then(shown => {
+                expect(shown).toBe(true);
+                expect(FakeMessage.prototype.show).toHaveBeenCalledTimes(1);
+            }));
 
         it('should emit a display event', () =>
             membershipEngagementBanner
@@ -218,8 +213,7 @@ describe('Membership engagement banner', () => {
                     expect(emitSpy).toHaveBeenCalledWith(
                         'membership-message:display'
                     )
-                )
-        );
+                ));
 
         it('should record the component event in ophan with a/b test info', () =>
             membershipEngagementBanner.show().then(() =>

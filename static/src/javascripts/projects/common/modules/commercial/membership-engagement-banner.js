@@ -106,9 +106,7 @@ const clearBannerHistory = (): void => {
     userPrefs.remove(lastClosedAtKey);
 };
 
-const showBanner = (
-    params: EngagementBannerParams,
-): boolean => {
+const showBanner = (params: EngagementBannerParams): boolean => {
     const messageText = Array.isArray(params.messageText)
         ? selectSequentiallyFrom(params.messageText)
         : params.messageText;
@@ -178,9 +176,11 @@ const show = (): Promise<boolean> =>
     getEngagementBannerTestToRun()
         .then(deriveBannerParams)
         .then(showBanner)
-        .catch((err) => {
+        .catch(err => {
             reportError(
-                new Error(`Could not show banner. ${err.message}. Stack: ${err.stack}`),
+                new Error(
+                    `Could not show banner. ${err.message}. Stack: ${err.stack}`
+                ),
                 { feature: 'engagement-banner-test' },
                 false
             );
