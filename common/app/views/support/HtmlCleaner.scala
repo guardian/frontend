@@ -582,8 +582,7 @@ object GalleryCaptionCleaner extends HtmlCleaner {
 
     val firstStrong = Option(galleryCaption.getElementsByTag("strong").first())
     val captionTitle = galleryCaption.createElement("h2")
-    val captionTitleText = firstStrong.map(_.children().toString)
-      .getOrElse("")
+    val captionTitleText = firstStrong.map(_.html()).getOrElse("")
 
     // <strong> is removed in place of having a <h2> element
     firstStrong.foreach(_.remove())
