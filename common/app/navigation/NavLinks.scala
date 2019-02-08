@@ -191,7 +191,7 @@ object NavLinks {
   val discountCodeRoot = "https://discountcode.theguardian.com"
   val ukDiscountCode = NavLink("Discount Codes", s"$discountCodeRoot/uk?INTCMP=guardian_header")
   val auDiscountCode = NavLink("Discount Codes", s"$discountCodeRoot/au?INTCMP=guardian_header")
-  val intDiscountCode = NavLink("Discount Codes", s"$discountCodeRoot")
+  val intDiscountCode = NavLink("Discount Codes", s"$discountCodeRoot?INTCMP=guardian_header")
   val guardianMasterClasses = NavLink("Guardian Masterclasses", "/guardian-masterclasses",
     children = List(
       NavLink("Journalism", "/guardian-masterclasses/journalism"),
