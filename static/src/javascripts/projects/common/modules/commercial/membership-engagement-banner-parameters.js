@@ -54,7 +54,7 @@ export const getControlEngagementBannerParams = (): Promise<?EngagementBannerTem
                     }. Stack: ${err.stack}`
                 ),
                 {
-                    feature: 'engagement-banner-test',
+                    feature: 'engagement-banner',
                 },
                 false
             );

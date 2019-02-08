@@ -64,7 +64,7 @@ export const getControlEpicCopy = (): Promise<AcquisitionsEpicTemplateCopy> =>
                     }. Stack: ${err.stack}`
                 ),
                 {
-                    feature: 'epic-test',
+                    feature: 'epic',
                 },
                 false
             );

@@ -662,7 +662,7 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                     }. Stack: ${err.stack}`
                 ),
                 {
-                    feature: 'epic-test',
+                    feature: 'epic',
                 },
                 false
             );
@@ -730,7 +730,7 @@ export const getEngagementBannerTestsFromGoogleDoc = (): Promise<
                     }. Stack: ${err.stack}`
                 ),
                 {
-                    feature: 'engagement-banner-test',
+                    feature: 'engagement-banner',
                 },
                 false
             );
