@@ -45,8 +45,6 @@ rules:
   no-misspelled-properties:
     - 1
     - extra-properties:
-        - mso-line-height-rule
-        - mso-hide
         - overflow-scrolling
         - osx-font-smoothing
         - grid-column-gap
