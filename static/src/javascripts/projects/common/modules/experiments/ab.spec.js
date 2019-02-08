@@ -238,16 +238,20 @@ describe('A/B', () => {
                 ...expectedAsyncTestsToRun,
             };
 
-            const checkTests = (tests) =>
-                expect(
-                    runnableTestsToParticipations(tests)
-                ).toEqual(expectedTestsToRun);
+            const checkTests = tests =>
+                expect(runnableTestsToParticipations(tests)).toEqual(
+                    expectedTestsToRun
+                );
 
             return getAsyncTestsToRun()
-                .then(asyncTests => checkTests([...asyncTests, ...getSynchronousTestsToRun()]))
+                .then(asyncTests =>
+                    checkTests([...asyncTests, ...getSynchronousTestsToRun()])
+                )
                 .then(runAndTrackAbTests)
                 .then(getAsyncTestsToRun)
-                .then(asyncTests => checkTests([...asyncTests, ...getSynchronousTestsToRun()]));
+                .then(asyncTests =>
+                    checkTests([...asyncTests, ...getSynchronousTestsToRun()])
+                );
         });
     });
 
