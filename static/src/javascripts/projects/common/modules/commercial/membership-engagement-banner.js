@@ -72,6 +72,7 @@ const deriveBannerParams = (
     const defaultParams: EngagementBannerParams = defaultEngagementBannerParams();
 
     if (testToRun) {
+        console.log('testToRun');
         return Promise.resolve({
             ...defaultParams,
             ...testToRun.variantToRun.engagementBannerParams,
