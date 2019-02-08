@@ -5,9 +5,7 @@ import fakeOphan from 'ophan/ng';
 import fetchJson from 'lib/fetch-json';
 import userPrefs from 'common/modules/user-prefs';
 import { defaultEngagementBannerParams as defaultEngagementBannerParams_ } from 'common/modules/commercial/membership-engagement-banner-parameters';
-import {
-    membershipEngagementBanner
-} from 'common/modules/commercial/membership-engagement-banner';
+import { membershipEngagementBanner } from 'common/modules/commercial/membership-engagement-banner';
 import { pageShouldHideReaderRevenue } from 'common/modules/commercial/contributions-utilities';
 
 const defaultEngagementBannerParams: any = defaultEngagementBannerParams_;
