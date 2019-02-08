@@ -3,9 +3,9 @@ import config from 'lib/config';
 import reportError from 'lib/report-error';
 import { getLocalCurrencySymbol } from 'lib/geolocation';
 import { supportContributeURL } from './support-utilities';
-import { getBannerGoogleDoc } from './contributions-google-docs';
+import { getEngagementBannerControlFromGoogleDoc } from 'common/modules/commercial/contributions-google-docs';
 
-const engagementBannerControl: string = `<strong>The Guardian is editorially independent &ndash;
+const fallbackCopy: string = `<strong>The Guardian is editorially independent &ndash;
     our journalism is free from the influence of billionaire owners or politicians.
     No one edits our editor. No one steers our opinion.</strong> And unlike many others, we haven’t put
     up a paywall as we want to keep our journalism open and accessible. But the revenue we get from
@@ -15,22 +15,17 @@ export const defaultEngagementBannerParams = (): EngagementBannerParams => ({
     campaignCode: 'fallback_hardcoded_banner',
     buttonCaption: 'Support The Guardian',
     linkUrl: supportContributeURL,
-    messageText: engagementBannerControl,
+    messageText: fallbackCopy,
     ctaText: `<span class="engagement-banner__highlight"> Support The Guardian from as little as ${getLocalCurrencySymbol()}1</span>`,
     pageviewId: config.get('ophan.pageViewId', 'not_found'),
     products: ['CONTRIBUTION', 'RECURRING_CONTRIBUTION'],
     hasTicker: false,
 });
 
-export const getAcquisitionsBannerParams = (
-    googleDocJson: any,
-    sheetName: string
+const getAcquisitionsBannerParams = (
+    rowsFromGoogleDoc: any
 ): ?EngagementBannerTemplateParams => {
-    const rows =
-        googleDocJson &&
-        googleDocJson.sheets &&
-        googleDocJson.sheets[sheetName];
-    const firstRow = rows && rows[0];
+    const firstRow = rowsFromGoogleDoc && rowsFromGoogleDoc[0];
 
     if (
         !(
@@ -60,8 +55,8 @@ export const getAcquisitionsBannerParams = (
 };
 
 export const getControlEngagementBannerParams = (): Promise<?EngagementBannerTemplateParams> =>
-    getBannerGoogleDoc()
-        .then(json => getAcquisitionsBannerParams(json, 'control'))
+    getEngagementBannerControlFromGoogleDoc()
+        .then(rows => getAcquisitionsBannerParams(rows))
         .catch(err => {
             reportError(
                 new Error(
@@ -75,5 +70,8 @@ export const getControlEngagementBannerParams = (): Promise<?EngagementBannerTem
                 false
             );
 
+            // The banner tests work by overriding built-in parameters.
+            // So the default case is override nothing.
+            // As opposed to the epic where we return default copy.
             return {};
         });

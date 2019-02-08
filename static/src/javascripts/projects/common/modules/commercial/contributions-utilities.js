@@ -33,12 +33,12 @@ import {
     bannerMultipleTestsGoogleDocUrl,
     epicMultipleTestsGoogleDocUrl,
     getGoogleDoc,
-    googleDocEpicControl,
 } from 'common/modules/commercial/contributions-google-docs';
 import {
     defaultExclusionRules,
     isArticleWorthAnEpicImpression,
 } from 'common/modules/commercial/epic/epic-exclusion-rules';
+import { getControlEpicCopy } from 'common/modules/commercial/acquisitions-copy';
 
 export type CtaUrls = {
     supportUrl: string,
@@ -370,7 +370,7 @@ const makeABTestVariant = (
 
             const copyPromise: Promise<AcquisitionsEpicTemplateCopy> =
                 (options.copy && Promise.resolve(options.copy)) ||
-                googleDocEpicControl();
+                getControlEpicCopy();
 
             copyPromise
                 .then((copy: AcquisitionsEpicTemplateCopy) =>
