@@ -6,7 +6,7 @@ import {
 } from 'common/modules/experiments/ab-local-storage';
 import { overwriteMvtCookie } from 'common/modules/analytics/mvt-cookie';
 import {
-    getAynschronousTestsToRun,
+    getAsyncTestsToRun,
     getSynchronousTestsToRun,
     isInVariantSynchronous,
     runAndTrackAbTests,
@@ -224,50 +224,34 @@ describe('A/B', () => {
             });
             window.location.hash = '#ab-DummyTest=variant';
 
-            const expectedTestsToRun = {
-                DummyTest: { variant: 'variant' },
-                DummyTest2: { variant: 'variant' },
+            const expectedAsyncTestsToRun = {
                 EpicTest: { variant: 'control' },
             };
 
-            getAynschronousTestsToRun().then(tests => {
-                expect(
-                    runnableTestsToParticipations([
-                        ...tests,
-                        ...getSynchronousTestsToRun(),
-                    ])
-                ).toEqual(expectedTestsToRun);
-            });
+            const expectedSynchronousTestsToRun = {
+                DummyTest: { variant: 'variant' },
+                DummyTest2: { variant: 'variant' },
+            };
 
-            runAndTrackAbTests()
-                .then(() => {
-                    expect(
-                        runnableTestsToParticipations(
-                            getSynchronousTestsToRun()
-                        )
-                    ).toEqual(expectedTestsToRun);
+            const expectedTestsToRun = {
+                ...expectedSynchronousTestsToRun,
+                ...expectedAsyncTestsToRun,
+            };
 
-                    // In this case, the localStorage participations should be the same as the tests to run,
-                    // because there are no 'notintest' participations to preserve
-                    expect(getParticipationsFromLocalStorage()).toEqual(
-                        expectedTestsToRun
-                    );
+            const checkTests = tests =>
+                expect(runnableTestsToParticipations(tests)).toEqual(
+                    expectedTestsToRun
+                );
 
-                    return runAndTrackAbTests();
-                })
-                .then(() => {
-                    expect(
-                        runnableTestsToParticipations(
-                            getSynchronousTestsToRun()
-                        )
-                    ).toEqual(expectedTestsToRun);
-
-                    // In this case, the localStorage participations should be the same as the tests to run,
-                    // because there are no 'notintest' participations to preserve
-                    expect(getParticipationsFromLocalStorage()).toEqual(
-                        expectedTestsToRun
-                    );
-                });
+            return getAsyncTestsToRun()
+                .then(asyncTests =>
+                    checkTests([...asyncTests, ...getSynchronousTestsToRun()])
+                )
+                .then(runAndTrackAbTests)
+                .then(getAsyncTestsToRun)
+                .then(asyncTests =>
+                    checkTests([...asyncTests, ...getSynchronousTestsToRun()])
+                );
         });
     });
 

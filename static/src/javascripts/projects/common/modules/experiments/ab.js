@@ -61,7 +61,7 @@ export const getSynchronousTestsToRun = memoize(
     }
 );
 
-export const getAynschronousTestsToRun = (): Promise<
+export const getAsyncTestsToRun = (): Promise<
     $ReadOnlyArray<Runnable<ABTest>>
 > =>
     getEpicTestToRun().then(
@@ -106,7 +106,7 @@ export const runAndTrackAbTests = (): Promise<void> => {
         ...testExclusions,
     });
 
-    return getAynschronousTestsToRun().then(tests => {
+    return getAsyncTestsToRun().then(tests => {
         tests.forEach(test => test.variantToRun.test(test));
 
         registerImpressionEvents(tests);
