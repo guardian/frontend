@@ -178,6 +178,8 @@ class ContentApiClient(httpClient: HttpClient)(implicit executionContext: Execut
   def getResponse(sectionsQuery: SectionsQuery): Future[SectionsResponse] = getClient.getResponse(sectionsQuery)
 
   def getResponse(editionsQuery: EditionsQuery): Future[EditionsResponse] = getClient.getResponse(editionsQuery)
+
+  def getResponse(atomUsageQuery: AtomUsageQuery): Future[AtomUsageResponse] = getClient.getResponse(atomUsageQuery)
 }
 
 // The Admin server uses this PreviewContentApi to check the preview environment.
