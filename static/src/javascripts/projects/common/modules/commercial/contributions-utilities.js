@@ -629,7 +629,7 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                               }
                             : {}),
                         variants: rows.map(row => ({
-                            id: row.name,
+                            id: row.name.trim(),
                             products: [],
                             ...(isLiveBlog
                                 ? { test: setupEpicInLiveblog }
