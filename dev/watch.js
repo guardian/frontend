@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 const path = require('path');
-const cpy = require('cpy');
 
 const chalk = require('chalk');
 const browserSync = require('browser-sync').create();
@@ -98,35 +97,6 @@ chokidar.watch(`${sassDir}/**/*.scss`).on('change', changedFile => {
 
     // now recompile all files that matter
     Promise.all(filesToCompile.map(compileSass))
-        .then(() => {
-            // TODO: styles inlined into emails do not get copied to conf/common/inline-stylesheets
-            // We should properly investigate why this is happening and fix it
-            return Promise.all(
-                filesToCompile
-                    .filter(file => /head.email-/.test(file))
-                    .map(file =>
-                        cpy(
-                            [`**/${file.replace('.scss', '.css')}`],
-                            path.resolve(
-                                __dirname,
-                                '../',
-                                'common',
-                                'conf',
-                                'assets',
-                                'inline-stylesheets'
-                            ),
-                            {
-                                cwd: path.resolve(
-                                    __dirname,
-                                    '../',
-                                    'static',
-                                    'target'
-                                ),
-                            }
-                        )
-                    )
-            );
-        })
         .then(() => {
             // clear any previous error messages
             browserSync.sockets.emit('fullscreen:message:clear');
