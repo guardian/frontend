@@ -4,8 +4,6 @@ import { commercialAdVerification } from 'common/modules/experiments/tests/comme
 import { commercialCmpCustomise } from 'common/modules/experiments/tests/commercial-cmp-customise.js';
 import { askFourEarning } from 'common/modules/experiments/tests/contributions-epic-ask-four-earning';
 import { acquisitionsEpicAlwaysAskIfTagged } from 'common/modules/experiments/tests/acquisitions-epic-always-ask-if-tagged';
-import { acquisitionsEpicLiveblog } from 'common/modules/experiments/tests/acquisitions-epic-liveblog';
-import { acquisitionsEpicThankYou } from 'common/modules/experiments/tests/acquisitions-epic-thank-you';
 import {
     AcquisitionsBannerGoogleDocTestFiveVariants,
     AcquisitionsBannerGoogleDocTestFourVariants,
@@ -23,8 +21,6 @@ export const concurrentTests: $ReadOnlyArray<ABTest> = [
 export const epicTests: $ReadOnlyArray<EpicABTest> = [
     askFourEarning,
     acquisitionsEpicAlwaysAskIfTagged,
-    acquisitionsEpicLiveblog,
-    acquisitionsEpicThankYou,
 ];
 
 export const engagementBannerTests: $ReadOnlyArray<AcquisitionsABTest> = [

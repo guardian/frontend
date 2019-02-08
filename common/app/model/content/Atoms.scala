@@ -29,9 +29,10 @@ final case class Atoms(
   guides: Seq[GuideAtom],
   profiles: Seq[ProfileAtom],
   timelines: Seq[TimelineAtom],
-  commonsdivisions: Seq[CommonsDivisionAtom]
+  commonsdivisions: Seq[CommonsDivisionAtom],
+  audios: Seq[AudioAtom],
 ) {
-  val all: Seq[Atom] = quizzes ++ media ++ interactives ++ recipes ++ reviews ++ storyquestions ++ explainers ++ qandas ++ guides ++ profiles ++ timelines ++ commonsdivisions
+  val all: Seq[Atom] = quizzes ++ media ++ interactives ++ recipes ++ reviews ++ storyquestions ++ explainers ++ qandas ++ guides ++ profiles ++ timelines ++ commonsdivisions ++ audios
 
   def atomTypes: Map[String, Boolean] = Map(
     "guide" -> !guides.isEmpty,
@@ -40,7 +41,8 @@ final case class Atoms(
     "timeline" -> !timelines.isEmpty,
     "storyquestions" -> !storyquestions.isEmpty,
     "explainer" -> !explainers.isEmpty,
-    "commonsdivision" -> !commonsdivisions.isEmpty
+    "commonsdivision" -> !commonsdivisions.isEmpty,
+    "audio" -> !audios.isEmpty
   )
 }
 
@@ -218,6 +220,12 @@ final case class CommonsDivisionAtom(
   data: atomapi.commonsdivision.CommonsDivision
 ) extends Atom
 
+final case class AudioAtom(
+  override val id: String,
+  atom: AtomApiAtom,
+  data: atomapi.audio.AudioAtom
+) extends Atom
+
 object Atoms extends common.Logging {
 
   def articleConfig = ArticleConfiguration(
@@ -271,6 +279,8 @@ object Atoms extends common.Logging {
 
       val commonsdivisions = extract(atoms.commonsdivisions, atom => {CommonsDivisionAtom.make(atom)})
 
+      val audios = extract(atoms.audios, atom => {AudioAtom.make(atom)})
+
       Atoms(
         quizzes = quizzes,
         media = media,
@@ -283,7 +293,8 @@ object Atoms extends common.Logging {
         guides = guides,
         profiles = profiles,
         timelines = timelines,
-        commonsdivisions = commonsdivisions
+        commonsdivisions = commonsdivisions,
+        audios = audios
       )
     }
   }
@@ -635,5 +646,12 @@ object CommonsDivisionAtom {
   def make(atom: AtomApiAtom): CommonsDivisionAtom = {
     val commonsdivision = atom.data.asInstanceOf[AtomData.CommonsDivision].commonsDivision
     CommonsDivisionAtom(atom.id, atom, commonsdivision)
+  }
+}
+
+object AudioAtom {
+  def make(atom: AtomApiAtom): AudioAtom = {
+    val audio = atom.data.asInstanceOf[AtomData.Audio].audio
+    AudioAtom(atom.id, atom, audio)
   }
 }

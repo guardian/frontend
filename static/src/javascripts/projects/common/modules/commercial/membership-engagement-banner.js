@@ -12,9 +12,10 @@ import {
 import { isBlocked } from 'common/modules/commercial/membership-engagement-banner-block';
 import {
     type ReaderRevenueRegion,
-    shouldShowReaderRevenue,
+    pageShouldHideReaderRevenue,
     getReaderRevenueRegion,
 } from 'common/modules/commercial/contributions-utilities';
+import { userIsSupporter } from 'common/modules/commercial/user-features';
 import type { Banner } from 'common/modules/ui/bannerPicker';
 import bean from 'bean';
 import fetchJson from 'lib/fetch-json';
@@ -260,7 +261,8 @@ const canShow = (): Promise<boolean> => {
 
     if (
         hasSeenEnoughArticles &&
-        shouldShowReaderRevenue() &&
+        !pageShouldHideReaderRevenue() &&
+        !userIsSupporter() &&
         userVariantCanShow()
     ) {
         const userLastClosedBannerAt = userPrefs.get(lastClosedAtKey);

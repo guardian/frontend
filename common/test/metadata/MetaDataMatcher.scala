@@ -1,5 +1,6 @@
 package metadata
 
+import model.meta.Logo
 import org.jsoup.Jsoup
 import org.scalatest.Matchers
 import play.api.libs.json._
@@ -23,7 +24,7 @@ object MetaDataMatcher extends Matchers  {
 
     val organisation: JsValue = Json.parse(script.first().html())
     (organisation \ "name").as[String] should be("The Guardian")
-    (organisation \ "logo").as[String] should include("152x152.png")
+    (organisation \ "logo").as[Logo].url should include("TheGuardian_AMP.png")
 
     val socialNetworks = (organisation \ "sameAs").as[List[String]]
 

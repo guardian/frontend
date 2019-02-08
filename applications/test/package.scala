@@ -20,6 +20,7 @@ class ApplicationsTestSuite extends Suites (
   new common.CombinerFeatureTest,
   new AllIndexControllerTest,
   new AllIndexTemplateTest,
+  new AllIndexTemplateTestLite,
   new GalleryControllerTest,
   new GalleryTemplateTest,
   new ImageContentControllerTest,

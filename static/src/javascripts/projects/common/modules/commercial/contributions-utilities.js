@@ -21,12 +21,14 @@ import {
     getSync as geolocationGetSync,
 } from 'lib/geolocation';
 import { noop } from 'lib/noop';
-import { splitAndTrim } from 'lib/string-utils';
+import { splitAndTrim, optionalSplitAndTrim } from 'lib/string-utils';
 import { epicButtonsTemplate } from 'common/modules/commercial/templates/acquisitions-epic-buttons';
 import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templates/acquisitions-epic-control';
-import { shouldSeeReaderRevenue as userShouldSeeReaderRevenue } from 'common/modules/commercial/user-features';
+import { epicLiveBlogTemplate } from 'common/modules/commercial/templates/acquisitions-epic-liveblog';
+import { userIsSupporter } from 'common/modules/commercial/user-features';
 import { supportContributeURL } from 'common/modules/commercial/support-utilities';
 import { awaitEpicButtonClicked } from 'common/modules/commercial/epic/epic-utils';
+import { setupEpicInLiveblog } from 'common/modules/commercial/contributions-liveblog-utilities';
 import {
     epicMultipleTestsGoogleDocUrl,
     getBannerGoogleDoc,
@@ -38,8 +40,6 @@ import {
     isArticleWorthAnEpicImpression,
 } from 'common/modules/commercial/epic/epic-exclusion-rules';
 import { getAcquisitionsBannerParams } from 'common/modules/commercial/membership-engagement-banner-parameters';
-
-export type EpicTemplate = (Variant, AcquisitionsEpicTemplateCopy) => string;
 
 export type CtaUrls = {
     supportUrl: string,
@@ -85,10 +85,22 @@ const controlTemplate: EpicTemplate = (
     acquisitionsEpicControlTemplate({
         copy,
         componentName: options.componentName,
-        buttonTemplate: options.buttonTemplate({
-            supportUrl: options.supportURL,
-            subscribeUrl: options.subscribeURL,
-        }),
+        buttonTemplate: options.buttonTemplate
+            ? options.buttonTemplate({
+                  supportUrl: options.supportURL,
+                  subscribeUrl: options.subscribeURL,
+              })
+            : undefined,
+    });
+
+const liveBlogTemplate: EpicTemplate = (
+    { options = {} },
+    copy: AcquisitionsEpicTemplateCopy
+) =>
+    epicLiveBlogTemplate({
+        copy,
+        componentName: options.componentName,
+        supportURL: options.supportURL,
     });
 
 const doTagsMatch = (test: EpicABTest): boolean =>
@@ -113,16 +125,17 @@ const getTargets = (
     return [];
 };
 
-const isCompatibleWithEpic = (page: Object): boolean =>
+const isCompatibleWithArticleEpic = (page: Object): boolean =>
     page.contentType === 'Article' &&
     !page.isMinuteArticle &&
     isArticleWorthAnEpicImpression(page, defaultExclusionRules);
 
-const shouldShowReaderRevenue = (
-    showToContributorsAndSupporters: boolean = false
-): boolean =>
-    (userShouldSeeReaderRevenue() || showToContributorsAndSupporters) &&
-    !config.get('page.shouldHideReaderRevenue');
+const isCompatibleWithLiveBlogEpic = (page: Object): boolean =>
+    page.contentType === 'LiveBlog' &&
+    isArticleWorthAnEpicImpression(page, defaultExclusionRules);
+
+const pageShouldHideReaderRevenue = () =>
+    config.get('page.shouldHideReaderRevenue');
 
 const shouldShowEpic = (test: EpicABTest): boolean => {
     const onCompatiblePage = test.pageCheck(config.get('page'));
@@ -134,11 +147,15 @@ const shouldShowEpic = (test: EpicABTest): boolean => {
 
     const tagsMatch = doTagsMatch(test);
 
+    const isCompatibleUser = test.onlyShowToExistingSupporters
+        ? userIsSupporter()
+        : !userIsSupporter();
+
     return (
-        shouldShowReaderRevenue(test.showToContributorsAndSupporters) &&
+        !pageShouldHideReaderRevenue() &&
         onCompatiblePage &&
+        isCompatibleUser &&
         inCompatibleLocation &&
-        test.locationCheck(storedGeolocation) &&
         tagsMatch
     );
 };
@@ -166,10 +183,22 @@ const registerIframeListener = (iframeId: string) => {
     });
 };
 
+const pageMatchesTags = (tagIds: string[]): boolean =>
+    tagIds.some(tagId =>
+        `${config.get('page.keywordIds')},${config.get(
+            'page.nonKeywordTagIds'
+        )}`.includes(tagId)
+    );
+
+const pageMatchesSections = (sectionIds: string[]): boolean =>
+    sectionIds.some(section => config.get('page.section') === section);
+
 const makeABTestVariant = (
     id: string,
     products: $ReadOnlyArray<OphanProduct>,
+    test?: (html: string, abTest: ABTest) => void,
     options: Object,
+    template: EpicTemplate,
     parentTest: EpicABTest
 ): Variant => {
     const trackingCampaignId = `epic_${parentTest.campaignId}`;
@@ -186,8 +215,10 @@ const makeABTestVariant = (
         locations = [],
         tagIds = [],
         sections = [],
+        excludedTagIds = [],
+        excludedSections = [],
+        maxViews = parentTest.maxViews,
 
-        maxViews = defaultMaxViews,
         isUnlimited = false,
         campaignCode = createTestAndVariantId(
             parentTest.campaignPrefix,
@@ -214,8 +245,7 @@ const makeABTestVariant = (
                 variant: id,
             },
         }),
-        template = controlTemplate,
-        buttonTemplate = options.buttonTemplate || defaultButtonTemplate,
+        buttonTemplate = options.buttonTemplate,
         blockEngagementBanner = false,
         engagementBannerParams = {},
         isOutbrainCompliant = false,
@@ -225,7 +255,6 @@ const makeABTestVariant = (
         insertAtSelector = '.submeta',
         insertMultiple = false,
         insertAfter = false,
-        test = noop,
         impression = submitABTestImpression =>
             mediator.once(parentTest.insertEvent, () => {
                 submitInsertEvent({
@@ -289,7 +318,6 @@ const makeABTestVariant = (
             insertAtSelector,
             insertMultiple,
             insertAfter,
-            test,
             impression,
             success,
             iframeId,
@@ -319,24 +347,20 @@ const makeABTestVariant = (
                 locations.some(
                     region => geolocationGetSync() === region.toUpperCase()
                 );
-            const matchesTags =
-                tagIds.length === 0 ||
-                tagIds.some(tagId =>
-                    `${config.get('page.keywordIds')},${config.get(
-                        'page.nonKeywordTagIds'
-                    )}`.includes(tagId)
-                );
+
+            const matchesTags = tagIds.length === 0 || pageMatchesTags(tagIds);
             const matchesSections =
-                sections.length === 0 ||
-                sections.some(
-                    section => config.get('page.section') === section
-                );
+                sections.length === 0 || pageMatchesSections(sections);
+            const noExcludedTags = !pageMatchesTags(excludedTagIds);
+            const notExcludedSection = !pageMatchesSections(excludedSections);
 
             return (
                 meetsMaxViewsConditions &&
                 matchesLocations &&
                 matchesTags &&
-                matchesSections
+                matchesSections &&
+                noExcludedTags &&
+                notExcludedSection
             );
         },
 
@@ -349,15 +373,15 @@ const makeABTestVariant = (
                 (options.copy && Promise.resolve(options.copy)) ||
                 googleDocEpicControl();
 
-            const render = (templateFn: ?EpicTemplate) =>
-                copyPromise
-                    .then((copy: AcquisitionsEpicTemplateCopy) => {
-                        const renderTemplate: EpicTemplate =
-                            templateFn ||
-                            (this.options && this.options.template);
-                        return renderTemplate(this, copy);
-                    })
-                    .then(renderedTemplate => {
+            copyPromise
+                .then((copy: AcquisitionsEpicTemplateCopy) =>
+                    this.options.template(this, copy)
+                )
+                .then(renderedTemplate => {
+                    if (test) {
+                        test(renderedTemplate, this);
+                    } else {
+                        // Standard epic insertion. TODO - this could do with a refactor
                         const component = $.create(renderedTemplate);
 
                         mediator.emit('register:begin', trackingCampaignId);
@@ -426,13 +450,8 @@ const makeABTestVariant = (
 
                             return component[0];
                         });
-                    });
-
-            if (test !== noop && typeof test === 'function') {
-                test(render.bind(this), this, parentTest);
-            } else {
-                render.apply(this);
-            }
+                    }
+                });
         },
         impression,
         success,
@@ -455,16 +474,17 @@ const makeABTest = ({
 
     // optional params
     // locations is a filter where empty is taken to mean 'all'
+    maxViews = defaultMaxViews,
     locations = [],
-    locationCheck = () => true,
     dataLinkNames = '',
     campaignPrefix = 'gdnwb_copts_memco',
     useLocalViewLog = false,
     overrideCanRun = false,
     useTargetingTool = false,
-    showToContributorsAndSupporters = false,
+    onlyShowToExistingSupporters = false,
     canRun = () => true,
-    pageCheck = isCompatibleWithEpic,
+    pageCheck = isCompatibleWithArticleEpic,
+    template = controlTemplate,
 }: InitEpicABTest): EpicABTest => {
     const test = {
         // this is true because we use the reader revenue flag rather than sensitive
@@ -486,6 +506,7 @@ const makeABTest = ({
         viewEvent: makeEvent(id, 'view'),
 
         variants: [],
+        maxViews: maxViews || defaultMaxViews,
 
         id,
         start,
@@ -502,10 +523,9 @@ const makeABTest = ({
         campaignPrefix,
         useLocalViewLog,
         overrideCanRun,
-        showToContributorsAndSupporters,
+        onlyShowToExistingSupporters,
         pageCheck,
         locations,
-        locationCheck,
         useTargetingTool,
     };
 
@@ -513,7 +533,9 @@ const makeABTest = ({
         makeABTestVariant(
             variant.id,
             variant.products,
+            variant.test,
             variant.options || {},
+            template,
             test
         )
     );
@@ -570,6 +592,9 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
             return Object.keys(sheets)
                 .filter(testName => testName.endsWith('__ON'))
                 .map(name => {
+                    const isThankYou = name.includes('__thank_you');
+                    const isLiveBlog = name.includes('__liveblog');
+
                     const rows = sheets[name];
                     const testName = name.split('__ON')[0];
                     return makeABTest({
@@ -587,23 +612,67 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                         audience: 1,
                         audienceOffset: 0,
 
+                        ...(isLiveBlog
+                            ? {
+                                  template: liveBlogTemplate,
+                                  pageCheck: isCompatibleWithLiveBlogEpic,
+                              }
+                            : {
+                                  template: controlTemplate,
+                                  pageCheck: isCompatibleWithArticleEpic,
+                              }),
+                        ...(isThankYou
+                            ? {
+                                  onlyShowToExistingSupporters: true,
+                                  maxViews: {
+                                      days: 365, // Arbitrarily high number - reader should only see the thank-you for one 'cycle'.
+                                      count: 1,
+                                      minDaysBetweenViews: 0,
+                                  },
+                                  useLocalViewLog: true,
+                              }
+                            : {
+                                  maxViews: defaultMaxViews,
+                              }),
                         variants: rows.map(row => ({
                             id: row.name,
                             products: [],
+                            ...(isLiveBlog
+                                ? { test: setupEpicInLiveblog }
+                                : {}),
                             options: {
-                                locations: splitAndTrim(row.locations, ','),
-                                tagIds: splitAndTrim(row.tagIds, ','),
-                                sections: splitAndTrim(row.sections, ','),
+                                buttonTemplate: isThankYou
+                                    ? undefined
+                                    : defaultButtonTemplate,
+                                locations: optionalSplitAndTrim(
+                                    row.locations,
+                                    ','
+                                ),
+                                tagIds: optionalSplitAndTrim(row.tagIds, ','),
+                                sections: optionalSplitAndTrim(
+                                    row.sections,
+                                    ','
+                                ),
+                                excludedTagIds: optionalSplitAndTrim(
+                                    row.excludedTagIds,
+                                    ','
+                                ),
+                                excludedSections: optionalSplitAndTrim(
+                                    row.excludedSections,
+                                    ','
+                                ),
                                 copy: {
                                     heading: row.heading,
                                     paragraphs: splitAndTrim(
                                         row.paragraphs,
                                         '\n'
                                     ),
-                                    highlightedText: row.highlightedText.replace(
-                                        /%%CURRENCY_SYMBOL%%/g,
-                                        getLocalCurrencySymbol()
-                                    ),
+                                    highlightedText: row.highlightedText
+                                        ? row.highlightedText.replace(
+                                              /%%CURRENCY_SYMBOL%%/g,
+                                              getLocalCurrencySymbol()
+                                          )
+                                        : undefined,
                                 },
                             },
                         })),
@@ -626,7 +695,7 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
         });
 
 export {
-    shouldShowReaderRevenue,
+    pageShouldHideReaderRevenue,
     shouldShowEpic,
     makeABTest,
     defaultButtonTemplate,

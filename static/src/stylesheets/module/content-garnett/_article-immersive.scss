@@ -210,6 +210,9 @@
 
     &.content__standfirst--advertisement {
         font-family: $f-sans-serif-text;
+        font-weight: 400;
+        padding-left: 0;
+        margin-left: 0;
     }
 }
 
@@ -623,7 +626,7 @@
 }
 
 //overides the immersive article — done like this to keep gallery's and photo eassy in ok shape
-.content--immersive:not(.immersive-main-media__gallery):not(.paid-content):not(.content--gallery):not(.content--minute-article) {
+.content--immersive:not(.immersive-main-media__gallery):not(.content--gallery):not(.content--minute-article) {
     &.immersive-main-media {
         @include mq(wide) {
             min-height: 600px;
@@ -651,7 +654,15 @@
         }
     }
 
-    .content__label__link {
+    .content__labels--paidgallery {
+        background: $labs-main;
+
+        .content__section-label__link--advertisement {
+            color: $brightness-7;
+        }
+    }
+
+    .content__label__link:not(.content__section-label__link--advertisement) {
         color: #ffffff;
     }
 
@@ -750,7 +761,7 @@
         }
     }
 
-    .content__standfirst--immersive-article {
+    .content__standfirst--immersive-article:not(.content__standfirst--advertisement) {
         @include fs-headline(1);
         position: relative;
         padding-left: 0px;

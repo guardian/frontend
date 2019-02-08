@@ -7,3 +7,8 @@ export const splitAndTrim = (str: string, delim: string): Array<string> =>
         .split(delim)
         .map(s => s.trim())
         .filter(Boolean);
+
+export const optionalSplitAndTrim = (
+    str: string,
+    delim: string
+): Array<string> => (str ? splitAndTrim(str, delim) : []);
