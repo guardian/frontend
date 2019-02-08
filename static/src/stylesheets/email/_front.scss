@@ -4,6 +4,7 @@ $gutter: 10px;
 
 $body-color: #ffffff;
 $container-color: #ffffff;
+$cta-font-color: #000000;
 
 @import '../_vars';
 @import '_normalise';
@@ -296,10 +297,9 @@ $email-tones: (
 
 .subscribe {
     border-collapse: collapse;
-    background-color: #ffffff;
     &.sc {
         width: 100%;
-        max-width: 500px;
+        max-width: $max-width;
     }
     .padded-divider {
         display: none;
@@ -310,19 +310,19 @@ $email-tones: (
         font-size: 14px;
         line-height: 20px;
         mso-line-height-rule: exactly;
-        color: #121212;
+        color: $brightness-7;
         padding-bottom: 15px;
         .sup-highlight {
-            color: #121212;
+            color: $brightness-7;
             font-weight: bold;
-            background-color: #ffe500;
+            background-color: $highlight-main;
             padding-bottom: 2px;
         }
     }
     .sm-btn {
-        background-color: #ffe500;
+        background-color: $highlight-main;
         border-radius: 20px;
-        color: #000000;
+        color: $cta-font-color;
         display: inline-block;
         font-family: Georgia, serif;
         font-size: 16px;
