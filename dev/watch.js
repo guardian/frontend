@@ -99,7 +99,9 @@ chokidar.watch(`${sassDir}/**/*.scss`).on('change', changedFile => {
     // now recompile all files that matter
     Promise.all(filesToCompile.map(compileSass))
         .then(() => {
-            Promise.all(
+            // TODO: styles inlined into emails do not get copied to conf/common/inline-stylesheets
+            // We should properly investigate why this is happening and fix it
+            return Promise.all(
                 filesToCompile
                     .filter(file => /head.email-/.test(file))
                     .map(file =>
