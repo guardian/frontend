@@ -72,10 +72,13 @@ const deriveBannerParams = (
     const defaultParams: EngagementBannerParams = defaultEngagementBannerParams();
 
     if (testToRun) {
-        console.log('testToRun');
         return Promise.resolve({
             ...defaultParams,
             ...testToRun.variantToRun.engagementBannerParams,
+            abTest: {
+                name: testToRun.id,
+                variant: testToRun.variantToRun.id,
+            },
             campaignCode: `${testToRun.id}_${testToRun.variantToRun.id}`,
         });
     }
@@ -105,7 +108,7 @@ const clearBannerHistory = (): void => {
 
 const showBanner = (
     params: EngagementBannerParams,
-): void => {
+): boolean => {
     const messageText = Array.isArray(params.messageText)
         ? selectSequentiallyFrom(params.messageText)
         : params.messageText;
@@ -165,14 +168,24 @@ const showBanner = (
         }
 
         mediator.emit('membership-message:display');
+        return true;
     }
+
+    return false;
 };
 
 const show = (): Promise<boolean> =>
     getEngagementBannerTestToRun()
         .then(deriveBannerParams)
         .then(showBanner)
-        .catch(() => false);
+        .catch((err) => {
+            reportError(
+                new Error(`Could not show banner. ${err.message}. Stack: ${err.stack}`),
+                { feature: 'engagement-banner-test' },
+                false
+            );
+            return false;
+        });
 
 const canShow = (): Promise<boolean> => {
     if (!config.get('switches.membershipEngagementBanner') || isBlocked()) {
