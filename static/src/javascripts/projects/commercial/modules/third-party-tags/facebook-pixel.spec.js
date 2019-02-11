@@ -1,13 +1,14 @@
 // @flow
-import * as adPrefs from 'common/modules/commercial/ad-prefs.lib';
+import { getAdConsentState as _getAdConsentState } from 'common/modules/commercial/ad-prefs.lib';
 import config from 'lib/config';
 
 import { fbPixel } from 'commercial/modules/third-party-tags/facebook-pixel';
 
+const getAdConsentState: any = _getAdConsentState;
+
 jest.mock('common/modules/commercial/ad-prefs.lib', () => ({
     getAdConsentState: jest.fn(),
 }));
-const consentSpy = jest.spyOn(adPrefs, 'getAdConsentState');
 
 type SetupParams = {
     consent: boolean | null,
@@ -21,7 +22,7 @@ describe('Facebook tracking pixel', () => {
     });
 
     const setup = (params: SetupParams) => {
-        consentSpy.mockReturnValueOnce(params.consent);
+        getAdConsentState.mockReturnValueOnce(params.consent);
         config.switches = { facebookTrackingPixel: params.switchedOn };
     };
 
