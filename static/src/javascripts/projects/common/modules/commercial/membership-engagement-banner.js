@@ -2,7 +2,6 @@
 import config from 'lib/config';
 import { local } from 'lib/storage';
 import { Message } from 'common/modules/ui/message';
-import mediator from 'lib/mediator';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
 import {
     defaultEngagementBannerParams,
@@ -131,8 +130,12 @@ const getBannerHtml = (params: EngagementBannerParams): string => {
         : acquisitionsBannerControlTemplate(templateParams);
 };
 
-const showBannerAsMessage = (messageCode: string, params: EngagementBannerParams, html: string): boolean => {
-    return new Message(messageCode, {
+const showBannerAsMessage = (
+    code: string,
+    params: EngagementBannerParams,
+    html: string
+): boolean =>
+    new Message(code, {
         siteMessageLinkName: 'membership message',
         siteMessageCloseBtn: 'hide',
         siteMessageComponentName: params.campaignCode,
@@ -147,7 +150,6 @@ const showBannerAsMessage = (messageCode: string, params: EngagementBannerParams
             );
         },
     }).show(html);
-};
 
 const trackBanner = (params: EngagementBannerParams): void => {
     ['INSERT', 'VIEW'].forEach(action => {

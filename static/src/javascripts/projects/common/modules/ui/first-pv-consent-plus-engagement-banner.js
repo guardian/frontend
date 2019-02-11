@@ -20,7 +20,6 @@ import { getEngagementBannerTestToRun } from 'common/modules/experiments/ab';
 import fastdom from 'lib/fastdom-promise';
 import reportError from 'lib/report-error';
 
-
 const messageCode: string = 'first-pv-consent-plus-engagement-banner';
 
 const doubleBannerHtml = (engagementBannerHtml: string): string => `
@@ -113,21 +112,25 @@ const show = (): Promise<boolean> => {
     return getEngagementBannerTestToRun()
         .then(deriveEngagementBannerParams)
         .then(getEngagementBannerHtml)
-        .then(engagementBannerHtml => fastdom.write(() => {
-            const html = doubleBannerHtml(engagementBannerHtml);
-            if (document.body) {
-                document.body.insertAdjacentHTML('beforeend', html);
-            }
-            bindFirstPvConsentClickHandlers(firstPvConsentMessage);
-            engagementMessage.bindCloseHandler(hideEngagementBanner);
-            return true;
-        }))
+        .then(engagementBannerHtml =>
+            fastdom.write(() => {
+                const html = doubleBannerHtml(engagementBannerHtml);
+                if (document.body) {
+                    document.body.insertAdjacentHTML('beforeend', html);
+                }
+                bindFirstPvConsentClickHandlers(firstPvConsentMessage);
+                engagementMessage.bindCloseHandler(hideEngagementBanner);
+                return true;
+            })
+        )
         .catch(err => {
             reportError(
                 new Error(
-                    `Could not show banner within double banner. ${err.message}. Stack: ${err.stack}`
+                    `Could not show banner within double banner. ${
+                        err.message
+                    }. Stack: ${err.stack}`
                 ),
-                {feature: 'engagement-banner'},
+                { feature: 'engagement-banner' },
                 false
             );
             return false;
