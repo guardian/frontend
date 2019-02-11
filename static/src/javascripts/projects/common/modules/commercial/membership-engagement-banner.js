@@ -57,10 +57,8 @@ const hasBannerBeenRedeployedSinceClosed = (
         .catch(err => {
             // Capture in sentry
             reportError(
-                new Error(
-                    `Unable to get contributions banner deploy log: ${err}`
-                ),
-                { feature: 'reader-revenue-contributions-banner' },
+                new Error(`Unable to get engagement banner deploy log: ${err}`),
+                { feature: 'engagement-banner' },
                 false
             );
             return false;
@@ -181,7 +179,7 @@ const show = (): Promise<boolean> =>
                 new Error(
                     `Could not show banner. ${err.message}. Stack: ${err.stack}`
                 ),
-                { feature: 'engagement-banner-test' },
+                { feature: 'engagement-banner' },
                 false
             );
             return false;
