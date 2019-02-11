@@ -163,7 +163,6 @@ const showBanner = (params: EngagementBannerParams): boolean => {
             initTicker('.js-engagement-banner-ticker');
         }
 
-        mediator.emit('membership-message:display');
         return true;
     }
 
