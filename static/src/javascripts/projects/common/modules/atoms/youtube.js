@@ -134,7 +134,7 @@ const handlePlay = (atomId: string, player: AtomPlayer): void => {
 
     // don't track play if resumed from a paused state
     if (paused) {
-        paused = false;
+        player.paused = false;
     } else {
         trackYoutubeEvent('play', trackingId);
     }
