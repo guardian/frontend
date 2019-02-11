@@ -43,7 +43,6 @@ object StoryHtmlPage {
     htmlTag(
       headTag(
         weAreHiring() when WeAreHiring.isSwitchedOn,
-        orielScriptTag(),
         titleTag(),
         metaData(),
         head,

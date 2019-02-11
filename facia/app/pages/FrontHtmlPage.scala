@@ -45,7 +45,6 @@ object FrontHtmlPage extends HtmlPage[PressedPage] {
     htmlTag(
       headTag(
         weAreHiring() when WeAreHiring.isSwitchedOn,
-        orielScriptTag(),
         titleTag(),
         metaData(),
         frontMeta(),

@@ -308,16 +308,6 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-  val OrielAnalyticsSwitch: Switch = Switch(
-    group = Commercial,
-    name = "oriel-analytics-or-full",
-    description = "Turn on to include the analytics ONLY for Oriel. Turn off to include the FULL integration script. Depends on AB test switch.",
-    owners = group(Commercial),
-    safeState = On,
-    sellByDate = new LocalDate(2019, 2, 13),
-    exposeClientSide = false
-  )
-
   val BlockthroughSwitch: Switch = Switch(
     group = Commercial,
     name = "blockthrough",
