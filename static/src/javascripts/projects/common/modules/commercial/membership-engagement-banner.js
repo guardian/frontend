@@ -104,7 +104,7 @@ const clearBannerHistory = (): void => {
     userPrefs.remove(lastClosedAtKey);
 };
 
-const showBanner = (params: EngagementBannerParams): boolean => {
+const getBannerHtml = (params: EngagementBannerParams): string => {
     const messageText = Array.isArray(params.messageText)
         ? selectSequentiallyFrom(params.messageText)
         : params.messageText;
@@ -126,10 +126,13 @@ const showBanner = (params: EngagementBannerParams): boolean => {
         hasTicker: params.hasTicker,
     };
 
-    const renderedBanner: string = params.template
+    return params.template
         ? params.template(templateParams)
         : acquisitionsBannerControlTemplate(templateParams);
-    const messageShown = new Message(messageCode, {
+};
+
+const showBannerAsMessage = (messageCode: string, params: EngagementBannerParams, html: string): boolean => {
+    return new Message(messageCode, {
         siteMessageLinkName: 'membership message',
         siteMessageCloseBtn: 'hide',
         siteMessageComponentName: params.campaignCode,
@@ -143,21 +146,30 @@ const showBanner = (params: EngagementBannerParams): boolean => {
                 () => hideBanner(this)
             );
         },
-    }).show(renderedBanner);
+    }).show(html);
+};
+
+const trackBanner = (params: EngagementBannerParams): void => {
+    ['INSERT', 'VIEW'].forEach(action => {
+        submitComponentEvent({
+            component: {
+                componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
+                products: params.products,
+                campaignCode: params.campaignCode,
+                id: params.campaignCode,
+            },
+            action,
+            ...(params.abTest ? { abTest: params.abTest } : {}),
+        });
+    });
+};
+
+const showBanner = (params: EngagementBannerParams): boolean => {
+    const html = getBannerHtml(params);
+    const messageShown = showBannerAsMessage(messageCode, params, html);
 
     if (messageShown) {
-        ['INSERT', 'VIEW'].forEach(action => {
-            submitComponentEvent({
-                component: {
-                    componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
-                    products: params.products,
-                    campaignCode: params.campaignCode,
-                    id: params.campaignCode,
-                },
-                action,
-                ...(params.abTest ? { abTest: params.abTest } : {}),
-            });
-        });
+        trackBanner(params);
 
         if (params.hasTicker) {
             initTicker('.js-engagement-banner-ticker');
@@ -228,4 +240,6 @@ export {
     clearBannerHistory,
     minArticlesBeforeShowingBanner,
     deriveBannerParams,
+    getBannerHtml,
+    trackBanner,
 };
