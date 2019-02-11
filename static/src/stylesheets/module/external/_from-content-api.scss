@@ -161,7 +161,7 @@
             margin-left: -$gs-gutter;
         }
 
-        .paid-content:not(.content--photo-essay) & {
+        .paid-content & {
             @include faux-bullet-point($brightness-60, $right-space: 4px);
         }
 
