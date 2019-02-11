@@ -65,27 +65,22 @@ const hasBannerBeenRedeployedSinceClosed = (
 
 const deriveBannerParams = (
     testToRun: ?Runnable<AcquisitionsABTest>
-): Promise<EngagementBannerParams> => {
-    const defaultParams: EngagementBannerParams = defaultEngagementBannerParams();
-
-    if (testToRun) {
-        return Promise.resolve({
-            ...defaultParams,
-            ...testToRun.variantToRun.engagementBannerParams,
-            abTest: {
-                name: testToRun.id,
-                variant: testToRun.variantToRun.id,
-            },
-            campaignCode: `${testToRun.id}_${testToRun.variantToRun.id}`,
-        });
-    }
-
-    // if the user isn't in a test variant, use the control in google docs
-    return getControlEngagementBannerParams().then(controlParams => ({
-        ...defaultParams,
-        ...controlParams,
-    }));
-};
+): Promise<EngagementBannerParams> =>
+    getControlEngagementBannerParams().then(defaultParams => {
+        if (testToRun) {
+            return {
+                ...defaultParams,
+                ...testToRun.variantToRun.engagementBannerParams,
+                abTest: {
+                    name: testToRun.id,
+                    variant: testToRun.variantToRun.id,
+                },
+                campaignCode: `${testToRun.id}_${testToRun.variantToRun.id}`,
+            };
+        } else {
+            return defaultParams;
+        }
+    });
 
 const getVisitCount = (): number => local.get('gu.alreadyVisited') || 0;
 
