@@ -295,10 +295,18 @@
 }
 
 .ad-slot--outstream {
+
+    background: transparent;
+
+    @include mq(mobile) {
+        width: 300px;
+        height: 221px;
+        min-height: 221px;
+    }
+
     @include mq(desktop) {
         width: 620px;
         height: $mpu-ad-label-height + 350px;
-        background: transparent;
 
         & > div.ad-slot__label {
             margin-left: 35px;

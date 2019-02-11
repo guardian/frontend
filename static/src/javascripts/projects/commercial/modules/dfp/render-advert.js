@@ -98,7 +98,10 @@ sizeCallbacks[adSizes.video] = (_, advert) =>
         advert.updateExtraSlotClasses('u-h');
     });
 
-sizeCallbacks[adSizes.outstream] = (_, advert) =>
+sizeCallbacks[(adSizes.outstreamDesktop, adSizes.outstreamMobile)] = (
+    _,
+    advert
+) =>
     fastdom.write(() => {
         advert.updateExtraSlotClasses('ad-slot--outstream');
     });
