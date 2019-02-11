@@ -1,15 +1,41 @@
 type ListenerFunction = (f: () => void) => void;
 
+export type CtaUrls = {
+    supportUrl: string,
+};
+
+declare type EpicTemplate = (EpicVariant, AcquisitionsEpicTemplateCopy) => string;
+
 declare type Variant = {
     id: string,
     test: (x: Object) => void,
     canRun?: () => boolean,
     impression?: ListenerFunction,
     success?: ListenerFunction,
-    options?: Object,
-    engagementBannerParams?: EngagementBannerParams,
     deploymentRules?: DeploymentRules,
 };
+
+declare type EpicVariant = Variant & {
+    // filters, where empty is taken to mean 'all', multiple entries are combined with OR
+    locations: string[],
+    tagIds: string[],
+    sections: string[],
+    excludedTagIds: string[],
+    excludedSections: string[],
+
+    campaignCode: string,
+    supportURL: string,
+    subscribeURL: string,
+    componentName: string,
+    template: EpicTemplate,
+
+    buttonTemplate?: CtaUrls => string,
+    copy?: AcquisitionsEpicTemplateCopy,
+}
+
+declare type EngagementBannerVariant = Variant & {
+    engagementBannerParams: () => Promise<EngagementBannerParams>,
+}
 
 declare type ABTest = {
     id: string,
@@ -49,10 +75,8 @@ declare type DeploymentRules = 'AlwaysAsk' | MaxViews
 declare type EpicABTest = AcquisitionsABTest & {
     campaignPrefix: string,
     useLocalViewLog: boolean,
-    overrideCanRun: boolean,
     onlyShowToExistingSupporters: boolean,
     pageCheck: (page: Object) => boolean,
-    locations: $ReadOnlyArray<string>,
     useTargetingTool: boolean,
     insertEvent: string,
     viewEvent: string,
@@ -60,19 +84,21 @@ declare type EpicABTest = AcquisitionsABTest & {
 
 declare type InitEpicABTestVariant = {
     id: string,
-    products: $ReadOnlyArray<OphanProduct>,
     test?: (html: string, abTest: ABTest) => void,
     deploymentRules?: DeploymentRules,
-    options?: Object
+    locations?: string[],
+    tagIds?: string[],
+    sections?: string[],
+    excludedTagIds?: string[],
+    excludedSections?: string[],
+    buttonTemplate?: CtaUrls => string,
+    copy?: AcquisitionsEpicTemplateCopy,
 };
 
 declare type InitBannerABTestVariant = {
     id: string,
-    products: $ReadOnlyArray<OphanProduct>,
     engagementBannerParams: () => Promise<?EngagementBannerTemplateParams>
 };
-
-declare type EpicTemplate = (Variant, AcquisitionsEpicTemplateCopy) => string;
 
 declare type InitEpicABTest = {
     id: string,
@@ -88,17 +114,13 @@ declare type InitEpicABTest = {
     campaignId: string,
     variants: $ReadOnlyArray<InitEpicABTestVariant>,
 
-    // locations is a filter where empty is taken to mean 'all'
-    locations?: string[],
-    dataLinkNames?: string,
     campaignPrefix?: string,
     useLocalViewLog?: boolean,
-    overrideCanRun?: boolean,
     useTargetingTool?: boolean,
     onlyShowToExistingSupporters?: boolean,
-    canRun?: (test: EpicABTest) => boolean,
     pageCheck?: (page: Object) => boolean,
     template?: EpicTemplate,
+    deploymentRules?: DeploymentRules,
 }
 
 declare type Interaction = {
