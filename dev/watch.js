@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const path = require('path');
-
+const cpy = require('cpy');
 const chalk = require('chalk');
 const browserSync = require('browser-sync').create();
 const bsConfig = require('./bs-config');
@@ -69,6 +69,15 @@ webpackBundler.watch(
 const chokidar = require('chokidar');
 
 const sassDir = path.resolve(__dirname, '../', 'static', 'src', 'stylesheets');
+const targetDir = path.resolve(__dirname, '../', 'static', 'target');
+const inlineStylesDir = path.resolve(
+    __dirname,
+    '../',
+    'common',
+    'conf',
+    'assets',
+    'inline-stylesheets'
+);
 const sassGraph = require('sass-graph').parseDir(sassDir, {
     loadPaths: [sassDir],
 });
@@ -96,7 +105,30 @@ chokidar.watch(`${sassDir}/**/*.scss`).on('change', changedFile => {
     }
 
     // now recompile all files that matter
-    Promise.all(filesToCompile.map(compileSass))
+    Promise.all(
+        filesToCompile.map(fileName => {
+            // email styles should not be remified
+            if (/head.email-(article|front).scss/.test(fileName)) {
+                return compileSass(fileName, { remify: false });
+            }
+
+            return compileSass(fileName);
+        })
+    )
+        .then(() =>
+            // copy stylesheets that are to be inlined
+            Promise.all(
+                filesToCompile.filter(file => /head./.test(file)).map(file =>
+                    cpy(
+                        [`**/${file.replace('.scss', '.css')}`],
+                        inlineStylesDir,
+                        {
+                            cwd: targetDir,
+                        }
+                    )
+                )
+            )
+        )
         .then(() => {
             // clear any previous error messages
             browserSync.sockets.emit('fullscreen:message:clear');
