@@ -10,7 +10,6 @@ import { pageShouldHideReaderRevenue } from 'common/modules/commercial/contribut
 
 const getControlEngagementBannerParams: any = getControlEngagementBannerParams_;
 
-
 jest.mock('lib/raven');
 jest.mock('lib/mediator');
 jest.mock('lib/storage', () => ({
@@ -54,10 +53,12 @@ jest.mock('common/modules/experiments/ab', () => ({
 jest.mock(
     'common/modules/commercial/membership-engagement-banner-parameters',
     () => ({
-        getControlEngagementBannerParams: jest.fn(() => (Promise.resolve({
-            products: ['CONTRIBUTION'],
-            linkUrl: 'fake-link-url',
-        }))),
+        getControlEngagementBannerParams: jest.fn(() =>
+            Promise.resolve({
+                products: ['CONTRIBUTION'],
+                linkUrl: 'fake-link-url',
+            })
+        ),
     })
 );
 jest.mock(
@@ -186,11 +187,13 @@ describe('Membership engagement banner', () => {
         let emitSpy;
 
         beforeEach(() => {
-            getControlEngagementBannerParams.mockImplementationOnce(() => Promise.resolve({
-                products: ['CONTRIBUTION'],
-                campaignCode: 'fake-campaign-code',
-                linkUrl: 'fake-link-url',
-            }));
+            getControlEngagementBannerParams.mockImplementationOnce(() =>
+                Promise.resolve({
+                    products: ['CONTRIBUTION'],
+                    campaignCode: 'fake-campaign-code',
+                    linkUrl: 'fake-link-url',
+                })
+            );
             emitSpy = jest.spyOn(fakeMediator, 'emit');
         });
 
@@ -238,9 +241,11 @@ describe('Membership engagement banner', () => {
 
     describe('creates message with', () => {
         beforeEach(() => {
-            getControlEngagementBannerParams.mockImplementationOnce(() => Promise.resolve({
-                linkUrl: 'fake-link-url',
-            }));
+            getControlEngagementBannerParams.mockImplementationOnce(() =>
+                Promise.resolve({
+                    linkUrl: 'fake-link-url',
+                })
+            );
         });
 
         it('correct campaign code', () =>
@@ -264,11 +269,13 @@ describe('Membership engagement banner', () => {
 
     describe('renders message with', () => {
         beforeEach(() => {
-            getControlEngagementBannerParams.mockImplementationOnce(() => Promise.resolve({
-                messageText: 'fake-message-text',
-                linkUrl: 'fake-link-url',
-                buttonCaption: 'fake-button-caption',
-            }));
+            getControlEngagementBannerParams.mockImplementationOnce(() =>
+                Promise.resolve({
+                    messageText: 'fake-message-text',
+                    linkUrl: 'fake-link-url',
+                    buttonCaption: 'fake-button-caption',
+                })
+            );
             fakeConfig.get.mockImplementationOnce(() => true);
             fakeConstructQuery.mockImplementationOnce(
                 () => 'fake-query-parameters'
