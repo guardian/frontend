@@ -82,19 +82,21 @@ document.addEventListener('focusin', () => {
 const recordPlayerProgress = (atomId: string): void => {
     const player = players[atomId];
 
-    console.log('handlePlay trackingId --->', atomId, player);
-
     if (!player) {
         return;
     }
 
-    const { pendingTrackingCalls } = player;
+    const {
+        pendingTrackingCalls,
+        youtubePlayer,
+        duration,
+        trackingId,
+    } = player;
 
     if (!pendingTrackingCalls.length) {
         return;
     }
 
-    const { youtubePlayer, duration, trackingId } = player;
     const currentTime = youtubePlayer.getCurrentTime();
 
     if (duration) {
@@ -125,16 +127,14 @@ const setProgressTracker = (atomId: string): IntervalID => {
 };
 
 const handlePlay = (atomId: string, player: AtomPlayer): void => {
-    const { trackingId, iframe, overlay, endSlate } = player;
-
-    console.log('handlePlay trackingId --->', trackingId);
+    const { trackingId, iframe, overlay, endSlate, paused } = player;
 
     killProgressTracker(atomId);
     setProgressTracker(atomId);
 
     // don't track play if resumed from a paused state
-    if (player.paused) {
-        player.paused = false;
+    if (paused) {
+        paused = false;
     } else {
         trackYoutubeEvent('play', trackingId);
     }
@@ -184,14 +184,10 @@ const onPlayerPlaying = (atomId: string): void => {
      */
     const latestYoutubeId = getYoutubeIdFromUrl(youtubePlayer.getVideoUrl());
 
-    console.log('compare --->', youtubeId, latestYoutubeId);
-
     if (youtubeId !== latestYoutubeId) {
         fetchJson(`/atom/youtube/${latestYoutubeId}.json`)
             .then(resp => {
                 const activeAtomId = resp.atomId;
-
-                console.log('fetch --->', resp);
 
                 if (!activeAtomId) {
                     return;
@@ -200,6 +196,10 @@ const onPlayerPlaying = (atomId: string): void => {
                 player.trackingId = activeAtomId;
                 player.youtubeId = latestYoutubeId;
                 player.duration = youtubePlayer.getDuration();
+
+                // Listen for events with new tracking ID (activeAtomId)
+                initYoutubeEvents(activeAtomId);
+
                 handlePlay(atomId, player);
             })
             .catch(err => {
