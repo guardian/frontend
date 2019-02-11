@@ -86,13 +86,17 @@ const recordPlayerProgress = (atomId: string): void => {
         return;
     }
 
-    const { pendingTrackingCalls } = player;
+    const {
+        pendingTrackingCalls,
+        youtubePlayer,
+        duration,
+        trackingId,
+    } = player;
 
     if (!pendingTrackingCalls.length) {
         return;
     }
 
-    const { youtubePlayer, duration, trackingId } = player;
     const currentTime = youtubePlayer.getCurrentTime();
 
     if (duration) {
@@ -123,13 +127,13 @@ const setProgressTracker = (atomId: string): IntervalID => {
 };
 
 const handlePlay = (atomId: string, player: AtomPlayer): void => {
-    const { trackingId, iframe, overlay, endSlate } = player;
+    const { trackingId, iframe, overlay, endSlate, paused } = player;
 
     killProgressTracker(atomId);
     setProgressTracker(atomId);
 
     // don't track play if resumed from a paused state
-    if (player.paused) {
+    if (paused) {
         player.paused = false;
     } else {
         trackYoutubeEvent('play', trackingId);
@@ -141,7 +145,7 @@ const handlePlay = (atomId: string, player: AtomPlayer): void => {
         mainMedia.classList.add('atom-playing');
     }
 
-    if (overlay && endSlate) {
+    if (overlay && endSlate && !endSlate.rendered) {
         const parentElem = overlay.parentElement;
 
         if (parentElem) {
@@ -184,6 +188,7 @@ const onPlayerPlaying = (atomId: string): void => {
         fetchJson(`/atom/youtube/${latestYoutubeId}.json`)
             .then(resp => {
                 const activeAtomId = resp.atomId;
+
                 if (!activeAtomId) {
                     return;
                 }
@@ -191,6 +196,10 @@ const onPlayerPlaying = (atomId: string): void => {
                 player.trackingId = activeAtomId;
                 player.youtubeId = latestYoutubeId;
                 player.duration = youtubePlayer.getDuration();
+
+                // Listen for events with new tracking ID (activeAtomId)
+                initYoutubeEvents(activeAtomId);
+
                 handlePlay(atomId, player);
             })
             .catch(err => {
