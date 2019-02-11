@@ -4,7 +4,6 @@ import { local } from 'lib/storage';
 import { Message } from 'common/modules/ui/message';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
 import {
-    defaultEngagementBannerParams,
     getControlEngagementBannerParams,
 } from 'common/modules/commercial/membership-engagement-banner-parameters';
 import { isBlocked } from 'common/modules/commercial/membership-engagement-banner-block';
@@ -77,9 +76,8 @@ const deriveBannerParams = (
                 },
                 campaignCode: `${testToRun.id}_${testToRun.variantToRun.id}`,
             };
-        } else {
-            return defaultParams;
         }
+        return defaultParams;
     });
 
 const getVisitCount = (): number => local.get('gu.alreadyVisited') || 0;

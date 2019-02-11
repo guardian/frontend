@@ -45,7 +45,9 @@ const getAcquisitionsBannerParams = (
     };
 };
 
-export const getControlEngagementBannerParams = (): Promise<EngagementBannerParams> =>
+export const getControlEngagementBannerParams = (): Promise<
+    EngagementBannerParams
+> =>
     getEngagementBannerControlFromGoogleDoc()
         .then(rows => getAcquisitionsBannerParams(rows))
         .catch(err => {
