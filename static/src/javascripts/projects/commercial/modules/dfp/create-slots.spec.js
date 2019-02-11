@@ -25,10 +25,6 @@ const inline1Html = `
 </div>
 `;
 
-const inline1BlockthroughHtml = `
-<span class="bt-uid-tg" uid="5a98587091-157" style="display: none !important" aria-hidden="true"></span>
-`;
-
 jest.mock('lib/config', () => ({ page: { edition: 'UK' } }));
 
 describe('Create Ad Slot', () => {
@@ -45,7 +41,7 @@ describe('Create Ad Slot', () => {
             type: 'inline',
             classes: 'inline',
             name: 'inline1',
-            htmls: [inline1Html, inline1BlockthroughHtml],
+            htmls: [inline1Html],
         },
     ].forEach((expectation: Object) => {
         it(`should create "${expectation.type}" ad slot`, () => {

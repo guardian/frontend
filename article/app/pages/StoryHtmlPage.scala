@@ -9,7 +9,7 @@ import model.{ApplicationContext, Page}
 import play.api.mvc.RequestHeader
 import play.twirl.api.Html
 import views.html.fragments._
-import views.html.fragments.commercial.{blockthrough, pageSkin, survey}
+import views.html.fragments.commercial.{pageSkin, survey}
 import views.html.fragments.page._
 import views.html.fragments.page.body._
 import views.html.fragments.page.head.stylesheets.{criticalStyleInline, criticalStyleLink, styles}
@@ -48,8 +48,7 @@ object StoryHtmlPage {
         head,
         styles(allStyles),
         fixIEReferenceErrors(),
-        inlineJSBlocking(),
-        blockthrough() when BlockthroughSwitch.isSwitchedOn
+        inlineJSBlocking()
       ),
       bodyTag(classes = bodyClasses)(
         tlsWarning() when ActiveExperiments.isParticipating(OldTLSSupportDeprecation),
