@@ -4,11 +4,12 @@ import fakeConfig from 'lib/config';
 import fakeOphan from 'ophan/ng';
 import fetchJson from 'lib/fetch-json';
 import userPrefs from 'common/modules/user-prefs';
-import { defaultEngagementBannerParams as defaultEngagementBannerParams_ } from 'common/modules/commercial/membership-engagement-banner-parameters';
+import { getControlEngagementBannerParams as getControlEngagementBannerParams_ } from 'common/modules/commercial/membership-engagement-banner-parameters';
 import { membershipEngagementBanner } from 'common/modules/commercial/membership-engagement-banner';
 import { pageShouldHideReaderRevenue } from 'common/modules/commercial/contributions-utilities';
 
-const defaultEngagementBannerParams: any = defaultEngagementBannerParams_;
+const getControlEngagementBannerParams: any = getControlEngagementBannerParams_;
+
 
 jest.mock('lib/raven');
 jest.mock('lib/mediator');
@@ -53,11 +54,10 @@ jest.mock('common/modules/experiments/ab', () => ({
 jest.mock(
     'common/modules/commercial/membership-engagement-banner-parameters',
     () => ({
-        defaultEngagementBannerParams: jest.fn(() => ({
+        getControlEngagementBannerParams: jest.fn(() => (Promise.resolve({
             products: ['CONTRIBUTION'],
             linkUrl: 'fake-link-url',
-        })),
-        getControlEngagementBannerParams: jest.fn(() => ({})),
+        }))),
     })
 );
 jest.mock(
@@ -186,7 +186,7 @@ describe('Membership engagement banner', () => {
         let emitSpy;
 
         beforeEach(() => {
-            defaultEngagementBannerParams.mockImplementationOnce(() => ({
+            getControlEngagementBannerParams.mockImplementationOnce(() => Promise.resolve({
                 products: ['CONTRIBUTION'],
                 campaignCode: 'fake-campaign-code',
                 linkUrl: 'fake-link-url',
@@ -238,7 +238,7 @@ describe('Membership engagement banner', () => {
 
     describe('creates message with', () => {
         beforeEach(() => {
-            defaultEngagementBannerParams.mockImplementationOnce(() => ({
+            getControlEngagementBannerParams.mockImplementationOnce(() => Promise.resolve({
                 linkUrl: 'fake-link-url',
             }));
         });
@@ -264,7 +264,7 @@ describe('Membership engagement banner', () => {
 
     describe('renders message with', () => {
         beforeEach(() => {
-            defaultEngagementBannerParams.mockImplementationOnce(() => ({
+            getControlEngagementBannerParams.mockImplementationOnce(() => Promise.resolve({
                 messageText: 'fake-message-text',
                 linkUrl: 'fake-link-url',
                 buttonCaption: 'fake-button-caption',
