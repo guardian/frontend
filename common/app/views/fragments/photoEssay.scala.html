@@ -55,4 +55,52 @@
           <div class="immersive-main-media__image-overlay"></div>
         }
     </div>
+
+    @if(!page.item.elements.hasMainVideo){
+      <div class="@RenderClasses("immersive-main-media__headline-container--dark", "immersive-main-media__headline-container--gallery", "content--pillar-news", s"content--pillar-${page.metadata.pillar.nameOrDefault}")">
+          <div class="gs-container">
+            <div class="content__main-column">
+                @fragments.meta.metaInline(page.item)
+                <h1 class="@if(hasMainMedia){content__headline--immersive--with-main-media} @if(isPaidContent){content__headline--advertisement} content__headline content__headline--immersive content__headline--immersive-article">
+                    @Html(page.item.trail.headline)
+                </h1>
+
+                @defining(page.item.elements.mainPicture.flatMap(_.images.masterImage)) {
+                    case Some(masterImage) => {
+                        <figcaption class="caption caption--immersive hide-until-leftcol">
+                            @fragments.inlineSvg("triangle", "icon")
+                            @masterImage.caption.map(Html(_))
+                            @if(masterImage.displayCredit && !masterImage.creditEndsWithCaption) {
+                                @masterImage.credit.map(Html(_))
+                            }
+                        </figcaption>
+                    }
+                    case None => { }
+                }
+            </div>
+          </div>
+      </div>
+    }
+    @if(page.item.fields.standfirst.isDefined) {
+        <div class="content__wrapper--standfirst">
+            <div class="gs-container">
+                <div class="content__main-column">
+                    @fragments.standfirst(page.item)
+
+                    @defining(page.item.elements.mainPicture.flatMap(_.images.masterImage)) {
+                        case Some(masterImage) => {
+                            <figcaption class="caption caption--immersive hide-from-leftcol">
+                                Main image:
+                                @masterImage.caption.map(Html(_))
+                                @if(masterImage.displayCredit && !masterImage.creditEndsWithCaption) {
+                                    @masterImage.credit.map(Html(_))
+                                }
+                            </figcaption>
+                        }
+                        case None => { }
+                    }
+                </div>
+            </div>
+        </div>
+    }
 }
