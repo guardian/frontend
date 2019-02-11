@@ -3,9 +3,7 @@ import config from 'lib/config';
 import { local } from 'lib/storage';
 import { Message } from 'common/modules/ui/message';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
-import {
-    getControlEngagementBannerParams,
-} from 'common/modules/commercial/membership-engagement-banner-parameters';
+import { getControlEngagementBannerParams } from 'common/modules/commercial/membership-engagement-banner-parameters';
 import { isBlocked } from 'common/modules/commercial/membership-engagement-banner-block';
 import {
     type ReaderRevenueRegion,
