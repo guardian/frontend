@@ -180,10 +180,15 @@ const onPlayerPlaying = (atomId: string): void => {
      */
     const latestYoutubeId = getYoutubeIdFromUrl(youtubePlayer.getVideoUrl());
 
+    console.log('compare --->', youtubeId, latestYoutubeId);
+
     if (youtubeId !== latestYoutubeId) {
         fetchJson(`/atom/youtube/${latestYoutubeId}.json`)
             .then(resp => {
                 const activeAtomId = resp.atomId;
+
+                console.log('fetch --->', resp);
+
                 if (!activeAtomId) {
                     return;
                 }
