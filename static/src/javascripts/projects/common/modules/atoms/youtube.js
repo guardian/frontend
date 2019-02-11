@@ -82,6 +82,8 @@ document.addEventListener('focusin', () => {
 const recordPlayerProgress = (atomId: string): void => {
     const player = players[atomId];
 
+    console.log('handlePlay trackingId --->', atomId, player);
+
     if (!player) {
         return;
     }
@@ -125,6 +127,8 @@ const setProgressTracker = (atomId: string): IntervalID => {
 const handlePlay = (atomId: string, player: AtomPlayer): void => {
     const { trackingId, iframe, overlay, endSlate } = player;
 
+    console.log('handlePlay trackingId --->', trackingId);
+
     killProgressTracker(atomId);
     setProgressTracker(atomId);
 
@@ -141,7 +145,7 @@ const handlePlay = (atomId: string, player: AtomPlayer): void => {
         mainMedia.classList.add('atom-playing');
     }
 
-    if (overlay && endSlate) {
+    if (overlay && endSlate && !endSlate.rendered) {
         const parentElem = overlay.parentElement;
 
         if (parentElem) {
