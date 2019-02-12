@@ -42,6 +42,7 @@ const getAcquisitionsBannerParams = (
         buttonCaption: firstRow.buttonCaption,
         linkUrl: firstRow.linkUrl,
         hasTicker: false,
+        isHardcodedFallback: false,
     };
 };
 
@@ -72,5 +73,6 @@ export const getControlEngagementBannerParams = (): Promise<
                 buttonCaption: 'Support The Guardian',
                 linkUrl: supportContributeURL,
                 hasTicker: false,
+                isHardcodedFallback: true,
             };
         });

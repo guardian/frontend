@@ -64,7 +64,10 @@ const deriveBannerParams = (
     testToRun: ?Runnable<AcquisitionsABTest>
 ): Promise<EngagementBannerParams> =>
     getControlEngagementBannerParams().then(defaultParams => {
-        if (testToRun) {
+        // If something goes wrong with fetching the control params, we don't
+        // want to register a test participation since they could be seeing
+        // a different control, which would screw up the test.
+        if (testToRun && !defaultParams.isHardcodedFallback) {
             return {
                 ...defaultParams,
                 ...testToRun.variantToRun.engagementBannerParams,
