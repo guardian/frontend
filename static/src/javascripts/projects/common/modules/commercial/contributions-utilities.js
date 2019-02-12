@@ -467,7 +467,9 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                         audienceCriteria: 'All',
                         audience: 1,
                         audienceOffset: 0,
-
+                        useLocalViewLog: rows.some(row =>
+                            optionalStringToBoolean(row.useLocalViewLog)
+                        ),
                         ...(isLiveBlog
                             ? {
                                   template: liveBlogTemplate,
@@ -480,13 +482,6 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                         ...(isThankYou
                             ? {
                                   onlyShowToExistingSupporters: true,
-                                  useLocalViewLog: true,
-                              }
-                            : {}),
-                        ...(rows.some(row =>
-                            optionalStringToBoolean(row.useLocalViewLog)
-                        )
-                            ? {
                                   useLocalViewLog: true,
                               }
                             : {}),
