@@ -6,6 +6,7 @@ const inlineDefinition = {
         mobile: [
             adSizes.outOfPage,
             adSizes.empty,
+            adSizes.outstreamMobile,
             adSizes.mpu,
             adSizes.googleCard,
             adSizes.fluid,
@@ -15,23 +16,11 @@ const inlineDefinition = {
             adSizes.empty,
             adSizes.mpu,
             adSizes.video,
-            adSizes.outstream,
+            adSizes.outstreamDesktop,
             adSizes.googleCard,
             adSizes.fluid,
         ],
     },
-};
-
-const adSlotToBlockthroughUids = {
-    inline1: '5a98587091-157',
-    inline2: '5a98587869-157',
-    inline3: '5a98587f21-157',
-    inline4: '5a985885d5-157',
-    inline5: '5a98588c9c-157',
-    inline6: '5a985892ed-157',
-    inline7: '5a985899d4-157',
-    inline8: '5a9858a114-157',
-    mostpop: '5a9d5c1d72-157',
 };
 
 const adSlotDefinitions = {
@@ -142,20 +131,6 @@ const createAdSlotElements = (
     });
 
     adSlots.push(adSlot);
-
-    // Should we have a companion BlockThrough span?
-    const blockthroughUid = adSlotToBlockthroughUids[`${name}`];
-    if (blockthroughUid) {
-        const blockthroughAdSlot: HTMLSpanElement = document.createElement(
-            'span'
-        );
-        blockthroughAdSlot.className = 'bt-uid-tg';
-        blockthroughAdSlot.setAttribute('uid', blockthroughUid);
-        blockthroughAdSlot.setAttribute('style', 'display: none !important');
-        blockthroughAdSlot.setAttribute('aria-hidden', 'true');
-
-        adSlots.push(blockthroughAdSlot);
-    }
 
     return adSlots;
 };
