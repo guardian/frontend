@@ -7,9 +7,10 @@ declare type Variant = {
     impression?: ListenerFunction,
     success?: ListenerFunction,
     options?: Object,
-    engagementBannerParams?: EngagementBannerParams,
+    engagementBannerParams?: EngagementBannerTestParams,
     deploymentRules?: DeploymentRules,
 };
+
 
 declare type ABTest = {
     id: string,

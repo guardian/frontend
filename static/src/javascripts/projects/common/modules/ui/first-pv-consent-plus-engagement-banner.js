@@ -6,7 +6,7 @@ import {
     canShow as canShowEngagementBanner,
     hideBanner as hideEngagementBanner,
     deriveBannerParams as deriveEngagementBannerParams,
-    getBannerHtml as getEngagementBannerHtml,
+    bannerParamsToHtml as getEngagementBannerHtml,
 } from 'common/modules/commercial/membership-engagement-banner';
 import {
     track as trackFirstPvConsent,

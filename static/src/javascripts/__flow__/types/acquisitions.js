@@ -23,12 +23,23 @@ declare type EngagementBannerParams = EngagementBannerTemplateParams & {
     pageviewId: string,
     products: OphanProduct[],
     isHardcodedFallback: boolean,
-    paypalClass?: string,
-    template?: (templateParams: EngagementBannerTemplateParams) => string,
+    template: (templateParams: EngagementBannerTemplateParams) => string,
+    minArticlesBeforeShowingBanner: number,
     bannerModifierClass?: string,
     abTest?: {
         name: string,
         variant: string
     },
-    minArticlesBeforeShowingBanner: number,
 };
+
+declare type EngagementBannerTestParams = {
+    messageText?: string,
+    ctaText?: string,
+    buttonCaption?: string,
+    linkUrl?: string,
+    hasTicker?: boolean,
+    products?: OphanProduct[],
+    template?: (templateParams: EngagementBannerTemplateParams) => string,
+    bannerModifierClass?: string,
+    minArticlesBeforeShowingBanner?: number,
+}
