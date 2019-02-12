@@ -24,6 +24,8 @@ import { acquisitionsBannerControlTemplate } from 'common/modules/commercial/tem
 import userPrefs from 'common/modules/user-prefs';
 import { initTicker } from 'common/modules/commercial/ticker';
 import { getEngagementBannerTestToRun } from 'common/modules/experiments/ab';
+import memoize from 'lodash/memoize';
+
 
 type BannerDeployLog = {
     time: string,
@@ -177,49 +179,53 @@ const showBanner = (params: EngagementBannerParams): boolean => {
     return false;
 };
 
+const getBannerParams = memoize((): Promise<EngagementBannerParams> =>
+  getEngagementBannerTestToRun()
+      .then(deriveBannerParams));
+
 const show = (): Promise<boolean> =>
-    getEngagementBannerTestToRun()
-        .then(deriveBannerParams)
-        .then(showBanner)
-        .catch(err => {
-            reportError(
-                new Error(
-                    `Could not show banner. ${err.message}. Stack: ${err.stack}`
-                ),
-                { feature: 'engagement-banner' },
-                false
-            );
-            return false;
-        });
+    getBannerParams()
+      .then(showBanner)
+      .catch(err => {
+          reportError(
+              new Error(
+                  `Could not show banner. ${err.message}. Stack: ${err.stack}`
+              ),
+              { feature: 'engagement-banner' },
+              false
+          );
+          return false;
+      });
 
 const canShow = (): Promise<boolean> => {
     if (!config.get('switches.membershipEngagementBanner') || isBlocked()) {
         return Promise.resolve(false);
     }
+    getBannerParams().then(params => {
+      const userHasSeenEnoughArticles: boolean =
+          getVisitCount() >= params.minArticlesBeforeShowingBanner;
+      const userAlreadyGivesUsMoney = userIsSupporter();
+      const bannerIsBlockedForEditorialReasons = pageShouldHideReaderRevenue();
 
-    const userHasSeenEnoughArticles: boolean =
-        getVisitCount() >= minArticlesBeforeShowingBanner;
-    const userAlreadyGivesUsMoney = userIsSupporter();
-    const bannerIsBlockedForEditorialReasons = pageShouldHideReaderRevenue();
+      if (
+          userHasSeenEnoughArticles &&
+          !userAlreadyGivesUsMoney &&
+          !bannerIsBlockedForEditorialReasons
+      ) {
+          const userLastClosedBannerAt = userPrefs.get(lastClosedAtKey);
 
-    if (
-        userHasSeenEnoughArticles &&
-        !userAlreadyGivesUsMoney &&
-        !bannerIsBlockedForEditorialReasons
-    ) {
-        const userLastClosedBannerAt = userPrefs.get(lastClosedAtKey);
+          if (!userLastClosedBannerAt) {
+              // show the banner if we can't get a value for this
+              return Promise.resolve(true);
+          }
 
-        if (!userLastClosedBannerAt) {
-            // show the banner if we can't get a value for this
-            return Promise.resolve(true);
-        }
-
-        return hasBannerBeenRedeployedSinceClosed(
-            userLastClosedBannerAt,
-            getReaderRevenueRegion(geolocationGetSync())
-        );
-    }
-    return Promise.resolve(false);
+          return hasBannerBeenRedeployedSinceClosed(
+              userLastClosedBannerAt,
+              getReaderRevenueRegion(geolocationGetSync())
+          );
+      }
+      return Promise.resolve(false);
+    });
 };
 
 const membershipEngagementBanner: Banner = {

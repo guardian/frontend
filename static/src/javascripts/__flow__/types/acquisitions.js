@@ -29,5 +29,6 @@ declare type EngagementBannerParams = EngagementBannerTemplateParams & {
     abTest?: {
         name: string,
         variant: string
-    }
+    },
+    minArticlesBeforeShowingBanner: number,
 };

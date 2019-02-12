@@ -43,6 +43,7 @@ const getAcquisitionsBannerParams = (
         linkUrl: firstRow.linkUrl,
         hasTicker: false,
         isHardcodedFallback: false,
+        minArticlesBeforeShowingBanner: 3,
     };
 };
 
@@ -74,5 +75,6 @@ export const getControlEngagementBannerParams = (): Promise<
                 linkUrl: supportContributeURL,
                 hasTicker: false,
                 isHardcodedFallback: true,
+                minArticlesBeforeShowingBanner: 3,
             };
         });
