@@ -21,6 +21,7 @@ import {
     addTrackingCodesToUrl,
 } from 'common/modules/commercial/acquisitions-ophan';
 import { acquisitionsBannerControlTemplate } from 'common/modules/commercial/templates/acquisitions-banner-control';
+import { acquisitionsBannerFivTemplate } from 'common/modules/commercial/templates/acquisitions-banner-fiv';
 import userPrefs from 'common/modules/user-prefs';
 import { initTicker } from 'common/modules/commercial/ticker';
 import { getEngagementBannerTestToRun } from 'common/modules/experiments/ab';
@@ -29,8 +30,11 @@ type BannerDeployLog = {
     time: string,
 };
 
+// this switches the thank you banner on, changes the styling and min articles rule.
+const fivMode = config.get('switches.fivModeBanner') || window.location.hash.match(/[#&]fiv(&.*)?$/);
+
 const messageCode = 'engagement-banner';
-const minArticlesBeforeShowingBanner = 3;
+const minArticlesBeforeShowingBanner = fivMode ? 0 : 3;
 
 const lastClosedAtKey = 'engagementBannerLastClosedAt';
 
@@ -119,8 +123,8 @@ const getBannerHtml = (params: EngagementBannerParams): string => {
         hasTicker: params.hasTicker,
     };
 
-    return params.template
-        ? params.template(templateParams)
+    return fivMode
+        ? acquisitionsBannerFivTemplate(userIsSupporter())(templateParams)
         : acquisitionsBannerControlTemplate(templateParams);
 };
 
@@ -193,18 +197,22 @@ const show = (): Promise<boolean> =>
         });
 
 const canShow = (): Promise<boolean> => {
+    // always show if they put #fiv in the url hash
+    if (window.location.hash.match(/[#&]fiv(&.*)?$/)) {
+        return Promise.resolve(true);
+    }
+
     if (!config.get('switches.membershipEngagementBanner') || isBlocked()) {
         return Promise.resolve(false);
     }
 
     const userHasSeenEnoughArticles: boolean =
         getVisitCount() >= minArticlesBeforeShowingBanner;
-    const userAlreadyGivesUsMoney = userIsSupporter();
     const bannerIsBlockedForEditorialReasons = pageShouldHideReaderRevenue();
 
     if (
         userHasSeenEnoughArticles &&
-        !userAlreadyGivesUsMoney &&
+        (fivMode || !userIsSupporter()) &&
         !bannerIsBlockedForEditorialReasons
     ) {
         const userLastClosedBannerAt = userPrefs.get(lastClosedAtKey);

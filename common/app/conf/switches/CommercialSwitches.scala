@@ -248,6 +248,16 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
+  val FivModeBanner = Switch(
+    Commercial,
+    "fiv-mode-banner",
+    "If ON, switch the membership engagement banner to FIV mode (different styling and rules plus thank you banner is on)",
+    owners = Seq(Owner.withGithub("johnduffell")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 5, 18),
+    exposeClientSide = true
+  )
+
   val EpicTestsFromGoogleDocs = Switch(
     Commercial,
     "epic-tests-from-google-docs",
