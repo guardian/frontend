@@ -308,16 +308,6 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-  val BlockthroughSwitch: Switch = Switch(
-    group = Commercial,
-    name = "blockthrough",
-    description = "Include the blockthrough script for testing the vendors effectiveness at circumventing ad-blocking.",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = new LocalDate(2019, 2, 13),
-    exposeClientSide = false
-   )
-
    val LotameSwitch: Switch = Switch(
      group = Commercial,
      name = "lotame",
