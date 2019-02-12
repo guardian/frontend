@@ -41,7 +41,6 @@ object IndexHtml {
     htmlTag(
       headTag(
         weAreHiring() when WeAreHiring.isSwitchedOn,
-        orielScriptTag(),
         titleTag(),
         metaData(),
         headContent,

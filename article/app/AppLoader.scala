@@ -5,7 +5,6 @@ import assets.DiscussionExternalAssetsLifecycle
 import com.softwaremill.macwire._
 import common.Logback.{LogbackOperationsPool, LogstashLifecycle}
 import common._
-import common.commercial.OrielCacheLifecycle
 import common.dfp.DfpAgentLifecycle
 import conf.CachedHealthCheckLifeCycle
 import conf.switches.SwitchboardLifecycle
@@ -51,7 +50,6 @@ trait AppComponents extends FrontendComponents with ArticleControllers {
     wire[CachedHealthCheckLifeCycle],
     wire[TargetingLifecycle],
     wire[DiscussionExternalAssetsLifecycle],
-    wire[OrielCacheLifecycle],
     wire[SkimLinksCacheLifeCycle]
   )
 
