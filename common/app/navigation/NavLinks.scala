@@ -192,6 +192,7 @@ object NavLinks {
   val ukDiscountCode = NavLink("Discount Codes", s"$discountCodeRoot/uk?INTCMP=guardian_header")
   val auDiscountCode = NavLink("Discount Codes", s"$discountCodeRoot/au?INTCMP=guardian_header")
   val intDiscountCode = NavLink("Discount Codes", s"$discountCodeRoot?INTCMP=guardian_header")
+  val usDiscountCode = NavLink("Discount Codes", s"$discountCodeRoot?INTCMP=guardian_header")
   val guardianMasterClasses = NavLink("Guardian Masterclasses", "/guardian-masterclasses",
     children = List(
       NavLink("Journalism", "/guardian-masterclasses/journalism"),
@@ -522,7 +523,8 @@ object NavLinks {
   )
   val usBrandExtensions= List(
     jobs.copy(url = jobs.url + "?INTCMP=jobs_us_web_newheader"),
-    digitalNewspaperArchive
+    digitalNewspaperArchive,
+    usDiscountCode
   )
   val intBrandExtensions = List(
     jobs.copy(url = jobs.url + "?INTCMP=jobs_int_web_newheader"),
