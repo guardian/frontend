@@ -31,7 +31,9 @@ type BannerDeployLog = {
 };
 
 // this switches the thank you banner on, changes the styling and min articles rule.
-const fivMode = config.get('switches.fivModeBanner') || window.location.hash.match(/[#&]fiv(&.*)?$/);
+const fivMode =
+    config.get('switches.fivModeBanner') ||
+    window.location.hash.match(/[#&]fiv(&.*)?$/);
 
 const messageCode = 'engagement-banner';
 const minArticlesBeforeShowingBanner = fivMode ? 0 : 3;
