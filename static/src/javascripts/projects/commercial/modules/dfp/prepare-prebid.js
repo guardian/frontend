@@ -17,7 +17,7 @@ if (!isGoogleWebPreview()) {
     import('prebid.js/build/dist/prebid');
 }
 
-export const setupPrebid: () => Promise<void> = once(() => {
+const setupPrebid: () => Promise<void> = () => {
     if (
         dfpEnv.externalDemand === 'prebid' &&
         commercialFeatures.dfpAdvertising &&
@@ -28,14 +28,17 @@ export const setupPrebid: () => Promise<void> = once(() => {
         prebid.initialise();
     }
     return Promise.resolve();
-});
+};
+
+export const setupPrebidOnce: () => Promise<void> = once(setupPrebid);
 
 export const init = (start: () => void, stop: () => void): Promise<void> => {
     start();
-    setupPrebid().then(stop);
+    setupPrebidOnce().then(stop);
     return Promise.resolve();
 };
 
 export const _ = {
     isGoogleWebPreview,
+    setupPrebid,
 };
