@@ -10,7 +10,7 @@ export const acquisitionsEpicControlTemplate = ({
 }: {
     copy: AcquisitionsEpicTemplateCopy,
     componentName: string,
-    epicClassNames: [],
+    epicClassNames: string[],
     buttonTemplate?: string,
     wrapperClass?: string,
 }) =>
