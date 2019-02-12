@@ -22,11 +22,6 @@ export const askFourEarning: EpicABTest = makeEpicABTest({
         {
             id: 'control',
             products: ['CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
-
-            options: {
-                insertAtSelector: '.submeta',
-                successOnView: true,
-            },
         },
     ],
 });

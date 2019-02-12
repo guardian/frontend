@@ -27,9 +27,6 @@ export const acquisitionsEpicAlwaysAskIfTagged = makeEpicABTest({
             products: ['CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
 
             deploymentRules: 'AlwaysAsk',
-            options: {
-                successOnView: true,
-            },
         },
     ],
 });
