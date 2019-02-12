@@ -199,7 +199,7 @@ const makeEpicABTestVariant = (
             },
         }),
         template,
-        buttonTemplate: initVariant.buttonTemplate,
+        buttonTemplate: initVariant.buttonTemplate || defaultButtonTemplate,
         copy: initVariant.copy,
 
         locations: initVariant.locations || [],
