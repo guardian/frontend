@@ -20,7 +20,7 @@ import {
     getLocalCurrencySymbol,
     getSync as geolocationGetSync,
 } from 'lib/geolocation';
-import { splitAndTrim, optionalSplitAndTrim } from 'lib/string-utils';
+import { splitAndTrim, optionalSplitAndTrim, optionalStringToBoolean } from 'lib/string-utils';
 import { epicButtonsTemplate } from 'common/modules/commercial/templates/acquisitions-epic-buttons';
 import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templates/acquisitions-epic-control';
 import { epicLiveBlogTemplate } from 'common/modules/commercial/templates/acquisitions-epic-liveblog';
@@ -479,12 +479,7 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                                   useLocalViewLog: true,
                               }
                             : {}),
-                        ...(rows.some(
-                            row =>
-                                row.useLocalViewLog &&
-                                row.useLocalViewLog.toLowerCase().trim() ===
-                                    'true'
-                        )
+                        ...(rows.some(row => optionalStringToBoolean(row.useLocalViewLog))
                             ? {
                                   useLocalViewLog: true,
                               }
@@ -495,8 +490,7 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                                 ? { test: setupEpicInLiveblog }
                                 : {}),
                             deploymentRules:
-                                row.alwaysAsk &&
-                                row.alwaysAsk.toLowerCase().trim() === 'true'
+                                optionalStringToBoolean(row.alwaysAsk)
                                     ? 'AlwaysAsk'
                                     : ({
                                           days:
