@@ -4,11 +4,11 @@ import fakeConfig from 'lib/config';
 import fakeOphan from 'ophan/ng';
 import fetchJson from 'lib/fetch-json';
 import userPrefs from 'common/modules/user-prefs';
-import { defaultEngagementBannerParams as defaultEngagementBannerParams_ } from 'common/modules/commercial/membership-engagement-banner-parameters';
+import { getControlEngagementBannerParams as getControlEngagementBannerParams_ } from 'common/modules/commercial/membership-engagement-banner-parameters';
 import { membershipEngagementBanner } from 'common/modules/commercial/membership-engagement-banner';
 import { pageShouldHideReaderRevenue } from 'common/modules/commercial/contributions-utilities';
 
-const defaultEngagementBannerParams: any = defaultEngagementBannerParams_;
+const getControlEngagementBannerParams: any = getControlEngagementBannerParams_;
 
 jest.mock('lib/raven');
 jest.mock('lib/mediator');
@@ -53,11 +53,12 @@ jest.mock('common/modules/experiments/ab', () => ({
 jest.mock(
     'common/modules/commercial/membership-engagement-banner-parameters',
     () => ({
-        defaultEngagementBannerParams: jest.fn(() => ({
-            products: ['CONTRIBUTION'],
-            linkUrl: 'fake-link-url',
-        })),
-        getControlEngagementBannerParams: jest.fn(() => ({})),
+        getControlEngagementBannerParams: jest.fn(() =>
+            Promise.resolve({
+                products: ['CONTRIBUTION'],
+                linkUrl: 'fake-link-url',
+            })
+        ),
     })
 );
 jest.mock(
@@ -186,11 +187,13 @@ describe('Membership engagement banner', () => {
         let emitSpy;
 
         beforeEach(() => {
-            defaultEngagementBannerParams.mockImplementationOnce(() => ({
-                products: ['CONTRIBUTION'],
-                campaignCode: 'fake-campaign-code',
-                linkUrl: 'fake-link-url',
-            }));
+            getControlEngagementBannerParams.mockImplementationOnce(() =>
+                Promise.resolve({
+                    products: ['CONTRIBUTION'],
+                    campaignCode: 'fake-campaign-code',
+                    linkUrl: 'fake-link-url',
+                })
+            );
             emitSpy = jest.spyOn(fakeMediator, 'emit');
         });
 
@@ -238,9 +241,11 @@ describe('Membership engagement banner', () => {
 
     describe('creates message with', () => {
         beforeEach(() => {
-            defaultEngagementBannerParams.mockImplementationOnce(() => ({
-                linkUrl: 'fake-link-url',
-            }));
+            getControlEngagementBannerParams.mockImplementationOnce(() =>
+                Promise.resolve({
+                    linkUrl: 'fake-link-url',
+                })
+            );
         });
 
         it('correct campaign code', () =>
@@ -264,11 +269,13 @@ describe('Membership engagement banner', () => {
 
     describe('renders message with', () => {
         beforeEach(() => {
-            defaultEngagementBannerParams.mockImplementationOnce(() => ({
-                messageText: 'fake-message-text',
-                linkUrl: 'fake-link-url',
-                buttonCaption: 'fake-button-caption',
-            }));
+            getControlEngagementBannerParams.mockImplementationOnce(() =>
+                Promise.resolve({
+                    messageText: 'fake-message-text',
+                    linkUrl: 'fake-link-url',
+                    buttonCaption: 'fake-button-caption',
+                })
+            );
             fakeConfig.get.mockImplementationOnce(() => true);
             fakeConstructQuery.mockImplementationOnce(
                 () => 'fake-query-parameters'

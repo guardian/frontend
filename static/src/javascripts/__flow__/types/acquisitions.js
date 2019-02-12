@@ -22,6 +22,7 @@ declare type EngagementBannerParams = EngagementBannerTemplateParams & {
     campaignCode: string,
     pageviewId: string,
     products: OphanProduct[],
+    isHardcodedFallback: boolean,
     paypalClass?: string,
     template?: (templateParams: EngagementBannerTemplateParams) => string,
     bannerModifierClass?: string,

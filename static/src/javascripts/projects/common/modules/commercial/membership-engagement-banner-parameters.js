@@ -13,7 +13,7 @@ const fallbackCopy: string = `<strong>The Guardian is editorially independent &n
 
 const getAcquisitionsBannerParams = (
     rowsFromGoogleDoc: any
-): ?EngagementBannerTemplateParams => {
+): EngagementBannerParams => {
     const firstRow = rowsFromGoogleDoc && rowsFromGoogleDoc[0];
 
     if (
@@ -31,6 +31,8 @@ const getAcquisitionsBannerParams = (
     }
 
     return {
+        pageviewId: config.get('ophan.pageViewId', 'not_found'),
+        products: ['CONTRIBUTION', 'RECURRING_CONTRIBUTION'],
         campaignCode: 'control_banner_from_google_doc',
         messageText: firstRow.messageText,
         ctaText: `<span class="engagement-banner__highlight"> ${firstRow.ctaText.replace(
@@ -40,10 +42,13 @@ const getAcquisitionsBannerParams = (
         buttonCaption: firstRow.buttonCaption,
         linkUrl: firstRow.linkUrl,
         hasTicker: false,
+        isHardcodedFallback: false,
     };
 };
 
-export const getControlEngagementBannerParams = (): Promise<?EngagementBannerTemplateParams> =>
+export const getControlEngagementBannerParams = (): Promise<
+    EngagementBannerParams
+> =>
     getEngagementBannerControlFromGoogleDoc()
         .then(rows => getAcquisitionsBannerParams(rows))
         .catch(err => {
@@ -59,20 +64,15 @@ export const getControlEngagementBannerParams = (): Promise<?EngagementBannerTem
                 false
             );
 
-            // The banner tests work by overriding built-in parameters.
-            // So the default case is override nothing.
-            // As opposed to the epic where we return default copy.
-            // TODO: but could we return defaultEngagementBannerParams here?
-            return {};
+            return {
+                pageviewId: config.get('ophan.pageViewId', 'not_found'),
+                products: ['CONTRIBUTION', 'RECURRING_CONTRIBUTION'],
+                campaignCode: 'fallback_hardcoded_banner',
+                messageText: fallbackCopy,
+                ctaText: `<span class="engagement-banner__highlight"> Support The Guardian from as little as ${getLocalCurrencySymbol()}1</span>`,
+                buttonCaption: 'Support The Guardian',
+                linkUrl: supportContributeURL,
+                hasTicker: false,
+                isHardcodedFallback: true,
+            };
         });
-
-export const defaultEngagementBannerParams = (): EngagementBannerParams => ({
-    campaignCode: 'fallback_hardcoded_banner',
-    buttonCaption: 'Support The Guardian',
-    linkUrl: supportContributeURL,
-    messageText: fallbackCopy,
-    ctaText: `<span class="engagement-banner__highlight"> Support The Guardian from as little as ${getLocalCurrencySymbol()}1</span>`,
-    pageviewId: config.get('ophan.pageViewId', 'not_found'),
-    products: ['CONTRIBUTION', 'RECURRING_CONTRIBUTION'],
-    hasTicker: false,
-});

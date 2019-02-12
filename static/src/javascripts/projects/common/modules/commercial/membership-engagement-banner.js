@@ -3,10 +3,7 @@ import config from 'lib/config';
 import { local } from 'lib/storage';
 import { Message } from 'common/modules/ui/message';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
-import {
-    defaultEngagementBannerParams,
-    getControlEngagementBannerParams,
-} from 'common/modules/commercial/membership-engagement-banner-parameters';
+import { getControlEngagementBannerParams } from 'common/modules/commercial/membership-engagement-banner-parameters';
 import { isBlocked } from 'common/modules/commercial/membership-engagement-banner-block';
 import {
     type ReaderRevenueRegion,
@@ -65,27 +62,24 @@ const hasBannerBeenRedeployedSinceClosed = (
 
 const deriveBannerParams = (
     testToRun: ?Runnable<AcquisitionsABTest>
-): Promise<EngagementBannerParams> => {
-    const defaultParams: EngagementBannerParams = defaultEngagementBannerParams();
-
-    if (testToRun) {
-        return Promise.resolve({
-            ...defaultParams,
-            ...testToRun.variantToRun.engagementBannerParams,
-            abTest: {
-                name: testToRun.id,
-                variant: testToRun.variantToRun.id,
-            },
-            campaignCode: `${testToRun.id}_${testToRun.variantToRun.id}`,
-        });
-    }
-
-    // if the user isn't in a test variant, use the control in google docs
-    return getControlEngagementBannerParams().then(controlParams => ({
-        ...defaultParams,
-        ...controlParams,
-    }));
-};
+): Promise<EngagementBannerParams> =>
+    getControlEngagementBannerParams().then(defaultParams => {
+        // If something goes wrong with fetching the control params, we don't
+        // want to register a test participation since they could be seeing
+        // a different control, which would screw up the test.
+        if (testToRun && !defaultParams.isHardcodedFallback) {
+            return {
+                ...defaultParams,
+                ...testToRun.variantToRun.engagementBannerParams,
+                abTest: {
+                    name: testToRun.id,
+                    variant: testToRun.variantToRun.id,
+                },
+                campaignCode: `${testToRun.id}_${testToRun.variantToRun.id}`,
+            };
+        }
+        return defaultParams;
+    });
 
 const getVisitCount = (): number => local.get('gu.alreadyVisited') || 0;
 

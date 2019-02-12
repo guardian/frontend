@@ -704,7 +704,7 @@ export const getEngagementBannerTestsFromGoogleDoc = (): Promise<
                         canRun: () => true,
 
                         variants: rows.map(row => ({
-                            id: row.name,
+                            id: row.name.trim().toLowerCase(),
                             products: [],
                             test: () => {},
 
