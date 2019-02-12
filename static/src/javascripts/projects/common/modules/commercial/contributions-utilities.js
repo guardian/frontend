@@ -98,8 +98,7 @@ const doTagsMatch = (test: EpicABTest): boolean =>
     test.useTargetingTool ? isAbTestTargeted(test) : true;
 
 // Returns an array containing:
-// - the first element matching insertAtSelector, if isMultiple is false or not supplied
-// - all elements matching insertAtSelector, if isMultiple is true
+// - the first element matching insertAtSelector
 // - or an empty array if the selector doesn't match anything on the page
 const getTargets = (insertAtSelector: string): Array<HTMLElement> => {
     const els = Array.from(document.querySelectorAll(insertAtSelector));
