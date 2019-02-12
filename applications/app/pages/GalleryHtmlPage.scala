@@ -39,7 +39,6 @@ object GalleryHtmlPage extends HtmlPage[GalleryPage] {
     htmlTag(
       headTag(
         weAreHiring() when WeAreHiring.isSwitchedOn,
-        orielScriptTag(),
         titleTag(),
         metaData(),
         styles(allStyles),

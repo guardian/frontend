@@ -244,11 +244,6 @@ class GuardianConfiguration extends Logging {
     lazy val subscribeWithGoogleApiUrl = configuration.getStringProperty("google.subscribeWithGoogleApiUrl").getOrElse("https://swg.theguardian.com")
   }
 
-  object oriel {
-    lazy val orielApiKey = configuration.getStringProperty("oriel.api.key")
-    lazy val orielCacheTimeInMinutes: Int = if (environment.isProd) 60 else 5
-  }
-
   object affiliatelinks {
     lazy val skimlinksId = configuration.getMandatoryStringProperty("skimlinks.id")
     lazy val affiliateLinkSections: Set[String] = configuration.getStringProperty("affiliatelinks.sections").getOrElse("").split(",").toSet

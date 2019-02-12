@@ -3,7 +3,6 @@ import app.{FrontendApplicationLoader, FrontendComponents}
 import com.softwaremill.macwire._
 import common._
 import common.Logback.{LogbackOperationsPool, LogstashLifecycle}
-import common.commercial.OrielCacheLifecycle
 import common.dfp.FaciaDfpAgentLifecycle
 import concurrent.BlockingOperations
 import conf.switches.SwitchboardLifecycle
@@ -51,7 +50,6 @@ trait AppComponents extends FrontendComponents with FaciaControllers with FapiSe
     wire[IndexListingsLifecycle],
     wire[SwitchboardLifecycle],
     wire[CachedHealthCheckLifeCycle],
-    wire[OrielCacheLifecycle]
   )
 
   lazy val router: Router = wire[Routes]
