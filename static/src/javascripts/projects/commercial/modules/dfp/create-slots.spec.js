@@ -20,7 +20,7 @@ const inline1Html = `
     data-link-name="ad slot inline1"
     data-name="inline1"
     aria-hidden="true"
-    data-mobile="1,1|2,2|300,250|300,274|fluid"
+    data-mobile="1,1|2,2|300,197|300,250|300,274|fluid"
     data-desktop="1,1|2,2|300,250|620,1|620,350|300,274|fluid">
 </div>
 `;

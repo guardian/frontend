@@ -6,6 +6,7 @@ const inlineDefinition = {
         mobile: [
             adSizes.outOfPage,
             adSizes.empty,
+            adSizes.outstreamMobile,
             adSizes.mpu,
             adSizes.googleCard,
             adSizes.fluid,
@@ -15,7 +16,7 @@ const inlineDefinition = {
             adSizes.empty,
             adSizes.mpu,
             adSizes.video,
-            adSizes.outstream,
+            adSizes.outstreamDesktop,
             adSizes.googleCard,
             adSizes.fluid,
         ],
