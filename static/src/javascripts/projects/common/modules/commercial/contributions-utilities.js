@@ -479,6 +479,11 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                                   useLocalViewLog: true,
                               }
                             : {}),
+                        ...(rows.some(row => row.useLocalViewLog && row.useLocalViewLog.toLowerCase().trim() === 'true')
+                            ? {
+                                useLocalViewLog: true,
+                            }
+                            : {}),
                         variants: rows.map(row => ({
                             id: row.name.toLowerCase().trim(),
                             ...(isLiveBlog
@@ -486,7 +491,7 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                                 : {}),
                             deploymentRules:
                                 row.alwaysAsk &&
-                                row.alwaysAsk.toLowerCase() === 'true'
+                                row.alwaysAsk.toLowerCase().trim() === 'true'
                                     ? 'AlwaysAsk'
                                     : ({
                                           days:
