@@ -14,4 +14,4 @@ export const optionalSplitAndTrim = (
 ): Array<string> => (str ? splitAndTrim(str, delim) : []);
 
 export const optionalStringToBoolean = (str: ?string): boolean =>
-    (typeof str === 'string') ? (str.toLowerCase().trim() === 'true') : false;
+    typeof str === 'string' ? str.toLowerCase().trim() === 'true' : false;
