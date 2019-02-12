@@ -131,7 +131,7 @@ object AMPPicker {
     val isSupported = features.forall({ case (test, isMet) => isMet})
     val isEnabled = conf.switches.Switches.DotcomRenderingAMP.isSwitchedOn
 
-    val tier = if ((isSupported && isEnabled && isWhitelisted) || request.isGuui) RemoteRenderAMP else LocalRender
+    val tier = if ((isSupported && isEnabled && isWhitelisted && !request.guuiOptOut) || request.isGuui) RemoteRenderAMP else LocalRender
 
     tier match {
       case RemoteRenderAMP => logRequest(s"path executing in dotcomponents AMP", features, page)
