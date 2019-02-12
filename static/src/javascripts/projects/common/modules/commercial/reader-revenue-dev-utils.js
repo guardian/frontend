@@ -1,6 +1,6 @@
 // @flow
 
-import { removeCookie } from 'lib/cookies';
+import { addCookie, removeCookie } from 'lib/cookies';
 import { isUserLoggedIn } from 'common/modules/identity/api';
 import {
     fakeOneOffContributor,
@@ -19,6 +19,7 @@ import {
 } from 'common/modules/analytics/mvt-cookie';
 import { setGeolocation, getSync as geolocationGetSync } from 'lib/geolocation';
 import { clearParticipations } from 'common/modules/experiments/ab-local-storage';
+import { COOKIE_NAME as CONSENT_COOKIE_NAME } from 'commercial/modules/cmp/cmp-env';
 
 const clearCommonReaderRevenueStateAndReload = (
     asExistingSupporter: boolean
@@ -72,6 +73,12 @@ const showMeTheBanner = (asExistingSupporter: boolean = false): void => {
     clearCommonReaderRevenueStateAndReload(asExistingSupporter);
 };
 
+const showMeTheDoubleBanner = (asExistingSupporter: boolean = false): void => {
+    addCookie('GU_geo_continent', 'EU');
+    removeCookie(CONSENT_COOKIE_NAME);
+    showMeTheBanner(asExistingSupporter);
+};
+
 // For the below functions, assume the user can currently see the thing
 // they want to display. So we don't clear out the banner history since
 // we don't necessarily want the banner popping up if someone's working
@@ -101,6 +108,7 @@ export const init = (): void => {
     window.guardian.readerRevenue = {
         showMeTheEpic,
         showMeTheBanner,
+        showMeTheDoubleBanner,
         showNextVariant,
         showPreviousVariant,
         changeGeolocation,
