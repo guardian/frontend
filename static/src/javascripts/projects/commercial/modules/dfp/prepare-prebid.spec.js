@@ -3,9 +3,9 @@
 import { prebid } from 'commercial/modules/prebid/prebid';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
-import { init, _ } from './prepare-prebid';
+import { _ } from './prepare-prebid';
 
-const { isGoogleWebPreview } = _;
+const { isGoogleWebPreview, setupPrebid } = _;
 
 jest.mock('common/modules/commercial/commercial-features', () => ({
     commercialFeatures: {},
@@ -33,20 +33,24 @@ const fakeUserAgent = (userAgent: string): void => {
 };
 
 describe('init', () => {
-    let mockInitialise;
+    const mockInitialise = jest.fn();
     const originalUA = navigator.userAgent;
 
     beforeEach(() => {
-        mockInitialise = jest.fn();
+        jest.resetAllMocks();
         (prebid: any).initialise = mockInitialise.bind(prebid);
         fakeUserAgent(originalUA);
+    });
+
+    afterAll(() => {
+        jest.resetAllMocks();
     });
 
     it('should initialise Prebid when external demand is Prebid and advertising is on and ad-free is off', () => {
         dfpEnv.externalDemand = 'prebid';
         commercialFeatures.dfpAdvertising = true;
         commercialFeatures.adFree = false;
-        init(jest.fn(), jest.fn());
+        setupPrebid();
         expect(mockInitialise).toBeCalled();
     });
 
@@ -54,31 +58,31 @@ describe('init', () => {
         dfpEnv.externalDemand = 'prebid';
         commercialFeatures.dfpAdvertising = true;
         commercialFeatures.adFree = false;
-        init(jest.fn(), jest.fn());
+        setupPrebid();
         expect(mockInitialise).toBeCalled();
     });
 
     it('should not initialise Prebid when useragent is Google Web Preview', () => {
         fakeUserAgent('Google Web Preview');
-        init(jest.fn(), jest.fn());
+        setupPrebid();
         expect(mockInitialise).not.toBeCalled();
     });
 
     it('should not initialise Prebid when no external demand', () => {
         dfpEnv.externalDemand = 'none';
-        init(jest.fn(), jest.fn());
+        setupPrebid();
         expect(mockInitialise).not.toBeCalled();
     });
 
     it('should not initialise Prebid when advertising is switched off', () => {
         commercialFeatures.dfpAdvertising = false;
-        init(jest.fn(), jest.fn());
+        setupPrebid();
         expect(mockInitialise).not.toBeCalled();
     });
 
     it('should not initialise Prebid when ad-free is on', () => {
         commercialFeatures.adFree = true;
-        init(jest.fn(), jest.fn());
+        setupPrebid();
         expect(mockInitialise).not.toBeCalled();
     });
 
