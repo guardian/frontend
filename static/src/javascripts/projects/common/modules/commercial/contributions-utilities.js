@@ -283,6 +283,7 @@ const makeEpicABTestVariant = (
                                 submitClickEvent({
                                     component: {
                                         componentType: parentTest.componentType,
+                                        products: initVariant.products,
                                         campaignCode,
                                         id: campaignCode,
                                     },
@@ -298,6 +299,7 @@ const makeEpicABTestVariant = (
 
                                 mediator.emit(parentTest.insertEvent, {
                                     componentType: parentTest.componentType,
+                                    products: initVariant.products,
                                     campaignCode,
                                 });
 
@@ -316,6 +318,7 @@ const makeEpicABTestVariant = (
                                         mediator.emit(parentTest.viewEvent, {
                                             componentType:
                                                 parentTest.componentType,
+                                            products: initVariant.products,
                                             campaignCode,
                                         });
                                         mediator.emit(
@@ -336,6 +339,7 @@ const makeEpicABTestVariant = (
                 submitInsertEvent({
                     component: {
                         componentType: parentTest.componentType,
+                        products: initVariant.products,
                         campaignCode,
                         id: campaignCode,
                     },
@@ -352,6 +356,7 @@ const makeEpicABTestVariant = (
                 submitViewEvent({
                     component: {
                         componentType: parentTest.componentType,
+                        products: initVariant.products,
                         campaignCode,
                         id: campaignCode,
                     },

@@ -81,6 +81,7 @@ declare type EpicABTest = AcquisitionsABTest & {
 
 declare type InitEpicABTestVariant = {
     id: string,
+    products: $ReadOnlyArray<OphanProduct>,
     test?: (html: string, abTest: ABTest) => void,
     deploymentRules?: DeploymentRules,
     locations?: string[],
@@ -94,6 +95,7 @@ declare type InitEpicABTestVariant = {
 
 declare type InitBannerABTestVariant = {
     id: string,
+    products: $ReadOnlyArray<OphanProduct>,
     engagementBannerParams: () => Promise<?EngagementBannerTemplateParams>
 };
 
