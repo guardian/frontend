@@ -479,10 +479,15 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                                   useLocalViewLog: true,
                               }
                             : {}),
-                        ...(rows.some(row => row.useLocalViewLog && row.useLocalViewLog.toLowerCase().trim() === 'true')
+                        ...(rows.some(
+                            row =>
+                                row.useLocalViewLog &&
+                                row.useLocalViewLog.toLowerCase().trim() ===
+                                    'true'
+                        )
                             ? {
-                                useLocalViewLog: true,
-                            }
+                                  useLocalViewLog: true,
+                              }
                             : {}),
                         variants: rows.map(row => ({
                             id: row.name.toLowerCase().trim(),
