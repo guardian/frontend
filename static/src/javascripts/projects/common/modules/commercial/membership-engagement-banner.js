@@ -24,6 +24,7 @@ import { acquisitionsBannerControlTemplate } from 'common/modules/commercial/tem
 import userPrefs from 'common/modules/user-prefs';
 import { initTicker } from 'common/modules/commercial/ticker';
 import { getEngagementBannerTestToRun } from 'common/modules/experiments/ab';
+import memoize from 'lodash/memoize';
 
 type BannerDeployLog = {
     time: string,
@@ -97,7 +98,7 @@ const clearBannerHistory = (): void => {
     userPrefs.remove(lastClosedAtKey);
 };
 
-const getBannerHtml = (params: EngagementBannerParams): string => {
+const bannerParamsToHtml = (params: EngagementBannerParams): string => {
     const messageText = Array.isArray(params.messageText)
         ? selectSequentiallyFrom(params.messageText)
         : params.messageText;
@@ -161,7 +162,7 @@ const trackBanner = (params: EngagementBannerParams): void => {
 };
 
 const showBanner = (params: EngagementBannerParams): boolean => {
-    const html = getBannerHtml(params);
+    const html = bannerParamsToHtml(params);
     const messageShown = showBannerAsMessage(messageCode, params, html);
 
     if (messageShown) {
@@ -177,9 +178,13 @@ const showBanner = (params: EngagementBannerParams): boolean => {
     return false;
 };
 
+const getBannerParams = memoize(
+    (): Promise<EngagementBannerParams> =>
+        getEngagementBannerTestToRun().then(deriveBannerParams)
+);
+
 const show = (): Promise<boolean> =>
-    getEngagementBannerTestToRun()
-        .then(deriveBannerParams)
+    getBannerParams()
         .then(showBanner)
         .catch(err => {
             reportError(
@@ -196,30 +201,31 @@ const canShow = (): Promise<boolean> => {
     if (!config.get('switches.membershipEngagementBanner') || isBlocked()) {
         return Promise.resolve(false);
     }
+    return getBannerParams().then(params => {
+        const userHasSeenEnoughArticles: boolean =
+            getVisitCount() >= params.minArticlesBeforeShowingBanner;
+        const userAlreadyGivesUsMoney = userIsSupporter();
+        const bannerIsBlockedForEditorialReasons = pageShouldHideReaderRevenue();
 
-    const userHasSeenEnoughArticles: boolean =
-        getVisitCount() >= minArticlesBeforeShowingBanner;
-    const userAlreadyGivesUsMoney = userIsSupporter();
-    const bannerIsBlockedForEditorialReasons = pageShouldHideReaderRevenue();
+        if (
+            userHasSeenEnoughArticles &&
+            !userAlreadyGivesUsMoney &&
+            !bannerIsBlockedForEditorialReasons
+        ) {
+            const userLastClosedBannerAt = userPrefs.get(lastClosedAtKey);
 
-    if (
-        userHasSeenEnoughArticles &&
-        !userAlreadyGivesUsMoney &&
-        !bannerIsBlockedForEditorialReasons
-    ) {
-        const userLastClosedBannerAt = userPrefs.get(lastClosedAtKey);
+            if (!userLastClosedBannerAt) {
+                // show the banner if we can't get a value for this
+                return Promise.resolve(true);
+            }
 
-        if (!userLastClosedBannerAt) {
-            // show the banner if we can't get a value for this
-            return Promise.resolve(true);
+            return hasBannerBeenRedeployedSinceClosed(
+                userLastClosedBannerAt,
+                getReaderRevenueRegion(geolocationGetSync())
+            );
         }
-
-        return hasBannerBeenRedeployedSinceClosed(
-            userLastClosedBannerAt,
-            getReaderRevenueRegion(geolocationGetSync())
-        );
-    }
-    return Promise.resolve(false);
+        return Promise.resolve(false);
+    });
 };
 
 const membershipEngagementBanner: Banner = {
@@ -236,6 +242,6 @@ export {
     clearBannerHistory,
     minArticlesBeforeShowingBanner,
     deriveBannerParams,
-    getBannerHtml,
+    bannerParamsToHtml,
     trackBanner,
 };

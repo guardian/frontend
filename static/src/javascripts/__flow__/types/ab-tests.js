@@ -13,7 +13,7 @@ declare type Variant = {
     canRun?: () => boolean,
     impression?: ListenerFunction,
     success?: ListenerFunction,
-    engagementBannerParams?: EngagementBannerParams,
+    engagementBannerParams?: EngagementBannerTestParams,
     deploymentRules?: DeploymentRules,
 };
 

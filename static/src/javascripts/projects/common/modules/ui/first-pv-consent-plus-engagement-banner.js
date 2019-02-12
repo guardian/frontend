@@ -6,7 +6,7 @@ import {
     canShow as canShowEngagementBanner,
     hideBanner as hideEngagementBanner,
     deriveBannerParams as deriveEngagementBannerParams,
-    getBannerHtml as getEngagementBannerHtml,
+    bannerParamsToHtml as engagementBannerParamsToHtml,
 } from 'common/modules/commercial/membership-engagement-banner';
 import {
     track as trackFirstPvConsent,
@@ -111,7 +111,7 @@ const show = (): Promise<boolean> => {
     trackFirstPvConsent();
     return getEngagementBannerTestToRun()
         .then(deriveEngagementBannerParams)
-        .then(getEngagementBannerHtml)
+        .then(engagementBannerParamsToHtml)
         .then(engagementBannerHtml =>
             fastdom.write(() => {
                 const html = doubleBannerHtml(engagementBannerHtml);

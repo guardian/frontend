@@ -61,6 +61,9 @@ jest.mock(
         ),
     })
 );
+
+jest.mock('lodash/memoize', () => f => f);
+
 jest.mock(
     'common/modules/commercial/membership-engagement-banner-block',
     () => ({

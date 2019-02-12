@@ -1,4 +1,7 @@
 // @flow
+import { acquisitionsBannerControlTemplate } from 'common/modules/commercial/templates/acquisitions-banner-control';
+
+// @flow
 import config from 'lib/config';
 import reportError from 'lib/report-error';
 import { getLocalCurrencySymbol } from 'lib/geolocation';
@@ -30,19 +33,23 @@ const getAcquisitionsBannerParams = (
         );
     }
 
+    const ctaText = `<span class="engagement-banner__highlight"> ${firstRow.ctaText.replace(
+        /%%CURRENCY_SYMBOL%%/g,
+        getLocalCurrencySymbol()
+    )}</span>`;
+
     return {
-        pageviewId: config.get('ophan.pageViewId', 'not_found'),
-        products: ['CONTRIBUTION', 'RECURRING_CONTRIBUTION'],
-        campaignCode: 'control_banner_from_google_doc',
         messageText: firstRow.messageText,
-        ctaText: `<span class="engagement-banner__highlight"> ${firstRow.ctaText.replace(
-            /%%CURRENCY_SYMBOL%%/g,
-            getLocalCurrencySymbol()
-        )}</span>`,
+        ctaText,
         buttonCaption: firstRow.buttonCaption,
         linkUrl: firstRow.linkUrl,
         hasTicker: false,
+        campaignCode: 'control_banner_from_google_doc',
+        pageviewId: config.get('ophan.pageViewId', 'not_found'),
+        products: ['CONTRIBUTION', 'RECURRING_CONTRIBUTION'],
         isHardcodedFallback: false,
+        template: acquisitionsBannerControlTemplate,
+        minArticlesBeforeShowingBanner: 3,
     };
 };
 
@@ -65,14 +72,16 @@ export const getControlEngagementBannerParams = (): Promise<
             );
 
             return {
-                pageviewId: config.get('ophan.pageViewId', 'not_found'),
-                products: ['CONTRIBUTION', 'RECURRING_CONTRIBUTION'],
-                campaignCode: 'fallback_hardcoded_banner',
                 messageText: fallbackCopy,
                 ctaText: `<span class="engagement-banner__highlight"> Support The Guardian from as little as ${getLocalCurrencySymbol()}1</span>`,
                 buttonCaption: 'Support The Guardian',
                 linkUrl: supportContributeURL,
                 hasTicker: false,
+                campaignCode: 'fallback_hardcoded_banner',
+                pageviewId: config.get('ophan.pageViewId', 'not_found'),
+                products: ['CONTRIBUTION', 'RECURRING_CONTRIBUTION'],
                 isHardcodedFallback: true,
+                template: acquisitionsBannerControlTemplate,
+                minArticlesBeforeShowingBanner: 3,
             };
         });
