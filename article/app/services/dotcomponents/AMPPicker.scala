@@ -33,6 +33,11 @@ object AMPPageChecks extends Logging {
       case None => true
     }
   }
+
+  def isNotOpinion(page:PageWithStoryPackage): Boolean = ! page.item.tags.isComment
+
+  def isNotAReview(page:PageWithStoryPackage): Boolean = ! page.item.tags.isReview
+
 }
 
 object AMPPicker {
@@ -111,6 +116,8 @@ object AMPPicker {
     Map(
       ("isBasicArticle", AMPPageChecks.isBasicArticle(page)),
       ("hasOnlySupportedElements", AMPPageChecks.hasOnlySupportedElements(page)),
+      ("isNotOpinionP", AMPPageChecks.isNotOpinion(page)),
+      ("isNotAReview", AMPPageChecks.isNotAReview(page))
     )
   }
 
