@@ -130,7 +130,7 @@ object ArticlePicker {
     val isWhitelisted = whitelist(page.metadata.id)
     val isEnabled = conf.switches.Switches.DotcomRendering.isSwitchedOn
 
-    val tier = if ((isSupported && isWhitelisted && isEnabled) || request.isGuui) RemoteRender else LocalRender
+    val tier = if ((isSupported && isWhitelisted && isEnabled && !request.guuiOptOut) || request.isGuui) RemoteRender else LocalRender
 
     if (tier == RemoteRender) {
       logRequest(s"path executing in dotcomponents", features, page)
