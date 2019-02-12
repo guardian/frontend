@@ -1,5 +1,8 @@
 // @flow
-import { makeEpicABTest } from 'common/modules/commercial/contributions-utilities';
+import {
+    makeEpicABTest,
+    defaultButtonTemplate,
+} from 'common/modules/commercial/contributions-utilities';
 
 export const acquisitionsEpicAlwaysAskIfTagged = makeEpicABTest({
     id: 'AcquisitionsEpicAlwaysAskIfTagged',
@@ -27,6 +30,7 @@ export const acquisitionsEpicAlwaysAskIfTagged = makeEpicABTest({
             products: ['CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
 
             deploymentRules: 'AlwaysAsk',
+            buttonTemplate: defaultButtonTemplate,
         },
     ],
 });

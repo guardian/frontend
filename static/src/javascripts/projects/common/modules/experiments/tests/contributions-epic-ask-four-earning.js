@@ -1,5 +1,8 @@
 // @flow
-import { makeEpicABTest } from 'common/modules/commercial/contributions-utilities';
+import {
+    makeEpicABTest,
+    defaultButtonTemplate,
+} from 'common/modules/commercial/contributions-utilities';
 
 export const askFourEarning: EpicABTest = makeEpicABTest({
     id: 'ContributionsEpicAskFourEarning',
@@ -22,6 +25,7 @@ export const askFourEarning: EpicABTest = makeEpicABTest({
         {
             id: 'control',
             products: ['CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
+            buttonTemplate: defaultButtonTemplate,
         },
     ],
 });
