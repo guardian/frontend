@@ -4,17 +4,19 @@ import { appendToLastElement } from 'lib/array-utils';
 export const acquisitionsEpicControlTemplate = ({
     copy: { heading = '', paragraphs, highlightedText },
     componentName,
+    epicClassNames = [],
     buttonTemplate,
-    epicClass = '',
     wrapperClass = '',
 }: {
     copy: AcquisitionsEpicTemplateCopy,
     componentName: string,
+    epicClassNames: [],
     buttonTemplate?: string,
-    epicClass?: string,
     wrapperClass?: string,
 }) =>
-    `<div class="contributions__epic ${epicClass}" data-component="${componentName}" data-link-name="epic">
+    `<div class="contributions__epic ${epicClassNames.join(
+        ' '
+    )}" data-component="${componentName}" data-link-name="epic">
         <div class="${wrapperClass}">
             <div>
                 <h2 class="contributions__title">

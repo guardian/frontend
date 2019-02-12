@@ -55,7 +55,7 @@ const controlEpicComponent = (
                 }),
             }),
             testimonialBlock,
-            epicClass: '',
+            epicClassNames: [],
             wrapperClass: '',
         });
 

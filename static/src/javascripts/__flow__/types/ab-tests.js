@@ -29,6 +29,7 @@ declare type EpicVariant = Variant & {
     subscribeURL: string,
     componentName: string,
     template: EpicTemplate,
+    classNames: string[],
 
     buttonTemplate?: CtaUrls => string,
     copy?: AcquisitionsEpicTemplateCopy,
@@ -91,6 +92,7 @@ declare type InitEpicABTestVariant = {
     excludedSections?: string[],
     buttonTemplate?: CtaUrls => string,
     copy?: AcquisitionsEpicTemplateCopy,
+    classNames?: string[],
 };
 
 declare type InitBannerABTestVariant = {
