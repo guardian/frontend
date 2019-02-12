@@ -22,7 +22,7 @@ describe('Sticky MPU', () => {
     `;
 
     const adSlotRight: string =
-        '<div id="dfp-ad--right" class="js-ad-slot ad-slot ad-slot--right" data-name="right" data-mobile="1,1|2,2|300,250|300,274|300,600|fluid"></div>';
+        '<div id="dfp-ad--right" class="js-ad-slot ad-slot ad-slot--right" data-name="right" data-mobile="1,1|2,2|160,600|300,250|300,274|300,600|fluid"></div>';
 
     beforeEach(() => {
         jest.resetAllMocks();

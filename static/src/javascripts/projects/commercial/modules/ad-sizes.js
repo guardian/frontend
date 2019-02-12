@@ -19,6 +19,7 @@ const adSizes: Object = {
     mpu: getAdSize(300, 250),
     halfPage: getAdSize(300, 600),
     portrait: getAdSize(300, 1050),
+    skyscraper: getAdSize(160, 600),
 
     // dfp proprietary ad sizes
     fluid: getAdSize(0, 0),
@@ -41,5 +42,6 @@ adSizes['728x90'] = adSizes.leaderboard;
 adSizes['300x250'] = adSizes.mpu;
 adSizes['300x600'] = adSizes.halfPage;
 adSizes['300x1050'] = adSizes.portrait;
+adSizes['160x600'] = adSizes.skyscraper;
 
 export { adSizes };

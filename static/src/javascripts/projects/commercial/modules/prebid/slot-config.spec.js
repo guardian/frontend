@@ -32,7 +32,7 @@ describe('getSlots', () => {
         expect(getSlots('Article')).toEqual([
             {
                 key: 'right',
-                sizes: [[300, 600], [300, 250]],
+                sizes: [[160, 600], [300, 600], [300, 250]],
             },
             {
                 key: 'inline1',
@@ -58,7 +58,7 @@ describe('getSlots', () => {
         expect(getSlots('Article')).toEqual([
             {
                 key: 'right',
-                sizes: [[300, 600], [300, 250]],
+                sizes: [[160, 600], [300, 600], [300, 250]],
             },
             {
                 key: 'inline1',
@@ -84,7 +84,7 @@ describe('getSlots', () => {
         const desktopSlots = getSlots('Article');
         expect(desktopSlots).toContainEqual({
             key: 'inline',
-            sizes: [[300, 600], [300, 250]],
+            sizes: [[160, 600], [300, 600], [300, 250]],
         });
         expect(desktopSlots).not.toContainEqual({
             key: 'inline',

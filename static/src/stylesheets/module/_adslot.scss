@@ -33,6 +33,12 @@
     }
 }
 
+.ad-slot--sky {
+    &.ad-slot--comments, &.ad-slot--right {
+        width: $mpu-skyscraper-width;
+    }
+}
+
 .ad-slot__label {
     @include font-size(12, 20);
     position: relative;
