@@ -9,9 +9,11 @@ declare type EpicTemplate = (EpicVariant, AcquisitionsEpicTemplateCopy) => strin
 declare type Variant = {
     id: string,
     test: (x: Object) => void,
+    campaignCode?: string,
     canRun?: () => boolean,
     impression?: ListenerFunction,
     success?: ListenerFunction,
+    engagementBannerParams?: EngagementBannerParams,
     deploymentRules?: DeploymentRules,
 };
 
@@ -23,7 +25,6 @@ declare type EpicVariant = Variant & {
     excludedTagIds: string[],
     excludedSections: string[],
 
-    campaignCode: string,
     supportURL: string,
     subscribeURL: string,
     componentName: string,
@@ -31,10 +32,6 @@ declare type EpicVariant = Variant & {
 
     buttonTemplate?: CtaUrls => string,
     copy?: AcquisitionsEpicTemplateCopy,
-}
-
-declare type EngagementBannerVariant = Variant & {
-    engagementBannerParams: () => Promise<EngagementBannerParams>,
 }
 
 declare type ABTest = {
