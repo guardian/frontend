@@ -86,6 +86,7 @@ const controlTemplate: EpicTemplate = (
                   subscribeUrl: variant.subscribeURL,
               })
             : undefined,
+        epicClassNames: variant.classNames,
     });
 
 const liveBlogTemplate: EpicTemplate = (
@@ -205,6 +206,7 @@ const makeEpicABTestVariant = (
         template,
         buttonTemplate: initVariant.buttonTemplate,
         copy: initVariant.copy,
+        classNames: initVariant.classNames || [],
 
         locations: initVariant.locations || [],
         tagIds: initVariant.tagIds || [],
@@ -533,6 +535,10 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                                       )
                                     : undefined,
                             },
+                            classNames: optionalSplitAndTrim(
+                                row.classNames,
+                                ','
+                            ),
                         })),
                     });
                 });
