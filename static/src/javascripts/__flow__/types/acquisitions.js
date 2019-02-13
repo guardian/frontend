@@ -18,6 +18,8 @@ declare type EngagementBannerTemplateParams = {
     hasTicker: boolean,
 };
 
+declare type AcquisitionsComponentUserCohort = 'OnlyExistingSupporters' | 'OnlyNonSupporters' | 'Everyone';
+
 declare type EngagementBannerParams = EngagementBannerTemplateParams & {
     campaignCode: string,
     pageviewId: string,
@@ -25,7 +27,7 @@ declare type EngagementBannerParams = EngagementBannerTemplateParams & {
     isHardcodedFallback: boolean,
     template: (templateParams: EngagementBannerTemplateParams) => string,
     minArticlesBeforeShowingBanner: number,
-    onlyShowToExistingSupporters: boolean,
+    userCohort: AcquisitionsComponentUserCohort,
     bannerModifierClass?: string,
     abTest?: {
         name: string,
@@ -43,5 +45,5 @@ declare type EngagementBannerTestParams = {
     template?: (templateParams: EngagementBannerTemplateParams) => string,
     bannerModifierClass?: string,
     minArticlesBeforeShowingBanner?: number,
-    onlyShowToExistingSupporters?: boolean,
+    userCohort?: AcquisitionsComponentUserCohort,
 }

@@ -72,7 +72,7 @@ declare type DeploymentRules = 'AlwaysAsk' | MaxViews
 declare type EpicABTest = AcquisitionsABTest & {
     campaignPrefix: string,
     useLocalViewLog: boolean,
-    onlyShowToExistingSupporters: boolean,
+    userCohort: AcquisitionsComponentUserCohort,
     pageCheck: (page: Object) => boolean,
     useTargetingTool: boolean,
     insertEvent: string,
@@ -116,7 +116,7 @@ declare type InitEpicABTest = {
     campaignPrefix?: string,
     useLocalViewLog?: boolean,
     useTargetingTool?: boolean,
-    onlyShowToExistingSupporters?: boolean,
+    userCohort?: AcquisitionsComponentUserCohort,
     pageCheck?: (page: Object) => boolean,
     template?: EpicTemplate,
     deploymentRules?: DeploymentRules,

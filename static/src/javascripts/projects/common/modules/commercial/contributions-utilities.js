@@ -126,8 +126,19 @@ const isCompatibleWithLiveBlogEpic = (page: Object): boolean =>
 const pageShouldHideReaderRevenue = () =>
     config.get('page.shouldHideReaderRevenue');
 
-const isCompatibleUser = (onlyShowToExistingSupporters: boolean) =>
-    onlyShowToExistingSupporters ? userIsSupporter() : !userIsSupporter();
+const userIsInCorrectCohort = (
+    userCohort: AcquisitionsComponentUserCohort
+): boolean => {
+    switch (userCohort) {
+        case 'OnlyExistingSupporters':
+            return userIsSupporter();
+        case 'OnlyNonSupporters':
+            return !userIsSupporter();
+        case 'Everyone':
+        default:
+            return true;
+    }
+};
 
 const shouldShowEpic = (test: EpicABTest): boolean => {
     const onCompatiblePage = test.pageCheck(config.get('page'));
@@ -137,7 +148,7 @@ const shouldShowEpic = (test: EpicABTest): boolean => {
     return (
         !pageShouldHideReaderRevenue() &&
         onCompatiblePage &&
-        isCompatibleUser(test.onlyShowToExistingSupporters) &&
+        userIsInCorrectCohort(test.userCohort) &&
         tagsMatch
     );
 };
@@ -391,7 +402,7 @@ const makeEpicABTest = ({
     campaignPrefix = 'gdnwb_copts_memco',
     useLocalViewLog = false,
     useTargetingTool = false,
-    onlyShowToExistingSupporters = false,
+    userCohort = 'OnlyNonSupporters',
     pageCheck = isCompatibleWithArticleEpic,
     template = controlTemplate,
 }: InitEpicABTest): EpicABTest => {
@@ -421,7 +432,7 @@ const makeEpicABTest = ({
         campaignId,
         campaignPrefix,
         useLocalViewLog,
-        onlyShowToExistingSupporters,
+        userCohort,
         pageCheck,
         useTargetingTool,
     };
@@ -480,7 +491,7 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                               }),
                         ...(isThankYou
                             ? {
-                                  onlyShowToExistingSupporters: true,
+                                  userCohort: 'OnlyExistingSupporters',
                                   useLocalViewLog: true,
                               }
                             : {}),
@@ -626,5 +637,5 @@ export {
     defaultButtonTemplate,
     defaultMaxViews,
     getReaderRevenueRegion,
-    isCompatibleUser,
+    userIsInCorrectCohort,
 };

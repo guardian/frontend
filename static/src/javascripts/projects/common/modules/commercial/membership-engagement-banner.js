@@ -9,7 +9,7 @@ import {
     type ReaderRevenueRegion,
     pageShouldHideReaderRevenue,
     getReaderRevenueRegion,
-    isCompatibleUser,
+    userIsInCorrectCohort,
 } from 'common/modules/commercial/contributions-utilities';
 import type { Banner } from 'common/modules/ui/bannerPicker';
 import bean from 'bean';
@@ -209,7 +209,7 @@ const canShow = (): Promise<boolean> => {
         if (
             userHasSeenEnoughArticles &&
             !bannerIsBlockedForEditorialReasons &&
-            isCompatibleUser(params.onlyShowToExistingSupporters)
+            userIsInCorrectCohort(params.userCohort)
         ) {
             const userLastClosedBannerAt = userPrefs.get(lastClosedAtKey);
 
