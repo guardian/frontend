@@ -157,4 +157,16 @@ a[href].contributions__contribute.contributions__contribute--epic {
     max-width: 620px;
 }
 
+.contributions__epic-footer {
+    margin-top: $gs-baseline;
 
+    h2 {
+        @include fs-header(5);
+        font-size: 32px;
+        line-height: 36px;
+    }
+}
+
+.contributions__epic-footer-blue {
+    color: #00b2ff
+}

@@ -35,12 +35,12 @@ export const acquisitionsEpicControlTemplate = ({
             ${buttonTemplate || ''}
             
             ${footer ?
-                `<div class="contributions__one-million-footer">
+                `<div class="contributions__epic-footer">
                     ${
                         footer.map(line => {
                             const firstSpaceIndex = line.trim().indexOf(' ');
-                            return `<h2><span class="one-million-blue">${line.substring(0, firstSpaceIndex)}</span>${line.substring(firstSpaceIndex)}</h2>`;
-                        })
+                            return `<h2><span class="contributions__epic-footer-blue">${line.substring(0, firstSpaceIndex)}</span>${line.substring(firstSpaceIndex)}</h2>`;
+                        }).join('')
                     }
                 </div>`
             : ''}
