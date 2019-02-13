@@ -24,7 +24,9 @@ import {
     splitAndTrim,
     optionalSplitAndTrim,
     optionalStringToBoolean,
+    throwIfEmptyString,
 } from 'lib/string-utils';
+import { throwIfEmptyArray } from 'lib/array-utils';
 import { epicButtonsTemplate } from 'common/modules/commercial/templates/acquisitions-epic-buttons';
 import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templates/acquisitions-epic-control';
 import { epicLiveBlogTemplate } from 'common/modules/commercial/templates/acquisitions-epic-liveblog';
@@ -526,8 +528,8 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                                 ','
                             ),
                             copy: {
-                                heading: row.heading,
-                                paragraphs: splitAndTrim(row.paragraphs, '\n'),
+                                heading: throwIfEmptyString('heading', row.heading),
+                                paragraphs: throwIfEmptyArray('paragraphs', splitAndTrim(row.paragraphs, '\n')),
                                 highlightedText: row.highlightedText
                                     ? row.highlightedText.replace(
                                           /%%CURRENCY_SYMBOL%%/g,

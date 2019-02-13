@@ -15,3 +15,11 @@ export const optionalSplitAndTrim = (
 
 export const optionalStringToBoolean = (str: ?string): boolean =>
     typeof str === 'string' ? str.toLowerCase().trim() === 'true' : false;
+
+export const throwIfEmptyString = (name: string, str: ?string): string => {
+    if (typeof str === 'string' && str.trim().length > 0) {
+        return str;
+    }
+
+    throw new Error(`${name} is empty`);
+};
