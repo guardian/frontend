@@ -534,6 +534,7 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                                           getLocalCurrencySymbol()
                                       )
                                     : undefined,
+                                footer: optionalSplitAndTrim(row.footer, '\n'),
                             },
                             classNames: optionalSplitAndTrim(
                                 row.classNames,

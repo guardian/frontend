@@ -2,7 +2,7 @@
 import { appendToLastElement } from 'lib/array-utils';
 
 export const acquisitionsEpicControlTemplate = ({
-    copy: { heading = '', paragraphs, highlightedText },
+    copy: { heading = '', paragraphs, highlightedText, footer },
     componentName,
     epicClassNames = [],
     buttonTemplate,
@@ -33,5 +33,16 @@ export const acquisitionsEpicControlTemplate = ({
             </div>
     
             ${buttonTemplate || ''}
+            
+            ${footer ?
+                `<div class="contributions__one-million-footer">
+                    ${
+                        footer.map(line => {
+                            const firstSpaceIndex = line.trim().indexOf(' ');
+                            return `<h2><span class="one-million-blue">${line.substring(0, firstSpaceIndex)}</span>${line.substring(firstSpaceIndex)}</h2>`;
+                        })
+                    }
+                </div>`
+            : ''}
         </div>
     </div>`;
