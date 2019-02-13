@@ -4,12 +4,7 @@ import { appendToLastElement } from 'lib/array-utils';
 const buildFooter = (footer: string[]): string =>
     `<div class="contributions__epic-footer">
         ${footer
-            .map(line => {
-                const firstSpaceIndex = line.trim().indexOf(' ');
-                const firstWord = line.substring(0, firstSpaceIndex);
-                const remainder = line.substring(firstSpaceIndex);
-                return `<h2><span class="contributions__epic-footer--blue">${firstWord}</span>${remainder}</h2>`;
-            })
+            .map(line => `<h2>${line}</h2>`)
             .join('')}
     </div>`;
 

@@ -165,8 +165,11 @@ a[href].contributions__contribute.contributions__contribute--epic {
         font-size: 32px;
         line-height: 36px;
     }
-}
 
-.contributions__epic-footer--blue {
-    color: #00b2ff
+    h2:nth-of-type(odd) {
+        color: #ff7f0f;
+    }
+    h2:nth-of-type(even) {
+        color: #041f4a;
+    }
 }
