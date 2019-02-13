@@ -528,8 +528,14 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                                 ','
                             ),
                             copy: {
-                                heading: throwIfEmptyString('heading', row.heading),
-                                paragraphs: throwIfEmptyArray('paragraphs', splitAndTrim(row.paragraphs, '\n')),
+                                heading: throwIfEmptyString(
+                                    'heading',
+                                    row.heading
+                                ),
+                                paragraphs: throwIfEmptyArray(
+                                    'paragraphs',
+                                    splitAndTrim(row.paragraphs, '\n')
+                                ),
                                 highlightedText: row.highlightedText
                                     ? row.highlightedText.replace(
                                           /%%CURRENCY_SYMBOL%%/g,

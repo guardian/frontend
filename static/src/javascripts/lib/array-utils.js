@@ -14,7 +14,7 @@ export const appendToLastElement = (
                 : element
     );
 
-export const throwIfEmptyArray = (name: string, array: ?any[]): any[] => {
+export const throwIfEmptyArray = (name: string, array: ?(any[])): any[] => {
     if (Array.isArray(array) && array.length > 0) {
         return array;
     }
