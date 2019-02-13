@@ -1,7 +1,6 @@
 // @flow strict
 
 import 'prebid.js/build/dist/prebid';
-import config from 'lib/config';
 import { Advert } from 'commercial/modules/dfp/Advert';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import { bids } from 'commercial/modules/prebid/bid-config';
@@ -12,6 +11,14 @@ import type {
     PrebidMediaTypes,
     PrebidSlot,
 } from 'commercial/modules/prebid/types';
+
+type EnableAnalyticsConfig = {
+    provider: string,
+    options: {
+        ajaxUrl: string,
+        pv: string,
+    },
+};
 
 const bidderTimeout = 1500;
 
@@ -50,115 +57,126 @@ class PrebidAdUnit {
     }
 }
 
-class PrebidService {
-    static initialise(): void {
-        const userSync = config.get('switches.prebidUserSync', false)
-            ? {
-                  // syncsPerBidder: 0, // allow all syncs - bug https://github.com/prebid/Prebid.js/issues/2781
-                  syncsPerBidder: 999, // temporarily until above bug fixed
-                  filterSettings: {
-                      all: {
-                          bidders: '*', // allow all bidders to sync by iframe or image beacons
-                          filter: 'include',
-                      },
+let requestQueue: Promise<void> = Promise.resolve();
+
+const initialise = (
+    config: { get: (string, ?boolean) => boolean | string },
+    window: {
+        pbjs: {
+            setConfig: Object => void,
+            bidderSettings: Object,
+            enableAnalytics: ([EnableAnalyticsConfig]) => void,
+        },
+    }
+): void => {
+    const userSync = config.get('switches.prebidUserSync', false)
+        ? {
+              // syncsPerBidder: 0, // allow all syncs - bug https://github.com/prebid/Prebid.js/issues/2781
+              syncsPerBidder: 999, // temporarily until above bug fixed
+              filterSettings: {
+                  all: {
+                      bidders: '*', // allow all bidders to sync by iframe or image beacons
+                      filter: 'include',
                   },
-              }
-            : { syncEnabled: false };
+              },
+          }
+        : { syncEnabled: false };
 
-        const pbjsConfig = Object.assign(
-            {},
+    const pbjsConfig = Object.assign(
+        {},
+        {
+            bidderTimeout,
+            priceGranularity,
+            userSync,
+        },
+        config.get('switches.enableConsentManagementService', false)
+            ? { consentManagement }
+            : {},
+        config.get('switches.prebidS2sozone', false) ? { s2sConfig } : {}
+    );
+
+    window.pbjs.setConfig(pbjsConfig);
+
+    if (config.get('switches.prebidAnalytics', false)) {
+        window.pbjs.enableAnalytics([
             {
-                bidderTimeout,
-                priceGranularity,
-                userSync,
+                provider: 'gu',
+                options: {
+                    ajaxUrl: config.get('page.ajaxUrl'),
+                    pv: config.get('ophan.pageViewId'),
+                },
             },
-            config.get('switches.enableConsentManagementService', false)
-                ? { consentManagement }
-                : {},
-            config.get('switches.prebidS2sozone', false) ? { s2sConfig } : {}
-        );
+        ]);
+    }
 
-        window.pbjs.setConfig(pbjsConfig);
+    // This creates an 'unsealed' object. Flows
+    // allows dynamic assignment.
+    window.pbjs.bidderSettings = {};
 
-        if (config.get('switches.prebidAnalytics', false)) {
-            window.pbjs.enableAnalytics([
+    if (config.get('switches.prebidXaxis', false)) {
+        window.pbjs.bidderSettings.xhb = {
+            adserverTargeting: [
                 {
-                    provider: 'gu',
-                    options: {
-                        ajaxUrl: config.get('page.ajaxUrl'),
-                        pv: config.get('ophan.pageViewId'),
+                    key: 'hb_buyer_id',
+                    val(bidResponse) {
+                        return bidResponse.appnexus
+                            ? bidResponse.appnexus.buyerMemberId
+                            : '';
                     },
                 },
-            ]);
-        }
+            ],
+        };
+    }
+};
 
-        // This creates an 'unsealed' object. Flows
-        // allows dynamic assignment.
-        window.pbjs.bidderSettings = {};
-
-        if (config.get('switches.prebidXaxis', false)) {
-            window.pbjs.bidderSettings.xhb = {
-                adserverTargeting: [
-                    {
-                        key: 'hb_buyer_id',
-                        val(bidResponse) {
-                            return bidResponse.appnexus
-                                ? bidResponse.appnexus.buyerMemberId
-                                : '';
-                        },
-                    },
-                ],
-            };
-        }
+// slotFlatMap allows you to dynamically interfere with the PrebidSlot definition
+// for this given request for bids.
+const requestBids = (
+    advert: Advert,
+    slotFlatMap?: PrebidSlot => PrebidSlot[],
+    config: any
+): Promise<void> => {
+    const effectiveSlotFlatMap = slotFlatMap || (s => [s]); // default to identity
+    if (dfpEnv.externalDemand !== 'prebid') {
+        return requestQueue;
     }
 
-    static requestQueue: Promise<void> = Promise.resolve();
+    const adUnits: Array<PrebidAdUnit> = slots(
+        advert.id,
+        config.get('page.contentType', '')
+    )
+        .map(effectiveSlotFlatMap)
+        .reduce((acc, elt) => acc.concat(elt), []) // the "flat" in "flatMap"
+        .map(slot => new PrebidAdUnit(advert, slot))
+        .filter(adUnit => !adUnit.isEmpty());
 
-    // slotFlatMap allows you to dynamically interfere with the PrebidSlot definition
-    // for this given request for bids.
-    static requestBids(
-        advert: Advert,
-        slotFlatMap?: PrebidSlot => PrebidSlot[]
-    ): Promise<void> {
-        const effectiveSlotFlatMap = slotFlatMap || (s => [s]); // default to identity
-        if (dfpEnv.externalDemand !== 'prebid') {
-            return PrebidService.requestQueue;
-        }
+    if (adUnits.length === 0) {
+        return requestQueue;
+    }
 
-        const adUnits: Array<PrebidAdUnit> = slots(
-            advert.id,
-            config.get('page.contentType', '')
-        )
-            .map(effectiveSlotFlatMap)
-            .reduce((acc, elt) => acc.concat(elt), []) // the "flat" in "flatMap"
-            .map(slot => new PrebidAdUnit(advert, slot))
-            .filter(adUnit => !adUnit.isEmpty());
-
-        if (adUnits.length === 0) {
-            return PrebidService.requestQueue;
-        }
-
-        PrebidService.requestQueue = PrebidService.requestQueue
-            .then(
-                () =>
-                    new Promise(resolve => {
-                        window.pbjs.que.push(() => {
-                            window.pbjs.requestBids({
-                                adUnits,
-                                bidsBackHandler() {
-                                    window.pbjs.setTargetingForGPTAsync([
-                                        adUnits[0].code,
-                                    ]);
-                                    resolve();
-                                },
-                            });
+    requestQueue = requestQueue
+        .then(
+            () =>
+                new Promise(resolve => {
+                    window.pbjs.que.push(() => {
+                        window.pbjs.requestBids({
+                            adUnits,
+                            bidsBackHandler() {
+                                window.pbjs.setTargetingForGPTAsync([
+                                    adUnits[0].code,
+                                ]);
+                                resolve();
+                            },
                         });
-                    })
-            )
-            .catch(() => {});
+                    });
+                })
+        )
+        .catch(() => {});
 
-        return PrebidService.requestQueue;
-    }
-}
+    return requestQueue;
+};
 
-export const prebid = PrebidService;
+export default {
+    initialise,
+    requestBids,
+};

@@ -1,6 +1,6 @@
 // @flow
 import { Advert } from 'commercial/modules/dfp/Advert';
-import { prebid } from 'commercial/modules/prebid/prebid';
+import prebid from 'commercial/modules/prebid/prebid';
 import config from 'lib/config';
 
 export const loadAdvert = (advert: Advert): void => {
