@@ -84,7 +84,7 @@ describe('Standard Article Aside Adverts', () => {
         <div class="js-content-main-column"></div>
         <div class="content__secondary-column js-secondary-column">
             <div class="aside-slot-container">
-                <div id="dfp-ad--right" class="js-ad-slot ad-slot ad-slot--right ad-slot--mpu-banner-ad js-sticky-mpu ad-slot--rendered" data-link-name="ad slot right" data-name="right" data-mobile="1,1|2,2|160,600|300,250|300,274|300,600|fluid"></div>
+                <div id="dfp-ad--right" class="js-ad-slot ad-slot ad-slot--right ad-slot--mpu-banner-ad js-sticky-mpu ad-slot--rendered" data-link-name="ad slot right" data-name="right" data-mobile="1,1|2,2|300,250|300,274|300,600|fluid"></div>
             </div>
         </div>
     `;
@@ -103,7 +103,7 @@ describe('Standard Article Aside Adverts', () => {
         mediator.once('page:defaultcommercial:right', adSlot => {
             expect(adSlot.classList).toContain('js-sticky-mpu');
             expect(adSlot.getAttribute('data-mobile')).toBe(
-                '1,1|2,2|160,600|300,250|300,274|300,600|fluid'
+                '1,1|2,2|300,250|300,274|300,600|fluid'
             );
             done();
         });
@@ -132,7 +132,7 @@ describe('Immersive Article Aside Adverts', () => {
         </div>
         <div class="content__secondary-column js-secondary-column">
             <div class="aside-slot-container">
-                <div id="dfp-ad--right" class="js-ad-slot ad-slot ad-slot--right ad-slot--mpu-banner-ad js-sticky-mpu ad-slot--rendered" data-link-name="ad slot right" data-name="right" data-mobile="1,1|2,2|160,600|300,250|300,274|300,600|fluid"></div>
+                <div id="dfp-ad--right" class="js-ad-slot ad-slot ad-slot--right ad-slot--mpu-banner-ad js-sticky-mpu ad-slot--rendered" data-link-name="ad slot right" data-name="right" data-mobile="1,1|2,2|300,250|300,274|300,600|fluid"></div>
             </div>
         </div>
     `;
@@ -154,7 +154,6 @@ describe('Immersive Article Aside Adverts', () => {
             const sizes = adSlot.getAttribute('data-mobile').split('|');
             expect(sizes).toContain('1,1');
             expect(sizes).toContain('2,2');
-            expect(sizes).toContain('160,600');
             expect(sizes).toContain('300,250');
             expect(sizes).toContain('300,274');
             expect(sizes).toContain('300,600');
@@ -174,7 +173,6 @@ describe('Immersive Article Aside Adverts', () => {
             expect(sizes).toContain('1,1');
             expect(sizes).toContain('2,2');
             expect(sizes).toContain('300,250');
-            expect(sizes).not.toContain('160,600');
             expect(sizes).not.toContain('300,274');
             expect(sizes).not.toContain('300,600');
             expect(sizes).not.toContain('fluid');
@@ -189,7 +187,7 @@ describe('Immersive Article (no immersive elements) Aside Adverts', () => {
         <div class="js-content-main-column"></div>
         <div class="content__secondary-column js-secondary-column">
             <div class="aside-slot-container">
-                <div id="dfp-ad--right" class="js-ad-slot ad-slot ad-slot--right ad-slot--mpu-banner-ad js-sticky-mpu ad-slot--rendered" data-link-name="ad slot right" data-name="right" data-mobile="1,1|2,2|160,600|300,250|300,274|300,600|fluid"></div>
+                <div id="dfp-ad--right" class="js-ad-slot ad-slot ad-slot--right ad-slot--mpu-banner-ad js-sticky-mpu ad-slot--rendered" data-link-name="ad slot right" data-name="right" data-mobile="1,1|2,2|300,250|300,274|300,600|fluid"></div>
             </div>
         </div>
     `;
@@ -202,7 +200,7 @@ describe('Immersive Article (no immersive elements) Aside Adverts', () => {
         mediator.once('page:defaultcommercial:right', adSlot => {
             expect(adSlot.classList).toContain('js-sticky-mpu');
             expect(adSlot.getAttribute('data-mobile')).toBe(
-                '1,1|2,2|160,600|300,250|300,274|300,600|fluid'
+                '1,1|2,2|300,250|300,274|300,600|fluid'
             );
             done();
         });

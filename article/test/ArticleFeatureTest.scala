@@ -225,7 +225,7 @@ import collection.JavaConverters._
 
         Then("The article-aside MPU should have the correct sizes")
           adSlotRight.id should be("dfp-ad--right")
-          adSlotRight.attribute("data-mobile") should be("1,1|2,2|160,600|300,250|300,274|300,600|fluid")
+          adSlotRight.attribute("data-mobile") should be("1,1|2,2|300,250|300,274|300,600|fluid")
       }
 
       Given("I am on an article entitled '10 of the best things to do in Tallinn'")
@@ -237,7 +237,7 @@ import collection.JavaConverters._
 
         Then("The article-aside MPU should have the correct sizes")
           adSlotRight.id should be("dfp-ad--right")
-          adSlotRight.attribute("data-mobile") should be("1,1|2,2|160,600|300,250|300,274|300,600|fluid|300,1050")
+          adSlotRight.attribute("data-mobile") should be("1,1|2,2|300,250|300,274|300,600|fluid|300,1050")
       }
 
       Given("I am on an immersive article, entitled 'Health insurance woes helped elect Trump, but his cure may be more painful'")
