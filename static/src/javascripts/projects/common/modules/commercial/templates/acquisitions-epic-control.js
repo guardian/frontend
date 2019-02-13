@@ -1,6 +1,18 @@
 // @flow
 import { appendToLastElement } from 'lib/array-utils';
 
+const buildFooter = (footer: string[]): string =>
+    `<div class="contributions__epic-footer">
+        ${footer
+            .map(line => {
+                const firstSpaceIndex = line.trim().indexOf(' ');
+                const firstWord = line.substring(0, firstSpaceIndex);
+                const remainder = line.substring(firstSpaceIndex);
+                return `<h2><span class="contributions__epic-footer-blue">${firstWord}</span>${remainder}</h2>`;
+            })
+            .join('')}
+    </div>`;
+
 export const acquisitionsEpicControlTemplate = ({
     copy: { heading = '', paragraphs, highlightedText, footer },
     componentName,
@@ -34,20 +46,6 @@ export const acquisitionsEpicControlTemplate = ({
     
             ${buttonTemplate || ''}
             
-            ${
-                footer
-                    ? `<div class="contributions__epic-footer">
-                    ${footer
-                        .map(line => {
-                            const firstSpaceIndex = line.trim().indexOf(' ');
-                            return `<h2><span class="contributions__epic-footer-blue">${line.substring(
-                                0,
-                                firstSpaceIndex
-                            )}</span>${line.substring(firstSpaceIndex)}</h2>`;
-                        })
-                        .join('')}
-                </div>`
-                    : ''
-            }
+            ${footer ? buildFooter(footer) : ''}
         </div>
     </div>`;
