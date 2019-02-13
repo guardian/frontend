@@ -25,6 +25,7 @@ declare type EngagementBannerParams = EngagementBannerTemplateParams & {
     isHardcodedFallback: boolean,
     template: (templateParams: EngagementBannerTemplateParams) => string,
     minArticlesBeforeShowingBanner: number,
+    onlyShowToExistingSupporters: boolean,
     bannerModifierClass?: string,
     abTest?: {
         name: string,
@@ -42,4 +43,5 @@ declare type EngagementBannerTestParams = {
     template?: (templateParams: EngagementBannerTemplateParams) => string,
     bannerModifierClass?: string,
     minArticlesBeforeShowingBanner?: number,
+    onlyShowToExistingSupporters?: boolean,
 }

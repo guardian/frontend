@@ -50,6 +50,7 @@ const getAcquisitionsBannerParams = (
         isHardcodedFallback: false,
         template: acquisitionsBannerControlTemplate,
         minArticlesBeforeShowingBanner: 3,
+        onlyShowToExistingSupporters: false,
     };
 };
 
@@ -83,5 +84,6 @@ export const getControlEngagementBannerParams = (): Promise<
                 isHardcodedFallback: true,
                 template: acquisitionsBannerControlTemplate,
                 minArticlesBeforeShowingBanner: 3,
+                onlyShowToExistingSupporters: false,
             };
         });
