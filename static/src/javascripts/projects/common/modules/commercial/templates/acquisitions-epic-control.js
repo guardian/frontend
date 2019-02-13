@@ -3,9 +3,7 @@ import { appendToLastElement } from 'lib/array-utils';
 
 const buildFooter = (footer: string[]): string =>
     `<div class="contributions__epic-footer">
-        ${footer
-            .map(line => `<h2>${line}</h2>`)
-            .join('')}
+        ${footer.map(line => `<h2>${line}</h2>`).join('')}
     </div>`;
 
 export const acquisitionsEpicControlTemplate = ({
