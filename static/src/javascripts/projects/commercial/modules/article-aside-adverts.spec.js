@@ -83,7 +83,7 @@ describe('Standard Article Aside Adverts', () => {
     const domSnippet = `
         <div class="js-content-main-column"></div>
         <div class="content__secondary-column js-secondary-column">
-            <div class="ad-slot-container">
+            <div class="aside-slot-container">
                 <div id="dfp-ad--right" class="js-ad-slot ad-slot ad-slot--right ad-slot--mpu-banner-ad js-sticky-mpu ad-slot--rendered" data-link-name="ad slot right" data-name="right" data-mobile="1,1|2,2|160,600|300,250|300,274|300,600|fluid"></div>
             </div>
         </div>
@@ -131,7 +131,7 @@ describe('Immersive Article Aside Adverts', () => {
             <figure class="element element--immersive"></figure>
         </div>
         <div class="content__secondary-column js-secondary-column">
-            <div class="ad-slot-container">
+            <div class="aside-slot-container">
                 <div id="dfp-ad--right" class="js-ad-slot ad-slot ad-slot--right ad-slot--mpu-banner-ad js-sticky-mpu ad-slot--rendered" data-link-name="ad slot right" data-name="right" data-mobile="1,1|2,2|160,600|300,250|300,274|300,600|fluid"></div>
             </div>
         </div>
@@ -188,7 +188,7 @@ describe('Immersive Article (no immersive elements) Aside Adverts', () => {
     const domSnippet = `
         <div class="js-content-main-column"></div>
         <div class="content__secondary-column js-secondary-column">
-            <div class="ad-slot-container">
+            <div class="aside-slot-container">
                 <div id="dfp-ad--right" class="js-ad-slot ad-slot ad-slot--right ad-slot--mpu-banner-ad js-sticky-mpu ad-slot--rendered" data-link-name="ad slot right" data-name="right" data-mobile="1,1|2,2|160,600|300,250|300,274|300,600|fluid"></div>
             </div>
         </div>
