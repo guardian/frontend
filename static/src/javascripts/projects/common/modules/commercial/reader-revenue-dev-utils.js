@@ -18,12 +18,22 @@ import {
     incrementMvtCookie,
 } from 'common/modules/analytics/mvt-cookie';
 import { setGeolocation, getSync as geolocationGetSync } from 'lib/geolocation';
+import config from 'lib/config';
 import { clearParticipations } from 'common/modules/experiments/ab-local-storage';
 import { COOKIE_NAME as CONSENT_COOKIE_NAME } from 'commercial/modules/cmp/cmp-env';
+import { isBlocked } from 'common/modules/commercial/membership-engagement-banner-block';
+import { pageShouldHideReaderRevenue } from 'common/modules/commercial/contributions-utilities';
 
 const clearCommonReaderRevenueStateAndReload = (
     asExistingSupporter: boolean
 ): void => {
+    if (pageShouldHideReaderRevenue()) {
+        alert(
+            'This page has "Prevent membership/contribution appeals" ticked in Composer. Please try a different page'
+        );
+        return;
+    }
+
     readerRevenueRelevantCookies.forEach(cookie => removeCookie(cookie));
 
     initMvtCookie();
@@ -66,6 +76,18 @@ const showMeTheEpic = (asExistingSupporter: boolean = false): void => {
 };
 
 const showMeTheBanner = (asExistingSupporter: boolean = false): void => {
+    if (!config.get('switches.membershipEngagementBanner')) {
+        alert(
+            'Membership engagement banner switch is turned off on the dotcom switchboard'
+        );
+        return;
+    }
+
+    if (isBlocked()) {
+        alert('Banner is blocked by a switch in the dotcom switchboard');
+        return;
+    }
+
     clearBannerHistory();
 
     // The banner only displays after a certain number of pageviews. So let's get there quick!
