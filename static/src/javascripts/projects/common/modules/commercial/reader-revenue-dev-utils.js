@@ -28,7 +28,9 @@ const clearCommonReaderRevenueStateAndReload = (
     asExistingSupporter: boolean
 ): void => {
     if (pageShouldHideReaderRevenue()) {
-        alert('This page has "Prevent membership/contribution appeals" ticked in Composer. Please try a different page');
+        alert(
+            'This page has "Prevent membership/contribution appeals" ticked in Composer. Please try a different page'
+        );
         return;
     }
 
@@ -75,7 +77,9 @@ const showMeTheEpic = (asExistingSupporter: boolean = false): void => {
 
 const showMeTheBanner = (asExistingSupporter: boolean = false): void => {
     if (!config.get('switches.membershipEngagementBanner')) {
-        alert('Membership engagement banner switch is turned off on the dotcom switchboard');
+        alert(
+            'Membership engagement banner switch is turned off on the dotcom switchboard'
+        );
         return;
     }
 
