@@ -32,7 +32,7 @@ describe('getSlots', () => {
         expect(getSlots('Article')).toEqual([
             {
                 key: 'right',
-                sizes: [[160, 600], [300, 600], [300, 250]],
+                sizes: [[300, 600], [300, 250]],
             },
             {
                 key: 'inline1',
