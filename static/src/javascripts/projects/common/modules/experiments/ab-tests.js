@@ -4,6 +4,7 @@ import { commercialAdVerification } from 'common/modules/experiments/tests/comme
 import { commercialCmpCustomise } from 'common/modules/experiments/tests/commercial-cmp-customise.js';
 import { askFourEarning } from 'common/modules/experiments/tests/contributions-epic-ask-four-earning';
 import { acquisitionsEpicAlwaysAskIfTagged } from 'common/modules/experiments/tests/acquisitions-epic-always-ask-if-tagged';
+import { februaryMomentBannerNonUS } from 'common/modules/experiments/tests/february-moment-banner-non-us';
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialPrebidSafeframe,
@@ -16,4 +17,6 @@ export const epicTests: $ReadOnlyArray<EpicABTest> = [
     acquisitionsEpicAlwaysAskIfTagged,
 ];
 
-export const engagementBannerTests: $ReadOnlyArray<AcquisitionsABTest> = [];
+export const engagementBannerTests: $ReadOnlyArray<AcquisitionsABTest> = [
+    februaryMomentBannerNonUS,
+];
