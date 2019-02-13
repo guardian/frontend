@@ -679,6 +679,10 @@ case class AtomsCleaner(
 
   override def clean(document: Document): Document = {
     if (UseAtomsSwitch.isSwitchedOn) {
+
+      val articleConfig: ArticleConfiguration =
+        Atoms.articleConfig(isAdFree(request), Switches.Acast.isSwitchedOn)
+
       for {
         atomContainer <- document.getElementsByClass("element-atom").asScala
         bodyElement <- atomContainer.getElementsByTag("gu-atom").asScala
@@ -698,12 +702,6 @@ case class AtomsCleaner(
 
             atomContainer.attr("data-atom-id", atomId)
             atomContainer.attr("data-atom-type", atomType)
-
-            val articleConfig: ArticleConfiguration = if (atomData.isInstanceOf[AudioAtom]) {
-              Atoms.articleConfig(isAdFree(request), Switches.Acast.isSwitchedOn)
-            } else {
-              Atoms.articleConfig()
-            }
 
             val html = views.html.fragments.atoms.atom(
               atomData,
