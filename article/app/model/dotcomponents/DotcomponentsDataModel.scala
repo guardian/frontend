@@ -146,7 +146,8 @@ case class PageData(
     hasStoryPackage: Boolean,
     hasRelated: Boolean,
     isCommentable: Boolean,
-    commercialProperties: Option[CommercialProperties]
+    commercialProperties: Option[CommercialProperties],
+    starRating: Option[Int],
 )
 
 case class Config(
@@ -309,7 +310,8 @@ object DotcomponentsDataModel {
       hasStoryPackage = articlePage.related.hasStoryPackage,
       hasRelated = article.content.showInRelated,
       isCommentable = article.trail.isCommentable,
-      article.metadata.commercial
+      article.metadata.commercial,
+      starRating = article.content.starRating,
     )
 
     val tags = article.tags.tags.map(
