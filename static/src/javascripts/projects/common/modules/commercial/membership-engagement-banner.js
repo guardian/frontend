@@ -9,7 +9,7 @@ import {
     type ReaderRevenueRegion,
     pageShouldHideReaderRevenue,
     getReaderRevenueRegion,
-    isCompatibleUser
+    isCompatibleUser,
 } from 'common/modules/commercial/contributions-utilities';
 import type { Banner } from 'common/modules/ui/bannerPicker';
 import bean from 'bean';

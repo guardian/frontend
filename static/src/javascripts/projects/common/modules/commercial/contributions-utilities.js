@@ -127,10 +127,7 @@ const pageShouldHideReaderRevenue = () =>
     config.get('page.shouldHideReaderRevenue');
 
 const isCompatibleUser = (onlyShowToExistingSupporters: boolean) =>
-    onlyShowToExistingSupporters
-        ? userIsSupporter()
-        : !userIsSupporter();
-
+    onlyShowToExistingSupporters ? userIsSupporter() : !userIsSupporter();
 
 const shouldShowEpic = (test: EpicABTest): boolean => {
     const onCompatiblePage = test.pageCheck(config.get('page'));
