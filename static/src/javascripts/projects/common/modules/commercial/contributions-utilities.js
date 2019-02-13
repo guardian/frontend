@@ -20,7 +20,11 @@ import {
     getLocalCurrencySymbol,
     getSync as geolocationGetSync,
 } from 'lib/geolocation';
-import { splitAndTrim, optionalSplitAndTrim } from 'lib/string-utils';
+import {
+    splitAndTrim,
+    optionalSplitAndTrim,
+    optionalStringToBoolean,
+} from 'lib/string-utils';
 import { epicButtonsTemplate } from 'common/modules/commercial/templates/acquisitions-epic-buttons';
 import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templates/acquisitions-epic-control';
 import { epicLiveBlogTemplate } from 'common/modules/commercial/templates/acquisitions-epic-liveblog';
@@ -463,7 +467,9 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                         audienceCriteria: 'All',
                         audience: 1,
                         audienceOffset: 0,
-
+                        useLocalViewLog: rows.some(row =>
+                            optionalStringToBoolean(row.useLocalViewLog)
+                        ),
                         ...(isLiveBlog
                             ? {
                                   template: liveBlogTemplate,
@@ -484,24 +490,24 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                             ...(isLiveBlog
                                 ? { test: setupEpicInLiveblog }
                                 : {}),
-                            deploymentRules:
-                                row.alwaysAsk &&
-                                row.alwaysAsk.toLowerCase() === 'true'
-                                    ? 'AlwaysAsk'
-                                    : ({
-                                          days:
-                                              parseInt(row.maxViewsDays, 10) ||
-                                              defaultMaxViews.days,
-                                          count:
-                                              parseInt(row.maxViewsCount, 10) ||
-                                              defaultMaxViews.count,
-                                          minDaysBetweenViews:
-                                              parseInt(
-                                                  row.minDaysBetweenViews,
-                                                  10
-                                              ) ||
-                                              defaultMaxViews.minDaysBetweenViews,
-                                      }: MaxViews),
+                            deploymentRules: optionalStringToBoolean(
+                                row.alwaysAsk
+                            )
+                                ? 'AlwaysAsk'
+                                : ({
+                                      days:
+                                          parseInt(row.maxViewsDays, 10) ||
+                                          defaultMaxViews.days,
+                                      count:
+                                          parseInt(row.maxViewsCount, 10) ||
+                                          defaultMaxViews.count,
+                                      minDaysBetweenViews:
+                                          parseInt(
+                                              row.minDaysBetweenViews,
+                                              10
+                                          ) ||
+                                          defaultMaxViews.minDaysBetweenViews,
+                                  }: MaxViews),
 
                             buttonTemplate: isThankYou
                                 ? undefined
