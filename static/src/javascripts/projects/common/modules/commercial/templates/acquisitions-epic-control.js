@@ -8,7 +8,7 @@ const buildFooter = (footer: string[]): string =>
                 const firstSpaceIndex = line.trim().indexOf(' ');
                 const firstWord = line.substring(0, firstSpaceIndex);
                 const remainder = line.substring(firstSpaceIndex);
-                return `<h2><span class="contributions__epic-footer-blue">${firstWord}</span>${remainder}</h2>`;
+                return `<h2><span class="contributions__epic-footer--blue">${firstWord}</span>${remainder}</h2>`;
             })
             .join('')}
     </div>`;
