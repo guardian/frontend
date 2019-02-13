@@ -126,19 +126,21 @@ const isCompatibleWithLiveBlogEpic = (page: Object): boolean =>
 const pageShouldHideReaderRevenue = () =>
     config.get('page.shouldHideReaderRevenue');
 
+const isCompatibleUser = (onlyShowToExistingSupporters: boolean) =>
+    onlyShowToExistingSupporters
+        ? userIsSupporter()
+        : !userIsSupporter();
+
+
 const shouldShowEpic = (test: EpicABTest): boolean => {
     const onCompatiblePage = test.pageCheck(config.get('page'));
 
     const tagsMatch = doTagsMatch(test);
 
-    const isCompatibleUser = test.onlyShowToExistingSupporters
-        ? userIsSupporter()
-        : !userIsSupporter();
-
     return (
         !pageShouldHideReaderRevenue() &&
         onCompatiblePage &&
-        isCompatibleUser &&
+        isCompatibleUser(test.onlyShowToExistingSupporters) &&
         tagsMatch
     );
 };
@@ -627,4 +629,5 @@ export {
     defaultButtonTemplate,
     defaultMaxViews,
     getReaderRevenueRegion,
+    isCompatibleUser,
 };
