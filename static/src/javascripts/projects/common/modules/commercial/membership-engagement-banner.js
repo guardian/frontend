@@ -206,13 +206,18 @@ const canShow = (): Promise<boolean> => {
             getVisitCount() >= params.minArticlesBeforeShowingBanner;
         const userAlreadyGivesUsMoney = userIsSupporter();
         const bannerIsBlockedForEditorialReasons = pageShouldHideReaderRevenue();
-        const showBecauseUserAlreadyGivesUsMoney = userAlreadyGivesUsMoney && params.onlyShowToExistingSupporters === true;
-        const showBecauseUserDoesNotAlreadyGiveUsMoney = !userAlreadyGivesUsMoney && params.onlyShowToExistingSupporters === false;
+        const showBecauseUserAlreadyGivesUsMoney =
+            userAlreadyGivesUsMoney &&
+            params.onlyShowToExistingSupporters === true;
+        const showBecauseUserDoesNotAlreadyGiveUsMoney =
+            !userAlreadyGivesUsMoney &&
+            params.onlyShowToExistingSupporters === false;
 
         if (
             userHasSeenEnoughArticles &&
             !bannerIsBlockedForEditorialReasons &&
-            (showBecauseUserAlreadyGivesUsMoney || showBecauseUserDoesNotAlreadyGiveUsMoney)
+            (showBecauseUserAlreadyGivesUsMoney ||
+                showBecauseUserDoesNotAlreadyGiveUsMoney)
         ) {
             const userLastClosedBannerAt = userPrefs.get(lastClosedAtKey);
 
