@@ -19,7 +19,7 @@ declare type Variant = {
 
 declare type EpicVariant = Variant & {
     // filters, where empty is taken to mean 'all', multiple entries are combined with OR
-    locations: string[],
+    countryGroups: string[],
     tagIds: string[],
     sections: string[],
     excludedTagIds: string[],
@@ -84,7 +84,7 @@ declare type InitEpicABTestVariant = {
     products: $ReadOnlyArray<OphanProduct>,
     test?: (html: string, abTest: ABTest) => void,
     deploymentRules?: DeploymentRules,
-    locations?: string[],
+    countryGroups?: string[],
     tagIds?: string[],
     sections?: string[],
     excludedTagIds?: string[],
