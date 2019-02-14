@@ -88,6 +88,7 @@ POST           /discussion/report-abuse/*commentId                              
 GET            /most-read-facebook.json                                                                                          controllers.MostViewedSocialController.renderMostViewed(socialContext: String = "facebook")
 GET            /most-read-twitter.json                                                                                           controllers.MostViewedSocialController.renderMostViewed(socialContext: String = "twitter")
 GET            /most-read.json                                                                                                   controllers.MostPopularController.render(path = "")
+GET            /most-read/front/*path.json                                                                                       controllers.MostPopularController.renderSectionFront(path)
 GET            /most-read/*path.json                                                                                             controllers.MostPopularController.render(path)
 GET            /most-read-geo.json                                                                                               controllers.MostPopularController.renderPopularGeo()
 GET            /most-read-day.json                                                                                               controllers.MostPopularController.renderPopularDay(countryCode)

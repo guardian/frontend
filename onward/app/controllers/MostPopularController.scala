@@ -31,7 +31,10 @@ class MostPopularController(contentApiClient: ContentApiClient,
   ))
 
   def renderHtml(path: String): Action[AnyContent] = render(path)
-  def render(path: String): Action[AnyContent] = Action.async { implicit request =>
+
+  def renderSectionFront(path: String): Action[AnyContent] = render(path, true)
+
+  def render(path: String, isSectionFront: Boolean = false): Action[AnyContent] = Action.async { implicit request =>
     val edition = Edition(request)
 
     // Synchronous global popular, from the mostPopularAgent (stateful)
@@ -52,7 +55,7 @@ class MostPopularController(contentApiClient: ContentApiClient,
     sectionPopular.map { sectionPopular =>
       val sectionFirst = sectionPopular ++ globalPopular
       val globalFirst = globalPopular.toList ++ sectionPopular
-      val mostPopular: List[MostPopular] = if (path == "global-development") sectionFirst else globalFirst
+      val mostPopular: List[MostPopular] = if (path == "global-development" || isSectionFront) sectionFirst else globalFirst
 
       mostPopular match {
         case Nil => NotFound
