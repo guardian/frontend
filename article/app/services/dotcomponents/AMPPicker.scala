@@ -52,7 +52,7 @@ object AMPPicker {
     val safeSections = Set[String]("music")
 
     if (conf.switches.Switches.DotcomRenderingAMPRollout.isSwitchedOn) {
-      Set("football") ++ safeSections
+      Set("football", "sport") ++ safeSections
     } else {
       safeSections
     }
