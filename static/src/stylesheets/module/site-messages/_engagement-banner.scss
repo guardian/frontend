@@ -7,6 +7,10 @@
         display: none;
     }
 
+    .inline-marque-36 path:nth-child(2) {
+        fill: $highlight-main;
+    }
+
     @mixin padding {
         padding: $gs-baseline/1.5 0;
 
@@ -20,9 +24,6 @@
 
         display: none;
         position: absolute;
-        svg {
-            fill: $brightness-7;
-        }
 
         // Because this roundel "jumps" from the right to left
         // at leftCol width, we display this one and hide the other
@@ -94,28 +95,33 @@
     vertical-align: middle;
 
     height: 36px;
-    padding-right: 0;
+    padding: 0 ($gs-gutter / 3) 0 18px;
     margin-right: $gs-gutter / 4;
+    margin-bottom: $gs-baseline / 2;
 
-    font-size: 14px;
-    line-height: 36px;
+    font-size: 16px;
+    line-height: 32px;
 
     background-color: $brightness-7;
     border-color: $brightness-7;
 
     .inline-icon {
         float: right;
+        transition: transform ease-in-out .3s;
 
         svg {
             // weirdly needed for vertical centering
-            padding-top: 3px;
+            padding-top: 2px;
+        }
+
+        .u-faux-block-link--hover & {
+            transform: translateX(3px);
         }
     }
 
     @include mq(tablet) {
         display: block;
         margin-bottom: 8px;
-        font-size: 16px;
     }
 }
 
@@ -174,6 +180,7 @@
     background: transparent;
     border: 1px solid rgba($brightness-7,  .3);
     color: $brightness-7;
+    transition: background-color .3s ease-in-out;
 
     svg {
         fill: $brightness-7;
@@ -182,6 +189,6 @@
     &:hover,
     &:focus,
     &:active {
-        border-color: $brightness-7;
+        background: rgba($brightness-7,  .05);
     }
 }

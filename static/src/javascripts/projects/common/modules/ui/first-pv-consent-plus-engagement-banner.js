@@ -36,13 +36,10 @@ const doubleBannerHtml = (engagementBannerHtml: string): string => `
                 </div>
             </div>
         </div>
-    
+
         <div class="js-first-pv-consent-site-message site-message--first-pv-consent" tabindex="-1" data-link-name="release message" role="dialog" aria-label="welcome" aria-describedby="site-message__message">
             <div class="gs-container">
                 <div class="site-message__inner js-site-message-inner">
-                    <div class="site-message__roundel">
-                        ${marque36icon.markup}
-                    </div>
                     <div class="site-message__copy js-site-message-copy u-cf">
                         ${makeFirstPvConsentHtml()}
                     </div>
