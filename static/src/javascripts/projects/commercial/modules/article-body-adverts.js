@@ -112,9 +112,7 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<number> => {
                 minBelow: 600,
             },
         },
-        filter: (candidate: SpacefinderItem) => {
-            filterNearbyCandidates(adSizes.halfPage.height)(candidate) && filterNearbyCandidates(adSizes.skyscraper.height)(candidate)
-        },
+        filter: filterNearbyCandidates(adSizes.halfPage.height),
     };
 
     const rules = isInline1 ? defaultRules : relaxedRules;
