@@ -25,6 +25,10 @@
         display: none;
         position: absolute;
 
+        svg {
+            fill: $brightness-7;
+        }
+
         // Because this roundel "jumps" from the right to left
         // at leftCol width, we display this one and hide the other
         // one at this point. See also: .engagement-banner__roundel
