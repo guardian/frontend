@@ -499,6 +499,10 @@
     @include mq(wide) {
         margin-right: -400px;
     }
+    &.ad-slot--sky {
+        width: $mpu-skyscraper-width;
+        min-width: $mpu-skyscraper-width;
+    }
 }
 
 .ad-slot--survey {
