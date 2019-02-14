@@ -165,11 +165,24 @@ a[href].contributions__contribute.contributions__contribute--epic {
         font-size: 32px;
         line-height: 36px;
     }
+}
 
-    h2:nth-of-type(odd) {
-        color: #ff7f0f;
+.contributions__epic--feb {
+    $contributions__epic--feb--orange: #ff7f0f;
+    $contributions__epic--feb--blue: #041f4a;
+
+    .contributions__title {
+        color: $contributions__epic--feb--blue;
     }
-    h2:nth-of-type(even) {
-        color: #041f4a;
+
+    border-top: 1px solid $contributions__epic--feb--orange;
+
+    .contributions__epic-footer {
+        h2:nth-of-type(odd) {
+            color: $contributions__epic--feb--orange;
+        }
+        h2:nth-of-type(even) {
+            color: $contributions__epic--feb--blue;
+        }
     }
 }
