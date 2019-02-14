@@ -595,15 +595,17 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
 // TODO - banner testing needs a refactor, as currently both canRun and canShow need to call this
 export const canShowBannerSync = (
     minArticlesBeforeShowingBanner: number = 3,
-    userCohort: AcquisitionsComponentUserCohort = 'OnlyNonSupporters',
+    userCohort: AcquisitionsComponentUserCohort = 'OnlyNonSupporters'
 ): boolean => {
     const userHasSeenEnoughArticles: boolean =
         getVisitCount() >= minArticlesBeforeShowingBanner;
     const bannerIsBlockedForEditorialReasons = pageShouldHideReaderRevenue();
 
-    return userHasSeenEnoughArticles &&
+    return (
+        userHasSeenEnoughArticles &&
         !bannerIsBlockedForEditorialReasons &&
         userIsInCorrectCohort(userCohort)
+    );
 };
 
 export const getEngagementBannerTestsFromGoogleDoc = (): Promise<

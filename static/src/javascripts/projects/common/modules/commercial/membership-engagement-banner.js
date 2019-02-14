@@ -1,15 +1,12 @@
 // @flow
 import config from 'lib/config';
-import { local } from 'lib/storage';
 import { Message } from 'common/modules/ui/message';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
 import { getControlEngagementBannerParams } from 'common/modules/commercial/membership-engagement-banner-parameters';
 import { isBlocked } from 'common/modules/commercial/membership-engagement-banner-block';
 import {
     type ReaderRevenueRegion,
-    pageShouldHideReaderRevenue,
     getReaderRevenueRegion,
-    userIsInCorrectCohort,
     canShowBannerSync,
     getVisitCount,
 } from 'common/modules/commercial/contributions-utilities';
@@ -204,7 +201,12 @@ const canShow = (): Promise<boolean> => {
         return Promise.resolve(false);
     }
     return getBannerParams().then(params => {
-        if (canShowBannerSync(params.minArticlesBeforeShowingBanner, params.userCohort)) {
+        if (
+            canShowBannerSync(
+                params.minArticlesBeforeShowingBanner,
+                params.userCohort
+            )
+        ) {
             const userLastClosedBannerAt = userPrefs.get(lastClosedAtKey);
 
             if (!userLastClosedBannerAt) {
