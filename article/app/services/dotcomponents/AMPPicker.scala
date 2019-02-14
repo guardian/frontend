@@ -49,20 +49,20 @@ object AMPPicker {
   }
 
   private[this] val sectionsWhitelist: Set[String] = {
-    val safeSections = Set[String]()
+    val safeSections = Set[String]("music")
 
     if (conf.switches.Switches.DotcomRenderingAMPRollout.isSwitchedOn) {
-      Set("music") ++ safeSections
+      Set("football") ++ safeSections
     } else {
       safeSections
     }
   }
 
   private[this] val tagsWhitelist: Set[String] = {
-    val safeTags = Set[String]()
+    val safeTags = Set[String]("info/series/digital-blog")
 
     if (conf.switches.Switches.DotcomRenderingAMPRollout.isSwitchedOn) {
-      Set("info/series/digital-blog") ++ safeTags
+      Set() ++ safeTags
     } else {
       safeTags
     }
