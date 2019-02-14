@@ -1,0 +1,46 @@
+.site-message--fiv-banner {
+    background-color: #ece4d9;
+}
+
+.fiv-banner__circles {
+    position: absolute;
+    right: -80px;
+    top: 50px;
+}
+.fiv-banner__circle {
+
+    width: 187px;
+    height: 187px;
+    border-radius: 50%;
+    position: absolute;
+    right: 0;
+
+}
+.fiv-banner__circle1 {
+    background: #ff7f0f;
+    top: 0;
+    z-index: 30;
+}
+
+.fiv-banner__circle2 {
+    top: 100px;
+    background: #041f4a;
+}
+
+.fiv-banner__circle2-clear {
+    opacity: .5;
+    z-index: 50;
+}
+
+.fiv-banner__circle2-mask {
+    z-index: 10;
+}
+
+.fiv-banner__headline {
+    padding-top: 50px;
+    border-bottom: #999999 2px solid;
+    padding-bottom: 28px;
+}
+.fiv-banner__text {
+    color: #041f4a;
+}
