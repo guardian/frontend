@@ -28,8 +28,28 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-february-moment-banner-non-us",
-    "switch on to test the copy of the engagement banner outside the US",
+    "ab-february-moment-banner-non-uk",
+    "switch on to test the moment copy of the engagement banner outside the UK",
+    owners = Seq(Owner.withGithub("johnduffell")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 9, 30),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-february-moment-banner-uk",
+    "switch on to enable the moment engagement banner in the UK",
+    owners = Seq(Owner.withGithub("johnduffell")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 9, 30),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-february-moment-banner-thank-you",
+    "switch on to enable the moment thank you engagement banner worldwide",
     owners = Seq(Owner.withGithub("johnduffell")),
     safeState = Off,
     sellByDate = new LocalDate(2019, 9, 30),
