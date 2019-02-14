@@ -19,6 +19,7 @@ import mediator from 'lib/mediator';
 import {
     getLocalCurrencySymbol,
     getSync as geolocationGetSync,
+    getSupporterCountryGroup,
 } from 'lib/geolocation';
 import {
     splitAndTrim,
@@ -168,6 +169,15 @@ const pageMatchesTags = (tagIds: string[]): boolean =>
         )}`.includes(tagId)
     );
 
+const userMatchesCountryGroups = (countryGroups: string[]) => {
+    const userCountryGroupId = getSupporterCountryGroup(
+        geolocationGetSync()
+    ).toUpperCase();
+    return countryGroups.some(
+        countryGroup => userCountryGroupId === countryGroup.toUpperCase()
+    );
+};
+
 const pageMatchesSections = (sectionIds: string[]): boolean =>
     sectionIds.some(section => config.get('page.section') === section);
 
@@ -220,7 +230,7 @@ const makeEpicABTestVariant = (
         copy: initVariant.copy,
         classNames: initVariant.classNames || [],
 
-        locations: initVariant.locations || [],
+        countryGroups: initVariant.countryGroups || [],
         tagIds: initVariant.tagIds || [],
         sections: initVariant.sections || [],
         excludedTagIds: initVariant.excludedTagIds || [],
@@ -250,11 +260,9 @@ const makeEpicABTestVariant = (
                 deploymentRules === 'AlwaysAsk' ||
                 checkMaxViews(deploymentRules);
 
-            const matchesLocations =
-                this.locations.length === 0 ||
-                this.locations.some(
-                    region => geolocationGetSync() === region.toUpperCase()
-                );
+            const matchesCountryGroups =
+                this.countryGroups.length === 0 ||
+                userMatchesCountryGroups(this.countryGroups);
 
             const matchesTags =
                 this.tagIds.length === 0 || pageMatchesTags(this.tagIds);
@@ -268,7 +276,7 @@ const makeEpicABTestVariant = (
 
             return (
                 meetsMaxViewsConditions &&
-                matchesLocations &&
+                matchesCountryGroups &&
                 matchesTags &&
                 matchesSections &&
                 noExcludedTags &&
@@ -526,7 +534,10 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                             buttonTemplate: isThankYou
                                 ? undefined
                                 : defaultButtonTemplate,
-                            locations: optionalSplitAndTrim(row.locations, ','),
+                            countryGroups: optionalSplitAndTrim(
+                                row.locations,
+                                ','
+                            ),
                             tagIds: optionalSplitAndTrim(row.tagIds, ','),
                             sections: optionalSplitAndTrim(row.sections, ','),
                             excludedTagIds: optionalSplitAndTrim(
