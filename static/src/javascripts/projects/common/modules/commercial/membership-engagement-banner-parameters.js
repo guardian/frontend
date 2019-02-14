@@ -39,6 +39,7 @@ const getAcquisitionsBannerParams = (
     )}</span>`;
 
     return {
+        leadSentence: 'leadSentence not yet supported in sheet',
         messageText: firstRow.messageText,
         ctaText,
         buttonCaption: firstRow.buttonCaption,
@@ -73,6 +74,7 @@ export const getControlEngagementBannerParams = (): Promise<
             );
 
             return {
+                leadSentence: 'fallback leadSentence',
                 messageText: fallbackCopy,
                 ctaText: `<span class="engagement-banner__highlight"> Support The Guardian from as little as ${getLocalCurrencySymbol()}1</span>`,
                 buttonCaption: 'Support The Guardian',

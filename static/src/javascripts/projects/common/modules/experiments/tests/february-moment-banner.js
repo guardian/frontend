@@ -3,21 +3,15 @@
 import { getSync } from 'lib/geolocation';
 import { acquisitionsBannerFivTemplate } from 'common/modules/commercial/templates/acquisitions-banner-fiv';
 
+const defaultBold =
+    'This is The Guardian’s model for open, independent journalism';
 const defaultCopy =
-    'Readers’ support powers our work, giving ' +
-    'our reporting impact and safeguarding our ' +
-    'essential editorial independence. This approach ' +
-    'allows us to keep our journalism accessible to all, ' +
-    'so more people, across the world, have access ' +
-    'to accurate information with integrity at its heart.';
+    'Our mission is to keep independent journalism accessible to everyone, regardless of where they live or what they can afford. Funding from our readers safeguards our editorial independence. It also powers our work and maintains this openness. It means more people, across the world, can access accurate information with integrity at its heart.';
 
+const thankYouBold =
+    'Thank you for supporting The Guardian’s model for open, independent journalism';
 const thankYouCopy =
-    'THANK YOU COPY TBC ' +
-    'our reporting impact and safeguarding our ' +
-    'essential editorial independence. This approach ' +
-    'allows us to keep our journalism accessible to all, ' +
-    'so more people, across the world, have access ' +
-    'to accurate information with integrity at its heart.';
+    'Our mission is to keep independent journalism accessible to everyone, regardless of where they live or what they can afford. Funding from readers like you safeguards our editorial independence, powers our work, and maintains this openness. It means more people, across the world, can access accurate information with integrity at its heart.';
 
 export const februaryMomentBannerNonUk: AcquisitionsABTest = {
     id: 'FebruaryMomentBannerNonUk',
@@ -39,7 +33,8 @@ export const februaryMomentBannerNonUk: AcquisitionsABTest = {
             id: 'control',
             test: (): void => {}, // banner tests look at the bucket and vary the copy themselves
             engagementBannerParams: {
-                messageText: `CONTROL NON UK${defaultCopy}`,
+                leadSentence: defaultBold,
+                messageText: defaultCopy,
                 // buttonCaption?: string, TO be decided with non engineers
                 template: acquisitionsBannerFivTemplate,
                 bannerModifierClass: 'fiv-banner',
@@ -51,7 +46,8 @@ export const februaryMomentBannerNonUk: AcquisitionsABTest = {
             id: 'variant1',
             test: (): void => {},
             engagementBannerParams: {
-                messageText: `VARIANT NON UK${defaultCopy}`,
+                leadSentence: defaultBold,
+                messageText: defaultCopy,
                 // buttonCaption?: string, TO be decided with non engineers
                 template: acquisitionsBannerFivTemplate,
                 bannerModifierClass: 'fiv-banner',
@@ -82,7 +78,8 @@ export const februaryMomentBannerUk: AcquisitionsABTest = {
             id: 'control',
             test: (): void => {}, // banner tests look at the bucket and vary the copy themselves
             engagementBannerParams: {
-                messageText: `UK${defaultCopy}`,
+                leadSentence: defaultBold,
+                messageText: defaultCopy,
                 // buttonCaption?: string, TO be decided with non engineers
                 template: acquisitionsBannerFivTemplate,
                 bannerModifierClass: 'fiv-banner',
@@ -113,6 +110,7 @@ export const februaryMomentBannerThankYou: AcquisitionsABTest = {
             id: 'control',
             test: (): void => {}, // banner tests look at the bucket and vary the copy themselves
             engagementBannerParams: {
+                leadSentence: thankYouBold,
                 messageText: thankYouCopy,
                 // buttonCaption?: string, TO be decided with non engineers
                 template: acquisitionsBannerFivTemplate,
