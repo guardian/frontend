@@ -44,10 +44,10 @@ describe('Facebook tracking pixel', () => {
         expect(result.shouldRun).toBe(true);
     });
 
-    it('if the switch is enabled and consent is null, do not load', () => {
+    it('if the switch is enabled and consent is null, treat consent as true', () => {
         setup({ consent: null, switchedOn: true });
         const result = fbPixel();
-        expect(result.shouldRun).toBe(false);
+        expect(result.shouldRun).toBe(true);
     });
 
     it('should send correct "netid" param', () => {
