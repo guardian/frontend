@@ -13,6 +13,8 @@ const thankYouBold =
 const thankYouCopy =
     'Our mission is to keep independent journalism accessible to everyone, regardless of where they live or what they can afford. Funding from readers like you safeguards our editorial independence, powers our work, and maintains this openness. It means more people, across the world, can access accurate information with integrity at its heart.';
 
+const campaignId = 'empower_campaign';
+
 export const februaryMomentBannerNonUk: AcquisitionsABTest = {
     id: 'FebruaryMomentBannerNonUk',
     start: '2019-01-01',
@@ -26,7 +28,7 @@ export const februaryMomentBannerNonUk: AcquisitionsABTest = {
     idealOutcome: 'best AV possible',
     canRun: () => getSync() !== 'GB',
     showForSensitive: true,
-    campaignId: 'february_moment', // TODO check this matches the one used elsewhere
+    campaignId: campaignId,
     componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
     variants: [
         {
@@ -48,7 +50,6 @@ export const februaryMomentBannerNonUk: AcquisitionsABTest = {
             engagementBannerParams: {
                 leadSentence: defaultBold,
                 messageText: defaultCopy,
-                // buttonCaption?: string, TO be decided with non engineers
                 template: acquisitionsBannerFivTemplate,
                 bannerModifierClass: 'fiv-banner',
                 minArticlesBeforeShowingBanner: 0,
@@ -71,7 +72,7 @@ export const februaryMomentBannerUk: AcquisitionsABTest = {
     idealOutcome: 'best AV possible',
     canRun: () => getSync() === 'GB',
     showForSensitive: true,
-    campaignId: 'february_moment', // TODO check this matches the one used elsewhere
+    campaignId: campaignId,
     componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
     variants: [
         {
@@ -80,7 +81,6 @@ export const februaryMomentBannerUk: AcquisitionsABTest = {
             engagementBannerParams: {
                 leadSentence: defaultBold,
                 messageText: defaultCopy,
-                // buttonCaption?: string, TO be decided with non engineers
                 template: acquisitionsBannerFivTemplate,
                 bannerModifierClass: 'fiv-banner',
                 minArticlesBeforeShowingBanner: 0,
@@ -103,7 +103,7 @@ export const februaryMomentBannerThankYou: AcquisitionsABTest = {
     idealOutcome: 'best AV possible',
     canRun: () => true,
     showForSensitive: true,
-    campaignId: 'february_moment', // TODO check this matches the one used elsewhere
+    campaignId: campaignId,
     componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
     variants: [
         {
@@ -112,7 +112,6 @@ export const februaryMomentBannerThankYou: AcquisitionsABTest = {
             engagementBannerParams: {
                 leadSentence: thankYouBold,
                 messageText: thankYouCopy,
-                // buttonCaption?: string, TO be decided with non engineers
                 template: acquisitionsBannerFivTemplate,
                 bannerModifierClass: 'fiv-banner',
                 minArticlesBeforeShowingBanner: 0,
