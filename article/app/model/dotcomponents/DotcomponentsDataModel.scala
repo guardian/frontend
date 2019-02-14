@@ -148,6 +148,7 @@ case class PageData(
     isCommentable: Boolean,
     commercialProperties: Option[CommercialProperties],
     hasAffiliateLinks: Boolean,
+    starRating: Option[Int],
 )
 
 case class Config(
@@ -312,6 +313,7 @@ object DotcomponentsDataModel {
       isCommentable = article.trail.isCommentable,
       article.metadata.commercial,
       article.content.fields.showAffiliateLinks.getOrElse(false),
+      article.content.starRating
     )
 
     val tags = article.tags.tags.map(
