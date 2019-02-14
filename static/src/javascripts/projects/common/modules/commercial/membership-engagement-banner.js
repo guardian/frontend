@@ -9,8 +9,8 @@ import {
     type ReaderRevenueRegion,
     pageShouldHideReaderRevenue,
     getReaderRevenueRegion,
+    userIsInCorrectCohort,
 } from 'common/modules/commercial/contributions-utilities';
-import { userIsSupporter } from 'common/modules/commercial/user-features';
 import type { Banner } from 'common/modules/ui/bannerPicker';
 import bean from 'bean';
 import fetchJson from 'lib/fetch-json';
@@ -204,13 +204,12 @@ const canShow = (): Promise<boolean> => {
     return getBannerParams().then(params => {
         const userHasSeenEnoughArticles: boolean =
             getVisitCount() >= params.minArticlesBeforeShowingBanner;
-        const userAlreadyGivesUsMoney = userIsSupporter();
         const bannerIsBlockedForEditorialReasons = pageShouldHideReaderRevenue();
 
         if (
             userHasSeenEnoughArticles &&
-            !userAlreadyGivesUsMoney &&
-            !bannerIsBlockedForEditorialReasons
+            !bannerIsBlockedForEditorialReasons &&
+            userIsInCorrectCohort(params.userCohort)
         ) {
             const userLastClosedBannerAt = userPrefs.get(lastClosedAtKey);
 
