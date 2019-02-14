@@ -4,7 +4,8 @@ import { commercialAdVerification } from 'common/modules/experiments/tests/comme
 import { commercialCmpCustomise } from 'common/modules/experiments/tests/commercial-cmp-customise.js';
 import { askFourEarning } from 'common/modules/experiments/tests/contributions-epic-ask-four-earning';
 import { acquisitionsEpicAlwaysAskIfTagged } from 'common/modules/experiments/tests/acquisitions-epic-always-ask-if-tagged';
-import { februaryMomentBannerNonUk,
+import {
+    februaryMomentBannerNonUk,
     februaryMomentBannerUk,
     februaryMomentBannerThankYou,
 } from 'common/modules/experiments/tests/february-moment-banner';

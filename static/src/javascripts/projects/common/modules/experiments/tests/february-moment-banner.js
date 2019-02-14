@@ -39,7 +39,7 @@ export const februaryMomentBannerNonUk: AcquisitionsABTest = {
             id: 'control',
             test: (): void => {}, // banner tests look at the bucket and vary the copy themselves
             engagementBannerParams: {
-                messageText: 'CONTROL NON UK' + defaultCopy,
+                messageText: `CONTROL NON UK${defaultCopy}`,
                 // buttonCaption?: string, TO be decided with non engineers
                 template: acquisitionsBannerFivTemplate,
                 bannerModifierClass: 'fiv-banner',
@@ -51,7 +51,7 @@ export const februaryMomentBannerNonUk: AcquisitionsABTest = {
             id: 'variant1',
             test: (): void => {},
             engagementBannerParams: {
-                messageText: 'VARIANT NON UK' + defaultCopy,
+                messageText: `VARIANT NON UK${defaultCopy}`,
                 // buttonCaption?: string, TO be decided with non engineers
                 template: acquisitionsBannerFivTemplate,
                 bannerModifierClass: 'fiv-banner',
@@ -82,7 +82,7 @@ export const februaryMomentBannerUk: AcquisitionsABTest = {
             id: 'control',
             test: (): void => {}, // banner tests look at the bucket and vary the copy themselves
             engagementBannerParams: {
-                messageText: 'UK' + defaultCopy,
+                messageText: `UK${defaultCopy}`,
                 // buttonCaption?: string, TO be decided with non engineers
                 template: acquisitionsBannerFivTemplate,
                 bannerModifierClass: 'fiv-banner',
