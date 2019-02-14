@@ -50,7 +50,11 @@ export const februaryMomentBannerNonUS: AcquisitionsABTest = {
                 // minArticlesBeforeShowingBanner: ControlTestParams.minArticlesBeforeShowingBanner,
                 // userCohort: ControlTestParams.userCohort,
             },
-            canRun: () => canShowBannerSync(ControlTestParams.minArticlesBeforeShowingBanner, ControlTestParams.userCohort),
+            canRun: () =>
+                canShowBannerSync(
+                    ControlTestParams.minArticlesBeforeShowingBanner,
+                    ControlTestParams.userCohort
+                ),
         },
         {
             id: 'variant1',
@@ -72,7 +76,11 @@ export const februaryMomentBannerNonUS: AcquisitionsABTest = {
                 // minArticlesBeforeShowingBanner: Variant1TestParams.minArticlesBeforeShowingBanner,
                 // userCohort: Variant1TestParams.userCohort,
             },
-            canRun: () => canShowBannerSync(Variant1TestParams.minArticlesBeforeShowingBanner, Variant1TestParams.userCohort),
+            canRun: () =>
+                canShowBannerSync(
+                    Variant1TestParams.minArticlesBeforeShowingBanner,
+                    Variant1TestParams.userCohort
+                ),
         },
     ],
 };
