@@ -148,7 +148,7 @@ describe('Membership engagement banner', () => {
 
             membershipEngagementBanner.canShow().then(canShow => {
                 expect(canShow).toBe(false);
-            })
+            });
         });
 
         it('should return false user visit count less than minArticles for banner', () => {

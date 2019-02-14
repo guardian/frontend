@@ -4,6 +4,16 @@ import { getSync } from 'lib/geolocation';
 import { acquisitionsBannerFivTemplate } from 'common/modules/commercial/templates/acquisitions-banner-fiv';
 import { canShowBannerSync } from 'common/modules/commercial/contributions-utilities';
 
+// These test params must be set on engagementBannerParams and passed into canShowBannerSync
+const ControlTestParams = {
+    minArticlesBeforeShowingBanner: undefined,
+    userCohort: undefined,
+};
+const Variant1TestParams = {
+    minArticlesBeforeShowingBanner: undefined,
+    userCohort: undefined,
+};
+
 export const februaryMomentBannerNonUS: AcquisitionsABTest = {
     id: 'FebruaryMomentBannerNonUs',
     start: '2019-01-01',
@@ -37,9 +47,10 @@ export const februaryMomentBannerNonUS: AcquisitionsABTest = {
                 // products?: OphanProduct[],
                 template: acquisitionsBannerFivTemplate,
                 bannerModifierClass: 'fiv-banner',
-                // minArticlesBeforeShowingBanner?: number,
+                // minArticlesBeforeShowingBanner: ControlTestParams.minArticlesBeforeShowingBanner,
+                // userCohort: ControlTestParams.userCohort,
             },
-            canRun: () => canShowBannerSync(),
+            canRun: () => canShowBannerSync(ControlTestParams.minArticlesBeforeShowingBanner, ControlTestParams.userCohort),
         },
         {
             id: 'variant1',
@@ -58,9 +69,10 @@ export const februaryMomentBannerNonUS: AcquisitionsABTest = {
                 // products?: OphanProduct[],
                 template: acquisitionsBannerFivTemplate,
                 // bannerModifierClass?: string,
-                // minArticlesBeforeShowingBanner?: number,
+                // minArticlesBeforeShowingBanner: Variant1TestParams.minArticlesBeforeShowingBanner,
+                // userCohort: Variant1TestParams.userCohort,
             },
-            canRun: () => canShowBannerSync(),
+            canRun: () => canShowBannerSync(Variant1TestParams.minArticlesBeforeShowingBanner, Variant1TestParams.userCohort),
         },
     ],
 };
