@@ -12,6 +12,7 @@ import {
 } from 'common/modules/commercial/acquisitions-ophan';
 import $ from 'lib/$';
 import config from 'lib/config';
+import { local } from 'lib/storage';
 import { elementInView } from 'lib/element-inview';
 import fastdom from 'lib/fastdom-promise';
 import reportError from 'lib/report-error';
@@ -34,7 +35,6 @@ import { epicLiveBlogTemplate } from 'common/modules/commercial/templates/acquis
 import { userIsSupporter } from 'common/modules/commercial/user-features';
 import { supportContributeURL } from 'common/modules/commercial/support-utilities';
 import { awaitEpicButtonClicked } from 'common/modules/commercial/epic/epic-utils';
-import { canShowSync } from 'common/modules/commercial/membership-engagement-banner';
 import { setupEpicInLiveblog } from 'common/modules/commercial/contributions-liveblog-utilities';
 import {
     bannerMultipleTestsGoogleDocUrl,
@@ -65,6 +65,8 @@ const getReaderRevenueRegion = (geolocation: string): ReaderRevenueRegion => {
             return 'rest-of-world';
     }
 };
+
+const getVisitCount = (): number => local.get('gu.alreadyVisited') || 0;
 
 // How many times the user can see the Epic,
 // e.g. 6 times within 7 days with minimum of 1 day in between views.
@@ -589,6 +591,21 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
             return [];
         });
 
+// This is called by individual banner AbTests in their canRun functions
+// TODO - banner testing needs a refactor, as currently both canRun and canShow need to call this
+export const canShowBannerSync = (
+    minArticlesBeforeShowingBanner: number = 3,
+    userCohort: AcquisitionsComponentUserCohort = 'OnlyNonSupporters',
+): boolean => {
+    const userHasSeenEnoughArticles: boolean =
+        getVisitCount() >= minArticlesBeforeShowingBanner;
+    const bannerIsBlockedForEditorialReasons = pageShouldHideReaderRevenue();
+
+    return userHasSeenEnoughArticles &&
+        !bannerIsBlockedForEditorialReasons &&
+        userIsInCorrectCohort(userCohort)
+};
+
 export const getEngagementBannerTestsFromGoogleDoc = (): Promise<
     $ReadOnlyArray<AcquisitionsABTest>
 > =>
@@ -638,7 +655,7 @@ export const getEngagementBannerTestsFromGoogleDoc = (): Promise<
                                 linkUrl: row.linkUrl.trim(),
                                 hasTicker: false,
                             },
-                            canRun: () => canShowSync(this.engagementBannerParams),
+                            canRun: () => canShowBannerSync(),
                         })),
                     };
                 });
@@ -666,4 +683,5 @@ export {
     defaultMaxViews,
     getReaderRevenueRegion,
     userIsInCorrectCohort,
+    getVisitCount,
 };

@@ -2,7 +2,7 @@
 
 import { getSync } from 'lib/geolocation';
 import { acquisitionsBannerFivTemplate } from 'common/modules/commercial/templates/acquisitions-banner-fiv';
-import { canShowSync } from 'common/modules/commercial/membership-engagement-banner';
+import { canShowBannerSync } from 'common/modules/commercial/contributions-utilities';
 
 export const februaryMomentBannerNonUS: AcquisitionsABTest = {
     id: 'FebruaryMomentBannerNonUs',
@@ -39,7 +39,7 @@ export const februaryMomentBannerNonUS: AcquisitionsABTest = {
                 bannerModifierClass: 'fiv-banner',
                 // minArticlesBeforeShowingBanner?: number,
             },
-            canRun: () => canShowSync(this.engagementBannerParams),
+            canRun: () => canShowBannerSync(),
         },
         {
             id: 'variant1',
@@ -60,7 +60,7 @@ export const februaryMomentBannerNonUS: AcquisitionsABTest = {
                 // bannerModifierClass?: string,
                 // minArticlesBeforeShowingBanner?: number,
             },
-            canRun: () => canShowSync(this.engagementBannerParams),
+            canRun: () => canShowBannerSync(),
         },
     ],
 };

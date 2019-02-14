@@ -10,6 +10,8 @@ import {
     pageShouldHideReaderRevenue,
     getReaderRevenueRegion,
     userIsInCorrectCohort,
+    canShowBannerSync,
+    getVisitCount,
 } from 'common/modules/commercial/contributions-utilities';
 import type { Banner } from 'common/modules/ui/bannerPicker';
 import bean from 'bean';
@@ -81,8 +83,6 @@ const deriveBannerParams = (
         }
         return defaultParams;
     });
-
-const getVisitCount = (): number => local.get('gu.alreadyVisited') || 0;
 
 const selectSequentiallyFrom = (array: Array<string>): string =>
     array[getVisitCount() % array.length];
@@ -199,27 +199,12 @@ const show = (): Promise<boolean> =>
             return false;
         });
 
-// This is called by individual banner AbTests in their canRun functions
-const canShowSync = (
-    minArticlesBeforeShowingBanner: number = 3,
-    userCohort: AcquisitionsComponentUserCohort = 'OnlyNonSupporters',
-): boolean => {
-    console.log("canShowSync")
-    const userHasSeenEnoughArticles: boolean =
-        getVisitCount() >= minArticlesBeforeShowingBanner;
-    const bannerIsBlockedForEditorialReasons = pageShouldHideReaderRevenue();
-
-    return userHasSeenEnoughArticles &&
-        !bannerIsBlockedForEditorialReasons &&
-        userIsInCorrectCohort(userCohort)
-};
-
 const canShow = (): Promise<boolean> => {
     if (!config.get('switches.membershipEngagementBanner') || isBlocked()) {
         return Promise.resolve(false);
     }
     return getBannerParams().then(params => {
-        if (canShowSync(params.minArticlesBeforeShowingBanner, params.userCohort)) {
+        if (canShowBannerSync(params.minArticlesBeforeShowingBanner, params.userCohort)) {
             const userLastClosedBannerAt = userPrefs.get(lastClosedAtKey);
 
             if (!userLastClosedBannerAt) {
@@ -245,7 +230,6 @@ const membershipEngagementBanner: Banner = {
 export {
     membershipEngagementBanner,
     canShow,
-    canShowSync
     messageCode,
     hideBanner,
     clearBannerHistory,
