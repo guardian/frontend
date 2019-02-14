@@ -30,9 +30,10 @@ export const init = (start: () => void, stop: () => void): Promise<boolean> => {
     }
 
     const $mainCol: bonzo = $('.js-content-main-column');
+    const $showcase: bonzo = $('.media-primary--showcase');
     const $adSlot: bonzo = $('.js-ad-slot', $col);
     const $immersiveEls: bonzo = $('.element--immersive', $mainCol);
-    const $showcaseEls: bonzo = $('.media-primary--showcase')
+    const $showcaseEls: bonzo = $('.has-feature-showcase-element', $showcase);
 
     if (!$adSlot.length || !$mainCol.length) {
         stop();
@@ -48,11 +49,21 @@ export const init = (start: () => void, stop: () => void): Promise<boolean> => {
         )
         .then(([mainColHeight, immersiveOffset]: [number, number]) => {
 
-            // if(config.get('page.hasShowcaseMainElement')) {
-            //     return $adSlot[0].setAttribute(
-            //         'data-mobile',
-            //         '1,1|2,2'
-            //     );
+            // if(config.get('page.hasShowcaseMainElement') && $showcaseEls.length > 0) {
+            //     return fastdom
+            //     .read(() => $showcaseEls.dim().height)
+            //     .then((showcaseElsHeight: number) => {
+            //         if (showcaseElsHeight >= 650) {
+            //             return fastdom.write(() => {
+            //                 $adSlot.removeClass('right-sticky js-sticky-mpu is-sticky');
+            //                 $adSlot[0].setAttribute(
+            //                     'data-mobile',
+            //                     '1,1|2,2'
+            //                 );
+            //             });
+            //         }
+            //     }
+            // }
 
              if (config.get('page.isImmersive') && $immersiveEls.length > 0) {
                 // filter ad slot sizes based on the available height
