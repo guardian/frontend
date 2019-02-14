@@ -248,11 +248,20 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-
   val EpicTestsFromGoogleDocs = Switch(
     Commercial,
     "epic-tests-from-google-docs",
     "Fetches epic tests from Google Docs. These take priority over hardcoded epic tests.",
+    owners = Seq(Owner.withGithub("joelochlann")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
+  val EngagementBannerTestsFromGoogleDocs = Switch(
+    Commercial,
+    "engagement-banner-tests-from-google-docs",
+    "Fetches engagement banner tests from Google Docs. These take priority over hardcoded banner tests.",
     owners = Seq(Owner.withGithub("joelochlann")),
     safeState = Off,
     sellByDate = never,
@@ -298,26 +307,6 @@ trait CommercialSwitches {
     sellByDate = never,
     exposeClientSide = true
   )
-
-  val OrielAnalyticsSwitch: Switch = Switch(
-    group = Commercial,
-    name = "oriel-analytics-or-full",
-    description = "Turn on to include the analytics ONLY for Oriel. Turn off to include the FULL integration script. Depends on AB test switch.",
-    owners = group(Commercial),
-    safeState = On,
-    sellByDate = new LocalDate(2019, 2, 13),
-    exposeClientSide = false
-  )
-
-  val BlockthroughSwitch: Switch = Switch(
-    group = Commercial,
-    name = "blockthrough",
-    description = "Include the blockthrough script for testing the vendors effectiveness at circumventing ad-blocking.",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = new LocalDate(2019, 2, 13),
-    exposeClientSide = false
-   )
 
    val LotameSwitch: Switch = Switch(
      group = Commercial,

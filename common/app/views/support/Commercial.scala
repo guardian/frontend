@@ -56,15 +56,6 @@ object Commercial {
     s"/guardian-labs$glabsUrlSuffix"
   }
 
-  def getBlockthroughElementUid(slotName: String): Option[String] = {
-    slotName match {
-      case "right" => Some("5a9858a84f-157")
-      case "top-above-nav" => Some("5a98585772-157")
-      case "mostpop" => Some("5a9d5c1d72-157")
-      case _ => None
-    }
-  }
-
   def isPaidContent(page: Page): Boolean = page.metadata.commercial.exists(_.isPaidContent)
 
   def isSponsoredContent(page: Page)(implicit request: RequestHeader): Boolean =

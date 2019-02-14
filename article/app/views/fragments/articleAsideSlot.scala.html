@@ -8,11 +8,11 @@
 @import conf.switches.Switches.CommercialSwitch
 
 @if(CommercialSwitch.isSwitchedOn && shouldShowAds) {
-  <div class="ad-slot-container" aria-hidden="true">
+  <div class="aside-slot-container" aria-hidden="true">
   @fragments.commercial.adSlot(
       "right",
       Seq("mpu-banner-ad"),
-      Map("mobile" -> (Seq("1,1", "2,2", "160,600", "300,250", "300,274", "300,600", "fluid") ++ articleAsideOptionalSizes)),
+      Map("mobile" -> (Seq("1,1", "2,2", "300,250", "300,274", "300,600", "fluid") ++ articleAsideOptionalSizes)),
       optClassNames = if (isSticky) Some("js-sticky-mpu") else None
       ){ }
   </div>

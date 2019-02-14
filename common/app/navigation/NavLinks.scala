@@ -186,9 +186,13 @@ object NavLinks {
   val apps = NavLink("The Guardian app", "https://www.theguardian.com/mobile/2014/may/29/the-guardian-for-mobile-and-tablet")
   val ukMasterClasses = NavLink("Masterclasses", "https://membership.theguardian.com/masterclasses?INTCMP=masterclasses_uk_web_newheader")
   val auEvents = NavLink("Events", "/guardian-live-australia")
-  var holidays = NavLink("Holidays", "https://holidays.theguardian.com")
+  val holidays = NavLink("Holidays", "https://holidays.theguardian.com")
   val ukPatrons = NavLink("Patrons", "https://patrons.theguardian.com/?INTCMP=header_patrons")
-  val ukDiscountCode = NavLink("Discount Codes", "https://discountcode.theguardian.com/uk?INTCMP=guardian_header")
+  val discountCodeRoot = "https://discountcode.theguardian.com"
+  val ukDiscountCode = NavLink("Discount Codes", s"$discountCodeRoot/uk?INTCMP=guardian_header")
+  val auDiscountCode = NavLink("Discount Codes", s"$discountCodeRoot/au?INTCMP=guardian_header")
+  val intDiscountCode = NavLink("Discount Codes", s"$discountCodeRoot?INTCMP=guardian_header")
+  val usDiscountCode = NavLink("Discount Codes", s"$discountCodeRoot?INTCMP=guardian_header")
   val guardianMasterClasses = NavLink("Guardian Masterclasses", "/guardian-masterclasses",
     children = List(
       NavLink("Journalism", "/guardian-masterclasses/journalism"),
@@ -514,17 +518,20 @@ object NavLinks {
   )
   val auBrandExtensions = List(
     auEvents,
-    digitalNewspaperArchive
+    digitalNewspaperArchive,
+    auDiscountCode
   )
   val usBrandExtensions= List(
     jobs.copy(url = jobs.url + "?INTCMP=jobs_us_web_newheader"),
-    digitalNewspaperArchive
+    digitalNewspaperArchive,
+    usDiscountCode
   )
   val intBrandExtensions = List(
     jobs.copy(url = jobs.url + "?INTCMP=jobs_int_web_newheader"),
     dating.copy(url = dating.url + "?INTCMP=soulmates_int_web_newheader"),
     holidays.copy(url = holidays.url + "?INTCMP=holidays_int_web_newheader"),
-    digitalNewspaperArchive
+    digitalNewspaperArchive,
+    intDiscountCode
   )
 
   // Tertiary Navigation

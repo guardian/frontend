@@ -11,6 +11,8 @@ import play.api.mvc.RequestHeader
 import views.support.{CamelCase, GUDateTimeFormat, ImgSrc, Item1200}
 import ai.x.play.json.Jsonx
 import common.Maps.RichMap
+import navigation.UrlHelpers.{AmpHeader, AmpFooter}
+import common.commercial.CommercialProperties
 import navigation.UrlHelpers.{Footer, Header, SideMenu, getReaderRevenueUrl}
 import navigation.ReaderRevenueSite.{Support, SupportContribute, SupportSubscribe}
 import model.meta.{Guardian, LinkedData, PotentialAction}
@@ -51,7 +53,9 @@ case class ReaderRevenueLink(
 case class ReaderRevenueLinks(
   header: ReaderRevenueLink,
   footer: ReaderRevenueLink,
-  sideMenu: ReaderRevenueLink
+  sideMenu: ReaderRevenueLink,
+  ampHeader: ReaderRevenueLink,
+  ampFooter: ReaderRevenueLink
 )
 
 case class IsPartOf(
@@ -129,8 +133,8 @@ case class PageData(
     contentType: Option[String],
     commissioningDesks: Option[String],
     subMetaLinks: SubMetaLinks,
-    sentryHost: Option[String],
-    sentryPublicApiKey: Option[String],
+    sentryHost: String,
+    sentryPublicApiKey: String,
     switches: Map[String,Boolean],
     linkedData: NewsArticle,
     subscribeWithGoogleApiUrl: String,
@@ -142,6 +146,8 @@ case class PageData(
     hasStoryPackage: Boolean,
     hasRelated: Boolean,
     isCommentable: Boolean,
+    commercialProperties: Option[CommercialProperties],
+    hasAffiliateLinks: Boolean,
 )
 
 case class Config(
@@ -293,17 +299,19 @@ object DotcomponentsDataModel {
       jsConfig("contentType"),
       jsConfig("commissioningDesks"),
       article.content.submetaLinks,
-      jsPageData.get("sentryHost"),
-      jsPageData.get("sentryPublicApiKey"),
+      Configuration.rendering.sentryHost,
+      Configuration.rendering.sentryPublicApiKey,
       switches,
       linkedData,
       Configuration.google.subscribeWithGoogleApiUrl,
-      Configuration.site.host,
-      article.metadata.webUrl,
-      article.content.shouldHideAdverts,
+      guardianBaseURL = Configuration.site.host,
+      webURL = article.metadata.webUrl,
+      shouldHideAds = article.content.shouldHideAdverts,
       hasStoryPackage = articlePage.related.hasStoryPackage,
       hasRelated = article.content.showInRelated,
-      isCommentable = article.trail.isCommentable
+      isCommentable = article.trail.isCommentable,
+      article.metadata.commercial,
+      article.content.fields.showAffiliateLinks.getOrElse(false),
     )
 
     val tags = article.tags.tags.map(
@@ -337,10 +345,24 @@ object DotcomponentsDataModel {
       getReaderRevenueUrl(Support, SideMenu)(request)
     )
 
+    val ampHeaderReaderRevenueLink: ReaderRevenueLink = ReaderRevenueLink(
+      getReaderRevenueUrl(SupportContribute, AmpHeader)(request),
+      getReaderRevenueUrl(SupportSubscribe, AmpHeader)(request),
+      getReaderRevenueUrl(Support, AmpHeader)(request)
+    )
+
+    val ampFooterReaderRevenueLink: ReaderRevenueLink = ReaderRevenueLink(
+      getReaderRevenueUrl(SupportContribute, AmpFooter)(request),
+      getReaderRevenueUrl(SupportSubscribe, AmpFooter)(request),
+      getReaderRevenueUrl(Support, AmpFooter)(request)
+    )
+
     val readerRevenueLinks = ReaderRevenueLinks(
       headerReaderRevenueLink,
       footerReaderRevenueLink,
-      sideMenuReaderRevenueLink
+      sideMenuReaderRevenueLink,
+      ampHeaderReaderRevenueLink,
+      ampFooterReaderRevenueLink
     )
 
     val config = Config(

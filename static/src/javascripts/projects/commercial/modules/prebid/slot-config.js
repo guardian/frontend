@@ -30,7 +30,7 @@ const getSlots = (contentType: string): Array<PrebidSlot> => {
     const commonSlots: Array<PrebidSlot> = [
         {
             key: 'right',
-            sizes: [[160, 600], [300, 600], [300, 250]],
+            sizes: [[300, 600], [300, 250]],
         },
         {
             key: 'inline1',

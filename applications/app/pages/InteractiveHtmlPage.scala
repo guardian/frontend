@@ -47,7 +47,6 @@ object InteractiveHtmlPage extends HtmlPage[InteractivePage] {
     htmlTag(
       headTag(
         weAreHiring() when WeAreHiring.isSwitchedOn,
-        orielScriptTag(),
         titleTag(),
         metaData(),
         styles(allStyles),

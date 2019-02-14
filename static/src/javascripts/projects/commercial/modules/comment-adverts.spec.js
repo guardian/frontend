@@ -94,13 +94,13 @@ describe('createCommentSlots', () => {
             '1,1|2,2|300,250|620,1|620,350|300,274|fluid'
         );
         expect(commentMpu.getAttribute('data-mobile')).toBe(
-            '1,1|2,2|300,250|300,274|fluid'
+            '1,1|2,2|300,197|300,250|300,274|fluid'
         );
         expect(commentDmpu.getAttribute('data-desktop')).toBe(
             '1,1|2,2|300,250|620,1|620,350|300,274|fluid|300,600|160,600'
         );
         expect(commentDmpu.getAttribute('data-mobile')).toBe(
-            '1,1|2,2|300,250|300,274|fluid'
+            '1,1|2,2|300,197|300,250|300,274|fluid'
         );
     });
 

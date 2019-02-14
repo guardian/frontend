@@ -149,6 +149,8 @@ class GuardianConfiguration extends Logging {
   object rendering {
     lazy val renderingEndpoint = configuration.getMandatoryStringProperty("rendering.endpoint")
     lazy val AMPArticleEndpoint = configuration.getMandatoryStringProperty("rendering.AMPArticleEndpoint")
+    lazy val sentryHost = configuration.getMandatoryStringProperty("rendering.sentryHost")
+    lazy val sentryPublicApiKey = configuration.getMandatoryStringProperty("rendering.sentryPublicApiKey")
   }
 
   object weather {
@@ -240,11 +242,6 @@ class GuardianConfiguration extends Logging {
 
   object google {
     lazy val subscribeWithGoogleApiUrl = configuration.getStringProperty("google.subscribeWithGoogleApiUrl").getOrElse("https://swg.theguardian.com")
-  }
-
-  object oriel {
-    lazy val orielApiKey = configuration.getStringProperty("oriel.api.key")
-    lazy val orielCacheTimeInMinutes: Int = if (environment.isProd) 60 else 5
   }
 
   object affiliatelinks {
