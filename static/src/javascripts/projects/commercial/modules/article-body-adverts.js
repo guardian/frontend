@@ -128,7 +128,9 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<number> => {
                     `inline${inlineId}`,
                     'inline',
                     `inline${isInline1 ? '' : ' offset-right'}`,
-                    isInline1 ? null : { desktop: [adSizes.halfPage] }
+                    isInline1
+                        ? null
+                        : { desktop: [adSizes.halfPage, adSizes.skyscraper] }
                 );
             });
 
