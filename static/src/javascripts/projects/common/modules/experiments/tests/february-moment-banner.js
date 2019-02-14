@@ -28,7 +28,7 @@ export const februaryMomentBannerNonUk: AcquisitionsABTest = {
     idealOutcome: 'best AV possible',
     canRun: () => getSync() !== 'GB',
     showForSensitive: true,
-    campaignId: campaignId,
+    campaignId,
     componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
     variants: [
         {
@@ -72,7 +72,7 @@ export const februaryMomentBannerUk: AcquisitionsABTest = {
     idealOutcome: 'best AV possible',
     canRun: () => getSync() === 'GB',
     showForSensitive: true,
-    campaignId: campaignId,
+    campaignId,
     componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
     variants: [
         {
@@ -103,7 +103,7 @@ export const februaryMomentBannerThankYou: AcquisitionsABTest = {
     idealOutcome: 'best AV possible',
     canRun: () => true,
     showForSensitive: true,
-    campaignId: campaignId,
+    campaignId,
     componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
     variants: [
         {
