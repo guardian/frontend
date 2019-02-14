@@ -48,7 +48,7 @@ $btn-height: ($gs-baseline*3.5);
         }
 
         @include mq(leftCol) {
-            top: $gs-baseline;
+            top: $gs-baseline / 2;
             left: $gs-gutter;
             right: auto;
             bottom: auto;
