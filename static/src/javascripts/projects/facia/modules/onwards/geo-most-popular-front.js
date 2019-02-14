@@ -20,21 +20,37 @@ export class GeoMostPopularFront extends Component {
     constructor() {
         super();
         begin('most-popular');
-        this.endpoint = '/most-read-geo.json';
         this.isNetworkFront =
             config.get('page.contentType') === 'Network Front';
+
+        const sectionsWithoutPopular = ['info', 'global'];
+        const pageSection = config.get('page.section');
+        const hasSection =
+            pageSection && !sectionsWithoutPopular.includes(pageSection);
+
+        this.isSectionFront = !this.isNetworkFront && hasSection;
+
+        if (this.isSectionFront) {
+            this.endpoint = `/most-read/front/${pageSection}.json`;
+        } else {
+            this.endpoint = '/most-read-geo.json';
+        }
+
         this.isVideoFront = config.get('page.pageId') === 'video';
         this.isInternational = config.get('page.pageId') === 'international';
         this.manipulationType = 'html';
     }
 
+    isSectionFront: boolean;
     isNetworkFront: boolean;
     isVideoFront: boolean;
     isInternational: boolean;
     parent: ?bonzo;
 
     prerender(): void {
-        this.elem = qwery('.headline-list', this.elem)[0];
+        if (!this.isSectionFront) {
+            this.elem = qwery('.headline-list', this.elem)[0];
+        }
     }
 
     go(): void {
@@ -48,6 +64,9 @@ export class GeoMostPopularFront extends Component {
             ) {
                 // hide the tabs
                 hideTabs(this.parent);
+            } else if (this.isSectionFront) {
+                this.parent.innerHTML = '';
+                this.fetch(this.parent, 'html');
             } else {
                 const tab = this.parent.querySelector(tabSelector);
 
