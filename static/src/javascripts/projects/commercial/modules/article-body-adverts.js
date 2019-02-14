@@ -112,7 +112,9 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<number> => {
                 minBelow: 600,
             },
         },
-        filter: filterNearbyCandidates(adSizes.halfPage.height),
+        filter: (candidate: SpacefinderItem) => {
+            filterNearbyCandidates(adSizes.halfPage.height)(candidate) && filterNearbyCandidates(adSizes.skyscraper.height)(candidate)
+        },
     };
 
     const rules = isInline1 ? defaultRules : relaxedRules;
@@ -128,7 +130,7 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<number> => {
                     `inline${inlineId}`,
                     'inline',
                     `inline${isInline1 ? '' : ' offset-right'}`,
-                    isInline1 ? null : { desktop: [adSizes.halfPage] }
+                    isInline1 ? null : { desktop: [adSizes.halfPage, adSizes.skyscraper] }
                 );
             });
 
