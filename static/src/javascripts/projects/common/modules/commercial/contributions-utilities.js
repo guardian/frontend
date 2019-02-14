@@ -34,6 +34,7 @@ import { epicLiveBlogTemplate } from 'common/modules/commercial/templates/acquis
 import { userIsSupporter } from 'common/modules/commercial/user-features';
 import { supportContributeURL } from 'common/modules/commercial/support-utilities';
 import { awaitEpicButtonClicked } from 'common/modules/commercial/epic/epic-utils';
+import { canShowSync } from 'common/modules/commercial/membership-engagement-banner';
 import { setupEpicInLiveblog } from 'common/modules/commercial/contributions-liveblog-utilities';
 import {
     bannerMultipleTestsGoogleDocUrl,
@@ -637,6 +638,7 @@ export const getEngagementBannerTestsFromGoogleDoc = (): Promise<
                                 linkUrl: row.linkUrl.trim(),
                                 hasTicker: false,
                             },
+                            canRun: () => canShowSync(this.engagementBannerParams),
                         })),
                     };
                 });

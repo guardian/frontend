@@ -199,20 +199,27 @@ const show = (): Promise<boolean> =>
             return false;
         });
 
+// This is called by individual banner AbTests in their canRun functions
+const canShowSync = (
+    minArticlesBeforeShowingBanner: number = 3,
+    userCohort: AcquisitionsComponentUserCohort = 'OnlyNonSupporters',
+): boolean => {
+    console.log("canShowSync")
+    const userHasSeenEnoughArticles: boolean =
+        getVisitCount() >= minArticlesBeforeShowingBanner;
+    const bannerIsBlockedForEditorialReasons = pageShouldHideReaderRevenue();
+
+    return userHasSeenEnoughArticles &&
+        !bannerIsBlockedForEditorialReasons &&
+        userIsInCorrectCohort(userCohort)
+};
+
 const canShow = (): Promise<boolean> => {
     if (!config.get('switches.membershipEngagementBanner') || isBlocked()) {
         return Promise.resolve(false);
     }
     return getBannerParams().then(params => {
-        const userHasSeenEnoughArticles: boolean =
-            getVisitCount() >= params.minArticlesBeforeShowingBanner;
-        const bannerIsBlockedForEditorialReasons = pageShouldHideReaderRevenue();
-
-        if (
-            userHasSeenEnoughArticles &&
-            !bannerIsBlockedForEditorialReasons &&
-            userIsInCorrectCohort(params.userCohort)
-        ) {
+        if (canShowSync(params.minArticlesBeforeShowingBanner, params.userCohort)) {
             const userLastClosedBannerAt = userPrefs.get(lastClosedAtKey);
 
             if (!userLastClosedBannerAt) {
@@ -238,6 +245,7 @@ const membershipEngagementBanner: Banner = {
 export {
     membershipEngagementBanner,
     canShow,
+    canShowSync
     messageCode,
     hideBanner,
     clearBannerHistory,
