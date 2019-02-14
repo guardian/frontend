@@ -2,6 +2,7 @@
 const path = require('path');
 const CircularDependencyPlugin = require('circular-dependency-plugin');
 const webpack = require('webpack');
+const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 
 module.exports = {
     entry: {
@@ -106,6 +107,7 @@ module.exports = {
         ],
     },
     plugins: [
+        new LodashModuleReplacementPlugin,
         // Makes videosjs available to all modules in the videojs chunk.
         // videojs plugins expect this object to be available globally,
         // but it's sufficient to scope it at the chunk level
