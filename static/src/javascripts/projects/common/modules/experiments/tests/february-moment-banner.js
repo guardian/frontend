@@ -63,27 +63,6 @@ export const februaryMomentBannerNonUk: AcquisitionsABTest = {
                     userCohortParam.februaryMomentBannerNonUk
                 ),
         },
-        {
-            id: 'variant1',
-            test: (): void => {},
-            engagementBannerParams: {
-                leadSentence: defaultBold,
-                messageText: defaultCopy,
-                template: acquisitionsBannerFivTemplate,
-                bannerModifierClass: 'fiv-banner',
-                minArticlesBeforeShowingBanner,
-                userCohort: userCohortParam.februaryMomentBannerNonUk,
-                titles: [
-                    "Free for those who can't afford it",
-                    'Supported by those who can',
-                ], // TODO: variant on this text, TBC
-            },
-            canRun: () =>
-                canShowBannerSync(
-                    minArticlesBeforeShowingBanner,
-                    userCohortParam.februaryMomentBannerNonUk
-                ),
-        },
     ],
 };
 
