@@ -103,6 +103,7 @@ const bannerParamsToHtml = (params: EngagementBannerParams): string => {
         ? selectSequentiallyFrom(params.messageText)
         : params.messageText;
     const ctaText = params.ctaText;
+    const leadSentence = params.leadSentence;
 
     const linkUrl = addTrackingCodesToUrl({
         base: params.linkUrl,
@@ -113,6 +114,7 @@ const bannerParamsToHtml = (params: EngagementBannerParams): string => {
     });
     const buttonCaption = params.buttonCaption;
     const templateParams = {
+        leadSentence,
         messageText,
         ctaText,
         linkUrl,

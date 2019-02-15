@@ -12,6 +12,7 @@ declare type AcquisitionsEpicTemplateCopy = {
 };
 
 declare type EngagementBannerTemplateParams = {
+    leadSentence?: string,
     messageText: string,
     ctaText: string,
     buttonCaption: string,
@@ -37,6 +38,7 @@ declare type EngagementBannerParams = EngagementBannerTemplateParams & {
 };
 
 declare type EngagementBannerTestParams = {
+    leadSentence?: string,
     messageText?: string,
     ctaText?: string,
     buttonCaption?: string,
