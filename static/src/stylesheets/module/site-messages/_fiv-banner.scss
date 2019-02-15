@@ -1,3 +1,5 @@
+$border-style: #999999 1px solid;
+
 .site-message--engagement-banner.site-message--fiv-banner {
     background-color: #fbf6ef;;
     .site-message__roundel {
@@ -7,11 +9,14 @@
     .site-message__copy {
         padding-top: 0;
         padding-bottom: 0;
+        @include mq($from: tablet) {
+            padding-right: 0;
+        }
     }
 
     .gs-container {
         @include mq($from: tablet) {
-            margin-right: 0;
+
         }
 }
 
@@ -20,7 +25,7 @@
         top: 5px;
         right: 5px;
         @include mq($from: tablet) {
-            margin-left: 20px;
+            margin-right: 20px;
         }
     }
 
@@ -34,6 +39,11 @@
 
         @include mq($from: tablet) {
             padding-left: 10px;
+            border-top: $border-style;
+        }
+
+        @include mq($from: desktop) {
+            margin-top: 0;
         }
     }
 
@@ -41,8 +51,8 @@
         padding-left: 10px;
         padding-right: 10px;
         height: 49.5px;
-        margin-bottom: 15px;
-        margin-top: 5px;
+        margin-bottom: 10px;
+        margin-top: 10px;
         width: 195px;
         margin-left: -5px;
         background-color: #fee400;
@@ -57,7 +67,7 @@
     .engagement-banner__button.engagement-banner__button__read-more {
         background-color: #fbf6ef;
         width: 95px;
-        border: #999999 1px solid;
+        border: $border-style
     }
 }
 
@@ -80,7 +90,7 @@
     flex-direction: row;
     position: relative;
     margin-top: 39px;
-    border-bottom: #999999 1px solid;
+    border-bottom: $border-style;
     padding-left: $gs-gutter/2;
 
     @include mq($from: 375px) {
@@ -92,6 +102,10 @@
         border-bottom: 0;
         flex-direction: column-reverse;
         height: 100%;
+    }
+
+    @include mq($from: tablet) {
+        flex-direction: row;
     }
 
 }
@@ -175,7 +189,7 @@ $large-circle-height: 214px;
     top: $small-circle-height/1.8;
     background: #0084c6;
 
-    @include mq($from: tablet) {
+    @include mq($from: tablet, $until: desktop) {
         top: 0;
         left: $small-circle-height/1.8;
     }
@@ -193,7 +207,8 @@ $large-circle-height: 214px;
 
     @include mq($from: tablet) {
         width: 349px;
-        border-left: #999999 1px solid;
+        border-left: $border-style;
+        border-right: $border-style;
         padding-left: 0;
         display: flex;
         flex-direction: column;
@@ -201,13 +216,17 @@ $large-circle-height: 214px;
     }
 
     @include mq($from: desktop) {
-        width: 100%;
+        width: 489px;
     }
 }
 
 .fiv-banner__message {
     @include mq($from: tablet) {
         padding-left: 10px;
+        margin-right: 20px;
+    }
+    @include mq($from: desktop) {
+        width: 419px;
     }
 }
 
@@ -228,7 +247,7 @@ $large-circle-height: 214px;
 
 .fiv-banner__message-text {
     letter-spacing: -.3px;
-    font-weight: 500;
+    font-weight: 400;
     line-height: 18px;
 }
 
