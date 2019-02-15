@@ -1,3 +1,24 @@
+@font-face {
+    font-family: 'GT Guardian Titlepiece';
+    src:
+    url('//pasteup.guim.co.uk/webfonts/1.0.0/noalts-not-hinted/GTGuardianTitlepiece-Bold.woff2') format('woff2'),
+    url('//pasteup.guim.co.uk/webfonts/1.0.0/noalts-not-hinted/GTGuardianTitlepiece-Bold.woff') format('woff'),
+    url('//pasteup.guim.co.uk/webfonts/1.0.0/noalts-not-hinted/GTGuardianTitlepiece-Bold.ttf') format('ttf');
+    font-weight: 400;
+}
+
+.fiv-banner__headline {
+    font-size: 48px;
+    line-height: .9;
+    font-family: 'GT Guardian Titlepiece', Georgia, serif;
+}
+.fiv-banner__headline1 {
+    color: #ef7d21;
+}
+.fiv-banner__headline2 {
+    color: #0084c6;
+}
+
 .site-message--fiv-banner {
     background-color: #ece4d9;
 }
