@@ -52,23 +52,10 @@ export const februaryMomentBannerNonUk: AcquisitionsABTest = {
                 bannerModifierClass: 'fiv-banner',
                 minArticlesBeforeShowingBanner,
                 userCohort: userCohortParam.februaryMomentBannerNonUk,
-            },
-            canRun: () =>
-                canShowBannerSync(
-                    minArticlesBeforeShowingBanner,
-                    userCohortParam.februaryMomentBannerNonUk
-                ),
-        },
-        {
-            id: 'variant1',
-            test: (): void => {},
-            engagementBannerParams: {
-                leadSentence: defaultBold,
-                messageText: defaultCopy,
-                template: acquisitionsBannerFivTemplate,
-                bannerModifierClass: 'fiv-banner',
-                minArticlesBeforeShowingBanner,
-                userCohort: userCohortParam.februaryMomentBannerNonUk,
+                titles: [
+                    "Free for those who can't afford it",
+                    'Supported by those who can',
+                ],
             },
             canRun: () =>
                 canShowBannerSync(
@@ -105,6 +92,10 @@ export const februaryMomentBannerUk: AcquisitionsABTest = {
                 bannerModifierClass: 'fiv-banner',
                 minArticlesBeforeShowingBanner,
                 userCohort: userCohortParam.februaryMomentBannerUk,
+                titles: [
+                    "We're available for everyone",
+                    'Funded by our readers.',
+                ],
             },
             canRun: () =>
                 canShowBannerSync(
@@ -141,6 +132,10 @@ export const februaryMomentBannerThankYou: AcquisitionsABTest = {
                 bannerModifierClass: 'fiv-banner',
                 minArticlesBeforeShowingBanner,
                 userCohort: userCohortParam.februaryMomentBannerThankYou,
+                titles: [
+                    'Thanks to your support',
+                    "We're available to everyone.",
+                ],
             },
             canRun: () =>
                 canShowBannerSync(

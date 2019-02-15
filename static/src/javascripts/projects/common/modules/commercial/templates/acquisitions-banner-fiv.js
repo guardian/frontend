@@ -2,7 +2,6 @@
 
 import marque36icon from 'svgs/icon/marque-36.svg';
 import closeCentralIcon from 'svgs/icon/close-central.svg';
-import potentialTitleMobile from 'svgs/fivbanner/potential-title-mobile.svg';
 
 export const acquisitionsBannerFivTemplate = (
     params: EngagementBannerTemplateParams
@@ -16,7 +15,11 @@ export const acquisitionsBannerFivTemplate = (
                 ${closeCentralIcon.markup}
             </button>
         </div>
-        <div class="fiv-banner__headline">${potentialTitleMobile.markup}</div>
+        <div class="fiv-banner__headline">${
+            params.titles
+                ? `${params.titles[0]} THEN ${params.titles[1]}`
+                : 'NOPE'
+        }</div>
         <div class="fiv-banner__circles">
             <div class="fiv-banner__circle fiv-banner__circle1"></div>
             <div class="fiv-banner__circle fiv-banner__circle2 fiv-banner__circle2-clear"></div>
