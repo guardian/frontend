@@ -1,15 +1,14 @@
 // @flow
 import config from 'lib/config';
-import { local } from 'lib/storage';
 import { Message } from 'common/modules/ui/message';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
 import { getControlEngagementBannerParams } from 'common/modules/commercial/membership-engagement-banner-parameters';
 import { isBlocked } from 'common/modules/commercial/membership-engagement-banner-block';
 import {
     type ReaderRevenueRegion,
-    pageShouldHideReaderRevenue,
     getReaderRevenueRegion,
-    userIsInCorrectCohort,
+    canShowBannerSync,
+    getVisitCount,
 } from 'common/modules/commercial/contributions-utilities';
 import type { Banner } from 'common/modules/ui/bannerPicker';
 import bean from 'bean';
@@ -81,8 +80,6 @@ const deriveBannerParams = (
         }
         return defaultParams;
     });
-
-const getVisitCount = (): number => local.get('gu.alreadyVisited') || 0;
 
 const selectSequentiallyFrom = (array: Array<string>): string =>
     array[getVisitCount() % array.length];
@@ -204,14 +201,11 @@ const canShow = (): Promise<boolean> => {
         return Promise.resolve(false);
     }
     return getBannerParams().then(params => {
-        const userHasSeenEnoughArticles: boolean =
-            getVisitCount() >= params.minArticlesBeforeShowingBanner;
-        const bannerIsBlockedForEditorialReasons = pageShouldHideReaderRevenue();
-
         if (
-            userHasSeenEnoughArticles &&
-            !bannerIsBlockedForEditorialReasons &&
-            userIsInCorrectCohort(params.userCohort)
+            canShowBannerSync(
+                params.minArticlesBeforeShowingBanner,
+                params.userCohort
+            )
         ) {
             const userLastClosedBannerAt = userPrefs.get(lastClosedAtKey);
 
