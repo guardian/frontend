@@ -17,25 +17,26 @@ export const acquisitionsBannerFivTemplate = (
             </button>
         </div>
         <div class="fiv-banner__headline-and-circles">
-        <div class="fiv-banner__circles">
-            <div class="fiv-banner__circle fiv-banner__circle1"></div>
-            <div class="fiv-banner__circle fiv-banner__circle2 fiv-banner__circle2-clear"></div>
-            <div class="fiv-banner__circle fiv-banner__circle2 fiv-banner__circle2-mask"></div>
+            <div class="fiv-banner__circles">
+                <div class="fiv-banner__circle fiv-banner__circle1"></div>
+                <div class="fiv-banner__circle fiv-banner__circle2 fiv-banner__circle2-clear"></div>
+                <div class="fiv-banner__circle fiv-banner__circle2 fiv-banner__circle2-mask"></div>
+            </div>
+            ${
+                params.titles
+                    ? `<div class="fiv-banner__headline">
+                <div class="fiv-banner__headline1">
+        ${params.titles[0]}
+                </div>
+                <div class="fiv-banner__headline2">
+                    ${params.titles[1]}
+                </div>
+            </div>`
+                    : ''
+            }    
         </div>
-        ${
-            params.titles
-                ? `<div class="fiv-banner__headline">
-            <div class="fiv-banner__headline1">
-    ${params.titles[0]}
-            </div>
-            <div class="fiv-banner__headline2">
-                ${params.titles[1]}
-            </div>
-        </div>`
-                : ''
-        }    
        
-        <div class="fiv-banner__copy-and-ctas">
+            <div class="fiv-banner__copy-and-ctas">
             <div class="fiv-banner__message">
                 <div class="fiv-banner__lead-sentence">
                    This is The Guardian’s model for open, independent journalism

@@ -1,10 +1,13 @@
-<<<<<<< HEAD
 $border-style: #999999 1px solid;
 
 .site-message--engagement-banner.site-message--fiv-banner {
     background-color: #fbf6ef;;
     .site-message__roundel {
         display: none;
+    }
+
+    .inline-marque-36 path:nth-child(2) {
+        fill: #ffffff;
     }
 
     .site-message__copy {
@@ -91,6 +94,7 @@ $border-style: #999999 1px solid;
     flex-direction: row;
     position: relative;
     margin-top: 39px;
+    margin-bottom: 20px;
     border-bottom: $border-style;
     padding-left: $gs-gutter/2;
 
@@ -100,9 +104,11 @@ $border-style: #999999 1px solid;
     }
 
     @include mq($from: tablet) {
+        margin-bottom: 0;
         border-bottom: 0;
         flex-direction: column-reverse;
         height: 100%;
+        margin-top: 0;
     }
 
     @include mq($from: tablet) {
@@ -111,35 +117,6 @@ $border-style: #999999 1px solid;
 
 }
 
-.fiv-banner__headline {
-
-    svg {
-        width: 171px;
-        height: 171px;
-    }
-
-
-    @include mq($from: tablet) {
-        svg {
-            height: 116px;
-            width: 274px;
-        }
-    }
-
-    @include mq($from: desktop) {
-        svg {
-            width: 253px;
-        }
-    }
-
-    @include mq($from: wide) {
-        svg {
-            width: 224px;
-        }
-    }
-
-
-=======
 @font-face {
     font-family: 'GT Guardian Titlepiece';
     src:
@@ -149,11 +126,19 @@ $border-style: #999999 1px solid;
     font-weight: 400;
 }
 
+
 .fiv-banner__headline {
-    font-size: 48px;
+    font-size: 32px;
     line-height: .9;
     font-family: 'GT Guardian Titlepiece', Georgia, serif;
+
+    @include mq($from: tablet) {
+        font-size: 48px;
+    }
+
+
 }
+
 .fiv-banner__headline1 {
     color: #ef7d21;
 }
@@ -163,7 +148,6 @@ $border-style: #999999 1px solid;
 
 .site-message--fiv-banner {
     background-color: #ece4d9;
->>>>>>> master
 }
 
 
