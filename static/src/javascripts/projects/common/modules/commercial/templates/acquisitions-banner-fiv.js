@@ -24,7 +24,7 @@ export const acquisitionsBannerFivTemplate = (
         </div>
         <div class="fiv-banner__container">
             <div class="fiv-banner__text">
-                HIHIHI ${params.messageText}${params.leadSentence}
+                HIHIHI ${params.messageText}${params.ctaText}
             </div>
             <div class="engagement-banner__cta">
                 <button class="button engagement-banner__button" href="${
