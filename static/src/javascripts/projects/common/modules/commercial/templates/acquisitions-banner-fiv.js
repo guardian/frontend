@@ -15,11 +15,19 @@ export const acquisitionsBannerFivTemplate = (
                 ${closeCentralIcon.markup}
             </button>
         </div>
-        <div class="fiv-banner__headline">${
+        ${
             params.titles
-                ? `${params.titles[0]} THEN ${params.titles[1]}`
-                : 'NOPE'
-        }</div>
+                ? `<div class="fiv-banner__headline">
+            <div class="fiv-banner__headline1">
+    ${params.titles[0]}
+            </div>
+            <div class="fiv-banner__headline2">
+                ${params.titles[1]}
+            </div>
+        </div>`
+                : ''
+        }
+
         <div class="fiv-banner__circles">
             <div class="fiv-banner__circle fiv-banner__circle1"></div>
             <div class="fiv-banner__circle fiv-banner__circle2 fiv-banner__circle2-clear"></div>
