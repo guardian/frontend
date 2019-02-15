@@ -46,10 +46,10 @@ object AMPPicker {
   }
 
   private[this] val sectionsWhitelist: Set[String] = {
-    val safeSections = Set[String]("music")
+    val safeSections = Set[String]("music", "football", "sport")
 
     if (conf.switches.Switches.DotcomRenderingAMPRollout.isSwitchedOn) {
-      Set("football", "sport") ++ safeSections
+      Set("games", "stage", "artanddesign", "film", "books") ++ safeSections
     } else {
       safeSections
     }
