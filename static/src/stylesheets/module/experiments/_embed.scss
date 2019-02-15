@@ -163,7 +163,7 @@ a[href].contributions__contribute.contributions__contribute--epic {
     h2 {
         @include fs-header(5);
         font-size: 32px;
-        line-height: 36px;
+        line-height: 34px;
     }
 }
 
@@ -174,7 +174,7 @@ a[href].contributions__contribute.contributions__contribute--epic {
     .contributions__title {
         @include fs-header(5);
         font-size: 32px;
-        line-height: 36px;
+        line-height: 34px;
         color: $contributions__epic--moment--blue;
     }
 
