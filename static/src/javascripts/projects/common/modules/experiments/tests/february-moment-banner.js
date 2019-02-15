@@ -2,6 +2,7 @@
 
 import { getSync } from 'lib/geolocation';
 import { acquisitionsBannerFivTemplate } from 'common/modules/commercial/templates/acquisitions-banner-fiv';
+import { canShowBannerSync } from 'common/modules/commercial/contributions-utilities';
 
 const defaultBold =
     'This is The Guardian’s model for open, independent journalism';
@@ -14,6 +15,15 @@ const thankYouCopy =
     'Our mission is to keep independent journalism accessible to everyone, regardless of where they live or what they can afford. Funding from readers like you safeguards our editorial independence, powers our work, and maintains this openness. It means more people, across the world, can access accurate information with integrity at its heart.';
 
 const campaignId = 'empower_campaign';
+
+// These test params must be set on engagementBannerParams *and* passed into canShowBannerSync
+// TODO - we need to rethink how banner tests are selected/displayed
+const userCohortParam = {
+    februaryMomentBannerNonUk: 'OnlyNonSupporters',
+    februaryMomentBannerUk: 'OnlyNonSupporters',
+    februaryMomentBannerThankYou: 'OnlyExistingSupporters',
+};
+const minArticlesBeforeShowingBanner = 0;
 
 export const februaryMomentBannerNonUk: AcquisitionsABTest = {
     id: 'FebruaryMomentBannerNonUk',
@@ -40,9 +50,14 @@ export const februaryMomentBannerNonUk: AcquisitionsABTest = {
                 // buttonCaption?: string, TO be decided with non engineers
                 template: acquisitionsBannerFivTemplate,
                 bannerModifierClass: 'fiv-banner',
-                minArticlesBeforeShowingBanner: 0,
-                userCohort: 'OnlyNonSupporters',
+                minArticlesBeforeShowingBanner,
+                userCohort: userCohortParam.februaryMomentBannerNonUk,
             },
+            canRun: () =>
+                canShowBannerSync(
+                    minArticlesBeforeShowingBanner,
+                    userCohortParam.februaryMomentBannerNonUk
+                ),
         },
         {
             id: 'variant1',
@@ -52,9 +67,14 @@ export const februaryMomentBannerNonUk: AcquisitionsABTest = {
                 messageText: defaultCopy,
                 template: acquisitionsBannerFivTemplate,
                 bannerModifierClass: 'fiv-banner',
-                minArticlesBeforeShowingBanner: 0,
-                userCohort: 'OnlyNonSupporters',
+                minArticlesBeforeShowingBanner,
+                userCohort: userCohortParam.februaryMomentBannerNonUk,
             },
+            canRun: () =>
+                canShowBannerSync(
+                    minArticlesBeforeShowingBanner,
+                    userCohortParam.februaryMomentBannerNonUk
+                ),
         },
     ],
 };
@@ -83,9 +103,14 @@ export const februaryMomentBannerUk: AcquisitionsABTest = {
                 messageText: defaultCopy,
                 template: acquisitionsBannerFivTemplate,
                 bannerModifierClass: 'fiv-banner',
-                minArticlesBeforeShowingBanner: 0,
-                userCohort: 'OnlyNonSupporters',
+                minArticlesBeforeShowingBanner,
+                userCohort: userCohortParam.februaryMomentBannerUk,
             },
+            canRun: () =>
+                canShowBannerSync(
+                    minArticlesBeforeShowingBanner,
+                    userCohortParam.februaryMomentBannerUk
+                ),
         },
     ],
 };
@@ -114,9 +139,14 @@ export const februaryMomentBannerThankYou: AcquisitionsABTest = {
                 messageText: thankYouCopy,
                 template: acquisitionsBannerFivTemplate,
                 bannerModifierClass: 'fiv-banner',
-                minArticlesBeforeShowingBanner: 0,
-                userCohort: 'OnlyExistingSupporters',
+                minArticlesBeforeShowingBanner,
+                userCohort: userCohortParam.februaryMomentBannerThankYou,
             },
+            canRun: () =>
+                canShowBannerSync(
+                    minArticlesBeforeShowingBanner,
+                    userCohortParam.februaryMomentBannerThankYou
+                ),
         },
     ],
 };
