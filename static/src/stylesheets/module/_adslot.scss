@@ -306,8 +306,11 @@
 
     @include mq(mobile) {
         width: 300px;
-        height: 221px;
-        min-height: 221px;
+        height: auto;
+
+        & > div.ad-slot__content > iframe {
+            min-height: 250px;
+        }
     }
 
     @include mq(desktop) {
@@ -498,6 +501,10 @@
 
     @include mq(wide) {
         margin-right: -400px;
+    }
+    &.ad-slot--sky {
+        width: $mpu-skyscraper-width;
+        min-width: $mpu-skyscraper-width;
     }
 }
 

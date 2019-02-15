@@ -2,7 +2,6 @@
 
 import marque36icon from 'svgs/icon/marque-36.svg';
 import closeCentralIcon from 'svgs/icon/close-central.svg';
-import potentialTitleMobile from 'svgs/fivbanner/potential-title-mobile.svg';
 
 export const acquisitionsBannerFivTemplate = (
     params: EngagementBannerTemplateParams
@@ -18,14 +17,23 @@ export const acquisitionsBannerFivTemplate = (
             </button>
         </div>
         <div class="fiv-banner__headline-and-circles">
-            <div class="fiv-banner__circles">
-                <div class="fiv-banner__circle fiv-banner__circle1"></div>
-                <div class="fiv-banner__circle fiv-banner__circle2"></div>
-            </div>
-            <div class="fiv-banner__headline">
-                ${potentialTitleMobile.markup}
-            </div>
+        <div class="fiv-banner__circles">
+            <div class="fiv-banner__circle fiv-banner__circle1"></div>
+            <div class="fiv-banner__circle fiv-banner__circle2 fiv-banner__circle2-clear"></div>
+            <div class="fiv-banner__circle fiv-banner__circle2 fiv-banner__circle2-mask"></div>
         </div>
+        ${
+            params.titles
+                ? `<div class="fiv-banner__headline">
+            <div class="fiv-banner__headline1">
+    ${params.titles[0]}
+            </div>
+            <div class="fiv-banner__headline2">
+                ${params.titles[1]}
+            </div>
+        </div>`
+                : ''
+        }    
        
         <div class="fiv-banner__copy-and-ctas">
             <div class="fiv-banner__message">

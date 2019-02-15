@@ -7,10 +7,13 @@ declare type AcquisitionsEpicTemplateCopy = {
     heading?: string,
     paragraphs: Array<string>,
     highlightedText?: string,
-    testimonial?: AcquisitionsEpicTestimonialCopy
+    testimonial?: AcquisitionsEpicTestimonialCopy,
+    footer?: Array<string>,
 };
 
 declare type EngagementBannerTemplateParams = {
+    titles?: Array<string>,
+    leadSentence?: string,
     messageText: string,
     ctaText: string,
     buttonCaption: string,
@@ -36,6 +39,8 @@ declare type EngagementBannerParams = EngagementBannerTemplateParams & {
 };
 
 declare type EngagementBannerTestParams = {
+    titles?: Array<string>,
+    leadSentence?: string,
     messageText?: string,
     ctaText?: string,
     buttonCaption?: string,

@@ -2,7 +2,7 @@ package model.content
 
 import com.gu.contentapi.client.model.v1.TagType
 import com.gu.contentapi.client.model.{v1 => contentapi}
-import com.gu.contentatom.renderer.ArticleConfiguration
+import com.gu.contentatom.renderer.{ArticleConfiguration, AudioSettings}
 import com.gu.contentatom.thrift.atom.media.{Asset => AtomApiMediaAsset, MediaAtom => AtomApiMediaAtom}
 import com.gu.contentatom.thrift.atom.timeline.{TimelineItem => TimelineApiItem}
 import com.gu.contentatom.thrift.{AtomData, Atom => AtomApiAtom, Image => AtomApiImage, ImageAsset => AtomApiImageAsset, atom => atomapi}
@@ -228,10 +228,15 @@ final case class AudioAtom(
 
 object Atoms extends common.Logging {
 
-  def articleConfig = ArticleConfiguration(
-    ajaxUrl = Configuration.ajax.url,
-    commonsdivisionConfiguration = ArticleConfiguration.CommonsdivisionConfiguration(showMps = true)
-  )
+  def articleConfig(isAdFree: Boolean = false, useAcast: Boolean = false) = {
+    val audioSettings = AudioSettings(externalAdvertising = !isAdFree && useAcast)
+    val artConf = ArticleConfiguration(
+      ajaxUrl = Configuration.ajax.url,
+      audioSettings = audioSettings,
+      commonsdivisionConfiguration = ArticleConfiguration.CommonsdivisionConfiguration(showMps = true)
+    )
+    artConf
+  }
 
   def extract[T](
     atoms: Option[Seq[AtomApiAtom]],

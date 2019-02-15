@@ -357,6 +357,16 @@ trait CommercialSwitches {
     sellByDate = never,
     exposeClientSide = true
   )
+
+  val facebookTrackingPixel: Switch = Switch(
+    group = Commercial,
+    name = "facebook-tracking-pixel",
+    description = "Facebook's PageView tracking to improve ad targeting",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
 }
 
 trait PrebidSwitches {

@@ -35,9 +35,6 @@ object AMPPageChecks extends Logging {
   }
 
   def isNotOpinion(page:PageWithStoryPackage): Boolean = ! page.item.tags.isComment
-
-  def isNotAReview(page:PageWithStoryPackage): Boolean = ! page.item.tags.isReview
-
 }
 
 object AMPPicker {
@@ -49,20 +46,20 @@ object AMPPicker {
   }
 
   private[this] val sectionsWhitelist: Set[String] = {
-    val safeSections = Set[String]()
+    val safeSections = Set[String]("music", "football", "sport")
 
     if (conf.switches.Switches.DotcomRenderingAMPRollout.isSwitchedOn) {
-      Set("music") ++ safeSections
+      Set("games", "stage", "artanddesign", "film", "books") ++ safeSections
     } else {
       safeSections
     }
   }
 
   private[this] val tagsWhitelist: Set[String] = {
-    val safeTags = Set[String]()
+    val safeTags = Set[String]("info/series/digital-blog")
 
     if (conf.switches.Switches.DotcomRenderingAMPRollout.isSwitchedOn) {
-      Set("info/series/digital-blog") ++ safeTags
+      Set() ++ safeTags
     } else {
       safeTags
     }
@@ -117,7 +114,6 @@ object AMPPicker {
       ("isBasicArticle", AMPPageChecks.isBasicArticle(page)),
       ("hasOnlySupportedElements", AMPPageChecks.hasOnlySupportedElements(page)),
       ("isNotOpinionP", AMPPageChecks.isNotOpinion(page)),
-      ("isNotAReview", AMPPageChecks.isNotAReview(page))
     )
   }
 
