@@ -52,6 +52,10 @@ export const februaryMomentBannerNonUk: AcquisitionsABTest = {
                 bannerModifierClass: 'fiv-banner',
                 minArticlesBeforeShowingBanner,
                 userCohort: userCohortParam.februaryMomentBannerNonUk,
+                titles: [
+                    "Free for those who can't afford it",
+                    'Supported by those who can',
+                ],
             },
             canRun: () =>
                 canShowBannerSync(
@@ -69,6 +73,10 @@ export const februaryMomentBannerNonUk: AcquisitionsABTest = {
                 bannerModifierClass: 'fiv-banner',
                 minArticlesBeforeShowingBanner,
                 userCohort: userCohortParam.februaryMomentBannerNonUk,
+                titles: [
+                    "Free for those who can't afford it",
+                    'Supported by those who can',
+                ], // TODO: variant on this text, TBC
             },
             canRun: () =>
                 canShowBannerSync(
@@ -105,6 +113,10 @@ export const februaryMomentBannerUk: AcquisitionsABTest = {
                 bannerModifierClass: 'fiv-banner',
                 minArticlesBeforeShowingBanner,
                 userCohort: userCohortParam.februaryMomentBannerUk,
+                titles: [
+                    "We're available for everyone",
+                    'Funded by our readers.',
+                ],
             },
             canRun: () =>
                 canShowBannerSync(
@@ -141,6 +153,10 @@ export const februaryMomentBannerThankYou: AcquisitionsABTest = {
                 bannerModifierClass: 'fiv-banner',
                 minArticlesBeforeShowingBanner,
                 userCohort: userCohortParam.februaryMomentBannerThankYou,
+                titles: [
+                    'Thanks to your support',
+                    "We're available to everyone.",
+                ],
             },
             canRun: () =>
                 canShowBannerSync(

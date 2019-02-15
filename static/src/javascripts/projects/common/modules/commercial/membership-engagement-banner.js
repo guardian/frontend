@@ -111,6 +111,7 @@ const bannerParamsToHtml = (params: EngagementBannerParams): string => {
     });
     const buttonCaption = params.buttonCaption;
     const templateParams = {
+        titles: params.titles,
         leadSentence,
         messageText,
         ctaText,
