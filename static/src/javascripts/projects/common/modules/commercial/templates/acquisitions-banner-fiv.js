@@ -7,6 +7,7 @@ import potentialTitleMobile from 'svgs/fivbanner/potential-title-mobile.svg';
 export const acquisitionsBannerFivTemplate = (
     params: EngagementBannerTemplateParams
 ): string => `
+    <div class="fiv-banner__container">
         <div class="engagement-banner__close">
             <div class="engagement-banner__roundel">
                 ${marque36icon.markup}
@@ -16,15 +17,22 @@ export const acquisitionsBannerFivTemplate = (
                 ${closeCentralIcon.markup}
             </button>
         </div>
-        <div class="fiv-banner__headline">${potentialTitleMobile.markup}</div>
-        <div class="fiv-banner__circles">
-            <div class="fiv-banner__circle fiv-banner__circle1"></div>
-            <div class="fiv-banner__circle fiv-banner__circle2 fiv-banner__circle2-clear"></div>
-            <div class="fiv-banner__circle fiv-banner__circle2 fiv-banner__circle2-mask"></div>
+        <div class="fiv-banner__headline-and-circles">
+            <div class="fiv-banner__circles">
+                <div class="fiv-banner__circle fiv-banner__circle1"></div>
+                <div class="fiv-banner__circle fiv-banner__circle2"></div>
+            </div>
+            <div class="fiv-banner__headline">${potentialTitleMobile.markup}</div>
         </div>
-        <div class="fiv-banner__container">
-            <div class="fiv-banner__text">
-                HIHIHI ${params.messageText}${params.ctaText}
+       
+        <div class="fiv-banner__copy-and-ctas">
+            <div class="fiv-banner__message">
+                <div class="fiv-banner__lead-sentence">
+                   This is The Guardian’s model for open, independent journalism
+                </div>
+                <div class="fiv-banner__message-text">
+                    Our mission is to keep independent journalism accessible to everyone, regardless of where they live or what they can afford. Funding from our readers safeguards our editorial independence. It also powers our work and maintains this openness. It means more people, across the world, can access accurate information with integrity at its heart. 
+                </div>
             </div>
             <div class="engagement-banner__cta">
                 <button class="button engagement-banner__button" href="${
@@ -32,16 +40,17 @@ export const acquisitionsBannerFivTemplate = (
                 }">
                     ${params.buttonCaption}
                 </button>
-                <button class="button engagement-banner__read-more" href="${
+                <button class="button engagement-banner__button engagement-banner__button__read-more" href="${
                     params.linkUrl
                 }">
-                    FIX LINK
+                    Read more
                 </button>
             </div>
         </div>
-        <a
+       <!--<a
             class="u-faux-block-link__overlay"
             target="_blank"
             href="${params.linkUrl}"
-        ></a>
+        ></a>-->
+    </div>
     `;

@@ -39,25 +39,5 @@ export const februaryMomentBannerNonUS: AcquisitionsABTest = {
                 // minArticlesBeforeShowingBanner?: number,
             },
         },
-        {
-            id: 'variant1',
-            test: (): void => {},
-            engagementBannerParams: {
-                messageText:
-                    'VARIANT1 Readers’ support powers our work, giving ' +
-                    'our reporting impact and safeguarding our ' +
-                    'essential editorial independence. This approach ' +
-                    'allows us to keep our journalism accessible to all, ' +
-                    'so more people, across the world, have access ' +
-                    'to accurate information with integrity at its heart.',
-                // buttonCaption?: string, TO be decided with non engineers
-                // linkUrl?: string,
-                // hasTicker?: boolean,
-                // products?: OphanProduct[],
-                template: acquisitionsBannerFivTemplate,
-                // bannerModifierClass?: string,
-                // minArticlesBeforeShowingBanner?: number,
-            },
-        },
     ],
 };

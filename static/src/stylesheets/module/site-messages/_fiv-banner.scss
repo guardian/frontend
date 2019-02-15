@@ -1,21 +1,169 @@
-.site-message--fiv-banner {
-    background-color: #ece4d9;
+.site-message--engagement-banner.site-message--fiv-banner {
+    background-color: #fbf6ef;;
+    .site-message__roundel {
+        display: none;
+    }
+
+    .site-message__copy {
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+
+    .gs-container {
+        @include mq($from: tablet) {
+            margin-right: 0;
+        }
 }
+
+    .engagement-banner__close {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        @include mq($from: tablet) {
+            margin-left: 20px;
+        }
+    }
+
+    .site-message__inner {
+        padding: 0
+    }
+
+    .engagement-banner__cta {
+        display: flex;
+        flex-direction: row;
+
+        @include mq($from: tablet) {
+            padding-left: 10px;
+        }
+    }
+
+    .engagement-banner__button {
+        padding-left: 10px;
+        padding-right: 10px;
+        height: 49.5px;
+        margin-bottom: 15px;
+        margin-top: 5px;
+        width: 195px;
+        margin-left: -5px;
+        background-color: #fee400;
+        font-size: 16px;
+        line-height: 16px;
+        font-weight: 600;
+        color: #1d1d1b;
+        border: none;
+        margin-right: 10px;
+    }
+
+    .engagement-banner__button.engagement-banner__button__read-more {
+        background-color: #fbf6ef;
+        width: 95px;
+        border: #999999 1px solid;
+    }
+}
+
+.fiv-banner__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    @include mq($from: tablet) {
+        flex-direction: row;
+    }
+
+
+}
+
+
+
+.fiv-banner__headline-and-circles {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    margin-top: 39px;
+    border-bottom: #999999 1px solid;
+    padding-left: $gs-gutter/2;
+
+    @include mq($from: 375px) {
+        margin-top: 15px;
+        height: 210px
+    }
+
+    @include mq($from: tablet) {
+        border-bottom: none;
+        flex-direction: column-reverse;
+        height: 100%;
+    }
+
+}
+
+.fiv-banner__headline {
+
+    svg {
+        width: 171px;
+        height: 171px;
+    }
+
+
+    @include mq($from: tablet) {
+        svg {
+            height: 116px;
+            width: 274px;
+        }
+    }
+
+    @include mq($from: desktop) {
+        svg {
+            width: 253px;
+        }
+    }
+
+    @include mq($from: wide) {
+        svg {
+            width: 224px;
+        }
+    }
+
+
+}
+
 
 .fiv-banner__circles {
-    position: absolute;
     right: -80px;
     top: 50px;
+    isolation: isolate;
+    margin-right: 15px;
+
+
+    @include mq($from: tablet) {
+        position: relative;
+        right: auto;
+        top: auto;
+        margin-left: 25px;
+    }
 }
+
+$small-circle-height: 109px;
+$medium-circle-height: 138px;
+$large-circle-height: 214px;
+
 .fiv-banner__circle {
 
-    width: 187px;
-    height: 187px;
-    border-radius: 50%;
-    position: absolute;
-    right: 0;
+    width: $small-circle-height;
+    height: $small-circle-height;
 
+    @include mq($from: 375px) {
+        width: $medium-circle-height;
+        height: $medium-circle-height;
+    }
+
+    @include mq($from: wide) {
+        width: $large-circle-height;
+        height: $large-circle-height;
+    }
+    border-radius: 50%;
+    mix-blend-mode: screen;
 }
+
 .fiv-banner__circle1 {
     background: #ff7f0f;
     top: 0;
@@ -23,24 +171,63 @@
 }
 
 .fiv-banner__circle2 {
-    top: 100px;
-    background: #041f4a;
+    position: absolute;
+    top: $small-circle-height/1.8;
+    background: #0084c6;
+
+    @include mq($from: tablet) {
+        top: 0;
+        left: $small-circle-height/1.8;
+    }
 }
 
-.fiv-banner__circle2-clear {
-    opacity: .5;
-    z-index: 50;
+
+.fiv-banner__copy-and-ctas {
+    width: 308px;
+    padding-left: $gs-gutter/2;
+    @include mq($from: tablet) {
+        width: 349px;
+        border-left: #999999 1px solid;
+        padding-left: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    @include mq($from: desktop) {
+        width: 100%;
+    }
+    @include fs-headlineGarnett(6);
+    color: #202d53;
+    font-style: normal;
+    font-stretch: normal;
+    font-size: 15px;
 }
 
-.fiv-banner__circle2-mask {
-    z-index: 10;
+.fiv-banner__message {
+    @include mq($from: tablet) {
+        padding-left: 10px;
+    }
 }
 
-.fiv-banner__headline {
-    padding-top: 50px;
-    border-bottom: #999999 2px solid;
-    padding-bottom: 28px;
+.fiv-banner__lead-sentence {
+    width: 250px;
+    font-weight: bold;
+    color: #202d53;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    letter-spacing: 0px;
+    line-height: 16px;
+
+    @include mq($from: tablet) {
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
 }
-.fiv-banner__text {
-    color: #041f4a;
+
+.fiv-banner__message-text {
+    letter-spacing: -0.3px;
+    font-weight: 500;
+    line-height: 18px;
 }
+
+
