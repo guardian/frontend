@@ -1,7 +1,10 @@
 // @flow
-import { makeABTest } from 'common/modules/commercial/contributions-utilities';
+import {
+    makeEpicABTest,
+    defaultButtonTemplate,
+} from 'common/modules/commercial/contributions-utilities';
 
-export const askFourEarning: EpicABTest = makeABTest({
+export const askFourEarning: EpicABTest = makeEpicABTest({
     id: 'ContributionsEpicAskFourEarning',
     campaignId: 'kr1_epic_ask_four_earning',
 
@@ -22,17 +25,7 @@ export const askFourEarning: EpicABTest = makeABTest({
         {
             id: 'control',
             products: ['CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
-
-            options: {
-                maxViews: {
-                    days: 30,
-                    count: 4,
-                    minDaysBetweenViews: 0,
-                },
-
-                insertAtSelector: '.submeta',
-                successOnView: true,
-            },
+            buttonTemplate: defaultButtonTemplate,
         },
     ],
 });

@@ -7,10 +7,12 @@ declare type AcquisitionsEpicTemplateCopy = {
     heading?: string,
     paragraphs: Array<string>,
     highlightedText?: string,
-    testimonial?: AcquisitionsEpicTestimonialCopy
+    testimonial?: AcquisitionsEpicTestimonialCopy,
+    footer?: Array<string>,
 };
 
 declare type EngagementBannerTemplateParams = {
+    leadSentence?: string,
     messageText: string,
     ctaText: string,
     buttonCaption: string,
@@ -18,11 +20,33 @@ declare type EngagementBannerTemplateParams = {
     hasTicker: boolean,
 };
 
+declare type AcquisitionsComponentUserCohort = 'OnlyExistingSupporters' | 'OnlyNonSupporters' | 'Everyone';
+
 declare type EngagementBannerParams = EngagementBannerTemplateParams & {
     campaignCode: string,
     pageviewId: string,
     products: OphanProduct[],
-    paypalClass?: string,
+    isHardcodedFallback: boolean,
+    template: (templateParams: EngagementBannerTemplateParams) => string,
+    minArticlesBeforeShowingBanner: number,
+    userCohort: AcquisitionsComponentUserCohort,
+    bannerModifierClass?: string,
+    abTest?: {
+        name: string,
+        variant: string
+    },
+};
+
+declare type EngagementBannerTestParams = {
+    leadSentence?: string,
+    messageText?: string,
+    ctaText?: string,
+    buttonCaption?: string,
+    linkUrl?: string,
+    hasTicker?: boolean,
+    products?: OphanProduct[],
     template?: (templateParams: EngagementBannerTemplateParams) => string,
     bannerModifierClass?: string,
-};
+    minArticlesBeforeShowingBanner?: number,
+    userCohort?: AcquisitionsComponentUserCohort,
+}

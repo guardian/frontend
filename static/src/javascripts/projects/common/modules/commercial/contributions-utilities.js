@@ -19,31 +19,32 @@ import mediator from 'lib/mediator';
 import {
     getLocalCurrencySymbol,
     getSync as geolocationGetSync,
+    getSupporterCountryGroup,
 } from 'lib/geolocation';
-import { noop } from 'lib/noop';
-import { splitAndTrim } from 'lib/string-utils';
+import {
+    splitAndTrim,
+    optionalSplitAndTrim,
+    optionalStringToBoolean,
+    throwIfEmptyString,
+} from 'lib/string-utils';
+import { throwIfEmptyArray } from 'lib/array-utils';
 import { epicButtonsTemplate } from 'common/modules/commercial/templates/acquisitions-epic-buttons';
 import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templates/acquisitions-epic-control';
+import { epicLiveBlogTemplate } from 'common/modules/commercial/templates/acquisitions-epic-liveblog';
 import { userIsSupporter } from 'common/modules/commercial/user-features';
 import { supportContributeURL } from 'common/modules/commercial/support-utilities';
 import { awaitEpicButtonClicked } from 'common/modules/commercial/epic/epic-utils';
+import { setupEpicInLiveblog } from 'common/modules/commercial/contributions-liveblog-utilities';
 import {
+    bannerMultipleTestsGoogleDocUrl,
     epicMultipleTestsGoogleDocUrl,
-    getBannerGoogleDoc,
     getGoogleDoc,
-    googleDocEpicControl,
 } from 'common/modules/commercial/contributions-google-docs';
 import {
     defaultExclusionRules,
     isArticleWorthAnEpicImpression,
 } from 'common/modules/commercial/epic/epic-exclusion-rules';
-import { getAcquisitionsBannerParams } from 'common/modules/commercial/membership-engagement-banner-parameters';
-
-export type EpicTemplate = (Variant, AcquisitionsEpicTemplateCopy) => string;
-
-export type CtaUrls = {
-    supportUrl: string,
-};
+import { getControlEpicCopy } from 'common/modules/commercial/acquisitions-copy';
 
 export type ReaderRevenueRegion =
     | 'united-kingdom'
@@ -66,82 +67,92 @@ const getReaderRevenueRegion = (geolocation: string): ReaderRevenueRegion => {
 
 // How many times the user can see the Epic,
 // e.g. 6 times within 7 days with minimum of 1 day in between views.
-const defaultMaxViews: {
-    days: number,
-    count: number,
-    minDaysBetweenViews: number,
-} = {
+const defaultMaxViews: MaxViews = {
     days: 30,
     count: 4,
     minDaysBetweenViews: 0,
 };
 
-const defaultButtonTemplate = (url: CtaUrls) => epicButtonsTemplate(url);
+const defaultButtonTemplate: CtaUrls => string = (url: CtaUrls) =>
+    epicButtonsTemplate(url);
 
 const controlTemplate: EpicTemplate = (
-    { options = {} },
+    variant: EpicVariant,
     copy: AcquisitionsEpicTemplateCopy
 ) =>
     acquisitionsEpicControlTemplate({
         copy,
-        componentName: options.componentName,
-        buttonTemplate: options.buttonTemplate
-            ? options.buttonTemplate({
-                  supportUrl: options.supportURL,
-                  subscribeUrl: options.subscribeURL,
+        componentName: variant.componentName,
+        buttonTemplate: variant.buttonTemplate
+            ? variant.buttonTemplate({
+                  supportUrl: variant.supportURL,
+                  subscribeUrl: variant.subscribeURL,
               })
             : undefined,
+        epicClassNames: variant.classNames,
+    });
+
+const liveBlogTemplate: EpicTemplate = (
+    variant: EpicVariant,
+    copy: AcquisitionsEpicTemplateCopy
+) =>
+    epicLiveBlogTemplate({
+        copy,
+        componentName: variant.componentName,
+        supportURL: variant.supportURL,
     });
 
 const doTagsMatch = (test: EpicABTest): boolean =>
     test.useTargetingTool ? isAbTestTargeted(test) : true;
 
 // Returns an array containing:
-// - the first element matching insertAtSelector, if isMultiple is false or not supplied
-// - all elements matching insertAtSelector, if isMultiple is true
+// - the first element matching insertAtSelector
 // - or an empty array if the selector doesn't match anything on the page
-const getTargets = (
-    insertAtSelector: string,
-    isMultiple: boolean
-): Array<HTMLElement> => {
+const getTargets = (insertAtSelector: string): Array<HTMLElement> => {
     const els = Array.from(document.querySelectorAll(insertAtSelector));
 
-    if (isMultiple) {
-        return els;
-    } else if (els.length) {
+    if (els.length) {
         return [els[0]];
     }
 
     return [];
 };
 
-const isCompatibleWithEpic = (page: Object): boolean =>
+const isCompatibleWithArticleEpic = (page: Object): boolean =>
     page.contentType === 'Article' &&
     !page.isMinuteArticle &&
+    isArticleWorthAnEpicImpression(page, defaultExclusionRules);
+
+const isCompatibleWithLiveBlogEpic = (page: Object): boolean =>
+    page.contentType === 'LiveBlog' &&
     isArticleWorthAnEpicImpression(page, defaultExclusionRules);
 
 const pageShouldHideReaderRevenue = () =>
     config.get('page.shouldHideReaderRevenue');
 
+const userIsInCorrectCohort = (
+    userCohort: AcquisitionsComponentUserCohort
+): boolean => {
+    switch (userCohort) {
+        case 'OnlyExistingSupporters':
+            return userIsSupporter();
+        case 'OnlyNonSupporters':
+            return !userIsSupporter();
+        case 'Everyone':
+        default:
+            return true;
+    }
+};
+
 const shouldShowEpic = (test: EpicABTest): boolean => {
     const onCompatiblePage = test.pageCheck(config.get('page'));
 
-    const storedGeolocation = geolocationGetSync();
-    const inCompatibleLocation = test.locations.length
-        ? test.locations.some(geo => geo === storedGeolocation)
-        : true;
-
     const tagsMatch = doTagsMatch(test);
-
-    const isCompatibleUser = test.onlyShowToExistingSupporters
-        ? userIsSupporter()
-        : !userIsSupporter();
 
     return (
         !pageShouldHideReaderRevenue() &&
         onCompatiblePage &&
-        isCompatibleUser &&
-        inCompatibleLocation &&
+        userIsInCorrectCohort(test.userCohort) &&
         tagsMatch
     );
 };
@@ -151,254 +162,172 @@ const createTestAndVariantId = (campaignCodePrefix, campaignID, id) =>
 
 const makeEvent = (id: string, event: string): string => `${id}:${event}`;
 
-const registerIframeListener = (iframeId: string) => {
-    window.addEventListener('message', message => {
-        const iframe = document.getElementById(iframeId);
+const pageMatchesTags = (tagIds: string[]): boolean =>
+    tagIds.some(tagId =>
+        `${config.get('page.keywordIds')},${config.get(
+            'page.nonKeywordTagIds'
+        )}`.includes(tagId)
+    );
 
-        if (iframe) {
-            try {
-                const data = JSON.parse(message.data);
-
-                if (data.type === 'set-height' && data.value) {
-                    iframe.style.height = `${data.value}px`;
-                }
-            } catch (e) {
-                // Nothing we can do in the error case
-            }
-        }
-    });
+const userMatchesCountryGroups = (countryGroups: string[]) => {
+    const userCountryGroupId = getSupporterCountryGroup(
+        geolocationGetSync()
+    ).toUpperCase();
+    return countryGroups.some(
+        countryGroup => userCountryGroupId === countryGroup.toUpperCase()
+    );
 };
 
-const makeABTestVariant = (
-    id: string,
-    products: $ReadOnlyArray<OphanProduct>,
-    options: Object,
+const pageMatchesSections = (sectionIds: string[]): boolean =>
+    sectionIds.some(section => config.get('page.section') === section);
+
+const makeEpicABTestVariant = (
+    initVariant: InitEpicABTestVariant,
+    template: EpicTemplate,
     parentTest: EpicABTest
-): Variant => {
+): EpicVariant => {
     const trackingCampaignId = `epic_${parentTest.campaignId}`;
     const componentId = createTestAndVariantId(
         parentTest.campaignPrefix,
         parentTest.campaignId,
-        id
+        initVariant.id
     );
-    const iframeId = `${parentTest.campaignId}_iframe`;
+    const campaignCode = createTestAndVariantId(
+        parentTest.campaignPrefix,
+        parentTest.campaignId,
+        initVariant.id
+    );
+    const deploymentRules = initVariant.deploymentRules || defaultMaxViews;
 
-    // defaults for options
-    const {
-        // filters, where empty is taken to mean 'all', multiple entries are combined with OR
-        locations = [],
-        tagIds = [],
-        sections = [],
-        maxViews = parentTest.maxViews,
-
-        isUnlimited = false,
-        campaignCode = createTestAndVariantId(
-            parentTest.campaignPrefix,
-            parentTest.campaignId,
-            id
-        ),
-        supportURL = addTrackingCodesToUrl({
-            base: `${options.supportBaseURL || supportContributeURL}`,
+    return {
+        id: initVariant.id,
+        componentName: `mem_acquisition_${trackingCampaignId}_${
+            initVariant.id
+        }`,
+        campaignCode,
+        supportURL: addTrackingCodesToUrl({
+            base: supportContributeURL,
             componentType: parentTest.componentType,
             componentId,
             campaignCode,
             abTest: {
                 name: parentTest.id,
-                variant: id,
+                variant: initVariant.id,
             },
         }),
-        subscribeURL = addTrackingCodesToUrl({
+        subscribeURL: addTrackingCodesToUrl({
             base: 'https://support.theguardian.com/subscribe',
             componentType: parentTest.componentType,
             componentId,
             campaignCode,
             abTest: {
                 name: parentTest.id,
-                variant: id,
+                variant: initVariant.id,
             },
         }),
-        template = controlTemplate,
-        buttonTemplate = options.buttonTemplate,
-        blockEngagementBanner = false,
-        engagementBannerParams = {},
-        isOutbrainCompliant = false,
-        usesIframe = false,
-        onInsert = noop,
-        onView = noop,
-        insertAtSelector = '.submeta',
-        insertMultiple = false,
-        insertAfter = false,
-        test = noop,
-        impression = submitABTestImpression =>
-            mediator.once(parentTest.insertEvent, () => {
-                submitInsertEvent({
-                    component: {
-                        componentType: parentTest.componentType,
-                        products,
-                        campaignCode,
-                        id: campaignCode,
-                    },
-                    abTest: {
-                        name: parentTest.id,
-                        variant: id,
-                    },
-                });
+        template,
+        buttonTemplate: initVariant.buttonTemplate,
+        copy: initVariant.copy,
+        classNames: initVariant.classNames || [],
 
-                submitABTestImpression();
-            }),
-        success = submitABTestComplete =>
-            mediator.once(parentTest.viewEvent, () => {
-                submitViewEvent({
-                    component: {
-                        componentType: parentTest.componentType,
-                        products,
-                        campaignCode,
-                        id: campaignCode,
-                    },
-                    abTest: {
-                        name: parentTest.id,
-                        variant: id,
-                    },
-                });
-                submitABTestComplete();
-            }),
-    } = options;
-
-    if (usesIframe) {
-        registerIframeListener(iframeId);
-    }
-
-    return {
-        id,
-
-        options: {
-            componentName: `mem_acquisition_${trackingCampaignId}_${id}`,
-            campaignCodes: [campaignCode],
-
-            maxViews,
-            isUnlimited,
-            products,
-            campaignCode,
-            supportURL,
-            subscribeURL,
-            template,
-            buttonTemplate,
-            blockEngagementBanner,
-            engagementBannerParams,
-            isOutbrainCompliant,
-            usesIframe,
-            onInsert,
-            onView,
-            insertAtSelector,
-            insertMultiple,
-            insertAfter,
-            test,
-            impression,
-            success,
-            iframeId,
-        },
+        countryGroups: initVariant.countryGroups || [],
+        tagIds: initVariant.tagIds || [],
+        sections: initVariant.sections || [],
+        excludedTagIds: initVariant.excludedTagIds || [],
+        excludedSections: initVariant.excludedSections || [],
 
         canRun() {
-            const {
-                count: maxViewCount,
-                days: maxViewDays,
-                minDaysBetweenViews: minViewDays,
-            } = maxViews;
+            const checkMaxViews = (maxViews: MaxViews) => {
+                const {
+                    count: maxViewCount,
+                    days: maxViewDays,
+                    minDaysBetweenViews: minViewDays,
+                } = maxViews;
 
-            const testId = parentTest.useLocalViewLog
-                ? parentTest.id
-                : undefined;
+                const testId = parentTest.useLocalViewLog
+                    ? parentTest.id
+                    : undefined;
 
-            const withinViewLimit =
-                viewsInPreviousDays(maxViewDays, testId) < maxViewCount;
-            const enoughDaysBetweenViews =
-                viewsInPreviousDays(minViewDays, testId) === 0;
+                const withinViewLimit =
+                    viewsInPreviousDays(maxViewDays, testId) < maxViewCount;
+                const enoughDaysBetweenViews =
+                    viewsInPreviousDays(minViewDays, testId) === 0;
+
+                return withinViewLimit && enoughDaysBetweenViews;
+            };
 
             const meetsMaxViewsConditions =
-                (withinViewLimit && enoughDaysBetweenViews) || isUnlimited;
+                deploymentRules === 'AlwaysAsk' ||
+                checkMaxViews(deploymentRules);
 
-            const matchesLocations =
-                locations.length === 0 ||
-                locations.some(
-                    region => geolocationGetSync() === region.toUpperCase()
-                );
+            const matchesCountryGroups =
+                this.countryGroups.length === 0 ||
+                userMatchesCountryGroups(this.countryGroups);
+
             const matchesTags =
-                tagIds.length === 0 ||
-                tagIds.some(tagId =>
-                    `${config.get('page.keywordIds')},${config.get(
-                        'page.nonKeywordTagIds'
-                    )}`.includes(tagId)
-                );
+                this.tagIds.length === 0 || pageMatchesTags(this.tagIds);
             const matchesSections =
-                sections.length === 0 ||
-                sections.some(
-                    section => config.get('page.section') === section
-                );
+                this.sections.length === 0 ||
+                pageMatchesSections(this.sections);
+            const noExcludedTags = !pageMatchesTags(this.excludedTagIds);
+            const notExcludedSection = !pageMatchesSections(
+                this.excludedSections
+            );
 
             return (
                 meetsMaxViewsConditions &&
-                matchesLocations &&
+                matchesCountryGroups &&
                 matchesTags &&
-                matchesSections
+                matchesSections &&
+                noExcludedTags &&
+                notExcludedSection
             );
         },
 
         test() {
-            if (typeof options.copy === 'function') {
-                options.copy = options.copy();
-            }
-
             const copyPromise: Promise<AcquisitionsEpicTemplateCopy> =
-                (options.copy && Promise.resolve(options.copy)) ||
-                googleDocEpicControl();
+                (this.copy && Promise.resolve(this.copy)) ||
+                getControlEpicCopy();
 
-            const render = (templateFn: ?EpicTemplate) =>
-                copyPromise
-                    .then((copy: AcquisitionsEpicTemplateCopy) => {
-                        const renderTemplate: EpicTemplate =
-                            templateFn ||
-                            (this.options && this.options.template);
-                        return renderTemplate(this, copy);
-                    })
-                    .then(renderedTemplate => {
+            copyPromise
+                .then((copy: AcquisitionsEpicTemplateCopy) =>
+                    this.template(this, copy)
+                )
+                .then(renderedTemplate => {
+                    if (initVariant.test) {
+                        initVariant.test(renderedTemplate, this);
+                    } else {
+                        // Standard epic insertion. TODO - this could do with a refactor
                         const component = $.create(renderedTemplate);
 
                         mediator.emit('register:begin', trackingCampaignId);
 
                         return fastdom.write(() => {
-                            const targets = getTargets(
-                                insertAtSelector,
-                                insertMultiple
-                            );
+                            const targets = getTargets('.submeta');
 
                             awaitEpicButtonClicked().then(() =>
                                 submitClickEvent({
                                     component: {
                                         componentType: parentTest.componentType,
-                                        products,
+                                        products: initVariant.products,
                                         campaignCode,
                                         id: campaignCode,
                                     },
                                     abTest: {
                                         name: parentTest.id,
-                                        variant: id,
+                                        variant: initVariant.id,
                                     },
                                 })
                             );
 
                             if (targets.length > 0) {
-                                if (insertAfter) {
-                                    component.insertAfter(targets);
-                                } else {
-                                    component.insertBefore(targets);
-                                }
+                                component.insertBefore(targets);
 
                                 mediator.emit(parentTest.insertEvent, {
                                     componentType: parentTest.componentType,
-                                    products,
+                                    products: initVariant.products,
                                     campaignCode,
                                 });
-                                onInsert(component);
 
                                 component.each(element => {
                                     // top offset of 18 ensures view only counts when half of element is on screen
@@ -415,34 +344,59 @@ const makeABTestVariant = (
                                         mediator.emit(parentTest.viewEvent, {
                                             componentType:
                                                 parentTest.componentType,
-                                            products,
+                                            products: initVariant.products,
                                             campaignCode,
                                         });
                                         mediator.emit(
                                             'register:end',
                                             trackingCampaignId
                                         );
-                                        onView(this);
                                     });
                                 });
                             }
 
                             return component[0];
                         });
-                    });
-
-            if (test !== noop && typeof test === 'function') {
-                test(render.bind(this), this, parentTest);
-            } else {
-                render.apply(this);
-            }
+                    }
+                });
         },
-        impression,
-        success,
+        impression: submitABTestImpression =>
+            mediator.once(parentTest.insertEvent, () => {
+                submitInsertEvent({
+                    component: {
+                        componentType: parentTest.componentType,
+                        products: initVariant.products,
+                        campaignCode,
+                        id: campaignCode,
+                    },
+                    abTest: {
+                        name: parentTest.id,
+                        variant: initVariant.id,
+                    },
+                });
+
+                submitABTestImpression();
+            }),
+        success: submitABTestComplete =>
+            mediator.once(parentTest.viewEvent, () => {
+                submitViewEvent({
+                    component: {
+                        componentType: parentTest.componentType,
+                        products: initVariant.products,
+                        campaignCode,
+                        id: campaignCode,
+                    },
+                    abTest: {
+                        name: parentTest.id,
+                        variant: initVariant.id,
+                    },
+                });
+                submitABTestComplete();
+            }),
     };
 };
 
-const makeABTest = ({
+const makeEpicABTest = ({
     id,
     start,
     expiry,
@@ -457,39 +411,25 @@ const makeABTest = ({
     variants,
 
     // optional params
-    // locations is a filter where empty is taken to mean 'all'
-    maxViews = defaultMaxViews,
-    locations = [],
-    dataLinkNames = '',
     campaignPrefix = 'gdnwb_copts_memco',
     useLocalViewLog = false,
-    overrideCanRun = false,
     useTargetingTool = false,
-    onlyShowToExistingSupporters = false,
-    canRun = () => true,
-    pageCheck = isCompatibleWithEpic,
+    userCohort = 'OnlyNonSupporters',
+    pageCheck = isCompatibleWithArticleEpic,
+    template = controlTemplate,
 }: InitEpicABTest): EpicABTest => {
     const test = {
         // this is true because we use the reader revenue flag rather than sensitive
         // to disable contributions asks for a particular piece of content
         showForSensitive: true,
         canRun() {
-            if (overrideCanRun) {
-                return doTagsMatch(this) && canRun(this);
-            }
-
-            const testCanRun =
-                typeof canRun === 'function' ? canRun(this) : true;
-            const canEpicBeDisplayed = shouldShowEpic(this);
-
-            return testCanRun && canEpicBeDisplayed;
+            return shouldShowEpic(this);
         },
         componentType: 'ACQUISITIONS_EPIC',
         insertEvent: makeEvent(id, 'insert'),
         viewEvent: makeEvent(id, 'view'),
 
         variants: [],
-        maxViews: maxViews || defaultMaxViews,
 
         id,
         start,
@@ -501,63 +441,20 @@ const makeABTest = ({
         successMeasure,
         audienceCriteria,
         idealOutcome,
-        dataLinkNames,
         campaignId,
         campaignPrefix,
         useLocalViewLog,
-        overrideCanRun,
-        onlyShowToExistingSupporters,
+        userCohort,
         pageCheck,
-        locations,
         useTargetingTool,
     };
 
     test.variants = variants.map(variant =>
-        makeABTestVariant(
-            variant.id,
-            variant.products,
-            variant.options || {},
-            test
-        )
+        makeEpicABTestVariant(variant, template, test)
     );
 
     return test;
 };
-
-const makeBannerABTestVariants = (
-    variants: Array<Object>
-): $ReadOnlyArray<Variant> =>
-    variants.map(x => {
-        x.test = noop;
-        return x;
-    });
-
-const makeGoogleDocBannerVariants = (
-    count: number
-): Array<InitBannerABTestVariant> => {
-    const variants = [];
-
-    for (let i = 1; i <= count; i += 1) {
-        variants.push({
-            id: `variant_${i}`,
-            products: [],
-            engagementBannerParams: () =>
-                getBannerGoogleDoc().then(res =>
-                    getAcquisitionsBannerParams(res, `variant_${i}`)
-                ),
-        });
-    }
-    return variants;
-};
-
-const makeGoogleDocBannerControl = (): InitBannerABTestVariant => ({
-    id: 'control',
-    products: [],
-    engagementBannerParams: () =>
-        getBannerGoogleDoc().then(res =>
-            getAcquisitionsBannerParams(res, 'control')
-        ),
-});
 
 export const getEpicTestsFromGoogleDoc = (): Promise<
     $ReadOnlyArray<EpicABTest>
@@ -574,10 +471,11 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                 .filter(testName => testName.endsWith('__ON'))
                 .map(name => {
                     const isThankYou = name.includes('__thank_you');
+                    const isLiveBlog = name.includes('__liveblog');
 
                     const rows = sheets[name];
                     const testName = name.split('__ON')[0];
-                    return makeABTest({
+                    return makeEpicABTest({
                         id: testName,
                         campaignId: testName,
 
@@ -591,43 +489,86 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                         audienceCriteria: 'All',
                         audience: 1,
                         audienceOffset: 0,
-
-                        // Special settings for the "thank you" epic
-                        ...(isThankYou
+                        useLocalViewLog: rows.some(row =>
+                            optionalStringToBoolean(row.useLocalViewLog)
+                        ),
+                        ...(isLiveBlog
                             ? {
-                                  onlyShowToExistingSupporters: true,
-                                  maxViews: {
-                                      days: 365, // Arbitrarily high number - reader should only see the thank-you for one 'cycle'.
-                                      count: 1,
-                                      minDaysBetweenViews: 0,
-                                  },
-                                  useLocalViewLog: true,
+                                  template: liveBlogTemplate,
+                                  pageCheck: isCompatibleWithLiveBlogEpic,
                               }
                             : {
-                                  maxViews: defaultMaxViews,
+                                  template: controlTemplate,
+                                  pageCheck: isCompatibleWithArticleEpic,
                               }),
+                        ...(isThankYou
+                            ? {
+                                  userCohort: 'OnlyExistingSupporters',
+                                  useLocalViewLog: true,
+                              }
+                            : {}),
                         variants: rows.map(row => ({
-                            id: row.name,
-                            products: [],
-                            options: {
-                                buttonTemplate: isThankYou
-                                    ? undefined
-                                    : defaultButtonTemplate,
-                                locations: splitAndTrim(row.locations, ','),
-                                tagIds: splitAndTrim(row.tagIds, ','),
-                                sections: splitAndTrim(row.sections, ','),
-                                copy: {
-                                    heading: row.heading,
-                                    paragraphs: splitAndTrim(
-                                        row.paragraphs,
-                                        '\n'
-                                    ),
-                                    highlightedText: row.highlightedText.replace(
-                                        /%%CURRENCY_SYMBOL%%/g,
-                                        getLocalCurrencySymbol()
-                                    ),
-                                },
+                            id: row.name.toLowerCase().trim(),
+                            ...(isLiveBlog
+                                ? { test: setupEpicInLiveblog }
+                                : {}),
+                            deploymentRules: optionalStringToBoolean(
+                                row.alwaysAsk
+                            )
+                                ? 'AlwaysAsk'
+                                : ({
+                                      days:
+                                          parseInt(row.maxViewsDays, 10) ||
+                                          defaultMaxViews.days,
+                                      count:
+                                          parseInt(row.maxViewsCount, 10) ||
+                                          defaultMaxViews.count,
+                                      minDaysBetweenViews:
+                                          parseInt(
+                                              row.minDaysBetweenViews,
+                                              10
+                                          ) ||
+                                          defaultMaxViews.minDaysBetweenViews,
+                                  }: MaxViews),
+
+                            buttonTemplate: isThankYou
+                                ? undefined
+                                : defaultButtonTemplate,
+                            countryGroups: optionalSplitAndTrim(
+                                row.locations,
+                                ','
+                            ),
+                            tagIds: optionalSplitAndTrim(row.tagIds, ','),
+                            sections: optionalSplitAndTrim(row.sections, ','),
+                            excludedTagIds: optionalSplitAndTrim(
+                                row.excludedTagIds,
+                                ','
+                            ),
+                            excludedSections: optionalSplitAndTrim(
+                                row.excludedSections,
+                                ','
+                            ),
+                            copy: {
+                                heading: throwIfEmptyString(
+                                    'heading',
+                                    row.heading
+                                ),
+                                paragraphs: throwIfEmptyArray(
+                                    'paragraphs',
+                                    splitAndTrim(row.paragraphs, '\n')
+                                ),
+                                highlightedText: row.highlightedText
+                                    ? row.highlightedText.replace(
+                                          /%%CURRENCY_SYMBOL%%/g,
+                                          getLocalCurrencySymbol()
+                                      )
+                                    : undefined,
+                                footer: optionalSplitAndTrim(row.footer, '\n'),
                             },
+                            classNames: optionalSplitAndTrim(
+                                row.classNames,
+                                ','
+                            ),
                         })),
                     });
                 });
@@ -640,7 +581,75 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                     }. Stack: ${err.stack}`
                 ),
                 {
-                    feature: 'epic-test',
+                    feature: 'epic',
+                },
+                false
+            );
+            return [];
+        });
+
+export const getEngagementBannerTestsFromGoogleDoc = (): Promise<
+    $ReadOnlyArray<AcquisitionsABTest>
+> =>
+    getGoogleDoc(bannerMultipleTestsGoogleDocUrl)
+        .then(googleDocJson => {
+            const sheets = googleDocJson && googleDocJson.sheets;
+
+            if (!sheets) {
+                return [];
+            }
+
+            return Object.keys(sheets)
+                .filter(testName => testName.endsWith('__ON'))
+                .map(name => {
+                    const rows = sheets[name];
+                    const testName = name.split('__ON')[0];
+                    return {
+                        id: testName,
+                        campaignId: testName,
+                        componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
+
+                        start: '2018-01-01',
+                        expiry: '2020-01-01',
+
+                        author: 'Google Docs',
+                        description: 'Google Docs',
+                        successMeasure: 'AV2.0',
+                        idealOutcome: 'Google Docs',
+                        audienceCriteria: 'All',
+                        audience: 1,
+                        audienceOffset: 0,
+
+                        canRun: () => true,
+
+                        variants: rows.map(row => ({
+                            id: row.name.trim().toLowerCase(),
+                            products: [],
+                            test: () => {},
+
+                            engagementBannerParams: {
+                                messageText: row.messageText.trim(),
+                                ctaText: `<span class="engagement-banner__highlight"> ${row.ctaText.replace(
+                                    /%%CURRENCY_SYMBOL%%/g,
+                                    getLocalCurrencySymbol()
+                                )}</span>`,
+                                buttonCaption: row.buttonCaption.trim(),
+                                linkUrl: row.linkUrl.trim(),
+                                hasTicker: false,
+                            },
+                        })),
+                    };
+                });
+        })
+        .catch((err: Error) => {
+            reportError(
+                new Error(
+                    `Error getting multiple engagement banner tests from Google Docs. ${
+                        err.message
+                    }. Stack: ${err.stack}`
+                ),
+                {
+                    feature: 'engagement-banner',
                 },
                 false
             );
@@ -650,11 +659,9 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
 export {
     pageShouldHideReaderRevenue,
     shouldShowEpic,
-    makeABTest,
+    makeEpicABTest,
     defaultButtonTemplate,
-    makeBannerABTestVariants,
     defaultMaxViews,
     getReaderRevenueRegion,
-    makeGoogleDocBannerControl,
-    makeGoogleDocBannerVariants,
+    userIsInCorrectCohort,
 };

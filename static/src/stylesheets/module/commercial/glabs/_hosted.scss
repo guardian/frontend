@@ -2,10 +2,10 @@ $hosted-stripe: 28px;
 $hosted-video-width: 980px;
 $hosted-video-height: 551px;
 
-@import '_hosted-video.scss';
-@import '_hosted-gallery.scss';
-@import '_hosted-article.scss';
-@import '_hosted-header.scss';
+@import '_hosted-video';
+@import '_hosted-gallery';
+@import '_hosted-article';
+@import '_hosted-header';
 
 .hosted-tone--dark {
     background-color: #3e3e3e;

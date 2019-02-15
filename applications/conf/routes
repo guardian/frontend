@@ -72,6 +72,7 @@ GET        /$path<theguardian|theobserver>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\
 
 # Atoms
 POST       /atom/quiz/:id/*path                                                 controllers.QuizController.submit(id, path)
+GET        /atom/youtube/:id.json                                               controllers.YoutubeController.getAtomId(id: String)
 
 GET        /$path<.+/\d\d\d\d/\w\w\w/\d\d>                                      controllers.AllIndexController.on(path)
 GET        /$path<.+>/latest                                                    controllers.LatestIndexController.latest(path)
@@ -82,6 +83,7 @@ GET        /$path<.+>/latest/email.emailtxt                                     
 GET        /$path<.+>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/all             controllers.AllIndexController.allOn(path, day, month, year)
 GET        /$path<.+>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/altdate         controllers.AllIndexController.altDate(path, day, month, year)
 GET        /$path<.+>/all                                                       controllers.AllIndexController.all(path)
+
 
 # Gallery paths
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>/lightbox.json                controllers.GalleryController.lightboxJson(path)

@@ -28,7 +28,7 @@ describe('Sticky MPU', () => {
         jest.resetAllMocks();
 
         if (document.body) {
-            document.body.innerHTML = `${domSnippet}<div class="ad-slot-container" aria-hidden="true">${adSlotRight}</div>`;
+            document.body.innerHTML = `${domSnippet}<div class="aside-slot-container" aria-hidden="true">${adSlotRight}</div>`;
         }
     });
 
@@ -53,7 +53,7 @@ describe('Sticky MPU', () => {
         };
         mediator.once('page:commercial:sticky-mpu', () => {
             const container: HTMLElement = (document.querySelector(
-                '.ad-slot-container'
+                '.aside-slot-container'
             ): any);
             expect(container.style.height).toBe('8000px');
             done();
@@ -74,7 +74,7 @@ describe('Sticky Comments MPU', () => {
         jest.resetAllMocks();
 
         if (document.body) {
-            document.body.innerHTML = `${domSnippet}<div class="ad-slot-container" aria-hidden="true">${adSlotComments}</div>`;
+            document.body.innerHTML = `${domSnippet}<div class="aside-slot-container" aria-hidden="true">${adSlotComments}</div>`;
         }
     });
 
@@ -99,7 +99,7 @@ describe('Sticky Comments MPU', () => {
         };
         mediator.once('page:commercial:sticky-comments-mpu', () => {
             const container: HTMLElement = (document.querySelector(
-                '.ad-slot-container'
+                '.aside-slot-container'
             ): any);
             expect(container.style.height).toBe('10000px');
             done();

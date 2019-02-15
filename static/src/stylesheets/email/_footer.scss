@@ -1,6 +1,6 @@
 // td
 .ft__margin {
-    padding-top: 36px;
+    padding-top: 20px;
 }
 
 // table
@@ -47,4 +47,11 @@
     line-height: 14px;
     padding: 20px 12px 0;
     text-align: center;
+}
+
+.gmailfix {
+    display: none;
+    white-space: nowrap;
+    font: 15px courier;
+    line-height: 0;
 }

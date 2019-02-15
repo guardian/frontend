@@ -1,15 +1,15 @@
-const http = require('http');
+const https = require('https');
 
-const fetch = () =>
+const fetch = path =>
     new Promise((resolve, reject) => {
         const errorMessage =
             'Failed to fetch top traffic endpoints from ophan.';
         const opts = {
             hostname: 'api.ophan.co.uk',
-            path: '/api/mostread?count=50',
+            path,
         };
 
-        const req = http.get(opts, res => {
+        const req = https.get(opts, res => {
             if (res.statusCode !== 200) {
                 // must consume data, see https://nodejs.org/api/http.html#http_class_http_clientrequest
                 res.resume();
@@ -45,4 +45,4 @@ const getEndpointsFromResponse = res => {
     });
 };
 
-module.exports = fetch().then(getEndpointsFromResponse);
+module.exports = { fetch, getEndpointsFromResponse };

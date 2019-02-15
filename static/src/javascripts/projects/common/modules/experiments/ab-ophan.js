@@ -24,8 +24,8 @@ const makeABEvent = (
         complete,
     };
 
-    if (variant.options && variant.options.campaignCodes) {
-        event.campaignCodes = variant.options.campaignCodes;
+    if (variant.campaignCode) {
+        event.campaignCodes = [variant.campaignCode];
     }
 
     return event;

@@ -188,6 +188,9 @@
                                     <li class="colophon__item"><a data-link-name="us : footer : jobs" href="https://jobs.theguardian.com/?INTCMP=NGW_FOOTER_US_GU_JOBS">
                                         Search jobs</a>
                                     </li>
+                                    <li class="colophon__item"><a data-link-name="us : footer : discount code" href="https://discountcode.theguardian.com?INTCMP=guardian_footer">
+                                        Discount Codes</a>
+                                    </li>
                                 </ul>
 
                                 @readerRevenueLinks(Edition(request).id.toLowerCase())
@@ -259,6 +262,9 @@
                                     <li class="colophon__item"><a data-link-name="au : footer : uk-jobs" href="https://jobs.theguardian.com/?INTCMP=NGW_FOOTER_AU_GU_JOBS">
                                         Search UK jobs</a>
                                     </li>
+                                    <li class="colophon__item"><a data-link-name="au : footer : discount code" href="https://discountcode.theguardian.com/au?INTCMP=guardian_footer">
+                                        Discount Codes</a>
+                                    </li>
                                 </ul>
 
                                 @readerRevenueLinks(Edition(request).id.toLowerCase())
@@ -316,6 +322,9 @@
                                     </li>
                                     <li class="colophon__item"><a data-link-name="international : footer : uk-jobs" href="https://jobs.theguardian.com/?INTCMP=NGW_FOOTER_INT_GU_JOBS">
                                         Search UK jobs</a>
+                                    </li>
+                                    <li class="colophon__item"><a data-link-name="international : footer : discount code" href="https://discountcode.theguardian.com?INTCMP=guardian_footer">
+                                        Discount Codes</a>
                                     </li>
                                 </ul>
 
@@ -379,7 +388,7 @@
             </a>
             <div class="really-serious-copyright">
                 @if(!page.metadata.isFoundation) {
-                    © @{new DateTime().year.getAsText} Guardian News and Media Limited or its affiliated companies. All rights reserved.
+                    © @{new DateTime().year.getAsText} Guardian News &amp; Media Limited or its affiliated companies. All rights reserved.
                 } else {
                     © @{new DateTime().year.getAsText} The Guardian Foundation. The Guardian Foundation | Kings Place | 90 York Way | London | N1 9GU | United Kingdom. Registered charity: 1153865
                 }

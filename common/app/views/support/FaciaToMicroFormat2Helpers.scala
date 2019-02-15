@@ -22,12 +22,19 @@ object FaciaToMicroFormat2Helpers {
     lazy val toneClass = TrailCssClasses.toneClass(content)
     lazy val webPublicationDate = if (toneClass == "tone-news") ContentOldAgeDescriber(content) else ""
 
+    val thumbnail = {
+      val maybeContent = content.properties.maybeContent
+
+      maybeContent.flatMap(_.trail.thumbnailPath)
+        .getOrElse(ImgSrc(maybeContent.flatMap(_.trail.trailPicture.flatMap(_.largestImageUrl)).getOrElse(""), Item140))
+    }
+
     JsObject(
       Json.obj(
         "headline" -> content.header.headline,
         "trailText" -> content.card.trailText,
         "url" -> content.header.url,
-        "thumbnail" -> content.properties.maybeContent.flatMap(_.trail.thumbnailPath),
+        "thumbnail" -> thumbnail,
         "id" -> content.properties.maybeContent.map(_.metadata.id),
         "byline" -> content.properties.byline,
         "isComment" -> content.header.isComment,

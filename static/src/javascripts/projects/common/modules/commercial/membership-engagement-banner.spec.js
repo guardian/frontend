@@ -4,15 +4,11 @@ import fakeConfig from 'lib/config';
 import fakeOphan from 'ophan/ng';
 import fetchJson from 'lib/fetch-json';
 import userPrefs from 'common/modules/user-prefs';
-import {
-    defaultEngagementBannerParams as defaultEngagementBannerParams_,
-    getUserVariantParams as getUserVariantParams_,
-} from 'common/modules/commercial/membership-engagement-banner-parameters';
+import { getControlEngagementBannerParams as getControlEngagementBannerParams_ } from 'common/modules/commercial/membership-engagement-banner-parameters';
 import { membershipEngagementBanner } from 'common/modules/commercial/membership-engagement-banner';
 import { pageShouldHideReaderRevenue } from 'common/modules/commercial/contributions-utilities';
 
-const defaultEngagementBannerParams: any = defaultEngagementBannerParams_;
-const getUserVariantParams: any = getUserVariantParams_;
+const getControlEngagementBannerParams: any = getControlEngagementBannerParams_;
 
 jest.mock('lib/raven');
 jest.mock('lib/mediator');
@@ -30,27 +26,13 @@ jest.mock('lib/geolocation', () => ({
     getSync: jest.fn(() => 'GB'),
     getLocalCurrencySymbol: () => '£',
 }));
-jest.mock('common/modules/experiments/ab-core', () => ({
-    firstRunnableTest: jest.fn(() => ({
-        campaignId: 'fake-campaign-id',
-        id: 'fake-test-id',
-        start: '2017-01-01',
-        expiry: '2027-01-01',
-        author: 'fake-author',
-        description: 'fake-description',
-        audience: 1,
-        audienceOffset: 0,
-        successMeasure: 'fake success measure',
-        audienceCriteria: 'fake audience criteria',
-        variants: [{ id: 'fake-variant-id' }],
-        variantToRun: { id: 'fake-variant-id' },
-        canRun: () => true,
-        componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
-    })),
-}));
-jest.mock('common/modules/experiments/ab-tests', () => ({
-    engagementBannerTests: [
-        {
+jest.mock('common/modules/experiments/ab', () => ({
+    getEngagementBannerTestToRun: jest.fn(() => {
+        const variant = {
+            id: 'fake-variant-id',
+            engagementBannerParams: {},
+        };
+        return Promise.resolve({
             campaignId: 'fake-campaign-id',
             id: 'fake-test-id',
             start: '2017-01-01',
@@ -61,34 +43,27 @@ jest.mock('common/modules/experiments/ab-tests', () => ({
             audienceOffset: 0,
             successMeasure: 'fake success measure',
             audienceCriteria: 'fake audience criteria',
-            variants: [
-                {
-                    id: 'fake-variant-id',
-                    engagementBannerParams: {},
-                },
-            ],
+            variants: [variant],
+            variantToRun: variant,
             canRun: () => true,
             componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
-        },
-    ],
+        });
+    }),
 }));
 jest.mock(
     'common/modules/commercial/membership-engagement-banner-parameters',
     () => ({
-        defaultEngagementBannerParams: jest.fn(() => ({
-            products: ['CONTRIBUTION'],
-            linkUrl: 'fake-link-url',
-        })),
-        getUserVariantParams: jest.fn(() =>
+        getControlEngagementBannerParams: jest.fn(() =>
             Promise.resolve({
-                buttonCaption: 'test-button-caption',
-                linkUrl: 'test-link-url',
-                messageText: 'test-message-text',
-                ctaText: 'test-cta-text',
+                products: ['CONTRIBUTION'],
+                linkUrl: 'fake-link-url',
             })
         ),
     })
 );
+
+jest.mock('lodash/memoize', () => f => f);
+
 jest.mock(
     'common/modules/commercial/membership-engagement-banner-block',
     () => ({
@@ -215,11 +190,13 @@ describe('Membership engagement banner', () => {
         let emitSpy;
 
         beforeEach(() => {
-            defaultEngagementBannerParams.mockImplementationOnce(() => ({
-                products: ['CONTRIBUTION'],
-                campaignCode: 'fake-campaign-code',
-                linkUrl: 'fake-link-url',
-            }));
+            getControlEngagementBannerParams.mockImplementationOnce(() =>
+                Promise.resolve({
+                    products: ['CONTRIBUTION'],
+                    campaignCode: 'fake-campaign-code',
+                    linkUrl: 'fake-link-url',
+                })
+            );
             emitSpy = jest.spyOn(fakeMediator, 'emit');
         });
 
@@ -227,23 +204,11 @@ describe('Membership engagement banner', () => {
             emitSpy.mockRestore();
         });
 
-        it('should show the membership engagement banner', () => {
-            membershipEngagementBanner
-                .show()
-                .then(() =>
-                    expect(FakeMessage.prototype.show).toHaveBeenCalledTimes(1)
-                );
-        });
-
-        it('should emit a display event', () => {
-            membershipEngagementBanner
-                .show()
-                .then(() =>
-                    expect(emitSpy).toHaveBeenCalledWith(
-                        'membership-message:display'
-                    )
-                );
-        });
+        it('should show the membership engagement banner', () =>
+            membershipEngagementBanner.show().then(shown => {
+                expect(shown).toBe(true);
+                expect(FakeMessage.prototype.show).toHaveBeenCalledTimes(1);
+            }));
 
         it('should record the component event in ophan with a/b test info', () =>
             membershipEngagementBanner.show().then(() =>
@@ -252,8 +217,8 @@ describe('Membership engagement banner', () => {
                         component: {
                             componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
                             products: ['CONTRIBUTION'],
-                            id: 'fake-campaign-id_fake-variant-id',
-                            campaignCode: 'fake-campaign-id_fake-variant-id',
+                            id: 'fake-test-id_fake-variant-id',
+                            campaignCode: 'fake-test-id_fake-variant-id',
                         },
                         action: 'INSERT',
                         abTest: {
@@ -279,13 +244,9 @@ describe('Membership engagement banner', () => {
 
     describe('creates message with', () => {
         beforeEach(() => {
-            defaultEngagementBannerParams.mockImplementationOnce(() => ({
-                linkUrl: 'fake-link-url',
-            }));
-            getUserVariantParams.mockImplementationOnce(() =>
+            getControlEngagementBannerParams.mockImplementationOnce(() =>
                 Promise.resolve({
-                    id: 'fake-variant-id',
-                    engagementBannerParams: {},
+                    linkUrl: 'fake-link-url',
                 })
             );
         });
@@ -296,7 +257,7 @@ describe('Membership engagement banner', () => {
                 .then(() =>
                     expect(
                         FakeMessage.mock.calls[0][1].siteMessageComponentName
-                    ).toBe('fake-campaign-id_fake-variant-id')
+                    ).toBe('fake-test-id_fake-variant-id')
                 ));
 
         it('correct CSS modifier class', () =>
@@ -311,13 +272,12 @@ describe('Membership engagement banner', () => {
 
     describe('renders message with', () => {
         beforeEach(() => {
-            defaultEngagementBannerParams.mockImplementationOnce(() => ({
-                messageText: 'fake-message-text',
-                linkUrl: 'fake-link-url',
-                buttonCaption: 'fake-button-caption',
-            }));
-            getUserVariantParams.mockImplementationOnce(() =>
-                Promise.resolve({})
+            getControlEngagementBannerParams.mockImplementationOnce(() =>
+                Promise.resolve({
+                    messageText: 'fake-message-text',
+                    linkUrl: 'fake-link-url',
+                    buttonCaption: 'fake-button-caption',
+                })
             );
             fakeConfig.get.mockImplementationOnce(() => true);
             fakeConstructQuery.mockImplementationOnce(

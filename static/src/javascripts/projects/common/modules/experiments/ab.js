@@ -25,54 +25,70 @@ import {
     engagementBannerTests,
     epicTests,
 } from 'common/modules/experiments/ab-tests';
-import { getEpicTestsFromGoogleDoc } from 'common/modules/commercial/contributions-utilities';
+import {
+    getEngagementBannerTestsFromGoogleDoc,
+    getEpicTestsFromGoogleDoc,
+} from 'common/modules/commercial/contributions-utilities';
 
-export const getEpicTestToRun = (): Promise<?Runnable<EpicABTest>> => {
-    if (config.get('switches.epicTestsFromGoogleDocs')) {
-        return getEpicTestsFromGoogleDoc().then(asyncEpicTests => {
-            asyncEpicTests.forEach(test =>
-                config.set(`switches.ab${test.id}`, true)
-            );
-            return firstRunnableTest<EpicABTest>([
-                ...asyncEpicTests,
-                ...epicTests,
-            ]);
-        });
+export const getEpicTestToRun = memoize(
+    (): Promise<?Runnable<EpicABTest>> => {
+        if (config.get('switches.epicTestsFromGoogleDocs')) {
+            return getEpicTestsFromGoogleDoc().then(asyncEpicTests => {
+                asyncEpicTests.forEach(test =>
+                    config.set(`switches.ab${test.id}`, true)
+                );
+                return firstRunnableTest<EpicABTest>([
+                    ...asyncEpicTests,
+                    ...epicTests,
+                ]);
+            });
+        }
+        return Promise.resolve(firstRunnableTest<EpicABTest>(epicTests));
     }
-    return Promise.resolve(firstRunnableTest<EpicABTest>(epicTests));
-};
+);
 
-export const getEngagementBannerTestToRun = (): ?Runnable<AcquisitionsABTest> =>
-    firstRunnableTest(engagementBannerTests);
+export const getEngagementBannerTestToRun = memoize(
+    (): Promise<?Runnable<AcquisitionsABTest>> => {
+        if (config.get('switches.engagementBannerTestsFromGoogleDocs')) {
+            return getEngagementBannerTestsFromGoogleDoc().then(
+                asyncEngagementBannerTests => {
+                    asyncEngagementBannerTests.forEach(test =>
+                        config.set(`switches.ab${test.id}`, true)
+                    );
+                    return firstRunnableTest<AcquisitionsABTest>([
+                        ...asyncEngagementBannerTests,
+                        ...engagementBannerTests,
+                    ]);
+                }
+            );
+        }
+        return Promise.resolve(
+            firstRunnableTest<AcquisitionsABTest>(engagementBannerTests)
+        );
+    }
+);
 
 // These are the tests which will actually take effect on this pageview.
 // Note that this is a subset of the potentially runnable tests,
 // because we only run one epic test and one banner test per pageview.
 // We memoize this because it can't change for a given pageview, and because getParticipations()
 // and isInVariantSynchronous() depend on it and these are called in many places.
-export const getSynchronousTestsToRun = memoize(
-    (): $ReadOnlyArray<Runnable<ABTest>> => {
-        const engagementBannerTest = getEngagementBannerTestToRun();
-
-        return [
-            ...allRunnableTests(concurrentTests),
-            ...(engagementBannerTest ? [engagementBannerTest] : []),
-        ];
-    }
+export const getSynchronousTestsToRun = memoize(() =>
+    allRunnableTests<ABTest>(concurrentTests)
 );
 
-export const getAynschronousTestsToRun = (): Promise<
+export const getAsyncTestsToRun = (): Promise<
     $ReadOnlyArray<Runnable<ABTest>>
 > =>
-    getEpicTestToRun().then(
-        (epicTest: ?Runnable<EpicABTest>) => (epicTest ? [epicTest] : [])
+    Promise.all([getEpicTestToRun(), getEngagementBannerTestToRun()]).then(
+        tests => tests.filter(Boolean)
     );
 
-// This excludes epic tests
+// This excludes epic & banner tests
 export const getSynchronousParticipations = (): Participations =>
     runnableTestsToParticipations(getSynchronousTestsToRun());
 
-// This excludes epic tests
+// This excludes epic & banner tests
 export const isInVariantSynchronous = (
     test: ABTest,
     variantId: string
@@ -106,7 +122,7 @@ export const runAndTrackAbTests = (): Promise<void> => {
         ...testExclusions,
     });
 
-    return getAynschronousTestsToRun().then(tests => {
+    return getAsyncTestsToRun().then(tests => {
         tests.forEach(test => test.variantToRun.test(test));
 
         registerImpressionEvents(tests);

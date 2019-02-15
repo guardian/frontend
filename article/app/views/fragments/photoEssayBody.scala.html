@@ -1,31 +1,17 @@
-@(amp: Boolean = false)(implicit model: ArticlePage, request: RequestHeader, context: _root_.model.ApplicationContext)
+@()(implicit model: ArticlePage, request: RequestHeader, context: _root_.model.ApplicationContext)
 
 @import views.html.fragments.langAttributes
 @import common.LinkTo
 @import views.BodyCleaner
-@import views.support.RenderClasses
 @import views.support.Commercial.{isPaidContent, articleAsideOptionalSizes, shouldShowAds}
 @import views.support.TrailCssClasses.toneClass
-@import _root_.model.ContentDesignType.RichContentDesignType
 
-@defining((model.article, isPaidContent(model))) { case (article, isPaidContent) =>
-
+@defining(model.article) { article =>
+  @defining(isPaidContent(model)) { isPaidContent =>
         <article id="article" data-test-id="article-root"
-
-            class="@RenderClasses(Map(
-                "paid-content" -> isPaidContent,
-                "content--pillar-special-report" -> (toneClass(article) == "tone-special-report")
-            ),
-                "content",
-                "content--article",
-                "content--photo-essay",
-                s"content--pillar-${article.metadata.pillar.nameOrDefault}",
-                s"content--type-${article.metadata.designType.nameOrDefault}",
-                "tonal",
-                s"tonal--${toneClass(article)}",
-                s"section-${article.trail.sectionName.trim.toLowerCase.replaceAll("""[\s-]+""", "-")}"
-            ), content content--type-immersive content--article content--immersive content--immersive-article content--immersive-garnett tonal"
-
+            class="content content--article content--immersive content--immersive-article tonal tonal--@toneClass(article) section-@article.trail.sectionName.trim.toLowerCase.replaceAll("""[\s-]+""", "-")
+            @if(isPaidContent){content--paid-content}
+            @if(article.tags.isFeature && article.elements.hasShowcaseMainElement){has-feature-showcase-element}"
             itemscope itemtype="@article.metadata.schemaType" role="main">
             <meta itemprop="mainEntityOfPage" content="@LinkTo(article.metadata.url)">
             <div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
@@ -33,43 +19,23 @@
                 <link itemprop="sameAs" href="http://www.theguardian.com">
             </div>
             @fragments.headerImmersive(article)
-            @fragments.immersiveGarnettHeadline()
-            <div class="content__standfirst--wrapper">
+            <div class="content__main tonal__main tonal__main--@toneClass(article)">
                 <div class="gs-container">
-                    <div class="content__main-column">
-                        @fragments.standfirst(article)
-                    </div>
-                </div>
-            </div>
-            <div class="content__main tonal__main tonal__main--@toneClass(article) content--photo-essay">
-                <div class="gs-container">
-                    <div class="content__main-column content__main-column--article js-content-main-column @if(article.tags.isSudoku) {sudoku}">
-                        @defining(model.article.elements.mainPicture.flatMap(_.images.masterImage)) {
-                            case Some(masterImage) => {
-                                <figcaption class="caption caption--immersive hide-from-leftcol">
-                                    Main image:
-                                    @masterImage.caption.map(Html(_))
-                                    @if(masterImage.displayCredit && !masterImage.creditEndsWithCaption) {
-                                        @masterImage.credit.map(Html(_))
-                                    }
-                                </figcaption>
-                            }
-                            case None => { }
-                        }
+                    <div class="content__main-column content__main-column--article js-content-main-column">
 
-                        @fragments.contentMeta(article, model, amp = amp)
+                        @fragments.contentMeta(article, model)
 
                         @if(article.tags.isNews && !article.elements.hasMainEmbed && article.elements.elements("main").isEmpty) {
                             <hr class="content__hr hide-until-leftcol" />
                         }
 
                         <div class="content__article-body from-content-api js-article__body"
-                             itemprop="@if(article.tags.isReview){reviewBody} else {articleBody}"
+                             itemprop="articleBody"
                              data-test-id="article-review-body" @langAttributes(article.content)>
-                            @BodyCleaner(article, amp = amp)
-                            @fragments.submeta(article)
-
+                            @BodyCleaner(article, amp = false)
                         </div>
+
+                        @fragments.submeta(article)
 
                         <div class="after-article js-after-article"></div>
                     </div>
@@ -80,9 +46,10 @@
 
                     </div>
                 </div>
+            </div>
         </article>
 
         @fragments.contentFooter(article, model.related, isPaidContent = isPaidContent)
 
-    </div>
+  }
 }

@@ -33,6 +33,8 @@ object AMPPageChecks extends Logging {
       case None => true
     }
   }
+
+  def isNotOpinion(page:PageWithStoryPackage): Boolean = ! page.item.tags.isComment
 }
 
 object AMPPicker {
@@ -43,13 +45,25 @@ object AMPPicker {
     logger.withRequestHeaders(request).results(msg, results, page)
   }
 
-  private[this] val sectionsWhitelist: Set[String] = Set(
+  private[this] val sectionsWhitelist: Set[String] = {
+    val safeSections = Set[String]("music", "football", "sport")
 
-  )
+    if (conf.switches.Switches.DotcomRenderingAMPRollout.isSwitchedOn) {
+      Set("games", "stage", "artanddesign", "film", "books") ++ safeSections
+    } else {
+      safeSections
+    }
+  }
 
-  private[this] val tagsWhitelist: Set[String] = Set(
+  private[this] val tagsWhitelist: Set[String] = {
+    val safeTags = Set[String]("info/series/digital-blog")
 
-  )
+    if (conf.switches.Switches.DotcomRenderingAMPRollout.isSwitchedOn) {
+      Set() ++ safeTags
+    } else {
+      safeTags
+    }
+  }
 
   private[this] val pageWhitelist: Set[String] = Set(
     "world/2018/oct/14/british-man-shot-dead-by-hunter-in-france",
@@ -99,6 +113,7 @@ object AMPPicker {
     Map(
       ("isBasicArticle", AMPPageChecks.isBasicArticle(page)),
       ("hasOnlySupportedElements", AMPPageChecks.hasOnlySupportedElements(page)),
+      ("isNotOpinionP", AMPPageChecks.isNotOpinion(page)),
     )
   }
 
@@ -112,7 +127,7 @@ object AMPPicker {
     val isSupported = features.forall({ case (test, isMet) => isMet})
     val isEnabled = conf.switches.Switches.DotcomRenderingAMP.isSwitchedOn
 
-    val tier = if ((isSupported && isEnabled && isWhitelisted) || request.isGuui) RemoteRenderAMP else LocalRender
+    val tier = if ((isSupported && isEnabled && isWhitelisted && !request.guuiOptOut) || request.isGuui) RemoteRenderAMP else LocalRender
 
     tier match {
       case RemoteRenderAMP => logRequest(s"path executing in dotcomponents AMP", features, page)

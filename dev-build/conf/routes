@@ -306,6 +306,7 @@ GET         /commercial/adgrabber/order/:orderId                                
 GET         /commercial/adgrabber/previewUrls/:lineItemId/:section                                                               controllers.admin.CommercialController.getCreativesListing(lineItemId: String, section: String)
 GET         /commercial/adops/ads-txt                                                                                            controllers.admin.commercial.AdsDotTextEditController.renderAdsDotText()
 POST        /commercial/adops/ads-txt                                                                                            controllers.admin.commercial.AdsDotTextEditController.postAdsDotText()
+
 # Breaking News
 GET            /news-alert/alerts                                                                                                controllers.NewsAlertController.alerts()
 POST           /news-alert/alert                                                                                                 controllers.NewsAlertController.create()
@@ -361,6 +362,7 @@ GET            /index/contributors/*contributor                                 
 GET            /$shortCode<p/[\w]+>                                                                                              controllers.ShortUrlsController.redirectShortUrl(shortCode)
 GET            /$shortCode<p/[\w]+>/:campaignCode                                                                                controllers.ShortUrlsController.fetchCampaignAndRedirectShortCode(shortCode, campaignCode)
 POST           /atom/quiz/:id/*path                                                                                              controllers.QuizController.submit(id,path)
+GET            /atom/youtube/:id.json                                                                                            controllers.YoutubeController.getAtomId(id: String)
 
 # Newspaper pages
 GET            /theguardian                                                                                                      controllers.NewspaperController.latestGuardianNewspaper()

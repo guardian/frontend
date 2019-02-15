@@ -1,7 +1,10 @@
 // @flow
-import { makeABTest } from 'common/modules/commercial/contributions-utilities';
+import {
+    makeEpicABTest,
+    defaultButtonTemplate,
+} from 'common/modules/commercial/contributions-utilities';
 
-export const acquisitionsEpicAlwaysAskIfTagged = makeABTest({
+export const acquisitionsEpicAlwaysAskIfTagged = makeEpicABTest({
     id: 'AcquisitionsEpicAlwaysAskIfTagged',
     campaignId: 'epic_always_ask_if_tagged',
 
@@ -26,10 +29,8 @@ export const acquisitionsEpicAlwaysAskIfTagged = makeABTest({
             id: 'control',
             products: ['CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
 
-            options: {
-                isUnlimited: true,
-                successOnView: true,
-            },
+            deploymentRules: 'AlwaysAsk',
+            buttonTemplate: defaultButtonTemplate,
         },
     ],
 });

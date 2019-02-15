@@ -58,7 +58,7 @@ object TrailsToRss extends implicits.Collections {
     feed.setDescription(description.getOrElse("Latest news and features from theguardian.com, the world's leading liberal voice"))
     feed.setLink("https://www.theguardian.com" + url.getOrElse(""))
     feed.setLanguage("en-gb")
-    feed.setCopyright(s"Guardian News and Media Limited or its affiliated companies. All rights reserved. ${DateTime.now.getYear}")
+    feed.setCopyright(s"Guardian News &amp; Media Limited or its affiliated companies. All rights reserved. ${DateTime.now.getYear}")
     feed.setImage(image)
     feed.setPublishedDate(DateTime.now.toDate)
     feed.setEncoding("utf-8")
