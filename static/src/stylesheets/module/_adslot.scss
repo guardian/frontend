@@ -307,6 +307,10 @@
     @include mq(mobile) {
         width: 300px;
         height: auto;
+
+        & > div.ad-slot__content > iframe {
+            min-height: 250px;
+        }
     }
 
     @include mq(desktop) {
