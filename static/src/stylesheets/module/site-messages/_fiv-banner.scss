@@ -50,7 +50,7 @@
         line-height: 16px;
         font-weight: 600;
         color: #1d1d1b;
-        border: none;
+        border: 0;
         margin-right: 10px;
     }
 
@@ -89,7 +89,7 @@
     }
 
     @include mq($from: tablet) {
-        border-bottom: none;
+        border-bottom: 0;
         flex-direction: column-reverse;
         height: 100%;
     }
@@ -183,8 +183,14 @@ $large-circle-height: 214px;
 
 
 .fiv-banner__copy-and-ctas {
+    @include fs-headlineGarnett(6);
+    color: #202d53;
+    font-style: normal;
+    font-stretch: normal;
+    font-size: 15px;
     width: 308px;
     padding-left: $gs-gutter/2;
+
     @include mq($from: tablet) {
         width: 349px;
         border-left: #999999 1px solid;
@@ -193,14 +199,10 @@ $large-circle-height: 214px;
         flex-direction: column;
         justify-content: space-between;
     }
+
     @include mq($from: desktop) {
         width: 100%;
     }
-    @include fs-headlineGarnett(6);
-    color: #202d53;
-    font-style: normal;
-    font-stretch: normal;
-    font-size: 15px;
 }
 
 .fiv-banner__message {
@@ -225,7 +227,7 @@ $large-circle-height: 214px;
 }
 
 .fiv-banner__message-text {
-    letter-spacing: -0.3px;
+    letter-spacing: -.3px;
     font-weight: 500;
     line-height: 18px;
 }

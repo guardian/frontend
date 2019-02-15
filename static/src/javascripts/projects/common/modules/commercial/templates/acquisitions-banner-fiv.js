@@ -22,7 +22,9 @@ export const acquisitionsBannerFivTemplate = (
                 <div class="fiv-banner__circle fiv-banner__circle1"></div>
                 <div class="fiv-banner__circle fiv-banner__circle2"></div>
             </div>
-            <div class="fiv-banner__headline">${potentialTitleMobile.markup}</div>
+            <div class="fiv-banner__headline">
+                ${potentialTitleMobile.markup}
+            </div>
         </div>
        
         <div class="fiv-banner__copy-and-ctas">
