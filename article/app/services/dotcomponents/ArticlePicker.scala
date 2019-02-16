@@ -53,6 +53,9 @@ object ArticlePageChecks {
   def isNotAMP(request: RequestHeader): Boolean = ! request.isAmp
 
   def isNotOpinion(page:PageWithStoryPackage): Boolean = ! page.item.tags.isComment
+
+  def isNotPaidContent(page: PageWithStoryPackage): Boolean = ! page.article.tags.isPaidContent
+
 }
 
 object ArticlePicker {
@@ -119,7 +122,8 @@ object ArticlePicker {
       ("isNotAReview", ArticlePageChecks.isNotAReview(page)),
       ("isNotAGallery", ArticlePageChecks.isNotAGallery(page)),
       ("isNotAMP", ArticlePageChecks.isNotAMP(request)),
-      ("isNotOpinionP", ArticlePageChecks.isNotOpinion(page))
+      ("isNotOpinionP", ArticlePageChecks.isNotOpinion(page)),
+      ("isNotPaidContent", ArticlePageChecks.isNotOpinion(page)),
     )
   }
 
