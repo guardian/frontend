@@ -19,6 +19,14 @@ import navigation.UrlHelpers._
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
 import views.html.fragments.affiliateLinksDisclaimer
+import views.support.{AffiliateLinksCleaner, CamelCase, GUDateTimeFormat, ImgSrc, Item1200} // Note, required despite Intellij saying otherwise
+import views.support.{CamelCase, GUDateTimeFormat, ImgSrc, Item1200}
+import common.Maps.RichMap
+import navigation.UrlHelpers.{AmpHeader, AmpFooter}
+import navigation.UrlHelpers.{Footer, Header, SideMenu, getReaderRevenueUrl}
+import navigation.ReaderRevenueSite.{Support, SupportContribute, SupportSubscribe}
+import model.meta.{Guardian, LinkedData, PotentialAction}
+import ai.x.play.json.implicits.optionWithNull // Note, required despite Intellij saying otherwise
 import views.support.{AffiliateLinksCleaner, CamelCase, FourByThree, GUDateTimeFormat, ImgSrc, Item1200, OneByOne} // Note, required despite Intellij saying otherwise
 
 // We have introduced our own set of objects for serializing data to the DotComponents API,
@@ -33,6 +41,7 @@ case class TagProperties(
     webTitle: String,
     twitterHandle: Option[String]
 )
+
 case class Tag(
     properties: TagProperties
 )
@@ -61,70 +70,84 @@ case class ReaderRevenueLinks(
   ampFooter: ReaderRevenueLink
 )
 
-case class PageData(
-    author: String,
-    pageId: String,
-    pillar: Option[String],
-    ajaxUrl: String,
-    webPublicationDate: Long,
-    webPublicationDateDisplay: String,
-    section: Option[String],
-    sectionLabel: String,
-    sectionUrl: String,
-    headline: String,
-    webTitle: String,
-    byline: String,
-    contentId: Option[String],
-    authorIds: Option[String],
-    keywordIds: Option[String],
-    toneIds: Option[String],
-    seriesId: Option[String],
-    isHosted: Boolean,
-    beaconUrl: String,
-    editionId: String,
-    edition: String,
-    contentType: Option[String],
-    commissioningDesks: Option[String],
-    subMetaLinks: SubMetaLinks,
-    sentryHost: String,
-    sentryPublicApiKey: String,
-    switches: Map[String,Boolean],
-    linkedData: List[LinkedData],
-    subscribeWithGoogleApiUrl: String,
-
-    // AMP specific
-    guardianBaseURL: String,
-    webURL: String,
-    shouldHideAds: Boolean,
-    hasStoryPackage: Boolean,
-    hasRelated: Boolean,
-    isCommentable: Boolean,
-    editionCommercialProperties: Map[String, EditionCommercialProperties],
-    prebidIndexSites: List[PrebidIndexSite],
-    commercialProperties: Option[CommercialProperties], //DEPRECATED TO DELETE
-    starRating: Option[Int],
-    trailText: String,
+case class Meta(
+  isImmersive: Boolean,
+  isHosted: Boolean,
+  shouldHideAds: Boolean,
+  hasStoryPackage: Boolean,
+  hasRelated: Boolean,
+  isCommentable: Boolean,
+  linkedData: List[LinkedData]
 )
 
-case class Config(
-    isImmersive: Boolean,
-    page: PageData,
-    nav: NavMenu,
-    readerRevenueLinks: ReaderRevenueLinks
+case class Tags(
+  authorIds: Option[String],
+  toneIds: Option[String],
+  keywordIds: Option[String],
+  commissioningDesks: Option[String],
+  all: List[Tag]
 )
 
-case class ContentFields(
-    standfirst: Option[String],
-    main: String,
-    body: String,
-    blocks: Blocks
+case class Content(
+  headline: String,
+  standfirst: Option[String],
+  main: String,
+  body: String,
+  blocks: Blocks,
+  byline: String,
+  trailText: String
 )
+
+case class Commercial(
+  editionCommercialProperties: Map[String, EditionCommercialProperties],
+  prebidIndexSites: List[PrebidIndexSite],
+  commercialProperties: Option[CommercialProperties], //DEPRECATED TO DELETE
+)
+
+// top-level structures
+
+case class DCSite(
+  ajaxUrl: String,
+  guardianBaseURL: String,
+  sentryHost: Option[String],
+  sentryPublicApiKey: Option[String],
+  switches: Map[String,Boolean],
+  beaconUrl: String,
+  subscribeWithGoogleApiUrl: String,
+  nav: NavMenu,
+  readerRevenueLinks: ReaderRevenueLinks
+)
+
+case class DCPage(
+  content: Content,
+  tags: Tags,
+  author: String,
+  pageId: String,
+  pillar: Option[String],
+  webPublicationDate: Long,
+  webPublicationDateDisplay: String,
+  section: Option[String],
+  sectionLabel: String,
+  sectionUrl: String,
+  webTitle: String,
+  contentId: Option[String],
+  seriesId: Option[String],
+  editionId: String,
+  edition: String,
+  contentType: Option[String],
+  subMetaLinks: SubMetaLinks,
+  webURL: String,
+  starRating: Option[Int],
+  commercial: Commercial,
+  meta: Meta
+)
+
+// the composite data model
 
 case class DotcomponentsDataModel(
-    contentFields: ContentFields,
-    config: Config,
-    tags: List[Tag],
-    version: Int
+  page: DCPage,
+  site: DCSite,
+  version: Int
 )
 
 object Block {
@@ -132,20 +155,32 @@ object Block {
   implicit val writes = Json.writes[Block]
 }
 
-object Blocks {
-  implicit val writes = Json.writes[Blocks]
+object Commercial {
+  implicit val writes = Json.writes[Commercial]
 }
 
-object ContentFields {
-  implicit val writes = Json.writes[ContentFields]
+object Blocks {
+  implicit val writes = Json.writes[Blocks]
 }
 
 object TagProperties {
   implicit val writes = Json.writes[TagProperties]
 }
 
+object Content {
+  implicit val writes = Json.writes[Content]
+}
+
 object Tag {
   implicit val writes = Json.writes[Tag]
+}
+
+object Tags {
+  implicit val writes = Json.writes[Tags]
+}
+
+object Meta {
+  implicit val writes = Json.writes[Meta]
 }
 
 object ReaderRevenueLink {
@@ -156,22 +191,17 @@ object ReaderRevenueLinks {
   implicit val writes = Json.writes[ReaderRevenueLinks]
 }
 
-object PageData {
-  // We use Jsonx here because PageData exceeds 22 fields and
-  // regular Play JSON is unable to serialise this. See, e.g.
-  //
-  // * https://github.com/playframework/play-json/issues/3
-  // * https://stackoverflow.com/questions/23571677/22-fields-limit-in-scala-2-11-play-framework-2-3-case-classes-and-functions/23588132#23588132
-  implicit val formats = Jsonx.formatCaseClass[PageData]
+object DCPage {
+  implicit val writes = Json.writes[DCPage]
 }
 
-object Config {
-  implicit val writes = Json.writes[Config]
+object DCSite {
+  implicit val writes = Json.writes[DCSite]
 }
 
 object DotcomponentsDataModel {
 
-  val VERSION = 1
+  val VERSION = 2
 
   def fromArticle(articlePage: ArticlePage, request: RequestHeader, blocks: APIBlocks): DotcomponentsDataModel = {
 
@@ -225,13 +255,6 @@ object DotcomponentsDataModel {
 
     val dcBlocks = Blocks(mainBlock, bodyBlocks)
 
-    val contentFields = ContentFields(
-      article.fields.standfirst,
-      article.fields.main,
-      article.fields.body,
-      dcBlocks
-    )
-
     val jsConfig = (k: String) => articlePage.getJavascriptConfig.get(k).map(_.as[String])
 
 
@@ -242,7 +265,6 @@ object DotcomponentsDataModel {
     val switches = conf.switches.Switches.all.filter(_.exposeClientSide).foldLeft(Map.empty[String,Boolean])( (acc, switch) => {
       acc + (CamelCase.fromHyphenated(switch.name) -> switch.isSwitchedOn)
     })
-
 
     // See https://developers.google.com/search/docs/data-types/article (and the AMP info too)
     // For example, we need to provide an image of at least 1200px width to be valid here
@@ -285,58 +307,7 @@ object DotcomponentsDataModel {
       )
     }
 
-    val pageData = PageData(
-      article.tags.contributors.map(_.name).mkString(","),
-      article.metadata.id,
-      article.metadata.pillar.map(_.toString),
-      Configuration.ajax.url,
-      article.trail.webPublicationDate.getMillis,
-      GUDateTimeFormat.formatDateTimeForDisplay(article.trail.webPublicationDate, request),
-      article.metadata.section.map(_.value),
-      article.content.sectionLabelName,
-      article.content.sectionLabelLink,
-      article.trail.headline,
-      article.metadata.webTitle,
-      article.trail.byline.getOrElse(""),
-      jsConfig("contentId"),   // source: content.scala
-      jsConfig("authorIds"),   // source: meta.scala
-      jsConfig("keywordIds"),  // source: tags.scala and meta.scala
-      jsConfig("toneIds"),     // source: meta.scala
-      jsConfig("seriesId"),    // source: content.scala
-      article.metadata.isHosted,
-      Configuration.debug.beaconUrl,
-      Edition(request).id,
-      Edition(request).displayName,
-      jsConfig("contentType"),
-      jsConfig("commissioningDesks"),
-      article.content.submetaLinks,
-      Configuration.rendering.sentryHost,
-      Configuration.rendering.sentryPublicApiKey,
-      switches,
-      linkedData,
-      Configuration.google.subscribeWithGoogleApiUrl,
-      guardianBaseURL = Configuration.site.host,
-      webURL = article.metadata.webUrl,
-      shouldHideAds = article.content.shouldHideAdverts,
-      hasStoryPackage = articlePage.related.hasStoryPackage,
-      hasRelated = article.content.showInRelated,
-      isCommentable = article.trail.isCommentable,
-      editionCommercialProperties = article.metadata.commercial
-        .map(_.perEdition.mapKeys(_.id))
-        .getOrElse(Map.empty[String,EditionCommercialProperties]),
-
-      prebidIndexSites = (for {
-        commercial <- article.metadata.commercial
-        sites <- commercial.prebidIndexSites
-      } yield sites.toList).getOrElse(List()),
-
-
-      commercialProperties = article.metadata.commercial,
-      starRating = article.content.starRating,
-      trailText = article.trail.fields.trailText.getOrElse("")
-    )
-
-    val tags = article.tags.tags.map(
+    val allTags = article.tags.tags.map(
       t => Tag(
         TagProperties(
           t.id,
@@ -387,17 +358,80 @@ object DotcomponentsDataModel {
       ampFooterReaderRevenueLink
     )
 
-    val config = Config(
-      article.isImmersive,
-      pageData,
+    val site = DCSite(
+      Configuration.ajax.url,
+      Configuration.site.host,
+      jsPageData.get("sentryHost"),
+      jsPageData.get("sentryPublicApiKey"),
+      switches,
+      Configuration.debug.beaconUrl,
+      Configuration.google.subscribeWithGoogleApiUrl,
       navMenu,
       readerRevenueLinks
     )
 
-    DotcomponentsDataModel(
-      contentFields,
-      config,
+    val tags = Tags(
+      jsConfig("authorIds"),
+      jsConfig("keywordIds"),
+      jsConfig("toneIds"),
+      jsConfig("commissioningDesks"),
+      allTags
+    )
+
+    val commercial = Commercial(
+      editionCommercialProperties =
+        article.metadata.commercial.map{_.perEdition.mapKeys(_.id)}
+          .getOrElse(Map.empty[String,EditionCommercialProperties]),
+      prebidIndexSites = (for {
+        commercial <- article.metadata.commercial
+        sites <- commercial.prebidIndexSites
+      } yield sites.toList).getOrElse(List()),
+      article.metadata.commercial,
+    )
+
+    val content = DCPage(
+      Content(
+        article.trail.headline,
+        article.fields.standfirst,
+        article.fields.main,
+        article.fields.body,
+        dcBlocks,
+        article.trail.byline.getOrElse(""),
+        trailText = article.trail.fields.trailText.getOrElse("")
+      ),
       tags,
+      article.tags.contributors.map(_.name).mkString(","),
+      article.metadata.id,
+      article.metadata.pillar.map(_.toString),
+      article.trail.webPublicationDate.getMillis,
+      GUDateTimeFormat.formatDateTimeForDisplay(article.trail.webPublicationDate, request),
+      article.metadata.section.map(_.value),
+      article.content.sectionLabelName,
+      article.content.sectionLabelLink,
+      article.metadata.webTitle,
+      jsConfig("contentId"),   // source: content.scala
+      jsConfig("seriesId"),    // source: content.scala
+      Edition(request).id,
+      Edition(request).displayName,
+      jsConfig("contentType"),
+      article.content.submetaLinks,
+      article.metadata.webUrl,
+      article.content.starRating,
+      commercial,
+      meta = Meta (
+        article.isImmersive,
+        article.metadata.isHosted,
+        article.content.shouldHideAdverts,
+        articlePage.related.hasStoryPackage,
+        article.content.showInRelated,
+        article.trail.isCommentable,
+        linkedData
+      ),
+    )
+
+    DotcomponentsDataModel(
+      content,
+      site,
       VERSION
     )
 
@@ -409,13 +443,8 @@ object DotcomponentsDataModel {
 
     implicit val DotComponentsDataModelWrites = new Writes[DotcomponentsDataModel] {
       def writes(model: DotcomponentsDataModel) = Json.obj(
-        "config" -> model.config,
-        "contentFields" -> Json.obj(
-          "fields" -> model.contentFields
-        ),
-        "tags" -> Json.obj(
-          "tags" -> model.tags
-        ),
+        "page" -> model.page,
+        "site" -> model.site,
         "version" -> model.version
       )
     }
