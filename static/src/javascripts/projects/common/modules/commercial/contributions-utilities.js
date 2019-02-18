@@ -478,6 +478,12 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
 
                     const rows = sheets[name];
                     const testName = name.split('__ON')[0];
+
+                    // The sheet does not easily allow test-level params, so get audience/audienceOffset from the first variant where they are defined
+                    const rowWithAudience = rows.find(row => !(isNaN(parseFloat(row.audience)) || isNaN(parseFloat(row.audienceOffset))));
+                    const audience = rowWithAudience ? rowWithAudience.audience : 1;
+                    const audienceOffset = rowWithAudience ? rowWithAudience.audienceOffset : 0;
+
                     return makeEpicABTest({
                         id: testName,
                         campaignId: testName,
@@ -490,8 +496,8 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                         successMeasure: 'AV2.0',
                         idealOutcome: 'Google Docs',
                         audienceCriteria: 'All',
-                        audience: 1,
-                        audienceOffset: 0,
+                        audience: audience,
+                        audienceOffset: audienceOffset,
                         useLocalViewLog: rows.some(row =>
                             optionalStringToBoolean(row.useLocalViewLog)
                         ),
