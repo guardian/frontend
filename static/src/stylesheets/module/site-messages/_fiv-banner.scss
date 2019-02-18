@@ -91,9 +91,9 @@ $border-style: #999999 1px solid;
     display: flex;
     flex-direction: row;
     position: relative;
-    margin-top: 39px;
-    border-bottom: $border-style;
+    margin-top: 50px;
     padding-left: $gs-gutter/2;
+    height: 181px;
 
     @include mq($from: 375px) {
         margin-top: 15px;
@@ -124,12 +124,18 @@ $border-style: #999999 1px solid;
 
 
 .fiv-banner__headline {
-    font-size: 32px;
+    font-size: 27px;
     line-height: .9;
     font-family: 'GT Guardian Titlepiece', Georgia, serif;
     margin-bottom: 20px;
+    width: 171px;
+    margin-left: 10px;
 
 
+    @include mq($from: 375px) {
+        font-size: 32px;
+    }
+    
     @include mq($from: tablet) {
         font-size: 48px;
         margin-bottom: 0;
@@ -155,12 +161,10 @@ $large-circle-height: 214px;
 
 .fiv-banner__circles {
     position: relative;
-    top: 50px;
+    top: 30px;
     isolation: isolate;
-    margin-right: 15px;
-
-    height: $small-circle-height;
     width: $small-circle-height;
+    height: $small-circle-height;
     @include mq($from: 375px) {
         height: $medium-circle-height;
         width: $medium-circle-height;
@@ -178,7 +182,7 @@ $large-circle-height: 214px;
         top: auto;
         margin-left: 25px;
     }
-    
+
     display: flex;
     align-items: center;
     justify-content: center;
@@ -251,11 +255,13 @@ $large-circle-height: 214px;
     font-style: normal;
     font-stretch: normal;
     font-size: 15px;
-    width: 308px;
+    width: 100%;
     padding-left: $gs-gutter/2;
-
+    padding-right: $gs-gutter/2;
+    border-top: $border-style;
     @include mq($from: tablet) {
         width: 349px;
+        border-top: 0;
         border-left: $border-style;
         border-right: $border-style;
         padding-left: 0;
