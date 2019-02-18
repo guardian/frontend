@@ -94,7 +94,6 @@ $border-style: #999999 1px solid;
     flex-direction: row;
     position: relative;
     margin-top: 39px;
-    margin-bottom: 20px;
     border-bottom: $border-style;
     padding-left: $gs-gutter/2;
 
@@ -104,7 +103,6 @@ $border-style: #999999 1px solid;
     }
 
     @include mq($from: tablet) {
-        margin-bottom: 0;
         border-bottom: 0;
         flex-direction: column-reverse;
         height: 100%;
@@ -131,9 +129,12 @@ $border-style: #999999 1px solid;
     font-size: 32px;
     line-height: .9;
     font-family: 'GT Guardian Titlepiece', Georgia, serif;
+    margin-bottom: 20px;
+
 
     @include mq($from: tablet) {
         font-size: 48px;
+        margin-bottom: 0;
     }
 
 
