@@ -83,6 +83,7 @@ $border-style: #999999 1px solid;
 
     @include mq($from: tablet) {
         flex-direction: row;
+        flex-wrap: nowrap;
     }
 }
 
