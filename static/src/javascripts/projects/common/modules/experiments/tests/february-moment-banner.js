@@ -113,7 +113,7 @@ export const februaryMomentBannerUk: AcquisitionsABTest = {
                 userCohort: userCohortParam.februaryMomentBannerUk,
                 titles: [
                     "We're available for everyone",
-                    'Funded by our readers.',
+                    'Funded by our\xa0readers',
                 ],
                 bannerShownCallback,
             },
@@ -154,7 +154,7 @@ export const februaryMomentBannerThankYou: AcquisitionsABTest = {
                 userCohort: userCohortParam.februaryMomentBannerThankYou,
                 titles: [
                     'Thanks to your support',
-                    "We're available to everyone.",
+                    "We're available to everyone",
                 ],
                 bannerShownCallback,
             },
