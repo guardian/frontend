@@ -45,22 +45,15 @@ export const acquisitionsBannerFivTemplate = (
                 </div>
             </div>
             <div class="engagement-banner__cta">
-                <button class="button engagement-banner__button" href="${
+                <a class="button engagement-banner__button" href="${
                     params.linkUrl
                 }">
                     ${params.buttonCaption}
-                </button>
-                <button class="button engagement-banner__button engagement-banner__button__read-more" href="${
-                    params.linkUrl
-                }">
-                    Read more
-                </button>
+                </a>
+                <a class="button engagement-banner__button engagement-banner__button__learn-more" href="${'TODO - get url'}">
+                    Learn more
+                </a>
             </div>
         </div>
-       <!--<a
-            class="u-faux-block-link__overlay"
-            target="_blank"
-            href="${params.linkUrl}"
-        ></a>-->
     </div>
     `;
