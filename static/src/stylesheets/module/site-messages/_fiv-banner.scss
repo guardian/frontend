@@ -52,26 +52,24 @@ $border-style: #999999 1px solid;
     }
 
     .engagement-banner__button {
-        padding-left: 10px;
-        padding-right: 10px;
+        padding: 0 20px;
         height: 49.5px;
-        margin-bottom: 10px;
-        margin-top: 10px;
-        width: 195px;
-        margin-left: -5px;
+        margin: 10px 10px 10px -5px;
         background-color: #fee400;
         font-size: 16px;
         line-height: 16px;
         font-weight: 600;
         color: #1d1d1b;
         border: 0;
-        margin-right: 10px;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
-    .engagement-banner__button.engagement-banner__button__read-more {
+    .engagement-banner__button.engagement-banner__button__learn-more {
         background-color: #fbf6ef;
-        width: 95px;
-        border: $border-style
+        border: $border-style;
     }
 }
 
