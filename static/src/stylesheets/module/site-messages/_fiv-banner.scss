@@ -22,7 +22,7 @@ $border-style: #999999 1px solid;
         @include mq($from: tablet) {
 
         }
-}
+    }
 
     .engagement-banner__close {
         position: absolute;
@@ -66,6 +66,10 @@ $border-style: #999999 1px solid;
     .engagement-banner__button.engagement-banner__button__learn-more {
         background-color: #fbf6ef;
         border: $border-style;
+    }
+
+    .engagement-banner__roundel {
+        display: inline-block;
     }
 }
 
@@ -298,6 +302,7 @@ $wide-circle-height: 214px;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        padding-right: 0;
     }
 
     @include mq($from: desktop) {
@@ -307,7 +312,7 @@ $wide-circle-height: 214px;
 
     @include mq($from: leftCol) {
         font-size: 19px;
-        line-height: 25pc;
+        line-height: 25px;
         width: 616px;
     }
 
