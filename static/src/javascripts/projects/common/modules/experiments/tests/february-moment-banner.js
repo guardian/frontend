@@ -149,7 +149,7 @@ export const februaryMomentBannerThankYou: AcquisitionsABTest = {
                 leadSentence: thankYouBold,
                 messageText: thankYouCopy,
                 template: acquisitionsBannerFivTemplate,
-                bannerModifierClass: 'fiv-banner',
+                bannerModifierClass: 'fiv-banner fiv-banner-thank-you',
                 minArticlesBeforeShowingBanner,
                 userCohort: userCohortParam.februaryMomentBannerThankYou,
                 titles: [

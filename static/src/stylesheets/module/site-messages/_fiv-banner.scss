@@ -29,7 +29,7 @@ $border-style: #999999 1px solid;
         top: 5px;
         right: 5px;
         @include mq($from: tablet) {
-            margin-right: 20px;
+            margin-right: 10px;
         }
     }
 
@@ -48,7 +48,8 @@ $border-style: #999999 1px solid;
     }
 
     .engagement-banner__button {
-        padding: 0 20px;
+        padding: 0 15px;
+        white-space: nowrap;
         height: 49.5px;
         margin: 10px 10px 10px -5px;
         background-color: #fee400;
@@ -61,6 +62,11 @@ $border-style: #999999 1px solid;
         display: flex;
         justify-content: center;
         align-items: center;
+
+        @include mq($from: 375px) {
+            padding: 0 20px;
+            white-space: normal;
+        }
     }
 
     .engagement-banner__button.engagement-banner__button__learn-more {
@@ -79,9 +85,8 @@ $border-style: #999999 1px solid;
     justify-content: space-between;
     flex-wrap: wrap;
 
-    @include mq($from: tablet) {
-        flex-direction: row;
-        flex-wrap: nowrap;
+    @include mq($from: tablet, $until: desktop) {
+        align-items: center;
     }
 }
 
@@ -126,7 +131,7 @@ $border-style: #999999 1px solid;
     line-height: .9;
     font-family: 'GT Guardian Titlepiece', Georgia, serif;
     margin-bottom: 20px;
-    width: 171px;
+    width: 143px;
     margin-left: 10px;
 
     @include mq($from: 375px) {
@@ -134,15 +139,16 @@ $border-style: #999999 1px solid;
     }
 
     @include mq($from: tablet) {
+        width: 186px;
         font-size: 30px;
-        margin-bottom: 0;
-        margin-top: 10px;
     }
 
     @include mq($from: desktop) {
         font-size: 40px;
         line-height: 40px;
         width: 256px;
+        margin-bottom: 0;
+        margin-top: 10px;
     }
 
     @include mq($from: leftCol) {
@@ -151,9 +157,9 @@ $border-style: #999999 1px solid;
     }
 
     @include mq($from: wide) {
-        font-size: 56px;
+        font-size: 50px;
         line-height: 54px;
-        width: 498px;
+        width: 341px;
     }
 }
 
@@ -201,10 +207,7 @@ $wide-circle-height: 214px;
 
 
     @include mq($from: tablet) {
-        position: relative;
-        right: auto;
-        top: auto;
-        margin-left: 25px;
+        top: $medium-circle-height/4;
     }
 
     @include mq($from: desktop) {
@@ -259,10 +262,6 @@ $wide-circle-height: 214px;
     position: absolute;
     background: #0084c6;
     bottom: 0;
-
-    @include mq($from: tablet, $until: desktop) {
-        left: $small-circle-height/1.8;
-    }
 }
 
 .fiv-banner__circles-animated {
@@ -370,4 +369,9 @@ $wide-circle-height: 214px;
     font-weight: 400;
 }
 
+.fiv-banner-thank-you {
+    .engagement-banner__button.engagement-banner__button__support.engagement-banner__button__support {
+        display: none;
+    }
+}
 
