@@ -27,7 +27,7 @@ const runValidator = (validator, options) => endpoint =>
             host: isDev ? fetchPage.hosts.dev : fetchPage.hosts.amp,
         })
         .then(res => {
-            const result = validator.validateString(res);
+            const result = validator.validateString(res.body);
             const pass = result.status === 'PASS';
             const message = `${result.status} for: ${endpoint}`;
 
@@ -46,15 +46,23 @@ const runValidator = (validator, options) => endpoint =>
 
 const maybeRunValidator = (validator, options) => endpoint => {
     const validate = runValidator(validator, options);
-    if (!options.checkIfAmp) return validate(endpoint);
+    const checkEither = options.checkIfAmp || options.checkIfDotComponents;
+    if (!checkEither) {
+        return validate(endpoint);
+    }
 
     return fetchPage
         .get({
             endpoint,
-            host: fetchPage.hosts.prod,
+            host: fetchPage.hosts.amp,
         })
-        .then(body => {
-            if (body.includes('<link rel="amphtml" href="')) {
+        .then(res => {
+            if (
+                (options.checkIfAmp &&
+                    res.body.includes('<link rel="amphtml" href="')) ||
+                (options.checkIfDotComponents &&
+                    res.resp.headers['x-gu-dotcomponents'])
+            ) {
                 return validate(endpoint);
             }
             return Promise.resolve(true);
