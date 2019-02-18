@@ -37,6 +37,23 @@ export const februaryMomentBannerNonUS: AcquisitionsABTest = {
                 template: acquisitionsBannerFivTemplate,
                 bannerModifierClass: 'fiv-banner',
                 // minArticlesBeforeShowingBanner?: number,
+                bannerShownCallback: () => {
+                    const circles = document.querySelector('.fiv-banner__circles');
+                    if (circles) {
+                        const observer = new window.IntersectionObserver(
+                            (entries, self) => {
+                                entries.forEach(entry => {
+                                    if (entry.isIntersecting) {
+                                        self.disconnect();
+                                        circles.className += ' fiv-banner__circles-animated';
+                                    }
+                                });
+                            },
+                            { threshold: 1.0 }
+                        );
+                        observer.observe(circles);
+                    }
+                }
             },
         },
     ],

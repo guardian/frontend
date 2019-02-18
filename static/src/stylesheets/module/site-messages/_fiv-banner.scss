@@ -77,17 +77,14 @@ $border-style: #999999 1px solid;
 
 .fiv-banner__container {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: space-between;
+    flex-wrap: wrap;
 
     @include mq($from: tablet) {
         flex-direction: row;
     }
-
-
 }
-
-
 
 .fiv-banner__headline-and-circles {
     display: flex;
@@ -150,12 +147,27 @@ $border-style: #999999 1px solid;
     background-color: #ece4d9;
 }
 
+$small-circle-height: 109px;
+$medium-circle-height: 138px;
+$large-circle-height: 214px;
 
 .fiv-banner__circles {
-    right: -80px;
+    position: relative;
     top: 50px;
     isolation: isolate;
     margin-right: 15px;
+
+    height: $small-circle-height;
+    width: $small-circle-height;
+    @include mq($from: 375px) {
+        height: $medium-circle-height;
+        width: $medium-circle-height;
+    }
+
+    @include mq($from: wide) {
+        height: $large-circle-height;
+        width: $large-circle-height;
+    }
 
 
     @include mq($from: tablet) {
@@ -164,11 +176,18 @@ $border-style: #999999 1px solid;
         top: auto;
         margin-left: 25px;
     }
-}
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-$small-circle-height: 109px;
-$medium-circle-height: 138px;
-$large-circle-height: 214px;
+    @supports (mix-blend-mode: multiply) {
+        .fiv-banner__circle {
+            mix-blend-mode: hue;
+            opacity: 1;
+        }
+    }
+}
 
 .fiv-banner__circle {
 
@@ -185,26 +204,44 @@ $large-circle-height: 214px;
         height: $large-circle-height;
     }
     border-radius: 50%;
-    mix-blend-mode: screen;
+
+    display: flex;
+    opacity: 0.8;
+    transition: transform 0.6s 0.6s linear;
+    transform: translateX(0);
+    will-change: transform;
 }
 
-.fiv-banner__circle1 {
+.fiv-banner__circle-orange {
+    position: absolute;
     background: #ff7f0f;
     top: 0;
     z-index: 30;
 }
 
-.fiv-banner__circle2 {
+.fiv-banner__circle-blue {
     position: absolute;
-    top: $small-circle-height/1.8;
     background: #0084c6;
+    bottom: 0;
 
     @include mq($from: tablet, $until: desktop) {
-        top: 0;
         left: $small-circle-height/1.8;
     }
 }
 
+.fiv-banner__circles-animated {
+    .fiv-banner__circle {
+        transition: all 2s cubic-bezier(0.645, 0.045, 0.355, 1);
+    }
+
+    .fiv-banner__circle-orange {
+        top: -25%;
+    }
+
+    .fiv-banner__circle-blue {
+        bottom: -25%;
+    }
+}
 
 .fiv-banner__copy-and-ctas {
     @include fs-headlineGarnett(6);

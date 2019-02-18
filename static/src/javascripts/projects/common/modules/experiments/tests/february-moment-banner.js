@@ -25,6 +25,24 @@ const userCohortParam = {
 };
 const minArticlesBeforeShowingBanner = 0;
 
+const bannerShownCallback = () => {
+    const circles = document.querySelector('.fiv-banner__circles');
+    if (circles) {
+        const observer = new window.IntersectionObserver(
+            (entries, self) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        self.disconnect();
+                        circles.className += ' fiv-banner__circles-animated';
+                    }
+                });
+            },
+            { threshold: 1.0 }
+        );
+        observer.observe(circles);
+    }
+};
+
 export const februaryMomentBannerNonUk: AcquisitionsABTest = {
     id: 'FebruaryMomentBannerNonUk',
     start: '2019-01-01',
@@ -56,6 +74,7 @@ export const februaryMomentBannerNonUk: AcquisitionsABTest = {
                     "Free for those who can't afford it",
                     'Supported by those who can',
                 ],
+                bannerShownCallback,
             },
             canRun: () =>
                 canShowBannerSync(
@@ -96,6 +115,7 @@ export const februaryMomentBannerUk: AcquisitionsABTest = {
                     "We're available for everyone",
                     'Funded by our readers.',
                 ],
+                bannerShownCallback,
             },
             canRun: () =>
                 canShowBannerSync(
@@ -136,6 +156,7 @@ export const februaryMomentBannerThankYou: AcquisitionsABTest = {
                     'Thanks to your support',
                     "We're available to everyone.",
                 ],
+                bannerShownCallback,
             },
             canRun: () =>
                 canShowBannerSync(
