@@ -45,10 +45,6 @@ $border-style: #999999 1px solid;
             padding-left: 10px;
             border-top: $border-style;
         }
-
-        @include mq($from: desktop) {
-            margin-top: 0;
-        }
     }
 
     .engagement-banner__button {
@@ -131,18 +127,33 @@ $border-style: #999999 1px solid;
     width: 171px;
     margin-left: 10px;
 
-
     @include mq($from: 375px) {
         font-size: 32px;
     }
-    
+
     @include mq($from: tablet) {
-        font-size: 48px;
+        font-size: 30px;
         margin-bottom: 0;
+        margin-top: 10px;
     }
 
+    @include mq($from: desktop) {
+        font-size: 40px;
+        line-height: 40px;
+        width: 235px;
+    }
 
+    @include mq($from: leftCol) {
+        font-size: 40px;
+        line-height: 40px
+    }
+
+    @include mq($from: wide) {
+        font-size: 56px;
+        line-height: 54px;
+    }
 }
+
 
 .fiv-banner__headline1 {
     color: #ef7d21;
@@ -157,7 +168,8 @@ $border-style: #999999 1px solid;
 
 $small-circle-height: 109px;
 $medium-circle-height: 138px;
-$large-circle-height: 214px;
+$desktop-circle-height: 155px;
+$wide-circle-height: 214px;
 
 .fiv-banner__circles {
     position: relative;
@@ -165,14 +177,23 @@ $large-circle-height: 214px;
     isolation: isolate;
     width: $small-circle-height;
     height: $small-circle-height;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     @include mq($from: 375px) {
         height: $medium-circle-height;
         width: $medium-circle-height;
     }
 
+    @include mq($from: desktop) {
+        height: $desktop-circle-height;
+        width: $desktop-circle-height;
+    }
+
     @include mq($from: wide) {
-        height: $large-circle-height;
-        width: $large-circle-height;
+        height: $wide-circle-height;
+        width: $wide-circle-height;
     }
 
 
@@ -183,9 +204,10 @@ $large-circle-height: 214px;
         margin-left: 25px;
     }
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    @include mq($from: desktop) {
+        top: $desktop-circle-height/4;
+        margin-top: 10px;
+    }
 
     @supports (mix-blend-mode: multiply) {
         .fiv-banner__circle {
@@ -205,9 +227,14 @@ $large-circle-height: 214px;
         height: $medium-circle-height;
     }
 
+    @include mq($from: desktop) {
+        height: $desktop-circle-height;
+        width: $desktop-circle-height;
+    }
+
     @include mq($from: wide) {
-        width: $large-circle-height;
-        height: $large-circle-height;
+        width: $wide-circle-height;
+        height: $wide-circle-height;
     }
     border-radius: 50%;
 
@@ -259,6 +286,11 @@ $large-circle-height: 214px;
     padding-left: $gs-gutter/2;
     padding-right: $gs-gutter/2;
     border-top: $border-style;
+
+    @include mq($from: 375px) {
+        font-size: 16px;
+    }
+
     @include mq($from: tablet) {
         width: 349px;
         border-top: 0;
@@ -271,7 +303,18 @@ $large-circle-height: 214px;
     }
 
     @include mq($from: desktop) {
+        font-size: 17px;
         width: 489px;
+    }
+
+    @include mq($from: leftCol) {
+        font-size: 19px;
+        line-height: 25pc;
+        width: 616px;
+    }
+
+    @include mq($from: wide) {
+        font-size: 19px;
     }
 }
 
@@ -283,10 +326,14 @@ $large-circle-height: 214px;
     @include mq($from: desktop) {
         width: 419px;
     }
+
+    @include mq($from: leftCol) {
+        width: 514px;
+    }
 }
 
 .fiv-banner__lead-sentence {
-    width: 250px;
+    width: 248px;
     font-weight: bold;
     color: #202d53;
     margin-top: 5px;
@@ -295,8 +342,17 @@ $large-circle-height: 214px;
     line-height: 16px;
 
     @include mq($from: tablet) {
+        width: 248px;
         margin-top: 15px;
         margin-bottom: 15px;
+    }
+
+    @include mq($from: desktop) {
+        width: 266px;
+    }
+
+    @include mq($from: leftCol) {
+        width: 291px;
     }
 }
 
