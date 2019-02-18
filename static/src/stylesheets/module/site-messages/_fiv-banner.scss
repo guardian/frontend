@@ -1,6 +1,7 @@
 $border-style: #999999 1px solid;
 
 .site-message--engagement-banner.site-message--fiv-banner {
+    border-top: $border-style;
     background-color: #fbf6ef;;
     .site-message__roundel {
         display: none;
@@ -13,7 +14,6 @@ $border-style: #999999 1px solid;
     .site-message__copy {
         padding-top: 0;
         padding-bottom: 0;
-        border-top: $border-style;
         @include mq($from: tablet) {
             padding-right: 0;
         }
@@ -59,7 +59,7 @@ $border-style: #999999 1px solid;
         font-weight: 600;
         color: #1d1d1b;
         border: 0;
-
+        cursor: pointer;
         display: flex;
         justify-content: center;
         align-items: center;
