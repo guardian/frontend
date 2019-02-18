@@ -142,7 +142,7 @@ $border-style: #999999 1px solid;
     @include mq($from: desktop) {
         font-size: 40px;
         line-height: 40px;
-        width: 235px;
+        width: 256px;
     }
 
     @include mq($from: leftCol) {
@@ -153,6 +153,7 @@ $border-style: #999999 1px solid;
     @include mq($from: wide) {
         font-size: 56px;
         line-height: 54px;
+        width: 498px;
     }
 }
 
@@ -284,6 +285,7 @@ $wide-circle-height: 214px;
     font-style: normal;
     font-stretch: normal;
     font-size: 15px;
+    line-height: 19px;
     width: 100%;
     padding-left: $gs-gutter/2;
     padding-right: $gs-gutter/2;
@@ -291,9 +293,11 @@ $wide-circle-height: 214px;
 
     @include mq($from: 375px) {
         font-size: 16px;
+        line-height: 21px;
     }
 
     @include mq($from: tablet) {
+        line-height: 22px;
         width: 349px;
         border-top: 0;
         border-left: $border-style;
@@ -307,6 +311,7 @@ $wide-circle-height: 214px;
 
     @include mq($from: desktop) {
         font-size: 17px;
+        line-height: 22px;
         width: 489px;
     }
 
@@ -318,6 +323,7 @@ $wide-circle-height: 214px;
 
     @include mq($from: wide) {
         font-size: 19px;
+        line-height: 25px;
     }
 }
 
@@ -362,7 +368,6 @@ $wide-circle-height: 214px;
 .fiv-banner__message-text {
     letter-spacing: -.3px;
     font-weight: 400;
-    line-height: 18px;
 }
 
 
