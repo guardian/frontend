@@ -206,8 +206,8 @@ $large-circle-height: 214px;
     border-radius: 50%;
 
     display: flex;
-    opacity: 0.8;
-    transition: transform 0.6s 0.6s linear;
+    opacity: .8;
+    transition: transform .6s .6s linear;
     transform: translateX(0);
     will-change: transform;
 }
@@ -231,7 +231,7 @@ $large-circle-height: 214px;
 
 .fiv-banner__circles-animated {
     .fiv-banner__circle {
-        transition: all 2s cubic-bezier(0.645, 0.045, 0.355, 1);
+        transition: all 2s cubic-bezier(.645, .045, .355, 1);
     }
 
     .fiv-banner__circle-orange {
