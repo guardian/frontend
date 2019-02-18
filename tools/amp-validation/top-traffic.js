@@ -17,6 +17,7 @@ Promise.all([
         run({
             checkIfAmp: true,
             logErrors: false,
+            checkIfDotComponents: true,
         })
     )
     .catch(err => console.log(err));
