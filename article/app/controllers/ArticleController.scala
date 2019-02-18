@@ -1,6 +1,6 @@
 package controllers
 
-import com.gu.contentapi.client.model.v1.{ItemResponse, Content => ApiContent}
+import com.gu.contentapi.client.model.v1.{Blocks, ItemResponse, Content => ApiContent}
 import common._
 import contentapi.ContentApiClient
 import implicits.{AmpFormat, EmailFormat, HtmlFormat, JsonFormat}
@@ -26,23 +26,23 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
 
   private def isSupported(c: ApiContent) = c.isArticle || c.isLiveBlog || c.isSudoku
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
-  override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = mapModel(path, Canonical)(render(path, _))
+  override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = mapModel(path, Canonical)((article, blocks) => render(path, article, blocks))
 
   def renderJson(path: String): Action[AnyContent] = {
     Action.async { implicit request =>
       mapModel(path, ArticleBlocks) {
-        render(path, _)
+        (article, blocks) => render(path, article, blocks)
       }
     }
   }
 
   def renderArticle(path: String): Action[AnyContent] = {
     Action.async { implicit request =>
-      mapModel(path, ArticleBlocks)( article => {
+      mapModel(path, ArticleBlocks)( (article, blocks) => {
         renderingTierPicker.getTier(article) match {
-          case RemoteRender => remoteRenderer.getArticle(ws, path, article)
-          case RemoteRenderAMP => remoteRenderer.getAMPArticle(ws, path, article)
-          case LocalRender => render(path, article)
+          case RemoteRender => remoteRenderer.getArticle(ws, path, article, blocks)
+          case RemoteRenderAMP => remoteRenderer.getAMPArticle(ws, path, article, blocks)
+          case LocalRender => render(path, article, blocks)
         }
       })
     }
@@ -51,7 +51,7 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
   def renderEmail(path: String): Action[AnyContent] = {
     Action.async { implicit request =>
       mapModel(path, ArticleBlocks) {
-        render(path, _)
+        (article, blocks) => render(path, article, blocks)
       }
     }
   }
@@ -79,13 +79,13 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
     List(("html", views.html.fragments.articleBody(article))) ++ contentFieldsJson
   }
 
-  private def getGuuiJson(article: ArticlePage)(implicit request: RequestHeader): String =
-    DotcomponentsDataModel.toJsonString(DotcomponentsDataModel.fromArticle(article, request))
+  private def getGuuiJson(article: ArticlePage, blocks: Blocks)(implicit request: RequestHeader): String =
+    DotcomponentsDataModel.toJsonString(DotcomponentsDataModel.fromArticle(article, request, blocks))
 
-  private def render(path: String, article: ArticlePage)(implicit request: RequestHeader): Future[Result] = {
+  private def render(path: String, article: ArticlePage, blocks: Blocks)(implicit request: RequestHeader): Future[Result] = {
     Future {
       request.getRequestFormat match {
-        case JsonFormat if request.isGuui => common.renderJson(getGuuiJson(article), article).as("application/json")
+        case JsonFormat if request.isGuui => common.renderJson(getGuuiJson(article, blocks), article).as("application/json")
         case JsonFormat => common.renderJson(getJson(article), article)
         case EmailFormat => common.renderEmail(ArticleEmailHtmlPage.html(article), article)
         case HtmlFormat => common.renderHtml(ArticleHtmlPage.html(article), article)
@@ -94,22 +94,23 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
     }
   }
 
-  private def mapModel(path: String, range: BlockRange)(render: ArticlePage => Future[Result])(implicit request: RequestHeader): Future[Result] = {
+  private def mapModel(path: String, range: BlockRange)(render: (ArticlePage, Blocks) => Future[Result])(implicit request: RequestHeader): Future[Result] = {
     capiLookup
       .lookup(path, Some(range))
       .map(responseToModelOrResult)
       .recover(convertApiExceptions)
       .flatMap {
-        case Left(model) => render(model)
+        case Left((model, blocks)) => render(model, blocks)
         case Right(other) => Future.successful(RenderOtherStatus(other))
       }
   }
 
-  private def responseToModelOrResult(response: ItemResponse)(implicit request: RequestHeader): Either[ArticlePage, Result] = {
+  private def responseToModelOrResult(response: ItemResponse)(implicit request: RequestHeader): Either[(ArticlePage, Blocks), Result] = {
     val supportedContent: Option[ContentType] = response.content.filter(isSupported).map(Content(_))
+    val blocks = response.content.flatMap(_.blocks).getOrElse(Blocks())
 
     ModelOrResult(supportedContent, response) match {
-      case Left(article:Article) => Left(ArticlePage(article, StoryPackages(article.metadata.id, response)))
+      case Left(article:Article) => Left((ArticlePage(article, StoryPackages(article.metadata.id, response)), blocks))
       case Right(r) => Right(r)
       case _ => Right(NotFound)
     }

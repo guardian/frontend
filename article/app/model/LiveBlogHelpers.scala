@@ -112,7 +112,7 @@ object LiveBlogHelpers {
     val textBlocks = firstPageBlocks
       .take(number)
       .collect {
-        case BodyBlock(id, html, summary, title, _, _, _, publishedAt, _, updatedAt, _, _, _) if html.trim.nonEmpty =>
+        case BodyBlock(id, html, summary, title, _, _, _, publishedAt, _, updatedAt, _, _) if html.trim.nonEmpty =>
           TextBlock(id, title, publishedAt, updatedAt, summary)
       }
 

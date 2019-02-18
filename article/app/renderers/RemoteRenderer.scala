@@ -3,6 +3,7 @@ package renderers
 import com.eclipsesource.schema._
 import com.eclipsesource.schema.drafts.Version7
 import com.eclipsesource.schema.drafts.Version7._
+import com.gu.contentapi.client.model.v1.Blocks
 import com.osinka.i18n.Lang
 import conf.Configuration
 import controllers.ArticlePage
@@ -52,8 +53,8 @@ class RemoteRenderer {
   }
 
 
-  def getAMPArticle(ws: WSClient, payload: String, article: ArticlePage)(implicit request: RequestHeader): Future[Result] = {
-    val dataModel: DotcomponentsDataModel = DotcomponentsDataModel.fromArticle(article, request)
+  def getAMPArticle(ws: WSClient, payload: String, article: ArticlePage, blocks: Blocks)(implicit request: RequestHeader): Future[Result] = {
+    val dataModel: DotcomponentsDataModel = DotcomponentsDataModel.fromArticle(article, request, blocks)
     val dataString: String = DotcomponentsDataModel.toJsonString(dataModel)
 
     validate(dataModel) match {
@@ -63,8 +64,8 @@ class RemoteRenderer {
 
   }
 
-  def getArticle(ws:WSClient, path: String, article: ArticlePage)(implicit request: RequestHeader): Future[Result] = {
-    val dataModel: DotcomponentsDataModel = DotcomponentsDataModel.fromArticle(article, request)
+  def getArticle(ws:WSClient, path: String, article: ArticlePage,  blocks: Blocks)(implicit request: RequestHeader): Future[Result] = {
+    val dataModel: DotcomponentsDataModel = DotcomponentsDataModel.fromArticle(article, request, blocks)
     val dataString: String = DotcomponentsDataModel.toJsonString(dataModel)
 
     validate(dataModel) match {
