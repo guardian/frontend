@@ -1,8 +1,9 @@
 $border-style: #999999 1px solid;
 
-.site-message--engagement-banner.site-message--fiv-banner {
+.site-message--fiv-banner {
     border-top: $border-style;
     background-color: #fbf6ef;;
+
     .site-message__roundel {
         display: none;
     }
@@ -166,10 +167,6 @@ $border-style: #999999 1px solid;
 }
 .fiv-banner__headline2 {
     color: #0084c6;
-}
-
-.site-message--fiv-banner {
-    background-color: #ece4d9;
 }
 
 $small-circle-height: 90px;
