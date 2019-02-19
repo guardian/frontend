@@ -84,11 +84,15 @@ class SubMessage extends Message {
     bindCloseHandler(close: (banner: Message) => void): void {
         const element = document.querySelector(this.elementSelector);
         if (element) {
-            const closeButton = element.querySelector('.js-site-message-close');
-            if (closeButton) {
-                closeButton.addEventListener('click', () => {
-                    close(this);
-                });
+            const closeButtons = element.querySelectorAll(
+                '.js-site-message-close'
+            );
+            if (closeButtons) {
+                closeButtons.forEach(button =>
+                    button.addEventListener('click', () => {
+                        close(this);
+                    })
+                );
             }
         }
     }
