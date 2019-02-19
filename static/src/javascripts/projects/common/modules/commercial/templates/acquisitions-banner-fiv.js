@@ -50,7 +50,7 @@ export const acquisitionsBannerFivTemplate = (
                 }">
                     ${params.buttonCaption}
                 </a>
-                <a class="button engagement-banner__button engagement-banner__button__learn-more" href="${'TODO - get url'}">
+                <a class="button engagement-banner__button engagement-banner__button__learn-more js-engagement-banner-close-button js-site-message-close" href="${'TODO - get url'}">
                     Learn more
                 </a>
             </div>
