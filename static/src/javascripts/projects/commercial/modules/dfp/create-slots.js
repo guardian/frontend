@@ -78,8 +78,9 @@ const adSlotDefinitions = {
             mobile: [
                 adSizes.outOfPage,
                 adSizes.empty,
-                adSizes.mpu,
                 adSizes.fabric,
+                adSizes.outstreamMobile,
+                adSizes.mpu,
                 adSizes.fluid,
             ],
         },
