@@ -66,7 +66,7 @@ object AMPPicker {
     )
 
     if (conf.switches.Switches.DotcomRenderingAMPRollout.isSwitchedOn) {
-      Set("technology", "lifeandstyle", "money", "travel") ++ safeSections
+      Set("technology", "lifeandstyle", "money", "travel", "education", "politics", "science", "media") ++ safeSections
     } else {
       safeSections
     }
