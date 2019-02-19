@@ -13,7 +13,7 @@ import layout.ContentWidths
 import layout.ContentWidths._
 import model._
 import model.content._
-import model.dotcomrendering.pageElements.{DisclaimerBlockElement, PageElement, TextBlockElement}
+import model.dotcomrendering.pageElements.{PageElement, TextBlockElement}
 import navigation.ReaderRevenueSite
 import org.jsoup.Jsoup
 import org.jsoup.nodes.{Document, Element, TextNode}
@@ -857,18 +857,15 @@ object AffiliateLinksCleaner {
     else html
   }
 
-  def replaceLinksInElement(element: TextBlockElement, pageUrl: String, contentType: String): List[PageElement] = {
+  def replaceLinksInElement(element: TextBlockElement, pageUrl: String, contentType: String): PageElement = {
     val doc = Jsoup.parseBodyFragment(element.html)
     val linksToReplace: mutable.Seq[Element] = getAffiliateableLinks(doc)
     linksToReplace.foreach{el => el.attr("href", linkToSkimLink(el.attr("href"), pageUrl, skimlinksId))}
 
     if (linksToReplace.nonEmpty) {
-      List(
-        TextBlockElement(doc.outerHtml()),
-        DisclaimerBlockElement(affiliateLinksDisclaimer(contentType: String).body)
-      )
+        TextBlockElement(doc.outerHtml())
     } else {
-      List(element)
+      element
     }
   }
 

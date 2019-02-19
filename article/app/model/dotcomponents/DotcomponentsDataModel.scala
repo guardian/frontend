@@ -1,6 +1,7 @@
 package model.dotcomponents
 
 import ai.x.play.json.Jsonx
+import com.gu.contentapi.client.model.v1.ElementType.Text
 import com.gu.contentapi.client.model.v1.{BlockElement => ClientBlockElement, Blocks => APIBlocks}
 import common.Edition
 import common.Maps.RichMap
@@ -10,7 +11,7 @@ import conf.Configuration.affiliatelinks
 import conf.switches.Switches
 import controllers.ArticlePage
 import model.SubMetaLinks
-import model.dotcomrendering.pageElements.{DisclaimerBlockElement, PageElement, TextBlockElement}
+import model.dotcomrendering.pageElements.{DisclaimerBlockElement, PageElement}
 import model.meta.{Guardian, LinkedData, PotentialAction}
 import navigation.NavMenu
 import navigation.ReaderRevenueSite.{Support, SupportContribute, SupportSubscribe}
@@ -234,17 +235,22 @@ object DotcomponentsDataModel {
       tagPaths = article.content.tags.tags.map(_.id)
     )
 
-    def blocksToPageElements(elements: Seq[ClientBlockElement], affiliateLinks: Boolean): List[PageElement] = {
-      elements.toList.flatMap(el => PageElement.make(
+    def blocksToPageElements(capiElems: Seq[ClientBlockElement], affiliateLinks: Boolean): List[PageElement] = {
+      val elems = capiElems.toList.flatMap(el => PageElement.make(
         element = el,
         addAffiliateLinks = affiliateLinks,
         pageUrl = request.uri
       ))
+
+      addDisclaimer(elems, capiElems)
     }
 
-    def addDisclaimer(elems: List[PageElement]): List[PageElement] = {
-      val hasLinks = elems.exists({
-        case TextBlockElement(html) => AffiliateLinksCleaner.stringContainsAffiliateableLinks(html)
+    def addDisclaimer(elems: List[PageElement], capiElems: Seq[ClientBlockElement]): List[PageElement] = {
+      val hasLinks = capiElems.exists(elem => elem.`type` match {
+        case Text => {
+          val textString = elem.textTypeData.toList.mkString("\n") // just concat all the elems here for this test
+          AffiliateLinksCleaner.stringContainsAffiliateableLinks(textString)
+        }
         case _ => false
       })
 

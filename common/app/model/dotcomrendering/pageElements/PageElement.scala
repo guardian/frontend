@@ -94,14 +94,13 @@ object PageElement {
         text <- block.html.toList
         element <- Cleaner.split(text)
         textElement = TextBlockElement(element)
-        withLinks <- {
-          if (addAffiliateLinks) {
-            AffiliateLinksCleaner.replaceLinksInElement(textElement, pageUrl = pageUrl, contentType = "article")
-          } else {
-            List(textElement)
-          }
+      } yield {
+        if (addAffiliateLinks) {
+          AffiliateLinksCleaner.replaceLinksInElement(textElement, pageUrl = pageUrl, contentType = "article")
+        } else {
+          textElement
         }
-      } yield withLinks
+      }
 
       case Tweet => {
         (for {
