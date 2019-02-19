@@ -5,20 +5,20 @@ import java.util.regex.{Matcher, Pattern}
 
 import com.gu.contentatom.renderer.ArticleConfiguration
 import common.{Edition, LinkTo, Logging}
+import conf.Configuration.affiliatelinks._
+import conf.Configuration.site.host
+import conf.switches.Switches
 import conf.switches.Switches._
 import layout.ContentWidths
 import layout.ContentWidths._
 import model._
 import model.content._
+import model.dotcomrendering.pageElements.{PageElement, TextBlockElement}
 import navigation.ReaderRevenueSite
 import org.jsoup.Jsoup
 import org.jsoup.nodes.{Document, Element, TextNode}
 import play.api.mvc.RequestHeader
-import play.twirl.api.HtmlFormat
 import services.SkimLinksCache
-import conf.Configuration.affiliatelinks._
-import conf.Configuration.site.host
-import conf.switches.Switches
 import views.html.fragments.affiliateLinksDisclaimer
 import views.support.Commercial.isAdFree
 
@@ -855,6 +855,18 @@ object AffiliateLinksCleaner {
     val shouldAppendDisclaimer = appendDisclaimer.getOrElse(linksToReplace.nonEmpty)
     if (shouldAppendDisclaimer) insertAffiliateDisclaimer(html, contentType)
     else html
+  }
+
+  def replaceLinksInElement(element: TextBlockElement, pageUrl: String, contentType: String): PageElement = {
+    val doc = Jsoup.parseBodyFragment(element.html)
+    val linksToReplace: mutable.Seq[Element] = getAffiliateableLinks(doc)
+    linksToReplace.foreach{el => el.attr("href", linkToSkimLink(el.attr("href"), pageUrl, skimlinksId))}
+
+    if (linksToReplace.nonEmpty) {
+        TextBlockElement(doc.outerHtml())
+    } else {
+      element
+    }
   }
 
   def isAffiliatable(element: Element): Boolean =
