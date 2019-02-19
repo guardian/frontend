@@ -59,11 +59,14 @@ object AMPPicker {
       "stage",
       "artanddesign",
       "film",
-      "books"
+      "books",
+      "business",
+      "society",
+      "environment"
     )
 
     if (conf.switches.Switches.DotcomRenderingAMPRollout.isSwitchedOn) {
-      Set("business", "society", "environment") ++ safeSections
+      Set("technology", "lifeandstyle", "money", "travel") ++ safeSections
     } else {
       safeSections
     }
