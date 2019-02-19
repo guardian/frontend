@@ -42,8 +42,10 @@ $border-style: #999999 1px solid;
     .engagement-banner__cta {
         display: flex;
         flex-direction: row;
+        margin-bottom: 10px;
 
         @include mq($from: tablet) {
+            margin-bottom: 2px;
             padding-left: 10px;
             border-top: $border-style;
         }
@@ -52,13 +54,12 @@ $border-style: #999999 1px solid;
     .engagement-banner__button {
         padding: 0 15px;
         white-space: nowrap;
-        height: 49.5px;
         margin: 10px 10px 10px -5px;
         background-color: #fee400;
         font-size: 16px;
         line-height: 16px;
         font-weight: 600;
-        color: #1d1d1b;
+        color: #202d53;
         border: 0;
         cursor: pointer;
         display: flex;
@@ -94,10 +95,10 @@ $border-style: #999999 1px solid;
     position: relative;
     margin-top: 50px;
     padding-left: $gs-gutter/2;
-    height: 181px;
+    height: 158px;
 
     @include mq($from: 375px) {
-        height: 210px
+        height: 183px;
     }
 
     @include mq($from: tablet) {
@@ -127,7 +128,6 @@ $border-style: #999999 1px solid;
     font-size: 27px;
     line-height: 27px;
     font-family: 'GT Guardian Titlepiece', Georgia, serif;
-    margin-bottom: 20px;
     width: 189px;
     margin-left: 10px;
 
@@ -276,7 +276,7 @@ $wide-circle-height: 162px;
     font-style: normal;
     font-stretch: normal;
     font-size: 15px;
-    line-height: 19px;
+    line-height: 18px;
     width: 100%;
     padding-left: $gs-gutter/2;
     padding-right: $gs-gutter/2;
@@ -284,11 +284,10 @@ $wide-circle-height: 162px;
 
     @include mq($from: 375px) {
         font-size: 16px;
-        line-height: 21px;
+        line-height: 20px;
     }
 
     @include mq($from: tablet) {
-        line-height: 22px;
         width: 349px;
         border-top: 0;
         border-left: $border-style;
@@ -302,19 +301,19 @@ $wide-circle-height: 162px;
 
     @include mq($from: desktop) {
         font-size: 17px;
-        line-height: 22px;
+        line-height: 21px;
         width: 489px;
     }
 
     @include mq($from: leftCol) {
         font-size: 19px;
-        line-height: 25px;
+        line-height: 23px;
         width: 616px;
     }
 
     @include mq($from: wide) {
         font-size: 19px;
-        line-height: 25px;
+        line-height: 23px;
     }
 }
 
@@ -339,7 +338,6 @@ $wide-circle-height: 162px;
     margin-top: 5px;
     margin-bottom: 5px;
     letter-spacing: 0px;
-    line-height: 16px;
 
     @include mq($from: tablet) {
         width: 248px;

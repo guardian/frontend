@@ -5,12 +5,12 @@ import { acquisitionsBannerFivTemplate } from 'common/modules/commercial/templat
 import { canShowBannerSync } from 'common/modules/commercial/contributions-utilities';
 
 const defaultBold =
-    'This is The Guardian’s model for open, independent journalism';
+    'This is The\xa0Guardian’s model for open, independent journalism';
 const defaultCopy =
     'Our mission is to keep independent journalism accessible to everyone, regardless of where they live or what they can afford. Funding from our readers safeguards our editorial independence. It also powers our work and maintains this openness. It means more people, across the world, can access accurate information with integrity at its heart.';
 
 const thankYouBold =
-    'Thank you for supporting The Guardian’s model for open, independent journalism';
+    'Thank you for supporting The\xa0Guardian’s model for open, independent journalism';
 const thankYouCopy =
     'Our mission is to keep independent journalism accessible to everyone, regardless of where they live or what they can afford. Funding from readers like you safeguards our editorial independence, powers our work, and maintains this openness. It means more people, across the world, can access accurate information with integrity at its heart.';
 

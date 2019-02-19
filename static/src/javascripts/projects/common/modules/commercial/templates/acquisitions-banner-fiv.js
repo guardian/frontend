@@ -38,10 +38,10 @@ export const acquisitionsBannerFivTemplate = (
             <div class="fiv-banner__copy-and-ctas">
             <div class="fiv-banner__message">
                 <div class="fiv-banner__lead-sentence">
-                   This is The Guardian’s model for open, independent journalism
+                   ${params.leadSentence || ''}
                 </div>
                 <div class="fiv-banner__message-text">
-                    Our mission is to keep independent journalism accessible to everyone, regardless of where they live or what they can afford. Funding from our readers safeguards our editorial independence. It also powers our work and maintains this openness. It means more people, across the world, can access accurate information with integrity at its heart. 
+                   ${params.messageText} 
                 </div>
             </div>
             <div class="engagement-banner__cta">
