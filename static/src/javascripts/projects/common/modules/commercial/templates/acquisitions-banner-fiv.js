@@ -6,6 +6,7 @@ import closeCentralIcon from 'svgs/icon/close-central.svg';
 export const acquisitionsBannerFivTemplate = (
     params: EngagementBannerTemplateParams
 ): string => `
+    <div class="fiv-banner__container">
         <div class="engagement-banner__close">
             <div class="engagement-banner__roundel">
                 ${marque36icon.markup}
@@ -15,44 +16,44 @@ export const acquisitionsBannerFivTemplate = (
                 ${closeCentralIcon.markup}
             </button>
         </div>
-        ${
-            params.titles
-                ? `<div class="fiv-banner__headline">
-            <div class="fiv-banner__headline1">
-    ${params.titles[0]}
+        <div class="fiv-banner__headline-and-circles">
+            <div class="fiv-banner__circles">
+                <div class="fiv-banner__circle fiv-banner__circle-orange"></div>
+                <div class="fiv-banner__circle fiv-banner__circle-blue"></div>
             </div>
-            <div class="fiv-banner__headline2">
-                ${params.titles[1]}
-            </div>
-        </div>`
-                : ''
-        }
-
-        <div class="fiv-banner__circles">
-            <div class="fiv-banner__circle fiv-banner__circle1"></div>
-            <div class="fiv-banner__circle fiv-banner__circle2 fiv-banner__circle2-clear"></div>
-            <div class="fiv-banner__circle fiv-banner__circle2 fiv-banner__circle2-mask"></div>
+            ${
+                params.titles
+                    ? `<div class="fiv-banner__headline">
+                <div class="fiv-banner__headline1">
+        ${params.titles[0]}
+                </div>
+                <div class="fiv-banner__headline2">
+                    ${params.titles[1]}
+                </div>
+            </div>`
+                    : ''
+            }    
         </div>
-        <div class="fiv-banner__container">
-            <div class="fiv-banner__text">
-                HIHIHI ${params.messageText}${params.ctaText}
+       
+            <div class="fiv-banner__copy-and-ctas">
+            <div class="fiv-banner__message">
+                <div class="fiv-banner__lead-sentence">
+                   ${params.leadSentence || ''}
+                </div>
+                <div class="fiv-banner__message-text">
+                   ${params.messageText} 
+                </div>
             </div>
             <div class="engagement-banner__cta">
-                <button class="button engagement-banner__button" href="${
+                <a class="button engagement-banner__button engagement-banner__button__support" href="${
                     params.linkUrl
                 }">
                     ${params.buttonCaption}
-                </button>
-                <button class="button engagement-banner__read-more" href="${
-                    params.linkUrl
-                }">
-                    FIX LINK
-                </button>
+                </a>
+                <a class="button engagement-banner__button engagement-banner__button__learn-more" href="${'TODO - get url'}">
+                    Learn more
+                </a>
             </div>
         </div>
-        <a
-            class="u-faux-block-link__overlay"
-            target="_blank"
-            href="${params.linkUrl}"
-        ></a>
+    </div>
     `;

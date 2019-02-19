@@ -5,12 +5,12 @@ import { acquisitionsBannerFivTemplate } from 'common/modules/commercial/templat
 import { canShowBannerSync } from 'common/modules/commercial/contributions-utilities';
 
 const defaultBold =
-    'This is The Guardian’s model for open, independent journalism';
+    'This is The\xa0Guardian’s model for open, independent journalism';
 const defaultCopy =
     'Our mission is to keep independent journalism accessible to everyone, regardless of where they live or what they can afford. Funding from our readers safeguards our editorial independence. It also powers our work and maintains this openness. It means more people, across the world, can access accurate information with integrity at its heart.';
 
 const thankYouBold =
-    'Thank you for supporting The Guardian’s model for open, independent journalism';
+    'Thank you for supporting The\xa0Guardian’s model for open, independent journalism';
 const thankYouCopy =
     'Our mission is to keep independent journalism accessible to everyone, regardless of where they live or what they can afford. Funding from readers like you safeguards our editorial independence, powers our work, and maintains this openness. It means more people, across the world, can access accurate information with integrity at its heart.';
 
@@ -24,6 +24,24 @@ const userCohortParam = {
     februaryMomentBannerThankYou: 'OnlyExistingSupporters',
 };
 const minArticlesBeforeShowingBanner = 0;
+
+const bannerShownCallback = () => {
+    const circles = document.querySelector('.fiv-banner__circles');
+    if (circles) {
+        const observer = new window.IntersectionObserver(
+            (entries, self) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        self.disconnect();
+                        circles.className += ' fiv-banner__circles-animated';
+                    }
+                });
+            },
+            { threshold: 1.0 }
+        );
+        observer.observe(circles);
+    }
+};
 
 export const februaryMomentBannerNonUk: AcquisitionsABTest = {
     id: 'FebruaryMomentBannerNonUk',
@@ -56,6 +74,7 @@ export const februaryMomentBannerNonUk: AcquisitionsABTest = {
                     "Free for those who can't afford it",
                     'Supported by those who can',
                 ],
+                bannerShownCallback,
             },
             canRun: () =>
                 canShowBannerSync(
@@ -94,8 +113,9 @@ export const februaryMomentBannerUk: AcquisitionsABTest = {
                 userCohort: userCohortParam.februaryMomentBannerUk,
                 titles: [
                     "We're available for everyone",
-                    'Funded by our readers.',
+                    'Funded by our\xa0readers',
                 ],
+                bannerShownCallback,
             },
             canRun: () =>
                 canShowBannerSync(
@@ -129,13 +149,14 @@ export const februaryMomentBannerThankYou: AcquisitionsABTest = {
                 leadSentence: thankYouBold,
                 messageText: thankYouCopy,
                 template: acquisitionsBannerFivTemplate,
-                bannerModifierClass: 'fiv-banner',
+                bannerModifierClass: 'fiv-banner fiv-banner-thank-you',
                 minArticlesBeforeShowingBanner,
                 userCohort: userCohortParam.februaryMomentBannerThankYou,
                 titles: [
                     'Thanks to your support',
-                    "We're available to everyone.",
+                    "We're available to everyone",
                 ],
+                bannerShownCallback,
             },
             canRun: () =>
                 canShowBannerSync(
