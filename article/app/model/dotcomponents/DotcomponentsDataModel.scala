@@ -19,7 +19,7 @@ import navigation.UrlHelpers._
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
 import views.html.fragments.affiliateLinksDisclaimer
-import views.support.{AffiliateLinksCleaner, CamelCase, GUDateTimeFormat, ImgSrc, Item1200} // Note, required despite Intellij saying otherwise
+import views.support.{AffiliateLinksCleaner, CamelCase, GUDateTimeFormat, ImgSrc, Item1200, Item300} // Note, required despite Intellij saying otherwise
 
 // We have introduced our own set of objects for serializing data to the DotComponents API,
 // because we don't want people changing the core frontend models and as a side effect,
@@ -31,7 +31,8 @@ case class TagProperties(
     id: String,
     tagType: String,
     webTitle: String,
-    twitterHandle: Option[String]
+    twitterHandle: Option[String],
+    bylineImageUrl: Option[String]
 )
 case class Tag(
     properties: TagProperties
@@ -360,7 +361,8 @@ object DotcomponentsDataModel {
           t.id,
           t.properties.tagType,
           t.properties.webTitle,
-          t.properties.twitterHandle
+          t.properties.twitterHandle,
+          t.properties.bylineImageUrl.map(src => ImgSrc(src, Item300))
         )
       )
     )
