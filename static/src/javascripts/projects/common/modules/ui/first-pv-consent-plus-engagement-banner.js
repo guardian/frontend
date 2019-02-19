@@ -133,6 +133,11 @@ const show = (): Promise<boolean> => {
                 }
                 bindFirstPvConsentClickHandlers(firstPvConsentMessage);
                 engagementMessage.bindCloseHandler(hideEngagementBanner);
+
+                if (paramsAndEngagementBannerHtml.params.bannerShownCallback) {
+                    paramsAndEngagementBannerHtml.params.bannerShownCallback();
+                }
+
                 return true;
             })
         )
