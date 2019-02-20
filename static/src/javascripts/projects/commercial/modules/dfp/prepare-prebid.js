@@ -18,6 +18,8 @@ if (!isGoogleWebPreview()) {
 }
 
 const setupPrebid: () => Promise<void> = () => {
+    console.log(`isGoogleWebPreview: ${isGoogleWebPreview().toString()}`);
+
     if (
         dfpEnv.externalDemand === 'prebid' &&
         commercialFeatures.dfpAdvertising &&
