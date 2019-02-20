@@ -362,7 +362,7 @@ object DotcomponentsDataModel {
           t.properties.tagType,
           t.properties.webTitle,
           t.properties.twitterHandle,
-          t.properties.bylineImageUrl.map(src => ImgSrc(src, Item300))
+          t.properties.contributorLargeImagePath.map(src => ImgSrc(src, Item300))
         )
       )
     )
