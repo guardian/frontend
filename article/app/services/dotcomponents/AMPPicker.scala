@@ -62,11 +62,15 @@ object AMPPicker {
       "books",
       "business",
       "society",
-      "environment"
+      "environment",
+      "technology",
+      "lifeandstyle",
+      "money",
+      "travel",
     )
 
     if (conf.switches.Switches.DotcomRenderingAMPRollout.isSwitchedOn) {
-      Set("technology", "lifeandstyle", "money", "travel", "education", "politics", "science", "media") ++ safeSections
+      Set("education", "politics", "science", "media", "australia-news", "tv-and-radio", "uk-news") ++ safeSections
     } else {
       safeSections
     }
