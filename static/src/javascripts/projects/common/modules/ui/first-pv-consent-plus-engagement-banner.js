@@ -88,7 +88,7 @@ class SubMessage extends Message {
                 '.js-site-message-close'
             );
             if (closeButtons) {
-                closeButtons.forEach(button =>
+                Array.from(closeButtons).forEach(button =>
                     button.addEventListener('click', () => {
                         close(this);
                     })
