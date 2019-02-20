@@ -26,7 +26,6 @@ import {
     splitAndTrim,
     optionalSplitAndTrim,
     optionalStringToBoolean,
-    throwIfEmptyString,
 } from 'lib/string-utils';
 import { throwIfEmptyArray } from 'lib/array-utils';
 import { epicButtonsTemplate } from 'common/modules/commercial/templates/acquisitions-epic-buttons';
