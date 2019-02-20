@@ -45,7 +45,6 @@ object TagIndexHtmlPage extends HtmlPage[StandalonePage] {
     htmlTag(
       headTag(
         weAreHiring() when WeAreHiring.isSwitchedOn,
-        orielScriptTag(),
         titleTag(),
         metaData(),
         styles(allStyles),

@@ -1,5 +1,4 @@
 // @flow
-import type { CtaUrls } from 'common/modules/commercial/contributions-utilities';
 import config from 'lib/config';
 import { applePayApiAvailable } from 'lib/detect';
 import applyPayMark from 'svgs/acquisitions/apple-pay-mark.svg';

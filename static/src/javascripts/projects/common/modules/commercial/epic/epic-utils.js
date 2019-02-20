@@ -6,7 +6,6 @@ import { elementInView } from 'lib/element-inview';
 import reportError from 'lib/report-error';
 import mediator from 'lib/mediator';
 
-import { googleDocEpicControl } from 'common/modules/commercial/contributions-google-docs';
 import { epicButtonsTemplate } from 'common/modules/commercial/templates/acquisitions-epic-buttons';
 import { supportContributeURL } from 'common/modules/commercial/support-utilities';
 import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templates/acquisitions-epic-control';
@@ -24,6 +23,7 @@ import type {
     ABTestVariant,
     ComponentEventWithoutAction,
 } from 'common/modules/commercial/acquisitions-ophan';
+import { getControlEpicCopy } from 'common/modules/commercial/acquisitions-copy';
 
 export type EpicComponent = {
     html: HTMLDivElement,
@@ -41,7 +41,7 @@ const controlEpicComponent = (
     const epicComponentType = 'ACQUISITIONS_EPIC';
     const testimonialBlock = '';
 
-    return googleDocEpicControl().then(copy => {
+    return getControlEpicCopy().then(copy => {
         const rawEpic = acquisitionsEpicControlTemplate({
             copy,
             componentName: '', // TODO: confirm data-component not needed
@@ -55,7 +55,7 @@ const controlEpicComponent = (
                 }),
             }),
             testimonialBlock,
-            epicClass: '',
+            epicClassNames: [],
             wrapperClass: '',
         });
 

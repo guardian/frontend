@@ -1,0 +1,368 @@
+$border-style: #999999 1px solid;
+
+.site-message--fiv-banner {
+    border-top: $border-style;
+    background-color: #fbf6ef;;
+
+    .site-message__roundel {
+        display: none;
+    }
+
+    .inline-marque-36 path:nth-child(2) {
+        fill: #ffffff;
+    }
+
+    .site-message__copy {
+        padding-top: 0;
+        padding-bottom: 0;
+        @include mq($from: tablet) {
+            padding-right: 0;
+        }
+    }
+
+    .gs-container {
+        @include mq($from: tablet) {
+
+        }
+    }
+
+    .engagement-banner__close {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        @include mq($from: tablet) {
+            margin-right: $gs-gutter/2;
+        }
+    }
+
+    .site-message__inner {
+        padding: 0
+    }
+
+    .engagement-banner__cta {
+        display: flex;
+        flex-direction: row;
+        margin-bottom: $gs-gutter/2;
+
+        @include mq($from: tablet) {
+            margin-bottom: 2px;
+            padding-left: $gs-gutter/2;
+            border-top: $border-style;
+        }
+    }
+
+    .engagement-banner__button {
+        padding: 0 15px;
+        white-space: nowrap;
+        margin: 10px 10px 10px -5px;
+        background-color: #fee400;
+        font-size: 16px;
+        line-height: 16px;
+        font-weight: 600;
+        color: #202d53;
+        border: 0;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        @include mq($from: 375px) {
+            margin-left: 0;
+            padding: 0 $gs-gutter;
+            white-space: normal;
+        }
+    }
+
+    .engagement-banner__button.engagement-banner__button__learn-more {
+        background-color: #fbf6ef;
+        border: $border-style;
+    }
+
+    .engagement-banner__roundel {
+        display: inline-block;
+    }
+}
+
+.fiv-banner__container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.fiv-banner__headline-and-circles {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    margin-top: 50px;
+    padding-left: $gs-gutter/2;
+    height: 158px;
+
+    @include mq($from: 375px) {
+        height: 183px;
+    }
+
+    @include mq($from: tablet) {
+        border-bottom: 0;
+        flex-direction: column-reverse;
+        height: 100%;
+        margin-top: $gs-gutter;
+    }
+
+    @include mq($from: tablet) {
+        flex-direction: row;
+    }
+
+}
+
+@font-face {
+    font-family: 'GT Guardian Titlepiece';
+    src:
+    url('//pasteup.guim.co.uk/webfonts/1.0.0/noalts-not-hinted/GTGuardianTitlepiece-Bold.woff2') format('woff2'),
+    url('//pasteup.guim.co.uk/webfonts/1.0.0/noalts-not-hinted/GTGuardianTitlepiece-Bold.woff') format('woff'),
+    url('//pasteup.guim.co.uk/webfonts/1.0.0/noalts-not-hinted/GTGuardianTitlepiece-Bold.ttf') format('ttf');
+    font-weight: 400;
+}
+
+
+.fiv-banner__headline {
+    font-size: 27px;
+    line-height: 27px;
+    font-family: 'GT Guardian Titlepiece', Georgia, serif;
+    width: 189px;
+    margin-left: 10px;
+
+    @include mq($from: 375px) {
+        font-size: 32px;
+        line-height: 32px;
+        width: 222px;
+    }
+
+    @include mq($from: tablet) {
+        font-size: 32px;
+        line-height: 32px;
+    }
+
+    @include mq($from: desktop) {
+        font-size: 40px;
+        line-height: 40px;
+        width: 280px;
+        margin-bottom: 0;
+    }
+
+    @include mq($from: leftCol) {
+        font-size: 40px;
+        line-height: 40px
+    }
+
+    @include mq($from: wide) {
+        font-size: 50px;
+        line-height: 50px;
+        width: 341px;
+    }
+}
+
+
+.fiv-banner__headline1 {
+    color: #ef7d21;
+}
+.fiv-banner__headline2 {
+    color: #0084c6;
+}
+
+$small-circle-height: 90px;
+$medium-circle-height: 105px;
+$desktop-circle-height: 135px;
+$wide-circle-height: 162px;
+
+.fiv-banner__circles {
+    position: relative;
+    top: 0;
+    margin-top: $small-circle-height/4;
+    isolation: isolate;
+    width: $small-circle-height;
+    height: $small-circle-height;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    @include mq($from: 375px) {
+        height: $medium-circle-height;
+        width: $medium-circle-height;
+        margin-top: $medium-circle-height/4;
+    }
+
+    @include mq($from: desktop) {
+        height: $desktop-circle-height;
+        width: $desktop-circle-height;
+        top: 0;
+        margin-top: $desktop-circle-height/4;
+    }
+
+    @include mq($from: wide) {
+        height: $wide-circle-height;
+        width: $wide-circle-height;
+        top: 0;
+        margin-top: $wide-circle-height/4;
+    }
+
+
+
+    @supports (mix-blend-mode: multiply) {
+        .fiv-banner__circle {
+            mix-blend-mode: hue;
+            opacity: 1;
+        }
+    }
+}
+
+.fiv-banner__circle {
+
+    width: $small-circle-height;
+    height: $small-circle-height;
+
+    @include mq($from: 375px) {
+        width: $medium-circle-height;
+        height: $medium-circle-height;
+    }
+
+    @include mq($from: desktop) {
+        height: $desktop-circle-height;
+        width: $desktop-circle-height;
+    }
+
+    @include mq($from: wide) {
+        width: $wide-circle-height;
+        height: $wide-circle-height;
+    }
+    border-radius: 50%;
+
+    display: flex;
+    opacity: .8;
+    transition: transform .6s .6s linear;
+    transform: translateX(0);
+    will-change: transform;
+}
+
+.fiv-banner__circle-orange {
+    position: absolute;
+    background: #ff7f0f;
+    top: 0;
+    z-index: 30;
+}
+
+.fiv-banner__circle-blue {
+    position: absolute;
+    background: #0084c6;
+    bottom: 0;
+}
+
+.fiv-banner__circles-animated {
+    .fiv-banner__circle {
+        transition: all 2s cubic-bezier(.645, .045, .355, 1);
+    }
+
+    .fiv-banner__circle-orange {
+        top: -25%;
+    }
+
+    .fiv-banner__circle-blue {
+        bottom: -25%;
+    }
+}
+
+.fiv-banner__copy-and-ctas {
+    @include fs-headlineGarnett(6);
+    color: #202d53;
+    font-style: normal;
+    font-stretch: normal;
+    font-size: 15px;
+    line-height: 18px;
+    width: 100%;
+    padding-left: $gs-gutter/2;
+    padding-right: $gs-gutter/2;
+    border-top: $border-style;
+
+    @include mq($from: 375px) {
+        font-size: 16px;
+        line-height: 20px;
+    }
+
+    @include mq($from: tablet) {
+        width: 365px;
+        border-top: 0;
+        border-left: $border-style;
+        border-right: $border-style;
+        padding-left: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding-right: 0;
+    }
+
+    @include mq($from: desktop) {
+        font-size: 17px;
+        line-height: 21px;
+        width: 489px;
+    }
+
+    @include mq($from: leftCol) {
+        font-size: 19px;
+        line-height: 23px;
+        width: 616px;
+    }
+
+    @include mq($from: wide) {
+        font-size: 19px;
+        line-height: 23px;
+    }
+}
+
+.fiv-banner__message {
+    @include mq($from: tablet) {
+        padding-left: $gs-gutter/2;
+        margin-right: $gs-gutter;
+    }
+    @include mq($from: desktop) {
+        width: 419px;
+    }
+
+    @include mq($from: leftCol) {
+        width: 514px;
+    }
+}
+
+.fiv-banner__lead-sentence {
+    width: 248px;
+    font-weight: bold;
+    color: #202d53;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    letter-spacing: 0px;
+
+    @include mq($from: tablet) {
+        width: 248px;
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+
+    @include mq($from: desktop) {
+        width: 266px;
+    }
+
+    @include mq($from: leftCol) {
+        width: 291px;
+    }
+}
+
+.fiv-banner__message-text {
+    letter-spacing: -.3px;
+    font-weight: 400;
+}
+
+.fiv-banner-thank-you {
+    .engagement-banner__button.engagement-banner__button__support.engagement-banner__button__support {
+        display: none;
+    }
+}
+

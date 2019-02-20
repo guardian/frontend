@@ -3,20 +3,22 @@ package views.support
 import java.net.URI
 import java.util.regex.{Matcher, Pattern}
 
+import com.gu.contentatom.renderer.ArticleConfiguration
 import common.{Edition, LinkTo, Logging}
+import conf.Configuration.affiliatelinks._
+import conf.Configuration.site.host
+import conf.switches.Switches
 import conf.switches.Switches._
 import layout.ContentWidths
 import layout.ContentWidths._
 import model._
 import model.content._
+import model.dotcomrendering.pageElements.{PageElement, TextBlockElement}
 import navigation.ReaderRevenueSite
 import org.jsoup.Jsoup
 import org.jsoup.nodes.{Document, Element, TextNode}
 import play.api.mvc.RequestHeader
-import play.twirl.api.HtmlFormat
 import services.SkimLinksCache
-import conf.Configuration.affiliatelinks._
-import conf.Configuration.site.host
 import views.html.fragments.affiliateLinksDisclaimer
 import views.support.Commercial.isAdFree
 
@@ -576,18 +578,19 @@ case class DropCaps(isFeature: Boolean, isImmersive: Boolean, isRecipeArticle: B
 // This is a hack to serve the correct html
 object GalleryCaptionCleaner extends HtmlCleaner {
   override def clean(galleryCaption: Document): Document = {
-    val firstStrong = Option(galleryCaption.getElementsByTag("strong").first())
-    val captionTitle = galleryCaption.createElement("h2")
-    val captionTitleText = firstStrong.map(_.text()).getOrElse("")
-
-    // <strong> is removed in place of having a <h2> element
-    firstStrong.foreach(_.remove())
     // There is an inconsistent number of <br> tags in gallery captions.
     // To create some consistency, re will remove them all.
     galleryCaption.getElementsByTag("br").remove()
 
+    val firstStrong = Option(galleryCaption.getElementsByTag("strong").first())
+    val captionTitle = galleryCaption.createElement("h2")
+    val captionTitleText = firstStrong.map(_.html()).getOrElse("")
+
+    // <strong> is removed in place of having a <h2> element
+    firstStrong.foreach(_.remove())
+
     captionTitle.addClass("gallery__caption__title")
-    captionTitle.text(captionTitleText)
+    captionTitle.html(captionTitleText)
 
     galleryCaption.prependChild(captionTitle)
 
@@ -677,6 +680,10 @@ case class AtomsCleaner(
 
   override def clean(document: Document): Document = {
     if (UseAtomsSwitch.isSwitchedOn) {
+
+      val articleConfig: ArticleConfiguration =
+        Atoms.articleConfig(isAdFree(request), Switches.Acast.isSwitchedOn)
+
       for {
         atomContainer <- document.getElementsByClass("element-atom").asScala
         bodyElement <- atomContainer.getElementsByTag("gu-atom").asScala
@@ -697,11 +704,14 @@ case class AtomsCleaner(
             atomContainer.attr("data-atom-id", atomId)
             atomContainer.attr("data-atom-type", atomType)
 
-            val html = if(atomData.isInstanceOf[AudioAtom] && isAdFree(request)) {
-              views.html.fragments.atoms.atom(atomData, Atoms.articleConfig, shouldFence, amp, mediaWrapper, posterImageOverride).toString().replaceAll("flex.acast.com/", "")
-            } else {
-              views.html.fragments.atoms.atom(atomData, Atoms.articleConfig, shouldFence, amp, mediaWrapper, posterImageOverride).toString()
-            }
+            val html = views.html.fragments.atoms.atom(
+              atomData,
+              articleConfig,
+              shouldFence,
+              amp,
+              mediaWrapper,
+              posterImageOverride
+            ).toString()
 
             bodyElement.remove()
             atomContainer.append(html)
@@ -845,6 +855,18 @@ object AffiliateLinksCleaner {
     val shouldAppendDisclaimer = appendDisclaimer.getOrElse(linksToReplace.nonEmpty)
     if (shouldAppendDisclaimer) insertAffiliateDisclaimer(html, contentType)
     else html
+  }
+
+  def replaceLinksInElement(element: TextBlockElement, pageUrl: String, contentType: String): PageElement = {
+    val doc = Jsoup.parseBodyFragment(element.html)
+    val linksToReplace: mutable.Seq[Element] = getAffiliateableLinks(doc)
+    linksToReplace.foreach{el => el.attr("href", linkToSkimLink(el.attr("href"), pageUrl, skimlinksId))}
+
+    if (linksToReplace.nonEmpty) {
+        TextBlockElement(doc.outerHtml())
+    } else {
+      element
+    }
   }
 
   def isAffiliatable(element: Element): Boolean =

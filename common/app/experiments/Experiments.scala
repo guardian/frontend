@@ -6,19 +6,10 @@ import org.joda.time.LocalDate
 
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] = Set(
-    OrielParticipation,
     OldTLSSupportDeprecation
   )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
-
-object OrielParticipation extends Experiment(
-  name = "oriel-participation",
-  description = "A slice of the audience who will participate in Oriel ad-blocking technology",
-  owners = Seq(Owner.withGithub("janua")),
-  sellByDate = new LocalDate(2019, 2, 13),
-  participationGroup = Perc20A
-)
 
 object OldTLSSupportDeprecation extends Experiment(
   name = "old-tls-support-deprecation",

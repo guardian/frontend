@@ -1,5 +1,6 @@
 // @flow strict
 
+import 'prebid.js/build/dist/prebid';
 import config from 'lib/config';
 import { Advert } from 'commercial/modules/dfp/Advert';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';

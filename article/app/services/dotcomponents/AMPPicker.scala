@@ -15,6 +15,10 @@ object AMPPageChecks extends Logging {
       !page.item.isPhotoEssay
   }
 
+  def isNotPaidContent(page: PageWithStoryPackage): Boolean = {
+    ! page.article.tags.isPaidContent
+  }
+
   def hasOnlySupportedElements(page: PageWithStoryPackage): Boolean = {
     // See: https://github.com/guardian/dotcom-rendering/blob/master/packages/frontend/amp/components/lib/Elements.tsx
     def supported(block: BlockElement): Boolean = block match {
@@ -33,6 +37,8 @@ object AMPPageChecks extends Logging {
       case None => true
     }
   }
+
+  def isNotOpinion(page:PageWithStoryPackage): Boolean = ! page.item.tags.isComment
 }
 
 object AMPPicker {
@@ -43,13 +49,39 @@ object AMPPicker {
     logger.withRequestHeaders(request).results(msg, results, page)
   }
 
-  private[this] val sectionsWhitelist: Set[String] = Set(
+  private[this] val sectionsWhitelist: Set[String] = {
 
-  )
+    val safeSections = Set[String](
+      "music",
+      "football",
+      "sport",
+      "games",
+      "stage",
+      "artanddesign",
+      "film",
+      "books",
+      "business",
+      "society",
+      "environment"
+    )
 
-  private[this] val tagsWhitelist: Set[String] = Set(
+    if (conf.switches.Switches.DotcomRenderingAMPRollout.isSwitchedOn) {
+      Set("technology", "lifeandstyle", "money", "travel") ++ safeSections
+    } else {
+      safeSections
+    }
 
-  )
+  }
+
+  private[this] val tagsWhitelist: Set[String] = {
+    val safeTags = Set[String]("info/series/digital-blog")
+
+    if (conf.switches.Switches.DotcomRenderingAMPRollout.isSwitchedOn) {
+      Set() ++ safeTags
+    } else {
+      safeTags
+    }
+  }
 
   private[this] val pageWhitelist: Set[String] = Set(
     "world/2018/oct/14/british-man-shot-dead-by-hunter-in-france",
@@ -99,6 +131,8 @@ object AMPPicker {
     Map(
       ("isBasicArticle", AMPPageChecks.isBasicArticle(page)),
       ("hasOnlySupportedElements", AMPPageChecks.hasOnlySupportedElements(page)),
+      ("isNotOpinionP", AMPPageChecks.isNotOpinion(page)),
+      ("isNotPaidContent", AMPPageChecks.isNotOpinion(page)),
     )
   }
 
@@ -112,7 +146,7 @@ object AMPPicker {
     val isSupported = features.forall({ case (test, isMet) => isMet})
     val isEnabled = conf.switches.Switches.DotcomRenderingAMP.isSwitchedOn
 
-    val tier = if ((isSupported && isEnabled && isWhitelisted) || request.isGuui) RemoteRenderAMP else LocalRender
+    val tier = if ((isSupported && isEnabled && isWhitelisted && !request.guuiOptOut) || request.isGuui) RemoteRenderAMP else LocalRender
 
     tier match {
       case RemoteRenderAMP => logRequest(s"path executing in dotcomponents AMP", features, page)

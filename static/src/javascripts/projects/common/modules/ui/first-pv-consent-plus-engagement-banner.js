@@ -1,13 +1,12 @@
 // @flow
 import { Message } from 'common/modules/ui/message';
 import type { Banner } from 'common/modules/ui/bannerPicker';
-import { acquisitionsBannerControlTemplate } from 'common/modules/commercial/templates/acquisitions-banner-control';
-import { defaultEngagementBannerParams } from 'common/modules/commercial/membership-engagement-banner-parameters';
-import { addTrackingCodesToUrl } from 'common/modules/commercial/acquisitions-ophan';
 import {
     messageCode as engagementMessageCode,
     canShow as canShowEngagementBanner,
     hideBanner as hideEngagementBanner,
+    deriveBannerParams as deriveEngagementBannerParams,
+    bannerParamsToHtml as engagementBannerParamsToHtml,
 } from 'common/modules/commercial/membership-engagement-banner';
 import {
     track as trackFirstPvConsent,
@@ -17,46 +16,33 @@ import {
     makeHtml as makeFirstPvConsentHtml,
 } from 'common/modules/ui/first-pv-consent-banner';
 import marque36icon from 'svgs/icon/marque-36.svg';
+import { getEngagementBannerTestToRun } from 'common/modules/experiments/ab';
+import fastdom from 'lib/fastdom-promise';
+import reportError from 'lib/report-error';
 
 const messageCode: string = 'first-pv-consent-plus-engagement-banner';
 
-const bannerParams: EngagementBannerParams = defaultEngagementBannerParams();
-
-const bannerTemplateParams: EngagementBannerTemplateParams = {
-    messageText: bannerParams.messageText,
-    ctaText: bannerParams.ctaText,
-    buttonCaption: bannerParams.buttonCaption,
-    linkUrl: addTrackingCodesToUrl({
-        base: bannerParams.linkUrl,
-        componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
-        componentId: 'first_pv_consent_plus_support_the_guardian_banner',
-    }),
-    hasTicker: false,
-};
-
-const bannerHtml = `
+const doubleBannerHtml = (
+    engagementBannerHtml: string,
+    customClass: string
+): string => `
     <div class="site-message js-site-message js-double-site-message site-message--banner site-message--double-banner" tabindex="-1" role="dialog" aria-label="welcome" aria-describedby="site-message__message" data-component="AcquisitionsEngagementBannerStylingTweaks_control">
-        <div class="js-engagement-banner-site-message site-message--engagement-banner">
+        <div class="js-engagement-banner-site-message ${customClass} site-message--engagement-banner">
             <div class="gs-container">
                 <div class="site-message__inner js-site-message-inner">
                     <div class="site-message__roundel">
                         ${marque36icon.markup}
                     </div>
                     <div class="site-message__copy js-site-message-copy u-cf">
-                        ${acquisitionsBannerControlTemplate(
-                            bannerTemplateParams
-                        )}
+                        ${engagementBannerHtml}
                     </div>
                 </div>
             </div>
         </div>
-    
+
         <div class="js-first-pv-consent-site-message site-message--first-pv-consent" tabindex="-1" data-link-name="release message" role="dialog" aria-label="welcome" aria-describedby="site-message__message">
             <div class="gs-container">
                 <div class="site-message__inner js-site-message-inner">
-                    <div class="site-message__roundel">
-                        ${marque36icon.markup}
-                    </div>
                     <div class="site-message__copy js-site-message-copy u-cf">
                         ${makeFirstPvConsentHtml()}
                     </div>
@@ -98,11 +84,15 @@ class SubMessage extends Message {
     bindCloseHandler(close: (banner: Message) => void): void {
         const element = document.querySelector(this.elementSelector);
         if (element) {
-            const closeButton = element.querySelector('.js-site-message-close');
-            if (closeButton) {
-                closeButton.addEventListener('click', () => {
-                    close(this);
-                });
+            const closeButtons = element.querySelectorAll(
+                '.js-site-message-close'
+            );
+            if (closeButtons) {
+                closeButtons.forEach(button =>
+                    button.addEventListener('click', () => {
+                        close(this);
+                    })
+                );
             }
         }
     }
@@ -123,13 +113,50 @@ const engagementMessage = new SubMessage(
 
 const show = (): Promise<boolean> => {
     trackFirstPvConsent();
-    if (document.body) {
-        document.body.insertAdjacentHTML('beforeend', bannerHtml);
-    }
-    bindFirstPvConsentClickHandlers(firstPvConsentMessage);
-    engagementMessage.bindCloseHandler(hideEngagementBanner);
+    return getEngagementBannerTestToRun()
+        .then(deriveEngagementBannerParams)
+        .then(params => ({
+            params,
+            html: engagementBannerParamsToHtml(params),
+        }))
+        .then(paramsAndEngagementBannerHtml =>
+            fastdom.write(() => {
+                const modifierClass = paramsAndEngagementBannerHtml.params
+                    .bannerModifierClass
+                    ? `site-message--${
+                          paramsAndEngagementBannerHtml.params
+                              .bannerModifierClass
+                      }`
+                    : '';
+                const html = doubleBannerHtml(
+                    paramsAndEngagementBannerHtml.html,
+                    modifierClass
+                );
+                if (document.body) {
+                    document.body.insertAdjacentHTML('beforeend', html);
+                }
+                bindFirstPvConsentClickHandlers(firstPvConsentMessage);
+                engagementMessage.bindCloseHandler(hideEngagementBanner);
 
-    return Promise.resolve(true);
+                if (paramsAndEngagementBannerHtml.params.bannerShownCallback) {
+                    paramsAndEngagementBannerHtml.params.bannerShownCallback();
+                }
+
+                return true;
+            })
+        )
+        .catch(err => {
+            reportError(
+                new Error(
+                    `Could not show banner within double banner. ${
+                        err.message
+                    }. Stack: ${err.stack}`
+                ),
+                { feature: 'engagement-banner' },
+                false
+            );
+            return false;
+        });
 };
 
 const firstPvConsentPlusEngagementBanner: Banner = {

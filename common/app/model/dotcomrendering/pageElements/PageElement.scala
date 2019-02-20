@@ -9,7 +9,7 @@ import org.jsoup.Jsoup
 import views.support.cleaner.AmpSoundcloud
 
 import scala.collection.JavaConverters._
-import views.support.{ImageProfile, ImageUrlSigner, ImgSrc, Item120, Item1200, Item140, Item300, Item640, Item700, SrcSet}
+import views.support.{AffiliateLinksCleaner, ImageProfile, ImageUrlSigner, ImgSrc, Item120, Item1200, Item140, Item300, Item640, Item700, SrcSet}
 
 /*
   These elements are used for the Dotcom Rendering, they are essentially the new version of the
@@ -37,6 +37,7 @@ case class InstagramBlockElement(url: String, html: Option[String], hasCaption: 
 case class VineBlockElement(html: Option[String]) extends PageElement
 case class MapBlockElement(html: Option[String],  role: Role, isMandatory: Option[Boolean]) extends PageElement
 case class UnknownBlockElement(html: Option[String]) extends PageElement
+case class DisclaimerBlockElement(html: String) extends PageElement
 
 case class MembershipBlockElement(
   originalUrl: Option[String],
@@ -84,7 +85,7 @@ object Sponsorship {
 object PageElement {
   val dotComponentsImageProfiles = List(Item1200, Item700, Item640, Item300, Item140, Item120)
 
-  def make(element: ApiBlockElement): List[PageElement] = {
+  def make(element: ApiBlockElement, addAffiliateLinks: Boolean, pageUrl: String): List[PageElement] = {
 
     element.`type` match {
 
@@ -92,7 +93,14 @@ object PageElement {
         block <- element.textTypeData.toList
         text <- block.html.toList
         element <- Cleaner.split(text)
-      } yield {TextBlockElement(element)}
+        textElement = TextBlockElement(element)
+      } yield {
+        if (addAffiliateLinks) {
+          AffiliateLinksCleaner.replaceLinksInElement(textElement, pageUrl = pageUrl, contentType = "article")
+        } else {
+          textElement
+        }
+      }
 
       case Tweet => {
         (for {
@@ -267,6 +275,7 @@ object PageElement {
   implicit val MembershipBlockElementWrites: Writes[MembershipBlockElement] = Json.writes[MembershipBlockElement]
   implicit val FormBlockElementWrites: Writes[FormBlockElement] = Json.writes[FormBlockElement]
   implicit val UnknownBlockElementWrites: Writes[UnknownBlockElement] = Json.writes[UnknownBlockElement]
+  implicit val DiscalimerBlockElementWrites: Writes[DisclaimerBlockElement] = Json.writes[DisclaimerBlockElement]
 
   implicit val SponsorshipWrites: Writes[Sponsorship] = new Writes[Sponsorship] {
     def writes(sponsorship: Sponsorship): JsObject = Json.obj(

@@ -157,4 +157,35 @@ a[href].contributions__contribute.contributions__contribute--epic {
     max-width: 620px;
 }
 
+.contributions__epic-footer {
+    margin-top: $gs-baseline;
 
+    h2 {
+        @include fs-header(5);
+        font-size: 32px;
+        line-height: 34px;
+    }
+}
+
+.contributions__epic--moment {
+    $contributions__epic--moment--orange: #ff7f0f;
+    $contributions__epic--moment--blue: #041f4a;
+
+    .contributions__title {
+        @include fs-header(5);
+        font-size: 32px;
+        line-height: 34px;
+        color: $contributions__epic--moment--blue;
+    }
+
+    border-top: 1px solid $contributions__epic--moment--orange;
+
+    .contributions__epic-footer {
+        h2:nth-of-type(odd) {
+            color: $contributions__epic--moment--orange;
+        }
+        h2:nth-of-type(even) {
+            color: $contributions__epic--moment--blue;
+        }
+    }
+}

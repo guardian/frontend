@@ -16,10 +16,10 @@ class PlaySigninService(conf: IdentityConfiguration) extends SafeLogging {
       _.right.map { apiCookies =>
         val maxAge = if(rememberMe) Some(Seconds.secondsBetween(DateTime.now, apiCookies.expiresAt).getSeconds) else None
         apiCookies.values.map { cookie =>
-          val secureHttpOnly = cookie.key.startsWith("SC_")
+          val httpOnly = cookie.key.startsWith("SC_")
           val cookieMaxAgeOpt = maxAge.filterNot(_ => cookie.isSessionCookie)
 
-          Cookie(cookie.key, cookie.value, cookieMaxAgeOpt, "/", Some(conf.domain), secureHttpOnly, secureHttpOnly)
+          Cookie(cookie.key, cookie.value, cookieMaxAgeOpt, "/", Some(conf.domain), secure = true, httpOnly)
         }
       }
     }

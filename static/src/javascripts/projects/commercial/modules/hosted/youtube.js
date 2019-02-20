@@ -35,7 +35,7 @@ type Page = {
 
 const EVENTSFIRED = [];
 
-const isDesktop = (): boolean => isBreakpoint({ min: 'desktop' });
+const isDesktop: boolean = isBreakpoint({ min: 'desktop' });
 
 const shouldAutoplay = (
     page: Page,
@@ -110,7 +110,7 @@ export const initHostedYoutube = (el: HTMLElement): void => {
                     youtubeTimer.textContent = '0:00';
                     if (canAutoplayNextVideo()) {
                         // on mobile show the next video link in the end of the currently watching video
-                        if (!isDesktop()) {
+                        if (!isDesktop) {
                             triggerEndSlate();
                         }
                     }
@@ -142,13 +142,12 @@ export const initHostedYoutube = (el: HTMLElement): void => {
                     shouldAutoplay(
                         config.get('page', {}),
                         config.get('switches', {})
-                    ) &&
-                    isDesktop()
+                    )
                 ) {
                     event.target.playVideo();
                 }
                 initNextVideoAutoPlay().then(() => {
-                    if (canAutoplayNextVideo() && isDesktop()) {
+                    if (canAutoplayNextVideo() && isDesktop) {
                         addCancelListener();
                         triggerAutoplay(
                             event.target.getCurrentTime.bind(event.target),
