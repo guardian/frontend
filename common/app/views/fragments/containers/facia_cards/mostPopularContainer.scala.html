@@ -1,8 +1,11 @@
 @(containerDefinition: layout.FaciaContainer, frontProperties: model.FrontProperties)(implicit requestHeader: RequestHeader)
+@import common.commercial.AdSlot.mostPopularSizes
 @import common.LinkTo
+@import conf.switches.Switches
+@import fragments.commercial.adSlot
 @import model.MostPopular
 
-@defining("Most viewed") { containerTitle =>
+@defining("Most popular") { containerTitle =>
 
     <div class="fc-container__header js-container__header">
         @containerDefinition.displayName.map { title =>
@@ -18,20 +21,38 @@
         }
     </div>
 
-    <div class="fc-container__body fc-container--rolled-up-hide js-popular-trails">
-    @defining(Seq(
-        MostPopular(
-            containerDefinition.displayName.getOrElse(containerTitle),
-            containerTitle,
-            containerDefinition.items.take(10)
-        ),
-        MostPopular(
-            "Across the guardian",
-            containerTitle,
-            Nil
-        )
-    )) { popular =>
-        @fragments.collections.popular(popular, Some(containerDefinition), isFront = true)
-    }
+@defining(Switches.ExtendedMostPopular.isSwitchedOn){ isExtended =>
+    <div
+    class="fc-container--rolled-up-hide @if(isExtended) {most-popular__container} else {fc-container__body popular-trails}">
+        <div class="@if(isExtended) {most-popular__content} else {popular-trails__content} js-popular-trails">
+        @defining(Seq(
+            MostPopular(
+                containerDefinition.displayName.getOrElse(containerTitle),
+                containerTitle,
+                containerDefinition.items.take(10)
+            ),
+            MostPopular(
+                "Across the guardian",
+                containerTitle,
+                Nil
+            )
+        )) { popular =>
+            <div class="most-popular__content">
+                @fragments.collections.popular(popular, Some(containerDefinition))
+            </div>
+        }
     </div>
+        <div class="@if(isExtended) {most-popular__mpu} else {popular-trails__mpu}">
+            <div class="@if(!isExtended) {fc-slice__popular-mpu fc-slice__item--mpu-candidate}">
+            @adSlot(
+                "mostpop",
+                Seq("container-inline"),
+                mostPopularSizes(isExtended),
+                optId = None,
+                optClassNames = None
+            ){ }
+            </div>
+        </div>
+}
+</div>
 }
