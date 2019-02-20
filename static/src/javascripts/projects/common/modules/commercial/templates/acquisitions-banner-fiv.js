@@ -50,7 +50,7 @@ export const acquisitionsBannerFivTemplate = (
                 }">
                     ${params.buttonCaption}
                 </a>
-                <a class="button engagement-banner__button engagement-banner__button__learn-more js-engagement-banner-close-button js-site-message-close" href="https://www.theguardian.com/media/2019/feb/20/guardian-supporters-future-journalism">
+                <a class="button engagement-banner__button engagement-banner__button__learn-more js-engagement-banner-close-button js-site-message-close" href="https://www.theguardian.com/media/2019/feb/20/guardian-supporters-future-journalism?INTCMP=fiv_banner">
                     Learn more
                 </a>
             </div>
