@@ -191,15 +191,21 @@ a[href].contributions__contribute.contributions__contribute--epic {
 
     .contributions__option-button {
         font-size: 16px;
-        padding-top: 11px;
-        padding-bottom: 11px;
         align-items: center;
         display: flex;
+
+        padding: 9px 45px 10px 21px;
+        position: relative;
     }
 
     .contributions__contribute:after {
-        background-size: 100%;
-        width: 44px;
-        height: 32px;
+        background-size: cover;
+        content: '';
+        background-repeat: no-repeat;
+        position: absolute;
+        width: 42px;
+        height: 42px;
+        right: 0;
+        top: 5px;
     }
 }
