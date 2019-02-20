@@ -1,0 +1,21 @@
+close
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# Date:      Fri Feb 15 17:50:12 2019 +0000
+#
+# On branch jr-fiv-banner
+# Changes to be committed:
+#	modified:   static/src/javascripts/projects/common/modules/commercial/templates/acquisitions-banner-fiv.js
+#	modified:   static/src/stylesheets/module/site-messages/_fiv-banner.scss
+#
+# Changes not staged for commit:
+#	modified:   static/src/javascripts/projects/common/modules/experiments/tests/february-moment-banner.js
+#
+# Untracked files:
+#	support.code.dev-theguardian.com_2019-01-21_12-12-09.report.html
+#	support.code.dev-theguardian.com_2019-01-21_12-13-30.report.html
+#	support.theguardian.com_2019-01-21_11-42-39.report.html
+#	support.theguardian.com_2019-01-21_11-48-05.report.html
+#
