@@ -568,10 +568,7 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                                 ','
                             ),
                             copy: {
-                                heading: throwIfEmptyString(
-                                    'heading',
-                                    row.heading
-                                ),
+                                heading: row.heading,
                                 paragraphs: throwIfEmptyArray(
                                     'paragraphs',
                                     splitAndTrim(row.paragraphs, '\n')
