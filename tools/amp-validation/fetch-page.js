@@ -20,7 +20,7 @@ const fetch = options => {
                 const errorMessage = `Unable to fetch ${options.endpoint}`;
 
                 request(
-                    `${options.host + options.endpoint}`,
+                    `${options.host + options.endpoint}?amp`,
                     (error, resp, body) => {
                         if (error || resp.statusCode !== 200) {
                             const errorDetails = error ? error.message : '';

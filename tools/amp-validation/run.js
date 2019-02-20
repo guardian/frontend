@@ -54,7 +54,7 @@ const maybeRunValidator = (validator, options) => endpoint => {
     return fetchPage
         .get({
             endpoint,
-            host: fetchPage.hosts.amp,
+            host: fetchPage.hosts.prod,
         })
         .then(res => {
             if (
