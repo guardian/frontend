@@ -88,11 +88,11 @@ class SubMessage extends Message {
                 '.js-site-message-close'
             );
             // https://developer.mozilla.org/en-US/docs/Web/API/NodeList#Example
-            Array.prototype.forEach.call(closeButtons, function (button) {
+            Array.prototype.forEach.call(closeButtons, function(button) {
                 button.addEventListener('click', () => {
                     close(this);
-                })
-            })
+                });
+            });
         }
     }
 }
