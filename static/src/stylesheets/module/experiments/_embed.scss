@@ -193,5 +193,13 @@ a[href].contributions__contribute.contributions__contribute--epic {
         font-size: 16px;
         padding-top: 11px;
         padding-bottom: 11px;
+        align-items: center;
+        display: flex;
+    }
+
+    .contributions__contribute:after {
+        background-size: 100%;
+        width: 44px;
+        height: 32px;
     }
 }
