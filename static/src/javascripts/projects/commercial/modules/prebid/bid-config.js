@@ -519,7 +519,9 @@ const getDummyServerSideBidders = (): Array<PrebidBidder> => {
     ) {
         dummyServerSideBidders.push(openxServerSideBidder);
         dummyServerSideBidders.push(appnexusServerSideBidder);
-        dummyServerSideBidders.push(pangaeaServerSideBidder);
+        if (config.get('switches.prebidPangaea', false)) {
+            dummyServerSideBidders.push(pangaeaServerSideBidder);
+        }
     }
 
     return dummyServerSideBidders;
