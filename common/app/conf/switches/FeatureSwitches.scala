@@ -465,17 +465,6 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
-  // Owner: George Haberis / Lindsey Dew
-  val UseTailorEndpoints = Switch(
-    SwitchGroup.Feature,
-    "use-tailor-endpoints",
-    "When ON will request data from tailor end points",
-    owners= Seq(Owner.withGithub("GHaberis")),
-    safeState = On,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
   val InlineEmailStyles = Switch(
     SwitchGroup.Feature,
     "inline-email-styles",
