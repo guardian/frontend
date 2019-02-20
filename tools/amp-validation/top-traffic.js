@@ -1,7 +1,27 @@
 const { fetch, getEndpointsFromResponse } = require('./endpoints/ophan');
 const run = require('./run');
 
-const sections = ['music', 'football', 'sport'];
+const sections = [
+    'technology',
+    'lifeandstyle',
+    'money',
+    'travel',
+    'education',
+    'politics',
+    'science',
+    'media',
+    'music',
+    'football',
+    'sport',
+    'games',
+    'stage',
+    'artanddesign',
+    'film',
+    'books',
+    'business',
+    'society',
+    'environment',
+];
 const keywordTags = ['info%2Fseries%2Fdigital-blog'];
 const fetchPath = path => fetch(path).then(getEndpointsFromResponse);
 
