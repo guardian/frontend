@@ -14,7 +14,7 @@ const isGoogleWebPreview: () => boolean = () =>
     );
 
 if (!isGoogleWebPreview()) {
-    import('prebid.js/build/dist/prebid');
+    import(/* webpackMode: "eager" */ 'prebid.js/build/dist/prebid');
 }
 
 const setupPrebid: () => Promise<void> = () => {
