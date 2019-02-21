@@ -47,9 +47,9 @@ export const adblockTest: ABTest = {
         {
             id: 'control',
             test: (): void => {
-                const slot = document.querySelector('.aside-slot-container');
+                const slot = document.querySelector('.js-aside-slot-container');
                 if (slot) {
-                    slot.insertAdjacentHTML('afterend', askHtml);
+                    slot.innerHTML += askHtml;
                 }
             },
         },

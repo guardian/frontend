@@ -303,7 +303,7 @@ trait CommercialSwitches {
     "ab-adblock-ask",
     "Places a contributions ask underneath the right-hand ad slot on articles.",
     owners = group(Membership),
-    safeState = On,
+    safeState = Off,
     sellByDate = never,
     exposeClientSide = true
   )
