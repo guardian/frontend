@@ -2,7 +2,7 @@ package conf.switches
 
 import conf.switches.Expiry.never
 import conf.switches.Owner.group
-import conf.switches.SwitchGroup.{Commercial, CommercialPrebid}
+import conf.switches.SwitchGroup.{Commercial, CommercialPrebid, Membership}
 import org.joda.time.LocalDate
 
 trait CommercialSwitches {
@@ -294,6 +294,16 @@ trait CommercialSwitches {
     "If this switch is turned on, the engagement banner will NOT show up on AU fronts for readers in AU",
     owners = Seq(Owner.withGithub("desbo")),
     safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
+  val AdblockAsk = Switch(
+    Commercial,
+    "ab-adblock-ask",
+    "Places a contributions ask underneath the right-hand ad slot on articles.",
+    owners = group(Membership),
+    safeState = On,
     sellByDate = never,
     exposeClientSide = true
   )
