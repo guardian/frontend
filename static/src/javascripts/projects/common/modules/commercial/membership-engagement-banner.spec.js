@@ -83,6 +83,7 @@ jest.mock('lib/config', () => ({
 jest.mock('common/modules/commercial/contributions-utilities', () => ({
     pageShouldHideReaderRevenue: jest.fn(() => false),
     getReaderRevenueRegion: jest.fn(() => 'united-kingdom'),
+    canShowBannerSync: jest.fn(() => false),
 }));
 jest.mock('common/modules/commercial/user-features', () => ({
     userIsSupporter: jest.fn(() => false),
@@ -100,6 +101,8 @@ const fakeIsBlocked: any = require('common/modules/commercial/membership-engagem
 const fakeGet: any = require('lib/storage').local.get;
 const fakeShouldHideReaderRevenue: any = require('common/modules/commercial/contributions-utilities')
     .pageShouldHideReaderRevenue;
+const fakeCanShowBannerSync: any = require('common/modules/commercial/contributions-utilities')
+    .canShowBannerSync;
 
 const fetchJsonMock: JestMockFn<*, *> = (fetchJson: any);
 const fakeUserPrefs: JestMockFn<*, *> = (userPrefs.get: any);
@@ -140,10 +143,13 @@ describe('Membership engagement banner', () => {
             });
         });
 
-        it('should return false user variant is blocked for test', () =>
+        it('should return false user variant is blocked for test', () => {
+            fakeCanShowBannerSync.mockReturnValueOnce(false);
+
             membershipEngagementBanner.canShow().then(canShow => {
                 expect(canShow).toBe(false);
-            }));
+            });
+        });
 
         it('should return false user visit count less than minArticles for banner', () => {
             fakeGet.mockReturnValueOnce(0); // gu.alreadyVisited

@@ -1,4 +1,4 @@
-// @flow
+// @flow strict
 /* A regionalised container for all the commercial tags. */
 
 import $ from 'lib/$';
@@ -11,18 +11,18 @@ import { imrWorldwide } from 'commercial/modules/third-party-tags/imr-worldwide'
 import { imrWorldwideLegacy } from 'commercial/modules/third-party-tags/imr-worldwide-legacy';
 import { remarketing } from 'commercial/modules/third-party-tags/remarketing';
 import { simpleReach } from 'commercial/modules/third-party-tags/simple-reach';
-import { tourismAustralia } from 'commercial/modules/third-party-tags/tourism-australia';
 import { krux } from 'common/modules/commercial/krux';
 import { ias } from 'commercial/modules/third-party-tags/ias';
 import { inizio } from 'commercial/modules/third-party-tags/inizio';
 import { initOutbrain } from 'commercial/modules/third-party-tags/outbrain';
 import { doubleClickAdFree } from 'commercial/modules/third-party-tags/doubleclick-ad-free';
 import { plista } from 'commercial/modules/third-party-tags/plista';
+import { fbPixel } from 'commercial/modules/third-party-tags/facebook-pixel';
 
 const loadExternalContentWidget = (): void => {
     const externalTpl = template(externalContentContainerStr);
 
-    const findAnchor = (): Promise<any> => {
+    const findAnchor = (): Promise<HTMLElement | null> => {
         const selector = !(config.page.seriesId || config.page.blogIds)
             ? '.js-related, .js-outbrain-anchor'
             : '.js-outbrain-anchor';
@@ -59,6 +59,7 @@ const insertScripts = (services: Array<ThirdPartyTag>): void => {
     const frag = document.createDocumentFragment();
     while (services.length) {
         const service = services.shift();
+        // flowlint sketchy-null-bool:warn
         if (service.useImage) {
             new Image().src = service.url;
         } else {
@@ -79,11 +80,11 @@ const loadOther = (): void => {
         imrWorldwideLegacy,
         remarketing,
         simpleReach,
-        tourismAustralia,
         krux,
         ias,
         inizio,
         doubleClickAdFree,
+        fbPixel(),
     ].filter(_ => _.shouldRun);
 
     if (services.length) {
@@ -91,7 +92,7 @@ const loadOther = (): void => {
     }
 };
 
-const init = (): Promise<any> => {
+const init = (): Promise<boolean> => {
     if (!commercialFeatures.thirdPartyTags) {
         return Promise.resolve(false);
     }

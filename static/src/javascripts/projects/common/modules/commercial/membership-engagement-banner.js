@@ -1,16 +1,15 @@
 // @flow
 import config from 'lib/config';
-import { local } from 'lib/storage';
 import { Message } from 'common/modules/ui/message';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
 import { getControlEngagementBannerParams } from 'common/modules/commercial/membership-engagement-banner-parameters';
 import { isBlocked } from 'common/modules/commercial/membership-engagement-banner-block';
 import {
     type ReaderRevenueRegion,
-    pageShouldHideReaderRevenue,
     getReaderRevenueRegion,
+    canShowBannerSync,
+    getVisitCount,
 } from 'common/modules/commercial/contributions-utilities';
-import { userIsSupporter } from 'common/modules/commercial/user-features';
 import type { Banner } from 'common/modules/ui/bannerPicker';
 import bean from 'bean';
 import fetchJson from 'lib/fetch-json';
@@ -82,8 +81,6 @@ const deriveBannerParams = (
         return defaultParams;
     });
 
-const getVisitCount = (): number => local.get('gu.alreadyVisited') || 0;
-
 const selectSequentiallyFrom = (array: Array<string>): string =>
     array[getVisitCount() % array.length];
 
@@ -103,6 +100,7 @@ const bannerParamsToHtml = (params: EngagementBannerParams): string => {
         ? selectSequentiallyFrom(params.messageText)
         : params.messageText;
     const ctaText = params.ctaText;
+    const leadSentence = params.leadSentence;
 
     const linkUrl = addTrackingCodesToUrl({
         base: params.linkUrl,
@@ -113,6 +111,8 @@ const bannerParamsToHtml = (params: EngagementBannerParams): string => {
     });
     const buttonCaption = params.buttonCaption;
     const templateParams = {
+        titles: params.titles,
+        leadSentence,
         messageText,
         ctaText,
         linkUrl,
@@ -166,6 +166,10 @@ const showBanner = (params: EngagementBannerParams): boolean => {
     const messageShown = showBannerAsMessage(messageCode, params, html);
 
     if (messageShown) {
+        if (params.bannerShownCallback) {
+            params.bannerShownCallback();
+        }
+
         trackBanner(params);
 
         if (params.hasTicker) {
@@ -202,15 +206,11 @@ const canShow = (): Promise<boolean> => {
         return Promise.resolve(false);
     }
     return getBannerParams().then(params => {
-        const userHasSeenEnoughArticles: boolean =
-            getVisitCount() >= params.minArticlesBeforeShowingBanner;
-        const userAlreadyGivesUsMoney = userIsSupporter();
-        const bannerIsBlockedForEditorialReasons = pageShouldHideReaderRevenue();
-
         if (
-            userHasSeenEnoughArticles &&
-            !userAlreadyGivesUsMoney &&
-            !bannerIsBlockedForEditorialReasons
+            canShowBannerSync(
+                params.minArticlesBeforeShowingBanner,
+                params.userCohort
+            )
         ) {
             const userLastClosedBannerAt = userPrefs.get(lastClosedAtKey);
 

@@ -28,6 +28,36 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-february-moment-banner-non-uk",
+    "switch on to test the moment copy of the engagement banner outside the UK",
+    owners = Seq(Owner.withGithub("johnduffell")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 9, 30),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-february-moment-banner-uk",
+    "switch on to enable the moment engagement banner in the UK",
+    owners = Seq(Owner.withGithub("johnduffell")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 9, 30),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-february-moment-banner-thank-you",
+    "switch on to enable the moment thank you engagement banner worldwide",
+    owners = Seq(Owner.withGithub("johnduffell")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 9, 30),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-acquisitions-epic-always-ask-if-tagged",
     "This guarantees that any on any article that is tagged with a tag that is on the allowed list of tags as set by the tagging tool, the epic will be displayed",
     owners = Seq(Owner.withGithub("jranks123")),

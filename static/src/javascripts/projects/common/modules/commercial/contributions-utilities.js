@@ -12,6 +12,7 @@ import {
 } from 'common/modules/commercial/acquisitions-ophan';
 import $ from 'lib/$';
 import config from 'lib/config';
+import { local } from 'lib/storage';
 import { elementInView } from 'lib/element-inview';
 import fastdom from 'lib/fastdom-promise';
 import reportError from 'lib/report-error';
@@ -19,6 +20,7 @@ import mediator from 'lib/mediator';
 import {
     getLocalCurrencySymbol,
     getSync as geolocationGetSync,
+    getSupporterCountryGroup,
 } from 'lib/geolocation';
 import {
     splitAndTrim,
@@ -63,6 +65,8 @@ const getReaderRevenueRegion = (geolocation: string): ReaderRevenueRegion => {
             return 'rest-of-world';
     }
 };
+
+const getVisitCount = (): number => local.get('gu.alreadyVisited') || 0;
 
 // How many times the user can see the Epic,
 // e.g. 6 times within 7 days with minimum of 1 day in between views.
@@ -129,19 +133,29 @@ const isCompatibleWithLiveBlogEpic = (page: Object): boolean =>
 const pageShouldHideReaderRevenue = () =>
     config.get('page.shouldHideReaderRevenue');
 
+const userIsInCorrectCohort = (
+    userCohort: AcquisitionsComponentUserCohort
+): boolean => {
+    switch (userCohort) {
+        case 'OnlyExistingSupporters':
+            return userIsSupporter();
+        case 'OnlyNonSupporters':
+            return !userIsSupporter();
+        case 'Everyone':
+        default:
+            return true;
+    }
+};
+
 const shouldShowEpic = (test: EpicABTest): boolean => {
     const onCompatiblePage = test.pageCheck(config.get('page'));
 
     const tagsMatch = doTagsMatch(test);
 
-    const isCompatibleUser = test.onlyShowToExistingSupporters
-        ? userIsSupporter()
-        : !userIsSupporter();
-
     return (
         !pageShouldHideReaderRevenue() &&
         onCompatiblePage &&
-        isCompatibleUser &&
+        userIsInCorrectCohort(test.userCohort) &&
         tagsMatch
     );
 };
@@ -157,6 +171,15 @@ const pageMatchesTags = (tagIds: string[]): boolean =>
             'page.nonKeywordTagIds'
         )}`.includes(tagId)
     );
+
+const userMatchesCountryGroups = (countryGroups: string[]) => {
+    const userCountryGroupId = getSupporterCountryGroup(
+        geolocationGetSync()
+    ).toUpperCase();
+    return countryGroups.some(
+        countryGroup => userCountryGroupId === countryGroup.toUpperCase()
+    );
+};
 
 const pageMatchesSections = (sectionIds: string[]): boolean =>
     sectionIds.some(section => config.get('page.section') === section);
@@ -210,7 +233,7 @@ const makeEpicABTestVariant = (
         copy: initVariant.copy,
         classNames: initVariant.classNames || [],
 
-        locations: initVariant.locations || [],
+        countryGroups: initVariant.countryGroups || [],
         tagIds: initVariant.tagIds || [],
         sections: initVariant.sections || [],
         excludedTagIds: initVariant.excludedTagIds || [],
@@ -240,11 +263,9 @@ const makeEpicABTestVariant = (
                 deploymentRules === 'AlwaysAsk' ||
                 checkMaxViews(deploymentRules);
 
-            const matchesLocations =
-                this.locations.length === 0 ||
-                this.locations.some(
-                    region => geolocationGetSync() === region.toUpperCase()
-                );
+            const matchesCountryGroups =
+                this.countryGroups.length === 0 ||
+                userMatchesCountryGroups(this.countryGroups);
 
             const matchesTags =
                 this.tagIds.length === 0 || pageMatchesTags(this.tagIds);
@@ -258,7 +279,7 @@ const makeEpicABTestVariant = (
 
             return (
                 meetsMaxViewsConditions &&
-                matchesLocations &&
+                matchesCountryGroups &&
                 matchesTags &&
                 matchesSections &&
                 noExcludedTags &&
@@ -396,7 +417,7 @@ const makeEpicABTest = ({
     campaignPrefix = 'gdnwb_copts_memco',
     useLocalViewLog = false,
     useTargetingTool = false,
-    onlyShowToExistingSupporters = false,
+    userCohort = 'OnlyNonSupporters',
     pageCheck = isCompatibleWithArticleEpic,
     template = controlTemplate,
 }: InitEpicABTest): EpicABTest => {
@@ -426,7 +447,7 @@ const makeEpicABTest = ({
         campaignId,
         campaignPrefix,
         useLocalViewLog,
-        onlyShowToExistingSupporters,
+        userCohort,
         pageCheck,
         useTargetingTool,
     };
@@ -457,6 +478,22 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
 
                     const rows = sheets[name];
                     const testName = name.split('__ON')[0];
+
+                    // The sheet does not easily allow test-level params, so get audience/audienceOffset from the first variant where they are defined
+                    const rowWithAudience = rows.find(
+                        row =>
+                            !(
+                                Number.isNaN(parseFloat(row.audience)) ||
+                                Number.isNaN(parseFloat(row.audienceOffset))
+                            )
+                    );
+                    const audience = rowWithAudience
+                        ? rowWithAudience.audience
+                        : 1;
+                    const audienceOffset = rowWithAudience
+                        ? rowWithAudience.audienceOffset
+                        : 0;
+
                     return makeEpicABTest({
                         id: testName,
                         campaignId: testName,
@@ -469,8 +506,8 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                         successMeasure: 'AV2.0',
                         idealOutcome: 'Google Docs',
                         audienceCriteria: 'All',
-                        audience: 1,
-                        audienceOffset: 0,
+                        audience,
+                        audienceOffset,
                         useLocalViewLog: rows.some(row =>
                             optionalStringToBoolean(row.useLocalViewLog)
                         ),
@@ -485,7 +522,7 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                               }),
                         ...(isThankYou
                             ? {
-                                  onlyShowToExistingSupporters: true,
+                                  userCohort: 'OnlyExistingSupporters',
                                   useLocalViewLog: true,
                               }
                             : {}),
@@ -516,7 +553,10 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                             buttonTemplate: isThankYou
                                 ? undefined
                                 : defaultButtonTemplate,
-                            locations: optionalSplitAndTrim(row.locations, ','),
+                            countryGroups: optionalSplitAndTrim(
+                                row.locations,
+                                ','
+                            ),
                             tagIds: optionalSplitAndTrim(row.tagIds, ','),
                             sections: optionalSplitAndTrim(row.sections, ','),
                             excludedTagIds: optionalSplitAndTrim(
@@ -542,6 +582,7 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                                           getLocalCurrencySymbol()
                                       )
                                     : undefined,
+                                footer: optionalSplitAndTrim(row.footer, '\n'),
                             },
                             classNames: optionalSplitAndTrim(
                                 row.classNames,
@@ -565,6 +606,23 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
             );
             return [];
         });
+
+// This is called by individual banner AbTests in their canRun functions
+// TODO - banner testing needs a refactor, as currently both canRun and canShow need to call this
+export const canShowBannerSync = (
+    minArticlesBeforeShowingBanner: number = 3,
+    userCohort: AcquisitionsComponentUserCohort = 'OnlyNonSupporters'
+): boolean => {
+    const userHasSeenEnoughArticles: boolean =
+        getVisitCount() >= minArticlesBeforeShowingBanner;
+    const bannerIsBlockedForEditorialReasons = pageShouldHideReaderRevenue();
+
+    return (
+        userHasSeenEnoughArticles &&
+        !bannerIsBlockedForEditorialReasons &&
+        userIsInCorrectCohort(userCohort)
+    );
+};
 
 export const getEngagementBannerTestsFromGoogleDoc = (): Promise<
     $ReadOnlyArray<AcquisitionsABTest>
@@ -615,6 +673,7 @@ export const getEngagementBannerTestsFromGoogleDoc = (): Promise<
                                 linkUrl: row.linkUrl.trim(),
                                 hasTicker: false,
                             },
+                            canRun: () => canShowBannerSync(),
                         })),
                     };
                 });
@@ -641,4 +700,6 @@ export {
     defaultButtonTemplate,
     defaultMaxViews,
     getReaderRevenueRegion,
+    userIsInCorrectCohort,
+    getVisitCount,
 };

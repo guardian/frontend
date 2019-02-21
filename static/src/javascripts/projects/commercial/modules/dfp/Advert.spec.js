@@ -1,5 +1,5 @@
 // @flow
-import { _ } from 'commercial/modules/dfp/Advert';
+import { _, Advert } from 'commercial/modules/dfp/Advert';
 
 const { filterClasses } = _;
 
@@ -31,5 +31,59 @@ describe('Filter classes', () => {
         expect(result.length).toBe(2);
         expect(result).toContain('old-class');
         expect(result).toContain('old-class-3');
+    });
+});
+
+describe('Advert', () => {
+    beforeEach(() => {
+        const sizeMapping = {
+            sizes: [],
+            build: jest.fn(() => []),
+        };
+        window.googletag = {
+            pubads() {
+                return {};
+            },
+            sizeMapping() {
+                return sizeMapping;
+            },
+            defineSlot: jest.fn(() => window.googletag),
+            addService: jest.fn(() => window.googletag),
+            defineSizeMapping: jest.fn(() => window.googletag),
+            setTargeting: jest.fn(() => window.googletag),
+            setSafeFrameConfig: jest.fn(() => window.googletag),
+        };
+    });
+
+    it('should enable safeframe to expand in the top-above-nav slot', () => {
+        const slot = document.createElement('div');
+        slot.setAttribute('data-name', 'top-above-nav');
+        const ad = new Advert(slot);
+        expect(ad).toBeDefined();
+        expect(window.googletag.setSafeFrameConfig).toBeCalledWith({
+            allowOverlayExpansion: false,
+            allowPushExpansion: true,
+            sandbox: true,
+        });
+    });
+
+    it('should enable safeframe to expand in the inline1 slot', () => {
+        const slot = document.createElement('div');
+        slot.setAttribute('data-name', 'inline1');
+        const ad = new Advert(slot);
+        expect(ad).toBeDefined();
+        expect(window.googletag.setSafeFrameConfig).toBeCalledWith({
+            allowOverlayExpansion: false,
+            allowPushExpansion: true,
+            sandbox: true,
+        });
+    });
+
+    it('should not enable safeframe to expand in a slot that cannot take outstream ads', () => {
+        const slot = document.createElement('div');
+        slot.setAttribute('data-name', 'inline2');
+        const ad = new Advert(slot);
+        expect(ad).toBeDefined();
+        expect(window.googletag.setSafeFrameConfig).not.toBeCalled();
     });
 });

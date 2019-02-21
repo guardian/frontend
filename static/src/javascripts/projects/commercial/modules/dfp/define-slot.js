@@ -78,7 +78,8 @@ const adomikClassify = (): string => {
 };
 
 const isEligibleForOutstream = (slotTarget: ?string): boolean =>
-    typeof slotTarget === 'string' && slotTarget === 'inline1';
+    typeof slotTarget === 'string' &&
+    (slotTarget === 'inline1' || slotTarget === 'top-above-nav');
 
 const allowSafeFrameToExpand = (slot: Slot): Slot => {
     slot.setSafeFrameConfig({

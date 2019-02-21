@@ -19,7 +19,7 @@ declare type Variant = {
 
 declare type EpicVariant = Variant & {
     // filters, where empty is taken to mean 'all', multiple entries are combined with OR
-    locations: string[],
+    countryGroups: string[],
     tagIds: string[],
     sections: string[],
     excludedTagIds: string[],
@@ -73,7 +73,7 @@ declare type DeploymentRules = 'AlwaysAsk' | MaxViews
 declare type EpicABTest = AcquisitionsABTest & {
     campaignPrefix: string,
     useLocalViewLog: boolean,
-    onlyShowToExistingSupporters: boolean,
+    userCohort: AcquisitionsComponentUserCohort,
     pageCheck: (page: Object) => boolean,
     useTargetingTool: boolean,
     insertEvent: string,
@@ -85,7 +85,7 @@ declare type InitEpicABTestVariant = {
     products: $ReadOnlyArray<OphanProduct>,
     test?: (html: string, abTest: ABTest) => void,
     deploymentRules?: DeploymentRules,
-    locations?: string[],
+    countryGroups?: string[],
     tagIds?: string[],
     sections?: string[],
     excludedTagIds?: string[],
@@ -118,7 +118,7 @@ declare type InitEpicABTest = {
     campaignPrefix?: string,
     useLocalViewLog?: boolean,
     useTargetingTool?: boolean,
-    onlyShowToExistingSupporters?: boolean,
+    userCohort?: AcquisitionsComponentUserCohort,
     pageCheck?: (page: Object) => boolean,
     template?: EpicTemplate,
     deploymentRules?: DeploymentRules,
