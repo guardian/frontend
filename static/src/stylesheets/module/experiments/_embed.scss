@@ -189,3 +189,38 @@ a[href].contributions__contribute.contributions__contribute--epic {
         }
     }
 }
+
+.contributions__adblock--moment {
+    position: absolute;
+    top: 0;
+    //TODO - can we make this less fragile?
+    padding-top: 6px;
+
+    .contributions__adblock--moment-header {
+        padding-left: 13px;
+
+        h2 {
+            @include fs-header(5);
+            font-size: 32px;
+            line-height: 32px;
+        }
+
+        .contributions__adblock--moment-header--blue {
+            color: #0084c6;
+        }
+        .contributions__adblock--moment-header--orange {
+            color: #ff7f0f;
+        }
+    }
+
+    .contributions__adblock--moment-sub {
+        color: #052962;
+        font-size: 16px;
+        line-height: 20px;
+        padding: 10px 0 8px 13px;
+    }
+
+    .contributions__adblock--moment-button {
+        padding-left: 5px;
+    }
+}
