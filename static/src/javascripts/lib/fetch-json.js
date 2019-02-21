@@ -12,7 +12,7 @@ const json = (
     let path = typeof input === 'string' ? input : input.url;
 
     if (!path.match('^(https?:)?//')) {
-        path = (config.page.ajaxUrl || '') + path;
+        path = config.get('page.ajaxUrl', '') + path;
         options.mode = 'cors';
     }
 

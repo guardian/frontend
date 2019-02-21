@@ -57,7 +57,7 @@ const fetchData = (): void => {
         isoDate: currentDate.toISOString(),
     });
 
-    fetchJson(config.page.beaconUrl + fetchUrl, {
+    fetchJson(config.get('page.beaconUrl') + fetchUrl, {
         mode: 'cors',
     }).then(logs => {
         type StartTime = { name: string, startTime: number };

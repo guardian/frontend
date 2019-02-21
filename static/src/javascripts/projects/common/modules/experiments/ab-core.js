@@ -18,7 +18,7 @@ const variantCanBeRun = (variant: Variant): boolean =>
 
 const testCanBeRun = (test: ABTest): boolean => {
     const expired = isExpired(test.expiry);
-    const isSensitive = config.page.isSensitive;
+    const isSensitive = config.get('page.isSensitive');
     const shouldShowForSensitive = !!test.showForSensitive;
     const isTestOn = isTestSwitchedOn(test.id);
     const canTestBeRun = !test.canRun || test.canRun();

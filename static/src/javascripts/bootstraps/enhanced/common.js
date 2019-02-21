@@ -59,9 +59,9 @@ const initialiseTopNavItems = (): void => {
     new Search();
 
     if (header) {
-        if (config.switches.idProfileNavigation) {
+        if (config.get('switches.idProfileNavigation')) {
             const profile: Profile = new Profile({
-                url: config.page.idUrl,
+                url: config.get('page.idUrl'),
             });
             profile.init();
         }
@@ -99,12 +99,14 @@ const initialiseClickstream = (): void => {
 
 const loadAnalytics = (): void => {
     interactionTracking.init();
-    if (config.switches.ophan) {
-        if (config.switches.scrollDepth) {
+    if (config.get('switches.ophan')) {
+        if (config.get('switches.scrollDepth')) {
             mediator.on('scrolldepth:data', ophan.record);
 
             new ScrollDepth({
-                isContent: /Article|LiveBlog/.test(config.page.contentType),
+                isContent: /Article|LiveBlog/.test(
+                    config.get('page.contentType')
+                ),
             });
         }
     }
@@ -136,15 +138,21 @@ const cleanupLocalStorage = (): void => {
 };
 
 const updateHistory = (): void => {
-    if (config.page.contentType !== 'Network Front') {
-        logSummary(config.page);
-    }
+    const page = config.get('page');
 
-    logHistory(config.page);
+    if (page) {
+        const { contentType } = page;
+
+        if (contentType !== 'Network Front') {
+            logSummary(page);
+        }
+
+        logHistory(page);
+    }
 };
 
 const showHistoryInMegaNav = (): void => {
-    if (config.switches.historyTags) {
+    if (config.get('switches.historyTags')) {
         mediator.once('modules:nav:open', () => {
             showInMegaNav();
         });
@@ -152,7 +160,7 @@ const showHistoryInMegaNav = (): void => {
 };
 
 const idCookieRefresh = (): void => {
-    if (config.switches.idCookieRefresh) {
+    if (config.get('switches.idCookieRefresh')) {
         initCookieRefresh();
     }
 };
@@ -194,7 +202,7 @@ const startRegister = (): void => {
 };
 
 const initDiscussion = (): void => {
-    if (config.switches.enableDiscussionSwitch) {
+    if (config.get('switches.enableDiscussionSwitch')) {
         initCommentCount();
     }
 };
@@ -246,7 +254,7 @@ const initPublicApi = (): void => {
 };
 
 const startPinterest = (): void => {
-    if (/Article|LiveBlog|Gallery|Video/.test(config.page.contentType)) {
+    if (/Article|LiveBlog|Gallery|Video/.test(config.get('page.contentType'))) {
         initPinterest();
     }
 };
@@ -256,7 +264,7 @@ const initialiseEmail = (): void => {
     initEmail();
 
     // Initalise email insertion into articles
-    if (config.switches.emailInArticle) {
+    if (config.get('switches.emailInArticle')) {
         initEmailArticle();
     }
 

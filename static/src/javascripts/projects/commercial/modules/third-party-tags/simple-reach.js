@@ -9,9 +9,9 @@ const shouldRun =
 let simpleReachUrl = '';
 
 if (shouldRun) {
-    const authors = config.page.author.split(',');
-    const channels = config.page.sectionName.split(',');
-    const keywords = config.page.keywords.split(',');
+    const authors = config.get('page.author').split(',');
+    const channels = config.get('page.sectionName').split(',');
+    const keywords = config.get('page.keywords').split(',');
 
     // We can't ditch the dangling underscores as SimpleReach needs this parameter, see:
     // http://docs.simplereach.com/implementation-1/standard-implementation

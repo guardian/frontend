@@ -53,7 +53,7 @@ const referenceOfType = (name: string): string => referencesOfType(name)[0];
 // the date nicely formatted and padded for use as part of a url
 // looks like    2012/04/31
 const webPublicationDateAsUrlPart = (): ?string => {
-    const webPublicationDate = config.page.webPublicationDate;
+    const webPublicationDate = config.get('page.webPublicationDate');
 
     if (webPublicationDate) {
         const pubDate = new Date(webPublicationDate);
@@ -70,7 +70,7 @@ const webPublicationDateAsUrlPart = (): ?string => {
 
 // returns 2014/apr/22
 const dateFromSlug = (): ?string => {
-    const s = config.page.pageId.match(/\d{4}\/\w{3}\/\d{2}/);
+    const s = config.get('page.pageId').match(/\d{4}\/\w{3}\/\d{2}/);
     return s ? s[0] : null;
 };
 
