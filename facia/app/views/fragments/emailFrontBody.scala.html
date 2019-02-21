@@ -9,6 +9,8 @@
 @import model.EmailAddons.EmailContentType
 @import model.pressed.{ExternalLink, Feature}
 @import model.pressed.ItemKicker
+@import model.InlineImage
+@import fragments.items.elements.facia_cards.itemImage
 @import com.gu.facia.api.utils.TagKicker
 @import views.support.EmailHelpers.{icon, imgFromCard, imgForFront, classesForCard}
 @import views.support.RemoveOuterParaHtml
@@ -223,10 +225,20 @@
             @faciaCard(classesForCard(card, withImage = true)) {
                 @row(Seq("no-pad")){
                     <a class="fc-link" href="@card.header.url.get">
-                        <img class="full-width" src="@FlagshipEmailContainer.AlbumArtUrl" alt="@card.header.headline">
+                        @card.displayElement match {
+                            case Some(InlineImage(image)) => {
+                                @itemImage(
+                                    image,
+                                    inlineImage = true,
+                                    widthsByBreakpoint = Some(card.squareImageWidthsByBreakpoint)
+                                )
+                            }
+                            case _ => {
+                                <img class="full-width" src="@FlagshipEmailContainer.AlbumArtUrl" alt="@card.header.headline">
+                            }
+                        }
                     </a>
                 }
-
                 @headline(card.setKicker(Some(FlagshipEmailContainer.kicker)), isLarge = true, isTrailText = true)
             }
         }
