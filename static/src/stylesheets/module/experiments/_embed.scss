@@ -112,7 +112,7 @@
 
 // Specificity needed to override an inline rule in _pillars.scss that's messing with the epic link colour.
 a[href].contributions__contribute.contributions__contribute--epic,
-a[href].contributions__option-button {
+.contributions__adblock--moment-button a {
     margin-top: 0;
     background-color: $highlight-main;
     color: $brightness-7;
