@@ -152,11 +152,13 @@
 
     .campaign--kicker {
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         min-height: 70px;
 
-        > .campaign--snippet__heading-logo {
+        > .campaign--snippet__heading {
+            display: flex;
             flex: initial;
+            flex-direction: row;
             margin-right: 10px;
 
             .speech-bubble {
@@ -165,6 +167,7 @@
                 padding: 6px 10px 10px;
                 line-height: 18px;
                 min-width: 84px;
+                margin-right: 10px;
 
                 &::after {
                     color: $brightness-7;
@@ -213,6 +216,10 @@
                     }
                 }
             }
+        }
+
+        .intro {
+            padding: 5px 0  0 10px;
         }
     }
 }
