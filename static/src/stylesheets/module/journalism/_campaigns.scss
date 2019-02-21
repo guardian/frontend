@@ -145,6 +145,11 @@
     outline: none;
     padding: 0;
     list-style: none;
+    margin: 0 0 6px;
+
+    @include mq(mobileMedium) {
+        margin: 0 0 10px;
+    }
 
     &::-webkit-details-marker {
         display: none;
@@ -152,21 +157,38 @@
 
     .campaign--kicker {
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
+        align-items: flex-start;
         min-height: 70px;
+
+
+        @include mq(mobileMedium) {
+            flex-direction: row;
+        }
 
         > .campaign--snippet__heading-logo {
             flex: initial;
             margin-right: 10px;
+            font-size: 18px;
+            font-family: $f-serif-headline;
+            font-weight: 500;
 
             .speech-bubble {
                 color: $brightness-7;
                 background-color: $highlight-main;
-                padding: 6px 10px 10px;
+                padding: 6px 10px 12px;
                 line-height: 18px;
-                min-width: 84px;
+                min-width: 88px;
+                position: relative;
 
                 &::after {
+                    content: '';
+                    width: 20px;
+                    height: 22px;
+                    border-radius: 0 0 18px;
+                    position: absolute;
+                    bottom: -12px;
+                    left: 10px;
                     color: $brightness-7;
                     background-color: $highlight-main;
                 }
@@ -214,30 +236,27 @@
                 }
             }
         }
+
+        > .campaign--snippet__heading-text {
+            padding: 12px 10px 6px;
+
+            @include mq(mobileMedium) {
+                padding: 5px 0 0;
+            }
+
+            .campaign--snippet__headline {
+                font-size: 18px;
+                line-height: 22px;
+                font-family: $f-serif-headline;
+                font-weight: 600;
+            }
+            p {
+                padding-right: 5px;
+            }
+        }
     }
 }
 
-.campaign--snippet__header {
-    margin: 0 0 6px;
-
-    @include mq(mobileMedium) {
-        margin: 0 0 20px;
-    }
-}
-
-.campaign--snippet__headline {
-    font-size: 18px;
-    line-height: 22px;
-    font-family: $f-serif-headline;
-    font-weight: 500;
-    padding-top: 1px;
-}
-
-.campaign--snippet__heading-logo {
-    font-size: 18px;
-    font-family: $f-serif-headline;
-    font-weight: 500;
-}
 
 .campaign--snippet__handle {
     font-family: $f-sans-serif-text;
@@ -285,24 +304,12 @@
     background-color: $news-main;
 }
 
-.speech-bubble {
-    position: relative;
 
-    &::after {
-        content: '';
-        width: 20px;
-        height: 22px;
-        border-radius: 0 0 18px;
-        position: absolute;
-        bottom: -12px;
-        left: 10px;
-    }
-}
 
 /*---------- SUCCESS STATE TOGGLE -----------------*/
 
 .success.element-campaign .campaign--snippet {
-    .heading {
+    .campaign--snippet__heading-text {
         display: none;
     }
     button {
