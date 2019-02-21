@@ -194,7 +194,7 @@ a[href].contributions__contribute.contributions__contribute--epic,
 .contributions__adblock--moment {
     position: absolute;
     top: 0;
-    padding-top: 6px;
+    padding-top: $gs-baseline/2;
 
     .contributions__adblock--moment-content {
         border-top: 5px solid #052962;
