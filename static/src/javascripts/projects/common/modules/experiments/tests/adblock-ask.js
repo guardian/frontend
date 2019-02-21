@@ -31,7 +31,7 @@ export const adblockTest: ABTest = {
     expiry: '2020-02-20',
     author: 'Tom Forbes',
     description:
-        'Add a contributions message under adverts, for users with adblocker enabled',
+        'Places a contributions ask underneath the right-hand ad slot on articles.',
     audience: 1,
     audienceOffset: 0,
     successMeasure: '',

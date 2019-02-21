@@ -301,7 +301,7 @@ trait CommercialSwitches {
   val AdblockAsk = Switch(
     Commercial,
     "ab-adblock-ask",
-    "blah",
+    "Places a contributions ask underneath the right-hand ad slot on articles.",
     owners = group(Membership),
     safeState = On,
     sellByDate = never,
