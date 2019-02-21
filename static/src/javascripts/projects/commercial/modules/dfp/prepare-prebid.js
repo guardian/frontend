@@ -14,7 +14,7 @@ const isGoogleWebPreview: () => boolean = () =>
     );
 
 if (!isGoogleWebPreview()) {
-    require('prebid.js/build/dist/prebid'); // eslint-disable-line global-require
+    import('prebid.js/build/dist/prebid');
 }
 
 const setupPrebid: () => Promise<void> = () => {
