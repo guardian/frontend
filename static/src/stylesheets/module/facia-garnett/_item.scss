@@ -114,34 +114,6 @@ $fc-item-gutter: $gs-gutter / 4;
             text-decoration: none;
         }
     }
-
-    .fc-item__header {
-        .stars {
-            background-color: $highlight-main;
-            display: inline-block;
-            line-height: 0;
-            padding: calc((#{$gs-baseline} / 2) - 2px);
-            margin-top: $gs-baseline / 2;
-        }
-
-        .inline-star {
-            display: inline;
-
-            svg {
-                stroke: $brightness-7;
-                fill: transparent;
-                height: .8em;
-                width: .8em;
-            }
-        }
-
-        .inline-star.star__item--golden {
-            svg {
-                fill: $brightness-7;
-                stroke: none;
-            }
-        }
-    }
 }
 
 .fc-item__container {
@@ -467,7 +439,7 @@ $block-height: 58px;
     white-space: nowrap;
 }
 
-.fc-item--type-review {
+.fc-item {
     .fc-item__media-wrapper,
     .fc-item__header
     {
