@@ -39,64 +39,60 @@ export const init = (start: () => void, stop: () => void): Promise<boolean> => {
         return Promise.resolve(false);
     }
 
-    if (config.get('page.hasShowcaseMainElement')) {
-        return fastdom
-            .read(
-                (): [number, number] => [
-                    $mainCol.dim().height,
-                    $showcase.offset().top -
-                        $mainCol.offset().top +
-                        $showcase.dim().height,
-                ]
-            )
-            .then(([mainColHeight, showcaseOffset]: [number, number]) => {
-                if (true) {
+    return fastdom
+        .read(
+            (): [number, number, number] => [
+                $mainCol.dim().height,
+                $immersiveEls.offset().top - $mainCol.offset().top,
+                $showcase.offset().top -
+                    $mainCol.offset().top +
+                    $showcase.dim().height,
+            ]
+        )
+        .then(
+            ([mainColHeight, immersiveOffset, showcaseOffset]: [
+                number,
+                number,
+                number,
+            ]) => {
+                if (config.get('page.hasShowcaseMainElement')) {
                     return fastdom.write(() => {
                         $col.css({
                             'padding-top': `${showcaseOffset}`,
                         });
                     });
+                } else if (
+                    config.get('page.isImmersive') &&
+                    $immersiveEls.length > 0
+                ) {
+                    // filter ad slot sizes based on the available height
+                    return fastdom.write(() => {
+                        $adSlot.removeClass(
+                            'right-sticky js-sticky-mpu is-sticky'
+                        );
+                        $adSlot[0].setAttribute(
+                            'data-mobile',
+                            calculateAllowedAdSlots(immersiveOffset)
+                        );
+                        return $adSlot[0];
+                    });
+                    // remove sticky
+                } else if (mainColHeight < minArticleHeight) {
+                    // Should switch to 'right-small' MPU for short articles
+                    return fastdom.write(() => {
+                        $adSlot.removeClass(
+                            'right-sticky js-sticky-mpu is-sticky'
+                        );
+                        $adSlot[0].setAttribute(
+                            'data-mobile',
+                            '1,1|2,2|300,250|300,274|fluid'
+                        );
+                        return $adSlot[0];
+                    });
                 }
-            })
-            .then((adSlot: Element) => {
-                stop();
-                mediator.emit('page:defaultcommercial:right', adSlot);
-                return true;
-            });
-    }
-
-    return fastdom
-        .read(
-            (): [number, number] => [
-                $mainCol.dim().height,
-                $immersiveEls.offset().top - $mainCol.offset().top,
-            ]
-        )
-        .then(([mainColHeight, immersiveOffset]: [number, number]) => {
-            if (config.get('page.isImmersive') && $immersiveEls.length > 0) {
-                // filter ad slot sizes based on the available height
-                return fastdom.write(() => {
-                    $adSlot.removeClass('right-sticky js-sticky-mpu is-sticky');
-                    $adSlot[0].setAttribute(
-                        'data-mobile',
-                        calculateAllowedAdSlots(immersiveOffset)
-                    );
-                    return $adSlot[0];
-                });
-                // remove sticky
-            } else if (mainColHeight < minArticleHeight) {
-                // Should switch to 'right-small' MPU for short articles
-                return fastdom.write(() => {
-                    $adSlot.removeClass('right-sticky js-sticky-mpu is-sticky');
-                    $adSlot[0].setAttribute(
-                        'data-mobile',
-                        '1,1|2,2|300,250|300,274|fluid'
-                    );
-                    return $adSlot[0];
-                });
+                return $adSlot[0];
             }
-            return $adSlot[0];
-        })
+        )
         .then((adSlot: Element) => {
             stop();
             mediator.emit('page:defaultcommercial:right', adSlot);
