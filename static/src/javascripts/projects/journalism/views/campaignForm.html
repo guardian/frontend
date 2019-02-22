@@ -78,6 +78,13 @@
 
                 </select>
 
+                <% } else if(field.type === "file") { %>
+                <input name="field_<%=field.id%>"
+                       type="file"
+                       accept="image/*, .pdf, .doc, .xml, .docx"
+                <% if (field.required == "1") { %> required <% } %>
+                />
+
                 <% } else { %>
                 <input name="field_<%=field.id%>"
                        type="<%=field.type%>"
@@ -85,10 +92,15 @@
                 />
                 <% } %>
             </div>
+
         </div>
 
         <% }) %>
-
+        <div class="form_input form_input--twitter-handle">
+            <div class="form_field">
+                <input name="twitter-handle" type="text" id="twitter-handle" placeholder="@mytwitterhandle"/>
+            </div>
+        </div>
         <div class="form_footer">
             <div class="form_submit">
                 <button class="button button--rounded" type="submit">Share with the Guardian</button>
