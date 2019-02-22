@@ -91,7 +91,7 @@
 
                         @fragments.articleAsideSlot(shouldShowAds(model), articleAsideOptionalSizes)
 
-                        @if(!isPaidContent){
+                        @if(!isPaidContent && !article.elements.hasShowcaseMainElement){
                         <div class="js-components-container"></div>
                         }
                     </div>

@@ -39,6 +39,32 @@ export const init = (start: () => void, stop: () => void): Promise<boolean> => {
         return Promise.resolve(false);
     }
 
+    if (config.get('page.hasShowcaseMainElement')) {
+        return fastdom
+            .read(
+                (): [number, number] => [
+                    $mainCol.dim().height,
+                    $showcase.offset().top -
+                        $mainCol.offset().top +
+                        $showcase.dim().height,
+                ]
+            )
+            .then(([mainColHeight, showcaseOffset]: [number, number]) => {
+                if (true) {
+                    return fastdom.write(() => {
+                        $col.css({
+                            'padding-top': `${showcaseOffset}`,
+                        });
+                    });
+                }
+            })
+            .then((adSlot: Element) => {
+                stop();
+                mediator.emit('page:defaultcommercial:right', adSlot);
+                return true;
+            });
+    }
+
     return fastdom
         .read(
             (): [number, number] => [
@@ -47,26 +73,7 @@ export const init = (start: () => void, stop: () => void): Promise<boolean> => {
             ]
         )
         .then(([mainColHeight, immersiveOffset]: [number, number]) => {
-            if (config.get('page.hasShowcaseMainElement')) {
-                fastdom
-                    .read(() => $showcase.dim().height)
-                    .then((showcaseHeight: number) => {
-                        if (showcaseHeight >= 650) {
-                            return fastdom.write(() => {
-                                $adSlot.removeClass(
-                                    'right-sticky js-sticky-mpu is-sticky'
-                                );
-                                $adSlot[0].setAttribute(
-                                    'data-mobile',
-                                    '1,1|2,2|300,250|300,274|fluid'
-                                );
-                            });
-                        }
-                    });
-            } else if (
-                config.get('page.isImmersive') &&
-                $immersiveEls.length > 0
-            ) {
+            if (config.get('page.isImmersive') && $immersiveEls.length > 0) {
                 // filter ad slot sizes based on the available height
                 return fastdom.write(() => {
                     $adSlot.removeClass('right-sticky js-sticky-mpu is-sticky');
