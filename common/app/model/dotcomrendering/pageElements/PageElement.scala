@@ -18,6 +18,7 @@ import views.support.{AffiliateLinksCleaner, ImageProfile, ImageUrlSigner, ImgSr
 
 sealed trait PageElement
 case class TextBlockElement(html: String) extends PageElement
+case class RuleElement(html: String) extends PageElement
 case class TweetBlockElement(html: String, url: String, id: String, hasMedia: Boolean, role: Role) extends PageElement
 case class PullquoteBlockElement(html: Option[String], role: Role) extends PageElement
 case class ImageBlockElement(media: ImageMedia, data: Map[String, String], displayCredit: Option[Boolean], role: Role, imageSources: Seq[ImageSource]) extends PageElement
@@ -93,12 +94,11 @@ object PageElement {
         block <- element.textTypeData.toList
         text <- block.html.toList
         element <- Cleaner.split(text)
-        textElement = TextBlockElement(element)
       } yield {
-        if (addAffiliateLinks) {
-          AffiliateLinksCleaner.replaceLinksInElement(textElement, pageUrl = pageUrl, contentType = "article")
-        } else {
-          textElement
+        element match {
+          case _ if element == "<h2>* * *</h2>" => RuleElement(element)
+          case _ if addAffiliateLinks => AffiliateLinksCleaner.replaceLinksInElement(TextBlockElement(element), pageUrl = pageUrl, contentType = "article")
+          case _ => TextBlockElement(element)
         }
       }
 
@@ -254,6 +254,7 @@ object PageElement {
 
   implicit val imageWeightingWrites: Writes[ImageSource] = Json.writes[ImageSource]
   implicit val textBlockElementWrites: Writes[TextBlockElement] = Json.writes[TextBlockElement]
+  implicit val ruleElementWrites: Writes[RuleElement] = Json.writes[RuleElement]
   implicit val ImageBlockElementWrites: Writes[ImageBlockElement] = Json.writes[ImageBlockElement]
   implicit val AudioBlockElementWrites: Writes[AudioBlockElement] = Json.writes[AudioBlockElement]
   implicit val GuVideoBlockElementWrites: Writes[GuVideoBlockElement] = Json.writes[GuVideoBlockElement]
