@@ -26,6 +26,42 @@ const bootstrapAtom = <A>(atomMaker: AtomMaker<A>, atomType: AtomType) => {
     });
 };
 
+const initCharts = () => {
+    const iframes: HTMLIFrameElement[] = ([
+        ...document.querySelectorAll('.atom--chart > .atom__iframe'),
+    ]: any);
+
+    window.addEventListener('message', event => {
+        const iframe: ?HTMLIFrameElement = iframes.find(i => {
+            try {
+                return i.name === event.source.name;
+            } catch (e) {
+                return false;
+            }
+        });
+        if (iframe) {
+            try {
+                const message = JSON.parse(event.data);
+                switch (message.type) {
+                    case 'set-height':
+                        iframe.height = message.value;
+                        break;
+                    default:
+                }
+                // eslint-disable-next-line no-empty
+            } catch (e) {}
+        }
+    });
+
+    iframes.forEach(iframe => {
+        const src = (iframe.getAttribute('srcdoc') || '').replace(
+            /gu-script/g,
+            'script'
+        );
+        iframe.setAttribute('srcdoc', src);
+    });
+};
+
 const initAtoms = () => {
     if (config.get('page.atomTypes.guide')) {
         require.ensure(
@@ -121,6 +157,10 @@ const initAtoms = () => {
             },
             'audio-atom'
         );
+    }
+
+    if (config.get('page.atomTypes.chart')) {
+        initCharts();
     }
 };
 export { initAtoms };
