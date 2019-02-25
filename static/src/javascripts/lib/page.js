@@ -40,7 +40,7 @@ const isMatch = (yes: yesable, no: noable): boolean => {
     Object.assign(match, {
         date: config.webPublicationDateAsUrlPart(),
         teams,
-        isLive: config.get('page.isLive'),
+        isLive: !!config.get('page.isLive'),
         pageType: pageType && pageType[0],
     });
 
@@ -68,7 +68,7 @@ const isClockwatch = (yes: yesable): boolean =>
     isit(config.hasSeries('Clockwatch'), yes);
 
 const isLiveClockwatch = (yes: yesable): boolean =>
-    isClockwatch(() => isit(config.get('page.isLive'), yes));
+    isClockwatch(() => isit(!!config.get('page.isLive'), yes));
 
 const isFootballStatsPage = (yes: yesable): boolean =>
     isit(!!config.get('page.footballMatch'), yes);
