@@ -26,7 +26,7 @@ describe('initialise', () => {
     });
 
     test('should generate correct Prebid config when all switches on', () => {
-        prebid.initialise(config, window);
+        prebid.initialise(window);
         expect(window.pbjs.getConfig()).toEqual({
             _bidderSequence: 'random',
             _bidderTimeout: 1500,
@@ -112,13 +112,13 @@ describe('initialise', () => {
 
     test('should generate correct Prebid config when consent management off', () => {
         config.set('switches.enableConsentManagementService', false);
-        prebid.initialise(config, window);
+        prebid.initialise(window);
         expect(window.pbjs.getConfig().consentManagement).toEqual({});
     });
 
     test('should generate correct Prebid config when Ozone off', () => {
         config.set('switches.prebidS2sozone', false);
-        prebid.initialise(config, window);
+        prebid.initialise(window);
         expect(window.pbjs.getConfig().s2sConfig).toEqual({
             adapter: 'prebidServer',
             adapterOptions: {},
@@ -129,7 +129,7 @@ describe('initialise', () => {
     });
 
     test('should generate correct bidder settings', () => {
-        prebid.initialise(config, window);
+        prebid.initialise(window);
         expect(window.pbjs.bidderSettings.xhb).toHaveProperty(
             'adserverTargeting'
         );
@@ -137,13 +137,13 @@ describe('initialise', () => {
 
     test('should generate correct bidder settings when Xaxis off', () => {
         config.set('switches.prebidXaxis', false);
-        prebid.initialise(config, window);
+        prebid.initialise(window);
         expect(window.pbjs.bidderSettings).toEqual({});
     });
 
     test('should generate correct Prebid config when user-sync off', () => {
         config.set('switches.prebidUserSync', false);
-        prebid.initialise(config, window);
+        prebid.initialise(window);
         expect(window.pbjs.getConfig().userSync.syncEnabled).toEqual(false);
     });
 });

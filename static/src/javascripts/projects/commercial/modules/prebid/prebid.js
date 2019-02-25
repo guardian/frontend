@@ -1,6 +1,7 @@
 // @flow strict
 
 import 'prebid.js/build/dist/prebid';
+import config from 'lib/config';
 import { Advert } from 'commercial/modules/dfp/Advert';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import { bids } from 'commercial/modules/prebid/bid-config';
@@ -11,6 +12,7 @@ import type {
     PrebidMediaTypes,
     PrebidSlot,
 } from 'commercial/modules/prebid/types';
+import type { PrebidPriceGranularity } from 'commercial/modules/prebid/price-config';
 
 type EnableAnalyticsConfig = {
     provider: string,
@@ -20,15 +22,34 @@ type EnableAnalyticsConfig = {
     },
 };
 
-const bidderTimeout = 1500;
+const bidderTimeout: number = 1500;
 
-const consentManagement = {
+type ConsentManagement = {
+    cmpApi: string,
+    timeout: number,
+    allowAuctionWithoutConsent: boolean,
+};
+
+const consentManagement: ConsentManagement = {
     cmpApi: 'iab',
     timeout: 200,
     allowAuctionWithoutConsent: true,
 };
 
-const s2sConfig = {
+type S2SConfig = {
+    accountId: string,
+    enabled: boolean,
+    bidders: Array<string>,
+    timeout: number,
+    adapter: string,
+    is_debug: string, // true or false string
+    endpoint: string,
+    syncEndpoint: string,
+    cookieSet: boolean,
+    cookiesetUrl: string,
+};
+
+const s2sConfig: S2SConfig = {
     accountId: '1',
     enabled: true,
     bidders: ['appnexus', 'openx', 'pangaea'],
@@ -59,16 +80,53 @@ class PrebidAdUnit {
 
 let requestQueue: Promise<void> = Promise.resolve();
 
-const initialise = (
-    config: { get: (string, ?boolean) => boolean | string },
-    window: {
-        pbjs: {
-            setConfig: Object => void,
-            bidderSettings: Object,
-            enableAnalytics: ([EnableAnalyticsConfig]) => void,
-        },
-    }
-): void => {
+type UserSync =
+    | {
+          // syncsPerBidder: number, // allow all syncs - bug https://github.com/prebid/Prebid.js/issues/2781
+          syncsPerBidder: number, // temporarily until above bug fixed
+          filterSettings: {
+              all: {
+                  bidders: string, // allow all bidders to sync by iframe or image beacons
+                  filter: string,
+              },
+          },
+      }
+    | { syncEnabled: false };
+
+type PbjsConfig = {
+    bidderTimeout: number | boolean,
+    priceGranularity: PrebidPriceGranularity,
+    userSync: UserSync,
+    consentManagement: ConsentManagement | false,
+    s2sConfig: S2SConfig,
+};
+
+type XasisFunction = ({
+    appnexus: {
+        buyerMemberId: string,
+    },
+}) => string;
+
+type XasisAdServerTargetting = {
+    key: string,
+    val: XasisFunction,
+};
+
+type XasisHeaderBidderConfig = {
+    adserverTargeting: Array<XasisAdServerTargetting>,
+};
+
+type BidderSettings = {
+    xhb: XasisHeaderBidderConfig,
+};
+
+const initialise = (window: {
+    pbjs: {
+        setConfig: PbjsConfig => void,
+        bidderSettings: BidderSettings,
+        enableAnalytics: ([EnableAnalyticsConfig]) => void,
+    },
+}): void => {
     const userSync = config.get('switches.prebidUserSync', false)
         ? {
               // syncsPerBidder: 0, // allow all syncs - bug https://github.com/prebid/Prebid.js/issues/2781
@@ -82,7 +140,7 @@ const initialise = (
           }
         : { syncEnabled: false };
 
-    const pbjsConfig = Object.assign(
+    const pbjsConfig: PbjsConfig = Object.assign(
         {},
         {
             bidderTimeout,
@@ -118,7 +176,8 @@ const initialise = (
             adserverTargeting: [
                 {
                     key: 'hb_buyer_id',
-                    val(bidResponse) {
+                    val(bidResponse): string {
+                        // flowlint sketchy-null-mixed:warn
                         return bidResponse.appnexus
                             ? bidResponse.appnexus.buyerMemberId
                             : '';
@@ -133,8 +192,7 @@ const initialise = (
 // for this given request for bids.
 const requestBids = (
     advert: Advert,
-    slotFlatMap?: PrebidSlot => PrebidSlot[],
-    config: any
+    slotFlatMap?: PrebidSlot => PrebidSlot[]
 ): Promise<void> => {
     const effectiveSlotFlatMap = slotFlatMap || (s => [s]); // default to identity
     if (dfpEnv.externalDemand !== 'prebid') {

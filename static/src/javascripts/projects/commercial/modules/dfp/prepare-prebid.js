@@ -5,7 +5,6 @@ import { buildPageTargeting } from 'common/modules/commercial/build-page-targeti
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import once from 'lodash/once';
 import prebid from 'commercial/modules/prebid/prebid';
-import config from 'lib/config';
 
 export const setupPrebid: () => Promise<void> = once(() => {
     if (
@@ -14,7 +13,7 @@ export const setupPrebid: () => Promise<void> = once(() => {
         !commercialFeatures.adFree
     ) {
         buildPageTargeting();
-        prebid.initialise(config, window);
+        prebid.initialise(window);
     }
     return Promise.resolve();
 });
