@@ -205,7 +205,7 @@ const onPlayerPlaying = (atomId: string): void => {
             .catch(err => {
                 reportError(
                     Error(
-                        `Failed to get atom ID for youtube ID ${youtubeId}. ${err}`
+                        `Failed to get atom ID for youtube ID ${latestYoutubeId}. ${err}`
                     ),
                     { feature: 'youtube' },
                     false

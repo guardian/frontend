@@ -166,6 +166,10 @@ const showBanner = (params: EngagementBannerParams): boolean => {
     const messageShown = showBannerAsMessage(messageCode, params, html);
 
     if (messageShown) {
+        if (params.bannerShownCallback) {
+            params.bannerShownCallback();
+        }
+
         trackBanner(params);
 
         if (params.hasTicker) {

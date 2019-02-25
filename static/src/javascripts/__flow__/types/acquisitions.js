@@ -36,6 +36,7 @@ declare type EngagementBannerParams = EngagementBannerTemplateParams & {
         name: string,
         variant: string
     },
+    bannerShownCallback?: () => void,
 };
 
 declare type EngagementBannerTestParams = {
@@ -51,4 +52,5 @@ declare type EngagementBannerTestParams = {
     bannerModifierClass?: string,
     minArticlesBeforeShowingBanner?: number,
     userCohort?: AcquisitionsComponentUserCohort,
+    bannerShownCallback?: () => void,
 }

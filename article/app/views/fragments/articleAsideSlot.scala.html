@@ -8,7 +8,7 @@
 @import conf.switches.Switches.CommercialSwitch
 
 @if(CommercialSwitch.isSwitchedOn && shouldShowAds) {
-  <div class="aside-slot-container" aria-hidden="true">
+  <div class="aside-slot-container js-aside-slot-container" aria-hidden="true">
   @fragments.commercial.adSlot(
       "right",
       Seq("mpu-banner-ad"),

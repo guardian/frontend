@@ -1,22 +1,25 @@
 package model.dotcomponents
 
+import ai.x.play.json.Jsonx
+import com.gu.contentapi.client.model.v1.ElementType.Text
+import com.gu.contentapi.client.model.v1.{BlockElement => ClientBlockElement, Blocks => APIBlocks}
 import common.Edition
+import common.Maps.RichMap
+import common.commercial.CommercialProperties
 import conf.Configuration
+import conf.Configuration.affiliatelinks
+import conf.switches.Switches
 import controllers.ArticlePage
 import model.SubMetaLinks
-import model.dotcomrendering.pageElements.PageElement
+import model.dotcomrendering.pageElements.{DisclaimerBlockElement, PageElement}
+import model.meta.{Guardian, LinkedData, PotentialAction}
 import navigation.NavMenu
+import navigation.ReaderRevenueSite.{Support, SupportContribute, SupportSubscribe}
+import navigation.UrlHelpers._
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
-import views.support.{CamelCase, GUDateTimeFormat, ImgSrc, Item1200}
-import ai.x.play.json.Jsonx
-import common.Maps.RichMap
-import navigation.UrlHelpers.{AmpHeader, AmpFooter}
-import common.commercial.CommercialProperties
-import navigation.UrlHelpers.{Footer, Header, SideMenu, getReaderRevenueUrl}
-import navigation.ReaderRevenueSite.{Support, SupportContribute, SupportSubscribe}
-import model.meta.{Guardian, LinkedData, PotentialAction}
-import ai.x.play.json.implicits.optionWithNull // Note, required despite Intellij saying otherwise
+import views.html.fragments.affiliateLinksDisclaimer
+import views.support.{AffiliateLinksCleaner, CamelCase, GUDateTimeFormat, ImgSrc, Item1200} // Note, required despite Intellij saying otherwise
 
 // We have introduced our own set of objects for serializing data to the DotComponents API,
 // because we don't want people changing the core frontend models and as a side effect,
@@ -147,7 +150,6 @@ case class PageData(
     hasRelated: Boolean,
     isCommentable: Boolean,
     commercialProperties: Option[CommercialProperties],
-    hasAffiliateLinks: Boolean,
     starRating: Option[Int],
 )
 
@@ -218,18 +220,55 @@ object DotcomponentsDataModel {
 
   val VERSION = 1
 
-  def fromArticle(articlePage: ArticlePage, request: RequestHeader): DotcomponentsDataModel = {
+  def fromArticle(articlePage: ArticlePage, request: RequestHeader, blocks: APIBlocks): DotcomponentsDataModel = {
 
     val article = articlePage.article
 
-    val bodyBlocks: List[Block] = article.blocks match {
-      case Some(bs) => bs.body.map(bb => Block(bb.bodyHtml, bb.dotcomponentsPageElements.toList)).toList
-      case None => List()
+    // TODO this logic is duplicated from the cleaners, can we consolidate?
+    val shouldAddAffiliateLinks = AffiliateLinksCleaner.shouldAddAffiliateLinks(
+      switchedOn = Switches.AffiliateLinks.isSwitchedOn,
+      section = article.metadata.sectionId,
+      showAffiliateLinks =  article.content.fields.showAffiliateLinks,
+      supportedSections = affiliatelinks.affiliateLinkSections,
+      defaultOffTags = affiliatelinks.defaultOffTags,
+      alwaysOffTags = affiliatelinks.alwaysOffTags,
+      tagPaths = article.content.tags.tags.map(_.id)
+    )
+
+    def blocksToPageElements(capiElems: Seq[ClientBlockElement], affiliateLinks: Boolean): List[PageElement] = {
+      val elems = capiElems.toList.flatMap(el => PageElement.make(
+        element = el,
+        addAffiliateLinks = affiliateLinks,
+        pageUrl = request.uri
+      ))
+
+      addDisclaimer(elems, capiElems)
     }
 
-    val mainBlock: Option[Block] = article.blocks.flatMap(
-      _.main.map(bb=>Block(bb.bodyHtml, bb.dotcomponentsPageElements.toList))
-    )
+    def addDisclaimer(elems: List[PageElement], capiElems: Seq[ClientBlockElement]): List[PageElement] = {
+      val hasLinks = capiElems.exists(elem => elem.`type` match {
+        case Text => {
+          val textString = elem.textTypeData.toList.mkString("\n") // just concat all the elems here for this test
+          AffiliateLinksCleaner.stringContainsAffiliateableLinks(textString)
+        }
+        case _ => false
+      })
+
+      if (hasLinks) {
+        elems :+ DisclaimerBlockElement(affiliateLinksDisclaimer("article").body)
+      } else {
+        elems
+      }
+    }
+
+    val bodyBlocks: List[Block] = {
+      val bodyBlocks = blocks.body.getOrElse(Nil)
+      bodyBlocks.map(block => Block(block.bodyHtml, blocksToPageElements(block.elements, shouldAddAffiliateLinks))).toList
+    }
+
+    val mainBlock: Option[Block] = {
+      blocks.main.map(block => Block(block.bodyHtml, blocksToPageElements(block.elements, shouldAddAffiliateLinks)))
+    }
 
     val dcBlocks = Blocks(mainBlock, bodyBlocks)
 
@@ -312,7 +351,6 @@ object DotcomponentsDataModel {
       hasRelated = article.content.showInRelated,
       isCommentable = article.trail.isCommentable,
       article.metadata.commercial,
-      article.content.fields.showAffiliateLinks.getOrElse(false),
       article.content.starRating
     )
 

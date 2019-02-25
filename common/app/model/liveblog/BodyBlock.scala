@@ -2,10 +2,10 @@ package model.liveblog
 
 import java.util.Locale
 
+import com.gu.contentapi.client.model.v1.{Block, BlockAttributes => ApiBlockAttributes, Blocks => ApiBlocks}
 import implicits.Dates.CapiRichDateTime
-import com.gu.contentapi.client.model.v1.{Block, BlockAttributes => ApiBlockAttributes, Blocks => ApiBlocks, MembershipPlaceholder => ApiMembershipPlaceholder}
-import model.liveblog.BodyBlock._
 import model.dotcomrendering.pageElements.PageElement
+import model.liveblog.BodyBlock._
 import org.joda.time.format.{DateTimeFormat, ISODateTimeFormat}
 import org.joda.time.{DateTime, DateTimeZone}
 import org.jsoup.Jsoup
@@ -15,9 +15,10 @@ object Blocks {
 
   def make(blocks: ApiBlocks): Blocks = {
 
-    def orderBlocks(blocks: Seq[BodyBlock]) =
-      blocks.sortBy(-_.publishedCreatedTimestamp().getOrElse(0L)) // Negate rather than reverse result: leaves
-                                                                  // order unchanged when there are no timestamps
+    def orderBlocks(blocks: Seq[BodyBlock]): Seq[BodyBlock] = {
+      // Negate rather than reverse result: leaves order unchanged when there are no timestamps
+      blocks.sortBy(-_.publishedCreatedTimestamp().getOrElse(0L))
+    }
 
     val mainBlock: Option[BodyBlock] = blocks.main.map(BodyBlock.make)
     val bodyBlocks: Seq[BodyBlock] = orderBlocks(blocks.body.toSeq.flatMap(BodyBlock.make))
@@ -45,8 +46,9 @@ case class Blocks(
 
 object BodyBlock {
 
-  def make(blocks: Seq[Block]): Seq[BodyBlock] =
+  def make(blocks: Seq[Block]): Seq[BodyBlock] = {
     blocks.map(make)
+  }
 
   def make(bodyBlock: Block): BodyBlock =
       BodyBlock(bodyBlock.id,
@@ -61,7 +63,6 @@ object BodyBlock {
         bodyBlock.lastModifiedDate.map(_.toJoda),
         bodyBlock.contributors,
         bodyBlock.elements.flatMap(BlockElement.make),
-        bodyBlock.elements.flatMap(PageElement.make)
       )
 
 
@@ -89,7 +90,6 @@ case class BodyBlock(
   lastModifiedDate: Option[DateTime],
   contributors: Seq[String],
   elements: Seq[BlockElement],
-  dotcomponentsPageElements: Seq[PageElement]
 ) {
   lazy val eventType: EventType =
     if (attributes.keyEvent) KeyEvent

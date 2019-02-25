@@ -77,4 +77,10 @@ describe('Create Ad Slot', () => {
                 .indexOf(adSizes.leaderboard.toString())
         ).toBeTruthy();
     });
+
+    it('should use correct sizes for the mobile top-above-nav slot', () => {
+        const topAboveNavSlot = bonzo(createSlots('top-above-nav')[0]);
+        const mobileSizes = topAboveNavSlot.attr('data-mobile');
+        expect(mobileSizes).toBe('1,1|2,2|88,71|300,197|300,250|fluid');
+    });
 });
