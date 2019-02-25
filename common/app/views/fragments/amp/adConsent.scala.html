@@ -24,7 +24,8 @@ https://support.google.com/dfp_premium/answer/7678538
    {
        "consents": {
            "adconsent": {
-               "promptIfUnknownForGeoGroup": "eea"
+               "promptIfUnknownForGeoGroup": "eea",
+               "promptUI": "adconsent-ui"
            }
        },
        "policy": {
@@ -39,16 +40,19 @@ https://support.google.com/dfp_premium/answer/7678538
    }
   </script>
 
-@*
-  Interface stubs (to be activated with promptUI: 'adconsent-ui' in the 'adconsent'
-  and with postPromptUI: 'post-adconsent-ui in the top application/json structure above.
-  <div id="adconsent-ui" class="with-uk-frame consent-ui">
-      <button on="tap:the-adconsent-element.accept"  role="button">YES DO PERSONALISE</button>
-      <button on="tap:the-adconsent-element.reject"  role="button">DO NOT PERSONALISE</button>
-      <button on="tap:the-adconsent-element.dismiss" role="button">CLOSE</button>
+  <div id="adconsent-ui" class="with-uk-frame consent-ui main-body">
+      <div class="adconsent-message">
+        <p>We use cookies to improve your experience on our site and to show you
+            personalised advertising.</p>
+        <p>To find out more, read our <a class="u-underline" href="https://www.theguardian.com/help/privacy-policy">privacy policy</a>
+            and <a class="u-underline" href="https://www.theguardian.com/info/cookies">cookie policy</a>.</p>
+      </div>
+      <div class="adconsent-actions">
+          <button on="tap:the-adconsent-element.reject" class="u-underline adconsent-reject" role="button">Reject</button>
+          <button on="tap:the-adconsent-element.accept" class="adconsent-accept" role="button">
+              @fragments.inlineSvg("tick", "icon")
+              I'm OK with that
+          </button>
+      </div>
   </div>
-  <div id="post-adconsent-ui">
-      <button on="tap:the-adconsent-element.prompt"  role="button">AD PERSONALISATION SETTING</button>
-  </div>
-*@
 </amp-consent>
