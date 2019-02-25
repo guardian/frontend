@@ -22,18 +22,10 @@ type EnableAnalyticsConfig = {
     },
 };
 
-const bidderTimeout: number = 1500;
-
 type ConsentManagement = {
     cmpApi: string,
     timeout: number,
     allowAuctionWithoutConsent: boolean,
-};
-
-const consentManagement: ConsentManagement = {
-    cmpApi: 'iab',
-    timeout: 200,
-    allowAuctionWithoutConsent: true,
 };
 
 type S2SConfig = {
@@ -48,37 +40,6 @@ type S2SConfig = {
     cookieSet: boolean,
     cookiesetUrl: string,
 };
-
-const s2sConfig: S2SConfig = {
-    accountId: '1',
-    enabled: true,
-    bidders: ['appnexus', 'openx', 'pangaea'],
-    timeout: bidderTimeout,
-    adapter: 'prebidServer',
-    is_debug: 'false',
-    endpoint: 'https://elb.the-ozone-project.com/openrtb2/auction',
-    syncEndpoint: 'https://elb.the-ozone-project.com/cookie_sync',
-    cookieSet: true,
-    cookiesetUrl: 'https://acdn.adnxs.com/cookieset/cs.js',
-};
-
-class PrebidAdUnit {
-    code: ?string;
-    bids: ?(PrebidBid[]);
-    mediaTypes: ?PrebidMediaTypes;
-
-    constructor(advert: Advert, slot: PrebidSlot) {
-        this.code = advert.id;
-        this.bids = bids(advert.id, slot.sizes);
-        this.mediaTypes = { banner: { sizes: slot.sizes } };
-    }
-
-    isEmpty() {
-        return this.code == null;
-    }
-}
-
-let requestQueue: Promise<void> = Promise.resolve();
 
 type UserSync =
     | {
@@ -119,6 +80,45 @@ type XasisHeaderBidderConfig = {
 type BidderSettings = {
     xhb: XasisHeaderBidderConfig,
 };
+
+const bidderTimeout: number = 1500;
+
+const consentManagement: ConsentManagement = {
+    cmpApi: 'iab',
+    timeout: 200,
+    allowAuctionWithoutConsent: true,
+};
+
+const s2sConfig: S2SConfig = {
+    accountId: '1',
+    enabled: true,
+    bidders: ['appnexus', 'openx', 'pangaea'],
+    timeout: bidderTimeout,
+    adapter: 'prebidServer',
+    is_debug: 'false',
+    endpoint: 'https://elb.the-ozone-project.com/openrtb2/auction',
+    syncEndpoint: 'https://elb.the-ozone-project.com/cookie_sync',
+    cookieSet: true,
+    cookiesetUrl: 'https://acdn.adnxs.com/cookieset/cs.js',
+};
+
+class PrebidAdUnit {
+    code: ?string;
+    bids: ?(PrebidBid[]);
+    mediaTypes: ?PrebidMediaTypes;
+
+    constructor(advert: Advert, slot: PrebidSlot) {
+        this.code = advert.id;
+        this.bids = bids(advert.id, slot.sizes);
+        this.mediaTypes = { banner: { sizes: slot.sizes } };
+    }
+
+    isEmpty() {
+        return this.code == null;
+    }
+}
+
+let requestQueue: Promise<void> = Promise.resolve();
 
 const initialise = (window: {
     pbjs: {
