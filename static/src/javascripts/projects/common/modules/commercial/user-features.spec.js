@@ -20,15 +20,24 @@ jest.mock('projects/common/modules/identity/api', () => ({
     isUserLoggedIn: jest.fn(),
 }));
 jest.mock('lib/fetch-json', () => jest.fn(() => Promise.resolve()));
+jest.mock('lib/config', () => {
+    const defaultConfig = {
+        switches: {
+            adFreeStrictExpiryEnforcement: true,
+        },
+        page: {
+            userAttributesApiUrl: '',
+        },
+    };
 
-jest.mock('lib/config', () => ({
-    switches: {
-        adFreeStrictExpiryEnforcement: true,
-    },
-    page: {
-        userAttributesApiUrl: '',
-    },
-}));
+    return Object.assign({}, defaultConfig, {
+        get: (path: string = '', defaultValue: any) =>
+            path
+                .replace(/\[(.+?)\]/g, '.$1')
+                .split('.')
+                .reduce((o, key) => o[key], defaultConfig) || defaultValue,
+    });
+});
 
 const fetchJsonSpy: any = fetchJson;
 const isUserLoggedIn: any = isUserLoggedIn_;
