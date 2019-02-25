@@ -24,6 +24,23 @@ jest.mock('lib/config', () => ({
         section: 'football',
     },
 }));
+jest.mock('lib/config', () => {
+    const defaultConfig = {
+        page: {
+            pageId: '12345',
+            edition: 'UK',
+            section: 'football',
+        },
+    };
+
+    return Object.assign({}, defaultConfig, {
+        get: (path: string = '', defaultValue: any) =>
+            path
+                .replace(/\[(.+?)\]/g, '.$1')
+                .split('.')
+                .reduce((o, key) => o[key], defaultConfig) || defaultValue,
+    });
+});
 jest.mock('lib/fetch-json', () =>
     jest.fn().mockReturnValue(
         Promise.resolve({
