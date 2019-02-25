@@ -169,8 +169,8 @@ object IndexPage {
 
   def makeLinkedData(indexPage: IndexPage)(implicit request: RequestHeader): ItemList = {
     ItemList(
-      LinkTo(indexPage.page.metadata.url),
-      indexPage.trails.zipWithIndex.map {
+      url = LinkTo(indexPage.page.metadata.url),
+      itemListElement = indexPage.trails.zipWithIndex.map {
         case (trail, index) =>
           ListItem(position = index, url = Some(LinkTo(trail.metadata.url)))
       }
