@@ -17,7 +17,7 @@
 @import fragments.email._
 @import common.LinkTo
 @import conf.audio.FlagshipEmailContainer
-
+@import conf.switches.Switches.FlagshipEmailContainerDynamicImageSwitch
 
 @headline(card: ContentCard, isLarge: Boolean = false, isTrailText: Boolean = false) = {
 
@@ -226,7 +226,7 @@
                 @row(Seq("no-pad")){
                     <a class="fc-link" href="@card.header.url.get">
                         @card.displayElement match {
-                            case Some(InlineImage(image)) => {
+                            case Some(InlineImage(image)) if FlagshipEmailContainerDynamicImageSwitch.isSwitchedOn => {
                                 @itemImage(
                                     image,
                                     inlineImage = true,

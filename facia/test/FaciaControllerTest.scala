@@ -224,24 +224,4 @@ import conf.audio.FlagshipEmailContainer
     val responseHeaders = headers(emailJsonResponse)
     responseHeaders("Surrogate-Control") should include("max-age=900")
   }
-
-  // TODO - devise a test that works!
-  it should "render email fronts including the TiF podcast with story-related image and not the default album art" in {
-    conf.switches.Switches.FlagshipEmailContainerSwitch.switchOn()
-    conf.switches.Switches.FlagshipFrontContainerSwitch.switchOn()
-
-    val emailRequest = FakeRequest("GET", "/email/uk/daily")
-    val emailJsonResponse = faciaController.renderFront("email/uk/daily")(emailRequest)
-    status(emailJsonResponse) shouldBe 200
-    val contentAsStr = contentAsString(emailJsonResponse)
-
-    contentAsStr should include ("Today in Focus")
-    contentAsStr shouldNot include (FlagshipEmailContainer.AlbumArtUrl)
-
-    // PLEASE don't make me do this!
-    // val re = """(?s)Podcast.*<td class="no-pad" style="padding: 0"\>.*<a class="fc-link" href=".*\n.*<div class="fc-item__image-container u-responsive-ratio inlined-image">.*<picture>""".r
-    // assert(re.findFirstMatchIn(contentAsStr).nonEmpty)
-
-  }
-
 }
