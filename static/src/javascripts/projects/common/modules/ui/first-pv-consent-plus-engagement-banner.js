@@ -87,13 +87,13 @@ class SubMessage extends Message {
             const closeButtons = element.querySelectorAll(
                 '.js-site-message-close'
             );
-            if (closeButtons) {
-                closeButtons.forEach(button =>
-                    button.addEventListener('click', () => {
-                        close(this);
-                    })
-                );
-            }
+
+            // https://developer.mozilla.org/en-US/docs/Web/API/NodeList#Example
+            Array.prototype.forEach.call(closeButtons, button => {
+                button.addEventListener('click', () => {
+                    close(this);
+                });
+            });
         }
     }
 }

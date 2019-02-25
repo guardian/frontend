@@ -19,9 +19,8 @@ const campaignId = 'empower_campaign';
 // These test params must be set on engagementBannerParams *and* passed into canShowBannerSync
 // TODO - we need to rethink how banner tests are selected/displayed
 const userCohortParam = {
-    februaryMomentBannerNonUk: 'OnlyNonSupporters',
-    februaryMomentBannerUk: 'OnlyNonSupporters',
-    februaryMomentBannerThankYou: 'OnlyExistingSupporters',
+    onlyNonSupporters: 'OnlyNonSupporters',
+    onlyExistingSupporters: 'OnlyExistingSupporters',
 };
 const minArticlesBeforeShowingBanner = 0;
 
@@ -43,11 +42,53 @@ const bannerShownCallback = () => {
     }
 };
 
-export const februaryMomentBannerNonUk: AcquisitionsABTest = {
-    id: 'FebruaryMomentBannerNonUk',
+const openVariant: Variant = {
+    id: 'open',
+    test: (): void => {}, // banner tests look at the bucket and vary the copy themselves
+    engagementBannerParams: {
+        leadSentence: defaultBold,
+        messageText: defaultCopy,
+        // buttonCaption?: string, TO be decided with non engineers
+        template: acquisitionsBannerFivTemplate,
+        bannerModifierClass: 'fiv-banner',
+        minArticlesBeforeShowingBanner,
+        userCohort: userCohortParam.onlyNonSupporters,
+        titles: ['Open journalism is a choice', 'Will you support it?'],
+        bannerShownCallback,
+    },
+    canRun: () =>
+        canShowBannerSync(
+            minArticlesBeforeShowingBanner,
+            userCohortParam.onlyNonSupporters
+        ),
+};
+
+const differentVariant: Variant = {
+    id: 'different',
+    test: (): void => {}, // banner tests look at the bucket and vary the copy themselves
+    engagementBannerParams: {
+        leadSentence: defaultBold,
+        messageText: defaultCopy,
+        // buttonCaption?: string, TO be decided with non engineers
+        template: acquisitionsBannerFivTemplate,
+        bannerModifierClass: 'fiv-banner',
+        minArticlesBeforeShowingBanner,
+        userCohort: userCohortParam.onlyNonSupporters,
+        titles: ['We chose a different approach', 'Will you support it?'],
+        bannerShownCallback,
+    },
+    canRun: () =>
+        canShowBannerSync(
+            minArticlesBeforeShowingBanner,
+            userCohortParam.onlyNonSupporters
+        ),
+};
+
+export const februaryMomentBannerNonUkRoundTwo: AcquisitionsABTest = {
+    id: 'FebruaryMomentBannerNonUkRoundTwo',
     start: '2019-01-01',
     expiry: '2019-09-30',
-    author: 'John Duffell',
+    author: 'Jonathan Rankin',
     description: 'test copy on engagement banner outside UK for the feb moment',
     audience: 1,
     audienceOffset: 0,
@@ -69,7 +110,7 @@ export const februaryMomentBannerNonUk: AcquisitionsABTest = {
                 template: acquisitionsBannerFivTemplate,
                 bannerModifierClass: 'fiv-banner',
                 minArticlesBeforeShowingBanner,
-                userCohort: userCohortParam.februaryMomentBannerNonUk,
+                userCohort: userCohortParam.onlyNonSupporters,
                 titles: [
                     "Free for those who can't afford it",
                     'Supported by those who can',
@@ -79,17 +120,19 @@ export const februaryMomentBannerNonUk: AcquisitionsABTest = {
             canRun: () =>
                 canShowBannerSync(
                     minArticlesBeforeShowingBanner,
-                    userCohortParam.februaryMomentBannerNonUk
+                    userCohortParam.onlyNonSupporters
                 ),
         },
+        openVariant,
+        differentVariant,
     ],
 };
 
-export const februaryMomentBannerUk: AcquisitionsABTest = {
-    id: 'FebruaryMomentBannerUk',
+export const februaryMomentBannerUkRoundTwo: AcquisitionsABTest = {
+    id: 'FebruaryMomentBannerUkRoundTwo',
     start: '2019-01-01',
     expiry: '2019-09-30',
-    author: 'John Duffell',
+    author: 'Jonathan Rankin',
     description: 'enable engagement banner in UK for the feb moment',
     audience: 1,
     audienceOffset: 0,
@@ -110,7 +153,7 @@ export const februaryMomentBannerUk: AcquisitionsABTest = {
                 template: acquisitionsBannerFivTemplate,
                 bannerModifierClass: 'fiv-banner',
                 minArticlesBeforeShowingBanner,
-                userCohort: userCohortParam.februaryMomentBannerUk,
+                userCohort: userCohortParam.onlyNonSupporters,
                 titles: [
                     "We're available for everyone",
                     'Funded by our\xa0readers',
@@ -120,9 +163,11 @@ export const februaryMomentBannerUk: AcquisitionsABTest = {
             canRun: () =>
                 canShowBannerSync(
                     minArticlesBeforeShowingBanner,
-                    userCohortParam.februaryMomentBannerUk
+                    userCohortParam.onlyNonSupporters
                 ),
         },
+        openVariant,
+        differentVariant,
     ],
 };
 
@@ -151,7 +196,7 @@ export const februaryMomentBannerThankYou: AcquisitionsABTest = {
                 template: acquisitionsBannerFivTemplate,
                 bannerModifierClass: 'fiv-banner fiv-banner-thank-you',
                 minArticlesBeforeShowingBanner,
-                userCohort: userCohortParam.februaryMomentBannerThankYou,
+                userCohort: userCohortParam.onlyExistingSupporters,
                 titles: [
                     'Thanks to your support',
                     "We're available to everyone",
@@ -161,7 +206,7 @@ export const februaryMomentBannerThankYou: AcquisitionsABTest = {
             canRun: () =>
                 canShowBannerSync(
                     minArticlesBeforeShowingBanner,
-                    userCohortParam.februaryMomentBannerThankYou
+                    userCohortParam.onlyExistingSupporters
                 ),
         },
     ],

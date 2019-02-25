@@ -43,6 +43,16 @@ trait JournalismSwitches {
     exposeClientSide = false
   )
 
+  val FlagshipEmailContainerDynamicImageSwitch = Switch(
+    SwitchGroup.Journalism,
+    "flagship-email-container-dynamic-image",
+    "For: Today in Focus podcast container. When On: Display a story image. Off: Use default album art image.",
+    owners = Seq(Owner.withName("journalism team")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+
   val FlagshipFrontContainerSwitch = Switch(
     SwitchGroup.Journalism,
     "flagship-front-container",
