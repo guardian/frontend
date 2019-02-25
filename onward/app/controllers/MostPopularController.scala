@@ -6,7 +6,7 @@ import java.time.temporal.ChronoUnit
 import common._
 import conf.switches.Switches
 import contentapi.ContentApiClient
-import feed.{DayMostPopularAgent, GeoMostPopularAgent, MostPopularAgent}
+import feed.{DayMostPopularAgent, GeoMostPopularAgent, GeoMostPopularWithAttentionAgent, MostPopularAgent}
 import layout.ContentCard
 import model.Cached.RevalidatableResult
 import model._
@@ -19,10 +19,11 @@ import views.support.FaciaToMicroFormat2Helpers._
 import scala.concurrent.Future
 
 class MostPopularController(contentApiClient: ContentApiClient,
-  geoMostPopularAgent: GeoMostPopularAgent,
-  dayMostPopularAgent: DayMostPopularAgent,
-  mostPopularAgent: MostPopularAgent,
-  val controllerComponents: ControllerComponents)
+                            geoMostPopularAgent: GeoMostPopularAgent,
+                            geoMostPopularWithAttentionAgent: GeoMostPopularWithAttentionAgent,
+                            dayMostPopularAgent: DayMostPopularAgent,
+                            mostPopularAgent: MostPopularAgent,
+                            val controllerComponents: ControllerComponents)
   (implicit context: ApplicationContext) extends BaseController with Logging with ImplicitControllerExecutionContext {
     val page = SimplePage(MetaData.make(
     "most-read",
@@ -100,6 +101,27 @@ class MostPopularController(contentApiClient: ContentApiClient,
       }
     }
   }
+
+
+  def renderPopularGeoWithAttention(): Action[AnyContent] = Action { implicit request =>
+    val headers = request.headers.toSimpleMap
+    val countryCode = headers.getOrElse("X-GU-GeoLocation","country:row").replace("country:","")
+
+    val countryPopular = MostPopular("Across The&nbsp;Guardian", "", geoMostPopularWithAttentionAgent.mostPopular(countryCode).map(_.faciaContent))
+
+    if (request.isGuui) {
+      jsonResponse(countryPopular, countryCode)
+    } else {
+      Cached(900) {
+        JsonComponent(
+          "html" -> views.html.fragments.collections.popular(Seq(countryPopular)),
+          "rightHtml" -> views.html.fragments.rightMostPopularGeoGarnett(countryPopular, countryNames.get(countryCode), countryCode),
+          "country" -> countryCode
+        )
+      }
+    }
+  }
+
 
   def jsonResponse(mostPopulars: Seq[MostPopular])(implicit request: RequestHeader): Result = {
     val responses = mostPopulars.map{section =>

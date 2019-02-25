@@ -65,6 +65,9 @@ class OphanApi(wsClient: WSClient)(implicit executionContext: ExecutionContext) 
   def getMostRead(hours: Int, count: Int, country: String): Future[Seq[MostReadItem]] =
     getMostRead(Map("hours" -> hours.toString, "count" -> count.toString, "country" -> country))
 
+  def getMostRead(hours: Int, count: Int, country: String, minAttention: Int): Future[Seq[MostReadItem]] =
+    getMostRead(Map("hours" -> hours.toString, "count" -> count.toString, "country" -> country, "min-attention" -> minAttention.toString))
+
   def getMostReadInSection(section: String, days: Int, count: Int): Future[Seq[MostReadItem]] =
     getMostRead(Map("days" -> days.toString, "count" -> count.toString, "section" -> section))
 

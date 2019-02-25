@@ -20,6 +20,7 @@ trait OnwardControllers {
   def stocksData: StocksData
   def weatherApi: WeatherApi
   def geoMostPopularAgent: GeoMostPopularAgent
+  def geoMostPopularWithAttentionAgent: GeoMostPopularWithAttentionAgent
   def dayMostPopularAgent: DayMostPopularAgent
   def mostPopularAgent: MostPopularAgent
   def mostReadAgent: MostReadAgent

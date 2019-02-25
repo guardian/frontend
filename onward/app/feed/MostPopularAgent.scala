@@ -157,6 +157,48 @@ class GeoMostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi
   }
 }
 
+class GeoMostPopularWithAttentionAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) extends Logging {
+
+  private val ophanPopularAgent = Box[Map[String, Seq[RelatedContentItem]]](Map.empty)
+
+  private val defaultCountry: Country = Country("row", Edition.defaultEdition)
+
+  // These are the only country codes (row must be lower-case) passed to us from the fastly service.
+  // This allows us to choose carefully the codes that give us the most impact. The trade-off is caching.
+  private val countries = Seq(
+    Country("GB", editions.Uk),
+    Country("US", editions.Us),
+    Country("AU", editions.Au),
+    Country("CA", editions.Us),
+    Country("IN", Edition.defaultEdition),
+    Country("NG", Edition.defaultEdition),
+    Country("NZ", editions.Au),
+    defaultCountry
+  )
+
+  def mostPopular(country: String): Seq[RelatedContentItem] =
+    ophanPopularAgent().getOrElse(country, ophanPopularAgent().getOrElse(defaultCountry.code, Nil))
+
+  def refresh()(implicit ec: ExecutionContext): Future[Map[String, Seq[RelatedContentItem]]] = {
+    log.info("Refreshing most popular for countries with attention.")
+    MostPopularRefresh.all(countries)(refresh)
+  }
+
+  private def refresh(country: Country)(implicit ec: ExecutionContext): Future[Map[String, Seq[RelatedContentItem]]] = {
+    val ophanMostViewed = ophanApi.getMostRead(hours = 3, count = 10, country = country.code.toLowerCase, minAttention = 120)
+    MostViewed.relatedContentItems(ophanMostViewed, country.edition)(contentApiClient).flatMap { items =>
+      val validItems = items.flatten
+      if (validItems.nonEmpty) {
+        log.info(s"Geo popular ${country.code} with attention updated successfully.")
+      } else {
+        log.info(s"Geo popular update for ${country.code} with attention found nothing.")
+      }
+      ophanPopularAgent.alter(_ + (country.code -> validItems))
+    }
+  }
+}
+
+
 class DayMostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) extends Logging {
 
   private val ophanPopularAgent = Box[Map[String, Seq[RelatedContentItem]]](Map.empty)

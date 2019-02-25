@@ -42,6 +42,7 @@ trait OnwardServices {
   lazy val stocksData = wire[StocksData]
   lazy val weatherApi = wire[WeatherApi]
   lazy val geoMostPopularAgent = wire[GeoMostPopularAgent]
+  lazy val geoMostPopularWithAttentionAgent = wire[GeoMostPopularWithAttentionAgent]
   lazy val dayMostPopularAgent = wire[DayMostPopularAgent]
   lazy val mostPopularAgent = wire[MostPopularAgent]
   lazy val mostReadAgent = wire[MostReadAgent]

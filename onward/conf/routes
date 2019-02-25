@@ -25,6 +25,7 @@ GET        /most-read-twitter.json                    controllers.MostViewedSoci
 GET        /most-read.json                            controllers.MostPopularController.render(path = "")
 GET        /most-read/*path.json                      controllers.MostPopularController.render(path)
 GET        /most-read-geo.json                        controllers.MostPopularController.renderPopularGeo()
+GET        /most-read-geo-attention.json              controllers.MostPopularController.renderPopularGeo()
 GET        /most-read-day.json                        controllers.MostPopularController.renderPopularDay(countryCode)
 
 GET        /top-stories.json                          controllers.TopStoriesController.renderTopStories()
