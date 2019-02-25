@@ -42,7 +42,6 @@ const bannerShownCallback = () => {
     }
 };
 
-
 const openVariant: Variant = {
     id: 'open',
     test: (): void => {}, // banner tests look at the bucket and vary the copy themselves
@@ -54,10 +53,7 @@ const openVariant: Variant = {
         bannerModifierClass: 'fiv-banner',
         minArticlesBeforeShowingBanner,
         userCohort: userCohortParam.onlyNonSupporters,
-        titles: [
-            "Open journalism is a choice",
-            'Will you support it?',
-        ],
+        titles: ['Open journalism is a choice', 'Will you support it?'],
         bannerShownCallback,
     },
     canRun: () =>
@@ -78,10 +74,7 @@ const differentVariant: Variant = {
         bannerModifierClass: 'fiv-banner',
         minArticlesBeforeShowingBanner,
         userCohort: userCohortParam.onlyNonSupporters,
-        titles: [
-            "We chose a different approach",
-            'Will you support it?',
-        ],
+        titles: ['We chose a different approach', 'Will you support it?'],
         bannerShownCallback,
     },
     canRun: () =>
