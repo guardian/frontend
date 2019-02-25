@@ -56,7 +56,11 @@ const init = (register: RegisterListeners) => {
     register('resize', (specs, ret, iframe) => {
         if (iframe && specs) {
             const adSlot = iframe && iframe.closest('.js-ad-slot');
-            if (adSlot && adSlot.classList.contains('ad-slot--mostpop')) {
+            if (
+                adSlot &&
+                (adSlot.classList.contains('ad-slot--mostpop') ||
+                    adSlot.classList.contains('ad-slot--right'))
+            ) {
                 // We ignore resize events (sent mainly by apnx)
                 // for the mostpop (Most popular) slot
                 // See https://trello.com/c/TtuGq6Iy
