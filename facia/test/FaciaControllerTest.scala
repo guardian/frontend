@@ -223,5 +223,4 @@ import scala.concurrent.Await
     val responseHeaders = headers(emailJsonResponse)
     responseHeaders("Surrogate-Control") should include("max-age=900")
   }
-
 }

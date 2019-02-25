@@ -2,6 +2,7 @@
 
 import config from 'lib/config';
 import prebid from 'commercial/modules/prebid/prebid';
+import 'prebid.js/build/dist/prebid';
 
 jest.mock('lib/raven');
 

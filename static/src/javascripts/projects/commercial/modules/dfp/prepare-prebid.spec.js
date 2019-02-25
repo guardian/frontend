@@ -3,7 +3,9 @@
 import prebid from 'commercial/modules/prebid/prebid';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
-import { init } from './prepare-prebid';
+import { _ } from './prepare-prebid';
+
+const { isGoogleWebPreview, setupPrebid } = _;
 
 jest.mock('common/modules/commercial/commercial-features', () => ({
     commercialFeatures: {},
@@ -25,9 +27,19 @@ jest.mock('commercial/modules/prebid/bid-config', () => ({
     isInVariant: jest.fn(),
 }));
 
+const fakeUserAgent = (userAgent: string): void => {
+    const userAgentObject = {};
+    userAgentObject.get = () => userAgent;
+    userAgentObject.configurable = true;
+    Object.defineProperty(navigator, 'userAgent', userAgentObject);
+};
+
 describe('init', () => {
+    const originalUA = navigator.userAgent;
+
     beforeEach(() => {
         jest.clearAllMocks();
+        fakeUserAgent(originalUA);
     });
 
     afterAll(() => {
@@ -38,25 +50,45 @@ describe('init', () => {
         dfpEnv.externalDemand = 'prebid';
         commercialFeatures.dfpAdvertising = true;
         commercialFeatures.adFree = false;
-        init(jest.fn(), jest.fn());
+        setupPrebid();
         expect(prebid.initialise).toBeCalled();
+    });
+
+    it('should not initialise Prebid when useragent is Google Web Preview', () => {
+        fakeUserAgent('Google Web Preview');
+        setupPrebid();
+        expect(prebid.initialise).not.toBeCalled();
     });
 
     it('should not initialise Prebid when no external demand', () => {
         dfpEnv.externalDemand = 'none';
-        init(jest.fn(), jest.fn());
+        setupPrebid();
         expect(prebid.initialise).not.toBeCalled();
     });
 
     it('should not initialise Prebid when advertising is switched off', () => {
         commercialFeatures.dfpAdvertising = false;
-        init(jest.fn(), jest.fn());
+        setupPrebid();
         expect(prebid.initialise).not.toBeCalled();
     });
 
     it('should not initialise Prebid when ad-free is on', () => {
         commercialFeatures.adFree = true;
-        init(jest.fn(), jest.fn());
+        setupPrebid();
         expect(prebid.initialise).not.toBeCalled();
+    });
+
+    it('isGoogleWebPreview should return false with no navigator or useragent', () => {
+        expect(isGoogleWebPreview()).toBe(false);
+    });
+
+    it('isGoogleWebPreview should return false with no navigator or useragent', () => {
+        fakeUserAgent('Firefox');
+        expect(isGoogleWebPreview()).toBe(false);
+    });
+
+    it('isGoogleWebPreview should return true with Google Web Preview useragent', () => {
+        fakeUserAgent('Google Web Preview');
+        expect(isGoogleWebPreview()).toBe(true);
     });
 });
