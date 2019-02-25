@@ -2,12 +2,22 @@
 import { load } from 'commercial/modules/hosted/next-video';
 import fetchJson from 'lib/fetch-json';
 
-jest.mock('lib/config', () => ({
-    page: {
-        ajaxUrl: 'some.url',
-        pageId: 'pageId',
-    },
-}));
+jest.mock('lib/config', () => {
+    const defaultConfig = {
+        page: {
+            ajaxUrl: 'some.url',
+            pageId: 'pageId',
+        },
+    };
+
+    return Object.assign({}, defaultConfig, {
+        get: (path: string = '', defaultValue: any) =>
+            path
+                .replace(/\[(.+?)\]/g, '.$1')
+                .split('.')
+                .reduce((o, key) => o[key], defaultConfig) || defaultValue,
+    });
+});
 
 jest.mock('lib/fetch-json', () =>
     jest.fn(() => Promise.resolve({ html: '<div class="video"></div>' }))
