@@ -31,8 +31,9 @@ final case class Atoms(
   timelines: Seq[TimelineAtom],
   commonsdivisions: Seq[CommonsDivisionAtom],
   audios: Seq[AudioAtom],
+  charts: Seq[ChartAtom]
 ) {
-  val all: Seq[Atom] = quizzes ++ media ++ interactives ++ recipes ++ reviews ++ storyquestions ++ explainers ++ qandas ++ guides ++ profiles ++ timelines ++ commonsdivisions ++ audios
+  val all: Seq[Atom] = quizzes ++ media ++ interactives ++ recipes ++ reviews ++ storyquestions ++ explainers ++ qandas ++ guides ++ profiles ++ timelines ++ commonsdivisions ++ audios ++ charts
 
   def atomTypes: Map[String, Boolean] = Map(
     "guide" -> !guides.isEmpty,
@@ -42,7 +43,8 @@ final case class Atoms(
     "storyquestions" -> !storyquestions.isEmpty,
     "explainer" -> !explainers.isEmpty,
     "commonsdivision" -> !commonsdivisions.isEmpty,
-    "audio" -> !audios.isEmpty
+    "audio" -> !audios.isEmpty,
+    "chart" -> !charts.isEmpty
   )
 }
 
@@ -226,6 +228,12 @@ final case class AudioAtom(
   data: atomapi.audio.AudioAtom
 ) extends Atom
 
+final case class ChartAtom(
+  override val id: String,
+  atom: AtomApiAtom,
+  data: atomapi.chart.ChartAtom
+) extends Atom
+
 object Atoms extends common.Logging {
 
   def articleConfig(isAdFree: Boolean = false, useAcast: Boolean = false) = {
@@ -286,6 +294,8 @@ object Atoms extends common.Logging {
 
       val audios = extract(atoms.audios, atom => {AudioAtom.make(atom)})
 
+      val charts = extract(atoms.charts, ChartAtom.make)
+
       Atoms(
         quizzes = quizzes,
         media = media,
@@ -299,7 +309,8 @@ object Atoms extends common.Logging {
         profiles = profiles,
         timelines = timelines,
         commonsdivisions = commonsdivisions,
-        audios = audios
+        audios = audios,
+        charts = charts
       )
     }
   }
@@ -659,4 +670,9 @@ object AudioAtom {
     val audio = atom.data.asInstanceOf[AtomData.Audio].audio
     AudioAtom(atom.id, atom, audio)
   }
+}
+
+object ChartAtom {
+  def make(atom: AtomApiAtom): ChartAtom =
+    ChartAtom(atom.id, atom, atom.data.asInstanceOf[AtomData.Chart].chart)
 }
