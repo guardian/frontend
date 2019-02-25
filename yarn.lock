@@ -1007,9 +1007,9 @@
   version "0.7.1"
   resolved "https://registry.yarnpkg.com/@emotion/utils/-/utils-0.7.1.tgz#e44e596d03c9f16ba3b127ad333a8a072bcb5a0a"
 
-"@guardian/atom-renderer@0.16.3":
-  version "0.16.3"
-  resolved "https://registry.yarnpkg.com/@guardian/atom-renderer/-/atom-renderer-0.16.3.tgz#bb96d3a8a5fd05663d0950dfd311bde746ae0107"
+"@guardian/atom-renderer@0.17.0":
+  version "0.17.0"
+  resolved "https://registry.yarnpkg.com/@guardian/atom-renderer/-/atom-renderer-0.17.0.tgz#fd585a917b0c8fe3e0666e3431a580647a7df455"
   dependencies:
     "@babel/preset-env" "^7.3.1"
     "@babel/preset-flow" "^7.0.0"
