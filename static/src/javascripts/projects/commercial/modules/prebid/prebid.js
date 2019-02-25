@@ -42,11 +42,10 @@ type S2SConfig = {
 
 type UserSync =
     | {
-          // syncsPerBidder: number, // allow all syncs - bug https://github.com/prebid/Prebid.js/issues/2781
-          syncsPerBidder: number, // temporarily until above bug fixed
+          syncsPerBidder: number,
           filterSettings: {
               all: {
-                  bidders: string, // allow all bidders to sync by iframe or image beacons
+                  bidders: string,
                   filter: string,
               },
           },
@@ -54,7 +53,7 @@ type UserSync =
     | { syncEnabled: false };
 
 type PbjsConfig = {
-    bidderTimeout: number | boolean,
+    bidderTimeout: number,
     priceGranularity: PrebidPriceGranularity,
     userSync: UserSync,
     consentManagement: ConsentManagement | false,
