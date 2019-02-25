@@ -17,7 +17,6 @@ import org.scalatest.mockito.MockitoSugar
 
 import scala.concurrent.duration._
 import scala.concurrent.Await
-import conf.audio.FlagshipEmailContainer
 
 @DoNotDiscover class FaciaControllerTest extends FlatSpec with FaciaTestData
   with Matchers
