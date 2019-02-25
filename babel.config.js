@@ -42,6 +42,7 @@ module.exports = {
             "plugins": [
                 "@babel/plugin-transform-runtime",
                 "@babel/plugin-proposal-class-properties",
+                "dynamic-import-node",
             ],
         },
         "internal": {

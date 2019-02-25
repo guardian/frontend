@@ -18,7 +18,6 @@ class LiveBlogCurrentPageTest extends FlatSpec with Matchers {
     None,
     None,
     Nil,
-    Nil,
     Nil
   )
 

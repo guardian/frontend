@@ -8,6 +8,10 @@
     }
 }
 
+.aside-slot-container {
+    min-height: 274px;
+}
+
 /* Ad slots with sticky MPUs should be vertically separated from the following content, but collapse if empty.
  * Margins on children don't affect the position of elements we make sticky.
  */
@@ -214,6 +218,8 @@
         }
     }
 }
+
+.ad-slot--right,
 .ad-slot--inline,
 .ad-slot--container-inline {
     background-color: $brightness-97;
@@ -307,6 +313,10 @@
     @include mq(mobile) {
         width: 300px;
         height: auto;
+
+        & > div.ad-slot__content > iframe {
+            min-height: 250px;
+        }
     }
 
     @include mq(desktop) {

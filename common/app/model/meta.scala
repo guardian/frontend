@@ -62,7 +62,7 @@ object Fields {
       standfirst = apiContent.fields.flatMap(_.standfirst),
       main = apiContent.fields.flatMap(_.main).getOrElse(""),
       body = apiContent.fields.flatMap(_.body).getOrElse(""),
-      blocks = apiContent.blocks.map(Blocks.make),
+      blocks = apiContent.blocks.map(block => Blocks.make(block)),
       lastModified = apiContent.fields.flatMap(_.lastModified).map(_.toJoda).getOrElse(DateTime.now),
       displayHint = apiContent.fields.flatMap(_.displayHint).getOrElse(""),
       isLive = apiContent.fields.flatMap(_.liveBloggingNow).getOrElse(false),

@@ -3,16 +3,14 @@
 /* in the CSS provided by the atom library                                  */
 /* ************************************************************************ */
 
-@import '../_vars';
-@import '../pasteup/typography/src';
+// The below code is used to give values to the CSS variables coming from Atom-Renderer.
+// They are the same as in the pasteup library below. But they cannot be added from there,
+// as the sass-loader does not import the pasteup dependency in time for the variables to have a value.
+// Please see the PR for more information
+//@import '../pasteup/typography/src';
 
 :root {
-    --f-serif-text: $f-serif-text;
-    --f-serif-headline: $f-serif-headline;
-    --f-sans-serif-text: $f-sans-serif-text;
-    --c-pillar-news: $news-main;
-    --c-pillar-arts: $culture-main;
-    --c-pillar-opinion: $opinion-main;
-    --c-pillar-lifestyle: $lifestyle-main;
-    --c-pillar-sport: $sport-main;
+    --f-serif-text: 'Guardian Text Egyptian Web', Georgia, serif;
+    --f-serif-headline: 'Guardian Egyptian Web', Georgia, serif;
+    --f-sans-serif-text: 'Guardian Text Sans Web', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
 }

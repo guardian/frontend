@@ -88,6 +88,7 @@ const resetConfig = () => {
     config.set('switches.prebidXaxis', true);
     config.set('switches.prebidAdYouLike', true);
     config.set('switches.prebidS2sozone', true);
+    config.set('switches.prebidPangaea', true);
     config.set('ophan', { pageViewId: 'pvid' });
     config.set('page.contentType', 'Article');
     config.set('page.section', 'Magic');
@@ -604,5 +605,11 @@ describe('bids', () => {
             delDomain: 'guardian-d.openx.net',
             unit: '540279541',
         });
+    });
+
+    test('should not include Pangaea when switched off', () => {
+        config.set('switches.prebidPangaea', false);
+        shouldIncludeOzone.mockReturnValue(true);
+        expect(bidders()).toEqual(['ix', 'adyoulike', 'openx', 'appnexus']);
     });
 });

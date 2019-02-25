@@ -12,6 +12,8 @@ declare type AcquisitionsEpicTemplateCopy = {
 };
 
 declare type EngagementBannerTemplateParams = {
+    titles?: Array<string>,
+    leadSentence?: string,
     messageText: string,
     ctaText: string,
     buttonCaption: string,
@@ -34,9 +36,12 @@ declare type EngagementBannerParams = EngagementBannerTemplateParams & {
         name: string,
         variant: string
     },
+    bannerShownCallback?: () => void,
 };
 
 declare type EngagementBannerTestParams = {
+    titles?: Array<string>,
+    leadSentence?: string,
     messageText?: string,
     ctaText?: string,
     buttonCaption?: string,
@@ -47,4 +52,5 @@ declare type EngagementBannerTestParams = {
     bannerModifierClass?: string,
     minArticlesBeforeShowingBanner?: number,
     userCohort?: AcquisitionsComponentUserCohort,
+    bannerShownCallback?: () => void,
 }

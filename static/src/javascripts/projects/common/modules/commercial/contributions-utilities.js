@@ -12,6 +12,7 @@ import {
 } from 'common/modules/commercial/acquisitions-ophan';
 import $ from 'lib/$';
 import config from 'lib/config';
+import { local } from 'lib/storage';
 import { elementInView } from 'lib/element-inview';
 import fastdom from 'lib/fastdom-promise';
 import reportError from 'lib/report-error';
@@ -64,6 +65,8 @@ const getReaderRevenueRegion = (geolocation: string): ReaderRevenueRegion => {
             return 'rest-of-world';
     }
 };
+
+const getVisitCount = (): number => local.get('gu.alreadyVisited') || 0;
 
 // How many times the user can see the Epic,
 // e.g. 6 times within 7 days with minimum of 1 day in between views.
@@ -475,6 +478,22 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
 
                     const rows = sheets[name];
                     const testName = name.split('__ON')[0];
+
+                    // The sheet does not easily allow test-level params, so get audience/audienceOffset from the first variant where they are defined
+                    const rowWithAudience = rows.find(
+                        row =>
+                            !(
+                                Number.isNaN(parseFloat(row.audience)) ||
+                                Number.isNaN(parseFloat(row.audienceOffset))
+                            )
+                    );
+                    const audience = rowWithAudience
+                        ? rowWithAudience.audience
+                        : 1;
+                    const audienceOffset = rowWithAudience
+                        ? rowWithAudience.audienceOffset
+                        : 0;
+
                     return makeEpicABTest({
                         id: testName,
                         campaignId: testName,
@@ -487,8 +506,8 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                         successMeasure: 'AV2.0',
                         idealOutcome: 'Google Docs',
                         audienceCriteria: 'All',
-                        audience: 1,
-                        audienceOffset: 0,
+                        audience,
+                        audienceOffset,
                         useLocalViewLog: rows.some(row =>
                             optionalStringToBoolean(row.useLocalViewLog)
                         ),
@@ -588,6 +607,23 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
             return [];
         });
 
+// This is called by individual banner AbTests in their canRun functions
+// TODO - banner testing needs a refactor, as currently both canRun and canShow need to call this
+export const canShowBannerSync = (
+    minArticlesBeforeShowingBanner: number = 3,
+    userCohort: AcquisitionsComponentUserCohort = 'OnlyNonSupporters'
+): boolean => {
+    const userHasSeenEnoughArticles: boolean =
+        getVisitCount() >= minArticlesBeforeShowingBanner;
+    const bannerIsBlockedForEditorialReasons = pageShouldHideReaderRevenue();
+
+    return (
+        userHasSeenEnoughArticles &&
+        !bannerIsBlockedForEditorialReasons &&
+        userIsInCorrectCohort(userCohort)
+    );
+};
+
 export const getEngagementBannerTestsFromGoogleDoc = (): Promise<
     $ReadOnlyArray<AcquisitionsABTest>
 > =>
@@ -637,6 +673,7 @@ export const getEngagementBannerTestsFromGoogleDoc = (): Promise<
                                 linkUrl: row.linkUrl.trim(),
                                 hasTicker: false,
                             },
+                            canRun: () => canShowBannerSync(),
                         })),
                     };
                 });
@@ -664,4 +701,5 @@ export {
     defaultMaxViews,
     getReaderRevenueRegion,
     userIsInCorrectCohort,
+    getVisitCount,
 };
