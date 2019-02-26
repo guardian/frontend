@@ -52,7 +52,7 @@ describe('initialise', () => {
             _publisherDomain: 'http://localhost',
             _sendAllBids: true,
             _timeoutBuffer: 400,
-            _useBidCache: true,
+            _useBidCache: false,
             bidderSequence: 'random',
             bidderTimeout: 1500,
             consentManagement: {
@@ -95,7 +95,7 @@ describe('initialise', () => {
                 timeout: 1500,
             },
             timeoutBuffer: 400,
-            useBidCache: true,
+            useBidCache: false,
             userSync: {
                 pixelEnabled: true,
                 syncDelay: 3000,
