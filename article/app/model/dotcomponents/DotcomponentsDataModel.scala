@@ -19,7 +19,7 @@ import navigation.UrlHelpers._
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
 import views.html.fragments.affiliateLinksDisclaimer
-import views.support.{AffiliateLinksCleaner, CamelCase, GUDateTimeFormat, ImgSrc, Item1200} // Note, required despite Intellij saying otherwise
+import views.support.{AffiliateLinksCleaner, CamelCase, FourByThree, GUDateTimeFormat, ImgSrc, Item1200, OneByOne} // Note, required despite Intellij saying otherwise
 
 // We have introduced our own set of objects for serializing data to the DotComponents API,
 // because we don't want people changing the core frontend models and as a side effect,
@@ -265,7 +265,11 @@ object DotcomponentsDataModel {
       List(
         NewsArticle(
           `@id` = Configuration.amp.baseUrl + article.metadata.id,
-          images = Seq(ImgSrc(mainImageURL, Item1200)),
+          images = Seq(
+            ImgSrc(mainImageURL, OneByOne),
+            ImgSrc(mainImageURL, FourByThree),
+            ImgSrc(mainImageURL, Item1200),
+          ),
           author = authors,
           datePublished = article.trail.webPublicationDate.toString(),
           dateModified = article.fields.lastModified.toString(),
