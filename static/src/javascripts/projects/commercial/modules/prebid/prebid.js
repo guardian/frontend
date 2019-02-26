@@ -60,19 +60,17 @@ type PbjsConfig = {
     s2sConfig: S2SConfig,
 };
 
-type XasisFunction = ({
-    appnexus: {
-        buyerMemberId: string,
-    },
-}) => string;
-
-type XasisAdServerTargetting = {
+type XasisBuyerTargetting = {
     key: string,
-    val: XasisFunction,
+    val: ({
+        appnexus: {
+            buyerMemberId: string,
+        },
+    }) => string,
 };
 
 type XasisHeaderBidderConfig = {
-    adserverTargeting: Array<XasisAdServerTargetting>,
+    adserverTargeting: Array<XasisBuyerTargetting>,
 };
 
 type BidderSettings = {
