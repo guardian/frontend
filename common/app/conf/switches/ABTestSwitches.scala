@@ -28,7 +28,7 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-february-moment-banner-non-uk",
+    "ab-february-moment-banner-non-uk-round-two",
     "switch on to test the moment copy of the engagement banner outside the UK",
     owners = Seq(Owner.withGithub("johnduffell")),
     safeState = Off,
@@ -48,7 +48,7 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-february-moment-banner-thank-you-round-two",
+    "ab-february-moment-banner-thank-you",
     "switch on to enable the moment thank you engagement banner worldwide",
     owners = Seq(Owner.withGithub("johnduffell")),
     safeState = Off,
