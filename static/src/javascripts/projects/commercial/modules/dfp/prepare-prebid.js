@@ -14,22 +14,25 @@ const isGoogleWebPreview: () => boolean = () =>
             navigator.userAgent.indexOf('googleweblight') > -1)
     );
 
+let moduleLoadResult = Promise.resolve();
+
 if (!isGoogleWebPreview()) {
-    import(/* webpackMode: "eager" */ 'prebid.js/build/dist/prebid');
+    moduleLoadResult = import('prebid.js/build/dist/prebid');
 }
 
-const setupPrebid: () => Promise<void> = () => {
-    if (
-        dfpEnv.externalDemand === 'prebid' &&
-        commercialFeatures.dfpAdvertising &&
-        !commercialFeatures.adFree &&
-        !isGoogleWebPreview()
-    ) {
-        buildPageTargeting();
-        prebid.initialise(window);
-    }
-    return Promise.resolve();
-};
+const setupPrebid: () => Promise<void> = () =>
+    moduleLoadResult.then(() => {
+        if (
+            dfpEnv.externalDemand === 'prebid' &&
+            commercialFeatures.dfpAdvertising &&
+            !commercialFeatures.adFree &&
+            !isGoogleWebPreview()
+        ) {
+            buildPageTargeting();
+            prebid.initialise(window);
+        }
+        return Promise.resolve();
+    });
 
 export const setupPrebidOnce: () => Promise<void> = once(setupPrebid);
 
