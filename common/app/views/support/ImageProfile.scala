@@ -202,16 +202,16 @@ object FacebookOpenGraphImage extends OverlayBase64 {
     val opinionsObserver = new ShareImage(s"overlay-base64=${overlayUrlBase64("to-opinions.png")}", FacebookShareImageLogoOverlay.isSwitchedOn)
 }
 
-object EmailImage extends ImageProfile(width = Some(580), autoFormat = false) {
-  override val qualityparam = "quality=60"
+object EmailImage extends ImageProfile(width = Some(1160), autoFormat = false) {
+  override val qualityparam = "quality=45"
   override val sharpenParam = "sharpen=a0.8,r1,t1"
   val knownWidth: Int = width.get
 }
 
-object EmailVideoImage extends ImageProfile(width = Some(580), autoFormat = false) with OverlayBase64 {
+object EmailVideoImage extends ImageProfile(width = Some(1160), autoFormat = false) with OverlayBase64 {
   override val qualityparam: String = EmailImage.qualityparam
-  val overlayAlignParam = "overlay-align=center"
-  val overlayUrlParam = s"overlay-base64=${overlayUrlBase64("play.png")}"
+  val overlayAlignParam = "overlay-align=bottom,left"
+  val overlayUrlParam = s"overlay-base64=${overlayUrlBase64("playx2.png")}"
 
   override def resizeString: String = {
     val params = Seq(widthParam, heightParam, qualityparam, autoParam, dprParam, overlayAlignParam, overlayUrlParam).filter(_.nonEmpty).mkString("&")
@@ -219,7 +219,7 @@ object EmailVideoImage extends ImageProfile(width = Some(580), autoFormat = fals
   }
 }
 
-object FrontEmailImage extends ImageProfile(width = Some(500), autoFormat = false) {
+object FrontEmailImage extends ImageProfile(width = Some(1000), autoFormat = false) {
   override val qualityparam: String = EmailImage.qualityparam
   override val sharpenParam: String = EmailImage.sharpenParam
   val knownWidth: Int = width.get
