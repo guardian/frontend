@@ -9,6 +9,8 @@ type PrebidPriceGranularity = {
     }>,
 };
 
+export type { PrebidPriceGranularity };
+
 export const priceGranularity: PrebidPriceGranularity = {
     buckets: [
         {

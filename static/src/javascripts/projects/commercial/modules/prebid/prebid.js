@@ -11,16 +11,81 @@ import type {
     PrebidMediaTypes,
     PrebidSlot,
 } from 'commercial/modules/prebid/types';
+import type { PrebidPriceGranularity } from 'commercial/modules/prebid/price-config';
 
-const bidderTimeout = 1500;
+type EnableAnalyticsConfig = {
+    provider: string,
+    options: {
+        ajaxUrl: string,
+        pv: string,
+    },
+};
 
-const consentManagement = {
+type ConsentManagement = {
+    cmpApi: string,
+    timeout: number,
+    allowAuctionWithoutConsent: boolean,
+};
+
+type S2SConfig = {
+    accountId: string,
+    enabled: boolean,
+    bidders: Array<string>,
+    timeout: number,
+    adapter: string,
+    is_debug: string, // true or false string
+    endpoint: string,
+    syncEndpoint: string,
+    cookieSet: boolean,
+    cookiesetUrl: string,
+};
+
+type UserSync =
+    | {
+          syncsPerBidder: number,
+          filterSettings: {
+              all: {
+                  bidders: string,
+                  filter: string,
+              },
+          },
+      }
+    | { syncEnabled: false };
+
+type PbjsConfig = {
+    bidderTimeout: number,
+    priceGranularity: PrebidPriceGranularity,
+    userSync: UserSync,
+    consentManagement: ConsentManagement | false,
+    s2sConfig: S2SConfig,
+};
+
+type XasisBuyerTargetting = {
+    key: string,
+    val: ({
+        appnexus: {
+            buyerMemberId: string,
+        },
+    }) => string,
+};
+
+type XasisHeaderBidderConfig = {
+    adserverTargeting: Array<XasisBuyerTargetting>,
+};
+
+type BidderSettings = {
+    xhb: XasisHeaderBidderConfig,
+};
+
+const bidderTimeout: number = 1500;
+
+const consentManagement: ConsentManagement = {
     cmpApi: 'iab',
     timeout: 200,
     allowAuctionWithoutConsent: true,
 };
 
-const s2sConfig = {
+const s2sConfig: S2SConfig = {
     accountId: '1',
     enabled: true,
     bidders: ['appnexus', 'openx', 'pangaea'],
@@ -49,115 +114,123 @@ class PrebidAdUnit {
     }
 }
 
-class PrebidService {
-    static initialise(): void {
-        const userSync = config.get('switches.prebidUserSync', false)
-            ? {
-                  // syncsPerBidder: 0, // allow all syncs - bug https://github.com/prebid/Prebid.js/issues/2781
-                  syncsPerBidder: 999, // temporarily until above bug fixed
-                  filterSettings: {
-                      all: {
-                          bidders: '*', // allow all bidders to sync by iframe or image beacons
-                          filter: 'include',
-                      },
+let requestQueue: Promise<void> = Promise.resolve();
+
+const initialise = (window: {
+    pbjs: {
+        setConfig: PbjsConfig => void,
+        bidderSettings: BidderSettings,
+        enableAnalytics: ([EnableAnalyticsConfig]) => void,
+    },
+}): void => {
+    const userSync = config.get('switches.prebidUserSync', false)
+        ? {
+              // syncsPerBidder: 0, // allow all syncs - bug https://github.com/prebid/Prebid.js/issues/2781
+              syncsPerBidder: 999, // temporarily until above bug fixed
+              filterSettings: {
+                  all: {
+                      bidders: '*', // allow all bidders to sync by iframe or image beacons
+                      filter: 'include',
                   },
-              }
-            : { syncEnabled: false };
+              },
+          }
+        : { syncEnabled: false };
 
-        const pbjsConfig = Object.assign(
-            {},
+    const pbjsConfig: PbjsConfig = Object.assign(
+        {},
+        {
+            bidderTimeout,
+            priceGranularity,
+            userSync,
+        },
+        config.get('switches.enableConsentManagementService', false)
+            ? { consentManagement }
+            : {},
+        config.get('switches.prebidS2sozone', false) ? { s2sConfig } : {}
+    );
+
+    window.pbjs.setConfig(pbjsConfig);
+
+    if (config.get('switches.prebidAnalytics', false)) {
+        window.pbjs.enableAnalytics([
             {
-                bidderTimeout,
-                priceGranularity,
-                userSync,
+                provider: 'gu',
+                options: {
+                    ajaxUrl: config.get('page.ajaxUrl'),
+                    pv: config.get('ophan.pageViewId'),
+                },
             },
-            config.get('switches.enableConsentManagementService', false)
-                ? { consentManagement }
-                : {},
-            config.get('switches.prebidS2sozone', false) ? { s2sConfig } : {}
-        );
+        ]);
+    }
 
-        window.pbjs.setConfig(pbjsConfig);
+    // This creates an 'unsealed' object. Flows
+    // allows dynamic assignment.
+    window.pbjs.bidderSettings = {};
 
-        if (config.get('switches.prebidAnalytics', false)) {
-            window.pbjs.enableAnalytics([
+    if (config.get('switches.prebidXaxis', false)) {
+        window.pbjs.bidderSettings.xhb = {
+            adserverTargeting: [
                 {
-                    provider: 'gu',
-                    options: {
-                        ajaxUrl: config.get('page.ajaxUrl'),
-                        pv: config.get('ophan.pageViewId'),
+                    key: 'hb_buyer_id',
+                    val(bidResponse): string {
+                        // flowlint sketchy-null-mixed:warn
+                        return bidResponse.appnexus
+                            ? bidResponse.appnexus.buyerMemberId
+                            : '';
                     },
                 },
-            ]);
-        }
+            ],
+        };
+    }
+};
 
-        // This creates an 'unsealed' object. Flows
-        // allows dynamic assignment.
-        window.pbjs.bidderSettings = {};
-
-        if (config.get('switches.prebidXaxis', false)) {
-            window.pbjs.bidderSettings.xhb = {
-                adserverTargeting: [
-                    {
-                        key: 'hb_buyer_id',
-                        val(bidResponse) {
-                            return bidResponse.appnexus
-                                ? bidResponse.appnexus.buyerMemberId
-                                : '';
-                        },
-                    },
-                ],
-            };
-        }
+// slotFlatMap allows you to dynamically interfere with the PrebidSlot definition
+// for this given request for bids.
+const requestBids = (
+    advert: Advert,
+    slotFlatMap?: PrebidSlot => PrebidSlot[]
+): Promise<void> => {
+    const effectiveSlotFlatMap = slotFlatMap || (s => [s]); // default to identity
+    if (dfpEnv.externalDemand !== 'prebid') {
+        return requestQueue;
     }
 
-    static requestQueue: Promise<void> = Promise.resolve();
+    const adUnits: Array<PrebidAdUnit> = slots(
+        advert.id,
+        config.get('page.contentType', '')
+    )
+        .map(effectiveSlotFlatMap)
+        .reduce((acc, elt) => acc.concat(elt), []) // the "flat" in "flatMap"
+        .map(slot => new PrebidAdUnit(advert, slot))
+        .filter(adUnit => !adUnit.isEmpty());
 
-    // slotFlatMap allows you to dynamically interfere with the PrebidSlot definition
-    // for this given request for bids.
-    static requestBids(
-        advert: Advert,
-        slotFlatMap?: PrebidSlot => PrebidSlot[]
-    ): Promise<void> {
-        const effectiveSlotFlatMap = slotFlatMap || (s => [s]); // default to identity
-        if (dfpEnv.externalDemand !== 'prebid') {
-            return PrebidService.requestQueue;
-        }
+    if (adUnits.length === 0) {
+        return requestQueue;
+    }
 
-        const adUnits: Array<PrebidAdUnit> = slots(
-            advert.id,
-            config.get('page.contentType', '')
-        )
-            .map(effectiveSlotFlatMap)
-            .reduce((acc, elt) => acc.concat(elt), []) // the "flat" in "flatMap"
-            .map(slot => new PrebidAdUnit(advert, slot))
-            .filter(adUnit => !adUnit.isEmpty());
-
-        if (adUnits.length === 0) {
-            return PrebidService.requestQueue;
-        }
-
-        PrebidService.requestQueue = PrebidService.requestQueue
-            .then(
-                () =>
-                    new Promise(resolve => {
-                        window.pbjs.que.push(() => {
-                            window.pbjs.requestBids({
-                                adUnits,
-                                bidsBackHandler() {
-                                    window.pbjs.setTargetingForGPTAsync([
-                                        adUnits[0].code,
-                                    ]);
-                                    resolve();
-                                },
-                            });
+    requestQueue = requestQueue
+        .then(
+            () =>
+                new Promise(resolve => {
+                    window.pbjs.que.push(() => {
+                        window.pbjs.requestBids({
+                            adUnits,
+                            bidsBackHandler() {
+                                window.pbjs.setTargetingForGPTAsync([
+                                    adUnits[0].code,
+                                ]);
+                                resolve();
+                            },
                         });
-                    })
-            )
-            .catch(() => {});
+                    });
+                })
+        )
+        .catch(() => {});
 
-        return PrebidService.requestQueue;
-    }
-}
+    return requestQueue;
+};
 
-export const prebid = PrebidService;
+export default {
+    initialise,
+    requestBids,
+};

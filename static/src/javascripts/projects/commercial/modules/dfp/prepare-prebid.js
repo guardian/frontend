@@ -4,7 +4,7 @@ import { commercialFeatures } from 'common/modules/commercial/commercial-feature
 import { buildPageTargeting } from 'common/modules/commercial/build-page-targeting';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import once from 'lodash/once';
-import { prebid } from 'commercial/modules/prebid/prebid';
+import prebid from 'commercial/modules/prebid/prebid';
 
 const isGoogleWebPreview: () => boolean = () =>
     !!(
@@ -26,7 +26,7 @@ const setupPrebid: () => Promise<void> = () => {
         !isGoogleWebPreview()
     ) {
         buildPageTargeting();
-        prebid.initialise();
+        prebid.initialise(window);
     }
     return Promise.resolve();
 };
