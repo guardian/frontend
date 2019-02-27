@@ -20,14 +20,22 @@ amp-consent { background: none; }
     div.adconsent-actions {
         text-align: right;
         button {
+            font: inherit;
+
             border: 0;
             background: transparent;
-            font: inherit;
             color: inherit;
+
+            display: block;
+            width: 100%;
+            margin-top: 1em;
         }
         button.adconsent-accept {
             @include circular;
             border: .0625rem solid rgba(255, 255, 255, .3);
+            background: $highlight-main;
+            color: $brightness-7;
+
             padding: 5px 20px;
             font-weight: bold;
         }

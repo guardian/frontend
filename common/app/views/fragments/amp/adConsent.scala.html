@@ -48,9 +48,12 @@ https://support.google.com/dfp_premium/answer/7678538
             and <a class="u-underline" href="https://www.theguardian.com/info/cookies">cookie policy</a>.</p>
       </div>
       <div class="adconsent-actions">
-          <button on="tap:the-adconsent-element.reject" class="u-underline adconsent-reject" role="button">Reject</button>
+          <button on="tap:the-adconsent-element.reject" class="u-underline adconsent-reject" role="button">
+              I do not want to see personalised ads
+          </button>
           <button on="tap:the-adconsent-element.accept" class="adconsent-accept" role="button">
-              @fragments.inlineSvg("tick", "icon")
+              @fragments.inlineSvg("tick", "icon", List("inline-icon--black"))
+
               I'm OK with that
           </button>
       </div>
