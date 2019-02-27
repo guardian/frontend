@@ -99,4 +99,9 @@ describe('init', () => {
         fakeUserAgent('Google Web Preview');
         expect(isGoogleWebPreview()).toBe(true);
     });
+
+    it('isGoogleWebPreview should return true with Google Web Preview useragent', () => {
+        fakeUserAgent('googleweblight');
+        expect(isGoogleWebPreview()).toBe(true);
+    });
 });

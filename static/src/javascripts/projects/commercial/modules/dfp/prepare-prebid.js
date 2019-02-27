@@ -10,7 +10,8 @@ const isGoogleWebPreview: () => boolean = () =>
     !!(
         navigator &&
         navigator.userAgent &&
-        navigator.userAgent.indexOf('Google Web Preview') > -1
+        (navigator.userAgent.indexOf('Google Web Preview') > -1 ||
+            navigator.userAgent.indexOf('googleweblight') > -1)
     );
 
 if (!isGoogleWebPreview()) {
