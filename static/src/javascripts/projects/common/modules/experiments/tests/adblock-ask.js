@@ -40,7 +40,9 @@ export const adblockTest: ABTest = {
     audienceCriteria: '',
     showForSensitive: true,
     canRun() {
-        return !userIsSupporter() && !pageShouldHideReaderRevenue();
+        return !userIsSupporter()
+            && !pageShouldHideReaderRevenue()
+            && !window.guardian.config.page.hasShowcaseMainElement;
     },
 
     variants: [
