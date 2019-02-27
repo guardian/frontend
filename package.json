@@ -9,6 +9,9 @@
   "engines": {
     "yarn": "1.8.0"
   },
+  "resolutions": {
+    "**/**/node-gyp": "^3.8.0"
+  },
   "dependencies": {
     "@babel/runtime": "^7.2.0",
     "@guardian/atom-renderer": "0.17.0",
