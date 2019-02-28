@@ -61,7 +61,7 @@
     "amphtml-validator": "^1.0.21",
     "any-observable": "^0.2.0",
     "autoprefixer": "^9.1.5",
-    "aws-sdk": "^2.188.0",
+    "aws-sdk": "^2.411.0",
     "babel-core": "^7.0.0-bridge",
     "babel-eslint": "^10.0.1",
     "babel-jest": "^23.6.0",
