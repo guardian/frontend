@@ -33,6 +33,7 @@ import { catchErrorsWithContext } from 'lib/robust';
 import { markTime } from 'lib/user-timing';
 import config from 'lib/config';
 import { newHeaderInit } from 'common/modules/navigation/new-header';
+import { fixSecondaryColumn } from 'common/modules/fix-secondary-column';
 import { trackPerformance } from 'common/modules/analytics/google';
 import debounce from 'lodash/debounce';
 import ophan from 'ophan/ng';
@@ -260,6 +261,11 @@ const bootStandard = (): void => {
     identityInit();
 
     newHeaderInit();
+
+    if (config.get('page.hasShowcaseMainElement')) {
+        //
+        fixSecondaryColumn();
+    }
 
     initAtoms();
 
