@@ -156,7 +156,9 @@
       "ophan/embed": "ophan-tracker-js/build/ophan.embed"
     },
     "testResultsProcessor": "jest-teamcity-reporter",
-    "setupFilesAfterEnv": ["<rootDir>/dev/jest.setupTestFrameworkScriptFile.js"],
+    "setupFilesAfterEnv": [
+      "<rootDir>/dev/jest.setupTestFrameworkScriptFile.js"
+    ],
     "testEnvironment": "jest-environment-jsdom-global"
   },
   "scripts": {
