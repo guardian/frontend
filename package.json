@@ -20,7 +20,7 @@
     "core-js": "^2.5.3",
     "curl": "cujojs/curl#0.8.9",
     "domready": "^1.0.8",
-    "emotion": "^9.2.4",
+    "emotion": "^9.2.12",
     "emotion-server": "^9.2.4",
     "fastdom": "0.8.5",
     "fence": "guardian/fence#0.2.11",
