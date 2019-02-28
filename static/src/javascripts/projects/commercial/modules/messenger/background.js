@@ -163,25 +163,27 @@ const setBackground = (specs: AdSpec, adSlot: Node): Promise<any> => {
     };
 
     const onIntersect = (entries: Array<IntersectionObserverEntry>): void => {
-        entries.filter(entry => entry.isIntersecting).forEach(entry => {
-            if (!backgroundAlreadyExists) {
-                const backgroundParent = entry.target;
-                const background = backgroundParent.firstChild;
+        entries
+            .filter(entry => entry.isIntersecting)
+            .forEach(entry => {
+                if (!backgroundAlreadyExists) {
+                    const backgroundParent = entry.target;
+                    const background = backgroundParent.firstChild;
 
-                if (background && background instanceof HTMLElement) {
-                    addEventListener(
-                        window,
-                        'scroll',
-                        () => onScroll(backgroundParent, background),
-                        {
-                            passive: true,
-                        }
-                    );
+                    if (background && background instanceof HTMLElement) {
+                        addEventListener(
+                            window,
+                            'scroll',
+                            () => onScroll(backgroundParent, background),
+                            {
+                                passive: true,
+                            }
+                        );
 
-                    onScroll(backgroundParent, background);
+                        onScroll(backgroundParent, background);
+                    }
                 }
-            }
-        });
+            });
     };
 
     const observer = new IntersectionObserver(onIntersect, {

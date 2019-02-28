@@ -46,20 +46,22 @@ const getPrefill = (el: HTMLElement): Prefill => ({
 });
 
 const bindBlockList = (el): void => {
-    fastdom.read(() => getPrefill(el)).then(prefill =>
-        fastdom.write(() => {
-            render(
-                <StatefulConfirmEmailPage
-                    csrfToken={prefill.csrfToken}
-                    accountToken={prefill.accountToken}
-                    email={prefill.email}
-                    hasPassword={prefill.hasPassword}
-                    hasSocialLinks={prefill.hasSocialLinks}
-                />,
-                el
-            );
-        })
-    );
+    fastdom
+        .read(() => getPrefill(el))
+        .then(prefill =>
+            fastdom.write(() => {
+                render(
+                    <StatefulConfirmEmailPage
+                        csrfToken={prefill.csrfToken}
+                        accountToken={prefill.accountToken}
+                        email={prefill.email}
+                        hasPassword={prefill.hasPassword}
+                        hasSocialLinks={prefill.hasSocialLinks}
+                    />,
+                    el
+                );
+            })
+        );
 };
 
 const enhanceUpsell = (): void => {

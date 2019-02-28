@@ -241,67 +241,71 @@ const toggleDropdown = (menuAndTriggerEls: MenuAndTriggerEls): void => {
     const globalOpenClass = 'dropdown--open';
     const openClass = 'dropdown-menu--open';
 
-    fastdom.read(() => menuAndTriggerEls).then(els => {
-        const { menu, trigger } = els;
+    fastdom
+        .read(() => menuAndTriggerEls)
+        .then(els => {
+            const { menu, trigger } = els;
 
-        if (!menu) {
-            return;
-        }
-
-        const isOpen = menu.classList.contains(openClass);
-        const expandedAttr = isOpen ? 'false' : 'true';
-        const hiddenAttr = isOpen ? 'true' : 'false';
-
-        return fastdom.write(() => {
-            if (trigger) {
-                trigger.setAttribute('aria-expanded', expandedAttr);
+            if (!menu) {
+                return;
             }
 
-            menu.setAttribute('aria-hidden', hiddenAttr);
-            menu.classList.toggle(openClass, !isOpen);
+            const isOpen = menu.classList.contains(openClass);
+            const expandedAttr = isOpen ? 'false' : 'true';
+            const hiddenAttr = isOpen ? 'true' : 'false';
 
-            if (documentElement) {
-                documentElement.classList.toggle(globalOpenClass, !isOpen);
-            }
+            return fastdom.write(() => {
+                if (trigger) {
+                    trigger.setAttribute('aria-expanded', expandedAttr);
+                }
 
-            if (!isOpen && document.body) {
-                // Prevents menu from being disconnected with trigger
-                (document.documentElement || document.body).scrollTop = 0;
+                menu.setAttribute('aria-hidden', hiddenAttr);
+                menu.classList.toggle(openClass, !isOpen);
 
-                const menuId = menu.getAttribute('id');
-                const triggerToggle = clickSpec => {
-                    const elem = clickSpec ? clickSpec.target : null;
-                    if (elem !== menu) {
-                        toggleDropdown(menuAndTriggerEls);
+                if (documentElement) {
+                    documentElement.classList.toggle(globalOpenClass, !isOpen);
+                }
 
-                        // remove event listener when the dropdown closes
-                        if (menuId) {
-                            removeClickstreamListener(menuId);
+                if (!isOpen && document.body) {
+                    // Prevents menu from being disconnected with trigger
+                    (document.documentElement || document.body).scrollTop = 0;
+
+                    const menuId = menu.getAttribute('id');
+                    const triggerToggle = clickSpec => {
+                        const elem = clickSpec ? clickSpec.target : null;
+                        if (elem !== menu) {
+                            toggleDropdown(menuAndTriggerEls);
+
+                            // remove event listener when the dropdown closes
+                            if (menuId) {
+                                removeClickstreamListener(menuId);
+                            }
                         }
-                    }
-                };
-                // if anywhere outside the menu is clicked the dropdown will close
-                registerClickstreamListener(menuId, triggerToggle);
-            }
+                    };
+                    // if anywhere outside the menu is clicked the dropdown will close
+                    registerClickstreamListener(menuId, triggerToggle);
+                }
+            });
         });
-    });
 };
 
 const returnFocusToButton = (btnId: string): void => {
-    fastdom.read(() => document.getElementById(btnId)).then(btn => {
-        if (btn) {
-            btn.focus();
-            /**
-             * As we're closing the menu with the ESC key we no longer need the
-             * clickstream listener that toggles the menu on a click outside the menu
-             * so let's unregister it here
-             * */
-            const menuId = btn.getAttribute('aria-controls');
-            if (menuId) {
-                removeClickstreamListener(menuId);
+    fastdom
+        .read(() => document.getElementById(btnId))
+        .then(btn => {
+            if (btn) {
+                btn.focus();
+                /**
+                 * As we're closing the menu with the ESC key we no longer need the
+                 * clickstream listener that toggles the menu on a click outside the menu
+                 * so let's unregister it here
+                 * */
+                const menuId = btn.getAttribute('aria-controls');
+                if (menuId) {
+                    removeClickstreamListener(menuId);
+                }
             }
-        }
-    });
+        });
 };
 
 const initiateUserAccountDropdown = (): void => {
