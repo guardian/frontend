@@ -320,12 +320,12 @@
     }
 
     @include mq(desktop) {
-        width: 620px;
-        height: $mpu-ad-label-height + 350px;
+        width: auto;
+        height: auto;
+        margin-right: 6%;
 
-        & > div.ad-slot__label {
-            margin-left: 35px;
-            margin-right: 35px;
+        & > div.ad-slot__content {
+            min-height: 250px;
         }
     }
 }
