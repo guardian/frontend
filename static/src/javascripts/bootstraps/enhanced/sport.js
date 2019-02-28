@@ -23,13 +23,13 @@ const renderExtras = (extras: Array<Extra>): void => {
         belowArticleVisible(
             () => {
                 $('.js-after-article').append(
-                    $
-                        .create('<div class="football-extras"></div>')
-                        .each(extrasContainer => {
+                    $.create('<div class="football-extras"></div>').each(
+                        extrasContainer => {
                             extras.forEach(extra => {
                                 extrasContainer.appendChild(extra.content);
                             });
-                        })
+                        }
+                    )
                 );
             },
             () => {

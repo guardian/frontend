@@ -536,9 +536,9 @@ class GalleryLightbox {
                     this.index,
                     0,
                     this.useSwipe &&
-                    isBreakpoint({
-                        max: 'tablet',
-                    })
+                        isBreakpoint({
+                            max: 'tablet',
+                        })
                         ? 100
                         : 0
                 );

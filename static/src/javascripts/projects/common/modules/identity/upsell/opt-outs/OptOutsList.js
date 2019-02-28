@@ -41,9 +41,8 @@ export class OptOutsList extends Component<
     onCheckboxChange = (consent: ConsentWithState) => {
         this.setState(state => ({
             hasUnsavedChanges: true,
-            consents: state.consents.map(
-                original =>
-                    original.uniqueId === consent.uniqueId ? consent : original
+            consents: state.consents.map(original =>
+                original.uniqueId === consent.uniqueId ? consent : original
             ),
         }));
     };

@@ -71,15 +71,17 @@ const maybeAnimateBlocks = (
         .read(() => el.getBoundingClientRect().top)
         .then(vPosition => {
             if (vPosition > 0 && vPosition < viewportHeightPx) {
-                setTimeout(() => {
-                    const $el = bonzo(el);
-
-                    fastdomPromise.write(() => {
-                        $el.removeClass(
-                            'fc-item__liveblog-blocks__inner--offset'
-                        );
-                    });
-                }, immediate ? 0 : animateDelayMs);
+                setTimeout(
+                    () => {
+                        const $el = bonzo(el);
+                        fastdomPromise.write(() => {
+                            $el.removeClass(
+                                'fc-item__liveblog-blocks__inner--offset'
+                            );
+                        });
+                    },
+                    immediate ? 0 : animateDelayMs
+                );
                 return true;
             }
             return false;
