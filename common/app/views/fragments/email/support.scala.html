@@ -8,6 +8,7 @@
     </tr>
     <tr>
         <td class="wrap-pad text-center">
+            @defining(request.path.replace("/", "_")) { pathURL =>
             <!--[if (gte mso 9)|(IE)]>
             <table width="100%">
                 <tr>
@@ -32,11 +33,11 @@
                                     <td class="cta-pad" align="center" valign="middle">
                                         <div>
                                             <!--[if mso]>
-                                            <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://support.theguardian.com/contribute?acquisitionData=%7B%22source%22%3A%22EMAIL%22%2C%22campaignCode%22%3A%22EmailED%22%2C%22componentId%22%3A%22EDSupportAskContribute%22%7D&INTCMP=EmailED&" style="height:30pt;v-text-anchor:middle;width:97pt;" arcsize="50%" strokecolor="#ffe500" fillcolor="#ffe500">
+                                            <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://support.theguardian.com/contribute?acquisitionData=%7B%22source%22%3A%22EMAIL%22%2C%22campaignCode%22%3A%22EmailED%22%2C%22componentId%22%3A%22editorial@{pathURL}_support_ask_contribute%22%7D&INTCMP=EmailED&" style="height:30pt;v-text-anchor:middle;width:97pt;" arcsize="50%" strokecolor="#ffe500" fillcolor="#ffe500">
                                                 <w:anchorlock></w:anchorlock>
                                                 <center style="color:#000000;font-family:Georgia,serif;font-size:16px;font-weight:bold;">Contribute</center>
                                             </v:roundrect>
-                                            <![endif]--><a class="sm-btn" href="https://support.theguardian.com/contribute?acquisitionData=%7B%22source%22%3A%22EMAIL%22%2C%22campaignCode%22%3A%22EmailED%22%2C%22componentId%22%3A%22EDSupportAskContribute%22%7D&INTCMP=EmailED&">Contribute</a>
+                                            <![endif]--><a class="sm-btn" href="https://support.theguardian.com/contribute?acquisitionData=%7B%22source%22%3A%22EMAIL%22%2C%22campaignCode%22%3A%22EmailED%22%2C%22componentId%22%3A%22editorial@{pathURL}_support_ask_contribute%22%7D&INTCMP=EmailED&">Contribute</a>
                                         </div>
                                     </td>
                                 </tr>
@@ -44,11 +45,11 @@
                                     <td class="cta-pad" align="center" valign="middle">
                                         <div>
                                             <!--[if mso]>
-                                            <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://support.theguardian.com/subscribe?acquisitionData=%7B%22source%22%3A%22EMAIL%22%2C%22campaignCode%22%3A%22EmailED%22%2C%22componentId%22%3A%22EDSupportAskSubscribe%22%7D&INTCMP=EmailED&" style="height:30pt;v-text-anchor:middle;width:97pt;" arcsize="50%" strokecolor="#ffe500" fillcolor="#ffe500">
+                                            <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://support.theguardian.com/subscribe?acquisitionData=%7B%22source%22%3A%22EMAIL%22%2C%22campaignCode%22%3A%22EmailED%22%2C%22componentId%22%3A%22editorial@{pathURL}_support_ask_subscribe%22%7D&INTCMP=EmailED&" style="height:30pt;v-text-anchor:middle;width:97pt;" arcsize="50%" strokecolor="#ffe500" fillcolor="#ffe500">
                                                 <w:anchorlock></w:anchorlock>
                                                 <center style="color:#000000;font-family:Georgia,serif;font-size:16px;font-weight:bold;">Subscribe</center>
                                             </v:roundrect>
-                                            <![endif]--><a class="sm-btn" href="https://support.theguardian.com/subscribe?acquisitionData=%7B%22source%22%3A%22EMAIL%22%2C%22campaignCode%22%3A%22EmailED%22%2C%22componentId%22%3A%22EDSupportAskSubscribe%22%7D&INTCMP=EmailED&">Subscribe</a>
+                                            <![endif]--><a class="sm-btn" href="https://support.theguardian.com/subscribe?acquisitionData=%7B%22source%22%3A%22EMAIL%22%2C%22campaignCode%22%3A%22EmailED%22%2C%22componentId%22%3A%22editorial@{pathURL}_support_ask_subscribe%22%7D&INTCMP=EmailED&">Subscribe</a>
                                         </div>
                                     </td>
                                 </tr>
@@ -59,6 +60,11 @@
                 </tr>
             </table>
             <![endif]-->
+            }
         </td>
     </tr>
 </table>
+
+<div>
+    @if(request.uri == "/") { "Home Menu Selected" }
+</div>
