@@ -127,7 +127,7 @@
     "svgo": "^0.7.2",
     "uglify-js": "^2.7.4",
     "uglifyjs-webpack-plugin": "^1.2.5",
-    "webpack": "^4.1.1",
+    "webpack": "^4.29.5",
     "webpack-bundle-analyzer": "^3.0.4",
     "webpack-merge": "^4.1.0",
     "webpack-visualizer-plugin": "^0.1.11",
