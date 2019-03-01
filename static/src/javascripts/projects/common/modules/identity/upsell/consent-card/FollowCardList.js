@@ -61,20 +61,16 @@ class FollowCardList extends React.Component<Props, State> {
     updateConsentState(consent: ConsentWithState) {
         this.setState(state => ({
             errors: [],
-            consents: state.consents.map(
-                original =>
-                    original.uniqueId === consent.uniqueId ? consent : original
+            consents: state.consents.map(original =>
+                original.uniqueId === consent.uniqueId ? consent : original
             ),
         }));
         setConsentsInApi([consent]).catch(() => {
             consent.flipState();
             this.setState(state => ({
                 errors: [genericErrorStr],
-                consents: state.consents.map(
-                    original =>
-                        original.uniqueId === consent.uniqueId
-                            ? consent
-                            : original
+                consents: state.consents.map(original =>
+                    original.uniqueId === consent.uniqueId ? consent : original
                 ),
             }));
         });

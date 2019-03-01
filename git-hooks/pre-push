@@ -39,7 +39,6 @@ const confirmIfMaster = execa
         }
     )
     .catch(() => Promise.reject(new Error('Ok, stopping 😉')));
-
 const validate = () =>
     execa(
         './tools/task-runner/runner',
@@ -48,7 +47,6 @@ const validate = () =>
             stdio: 'inherit',
         }
     );
-
 const checkYarnLock = changed => {
     if (
         changed.some(file => file === 'package.json') &&
@@ -69,9 +67,7 @@ const checkYarnLock = changed => {
         );
     }
     return changed;
-};
-
-// make sure docs TOC stays up to date
+}; // make sure docs TOC stays up to date
 const updateTOC = changed => {
     if (changed.some(file => file.includes('docs/'))) {
         const docs = path.resolve('docs');
@@ -84,7 +80,6 @@ const updateTOC = changed => {
     }
     return changed;
 };
-
 confirmIfMaster
     .then(validate)
     .then(getChangedFiles)

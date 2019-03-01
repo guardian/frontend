@@ -121,6 +121,12 @@ const getSpacefinderRules = (): SpacefinderRules => ({
             minAbove: 500,
             minBelow: 500,
         },
+        ' .element--showcase': {
+            minAbove: ['desktop', 'leftCol', 'wide'].includes(getBreakpoint())
+                ? 200
+                : 0,
+            minBelow: 0,
+        },
     },
 });
 

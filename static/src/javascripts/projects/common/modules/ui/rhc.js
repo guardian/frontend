@@ -5,10 +5,9 @@ const addComponent = (content: Element, importance: number = 1): void => {
     const container = $('.js-components-container');
     const classname = 'component--rhc';
 
-    return $
-        .create(
-            `<div class="${classname}" data-importance="${importance}"></div>`
-        )
+    return $.create(
+        `<div class="${classname}" data-importance="${importance}"></div>`
+    )
         .append(content)
         .each(component => {
             const existingComponents = $(`.${classname}`, container[0]) || [];

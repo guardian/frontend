@@ -132,58 +132,64 @@ const onRichLinksUpgraded = memoize(
     getFuncId
 );
 
-const onInteractivesLoaded = memoize((rules: SpacefinderRules): Promise<
-    void
-> => {
-    const notLoaded: Element[] = qwery(
-        '.element-interactive',
-        rules.body
-    ).filter(
-        (interactive: Element): boolean => {
-            const iframe: HTMLIFrameElement[] = (Array.from(
-                interactive.children
-            ).filter(isIframe): any[]);
-            return !(iframe.length && isIframeLoaded(iframe[0]));
-        }
-    );
+const onInteractivesLoaded = memoize(
+    (rules: SpacefinderRules): Promise<void> => {
+        const notLoaded: Element[] = qwery(
+            '.element-interactive',
+            rules.body
+        ).filter(
+            (interactive: Element): boolean => {
+                const iframe: HTMLIFrameElement[] = (Array.from(
+                    interactive.children
+                ).filter(isIframe): any[]);
+                return !(iframe.length && isIframeLoaded(iframe[0]));
+            }
+        );
 
-    return notLoaded.length === 0 || !('MutationObserver' in window)
-        ? Promise.resolve()
-        : Promise.all(
-              notLoaded.map(
-                  (interactive: Element): Promise<void> =>
-                      new Promise(resolve => {
-                          new MutationObserver(
-                              (
-                                  records: MutationRecord[],
-                                  instance: MutationObserver
-                              ): void => {
-                                  if (
-                                      !records.length ||
-                                      !records[0].addedNodes.length ||
-                                      !isIframe((records[0].addedNodes[0]: any))
-                                  ) {
-                                      return;
-                                  }
+        return notLoaded.length === 0 || !('MutationObserver' in window)
+            ? Promise.resolve()
+            : Promise.all(
+                  notLoaded.map(
+                      (interactive: Element): Promise<void> =>
+                          new Promise(resolve => {
+                              new MutationObserver(
+                                  (
+                                      records: MutationRecord[],
+                                      instance: MutationObserver
+                                  ): void => {
+                                      if (
+                                          !records.length ||
+                                          !records[0].addedNodes.length ||
+                                          !isIframe(
+                                              (records[0].addedNodes[0]: any)
+                                          )
+                                      ) {
+                                          return;
+                                      }
 
-                                  const iframe = records[0].addedNodes[0];
-                                  if (isIframeLoaded((iframe: any))) {
-                                      instance.disconnect();
-                                      resolve();
-                                  } else {
-                                      iframe.addEventListener('load', () => {
+                                      const iframe = records[0].addedNodes[0];
+                                      if (isIframeLoaded((iframe: any))) {
                                           instance.disconnect();
                                           resolve();
-                                      });
+                                      } else {
+                                          iframe.addEventListener(
+                                              'load',
+                                              () => {
+                                                  instance.disconnect();
+                                                  resolve();
+                                              }
+                                          );
+                                      }
                                   }
-                              }
-                          ).observe(interactive, {
-                              childList: true,
-                          });
-                      })
-              )
-          ).then(() => undefined);
-}, getFuncId);
+                              ).observe(interactive, {
+                                  childList: true,
+                              });
+                          })
+                  )
+              ).then(() => undefined);
+    },
+    getFuncId
+);
 
 const filter = <T>(
     list: T[],
