@@ -17,7 +17,7 @@ const isGoogleWebPreview: () => boolean = () =>
 let moduleLoadResult = Promise.resolve();
 
 if (!isGoogleWebPreview()) {
-    moduleLoadResult = import('prebid.js/build/dist/prebid');
+    moduleLoadResult = import(/* webpackChunkName: "Prebid.js" */ 'prebid.js/build/dist/prebid');
 }
 
 const setupPrebid: () => Promise<void> = () =>
