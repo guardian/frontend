@@ -1,44 +1,25 @@
 // @flow
 import fastdom from 'lib/fastdom-promise';
 import fetch from 'lib/fetch';
+import config from 'lib/config';
 
-const isCheckbox = element => element.type === 'checkbox';
-const isFile = element => element.type === 'file';
+const targetUrl = config.get('page.calloutsUrl');
 const isNamed = element => element.name > '';
+const isCheckbox = (element: HTMLInputElement) => element.type === 'checkbox';
+const isFile = (element: HTMLInputElement) => element.type === 'file';
 
-const disableButton = button => {
-    button.disabled = true;
-};
+/* --------- DOM MANIPULATION ---------*/
 
 const enableButton = cForm => {
-    const button = cForm.querySelector('button');
+    const button: HTMLButtonElement = cForm.getElementsByTagName('button')[0];
     button.disabled = false;
     button.textContent = 'Share with the Guardian';
 };
 
 const showConfirmation = cForm => {
     const calloutWrapper = cForm.closest('.element-campaign');
-    if (calloutWrapper) {
-        fastdom.write(() => {
-            calloutWrapper.classList.add('success');
-        });
-    }
-};
-
-const showError = (cForm, msg) => {
-    const errorField = cForm.querySelector('.error_box');
     fastdom.write(() => {
-        errorField.innerHTML = `<p class="error">${msg}</p>`;
-    });
-    enableButton(cForm);
-};
-
-const showFileUploadError = (el, msg) => {
-    fastdom.write(() => {
-        const errorBox = document.createElement('p');
-        errorBox.textContent = msg;
-        errorBox.classList.add('error');
-        el.appendChild(errorBox);
+        calloutWrapper.classList.add('success');
     });
 };
 
@@ -47,30 +28,38 @@ const showWaiting = cForm => {
     const errorField = cForm.querySelector('.error_box');
     fastdom.write(() => {
         button.textContent = 'Sending...';
-        disableButton(button);
+        button.disabled = true;
         errorField.innerHTML = '';
     });
 };
 
-const readFile = (file, inputEl) =>
+const showError = (cForm: HTMLElement, msg: string) => {
+    const errorField = cForm.querySelector('.error_box');
+    if (errorField) {
+        fastdom.write(() => {
+            errorField.innerHTML = `<p class="error">${msg}</p>`;
+        });
+    }
+    enableButton(cForm);
+};
+
+/* ---------- DATA PARSING ------------*/
+
+const readFile = (file, cForm) =>
     new Promise(res => {
         const reader = new FileReader();
         reader.addEventListener(
             'load',
             () => {
-                // remove 'data:*/*;base64,' from the start of the string
-                // https://developer.mozilla.org/en-US/docs/Web/API/FileReader/readAsDataURL
-                const fileAsBase64 = reader.result
-                    .toString()
-                    .split('base64,')[1];
+                const fileAsBase64 = reader.result.toString();
                 res(fileAsBase64);
             },
             false
         );
         reader.addEventListener('error', () => {
-            showFileUploadError(
-                inputEl,
-                'Sorry there was a problem with your file: we accept images, pdfs and .doc or .docx files'
+            showError(
+                cForm,
+                'Sorry there was a problem with the file you uploaded above. Check the size and type. We only accept images, pdfs and .doc or .docx files'
             );
         });
         reader.readAsDataURL(file);
@@ -80,7 +69,8 @@ const getValueFromInput = (element, data) => {
     if (isCheckbox(element)) {
         return (data[element.name] || '').concat(`\n${element.value}`);
     } else if (isFile(element) && element.files[0]) {
-        return readFile(element.files[0], element);
+        const cForm = element.closest('form');
+        return readFile(element.files[0], cForm);
     }
     return element.value;
 };
@@ -109,23 +99,32 @@ export const submitForm = async (e: any) => {
         showError(cForm, 'Sorry we think you are a robot.');
         return false;
     }
+
     showWaiting(cForm);
 
-    return fetch('https://callouts.code.dev-guardianapis.com', {
+    return fetch(targetUrl, {
         method: 'post',
         body: JSON.stringify(data),
         headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
         },
-    }).then(res => {
-        if (res.ok) {
-            showConfirmation(cForm);
-        } else {
+    })
+        .then(res => {
+            if (res.ok) {
+                showConfirmation(cForm);
+            } else {
+                showError(
+                    cForm,
+                    'Sorry, there was a problem submitting your form. Please try again later.'
+                );
+            }
+        })
+        .catch(() => {
+            console.error(`Request to ${targetUrl} failed`);
             showError(
                 cForm,
                 'Sorry, there was a problem submitting your form. Please try again later.'
             );
-        }
-    });
+        });
 };
