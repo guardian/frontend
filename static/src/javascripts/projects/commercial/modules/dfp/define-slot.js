@@ -221,7 +221,9 @@ const defineSlot = (adSlotNode: Element, sizes: Object): Object => {
         slot.setTargeting('ad_h', new Date().getUTCHours().toString());
     }
 
-    slot.addService(window.googletag.pubads()).setTargeting('slot', slotTarget);
+    slot.setSafeFrameConfig({ sandbox: true })
+        .addService(window.googletag.pubads())
+        .setTargeting('slot', slotTarget);
 
     return {
         slot,
