@@ -4,10 +4,8 @@ import config from 'lib/config';
 import mediator from 'lib/mediator';
 import fastdom from 'lib/fastdom-promise';
 import { bonzo } from 'bonzo';
-import type { AdSize } from 'commercial/types';
 import { createSlots } from 'commercial/modules/dfp/create-slots';
 import { addSlot } from 'commercial/modules/dfp/add-slot';
-import { adSizes } from 'commercial/modules/ad-sizes';
 
 const minArticleHeight: number = 1300;
 
@@ -27,23 +25,6 @@ const createSlotWrapper = (): Element => {
     adSlotWrapper.className = 'aside-slot-container js-aside-slot-container';
     adSlotWrapper.setAttribute('aria-hidden', 'true');
     return adSlotWrapper;
-};
-
-const createAsideSlots = (availableSpace: ?number): Array<HTMLDivElement> => {
-    // TODO: workout available space, so we know which adSizes can be used before we create the slot
-    const calculateShowcaseSizes = (
-        offset: number
-    ): { [string]: Array<AdSize> } => {
-        // ??? what is our threshold? Where does inline2 insert?
-        if (offset < 700) {
-            return { desktop: [adSizes.halfPage] };
-        }
-        return {};
-    };
-    return createSlots('right', {
-        classes: 'mpu-banner-ad',
-        sizes: availableSpace ? calculateShowcaseSizes(availableSpace) : null,
-    });
 };
 
 export const init = (start: () => void, stop: () => void): Promise<boolean> => {
@@ -68,12 +49,12 @@ export const init = (start: () => void, stop: () => void): Promise<boolean> => {
             ]
         )
         .then(([mainColHeight, immersiveOffset]: [number, number]) => {
-            // TODO: should we check if shouldShowAds? Ideally the module will not load anyway..
             if (config.get('page.hasShowcaseMainElement', false)) {
                 const slotWrapper = createSlotWrapper();
-                const asideSlots = createAsideSlots();
+                const asideSlots = createSlots('right-with-showcase', {
+                    classes: 'mpu-banner-ad',
+                });
 
-                // TODO: can we do something with the $col.style padding to work out if we can fit a DMPU?
                 asideSlots.forEach(adSlot => {
                     slotWrapper.append(adSlot);
                 });
@@ -83,6 +64,7 @@ export const init = (start: () => void, stop: () => void): Promise<boolean> => {
                     })
                     .then(() => {
                         addSlot(asideSlots[0], false);
+                        return asideSlots[0];
                     });
             }
             if (config.get('page.isImmersive') && $immersiveEls.length > 0) {

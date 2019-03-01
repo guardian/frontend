@@ -24,13 +24,14 @@ const filterByAdvertId = (
 const getSlots = (contentType: string): Array<PrebidSlot> => {
     const isArticle = contentType === 'Article';
     const isCrossword = contentType === 'Crossword';
+    const hasShowcase = config.get('page.hasShowcaseMainElement', false);
     const hasExtendedMostPop =
         isArticle && config.get('switches.extendedMostPopular');
 
     const commonSlots: Array<PrebidSlot> = [
         {
             key: 'right',
-            sizes: [[300, 600], [300, 250]],
+            sizes: hasShowcase ? [[300, 250]] : [[300, 600], [300, 250]],
         },
         {
             key: 'inline1',

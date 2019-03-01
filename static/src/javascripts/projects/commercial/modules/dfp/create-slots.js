@@ -74,7 +74,18 @@ const adSlotDefinitions = {
     inline: inlineDefinition,
     mostpop: inlineDefinition,
     comments: inlineDefinition,
-    right: inlineDefinition,
+    'right-with-showcase': {
+        name: 'right',
+        sizeMappings: {
+            desktop: [
+                adSizes.outOfPage,
+                adSizes.empty,
+                adSizes.mpu,
+                adSizes.googleCard,
+                adSizes.fluid,
+            ],
+        },
+    },
     'top-above-nav': {
         sizeMappings: {
             mobile: [
