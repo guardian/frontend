@@ -1,12 +1,12 @@
 @(containerDefinition: layout.FaciaContainer, frontProperties: model.FrontProperties)(implicit requestHeader: RequestHeader)
-@import common.commercial.AdSlot.mostPopularSizes
-@import common.LinkTo
+
 @import conf.switches.Switches
-@import fragments.commercial.adSlot
+@import common.LinkTo
 @import model.MostPopular
+@import fragments.commercial.adSlot
+@import common.commercial.AdSlot.mostPopularSizes
 
-@defining("Most popular") { containerTitle =>
-
+@defining("Most viewed") { containerTitle =>
     <div class="fc-container__header js-container__header">
         @containerDefinition.displayName.map { title =>
             <div class="fc-container__header__title">
@@ -21,10 +21,38 @@
         }
     </div>
 
-@defining(Switches.ExtendedMostPopular.isSwitchedOn){ isExtended =>
-    <div
-    class="fc-container--rolled-up-hide @if(isExtended) {most-popular__container} else {fc-container__body popular-trails}">
-        <div class="@if(isExtended) {most-popular__content} else {popular-trails__content} js-popular-trails">
+    @if(Switches.ExtendedMostPopular.isSwitchedOn) {
+        <div class="fc-container--rolled-up-hide most-popular__container">
+            <div class="most-popular__content js-popular-trails">
+            @defining(Seq(
+                MostPopular(
+                    containerDefinition.displayName.getOrElse(containerTitle),
+                    containerTitle,
+                    containerDefinition.items.take(10)
+                ),
+                MostPopular(
+                    "Across the guardian",
+                    containerTitle,
+                    Nil
+                )
+            )) { popular =>
+                @fragments.collections.popular(popular, Some(containerDefinition), isFront = true)
+            }
+            </div>
+            <div class="most-popular__mpu">
+                <div>
+                @adSlot(
+                    "mostpop",
+                    Seq("container-inline"),
+                    mostPopularSizes(true),
+                    optId = None,
+                    optClassNames = None
+                ){ }
+                </div>
+            </div>
+        </div>
+    } else {
+        <div class="fc-container__body fc-container--rolled-up-hide js-popular-trails">
         @defining(Seq(
             MostPopular(
                 containerDefinition.displayName.getOrElse(containerTitle),
@@ -37,22 +65,8 @@
                 Nil
             )
         )) { popular =>
-            <div class="most-popular__content">
-                @fragments.collections.popular(popular, Some(containerDefinition))
-            </div>
+            @fragments.collections.popular(popular, Some(containerDefinition), isFront = true)
         }
-    </div>
-        <div class="@if(isExtended) {most-popular__mpu} else {popular-trails__mpu}">
-            <div class="@if(!isExtended) {fc-slice__popular-mpu fc-slice__item--mpu-candidate}">
-            @adSlot(
-                "mostpop",
-                Seq("container-inline"),
-                mostPopularSizes(isExtended),
-                optId = None,
-                optClassNames = None
-            ){ }
-            </div>
         </div>
-}
-</div>
+    }
 }

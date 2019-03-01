@@ -34,7 +34,10 @@ class MostPopularController(contentApiClient: ContentApiClient,
 
   def renderSectionFront(path: String): Action[AnyContent] = render(path, true)
 
+  lazy val mostCards = mostPopularAgent.mostSingleCards.get().mapValues(ContentCard.fromApiContent(_))
+
   def render(path: String, isSectionFront: Boolean = false): Action[AnyContent] = Action.async { implicit request =>
+    println("******* render " + isSectionFront)
     val edition = Edition(request)
 
     // Synchronous global popular, from the mostPopularAgent (stateful)
@@ -48,8 +51,6 @@ class MostPopularController(contentApiClient: ContentApiClient,
 
     // Async section specific most Popular.
     val sectionPopular: Future[List[MostPopular]] = if (path.nonEmpty) lookup(edition, path).map(_.toList) else Future(Nil)
-
-    lazy val mostCards = mostPopularAgent.mostSingleCards.get().mapValues(ContentCard.fromApiContent(_))
 
     // map is not on a list, but on a Future
     sectionPopular.map { sectionPopular =>
@@ -96,7 +97,14 @@ class MostPopularController(contentApiClient: ContentApiClient,
     } else {
       Cached(900) {
         JsonComponent(
-          "html" -> views.html.fragments.collections.popular(Seq(countryPopular)),
+          "html" -> {
+            if (Switches.ExtendedMostPopular.isSwitchedOn) {
+              views.html.fragments.collections.popularExtended(Seq(countryPopular), mostCards)
+            } else {
+              println("************** DO SOMETHING")
+              views.html.fragments.collections.popular(Seq(countryPopular))
+            }
+          },
           "rightHtml" -> views.html.fragments.rightMostPopularGeoGarnett(countryPopular, countryNames.get(countryCode), countryCode),
           "country" -> countryCode
         )

@@ -30,11 +30,16 @@ export class GeoMostPopularFront extends Component {
 
         this.isSectionFront = !this.isNetworkFront && hasSection;
 
-        if (this.isSectionFront) {
+        if (this.isSectionFront && config.get('switches.extendedMostPopular')) {
             this.endpoint = `/most-read/front/${pageSection}.json`;
         } else {
             this.endpoint = '/most-read-geo.json';
         }
+
+        console.log(
+            '**************',
+            config.get('switches.extendedMostPopular')
+        );
 
         this.isVideoFront = config.get('page.pageId') === 'video';
         this.isInternational = config.get('page.pageId') === 'international';
@@ -48,7 +53,8 @@ export class GeoMostPopularFront extends Component {
     parent: ?bonzo;
 
     prerender(): void {
-        if (!this.isSectionFront) {
+        if (!config.get('switches.extendedMostPopular')) {
+            console.log('************** DO SOMETHING');
             this.elem = qwery('.headline-list', this.elem)[0];
         }
     }
@@ -62,9 +68,13 @@ export class GeoMostPopularFront extends Component {
                 (this.isInternational && this.isNetworkFront) ||
                 this.isVideoFront
             ) {
+                console.log('************** HIDE 1');
                 // hide the tabs
                 hideTabs(this.parent);
-            } else if (this.isSectionFront) {
+            } else if (
+                this.isSectionFront &&
+                config.get('switches.extendedMostPopular')
+            ) {
                 this.parent.innerHTML = '';
                 this.fetch(this.parent, 'html');
             } else {
@@ -79,6 +89,7 @@ export class GeoMostPopularFront extends Component {
 
     ready(): void {
         if (this.isNetworkFront) {
+            console.log('************** HIDE 2');
             hideTabs(this.parent);
         }
         end('most-popular');
