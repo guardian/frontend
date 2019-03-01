@@ -57,6 +57,9 @@ export const refreshAdvert = (advert: Advert): void => {
                     advert.slot.defineSizeMapping([[[0, 0], [advert.size]]]);
                 }
             }
-            window.googletag.pubads().refresh([advert.slot]);
+            window.googletag
+                .pubads()
+                .setForceSafeFrame(true)
+                .refresh([advert.slot]);
         });
 };
