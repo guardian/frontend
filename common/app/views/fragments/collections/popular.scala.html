@@ -8,11 +8,12 @@
 @import views.support.MostPopular.{isAdFree, showMPU, tabsPaneCssClass}
 @import views.support.GetClasses
 @import model.Pillar.RichPillar
+@import conf.switches.Switches
 
 @defining(popular.size > 1){ isTabbed =>
     <div id="popular-trails" class="fc-slice fc-slice--popular" data-link-name="most popular Test" data-test-id="popular-in">
         @if(isTabbed) {
-            <div class="tabs tabs--mostpop u-cf @if(isAdFree(containerDefinition) && isFront){tabs--mostpop--without-mpu}">
+            <div class="tabs tabs--mostpop u-cf @if(isAdFree(containerDefinition) && isFront && Switches.ExtendedMostPopular.isSwitchedOff){tabs--mostpop--without-mpu}">
                 <ol class="tabs__container js-tabs" id="js-popular-tabs" role="tablist">
                     @popular.zipWithRowInfo.map{ case (section, info) =>
                     <li class="tabs__tab@if(info.isFirst){ tabs__tab--selected tone-colour tone-accent-border}" role="tab" id="tabs-popular-@info.rowNum-tab"@if(info.isFirst){ aria-selected="true"} aria-controls="tabs-popular-@info.rowNum">
@@ -54,7 +55,7 @@
                 </ul>
             </div>
         }
-        @if(showMPU(containerDefinition) && isFront) {
+        @if(showMPU(containerDefinition) && isFront && Switches.ExtendedMostPopular.isSwitchedOff) {
             <div class="fc-slice__popular-mpu fc-slice__item--mpu-candidate">
             </div>
         }
