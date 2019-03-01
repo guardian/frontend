@@ -123,7 +123,6 @@ export const februaryMomentBannerNonUkRoundTwo: AcquisitionsABTest = {
                     userCohortParam.onlyNonSupporters
                 ),
         },
-        openVariant,
         differentVariant,
     ],
 };
