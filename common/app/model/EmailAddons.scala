@@ -443,5 +443,7 @@ object EmailAddons {
     lazy val address = email flatMap (_.address) getOrElse defaultAddress
 
     lazy val bodyClass = email map (_.name.toLowerCase().replace(' ', '-'))
+
+    lazy val analyticsComponentId = email map (_.name.toLowerCase().replace(' ', '_')) getOrElse "article"
   }
 }
