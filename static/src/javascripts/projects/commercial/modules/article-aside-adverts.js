@@ -1,4 +1,4 @@
-// @flow
+// @flow strict
 import $ from 'lib/$';
 import config from 'lib/config';
 import mediator from 'lib/mediator';
@@ -36,7 +36,7 @@ export const init = (start: () => void, stop: () => void): Promise<boolean> => {
     const $immersiveEls: bonzo = $('.element--immersive', $mainCol);
 
     // article aside ads are added server-side UNLESS the page has a ShowcaseMainElement!
-    if (!$mainCol.length || !$col.length || $col.css('display') === 'none') {
+    if (!$col.length || $col.css('display') === 'none') {
         stop();
         return Promise.resolve(false);
     }
@@ -92,7 +92,7 @@ export const init = (start: () => void, stop: () => void): Promise<boolean> => {
             }
             return $adSlot[0];
         })
-        .then((adSlot: ?Element) => {
+        .then((adSlot: Element) => {
             stop();
             // this is only used for testing...
             mediator.emit('page:defaultcommercial:right', adSlot);
