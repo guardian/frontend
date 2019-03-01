@@ -81,7 +81,9 @@
 
                     <div class="content__secondary-column js-secondary-column" aria-hidden="true">
 
-                        @fragments.articleAsideSlot(shouldShowAds(model), articleAsideOptionalSizes)
+                        @if(!article.elements.hasShowcaseMainElement) {
+                            @fragments.articleAsideSlot(shouldShowAds(model), articleAsideOptionalSizes)
+                        }
 
                         @if(!isPaidContent){
                         <div class="js-components-container"></div>

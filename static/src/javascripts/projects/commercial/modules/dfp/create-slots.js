@@ -74,6 +74,7 @@ const adSlotDefinitions = {
     inline: inlineDefinition,
     mostpop: inlineDefinition,
     comments: inlineDefinition,
+    right: inlineDefinition,
     'top-above-nav': {
         sizeMappings: {
             mobile: [
