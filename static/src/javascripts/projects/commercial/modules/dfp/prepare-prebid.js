@@ -7,7 +7,7 @@ import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import once from 'lodash/once';
 import prebid from 'commercial/modules/prebid/prebid';
 
-const isGoogleWebPreview: () => boolean = () =>
+const isGoogleProxy: () => boolean = () =>
     !!(
         navigator &&
         navigator.userAgent &&
@@ -15,7 +15,7 @@ const isGoogleWebPreview: () => boolean = () =>
             navigator.userAgent.indexOf('googleweblight') > -1)
     );
 
-if (!isGoogleWebPreview()) {
+if (!isGoogleProxy()) {
     import(/* webpackMode: "eager" */ 'prebid.js/build/dist/prebid');
 }
 
@@ -25,7 +25,7 @@ const setupPrebid: () => Promise<void> = () => {
         commercialFeatures.dfpAdvertising &&
         !commercialFeatures.adFree &&
         !config.page.hasPageSkin &&
-        !isGoogleWebPreview()
+        !isGoogleProxy()
     ) {
         buildPageTargeting();
         prebid.initialise(window);
@@ -42,6 +42,6 @@ export const init = (start: () => void, stop: () => void): Promise<void> => {
 };
 
 export const _ = {
-    isGoogleWebPreview,
+    isGoogleProxy,
     setupPrebid,
 };
