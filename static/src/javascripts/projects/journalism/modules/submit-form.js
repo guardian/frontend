@@ -51,7 +51,10 @@ const readFile = (file, cForm) =>
         reader.addEventListener(
             'load',
             () => {
-                const fileAsBase64 = reader.result.toString();
+                const fileAsBase64 = reader.result
+                    .toString()
+                    .split(';base64,')[1];
+                // remove data:*/*;base64, from the start of the base64 string
                 res(fileAsBase64);
             },
             false
