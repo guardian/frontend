@@ -80,7 +80,7 @@
 .element-rich-link {
     float: left;
     margin: 5px $gs-gutter $gs-baseline 0;
-    clear: both;
+    clear: left;
 
     @include mq($until: mobileLandscape) {
         width: $gs-gutter * 6.5;
