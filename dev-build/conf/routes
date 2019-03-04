@@ -2,13 +2,10 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-# FONT LOADER
-GET            /fontLoader                                                                                                       controllers.FontLoaderController.renderFontLoader()  
-
 GET            /commercial/test-page                                                                                             commercial.controllers.CreativeTestPage.allComponents(k: List[String])
 
 # FONT LOADER
-GET            /font-loader                                                                                                       controllers.FontLoaderController.renderFontLoader()
+GET            /font-loader                                                                                                      controllers.FontLoaderController.renderFontLoader()
 
 # Reader Revenue
 GET            /reader-revenue                                                                                                   controllers.admin.ReaderRevenueAdminController.renderReaderRevenueMenu()

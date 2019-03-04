@@ -20,7 +20,7 @@ do you have fonts in localStorage?
     // Determine whether we need to deliver hinted fonts.
     const shouldHint = (() => {
         const windowsNT = /Windows NT (\d\.\d+)/.exec(ua);
-        
+
         try { // belt and braces
             if (windowsNT) {
                 const version = parseFloat(windowsNT[1], 10);
@@ -41,6 +41,10 @@ do you have fonts in localStorage?
     function loadFontsFromStorage() {
         try { // localStorage can fail for many reasons
             if ("localStorage" in window) {
+                // list of fonts to post to parent if page is in iframe
+                const fontsToPost = [];
+                let fontsToLoadCount;
+
                 const fontStorageKey = (fontName, fontHash = '') => `gu.fonts.${fontName}.${fontHash}`;
 
                 // detect which font format (ttf, woff, woff2 etc) we want
@@ -95,8 +99,21 @@ do you have fonts in localStorage?
                 })();
 
                 // use whatever font CSS we've now got
-                function useFont(el, css) {
+                function useFont(el, css, fontName) {
                     el.innerHTML = css;
+
+                    fontsToPost.push({
+                        fontName: fontName,
+                        css: css
+                    });
+
+                    // if all the fonts have loaded and we're in an iframe post them to the parent
+                    if (fontsToPost.length === fontsToLoadCount && (window.location !== window.parent.location)) {
+                        window.parent.postMessage({
+                            name:"guardianFonts",
+                            fonts: fontsToPost
+                        }, "*");
+                    }
                 }
 
                 // download font as json to store/use etc
@@ -112,7 +129,7 @@ do you have fonts in localStorage?
                     xhr.onreadystatechange = () => {
                         if (xhr.readyState === 4 && xhr.status === 200) {
                             const css = eval(xhr.responseText);
-                            useFont(el, css);
+                            useFont(el, css, fontName);
                             saveFont(fontName, fontHash, css);
                         }
                     };
@@ -135,6 +152,9 @@ do you have fonts in localStorage?
                 // the target for each font and holders of all the necessary metadata
                 // are some style elements in the head, all identified by a .webfont class
                 const fonts = document.querySelectorAll('.webfont');
+
+                fontsToLoadCount = fonts.length;
+
                 const urlAttribute = shouldHint ? `data-cache-file-hinted-${fontFormat}` : `data-cache-file-${fontFormat}`;
 
                 for (let i = 0, j = fonts.length; i < j; ++i) {
@@ -146,7 +166,7 @@ do you have fonts in localStorage?
                     const fontData = localStorage.getItem(fontStorageKey(fontName, fontHash));
 
                     if (fontData) {
-                        useFont(font, JSON.parse(fontData).value);
+                        useFont(font, JSON.parse(fontData).value, fontName);
                     } else {
                         fetchFont(fontURL, font, fontName, fontHash);
                     }
@@ -169,7 +189,7 @@ do you have fonts in localStorage?
             fonts.rel = 'stylesheet';
             fonts.className = 'webfonts';
             fonts.href = window.guardian.config.stylesheets.fonts[shouldHint ? 'hintingAuto' : 'hintingOff'].kerningOn;
-            
+
             window.setTimeout(function () {
                 thisScript.parentNode.insertBefore(fonts, thisScript);
             });
