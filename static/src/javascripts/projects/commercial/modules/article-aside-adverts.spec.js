@@ -40,7 +40,7 @@ describe('Standard Article Aside Adverts', () => {
     const domSnippet = `
         <div class="js-content-main-column"></div>
         <div class="content__secondary-column js-secondary-column">
-            <div class="aside-slot-container">
+            <div class="aside-slot-container js-aside-slot-container">
                 <div id="dfp-ad--right" class="js-ad-slot ad-slot ad-slot--right ad-slot--mpu-banner-ad js-sticky-mpu ad-slot--rendered" data-link-name="ad slot right" data-name="right" data-mobile="1,1|2,2|300,250|300,274|300,600|fluid"></div>
             </div>
         </div>
@@ -86,7 +86,7 @@ describe('Immersive Article Aside Adverts', () => {
             <figure class="element element--immersive"></figure>
         </div>
         <div class="content__secondary-column js-secondary-column">
-            <div class="aside-slot-container">
+            <div class="aside-slot-container js-aside-slot-container">
                 <div id="dfp-ad--right" class="js-ad-slot ad-slot ad-slot--right ad-slot--mpu-banner-ad js-sticky-mpu ad-slot--rendered" data-link-name="ad slot right" data-name="right" data-mobile="1,1|2,2|300,250|300,274|300,600|fluid"></div>
             </div>
         </div>
@@ -141,7 +141,7 @@ describe('Immersive Article (no immersive elements) Aside Adverts', () => {
     const domSnippet = `
         <div class="js-content-main-column"></div>
         <div class="content__secondary-column js-secondary-column">
-            <div class="aside-slot-container">
+            <div class="aside-slot-container js-aside-slot-container">
                 <div id="dfp-ad--right" class="js-ad-slot ad-slot ad-slot--right ad-slot--mpu-banner-ad js-sticky-mpu ad-slot--rendered" data-link-name="ad slot right" data-name="right" data-mobile="1,1|2,2|300,250|300,274|300,600|fluid"></div>
             </div>
         </div>
@@ -168,26 +168,11 @@ describe('Showcase Article Aside Adverts', () => {
     const domSnippet = `
         <div class="js-content-main-column"></div>
         <div class="content__secondary-column js-secondary-column">
+            <div class="aside-slot-container js-aside-slot-container"></div>
         </div>
     `;
     beforeEach(sharedBeforeEach(domSnippet));
     afterEach(sharedAfterEach);
-
-    it('should create and insert the aside-slot-container', done => {
-        fastdomReadSpy.mockReturnValue(Promise.resolve([900000, 0]));
-        fakeConfig.page.hasShowcaseMainElement = true;
-
-        fakeMediator.once('page:defaultcommercial:right', () => {
-            // $FlowFixMe ...the test assumes that this element will exist
-            const adSlotWrapper: HTMLElement = document.querySelector(
-                '.js-aside-slot-container'
-            );
-            expect(adSlotWrapper.classList).toContain('aside-slot-container');
-            expect(adSlotWrapper.getAttribute('aria-hidden')).toBe('true');
-            done();
-        });
-        init(noop, noop);
-    });
 
     it('should create an adslot with the correct size mappings and classes', done => {
         fastdomReadSpy.mockReturnValue(Promise.resolve([900000, 0]));
