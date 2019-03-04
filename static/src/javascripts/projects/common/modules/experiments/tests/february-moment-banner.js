@@ -42,50 +42,9 @@ const bannerShownCallback = () => {
     }
 };
 
-const openVariant: Variant = {
-    id: 'open',
-    test: (): void => {}, // banner tests look at the bucket and vary the copy themselves
-    engagementBannerParams: {
-        leadSentence: defaultBold,
-        messageText: defaultCopy,
-        // buttonCaption?: string, TO be decided with non engineers
-        template: acquisitionsBannerFivTemplate,
-        bannerModifierClass: 'fiv-banner',
-        minArticlesBeforeShowingBanner,
-        userCohort: userCohortParam.onlyNonSupporters,
-        titles: ['Open journalism is a choice', 'Will you support it?'],
-        bannerShownCallback,
-    },
-    canRun: () =>
-        canShowBannerSync(
-            minArticlesBeforeShowingBanner,
-            userCohortParam.onlyNonSupporters
-        ),
-};
 
-const differentVariant: Variant = {
-    id: 'different',
-    test: (): void => {}, // banner tests look at the bucket and vary the copy themselves
-    engagementBannerParams: {
-        leadSentence: defaultBold,
-        messageText: defaultCopy,
-        // buttonCaption?: string, TO be decided with non engineers
-        template: acquisitionsBannerFivTemplate,
-        bannerModifierClass: 'fiv-banner',
-        minArticlesBeforeShowingBanner,
-        userCohort: userCohortParam.onlyNonSupporters,
-        titles: ['We chose a different approach', 'Will you support it?'],
-        bannerShownCallback,
-    },
-    canRun: () =>
-        canShowBannerSync(
-            minArticlesBeforeShowingBanner,
-            userCohortParam.onlyNonSupporters
-        ),
-};
-
-export const februaryMomentBannerNonUkRoundTwo: AcquisitionsABTest = {
-    id: 'FebruaryMomentBannerNonUkRoundTwo',
+export const februaryMomentBannerColour: AcquisitionsABTest = {
+    id: 'FebruaryMomentBannerColour',
     start: '2019-01-01',
     expiry: '2019-09-30',
     author: 'Jonathan Rankin',
@@ -95,7 +54,7 @@ export const februaryMomentBannerNonUkRoundTwo: AcquisitionsABTest = {
     successMeasure: 'AV per impression',
     audienceCriteria: 'All',
     idealOutcome: 'best AV possible',
-    canRun: () => getSync() !== 'GB',
+    canRun: () => true,
     showForSensitive: true,
     campaignId,
     componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
@@ -111,10 +70,7 @@ export const februaryMomentBannerNonUkRoundTwo: AcquisitionsABTest = {
                 bannerModifierClass: 'fiv-banner',
                 minArticlesBeforeShowingBanner,
                 userCohort: userCohortParam.onlyNonSupporters,
-                titles: [
-                    "Free for those who can't afford it",
-                    'Supported by those who can',
-                ],
+                titles: ['We chose a different approach', 'Will you support it?'],
                 bannerShownCallback,
             },
             canRun: () =>
@@ -123,40 +79,18 @@ export const februaryMomentBannerNonUkRoundTwo: AcquisitionsABTest = {
                     userCohortParam.onlyNonSupporters
                 ),
         },
-        differentVariant,
-    ],
-};
-
-export const februaryMomentBannerUkRoundTwo: AcquisitionsABTest = {
-    id: 'FebruaryMomentBannerUkRoundTwo',
-    start: '2019-01-01',
-    expiry: '2019-09-30',
-    author: 'Jonathan Rankin',
-    description: 'enable engagement banner in UK for the feb moment',
-    audience: 1,
-    audienceOffset: 0,
-    successMeasure: 'AV per impression',
-    audienceCriteria: 'All',
-    idealOutcome: 'best AV possible',
-    canRun: () => getSync() === 'GB',
-    showForSensitive: true,
-    campaignId,
-    componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
-    variants: [
         {
-            id: 'control',
+            id: 'blue',
             test: (): void => {}, // banner tests look at the bucket and vary the copy themselves
             engagementBannerParams: {
                 leadSentence: defaultBold,
                 messageText: defaultCopy,
+                // buttonCaption?: string, TO be decided with non engineers
                 template: acquisitionsBannerFivTemplate,
-                bannerModifierClass: 'fiv-banner',
+                bannerModifierClass: 'fiv-banner fiv-banner--blue',
                 minArticlesBeforeShowingBanner,
                 userCohort: userCohortParam.onlyNonSupporters,
-                titles: [
-                    "We're available for everyone",
-                    'Funded by our\xa0readers',
-                ],
+                titles: ['We chose a different approach', 'Will you support it?'],
                 bannerShownCallback,
             },
             canRun: () =>
@@ -165,8 +99,26 @@ export const februaryMomentBannerUkRoundTwo: AcquisitionsABTest = {
                     userCohortParam.onlyNonSupporters
                 ),
         },
-        openVariant,
-        differentVariant,
+        {
+            id: 'yellow',
+            test: (): void => {}, // banner tests look at the bucket and vary the copy themselves
+            engagementBannerParams: {
+                leadSentence: defaultBold,
+                messageText: defaultCopy,
+                // buttonCaption?: string, TO be decided with non engineers
+                template: acquisitionsBannerFivTemplate,
+                bannerModifierClass: 'fiv-banner fiv-banner--yellow',
+                minArticlesBeforeShowingBanner,
+                userCohort: userCohortParam.onlyNonSupporters,
+                titles: ['We chose a different approach', 'Will you support it?'],
+                bannerShownCallback,
+            },
+            canRun: () =>
+                canShowBannerSync(
+                    minArticlesBeforeShowingBanner,
+                    userCohortParam.onlyNonSupporters
+                ),
+        },
     ],
 };
 
