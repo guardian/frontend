@@ -381,6 +381,11 @@
         }
     }
 
+    &.form_input--twitter-handle {
+        position: absolute;
+        left: -600px;
+    }
+
     textarea {
         max-width: 100%;
         min-height: 80px;
