@@ -39,10 +39,10 @@ object Logo {
 
 case class Guardian(
   `@type`: String = "Organization",
-  `@context`: String = "http://schema.org",
+  `@context`: String = "https://schema.org",
   `@id`: String = "https://www.theguardian.com#publisher",
   name: String = "The Guardian",
-  url: String = "http://www.theguardian.com/",
+  url: String = "https://www.theguardian.com/",
   logo: Logo = Logo(),
   sameAs: List[String] = List(
     "https://www.facebook.com/theguardian",
@@ -58,7 +58,7 @@ object Guardian {
 // https://developers.google.com/app-indexing/webmasters/server#schemaorg-markup-for-viewaction
 case class WebPage(
   `@type`: String = "WebPage",
-  `@context`: String = "http://schema.org",
+  `@context`: String = "https://schema.org",
 
   `@id`: String,
   potentialAction: PotentialAction
@@ -78,7 +78,7 @@ object PotentialAction {
 }
 
 case class ItemList(
-  `@context`: String = "http://schema.org",
+  `@context`: String = "https://schema.org",
   `@type`: String = "ItemList",
   url: String,
   itemListElement: Seq[ListItem]
@@ -121,7 +121,7 @@ object IsPartOf {
 
 case class NewsArticle(
   `@type`: String = "NewsArticle",
-  `@context`: String = "http://schema.org",
+  `@context`: String = "https://schema.org",
   `@id`: String,
   publisher: Guardian = Guardian(),
   isAccessibleForFree: Boolean = true,
