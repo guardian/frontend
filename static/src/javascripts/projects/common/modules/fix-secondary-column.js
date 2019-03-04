@@ -1,17 +1,15 @@
-// @flow
+// @flow strict
 
 import fastdom from 'lib/fastdom-promise';
 
-type Dim = {
+type Rect = {
     top: number,
-    left: number,
     height: number,
-    width: number,
 };
 
-const calcShowcaseOffset = (showcaseDim: Dim, maincolDim: Dim): number => {
-    const headlineHeight = showcaseDim.top - maincolDim.top;
-    const showcaseHeight = showcaseDim.height;
+const calcShowcaseOffset = (showcaseRect: Rect, mainColRect: Rect): number => {
+    const headlineHeight = showcaseRect.top - mainColRect.top;
+    const showcaseHeight = showcaseRect.height;
     return headlineHeight + showcaseHeight;
 };
 
@@ -36,3 +34,5 @@ export const fixSecondaryColumn = (): void => {
             })
         );
 };
+
+export const _ = { calcShowcaseOffset };
