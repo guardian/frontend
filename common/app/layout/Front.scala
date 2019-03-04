@@ -373,13 +373,13 @@ object Front extends implicits.Collections {
 
   def makeLinkedData(url: String, collections: Seq[FaciaContainer])(implicit request: RequestHeader): ItemList = {
     ItemList(
-      LinkTo(url),
-      collections.zipWithIndex.map {
+      url = LinkTo(url),
+      itemListElement = collections.zipWithIndex.map {
         case (collection, index) =>
           ListItem(position = index, item = Some(
             ItemList(
-              LinkTo(url), // don't have a uri for each container
-              collection.items.zipWithIndex.map {
+              url = LinkTo(url), // don't have a uri for each container
+              itemListElement = collection.items.zipWithIndex.map {
                 case (item, i) =>
                   ListItem(position = i, url = Some(LinkTo(item.header.url)))
               }

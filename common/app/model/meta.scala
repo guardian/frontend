@@ -314,7 +314,7 @@ final case class MetaData (
 
   def linkedData: List[LinkedData] = List(
     Guardian()) ++ iosType.map(_ => List(
-    WebPage(webUrl, PotentialAction(target = "android-app://com.guardian/" + webUrl.replace("://", "/")))
+    WebPage(`@id` = webUrl, potentialAction = PotentialAction(target = "android-app://com.guardian/" + webUrl.replace("://", "/")))
   )).getOrElse(Nil)
 
   def iosId(referrer: String): Option[String] = iosType.map(iosType => s"$id?contenttype=$iosType&source=$referrer")

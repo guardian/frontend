@@ -117,6 +117,12 @@ object Video700 extends VideoProfile(width = Some(700))
 object Video1280 extends VideoProfile(width = Some(1280))
 object GoogleStructuredData extends ImageProfile(width = Some(300), height = Some(300)) // 1:1
 
+// Used for AMP image structured data - see
+// https://developers.google.com/search/docs/data-types/article#article_types
+// and the image advice.
+object OneByOne extends ImageProfile(width = Some(1200), height = Some(1200))
+object FourByThree extends ImageProfile(width = Some(1200), height = Some(900))
+
 class ShareImage(overlayUrlParam: String, shouldIncludeOverlay: Boolean) extends ImageProfile(width = Some(1200)) {
   override val heightParam = "height=630"
   override val fitParam = "fit=crop"

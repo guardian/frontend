@@ -12,14 +12,14 @@ import conf.switches.Switches
 import controllers.ArticlePage
 import model.SubMetaLinks
 import model.dotcomrendering.pageElements.{DisclaimerBlockElement, PageElement}
-import model.meta.{Guardian, LinkedData, PotentialAction}
+import model.meta._
 import navigation.NavMenu
 import navigation.ReaderRevenueSite.{Support, SupportContribute, SupportSubscribe}
 import navigation.UrlHelpers._
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
 import views.html.fragments.affiliateLinksDisclaimer
-import views.support.{AffiliateLinksCleaner, CamelCase, GUDateTimeFormat, ImgSrc, Item1200} // Note, required despite Intellij saying otherwise
+import views.support.{AffiliateLinksCleaner, CamelCase, FourByThree, GUDateTimeFormat, ImgSrc, Item1200, OneByOne} // Note, required despite Intellij saying otherwise
 
 // We have introduced our own set of objects for serializing data to the DotComponents API,
 // because we don't want people changing the core frontend models and as a side effect,
@@ -61,56 +61,6 @@ case class ReaderRevenueLinks(
   ampFooter: ReaderRevenueLink
 )
 
-case class IsPartOf(
-  `@type`: List[String] = List("CreativeWork", "Product"),
-  name: String = "The Guardian",
-  productID: String = "theguardian.com:basic"
-)
-
-object IsPartOf {
-  implicit val formats: OFormat[IsPartOf] = Json.format[IsPartOf]
-}
-
-case class NewsArticle(
-  override val `@type`: String,
-  override val `@context`: String,
-  `@id`: String,
-  potentialAction: PotentialAction,
-  publisher: Guardian = Guardian(),
-  isAccessibleForFree: Boolean = true,
-  isPartOf: IsPartOf = IsPartOf(),
-  image: Seq[String],
-  author: String,
-  datePublished: String,
-  headline: String,
-  dateModified: String,
-) extends LinkedData(`@type`, `@context`)
-
-object NewsArticle {
-  def apply(
-   `@id`: String,
-    images: Seq[String],
-    author: String,
-    datePublished: String,
-    headline: String,
-    dateModified: String,
- ): NewsArticle = NewsArticle(
-    "NewsArticle",
-    "http://schema.org",
-    `@id`,
-    PotentialAction(
-      target = s"android-app://com.guardian/${`@id`.replace("://", "/")}"
-    ),
-    image = images,
-    author = author,
-    headline = headline,
-    datePublished = datePublished,
-    dateModified = dateModified,
-  )
-
-  implicit val formats: OFormat[NewsArticle] = Json.format[NewsArticle]
-}
-
 case class PageData(
     author: String,
     pageId: String,
@@ -139,7 +89,7 @@ case class PageData(
     sentryHost: String,
     sentryPublicApiKey: String,
     switches: Map[String,Boolean],
-    linkedData: NewsArticle,
+    linkedData: List[LinkedData],
     subscribeWithGoogleApiUrl: String,
 
     // AMP specific
@@ -151,6 +101,7 @@ case class PageData(
     isCommentable: Boolean,
     commercialProperties: Option[CommercialProperties],
     starRating: Option[Int],
+    trailText: String,
 )
 
 case class Config(
@@ -293,7 +244,7 @@ object DotcomponentsDataModel {
 
     // See https://developers.google.com/search/docs/data-types/article (and the AMP info too)
     // For example, we need to provide an image of at least 1200px width to be valid here
-    val linkedData = {
+    val linkedData: List[LinkedData] = {
       val mainImageURL = {
         val main = for {
           elem <- article.trail.trailPicture
@@ -304,13 +255,31 @@ object DotcomponentsDataModel {
         main.getOrElse(Configuration.images.fallbackLogo)
       }
 
-      NewsArticle(
-        `@id` = article.metadata.webUrl,
-        images = Seq(ImgSrc(mainImageURL, Item1200)),
-        author = article.tags.contributors.mkString(", "),
-        datePublished = article.trail.webPublicationDate.toString(),
-        dateModified = article.fields.lastModified.toString(),
-        headline = article.trail.headline,
+      val authors = article.tags.contributors.map(contributor => {
+        Person(
+          name = contributor.name,
+          sameAs = contributor.metadata.webUrl,
+        )
+      })
+
+      List(
+        NewsArticle(
+          `@id` = Configuration.amp.baseUrl + article.metadata.id,
+          images = Seq(
+            ImgSrc(mainImageURL, OneByOne),
+            ImgSrc(mainImageURL, FourByThree),
+            ImgSrc(mainImageURL, Item1200),
+          ),
+          author = authors,
+          datePublished = article.trail.webPublicationDate.toString(),
+          dateModified = article.fields.lastModified.toString(),
+          headline = article.trail.headline,
+          mainEntityOfPage = article.metadata.webUrl,
+        ),
+        WebPage(
+          `@id` = article.metadata.webUrl,
+          potentialAction = PotentialAction(target = "android-app://com.guardian/" + article.metadata.webUrl.replace("://", "/"))
+        )
       )
     }
 
@@ -342,7 +311,7 @@ object DotcomponentsDataModel {
       Configuration.rendering.sentryHost,
       Configuration.rendering.sentryPublicApiKey,
       switches,
-      linkedData,
+      linkedData = linkedData,
       Configuration.google.subscribeWithGoogleApiUrl,
       guardianBaseURL = Configuration.site.host,
       webURL = article.metadata.webUrl,
@@ -350,8 +319,9 @@ object DotcomponentsDataModel {
       hasStoryPackage = articlePage.related.hasStoryPackage,
       hasRelated = article.content.showInRelated,
       isCommentable = article.trail.isCommentable,
-      article.metadata.commercial,
-      article.content.starRating
+      commercialProperties = article.metadata.commercial,
+      starRating = article.content.starRating,
+      trailText = article.trail.fields.trailText.getOrElse("")
     )
 
     val tags = article.tags.tags.map(
