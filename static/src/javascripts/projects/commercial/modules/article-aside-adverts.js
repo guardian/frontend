@@ -4,8 +4,6 @@ import config from 'lib/config';
 import mediator from 'lib/mediator';
 import fastdom from 'lib/fastdom-promise';
 import { bonzo } from 'bonzo';
-import { createSlots } from 'commercial/modules/dfp/create-slots';
-import { addSlot } from 'commercial/modules/dfp/add-slot';
 
 const minArticleHeight: number = 1300;
 
@@ -19,13 +17,6 @@ const getAllowedSizesForImmersive = (availableSpace: number): string => {
         return '1,1|2,2|300,250';
     }
     return '1,1|2,2';
-};
-
-const createSlotWrapper = (): Element => {
-    const adSlotWrapper = document.createElement('div');
-    adSlotWrapper.className = 'aside-slot-container js-aside-slot-container';
-    adSlotWrapper.setAttribute('aria-hidden', 'true');
-    return adSlotWrapper;
 };
 
 export const init = (start: () => void, stop: () => void): Promise<boolean> => {
@@ -50,24 +41,9 @@ export const init = (start: () => void, stop: () => void): Promise<boolean> => {
             ]
         )
         .then(([mainColHeight, immersiveOffset]: [number, number]) => {
-            // article aside ads are added server-side UNLESS the page has a ShowcaseMainElement!
+            // we do all the adjustments server-side if the page has a ShowcaseMainElement!
             if (config.get('page.hasShowcaseMainElement', false)) {
-                const slotWrapper = createSlotWrapper();
-                const asideSlots = createSlots('right-with-showcase', {
-                    classes: 'mpu-banner-ad',
-                });
-
-                asideSlots.forEach(adSlot => {
-                    slotWrapper.append(adSlot);
-                });
-                return fastdom
-                    .write(() => {
-                        $col.prepend(slotWrapper);
-                    })
-                    .then(() => {
-                        addSlot(asideSlots[0], true);
-                        return asideSlots[0];
-                    });
+                return $adSlot[0];
             }
             // immersive articles may have an image that overlaps the aside ad so we need to remove
             // the sticky behaviour and conditionally adjust the slot size depending on how far down
