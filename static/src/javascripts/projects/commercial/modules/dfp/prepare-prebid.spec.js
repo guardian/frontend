@@ -6,7 +6,7 @@ import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { _ } from './prepare-prebid';
 
-const { isGoogleWebPreview, setupPrebid } = _;
+const { isGoogleProxy, setupPrebid } = _;
 
 jest.mock('common/modules/commercial/commercial-features', () => ({
     commercialFeatures: {},
@@ -104,21 +104,21 @@ describe('init', () => {
     });
 
     it('isGoogleWebPreview should return false with no navigator or useragent', () => {
-        expect(isGoogleWebPreview()).toBe(false);
+        expect(isGoogleProxy()).toBe(false);
     });
 
     it('isGoogleWebPreview should return false with no navigator or useragent', () => {
         fakeUserAgent('Firefox');
-        expect(isGoogleWebPreview()).toBe(false);
+        expect(isGoogleProxy()).toBe(false);
     });
 
     it('isGoogleWebPreview should return true with Google Web Preview useragent', () => {
         fakeUserAgent('Google Web Preview');
-        expect(isGoogleWebPreview()).toBe(true);
+        expect(isGoogleProxy()).toBe(true);
     });
 
     it('isGoogleWebPreview should return true with Google Web Preview useragent', () => {
         fakeUserAgent('googleweblight');
-        expect(isGoogleWebPreview()).toBe(true);
+        expect(isGoogleProxy()).toBe(true);
     });
 });
