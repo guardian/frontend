@@ -9,7 +9,8 @@ import { addSlot } from 'commercial/modules/dfp/add-slot';
 
 const minArticleHeight: number = 1300;
 
-const calculateImmersiveSizes = (availableSpace: number): string => {
+const getAllowedSizesForImmersive = (availableSpace: number): string => {
+    // filter ad slot sizes based on the available height
     if (availableSpace > 600) {
         return '1,1|2,2|300,250|300,274|300,600|fluid';
     } else if (availableSpace > 274) {
@@ -31,15 +32,15 @@ export const init = (start: () => void, stop: () => void): Promise<boolean> => {
     start();
 
     const $col: bonzo = $('.js-secondary-column');
-    const $mainCol: bonzo = $('.js-content-main-column');
-    const $adSlot: bonzo = $('.js-ad-slot', $col);
-    const $immersiveEls: bonzo = $('.element--immersive', $mainCol);
 
-    // article aside ads are added server-side UNLESS the page has a ShowcaseMainElement!
     if (!$col.length || $col.css('display') === 'none') {
         stop();
         return Promise.resolve(false);
     }
+
+    const $mainCol: bonzo = $('.js-content-main-column');
+    const $adSlot: bonzo = $('.js-ad-slot', $col);
+    const $immersiveEls: bonzo = $('.element--immersive', $mainCol);
 
     return fastdom
         .read(
@@ -49,6 +50,7 @@ export const init = (start: () => void, stop: () => void): Promise<boolean> => {
             ]
         )
         .then(([mainColHeight, immersiveOffset]: [number, number]) => {
+            // article aside ads are added server-side UNLESS the page has a ShowcaseMainElement!
             if (config.get('page.hasShowcaseMainElement', false)) {
                 const slotWrapper = createSlotWrapper();
                 const asideSlots = createSlots('right-with-showcase', {
@@ -63,24 +65,26 @@ export const init = (start: () => void, stop: () => void): Promise<boolean> => {
                         $col.prepend(slotWrapper);
                     })
                     .then(() => {
-                        addSlot(asideSlots[0], false);
+                        addSlot(asideSlots[0], true);
                         return asideSlots[0];
                     });
             }
+            // immersive articles may have an image that overlaps the aside ad so we need to remove
+            // the sticky behaviour and conditionally adjust the slot size depending on how far down
+            // the page the first immersive image appears.
             if (config.get('page.isImmersive') && $immersiveEls.length > 0) {
-                // filter ad slot sizes based on the available height
                 return fastdom.write(() => {
                     $adSlot.removeClass('right-sticky js-sticky-mpu is-sticky');
                     $adSlot[0].setAttribute(
                         'data-mobile',
-                        calculateImmersiveSizes(immersiveOffset)
+                        getAllowedSizesForImmersive(immersiveOffset)
                     );
                     return $adSlot[0];
                 });
-                // remove sticky
             }
+            // most articles are long enough to fit a DMPU. However, the occasional shorter article
+            // will need the slot sizes to be adjusted, and the sticky behaviour removed.
             if (mainColHeight < minArticleHeight) {
-                // Should switch to 'right-small' MPU for short articles
                 return fastdom.write(() => {
                     $adSlot.removeClass('right-sticky js-sticky-mpu is-sticky');
                     $adSlot[0].setAttribute(
@@ -94,7 +98,6 @@ export const init = (start: () => void, stop: () => void): Promise<boolean> => {
         })
         .then((adSlot: Element) => {
             stop();
-            // this is only used for testing...
             mediator.emit('page:defaultcommercial:right', adSlot);
             return true;
         });
