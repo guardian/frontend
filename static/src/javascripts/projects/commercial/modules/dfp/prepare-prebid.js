@@ -1,5 +1,6 @@
 // @flow
 
+import config from 'lib/config';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { buildPageTargeting } from 'common/modules/commercial/build-page-targeting';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
@@ -23,6 +24,7 @@ const setupPrebid: () => Promise<void> = () => {
         dfpEnv.externalDemand === 'prebid' &&
         commercialFeatures.dfpAdvertising &&
         !commercialFeatures.adFree &&
+        !config.page.hasPageSkin &&
         !isGoogleWebPreview()
     ) {
         buildPageTargeting();

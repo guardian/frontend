@@ -456,5 +456,3 @@ GET     /*path/email.emailjson                                                  
 GET     /*path/email.emailtxt                                                                                                    controllers.ArticleController.renderEmail(path)
 GET     /*path                                                                                                                   controllers.ArticleController.renderArticle(path)
 
-# Formstack form submission
-POST      /formstack-campaign/submit                                                                                             controllers.CampaignsController.formSubmit()
