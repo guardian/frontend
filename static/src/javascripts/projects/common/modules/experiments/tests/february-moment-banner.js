@@ -1,6 +1,5 @@
 // @flow
 
-import { getSync } from 'lib/geolocation';
 import { acquisitionsBannerFivTemplate } from 'common/modules/commercial/templates/acquisitions-banner-fiv';
 import { canShowBannerSync } from 'common/modules/commercial/contributions-utilities';
 
@@ -42,7 +41,6 @@ const bannerShownCallback = () => {
     }
 };
 
-
 export const februaryMomentBannerColour: AcquisitionsABTest = {
     id: 'FebruaryMomentBannerColour',
     start: '2019-01-01',
@@ -70,7 +68,10 @@ export const februaryMomentBannerColour: AcquisitionsABTest = {
                 bannerModifierClass: 'fiv-banner',
                 minArticlesBeforeShowingBanner,
                 userCohort: userCohortParam.onlyNonSupporters,
-                titles: ['We chose a different approach', 'Will you support it?'],
+                titles: [
+                    'We chose a different approach',
+                    'Will you support it?',
+                ],
                 bannerShownCallback,
             },
             canRun: () =>
@@ -90,7 +91,10 @@ export const februaryMomentBannerColour: AcquisitionsABTest = {
                 bannerModifierClass: 'fiv-banner fiv-banner--blue',
                 minArticlesBeforeShowingBanner,
                 userCohort: userCohortParam.onlyNonSupporters,
-                titles: ['We chose a different approach', 'Will you support it?'],
+                titles: [
+                    'We chose a different approach',
+                    'Will you support it?',
+                ],
                 bannerShownCallback,
             },
             canRun: () =>
@@ -110,7 +114,10 @@ export const februaryMomentBannerColour: AcquisitionsABTest = {
                 bannerModifierClass: 'fiv-banner fiv-banner--yellow',
                 minArticlesBeforeShowingBanner,
                 userCohort: userCohortParam.onlyNonSupporters,
-                titles: ['We chose a different approach', 'Will you support it?'],
+                titles: [
+                    'We chose a different approach',
+                    'Will you support it?',
+                ],
                 bannerShownCallback,
             },
             canRun: () =>
