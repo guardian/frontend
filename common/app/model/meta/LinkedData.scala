@@ -2,6 +2,8 @@ package model.meta
 
 import conf.Static
 import play.api.libs.json._
+import play.api.libs.json.Reads._
+import play.api.libs.functional.syntax._
 
 sealed trait LinkedData {
   val `@type`: String
@@ -96,7 +98,15 @@ case class ListItem(
 )
 
 object ListItem {
-  implicit val formats: OFormat[ListItem] = Json.format[ListItem]
+
+  // We have to do this manually as automatic mapping doesn't seem to
+  // work with recursive types unfortunately.
+  implicit val listItemFormats: OFormat[ListItem] = (
+    (__ \ "@type").format[String] and
+      (__ \ "position").format[Int] and
+      (__ \ "url").format(Format.optionWithNull[String]) and
+      (__ \ "item").lazyFormat(Format.optionWithNull[ItemList])
+    )(ListItem.apply, unlift(ListItem.unapply))
 }
 
 case class Person(
