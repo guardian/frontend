@@ -263,7 +263,6 @@ const bootStandard = (): void => {
     newHeaderInit();
 
     if (config.get('page.hasShowcaseMainElement')) {
-        //
         fixSecondaryColumn();
     }
 
