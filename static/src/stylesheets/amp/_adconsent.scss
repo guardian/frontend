@@ -1,5 +1,13 @@
 amp-consent { background: none; }
-.consent-ui {
+a.adconsent-preference {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+div.consent-ui {
     font-family: 'Guardian Text Sans Web', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
     font-size: 1rem;
     line-height: 1.25rem;
@@ -29,6 +37,9 @@ amp-consent { background: none; }
             display: block;
             width: 100%;
             margin-top: 1em;
+        }
+        button.adconsent-reject {
+            text-decoration: underline;
         }
         button.adconsent-accept {
             @include circular;

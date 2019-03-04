@@ -52,6 +52,7 @@ rules:
         - grid-column-gap
         - grid-row-gap
         - grid-gap
+        - touch-callout
   no-trailing-zero: 1
   no-url-protocols: 0
 
