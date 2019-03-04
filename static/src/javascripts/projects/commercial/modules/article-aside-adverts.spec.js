@@ -12,10 +12,6 @@ jest.mock('common/modules/commercial/commercial-features', () => ({
     },
 }));
 
-jest.mock('commercial/modules/dfp/add-slot', () => ({
-    addSlot: jest.fn(),
-}));
-
 const fastdomReadSpy = jest.spyOn(fastdom, 'read');
 
 const sharedBeforeEach = (domSnippet: string) => () => {
@@ -52,6 +48,17 @@ describe('Standard Article Aside Adverts', () => {
     it('should exist', () => {
         expect(init).toBeDefined();
         expect(qwery('.ad-slot').length).toBe(1);
+    });
+
+    it('should resolve immediately if the secondary column does not exist', done => {
+        if (document.body) {
+            document.body.innerHTML = `<div class="js-content-main-column"></div>`;
+        }
+
+        init(noop, noop).then(resolve => {
+            expect(resolve).toBe(false);
+            done();
+        });
     });
 
     it('should have the correct size mappings and classes', done => {
@@ -157,33 +164,6 @@ describe('Immersive Article (no immersive elements) Aside Adverts', () => {
             expect(adSlot.classList).toContain('js-sticky-mpu');
             expect(adSlot.getAttribute('data-mobile')).toBe(
                 '1,1|2,2|300,250|300,274|300,600|fluid'
-            );
-            done();
-        });
-        init(noop, noop);
-    });
-});
-
-describe('Showcase Article Aside Adverts', () => {
-    const domSnippet = `
-        <div class="js-content-main-column"></div>
-        <div class="content__secondary-column js-secondary-column">
-            <div class="aside-slot-container js-aside-slot-container"></div>
-        </div>
-    `;
-    beforeEach(sharedBeforeEach(domSnippet));
-    afterEach(sharedAfterEach);
-
-    it('should create an adslot with the correct size mappings and classes', done => {
-        fastdomReadSpy.mockReturnValue(Promise.resolve([900000, 0]));
-        fakeConfig.page.hasShowcaseMainElement = true;
-
-        fakeMediator.once('page:defaultcommercial:right', () => {
-            // $FlowFixMe ...the test assumes that this element will exist
-            const adSlot: HTMLElement = document.querySelector('.js-ad-slot');
-            expect(adSlot.classList).not.toContain('js-sticky-mpu');
-            expect(adSlot.getAttribute('data-desktop')).toBe(
-                '1,1|2,2|300,250|300,274|fluid'
             );
             done();
         });

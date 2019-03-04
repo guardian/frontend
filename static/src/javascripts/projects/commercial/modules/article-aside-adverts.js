@@ -24,6 +24,7 @@ export const init = (start: () => void, stop: () => void): Promise<boolean> => {
 
     const $col: bonzo = $('.js-secondary-column');
 
+    // article aside ads are added server-side if the container doesn't exist then stop.
     if (!$col.length || $col.css('display') === 'none') {
         stop();
         return Promise.resolve(false);
@@ -32,6 +33,11 @@ export const init = (start: () => void, stop: () => void): Promise<boolean> => {
     const $mainCol: bonzo = $('.js-content-main-column');
     const $adSlot: bonzo = $('.js-ad-slot', $col);
     const $immersiveEls: bonzo = $('.element--immersive', $mainCol);
+
+    if (!$adSlot.length || !$mainCol.length) {
+        stop();
+        return Promise.resolve(false);
+    }
 
     return fastdom
         .read(
