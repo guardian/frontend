@@ -38,8 +38,6 @@ GET         /advertiser-content/:campaignName/:pageName                     comm
 GET         /advertiser-content/:campaignName/:pageName/:cType/onward.json  commercial.controllers.HostedContentController.renderOnwardComponent(campaignName, pageName, cType)
 GET         /advertiser-content/:campaignName/:pageName/autoplay.json       commercial.controllers.HostedContentController.renderAutoplayComponent(campaignName, pageName)
 
-# Off-platform ads
-GET         /facebook-ia/remote.html                                        controllers.Assets.at(path="/public", file="facebook_ia_remote.html")
 
 # ADS.TXT Standard
 GET         /ads.txt                                                        commercial.controllers.AdsDotTextViewController.renderTextFile()
