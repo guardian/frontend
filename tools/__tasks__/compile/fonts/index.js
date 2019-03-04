@@ -39,9 +39,8 @@ const generateCSS = (fontFamily, font) =>
                         'font-feature-settings',
                         'unicode-range',
                     ]
-                        .map(
-                            prop =>
-                                font[prop] ? `${prop}: ${font[prop]};` : ''
+                        .map(prop =>
+                            font[prop] ? `${prop}: ${font[prop]};` : ''
                         )
                         .join('')}
                 }

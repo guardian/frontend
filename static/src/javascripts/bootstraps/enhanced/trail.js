@@ -52,11 +52,13 @@ const insertOrProximity = (selector, insert) => {
     if (window.location.hash) {
         insert();
     } else {
-        fastdom.read(() => document.querySelector(selector)).then(el => {
-            if (el) {
-                addProximityLoader(el, 1500, insert);
-            }
-        });
+        fastdom
+            .read(() => document.querySelector(selector))
+            .then(el => {
+                if (el) {
+                    addProximityLoader(el, 1500, insert);
+                }
+            });
     }
 };
 
@@ -149,26 +151,30 @@ const initDiscussion = () => {
         config.get('switches.enableDiscussionSwitch') &&
         config.get('page.commentable')
     ) {
-        fastdom.read(() => document.querySelector('.discussion')).then(el => {
-            if (el) {
-                new DiscussionLoader().attachTo(el);
-            }
-        });
+        fastdom
+            .read(() => document.querySelector('.discussion'))
+            .then(el => {
+                if (el) {
+                    new DiscussionLoader().attachTo(el);
+                }
+            });
     }
 };
 
 const repositionComments = () => {
     if (!isUserLoggedIn()) {
-        fastdom.read(() => $('.js-comments')).then($comments =>
-            fastdom.write(() => {
-                $comments.appendTo(qwery('.js-repositioned-comments'));
+        fastdom
+            .read(() => $('.js-comments'))
+            .then($comments =>
+                fastdom.write(() => {
+                    $comments.appendTo(qwery('.js-repositioned-comments'));
 
-                if (window.location.hash === '#comments') {
-                    const top = $comments.offset().top;
-                    $(document.body).scrollTop(top);
-                }
-            })
-        );
+                    if (window.location.hash === '#comments') {
+                        const top = $comments.offset().top;
+                        $(document.body).scrollTop(top);
+                    }
+                })
+            );
     }
 };
 

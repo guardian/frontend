@@ -30,9 +30,11 @@ type SizeMappingArray = Array<Object>;
 const buildSizeMapping = (sizes: Object): SizeMappingArray => {
     const mapping = window.googletag.sizeMapping();
 
-    breakpoints.filter(_ => _.name in sizes).forEach(_ => {
-        mapping.addSize([_.width, 0], sizes[_.name]);
-    });
+    breakpoints
+        .filter(_ => _.name in sizes)
+        .forEach(_ => {
+            mapping.addSize([_.width, 0], sizes[_.name]);
+        });
 
     return mapping.build();
 };

@@ -44,8 +44,7 @@ const renderNav = (
                 let $nav;
 
                 if (resp.nav && resp.nav.trim().length > 0) {
-                    $nav = $
-                        .create(resp.nav)
+                    $nav = $.create(resp.nav)
                         .first()
                         .each(nav => {
                             if (match.id || $('.tabs__tab', nav).length > 2) {
@@ -273,14 +272,12 @@ const init = (): void => {
             config.dateFromSlug()
         );
         const $img = $('.media-primary');
-        const $matchListContainer = $
-            .create(
-                `
+        const $matchListContainer = $.create(
+            `
             <div class="football-matches__container"
                   data-link-name="football-matches-clockwatch"></div>
         `
-            )
-            .css({ minHeight: $img[0] ? $img[0].offsetHeight : 0 });
+        ).css({ minHeight: $img[0] ? $img[0].offsetHeight : 0 });
 
         $img.addClass('u-h');
 

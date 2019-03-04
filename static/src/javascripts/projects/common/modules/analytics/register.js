@@ -22,17 +22,21 @@ const begin = (name: string): void => {
 };
 
 const end = (name: string): void => {
-    register.filter(_ => _.name === name).forEach(module => {
-        module.status = 'completed';
-        module.endTime = `${Date.now() - startTime}ms`;
-    });
+    register
+        .filter(_ => _.name === name)
+        .forEach(module => {
+            module.status = 'completed';
+            module.endTime = `${Date.now() - startTime}ms`;
+        });
 };
 
 const error = (name: string): void => {
-    register.filter(_ => _.name === name).forEach(module => {
-        module.status = 'failed';
-        module.endTime = `${Date.now() - startTime}ms`;
-    });
+    register
+        .filter(_ => _.name === name)
+        .forEach(module => {
+            module.status = 'failed';
+            module.endTime = `${Date.now() - startTime}ms`;
+        });
 };
 
 const sendEvent = (): void => {

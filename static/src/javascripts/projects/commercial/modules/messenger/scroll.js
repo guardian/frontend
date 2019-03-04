@@ -115,9 +115,11 @@ const addScrollListener = (iframe: Element, respond: any): ?Promise<any> => {
         observer.observe(iframe);
     }
 
-    fastdom.read(() => iframe.getBoundingClientRect()).then(domRect => {
-        sendCoordinates(iframe.id, domRect);
-    });
+    fastdom
+        .read(() => iframe.getBoundingClientRect())
+        .then(domRect => {
+            sendCoordinates(iframe.id, domRect);
+        });
 };
 
 const removeScrollListener = (iframe: Element): void => {

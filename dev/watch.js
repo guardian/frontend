@@ -118,15 +118,17 @@ chokidar.watch(`${sassDir}/**/*.scss`).on('change', changedFile => {
         .then(() =>
             // copy stylesheets that are to be inlined
             Promise.all(
-                filesToCompile.filter(file => /head./.test(file)).map(file =>
-                    cpy(
-                        [`**/${file.replace('.scss', '.css')}`],
-                        inlineStylesDir,
-                        {
-                            cwd: targetDir,
-                        }
+                filesToCompile
+                    .filter(file => /head./.test(file))
+                    .map(file =>
+                        cpy(
+                            [`**/${file.replace('.scss', '.css')}`],
+                            inlineStylesDir,
+                            {
+                                cwd: targetDir,
+                            }
+                        )
                     )
-                )
             )
         )
         .then(() => {

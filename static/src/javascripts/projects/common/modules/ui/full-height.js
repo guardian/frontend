@@ -16,11 +16,13 @@ const renderBlock = (state: Object): Promise<void> =>
         })
         .then(() => {
             if (state.isMobile) {
-                return fastdom.read(() => state.$el.height()).then(height =>
-                    fastdom.write(() => {
-                        state.$el.css('height', height);
-                    })
-                );
+                return fastdom
+                    .read(() => state.$el.height())
+                    .then(height =>
+                        fastdom.write(() => {
+                            state.$el.css('height', height);
+                        })
+                    );
             }
         });
 

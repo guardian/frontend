@@ -140,8 +140,7 @@ describe('DFP', () => {
             document.body.innerHTML = domSnippet;
         }
 
-        $style = $
-            .create('<style type="text/css"></style>')
+        $style = $.create('<style type="text/css"></style>')
             .html(`body:after{ content: "wide"}`)
             .appendTo('head');
         const pubAds = {

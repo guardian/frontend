@@ -17,8 +17,8 @@ type Resolver = (x: boolean) => void;
 const createSizeMapping = (attr: string): Array<AdSize> =>
     attr
         .split('|')
-        .map(
-            size => (size === 'fluid' ? 'fluid' : size.split(',').map(Number))
+        .map(size =>
+            size === 'fluid' ? 'fluid' : size.split(',').map(Number)
         );
 
 const getAdBreakpointSizes = (advertNode: HTMLElement): AdSizes =>

@@ -48,15 +48,17 @@ const replaceAllSectionsLink = (): Promise<void> =>
         );
 
 const addOverflowScrollTouch = (): Promise<void> =>
-    fastdom.read(() => $('.navigation__scroll')).then(navScroll => {
-        if (navScroll) {
-            return fastdom.write(() => {
-                navScroll.css({
-                    '-webkit-overflow-scrolling': 'touch',
+    fastdom
+        .read(() => $('.navigation__scroll'))
+        .then(navScroll => {
+            if (navScroll) {
+                return fastdom.write(() => {
+                    navScroll.css({
+                        '-webkit-overflow-scrolling': 'touch',
+                    });
                 });
-            });
-        }
-    });
+            }
+        });
 
 const enableMegaNavToggle = (): void => {
     bean.on(document, 'click', '.js-navigation-toggle', e => {

@@ -74,15 +74,17 @@ const controlEpicComponent = (
 };
 
 const insertAtSubmeta = (epic: EpicComponent): Promise<EpicComponent> =>
-    fastdom.read(() => document.querySelector('.submeta')).then(element => {
-        if (element && element.parentElement) {
-            element.parentElement.insertBefore(epic.html, element);
-            return Promise.resolve(epic);
-        }
-        const error = new Error('unable to insert Epic');
-        reportEpicError(error);
-        return Promise.reject(error);
-    });
+    fastdom
+        .read(() => document.querySelector('.submeta'))
+        .then(element => {
+            if (element && element.parentElement) {
+                element.parentElement.insertBefore(epic.html, element);
+                return Promise.resolve(epic);
+            }
+            const error = new Error('unable to insert Epic');
+            reportEpicError(error);
+            return Promise.reject(error);
+        });
 
 const displayControlEpic = (abTest?: ABTestVariant): Promise<EpicComponent> =>
     controlEpicComponent(abTest)
