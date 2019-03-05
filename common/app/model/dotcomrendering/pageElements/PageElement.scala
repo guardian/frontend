@@ -18,6 +18,7 @@ import views.support.{AffiliateLinksCleaner, ImageProfile, ImageUrlSigner, ImgSr
 
 sealed trait PageElement
 case class TextBlockElement(html: String) extends PageElement
+case class HeadingBlockElement(html: String) extends PageElement
 case class TweetBlockElement(html: String, url: String, id: String, hasMedia: Boolean, role: Role) extends PageElement
 case class PullquoteBlockElement(html: Option[String], role: Role) extends PageElement
 case class ImageBlockElement(media: ImageMedia, data: Map[String, String], displayCredit: Option[Boolean], role: Role, imageSources: Seq[ImageSource]) extends PageElement
@@ -93,12 +94,20 @@ object PageElement {
         block <- element.textTypeData.toList
         text <- block.html.toList
         element <- Cleaner.split(text)
-        textElement = TextBlockElement(element)
       } yield {
-        if (addAffiliateLinks) {
-          AffiliateLinksCleaner.replaceLinksInElement(textElement, pageUrl = pageUrl, contentType = "article")
+        val doc = Jsoup.parseBodyFragment(element)
+        val para = doc.getElementsByTag("p").html()
+
+        if (para != "") {
+          val textElement = TextBlockElement(para)
+          if (addAffiliateLinks) {
+            AffiliateLinksCleaner.replaceLinksInElement(textElement, pageUrl = pageUrl, contentType = "article")
+          } else {
+            textElement
+          }
         } else {
-          textElement
+          val heading = doc.getElementsByTag("h2").html()
+          HeadingBlockElement(heading)
         }
       }
 
@@ -254,6 +263,7 @@ object PageElement {
 
   implicit val imageWeightingWrites: Writes[ImageSource] = Json.writes[ImageSource]
   implicit val textBlockElementWrites: Writes[TextBlockElement] = Json.writes[TextBlockElement]
+  implicit val headingBlockElementWrites: Writes[HeadingBlockElement] = Json.writes[HeadingBlockElement]
   implicit val ImageBlockElementWrites: Writes[ImageBlockElement] = Json.writes[ImageBlockElement]
   implicit val AudioBlockElementWrites: Writes[AudioBlockElement] = Json.writes[AudioBlockElement]
   implicit val GuVideoBlockElementWrites: Writes[GuVideoBlockElement] = Json.writes[GuVideoBlockElement]
