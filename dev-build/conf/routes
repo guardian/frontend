@@ -4,14 +4,14 @@
 
 GET            /commercial/test-page                                                                                             commercial.controllers.CreativeTestPage.allComponents(k: List[String])
 
-# FONT LOADER
-GET            /font-loader                                                                                                      controllers.FontLoaderController.renderFontLoader()
-
 # Reader Revenue
 GET            /reader-revenue                                                                                                   controllers.admin.ReaderRevenueAdminController.renderReaderRevenueMenu()
 GET            /reader-revenue/contributions-banner                                                                              controllers.admin.ReaderRevenueAdminController.renderContributionsBannerAdmin()
 POST           /reader-revenue/redeploy-contributions-banner/$region<united-kingdom|united-states|australia|rest-of-world>                                               controllers.admin.ReaderRevenueAdminController.redeployContributionsBanner(region)
 GET            /reader-revenue/contributions-banner-deploy-log/$region<united-kingdom|united-states|australia|rest-of-world>                                             controllers.ReaderRevenueAppController.contributionsBannerDeployLog(region: String)
+
+# FONT LOADER
+GET            /font-loader                                                                                                      controllers.FontLoaderController.renderFontLoader()
 
 GET            /email-newsletters                                                                                                controllers.SignupPageController.renderNewslettersPage()
 
