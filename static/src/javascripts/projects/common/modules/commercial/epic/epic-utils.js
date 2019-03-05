@@ -57,6 +57,7 @@ const controlEpicComponent = (
             testimonialBlock,
             epicClassNames: [],
             wrapperClass: '',
+            showTicker: false,
         });
 
         const epicElement = $.create(rawEpic).get(0);
