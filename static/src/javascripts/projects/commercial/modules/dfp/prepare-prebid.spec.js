@@ -85,21 +85,21 @@ describe('init', () => {
         expect(prebid.initialise).not.toBeCalled();
     });
 
-    it('should not initialise Prebid when the page has a pageskin', () => {
+    it('should not initialise Prebid when the page has a pageskin', async () => {
         dfpEnv.externalDemand = 'prebid';
         commercialFeatures.dfpAdvertising = true;
         commercialFeatures.adFree = false;
         config.page.hasPageSkin = true;
-        setupPrebid();
+        await setupPrebid();
         expect(prebid.initialise).not.toBeCalled();
     });
 
-    it('should initialise Prebid when the page has no pageskin', () => {
+    it('should initialise Prebid when the page has no pageskin', async () => {
         dfpEnv.externalDemand = 'prebid';
         commercialFeatures.dfpAdvertising = true;
         commercialFeatures.adFree = false;
         config.page.hasPageSkin = false;
-        setupPrebid();
+        await setupPrebid();
         expect(prebid.initialise).toBeCalled();
     });
 
