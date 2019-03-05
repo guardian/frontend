@@ -240,8 +240,7 @@ $wide-circle-height: 162px;
 
     display: flex;
     opacity: .8;
-    transition: transform .6s .6s linear;
-    transform: translateX(0);
+    transition: transform 2s cubic-bezier(.645, .045, .355, 1);
     will-change: transform;
 }
 
@@ -261,16 +260,12 @@ $wide-circle-height: 162px;
 }
 
 .fiv-banner__circles-animated {
-    .fiv-banner__circle {
-        transition: all 2s cubic-bezier(.645, .045, .355, 1);
-    }
-
     .fiv-banner__circle-top {
-        top: -25%;
+        transform: translateY(25%);
     }
 
     .fiv-banner__circle-bottom {
-        bottom: -25%;
+        transform: translateY(-25%);
     }
 }
 
