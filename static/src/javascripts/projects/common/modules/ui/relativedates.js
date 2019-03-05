@@ -194,8 +194,9 @@ const replaceValidTimestamps = (opts: RelativeDateOptions = {}): void => {
         const $el = bonzo(el);
 
         const // Epoch dates are more reliable, fallback to datetime for liveblog blocks
-        timestamp =
-            parseInt($el.attr('data-timestamp'), 10) || $el.attr('datetime');
+            timestamp =
+                parseInt($el.attr('data-timestamp'), 10) ||
+                $el.attr('datetime');
 
         const datetime = new Date(timestamp);
 

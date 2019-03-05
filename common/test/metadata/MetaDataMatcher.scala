@@ -41,7 +41,6 @@ object MetaDataMatcher extends Matchers  {
     val appIndexer: JsValue = Json.parse(script.first().html())
 
     (appIndexer \ "potentialAction" \ "target").as[String] should include(articleUrl)
-
   }
 
   def ensureDeepLink(result: Future[Result]) {

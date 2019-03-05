@@ -320,6 +320,31 @@
     }
 
     @include mq(desktop) {
+        width: auto;
+        height: auto;
+        margin-right: 6%;
+
+        & > div.ad-slot__content {
+            min-height: 250px;
+        }
+    }
+}
+
+// todo: remove when 620x350 size removed
+.ad-slot--outstream-old {
+
+    background: transparent;
+
+    @include mq(mobile) {
+        width: 300px;
+        height: auto;
+
+        & > div.ad-slot__content > iframe {
+            min-height: 250px;
+        }
+    }
+
+    @include mq(desktop) {
         width: 620px;
         height: $mpu-ad-label-height + 350px;
 

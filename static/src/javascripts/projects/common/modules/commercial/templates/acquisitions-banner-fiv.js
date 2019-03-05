@@ -18,8 +18,8 @@ export const acquisitionsBannerFivTemplate = (
         </div>
         <div class="fiv-banner__headline-and-circles">
             <div class="fiv-banner__circles">
-                <div class="fiv-banner__circle fiv-banner__circle-orange"></div>
-                <div class="fiv-banner__circle fiv-banner__circle-blue"></div>
+                <div class="fiv-banner__circle fiv-banner__circle-top"></div>
+                <div class="fiv-banner__circle fiv-banner__circle-bottom"></div>
             </div>
             ${
                 params.titles

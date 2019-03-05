@@ -113,9 +113,9 @@ class ScrollableMpu {
                     : '',
         };
 
-        this.$scrollableMpu = $
-            .create(scrollableMpuTpl(templateOptions))
-            .appendTo(this.adSlot);
+        this.$scrollableMpu = $.create(
+            scrollableMpuTpl(templateOptions)
+        ).appendTo(this.adSlot);
 
         if (this.params.trackingPixel) {
             addTrackingPixel(

@@ -57,9 +57,11 @@ const generateVendorConsentResponse = (
 
     // and set the ones that are selected to true, only
     // for the ones considered.
-    selectedVendorIds.filter(svid => svid in vendorMap).forEach(svid => {
-        vendorMap[svid] = true;
-    });
+    selectedVendorIds
+        .filter(svid => svid in vendorMap)
+        .forEach(svid => {
+            vendorMap[svid] = true;
+        });
 
     return {
         maxVendorId,

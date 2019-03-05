@@ -1,8 +1,6 @@
 @(content: Html)(implicit page: model.Page, request: RequestHeader)
 @import model.EmailAddons.EmailContentType
 <body>
-    @fragments.email.ampScript(page)
-
     <table class="body @page.bodyClass">
         <tr>
             <td class="center no-pad" align="center" valign="top">

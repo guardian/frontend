@@ -1,12 +1,13 @@
 // @flow
 
+import config from 'lib/config';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { buildPageTargeting } from 'common/modules/commercial/build-page-targeting';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import once from 'lodash/once';
 import prebid from 'commercial/modules/prebid/prebid';
 
-const isGoogleWebPreview: () => boolean = () =>
+const isGoogleProxy: () => boolean = () =>
     !!(
         navigator &&
         navigator.userAgent &&
@@ -16,7 +17,7 @@ const isGoogleWebPreview: () => boolean = () =>
 
 let moduleLoadResult = Promise.resolve();
 
-if (!isGoogleWebPreview()) {
+if (!isGoogleProxy()) {
     moduleLoadResult = import(/* webpackChunkName: "Prebid.js" */ 'prebid.js/build/dist/prebid');
 }
 
@@ -26,7 +27,8 @@ const setupPrebid: () => Promise<void> = () =>
             dfpEnv.externalDemand === 'prebid' &&
             commercialFeatures.dfpAdvertising &&
             !commercialFeatures.adFree &&
-            !isGoogleWebPreview()
+            !config.page.hasPageSkin &&
+            !isGoogleProxy()
         ) {
             buildPageTargeting();
             prebid.initialise(window);
@@ -43,6 +45,6 @@ export const init = (start: () => void, stop: () => void): Promise<void> => {
 };
 
 export const _ = {
-    isGoogleWebPreview,
+    isGoogleProxy,
     setupPrebid,
 };

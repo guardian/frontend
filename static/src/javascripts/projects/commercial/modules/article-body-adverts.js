@@ -252,9 +252,8 @@ export const init = (start: () => void, stop: () => void): Promise<boolean> => {
     const im = config.page.hasInlineMerchandise
         ? attemptToAddInlineMerchAd()
         : Promise.resolve(false);
-    im.then(
-        (inlineMerchAdded: boolean) =>
-            inlineMerchAdded ? trackAdRender('dfp-ad--im') : Promise.resolve()
+    im.then((inlineMerchAdded: boolean) =>
+        inlineMerchAdded ? trackAdRender('dfp-ad--im') : Promise.resolve()
     )
         .then(initCarrot)
         .then(addInlineAds)

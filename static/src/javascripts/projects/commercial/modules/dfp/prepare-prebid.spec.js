@@ -1,11 +1,12 @@
 // @flow
 
+import config from 'lib/config';
 import prebid from 'commercial/modules/prebid/prebid';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { _ } from './prepare-prebid';
 
-const { isGoogleWebPreview, setupPrebid } = _;
+const { isGoogleProxy, setupPrebid } = _;
 
 jest.mock('common/modules/commercial/commercial-features', () => ({
     commercialFeatures: {},
@@ -25,6 +26,12 @@ jest.mock('common/modules/commercial/build-page-targeting', () => ({
 
 jest.mock('commercial/modules/prebid/bid-config', () => ({
     isInVariant: jest.fn(),
+}));
+
+jest.mock('lib/config', () => ({
+    page: {
+        hasPageSkin: false,
+    },
 }));
 
 const fakeUserAgent = (userAgent: string): void => {
@@ -78,22 +85,40 @@ describe('init', () => {
         expect(prebid.initialise).not.toBeCalled();
     });
 
+    it('should not initialise Prebid when the page has a pageskin', () => {
+        dfpEnv.externalDemand = 'prebid';
+        commercialFeatures.dfpAdvertising = true;
+        commercialFeatures.adFree = false;
+        config.page.hasPageSkin = true;
+        setupPrebid();
+        expect(prebid.initialise).not.toBeCalled();
+    });
+
+    it('should initialise Prebid when the page has no pageskin', () => {
+        dfpEnv.externalDemand = 'prebid';
+        commercialFeatures.dfpAdvertising = true;
+        commercialFeatures.adFree = false;
+        config.page.hasPageSkin = false;
+        setupPrebid();
+        expect(prebid.initialise).toBeCalled();
+    });
+
     it('isGoogleWebPreview should return false with no navigator or useragent', () => {
-        expect(isGoogleWebPreview()).toBe(false);
+        expect(isGoogleProxy()).toBe(false);
     });
 
     it('isGoogleWebPreview should return false with no navigator or useragent', () => {
         fakeUserAgent('Firefox');
-        expect(isGoogleWebPreview()).toBe(false);
+        expect(isGoogleProxy()).toBe(false);
     });
 
     it('isGoogleWebPreview should return true with Google Web Preview useragent', () => {
         fakeUserAgent('Google Web Preview');
-        expect(isGoogleWebPreview()).toBe(true);
+        expect(isGoogleProxy()).toBe(true);
     });
 
     it('isGoogleWebPreview should return true with Google Web Preview useragent', () => {
         fakeUserAgent('googleweblight');
-        expect(isGoogleWebPreview()).toBe(true);
+        expect(isGoogleProxy()).toBe(true);
     });
 });
