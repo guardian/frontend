@@ -53,53 +53,53 @@ describe('init', () => {
         jest.clearAllMocks();
     });
 
-    it('should initialise Prebid when external demand is Prebid and advertising is on and ad-free is off', () => {
+    it('should initialise Prebid when external demand is Prebid and advertising is on and ad-free is off', async () => {
         dfpEnv.externalDemand = 'prebid';
         commercialFeatures.dfpAdvertising = true;
         commercialFeatures.adFree = false;
-        setupPrebid();
+        await setupPrebid();
         expect(prebid.initialise).toBeCalled();
     });
 
-    it('should not initialise Prebid when useragent is Google Web Preview', () => {
+    it('should not initialise Prebid when useragent is Google Web Preview', async () => {
         fakeUserAgent('Google Web Preview');
-        setupPrebid();
+        await setupPrebid();
         expect(prebid.initialise).not.toBeCalled();
     });
 
-    it('should not initialise Prebid when no external demand', () => {
+    it('should not initialise Prebid when no external demand', async () => {
         dfpEnv.externalDemand = 'none';
-        setupPrebid();
+        await setupPrebid();
         expect(prebid.initialise).not.toBeCalled();
     });
 
-    it('should not initialise Prebid when advertising is switched off', () => {
+    it('should not initialise Prebid when advertising is switched off', async () => {
         commercialFeatures.dfpAdvertising = false;
-        setupPrebid();
+        await setupPrebid();
         expect(prebid.initialise).not.toBeCalled();
     });
 
-    it('should not initialise Prebid when ad-free is on', () => {
+    it('should not initialise Prebid when ad-free is on', async () => {
         commercialFeatures.adFree = true;
-        setupPrebid();
+        await setupPrebid();
         expect(prebid.initialise).not.toBeCalled();
     });
 
-    it('should not initialise Prebid when the page has a pageskin', () => {
+    it('should not initialise Prebid when the page has a pageskin', async () => {
         dfpEnv.externalDemand = 'prebid';
         commercialFeatures.dfpAdvertising = true;
         commercialFeatures.adFree = false;
         config.page.hasPageSkin = true;
-        setupPrebid();
+        await setupPrebid();
         expect(prebid.initialise).not.toBeCalled();
     });
 
-    it('should initialise Prebid when the page has no pageskin', () => {
+    it('should initialise Prebid when the page has no pageskin', async () => {
         dfpEnv.externalDemand = 'prebid';
         commercialFeatures.dfpAdvertising = true;
         commercialFeatures.adFree = false;
         config.page.hasPageSkin = false;
-        setupPrebid();
+        await setupPrebid();
         expect(prebid.initialise).toBeCalled();
     });
 
