@@ -39,7 +39,7 @@
             }
 
             @article.content.imdb.map { imdbId =>
-                <div articleprop="articleReviewed" articlescope articletype="http://schema.org/Movie">
+                <div articleprop="itemReviewed" articlescope articletype="http://schema.org/Movie">
                     <link articleprop="sameAs" href="http://www.imdb.com/title/@imdbId/">
                     @defining(article.content.primaryKeyWordTag.map(_.name).getOrElse(".")) { tag =>
                         @* we're not the authority on the film name, but just to keep google validator happy

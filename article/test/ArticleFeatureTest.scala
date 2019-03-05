@@ -287,7 +287,7 @@ import collection.JavaConverters._
         review.$("[articleprop=reviewRating]").text should be("4 / 5 stars")
         review.$("[articleprop=ratingValue]").text should be("4")
 
-        val reviewed = review.el("[articleprop=articleReviewed]")
+        val reviewed = review.el("[articleprop=itemReviewed]")
 
         reviewed.attribute("articletype") should be("http://schema.org/Movie")
         reviewed.$("[articleprop=sameAs]").attribute("href") should be("http://www.imdb.com/title/tt3205376/")
