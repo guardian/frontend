@@ -23,11 +23,11 @@ describe('A/B Ophan analytics', () => {
     beforeEach(() => {
         // enable all test switches
         concurrentTests.forEach(test => {
-            config.switches[`ab${test.id}`] = true;
+            config.set(`switches.ab${test.id}`, true);
         });
 
         // empty server-side tests
-        config.tests = [];
+        config.set('tests', []);
     });
 
     afterEach(() => {
