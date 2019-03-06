@@ -209,7 +209,7 @@ const makeEpicABTestVariant = (
         }`,
         campaignCode,
         supportURL: addTrackingCodesToUrl({
-            base: supportContributeURL,
+            base: supportContributeURL(),
             componentType: parentTest.componentType,
             componentId,
             campaignCode,

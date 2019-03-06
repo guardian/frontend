@@ -377,8 +377,11 @@ const getSupporterCountryGroup = (location: string): CountryGroupId => {
             response = countryGroup;
         }
     });
-    return response || 'GBPCountries';
+    return response || 'International';
 };
+
+const getSupportInternationalisationIdSync = (): string =>
+    countryGroups[getSupporterCountryGroup(getSync())].supportInternationalisationId;
 
 const extendedCurrencySymbol = {
     GBPCountries: '£',
@@ -396,6 +399,7 @@ const getLocalCurrencySymbol = (): string =>
 export {
     get,
     getSupporterCountryGroup,
+    getSupportInternationalisationIdSync,
     getSync,
     getLocalCurrencySymbol,
     init,

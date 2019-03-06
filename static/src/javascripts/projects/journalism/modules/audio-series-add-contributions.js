@@ -6,7 +6,7 @@ import audioContribBanner from 'raw-loader!journalism/views/audioSeriesContribut
 import { supportContributeURL } from '../../common/modules/commercial/support-utilities';
 
 const renderContributionsBanner = el => {
-    const banner = template(audioContribBanner)({ supportContributeURL });
+    const banner = template(audioContribBanner)({ supportContributeURL: supportContributeURL() });
 
     fastdom.write(() => {
         el.insertAdjacentHTML('afterend', banner);

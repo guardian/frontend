@@ -1,5 +1,9 @@
 // @flow
-const supportContributeURL = 'https://support.theguardian.com/contribute';
-const supportSubscribeURL = 'https://support.theguardian.com/subscribe';
+import { getSupportInternationalisationIdSync } from 'lib/geolocation';
 
-export { supportContributeURL, supportSubscribeURL };
+const supportContributeURL = (): string =>
+    `https://support.theguardian.com/${getSupportInternationalisationIdSync()}/contribute`;
+const supportContributeGeoRedirectURL = 'https://support.theguardian.com/contribute';
+const supportSubscribeGeoRedirectURL = 'https://support.theguardian.com/subscribe';
+
+export { supportContributeURL, supportContributeGeoRedirectURL, supportSubscribeGeoRedirectURL };
