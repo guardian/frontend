@@ -3,6 +3,7 @@
 import { addCookie, removeCookie, getCookie } from 'lib/cookies';
 import fetchJson from 'lib/fetch-json';
 import { isUserLoggedIn as isUserLoggedIn_ } from 'common/modules/identity/api';
+import config from 'lib/config';
 import {
     refresh,
     isAdFreeUser,
@@ -14,7 +15,6 @@ import {
     getDaysSinceLastOneOffContribution,
     isRecentOneOffContributor,
 } from './user-features.js';
-import config from 'lib/config';
 
 jest.mock('lib/raven');
 jest.mock('projects/common/modules/identity/api', () => ({

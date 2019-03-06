@@ -1,8 +1,8 @@
 // @flow
 
 import Chance from 'chance';
-import fetchJson from './fetch-json';
 import config from 'lib/config';
+import fetchJson from './fetch-json';
 
 const chance = new Chance();
 
