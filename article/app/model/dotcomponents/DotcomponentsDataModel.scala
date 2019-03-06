@@ -5,7 +5,7 @@ import com.gu.contentapi.client.model.v1.ElementType.Text
 import com.gu.contentapi.client.model.v1.{BlockElement => ClientBlockElement, Blocks => APIBlocks}
 import common.Edition
 import common.Maps.RichMap
-import common.commercial.CommercialProperties
+import common.commercial.{CommercialProperties, EditionCommercialProperties, PrebidIndexSite}
 import conf.Configuration
 import conf.Configuration.affiliatelinks
 import conf.switches.Switches
@@ -99,7 +99,9 @@ case class PageData(
     hasStoryPackage: Boolean,
     hasRelated: Boolean,
     isCommentable: Boolean,
-    commercialProperties: Option[CommercialProperties],
+    editionCommercialProperties: Map[String, EditionCommercialProperties],
+    prebidIndexSites: List[PrebidIndexSite],
+    commercialProperties: Option[CommercialProperties], //DEPRECATED TO DELETE
     starRating: Option[Int],
     trailText: String,
 )
@@ -311,7 +313,7 @@ object DotcomponentsDataModel {
       Configuration.rendering.sentryHost,
       Configuration.rendering.sentryPublicApiKey,
       switches,
-      linkedData = linkedData,
+      linkedData,
       Configuration.google.subscribeWithGoogleApiUrl,
       guardianBaseURL = Configuration.site.host,
       webURL = article.metadata.webUrl,
@@ -319,6 +321,16 @@ object DotcomponentsDataModel {
       hasStoryPackage = articlePage.related.hasStoryPackage,
       hasRelated = article.content.showInRelated,
       isCommentable = article.trail.isCommentable,
+      editionCommercialProperties = article.metadata.commercial
+        .map(_.perEdition.mapKeys(_.id))
+        .getOrElse(Map.empty[String,EditionCommercialProperties]),
+
+      prebidIndexSites = (for {
+        commercial <- article.metadata.commercial
+        sites <- commercial.prebidIndexSites
+      } yield sites.toList).getOrElse(List()),
+
+
       commercialProperties = article.metadata.commercial,
       starRating = article.content.starRating,
       trailText = article.trail.fields.trailText.getOrElse("")
