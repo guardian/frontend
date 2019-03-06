@@ -1,4 +1,4 @@
-@()(implicit context: model.ApplicationContext, request: RequestHeader)
+@(postFonts: Boolean = false)(implicit context: model.ApplicationContext, request: RequestHeader)
 
 @import play.api.Mode.Dev
 @import experiments._
@@ -41,7 +41,8 @@ do you have fonts in localStorage?
     function loadFontsFromStorage() {
         try { // localStorage can fail for many reasons
             if ("localStorage" in window) {
-                // list of fonts to post to parent if page is in iframe
+                // postFonts true for font-loader endpoint only
+                const postFonts = @postFonts.toString();
                 const fontsToPost = [];
                 let fontsToLoadCount;
 
@@ -107,8 +108,8 @@ do you have fonts in localStorage?
                         css: css
                     });
 
-                    // if all the fonts have loaded and we're in an iframe post them to the parent
-                    if (fontsToPost.length === fontsToLoadCount && (window.location !== window.parent.location)) {
+                    // if all the fonts have loaded and postFonts true then post them to the parent
+                    if (postFonts && fontsToPost.length === fontsToLoadCount) {
                         window.parent.postMessage({
                             name:"guardianFonts",
                             fonts: fontsToPost
