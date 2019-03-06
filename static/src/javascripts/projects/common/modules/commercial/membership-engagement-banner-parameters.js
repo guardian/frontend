@@ -3,9 +3,7 @@ import { acquisitionsBannerControlTemplate } from 'common/modules/commercial/tem
 import { getEngagementBannerControlFromGoogleDoc } from 'common/modules/commercial/contributions-google-docs';
 import config from 'lib/config';
 import reportError from 'lib/report-error';
-import {
-    getLocalCurrencySymbol,
-} from 'lib/geolocation';
+import { getLocalCurrencySymbol } from 'lib/geolocation';
 import {
     supportContributeLocalURL,
     addCountryGroupToSupportLink,
