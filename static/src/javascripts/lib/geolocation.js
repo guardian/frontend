@@ -378,9 +378,7 @@ const countryGroups: CountryGroups = {
 
 // These are the different 'country groups' we accept when taking payment.
 // See https://github.com/guardian/support-internationalisation/blob/master/src/main/scala/com/gu/i18n/CountryGroup.scala for more context.
-const countryCodeToCountryGroupId = (
-    countryCode: string
-): CountryGroupId => {
+const countryCodeToCountryGroupId = (countryCode: string): CountryGroupId => {
     const availableCountryGroups = Object.keys(countryGroups);
     let response = null;
     availableCountryGroups.forEach(countryGroup => {

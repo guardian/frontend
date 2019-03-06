@@ -4,9 +4,7 @@ import { getEngagementBannerControlFromGoogleDoc } from 'common/modules/commerci
 import config from 'lib/config';
 import reportError from 'lib/report-error';
 import {
-    countryCodeToSupportInternationalisationId,
     getLocalCurrencySymbol,
-    getSync,
 } from 'lib/geolocation';
 import {
     supportContributeLocalURL,

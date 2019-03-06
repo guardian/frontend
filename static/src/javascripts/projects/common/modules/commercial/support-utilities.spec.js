@@ -8,7 +8,7 @@ describe('addCountryGroupToSupportLink', () => {
         setGeolocation('GB');
         expect(
             addCountryGroupToSupportLink(
-                'https://support.theguardian.com/subscribe',
+                'https://support.theguardian.com/subscribe'
             )
         ).toEqual('https://support.theguardian.com/uk/subscribe');
     });
@@ -26,7 +26,7 @@ describe('addCountryGroupToSupportLink', () => {
         setGeolocation('GB');
         expect(
             addCountryGroupToSupportLink(
-                'https://support.theguardian.com/int/contribute',
+                'https://support.theguardian.com/int/contribute'
             )
         ).toEqual('https://support.theguardian.com/int/contribute');
     });
