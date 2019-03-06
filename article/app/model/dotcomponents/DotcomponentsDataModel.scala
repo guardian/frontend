@@ -321,16 +321,14 @@ object DotcomponentsDataModel {
       hasStoryPackage = articlePage.related.hasStoryPackage,
       hasRelated = article.content.showInRelated,
       isCommentable = article.trail.isCommentable,
-
-
-
-
-      editionCommercialProperties = article.metadata.commercial.map{_.perEdition.mapKeys(_.id)}.getOrElse(Map.empty[String,EditionCommercialProperties]),
+      editionCommercialProperties = article.metadata.commercial
+        .map(_.perEdition.mapKeys(_.id))
+        .getOrElse(Map.empty[String,EditionCommercialProperties]),
 
       prebidIndexSites = (for {
         commercial <- article.metadata.commercial
         sites <- commercial.prebidIndexSites
-      }yield sites.toList).getOrElse(List()),
+      } yield sites.toList).getOrElse(List()),
 
 
       commercialProperties = article.metadata.commercial,

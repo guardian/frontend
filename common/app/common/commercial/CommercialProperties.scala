@@ -42,8 +42,8 @@ case class CommercialProperties(
       .getOrElse(Set.empty)
 
   def perEdition: Map[Edition, EditionCommercialProperties] = {
-    Edition.all.map{
-      edition => (
+    Edition.all.map{ edition =>
+      (
         edition,
         EditionCommercialProperties(
           branding(edition),
