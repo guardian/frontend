@@ -3,7 +3,7 @@
 import fastdom from 'lib/fastdom-promise';
 import template from 'lodash/template';
 import audioContribBanner from 'raw-loader!journalism/views/audioSeriesContributions.html';
-import { supportContributeLocalURL } from '../../common/modules/commercial/support-utilities';
+import { supportContributeLocalURL } from 'common/modules/commercial/support-utilities';
 
 const renderContributionsBanner = el => {
     const banner = template(audioContribBanner)({
