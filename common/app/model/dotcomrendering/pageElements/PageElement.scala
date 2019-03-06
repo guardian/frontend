@@ -94,20 +94,10 @@ object PageElement {
         block <- element.textTypeData.toList
         text <- block.html.toList
         element <- Cleaner.split(text)
-      } yield {
-        val doc = Jsoup.parseBodyFragment(element)
-        val para = doc.getElementsByTag("p").html()
-
-        if (para != "") {
-          val textElement = TextBlockElement(para)
-          if (addAffiliateLinks) {
-            AffiliateLinksCleaner.replaceLinksInElement(textElement, pageUrl = pageUrl, contentType = "article")
-          } else {
-            textElement
-          }
-        } else {
-          val heading = doc.getElementsByTag("h2").html()
-          HeadingBlockElement(heading)
+      } yield { element match {
+        case ("h2", heading) => HeadingBlockElement(heading)
+        case (_ , para) if (addAffiliateLinks) => AffiliateLinksCleaner.replaceLinksInElement(para, pageUrl = pageUrl, contentType = "article")
+        case (_, para) => TextBlockElement(para)
         }
       }
 
@@ -301,14 +291,14 @@ object PageElement {
 }
 
 object Cleaner{
-  def split(html: String):List[String] = {
+  def split(html: String):List[(String, String)] = {
     Jsoup
       .parseBodyFragment(html)
       .body()
       .children()
       .asScala
       .toList
-      .map(_.outerHtml())
+      .map(el => (el.tagName, el.outerHtml))
   }
 }
 
