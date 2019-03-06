@@ -414,6 +414,7 @@ export {
     get,
     countryCodeToCountryGroupId,
     countryCodeToSupportInternationalisationId,
+    getFromStorage,
     getSync,
     getLocalCurrencySymbol,
     init,

@@ -1,9 +1,5 @@
 // @flow
 import { addReferrerData } from 'common/modules/commercial/acquisitions-ophan';
-import {
-    countryCodeToSupportInternationalisationId,
-    get as getGeolocation,
-} from 'lib/geolocation';
 import { addCountryGroupToSupportLink } from 'common/modules/commercial/support-utilities';
 
 // Currently the only acquisition components on the site are
@@ -55,30 +51,7 @@ const addReferrerDataToAcquisitionLink = (rawUrl: string): string => {
 
 const ACQUISITION_LINK_CLASS = 'js-acquisition-link';
 
-const makeAcquisitionLinksRegionSpecific = (): Promise<void> =>
-    getGeolocation().then(countryCode => {
-        const supportInternationalisationId = countryCodeToSupportInternationalisationId(
-            countryCode
-        );
-        const links = Array.from(
-            document.getElementsByClassName(ACQUISITION_LINK_CLASS)
-        );
-
-        links.forEach(el => {
-            const link = el.getAttribute('href');
-            if (link) {
-                el.setAttribute(
-                    'href',
-                    addCountryGroupToSupportLink(
-                        link,
-                        supportInternationalisationId
-                    )
-                );
-            }
-        });
-    });
-
-const addReferrerDataToAcquisitionLinksOnPage = (): void => {
+const enrichAcquisitionLinksOnPage = (): void => {
     const links = Array.from(
         document.getElementsByClassName(ACQUISITION_LINK_CLASS)
     );
@@ -86,7 +59,9 @@ const addReferrerDataToAcquisitionLinksOnPage = (): void => {
     links.forEach(el => {
         const link = el.getAttribute('href');
         if (link) {
-            el.setAttribute('href', addReferrerDataToAcquisitionLink(link));
+            let modifiedLink = addReferrerDataToAcquisitionLink(link);
+            modifiedLink = addCountryGroupToSupportLink(modifiedLink);
+            el.setAttribute('href', modifiedLink);
         }
     });
 };
@@ -138,6 +113,5 @@ const addReferrerDataToAcquisitionLinksInInteractiveIframes = (): void => {
 
 export const init = (): void => {
     addReferrerDataToAcquisitionLinksInInteractiveIframes();
-    addReferrerDataToAcquisitionLinksOnPage();
-    makeAcquisitionLinksRegionSpecific();
+    enrichAcquisitionLinksOnPage();
 };

@@ -47,10 +47,7 @@ const getAcquisitionsBannerParams = (
         messageText: firstRow.messageText,
         ctaText,
         buttonCaption: firstRow.buttonCaption,
-        linkUrl: addCountryGroupToSupportLink(
-            firstRow.linkUrl,
-            countryCodeToSupportInternationalisationId(getSync())
-        ),
+        linkUrl: addCountryGroupToSupportLink(firstRow.linkUrl),
         hasTicker: false,
         campaignCode: 'control_banner_from_google_doc',
         pageviewId: config.get('ophan.pageViewId', 'not_found'),
