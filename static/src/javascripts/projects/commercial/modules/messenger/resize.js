@@ -52,6 +52,18 @@ const resize = (
     });
 };
 
+// When an outstream resizes we want it to revert to its original styling
+const removeAnyOutstreamClass = (adSlot: ?HTMLElement) => {
+    fastdom.write(() => {
+        if (adSlot) {
+            adSlot.classList.remove(
+                'ad-slot--outstream-old',
+                'ad-slot--outstream'
+            );
+        }
+    });
+};
+
 const init = (register: RegisterListeners) => {
     register('resize', (specs, ret, iframe) => {
         if (iframe && specs) {
@@ -67,6 +79,7 @@ const init = (register: RegisterListeners) => {
                 // See https://trello.com/c/TtuGq6Iy
                 return null;
             }
+            removeAnyOutstreamClass(adSlot);
             const iframeContainer =
                 iframe && iframe.closest('.ad-slot__content');
             return resize(specs, iframe, iframeContainer, adSlot);
