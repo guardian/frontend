@@ -18,7 +18,7 @@ import views.support.{AffiliateLinksCleaner, ImageProfile, ImageUrlSigner, ImgSr
 
 sealed trait PageElement
 case class TextBlockElement(html: String) extends PageElement
-case class HeadingBlockElement(html: String) extends PageElement
+case class SubheadingBlockElement(html: String) extends PageElement
 case class TweetBlockElement(html: String, url: String, id: String, hasMedia: Boolean, role: Role) extends PageElement
 case class PullquoteBlockElement(html: Option[String], role: Role) extends PageElement
 case class ImageBlockElement(media: ImageMedia, data: Map[String, String], displayCredit: Option[Boolean], role: Role, imageSources: Seq[ImageSource]) extends PageElement
@@ -107,7 +107,7 @@ object PageElement {
           }
         } else {
           val heading = doc.getElementsByTag("h2").html()
-          HeadingBlockElement(heading)
+          SubheadingBlockElement(heading)
         }
       }
 
@@ -263,7 +263,7 @@ object PageElement {
 
   implicit val imageWeightingWrites: Writes[ImageSource] = Json.writes[ImageSource]
   implicit val textBlockElementWrites: Writes[TextBlockElement] = Json.writes[TextBlockElement]
-  implicit val headingBlockElementWrites: Writes[HeadingBlockElement] = Json.writes[HeadingBlockElement]
+  implicit val subheadingBlockElementWrites: Writes[SubheadingBlockElement] = Json.writes[SubheadingBlockElement]
   implicit val ImageBlockElementWrites: Writes[ImageBlockElement] = Json.writes[ImageBlockElement]
   implicit val AudioBlockElementWrites: Writes[AudioBlockElement] = Json.writes[AudioBlockElement]
   implicit val GuVideoBlockElementWrites: Writes[GuVideoBlockElement] = Json.writes[GuVideoBlockElement]
