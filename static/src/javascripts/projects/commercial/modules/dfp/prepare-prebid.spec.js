@@ -28,12 +28,6 @@ jest.mock('commercial/modules/prebid/bid-config', () => ({
     isInVariant: jest.fn(),
 }));
 
-jest.mock('lib/config', () => ({
-    page: {
-        hasPageSkin: false,
-    },
-}));
-
 const fakeUserAgent = (userAgent: string): void => {
     const userAgentObject = {};
     userAgentObject.get = () => userAgent;
@@ -89,7 +83,7 @@ describe('init', () => {
         dfpEnv.externalDemand = 'prebid';
         commercialFeatures.dfpAdvertising = true;
         commercialFeatures.adFree = false;
-        config.page.hasPageSkin = true;
+        config.set('page.hasPageSkin', true);
         await setupPrebid();
         expect(prebid.initialise).not.toBeCalled();
     });
@@ -98,7 +92,7 @@ describe('init', () => {
         dfpEnv.externalDemand = 'prebid';
         commercialFeatures.dfpAdvertising = true;
         commercialFeatures.adFree = false;
-        config.page.hasPageSkin = false;
+        config.set('page.hasPageSkin', true);
         await setupPrebid();
         expect(prebid.initialise).toBeCalled();
     });
