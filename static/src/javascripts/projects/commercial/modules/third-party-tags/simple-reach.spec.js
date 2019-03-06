@@ -3,6 +3,12 @@ import { simpleReach } from './simple-reach';
 
 const { shouldRun, url } = simpleReach;
 
+/**
+ * we have to mock config like this because
+ * loading simple-reach has side affects
+ * that are dependent on config.
+ * */
+
 jest.mock('lib/config', () => {
     const defaultConfig = {
         switches: {

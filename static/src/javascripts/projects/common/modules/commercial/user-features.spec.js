@@ -14,30 +14,13 @@ import {
     getDaysSinceLastOneOffContribution,
     isRecentOneOffContributor,
 } from './user-features.js';
+import config from 'lib/config';
 
 jest.mock('lib/raven');
 jest.mock('projects/common/modules/identity/api', () => ({
     isUserLoggedIn: jest.fn(),
 }));
 jest.mock('lib/fetch-json', () => jest.fn(() => Promise.resolve()));
-jest.mock('lib/config', () => {
-    const defaultConfig = {
-        switches: {
-            adFreeStrictExpiryEnforcement: true,
-        },
-        page: {
-            userAttributesApiUrl: '',
-        },
-    };
-
-    return Object.assign({}, defaultConfig, {
-        get: (path: string = '', defaultValue: any) =>
-            path
-                .replace(/\[(.+?)\]/g, '.$1')
-                .split('.')
-                .reduce((o, key) => o[key], defaultConfig) || defaultValue,
-    });
-});
 
 const fetchJsonSpy: any = fetchJson;
 const isUserLoggedIn: any = isUserLoggedIn_;
@@ -93,6 +76,11 @@ const deleteAllFeaturesData = () => {
     removeCookie(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE);
     removeCookie(PERSISTENCE_KEYS.ACTION_REQUIRED_FOR_COOKIE);
 };
+
+beforeAll(() => {
+    config.set('switches.adFreeStrictExpiryEnforcement', true);
+    config.set('page.userAttributesApiUrl', '');
+});
 
 describe('Refreshing the features data', () => {
     describe('If user signed in', () => {

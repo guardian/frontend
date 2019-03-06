@@ -23,13 +23,6 @@ const isUserLoggedIn: any = isUserLoggedIn_;
 
 const CommercialFeatures = commercialFeatures.constructor;
 
-// jest.mock('lib/config', () => ({
-//     switches: {},
-//     page: {},
-//     hasTone: jest.fn(),
-//     get: jest.fn(() => ''),
-// }));
-
 jest.mock('common/modules/commercial/user-features', () => ({
     isPayingMember: jest.fn(),
     isRecentOneOffContributor: jest.fn(),
@@ -61,30 +54,11 @@ describe('Commercial features', () => {
             showRelatedContent: true,
         });
 
-        // page = {
-        //     contentType: 'Article',
-        //     isMinuteArticle: false,
-        //     section: 'politics',
-        //     pageId: 'politics-article',
-        //     shouldHideAdverts: false,
-        //     shouldHideReaderRevenue: false,
-        //     isFront: false,
-        //     showRelatedContent: true,
-        // };
-
         config.set('switches', {
             outbrain: true,
             commercial: true,
             enableDiscussionSwitch: true,
         });
-
-        // switches = {
-        //     outbrain: true,
-        //     commercial: true,
-        //     enableDiscussionSwitch: true,
-        // };
-
-        // config.get.mockReturnValue('');
 
         window.location.hash = '';
 
