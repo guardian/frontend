@@ -378,7 +378,7 @@ const countryGroups: CountryGroups = {
 
 // These are the different 'country groups' we accept when taking payment.
 // See https://github.com/guardian/support-internationalisation/blob/master/src/main/scala/com/gu/i18n/CountryGroup.scala for more context.
-const countryToSupporterCountryGroup = (
+const countryCodeToCountryGroupId = (
     countryCode: string
 ): CountryGroupId => {
     const availableCountryGroups = Object.keys(countryGroups);
@@ -391,10 +391,10 @@ const countryToSupporterCountryGroup = (
     return response || 'International';
 };
 
-const countryToSupportInternationalisationId = (
+const countryCodeToSupportInternationalisationId = (
     countryCode: string
 ): SupportInternationalisationId =>
-    countryGroups[countryToSupporterCountryGroup(countryCode)]
+    countryGroups[countryCodeToCountryGroupId(countryCode)]
         .supportInternationalisationId;
 
 const extendedCurrencySymbol = {
@@ -408,12 +408,12 @@ const extendedCurrencySymbol = {
 };
 
 const getLocalCurrencySymbol = (): string =>
-    extendedCurrencySymbol[countryToSupporterCountryGroup(getSync())] || '£';
+    extendedCurrencySymbol[countryCodeToCountryGroupId(getSync())] || '£';
 
 export {
     get,
-    countryToSupporterCountryGroup,
-    countryToSupportInternationalisationId,
+    countryCodeToCountryGroupId,
+    countryCodeToSupportInternationalisationId,
     getSync,
     getLocalCurrencySymbol,
     init,

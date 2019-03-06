@@ -1,6 +1,6 @@
 // @flow
 import {
-    countryToSupportInternationalisationId,
+    countryCodeToSupportInternationalisationId,
     getSync,
 } from 'lib/geolocation';
 
@@ -20,12 +20,12 @@ const supportSubscribeGeoRedirectURL =
 const supportContributeLocalURL = (): string =>
     addCountryGroupToSupportLink(
         supportContributeGeoRedirectURL,
-        countryToSupportInternationalisationId(getSync())
+        countryCodeToSupportInternationalisationId(getSync())
     );
 const supportSubscribeLocalURL = (): string =>
     addCountryGroupToSupportLink(
         supportSubscribeGeoRedirectURL,
-        countryToSupportInternationalisationId(getSync())
+        countryCodeToSupportInternationalisationId(getSync())
     );
 
 export {

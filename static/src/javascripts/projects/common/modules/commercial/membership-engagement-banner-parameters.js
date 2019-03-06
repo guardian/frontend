@@ -4,7 +4,7 @@ import { getEngagementBannerControlFromGoogleDoc } from 'common/modules/commerci
 import config from 'lib/config';
 import reportError from 'lib/report-error';
 import {
-    countryToSupportInternationalisationId,
+    countryCodeToSupportInternationalisationId,
     getLocalCurrencySymbol,
     getSync,
 } from 'lib/geolocation';
@@ -49,7 +49,7 @@ const getAcquisitionsBannerParams = (
         buttonCaption: firstRow.buttonCaption,
         linkUrl: addCountryGroupToSupportLink(
             firstRow.linkUrl,
-            countryToSupportInternationalisationId(getSync())
+            countryCodeToSupportInternationalisationId(getSync())
         ),
         hasTicker: false,
         campaignCode: 'control_banner_from_google_doc',

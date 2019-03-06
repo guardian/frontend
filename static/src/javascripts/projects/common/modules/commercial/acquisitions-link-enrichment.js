@@ -1,7 +1,7 @@
 // @flow
 import { addReferrerData } from 'common/modules/commercial/acquisitions-ophan';
 import {
-    countryToSupportInternationalisationId,
+    countryCodeToSupportInternationalisationId,
     get as getGeolocation,
 } from 'lib/geolocation';
 import { addCountryGroupToSupportLink } from 'common/modules/commercial/support-utilities';
@@ -57,7 +57,7 @@ const ACQUISITION_LINK_CLASS = 'js-acquisition-link';
 
 const makeAcquisitionLinksRegionSpecific = (): Promise<void> =>
     getGeolocation().then(countryCode => {
-        const supportInternationalisationId = countryToSupportInternationalisationId(
+        const supportInternationalisationId = countryCodeToSupportInternationalisationId(
             countryCode
         );
         const links = Array.from(
