@@ -1,12 +1,10 @@
 // @flow
-import { acquisitionsBannerControlTemplate } from 'common/modules/commercial/templates/acquisitions-banner-control';
-
-// @flow
 import config from 'lib/config';
 import reportError from 'lib/report-error';
-import { getLocalCurrencySymbol } from 'lib/geolocation';
+import { countryToSupportInternationalisationId, getLocalCurrencySymbol, getSync } from 'lib/geolocation';
+import { supportContributeURL, addCountryGroupToSupportLink } from './support-utilities';
+import { acquisitionsBannerControlTemplate } from 'common/modules/commercial/templates/acquisitions-banner-control';
 import { getEngagementBannerControlFromGoogleDoc } from 'common/modules/commercial/contributions-google-docs';
-import { supportContributeURL } from './support-utilities';
 
 const fallbackCopy: string = `<strong>The Guardian is editorially independent &ndash;
     our journalism is free from the influence of billionaire owners or politicians.
@@ -42,7 +40,10 @@ const getAcquisitionsBannerParams = (
         messageText: firstRow.messageText,
         ctaText,
         buttonCaption: firstRow.buttonCaption,
-        linkUrl: firstRow.linkUrl,
+        linkUrl: addCountryGroupToSupportLink(
+            firstRow.linkUrl,
+            countryToSupportInternationalisationId(getSync())
+        ),
         hasTicker: false,
         campaignCode: 'control_banner_from_google_doc',
         pageviewId: config.get('ophan.pageViewId', 'not_found'),

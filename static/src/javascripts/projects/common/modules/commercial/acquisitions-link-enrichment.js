@@ -1,10 +1,8 @@
 // @flow
 import { addReferrerData } from 'common/modules/commercial/acquisitions-ophan';
 import fastdom from 'lib/fastdom-promise';
-import {
-    get as getGeolocation,
-    countryToSupportInternationalisationId,
-} from 'lib/geolocation';
+import { countryToSupportInternationalisationId, get as getGeolocation, } from 'lib/geolocation';
+import { addCountryGroupToSupportLink } from 'common/modules/commercial/support-utilities';
 
 // Currently the only acquisition components on the site are
 // from the Mother Load campaign and the Wide Brown Land campaign.
@@ -53,18 +51,9 @@ const addReferrerDataToAcquisitionLink = (rawUrl: string): string => {
     return url.toString();
 };
 
-const addCountryGroupToContributionLink = (
-    rawUrl: string,
-    countryGroup: string
-): string =>
-    rawUrl.replace(
-        'support.theguardian.com/contribute',
-        `support.theguardian.com/${countryGroup.toLowerCase()}/contribute`
-    );
-
 const ACQUISITION_LINK_CLASS = 'js-acquisition-link';
 
-const makeContributionLinksRegionSpecific = (): Promise<void> =>
+const makeAcquisitionLinksRegionSpecific = (): Promise<void> =>
     getGeolocation().then(countryCode => {
         const supportInternationalisationId = countryToSupportInternationalisationId(
             countryCode
@@ -76,15 +65,13 @@ const makeContributionLinksRegionSpecific = (): Promise<void> =>
         links.forEach(el => {
             const link = el.getAttribute('href');
             if (link) {
-                fastdom.write(() => {
-                    el.setAttribute(
-                        'href',
-                        addCountryGroupToContributionLink(
-                            link,
-                            supportInternationalisationId
-                        )
-                    );
-                });
+                el.setAttribute(
+                    'href',
+                    addCountryGroupToSupportLink(
+                        link,
+                        supportInternationalisationId
+                    )
+                );
             }
         });
     });
@@ -95,18 +82,13 @@ const addReferrerDataToAcquisitionLinksOnPage = (): void => {
     );
 
     links.forEach(el => {
-        fastdom
-            .read(() => el.getAttribute('href'))
-            .then(link => {
-                if (link) {
-                    fastdom.write(() => {
-                        el.setAttribute(
-                            'href',
-                            addReferrerDataToAcquisitionLink(link)
-                        );
-                    });
-                }
-            });
+        const link = el.getAttribute('href');
+        if (link) {
+            el.setAttribute(
+                'href',
+                addReferrerDataToAcquisitionLink(link)
+            );
+        }
     });
 };
 
@@ -158,5 +140,5 @@ const addReferrerDataToAcquisitionLinksInInteractiveIframes = (): void => {
 export const init = (): void => {
     addReferrerDataToAcquisitionLinksInInteractiveIframes();
     addReferrerDataToAcquisitionLinksOnPage();
-    makeContributionLinksRegionSpecific();
+    makeAcquisitionLinksRegionSpecific();
 };

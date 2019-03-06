@@ -33,7 +33,7 @@ import { epicButtonsTemplate } from 'common/modules/commercial/templates/acquisi
 import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templates/acquisitions-epic-control';
 import { epicLiveBlogTemplate } from 'common/modules/commercial/templates/acquisitions-epic-liveblog';
 import { userIsSupporter } from 'common/modules/commercial/user-features';
-import { supportContributeURL } from 'common/modules/commercial/support-utilities';
+import { supportContributeURL, supportSubscribeGeoRedirectURL } from 'common/modules/commercial/support-utilities';
 import { awaitEpicButtonClicked } from 'common/modules/commercial/epic/epic-utils';
 import { setupEpicInLiveblog } from 'common/modules/commercial/contributions-liveblog-utilities';
 import {
@@ -219,7 +219,7 @@ const makeEpicABTestVariant = (
             },
         }),
         subscribeURL: addTrackingCodesToUrl({
-            base: 'https://support.theguardian.com/subscribe',
+            base: supportSubscribeGeoRedirectURL,
             componentType: parentTest.componentType,
             componentId,
             campaignCode,
