@@ -67,6 +67,15 @@ export type CountryGroupId =
     | 'NZDCountries'
     | 'Canada';
 
+export type SupportInternationalisationId =
+    | 'uk'
+    | 'us'
+    | 'au'
+    | 'eu'
+    | 'int'
+    | 'nz'
+    | 'ca';
+
 /*
   Note: supportInternationalizationId should match an existing
   id from support-internationalisation library. We use it to
@@ -80,7 +89,7 @@ export type CountryGroup = {
     name: string,
     currency: IsoCurrency,
     countries: string[],
-    supportInternationalisationId: string,
+    supportInternationalisationId: SupportInternationalisationId,
 };
 
 type CountryGroups = {
@@ -369,19 +378,20 @@ const countryGroups: CountryGroups = {
 
 // These are the different 'country groups' we accept when taking payment.
 // See https://github.com/guardian/support-internationalisation/blob/master/src/main/scala/com/gu/i18n/CountryGroup.scala for more context.
-const getSupporterCountryGroup = (location: string): CountryGroupId => {
+const countryToSupporterCountryGroup = (countryCode: string): CountryGroupId => {
     const availableCountryGroups = Object.keys(countryGroups);
     let response = null;
     availableCountryGroups.forEach(countryGroup => {
-        if (countryGroups[countryGroup].countries.includes(location)) {
+        if (countryGroups[countryGroup].countries.includes(countryCode)) {
             response = countryGroup;
         }
     });
     return response || 'International';
 };
 
-const getSupportInternationalisationIdSync = (): string =>
-    countryGroups[getSupporterCountryGroup(getSync())].supportInternationalisationId;
+const countryToSupportInternationalisationId = (countryCode: string): SupportInternationalisationId =>
+    countryGroups[countryToSupporterCountryGroup(countryCode)].supportInternationalisationId;
+
 
 const extendedCurrencySymbol = {
     GBPCountries: '£',
@@ -394,12 +404,12 @@ const extendedCurrencySymbol = {
 };
 
 const getLocalCurrencySymbol = (): string =>
-    extendedCurrencySymbol[getSupporterCountryGroup(getSync())] || '£';
+    extendedCurrencySymbol[countryToSupporterCountryGroup(getSync())] || '£';
 
 export {
     get,
-    getSupporterCountryGroup,
-    getSupportInternationalisationIdSync,
+    countryToSupporterCountryGroup,
+    countryToSupportInternationalisationId,
     getSync,
     getLocalCurrencySymbol,
     init,

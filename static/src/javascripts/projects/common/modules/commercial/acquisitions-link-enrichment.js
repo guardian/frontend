@@ -1,6 +1,7 @@
 // @flow
 import { addReferrerData } from 'common/modules/commercial/acquisitions-ophan';
 import fastdom from 'lib/fastdom-promise';
+import { get as getGeolocation, countryToSupportInternationalisationId } from 'lib/geolocation';
 
 // Currently the only acquisition components on the site are
 // from the Mother Load campaign and the Wide Brown Land campaign.
@@ -49,7 +50,34 @@ const addReferrerDataToAcquisitionLink = (rawUrl: string): string => {
     return url.toString();
 };
 
+const addCountryGroupToAcquisitionLink = (rawUrl: string, countryGroup: string): string =>
+    rawUrl.replace(
+        'support.theguardian.com/contribute',
+        `support.theguardian.com/${countryGroup.toLowerCase()}/contribute`
+    );
+
 const ACQUISITION_LINK_CLASS = 'js-acquisition-link';
+
+const makeAcquisitionLinksRegionSpecific = (): Promise<void> =>
+    getGeolocation().then(countryCode => {
+        const supportInternationalisationId = countryToSupportInternationalisationId(countryCode);
+        const links = Array.from(
+            document.getElementsByClassName(ACQUISITION_LINK_CLASS)
+        );
+
+        links.forEach(el => {
+            const link = el.getAttribute('href');
+            if (link) {
+                fastdom.write(() => {
+                    el.setAttribute(
+                        'href',
+                        addCountryGroupToAcquisitionLink(link, supportInternationalisationId)
+                    );
+                });
+            }
+        });
+    });
+
 
 const addReferrerDataToAcquisitionLinksOnPage = (): void => {
     const links = Array.from(
@@ -120,4 +148,5 @@ const addReferrerDataToAcquisitionLinksInInteractiveIframes = (): void => {
 export const init = (): void => {
     addReferrerDataToAcquisitionLinksInInteractiveIframes();
     addReferrerDataToAcquisitionLinksOnPage();
+    makeAcquisitionLinksRegionSpecific();
 };

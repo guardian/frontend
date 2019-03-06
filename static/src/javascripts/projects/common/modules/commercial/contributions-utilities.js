@@ -20,7 +20,7 @@ import mediator from 'lib/mediator';
 import {
     getLocalCurrencySymbol,
     getSync as geolocationGetSync,
-    getSupporterCountryGroup,
+    countryToSupporterCountryGroup,
 } from 'lib/geolocation';
 import {
     splitAndTrim,
@@ -173,7 +173,7 @@ const pageMatchesTags = (tagIds: string[]): boolean =>
     );
 
 const userMatchesCountryGroups = (countryGroups: string[]) => {
-    const userCountryGroupId = getSupporterCountryGroup(
+    const userCountryGroupId = countryToSupporterCountryGroup(
         geolocationGetSync()
     ).toUpperCase();
     return countryGroups.some(
