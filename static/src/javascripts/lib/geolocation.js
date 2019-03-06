@@ -378,7 +378,9 @@ const countryGroups: CountryGroups = {
 
 // These are the different 'country groups' we accept when taking payment.
 // See https://github.com/guardian/support-internationalisation/blob/master/src/main/scala/com/gu/i18n/CountryGroup.scala for more context.
-const countryToSupporterCountryGroup = (countryCode: string): CountryGroupId => {
+const countryToSupporterCountryGroup = (
+    countryCode: string
+): CountryGroupId => {
     const availableCountryGroups = Object.keys(countryGroups);
     let response = null;
     availableCountryGroups.forEach(countryGroup => {
@@ -389,9 +391,11 @@ const countryToSupporterCountryGroup = (countryCode: string): CountryGroupId => 
     return response || 'International';
 };
 
-const countryToSupportInternationalisationId = (countryCode: string): SupportInternationalisationId =>
-    countryGroups[countryToSupporterCountryGroup(countryCode)].supportInternationalisationId;
-
+const countryToSupportInternationalisationId = (
+    countryCode: string
+): SupportInternationalisationId =>
+    countryGroups[countryToSupporterCountryGroup(countryCode)]
+        .supportInternationalisationId;
 
 const extendedCurrencySymbol = {
     GBPCountries: '£',

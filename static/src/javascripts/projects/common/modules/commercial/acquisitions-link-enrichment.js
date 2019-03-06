@@ -1,7 +1,10 @@
 // @flow
 import { addReferrerData } from 'common/modules/commercial/acquisitions-ophan';
 import fastdom from 'lib/fastdom-promise';
-import { get as getGeolocation, countryToSupportInternationalisationId } from 'lib/geolocation';
+import {
+    get as getGeolocation,
+    countryToSupportInternationalisationId,
+} from 'lib/geolocation';
 
 // Currently the only acquisition components on the site are
 // from the Mother Load campaign and the Wide Brown Land campaign.
@@ -50,7 +53,10 @@ const addReferrerDataToAcquisitionLink = (rawUrl: string): string => {
     return url.toString();
 };
 
-const addCountryGroupToContributionLink = (rawUrl: string, countryGroup: string): string =>
+const addCountryGroupToContributionLink = (
+    rawUrl: string,
+    countryGroup: string
+): string =>
     rawUrl.replace(
         'support.theguardian.com/contribute',
         `support.theguardian.com/${countryGroup.toLowerCase()}/contribute`
@@ -60,7 +66,9 @@ const ACQUISITION_LINK_CLASS = 'js-acquisition-link';
 
 const makeContributionLinksRegionSpecific = (): Promise<void> =>
     getGeolocation().then(countryCode => {
-        const supportInternationalisationId = countryToSupportInternationalisationId(countryCode);
+        const supportInternationalisationId = countryToSupportInternationalisationId(
+            countryCode
+        );
         const links = Array.from(
             document.getElementsByClassName(ACQUISITION_LINK_CLASS)
         );
@@ -71,13 +79,15 @@ const makeContributionLinksRegionSpecific = (): Promise<void> =>
                 fastdom.write(() => {
                     el.setAttribute(
                         'href',
-                        addCountryGroupToContributionLink(link, supportInternationalisationId)
+                        addCountryGroupToContributionLink(
+                            link,
+                            supportInternationalisationId
+                        )
                     );
                 });
             }
         });
     });
-
 
 const addReferrerDataToAcquisitionLinksOnPage = (): void => {
     const links = Array.from(
