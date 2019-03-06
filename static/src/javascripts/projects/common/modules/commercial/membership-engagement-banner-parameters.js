@@ -1,10 +1,17 @@
 // @flow
-import config from 'lib/config';
-import reportError from 'lib/report-error';
-import { countryToSupportInternationalisationId, getLocalCurrencySymbol, getSync } from 'lib/geolocation';
-import { supportContributeURL, addCountryGroupToSupportLink } from './support-utilities';
 import { acquisitionsBannerControlTemplate } from 'common/modules/commercial/templates/acquisitions-banner-control';
 import { getEngagementBannerControlFromGoogleDoc } from 'common/modules/commercial/contributions-google-docs';
+import config from 'lib/config';
+import reportError from 'lib/report-error';
+import {
+    countryToSupportInternationalisationId,
+    getLocalCurrencySymbol,
+    getSync,
+} from 'lib/geolocation';
+import {
+    supportContributeLocalURL,
+    addCountryGroupToSupportLink,
+} from './support-utilities';
 
 const fallbackCopy: string = `<strong>The Guardian is editorially independent &ndash;
     our journalism is free from the influence of billionaire owners or politicians.
@@ -75,7 +82,7 @@ export const getControlEngagementBannerParams = (): Promise<EngagementBannerPara
                 messageText: fallbackCopy,
                 ctaText: `<span class="engagement-banner__highlight"> Support The Guardian from as little as ${getLocalCurrencySymbol()}1</span>`,
                 buttonCaption: 'Support The Guardian',
-                linkUrl: supportContributeURL(),
+                linkUrl: supportContributeLocalURL(),
                 hasTicker: false,
                 campaignCode: 'fallback_hardcoded_banner',
                 pageviewId: config.get('ophan.pageViewId', 'not_found'),

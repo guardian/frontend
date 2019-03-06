@@ -1,7 +1,9 @@
 // @flow
 import { addReferrerData } from 'common/modules/commercial/acquisitions-ophan';
-import fastdom from 'lib/fastdom-promise';
-import { countryToSupportInternationalisationId, get as getGeolocation, } from 'lib/geolocation';
+import {
+    countryToSupportInternationalisationId,
+    get as getGeolocation,
+} from 'lib/geolocation';
 import { addCountryGroupToSupportLink } from 'common/modules/commercial/support-utilities';
 
 // Currently the only acquisition components on the site are
@@ -84,10 +86,7 @@ const addReferrerDataToAcquisitionLinksOnPage = (): void => {
     links.forEach(el => {
         const link = el.getAttribute('href');
         if (link) {
-            el.setAttribute(
-                'href',
-                addReferrerDataToAcquisitionLink(link)
-            );
+            el.setAttribute('href', addReferrerDataToAcquisitionLink(link));
         }
     });
 };

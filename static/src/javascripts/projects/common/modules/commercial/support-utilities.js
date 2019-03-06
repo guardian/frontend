@@ -1,5 +1,8 @@
 // @flow
-import { countryToSupportInternationalisationId, getSync, } from 'lib/geolocation';
+import {
+    countryToSupportInternationalisationId,
+    getSync,
+} from 'lib/geolocation';
 
 const addCountryGroupToSupportLink = (
     rawUrl: string,
@@ -14,20 +17,21 @@ const supportContributeGeoRedirectURL =
     'https://support.theguardian.com/contribute';
 const supportSubscribeGeoRedirectURL =
     'https://support.theguardian.com/subscribe';
-const supportContributeURL = (): string =>
+const supportContributeLocalURL = (): string =>
     addCountryGroupToSupportLink(
         supportContributeGeoRedirectURL,
         countryToSupportInternationalisationId(getSync())
     );
-const supportSubscribeURL = (): string =>
+const supportSubscribeLocalURL = (): string =>
     addCountryGroupToSupportLink(
         supportSubscribeGeoRedirectURL,
         countryToSupportInternationalisationId(getSync())
     );
 
 export {
-    supportContributeURL,
     supportContributeGeoRedirectURL,
     supportSubscribeGeoRedirectURL,
-    addCountryGroupToSupportLink
+    supportContributeLocalURL,
+    supportSubscribeLocalURL,
+    addCountryGroupToSupportLink,
 };

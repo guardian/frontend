@@ -33,7 +33,10 @@ import { epicButtonsTemplate } from 'common/modules/commercial/templates/acquisi
 import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templates/acquisitions-epic-control';
 import { epicLiveBlogTemplate } from 'common/modules/commercial/templates/acquisitions-epic-liveblog';
 import { userIsSupporter } from 'common/modules/commercial/user-features';
-import { supportContributeURL, supportSubscribeGeoRedirectURL } from 'common/modules/commercial/support-utilities';
+import {
+    supportContributeLocalURL,
+    supportSubscribeGeoRedirectURL,
+} from 'common/modules/commercial/support-utilities';
 import { awaitEpicButtonClicked } from 'common/modules/commercial/epic/epic-utils';
 import { setupEpicInLiveblog } from 'common/modules/commercial/contributions-liveblog-utilities';
 import {
@@ -209,7 +212,7 @@ const makeEpicABTestVariant = (
         }`,
         campaignCode,
         supportURL: addTrackingCodesToUrl({
-            base: supportContributeURL(),
+            base: supportContributeLocalURL(),
             componentType: parentTest.componentType,
             componentId,
             campaignCode,
