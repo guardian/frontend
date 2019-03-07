@@ -1,6 +1,6 @@
 package dfp
 
-import com.google.api.ads.dfp.axis.v201802._
+import com.google.api.ads.admanager.axis.v201902._
 import common.Logging
 import org.joda.time.{DateTime => JodaDateTime, DateTimeZone}
 
@@ -30,7 +30,7 @@ private[dfp] object ApiHelper extends Logging {
       time.getHour,
       time.getMinute,
       time.getSecond,
-      DateTimeZone.forID(time.getTimeZoneID)
+      DateTimeZone.forID(time.getTimeZoneId)
     )
   }
 

@@ -1,12 +1,12 @@
 package dfp
 
-import com.google.api.ads.dfp.axis.factory.DfpServices
-import com.google.api.ads.dfp.axis.v201802._
-import com.google.api.ads.dfp.lib.client.DfpSession
+import com.google.api.ads.admanager.axis.factory.AdManagerServices
+import com.google.api.ads.admanager.axis.v201902._
+import com.google.api.ads.admanager.lib.client.AdManagerSession
 
-private[dfp] class ServicesWrapper(session: DfpSession) {
+private[dfp] class ServicesWrapper(session: AdManagerSession) {
 
-  private val dfpServices = new DfpServices
+  private val dfpServices = new AdManagerServices
 
   lazy val lineItemService = dfpServices.get(session, classOf[LineItemServiceInterface])
 

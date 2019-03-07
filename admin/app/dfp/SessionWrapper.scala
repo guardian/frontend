@@ -2,9 +2,9 @@ package dfp
 
 import com.google.api.ads.common.lib.auth.OfflineCredentials
 import com.google.api.ads.common.lib.auth.OfflineCredentials.Api
-import com.google.api.ads.dfp.axis.utils.v201802.{ReportDownloader, StatementBuilder}
-import com.google.api.ads.dfp.axis.v201802._
-import com.google.api.ads.dfp.lib.client.DfpSession
+import com.google.api.ads.admanager.axis.utils.v201902.{ReportDownloader, StatementBuilder}
+import com.google.api.ads.admanager.axis.v201902._
+import com.google.api.ads.admanager.lib.client.AdManagerSession
 import com.google.common.io.CharSource
 import common.Logging
 import conf.{AdminConfiguration, Configuration}
@@ -14,7 +14,7 @@ import collection.JavaConverters._
 
 import scala.util.control.NonFatal
 
-private[dfp] class SessionWrapper(dfpSession: DfpSession) {
+private[dfp] class SessionWrapper(dfpSession: AdManagerSession) {
 
   private val services = new ServicesWrapper(dfpSession)
 
@@ -210,11 +210,11 @@ object SessionWrapper extends Logging {
         appName <- AdminConfiguration.dfpApi.appName
       } yield {
         val credential = new OfflineCredentials.Builder()
-                         .forApi(Api.DFP)
+                         .forApi(Api.AD_MANAGER)
                          .withClientSecrets(clientId, clientSecret)
                          .withRefreshToken(refreshToken)
                          .build().generateCredential()
-        new DfpSession.Builder()
+        new AdManagerSession.Builder()
         .withOAuth2Credential(credential)
         .withApplicationName(appName)
         .withNetworkCode(networkId.getOrElse(Configuration.commercial.dfpAccountId))
