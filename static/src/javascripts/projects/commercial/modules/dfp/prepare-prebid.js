@@ -27,7 +27,7 @@ const setupPrebid: () => Promise<void> = () =>
             dfpEnv.externalDemand === 'prebid' &&
             commercialFeatures.dfpAdvertising &&
             !commercialFeatures.adFree &&
-            !config.page.hasPageSkin &&
+            !config.get('page.hasPageSkin') &&
             !isGoogleProxy()
         ) {
             buildPageTargeting();

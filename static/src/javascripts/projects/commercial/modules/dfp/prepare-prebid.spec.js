@@ -92,7 +92,7 @@ describe('init', () => {
         dfpEnv.externalDemand = 'prebid';
         commercialFeatures.dfpAdvertising = true;
         commercialFeatures.adFree = false;
-        config.set('page.hasPageSkin', true);
+        config.set('page.hasPageSkin', false);
         await setupPrebid();
         expect(prebid.initialise).toBeCalled();
     });
