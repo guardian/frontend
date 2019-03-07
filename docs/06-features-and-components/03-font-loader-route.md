@@ -36,7 +36,7 @@ Below is an example code snippet that can be included inline on you site, this m
      var loadFonts = function() {
        var iframe = document.createElement('iframe');
 
-       iframe.src = 'https://theguardian.com/font-loader';
+       iframe.src = 'https://www.theguardian.com/font-loader';
        iframe.style.display = 'none';
 
        // add iframe and wait for message
