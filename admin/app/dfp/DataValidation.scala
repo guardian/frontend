@@ -1,6 +1,6 @@
 package dfp
 
-import com.google.api.ads.dfp.axis.v201802._
+import com.google.api.ads.admanager.axis.v201902._
 import common.dfp._
 import dfp.ApiHelper.toSeq
 
