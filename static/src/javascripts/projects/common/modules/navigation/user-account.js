@@ -39,32 +39,28 @@ const showMyAccountIfNecessary = (): void => {
             ),
             commentItems: Array.from(
                 document.querySelectorAll('.js-show-comment-activity')
-            ),
-            accountTrigger: document.querySelector('.js-user-account-trigger'),
+            )
         }))
         .then(els => {
             const {
                 signIns,
                 accountActionsLists,
                 commentItems,
-                accountTrigger,
             } = els;
-
             return fastdom
                 .write(() => {
                     signIns.forEach(signIn => {
                         signIn.remove();
                     });
-
                     accountActionsLists.forEach(accountActions => {
                         accountActions.classList.remove('is-hidden');
                     });
-
-                    // We still want the button to be hidden, but tabbable now
-                    if (accountTrigger) {
+                    
+                    Array.from(
+                        document.querySelectorAll('.js-user-account-trigger')
+                    ).forEach(accountTrigger => {
                         accountTrigger.classList.remove('is-hidden');
-                        accountTrigger.classList.add('u-h');
-                    }
+                    })
                 })
                 .then(() => {
                     updateCommentLink(commentItems);
