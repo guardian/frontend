@@ -36,8 +36,8 @@ Below is an example code snippet that can be included inline on you site, this m
      var loadFonts = function() {
        var iframe = document.createElement('iframe');
 
-       iframe.src = 'http://localhost:9000/font-loader';
-       iframe.classList = 'guardianFontLoader';
+       iframe.src = 'https://theguardian.com/font-loader';
+       iframe.style.display = 'none';
 
        // add iframe and wait for message
        window.addEventListener('message', function(e) {
