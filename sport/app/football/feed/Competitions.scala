@@ -122,7 +122,7 @@ object CompetitionsProvider {
     Competition("700", "/football/world-cup-2018", "World Cup 2018", "World Cup 2018", "Internationals", showInTeamsList = true, tableDividers = List(2), startDate = Some(new LocalDate(2018, 6, 1))),
     Competition("701", "/football/world-cup-2018-qualifiers", "World Cup 2018 Qualifiers", "World Cup 2018 qual.", "Internationals", showInTeamsList = true, tableDividers = List(2)),
 
-    Competition("870", "/football/women-s-world-cup-2019", "Women's World Cup 2019", "Women's World Cup", "Internationals", showInTeamsList = true, tableDividers = List(2)),
+    Competition("870", "/football/women-s-world-cup-2019", "Women's World Cup 2019", "Women's World Cup", "Internationals", showInTeamsList = true, tableDividers = List(2), startDate =Some(new LocalDate(2019, 6, 7)) ),
     Competition("423", "/football/women-euro-2017", "Women's Euro 2017", "Women's Euro", "Internationals", showInTeamsList = true, tableDividers = List(2)),
     Competition("970", "/football/women-s-champions-league", "Women's Champions League", "Women's Champions League", "European"),
     Competition("333", "/football/womens-fa-cup", "Women's FA Cup", "Women's FA Cup", "English"),
