@@ -20,7 +20,7 @@ import mediator from 'lib/mediator';
 import {
     getLocalCurrencySymbol,
     getSync as geolocationGetSync,
-    getSupporterCountryGroup,
+    countryCodeToCountryGroupId,
 } from 'lib/geolocation';
 import {
     splitAndTrim,
@@ -33,7 +33,10 @@ import { epicButtonsTemplate } from 'common/modules/commercial/templates/acquisi
 import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templates/acquisitions-epic-control';
 import { epicLiveBlogTemplate } from 'common/modules/commercial/templates/acquisitions-epic-liveblog';
 import { userIsSupporter } from 'common/modules/commercial/user-features';
-import { supportContributeURL } from 'common/modules/commercial/support-utilities';
+import {
+    supportContributeURL,
+    supportSubscribeGeoRedirectURL,
+} from 'common/modules/commercial/support-utilities';
 import { awaitEpicButtonClicked } from 'common/modules/commercial/epic/epic-utils';
 import { setupEpicInLiveblog } from 'common/modules/commercial/contributions-liveblog-utilities';
 import {
@@ -173,7 +176,7 @@ const pageMatchesTags = (tagIds: string[]): boolean =>
     );
 
 const userMatchesCountryGroups = (countryGroups: string[]) => {
-    const userCountryGroupId = getSupporterCountryGroup(
+    const userCountryGroupId = countryCodeToCountryGroupId(
         geolocationGetSync()
     ).toUpperCase();
     return countryGroups.some(
@@ -209,7 +212,7 @@ const makeEpicABTestVariant = (
         }`,
         campaignCode,
         supportURL: addTrackingCodesToUrl({
-            base: supportContributeURL,
+            base: supportContributeURL(),
             componentType: parentTest.componentType,
             componentId,
             campaignCode,
@@ -219,7 +222,7 @@ const makeEpicABTestVariant = (
             },
         }),
         subscribeURL: addTrackingCodesToUrl({
-            base: 'https://support.theguardian.com/subscribe',
+            base: supportSubscribeGeoRedirectURL,
             componentType: parentTest.componentType,
             componentId,
             campaignCode,
