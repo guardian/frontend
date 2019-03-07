@@ -12,7 +12,6 @@ import org.apache.commons.math3.fraction.Fraction
 import org.apache.commons.math3.util.Precision
 import common.Environment.{app, awsRegion, stage}
 import play.api.libs.json.{Json, Writes}
-import views.support.EmailImage.width
 
 import Function.const
 
