@@ -150,6 +150,11 @@ const userIsInCorrectCohort = (
     }
 };
 
+const isValidCohort = (cohort: string): boolean =>
+    ['OnlyExistingSupporters', 'OnlyNonSupporters', 'Everyone'].includes(
+        cohort
+    );
+
 const shouldShowEpic = (test: EpicABTest): boolean => {
     const onCompatiblePage = test.pageCheck(config.get('page'));
 
@@ -497,6 +502,13 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                         ? rowWithAudience.audienceOffset
                         : 0;
 
+                    const rowWithUserCohort = rows.find(
+                        row => row.userCohort && isValidCohort(row.userCohort)
+                    );
+                    const userCohort = rowWithUserCohort
+                        ? rowWithUserCohort.userCohort
+                        : 'OnlyNonSupporters';
+
                     return makeEpicABTest({
                         id: testName,
                         campaignId: testName,
@@ -514,6 +526,7 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                         useLocalViewLog: rows.some(row =>
                             optionalStringToBoolean(row.useLocalViewLog)
                         ),
+                        userCohort,
                         ...(isLiveBlog
                             ? {
                                   template: liveBlogTemplate,
