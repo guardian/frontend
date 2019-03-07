@@ -7,7 +7,7 @@ import reportError from 'lib/report-error';
 import mediator from 'lib/mediator';
 
 import { epicButtonsTemplate } from 'common/modules/commercial/templates/acquisitions-epic-buttons';
-import { supportContributeLocalURL } from 'common/modules/commercial/support-utilities';
+import { supportContributeURL } from 'common/modules/commercial/support-utilities';
 import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templates/acquisitions-epic-control';
 import {
     addTrackingCodesToUrl,
@@ -47,7 +47,7 @@ const controlEpicComponent = (
             componentName: '', // TODO: confirm data-component not needed
             buttonTemplate: epicButtonsTemplate({
                 supportUrl: addTrackingCodesToUrl({
-                    base: supportContributeLocalURL(),
+                    base: supportContributeURL(),
                     componentType: epicComponentType,
                     componentId: epicId,
                     campaignCode: epicId,

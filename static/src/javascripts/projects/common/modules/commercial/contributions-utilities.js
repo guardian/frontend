@@ -34,7 +34,7 @@ import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templ
 import { epicLiveBlogTemplate } from 'common/modules/commercial/templates/acquisitions-epic-liveblog';
 import { userIsSupporter } from 'common/modules/commercial/user-features';
 import {
-    supportContributeLocalURL,
+    supportContributeURL,
     supportSubscribeGeoRedirectURL,
 } from 'common/modules/commercial/support-utilities';
 import { awaitEpicButtonClicked } from 'common/modules/commercial/epic/epic-utils';
@@ -212,7 +212,7 @@ const makeEpicABTestVariant = (
         }`,
         campaignCode,
         supportURL: addTrackingCodesToUrl({
-            base: supportContributeLocalURL(),
+            base: supportContributeURL(),
             componentType: parentTest.componentType,
             componentId,
             campaignCode,

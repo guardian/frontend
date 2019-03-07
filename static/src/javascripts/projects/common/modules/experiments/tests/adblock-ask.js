@@ -1,10 +1,10 @@
 // @flow
 import { userIsSupporter } from 'common/modules/commercial/user-features';
 import { pageShouldHideReaderRevenue } from 'common/modules/commercial/contributions-utilities';
-import { supportContributeLocalURL } from 'common/modules/commercial/support-utilities';
+import { supportContributeURL } from 'common/modules/commercial/support-utilities';
 import config from 'lib/config';
 
-const supportUrl = `${supportContributeLocalURL()}?acquisitionData=%7B%22componentType%22%3A%22ACQUISITIONS_OTHER%22%2C%22source%22%3A%22GUARDIAN_WEB%22%2C%22campaignCode%22%3A%22shady_pie_open_2019%22%2C%22componentId%22%3A%22shady_pie_open_2019%22%7D&INTCMP=shady_pie_open_2019`;
+const supportUrl = `${supportContributeURL()}?acquisitionData=%7B%22componentType%22%3A%22ACQUISITIONS_OTHER%22%2C%22source%22%3A%22GUARDIAN_WEB%22%2C%22campaignCode%22%3A%22shady_pie_open_2019%22%2C%22componentId%22%3A%22shady_pie_open_2019%22%7D&INTCMP=shady_pie_open_2019`;
 
 const askHtml = `
 <div class="contributions__adblock--moment">

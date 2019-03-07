@@ -5,7 +5,7 @@ import config from 'lib/config';
 import reportError from 'lib/report-error';
 import { getLocalCurrencySymbol } from 'lib/geolocation';
 import {
-    supportContributeLocalURL,
+    supportContributeURL,
     addCountryGroupToSupportLink,
 } from './support-utilities';
 
@@ -75,7 +75,7 @@ export const getControlEngagementBannerParams = (): Promise<EngagementBannerPara
                 messageText: fallbackCopy,
                 ctaText: `<span class="engagement-banner__highlight"> Support The Guardian from as little as ${getLocalCurrencySymbol()}1</span>`,
                 buttonCaption: 'Support The Guardian',
-                linkUrl: supportContributeLocalURL(),
+                linkUrl: supportContributeURL(),
                 hasTicker: false,
                 campaignCode: 'fallback_hardcoded_banner',
                 pageviewId: config.get('ophan.pageViewId', 'not_found'),

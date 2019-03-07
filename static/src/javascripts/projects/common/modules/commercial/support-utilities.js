@@ -26,15 +26,15 @@ const supportContributeGeoRedirectURL =
     'https://support.theguardian.com/contribute';
 const supportSubscribeGeoRedirectURL =
     'https://support.theguardian.com/subscribe';
-const supportContributeLocalURL = (): string =>
+const supportContributeURL = (): string =>
     addCountryGroupToSupportLink(supportContributeGeoRedirectURL);
-const supportSubscribeLocalURL = (): string =>
+const supportSubscribeURL = (): string =>
     addCountryGroupToSupportLink(supportSubscribeGeoRedirectURL);
 
 export {
     supportContributeGeoRedirectURL,
     supportSubscribeGeoRedirectURL,
-    supportContributeLocalURL,
-    supportSubscribeLocalURL,
+    supportContributeURL,
+    supportSubscribeURL,
     addCountryGroupToSupportLink,
 };
