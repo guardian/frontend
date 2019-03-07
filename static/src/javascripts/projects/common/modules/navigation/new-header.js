@@ -308,7 +308,10 @@ const returnFocusToButton = (btnId: string): void => {
         });
 };
 
-const genericToggleMenu = (menuClassName: string, triggerClassName: string): void => {
+const genericToggleMenu = (
+    menuClassName: string,
+    triggerClassName: string
+): void => {
     const menu: ?HTMLElement = document.querySelector(menuClassName);
 
     const trigger: ?HTMLElement = document.querySelector(triggerClassName);
@@ -321,10 +324,17 @@ const genericToggleMenu = (menuClassName: string, triggerClassName: string): voi
     }
 };
 
-const toggleEditionPicker = () => genericToggleMenu('.js-edition-dropdown-menu', '.js-edition-picker-trigger');
+const toggleEditionPicker = () =>
+    genericToggleMenu(
+        '.js-edition-dropdown-menu',
+        '.js-edition-picker-trigger'
+    );
 
-const toggleMyAccountMenu = () => genericToggleMenu('.js-user-account-dropdown-menu', '.js-user-account-trigger');
-
+const toggleMyAccountMenu = () =>
+    genericToggleMenu(
+        '.js-user-account-dropdown-menu',
+        '.js-user-account-trigger'
+    );
 
 const buttonClickHandlers = {
     [MENU_TOGGLE_ID]: toggleMenu,

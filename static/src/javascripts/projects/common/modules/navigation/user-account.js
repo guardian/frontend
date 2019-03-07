@@ -39,14 +39,10 @@ const showMyAccountIfNecessary = (): void => {
             ),
             commentItems: Array.from(
                 document.querySelectorAll('.js-show-comment-activity')
-            )
+            ),
         }))
         .then(els => {
-            const {
-                signIns,
-                accountActionsLists,
-                commentItems,
-            } = els;
+            const { signIns, accountActionsLists, commentItems } = els;
             return fastdom
                 .write(() => {
                     signIns.forEach(signIn => {
@@ -55,12 +51,12 @@ const showMyAccountIfNecessary = (): void => {
                     accountActionsLists.forEach(accountActions => {
                         accountActions.classList.remove('is-hidden');
                     });
-                    
+
                     Array.from(
                         document.querySelectorAll('.js-user-account-trigger')
                     ).forEach(accountTrigger => {
                         accountTrigger.classList.remove('is-hidden');
-                    })
+                    });
                 })
                 .then(() => {
                     updateCommentLink(commentItems);
