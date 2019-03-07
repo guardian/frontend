@@ -41,10 +41,13 @@ do you have fonts in localStorage?
     function loadFontsFromStorage() {
         try { // localStorage can fail for many reasons
             if ("localStorage" in window) {
-                // postFonts true for font-loader endpoint only
-                const postFonts = @postFonts.toString();
-                const fontsToPost = [];
-                let fontsToLoadCount;
+
+                // only include this block of JS if postFonts true
+                @if(postFonts) {
+                    let fontsToLoadCount;
+                    const fontsToPost = [];
+                    const inIframe = window.location !== window.parent.location;
+                }
 
                 const fontStorageKey = (fontName, fontHash = '') => `gu.fonts.${fontName}.${fontHash}`;
 
@@ -103,17 +106,22 @@ do you have fonts in localStorage?
                 function useFont(el, css, fontName) {
                     el.innerHTML = css;
 
-                    fontsToPost.push({
-                        fontName: fontName,
-                        css: css
-                    });
+                    // only include this block of JS if postFonts true
+                    @if(postFonts) {
+                        fontsToPost.push({
+                            fontName: fontName,
+                            css: css
+                        });
 
-                    // if all the fonts have loaded and postFonts true then post them to the parent
-                    if (postFonts && fontsToPost.length === fontsToLoadCount) {
-                        window.parent.postMessage({
-                            name:"guardianFonts",
-                            fonts: fontsToPost
-                        }, "*");
+                        console.log('********', fontsToPost.length);
+
+                        // if all the fonts have loaded and we're in an iframe post them to the parent
+                        if (fontsToPost.length === fontsToLoadCount && inIframe) {
+                            window.parent.postMessage({
+                                name: "guardianFonts",
+                                fonts: fontsToPost
+                            }, "*");
+                        }
                     }
                 }
 
@@ -154,7 +162,10 @@ do you have fonts in localStorage?
                 // are some style elements in the head, all identified by a .webfont class
                 const fonts = document.querySelectorAll('.webfont');
 
-                fontsToLoadCount = fonts.length;
+                // only include this block of JS if postFonts true
+                @if(postFonts) {
+                    fontsToLoadCount = fonts.length;
+                }
 
                 const urlAttribute = shouldHint ? `data-cache-file-hinted-${fontFormat}` : `data-cache-file-${fontFormat}`;
 
