@@ -79,12 +79,9 @@ $progress-bar-height: 10px;
     transition: transform 3s cubic-bezier(.25, .55, .2, .85);
 }
 
-.epic-ticker__progress .ticker__filled-progress-under {
-    background-color: #ffe500;
-}
-
+.epic-ticker__progress .ticker__filled-progress-under,
 .epic-ticker__progress .ticker__filled-progress-over {
-    background-color: #ff7f0f;
+    background-color: #ffe500;
 }
 
 .epic-ticker__goal-marker {
