@@ -113,8 +113,6 @@ do you have fonts in localStorage?
                             css: css
                         });
 
-                        console.log('********', fontsToPost.length);
-
                         // if all the fonts have loaded and we're in an iframe post them to the parent
                         if (fontsToPost.length === fontsToLoadCount && inIframe) {
                             window.parent.postMessage({
