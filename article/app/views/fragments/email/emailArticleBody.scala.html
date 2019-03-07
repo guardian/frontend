@@ -3,7 +3,7 @@
 @()(implicit page: PageWithStoryPackage, request: RequestHeader)
 
 @import views.support.{EmailImage, EmailVideoImage}
-@import views.support.EmailHelpers.{imgForArticle, icon}
+@import views.support.EmailHelpers.{imgForArticle, icon, imgForVideo}
 @import fragments.email._
 @import model.liveblog._
 @import model.EmailAddons.EmailContentType
@@ -189,11 +189,11 @@
                                         @asset.platform match {
                                             case MediaAssetPlatform.Youtube => {
                                                 <a href="https://www.youtube.com/watch?v=@asset.id">
-                                                @imgForArticle(imageUrl, Some(atom.title))
+                                                @imgForVideo(imageUrl, Some(atom.title))
                                                 </a>
                                             }
                                             case _ => {
-                                                @imgForArticle(imageUrl, Some(atom.title))
+                                                @imgForVideo(imageUrl, Some(atom.title))
                                             }
                                         }
                                     }

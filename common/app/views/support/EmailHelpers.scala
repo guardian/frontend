@@ -45,6 +45,7 @@ object EmailHelpers {
   }
 
   def imgForArticle: (String, Option[String]) => Html = img(EmailImage.knownWidth) _
+  def imgForVideo: (String, Option[String]) => Html = img(EmailVideoImage.knownWidth) _
 
   def imgForFront: (String, Option[String]) => Html = img(width=EmailImageParams.fullWidth) _
 

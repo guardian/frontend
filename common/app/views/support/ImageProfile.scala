@@ -12,6 +12,7 @@ import org.apache.commons.math3.fraction.Fraction
 import org.apache.commons.math3.util.Precision
 import common.Environment.{app, awsRegion, stage}
 import play.api.libs.json.{Json, Writes}
+import views.support.EmailImage.width
 
 import Function.const
 
@@ -215,11 +216,12 @@ object EmailImage extends ImageProfile(width = Some(EmailImageParams.articleFull
   val knownWidth: Int = width.get
 }
 
-object EmailVideoImage extends ImageProfile(width = Some(EmailImageParams.articleFullWidth), autoFormat = false) with OverlayBase64 {
+object EmailVideoImage extends ImageProfile(width = Some(EmailImageParams.videoFullWidth), autoFormat = false) with OverlayBase64 {
   override val qualityparam: String = EmailImage.qualityparam
   override val dprParam: String = EmailImageParams.dprParam
   val overlayAlignParam = "overlay-align=bottom,left"
   val overlayUrlParam = s"overlay-base64=${overlayUrlBase64("playx2.png")}"
+  val knownWidth: Int = width.get
 
   override def resizeString: String = {
     val params = Seq(widthParam, heightParam, qualityparam, autoParam, dprParam, overlayAlignParam, overlayUrlParam).filter(_.nonEmpty).mkString("&")
@@ -232,6 +234,7 @@ object EmailImageParams {
   val sharpenParam: String = "sharpen=a0.8,r1,t1"
   val fullWidth: Int = 500
   val articleFullWidth: Int = 580
+  val videoFullWidth: Int = 560
   val dprParam: String = "dpr=2"
 }
 
