@@ -1,6 +1,6 @@
-(function(window, document) {
+const fetchFonts = (window, document) => {
     const head = document.querySelector('head');
-    const useFont = function(font) {
+    const useFont = font => {
         if (font.css) {
             const style = document.createElement('style');
             style.innerHTML = font.css;
@@ -8,13 +8,13 @@
         }
     };
 
-    const loadFonts = function() {
+    const loadFonts = () => {
         const iframe = document.createElement('iframe');
         iframe.src = 'https://theguardian.com/font-loader';
         iframe.classList = 'guardianFontLoader';
         // add iframe and wait for message
         iframe.style.display = 'none';
-        window.addEventListener('message', function(e) {
+        window.addEventListener('message', e => {
             if (
                 e &&
                 e.data &&
@@ -29,4 +29,6 @@
         document.body.appendChild(iframe);
     };
     loadFonts();
-})(window, document);
+};
+
+export default fetchFonts;
