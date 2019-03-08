@@ -219,7 +219,7 @@ const makeEpicABTestVariant = (
         }`,
         campaignCode,
         supportURL: addTrackingCodesToUrl({
-            base: supportContributeURL(),
+            base: initVariant.supportBaseURL || supportContributeURL(),
             componentType: parentTest.componentType,
             componentId,
             campaignCode,
@@ -612,6 +612,7 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                                 ','
                             ),
                             showTicker: optionalStringToBoolean(row.showTicker),
+                            supportBaseURL: row.supportBaseURL,
                         })),
                     });
                 });

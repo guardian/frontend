@@ -95,6 +95,7 @@ declare type InitEpicABTestVariant = {
     copy?: AcquisitionsEpicTemplateCopy,
     classNames?: string[],
     showTicker?: boolean,
+    supportBaseURL?: string,
 };
 
 declare type InitBannerABTestVariant = {
