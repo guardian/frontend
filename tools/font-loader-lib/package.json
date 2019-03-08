@@ -1,0 +1,11 @@
+{
+  "name": "@guardian/font-loader",
+  "version": "1.0.0-alpha",
+  "description": "A script that inserts an iframe that points to the /font-loader endpoint on gu.com",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
