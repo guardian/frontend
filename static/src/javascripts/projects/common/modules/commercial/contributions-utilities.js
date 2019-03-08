@@ -49,6 +49,7 @@ import {
     isArticleWorthAnEpicImpression,
 } from 'common/modules/commercial/epic/epic-exclusion-rules';
 import { getControlEpicCopy } from 'common/modules/commercial/acquisitions-copy';
+import { initTicker } from 'common/modules/commercial/ticker';
 
 export type ReaderRevenueRegion =
     | 'united-kingdom'
@@ -96,6 +97,7 @@ const controlTemplate: EpicTemplate = (
               })
             : undefined,
         epicClassNames: variant.classNames,
+        showTicker: variant.showTicker,
     });
 
 const liveBlogTemplate: EpicTemplate = (
@@ -235,6 +237,7 @@ const makeEpicABTestVariant = (
         buttonTemplate: initVariant.buttonTemplate,
         copy: initVariant.copy,
         classNames: initVariant.classNames || [],
+        showTicker: initVariant.showTicker || false,
 
         countryGroups: initVariant.countryGroups || [],
         tagIds: initVariant.tagIds || [],
@@ -357,6 +360,10 @@ const makeEpicABTestVariant = (
                                             'register:end',
                                             trackingCampaignId
                                         );
+
+                                        if (initVariant.showTicker) {
+                                            initTicker('.js-epic-ticker');
+                                        }
                                     });
                                 });
                             }
@@ -591,6 +598,7 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                                 row.classNames,
                                 ','
                             ),
+                            showTicker: optionalStringToBoolean(row.showTicker),
                         })),
                     });
                 });
