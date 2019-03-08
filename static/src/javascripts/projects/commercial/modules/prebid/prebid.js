@@ -33,7 +33,7 @@ type S2SConfig = {
     bidders: Array<string>,
     timeout: number,
     adapter: string,
-    is_debug: string, // true or false string
+    is_debug: 'true' | 'false',
     endpoint: string,
     syncEndpoint: string,
     cookieSet: boolean,
@@ -88,7 +88,7 @@ const consentManagement: ConsentManagement = {
 const s2sConfig: S2SConfig = {
     accountId: '1',
     enabled: true,
-    bidders: ['appnexus', 'openx', 'pangaea'],
+    bidders: ['appnexus', 'openx', 'pangaea', 'ozone'],
     timeout: bidderTimeout,
     adapter: 'prebidServer',
     is_debug: 'false',

@@ -108,7 +108,7 @@ const adSlotDefinitions = {
   Returns an array of adSlot HTMLElement(s) with always at least one HTMLDivElement
   which is the main DFP slot.
 
-  Insert those elements as sibblings at the place
+  Insert those elements as siblings at the place
   you want adverts to appear.
 
   Note that for the DFP slot to be filled by GTP, you'll have to
