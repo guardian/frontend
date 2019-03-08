@@ -56,7 +56,7 @@ Below is an example code snippet that can be included inline on you site, this m
        document.body.appendChild(iframe);
      };
 
-     document.addEventListener('DomContentLoaded', loadFonts);
+     document.addEventListener('DOMContentLoaded', loadFonts);
    })(window, document);
 </script>
 ```
