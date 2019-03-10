@@ -18,6 +18,7 @@ import type {
     PrebidImproveParams,
     PrebidIndexExchangeParams,
     PrebidOpenXParams,
+    PrebidOzoneParams,
     PrebidPubmaticParams,
     PrebidSize,
     PrebidSonobiParams,
@@ -361,6 +362,23 @@ const openxClientSideBidder: PrebidBidder = {
             customParams: buildAppNexusTargetingObject(buildPageTargeting()),
         };
     },
+};
+
+const ozoneClientSideBidder: PrebidBidder = {
+    name: 'ozone',
+    switchName: 'prebidOzone',
+    bidParams: (): PrebidOzoneParams =>
+        Object.assign(
+            {},
+            (() => ({
+                publisherId: 'OZONENUK0001', // test ID
+                siteId: '4204204201', // test ID
+                placementId: '0420420421', // test ID
+                // customData: { key1: 'value1', key2: 'value2' }, this is optional
+                ozoneData: buildAppNexusTargetingObject(buildPageTargeting()),
+            }))(),
+            window.OzoneLotameData ? { lotameData: window.OzoneLotameData } : {}
+        ),
 };
 
 const sonobiBidder: PrebidBidder = {

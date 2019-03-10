@@ -481,6 +481,16 @@ trait PrebidSwitches {
     exposeClientSide = true
   )
 
+  val prebidOzone: Switch = Switch(
+    group = CommercialPrebid,
+    name = "prebid-ozone",
+    description = "Include Ozone adapter direct in Prebid auctions",
+    owners = group(Commercial),
+    safeState = On, // TODO: set safeState to off
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
   val prebidPangaea: Switch = Switch(
     group = CommercialPrebid,
     name = "prebid-pangaea",
