@@ -3,7 +3,7 @@ import React, { Component } from 'preact-compat';
 
 type ErrorBarProps = {
     errors: string[],
-    tagName: ?string,
+    tagName?: string,
 };
 
 export const genericErrorStr = 'Oops! Something went wrong';
