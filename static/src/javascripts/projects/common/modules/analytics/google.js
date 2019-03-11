@@ -113,8 +113,9 @@ const trackPerformance = (
     timingLabel: string
 ): void => {
     if (window.performance && window.performance.now && window.ga) {
+        const timingEvents = config.get('googleAnalytics.timingEvents', []);
         const sendDeferredEventQueue = (): void => {
-            config.googleAnalytics.timingEvents.map(sendPerformanceEvent);
+            timingEvents.map(sendPerformanceEvent);
             mediator.off('modules:ga:ready', sendDeferredEventQueue);
         };
         const timeSincePageLoad = Math.round(window.performance.now());
@@ -129,7 +130,7 @@ const trackPerformance = (
             sendPerformanceEvent(event);
         } else {
             mediator.on('modules:ga:ready', sendDeferredEventQueue);
-            config.get('googleAnalytics.timingEvents').push(event);
+            timingEvents.push(event);
         }
     }
 };

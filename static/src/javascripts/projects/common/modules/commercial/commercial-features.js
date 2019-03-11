@@ -69,7 +69,7 @@ class CommercialFeatures {
 
         this.stickyTopBannerAd =
             !this.adFree &&
-            !config.page.disableStickyTopBanner &&
+            !config.get('page.disableStickyTopBanner') &&
             !supportsSticky;
 
         this.articleBodyAdverts =
