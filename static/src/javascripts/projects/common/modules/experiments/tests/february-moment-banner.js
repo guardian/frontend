@@ -49,7 +49,8 @@ export const februaryMomentBannerCopy: AcquisitionsABTest = {
     start: '2019-03-11',
     expiry: '2019-09-30',
     author: 'Jonathan Rankin',
-    description: 'test some moment specific copy on fiv moment engagement banner',
+    description:
+        'test some moment specific copy on fiv moment engagement banner',
     audience: 1,
     audienceOffset: 0,
     successMeasure: 'AV per impression',
