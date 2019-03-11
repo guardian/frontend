@@ -1,5 +1,4 @@
 // @flow
-/* eslint-disable guardian-frontend/no-direct-access-config */
 
 // This should be the only module accessing the window config object directly
 // because this is the one that gets imported to all other modules
