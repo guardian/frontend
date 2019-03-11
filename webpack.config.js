@@ -46,6 +46,14 @@ module.exports = {
             'bootstraps',
             'youtube-embed.js'
         ),
+        'dotcom-rendering-commercial': path.join(
+            __dirname,
+            'static',
+            'src',
+            'javascripts',
+            'bootstraps',
+            'dotcom-rendering-commercial.js'
+        ),
     },
     output: {
         path: path.join(__dirname, 'static', 'target', 'javascripts'),
@@ -78,7 +86,13 @@ module.exports = {
             // TODO: atom-renderer's loaders are actually dependencies of frontend, not atom-renderer
             // They should be listed as peerDependencies in atom-renderer
             // https://github.com/guardian/atom-renderer/issues/41
-            path.resolve(__dirname, 'node_modules', '@guardian', 'atom-renderer', 'node_modules'),
+            path.resolve(
+                __dirname,
+                'node_modules',
+                '@guardian',
+                'atom-renderer',
+                'node_modules'
+            ),
             'node_modules',
         ],
     },
@@ -101,7 +115,14 @@ module.exports = {
             // module below exposes a loader that catches requests for
             // atoms's CSS and automatically swaps in values for these variables
             ...require('@guardian/atom-renderer/webpack/css')({
-                cssVarsPath: path.join(__dirname, 'static', 'src', 'stylesheets', 'atoms', 'vars.scss')
+                cssVarsPath: path.join(
+                    __dirname,
+                    'static',
+                    'src',
+                    'stylesheets',
+                    'atoms',
+                    'vars.scss'
+                ),
             }),
         ],
     },

@@ -6,7 +6,7 @@ import com.gu.contentapi.client.model.v1.{BlockElement => ClientBlockElement, Bl
 import common.Edition
 import common.Maps.RichMap
 import common.commercial.{CommercialProperties, EditionCommercialProperties, PrebidIndexSite}
-import conf.Configuration
+import conf.{Configuration, Static}
 import conf.Configuration.affiliatelinks
 import conf.switches.Switches
 import controllers.ArticlePage
@@ -115,7 +115,8 @@ case class DCSite(
   beaconUrl: String,
   subscribeWithGoogleApiUrl: String,
   nav: NavMenu,
-  readerRevenueLinks: ReaderRevenueLinks
+  readerRevenueLinks: ReaderRevenueLinks,
+  commercialUrl: String
 )
 
 case class DCPage(
@@ -367,7 +368,8 @@ object DotcomponentsDataModel {
       Configuration.debug.beaconUrl,
       Configuration.google.subscribeWithGoogleApiUrl,
       navMenu,
-      readerRevenueLinks
+      readerRevenueLinks,
+      Static("javascripts/graun.dotcom-rendering-commercial.js")
     )
 
     val tags = Tags(
