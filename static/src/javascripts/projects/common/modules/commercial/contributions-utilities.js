@@ -36,6 +36,7 @@ import { userIsSupporter } from 'common/modules/commercial/user-features';
 import {
     supportContributeURL,
     supportSubscribeGeoRedirectURL,
+    addCountryGroupToSupportLink,
 } from 'common/modules/commercial/support-utilities';
 import { awaitEpicButtonClicked } from 'common/modules/commercial/epic/epic-utils';
 import { setupEpicInLiveblog } from 'common/modules/commercial/contributions-liveblog-utilities';
@@ -219,7 +220,9 @@ const makeEpicABTestVariant = (
         }`,
         campaignCode,
         supportURL: addTrackingCodesToUrl({
-            base: initVariant.supportBaseURL || supportContributeURL(),
+            base: initVariant.supportBaseURL
+                ? addCountryGroupToSupportLink(initVariant.supportBaseURL)
+                : supportContributeURL(),
             componentType: parentTest.componentType,
             componentId,
             campaignCode,
