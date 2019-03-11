@@ -17,7 +17,7 @@ const onLoad = () => {
 };
 
 export const imrWorldwideLegacy: ThirdPartyTag = {
-    shouldRun: config.get('switches.imrWorldwide'),
+    shouldRun: config.switches.imrWorldwide,
     url: '//secure-au.imrworldwide.com/v60.js',
     onLoad,
 };

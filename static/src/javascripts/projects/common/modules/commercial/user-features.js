@@ -95,7 +95,7 @@ const deleteOldData = (): void => {
 };
 
 const requestNewData = (): Promise<void> =>
-    fetchJson(`${config.get('page.userAttributesApiUrl')}/me`, {
+    fetchJson(`${config.page.userAttributesApiUrl}/me`, {
         mode: 'cors',
         credentials: 'include',
     })

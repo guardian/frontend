@@ -60,7 +60,7 @@ const guMetadata = {
 };
 
 const onLoad = () => {
-    const sectionFromMeta = config.get('page.section', '').toLowerCase();
+    const sectionFromMeta = config.page.section.toLowerCase();
     const subBrandApId =
         guMetadata[sectionFromMeta] || guMetadata['brand-only'];
 
@@ -80,7 +80,7 @@ const onLoad = () => {
 
     const dcrStaticMetadata = {
         type: 'static',
-        assetid: config.get('page.pageId'),
+        assetid: config.page.pageId,
         section: sectionRef,
     };
 
@@ -88,7 +88,7 @@ const onLoad = () => {
 };
 
 export const imrWorldwide: ThirdPartyTag = {
-    shouldRun: config.get('switches.imrWorldwide'),
+    shouldRun: config.switches.imrWorldwide,
     url: '//secure-dcr.imrworldwide.com/novms/js/2/ggcmb510.js',
     onLoad,
 };
