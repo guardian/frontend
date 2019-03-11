@@ -1,5 +1,15 @@
 module.exports = {
     create(context) {
+        const configInterface = [
+            'get',
+            'set',
+            'hasTone',
+            'hasSeries',
+            'referencesOfType',
+            'referenceOfType',
+            'webPublicationDateAsUrlPart',
+            'dateFromSlug',
+        ];
         const isDot = token =>
             token && token.type === 'Punctuator' && token.value === '.';
         const isIdentifier = token => token && token.type === 'Identifier';
@@ -14,7 +24,7 @@ module.exports = {
                     if (
                         isDot(dot) &&
                         isIdentifier(child) &&
-                        child.value !== 'get'
+                        !configInterface.includes(child.value)
                     ) {
                         context.report({
                             node,

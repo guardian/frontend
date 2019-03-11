@@ -79,7 +79,7 @@ module.exports = {
         'guardian-frontend/global-config': 'error',
         'guardian-frontend/no-multiple-classlist-parameters': 'error',
         'guardian-frontend/no-default-export': 'warn',
-        'guardian-frontend/no-direct-access-config': 'warn',
+        'guardian-frontend/no-direct-access-config': 'error',
 
         // flow should take care of our return values
         'consistent-return': 'off',

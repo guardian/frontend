@@ -1,4 +1,5 @@
 // @flow
+/* eslint-disable guardian-frontend/no-direct-access-config */
 
 import config from 'lib/config';
 import { isMatch, isClockwatch, isLiveClockwatch, keywordExists } from './page';
