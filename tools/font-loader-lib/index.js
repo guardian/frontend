@@ -11,7 +11,6 @@ const fetchFonts = (window, document) => {
     const loadFonts = () => {
         const iframe = document.createElement('iframe');
         iframe.src = 'https://theguardian.com/font-loader';
-        iframe.classList = 'guardianFontLoader';
         // add iframe and wait for message
         iframe.style.display = 'none';
         window.addEventListener('message', e => {
@@ -28,7 +27,14 @@ const fetchFonts = (window, document) => {
         });
         document.body.appendChild(iframe);
     };
-    loadFonts();
+
+    if (document.readyState === 'loading') {
+        // Loading hasn't finished yet
+        document.addEventListener('DOMContentLoaded', loadFonts);
+    } else {
+        // DOMContentLoaded has already fired
+        loadFonts();
+    }
 };
 
 export default fetchFonts;
