@@ -18,7 +18,7 @@ const createComponent = (
 };
 
 const onwardAudio = (el: HTMLElement) => {
-    if (config.page.seriesId) {
+    if (config.get('page.seriesId')) {
         const manipulationType = 'append';
         const endpoint = `/audio/series/${config.get('page.seriesId')}.json`;
 
