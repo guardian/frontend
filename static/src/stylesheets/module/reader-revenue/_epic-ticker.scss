@@ -29,12 +29,19 @@
 
 .epic-ticker {
     position: relative;
-    height: 60px;
     margin-bottom: 15px;
 
     font-family: $f-serif-headline;
     font-size: 16px;
     line-height: 18px;
+}
+
+.epic-ticker--tall {
+    height: 60px;
+}
+
+.epic-ticker--short {
+    height: 50px;
 }
 
 .epic-ticker__count {
