@@ -3,6 +3,7 @@ package model.dotcomrendering.pageElements
 import com.gu.contentapi.client.model.v1.ElementType.{Map => _, _}
 import com.gu.contentapi.client.model.v1.{ElementType, SponsorshipType, BlockElement => ApiBlockElement, Sponsorship => ApiSponsorship}
 import layout.ContentWidths.BodyMedia
+import model.content.{MediaAtom, MediaWrapper}
 import model.{AudioAsset, ImageAsset, ImageMedia, VideoAsset}
 import play.api.libs.json._
 import org.jsoup.Jsoup
@@ -29,6 +30,7 @@ case class VideoBlockElement(data: Map[String, String], role: Role) extends Page
 case class EmbedBlockElement(html: String, safe: Option[Boolean], alt: Option[String], isMandatory: Boolean) extends PageElement
 case class SoundcloudBlockElement(html: String, id: String, isTrack: Boolean, isMandatory: Boolean) extends PageElement
 case class ContentAtomBlockElement(atomId: String) extends PageElement
+case class YoutubeBlockElement(id: String, assetId: String, channelId: Option[String], mediaTitle: String, isMainMedia: Boolean) extends PageElement
 case class InteractiveBlockElement(html: Option[String], role: Role, isMandatory: Option[Boolean]) extends PageElement
 case class CommentBlockElement(body: String, avatarURL: String, profileURL: String, profileName: String, permalink: String, dateTime: String) extends PageElement
 case class TableBlockElement(html: Option[String], role: Role, isMandatory: Option[Boolean]) extends PageElement
@@ -182,7 +184,19 @@ object PageElement {
 
       case Embed => extractEmbed(element).toList
 
-      case Contentatom => element.contentAtomTypeData.map(d => ContentAtomBlockElement(d.atomId)).toList
+      case Contentatom => element.contentAtomTypeData.map(d => d.atomType match {
+        case "media" => {
+          val atom = MediaAtom.make(d.atomId, None())
+          YoutubeBlockElement(
+            atom.id, //CAPI ID
+            atom.data.media.assets.headOption().getOrElse().id, //Youtube Id
+            atom.channelId, //Channel ID
+            atom.title, //Caption
+            atom.assets.headOption().mediaWrapper.contains(MediaWrapper.MainMedia) //is this atom the main media
+          )
+        }
+        case _ => ContentAtomBlockElement(d.atomId)).toList
+      }
 
       case Pullquote => element.pullquoteTypeData.map(d => PullquoteBlockElement(d.html, Role(None))).toList
       case Interactive => element.interactiveTypeData.map(d => InteractiveBlockElement(d.html, Role(d.role), d.isMandatory)).toList
