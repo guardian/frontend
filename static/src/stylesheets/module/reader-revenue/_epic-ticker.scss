@@ -29,7 +29,7 @@
 
 .epic-ticker {
     position: relative;
-    height: 65px;
+    height: 60px;
     margin-bottom: 15px;
 
     font-family: $f-serif-headline;
@@ -119,16 +119,7 @@ $progress-bar-height: 10px;
 }
 
 .epic-ticker__thankyou {
-    >:first-child {
-        font-size: 24px;
-        line-height: 26px;
-        font-weight: 800;
-        color: #333333;
-    }
-
-    >:last-child {
-        font-style: italic;
-    }
+    font-weight: 800;
 }
 
 .epic-ticker__exceeded .epic-ticker__count-label {

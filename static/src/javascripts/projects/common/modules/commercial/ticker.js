@@ -5,6 +5,7 @@ import fetchJSON from 'lib/fetch-json';
 const count = {};
 let goal;
 let total;
+let allowToExceed = false; // Some campaigns should end once the goal is reached
 
 const percentageTotalAsNegative = (end: number) => {
     let percentage = (total / end) * 100 - 100;
@@ -16,7 +17,7 @@ const percentageTotalAsNegative = (end: number) => {
 
 const animateBar = (parentElement: HTMLElement) => {
     // If we've exceeded the goal then extend the bar 20% beyond the total
-    const end = total > goal ? total + total * 0.2 : goal;
+    const end = total > goal && allowToExceed ? total + total * 0.2 : goal;
 
     const progressBarElement = parentElement.querySelector(
         '.js-ticker-filled-progress'
@@ -53,6 +54,10 @@ const increaseCounter = (
     // Count is local to the parent element
     count[parentElementSelector] += Math.floor(total / 100);
 
+    const showTotal = total <= goal || (total > goal && allowToExceed);
+
+    const value = showTotal ? total : goal;
+
     const counterElement = parentElement.querySelector(
         `${tickerElementSelector} .js-ticker-count`
     );
@@ -61,8 +66,8 @@ const increaseCounter = (
         counterElement.innerHTML = `${getLocalCurrencySymbol()}${count[
             parentElementSelector
         ].toLocaleString()}`;
-        if (count[parentElementSelector] >= total) {
-            counterElement.innerHTML = `${getLocalCurrencySymbol()}${total.toLocaleString()}`;
+        if (count[parentElementSelector] >= value) {
+            counterElement.innerHTML = `${getLocalCurrencySymbol()}${value.toLocaleString()}`;
         } else {
             window.requestAnimationFrame(() =>
                 increaseCounter(
@@ -133,6 +138,7 @@ const fetchDataAndAnimate = (parentElementSelector: string) => {
         }).then(data => {
             total = parseInt(data.total, 10);
             goal = parseInt(data.goal, 10);
+            allowToExceed = data.allowToExceed || false;
 
             if (dataSuccessfullyFetched()) {
                 animate(parentElementSelector);
