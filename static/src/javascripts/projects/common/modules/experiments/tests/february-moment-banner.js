@@ -8,6 +8,9 @@ const defaultBold =
 const defaultCopy =
     'Our mission is to keep independent journalism accessible to everyone, regardless of where they live or what they can afford. Funding from our readers safeguards our editorial independence. It also powers our work and maintains this openness. It means more people, across the world, can access accurate information with integrity at its heart.';
 
+const variantCopy =
+    'Unlike many news organisations, we made a choice to keep all of our independent, investigative reporting free and available for everyone. We believe that each of us, around the world, deserves access to accurate information with integrity at its heart. At a time when factual reporting is critical, The Guardian’s editorial independence is safeguarded by our readers. If you’re able to, please support The Guardian today.';
+
 const thankYouBold =
     'Thank you for supporting The\xa0Guardian’s model for open, independent journalism';
 const thankYouCopy =
@@ -41,12 +44,12 @@ const bannerShownCallback = () => {
     }
 };
 
-export const februaryMomentBannerColour: AcquisitionsABTest = {
-    id: 'FebruaryMomentBannerColour',
-    start: '2019-01-01',
+export const februaryMomentBannerCopy: AcquisitionsABTest = {
+    id: 'FebruaryMomentBannerCopy',
+    start: '2019-03-11',
     expiry: '2019-09-30',
     author: 'Jonathan Rankin',
-    description: 'test copy on engagement banner outside UK for the feb moment',
+    description: 'test some moment specific copy on fiv moment engagement banner',
     audience: 1,
     audienceOffset: 0,
     successMeasure: 'AV per impression',
@@ -65,7 +68,7 @@ export const februaryMomentBannerColour: AcquisitionsABTest = {
                 messageText: defaultCopy,
                 // buttonCaption?: string, TO be decided with non engineers
                 template: acquisitionsBannerFivTemplate,
-                bannerModifierClass: 'fiv-banner',
+                bannerModifierClass: 'fiv-banner fiv-banner--yellow',
                 minArticlesBeforeShowingBanner,
                 userCohort: userCohortParam.onlyNonSupporters,
                 titles: [
@@ -81,34 +84,11 @@ export const februaryMomentBannerColour: AcquisitionsABTest = {
                 ),
         },
         {
-            id: 'blue',
+            id: 'variant',
             test: (): void => {}, // banner tests look at the bucket and vary the copy themselves
             engagementBannerParams: {
                 leadSentence: defaultBold,
-                messageText: defaultCopy,
-                // buttonCaption?: string, TO be decided with non engineers
-                template: acquisitionsBannerFivTemplate,
-                bannerModifierClass: 'fiv-banner fiv-banner--blue',
-                minArticlesBeforeShowingBanner,
-                userCohort: userCohortParam.onlyNonSupporters,
-                titles: [
-                    'We chose a different approach',
-                    'Will you support it?',
-                ],
-                bannerShownCallback,
-            },
-            canRun: () =>
-                canShowBannerSync(
-                    minArticlesBeforeShowingBanner,
-                    userCohortParam.onlyNonSupporters
-                ),
-        },
-        {
-            id: 'yellow',
-            test: (): void => {}, // banner tests look at the bucket and vary the copy themselves
-            engagementBannerParams: {
-                leadSentence: defaultBold,
-                messageText: defaultCopy,
+                messageText: variantCopy,
                 // buttonCaption?: string, TO be decided with non engineers
                 template: acquisitionsBannerFivTemplate,
                 bannerModifierClass: 'fiv-banner fiv-banner--yellow',

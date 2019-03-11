@@ -28,8 +28,8 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-february-moment-banner-colour",
-    "switch on to test the moment colour engagement banner test",
+    "ab-february-moment-banner-copy",
+    "switch on to test the some moment copy on the fiv engagement banner",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
     sellByDate = new LocalDate(2019, 9, 30),
