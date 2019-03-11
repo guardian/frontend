@@ -6,6 +6,15 @@
     }
 }
 
+.my-account-toggle-button {
+    border: 0;
+    background: none;
+    text-align: left;
+    @include mq($until: tablet) {
+        padding-left: 0;
+    }
+}
+
 .my-account--icon {
     svg {
         height: 18px;
