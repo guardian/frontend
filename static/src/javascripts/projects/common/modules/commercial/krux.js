@@ -92,7 +92,7 @@ export const getKruxSegments = (): Array<string> => {
 };
 
 export const krux: ThirdPartyTag = {
-    shouldRun: config.get('switches.krux'),
+    shouldRun: !!config.get('switches.krux'),
     url: '//cdn.krxd.net/controltag?confid=JVZiE3vn',
     onLoad,
 };
