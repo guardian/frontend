@@ -1,18 +1,18 @@
 // @flow
 import { handle, closeTooltip } from 'common/modules/discussion/upvote';
 import { recommendComment as recommendComment_ } from 'common/modules/discussion/api';
-import fakeConfig from 'lib/config';
+import config from 'lib/config';
 
 jest.mock('lib/raven');
 jest.mock('common/modules/discussion/api', () => ({
     recommendComment: jest.fn(),
 }));
 
-jest.mock('lib/config', () => ({
-    switches: {
-        discussionAllowAnonymousRecommendsSwitch: false,
-    },
-}));
+// jest.mock('lib/config', () => ({
+//     switches: {
+//         discussionAllowAnonymousRecommendsSwitch: false,
+//     },
+// }));
 
 const recommendComment: any = recommendComment_;
 
@@ -59,6 +59,8 @@ describe('Recommendations of comments', () => {
         }
 
         recommendComment.mockReset();
+
+        config.set('switches.discussionAllowAnonymousRecommendsSwitch', false);
     });
 
     it('should send a request to discussion API if the user is logged in', () => {
@@ -69,7 +71,8 @@ describe('Recommendations of comments', () => {
         }
 
         recommendComment.mockImplementationOnce(() => Promise.resolve());
-        fakeConfig.switches.discussionAllowAnonymousRecommendsSwitch = false;
+
+        config.set('switches.discussionAllowAnonymousRecommendsSwitch', false);
 
         return handle(
             target,
@@ -94,7 +97,8 @@ describe('Recommendations of comments', () => {
         }
 
         recommendComment.mockImplementationOnce(() => Promise.resolve());
-        fakeConfig.switches.discussionAllowAnonymousRecommendsSwitch = true;
+
+        config.set('switches.discussionAllowAnonymousRecommendsSwitch', true);
 
         return handle(
             target,
@@ -121,7 +125,8 @@ describe('Recommendations of comments', () => {
         recommendComment.mockImplementationOnce(() =>
             Promise.reject(new Error('discussion api error'))
         );
-        fakeConfig.switches.discussionAllowAnonymousRecommendsSwitch = false;
+
+        config.set('switches.discussionAllowAnonymousRecommendsSwitch', false);
 
         return handle(
             target,
@@ -150,7 +155,8 @@ describe('Recommendations of comments', () => {
         recommendComment.mockImplementationOnce(() =>
             Promise.reject(new Error('discussion api error'))
         );
-        fakeConfig.switches.discussionAllowAnonymousRecommendsSwitch = false;
+
+        config.set('switches.discussionAllowAnonymousRecommendsSwitch', false);
 
         return handle(
             target,
