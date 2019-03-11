@@ -19,7 +19,7 @@ jest.mock('lib/storage', () => ({
 }));
 /**
  * we have to mock config like this because
- * loading simple-reach has side affects
+ * loading breaking-news has side affects
  * that are dependent on config.
  * */
 
