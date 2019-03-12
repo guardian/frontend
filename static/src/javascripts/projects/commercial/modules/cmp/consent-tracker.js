@@ -19,8 +19,8 @@ const shouldTrack = (): boolean => {
     // gather analytics from 1% (1 in 100) of page views
     const inSample = getRandomIntInclusive(1, 100) === 1;
     return (
-        config.switches.commercialPageViewAnalytics &&
-        (inSample || config.page.isDev)
+        config.get('switches.commercialPageViewAnalytics') &&
+        (inSample || config.get('page.isDev'))
     );
 };
 

@@ -42,6 +42,7 @@ object NavLinks {
   val eurozone = NavLink("Eurozone", "/business/eurozone")
   val businessToBusiness = NavLink("B2B", "/business-to-business")
   val sustainableBusiness = NavLink("Sustainable business", "/us/sustainable-business")
+  val ourWideBrownLand = NavLink("Our wide brown land", "/environment/series/our-wide-brown-land")
   val diversityEquality = NavLink("Diversity & equality in business", "/business/diversity-and-equality")
   val smallBusiness = NavLink("Small business", "/business/us-small-business")
   val projectSyndicate = NavLink("Project Syndicate", "/business/series/project-syndicate-economists")
@@ -58,7 +59,7 @@ object NavLinks {
   val ukNews = NavLink("UK", "/uk-news", longTitle = "UK news", children = List(politics, education, media, society, law, scotland, wales, northernIreland))
   val world = NavLink("World", "/world", longTitle = "World news", children = List(europe, usNews, americas, asia, australiaNews, middleEast, africa, inequality, cities, globalDevelopment))
   val ukEnvironment = NavLink("Environment", "/environment", children = List(climateChange, wildlife, energy, pollution))
-  val auEnvironment = ukEnvironment.copy(children = List(cities, globalDevelopment, sustainableBusiness))
+  val auEnvironment = ukEnvironment.copy(children = List(cities, globalDevelopment, ourWideBrownLand))
   val money = NavLink("Money", "/money", children = List(property, pensions, savings, borrowing, careers))
   val ukBusiness = NavLink("Business", "/business", children = List(economics, banking, money, markets, projectSyndicate, businessToBusiness))
   val usBusiness = ukBusiness.copy(children = List(economics, sustainableBusiness, diversityEquality, smallBusiness))
@@ -82,7 +83,7 @@ object NavLinks {
       NavLink("Results", "/football/results", "football/results"),
       NavLink("Competitions", "/football/competitions", "football/competitions"),
       NavLink("Clubs", "/football/teams", "football/teams"),
-      NavLink("World Cup 2018", "/football/world-cup-2018")
+      NavLink("World Cup 2019", "/football/womens-world-cup-2019")
     )
   )
   val soccer = football.copy(title = "Soccer")

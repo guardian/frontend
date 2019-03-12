@@ -115,6 +115,7 @@ class PrebidAdUnit {
 }
 
 let requestQueue: Promise<void> = Promise.resolve();
+let initialised: boolean = false;
 
 const initialise = (window: {
     pbjs: {
@@ -123,6 +124,8 @@ const initialise = (window: {
         enableAnalytics: ([EnableAnalyticsConfig]) => void,
     },
 }): void => {
+    initialised = true;
+
     const userSync = config.get('switches.prebidUserSync', false)
         ? {
               // syncsPerBidder: 0, // allow all syncs - bug https://github.com/prebid/Prebid.js/issues/2781
@@ -190,6 +193,10 @@ const requestBids = (
     advert: Advert,
     slotFlatMap?: PrebidSlot => PrebidSlot[]
 ): Promise<void> => {
+    if (!initialised) {
+        return requestQueue;
+    }
+
     const effectiveSlotFlatMap = slotFlatMap || (s => [s]); // default to identity
     if (dfpEnv.externalDemand !== 'prebid') {
         return requestQueue;

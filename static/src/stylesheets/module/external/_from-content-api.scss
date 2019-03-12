@@ -214,8 +214,6 @@ figure {
         display: block;
     }
     &.element {
-        margin-top: ($gs-baseline/3)*4;
-        margin-bottom: $gs-baseline;
         position: relative;
 
         .content__article-body &:first-child {

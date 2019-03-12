@@ -8,15 +8,27 @@ import common.Edition.defaultEdition
 import common.dfp.DfpAgent
 import play.api.libs.json.Json
 
+case class EditionCommercialProperties (branding: Option[Branding], adTargeting: Set[AdTargetParam])
+
+
+object EditionCommercialProperties {
+  implicit val thirdNeedlessFormatter = EditionAdTargeting.adTargetParamFormat
+  implicit val secondNeedlessFormatter = EditionBranding.brandingFormat
+  implicit val firstNeedlessFormatter = Json.format[EditionCommercialProperties]
+
+}
 case class CommercialProperties(
   editionBrandings: Set[EditionBranding],
   editionAdTargetings: Set[EditionAdTargeting],
   prebidIndexSites: Option[Set[PrebidIndexSite]]
 ) {
+
   val isPaidContent: Boolean = branding(defaultEdition).exists(_.isPaid)
   val isFoundationFunded: Boolean = branding(defaultEdition).exists(_.isFoundationFunded)
   def isSponsored(edition: Edition): Boolean = branding(edition).exists(_.isSponsored)
   val nonRefreshableLineItemIds: Seq[Long] = DfpAgent.nonRefreshableLineItemIds()
+
+
 
   def branding(edition: Edition): Option[Branding] = for {
     editionBranding <- editionBrandings.find(_.edition == edition)
@@ -28,6 +40,18 @@ case class CommercialProperties(
       .find(_.edition == edition)
       .flatMap(_.paramSet)
       .getOrElse(Set.empty)
+
+  def perEdition: Map[Edition, EditionCommercialProperties] = {
+    Edition.all.map{ edition =>
+      (
+        edition,
+        EditionCommercialProperties(
+          branding(edition),
+          adTargeting(edition)
+        )
+      )
+    }.toMap
+  }
 }
 
 object CommercialProperties {

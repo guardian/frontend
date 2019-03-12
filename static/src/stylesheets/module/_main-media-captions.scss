@@ -20,7 +20,6 @@ $caption-button-size: 32px;
 }
 
 .caption--main {
-    min-height: ($gs-baseline / 3) * 7;
     max-width: gs-span(7);
     padding: ($gs-baseline / 3) * 2 $gs-gutter / 2 $gs-baseline * 2;
 

@@ -1,15 +1,15 @@
-$border-style: #999999 1px solid;
+$border-style: $brightness-60 1px solid;
 
 .site-message--fiv-banner {
     border-top: $border-style;
-    background-color: #fbf6ef;;
+    background-color: $culture-faded;
 
     .site-message__roundel {
         display: none;
     }
 
     .inline-marque-36 path:nth-child(2) {
-        fill: #ffffff;
+        fill: $brightness-100;
     }
 
     .site-message__copy {
@@ -74,7 +74,7 @@ $border-style: #999999 1px solid;
     }
 
     .engagement-banner__button.engagement-banner__button__learn-more {
-        background-color: #fbf6ef;
+        background-color: $culture-faded;
         border: $border-style;
     }
 
@@ -127,47 +127,49 @@ $border-style: #999999 1px solid;
 
 .fiv-banner__headline {
     font-size: 27px;
-    line-height: 27px;
+    line-height: 25px;
     font-family: 'GT Guardian Titlepiece', Georgia, serif;
     width: 189px;
     margin-left: 10px;
 
     @include mq($from: 375px) {
         font-size: 32px;
-        line-height: 32px;
+        line-height: 30px;
         width: 222px;
     }
 
     @include mq($from: tablet) {
         font-size: 32px;
-        line-height: 32px;
+        line-height: 30px;
     }
 
     @include mq($from: desktop) {
         font-size: 40px;
-        line-height: 40px;
+        line-height: 38px;
         width: 280px;
         margin-bottom: 0;
     }
 
     @include mq($from: leftCol) {
         font-size: 40px;
-        line-height: 40px
+        line-height: 38px;
     }
 
     @include mq($from: wide) {
         font-size: 50px;
-        line-height: 50px;
+        line-height: 45px;
         width: 341px;
+        margin-left: 47px;
     }
 }
 
 
 .fiv-banner__headline1 {
     color: #ef7d21;
+    margin-bottom: 8px;
 }
 .fiv-banner__headline2 {
-    color: #0084c6;
+    color: $sport-main;
 }
 
 $small-circle-height: 90px;
@@ -204,6 +206,7 @@ $wide-circle-height: 162px;
         width: $wide-circle-height;
         top: 0;
         margin-top: $wide-circle-height/4;
+        margin-left: 20px;
     }
 
 
@@ -244,17 +247,17 @@ $wide-circle-height: 162px;
     will-change: transform;
 }
 
-.fiv-banner__circle-orange {
+.fiv-banner__circle-top {
     position: absolute;
-    background: #ff7f0f;
+    background: $opinion-bright;
     top: 0;
     left: 0;
     z-index: 30;
 }
 
-.fiv-banner__circle-blue {
+.fiv-banner__circle-bottom {
     position: absolute;
-    background: #0084c6;
+    background: $sport-main;
     bottom: 0;
     left: 0;
 }
@@ -264,11 +267,11 @@ $wide-circle-height: 162px;
         transition: all 2s cubic-bezier(.645, .045, .355, 1);
     }
 
-    .fiv-banner__circle-orange {
+    .fiv-banner__circle-top {
         top: -25%;
     }
 
-    .fiv-banner__circle-blue {
+    .fiv-banner__circle-bottom {
         bottom: -25%;
     }
 }
@@ -360,6 +363,7 @@ $wide-circle-height: 162px;
 .fiv-banner__message-text {
     letter-spacing: -.3px;
     font-weight: 400;
+    margin-right: 10px;
 }
 
 .fiv-banner-thank-you {
@@ -368,3 +372,123 @@ $wide-circle-height: 162px;
     }
 }
 
+
+.site-message--fiv-banner.fiv-banner--blue {
+    $border-style-blue: $brightness-100 1px solid;
+    border-top: $border-style-blue;
+    background-color: $sport-main;
+
+    .engagement-banner__cta {
+        @include mq($from: tablet) {
+            border-top: $border-style-blue;
+        }
+    }
+    .fiv-banner__copy-and-ctas {
+        border-top: $border-style-blue;
+        @include mq($from: tablet) {
+            border-top: 0;
+            border-left: $border-style-blue;
+            border-right: $border-style-blue;
+        }
+    }
+    .engagement-banner__close-button {
+        border-color: $brightness-86;
+        svg {
+            fill: $brightness-86;
+        }
+    }
+
+    .fiv-banner__copy-and-ctas, .fiv-banner__lead-sentence {
+        color: $brightness-100;
+    }
+
+    .fiv-banner__headline1 {
+        color: $highlight-main;
+    }
+    .fiv-banner__headline2 {
+        color: #041f4a;
+    }
+
+    .fiv-banner__circle-top {
+        background: $highlight-main;
+
+    }
+
+    .fiv-banner__circle-bottom {
+        background: $brand-main;
+
+    }
+
+    .engagement-banner__button.engagement-banner__button__learn-more {
+        background-color: $sport-main;
+        border: $border-style-blue;
+        color: $brightness-100;
+    }
+
+    @supports (mix-blend-mode: difference) {
+        .fiv-banner__circle {
+            mix-blend-mode: difference;
+            opacity: 1;
+        }
+    }
+}
+
+.site-message--fiv-banner.fiv-banner--yellow {
+    $border-style-yellow: $brand-main 1px solid;
+    border-top: $border-style-yellow;
+    background-color: $highlight-main;
+
+    .engagement-banner__cta {
+        @include mq($from: tablet) {
+            border-top: $border-style-yellow;
+        }
+    }
+    .fiv-banner__copy-and-ctas {
+        border-top: $border-style-yellow;
+        @include mq($from: tablet) {
+            border-top: 0;
+            border-left: $border-style-yellow;
+            border-right: $border-style-yellow;
+        }
+    }
+
+    .fiv-banner__copy-and-ctas, .fiv-banner__lead-sentence {
+        color: $brand-main;
+    }
+
+    .fiv-banner__headline1 {
+        color: $brand-main;
+    }
+    .fiv-banner__headline2 {
+        color: $news-bright;
+    }
+
+    .fiv-banner__circle-top {
+        background: $sport-main;
+
+    }
+
+    .fiv-banner__circle-bottom {
+        background: $news-bright;
+
+    }
+
+    .engagement-banner__button__support {
+        background-color: $brand-main;
+        color: $brightness-100;
+        border:  $brand-main 1px solid;
+    }
+
+    .engagement-banner__button.engagement-banner__button__learn-more {
+        background-color: $highlight-main;
+        border:  $brand-main 1px solid;
+        color: $brand-main;
+    }
+
+    @supports (mix-blend-mode: multiply) {
+        .fiv-banner__circle {
+            mix-blend-mode: multiply;
+            opacity: 1;
+        }
+    }
+}

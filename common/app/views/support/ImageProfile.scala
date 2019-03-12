@@ -117,6 +117,12 @@ object Video700 extends VideoProfile(width = Some(700))
 object Video1280 extends VideoProfile(width = Some(1280))
 object GoogleStructuredData extends ImageProfile(width = Some(300), height = Some(300)) // 1:1
 
+// Used for AMP image structured data - see
+// https://developers.google.com/search/docs/data-types/article#article_types
+// and the image advice.
+object OneByOne extends ImageProfile(width = Some(1200), height = Some(1200))
+object FourByThree extends ImageProfile(width = Some(1200), height = Some(900))
+
 class ShareImage(overlayUrlParam: String, shouldIncludeOverlay: Boolean) extends ImageProfile(width = Some(1200)) {
   override val heightParam = "height=630"
   override val fitParam = "fit=crop"
@@ -202,16 +208,19 @@ object FacebookOpenGraphImage extends OverlayBase64 {
     val opinionsObserver = new ShareImage(s"overlay-base64=${overlayUrlBase64("to-opinions.png")}", FacebookShareImageLogoOverlay.isSwitchedOn)
 }
 
-object EmailImage extends ImageProfile(width = Some(1160), autoFormat = false) {
-  override val qualityparam = "quality=45"
-  override val sharpenParam = "sharpen=a0.8,r1,t1"
+object EmailImage extends ImageProfile(width = Some(EmailImageParams.articleFullWidth), autoFormat = false) {
+  override val qualityparam: String = EmailImageParams.qualityParam
+  override val sharpenParam: String = EmailImageParams.sharpenParam
+  override val dprParam: String = EmailImageParams.dprParam
   val knownWidth: Int = width.get
 }
 
-object EmailVideoImage extends ImageProfile(width = Some(1160), autoFormat = false) with OverlayBase64 {
+object EmailVideoImage extends ImageProfile(width = Some(EmailImageParams.videoFullWidth), autoFormat = false) with OverlayBase64 {
   override val qualityparam: String = EmailImage.qualityparam
+  override val dprParam: String = EmailImageParams.dprParam
   val overlayAlignParam = "overlay-align=bottom,left"
   val overlayUrlParam = s"overlay-base64=${overlayUrlBase64("playx2.png")}"
+  val knownWidth: Int = width.get
 
   override def resizeString: String = {
     val params = Seq(widthParam, heightParam, qualityparam, autoParam, dprParam, overlayAlignParam, overlayUrlParam).filter(_.nonEmpty).mkString("&")
@@ -219,18 +228,22 @@ object EmailVideoImage extends ImageProfile(width = Some(1160), autoFormat = fal
   }
 }
 
-object FrontEmailImage extends ImageProfile(width = Some(1000), autoFormat = false) {
-  override val qualityparam: String = EmailImage.qualityparam
-  override val sharpenParam: String = EmailImage.sharpenParam
-  val knownWidth: Int = width.get
+object EmailImageParams {
+  val qualityParam: String = "quality=45"
+  val sharpenParam: String = "sharpen=a0.8,r1,t1"
+  val fullWidth: Int = 500
+  val articleFullWidth: Int = 580
+  val videoFullWidth: Int = 560
+  val dprParam: String = "dpr=2"
 }
 
-object SmallFrontEmailImage {
-  def apply(customWidth: Int): SmallFrontEmailImage = new SmallFrontEmailImage(customWidth)
+object FrontEmailImage {
+  def apply(customWidth: Int): FrontEmailImage = new FrontEmailImage(customWidth)
 }
-class SmallFrontEmailImage(customWidth: Int) extends ImageProfile(Some(customWidth), autoFormat = false) {
-  override val qualityparam: String = EmailImage.qualityparam
-  override val sharpenParam: String = EmailImage.sharpenParam
+class FrontEmailImage(customWidth: Int) extends ImageProfile(Some(customWidth), autoFormat = false) {
+  override val dprParam: String = EmailImageParams.dprParam
+  override val qualityparam: String = EmailImageParams.qualityParam
+  override val sharpenParam: String = EmailImageParams.sharpenParam
 }
 
 // The imager/images.js base image.

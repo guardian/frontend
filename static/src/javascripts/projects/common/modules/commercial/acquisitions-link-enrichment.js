@@ -1,6 +1,6 @@
 // @flow
 import { addReferrerData } from 'common/modules/commercial/acquisitions-ophan';
-import fastdom from 'lib/fastdom-promise';
+import { addCountryGroupToSupportLink } from 'common/modules/commercial/support-utilities';
 
 // Currently the only acquisition components on the site are
 // from the Mother Load campaign and the Wide Brown Land campaign.
@@ -51,24 +51,18 @@ const addReferrerDataToAcquisitionLink = (rawUrl: string): string => {
 
 const ACQUISITION_LINK_CLASS = 'js-acquisition-link';
 
-const addReferrerDataToAcquisitionLinksOnPage = (): void => {
+const enrichAcquisitionLinksOnPage = (): void => {
     const links = Array.from(
         document.getElementsByClassName(ACQUISITION_LINK_CLASS)
     );
 
     links.forEach(el => {
-        fastdom
-            .read(() => el.getAttribute('href'))
-            .then(link => {
-                if (link) {
-                    fastdom.write(() => {
-                        el.setAttribute(
-                            'href',
-                            addReferrerDataToAcquisitionLink(link)
-                        );
-                    });
-                }
-            });
+        const link = el.getAttribute('href');
+        if (link) {
+            let modifiedLink = addReferrerDataToAcquisitionLink(link);
+            modifiedLink = addCountryGroupToSupportLink(modifiedLink);
+            el.setAttribute('href', modifiedLink);
+        }
     });
 };
 
@@ -119,5 +113,5 @@ const addReferrerDataToAcquisitionLinksInInteractiveIframes = (): void => {
 
 export const init = (): void => {
     addReferrerDataToAcquisitionLinksInInteractiveIframes();
-    addReferrerDataToAcquisitionLinksOnPage();
+    enrichAcquisitionLinksOnPage();
 };

@@ -55,7 +55,10 @@ const editionToGeolocation = (editionKey: string = 'UK'): string =>
 
 const getSync = (): string => {
     const geolocationFromStorage = getFromStorage();
-    return geolocationFromStorage || editionToGeolocation(config.page.edition);
+    return (
+        geolocationFromStorage ||
+        editionToGeolocation(config.get('page.edition'))
+    );
 };
 
 export type CountryGroupId =
@@ -66,6 +69,15 @@ export type CountryGroupId =
     | 'International'
     | 'NZDCountries'
     | 'Canada';
+
+export type SupportInternationalisationId =
+    | 'uk'
+    | 'us'
+    | 'au'
+    | 'eu'
+    | 'int'
+    | 'nz'
+    | 'ca';
 
 /*
   Note: supportInternationalizationId should match an existing
@@ -80,7 +92,7 @@ export type CountryGroup = {
     name: string,
     currency: IsoCurrency,
     countries: string[],
-    supportInternationalisationId: string,
+    supportInternationalisationId: SupportInternationalisationId,
 };
 
 type CountryGroups = {
@@ -369,16 +381,22 @@ const countryGroups: CountryGroups = {
 
 // These are the different 'country groups' we accept when taking payment.
 // See https://github.com/guardian/support-internationalisation/blob/master/src/main/scala/com/gu/i18n/CountryGroup.scala for more context.
-const getSupporterCountryGroup = (location: string): CountryGroupId => {
+const countryCodeToCountryGroupId = (countryCode: string): CountryGroupId => {
     const availableCountryGroups = Object.keys(countryGroups);
     let response = null;
     availableCountryGroups.forEach(countryGroup => {
-        if (countryGroups[countryGroup].countries.includes(location)) {
+        if (countryGroups[countryGroup].countries.includes(countryCode)) {
             response = countryGroup;
         }
     });
-    return response || 'GBPCountries';
+    return response || 'International';
 };
+
+const countryCodeToSupportInternationalisationId = (
+    countryCode: string
+): SupportInternationalisationId =>
+    countryGroups[countryCodeToCountryGroupId(countryCode)]
+        .supportInternationalisationId;
 
 const extendedCurrencySymbol = {
     GBPCountries: '£',
@@ -391,11 +409,13 @@ const extendedCurrencySymbol = {
 };
 
 const getLocalCurrencySymbol = (): string =>
-    extendedCurrencySymbol[getSupporterCountryGroup(getSync())] || '£';
+    extendedCurrencySymbol[countryCodeToCountryGroupId(getSync())] || '£';
 
 export {
     get,
-    getSupporterCountryGroup,
+    countryCodeToCountryGroupId,
+    countryCodeToSupportInternationalisationId,
+    getFromStorage,
     getSync,
     getLocalCurrencySymbol,
     init,

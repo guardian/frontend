@@ -13,18 +13,21 @@
         Sign in
     </a>
 
-    <button class="dropdown-menu-fallback js-user-account-trigger"
+    <input 
+        type="checkbox"
         id="my-account-toggle"
-        title="user account toggle"
+        aria-controls="my-account-dropdown"
+        class="dropdown-menu-fallback js-enhance-checkbox"
         data-link-name="nav2 : topbar: my account"
-        aria-expanded="false"
-        aria-controls="my-account-dropdown"></button>
+        tabindex="-1"
+    />
 
-    <label class="top-bar__item popup__toggle my-account is-hidden js-navigation-account-actions"
+    <label class="top-bar__item popup__toggle js-navigation-account-actions js-user-account-trigger is-hidden"
         for="my-account-toggle"
-        data-link-name="nav2 : topbar: my account">
-        @fragments.inlineSvg("profile", "icon", List("top-bar__item__icon"))
-        My account
+        data-link-name="nav2 : topbar: my account"        
+        tabindex="0">
+            @fragments.inlineSvg("profile", "icon", List("top-bar__item__icon"))
+            My account
     </label>
     <div class="my-account__overlay"></div>
 

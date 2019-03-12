@@ -12,6 +12,9 @@ GET        /reader-revenue/contributions-banner-deploy-log/$region<united-kingdo
 GET        /sitemaps/news.xml                                                   controllers.SiteMapController.renderNewsSiteMap()
 GET        /sitemaps/video.xml                                                  controllers.SiteMapController.renderVideoSiteMap()
 
+# FONT LOADER
+GET        /font-loader                                                         controllers.FontLoaderController.renderFontLoader()
+
 GET        /email-newsletters                                                   controllers.SignupPageController.renderNewslettersPage()
 
 GET        /survey/:formName/show                                               controllers.SurveyPageController.renderFormStackSurvey(formName)
@@ -129,6 +132,3 @@ GET        /$leftSide<[^+]+>+*rightSide                                         
 
 # Google site verification
 GET        /google$account<[\w\d-]*>.html                                       controllers.SiteVerificationController.googleSiteVerify(account)
-
-# Formstack form submission
-POST      /formstack-campaign/submit                                            controllers.CampaignsController.formSubmit()

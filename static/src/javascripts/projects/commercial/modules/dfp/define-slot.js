@@ -11,8 +11,8 @@ import type { Slot } from 'commercial/types';
 const adUnit = once(() => {
     const urlVars = getUrlVars();
     return urlVars['ad-unit']
-        ? `/${config.page.dfpAccountId}/${urlVars['ad-unit']}`
-        : config.page.adUnit;
+        ? `/${config.get('page.dfpAccountId')}/${urlVars['ad-unit']}`
+        : config.get('page.adUnit');
 });
 
 type SizeMappingArray = Array<Object>;
@@ -202,8 +202,10 @@ const defineSlot = (adSlotNode: Element, sizes: Object): Object => {
         );
     }
 
-    if (slotTarget === 'im' && config.page.isbn) {
-        slot.setTargeting('isbn', config.page.isbn);
+    const isBn = config.get('page.isbn');
+
+    if (slotTarget === 'im' && isBn) {
+        slot.setTargeting('isbn', isBn);
     }
 
     const fabricKeyValues = new Map([
@@ -216,7 +218,7 @@ const defineSlot = (adSlotNode: Element, sizes: Object): Object => {
         slot.setTargeting('slot-fabric', fabricKeyValues.get(slotTarget));
     }
 
-    if (config.switches.adomik) {
+    if (config.get('switches.adomik')) {
         slot.setTargeting('ad_group', adomikClassify());
         slot.setTargeting('ad_h', new Date().getUTCHours().toString());
     }

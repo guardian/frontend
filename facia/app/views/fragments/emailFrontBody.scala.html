@@ -227,11 +227,7 @@
                     <a class="fc-link" href="@card.header.url.get">
                         @card.displayElement match {
                             case Some(InlineImage(image)) if FlagshipEmailContainerDynamicImageSwitch.isSwitchedOn => {
-                                @itemImage(
-                                    image,
-                                    inlineImage = true,
-                                    widthsByBreakpoint = Some(card.squareImageWidthsByBreakpoint)
-                                )
+                                @imgFromCard(card)
                             }
                             case _ => {
                                 <img class="full-width" src="@FlagshipEmailContainer.AlbumArtUrl" alt="@card.header.headline">

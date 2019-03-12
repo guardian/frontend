@@ -39,9 +39,9 @@ trait ApplicationsControllers {
   lazy val indexController = wire[IndexController]
   lazy val siteVerificationController = wire[SiteVerificationController]
   lazy val shareCountController = wire[ShareCountController]
-  lazy val formstackController = wire[CampaignsController]
   lazy val readerRevenueAppController = wire[ReaderRevenueAppController]
   lazy val youtubeController = wire[YoutubeController]
+  lazy val fontLoaderController = wire[FontLoaderController]
 
   //A fake geolocation controller to test it locally
   lazy val geolocationController = wire[FakeGeolocationController]

@@ -1,11 +1,10 @@
 // @flow
-/* eslint-disable no-new */
-import config from 'lib/config';
 import qwery from 'qwery';
-import mediator from 'lib/mediator';
+import fakeConfig from 'lib/config';
+import fakeMediator from 'lib/mediator';
+import fastdom from 'lib/fastdom-promise';
 import { noop } from 'lib/noop';
 import { init } from 'commercial/modules/article-aside-adverts';
-import fastdom from 'lib/fastdom-promise';
 
 jest.mock('common/modules/commercial/commercial-features', () => ({
     commercialFeatures: {
@@ -15,61 +14,15 @@ jest.mock('common/modules/commercial/commercial-features', () => ({
 
 const fastdomReadSpy = jest.spyOn(fastdom, 'read');
 
-jest.mock('lib/config', () => ({
-    get: jest.fn(),
-}));
-const configSpy = jest.spyOn(config, 'get');
-
 const sharedBeforeEach = (domSnippet: string) => () => {
     jest.resetAllMocks();
+    fakeMediator.removeAllListeners();
+    fakeConfig.page.isImmersive = false;
+    fakeConfig.page.hasShowcaseMainElement = false;
 
     if (document.body) {
         document.body.innerHTML = domSnippet;
     }
-
-    const pubAds = {
-        listeners: [],
-        addEventListener: jest.fn(function(eventName, callback) {
-            this.listeners[eventName] = callback;
-        }),
-        setTargeting: jest.fn(),
-        enableSingleRequest: jest.fn(),
-        collapseEmptyDivs: jest.fn(),
-        refresh: jest.fn(),
-    };
-    const sizeMapping = {
-        sizes: [],
-        addSize: jest.fn(function(width, sizes) {
-            this.sizes.unshift([width, sizes]);
-        }),
-        build: jest.fn(function() {
-            const tmp = this.sizes;
-            this.sizes = [];
-            return tmp;
-        }),
-    };
-    window.googletag = {
-        cmd: {
-            push(...args) {
-                args.forEach(command => {
-                    command();
-                });
-            },
-        },
-        pubads() {
-            return pubAds;
-        },
-        sizeMapping() {
-            return sizeMapping;
-        },
-        defineSlot: jest.fn(() => window.googletag),
-        defineOutOfPageSlot: jest.fn(() => window.googletag),
-        addService: jest.fn(() => window.googletag),
-        defineSizeMapping: jest.fn(() => window.googletag),
-        setTargeting: jest.fn(() => window.googletag),
-        enableServices: jest.fn(),
-        display: jest.fn(),
-    };
     expect.hasAssertions();
 };
 
@@ -83,7 +36,7 @@ describe('Standard Article Aside Adverts', () => {
     const domSnippet = `
         <div class="js-content-main-column"></div>
         <div class="content__secondary-column js-secondary-column">
-            <div class="aside-slot-container">
+            <div class="aside-slot-container js-aside-slot-container">
                 <div id="dfp-ad--right" class="js-ad-slot ad-slot ad-slot--right ad-slot--mpu-banner-ad js-sticky-mpu ad-slot--rendered" data-link-name="ad slot right" data-name="right" data-mobile="1,1|2,2|300,250|300,274|300,600|fluid"></div>
             </div>
         </div>
@@ -97,10 +50,20 @@ describe('Standard Article Aside Adverts', () => {
         expect(qwery('.ad-slot').length).toBe(1);
     });
 
+    it('should resolve immediately if the secondary column does not exist', done => {
+        if (document.body) {
+            document.body.innerHTML = `<div class="js-content-main-column"></div>`;
+        }
+
+        init(noop, noop).then(resolve => {
+            expect(resolve).toBe(false);
+            done();
+        });
+    });
+
     it('should have the correct size mappings and classes', done => {
-        configSpy.mockReturnValueOnce(false);
-        fastdomReadSpy.mockReturnValue(Promise.resolve([900000, 0]));
-        mediator.once('page:defaultcommercial:right', adSlot => {
+        fastdomReadSpy.mockReturnValue(Promise.resolve([2000, 0]));
+        fakeMediator.once('page:defaultcommercial:right', adSlot => {
             expect(adSlot.classList).toContain('js-sticky-mpu');
             expect(adSlot.getAttribute('data-mobile')).toBe(
                 '1,1|2,2|300,250|300,274|300,600|fluid'
@@ -111,9 +74,8 @@ describe('Standard Article Aside Adverts', () => {
     });
 
     it('should mutate the ad slot in short articles', done => {
-        configSpy.mockReturnValueOnce(false);
         fastdomReadSpy.mockReturnValue(Promise.resolve([10, 0]));
-        mediator.once('page:defaultcommercial:right', adSlot => {
+        fakeMediator.once('page:defaultcommercial:right', adSlot => {
             expect(adSlot.classList).not.toContain('js-sticky-mpu');
             expect(adSlot.getAttribute('data-mobile')).toBe(
                 '1,1|2,2|300,250|300,274|fluid'
@@ -131,7 +93,7 @@ describe('Immersive Article Aside Adverts', () => {
             <figure class="element element--immersive"></figure>
         </div>
         <div class="content__secondary-column js-secondary-column">
-            <div class="aside-slot-container">
+            <div class="aside-slot-container js-aside-slot-container">
                 <div id="dfp-ad--right" class="js-ad-slot ad-slot ad-slot--right ad-slot--mpu-banner-ad js-sticky-mpu ad-slot--rendered" data-link-name="ad slot right" data-name="right" data-mobile="1,1|2,2|300,250|300,274|300,600|fluid"></div>
             </div>
         </div>
@@ -147,9 +109,9 @@ describe('Immersive Article Aside Adverts', () => {
 
     it('should remove sticky and return all slot sizes when there is enough space', done => {
         fastdomReadSpy.mockReturnValueOnce(Promise.resolve([900001, 10000]));
-        configSpy.mockReturnValueOnce(true);
+        fakeConfig.page.isImmersive = true;
 
-        mediator.once('page:defaultcommercial:right', adSlot => {
+        fakeMediator.once('page:defaultcommercial:right', adSlot => {
             expect(adSlot.classList).not.toContain('js-sticky-mpu');
             const sizes = adSlot.getAttribute('data-mobile').split('|');
             expect(sizes).toContain('1,1');
@@ -165,9 +127,9 @@ describe('Immersive Article Aside Adverts', () => {
 
     it('should remove sticky and return sizes that will fit when there is limited space', done => {
         fastdomReadSpy.mockReturnValueOnce(Promise.resolve([900002, 260]));
-        configSpy.mockReturnValueOnce(true);
+        fakeConfig.page.isImmersive = true;
 
-        mediator.once('page:defaultcommercial:right', adSlot => {
+        fakeMediator.once('page:defaultcommercial:right', adSlot => {
             expect(adSlot.classList).not.toContain('js-sticky-mpu');
             const sizes = adSlot.getAttribute('data-mobile').split('|');
             expect(sizes).toContain('1,1');
@@ -186,7 +148,7 @@ describe('Immersive Article (no immersive elements) Aside Adverts', () => {
     const domSnippet = `
         <div class="js-content-main-column"></div>
         <div class="content__secondary-column js-secondary-column">
-            <div class="aside-slot-container">
+            <div class="aside-slot-container js-aside-slot-container">
                 <div id="dfp-ad--right" class="js-ad-slot ad-slot ad-slot--right ad-slot--mpu-banner-ad js-sticky-mpu ad-slot--rendered" data-link-name="ad slot right" data-name="right" data-mobile="1,1|2,2|300,250|300,274|300,600|fluid"></div>
             </div>
         </div>
@@ -195,9 +157,10 @@ describe('Immersive Article (no immersive elements) Aside Adverts', () => {
     afterEach(sharedAfterEach);
 
     it('should have the correct size mappings and classes (leaves it untouched)', done => {
-        configSpy.mockReturnValueOnce(true);
         fastdomReadSpy.mockReturnValue(Promise.resolve([900000, 0]));
-        mediator.once('page:defaultcommercial:right', adSlot => {
+        fakeConfig.page.isImmersive = true;
+
+        fakeMediator.once('page:defaultcommercial:right', adSlot => {
             expect(adSlot.classList).toContain('js-sticky-mpu');
             expect(adSlot.getAttribute('data-mobile')).toBe(
                 '1,1|2,2|300,250|300,274|300,600|fluid'

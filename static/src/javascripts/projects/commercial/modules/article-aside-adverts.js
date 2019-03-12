@@ -1,13 +1,14 @@
-// @flow
+// @flow strict
 import $ from 'lib/$';
 import config from 'lib/config';
 import mediator from 'lib/mediator';
 import fastdom from 'lib/fastdom-promise';
-import type { bonzo } from 'bonzo';
+import { bonzo } from 'bonzo';
 
 const minArticleHeight: number = 1300;
 
-const calculateAllowedAdSlots = (availableSpace: number): string => {
+const getAllowedSizesForImmersive = (availableSpace: number): string => {
+    // filter ad slot sizes based on the available height
     if (availableSpace > 600) {
         return '1,1|2,2|300,250|300,274|300,600|fluid';
     } else if (availableSpace > 274) {
@@ -46,19 +47,26 @@ export const init = (start: () => void, stop: () => void): Promise<boolean> => {
             ]
         )
         .then(([mainColHeight, immersiveOffset]: [number, number]) => {
+            // we do all the adjustments server-side if the page has a ShowcaseMainElement!
+            if (config.get('page.hasShowcaseMainElement', false)) {
+                return $adSlot[0];
+            }
+            // immersive articles may have an image that overlaps the aside ad so we need to remove
+            // the sticky behaviour and conditionally adjust the slot size depending on how far down
+            // the page the first immersive image appears.
             if (config.get('page.isImmersive') && $immersiveEls.length > 0) {
-                // filter ad slot sizes based on the available height
                 return fastdom.write(() => {
                     $adSlot.removeClass('right-sticky js-sticky-mpu is-sticky');
                     $adSlot[0].setAttribute(
                         'data-mobile',
-                        calculateAllowedAdSlots(immersiveOffset)
+                        getAllowedSizesForImmersive(immersiveOffset)
                     );
                     return $adSlot[0];
                 });
-                // remove sticky
-            } else if (mainColHeight < minArticleHeight) {
-                // Should switch to 'right-small' MPU for short articles
+            }
+            // most articles are long enough to fit a DMPU. However, the occasional shorter article
+            // will need the slot sizes to be adjusted, and the sticky behaviour removed.
+            if (mainColHeight < minArticleHeight) {
                 return fastdom.write(() => {
                     $adSlot.removeClass('right-sticky js-sticky-mpu is-sticky');
                     $adSlot[0].setAttribute(

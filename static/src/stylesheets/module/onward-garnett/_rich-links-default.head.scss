@@ -82,6 +82,13 @@
     margin: 5px $gs-gutter $gs-baseline 0;
     clear: both;
 
+    // Decouple rich link position from height of ads that are offset right.
+    // This prevents the rich link from shifting when the height of the ad
+    // changes. Currently the tall ads are allowed only on desktop and above.
+    @include mq($from: desktop) {
+        clear: left;
+    }
+
     @include mq($until: mobileLandscape) {
         width: $gs-gutter * 6.5;
         margin-bottom: $gs-baseline / 2;

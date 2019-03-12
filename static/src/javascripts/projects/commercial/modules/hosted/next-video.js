@@ -8,7 +8,9 @@ const loadNextVideo = (): Promise<void> => {
 
     if (placeholders.length) {
         return fetchJson(
-            `${config.page.ajaxUrl}/${config.page.pageId}/autoplay.json`,
+            `${config.get('page.ajaxUrl')}/${config.get(
+                'page.pageId'
+            )}/autoplay.json`,
             {
                 mode: 'cors',
             }

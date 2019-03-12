@@ -59,6 +59,8 @@ object Tag {
     val richLinkId = tag.references.find(_.`type` == "rich-link")
       .map(_.id.stripPrefix("rich-link/"))
       .filter(_.matches( """https?://www\.theguardian\.com/.*"""))
+      .map(_.stripPrefix("https://www.theguardian.com"))
+
 
     Tag(
       properties = TagProperties.make(tag),

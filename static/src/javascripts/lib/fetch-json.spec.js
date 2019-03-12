@@ -1,20 +1,19 @@
 // @flow
 
 import Chance from 'chance';
+import config from 'lib/config';
 import fetchJson from './fetch-json';
 
 const chance = new Chance();
-
-jest.mock('lib/config', () => ({
-    page: {
-        ajaxUrl: 'foo',
-    },
-}));
 
 jest.mock('lib/fetch', () => jest.fn());
 const fetchSpy: any = require('lib/fetch');
 
 describe('Fetch JSON util', () => {
+    beforeAll(() => {
+        config.set('page.ajaxUrl', 'foo');
+    });
+
     it('returns a promise which rejects on network errors', done => {
         const error = new Error(chance.string());
         fetchSpy.mockReturnValueOnce(Promise.reject(error));

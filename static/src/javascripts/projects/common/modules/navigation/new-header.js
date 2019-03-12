@@ -308,59 +308,38 @@ const returnFocusToButton = (btnId: string): void => {
         });
 };
 
-const initiateUserAccountDropdown = (): void => {
-    fastdom
-        .read(() => ({
-            menu: document.querySelector('.js-user-account-dropdown-menu'),
-            trigger: document.querySelector('.js-user-account-trigger'),
-        }))
-        .then((userAccountDropdownEls: MenuAndTriggerEls) => {
-            const button = userAccountDropdownEls.trigger;
+const genericToggleMenu = (
+    menuClassName: string,
+    triggerClassName: string
+): void => {
+    const menu: ?HTMLElement = document.querySelector(menuClassName);
 
-            if (button && button instanceof HTMLButtonElement) {
-                button.addEventListener('click', () =>
-                    toggleDropdown(userAccountDropdownEls)
-                );
-            }
+    const trigger: ?HTMLElement = document.querySelector(triggerClassName);
 
-            const { menu } = userAccountDropdownEls;
-
-            if (menu) {
-                menu.addEventListener(
-                    'keyup',
-                    (event: KeyboardEvent): void => {
-                        if (event.key === 'Escape') {
-                            toggleDropdown(userAccountDropdownEls);
-                            returnFocusToButton(MY_ACCOUNT_ID);
-                        }
-                    }
-                );
-            }
+    if (menu && trigger) {
+        toggleDropdown({
+            menu,
+            trigger,
         });
+    }
 };
 
-const toggleEditionPicker = (): void => {
-    const menu: ?HTMLElement = document.querySelector(
-        '.js-edition-dropdown-menu'
-    );
-
-    const trigger: ?HTMLElement = document.querySelector(
+const toggleEditionPicker = () =>
+    genericToggleMenu(
+        '.js-edition-dropdown-menu',
         '.js-edition-picker-trigger'
     );
 
-    if (menu && trigger) {
-        const editionPickerDropdownEls: MenuAndTriggerEls = {
-            menu,
-            trigger,
-        };
-
-        toggleDropdown(editionPickerDropdownEls);
-    }
-};
+const toggleMyAccountMenu = () =>
+    genericToggleMenu(
+        '.js-user-account-dropdown-menu',
+        '.js-user-account-trigger'
+    );
 
 const buttonClickHandlers = {
     [MENU_TOGGLE_ID]: toggleMenu,
     [EDITION_PICKER_TOGGLE_ID]: toggleEditionPicker,
+    [MY_ACCOUNT_ID]: toggleMyAccountMenu,
 };
 
 const menuKeyHandlers = {
@@ -374,6 +353,12 @@ const menuKeyHandlers = {
         if (event.key === 'Escape') {
             toggleEditionPicker();
             returnFocusToButton(EDITION_PICKER_TOGGLE_ID);
+        }
+    },
+    [MY_ACCOUNT_ID]: (event: KeyboardEvent): void => {
+        if (event.key === 'Escape') {
+            toggleMyAccountMenu();
+            returnFocusToButton(MY_ACCOUNT_ID);
         }
     },
 };
@@ -618,7 +603,6 @@ export const newHeaderInit = (): void => {
     addEventHandler();
     showMyAccountIfNecessary();
     bindCredentialsApiSignIn();
-    initiateUserAccountDropdown();
     closeAllMenuSections();
     trackRecentSearch();
 };

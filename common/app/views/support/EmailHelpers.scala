@@ -10,7 +10,7 @@ import views.support.TrailCssClasses.toneClassFromStyle
 object EmailHelpers {
   def imageUrlFromCard(contentCard: ContentCard, width: Int): Option[String] = {
     def imageUrl(displayElement: Option[FaciaDisplayElement]): Option[String] = displayElement.flatMap {
-      case InlineImage(imageMedia) => SmallFrontEmailImage(width).bestSrcFor(imageMedia)
+      case InlineImage(imageMedia) => FrontEmailImage(width).bestSrcFor(imageMedia)
       case InlineVideo(video, _, _, maybeFallbackImage) => EmailVideoImage.bestSrcFor(video.images).orElse(imageUrl(maybeFallbackImage))
       case InlineYouTubeMediaAtom(atom, posterOverride) => posterOverride.orElse(atom.posterImage).flatMap(EmailVideoImage.bestSrcFor)
       case _ => None
@@ -45,11 +45,12 @@ object EmailHelpers {
   }
 
   def imgForArticle: (String, Option[String]) => Html = img(EmailImage.knownWidth) _
+  def imgForVideo: (String, Option[String]) => Html = img(EmailVideoImage.knownWidth) _
 
-  def imgForFront: (String, Option[String]) => Html = img(FrontEmailImage.knownWidth) _
+  def imgForFront: (String, Option[String]) => Html = img(width=EmailImageParams.fullWidth) _
 
   def imgFromCard(card: ContentCard, colWidth: Int = 12)(implicit requestHeader: RequestHeader): Option[Html] = {
-    val width = ((colWidth.toDouble / 12.toDouble) * FrontEmailImage.knownWidth).toInt
+    val width = ((colWidth.toDouble / 12.toDouble) * EmailImageParams.fullWidth).toInt
     imageUrlFromCard(card, width).map { url => Html {
         s"""<a ${card.header.url.hrefWithRel}>${img(width)(url, Some(card.header.headline))}</a>"""
       }

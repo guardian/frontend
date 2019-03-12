@@ -47,7 +47,7 @@ const controlEpicComponent = (
             componentName: '', // TODO: confirm data-component not needed
             buttonTemplate: epicButtonsTemplate({
                 supportUrl: addTrackingCodesToUrl({
-                    base: supportContributeURL,
+                    base: supportContributeURL(),
                     componentType: epicComponentType,
                     componentId: epicId,
                     campaignCode: epicId,
@@ -57,6 +57,7 @@ const controlEpicComponent = (
             testimonialBlock,
             epicClassNames: [],
             wrapperClass: '',
+            showTicker: false,
         });
 
         const epicElement = $.create(rawEpic).get(0);

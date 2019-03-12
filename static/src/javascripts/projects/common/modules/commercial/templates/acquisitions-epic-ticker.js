@@ -19,8 +19,7 @@ export const acquisitionsEpicTickerTemplate = `
         
         <div class="js-ticker-over-goal is-hidden">
             <div class="epic-ticker__thankyou">
-                <div>Help us beat our goal - thank you</div>
-                <div>Please keep contributing into the new year</div>
+                <div>We've met our goal — thank you</div>
             </div>
             
             <div class="js-ticker-exceeded epic-ticker__exceeded">

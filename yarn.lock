@@ -1063,9 +1063,9 @@
   version "0.8.2"
   resolved "https://registry.yarnpkg.com/@emotion/utils/-/utils-0.8.2.tgz#576ff7fb1230185b619a75d258cbc98f0867a8dc"
 
-"@guardian/atom-renderer@0.17.1":
-  version "0.17.1"
-  resolved "https://registry.yarnpkg.com/@guardian/atom-renderer/-/atom-renderer-0.17.1.tgz#298a6f6560913470991ce12513abf0e88397f9df"
+"@guardian/atom-renderer@0.17.3":
+  version "0.17.3"
+  resolved "https://registry.yarnpkg.com/@guardian/atom-renderer/-/atom-renderer-0.17.3.tgz#27a0e8dbc9a7d24c6115c31f56e7116842d82f3d"
   dependencies:
     "@babel/preset-env" "^7.3.1"
     "@babel/preset-flow" "^7.0.0"
@@ -4742,9 +4742,9 @@ fstream@^1.0.0, fstream@^1.0.2, fstream@~1.0.10:
     mkdirp ">=0.5 0"
     rimraf "2"
 
-fun-hooks@^0.6.5:
-  version "0.6.6"
-  resolved "https://registry.yarnpkg.com/fun-hooks/-/fun-hooks-0.6.6.tgz#f931ff24a872eb17e71fb52a1e3d25569d0a72fe"
+fun-hooks@^0.8.1:
+  version "0.8.1"
+  resolved "https://registry.yarnpkg.com/fun-hooks/-/fun-hooks-0.8.1.tgz#5ef7866840610a5a1858c26ade97b15d35853434"
 
 function-bind@^1.1.0:
   version "1.1.0"
@@ -8206,14 +8206,14 @@ preact@^8.2.9:
   version "8.2.9"
   resolved "https://registry.yarnpkg.com/preact/-/preact-8.2.9.tgz#813ba9dd45e5d97c5ea0d6c86d375b3be711cc40"
 
-"prebid.js@https://github.com/guardian/Prebid.js.git#fe14150":
-  version "2.3.0"
-  resolved "https://github.com/guardian/Prebid.js.git#fe1415035ba8c958124062e0f2adf35a88997897"
+"prebid.js@https://github.com/guardian/Prebid.js.git#4ea7052":
+  version "2.5.0"
+  resolved "https://github.com/guardian/Prebid.js.git#4ea7052ff40291885d43373317618a4bd6423924"
   dependencies:
     babel-plugin-transform-object-assign "^6.22.0"
     core-js "^2.4.1"
     crypto-js "^3.1.9-1"
-    fun-hooks "^0.6.5"
+    fun-hooks "^0.8.1"
     jsencrypt "^3.0.0-rc.1"
     just-clone "^1.0.2"
 

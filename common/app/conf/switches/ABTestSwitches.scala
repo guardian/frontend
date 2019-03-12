@@ -28,19 +28,9 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-february-moment-banner-non-uk-round-two",
-    "switch on to test the moment copy of the engagement banner outside the UK",
-    owners = Seq(Owner.withGithub("johnduffell")),
-    safeState = Off,
-    sellByDate = new LocalDate(2019, 9, 30),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-february-moment-banner-uk-round-two",
-    "switch on to enable the moment engagement banner in the UK",
-    owners = Seq(Owner.withGithub("johnduffell")),
+    "ab-february-moment-banner-copy",
+    "switch on to test the some moment copy on the fiv engagement banner",
+    owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
     sellByDate = new LocalDate(2019, 9, 30),
     exposeClientSide = true

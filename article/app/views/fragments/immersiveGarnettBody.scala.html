@@ -78,10 +78,17 @@
 
                     <div class="content__secondary-column js-secondary-column" aria-hidden="true">
 
-                        @fragments.articleAsideSlot(shouldShowAds(model), articleAsideOptionalSizes, false)
+                        @if(!article.tags.isPrintSalesSeries){
+                            @fragments.articleAsideSlot(
+                                shouldShowAds(model),
+                                articleAsideOptionalSizes(article.elements.hasShowcaseMainElement),
+                                false
+                            )
+                        }
 
                     </div>
                 </div>
+            </div>
         </article>
 
         @fragments.contentFooter(article, model.related, isPaidContent = isPaidContent)

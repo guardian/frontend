@@ -314,7 +314,7 @@ final case class MetaData (
 
   def linkedData: List[LinkedData] = List(
     Guardian()) ++ iosType.map(_ => List(
-    WebPage(webUrl, PotentialAction(target = "android-app://com.guardian/" + webUrl.replace("://", "/")))
+    WebPage(`@id` = webUrl, potentialAction = PotentialAction(target = "android-app://com.guardian/" + webUrl.replace("://", "/")))
   )).getOrElse(Nil)
 
   def iosId(referrer: String): Option[String] = iosType.map(iosType => s"$id?contenttype=$iosType&source=$referrer")
@@ -784,6 +784,7 @@ final case class Tags(
     tags.exists(t => t.id == "sport/rugby-union")
 
   lazy val isClimateChangeSeries: Boolean = tags.exists(t => t.id =="environment/series/keep-it-in-the-ground")
+  lazy val isPrintSalesSeries: Boolean = tags.exists(t => t.id == "artanddesign/series/gnm-print-sales")
   lazy val isTheMinuteArticle: Boolean = tags.exists(t => t.id == "tone/minute")
   //this is for the immersive header to access this info
   lazy val isPaidContent: Boolean = tags.exists( t => t.id == "tone/advertisement-features" )

@@ -16,6 +16,7 @@ artifacts.zip
 .node-version
 .sbt
 .sbt.*
+.metals
 
 log
 logs

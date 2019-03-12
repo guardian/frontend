@@ -110,10 +110,9 @@ describe('DFP', () => {
     `;
 
     beforeEach(() => {
-        config.switches = {
-            commercial: true,
-        };
-        config.page = {
+        config.set('switches.commercial', true);
+
+        config.set('page', {
             adUnit: '/123456/theguardian.com/front',
             contentType: 'Article',
             edition: 'us',
@@ -128,13 +127,11 @@ describe('DFP', () => {
                 k: ['korea', 'ukraine'],
                 se: ['happy-times'],
             },
-        };
-        config.images = {
-            commercial: {},
-        };
-        config.ophan = {
-            pageViewId: 'dummyOphanPageViewId',
-        };
+        });
+
+        config.set('images.commercial', {});
+
+        config.set('ophan.pageViewId', 'dummyOphanPageViewId');
 
         if (document.body) {
             document.body.innerHTML = domSnippet;
@@ -218,7 +215,7 @@ describe('DFP', () => {
     });
 
     it('should get the slots', () => {
-        config.page.hasPageSkin = true;
+        config.set('page.hasPageSkin', true);
         return new Promise(resolve => {
             prepareGoogletag(noop, resolve);
         }).then(() => {
@@ -309,7 +306,7 @@ describe('DFP', () => {
         }));
 
     it('should display ads', () => {
-        config.page.hasPageSkin = true;
+        config.set('page.hasPageSkin', true);
         getBreakpoint.mockReturnValue('wide');
         return new Promise(resolve => {
             prepareGoogletag(noop, resolve);
@@ -356,12 +353,12 @@ describe('DFP', () => {
 
     describe('pageskin loading', () => {
         it('should lazy load ads when there is no pageskin', () => {
-            config.page.hasPageSkin = false;
+            config.set('page.hasPageSkin', false);
             expect(dfpEnv.shouldLazyLoad()).toBe(true);
         });
 
         it('should not lazy load ads when there is a pageskin', () => {
-            config.page.hasPageSkin = true;
+            config.set('page.hasPageSkin', true);
             expect(dfpEnv.shouldLazyLoad()).toBe(false);
         });
     });

@@ -41,9 +41,12 @@ object Commercial {
     }
   }
 
-  def articleAsideOptionalSizes(implicit request: RequestHeader): Seq[String] = Edition(request).id match {
-    case "US" => Seq("300,1050")
-    case _   => Seq.empty
+  def articleAsideOptionalSizes(isShowcase: Boolean)(implicit request: RequestHeader): Seq[String] = {
+    (isShowcase, Edition(request).id) match {
+      case (true, _) => Seq.empty
+      case (false, "US") => Seq("300,600", "fluid", "300,1050")
+      case (false, _)   => Seq("300,600", "fluid")
+    }
   }
 
   def glabsLink (request: RequestHeader): String = {

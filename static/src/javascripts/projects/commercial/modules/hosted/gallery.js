@@ -209,8 +209,8 @@ class HostedGallery {
     }
 
     static ctaIndex(): ?number {
-        const ctaIndex = config.page.ctaIndex;
-        const images = config.page.images;
+        const ctaIndex = config.get('page.ctaIndex');
+        const images = config.get('page.images');
         return ctaIndex > 0 && ctaIndex < images.length - 1
             ? ctaIndex
             : undefined;
@@ -387,7 +387,7 @@ class HostedGallery {
 
     trackNavBetweenImages(data: Object) {
         if (data && data.nav) {
-            const trackingPrefix = config.page.trackingPrefix || '';
+            const trackingPrefix = config.get('page.trackingPrefix', '');
             interactionTracking.trackNonClickInteraction(
                 `${trackingPrefix + data.nav} - image ${this.index}`
             );
@@ -504,7 +504,7 @@ HostedGallery.prototype.states = {
             }
 
             const pageName =
-                config.page.pageName ||
+                config.get('page.pageName') ||
                 window.location.pathname.substr(
                     window.location.pathname.lastIndexOf('/') + 1
                 );

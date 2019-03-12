@@ -249,7 +249,7 @@ export const init = (start: () => void, stop: () => void): Promise<boolean> => {
         return Promise.resolve(false);
     }
 
-    const im = config.page.hasInlineMerchandise
+    const im = config.get('page.hasInlineMerchandise')
         ? attemptToAddInlineMerchAd()
         : Promise.resolve(false);
     im.then((inlineMerchAdded: boolean) =>

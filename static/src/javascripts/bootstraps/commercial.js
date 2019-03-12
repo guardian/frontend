@@ -60,7 +60,7 @@ if (!commercialFeatures.adFree) {
 }
 
 const loadHostedBundle = (): Promise<void> => {
-    if (config.page.isHosted) {
+    if (config.get('page.isHosted')) {
         return new Promise(resolve => {
             require.ensure(
                 [],

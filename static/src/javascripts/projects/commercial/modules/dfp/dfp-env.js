@@ -26,7 +26,7 @@ export const dfpEnv: DfpEnv = {
     adSlotSelector: '.js-ad-slot',
 
     /* externalDemand: string. Set to 'prebid' for header-bidding connections, or 'none'. */
-    externalDemand: config.page.hbImpl,
+    externalDemand: config.get('page.hbImpl'),
 
     /* lazyLoadEnabled: boolean. Set to true when adverts are lazy-loaded */
     lazyLoadEnabled: false,
@@ -53,6 +53,6 @@ export const dfpEnv: DfpEnv = {
     shouldLazyLoad() {
         // We do not want lazy loading on pageskins because it messes up the roadblock
         // Also, if the special dll parameter is passed with a value of 1, we don't lazy load
-        return !config.page.hasPageSkin && getUrlVars().dll !== '1';
+        return !config.get('page.hasPageSkin') && getUrlVars().dll !== '1';
     },
 };

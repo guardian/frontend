@@ -25,6 +25,8 @@ describe('Submitting a callout response to formstack', () => {
             field2: 'hello',
             field3: '\nOption1\nOption2',
         };
-        expect(formatData(mockFormEls)).toEqual(mockData);
+        formatData(mockFormEls).then(res => {
+            expect(res).toEqual(mockData);
+        });
     });
 });
