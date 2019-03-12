@@ -3,7 +3,7 @@ import config from 'lib/config';
 import { initCheckMediator, resolveCheck } from 'common/modules/check-mediator';
 import { adblockInUse as adblockInUse_ } from 'lib/detect';
 import { load } from './outbrain-load';
-import { initOutbrain } from './outbrain';
+import { initOutbrain, shouldTestOutbrainWidget } from './outbrain';
 import { getSection } from './outbrain-sections';
 
 const adblockInUse: any = adblockInUse_;
@@ -169,6 +169,10 @@ describe('Outbrain', () => {
             });
         });
     });
+
+    // it('should show outbrain widget if in test variant', () => {
+    //     expect(shouldTestOutbrainWidget).toBe('true');
+    // });
 
     describe('Sections', () => {
         it('should return "news" for news sections', () => {
