@@ -88,7 +88,13 @@ object Sponsorship {
 object PageElement {
   val dotComponentsImageProfiles = List(Item1200, Item700, Item640, Item300, Item140, Item120)
 
+
+
   def make(element: ApiBlockElement, addAffiliateLinks: Boolean, pageUrl: String, atoms: Iterable[Atom]): List[PageElement] = {
+    def extractAtom: Option[Atom] = for {
+      contentAtom <- element.contentAtomTypeData
+      atom <- atoms.find(_.id == contentAtom.atomId)
+    } yield atom
 
     element.`type` match {
 
@@ -183,25 +189,19 @@ object PageElement {
       }).toList
 
       case Embed => extractEmbed(element).toList
-      case Contentatom => (for {
-        contentAtom <- element.contentAtomTypeData
-        atom <- atoms.find(_.id == contentAtom.atomId)
-      } yield {
-        atom match {
-          case mediaAtom: MediaAtom =>
-            mediaAtom.activeAssets.headOption.map(asset => {
-              YoutubeBlockElement(
-                mediaAtom.id, //CAPI ID
-                asset.id,
-                mediaAtom.channelId, //Channel ID
-                mediaAtom.title //Caption
-              )
-            })
-          case _ => UnknownBlockElement(None)
-        }
-      }).flatten.toList
-
-
+      case Contentatom => (extractAtom match {
+        case Some(mediaAtom: MediaAtom) =>
+          mediaAtom.activeAssets.headOption.map(asset => {
+            YoutubeBlockElement(
+              mediaAtom.id, //CAPI ID
+              asset.id,
+              mediaAtom.channelId, //Channel ID
+              mediaAtom.title //Caption
+            )
+          })
+        case Some(atom) => Some(ContentAtomBlockElement(atom.id))
+        case _ => None
+      }).toList
       case Pullquote => element.pullquoteTypeData.map(d => PullquoteBlockElement(d.html, Role(None))).toList
       case Interactive => element.interactiveTypeData.map(d => InteractiveBlockElement(d.html, Role(d.role), d.isMandatory)).toList
       case Table => element.tableTypeData.map(d => TableBlockElement(d.html, Role(d.role), d.isMandatory)).toList
@@ -280,7 +280,7 @@ object PageElement {
   implicit val EmbedBlockElementWrites: Writes[EmbedBlockElement] = Json.writes[EmbedBlockElement]
   implicit val SoundCloudBlockElementWrites: Writes[SoundcloudBlockElement] = Json.writes[SoundcloudBlockElement]
   implicit val ContentAtomBlockElementWrites: Writes[ContentAtomBlockElement] = Json.writes[ContentAtomBlockElement]
-  implicit val YoutubeBlockElementEWrites: Writes[YoutubeBlockElement] = Json.writes[YoutubeBlockElement]
+  implicit val YoutubeBlockElementWrites: Writes[YoutubeBlockElement] = Json.writes[YoutubeBlockElement]
   implicit val PullquoteBlockElementWrites: Writes[PullquoteBlockElement] = Json.writes[PullquoteBlockElement]
   implicit val InteractiveBlockElementWrites: Writes[InteractiveBlockElement] = Json.writes[InteractiveBlockElement]
   implicit val CommentBlockElementWrites: Writes[CommentBlockElement] = Json.writes[CommentBlockElement]

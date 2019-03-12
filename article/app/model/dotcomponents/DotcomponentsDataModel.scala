@@ -11,6 +11,7 @@ import conf.Configuration.affiliatelinks
 import conf.switches.Switches
 import controllers.ArticlePage
 import model.SubMetaLinks
+import model.content.Atom
 import model.dotcomrendering.pageElements.{DisclaimerBlockElement, PageElement}
 import model.meta._
 import navigation.NavMenu
@@ -207,7 +208,7 @@ object DotcomponentsDataModel {
   def fromArticle(articlePage: ArticlePage, request: RequestHeader, blocks: APIBlocks): DotcomponentsDataModel = {
 
     val article = articlePage.article
-    val atoms = article.content.atoms.flatMap(_.all)
+    val atoms: Iterable[Atom] = article.content.atoms.map(_.all).getOrElse(Seq())
 
     // TODO this logic is duplicated from the cleaners, can we consolidate?
     val shouldAddAffiliateLinks = AffiliateLinksCleaner.shouldAddAffiliateLinks(
