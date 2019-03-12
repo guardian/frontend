@@ -18,13 +18,8 @@ type OutbrainDfpConditions = {
     useMerchandiseAdSlot: boolean,
 };
 
-const isInOutbrainTestingVariant = (): boolean => {
+const isInOutbrainTestingVariant = (): boolean =>
     isInVariantSynchronous(commercialOutbrainTesting, 'variant');
-};
-
-const shouldTestOutbrainWidget = (isInOutbrainTestingVariant());
-
-
 
 const noMerchSlotsExpected = (): Promise<boolean> =>
     // Loading Outbrain is dependent on successful return of high relevance component
@@ -98,9 +93,12 @@ export const getOutbrainComplianceTargeting = (): Promise<
   true              false               false             n/a              false         false      true      non-compliant
   true              false               false             n/a              false         false      false     compliant
 */
+
+export const shouldTestOutbrainWidget = isInOutbrainTestingVariant();
+
 export const initOutbrain = (): Promise<void> =>
     getOutbrainPageConditions().then(pageConditions => {
-        if (!pageConditions.outbrainEnabled) {
+        if (!pageConditions.outbrainEnabled && !shouldTestOutbrainWidget) {
             return;
         }
 
