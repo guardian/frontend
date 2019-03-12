@@ -76,4 +76,14 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  Switch(
+    ABTests,
+    "ab-commercial-outbrain-testing",
+    "Test the outbrain widget",
+    owners = Seq(Owner.withGithub("frankie297")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 3, 25),
+    exposeClientSide = true
+  )
+
 }

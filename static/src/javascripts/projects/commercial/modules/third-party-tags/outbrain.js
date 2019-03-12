@@ -1,4 +1,6 @@
 // @flow
+import { isInVariantSynchronous } from 'common/modules/experiments/ab';
+import { commercialOutbrainTesting } from 'common/modules/experiments/tests/commercial-outbrain-testing.js';
 import { adblockInUse } from 'lib/detect';
 import { waitForCheck } from 'common/modules/check-mediator';
 import { load } from './outbrain-load';
@@ -15,6 +17,14 @@ type OutbrainDfpConditions = {
     blockedByAds: boolean,
     useMerchandiseAdSlot: boolean,
 };
+
+const isInOutbrainTestingVariant = (): boolean => {
+    isInVariantSynchronous(commercialOutbrainTesting, 'variant');
+};
+
+const shouldTestOutbrainWidget = (isInOutbrainTestingVariant());
+
+
 
 const noMerchSlotsExpected = (): Promise<boolean> =>
     // Loading Outbrain is dependent on successful return of high relevance component
