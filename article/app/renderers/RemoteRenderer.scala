@@ -22,7 +22,7 @@ import scala.io.Source
 
 class RemoteRenderer {
 
-  private[this] val SCHEMA = "schema/dotcomponentsDataModelV1.jsonschema"
+  private[this] val SCHEMA = "schema/dotcomponentsDataModelV2.jsonschema"
 
   private[this] def validate(model: DotcomponentsDataModel) = {
     val rawschema: String = Source.fromResource(SCHEMA).getLines.mkString("\n")
