@@ -8,12 +8,6 @@ jest.mock('common/modules/discussion/api', () => ({
     recommendComment: jest.fn(),
 }));
 
-// jest.mock('lib/config', () => ({
-//     switches: {
-//         discussionAllowAnonymousRecommendsSwitch: false,
-//     },
-// }));
-
 const recommendComment: any = recommendComment_;
 
 const fakeUser = {
