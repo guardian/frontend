@@ -33,23 +33,24 @@ class CommercialFeatures {
         );
         const externalAdvertising = !noadsUrl && !userPrefs.isOff('adverts');
         const sensitiveContent =
-            config.page.shouldHideAdverts ||
-            config.page.section === 'childrens-books-site';
-        const isMinuteArticle = config.page.isMinuteArticle;
-        const isArticle = config.page.contentType === 'Article';
-        const isInteractive = config.page.contentType === 'Interactive';
-        const isLiveBlog = config.page.isLiveBlog;
-        const isHosted = config.page.isHosted;
+            config.get('page.shouldHideAdverts') ||
+            config.get('page.section') === 'childrens-books-site';
+        const isMinuteArticle = config.get('page.isMinuteArticle');
+        const isArticle = config.get('page.contentType') === 'Article';
+        const isInteractive = config.get('page.contentType') === 'Interactive';
+        const isLiveBlog = config.get('page.isLiveBlog');
+        const isHosted = config.get('page.isHosted');
         const isIdentityPage =
-            config.page.contentType === 'Identity' ||
-            config.page.section === 'identity'; // needed for pages under profile.* subdomain
-        const switches = config.switches;
+            config.get('page.contentType') === 'Identity' ||
+            config.get('page.section') === 'identity'; // needed for pages under profile.* subdomain
+        const switches = config.get('switches');
         const isWidePage = getBreakpoint() === 'wide';
         const supportsSticky =
             document.documentElement &&
             document.documentElement.classList.contains('has-sticky');
         const newRecipeDesign =
-            config.page.showNewRecipeDesign && config.tests.abNewRecipeDesign;
+            config.get('page.showNewRecipeDesign') &&
+            config.get('tests.abNewRecipeDesign');
         const isSecureContact = config
             .get('page.pageId', '')
             .includes(
@@ -84,7 +85,7 @@ class CommercialFeatures {
             !this.adFree &&
             this.articleBodyAdverts &&
             config.get('switches.carrotTrafficDriver', false) &&
-            !config.page.isPaidContent;
+            !config.get('page.isPaidContent');
 
         this.videoPreRolls = this.dfpAdvertising && !this.adFree;
 
@@ -94,7 +95,7 @@ class CommercialFeatures {
             !isMinuteArticle &&
             !isHosted &&
             !isInteractive &&
-            !config.page.isFront &&
+            !config.get('page.isFront') &&
             !newRecipeDesign;
 
         this.thirdPartyTags =
@@ -107,22 +108,22 @@ class CommercialFeatures {
             !noadsUrl &&
             !sensitiveContent &&
             isArticle &&
-            !config.page.isPreview &&
-            config.page.showRelatedContent &&
-            !(isUserLoggedIn() && config.page.commentable);
+            !config.get('page.isPreview') &&
+            config.get('page.showRelatedContent') &&
+            !(isUserLoggedIn() && config.get('page.commentable'));
 
         this.commentAdverts =
             this.dfpAdvertising &&
             !this.adFree &&
             !isMinuteArticle &&
-            config.switches.enableDiscussionSwitch &&
-            config.page.commentable &&
+            config.get('switches.enableDiscussionSwitch') &&
+            config.get('page.commentable') &&
             (!isLiveBlog || isWidePage);
 
         this.liveblogAdverts =
             isLiveBlog && this.dfpAdvertising && !this.adFree;
 
-        this.paidforBand = config.page.isPaidContent && !supportsSticky;
+        this.paidforBand = config.get('page.isPaidContent') && !supportsSticky;
     }
 }
 

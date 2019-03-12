@@ -171,7 +171,7 @@ const buildAppNexusTargeting = once(
 
 const buildPageTargeting = once(
     (): {} => {
-        const page = config.page;
+        const page = config.get('page');
         //
         const adConsentState: boolean | null = getAdConsentState(
             thirdPartyTrackingAdConsent

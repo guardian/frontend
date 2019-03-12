@@ -85,7 +85,7 @@ const initRelated = () => {
             if (
                 'contentType' in config.get('page') &&
                 ['video', 'interactive'].includes(
-                    config.page.contentType.toLowerCase()
+                    config.get('page.contentType', '').toLowerCase()
                 )
             ) {
                 opts.excludeTags.push(
@@ -99,14 +99,13 @@ const initRelated = () => {
 };
 
 const initOnwardVideoContainer = (): void => {
-    if (
-        config.get('page.contentType') !== 'Audio' &&
-        config.get('page.contentType') !== 'Video'
-    ) {
+    const contentType = config.get('page.contentType', '');
+
+    if (contentType !== 'Audio' && contentType !== 'Video') {
         return;
     }
 
-    const mediaType = config.get('page.contentType', '').toLowerCase();
+    const mediaType = contentType.toLowerCase();
     const els = $(
         mediaType === 'video'
             ? '.js-video-components-container'

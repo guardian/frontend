@@ -33,7 +33,7 @@ const EVENTS = [
     'content:play',
     'content:end',
 ];
-const gaTracker = config.googleAnalytics.trackers.editorial;
+const gaTracker = config.get('googleAnalytics.trackers.editorial');
 
 const bindCustomMediaEvents = (
     eventsMap: Object,

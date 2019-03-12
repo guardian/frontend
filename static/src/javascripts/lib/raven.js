@@ -4,7 +4,7 @@ import raven from 'raven-js';
 import config from 'lib/config';
 import { adblockInUse } from 'lib/detect';
 
-const { sentryPublicApiKey, sentryHost } = config.page;
+const { sentryPublicApiKey, sentryHost } = config.get('page', {});
 const sentryUrl = `https://${sentryPublicApiKey}@${sentryHost}`;
 
 let adblockBeingUsed = false;

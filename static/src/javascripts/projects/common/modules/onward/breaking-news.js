@@ -23,7 +23,7 @@ const supportedSections = {
     football: 'sport',
 };
 const breakingNewsURL = '/news-alert/alerts';
-const page = config.page;
+const page = config.get('page');
 
 // get the users breaking news alert history
 // {

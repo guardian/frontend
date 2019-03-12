@@ -6,7 +6,7 @@ import { askFourEarning } from 'common/modules/experiments/tests/contributions-e
 import { acquisitionsEpicAlwaysAskIfTagged } from 'common/modules/experiments/tests/acquisitions-epic-always-ask-if-tagged';
 import { adblockTest } from 'common/modules/experiments/tests/adblock-ask';
 import {
-    februaryMomentBannerColour,
+    februaryMomentBannerCopy,
     februaryMomentBannerThankYou,
 } from 'common/modules/experiments/tests/february-moment-banner';
 
@@ -23,6 +23,6 @@ export const epicTests: $ReadOnlyArray<EpicABTest> = [
 ];
 
 export const engagementBannerTests: $ReadOnlyArray<AcquisitionsABTest> = [
-    februaryMomentBannerColour,
+    februaryMomentBannerCopy,
     februaryMomentBannerThankYou,
 ];

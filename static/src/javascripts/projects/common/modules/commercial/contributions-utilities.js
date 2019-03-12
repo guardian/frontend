@@ -36,6 +36,7 @@ import { userIsSupporter } from 'common/modules/commercial/user-features';
 import {
     supportContributeURL,
     supportSubscribeGeoRedirectURL,
+    addCountryGroupToSupportLink,
 } from 'common/modules/commercial/support-utilities';
 import { awaitEpicButtonClicked } from 'common/modules/commercial/epic/epic-utils';
 import { setupEpicInLiveblog } from 'common/modules/commercial/contributions-liveblog-utilities';
@@ -152,6 +153,11 @@ const userIsInCorrectCohort = (
     }
 };
 
+const isValidCohort = (cohort: string): boolean =>
+    ['OnlyExistingSupporters', 'OnlyNonSupporters', 'Everyone'].includes(
+        cohort
+    );
+
 const shouldShowEpic = (test: EpicABTest): boolean => {
     const onCompatiblePage = test.pageCheck(config.get('page'));
 
@@ -214,7 +220,9 @@ const makeEpicABTestVariant = (
         }`,
         campaignCode,
         supportURL: addTrackingCodesToUrl({
-            base: supportContributeURL(),
+            base: initVariant.supportBaseURL
+                ? addCountryGroupToSupportLink(initVariant.supportBaseURL)
+                : supportContributeURL(),
             componentType: parentTest.componentType,
             componentId,
             campaignCode,
@@ -504,6 +512,13 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                         ? rowWithAudience.audienceOffset
                         : 0;
 
+                    const rowWithUserCohort = rows.find(
+                        row => row.userCohort && isValidCohort(row.userCohort)
+                    );
+                    const userCohort = rowWithUserCohort
+                        ? rowWithUserCohort.userCohort
+                        : 'OnlyNonSupporters';
+
                     return makeEpicABTest({
                         id: testName,
                         campaignId: testName,
@@ -521,6 +536,7 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                         useLocalViewLog: rows.some(row =>
                             optionalStringToBoolean(row.useLocalViewLog)
                         ),
+                        userCohort,
                         ...(isLiveBlog
                             ? {
                                   template: liveBlogTemplate,
@@ -599,6 +615,7 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                                 ','
                             ),
                             showTicker: optionalStringToBoolean(row.showTicker),
+                            supportBaseURL: row.supportBaseURL,
                         })),
                     });
                 });

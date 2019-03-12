@@ -6,7 +6,7 @@ import { commercialFeatures } from 'common/modules/commercial/commercial-feature
 
 export const init = (): Promise<void> => {
     if (commercialFeatures.highMerch) {
-        const anchorSelector = config.page.commentable
+        const anchorSelector = config.get('page.commentable')
             ? '#comments + *'
             : '.content-footer > :first-child';
         const anchor = document.querySelector(anchorSelector);
@@ -14,7 +14,7 @@ export const init = (): Promise<void> => {
 
         container.className = 'fc-container fc-container--commercial';
         const slots = createSlots(
-            config.page.isPaidContent ? 'high-merch-paid' : 'high-merch'
+            config.get('page.isPaidContent') ? 'high-merch-paid' : 'high-merch'
         );
 
         slots.forEach(slot => {

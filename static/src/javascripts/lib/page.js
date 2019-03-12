@@ -30,7 +30,7 @@ const isMatch = (yes: yesable, no: noable): boolean => {
     // the order of this is important as, on occasion,
     // "minbymin" is tagged with "match reports" but should be considered "minbymin".
     const pageTypes = [
-        ['minbymin', config.page.isLiveBlog],
+        ['minbymin', config.get('page.isLiveBlog')],
         ['report', config.hasTone('Match reports')],
         ['preview', config.hasSeries('Match previews')],
         ['stats', match.id],
@@ -40,7 +40,7 @@ const isMatch = (yes: yesable, no: noable): boolean => {
     Object.assign(match, {
         date: config.webPublicationDateAsUrlPart(),
         teams,
-        isLive: config.page.isLive,
+        isLive: !!config.get('page.isLive'),
         pageType: pageType && pageType[0],
     });
 
@@ -68,10 +68,10 @@ const isClockwatch = (yes: yesable): boolean =>
     isit(config.hasSeries('Clockwatch'), yes);
 
 const isLiveClockwatch = (yes: yesable): boolean =>
-    isClockwatch(() => isit(config.page.isLive, yes));
+    isClockwatch(() => isit(!!config.get('page.isLive'), yes));
 
 const isFootballStatsPage = (yes: yesable): boolean =>
-    isit(config.page.hasOwnProperty('footballMatch'), yes);
+    isit(!!config.get('page.footballMatch'), yes);
 
 const belowArticleVisible = (yes: yesable, no: noable): boolean => {
     const el = $('.js-after-article')[0];
