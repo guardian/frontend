@@ -49,7 +49,7 @@ const checksToDispatch = {
     },
 
     emailInArticleOutbrainEnabled(): Promise<boolean> {
-        return Promise.resolve(config.switches.emailInArticleOutbrain);
+        return Promise.resolve(config.get('switches.emailInArticleOutbrain'));
     },
 
     hasHighPriorityAdLoaded(): Promise<boolean> {

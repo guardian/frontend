@@ -55,7 +55,10 @@ const editionToGeolocation = (editionKey: string = 'UK'): string =>
 
 const getSync = (): string => {
     const geolocationFromStorage = getFromStorage();
-    return geolocationFromStorage || editionToGeolocation(config.page.edition);
+    return (
+        geolocationFromStorage ||
+        editionToGeolocation(config.get('page.edition'))
+    );
 };
 
 export type CountryGroupId =

@@ -86,8 +86,8 @@ export const buildOphanPayload = (
 ): OphanABPayload => {
     try {
         const log = {};
-        const serverSideTests = Object.keys(config.tests).filter(
-            test => !!config.tests[test]
+        const serverSideTests = Object.keys(config.get('tests')).filter(
+            test => !!config.get(`tests.${test}`)
         );
 
         tests.filter(not(defersImpression)).forEach(test => {

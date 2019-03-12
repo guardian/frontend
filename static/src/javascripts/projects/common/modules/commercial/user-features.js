@@ -116,7 +116,7 @@ const featuresDataIsOld = (): boolean =>
     datedCookieIsOld(USER_FEATURES_EXPIRY_COOKIE);
 
 const adFreeDataIsOld = (): boolean => {
-    const switches = config.switches;
+    const switches = config.get('switches');
     return (
         switches.adFreeStrictExpiryEnforcement &&
         datedCookieIsOld(AD_FREE_USER_COOKIE)

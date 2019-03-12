@@ -1,19 +1,19 @@
 // @flow
 import { load } from 'commercial/modules/hosted/next-video';
 import fetchJson from 'lib/fetch-json';
-
-jest.mock('lib/config', () => ({
-    page: {
-        ajaxUrl: 'some.url',
-        pageId: 'pageId',
-    },
-}));
+import config from 'lib/config';
 
 jest.mock('lib/fetch-json', () =>
     jest.fn(() => Promise.resolve({ html: '<div class="video"></div>' }))
 );
 
 describe('Hosted Next Video', () => {
+    beforeAll(() => {
+        config.set('page', {
+            ajaxUrl: 'some.url',
+            pageId: 'pageId',
+        });
+    });
     beforeEach(() => {
         if (document.body) {
             document.body.innerHTML =
