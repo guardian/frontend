@@ -29,12 +29,19 @@
 
 .epic-ticker {
     position: relative;
-    height: 65px;
-    margin-bottom: 25px;
+    margin-bottom: 15px;
 
     font-family: $f-serif-headline;
     font-size: 16px;
     line-height: 18px;
+}
+
+.epic-ticker--tall {
+    height: 60px;
+}
+
+.epic-ticker--short {
+    height: 50px;
 }
 
 .epic-ticker__count {
@@ -119,16 +126,7 @@ $progress-bar-height: 10px;
 }
 
 .epic-ticker__thankyou {
-    >:first-child {
-        font-size: 24px;
-        line-height: 26px;
-        font-weight: 800;
-        color: #333333;
-    }
-
-    >:last-child {
-        font-style: italic;
-    }
+    font-weight: 800;
 }
 
 .epic-ticker__exceeded .epic-ticker__count-label {
