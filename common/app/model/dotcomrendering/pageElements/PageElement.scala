@@ -195,8 +195,9 @@ object PageElement {
                 asset.id,
                 mediaAtom.channelId, //Channel ID
                 mediaAtom.title //Caption
-              ) //is this atom the main media (alex: not anymore it's not)
+              )
             })
+          case _ => UnknownBlockElement(None)
         }
       }).flatten.toList
 
@@ -279,6 +280,7 @@ object PageElement {
   implicit val EmbedBlockElementWrites: Writes[EmbedBlockElement] = Json.writes[EmbedBlockElement]
   implicit val SoundCloudBlockElementWrites: Writes[SoundcloudBlockElement] = Json.writes[SoundcloudBlockElement]
   implicit val ContentAtomBlockElementWrites: Writes[ContentAtomBlockElement] = Json.writes[ContentAtomBlockElement]
+  implicit val YoutubeBlockElementEWrites: Writes[YoutubeBlockElement] = Json.writes[YoutubeBlockElement]
   implicit val PullquoteBlockElementWrites: Writes[PullquoteBlockElement] = Json.writes[PullquoteBlockElement]
   implicit val InteractiveBlockElementWrites: Writes[InteractiveBlockElement] = Json.writes[InteractiveBlockElement]
   implicit val CommentBlockElementWrites: Writes[CommentBlockElement] = Json.writes[CommentBlockElement]
