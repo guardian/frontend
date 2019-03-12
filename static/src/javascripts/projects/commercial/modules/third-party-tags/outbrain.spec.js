@@ -3,7 +3,7 @@ import config from 'lib/config';
 import { initCheckMediator, resolveCheck } from 'common/modules/check-mediator';
 import { adblockInUse as adblockInUse_ } from 'lib/detect';
 import { load } from './outbrain-load';
-import { initOutbrain, shouldTestOutbrainWidget } from './outbrain';
+import { initOutbrain } from './outbrain';
 import { getSection } from './outbrain-sections';
 
 const adblockInUse: any = adblockInUse_;
