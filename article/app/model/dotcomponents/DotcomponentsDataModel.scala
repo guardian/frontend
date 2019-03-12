@@ -207,6 +207,7 @@ object DotcomponentsDataModel {
   def fromArticle(articlePage: ArticlePage, request: RequestHeader, blocks: APIBlocks): DotcomponentsDataModel = {
 
     val article = articlePage.article
+    val atoms = article.content.atoms.flatMap(_.all)
 
     // TODO this logic is duplicated from the cleaners, can we consolidate?
     val shouldAddAffiliateLinks = AffiliateLinksCleaner.shouldAddAffiliateLinks(
@@ -223,7 +224,8 @@ object DotcomponentsDataModel {
       val elems = capiElems.toList.flatMap(el => PageElement.make(
         element = el,
         addAffiliateLinks = affiliateLinks,
-        pageUrl = request.uri
+        pageUrl = request.uri,
+        atoms = atoms
       ))
 
       addDisclaimer(elems, capiElems)
