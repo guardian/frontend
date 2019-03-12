@@ -60,3 +60,6 @@ Below is an example code snippet that can be included inline on you site, this m
    })(window, document);
 </script>
 ```
+
+A version of this script is available on NPM at https://www.npmjs.com/package/@guardian/font-loader
+
