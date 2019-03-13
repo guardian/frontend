@@ -89,7 +89,7 @@ case class PageData(
     sentryHost: String,
     sentryPublicApiKey: String,
     switches: Map[String,Boolean],
-    linkedData: List[LinkedData],
+    linkedData: LinkedData,
     subscribeWithGoogleApiUrl: String,
 
     // AMP specific
@@ -246,7 +246,7 @@ object DotcomponentsDataModel {
 
     // See https://developers.google.com/search/docs/data-types/article (and the AMP info too)
     // For example, we need to provide an image of at least 1200px width to be valid here
-    val linkedData: List[LinkedData] = {
+    val linkedData: LinkedData = {
       val mainImageURL = {
         val main = for {
           elem <- article.trail.trailPicture
@@ -264,24 +264,19 @@ object DotcomponentsDataModel {
         )
       })
 
-      List(
-        NewsArticle(
-          `@id` = Configuration.amp.baseUrl + article.metadata.id,
-          images = Seq(
-            ImgSrc(mainImageURL, OneByOne),
-            ImgSrc(mainImageURL, FourByThree),
-            ImgSrc(mainImageURL, Item1200),
-          ),
-          author = authors,
-          datePublished = article.trail.webPublicationDate.toString(),
-          dateModified = article.fields.lastModified.toString(),
-          headline = article.trail.headline,
-          mainEntityOfPage = article.metadata.webUrl,
+      NewsArticle(
+        `@id` = article.metadata.webUrl,
+        images = Seq(
+          ImgSrc(mainImageURL, OneByOne),
+          ImgSrc(mainImageURL, FourByThree),
+          ImgSrc(mainImageURL, Item1200),
         ),
-        WebPage(
-          `@id` = article.metadata.webUrl,
-          potentialAction = PotentialAction(target = "android-app://com.guardian/" + article.metadata.webUrl.replace("://", "/"))
-        )
+        author = authors,
+        datePublished = article.trail.webPublicationDate.toString(),
+        dateModified = article.fields.lastModified.toString(),
+        headline = article.trail.headline,
+        mainEntityOfPage = article.metadata.webUrl,
+        potentialAction = PotentialAction(target = "android-app://com.guardian/" + article.metadata.webUrl.replace("://", "/"))
       )
     }
 

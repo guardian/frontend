@@ -142,6 +142,7 @@ case class NewsArticle(
   headline: String,
   dateModified: String,
   mainEntityOfPage: String,
+  potentialAction: PotentialAction
 ) extends LinkedData
 
 object NewsArticle {
@@ -153,6 +154,7 @@ object NewsArticle {
     headline: String,
     dateModified: String,
     mainEntityOfPage: String,
+    potentialAction: PotentialAction
   ): NewsArticle = NewsArticle(
     `@id` = `@id`,
     image = images,
@@ -161,6 +163,7 @@ object NewsArticle {
     datePublished = datePublished,
     dateModified = dateModified,
     mainEntityOfPage = mainEntityOfPage,
+    potentialAction = potentialAction
   )
 
   implicit val formats: OFormat[NewsArticle] = Json.format[NewsArticle]
