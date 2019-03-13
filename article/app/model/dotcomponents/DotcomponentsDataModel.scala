@@ -245,6 +245,15 @@ object DotcomponentsDataModel {
       }
     }
 
+    def buildFullCommercialUrl(bundlePath: String): String = {
+      // This function exists because for some reasons `Static` behaves differently in { PROD and CODE } versus LOCAL
+      if(Configuration.environment.isProd || Configuration.environment.isCode){
+        Static(bundlePath)
+      } else {
+        s"${Configuration.site.host}${Static(bundlePath)}"
+      }
+    }
+
     val bodyBlocks: List[Block] = {
       val bodyBlocks = blocks.body.getOrElse(Nil)
       bodyBlocks.map(block => Block(block.bodyHtml, blocksToPageElements(block.elements, shouldAddAffiliateLinks))).toList
@@ -369,7 +378,7 @@ object DotcomponentsDataModel {
       Configuration.google.subscribeWithGoogleApiUrl,
       navMenu,
       readerRevenueLinks,
-      Static("javascripts/graun.dotcom-rendering-commercial.js")
+      buildFullCommercialUrl("javascripts/graun.dotcom-rendering-commercial.js")
     )
 
     val tags = Tags(
