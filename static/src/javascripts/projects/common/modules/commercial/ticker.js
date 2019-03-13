@@ -88,17 +88,10 @@ const populateGoal = (parentElement: HTMLElement) => {
 const animate = (parentElementSelector: string) => {
     const parentElement = document.querySelector(parentElementSelector);
 
-    const tickerElementSelector =
-        total > goal ? '.js-ticker-over-goal' : '.js-ticker-under-goal';
+    const tickerElementSelector = '.js-ticker-amounts';
 
     if (parentElement && parentElement instanceof HTMLElement) {
-        const heightClass =
-            total > goal ? 'epic-ticker--short' : 'epic-ticker--tall';
-        parentElement.classList.add(heightClass);
-
-        if (total < goal) {
-            populateGoal(parentElement);
-        }
+        populateGoal(parentElement);
 
         window.setTimeout(() => {
             count[parentElementSelector] = 0;
