@@ -45,11 +45,14 @@ import {
     shouldIncludeSonobi,
     shouldIncludeTrustX,
     shouldIncludeXaxis,
+    shouldUseOzoneAdaptor,
     stripDfpAdPrefixFrom,
     stripMobileSuffix,
     stripTrailingNumbersAbove1,
 } from './utils';
 import { getAppNexusDirectBidParams, getAppNexusPlacementId } from './appnexus';
+
+const PAGE_TARGETING: {} = buildAppNexusTargetingObject(buildPageTargeting());
 
 const isInSafeframeTestVariant = (): boolean =>
     isInVariantSynchronous(commercialPrebidSafeframe, 'variant');
@@ -371,11 +374,15 @@ const ozoneClientSideBidder: PrebidBidder = {
         Object.assign(
             {},
             (() => ({
+                // TODO: update the test values below once testing over
                 publisherId: 'OZONENUK0001', // test ID
                 siteId: '4204204201', // test ID
                 placementId: '0420420421', // test ID
-                // customData: { key1: 'value1', key2: 'value2' }, this is optional
-                ozoneData: buildAppNexusTargetingObject(buildPageTargeting()),
+                customData: {
+                    keywords: PAGE_TARGETING,
+                    customParams: PAGE_TARGETING,
+                },
+                ozoneData: {}, // TODO: confirm if we need to send any
             }))(),
             window.OzoneLotameData ? { lotameData: window.OzoneLotameData } : {}
         ),
@@ -580,6 +587,7 @@ const currentBidders: (PrebidSize[]) => PrebidBidder[] = slotSizes => {
         ...(inPbTestOr(shouldIncludeAdYouLike(slotSizes))
             ? [adYouLikeBidder]
             : []),
+        ...(inPbTestOr(shouldUseOzoneAdaptor()) ? [ozoneClientSideBidder] : []),
         ...(shouldIncludeOpenx() ? [openxClientSideBidder] : []),
     ];
 

@@ -6,8 +6,8 @@ export type PrebidOzoneParams = {
     publisherId: string,
     siteId: string,
     placementId: string,
-    customData?: { [string]: string },
-    ozoneData: { [string]: string },
+    customData?: { [string]: mixed },
+    ozoneData?: { [string]: mixed },
 };
 
 export type PrebidSonobiParams = {

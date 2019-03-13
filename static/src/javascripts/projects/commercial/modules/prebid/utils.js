@@ -113,6 +113,10 @@ export const shouldIncludeAdYouLike = (slotSizes: PrebidSize[]): boolean =>
 export const shouldIncludeOzone = (): boolean =>
     !isInUsRegion() && !isInAuRegion();
 
+// TODO: Check is we want regional restrictions on where we load the ozoneBidAdapter
+export const shouldUseOzoneAdaptor = (): boolean =>
+    !isInUsRegion() && !isInAuRegion() && config.get('switches.prebidOzone');
+
 export const shouldIncludeAppNexus = (): boolean =>
     isInAuRegion() ||
     ((config.get('switches.prebidAppnexusUkRow') && !isInUsRegion()) ||

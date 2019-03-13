@@ -88,7 +88,7 @@ const consentManagement: ConsentManagement = {
 const s2sConfig: S2SConfig = {
     accountId: '1',
     enabled: true,
-    bidders: ['appnexus', 'openx', 'pangaea', 'ozone'],
+    bidders: ['appnexus', 'openx', 'pangaea'],
     timeout: bidderTimeout,
     adapter: 'prebidServer',
     is_debug: 'false',
