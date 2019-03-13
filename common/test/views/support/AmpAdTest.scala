@@ -96,6 +96,17 @@ class AmpAdTest extends FlatSpec with Matchers {
     targetingBlogs should be("blog")
   }
 
+  it should "return a JSON object containing a rendering platform value" in {
+    val uri = "http://www.guardian.co.uk/foo/2012/jan/07/bar"
+    val edition = "uk"
+    val sectionId = "sectionId"
+    val blogTag = tag("blog", "Blog", TagType.Blog)
+    val result = AmpAd(article(sectionId, blogTag), uri, edition).toJson
+    val renderingPlatform = (result \ "targeting" \ "rp").as[JsString].value
+
+    renderingPlatform should be("dotcom-platform")
+  }
+
   private def article(sectionId: String, tags: ApiTag*) = {
     val contentApiItem = contentApi(sectionId, tags.toList)
     val content = Content.make(contentApiItem)

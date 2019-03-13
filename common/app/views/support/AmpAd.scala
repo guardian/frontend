@@ -13,11 +13,17 @@ import play.api.libs.json._
 case class AmpAd(article: Article, uri: String, edition: String) {
 
   val toJson: JsValue = {
-    def setAmpPlatform(targeting: Map[String, AdTargetParamValue]) = targeting + ("p" -> SingleValue("amp"))
+
+    // to distinguish from web and from dotcom-rendering
+    def setFrontendAmpPlatform(targeting: Map[String, AdTargetParamValue]) =
+      targeting ++ Map(
+        "rp" -> SingleValue("dotcom-platform"),
+        "p" -> SingleValue("amp")
+      )
 
     val editionToTarget = Edition.byId(edition) getOrElse Edition.defaultEdition
     val targeting       = article.metadata.commercial.map(_.adTargeting(editionToTarget)).getOrElse(Set.empty)
-    val csvTargeting = Json.toJson(setAmpPlatform(toMap(targeting)) mapValues {
+    val csvTargeting = Json.toJson(setFrontendAmpPlatform(toMap(targeting)) mapValues {
       case SingleValue(v)     => v
       case MultipleValues(vs) => vs.mkString(",")
     })
