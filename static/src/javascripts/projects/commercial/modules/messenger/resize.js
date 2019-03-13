@@ -56,10 +56,7 @@ const resize = (
 const removeAnyOutstreamClass = (adSlot: ?HTMLElement) => {
     fastdom.write(() => {
         if (adSlot) {
-            adSlot.classList.remove(
-                'ad-slot--outstream-old',
-                'ad-slot--outstream'
-            );
+            adSlot.classList.remove('ad-slot--outstream');
         }
     });
 };
