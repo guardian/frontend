@@ -190,10 +190,10 @@ object NavLinks {
   val holidays = NavLink("Holidays", "https://holidays.theguardian.com")
   val ukPatrons = NavLink("Patrons", "https://patrons.theguardian.com/?INTCMP=header_patrons")
   val discountCodeRoot = "https://discountcode.theguardian.com"
-  val ukDiscountCode = NavLink("Discount Codes", s"$discountCodeRoot/uk?INTCMP=guardian_header")
-  val auDiscountCode = NavLink("Discount Codes", s"$discountCodeRoot/au?INTCMP=guardian_header")
-  val intDiscountCode = NavLink("Discount Codes", s"$discountCodeRoot?INTCMP=guardian_header")
-  val usDiscountCode = NavLink("Discount Codes", s"$discountCodeRoot?INTCMP=guardian_header")
+  val ukDiscountCode = NavLink("Discount Codes", s"$discountCodeRoot/uk")
+  val auDiscountCode = NavLink("Discount Codes", s"$discountCodeRoot/au")
+  val intDiscountCode = NavLink("Discount Codes", s"$discountCodeRoot")
+  val usDiscountCode = NavLink("Discount Codes", s"$discountCodeRoot/us")
   val guardianMasterClasses = NavLink("Guardian Masterclasses", "/guardian-masterclasses",
     children = List(
       NavLink("Journalism", "/guardian-masterclasses/journalism"),
