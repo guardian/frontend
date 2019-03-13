@@ -29,7 +29,7 @@ To get set up, please follow [the installation guide](docs/01-start-here/01-inst
 
 Fixes for common problems can be found [here](docs/01-start-here/04-troubleshooting.md).
 
-Please, read the [development tips](docs/01-start-here/05-development-tips.md) document to learn about more about development process.
+Please read the [development tips](docs/01-start-here/05-development-tips.md) document to learn about more about development process.
 
 ## Deploying
 Follow the steps described in the [How to deploy document](docs/01-start-here/03-how-to-deploy.md).
