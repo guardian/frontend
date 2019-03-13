@@ -486,7 +486,7 @@ trait PrebidSwitches {
     name = "prebid-ozone",
     description = "Include Ozone adapter direct in Prebid auctions",
     owners = group(Commercial),
-    safeState = On, // TODO: set safeState to off
+    safeState = Off,
     sellByDate = never,
     exposeClientSide = true
   )
