@@ -574,6 +574,32 @@ case class DropCaps(isFeature: Boolean, isImmersive: Boolean, isRecipeArticle: B
   }
 }
 
+case class NumberedListFurniture(isNumberedList: Boolean) extends HtmlCleaner {
+  override def clean(document: Document): Document = {
+    if(isNumberedList) {
+      // Adds yellow styling to star ratings mid article
+      document.select("p:containsOwn(★)").asScala.foreach { star =>
+        star.addClass("stars")
+      }
+
+      // Styled link/section end
+      document.select("ul > li:only-child").asScala.foreach{ li =>
+        val ul = li.parent();
+          ul.addClass("article-link")
+      }
+
+      // Faux h3 headings, for second level of heading hierarchy in numbered list articles
+      document.select("p > strong").asScala.foreach{ strong =>
+        val p = strong.parent();
+        if (p.is("p:matchesOwn(^$)") && !p.children().is("a")) {
+          p.addClass("falseH3")
+        }
+      }
+    }
+    document
+  }
+}
+
 // Gallery Caption's don't come back as structured data
 // This is a hack to serve the correct html
 object GalleryCaptionCleaner extends HtmlCleaner {
