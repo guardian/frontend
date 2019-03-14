@@ -22,7 +22,7 @@ const inline1Html = `
     aria-hidden="true"
     data-mobile="1,1|2,2|300,197|300,250|300,274|fluid"
     data-tablet="1,1|2,2|300,197|300,250|300,274|620,350|fluid"
-    data-desktop="1,1|2,2|300,250|620,1|620,350|300,274|fluid">
+    data-desktop="1,1|2,2|300,250|300,274|620,1|620,350|fluid">
 </div>
 `;
 
