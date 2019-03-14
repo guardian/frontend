@@ -44,13 +44,12 @@ describe('Outbrain', () => {
                 <div class="js-outbrain"><div class="js-outbrain-container"></div></div>
                 `;
         }
-        jest.resetAllMocks();
         // init checkMediator so we can resolve checks in tests
         initCheckMediator();
 
-        config.switches.abCommercialOutbrainTesting = true;
         config.switches.outbrain = true;
         config.switches.emailInArticleOutbrain = false;
+        config.switches.abCommercialOutbrainTesting = true;
         config.page = {
             section: 'uk-news',
             commentable: true,
@@ -84,10 +83,12 @@ describe('Outbrain', () => {
             resolveCheck('isUserInContributionsAbTest', true);
             resolveCheck('isStoryQuestionsOnPage', true);
 
+            resolveCheck('isOutbrainBlockedByAds', false);
+            resolveCheck('isOutbrainMerchandiseCompliant', false);
+
             isInVariantSynchronous.mockImplementationOnce(
                 (testId, variantId) => variantId === 'variant'
             );
-
             return initOutbrain().then(() => {
                 expect(load).toHaveBeenCalled();
             });
@@ -99,6 +100,7 @@ describe('Outbrain', () => {
             resolveCheck('isUserInContributionsAbTest', true);
             resolveCheck('isStoryQuestionsOnPage', true);
 
+            config.switches.abCommercialOutbrainTesting = true;
             isInVariantSynchronous.mockImplementationOnce(
                 (testId, variantId) => variantId === 'control'
             );
@@ -209,10 +211,6 @@ describe('Outbrain', () => {
             });
         });
     });
-
-    // it('should show outbrain widget if in test variant', () => {
-    //     expect(shouldTestOutbrainWidget).toBe('true');
-    // });
 
     describe('Sections', () => {
         it('should return "news" for news sections', () => {

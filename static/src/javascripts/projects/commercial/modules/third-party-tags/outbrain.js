@@ -95,11 +95,12 @@ export const initOutbrain = (): Promise<void> =>
     getOutbrainPageConditions().then(pageConditions => {
         // temporary addition based on a zero participation AB test
         // Remove after 19-03-25 as testing will be complete.
-        if (isInVariantSynchronous(commercialOutbrainTesting, 'variant')) {
-            return load('defaults');
-        }
+        const shouldTestOutbrainWidget: boolean = isInVariantSynchronous(
+            commercialOutbrainTesting,
+            'variant'
+        );
 
-        if (!pageConditions.outbrainEnabled) {
+        if (!pageConditions.outbrainEnabled && !shouldTestOutbrainWidget) {
             return;
         }
 
@@ -118,7 +119,7 @@ export const initOutbrain = (): Promise<void> =>
         } else {
             // only wait for dfp conditions if we really have to.
             return getOutbrainDfpConditions().then(dfpConditions => {
-                if (dfpConditions.blockedByAds) {
+                if (dfpConditions.blockedByAds && !shouldTestOutbrainWidget) {
                     return;
                 }
 

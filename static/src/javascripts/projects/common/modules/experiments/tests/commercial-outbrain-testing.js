@@ -3,7 +3,7 @@
 export const commercialOutbrainTesting: ABTest = {
     id: 'CommercialOutbrainTesting',
     start: '2019-03-12',
-    expiry: '2019-03-25',
+    expiry: '2019-03-29',
     author: 'Frankie Hammond',
     description: '0% participation AB test for testing Outbrain',
     audience: 0,
