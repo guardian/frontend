@@ -1,12 +1,14 @@
 // @flow
 import config from 'lib/config';
-import { initCheckMediator, resolveCheck } from 'common/modules/check-mediator';
 import { adblockInUse as adblockInUse_ } from 'lib/detect';
+import { initCheckMediator, resolveCheck } from 'common/modules/check-mediator';
+import { isInVariantSynchronous as isInVariantSynchronous_ } from 'common/modules/experiments/ab';
 import { load } from './outbrain-load';
 import { initOutbrain } from './outbrain';
 import { getSection } from './outbrain-sections';
 
 const adblockInUse: any = adblockInUse_;
+const isInVariantSynchronous: any = isInVariantSynchronous_;
 
 jest.mock('ophan/ng', () => ({ record: () => undefined }));
 
@@ -24,6 +26,12 @@ jest.mock('lib/detect', () => {
     };
 });
 
+jest.mock('common/modules/experiments/ab', () => ({
+    isInVariantSynchronous: jest.fn(
+        (testId, variantId) => variantId === 'notintest'
+    ),
+}));
+
 jest.mock('lib/load-script', () => ({ loadScript: jest.fn() }));
 jest.mock('./outbrain-load', () => ({ load: jest.fn() }));
 
@@ -36,9 +44,11 @@ describe('Outbrain', () => {
                 <div class="js-outbrain"><div class="js-outbrain-container"></div></div>
                 `;
         }
+        jest.resetAllMocks();
         // init checkMediator so we can resolve checks in tests
         initCheckMediator();
 
+        config.switches.abCommercialOutbrainTesting = true;
         config.switches.outbrain = true;
         config.switches.emailInArticleOutbrain = false;
         config.page = {
@@ -66,6 +76,36 @@ describe('Outbrain', () => {
 
         afterAll(() => {
             jest.resetModules();
+        });
+
+        it('should ALWAYS load if outbrain test participation is "variant"', () => {
+            // resolve the required checks
+            resolveCheck('isOutbrainDisabled', true);
+            resolveCheck('isUserInContributionsAbTest', true);
+            resolveCheck('isStoryQuestionsOnPage', true);
+
+            isInVariantSynchronous.mockImplementationOnce(
+                (testId, variantId) => variantId === 'variant'
+            );
+
+            return initOutbrain().then(() => {
+                expect(load).toHaveBeenCalled();
+            });
+        });
+
+        it('should not load if outbrain test participation is "control"', () => {
+            // resolve the required checks
+            resolveCheck('isOutbrainDisabled', true);
+            resolveCheck('isUserInContributionsAbTest', true);
+            resolveCheck('isStoryQuestionsOnPage', true);
+
+            isInVariantSynchronous.mockImplementationOnce(
+                (testId, variantId) => variantId === 'control'
+            );
+
+            return initOutbrain().then(() => {
+                expect(load).not.toHaveBeenCalled();
+            });
         });
 
         it('should not load if outbrain disabled', () => {
