@@ -16,7 +16,7 @@ object AMPPageChecks extends Logging {
   }
 
   def isNotPaidContent(page: PageWithStoryPackage): Boolean = {
-    ! page.article.tags.isPaidContent
+    !page.article.tags.isPaidContent
   }
 
   def hasOnlySupportedElements(page: PageWithStoryPackage): Boolean = {
@@ -54,7 +54,7 @@ object AMPPicker {
       ("isBasicArticle", AMPPageChecks.isBasicArticle(page)),
       ("hasOnlySupportedElements", AMPPageChecks.hasOnlySupportedElements(page)),
       ("isNotOpinionP", AMPPageChecks.isNotOpinion(page)),
-      ("isNotPaidContent", AMPPageChecks.isNotOpinion(page)),
+      ("isNotPaidContent", AMPPageChecks.isNotPaidContent(page)),
     )
   }
 
