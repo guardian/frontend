@@ -1,4 +1,4 @@
-// @flow
+// @flow strict
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import { commercialOutbrainTesting } from 'common/modules/experiments/tests/commercial-outbrain-testing.js';
 import { adblockInUse } from 'lib/detect';
@@ -17,9 +17,6 @@ type OutbrainDfpConditions = {
     blockedByAds: boolean,
     useMerchandiseAdSlot: boolean,
 };
-
-const isInOutbrainTestingVariant = (): boolean =>
-    isInVariantSynchronous(commercialOutbrainTesting, 'variant');
 
 const noMerchSlotsExpected = (): Promise<boolean> =>
     // Loading Outbrain is dependent on successful return of high relevance component
@@ -94,11 +91,15 @@ export const getOutbrainComplianceTargeting = (): Promise<
   true              false               false             n/a              false         false      false     compliant
 */
 
-export const shouldTestOutbrainWidget = isInOutbrainTestingVariant();
-
 export const initOutbrain = (): Promise<void> =>
     getOutbrainPageConditions().then(pageConditions => {
-        if (!pageConditions.outbrainEnabled && !shouldTestOutbrainWidget) {
+        // temporary addition based on a zero participation AB test
+        // Remove after 19-03-25 as testing will be complete.
+        if (isInVariantSynchronous(commercialOutbrainTesting, 'variant')) {
+            return load('defaults');
+        }
+
+        if (!pageConditions.outbrainEnabled) {
             return;
         }
 
