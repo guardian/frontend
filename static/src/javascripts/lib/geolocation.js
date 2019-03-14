@@ -22,9 +22,6 @@ const get = (): Promise<string> =>
         }
 
         fetchJSON('/geolocation', {
-            headers: {
-                'Content-Type': 'application/json',
-            },
             mode: 'cors',
         })
             .then(response => {
