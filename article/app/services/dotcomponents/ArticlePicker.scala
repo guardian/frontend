@@ -123,7 +123,7 @@ object ArticlePicker {
       ("isNotAGallery", ArticlePageChecks.isNotAGallery(page)),
       ("isNotAMP", ArticlePageChecks.isNotAMP(request)),
       ("isNotOpinionP", ArticlePageChecks.isNotOpinion(page)),
-      ("isNotPaidContent", ArticlePageChecks.isNotOpinion(page)),
+      ("isNotPaidContent", ArticlePageChecks.isNotPaidContent(page)),
     )
   }
 
