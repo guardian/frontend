@@ -1,3 +1,4 @@
+@import navigation.NavLinks
 @(showNav: Boolean = true, isAmp: Boolean = false)(implicit page: model.Page, request: RequestHeader)
 
 @import org.joda.time.DateTime
@@ -120,7 +121,7 @@
                                     <li class="colophon__item"><a data-link-name="uk : footer : patrons" href="https://patrons.theguardian.com/?INTCMP=footer_patrons">
                                         Patrons</a>
                                     </li>
-                                    <li class="colophon__item"><a data-link-name="uk : footer : discount code" href="https://discountcode.theguardian.com/uk">
+                                    <li class="colophon__item"><a data-link-name="uk : footer : discount code" href=@(s"${NavLinks.discountCodeRoot}${NavMenu.getVoucherCloudPath(page.metadata.id)}")">
                                         Discount Codes</a>
                                     </li>
                                 </ul>
@@ -192,7 +193,7 @@
                                     </li>
                                     <li class="colophon__item"><a data-link-name="us : footer : soulmates" href="https://soulmates.theguardian.com/?INTCMP=soulmates_us_web_footer">
                                         Dating</a>
-                                    <li class="colophon__item"><a data-link-name="us : footer : discount code" href="https://discountcode.theguardian.com/us">
+                                    <li class="colophon__item"><a data-link-name="us : footer : discount code" href=@(s"${NavLinks.discountCodeRoot}${NavMenu.getVoucherCloudPath(page.metadata.id)}")>
                                         Discount Codes</a>
                                     </li>
                                 </ul>
@@ -269,7 +270,7 @@
                                     </li>
                                     <li class="colophon__item"><a data-link-name="au : footer : soulmates" href="https://soulmates.theguardian.com/?INTCMP=soulmates_au_web_footer">
                                         Dating</a>
-                                    <li class="colophon__item"><a data-link-name="au : footer : discount code" href="https://discountcode.theguardian.com/au">
+                                    <li class="colophon__item"><a data-link-name="au : footer : discount code" href=@(s"${NavLinks.discountCodeRoot}${NavMenu.getVoucherCloudPath(page.metadata.id)}")>
                                         Discount Codes</a>
                                     </li>
                                 </ul>
@@ -333,7 +334,7 @@
                                     </li>
                                     <li class="colophon__item"><a data-link-name="international : footer : soulmates" href="https://soulmates.theguardian.com/?INTCMP=soulmates_int_web_footer">
                                         Dating</a>
-                                    <li class="colophon__item"><a data-link-name="international : footer : discount code" href="https://discountcode.theguardian.com">
+                                    <li class="colophon__item"><a data-link-name="international : footer : discount code" href=@(NavLinks.discountCodeRoot)>
                                         Discount Codes</a>
                                     </li>
                                 </ul>
