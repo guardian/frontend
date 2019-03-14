@@ -16,8 +16,7 @@ const inlineDefinition = {
             adSizes.empty,
             adSizes.mpu,
             adSizes.video,
-            adSizes.outstreamDesktop, // todo will remove this once Ad Manager updated
-            adSizes.outstreamMobile,
+            adSizes.outstreamDesktop,
             adSizes.googleCard,
             adSizes.fluid,
         ],
