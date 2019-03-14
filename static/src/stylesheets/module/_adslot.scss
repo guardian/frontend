@@ -316,9 +316,11 @@
         min-height: auto;
     }
 
-    @include mq(desktop) {
+    @include mq($from: tablet) {
+        float: none;
         width: 620px;
         height: $mpu-ad-label-height + 350px;
+        margin: 4px auto -20px;
 
         & > div.ad-slot__label {
             margin-left: 35px;
