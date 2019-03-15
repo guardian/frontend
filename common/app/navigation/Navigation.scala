@@ -52,20 +52,8 @@ object NavMenu {
 
   private[navigation] case class NavRoot(children: Seq[NavLink], otherLinks: Seq[NavLink], brandExtensions: Seq[NavLink])
 
-  // Vouchercloud links are designed for search engines rather than humans. When the googlebot hits theguardian.com/uk
-  // we want it to see the discountcode path for the UK, rather than the US version (as it would normally see as nav
-  // is based off th edition rather than the path. So this function exists...
-  def getVoucherCloudPath(pageId: String): String = {
-    pageId.take(3) match {
-      case "uk" | "uk/" => "/uk"
-      case "au" | "au/" => "/au"
-      case "us" | "us/" => "/us"
-      case _ => ""
-    }
-  }
-
   def apply(page: Page, edition: Edition): NavMenu = {
-    val root = navRoot(edition, discountCodePath = getVoucherCloudPath(page.metadata.id))
+    val root = navRoot(edition)
     val currentUrl = getSectionOrPageUrl(page, edition)
     val currentNavLink = findDescendantByUrl(currentUrl, edition, root.children, root.otherLinks)
     val currentParent = currentNavLink.flatMap(link => findParent(link, edition, root.children, root.otherLinks))
@@ -140,11 +128,11 @@ object NavMenu {
     )
   }
 
-  private[navigation] def navRoot(edition: Edition, discountCodePath: String = ""): NavRoot = {
+  private[navigation] def navRoot(edition: Edition): NavRoot = {
     edition match {
-      case editions.Uk => NavRoot(Seq(ukNewsPillar, ukOpinionPillar, ukSportPillar, ukCulturePillar, ukLifestylePillar), ukOtherLinks, ukBrandExtensions(discountCodePath))
-      case editions.Us => NavRoot(Seq(usNewsPillar, usOpinionPillar, usSportPillar, usCulturePillar, usLifestylePillar), usOtherLinks, usBrandExtensions(discountCodePath))
-      case editions.Au => NavRoot(Seq(auNewsPillar, auOpinionPillar, auSportPillar, auCulturePillar, auLifestylePillar), auOtherLinks, auBrandExtensions(discountCodePath))
+      case editions.Uk => NavRoot(Seq(ukNewsPillar, ukOpinionPillar, ukSportPillar, ukCulturePillar, ukLifestylePillar), ukOtherLinks, ukBrandExtensions)
+      case editions.Us => NavRoot(Seq(usNewsPillar, usOpinionPillar, usSportPillar, usCulturePillar, usLifestylePillar), usOtherLinks, usBrandExtensions)
+      case editions.Au => NavRoot(Seq(auNewsPillar, auOpinionPillar, auSportPillar, auCulturePillar, auLifestylePillar), auOtherLinks, auBrandExtensions)
       case editions.International => NavRoot(Seq(intNewsPillar, intOpinionPillar, intSportPillar, intCulturePillar, intLifestylePillar), intOtherLinks, intBrandExtensions)
     }
   }
