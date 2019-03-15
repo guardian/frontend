@@ -112,7 +112,6 @@ const fetchDataAndAnimate = (parentElementSelector: string) => {
             mode: 'cors',
         }).then(data => {
             total = parseInt(data.total, 10);
-            // total = 151000
             goal = parseInt(data.goal, 10);
 
             if (dataSuccessfullyFetched()) {
