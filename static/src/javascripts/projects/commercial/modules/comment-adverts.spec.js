@@ -91,13 +91,13 @@ describe('createCommentSlots', () => {
         const commentMpu: HTMLElement = createCommentSlots(false)[0];
         const commentDmpu: HTMLElement = createCommentSlots(true)[0];
         expect(commentMpu.getAttribute('data-desktop')).toBe(
-            '1,1|2,2|300,250|620,1|620,350|300,274|fluid'
+            '1,1|2,2|300,250|300,274|620,1|620,350|fluid'
         );
         expect(commentMpu.getAttribute('data-mobile')).toBe(
             '1,1|2,2|300,197|300,250|300,274|fluid'
         );
         expect(commentDmpu.getAttribute('data-desktop')).toBe(
-            '1,1|2,2|300,250|620,1|620,350|300,274|fluid|300,600|160,600'
+            '1,1|2,2|300,250|300,274|620,1|620,350|fluid|300,600|160,600'
         );
         expect(commentDmpu.getAttribute('data-mobile')).toBe(
             '1,1|2,2|300,197|300,250|300,274|fluid'
@@ -252,7 +252,7 @@ describe('initCommentAdverts', () => {
                 ): any);
                 expect(addSlot).toHaveBeenCalledTimes(1);
                 expect(adSlot.getAttribute('data-desktop')).toBe(
-                    '1,1|2,2|300,250|620,1|620,350|300,274|fluid|300,600|160,600'
+                    '1,1|2,2|300,250|300,274|620,1|620,350|fluid|300,600|160,600'
                 );
                 done();
             });
@@ -270,7 +270,7 @@ describe('initCommentAdverts', () => {
                 ): any);
                 expect(addSlot).toHaveBeenCalledTimes(1);
                 expect(adSlot.getAttribute('data-desktop')).toBe(
-                    '1,1|2,2|300,250|620,1|620,350|300,274|fluid|300,600|160,600'
+                    '1,1|2,2|300,250|300,274|620,1|620,350|fluid|300,600|160,600'
                 );
                 done();
             });
@@ -288,7 +288,7 @@ describe('initCommentAdverts', () => {
                 ): any);
                 expect(addSlot).toHaveBeenCalledTimes(1);
                 expect(adSlot.getAttribute('data-desktop')).toBe(
-                    '1,1|2,2|300,250|620,1|620,350|300,274|fluid'
+                    '1,1|2,2|300,250|300,274|620,1|620,350|fluid'
                 );
                 done();
             });
