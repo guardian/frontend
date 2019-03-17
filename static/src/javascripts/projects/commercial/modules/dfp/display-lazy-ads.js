@@ -22,9 +22,15 @@ const displayLazyAds = (): void => {
     window.googletag.pubads().collapseEmptyDivs();
     window.googletag.enableServices();
     instantLoad();
+
     dfpEnv.advertsToLoad.forEach(
         (advert: Advert): void => {
-            enableLazyLoad(advert);
+            if (dfpEnv.lazyLoadObserve) {
+                enableLazyLoad(advert);
+            } else {
+                console.log('unable to lazy-load!');
+                loadAdvert(advert);
+            }
         }
     );
 };
