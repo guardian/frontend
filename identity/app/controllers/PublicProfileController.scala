@@ -20,7 +20,7 @@ class PublicProfileController(
 )(implicit context: ApplicationContext)
   extends BaseController
     with ImplicitControllerExecutionContext
-    with SafeLogging{
+    with SafeLogging {
 
   def page(url: String, username: String): IdentityPage = IdentityPage(url,  s"$username's public profile", usesGuardianHeader=true)
 
@@ -40,12 +40,22 @@ class PublicProfileController(
           NotFound(views.html.errors._404())
 
         case Right(user) =>
-          user.publicFields.displayName.map { displayName =>
-            val idRequest = idRequestParser(request)
-            Cached(60)(RevalidatableResult.Ok(
-              IdentityHtmlPage.html(views.html.publicProfilePage(page(url, displayName), idRequest, idUrlBuilder, user, activityType))(page(url, displayName), request, context)
-            ))
-          } getOrElse NotFound(views.html.errors._404())
+          // When a user signs up through profile.theguardian.com with an email address,
+          // their display name is first name, last name and their username is empty.
+          // If they go to comment, they are prompted to set a username which is used as the display name.
+          // Since the user has publicised this information (via commenting), we are ok making it public too.
+          //
+          // Conversely if username hasn't been set, we don't want to use their display name,
+          // since it could be (by default) first name, last name; something the user might not want displayed.
+          // In these cases, default to using their identity id instead of e.g. a not found response.
+          // This behaviour means that in edge cases where a user has commented but hasn't got a username
+          // (possible on e.g. apps) and someone has clicked through on their profile from comments,
+          // they'll still see their comment history.
+          val displayName = user.publicFields.username.getOrElse(user.id)
+          val idRequest = idRequestParser(request)
+          Cached(60)(RevalidatableResult.Ok(
+            IdentityHtmlPage.html(views.html.publicProfilePage(page(url, displayName), idRequest, idUrlBuilder, user, activityType))(page(url, displayName), request, context)
+          ))
       }
   }
 }
