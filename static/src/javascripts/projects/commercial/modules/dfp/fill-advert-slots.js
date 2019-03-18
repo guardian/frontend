@@ -41,7 +41,7 @@ const fillAdvertSlots = (): Promise<void> => {
         });
         adverts.forEach(queueAdvert);
 
-        if (dfpEnv.shouldLazyLoad() && dfpEnv.lazyLoadObserve) {
+        if (dfpEnv.shouldLazyLoad()) {
             displayLazyAds();
         } else {
             displayAds();
