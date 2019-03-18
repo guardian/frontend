@@ -478,12 +478,7 @@ $wide-circle-height: 162px;
         color: $brightness-100;
         border:  $brand-main 1px solid;
     }
-
-    .engagement-banner__button.engagement-banner__button__learn-more {
-        background-color: $highlight-main;
-        border:  $brand-main 1px solid;
-        color: $brand-main;
-    }
+    
 
     @supports (mix-blend-mode: multiply) {
         .fiv-banner__circle {
