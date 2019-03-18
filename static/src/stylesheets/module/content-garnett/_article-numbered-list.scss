@@ -1,5 +1,13 @@
-/// Can I do this -->
-@font-face{font-family:"Guardian Titlepiece";src:url("https://interactive.guim.co.uk/fonts/garnett/GTGuardianTitlepiece-Bold.woff2") format("woff2"),url("https://interactive.guim.co.uk/fonts/garnett/GTGuardianTitlepiece-Bold.woff") format("woff"),url("https://interactive.guim.co.uk/fonts/garnett/GTGuardianTitlepiece-Bold.ttf") format("truetype");font-weight:700;font-style:normal}
+/// Can I do this? -->
+@font-face {
+    font-family: 'Guardian Titlepiece';
+    src:
+    url('https://interactive.guim.co.uk/fonts/garnett/GTGuardianTitlepiece-Bold.woff2') format('woff2'),
+    url('https://interactive.guim.co.uk/fonts/garnett/GTGuardianTitlepiece-Bold.woff') format('woff'),
+    url('https://interactive.guim.co.uk/fonts/garnett/GTGuardianTitlepiece-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
 
 .content.content--article.content--type-numbered-list {
     counter-reset: section;
@@ -51,7 +59,7 @@
 
             li {
                 border: 1px solid $brightness-86;
-                padding: ($gs-baseline / 2) ($gs-gutter / 2) ($gs-baseline * 1.5) !important;
+                padding: $gs-baseline ($gs-gutter / 2) ($gs-baseline + $gs-baseline / 2) !important;
                 margin: 0 ($gs-gutter / 2);
                 max-width: gs-span(6) - $gs-gutter / 2;
 
@@ -64,15 +72,12 @@
                 }
 
                 a {
-                    font-family: 'Guardian Egyptian Web', Georgia, serif;
-                    font-size: 18px;
-                    line-height: 20px;
+                    @include fs-headlineGarnett(0);
                     font-weight: 800;
                 }
 
                 strong {
-                    font-family: "Guardian Text Sans Web","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
-                    font-size: 16px;
+                    @include fs-textSans(5);
                     font-weight: 400;
                     color: $brightness-46;
                     display: block;
@@ -90,12 +95,11 @@
         $large-number: 99px;
 
         & > h2 {
+            @include fs-headlineGarnett(2);
+            font-weight: 500;
             box-sizing: border-box;
             border-top: 4px solid $brightness-86;
-            font-family: 'Guardian Egyptian Web', Georgia, serif;
             color: $brightness-7;
-            font-size: 24px;
-            line-height: 26px;
             min-height: $small-number + $gs-baseline;
             position: relative;
             margin-left: -$gs-gutter / 2;
@@ -110,7 +114,8 @@
             }
 
             @include mq(tablet) {
-                font-size: 36px;
+                @include fs-headlineGarnett(7);
+                font-weight: 500;
                 line-height: 40px;
                 margin-right: 0;
                 margin-top: $gs-baseline * 8;
@@ -127,29 +132,25 @@
             // Optional way of forcing text onto seperate lines, with different colours
             strong {
                 display: block;
+                font-weight: 500;
             }
 
             // Large numbered heading
             &:before {
-                font-family: "Guardian Titlepiece", "Guardian Headline Full", "Guardian Headline", "Guardian Egyptian Web", Georgia, serif;
+                font-family: 'Guardian Titlepiece', Georgia, serif;
+                font-size: 60px;
+                line-height: 60px;
                 content: counter(section);
                 box-sizing: border-box;
                 counter-increment: section;
                 border: 1px solid $brightness-86;
                 border-top-width: 4px;
                 font-variant-numeric: lining-nums;
-                line-height: 56px;
-                font-size: 60px;
                 height: $small-number;
                 width: $small-number;
                 color: $brightness-100;
-                // -webkit-text-stroke-width: 1px;
-                // -webkit-text-stroke-color: $brightness-86;
-                text-shadow:
-                    -1px -1px 0 $brightness-86,
-                    1px -1px 0 $brightness-86,
-                    -1px 1px 0 $brightness-86,
-                    1px 1px 0 $brightness-86;
+                -webkit-text-stroke-width: 1px;
+                -webkit-text-stroke-color: $brightness-86;
                 text-align: center;
                 position: absolute;
                 top: -4px;
@@ -174,11 +175,9 @@
 
     // p tags containing ONLY a strong tag will be styled as H3 level headings
     .falseH3 {
+        @include fs-headlineGarnett(0);
         border-top: 1px solid $brightness-86;
-        font-family: 'Guardian Egyptian Web', Georgia, serif;
         color: $brightness-7;
-        font-size: 18px;
-        line-height: 22px;
         margin-top: $gs-baseline * 2;
         margin-bottom: 3px;
         margin-left: -10px;
@@ -212,7 +211,7 @@
         line-height: 1;
         height: 30px;
         letter-spacing: 2px;
-        margin: 0 0 $gs-baseline -$gs-gutter / 2;
+        margin: 0 0 $gs-baseline (-$gs-gutter / 2);
         position: relative;
         z-index: $zindex-ui;
 
@@ -228,10 +227,9 @@
             margin-left: -$gs-gutter / 2;
         }
 
-
         & + .element-image {
             @include mq(leftCol) {
-                margin-top: -32px;
+                margin-top: -42px;
             }
         }
     }
@@ -248,7 +246,7 @@
 
 @include numberedListPillarColours('news', $news-main);
 @include numberedListPillarColours('opinion', $opinion-main);
-@include numberedListPillarColours('sport',$sport-main);
+@include numberedListPillarColours('sport', $sport-main);
 @include numberedListPillarColours('arts', $culture-main);
 @include numberedListPillarColours('lifestyle', $lifestyle-main);
 @include numberedListPillarColours('special-report', $special-report-dark);
