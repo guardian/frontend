@@ -74,6 +74,7 @@ object BodyCleaner {
       PhotoEssayBlockQuote(article.isPhotoEssay),
       PhotoEssayCaptions(article.isPhotoEssay),
       ImmersiveLinks(article.isImmersive),
+      NumberedListFurniture(article.isNumberedList),
       TimestampCleaner(article),
       MinuteCleaner(article),
       GarnettQuoteCleaner,

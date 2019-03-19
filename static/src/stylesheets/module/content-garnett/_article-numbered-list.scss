@@ -1,0 +1,252 @@
+/// Can I do this? -->
+@font-face {
+    font-family: 'Guardian Titlepiece';
+    src:
+    url('https://interactive.guim.co.uk/fonts/garnett/GTGuardianTitlepiece-Bold.woff2') format('woff2'),
+    url('https://interactive.guim.co.uk/fonts/garnett/GTGuardianTitlepiece-Bold.woff') format('woff'),
+    url('https://interactive.guim.co.uk/fonts/garnett/GTGuardianTitlepiece-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+.content.content--article.content--type-numbered-list {
+    counter-reset: section;
+
+    .content__article-body {
+        figure.element--thumbnail {
+            @include mq($until: tablet) {
+                float: right;
+                margin-left: $gs-gutter;
+                margin-right: 0;
+            }
+        }
+
+        // Thumnail sized image has rounded corners
+        .element--thumbnail img {
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+        ul.article-link {
+            display: block;
+            position: relative;
+            margin-left: -$gs-gutter / 2;
+            margin-right: -$gs-gutter / 2;
+            margin-top: $gs-baseline * 2;
+            margin-bottom: $gs-baseline * 3;
+
+            @include mq(mobileLandscape) {
+                margin-left: -$gs-gutter;
+                margin-right: -$gs-gutter;
+            }
+
+            @include mq(tablet) {
+                margin-right: 0;
+            }
+
+            @include mq(leftCol) {
+                margin-left: -$gs-gutter / 2;
+            }
+
+            &:after {
+                content: '';
+                border-bottom: 1px solid $brightness-86;
+                position: absolute;
+                left: 0;
+                right: 0;
+                top: 0;
+            }
+
+            li {
+                border: 1px solid $brightness-86;
+                padding: $gs-baseline ($gs-gutter / 2) ($gs-baseline + $gs-baseline / 2) !important;
+                margin: 0 ($gs-gutter / 2);
+                max-width: gs-span(6) - $gs-gutter / 2;
+
+                @include mq(mobileLandscape) {
+                    margin: 0 $gs-gutter;
+                }
+
+                @include mq(leftCol) {
+                    margin-left: 0;
+                }
+
+                a {
+                    @include fs-headlineGarnett(0);
+                    font-weight: 800;
+                }
+
+                strong {
+                    @include fs-textSans(5);
+                    font-weight: 400;
+                    color: $brightness-46;
+                    display: block;
+                }
+
+                &:before {
+                    // Hides bullet icon
+                    content: none !important;
+                }
+            }
+        }
+
+        // Prominent H2 styling with optional different coloured secondary level
+        $small-number: 68px;
+        $large-number: 99px;
+
+        & > h2 {
+            @include fs-headlineGarnett(2);
+            font-weight: 500;
+            box-sizing: border-box;
+            border-top: 4px solid $brightness-86;
+            color: $brightness-7;
+            min-height: $small-number + $gs-baseline;
+            position: relative;
+            margin-left: -$gs-gutter / 2;
+            margin-right: -$gs-gutter / 2;
+            margin-top: $gs-baseline * 4;
+            padding: ($gs-baseline / 4) ($gs-gutter / 2) $gs-baseline ($small-number + $gs-gutter);
+
+            @include mq(mobileLandscape) {
+                margin-left: -$gs-gutter;
+                margin-right: -$gs-gutter;
+                padding: ($gs-baseline / 4) $gs-gutter $gs-baseline 98px;
+            }
+
+            @include mq(tablet) {
+                @include fs-headlineGarnett(7);
+                font-weight: 500;
+                line-height: 40px;
+                margin-right: 0;
+                margin-top: $gs-baseline * 8;
+                min-height: $large-number + $gs-baseline;
+                padding: ($gs-baseline / 2) ($gs-gutter / 2) $gs-baseline ($large-number + $gs-gutter + $gs-gutter / 2);
+            }
+
+            @include mq(leftCol) {
+                min-height: auto;
+                margin-left: -$gs-gutter / 2;
+                padding: ($gs-baseline / 2) ($gs-gutter / 2) $gs-baseline;
+            }
+
+            // Optional way of forcing text onto seperate lines, with different colours
+            strong {
+                display: block;
+                font-weight: 500;
+            }
+
+            // Large numbered heading
+            &:before {
+                font-family: 'Guardian Titlepiece', Georgia, serif;
+                font-size: 60px;
+                line-height: 60px;
+                content: counter(section);
+                box-sizing: border-box;
+                counter-increment: section;
+                border: 1px solid $brightness-86;
+                border-top-width: 4px;
+                font-variant-numeric: lining-nums;
+                height: $small-number;
+                width: $small-number;
+                color: $brightness-100;
+                -webkit-text-stroke-width: 1px;
+                -webkit-text-stroke-color: $brightness-86;
+                text-align: center;
+                position: absolute;
+                top: -4px;
+                left: $gs-gutter / 2;
+
+                @include mq(tablet) {
+                    line-height: 88px;
+                    font-size: 88px;
+                    height: $large-number;
+                    width: $large-number;
+                    left: $gs-gutter;
+                }
+
+                @include mq(leftCol) {
+                    left: 1px;
+                    top: -4px;
+                    transform: translateX(-100%);
+                }
+            }
+         }
+    }
+
+    // p tags containing ONLY a strong tag will be styled as H3 level headings
+    .falseH3 {
+        @include fs-headlineGarnett(0);
+        border-top: 1px solid $brightness-86;
+        color: $brightness-7;
+        margin-top: $gs-baseline * 2;
+        margin-bottom: 3px;
+        margin-left: -10px;
+        margin-right: -10px;
+        padding: ($gs-baseline / 4) ($gs-gutter / 2) ($gs-baseline / 2);
+
+        @include mq(mobileLandscape) {
+            padding: ($gs-baseline / 4) $gs-gutter ($gs-baseline / 2);
+            margin-left: -$gs-gutter;
+            margin-right: -$gs-gutter;
+        }
+
+        @include mq(tablet) {
+            display: block;
+            margin-left: -$gs-gutter;
+            margin-right: 0;
+            font-size: 24px;
+            line-height: 28px;
+        }
+
+        @include mq(leftCol) {
+            margin-left: -$gs-gutter / 2;
+            padding: ($gs-baseline / 4) ($gs-gutter / 2) ($gs-baseline / 2);
+        }
+    }
+
+    // Star glyphs eg: ★, ☆ will be styled with yellow background
+    .stars {
+        box-sizing: border-box;
+        font-size: 20px;
+        line-height: 1;
+        height: 30px;
+        letter-spacing: 2px;
+        margin: 0 0 $gs-baseline (-$gs-gutter / 2);
+        position: relative;
+        z-index: $zindex-ui;
+
+        @include mq(mobileLandscape) {
+            margin-left: -$gs-gutter;
+        }
+
+        @include mq(tablet) {
+            margin-left: 0;
+        }
+
+        @include mq(leftCol) {
+            margin-left: -$gs-gutter / 2;
+        }
+
+        & + .element-image {
+            @include mq(leftCol) {
+                margin-top: -42px;
+            }
+        }
+    }
+}
+
+// Variable pillar colours
+@mixin numberedListPillarColours($pillar, $color) {
+    .content--pillar-#{$pillar}.content--type-numbered-list {
+        h2 strong {
+            color: $color;
+        }
+    }
+}
+
+@include numberedListPillarColours('news', $news-main);
+@include numberedListPillarColours('opinion', $opinion-main);
+@include numberedListPillarColours('sport', $sport-main);
+@include numberedListPillarColours('arts', $culture-main);
+@include numberedListPillarColours('lifestyle', $lifestyle-main);
+@include numberedListPillarColours('special-report', $special-report-dark);
