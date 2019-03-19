@@ -80,7 +80,7 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
   }
 
   private def getGuuiJson(article: ArticlePage, blocks: Blocks)(implicit request: RequestHeader): String =
-    DotcomponentsDataModel.toJsonString(DotcomponentsDataModel.fromArticle(article, request, blocks))
+    DotcomponentsDataModel.toJsonString(DotcomponentsDataModel.fromArticle(article, request, blocks, context))
 
   private def render(path: String, article: ArticlePage, blocks: Blocks)(implicit request: RequestHeader): Future[Result] = {
     Future {

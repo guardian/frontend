@@ -7,7 +7,7 @@ import com.gu.contentapi.client.model.v1.Blocks
 import com.osinka.i18n.Lang
 import conf.Configuration
 import controllers.ArticlePage
-import model.Cached
+import model.{ApplicationContext, Cached}
 import model.Cached.RevalidatableResult
 import model.dotcomponents.DotcomponentsDataModel
 import play.api.libs.json._
@@ -53,8 +53,8 @@ class RemoteRenderer {
   }
 
 
-  def getAMPArticle(ws: WSClient, payload: String, article: ArticlePage, blocks: Blocks)(implicit request: RequestHeader): Future[Result] = {
-    val dataModel: DotcomponentsDataModel = DotcomponentsDataModel.fromArticle(article, request, blocks)
+  def getAMPArticle(ws: WSClient, payload: String, article: ArticlePage, blocks: Blocks)(implicit request: RequestHeader, context: ApplicationContext): Future[Result] = {
+    val dataModel: DotcomponentsDataModel = DotcomponentsDataModel.fromArticle(article, request, blocks, context)
     val dataString: String = DotcomponentsDataModel.toJsonString(dataModel)
 
     validate(dataModel) match {
@@ -64,8 +64,8 @@ class RemoteRenderer {
 
   }
 
-  def getArticle(ws:WSClient, path: String, article: ArticlePage,  blocks: Blocks)(implicit request: RequestHeader): Future[Result] = {
-    val dataModel: DotcomponentsDataModel = DotcomponentsDataModel.fromArticle(article, request, blocks)
+  def getArticle(ws:WSClient, path: String, article: ArticlePage,  blocks: Blocks)(implicit request: RequestHeader, context: ApplicationContext): Future[Result] = {
+    val dataModel: DotcomponentsDataModel = DotcomponentsDataModel.fromArticle(article, request, blocks, context)
     val dataString: String = DotcomponentsDataModel.toJsonString(dataModel)
 
     validate(dataModel) match {
