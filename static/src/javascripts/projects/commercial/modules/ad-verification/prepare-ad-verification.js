@@ -10,7 +10,7 @@ export const init = (start: () => void): Promise<void> => {
 
     start();
 
-    if (config.get('switches.confiant', true)) {
+    if (config.get('switches.confiant', false)) {
         // vivify the _clrm object
 
         /* eslint-disable no-underscore-dangle */
