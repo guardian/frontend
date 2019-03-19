@@ -1,5 +1,5 @@
 // I hate this specificty. So far this is the only way I can see to override template specific rules with multiple declared classes
-.content.content--article.content--type-column {
+.content.content--article.content--type-splash {
     .content__head--article {
         @supports (display: grid) {
             @include mq(leftCol) {
@@ -44,7 +44,7 @@
         }
     }
 
-    .content__labels--column {
+    .content__labels--splash {
         margin-right: $gs-gutter;
         padding: ($gs-baseline / 2) ($gs-gutter / 2);
 
@@ -69,7 +69,7 @@
         }
     }
 
-    .content__headline-column-wrapper {
+    .content__headline-splash-wrapper {
         border-top: 1px solid #ffffff;
         box-sizing: border-box;
         margin: 0 $gs-gutter 0 0;
@@ -136,7 +136,7 @@
         }
     }
 
-    .content__headline--column {
+    .content__headline--splash {
         color: #ffffff;
         padding: 0;
 
@@ -146,7 +146,7 @@
         }
     }
 
-    .content__series-label--column {
+    .content__series-label--splash {
         font-size: 20px;
 
         .content__label__link {
@@ -163,7 +163,7 @@
 
     // Opinion specific styling
     &.content--type-comment {
-        .content__headline-column-wrapper {
+        .content__headline-splash-wrapper {
             overflow: hidden;
 
             .content__header {
@@ -181,13 +181,13 @@
         }
 
         // Fix for visible hover on series panel
-        .content__labels--column:hover {
+        .content__labels--splash:hover {
             background-color: $opinion-dark;
         }
 
         // Opinion layout with byline pic
         .content__head--byline-pic {
-            .content__headline-column-wrapper--column {
+            .content__headline-splash-wrapper--column {
                 padding-bottom: $gs-baseline * 3;
             }
 

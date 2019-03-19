@@ -19,7 +19,7 @@
     }
 
     .button--primary,
-    .content__labels--column:hover {
+    .content__labels--splash:hover {
         background: $pillarColor;
     }
 
@@ -59,8 +59,8 @@
     }
 
     .bullet::before,
-    .content__headline-column-wrapper--column,
-    .content__labels--column,
+    .content__headline-splash-wrapper--column,
+    .content__labels--splash,
     .content__labels--panel {
         background-color: $kickerColor;
     }

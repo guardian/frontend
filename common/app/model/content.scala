@@ -80,6 +80,7 @@ final case class Content(
   lazy val isPhotoEssay = fields.displayHint.contains("photoEssay")
   lazy val isColumn = fields.displayHint.contains("column")
   lazy val isNumberedList = fields.displayHint.contains("splash")
+  lazy val isSplash = fields.displayHint.contains("column") || fields.displayHint.contains("splash")
   lazy val isImmersive = fields.displayHint.contains("immersive") || isGallery || tags.isTheMinuteArticle || isPhotoEssay
   lazy val isPaidContent: Boolean = tags.tags.exists{ tag => tag.id == "tone/advertisement-features" }
   lazy val campaigns: List[Campaign] = _root_.commercial.targeting.CampaignAgent.getCampaignsForTags(tags.tags.map(_.id))
@@ -258,6 +259,7 @@ final case class Content(
     ("isImmersive", JsBoolean(isImmersive)),
     ("isColumn", JsBoolean(isColumn)),
     ("isNumberedList", JsBoolean(isNumberedList)),
+    ("isSplash", JsBoolean(isSplash)),
     ("isPaidContent", JsBoolean(isPaidContent)),
     ("campaigns", JsArray(campaigns.map(Campaign.toJson))),
     ("contributorBio", JsString(contributorBio.getOrElse("")))
@@ -471,6 +473,7 @@ object Article {
       ("isPhotoEssay", JsBoolean(content.isPhotoEssay)),
       ("isColumn", JsBoolean(content.isColumn)),
       ("isNumberedList", JsBoolean(content.isNumberedList)),
+      ("isSplash", JsBoolean(content.isSplash)),
       ("isSensitive", JsBoolean(fields.sensitive.getOrElse(false))),
       "videoDuration" -> videoDuration
     ) ++ bookReviewIsbn ++ AtomProperties(content.atoms)
@@ -544,6 +547,7 @@ final case class Article (
   val isPhotoEssay: Boolean = content.isPhotoEssay
   val isColumn: Boolean = content.isColumn
   val isNumberedList: Boolean = content.isNumberedList
+  val isSplash: Boolean = content.isSplash
   lazy val hasVideoAtTop: Boolean = soupedBody.body().children().asScala.headOption
     .exists(e => e.hasClass("gu-video") && e.tagName() == "video")
 
