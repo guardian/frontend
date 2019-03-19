@@ -5,11 +5,11 @@ import { canShowBannerSync } from 'common/modules/commercial/contributions-utili
 
 const defaultBold =
     'This is The\xa0Guardian’s model for open, independent journalism';
-const defaultCopy =
-    'Our mission is to keep independent journalism accessible to everyone, regardless of where they live or what they can afford. Funding from our readers safeguards our editorial independence. It also powers our work and maintains this openness. It means more people, across the world, can access accurate information with integrity at its heart.';
 
-const variantCopy =
+const defaultCopy =
     'Unlike many news organisations, we made a choice to keep all of our independent, investigative reporting free and available for everyone. We believe that each of us, around the world, deserves access to accurate information with integrity at its heart. At a time when factual reporting is critical, The Guardian’s editorial independence is safeguarded by our readers. If you’re able to, please support The Guardian today.';
+const variantCopy =
+    'More people around the world are reading The Guardian’s independent, investigative reporting than ever before and we’ve now been funded by over one million readers. Thanks to this essential support, we’re able to keep all of our journalism open for everyone, at a time when factual reporting is critical. If you’re able to, please support The Guardian today – so more people, across the world, can access accurate information with integrity at its heart.';
 
 const thankYouBold =
     'Thank you for supporting The\xa0Guardian’s model for open, independent journalism';
@@ -44,11 +44,11 @@ const bannerShownCallback = () => {
     }
 };
 
-export const februaryMomentBannerCopy: AcquisitionsABTest = {
-    id: 'FebruaryMomentBannerCopy',
-    start: '2019-03-11',
+export const februaryMomentBannerCopyMorePeople: AcquisitionsABTest = {
+    id: 'FebruaryMomentBannerCopyMorePeople',
+    start: '2019-03-18',
     expiry: '2019-09-30',
-    author: 'Jonathan Rankin',
+    author: 'Joshua Lieberman',
     description:
         'test some moment specific copy on fiv moment engagement banner',
     audience: 1,

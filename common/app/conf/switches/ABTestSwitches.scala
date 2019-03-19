@@ -28,9 +28,9 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-february-moment-banner-copy",
+    "ab-february-moment-banner-copy-more-people",
     "switch on to test the some moment copy on the fiv engagement banner",
-    owners = Seq(Owner.withGithub("jranks123")),
+    owners = Seq(Owner.withGithub("jlieb10")),
     safeState = Off,
     sellByDate = new LocalDate(2019, 9, 30),
     exposeClientSide = true
