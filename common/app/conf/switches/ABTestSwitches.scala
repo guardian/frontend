@@ -68,16 +68,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-commercial-ad-verification",
-    "Test the impact of verifiyng ads",
-    owners = Seq(Owner.withGithub("jeteve")),
-    safeState = Off,
-    sellByDate = new LocalDate(2019, 9, 30),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-commercial-outbrain-testing",
     "Test the outbrain widget",
     owners = Seq(Owner.withGithub("frankie297")),
