@@ -73,11 +73,6 @@ $border-style: $brightness-60 1px solid;
         }
     }
 
-    .engagement-banner__button.engagement-banner__button__learn-more {
-        background-color: $culture-faded;
-        border: $border-style;
-    }
-
     .engagement-banner__roundel {
         display: inline-block;
     }
@@ -419,12 +414,6 @@ $wide-circle-height: 162px;
 
     }
 
-    .engagement-banner__button.engagement-banner__button__learn-more {
-        background-color: $sport-main;
-        border: $border-style-blue;
-        color: $brightness-100;
-    }
-
     @supports (mix-blend-mode: difference) {
         .fiv-banner__circle {
             mix-blend-mode: difference;
@@ -478,7 +467,6 @@ $wide-circle-height: 162px;
         color: $brightness-100;
         border:  $brand-main 1px solid;
     }
-    
 
     @supports (mix-blend-mode: multiply) {
         .fiv-banner__circle {
