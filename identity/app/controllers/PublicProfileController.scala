@@ -22,8 +22,6 @@ class PublicProfileController(
     with ImplicitControllerExecutionContext
     with SafeLogging {
 
-  def page(url: String, username: String): IdentityPage = IdentityPage(url,  s"$username's public profile", usesGuardianHeader=true)
-
   def renderProfileFromVanityUrl(vanityUrl: String, activityType: String): Action[AnyContent] = renderPublicProfilePage(
     "/user/" + vanityUrl,
     activityType,
@@ -32,27 +30,22 @@ class PublicProfileController(
 
   def renderProfileFromId(id: String, activityType: String): Action[AnyContent] = renderPublicProfilePage("/user/id/"+id, activityType, identityApiClient.user(id))
 
-  def renderPublicProfilePage(url: String, activityType: String, futureUser: => Future[Response[User]]): Action[AnyContent] = Action.async {
-    implicit request =>
-      futureUser map {
-        case Left(errors) =>
-          logger.info(s"public profile page returned errors ${errors.toString()}")
-          NotFound(views.html.errors._404())
+  def renderPublicProfilePage(url: String, activityType: String, futureUser: => Future[Response[User]]): Action[AnyContent] = Action.async { implicit request =>
+    futureUser.map {
+      case Left(errors) =>
+        logger.info(s"public profile page returned errors ${errors.toString()}")
+        NotFound(views.html.errors._404())
 
-        case Right(user) =>
-          // When a user goes to comment, they are prompted to set a username which is used as the display name.
-          // Since the user has publicised this information (via commenting), we are ok making it public too.
-          // Conversely if username hasn't been set, we don't want to use their display name,
-          // since it is something the user might not want made public.
-          // In these cases, default to using their identity id instead of e.g. a not found response.
-          // This behaviour means that in edge cases where a user has commented but hasn't got a username
-          // (possible on e.g. apps) and someone has clicked through on their profile from comments,
-          // they'll still see their comment history.
-          val displayName = user.publicFields.username.getOrElse(user.id)
-          val idRequest = idRequestParser(request)
-          Cached(60)(RevalidatableResult.Ok(
-            IdentityHtmlPage.html(views.html.publicProfilePage(page(url, displayName), idRequest, idUrlBuilder, user, activityType))(page(url, displayName), request, context)
-          ))
-      }
+      case Right(user) =>
+        val title = user.publicFields.username.fold("public profile")(username => s"$username's public profile")
+        implicit val identityPage: IdentityPage = IdentityPage(url,  title, usesGuardianHeader = true)
+        Cached(60)(
+          RevalidatableResult.Ok(
+            IdentityHtmlPage.html(
+              views.html.publicProfilePage(identityPage, idRequestParser(request), idUrlBuilder, user, activityType)
+            )
+          )
+        )
+    }
   }
 }
