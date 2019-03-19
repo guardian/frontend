@@ -378,10 +378,7 @@ const ozoneClientSideBidder: PrebidBidder = {
                 publisherId: 'OZONENUK0001', // test ID
                 siteId: '4204204201', // test ID
                 placementId: '0420420421', // test ID
-                customData: {
-                    keywords: PAGE_TARGETING,
-                    customParams: PAGE_TARGETING,
-                },
+                customData: PAGE_TARGETING,
                 ozoneData: {}, // TODO: confirm if we need to send any
             }))(),
             window.OzoneLotameData ? { lotameData: window.OzoneLotameData } : {}
