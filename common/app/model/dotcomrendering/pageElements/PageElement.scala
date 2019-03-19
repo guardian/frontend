@@ -194,7 +194,7 @@ object PageElement {
           mediaAtom.activeAssets.headOption.map(asset => {
             YoutubeBlockElement(
               mediaAtom.id, //CAPI ID
-              asset.id,
+              asset.id, // Youtube ID
               mediaAtom.channelId, //Channel ID
               mediaAtom.title //Caption
             )
