@@ -4,6 +4,7 @@ import common.Logging
 import controllers.ArticlePage
 import implicits.Requests._
 import model.PageWithStoryPackage
+import model.dotcomrendering.pageElements.YoutubeBlockElement
 import model.liveblog._
 import play.api.mvc.RequestHeader
 
@@ -38,6 +39,21 @@ object AMPPageChecks extends Logging {
       case None => true
     }
   }
+
+  def hasOnlySupportedMainElements(page: PageWithStoryPackage): Boolean = {
+    def supported(block: BlockElement): Boolean = block match {
+      case _: ImageBlockElement => true
+      case _: YoutubeBlockElement => true
+      case _ => false
+    }
+
+    val areSupported = for {
+      blocks <- page.article.blocks
+      main <- blocks.main
+    } yield main.elements.forall(supported)
+
+    areSupported.getOrElse(true)
+  }
 }
 
 object AMPPicker {
@@ -52,6 +68,7 @@ object AMPPicker {
     Map(
       ("isBasicArticle", AMPPageChecks.isBasicArticle(page)),
       ("hasOnlySupportedElements", AMPPageChecks.hasOnlySupportedElements(page)),
+      ("hasOnlySupportedMainElements", AMPPageChecks.hasOnlySupportedMainElements(page)),
       ("isNotPaidContent", AMPPageChecks.isNotPaidContent(page)),
     )
   }
