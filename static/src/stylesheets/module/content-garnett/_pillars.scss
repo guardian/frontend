@@ -50,7 +50,8 @@
         fill: $kickerColor;
     }
 
-    .inline-garnett-quote svg {
+    .inline-garnett-quote svg,
+    .content__series-cta__icon {
         fill: $kickerColor;
     }
 
@@ -59,7 +60,7 @@
     }
 
     .bullet::before,
-    .content__headline-splash-wrapper--column,
+    .content__headline-splash-wrapper,
     .content__labels--splash,
     .content__labels--panel {
         background-color: $kickerColor;

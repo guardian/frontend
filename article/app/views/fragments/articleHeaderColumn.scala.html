@@ -6,13 +6,13 @@
 @import _root_.model.ContentDesignType.RichContentDesignType
 
 
-<header class="content__head content__head--column content__head--article tonal__head tonal__head--@toneClass(article)
+<header class="content__head content__head--splash content__head--article tonal__head tonal__head--@toneClass(article)
 @if(article.content.hasTonalHeaderByline && article.tags.hasLargeContributorImage && article.metadata.designType.nameOrDefault != "analysis") { content__head--byline-pic}">
     @fragments.mainMedia(article, amp)
 
     @fragments.meta.metaInline(article, amp)
 
-    <div class="content__headline-splash-wrapper content__headline-splash-wrapper--column">
+    <div class="content__headline-splash-wrapper">
         <div class="content__header tonal__header u-cf">
             <h1 class="content__headline content__headline--splash @if(article.content.hasTonalHeaderByline) {content__headline--no-margin-bottom}" articleprop="headline" @langAttributes(article.content)>
                 @Html(article.trail.headline)

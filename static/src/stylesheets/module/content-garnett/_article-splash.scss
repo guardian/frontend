@@ -39,7 +39,7 @@
             grid-area: media-primary;
             margin-bottom: -70px;
             // TODO this should be done in a more intelligent way
-            max-height: 460px;
+            max-height: 560px;
             overflow: hidden;
         }
     }
@@ -47,6 +47,7 @@
     .content__labels--splash {
         margin-right: $gs-gutter;
         padding: ($gs-baseline / 2) ($gs-gutter / 2);
+        order: 0;
 
         @include mq(mobileLandscape, $until: tablet) {
             padding-left: $gs-gutter;
@@ -70,7 +71,7 @@
     }
 
     .content__headline-splash-wrapper {
-        border-top: 1px solid #ffffff;
+        border-top: 1px solid rgba(0, 0, 0, .2);
         box-sizing: border-box;
         margin: 0 $gs-gutter 0 0;
         padding: 0 ($gs-gutter / 2) ($gs-baseline * 3);
@@ -92,7 +93,7 @@
             padding-bottom: $gs-baseline * 4;
 
             @supports (display: grid) {
-                border-left: 1px solid #ffffff;
+                border-left: 1px solid rgba(0, 0, 0, .2);
             }
         }
 
@@ -236,13 +237,12 @@
 
 .content__series-cta__text {
     color: #ffffff;
-    font-size: 16px;
-    font-style: italic;
+    @include fs-textSans(5);
+    font-weight: 700;
 }
 
 .content__series-cta__icon {
     background-color: #ffffff;
-    fill: $brightness-7;
     height: 34px;
     width: 34px;
 }
