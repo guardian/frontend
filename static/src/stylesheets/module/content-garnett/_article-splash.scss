@@ -247,8 +247,8 @@
 }
 
 .content__series-cta__text {
-    color: #ffffff;
     @include fs-textSans(5);
+    color: #ffffff;
     font-weight: 700;
     vertical-align: middle;
 }
