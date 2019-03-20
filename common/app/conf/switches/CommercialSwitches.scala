@@ -88,16 +88,6 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-  val TourismAustraliaSwitch = Switch(
-    Commercial,
-    "tourism-australia",
-    "If this switch is on, the Tourism Australia pixel is added to the Ashes Australia travel section.",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
   val ImrWorldwideSwitch = Switch(
     Commercial,
     "imr-worldwide",
