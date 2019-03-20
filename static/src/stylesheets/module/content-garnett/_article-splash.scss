@@ -115,6 +115,11 @@
     .content__headline-standfirst-wrapper {
         @include mq(tablet) {
             padding-bottom: $gs-baseline * 2;
+
+            .content__standfirst {
+                font-size: 24px;
+                line-height: 28px;
+            }
         }
 
         @include mq(leftCol) {
@@ -142,8 +147,8 @@
         padding: 0;
 
         @include mq(tablet) {
-            font-size: 32px;
-            line-height: 36px;
+            font-size: 38px;
+            line-height: 40px;
         }
     }
 
@@ -188,7 +193,15 @@
 
         // Opinion layout with byline pic
         .content__head--byline-pic {
-            .content__headline-splash-wrapper--column {
+            .content__headline-splash-wrapper {
+                padding-bottom: 0;
+            }
+
+            .content__headline--byline {
+                @include mq($until: leftCol) {
+                    padding-right: gs-span(2);
+                }
+
                 padding-bottom: $gs-baseline * 3;
             }
 
@@ -201,10 +214,10 @@
             }
 
             .byline-img {
-                margin-bottom: -$gs-baseline * 3;
+                position: relative;
+                right: -30px;
 
                 @include mq(leftCol) {
-                    right: -30px;
                     position: absolute;
                 }
             }
@@ -239,6 +252,7 @@
     color: #ffffff;
     @include fs-textSans(5);
     font-weight: 700;
+    vertical-align: middle;
 }
 
 .content__series-cta__icon {
