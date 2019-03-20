@@ -60,7 +60,7 @@ const breakpoints: Array<Breakpoint> = [
     {
         name: 'tablet',
         isTweakpoint: false,
-        width: 740,
+        width: 712,
     },
     {
         name: 'desktop',

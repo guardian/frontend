@@ -24,7 +24,7 @@ case object Phablet extends Breakpoint {
 }
 
 case object Tablet extends Breakpoint {
-  val minWidth = Some(740)
+  val minWidth = Some(712)
 }
 
 case object Desktop extends Breakpoint {
