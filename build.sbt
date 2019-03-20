@@ -57,7 +57,14 @@ val common = library("common").settings(
     capiAws,
     okhttp,
     jsonSchema
-  )
+  ),
+
+  /**
+   * WARNING - this is useful to prevent dependencies from evicting
+   * the version of libthrift that is *required* by the scrooge
+   * plugin we are using
+   */
+  dependencyOverrides += "org.apache.thrift" % "libthrift" % "0.9.1"
 ).settings(
     mappings in TestAssets ~= filterAssets
 )
