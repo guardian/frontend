@@ -1,8 +1,7 @@
 // @flow
 
 import { loadScript } from 'lib/load-script';
-import { commercialAdVerification } from 'common/modules/experiments/tests/commercial-ad-verification.js';
-import { isInVariantSynchronous } from 'common/modules/experiments/ab';
+import config from 'lib/config';
 
 export const init = (start: () => void): Promise<void> => {
     const host = 'clarium.global.ssl.fastly.net';
@@ -11,7 +10,7 @@ export const init = (start: () => void): Promise<void> => {
 
     start();
 
-    if (isInVariantSynchronous(commercialAdVerification, 'variant')) {
+    if (config.get('switches.confiant', false)) {
         // vivify the _clrm object
 
         /* eslint-disable no-underscore-dangle */
