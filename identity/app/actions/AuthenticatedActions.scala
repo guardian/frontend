@@ -28,7 +28,7 @@ class AuthenticatedActions(
     val returnUrl = identityUrlBuilder.buildUrl(request.uri)
 
     val params = List("returnUrl" -> returnUrl) ++
-      List("INTCMP", "email", "CMP", "utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content","clientId","encryptedEmail") //only forward these if they exist in original query string
+      List("INTCMP", "email", "CMP", "utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content","clientId","encryptedEmail","autoSignInToken") //only forward these if they exist in original query string
         .flatMap(name => request.getQueryString(name).map(value => name -> value))
 
     val redirectUrlWithParams = identityUrlBuilder.appendQueryParams(path, params)
