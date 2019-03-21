@@ -10,7 +10,7 @@ const onLoad = () => {
 };
 
 export const remarketing: ThirdPartyTag = {
-    shouldRun: config.switches.remarketing,
+    shouldRun: config.get('switches.remarketing'),
     url: '//www.googleadservices.com/pagead/conversion_async.js',
     onLoad,
 };

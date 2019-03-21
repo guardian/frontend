@@ -11,16 +11,16 @@ const createComponent = (
     const component = new Component();
 
     component.manipulationType = manipulationType;
-    component.endpoint = `${endpoint}?shortUrl=${config.page.shortUrl}`;
+    component.endpoint = `${endpoint}?shortUrl=${config.get('page.shortUrl')}`;
     el.innerHTML = '';
 
     return component.fetch(el, 'html');
 };
 
 const onwardAudio = (el: HTMLElement) => {
-    if (config.page.seriesId) {
+    if (config.get('page.seriesId')) {
         const manipulationType = 'append';
-        const endpoint = `/audio/series/${config.page.seriesId}.json`;
+        const endpoint = `/audio/series/${config.get('page.seriesId')}.json`;
 
         createComponent(el, endpoint, manipulationType);
     }

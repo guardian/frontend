@@ -50,8 +50,10 @@ const abParam = (): Array<string> => {
         }
     );
 
-    if (config.tests) {
-        Object.entries(config.tests).forEach(([testName, testValue]) => {
+    const tests = config.get('tests');
+
+    if (tests) {
+        Object.entries(tests).forEach(([testName, testValue]) => {
             pushAbParams(testName, testValue);
         });
     }

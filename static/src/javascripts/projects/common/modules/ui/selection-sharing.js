@@ -104,11 +104,11 @@ const updateSelection = (): void => {
         }
 
         const twitterText = encodeURIComponent(twitterMessage);
-        const twitterShortUrl = `${config.page.shortUrl}/stw`;
+        const twitterShortUrl = `${config.get('page.shortUrl')}/stw`;
         const twitterUrl = encodeURI(twitterShortUrl);
         const twitterHref = `https://twitter.com/intent/tweet?text=%E2%80%9C${twitterText}%E2%80%9D&url=${twitterUrl}`;
 
-        const emailSubject = encodeURI(config.page.webTitle);
+        const emailSubject = encodeURI(config.get('page.webTitle'));
         const emailSelection = encodeURI(range.toString());
         const emailShortUrl = `${config.get('page.shortUrl')}/sbl`;
         const emailUrl = encodeURI(emailShortUrl);

@@ -5,13 +5,15 @@ import config from 'lib/config';
 import { Component } from 'common/modules/component';
 
 const getEndpoint = (mediaType: string): string => {
-    const isInSeries = Boolean(config.page.seriesTags);
+    const isInSeries = Boolean(config.get('page.seriesTags'));
 
     if (isInSeries) {
-        return `/video/in-series/${config.page.seriesId}.json`;
+        return `/video/in-series/${config.get('page.seriesId')}.json`;
     }
 
-    return `/${config.page.isPodcast ? 'podcast' : mediaType}/most-viewed.json`;
+    return `/${
+        config.get('page.isPodcast') ? 'podcast' : mediaType
+    }/most-viewed.json`;
 };
 
 const createComponent = (

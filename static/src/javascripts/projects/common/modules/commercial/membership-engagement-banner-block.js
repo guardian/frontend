@@ -54,7 +54,7 @@ export const isBlocked = (
 ): boolean => {
     // the enabled block configurations that apply to the provided geolocation
     const activeBlockConfigs: Array<BlockConfig> = switches
-        .filter(switchName => !!config.switches[switchName])
+        .filter(switchName => !!config.get(`switches.${switchName}`))
         .map(switchName => switchBlockConfig[switchName])
         .filter(conf => conf.geolocation === geolocation);
 
