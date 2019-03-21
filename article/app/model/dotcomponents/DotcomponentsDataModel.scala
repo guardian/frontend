@@ -154,7 +154,8 @@ case class DCPage(
   webURL: String,
   starRating: Option[Int],
   commercial: Commercial,
-  meta: Meta
+  meta: Meta,
+  isFront: Boolean
 )
 
 // the composite data model
@@ -288,7 +289,7 @@ object DotcomponentsDataModel {
     }
 
     val dcBlocks = Blocks(mainBlock, bodyBlocks)
-    
+
     val jsConfig = (k: String) => articlePage.getJavascriptConfig.get(k).map(_.as[String])
     val jsConfigOptionBoolean = (k: String) => articlePage.getJavascriptConfig.get(k).map(_.as[Boolean])
 
@@ -476,7 +477,8 @@ object DotcomponentsDataModel {
         article.trail.isCommentable,
         linkedData,
         jsConfigOptionBoolean("hasShowcaseMainElement").getOrElse(false)
-      )
+      ),
+      JavaScriptPage.getMap(articlePage, Edition(request), false).getOrElse("isFront", JsBoolean(false)).as[Boolean]
     )
 
     DotcomponentsDataModel(
