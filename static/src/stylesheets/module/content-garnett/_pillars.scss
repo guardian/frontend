@@ -19,7 +19,7 @@
     }
 
     .button--primary,
-    .content__labels--column:hover {
+    .content__labels--splash:hover {
         background: $pillarColor;
     }
 
@@ -50,7 +50,8 @@
         fill: $kickerColor;
     }
 
-    .inline-garnett-quote svg {
+    .inline-garnett-quote svg,
+    .content__series-cta__icon {
         fill: $kickerColor;
     }
 
@@ -59,8 +60,8 @@
     }
 
     .bullet::before,
-    .content__headline-column-wrapper--column,
-    .content__labels--column,
+    .content__headline-splash-wrapper,
+    .content__labels--splash,
     .content__labels--panel {
         background-color: $kickerColor;
     }

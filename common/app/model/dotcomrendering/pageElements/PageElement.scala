@@ -3,6 +3,7 @@ package model.dotcomrendering.pageElements
 import com.gu.contentapi.client.model.v1.ElementType.{Map => _, _}
 import com.gu.contentapi.client.model.v1.{ElementType, SponsorshipType, BlockElement => ApiBlockElement, Sponsorship => ApiSponsorship}
 import layout.ContentWidths.BodyMedia
+import model.content.{Atom, MediaAtom, MediaWrapper}
 import model.{AudioAsset, ImageAsset, ImageMedia, VideoAsset}
 import play.api.libs.json._
 import org.jsoup.Jsoup
@@ -29,6 +30,7 @@ case class VideoBlockElement(data: Map[String, String], role: Role) extends Page
 case class EmbedBlockElement(html: String, safe: Option[Boolean], alt: Option[String], isMandatory: Boolean) extends PageElement
 case class SoundcloudBlockElement(html: String, id: String, isTrack: Boolean, isMandatory: Boolean) extends PageElement
 case class ContentAtomBlockElement(atomId: String) extends PageElement
+case class YoutubeBlockElement(id: String, assetId: String, channelId: Option[String], mediaTitle: String) extends PageElement
 case class InteractiveBlockElement(html: Option[String], role: Role, isMandatory: Option[Boolean]) extends PageElement
 case class CommentBlockElement(body: String, avatarURL: String, profileURL: String, profileName: String, permalink: String, dateTime: String) extends PageElement
 case class TableBlockElement(html: Option[String], role: Role, isMandatory: Option[Boolean]) extends PageElement
@@ -86,7 +88,13 @@ object Sponsorship {
 object PageElement {
   val dotComponentsImageProfiles = List(Item1200, Item700, Item640, Item300, Item140, Item120)
 
-  def make(element: ApiBlockElement, addAffiliateLinks: Boolean, pageUrl: String): List[PageElement] = {
+
+
+  def make(element: ApiBlockElement, addAffiliateLinks: Boolean, pageUrl: String, atoms: Iterable[Atom]): List[PageElement] = {
+    def extractAtom: Option[Atom] = for {
+      contentAtom <- element.contentAtomTypeData
+      atom <- atoms.find(_.id == contentAtom.atomId)
+    } yield atom
 
     element.`type` match {
 
@@ -181,9 +189,19 @@ object PageElement {
       }).toList
 
       case Embed => extractEmbed(element).toList
-
-      case Contentatom => element.contentAtomTypeData.map(d => ContentAtomBlockElement(d.atomId)).toList
-
+      case Contentatom => (extractAtom match {
+        case Some(mediaAtom: MediaAtom) =>
+          mediaAtom.activeAssets.headOption.map(asset => {
+            YoutubeBlockElement(
+              mediaAtom.id, //CAPI ID
+              asset.id, // Youtube ID
+              mediaAtom.channelId, //Channel ID
+              mediaAtom.title //Caption
+            )
+          })
+        case Some(atom) => Some(ContentAtomBlockElement(atom.id))
+        case _ => None
+      }).toList
       case Pullquote => element.pullquoteTypeData.map(d => PullquoteBlockElement(d.html, Role(None))).toList
       case Interactive => element.interactiveTypeData.map(d => InteractiveBlockElement(d.html, Role(d.role), d.isMandatory)).toList
       case Table => element.tableTypeData.map(d => TableBlockElement(d.html, Role(d.role), d.isMandatory)).toList
@@ -262,6 +280,7 @@ object PageElement {
   implicit val EmbedBlockElementWrites: Writes[EmbedBlockElement] = Json.writes[EmbedBlockElement]
   implicit val SoundCloudBlockElementWrites: Writes[SoundcloudBlockElement] = Json.writes[SoundcloudBlockElement]
   implicit val ContentAtomBlockElementWrites: Writes[ContentAtomBlockElement] = Json.writes[ContentAtomBlockElement]
+  implicit val YoutubeBlockElementWrites: Writes[YoutubeBlockElement] = Json.writes[YoutubeBlockElement]
   implicit val PullquoteBlockElementWrites: Writes[PullquoteBlockElement] = Json.writes[PullquoteBlockElement]
   implicit val InteractiveBlockElementWrites: Writes[InteractiveBlockElement] = Json.writes[InteractiveBlockElement]
   implicit val CommentBlockElementWrites: Writes[CommentBlockElement] = Json.writes[CommentBlockElement]

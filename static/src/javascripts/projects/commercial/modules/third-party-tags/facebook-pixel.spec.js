@@ -18,12 +18,12 @@ type SetupParams = {
 describe('Facebook tracking pixel', () => {
     beforeEach(() => {
         jest.resetAllMocks();
-        config.libs.facebookAccountId = 'test-account-id';
+        config.set('libs.facebookAccountId', 'test-account-id');
     });
 
     const setup = (params: SetupParams) => {
         getAdConsentState.mockReturnValueOnce(params.consent);
-        config.switches = { facebookTrackingPixel: params.switchedOn };
+        config.set('switches.facebookTrackingPixel', params.switchedOn);
     };
 
     it('should not load if switch is off', () => {

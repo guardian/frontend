@@ -10,7 +10,7 @@ import stocksTemplate from 'raw-loader!common/views/business/stocks.html';
 
 const isBusinessFront = () =>
     ['uk/business', 'us/business', 'au/business'].indexOf(
-        config.page.pageId
+        config.get('page.pageId')
     ) !== -1;
 
 const getStocksData = () =>

@@ -23,7 +23,9 @@ const loadExternalContentWidget = (): void => {
     const externalTpl = template(externalContentContainerStr);
 
     const findAnchor = (): Promise<HTMLElement | null> => {
-        const selector = !(config.page.seriesId || config.page.blogIds)
+        const selector = !(
+            config.get('page.seriesId') || config.get('page.blogIds')
+        )
             ? '.js-related, .js-outbrain-anchor'
             : '.js-outbrain-anchor';
         return Promise.resolve(document.querySelector(selector));
@@ -44,8 +46,8 @@ const loadExternalContentWidget = (): void => {
     };
 
     const shouldServePlista: boolean =
-        config.switches.plistaForOutbrainAu &&
-        config.page.edition.toLowerCase() === 'au';
+        config.get('switches.plistaForOutbrainAu') &&
+        config.get('page.edition', '').toLowerCase() === 'au';
 
     if (shouldServePlista) {
         renderWidget('plista', plista.init);

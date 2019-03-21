@@ -31,6 +31,7 @@ class PublicProfileControllerTest extends path.FreeSpec
   val user = User("test@example.com", userId,
     publicFields = PublicFields(
       displayName = Some("John Smith"),
+      username = Some("John Smith"),
       aboutMe = Some("I read the Guardian"),
       location = Some("London"),
       interests = Some("I like stuff"),
@@ -63,8 +64,8 @@ class PublicProfileControllerTest extends path.FreeSpec
       }
 
       val content = contentAsString(result)
-      "then rendered profile should include display name" in {
-        content should include(user.publicFields.displayName.get)
+      "then rendered profile should include username" in {
+        content should include(user.publicFields.username.get)
       }
       "then rendered profile should include account creation date" in {
         content should include(s"Registered on ${user.dates.accountCreatedDate.get.toString("d MMM yyyy")}")
@@ -92,8 +93,8 @@ class PublicProfileControllerTest extends path.FreeSpec
       }
 
       val content = contentAsString(result)
-      "then rendered profile should include display name" in {
-        content should include(user.publicFields.displayName.get)
+      "then rendered profile should include username" in {
+        content should include(user.publicFields.username.get)
       }
       "then rendered profile should include account creation date" in {
         content should include(s"Registered on ${user.dates.accountCreatedDate.get.toString("d MMM yyyy")}")
@@ -108,16 +109,20 @@ class PublicProfileControllerTest extends path.FreeSpec
       }
     }
 
-    "with no display name for the specified user" - {
-      val guestUser = user.copy(publicFields = user.publicFields.copy(displayName = None))
+    "with no username for the specified user" - {
+      val guestUser = user.copy(publicFields = user.publicFields.copy(username = None))
       when(api.userFromVanityUrl(MockitoMatchers.anyString, MockitoMatchers.any[Auth])) thenReturn Future.successful(Left(Nil))
       when(api.userFromVanityUrl(vanityUrl)) thenReturn Future.successful(Right(guestUser))
       val result = controller.renderProfileFromVanityUrl(vanityUrl, "discussions")(request)
 
-      "then should return status 404" in {
-        status(result) should be(404)
+      "then should return status 200" in {
+        status(result) should be(200)
+      }
+
+      "then should omit the profile section with the user's username" in {
+        val content = contentAsString(result)
+        content should not include """<div class="user-profile u-cf">"""
       }
     }
   }
-
 }

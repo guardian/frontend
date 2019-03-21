@@ -63,7 +63,9 @@ const addToShareCount = (val: number): void => {
 };
 
 const fetch = (): void => {
-    const url = `${config.page.ajaxUrl}/sharecount/${config.page.pageId}.json`;
+    const url = `${config.get('page.ajaxUrl')}/sharecount/${config.get(
+        'page.pageId'
+    )}.json`;
 
     fetchJSON(url, {
         mode: 'cors',
@@ -80,9 +82,9 @@ const loadShareCounts = (): void => {
        when they then crawl them they get 404s which affects later sharing.
       don't call counts in preview */
     if (
-        config.switches.serverShareCounts &&
+        config.get('switches.serverShareCounts') &&
         $shareCountEls.length &&
-        !config.page.isPreview
+        !config.get('page.isPreview')
     ) {
         try {
             fetch();

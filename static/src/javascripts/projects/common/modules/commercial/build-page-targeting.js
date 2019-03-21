@@ -50,8 +50,10 @@ const abParam = (): Array<string> => {
         }
     );
 
-    if (config.tests) {
-        Object.entries(config.tests).forEach(([testName, testValue]) => {
+    const tests = config.get('tests');
+
+    if (tests) {
+        Object.entries(tests).forEach(([testName, testValue]) => {
             pushAbParams(testName, testValue);
         });
     }
@@ -202,6 +204,7 @@ const buildPageTargeting = once(
                     : undefined,
                 cc: geolocationGetSync(),
                 s: page.section, // for reference in a macro, so cannot be extracted from ad unit
+                pr: 'dotcom-platform', // rendering platform
             },
             page.sharedAdTargeting,
             paTargeting,
