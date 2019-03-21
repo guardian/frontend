@@ -33,7 +33,7 @@ type S2SConfig = {
     bidders: Array<string>,
     timeout: number,
     adapter: string,
-    is_debug: string, // true or false string
+    is_debug: 'true' | 'false',
     endpoint: string,
     syncEndpoint: string,
     cookieSet: boolean,

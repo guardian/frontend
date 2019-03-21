@@ -1,5 +1,6 @@
 // @flow
 import { appendToLastElement } from 'lib/array-utils';
+import { acquisitionsEpicTickerTemplate } from 'common/modules/commercial/templates/acquisitions-epic-ticker';
 
 const buildFooter = (footer: string[]): string =>
     `<div class="contributions__epic-footer">
@@ -12,18 +13,22 @@ export const acquisitionsEpicControlTemplate = ({
     epicClassNames = [],
     buttonTemplate,
     wrapperClass = '',
+    showTicker = false,
 }: {
     copy: AcquisitionsEpicTemplateCopy,
     componentName: string,
     epicClassNames: string[],
     buttonTemplate?: string,
     wrapperClass?: string,
+    showTicker: boolean,
 }) =>
     `<div class="contributions__epic ${epicClassNames.join(
         ' '
     )}" data-component="${componentName}" data-link-name="epic">
         <div class="${wrapperClass}">
             <div>
+                ${showTicker ? acquisitionsEpicTickerTemplate : ''}
+
                 <h2 class="contributions__title">
                     ${heading}
                 </h2>

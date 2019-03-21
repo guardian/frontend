@@ -11,14 +11,22 @@ const inlineDefinition = {
             adSizes.googleCard,
             adSizes.fluid,
         ],
+        tablet: [
+            adSizes.outOfPage,
+            adSizes.empty,
+            adSizes.outstreamMobile,
+            adSizes.mpu,
+            adSizes.googleCard,
+            adSizes.outstreamDesktop,
+            adSizes.fluid,
+        ],
         desktop: [
             adSizes.outOfPage,
             adSizes.empty,
             adSizes.mpu,
-            adSizes.video,
-            adSizes.outstreamDesktop, // todo will remove this once Ad Manager updated
-            adSizes.outstreamMobile,
             adSizes.googleCard,
+            adSizes.video,
+            adSizes.outstreamDesktop,
             adSizes.fluid,
         ],
     },
@@ -108,7 +116,7 @@ const adSlotDefinitions = {
   Returns an array of adSlot HTMLElement(s) with always at least one HTMLDivElement
   which is the main DFP slot.
 
-  Insert those elements as sibblings at the place
+  Insert those elements as siblings at the place
   you want adverts to appear.
 
   Note that for the DFP slot to be filled by GTP, you'll have to

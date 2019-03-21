@@ -8,7 +8,7 @@
         "content__labels--gallery" -> item.content.isGallery,
         "content__labels--paidgallery" -> (item.content.isGallery && item.content.isPaidContent || item.content.isPhotoEssay && item.content.isPaidContent),
         "content__labels--not-immersive" -> !item.content.isImmersive,
-        "content__labels--column" -> item.content.isColumn,
+        "content__labels--splash" -> item.content.isSplash,
         "content__labels--immersive" -> (item.content.isImmersive && item.content.blogOrSeriesTag.isDefined || badgeFor(item).isDefined),
         "content__labels--panel" -> (item.content.isImmersive && item.content.blogOrSeriesTag.isDefined || item.content.isGallery && item.content.blogOrSeriesTag.isDefined),
         "content__labels--flagship"  -> item.tags.isAudio
@@ -28,7 +28,7 @@
         <div class="@RenderClasses(Map(
                 "content__series-label--immersive-article content__label" -> (item.content.isImmersive && item.content.tags.isArticle),
                 "content__series-label--photo-essay" -> item.content.isPhotoEssay,
-                "content__series-label--column" -> item.content.isColumn
+                "content__series-label--splash" -> item.content.isSplash
             ), "content__series-label content__label")
           ">
             <a class="content__label__link" href="@LinkTo {/@series.id}">
@@ -38,7 +38,7 @@
             </a>
         </div>
 
-        @if(item.content.isColumn && !amp) {
+        @if(item.content.isSplash && !amp) {
             <div class="content__series-cta">
                     @fragments.inlineSvg("arrow-right", "icon", List("content__series-cta__icon", "rounded-icon centered-icon"))
                     <span class="content__series-cta__text hide-until-leftcol">
@@ -66,7 +66,7 @@
               </a>
           </div>
         } else {
-            @if(!(item.content.isImmersive && item.content.tags.isArticle || item.content.isColumn || item.content.tags.isGallery)) {
+            @if(!(item.content.isImmersive && item.content.tags.isArticle || item.content.isSplash || item.content.tags.isGallery)) {
               <div class="content__section-label content__label">
                   <a class="content__label__link"
                       data-link-name="article section"

@@ -635,16 +635,16 @@ class Loader extends Component {
 
     renderCommentCount(): void {
         loadDiscussionFrontend(this, {
-            apiHost: config.page.discussionApiUrl,
-            avatarImagesHost: config.page.avatarImagesUrl,
+            apiHost: config.get('page.discussionApiUrl'),
+            avatarImagesHost: config.get('page.avatarImagesUrl'),
             closed: this.getDiscussionClosed(),
             discussionId: this.getDiscussionId(),
             element: document.getElementsByClassName(
                 'js-discussion-external-frontend'
             )[0],
             userFromCookie: !!getUserFromCookie(),
-            profileUrl: config.page.idUrl,
-            profileClientId: config.switches.registerWithPhone
+            profileUrl: config.get('page.idUrl'),
+            profileClientId: config.get('switches.registerWithPhone')
                 ? 'comments'
                 : '',
             Promise,

@@ -17,13 +17,29 @@ jest.mock('lib/storage', () => ({
         isAvailable: jest.fn().mockReturnValue(true),
     },
 }));
-jest.mock('lib/config', () => ({
-    page: {
-        pageId: '12345',
-        edition: 'UK',
-        section: 'football',
-    },
-}));
+/**
+ * we have to mock config like this because
+ * loading breaking-news has side affects
+ * that are dependent on config.
+ * */
+
+jest.mock('lib/config', () => {
+    const defaultConfig = {
+        page: {
+            pageId: '12345',
+            edition: 'UK',
+            section: 'football',
+        },
+    };
+
+    return Object.assign({}, defaultConfig, {
+        get: (path: string = '', defaultValue: any) =>
+            path
+                .replace(/\[(.+?)\]/g, '.$1')
+                .split('.')
+                .reduce((o, key) => o[key], defaultConfig) || defaultValue,
+    });
+});
 jest.mock('lib/fetch-json', () =>
     jest.fn().mockReturnValue(
         Promise.resolve({

@@ -3,21 +3,37 @@ import { simpleReach } from './simple-reach';
 
 const { shouldRun, url } = simpleReach;
 
-jest.mock('lib/config', () => ({
-    switches: {
-        simpleReach: true,
-    },
-    page: {
-        headline: 'Starship Enterprise',
-        author: 'Captain Kirk',
-        sectionName: 'Space Exploration',
-        keywords: 'Space,Travel',
-        webPublicationDate: 1498113262000,
-        isFront: false,
-        isPaidContent: true,
-        pageId: 100,
-    },
-}));
+/**
+ * we have to mock config like this because
+ * loading simple-reach has side affects
+ * that are dependent on config.
+ * */
+
+jest.mock('lib/config', () => {
+    const defaultConfig = {
+        switches: {
+            simpleReach: true,
+        },
+        page: {
+            headline: 'Starship Enterprise',
+            author: 'Captain Kirk',
+            sectionName: 'Space Exploration',
+            keywords: 'Space,Travel',
+            webPublicationDate: 1498113262000,
+            isFront: false,
+            isPaidContent: true,
+            pageId: 100,
+        },
+    };
+
+    return Object.assign({}, defaultConfig, {
+        get: (path: string = '', defaultValue: any) =>
+            path
+                .replace(/\[(.+?)\]/g, '.$1')
+                .split('.')
+                .reduce((o, key) => o[key], defaultConfig) || defaultValue,
+    });
+});
 
 describe('third party tag SimpleReach', () => {
     it('should exist', () => {

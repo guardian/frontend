@@ -1,12 +1,14 @@
 // @flow
 import config from 'lib/config';
-import { initCheckMediator, resolveCheck } from 'common/modules/check-mediator';
 import { adblockInUse as adblockInUse_ } from 'lib/detect';
+import { initCheckMediator, resolveCheck } from 'common/modules/check-mediator';
+import { isInVariantSynchronous as isInVariantSynchronous_ } from 'common/modules/experiments/ab';
 import { load } from './outbrain-load';
 import { initOutbrain } from './outbrain';
 import { getSection } from './outbrain-sections';
 
 const adblockInUse: any = adblockInUse_;
+const isInVariantSynchronous: any = isInVariantSynchronous_;
 
 jest.mock('ophan/ng', () => ({ record: () => undefined }));
 
@@ -23,6 +25,12 @@ jest.mock('lib/detect', () => {
         },
     };
 });
+
+jest.mock('common/modules/experiments/ab', () => ({
+    isInVariantSynchronous: jest.fn(
+        (testId, variantId) => variantId === 'notintest'
+    ),
+}));
 
 jest.mock('lib/load-script', () => ({ loadScript: jest.fn() }));
 jest.mock('./outbrain-load', () => ({ load: jest.fn() }));
@@ -60,6 +68,14 @@ describe('Outbrain', () => {
     });
 
     describe('Init', () => {
+        beforeEach(() => {
+            // extra testing to catch if the AB test is doing anything untoward.
+            config.switches.abCommercialOutbrainTesting = true;
+            isInVariantSynchronous.mockImplementation(
+                (testId, variantId) => variantId !== 'variant'
+            );
+        });
+
         afterEach(() => {
             jest.resetAllMocks();
         });
@@ -166,6 +182,82 @@ describe('Outbrain', () => {
 
             return initOutbrain().then(() => {
                 expect(load).toHaveBeenCalled();
+            });
+        });
+    });
+
+    describe('Init when commercial outbrain test participation is "variant"', () => {
+        beforeEach(() => {
+            config.switches.abCommercialOutbrainTesting = true;
+            isInVariantSynchronous.mockImplementation(
+                (testId, variantId) => variantId === 'variant'
+            );
+        });
+
+        afterEach(() => {
+            jest.resetAllMocks();
+        });
+
+        afterAll(() => {
+            jest.resetModules();
+        });
+
+        it('should ALWAYS load even if outbrain is disabled', () => {
+            // resolve the required checks
+            resolveCheck('isOutbrainDisabled', true);
+            resolveCheck('isUserInContributionsAbTest', true);
+            resolveCheck('isStoryQuestionsOnPage', true);
+
+            resolveCheck('isOutbrainBlockedByAds', false);
+            resolveCheck('isOutbrainMerchandiseCompliant', false);
+
+            return initOutbrain().then(() => {
+                expect(load).toHaveBeenCalled();
+            });
+        });
+
+        it('should load in the low-priority merch component', () => {
+            // isOutbrainDisabled check
+            resolveCheck('isOutbrainDisabled', false);
+            // make outbrain compliant
+            resolveCheck('isUserInContributionsAbTest', false);
+            resolveCheck('isStoryQuestionsOnPage', false);
+            // isOutbrainBlockedByAds and isOutbrainMerchandiseCompliant checks
+            resolveCheck('isOutbrainBlockedByAds', false);
+            resolveCheck('isOutbrainMerchandiseCompliant', true);
+
+            return initOutbrain().then(() => {
+                expect(load).toHaveBeenCalledWith('merchandising');
+            });
+        });
+
+        it('should load a non compliant component if user in contributions AB test', () => {
+            // isOutbrainDisabled check
+            resolveCheck('isOutbrainDisabled', false);
+            // isOutbrainBlockedByAds and isOutbrainMerchandiseCompliant checks
+            resolveCheck('isOutbrainBlockedByAds', false);
+            resolveCheck('isOutbrainMerchandiseCompliant', false);
+            // editorial tests
+            resolveCheck('isUserInContributionsAbTest', true);
+            resolveCheck('isStoryQuestionsOnPage', false);
+
+            return initOutbrain().then(() => {
+                expect(load).toHaveBeenCalledWith('nonCompliant', true);
+            });
+        });
+
+        it('should load a non compliant component if story questions on page', () => {
+            // isOutbrainDisabled check
+            resolveCheck('isOutbrainDisabled', false);
+            // isOutbrainBlockedByAds and isOutbrainMerchandiseCompliant checks
+            resolveCheck('isOutbrainBlockedByAds', false);
+            resolveCheck('isOutbrainMerchandiseCompliant', false);
+            // editorial tests
+            resolveCheck('isUserInContributionsAbTest', false);
+            resolveCheck('isStoryQuestionsOnPage', true);
+
+            return initOutbrain().then(() => {
+                expect(load).toHaveBeenCalledWith('nonCompliant', false);
             });
         });
     });

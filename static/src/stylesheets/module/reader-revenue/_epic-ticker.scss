@@ -29,20 +29,26 @@
 
 .epic-ticker {
     position: relative;
-    height: 70px;
-    margin-bottom: 25px;
+    height: 65px;
+    margin-bottom: 15px;
+
+    font-family: $f-serif-headline;
+    font-size: 16px;
+    line-height: 18px;
 }
 
 .epic-ticker__count {
-    @include fs-header(5);
-    font-size: 32px;
     font-weight: 800;
     color: #333333;
 }
 
+.epic-ticker__so-far .epic-ticker__count {
+    font-size: 24px;
+    line-height: 26px;
+}
+
 .epic-ticker__count-label {
-    font-size: 17px;
-    line-height: 1.4;
+    font-style: italic;
 }
 
 $progress-bar-height: 10px;
@@ -71,22 +77,7 @@ $progress-bar-height: 10px;
     bottom: 0;
     transform: translateX(-100%);
     transition: transform 3s cubic-bezier(.25, .55, .2, .85);
-}
-
-.epic-ticker__progress .ticker__filled-progress-under {
     background-color: #ffe500;
-}
-
-.epic-ticker__progress .ticker__filled-progress-over {
-    background-color: #ff7f0f;
-}
-
-.epic-ticker__goal-marker {
-    border-right: 3px solid #121212;
-    content: ' ';
-    display: block;
-    height: 17px;
-    margin-top: -7px;
 }
 
 .epic-ticker__progress-labels {
@@ -102,44 +93,18 @@ $progress-bar-height: 10px;
     top: 5px;
 }
 
-.epic-ticker__goal, .epic-ticker__exceeded {
+.epic-ticker__goal {
     position: absolute;
     right: 0;
     bottom: $progress-bar-height + 5px;
     text-align: right;
 }
 
-.epic-ticker__so-far, .epic-ticker__thankyou {
+.epic-ticker__so-far {
     position: absolute;
     left: 0;
     bottom: $progress-bar-height + 5px;
 }
-
-.epic-ticker__thankyou {
-    >:first-child {
-        @include fs-header(5);
-        font-weight: 800;
-        color: #333333;
-    }
-
-    >:last-child {
-        font-style: italic;
-    }
-}
-
-.epic-ticker__exceeded .epic-ticker__count {
-    font-size: 17px;
-    line-height: 1.4;
-}
-
-.epic-ticker__exceeded .epic-ticker__count-label {
-    font-style: italic;
-}
-
-.epic-ticker__hidden {
-    display: none;
-}
-
 
 .epic-ticker__caption {
     @include fs-textSans(4);

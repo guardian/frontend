@@ -50,8 +50,10 @@ const abParam = (): Array<string> => {
         }
     );
 
-    if (config.tests) {
-        Object.entries(config.tests).forEach(([testName, testValue]) => {
+    const tests = config.get('tests');
+
+    if (tests) {
+        Object.entries(tests).forEach(([testName, testValue]) => {
             pushAbParams(testName, testValue);
         });
     }
@@ -171,7 +173,7 @@ const buildAppNexusTargeting = once(
 
 const buildPageTargeting = once(
     (): {} => {
-        const page = config.page;
+        const page = config.get('page');
         //
         const adConsentState: boolean | null = getAdConsentState(
             thirdPartyTrackingAdConsent
@@ -202,6 +204,7 @@ const buildPageTargeting = once(
                     : undefined,
                 cc: geolocationGetSync(),
                 s: page.section, // for reference in a macro, so cannot be extracted from ad unit
+                pr: 'dotcom-platform', // rendering platform
             },
             page.sharedAdTargeting,
             paTargeting,

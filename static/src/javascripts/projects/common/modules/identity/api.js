@@ -47,7 +47,7 @@ export type IdentityUser = {
 export const init = (): void => {
     idApiRoot = config.get('page.idApiUrl');
     mediator.emit('module:identity:api:loaded');
-    profileRoot = config.page.idUrl;
+    profileRoot = config.get('page.idUrl');
 };
 
 export const decodeBase64 = (str: string): string =>

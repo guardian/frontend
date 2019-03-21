@@ -17,6 +17,16 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
+    val ConfiantSwitch = Switch(
+    Commercial,
+    "confiant",
+    "Enables ad verification",
+    owners = Seq(Owner.withGithub("frankie297")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
   val CarrotTrafficDriverSwitch = Switch(
     Commercial,
     "carrot-traffic-driver",
@@ -73,16 +83,6 @@ trait CommercialSwitches {
     "ad-free-strict-expiry-enforcement",
     "When ON, the ad-free cookie is valid for max. 48 hours. OFF doesn't enforce expiry check.",
     owners = Seq(Owner.withGithub("JustinPinner")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
-  val TourismAustraliaSwitch = Switch(
-    Commercial,
-    "tourism-australia",
-    "If this switch is on, the Tourism Australia pixel is added to the Ashes Australia travel section.",
-    owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true
@@ -475,6 +475,16 @@ trait PrebidSwitches {
     group = CommercialPrebid,
     name = "prebid-openx",
     description = "Include OpenX adapter in Prebid auctions",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
+  val prebidOzone: Switch = Switch(
+    group = CommercialPrebid,
+    name = "prebid-ozone",
+    description = "Include Ozone adapter direct in Prebid auctions",
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,

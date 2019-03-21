@@ -5,9 +5,27 @@ const { url, shouldRun } = krux;
 
 jest.mock('lib/raven');
 jest.mock('ophan/ng', () => null);
-jest.mock('lib/config', () => ({
-    switches: { krux: false },
-}));
+
+/**
+ * we have to mock config like this because
+ * loading krux has side affects
+ * that are dependent on config.
+ * */
+jest.mock('lib/config', () => {
+    const defaultConfig = {
+        switches: {
+            krux: false,
+        },
+    };
+
+    return Object.assign({}, defaultConfig, {
+        get: (path: string = '', defaultValue: any) =>
+            path
+                .replace(/\[(.+?)\]/g, '.$1')
+                .split('.')
+                .reduce((o, key) => o[key], defaultConfig) || defaultValue,
+    });
+});
 
 describe('Krux', () => {
     it('should not load if switch is off', () => {

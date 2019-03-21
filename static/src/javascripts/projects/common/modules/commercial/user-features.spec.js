@@ -3,6 +3,7 @@
 import { addCookie, removeCookie, getCookie } from 'lib/cookies';
 import fetchJson from 'lib/fetch-json';
 import { isUserLoggedIn as isUserLoggedIn_ } from 'common/modules/identity/api';
+import config from 'lib/config';
 import {
     refresh,
     isAdFreeUser,
@@ -20,15 +21,6 @@ jest.mock('projects/common/modules/identity/api', () => ({
     isUserLoggedIn: jest.fn(),
 }));
 jest.mock('lib/fetch-json', () => jest.fn(() => Promise.resolve()));
-
-jest.mock('lib/config', () => ({
-    switches: {
-        adFreeStrictExpiryEnforcement: true,
-    },
-    page: {
-        userAttributesApiUrl: '',
-    },
-}));
 
 const fetchJsonSpy: any = fetchJson;
 const isUserLoggedIn: any = isUserLoggedIn_;
@@ -84,6 +76,11 @@ const deleteAllFeaturesData = () => {
     removeCookie(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE);
     removeCookie(PERSISTENCE_KEYS.ACTION_REQUIRED_FOR_COOKIE);
 };
+
+beforeAll(() => {
+    config.set('switches.adFreeStrictExpiryEnforcement', true);
+    config.set('page.userAttributesApiUrl', '');
+});
 
 describe('Refreshing the features data', () => {
     describe('If user signed in', () => {

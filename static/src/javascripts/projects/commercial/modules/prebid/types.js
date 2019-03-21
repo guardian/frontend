@@ -2,6 +2,14 @@
 
 export type PrebidSize = [number, number];
 
+export type PrebidOzoneParams = {
+    publisherId: string,
+    siteId: string,
+    placementId: string,
+    customData?: { [string]: mixed },
+    ozoneData?: { [string]: mixed },
+};
+
 export type PrebidSonobiParams = {
     ad_unit: string,
     dom_id: string,
@@ -80,6 +88,7 @@ export type PrebidBidder = {
         | PrebidXaxisParams
         | PrebidAppNexusParams
         | PrebidOpenXParams
+        | PrebidOzoneParams
         | PrebidAdYouLikeParams
         | PrebidPubmaticParams,
 };
@@ -94,6 +103,7 @@ export type PrebidBid = {
         | PrebidXaxisParams
         | PrebidAppNexusParams
         | PrebidOpenXParams
+        | PrebidOzoneParams
         | PrebidAdYouLikeParams
         | PrebidPubmaticParams,
 };

@@ -2157,9 +2157,9 @@ bonzo@~2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/bonzo/-/bonzo-2.0.0.tgz#a871618120acb62d891268377fff809162d159a0"
 
-bootstrap-sass@^3.3.7:
-  version "3.3.7"
-  resolved "https://registry.yarnpkg.com/bootstrap-sass/-/bootstrap-sass-3.3.7.tgz#6596c7ab40f6637393323ab0bc80d064fc630498"
+bootstrap-sass@^3.4.1:
+  version "3.4.1"
+  resolved "https://registry.yarnpkg.com/bootstrap-sass/-/bootstrap-sass-3.4.1.tgz#6843c73b1c258a0ac5cb2cc6f6f5285b664a8e9a"
 
 brace-expansion@^1.1.7:
   version "1.1.11"
@@ -4742,9 +4742,9 @@ fstream@^1.0.0, fstream@^1.0.2, fstream@~1.0.10:
     mkdirp ">=0.5 0"
     rimraf "2"
 
-fun-hooks@^0.6.5:
-  version "0.6.6"
-  resolved "https://registry.yarnpkg.com/fun-hooks/-/fun-hooks-0.6.6.tgz#f931ff24a872eb17e71fb52a1e3d25569d0a72fe"
+fun-hooks@^0.8.1:
+  version "0.8.1"
+  resolved "https://registry.yarnpkg.com/fun-hooks/-/fun-hooks-0.8.1.tgz#5ef7866840610a5a1858c26ade97b15d35853434"
 
 function-bind@^1.1.0:
   version "1.1.0"
@@ -8206,14 +8206,14 @@ preact@^8.2.9:
   version "8.2.9"
   resolved "https://registry.yarnpkg.com/preact/-/preact-8.2.9.tgz#813ba9dd45e5d97c5ea0d6c86d375b3be711cc40"
 
-"prebid.js@https://github.com/guardian/Prebid.js.git#fe14150":
-  version "2.3.0"
-  resolved "https://github.com/guardian/Prebid.js.git#fe1415035ba8c958124062e0f2adf35a88997897"
+"prebid.js@https://github.com/guardian/Prebid.js.git#0e4ee56":
+  version "2.6.0"
+  resolved "https://github.com/guardian/Prebid.js.git#0e4ee564513e9ae009b4eca22046d114e7ac9617"
   dependencies:
     babel-plugin-transform-object-assign "^6.22.0"
     core-js "^2.4.1"
     crypto-js "^3.1.9-1"
-    fun-hooks "^0.6.5"
+    fun-hooks "^0.8.1"
     jsencrypt "^3.0.0-rc.1"
     just-clone "^1.0.2"
 

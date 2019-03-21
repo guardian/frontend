@@ -91,7 +91,7 @@ export const onSlotRender = (event: SlotRenderEndedEvent): void => {
         advert.shouldRefresh =
             isNotFluid &&
             !isOutstream &&
-            !config.page.hasPageSkin &&
+            !config.get('page.hasPageSkin') &&
             !isNonRefreshableLineItem;
 
         renderAdvert(advert, event).then(emitRenderEvents);

@@ -23,13 +23,6 @@ const isUserLoggedIn: any = isUserLoggedIn_;
 
 const CommercialFeatures = commercialFeatures.constructor;
 
-jest.mock('lib/config', () => ({
-    switches: {},
-    page: {},
-    hasTone: jest.fn(),
-    get: jest.fn(() => ''),
-}));
-
 jest.mock('common/modules/commercial/user-features', () => ({
     isPayingMember: jest.fn(),
     isRecentOneOffContributor: jest.fn(),
@@ -50,7 +43,7 @@ describe('Commercial features', () => {
         jest.resetAllMocks();
 
         // Set up a happy path by default
-        config.page = {
+        config.set('page', {
             contentType: 'Article',
             isMinuteArticle: false,
             section: 'politics',
@@ -59,15 +52,13 @@ describe('Commercial features', () => {
             shouldHideReaderRevenue: false,
             isFront: false,
             showRelatedContent: true,
-        };
+        });
 
-        config.switches = {
+        config.set('switches', {
             outbrain: true,
             commercial: true,
             enableDiscussionSwitch: true,
-        };
-
-        config.get.mockReturnValue('');
+        });
 
         window.location.hash = '';
 
@@ -92,14 +83,14 @@ describe('Commercial features', () => {
         it('Is disabled on sensitive pages', () => {
             // Like all newspapers, the Guardian must sometimes cover disturbing and graphic content.
             // Showing adverts on these pages would be crass - callous, even.
-            config.page.shouldHideAdverts = true;
+            config.set('page.shouldHideAdverts', true);
             const features = new CommercialFeatures();
             expect(features.dfpAdvertising).toBe(false);
         });
 
         it('Is disabled on the children`s book site', () => {
             // ASA guidelines prohibit us from showing adverts on anything that might be deemed childrens' content
-            config.page.section = 'childrens-books-site';
+            config.set('page.section', 'childrens-books-site');
             const features = new CommercialFeatures();
             expect(features.dfpAdvertising).toBe(false);
         });
@@ -126,19 +117,19 @@ describe('Commercial features', () => {
         });
 
         it('Doesn`t run in minute articles', () => {
-            config.page.isMinuteArticle = true;
+            config.set('page.isMinuteArticle', true);
             const features = new CommercialFeatures();
             expect(features.articleBodyAdverts).toBe(false);
         });
 
         it('Doesn`t run in non-article pages', () => {
-            config.page.contentType = 'Network Front';
+            config.set('page.contentType', 'Network Front');
             const features = new CommercialFeatures();
             expect(features.articleBodyAdverts).toBe(false);
         });
 
         it('Doesn`t run in live blogs', () => {
-            config.page.isLiveBlog = true;
+            config.set('page.isLiveBlog', true);
             const features = new CommercialFeatures();
             expect(features.articleBodyAdverts).toBe(false);
         });
@@ -170,19 +161,19 @@ describe('Commercial features', () => {
 
     describe('High-relevance commercial component', () => {
         it('Does not run on fronts', () => {
-            config.page.isFront = true;
+            config.set('page.isFront', true);
             const features = new CommercialFeatures();
             expect(features.highMerch).toBe(false);
         });
 
         it('Does run on outside of fronts', () => {
-            config.page.isFront = false;
+            config.set('page.isFront', false);
             const features = new CommercialFeatures();
             expect(features.highMerch).toBe(true);
         });
 
         it('Does not run on minute articles', () => {
-            config.page.isMinuteArticle = true;
+            config.set('page.isMinuteArticle', true);
             const features = new CommercialFeatures();
             expect(features.highMerch).toBe(false);
         });
@@ -194,19 +185,19 @@ describe('Commercial features', () => {
         });
 
         it('Does not run on fronts', () => {
-            config.page.isFront = true;
+            config.set('page.isFront', true);
             const features = new CommercialFeatures();
             expect(features.highMerch).toBe(false);
         });
 
         it('Does not run outside of fronts', () => {
-            config.page.isFront = false;
+            config.set('page.isFront', false);
             const features = new CommercialFeatures();
             expect(features.highMerch).toBe(false);
         });
 
         it('Does not run on minute articles', () => {
-            config.page.isMinuteArticle = true;
+            config.set('page.isMinuteArticle', true);
             const features = new CommercialFeatures();
             expect(features.highMerch).toBe(false);
         });
@@ -219,29 +210,25 @@ describe('Commercial features', () => {
         });
 
         it('Does not run on identity pages', () => {
-            config.page.contentType = 'Identity';
+            config.set('page.contentType', 'Identity');
             const features = new CommercialFeatures();
             expect(features.thirdPartyTags).toBe(false);
         });
 
         it('Does not run on identity section', () => {
             // This is needed for identity pages in the profile subdomain
-            config.page.section = 'identity';
+            config.set('page.section', 'identity');
             const features = new CommercialFeatures();
             expect(features.thirdPartyTags).toBe(false);
         });
 
         it('Does not run on secure contact pages', () => {
-            config.page.pageId =
-                'help/ng-interactive/2017/mar/17/contact-the-guardian-securely';
+            config.set(
+                'page.pageId',
+                'help/ng-interactive/2017/mar/17/contact-the-guardian-securely'
+            );
 
-            const mockConfig = {
-                get: () => config.page.pageId,
-                page: config.page,
-                switches: config.switches,
-                hasTone: jest.fn(),
-            };
-            const features = new CommercialFeatures(mockConfig);
+            const features = new CommercialFeatures();
             expect(features.thirdPartyTags).toBe(false);
         });
     });
@@ -257,14 +244,14 @@ describe('Commercial features', () => {
         });
 
         it('Does not run on identity pages', () => {
-            config.page.contentType = 'Identity';
+            config.set('page.contentType', 'Identity');
             const features = new CommercialFeatures();
             expect(features.thirdPartyTags).toBe(false);
         });
 
         it('Does not run on identity section', () => {
             // This is needed for identity pages in the profile subdomain
-            config.page.section = 'identity';
+            config.set('page.section', 'identity');
             const features = new CommercialFeatures();
             expect(features.thirdPartyTags).toBe(false);
         });
@@ -284,20 +271,20 @@ describe('Commercial features', () => {
         });
 
         it('Is disabled in sensitive content', () => {
-            config.page.shouldHideAdverts = true;
+            config.set('page.shouldHideAdverts', true);
             const features = new CommercialFeatures();
             expect(features.outbrain).toBe(false);
         });
 
         it('Is disabled when related content is hidden', () => {
-            config.page.showRelatedContent = false;
+            config.set('page.showRelatedContent', false);
             const features = new CommercialFeatures();
             expect(features.outbrain).toBe(false);
         });
 
         it('Is disabled when user is logged in and page is commentable', () => {
             isUserLoggedIn.mockReturnValue(true);
-            config.page.commentable = true;
+            config.set('page.commentable', true);
             const features = new CommercialFeatures();
             expect(features.outbrain).toBe(false);
         });
@@ -321,19 +308,19 @@ describe('Commercial features', () => {
         });
 
         it('Is disabled in sensitive content', () => {
-            config.page.shouldHideAdverts = true;
+            config.set('page.shouldHideAdverts', true);
             const features = new CommercialFeatures();
             expect(features.outbrain).toBe(false);
         });
 
         it('Is disabled when related content is hidden', () => {
-            config.page.showRelatedContent = false;
+            config.set('page.showRelatedContent', false);
             const features = new CommercialFeatures();
             expect(features.outbrain).toBe(false);
         });
 
         it('Is disabled when user is logged in and page is commentable', () => {
-            config.page.commentable = true;
+            config.set('page.commentable', true);
             const features = new CommercialFeatures();
             expect(features.outbrain).toBe(false);
         });
@@ -341,7 +328,7 @@ describe('Commercial features', () => {
 
     describe('Comment adverts', () => {
         beforeEach(() => {
-            config.page.commentable = true;
+            config.set('page.commentable', true);
             isUserLoggedIn.mockReturnValue(true);
         });
 
@@ -357,20 +344,20 @@ describe('Commercial features', () => {
         });
 
         it('Does not display on minute articles', () => {
-            config.page.isMinuteArticle = true;
+            config.set('page.isMinuteArticle', true);
             const features = new CommercialFeatures();
             expect(features.commentAdverts).toBe(false);
         });
 
         it('Short circuits when no comments to add adverts to', () => {
-            config.page.commentable = false;
+            config.set('page.commentable', false);
             const features = new CommercialFeatures();
             expect(features.commentAdverts).toBe(false);
         });
 
         describe('If live blog', () => {
             beforeEach(() => {
-                config.page.isLiveBlog = true;
+                config.set('page.isLiveBlog', true);
             });
 
             it('Appears if page is wide', () => {
@@ -389,7 +376,7 @@ describe('Commercial features', () => {
 
     describe('Comment adverts under ad-free', () => {
         beforeEach(() => {
-            config.page.commentable = true;
+            config.set('page.commentable', true);
             isAdFreeUser.mockReturnValue(true);
         });
 
@@ -399,7 +386,7 @@ describe('Commercial features', () => {
         });
 
         it('Does not display on minute articles', () => {
-            config.page.isMinuteArticle = true;
+            config.set('page.isMinuteArticle', true);
             const features = new CommercialFeatures();
             expect(features.commentAdverts).toBe(false);
         });
@@ -411,14 +398,14 @@ describe('Commercial features', () => {
         });
 
         it('Short circuits when no comments to add adverts to', () => {
-            config.page.commentable = false;
+            config.set('page.commentable', false);
             const features = new CommercialFeatures();
             expect(features.commentAdverts).toBe(false);
         });
 
         describe('If live blog', () => {
             beforeEach(() => {
-                config.page.isLiveBlog = true;
+                config.set('page.isLiveBlog', true);
             });
 
             it('Does not appear if page is wide', () => {

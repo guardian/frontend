@@ -3,10 +3,10 @@ package jobs
 import java.time.{LocalDate, LocalDateTime}
 
 import app.LifecycleComponent
-import com.google.api.ads.dfp.axis.v201802.Column.{AD_SERVER_IMPRESSIONS, AD_SERVER_WITHOUT_CPD_AVERAGE_ECPM}
-import com.google.api.ads.dfp.axis.v201802.DateRangeType.CUSTOM_DATE
-import com.google.api.ads.dfp.axis.v201802.Dimension.{CUSTOM_CRITERIA, DATE}
-import com.google.api.ads.dfp.axis.v201802._
+import com.google.api.ads.admanager.axis.v201902.Column.{AD_SERVER_IMPRESSIONS, AD_SERVER_WITHOUT_CPD_AVERAGE_ECPM}
+import com.google.api.ads.admanager.axis.v201902.DateRangeType.CUSTOM_DATE
+import com.google.api.ads.admanager.axis.v201902.Dimension.{CUSTOM_CRITERIA, DATE}
+import com.google.api.ads.admanager.axis.v201902._
 import com.gu.Box
 import common.{AkkaAsync, JobScheduler, Logging}
 import dfp.DfpApi

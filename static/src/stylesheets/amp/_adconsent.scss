@@ -1,0 +1,58 @@
+amp-consent { background: none; }
+a.adconsent-preference {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+div.consent-ui {
+    font-family: 'Guardian Text Sans Web', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
+    font-size: 1rem;
+    line-height: 1.25rem;
+
+    color: $brightness-97;
+    background-color: rgb(51, 51, 51);
+
+    h2 {
+        margin-bottom: 1em;
+    }
+
+    a {
+        color: $brightness-97;
+    }
+    a:hover {
+        text-decoration: 0;
+    }
+
+    div {
+        margin: 1em;
+    }
+    div.adconsent-actions {
+        text-align: right;
+        button {
+            font: inherit;
+
+            border: 0;
+            background: transparent;
+            color: inherit;
+
+            display: block;
+            width: 100%;
+            margin-top: 1em;
+        }
+        button.adconsent-reject {
+            text-decoration: underline;
+        }
+        button.adconsent-accept {
+            @include circular;
+            border: .0625rem solid rgba(255, 255, 255, .3);
+            background: $highlight-main;
+            color: $brightness-7;
+
+            padding: 5px 20px;
+            font-weight: bold;
+        }
+    }
+}

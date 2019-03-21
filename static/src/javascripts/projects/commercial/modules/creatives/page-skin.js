@@ -7,7 +7,7 @@ import { commercialFeatures } from 'common/modules/commercial/commercial-feature
 
 const pageSkin = (): void => {
     const bodyEl = document.body;
-    const hasPageSkin: boolean = config.page.hasPageSkin;
+    const hasPageSkin: boolean = config.get('page.hasPageSkin');
 
     const togglePageSkinActiveClass = (): void => {
         if (bodyEl) {

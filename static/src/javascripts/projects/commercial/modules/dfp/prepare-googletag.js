@@ -130,7 +130,7 @@ export const init = (start: () => void, stop: () => void): Promise<void> => {
         );
 
         // Just load googletag. Prebid will already be loaded, and googletag is already added to the window by Prebid.
-        return loadScript(config.libs.googletag, { async: false });
+        return loadScript(config.get('libs.googletag'), { async: false });
     };
 
     if (commercialFeatures.dfpAdvertising) {

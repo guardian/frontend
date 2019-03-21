@@ -28,9 +28,9 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-february-moment-banner-colour",
-    "switch on to test the moment colour engagement banner test",
-    owners = Seq(Owner.withGithub("jranks123")),
+    "ab-february-moment-banner-copy-more-people",
+    "switch on to test the some moment copy on the fiv engagement banner",
+    owners = Seq(Owner.withGithub("jlieb10")),
     safeState = Off,
     sellByDate = new LocalDate(2019, 9, 30),
     exposeClientSide = true
@@ -68,11 +68,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-commercial-ad-verification",
-    "Test the impact of verifiyng ads",
-    owners = Seq(Owner.withGithub("jeteve")),
+    "ab-commercial-outbrain-testing",
+    "Test the outbrain widget",
+    owners = Seq(Owner.withGithub("frankie297")),
     safeState = Off,
-    sellByDate = new LocalDate(2019, 9, 30),
+    sellByDate = new LocalDate(2019, 3, 29),
     exposeClientSide = true
   )
 

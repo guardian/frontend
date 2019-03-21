@@ -1,5 +1,5 @@
 // I hate this specificty. So far this is the only way I can see to override template specific rules with multiple declared classes
-.content.content--article.content--type-column {
+.content.content--article.content--type-splash {
     .content__head--article {
         @supports (display: grid) {
             @include mq(leftCol) {
@@ -39,14 +39,15 @@
             grid-area: media-primary;
             margin-bottom: -70px;
             // TODO this should be done in a more intelligent way
-            max-height: 460px;
+            max-height: 560px;
             overflow: hidden;
         }
     }
 
-    .content__labels--column {
+    .content__labels--splash {
         margin-right: $gs-gutter;
         padding: ($gs-baseline / 2) ($gs-gutter / 2);
+        order: 0;
 
         @include mq(mobileLandscape, $until: tablet) {
             padding-left: $gs-gutter;
@@ -69,8 +70,8 @@
         }
     }
 
-    .content__headline-column-wrapper {
-        border-top: 1px solid #ffffff;
+    .content__headline-splash-wrapper {
+        border-top: 1px solid rgba(0, 0, 0, .2);
         box-sizing: border-box;
         margin: 0 $gs-gutter 0 0;
         padding: 0 ($gs-gutter / 2) ($gs-baseline * 3);
@@ -92,7 +93,7 @@
             padding-bottom: $gs-baseline * 4;
 
             @supports (display: grid) {
-                border-left: 1px solid #ffffff;
+                border-left: 1px solid rgba(0, 0, 0, .2);
             }
         }
 
@@ -114,6 +115,11 @@
     .content__headline-standfirst-wrapper {
         @include mq(tablet) {
             padding-bottom: $gs-baseline * 2;
+
+            .content__standfirst {
+                font-size: 24px;
+                line-height: 28px;
+            }
         }
 
         @include mq(leftCol) {
@@ -136,19 +142,17 @@
         }
     }
 
-    .content__headline--column {
+    .content__headline--splash {
         color: #ffffff;
         padding: 0;
 
         @include mq(tablet) {
-            font-size: 32px;
-            line-height: 36px;
+            font-size: 38px;
+            line-height: 40px;
         }
     }
 
-    .content__series-label--column {
-        font-size: 20px;
-
+    .content__series-label--splash {
         .content__label__link {
             color: #ffffff;
             font-weight: 700;
@@ -163,7 +167,7 @@
 
     // Opinion specific styling
     &.content--type-comment {
-        .content__headline-column-wrapper {
+        .content__headline-splash-wrapper {
             overflow: hidden;
 
             .content__header {
@@ -181,13 +185,21 @@
         }
 
         // Fix for visible hover on series panel
-        .content__labels--column:hover {
+        .content__labels--splash:hover {
             background-color: $opinion-dark;
         }
 
         // Opinion layout with byline pic
         .content__head--byline-pic {
-            .content__headline-column-wrapper--column {
+            .content__headline-splash-wrapper {
+                padding-bottom: 0;
+            }
+
+            .content__headline--byline {
+                @include mq($until: leftCol) {
+                    padding-right: gs-span(2);
+                }
+
                 padding-bottom: $gs-baseline * 3;
             }
 
@@ -200,10 +212,10 @@
             }
 
             .byline-img {
-                margin-bottom: -$gs-baseline * 3;
+                position: relative;
+                right: -30px;
 
                 @include mq(leftCol) {
-                    right: -30px;
                     position: absolute;
                 }
             }
@@ -235,14 +247,14 @@
 }
 
 .content__series-cta__text {
+    @include fs-textSans(5);
     color: #ffffff;
-    font-size: 16px;
-    font-style: italic;
+    font-weight: 700;
+    vertical-align: middle;
 }
 
 .content__series-cta__icon {
     background-color: #ffffff;
-    fill: $brightness-7;
     height: 34px;
     width: 34px;
 }

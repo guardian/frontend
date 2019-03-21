@@ -8,7 +8,7 @@ import org.jsoup.nodes.{Document, Element}
 import views.support.{AdRegion, AmpAd, AmpAdDataSlot, AmpAdRtcConfig, AuAdRegion, HtmlCleaner, RowAdRegion, UsAdRegion}
 
 import scala.collection.JavaConverters._
-import scala.xml.Elem
+import scala.xml.{Attribute, Elem, Null}
 
 object AmpAdCleaner {
   val AD_LIMIT = 8
@@ -106,18 +106,17 @@ case class AmpAdCleaner(edition: Edition, uri: String, article: Article) extends
         debug = environment.isNonProd
       )}></amp-ad>
 
-    val ampAdString = {
+    def withDataBlockOnConsent(ampAd: Elem): String =
       // data-block-on-consent should not have ANY value
       // according to https://www.ampproject.org/docs/reference/components/amp-consent
       // This is not compatible with proper XML, hence the stringware hack
+      ( ampAd % Attribute(null, "data-block-on-consent", "PLEASEREMOVEME", Null) ).toString().replaceFirst("=\"PLEASEREMOVEME\"", "")
 
-      // This cannot be activated until we designed a solution to either inject/synchronise consent from our storage
-      // or gather it in AMP.
-      // ( ampAd % Attribute(null, "data-block-on-consent", "PLEASEREMOVEME", Null) ).toString().replaceFirst("=\"PLEASEREMOVEME\"", "")
-      // Falling back to
-      val usAdRegionSlot = ampAd(UsAdRegion).toString()
-      val auAdRegionSlot = ampAd(AuAdRegion).toString()
-      val rowAdRegionSlot = ampAd(RowAdRegion).toString()
+    val ampAdString = {
+      val usAdRegionSlot = withDataBlockOnConsent(ampAd(UsAdRegion))
+      val auAdRegionSlot = withDataBlockOnConsent(ampAd(AuAdRegion))
+      val rowAdRegionSlot = withDataBlockOnConsent(ampAd(RowAdRegion))
+
       s"$usAdRegionSlot$auAdRegionSlot$rowAdRegionSlot"
     }
 

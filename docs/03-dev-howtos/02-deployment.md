@@ -1,4 +1,8 @@
-# What to do when a deployment breaks
+# Deployment
+
+Deploy dotcom using the `dotcom:all` project in riff-raff. This will autodeploy in PROD- and it's usually what you want to do when using CODE.
+
+## What to do when a deployment breaks
 
 ```
 com.amazonaws.AmazonServiceException Status Code: 400, AWS Service:

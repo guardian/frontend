@@ -20,7 +20,7 @@ import mediator from 'lib/mediator';
 import {
     getLocalCurrencySymbol,
     getSync as geolocationGetSync,
-    getSupporterCountryGroup,
+    countryCodeToCountryGroupId,
 } from 'lib/geolocation';
 import {
     splitAndTrim,
@@ -33,7 +33,11 @@ import { epicButtonsTemplate } from 'common/modules/commercial/templates/acquisi
 import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templates/acquisitions-epic-control';
 import { epicLiveBlogTemplate } from 'common/modules/commercial/templates/acquisitions-epic-liveblog';
 import { userIsSupporter } from 'common/modules/commercial/user-features';
-import { supportContributeURL } from 'common/modules/commercial/support-utilities';
+import {
+    supportContributeURL,
+    supportSubscribeGeoRedirectURL,
+    addCountryGroupToSupportLink,
+} from 'common/modules/commercial/support-utilities';
 import { awaitEpicButtonClicked } from 'common/modules/commercial/epic/epic-utils';
 import { setupEpicInLiveblog } from 'common/modules/commercial/contributions-liveblog-utilities';
 import {
@@ -46,6 +50,7 @@ import {
     isArticleWorthAnEpicImpression,
 } from 'common/modules/commercial/epic/epic-exclusion-rules';
 import { getControlEpicCopy } from 'common/modules/commercial/acquisitions-copy';
+import { initTicker } from 'common/modules/commercial/ticker';
 
 export type ReaderRevenueRegion =
     | 'united-kingdom'
@@ -93,6 +98,7 @@ const controlTemplate: EpicTemplate = (
               })
             : undefined,
         epicClassNames: variant.classNames,
+        showTicker: variant.showTicker,
     });
 
 const liveBlogTemplate: EpicTemplate = (
@@ -147,6 +153,11 @@ const userIsInCorrectCohort = (
     }
 };
 
+const isValidCohort = (cohort: string): boolean =>
+    ['OnlyExistingSupporters', 'OnlyNonSupporters', 'Everyone'].includes(
+        cohort
+    );
+
 const shouldShowEpic = (test: EpicABTest): boolean => {
     const onCompatiblePage = test.pageCheck(config.get('page'));
 
@@ -173,7 +184,7 @@ const pageMatchesTags = (tagIds: string[]): boolean =>
     );
 
 const userMatchesCountryGroups = (countryGroups: string[]) => {
-    const userCountryGroupId = getSupporterCountryGroup(
+    const userCountryGroupId = countryCodeToCountryGroupId(
         geolocationGetSync()
     ).toUpperCase();
     return countryGroups.some(
@@ -209,7 +220,9 @@ const makeEpicABTestVariant = (
         }`,
         campaignCode,
         supportURL: addTrackingCodesToUrl({
-            base: supportContributeURL,
+            base: initVariant.supportBaseURL
+                ? addCountryGroupToSupportLink(initVariant.supportBaseURL)
+                : supportContributeURL(),
             componentType: parentTest.componentType,
             componentId,
             campaignCode,
@@ -219,7 +232,7 @@ const makeEpicABTestVariant = (
             },
         }),
         subscribeURL: addTrackingCodesToUrl({
-            base: 'https://support.theguardian.com/subscribe',
+            base: supportSubscribeGeoRedirectURL,
             componentType: parentTest.componentType,
             componentId,
             campaignCode,
@@ -232,6 +245,7 @@ const makeEpicABTestVariant = (
         buttonTemplate: initVariant.buttonTemplate,
         copy: initVariant.copy,
         classNames: initVariant.classNames || [],
+        showTicker: initVariant.showTicker || false,
 
         countryGroups: initVariant.countryGroups || [],
         tagIds: initVariant.tagIds || [],
@@ -354,6 +368,10 @@ const makeEpicABTestVariant = (
                                             'register:end',
                                             trackingCampaignId
                                         );
+
+                                        if (initVariant.showTicker) {
+                                            initTicker('.js-epic-ticker');
+                                        }
                                     });
                                 });
                             }
@@ -494,6 +512,13 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                         ? rowWithAudience.audienceOffset
                         : 0;
 
+                    const rowWithUserCohort = rows.find(
+                        row => row.userCohort && isValidCohort(row.userCohort)
+                    );
+                    const userCohort = rowWithUserCohort
+                        ? rowWithUserCohort.userCohort
+                        : 'OnlyNonSupporters';
+
                     return makeEpicABTest({
                         id: testName,
                         campaignId: testName,
@@ -511,6 +536,7 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                         useLocalViewLog: rows.some(row =>
                             optionalStringToBoolean(row.useLocalViewLog)
                         ),
+                        userCohort,
                         ...(isLiveBlog
                             ? {
                                   template: liveBlogTemplate,
@@ -588,6 +614,8 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                                 row.classNames,
                                 ','
                             ),
+                            showTicker: optionalStringToBoolean(row.showTicker),
+                            supportBaseURL: row.supportBaseURL,
                         })),
                     });
                 });

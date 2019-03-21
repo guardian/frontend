@@ -9,11 +9,11 @@ export const fbPixel: () => ThirdPartyTag = () => {
     const consent = getAdConsentState(thirdPartyTrackingAdConsent);
     return {
         shouldRun:
-            config.switches.facebookTrackingPixel &&
+            config.get('switches.facebookTrackingPixel') &&
             (consent == null || consent),
-        url: `https://www.facebook.com/tr?id=${
-            config.libs.facebookAccountId
-        }&ev=PageView&noscript=1`,
+        url: `https://www.facebook.com/tr?id=${config.get(
+            'libs.facebookAccountId'
+        )}&ev=PageView&noscript=1`,
         useImage: true,
     };
 };
