@@ -159,10 +159,18 @@ case class DCPage(
   isFront: Boolean
 )
 
+// This class is introduce only because the problem of extending the existing DCPage to more than 22 parameters
+// Once this problem has been solved, DCPage and DCPage2 should e merged. More precisely the attributes of
+// DCPage2 should be added to DCPage
+case class DCPage2(
+  isLiveBlog: Boolean
+)
+
 // the composite data model
 
 case class DotcomponentsDataModel(
   page: DCPage,
+  page2: DCPage2,
   site: DCSite,
   version: Int
 )
@@ -218,6 +226,10 @@ object GoogleAnalytics {
 
 object DCPage {
   implicit val writes = Json.writes[DCPage]
+}
+
+object DCPage2 {
+  implicit val writes = Json.writes[DCPage2]
 }
 
 object DCSite {
@@ -483,8 +495,11 @@ object DotcomponentsDataModel {
       JavaScriptPage.getMap(articlePage, Edition(request), false).getOrElse("isFront", JsBoolean(false)).as[Boolean]
     )
 
+      val content2 = DCPage2(true)
+
     DotcomponentsDataModel(
       content,
+      content2,
       site,
       VERSION
     )
@@ -498,6 +513,7 @@ object DotcomponentsDataModel {
     implicit val DotComponentsDataModelWrites = new Writes[DotcomponentsDataModel] {
       def writes(model: DotcomponentsDataModel) = Json.obj(
         "page" -> model.page,
+        "page2" -> model.page2,
         "site" -> model.site,
         "version" -> model.version
       )
