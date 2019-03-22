@@ -81,9 +81,11 @@
                 <% } else if(field.type === "file") { %>
                 <input name="field_<%=field.id%>"
                        type="file"
-                       accept="image/*, .pdf, .doc, .xml, .docx"
+                       accept="image/*, ,video/*, .pdf"
+                       multiple="multiple"
                 <% if (field.required == "1") { %> required <% } %>
                 />
+                <p class="form-info-text">Maximum total size: 6MB.</p>
 
                 <% } else { %>
                 <input name="field_<%=field.id%>"
@@ -96,7 +98,7 @@
         </div>
 
         <% }) %>
-        <div class="form_input form_input--twitter-handle">
+        <div class="form_input form_input--twitter-handle" aria-hidden="true">
             <div class="form_field">
                 <input name="twitter-handle" type="text" id="twitter-handle" placeholder="@mytwitterhandle"/>
             </div>
