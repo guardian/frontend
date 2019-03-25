@@ -100,7 +100,6 @@ class MostPopularController(contentApiClient: ContentApiClient,
             if (Switches.ExtendedMostPopular.isSwitchedOn) {
               views.html.fragments.collections.popularExtended(Seq(countryPopular), mostCards)
             } else {
-              println("************** DO SOMETHING")
               views.html.fragments.collections.popular(Seq(countryPopular))
             }
           },
