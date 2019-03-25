@@ -98,6 +98,19 @@
         }
     }
 
+    &.pillar-Arts {
+        border-top: 1px solid #e7d4b9;
+
+        .fc__kicker {
+            color: #e7d4b9;
+        }
+
+        &,
+        & th {
+            background-color: #6b5840;
+        }
+    }
+
     &.pillar-Lifestyle {
         border-top: 1px solid #ffbac8;
 
