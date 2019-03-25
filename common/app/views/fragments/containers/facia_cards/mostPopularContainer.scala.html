@@ -6,6 +6,24 @@
 @import fragments.commercial.adSlot
 @import common.commercial.AdSlot.mostPopularSizes
 
+@mostPopularTabs(containerTitle: String) = {
+@defining(Seq(
+    MostPopular(
+        containerDefinition.displayName.getOrElse(containerTitle),
+        containerTitle,
+        containerDefinition.items.take(10)
+    ),
+    MostPopular(
+        "Across the guardian",
+        containerTitle,
+        Nil
+    )
+)) { popular =>
+    @fragments.collections.popular(popular, Some(containerDefinition), isFront = true)
+}
+}
+
+
 @defining("Most viewed") { containerTitle =>
     <div class="fc-container__header js-container__header">
         @containerDefinition.displayName.map { title =>
@@ -24,20 +42,7 @@
     @if(Switches.ExtendedMostPopular.isSwitchedOn) {
         <div class="fc-container--rolled-up-hide most-popular__container">
             <div class="most-popular__content js-popular-trails">
-            @defining(Seq(
-                MostPopular(
-                    containerDefinition.displayName.getOrElse(containerTitle),
-                    containerTitle,
-                    containerDefinition.items.take(10)
-                ),
-                MostPopular(
-                    "Across the guardian",
-                    containerTitle,
-                    Nil
-                )
-            )) { popular =>
-                @fragments.collections.popular(popular, Some(containerDefinition), isFront = true)
-            }
+            @mostPopularTabs(containerTitle)
             </div>
             <div class="most-popular__mpu">
                 <div>
@@ -53,20 +58,7 @@
         </div>
     } else {
         <div class="fc-container__body fc-container--rolled-up-hide js-popular-trails">
-        @defining(Seq(
-            MostPopular(
-                containerDefinition.displayName.getOrElse(containerTitle),
-                containerTitle,
-                containerDefinition.items.take(10)
-            ),
-            MostPopular(
-                "Across the guardian",
-                containerTitle,
-                Nil
-            )
-        )) { popular =>
-            @fragments.collections.popular(popular, Some(containerDefinition), isFront = true)
-        }
+        @mostPopularTabs(containerTitle)
         </div>
     }
 }

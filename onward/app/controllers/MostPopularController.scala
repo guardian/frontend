@@ -37,7 +37,6 @@ class MostPopularController(contentApiClient: ContentApiClient,
   lazy val mostCards = mostPopularAgent.mostSingleCards.get().mapValues(ContentCard.fromApiContent(_))
 
   def render(path: String, isSectionFront: Boolean = false): Action[AnyContent] = Action.async { implicit request =>
-    println("******* render " + isSectionFront)
     val edition = Edition(request)
 
     // Synchronous global popular, from the mostPopularAgent (stateful)
