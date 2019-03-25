@@ -3,6 +3,7 @@ import {
     firstPvConsentBanner as banner,
     _ as test,
 } from './first-pv-consent-banner';
+import { isInVariantSynchronous as isInVariantSynchronous_ } from 'common/modules/experiments/ab';
 
 const getAdConsentState: any = require('common/modules/commercial/ad-prefs.lib')
     .getAdConsentState;
@@ -18,6 +19,7 @@ const passingCookies = _ => {
     if (_ === 'GU_country') return 'NO';
     else if (_ === 'GU_geo_continent') return 'EU';
 };
+const isInVariantSynchronous: any = isInVariantSynchronous_;
 
 beforeEach(() => {
     jest.clearAllMocks();
@@ -28,6 +30,12 @@ beforeEach(() => {
     Message.prototype.hide = jest.fn(() => true);
     getCookie.mockImplementation(passingCookies);
 });
+
+jest.mock('common/modules/experiments/ab', () => ({
+    isInVariantSynchronous: jest.fn(
+        (testId, variantId) => variantId === 'notintest'
+    ),
+}));
 
 jest.mock('ophan/ng', () => ({
     record: jest.fn(),
@@ -110,6 +118,16 @@ describe('First PV consents banner', () => {
                 return null;
             });
             return expect(await banner.canShow()).toBe(false);
+        });
+        it('should render outside the EU if in test', async () => {
+            isInVariantSynchronous.mockImplementation(
+                (testId, variantId) => variantId === 'variant'
+            );
+            getCookie.mockImplementation(_ => {
+                if (_ === 'GU_geo_continent') return '??';
+                return null;
+            });
+            return expect(await banner.canShow()).toBe(true);
         });
     });
 

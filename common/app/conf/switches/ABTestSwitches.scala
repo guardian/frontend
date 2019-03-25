@@ -76,4 +76,14 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  Switch(
+    ABTests,
+    "ab-commercial-consent-global",
+    "Test the TCF globally",
+    owners = Seq(Owner.withGithub("frankie297")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 4, 16),
+    exposeClientSide = true
+  )
+
 }
