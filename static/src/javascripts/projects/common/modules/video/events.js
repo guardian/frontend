@@ -143,7 +143,7 @@ const bindGoogleAnalyticsEvents = (player: Object, canonicalUrl: string) => {
 const getMediaType = player => (isEmbed ? 'video' : player.guMediaType);
 
 const shouldAutoPlay = player =>
-    isDesktop && !isRevisit(config.page.pageId) && player.guAutoplay;
+    isDesktop && !isRevisit(config.get('page.pageId')) && player.guAutoplay;
 
 const constructEventName = (eventName: string, player: Object): string =>
     `${getMediaType(player)}:${eventName}`;
@@ -274,8 +274,8 @@ const kruxTracking = (player: Object, event: string) => {
     // /music/video/2015/aug/31/vmas-2015-highlights-video
 
     if (
-        config.switches.kruxVideoTracking &&
-        config.switches.krux &&
+        config.get('switches.kruxVideoTracking') &&
+        config.get('switches.krux') &&
         $(player.el()).attr('data-media-id') &&
         desiredVideos.indexOf($(player.el()).attr('data-media-id')) !== -1
     ) {

@@ -1,6 +1,5 @@
 // @flow
 import { commercialPrebidSafeframe } from 'common/modules/experiments/tests/commercial-prebid-safeframe.js';
-import { commercialAdVerification } from 'common/modules/experiments/tests/commercial-ad-verification.js';
 import { commercialCmpCustomise } from 'common/modules/experiments/tests/commercial-cmp-customise.js';
 import { commercialOutbrainTesting } from 'common/modules/experiments/tests/commercial-outbrain-testing.js';
 import { askFourEarning } from 'common/modules/experiments/tests/contributions-epic-ask-four-earning';
@@ -13,7 +12,6 @@ import {
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialPrebidSafeframe,
-    commercialAdVerification,
     commercialCmpCustomise,
     commercialOutbrainTesting,
     adblockTest,

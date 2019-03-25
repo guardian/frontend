@@ -3,11 +3,27 @@ import { imrWorldwideLegacy } from './imr-worldwide-legacy';
 
 const { shouldRun, url, onLoad } = imrWorldwideLegacy;
 
-jest.mock('lib/config', () => ({
-    switches: {
-        imrWorldwide: true,
-    },
-}));
+/**
+ * we have to mock config like this because
+ * loading imr-worldwide-legacy has side affects
+ * that are dependent on config.
+ * */
+
+jest.mock('lib/config', () => {
+    const defaultConfig = {
+        switches: {
+            imrWorldwide: true,
+        },
+    };
+
+    return Object.assign({}, defaultConfig, {
+        get: (path: string = '', defaultValue: any) =>
+            path
+                .replace(/\[(.+?)\]/g, '.$1')
+                .split('.')
+                .reduce((o, key) => o[key], defaultConfig) || defaultValue,
+    });
+});
 
 describe('third party tag IMR worldwide legacy', () => {
     it('should exist and have the correct exports', () => {

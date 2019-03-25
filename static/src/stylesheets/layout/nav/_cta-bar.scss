@@ -51,7 +51,7 @@
 }
 
 .cta-bar__heading {
-    color: $opinion-bright;
+    color: $highlight-main;
     font-family: $f-serif-headline;
     font-size: 20px;
     font-weight: 700;
@@ -79,7 +79,7 @@
 .cta-bar__cta {
     @include fs-textSans(5);
     font-weight: 700;
-    background-color: $opinion-bright;
+    background-color: $highlight-main;
     border-radius: 18px;
     box-sizing: border-box;
     color: $brand-main;

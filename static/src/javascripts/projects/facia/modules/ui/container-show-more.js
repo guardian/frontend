@@ -144,7 +144,7 @@ class Button {
             this.setState(DISPLAY_STATE.loading);
         });
 
-        loadShowMore(config.page.pageId, this.id)
+        loadShowMore(config.get('page.pageId'), this.id)
             .then(response => {
                 let dedupedShowMore;
                 const html = response.html.trim();

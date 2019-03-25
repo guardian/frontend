@@ -4,22 +4,38 @@ import { imrWorldwide } from './imr-worldwide';
 const { shouldRun, url } = imrWorldwide;
 const onLoad: any = imrWorldwide.onLoad;
 
-jest.mock('lib/config', () => ({
-    switches: {
-        imrWorldwide: true,
-    },
-    page: {
-        headline: 'Starship Enterprise',
-        author: 'Captain Kirk',
-        section: 'spaceexploration',
-        sectionName: 'Space Exploration',
-        keywords: 'Space,Travel',
-        webPublicationDate: 1498113262000,
-        isFront: false,
-        isPaidContent: true,
-        pageId: 100,
-    },
-}));
+/**
+ * we have to mock config like this because
+ * loading imr-worldwide has side affects
+ * that are dependent on config.
+ * */
+
+jest.mock('lib/config', () => {
+    const defaultConfig = {
+        switches: {
+            imrWorldwide: true,
+        },
+        page: {
+            headline: 'Starship Enterprise',
+            author: 'Captain Kirk',
+            section: 'spaceexploration',
+            sectionName: 'Space Exploration',
+            keywords: 'Space,Travel',
+            webPublicationDate: 1498113262000,
+            isFront: false,
+            isPaidContent: true,
+            pageId: 100,
+        },
+    };
+
+    return Object.assign({}, defaultConfig, {
+        get: (path: string = '', defaultValue: any) =>
+            path
+                .replace(/\[(.+?)\]/g, '.$1')
+                .split('.')
+                .reduce((o, key) => o[key], defaultConfig) || defaultValue,
+    });
+});
 
 const nSdkInstance = {
     ggInitialize: jest.fn(),

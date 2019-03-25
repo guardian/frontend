@@ -71,11 +71,14 @@ const handle = (
     container: ?Element,
     user: ?DiscussionProfile
 ): Promise<void> => {
-    if (!config.switches.discussionAllowAnonymousRecommendsSwitch && !user) {
+    const discussionAllowAnonymousRecommendsSwitch = config.get(
+        'switches.discussionAllowAnonymousRecommendsSwitch'
+    );
+    if (!discussionAllowAnonymousRecommendsSwitch && !user) {
         target.setAttribute('data-link-name', 'Recommend comment anonymous');
         return showSignInTooltip(target);
     } else if (
-        (config.switches.discussionAllowAnonymousRecommendsSwitch || user) &&
+        (discussionAllowAnonymousRecommendsSwitch || user) &&
         isOpenForRecommendations(container)
     ) {
         const id = target.getAttribute('data-comment-id');

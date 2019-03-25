@@ -2,8 +2,8 @@
 import { ajax } from 'lib/ajax';
 import config from 'lib/config';
 
-const apiUrl = `${config.page.avatarApiUrl}/v1`;
-const staticUrl = `${config.page.avatarImagesUrl}/user`;
+const apiUrl = `${config.get('page.avatarApiUrl')}/v1`;
+const staticUrl = `${config.get('page.avatarImagesUrl')}/user`;
 
 type HttpVerb = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 

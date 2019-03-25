@@ -5,11 +5,26 @@ import { remarketing } from 'commercial/modules/third-party-tags/remarketing';
 const { shouldRun, url } = remarketing;
 const onLoad: any = remarketing.onLoad;
 
-jest.mock('lib/config', () => ({
-    switches: {
-        remarketing: true,
-    },
-}));
+/**
+ * we have to mock config like this because
+ * loading remarketing has side affects
+ * that are dependent on config.
+ * */
+jest.mock('lib/config', () => {
+    const defaultConfig = {
+        switches: {
+            remarketing: true,
+        },
+    };
+
+    return Object.assign({}, defaultConfig, {
+        get: (path: string = '', defaultValue: any) =>
+            path
+                .replace(/\[(.+?)\]/g, '.$1')
+                .split('.')
+                .reduce((o, key) => o[key], defaultConfig) || defaultValue,
+    });
+});
 
 describe('Remarketing', () => {
     it('should exist', () => {

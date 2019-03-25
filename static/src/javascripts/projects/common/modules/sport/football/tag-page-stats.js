@@ -10,9 +10,12 @@ export const tagPageStats = (): void => {
     );
 
     if (firstContainer) {
-        fetchJSON(`/${config.page.pageId}/fixtures-and-results-container`, {
-            mode: 'cors',
-        })
+        fetchJSON(
+            `/${config.get('page.pageId')}/fixtures-and-results-container`,
+            {
+                mode: 'cors',
+            }
+        )
             .then(container => {
                 if (container.html) {
                     firstContainer.insertAdjacentHTML(

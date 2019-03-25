@@ -96,7 +96,7 @@
 
         & > h2 {
             @include fs-headlineGarnett(2);
-            font-weight: 500;
+            font-weight: 700;
             box-sizing: border-box;
             border-top: 4px solid $brightness-86;
             color: $brightness-7;
@@ -115,7 +115,7 @@
 
             @include mq(tablet) {
                 @include fs-headlineGarnett(7);
-                font-weight: 500;
+                font-weight: 700;
                 line-height: 40px;
                 margin-right: 0;
                 margin-top: $gs-baseline * 8;
@@ -132,7 +132,7 @@
             // Optional way of forcing text onto seperate lines, with different colours
             strong {
                 display: block;
-                font-weight: 500;
+                font-weight: 700;
             }
 
             // Large numbered heading
