@@ -1,9 +1,9 @@
 // @flow
+import { isInVariantSynchronous as isInVariantSynchronous_ } from 'common/modules/experiments/ab';
 import {
     firstPvConsentBanner as banner,
     _ as test,
 } from './first-pv-consent-banner';
-import { isInVariantSynchronous as isInVariantSynchronous_ } from 'common/modules/experiments/ab';
 
 const getAdConsentState: any = require('common/modules/commercial/ad-prefs.lib')
     .getAdConsentState;
