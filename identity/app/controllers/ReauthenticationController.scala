@@ -48,10 +48,8 @@ class ReauthenticationController(
     )
   )
 
-  def signInWithAutoSignInToken(autoSignInToken: Option[String], returnUrlOpt: Option[String]): Future[Response[Result]] = { // either list of errors or a result
-    val token = autoSignInToken.getOrElse("")
-    val returnUrl = returnUrlOpt.getOrElse("")
-    val futureCookies = api.verifyAutoSignInToken(token)
+  def signInWithAutoSignInToken(autoSignInToken: String, returnUrl: String): Future[Response[Result]] = { // either list of errors or a result
+    val futureCookies = api.verifyAutoSignInToken(autoSignInToken)
     signInService.getCookies(futureCookies, rememberMe = false).map {
       case Right(cookies) =>
         Right(SeeOther(returnUrl)
@@ -66,18 +64,24 @@ class ReauthenticationController(
     logger.trace("Rendering reauth form")
     val idRequest = idRequestParser(request)
     val googleId = request.user.socialLinks.find(_.network == "google").map(_.socialId)
-    val autoSignInToken = request.getQueryString("autoSignInToken")
+    val renderReauthenticate = Future.successful(NoCache(Ok(
+      IdentityHtmlPage.html(
+        content = views.html.reauthenticate(idRequest, idUrlBuilder, filledForm, googleId)
+      )(page, request, context))))
 
-    signInWithAutoSignInToken(autoSignInToken, idRequest.returnUrl) flatMap {
+    val autoSignIn = for {
+      autoSignInToken <- request.getQueryString("autoSignInToken")
+      returnUrl <- returnUrl
+    } yield {
+      signInWithAutoSignInToken(autoSignInToken, returnUrl).flatMap {
         case Left(errors) =>
           logger.error(s"unable to sign in with auto signin token, $errors")
-          Future.successful(NoCache(Ok(
-            IdentityHtmlPage.html(
-              content = views.html.reauthenticate(idRequest, idUrlBuilder, filledForm, googleId)
-            )(page, request, context)
-          )))
+          renderReauthenticate
         case Right(result) => Future.successful(result)
       }
+    }
+
+    autoSignIn.getOrElse(renderReauthenticate)
   }
 
   def processForm: Action[AnyContent] = authenticatedActions.fullAuthWithIdapiUserAction.async { implicit request =>
