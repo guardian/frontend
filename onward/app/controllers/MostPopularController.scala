@@ -34,6 +34,7 @@ class MostPopularController(contentApiClient: ContentApiClient,
 
   def renderSectionFront(path: String): Action[AnyContent] = render(path, true)
 
+  // Get "Most Commented" & "Most Shared" cards for Extended "Most Read" container
   lazy val mostCards = mostPopularAgent.mostSingleCards.get().mapValues(ContentCard.fromApiContent(_))
 
   def render(path: String, isSectionFront: Boolean = false): Action[AnyContent] = Action.async { implicit request =>
@@ -55,6 +56,7 @@ class MostPopularController(contentApiClient: ContentApiClient,
     sectionPopular.map { sectionPopular =>
       val sectionFirst = sectionPopular ++ globalPopular
       val globalFirst = globalPopular.toList ++ sectionPopular
+      // On section fronts the "Most Read" in section is the first tab and glbal "Most Read" is the second
       val mostPopular: List[MostPopular] = if (path == "global-development" || isSectionFront) sectionFirst else globalFirst
 
       mostPopular match {
@@ -66,6 +68,7 @@ class MostPopularController(contentApiClient: ContentApiClient,
         case popular => Cached(2) {
           JsonComponent(
             "html" -> {
+              // Use popularExtended for the "Most Read" tabs if ExtendedMostPopular switch is on
               if (Switches.ExtendedMostPopular.isSwitchedOn) {
                 views.html.fragments.collections.popularExtended(popular, mostCards)
               } else {
@@ -88,7 +91,6 @@ class MostPopularController(contentApiClient: ContentApiClient,
   def renderPopularGeo(): Action[AnyContent] = Action { implicit request =>
     val headers = request.headers.toSimpleMap
     val countryCode = headers.getOrElse("X-GU-GeoLocation","country:row").replace("country:","")
-
     val countryPopular = MostPopular("Across The&nbsp;Guardian", "", geoMostPopularAgent.mostPopular(countryCode).map(_.faciaContent))
 
     if (request.isGuui) {
