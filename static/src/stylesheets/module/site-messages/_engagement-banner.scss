@@ -98,7 +98,7 @@
     display: inline-block;
     vertical-align: middle;
 
-    height: 36px;
+    height: 42px;
     padding: 0 ($gs-gutter / 3) 0 18px;
     margin-right: $gs-gutter / 4;
     margin-bottom: $gs-baseline / 2;
@@ -132,7 +132,6 @@
 .engagement-banner__payment-logos {
     display: inline-block;
     vertical-align: middle;
-
     height: 17px;
 
     @include mq(tablet) {

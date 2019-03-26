@@ -2,6 +2,8 @@
 
 import marque36icon from 'svgs/icon/marque-36.svg';
 import closeCentralIcon from 'svgs/icon/close-central.svg';
+import arrowWhiteRight from 'svgs/icon/arrow-white-right.svg';
+import paymentMethods from 'svgs/icon/payment-methods.svg';
 
 export const acquisitionsBannerFivTemplate = (
     params: EngagementBannerTemplateParams
@@ -45,11 +47,12 @@ export const acquisitionsBannerFivTemplate = (
                 </div>
             </div>
             <div class="engagement-banner__cta">
-                <a class="button engagement-banner__button engagement-banner__button__support" href="${
-                    params.linkUrl
-                }">
-                    ${params.buttonCaption}
-                </a>
+                <a class="button engagement-banner__button engagement-banner__button__support engagement-banner__button--with-arrow" href="${params.linkUrl}">
+                    ${params.buttonCaption}${arrowWhiteRight.markup}
+                </a>  
+                <div class="engagement-banner__payment-logos engagement-banner__payment-logos--fiv">
+                    ${paymentMethods.markup}
+                </div>
             </div>
         </div>
     </div>
