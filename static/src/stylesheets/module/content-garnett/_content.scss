@@ -867,7 +867,7 @@
 
     .content__headline-standfirst-wrapper & {
         @include fs-textSans(5);
-        padding: ($gs-baseline / 2) ($gs-gutter / 2) ($gs-baseline / 2) ($gs-gutter / 2);
+        padding: ($gs-baseline / 2) ($gs-gutter / 2);
         margin-top: $gs-baseline / 2;
 
         @include mq(mobileLandscape) {
