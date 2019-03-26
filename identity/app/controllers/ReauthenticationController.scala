@@ -64,10 +64,15 @@ class ReauthenticationController(
     logger.trace("Rendering reauth form")
     val idRequest = idRequestParser(request)
     val googleId = request.user.socialLinks.find(_.network == "google").map(_.socialId)
-    val renderReauthenticate = Future.successful(NoCache(Ok(
-      IdentityHtmlPage.html(
-        content = views.html.reauthenticate(idRequest, idUrlBuilder, filledForm, googleId)
-      )(page, request, context))))
+    val renderReauthenticate =
+      Future.successful(
+        NoCache(
+          Ok(
+            IdentityHtmlPage.html(
+              content = views.html.reauthenticate(idRequest, idUrlBuilder, filledForm, googleId)
+            )(page, request, context)
+          ))
+      )
 
     val autoSignIn = for {
       autoSignInToken <- request.getQueryString("autoSignInToken")
