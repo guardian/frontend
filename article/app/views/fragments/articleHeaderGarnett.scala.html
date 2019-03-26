@@ -3,7 +3,12 @@
 @import views.html.fragments.langAttributes
 @import views.support.ContributorLinks
 @import views.support.TrailCssClasses.toneClass
+@import views.support.ContentOldAgeDescriber
 @import _root_.model.ContentDesignType.RichContentDesignType
+
+@ageNotice() = @{
+    ContentOldAgeDescriber(article.content)
+}
 
 
     <header class="content__head content__head--article tonal__head tonal__head--@toneClass(article)">
@@ -30,6 +35,10 @@
                     }
                 </h1>
 
+                @if(article.content.tags.tags.exists(_.id == "tone/news")) {
+                    @fragments.contentAgeNotice(ageNotice)
+                }
+
                 @if(article.tags.isInterview) {
                     @article.trail.byline.map { text =>
                         <span class="content__headline--byline-interview">@ContributorLinks(text, article.tags.contributors)</span>
@@ -49,6 +58,10 @@
 
                 @if((article.tags.isInterview)){
                     <div class="content__label-interview">Interview</div>
+                }
+
+                @if(article.content.tags.tags.exists(_.id == "tone/news")) {
+                    @fragments.contentAgeNotice(ageNotice)
                 }
 
                 <h1 class="content__headline @if(article.content.starRating && !article.elements.hasShowcaseMainElement) {content__headline--no-margin-bottom}" itemprop="headline" @langAttributes(article.content)>

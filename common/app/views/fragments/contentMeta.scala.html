@@ -1,7 +1,6 @@
 @(item: model.ContentType, page: model.Page, showExtras: Boolean = true, amp: Boolean = false)(implicit request: RequestHeader)
 @import model._
 @import views.support.Commercial.isPaidContent
-@import views.support.ContentOldAgeDescriber
 @import _root_.model.ContentDesignType.RichContentDesignType
 @import views.support.RenderClasses
 
@@ -15,10 +14,6 @@
 
 @iconModifier() = @{
     if (item.content.isGallery) List("social-icon-media") else Nil
-}
-
-@ageNotice() = @{
-    ContentOldAgeDescriber(item.content)
 }
 
 @metaBody() = {
@@ -57,13 +52,11 @@
     }
 
     @if(showExtras) {
-        <div class="meta__extras @if(!ageNotice.isEmpty){ meta__extras--notice }">
+        <div class="meta__extras">
             <div class="meta__social" data-component="share">
                 @fragments.social(item.sharelinks.pageShares, "top", iconModifier = iconModifier, amp = amp)
             </div>
-            @if(item.content.tags.tags.exists(_.id == "tone/news")) {
-                @fragments.contentAgeNotice(ageNotice)
-            }
+
             @if(!amp) {
                 <div class="meta__numbers">
                     <div class="u-h meta__number js-sharecount">

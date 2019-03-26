@@ -37,7 +37,6 @@ $quote-mark: 35px;
     .content__headline,
     .content__labels,
     .content__standfirst,
-    .old-article-message,
     .meta__extras,
     .meta__contact-wrap {
         padding-left: $gs-gutter/2;
@@ -125,10 +124,6 @@ $quote-mark: 35px;
         border-top: 0;
         padding-top: 0;
         padding-bottom: $gs-baseline;
-    }
-
-    .old-article-message {
-        order: 4;
     }
 
     .meta__contact-header {
