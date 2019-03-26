@@ -76,11 +76,16 @@ $border-style: $brightness-60 1px solid;
 
     .engagement-banner__button--with-arrow {
         padding-right: $gs-gutter/2;
+        height: 36px;
+
+        @include mq($from: tablet) {
+            height: 42px;
+        }
     }
 
     .engagement-banner__payment-logos--fiv {
         flex: 1 1 auto;
-        height: 20px;
+        height: 25px;
         align-self: center;
 
         @include mq($from: leftCol) {
