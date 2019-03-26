@@ -47,7 +47,9 @@ export const acquisitionsBannerFivTemplate = (
                 </div>
             </div>
             <div class="engagement-banner__cta">
-                <a class="button engagement-banner__button engagement-banner__button__support engagement-banner__button--with-arrow" href="${params.linkUrl}">
+                <a class="button engagement-banner__button engagement-banner__button__support engagement-banner__button--with-arrow" href="${
+                    params.linkUrl
+                }">
                     ${params.buttonCaption}${arrowWhiteRight.markup}
                 </a>  
                 <div class="engagement-banner__payment-logos engagement-banner__payment-logos--fiv">
