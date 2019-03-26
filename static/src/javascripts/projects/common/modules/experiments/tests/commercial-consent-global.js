@@ -9,7 +9,7 @@ export const commercialConsentGlobal: ABTest = {
     audience: 0.02,
     audienceOffset: 0.1,
     successMeasure: 'TCF is served globally',
-    audienceCriteria: 'internal',
+    audienceCriteria: 'all users',
     dataLinkNames: '',
     idealOutcome: 'TCF can be served globally',
     canRun: () => true,
