@@ -20,6 +20,24 @@ import once from 'lodash/once';
 import pick from 'lodash/pick';
 import pickBy from 'lodash/pickBy';
 
+const findBreakpoint = (): string => {
+    switch (getBreakpoint(true)) {
+        case 'mobile':
+        case 'mobileMedium':
+        case 'mobileLandscape':
+            return 'mobile';
+        case 'phablet':
+        case 'tablet':
+            return 'tablet';
+        case 'desktop':
+        case 'leftCol':
+        case 'wide':
+            return 'desktop';
+        default:
+            return 'mobile';
+    }
+};
+
 const format = (keyword: string): string =>
     keyword.replace(/[+\s]+/g, '-').toLowerCase();
 
@@ -190,7 +208,7 @@ const buildPageTargeting = once(
                 sens: page.isSensitive ? 't' : 'f',
                 x: getKruxSegments(),
                 pv: config.get('ophan.pageViewId'),
-                bp: getBreakpoint(),
+                bp: findBreakpoint(),
                 at: getCookie('adtest') || undefined,
                 si: isUserLoggedIn() ? 't' : 'f',
                 gdncrm: getUserSegments(),
