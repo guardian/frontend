@@ -79,8 +79,8 @@ trait ABTestSwitches {
   Switch(
     ABTests,
     "ab-commercial-consent-global",
-    "Test the TCF globally",
-    owners = Seq(Owner.withGithub("frankie297")),
+    "Test the consent banner globally",
+    owners = Owner.group(Commercial),
     safeState = Off,
     sellByDate = new LocalDate(2019, 4, 16),
     exposeClientSide = true
