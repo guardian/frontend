@@ -285,32 +285,7 @@ object DotcomponentsDataModel {
         main.getOrElse(Configuration.images.fallbackLogo)
       }
 
-      val authors = article.tags.contributors.map(contributor => {
-        Person(
-          name = contributor.name,
-          sameAs = contributor.metadata.webUrl,
-        )
-      })
-
-      List(
-        NewsArticle(
-          `@id` = Configuration.amp.baseUrl + article.metadata.id,
-          images = Seq(
-            ImgSrc(mainImageURL, OneByOne),
-            ImgSrc(mainImageURL, FourByThree),
-            ImgSrc(mainImageURL, Item1200),
-          ),
-          author = authors,
-          datePublished = article.trail.webPublicationDate.toString(),
-          dateModified = article.fields.lastModified.toString(),
-          headline = article.trail.headline,
-          mainEntityOfPage = article.metadata.webUrl,
-        ),
-        WebPage(
-          `@id` = article.metadata.webUrl,
-          potentialAction = PotentialAction(target = "android-app://com.guardian/" + article.metadata.webUrl.replace("://", "/"))
-        )
-      )
+      LinkedData(article, Configuration.amp.baseUrl, Configuration.images.fallbackLogo)
     }
 
     val allTags = article.tags.tags.map(
