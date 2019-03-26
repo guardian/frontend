@@ -283,7 +283,8 @@ const makeEpicABTestVariant = (
 
             const matchesTagsOrSections =
                 (this.tagIds.length === 0 && this.sections.length === 0) ||
-                (pageMatchesTags(this.tagIds) || pageMatchesSections(this.sections));
+                (pageMatchesTags(this.tagIds) ||
+                    pageMatchesSections(this.sections));
 
             const noExcludedTags = !pageMatchesTags(this.excludedTagIds);
             const notExcludedSection = !pageMatchesSections(
