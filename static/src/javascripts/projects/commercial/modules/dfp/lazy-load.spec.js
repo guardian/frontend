@@ -27,7 +27,7 @@ const getAdvertById: any = getAdvertById_;
 describe('enableLazyLoad', () => {
     const windowIntersectionObserver = window.IntersectionObserver;
 
-    const fakeAdvert: any = {
+    const testAdvert: any = {
         id: 'test-advert',
         sizes: { desktop: [[300, 250]] },
         isRendered: false,
@@ -47,13 +47,13 @@ describe('enableLazyLoad', () => {
     });
 
     test('JSDOM and Jest should not have an intersectionObserver', () => {
-        // META TEST! Our the assumptions about Jest and JSDOM correct?
+        // META TEST! Are the assumptions about Jest and JSDOM correct?
         expect(windowIntersectionObserver).toBe(undefined);
     });
 
     it('should create an observer if lazyLoadObserve is true', () => {
         dfpEnv.lazyLoadObserve = true;
-        enableLazyLoad(fakeAdvert);
+        enableLazyLoad(testAdvert);
         expect(loadAdvert).not.toHaveBeenCalled();
         expect(window.IntersectionObserver.mock.calls[0][1]).toEqual({
             rootMargin: '200px 0px',
@@ -62,9 +62,9 @@ describe('enableLazyLoad', () => {
 
     it('should still display the adverts if lazyLoadObserve is false', () => {
         dfpEnv.lazyLoadObserve = false;
-        getAdvertById.mockReturnValue(fakeAdvert);
-        enableLazyLoad(fakeAdvert);
+        getAdvertById.mockReturnValue(testAdvert);
+        enableLazyLoad(testAdvert);
         expect(getAdvertById.mock.calls).toEqual([['test-advert']]);
-        expect(loadAdvert).toHaveBeenCalledWith(fakeAdvert);
+        expect(loadAdvert).toHaveBeenCalledWith(testAdvert);
     });
 });
