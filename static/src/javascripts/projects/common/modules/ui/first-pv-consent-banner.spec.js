@@ -119,7 +119,8 @@ describe('First PV consents banner', () => {
             });
             return expect(await banner.canShow()).toBe(false);
         });
-        it('should render outside the EU if in test', async () => {
+        // two temporary tests that can be removed after 31/03/2019
+        it('should render outside the EU, when commercial consent test participation is "variant"', async () => {
             isInVariantSynchronous.mockImplementation(
                 (testId, variantId) => variantId === 'variant'
             );
@@ -128,6 +129,16 @@ describe('First PV consents banner', () => {
                 return null;
             });
             return expect(await banner.canShow()).toBe(true);
+        });
+        it('should not render outside the EU, when commercial consent test participation is "control"', async () => {
+            isInVariantSynchronous.mockImplementation(
+                (testId, variantId) => variantId === 'control'
+            );
+            getCookie.mockImplementation(_ => {
+                if (_ === 'GU_geo_continent') return '??';
+                return null;
+            });
+            return expect(await banner.canShow()).toBe(false);
         });
     });
 
