@@ -20,14 +20,19 @@ export class GeoMostPopularFront extends Component {
     constructor() {
         super();
         begin('most-popular');
-        this.isNetworkFront = config.get('page.contentType') === 'Network Front';
+        this.isNetworkFront =
+            config.get('page.contentType') === 'Network Front';
 
         // These two sections do not have their own most popular endpoints
         const sectionsWithoutPopular = ['info', 'global'];
         const pageSection = config.get('page.section');
-        const hasPopularInSection = pageSection && !sectionsWithoutPopular.includes(pageSection);
+        const hasPopularInSection =
+            pageSection && !sectionsWithoutPopular.includes(pageSection);
 
-        this.getExtendedMostPopularInSection = !this.isNetworkFront && hasPopularInSection && config.get('switches.extendedMostPopular');
+        this.getExtendedMostPopularInSection =
+            !this.isNetworkFront &&
+            hasPopularInSection &&
+            config.get('switches.extendedMostPopular');
 
         /**
          * Use the extended most popular in section endpoint
