@@ -20,33 +20,32 @@ export class GeoMostPopularFront extends Component {
     constructor() {
         super();
         begin('most-popular');
-        this.isNetworkFront =
-            config.get('page.contentType') === 'Network Front';
+        this.isNetworkFront = config.get('page.contentType') === 'Network Front';
 
+        // These two sections do not have their own most popular endpoints
         const sectionsWithoutPopular = ['info', 'global'];
         const pageSection = config.get('page.section');
-        const hasSection =
-            pageSection && !sectionsWithoutPopular.includes(pageSection);
+        const hasPopularInSection = pageSection && !sectionsWithoutPopular.includes(pageSection);
 
-        this.isSectionFront = !this.isNetworkFront && hasSection;
+        this.getExtendedMostPopularInSection = !this.isNetworkFront && hasPopularInSection && config.get('switches.extendedMostPopular');
 
-        if (this.isSectionFront && config.get('switches.extendedMostPopular')) {
+        /**
+         * Use the extended most popular in section endpoint
+         * for section fronts when the extendedMostPopular switch
+         * is on.
+         */
+        if (this.getExtendedMostPopularInSection) {
             this.endpoint = `/most-read/front/${pageSection}.json`;
         } else {
             this.endpoint = '/most-read-geo.json';
         }
-
-        console.log(
-            '**************',
-            config.get('switches.extendedMostPopular')
-        );
 
         this.isVideoFront = config.get('page.pageId') === 'video';
         this.isInternational = config.get('page.pageId') === 'international';
         this.manipulationType = 'html';
     }
 
-    isSectionFront: boolean;
+    getExtendedMostPopularInSection: boolean;
     isNetworkFront: boolean;
     isVideoFront: boolean;
     isInternational: boolean;
@@ -54,7 +53,6 @@ export class GeoMostPopularFront extends Component {
 
     prerender(): void {
         if (!config.get('switches.extendedMostPopular')) {
-            console.log('************** DO SOMETHING');
             this.elem = qwery('.headline-list', this.elem)[0];
         }
     }
@@ -64,20 +62,20 @@ export class GeoMostPopularFront extends Component {
         this.parent = qwery('.js-popular-trails')[0];
 
         if (this.parent) {
-            if (
-                (this.isInternational && this.isNetworkFront) ||
-                this.isVideoFront
-            ) {
-                console.log('************** HIDE 1');
-                // hide the tabs
-                hideTabs(this.parent);
-            } else if (
-                this.isSectionFront &&
-                config.get('switches.extendedMostPopular')
-            ) {
+            if (this.getExtendedMostPopularInSection) {
+                /**
+                 * Only go into this block on section fronts when
+                 * extendedMostPopular switch is on. this removes general
+                 * most popular trails and replaces with the
+                 * extended most popular trails.
+                 */
                 this.parent.innerHTML = '';
                 this.fetch(this.parent, 'html');
             } else {
+                /**
+                 * We'll only go into this block for Network fronts
+                 * or sections fronts when extendedMostPopular switch is off.
+                 */
                 const tab = this.parent.querySelector(tabSelector);
 
                 if (tab) {
@@ -88,8 +86,7 @@ export class GeoMostPopularFront extends Component {
     }
 
     ready(): void {
-        if (this.isNetworkFront) {
-            console.log('************** HIDE 2');
+        if (this.isNetworkFront || this.isVideoFront) {
             hideTabs(this.parent);
         }
         end('most-popular');
