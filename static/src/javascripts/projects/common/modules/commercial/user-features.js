@@ -11,6 +11,7 @@ const PAYING_MEMBER_COOKIE = 'gu_paying_member';
 const AD_FREE_USER_COOKIE = 'GU_AF1';
 const ACTION_REQUIRED_FOR_COOKIE = 'gu_action_required_for';
 const DIGITAL_SUBSCRIBER_COOKIE = 'gu_digital_subscriber';
+const SHOW_SUPPORT_MESSAGING_COOKIE = 'gu_show_support_messaging';
 
 // This cookie comes from the user attributes API
 const RECURRING_CONTRIBUTOR_COOKIE = 'gu_recurring_contributor';
@@ -36,7 +37,8 @@ const userHasData = (): boolean => {
         getCookie(PAYING_MEMBER_COOKIE) ||
         getCookie(RECURRING_CONTRIBUTOR_COOKIE) ||
         getCookie(AD_FREE_USER_COOKIE) ||
-        getCookie(DIGITAL_SUBSCRIBER_COOKIE);
+        getCookie(DIGITAL_SUBSCRIBER_COOKIE) ||
+        getCookie(SHOW_SUPPORT_MESSAGING_COOKIE);
     return !!cookie;
 };
 
@@ -65,6 +67,7 @@ const persistResponse = (JsonResponse: () => void) => {
         DIGITAL_SUBSCRIBER_COOKIE,
         JsonResponse.contentAccess.digitalPack
     );
+    addCookie(SHOW_SUPPORT_MESSAGING_COOKIE, JsonResponse.showSupportMessaging);
 
     removeCookie(ACTION_REQUIRED_FOR_COOKIE);
     if ('alertAvailableFor' in JsonResponse) {
@@ -92,6 +95,7 @@ const deleteOldData = (): void => {
     removeCookie(AD_FREE_USER_COOKIE);
     removeCookie(ACTION_REQUIRED_FOR_COOKIE);
     removeCookie(DIGITAL_SUBSCRIBER_COOKIE);
+    removeCookie(SHOW_SUPPORT_MESSAGING_COOKIE);
 };
 
 const requestNewData = (): Promise<void> =>
@@ -210,6 +214,9 @@ const isRecurringContributor = (): boolean =>
 const isDigitalSubscriber = (): boolean =>
     getCookie(DIGITAL_SUBSCRIBER_COOKIE) === 'true';
 
+const shouldShowSupportMessaging = (): boolean =>
+    getCookie(SHOW_SUPPORT_MESSAGING_COOKIE) === 'true';
+
 /*
     Whenever the checks are updated, please make sure to update
     applyRenderConditions.scala.js too, where the global CSS class, indicating
@@ -217,11 +224,11 @@ const isDigitalSubscriber = (): boolean =>
     Please also update readerRevenueRelevantCookies below, if changing the cookies
     which this function is dependent on.
 */
-const userIsSupporter = (): boolean =>
-    isPayingMember() ||
-    isRecentOneOffContributor() ||
-    isRecurringContributor() ||
-    isDigitalSubscriber();
+
+const shouldHideSupportMessaging = (): boolean =>
+    !shouldShowSupportMessaging() ||
+    isRecentOneOffContributor() || // because members-data-api is unaware of one-off contributions so relies on cookie
+    isRecurringContributor(); // guest checkout means that members-data-api isn't aware of all recurring contributions so relies on cookie
 
 const readerRevenueRelevantCookies = [
     PAYING_MEMBER_COOKIE,
@@ -230,6 +237,7 @@ const readerRevenueRelevantCookies = [
     SUPPORT_RECURRING_CONTRIBUTOR_MONTHLY_COOKIE,
     SUPPORT_RECURRING_CONTRIBUTOR_ANNUAL_COOKIE,
     SUPPORT_ONE_OFF_CONTRIBUTION_COOKIE,
+    SHOW_SUPPORT_MESSAGING_COOKIE,
 ];
 
 // For debug/test purposes
@@ -247,11 +255,12 @@ export {
     isRecentOneOffContributor,
     isRecurringContributor,
     isDigitalSubscriber,
-    userIsSupporter,
+    shouldHideSupportMessaging,
     refresh,
     deleteOldData,
     getLastOneOffContributionDate,
     getDaysSinceLastOneOffContribution,
     readerRevenueRelevantCookies,
     fakeOneOffContributor,
+    shouldShowSupportMessaging,
 };

@@ -3,7 +3,7 @@
     top: 30px;
     left: $gs-gutter / 2;
 
-    .is-paying-member &,
+    .hide-support-messaging &,
     .is-recent-contributor & {
         display: none;
     }
