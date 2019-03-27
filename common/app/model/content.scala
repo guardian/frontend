@@ -81,7 +81,7 @@ final case class Content(
   lazy val isColumn = fields.displayHint.contains("column")
   lazy val isNumberedList = fields.displayHint.contains("numberedList")
   lazy val isSplash = fields.displayHint.contains("column") || fields.displayHint.contains("numberedList")
-  lazy val isImmersive = fields.displayHint.contains("immersive") || isGallery || tags.isTheMinuteArticle gi|| isPhotoEssay
+  lazy val isImmersive = fields.displayHint.contains("immersive") || isGallery || tags.isTheMinuteArticle || isPhotoEssay
   lazy val isPaidContent: Boolean = tags.tags.exists{ tag => tag.id == "tone/advertisement-features" }
   lazy val campaigns: List[Campaign] = _root_.commercial.targeting.CampaignAgent.getCampaignsForTags(tags.tags.map(_.id))
 
