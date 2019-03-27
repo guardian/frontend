@@ -48,7 +48,7 @@ class ReauthenticationController(
     )
   )
 
-  def signInWithAutoSignInToken(autoSignInToken: String, returnUrl: String): Future[Response[Result]] = { // either list of errors or a result
+  def signInWithAutoSignInToken(autoSignInToken: String, returnUrl: String): Future[Response[Result]] = {
     val futureCookies = api.verifyAutoSignInToken(autoSignInToken)
     signInService.getCookies(futureCookies, rememberMe = false).map {
       case Right(cookies) =>
@@ -66,12 +66,11 @@ class ReauthenticationController(
     val googleId = request.user.socialLinks.find(_.network == "google").map(_.socialId)
     val renderReauthenticate =
       Future.successful(
-        NoCache(
-          Ok(
+        NoCache(Ok(
             IdentityHtmlPage.html(
               content = views.html.reauthenticate(idRequest, idUrlBuilder, filledForm, googleId)
             )(page, request, context)
-          ))
+        ))
       )
 
     val autoSignIn = for {
