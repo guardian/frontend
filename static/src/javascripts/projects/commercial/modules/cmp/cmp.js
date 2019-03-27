@@ -6,6 +6,7 @@ import { getUrlVars } from 'lib/url';
 import fetchJSON from 'lib/fetch-json';
 
 import { commercialCmpCustomise } from 'common/modules/experiments/tests/commercial-cmp-customise';
+import { commercialConsentGlobal } from 'common/modules/experiments/tests/commercial-consent-global';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import { log } from './log';
 import { CmpStore } from './store';
@@ -77,6 +78,9 @@ const generateStore = (isInTest: boolean): CmpStore => {
     return store;
 };
 
+const isInConsentGlobalTest = (): boolean =>
+    isInVariantSynchronous(commercialConsentGlobal, 'variant');
+
 const isInEU = (): boolean =>
     (getCookie('GU_geo_continent') || 'OTHER').toUpperCase() === 'EU';
 
@@ -102,7 +106,7 @@ class CmpService {
             this.cmpConfig.logging = 'debug';
             log.info('Set logging level to DEBUG');
         }
-        if (isInEU()) {
+        if (isInEU() || isInConsentGlobalTest()) {
             this.cmpConfig.gdprApplies = true;
         }
     }
