@@ -124,6 +124,19 @@
         }
     }
 
+    &.pillar-Opinion {
+        border-top: 1px solid #f9b376;
+
+        .fc__kicker {
+            color: #f9b376;
+        }
+
+        &,
+        & th {
+            background-color: #bd5318;
+        }
+    }
+
     .headline,
     .fc-link,
     .trail-text {
