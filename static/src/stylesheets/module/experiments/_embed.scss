@@ -258,7 +258,7 @@ a[href].contributions__contribute.contributions__contribute--epic,
         border-radius: 21px;
         box-sizing: border-box;
         cursor: pointer;
-        transition: 0.3s ease-in-out;
+        transition: .3s ease-in-out;
         justify-content: space-between;
         position: relative;
 
@@ -278,7 +278,7 @@ a[href].contributions__contribute.contributions__contribute--epic,
             flex: 0 0 auto;
             display: block;
 
-            transition: 0.3s ease-in-out transform;
+            transition: .3s ease-in-out transform;
             will-change: transform;
             margin: 0 -5px 0 10px;
             fill: currentColor;
