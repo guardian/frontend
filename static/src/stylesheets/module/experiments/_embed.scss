@@ -112,7 +112,7 @@
 
 // Specificity needed to override an inline rule in _pillars.scss that's messing with the epic link colour.
 a[href].contributions__contribute.contributions__contribute--epic,
-.contributions__adblock--moment-button a {
+.contributions__adblock-button a {
     margin-top: 0;
     background-color: $highlight-main;
     color: $brightness-7;
@@ -211,46 +211,81 @@ a[href].contributions__contribute.contributions__contribute--epic,
     }
 }
 
-.contributions__adblock--moment {
+.contributions__adblock {
     position: absolute;
     top: 0;
     padding-top: $gs-baseline/2;
+    width: 100%;
 
-    .contributions__adblock--moment-content {
-        border-top: 5px solid #052962;
-        background-color: #f6f6f6;
+    .contributions__adblock-content {
+        border-top: 5px solid $highlight-main;
+        margin-right: 20px;
     }
 
-    .contributions__adblock--moment-header {
-        padding-left: 13px;
+    .contributions__adblock-header {
+        padding-left: 10px;
+        padding-top: 3px;
 
         h2 {
             @include fs-header(5);
             font-size: 32px;
-            line-height: 32px;
-        }
-
-        .contributions__adblock--moment-header--blue {
-            color: #0084c6;
-        }
-        .contributions__adblock--moment-header--orange {
-            color: #ff7f0f;
+            line-height: 36px;
         }
     }
 
-    .contributions__adblock--moment-sub {
-        color: #052962;
-        font-size: 16px;
+    .contributions__adblock-sub {
+        font-family: $f-serif-headline;
+        font-size: 18px;
         line-height: 20px;
-        padding: 10px 0 8px 13px;
+        padding: 12px 0 10px 10px;
     }
 
-    .contributions__adblock--moment-button {
-        padding-left: 5px;
-        padding-bottom: 4px;
-        a {
-            color: #052962;
-            margin: $gs-baseline/3 $gs-gutter/2 $gs-baseline/3 0;
+    .contributions__adblock-button {
+        margin-top: 10px;
+        margin-left: 5px;
+        background-color: $highlight-main;
+        color: $brightness-7 !important;
+        font-size: 1rem;
+        line-height: 1.375rem;
+        font-family: $f-sans-serif-text;
+        display: inline-flex;
+        align-items: center;
+        text-decoration: none;
+        font-weight: bold;
+        height: 2.625rem;
+        min-height: 2.625rem;
+        padding: 0 1.3125rem;
+        border: none;
+        border-radius: 1.3125rem;
+        box-sizing: border-box;
+        cursor: pointer;
+        transition: 0.3s ease-in-out;
+        justify-content: space-between;
+        position: relative;
+
+        &:hover, &:focus {
+            background-color: $highlight-dark;
+            svg {
+                transform: translateX(20%);
+            }
+        }
+
+        span {
+            flex: 0 0 auto;
+            display: block;
+        }
+
+        svg {
+            flex: 0 0 auto;
+            display: block;
+
+            transition: 0.3s ease-in-out transform;
+            will-change: transform;
+            margin: 0 -0.32813rem 0 0.65625rem;
+            fill: currentColor;
+            position: relative;
+            width: 1.3125rem;
+            height: auto;
         }
     }
 }
