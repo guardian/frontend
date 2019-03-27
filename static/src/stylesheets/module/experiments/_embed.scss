@@ -245,18 +245,17 @@ a[href].contributions__contribute.contributions__contribute--epic,
         margin-left: 5px;
         background-color: $highlight-main;
         color: $brightness-7 !important;
-        font-size: 1rem;
-        line-height: 1.375rem;
+        font-size: 16px;
+        line-height: 22px;
         font-family: $f-sans-serif-text;
         display: inline-flex;
         align-items: center;
         text-decoration: none;
         font-weight: bold;
-        height: 2.625rem;
-        min-height: 2.625rem;
-        padding: 0 1.3125rem;
-        border: none;
-        border-radius: 1.3125rem;
+        height: 42px;
+        min-height: 42px;
+        padding: 0 21px;
+        border-radius: 21px;
         box-sizing: border-box;
         cursor: pointer;
         transition: 0.3s ease-in-out;
@@ -281,10 +280,10 @@ a[href].contributions__contribute.contributions__contribute--epic,
 
             transition: 0.3s ease-in-out transform;
             will-change: transform;
-            margin: 0 -0.32813rem 0 0.65625rem;
+            margin: 0 -5px 0 10px;
             fill: currentColor;
             position: relative;
-            width: 1.3125rem;
+            width: 21px;
             height: auto;
         }
     }
