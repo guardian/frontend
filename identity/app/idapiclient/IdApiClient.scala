@@ -8,11 +8,10 @@ import conf.IdConfig
 import idapiclient.parser.IdApiJsonBodyParser
 import net.liftweb.json.JsonDSL._
 import net.liftweb.json.compactRender
-import net.liftweb.json.JsonAST.{JObject, JString, JValue}
+import net.liftweb.json.JsonAST.JObject
 import net.liftweb.json.Serialization.write
 import utils.SafeLogging
-import idapiclient.requests.{DeletionBody, PasswordUpdate, TokenPassword}
-import org.json4s.JsonAST.JField
+import idapiclient.requests.{DeletionBody, PasswordUpdate, TokenPassword, AutoSignInToken}
 import org.slf4j.LoggerFactory
 import play.api.libs.ws.WSClient
 
@@ -43,6 +42,12 @@ class IdApiClient(
 
   def unauth(auth: Auth, trackingData: TrackingData): Future[Response[CookiesResponse]] =
     post("unauth", Some(auth), Some(trackingData)) map extract[CookiesResponse](jsonField("cookies"))
+
+  //  AUTO SIGN IN TOKENS
+  def verifyAutoSignInToken(token: String): Future[Response[CookiesResponse]] = {
+    val response = httpClient.PUT(apiUrl("auto-signin-token"), Some(write(AutoSignInToken(token))), clientAuth.parameters, clientAuth.headers)
+    response map extract(jsonField("cookies"))
+  }
 
   // USERS
 

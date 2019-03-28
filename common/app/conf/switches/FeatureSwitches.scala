@@ -471,7 +471,7 @@ trait FeatureSwitches {
     "When ON show YouTube related video suggestions in YouTube media atoms",
     owners = Seq(Owner.withGithub("siadcock")),
     safeState = Off,
-    sellByDate = new LocalDate(2019, 3, 26),
+    sellByDate = new LocalDate(2019, 4, 16),
     exposeClientSide = true
   )
 
@@ -512,7 +512,7 @@ trait FeatureSwitches {
     "If switched on, a Subscribe with Google button will appear on AMP articles.",
     owners = Seq(Owner.withName("adem.gaygusuz")),
     safeState = Off,
-    sellByDate = new LocalDate(2019, 3, 27),
+    sellByDate = new LocalDate(2019, 4, 25),
     exposeClientSide = true
   )
 }
