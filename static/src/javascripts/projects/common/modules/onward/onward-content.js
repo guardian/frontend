@@ -7,9 +7,8 @@ import { Component } from 'common/modules/component';
 
 const getTag = (): string =>
     [
-        ...config.get('page.nonKeywordTagIds', '').split(','),
-        ...config.get('page.blogIds', '').split(','),
         ...[config.get('page.seriesId')],
+        ...config.get('page.blogIds', '').split(','),
     ].shift();
 
 const getShortUrl = (): string =>
