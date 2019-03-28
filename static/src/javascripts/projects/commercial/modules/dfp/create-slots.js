@@ -11,7 +11,7 @@ const inlineDefinition = {
             adSizes.googleCard,
             adSizes.fluid,
         ],
-        tablet: [
+        phablet: [
             adSizes.outOfPage,
             adSizes.empty,
             adSizes.outstreamMobile,

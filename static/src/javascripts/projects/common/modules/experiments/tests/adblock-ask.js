@@ -7,23 +7,25 @@ import config from 'lib/config';
 const supportUrl = `${supportContributeURL()}?acquisitionData=%7B%22componentType%22%3A%22ACQUISITIONS_OTHER%22%2C%22source%22%3A%22GUARDIAN_WEB%22%2C%22campaignCode%22%3A%22shady_pie_open_2019%22%2C%22componentId%22%3A%22shady_pie_open_2019%22%7D&INTCMP=shady_pie_open_2019`;
 
 const askHtml = `
-<div class="contributions__adblock--moment">
-    <div class="contributions__adblock--moment-content">
-        <div class="contributions__adblock--moment-header">
-            <h2 class="contributions__adblock--moment-header--blue">Support</h2>
-            <h2 class="contributions__adblock--moment-header--blue">The Guardian’s</h2>
-            <h2 class="contributions__adblock--moment-header--orange">model for open, independent journalism</h2>
+<div class="contributions__adblock">
+    <div class="contributions__adblock-content">
+        <div class="contributions__adblock-header">
+            <h2>
+                Editorially<br>
+                independent,<br>
+                open to everyone
+            </h2>
         </div>
-        <div class="contributions__adblock--moment-sub">
-            We’re available for everyone, supported by our readers
+        <div class="contributions__adblock-sub">
+            We chose a different approach —<br>
+            will you support it?
         </div>
-        <div class="contributions__adblock--moment-button">
-            <a class="contributions__option-button contributions__contribute "
-              href="${supportUrl}"
-              target="_blank">
-              Support The Guardian
-            </a>
-        </div>
+        <a class="contributions__adblock-button" href="${supportUrl}">
+            <span class="component-button__content">Support The Guardian</span>
+            <svg class="svg-arrow-right-straight" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 17.89" preserveAspectRatio="xMinYMid">
+                <path d="M20 9.35l-9.08 8.54-.86-.81 6.54-7.31H0V8.12h16.6L10.06.81l.86-.81L20 8.51v.84z"></path>
+            </svg>
+        </a>
     </div>
 </div>
 `;

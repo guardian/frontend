@@ -316,7 +316,7 @@
         min-height: auto;
     }
 
-    @include mq($from: tablet) {
+    @include mq($from: phablet) {
         float: none;
         width: 620px;
         height: $mpu-ad-label-height + 350px;

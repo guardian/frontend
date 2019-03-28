@@ -41,7 +41,7 @@ $border-style: $brightness-60 1px solid;
 
     .engagement-banner__cta {
         display: flex;
-        flex-direction: row;
+        flex-flow: row wrap;
         margin-bottom: $gs-gutter/2;
 
         @include mq($from: tablet) {
@@ -65,11 +65,31 @@ $border-style: $brightness-60 1px solid;
         display: flex;
         justify-content: center;
         align-items: center;
+        flex: 0 1 auto;
 
         @include mq($from: 375px) {
             margin-left: 0;
             padding: 0 $gs-gutter;
             white-space: normal;
+        }
+    }
+
+    .engagement-banner__button--with-arrow {
+        padding-right: $gs-gutter/2;
+        height: 36px;
+
+        @include mq($from: tablet) {
+            height: 42px;
+        }
+    }
+
+    .engagement-banner__payment-logos--fiv {
+        flex: 1 1 auto;
+        height: 25px;
+        align-self: center;
+
+        @include mq($from: leftCol) {
+            margin-left: 10px;
         }
     }
 
@@ -118,7 +138,6 @@ $border-style: $brightness-60 1px solid;
     url('//pasteup.guim.co.uk/webfonts/1.0.0/noalts-not-hinted/GTGuardianTitlepiece-Bold.ttf') format('ttf');
     font-weight: 400;
 }
-
 
 .fiv-banner__headline {
     font-size: 27px;
@@ -432,6 +451,7 @@ $wide-circle-height: 162px;
             border-top: $border-style-yellow;
         }
     }
+
     .fiv-banner__copy-and-ctas {
         border-top: $border-style-yellow;
         @include mq($from: tablet) {
