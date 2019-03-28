@@ -100,6 +100,7 @@
     text-align: right;
     float: left;
     min-width: 15px; // Min width is the width of the icons
+    padding-top: $gs-baseline / 2;
 }
 
 .meta__number + .meta__number {

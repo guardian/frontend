@@ -13,6 +13,8 @@ import ophan from 'ophan/ng';
 import { upAlertViewCount } from 'common/modules/analytics/send-privacy-prefs';
 import type { AdConsent } from 'common/modules/commercial/ad-prefs.lib';
 import type { Banner } from 'common/modules/ui/bannerPicker';
+import { commercialConsentGlobal } from 'common/modules/experiments/tests/commercial-consent-global';
+import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 
 type Template = {
     heading: string,
@@ -103,10 +105,13 @@ const trackInteraction = (interaction: string): void => {
     trackNonClickInteraction(interaction);
 };
 
+const isInConsentGlobalTest = (): boolean =>
+    isInVariantSynchronous(commercialConsentGlobal, 'variant');
+
 const canShow = (): Promise<boolean> =>
     Promise.resolve(
         hasUnsetAdChoices() &&
-            isInEU() &&
+            (isInEU() || isInConsentGlobalTest()) &&
             !hasUserAcknowledgedBanner(messageCode)
     );
 

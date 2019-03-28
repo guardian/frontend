@@ -1,7 +1,13 @@
-// @flow
+// @flow strict
 
 import { loadScript } from 'lib/load-script';
 import config from 'lib/config';
+
+const errorHandler = (error: Error) => {
+    // Looks like some plugins block ad-verification
+    // Avoid barraging Sentry with errors from these pageviews
+    console.log('Failed to load Confiant:', error);
+};
 
 export const init = (start: () => void): Promise<void> => {
     const host = 'clarium.global.ssl.fastly.net';
@@ -27,9 +33,9 @@ export const init = (start: () => void): Promise<void> => {
         };
         /* eslint-enable no-underscore-dangle */
 
-        // and load the script tag
-        return loadScript(`//${host}/gpt/a/wrap.js`, { async: true });
+        return loadScript(`//${host}/gpt/a/wrap.js`, { async: true }).catch(
+            errorHandler
+        );
     }
-    // Do nothing.
     return Promise.resolve();
 };

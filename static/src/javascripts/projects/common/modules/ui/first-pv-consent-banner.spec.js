@@ -1,4 +1,5 @@
 // @flow
+import { isInVariantSynchronous as isInVariantSynchronous_ } from 'common/modules/experiments/ab';
 import {
     firstPvConsentBanner as banner,
     _ as test,
@@ -18,6 +19,7 @@ const passingCookies = _ => {
     if (_ === 'GU_country') return 'NO';
     else if (_ === 'GU_geo_continent') return 'EU';
 };
+const isInVariantSynchronous: any = isInVariantSynchronous_;
 
 beforeEach(() => {
     jest.clearAllMocks();
@@ -28,6 +30,12 @@ beforeEach(() => {
     Message.prototype.hide = jest.fn(() => true);
     getCookie.mockImplementation(passingCookies);
 });
+
+jest.mock('common/modules/experiments/ab', () => ({
+    isInVariantSynchronous: jest.fn(
+        (testId, variantId) => variantId === 'notintest'
+    ),
+}));
 
 jest.mock('ophan/ng', () => ({
     record: jest.fn(),
@@ -105,6 +113,27 @@ describe('First PV consents banner', () => {
             return expect(await banner.canShow()).toBe(true);
         });
         it('should not render outside the EU', async () => {
+            getCookie.mockImplementation(_ => {
+                if (_ === 'GU_geo_continent') return '??';
+                return null;
+            });
+            return expect(await banner.canShow()).toBe(false);
+        });
+        // two temporary tests that can be removed after 31/03/2019
+        it('should render outside the EU, when commercial consent test participation is "variant"', async () => {
+            isInVariantSynchronous.mockImplementation(
+                (testId, variantId) => variantId === 'variant'
+            );
+            getCookie.mockImplementation(_ => {
+                if (_ === 'GU_geo_continent') return '??';
+                return null;
+            });
+            return expect(await banner.canShow()).toBe(true);
+        });
+        it('should not render outside the EU, when commercial consent test participation is "control"', async () => {
+            isInVariantSynchronous.mockImplementation(
+                (testId, variantId) => variantId === 'control'
+            );
             getCookie.mockImplementation(_ => {
                 if (_ === 'GU_geo_continent') return '??';
                 return null;

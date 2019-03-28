@@ -76,4 +76,14 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  Switch(
+    ABTests,
+    "ab-commercial-consent-global",
+    "Test the consent banner globally",
+    owners = Owner.group(Commercial),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 4, 16),
+    exposeClientSide = true
+  )
+
 }

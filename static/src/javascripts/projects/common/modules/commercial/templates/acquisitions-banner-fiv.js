@@ -2,10 +2,15 @@
 
 import marque36icon from 'svgs/icon/marque-36.svg';
 import closeCentralIcon from 'svgs/icon/close-central.svg';
+import arrowWhiteRight from 'svgs/icon/arrow-white-right.svg';
+import paymentMethods from 'svgs/icon/payment-methods.svg';
 
 export const acquisitionsBannerFivTemplate = (
     params: EngagementBannerTemplateParams
-): string => `
+): string => {
+    const desktopButton = params.buttonCaption;
+    const mobileButton = 'Support us';
+    return `
     <div class="fiv-banner__container">
         <div class="engagement-banner__close">
             <div class="engagement-banner__roundel">
@@ -45,12 +50,21 @@ export const acquisitionsBannerFivTemplate = (
                 </div>
             </div>
             <div class="engagement-banner__cta">
-                <a class="button engagement-banner__button engagement-banner__button__support" href="${
+                <a class="button engagement-banner__button engagement-banner__button__support engagement-banner__button--with-arrow hide-until-tablet" href="${
                     params.linkUrl
                 }">
-                    ${params.buttonCaption}
+                    ${desktopButton}${arrowWhiteRight.markup}
                 </a>
+                <a class="button engagement-banner__button engagement-banner__button__support engagement-banner__button--with-arrow hide-from-tablet" href="${
+                    params.linkUrl
+                }">
+                    ${mobileButton}${arrowWhiteRight.markup}
+                </a>
+                <div class="engagement-banner__payment-logos engagement-banner__payment-logos--fiv">
+                    ${paymentMethods.markup}
+                </div>
             </div>
         </div>
     </div>
     `;
+};
