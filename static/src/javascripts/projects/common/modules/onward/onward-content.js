@@ -9,6 +9,7 @@ const getTag = (): string =>
     [
         ...[config.get('page.seriesId')],
         ...config.get('page.blogIds', '').split(','),
+        ...config.get('page.nonKeywordTagIds', '').split(','),
     ].shift();
 
 const getShortUrl = (): string =>
