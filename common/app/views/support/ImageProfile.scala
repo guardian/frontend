@@ -11,6 +11,7 @@ import model._
 import org.apache.commons.math3.fraction.Fraction
 import org.apache.commons.math3.util.Precision
 import common.Environment.{app, awsRegion, stage}
+import org.joda.time.DateTime
 import play.api.libs.json.{Json, Writes}
 
 import Function.const
@@ -171,6 +172,24 @@ object TwitterImage extends OverlayBase64 {
             case _ => s"overlay-base64=${overlayUrlBase64("to-default.png")}"
         }
         new ShareImage(image, TwitterShareImageLogoOverlay.isSwitchedOn)
+    }
+    def getContentAgeFileName(prefix: String, publicationYear: Int): String = {
+      // WARNING: we have only produced these content age images up to the year 2025
+      if (publicationYear < 2025) {
+        s"${prefix}-age-${publicationYear}.png"
+      } else {
+        s"${prefix}-default.png"
+      }
+    }
+    def contentAgeNotice(publicationYear: Int): ShareImage = {
+      val image = s"overlay-base64=${overlayUrlBase64(getContentAgeFileName("tg", publicationYear))}"
+
+      new ShareImage(image, TwitterShareImageLogoOverlay.isSwitchedOn)
+    }
+    def contentAgeNoticeObserver(publicationYear: Int): ShareImage = {
+      val image = s"overlay-base64=${overlayUrlBase64(getContentAgeFileName("to", publicationYear))}"
+
+      new ShareImage(image, TwitterShareImageLogoOverlay.isSwitchedOn)
     }
     val defaultObserver = new ShareImage(s"overlay-base64=${overlayUrlBase64("to-default.png")}", TwitterShareImageLogoOverlay.isSwitchedOn)
     val opinionsObserver = new ShareImage(s"overlay-base64=${overlayUrlBase64("to-opinions.png")}", TwitterShareImageLogoOverlay.isSwitchedOn)
