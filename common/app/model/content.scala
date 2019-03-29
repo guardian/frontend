@@ -129,7 +129,11 @@ final case class Content(
     else if(isFromTheObserver && tags.isComment) FacebookOpenGraphImage.opinionsObserver
     else if(tags.isComment) FacebookOpenGraphImage.opinions
     else if(tags.isLiveBlog) FacebookOpenGraphImage.live
-    else if(tags.tags.exists(_.id == "tone/news") && trail.webPublicationDate.getYear < DateTime.now().getYear()) {
+    else if(
+      metadata.id == "education/2016/aug/07/senior-tories-likely-to-resist-theresa-mays-grammar-schools-agenda" &&
+      tags.tags.exists(_.id == "tone/news") &&
+      trail.webPublicationDate.getYear < DateTime.now().getYear()
+    ) {
       if(isFromTheObserver) {
         TwitterImage.contentAgeNoticeObserver(trail.webPublicationDate.getYear)
       } else {
@@ -165,7 +169,11 @@ final case class Content(
     else if(isFromTheObserver && tags.isComment) TwitterImage.opinionsObserver
     else if(tags.isComment) TwitterImage.opinions
     else if(tags.isLiveBlog) TwitterImage.live
-    else if(tags.tags.exists(_.id == "tone/news") && trail.webPublicationDate.getYear < DateTime.now().getYear()) {
+    else if(
+        metadata.id == "education/2016/aug/07/senior-tories-likely-to-resist-theresa-mays-grammar-schools-agenda" &&
+        tags.tags.exists(_.id == "tone/news") &&
+        trail.webPublicationDate.getYear < DateTime.now().getYear()
+    ) {
       if(isFromTheObserver) {
         TwitterImage.contentAgeNoticeObserver(trail.webPublicationDate.getYear)
       } else {
