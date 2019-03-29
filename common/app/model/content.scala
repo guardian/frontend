@@ -129,6 +129,13 @@ final case class Content(
     else if(isFromTheObserver && tags.isComment) FacebookOpenGraphImage.opinionsObserver
     else if(tags.isComment) FacebookOpenGraphImage.opinions
     else if(tags.isLiveBlog) FacebookOpenGraphImage.live
+    else if(tags.tags.exists(_.id == "tone/news") && trail.webPublicationDate.getYear < DateTime.now().getYear()) {
+      if(isFromTheObserver) {
+        TwitterImage.contentAgeNoticeObserver(trail.webPublicationDate.getYear)
+      } else {
+        TwitterImage.contentAgeNotice(trail.webPublicationDate.getYear)
+      }
+    }
     else starRating.map(rating =>
         if(isFromTheObserver) {
             FacebookOpenGraphImage.starRatingObserver(rating)

@@ -223,6 +223,24 @@ object FacebookOpenGraphImage extends OverlayBase64 {
         }
         new ShareImage(image, FacebookShareImageLogoOverlay.isSwitchedOn)
     }
+    def getContentAgeFileName(prefix: String, publicationYear: Int): String = {
+      // WARNING: we have only produced these content age images up to the year 2025
+      if (publicationYear < 2025) {
+        s"${prefix}-age-${publicationYear}.png"
+      } else {
+        s"${prefix}-default.png"
+      }
+    }
+    def contentAgeNotice(publicationYear: Int): ShareImage = {
+      val image = s"overlay-base64=${overlayUrlBase64(getContentAgeFileName("tg", publicationYear))}"
+
+      new ShareImage(image, FacebookShareImageLogoOverlay.isSwitchedOn)
+    }
+    def contentAgeNoticeObserver(publicationYear: Int): ShareImage = {
+      val image = s"overlay-base64=${overlayUrlBase64(getContentAgeFileName("to", publicationYear))}"
+
+      new ShareImage(image, FacebookShareImageLogoOverlay.isSwitchedOn)
+    }
     val defaultObserver = new ShareImage(s"overlay-base64=${overlayUrlBase64("to-default.png")}", FacebookShareImageLogoOverlay.isSwitchedOn)
     val opinionsObserver = new ShareImage(s"overlay-base64=${overlayUrlBase64("to-opinions.png")}", FacebookShareImageLogoOverlay.isSwitchedOn)
 }
