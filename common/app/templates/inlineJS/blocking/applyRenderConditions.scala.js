@@ -70,7 +70,7 @@
     }
 
     /*
-        This is a shortened version of shouldHideSupportMessaging() from
+        This is a shortened version of shouldSeeReaderRevenue() from
         user-features.js. Since we are blocking rendering at this time we
         can't inline all required JS from this module.
     */
@@ -88,12 +88,8 @@
         return diffDays <= 180;
     }
 
-    function shouldHideSupportMessaging() {
-        var value = getCookieValue('gu_show_support_messaging');
-        if (!value) {
-            return false;
-        }
-        return value === 'false';
+    function isPayingMember() {
+        return getCookieValue('gu_paying_member') === 'true';
     }
 
     function forcePercentagePadding() {
@@ -144,8 +140,8 @@
         documentElement.style.fontSize = baseFontSize
     }
 
-    if (shouldHideSupportMessaging()) {
-        docClass += ' hide-support-messaging'
+    if (isPayingMember()) {
+        docClass += ' is-paying-member';
     }
 
     if (isRecentContributor()) {
