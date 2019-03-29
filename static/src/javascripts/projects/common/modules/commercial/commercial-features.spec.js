@@ -7,7 +7,7 @@ import { isUserLoggedIn as isUserLoggedIn_ } from 'common/modules/identity/api';
 import {
     isPayingMember as isPayingMember_,
     isRecentOneOffContributor as isRecentOneOffContributor_,
-    shouldHideSupportMessaging as shouldHideSupportMessaging_,
+    userIsSupporter as userIsSupporter_,
     isAdFreeUser as isAdFreeUser_,
 } from 'common/modules/commercial/user-features';
 
@@ -16,10 +16,7 @@ const isRecentOneOffContributor: JestMockFn<
     *,
     *
 > = (isRecentOneOffContributor_: any);
-const shouldHideSupportMessaging: JestMockFn<
-    *,
-    *
-> = (shouldHideSupportMessaging_: any);
+const userIsSupporter: JestMockFn<*, *> = (userIsSupporter_: any);
 const isAdFreeUser: JestMockFn<*, *> = (isAdFreeUser_: any);
 const getBreakpoint: any = getBreakpoint_;
 const isUserLoggedIn: any = isUserLoggedIn_;
@@ -29,7 +26,7 @@ const CommercialFeatures = commercialFeatures.constructor;
 jest.mock('common/modules/commercial/user-features', () => ({
     isPayingMember: jest.fn(),
     isRecentOneOffContributor: jest.fn(),
-    shouldHideSupportMessaging: jest.fn(),
+    userIsSupporter: jest.fn(),
     isAdFreeUser: jest.fn(),
 }));
 
@@ -70,7 +67,7 @@ describe('Commercial features', () => {
         getBreakpoint.mockReturnValue('desktop');
         isPayingMember.mockReturnValue(false);
         isRecentOneOffContributor.mockReturnValue(false);
-        shouldHideSupportMessaging.mockReturnValue(false);
+        userIsSupporter.mockReturnValue(false);
         isAdFreeUser.mockReturnValue(false);
         isUserLoggedIn.mockReturnValue(true);
 
