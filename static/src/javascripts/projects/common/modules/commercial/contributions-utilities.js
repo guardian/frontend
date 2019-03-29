@@ -32,7 +32,7 @@ import { throwIfEmptyArray } from 'lib/array-utils';
 import { epicButtonsTemplate } from 'common/modules/commercial/templates/acquisitions-epic-buttons';
 import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templates/acquisitions-epic-control';
 import { epicLiveBlogTemplate } from 'common/modules/commercial/templates/acquisitions-epic-liveblog';
-import { userIsSupporter } from 'common/modules/commercial/user-features';
+import { shouldHideSupportMessaging } from 'common/modules/commercial/user-features';
 import {
     supportContributeURL,
     supportSubscribeGeoRedirectURL,
@@ -144,9 +144,9 @@ const userIsInCorrectCohort = (
 ): boolean => {
     switch (userCohort) {
         case 'OnlyExistingSupporters':
-            return userIsSupporter();
+            return shouldHideSupportMessaging();
         case 'OnlyNonSupporters':
-            return !userIsSupporter();
+            return !shouldHideSupportMessaging();
         case 'Everyone':
         default:
             return true;
