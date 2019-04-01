@@ -1,5 +1,5 @@
 // @flow
-import { userIsSupporter } from 'common/modules/commercial/user-features';
+import { shouldHideSupportMessaging } from 'common/modules/commercial/user-features';
 import { pageShouldHideReaderRevenue } from 'common/modules/commercial/contributions-utilities';
 import { supportContributeURL } from 'common/modules/commercial/support-utilities';
 import config from 'lib/config';
@@ -44,7 +44,7 @@ export const adblockTest: ABTest = {
     showForSensitive: true,
     canRun() {
         return (
-            !userIsSupporter() &&
+            !shouldHideSupportMessaging() &&
             !pageShouldHideReaderRevenue() &&
             !config.get('page.hasShowcaseMainElement')
         );
