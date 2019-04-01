@@ -88,12 +88,15 @@
         return diffDays <= 180;
     }
 
+
     function shouldHideSupportMessaging() {
-        var value = getCookieValue('gu_show_support_messaging');
-        if (!value) {
-            return false;
-        }
-        return value === 'false';
+        return getCookieValue('gu_paying_member') === 'true' ||
+        getCookieValue('gu_digital_subscriber') === 'true' ||
+        getCookieValue('gu_recurring_contributor') === 'true' ||
+        (
+            !!getCookieValue('gu_show_support_messaging') &&
+            getCookieValue('gu_show_support_messaging') === 'false'
+        );
     }
 
     function forcePercentagePadding() {
