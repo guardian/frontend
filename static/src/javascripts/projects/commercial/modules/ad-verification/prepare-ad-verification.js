@@ -1,7 +1,8 @@
 // @flow strict
 
 import { loadScript } from 'lib/load-script';
-import config from 'lib/config';
+import { commercialAdVerification } from 'common/modules/experiments/tests/commercial-ad-verification.js';
+import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 
 const errorHandler = (error: Error) => {
     // Looks like some plugins block ad-verification
@@ -16,7 +17,7 @@ export const init = (start: () => void): Promise<void> => {
 
     start();
 
-    if (config.get('switches.confiant', false)) {
+    if (isInVariantSynchronous(commercialAdVerification, 'variant')) {
         // vivify the _clrm object
 
         /* eslint-disable no-underscore-dangle */

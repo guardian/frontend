@@ -17,16 +17,6 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-    val ConfiantSwitch = Switch(
-    Commercial,
-    "confiant",
-    "Enables ad verification",
-    owners = Seq(Owner.withGithub("frankie297")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
   val CarrotTrafficDriverSwitch = Switch(
     Commercial,
     "carrot-traffic-driver",
