@@ -72,7 +72,7 @@ trait ABTestSwitches {
     "Test the outbrain widget",
     owners = Seq(Owner.withGithub("frankie297")),
     safeState = Off,
-    sellByDate = new LocalDate(2019, 3, 29),
+    sellByDate = new LocalDate(2019, 4, 22),
     exposeClientSide = true
   )
 
