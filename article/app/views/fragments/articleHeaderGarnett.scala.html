@@ -60,7 +60,7 @@
                     <div class="content__label-interview">Interview</div>
                 }
 
-                @if(article.content.tags.tags.exists(_.id == "tone/news") &&  !(article.elements.hasShowcaseMainElement)) {
+                @if(article.content.tags.tags.exists(_.id == "tone/news")) {
                     @fragments.contentAgeNotice(ageNotice, ariaHidden = true)
                 }
 
