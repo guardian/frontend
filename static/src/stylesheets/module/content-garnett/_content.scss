@@ -855,34 +855,33 @@
 
 .old-article-message {
     @include fs-textSans(1);
+    background: $highlight-main;
     display: inline-block;
-    color: $brightness-46;
-    margin-bottom: $gs-baseline;
+    color: $brightness-7;
+    margin-bottom: $gs-baseline / 2;
+    padding: ($gs-baseline / 4) ($gs-gutter / 4);
 
     .old-article-message--clock svg {
-        fill: $brightness-46;
-        margin-bottom: -1px;
+        fill: currentColor;
     }
-}
 
-.tonal--tone-media {
-    .old-article-message {
-        color: $brightness-86;
+    .content__headline-standfirst-wrapper & {
+        @include fs-textSans(5);
+        padding: ($gs-baseline / 2) ($gs-gutter / 2);
+        margin-top: $gs-baseline / 2;
 
-        .old-article-message--clock svg {
-            fill: $brightness-86;
+        @include mq(mobileLandscape) {
+            padding-left: $gs-gutter;
         }
-    }
-}
 
-.content--interactive {
-    .tonal__main--tone-news {
-        .old-article-message {
-            @include mq(tablet) {
-                position: absolute;
-                left: 0;
-                top: 44px;
-            }
+        @include mq(tablet) {
+            margin-left: -$gs-gutter;
+        }
+
+        @include mq(leftCol) {
+            margin-left: -$gs-gutter / 2;
+            margin-top: 0;
+            padding-left: $gs-gutter / 2;
         }
     }
 }

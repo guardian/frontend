@@ -3,7 +3,12 @@
 @import views.html.fragments.langAttributes
 @import views.support.ContributorLinks
 @import views.support.TrailCssClasses.toneClass
+@import views.support.ContentOldAgeDescriber
 @import _root_.model.ContentDesignType.RichContentDesignType
+
+@ageNotice() = @{
+    ContentOldAgeDescriber(article.content)
+}
 
 
     <header class="content__head content__head--article tonal__head tonal__head--@toneClass(article)">
@@ -22,6 +27,10 @@
                     <div class="content__label-interview">Interview</div>
                 }
 
+                @if(article.content.tags.tags.exists(_.id == "tone/news")) {
+                    @fragments.contentAgeNotice(ageNotice, ariaHidden = true)
+                }
+
                 <h1 class="content__headline" itemprop="headline" @langAttributes(article.content)>
                     @if(article.tags.isInterview) {
                         <span class="content__headline--interview-wrapper">@Html(article.trail.headline)</span>
@@ -29,6 +38,10 @@
                         @Html(article.trail.headline)
                     }
                 </h1>
+
+                @if(article.content.tags.tags.exists(_.id == "tone/news")) {
+                    @fragments.contentAgeNotice(ageNotice, isHidden = true)
+                }
 
                 @if(article.tags.isInterview) {
                     @article.trail.byline.map { text =>
@@ -51,6 +64,10 @@
                     <div class="content__label-interview">Interview</div>
                 }
 
+                @if(article.content.tags.tags.exists(_.id == "tone/news")) {
+                    @fragments.contentAgeNotice(ageNotice, ariaHidden = true)
+                }
+
                 <h1 class="content__headline @if(article.content.starRating && !article.elements.hasShowcaseMainElement) {content__headline--no-margin-bottom}" itemprop="headline" @langAttributes(article.content)>
                     @if(article.tags.isInterview) {
                         <span class="content__headline--interview-wrapper">@Html(article.trail.headline)</span>
@@ -58,6 +75,10 @@
                         @Html(article.trail.headline)
                     }
                 </h1>
+
+                @if(article.content.tags.tags.exists(_.id == "tone/news")) {
+                    @fragments.contentAgeNotice(ageNotice, isHidden = true)
+                }
 
                 @if(article.tags.isInterview) {
                     @article.trail.byline.map { text =>
