@@ -1074,6 +1074,9 @@ $quote-mark: 35px;
         .content__headline-standfirst-wrapper {
             @include mq($from: leftCol) {
                 grid-area: standfirst;
+                .old-article-message {
+                    display: none;
+                }
             }
         }
 

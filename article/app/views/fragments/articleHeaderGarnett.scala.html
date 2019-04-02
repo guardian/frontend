@@ -39,10 +39,6 @@
                     }
                 </h1>
 
-                @if(article.content.tags.tags.exists(_.id == "tone/news")) {
-                    @fragments.contentAgeNotice(ageNotice, isHidden = true)
-                }
-
                 @if(article.tags.isInterview) {
                     @article.trail.byline.map { text =>
                         <span class="content__headline--byline-interview">@ContributorLinks(text, article.tags.contributors)</span>
