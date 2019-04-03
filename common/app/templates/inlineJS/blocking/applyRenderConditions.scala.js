@@ -148,7 +148,7 @@
     }
 
     if (shouldHideSupportMessaging()) {
-        docClass += ' hide-support-messaging'
+        docClass += ' hide-support-messaging';
     }
 
     if (isRecentContributor()) {
