@@ -14,7 +14,7 @@ import {
     getLastOneOffContributionDate,
     getDaysSinceLastOneOffContribution,
     isRecentOneOffContributor,
-    shouldShowSupportMessaging,
+    shouldNotBeShownSupportMessaging,
 } from './user-features.js';
 
 jest.mock('lib/raven');
@@ -34,7 +34,7 @@ const PERSISTENCE_KEYS = {
     ACTION_REQUIRED_FOR_COOKIE: 'gu_action_required_for',
     DIGITAL_SUBSCRIBER_COOKIE: 'gu_digital_subscriber',
     SUPPORT_ONE_OFF_CONTRIBUTION_COOKIE: 'gu.contributions.contrib-timestamp',
-    SHOW_SUPPORT_MESSAGING_COOKIE: 'gu_show_support_messaging',
+    HIDE_SUPPORT_MESSAGING_COOKIE: 'gu_hide_support_messaging',
 };
 
 const setAllFeaturesData = opts => {
@@ -49,7 +49,7 @@ const setAllFeaturesData = opts => {
     addCookie(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE, 'true');
     addCookie(PERSISTENCE_KEYS.RECURRING_CONTRIBUTOR_COOKIE, 'true');
     addCookie(PERSISTENCE_KEYS.DIGITAL_SUBSCRIBER_COOKIE, 'true');
-    addCookie(PERSISTENCE_KEYS.SHOW_SUPPORT_MESSAGING_COOKIE, 'true');
+    addCookie(PERSISTENCE_KEYS.HIDE_SUPPORT_MESSAGING_COOKIE, 'true');
     addCookie(
         PERSISTENCE_KEYS.AD_FREE_USER_COOKIE,
         adFreeExpiryDate.getTime().toString()
@@ -78,7 +78,7 @@ const deleteAllFeaturesData = () => {
     removeCookie(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE);
     removeCookie(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE);
     removeCookie(PERSISTENCE_KEYS.ACTION_REQUIRED_FOR_COOKIE);
-    removeCookie(PERSISTENCE_KEYS.SHOW_SUPPORT_MESSAGING_COOKIE);
+    removeCookie(PERSISTENCE_KEYS.HIDE_SUPPORT_MESSAGING_COOKIE);
 };
 
 beforeAll(() => {
@@ -308,11 +308,11 @@ describe('The isDigitalSubscriber getter', () => {
     });
 });
 
-describe('The shouldShowSupportMessaging getter', () => {
+describe('The shouldNotBeShownSupportMessaging getter', () => {
     it('Returns false when the user is logged out', () => {
         jest.resetAllMocks();
         isUserLoggedIn.mockReturnValue(false);
-        expect(shouldShowSupportMessaging()).toBe(false);
+        expect(shouldNotBeShownSupportMessaging()).toBe(false);
     });
 
     describe('When the user is logged in', () => {
@@ -321,19 +321,19 @@ describe('The shouldShowSupportMessaging getter', () => {
             isUserLoggedIn.mockReturnValue(true);
         });
 
-        it('Returns true when the user has a `true` support messaging cookie', () => {
-            addCookie(PERSISTENCE_KEYS.SHOW_SUPPORT_MESSAGING_COOKIE, 'true');
-            expect(shouldShowSupportMessaging()).toBe(true);
+        it('Returns true when the user has a `true` hide support messaging cookie', () => {
+            addCookie(PERSISTENCE_KEYS.HIDE_SUPPORT_MESSAGING_COOKIE, 'true');
+            expect(shouldNotBeShownSupportMessaging()).toBe(true);
         });
 
-        it('Returns false when the user has a `false` support messaging cookie', () => {
-            addCookie(PERSISTENCE_KEYS.SHOW_SUPPORT_MESSAGING_COOKIE, 'false');
-            expect(shouldShowSupportMessaging()).toBe(false);
+        it('Returns false when the user has a `false` hide support messaging cookie', () => {
+            addCookie(PERSISTENCE_KEYS.HIDE_SUPPORT_MESSAGING_COOKIE, 'false');
+            expect(shouldNotBeShownSupportMessaging()).toBe(false);
         });
 
-        it('Returns false when the user has no support messaging cookie', () => {
-            removeCookie(PERSISTENCE_KEYS.SHOW_SUPPORT_MESSAGING_COOKIE);
-            expect(shouldShowSupportMessaging()).toBe(false);
+        it('Returns false when the user has no hide support messaging cookie', () => {
+            removeCookie(PERSISTENCE_KEYS.HIDE_SUPPORT_MESSAGING_COOKIE);
+            expect(shouldNotBeShownSupportMessaging()).toBe(false);
         });
     });
 });
