@@ -12,6 +12,7 @@ import {
     upgradeRichLinks,
 } from 'common/modules/article/rich-links';
 import { upgradeMembershipEvents } from 'common/modules/article/membership-events';
+import { fixSecondaryColumn } from 'common/modules/fix-secondary-column';
 import { geoMostPopular } from 'common/modules/onward/geo-most-popular';
 import { handleCompletion as handleQuizCompletion } from 'common/modules/atoms/quiz';
 import { init as initLiveblogCommon } from 'bootstraps/enhanced/article-liveblog-common';
@@ -28,6 +29,17 @@ const modules = {
             $('.element-pass-cmp').each(el => {
                 el.src = `${el.src}?CMP=${allvars.CMP}`;
             });
+        }
+    },
+
+    initShowcaseFix() {
+        if (
+            config.get('page.hasShowcaseMainElement') &&
+            isBreakpoint({
+                min: 'wide',
+            })
+        ) {
+            fixSecondaryColumn();
         }
     },
 
@@ -62,6 +74,7 @@ const init = () => {
     catchErrorsWithContext([
         ['article-trails', initTrails],
         ['article-liveblog-common', initLiveblogCommon],
+        ['article-showcase-fix', modules.initShowcaseFix],
         ['article-righthand-component', modules.initRightHandComponent],
         ['article-cmp-param', modules.initCmpParam],
         ['article-quiz-listeners', modules.initQuizListeners],
