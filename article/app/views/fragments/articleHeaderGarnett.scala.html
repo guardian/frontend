@@ -22,13 +22,12 @@
         <div class="content__header tonal__header">
 
             <div class="u-cf">
+                @if(article.content.tags.tags.exists(_.id == "tone/news")) {
+                    @fragments.contentAgeNotice(ageNotice, ariaHidden = true)
+                }
 
                 @if((article.tags.isInterview)){
                     <div class="content__label-interview">Interview</div>
-                }
-
-                @if(article.content.tags.tags.exists(_.id == "tone/news")) {
-                    @fragments.contentAgeNotice(ageNotice, ariaHidden = true)
                 }
 
                 <h1 class="content__headline" itemprop="headline" @langAttributes(article.content)>
@@ -55,13 +54,12 @@
         <div class="content__header tonal__header">
 
             <div class="u-cf">
+                @if(article.content.tags.tags.exists(_.id == "tone/news")) {
+                    @fragments.contentAgeNotice(ageNotice, ariaHidden = true)
+                }
 
                 @if((article.tags.isInterview)){
                     <div class="content__label-interview">Interview</div>
-                }
-
-                @if(article.content.tags.tags.exists(_.id == "tone/news")) {
-                    @fragments.contentAgeNotice(ageNotice, ariaHidden = true)
                 }
 
                 <h1 class="content__headline @if(article.content.starRating && !article.elements.hasShowcaseMainElement) {content__headline--no-margin-bottom}" itemprop="headline" @langAttributes(article.content)>
