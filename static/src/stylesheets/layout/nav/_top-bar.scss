@@ -75,7 +75,7 @@
     z-index: $zindex-main-menu + 2;
 
     .new-header--open & {
-        // Needs to sit below the menu, and the veggie burger
+        // Needs to sit below the menu, and the veggie disc
         z-index: $zindex-main-menu - 2;
     }
 }

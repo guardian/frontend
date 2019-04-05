@@ -4,7 +4,7 @@
     font-size: 20px;
     left: 0;
     line-height: 1;
-    margin-right: 6px + ($veggie-burger / 2);
+    margin-right: 6px + ($veggie-disc / 2);
     padding-bottom: $gs-baseline * 2;
     top: 0;
     z-index: $zindex-main-menu;
@@ -24,11 +24,11 @@
     }
 
     @include mq(mobileMedium) {
-        margin-right: 8px + ($veggie-burger / 2);
+        margin-right: 8px + ($veggie-disc / 2);
     }
 
     @include mq(mobileLandscape) {
-        margin-right: $gs-gutter + ($veggie-burger / 2);
+        margin-right: $gs-gutter + ($veggie-disc / 2);
     }
 
     @include mq(desktop) {

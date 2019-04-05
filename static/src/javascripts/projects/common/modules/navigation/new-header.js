@@ -103,7 +103,7 @@ const toggleMenu = (): void => {
     const documentElement = document.documentElement;
     const openClass = 'new-header--open';
     const globalOpenClass = 'nav-is-open';
-    const trigger = document.querySelector('.veggie-burger');
+    const trigger = document.querySelector('.veggie-disc');
     const newHeader = document.querySelector('.new-header');
     const menuToggle = newHeader && newHeader.querySelector('.js-change-link');
     const isOpen = trigger && trigger.getAttribute('aria-expanded') === 'true';
@@ -166,7 +166,7 @@ const toggleMenu = (): void => {
             });
 
         /*
-            Between tablet and desktop the veggie-burger does not have a fixed
+            Between tablet and desktop the veggie-disc does not have a fixed
             margin to the right. Therefore we have to calculate it's midpoint
             and apply it as a margin to the menu.
             The listeners have to be applied always, because the device
@@ -211,7 +211,7 @@ const toggleMenu = (): void => {
 
         menuToggle.setAttribute(
             'data-link-name',
-            `nav2 : veggie-burger : ${isOpen ? 'show' : 'hide'}`
+            `nav2 : veggie-disc : ${isOpen ? 'show' : 'hide'}`
         );
 
         if (trigger) {

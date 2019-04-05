@@ -38,7 +38,7 @@ from scrolling */
 .new-header__edition-container {
     position: absolute;
     top: 0;
-    // Needs to sit above the menu, and the veggie burger
+    // Needs to sit above the menu, and the veggie disc
     z-index: $zindex-main-menu + 2;
     transform: translateX(100%);
 
@@ -96,7 +96,7 @@ from scrolling */
 .new-header__logo {
     float: right;
     margin-top: 10px;
-    margin-right: $veggie-burger + 12px;
+    margin-right: $veggie-disc + 12px;
     margin-bottom: $gs-baseline * 2;
 
     @include mq(mobileMedium) {
@@ -123,14 +123,14 @@ from scrolling */
     .new-header--slim & {
         position: absolute;
         margin: 0;
-        right: $veggie-burger;
+        right: $veggie-disc;
         top: $gs-baseline / 4;
         z-index: $zindex-main-menu;
 
         body:not(.has-page-skin) & {
             @include mq(mobileLandscape) {
                 margin-right: 0;
-                right: $veggie-burger + ($gs-gutter / 2);
+                right: $veggie-disc + ($gs-gutter / 2);
             }
 
             @include mq(desktop) {
@@ -147,8 +147,8 @@ from scrolling */
 }
 
 .inline-the-guardian-roundel__svg {
-    height: $veggie-burger;
-    width: $veggie-burger;
+    height: $veggie-disc;
+    width: $veggie-disc;
 
     & path:nth-child(1) {
         fill: $brightness-100;

@@ -1,9 +1,9 @@
-.veggie-burger {
+.veggie-disc {
     background-color: $highlight-main;
     bottom: 50px;
     color: $brightness-7;
-    height: $veggie-burger;
-    width: $veggie-burger;
+    height: $veggie-disc;
+    width: $veggie-disc;
     position: absolute;
     border: 0;
     border-radius: 50%;
@@ -22,7 +22,7 @@
     }
 }
 
-.veggie-burger__icon {
+.veggie-disc__icon {
     margin-top: -1px;
     right: 0;
     margin-left: auto;

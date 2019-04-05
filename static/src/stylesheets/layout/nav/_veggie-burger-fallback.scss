@@ -1,4 +1,4 @@
-.veggie-burger-fallback {
+.veggie-disc-fallback {
     &:checked {
         & ~ .menu {
             @include mq($until: desktop) {
@@ -17,10 +17,10 @@
             }
         }
 
-        & ~ .veggie-burger {
+        & ~ .veggie-disc {
             z-index: $zindex-main-menu + 1;
 
-            .veggie-burger__icon {
+            .veggie-disc__icon {
                 background-color: transparent;
 
                 &:before {
@@ -34,7 +34,7 @@
                 }
             }
 
-            .veggie-burger__label {
+            .veggie-disc__label {
                 @include mq(desktop) {
                     @include u-h();
                 }
@@ -43,7 +43,7 @@
     }
 }
 
-.veggie-burger-fallback {
+.veggie-disc-fallback {
     &:focus {
         & ~ .new-header__menu-toggle .pillar-link {
             color: $brightness-100;
