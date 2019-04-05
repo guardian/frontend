@@ -13,7 +13,7 @@ object UrlHelpers {
   // SlimHeaderDropdown can only be seen on slim header content, e.g. interactives
   // It's the icon with the three dots in the top left
   case object SlimHeaderDropdown extends Position
-  // SideMenu is the full menu you get from clicking the hamburger icon on mobile
+  // SideMenu is the full menu you get from clicking the veggie disc icon on mobile
   case object SideMenu extends Position
   case object AmpHeader extends Position
   case object Footer extends Position
