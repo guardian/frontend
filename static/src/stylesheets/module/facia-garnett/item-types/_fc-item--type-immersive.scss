@@ -117,22 +117,6 @@
             content: none;
         }
 
-        &.fc-item--list-media-mobile .fc-item__kicker:after,
-        &.fc-item--list-mobile .fc-item__kicker:after
-        {
-            content: '/';
-
-            @include mq($from: tablet) {
-                content: none;
-            }
-        }
-
-        &.fc-item--list-media-tablet .fc-item__kicker:after,
-        &.fc-item--list-tablet .fc-item__kicker:after
-        {
-            content: '/';
-        }
-
         .fc-item__meta {
             margin-left: auto;
             color: #ffffff;

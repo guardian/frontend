@@ -422,13 +422,6 @@ $fc-item-gutter: $gs-gutter / 4;
 .fc-item__kicker,
 .fc-sublink__kicker,
 .rich-link__kicker {
-    &:after {
-        content: '/';
-        display: inline-block;
-        margin-left: .2em;
-        color: mix($brightness-7, #ffffff, 20%);
-    }
-
     &:hover:after {
         text-decoration: none;
     }
