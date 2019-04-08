@@ -4,18 +4,12 @@ $f-sans-serif-text: 'Guardian Text Sans Web', 'Helvetica Neue', Helvetica, Arial
 
 $font-scale: (
     header: (
+        15: (font-size: 14, line-height: 18),
         1: (font-size: 16, line-height: 20),
         2: (font-size: 18, line-height: 24),
         3: (font-size: 20, line-height: 24),
         4: (font-size: 22, line-height: 28),
         5: (font-size: 24, line-height: 28),
-    ),
-    headerGarnett: (
-        1: (font-size: 14, line-height: 18),
-        2: (font-size: 16, line-height: 20),
-        3: (font-size: 18, line-height: 22),
-        4: (font-size: 20, line-height: 24),
-        5: (font-size: 22, line-height: 26),
     ),
     headline: (
         1: (font-size: 14, line-height: 18),
@@ -82,19 +76,6 @@ $font-scale: (
 
     @if $size-only == false {
         @include f-header;
-    }
-}
-
-@mixin f-headerGarnett {
-    font-family: $f-serif-headline;
-    font-weight: 900;
-}
-
-@mixin fs-headerGarnett($level, $size-only: false) {
-    @include font-size(get-font-size(header, $level), get-line-height(header, $level));
-
-    @if $size-only == false {
-        @include f-headerGarnett;
     }
 }
 
