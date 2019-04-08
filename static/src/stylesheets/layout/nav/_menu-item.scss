@@ -70,7 +70,7 @@
     }
 
     @include mq(desktop) {
-        font-size: 17px;
+        font-size: 16px;
         line-height: 1.2;
         padding: ($gs-baseline / 2) 0;
     }
