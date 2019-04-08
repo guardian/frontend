@@ -23,6 +23,7 @@ const sections = [
     'environment',
 ];
 const keywordTags = ['info%2Fseries%2Fdigital-blog'];
+const filterOut = "ng-interactive|picture";
 const fetchPath = path => fetch(path).then(getEndpointsFromResponse);
 
 Promise.all([
@@ -33,6 +34,7 @@ Promise.all([
     ...sections.map(section => fetchPath(`/api/mostread/${section}?count=25`)),
 ])
     .then(urlArrays => [].concat(...urlArrays)) // Flatten the array of arrays of paths
+    .then(urls => urls.filter(url => !url.match(filterOut))) // Filter out unsupported urls
     .then(
         run({
             checkIfAmp: true,
