@@ -94,7 +94,7 @@
     }
 
     .content__series-label {
-        @include fs-headlineGarnett(1);
+        @include fs-headline(3);
         color: $brightness-100;
     }
 

@@ -96,7 +96,7 @@
 
 .goal-attempts__off-target,
 .goal-attempts__on-target {
-    @include fs-headlineGarnett(6);
+    @include fs-headline(65);
     line-height: .8;
     box-sizing: border-box;
     padding: 2px 4px;
@@ -155,7 +155,7 @@
 }
 
 .bar-fight__bar {
-    @include fs-headlineGarnett(6);
+    @include fs-headline(65);
     line-height: .8;
     box-sizing: border-box;
     padding: 2px 6px 9px;

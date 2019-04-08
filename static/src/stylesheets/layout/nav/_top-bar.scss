@@ -23,8 +23,7 @@
 }
 
 .top-bar__item {
-    @include fs-textSans(2);
-    font-size: 16px;
+    @include fs-textSans(5);
     color: $brightness-100;
     float: left;
     line-height: 1;
