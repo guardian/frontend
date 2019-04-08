@@ -1,19 +1,19 @@
-const https = require("https");
-const os = require("os");
-const fs = require("fs");
+const https = require('https');
+const os = require('os');
+const fs = require('fs');
 
 const defaultOptions = {
-    hostname: "cdn.ampproject.org",
-    path: "/v0/validator.js"
+    hostname: 'cdn.ampproject.org',
+    path: '/v0/validator.js',
 };
 const devOptions = {
     headers: {
-        Cookie: "AMP_CANARY=1;"
-    }
+        Cookie: 'AMP_CANARY=1;',
+    },
 };
 const tempFilenames = {
-    release: "/release.js",
-    preRelease: "/pre-release.js"
+    release: '/release.js',
+    preRelease: '/pre-release.js',
 };
 
 const fetchValidator = devChannel => {
@@ -25,7 +25,7 @@ const fetchValidator = devChannel => {
         );
         const errorMessage = `Unable to retrieve ${
             options.path
-        } with dev channel ${devChannel ? "enabled" : "disabled"}.`;
+        } with dev channel ${devChannel ? 'enabled' : 'disabled'}.`;
 
         const req = https.get(options, res => {
             if (res.statusCode !== 200) {
@@ -39,7 +39,7 @@ const fetchValidator = devChannel => {
                 resolve(res);
             }
         });
-        req.on("error", error => {
+        req.on('error', error => {
             reject(new Error(`${errorMessage} ${error.message}`));
         });
         req.end();
@@ -53,8 +53,8 @@ const fetchValidator = devChannel => {
 
         return new Promise((resolve, reject) => {
             res.pipe(writeStream)
-                .on("finish", () => resolve(writeStream.path))
-                .on("error", error => {
+                .on('finish', () => resolve(writeStream.path))
+                .on('error', error => {
                     reject(error);
                     writeStream.close();
                 });
