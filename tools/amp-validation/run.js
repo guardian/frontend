@@ -1,10 +1,10 @@
-const amphtmlValidator = require('amphtml-validator');
-const partition = require('lodash/partition');
+const amphtmlValidator = require("amphtml-validator");
+const partition = require("lodash/partition");
 
-const validatorJs = require('./validator-js');
-const fetchPage = require('./fetch-page');
+const validatorJs = require("./validator-js");
+const fetchPage = require("./fetch-page");
 
-const isDev = process.env.NODE_ENV === 'dev' || false;
+const isDev = process.env.NODE_ENV === "dev" || false;
 const failureThreshold = 2;
 
 const onError = error => {
@@ -25,17 +25,17 @@ const runValidator = (validator, options) => endpoint =>
     fetchPage
         .get({
             endpoint,
-            host: isDev ? fetchPage.hosts.dev : fetchPage.hosts.amp,
+            host: isDev ? fetchPage.hosts.dev : fetchPage.hosts.amp
         })
         .then(res => {
             const result = validator.validateString(res.body);
-            const pass = result.status === 'PASS';
+            const pass = result.status === "PASS";
             const message = `${result.status} for: ${endpoint}`;
 
             (pass ? console.log : console.error)(message);
             if (options.logErrors) {
                 result.errors.forEach(error => {
-                    (error.severity === 'ERROR' ? console.error : console.warn)(
+                    (error.severity === "ERROR" ? console.error : console.warn)(
                         buildErrorMessage(error)
                     );
                 });
@@ -55,14 +55,14 @@ const maybeRunValidator = (validator, options) => endpoint => {
     return fetchPage
         .get({
             endpoint,
-            host: fetchPage.hosts.amp,
+            host: fetchPage.hosts.amp
         })
         .then(res => {
             if (
                 (options.checkIfAmp &&
                     res.body.includes('<link rel="amphtml" href="')) ||
                 (options.checkIfDotComponents &&
-                    res.resp.headers['x-gu-dotcomponents'])
+                    res.resp.headers["x-gu-dotcomponents"])
             ) {
                 return validate(endpoint);
             }
@@ -93,7 +93,7 @@ module.exports = opts => endpoints => {
     const options = Object.assign(
         {
             checkIfAmp: false,
-            logErrors: true,
+            logErrors: true
         },
         opts
     );
