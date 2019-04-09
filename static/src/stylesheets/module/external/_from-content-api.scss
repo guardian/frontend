@@ -68,10 +68,6 @@
     > h3 {
         @include fs-bodyHeading(2);
         margin: 0;
-
-        @include mq(tablet) {
-            @include fs-bodyHeading(3, true);
-        }
     }
     > p,
     > figure,
