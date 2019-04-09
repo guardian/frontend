@@ -113,7 +113,7 @@
 }
 
 .identity-upsell-title {
-    @include fs-headline(35);
+    @include fs-headline(3);
     font-weight: 600;
     margin-bottom: $gs-baseline * 2;
     &.identity-upsell-title--hero {

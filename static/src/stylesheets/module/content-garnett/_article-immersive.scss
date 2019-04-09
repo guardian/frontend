@@ -751,12 +751,10 @@
     }
 
     .content__standfirst--immersive-article {
-        @include fs-headline(1);
+        @include fs-headline(3);
+        font-weight: 300;
         position: relative;
         padding-left: 0px;
-        font-size: 20px;
-        line-height: 24px;
-        font-weight: 200;
         margin-top: $gs-baseline / 2;
         max-width: 280px;
         margin-bottom: $gs-baseline;
@@ -764,8 +762,6 @@
 
         @include mq($from: tablet) {
             max-width: 400px;
-            font-size: 22px;
-            line-height: 25px;
             margin-top: 0;
         }
 

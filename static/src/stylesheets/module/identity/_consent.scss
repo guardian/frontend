@@ -71,7 +71,7 @@
 }
 
 .identity-consent-journey-step__title {
-    @include fs-headline(35);
+    @include fs-headline(3);
     font-weight: 500;
     .identity-consent-journey-step--intro & {
         @include fs-headline(5, true);

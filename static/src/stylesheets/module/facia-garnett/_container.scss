@@ -126,17 +126,10 @@ $header-image-size-desktop: 100px;
 .fc-container__title__text,
 .fc-container__header__title--sticky,
 .container__title {
-    @include fs-header(4);
-    font-size: 24px;
+    @include fs-header(3);
     position: relative;
     padding-bottom: $gs-baseline/3;
-    line-height: get-line-height(header, 2);
     color: $brightness-7;
-
-
-    @include mq(leftCol, wide) {
-        @include font-size(20px, 24px);
-    }
 
     .has-page-skin & {
         @include mq(wide) {
@@ -553,7 +546,7 @@ $header-image-size-desktop: 100px;
         color: $brightness-7;
     }
 
-    @include fs-header(4);
+    @include fs-header(3);
     @include mq(leftCol) {
         float: left;
         width: $left-column;
