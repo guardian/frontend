@@ -227,8 +227,7 @@ $quote-mark: 35px;
     }
 
     .content__article-body {
-        font-size: 17px;
-        line-height: 24px;
+        @include fs-bodyCopy(2);
 
         @include mq(tablet) {
             margin-left: 0;
@@ -313,8 +312,6 @@ $quote-mark: 35px;
     .content__standfirst {
         @include fs-bodyCopy(2);
         font-weight: 700;
-        font-size: 17px;
-        line-height: 22px;
         border-top: 0;
         color: $brightness-7;
         padding-top: 2px;
