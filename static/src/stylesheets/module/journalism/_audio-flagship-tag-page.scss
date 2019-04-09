@@ -2,9 +2,9 @@
 
 #flagship-audio {
     @include fs-headline(3);
+    font-weight: 300;
     padding-top: 0;
     margin-bottom: 0;
-
 
     .ad-slot,
     .ad-slot--paid-for-badge {
