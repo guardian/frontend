@@ -402,6 +402,8 @@ $quote-mark: 35px;
         .pullquote-cite,
         .pullquote-paragraph {
             display: inline;
+            font-family: $f-serif-headline;
+            font-weight: 300;
         }
 
         .inline-quote,
@@ -446,7 +448,7 @@ $quote-mark: 35px;
 
         .pullquote-cite,
         .pullquote-paragraph {
-            @include fs-headline(3);
+            @include fs-headline(3, true);
         }
 
         .inline-garnett-quote {
@@ -472,9 +474,9 @@ $quote-mark: 35px;
 
         .pullquote-cite,
         .pullquote-paragraph {
-            @include fs-headline(35);
+            @include fs-headline(35, true);
             @include mq(desktop) {
-                @include fs-headline(36);
+                @include fs-headline(36, true);
             }
         }
     }
@@ -490,9 +492,9 @@ $quote-mark: 35px;
 
         .pullquote-cite,
         .pullquote-paragraph {
-            @include fs-headline(35);
+            @include fs-headline(35, true);
             @include mq(desktop) {
-                @include fs-headline(36);
+                @include fs-headline(36, true);
             }
         }
     }
@@ -518,12 +520,12 @@ $quote-mark: 35px;
 
         .pullquote-cite,
         .pullquote-paragraph {
-            @include fs-headline(36);
+            @include fs-headline(36, true);
             @include mq(phablet) {
-                @include fs-headline(5);
+                @include fs-headline(5, true);
             }
             @include mq(desktop) {
-                @include fs-headline(55);
+                @include fs-headline(55, true);
             }
         }
 
