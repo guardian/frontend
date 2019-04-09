@@ -578,12 +578,7 @@
     margin-bottom: 0;
     display: inline-block;
     padding-top: $gs-baseline/3;
-    line-height: 20px;
     color: $brightness-46;
-
-    @include mq(tablet) {
-        line-height: 22px;
-    }
 
     @include mq(leftCol) {
         clear: both;

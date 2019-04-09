@@ -97,12 +97,10 @@
                 }
 
                 .flagship-audio__description {
+                    @include fs-bodyCopy(2);
                     padding-top: 6px;
                     margin-top: 2px;
                     margin-bottom: 2px;
-                    line-height: 22px;
-                    font-weight: normal;
-                    font-size: 18px;
                 }
 
                 .flagship-audio__title {
