@@ -167,11 +167,9 @@
         }
 
         > .campaign--snippet__heading-logo {
+            @include fs-headline(2);
             flex: initial;
             margin-right: 10px;
-            font-size: 18px;
-            font-family: $f-serif-headline;
-            font-weight: 500;
 
             .speech-bubble {
                 color: $brightness-7;
@@ -245,9 +243,7 @@
             }
 
             .campaign--snippet__headline {
-                font-size: 18px;
-                line-height: 22px;
-                font-family: $f-serif-headline;
+                @include fs-headline(2);
                 font-weight: 600;
             }
             p {

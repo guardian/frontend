@@ -234,9 +234,7 @@ a[href].contributions__contribute.contributions__contribute--epic,
     }
 
     .contributions__adblock-sub {
-        font-family: $f-serif-headline;
-        font-size: 18px;
-        line-height: 20px;
+        @include fs-headline(2);
         padding: 12px 0 10px 10px;
     }
 

@@ -21,7 +21,7 @@
     display: flex;
     flex-direction: column;
     .identity-upsell-consent-card__title {
-        @include fs-headline(25);
+        @include fs-headline(2);
         font-weight: 600;
         margin-bottom: $gs-baseline / 2;
     }

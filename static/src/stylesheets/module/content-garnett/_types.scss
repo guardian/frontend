@@ -1212,8 +1212,9 @@ $quote-mark: 35px;
 .content--type-review,
 .content--type-recipe {
     &:not(.paid-content) .content__standfirst {
-        @include fs-headline(25);
+        @include fs-headline(2);
         font-weight: 300;
+
         @include mq(tablet) {
             @include fs-headline(3, true);
         }
