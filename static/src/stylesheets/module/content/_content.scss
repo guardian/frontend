@@ -160,7 +160,7 @@
 }
 
 .content__section-label {
-    @include fs-header(1);
+    @include fs-header(2);
     float: left;
     padding-right: $gs-gutter/3;
 
@@ -185,7 +185,7 @@
     float: left;
 
     @include mq($until: tablet) {
-        @include fs-header(1);
+        @include fs-header(2);
         padding-top: $gs-baseline / 3;
     }
 
@@ -1008,7 +1008,7 @@
 }
 
 .content__meta-heading {
-    @include fs-header(1);
+    @include fs-header(2);
     padding-top: ($gs-baseline/3);
     padding-bottom: ($gs-baseline/3)*4;
     margin-bottom: 0;

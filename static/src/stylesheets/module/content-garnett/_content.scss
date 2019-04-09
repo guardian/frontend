@@ -211,7 +211,7 @@
 }
 
 .content__label {
-    @include fs-header(1);
+    @include fs-header(2);
     display: inline;
     padding-right: $gs-gutter / 3;
 
@@ -544,7 +544,7 @@
 }
 
 .byline {
-    @include fs-header(1);
+    @include fs-header(2);
     border-top: 0;
     color: $brightness-46;
     font-style: italic;
@@ -662,7 +662,7 @@
 }
 
 .content__meta-heading {
-    @include fs-header(1);
+    @include fs-header(2);
     padding-top: ($gs-baseline/3);
     padding-bottom: ($gs-baseline/3)*4;
     margin-bottom: 0;
