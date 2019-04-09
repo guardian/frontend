@@ -43,14 +43,10 @@
         counter-reset: li;
     }
     > ol > li:before {
-        @include fs-header(1, true);
+        @include fs-header(2, true);
         content: counter(li);
         counter-increment: li;
         margin-right: 4px;
-
-        @include mq(tablet) {
-            @include fs-header(2, true);
-        }
     }
     > ul ul,
     > ol ol {

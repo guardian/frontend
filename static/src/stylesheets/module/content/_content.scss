@@ -387,7 +387,7 @@
         }
 
         > li:before {
-            @include fs-header(1, true);
+            @include fs-header(2, true);
             position: absolute;
             left: -16px;
             content: counter(li);
@@ -780,7 +780,7 @@
     }
 
     .rich-link__header {
-        line-height: get-line-height(header, 1);
+        line-height: get-line-height(header, 2);
     }
 
     .ad-slot__label,
