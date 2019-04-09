@@ -473,7 +473,7 @@ $quote-mark: 35px;
         .pullquote-paragraph {
             @include fs-headline(3, true);
             @include mq(desktop) {
-                @include fs-headline(36, true);
+                @include fs-headline(4, true);
             }
         }
     }
@@ -491,7 +491,7 @@ $quote-mark: 35px;
         .pullquote-paragraph {
             @include fs-headline(3, true);
             @include mq(desktop) {
-                @include fs-headline(36, true);
+                @include fs-headline(4, true);
             }
         }
     }
@@ -517,7 +517,7 @@ $quote-mark: 35px;
 
         .pullquote-cite,
         .pullquote-paragraph {
-            @include fs-headline(36, true);
+            @include fs-headline(4, true);
             @include mq(phablet) {
                 @include fs-headline(5, true);
             }
