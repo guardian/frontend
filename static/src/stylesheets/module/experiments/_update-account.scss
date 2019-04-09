@@ -62,7 +62,7 @@
         right: $gs-baseline;
         height: 36px;
         width: 36px;
-        
+
         .inline-icon {
             fill: $brightness-100;
         }
@@ -86,10 +86,9 @@
 
     .site-message__copy-text, .site-message__copy-heading {
         @include banner-copy-alignment;
+        @include fs-bodyCopy(2);
         display: block;
         margin-right: 24px;
-        font-size: 17px;
-        line-height: 22px;
         @include mq(phablet) {
             width: auto;
             margin-right: gs-span(1);
@@ -141,7 +140,7 @@
         &:focus {
             outline: auto;
             outline-color: $sport-bright;
-            outline-width: 5px; 
+            outline-width: 5px;
         }
     }
 

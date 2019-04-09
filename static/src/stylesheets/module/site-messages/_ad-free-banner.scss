@@ -116,16 +116,13 @@ $btn-height: ($gs-baseline*3.5);
 
     .site-message__copy-text {
         @include banner-copy-alignment;
+        @include fs-headline(2);
         display: block;
         margin-bottom: 12px;
         margin-right: 0;
-        font-size: 16px;
-        line-height: 20px;
         padding-bottom: $gs-baseline * 2;
         flex: 0 0 auto;
         @include mq(phablet) {
-            font-size: 18px;
-            line-height: 24px;
             width: auto;
         }
         @include mq(desktop) {

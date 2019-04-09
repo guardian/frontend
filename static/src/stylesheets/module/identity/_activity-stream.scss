@@ -23,7 +23,6 @@
     font-weight: normal;
 
     @include mq(leftCol) {
-        @include fs-header(1, true);
         float: left;
         position: relative;
         z-index: 1;

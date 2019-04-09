@@ -320,8 +320,7 @@ $wide-circle-height: 162px;
     }
 
     @include mq($from: desktop) {
-        font-size: 17px;
-        line-height: 21px;
+        @include fs-bodyCopy(2);
         width: 489px;
     }
 

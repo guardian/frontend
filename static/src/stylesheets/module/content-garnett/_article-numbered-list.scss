@@ -72,7 +72,7 @@
                 }
 
                 a {
-                    @include fs-headline(25);
+                    @include fs-headline(2);
                     font-weight: 800;
                 }
 
@@ -175,7 +175,7 @@
 
     // p tags containing ONLY a strong tag will be styled as H3 level headings
     .falseH3 {
-        @include fs-headline(25);
+        @include fs-headline(2);
         border-top: 1px solid $brightness-86;
         color: $brightness-7;
         margin-top: $gs-baseline * 2;

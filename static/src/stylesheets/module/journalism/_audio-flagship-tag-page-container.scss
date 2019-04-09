@@ -148,8 +148,7 @@
                 color: #ff6a56;
             }
             p {
-                font-size: 18px;
-                line-height: 20px;
+                @include fs-bodyCopy(2);
             }
             a {
                 background-color: #121212;
