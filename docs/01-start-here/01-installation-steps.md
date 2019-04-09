@@ -106,7 +106,7 @@ just `nvm use` (or `nvm install` if you don't have 8 installed yet).
 To install nvm:
 
 ```bash
-$ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.1/install.sh | bash
+$ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
 ```
 
 You may find it useful to add [this script](https://gist.github.com/sndrs/5940e9e8a3f506b287233ed65365befb) to your 
