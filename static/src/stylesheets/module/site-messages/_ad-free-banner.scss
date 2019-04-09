@@ -104,9 +104,9 @@ $btn-height: ($gs-baseline*3.5);
     }
 
     .site-message__copy-heading {
-        @include fs-headlineGarnett(4);
+        @include fs-headline(5);
         @include mq(leftCol) {
-            @include fs-headlineGarnett(6, true);
+            @include fs-headline(65, true);
         }
         font-weight: bold;
         padding-bottom: $gs-baseline;

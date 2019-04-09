@@ -252,14 +252,14 @@
 }
 
 .content__headline {
-    @include fs-headlineGarnett(4);
+    @include fs-headline(5);
     display: block;
     font-weight: 400;
     padding-bottom: $gs-baseline * 2;
     padding-top: $gs-baseline / 4;
 
     @include mq(tablet) {
-        @include fs-headlineGarnett(6);
+        @include fs-headline(65);
         font-weight: 400;
         padding-bottom: $gs-baseline * 3;
     }

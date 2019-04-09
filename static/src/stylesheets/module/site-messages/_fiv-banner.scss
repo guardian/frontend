@@ -291,7 +291,7 @@ $wide-circle-height: 162px;
 }
 
 .fiv-banner__copy-and-ctas {
-    @include fs-headlineGarnett(6);
+    @include fs-headline(65);
     color: #202d53;
     font-style: normal;
     font-stretch: normal;
