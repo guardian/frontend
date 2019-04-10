@@ -15,14 +15,32 @@ const isHidden = (transcriptionElement): boolean => {
 };
 
 const retrieveTranscription = (url): ?String => {
-    const s3Key = url.split('/')[4];
-    // https://audio.guim.co.uk/2019/03/27-51922-gnl.chips.27032019.ds.voicelabs.mp3
-    // 27-51922-gnl.chips.27032019.ds.voicelabs.mp31554805546246Out.txt
-    const fetchUrl = `https://s3-eu-west-1.amazonaws.com/gu-transcribe-data/${s3Key}`;
-    // return fetch(fetchUrl)
-    //     .then(response => response.text);
-    return 'wait for it!'
+    const urEls = url.split('/');
+    const s3Key = urEls[urEls.length -1];
+    const fetchUrl = `https://s3-eu-west-1.amazonaws.com/gu-transcribe-data/${s3Key.replace('.mp3', '.txt')}`;
+    return fetch(fetchUrl).then(resp => {
+        if (resp.ok) {
+            switch (resp.status) {
+                case 204:
+                    return {};
+                default:
+                    return resp.text();
+            }
+        }
+        throw new Error(
+            `Fetch error while requesting ${fetchUrl}: ${resp.statusText}`
+        );
+    });
+};
 
+const replacer = (match, spkNum, para, offset, string) => {
+    const odd = spkNum % 2 != 0;
+    return `<div class="transcription-speaker${odd ? "-odd" : "-even"}"><strong>Speaker ${spkNum}</strong></div><div class="transcription-paragraph">${para}</div><div>&nbsp;</div>`;
+};
+
+const cleaner = (originalText): String => {
+    const re = /Speaker.?(\d*):.?(.*)(\r\n)?/gi;
+    return originalText.replace(re, replacer);
 };
 
 const toggleTranscriptionView = (transcriptionElement): void => {
@@ -30,11 +48,14 @@ const toggleTranscriptionView = (transcriptionElement): void => {
         transcriptionElement.classList.remove('is-hidden');
         transcriptionElement.setAttribute('aria-expanded', 'true');
         // retrieve the transcription if we can (and haven't already)
-        if (transcriptionElement.innerHTML.length < 1) {
+        if (transcriptionElement.innerHTML.trim().length < 1) {
             const button = document.querySelector('.js-show-podcast-transcript-button > .js-button-text');
             const url = button && button.getAttribute('sourceUrl');
-            const text = retrieveTranscription(url);
-            transcriptionElement.innerHTML == text;
+            retrieveTranscription(url).then(text => {
+                const re = /Speaker \d{1-2}/gi;
+
+                transcriptionElement.innerHTML = cleaner(text);
+            });
         }
     } else {
         transcriptionElement.classList.add('is-hidden');
