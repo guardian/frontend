@@ -863,9 +863,6 @@ $quote-mark: 35px;
         @include mq(mobileMedium) {
             @include fs-headline(6, true);
         }
-        @include mq(tablet) {
-            @include fs-headline(7, true);
-        }
     }
 
     .content__standfirst {

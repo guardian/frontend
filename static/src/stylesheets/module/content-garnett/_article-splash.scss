@@ -147,7 +147,7 @@
         padding: 0;
 
         @include mq(tablet) {
-            @include fs-headline(7, true);
+            @include fs-headline(6, true);
         }
     }
 

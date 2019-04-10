@@ -43,7 +43,7 @@ category: Charts
     }
 
     .chart__unit {
-        @include fs-headline(7);
+        @include fs-headline(6);
         fill: $brightness-46;
         font-weight: 900;
         text-anchor: middle;

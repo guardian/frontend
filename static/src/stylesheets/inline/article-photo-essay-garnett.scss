@@ -54,7 +54,7 @@
         }
 
         h2 {
-            @include fs-headline(7, true);
+            @include fs-headline(6, true);
             color: $sport-dark;
             font-weight: 100;
         }

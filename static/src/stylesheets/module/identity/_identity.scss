@@ -246,7 +246,7 @@ $identity-header-height: 48px;
     @include fs-headline(4);
 
     @include mq(tablet) {
-        @include fs-headline(7, true);
+        @include fs-headline(6, true);
     }
 }
 .user-profile__last-seen,

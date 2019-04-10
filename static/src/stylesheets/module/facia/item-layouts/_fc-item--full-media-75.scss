@@ -83,7 +83,7 @@ Full item with 75% width media.
 
             @include mq(desktop) {
                 @include fs-headline(6, true);
-                @include headline-boost(7);
+                @include headline-boost(6);
             }
         }
 
