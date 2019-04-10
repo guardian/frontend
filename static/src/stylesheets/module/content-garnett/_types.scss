@@ -521,9 +521,6 @@ $quote-mark: 35px;
             @include mq(phablet) {
                 @include fs-headline(5, true);
             }
-            @include mq(desktop) {
-                @include fs-headline(55, true);
-            }
         }
 
         .inline-garnett-quote {
@@ -861,8 +858,8 @@ $quote-mark: 35px;
     }
 
     .content__headline {
-        @include fs-headline(55);
-        font-weight: 100;
+        @include fs-headline(5);
+        font-weight: 300;
         @include mq(mobileMedium) {
             @include fs-headline(65, true);
         }
