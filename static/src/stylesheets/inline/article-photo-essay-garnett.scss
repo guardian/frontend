@@ -54,10 +54,9 @@
         }
 
         h2 {
+            @include fs-headline(7, true);
             color: $sport-dark;
             font-weight: 100;
-            font-size: 38px;
-            line-height: 1;
         }
 
         &.quoted {

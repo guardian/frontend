@@ -119,7 +119,7 @@
     &.identity-upsell-title--hero {
         @include fs-headline(5, true);
         @include mq(tablet) {
-            @include fs-headline(75, true);
+            @include fs-headline(7, true);
         }
     }
     .identity-upsell-title__title {

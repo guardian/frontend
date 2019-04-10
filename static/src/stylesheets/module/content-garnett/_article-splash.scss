@@ -147,8 +147,7 @@
         padding: 0;
 
         @include mq(tablet) {
-            font-size: 38px;
-            line-height: 40px;
+            @include fs-headline(7, true);
         }
     }
 

@@ -861,10 +861,10 @@ $quote-mark: 35px;
         @include fs-headline(5);
         font-weight: 300;
         @include mq(mobileMedium) {
-            @include fs-headline(65, true);
+            @include fs-headline(6, true);
         }
         @include mq(tablet) {
-            @include fs-headline(75, true);
+            @include fs-headline(7, true);
         }
     }
 

@@ -730,7 +730,6 @@
 
     .content__headline--immersive {
         @include fs-headline(6, true);
-        line-height: 1.1;
         color: $brightness-7;
         padding: 0;
         padding-bottom: $gs-baseline * 2;

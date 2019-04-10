@@ -11,9 +11,8 @@ $tls-warning-rule: darken($brightness-97, 20%);
 }
 
 .tls-warning__title {
-    @include fs-header(5);
-    font-size: 32px;
-    line-height: 36px;
+    @include fs-headline(6);
+    font-weight: 700;
     padding: $gs-baseline 0;
 
     .inline-error-exclamation__svg {
