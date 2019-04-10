@@ -68,6 +68,9 @@
             </div>
 
             <div class="from-content-api podcast__body">
+                @audio.downloadUrl.map{ url =>
+                    @fragments.podcastTranscription(url)
+                }
                 @if(audio.fields.body.nonEmpty) {
                     @Html(audio.fields.body)
                 }
