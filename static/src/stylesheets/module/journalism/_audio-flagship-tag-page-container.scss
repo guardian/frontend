@@ -11,7 +11,7 @@
             border-color: $brightness-20;
 
             .fc-container__header {
-                font-size: 26px;
+                @include fs-headline(4, true);
 
                 &::after {
                     display: none;
@@ -143,8 +143,7 @@
             flex-direction: row;
 
             h2 {
-                font-size: 26px;
-                line-height: 28px;
+                @include fs-headline(4, true);
                 color: #ff6a56;
             }
             p {

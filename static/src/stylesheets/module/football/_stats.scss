@@ -8,7 +8,7 @@
 }
 
 .match-stats__heading {
-    @include fs-header(4);
+    @include fs-header(3);
     font-weight: 900;
     grid-column-start: 1;
     grid-column-end: 3;

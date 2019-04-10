@@ -129,19 +129,14 @@ $header-image-size-desktop: 100px;
 .fc-container__header__title,
 .fc-container__header__title--sticky,
 .container__title {
-    @include fs-header(4);
+    @include fs-header(3);
     position: relative;
     padding-bottom: $gs-baseline/3;
-    line-height: get-line-height(header, 2);
     color: $brand-dark;
 
     @include mq(tablet, leftCol) {
         float: left;
         width: gs-span(4);
-    }
-
-    @include mq(leftCol, wide) {
-        @include font-size(20px, 24px);
     }
 
     .has-page-skin & {
@@ -552,7 +547,7 @@ $header-image-size-desktop: 100px;
         color: $brand-dark;
     }
 
-    @include fs-header(4);
+    @include fs-header(3);
     @include mq(leftCol) {
         float: left;
         width: $left-column;
@@ -565,10 +560,6 @@ $header-image-size-desktop: 100px;
         .has-page-skin & {
             float: none;
         }
-    }
-
-    @include mq(leftCol, wide) {
-        @include font-size(20px, 24px);
     }
 }
 

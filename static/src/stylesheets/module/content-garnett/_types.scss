@@ -471,9 +471,9 @@ $quote-mark: 35px;
 
         .pullquote-cite,
         .pullquote-paragraph {
-            @include fs-headline(35, true);
+            @include fs-headline(3, true);
             @include mq(desktop) {
-                @include fs-headline(36, true);
+                @include fs-headline(4, true);
             }
         }
     }
@@ -489,9 +489,9 @@ $quote-mark: 35px;
 
         .pullquote-cite,
         .pullquote-paragraph {
-            @include fs-headline(35, true);
+            @include fs-headline(3, true);
             @include mq(desktop) {
-                @include fs-headline(36, true);
+                @include fs-headline(4, true);
             }
         }
     }
@@ -517,7 +517,7 @@ $quote-mark: 35px;
 
         .pullquote-cite,
         .pullquote-paragraph {
-            @include fs-headline(36, true);
+            @include fs-headline(4, true);
             @include mq(phablet) {
                 @include fs-headline(5, true);
             }
@@ -697,7 +697,7 @@ $quote-mark: 35px;
     }
 
     .content__label-interview {
-        @include fs-headline(35);
+        @include fs-headline(3);
         padding-bottom: $gs-baseline / 4;
         font-weight: 900;
         display: inline-block;
@@ -732,7 +732,7 @@ $quote-mark: 35px;
     }
 
     .content__headline--byline-interview {
-        @include fs-headline(35);
+        @include fs-headline(3);
         display: inline-block;
         font-style: italic;
         font-weight: 500;

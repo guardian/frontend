@@ -216,7 +216,7 @@
     padding-right: $gs-gutter / 3;
 
     @include mq(leftCol) {
-        @include fs-header(4);
+        @include fs-header(3, true);
         line-height: 20px;
         padding-right: 0;
     }
@@ -226,8 +226,7 @@
     font-weight: normal;
 
     @include mq(leftCol) {
-        font-size: 16px;
-        line-height: 18px;
+        @include fs-header(2, true);
         margin-bottom: $gs-baseline;
         display: block;
     }
@@ -239,8 +238,7 @@
 
 @include mq(leftCol, wide) {
     .container__meta__title {
-        font-size: 20px;
-        line-height: 24px;
+        @include fs-header(3);
     }
 }
 
