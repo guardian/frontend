@@ -1,11 +1,11 @@
 .newsletters-heading {
-    @include fs-header(5);
-    font-size: 40px;
+    @include fs-headline(8);
+    font-weight: 700;
     color: $brightness-7;
     padding-top: $gs-baseline;
 
     @include mq($from: tablet) {
-        font-size: 60px;
+        @include fs-headline(9, true);
         padding-top: $gs-baseline * 2;
     }
 }

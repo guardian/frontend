@@ -723,8 +723,7 @@
         font-weight: 700;
 
         @include mq(desktop) {
-            font-size: 50px;
-            line-height: 54px;
+            @include fs-headline(9, true);
         }
     }
 

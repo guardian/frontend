@@ -301,9 +301,7 @@
 }
 
 .atom-quiz__score {
-    @include fs-headline(9);
-    font-size: 72px;
-    line-height: 78px;
+    @include fs-headline(10);
     color: $brand-main;
     display: block;
 }

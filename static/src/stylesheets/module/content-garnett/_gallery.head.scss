@@ -58,8 +58,7 @@
         }
 
         @include mq(desktop) {
-            font-size: 50px;
-            line-height: 54px;
+            @include fs-headline(9, true);
             width: gs-span(8) - ($gs-gutter / 2);
         }
     }
