@@ -1,7 +1,10 @@
+// @flow
 import fetch from 'lib/fetch';
 
 const getTranscriptionToggleButton = (): ?HTMLElement => {
-    const el = document.getElementsByClassName('js-show-podcast-transcript-button');
+    const el = document.getElementsByClassName(
+        'js-show-podcast-transcript-button'
+    );
     return el && el[0];
 };
 
@@ -10,14 +13,16 @@ const getTranscriptionElement = (): ?HTMLElement => {
     return el && el[0];
 };
 
-const isHidden = (transcriptionElement): boolean => {
-    return transcriptionElement.classList.contains('is-hidden');
-};
+const isHidden = (transcriptionElement): boolean =>
+    transcriptionElement.classList.contains('is-hidden');
 
 const retrieveTranscription = (url): ?String => {
     const urEls = url.split('/');
-    const s3Key = urEls[urEls.length -1];
-    const fetchUrl = `https://s3-eu-west-1.amazonaws.com/gu-transcribe-data/${s3Key.replace('.mp3', '.txt')}`;
+    const s3Key = urEls[urEls.length - 1];
+    const fetchUrl = `https://s3-eu-west-1.amazonaws.com/gu-transcribe-data/${s3Key.replace(
+        '.mp3',
+        '.txt'
+    )}`;
     return fetch(fetchUrl).then(resp => {
         if (resp.ok) {
             switch (resp.status) {
@@ -33,9 +38,11 @@ const retrieveTranscription = (url): ?String => {
     });
 };
 
-const replacer = (match, spkNum, para, offset, string) => {
-    const odd = spkNum % 2 != 0;
-    return `<div class="transcription-speaker${odd ? "-odd" : "-even"}"><strong>Speaker ${spkNum}</strong></div><div class="transcription-paragraph">${para}</div><div>&nbsp;</div>`;
+const replacer = (match, spkNum, para) => {
+    const odd = spkNum % 2 !== 0;
+    return `<div class="transcription-speaker${
+        odd ? '-odd' : '-even'
+    }"><strong>Speaker ${spkNum}</strong></div><div class="transcription-paragraph">${para}</div><div>&nbsp;</div>`;
 };
 
 const cleaner = (originalText): String => {
@@ -49,11 +56,11 @@ const toggleTranscriptionView = (transcriptionElement): void => {
         transcriptionElement.setAttribute('aria-expanded', 'true');
         // retrieve the transcription if we can (and haven't already)
         if (transcriptionElement.innerHTML.trim().length < 1) {
-            const button = document.querySelector('.js-show-podcast-transcript-button > .js-button-text');
+            const button = document.querySelector(
+                '.js-show-podcast-transcript-button > .js-button-text'
+            );
             const url = button && button.getAttribute('sourceUrl');
             retrieveTranscription(url).then(text => {
-                const re = /Speaker \d{1-2}/gi;
-
                 transcriptionElement.innerHTML = cleaner(text);
             });
         }
@@ -72,7 +79,10 @@ const addEventHandler = (): void => {
             const buttonSelector = '.js-show-podcast-transcript-button';
             const target: HTMLElement = (event.target: any);
 
-            if (target.matches(buttonSelector) || (target.parentNode && target.parentNode.matches(buttonSelector))) {
+            if (
+                target.matches(buttonSelector) ||
+                (target.parentNode && target.parentNode.matches(buttonSelector))
+            ) {
                 event.preventDefault();
                 event.stopPropagation();
                 toggleTranscriptionView(transcriptionElement);
@@ -81,7 +91,6 @@ const addEventHandler = (): void => {
     }
 };
 
-
 export const transcriptionExpanderInit = (): void => {
-  addEventHandler();
+    addEventHandler();
 };
