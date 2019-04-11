@@ -86,7 +86,7 @@ jest.mock('common/modules/commercial/contributions-utilities', () => ({
     canShowBannerSync: jest.fn(() => false),
 }));
 jest.mock('common/modules/commercial/user-features', () => ({
-    userIsSupporter: jest.fn(() => false),
+    shouldHideSupportMessaging: jest.fn(() => false),
 }));
 jest.mock('lib/fetch-json', () => jest.fn());
 jest.mock('common/modules/user-prefs', () => ({

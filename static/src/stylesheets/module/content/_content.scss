@@ -160,13 +160,12 @@
 }
 
 .content__section-label {
-    @include fs-header(1);
+    @include fs-header(2);
     float: left;
     padding-right: $gs-gutter/3;
 
     @include mq(leftCol) {
-        @include fs-header(4);
-        line-height: get-line-height(header, 2);
+        @include fs-header(3, true);
         float: none;
         padding-right: 0;
     }
@@ -185,7 +184,7 @@
     float: left;
 
     @include mq($until: tablet) {
-        @include fs-header(1);
+        @include fs-header(2);
         padding-top: $gs-baseline / 3;
     }
 
@@ -387,7 +386,7 @@
         }
 
         > li:before {
-            @include fs-header(1, true);
+            @include fs-header(2, true);
             position: absolute;
             left: -16px;
             content: counter(li);
@@ -578,12 +577,7 @@
     margin-bottom: 0;
     display: inline-block;
     padding-top: $gs-baseline/3;
-    line-height: 20px;
     color: $brightness-46;
-
-    @include mq(tablet) {
-        line-height: 22px;
-    }
 
     @include mq(leftCol) {
         clear: both;
@@ -785,7 +779,7 @@
     }
 
     .rich-link__header {
-        line-height: get-line-height(header, 1);
+        line-height: get-line-height(header, 2);
     }
 
     .ad-slot__label,
@@ -1013,7 +1007,7 @@
 }
 
 .content__meta-heading {
-    @include fs-header(1);
+    @include fs-header(2);
     padding-top: ($gs-baseline/3);
     padding-bottom: ($gs-baseline/3)*4;
     margin-bottom: 0;

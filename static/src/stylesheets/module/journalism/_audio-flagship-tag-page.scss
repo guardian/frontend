@@ -1,10 +1,10 @@
 // header styling
 
 #flagship-audio {
-    @include fs-headlineGarnett(1);
+    @include fs-headline(3);
+    font-weight: 300;
     padding-top: 0;
     margin-bottom: 0;
-
 
     .ad-slot,
     .ad-slot--paid-for-badge {
@@ -97,12 +97,10 @@
                 }
 
                 .flagship-audio__description {
+                    @include fs-bodyCopy(2);
                     padding-top: 6px;
                     margin-top: 2px;
                     margin-bottom: 2px;
-                    line-height: 22px;
-                    font-weight: normal;
-                    font-size: 18px;
                 }
 
                 .flagship-audio__title {
@@ -194,7 +192,7 @@
             margin-bottom: 6px;
             color: $brightness-20;
             font-weight: 800;
-            font-size: 18px;
+            font-size: 17px;
         }
     }
 

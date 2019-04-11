@@ -35,7 +35,7 @@
 }
 
 .explainer-snippet__heading {
-    font-size: 18px;
+    font-size: 17px;
     padding-top: 2px;
 }
 
@@ -90,7 +90,7 @@
     @include fs-textSans(1, true);
     color: $brightness-7;
     margin: $gs-baseline 0;
-    
+
     > .inline-icon {
         display: inline-flex;
         background: $brightness-86;

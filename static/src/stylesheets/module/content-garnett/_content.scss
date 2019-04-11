@@ -211,12 +211,12 @@
 }
 
 .content__label {
-    @include fs-header(1);
+    @include fs-header(2);
     display: inline;
     padding-right: $gs-gutter / 3;
 
     @include mq(leftCol) {
-        @include fs-header(4);
+        @include fs-header(3, true);
         line-height: 20px;
         padding-right: 0;
     }
@@ -226,8 +226,7 @@
     font-weight: normal;
 
     @include mq(leftCol) {
-        font-size: 16px;
-        line-height: 18px;
+        @include fs-header(2, true);
         margin-bottom: $gs-baseline;
         display: block;
     }
@@ -239,8 +238,7 @@
 
 @include mq(leftCol, wide) {
     .container__meta__title {
-        font-size: 20px;
-        line-height: 24px;
+        @include fs-header(3);
     }
 }
 
@@ -252,14 +250,14 @@
 }
 
 .content__headline {
-    @include fs-headlineGarnett(4);
+    @include fs-headline(5);
     display: block;
     font-weight: 400;
     padding-bottom: $gs-baseline * 2;
     padding-top: $gs-baseline / 4;
 
     @include mq(tablet) {
-        @include fs-headlineGarnett(6);
+        @include fs-headline(65);
         font-weight: 400;
         padding-bottom: $gs-baseline * 3;
     }
@@ -368,7 +366,7 @@
         }
 
         > li:before {
-            @include fs-header(1, true);
+            @include fs-header(2, true);
             position: absolute;
             left: -16px;
             content: counter(li);
@@ -544,7 +542,7 @@
 }
 
 .byline {
-    @include fs-header(1);
+    @include fs-header(2);
     border-top: 0;
     color: $brightness-46;
     font-style: italic;
@@ -662,7 +660,7 @@
 }
 
 .content__meta-heading {
-    @include fs-header(1);
+    @include fs-header(2);
     padding-top: ($gs-baseline/3);
     padding-bottom: ($gs-baseline/3)*4;
     margin-bottom: 0;
@@ -855,34 +853,33 @@
 
 .old-article-message {
     @include fs-textSans(1);
+    background: $highlight-main;
     display: inline-block;
-    color: $brightness-46;
-    margin-bottom: $gs-baseline;
+    color: $brightness-7;
+    margin-bottom: $gs-baseline / 2;
+    padding: ($gs-baseline / 4) ($gs-gutter / 4);
 
     .old-article-message--clock svg {
-        fill: $brightness-46;
-        margin-bottom: -1px;
+        fill: currentColor;
     }
-}
 
-.tonal--tone-media {
-    .old-article-message {
-        color: $brightness-86;
+    .content__headline-standfirst-wrapper & {
+        @include fs-textSans(5);
+        padding: ($gs-baseline / 2) ($gs-gutter / 2);
+        margin-top: $gs-baseline / 2;
 
-        .old-article-message--clock svg {
-            fill: $brightness-86;
+        @include mq(mobileLandscape) {
+            padding-left: $gs-gutter;
         }
-    }
-}
 
-.content--interactive {
-    .tonal__main--tone-news {
-        .old-article-message {
-            @include mq(tablet) {
-                position: absolute;
-                left: 0;
-                top: 44px;
-            }
+        @include mq(tablet) {
+            margin-left: -$gs-gutter;
+        }
+
+        @include mq(leftCol) {
+            margin-left: -$gs-gutter / 2;
+            margin-top: 0;
+            padding-left: $gs-gutter / 2;
         }
     }
 }
@@ -1106,7 +1103,7 @@
         font-size: get-font-size(header, 2);
     }
     .rich-link__header {
-        line-height: get-line-height(header, 1);
+        line-height: get-line-height(header, 2);
     }
     .ad-slot__label,
     .ad-slot--inline {

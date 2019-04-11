@@ -72,7 +72,7 @@
                 }
 
                 a {
-                    @include fs-headlineGarnett(0);
+                    @include fs-headline(2);
                     font-weight: 800;
                 }
 
@@ -95,7 +95,7 @@
         $large-number: 99px;
 
         & > h2 {
-            @include fs-headlineGarnett(2);
+            @include fs-headline(3);
             font-weight: 700;
             box-sizing: border-box;
             border-top: 4px solid $brightness-86;
@@ -114,7 +114,7 @@
             }
 
             @include mq(tablet) {
-                @include fs-headlineGarnett(7);
+                @include fs-headline(75);
                 font-weight: 700;
                 line-height: 40px;
                 margin-right: 0;
@@ -175,7 +175,7 @@
 
     // p tags containing ONLY a strong tag will be styled as H3 level headings
     .falseH3 {
-        @include fs-headlineGarnett(0);
+        @include fs-headline(2);
         border-top: 1px solid $brightness-86;
         color: $brightness-7;
         margin-top: $gs-baseline * 2;

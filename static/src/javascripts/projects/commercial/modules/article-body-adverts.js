@@ -188,7 +188,7 @@ const addMobileInlineAds = (): Promise<number> => {
 
 const addInlineAds = (): Promise<number> => {
     const isMobile = isBreakpoint({
-        max: 'phablet',
+        max: 'mobileLandscape',
     });
 
     if (isMobile) {

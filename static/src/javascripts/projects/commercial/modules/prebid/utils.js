@@ -79,8 +79,8 @@ export const getBreakpointKey = (): string => {
         case 'mobile':
         case 'mobileMedium':
         case 'mobileLandscape':
-        case 'phablet':
             return 'M';
+        case 'phablet':
         case 'tablet':
             return 'T';
         case 'desktop':
@@ -88,7 +88,7 @@ export const getBreakpointKey = (): string => {
         case 'wide':
             return 'D';
         default:
-            return 'D';
+            return 'M';
     }
 };
 

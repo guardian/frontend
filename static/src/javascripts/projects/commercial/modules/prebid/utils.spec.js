@@ -95,7 +95,7 @@ describe('Utils', () => {
             getBreakpoint.mockReturnValueOnce(breakpoints[i]);
             results.push(getBreakpointKey());
         }
-        expect(results).toEqual(['M', 'M', 'T', 'D', 'D']);
+        expect(results).toEqual(['M', 'T', 'T', 'D', 'D']);
     });
 
     test('shouldIncludeAppNexus should return true if geolocation is AU', () => {

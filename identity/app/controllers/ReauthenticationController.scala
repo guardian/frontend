@@ -3,8 +3,9 @@ package controllers
 import actions.AuthenticatedActions
 import common.ImplicitControllerExecutionContext
 import form.Mappings
-import idapiclient.{EmailPassword, IdApiClient, ScGuU}
+import idapiclient.{EmailPassword, IdApiClient, Response, ScGuU}
 import implicits.Forms
+import controllers.DiscardingIdentityCookies.discardingCookieForRootDomain
 import model.{ApplicationContext, IdentityPage, NoCache}
 import play.api.data._
 import play.api.data.validation.Constraints
@@ -47,18 +48,44 @@ class ReauthenticationController(
     )
   )
 
-  def renderForm(returnUrl: Option[String]): Action[AnyContent] = authenticatedActions.fullAuthWithIdapiUserAction { implicit request =>
-    val filledForm = form.bindFromFlash.getOrElse(form.fill(""))
+  def signInWithAutoSignInToken(autoSignInToken: String, returnUrl: String): Future[Response[Result]] = {
+    val futureCookies = api.verifyAutoSignInToken(autoSignInToken)
+    signInService.getCookies(futureCookies, rememberMe = false).map {
+      case Right(cookies) =>
+        Right(SeeOther(returnUrl)
+          .withCookies(cookies: _*)
+          .discardingCookies(discardingCookieForRootDomain("GU_SIGNIN_EMAIL")))
+      case Left(errors) => Left(errors)
+    }
+  }
 
+  def renderForm(returnUrl: Option[String]): Action[AnyContent] = authenticatedActions.fullAuthWithIdapiUserAction.async { implicit request =>
+    val filledForm = form.bindFromFlash.getOrElse(form.fill(""))
     logger.trace("Rendering reauth form")
     val idRequest = idRequestParser(request)
     val googleId = request.user.socialLinks.find(_.network == "google").map(_.socialId)
+    val renderReauthenticate =
+      Future.successful(
+        NoCache(Ok(
+            IdentityHtmlPage.html(
+              content = views.html.reauthenticate(idRequest, idUrlBuilder, filledForm, googleId)
+            )(page, request, context)
+        ))
+      )
 
-    NoCache(Ok(
-      IdentityHtmlPage.html(
-        content = views.html.reauthenticate(idRequest, idUrlBuilder, filledForm, googleId)
-      )(page, request, context)
-    ))
+    val autoSignIn = for {
+      autoSignInToken <- request.getQueryString("autoSignInToken")
+      returnUrl <- returnUrl
+    } yield {
+      signInWithAutoSignInToken(autoSignInToken, returnUrl).flatMap {
+        case Left(errors) =>
+          logger.error(s"unable to sign in with auto signin token, $errors")
+          renderReauthenticate
+        case Right(result) => Future.successful(result)
+      }
+    }
+
+    autoSignIn.getOrElse(renderReauthenticate)
   }
 
   def processForm: Action[AnyContent] = authenticatedActions.fullAuthWithIdapiUserAction.async { implicit request =>

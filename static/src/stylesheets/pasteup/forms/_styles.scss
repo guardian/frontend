@@ -10,7 +10,7 @@
 }
 
 .form__heading {
-    @include fs-bodyHeading(3);
+    @include fs-bodyHeading(2);
     margin-left: 0;
     margin-right: 0;
 }
@@ -136,7 +136,7 @@
     }
 
     .form-fields__heading {
-        @include fs-bodyHeading(3, true);
+        @include fs-bodyHeading(2, true);
         margin: 0 0 $gs-baseline;
         display: block;
     }

@@ -221,6 +221,48 @@ describe('Build Page Targeting', () => {
         });
     });
 
+    describe('Breakpoint targeting', () => {
+        it('should set correct breakpoint targeting for a mobile device', () => {
+            getBreakpoint.mockReturnValue('mobile');
+            expect(buildPageTargeting().bp).toEqual('mobile');
+        });
+
+        it('should set correct breakpoint targeting for a medium mobile device', () => {
+            getBreakpoint.mockReturnValue('mobileMedium');
+            expect(buildPageTargeting().bp).toEqual('mobile');
+        });
+
+        it('should set correct breakpoint targeting for a mobile device in landscape mode', () => {
+            getBreakpoint.mockReturnValue('mobileLandscape');
+            expect(buildPageTargeting().bp).toEqual('mobile');
+        });
+
+        it('should set correct breakpoint targeting for a phablet device', () => {
+            getBreakpoint.mockReturnValue('phablet');
+            expect(buildPageTargeting().bp).toEqual('tablet');
+        });
+
+        it('should set correct breakpoint targeting for a tablet device', () => {
+            getBreakpoint.mockReturnValue('tablet');
+            expect(buildPageTargeting().bp).toEqual('tablet');
+        });
+
+        it('should set correct breakpoint targeting for a desktop device', () => {
+            getBreakpoint.mockReturnValue('desktop');
+            expect(buildPageTargeting().bp).toEqual('desktop');
+        });
+
+        it('should set correct breakpoint targeting for a leftCol device', () => {
+            getBreakpoint.mockReturnValue('leftCol');
+            expect(buildPageTargeting().bp).toEqual('desktop');
+        });
+
+        it('should set correct breakpoint targeting for a wide device', () => {
+            getBreakpoint.mockReturnValue('wide');
+            expect(buildPageTargeting().bp).toEqual('desktop');
+        });
+    });
+
     describe('Build Page Targeting (ad-free)', () => {
         it('should set the ad-free param to t when enabled', () => {
             commercialFeatures.adFree = true;

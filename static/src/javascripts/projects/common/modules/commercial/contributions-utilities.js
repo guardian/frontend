@@ -32,7 +32,7 @@ import { throwIfEmptyArray } from 'lib/array-utils';
 import { epicButtonsTemplate } from 'common/modules/commercial/templates/acquisitions-epic-buttons';
 import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templates/acquisitions-epic-control';
 import { epicLiveBlogTemplate } from 'common/modules/commercial/templates/acquisitions-epic-liveblog';
-import { userIsSupporter } from 'common/modules/commercial/user-features';
+import { shouldHideSupportMessaging } from 'common/modules/commercial/user-features';
 import {
     supportContributeURL,
     supportSubscribeGeoRedirectURL,
@@ -144,9 +144,9 @@ const userIsInCorrectCohort = (
 ): boolean => {
     switch (userCohort) {
         case 'OnlyExistingSupporters':
-            return userIsSupporter();
+            return shouldHideSupportMessaging();
         case 'OnlyNonSupporters':
-            return !userIsSupporter();
+            return !shouldHideSupportMessaging();
         case 'Everyone':
         default:
             return true;
@@ -281,11 +281,11 @@ const makeEpicABTestVariant = (
                 this.countryGroups.length === 0 ||
                 userMatchesCountryGroups(this.countryGroups);
 
-            const matchesTags =
-                this.tagIds.length === 0 || pageMatchesTags(this.tagIds);
-            const matchesSections =
-                this.sections.length === 0 ||
-                pageMatchesSections(this.sections);
+            const matchesTagsOrSections =
+                (this.tagIds.length === 0 && this.sections.length === 0) ||
+                (pageMatchesTags(this.tagIds) ||
+                    pageMatchesSections(this.sections));
+
             const noExcludedTags = !pageMatchesTags(this.excludedTagIds);
             const notExcludedSection = !pageMatchesSections(
                 this.excludedSections
@@ -294,8 +294,7 @@ const makeEpicABTestVariant = (
             return (
                 meetsMaxViewsConditions &&
                 matchesCountryGroups &&
-                matchesTags &&
-                matchesSections &&
+                matchesTagsOrSections &&
                 noExcludedTags &&
                 notExcludedSection
             );
