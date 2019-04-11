@@ -1071,16 +1071,6 @@
     .content__header {
         background-color: $brightness-86;
     }
-    .tonal__standfirst {
-        background-color: transparent;
-        border-top: 1px solid $brightness-60;
-        min-height: $gs-baseline*8;
-        padding: ($gs-baseline / 4) 0 ($gs-baseline * 2);
-        .content__standfirst {
-            color: $brightness-7;
-            font-weight: lighter;
-        }
-    }
     .tone-media--item {
         color: $brightness-7;
         .rich-link__container:before {

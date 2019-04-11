@@ -310,11 +310,9 @@ $quote-mark: 35px;
     }
 
     .content__standfirst {
-        @include fs-bodyCopy(2);
+        @include fs-headline(2);
         font-weight: 700;
-        border-top: 0;
         color: $brightness-7;
-        padding-top: 2px;
         margin-bottom: $gs-baseline;
         max-width: 80%;
         @include mq(phablet) {
