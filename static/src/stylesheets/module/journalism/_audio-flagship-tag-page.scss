@@ -104,9 +104,8 @@
                 }
 
                 .flagship-audio__title {
+                    @include fs-headline(8, true);
                     font-weight: 700;
-                    font-size: 42px;
-                    line-height: 1;
                     color: #000000;
                     margin-bottom: 0;
 
@@ -115,7 +114,7 @@
                     }
 
                     @include mq($from: mobile, $until: phablet) {
-                        font-size: 36px;
+                        @include fs-headline(6, true);
                     }
                 }
 

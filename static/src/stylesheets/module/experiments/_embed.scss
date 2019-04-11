@@ -32,7 +32,7 @@
 }
 
 .contributions__title--big {
-    font-size: 32px;
+    @include fs-headline(6, true);
     padding-bottom: $gs-baseline/2;
     padding-top: $gs-baseline/2;
 }
@@ -227,9 +227,8 @@ a[href].contributions__contribute.contributions__contribute--epic,
         padding-top: 3px;
 
         h2 {
-            @include fs-header(5);
-            font-size: 32px;
-            line-height: 36px;
+            @include fs-headline(6);
+            font-weight: 700;
         }
     }
 

@@ -61,7 +61,7 @@
 
     body:not(.has-page-skin) & {
         @include mq(leftCol) {
-            font-size: 32px;
+            @include fs-headline(6, true);
         }
     }
 }

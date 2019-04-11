@@ -38,12 +38,12 @@ category: Charts
     }
 
     .chart__label-value {
-        @include fs-headline(65);
+        @include fs-headline(6);
         font-weight: bold;
     }
 
     .chart__unit {
-        @include fs-headline(75);
+        @include fs-headline(6);
         fill: $brightness-46;
         font-weight: 900;
         text-anchor: middle;

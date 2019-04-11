@@ -106,7 +106,7 @@ $btn-height: ($gs-baseline*3.5);
     .site-message__copy-heading {
         @include fs-headline(5);
         @include mq(leftCol) {
-            @include fs-headline(65, true);
+            @include fs-headline(6, true);
         }
         font-weight: bold;
         padding-bottom: $gs-baseline;

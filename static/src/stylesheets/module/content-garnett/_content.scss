@@ -257,8 +257,7 @@
     padding-top: $gs-baseline / 4;
 
     @include mq(tablet) {
-        @include fs-headline(65);
-        font-weight: 400;
+        @include fs-headline(6, true);
         padding-bottom: $gs-baseline * 3;
     }
 

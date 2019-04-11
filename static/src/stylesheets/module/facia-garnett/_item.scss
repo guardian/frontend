@@ -313,7 +313,7 @@ $block-height: 58px;
 }
 
 .fc-item__liveblog-block__text:after {
-    @include fs-headline(1);
+    @include fs-headline(5);
     content: '...';
     position: absolute;
     bottom: 0;

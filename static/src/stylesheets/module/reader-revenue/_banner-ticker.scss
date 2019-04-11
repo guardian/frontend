@@ -10,8 +10,7 @@
 }
 
 .engagement-banner-ticker__count {
-    @include fs-header(5);
-    font-size: 32px;
+    @include fs-headline(6);
     font-weight: 800;
     color: #333333;
 }

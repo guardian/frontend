@@ -238,7 +238,7 @@
     }
 
     @include mq(mobileLandscape) {
-        @include fs-headline(7, true);
+        @include fs-headline(6, true);
     }
 
     @include mq(leftCol) {

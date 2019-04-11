@@ -114,9 +114,8 @@
             }
 
             @include mq(tablet) {
-                @include fs-headline(75);
+                @include fs-headline(6);
                 font-weight: 700;
-                line-height: 40px;
                 margin-right: 0;
                 margin-top: $gs-baseline * 8;
                 min-height: $large-number + $gs-baseline;
