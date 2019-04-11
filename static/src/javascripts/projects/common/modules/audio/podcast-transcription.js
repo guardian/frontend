@@ -1,15 +1,19 @@
 // @flow
 import fetch from 'lib/fetch';
 
+const transcriptionToggleButtonClassName = 'js-show-podcast-transcript-button';
+const transcriptionToggleButtonTextSelector = `.${transcriptionToggleButtonClassName} > .js-button-text`;
+const transcriptionContainerElementClassName = 'js-podcast-transcription';
+
 const getTranscriptionToggleButton = (): ?HTMLElement => {
     const el = document.getElementsByClassName(
-        'js-show-podcast-transcript-button'
+        transcriptionToggleButtonClassName
     );
     return el && el[0];
 };
 
 const getTranscriptionElement = (): ?HTMLElement => {
-    const el = document.getElementsByClassName('js-podcast-transcription');
+    const el = document.getElementsByClassName(transcriptionContainerElementClassName);
     return el && el[0];
 };
 
@@ -47,15 +51,16 @@ const cleaner = (originalText): string => {
 
 const toggleTranscriptionView = (transcriptionElement: ?HTMLElement): void => {
     if (transcriptionElement) {
+        const buttonTextElement = document.querySelector(
+            transcriptionToggleButtonTextSelector
+        );
         if (isHidden(transcriptionElement)) {
+            buttonTextElement.innerHTML = 'Close transcription';
             transcriptionElement.classList.remove('is-hidden');
             transcriptionElement.setAttribute('aria-expanded', 'true');
             // retrieve the transcription if we can (and haven't already)
             if (transcriptionElement.innerHTML.trim().length < 1) {
-                const button = document.querySelector(
-                    '.js-show-podcast-transcript-button > .js-button-text'
-                );
-                const url = button && button.getAttribute('sourceUrl');
+                const url = buttonTextElement && buttonTextElement.getAttribute('sourceUrl');
                 if (url) {
                     retrieveTranscription(url).then(text => {
                         if (transcriptionElement) {
@@ -65,6 +70,7 @@ const toggleTranscriptionView = (transcriptionElement: ?HTMLElement): void => {
                 }
             }
         } else {
+            buttonTextElement.innerHTML = 'Read transcription';
             transcriptionElement.classList.add('is-hidden');
             transcriptionElement.setAttribute('aria-expanded', 'false');
         }
