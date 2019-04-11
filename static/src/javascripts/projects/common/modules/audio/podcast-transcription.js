@@ -13,7 +13,9 @@ const getTranscriptionToggleButton = (): ?HTMLElement => {
 };
 
 const getTranscriptionElement = (): ?HTMLElement => {
-    const el = document.getElementsByClassName(transcriptionContainerElementClassName);
+    const el = document.getElementsByClassName(
+        transcriptionContainerElementClassName
+    );
     return el && el[0];
 };
 
@@ -55,12 +57,16 @@ const toggleTranscriptionView = (transcriptionElement: ?HTMLElement): void => {
             transcriptionToggleButtonTextSelector
         );
         if (isHidden(transcriptionElement)) {
-            buttonTextElement.innerHTML = 'Close transcription';
+            if (buttonTextElement) {
+                buttonTextElement.innerHTML = 'Close transcription';
+            }
             transcriptionElement.classList.remove('is-hidden');
             transcriptionElement.setAttribute('aria-expanded', 'true');
             // retrieve the transcription if we can (and haven't already)
             if (transcriptionElement.innerHTML.trim().length < 1) {
-                const url = buttonTextElement && buttonTextElement.getAttribute('sourceUrl');
+                const url =
+                    buttonTextElement &&
+                    buttonTextElement.getAttribute('sourceUrl');
                 if (url) {
                     retrieveTranscription(url).then(text => {
                         if (transcriptionElement) {
@@ -70,7 +76,9 @@ const toggleTranscriptionView = (transcriptionElement: ?HTMLElement): void => {
                 }
             }
         } else {
-            buttonTextElement.innerHTML = 'Read transcription';
+            if (buttonTextElement) {
+                buttonTextElement.innerHTML = 'Read transcription';
+            }
             transcriptionElement.classList.add('is-hidden');
             transcriptionElement.setAttribute('aria-expanded', 'false');
         }
