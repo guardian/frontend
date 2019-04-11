@@ -245,12 +245,11 @@ $fc-item-gutter: $gs-gutter / 4;
 
 .fc-item__standfirst {
     @include fs-bodyCopy(1);
-    font-size: 13px;
-    line-height: 16px;
     color: $brightness-46;
     display: none;
     flex: 1 1 auto;
     padding-right: $gs-gutter * .25;
+    padding-bottom: $gs-baseline / 2;
 
     .fc-item--has-boosted-title & {
         display: none !important;
