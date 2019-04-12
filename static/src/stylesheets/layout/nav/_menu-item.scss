@@ -137,6 +137,7 @@
     // only match the ones, which are not in --secondary
     .menu-group--primary > .menu-item > & {
         @include fs-headline(4);
+        font-weight: 700;
         color: $brightness-100;
         padding-bottom: 18px;
         padding-top: $gs-baseline / 2;
