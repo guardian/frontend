@@ -70,7 +70,9 @@ class ShouldServeFrontTest
         showTimestamps = None,
         hideShowMore = None,
         displayHints = None,
-        platform = None
+        platform = None,
+        frontsToolSettings = None,
+        userVisibility = None
       )
     )
   )
