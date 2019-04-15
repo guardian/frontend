@@ -174,7 +174,7 @@ const defineSlot = (adSlotNode: Element, sizes: Object): Object => {
                 googletag.pubads().setTargeting('fra', targeting.fr);
             }
             if (targeting.custom) {
-                if(targeting.custom.kw) {
+                if (targeting.custom.kw) {
                     googletag.pubads().setTargeting('kw', targeting.custom.kw);
                 }
             }
