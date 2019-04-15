@@ -201,7 +201,7 @@
 
 .fc-item--list-media-mobile {
     @include mq($until: tablet) {
-        @include fc-item--list-media(3.46, 2);
+        @include fc-item--list-media(3.47, 2);
     }
 }
 
