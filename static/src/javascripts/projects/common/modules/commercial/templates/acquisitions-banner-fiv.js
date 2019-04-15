@@ -3,7 +3,7 @@
 import marque36icon from 'svgs/icon/marque-36.svg';
 import closeCentralIcon from 'svgs/icon/close-central.svg';
 import arrowWhiteRight from 'svgs/icon/arrow-white-right.svg';
-import paymentMethods from 'svgs/icon/payment-methods.svg';
+import config from 'lib/config';
 
 export const acquisitionsBannerFivTemplate = (
     params: EngagementBannerTemplateParams
@@ -61,7 +61,13 @@ export const acquisitionsBannerFivTemplate = (
                     ${mobileButton}${arrowWhiteRight.markup}
                 </a>
                 <div class="engagement-banner__payment-logos engagement-banner__payment-logos--fiv">
-                    ${paymentMethods.markup}
+                    <img
+                        src="${config.get(
+                            'images.acquisitions.paypal-and-credit-card',
+                            ''
+                        )}"
+                        alt="payment options"
+                    >
                 </div>
             </div>
         </div>
