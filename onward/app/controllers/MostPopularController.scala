@@ -19,12 +19,12 @@ import views.support.FaciaToMicroFormat2Helpers._
 import scala.concurrent.Future
 
 class MostPopularController(contentApiClient: ContentApiClient,
-  geoMostPopularAgent: GeoMostPopularAgent,
-  dayMostPopularAgent: DayMostPopularAgent,
-  mostPopularAgent: MostPopularAgent,
-  val controllerComponents: ControllerComponents)
-  (implicit context: ApplicationContext) extends BaseController with Logging with ImplicitControllerExecutionContext {
-    val page = SimplePage(MetaData.make(
+                            geoMostPopularAgent: GeoMostPopularAgent,
+                            dayMostPopularAgent: DayMostPopularAgent,
+                            mostPopularAgent: MostPopularAgent,
+                            val controllerComponents: ControllerComponents)
+                           (implicit context: ApplicationContext) extends BaseController with Logging with ImplicitControllerExecutionContext {
+  val page = SimplePage(MetaData.make(
     "most-read",
     Some(SectionId.fromId("most-read")),
     "Most read"
@@ -33,9 +33,6 @@ class MostPopularController(contentApiClient: ContentApiClient,
   def renderHtml(path: String): Action[AnyContent] = render(path)
 
   def renderSectionFront(path: String): Action[AnyContent] = render(path, true)
-
-  // Get "Most Commented" & "Most Shared" cards for Extended "Most Read" container
-  lazy val mostCards = mostPopularAgent.mostSingleCards.get().mapValues(ContentCard.fromApiContent(_))
 
   def render(path: String, isSectionFront: Boolean = false): Action[AnyContent] = Action.async { implicit request =>
     val edition = Edition(request)
@@ -70,7 +67,7 @@ class MostPopularController(contentApiClient: ContentApiClient,
             "html" -> {
               // Use popularExtended for the "Most Read" tabs if ExtendedMostPopular switch is on
               if (Switches.ExtendedMostPopular.isSwitchedOn) {
-                views.html.fragments.collections.popularExtended(popular, mostCards)
+                views.html.fragments.collections.popularExtended(popular, mostCards())
               } else {
                 views.html.fragments.collections.popular(popular)
               }
@@ -100,7 +97,7 @@ class MostPopularController(contentApiClient: ContentApiClient,
         JsonComponent(
           "html" -> {
             if (Switches.ExtendedMostPopular.isSwitchedOn) {
-              views.html.fragments.collections.popularExtended(Seq(countryPopular), mostCards)
+              views.html.fragments.collections.popularExtended(Seq(countryPopular), mostCards())
             } else {
               views.html.fragments.collections.popular(Seq(countryPopular))
             }
@@ -162,6 +159,9 @@ class MostPopularController(contentApiClient: ContentApiClient,
       )
     }
   }
+
+  // Get "Most Commented" & "Most Shared" cards for Extended "Most Read" container
+  private def mostCards(): Map[String, Option[ContentCard]] = mostPopularAgent.mostSingleCards.get().mapValues(ContentCard.fromApiContent(_))
 
   private def lookup(edition: Edition, path: String)(implicit request: RequestHeader): Future[Option[MostPopular]] = {
     log.info(s"Fetching most popular: $path for edition $edition")
