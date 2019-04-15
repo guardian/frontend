@@ -21,21 +21,11 @@
     z-index: $zindex-popover - 1;
 }
 
-@keyframes reveal {
-    from {transform: translateY(100%);}
-    to {transform: translateY(0);}
-}
-
 .site-message--banner {
     width: 100%;
     z-index: $zindex-popover;
     position: fixed;
     bottom: 0;
-    animation-name: reveal;
-    animation-delay: 2s;
-    animation-duration: 1s;
-    animation-fill-mode: forwards;
-    transform: translateY(100%);
     &.site-message--on-top {
         bottom: auto;
         top: 0;
