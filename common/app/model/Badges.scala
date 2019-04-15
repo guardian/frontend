@@ -42,6 +42,7 @@ object Badges {
   val roadToTheVote = Badge("politics/series/road-to-the-vote", Static("images/badges/EUReferendumBadge.svg"))
   val brexitFrontline = Badge("politics/series/brexit-frontline", Static("images/badges/EUReferendumBadge.svg"))
   val brexitDividedGenerations = Badge("politics/series/brexit-divided-generations", Static("images/badges/EUReferendumBadge.svg"))
+  val brexitHowItCameToThis = Badge("politics/series/brexit-how-it-came-to-this", Static("images/badges/EUReferendumBadge.svg"))
   val beyondTheBlade = Badge("membership/series/beyond-the-blade", Static("images/badges/beyondthebladebadge.svg"))
   val paradisePapers = Badge("news/series/paradise-papers", Static("images/badges/pp_web.svg"))
   val cambridgeAnalytica = Badge("news/series/cambridge-analytica-files", Static("images/badges/calock.svg"))
@@ -52,7 +53,9 @@ object Badges {
   val theNewPopulism = Badge("world/series/the-new-populism", Static("images/badges/the-new-populism.svg"))
   val theImplantFiles = Badge("society/series/the-implant-files", Static("images/badges/the-implant-files.svg"))
 
-  val allBadges = Seq(newArrivals, brexitGamble, roadToTheVote, brexitFrontline, brexitDividedGenerations, beyondTheBlade, paradisePapers, cambridgeAnalytica, specialReport, nhs70, ausElection, midterm, theNewPopulism, theImplantFiles)
+  val allBadges = Seq(newArrivals, brexitGamble, roadToTheVote, brexitFrontline, brexitDividedGenerations,
+    brexitHowItCameToThis, beyondTheBlade, paradisePapers, cambridgeAnalytica, specialReport, nhs70, ausElection,
+    midterm, theNewPopulism, theImplantFiles)
 
   def badgeFor(c: ContentType): Option[Badge] = {
     badgeForTags(c.tags.tags.map(_.id))
