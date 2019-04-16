@@ -379,7 +379,7 @@
 
     &.form_input--twitter-handle {
         position: absolute;
-        left: -600px;
+        left: -1000px;
     }
 
     textarea {
@@ -421,6 +421,15 @@
     }
     select {
         height: 40px;
+    }
+
+    .form-info-text {
+        margin: 1px 0 6px 3px;
+        padding: 0 10px;
+        line-height: 15px;
+        font-size: 12px;
+        font-weight: 400;
+        font-family: $f-sans-serif-text;
     }
 
     .form_field_label {
