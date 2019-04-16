@@ -39,7 +39,7 @@ export const acquisitionsBannerControlTemplate = (
                             'images.acquisitions.payment-methods',
                             ''
                         )}"
-                        alt="PayPal and credit card"
+                        alt="Accepted payment methods: Visa, Mastercard, American Express and Paypal"
                     >
                     ${applePayLogo}
                 </div>

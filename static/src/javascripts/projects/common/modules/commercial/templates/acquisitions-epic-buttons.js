@@ -19,7 +19,7 @@ export const epicButtonsTemplate = ({ supportUrl = '' }: CtaUrls) => {
         <img src="${config.get(
             'images.acquisitions.payment-methods',
             ''
-        )}" alt="Paypal and credit card">
+        )}" alt="Accepted payment methods: Visa, Mastercard, American Express and Paypal">
         ${applePayLogo}
     </div>`;
 
