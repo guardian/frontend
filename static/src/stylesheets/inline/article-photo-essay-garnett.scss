@@ -220,12 +220,10 @@
     }
 
     & > li {
-        @include fs-textSans(3);
+        @include fs-textSans(1);
         color: $brand-main;
-        font-size: 12px;
         width: 100%;
         margin-right: 1%;
-        line-height: 14px;
         padding-top: $gs-baseline / 2;
         padding-left: 0 !important; // override padding applied in from-content-api.scss
         border-top: 1px solid $brand-main;

@@ -172,20 +172,15 @@
 
 .fc-podcast-container__subscribe {
     color: $brightness-100;
-    font-family: $f-sans-serif-text;
-    font-size: 11px;
+    @include fs-textSans(1);
     border-top: solid 1px #777777;
-
-    @include mq(desktop) {
-        font-size: 12px;
-    }
 
     span {
         margin-right: 2px;
     }
 
     span:first-child {
-        font-weight: bold;
+        font-weight: 700;
     }
 
     span:not(:first-child):not(:last-child) {

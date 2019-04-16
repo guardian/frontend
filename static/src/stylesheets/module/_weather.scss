@@ -93,7 +93,7 @@ $weather-large-size: 50px;
 }
 
 .weather__time {
-    font-size: 12px;
+    @include fs-textSans(1, true);
     color: $brightness-46;
 }
 

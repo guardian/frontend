@@ -463,11 +463,10 @@
         }
     }
     .t_and_c {
+        @include fs-textSans(1);
         flex: auto;
         text-align: right;
         display: flex;
-        font-family: $f-sans-serif-text;
-        font-size: 12px;
 
         a {
             flex: auto;

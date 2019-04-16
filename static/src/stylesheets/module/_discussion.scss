@@ -856,8 +856,7 @@ $comment-recommend-button-size: 19px;
     @include fs-textSans(3);
     display: inline-block;
     color: $sport-dark;
-    font-weight: bold;
-    line-height: 20px;
+    font-weight: 700;
     width: auto;
 }
 
@@ -875,11 +874,11 @@ $comment-recommend-button-size: 19px;
 }
 
 .d-comment__action--report {
-    font-weight: normal;
+    @include fs-textSans(1);
+    font-weight: 400;
     position: absolute;
     right: $gs-baseline / 3;
     bottom: $gs-baseline;
-    font-size: 11px;
 
     a {
         color: $brightness-46;

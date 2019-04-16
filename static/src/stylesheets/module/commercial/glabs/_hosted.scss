@@ -214,18 +214,14 @@ $hosted-video-height: 551px;
 }
 
 .hosted__glogotext {
-    @include f-textSans;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: .5px;
-    line-height: 16px;
-
+    @include fs-textSans(1);
+    font-weight: 700;
     margin: 0;
     text-align: left;
     color: rgba(255, 255, 255, .5);
 
     @include mq(tablet) {
-        font-size: 14px;
+        @include fs-textSans(3, true);
     }
 }
 
@@ -775,12 +771,9 @@ $hosted-video-height: 551px;
 }
 
 .hosted__terms {
-    @include f-textSans;
-
+    @include fs-textSans(1);
     display: inline-block;
     margin-top: $gs-row-height / 2;
-    font-size: 12px;
-    line-height: 1.2;
     color: #767676;
 }
 
@@ -861,9 +854,7 @@ $hosted-video-height: 551px;
 }
 
 .hosted__label-btn.hosted__label-btn--small {
-    @include f-textSans;
-
-    font-size: 12px;
+    @include fs-textSans(1);
 }
 
 .hosted__next-page--header {

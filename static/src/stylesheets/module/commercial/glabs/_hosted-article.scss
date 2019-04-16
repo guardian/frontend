@@ -117,8 +117,7 @@
             line-height: 28px;
         }
         & :not(.element-atom--media) figcaption {
-            font-size: 12px;
-            line-height: 16px;
+            @include fs-textSans(1, true);
             color: $brightness-46;
 
             &:before {

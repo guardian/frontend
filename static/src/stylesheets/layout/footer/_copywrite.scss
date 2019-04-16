@@ -5,7 +5,6 @@
 
 .really-serious-copyright {
     color: $brightness-100;
-    font-size: 12px;
     padding-top: $gs-baseline * 2;
 
     @include mq(tablet) {
