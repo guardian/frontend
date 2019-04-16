@@ -34,8 +34,53 @@ export class GeoMostPopularFront extends Component {
     parent: ?bonzo;
 
     prerender(): void {
-        const selector = config.get('switches.extendedMostPopular') ? '.most-popular' : '.headline-list';
-        this.elem = qwery(selector, this.elem)[0];
+        if (config.get('switches.extendedMostPopular')) {
+            /**
+             * mostReadClone is a clone of the server side rendered most read element.
+             * After making the clone we hydrate it with the latestMostPopularTab and the
+             * latestMostCards, which are retrieved from the element in the network response (aka this.elem).
+             * The server side rendered most read element will be replaced with the hydrated mostReadClone.
+             */
+            if (this.parent) {
+                const mostReadClone = this.parent.cloneNode(true);
+                const latestMostPopularTab = qwery(
+                    '.most-popular',
+                    this.elem
+                )[0];
+                const mostPopularTabInClone = qwery(
+                    '.js-tab-2 .most-popular',
+                    mostReadClone
+                )[0];
+
+                // Replace mostPopularTabInClone with latestMostPopularTab
+                mostPopularTabInClone.parentNode.replaceChild(
+                    latestMostPopularTab,
+                    mostPopularTabInClone
+                );
+
+                const mostCardsSelector = '.most-popular__second-tier';
+                const latestMostCards = qwery(mostCardsSelector, this.elem)[0];
+                const mostCardsInClone = qwery(
+                    mostCardsSelector,
+                    mostReadClone
+                )[0];
+
+                // Replace mostCardsInClone with latestMostCards
+                mostCardsInClone.parentNode.replaceChild(
+                    latestMostCards,
+                    mostCardsInClone
+                );
+
+                /**
+                 * Setting this.elem to be mostReadClone means
+                 * mostReadClone will replace the existing server side rendered
+                 * most read element.
+                 */
+                this.elem = mostReadClone;
+            }
+        } else {
+            this.elem = qwery('.headline-list', this.elem)[0];
+        }
     }
 
     go(): void {
@@ -49,7 +94,17 @@ export class GeoMostPopularFront extends Component {
             ) {
                 // hide the tabs
                 hideTabs(this.parent);
+            } else if (config.get('switches.extendedMostPopular')) {
+                /**
+                 * if extendedMostPopular switch is enabled we will replace the
+                 * entire server side most read element.
+                 */
+                this.fetch(this.parent, 'html');
             } else {
+                /**
+                 * if extendedMostPopular switch is enabled we will replace the
+                 * entire server side most read element.
+                 */
                 const tab = this.parent.querySelector(tabSelector);
 
                 if (tab) {
@@ -67,7 +122,6 @@ export class GeoMostPopularFront extends Component {
         mediator.emit('modules:geomostpopular:ready');
     }
 }
-
 
 // import qwery from 'qwery';
 // import $ from 'lib/$';
