@@ -193,7 +193,7 @@ body {
     }
 
     .email-sub__heading {
-        @include fs-header(4);
+        @include fs-header(3);
         color: #ffffff;
         padding-right: 40px; // Avoid close icon
         hyphens: none; // Allow invisible line breaks in "one-word" names, e.g. theguardiantoday

@@ -70,15 +70,7 @@
 .most-popular__container .tabs__tab--most-popular a,
 .simple-content-card__headline,
 .second-tier__title {
-    font-family: $f-serif-headline;
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 20px;
-
-    @include mq(tablet) {
-        font-size: 18px;
-        line-height: 22px;
-    }
+    @include fs-headline(2);
 }
 
 .most-popular__headline {

@@ -73,7 +73,7 @@
     &:last-child {
         margin-right: 0;
 
-        .is-paying-member & > *,
+        .hide-support-messaging & > *,
         .is-recent-contributor & > * {
             display: none;
         }

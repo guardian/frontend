@@ -34,13 +34,8 @@
     }
 
     .content__standfirst {
-        font-size: 18px;
-        @include mq(tablet) {
-            font-size: 20px;
-        }
-        @include mq(leftCol) {
-            font-size: 22px;
-        }
+        @include fs-headline(3, true);
+
         @include mq($until: desktop) {
             margin-left: 0;
         }

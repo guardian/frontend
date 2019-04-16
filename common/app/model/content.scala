@@ -131,7 +131,7 @@ final case class Content(
     else if(tags.isLiveBlog) FacebookOpenGraphImage.live
     else if(
       tags.tags.exists(_.id == "tone/news") &&
-      trail.webPublicationDate.getYear < DateTime.now().getYear()
+      trail.webPublicationDate.isBefore(DateTime.now().minusYears(1))
     ) {
       if(isFromTheObserver) {
         TwitterImage.contentAgeNoticeObserver(trail.webPublicationDate.getYear)
@@ -170,7 +170,7 @@ final case class Content(
     else if(tags.isLiveBlog) TwitterImage.live
     else if(
         tags.tags.exists(_.id == "tone/news") &&
-        trail.webPublicationDate.getYear < DateTime.now().getYear()
+        trail.webPublicationDate.isBefore(DateTime.now().minusYears(1))
     ) {
       if(isFromTheObserver) {
         TwitterImage.contentAgeNoticeObserver(trail.webPublicationDate.getYear)

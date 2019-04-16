@@ -246,7 +246,7 @@ $identity-header-height: 48px;
     @include fs-headline(4);
 
     @include mq(tablet) {
-        @include fs-headline(7, true);
+        @include fs-headline(6, true);
     }
 }
 .user-profile__last-seen,
@@ -380,7 +380,7 @@ $identity-header-height: 48px;
         @include pillar-dropdown('Lifestyle', $lifestyle-main);
         @include pillar-dropdown('Comment', $opinion-main);
         .dropdown__label {
-            @include fs-bodyHeading(3);
+            @include fs-bodyHeading(2);
             &:after {
                 content: '';
                 border: 2px solid currentColor;

@@ -201,7 +201,7 @@
 
 .fc-item--list-media-mobile {
     @include mq($until: tablet) {
-        @include fc-item--list-media(3.5, 2);
+        @include fc-item--list-media(3.47, 2);
     }
 }
 
@@ -272,7 +272,7 @@
                 @include mq(desktop) {
                     @include fs-headline(6, true);
                     @include fs-headline-quote(6);
-                    @include headline-boost(7);
+                    @include headline-boost(6);
                 }
 
                 padding-right: gs-height(4.5);

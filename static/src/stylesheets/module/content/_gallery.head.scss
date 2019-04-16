@@ -45,7 +45,7 @@
 
     .content__series-label,
     .content__section-label {
-        @include fs-header(1, $size-only: true);
+        @include fs-header(2, $size-only: true);
         float: left;
     }
 }

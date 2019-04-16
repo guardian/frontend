@@ -136,9 +136,9 @@ $btn-height: ($gs-baseline*3.5);
 .site-message--first-pv-consent__block {
     max-width: gs-span(8);
     &.site-message--first-pv-consent__block--head {
-        @include fs-headlineGarnett(4);
+        @include fs-headline(5);
         @include mq(leftCol) {
-            @include fs-headlineGarnett(6, true);
+            @include fs-headline(6, true);
         }
         font-weight: bold;
         padding-bottom: $gs-baseline;
@@ -150,8 +150,6 @@ $btn-height: ($gs-baseline*3.5);
     }
     &.site-message--first-pv-consent__block--intro {
         @include fs-bodyCopy(2);
-        font-size: 17px;
-        line-height: 24px;
 
         .site-message--double-banner & {
             @include fs-textSans(2);

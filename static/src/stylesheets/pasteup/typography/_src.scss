@@ -4,50 +4,30 @@ $f-sans-serif-text: 'Guardian Text Sans Web', 'Helvetica Neue', Helvetica, Arial
 
 $font-scale: (
     header: (
-        1: (font-size: 16, line-height: 20),
-        2: (font-size: 18, line-height: 24),
-        3: (font-size: 20, line-height: 24),
-        4: (font-size: 22, line-height: 28),
-        5: (font-size: 24, line-height: 28),
-    ),
-    headerGarnett: (
-        1: (font-size: 14, line-height: 18),
-        2: (font-size: 16, line-height: 20),
-        3: (font-size: 18, line-height: 22),
-        4: (font-size: 20, line-height: 24),
-        5: (font-size: 22, line-height: 26),
+        15: (font-size: 14, line-height: 17),
+        2: (font-size: 17, line-height: 20),
+        3: (font-size: 20, line-height: 23),
+        5: (font-size: 24, line-height: 27),
     ),
     headline: (
-        1: (font-size: 14, line-height: 18),
-        2: (font-size: 16, line-height: 20),
-        3: (font-size: 20, line-height: 24),
-        4: (font-size: 24, line-height: 28),
+        1: (font-size: 14, line-height: 17),
+        2: (font-size: 17, line-height: 20),
+        3: (font-size: 20, line-height: 23),
+        4: (font-size: 24, line-height: 27),
         5: (font-size: 28, line-height: 32),
-        6: (font-size: 32, line-height: 36),
-        7: (font-size: 36, line-height: 40),
-        8: (font-size: 40, line-height: 44),
-        9: (font-size: 44, line-height: 48),
-    ),
-    headlineGarnett: (
-        0: (font-size: 18, line-height: 22),
-        1: (font-size: 20, line-height: 24),
-        2: (font-size: 22, line-height: 26),
-        3: (font-size: 26, line-height: 30),
-        4: (font-size: 28, line-height: 32),
-        5: (font-size: 30, line-height: 34),
         6: (font-size: 34, line-height: 38),
-        7: (font-size: 38, line-height: 42),
+        8: (font-size: 42, line-height: 46),
+        9: (font-size: 50, line-height: 56),
+        10: (font-size: 70, line-height: 78),
     ),
     bodyHeading: (
         1: (font-size: 14, line-height: 22),
-        2: (font-size: 16, line-height: 24),
-        3: (font-size: 18, line-height: 28),
+        2: (font-size: 17, line-height: 24),
         4: (font-size: 20, line-height: 28),
     ),
     bodyCopy: (
-        1: (font-size: 14, line-height: 20),
-        2: (font-size: 16, line-height: 24),
-        3: (font-size: 18, line-height: 28),
+        1: (font-size: 14, line-height: 18),
+        2: (font-size: 17, line-height: 24),
     ),
     textSans: (
         1: (font-size: 12, line-height: 16),
@@ -89,19 +69,6 @@ $font-scale: (
     }
 }
 
-@mixin f-headerGarnett {
-    font-family: $f-serif-headline;
-    font-weight: 900;
-}
-
-@mixin fs-headerGarnett($level, $size-only: false) {
-    @include font-size(get-font-size(header, $level), get-line-height(header, $level));
-
-    @if $size-only == false {
-        @include f-headerGarnett;
-    }
-}
-
 @mixin f-headline {
     font-family: $f-serif-headline;
     font-weight: normal;
@@ -112,19 +79,6 @@ $font-scale: (
 
     @if $size-only == false {
         @include f-headline;
-    }
-}
-
-@mixin f-headlineGarnett {
-    font-family: $f-serif-headline;
-    font-weight: lighter;
-}
-
-@mixin fs-headlineGarnett($level, $size-only: false) {
-    @include font-size(get-font-size(headlineGarnett, $level), get-line-height(headlineGarnett, $level));
-
-    @if $size-only == false {
-        @include f-headlineGarnett;
     }
 }
 

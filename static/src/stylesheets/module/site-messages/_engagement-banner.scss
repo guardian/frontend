@@ -62,8 +62,7 @@
     line-height: 18px;
 
     @include mq(tablet) {
-        font-size: 17px;
-        line-height: 22px;
+        @include fs-bodyCopy(2);
     }
 
     @include mq(desktop) {

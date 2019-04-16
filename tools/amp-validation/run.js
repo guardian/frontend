@@ -6,6 +6,8 @@ const fetchPage = require('./fetch-page');
 
 const isDev = process.env.NODE_ENV === 'dev' || false;
 
+const failureThreshold = 3;
+
 const onError = error => {
     console.error(error.message);
     validatorJs.cleanUp();
@@ -76,7 +78,7 @@ const checkEndpoints = (endpoints, options) => validatorFilePath =>
 
         Promise.all(tests).then(values => {
             const results = partition(values, Boolean);
-            const exitValue = results[1].length ? 1 : 0; // every promise returns true <=> exit value is zero
+            const exitValue = results[1].length > failureThreshold ? 1 : 0; // every promise returns true <=> exit value is zero, build in some failure threshold
 
             console.log(
                 `Validator finished, there were ${
