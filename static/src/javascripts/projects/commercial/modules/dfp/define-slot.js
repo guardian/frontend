@@ -168,14 +168,18 @@ const defineSlot = (adSlotNode: Element, sizes: Object): Object => {
 
             // brand safety is on a page level
             Object.keys(targeting.brandSafety).forEach(key =>
-                googletag.pubads().setTargeting(key, targeting.brandSafety[key])
+                window.googletag
+                    .pubads()
+                    .setTargeting(key, targeting.brandSafety[key])
             );
             if (targeting.fr) {
-                googletag.pubads().setTargeting('fra', targeting.fr);
+                window.googletag.pubads().setTargeting('fra', targeting.fr);
             }
             if (targeting.custom) {
                 if (targeting.custom.kw) {
-                    googletag.pubads().setTargeting('kw', targeting.custom.kw);
+                    window.googletag
+                        .pubads()
+                        .setTargeting('kw', targeting.custom.kw);
                 }
             }
 
