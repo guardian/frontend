@@ -398,7 +398,7 @@ trait PrebidSwitches {
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = true
   )
 
   val prebidUserSync: Switch = Switch(
