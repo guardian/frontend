@@ -47,29 +47,49 @@ export class GeoMostPopularFront extends Component {
                     '.most-popular',
                     this.elem
                 )[0];
+                /**
+                 * Find the 2nd tab in mostReadClone and assign to mostPopularTabInClone.
+                 * This tab is initially empty, so we want to hydrate/replace it with the latestMostPopularTab.
+                 */
                 const mostPopularTabInClone = qwery(
                     '.js-tab-2 .most-popular',
                     mostReadClone
                 )[0];
 
-                // Replace mostPopularTabInClone with latestMostPopularTab
-                mostPopularTabInClone.parentNode.replaceChild(
-                    latestMostPopularTab,
-                    mostPopularTabInClone
-                );
+                if (
+                    latestMostPopularTab &&
+                    mostPopularTabInClone &&
+                    mostPopularTabInClone.parentNode
+                ) {
+                    // Replace mostPopularTabInClone with latestMostPopularTab
+                    mostPopularTabInClone.parentNode.replaceChild(
+                        latestMostPopularTab,
+                        mostPopularTabInClone
+                    );
+                }
 
                 const mostCardsSelector = '.most-popular__second-tier';
                 const latestMostCards = qwery(mostCardsSelector, this.elem)[0];
+                /**
+                 * Find the most cards container in mostReadClone and assign to mostCardsInClone.
+                 * This container is initially empty, so we want to hydrate/replace it with the latestMostCards.
+                 */
                 const mostCardsInClone = qwery(
                     mostCardsSelector,
                     mostReadClone
                 )[0];
 
-                // Replace mostCardsInClone with latestMostCards
-                mostCardsInClone.parentNode.replaceChild(
-                    latestMostCards,
-                    mostCardsInClone
-                );
+                if (
+                    latestMostCards &&
+                    mostCardsInClone &&
+                    mostCardsInClone.parentNode
+                ) {
+                    // Replace mostCardsInClone with latestMostCards
+                    mostCardsInClone.parentNode.replaceChild(
+                        latestMostCards,
+                        mostCardsInClone
+                    );
+                }
 
                 /**
                  * Setting this.elem to be mostReadClone means
@@ -94,13 +114,16 @@ export class GeoMostPopularFront extends Component {
             ) {
                 // hide the tabs
                 hideTabs(this.parent);
-            } else if (config.get('switches.extendedMostPopular')) {
+            } else if (
+                config.get('switches.extendedMostPopular') &&
+                this.parent
+            ) {
                 /**
                  * if extendedMostPopular switch is enabled we will replace the
                  * entire server side most read element.
                  */
                 this.fetch(this.parent, 'html');
-            } else {
+            } else if (this.parent) {
                 /**
                  * if extendedMostPopular switch is enabled we will replace the
                  * entire server side most read element.
