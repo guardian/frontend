@@ -85,11 +85,12 @@ $border-style: $brightness-60 1px solid;
 
     .engagement-banner__payment-logos--fiv {
         flex: 1 1 auto;
-        height: 25px;
+        height: 20px;
         align-self: center;
 
         @include mq($from: leftCol) {
             margin-left: 10px;
+            height: 25px;
         }
     }
 
