@@ -37,16 +37,16 @@ export const acquisitionsBannerFivTemplate = (
                 </div>
             </div>`
                     : ''
-            }    
+            }
         </div>
-       
+
             <div class="fiv-banner__copy-and-ctas">
             <div class="fiv-banner__message">
                 <div class="fiv-banner__lead-sentence">
                    ${params.leadSentence || ''}
                 </div>
                 <div class="fiv-banner__message-text">
-                   ${params.messageText} 
+                   ${params.messageText}
                 </div>
             </div>
             <div class="engagement-banner__cta">
@@ -63,7 +63,7 @@ export const acquisitionsBannerFivTemplate = (
                 <div class="engagement-banner__payment-logos engagement-banner__payment-logos--fiv">
                     <img
                         src="${config.get(
-                            'images.acquisitions.paypal-and-credit-card',
+                            'images.acquisitions.payment-methods',
                             ''
                         )}"
                         alt="Accepted payment methods: Visa, Mastercard, American Express and Paypal"
