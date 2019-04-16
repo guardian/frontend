@@ -91,12 +91,19 @@ export class GeoMostPopularFront extends Component {
                     );
                 }
 
-                /**
-                 * Setting this.elem to be mostReadClone means
-                 * mostReadClone will replace the existing server side rendered
-                 * most read element.
-                 */
-                this.elem = mostReadClone;
+                const latestPopularTrails = qwery(
+                    '#popular-trails',
+                    mostReadClone
+                )[0];
+
+                if (latestPopularTrails) {
+                    /**
+                     * Setting this.elem to be latestPopularTrails means
+                     * latestPopularTrails will replace the contents of the existing
+                     * server side rendered most read element.
+                     */
+                    this.elem = latestPopularTrails;
+                }
             }
         } else {
             this.elem = qwery('.headline-list', this.elem)[0];
