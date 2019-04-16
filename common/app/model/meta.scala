@@ -684,9 +684,9 @@ object SubMetaLinks {
     } else None
 
     val secondaryLink = if (blogOrSeriesTag.isDefined) {
-      blogOrSeriesTag.map(t => SubMetaLink(s"${Configuration.site.host}/${t.id}", t.name))
+      blogOrSeriesTag.map(t => SubMetaLink(s"/${t.id}", t.name))
     } else if (isFromTheObserver) {
-      Some(SubMetaLink(s"${Configuration.site.host}/observer", "The Observer"))
+      Some(SubMetaLink("/observer", "The Observer"))
     } else {
       None
     }
