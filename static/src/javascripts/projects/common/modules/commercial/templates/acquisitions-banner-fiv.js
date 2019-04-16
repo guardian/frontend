@@ -66,7 +66,7 @@ export const acquisitionsBannerFivTemplate = (
                             'images.acquisitions.paypal-and-credit-card',
                             ''
                         )}"
-                        alt="payment options"
+                        alt="Accepted payment methods: Visa, Mastercard, American Express and Paypal"
                     >
                 </div>
             </div>
