@@ -118,7 +118,7 @@ $avatarPadding: $gs-gutter / 2;
 
 .d-discussion__size-message,
 .d-discussion__message {
-    @include fs-textSans(2);
+    @include fs-textSans(3);
     margin-bottom: $gs-baseline * 2 / 3;
     border-top: 1px solid $brightness-86;
     padding-top: $gs-baseline;
@@ -259,12 +259,11 @@ $avatarPadding: $gs-gutter / 2;
 }
 
 .discussion__toolbar-item {
-    @include fs-textSans(2);
+    @include fs-textSans(3);
     position: relative;
     top: 1px;
     float: left;
     color: $brightness-46;
-    display: inline-block;
     line-height: $gs-baseline * 2;
 
     margin: $gs-baseline 0;
@@ -677,7 +676,7 @@ $avatarPadding: $gs-gutter / 2;
 }
 
 .d-show-more-replies {
-    @include fs-textSans(2);
+    @include fs-textSans(3);
     border-top: 1px dotted $brightness-86;
     padding: $gs-baseline 0;
 
@@ -1165,7 +1164,7 @@ $comment-recommend-button-size: 19px;
    ========================================================================== */
 
 .person {
-    @include fs-textSans(2, true);
+    @include fs-textSans(3, true);
 }
 .person__avatar {
     @include circular;
@@ -1343,7 +1342,7 @@ $comment-recommend-button-size: 19px;
 }
 .d-comment-box__hide-parent,
 .d-comment-box__show-parent {
-    @include fs-textSans(2);
+    @include fs-textSans(3);
     display: none;
     margin-left: $gs-gutter;
 }
@@ -1486,7 +1485,7 @@ $comment-recommend-button-size: 19px;
 .d-comment-box__formatting-italic,
 .d-comment-box__formatting-quote,
 .d-comment-box__formatting-link {
-    @include fs-textSans(2);
+    @include fs-textSans(3);
     display: inline-block;
     border: 1px solid $brightness-86;
     color: $brightness-46;
@@ -1523,7 +1522,7 @@ $comment-recommend-button-size: 19px;
 }
 
 .d-comment-box--onboarding-visible .d-comment-box__onboarding {
-    @include fs-textSans(2);
+    @include fs-textSans(3);
     display: block;
     background-color: colour(brightness-97);
     padding: $gs-baseline $gs-gutter;

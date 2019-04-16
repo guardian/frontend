@@ -74,7 +74,7 @@
 
 
 .explainer-button {
-    @include fs-textSans(2);
+    @include fs-textSans(3);
     @include button-colour(
         $sport-bright,
         #ffffff,
@@ -84,7 +84,7 @@
     vertical-align: top;
     width: auto;
     height: 2.25rem;
-    font-weight: bold;
+    font-weight: 700;
     text-decoration: none;
     border-radius: 1000px;
     box-sizing: border-box;

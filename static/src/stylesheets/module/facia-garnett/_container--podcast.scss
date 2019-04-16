@@ -67,12 +67,10 @@
 }
 
 .fc-podcast-container__episode-details .fc-item__header {
-    font-size: 20px;
-    line-height: 24px;
+    @include fs-headline(3);
 
     @include mq(desktop) {
-        font-size: 24px;
-        line-height: 28px;
+        @include fs-headline(4, true);
     }
 
     .fc-item__link div {
@@ -82,9 +80,9 @@
 
 .fc-podcast-container__episode-details .fc-item__standfirst {
     @include mq(desktop) {
+        @include fs-headline(1);
         display: block;
         margin-bottom: $gs-baseline/2;
-        font-size: 13px;
     }
 }
 

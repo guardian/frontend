@@ -290,7 +290,7 @@ figure.element--thumbnail + h2 {
     }
     th,
     td {
-        @include fs-textSans(2);
+        @include fs-textSans(3);
         padding: ($gs-baseline/3)*2;
     }
     th {

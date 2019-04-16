@@ -30,7 +30,7 @@
 .football-leagues__list {}
 
 .football-leagues__item {
-    @include fs-textSans(2, true);
+    @include fs-textSans(3, true);
     box-sizing: border-box;
     display: inline-block;
     vertical-align: top;

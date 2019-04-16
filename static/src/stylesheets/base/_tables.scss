@@ -50,7 +50,7 @@ td {
     th,
     td,
     .table__caption {
-        @include fs-textSans(2);
+        @include fs-textSans(3);
         padding: $table-baseline $table-gutter;
         vertical-align: top;
     }

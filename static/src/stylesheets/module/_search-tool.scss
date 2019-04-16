@@ -66,8 +66,7 @@
 }
 
 .search-tool__meta {
-    @include fs-textSans(2);
+    @include fs-textSans(3);
     color: $brightness-46;
     display: block;
-    line-height: 16px;
 }

@@ -25,7 +25,7 @@ Loading screen
         margin: 0;
     }
     .identity-forms-loading__text {
-        @include fs-textSans(2);
+        @include fs-textSans(3);
         margin-top: $gs-baseline;
         .manage-account__button {
             margin: $gs-baseline auto;

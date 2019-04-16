@@ -1,7 +1,7 @@
 @import 'src';
 
 .button {
-    @include fs-textSans(2);
+    @include fs-textSans(3);
     @include button-height($base-size * 5);
     @include button-colour(
         $sport-bright,

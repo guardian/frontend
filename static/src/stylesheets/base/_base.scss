@@ -67,11 +67,7 @@ body:after {
 }
 
 .dateline {
-    @include fs-textSans(2);
-
-    @include mq(tablet) {
-        @include fs-textSans(3, true);
-    }
+    @include fs-textSans(3);
 
     color: $brightness-46;
 

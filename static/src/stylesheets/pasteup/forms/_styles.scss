@@ -87,7 +87,7 @@
 }
 
 .form__error {
-    @include fs-textSans(2);
+    @include fs-textSans(3);
     background-color: lighten($news-main, 55%);
     border-bottom: 1px solid lighten($news-main, 35%);
     border-top: 1px solid lighten($news-main, 35%);
@@ -97,7 +97,7 @@
 }
 
 .form__success {
-    @include fs-textSans(2);
+    @include fs-textSans(3);
     background-color: lighten($green-bold, 70%);
     border-bottom: 1px solid lighten($green-bold, 35%);
     border-top: 1px solid lighten($green-bold, 35%);

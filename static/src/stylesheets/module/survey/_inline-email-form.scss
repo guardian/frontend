@@ -4,7 +4,7 @@
     }
 
     .fsSubmitButton {
-        @include fs-textSans(2);
+        @include fs-textSans(3);
         @include button-height($base-size * 5);
         @include button-colour(
             $brand-main,
@@ -29,7 +29,7 @@
     }
 
     .fsField {
-        @include fs-textSans(2);
+        @include fs-textSans(3);
         display: block;
         width: 100%;
         margin: 0 auto;

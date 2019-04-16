@@ -434,8 +434,7 @@ $wideHeight: #{map-get($mq-breakpoints, wide) * 3/5 + $headerHeight + $footerHei
 }
 
 .hosted-gallery__caption {
-    @include f-textSans;
-    font-size: 13px;
+    @include fs-textSans(3);
     height: 40px;
     color: $brightness-97;
     position: absolute;

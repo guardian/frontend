@@ -82,7 +82,7 @@
     }
 
     .newsletter-card__text-input {
-        @include fs-textSans(2);
+        @include fs-textSans(3);
         border-radius: 1000px 0 0 1000px;
         border: 1px solid $brightness-86;
         border-right: 0;
@@ -93,7 +93,7 @@
     }
 
     .newsletter-card__lozenge {
-        @include fs-textSans(2);
+        @include fs-textSans(3);
         color: #ffffff;
         border: 1px solid $sport-dark;
         background-color: $sport-dark;

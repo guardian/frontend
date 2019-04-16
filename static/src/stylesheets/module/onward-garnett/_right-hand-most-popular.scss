@@ -89,7 +89,7 @@
         left: $gs-column-width*2 + $gs-gutter/2;
 
         a {
-            @include fs-textSans(2, true);
+            @include fs-textSans(3, true);
         }
     }
 }

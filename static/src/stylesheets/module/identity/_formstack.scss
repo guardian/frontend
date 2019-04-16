@@ -30,10 +30,9 @@
 }
 
 .formstack-count {
+    @include fs-textSans(1);
     position: absolute;
     color: $brightness-7;
-    font-family: $f-sans-serif-text;
-    font-size: 13px;
     margin-left: 6px;
     padding-top: ($gs-baseline/3)*9;
 }

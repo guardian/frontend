@@ -255,9 +255,8 @@
 
 
 .campaign--snippet__handle {
-    font-family: $f-sans-serif-text;
-    font-size: 13px;
-    font-weight: bold;
+    @include fs-textSans(3);
+    font-weight: 700;
     position: absolute;
     bottom: 0;
     transform: translate(0, 50%);

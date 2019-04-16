@@ -66,13 +66,13 @@ $player-card-avatar: (
     padding: $gs-baseline/3 0 ($gs-baseline/3)*2;
 }
 .player-card__stat-name {
-    @include fs-textSans(2);
+    @include fs-textSans(3);
     display: block;
     float: left;
     font-weight: normal;
 }
 .player-card__stat-value {
-    @include fs-textSans(2);
+    @include fs-textSans(3);
     border-top: 1px solid $brightness-86;
     font-weight: bold;
     padding-left: 85%;

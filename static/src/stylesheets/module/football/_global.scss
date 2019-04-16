@@ -43,12 +43,12 @@
 }
 
 .date-divider {
-    @include fs-textSans(2);
+    @include fs-textSans(3);
     margin-bottom: $gs-baseline*2;
     padding-top: $gs-baseline/2;
     border-top: 1px solid $brightness-86;
     color: $brightness-7;
-    font-weight: 900;
+    font-weight: 700;
 
     @include mq(leftCol) {
         margin-left: -160px;

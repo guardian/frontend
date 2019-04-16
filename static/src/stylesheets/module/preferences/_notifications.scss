@@ -108,7 +108,7 @@ $notifications-button-height: 28px;
 }
 
 .js-live-notifications__label--denied {
-    @include fs-textSans(2, true);
+    @include fs-textSans(3, true);
     padding: $gs-baseline 0;
     text-align: left;
 }

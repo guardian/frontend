@@ -234,7 +234,7 @@ $footballBadgeSizeDesktop: 120px;
 }
 
 .football-component-missing {
-    @include fs-textSans(2);
+    @include fs-textSans(3);
 
     background: $brightness-97;
     width: 100%;

@@ -601,7 +601,7 @@ $ima-controls-height: 70px;
 }
 
 .vjs-embedoverlay-input {
-    @include fs-textSans(2);
+    @include fs-textSans(3);
     box-sizing: border-box;
     width: 100%;
     height: gs-height(1) + $gs-baseline;
@@ -731,7 +731,7 @@ $ima-controls-height: 70px;
     text-align: left;
 
     @include mq(tablet) {
-        @include fs-textSans(2, true);
+        @include fs-textSans(3, true);
     }
 }
 .vjs-ads-skip__countdown,

@@ -130,7 +130,7 @@ $block-padding-left: gs-span(1) + $gs-gutter;
     position: relative;
 
     &.published-time {
-        @include fs-textSans(2);
+        @include fs-textSans(3);
         margin: 0;
         font-weight: bold;
     }
@@ -615,7 +615,7 @@ $timeline-width: 15px;
     }
 }
 .timeline__date {
-    @include fs-textSans(2);
+    @include fs-textSans(3);
     display: table-cell;
     width: gs-span(1);
     font-weight: bold;
@@ -706,7 +706,7 @@ $timeline-width: 15px;
             }
         }
         .player-card__position {
-            @include fs-textSans(2);
+            @include fs-textSans(3);
             color: $brightness-7;
             font-weight: 700;
         }

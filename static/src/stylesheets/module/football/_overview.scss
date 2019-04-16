@@ -396,7 +396,7 @@
     .football-match__kickoff,
     .football-match__date,
     .football-match__comments {
-        @include fs-textSans(2, true);
+        @include fs-textSans(3, true);
     }
 
     .football-match__comments {
@@ -448,7 +448,7 @@
 }
 
 .football-round {
-    @include fs-textSans(2);
+    @include fs-textSans(3);
     float: left;
 }
 .football-round--active {

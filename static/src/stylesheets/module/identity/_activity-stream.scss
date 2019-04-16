@@ -98,7 +98,7 @@
     padding-left: $gs-gutter;
 }
 .activity-stream-search__q {
-    @include fs-textSans(2);
+    @include fs-textSans(3);
     box-sizing: border-box;
     vertical-align: bottom;
     width: 100%;
@@ -177,6 +177,6 @@
     color: $brightness-7;
 }
 .activity-stream__witness-description {
-    @include fs-textSans(2);
+    @include fs-textSans(3);
     color: $brightness-46;
 }

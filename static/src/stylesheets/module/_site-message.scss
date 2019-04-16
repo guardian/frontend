@@ -150,7 +150,7 @@
 $btn-height: gs-height(1) - $gs-baseline/2; //30px
 
 .site-message__actions__item {
-    @include fs-textSans(2);
+    @include fs-textSans(3);
     @include circular;
     float: left;
     height: $btn-height;
@@ -199,7 +199,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 }
 
 .site-message__close-btn {
-    @include fs-textSans(2);
+    @include fs-textSans(3);
     @include circular;
     display: block;
     padding: 0;

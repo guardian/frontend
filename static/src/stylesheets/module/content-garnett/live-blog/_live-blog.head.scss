@@ -173,14 +173,13 @@ $block-padding-left: gs-span(1) + $gs-gutter;
 }
 
 .block-time {
-    line-height: 15px;
     padding: $gs-baseline/4 0 $gs-baseline $gs-gutter/2;
     position: relative;
 
     &.published-time {
-        @include fs-textSans(2);
+        @include fs-textSans(3);
         margin: 0;
-        font-weight: bold;
+        font-weight: 700;
     }
 
     .live-pulse-icon--red {
@@ -685,7 +684,7 @@ $timeline-width: 15px;
     }
 }
 .timeline__date {
-    @include fs-textSans(2);
+    @include fs-textSans(3);
     display: table-cell;
     width: gs-span(1);
     font-weight: bold;
@@ -777,7 +776,7 @@ $timeline-width: 15px;
             }
         }
         .player-card__position {
-            @include fs-textSans(2);
+            @include fs-textSans(3);
             color: $brightness-7;
             font-weight: 700;
         }

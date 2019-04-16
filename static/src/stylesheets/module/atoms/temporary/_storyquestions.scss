@@ -60,9 +60,9 @@
     margin-top: $gs-baseline * 2;
 
     h3 {
-        @include fs-textSans(2);
+        @include fs-textSans(3);
         color: $brightness-46;
-        font-weight: 200;
+        font-weight: 400;
     }
 }
 

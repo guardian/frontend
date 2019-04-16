@@ -23,11 +23,9 @@
 }
 
 .top-bar__item {
-    @include fs-textSans(2);
-    font-size: 16px;
+    @include fs-textSans(3);
     color: $brightness-100;
     float: left;
-    line-height: 1;
     padding-top: $gs-baseline / 2;
     position: relative;
     z-index: $zindex-main-menu + 2;

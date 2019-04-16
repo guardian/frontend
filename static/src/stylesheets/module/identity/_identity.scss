@@ -73,7 +73,7 @@ $identity-header-height: 48px;
     @include fs-bodyCopy(2);
     margin-bottom: $gs-baseline;
     &.identity-title-explainer--small {
-        @include fs-textSans(2);
+        @include fs-textSans(3);
         color: $brightness-46;
     }
 }
@@ -226,7 +226,7 @@ $identity-header-height: 48px;
     }
 }
 .user-profile__about {
-    @include fs-textSans(2);
+    @include fs-textSans(3);
     clear: both;
     margin-top: $gs-baseline;
 
