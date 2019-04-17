@@ -86,15 +86,21 @@ const checkEndpoints = (endpoints, options) => validatorFilePath =>
                 notAmp: values.filter(x => x === 'not AMP').length,
             };
 
-            const exitValue = results.failed > failureThreshold ? 1 : 0; // every promise returns true <=> exit value is zero, build in some failure threshold
+            const failed = results.failed > failureThreshold;
+            const exitValue = failed ? 1 : 0; // every promise returns true <=> exit value is zero, build in some failure threshold
+            const completionMessage = `Validator finished, there were ${
+                results.passed
+            } passes, ${results.failed} failures ${
+                results.skipped
+            } skipped and ${results.notAmp} non-AMP pages`;
+            if (failed) {
+                console.log(
+                    `##teamcity[buildProblem description='${completionMessage}' identity='AMPValidation']`
+                );
+            } else {
+                console.log(completionMessage);
+            }
 
-            console.log(
-                `Validator finished, there were ${results.passed} passes, ${
-                    results.failed
-                } failures ${results.skipped} skipped and ${
-                    results.notAmp
-                } non-AMP pages`
-            );
             validatorJs.cleanUp();
             process.exit(exitValue);
         });
