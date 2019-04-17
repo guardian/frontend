@@ -129,11 +129,14 @@ export class GeoMostPopularFront extends Component {
                  * if extendedMostPopular switch is enabled we will replace the
                  * entire server side most read element.
                  */
-                this.fetch(this.parent, 'html');
+                setTimeout(() => {
+                    console.log('*** fetch most read front ***');
+                    this.fetch(this.parent, 'html');
+                }, 5000);
             } else if (this.parent) {
                 /**
-                 * if extendedMostPopular switch is enabled we will replace the
-                 * entire server side most read element.
+                 * if extendedMostPopular switch is not enabled we will only replace the
+                 * a single tab in the server side most read element.
                  */
                 const tab = this.parent.querySelector(tabSelector);
 
