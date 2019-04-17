@@ -22,6 +22,8 @@ export class GeoMostPopularFrontExtended extends Component {
     parent: ?bonzo;
 
     prerender(): void {
+        const isInternational = config.get('page.pageId') === 'international';
+
         /**
          * mostReadClone is a clone of the server side rendered most read element.
          * After making the clone we hydrate it with the latestMostPopularTab and the
@@ -41,6 +43,7 @@ export class GeoMostPopularFrontExtended extends Component {
             )[0];
 
             if (
+                !isInternational && // we don't update the most popular list for international fronts
                 latestMostPopularTab &&
                 mostPopularTabInClone &&
                 mostPopularTabInClone.parentNode
@@ -99,10 +102,9 @@ export class GeoMostPopularFrontExtended extends Component {
     ready(): void {
         const isNetworkFront =
             config.get('page.contentType') === 'Network Front';
-        const isVideoFront = config.get('page.pageId') === 'video';
 
-        // Hide tabs on all Network fronts and the Video front
-        if (isNetworkFront || isVideoFront) {
+        // Hide tabs on all Network fronts
+        if (isNetworkFront) {
             $('.js-tabs-content', this.parent).addClass(
                 'tabs__content--no-border'
             );
