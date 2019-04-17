@@ -1,14 +1,13 @@
 package model.dotcomponents
 
-import ai.x.play.json.Jsonx
 import com.gu.contentapi.client.model.v1.ElementType.Text
 import com.gu.contentapi.client.model.v1.{BlockElement => ClientBlockElement, Blocks => APIBlocks}
 import common.Edition
 import common.Maps.RichMap
 import common.commercial.{CommercialProperties, EditionCommercialProperties, PrebidIndexSite}
-import conf.{Configuration, Static}
 import conf.Configuration.affiliatelinks
 import conf.switches.Switches
+import conf.{Configuration, Static}
 import controllers.ArticlePage
 import model.SubMetaLinks
 import model.content.Atom
@@ -21,11 +20,6 @@ import play.api.libs.json._
 import play.api.mvc.RequestHeader
 import views.html.fragments.affiliateLinksDisclaimer
 import views.support.{AffiliateLinksCleaner, CamelCase, FourByThree, GUDateTimeFormat, ImgSrc, Item1200, Item300, OneByOne}
-import common.Maps.RichMap
-import navigation.UrlHelpers.{AmpFooter, AmpHeader}
-import navigation.UrlHelpers.{Footer, Header, SideMenu, getReaderRevenueUrl}
-import navigation.ReaderRevenueSite.{Support, SupportContribute, SupportSubscribe}
-import model.meta.{Guardian, LinkedData, PotentialAction}
 import ai.x.play.json.implicits.optionWithNull // Note, required despite Intellij saying otherwise
 
 // We have introduced our own set of objects for serializing data to the DotComponents API,
