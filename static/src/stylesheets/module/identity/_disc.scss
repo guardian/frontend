@@ -10,7 +10,7 @@ $disc-avatar-size: 44px;
    ========================================================================== */
 
 .disc-comment {
-    @include fs-textSans(4);
+    @include fs-textSans(3);
     padding-bottom: $gs-baseline/2;
 
     @include mq(activityLeftCol) {
@@ -90,7 +90,7 @@ $disc-avatar-size: 44px;
    ========================================================================== */
 
 .disc-profile {
-    @include fs-textSans(4);
+    @include fs-textSans(3);
 }
 .disc-profile__avatar {
     @include circular;

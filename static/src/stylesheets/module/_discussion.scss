@@ -428,7 +428,7 @@ $avatarPadding: $gs-gutter / 2;
 
 .d-comment__author,
 .d-comment-box__author {
-    @include fs-textSans(4);
+    @include fs-textSans(3);
     overflow: hidden;
     padding-right: $gs-gutter / 4;
     font-weight: bold;
@@ -444,7 +444,7 @@ $avatarPadding: $gs-gutter / 2;
 }
 
 .d-comment-box__author-label {
-    @include fs-textSans(4);
+    @include fs-textSans(3);
     color: $brightness-46;
 }
 
@@ -512,7 +512,7 @@ $avatarPadding: $gs-gutter / 2;
 
 .d-comment__reply-to-author,
 .d-comment-box__reply-to-author {
-    @include fs-textSans(4);
+    @include fs-textSans(3);
     padding-right: $gs-gutter / 4;
     display: inline;
 }
@@ -1046,7 +1046,7 @@ $comment-recommend-button-size: 19px;
 }
 
 .d-top-comment__bubble {
-    @include fs-textSans(4);
+    @include fs-textSans(3);
     color: $brightness-7;
     box-sizing: border-box;
     padding: $gs-baseline ($gs-baseline * 4 / 3);
@@ -1063,7 +1063,7 @@ $comment-recommend-button-size: 19px;
 }
 
 .d-top-comment__body {
-    $line-height: get-line-height(textSans, 4);
+    $line-height: get-line-height(textSans, 3);
     margin-bottom: $gs-baseline / 2;
     @include mq(tablet) {
         min-height: 5 * $line-height;
@@ -1092,7 +1092,7 @@ $comment-recommend-button-size: 19px;
    ===========================================================================*/
 
 .comment {
-    @include fs-textSans(4);
+    @include fs-textSans(3);
     display: block;
     position: relative;
 }
@@ -1207,7 +1207,7 @@ $comment-recommend-button-size: 19px;
    ========================================================================== */
 
 .d-discussion__error {
-    @include fs-textSans(4);
+    @include fs-textSans(3);
     margin-top: ($gs-baseline / 3) * 2;
     color: $news-main;
 
@@ -1254,7 +1254,7 @@ $comment-recommend-button-size: 19px;
 }
 
 .d-bar {
-    @include fs-textSans(4);
+    @include fs-textSans(3);
     margin-bottom: ($gs-baseline / 3) * 4;
     color: $brightness-46;
 }
@@ -1417,7 +1417,7 @@ $comment-recommend-button-size: 19px;
     border-right-style: inset;
 }
 .d-comment-box__parent-comment {
-    @include fs-textSans(4);
+    @include fs-textSans(3);
     padding: $gs-baseline $gs-gutter;
     background-color: $brightness-97;
 

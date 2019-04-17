@@ -79,7 +79,7 @@ td {
         th,
         td,
         thead td {
-            @include fs-textSans(4, true);
+            @include fs-textSans(3, true);
             padding: $table-baseline*1.5 $table-gutter*1.5 ($table-baseline);
         }
     }

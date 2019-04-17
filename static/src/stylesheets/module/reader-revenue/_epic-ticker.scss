@@ -87,7 +87,7 @@ $progress-bar-height: 10px;
 }
 
 .epic-ticker__label {
-    @include fs-textSans(4);
+    @include fs-textSans(3);
     color: #676767;
     position: absolute;
     top: 5px;
@@ -107,7 +107,7 @@ $progress-bar-height: 10px;
 }
 
 .epic-ticker__caption {
-    @include fs-textSans(4);
+    @include fs-textSans(3);
     position: absolute;
     bottom: 6px;
     left: 10px;

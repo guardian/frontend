@@ -52,7 +52,7 @@ $player-card-avatar: (
     font-weight: normal;
 }
 .player-card__position {
-    @include fs-textSans(4);
+    @include fs-textSans(3);
     color: $sport-dark;
 }
 

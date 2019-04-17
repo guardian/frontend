@@ -11,8 +11,7 @@
 }
 
 .colophon__lists-container {
-    @include fs-textSans(5);
-    line-height: 1.2;
+    @include fs-textSans(3);
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -142,7 +141,7 @@
 .colophon__item a {
     color: $brightness-100;
     display: inline-block;
-    padding: ($gs-baseline / 2) 0;
+    padding: ($gs-baseline / 4) 0;
 
     &:hover,
     &:focus {

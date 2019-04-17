@@ -47,9 +47,9 @@
 }
 
 .contributions__option-button {
-    @include fs-textSans(4);
+    @include fs-textSans(3);
 
-    font-weight: bold;
+    font-weight: 700;
     text-decoration: none;
     cursor: pointer;
     display: inline-block;

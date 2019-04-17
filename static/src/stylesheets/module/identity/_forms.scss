@@ -71,9 +71,9 @@ Messages
         }
 
         &.identity-forms-message__body--aside {
-            @include fs-textSans(4);
+            @include fs-textSans(3);
             .manage-account__button {
-                @include fs-textSans(4);
+                @include fs-textSans(3);
             }
         }
 
@@ -102,7 +102,7 @@ Messages
     }
 
     aside {
-        @include fs-textSans(4);
+        @include fs-textSans(3);
         opacity: .75;
         margin-top: $gs-gutter / 4;
     }

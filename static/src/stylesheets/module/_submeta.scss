@@ -54,7 +54,7 @@ article .submeta__links,
     color: $brightness-7;
 
     .submeta__keywords & {
-        @include fs-textSans(4);
+        @include fs-textSans(3);
     }
 
     .submeta__section-labels & {

@@ -48,7 +48,7 @@
         background: #ffffff;
     }
     .title {
-        @include fs-textSans(4);
+        @include fs-textSans(3);
         position: absolute;
         z-index: 3;
         bottom: $gs-gutter;
@@ -76,7 +76,7 @@
             line-height: 24px;
 
             &.intro + p::first-letter {
-                @include fs-textSans(4);
+                @include fs-textSans(3);
                 display: inline-block;
                 float: left;
                 color: #000000;
@@ -100,7 +100,7 @@
             }
         }
         .drop-cap {
-            @include fs-textSans(4);
+            @include fs-textSans(3);
             background-color: $brightness-46;
             display: inline-block;
             float: left;

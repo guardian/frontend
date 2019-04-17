@@ -86,9 +86,9 @@
     }
 
     .survey-text__header {
-        @include fs-textSans(4);
+        @include fs-textSans(3);
         font-size: 24px;
-        font-weight: bold;
+        font-weight: 700;
         margin-bottom: 0;
         padding: 6px 0 0 10px;
         background-color: #f8b600;
@@ -96,9 +96,8 @@
     }
 
     .survey-text__strong {
-        @include fs-textSans(4);
-        font-size: 14px;
-        font-weight: bold;
+        @include fs-textSans(3);
+        font-weight: 700;
         margin-bottom: 0;
         padding: 6px 0 0 10px;
         background-color: #f8b600;

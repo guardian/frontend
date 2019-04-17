@@ -12,7 +12,7 @@
 }
 
 .crossword__clue {
-    @include fs-textSans(4);
+    @include fs-textSans(3);
     position: relative;
     padding: $gs-baseline * .25 $gs-baseline $gs-baseline * .25 0;
     margin: $gs-baseline * .25 0;

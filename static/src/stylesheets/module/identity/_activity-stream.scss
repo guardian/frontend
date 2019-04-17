@@ -2,7 +2,7 @@
     margin-top: $gs-baseline;
 }
 .activity-stream--loading:after {
-    @include fs-textSans(4);
+    @include fs-textSans(3);
     display: block;
     content: 'Loading comments…';
     min-height: $gs-baseline*20;
@@ -49,7 +49,7 @@
     margin-left: 0;
 }
 .activity-item__content-meta {
-    @include fs-textSans(4);
+    @include fs-textSans(3);
 
     @include mq(activityLeftCol) {
         width: gs-span(2.5);
@@ -63,7 +63,7 @@
     }
 }
 .activity-stream__empty {
-    @include fs-textSans(4);
+    @include fs-textSans(3);
     min-height: $gs-baseline*20;
     padding-top: $gs-baseline*2;
     text-align: center;
@@ -172,7 +172,7 @@
     min-height: 100px;
 }
 .activity-stream__witness-title {
-    @include fs-textSans(4);
+    @include fs-textSans(3);
     margin-bottom: $gs-baseline/4;
     color: $brightness-7;
 }

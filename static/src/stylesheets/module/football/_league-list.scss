@@ -1,9 +1,9 @@
 .football-leagues {
-    @include fs-textSans(4);
+    @include fs-textSans(3);
     margin: $gs-baseline 0 $gs-baseline*2;
 
     @include mq(tablet) {
-        @include fs-textSans(4);
+        @include fs-textSans(3);
         margin-top: ($gs-baseline/3)*2;
     }
 }
@@ -27,7 +27,6 @@
 .football-leagues--list {
     font-size: 0;
 }
-.football-leagues__list {}
 
 .football-leagues__item {
     @include fs-textSans(3, true);

@@ -72,7 +72,7 @@ $checkbox-size: $gs-gutter / 1.25;
 }
 
 .manage-account__switch {
-    @include fs-textSans(4);
+    @include fs-textSans(3);
     @include identity-switch($brightness-7)
     line-height: 1.333;
     overflow: visible;
@@ -191,8 +191,8 @@ $checkbox-size: $gs-gutter / 1.25;
 }
 
 .manage-account__switch-title {
-    @include fs-textSans(4);
-    font-weight: 800;
+    @include fs-textSans(3);
+    font-weight: 700;
     margin: -1px 0 0;
     cursor: pointer;
     display: block;

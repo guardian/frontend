@@ -270,7 +270,7 @@ $hosted-video-height: 551px;
 .hosted__youtube-video ~ .hosted__youtube-poster-image .hosted__youtube-play-button,
 .hosted-article-page figure div > div .vjs-big-play-button .vjs-control-text, //no useful class name here!
 .hosted__video.gu-media--video .vjs-big-play-button .vjs-control-text {
-    @include fs-textSans(4);
+    @include fs-textSans(3);
     margin-left: 16px;
     margin-top: 0;
     width: 136px;
