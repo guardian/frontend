@@ -131,7 +131,9 @@ export class GeoMostPopularFront extends Component {
                  */
                 setTimeout(() => {
                     console.log('*** fetch most read front ***');
-                    this.fetch(this.parent, 'html');
+                    if (this.parent) {
+                        this.fetch(this.parent, 'html');
+                    }
                 }, 5000);
             } else if (this.parent) {
                 /**
