@@ -92,7 +92,7 @@ trait ABTestSwitches {
     "Test the consent banner globally",
     owners = Owner.group(Commercial),
     safeState = Off,
-    sellByDate = new LocalDate(2019, 4, 16),
+    sellByDate = new LocalDate(2019, 5, 16),
     exposeClientSide = true
   )
 
