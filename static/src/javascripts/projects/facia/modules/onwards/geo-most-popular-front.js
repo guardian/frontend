@@ -34,80 +34,7 @@ export class GeoMostPopularFront extends Component {
     parent: ?bonzo;
 
     prerender(): void {
-        if (config.get('switches.extendedMostPopular')) {
-            /**
-             * mostReadClone is a clone of the server side rendered most read element.
-             * After making the clone we hydrate it with the latestMostPopularTab and the
-             * latestMostCards, which are retrieved from the element in the network response (aka this.elem).
-             * The server side rendered most read element will be replaced with the hydrated mostReadClone.
-             */
-            if (this.parent) {
-                const mostReadClone = this.parent.cloneNode(true);
-                const latestMostPopularTab = qwery(
-                    '.most-popular',
-                    this.elem
-                )[0];
-                /**
-                 * Find the 2nd tab in mostReadClone and assign to mostPopularTabInClone.
-                 * This tab is initially empty, so we want to hydrate/replace it with the latestMostPopularTab.
-                 */
-                const mostPopularTabInClone = qwery(
-                    '.js-tab-2 .most-popular',
-                    mostReadClone
-                )[0];
-
-                if (
-                    latestMostPopularTab &&
-                    mostPopularTabInClone &&
-                    mostPopularTabInClone.parentNode
-                ) {
-                    // Replace mostPopularTabInClone with latestMostPopularTab
-                    mostPopularTabInClone.parentNode.replaceChild(
-                        latestMostPopularTab,
-                        mostPopularTabInClone
-                    );
-                }
-
-                const mostCardsSelector = '.most-popular__second-tier';
-                const latestMostCards = qwery(mostCardsSelector, this.elem)[0];
-                /**
-                 * Find the most cards container in mostReadClone and assign to mostCardsInClone.
-                 * This container is initially empty, so we want to hydrate/replace it with the latestMostCards.
-                 */
-                const mostCardsInClone = qwery(
-                    mostCardsSelector,
-                    mostReadClone
-                )[0];
-
-                if (
-                    latestMostCards &&
-                    mostCardsInClone &&
-                    mostCardsInClone.parentNode
-                ) {
-                    // Replace mostCardsInClone with latestMostCards
-                    mostCardsInClone.parentNode.replaceChild(
-                        latestMostCards,
-                        mostCardsInClone
-                    );
-                }
-
-                const latestPopularTrails = qwery(
-                    '#popular-trails',
-                    mostReadClone
-                )[0];
-
-                if (latestPopularTrails) {
-                    /**
-                     * Setting this.elem to be latestPopularTrails means
-                     * latestPopularTrails will replace the contents of the existing
-                     * server side rendered most read element.
-                     */
-                    this.elem = latestPopularTrails;
-                }
-            }
-        } else {
-            this.elem = qwery('.headline-list', this.elem)[0];
-        }
+        this.elem = qwery('.headline-list', this.elem)[0];
     }
 
     go(): void {
@@ -121,20 +48,7 @@ export class GeoMostPopularFront extends Component {
             ) {
                 // hide the tabs
                 hideTabs(this.parent);
-            } else if (
-                config.get('switches.extendedMostPopular') &&
-                this.parent
-            ) {
-                /**
-                 * if extendedMostPopular switch is enabled we will replace the
-                 * entire server side most read element.
-                 */
-                this.fetch(this.parent, 'html');
-            } else if (this.parent) {
-                /**
-                 * if extendedMostPopular switch is not enabled we will only replace the
-                 * a single tab in the server side most read element.
-                 */
+            } else {
                 const tab = this.parent.querySelector(tabSelector);
 
                 if (tab) {
