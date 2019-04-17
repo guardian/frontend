@@ -62,7 +62,6 @@ class MostPopularController(contentApiClient: ContentApiClient,
         case popular => Cached(2) {
           JsonComponent(
             "html" -> {
-              // Use popularExtended for the "Most Read" tabs if ExtendedMostPopular switch is on
               if (Switches.ExtendedMostPopular.isSwitchedOn) {
                 views.html.fragments.collections.popularExtended(popular, mostCards())
               } else {
