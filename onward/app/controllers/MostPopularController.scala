@@ -51,7 +51,6 @@ class MostPopularController(contentApiClient: ContentApiClient,
     sectionPopular.map { sectionPopular =>
       val sectionFirst = sectionPopular ++ globalPopular
       val globalFirst = globalPopular.toList ++ sectionPopular
-      // On section fronts the "Most Read" in section is the first tab and glbal "Most Read" is the second
       val mostPopular: List[MostPopular] = if (path == "global-development") sectionFirst else globalFirst
 
       mostPopular match {
