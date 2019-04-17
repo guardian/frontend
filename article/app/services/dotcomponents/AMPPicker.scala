@@ -28,6 +28,7 @@ object AMPPageChecks extends Logging {
       case _: TweetBlockElement => true
       case _: RichLinkBlockElement => true
       case _: CommentBlockElement => true
+      case _: PullquoteBlockElement => true
       case _ => false
     }
 
