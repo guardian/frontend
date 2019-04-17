@@ -22,15 +22,11 @@ class MostPopular extends Component {
 
         mediator.emit('register:begin', 'popular-in-section');
 
-        setTimeout(() => {
-            console.log('*** fetch most read article ***');
-            this.fetch(qwery('.js-popular-trails'), 'html');
-        }, 5000);
+        this.fetch(qwery('.js-popular-trails'), 'html');
     }
 
     // eslint-disable-next-line class-methods-use-this
     ready() {
-        console.log('*** ready ***', this.endpoint);
         mediator.emit('modules:popular:loaded');
         mediator.emit('register:end', 'popular-in-section');
     }
