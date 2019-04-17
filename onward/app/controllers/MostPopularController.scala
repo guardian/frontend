@@ -92,7 +92,7 @@ class MostPopularController(contentApiClient: ContentApiClient,
       Cached(900) {
         JsonComponent(
           "html" -> {
-            if (Switches.ExtendedMostPopular.isSwitchedOn) {
+            if (Switches.ExtendedMostPopularFronts.isSwitchedOn) {
               views.html.fragments.collections.popularExtended(Seq(countryPopular), mostCards())
             } else {
               views.html.fragments.collections.popular(Seq(countryPopular))

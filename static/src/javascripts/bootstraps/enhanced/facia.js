@@ -50,7 +50,7 @@ const showContainerToggle = (): void => {
 
 const upgradeMostPopularToGeo = (): void => {
     if (config.get('switches.geoMostPopular')) {
-        if (config.get('switches.extendedMostPopular')) {
+        if (config.get('switches.extendedMostPopularFronts')) {
             new GeoMostPopularFrontExtended().go();
         } else {
             new GeoMostPopularFront().go();
