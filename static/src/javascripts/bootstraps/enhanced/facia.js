@@ -7,6 +7,7 @@ import { catchErrorsWithContext } from 'lib/robust';
 import { shouldHideFlashingElements } from 'common/modules/accessibility/helpers';
 import stocks from 'common/modules/business/stocks';
 import { GeoMostPopularFront } from 'facia/modules/onwards/geo-most-popular-front';
+import { GeoMostPopularFrontExtended } from 'facia/modules/onwards/geo-most-popular-front-extended';
 import { ContainerToggle } from 'facia/modules/ui/container-toggle';
 import { init as initShowMore } from 'facia/modules/ui/container-show-more';
 import { lazyLoadContainers } from 'facia/modules/ui/lazy-load-containers';
@@ -49,7 +50,11 @@ const showContainerToggle = (): void => {
 
 const upgradeMostPopularToGeo = (): void => {
     if (config.get('switches.geoMostPopular')) {
-        new GeoMostPopularFront().go();
+        if (config.get('switches.extendedMostPopularFronts')) {
+            new GeoMostPopularFrontExtended().go();
+        } else {
+            new GeoMostPopularFront().go();
+        }
     }
 };
 
