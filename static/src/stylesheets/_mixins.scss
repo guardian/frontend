@@ -305,9 +305,11 @@
 
     @include mq(leftCol) {
         margin-left: gs-span(2) + $gs-gutter;
+        margin-right: gs-span(2) + $gs-gutter;  //button needs to be smaller
     }
 
     @include mq(wide) {
         margin-left: gs-span(3) + $gs-gutter;
+        margin-right: gs-span(2) + $gs-gutter;
     }
 }
