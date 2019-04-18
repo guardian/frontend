@@ -50,7 +50,7 @@ class FacebookGraphApi(facebookGraphApiClient: FacebookGraphApiClient) {
       endpoint = None,
       timeout = 1.second,
       // This has to be http so long as the og:url is (or the API changes again)
-      queryString = ("id", s"http://www.theguardian.com/$path"), ("fields", "og_object,engagement")
+      queryString = ("id", s"http://www.theguardian.com/$path"), ("fields", "engagement")
     ) map { response =>
       response.json.asOpt[URLResponse]
         .map(_.engagement.share_count)
