@@ -3,14 +3,14 @@ package model.dotcomrendering.pageElements
 import com.gu.contentapi.client.model.v1.ElementType.{Map => _, _}
 import com.gu.contentapi.client.model.v1.{ElementType, SponsorshipType, BlockElement => ApiBlockElement, Sponsorship => ApiSponsorship}
 import layout.ContentWidths.BodyMedia
-import model.content.{Atom, MediaAtom, MediaWrapper}
+import model.content._
 import model.{AudioAsset, ImageAsset, ImageMedia, VideoAsset}
-import play.api.libs.json._
 import org.jsoup.Jsoup
+import play.api.libs.json._
 import views.support.cleaner.AmpSoundcloud
+import views.support.{AffiliateLinksCleaner, ImgSrc, Item120, Item1200, Item140, Item300, Item640, Item700, SrcSet}
 
 import scala.collection.JavaConverters._
-import views.support.{AffiliateLinksCleaner, ImageProfile, ImageUrlSigner, ImgSrc, Item120, Item1200, Item140, Item300, Item640, Item700, SrcSet}
 
 /*
   These elements are used for the Dotcom Rendering, they are essentially the new version of the
@@ -41,6 +41,26 @@ case class VineBlockElement(html: Option[String]) extends PageElement
 case class MapBlockElement(html: Option[String],  role: Role, isMandatory: Option[Boolean]) extends PageElement
 case class UnknownBlockElement(html: Option[String]) extends PageElement
 case class DisclaimerBlockElement(html: String) extends PageElement
+
+// atoms
+
+// TODO dates are being rendered as strings to avoid duplication of the
+//  to-string logic, but ultimately we should pass unformatted date info to
+//  DCR.
+case class TimelineEvent(
+  title: String,
+  date: String,
+  body: Option[String],
+  toDate: Option[String]
+)
+
+
+// TODO include img alt, width, and height in model
+case class TimelineBlockElement(id: String, title: String, description: Option[String], events: Seq[TimelineEvent]) extends PageElement
+
+case class QABlockElement(id: String, title: String, img: Option[String], html: String, credit: String) extends PageElement
+case class GuideBlockElement(id: String, title: String, img: Option[String], html: String, credit: String) extends PageElement
+case class ProfileBlockElement(id: String, title: String, img: Option[String], html: String, credit: String) extends PageElement
 
 case class MembershipBlockElement(
   originalUrl: Option[String],
@@ -190,7 +210,7 @@ object PageElement {
 
       case Contentatom =>
         (extractAtom match {
-          case Some(mediaAtom: MediaAtom) =>
+          case Some(mediaAtom: MediaAtom) => {
             mediaAtom.activeAssets.headOption.map(asset => {
               YoutubeBlockElement(
                 mediaAtom.id, //CAPI ID
@@ -199,6 +219,52 @@ object PageElement {
                 mediaAtom.title //Caption
               )
             })
+          }
+
+          case Some(qa: QandaAtom) => {
+            Some(QABlockElement(
+              id = qa.id,
+              title = qa.atom.title.getOrElse(""),
+              img = qa.image.flatMap(ImgSrc.getAmpImageUrl),
+              html = qa.data.item.body,
+              credit = qa.credit.getOrElse("")
+            ))
+          }
+
+          case Some(guide: GuideAtom) => {
+            Some(ProfileBlockElement(
+              id = guide.id,
+              title = guide.atom.title.getOrElse(""),
+              img = guide.image.flatMap(ImgSrc.getAmpImageUrl),
+              html = guide.data.items.map(_.body).mkString(""),
+              credit = guide.credit.getOrElse("")
+            ))
+          }
+
+          case Some(profile: ProfileAtom) => {
+            Some(ProfileBlockElement(
+              id = profile.id,
+              title = profile.atom.title.getOrElse(""),
+              img = profile.image.flatMap(ImgSrc.getAmpImageUrl),
+              html = profile.data.items.map(_.body).mkString(""),
+              credit = profile.credit.getOrElse("")
+            ))
+          }
+
+          case Some(timeline: TimelineAtom) => {
+            Some(TimelineBlockElement(
+              id = timeline.id,
+              title = timeline.atom.title.getOrElse(""),
+              description = timeline.data.description,
+              events = timeline.data.events.map(event => TimelineEvent(
+                title = event.title,
+                date = TimelineAtom.renderFormattedDate(event.date, event.dateFormat),
+                body = event.body,
+                toDate = event.toDate.map(date => TimelineAtom.renderFormattedDate(date, event.dateFormat)),
+              )),
+            ))
+          }
+
           case Some(atom) =>
             Some(ContentAtomBlockElement(atom.id))
           case _ => None
@@ -296,6 +362,13 @@ object PageElement {
   implicit val FormBlockElementWrites: Writes[FormBlockElement] = Json.writes[FormBlockElement]
   implicit val UnknownBlockElementWrites: Writes[UnknownBlockElement] = Json.writes[UnknownBlockElement]
   implicit val DiscalimerBlockElementWrites: Writes[DisclaimerBlockElement] = Json.writes[DisclaimerBlockElement]
+
+  // atoms
+  implicit val TimelineEventWrites = Json.writes[TimelineEvent]
+  implicit val TimelineBlockElementWrites = Json.writes[TimelineBlockElement]
+  implicit val QABlockElementWrites = Json.writes[QABlockElement]
+  implicit val GuideBlocklementWrites = Json.writes[GuideBlockElement]
+  implicit val profileBlockElementWrites = Json.writes[ProfileBlockElement]
 
   implicit val SponsorshipWrites: Writes[Sponsorship] = new Writes[Sponsorship] {
     def writes(sponsorship: Sponsorship): JsObject = Json.obj(
