@@ -398,7 +398,7 @@ trait PrebidSwitches {
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true // Frontend sees our server-side AMP code as a client-side so this switch needs to be true in order for AMP to have access it
+    exposeClientSide = true // Has to be true so that switch is exposed to dotcom-rendering
   )
 
   val prebidUserSync: Switch = Switch(
