@@ -88,8 +88,6 @@ object Sponsorship {
 object PageElement {
   val dotComponentsImageProfiles = List(Item1200, Item700, Item640, Item300, Item140, Item120)
 
-
-
   def make(element: ApiBlockElement, addAffiliateLinks: Boolean, pageUrl: String, atoms: Iterable[Atom]): List[PageElement] = {
     def extractAtom: Option[Atom] = for {
       contentAtom <- element.contentAtomTypeData
@@ -189,19 +187,23 @@ object PageElement {
       }).toList
 
       case Embed => extractEmbed(element).toList
-      case Contentatom => (extractAtom match {
-        case Some(mediaAtom: MediaAtom) =>
-          mediaAtom.activeAssets.headOption.map(asset => {
-            YoutubeBlockElement(
-              mediaAtom.id, //CAPI ID
-              asset.id, // Youtube ID
-              mediaAtom.channelId, //Channel ID
-              mediaAtom.title //Caption
-            )
-          })
-        case Some(atom) => Some(ContentAtomBlockElement(atom.id))
-        case _ => None
-      }).toList
+
+      case Contentatom =>
+        (extractAtom match {
+          case Some(mediaAtom: MediaAtom) =>
+            mediaAtom.activeAssets.headOption.map(asset => {
+              YoutubeBlockElement(
+                mediaAtom.id, //CAPI ID
+                asset.id, // Youtube ID
+                mediaAtom.channelId, //Channel ID
+                mediaAtom.title //Caption
+              )
+            })
+          case Some(atom) =>
+            Some(ContentAtomBlockElement(atom.id))
+          case _ => None
+        }).toList
+
       case Pullquote => element.pullquoteTypeData.map(d => PullquoteBlockElement(d.html, Role(None))).toList
       case Interactive => element.interactiveTypeData.map(d => InteractiveBlockElement(d.html, Role(d.role), d.isMandatory)).toList
       case Table => element.tableTypeData.map(d => TableBlockElement(d.html, Role(d.role), d.isMandatory)).toList
@@ -213,7 +215,6 @@ object PageElement {
       case Code => List(CodeBlockElement(None))
       case Form => List(FormBlockElement(None))
       case EnumUnknownElementType(f) => List(UnknownBlockElement(None))
-
     }
   }
 
