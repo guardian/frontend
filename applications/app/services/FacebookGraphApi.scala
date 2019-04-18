@@ -9,20 +9,18 @@ import play.api.libs.ws.{WSClient, WSResponse}
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.duration.{Duration, DurationInt}
-import scala.util.Failure
-import scala.util.control.NonFatal
 
 
 object URLResponseDeserializer {
-  implicit val jsonShare = Json.reads[ShareObject]
+  implicit val jsonEngagement = Json.reads[Engagement]
   implicit val jsonResponse = Json.reads[URLResponse]
 }
 
-case class URLResponse(id: String, share: ShareObject)
-case class ShareObject(share_count: Int)
+case class Engagement(share_count: Int)
+case class URLResponse(id: String, engagement: Engagement)
 
 class FacebookGraphApiClient(wsClient: WSClient) extends implicits.WSRequests with Logging {
-  val apiRootUrl = s"https://graph.facebook.com/v${Configuration.facebook.graphApi.version}/"
+  val apiRootUrl = s"https://graph.facebook.com/v${Configuration.facebook.graphApi.version}"
 
   def GET(endpoint: Option[String], timeout: Duration, queryString: (String, String)*)(implicit executionContext: ExecutionContext): Future[WSResponse] = {
     val url = apiRootUrl + endpoint.getOrElse("")
@@ -52,10 +50,10 @@ class FacebookGraphApi(facebookGraphApiClient: FacebookGraphApiClient) {
       endpoint = None,
       timeout = 1.second,
       // This has to be http so long as the og:url is (or the API changes again)
-      queryString = ("id", s"http://www.theguardian.com/$path")
+      queryString = ("id", s"http://www.theguardian.com/$path"), ("fields", "og_object,engagement")
     ) map { response =>
       response.json.asOpt[URLResponse]
-        .map(_.share.share_count)
+        .map(_.engagement.share_count)
         .getOrElse(0)
     }
   }
