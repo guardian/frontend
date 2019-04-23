@@ -128,6 +128,12 @@ const bindClickHandlers = (msg: Message): void => {
     });
 };
 
+const preventTouchMove = (msg: Message): void => {
+    msg.$siteMessageContainer[0].addEventListener('touchmove', (e) => {
+        e.preventDefault();
+    });
+};
+
 const show = (): Promise<boolean> => {
     track();
 
@@ -136,6 +142,7 @@ const show = (): Promise<boolean> => {
         permanent: true,
         customJs: () => {
             bindClickHandlers(msg);
+            preventTouchMove(msg);
         },
     });
 
