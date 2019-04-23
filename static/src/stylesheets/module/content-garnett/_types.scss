@@ -1278,6 +1278,7 @@ $quote-mark: 35px;
     .content__meta-container {
         border-top: 1px solid $brightness-60;
         padding-top: $gs-baseline / 4;
+        height: inherit;
     }
 
     .content__article-body::before {
