@@ -27,7 +27,7 @@ const runValidator = (validator, options) => endpoint =>
             host: isDev ? fetchPage.hosts.dev : fetchPage.hosts.amp,
         })
         .then(res => {
-            const result = validator.validateString(res.body);
+            const result = validator.validateString(res.body.toString());
             const pass = result.status === 'PASS';
             const message = `${result.status} for: ${endpoint}`;
 
