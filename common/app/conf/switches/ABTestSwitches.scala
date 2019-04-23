@@ -92,7 +92,7 @@ trait ABTestSwitches {
     "Test the consent banner on non-EEA users with & without the ability to scroll underlying content through the banner on mobile",
     owners = Owner.group(Commercial),
     safeState = Off,
-    sellByDate = new LocalDate(2019, 5, 25),
+    sellByDate = new LocalDate(2019, 5, 24),
     exposeClientSide = true
   )
 

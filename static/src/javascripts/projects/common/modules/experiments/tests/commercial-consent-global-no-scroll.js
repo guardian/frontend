@@ -4,7 +4,7 @@ import { getCookie } from 'lib/cookies';
 export const commercialConsentGlobalNoScroll: ABTest = {
     id: 'CommercialConsentGlobalNoScroll',
     start: '2019-04-25',
-    expiry: '2019-05-25',
+    expiry: '2019-05-24',
     author: 'George Haberis',
     description:
         'Test the consent banner on non-EEA users with & without the ability to scroll underlying content through the banner on mobile',
