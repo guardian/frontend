@@ -5,7 +5,6 @@
     @include mq(desktop) {
         display: flex;
         justify-content: flex-start;
-        // justify-content: flex-end;
     }
 
     body:not(.has-page-skin) & {
@@ -27,11 +26,11 @@
 
     @include mq(leftCol) {
         margin-left: $gs-gutter / 2;
-        max-width: gs-span(9)+ $gs-gutter;
+        width: gs-span(9)+ $gs-gutter;
     }
     @include mq(wide) {
         margin-left: 0;
-        max-width: gs-span(12) + $gs-gutter;
+        width: gs-span(12) + $gs-gutter;
     }
 }
 
