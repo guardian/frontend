@@ -1,8 +1,10 @@
-@(ageMessage: String)(implicit request: RequestHeader)
+@(ageMessage: String, isHidden: Boolean = false, ariaHidden: Boolean = false)(implicit request: RequestHeader)
 
 @if(ageMessage.nonEmpty) {
-    <div class="old-article-message">
-        @fragments.inlineSvg("clock", "icon", List("old-article-message--clock"))
-        This article is over <strong>@ageMessage old</strong>
+    <div class="old-article-message-wrapper @if(isHidden){u-h}" @if(ariaHidden){aria-hidden="true"}>
+        <div class="old-article-message">
+                @fragments.inlineSvg("clock", "icon", List("old-article-message--clock"))
+                This article is more than <strong>@ageMessage old</strong>
+        </div>
     </div>
 }

@@ -28,6 +28,7 @@ object AMPPageChecks extends Logging {
       case _: TweetBlockElement => true
       case _: RichLinkBlockElement => true
       case _: CommentBlockElement => true
+      case _: PullquoteBlockElement => true
       case _ => false
     }
 
@@ -37,8 +38,6 @@ object AMPPageChecks extends Logging {
       case None => true
     }
   }
-
-  def isNotOpinion(page:PageWithStoryPackage): Boolean = ! page.item.tags.isComment
 }
 
 object AMPPicker {
@@ -53,7 +52,6 @@ object AMPPicker {
     Map(
       ("isBasicArticle", AMPPageChecks.isBasicArticle(page)),
       ("hasOnlySupportedElements", AMPPageChecks.hasOnlySupportedElements(page)),
-      ("isNotOpinionP", AMPPageChecks.isNotOpinion(page)),
       ("isNotPaidContent", AMPPageChecks.isNotPaidContent(page)),
     )
   }

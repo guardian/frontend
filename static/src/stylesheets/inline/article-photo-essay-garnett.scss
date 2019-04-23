@@ -54,16 +54,14 @@
         }
 
         h2 {
+            @include fs-headline(6, true);
             color: $sport-dark;
             font-weight: 100;
-            font-size: 38px;
-            line-height: 1;
         }
 
         &.quoted {
+            @include fs-headline(4, true);
             color: $sport-dark;
-            font-size: 26px;
-            line-height: 28px;
 
             .inline-icon {
                 fill: $sport-bright;
@@ -164,14 +162,14 @@
 
     .element-pullquote--photo-essay {
         .pullquote-paragraph {
+            @include fs-headline(4, true);
             color: $sport-dark;
-            font-size: 26px;
         }
 
         //important because it is important elsewhere
         .pullquote-cite {
+            @include fs-headline(4, true);
             color: $brightness-46 !important;
-            font-size: 26px;
         }
 
         &.element--halfWidth {

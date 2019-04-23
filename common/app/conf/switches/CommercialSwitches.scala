@@ -17,16 +17,6 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-    val ConfiantSwitch = Switch(
-    Commercial,
-    "confiant",
-    "Enables ad verification",
-    owners = Seq(Owner.withGithub("frankie297")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
   val CarrotTrafficDriverSwitch = Switch(
     Commercial,
     "carrot-traffic-driver",
@@ -408,7 +398,7 @@ trait PrebidSwitches {
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = true // Has to be true so that switch is exposed to dotcom-rendering
   )
 
   val prebidUserSync: Switch = Switch(

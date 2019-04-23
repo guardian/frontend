@@ -136,16 +136,11 @@
 
     // only match the ones, which are not in --secondary
     .menu-group--primary > .menu-item > & {
-        color: $brightness-100;
-        font-family: $f-serif-headline;
-        font-size: 24px;
+        @include fs-headline(4);
         font-weight: 700;
+        color: $brightness-100;
         padding-bottom: 18px;
         padding-top: $gs-baseline / 2;
-
-        @include mq(desktop) {
-            font-size: 32px;
-        }
     }
 }
 
@@ -156,14 +151,12 @@
 }
 
 .menu-item__title--brand-extension {
-    font-family: $f-serif-headline;
-    font-size: 20px;
+    @include fs-headline(3);
     font-weight: 700;
-    line-height: 1.2;
 
     body:not(.has-page-skin) & {
         @include mq(wide) {
-            font-size: 24px;
+            @include fs-headline(4, true);
             padding-top: 5px;
         }
     }

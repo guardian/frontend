@@ -55,7 +55,7 @@ const fetchValidator = devChannel => {
             res.pipe(writeStream)
                 .on('finish', () => resolve(writeStream.path))
                 .on('error', error => {
-                    reject(error);
+                    reject(new Error(`Error saving to file: ${error.message}`));
                     writeStream.close();
                 });
         });

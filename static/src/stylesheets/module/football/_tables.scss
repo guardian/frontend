@@ -101,7 +101,7 @@
 
     @include mq(leftCol) {
         .table__caption--top {
-            @include fs-header(1);
+            @include fs-header(2);
             margin-bottom: ($gs-baseline/3)*4;
             margin-left: ($left-column + $gs-gutter)*-1;
             padding-bottom: ($gs-baseline/3)*4;

@@ -68,11 +68,21 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-commercial-ad-verification",
+    "Test the impact of verifiyng ads",
+    owners = Seq(Owner.withGithub("jeteve")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 9, 30),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-commercial-outbrain-testing",
     "Test the outbrain widget",
     owners = Seq(Owner.withGithub("frankie297")),
     safeState = Off,
-    sellByDate = new LocalDate(2019, 3, 29),
+    sellByDate = new LocalDate(2020, 4, 22),
     exposeClientSide = true
   )
 
@@ -82,7 +92,7 @@ trait ABTestSwitches {
     "Test the consent banner globally",
     owners = Owner.group(Commercial),
     safeState = Off,
-    sellByDate = new LocalDate(2019, 4, 16),
+    sellByDate = new LocalDate(2019, 5, 16),
     exposeClientSide = true
   )
 

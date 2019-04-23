@@ -19,18 +19,19 @@ import views.support.FaciaToMicroFormat2Helpers._
 import scala.concurrent.Future
 
 class MostPopularController(contentApiClient: ContentApiClient,
-  geoMostPopularAgent: GeoMostPopularAgent,
-  dayMostPopularAgent: DayMostPopularAgent,
-  mostPopularAgent: MostPopularAgent,
-  val controllerComponents: ControllerComponents)
-  (implicit context: ApplicationContext) extends BaseController with Logging with ImplicitControllerExecutionContext {
-    val page = SimplePage(MetaData.make(
+                            geoMostPopularAgent: GeoMostPopularAgent,
+                            dayMostPopularAgent: DayMostPopularAgent,
+                            mostPopularAgent: MostPopularAgent,
+                            val controllerComponents: ControllerComponents)
+                           (implicit context: ApplicationContext) extends BaseController with Logging with ImplicitControllerExecutionContext {
+  val page = SimplePage(MetaData.make(
     "most-read",
     Some(SectionId.fromId("most-read")),
     "Most read"
   ))
 
   def renderHtml(path: String): Action[AnyContent] = render(path)
+
   def render(path: String): Action[AnyContent] = Action.async { implicit request =>
     val edition = Edition(request)
 
@@ -45,8 +46,6 @@ class MostPopularController(contentApiClient: ContentApiClient,
 
     // Async section specific most Popular.
     val sectionPopular: Future[List[MostPopular]] = if (path.nonEmpty) lookup(edition, path).map(_.toList) else Future(Nil)
-
-    lazy val mostCards = mostPopularAgent.mostSingleCards.get().mapValues(ContentCard.fromApiContent(_))
 
     // map is not on a list, but on a Future
     sectionPopular.map { sectionPopular =>
@@ -64,7 +63,7 @@ class MostPopularController(contentApiClient: ContentApiClient,
           JsonComponent(
             "html" -> {
               if (Switches.ExtendedMostPopular.isSwitchedOn) {
-                views.html.fragments.collections.popularExtended(popular, mostCards)
+                views.html.fragments.collections.popularExtended(popular, mostCards())
               } else {
                 views.html.fragments.collections.popular(popular)
               }
@@ -85,7 +84,6 @@ class MostPopularController(contentApiClient: ContentApiClient,
   def renderPopularGeo(): Action[AnyContent] = Action { implicit request =>
     val headers = request.headers.toSimpleMap
     val countryCode = headers.getOrElse("X-GU-GeoLocation","country:row").replace("country:","")
-
     val countryPopular = MostPopular("Across The&nbsp;Guardian", "", geoMostPopularAgent.mostPopular(countryCode).map(_.faciaContent))
 
     if (request.isGuui) {
@@ -93,7 +91,13 @@ class MostPopularController(contentApiClient: ContentApiClient,
     } else {
       Cached(900) {
         JsonComponent(
-          "html" -> views.html.fragments.collections.popular(Seq(countryPopular)),
+          "html" -> {
+            if (Switches.ExtendedMostPopularFronts.isSwitchedOn) {
+              views.html.fragments.collections.popularExtended(Seq(countryPopular), mostCards())
+            } else {
+              views.html.fragments.collections.popular(Seq(countryPopular))
+            }
+          },
           "rightHtml" -> views.html.fragments.rightMostPopularGeoGarnett(countryPopular, countryNames.get(countryCode), countryCode),
           "country" -> countryCode
         )
@@ -151,6 +155,9 @@ class MostPopularController(contentApiClient: ContentApiClient,
       )
     }
   }
+
+  // Get "Most Commented" & "Most Shared" cards for Extended "Most Read" container
+  private def mostCards(): Map[String, Option[ContentCard]] = mostPopularAgent.mostSingleCards.get().mapValues(ContentCard.fromApiContent(_))
 
   private def lookup(edition: Edition, path: String)(implicit request: RequestHeader): Future[Option[MostPopular]] = {
     log.info(s"Fetching most popular: $path for edition $edition")

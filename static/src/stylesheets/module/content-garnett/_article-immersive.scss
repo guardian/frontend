@@ -135,21 +135,8 @@
     }
 }
 
-.immersive-main-media__headline-container--dark {
-    transition: background 500ms ease-out 200ms, background-color 500ms ease-out 200ms;
-    background-color: rgba(0, 0, 0, .6);
-    background: linear-gradient(rgba(0, 0, 0, .5), $brightness-7);
-}
-
 .content__headline--immersive {
-    @include fs-headline(7, true);
-    line-height: 1;
-    font-weight: 200;
     color: #ffffff;
-
-    @include mq(desktop) {
-        font-size: 4rem;
-    }
 
     &.content__headline--advertisement {
         font-family: $f-sans-serif-text;
@@ -421,10 +408,10 @@
     .section-title,
     .from-content-api > h2 {
         @include fs-headline(5);
-        font-weight: 200;
+        font-weight: 300;
 
         @include mq(tablet) {
-            @include fs-headline(7, true);
+            @include fs-headline(6, true);
         }
     }
 
@@ -730,15 +717,13 @@
 
     .content__headline--immersive {
         @include fs-headline(6, true);
-        line-height: 1.1;
         color: $brightness-7;
         padding: 0;
         padding-bottom: $gs-baseline * 2;
         font-weight: 700;
 
         @include mq(desktop) {
-            font-size: 50px;
-            line-height: 54px;
+            @include fs-headline(9, true);
         }
     }
 
@@ -751,12 +736,10 @@
     }
 
     .content__standfirst--immersive-article {
-        @include fs-headline(1);
+        @include fs-headline(4);
+        font-weight: 300;
         position: relative;
         padding-left: 0px;
-        font-size: 20px;
-        line-height: 24px;
-        font-weight: 200;
         margin-top: $gs-baseline / 2;
         max-width: 280px;
         margin-bottom: $gs-baseline;
@@ -764,8 +747,6 @@
 
         @include mq($from: tablet) {
             max-width: 400px;
-            font-size: 22px;
-            line-height: 25px;
             margin-top: 0;
         }
 

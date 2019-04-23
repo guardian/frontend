@@ -3,7 +3,12 @@
 @import views.html.fragments.langAttributes
 @import views.support.ContributorLinks
 @import views.support.TrailCssClasses.toneClass
+@import views.support.ContentOldAgeDescriber
 @import _root_.model.ContentDesignType.RichContentDesignType
+
+@ageNotice() = @{
+    ContentOldAgeDescriber(article.content)
+}
 
 
     <header class="content__head content__head--article tonal__head tonal__head--@toneClass(article)">
@@ -17,6 +22,9 @@
         <div class="content__header tonal__header">
 
             <div class="u-cf">
+                @if(article.content.tags.tags.exists(_.id == "tone/news")) {
+                    @fragments.contentAgeNotice(ageNotice, ariaHidden = true)
+                }
 
                 @if((article.tags.isInterview)){
                     <div class="content__label-interview">Interview</div>
@@ -46,6 +54,9 @@
         <div class="content__header tonal__header">
 
             <div class="u-cf">
+                @if(article.content.tags.tags.exists(_.id == "tone/news")) {
+                    @fragments.contentAgeNotice(ageNotice, ariaHidden = true)
+                }
 
                 @if((article.tags.isInterview)){
                     <div class="content__label-interview">Interview</div>
@@ -58,6 +69,10 @@
                         @Html(article.trail.headline)
                     }
                 </h1>
+
+                @if(article.content.tags.tags.exists(_.id == "tone/news")) {
+                    @fragments.contentAgeNotice(ageNotice, isHidden = true)
+                }
 
                 @if(article.tags.isInterview) {
                     @article.trail.byline.map { text =>

@@ -107,6 +107,16 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
+  val ExtendedMostPopularFronts = Switch(
+    SwitchGroup.Feature,
+    "extended-most-popular-fronts",
+    "Extended 'If switched on shows 'Most Popular' component with space for DPMUs on fronts",
+    owners = group(Commercial),
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
   val MostViewedFronts = Switch(
     SwitchGroup.Feature,
     "most-viewed-fronts",
@@ -471,7 +481,7 @@ trait FeatureSwitches {
     "When ON show YouTube related video suggestions in YouTube media atoms",
     owners = Seq(Owner.withGithub("siadcock")),
     safeState = Off,
-    sellByDate = new LocalDate(2019, 4, 16),
+    sellByDate = new LocalDate(2019, 5, 16),
     exposeClientSide = true
   )
 

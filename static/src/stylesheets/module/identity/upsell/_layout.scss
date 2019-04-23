@@ -113,13 +113,13 @@
 }
 
 .identity-upsell-title {
-    @include fs-headlineGarnett(2);
+    @include fs-headline(3);
     font-weight: 600;
     margin-bottom: $gs-baseline * 2;
     &.identity-upsell-title--hero {
-        @include fs-headlineGarnett(4, true);
+        @include fs-headline(5, true);
         @include mq(tablet) {
-            @include fs-headlineGarnett(7, true);
+            @include fs-headline(6, true);
         }
     }
     .identity-upsell-title__title {

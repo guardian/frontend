@@ -22,6 +22,7 @@ import views.support._
 import scala.collection.JavaConverters._
 import scala.util.Try
 import implicits.Booleans._
+import org.joda.time.DateTime
 
 sealed trait ContentType {
   def content: Content
@@ -128,6 +129,16 @@ final case class Content(
     else if(isFromTheObserver && tags.isComment) FacebookOpenGraphImage.opinionsObserver
     else if(tags.isComment) FacebookOpenGraphImage.opinions
     else if(tags.isLiveBlog) FacebookOpenGraphImage.live
+    else if(
+      tags.tags.exists(_.id == "tone/news") &&
+      trail.webPublicationDate.isBefore(DateTime.now().minusYears(1))
+    ) {
+      if(isFromTheObserver) {
+        TwitterImage.contentAgeNoticeObserver(trail.webPublicationDate.getYear)
+      } else {
+        TwitterImage.contentAgeNotice(trail.webPublicationDate.getYear)
+      }
+    }
     else starRating.map(rating =>
         if(isFromTheObserver) {
             FacebookOpenGraphImage.starRatingObserver(rating)
@@ -157,6 +168,16 @@ final case class Content(
     else if(isFromTheObserver && tags.isComment) TwitterImage.opinionsObserver
     else if(tags.isComment) TwitterImage.opinions
     else if(tags.isLiveBlog) TwitterImage.live
+    else if(
+        tags.tags.exists(_.id == "tone/news") &&
+        trail.webPublicationDate.isBefore(DateTime.now().minusYears(1))
+    ) {
+      if(isFromTheObserver) {
+        TwitterImage.contentAgeNoticeObserver(trail.webPublicationDate.getYear)
+      } else {
+        TwitterImage.contentAgeNotice(trail.webPublicationDate.getYear)
+      }
+    }
     else starRating.map(rating =>
         if(isFromTheObserver) {
             TwitterImage.starRatingObserver(rating)

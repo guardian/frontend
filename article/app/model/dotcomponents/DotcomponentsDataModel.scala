@@ -1,14 +1,13 @@
 package model.dotcomponents
 
-import ai.x.play.json.Jsonx
 import com.gu.contentapi.client.model.v1.ElementType.Text
 import com.gu.contentapi.client.model.v1.{BlockElement => ClientBlockElement, Blocks => APIBlocks}
 import common.Edition
 import common.Maps.RichMap
 import common.commercial.{CommercialProperties, EditionCommercialProperties, PrebidIndexSite}
-import conf.{Configuration, Static}
 import conf.Configuration.affiliatelinks
 import conf.switches.Switches
+import conf.{Configuration, Static}
 import controllers.ArticlePage
 import model.SubMetaLinks
 import model.content.Atom
@@ -20,15 +19,8 @@ import navigation.UrlHelpers._
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
 import views.html.fragments.affiliateLinksDisclaimer
-import views.support.{AffiliateLinksCleaner, CamelCase, GUDateTimeFormat, ImgSrc, Item1200} // Note, required despite Intellij saying otherwise
-import views.support.{CamelCase, GUDateTimeFormat, ImgSrc, Item1200}
-import common.Maps.RichMap
-import navigation.UrlHelpers.{AmpHeader, AmpFooter}
-import navigation.UrlHelpers.{Footer, Header, SideMenu, getReaderRevenueUrl}
-import navigation.ReaderRevenueSite.{Support, SupportContribute, SupportSubscribe}
-import model.meta.{Guardian, LinkedData, PotentialAction}
+import views.support.{AffiliateLinksCleaner, CamelCase, FourByThree, GUDateTimeFormat, ImgSrc, Item1200, Item300, OneByOne}
 import ai.x.play.json.implicits.optionWithNull // Note, required despite Intellij saying otherwise
-import views.support.{AffiliateLinksCleaner, CamelCase, FourByThree, GUDateTimeFormat, ImgSrc, Item1200, OneByOne} // Note, required despite Intellij saying otherwise
 
 // We have introduced our own set of objects for serializing data to the DotComponents API,
 // because we don't want people changing the core frontend models and as a side effect,
@@ -40,7 +32,8 @@ case class TagProperties(
     id: String,
     tagType: String,
     webTitle: String,
-    twitterHandle: Option[String]
+    twitterHandle: Option[String],
+    bylineImageUrl: Option[String]
 )
 
 case class Tag(
@@ -326,7 +319,8 @@ object DotcomponentsDataModel {
           t.id,
           t.properties.tagType,
           t.properties.webTitle,
-          t.properties.twitterHandle
+          t.properties.twitterHandle,
+          t.properties.contributorLargeImagePath.map(src => ImgSrc(src, Item300))
         )
       )
     )

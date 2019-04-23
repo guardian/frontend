@@ -135,21 +135,8 @@
     }
 }
 
-.immersive-main-media__headline-container--dark {
-    transition: background 500ms ease-out 200ms, background-color 500ms ease-out 200ms;
-    background-color: rgba(0, 0, 0, .6);
-    background: linear-gradient(rgba(0, 0, 0, .5), $brightness-7);
-}
-
 .content__headline--immersive {
-    @include fs-headline(7, true);
-    line-height: 1;
-    font-weight: 200;
     color: #ffffff;
-
-    @include mq(desktop) {
-        font-size: 4rem;
-    }
 
     &.content__headline--advertisement {
         font-family: $f-sans-serif-text;
@@ -297,7 +284,7 @@
         font-weight: 200;
 
         @include mq(tablet) {
-            @include fs-headline(7, true);
+            @include fs-headline(6, true);
         }
     }
 

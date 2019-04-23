@@ -185,16 +185,12 @@ object NavLinks {
   val jobs = NavLink("Search jobs", "https://jobs.theguardian.com")
   val dating = NavLink("Dating", "https://soulmates.theguardian.com")
   val apps = NavLink("The Guardian app", "https://www.theguardian.com/mobile/2014/may/29/the-guardian-for-mobile-and-tablet")
-  val ukMasterClasses = NavLink("Masterclasses", "https://membership.theguardian.com/masterclasses?INTCMP=masterclasses_uk_web_newheader")
+  val ukMasterClasses = NavLink("Masterclasses", "/guardian-masterclasses")
   val printShop = NavLink("Guardian Print Shop", "/artanddesign/series/gnm-print-sales")
   val auEvents = NavLink("Events", "/guardian-live-australia")
   val holidays = NavLink("Holidays", "https://holidays.theguardian.com")
   val ukPatrons = NavLink("Patrons", "https://patrons.theguardian.com/?INTCMP=header_patrons")
-  val discountCodeRoot = "https://discountcode.theguardian.com"
-  val ukDiscountCode = NavLink("Discount Codes", s"$discountCodeRoot/uk")
-  val auDiscountCode = NavLink("Discount Codes", s"$discountCodeRoot/au")
-  val intDiscountCode = NavLink("Discount Codes", s"$discountCodeRoot")
-  val usDiscountCode = NavLink("Discount Codes", s"$discountCodeRoot/us")
+  val discountCodes = NavLink("Discount Codes", s"https://discountcode.theguardian.com")
   val guardianMasterClasses = NavLink("Guardian Masterclasses", "/guardian-masterclasses",
     children = List(
       NavLink("Journalism", "/guardian-masterclasses/journalism"),
@@ -516,24 +512,24 @@ object NavLinks {
     digitalNewspaperArchive,
     printShop,
     ukPatrons,
-    ukDiscountCode
+    discountCodes
   )
   val auBrandExtensions = List(
     auEvents,
     digitalNewspaperArchive,
-    auDiscountCode
+    discountCodes
   )
   val usBrandExtensions= List(
     jobs.copy(url = jobs.url + "?INTCMP=jobs_us_web_newheader"),
     digitalNewspaperArchive,
-    usDiscountCode
+    discountCodes
   )
   val intBrandExtensions = List(
     jobs.copy(url = jobs.url + "?INTCMP=jobs_int_web_newheader"),
     dating.copy(url = dating.url + "?INTCMP=soulmates_int_web_newheader"),
     holidays.copy(url = holidays.url + "?INTCMP=holidays_int_web_newheader"),
     digitalNewspaperArchive,
-    intDiscountCode
+    discountCodes
   )
 
   // Tertiary Navigation
