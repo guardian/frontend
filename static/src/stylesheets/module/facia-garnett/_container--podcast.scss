@@ -169,8 +169,8 @@
 }
 
 .fc-podcast-container__subscribe {
-    color: $brightness-100;
     @include fs-textSans(1);
+    color: $brightness-100;
     border-top: solid 1px #777777;
 
     span {
