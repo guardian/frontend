@@ -79,8 +79,8 @@ const generateStore = (isInTest: boolean): CmpStore => {
 };
 
 const isInConsentGlobalNoScrollTest = (): boolean =>
-    isInVariantSynchronous(commercialConsentGlobalNoScroll, 'scroll') ||
-    isInVariantSynchronous(commercialConsentGlobalNoScroll, 'noScroll');
+    isInVariantSynchronous(commercialConsentGlobalNoScroll, 'scrollVariant') ||
+    isInVariantSynchronous(commercialConsentGlobalNoScroll, 'noScrollVariant');
 
 const isInEU = (): boolean =>
     (getCookie('GU_geo_continent') || 'OTHER').toUpperCase() === 'EU';

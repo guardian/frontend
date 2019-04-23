@@ -106,8 +106,8 @@ const trackInteraction = (interaction: string): void => {
 };
 
 const isInConsentGlobalNoScrollTest = (): boolean =>
-    isInVariantSynchronous(commercialConsentGlobalNoScroll, 'scroll') ||
-    isInVariantSynchronous(commercialConsentGlobalNoScroll, 'noScroll');
+    isInVariantSynchronous(commercialConsentGlobalNoScroll, 'scrollVariant') ||
+    isInVariantSynchronous(commercialConsentGlobalNoScroll, 'noScrollVariant');
 
 const canShow = (): Promise<boolean> =>
     Promise.resolve(
@@ -146,7 +146,7 @@ const show = (): Promise<boolean> => {
             if (
                 isInVariantSynchronous(
                     commercialConsentGlobalNoScroll,
-                    'noScroll'
+                    'noScrollVariant'
                 )
             ) {
                 preventScroll(msg);

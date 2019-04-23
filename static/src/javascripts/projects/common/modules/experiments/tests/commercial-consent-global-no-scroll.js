@@ -23,11 +23,11 @@ export const commercialConsentGlobalNoScroll: ABTest = {
             test: (): void => {},
         },
         {
-            id: 'scroll',
+            id: 'scrollVariant',
             test: (): void => {},
         },
         {
-            id: 'noScroll',
+            id: 'noScrollVariant',
             test: (): void => {},
         },
     ],
