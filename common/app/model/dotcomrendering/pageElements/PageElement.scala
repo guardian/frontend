@@ -26,10 +26,10 @@ case class ImageBlockElement(media: ImageMedia, data: Map[String, String], displ
 case class ImageSource(weighting: String, srcSet: Seq[SrcSet])
 case class AudioBlockElement(assets: Seq[AudioAsset]) extends PageElement
 case class GuVideoBlockElement(assets: Seq[VideoAsset], imageMedia: ImageMedia, data: Map[String, String], role: Role) extends PageElement
-case class VideoBlockElement(data: Map[String, String], role: Role) extends PageElement
-case class VideoYoutubeBlockElement(data: Map[String, String], role: Role) extends PageElement
-case class VideoVimeoBlockElement(data: Map[String, String], role: Role) extends PageElement
-case class VideoFacebookBlockElement(data: Map[String, String], role: Role) extends PageElement
+case class VideoBlockElement(caption:String, url:String, originalUrl:String, role: Role) extends PageElement
+case class VideoYoutubeBlockElement(caption:String, url:String, originalUrl:String, role: Role) extends PageElement
+case class VideoVimeoBlockElement(caption:String, url:String, originalUrl:String, role: Role) extends PageElement
+case class VideoFacebookBlockElement(caption:String, url:String, originalUrl:String, role: Role) extends PageElement
 case class EmbedBlockElement(html: String, safe: Option[Boolean], alt: Option[String], isMandatory: Boolean) extends PageElement
 case class SoundcloudBlockElement(html: String, id: String, isTrack: Boolean, isMandatory: Boolean) extends PageElement
 case class ContentAtomBlockElement(atomId: String) extends PageElement
@@ -264,25 +264,24 @@ object PageElement {
     } getOrElse Map()
   }
 
-  private def videoDataFor(element: ApiBlockElement):Option[PageElement]  = {
+  private def videoDataFor(element: ApiBlockElement): Option[PageElement] = {
 
-    def extractVideoEmbedElement(element: ApiBlockElement): Option[Map[String, String]] = {
-      element.videoTypeData.map { d =>
-        Map(
-          "caption" -> d.caption,
-          "url" -> d.url,
-          "originalUrl" -> d.originalUrl
-        ) collect { case (k, Some(v)) => (k, v) }
+
+    for {
+      data <- element.videoTypeData
+      source <- data.source
+      caption <- data.caption
+      url <- data.url
+      originalUrl <- data.originalUrl
+    } yield {
+      source match {
+        case "youtube" => VideoYoutubeBlockElement(caption, url, originalUrl, Role(data.role))
+        case "vimeo" => VideoVimeoBlockElement(caption, url, originalUrl, Role(data.role))
+        case "facebook" => VideoFacebookBlockElement(caption, url, originalUrl, Role(data.role))
+        case _ => VideoBlockElement(caption, url, originalUrl, Role(data.role))
       }
     }
 
-    element.videoTypeData.map { d =>
-      d.source.getOrElse("") match {
-        case "youtube" => VideoYoutubeBlockElement(extractVideoEmbedElement(d))
-        case _ => null
-      } 
-
-    }
 
   }
 
