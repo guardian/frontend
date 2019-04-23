@@ -784,7 +784,7 @@ final case class Tags(
     tags.exists(t => t.id == "sport/rugby-union")
 
   lazy val isClimateChangeSeries: Boolean = tags.exists(t => t.id =="environment/series/keep-it-in-the-ground")
-  lazy val isPrintSalesSeries: Boolean = tags.exists(t => t.id == "artanddesign/series/gnm-print-sales")
+  lazy val isPrintSalesSeries: Boolean = tags.exists(t => t.id == "artanddesign/series/guardian-print-shop")
   lazy val isTheMinuteArticle: Boolean = tags.exists(t => t.id == "tone/minute")
   //this is for the immersive header to access this info
   lazy val isPaidContent: Boolean = tags.exists( t => t.id == "tone/advertisement-features" )
