@@ -8,6 +8,7 @@
 @import services.IndexPage
 @import views.html.fragments.containers.facia_cards.{container, containerScaffold, audioFlagshipContainer}
 @import views.html.fragments.pagination
+@import views.html.fragments.DiscountCodeWidget
 @import views.support.Commercial.container.isFirstNonThrasherContainer
 @import views.support.RenderClasses
 
@@ -47,6 +48,7 @@
                 }
 
                 @fragments.trendingTopics(index.faciaTrails, index.page.metadata.id, None)
+                @fragments.DiscountCodeWidget
 
                 <div class="fc-container fc-container--commercial">@fragments.commercial.commercialComponent()</div>
 
