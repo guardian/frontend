@@ -27,6 +27,9 @@ case class ImageSource(weighting: String, srcSet: Seq[SrcSet])
 case class AudioBlockElement(assets: Seq[AudioAsset]) extends PageElement
 case class GuVideoBlockElement(assets: Seq[VideoAsset], imageMedia: ImageMedia, data: Map[String, String], role: Role) extends PageElement
 case class VideoBlockElement(data: Map[String, String], role: Role) extends PageElement
+case class VideoYoutubeBlockElement(data: Map[String, String], role: Role) extends PageElement
+case class VideoVimeoBlockElement(data: Map[String, String], role: Role) extends PageElement
+case class VideoFacebookBlockElement(data: Map[String, String], role: Role) extends PageElement
 case class EmbedBlockElement(html: String, safe: Option[Boolean], alt: Option[String], isMandatory: Boolean) extends PageElement
 case class SoundcloudBlockElement(html: String, id: String, isTrack: Boolean, isMandatory: Boolean) extends PageElement
 case class ContentAtomBlockElement(atomId: String) extends PageElement
@@ -326,12 +329,26 @@ object PageElement {
     } getOrElse Map()
   }
 
-  private def videoDataFor(element: ApiBlockElement): Map[String, String] = {
-    element.videoTypeData.map { d => Map(
-      "caption" -> d.caption,
-      "url" -> d.url
-    ) collect { case (k, Some (v) ) => (k, v) }
-    } getOrElse Map()
+  private def videoDataFor(element: ApiBlockElement):Option[PageElement]  = {
+
+    def extractVideoEmbedElement(element: ApiBlockElement): Option[Map[String, String]] = {
+      element.videoTypeData.map { d =>
+        Map(
+          "caption" -> d.caption,
+          "url" -> d.url,
+          "originalUrl" -> d.originalUrl
+        ) collect { case (k, Some(v)) => (k, v) }
+      }
+    }
+
+    element.videoTypeData.map { d =>
+      d.source.getOrElse("") match {
+        case "youtube" => VideoYoutubeBlockElement(extractVideoEmbedElement(d))
+        case _ => null
+      } 
+
+    }
+
   }
 
   implicit val ImageWeightingWrites: Writes[ImageSource] = Json.writes[ImageSource]
@@ -341,6 +358,9 @@ object PageElement {
   implicit val AudioBlockElementWrites: Writes[AudioBlockElement] = Json.writes[AudioBlockElement]
   implicit val GuVideoBlockElementWrites: Writes[GuVideoBlockElement] = Json.writes[GuVideoBlockElement]
   implicit val VideoBlockElementWrites: Writes[VideoBlockElement] = Json.writes[VideoBlockElement]
+  implicit val VideoYouTubeElementWrites: Writes[VideoYoutubeBlockElement] = Json.writes[VideoYoutubeBlockElement]
+  implicit val VideoVimeoElementWrites: Writes[VideoVimeoBlockElement] = Json.writes[VideoVimeoBlockElement]
+  implicit val VideoFacebookBlockElementWrites: Writes[VideoFacebookBlockElement] = Json.writes[VideoFacebookBlockElement]
   implicit val TweetBlockElementWrites: Writes[TweetBlockElement] = Json.writes[TweetBlockElement]
   implicit val EmbedBlockElementWrites: Writes[EmbedBlockElement] = Json.writes[EmbedBlockElement]
   implicit val SoundCloudBlockElementWrites: Writes[SoundcloudBlockElement] = Json.writes[SoundcloudBlockElement]
