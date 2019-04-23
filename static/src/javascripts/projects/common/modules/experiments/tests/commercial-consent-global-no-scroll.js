@@ -3,7 +3,7 @@ import { getCookie } from 'lib/cookies';
 
 export const commercialConsentGlobalNoScroll: ABTest = {
     id: 'CommercialConsentGlobalNoScroll',
-    start: '2019-04-25',
+    start: '2019-04-24',
     expiry: '2019-05-24',
     author: 'George Haberis',
     description:
