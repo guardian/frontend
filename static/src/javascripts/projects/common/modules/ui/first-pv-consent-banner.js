@@ -13,7 +13,7 @@ import ophan from 'ophan/ng';
 import { upAlertViewCount } from 'common/modules/analytics/send-privacy-prefs';
 import type { AdConsent } from 'common/modules/commercial/ad-prefs.lib';
 import type { Banner } from 'common/modules/ui/bannerPicker';
-import { commercialConsentGlobal } from 'common/modules/experiments/tests/commercial-consent-global';
+import { commercialConsentGlobalNoScroll } from 'common/modules/experiments/tests/commercial-consent-global-no-scroll';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 
 type Template = {
@@ -105,13 +105,14 @@ const trackInteraction = (interaction: string): void => {
     trackNonClickInteraction(interaction);
 };
 
-const isInConsentGlobalTest = (): boolean =>
-    isInVariantSynchronous(commercialConsentGlobal, 'variant');
+const isInConsentGlobalNoScrollTest = (): boolean =>
+    isInVariantSynchronous(commercialConsentGlobalNoScroll, 'scrollVariant') ||
+    isInVariantSynchronous(commercialConsentGlobalNoScroll, 'noScrollVariant');
 
 const canShow = (): Promise<boolean> =>
     Promise.resolve(
         hasUnsetAdChoices() &&
-            (isInEU() || isInConsentGlobalTest()) &&
+            (isInEU() || isInConsentGlobalNoScrollTest()) &&
             !hasUserAcknowledgedBanner(messageCode)
     );
 
@@ -128,6 +129,12 @@ const bindClickHandlers = (msg: Message): void => {
     });
 };
 
+const preventScroll = (msg: Message): void => {
+    msg.$siteMessageContainer[0].addEventListener('touchmove', e => {
+        e.preventDefault();
+    });
+};
+
 const show = (): Promise<boolean> => {
     track();
 
@@ -136,6 +143,14 @@ const show = (): Promise<boolean> => {
         permanent: true,
         customJs: () => {
             bindClickHandlers(msg);
+            if (
+                isInVariantSynchronous(
+                    commercialConsentGlobalNoScroll,
+                    'noScrollVariant'
+                )
+            ) {
+                preventScroll(msg);
+            }
         },
     });
 
