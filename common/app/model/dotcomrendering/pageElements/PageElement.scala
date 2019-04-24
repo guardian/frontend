@@ -54,8 +54,6 @@ case class TimelineEvent(
   toDate: Option[String]
 )
 
-
-// TODO include img alt, width, and height in model
 case class TimelineBlockElement(id: String, title: String, description: Option[String], events: Seq[TimelineEvent]) extends PageElement
 
 case class QABlockElement(id: String, title: String, img: Option[String], html: String, credit: String) extends PageElement
@@ -336,9 +334,9 @@ object PageElement {
     } getOrElse Map()
   }
 
-  implicit val imageWeightingWrites: Writes[ImageSource] = Json.writes[ImageSource]
-  implicit val textBlockElementWrites: Writes[TextBlockElement] = Json.writes[TextBlockElement]
-  implicit val subheadingBlockElementWrites: Writes[SubheadingBlockElement] = Json.writes[SubheadingBlockElement]
+  implicit val ImageWeightingWrites: Writes[ImageSource] = Json.writes[ImageSource]
+  implicit val TextBlockElementWrites: Writes[TextBlockElement] = Json.writes[TextBlockElement]
+  implicit val SubheadingBlockElementWrites: Writes[SubheadingBlockElement] = Json.writes[SubheadingBlockElement]
   implicit val ImageBlockElementWrites: Writes[ImageBlockElement] = Json.writes[ImageBlockElement]
   implicit val AudioBlockElementWrites: Writes[AudioBlockElement] = Json.writes[AudioBlockElement]
   implicit val GuVideoBlockElementWrites: Writes[GuVideoBlockElement] = Json.writes[GuVideoBlockElement]
@@ -368,7 +366,7 @@ object PageElement {
   implicit val TimelineBlockElementWrites = Json.writes[TimelineBlockElement]
   implicit val QABlockElementWrites = Json.writes[QABlockElement]
   implicit val GuideBlocklementWrites = Json.writes[GuideBlockElement]
-  implicit val profileBlockElementWrites = Json.writes[ProfileBlockElement]
+  implicit val ProfileBlockElementWrites = Json.writes[ProfileBlockElement]
 
   implicit val SponsorshipWrites: Writes[Sponsorship] = new Writes[Sponsorship] {
     def writes(sponsorship: Sponsorship): JsObject = Json.obj(
