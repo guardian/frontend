@@ -165,7 +165,7 @@ object PageElement {
             Role(element.videoTypeData.flatMap(_.role)))
           )
         }
-        else List(videoDataFor(element).getOrElse(TextBlockElement("strung")))
+        else videoDataFor(element).toList
 
       case Membership => element.membershipTypeData.map(m => MembershipBlockElement(
         m.originalUrl,
@@ -271,8 +271,8 @@ object PageElement {
       data <- element.videoTypeData
       source <- data.source
       caption <- data.caption
-      url <- data.url
       originalUrl <- data.originalUrl
+      url = data.url.getOrElse(originalUrl)
     } yield {
       source match {
         case "YouTube" => VideoYoutubeBlockElement(caption, url, originalUrl, Role(data.role))
