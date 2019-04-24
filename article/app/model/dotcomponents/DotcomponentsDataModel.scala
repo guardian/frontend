@@ -19,7 +19,7 @@ import navigation.UrlHelpers._
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
 import views.html.fragments.affiliateLinksDisclaimer
-import views.support.{AffiliateLinksCleaner, CamelCase, FourByThree, GUDateTimeFormat, ImgSrc, Item1200, OneByOne, GoogleAnalyticsAccount}
+import views.support.{AffiliateLinksCleaner, CamelCase, FourByThree, GUDateTimeFormat, ImgSrc, Item1200, Item300, OneByOne, GoogleAnalyticsAccount}
 import ai.x.play.json.implicits.optionWithNull // Note, required despite Intellij saying otherwise
 import common.Maps.RichMap
 import navigation.UrlHelpers.{AmpFooter, AmpHeader}
