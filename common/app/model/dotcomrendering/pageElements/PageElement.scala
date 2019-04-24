@@ -332,7 +332,6 @@ object PageElement {
   }
 
   private def videoDataFor(element: ApiBlockElement): Option[PageElement] = {
-    println(element.videoTypeData.get.source)
     for {
       data <- element.videoTypeData
       source <- data.source
@@ -340,8 +339,6 @@ object PageElement {
       url <- data.url
       originalUrl <- data.originalUrl
     } yield {
-      println(data)
-      println(source)
       source match {
         case "YouTube" => VideoYoutubeBlockElement(caption, url, originalUrl, Role(data.role))
         case "Vimeo" => VideoVimeoBlockElement(caption, url, originalUrl, Role(data.role))
