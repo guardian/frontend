@@ -26,10 +26,10 @@ case class ImageBlockElement(media: ImageMedia, data: Map[String, String], displ
 case class ImageSource(weighting: String, srcSet: Seq[SrcSet])
 case class AudioBlockElement(assets: Seq[AudioAsset]) extends PageElement
 case class GuVideoBlockElement(assets: Seq[VideoAsset], imageMedia: ImageMedia, caption:String, url:String, originalUrl:String, role: Role) extends PageElement
-case class VideoBlockElement(caption:String, url:String, originalUrl:String, role: Role) extends PageElement
-case class VideoYoutubeBlockElement(caption:String, url:String, originalUrl:String, role: Role) extends PageElement
-case class VideoVimeoBlockElement(caption:String, url:String, originalUrl:String, role: Role) extends PageElement
-case class VideoFacebookBlockElement(caption:String, url:String, originalUrl:String, role: Role) extends PageElement
+case class VideoBlockElement(caption:String, url:String, originalUrl:String, height:Int, Width:Int, role: Role) extends PageElement
+case class VideoYoutubeBlockElement(caption:String, url:String, originalUrl:String, height:Int, Width:Int, role: Role) extends PageElement
+case class VideoVimeoBlockElement(caption:String, url:String, originalUrl:String, height:Int, Width:Int, role: Role) extends PageElement
+case class VideoFacebookBlockElement(caption:String, url:String, originalUrl:String, height:Int, Width:Int, role: Role) extends PageElement
 case class EmbedBlockElement(html: String, safe: Option[Boolean], alt: Option[String], isMandatory: Boolean) extends PageElement
 case class SoundcloudBlockElement(html: String, id: String, isTrack: Boolean, isMandatory: Boolean) extends PageElement
 case class ContentAtomBlockElement(atomId: String) extends PageElement
@@ -272,13 +272,16 @@ object PageElement {
       source <- data.source
       caption <- data.caption
       originalUrl <- data.originalUrl
+      height <- data.height
+      width <- data.width
+
       url = data.url.getOrElse(originalUrl)
     } yield {
       source match {
-        case "YouTube" => VideoYoutubeBlockElement(caption, url, originalUrl, Role(data.role))
-        case "Vimeo" => VideoVimeoBlockElement(caption, url, originalUrl, Role(data.role))
-        case "Facebook" => VideoFacebookBlockElement(caption, url, originalUrl, Role(data.role))
-        case _ => VideoBlockElement(caption, url, originalUrl, Role(data.role))
+        case "YouTube" => VideoYoutubeBlockElement(caption, url, originalUrl, height, width, Role(data.role))
+        case "Vimeo" => VideoVimeoBlockElement(caption, url, originalUrl, height, width, Role(data.role))
+        case "Facebook" => VideoFacebookBlockElement(caption, url, originalUrl, height, width, Role(data.role))
+        case _ => VideoBlockElement(caption, url, originalUrl, height, width, Role(data.role))
       }
     }
 
