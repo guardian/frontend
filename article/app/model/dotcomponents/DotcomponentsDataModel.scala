@@ -19,14 +19,13 @@ import navigation.UrlHelpers._
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
 import views.html.fragments.affiliateLinksDisclaimer
-import views.support.{AffiliateLinksCleaner, CamelCase, FourByThree, GUDateTimeFormat, ImgSrc, Item1200, Item300, OneByOne, GoogleAnalyticsAccount}
-import ai.x.play.json.implicits.optionWithNull // Note, required despite Intellij saying otherwise
+import views.support.{AffiliateLinksCleaner, CamelCase, FourByThree, GUDateTimeFormat, GoogleAnalyticsAccount, ImgSrc, Item1200, Item300, JavaScriptPage, OneByOne}
+import ai.x.play.json.implicits.optionWithNull
 import common.Maps.RichMap
 import navigation.UrlHelpers.{AmpFooter, AmpHeader}
 import navigation.UrlHelpers.{Footer, Header, SideMenu, getReaderRevenueUrl}
 import navigation.ReaderRevenueSite.{Support, SupportContribute, SupportSubscribe}
 import model.meta.{Guardian, LinkedData, PotentialAction}
-import views.support.JavaScriptPage
 
 // We have introduced our own set of objects for serializing data to the DotComponents API,
 // because we don't want people changing the core frontend models and as a side effect,
@@ -78,7 +77,12 @@ case class Meta(
   hasRelated: Boolean,
   isCommentable: Boolean,
   linkedData: List[LinkedData],
-  hasShowcaseMainElement: Boolean
+  hasShowcaseMainElement: Boolean,
+  isFront: Boolean,
+  isLiveblog: Boolean,
+  isMinuteArticle: Boolean,
+  isPaidContent: Boolean
+
 )
 
 case class Tags(
@@ -156,21 +160,11 @@ case class DCPage(
   starRating: Option[Int],
   commercial: Commercial,
   meta: Meta,
-  isFront: Boolean
-)
-
-// This class is introduce only because the problem of extending the existing DCPage to more than 22 parameters
-// Once this problem has been solved, DCPage and DCPage2 should e merged. More precisely the attributes of
-// DCPage2 should be added to DCPage
-case class DCPage2(
-  isLiveBlog: Boolean
 )
 
 // the composite data model
-
 case class DotcomponentsDataModel(
   page: DCPage,
-  page2: DCPage2,
   site: DCSite,
   version: Int
 )
@@ -226,10 +220,6 @@ object GoogleAnalytics {
 
 object DCPage {
   implicit val writes = Json.writes[DCPage]
-}
-
-object DCPage2 {
-  implicit val writes = Json.writes[DCPage2]
 }
 
 object DCSite {
@@ -490,16 +480,16 @@ object DotcomponentsDataModel {
         article.content.showInRelated,
         article.trail.isCommentable,
         linkedData,
-        jsConfigOptionBoolean("hasShowcaseMainElement").getOrElse(false)
+        jsConfigOptionBoolean("hasShowcaseMainElement").getOrElse(false),
+        JavaScriptPage.getMap(articlePage, Edition(request), false).getOrElse("isFront", JsBoolean(false)).as[Boolean],
+        JavaScriptPage.getMap(articlePage, Edition(request), false).getOrElse("isLiveBlog", JsBoolean(false)).as[Boolean],
+        JavaScriptPage.getMap(articlePage, Edition(request), false).getOrElse("isMinuteArticle", JsBoolean(false)).as[Boolean],
+        JavaScriptPage.getMap(articlePage, Edition(request), false).getOrElse("isPaidContent", JsBoolean(false)).as[Boolean]
       ),
-      JavaScriptPage.getMap(articlePage, Edition(request), false).getOrElse("isFront", JsBoolean(false)).as[Boolean]
     )
-
-      val content2 = DCPage2(true)
 
     DotcomponentsDataModel(
       content,
-      content2,
       site,
       VERSION
     )
@@ -513,7 +503,6 @@ object DotcomponentsDataModel {
     implicit val DotComponentsDataModelWrites = new Writes[DotcomponentsDataModel] {
       def writes(model: DotcomponentsDataModel) = Json.obj(
         "page" -> model.page,
-        "page2" -> model.page2,
         "site" -> model.site,
         "version" -> model.version
       )
