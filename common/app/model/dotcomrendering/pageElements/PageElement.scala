@@ -25,7 +25,7 @@ case class PullquoteBlockElement(html: Option[String], role: Role) extends PageE
 case class ImageBlockElement(media: ImageMedia, data: Map[String, String], displayCredit: Option[Boolean], role: Role, imageSources: Seq[ImageSource]) extends PageElement
 case class ImageSource(weighting: String, srcSet: Seq[SrcSet])
 case class AudioBlockElement(assets: Seq[AudioAsset]) extends PageElement
-case class GuVideoBlockElement(assets: Seq[VideoAsset], imageMedia: ImageMedia, data: Map[String, String], role: Role) extends PageElement
+case class GuVideoBlockElement(assets: Seq[VideoAsset], imageMedia: ImageMedia, caption:String, url:String, originalUrl:String, role: Role) extends PageElement
 case class VideoBlockElement(caption:String, url:String, originalUrl:String, role: Role) extends PageElement
 case class VideoYoutubeBlockElement(caption:String, url:String, originalUrl:String, role: Role) extends PageElement
 case class VideoVimeoBlockElement(caption:String, url:String, originalUrl:String, role: Role) extends PageElement
@@ -159,11 +159,13 @@ object PageElement {
             ImageMedia(element.assets.filter(_.mimeType.exists(_.startsWith("image"))).zipWithIndex.map {
               case (a, i) => ImageAsset.make(a, i)
             }),
-            videoDataFor(element),
+            element.videoTypeData.flatMap(_.caption).getOrElse(""),
+            element.videoTypeData.flatMap(_.url).getOrElse(""),
+            element.videoTypeData.flatMap(_.originalUrl).getOrElse(""),
             Role(element.videoTypeData.flatMap(_.role)))
           )
         }
-        else List(VideoBlockElement(videoDataFor(element), Role(element.videoTypeData.flatMap(_.role))))
+        else List(videoDataFor(element).getOrElse(TextBlockElement("strung")))
 
       case Membership => element.membershipTypeData.map(m => MembershipBlockElement(
         m.originalUrl,
@@ -265,8 +267,7 @@ object PageElement {
   }
 
   private def videoDataFor(element: ApiBlockElement): Option[PageElement] = {
-
-
+    println(element.videoTypeData.get.source)
     for {
       data <- element.videoTypeData
       source <- data.source
@@ -274,10 +275,12 @@ object PageElement {
       url <- data.url
       originalUrl <- data.originalUrl
     } yield {
+      println(data)
+      println(source)
       source match {
-        case "youtube" => VideoYoutubeBlockElement(caption, url, originalUrl, Role(data.role))
-        case "vimeo" => VideoVimeoBlockElement(caption, url, originalUrl, Role(data.role))
-        case "facebook" => VideoFacebookBlockElement(caption, url, originalUrl, Role(data.role))
+        case "YouTube" => VideoYoutubeBlockElement(caption, url, originalUrl, Role(data.role))
+        case "Vimeo" => VideoVimeoBlockElement(caption, url, originalUrl, Role(data.role))
+        case "Facebook" => VideoFacebookBlockElement(caption, url, originalUrl, Role(data.role))
         case _ => VideoBlockElement(caption, url, originalUrl, Role(data.role))
       }
     }
