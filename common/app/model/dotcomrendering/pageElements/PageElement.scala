@@ -3,14 +3,14 @@ package model.dotcomrendering.pageElements
 import com.gu.contentapi.client.model.v1.ElementType.{Map => _, _}
 import com.gu.contentapi.client.model.v1.{ElementType, SponsorshipType, BlockElement => ApiBlockElement, Sponsorship => ApiSponsorship}
 import layout.ContentWidths.BodyMedia
-import model.content.{Atom, MediaAtom, MediaWrapper}
+import model.content._
 import model.{AudioAsset, ImageAsset, ImageMedia, VideoAsset}
-import play.api.libs.json._
 import org.jsoup.Jsoup
+import play.api.libs.json._
 import views.support.cleaner.AmpSoundcloud
+import views.support.{AffiliateLinksCleaner, ImgSrc, Item120, Item1200, Item140, Item300, Item640, Item700, SrcSet}
 
 import scala.collection.JavaConverters._
-import views.support.{AffiliateLinksCleaner, ImageProfile, ImageUrlSigner, ImgSrc, Item120, Item1200, Item140, Item300, Item640, Item700, SrcSet}
 
 /*
   These elements are used for the Dotcom Rendering, they are essentially the new version of the
@@ -41,6 +41,24 @@ case class VineBlockElement(html: Option[String]) extends PageElement
 case class MapBlockElement(html: Option[String],  role: Role, isMandatory: Option[Boolean]) extends PageElement
 case class UnknownBlockElement(html: Option[String]) extends PageElement
 case class DisclaimerBlockElement(html: String) extends PageElement
+
+// atoms
+
+// TODO dates are being rendered as strings to avoid duplication of the
+//  to-string logic, but ultimately we should pass unformatted date info to
+//  DCR.
+case class TimelineEvent(
+  title: String,
+  date: String,
+  body: Option[String],
+  toDate: Option[String]
+)
+
+case class TimelineBlockElement(id: String, title: String, description: Option[String], events: Seq[TimelineEvent]) extends PageElement
+
+case class QABlockElement(id: String, title: String, img: Option[String], html: String, credit: String) extends PageElement
+case class GuideBlockElement(id: String, title: String, img: Option[String], html: String, credit: String) extends PageElement
+case class ProfileBlockElement(id: String, title: String, img: Option[String], html: String, credit: String) extends PageElement
 
 case class MembershipBlockElement(
   originalUrl: Option[String],
@@ -87,8 +105,6 @@ object Sponsorship {
 //noinspection ScalaStyle
 object PageElement {
   val dotComponentsImageProfiles = List(Item1200, Item700, Item640, Item300, Item140, Item120)
-
-
 
   def make(element: ApiBlockElement, addAffiliateLinks: Boolean, pageUrl: String, atoms: Iterable[Atom]): List[PageElement] = {
     def extractAtom: Option[Atom] = for {
@@ -189,19 +205,69 @@ object PageElement {
       }).toList
 
       case Embed => extractEmbed(element).toList
-      case Contentatom => (extractAtom match {
-        case Some(mediaAtom: MediaAtom) =>
-          mediaAtom.activeAssets.headOption.map(asset => {
-            YoutubeBlockElement(
-              mediaAtom.id, //CAPI ID
-              asset.id, // Youtube ID
-              mediaAtom.channelId, //Channel ID
-              mediaAtom.title //Caption
-            )
-          })
-        case Some(atom) => Some(ContentAtomBlockElement(atom.id))
-        case _ => None
-      }).toList
+
+      case Contentatom =>
+        (extractAtom match {
+          case Some(mediaAtom: MediaAtom) => {
+            mediaAtom.activeAssets.headOption.map(asset => {
+              YoutubeBlockElement(
+                mediaAtom.id, //CAPI ID
+                asset.id, // Youtube ID
+                mediaAtom.channelId, //Channel ID
+                mediaAtom.title //Caption
+              )
+            })
+          }
+
+          case Some(qa: QandaAtom) => {
+            Some(QABlockElement(
+              id = qa.id,
+              title = qa.atom.title.getOrElse(""),
+              img = qa.image.flatMap(ImgSrc.getAmpImageUrl),
+              html = qa.data.item.body,
+              credit = qa.credit.getOrElse("")
+            ))
+          }
+
+          case Some(guide: GuideAtom) => {
+            Some(ProfileBlockElement(
+              id = guide.id,
+              title = guide.atom.title.getOrElse(""),
+              img = guide.image.flatMap(ImgSrc.getAmpImageUrl),
+              html = guide.data.items.map(_.body).mkString(""),
+              credit = guide.credit.getOrElse("")
+            ))
+          }
+
+          case Some(profile: ProfileAtom) => {
+            Some(ProfileBlockElement(
+              id = profile.id,
+              title = profile.atom.title.getOrElse(""),
+              img = profile.image.flatMap(ImgSrc.getAmpImageUrl),
+              html = profile.data.items.map(_.body).mkString(""),
+              credit = profile.credit.getOrElse("")
+            ))
+          }
+
+          case Some(timeline: TimelineAtom) => {
+            Some(TimelineBlockElement(
+              id = timeline.id,
+              title = timeline.atom.title.getOrElse(""),
+              description = timeline.data.description,
+              events = timeline.data.events.map(event => TimelineEvent(
+                title = event.title,
+                date = TimelineAtom.renderFormattedDate(event.date, event.dateFormat),
+                body = event.body,
+                toDate = event.toDate.map(date => TimelineAtom.renderFormattedDate(date, event.dateFormat)),
+              )),
+            ))
+          }
+
+          case Some(atom) =>
+            Some(ContentAtomBlockElement(atom.id))
+          case _ => None
+        }).toList
+
       case Pullquote => element.pullquoteTypeData.map(d => PullquoteBlockElement(d.html, Role(None))).toList
       case Interactive => element.interactiveTypeData.map(d => InteractiveBlockElement(d.html, Role(d.role), d.isMandatory)).toList
       case Table => element.tableTypeData.map(d => TableBlockElement(d.html, Role(d.role), d.isMandatory)).toList
@@ -213,7 +279,6 @@ object PageElement {
       case Code => List(CodeBlockElement(None))
       case Form => List(FormBlockElement(None))
       case EnumUnknownElementType(f) => List(UnknownBlockElement(None))
-
     }
   }
 
@@ -269,9 +334,9 @@ object PageElement {
     } getOrElse Map()
   }
 
-  implicit val imageWeightingWrites: Writes[ImageSource] = Json.writes[ImageSource]
-  implicit val textBlockElementWrites: Writes[TextBlockElement] = Json.writes[TextBlockElement]
-  implicit val subheadingBlockElementWrites: Writes[SubheadingBlockElement] = Json.writes[SubheadingBlockElement]
+  implicit val ImageWeightingWrites: Writes[ImageSource] = Json.writes[ImageSource]
+  implicit val TextBlockElementWrites: Writes[TextBlockElement] = Json.writes[TextBlockElement]
+  implicit val SubheadingBlockElementWrites: Writes[SubheadingBlockElement] = Json.writes[SubheadingBlockElement]
   implicit val ImageBlockElementWrites: Writes[ImageBlockElement] = Json.writes[ImageBlockElement]
   implicit val AudioBlockElementWrites: Writes[AudioBlockElement] = Json.writes[AudioBlockElement]
   implicit val GuVideoBlockElementWrites: Writes[GuVideoBlockElement] = Json.writes[GuVideoBlockElement]
@@ -295,6 +360,13 @@ object PageElement {
   implicit val FormBlockElementWrites: Writes[FormBlockElement] = Json.writes[FormBlockElement]
   implicit val UnknownBlockElementWrites: Writes[UnknownBlockElement] = Json.writes[UnknownBlockElement]
   implicit val DiscalimerBlockElementWrites: Writes[DisclaimerBlockElement] = Json.writes[DisclaimerBlockElement]
+
+  // atoms
+  implicit val TimelineEventWrites = Json.writes[TimelineEvent]
+  implicit val TimelineBlockElementWrites = Json.writes[TimelineBlockElement]
+  implicit val QABlockElementWrites = Json.writes[QABlockElement]
+  implicit val GuideBlocklementWrites = Json.writes[GuideBlockElement]
+  implicit val ProfileBlockElementWrites = Json.writes[ProfileBlockElement]
 
   implicit val SponsorshipWrites: Writes[Sponsorship] = new Writes[Sponsorship] {
     def writes(sponsorship: Sponsorship): JsObject = Json.obj(
