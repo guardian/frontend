@@ -192,6 +192,30 @@ const getLastOneOffContributionDate = (): number | null => {
     return null;
 };
 
+const getLastRecurringContributionDate = (): number | null => {
+    // Check for cookies, ensure that cookies parse, and ensure parsed results are integers
+    const monthlyCookie = getCookie(
+        SUPPORT_RECURRING_CONTRIBUTOR_MONTHLY_COOKIE
+    );
+    const annualCookie = getCookie(SUPPORT_RECURRING_CONTRIBUTOR_ANNUAL_COOKIE);
+    const monthlyTime = monthlyCookie ? parseInt(monthlyCookie, 10) : null;
+    const annualTime = annualCookie ? parseInt(annualCookie, 10) : null;
+    const monthlyMS =
+        monthlyTime && Number.isInteger(monthlyTime) ? monthlyTime : null;
+    const annualMS =
+        annualTime && Number.isInteger(annualTime) ? annualTime : null;
+
+    if (!monthlyMS && !annualMS) {
+        return null;
+    }
+
+    if (monthlyMS && annualMS) {
+        return monthlyMS > annualMS ? monthlyMS : annualMS;
+    }
+
+    return monthlyMS || annualMS || null;
+};
+
 const getDaysSinceLastOneOffContribution = (): number | null => {
     const lastContributionDate = getLastOneOffContributionDate();
     if (lastContributionDate === null) {
@@ -264,6 +288,7 @@ export {
     refresh,
     deleteOldData,
     getLastOneOffContributionDate,
+    getLastRecurringContributionDate,
     getDaysSinceLastOneOffContribution,
     readerRevenueRelevantCookies,
     fakeOneOffContributor,
