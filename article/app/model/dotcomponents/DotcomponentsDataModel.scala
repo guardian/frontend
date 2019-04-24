@@ -81,8 +81,13 @@ case class Meta(
   isFront: Boolean,
   isLiveblog: Boolean,
   isMinuteArticle: Boolean,
-  isPaidContent: Boolean
-
+  isPaidContent: Boolean,
+  isPreview: Boolean,
+  isSensitive: Boolean,
+  revisionNumber: String,
+  shouldHideReaderRevenue: Boolean,
+  showNewRecipeDesign: Boolean,
+  showRelatedContent: Boolean
 )
 
 case class Tags(
@@ -484,7 +489,13 @@ object DotcomponentsDataModel {
         JavaScriptPage.getMap(articlePage, Edition(request), false).getOrElse("isFront", JsBoolean(false)).as[Boolean],
         JavaScriptPage.getMap(articlePage, Edition(request), false).getOrElse("isLiveBlog", JsBoolean(false)).as[Boolean],
         JavaScriptPage.getMap(articlePage, Edition(request), false).getOrElse("isMinuteArticle", JsBoolean(false)).as[Boolean],
-        JavaScriptPage.getMap(articlePage, Edition(request), false).getOrElse("isPaidContent", JsBoolean(false)).as[Boolean]
+        JavaScriptPage.getMap(articlePage, Edition(request), false).getOrElse("isPaidContent", JsBoolean(false)).as[Boolean],
+        context.isPreview,
+        JavaScriptPage.getMap(articlePage, Edition(request), false).getOrElse("isSensitive", JsBoolean(false)).as[Boolean],
+        JavaScriptPage.getMap(articlePage, Edition(request), false).getOrElse("revisionNumber", JsString("")).as[String],
+        JavaScriptPage.getMap(articlePage, Edition(request), false).getOrElse("shouldHideReaderRevenue", JsBoolean(false)).as[Boolean],
+        JavaScriptPage.getMap(articlePage, Edition(request), false).getOrElse("showNewRecipeDesign", JsBoolean(false)).as[Boolean],
+        jsConfigOptionBoolean("showRelatedContent").getOrElse(false),
       ),
     )
 
