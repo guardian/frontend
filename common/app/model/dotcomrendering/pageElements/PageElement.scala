@@ -26,10 +26,10 @@ case class ImageBlockElement(media: ImageMedia, data: Map[String, String], displ
 case class ImageSource(weighting: String, srcSet: Seq[SrcSet])
 case class AudioBlockElement(assets: Seq[AudioAsset]) extends PageElement
 case class GuVideoBlockElement(assets: Seq[VideoAsset], imageMedia: ImageMedia, caption:String, url:String, originalUrl:String, role: Role) extends PageElement
-case class VideoBlockElement(caption:String, url:String, originalUrl:String, height:Int, Width:Int, role: Role) extends PageElement
-case class VideoYoutubeBlockElement(caption:String, url:String, originalUrl:String, height:Int, Width:Int, role: Role) extends PageElement
-case class VideoVimeoBlockElement(caption:String, url:String, originalUrl:String, height:Int, Width:Int, role: Role) extends PageElement
-case class VideoFacebookBlockElement(caption:String, url:String, originalUrl:String, height:Int, Width:Int, role: Role) extends PageElement
+case class VideoBlockElement(caption:String, url:String, originalUrl:String, height:Int, width:Int, role: Role) extends PageElement
+case class VideoYoutubeBlockElement(caption:String, url:String, originalUrl:String, height:Int, width:Int, role: Role) extends PageElement
+case class VideoVimeoBlockElement(caption:String, url:String, originalUrl:String, height:Int, width:Int, role: Role) extends PageElement
+case class VideoFacebookBlockElement(caption:String, url:String, originalUrl:String, height:Int, width:Int, role: Role) extends PageElement
 case class EmbedBlockElement(html: String, safe: Option[Boolean], alt: Option[String], isMandatory: Boolean) extends PageElement
 case class SoundcloudBlockElement(html: String, id: String, isTrack: Boolean, isMandatory: Boolean) extends PageElement
 case class ContentAtomBlockElement(atomId: String) extends PageElement
