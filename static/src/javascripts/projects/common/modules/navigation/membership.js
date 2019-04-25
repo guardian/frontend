@@ -3,6 +3,8 @@
 import {
     isPayingMember,
     accountDataUpdateWarning,
+    getLastOneOffContributionDate,
+    getLastRecurringContributionDate,
 } from 'common/modules/commercial/user-features';
 import fastdom from 'lib/fastdom-promise';
 import { Message } from 'common/modules/ui/message';
@@ -12,6 +14,7 @@ import arrowRight from 'svgs/icon/arrow-right.svg';
 import type { Banner } from 'common/modules/ui/bannerPicker';
 import { isUserLoggedIn } from 'common/modules/identity/api';
 import userPrefs from 'common/modules/user-prefs';
+import { submitViewEvent } from 'common/modules/commercial/acquisitions-ophan';
 
 const createManageBannerLink = manageProductKeyword =>
     `${config.get('page.mmaUrl')}/banner/${manageProductKeyword}?INTCMP=BANNER`;
@@ -144,6 +147,29 @@ export const membershipBanner: Banner = {
 };
 
 export const initMembership = (): void => {
+    const lastOneOff = getLastOneOffContributionDate();
+    const lastRecurring = getLastRecurringContributionDate();
+
+    if (lastOneOff) {
+        submitViewEvent({
+            component: {
+                componentType: 'ACQUISITIONS_OTHER',
+                id: 'acquisitions-cookie-one-off',
+            },
+            value: lastOneOff.toString(),
+        });
+    }
+
+    if (lastRecurring) {
+        submitViewEvent({
+            component: {
+                componentType: 'ACQUISITIONS_OTHER',
+                id: 'acquisitions-cookie-recurring',
+            },
+            value: lastRecurring.toString(),
+        });
+    }
+
     if (isPayingMember()) {
         fastdom
             .read(() => document.getElementsByClassName('js-become-member'))
