@@ -112,8 +112,7 @@ case class Commercial(
   editionCommercialProperties: Map[String, EditionCommercialProperties],
   prebidIndexSites: List[PrebidIndexSite],
   commercialProperties: Option[CommercialProperties], //DEPRECATED TO DELETE
-  hbImpl: String,
-  isHosted: Boolean
+  hbImpl: String
 )
 
 case class GoogleAnalyticsTrackers(
@@ -164,7 +163,7 @@ case class DCPage(
   webURL: String,
   starRating: Option[Int],
   commercial: Commercial,
-  meta: Meta,
+  meta: Meta
 )
 
 // the composite data model
@@ -444,8 +443,7 @@ object DotcomponentsDataModel {
         sites <- commercial.prebidIndexSites
       } yield sites.toList).getOrElse(List()),
       article.metadata.commercial,
-      JavaScriptPage.getMap(articlePage, Edition(request), false).get("hbImpl").map(_.as[String]).getOrElse("none"),
-      JavaScriptPage.getMap(articlePage, Edition(request), false).getOrElse("isHosted", JsBoolean(false)).as[Boolean]
+      JavaScriptPage.getMap(articlePage, Edition(request), false).get("hbImpl").map(_.as[String]).getOrElse("none")
     )
 
     val content = DCPage(
