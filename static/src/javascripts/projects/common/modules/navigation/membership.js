@@ -153,7 +153,8 @@ export const initMembership = (): void => {
     if (lastOneOff) {
         submitViewEvent({
             component: {
-                componentType: 'ACQUISITIONS_ONE_OFF_COOKIE',
+                componentType: 'ACQUISITIONS_OTHER',
+                id: 'acquisitions-cookie-one-off',
             },
             value: lastOneOff.toString(),
         });
@@ -162,7 +163,8 @@ export const initMembership = (): void => {
     if (lastRecurring) {
         submitViewEvent({
             component: {
-                componentType: 'ACQUISITIONS_RECURRING_COOKIE',
+                componentType: 'ACQUISITIONS_OTHER',
+                id: 'acquisitions-cookie-recurring',
             },
             value: lastRecurring.toString(),
         });
