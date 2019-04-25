@@ -116,12 +116,11 @@ const isInConsentGlobaTallBannerTest = (): boolean =>
 
 const canShow = (): Promise<boolean> =>
     Promise.resolve(
-        true
-        // hasUnsetAdChoices() &&
-        //     (isInEU() ||
-        //         isInConsentGlobalNoScrollTest() ||
-        //         isInConsentGlobaTallBannerTest()) &&
-        //     !hasUserAcknowledgedBanner(messageCode)
+        hasUnsetAdChoices() &&
+            (isInEU() ||
+                isInConsentGlobalNoScrollTest() ||
+                isInConsentGlobaTallBannerTest()) &&
+            !hasUserAcknowledgedBanner(messageCode)
     );
 
 const track = (): void => {
@@ -144,7 +143,9 @@ const preventScroll = (msg: Message): void => {
 };
 
 const increaseBannerHeight = (msg: Message): void => {
-    msg.$siteMessageContainer[0].classList.add('site-message--first-pv-consent--tall-banner');
+    msg.$siteMessageContainer[0].classList.add(
+        'site-message--first-pv-consent--tall-banner'
+    );
 };
 
 const show = (): Promise<boolean> => {
