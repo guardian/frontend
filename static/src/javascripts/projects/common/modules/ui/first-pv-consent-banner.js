@@ -14,6 +14,7 @@ import { upAlertViewCount } from 'common/modules/analytics/send-privacy-prefs';
 import type { AdConsent } from 'common/modules/commercial/ad-prefs.lib';
 import type { Banner } from 'common/modules/ui/bannerPicker';
 import { commercialConsentGlobalNoScroll } from 'common/modules/experiments/tests/commercial-consent-global-no-scroll';
+import { commercialConsentGlobalTallBanner } from 'common/modules/experiments/tests/commercial-consent-global-tall-banner';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 
 type Template = {
@@ -109,11 +110,18 @@ const isInConsentGlobalNoScrollTest = (): boolean =>
     isInVariantSynchronous(commercialConsentGlobalNoScroll, 'scrollVariant') ||
     isInVariantSynchronous(commercialConsentGlobalNoScroll, 'noScrollVariant');
 
+const isInConsentGlobaTallBannerTest = (): boolean =>
+    isInVariantSynchronous(commercialConsentGlobalTallBanner, 'shortVariant') ||
+    isInVariantSynchronous(commercialConsentGlobalTallBanner, 'tallVariant');
+
 const canShow = (): Promise<boolean> =>
     Promise.resolve(
-        hasUnsetAdChoices() &&
-            (isInEU() || isInConsentGlobalNoScrollTest()) &&
-            !hasUserAcknowledgedBanner(messageCode)
+        true
+        // hasUnsetAdChoices() &&
+        //     (isInEU() ||
+        //         isInConsentGlobalNoScrollTest() ||
+        //         isInConsentGlobaTallBannerTest()) &&
+        //     !hasUserAcknowledgedBanner(messageCode)
     );
 
 const track = (): void => {
@@ -135,6 +143,10 @@ const preventScroll = (msg: Message): void => {
     });
 };
 
+const increaseBannerHeight = (msg: Message): void => {
+    msg.$siteMessageContainer[0].classList.add('site-message--first-pv-consent--tall');
+};
+
 const show = (): Promise<boolean> => {
     track();
 
@@ -150,6 +162,13 @@ const show = (): Promise<boolean> => {
                 )
             ) {
                 preventScroll(msg);
+            } else if (
+                isInVariantSynchronous(
+                    commercialConsentGlobalTallBanner,
+                    'tallVariant'
+                )
+            ) {
+                increaseBannerHeight(msg);
             }
         },
     });

@@ -7,6 +7,7 @@ import fetchJSON from 'lib/fetch-json';
 
 import { commercialCmpCustomise } from 'common/modules/experiments/tests/commercial-cmp-customise';
 import { commercialConsentGlobalNoScroll } from 'common/modules/experiments/tests/commercial-consent-global-no-scroll';
+import { commercialConsentGlobalTallBanner } from 'common/modules/experiments/tests/commercial-consent-global-tall-banner';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import { log } from './log';
 import { CmpStore } from './store';
@@ -82,6 +83,10 @@ const isInConsentGlobalNoScrollTest = (): boolean =>
     isInVariantSynchronous(commercialConsentGlobalNoScroll, 'scrollVariant') ||
     isInVariantSynchronous(commercialConsentGlobalNoScroll, 'noScrollVariant');
 
+const isInConsentGlobaTallBannerTest = (): boolean =>
+    isInVariantSynchronous(commercialConsentGlobalTallBanner, 'shortVariant') ||
+    isInVariantSynchronous(commercialConsentGlobalTallBanner, 'tallVariant');
+
 const isInEU = (): boolean =>
     (getCookie('GU_geo_continent') || 'OTHER').toUpperCase() === 'EU';
 
@@ -107,7 +112,11 @@ class CmpService {
             this.cmpConfig.logging = 'debug';
             log.info('Set logging level to DEBUG');
         }
-        if (isInEU() || isInConsentGlobalNoScrollTest()) {
+        if (
+            isInEU() ||
+            isInConsentGlobalNoScrollTest() ||
+            isInConsentGlobaTallBannerTest()
+        ) {
             this.cmpConfig.gdprApplies = true;
         }
     }
