@@ -8,7 +8,7 @@ export const commercialConsentGlobalTallBanner: ABTest = {
     author: 'George Haberis',
     description:
         'Test whether increasing the height of the consent banner on non-EEA users increases proportion of users who interact with it',
-    audience: 0.02,
+    audience: 0.03,
     audienceOffset: 0.1,
     successMeasure: 'Users outside of the EU interact with the consent banner',
     audienceCriteria: 'all users',

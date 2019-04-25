@@ -144,7 +144,7 @@ const preventScroll = (msg: Message): void => {
 };
 
 const increaseBannerHeight = (msg: Message): void => {
-    msg.$siteMessageContainer[0].classList.add('site-message--first-pv-consent--tall');
+    msg.$siteMessageContainer[0].classList.add('site-message--first-pv-consent--tall-banner');
 };
 
 const show = (): Promise<boolean> => {
