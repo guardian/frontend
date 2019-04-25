@@ -27,7 +27,7 @@ class FakePicker extends RenderingTierPicker {
 }
 
 class FakeRemoteRender(implicit context: ApplicationContext) extends renderers.RemoteRenderer {
-  override def getArticle(ws:WSClient, path: String, article: ArticlePage, blocks: Blocks)(implicit request: RequestHeader): Future[Result] = {
+  override def getArticle(ws:WSClient, path: String, article: ArticlePage, blocks: Blocks)(implicit request: RequestHeader, context: ApplicationContext): Future[Result] = {
     implicit val ec = ExecutionContext.global
     Future(Cached(article)(RevalidatableResult.Ok(Html("OK"))))
   }
