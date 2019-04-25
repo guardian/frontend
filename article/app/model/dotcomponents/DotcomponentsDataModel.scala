@@ -138,7 +138,6 @@ case class DCSite(
   nav: NavMenu,
   readerRevenueLinks: ReaderRevenueLinks,
   commercialUrl: String,
-  assetsPath: String,
   googleAnalytics: GoogleAnalytics
 )
 
@@ -421,7 +420,6 @@ object DotcomponentsDataModel {
       navMenu,
       readerRevenueLinks,
       buildFullCommercialUrl("javascripts/graun.dotcom-rendering-commercial.js"),
-      Configuration.assets.path,
       googleAnalytics
     )
 
