@@ -147,7 +147,6 @@
         @include faux-bullet-point($right-space: 8px);
         margin-bottom: $gs-baseline / 2;
         padding-left: $gs-gutter;
-        overflow: hidden;
 
         &:before {
             margin-left: -$gs-gutter;
