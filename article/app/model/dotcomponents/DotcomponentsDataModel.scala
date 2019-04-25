@@ -297,6 +297,7 @@ object DotcomponentsDataModel {
     val dcBlocks = Blocks(mainBlock, bodyBlocks)
 
     val jsConfig = (k: String) => articlePage.getJavascriptConfig.get(k).map(_.as[String])
+    val jsConfigOptionBoolean = (k: String) => articlePage.getJavascriptConfig.get(k).map(_.as[Boolean])
 
     val jsPageData = Configuration.javascript.pageData mapKeys { key =>
       CamelCase.fromHyphenated(key.split('.').lastOption.getOrElse(""))
