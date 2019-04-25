@@ -29,6 +29,7 @@ object AMPPageChecks extends Logging {
       case _: RichLinkBlockElement => true
       case _: CommentBlockElement => true
       case _: PullquoteBlockElement => true
+      case _: ContentAtomBlockElement => true // Note, the `isAmpSupportedArticleType` method on Content excludes quizzes here
       case _ => false
     }
 
