@@ -3,8 +3,8 @@ import { getCookie } from 'lib/cookies';
 
 export const commercialConsentGlobalTallBanner: ABTest = {
     id: 'CommercialConsentGlobalTallBanner',
-    start: '2019-04-24',
-    expiry: '2019-05-24',
+    start: '2019-05-07',
+    expiry: '2019-06-07',
     author: 'George Haberis',
     description:
         'Test whether increasing the height of the consent banner on non-EEA users increases proportion of users who interact with it',
