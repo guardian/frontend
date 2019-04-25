@@ -210,7 +210,7 @@ const getLastRecurringContributionDate = (): number | null => {
     }
 
     if (monthlyMS && annualMS) {
-        return monthlyMS > annualMS ? monthlyMS : annualMS;
+        return Math.max(monthlyMS, annualMS);
     }
 
     return monthlyMS || annualMS || null;
