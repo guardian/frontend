@@ -485,7 +485,7 @@ object DotcomponentsDataModel {
         article.content.showInRelated,
         article.trail.isCommentable,
         linkedData,
-        jsConfigOptionBoolean("hasShowcaseMainElement").getOrElse(false),
+        JavaScriptPage.getMap(articlePage, Edition(request), false).getOrElse("hasShowcaseMainElement", JsBoolean(false)).as[Boolean],
         JavaScriptPage.getMap(articlePage, Edition(request), false).getOrElse("isFront", JsBoolean(false)).as[Boolean],
         JavaScriptPage.getMap(articlePage, Edition(request), false).getOrElse("isLiveBlog", JsBoolean(false)).as[Boolean],
         JavaScriptPage.getMap(articlePage, Edition(request), false).getOrElse("isMinuteArticle", JsBoolean(false)).as[Boolean],
@@ -495,7 +495,7 @@ object DotcomponentsDataModel {
         JavaScriptPage.getMap(articlePage, Edition(request), false).getOrElse("revisionNumber", JsString("")).as[String],
         JavaScriptPage.getMap(articlePage, Edition(request), false).getOrElse("shouldHideReaderRevenue", JsBoolean(false)).as[Boolean],
         JavaScriptPage.getMap(articlePage, Edition(request), false).getOrElse("showNewRecipeDesign", JsBoolean(false)).as[Boolean],
-        jsConfigOptionBoolean("showRelatedContent").getOrElse(false),
+        JavaScriptPage.getMap(articlePage, Edition(request), false).getOrElse("showRelatedContent", JsBoolean(false)).as[Boolean],
       ),
     )
 
