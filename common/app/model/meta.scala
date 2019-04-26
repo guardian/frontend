@@ -684,9 +684,9 @@ object SubMetaLinks {
     } else None
 
     val secondaryLink = if (blogOrSeriesTag.isDefined) {
-      blogOrSeriesTag.map(t => SubMetaLink(s"${Configuration.site.host}/${t.id}", t.name))
+      blogOrSeriesTag.map(t => SubMetaLink(s"/${t.id}", t.name))
     } else if (isFromTheObserver) {
-      Some(SubMetaLink(s"${Configuration.site.host}/observer", "The Observer"))
+      Some(SubMetaLink("/observer", "The Observer"))
     } else {
       None
     }
@@ -784,7 +784,7 @@ final case class Tags(
     tags.exists(t => t.id == "sport/rugby-union")
 
   lazy val isClimateChangeSeries: Boolean = tags.exists(t => t.id =="environment/series/keep-it-in-the-ground")
-  lazy val isPrintSalesSeries: Boolean = tags.exists(t => t.id == "artanddesign/series/gnm-print-sales")
+  lazy val isPrintSalesSeries: Boolean = tags.exists(t => t.id == "artanddesign/series/guardian-print-shop")
   lazy val isTheMinuteArticle: Boolean = tags.exists(t => t.id == "tone/minute")
   //this is for the immersive header to access this info
   lazy val isPaidContent: Boolean = tags.exists( t => t.id == "tone/advertisement-features" )

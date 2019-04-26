@@ -873,7 +873,7 @@ $ima-controls-height: 70px;
     }
 }
 .end-slate-container__heading {
-    @include fs-header(1);
+    @include fs-header(2);
     padding-top: $gs-baseline/3;
     font-weight: bold;
     text-align: left;

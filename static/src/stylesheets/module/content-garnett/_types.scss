@@ -227,8 +227,7 @@ $quote-mark: 35px;
     }
 
     .content__article-body {
-        font-size: 17px;
-        line-height: 24px;
+        @include fs-bodyCopy(2);
 
         @include mq(tablet) {
             margin-left: 0;
@@ -311,13 +310,9 @@ $quote-mark: 35px;
     }
 
     .content__standfirst {
-        @include fs-bodyCopy(2);
+        @include fs-headline(2);
         font-weight: 700;
-        font-size: 17px;
-        line-height: 22px;
-        border-top: 0;
         color: $brightness-7;
-        padding-top: 2px;
         margin-bottom: $gs-baseline;
         max-width: 80%;
         @include mq(phablet) {
@@ -402,6 +397,8 @@ $quote-mark: 35px;
         .pullquote-cite,
         .pullquote-paragraph {
             display: inline;
+            font-family: $f-serif-headline;
+            font-weight: 300;
         }
 
         .inline-quote,
@@ -446,7 +443,7 @@ $quote-mark: 35px;
 
         .pullquote-cite,
         .pullquote-paragraph {
-            @include fs-headlineGarnett(1);
+            @include fs-headline(3, true);
         }
 
         .inline-garnett-quote {
@@ -472,9 +469,9 @@ $quote-mark: 35px;
 
         .pullquote-cite,
         .pullquote-paragraph {
-            @include fs-headlineGarnett(2);
+            @include fs-headline(3, true);
             @include mq(desktop) {
-                @include fs-headlineGarnett(3);
+                @include fs-headline(4, true);
             }
         }
     }
@@ -490,9 +487,9 @@ $quote-mark: 35px;
 
         .pullquote-cite,
         .pullquote-paragraph {
-            @include fs-headlineGarnett(2);
+            @include fs-headline(3, true);
             @include mq(desktop) {
-                @include fs-headlineGarnett(3);
+                @include fs-headline(4, true);
             }
         }
     }
@@ -518,12 +515,9 @@ $quote-mark: 35px;
 
         .pullquote-cite,
         .pullquote-paragraph {
-            @include fs-headlineGarnett(3);
+            @include fs-headline(4, true);
             @include mq(phablet) {
-                @include fs-headlineGarnett(4);
-            }
-            @include mq(desktop) {
-                @include fs-headlineGarnett(5);
+                @include fs-headline(5, true);
             }
         }
 
@@ -698,7 +692,7 @@ $quote-mark: 35px;
     }
 
     .content__label-interview {
-        @include fs-headlineGarnett(2);
+        @include fs-headline(3);
         padding-bottom: $gs-baseline / 4;
         font-weight: 900;
         display: inline-block;
@@ -733,7 +727,7 @@ $quote-mark: 35px;
     }
 
     .content__headline--byline-interview {
-        @include fs-headlineGarnett(2);
+        @include fs-headline(3);
         display: inline-block;
         font-style: italic;
         font-weight: 500;
@@ -862,13 +856,10 @@ $quote-mark: 35px;
     }
 
     .content__headline {
-        @include fs-headlineGarnett(5);
-        font-weight: 100;
+        @include fs-headline(5);
+        font-weight: 300;
         @include mq(mobileMedium) {
-            @include fs-headlineGarnett(6);
-        }
-        @include mq(tablet) {
-            @include fs-headlineGarnett(7);
+            @include fs-headline(6, true);
         }
     }
 
@@ -1196,7 +1187,7 @@ $quote-mark: 35px;
 .content--type-guardianview {
     .element-pullquote.element--supporting .pullquote-cite,
     .element-pullquote.element--supporting .pullquote-paragraph {
-        font-weight: 200;
+        font-weight: 300;
     }
 
     .content__meta-container {
@@ -1213,10 +1204,11 @@ $quote-mark: 35px;
 .content--type-review,
 .content--type-recipe {
     &:not(.paid-content) .content__standfirst {
-        @include fs-headlineGarnett(0);
-        font-weight: 200;
+        @include fs-headline(2);
+        font-weight: 300;
+
         @include mq(tablet) {
-            @include fs-headlineGarnett(1);
+            @include fs-headline(3, true);
         }
     }
 }
@@ -1286,6 +1278,7 @@ $quote-mark: 35px;
     .content__meta-container {
         border-top: 1px solid $brightness-60;
         padding-top: $gs-baseline / 4;
+        height: inherit;
     }
 
     .content__article-body::before {

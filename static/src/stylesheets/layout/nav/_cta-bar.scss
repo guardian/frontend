@@ -51,19 +51,17 @@
 }
 
 .cta-bar__heading {
+    @include fs-headline(3);
     color: $highlight-main;
-    font-family: $f-serif-headline;
-    font-size: 20px;
     font-weight: 700;
-    line-height: 1;
 
     @include mq(desktop) {
-        font-size: 26px;
+        @include fs-headline(4, true);
     }
 
     body:not(.has-page-skin) & {
         @include mq(leftCol) {
-            font-size: 32px;
+            @include fs-headline(6, true);
         }
     }
 }

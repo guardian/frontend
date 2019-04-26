@@ -27,7 +27,7 @@
                 "abp-whitelist-instruction-chrome": "@Static("images/commercial/ad-block-instructions-chrome.png")"
             },
             "acquisitions": {
-                "paypal-and-credit-card": "@Static("images/acquisitions/paypal-and-credit-card.png")",
+                "payment-methods": "@Static("images/acquisitions/payment-methods.png")",
                 "info-logo": "@Static("images/acquisitions/info-logo.svg")",
                 "ad-free": "@Static("images/acquisitions/ad-free.svg")"
             },

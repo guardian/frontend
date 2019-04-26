@@ -1,5 +1,5 @@
 .crossword__clues-header {
-    @include fs-header(1);
+    @include fs-header(2);
     border-top: 1px solid $lifestyle-main;
     border-bottom: 1px dotted $brightness-86;
     padding-bottom: $gs-baseline * .75;

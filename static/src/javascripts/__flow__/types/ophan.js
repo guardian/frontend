@@ -51,7 +51,8 @@ declare type OphanComponentType =
     | 'ACQUISITIONS_NUGGET'
     | 'ACQUISITIONS_STANDFIRST'
     | 'ACQUISITIONS_THRASHER'
-    | 'ACQUISITIONS_EDITORIAL_LINK';
+    | 'ACQUISITIONS_EDITORIAL_LINK'
+    | 'ACQUISITIONS_OTHER';
 
 declare type OphanComponent = {
     componentType: OphanComponentType,

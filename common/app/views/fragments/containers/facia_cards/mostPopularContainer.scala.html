@@ -1,9 +1,13 @@
 @(containerDefinition: layout.FaciaContainer, frontProperties: model.FrontProperties)(implicit requestHeader: RequestHeader)
+
+@import conf.switches.Switches
 @import common.LinkTo
 @import model.MostPopular
+@import fragments.commercial.adSlot
+@import common.commercial.AdSlot.mostPopularSizes
+@import layout.ContentCard
 
 @defining("Most viewed") { containerTitle =>
-
     <div class="fc-container__header js-container__header">
         @containerDefinition.displayName.map { title =>
             <div class="fc-container__header__title">
@@ -18,20 +22,52 @@
         }
     </div>
 
-    <div class="fc-container__body fc-container--rolled-up-hide js-popular-trails">
-    @defining(Seq(
-        MostPopular(
-            containerDefinition.displayName.getOrElse(containerTitle),
-            containerTitle,
-            containerDefinition.items.take(10)
-        ),
-        MostPopular(
-            "Across the guardian",
-            containerTitle,
-            Nil
-        )
-    )) { popular =>
-        @fragments.collections.popular(popular, Some(containerDefinition), isFront = true)
+    @if(Switches.ExtendedMostPopularFronts.isSwitchedOn) {
+        <div class="fc-container--rolled-up-hide most-popular__container">
+            <div class="most-popular__content js-popular-trails">
+            @defining(Seq(
+                MostPopular(
+                    containerDefinition.displayName.getOrElse(containerTitle),
+                    containerTitle,
+                    containerDefinition.items.take(10)
+                ),
+                MostPopular(
+                    "Across the guardian",
+                    containerTitle,
+                    Nil
+                )
+            )) { popular =>
+                @fragments.collections.popularExtended(popular)
+            }
+            </div>
+            <div class="most-popular__mpu">
+                <div>
+                @adSlot(
+                    "mostpop",
+                    Seq("container-inline"),
+                    mostPopularSizes(true),
+                    optId = None,
+                    optClassNames = None
+                ){ }
+                </div>
+            </div>
+        </div>
+    } else {
+        <div class="fc-container__body fc-container--rolled-up-hide js-popular-trails">
+        @defining(Seq(
+            MostPopular(
+                containerDefinition.displayName.getOrElse(containerTitle),
+                containerTitle,
+                containerDefinition.items.take(10)
+            ),
+            MostPopular(
+                "Across the guardian",
+                containerTitle,
+                Nil
+            )
+        )) { popular =>
+            @fragments.collections.popular(popular, Some(containerDefinition), isFront = true)
+        }
+        </div>
     }
-    </div>
 }

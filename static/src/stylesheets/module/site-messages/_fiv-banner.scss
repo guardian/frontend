@@ -85,11 +85,12 @@ $border-style: $brightness-60 1px solid;
 
     .engagement-banner__payment-logos--fiv {
         flex: 1 1 auto;
-        height: 25px;
+        height: 20px;
         align-self: center;
 
         @include mq($from: leftCol) {
             margin-left: 10px;
+            height: 25px;
         }
     }
 
@@ -140,7 +141,7 @@ $border-style: $brightness-60 1px solid;
 }
 
 .fiv-banner__headline {
-    font-size: 27px;
+    font-size: 28px;
     line-height: 25px;
     font-family: 'GT Guardian Titlepiece', Georgia, serif;
     width: 189px;
@@ -291,7 +292,7 @@ $wide-circle-height: 162px;
 }
 
 .fiv-banner__copy-and-ctas {
-    @include fs-headlineGarnett(6);
+    @include fs-headline(6);
     color: #202d53;
     font-style: normal;
     font-stretch: normal;
@@ -320,8 +321,7 @@ $wide-circle-height: 162px;
     }
 
     @include mq($from: desktop) {
-        font-size: 17px;
-        line-height: 21px;
+        @include fs-bodyCopy(2);
         width: 489px;
     }
 

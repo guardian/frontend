@@ -10,15 +10,13 @@
 }
 
 .engagement-banner-ticker__count {
-    @include fs-header(5);
-    font-size: 32px;
+    @include fs-headline(6);
     font-weight: 800;
     color: #333333;
 }
 
 .engagement-banner-ticker__count-label {
-    font-size: 17px;
-    line-height: 1.4;
+    @include fs-bodyCopy(2);
 }
 
 $progress-bar-height: 10px;
@@ -98,8 +96,7 @@ $progress-bar-height: 10px;
 }
 
 .engagement-banner-ticker__exceeded .engagement-banner-ticker__count {
-    font-size: 17px;
-    line-height: 1.4;
+    @include fs-bodyCopy(2);
 }
 
 .engagement-banner-ticker__exceeded .engagement-banner-ticker__count-label {

@@ -43,14 +43,10 @@
         counter-reset: li;
     }
     > ol > li:before {
-        @include fs-header(1, true);
+        @include fs-header(2, true);
         content: counter(li);
         counter-increment: li;
         margin-right: 4px;
-
-        @include mq(tablet) {
-            @include fs-header(2, true);
-        }
     }
     > ul ul,
     > ol ol {
@@ -72,10 +68,6 @@
     > h3 {
         @include fs-bodyHeading(2);
         margin: 0;
-
-        @include mq(tablet) {
-            @include fs-bodyHeading(3, true);
-        }
     }
     > p,
     > figure,
@@ -155,7 +147,6 @@
         @include faux-bullet-point($right-space: 8px);
         margin-bottom: $gs-baseline / 2;
         padding-left: $gs-gutter;
-        overflow: hidden;
 
         &:before {
             margin-left: -$gs-gutter;

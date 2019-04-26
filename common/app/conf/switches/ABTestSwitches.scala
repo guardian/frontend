@@ -78,21 +78,31 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-commercial-outbrain-testing",
-    "Test the outbrain widget",
-    owners = Seq(Owner.withGithub("frankie297")),
+    "ab-commercial-ad-verification-q-a",
+    "Test the impact of verifiyng ads for QA before rolling it out to wider audiance",
+    owners = Seq(Owner.withGithub("guardiancosta")),
     safeState = Off,
-    sellByDate = new LocalDate(2019, 4, 22),
+    sellByDate = new LocalDate(2019, 9, 30),
     exposeClientSide = true
   )
 
   Switch(
     ABTests,
-    "ab-commercial-consent-global",
-    "Test the consent banner globally",
+    "ab-commercial-outbrain-testing",
+    "Test the outbrain widget",
+    owners = Seq(Owner.withGithub("frankie297")),
+    safeState = Off,
+    sellByDate = new LocalDate(2020, 4, 22),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-commercial-consent-global-no-scroll",
+    "Test the consent banner on non-EEA users with & without the ability to scroll underlying content through the banner on mobile",
     owners = Owner.group(Commercial),
     safeState = Off,
-    sellByDate = new LocalDate(2019, 4, 16),
+    sellByDate = new LocalDate(2019, 5, 24),
     exposeClientSide = true
   )
 

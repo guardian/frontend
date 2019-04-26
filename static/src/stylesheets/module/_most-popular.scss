@@ -4,9 +4,8 @@
 
     @include mq(desktop) {
         display: flex;
-        justify-content: flex-end;
+        justify-content: flex-start;
     }
-
 
     body:not(.has-page-skin) & {
         @include mq(leftCol) {
@@ -24,6 +23,15 @@
     margin-top: -1px;
     border: 1px solid $brightness-86;
     border-bottom: 0;
+
+    @include mq(leftCol) {
+        margin-left: $gs-gutter / 2;
+        width: gs-span(9)+ $gs-gutter;
+    }
+    @include mq(wide) {
+        margin-left: 0;
+        width: gs-span(12) + $gs-gutter;
+    }
 }
 
 .most-popular {
@@ -70,15 +78,7 @@
 .most-popular__container .tabs__tab--most-popular a,
 .simple-content-card__headline,
 .second-tier__title {
-    font-family: $f-serif-headline;
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 20px;
-
-    @include mq(tablet) {
-        font-size: 18px;
-        line-height: 22px;
-    }
+    @include fs-headline(2);
 }
 
 .most-popular__headline {

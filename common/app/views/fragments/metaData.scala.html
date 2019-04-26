@@ -9,6 +9,9 @@
 @import play.api.Mode.Dev
 
 <meta charset="utf-8">
+@page.metadata.description.map { description =>
+    <meta name="description" content="@StripHtmlTags(description)" />
+}
 @* Critical meta data that have an impact on rendering speed *@
 <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
 <meta name="format-detection" content="telephone=no" />
@@ -93,10 +96,6 @@
     @content.tags.contributors.map { contributor =>
         <meta name="author" content="@contributor.name" />
     }
-}
-
-@page.metadata.description.map { description =>
-    <meta name="description" content="@StripHtmlTags(description)" />
 }
 
 @* https://support.google.com/customsearch/answer/1626955?hl=en *@
