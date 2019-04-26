@@ -14,6 +14,7 @@ import play.api.mvc._
 import services.CAPILookup
 import views.support.RenderOtherStatus
 import implicits.{AmpFormat, EmailFormat, HtmlFormat, JsonFormat}
+import model.dotcomponents.DotcomponentsDataModel
 
 import scala.concurrent.Future
 
@@ -51,14 +52,13 @@ class LiveBlogController(contentApiClient: ContentApiClient, val controllerCompo
   def renderJson(path: String, lastUpdate: Option[String], rendered: Option[Boolean], isLivePage: Option[Boolean]): Action[AnyContent] = {
     Action.async { implicit request =>
       val range = getRange(lastUpdate, rendered)
-
       mapModel(path, range) {
         case liveblog: LiveBlogPage if rendered.contains(false) => getJsonForFronts(liveblog)
+        case liveblog: LiveBlogPage if request.isGuui => getGuuiJson(path, liveblog, range, isLivePage)
         case liveblog: LiveBlogPage => getJson(path, liveblog, range, isLivePage)
         case minute: MinutePage => render(path, minute)
         case _ => Future { Cached(600)(WithoutRevalidationResult(NotFound)) }
       }
-
     }
   }
 
@@ -79,6 +79,12 @@ class LiveBlogController(contentApiClient: ContentApiClient, val controllerCompo
     range match {
       case SinceBlockId(lastBlockId) => renderNewerUpdatesJson(liveblog, SinceBlockId(lastBlockId), isLivePage)
       case _ => render(path, liveblog)
+    }
+  }
+
+  private def getGuuiJson(path: String, liveblog: PageWithStoryPackage, range: BlockRange, isLivePage: Option[Boolean])(implicit request: RequestHeader): Future[Result] = {
+    Future {
+      Ok(DotcomponentsDataModel.toJsonString(DotcomponentsDataModel.fromLiveBlog()))
     }
   }
 
@@ -105,7 +111,6 @@ class LiveBlogController(contentApiClient: ContentApiClient, val controllerCompo
     Future {
       Cached(page)(JsonComponent(allPagesJson ++ livePageJson ++ mostRecent: _*))
     }
-
   }
 
   private def renderMinute(path: String, minute: MinutePage)(implicit request: RequestHeader): Future[Result] = {
@@ -148,10 +153,8 @@ class LiveBlogController(contentApiClient: ContentApiClient, val controllerCompo
   }
 
   private def responseToModelOrResult(range: BlockRange)(response: ItemResponse)(implicit request: RequestHeader): Either[PageWithStoryPackage, Result] = {
-
     val supportedContent: Option[ContentType] = response.content.filter(isSupported).map(Content(_))
     val supportedContentResult: Either[ContentType, Result] = ModelOrResult(supportedContent, response)
-
     val content: Either[PageWithStoryPackage, Result] = supportedContentResult.left.flatMap {
       case minute: Article if minute.isTheMinute =>
         Left(MinutePage(minute, StoryPackages(minute.metadata.id, response)))
@@ -160,9 +163,7 @@ class LiveBlogController(contentApiClient: ContentApiClient, val controllerCompo
       case liveBlog: Article if liveBlog.isLiveBlog =>
         createLiveBlogModel(liveBlog, response, range)
     }
-
     content
-
   }
 
 }

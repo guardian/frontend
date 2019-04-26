@@ -9,11 +9,11 @@ import conf.Configuration.affiliatelinks
 import conf.switches.Switches
 import conf.{Configuration, Static}
 import controllers.ArticlePage
-import model.SubMetaLinks
+import model.{SubMetaLink, SubMetaLinks}
 import model.content.Atom
 import model.dotcomrendering.pageElements.{DisclaimerBlockElement, PageElement}
 import model.meta._
-import navigation.NavMenu
+import navigation.{NavLink, NavMenu, Subnav}
 import navigation.ReaderRevenueSite.{Support, SupportContribute, SupportSubscribe}
 import navigation.UrlHelpers._
 import play.api.libs.json._
@@ -420,10 +420,46 @@ object DotcomponentsDataModel {
 
   }
 
+  def fromLiveBlog(): DotcomponentsDataModel = { // PASCAL: This is a template answer that we will need to upgrade
+    val page = DCPage(
+      Content("", Some(""), "", "", Blocks(None, Nil), "", ""),
+      Tags( None, None, None, None, Nil),
+      "",
+      "",
+      None,
+      0L,
+      "",
+      None,
+      "",
+      "",
+      "",
+      None,
+      None,
+      "",
+      "",
+      None,
+      SubMetaLinks(Nil, Nil),
+      "",
+      None,
+      Commercial(Map[String, EditionCommercialProperties](), Nil, None),
+      Meta( false, false, false, false, false, false, Nil)
+    )
+    val site = DCSite( "", "", None, None, Map[String,Boolean](), "", "",
+      NavMenu( "", Nil, Nil, Nil, None, None, None, None),
+      ReaderRevenueLinks(
+        ReaderRevenueLink("", "", ""),
+        ReaderRevenueLink("", "", ""),
+        ReaderRevenueLink("", "", ""),
+        ReaderRevenueLink("", "", ""),
+        ReaderRevenueLink("", "", "")
+      ),
+      ""
+    )
+    DotcomponentsDataModel(page, site, 1)
+  }
+
   def toJson(model: DotcomponentsDataModel): JsValue = {
-
     // make what we have look a bit closer to what dotcomponents currently expects
-
     implicit val DotComponentsDataModelWrites = new Writes[DotcomponentsDataModel] {
       def writes(model: DotcomponentsDataModel) = Json.obj(
         "page" -> model.page,
@@ -431,14 +467,10 @@ object DotcomponentsDataModel {
         "version" -> model.version
       )
     }
-
     Json.toJson(model)
-
   }
-
 
   def toJsonString(model: DotcomponentsDataModel): String = {
     Json.stringify(toJson(model))
   }
-
 }
