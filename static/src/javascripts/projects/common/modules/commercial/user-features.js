@@ -253,8 +253,6 @@ const shouldNotBeShownSupportMessaging = (): boolean =>
 */
 
 const shouldHideSupportMessaging = (): boolean =>
-    isPayingMember() || // TODO: remove
-    isDigitalSubscriber() || // TODO: remove
     shouldNotBeShownSupportMessaging() ||
     isRecentOneOffContributor() || // because members-data-api is unaware of one-off contributions so relies on cookie
     isRecurringContributor(); // guest checkout means that members-data-api isn't aware of all recurring contributions so relies on cookie
