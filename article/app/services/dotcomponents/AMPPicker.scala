@@ -29,6 +29,10 @@ object AMPPageChecks extends Logging {
       case _: RichLinkBlockElement => true
       case _: CommentBlockElement => true
       case _: PullquoteBlockElement => true
+      case _: GuVideoBlockElement => true
+      case _: VideoYoutubeBlockElement => true
+      case _: VideoVimeoBlockElement => true
+      case _: VideoFacebookBlockElement => true
       case _ => false
     }
 
