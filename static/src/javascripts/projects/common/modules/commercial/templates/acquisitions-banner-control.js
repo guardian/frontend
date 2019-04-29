@@ -14,7 +14,7 @@ export const acquisitionsBannerControlTemplate = (
     const applePayLogo = applePayApiAvailable ? applyPayMark.markup : '';
     return `
         <div class="engagement-banner__close">
-            <div class="engagement-banner__roundel">
+            <div class="engagement-banner__roundel hide-until-tablet">
                 ${marque36icon.markup}
             </div>
             <button class="button engagement-banner__close-button js-site-message-close js-engagement-banner-close-button" data-link-name="hide release message">
@@ -23,7 +23,15 @@ export const acquisitionsBannerControlTemplate = (
             </button>
         </div>
         <div class="engagement-banner__container">
-            <div class="engagement-banner__text">
+            <div class="engagement-banner__text engagement-banner__text--mobile hide-from-tablet">
+                <h2 class="engagement-banner__header engagement-banner__header--mobile hide-from-tablet">${
+                    params.mobileHeader ? params.mobileHeader : ''
+                }</h2>
+                ${params.mobileBody ? params.mobileBody : params.messageText}
+                ${params.ctaText}
+                ${params.hasTicker ? acquisitionsBannerTickerTemplate : ''}
+            </div>
+            <div class="engagement-banner__text hide-until-tablet">
                 ${params.messageText}${params.ctaText}
                 ${params.hasTicker ? acquisitionsBannerTickerTemplate : ''}
             </div>
@@ -31,7 +39,15 @@ export const acquisitionsBannerControlTemplate = (
                 <button class="button engagement-banner__button" href="${
                     params.linkUrl
                 }">
-                    ${params.buttonCaption}${arrowWhiteRight.markup}
+                    <span class="engagement-banner__button-caption hide-until-tablet">${
+                        params.buttonCaption
+                    }</span>
+                    <span class="engagement-banner__button-caption hide-from-tablet">${
+                        params.mobileButtonCaption
+                            ? params.mobileButtonCaption
+                            : params.buttonCaption
+                    }</span>
+                    ${arrowWhiteRight.markup}
                 </button>
                 <div class="engagement-banner__payment-logos">
                     <img

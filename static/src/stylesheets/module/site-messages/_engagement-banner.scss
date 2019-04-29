@@ -54,6 +54,14 @@
     }
 }
 
+.engagement-banner__header {
+    @include fs-headline(3);
+    font-weight: 700;
+    margin: 0 -10px $gs-baseline / 2;
+    padding: 0 10px $gs-baseline / 2;
+    border-bottom: 1px solid  rgba($brightness-7,  .3);
+}
+
 .engagement-banner__text {
     @include banner-copy-alignment;
 

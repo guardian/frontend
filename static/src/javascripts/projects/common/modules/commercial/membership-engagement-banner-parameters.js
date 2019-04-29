@@ -15,6 +15,10 @@ const fallbackCopy: string = `<strong>The Guardian is editorially independent &n
     up a paywall as we want to keep our journalism open and accessible. But the revenue we get from
     advertising is falling, so we increasingly need our readers to fund our independent, investigative reporting.`;
 
+const mobileHeader: string = `The Guardian is editorially independent...`;
+const mobileBody: string = `...our journalism is free from the influence of billionaire owners or politicians. No one edits our editor. No one steers our opinion.  This means we can pursue difficult investigations, challenging the powerful and holding them to account. And unlike many others, we have chosen an approach that allows us to keep our journalism open and accessible to all, regardless of where they live or what they can afford. But we depend on voluntary contributions from readers to keep working as we do.`;
+const mobileButtonCaption: string = `Support us`;
+
 const getAcquisitionsBannerParams = (
     rowsFromGoogleDoc: any
 ): EngagementBannerParams => {
@@ -52,6 +56,9 @@ const getAcquisitionsBannerParams = (
         template: acquisitionsBannerControlTemplate,
         minArticlesBeforeShowingBanner: 3,
         userCohort: 'OnlyNonSupporters',
+        mobileHeader,
+        mobileBody,
+        mobileButtonCaption,
     };
 };
 
