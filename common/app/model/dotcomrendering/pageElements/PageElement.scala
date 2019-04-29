@@ -45,6 +45,9 @@ case class MapBlockElement(html: Option[String],  role: Role, isMandatory: Optio
 case class UnknownBlockElement(html: Option[String]) extends PageElement
 case class DisclaimerBlockElement(html: String) extends PageElement
 
+// Intended for unstructured html that we can't model, typically rejected by consumers
+case class HTMLFallbackBlockElement(html: String) extends PageElement
+
 // atoms
 
 // TODO dates are being rendered as strings to avoid duplication of the
@@ -214,14 +217,22 @@ object PageElement {
       case Contentatom =>
         (extractAtom match {
           case Some(mediaAtom: MediaAtom) => {
-            mediaAtom.activeAssets.headOption.map(asset => {
-              YoutubeBlockElement(
-                mediaAtom.id, //CAPI ID
-                asset.id, // Youtube ID
-                mediaAtom.channelId, //Channel ID
-                mediaAtom.title //Caption
-              )
-            })
+
+            mediaAtom match {
+              case youtube if mediaAtom.assets.headOption.exists(_.platform == MediaAssetPlatform.Youtube) => {
+                mediaAtom.activeAssets.headOption.map(asset => {
+                  YoutubeBlockElement(
+                    mediaAtom.id, //CAPI ID
+                    asset.id, // Youtube ID
+                    mediaAtom.channelId, //Channel ID
+                    mediaAtom.title //Caption
+                  )
+                })
+              }
+
+              // TODO - handle self-hosted video case.
+              case htmlBlob if mediaAtom.assets.nonEmpty => Some(HTMLFallbackBlockElement(mediaAtom.defaultHtml))
+            }
           }
 
           case Some(qa: QandaAtom) => {
@@ -382,6 +393,7 @@ object PageElement {
   implicit val FormBlockElementWrites: Writes[FormBlockElement] = Json.writes[FormBlockElement]
   implicit val UnknownBlockElementWrites: Writes[UnknownBlockElement] = Json.writes[UnknownBlockElement]
   implicit val DiscalimerBlockElementWrites: Writes[DisclaimerBlockElement] = Json.writes[DisclaimerBlockElement]
+  implicit val HTMLBlockElementWrites: Writes[HTMLFallbackBlockElement] = Json.writes[HTMLFallbackBlockElement]
 
   // atoms
   implicit val TimelineEventWrites = Json.writes[TimelineEvent]
