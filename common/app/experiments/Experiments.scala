@@ -25,6 +25,6 @@ object LazyLoadImages extends Experiment(
   name = "lazy-load-images",
   description = "Lazy-loaded non-main images for participants on fronts as images approach the viewport",
   owners = Seq(Owner.withGithub("nicl")),
-  sellByDate = new LocalDate(2019, 3, 1),
+  sellByDate = new LocalDate(2019, 6, 1),
   participationGroup = Perc0A
 )
