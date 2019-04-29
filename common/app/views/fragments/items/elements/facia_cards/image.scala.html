@@ -2,27 +2,59 @@
 @import model.ImageMedia
 @import views.support.{ImgSrc, RenderClasses, SrcSet}
 
+@import experiments.{ActiveExperiments, LazyLoadImages}
+
 @(
     classes: Seq[String],
     widths: WidthsByBreakpoint,
     maybeImageMedia: Option[ImageMedia] = None,
     maybePath: Option[String] = None,
-    maybeSrc: Option[String] = None
+    maybeSrc: Option[String] = None,
+    shouldLazyLoad: Boolean = true,
 )(implicit request: RequestHeader)
 
-<picture>
-    @* IE 9 needs this workaround as per https://scottjehl.github.io/picturefill/ *@
-    <!--[if IE 9]><video style="display: none;"><![endif]-->
-    @widths.breakpoints.map { breakpointWidth =>
-        <source media="(min-width: @breakpointWidth.breakpoint.minWidth.getOrElse("0")px) and (-webkit-min-device-pixel-ratio: 1.25), (min-width: @breakpointWidth.breakpoint.minWidth.getOrElse("0")px) and (min-resolution: 120dpi)"
-                sizes="@breakpointWidth.width"
-                srcset="@SrcSet.asSrcSetString(ImgSrc.srcsetForBreakpoint(breakpointWidth, widths.breakpoints, maybePath, maybeImageMedia, hidpi = true))" />
-        <source media="(min-width: @breakpointWidth.breakpoint.minWidth.getOrElse("0")px)"
-                sizes="@breakpointWidth.width"
-                srcset="@SrcSet.asSrcSetString(ImgSrc.srcsetForBreakpoint(breakpointWidth, widths.breakpoints, maybePath, maybeImageMedia))" />
+@lazyLoad() = {
+    @maybeImageMedia.map(ImgSrc.getFallbackUrl).orElse(maybeSrc).orElse(maybePath).map { src =>
+        <picture class="lazy-load-img" data-iesrc="@src" data-alt="" data-class="@RenderClasses(classes: _*)">
+        @widths.breakpoints.map { breakpointWidth =>
+            <source media="(min-width: @breakpointWidth.breakpoint.minWidth.getOrElse("0")px) and (-webkit-min-device-pixel-ratio: 1.25), (min-width: @breakpointWidth.breakpoint.minWidth.getOrElse("0")px) and (min-resolution: 120dpi)"
+            sizes="@breakpointWidth.width"
+            srcset=@SrcSet.asSrcSetString(ImgSrc.srcsetForBreakpoint(breakpointWidth, widths.breakpoints, maybePath, maybeImageMedia, hidpi = true)) />
+            <source media="(min-width: @breakpointWidth.breakpoint.minWidth.getOrElse("0")px)"
+            sizes="@breakpointWidth.width"
+            srcset="@SrcSet.asSrcSetString(ImgSrc.srcsetForBreakpoint(breakpointWidth, widths.breakpoints, maybePath, maybeImageMedia))" />
+        }
+
+        @if(widths.breakpoints.isEmpty) {
+            <source srcset="@src" media="(min-width: 0px)">
+        }
+
+        </picture>
+        <noscript>@eagerlyLoad()</noscript>
     }
-    <!--[if IE 9]></video><![endif]-->
-    @maybeImageMedia.map(ImgSrc.getFallbackUrl(_)).orElse(maybeSrc).orElse(maybePath).map { src =>
-        <img class="@RenderClasses(classes: _*)" alt="" src="@src"/>
-    }
-</picture>
+}
+
+@eagerlyLoad() = {
+    <picture>
+        @* IE 9 needs this workaround as per https://scottjehl.github.io/picturefill/ *@
+        <!--[if IE 9]><video style="display: none;"><![endif]-->
+        @widths.breakpoints.map { breakpointWidth =>
+            <source media="(min-width: @breakpointWidth.breakpoint.minWidth.getOrElse("0")px) and (-webkit-min-device-pixel-ratio: 1.25), (min-width: @breakpointWidth.breakpoint.minWidth.getOrElse("0")px) and (min-resolution: 120dpi)"
+            sizes="@breakpointWidth.width"
+            srcset=@SrcSet.asSrcSetString(ImgSrc.srcsetForBreakpoint(breakpointWidth, widths.breakpoints, maybePath, maybeImageMedia, hidpi = true)) />
+            <source media="(min-width: @breakpointWidth.breakpoint.minWidth.getOrElse("0")px)"
+            sizes="@breakpointWidth.width"
+            srcset="@SrcSet.asSrcSetString(ImgSrc.srcsetForBreakpoint(breakpointWidth, widths.breakpoints, maybePath, maybeImageMedia))" />
+        }
+        <!--[if IE 9]></video><![endif]-->
+        @maybeImageMedia.map(ImgSrc.getFallbackUrl(_)).orElse(maybeSrc).orElse(maybePath).map { src =>
+            <img class="@RenderClasses(classes: _*)" alt="" src="@src"/>
+        }
+    </picture>
+}
+
+@if(shouldLazyLoad && ActiveExperiments.isParticipating(LazyLoadImages)) {
+    @lazyLoad()
+} else {
+    @eagerlyLoad()
+}
