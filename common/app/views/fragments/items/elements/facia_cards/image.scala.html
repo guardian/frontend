@@ -25,6 +25,10 @@
             srcset="@SrcSet.asSrcSetString(ImgSrc.srcsetForBreakpoint(breakpointWidth, widths.breakpoints, maybePath, maybeImageMedia))" />
         }
 
+        @if(widths.breakpoints.isEmpty) {
+            <source srcset="@src" media="(min-width: 0px)">
+        }
+
         </picture>
         <noscript>@eagerlyLoad()</noscript>
     }
