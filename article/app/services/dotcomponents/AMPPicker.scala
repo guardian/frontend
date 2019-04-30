@@ -4,7 +4,7 @@ import common.Logging
 import controllers.ArticlePage
 import implicits.Requests._
 import model.PageWithStoryPackage
-import model.liveblog._
+import model.liveblog.BlockElement
 import model.dotcomrendering.pageElements._
 import play.api.mvc.RequestHeader
 
