@@ -164,8 +164,6 @@ $header-image-size-desktop: 100px;
         color: inherit;
 
         &:hover {
-            color: $news-main;
-            text-decoration: none;
             border-bottom: 1px solid $news-main;
 
             & .inline-icon {
