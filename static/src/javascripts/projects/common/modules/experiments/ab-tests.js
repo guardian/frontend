@@ -12,6 +12,7 @@ import {
     februaryMomentBannerCopyMorePeople,
     februaryMomentBannerThankYou,
 } from 'common/modules/experiments/tests/february-moment-banner';
+import { contributionsGlobalMobileBannerDesign } from 'common/modules/experiments/tests/contribs_global_mobile_banner_design';
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialPrebidSafeframe,
@@ -31,4 +32,5 @@ export const epicTests: $ReadOnlyArray<EpicABTest> = [
 export const engagementBannerTests: $ReadOnlyArray<AcquisitionsABTest> = [
     februaryMomentBannerCopyMorePeople,
     februaryMomentBannerThankYou,
+    contributionsGlobalMobileBannerDesign,
 ];
