@@ -1,6 +1,7 @@
 @import layout.WidthsByBreakpoint
 @import model.ImageMedia
 @import views.support.{ImgSrc, RenderClasses, SrcSet}
+@import implicits.Requests._
 
 @import experiments.{ActiveExperiments, LazyLoadImages}
 
@@ -53,7 +54,7 @@
     </picture>
 }
 
-@if(shouldLazyLoad && ActiveExperiments.isParticipating(LazyLoadImages)) {
+@if(shouldLazyLoad && (ActiveExperiments.isParticipating(LazyLoadImages) || request.isLazyLoad)) {
     @lazyLoad()
 } else {
     @eagerlyLoad()
