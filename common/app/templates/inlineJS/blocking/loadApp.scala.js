@@ -1,6 +1,6 @@
 @import conf.Static
 @import conf.Configuration
-@import conf.switches.Switches.PolyfillIO
+@import conf.switches.Switches.{PolyfillIO, PolyfillIOFallbackMin}
 
 @(bootModule: String = "standard")(implicit request: RequestHeader)
 
@@ -43,6 +43,10 @@ function guardianPolyfilled() {
             '@polyfillioUrl',
             '@Static(s"javascripts/graun.$bootModule.js")'
         ];
+    }
+
+    @if(PolyfillIOFallbackMin.isSwitchedOn) {
+        scripts.unshift('@Static(s"javascripts/vendor/polyfillio.minimum.fallback.js")')
     }
 
     function stateChange() {

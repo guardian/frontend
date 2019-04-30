@@ -8,7 +8,11 @@ module.exports = {
     task: () =>
         Promise.all([
             cpy(
-                ['formstack-interactive/**/*', 'prebid_safeframe.js'],
+                [
+                    'formstack-interactive/**/*',
+                    'prebid_safeframe.js',
+                    'polyfillio.minimum.fallback.js',
+                ],
                 path.resolve(target, 'javascripts', 'vendor'),
                 {
                     cwd: path.resolve(vendor, 'javascripts'),
