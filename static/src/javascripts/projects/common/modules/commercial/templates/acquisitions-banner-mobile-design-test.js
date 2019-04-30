@@ -19,8 +19,8 @@ export const acquisitionsBannerMobileDesignTestTemplate = (
             </button>
         </div>
         <div class="engagement-banner__container">
-            <div class="engagement-banner__text engagement-banner__text--mobile">
-                <h2 class="engagement-banner__header engagement-banner__header--mobile">${
+            <div class="engagement-banner__text">
+                <h2 class="engagement-banner__header">${
                     params.leadSentence ? params.leadSentence : ''
                 }</h2>
                 ${params.messageText}${params.ctaText}
