@@ -101,9 +101,6 @@ const bannerParamsToHtml = (params: EngagementBannerParams): string => {
         : params.messageText;
     const ctaText = params.ctaText;
     const leadSentence = params.leadSentence;
-    const mobileBody = params.mobileBody;
-    const mobileHeader = params.mobileHeader;
-    const mobileButtonCaption = params.mobileButtonCaption;
 
     const linkUrl = addTrackingCodesToUrl({
         base: params.linkUrl,
@@ -121,9 +118,6 @@ const bannerParamsToHtml = (params: EngagementBannerParams): string => {
         linkUrl,
         buttonCaption,
         hasTicker: params.hasTicker,
-        mobileHeader,
-        mobileBody,
-        mobileButtonCaption,
     };
 
     return params.template
