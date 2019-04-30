@@ -5,6 +5,7 @@ import controllers.ArticlePage
 import implicits.Requests._
 import model.PageWithStoryPackage
 import model.liveblog._
+import model.dotcomrendering.pageElements._
 import play.api.mvc.RequestHeader
 
 object AMPPageChecks extends Logging {
