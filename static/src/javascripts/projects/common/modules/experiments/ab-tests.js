@@ -8,10 +8,7 @@ import { commercialConsentGlobalNoScroll } from 'common/modules/experiments/test
 import { askFourEarning } from 'common/modules/experiments/tests/contributions-epic-ask-four-earning';
 import { acquisitionsEpicAlwaysAskIfTagged } from 'common/modules/experiments/tests/acquisitions-epic-always-ask-if-tagged';
 import { adblockTest } from 'common/modules/experiments/tests/adblock-ask';
-import {
-    februaryMomentBannerCopyMorePeople,
-    februaryMomentBannerThankYou,
-} from 'common/modules/experiments/tests/february-moment-banner';
+import { contributionsGlobalMobileBannerDesign } from 'common/modules/experiments/tests/contribs_global_mobile_banner_design';
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialPrebidSafeframe,
@@ -29,6 +26,5 @@ export const epicTests: $ReadOnlyArray<EpicABTest> = [
 ];
 
 export const engagementBannerTests: $ReadOnlyArray<AcquisitionsABTest> = [
-    februaryMomentBannerCopyMorePeople,
-    februaryMomentBannerThankYou,
+    contributionsGlobalMobileBannerDesign,
 ];

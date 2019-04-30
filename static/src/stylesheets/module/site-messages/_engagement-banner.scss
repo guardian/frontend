@@ -194,3 +194,13 @@
         background: rgba($brightness-7,  .05);
     }
 }
+
+// For Mobile Design test:
+.engagement-banner__header {
+    @include fs-headline(3);
+    min-height: 50px;
+    font-weight: 700;
+    margin: 0 -10px $gs-gutter / 2;
+    padding: 0 10px $gs-gutter / 2;
+    border-bottom: 1px solid  rgba($brightness-7,  .3);
+}
