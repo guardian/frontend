@@ -6,8 +6,7 @@ import { getUrlVars } from 'lib/url';
 import fetchJSON from 'lib/fetch-json';
 
 import { commercialCmpCustomise } from 'common/modules/experiments/tests/commercial-cmp-customise';
-import { commercialConsentGlobalNoScroll } from 'common/modules/experiments/tests/commercial-consent-global-no-scroll';
-import { commercialConsentGlobalTallBanner } from 'common/modules/experiments/tests/commercial-consent-global-tall-banner';
+import { commercialConsentGlobalBanner } from 'common/modules/experiments/tests/commercial-consent-global-banner';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import { log } from './log';
 import { CmpStore } from './store';
@@ -79,13 +78,12 @@ const generateStore = (isInTest: boolean): CmpStore => {
     return store;
 };
 
-const isInConsentGlobalNoScrollTest = (): boolean =>
-    isInVariantSynchronous(commercialConsentGlobalNoScroll, 'scrollVariant') ||
-    isInVariantSynchronous(commercialConsentGlobalNoScroll, 'noScrollVariant');
-
-const isInConsentGlobaTallBannerTest = (): boolean =>
-    isInVariantSynchronous(commercialConsentGlobalTallBanner, 'shortVariant') ||
-    isInVariantSynchronous(commercialConsentGlobalTallBanner, 'tallVariant');
+const isInCommercialConsentGlobalBannerTest = (): boolean =>
+    isInVariantSynchronous(commercialConsentGlobalBanner, 'regularVariant') ||
+    isInVariantSynchronous(commercialConsentGlobalBanner, 'noScrollVariant') ||
+    isInVariantSynchronous(commercialConsentGlobalBanner, 'tallVariant') ||
+    isInVariantSynchronous(commercialConsentGlobalBanner, 'animatedVariant') ||
+    isInVariantSynchronous(commercialConsentGlobalBanner, 'floatingVariant');
 
 const isInEU = (): boolean =>
     (getCookie('GU_geo_continent') || 'OTHER').toUpperCase() === 'EU';
@@ -112,11 +110,7 @@ class CmpService {
             this.cmpConfig.logging = 'debug';
             log.info('Set logging level to DEBUG');
         }
-        if (
-            isInEU() ||
-            isInConsentGlobalNoScrollTest() ||
-            isInConsentGlobaTallBannerTest()
-        ) {
+        if (isInEU() || isInCommercialConsentGlobalBannerTest()) {
             this.cmpConfig.gdprApplies = true;
         }
     }

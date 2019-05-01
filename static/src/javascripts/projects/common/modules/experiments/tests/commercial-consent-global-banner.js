@@ -1,20 +1,20 @@
 // @flow
 import { getCookie } from 'lib/cookies';
 
-export const commercialConsentGlobalTallBanner: ABTest = {
-    id: 'CommercialConsentGlobalTallBanner',
-    start: '2019-05-07',
-    expiry: '2019-06-07',
+export const commercialConsentGlobalBanner: ABTest = {
+    id: 'CommercialConsentGlobalBanner',
+    start: '2019-05-01',
+    expiry: '2019-05-15',
     author: 'George Haberis',
     description:
-        'Test whether increasing the height of the consent banner on non-EEA users increases proportion of users who interact with it',
+        'Test whether changes to Consent Banner increases proportion of non-EU users who interact with it',
     audience: 0.03,
     audienceOffset: 0.1,
     successMeasure: 'Users outside of the EU interact with the consent banner',
     audienceCriteria: 'all users',
     dataLinkNames: '',
     idealOutcome:
-        'More non-EEA users interact with the consent banner when we increase the height of the banner',
+        'More non-EEA users interact with the consent banner when we alter ir',
     canRun: () =>
         (getCookie('GU_geo_continent') || 'OTHER').toUpperCase() !== 'EU',
     variants: [
@@ -23,11 +23,23 @@ export const commercialConsentGlobalTallBanner: ABTest = {
             test: (): void => {},
         },
         {
-            id: 'shortVariant',
+            id: 'regularVariant',
+            test: (): void => {},
+        },
+        {
+            id: 'noScrollVariant',
             test: (): void => {},
         },
         {
             id: 'tallVariant',
+            test: (): void => {},
+        },
+        {
+            id: 'animatedVariant',
+            test: (): void => {},
+        },
+        {
+            id: 'floatingVariant',
             test: (): void => {},
         },
     ],

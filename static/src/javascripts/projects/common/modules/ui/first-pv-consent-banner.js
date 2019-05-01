@@ -13,8 +13,7 @@ import ophan from 'ophan/ng';
 import { upAlertViewCount } from 'common/modules/analytics/send-privacy-prefs';
 import type { AdConsent } from 'common/modules/commercial/ad-prefs.lib';
 import type { Banner } from 'common/modules/ui/bannerPicker';
-import { commercialConsentGlobalNoScroll } from 'common/modules/experiments/tests/commercial-consent-global-no-scroll';
-import { commercialConsentGlobalTallBanner } from 'common/modules/experiments/tests/commercial-consent-global-tall-banner';
+import { commercialConsentGlobalBanner } from 'common/modules/experiments/tests/commercial-consent-global-banner';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 
 type Template = {
@@ -106,20 +105,17 @@ const trackInteraction = (interaction: string): void => {
     trackNonClickInteraction(interaction);
 };
 
-const isInConsentGlobalNoScrollTest = (): boolean =>
-    isInVariantSynchronous(commercialConsentGlobalNoScroll, 'scrollVariant') ||
-    isInVariantSynchronous(commercialConsentGlobalNoScroll, 'noScrollVariant');
-
-const isInConsentGlobaTallBannerTest = (): boolean =>
-    isInVariantSynchronous(commercialConsentGlobalTallBanner, 'shortVariant') ||
-    isInVariantSynchronous(commercialConsentGlobalTallBanner, 'tallVariant');
+const isInCommercialConsentGlobalBannerTest = (): boolean =>
+    isInVariantSynchronous(commercialConsentGlobalBanner, 'regularVariant') ||
+    isInVariantSynchronous(commercialConsentGlobalBanner, 'noScrollVariant') ||
+    isInVariantSynchronous(commercialConsentGlobalBanner, 'tallVariant') ||
+    isInVariantSynchronous(commercialConsentGlobalBanner, 'animatedVariant') ||
+    isInVariantSynchronous(commercialConsentGlobalBanner, 'floatingVariant');
 
 const canShow = (): Promise<boolean> =>
     Promise.resolve(
         hasUnsetAdChoices() &&
-            (isInEU() ||
-                isInConsentGlobalNoScrollTest() ||
-                isInConsentGlobaTallBannerTest()) &&
+            (isInEU() || isInCommercialConsentGlobalBannerTest()) &&
             !hasUserAcknowledgedBanner(messageCode)
     );
 
@@ -148,6 +144,18 @@ const increaseBannerHeight = (msg: Message): void => {
     );
 };
 
+const animateBanner = (msg: Message): void => {
+    msg.$siteMessageContainer[0].classList.add(
+        'site-message--first-pv-consent--animated-banner'
+    );
+};
+
+const createFloatingBanner = (msg: Message): void => {
+    msg.$siteMessageContainer[0].classList.add(
+        'site-message--first-pv-consent--floating-banner'
+    );
+};
+
 const show = (): Promise<boolean> => {
     track();
 
@@ -158,18 +166,32 @@ const show = (): Promise<boolean> => {
             bindClickHandlers(msg);
             if (
                 isInVariantSynchronous(
-                    commercialConsentGlobalNoScroll,
+                    commercialConsentGlobalBanner,
                     'noScrollVariant'
                 )
             ) {
                 preventScroll(msg);
             } else if (
                 isInVariantSynchronous(
-                    commercialConsentGlobalTallBanner,
+                    commercialConsentGlobalBanner,
                     'tallVariant'
                 )
             ) {
                 increaseBannerHeight(msg);
+            } else if (
+                isInVariantSynchronous(
+                    commercialConsentGlobalBanner,
+                    'animatedVariant'
+                )
+            ) {
+                animateBanner(msg);
+            } else if (
+                isInVariantSynchronous(
+                    commercialConsentGlobalBanner,
+                    'floatingVariant'
+                )
+            ) {
+                createFloatingBanner(msg);
             }
         },
     });

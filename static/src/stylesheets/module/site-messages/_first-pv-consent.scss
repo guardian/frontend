@@ -194,3 +194,21 @@ $btn-height: ($gs-baseline*3.5);
         }
     }
 }
+
+/** Classes added by CommercialConsentGlobalBanner **/
+
+.site-message--first-pv-consent--tall-banner {
+    @include mq(mobile) {
+        min-height: 45vh;
+
+        .site-message--first-pv-consent__block--head {
+            padding-bottom: $gs-baseline;
+        }
+    }
+    @include mq(phablet) {
+        min-height: 30vh;
+    }
+    @include mq(desktop) {
+        min-height: 20vh;
+    }
+}

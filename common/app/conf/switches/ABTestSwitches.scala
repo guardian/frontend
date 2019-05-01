@@ -78,21 +78,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-commercial-consent-global-no-scroll",
-    "Test the consent banner on non-EEA users with & without the ability to scroll underlying content through the banner on mobile",
+    "ab-commercial-consent-global-banner",
+    "Test whether changes to Consent Banner increases proportion of non-EU users who interact with it",
     owners = Owner.group(Commercial),
     safeState = Off,
-    sellByDate = new LocalDate(2019, 5, 24),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-commercial-consent-global-tall-banner",
-    "Test whether increasing the height of the consent banner on non-EEA users increases proportion of users who interact with it",
-    owners = Owner.group(Commercial),
-    safeState = Off,
-    sellByDate = new LocalDate(2019, 6, 7),
+    sellByDate = new LocalDate(2019, 5, 15),
     exposeClientSide = true
   )
 }
