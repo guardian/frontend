@@ -182,13 +182,15 @@ data-test-id="facia-card"
                             classes = Seq("responsive-img"),
                             widths = item.mediaWidthsByBreakpoint,
                             maybePath = Some(imageElement.url),
-                            maybeSrc = if(containerIndex == 0 && index < 4) Some(imageElement.url) else None
+                            maybeSrc = if(containerIndex == 0 && index < 4) Some(imageElement.url) else None,
+                            shouldLazyLoad = false
                         )
                         @imageElements.tail.map { imageElement =>
                             @image(
                                 classes = Seq("responsive-img "),
                                 widths = item.mediaWidthsByBreakpoint,
-                                maybePath = Some(imageElement.url)
+                                maybePath = Some(imageElement.url),
+                                shouldLazyLoad = false
                             )
                         }
                     }
