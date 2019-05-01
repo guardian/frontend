@@ -219,10 +219,6 @@ $btn-height: ($gs-baseline*3.5);
     padding: 10px 0;
     background-color: transparent;
     .gs-container {
-        box-sizing: border-box;
-        background: rgba(51,51,51,.98);
-        border-radius: 6px;
-        color: #fff;
         @include mq(mobile) {
             width: 95%;
         }
@@ -232,6 +228,10 @@ $btn-height: ($gs-baseline*3.5);
         @include mq(desktop) {
             width: 620px;
         }
+        box-sizing: border-box;
+        background: rgba(51,51,51,.98);
+        border-radius: 6px;
+        color: #fff;
         margin: 0 auto 10px;
         padding: 6px 0px 24px;
     }
