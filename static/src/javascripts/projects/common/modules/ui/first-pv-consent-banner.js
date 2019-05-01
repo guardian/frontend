@@ -147,9 +147,7 @@ const increaseBannerHeight = (msg: Message): void => {
 const animateBanner = (msg: Message): void => {
     const banner = msg.$siteMessageContainer[0];
 
-    banner.classList.add(
-        'site-message--first-pv-consent--animation-banner'
-    );
+    banner.classList.add('site-message--first-pv-consent--animation-banner');
 
     setTimeout(() => {
         banner.classList.add(
