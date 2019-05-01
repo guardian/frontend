@@ -82,7 +82,7 @@ trait ABTestSwitches {
     "Test whether changes to Consent Banner increases proportion of non-EU users who interact with it",
     owners = Owner.group(Commercial),
     safeState = Off,
-    sellByDate = new LocalDate(2019, 5, 15),
+    sellByDate = new LocalDate(2019, 5, 31),
     exposeClientSide = true
   )
 }
