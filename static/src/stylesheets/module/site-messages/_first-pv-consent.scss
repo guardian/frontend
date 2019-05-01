@@ -217,7 +217,7 @@ $btn-height: ($gs-baseline*3.5);
 }
 
 .site-message--first-pv-consent--floating-banner {
-    padding: 10px 0;
+    padding: $gs-baseline 0;
     background-color: transparent;
     .gs-container {
         @include mq(mobile) {
@@ -226,32 +226,32 @@ $btn-height: ($gs-baseline*3.5);
         @include mq(phablet) {
             width: 620px;
         }
-        //background: rgba(51, 51, 51, .98);
         background-color: rgba($brightness-20, .98);
-        border-radius: 6px;
-        margin: 0 auto 10px;
-        padding: 6px 0px 24px;
+        border-radius: $gs-baseline * .5;
+        margin: 0 auto $gs-gutter * .5;
+        padding-top: $gs-baseline * .5;
+        padding-bottom: $gs-baseline * 2;
     }
     .site-message__roundel {
         display: none;
     }
     .site-message__copy {
         padding-left: 0;
-        margin: 0 20px;
+        margin: 0 $gs-gutter;
     }
     .site-message--first-pv-consent__link {
         margin-top: 1rem;
         margin-left: 0;
     }
     .site-message--first-pv-consent__button {
-        margin-right: 10px;
+        margin-right: $gs-gutter * .5;
     }
 
 .site-message--first-pv-consent--animation-banner {
-    transform: translateY(100%);
+    transform: translateY(100%) translateZ(0);
 }
 
 .site-message--first-pv-consent--animation-banner--animate {
-    transform: translateY(0%);
+    transform: translateY(0%) translateZ(0); // To force GPU
     transition: transform .85s ease-in-out;
 }
