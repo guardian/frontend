@@ -250,4 +250,11 @@ $btn-height: ($gs-baseline*3.5);
         margin-right: 10px;
     }
 
+.site-message--first-pv-consent--animation-banner {
+    transform: translateY(100%);
+}
+
+.site-message--first-pv-consent--animation-banner--animate {
+    transform: translateY(0%);
+    transition: transform .75s ease-in-out;
 }

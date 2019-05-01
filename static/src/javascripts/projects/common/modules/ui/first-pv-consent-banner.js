@@ -145,9 +145,17 @@ const increaseBannerHeight = (msg: Message): void => {
 };
 
 const animateBanner = (msg: Message): void => {
-    msg.$siteMessageContainer[0].classList.add(
-        'site-message--first-pv-consent--animated-banner'
+    const banner = msg.$siteMessageContainer[0];
+
+    banner.classList.add(
+        'site-message--first-pv-consent--animation-banner'
     );
+
+    setTimeout(() => {
+        banner.classList.add(
+            'site-message--first-pv-consent--animation-banner--animate'
+        );
+    }, 750);
 };
 
 const createFloatingBanner = (msg: Message): void => {
