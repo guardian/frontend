@@ -83,6 +83,7 @@ class DevParametersHttpRequestHandler(
       context.environment.mode != Prod &&
       !request.isJson &&
       !request.isGuui &&
+      !request.isLazyLoad &&
       !request.uri.startsWith("/oauth2callback") &&
       !request.uri.startsWith("/px.gif")  && // diagnostics box
       !request.uri.startsWith("/tech-feedback") &&
