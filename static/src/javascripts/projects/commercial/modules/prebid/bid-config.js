@@ -374,10 +374,9 @@ const ozoneClientSideBidder: PrebidBidder = {
         Object.assign(
             {},
             (() => ({
-                // TODO: update the test values below once testing over
-                publisherId: 'OZONENUK0001', // test ID
-                siteId: '4204204201', // test ID
-                placementId: '0420420421', // test ID
+                publisherId: 'OZONEGMG0001',
+                siteId: '4204204209',
+                placementId: '0420420500',
                 customData: PAGE_TARGETING,
                 ozoneData: {}, // TODO: confirm if we need to send any
             }))(),
