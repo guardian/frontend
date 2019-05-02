@@ -197,7 +197,7 @@ $btn-height: ($gs-baseline*3.5);
 
 /** Classes added by CommercialConsentGlobalBanner **/
 
-.site-message--first-pv-consent--tall-banner {
+.site-message--first-pv-consent--tallVariant {
     @include mq(mobile) {
         min-height: 45vh;
     }
@@ -216,7 +216,7 @@ $btn-height: ($gs-baseline*3.5);
     }
 }
 
-.site-message--first-pv-consent--floating-banner {
+.site-message--first-pv-consent--floatingVariant {
     padding: $gs-baseline 0;
     background-color: transparent;
     .gs-container {
@@ -247,12 +247,12 @@ $btn-height: ($gs-baseline*3.5);
         margin-right: $gs-gutter * .5;
     }
 
-.site-message--first-pv-consent--animation-banner {
+.site-message--first-pv-consent--animationVariant {
     transform: translateY(100%) translateZ(0); // translateZ to force GPU
     will-change: transform;
 }
 
-.site-message--first-pv-consent--animation-banner--animate {
+.site-message--first-pv-consent--animationVariant--animate {
     transform: translateY(0%) translateZ(0);
     transition: transform .85s ease-in-out;
 }

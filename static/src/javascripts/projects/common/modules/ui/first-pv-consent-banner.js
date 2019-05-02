@@ -62,7 +62,7 @@ const bindableClassNames: BindableClassNames = {
 };
 
 const makeHtml = (): string => `
-    <div class="site-message--first-pv-consent__block site-message--first-pv-consent__block--head">${
+    <div class="site-message--first-pv-consent__block site-message--first-pv-consent__block--head ">${
         template.heading
     }</div>
     <div class="site-message--first-pv-consent__block site-message--first-pv-consent__block--intro">${template.consentText
@@ -110,7 +110,7 @@ const isInCommercialConsentGlobalBannerTest = (): boolean =>
     isInVariantSynchronous(commercialConsentGlobalBanner, 'regularVariant') ||
     isInVariantSynchronous(commercialConsentGlobalBanner, 'noScrollVariant') ||
     isInVariantSynchronous(commercialConsentGlobalBanner, 'tallVariant') ||
-    isInVariantSynchronous(commercialConsentGlobalBanner, 'animatedVariant') ||
+    isInVariantSynchronous(commercialConsentGlobalBanner, 'animationVariant') ||
     isInVariantSynchronous(commercialConsentGlobalBanner, 'floatingVariant');
 
 const canShow = (): Promise<boolean> =>
@@ -139,79 +139,89 @@ const preventScroll = (msg: Message): void => {
     });
 };
 
-const increaseBannerHeight = (msg: Message): void => {
-    fastdom.write(() => {
-        msg.$siteMessageContainer[0].classList.add(
-            'site-message--first-pv-consent--tall-banner'
-        );
-    });
-};
-
 const animateBanner = (msg: Message): void => {
-    const banner = msg.$siteMessageContainer[0];
-
-    fastdom.write(() => {
-        banner.classList.add(
-            'site-message--first-pv-consent--animation-banner'
-        );
-
-        setTimeout(() => {
-            fastdom.write(() => {
-                banner.classList.add(
-                    'site-message--first-pv-consent--animation-banner--animate'
-                );
-            });
-        }, 750);
-    });
-};
-
-const createFloatingBanner = (msg: Message): void => {
-    fastdom.write(() => {
-        msg.$siteMessageContainer[0].classList.add(
-            'site-message--first-pv-consent--floating-banner'
-        );
-    });
+    setTimeout(() => {
+        fastdom.write(() => {
+            msg.$siteMessageContainer[0].classList.add(
+                'site-message--first-pv-consent--animationVariant--animate'
+            );
+        });
+    }, 750);
 };
 
 const show = (): Promise<boolean> => {
     track();
 
-    const msg = new Message(messageCode, {
-        important: true,
-        permanent: true,
-        customJs: () => {
-            bindClickHandlers(msg);
-            if (
-                isInVariantSynchronous(
-                    commercialConsentGlobalBanner,
-                    'noScrollVariant'
-                )
-            ) {
-                preventScroll(msg);
-            } else if (
-                isInVariantSynchronous(
-                    commercialConsentGlobalBanner,
-                    'tallVariant'
-                )
-            ) {
-                increaseBannerHeight(msg);
-            } else if (
-                isInVariantSynchronous(
-                    commercialConsentGlobalBanner,
-                    'animatedVariant'
-                )
-            ) {
-                animateBanner(msg);
-            } else if (
-                isInVariantSynchronous(
-                    commercialConsentGlobalBanner,
-                    'floatingVariant'
-                )
-            ) {
-                createFloatingBanner(msg);
-            }
-        },
-    });
+    const opts = {};
+
+    const getTestVariant = (): ?string => {
+        if (
+            isInVariantSynchronous(
+                commercialConsentGlobalBanner,
+                'noScrollVariant'
+            )
+        ) {
+            return 'noScrollVariant';
+        }
+
+        if (
+            isInVariantSynchronous(commercialConsentGlobalBanner, 'tallVariant')
+        ) {
+            return 'tallVariant';
+        }
+
+        if (
+            isInVariantSynchronous(
+                commercialConsentGlobalBanner,
+                'animationVariant'
+            )
+        ) {
+            return 'animationVariant';
+        }
+
+        if (
+            isInVariantSynchronous(
+                commercialConsentGlobalBanner,
+                'floatingVariant'
+            )
+        ) {
+            return 'floatingVariant';
+        }
+    };
+
+    const testVariant = getTestVariant();
+
+    const getTestModifierClass = (): ?string => {
+        if (testVariant) {
+            return `first-pv-consent--${testVariant}`;
+        }
+    };
+
+    const modifierClass = getTestModifierClass();
+
+    if (modifierClass) {
+        opts.cssModifierClass = modifierClass;
+    }
+
+    const msg = new Message(
+        messageCode,
+        Object.assign(
+            {},
+            {
+                important: true,
+                permanent: true,
+                customJs: () => {
+                    bindClickHandlers(msg);
+                    if (testVariant === 'noScrollVariant') {
+                        preventScroll(msg);
+                    } else if (testVariant === 'animationVariant') {
+                        animateBanner(msg);
+                    }
+                },
+            },
+            opts
+        )
+    );
 
     return Promise.resolve(msg.show(makeHtml()));
 };

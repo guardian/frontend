@@ -82,7 +82,7 @@ const isInCommercialConsentGlobalBannerTest = (): boolean =>
     isInVariantSynchronous(commercialConsentGlobalBanner, 'regularVariant') ||
     isInVariantSynchronous(commercialConsentGlobalBanner, 'noScrollVariant') ||
     isInVariantSynchronous(commercialConsentGlobalBanner, 'tallVariant') ||
-    isInVariantSynchronous(commercialConsentGlobalBanner, 'animatedVariant') ||
+    isInVariantSynchronous(commercialConsentGlobalBanner, 'animationVariant') ||
     isInVariantSynchronous(commercialConsentGlobalBanner, 'floatingVariant');
 
 const isInEU = (): boolean =>

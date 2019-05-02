@@ -35,7 +35,7 @@ export const commercialConsentGlobalBanner: ABTest = {
             test: (): void => {},
         },
         {
-            id: 'animatedVariant',
+            id: 'animationVariant',
             test: (): void => {},
         },
         {
