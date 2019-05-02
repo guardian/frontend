@@ -14,7 +14,7 @@ export const commercialConsentGlobalBanner: ABTest = {
     audienceCriteria: 'all users',
     dataLinkNames: '',
     idealOutcome:
-        'More non-EEA users interact with the consent banner when we alter ir',
+        'Fewer non-EEA users ignore the altered banner, which reduces the number of pageviews with unset conset',
     canRun: () =>
         (getCookie('GU_geo_continent') || 'OTHER').toUpperCase() !== 'EU',
     variants: [
