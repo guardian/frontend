@@ -256,8 +256,9 @@ $btn-height: ($gs-baseline*3.5);
 }
 
 .site-message--first-pv-consent--animationVariant {
-    transform: translateY(100%) translateZ(0); // translateZ to force GPU
+    transform: translateY(100%) translateZ(0); // translateZ to enable hardware acceleration
     will-change: transform;
+    backface-visibility: hidden;
 }
 
 .site-message--first-pv-consent--animationVariant--animate {
