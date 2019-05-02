@@ -21,7 +21,7 @@ import scala.concurrent.{ExecutionContext, Future}
 // these
 
 class FakePicker extends RenderingTierPicker {
-  override def getTier(page: PageWithStoryPackage)(implicit request: RequestHeader): RenderType = {
+  override def getTier(page: PageWithStoryPackage, blocks: Blocks)(implicit request: RequestHeader): RenderType = {
     RemoteRender
   }
 }
