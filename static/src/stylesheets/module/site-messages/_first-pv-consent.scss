@@ -254,5 +254,5 @@ $btn-height: ($gs-baseline*3.5);
 
 .site-message--first-pv-consent--animation-banner--animate {
     transform: translateY(0%) translateZ(0);
-    transition: transform .85s ease-in-out .75s;
+    transition: transform .85s ease-in-out;
 }
