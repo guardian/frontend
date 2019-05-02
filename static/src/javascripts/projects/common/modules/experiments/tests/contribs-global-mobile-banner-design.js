@@ -11,10 +11,9 @@
 
  TBD: Re-enable this test to run after the copy test has run
  Steps:
- 1. Re-enable in ab-tests.js
- 2. Enable on switchboard
- 3. Test
- 4. Remove this copy, merge, test again
+ 1. Enable on switchboard
+ 2. Test
+ 3. Remove this copy, merge, test again
  ********************************************************** */
 
 import { isBreakpoint } from 'lib/detect';

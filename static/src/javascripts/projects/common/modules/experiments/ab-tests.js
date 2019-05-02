@@ -7,7 +7,7 @@ import { commercialConsentGlobalNoScroll } from 'common/modules/experiments/test
 import { askFourEarning } from 'common/modules/experiments/tests/contributions-epic-ask-four-earning';
 import { acquisitionsEpicAlwaysAskIfTagged } from 'common/modules/experiments/tests/acquisitions-epic-always-ask-if-tagged';
 import { adblockTest } from 'common/modules/experiments/tests/adblock-ask';
-// import { contributionsGlobalMobileBannerDesign } from 'common/modules/experiments/tests/contribs_global_mobile_banner_design';
+import { contributionsGlobalMobileBannerDesign } from 'common/modules/experiments/tests/contribs-global-mobile-banner-design';
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialPrebidSafeframe,
@@ -35,10 +35,9 @@ export const engagementBannerTests: $ReadOnlyArray<AcquisitionsABTest> = [
 
      TBD: Re-enable this test to run after the copy test has run
      Steps:
-     1. Re-enable in ab-tests.js
-     2. Enable on switchboard
-     3. Test
-     4. Remove this copy, merge, test again
+     1. Enable on switchboard
+     2. Test
+     3. Remove this copy, merge, test again
      ********************************************************** */
-    // contributionsGlobalMobileBannerDesign,
+    contributionsGlobalMobileBannerDesign,
 ];
