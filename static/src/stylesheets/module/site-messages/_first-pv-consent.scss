@@ -219,33 +219,41 @@ $btn-height: ($gs-baseline*3.5);
 .site-message--first-pv-consent--floatingVariant {
     padding: $gs-baseline 0;
     background-color: transparent;
+
     .gs-container {
         @include mq(mobile) {
             width: 95%;
         }
+
         @include mq(phablet) {
             width: 620px;
         }
+
         background-color: rgba($brightness-20, .98);
         border-radius: $gs-baseline * .5;
         margin: 0 auto $gs-gutter * .5;
         padding-top: $gs-baseline * .5;
         padding-bottom: $gs-baseline * 2;
     }
+
     .site-message__roundel {
         display: none;
     }
+
     .site-message__copy {
         padding-left: 0;
         margin: 0 $gs-gutter;
     }
+
     .site-message--first-pv-consent__link {
         margin-top: $gs-baseline * 1.5;
         margin-left: 0;
     }
+
     .site-message--first-pv-consent__button {
         margin-right: $gs-gutter * .5;
     }
+}
 
 .site-message--first-pv-consent--animationVariant {
     transform: translateY(100%) translateZ(0); // translateZ to force GPU
