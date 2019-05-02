@@ -240,7 +240,7 @@ $btn-height: ($gs-baseline*3.5);
         margin: 0 $gs-gutter;
     }
     .site-message--first-pv-consent__link {
-        margin-top: 1rem;
+        margin-top: $gs-baseline * 1.5;
         margin-left: 0;
     }
     .site-message--first-pv-consent__button {
