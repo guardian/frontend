@@ -1,5 +1,22 @@
 // @flow
 
+/** *********************************************************
+ 2 May 2019 - JTL - This test is disabled as of 2 May 2019
+ This test went out on mobile devices the same day as a
+ global copy test went out across all devices. The copy
+ test runs before tests in the code (per `ab.js`) which is
+ desired behavior. A user can only be assigned to one banner
+ test at a time (also desired), so we decided to give the
+ copy test time precedence over this test.
+
+ TBD: Re-enable this test to run after the copy test has run
+ Steps:
+ 1. Re-enable in ab-tests.js
+ 2. Enable on switchboard
+ 3. Test
+ 4. Remove this copy, merge, test again
+ ********************************************************** */
+
 import { isBreakpoint } from 'lib/detect';
 import { acquisitionsBannerControlTemplate } from 'common/modules/commercial/templates/acquisitions-banner-control';
 import { acquisitionsBannerMobileDesignTestTemplate } from 'common/modules/commercial/templates/acquisitions-banner-mobile-design-test';
