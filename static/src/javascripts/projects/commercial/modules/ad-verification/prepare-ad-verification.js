@@ -1,7 +1,7 @@
 // @flow strict
 
 import { loadScript } from 'lib/load-script';
-import { commercialAdVerificationQA } from 'common/modules/experiments/tests/commercial-ad-verification-qa.js';
+import { commercialAdVerification } from 'common/modules/experiments/tests/commercial-ad-verification.js';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 
 const errorHandler = (error: Error) => {
@@ -15,7 +15,7 @@ export const init = (start: () => void): Promise<void> => {
 
     start();
 
-    if (isInVariantSynchronous(commercialAdVerificationQA, 'variant')) {
+    if (isInVariantSynchronous(commercialAdVerification, 'variant')) {
         return loadScript(
             `//${host}/7oDgiTsq88US4rrBG0_Nxpafkrg/gpt_and_prebid/config.js`,
             { async: true }
