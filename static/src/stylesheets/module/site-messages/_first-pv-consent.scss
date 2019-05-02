@@ -248,10 +248,11 @@ $btn-height: ($gs-baseline*3.5);
     }
 
 .site-message--first-pv-consent--animation-banner {
-    transform: translateY(100%) translateZ(0);
+    transform: translateY(100%) translateZ(0); // translateZ to force GPU
+    will-change: transform;
 }
 
 .site-message--first-pv-consent--animation-banner--animate {
-    transform: translateY(0%) translateZ(0); // To force GPU
-    transition: transform .85s ease-in-out;
+    transform: translateY(0%) translateZ(0);
+    transition: transform .85s ease-in-out .75s;
 }

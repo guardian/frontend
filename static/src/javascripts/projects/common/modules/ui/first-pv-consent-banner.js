@@ -15,6 +15,7 @@ import type { AdConsent } from 'common/modules/commercial/ad-prefs.lib';
 import type { Banner } from 'common/modules/ui/bannerPicker';
 import { commercialConsentGlobalBanner } from 'common/modules/experiments/tests/commercial-consent-global-banner';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
+import fastdom from 'fastdom';
 
 type Template = {
     heading: string,
@@ -139,27 +140,37 @@ const preventScroll = (msg: Message): void => {
 };
 
 const increaseBannerHeight = (msg: Message): void => {
-    msg.$siteMessageContainer[0].classList.add(
-        'site-message--first-pv-consent--tall-banner'
-    );
+    fastdom.write(() => {
+        msg.$siteMessageContainer[0].classList.add(
+            'site-message--first-pv-consent--tall-banner'
+        );
+    });
 };
 
 const animateBanner = (msg: Message): void => {
     const banner = msg.$siteMessageContainer[0];
 
-    banner.classList.add('site-message--first-pv-consent--animation-banner');
-
-    setTimeout(() => {
+    fastdom.write(() => {
         banner.classList.add(
-            'site-message--first-pv-consent--animation-banner--animate'
+            'site-message--first-pv-consent--animation-banner'
         );
-    }, 750);
+
+        setTimeout(() => {
+            fastdom.write(() => {
+                banner.classList.add(
+                    'site-message--first-pv-consent--animation-banner--animate'
+                );
+            });
+        }, 750);
+    });
 };
 
 const createFloatingBanner = (msg: Message): void => {
-    msg.$siteMessageContainer[0].classList.add(
-        'site-message--first-pv-consent--floating-banner'
-    );
+    fastdom.write(() => {
+        msg.$siteMessageContainer[0].classList.add(
+            'site-message--first-pv-consent--floating-banner'
+        );
+    });
 };
 
 const show = (): Promise<boolean> => {
