@@ -1,9 +1,11 @@
 package model.meta
 
-import conf.Static
+import conf.Configuration
+import model.Article
 import play.api.libs.json._
 import play.api.libs.json.Reads._
 import play.api.libs.functional.syntax._
+import views.support.{FourByThree, ImgSrc, Item1200, OneByOne}
 
 sealed trait LinkedData {
   val `@type`: String
@@ -18,6 +20,7 @@ object LinkedData {
       case wp: WebPage => Json.toJsObject(wp)(WebPage.formats)
       case il: ItemList => Json.toJsObject(il)(ItemList.formats)
       case na: NewsArticle => Json.toJsObject(na)(NewsArticle.formats)
+      case re: Review => Json.toJsObject(re)(Review.formats)
     }
 
     override def reads(json: JsValue): JsResult[LinkedData] = json match {
@@ -26,6 +29,61 @@ object LinkedData {
   }
 
   def toJson(list: LinkedData): String = Json.stringify(Json.toJson(list))
+
+  // Use this to generate structured data for your content
+  def apply(article: Article, baseURL: String, fallbackLogo: String): List[LinkedData] = {
+    val authors = article.tags.contributors.map(contributor => {
+      Person(
+        name = contributor.name,
+        sameAs = contributor.metadata.webUrl,
+      )
+    })
+
+    article match {
+      case filmReview if article.content.imdb.isDefined && article.tags.isReview => {
+        article.content.imdb.toList.map(ref =>
+          Review(
+            author = authors,
+            itemReviewed = SameAs(sameAs = "http://www.imdb.com/title/" + ref),
+            reviewRating = article.content.starRating.map(rating =>
+              Rating(ratingValue = rating)
+            )
+          )
+        )
+      }
+      case newsArticle => {
+        val mainImageURL = {
+          val main = for {
+            elem <- article.trail.trailPicture
+            master <- elem.masterImage
+            url <- master.url
+          } yield url
+
+          main.getOrElse(fallbackLogo)
+        }
+
+        List(
+          NewsArticle(
+            `@id` = baseURL + article.metadata.id,
+            images = Seq(
+              ImgSrc(mainImageURL, OneByOne),
+              ImgSrc(mainImageURL, FourByThree),
+              ImgSrc(mainImageURL, Item1200),
+            ),
+            author = authors,
+            datePublished = article.trail.webPublicationDate.toString(),
+            dateModified = article.fields.lastModified.toString(),
+            headline = article.trail.headline,
+            mainEntityOfPage = article.metadata.webUrl,
+          ),
+          WebPage(
+            `@id` = article.metadata.webUrl,
+            potentialAction = PotentialAction(target = "android-app://com.guardian/" + article.metadata.webUrl.replace("://", "/"))
+          )
+        )
+      }
+    }
+  }
 }
 
 case class Logo(
@@ -164,4 +222,37 @@ object NewsArticle {
   )
 
   implicit val formats: OFormat[NewsArticle] = Json.format[NewsArticle]
+}
+
+case class Rating(
+  `@type`: String = "Rating",
+  `@context`: String = "http://schema.org",
+  ratingValue: Int,
+  bestRating: Int = 5,
+  worstRating: Int = 1,
+)
+
+object Rating {
+  implicit val formats: OFormat[Rating] = Json.format[Rating]
+}
+
+case class SameAs(
+  sameAs: String,
+)
+
+object SameAs {
+  implicit val formats: OFormat[SameAs] = Json.format[SameAs]
+}
+
+case class Review(
+  `@type`: String = "Review",
+ `@context`: String = "http://schema.org",
+  publisher: Guardian = Guardian(),
+  author: List[Person],
+  itemReviewed: SameAs,
+  reviewRating: Option[Rating],
+) extends LinkedData
+
+object Review {
+  implicit val formats: OFormat[Review] = Json.format[Review]
 }
