@@ -13,9 +13,12 @@ object ContentFooterContainersLayout {
            (commentsPlaceholder: => Html)
            (mostPopularPlaceholder: => Html)
            (highRelevanceCommercialComponent: => Html)
-           (standardCommercialComponent: => Html): Html = {
+           (standardCommercialComponent: => Html)
+           (discountCodeWidget: => Html): Html = {
 
     def optional(p: => Boolean, htmlBlock: => Html): Option[Html] = if (p) Some(htmlBlock) else None
+    println(content.metadata.sectionId)
+
 
     val htmlBlocks = if (isPaidContent) {
 
@@ -33,7 +36,8 @@ object ContentFooterContainersLayout {
         Some(onwardPlaceholder),
         optional(content.trail.isCommentable, commentsPlaceholder),
         Some(mostPopularPlaceholder),
-        optional(!content.shouldHideAdverts, standardCommercialComponent)
+        optional(!content.shouldHideAdverts, standardCommercialComponent),
+        optional(content.metadata.sectionId == "lifeandstyle" && !content.shouldHideAdverts, discountCodeWidget),
       ).flatten
 
     }
