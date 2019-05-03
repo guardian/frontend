@@ -14,6 +14,14 @@
     if (page.article.tags.isReview) "reviewBody" else "articleBody"
 }
 
+@author(name: String, sameAs: String) = {
+    <div itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="sameAs" content="@sameAs">
+        <meta itemprop="name" content="@name">
+    </div>
+}
+
+
 @defining(model.article) { article =>
   @defining(isPaidContent(model)) { isPaidContent =>
 
@@ -49,6 +57,10 @@
             @if(isPaidContent) {
                 @fragments.guBand()
                 @fragments.articleHeaderPaidGarnett(article, model, amp = amp)
+            }
+
+            @if(article.tags.isReview) {
+                @article.tags.contributors.map(contributor => author(contributor.name, contributor.metadata.webUrl))
             }
 
             <div class="content__main tonal__main tonal__main--@toneClass(article)">

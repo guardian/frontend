@@ -1,11 +1,13 @@
 package services.dotcomponents
 
+import com.gu.contentapi.client.model.v1.{ElementType, Blocks => APIBlocks}
 import common.Logging
 import controllers.ArticlePage
 import implicits.Requests._
 import model.PageWithStoryPackage
-import model.liveblog._
+import com.gu.contentapi.client.model.v1.ElementType.{Map => _, _} // prevent overriding normal Map type
 import play.api.mvc.RequestHeader
+
 
 object AMPPageChecks extends Logging {
 
@@ -19,24 +21,29 @@ object AMPPageChecks extends Logging {
     !page.article.tags.isPaidContent
   }
 
-  def hasOnlySupportedElements(page: PageWithStoryPackage): Boolean = {
+  def hasOnlySupportedElements(blocks: APIBlocks): Boolean = {
     // See: https://github.com/guardian/dotcom-rendering/blob/master/packages/frontend/amp/components/lib/Elements.tsx
-    def supported(block: BlockElement): Boolean = block match {
-      case _: TextBlockElement => true
-      case _: ImageBlockElement => true
-      case _: InstagramBlockElement => true
-      case _: TweetBlockElement => true
-      case _: RichLinkBlockElement => true
-      case _: CommentBlockElement => true
-      case _: PullquoteBlockElement => true
-      case _ => false
+    // And also PageElement.scala here.
+    // It is necessary to look at both to check that we handle the relevant element type here and also handle the
+    // resulting PageElement model in DCR.
+    def supported(element: ElementType): Boolean = element match {
+      case Text => true
+      case Image => true
+      case Instagram => true
+      case Tweet => true
+      case RichLink => true
+      case Comment => true
+      case Pullquote => true
+      case Video => true
+      case Contentatom => true
+      case Audio => true
+      case _: ElementType => false
     }
 
-    page.article.blocks match {
-      case Some(blocks) =>
-        blocks.body.exists(bodyBlock => bodyBlock.elements.forall(supported))
-      case None => true
-    }
+    blocks.body
+      .getOrElse(Nil)
+      .flatMap(_.elements)
+      .forall(element => supported(element.`type`))
   }
 }
 
@@ -48,17 +55,17 @@ object AMPPicker {
     logger.withRequestHeaders(request).results(msg, results, page)
   }
 
-  private[this] def ampFeatureWhitelist(page: PageWithStoryPackage, request: RequestHeader): Map[String, Boolean] = {
+  private[this] def ampFeatureWhitelist(page: PageWithStoryPackage, request: RequestHeader, blocks: APIBlocks): Map[String, Boolean] = {
     Map(
       ("isBasicArticle", AMPPageChecks.isBasicArticle(page)),
-      ("hasOnlySupportedElements", AMPPageChecks.hasOnlySupportedElements(page)),
+      ("hasOnlySupportedElements", AMPPageChecks.hasOnlySupportedElements(blocks)),
       ("isNotPaidContent", AMPPageChecks.isNotPaidContent(page)),
     )
   }
 
-  def getTier(page: PageWithStoryPackage)(implicit request: RequestHeader): RenderType = {
+  def getTier(page: PageWithStoryPackage, blocks: APIBlocks)(implicit request: RequestHeader): RenderType = {
 
-    val features = ampFeatureWhitelist(page, request)
+    val features = ampFeatureWhitelist(page, request, blocks)
     val isSupported = features.forall({ case (test, isMet) => isMet})
     val isEnabled = conf.switches.Switches.DotcomRenderingAMP.isSwitchedOn
 

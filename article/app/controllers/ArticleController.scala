@@ -39,7 +39,7 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
   def renderArticle(path: String): Action[AnyContent] = {
     Action.async { implicit request =>
       mapModel(path, ArticleBlocks)( (article, blocks) => {
-        renderingTierPicker.getTier(article) match {
+        renderingTierPicker.getTier(article, blocks) match {
           case RemoteRender => remoteRenderer.getArticle(ws, path, article, blocks)
           case RemoteRenderAMP => remoteRenderer.getAMPArticle(ws, path, article, blocks)
           case LocalRender => render(path, article, blocks)

@@ -90,10 +90,7 @@
 
 
     function shouldHideSupportMessaging() {
-        return getCookieValue('gu_paying_member') === 'true' ||
-        getCookieValue('gu_digital_subscriber') === 'true' ||
-        getCookieValue('gu_recurring_contributor') === 'true' ||
-        getCookieValue('gu_hide_support_messaging') === 'true';
+        return getCookieValue('gu_hide_support_messaging') === 'true';
     }
 
     function forcePercentagePadding() {

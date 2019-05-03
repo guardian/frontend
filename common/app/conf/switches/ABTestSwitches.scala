@@ -28,19 +28,9 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-february-moment-banner-copy-more-people",
-    "switch on to test the some moment copy on the fiv engagement banner",
+    "ab-contributions-global-mobile-banner-design",
+    "testing mobile-only design changes",
     owners = Seq(Owner.withGithub("jlieb10")),
-    safeState = Off,
-    sellByDate = new LocalDate(2019, 9, 30),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-february-moment-banner-thank-you",
-    "switch on to enable the moment thank you engagement banner worldwide",
-    owners = Seq(Owner.withGithub("johnduffell")),
     safeState = Off,
     sellByDate = new LocalDate(2019, 9, 30),
     exposeClientSide = true
@@ -71,16 +61,6 @@ trait ABTestSwitches {
     "ab-commercial-ad-verification",
     "Test the impact of verifiyng ads",
     owners = Seq(Owner.withGithub("jeteve")),
-    safeState = Off,
-    sellByDate = new LocalDate(2019, 9, 30),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-commercial-ad-verification-q-a",
-    "Test the impact of verifiyng ads for QA before rolling it out to wider audiance",
-    owners = Seq(Owner.withGithub("guardiancosta")),
     safeState = Off,
     sellByDate = new LocalDate(2019, 9, 30),
     exposeClientSide = true

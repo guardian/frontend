@@ -4,6 +4,7 @@ import com.gu.contentapi.client.model.v1.{Asset => ApiAsset, Content => ApiConte
 import common.Edition
 import common.editions.Uk
 import conf.Configuration
+import conf.switches.Switches
 import model._
 import org.jsoup.Jsoup
 import org.scalatest.{FlatSpec, Matchers}

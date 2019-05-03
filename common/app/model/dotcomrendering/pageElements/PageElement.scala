@@ -25,8 +25,11 @@ case class PullquoteBlockElement(html: Option[String], role: Role) extends PageE
 case class ImageBlockElement(media: ImageMedia, data: Map[String, String], displayCredit: Option[Boolean], role: Role, imageSources: Seq[ImageSource]) extends PageElement
 case class ImageSource(weighting: String, srcSet: Seq[SrcSet])
 case class AudioBlockElement(assets: Seq[AudioAsset]) extends PageElement
-case class GuVideoBlockElement(assets: Seq[VideoAsset], imageMedia: ImageMedia, data: Map[String, String], role: Role) extends PageElement
-case class VideoBlockElement(data: Map[String, String], role: Role) extends PageElement
+case class GuVideoBlockElement(assets: Seq[VideoAsset], imageMedia: ImageMedia, caption:String, url:String, originalUrl:String, role: Role) extends PageElement
+case class VideoBlockElement(caption:String, url:String, originalUrl:String, height:Int, width:Int, role: Role) extends PageElement
+case class VideoYoutubeBlockElement(caption:String, url:String, originalUrl:String, height:Int, width:Int, role: Role) extends PageElement
+case class VideoVimeoBlockElement(caption:String, url:String, originalUrl:String, height:Int, width:Int, role: Role) extends PageElement
+case class VideoFacebookBlockElement(caption:String, url:String, originalUrl:String, height:Int, width:Int, role: Role) extends PageElement
 case class EmbedBlockElement(html: String, safe: Option[Boolean], alt: Option[String], isMandatory: Boolean) extends PageElement
 case class SoundcloudBlockElement(html: String, id: String, isTrack: Boolean, isMandatory: Boolean) extends PageElement
 case class ContentAtomBlockElement(atomId: String) extends PageElement
@@ -41,6 +44,9 @@ case class VineBlockElement(html: Option[String]) extends PageElement
 case class MapBlockElement(html: Option[String],  role: Role, isMandatory: Option[Boolean]) extends PageElement
 case class UnknownBlockElement(html: Option[String]) extends PageElement
 case class DisclaimerBlockElement(html: String) extends PageElement
+
+// Intended for unstructured html that we can't model, typically rejected by consumers
+case class HTMLFallbackBlockElement(html: String) extends PageElement
 
 // atoms
 
@@ -172,11 +178,13 @@ object PageElement {
             ImageMedia(element.assets.filter(_.mimeType.exists(_.startsWith("image"))).zipWithIndex.map {
               case (a, i) => ImageAsset.make(a, i)
             }),
-            videoDataFor(element),
+            element.videoTypeData.flatMap(_.caption).getOrElse(""),
+            element.videoTypeData.flatMap(_.url).getOrElse(""),
+            element.videoTypeData.flatMap(_.originalUrl).getOrElse(""),
             Role(element.videoTypeData.flatMap(_.role)))
           )
         }
-        else List(VideoBlockElement(videoDataFor(element), Role(element.videoTypeData.flatMap(_.role))))
+        else videoDataFor(element).toList
 
       case Membership => element.membershipTypeData.map(m => MembershipBlockElement(
         m.originalUrl,
@@ -209,14 +217,22 @@ object PageElement {
       case Contentatom =>
         (extractAtom match {
           case Some(mediaAtom: MediaAtom) => {
-            mediaAtom.activeAssets.headOption.map(asset => {
-              YoutubeBlockElement(
-                mediaAtom.id, //CAPI ID
-                asset.id, // Youtube ID
-                mediaAtom.channelId, //Channel ID
-                mediaAtom.title //Caption
-              )
-            })
+
+            mediaAtom match {
+              case youtube if mediaAtom.assets.headOption.exists(_.platform == MediaAssetPlatform.Youtube) => {
+                mediaAtom.activeAssets.headOption.map(asset => {
+                  YoutubeBlockElement(
+                    mediaAtom.id, //CAPI ID
+                    asset.id, // Youtube ID
+                    mediaAtom.channelId, //Channel ID
+                    mediaAtom.title //Caption
+                  )
+                })
+              }
+
+              // TODO - handle self-hosted video case.
+              case htmlBlob if mediaAtom.assets.nonEmpty => Some(HTMLFallbackBlockElement(mediaAtom.defaultHtml))
+            }
           }
 
           case Some(qa: QandaAtom) => {
@@ -326,12 +342,26 @@ object PageElement {
     } getOrElse Map()
   }
 
-  private def videoDataFor(element: ApiBlockElement): Map[String, String] = {
-    element.videoTypeData.map { d => Map(
-      "caption" -> d.caption,
-      "url" -> d.url
-    ) collect { case (k, Some (v) ) => (k, v) }
-    } getOrElse Map()
+  private def videoDataFor(element: ApiBlockElement): Option[PageElement] = {
+    for {
+      data <- element.videoTypeData
+      source <- data.source
+      caption <- data.caption
+      originalUrl <- data.originalUrl
+      height <- data.height
+      width <- data.width
+
+      url = data.url.getOrElse(originalUrl)
+    } yield {
+      source match {
+        case "YouTube" => VideoYoutubeBlockElement(caption, url, originalUrl, height, width, Role(data.role))
+        case "Vimeo" => VideoVimeoBlockElement(caption, url, originalUrl, height, width, Role(data.role))
+        case "Facebook" => VideoFacebookBlockElement(caption, url, originalUrl, height, width, Role(data.role))
+        case _ => VideoBlockElement(caption, url, originalUrl, height, width, Role(data.role))
+      }
+    }
+
+
   }
 
   implicit val ImageWeightingWrites: Writes[ImageSource] = Json.writes[ImageSource]
@@ -341,6 +371,9 @@ object PageElement {
   implicit val AudioBlockElementWrites: Writes[AudioBlockElement] = Json.writes[AudioBlockElement]
   implicit val GuVideoBlockElementWrites: Writes[GuVideoBlockElement] = Json.writes[GuVideoBlockElement]
   implicit val VideoBlockElementWrites: Writes[VideoBlockElement] = Json.writes[VideoBlockElement]
+  implicit val VideoYouTubeElementWrites: Writes[VideoYoutubeBlockElement] = Json.writes[VideoYoutubeBlockElement]
+  implicit val VideoVimeoElementWrites: Writes[VideoVimeoBlockElement] = Json.writes[VideoVimeoBlockElement]
+  implicit val VideoFacebookBlockElementWrites: Writes[VideoFacebookBlockElement] = Json.writes[VideoFacebookBlockElement]
   implicit val TweetBlockElementWrites: Writes[TweetBlockElement] = Json.writes[TweetBlockElement]
   implicit val EmbedBlockElementWrites: Writes[EmbedBlockElement] = Json.writes[EmbedBlockElement]
   implicit val SoundCloudBlockElementWrites: Writes[SoundcloudBlockElement] = Json.writes[SoundcloudBlockElement]
@@ -360,6 +393,7 @@ object PageElement {
   implicit val FormBlockElementWrites: Writes[FormBlockElement] = Json.writes[FormBlockElement]
   implicit val UnknownBlockElementWrites: Writes[UnknownBlockElement] = Json.writes[UnknownBlockElement]
   implicit val DiscalimerBlockElementWrites: Writes[DisclaimerBlockElement] = Json.writes[DisclaimerBlockElement]
+  implicit val HTMLBlockElementWrites: Writes[HTMLFallbackBlockElement] = Json.writes[HTMLFallbackBlockElement]
 
   // atoms
   implicit val TimelineEventWrites = Json.writes[TimelineEvent]

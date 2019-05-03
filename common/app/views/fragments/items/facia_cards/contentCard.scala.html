@@ -117,7 +117,8 @@ data-test-id="facia-card"
                         @itemImage(
                             fallbackImage.imageMedia,
                             inlineImage = containerIndex == 0 && index < 4,
-                            widthsByBreakpoint = Some(item.mediaWidthsByBreakpoint)
+                            widthsByBreakpoint = Some(item.mediaWidthsByBreakpoint),
+                            shouldLazyLoad = containerIndex > 1,
                         )
                     </div>
                 }
@@ -153,7 +154,8 @@ data-test-id="facia-card"
                     @itemImage(
                         fallbackImage.imageMedia,
                         inlineImage = containerIndex == 0 && index < 4,
-                        widthsByBreakpoint = Some(item.mediaWidthsByBreakpoint)
+                        widthsByBreakpoint = Some(item.mediaWidthsByBreakpoint),
+                        shouldLazyLoad = containerIndex > 1,
                     )
                 </div>
             }
@@ -166,7 +168,8 @@ data-test-id="facia-card"
                     @itemImage(
                         images,
                         inlineImage = containerIndex == 0 && index < 4,
-                        widthsByBreakpoint = Some(item.mediaWidthsByBreakpoint)
+                        widthsByBreakpoint = Some(item.mediaWidthsByBreakpoint),
+                        shouldLazyLoad = containerIndex > 1,
                     )
                 </div>
             }
