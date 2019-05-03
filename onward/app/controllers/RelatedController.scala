@@ -37,8 +37,8 @@ class RelatedController(
 
     related(edition, path, excludeTags) map {
       case related if related.items.isEmpty => Cached(60)(JsonNotFound())
-      case related if isMf2 => renderRelatedMf2(related.items.sortBy(-_.content.trail.webPublicationDate.getMillis), RelatedLabel.toLowerCase())
-      case trails => renderRelated(trails.items.sortBy(-_.content.trail.webPublicationDate.getMillis), containerTitle = RelatedLabel.toLowerCase())
+      case related if isMf2 => renderRelatedMf2(related.items.sortBy(-_.content.trail.webPublicationDate.getMillis), RelatedLabel)
+      case trails => renderRelated(trails.items.sortBy(-_.content.trail.webPublicationDate.getMillis), containerTitle = RelatedLabel)
     }
   }
 
@@ -69,7 +69,7 @@ class RelatedController(
     JsonComponent(
       "items" -> JsArray(Seq(
         Json.obj(
-          "displayName" -> RelatedLabel.toLowerCase(),
+          "displayName" -> RelatedLabel,
           "showContent" -> relatedTrails.nonEmpty,
           "content" -> relatedTrails.map( collection => isCuratedContent(collection.faciaContent))
         )
