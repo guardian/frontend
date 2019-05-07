@@ -66,6 +66,7 @@ object LinkedData {
           NewsArticle(
             `@id` = baseURL + article.metadata.id,
             images = Seq(
+              article.content.openGraphImage,
               ImgSrc(mainImageURL, OneByOne),
               ImgSrc(mainImageURL, FourByThree),
               ImgSrc(mainImageURL, Item1200),
