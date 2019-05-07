@@ -121,8 +121,12 @@ object GoogleStructuredData extends ImageProfile(width = Some(300), height = Som
 // Used for AMP image structured data - see
 // https://developers.google.com/search/docs/data-types/article#article_types
 // and the image advice.
-object OneByOne extends ImageProfile(width = Some(1200), height = Some(1200))
-object FourByThree extends ImageProfile(width = Some(1200), height = Some(900))
+object OneByOne extends ImageProfile(width = Some(1200), height = Some(1200)) {
+  override val fitParam: String = "fit=crop"
+}
+object FourByThree extends ImageProfile(width = Some(1200), height = Some(900)) {
+  override val fitParam: String = "fit=crop"
+}
 
 class ShareImage(overlayUrlParam: String, shouldIncludeOverlay: Boolean) extends ImageProfile(width = Some(1200)) {
   override val heightParam = "height=630"
