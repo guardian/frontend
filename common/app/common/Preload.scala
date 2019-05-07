@@ -9,7 +9,7 @@ object Preload {
 
   def commercialBundleName(implicit request: RequestHeader): String = "graun.commercial.js"
 
-  def isPFFallbackMin: Seq[PreloadAsset] =
+  def isPolyFillIOFallbackMin: Seq[PreloadAsset] =
     if (conf.switches.Switches.PolyfillIOFallbackMin.isSwitchedOn) Seq(JsPreloadAsset("javascripts/vendor/polyfillio.minimum.fallback.js")) else Seq.empty
 
   def articleDefaultPreloads(implicit request: RequestHeader): Seq[PreloadAsset] = Seq(
@@ -21,7 +21,7 @@ object Preload {
     },
     JsPreloadAsset("javascripts/graun.standard.js"),
     JsPreloadAsset(s"javascripts/$commercialBundleName")
-  ) ++ isPFFallbackMin
+  ) ++ isPolyFillIOFallbackMin
 
 
   def faciaDefaultPreloads(implicit request: RequestHeader): Seq[PreloadAsset] = Seq(
@@ -33,7 +33,7 @@ object Preload {
     },
     JsPreloadAsset("javascripts/graun.standard.js"),
     JsPreloadAsset(s"javascripts/$commercialBundleName")
-  ) ++ isPFFallbackMin
+  ) ++ isPolyFillIOFallbackMin
 
   def config(implicit request: RequestHeader): Map[ApplicationIdentity, Seq[PreloadAsset]] = Map(
     ApplicationIdentity("article") -> articleDefaultPreloads,
