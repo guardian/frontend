@@ -34,7 +34,7 @@ case class EmbedBlockElement(html: String, safe: Option[Boolean], alt: Option[St
 case class SoundcloudBlockElement(html: String, id: String, isTrack: Boolean, isMandatory: Boolean) extends PageElement
 case class ContentAtomBlockElement(atomId: String) extends PageElement
 case class YoutubeBlockElement(id: String, assetId: String, channelId: Option[String], mediaTitle: String) extends PageElement
-case class InteractiveBlockElement(html: Option[String], role: Role, isMandatory: Option[Boolean]) extends PageElement
+case class InteractiveBlockElement(html: Option[String], css: Option[String], js: Option[String], role: Role, isMandatory: Option[Boolean]) extends PageElement
 case class CommentBlockElement(body: String, avatarURL: String, profileURL: String, profileName: String, permalink: String, dateTime: String) extends PageElement
 case class TableBlockElement(html: Option[String], role: Role, isMandatory: Option[Boolean]) extends PageElement
 case class WitnessBlockElement(html: Option[String]) extends PageElement
@@ -279,13 +279,23 @@ object PageElement {
             ))
           }
 
+          case Some(interactive: InteractiveAtom) => {
+            Some(InteractiveBlockElement(
+              html = Some(interactive.html),
+              css = Some(interactive.css),
+              js = interactive.mainJS,
+              role = Role(None),
+              isMandatory = None
+            ))
+          }
+
           case Some(atom) =>
             Some(ContentAtomBlockElement(atom.id))
           case _ => None
         }).toList
 
       case Pullquote => element.pullquoteTypeData.map(d => PullquoteBlockElement(d.html, Role(None))).toList
-      case Interactive => element.interactiveTypeData.map(d => InteractiveBlockElement(d.html, Role(d.role), d.isMandatory)).toList
+      case Interactive => element.interactiveTypeData.map(d => InteractiveBlockElement(d.html, None, None, Role(d.role), d.isMandatory)).toList
       case Table => element.tableTypeData.map(d => TableBlockElement(d.html, Role(d.role), d.isMandatory)).toList
       case Witness => element.witnessTypeData.map(d => WitnessBlockElement(d.html)).toList
       case Document => element.documentTypeData.map(d => DocumentBlockElement(d.html, Role(d.role), d.isMandatory)).toList
