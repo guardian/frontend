@@ -6,6 +6,7 @@ import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import { bids } from 'commercial/modules/prebid/bid-config';
 import { slots } from 'commercial/modules/prebid/slot-config';
 import { priceGranularity } from 'commercial/modules/prebid/price-config';
+import { getAdvertById } from 'commercial/modules/dfp/get-advert-by-id';
 import type {
     PrebidBid,
     PrebidMediaTypes,
@@ -80,7 +81,9 @@ type BidderSettings = {
 type PbjsEvent = 'bidWon';
 
 type PbjsEventData = {
-    size: number,
+    width: number,
+    height: number,
+    adUnitCode: string,
 };
 
 type PbjsEventHandler = PbjsEventData => void;
@@ -195,11 +198,15 @@ const initialise = (window: {
         };
     }
 
-    console.log('*** subscribe to bidWon ***');
-
     // Adjust slot size when prebid ad loads
     window.pbjs.onEvent('bidWon', data => {
-        console.log('*** bidWon ***', data);
+        const { width, height, adUnitCode } = data;
+        const size = [width, height]; // eg. [300, 250]
+        const advert: ?Advert = getAdvertById(adUnitCode);
+
+        // advert.size = size;
+
+        console.log('*** bidWon ***', size, adUnitCode, advert);
     });
 };
 
