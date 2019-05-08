@@ -27,7 +27,6 @@ export const onSlotLoad = (event: SlotOnloadEvent) => {
             id: iframe.id,
             host,
         },
-        iframe.contentWindow,
-        host
+        iframe.contentWindow
     );
 };
