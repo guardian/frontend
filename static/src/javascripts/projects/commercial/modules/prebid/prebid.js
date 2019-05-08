@@ -77,6 +77,14 @@ type BidderSettings = {
     xhb: XasisHeaderBidderConfig,
 };
 
+type PbjsEvent = 'bidWon';
+
+type PbjsEventData = {
+    size: number,
+};
+
+type PbjsEventHandler = PbjsEventData => void;
+
 const bidderTimeout: number = 1500;
 
 const consentManagement: ConsentManagement = {
@@ -122,6 +130,7 @@ const initialise = (window: {
         setConfig: PbjsConfig => void,
         bidderSettings: BidderSettings,
         enableAnalytics: ([EnableAnalyticsConfig]) => void,
+        onEvent: (PbjsEvent, PbjsEventHandler) => void,
     },
 }): void => {
     initialised = true;
