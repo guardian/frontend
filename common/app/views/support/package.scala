@@ -117,6 +117,9 @@ object `package` {
 object GUDateTimeFormat {
   def formatDateTimeForDisplay(date: DateTime, request: RequestHeader): String = {
     val edition = Edition(request)
+    formatDateTimeForDisplayGivenEdition(date: DateTime, edition: Edition)
+  }
+  def formatDateTimeForDisplayGivenEdition(date: DateTime, edition: Edition): String = {
     val timezone = edition.timezone
     date.toString(DateTimeFormat.forPattern("E d MMM yyyy HH.mm").withZone(timezone)) + " " + timezone.getShortName(date.getMillis)
   }
