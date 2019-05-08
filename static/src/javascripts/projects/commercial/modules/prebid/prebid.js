@@ -185,6 +185,11 @@ const initialise = (window: {
             ],
         };
     }
+
+    // Adjust slot size when prebid ad loads
+    window.pbjs.onEvent('bidWon', data => {
+        console.log('*** bidWon ***', data);
+    });
 };
 
 // slotFlatMap allows you to dynamically interfere with the PrebidSlot definition
