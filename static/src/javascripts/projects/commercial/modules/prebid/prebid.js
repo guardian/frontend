@@ -186,6 +186,8 @@ const initialise = (window: {
         };
     }
 
+    console.log('*** subscribe to bidWon ***');
+
     // Adjust slot size when prebid ad loads
     window.pbjs.onEvent('bidWon', data => {
         console.log('*** bidWon ***', data);
