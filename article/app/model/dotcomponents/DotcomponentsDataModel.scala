@@ -9,7 +9,7 @@ import conf.Configuration.affiliatelinks
 import conf.switches.Switches
 import conf.{Configuration, Static}
 import controllers.ArticlePage
-import model.{SubMetaLink, SubMetaLinks}
+import model.{LiveBlogPage, PageWithStoryPackage, SubMetaLink, SubMetaLinks}
 import model.content.Atom
 import model.dotcomrendering.pageElements.{DisclaimerBlockElement, PageElement}
 import model.meta._
@@ -198,7 +198,7 @@ object DotcomponentsDataModel {
 
   val VERSION = 2
 
-  def fromArticle(articlePage: ArticlePage, request: RequestHeader, blocks: APIBlocks): DotcomponentsDataModel = {
+  def fromArticle(articlePage: PageWithStoryPackage, request: RequestHeader, blocks: APIBlocks): DotcomponentsDataModel = {
 
     val article = articlePage.article
     val atoms: Iterable[Atom] = article.content.atoms.map(_.all).getOrElse(Seq())
@@ -418,44 +418,6 @@ object DotcomponentsDataModel {
       VERSION
     )
 
-  }
-
-  def fromLiveBlog(): DotcomponentsDataModel = { // PASCAL: This is a template answer that we will need to upgrade
-    val page = DCPage(
-      Content("", Some(""), "", "", Blocks(None, Nil), "", ""),
-      Tags( None, None, None, None, Nil),
-      "",
-      "",
-      None,
-      0L,
-      "",
-      None,
-      "",
-      "",
-      "",
-      None,
-      None,
-      "",
-      "",
-      None,
-      SubMetaLinks(Nil, Nil),
-      "",
-      None,
-      Commercial(Map[String, EditionCommercialProperties](), Nil, None),
-      Meta( false, false, false, false, false, false, Nil)
-    )
-    val site = DCSite( "", "", None, None, Map[String,Boolean](), "", "",
-      NavMenu( "", Nil, Nil, Nil, None, None, None, None),
-      ReaderRevenueLinks(
-        ReaderRevenueLink("", "", ""),
-        ReaderRevenueLink("", "", ""),
-        ReaderRevenueLink("", "", ""),
-        ReaderRevenueLink("", "", ""),
-        ReaderRevenueLink("", "", "")
-      ),
-      ""
-    )
-    DotcomponentsDataModel(page, site, 1)
   }
 
   def toJson(model: DotcomponentsDataModel): JsValue = {
