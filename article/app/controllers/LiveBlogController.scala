@@ -16,6 +16,8 @@ import views.support.RenderOtherStatus
 import implicits.{AmpFormat, EmailFormat, HtmlFormat, JsonFormat}
 import model.dotcomponents.DotcomponentsDataModel
 import play.api.libs.json.Json
+import renderers.RemoteRenderer
+import services.dotcomponents.{LocalRender, RemoteRender, RemoteRenderAMP, RenderingTierPicker}
 
 import scala.concurrent.Future
 
@@ -24,7 +26,9 @@ case class MinutePage(article: Article, related: RelatedContent) extends PageWit
 class LiveBlogController(
   contentApiClient: ContentApiClient,
   val controllerComponents: ControllerComponents,
-  ws: WSClient
+  ws: WSClient,
+  remoteRenderer: renderers.RemoteRenderer = RemoteRenderer(),
+  renderingTierPicker: RenderingTierPicker = RenderingTierPicker()
 )(implicit context: ApplicationContext)
   extends BaseController with
     RendersItemResponse with
@@ -53,7 +57,13 @@ class LiveBlogController(
   def renderArticle(path: String, page: Option[String] = None, format: Option[String] = None): Action[AnyContent] = {
     Action.async { implicit request =>
       def renderWithRange(range: BlockRange): Future[Result] = {
-        mapModel(path, range)((page, blocks) => render(path, page, blocks))
+        mapModel(path, range)((page, blocks) => {
+          renderingTierPicker.getTier(page, blocks) match {
+            case RemoteRender => remoteRenderer.getArticle(ws, path, page, blocks)
+            case RemoteRenderAMP => remoteRenderer.getAMPArticle(ws, path, page, blocks)
+            case LocalRender => render(path, page, blocks)
+          }
+        })
       }
 
       page.map(ParseBlockId.fromPageParam) match {
@@ -73,6 +83,7 @@ class LiveBlogController(
 
     Action.async { implicit request =>
       val range = getRange(lastUpdate, rendered)
+
       mapModel(path, range) {
         case (liveblog: LiveBlogPage, blocks) => getJson(path, liveblog, range, isLivePage, blocks)
         case (minute: MinutePage, blocks) => render(path, minute, blocks)
@@ -100,6 +111,7 @@ class LiveBlogController(
         case (blog: LiveBlogPage, JsonFormat) => common.renderJson( views.html.liveblog.liveBlogBody(blog), blog)
         case (blog: LiveBlogPage, EmailFormat) => common.renderEmail(LiveBlogHtmlPage.html(blog), blog)
         case (blog: LiveBlogPage, HtmlFormat) => common.renderHtml(LiveBlogHtmlPage.html(blog), blog)
+        case (blog: LiveBlogPage, AmpFormat) if request.isGuui => common.renderHtml(views.html.liveBlogAMP(blog), blog)
         case (blog: LiveBlogPage, AmpFormat) => common.renderHtml(views.html.liveBlogAMP(blog), blog)
 
         case _ => NotFound
