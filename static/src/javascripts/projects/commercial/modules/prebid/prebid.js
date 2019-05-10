@@ -204,9 +204,14 @@ const initialise = (window: {
         const size = [width, height]; // eg. [300, 250]
         const advert: ?Advert = getAdvertById(adUnitCode);
 
-        // advert.size = size;
-
-        console.log('*** bidWon ***', size, adUnitCode, advert);
+        if (advert) {
+            advert.size = size;
+            /**
+             * when hasPrebidSize is true we use size
+             * set here when adjusting the slot size.
+            **/
+            advert.hasPrebidSize = true;
+        }
     });
 };
 

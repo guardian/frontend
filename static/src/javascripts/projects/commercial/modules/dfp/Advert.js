@@ -60,6 +60,7 @@ class Advert {
         loadingMethod: ?number,
         lazyWaitComplete: ?number,
     };
+    hasPrebidSize: boolean;
 
     constructor(adSlotNode: HTMLElement) {
         const sizes: AdSizes = getAdBreakpointSizes(adSlotNode);
@@ -87,6 +88,7 @@ class Advert {
         };
         this.shouldRefresh = false;
         this.maxViewPercentage = 0;
+        this.hasPrebidSize = false;
 
         this.whenLoaded = new Promise(resolve => {
             this.whenLoadedResolver = resolve;

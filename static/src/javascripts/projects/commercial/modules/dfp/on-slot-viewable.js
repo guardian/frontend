@@ -13,7 +13,7 @@ import { enableLazyLoad } from 'commercial/modules/dfp/lazy-load';
 
 const setSlotAdRefresh = (event: ImpressionViewableEvent): void => {
     const advert: ?Advert = getAdvertById(event.slot.getSlotElementId());
-    const viewabilityThresholdMs = 30000; // 30 seconds refresh
+    const viewabilityThresholdMs = 3000; // 30 seconds refresh
 
     if (advert && advert.shouldRefresh) {
         const onDocumentVisible = () => {
