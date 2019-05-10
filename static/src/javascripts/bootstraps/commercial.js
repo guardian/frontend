@@ -37,7 +37,6 @@ const commercialModules: Array<Array<any>> = [
     ['cm-closeDisabledSlots', closeDisabledSlots],
     ['cm-prepare-cmp', initCmpService],
     ['cm-track-cmp-consent', trackCmpConsent],
-    ['cm-thirdPartyTags', initThirdPartyTags],
     ['cm-prepare-prebid', preparePrebid, true],
     ['cm-prepare-googletag', prepareGoogletag, true],
     ['cm-checkDispatcher', initCheckDispatcher],
@@ -47,6 +46,7 @@ const commercialModules: Array<Array<any>> = [
 
 if (!commercialFeatures.adFree) {
     commercialModules.push(
+        ['cm-thirdPartyTags', initThirdPartyTags],
         ['cm-prepare-adverification', prepareAdVerification, true],
         ['cm-highMerch', initHighMerch],
         ['cm-articleAsideAdverts', initArticleAsideAdverts, true],

@@ -99,7 +99,10 @@ class CommercialFeatures {
             !newRecipeDesign;
 
         this.thirdPartyTags =
-            externalAdvertising && !isIdentityPage && !isSecureContact;
+            !this.adFree &&
+            externalAdvertising &&
+            !isIdentityPage &&
+            !isSecureContact;
 
         this.outbrain =
             this.dfpAdvertising &&

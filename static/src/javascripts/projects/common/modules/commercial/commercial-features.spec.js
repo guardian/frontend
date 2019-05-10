@@ -241,9 +241,9 @@ describe('Commercial features', () => {
             isAdFreeUser.mockReturnValue(true);
         });
 
-        it('Runs by default', () => {
+        it('Does not run by default', () => {
             const features = new CommercialFeatures();
-            expect(features.thirdPartyTags).toBe(true);
+            expect(features.thirdPartyTags).toBe(false);
         });
 
         it('Does not run on identity pages', () => {
@@ -255,6 +255,16 @@ describe('Commercial features', () => {
         it('Does not run on identity section', () => {
             // This is needed for identity pages in the profile subdomain
             config.set('page.section', 'identity');
+            const features = new CommercialFeatures();
+            expect(features.thirdPartyTags).toBe(false);
+        });
+
+        it('Does not run on secure contact pages', () => {
+            config.set(
+                'page.pageId',
+                'help/ng-interactive/2017/mar/17/contact-the-guardian-securely'
+            );
+
             const features = new CommercialFeatures();
             expect(features.thirdPartyTags).toBe(false);
         });
