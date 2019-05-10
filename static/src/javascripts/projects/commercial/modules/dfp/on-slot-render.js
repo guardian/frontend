@@ -74,12 +74,10 @@ export const onSlotRender = (event: SlotRenderEndedEvent): void => {
         reportEmptyResponse(advert.id, event);
         emitRenderEvents(false);
     } else {
-        const { advertiserId } = event;
-
         /**
          * if advert.hasPrebidSize is false we use size
          * from the GAM event when adjusting the slot size.
-        **/
+         * */
         if (!advert.hasPrebidSize) {
             console.log('*** set ad size ***', event);
             advert.size = event.size;

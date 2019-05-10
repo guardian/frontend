@@ -209,7 +209,7 @@ const initialise = (window: {
             /**
              * when hasPrebidSize is true we use size
              * set here when adjusting the slot size.
-            **/
+             * */
             advert.hasPrebidSize = true;
         }
     });

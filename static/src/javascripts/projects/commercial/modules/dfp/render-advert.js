@@ -202,7 +202,7 @@ export const renderAdvert = (
                      * we must reset hasPrebidSize to teh default
                      * value of false for subsequent ad refreshes
                      * as they may not be prebid ads.
-                    **/
+                     * */
                     advert.hasPrebidSize = false;
 
                     return Promise.resolve(
