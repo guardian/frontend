@@ -142,9 +142,11 @@ const makeHtml = (): string => `
 const isInEU = (): boolean =>
     (getCookie('GU_geo_continent') || 'OTHER').toUpperCase() === 'EU';
 
-const isInAU = (): boolean =>
-    (getFromStorage() || 'OTHER').toUpperCase() === 'AU' ||
-    (getFromStorage() || 'OTHER').toUpperCase() === 'NZ';
+const isInAU = (): boolean => {
+    const countryCode = (getFromStorage() || 'OTHER').toUpperCase();
+
+    return countryCode === 'AU' || countryCode === 'NZ';
+};
 
 const gdprApplies = (): boolean => isInEU() || isInAU();
 
