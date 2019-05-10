@@ -55,6 +55,8 @@ const outstreamSizes = [
 export const onSlotRender = (event: SlotRenderEndedEvent): void => {
     recordFirstAdRendered();
 
+    console.log('onSlotRender --->', event.slot.getSlotElementId());
+
     const advert: ?Advert = getAdvertById(event.slot.getSlotElementId());
     if (!advert) {
         return;

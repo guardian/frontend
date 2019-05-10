@@ -207,6 +207,8 @@ const initialise = (window: {
             const size = [width, height]; // eg. [300, 250]
             const advert: ?Advert = getAdvertById(adUnitCode);
 
+            console.log('bidWon --->', adUnitCode);
+
             if (advert) {
                 advert.size = size;
                 /**
