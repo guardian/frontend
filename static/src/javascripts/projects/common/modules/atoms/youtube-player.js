@@ -7,6 +7,7 @@ import {
     getAdConsentState,
     thirdPartyTrackingAdConsent,
 } from 'common/modules/commercial/ad-prefs.lib';
+import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 
 const scriptSrc = 'https://www.youtube.com/iframe_api';
 const promise = new Promise(resolve => {
@@ -100,6 +101,10 @@ const setupPlayer = (
      */
     // const relatedChannels = !disableRelatedVideos && channelId ? [channelId] : [];
 
+    const adsConfig = commercialFeatures.adFree
+        ? { disableAds: true }
+        : { nonPersonalizedAd: !wantPersonalisedAds };
+
     return new window.YT.Player(eltId, {
         videoId,
         width: '100%',
@@ -112,9 +117,7 @@ const setupPlayer = (
         embedConfig: {
             relatedChannels,
             disableRelatedVideos,
-            adsConfig: {
-                nonPersonalizedAd: !wantPersonalisedAds,
-            },
+            adsConfig,
         },
     });
 };
