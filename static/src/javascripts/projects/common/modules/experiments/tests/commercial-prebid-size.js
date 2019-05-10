@@ -1,7 +1,7 @@
 // @flow
 export const commercialPrebidSize: ABTest = {
     id: 'CommercialPrebidSize',
-    start: '2019-05-13',
+    start: '2019-05-10',
     expiry: '2019-06-13',
     author: 'George Haberis',
     description:
