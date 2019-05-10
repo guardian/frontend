@@ -82,7 +82,7 @@ export const onSlotRender = (event: SlotRenderEndedEvent): void => {
             console.log('*** set ad size ***', event);
             advert.size = event.size;
         } else {
-            console.log('*** ignore ad size ***', event);
+            console.log('*** ignore ad size ***', event, event.size !== advert.size);
         }
 
         if (event.creativeId !== undefined) {
