@@ -7,6 +7,8 @@ import { bids } from 'commercial/modules/prebid/bid-config';
 import { slots } from 'commercial/modules/prebid/slot-config';
 import { priceGranularity } from 'commercial/modules/prebid/price-config';
 import { getAdvertById } from 'commercial/modules/dfp/get-advert-by-id';
+import { commercialPrebidSize } from 'common/modules/experiments/tests/commercial-prebid-size';
+import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import type {
     PrebidBid,
     PrebidMediaTypes,
@@ -198,21 +200,23 @@ const initialise = (window: {
         };
     }
 
-    // Adjust slot size when prebid ad loads
-    window.pbjs.onEvent('bidWon', data => {
-        const { width, height, adUnitCode } = data;
-        const size = [width, height]; // eg. [300, 250]
-        const advert: ?Advert = getAdvertById(adUnitCode);
+    if (isInVariantSynchronous(commercialPrebidSize, 'variant')) {
+        // Adjust slot size when prebid ad loads
+        window.pbjs.onEvent('bidWon', data => {
+            const { width, height, adUnitCode } = data;
+            const size = [width, height]; // eg. [300, 250]
+            const advert: ?Advert = getAdvertById(adUnitCode);
 
-        if (advert) {
-            advert.size = size;
-            /**
-             * when hasPrebidSize is true we use size
-             * set here when adjusting the slot size.
-             * */
-            advert.hasPrebidSize = true;
-        }
-    });
+            if (advert) {
+                advert.size = size;
+                /**
+                 * when hasPrebidSize is true we use size
+                 * set here when adjusting the slot size.
+                 * */
+                advert.hasPrebidSize = true;
+            }
+        });
+    }
 };
 
 // slotFlatMap allows you to dynamically interfere with the PrebidSlot definition

@@ -85,4 +85,14 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2019, 5, 31),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-commercial-prebid-size",
+    "Test overriding the ad size from GAM with the ad size from prebid for prebid ads",
+    owners = Owner.group(Commercial),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 6, 13),
+    exposeClientSide = true
+  )
 }
