@@ -199,7 +199,7 @@ export const renderAdvert = (
                     }
 
                     /**
-                     * we must reset hasPrebidSize to teh default
+                     * we reset hasPrebidSize to the default
                      * value of false for subsequent ad refreshes
                      * as they may not be prebid ads.
                      * */
