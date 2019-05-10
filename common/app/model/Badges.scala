@@ -45,7 +45,7 @@ object Badges {
   val brexitHowItCameToThis = Badge("politics/series/brexit-how-it-came-to-this", Static("images/badges/EUReferendumBadge.svg"))
   val londonVersus = Badge("uk-news/series/london-versus", Static("images/badges/london-versus.svg"))
   val beyondTheBlade = Badge("membership/series/beyond-the-blade", Static("images/badges/beyondthebladebadge.svg"))
-  val euElection = Badge("politics/2019-european-parliamentary-elections", Static("images/badges/eu-election.svg"))
+  val euElection = Badge("politics/2019-european-parliamentary-elections", Static("images/badges/eu_election.svg"))
   val paradisePapers = Badge("news/series/paradise-papers", Static("images/badges/pp_web.svg"))
   val cambridgeAnalytica = Badge("news/series/cambridge-analytica-files", Static("images/badges/calock.svg"))
   val specialReport = SpecialBadge("06966783c5b5413394df723f2ca58030953", "feb78187bd4de427603a164d0a69f19f", Static("images/badges/56738_Badge.svg"))
