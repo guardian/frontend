@@ -14,6 +14,10 @@ jest.mock('commercial/modules/prebid/bid-config', () => ({
     bids: jest.fn(),
 }));
 
+jest.mock('common/modules/experiments/ab', () => ({
+    isInVariantSynchronous: () => false,
+}));
+
 describe('initialise', () => {
     beforeEach(() => {
         config.set('switches.enableConsentManagementService', true);
