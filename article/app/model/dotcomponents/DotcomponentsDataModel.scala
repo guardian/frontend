@@ -9,11 +9,11 @@ import conf.Configuration.affiliatelinks
 import conf.switches.Switches
 import conf.{Configuration, Static}
 import controllers.ArticlePage
-import model.SubMetaLinks
+import model.{LiveBlogPage, PageWithStoryPackage, SubMetaLink, SubMetaLinks}
 import model.content.Atom
 import model.dotcomrendering.pageElements.{DisclaimerBlockElement, PageElement}
 import model.meta._
-import navigation.NavMenu
+import navigation.{NavLink, NavMenu, Subnav}
 import navigation.ReaderRevenueSite.{Support, SupportContribute, SupportSubscribe}
 import navigation.UrlHelpers._
 import play.api.libs.json._
@@ -198,7 +198,7 @@ object DotcomponentsDataModel {
 
   val VERSION = 2
 
-  def fromArticle(articlePage: ArticlePage, request: RequestHeader, blocks: APIBlocks): DotcomponentsDataModel = {
+  def fromArticle(articlePage: PageWithStoryPackage, request: RequestHeader, blocks: APIBlocks): DotcomponentsDataModel = {
 
     val article = articlePage.article
     val atoms: Iterable[Atom] = article.content.atoms.map(_.all).getOrElse(Seq())
@@ -423,9 +423,7 @@ object DotcomponentsDataModel {
   }
 
   def toJson(model: DotcomponentsDataModel): JsValue = {
-
     // make what we have look a bit closer to what dotcomponents currently expects
-
     implicit val DotComponentsDataModelWrites = new Writes[DotcomponentsDataModel] {
       def writes(model: DotcomponentsDataModel) = Json.obj(
         "page" -> model.page,
@@ -433,14 +431,10 @@ object DotcomponentsDataModel {
         "version" -> model.version
       )
     }
-
     Json.toJson(model)
-
   }
-
 
   def toJsonString(model: DotcomponentsDataModel): String = {
     Json.stringify(toJson(model))
   }
-
 }

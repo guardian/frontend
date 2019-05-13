@@ -72,7 +72,7 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
       .map(responseFromHeadline)
   }
 
-  private def getJson(article: ArticlePage)(implicit request: RequestHeader) = {
+  private def getJson(article: ArticlePage)(implicit request: RequestHeader): List[(String, Object)] = {
     val contentFieldsJson = if (request.isGuuiJson) List(
       "contentFields" -> Json.toJson(ContentFields(article.article)),
       "tags" -> Json.toJson(article.article.tags)) else List()
