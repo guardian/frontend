@@ -208,12 +208,10 @@ const initialise = (window: {
             const advert: ?Advert = getAdvertById(adUnitCode);
 
             if (advert) {
-                advert.size = size;
                 /**
-                 * when hasPrebidSize is true we use size
-                 * set here when adjusting the slot size.
-                 * */
-                advert.hasPrebidSize = true;
+                 * calling advert.sizeReady resolves advert.whenSizeReady
+                 */
+                advert.sizeReady(size);
             }
         });
     }

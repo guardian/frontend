@@ -199,11 +199,11 @@ export const renderAdvert = (
                     }
 
                     /**
-                     * we reset hasPrebidSize to the default
-                     * value of false for subsequent ad refreshes
-                     * as they may not be prebid ads.
-                     * */
-                    advert.hasPrebidSize = false;
+                     * waitForSizeReady sets advert.whenSizeReady
+                     * to Promise back to pending state for subsequent
+                     * refreshes
+                     */
+                    advert.waitForSizeReady();
 
                     return Promise.resolve(
                         sizeCallbacks[size]

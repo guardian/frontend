@@ -52,6 +52,14 @@ const outstreamSizes = [
     adSizes.outstreamMobile.toString(),
 ];
 
+const isPrebidAd = (advertiserId: number): boolean => {
+    const prebidId = 4499194706;
+    const preBidTestId = 4734359003;
+    const indexPrebidId = 4692869497;
+
+    return [prebidId, preBidTestId, indexPrebidId].includes(advertiserId);
+};
+
 export const onSlotRender = (event: SlotRenderEndedEvent): void => {
     recordFirstAdRendered();
 
@@ -74,14 +82,6 @@ export const onSlotRender = (event: SlotRenderEndedEvent): void => {
         reportEmptyResponse(advert.id, event);
         emitRenderEvents(false);
     } else {
-        /**
-         * if advert.hasPrebidSize is false we use size
-         * from the GAM event when adjusting the slot size.
-         * */
-        if (!advert.hasPrebidSize) {
-            advert.size = event.size;
-        }
-
         if (event.creativeId !== undefined) {
             dfpEnv.creativeIDs.push(event.creativeId);
         }
@@ -101,6 +101,46 @@ export const onSlotRender = (event: SlotRenderEndedEvent): void => {
             !config.get('page.hasPageSkin') &&
             !isNonRefreshableLineItem;
 
-        renderAdvert(advert, event).then(emitRenderEvents);
+        const { advertiserId } = event;
+
+        if (advertiserId && isPrebidAd(advertiserId)) {
+            /**
+             * If the advertiserId is a prebid ID wait for advert.whenSizeReady
+             * to be resolved before rendering the advet.
+             */
+            advert.whenSizeReady.then(
+                (size: number[]): void => {
+                    advert.size = size;
+                    renderAdvert(advert, event).then(emitRenderEvents);
+                }
+            );
+        } else {
+            advert.size = event.size;
+            renderAdvert(advert, event).then(emitRenderEvents);
+        }
     }
 };
+
+// class Advert {
+//     waitForSize() {
+//       return new Promise(resolve => {
+//         this.sizeReady = resolve;
+//       });
+//     }
+//   }
+
+//   const myAdvert = new Advert();
+
+//   myAdvert.waitForSize().then(size => {
+//     console.log('size ----->', size);
+//   });
+
+//   myAdvert.sizeReady(10);
+
+//   setTimeout(() => {
+//       myAdvert.waitForSize().then(size => {
+//         console.log('size ----->', size);
+//       });
+
+//       myAdvert.sizeReady(15);
+//   }, 500);

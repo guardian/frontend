@@ -61,6 +61,9 @@ class Advert {
         lazyWaitComplete: ?number,
     };
     hasPrebidSize: boolean;
+    waitForSizeReady: () => void;
+    whenSizeReady: Promise<number[]>;
+    sizeReady: (number[]) => void;
 
     constructor(adSlotNode: HTMLElement) {
         const sizes: AdSizes = getAdBreakpointSizes(adSlotNode);
@@ -107,6 +110,22 @@ class Advert {
                 return isRendered;
             }
         );
+
+        /**
+         * some ads get their size async when we have to wait for
+         * the size to be ready we can wait for the s
+         * to be resolved.
+         */
+        this.waitForSizeReady = () => {
+            this.whenSizeReady = new Promise(resolve => {
+                this.sizeReady = resolve;
+            });
+        };
+
+        /**
+         * set default state of whenSizeReady to pending state
+         */
+        this.waitForSizeReady();
 
         this.extraNodeClasses = [];
     }
