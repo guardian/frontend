@@ -12,6 +12,8 @@ import { emptyAdvert } from 'commercial/modules/dfp/empty-advert';
 import { getAdvertById } from 'commercial/modules/dfp/get-advert-by-id';
 import config from 'lib/config';
 import { adSizes } from 'commercial/modules/ad-sizes';
+import { commercialPrebidSize } from 'common/modules/experiments/tests/commercial-prebid-size';
+import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 
 const recordFirstAdRendered = once(() => {
     fire('/count/ad-render.gif');
@@ -106,7 +108,7 @@ export const onSlotRender = (event: SlotRenderEndedEvent): void => {
 
         const { advertiserId } = event;
 
-        if (advertiserId && isPrebidAd(advertiserId)) {
+        if (isInVariantSynchronous(commercialPrebidSize, 'variant') && advertiserId && isPrebidAd(advertiserId)) {
             /**
              * If the advertiserId is a prebid ID wait for advert.whenSizeReady
              * to be resolved before rendering the advert.
