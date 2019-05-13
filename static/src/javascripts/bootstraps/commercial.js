@@ -37,8 +37,6 @@ const commercialModules: Array<Array<any>> = [
     ['cm-closeDisabledSlots', closeDisabledSlots],
     ['cm-prepare-cmp', initCmpService],
     ['cm-track-cmp-consent', trackCmpConsent],
-    ['cm-prepare-prebid', preparePrebid, true],
-    ['cm-prepare-googletag', prepareGoogletag, true],
     ['cm-checkDispatcher', initCheckDispatcher],
     ['cm-lotame-cmp', initLotameCmp],
     ['cm-lotame-data-extract', initLotameDataExtract, true],
@@ -46,6 +44,8 @@ const commercialModules: Array<Array<any>> = [
 
 if (!commercialFeatures.adFree) {
     commercialModules.push(
+        ['cm-prepare-prebid', preparePrebid, true],
+        ['cm-prepare-googletag', prepareGoogletag, true],
         ['cm-thirdPartyTags', initThirdPartyTags],
         ['cm-prepare-adverification', prepareAdVerification, true],
         ['cm-highMerch', initHighMerch],

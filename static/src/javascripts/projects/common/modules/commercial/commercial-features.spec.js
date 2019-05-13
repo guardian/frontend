@@ -105,11 +105,11 @@ describe('Commercial features', () => {
             expect(features.dfpAdvertising).toBe(false);
         });
 
-        it('Is enabled for speedcurve tests of ad-free mode', () => {
+        it('Is disabled for speedcurve tests in ad-free mode', () => {
             window.location.hash = '#noadsaf';
             const features = new CommercialFeatures();
-            expect(features.dfpAdvertising).toBe(true);
             expect(features.adFree).toBe(true);
+            expect(features.dfpAdvertising).toBe(false);
         });
     });
 

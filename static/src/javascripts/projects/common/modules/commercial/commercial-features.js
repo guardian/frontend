@@ -65,7 +65,8 @@ class CommercialFeatures {
             (switches.commercial &&
                 externalAdvertising &&
                 !sensitiveContent &&
-                !isIdentityPage);
+                !isIdentityPage &&
+                !this.adFree);
 
         this.stickyTopBannerAd =
             !this.adFree &&
