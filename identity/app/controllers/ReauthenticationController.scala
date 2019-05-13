@@ -83,7 +83,16 @@ class ReauthenticationController(
         // drop the query parameter by redirecting to the same endpoint (/reauthenticate) without including it.
         // This will prevent the token being present in logs or the datalake.
         // TODO: change this once the query parameter is set as a header instead.
-        NoCache(Redirect(routes.ReauthenticationController.renderForm(returnUrl)))
+        val call = routes.ReauthenticationController.renderForm(returnUrl)
+
+        val queryParams = idUrlBuilder
+          .flattenQueryParams(request.queryString)
+          // In addition to the auto sign-in token query parameter,
+          // don't include the returnUrl query parameter since this will already be included
+          // (the returnUrl val has been passed to the renderForm() function call).
+          .filter { case (key, _ ) => key != "autoSignInToken" && key != "returnUrl" }
+
+        NoCache(Redirect(idUrlBuilder.appendQueryParams(call.url, queryParams)))
       }
     }
 
