@@ -56,8 +56,11 @@ const isPrebidAd = (advertiserId: number): boolean => {
     const prebidId = 4499194706;
     const preBidTestId = 4734359003;
     const indexPrebidId = 4692869497;
+    const ozoneId = 4732590210;
 
-    return [prebidId, preBidTestId, indexPrebidId].includes(advertiserId);
+    return [prebidId, preBidTestId, indexPrebidId, ozoneId].includes(
+        advertiserId
+    );
 };
 
 export const onSlotRender = (event: SlotRenderEndedEvent): void => {
