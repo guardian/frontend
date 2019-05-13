@@ -106,7 +106,7 @@ export const onSlotRender = (event: SlotRenderEndedEvent): void => {
         if (advertiserId && isPrebidAd(advertiserId)) {
             /**
              * If the advertiserId is a prebid ID wait for advert.whenSizeReady
-             * to be resolved before rendering the advet.
+             * to be resolved before rendering the advert.
              */
             advert.whenSizeReady.then(
                 (size: number[]): void => {
@@ -120,27 +120,3 @@ export const onSlotRender = (event: SlotRenderEndedEvent): void => {
         }
     }
 };
-
-// class Advert {
-//     waitForSize() {
-//       return new Promise(resolve => {
-//         this.sizeReady = resolve;
-//       });
-//     }
-//   }
-
-//   const myAdvert = new Advert();
-
-//   myAdvert.waitForSize().then(size => {
-//     console.log('size ----->', size);
-//   });
-
-//   myAdvert.sizeReady(10);
-
-//   setTimeout(() => {
-//       myAdvert.waitForSize().then(size => {
-//         console.log('size ----->', size);
-//       });
-
-//       myAdvert.sizeReady(15);
-//   }, 500);
