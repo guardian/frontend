@@ -34,6 +34,7 @@ object Title {
   }
 
   private def titleFromSectionId(sectionId: String): String = sectionId.toLowerCase match {
+    case "Uk-news" => "UK news"
     case "theobserver" => "The Observer"
     case _ => sectionId
   }
