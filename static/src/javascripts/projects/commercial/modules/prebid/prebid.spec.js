@@ -92,6 +92,7 @@ describe('initialise', () => {
                 is_debug: 'false',
                 maxBids: 1,
                 syncEndpoint: 'https://elb.the-ozone-project.com/cookie_sync',
+                syncUrlModifier: {},
                 timeout: 1500,
             },
             timeoutBuffer: 400,
@@ -125,6 +126,7 @@ describe('initialise', () => {
             adapterOptions: {},
             enabled: false,
             maxBids: 1,
+            syncUrlModifier: {},
             timeout: 1000,
         });
     });

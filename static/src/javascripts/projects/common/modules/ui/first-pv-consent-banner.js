@@ -13,8 +13,9 @@ import ophan from 'ophan/ng';
 import { upAlertViewCount } from 'common/modules/analytics/send-privacy-prefs';
 import type { AdConsent } from 'common/modules/commercial/ad-prefs.lib';
 import type { Banner } from 'common/modules/ui/bannerPicker';
-import { commercialConsentGlobalNoScroll } from 'common/modules/experiments/tests/commercial-consent-global-no-scroll';
+import { commercialConsentGlobalBanner } from 'common/modules/experiments/tests/commercial-consent-global-banner';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
+import fastdom from 'fastdom';
 
 type Template = {
     heading: string,
@@ -61,7 +62,7 @@ const bindableClassNames: BindableClassNames = {
 };
 
 const makeHtml = (): string => `
-    <div class="site-message--first-pv-consent__block site-message--first-pv-consent__block--head">${
+    <div class="site-message--first-pv-consent__block site-message--first-pv-consent__block--head ">${
         template.heading
     }</div>
     <div class="site-message--first-pv-consent__block site-message--first-pv-consent__block--intro">${template.consentText
@@ -105,14 +106,17 @@ const trackInteraction = (interaction: string): void => {
     trackNonClickInteraction(interaction);
 };
 
-const isInConsentGlobalNoScrollTest = (): boolean =>
-    isInVariantSynchronous(commercialConsentGlobalNoScroll, 'scrollVariant') ||
-    isInVariantSynchronous(commercialConsentGlobalNoScroll, 'noScrollVariant');
+const isInCommercialConsentGlobalBannerTest = (): boolean =>
+    isInVariantSynchronous(commercialConsentGlobalBanner, 'regularVariant') ||
+    isInVariantSynchronous(commercialConsentGlobalBanner, 'noScrollVariant') ||
+    isInVariantSynchronous(commercialConsentGlobalBanner, 'tallVariant') ||
+    isInVariantSynchronous(commercialConsentGlobalBanner, 'animationVariant') ||
+    isInVariantSynchronous(commercialConsentGlobalBanner, 'floatingVariant');
 
 const canShow = (): Promise<boolean> =>
     Promise.resolve(
         hasUnsetAdChoices() &&
-            (isInEU() || isInConsentGlobalNoScrollTest()) &&
+            (isInEU() || isInCommercialConsentGlobalBannerTest()) &&
             !hasUserAcknowledgedBanner(messageCode)
     );
 
@@ -135,24 +139,89 @@ const preventScroll = (msg: Message): void => {
     });
 };
 
+const animateBanner = (msg: Message): void => {
+    setTimeout(() => {
+        fastdom.write(() => {
+            msg.$siteMessageContainer[0].classList.add(
+                'site-message--first-pv-consent--animationVariant--animate'
+            );
+        });
+    }, 750);
+};
+
 const show = (): Promise<boolean> => {
     track();
 
-    const msg = new Message(messageCode, {
-        important: true,
-        permanent: true,
-        customJs: () => {
-            bindClickHandlers(msg);
-            if (
-                isInVariantSynchronous(
-                    commercialConsentGlobalNoScroll,
-                    'noScrollVariant'
-                )
-            ) {
-                preventScroll(msg);
-            }
-        },
-    });
+    const opts = {};
+
+    const getTestVariant = (): ?string => {
+        if (
+            isInVariantSynchronous(
+                commercialConsentGlobalBanner,
+                'noScrollVariant'
+            )
+        ) {
+            return 'noScrollVariant';
+        }
+
+        if (
+            isInVariantSynchronous(commercialConsentGlobalBanner, 'tallVariant')
+        ) {
+            return 'tallVariant';
+        }
+
+        if (
+            isInVariantSynchronous(
+                commercialConsentGlobalBanner,
+                'animationVariant'
+            )
+        ) {
+            return 'animationVariant';
+        }
+
+        if (
+            isInVariantSynchronous(
+                commercialConsentGlobalBanner,
+                'floatingVariant'
+            )
+        ) {
+            return 'floatingVariant';
+        }
+    };
+
+    const testVariant = getTestVariant();
+
+    const getTestModifierClass = (): ?string => {
+        if (testVariant) {
+            return `first-pv-consent--${testVariant}`;
+        }
+    };
+
+    const modifierClass = getTestModifierClass();
+
+    if (modifierClass) {
+        opts.cssModifierClass = modifierClass;
+    }
+
+    const msg = new Message(
+        messageCode,
+        Object.assign(
+            {},
+            {
+                important: true,
+                permanent: true,
+                customJs: () => {
+                    bindClickHandlers(msg);
+                    if (testVariant === 'noScrollVariant') {
+                        preventScroll(msg);
+                    } else if (testVariant === 'animationVariant') {
+                        animateBanner(msg);
+                    }
+                },
+            },
+            opts
+        )
+    );
 
     return Promise.resolve(msg.show(makeHtml()));
 };

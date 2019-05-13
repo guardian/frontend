@@ -120,9 +120,9 @@ describe('First PV consents banner', () => {
             return expect(await banner.canShow()).toBe(false);
         });
         // two temporary tests that can be removed after 31/03/2019
-        it('should render outside the EU, when commercial consent test participation is "scrollVariant"', async () => {
+        it('should render outside the EU, when commercial consent test participation is "regularVariant"', async () => {
             isInVariantSynchronous.mockImplementation(
-                (testId, variantId) => variantId === 'scrollVariant'
+                (testId, variantId) => variantId === 'regularVariant'
             );
             getCookie.mockImplementation(_ => {
                 if (_ === 'GU_geo_continent') return '??';

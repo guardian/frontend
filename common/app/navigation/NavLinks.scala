@@ -64,6 +64,7 @@ object NavLinks {
   val ukBusiness = NavLink("Business", "/business", children = List(economics, banking, money, markets, projectSyndicate, businessToBusiness))
   val usBusiness = ukBusiness.copy(children = List(economics, sustainableBusiness, diversityEquality, smallBusiness))
   val auBusiness = ukBusiness.copy(children = List(markets, money, projectSyndicate))
+  val usPenAward = NavLink("PEN World Voices Festival", "/books/pen-world-voices-festival")
 
   /* OPINION */
   val columnists = NavLink("Columnists", "/index/contributors")
@@ -244,7 +245,8 @@ object NavLinks {
       usPolitics,
       usBusiness,
       tech,
-      science
+      science,
+      usPenAward
     )
   )
   val intNewsPillar = ukNewsPillar.copy(
