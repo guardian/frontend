@@ -222,23 +222,25 @@ object DotcomponentsDataModel {
         atoms = atoms
       ))
 
-      addDisclaimer(elems, capiElems)
+      addDisclaimer(elems, capiElems, affiliateLinks)
     }
 
-    def addDisclaimer(elems: List[PageElement], capiElems: Seq[ClientBlockElement]): List[PageElement] = {
-      val hasLinks = capiElems.exists(elem => elem.`type` match {
-        case Text => {
-          val textString = elem.textTypeData.toList.mkString("\n") // just concat all the elems here for this test
-          AffiliateLinksCleaner.stringContainsAffiliateableLinks(textString)
-        }
-        case _ => false
-      })
+    def addDisclaimer(elems: List[PageElement], capiElems: Seq[ClientBlockElement], affiliateLinks: Boolean): List[PageElement] = {
+      if (affiliateLinks) {
+        val hasLinks = capiElems.exists(elem => elem.`type` match {
+          case Text => {
+            val textString = elem.textTypeData.toList.mkString("\n") // just concat all the elems here for this test
+            AffiliateLinksCleaner.stringContainsAffiliateableLinks(textString)
+          }
+          case _ => false
+        })
 
-      if (hasLinks) {
-        elems :+ DisclaimerBlockElement(affiliateLinksDisclaimer("article").body)
-      } else {
-        elems
-      }
+        if (hasLinks) {
+          elems :+ DisclaimerBlockElement(affiliateLinksDisclaimer("article").body)
+        } else {
+          elems
+        }
+      } else elems
     }
 
     def buildFullCommercialUrl(bundlePath: String): String = {
