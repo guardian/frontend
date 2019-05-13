@@ -7,7 +7,7 @@ import com.gu.contentapi.client.model.v1.Blocks
 import com.osinka.i18n.Lang
 import conf.Configuration
 import controllers.ArticlePage
-import model.Cached
+import model.{Cached, PageWithStoryPackage}
 import model.Cached.RevalidatableResult
 import model.dotcomponents.DotcomponentsDataModel
 import play.api.libs.json._
@@ -34,7 +34,7 @@ class RemoteRenderer {
   private[this] def get(
     ws:WSClient,
     payload: String,
-    article: ArticlePage,
+    article: PageWithStoryPackage,
     endpoint: String
   )(implicit request: RequestHeader): Future[Result] = {
 
@@ -53,23 +53,23 @@ class RemoteRenderer {
   }
 
 
-  def getAMPArticle(ws: WSClient, payload: String, article: ArticlePage, blocks: Blocks)(implicit request: RequestHeader): Future[Result] = {
-    val dataModel: DotcomponentsDataModel = DotcomponentsDataModel.fromArticle(article, request, blocks)
+  def getAMPArticle(ws: WSClient, payload: String, page: PageWithStoryPackage, blocks: Blocks)(implicit request: RequestHeader): Future[Result] = {
+    val dataModel: DotcomponentsDataModel = DotcomponentsDataModel.fromArticle(page, request, blocks)
     val dataString: String = DotcomponentsDataModel.toJsonString(dataModel)
 
     validate(dataModel) match {
-      case JsSuccess(_,_) => get(ws, dataString, article, Configuration.rendering.AMPArticleEndpoint)
+      case JsSuccess(_,_) => get(ws, dataString, page, Configuration.rendering.AMPArticleEndpoint)
       case JsError(e) => Future.failed(new Exception(Json.prettyPrint(JsError.toJson(e))))
     }
 
   }
 
-  def getArticle(ws:WSClient, path: String, article: ArticlePage,  blocks: Blocks)(implicit request: RequestHeader): Future[Result] = {
-    val dataModel: DotcomponentsDataModel = DotcomponentsDataModel.fromArticle(article, request, blocks)
+  def getArticle(ws:WSClient, path: String, page: PageWithStoryPackage,  blocks: Blocks)(implicit request: RequestHeader): Future[Result] = {
+    val dataModel: DotcomponentsDataModel = DotcomponentsDataModel.fromArticle(page, request, blocks)
     val dataString: String = DotcomponentsDataModel.toJsonString(dataModel)
 
     validate(dataModel) match {
-      case JsSuccess(_,_) => get(ws, dataString, article, Configuration.rendering.renderingEndpoint)
+      case JsSuccess(_,_) => get(ws, dataString, page, Configuration.rendering.renderingEndpoint)
       case JsError(e) => Future.failed(new Exception(Json.prettyPrint(JsError.toJson(e))))
     }
   }

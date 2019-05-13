@@ -1,7 +1,7 @@
 package model.dotcomponents
 
 import com.gu.contentapi.client.model.v1.ElementType.Text
-import com.gu.contentapi.client.model.v1.{BlockElement => ClientBlockElement, Blocks => APIBlocks}
+import com.gu.contentapi.client.model.v1.{Block => APIBlock, BlockElement => ClientBlockElement, Blocks => APIBlocks}
 import common.Edition
 import common.Maps.RichMap
 import common.commercial.{CommercialProperties, EditionCommercialProperties, PrebidIndexSite}
@@ -9,11 +9,11 @@ import conf.Configuration.affiliatelinks
 import conf.switches.Switches
 import conf.{Configuration, Static}
 import controllers.ArticlePage
-import model.SubMetaLinks
+import model.{LiveBlogPage, PageWithStoryPackage, SubMetaLink, SubMetaLinks}
 import model.content.Atom
 import model.dotcomrendering.pageElements.{DisclaimerBlockElement, PageElement}
 import model.meta._
-import navigation.NavMenu
+import navigation.{NavLink, NavMenu, Subnav}
 import navigation.ReaderRevenueSite.{Support, SupportContribute, SupportSubscribe}
 import navigation.UrlHelpers._
 import play.api.libs.json._
@@ -47,7 +47,8 @@ case class Block(
 
 case class Blocks(
     main: Option[Block],
-    body: List[Block]
+    body: List[Block],
+    keyEvents: List[Block],
 )
 
 case class ReaderRevenueLink(
@@ -198,7 +199,7 @@ object DotcomponentsDataModel {
 
   val VERSION = 2
 
-  def fromArticle(articlePage: ArticlePage, request: RequestHeader, blocks: APIBlocks): DotcomponentsDataModel = {
+  def fromArticle(articlePage: PageWithStoryPackage, request: RequestHeader, blocks: APIBlocks): DotcomponentsDataModel = {
 
     val article = articlePage.article
     val atoms: Iterable[Atom] = article.content.atoms.map(_.all).getOrElse(Seq())
@@ -222,23 +223,25 @@ object DotcomponentsDataModel {
         atoms = atoms
       ))
 
-      addDisclaimer(elems, capiElems)
+      addDisclaimer(elems, capiElems, affiliateLinks)
     }
 
-    def addDisclaimer(elems: List[PageElement], capiElems: Seq[ClientBlockElement]): List[PageElement] = {
-      val hasLinks = capiElems.exists(elem => elem.`type` match {
-        case Text => {
-          val textString = elem.textTypeData.toList.mkString("\n") // just concat all the elems here for this test
-          AffiliateLinksCleaner.stringContainsAffiliateableLinks(textString)
-        }
-        case _ => false
-      })
+    def addDisclaimer(elems: List[PageElement], capiElems: Seq[ClientBlockElement], affiliateLinks: Boolean): List[PageElement] = {
+      if (affiliateLinks) {
+        val hasLinks = capiElems.exists(elem => elem.`type` match {
+          case Text => {
+            val textString = elem.textTypeData.toList.mkString("\n") // just concat all the elems here for this test
+            AffiliateLinksCleaner.stringContainsAffiliateableLinks(textString)
+          }
+          case _ => false
+        })
 
-      if (hasLinks) {
-        elems :+ DisclaimerBlockElement(affiliateLinksDisclaimer("article").body)
-      } else {
-        elems
-      }
+        if (hasLinks) {
+          elems :+ DisclaimerBlockElement(affiliateLinksDisclaimer("article").body)
+        } else {
+          elems
+        }
+      } else elems
     }
 
     def buildFullCommercialUrl(bundlePath: String): String = {
@@ -252,14 +255,35 @@ object DotcomponentsDataModel {
 
     val bodyBlocks: List[Block] = {
       val bodyBlocks = blocks.body.getOrElse(Nil)
-      bodyBlocks.map(block => Block(block.bodyHtml, blocksToPageElements(block.elements, shouldAddAffiliateLinks))).toList
+        .map(block => Block(block.bodyHtml, blocksToPageElements(block.elements, shouldAddAffiliateLinks)))
+        .toList
+
+      val last60 = blocks.requestedBodyBlocks
+        .getOrElse(Map.empty[String, Seq[APIBlock]])
+        .getOrElse("body:latest:60", Seq.empty[APIBlock])
+        .map(block => Block(block.bodyHtml, blocksToPageElements(block.elements, shouldAddAffiliateLinks)))
+        .toList
+
+      // This is the liveblog case
+      if (last60.nonEmpty) {
+        last60
+      } else {
+        bodyBlocks
+      }
     }
 
     val mainBlock: Option[Block] = {
       blocks.main.map(block => Block(block.bodyHtml, blocksToPageElements(block.elements, shouldAddAffiliateLinks)))
     }
 
-    val dcBlocks = Blocks(mainBlock, bodyBlocks)
+    val keyEvents: Seq[Block] = {
+      blocks.requestedBodyBlocks
+        .getOrElse(Map.empty[String, Seq[APIBlock]])
+        .getOrElse("body:key-events", Seq.empty[APIBlock])
+        .map(block => Block(block.bodyHtml, blocksToPageElements(block.elements, shouldAddAffiliateLinks)))
+    }
+
+    val dcBlocks = Blocks(mainBlock, bodyBlocks, keyEvents.toList)
 
     val jsConfig = (k: String) => articlePage.getJavascriptConfig.get(k).map(_.as[String])
 
@@ -421,9 +445,7 @@ object DotcomponentsDataModel {
   }
 
   def toJson(model: DotcomponentsDataModel): JsValue = {
-
     // make what we have look a bit closer to what dotcomponents currently expects
-
     implicit val DotComponentsDataModelWrites = new Writes[DotcomponentsDataModel] {
       def writes(model: DotcomponentsDataModel) = Json.obj(
         "page" -> model.page,
@@ -431,14 +453,10 @@ object DotcomponentsDataModel {
         "version" -> model.version
       )
     }
-
     Json.toJson(model)
-
   }
-
 
   def toJsonString(model: DotcomponentsDataModel): String = {
     Json.stringify(toJson(model))
   }
-
 }
