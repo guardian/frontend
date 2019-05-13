@@ -64,20 +64,34 @@ class ReauthenticationController(
     logger.trace("Rendering reauth form")
     val idRequest = idRequestParser(request)
     val googleId = request.user.socialLinks.find(_.network == "google").map(_.socialId)
-    val renderReauthenticate =
-      Future.successful(
+
+    // Included in payment failure links to faciliate sign-in.
+    // If present and the user needs to reauthenticate,
+    // manage will include it as a query parameter to be used by the /reauthenticate endpoint.
+    val autoSignInToken = request.getQueryString("autoSignInToken")
+
+    val renderReauthenticate = Future.successful {
+      if (autoSignInToken.isEmpty) {
         NoCache(Ok(
-            IdentityHtmlPage.html(
-              content = views.html.reauthenticate(idRequest, idUrlBuilder, filledForm, googleId)
-            )(page, request, context)
+          IdentityHtmlPage.html(
+            content = views.html.reauthenticate(idRequest, idUrlBuilder, filledForm, googleId)
+          )(page, request, context)
         ))
-      )
+      } else {
+        // If auto sign-in token query parameter is present but not used
+        // (i.e. the user isn't automatically redirected to the return url)
+        // drop the query parameter by redirecting to the same endpoint (/reauthenticate) without including it.
+        // This will prevent the token being present in logs or the datalake.
+        // TODO: change this once the query parameter is set as a header instead.
+        NoCache(Redirect(routes.ReauthenticationController.renderForm(returnUrl)))
+      }
+    }
 
     val autoSignIn = for {
-      autoSignInToken <- request.getQueryString("autoSignInToken")
-      returnUrl <- returnUrl
+      token <- autoSignInToken
+      url <- returnUrl
     } yield {
-      signInWithAutoSignInToken(autoSignInToken, returnUrl).flatMap {
+      signInWithAutoSignInToken(token, url).flatMap {
         case Left(errors) =>
           logger.error(s"unable to sign in with auto signin token, $errors")
           renderReauthenticate
