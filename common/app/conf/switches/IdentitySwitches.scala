@@ -21,7 +21,7 @@ trait IdentitySwitches {
     "If switched on, users coming from newsletters will get prompts to sign in.",
     owners = Owner.group(SwitchGroup.Identity),
     safeState = Off,
-    sellByDate = new LocalDate(2019, 6, 17),
+    sellByDate = new LocalDate(2019, 6, 21),
     exposeClientSide = true
   )
 
@@ -31,7 +31,7 @@ trait IdentitySwitches {
     "If switched on, access to the new consent journeys will be enabled.",
     owners = Owner.group(SwitchGroup.Identity),
     safeState = Off,
-    sellByDate = new LocalDate(2019, 6, 17),
+    sellByDate = new LocalDate(2019, 6, 21),
     exposeClientSide = false
   )
 
