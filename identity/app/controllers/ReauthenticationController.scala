@@ -82,7 +82,7 @@ class ReauthenticationController(
         // (i.e. the user isn't automatically redirected to the return url)
         // drop the query parameter by redirecting to the same endpoint (/reauthenticate) without including it.
         // This will prevent the token being present in logs or the datalake.
-        // TODO: change this once the query parameter is set as a header instead.
+        // NOTE: this might change in the future if some other (better) mechanism is used to pass auto sign-in tokens.
         val call = routes.ReauthenticationController.renderForm(returnUrl)
 
         val queryParams = idUrlBuilder
