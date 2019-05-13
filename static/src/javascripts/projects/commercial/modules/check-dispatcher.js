@@ -55,7 +55,11 @@ const checksToDispatch = {
     hasHighPriorityAdLoaded(): Promise<boolean> {
         // if thirdPartyTags false no external ads are loaded
         // is irrelevant for ad-free users (independently of thirdPartyTags)
-        if (commercialFeatures.thirdPartyTags && commercialFeatures.highMerch && !commercialFeatures.adFree) {
+        if (
+            commercialFeatures.thirdPartyTags &&
+            commercialFeatures.highMerch &&
+            !commercialFeatures.adFree
+        ) {
             return Promise.resolve(trackAdRender('dfp-ad--merchandising-high'));
         }
         return Promise.resolve(false);
