@@ -108,10 +108,14 @@ export const onSlotRender = (event: SlotRenderEndedEvent): void => {
 
         const { advertiserId } = event;
 
-        if (isInVariantSynchronous(commercialPrebidSize, 'variant') && advertiserId && isPrebidAd(advertiserId)) {
+        if (
+            isInVariantSynchronous(commercialPrebidSize, 'variant') &&
+            advertiserId &&
+            isPrebidAd(advertiserId)
+        ) {
             /**
              * If the advertiserId is a prebid ID wait for advert.whenSizeReady
-             * to be resolved before rendering the advert.
+             * to be resolved with prebid size before rendering the advert.
              */
             advert.whenSizeReady.then(
                 (size: number[]): void => {
