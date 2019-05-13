@@ -1,7 +1,7 @@
 package model.dotcomponents
 
 import com.gu.contentapi.client.model.v1.ElementType.Text
-import com.gu.contentapi.client.model.v1.{BlockElement => ClientBlockElement, Blocks => APIBlocks}
+import com.gu.contentapi.client.model.v1.{Block => APIBlock, BlockElement => ClientBlockElement, Blocks => APIBlocks}
 import common.Edition
 import common.Maps.RichMap
 import common.commercial.{CommercialProperties, EditionCommercialProperties, PrebidIndexSite}
@@ -47,7 +47,8 @@ case class Block(
 
 case class Blocks(
     main: Option[Block],
-    body: List[Block]
+    body: List[Block],
+    keyEvents: List[Block],
 )
 
 case class ReaderRevenueLink(
@@ -254,14 +255,35 @@ object DotcomponentsDataModel {
 
     val bodyBlocks: List[Block] = {
       val bodyBlocks = blocks.body.getOrElse(Nil)
-      bodyBlocks.map(block => Block(block.bodyHtml, blocksToPageElements(block.elements, shouldAddAffiliateLinks))).toList
+        .map(block => Block(block.bodyHtml, blocksToPageElements(block.elements, shouldAddAffiliateLinks)))
+        .toList
+
+      val last60 = blocks.requestedBodyBlocks
+        .getOrElse(Map.empty[String, Seq[APIBlock]])
+        .getOrElse("body:latest:60", Seq.empty[APIBlock])
+        .map(block => Block(block.bodyHtml, blocksToPageElements(block.elements, shouldAddAffiliateLinks)))
+        .toList
+
+      // This is the liveblog case
+      if (last60.nonEmpty) {
+        last60
+      } else {
+        bodyBlocks
+      }
     }
 
     val mainBlock: Option[Block] = {
       blocks.main.map(block => Block(block.bodyHtml, blocksToPageElements(block.elements, shouldAddAffiliateLinks)))
     }
 
-    val dcBlocks = Blocks(mainBlock, bodyBlocks)
+    val keyEvents: Seq[Block] = {
+      blocks.requestedBodyBlocks
+        .getOrElse(Map.empty[String, Seq[APIBlock]])
+        .getOrElse("body:key-events", Seq.empty[APIBlock])
+        .map(block => Block(block.bodyHtml, blocksToPageElements(block.elements, shouldAddAffiliateLinks)))
+    }
+
+    val dcBlocks = Blocks(mainBlock, bodyBlocks, keyEvents.toList)
 
     val jsConfig = (k: String) => articlePage.getJavascriptConfig.get(k).map(_.as[String])
 
