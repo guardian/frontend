@@ -8,19 +8,19 @@ import common.commercial.{CommercialProperties, EditionCommercialProperties, Pre
 import conf.Configuration.affiliatelinks
 import conf.switches.Switches
 import conf.{Configuration, Static}
-import controllers.ArticlePage
-import model.{LiveBlogPage, PageWithStoryPackage, SubMetaLink, SubMetaLinks}
 import model.content.Atom
 import model.dotcomrendering.pageElements.{DisclaimerBlockElement, PageElement}
 import model.meta._
-import navigation.{NavLink, NavMenu, Subnav}
+import model.{PageWithStoryPackage, SubMetaLinks}
+import navigation.NavMenu
 import navigation.ReaderRevenueSite.{Support, SupportContribute, SupportSubscribe}
 import navigation.UrlHelpers._
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
 import views.html.fragments.affiliateLinksDisclaimer
-import views.support.{AffiliateLinksCleaner, CamelCase, FourByThree, GUDateTimeFormat, ImgSrc, Item1200, Item300, OneByOne}
+import views.support.{AffiliateLinksCleaner, CamelCase, GUDateTimeFormat, ImgSrc, Item300}
 import ai.x.play.json.implicits.optionWithNull // Note, required despite Intellij saying otherwise
+
 
 // We have introduced our own set of objects for serializing data to the DotComponents API,
 // because we don't want people changing the core frontend models and as a side effect,
@@ -41,8 +41,12 @@ case class Tag(
 )
 
 case class Block(
+    id: String,
     bodyHtml: String,
-    elements: List[PageElement]
+    elements: List[PageElement],
+    createdOn: Option[Long],
+    lastUpdated: Option[Long],
+    title: Option[String],
 )
 
 case class Blocks(
@@ -215,6 +219,17 @@ object DotcomponentsDataModel {
       tagPaths = article.content.tags.tags.map(_.id)
     )
 
+    def toBlock(block: APIBlock, shouldAddAffiliateLinks: Boolean): Block = {
+      Block(
+        id = block.id,
+        bodyHtml = block.bodyHtml,
+        elements = blocksToPageElements(block.elements, shouldAddAffiliateLinks),
+        createdOn = block.createdDate.map(_.dateTime),
+        lastUpdated = block.lastModifiedDate.map(_.dateTime),
+        title = block.title,
+      )
+    }
+
     def blocksToPageElements(capiElems: Seq[ClientBlockElement], affiliateLinks: Boolean): List[PageElement] = {
       val elems = capiElems.toList.flatMap(el => PageElement.make(
         element = el,
@@ -255,13 +270,12 @@ object DotcomponentsDataModel {
 
     val bodyBlocks: List[Block] = {
       val bodyBlocks = blocks.body.getOrElse(Nil)
-        .map(block => Block(block.bodyHtml, blocksToPageElements(block.elements, shouldAddAffiliateLinks)))
-        .toList
+        .map(block => toBlock(block, shouldAddAffiliateLinks)).toList
 
       val last60 = blocks.requestedBodyBlocks
         .getOrElse(Map.empty[String, Seq[APIBlock]])
         .getOrElse("body:latest:60", Seq.empty[APIBlock])
-        .map(block => Block(block.bodyHtml, blocksToPageElements(block.elements, shouldAddAffiliateLinks)))
+        .map(block => toBlock(block, shouldAddAffiliateLinks))
         .toList
 
       // This is the liveblog case
@@ -273,14 +287,14 @@ object DotcomponentsDataModel {
     }
 
     val mainBlock: Option[Block] = {
-      blocks.main.map(block => Block(block.bodyHtml, blocksToPageElements(block.elements, shouldAddAffiliateLinks)))
+      blocks.main.map(block => toBlock(block, shouldAddAffiliateLinks))
     }
 
     val keyEvents: Seq[Block] = {
       blocks.requestedBodyBlocks
         .getOrElse(Map.empty[String, Seq[APIBlock]])
         .getOrElse("body:key-events", Seq.empty[APIBlock])
-        .map(block => Block(block.bodyHtml, blocksToPageElements(block.elements, shouldAddAffiliateLinks)))
+        .map(block => toBlock(block, shouldAddAffiliateLinks))
     }
 
     val dcBlocks = Blocks(mainBlock, bodyBlocks, keyEvents.toList)
