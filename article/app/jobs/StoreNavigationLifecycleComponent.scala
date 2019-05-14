@@ -17,6 +17,10 @@ class StoreNavigationLifecycleComponent(implicit executionContext: ExecutionCont
     */
   override def start(): Unit = {
 
+    if(Configuration.environment.stage.equalsIgnoreCase("DEVINFRA")){
+      return
+    }
+
     implicit val navlinkWrites = Json.writes[NavLink]
     implicit val editionNavLinksWrites = Json.writes[EditionNavLinks]
     implicit val navlinksInterfaceWrites = Json.writes[NavigationData]
