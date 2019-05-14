@@ -11,7 +11,7 @@ import conf.{Configuration, Static}
 import model.content.Atom
 import model.dotcomrendering.pageElements.{DisclaimerBlockElement, PageElement}
 import model.meta._
-import model.{PageWithStoryPackage, SubMetaLinks}
+import model.{Canonical, LiveBlogPage, PageWithStoryPackage, SubMetaLinks}
 import navigation.NavMenu
 import navigation.ReaderRevenueSite.{Support, SupportContribute, SupportSubscribe}
 import navigation.UrlHelpers._
@@ -53,6 +53,16 @@ case class Blocks(
     main: Option[Block],
     body: List[Block],
     keyEvents: List[Block],
+)
+
+// For liveblogs
+case class Pagination(
+  currentPage: Int,
+  totalPages: Int,
+  newest: Option[String],
+  newer: Option[String],
+  oldest: Option[String],
+  older: Option[String],
 )
 
 case class ReaderRevenueLink(
@@ -121,6 +131,7 @@ case class DCSite(
 case class DCPage(
   content: Content,
   tags: Tags,
+  pagination: Option[Pagination],
   author: String,
   pageId: String,
   pillar: Option[String],
@@ -189,6 +200,10 @@ object ReaderRevenueLink {
 
 object ReaderRevenueLinks {
   implicit val writes = Json.writes[ReaderRevenueLinks]
+}
+
+object Pagination {
+  implicit val writes = Json.writes[Pagination]
 }
 
 object DCPage {
@@ -274,7 +289,7 @@ object DotcomponentsDataModel {
 
       val last60 = blocks.requestedBodyBlocks
         .getOrElse(Map.empty[String, Seq[APIBlock]])
-        .getOrElse("body:latest:60", Seq.empty[APIBlock])
+        .getOrElse(Canonical.firstPage, Seq.empty[APIBlock])
         .map(block => toBlock(block, shouldAddAffiliateLinks))
         .toList
 
@@ -284,6 +299,20 @@ object DotcomponentsDataModel {
       } else {
         bodyBlocks
       }
+    }
+
+    val pagination = articlePage match {
+      case liveblog: LiveBlogPage => liveblog.currentPage.pagination.map(paginationInfo => {
+        Pagination(
+          currentPage = liveblog.currentPage.currentPage.pageNumber,
+          totalPages = paginationInfo.numberOfPages,
+          newest = paginationInfo.newest.map(_.suffix),
+          newer = paginationInfo.newer.map(_.suffix),
+          oldest = paginationInfo.oldest.map(_.suffix),
+          older = paginationInfo.older.map(_.suffix),
+        )
+      })
+      case _ => None
     }
 
     val mainBlock: Option[Block] = {
@@ -421,6 +450,7 @@ object DotcomponentsDataModel {
         trailText = article.trail.fields.trailText.getOrElse("")
       ),
       tags,
+      pagination = pagination,
       article.tags.contributors.map(_.name).mkString(","),
       article.metadata.id,
       article.metadata.pillar.map(_.toString),
