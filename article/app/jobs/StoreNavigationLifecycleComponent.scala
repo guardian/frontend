@@ -12,7 +12,6 @@ case class Data()
 
 class StoreNavigationLifecycleComponent(implicit executionContext: ExecutionContext) extends LifecycleComponent{
 
-
   /**
     * Pushes Navigation data from NavLinks.scala into S3
     */
@@ -22,15 +21,13 @@ class StoreNavigationLifecycleComponent(implicit executionContext: ExecutionCont
     implicit val editionNavLinksWrites = Json.writes[EditionNavLinks]
     implicit val navlinksInterfaceWrites = Json.writes[NavigationData]
 
-    val data = NavigationData()
-    val json: JsValue = Json.toJson(data)
+    val nav: JsValue = Json.toJson(NavigationData())
 
     S3.putPrivate(
       key = s"${Configuration.environment.stage}/navigation.json",
-      value = json.toString(),
+      value = nav.toString(),
       contentType = "application/json"
     )
-
 
   }
 
