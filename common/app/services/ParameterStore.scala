@@ -1,6 +1,6 @@
 package services
 
-import com.amazonaws.services.simplesystemsmanagement.model.{GetParameterRequest, GetParametersByPathRequest, PutParameterRequest, PutParameterResult}
+import com.amazonaws.services.simplesystemsmanagement.model.{GetParameterRequest, GetParametersByPathRequest}
 import com.amazonaws.services.simplesystemsmanagement.{AWSSimpleSystemsManagement, AWSSimpleSystemsManagementClientBuilder}
 import common.GuardianConfiguration
 import conf.Configuration
@@ -49,19 +49,4 @@ class ParameterStore(region: String) {
 
     pagination(Map.empty, None)
   }
-
-  def putPath(name: String, value: String): String = {
-
-    val result: PutParameterResult = client.putParameter(
-      new PutParameterRequest()
-        .withName(name)
-        .withType("SecureString")
-        .withOverwrite(true)
-        .withValue(value)
-    )
-
-    result.toString
-
-  }
-
 }
