@@ -3,6 +3,11 @@
 import config from 'lib/config';
 import prebid from 'commercial/modules/prebid/prebid';
 import 'prebid.js/build/dist/prebid';
+import { isInVariantSynchronous as isInVariantSynchronous_ } from 'common/modules/experiments/ab';
+import { getAdvertById as getAdvertById_ } from 'commercial/modules/dfp/get-advert-by-id';
+
+const isInVariantSynchronous: any = isInVariantSynchronous_;
+const getAdvertById: any = getAdvertById_;
 
 jest.mock('lib/raven');
 
@@ -15,7 +20,11 @@ jest.mock('commercial/modules/prebid/bid-config', () => ({
 }));
 
 jest.mock('common/modules/experiments/ab', () => ({
-    isInVariantSynchronous: () => false,
+    isInVariantSynchronous: jest.fn(() => false),
+}));
+
+jest.mock('commercial/modules/dfp/get-advert-by-id', () => ({
+    getAdvertById: jest.fn(),
 }));
 
 describe('initialise', () => {
@@ -28,6 +37,7 @@ describe('initialise', () => {
         config.set('switches.prebidXaxis', true);
         window.pbjs.setConfig({ consentManagement: {} });
         window.pbjs.setConfig({ s2sConfig: {} });
+        getAdvertById.mockReset();
     });
 
     test('should generate correct Prebid config when all switches on', () => {
@@ -121,7 +131,6 @@ describe('initialise', () => {
         prebid.initialise(window);
         expect(window.pbjs.getConfig().consentManagement).toEqual({});
     });
-
     test('should generate correct Prebid config when Ozone off', () => {
         config.set('switches.prebidS2sozone', false);
         prebid.initialise(window);
@@ -152,5 +161,127 @@ describe('initialise', () => {
         config.set('switches.prebidUserSync', false);
         prebid.initialise(window);
         expect(window.pbjs.getConfig().userSync.syncEnabled).toEqual(false);
+    });
+
+    test('should not listen for the prebid.js bidWon event if not in commercialPrebidSize A/B test', () => {
+        window.pbjs.onEvent = jest.fn();
+
+        prebid.initialise(window);
+
+        expect(window.pbjs.onEvent).not.toHaveBeenCalled();
+    });
+
+    test('should listen for the prebid.js bidWon event if in commercialPrebidSize A/B test', () => {
+        window.pbjs.onEvent = jest.fn();
+        isInVariantSynchronous.mockImplementation(() => true);
+
+        prebid.initialise(window);
+
+        expect(window.pbjs.onEvent).toHaveBeenCalledTimes(1);
+    });
+
+    test('should respond to prebid.js bidWon event', () => {
+        let bidWonEventName;
+        let bidWonEventHandler;
+        const dummyAdvert = {
+            size: [200, 200],
+            hasPrebidSize: false,
+        };
+
+        window.pbjs.onEvent = jest.fn((eventName, eventHandler) => {
+            bidWonEventName = eventName;
+            bidWonEventHandler = eventHandler;
+        });
+
+        isInVariantSynchronous.mockImplementation(() => true);
+        getAdvertById.mockImplementation(() => dummyAdvert);
+
+        prebid.initialise(window);
+
+        expect(bidWonEventName).toBe('bidWon');
+        expect(window.pbjs.onEvent).toHaveBeenCalledTimes(1);
+
+        bidWonEventHandler({
+            height: 100,
+            width: 100,
+            adUnitCode: 'foo',
+        });
+
+        expect(getAdvertById).toHaveBeenCalledTimes(1);
+        expect(getAdvertById).toHaveBeenCalledWith('foo');
+        expect(dummyAdvert.size).toMatchObject([100, 100]);
+        expect(dummyAdvert.hasPrebidSize).toBe(true);
+    });
+
+    test('should not respond to prebid.js bidWon event if height missing from prebid data', () => {
+        let bidWonEventName;
+        let bidWonEventHandler;
+
+        window.pbjs.onEvent = jest.fn((eventName, eventHandler) => {
+            bidWonEventName = eventName;
+            bidWonEventHandler = eventHandler;
+        });
+
+        isInVariantSynchronous.mockImplementation(() => true);
+
+        prebid.initialise(window);
+
+        expect(bidWonEventName).toBe('bidWon');
+        expect(window.pbjs.onEvent).toHaveBeenCalledTimes(1);
+
+        bidWonEventHandler({
+            width: 100,
+            adUnitCode: 'foo',
+        });
+
+        expect(getAdvertById).not.toHaveBeenCalled();
+    });
+
+    test('should not respond to prebid.js bidWon event if width missing from prebid data', () => {
+        let bidWonEventName;
+        let bidWonEventHandler;
+
+        window.pbjs.onEvent = jest.fn((eventName, eventHandler) => {
+            bidWonEventName = eventName;
+            bidWonEventHandler = eventHandler;
+        });
+
+        isInVariantSynchronous.mockImplementation(() => true);
+
+        prebid.initialise(window);
+
+        expect(bidWonEventName).toBe('bidWon');
+        expect(window.pbjs.onEvent).toHaveBeenCalledTimes(1);
+
+        bidWonEventHandler({
+            height: 100,
+            adUnitCode: 'foo',
+        });
+
+        expect(getAdvertById).not.toHaveBeenCalled();
+    });
+
+    test('should not respond to prebid.js bidWon event if adUnitCode missing from prebid data', () => {
+        let bidWonEventName;
+        let bidWonEventHandler;
+
+        window.pbjs.onEvent = jest.fn((eventName, eventHandler) => {
+            bidWonEventName = eventName;
+            bidWonEventHandler = eventHandler;
+        });
+
+        isInVariantSynchronous.mockImplementation(() => true);
+
+        prebid.initialise(window);
+
+        expect(bidWonEventName).toBe('bidWon');
+        expect(window.pbjs.onEvent).toHaveBeenCalledTimes(1);
+
+        bidWonEventHandler({
+            height: 100,
+            width: 100,
+        });
+
+        expect(getAdvertById).not.toHaveBeenCalled();
     });
 });

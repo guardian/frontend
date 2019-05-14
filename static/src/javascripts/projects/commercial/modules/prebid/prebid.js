@@ -204,17 +204,24 @@ const initialise = (window: {
         // Adjust slot size when prebid ad loads
         window.pbjs.onEvent('bidWon', data => {
             const { width, height, adUnitCode } = data;
+
+            if (!width || !height || !adUnitCode) {
+                return;
+            }
+
             const size = [width, height]; // eg. [300, 250]
             const advert: ?Advert = getAdvertById(adUnitCode);
 
-            if (advert) {
-                advert.size = size;
-                /**
-                 * when hasPrebidSize is true we use size
-                 * set here when adjusting the slot size.
-                 * */
-                advert.hasPrebidSize = true;
+            if (!advert) {
+                return;
             }
+
+            advert.size = size;
+            /**
+             * when hasPrebidSize is true we use size
+             * set here when adjusting the slot size.
+             * */
+            advert.hasPrebidSize = true;
         });
     }
 };
