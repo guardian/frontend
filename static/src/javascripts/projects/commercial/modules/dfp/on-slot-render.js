@@ -74,7 +74,14 @@ export const onSlotRender = (event: SlotRenderEndedEvent): void => {
         reportEmptyResponse(advert.id, event);
         emitRenderEvents(false);
     } else {
-        advert.size = event.size;
+        /**
+         * if advert.hasPrebidSize is false we use size
+         * from the GAM event when adjusting the slot size.
+         * */
+        if (!advert.hasPrebidSize) {
+            advert.size = event.size;
+        }
+
         if (event.creativeId !== undefined) {
             dfpEnv.creativeIDs.push(event.creativeId);
         }
