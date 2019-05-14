@@ -64,20 +64,43 @@ class ReauthenticationController(
     logger.trace("Rendering reauth form")
     val idRequest = idRequestParser(request)
     val googleId = request.user.socialLinks.find(_.network == "google").map(_.socialId)
-    val renderReauthenticate =
-      Future.successful(
+
+    // Included in payment failure links to faciliate sign-in.
+    // If present and the user needs to reauthenticate,
+    // manage will include it as a query parameter to be used by the /reauthenticate endpoint.
+    val autoSignInToken = request.getQueryString("autoSignInToken")
+
+    val renderReauthenticate = Future.successful {
+      if (autoSignInToken.isEmpty) {
         NoCache(Ok(
-            IdentityHtmlPage.html(
-              content = views.html.reauthenticate(idRequest, idUrlBuilder, filledForm, googleId)
-            )(page, request, context)
+          IdentityHtmlPage.html(
+            content = views.html.reauthenticate(idRequest, idUrlBuilder, filledForm, googleId)
+          )(page, request, context)
         ))
-      )
+      } else {
+        // If auto sign-in token query parameter is present but not used
+        // (i.e. the user isn't automatically redirected to the return url)
+        // drop the query parameter by redirecting to the same endpoint (/reauthenticate) without including it.
+        // This will prevent the token being present in logs or the datalake.
+        // NOTE: this might change in the future if some other (better) mechanism is used to pass auto sign-in tokens.
+        val call = routes.ReauthenticationController.renderForm(returnUrl)
+
+        val queryParams = idUrlBuilder
+          .flattenQueryParams(request.queryString)
+          // In addition to the auto sign-in token query parameter,
+          // don't include the returnUrl query parameter since this will already be included
+          // (the returnUrl val has been passed to the renderForm() function call).
+          .filter { case (key, _ ) => key != "autoSignInToken" && key != "returnUrl" }
+
+        NoCache(Redirect(idUrlBuilder.appendQueryParams(call.url, queryParams)))
+      }
+    }
 
     val autoSignIn = for {
-      autoSignInToken <- request.getQueryString("autoSignInToken")
-      returnUrl <- returnUrl
+      token <- autoSignInToken
+      url <- returnUrl
     } yield {
-      signInWithAutoSignInToken(autoSignInToken, returnUrl).flatMap {
+      signInWithAutoSignInToken(token, url).flatMap {
         case Left(errors) =>
           logger.error(s"unable to sign in with auto signin token, $errors")
           renderReauthenticate

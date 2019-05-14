@@ -17,6 +17,13 @@ class IdentityUrlBuilder(conf: IdConfig) {
     params.flatMap(param => if (param._2.isDefined) Some(param._1 -> param._2.get) else None)
   }
 
+  // Utility function to map Play's modelling of query parameters,
+  // to how query parameters are modelled in this class.
+  def flattenQueryParams(params: Map[String, Seq[String]]): List[(String, String)] =
+    params.foldLeft(List.empty[(String, String)]) { case (acc, (key, values)) =>
+      acc ++ values.map(key -> _)
+    }
+
   def appendQueryParams(url: String, params: List[(String, String)]): String = {
     val separator = if (url.contains("?")) "&" else "?"
     url + {
