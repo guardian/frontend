@@ -3,10 +3,8 @@
 import config from 'lib/config';
 import prebid from 'commercial/modules/prebid/prebid';
 import 'prebid.js/build/dist/prebid';
-import { isInVariantSynchronous as isInVariantSynchronous_ } from 'common/modules/experiments/ab';
 import { getAdvertById as getAdvertById_ } from 'commercial/modules/dfp/get-advert-by-id';
 
-const isInVariantSynchronous: any = isInVariantSynchronous_;
 const getAdvertById: any = getAdvertById_;
 
 jest.mock('lib/raven');
@@ -17,10 +15,6 @@ jest.mock('commercial/modules/dfp/Advert', () =>
 
 jest.mock('commercial/modules/prebid/bid-config', () => ({
     bids: jest.fn(),
-}));
-
-jest.mock('common/modules/experiments/ab', () => ({
-    isInVariantSynchronous: jest.fn(() => false),
 }));
 
 jest.mock('commercial/modules/dfp/get-advert-by-id', () => ({
@@ -163,23 +157,6 @@ describe('initialise', () => {
         expect(window.pbjs.getConfig().userSync.syncEnabled).toEqual(false);
     });
 
-    test('should not listen for the prebid.js bidWon event if not in commercialPrebidSize A/B test', () => {
-        window.pbjs.onEvent = jest.fn();
-
-        prebid.initialise(window);
-
-        expect(window.pbjs.onEvent).not.toHaveBeenCalled();
-    });
-
-    test('should listen for the prebid.js bidWon event if in commercialPrebidSize A/B test', () => {
-        window.pbjs.onEvent = jest.fn();
-        isInVariantSynchronous.mockImplementation(() => true);
-
-        prebid.initialise(window);
-
-        expect(window.pbjs.onEvent).toHaveBeenCalledTimes(1);
-    });
-
     test('should respond to prebid.js bidWon event', () => {
         let bidWonEventName;
         let bidWonEventHandler: ?() => void;
@@ -193,7 +170,6 @@ describe('initialise', () => {
             bidWonEventHandler = eventHandler;
         });
 
-        isInVariantSynchronous.mockImplementation(() => true);
         getAdvertById.mockImplementation(() => dummyAdvert);
 
         prebid.initialise(window);
@@ -224,8 +200,6 @@ describe('initialise', () => {
             bidWonEventHandler = eventHandler;
         });
 
-        isInVariantSynchronous.mockImplementation(() => true);
-
         prebid.initialise(window);
 
         expect(bidWonEventName).toBe('bidWon');
@@ -250,8 +224,6 @@ describe('initialise', () => {
             bidWonEventHandler = eventHandler;
         });
 
-        isInVariantSynchronous.mockImplementation(() => true);
-
         prebid.initialise(window);
 
         expect(bidWonEventName).toBe('bidWon');
@@ -275,8 +247,6 @@ describe('initialise', () => {
             bidWonEventName = eventName;
             bidWonEventHandler = eventHandler;
         });
-
-        isInVariantSynchronous.mockImplementation(() => true);
 
         prebid.initialise(window);
 
