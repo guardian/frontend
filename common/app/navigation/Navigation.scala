@@ -134,7 +134,7 @@ object NavMenu {
     edition match {
             case editions.Uk => NavRoot(Seq(navigationData.uk.newsPillar, navigationData.uk.opinionPillar, navigationData.uk.sportPillar, navigationData.uk.culturePillar, navigationData.uk.lifestylePillar), navigationData.uk.otherLinks, navigationData.uk.brandExtensions)
             case editions.Us => NavRoot(Seq(navigationData.us.newsPillar, navigationData.us.opinionPillar, navigationData.us.sportPillar, navigationData.us.culturePillar, navigationData.us.lifestylePillar), navigationData.us.otherLinks, navigationData.us.brandExtensions)
-            case editions.Au => NavRoot(Seq(navigationData.uk.newsPillar, navigationData.uk.opinionPillar, navigationData.uk.sportPillar, navigationData.uk.culturePillar, navigationData.uk.lifestylePillar), navigationData.uk.otherLinks, navigationData.uk.brandExtensions)
+            case editions.Au => NavRoot(Seq(navigationData.au.newsPillar, navigationData.au.opinionPillar, navigationData.au.sportPillar, navigationData.au.culturePillar, navigationData.au.lifestylePillar), navigationData.au.otherLinks, navigationData.au.brandExtensions)
             case editions.International => NavRoot(Seq(navigationData.international.newsPillar, navigationData.international.opinionPillar, navigationData.international.sportPillar, navigationData.international.culturePillar, navigationData.international.lifestylePillar), navigationData.international.otherLinks, navigationData.international.brandExtensions)
           }
   }
