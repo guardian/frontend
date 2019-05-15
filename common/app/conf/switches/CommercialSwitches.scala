@@ -118,16 +118,6 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-  val DoubleClickYouTubeAdFree = Switch(
-    Commercial,
-    "doubleclick-youtube-ad-free",
-    "Enable DoubleClick Segment for YouTube for Ad Free Users",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
   val RemarketingSwitch = Switch(
     Commercial,
     "remarketing",
