@@ -86,7 +86,8 @@ const populateGoal = (parentElement: HTMLElement, tickerType: TickerType) => {
         const labelElement = goalElement.querySelector('.js-ticker-label');
 
         if (countElement && labelElement) {
-            const amount = goalReached() && tickerType === 'unlimited' ? total : goal;
+            const amount =
+                goalReached() && tickerType === 'unlimited' ? total : goal;
             countElement.innerHTML = `${getLocalCurrencySymbol()}${amount.toLocaleString()}`;
 
             if (goalReached()) {
