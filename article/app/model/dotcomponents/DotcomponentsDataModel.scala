@@ -20,6 +20,7 @@ import play.api.mvc.RequestHeader
 import views.html.fragments.affiliateLinksDisclaimer
 import views.support.{AffiliateLinksCleaner, CamelCase, GUDateTimeFormat, ImgSrc, Item300}
 import ai.x.play.json.implicits.optionWithNull // Note, required despite Intellij saying otherwise
+import org.joda.time.{DateTime, DateTimeZone}
 
 
 // We have introduced our own set of objects for serializing data to the DotComponents API,
@@ -45,7 +46,9 @@ case class Block(
     bodyHtml: String,
     elements: List[PageElement],
     createdOn: Option[Long],
+    createdOnDisplay: Option[String],
     lastUpdated: Option[Long],
+    lastUpdatedDisplay: Option[String],
     title: Option[String],
 )
 
@@ -234,13 +237,19 @@ object DotcomponentsDataModel {
       tagPaths = article.content.tags.tags.map(_.id)
     )
 
-    def toBlock(block: APIBlock, shouldAddAffiliateLinks: Boolean): Block = {
+    def toBlock(block: APIBlock, shouldAddAffiliateLinks: Boolean, edition: Edition): Block = {
+      val createdOn = block.createdDate.map(_.dateTime)
+      val createdOnDisplay = createdOn.map(datetime => GUDateTimeFormat.dateTimeToLiveBlogDisplay(new DateTime(datetime), edition.timezone))
+      val lastUpdated = block.lastModifiedDate.map(_.dateTime)
+      val lastUpdatedDisplay = lastUpdated.map(datetime => GUDateTimeFormat.dateTimeToLiveBlogDisplay(new DateTime(datetime), edition.timezone))
       Block(
         id = block.id,
         bodyHtml = block.bodyHtml,
         elements = blocksToPageElements(block.elements, shouldAddAffiliateLinks),
-        createdOn = block.createdDate.map(_.dateTime),
-        lastUpdated = block.lastModifiedDate.map(_.dateTime),
+        createdOn = createdOn,
+        createdOnDisplay = createdOnDisplay,
+        lastUpdated = lastUpdated,
+        lastUpdatedDisplay = lastUpdatedDisplay,
         title = block.title,
       )
     }
@@ -285,12 +294,12 @@ object DotcomponentsDataModel {
 
     val bodyBlocks: List[Block] = {
       val bodyBlocks = blocks.body.getOrElse(Nil)
-        .map(block => toBlock(block, shouldAddAffiliateLinks)).toList
+        .map(block => toBlock(block, shouldAddAffiliateLinks, Edition(request))).toList
 
       val last60 = blocks.requestedBodyBlocks
         .getOrElse(Map.empty[String, Seq[APIBlock]])
         .getOrElse(Canonical.firstPage, Seq.empty[APIBlock])
-        .map(block => toBlock(block, shouldAddAffiliateLinks))
+        .map(block => toBlock(block, shouldAddAffiliateLinks, Edition(request)))
         .toList
 
       // This is the liveblog case
@@ -316,14 +325,14 @@ object DotcomponentsDataModel {
     }
 
     val mainBlock: Option[Block] = {
-      blocks.main.map(block => toBlock(block, shouldAddAffiliateLinks))
+      blocks.main.map(block => toBlock(block, shouldAddAffiliateLinks, Edition(request)))
     }
 
     val keyEvents: Seq[Block] = {
       blocks.requestedBodyBlocks
         .getOrElse(Map.empty[String, Seq[APIBlock]])
         .getOrElse("body:key-events", Seq.empty[APIBlock])
-        .map(block => toBlock(block, shouldAddAffiliateLinks))
+        .map(block => toBlock(block, shouldAddAffiliateLinks, Edition(request)))
     }
 
     val dcBlocks = Blocks(mainBlock, bodyBlocks, keyEvents.toList)
