@@ -45,9 +45,7 @@ case class Block(
     id: String,
     bodyHtml: String,
     elements: List[PageElement],
-    createdOn: Option[Long],
     createdOnDisplay: Option[String],
-    lastUpdated: Option[Long],
     lastUpdatedDisplay: Option[String],
     title: Option[String],
 )
@@ -246,9 +244,7 @@ object DotcomponentsDataModel {
         id = block.id,
         bodyHtml = block.bodyHtml,
         elements = blocksToPageElements(block.elements, shouldAddAffiliateLinks),
-        createdOn = createdOn,
         createdOnDisplay = createdOnDisplay,
-        lastUpdated = lastUpdated,
         lastUpdatedDisplay = lastUpdatedDisplay,
         title = block.title,
       )
