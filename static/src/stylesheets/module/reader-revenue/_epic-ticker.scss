@@ -88,7 +88,7 @@ $progress-bar-height: 10px;
 .epic-ticker__goal-reached .epic-ticker__progress-container:after {
     content: '';
     position: absolute;
-    background: #121212;
+    background: $brightness-7;
     width: 2px;
     height: 15px;
     right: 0;
