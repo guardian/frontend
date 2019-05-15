@@ -16,7 +16,7 @@ const goalReached = () => total >= goal;
  */
 const percentageToTranslate = (tickerType: TickerType) => {
     const percentage = (total / goal) * 100 - 100;
-    const endOfFillPercentage = () => tickerType === 'unlimited' ? -15 : 0;
+    const endOfFillPercentage = () => (tickerType === 'unlimited' ? -15 : 0);
 
     return percentage >= 0 ? endOfFillPercentage() : percentage;
 };
@@ -32,13 +32,16 @@ const animateBar = (parentElement: HTMLElement, tickerType: TickerType) => {
     }
 };
 
-const increaseCounter = (parentElementSelector: string, counterElement: HTMLElement) => {
+const increaseCounter = (
+    parentElementSelector: string,
+    counterElement: HTMLElement
+) => {
     // Count is local to the parent element
     count[parentElementSelector] += Math.floor(total / 100);
 
     counterElement.innerHTML = `${getLocalCurrencySymbol()}${count[
         parentElementSelector
-        ].toLocaleString()}`;
+    ].toLocaleString()}`;
     if (count[parentElementSelector] >= total) {
         counterElement.innerHTML = `${getLocalCurrencySymbol()}${total.toLocaleString()}`;
     } else {
@@ -48,7 +51,11 @@ const increaseCounter = (parentElementSelector: string, counterElement: HTMLElem
     }
 };
 
-const populateStatusSoFar = (parentElementSelector: string, parentElement: HTMLElement, tickerType: TickerType) => {
+const populateStatusSoFar = (
+    parentElementSelector: string,
+    parentElement: HTMLElement,
+    tickerType: TickerType
+) => {
     const counterElement = parentElement.querySelector(
         `.js-ticker-amounts .js-ticker-count`
     );
@@ -66,7 +73,7 @@ const populateStatusSoFar = (parentElementSelector: string, parentElement: HTMLE
             }
         } else {
             labelElement.classList.remove('is-hidden');
-            increaseCounter(parentElementSelector, counterElement)
+            increaseCounter(parentElementSelector, counterElement);
         }
     }
 };
@@ -102,7 +109,11 @@ const animate = (parentElementSelector: string, tickerType: TickerType) => {
         window.setTimeout(() => {
             count[parentElementSelector] = 0;
             window.requestAnimationFrame(() =>
-                populateStatusSoFar(parentElementSelector, parentElement, tickerType)
+                populateStatusSoFar(
+                    parentElementSelector,
+                    parentElement,
+                    tickerType
+                )
             );
             animateBar(parentElement, tickerType);
         }, 500);
@@ -114,7 +125,10 @@ const animate = (parentElementSelector: string, tickerType: TickerType) => {
 
 const dataSuccessfullyFetched = () => total && goal;
 
-const fetchDataAndAnimate = (parentElementSelector: string, tickerType: TickerType) => {
+const fetchDataAndAnimate = (
+    parentElementSelector: string,
+    tickerType: TickerType
+) => {
     if (dataSuccessfullyFetched()) {
         animate(parentElementSelector, tickerType);
     } else {
@@ -131,6 +145,9 @@ const fetchDataAndAnimate = (parentElementSelector: string, tickerType: TickerTy
     }
 };
 
-export const initTicker = (parentElementSelector: string, tickerType?: TickerType) => {
+export const initTicker = (
+    parentElementSelector: string,
+    tickerType?: TickerType
+) => {
     fetchDataAndAnimate(parentElementSelector, tickerType || 'hardstop');
 };
