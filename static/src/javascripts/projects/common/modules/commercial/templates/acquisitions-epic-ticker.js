@@ -7,13 +7,13 @@ export const acquisitionsEpicTickerTemplate = `
     
         <div class="js-ticker-amounts">
             <div class="js-ticker-so-far epic-ticker__so-far">
-                <div class="js-ticker-count epic-ticker__count">${getLocalCurrencySymbol()}0</div>
-                <div class="epic-ticker__count-label">contributed</div>
+                <div class="js-ticker-count epic-ticker__count"></div>
+                <div class="js-ticker-label epic-ticker__count-label is-hidden">contributed</div>
             </div>
             
-            <div class="js-ticker-goal epic-ticker__goal is-hidden">
+            <div class="js-ticker-goal epic-ticker__goal">
                 <div class="js-ticker-count epic-ticker__count">${getLocalCurrencySymbol()}0</div>
-                <div class="epic-ticker__count-label">our goal</div>
+                <div class="js-ticker-label epic-ticker__count-label">our goal</div>
             </div>
         </div>
         
