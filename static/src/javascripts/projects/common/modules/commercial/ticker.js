@@ -78,19 +78,19 @@ const populateStatusSoFar = (
     }
 };
 
-const populateGoal = (parentElement: HTMLElement) => {
+const populateGoal = (parentElement: HTMLElement, tickerType: TickerType) => {
     const goalElement = parentElement.querySelector('.js-ticker-goal');
 
     if (goalElement) {
         const countElement = goalElement.querySelector('.js-ticker-count');
-        if (countElement) {
-            countElement.innerHTML = `${getLocalCurrencySymbol()}${goal.toLocaleString()}`;
-        }
+        const labelElement = goalElement.querySelector('.js-ticker-label');
 
-        if (goalReached()) {
-            const label = goalElement.querySelector('.js-ticker-label');
-            if (label) {
-                label.innerHTML = 'contributed';
+        if (countElement && labelElement) {
+            const amount = goalReached() && tickerType === 'unlimited' ? total : goal;
+            countElement.innerHTML = `${getLocalCurrencySymbol()}${amount.toLocaleString()}`;
+
+            if (goalReached()) {
+                labelElement.innerHTML = 'contributed';
             }
         }
     }
@@ -104,7 +104,7 @@ const animate = (parentElementSelector: string, tickerType: TickerType) => {
             parentElement.classList.add('epic-ticker__goal-reached');
         }
 
-        populateGoal(parentElement);
+        populateGoal(parentElement, tickerType);
 
         window.setTimeout(() => {
             count[parentElementSelector] = 0;
@@ -149,5 +149,5 @@ export const initTicker = (
     parentElementSelector: string,
     tickerType?: TickerType
 ) => {
-    fetchDataAndAnimate(parentElementSelector, tickerType || 'hardstop');
+    fetchDataAndAnimate(parentElementSelector, tickerType || 'unlimited');
 };
