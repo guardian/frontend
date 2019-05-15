@@ -1,13 +1,14 @@
 package views.support
 
 import java.text.DecimalFormat
+import java.util.Locale
 
 import common._
 import model.Cached.WithoutRevalidationResult
 import model._
 import model.pressed.PressedContent
 import org.apache.commons.lang.StringEscapeUtils
-import org.joda.time.format.DateTimeFormat
+import org.joda.time.format.{DateTimeFormat, ISODateTimeFormat}
 import org.joda.time.{DateTime, DateTimeZone, LocalDate}
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
@@ -133,6 +134,9 @@ object GUDateTimeFormat {
       case "AU" => date.toString(DateTimeFormat.forPattern("HH.mm").withZone(timezone)) + " " + timezone.getShortName(date.getMillis)
       case _ => date.toString(DateTimeFormat.forPattern("HH.mm z").withZone(timezone))
     }
+  }
+  def dateTimeToLiveBlogDisplay(dateTime: DateTime, timezone: DateTimeZone): String = {
+    dateTime.toString(DateTimeFormat.forPattern("HH.mm z").withZone(timezone))
   }
 }
 
