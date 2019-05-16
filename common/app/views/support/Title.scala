@@ -53,13 +53,6 @@ object Title {
       .map(titleFromSectionId)
       .fold("") { s => s" | ${guCapitalization(s)}" }}
 
-//  private def getSectionConsideringWebtitle(webTitle: String, section: Option[String]): String =
-//    section.filter(_.nonEmpty)
-//      .filterNot(_.toLowerCase == webTitle.toLowerCase)
-//      .filterNot(SectionsToIgnore.contains)
-//      .map(titleFromSectionId)
-//      .fold("") { s => s" | ${s.capitalize}"}
-
   private def pagination(page: Page) = page.metadata.pagination.filterNot(_.isFirstPage).map{ pagination =>
     s" | Page ${pagination.currentPage} of ${pagination.lastPage}"
   }.getOrElse("")
