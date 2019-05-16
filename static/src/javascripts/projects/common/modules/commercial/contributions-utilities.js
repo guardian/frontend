@@ -81,9 +81,9 @@ const defaultMaxViews: MaxViews = {
     minDaysBetweenViews: 0,
 };
 
-const defaultButtonTemplate: CtaUrls => string = (
+const defaultButtonTemplate: (CtaUrls, ctaText?: string) => string = (
     url: CtaUrls,
-    ctaText: ?string
+    ctaText?: string
 ) => epicButtonsTemplate(url, ctaText);
 
 const controlTemplate: EpicTemplate = (

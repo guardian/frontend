@@ -5,7 +5,7 @@ import applyPayMark from 'svgs/acquisitions/apple-pay-mark.svg';
 
 export const epicButtonsTemplate = (
     { supportUrl = '' }: CtaUrls,
-    ctaText: string = 'Support The Guardian'
+    ctaText?: string = 'Support The Guardian'
 ) => {
     const applePayLogo = applePayApiAvailable ? applyPayMark.markup : '';
 
