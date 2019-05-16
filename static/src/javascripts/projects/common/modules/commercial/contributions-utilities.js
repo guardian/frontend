@@ -81,8 +81,10 @@ const defaultMaxViews: MaxViews = {
     minDaysBetweenViews: 0,
 };
 
-const defaultButtonTemplate: CtaUrls => string = (url: CtaUrls, ctaText: ?string) =>
-    epicButtonsTemplate(url, ctaText);
+const defaultButtonTemplate: CtaUrls => string = (
+    url: CtaUrls,
+    ctaText: ?string
+) => epicButtonsTemplate(url, ctaText);
 
 const controlTemplate: EpicTemplate = (
     variant: EpicVariant,
@@ -92,10 +94,13 @@ const controlTemplate: EpicTemplate = (
         copy,
         componentName: variant.componentName,
         buttonTemplate: variant.buttonTemplate
-            ? variant.buttonTemplate({
-                supportUrl: variant.supportURL,
-                subscribeUrl: variant.subscribeURL,
-            }, variant.ctaText)
+            ? variant.buttonTemplate(
+                  {
+                      supportUrl: variant.supportURL,
+                      subscribeUrl: variant.subscribeURL,
+                  },
+                  variant.ctaText
+              )
             : undefined,
         epicClassNames: variant.classNames,
         showTicker: variant.showTicker,
