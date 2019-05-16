@@ -81,8 +81,8 @@ const defaultMaxViews: MaxViews = {
     minDaysBetweenViews: 0,
 };
 
-const defaultButtonTemplate: CtaUrls => string = (url: CtaUrls) =>
-    epicButtonsTemplate(url);
+const defaultButtonTemplate: CtaUrls => string = (url: CtaUrls, ctaText: ?string) =>
+    epicButtonsTemplate(url, ctaText);
 
 const controlTemplate: EpicTemplate = (
     variant: EpicVariant,
@@ -93,9 +93,9 @@ const controlTemplate: EpicTemplate = (
         componentName: variant.componentName,
         buttonTemplate: variant.buttonTemplate
             ? variant.buttonTemplate({
-                  supportUrl: variant.supportURL,
-                  subscribeUrl: variant.subscribeURL,
-              })
+                supportUrl: variant.supportURL,
+                subscribeUrl: variant.subscribeURL,
+            }, variant.ctaText)
             : undefined,
         epicClassNames: variant.classNames,
         showTicker: variant.showTicker,
@@ -243,6 +243,7 @@ const makeEpicABTestVariant = (
         }),
         template,
         buttonTemplate: initVariant.buttonTemplate,
+        ctaText: initVariant.ctaText,
         copy: initVariant.copy,
         classNames: initVariant.classNames || [],
         showTicker: initVariant.showTicker || false,
@@ -578,6 +579,7 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                             buttonTemplate: isThankYou
                                 ? undefined
                                 : defaultButtonTemplate,
+                            ctaText: row.ctaText,
                             countryGroups: optionalSplitAndTrim(
                                 row.locations,
                                 ','
