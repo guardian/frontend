@@ -15,7 +15,6 @@ const buildImage = (url: string): string =>
 export const acquisitionsEpicControlTemplate = ({
     copy: { heading = '', paragraphs, highlightedText, footer },
     componentName,
-    epicClassNames = [],
     buttonTemplate,
     wrapperClass = '',
     showTicker = false,
@@ -23,13 +22,14 @@ export const acquisitionsEpicControlTemplate = ({
 }: {
     copy: AcquisitionsEpicTemplateCopy,
     componentName: string,
-    epicClassNames: string[],
     buttonTemplate?: string,
     wrapperClass?: string,
     showTicker: boolean,
     backgroundImageUrl?: string,
 }) => {
-    const extraClasses = backgroundImageUrl ? 'contributions__epic--with-image' : '';
+    const extraClasses = backgroundImageUrl
+        ? 'contributions__epic--with-image'
+        : '';
 
     return `<div class="contributions__epic ${extraClasses}" data-component="${componentName}" data-link-name="epic">
         <div class="${wrapperClass}">

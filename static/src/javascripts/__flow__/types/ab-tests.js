@@ -29,7 +29,6 @@ declare type EpicVariant = Variant & {
     subscribeURL: string,
     componentName: string,
     template: EpicTemplate,
-    classNames: string[],
     showTicker: boolean,
 
     buttonTemplate?: (CtaUrls, ctaText?: string) => string,
@@ -96,7 +95,6 @@ declare type InitEpicABTestVariant = {
     buttonTemplate?: (CtaUrls, ctaText?: string) => string,
     ctaText?: string,
     copy?: AcquisitionsEpicTemplateCopy,
-    classNames?: string[],
     showTicker?: boolean,
     supportBaseURL?: string,
     backgroundImageUrl?: string,

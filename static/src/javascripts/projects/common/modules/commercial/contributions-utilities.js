@@ -619,7 +619,9 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                             },
                             showTicker: optionalStringToBoolean(row.showTicker),
                             supportBaseURL: row.supportBaseURL,
-                            backgroundImageUrl: filterEmptyString(row.backgroundImageUrl),
+                            backgroundImageUrl: filterEmptyString(
+                                row.backgroundImageUrl
+                            ),
                         })),
                     });
                 });
