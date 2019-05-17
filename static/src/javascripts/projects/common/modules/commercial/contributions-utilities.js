@@ -27,6 +27,7 @@ import {
     optionalSplitAndTrim,
     optionalStringToBoolean,
     throwIfEmptyString,
+    filterEmptyString,
 } from 'lib/string-utils';
 import { throwIfEmptyArray } from 'lib/array-utils';
 import { epicButtonsTemplate } from 'common/modules/commercial/templates/acquisitions-epic-buttons';
@@ -81,8 +82,10 @@ const defaultMaxViews: MaxViews = {
     minDaysBetweenViews: 0,
 };
 
-const defaultButtonTemplate: CtaUrls => string = (url: CtaUrls) =>
-    epicButtonsTemplate(url);
+const defaultButtonTemplate: (CtaUrls, ctaText?: string) => string = (
+    url: CtaUrls,
+    ctaText?: string
+) => epicButtonsTemplate(url, ctaText);
 
 const controlTemplate: EpicTemplate = (
     variant: EpicVariant,
@@ -92,10 +95,13 @@ const controlTemplate: EpicTemplate = (
         copy,
         componentName: variant.componentName,
         buttonTemplate: variant.buttonTemplate
-            ? variant.buttonTemplate({
-                  supportUrl: variant.supportURL,
-                  subscribeUrl: variant.subscribeURL,
-              })
+            ? variant.buttonTemplate(
+                  {
+                      supportUrl: variant.supportURL,
+                      subscribeUrl: variant.subscribeURL,
+                  },
+                  variant.ctaText
+              )
             : undefined,
         epicClassNames: variant.classNames,
         showTicker: variant.showTicker,
@@ -243,6 +249,7 @@ const makeEpicABTestVariant = (
         }),
         template,
         buttonTemplate: initVariant.buttonTemplate,
+        ctaText: initVariant.ctaText,
         copy: initVariant.copy,
         classNames: initVariant.classNames || [],
         showTicker: initVariant.showTicker || false,
@@ -578,6 +585,7 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                             buttonTemplate: isThankYou
                                 ? undefined
                                 : defaultButtonTemplate,
+                            ctaText: filterEmptyString(row.ctaText),
                             countryGroups: optionalSplitAndTrim(
                                 row.locations,
                                 ','
