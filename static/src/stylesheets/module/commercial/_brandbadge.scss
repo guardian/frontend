@@ -45,7 +45,10 @@
     }
 
     .badge__logo {
-        max-height: none;
+        max-height: 6 * $gs-baseline;
+        @include mq(tablet) {
+            max-height: none;
+        }
         max-width: 100%;
         margin: 0 0 5px;
     }
