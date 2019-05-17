@@ -23,3 +23,6 @@ export const throwIfEmptyString = (name: string, str: ?string): string => {
 
     throw new Error(`${name} is empty`);
 };
+
+export const filterEmptyString = (str: ?string): ?string =>
+    str && str.trim().length > 0 ? str.trim() : undefined;

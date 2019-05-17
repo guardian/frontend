@@ -27,6 +27,7 @@ import {
     optionalSplitAndTrim,
     optionalStringToBoolean,
     throwIfEmptyString,
+    filterEmptyString,
 } from 'lib/string-utils';
 import { throwIfEmptyArray } from 'lib/array-utils';
 import { epicButtonsTemplate } from 'common/modules/commercial/templates/acquisitions-epic-buttons';
@@ -584,7 +585,7 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                             buttonTemplate: isThankYou
                                 ? undefined
                                 : defaultButtonTemplate,
-                            ctaText: row.ctaText,
+                            ctaText: filterEmptyString(row.ctaText),
                             countryGroups: optionalSplitAndTrim(
                                 row.locations,
                                 ','
