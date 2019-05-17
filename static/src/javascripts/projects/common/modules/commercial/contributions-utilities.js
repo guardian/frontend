@@ -103,8 +103,8 @@ const controlTemplate: EpicTemplate = (
                   variant.ctaText
               )
             : undefined,
-        epicClassNames: variant.classNames,
         showTicker: variant.showTicker,
+        backgroundImageUrl: variant.backgroundImageUrl,
     });
 
 const liveBlogTemplate: EpicTemplate = (
@@ -251,8 +251,8 @@ const makeEpicABTestVariant = (
         buttonTemplate: initVariant.buttonTemplate,
         ctaText: initVariant.ctaText,
         copy: initVariant.copy,
-        classNames: initVariant.classNames || [],
         showTicker: initVariant.showTicker || false,
+        backgroundImageUrl: initVariant.backgroundImageUrl,
 
         countryGroups: initVariant.countryGroups || [],
         tagIds: initVariant.tagIds || [],
@@ -617,12 +617,9 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                                     : undefined,
                                 footer: optionalSplitAndTrim(row.footer, '\n'),
                             },
-                            classNames: optionalSplitAndTrim(
-                                row.classNames,
-                                ','
-                            ),
                             showTicker: optionalStringToBoolean(row.showTicker),
                             supportBaseURL: row.supportBaseURL,
+                            backgroundImageUrl: filterEmptyString(row.backgroundImageUrl),
                         })),
                     });
                 });

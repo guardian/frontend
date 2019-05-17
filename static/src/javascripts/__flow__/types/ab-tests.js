@@ -35,6 +35,7 @@ declare type EpicVariant = Variant & {
     buttonTemplate?: (CtaUrls, ctaText?: string) => string,
     ctaText?: string,
     copy?: AcquisitionsEpicTemplateCopy,
+    backgroundImageUrl?: string,
 }
 
 declare type ABTest = {
@@ -98,6 +99,7 @@ declare type InitEpicABTestVariant = {
     classNames?: string[],
     showTicker?: boolean,
     supportBaseURL?: string,
+    backgroundImageUrl?: string,
 };
 
 declare type InitBannerABTestVariant = {

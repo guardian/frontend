@@ -286,26 +286,28 @@ a[href].contributions__contribute.contributions__contribute--epic,
     }
 }
 
-.contributions__epic--thefrontline {
+.contributions__epic-image {
+    display: none;
+    @include mq($from: tablet) {
+        display: block;
+    }
+
+    margin: 10px -5px 12px;
+    height: 150px;
+    width: calc(100% + 10px);
+
+    img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+    }
+}
+
+.contributions__epic--with-image {
     .contributions__title {
         @include fs-header(5);
         font-size: 28px;
         line-height: 28px;
-
-        &:before {
-            content: '';
-            background-repeat: no-repeat;
-            margin: 10px -5px 12px;
-            background-image: url('https://media.guim.co.uk/b9ed1767866d29186f198b523cd5571aeda02a88/0_1269_5184_1516/1000.jpg');
-            background-size: 100%;
-            background-position: center bottom;
-            height: 150px;
-
-            display: none;
-            @include mq($from: tablet) {
-                display: block;
-            }
-        }
     }
 
     p:last-child {
