@@ -10,8 +10,7 @@ import conf.switches.Switches
 import conf.{Configuration, Static}
 import model.content.Atom
 import model.dotcomrendering.pageElements.{DisclaimerBlockElement, PageElement}
-import model.meta._
-import model.{Canonical, LiveBlogPage, PageWithStoryPackage, SubMetaLinks}
+import model.{Article, Canonical, LiveBlogPage, PageWithStoryPackage, SubMetaLinks}
 import navigation.NavMenu
 import navigation.ReaderRevenueSite.{Support, SupportContribute, SupportSubscribe}
 import navigation.UrlHelpers._
@@ -19,7 +18,8 @@ import play.api.libs.json._
 import play.api.mvc.RequestHeader
 import views.html.fragments.affiliateLinksDisclaimer
 import views.support.{AffiliateLinksCleaner, CamelCase, GUDateTimeFormat, ImgSrc, Item300}
-import ai.x.play.json.implicits.optionWithNull // Note, required despite Intellij saying otherwise
+import ai.x.play.json.implicits.optionWithNull
+import controllers.ArticlePage
 import org.joda.time.{DateTime, DateTimeZone}
 
 
@@ -290,23 +290,27 @@ object DotcomponentsDataModel {
       }
     }
 
-    val bodyBlocks: List[Block] = {
-      val bodyBlocks = blocks.body.getOrElse(Nil)
-        .map(block => toBlock(block, shouldAddAffiliateLinks, Edition(request))).toList
-
+    def blocksForLiveblogPage(liveblog: LiveBlogPage, blocks: APIBlocks): Seq[APIBlock] = {
       val last60 = blocks.requestedBodyBlocks
         .getOrElse(Map.empty[String, Seq[APIBlock]])
         .getOrElse(Canonical.firstPage, Seq.empty[APIBlock])
-        .map(block => toBlock(block, shouldAddAffiliateLinks, Edition(request)))
         .toList
 
-      // This is the liveblog case
-      if (last60.nonEmpty) {
-        last60
-      } else {
-        bodyBlocks
-      }
+      // For the newest page, the last 60 blocks are requested, but for other page,
+      // all of the blocks have been requested and returned in the blocks.body bit
+      // of the response so we use those
+      val relevantBlocks = if (last60.isEmpty) blocks.body.getOrElse(Nil) else last60
+
+      val ids = liveblog.currentPage.currentPage.blocks.map(_.id).toSet
+      relevantBlocks.filter(block => ids(block.id))
     }
+
+    val bodyBlocksRaw = articlePage match {
+      case lb: LiveBlogPage => blocksForLiveblogPage(lb, blocks)
+      case article => blocks.body.getOrElse(Nil)
+    }
+
+    val bodyBlocks = bodyBlocksRaw.map(block => toBlock(block, shouldAddAffiliateLinks, Edition(request))).toList
 
     val pagination = articlePage match {
       case liveblog: LiveBlogPage => liveblog.currentPage.pagination.map(paginationInfo => {
@@ -337,7 +341,6 @@ object DotcomponentsDataModel {
 
     val jsConfig = (k: String) => articlePage.getJavascriptConfig.get(k).map(_.as[String])
 
-
     val jsPageData = Configuration.javascript.pageData mapKeys { key =>
       CamelCase.fromHyphenated(key.split('.').lastOption.getOrElse(""))
     }
@@ -359,7 +362,19 @@ object DotcomponentsDataModel {
         main.getOrElse(Configuration.images.fallbackLogo)
       }
 
-      LinkedData(article, Configuration.amp.baseUrl, Configuration.images.fallbackLogo)
+      articlePage match {
+        case liveblog: LiveBlogPage => LinkedData.forLiveblog(
+          liveblog = liveblog,
+          blocks = bodyBlocksRaw,
+          baseURL = Configuration.amp.baseUrl,
+          fallbackLogo = Configuration.images.fallbackLogo
+        )
+        case regular: ArticlePage => LinkedData.forArticle(
+          article = regular.article,
+          baseURL = Configuration.amp.baseUrl,
+          fallbackLogo = Configuration.images.fallbackLogo
+        )
+      }
     }
 
     val allTags = article.tags.tags.map(
