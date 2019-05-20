@@ -8,6 +8,7 @@ import { askFourEarning } from 'common/modules/experiments/tests/contributions-e
 import { acquisitionsEpicAlwaysAskIfTagged } from 'common/modules/experiments/tests/acquisitions-epic-always-ask-if-tagged';
 import { adblockTest } from 'common/modules/experiments/tests/adblock-ask';
 import { contributionsGlobalMobileBannerDesign } from 'common/modules/experiments/tests/contribs-global-mobile-banner-design';
+import {acquisitionsBannerSignInCta} from "common/modules/experiments/tests/acquisitions-banner-sign-in-cta";
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialPrebidSafeframe,
@@ -24,6 +25,7 @@ export const epicTests: $ReadOnlyArray<EpicABTest> = [
 ];
 
 export const engagementBannerTests: $ReadOnlyArray<AcquisitionsABTest> = [
+    acquisitionsBannerSignInCta,
     /** *********************************************************
      2 May 2019 - JTL - This test is disabled as of 2 May 2019
      This test went out on mobile devices the same day as a
