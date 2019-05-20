@@ -37,6 +37,7 @@ object AMPPageChecks extends Logging {
       case Video => true
       case Contentatom => true
       case Audio => true
+      case Interactive => true
       case _: ElementType => false
     }
 
