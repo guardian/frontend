@@ -168,10 +168,13 @@ export const bootCommercial = (): Promise<void> => {
             ]);
         })
         .catch(err => {
-            // Just in case something goes wrong, we don't want it to
-            // prevent enhanced from loading
-            reportError(err, {
-                feature: 'commercial',
-            });
+            // report async errors in bootCommercial to Sentry with the commercial feature tag
+            reportError(
+                err,
+                {
+                    feature: 'commercial',
+                },
+                false
+            );
         });
 };
