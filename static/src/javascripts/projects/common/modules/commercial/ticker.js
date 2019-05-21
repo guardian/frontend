@@ -124,7 +124,7 @@ const animate = (parentElementSelector: string, tickerType: TickerType) => {
     }
 };
 
-const dataSuccessfullyFetched = () => total && goal;
+const dataSuccessfullyFetched = () => !(isNaN(total) || isNaN(goal));
 
 const fetchDataAndAnimate = (
     parentElementSelector: string,
