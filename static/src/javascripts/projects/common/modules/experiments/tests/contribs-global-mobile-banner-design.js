@@ -1,27 +1,11 @@
 // @flow
 
-/** *********************************************************
- 2 May 2019 - JTL - This test is disabled as of 2 May 2019
- This test went out on mobile devices the same day as a
- global copy test went out across all devices. The copy
- test runs before tests in the code (per `ab.js`) which is
- desired behavior. A user can only be assigned to one banner
- test at a time (also desired), so we decided to give the
- copy test time precedence over this test.
-
- TBD: Re-enable this test to run after the copy test has run
- Steps:
- 1. Enable on switchboard
- 2. Test
- 3. Remove this copy, merge, test again
- ********************************************************** */
-
 import { isBreakpoint } from 'lib/detect';
 import { acquisitionsBannerControlTemplate } from 'common/modules/commercial/templates/acquisitions-banner-control';
 import { acquisitionsBannerMobileDesignTestTemplate } from 'common/modules/commercial/templates/acquisitions-banner-mobile-design-test';
 
-const mobileHeader: string = `The Guardian is editorially independent...`;
-const mobileBody: string = `...our journalism is free from the influence of billionaire owners or politicians. No one edits our editor. No one steers our opinion.  This means we can pursue difficult investigations, challenging the powerful and holding them to account. And unlike many others, we have chosen an approach that allows us to keep our journalism open and accessible to all, regardless of where they live or what they can afford. But we depend on voluntary contributions from readers to keep working as we do.`;
+const mobileHeader: string = `We chose a different approach.<br/>Will you support it?`;
+const mobileBody: string = `Unlike many news organisations, we made a choice to keep all of our independent, investigative reporting free and available for everyone. We believe that each of us, around the world, deserves access to accurate information with integrity at its heart. At a time when factual reporting is critical, support from our readers is essential in safeguarding The Guardian’s editorial independence. This is our model for open, independent journalism.`
 
 export const contributionsGlobalMobileBannerDesign: AcquisitionsABTest = {
     id: 'ContributionsGlobalMobileBannerDesign',
