@@ -60,7 +60,10 @@ const go = () => {
                 try {
                     return bootCommercial();
                 } catch (err) {
-                    // report sync errors in bootCommercial to Sentry with the commercial feature tag
+                    /**
+                     * report sync errors in bootCommercial to
+                     * Sentry with the commercial feature tag
+                     *  */
                     reportError(
                         err,
                         {
@@ -75,7 +78,10 @@ const go = () => {
                 try {
                     return bootEnhanced();
                 } catch (err) {
-                    // report sync errors in bootEnhanced to Sentry with the enhanced feature tag
+                    /**
+                     * report sync errors in bootEnhanced to
+                     * Sentry with the enhanced feature tag
+                     *  */
                     reportError(
                         err,
                         {
