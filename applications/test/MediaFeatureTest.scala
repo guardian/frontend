@@ -3,7 +3,7 @@ package test
 import org.scalatest.{DoNotDiscover, Matchers, GivenWhenThen, FeatureSpec}
 
 @DoNotDiscover class MediaFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with ConfiguredTestSuite {
-  feature("Media") {
+  feature("Media (video)") {
 
     info("In order to experience all the wonderful videos the Guardian publish")
     info("As a sighted Guardian reader")
