@@ -136,7 +136,9 @@ object GUDateTimeFormat {
     }
   }
   def dateTimeToLiveBlogDisplay(dateTime: DateTime, timezone: DateTimeZone): String = {
-    dateTime.toString(DateTimeFormat.forPattern("HH.mm z").withZone(timezone))
+    // The reason for .toLowerCase is that I could not find the code for lowercase half day marker: am or pm
+    // So we "4.59 PM".toLowerCase
+    dateTime.toString(DateTimeFormat.forPattern("h.mm a").withZone(timezone)).toLowerCase
   }
 }
 
