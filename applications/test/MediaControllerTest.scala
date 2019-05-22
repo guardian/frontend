@@ -80,4 +80,38 @@ import scala.util.matching.Regex
     mp4.isDefined should be(true)
     webm.isDefined should be(true)
   }
+
+  val audioUrl = "/news/audio/2019/may/16/facing-up-europe-far-right-podcast"
+
+  "Media Controller" should "200 when content type is audio" in {
+    val result = mediaController.render(audioUrl)(TestRequest(audioUrl))
+    status(result) should be(200)
+  }
+
+  it should "render audio with an acast URL" in {
+    val fakeRequest = TestRequest(audioUrl)
+    val result = mediaController.render(audioUrl)(fakeRequest)
+
+    status(result) should be(200)
+
+    val html = Jsoup.parse(contentAsString(result))
+    val audioEl = html.getElementsByClass("podcast__player")
+
+    audioEl.attr("data-source") should startWith("https://flex.acast.com/audio.guim.co.uk")
+    audioEl.attr("data-download-url") should startWith("https://audio.guim.co.uk")
+  }
+
+  it should "NOT render audio with an acast URL for ad-free requests" in {
+    val fakeRequest = TestRequest(audioUrl).withHeaders("X-GU-Commercial-Ad-Free" -> "true")
+    val result = mediaController.render(audioUrl)(fakeRequest)
+
+    status(result) should be(200)
+
+    val html = Jsoup.parse(contentAsString(result))
+    val audioEl = html.getElementsByClass("podcast__player")
+
+    audioEl.attr("data-source") should startWith("https://audio.guim.co.uk")
+    audioEl.attr("data-download-url") should startWith("https://audio.guim.co.uk")
+  }
+
 }
