@@ -29,7 +29,7 @@ const logError = (
     }
 
     if (tags) {
-        reportError(error, Object.assign({}, { module }, tags), false);
+        reportError(error, Object.assign({ module }, tags), false);
     } else {
         reportError(error, { module }, false);
     }
