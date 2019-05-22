@@ -355,7 +355,7 @@ case object GreenLight extends FrontEmailMetadata {
 }
 
 case object GunsAndLiesInAmerica extends FrontEmailMetadata {
-  val name = "Guns and Lies in America"
+  val name = "Guns And Lies In America"
   override val banner = Some("guns_and_lies.png")
 }
 
