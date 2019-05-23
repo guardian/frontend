@@ -6,8 +6,6 @@ import scala.util.Try
 
 object ReturnJourney {
   private val paymentFailureCodes = Set("PF", "PF1", "PF2", "PF3", "PF4", "CCX")
-  private val subscriptionsClientId = "subscriptions"
-  private val contributionsClientId = "recurringContributions"
 
   sealed trait Journey {
     def applies(returnUri: Uri): Boolean
@@ -26,19 +24,19 @@ object ReturnJourney {
   }
 
   case object Subscriptions extends Journey {
+    // e.g. /subscribe/paper/checkout or /subscribe/digital/checkout
     override def applies(returnUri: Uri): Boolean =
-      returnUri.query
-        .param("clientId")
-        .contains(subscriptionsClientId)
+      returnUri.host.contains("support.theguardian.com") &&
+        returnUri.pathParts.head.part == "subscribe"
 
     override val continueCopy: String = "Back to my subscription"
   }
 
   case object Contributions extends Journey {
+    // e.g. /au/contribute or /uk/contribute
     override def applies(returnUri: Uri): Boolean =
-      returnUri.query
-        .param("clientId")
-        .contains(contributionsClientId)
+      returnUri.host.contains("support.theguardian.com") &&
+        returnUri.pathParts.last.part == "contribute"
 
     override val continueCopy: String = "Back to my contribution"
   }
