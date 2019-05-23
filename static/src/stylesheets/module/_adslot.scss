@@ -528,3 +528,14 @@
     }
 
 }
+
+.ad-slot--mobile-sticky {
+    position: fixed;
+    bottom: 0;
+    height: 74px;
+    width: 320px;
+    margin: 0 auto;
+    right: 0;
+    left: 0;
+    z-index: 990;
+}

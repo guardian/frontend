@@ -6,6 +6,7 @@ import reportError from 'lib/report-error';
 import { init as initHighMerch } from 'commercial/modules/high-merch';
 import { init as initArticleAsideAdverts } from 'commercial/modules/article-aside-adverts';
 import { init as initArticleBodyAdverts } from 'commercial/modules/article-body-adverts';
+import { init as initMobileSticky } from 'commercial/modules/mobile-sticky';
 import { closeDisabledSlots } from 'commercial/modules/close-disabled-slots';
 import { adFreeSlotRemove } from 'commercial/modules/ad-free-slot-remove';
 import { init as initCmpService } from 'commercial/modules/cmp/cmp';
@@ -52,6 +53,7 @@ if (!commercialFeatures.adFree) {
         ['cm-articleAsideAdverts', initArticleAsideAdverts, true],
         ['cm-articleBodyAdverts', initArticleBodyAdverts, true],
         ['cm-liveblogAdverts', initLiveblogAdverts, true],
+        ['cm-mobileSticky', initMobileSticky],
         ['cm-stickyTopBanner', initStickyTopBanner],
         ['cm-paidContainers', paidContainers],
         ['cm-paidforBand', initPaidForBand],
