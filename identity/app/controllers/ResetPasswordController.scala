@@ -1,10 +1,9 @@
 package controllers
 
-import com.netaporter.uri.Uri
 import common.ImplicitControllerExecutionContext
 import form.Mappings
 import idapiclient.IdApiClient
-import model.{ApplicationContext, IdentityPage, NoCache}
+import model.{ApplicationContext, IdentityPage, NoCache, ReturnJourney}
 import pages.IdentityHtmlPage
 import play.api.data.Forms._
 import play.api.data.format.Formats._
@@ -17,7 +16,7 @@ import services._
 import utils.SafeLogging
 
 import scala.concurrent.Future
-import scala.util.Try
+
 
 class ResetPasswordController(
   api : IdApiClient,
@@ -32,7 +31,7 @@ class ResetPasswordController(
 
   private val page = IdentityPage("/reset-password", "Reset Password", isFlow = true)
 
-  private val paymentFailureCodes = Set("PF", "PF1", "PF2", "PF3", "PF4", "CCX")
+
 
   private val requestPasswordResetForm = Form(
     Forms.single(
@@ -124,26 +123,15 @@ class ResetPasswordController(
     boundForm.fold[Future[Result]](onError, onSuccess)
   }
 
-  // Checks for INTCMP parameter in returnUrl after manage.theguardian redirects to signin with this parameter for payment failure flows
-  // If parameter exists and is for payment failure, the 'continue' button reads 'Update your payment method'
-  def getPaymentFailureCode(url: Uri): Option[String] = {
-    val queryString = url.query
-    queryString
-      .param("INTCMP")
-      .filter(paymentFailureCodes.contains)
-  }
+
+
 
   def renderPasswordResetConfirmation(returnUrl: Option[String]): Action[AnyContent] = Action{ implicit request =>
-    val isPaymentFailure = (for {
-      url <- returnUrl
-      parsedUrl <- Try(Uri.parse(url)).toOption
-      paymentFailure <- getPaymentFailureCode(parsedUrl)
-    } yield paymentFailure).orElse(None)
-
+    val returnJourney = ReturnJourney(returnUrl)
     val idRequest = idRequestParser(request)
     val userIsLoggedIn = authenticationService.userIsFullyAuthenticated(request)
     Ok(IdentityHtmlPage.html(
-      views.html.password.passwordResetConfirmation(page, idRequest, idUrlBuilder, userIsLoggedIn, returnUrl, isPaymentFailure)
+      views.html.password.passwordResetConfirmation(page, idRequest, idUrlBuilder, userIsLoggedIn, returnUrl, returnJourney)
     )(page, request, context))
   }
 
