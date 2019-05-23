@@ -21,13 +21,6 @@ import { init as initStickyTopBanner } from 'commercial/modules/sticky-top-banne
 import { init as initThirdPartyTags } from 'commercial/modules/third-party-tags';
 import { init as initPaidForBand } from 'commercial/modules/paidfor-band';
 import { paidContainers } from 'commercial/modules/paid-containers';
-import {
-    defer,
-    wrap,
-    addStartTimeBaseline,
-    addEndTimeBaseline,
-    primaryBaseline,
-} from 'commercial/modules/dfp/performance-logging';
 import { trackPerformance } from 'common/modules/analytics/google';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { initCheckDispatcher } from 'commercial/modules/check-dispatcher';
@@ -99,28 +92,19 @@ const loadHostedBundle = (): Promise<void> => {
     return Promise.resolve();
 };
 
-const loadModules = (): Promise<void> => {
-    addStartTimeBaseline(primaryBaseline);
-
+const loadModules = (): Promise<any> => {
     const modulePromises = [];
 
     commercialModules.forEach(module => {
         const moduleName: string = module[0];
         const moduleInit: () => void = module[1];
-        const moduleDefer: boolean = module[2];
 
         catchErrorsWithContext(
             [
                 [
                     moduleName,
                     function pushAfterComplete(): void {
-                        // These modules all have async init procedures which don't block, and return a promise purely for
-                        // perf logging, to time when their async work is done. The command buffer guarantees execution order,
-                        // so we don't use the returned promise to order the bootstrap's module invocations.
-                        const wrapped = moduleDefer
-                            ? defer(moduleName, moduleInit)
-                            : wrap(moduleName, moduleInit);
-                        const result = wrapped();
+                        const result = moduleInit();
                         modulePromises.push(result);
                     },
                 ],
@@ -130,11 +114,8 @@ const loadModules = (): Promise<void> => {
             }
         );
     });
-    return Promise.all(modulePromises).then(
-        (): void => {
-            addEndTimeBaseline(primaryBaseline);
-        }
-    );
+
+    return Promise.all(modulePromises);
 };
 
 export const bootCommercial = (): Promise<void> => {

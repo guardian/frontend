@@ -1,5 +1,5 @@
 // @flow
-import { noop } from 'lib/noop';
+// import { noop } from 'lib/noop';
 import { init, _ } from './liveblog-adverts';
 
 const { getSlotName } = _;
@@ -67,9 +67,10 @@ describe('Liveblog Dynamic Adverts', () => {
 
     // todo: difficult to mock spacefiller, which is not yet ES6'ed, so come back to this
     it.skip('should insert ads every 5th block', () =>
-        new Promise(resolve => {
-            init(noop, resolve);
-        }).then(() => {
+        // new Promise(resolve => {
+        //     init(resolve);
+        // })
+        init().then(() => {
             const adSlots = document.querySelectorAll(
                 '.js-liveblog-body .ad-slot'
             );
