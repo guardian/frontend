@@ -537,5 +537,7 @@
     margin: 0 auto;
     right: 0;
     left: 0;
-    z-index: 990;
+    @include mq(phablet) {
+        display: none;
+    }
 }
