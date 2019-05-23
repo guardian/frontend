@@ -42,7 +42,7 @@ case class WitnessBlockElement(html: Option[String]) extends PageElement
 case class DocumentBlockElement(html: Option[String], role: Role, isMandatory: Option[Boolean]) extends PageElement
 case class InstagramBlockElement(url: String, html: Option[String], hasCaption: Boolean) extends PageElement
 case class VineBlockElement(html: Option[String]) extends PageElement
-case class MapBlockElement(html: Option[String],  role: Role, isMandatory: Option[Boolean]) extends PageElement
+case class MapBlockElement(url: String) extends PageElement
 case class UnknownBlockElement(html: Option[String]) extends PageElement
 case class DisclaimerBlockElement(html: String) extends PageElement
 
@@ -293,6 +293,16 @@ object PageElement {
           case _ => None
         }).toList
 
+      case ElementType.Map => {
+        for {
+          mapElem <-  element.mapTypeData
+          html <- mapElem.html
+          src <- getIframeSrc(html)
+
+        } yield MapBlockElement(src)
+      }.toList
+
+
       case Pullquote => element.pullquoteTypeData.map(d => PullquoteBlockElement(d.html, Role(None))).toList
       case Interactive => element.interactiveTypeData.flatMap(_.iframeUrl).map(url => InteractiveUrlBlockElement(url)).toList
       case Table => element.tableTypeData.map(d => TableBlockElement(d.html, Role(d.role), d.isMandatory)).toList
@@ -300,11 +310,16 @@ object PageElement {
       case Document => element.documentTypeData.map(d => DocumentBlockElement(d.html, Role(d.role), d.isMandatory)).toList
       case Instagram => element.instagramTypeData.map(d => InstagramBlockElement(d.originalUrl, d.html, d.caption.isDefined)).toList
       case Vine => element.vineTypeData.map(d => VineBlockElement(d.html)).toList
-      case ElementType.Map => element.mapTypeData.map(d => MapBlockElement(d.html, Role(d.role), d.isMandatory)).toList
       case Code => List(CodeBlockElement(None))
       case Form => List(FormBlockElement(None))
       case EnumUnknownElementType(f) => List(UnknownBlockElement(None))
     }
+  }
+
+  private[this] def getIframeSrc(html: String): Option[String] = {
+    val doc = Jsoup.parseBodyFragment(html)
+    doc.getElementsByTag("iframe").asScala.headOption.map(_.attr("src"))
+
   }
 
   private def extractAudio(element: ApiBlockElement) = {
@@ -328,12 +343,10 @@ object PageElement {
   }
 
   private def extractSoundcloud(html: String, isMandatory: Boolean): Option[SoundcloudBlockElement] = {
+    val src = getIframeSrc(html)
 
-    val doc = Jsoup.parseBodyFragment(html)
-    doc.getElementsByTag("iframe").asScala.headOption.flatMap {
-      iframe =>
-        val src = iframe.attr("src")
-        (AmpSoundcloud.getTrackIdFromUrl(src), AmpSoundcloud.getPlaylistIdFromUrl(src)) match {
+    src.flatMap { s =>
+        (AmpSoundcloud.getTrackIdFromUrl(s), AmpSoundcloud.getPlaylistIdFromUrl(s)) match {
           case (Some(track), _) => Some(SoundcloudBlockElement(html, track, isTrack = true, isMandatory))
           case (_, Some(playlist)) => Some(SoundcloudBlockElement(html, playlist, isTrack = false, isMandatory))
           case _ => None
