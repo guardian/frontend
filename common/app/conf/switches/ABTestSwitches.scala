@@ -85,4 +85,14 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2019, 6, 28),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-commercial-us-mobile-sticky",
+    "Test whether changes to Consent Banner increases proportion of non-EU users who interact with it",
+    owners = Seq(Owner.withGithub("ripecosta")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 9, 30),
+    exposeClientSide = true
+  )
 }

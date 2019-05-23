@@ -1,7 +1,8 @@
-/* eslint-disable no-console */
 // @flow
 import fastdom from 'lib/fastdom-promise';
 import { addSlot } from 'commercial/modules/dfp/add-slot';
+import { commercialUsMobileSticky } from 'common/modules/experiments/tests/commercial-us-mobile-sticky';
+import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 
 const createAdSlot = (): HTMLDivElement => {
     const adSlot: HTMLDivElement = document.createElement('div');
@@ -17,19 +18,18 @@ const createAdSlot = (): HTMLDivElement => {
 
 export const init = (): Promise<void> => {
     // If !inUS() || !inTestVariant
-    // Use ???
-    // isBreakpoint({
-    //     max: 'mobile',
-    // })
-    const mobileStickySlot = createAdSlot();
 
-    fastdom
-        .write(() => {
-            if (document.body) document.body.appendChild(mobileStickySlot);
-        })
-        .then(() => {
-            addSlot(mobileStickySlot, false);
-        });
+    if (isInVariantSynchronous(commercialUsMobileSticky, 'variant')) {
+        const mobileStickySlot = createAdSlot();
+
+        fastdom
+            .write(() => {
+                if (document.body) document.body.appendChild(mobileStickySlot);
+            })
+            .then(() => {
+                addSlot(mobileStickySlot, false);
+            });
+    }
 
     return Promise.resolve();
 };
