@@ -1,7 +1,7 @@
 package controllers
 
 import common.ImplicitControllerExecutionContext
-import model.{ApplicationContext, IdentityPage, NoCache}
+import model.{ApplicationContext, IdentityPage, NoCache, ReturnJourney}
 import play.api.mvc._
 import play.api.data.{Form, Forms}
 import play.api.data.Forms._
@@ -78,12 +78,15 @@ class ChangePasswordController(
   }
 
   def renderPasswordConfirmation(returnUrl: Option[String]): Action[AnyContent] = Action { implicit request =>
+    // TODO: returnUrl doesn't appear to be used by this route.
+    //  Leaving to be fixed by consolidating the whole route with *reset* confirmation
+    val returnJourney = ReturnJourney(returnUrl)
     val idRequest = idRequestParser(request)
     val userIsLoggedIn = authenticationService.userIsFullyAuthenticated(request)
     NoCache(
       Ok(
         IdentityHtmlPage.html(
-          views.html.password.passwordResetConfirmation(page, idRequest, idUrlBuilder, userIsLoggedIn, returnUrl, None)
+          views.html.password.passwordResetConfirmation(page, idRequest, idUrlBuilder, userIsLoggedIn, returnUrl, returnJourney)
         )(page, request, context)
       ))
   }
