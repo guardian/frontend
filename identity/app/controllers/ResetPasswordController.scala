@@ -1,6 +1,5 @@
 package controllers
 
-import com.netaporter.uri.{QueryString, Uri}
 import common.ImplicitControllerExecutionContext
 import form.Mappings
 import idapiclient.IdApiClient
@@ -17,7 +16,6 @@ import services._
 import utils.SafeLogging
 
 import scala.concurrent.Future
-import scala.util.Try
 
 
 class ResetPasswordController(
