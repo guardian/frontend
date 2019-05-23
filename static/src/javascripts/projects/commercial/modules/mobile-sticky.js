@@ -1,5 +1,7 @@
 // @flow
+import config from 'lib/config';
 import fastdom from 'lib/fastdom-promise';
+import { getCookie } from 'lib/cookies';
 import { addSlot } from 'commercial/modules/dfp/add-slot';
 import { commercialUsMobileSticky } from 'common/modules/experiments/tests/commercial-us-mobile-sticky';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
@@ -16,10 +18,15 @@ const createAdSlot = (): HTMLDivElement => {
     return adSlot;
 };
 
-export const init = (): Promise<void> => {
-    // If !inUS() || !inTestVariant
+const isInNA = (): boolean =>
+    (getCookie('GU_geo_continent') || 'OTHER').toUpperCase() === 'NA';
 
-    if (isInVariantSynchronous(commercialUsMobileSticky, 'variant')) {
+export const init = (): Promise<void> => {
+    if (
+        isInNA() &&
+        config.get('page.contentType') === 'Article' &&
+        isInVariantSynchronous(commercialUsMobileSticky, 'variant')
+    ) {
         const mobileStickySlot = createAdSlot();
 
         fastdom
