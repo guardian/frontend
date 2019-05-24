@@ -42,7 +42,7 @@ case class WitnessBlockElement(html: Option[String]) extends PageElement
 case class DocumentBlockElement(html: Option[String], role: Role, isMandatory: Option[Boolean]) extends PageElement
 case class InstagramBlockElement(url: String, html: Option[String], hasCaption: Boolean) extends PageElement
 case class VineBlockElement(html: Option[String]) extends PageElement
-case class MapBlockElement(url: String) extends PageElement
+case class MapBlockElement(url: String, originalUrl: String, source: String, caption: String, title: String) extends PageElement
 case class UnknownBlockElement(html: Option[String]) extends PageElement
 case class DisclaimerBlockElement(html: String) extends PageElement
 
@@ -295,13 +295,18 @@ object PageElement {
 
       case ElementType.Map => {
         for {
-          mapElem <-  element.mapTypeData
+          mapElem <- element.mapTypeData
+          originalUrl <- mapElem.originalUrl
+          source <- mapElem.source
           html <- mapElem.html
           src <- getIframeSrc(html)
-
-        } yield MapBlockElement(src)
+        } yield MapBlockElement(
+                  src,
+                  originalUrl,
+                  source,
+                  element.mapTypeData.flatMap(_.caption).getOrElse(""),
+                  element.mapTypeData.flatMap(_.title).getOrElse(""))
       }.toList
-
 
       case Pullquote => element.pullquoteTypeData.map(d => PullquoteBlockElement(d.html, Role(None))).toList
       case Interactive => element.interactiveTypeData.flatMap(_.iframeUrl).map(url => InteractiveUrlBlockElement(url)).toList
@@ -319,7 +324,6 @@ object PageElement {
   private[this] def getIframeSrc(html: String): Option[String] = {
     val doc = Jsoup.parseBodyFragment(html)
     doc.getElementsByTag("iframe").asScala.headOption.map(_.attr("src"))
-
   }
 
   private def extractAudio(element: ApiBlockElement) = {
