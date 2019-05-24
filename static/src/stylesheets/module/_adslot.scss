@@ -529,10 +529,9 @@
 
 }
 
-.ad-slot--mobile-sticky {
+.mobilesticky-container {
     position: fixed;
     bottom: 0;
-    height: 74px;
     width: 320px;
     margin: 0 auto;
     right: 0;
@@ -540,4 +539,28 @@
     @include mq(phablet) {
         display: none;
     }
+}
+
+.mobilesticky-container--hidden {
+    display: none;
+}
+
+.mobilesticky-container_close-x {
+    stroke: #121212;
+    fill: transparent;
+    stroke-linecap: round;
+    stroke-width: 2;
+    text-align: center;
+}
+
+.mobilesticky-container_close-x svg {
+    width: 20px;
+}
+
+.mobilesticky-closer {
+    position: relative;
+    z-index: 1011;
+    float: right;
+    height: $mpu-ad-label-height;
+    width: $mpu-ad-label-height;
 }
