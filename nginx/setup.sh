@@ -48,7 +48,7 @@ if [[ $? -gt 0 ]]; then
 	exit 1
 fi
 
-function install_ssh_certificate() {
+function install_ssl_certificate() {
 	KEY_NAME="${1}.key"
 	CRT_NAME="${1}.crt"
 	echo "Downloading SSL certificate $CRT_NAME from $S3_BUCKET"
@@ -61,7 +61,7 @@ function install_ssh_certificate() {
 	sudo ln -fs "${DIR}/${KEY_NAME}" "${nginxHome}/${KEY_NAME}"
 }
 
-function install_ssh_certificate_in_jdk_ca() {
+function install_ssl_certificate_in_jdk_ca() {
     echo "Importing SSL certificate into Java keystore ${jdkHome}/jre/lib/security/cacerts"
 	sudo "${jdkHome}/bin/keytool" -import -alias ${1} -keystore "${jdkHome}/jre/lib/security/cacerts" -file "${1}.crt" -storepass "changeit" -noprompt
 }
@@ -71,8 +71,8 @@ function install_nginx_configuration() {
     sudo ln -fs "$DIR/${1}" "$nginxHome/sites-enabled/${1}"
 }
 
-install_ssh_certificate ${SSL_CERT_NAME}
-install_ssh_certificate_in_jdk_ca ${SSL_CERT_NAME}
+install_ssl_certificate ${SSL_CERT_NAME}
+install_ssl_certificate_in_jdk_ca ${SSL_CERT_NAME}
 install_nginx_configuration ${NGINX_SITE_CONF}
 
 echo "Restarting Nginx"
