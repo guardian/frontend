@@ -12,13 +12,11 @@ const goalReached = () => total >= goal;
 
 /**
  * The filled bar begins 100% to the left, and is animated rightwards.
- * If the goal is reached and type is 'unlimited' then only 85% is filled.
  */
-const percentageToTranslate = (tickerType: TickerType) => {
-    const percentage = (total / goal) * 100 - 100;
-    const endOfFillPercentage = () => (tickerType === 'unlimited' ? -15 : 0);
+const percentageToTranslate = (total: number, end: number) => {
+    const percentage = (total / end) * 100 - 100;
 
-    return percentage >= 0 ? endOfFillPercentage() : percentage;
+    return percentage >= 0 ? 0 : percentage;
 };
 
 const animateBar = (parentElement: HTMLElement, tickerType: TickerType) => {
@@ -27,8 +25,23 @@ const animateBar = (parentElement: HTMLElement, tickerType: TickerType) => {
     );
 
     if (progressBarElement && progressBarElement instanceof HTMLElement) {
-        const barTranslate = percentageToTranslate(tickerType);
+        // If we've exceeded the goal then extend the bar 15% beyond the total
+        const end = tickerType === 'unlimited' && total > goal ? total + total * 0.15 : goal;
+
+        const barTranslate = percentageToTranslate(total, end);
         progressBarElement.style.transform = `translate3d(${barTranslate}%, 0, 0)`;
+
+        if (end > goal) {
+            // Show a marker for the goal that has been exceeded
+            const marker = parentElement.querySelector(
+                '.js-ticker-goal-marker'
+            );
+            if (marker) {
+                marker.classList.remove('is-hidden');
+                const markerTranslate = (goal / end) * 100 - 100;
+                marker.style.transform = `translate3d(${markerTranslate}%, 0, 0)`;
+            }
+        }
     }
 };
 
