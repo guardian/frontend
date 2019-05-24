@@ -13,7 +13,7 @@ const goalReached = () => total >= goal;
 /**
  * The filled bar begins 100% to the left, and is animated rightwards.
  */
-const percentageToTranslate = (total: number, end: number) => {
+const percentageToTranslate = (end: number) => {
     const percentage = (total / end) * 100 - 100;
 
     return percentage >= 0 ? 0 : percentage;
@@ -26,9 +26,12 @@ const animateBar = (parentElement: HTMLElement, tickerType: TickerType) => {
 
     if (progressBarElement && progressBarElement instanceof HTMLElement) {
         // If we've exceeded the goal then extend the bar 15% beyond the total
-        const end = tickerType === 'unlimited' && total > goal ? total + total * 0.15 : goal;
+        const end =
+            tickerType === 'unlimited' && total > goal
+                ? total + total * 0.15
+                : goal;
 
-        const barTranslate = percentageToTranslate(total, end);
+        const barTranslate = percentageToTranslate(end);
         progressBarElement.style.transform = `translate3d(${barTranslate}%, 0, 0)`;
 
         if (end > goal) {
