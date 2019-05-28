@@ -17,10 +17,6 @@ object AMPPageChecks extends Logging {
       !page.item.isPhotoEssay
   }
 
-  def isNotPaidContent(page: PageWithStoryPackage): Boolean = {
-    !page.article.tags.isPaidContent
-  }
-
   def hasOnlySupportedElements(blocks: APIBlocks): Boolean = {
     // See: https://github.com/guardian/dotcom-rendering/blob/master/packages/frontend/amp/components/lib/Elements.tsx
     // And also PageElement.scala here.
@@ -60,7 +56,6 @@ object AMPPicker {
     Map(
       ("isBasicArticle", AMPPageChecks.isBasicArticle(page)),
       ("hasOnlySupportedElements", AMPPageChecks.hasOnlySupportedElements(blocks)),
-      ("isNotPaidContent", AMPPageChecks.isNotPaidContent(page)),
     )
   }
 
