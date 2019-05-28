@@ -45,4 +45,9 @@ export const acquisitionsBannerSignInCtaTemplate = (
                 </div>
             </div>
         </div>
+        <a
+            class="u-faux-block-link__overlay"
+            target="_blank"
+            href="${params.linkUrl}"
+        />
     `;

@@ -26,6 +26,10 @@
     color: $brightness-7;
     font-family: $f-sans-serif-text;
 
+    // Place sign-in link above the overlay which makes whole support banner clickable.
+    position: relative;
+    z-index: 1;
+
     @include mq(tablet) {
         font-size: 16px;
     }
