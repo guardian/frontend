@@ -85,18 +85,12 @@ $progress-bar-height: 10px;
     background-color: #ffe500;
 }
 
-.epic-ticker__goal-reached .epic-ticker__progress-container:after {
-    content: '';
-    position: absolute;
-    background: $brightness-7;
-    width: 2px;
-    height: 15px;
-    right: 0;
-    bottom: 0;
-}
-
-.epic-ticker__goal-reached.epic-ticker__unlimited .epic-ticker__progress-container:after {
-    right: 20%;
+.epic-ticker__goal-marker {
+    border-right: 2px solid #121212;
+    content: ' ';
+    display: block;
+    height: 12px;
+    margin-top: -2px;
 }
 
 .epic-ticker__progress-labels {

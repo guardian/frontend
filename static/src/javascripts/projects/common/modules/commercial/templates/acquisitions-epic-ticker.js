@@ -21,6 +21,7 @@ export const acquisitionsEpicTickerTemplate = `
             <div class="epic-ticker__progress">
                 <div class="js-ticker-filled-progress epic-ticker__filled-progress"></div>
             </div>
+            <div class="js-ticker-goal-marker epic-ticker__goal-marker is-hidden"></div>
         </div>
     </div>
 `;
