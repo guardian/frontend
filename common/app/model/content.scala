@@ -146,7 +146,7 @@ final case class Content(
   // read this before modifying: https://developers.facebook.com/docs/opengraph/howtos/maximizing-distribution-media-content#images
   lazy val openGraphImageProfile: ElementProfile = {
     val category = shareImageCategory
-    FacebookOpenGraphImage.forCategory(category)
+    OpenGraphImage.forCategory(category, FacebookShareImageLogoOverlay.isSwitchedOn)
   }
 
   lazy val openGraphImage: String = ImgSrc(openGraphImageOrFallbackUrl, openGraphImageProfile)
@@ -160,7 +160,7 @@ final case class Content(
 
   // URL of image to use in the twitter card. Image must be less than 1MB in size: https://dev.twitter.com/cards/overview
   lazy val twitterCardImage = {
-    val profile = TwitterImage.forCategory(shareImageCategory)
+    val profile = OpenGraphImage.forCategory(shareImageCategory, TwitterShareImageLogoOverlay.isSwitchedOn)
     ImgSrc(openGraphImageOrFallbackUrl, profile)
   }
 
@@ -781,7 +781,7 @@ case class GalleryLightbox(
       else if (tags.isLiveBlog) Live
       else GuardianDefault
 
-    FacebookOpenGraphImage.forCategory(category)
+    OpenGraphImage.forCategory(category, FacebookShareImageLogoOverlay.isSwitchedOn)
   }
 
   val galleryImages: Seq[ImageElement] = elements.images.filter(_.properties.isGallery)

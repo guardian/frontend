@@ -167,23 +167,23 @@ trait OverlayBase64 {
     Base64.getUrlEncoder.encodeToString(s"/img/static/overlays/$overlay".getBytes).replace("=", "")
 }
 
-object TwitterImage extends OverlayBase64 {
-  def forCategory(category: ShareImageCategory, shouldUpscale: Boolean = false): ElementProfile = {
+object OpenGraphImage extends OverlayBase64 {
+  def forCategory(category: ShareImageCategory, shouldIncludeOverlay: Boolean, shouldUpscale: Boolean = false): ElementProfile = {
     category match {
-      case GuardianDefault => new ShareImage(s"overlay-base64=${overlayUrlBase64("tg-default.png")}", TwitterShareImageLogoOverlay.isSwitchedOn, shouldUpscale)
-      case ObserverDefault => new ShareImage(s"overlay-base64=${overlayUrlBase64("to-default.png")}", TwitterShareImageLogoOverlay.isSwitchedOn, shouldUpscale)
-      case ObserverOpinion => new ShareImage(s"overlay-base64=${overlayUrlBase64("to-opinions.png")}", TwitterShareImageLogoOverlay.isSwitchedOn, shouldUpscale)
-      case GuardianOpinion => new ShareImage(s"overlay-base64=${overlayUrlBase64("tg-opinions.png")}", TwitterShareImageLogoOverlay.isSwitchedOn, shouldUpscale)
-      case Live => new ShareImage(s"overlay-base64=${overlayUrlBase64("tg-live.png")}", TwitterShareImageLogoOverlay.isSwitchedOn, shouldUpscale)
-      case ObserverOldContent(year) => contentAgeNoticeObserver(year, shouldUpscale)
-      case GuardianOldContent(year) => contentAgeNotice(year, shouldUpscale)
-      case ObserverStarRating(rating) => starRatingObserver(rating)
-      case GuardianStarRating(rating) => starRating(rating)
+      case GuardianDefault => new ShareImage(s"overlay-base64=${overlayUrlBase64("tg-default.png")}", shouldIncludeOverlay, shouldUpscale)
+      case ObserverDefault => new ShareImage(s"overlay-base64=${overlayUrlBase64("to-default.png")}", shouldIncludeOverlay, shouldUpscale)
+      case ObserverOpinion => new ShareImage(s"overlay-base64=${overlayUrlBase64("to-opinions.png")}", shouldIncludeOverlay, shouldUpscale)
+      case GuardianOpinion => new ShareImage(s"overlay-base64=${overlayUrlBase64("tg-opinions.png")}", shouldIncludeOverlay, shouldUpscale)
+      case Live => new ShareImage(s"overlay-base64=${overlayUrlBase64("tg-live.png")}", shouldIncludeOverlay, shouldUpscale)
+      case ObserverOldContent(year) => contentAgeNoticeObserver(year, shouldIncludeOverlay, shouldUpscale)
+      case GuardianOldContent(year) => contentAgeNotice(year, shouldIncludeOverlay, shouldUpscale)
+      case ObserverStarRating(rating) => starRatingObserver(rating, shouldIncludeOverlay, shouldUpscale)
+      case GuardianStarRating(rating) => starRating(rating, shouldIncludeOverlay, shouldUpscale)
       case Paid => Item700
     }
   }
 
-  private[this] def starRating(rating: Int): ShareImage = {
+  private[this] def starRating(rating: Int, shouldIncludeOverlay: Boolean, shouldUpscale: Boolean = false): ShareImage = {
     val image = rating match {
       case 0 => s"overlay-base64=${overlayUrlBase64("tg-review-0.png")}"
       case 1 => s"overlay-base64=${overlayUrlBase64("tg-review-1.png")}"
@@ -193,10 +193,10 @@ object TwitterImage extends OverlayBase64 {
       case 5 => s"overlay-base64=${overlayUrlBase64("tg-review-5.png")}"
       case _ => s"overlay-base64=${overlayUrlBase64("tg-default.png")}"
     }
-    new ShareImage(image, TwitterShareImageLogoOverlay.isSwitchedOn)
+    new ShareImage(image, shouldIncludeOverlay, shouldUpscale)
   }
 
-  private[this] def starRatingObserver(rating: Int): ShareImage = {
+  private[this] def starRatingObserver(rating: Int, shouldIncludeOverlay: Boolean, shouldUpscale: Boolean = false): ShareImage = {
     val image = rating match {
       case 0 => s"overlay-base64=${overlayUrlBase64("to-review-0.png")}"
       case 1 => s"overlay-base64=${overlayUrlBase64("to-review-1.png")}"
@@ -206,7 +206,7 @@ object TwitterImage extends OverlayBase64 {
       case 5 => s"overlay-base64=${overlayUrlBase64("to-review-5.png")}"
       case _ => s"overlay-base64=${overlayUrlBase64("to-default.png")}"
     }
-    new ShareImage(image, TwitterShareImageLogoOverlay.isSwitchedOn)
+    new ShareImage(image, shouldIncludeOverlay, shouldUpscale)
   }
 
   private[this] def getContentAgeFileName(prefix: String, publicationYear: Int): String = {
@@ -218,77 +218,14 @@ object TwitterImage extends OverlayBase64 {
     }
   }
 
-  private[this] def contentAgeNotice(publicationYear: Int, shouldUpscale: Boolean): ShareImage = {
+  private[this] def contentAgeNotice(publicationYear: Int, shouldIncludeOverlay: Boolean, shouldUpscale: Boolean = false): ShareImage = {
     val image = s"overlay-base64=${overlayUrlBase64(getContentAgeFileName("tg", publicationYear))}"
-    new ShareImage(image, TwitterShareImageLogoOverlay.isSwitchedOn, shouldUpscale)
+    new ShareImage(image, shouldIncludeOverlay, shouldUpscale)
   }
 
-  private[this] def contentAgeNoticeObserver(publicationYear: Int, shouldUpscale: Boolean): ShareImage = {
+  private[this] def contentAgeNoticeObserver(publicationYear: Int, shouldIncludeOverlay: Boolean, shouldUpscale: Boolean): ShareImage = {
     val image = s"overlay-base64=${overlayUrlBase64(getContentAgeFileName("to", publicationYear))}"
-    new ShareImage(image, TwitterShareImageLogoOverlay.isSwitchedOn, shouldUpscale)
-  }
-}
-
-// TODO lift overlay boolean
-object FacebookOpenGraphImage extends OverlayBase64 {
-  def forCategory(category: ShareImageCategory, shouldUpscale: Boolean = false): ElementProfile = {
-    category match {
-      case GuardianDefault => new ShareImage(s"overlay-base64=${overlayUrlBase64("tg-default.png")}", FacebookShareImageLogoOverlay.isSwitchedOn, shouldUpscale)
-      case ObserverDefault => new ShareImage(s"overlay-base64=${overlayUrlBase64("to-default.png")}", FacebookShareImageLogoOverlay.isSwitchedOn, shouldUpscale)
-      case ObserverOpinion => new ShareImage(s"overlay-base64=${overlayUrlBase64("to-opinions.png")}", FacebookShareImageLogoOverlay.isSwitchedOn, shouldUpscale)
-      case GuardianOpinion => new ShareImage(s"overlay-base64=${overlayUrlBase64("tg-opinions.png")}", FacebookShareImageLogoOverlay.isSwitchedOn, shouldUpscale)
-      case Live => new ShareImage(s"overlay-base64=${overlayUrlBase64("tg-live.png")}", FacebookShareImageLogoOverlay.isSwitchedOn, shouldUpscale)
-      case ObserverOldContent(year) => contentAgeNoticeObserver(year, shouldUpscale)
-      case GuardianOldContent(year) => contentAgeNotice(year, shouldUpscale)
-      case ObserverStarRating(rating) => starRatingObserver(rating)
-      case GuardianStarRating(rating) => starRating(rating)
-      case Paid => Item700
-    }
-  }
-
-  private[this] def starRating(rating: Int): ShareImage = {
-    val image = rating match {
-      case 0 => s"overlay-base64=${overlayUrlBase64("tg-review-0.png")}"
-      case 1 => s"overlay-base64=${overlayUrlBase64("tg-review-1.png")}"
-      case 2 => s"overlay-base64=${overlayUrlBase64("tg-review-2.png")}"
-      case 3 => s"overlay-base64=${overlayUrlBase64("tg-review-3.png")}"
-      case 4 => s"overlay-base64=${overlayUrlBase64("tg-review-4.png")}"
-      case 5 => s"overlay-base64=${overlayUrlBase64("tg-review-5.png")}"
-      case _ => s"overlay-base64=${overlayUrlBase64("tg-default.png")}"
-    }
-    new ShareImage(image, FacebookShareImageLogoOverlay.isSwitchedOn)
-  }
-
-  private[this] def starRatingObserver(rating: Int): ShareImage = {
-    val image = rating match {
-      case 0 => s"overlay-base64=${overlayUrlBase64("to-review-0.png")}"
-      case 1 => s"overlay-base64=${overlayUrlBase64("to-review-1.png")}"
-      case 2 => s"overlay-base64=${overlayUrlBase64("to-review-2.png")}"
-      case 3 => s"overlay-base64=${overlayUrlBase64("to-review-3.png")}"
-      case 4 => s"overlay-base64=${overlayUrlBase64("to-review-4.png")}"
-      case 5 => s"overlay-base64=${overlayUrlBase64("to-review-5.png")}"
-      case _ => s"overlay-base64=${overlayUrlBase64("to-default.png")}"
-    }
-    new ShareImage(image, FacebookShareImageLogoOverlay.isSwitchedOn)
-  }
-
-  private[this] def getContentAgeFileName(prefix: String, publicationYear: Int): String = {
-    // WARNING: we have only produced these content age images up to the year 2025
-    if (publicationYear < 2025) {
-      s"${prefix}-age-${publicationYear}.png"
-    } else {
-      s"${prefix}-default.png"
-    }
-  }
-
-  private[this] def contentAgeNotice(publicationYear: Int, shouldUpscale: Boolean): ShareImage = {
-    val image = s"overlay-base64=${overlayUrlBase64(getContentAgeFileName("tg", publicationYear))}"
-    new ShareImage(image, FacebookShareImageLogoOverlay.isSwitchedOn, shouldUpscale)
-  }
-
-  private[this] def contentAgeNoticeObserver(publicationYear: Int, shouldUpscale: Boolean): ShareImage = {
-    val image = s"overlay-base64=${overlayUrlBase64(getContentAgeFileName("to", publicationYear))}"
-    new ShareImage(image, FacebookShareImageLogoOverlay.isSwitchedOn, shouldUpscale)
+    new ShareImage(image, shouldIncludeOverlay, shouldUpscale)
   }
 }
 
