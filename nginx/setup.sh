@@ -31,8 +31,15 @@ ln -sf ${CERT_FILE} ${NGINX_HOME}/${DOMAIN}.crt
 echo -e "🔗 Symlinking nginx config file"
 ln -sf ${SOURCE_DIR}/frontend.conf ${NGINX_HOME}/servers/frontend.conf
 
-echo -e "🚀 ${YELLOW}Restarting nginx, which requires sudo - enter password when prompted.${NC}"
+echo -e "🚀 ${YELLOW}Restarting nginx, Requires sudo - enter password when prompted.${NC}"
 sudo nginx -s stop
 sudo nginx
 
-echo -e "💯 Done. Remember to add an entry to /etc/hosts for ${DOMAIN}."
+if grep '127.0.0.1' /etc/hosts | grep ${DOMAIN} ; then
+  echo -e "✅ /etc/hosts entry already exists for ${DOMAIN}"
+else
+  echo -e "🔧 ${YELLOW}adding /etc/hosts entry for ${DOMAIN}. Requires sudo - enter password when prompted.${NC}"
+  sudo sh -c "echo '127.0.0.1		${DOMAIN}' >> /etc/hosts"
+fi
+
+echo -e "💯 Done! You can now run frontend locally on https://${DOMAIN}"
