@@ -3,16 +3,12 @@
 import marque36icon from 'svgs/icon/marque-36.svg';
 import closeCentralIcon from 'svgs/icon/close-central.svg';
 import arrowWhiteRight from 'svgs/icon/arrow-white-right.svg';
-import applyPayMark from 'svgs/acquisitions/apple-pay-mark.svg';
 import config from 'lib/config';
-import { applePayApiAvailable } from 'lib/detect';
 import { acquisitionsBannerTickerTemplate } from 'common/modules/commercial/templates/acquisitions-banner-ticker';
 
 export const acquisitionsBannerSignInCtaTemplate = (
     params: EngagementBannerTemplateParams
-): string => {
-    const applePayLogo = applePayApiAvailable ? applyPayMark.markup : '';
-    return `
+): string => `
         <div class="engagement-banner__close">
             <div class="engagement-banner__roundel">
                 ${marque36icon.markup}
@@ -27,32 +23,26 @@ export const acquisitionsBannerSignInCtaTemplate = (
                 ${params.messageText}${params.ctaText}
                 ${params.hasTicker ? acquisitionsBannerTickerTemplate : ''}
             </div>
-            <!--<div class="engagement-banner__cta&#45;&#45;sign-in">-->
-                <!--Holla!-->
-            <!--</div>-->
             <div class="engagement-banner__cta">
-                <div>Holla!</div>
-                <button class="button engagement-banner__button" href="${
-        params.linkUrl
-        }">
-                    ${params.buttonCaption}${arrowWhiteRight.markup}
-                </button>
-                <div class="engagement-banner__payment-logos">
-                    <img
-                        src="${config.get(
-        'images.acquisitions.payment-methods',
-        ''
-    )}"
-                        alt="Accepted payment methods: Visa, Mastercard, American Express and Paypal"
-                    >
-                    ${applePayLogo}
+                <div class="engagement-banner__payment-cta">
+                    <button class="button engagement-banner__button" href="${
+                        params.linkUrl
+                    }">
+                        ${params.buttonCaption}${arrowWhiteRight.markup}
+                    </button>
+                    <div class="engagement-banner__payment-logos">
+                        <img
+                            src="${config.get(
+                                'images.acquisitions.payment-methods',
+                                ''
+                            )}"
+                            alt="Accepted payment methods: Visa, Mastercard, American Express and Paypal"
+                        >
+                    </div>
+                </div>
+                <div class="engagement-banner__sign-in-cta">
+                    <a class="engagement-banner__sign-in-cta-link u-underline">Already a supporter? Sign in</a>
                 </div>
             </div>
         </div>
-        <a
-            class="u-faux-block-link__overlay"
-            target="_blank"
-            href="${params.linkUrl}"
-        ></a>
     `;
-};

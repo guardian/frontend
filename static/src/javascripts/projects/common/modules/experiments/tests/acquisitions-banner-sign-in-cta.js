@@ -1,7 +1,7 @@
 // @flow
 
-import {acquisitionsBannerControlTemplate} from "common/modules/commercial/templates/acquisitions-banner-control";
-import {acquisitionsBannerSignInCtaTemplate} from "common/modules/commercial/templates/acquisitions-banner-sign-in-cta";
+import { acquisitionsBannerControlTemplate } from 'common/modules/commercial/templates/acquisitions-banner-control';
+import { acquisitionsBannerSignInCtaTemplate } from 'common/modules/commercial/templates/acquisitions-banner-sign-in-cta';
 
 export const acquisitionsBannerSignInCta: AcquisitionsABTest = {
     id: 'AcquisitionsBannerSignInCta',
@@ -9,7 +9,8 @@ export const acquisitionsBannerSignInCta: AcquisitionsABTest = {
     start: '2019-05-15', // TODO
     expiry: '2019-05-30', // TODO
     author: 'Guy Dawson',
-    description: 'test whether having a sign-in CTA negatively impacts acquisitions',
+    description:
+        'test whether having a sign-in CTA negatively impacts acquisitions',
     audience: 1,
     audienceOffset: 0,
     successMeasure: 'AV per impression',
@@ -32,6 +33,6 @@ export const acquisitionsBannerSignInCta: AcquisitionsABTest = {
             engagementBannerParams: {
                 template: acquisitionsBannerSignInCtaTemplate,
             },
-        }
+        },
     ],
 };

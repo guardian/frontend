@@ -8,7 +8,7 @@ import { askFourEarning } from 'common/modules/experiments/tests/contributions-e
 import { acquisitionsEpicAlwaysAskIfTagged } from 'common/modules/experiments/tests/acquisitions-epic-always-ask-if-tagged';
 import { adblockTest } from 'common/modules/experiments/tests/adblock-ask';
 import { contributionsGlobalMobileBannerDesign } from 'common/modules/experiments/tests/contribs-global-mobile-banner-design';
-import {acquisitionsBannerSignInCta} from "common/modules/experiments/tests/acquisitions-banner-sign-in-cta";
+import { acquisitionsBannerSignInCta } from 'common/modules/experiments/tests/acquisitions-banner-sign-in-cta';
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialPrebidSafeframe,

@@ -1,0 +1,37 @@
+.engagement-banner__payment-cta {
+    display: inline-block;
+
+    @include mq(desktop) {
+        display: block;
+    }
+}
+
+.engagement-banner__sign-in-cta {
+    display: inline-block;
+
+    padding-left: 12px;
+
+    @include mq(tablet) {
+        vertical-align: 36px;
+    }
+
+    @include mq(desktop) {
+        padding-left: 0;
+        padding-top: 12px;
+        display: block;
+    }
+}
+
+.engagement-banner__sign-in-cta-link.u-underline {
+    color: $brightness-7;
+    font-family: $f-sans-serif-text;
+
+    @include mq(tablet) {
+        font-size: 16px;
+    }
+
+    border-color: $brightness-60;
+    &:hover {
+        border-color: $brightness-7;
+    }
+}
