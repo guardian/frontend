@@ -352,16 +352,6 @@ object DotcomponentsDataModel {
     // See https://developers.google.com/search/docs/data-types/article (and the AMP info too)
     // For example, we need to provide an image of at least 1200px width to be valid here
     val linkedData: List[LinkedData] = {
-      val mainImageURL = {
-        val main = for {
-          elem <- article.trail.trailPicture
-          master <- elem.masterImage
-          url <- master.url
-        } yield url
-
-        main.getOrElse(Configuration.images.fallbackLogo)
-      }
-
       articlePage match {
         case liveblog: LiveBlogPage => LinkedData.forLiveblog(
           liveblog = liveblog,

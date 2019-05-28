@@ -123,39 +123,35 @@ final case class Content(
       .flatMap(_.url)
       .getOrElse(Configuration.images.fallbackLogo)
 
-  // read this before modifying: https://developers.facebook.com/docs/opengraph/howtos/maximizing-distribution-media-content#images
-  private lazy val openGraphImageProfile: ElementProfile =
-    if(isPaidContent && FacebookShareImageLogoOverlay.isSwitchedOn) Item700
-    else if(isFromTheObserver && tags.isComment) FacebookOpenGraphImage.opinionsObserver
-    else if(tags.isComment) FacebookOpenGraphImage.opinions
-    else if(tags.isLiveBlog) FacebookOpenGraphImage.live
-    else if(
-      tags.tags.exists(_.id == "tone/news") &&
+  def shareImageCategory: ShareImageCategory = {
+    val isOldNews = tags.tags.exists(_.id == "tone/news") &&
       trail.webPublicationDate.isBefore(DateTime.now().minusYears(1))
-    ) {
-      if(isFromTheObserver) {
-        TwitterImage.contentAgeNoticeObserver(trail.webPublicationDate.getYear)
-      } else {
-        TwitterImage.contentAgeNotice(trail.webPublicationDate.getYear)
-      }
+
+    val isStarRating = starRating.isDefined
+
+    () match {
+      case paid if isPaidContent => Paid
+      case commentObserver if tags.isComment && isFromTheObserver => ObserverOpinion
+      case comment if tags.isComment => GuardianOpinion
+      case live if tags.isLiveBlog => Live
+      case oldObserver if isOldNews && isFromTheObserver => ObserverOldContent(trail.webPublicationDate.getYear)
+      case old if isOldNews => GuardianOldContent(trail.webPublicationDate.getYear)
+      case ratingObserver if isStarRating && isFromTheObserver => ObserverStarRating(starRating.get)
+      case rating if isStarRating => GuardianStarRating(starRating.get)
+      case observerDefault if isFromTheObserver => ObserverDefault
+      case default => GuardianDefault
     }
-    else starRating.map(rating =>
-        if(isFromTheObserver) {
-            FacebookOpenGraphImage.starRatingObserver(rating)
-        } else {
-            FacebookOpenGraphImage.starRating(rating)
-        }
-    ).getOrElse(
-        if(isFromTheObserver) {
-            FacebookOpenGraphImage.defaultObserver
-        } else {
-            FacebookOpenGraphImage.default
-        }
-    )
+  }
+
+  // read this before modifying: https://developers.facebook.com/docs/opengraph/howtos/maximizing-distribution-media-content#images
+  lazy val openGraphImageProfile: ElementProfile = {
+    val category = shareImageCategory
+    FacebookOpenGraphImage.forCategory(category)
+  }
 
   lazy val openGraphImage: String = ImgSrc(openGraphImageOrFallbackUrl, openGraphImageProfile)
   // These dimensions are just an educated guess (e.g. we don't take into account image-resizer being turned off)
-  lazy val openGraphImageWidth: Option[Int] = openGraphImageProfile.width
+  lazy val openGraphImageWidth: Option[Int] = openGraphImageProfile.width // TODO avoid repeating here
   lazy val openGraphImageHeight: Option[Int] =
     for {
       img <- rawOpenGraphImage
@@ -163,35 +159,9 @@ final case class Content(
     } yield Math.round(width / img.ratioDouble).toInt // Assume image resizing maintains aspect ratio to calculate height
 
   // URL of image to use in the twitter card. Image must be less than 1MB in size: https://dev.twitter.com/cards/overview
-  lazy val twitterCardImage: String = {
-    val image = if (isPaidContent && TwitterShareImageLogoOverlay.isSwitchedOn) Item700
-    else if(isFromTheObserver && tags.isComment) TwitterImage.opinionsObserver
-    else if(tags.isComment) TwitterImage.opinions
-    else if(tags.isLiveBlog) TwitterImage.live
-    else if(
-        tags.tags.exists(_.id == "tone/news") &&
-        trail.webPublicationDate.isBefore(DateTime.now().minusYears(1))
-    ) {
-      if(isFromTheObserver) {
-        TwitterImage.contentAgeNoticeObserver(trail.webPublicationDate.getYear)
-      } else {
-        TwitterImage.contentAgeNotice(trail.webPublicationDate.getYear)
-      }
-    }
-    else starRating.map(rating =>
-        if(isFromTheObserver) {
-            TwitterImage.starRatingObserver(rating)
-        } else {
-            TwitterImage.starRating(rating)
-        }
-    ).getOrElse(
-        if(isFromTheObserver) {
-            TwitterImage.defaultObserver
-        } else {
-            TwitterImage.default
-        }
-    )
-    ImgSrc(openGraphImageOrFallbackUrl, image)
+  lazy val twitterCardImage = {
+    val profile = TwitterImage.forCategory(shareImageCategory)
+    ImgSrc(openGraphImageOrFallbackUrl, profile)
   }
 
   lazy val syndicationType: String = {
@@ -805,7 +775,15 @@ case class GalleryLightbox(
 ){
   def imageContainer(index: Int): ImageElement = galleryImages(index)
 
-  private val facebookImage: ShareImage = if(tags.isComment) FacebookOpenGraphImage.opinions else if(tags.isLiveBlog) FacebookOpenGraphImage.live else FacebookOpenGraphImage.default
+  private val facebookImage: ElementProfile = {
+    val category =
+      if (tags.isComment) GuardianOpinion
+      else if (tags.isLiveBlog) Live
+      else GuardianDefault
+
+    FacebookOpenGraphImage.forCategory(category)
+  }
+
   val galleryImages: Seq[ImageElement] = elements.images.filter(_.properties.isGallery)
   val largestCrops: Seq[ImageAsset] = galleryImages.flatMap(_.images.largestImage)
   val openGraphImages: Seq[String] = largestCrops.flatMap(_.url).map(ImgSrc(_, facebookImage))
