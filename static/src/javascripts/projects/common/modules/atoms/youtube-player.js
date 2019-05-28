@@ -86,7 +86,10 @@ const setupPlayer = (
     channelId?: string,
     onReady,
     onStateChange,
-    onError
+    onError,
+    onAdStart,
+    onAdEnd,
+    onAdSkip
 ) => {
     const wantPersonalisedAds: boolean =
         getAdConsentState(thirdPartyTrackingAdConsent) !== false;
@@ -113,6 +116,9 @@ const setupPlayer = (
             onReady,
             onStateChange,
             onError,
+            onAdStart,
+            onAdEnd,
+            onAdSkip,
         },
         embedConfig: {
             relatedChannels,
@@ -151,13 +157,31 @@ export const initYoutubePlayer = (
             console.error(`YOUTUBE: ${event}`);
         };
 
+        const onAdStart = event => {
+            const isPreroll = !hasPlayerStarted(event);
+            console.log(`${isPreroll ? 'pre-roll' : 'advert'} started`);
+        };
+
+        const onAdEnd = event => {
+            const isPreroll = !hasPlayerStarted(event);
+            console.log(`${isPreroll ? 'pre-roll' : 'advert'} ended`);
+        };
+
+        const onAdSkip = event => {
+            const isPreroll = !hasPlayerStarted(event);
+            console.log(`${isPreroll ? 'pre-roll' : 'advert'} skipped`);
+        };
+
         return setupPlayer(
             el.id,
             videoId,
             channelId,
             onPlayerReady,
             onPlayerStateChange,
-            onPlayerError
+            onPlayerError,
+            onAdStart,
+            onAdEnd,
+            onAdSkip
         );
     });
 };
