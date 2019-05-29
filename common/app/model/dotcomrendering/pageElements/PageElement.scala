@@ -300,12 +300,10 @@ object PageElement {
           source <- mapElem.source
           html <- mapElem.html
           src <- getIframeSrc(html)
-        } yield MapBlockElement(
-                  src,
-                  originalUrl,
-                  source,
-                  element.mapTypeData.flatMap(_.caption).getOrElse(""),
-                  element.mapTypeData.flatMap(_.title).getOrElse(""))
+
+          caption = mapElem.caption.getOrElse("")
+          title = mapElem.title.getOrElse("")
+        } yield MapBlockElement(src, originalUrl, source, caption, title)
       }.toList
 
       case Pullquote => element.pullquoteTypeData.map(d => PullquoteBlockElement(d.html, Role(None))).toList
