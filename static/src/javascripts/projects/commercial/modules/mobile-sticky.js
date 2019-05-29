@@ -1,7 +1,7 @@
 // @flow
 import config from 'lib/config';
 import fastdom from 'lib/fastdom-promise';
-// import { getCookie } from 'lib/cookies';
+import { getCookie } from 'lib/cookies';
 import { addSlot } from 'commercial/modules/dfp/add-slot';
 import { commercialUsMobileSticky } from 'common/modules/experiments/tests/commercial-us-mobile-sticky';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
@@ -25,12 +25,12 @@ const createAdWrapper = (): HTMLDivElement => {
     return wrapper;
 };
 
-// const isInNA = (): boolean =>
-//     (getCookie('GU_geo_continent') || 'OTHER').toUpperCase() === 'NA';
+const isInNA = (): boolean =>
+    (getCookie('GU_geo_continent') || 'OTHER').toUpperCase() === 'NA';
 
 export const init = (): Promise<void> => {
     if (
-        // isInNA() &&
+        isInNA() &&
         config.get('page.contentType') === 'Article' &&
         isInVariantSynchronous(commercialUsMobileSticky, 'variant')
     ) {

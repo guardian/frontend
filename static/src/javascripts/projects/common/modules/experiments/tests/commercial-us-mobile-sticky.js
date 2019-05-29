@@ -1,5 +1,5 @@
 // @flow
-// import { getCookie } from 'lib/cookies';
+import { getCookie } from 'lib/cookies';
 import { isBreakpoint } from 'lib/detect';
 
 export const commercialUsMobileSticky: ABTest = {
@@ -16,8 +16,8 @@ export const commercialUsMobileSticky: ABTest = {
     idealOutcome:
         'No significant impact to performance as well as higher ad yield',
     canRun: () =>
-        // (getCookie('GU_geo_continent') || 'OTHER').toUpperCase() === 'NA' &&
-        isBreakpoint({ max: 'mobileLandscape' }),
+        (getCookie('GU_geo_continent') || 'OTHER').toUpperCase() === 'NA' &&
+        isBreakpoint({ min: 'mobile' }),
     variants: [
         {
             id: 'control',
