@@ -76,7 +76,7 @@ const getReaderRevenueRegion = (geolocation: string): ReaderRevenueRegion => {
 const getVisitCount = (): number => local.get('gu.alreadyVisited') || 0;
 
 const replaceArticlesRead = (text: string, days: number = 30): string =>
-    text.replace(/%%ARTICLES_READ%%/g, getArticleViewCount(days));
+    text.replace(/%%ARTICLES_READ%%/g, `${getArticleViewCount(days)}`);
 
 // How many times the user can see the Epic,
 // e.g. 6 times within 7 days with minimum of 1 day in between views.
