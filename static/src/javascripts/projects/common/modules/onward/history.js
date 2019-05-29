@@ -492,7 +492,9 @@ const getArticleViewCount = (days: number): number => {
     const dailyCount = local.get(storageKeyDailyArticleCount) || [];
     const cutOff = today - days;
 
-    const firstOldDayIndex = dailyCount.findIndex(c => c.day && c.day <= cutOff);
+    const firstOldDayIndex = dailyCount.findIndex(
+        c => c.day && c.day <= cutOff
+    );
     const dailyCountWindow =
         firstOldDayIndex >= 0
             ? dailyCount.slice(0, firstOldDayIndex)

@@ -11,7 +11,8 @@ import {
     seriesSummary,
     mostViewedSeries,
     getArticleViewCount,
-    _, incrementDailyArticleCount,
+    _,
+    incrementDailyArticleCount,
 } from 'common/modules/onward/history';
 import { local as localStorageStub } from 'lib/storage';
 
@@ -354,21 +355,21 @@ describe('history', () => {
 
     // dailyArticleCount tests
     it('gets article count for today only', () => {
-        const counts = [{day: today, count: 1}, {day: today-1, count: 1}];
+        const counts = [{ day: today, count: 1 }, { day: today - 1, count: 1 }];
         localStorageStub.set('gu.history.dailyArticleCount', counts);
 
         expect(getArticleViewCount(1)).toEqual(1);
     });
 
     it('gets article count for 2 days', () => {
-        const counts = [{day: today, count: 1}, {day: today-1, count: 1}];
+        const counts = [{ day: today, count: 1 }, { day: today - 1, count: 1 }];
         localStorageStub.set('gu.history.dailyArticleCount', counts);
 
         expect(getArticleViewCount(2)).toEqual(2);
     });
 
     it('increments the article count', () => {
-        const counts = [{day: today, count: 1}];
+        const counts = [{ day: today, count: 1 }];
         localStorageStub.set('gu.history.dailyArticleCount', counts);
 
         incrementDailyArticleCount(pageConfig);
@@ -377,12 +378,13 @@ describe('history', () => {
     });
 
     it('removes old history while incrementing the article count', () => {
-        const counts = [{day: today-40, count: 9}];
+        const counts = [{ day: today - 40, count: 9 }];
         localStorageStub.set('gu.history.dailyArticleCount', counts);
 
         incrementDailyArticleCount(pageConfig);
 
-        expect(localStorageStub.get('gu.history.dailyArticleCount', counts))
-            .toEqual([{day: today, count: 1}])
+        expect(
+            localStorageStub.get('gu.history.dailyArticleCount', counts)
+        ).toEqual([{ day: today, count: 1 }]);
     });
 });
