@@ -59,6 +59,7 @@ const forgetUniquesAfter = 10;
 const historySize = 50;
 const storageKeyHistory = 'gu.history';
 const storageKeySummary = 'gu.history.summary';
+const storageKeyDailyArticleCount = 'gu.history.dailyArticleCount'; // Array containing an article count for each day
 
 const today = Math.floor(Date.now() / 86400000); // 1 day in ms
 
@@ -462,6 +463,41 @@ const showInMegaNavEnable = (bool: boolean): void => {
     saveSummary(summary);
 };
 
+const incrementDailyArticleCount = (pageConfig: Object): void => {
+    if (!pageConfig.isFront) {
+        const dailyCount = local.get(storageKeyDailyArticleCount) || [];
+
+        if (dailyCount[0] && dailyCount[0].day && dailyCount[0].day === today) {
+            dailyCount[0].count += 1;
+        } else {
+            //New day
+            dailyCount.unshift({day: today, count: 1});
+
+            //Remove any old days
+            const cutOff = today - 30;
+            const firstOldDayIndex = dailyCount.findIndex(c => c.day && c.day < cutOff);
+            if (firstOldDayIndex > 0) {
+                dailyCount.splice(firstOldDayIndex);
+            }
+        }
+
+        local.set(storageKeyDailyArticleCount, dailyCount);
+    }
+};
+
+const getArticleViewCount = (days: number): number => {
+    const dailyCount = local.get(storageKeyDailyArticleCount) || [];
+    const cutOff = today - days;
+
+    const firstOldDayIndex = dailyCount.findIndex(c => c.day && c.day < cutOff);
+    const dailyCountWindow = firstOldDayIndex >= 0 ? dailyCount.slice(0, firstOldDayIndex) : dailyCount;
+
+    return dailyCountWindow.reduce(
+        (acc, current) => current.count + acc,
+        0
+    );
+};
+
 export {
     logHistory,
     logSummary,
@@ -476,6 +512,8 @@ export {
     reset,
     seriesSummary,
     mostViewedSeries,
+    incrementDailyArticleCount,
+    getArticleViewCount,
 };
 
 export const _ = {
