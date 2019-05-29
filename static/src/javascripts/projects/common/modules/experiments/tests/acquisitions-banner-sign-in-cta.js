@@ -7,10 +7,12 @@ import { isBreakpoint } from 'lib/detect';
 
 // Only display on desktop since we want to validate test hypothesis as quickly as possible.
 // Running on tablet and mobile would require more design since baaner already takes up maximum space allowed on these devices.
-const canRun: () => boolean = () => isBreakpoint({min: 'desktop'});
+const canRun: () => boolean = () => isBreakpoint({ min: 'desktop' });
 
 // TODO: does this need to be percent encoded? https://en.wikipedia.org/wiki/Percent-encoding
-const signInUrl: string = `${getUrl() || ''}/signin?returnUrl=${document.location.href}`;
+const signInUrl: string = `${getUrl() || ''}/signin?returnUrl=${
+    document.location.href
+}`;
 
 export const acquisitionsBannerSignInCta: AcquisitionsABTest = {
     id: 'AcquisitionsBannerSignInCta',

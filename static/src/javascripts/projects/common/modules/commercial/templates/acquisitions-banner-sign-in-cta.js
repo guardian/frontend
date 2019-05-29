@@ -40,13 +40,15 @@ export const acquisitionsBannerSignInCtaTemplate = (
                         >
                     </div>
                     <button class="button engagement-banner__button engagement-banner__button--after-logos" href="${
-                            params.linkUrl
-                        }">
+                        params.linkUrl
+                    }">
                         ${params.buttonCaption}${arrowWhiteRight.markup}
                     </button>
                 </div>
                 <div class="engagement-banner__sign-in-cta">
-                    <a class="engagement-banner__sign-in-cta-link u-underline" href="${params.signInUrl ? params.signInUrl : ''}">Already a supporter? Sign in</a>
+                    <a class="engagement-banner__sign-in-cta-link u-underline" href="${
+                        params.signInUrl ? params.signInUrl : ''
+                    }">Already a supporter? Sign in</a>
                 </div>
             </div>
         </div>
