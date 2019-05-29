@@ -52,7 +52,7 @@ trait ABTestSwitches {
     "test whether having a sign-in CTA negatively impacts acquisitions",
     owners = Seq(Owner.withGithub("Mullefa")),
     safeState = On,
-    sellByDate = new LocalDate(2019, 5, 30), // TODO
+    sellByDate = new LocalDate(2019, 6, 5),
     exposeClientSide = true
   )
 
