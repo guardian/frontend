@@ -149,7 +149,7 @@ final case class Content(
 
   lazy val openGraphImage: String = ImgSrc(openGraphImageOrFallbackUrl, openGraphImageProfile)
   // These dimensions are just an educated guess (e.g. we don't take into account image-resizer being turned off)
-  lazy val openGraphImageWidth: Option[Int] = openGraphImageProfile.width // TODO avoid repeating here
+  lazy val openGraphImageWidth: Option[Int] = openGraphImageProfile.width
   lazy val openGraphImageHeight: Option[Int] =
     for {
       img <- rawOpenGraphImage
