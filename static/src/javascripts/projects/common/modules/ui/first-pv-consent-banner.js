@@ -13,9 +13,8 @@ import ophan from 'ophan/ng';
 import { upAlertViewCount } from 'common/modules/analytics/send-privacy-prefs';
 import type { AdConsent } from 'common/modules/commercial/ad-prefs.lib';
 import type { Banner } from 'common/modules/ui/bannerPicker';
-import { commercialConsentGlobalBanner } from 'common/modules/experiments/tests/commercial-consent-global-banner';
+import { commercialConsentModalBanner } from 'common/modules/experiments/tests/commercial-consent-modal-banner';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
-import fastdom from 'fastdom';
 
 type Template = {
     heading: string,
@@ -106,17 +105,21 @@ const trackInteraction = (interaction: string): void => {
     trackNonClickInteraction(interaction);
 };
 
-const isInCommercialConsentGlobalBannerTest = (): boolean =>
-    isInVariantSynchronous(commercialConsentGlobalBanner, 'regularVariant') ||
-    isInVariantSynchronous(commercialConsentGlobalBanner, 'noScrollVariant') ||
-    isInVariantSynchronous(commercialConsentGlobalBanner, 'tallVariant') ||
-    isInVariantSynchronous(commercialConsentGlobalBanner, 'animationVariant') ||
-    isInVariantSynchronous(commercialConsentGlobalBanner, 'floatingVariant');
+const isInModalTestDismissableVariant: boolean = isInVariantSynchronous(
+    commercialConsentModalBanner,
+    'dismissableVariant'
+);
+const isInModalTestNonDismissableVariant: boolean = isInVariantSynchronous(
+    commercialConsentModalBanner,
+    'nonDismissableVariant'
+);
+const isInCommercialConsentModalBannerTest: boolean =
+    isInModalTestDismissableVariant || isInModalTestNonDismissableVariant;
 
 const canShow = (): Promise<boolean> =>
     Promise.resolve(
         hasUnsetAdChoices() &&
-            (isInEU() || isInCommercialConsentGlobalBannerTest()) &&
+            (isInEU() || isInCommercialConsentModalBannerTest) &&
             !hasUserAcknowledgedBanner(messageCode)
     );
 
@@ -133,20 +136,8 @@ const bindClickHandlers = (msg: Message): void => {
     });
 };
 
-const preventScroll = (msg: Message): void => {
-    msg.$siteMessageContainer[0].addEventListener('touchmove', e => {
-        e.preventDefault();
-    });
-};
-
-const animateBanner = (msg: Message): void => {
-    setTimeout(() => {
-        fastdom.write(() => {
-            msg.$siteMessageContainer[0].classList.add(
-                'site-message--first-pv-consent--animationVariant--animate'
-            );
-        });
-    }, 750);
+const bindModalCloseHandlers = (msg: Message): void => {
+    console.log('bindModalCloseHandlers --->', msg);
 };
 
 const show = (): Promise<boolean> => {
@@ -155,43 +146,18 @@ const show = (): Promise<boolean> => {
     const opts = {};
 
     const getTestVariant = (): ?string => {
-        if (
-            isInVariantSynchronous(
-                commercialConsentGlobalBanner,
-                'noScrollVariant'
-            )
-        ) {
-            return 'noScrollVariant';
+        if (isInModalTestDismissableVariant) {
+            return 'dismissableVariant';
         }
 
-        if (
-            isInVariantSynchronous(commercialConsentGlobalBanner, 'tallVariant')
-        ) {
-            return 'tallVariant';
-        }
-
-        if (
-            isInVariantSynchronous(
-                commercialConsentGlobalBanner,
-                'animationVariant'
-            )
-        ) {
-            return 'animationVariant';
-        }
-
-        if (
-            isInVariantSynchronous(
-                commercialConsentGlobalBanner,
-                'floatingVariant'
-            )
-        ) {
-            return 'floatingVariant';
+        if (isInModalTestNonDismissableVariant) {
+            return 'nonDismissableVariant';
         }
     };
 
-    const testVariant = getTestVariant();
-
     const getTestModifierClass = (): ?string => {
+        const testVariant = getTestVariant();
+
         if (testVariant) {
             return `first-pv-consent--${testVariant}`;
         }
@@ -206,16 +172,19 @@ const show = (): Promise<boolean> => {
     const msg = new Message(
         messageCode,
         Object.assign(
-            {},
             {
                 important: true,
                 permanent: true,
                 customJs: () => {
                     bindClickHandlers(msg);
-                    if (testVariant === 'noScrollVariant') {
-                        preventScroll(msg);
-                    } else if (testVariant === 'animationVariant') {
-                        animateBanner(msg);
+
+                    if (isInCommercialConsentModalBannerTest) {
+                        // prevent body scrolling beneath overlay
+                        document.body.classList.add('no-scroll');
+
+                        if (isInModalTestDismissableVariant) {
+                            bindModalCloseHandlers(msg);
+                        }
                     }
                 },
             },
