@@ -1,8 +1,26 @@
+@import 'engagement-banner';
+
 .engagement-banner__payment-cta {
     display: inline-block;
 
     @include mq(desktop) {
         display: block;
+    }
+}
+
+.engagement-banner__button--before-logos {
+    @include mq($from: desktop) {
+        display: none;
+    }
+}
+
+// At desktop break point want to differ from regular ordering
+// and put the button under the payment logos.
+.engagement-banner__button--after-logos {
+    margin-top: 12px;
+
+    @include mq($until: desktop) {
+        display: none;
     }
 }
 

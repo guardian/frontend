@@ -25,7 +25,7 @@ export const acquisitionsBannerSignInCtaTemplate = (
             </div>
             <div class="engagement-banner__cta">
                 <div class="engagement-banner__payment-cta">
-                    <button class="button engagement-banner__button" href="${
+                    <button class="button engagement-banner__button engagement-banner__button--before-logos" href="${
                         params.linkUrl
                     }">
                         ${params.buttonCaption}${arrowWhiteRight.markup}
@@ -39,6 +39,11 @@ export const acquisitionsBannerSignInCtaTemplate = (
                             alt="Accepted payment methods: Visa, Mastercard, American Express and Paypal"
                         >
                     </div>
+                    <button class="button engagement-banner__button engagement-banner__button--after-logos" href="${
+                            params.linkUrl
+                        }">
+                        ${params.buttonCaption}${arrowWhiteRight.markup}
+                    </button>
                 </div>
                 <div class="engagement-banner__sign-in-cta">
                     <a class="engagement-banner__sign-in-cta-link u-underline" href="${params.signInUrl ? params.signInUrl : ''}">Already a supporter? Sign in</a>
