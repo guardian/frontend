@@ -546,18 +546,6 @@
     display: none;
 }
 
-.mobilesticky-container_close-x {
-    stroke: #121212;
-    fill: transparent;
-    stroke-linecap: round;
-    stroke-width: 2;
-    text-align: center;
-}
-
-.mobilesticky-container_close-x svg {
-    width: 20px;
-}
-
 .mobilesticky-closer {
     display: none;
     position: absolute;
@@ -569,4 +557,16 @@
 
 .ad-slot--mobile-sticky .ad-slot__label .mobilesticky-closer {
     display: block;
+}
+
+.mobilesticky-container_close-x {
+    stroke: #121212;
+    fill: transparent;
+    stroke-linecap: round;
+    stroke-width: 2;
+    text-align: center;
+}
+
+.mobilesticky-container_close-x svg {
+    width: 20px;
 }

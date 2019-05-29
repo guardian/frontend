@@ -33,11 +33,6 @@ const createAdLabel = (): HTMLDivElement => {
 export const renderAdvertLabel = (adSlotNode: HTMLElement): Promise<null> =>
     fastdom.read(() => {
         if (shouldRenderLabel(adSlotNode)) {
-            // const labelDiv = `<div class="ad-slot__label">Advertisement<div class="mobilesticky-closer"></div></div>`;
-
-            const tmpDiv: HTMLDivElement = document.createElement('div');
-            tmpDiv.appendChild(createAdLabel());
-
             return fastdom.write(() => {
                 adSlotNode.prepend(createAdLabel());
             });
