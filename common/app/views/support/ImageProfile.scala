@@ -185,12 +185,7 @@ object OpenGraphImage extends OverlayBase64 {
 
   private[this] def starRating(rating: Int, shouldIncludeOverlay: Boolean, shouldUpscale: Boolean = false): ShareImage = {
     val image = rating match {
-      case 0 => s"overlay-base64=${overlayUrlBase64("tg-review-0.png")}"
-      case 1 => s"overlay-base64=${overlayUrlBase64("tg-review-1.png")}"
-      case 2 => s"overlay-base64=${overlayUrlBase64("tg-review-2.png")}"
-      case 3 => s"overlay-base64=${overlayUrlBase64("tg-review-3.png")}"
-      case 4 => s"overlay-base64=${overlayUrlBase64("tg-review-4.png")}"
-      case 5 => s"overlay-base64=${overlayUrlBase64("tg-review-5.png")}"
+      case x if 0 to 5 contains x => s"overlay-base64=${overlayUrlBase64(s"tg-review-$x.png")}"
       case _ => s"overlay-base64=${overlayUrlBase64("tg-default.png")}"
     }
     new ShareImage(image, shouldIncludeOverlay, shouldUpscale)
@@ -198,12 +193,7 @@ object OpenGraphImage extends OverlayBase64 {
 
   private[this] def starRatingObserver(rating: Int, shouldIncludeOverlay: Boolean, shouldUpscale: Boolean = false): ShareImage = {
     val image = rating match {
-      case 0 => s"overlay-base64=${overlayUrlBase64("to-review-0.png")}"
-      case 1 => s"overlay-base64=${overlayUrlBase64("to-review-1.png")}"
-      case 2 => s"overlay-base64=${overlayUrlBase64("to-review-2.png")}"
-      case 3 => s"overlay-base64=${overlayUrlBase64("to-review-3.png")}"
-      case 4 => s"overlay-base64=${overlayUrlBase64("to-review-4.png")}"
-      case 5 => s"overlay-base64=${overlayUrlBase64("to-review-5.png")}"
+      case x if 0 to 5 contains x => s"overlay-base64=${overlayUrlBase64(s"tg-review-$x.png")}"
       case _ => s"overlay-base64=${overlayUrlBase64("to-default.png")}"
     }
     new ShareImage(image, shouldIncludeOverlay, shouldUpscale)
