@@ -384,7 +384,7 @@ describe('history', () => {
         incrementDailyArticleCount(pageConfig);
 
         expect(
-            localStorageStub.get('gu.history.dailyArticleCount', counts)
+            localStorageStub.get('gu.history.dailyArticleCount')
         ).toEqual([{ day: today, count: 1 }]);
     });
 });
