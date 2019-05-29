@@ -334,6 +334,7 @@ const reset = (): void => {
     summaryCache = undefined;
     local.remove(storageKeyHistory);
     local.remove(storageKeySummary);
+    local.remove(storageKeyDailyArticleCount);
 };
 
 const logHistory = (pageConfig: Object): void => {
@@ -470,12 +471,14 @@ const incrementDailyArticleCount = (pageConfig: Object): void => {
         if (dailyCount[0] && dailyCount[0].day && dailyCount[0].day === today) {
             dailyCount[0].count += 1;
         } else {
-            //New day
-            dailyCount.unshift({day: today, count: 1});
+            // New day
+            dailyCount.unshift({ day: today, count: 1 });
 
-            //Remove any old days
+            // Remove any days older than 30
             const cutOff = today - 30;
-            const firstOldDayIndex = dailyCount.findIndex(c => c.day && c.day < cutOff);
+            const firstOldDayIndex = dailyCount.findIndex(
+                c => c.day && c.day < cutOff
+            );
             if (firstOldDayIndex > 0) {
                 dailyCount.splice(firstOldDayIndex);
             }
@@ -489,13 +492,13 @@ const getArticleViewCount = (days: number): number => {
     const dailyCount = local.get(storageKeyDailyArticleCount) || [];
     const cutOff = today - days;
 
-    const firstOldDayIndex = dailyCount.findIndex(c => c.day && c.day < cutOff);
-    const dailyCountWindow = firstOldDayIndex >= 0 ? dailyCount.slice(0, firstOldDayIndex) : dailyCount;
+    const firstOldDayIndex = dailyCount.findIndex(c => c.day && c.day <= cutOff);
+    const dailyCountWindow =
+        firstOldDayIndex >= 0
+            ? dailyCount.slice(0, firstOldDayIndex)
+            : dailyCount;
 
-    return dailyCountWindow.reduce(
-        (acc, current) => current.count + acc,
-        0
-    );
+    return dailyCountWindow.reduce((acc, current) => current.count + acc, 0);
 };
 
 export {
