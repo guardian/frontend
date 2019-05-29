@@ -17,7 +17,7 @@
 // At desktop break point want to differ from regular ordering
 // and put the button under the payment logos.
 .engagement-banner__button--after-logos {
-    margin-top: 12px;
+    margin-top: 6px;
 
     @include mq($until: desktop) {
         display: none;
@@ -35,7 +35,6 @@
 
     @include mq(desktop) {
         padding-left: 0;
-        padding-top: 12px;
         display: block;
     }
 }

@@ -4,15 +4,21 @@ import { acquisitionsBannerControlTemplate } from 'common/modules/commercial/tem
 import { acquisitionsBannerSignInCtaTemplate } from 'common/modules/commercial/templates/acquisitions-banner-sign-in-cta';
 import { getUrl } from 'common/modules/identity/api';
 import { isBreakpoint } from 'lib/detect';
+import { constructQuery } from 'lib/url';
 
 // Only display on desktop since we want to validate test hypothesis as quickly as possible.
-// Running on tablet and mobile would require more design since baaner already takes up maximum space allowed on these devices.
+// Running on tablet and mobile would require more design since banner already takes up maximum space allowed on these devices.
 const canRun: () => boolean = () => isBreakpoint({ min: 'desktop' });
 
-// TODO: does this need to be percent encoded? https://en.wikipedia.org/wiki/Percent-encoding
-const signInUrl: string = `${getUrl() || ''}/signin?returnUrl=${
-    document.location.href
-}`;
+const signInUrl: () => string = () => {
+    const signInQueryParams = {
+        // Include profile specific AB test query parameters to track sign-in on profile.
+        abName: 'AcquisitionsBannerSignInCta',
+        abVariant: 'sign-in-cta',
+        returnUrl: document.location.href,
+    };
+    return `${getUrl() || ''}/signin?${constructQuery(signInQueryParams)}`;
+};
 
 export const acquisitionsBannerSignInCta: AcquisitionsABTest = {
     id: 'AcquisitionsBannerSignInCta',
@@ -43,7 +49,7 @@ export const acquisitionsBannerSignInCta: AcquisitionsABTest = {
             test: (): void => {}, // membership-engagement-banner.js is responsible for displaying the banner
             engagementBannerParams: {
                 template: acquisitionsBannerSignInCtaTemplate,
-                signInUrl,
+                signInUrl: signInUrl(),
             },
         },
     ],
