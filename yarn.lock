@@ -4742,9 +4742,9 @@ fstream@^1.0.0, fstream@^1.0.2, fstream@~1.0.10:
     mkdirp ">=0.5 0"
     rimraf "2"
 
-fun-hooks@^0.8.1:
-  version "0.8.1"
-  resolved "https://registry.yarnpkg.com/fun-hooks/-/fun-hooks-0.8.1.tgz#5ef7866840610a5a1858c26ade97b15d35853434"
+fun-hooks@^0.9.2:
+  version "0.9.2"
+  resolved "https://registry.yarnpkg.com/fun-hooks/-/fun-hooks-0.9.2.tgz#c0692316de311bd0ed0e235cde1c769a599930c9"
 
 function-bind@^1.1.0:
   version "1.1.0"
@@ -8206,14 +8206,14 @@ preact@^8.2.9:
   version "8.2.9"
   resolved "https://registry.yarnpkg.com/preact/-/preact-8.2.9.tgz#813ba9dd45e5d97c5ea0d6c86d375b3be711cc40"
 
-"prebid.js@https://github.com/guardian/Prebid.js.git#b06a091":
-  version "2.13.0"
-  resolved "https://github.com/guardian/Prebid.js.git#b06a0910b92b37f23ae87d157fcdecfee4919cb0"
+"prebid.js@https://github.com/guardian/Prebid.js.git#e475698":
+  version "2.15.0"
+  resolved "https://github.com/guardian/Prebid.js.git#e47569882e47fdcbf63466c998870392c1d3430e"
   dependencies:
     babel-plugin-transform-object-assign "^6.22.0"
     core-js "^2.4.1"
     crypto-js "^3.1.9-1"
-    fun-hooks "^0.8.1"
+    fun-hooks "^0.9.2"
     jsencrypt "^3.0.0-rc.1"
     just-clone "^1.0.2"
 

@@ -47,6 +47,11 @@
     line-height: 26px;
 }
 
+.epic-ticker__goal-reached .epic-ticker__so-far .epic-ticker__count {
+    font-size: 16px;
+    line-height: 18px;
+}
+
 .epic-ticker__count-label {
     font-style: italic;
 }
@@ -78,6 +83,14 @@ $progress-bar-height: 10px;
     transform: translateX(-100%);
     transition: transform 3s cubic-bezier(.25, .55, .2, .85);
     background-color: #ffe500;
+}
+
+.epic-ticker__goal-marker {
+    border-right: 2px solid #121212;
+    content: ' ';
+    display: block;
+    height: 12px;
+    margin-top: -2px;
 }
 
 .epic-ticker__progress-labels {

@@ -34,7 +34,8 @@ case class EmbedBlockElement(html: String, safe: Option[Boolean], alt: Option[St
 case class SoundcloudBlockElement(html: String, id: String, isTrack: Boolean, isMandatory: Boolean) extends PageElement
 case class ContentAtomBlockElement(atomId: String) extends PageElement
 case class YoutubeBlockElement(id: String, assetId: String, channelId: Option[String], mediaTitle: String) extends PageElement
-case class InteractiveBlockElement(html: Option[String], role: Role, isMandatory: Option[Boolean]) extends PageElement
+case class InteractiveUrlBlockElement(url: String) extends PageElement
+case class InteractiveMarkupBlockElement(html: Option[String], css: Option[String], js: Option[String]) extends PageElement
 case class CommentBlockElement(body: String, avatarURL: String, profileURL: String, profileName: String, permalink: String, dateTime: String) extends PageElement
 case class TableBlockElement(html: Option[String], role: Role, isMandatory: Option[Boolean]) extends PageElement
 case class WitnessBlockElement(html: Option[String]) extends PageElement
@@ -279,13 +280,21 @@ object PageElement {
             ))
           }
 
+          case Some(interactive: InteractiveAtom) => {
+            Some(InteractiveMarkupBlockElement(
+              html = Some(interactive.html),
+              css = Some(interactive.css),
+              js = interactive.mainJS
+            ))
+          }
+
           case Some(atom) =>
             Some(ContentAtomBlockElement(atom.id))
           case _ => None
         }).toList
 
       case Pullquote => element.pullquoteTypeData.map(d => PullquoteBlockElement(d.html, Role(None))).toList
-      case Interactive => element.interactiveTypeData.map(d => InteractiveBlockElement(d.html, Role(d.role), d.isMandatory)).toList
+      case Interactive => element.interactiveTypeData.flatMap(_.iframeUrl).map(url => InteractiveUrlBlockElement(url)).toList
       case Table => element.tableTypeData.map(d => TableBlockElement(d.html, Role(d.role), d.isMandatory)).toList
       case Witness => element.witnessTypeData.map(d => WitnessBlockElement(d.html)).toList
       case Document => element.documentTypeData.map(d => DocumentBlockElement(d.html, Role(d.role), d.isMandatory)).toList
@@ -380,7 +389,8 @@ object PageElement {
   implicit val ContentAtomBlockElementWrites: Writes[ContentAtomBlockElement] = Json.writes[ContentAtomBlockElement]
   implicit val YoutubeBlockElementWrites: Writes[YoutubeBlockElement] = Json.writes[YoutubeBlockElement]
   implicit val PullquoteBlockElementWrites: Writes[PullquoteBlockElement] = Json.writes[PullquoteBlockElement]
-  implicit val InteractiveBlockElementWrites: Writes[InteractiveBlockElement] = Json.writes[InteractiveBlockElement]
+  implicit val InteractiveBlockElementWrites: Writes[InteractiveMarkupBlockElement] = Json.writes[InteractiveMarkupBlockElement]
+  implicit val InteractiveIframeElementWrites: Writes[InteractiveUrlBlockElement] = Json.writes[InteractiveUrlBlockElement]
   implicit val CommentBlockElementWrites: Writes[CommentBlockElement] = Json.writes[CommentBlockElement]
   implicit val TableBlockElementWrites: Writes[TableBlockElement] = Json.writes[TableBlockElement]
   implicit val WitnessBlockElementWrites: Writes[WitnessBlockElement] = Json.writes[WitnessBlockElement]
