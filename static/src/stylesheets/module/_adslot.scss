@@ -536,6 +536,7 @@
     margin: 0 auto;
     right: 0;
     left: 0;
+    z-index: $zindex-ads;
     @include mq(phablet) {
         display: none;
     }
@@ -558,9 +559,14 @@
 }
 
 .mobilesticky-closer {
-    position: relative;
-    z-index: 1011;
-    float: right;
-    height: $mpu-ad-label-height;
-    width: $mpu-ad-label-height;
+    display: none;
+    position: absolute;
+    right: 3px;
+    top: 1px;
+    height: $mpu-ad-label-height - 3px;
+    width: $mpu-ad-label-height - 3px;
+}
+
+.ad-slot--mobile-sticky .ad-slot__label .mobilesticky-closer {
+    display: block;
 }

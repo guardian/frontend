@@ -18,23 +18,9 @@ const createAdSlot = (): HTMLDivElement => {
     return adSlot;
 };
 
-const createAdCloseDiv = (): HTMLDivElement => {
-    const closeDiv: HTMLDivElement = document.createElement('div');
-    closeDiv.className = 'mobilesticky-closer';
-    closeDiv.innerHTML =
-        '<svg viewbox="0 0 40 40"><path class="mobilesticky-container_close-x" d="M 10,10 L 30,30 M 30,10 L 10,30" /></svg>';
-    closeDiv.onclick = function onclickMobileStickyCloser() {
-        const wrapperEl = this.parentElement;
-        if (wrapperEl)
-            wrapperEl.classList.add('mobilesticky-container--hidden');
-    };
-    return closeDiv;
-};
-
 const createAdWrapper = (): HTMLDivElement => {
     const wrapper: HTMLDivElement = document.createElement('div');
     wrapper.className = 'mobilesticky-container';
-    wrapper.appendChild(createAdCloseDiv());
     wrapper.appendChild(createAdSlot());
     return wrapper;
 };
