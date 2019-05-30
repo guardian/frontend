@@ -15,7 +15,8 @@ export const commercialConsentModalBanner: ABTest = {
     dataLinkNames: '',
     idealOutcome:
         'Fewer US users ignore the modal banner, which reduces the number of pageviews with unset conset',
-    canRun: () => (getCookie('GU_geo_continent') || 'OTHER').toUpperCase() === 'NA',
+    canRun: () =>
+        (getCookie('GU_geo_continent') || 'OTHER').toUpperCase() === 'NA',
     variants: [
         {
             id: 'control',
