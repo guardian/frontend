@@ -10,7 +10,9 @@ import {
     reset,
     seriesSummary,
     mostViewedSeries,
+    getArticleViewCount,
     _,
+    incrementDailyArticleCount,
 } from 'common/modules/onward/history';
 import { local as localStorageStub } from 'lib/storage';
 
@@ -64,6 +66,7 @@ const lessVisited = {
 describe('history', () => {
     let mockContains;
     let mockSummary;
+    let mockDailyArticleCount;
 
     beforeEach(() => {
         mockContains = contains;
@@ -73,6 +76,8 @@ describe('history', () => {
                 return mockContains;
             } else if (key === 'gu.history.summary') {
                 return mockSummary;
+            } else if (key === 'gu.history.dailyArticleCount') {
+                return mockDailyArticleCount;
             }
         });
 
@@ -81,6 +86,8 @@ describe('history', () => {
                 mockContains = data;
             } else if (key === 'gu.history.summary') {
                 mockSummary = data;
+            } else if (key === 'gu.history.dailyArticleCount') {
+                mockDailyArticleCount = data;
             }
         });
     });
@@ -344,5 +351,40 @@ describe('history', () => {
 
         expect(getContributors().length).toEqual(1);
         expect(getContributors()[0][0]).toEqual('Finbarr Saunders');
+    });
+
+    // dailyArticleCount tests
+    it('gets article count for today only', () => {
+        const counts = [{ day: today, count: 1 }, { day: today - 1, count: 1 }];
+        localStorageStub.set('gu.history.dailyArticleCount', counts);
+
+        expect(getArticleViewCount(1)).toEqual(1);
+    });
+
+    it('gets article count for 2 days', () => {
+        const counts = [{ day: today, count: 1 }, { day: today - 1, count: 1 }];
+        localStorageStub.set('gu.history.dailyArticleCount', counts);
+
+        expect(getArticleViewCount(2)).toEqual(2);
+    });
+
+    it('increments the article count', () => {
+        const counts = [{ day: today, count: 1 }];
+        localStorageStub.set('gu.history.dailyArticleCount', counts);
+
+        incrementDailyArticleCount(pageConfig);
+
+        expect(getArticleViewCount(1)).toEqual(2);
+    });
+
+    it('removes old history while incrementing the article count', () => {
+        const counts = [{ day: today - 40, count: 9 }];
+        localStorageStub.set('gu.history.dailyArticleCount', counts);
+
+        incrementDailyArticleCount(pageConfig);
+
+        expect(localStorageStub.get('gu.history.dailyArticleCount')).toEqual([
+            { day: today, count: 1 },
+        ]);
     });
 });
