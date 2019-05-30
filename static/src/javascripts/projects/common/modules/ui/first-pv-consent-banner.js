@@ -79,7 +79,7 @@ const makeHtml = (): string => `
     }</div>
     ${isInModalTestDismissableVariant &&
         `<div class="first-pv-consent-banner__close">
-            <button class="button site-message--first-pv-consent__close-button js-site-message-close js-first-pv-consent-banner-close-button" data-link-name="hide consent banner">
+            <button tabindex="3" class="button site-message--first-pv-consent__close-button js-site-message-close js-first-pv-consent-banner-close-button" data-link-name="hide consent banner">
                 <span class="u-h">Close</span>
                 ${closeCentralIcon.markup}
             </button>
@@ -94,11 +94,13 @@ const makeHtml = (): string => `
             class="site-message--first-pv-consent__button site-message--first-pv-consent__button--main ${
                 bindableClassNames.agree
             }"
+            tabindex="1"
         >${checkIcon.markup}<span>${template.agreeButton}</span></button>
         <a
             href="${template.linkToPreferences}"
             data-link-name="first-pv-consent : to-prefs"
             class="site-message--first-pv-consent__link u-underline"
+            tabindex="2"
         >${template.choicesButton}</a>
     </div>
 `;
