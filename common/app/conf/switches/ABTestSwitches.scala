@@ -89,7 +89,7 @@ trait ABTestSwitches {
   Switch(
     ABTests,
     "ab-commercial-us-mobile-sticky",
-    "Test whether changes to Consent Banner increases proportion of non-EU users who interact with it",
+    "Test the behaviour of the new mobile sticky ad slot",
     owners = Seq(Owner.withGithub("ripecosta")),
     safeState = Off,
     sellByDate = new LocalDate(2019, 9, 30),

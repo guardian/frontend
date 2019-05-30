@@ -12,9 +12,9 @@ const shouldRenderLabel = adSlotNode =>
 
 const createAdCloseDiv = (): HTMLDivElement => {
     const closeDiv: HTMLDivElement = document.createElement('div');
-    closeDiv.className = 'mobilesticky-closer';
+    closeDiv.className = 'ad-slot__closer';
     closeDiv.innerHTML =
-        '<svg viewbox="0 0 40 40"><path class="mobilesticky_close-x" d="M 10,10 L 30,30 M 30,10 L 10,30" /></svg>';
+        '<svg viewbox="0 0 40 40"><path class="ad-slot__closer__x" d="M 10,10 L 30,30 M 30,10 L 10,30" /></svg>';
     closeDiv.onclick = function onclickMobileStickyCloser() {
         this.closest('.mobilesticky-container').remove();
     };

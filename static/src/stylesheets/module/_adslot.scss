@@ -542,7 +542,7 @@
     }
 }
 
-.mobilesticky-closer {
+.ad-slot__closer {
     display: none;
     position: absolute;
     right: 3px;
@@ -551,11 +551,11 @@
     width: $mpu-ad-label-height - 3px;
 }
 
-.ad-slot--mobile-sticky .ad-slot__label .mobilesticky-closer {
+.ad-slot--mobile-sticky .ad-slot__label .ad-slot__closer {
     display: block;
 }
 
-.mobilesticky_close-x {
+.ad-slot__closer__x {
     stroke: #121212;
     fill: transparent;
     stroke-linecap: round;
@@ -563,6 +563,6 @@
     text-align: center;
 }
 
-.mobilesticky_close-x svg {
+.ad-slot__closer__x svg {
     width: 20px;
 }
