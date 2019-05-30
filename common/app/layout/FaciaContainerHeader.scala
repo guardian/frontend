@@ -1,7 +1,7 @@
 package layout
 
 import common.Pagination
-import model.{ApplicationContext, Page, Section, Tag}
+import model.{ApplicationContext, Badges, Page, Section, Tag}
 import org.joda.time.LocalDate
 import org.joda.time.format.DateTimeFormat
 import services.ConfigAgent
@@ -61,6 +61,14 @@ object FaciaContainerHeader {
         tagPage.metadata.webTitle,
         tagPage.contributorImagePath.map(FaciaHeaderImage(_, ContributorCircleImage)),
         tagPage.properties.bio.filter(_.nonEmpty) orElse tagPage.metadata.description,
+        dateHeadline,
+        frontHref(tagPage.id, tagPage.metadata.pagination)
+      )
+    } else if (tagPage.id == "sport/cricket-world-cup-2019") {
+      MetaDataHeader(
+        tagPage.metadata.webTitle,
+        Some(FaciaHeaderImage(Badges.cricketWorldCup.imageUrl, FootballBadge)),
+        tagPage.metadata.description,
         dateHeadline,
         frontHref(tagPage.id, tagPage.metadata.pagination)
       )
