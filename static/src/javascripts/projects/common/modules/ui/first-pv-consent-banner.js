@@ -157,7 +157,9 @@ const bindModalCloseHandlers = (msg: Message): void => {
                 closeButton.addEventListener('click', () => {
                     msg.hide();
                     // enable scrolling on body
-                    document.body.classList.remove('no-scroll');
+                    if (document.body) {
+                        document.body.classList.remove('no-scroll');
+                    }
                 });
             }
         });
@@ -195,6 +197,7 @@ const show = (): Promise<boolean> => {
     const msg = new Message(
         messageCode,
         Object.assign(
+            {},
             {
                 important: true,
                 permanent: true,
@@ -203,7 +206,9 @@ const show = (): Promise<boolean> => {
 
                     if (isInCommercialConsentModalBannerTest) {
                         // prevent body scrolling beneath overlay
-                        document.body.classList.add('no-scroll');
+                        if (document.body) {
+                            document.body.classList.add('no-scroll');
+                        }
                         // if dissmissable bind close handlers
                         if (isInModalTestDismissableVariant) {
                             bindModalCloseHandlers(msg);
