@@ -43,3 +43,5 @@ else
 fi
 
 echo -e "💯 Done! You can now run frontend locally on https://${DOMAIN}"
+echo -e "👤 To setup Dotcom Identity Frontend please follow identity-platform README."
+echo -e "👋"
