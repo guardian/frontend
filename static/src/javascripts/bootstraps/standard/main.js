@@ -268,10 +268,10 @@ const bootStandard = (): void => {
 
     newHeaderInit();
 
-    const isLeftCol: boolean = isBreakpoint({ min: 'leftCol' });
+    const isAtLeastLeftCol: boolean = isBreakpoint({ min: 'leftCol' });
 
     // we only need to fix the secondary column from leftCol breakpoint up
-    if (config.get('page.hasShowcaseMainElement') && isLeftCol) {
+    if (config.get('page.hasShowcaseMainElement') && isAtLeastLeftCol) {
         fixSecondaryColumn();
     }
 
