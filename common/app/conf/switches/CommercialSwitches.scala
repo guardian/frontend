@@ -357,6 +357,16 @@ trait CommercialSwitches {
     sellByDate = never,
     exposeClientSide = true
   )
+
+  val confiantAdVerification: Switch = Switch(
+    group = Commercial,
+    name = "confiant-ad-verification",
+    description = "Enable Confiant ad verification",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
 }
 
 trait PrebidSwitches {

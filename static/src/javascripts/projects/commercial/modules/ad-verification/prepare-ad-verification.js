@@ -1,5 +1,5 @@
 // @flow strict
-
+import config from 'lib/config';
 import { loadScript } from 'lib/load-script';
 import { commercialAdVerification } from 'common/modules/experiments/tests/commercial-ad-verification.js';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
@@ -15,7 +15,10 @@ export const init = (start: () => void): Promise<void> => {
 
     start();
 
-    if (isInVariantSynchronous(commercialAdVerification, 'variant')) {
+    if (
+        config.get('switches.confiantAdVerification') ||
+        isInVariantSynchronous(commercialAdVerification, 'variant')
+    ) {
         return loadScript(
             `//${host}/7oDgiTsq88US4rrBG0_Nxpafkrg/gpt_and_prebid/config.js`,
             { async: true }
