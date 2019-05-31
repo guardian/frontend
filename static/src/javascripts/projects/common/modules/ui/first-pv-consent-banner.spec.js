@@ -105,6 +105,9 @@ describe('First PV consents banner', () => {
     });
 
     describe('With location', () => {
+        beforeEach(() => {
+            test.clearTestVariants();
+        });
         it('should render inside the EU', async () => {
             getCookie.mockImplementation(_ => {
                 if (_ === 'GU_geo_continent') return 'EU';
@@ -113,6 +116,7 @@ describe('First PV consents banner', () => {
             return expect(await banner.canShow()).toBe(true);
         });
         it('should not render outside the EU', async () => {
+            isInVariantSynchronous.mockImplementation(() => false);
             getCookie.mockImplementation(_ => {
                 if (_ === 'GU_geo_continent') return '??';
                 return null;
@@ -130,7 +134,7 @@ describe('First PV consents banner', () => {
             });
             return expect(await banner.canShow()).toBe(true);
         });
-        it('sshould render in North America, when commercial consent test participation is "nonDismissableVariant"', async () => {
+        it('should render in North America, when commercial consent test participation is "nonDismissableVariant"', async () => {
             isInVariantSynchronous.mockImplementation(
                 (testId, variantId) => variantId === 'nonDismissableVariant'
             );
@@ -140,15 +144,15 @@ describe('First PV consents banner', () => {
             });
             return expect(await banner.canShow()).toBe(true);
         });
-        it('should not render in North America, when commercial consent test participation is "control"', async () => {
+        it('should render in North America, when commercial consent test participation is "regularVariant"', async () => {
             isInVariantSynchronous.mockImplementation(
-                (testId, variantId) => variantId === 'control'
+                (testId, variantId) => variantId === 'regularVariant'
             );
             getCookie.mockImplementation(_ => {
-                if (_ === 'GU_geo_continent') return '??';
+                if (_ === 'GU_geo_continent') return 'NA';
                 return null;
             });
-            return expect(await banner.canShow()).toBe(false);
+            return expect(await banner.canShow()).toBe(true);
         });
     });
 

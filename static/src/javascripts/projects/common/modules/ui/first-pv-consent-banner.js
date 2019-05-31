@@ -62,17 +62,47 @@ const bindableClassNames: BindableClassNames = {
     agree: 'js-first-pv-consent-agree',
 };
 
-const isInModalTestRegularVariant = (): boolean =>
-    isInVariantSynchronous(commercialConsentModalBanner, 'regularVariant');
+let inModalTestRegularVariant;
+const isInModalTestRegularVariant = (): boolean => {
+    if (inModalTestRegularVariant !== undefined) {
+        return inModalTestRegularVariant;
+    }
 
-const isInModalTestDismissableVariant = (): boolean =>
-    isInVariantSynchronous(commercialConsentModalBanner, 'dismissableVariant');
+    inModalTestRegularVariant = isInVariantSynchronous(
+        commercialConsentModalBanner,
+        'regularVariant'
+    );
 
-const isInModalTestNonDismissableVariant = (): boolean =>
-    isInVariantSynchronous(
+    return inModalTestRegularVariant;
+};
+
+let inModalTestDismissableVariant;
+const isInModalTestDismissableVariant = (): boolean => {
+    if (inModalTestDismissableVariant !== undefined) {
+        return inModalTestDismissableVariant;
+    }
+
+    inModalTestDismissableVariant = isInVariantSynchronous(
+        commercialConsentModalBanner,
+        'dismissableVariant'
+    );
+
+    return inModalTestDismissableVariant;
+};
+
+let inModalTestNonDismissableVariant;
+const isInModalTestNonDismissableVariant = (): boolean => {
+    if (inModalTestNonDismissableVariant !== undefined) {
+        return inModalTestNonDismissableVariant;
+    }
+
+    inModalTestNonDismissableVariant = isInVariantSynchronous(
         commercialConsentModalBanner,
         'nonDismissableVariant'
     );
+
+    return inModalTestNonDismissableVariant;
+};
 
 const isInCommercialConsentModalBannerTest = (): boolean =>
     isInModalTestRegularVariant() ||
@@ -125,6 +155,12 @@ const onAgree = (msg: Message): void => {
         setAdConsentState(_, true);
     });
     msg.hide();
+    if (isInModalTestNonDismissableVariant) {
+        // enable scrolling on body
+        if (document.body) {
+            document.body.classList.remove('no-scroll');
+        }
+    }
 };
 
 const trackInteraction = (interaction: string): void => {
@@ -213,15 +249,18 @@ const show = (): Promise<boolean> => {
                 customJs: () => {
                     bindClickHandlers(msg);
 
-                    if (isInCommercialConsentModalBannerTest()) {
+                    if (
+                        (isInModalTestDismissableVariant() ||
+                            isInModalTestNonDismissableVariant()) &&
+                        document.body
+                    ) {
                         // prevent body scrolling beneath overlay
-                        if (document.body) {
-                            document.body.classList.add('no-scroll');
-                        }
-                        // if dissmissable bind close handlers
-                        if (isInModalTestDismissableVariant()) {
-                            bindModalCloseHandlers(msg);
-                        }
+                        document.body.classList.add('no-scroll');
+                    }
+
+                    // if isInModalTestDismissableVariant bind close button handlers
+                    if (isInModalTestDismissableVariant()) {
+                        bindModalCloseHandlers(msg);
                     }
                 },
             },
@@ -238,9 +277,16 @@ const firstPvConsentBanner: Banner = {
     show,
 };
 
+const clearTestVariants = (): void => {
+    inModalTestRegularVariant = undefined;
+    inModalTestDismissableVariant = undefined;
+    inModalTestNonDismissableVariant = undefined;
+};
+
 export const _ = {
     onAgree,
     bindableClassNames,
+    clearTestVariants,
 };
 
 export {
