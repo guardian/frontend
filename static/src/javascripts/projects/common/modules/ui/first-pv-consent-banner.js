@@ -64,42 +64,36 @@ const bindableClassNames: BindableClassNames = {
 
 let inModalTestRegularVariant;
 const isInModalTestRegularVariant = (): boolean => {
-    if (inModalTestRegularVariant !== undefined) {
-        return inModalTestRegularVariant;
+    if (inModalTestRegularVariant === undefined) {
+        inModalTestRegularVariant = isInVariantSynchronous(
+            commercialConsentModalBanner,
+            'regularVariant'
+        );
     }
-
-    inModalTestRegularVariant = isInVariantSynchronous(
-        commercialConsentModalBanner,
-        'regularVariant'
-    );
 
     return inModalTestRegularVariant;
 };
 
 let inModalTestDismissableVariant;
 const isInModalTestDismissableVariant = (): boolean => {
-    if (inModalTestDismissableVariant !== undefined) {
-        return inModalTestDismissableVariant;
+    if (inModalTestDismissableVariant === undefined) {
+        inModalTestDismissableVariant = isInVariantSynchronous(
+            commercialConsentModalBanner,
+            'dismissableVariant'
+        );
     }
-
-    inModalTestDismissableVariant = isInVariantSynchronous(
-        commercialConsentModalBanner,
-        'dismissableVariant'
-    );
 
     return inModalTestDismissableVariant;
 };
 
 let inModalTestNonDismissableVariant;
 const isInModalTestNonDismissableVariant = (): boolean => {
-    if (inModalTestNonDismissableVariant !== undefined) {
-        return inModalTestNonDismissableVariant;
+    if (inModalTestNonDismissableVariant === undefined) {
+        inModalTestNonDismissableVariant = isInVariantSynchronous(
+            commercialConsentModalBanner,
+            'nonDismissableVariant'
+        );
     }
-
-    inModalTestNonDismissableVariant = isInVariantSynchronous(
-        commercialConsentModalBanner,
-        'nonDismissableVariant'
-    );
 
     return inModalTestNonDismissableVariant;
 };
