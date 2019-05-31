@@ -4,7 +4,7 @@ import { getCookie } from 'lib/cookies';
 export const commercialConsentGlobalBanner: ABTest = {
     id: 'CommercialConsentGlobalBanner',
     start: '2019-05-01',
-    expiry: '2019-05-31',
+    expiry: '2019-06-03',
     author: 'George Haberis',
     description:
         'Test whether changes to Consent Banner increases proportion of non-EU users who interact with it',
