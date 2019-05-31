@@ -79,8 +79,26 @@ const enableMegaNavToggle = (): void => {
     });
 };
 
+const getDiscountCodePath = (path: string): string => {
+    const firstPart = path.split("/")[1];
+    if (firstPart === "us" || firstPart === "us-news") {
+        return "us";
+    } else if (firstPart === "uk" || firstPart === "uk-news") {
+        return "uk";
+    } else if (firstPart ==="au" || firstPart === "australia-news") {
+        return "au";
+    } else return "";
+}
+
+const localiseDiscountCodeLinks = (): void => {
+    const path = window.location.pathname;
+    const discountCodeLinks = Array.from(document.getElementsByClassName("js-discount-code-link"));
+    discountCodeLinks.map((link) => link.href = link.href + getDiscountCodePath(path))
+}
+
 const initNavigation = (): Promise<any> => {
     enableMegaNavToggle();
+    localiseDiscountCodeLinks();
 
     const modifications = [
         jsEnableFooterNav(),
@@ -100,4 +118,4 @@ const initNavigation = (): Promise<any> => {
     return Promise.all(modifications);
 };
 
-export { initNavigation };
+export { initNavigation, getDiscountCodePath };

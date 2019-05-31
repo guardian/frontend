@@ -47,7 +47,7 @@
 @brandExtensions(item: NavLink) = {
     <li class="menu-item--brand-extension">
         <a href="@LinkTo { @item.url }"
-           class="menu-item__title menu-item__title--brand-extension"
+           class="@{"menu-item__title menu-item__title--brand-extension " ++ item.classList.mkString(" ")}"
            data-link-name="nav2 : brand extension : @item.title">
             @{item.title}
         </a>
