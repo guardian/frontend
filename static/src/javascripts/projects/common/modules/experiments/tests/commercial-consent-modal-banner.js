@@ -19,7 +19,7 @@ export const commercialConsentModalBanner: ABTest = {
         (getCookie('GU_geo_continent') || 'OTHER').toUpperCase() === 'NA',
     variants: [
         {
-            id: 'control',
+            id: 'regularVariant',
             test: (): void => {},
         },
         {

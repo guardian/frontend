@@ -62,23 +62,29 @@ const bindableClassNames: BindableClassNames = {
     agree: 'js-first-pv-consent-agree',
 };
 
-const isInModalTestDismissableVariant: boolean = isInVariantSynchronous(
-    commercialConsentModalBanner,
-    'dismissableVariant'
-);
-const isInModalTestNonDismissableVariant: boolean = isInVariantSynchronous(
-    commercialConsentModalBanner,
-    'nonDismissableVariant'
-);
-const isInCommercialConsentModalBannerTest: boolean =
-    isInModalTestDismissableVariant || isInModalTestNonDismissableVariant;
+const isInModalTestRegularVariant = (): boolean =>
+    isInVariantSynchronous(commercialConsentModalBanner, 'regularVariant');
+
+const isInModalTestDismissableVariant = (): boolean =>
+    isInVariantSynchronous(commercialConsentModalBanner, 'dismissableVariant');
+
+const isInModalTestNonDismissableVariant = (): boolean =>
+    isInVariantSynchronous(
+        commercialConsentModalBanner,
+        'nonDismissableVariant'
+    );
+
+const isInCommercialConsentModalBannerTest = (): boolean =>
+    isInModalTestRegularVariant() ||
+    isInModalTestDismissableVariant() ||
+    isInModalTestNonDismissableVariant();
 
 const makeHtml = (): string => `
     <div class="site-message--first-pv-consent__block site-message--first-pv-consent__block--head ">${
         template.heading
     }</div>
     ${
-        isInModalTestDismissableVariant
+        isInModalTestDismissableVariant()
             ? `<div class="first-pv-consent-banner__close">
             <button tabindex="3" class="button site-message--first-pv-consent__close-button js-site-message-close js-first-pv-consent-banner-close-button" data-link-name="hide consent banner">
                 <span class="u-h">Close</span>
@@ -133,7 +139,7 @@ const trackInteraction = (interaction: string): void => {
 const canShow = (): Promise<boolean> =>
     Promise.resolve(
         hasUnsetAdChoices() &&
-            (isInEU() || isInCommercialConsentModalBannerTest) &&
+            (isInEU() || isInCommercialConsentModalBannerTest()) &&
             !hasUserAcknowledgedBanner(messageCode)
     );
 
@@ -174,11 +180,11 @@ const show = (): Promise<boolean> => {
     const opts = {};
 
     const getTestVariant = (): ?string => {
-        if (isInModalTestDismissableVariant) {
+        if (isInModalTestDismissableVariant()) {
             return 'dismissableVariant';
         }
 
-        if (isInModalTestNonDismissableVariant) {
+        if (isInModalTestNonDismissableVariant()) {
             return 'nonDismissableVariant';
         }
     };
@@ -207,13 +213,13 @@ const show = (): Promise<boolean> => {
                 customJs: () => {
                     bindClickHandlers(msg);
 
-                    if (isInCommercialConsentModalBannerTest) {
+                    if (isInCommercialConsentModalBannerTest()) {
                         // prevent body scrolling beneath overlay
                         if (document.body) {
                             document.body.classList.add('no-scroll');
                         }
                         // if dissmissable bind close handlers
-                        if (isInModalTestDismissableVariant) {
+                        if (isInModalTestDismissableVariant()) {
                             bindModalCloseHandlers(msg);
                         }
                     }

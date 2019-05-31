@@ -79,6 +79,7 @@ const generateStore = (isInTest: boolean): CmpStore => {
 };
 
 const isInCommercialConsentModalBannerTest = (): boolean =>
+    isInVariantSynchronous(commercialConsentModalBanner, 'regularVariant') ||
     isInVariantSynchronous(
         commercialConsentModalBanner,
         'dismissableVariant'
