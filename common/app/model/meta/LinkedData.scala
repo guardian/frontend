@@ -1,6 +1,5 @@
 package model.meta
 
-import conf.Static
 import play.api.libs.json.{Json, OFormat}
 
 class LinkedData(
