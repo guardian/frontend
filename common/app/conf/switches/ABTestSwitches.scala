@@ -50,7 +50,7 @@ trait ABTestSwitches {
     ABTests,
     "ab-acquisitions-banner-sign-in-cta",
     "test whether having a sign-in CTA negatively impacts acquisitions",
-    owners = Seq(Owner.withGithub("Mullefa")),
+    owners = Owner.group(SwitchGroup.Identity),
     safeState = On,
     sellByDate = new LocalDate(2019, 6, 5),
     exposeClientSide = true
