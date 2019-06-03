@@ -21,7 +21,7 @@
     z-index: $zindex-popover - 1;
 }
 
-.site-message--banner {
+.site-message--banner:not(.site-message--first-pv-consent--dismissableVariant):not(.site-message--first-pv-consent--nonDismissableVariant) {
     width: 100%;
     z-index: $zindex-popover;
     position: fixed;

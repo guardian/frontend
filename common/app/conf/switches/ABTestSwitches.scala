@@ -78,11 +78,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-commercial-consent-global-banner",
-    "Test whether changes to Consent Banner increases proportion of non-EU users who interact with it",
+    "ab-commercial-consent-modal-banner",
+    "Test whether presenting a modal Consent Banner increases proportion of US users who interact with it",
     owners = Owner.group(Commercial),
     safeState = Off,
-    sellByDate = new LocalDate(2019, 6, 3),
+    sellByDate = new LocalDate(2019, 6, 28),
     exposeClientSide = true
   )
 }
