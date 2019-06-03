@@ -32,7 +32,9 @@ echo -e "🔗 Symlinking nginx config file"
 ln -sf ${SOURCE_DIR}/frontend.conf ${NGINX_HOME}/servers/frontend.conf
 
 echo -e "🚀 ${YELLOW}Restarting nginx, Requires sudo - enter password when prompted.${NC}"
-sudo nginx -s stop
+if pgrep 'nginx' > /dev/null; then
+  sudo nginx -s stop
+fi
 sudo nginx
 
 if grep '127.0.0.1' /etc/hosts | grep ${DOMAIN} ; then
