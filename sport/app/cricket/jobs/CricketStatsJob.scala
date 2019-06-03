@@ -44,7 +44,7 @@ class CricketStatsJob(paFeed: PaFeed) extends Logging {
 
       paFeed.getMatchIds(team).map { matchIds =>
 
-        val matches = matchIds.diff(loadedMatches).take(10)
+        val matches = matchIds.diff(loadedMatches).take(50)
 
         matches.map { matchId =>
 
