@@ -1,5 +1,6 @@
 // @flow
 import fastdom from 'lib/fastdom-promise';
+import crossIcon from 'svgs/icon/cross.svg';
 
 const shouldRenderLabel = adSlotNode =>
     !(
@@ -10,13 +11,13 @@ const shouldRenderLabel = adSlotNode =>
         adSlotNode.getElementsByClassName('ad-slot__label').length
     );
 
-const createAdCloseDiv = (): HTMLDivElement => {
-    const closeDiv: HTMLDivElement = document.createElement('div');
-    closeDiv.className = 'ad-slot__closer';
-    closeDiv.innerHTML =
-        '<svg viewbox="0 0 40 40"><path class="ad-slot__closer__x" d="M 10,10 L 30,30 M 30,10 L 10,30" /></svg>';
+const createAdCloseDiv = (): HTMLButtonElement => {
+    const closeDiv: HTMLButtonElement = document.createElement('button');
+    closeDiv.className = 'ad-slot__close-button';
+    closeDiv.innerHTML = crossIcon.markup;
     closeDiv.onclick = function onclickMobileStickyCloser() {
-        this.closest('.mobilesticky-container').remove();
+        const container = this.closest('.mobilesticky-container');
+        if (container) container.remove();
     };
     return closeDiv;
 };

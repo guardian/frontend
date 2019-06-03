@@ -110,6 +110,14 @@ const adSlotDefinitions = {
             mobile: [adSizes.fluid],
         },
     },
+    mobilesticky: {
+        label: true,
+        refresh: true,
+        name: 'mobile-sticky',
+        sizeMappings: {
+            mobile: [adSizes.mobilesticky],
+        },
+    },
 };
 
 /*

@@ -17,7 +17,7 @@ export const commercialUsMobileSticky: ABTest = {
         'No significant impact to performance as well as higher ad yield',
     canRun: () =>
         (getCookie('GU_geo_continent') || 'OTHER').toUpperCase() === 'NA' &&
-        isBreakpoint({ min: 'mobile' }),
+        isBreakpoint({ min: 'mobile', max: 'mobileLandscape' }),
     variants: [
         {
             id: 'control',
