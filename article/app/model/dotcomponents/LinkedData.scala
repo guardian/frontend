@@ -134,7 +134,6 @@ object LinkedData {
       article.content.openGraphImage,
       ImgSrc(mainImageURL, OneByOne),
       ImgSrc(mainImageURL, FourByThree),
-      ImgSrc(mainImageURL, Item1200),
     )
   }
 
