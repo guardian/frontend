@@ -249,7 +249,7 @@ object PageElement {
           case Some(guide: GuideAtom) => {
             Some(ProfileBlockElement(
               id = guide.id,
-              label = guide.atom.labels.headOption.getOrElse("Quick Guide"),
+              label = guide.data.typeLabel.getOrElse("Quick Guide") ,
               title = guide.atom.title.getOrElse(""),
               img = guide.image.flatMap(ImgSrc.getAmpImageUrl),
               html = guide.data.items.map(_.body).mkString(""),
@@ -260,7 +260,7 @@ object PageElement {
           case Some(profile: ProfileAtom) => {
             Some(ProfileBlockElement(
               id = profile.id,
-              label = profile.atom.labels.headOption.getOrElse("Profile"),
+              label = profile.data.typeLabel.getOrElse("Profile"),
               title = profile.atom.title.getOrElse(""),
               img = profile.image.flatMap(ImgSrc.getAmpImageUrl),
               html = profile.data.items.map(_.body).mkString(""),
