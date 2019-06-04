@@ -21,6 +21,7 @@ import {
     getLocalCurrencySymbol,
     getSync as geolocationGetSync,
     countryCodeToCountryGroupId,
+    countryNames,
 } from 'lib/geolocation';
 import {
     splitAndTrim,
@@ -77,6 +78,15 @@ const getVisitCount = (): number => local.get('gu.alreadyVisited') || 0;
 
 const replaceArticlesRead = (text: string, days: number = 30): string =>
     text.replace(/%%ARTICLES_READ%%/g, `${getArticleViewCount(days)}`);
+
+const replaceCountryName = (text: string): string => {
+    const countryName = countryNames[geolocationGetSync()];
+    if (countryName) {
+        return text.replace(/%%COUNTRY_NAME%%/g, countryName)
+    } else {
+        return text;
+    }
+};
 
 // How many times the user can see the Epic,
 // e.g. 6 times within 7 days with minimum of 1 day in between views.
@@ -302,12 +312,18 @@ const makeEpicABTestVariant = (
                 this.excludedSections
             );
 
+            // If copy contains COUNTRY_NAME then ensure user is in the set of valid countries
+            const countryNameIsValid =
+                this.copy && this.copy.heading && this.copy.heading.includes('%%COUNTRY_NAME%%') ?
+                    countryNames[geolocationGetSync()] : true;
+
             return (
                 meetsMaxViewsConditions &&
                 matchesCountryGroups &&
                 matchesTagsOrSections &&
                 noExcludedTags &&
-                notExcludedSection
+                notExcludedSection &&
+                countryNameIsValid
             );
         },
 
@@ -605,8 +621,10 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                                 ','
                             ),
                             copy: {
-                                heading: replaceArticlesRead(
-                                    throwIfEmptyString('heading', row.heading)
+                                heading: replaceCountryName(
+                                    replaceArticlesRead(
+                                        throwIfEmptyString('heading', row.heading)
+                                    )
                                 ),
                                 paragraphs: throwIfEmptyArray(
                                     'paragraphs',

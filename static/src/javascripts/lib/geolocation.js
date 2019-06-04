@@ -408,6 +408,35 @@ const extendedCurrencySymbol = {
 const getLocalCurrencySymbol = (): string =>
     extendedCurrencySymbol[countryCodeToCountryGroupId(getSync())] || '£';
 
+const countryNames = {
+    'GB': 'The United Kingdom',
+    'US': 'The United States',
+    'AU': 'Australia',
+    'CA': 'Canada',
+    'DE': 'Germany',
+    'NZ': 'New Zealand',
+    'FR': 'France',
+    'NL': 'The Netherlands',
+    'IE': 'Ireland',
+    'SE': 'Sweden',
+    'CH': 'Switzerland',
+    'NO': 'Norway',
+    'BE': 'Belgium',
+    'IT': 'Italy',
+    'IN': 'India',
+    'ES': 'Spain',
+    'DK': 'Denmark',
+    'SG': 'Singapore',
+    'AT': 'Austria',
+    'FI': 'Finland',
+    'HK': 'Hong Kong',
+    'LU': 'Luxembourg',
+    'PT': 'Portugal',
+    'AE': 'The United Arab Emirates',
+    'MX': 'Mexico',
+    'BR': 'Brazil',
+};
+
 export {
     get,
     countryCodeToCountryGroupId,
@@ -418,4 +447,5 @@ export {
     init,
     setGeolocation,
     extendedCurrencySymbol,
+    countryNames,
 };
