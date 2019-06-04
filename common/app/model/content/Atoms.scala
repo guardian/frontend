@@ -236,7 +236,7 @@ final case class ChartAtom(
 
 object Atoms extends common.Logging {
 
-  def articleConfig(isAdFree: Boolean = false, useAcast: Boolean = false) = {
+  def articleConfig(isAdFree: Boolean = false, useAcast: Boolean = false): ArticleConfiguration = {
     val audioSettings = AudioSettings(externalAdvertising = !isAdFree && useAcast)
     val artConf = ArticleConfiguration(
       ajaxUrl = Configuration.ajax.url,
