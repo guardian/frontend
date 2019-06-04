@@ -65,7 +65,7 @@ case class TimelineBlockElement(id: String, title: String, description: Option[S
 
 case class QABlockElement(id: String, title: String, img: Option[String], html: String, credit: String) extends PageElement
 case class GuideBlockElement(id: String, title: String, img: Option[String], html: String, credit: String) extends PageElement
-case class ProfileBlockElement(id: String, title: String, img: Option[String], html: String, credit: String) extends PageElement
+case class ProfileBlockElement(id: String, label: String, title: String, img: Option[String], html: String, credit: String) extends PageElement
 
 case class MembershipBlockElement(
   originalUrl: Option[String],
@@ -249,6 +249,7 @@ object PageElement {
           case Some(guide: GuideAtom) => {
             Some(ProfileBlockElement(
               id = guide.id,
+              label = guide.data.typeLabel.getOrElse("Quick Guide") ,
               title = guide.atom.title.getOrElse(""),
               img = guide.image.flatMap(ImgSrc.getAmpImageUrl),
               html = guide.data.items.map(_.body).mkString(""),
@@ -259,6 +260,7 @@ object PageElement {
           case Some(profile: ProfileAtom) => {
             Some(ProfileBlockElement(
               id = profile.id,
+              label = profile.data.typeLabel.getOrElse("Profile"),
               title = profile.atom.title.getOrElse(""),
               img = profile.image.flatMap(ImgSrc.getAmpImageUrl),
               html = profile.data.items.map(_.body).mkString(""),
