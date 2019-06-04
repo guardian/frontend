@@ -118,6 +118,7 @@ const bannerParamsToHtml = (params: EngagementBannerParams): string => {
         linkUrl,
         buttonCaption,
         hasTicker: params.hasTicker,
+        signInUrl: params.signInUrl,
     };
 
     return params.template

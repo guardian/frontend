@@ -19,6 +19,7 @@ declare type EngagementBannerTemplateParams = {
     buttonCaption: string,
     linkUrl: string,
     hasTicker: boolean,
+    signInUrl?: string,
 };
 
 declare type AcquisitionsComponentUserCohort = 'OnlyExistingSupporters' | 'OnlyNonSupporters' | 'Everyone';

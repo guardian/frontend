@@ -1,0 +1,58 @@
+@import 'engagement-banner';
+
+.engagement-banner__payment-cta {
+    display: inline-block;
+
+    @include mq(desktop) {
+        display: block;
+    }
+}
+
+.engagement-banner__button--before-logos {
+    @include mq($from: desktop) {
+        display: none;
+    }
+}
+
+// At desktop break point want to differ from regular ordering
+// and put the button under the payment logos.
+.engagement-banner__button--after-logos {
+    margin-top: 6px;
+
+    @include mq($until: desktop) {
+        display: none;
+    }
+}
+
+.engagement-banner__sign-in-cta {
+    display: inline-block;
+
+    padding-left: 12px;
+
+    @include mq(tablet) {
+        vertical-align: 36px;
+    }
+
+    @include mq(desktop) {
+        padding-left: 0;
+        display: block;
+    }
+}
+
+.engagement-banner__sign-in-cta-link.u-underline {
+    color: $brightness-7;
+    font-family: $f-sans-serif-text;
+
+    // Place sign-in link above the overlay which makes whole support banner clickable.
+    position: relative;
+    z-index: 1;
+
+    @include mq(tablet) {
+        font-size: 16px;
+    }
+
+    border-color: $brightness-60;
+    &:hover {
+        border-color: $brightness-7;
+    }
+}
