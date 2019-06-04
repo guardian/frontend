@@ -16,6 +16,9 @@ export const optionalSplitAndTrim = (
 export const optionalStringToBoolean = (str: ?string): boolean =>
     typeof str === 'string' ? str.toLowerCase().trim() === 'true' : false;
 
+export const optionalStringToNumber = (str: ?string): ?number =>
+    str && !Number.isNaN(Number(str)) ? Number(str) : undefined;
+
 export const throwIfEmptyString = (name: string, str: ?string): string => {
     if (typeof str === 'string' && str.trim().length > 0) {
         return str;

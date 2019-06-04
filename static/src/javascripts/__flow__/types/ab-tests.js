@@ -128,6 +128,8 @@ declare type InitEpicABTest = {
     template?: EpicTemplate,
     deploymentRules?: DeploymentRules,
     hasCountryName?: boolean,
+    minArticleViews?: number,
+    articleCountDays?: number,
 }
 
 declare type Interaction = {

@@ -27,6 +27,7 @@ import {
     splitAndTrim,
     optionalSplitAndTrim,
     optionalStringToBoolean,
+    optionalStringToNumber,
     throwIfEmptyString,
     filterEmptyString,
 } from 'lib/string-utils';
@@ -75,12 +76,6 @@ const getReaderRevenueRegion = (geolocation: string): ReaderRevenueRegion => {
 };
 
 const getVisitCount = (): number => local.get('gu.alreadyVisited') || 0;
-
-const replaceArticlesRead = (text: string, days: number = 30): string =>
-    text.replace(/%%ARTICLES_READ%%/g, `${getArticleViewCount(days)}`);
-
-const replaceCountryName = (text: string, countryName: string): string =>
-    text.replace(/%%COUNTRY_NAME%%/g, countryName);
 
 // How many times the user can see the Epic,
 // e.g. 6 times within 7 days with minimum of 1 day in between views.
@@ -451,6 +446,8 @@ const makeEpicABTest = ({
     useTargetingTool = false,
     userCohort = 'OnlyNonSupporters',
     hasCountryName = false,
+    minArticleViews,
+    articleCountDays,
     pageCheck = isCompatibleWithArticleEpic,
     template = controlTemplate,
 }: InitEpicABTest): EpicABTest => {
@@ -461,7 +458,15 @@ const makeEpicABTest = ({
         canRun() {
             const countryNameIsOk =
                 !hasCountryName || countryNames[geolocationGetSync()];
-            return countryNameIsOk && shouldShowEpic(this);
+
+            const hasReadEnoughArticles =
+                minArticleViews && articleCountDays
+                    ? getArticleViewCount(articleCountDays) >= minArticleViews
+                    : true;
+
+            return (
+                countryNameIsOk && hasReadEnoughArticles && shouldShowEpic(this)
+            );
         },
         componentType: 'ACQUISITIONS_EPIC',
         insertEvent: makeEvent(id, 'insert'),
@@ -494,10 +499,12 @@ const makeEpicABTest = ({
     return test;
 };
 
-const buildEpicCopy = (row: any, hasCountryName: boolean) => {
-    const heading = replaceArticlesRead(
-        throwIfEmptyString('heading', row.heading)
-    );
+const buildEpicCopy = (
+    row: any,
+    hasCountryName: boolean,
+    articleCountDays: ?number
+) => {
+    const heading = throwIfEmptyString('heading', row.heading);
 
     const paragraphs = throwIfEmptyArray(
         'paragraphs',
@@ -508,15 +515,23 @@ const buildEpicCopy = (row: any, hasCountryName: boolean) => {
         ? countryNames[geolocationGetSync()]
         : undefined;
 
+    const replaceCountryName = (text: string): string =>
+        countryName ? text.replace(/%%COUNTRY_NAME%%/g, countryName) : text;
+
+    const replaceArticlesRead = (text: string): string =>
+        articleCountDays
+            ? text.replace(
+                  /%%ARTICLES_READ%%/g,
+                  `${getArticleViewCount(articleCountDays)}`
+              )
+            : text;
+
+    const replaceTemplates = (text: string): string =>
+        replaceCountryName(replaceArticlesRead(text));
+
     return {
-        heading:
-            heading && countryName
-                ? replaceCountryName(heading, countryName)
-                : heading,
-        paragraphs:
-            paragraphs && countryName
-                ? paragraphs.map(para => replaceCountryName(para, countryName))
-                : paragraphs,
+        heading: replaceTemplates(heading),
+        paragraphs: paragraphs.map(para => replaceTemplates(para)),
         highlightedText: row.highlightedText
             ? row.highlightedText.replace(
                   /%%CURRENCY_SYMBOL%%/g,
@@ -575,6 +590,21 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                         optionalStringToBoolean(row.hasCountryName)
                     );
 
+                    // Expect minArticleViews and articleCountDays to appear together or not at all
+                    const rowWithArticleViews = rows.find(
+                        row => row.minArticleViews && row.articleCountDays
+                    );
+                    const minArticleViews = rowWithArticleViews
+                        ? optionalStringToNumber(
+                              rowWithArticleViews.minArticleViews
+                          )
+                        : undefined;
+                    const articleCountDays = rowWithArticleViews
+                        ? optionalStringToNumber(
+                              rowWithArticleViews.articleCountDays
+                          )
+                        : undefined;
+
                     return makeEpicABTest({
                         id: testName,
                         campaignId: testName,
@@ -589,7 +619,7 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                         audienceCriteria: 'All',
                         audience,
                         audienceOffset,
-                        useLocalViewLog: rows.some(row =>
+                        useLocalViewLog: rows.find(row =>
                             optionalStringToBoolean(row.useLocalViewLog)
                         ),
                         userCohort,
@@ -609,6 +639,9 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                               }
                             : {}),
                         hasCountryName,
+                        minArticleViews,
+                        articleCountDays,
+
                         variants: rows.map(row => ({
                             id: row.name.toLowerCase().trim(),
                             ...(isLiveBlog
@@ -651,7 +684,11 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                                 row.excludedSections,
                                 ','
                             ),
-                            copy: buildEpicCopy(row, hasCountryName),
+                            copy: buildEpicCopy(
+                                row,
+                                hasCountryName,
+                                articleCountDays
+                            ),
                             showTicker: optionalStringToBoolean(row.showTicker),
                             supportBaseURL: row.supportBaseURL,
                             backgroundImageUrl: filterEmptyString(
