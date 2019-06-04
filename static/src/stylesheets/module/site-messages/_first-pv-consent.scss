@@ -195,73 +195,109 @@ $btn-height: ($gs-baseline*3.5);
     }
 }
 
-/** Classes added by CommercialConsentGlobalBanner **/
+/**
+    Classes added by CommercialConsentModalBannerTest.
+    TODO: on test end remove :not() overrides from _site-message.scss line 24
+**/
 
-.site-message--first-pv-consent--tallVariant {
-    @include mq(mobile) {
-        min-height: 45vh;
-    }
-    @include mq(phablet) {
-        min-height: 30vh;
-    }
-    .site-message__roundel,
-    .site-message--first-pv-consent__block--head {
-        padding-top: $gs-baseline * 1.5;
-    }
-    .site-message--first-pv-consent__block--head {
-        padding-bottom: $gs-baseline * 1.5;
-    }
-    .site-message--first-pv-consent__block--intro {
-        padding-bottom: $gs-baseline;
-    }
+// Prevent body scrolling behind overlay
+body.no-scroll {
+    overflow: hidden;
+    position: fixed;
+    left: 0;
+    right: 0;
 }
 
-.site-message--first-pv-consent--floatingVariant {
-    padding: $gs-baseline 0;
-    background-color: transparent;
+.first-pv-consent-banner__close {
+    display: none;
+}
+
+.site-message--first-pv-consent--dismissableVariant,
+.site-message--first-pv-consent--nonDismissableVariant {
+    background-color: rgba($brand-dark, .8);
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    z-index: 9999;
 
     .gs-container {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        background-color: $brightness-100;
+        padding-top: $gs-baseline * .5;
+        padding-bottom: $gs-baseline;
+
         @include mq(mobile) {
             width: 95%;
         }
 
         @include mq(phablet) {
-            width: 620px;
+            width: 460px;
         }
 
-        background-color: rgba($brightness-20, .98);
-        border-radius: $gs-baseline * .5;
-        margin: 0 auto $gs-gutter * .5;
-        padding-top: $gs-baseline * .5;
-        padding-bottom: $gs-baseline * 2;
-    }
+        .site-message__copy,
+        .site-message--first-pv-consent__block--head {
+            color: $brightness-7;
+        }
 
-    .site-message__roundel {
-        display: none;
-    }
+        .site-message__roundel {
+            display: none;
+        }
 
-    .site-message__copy {
-        padding-left: 0;
-        margin: 0 $gs-gutter;
-    }
+        .site-message__copy {
+            padding-left: 0;
+            margin: 0 $gs-gutter;
+        }
 
-    .site-message--first-pv-consent__link {
-        margin-top: $gs-baseline * 1.5;
-        margin-left: 0;
-    }
+        .site-message--first-pv-consent__link {
+            margin-top: $gs-baseline * 1.5;
+            margin-left: 0;
+        }
 
-    .site-message--first-pv-consent__button {
-        margin-right: $gs-gutter * .5;
+        .site-message--first-pv-consent__button {
+            margin-right: $gs-gutter * .5;
+        }
     }
 }
 
-.site-message--first-pv-consent--animationVariant {
-    transform: translateY(100%) translateZ(0); // translateZ to enable hardware acceleration
-    will-change: transform;
-    backface-visibility: hidden;
-}
+.site-message--first-pv-consent--dismissableVariant {
+    .site-message__inner {
+        position: relative;
+    }
 
-.site-message--first-pv-consent--animationVariant--animate {
-    transform: translateY(0%) translateZ(0);
-    transition: transform .85s ease-in-out;
+    .first-pv-consent-banner__close {
+        display: block;
+        position: absolute;
+        top: $gs-baseline / 3;
+        right: -$gs-baseline;
+    }
+
+    .site-message--first-pv-consent__close-button {
+        display: inline-block;
+        vertical-align: middle;
+        height: 36px;
+        width: 36px;
+        padding: 2px 0 0;
+        margin: 0;
+        background: transparent;
+        border: 1px solid rgba($brightness-7,  .3);
+        color: $brightness-7;
+        transition: background-color .3s ease-in-out;
+
+        svg {
+            fill: $brightness-7;
+        }
+
+        &:hover,
+        &:focus,
+        &:active {
+            background: rgba($brightness-7,  .05);
+        }
+    }
 }

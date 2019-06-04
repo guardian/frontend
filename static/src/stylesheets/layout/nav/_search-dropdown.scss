@@ -22,7 +22,7 @@
 }
 
 .gsst_a {
-    padding: 13px 0 0 11px !important;
+    padding: 9px 0 0 11px !important;
 }
 
 .sc-control-cse {
@@ -44,6 +44,10 @@
 
 .gsc-input-box {
     border: 0 !important;
+}
+
+.gsib_a {
+    border: 0 !important;
     box-shadow: none !important;
 
     .gsc-input {
@@ -51,6 +55,7 @@
         margin: 0 !important;
         box-sizing: border-box !important;
         background-position-x: 40px !important;
+        // Ensures 'Custom Search' text is after Google logo
         text-indent: 90px !important;
         border: 1px solid $brightness-86 !important;
         border-radius: 999px !important;

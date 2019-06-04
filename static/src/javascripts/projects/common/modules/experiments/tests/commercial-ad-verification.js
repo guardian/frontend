@@ -6,8 +6,8 @@ export const commercialAdVerification: ABTest = {
     expiry: '2019-09-30',
     author: 'Jerome Eteve',
     description: 'This test will implemement our ad verification framework',
-    audience: 0.99,
-    audienceOffset: 0.01, // No overlap with PrebidSafeframe
+    audience: 1,
+    audienceOffset: 0,
     successMeasure: 'Impact of ad verification on yield or fillrate',
     audienceCriteria: 'n/a',
     dataLinkNames: 'n/a',

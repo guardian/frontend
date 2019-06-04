@@ -52,6 +52,7 @@ import {
 } from 'common/modules/commercial/epic/epic-exclusion-rules';
 import { getControlEpicCopy } from 'common/modules/commercial/acquisitions-copy';
 import { initTicker } from 'common/modules/commercial/ticker';
+import { getArticleViewCount } from 'common/modules/onward/history';
 
 export type ReaderRevenueRegion =
     | 'united-kingdom'
@@ -73,6 +74,9 @@ const getReaderRevenueRegion = (geolocation: string): ReaderRevenueRegion => {
 };
 
 const getVisitCount = (): number => local.get('gu.alreadyVisited') || 0;
+
+const replaceArticlesRead = (text: string, days: number = 30): string =>
+    text.replace(/%%ARTICLES_READ%%/g, `${getArticleViewCount(days)}`);
 
 // How many times the user can see the Epic,
 // e.g. 6 times within 7 days with minimum of 1 day in between views.
@@ -601,9 +605,8 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                                 ','
                             ),
                             copy: {
-                                heading: throwIfEmptyString(
-                                    'heading',
-                                    row.heading
+                                heading: replaceArticlesRead(
+                                    throwIfEmptyString('heading', row.heading)
                                 ),
                                 paragraphs: throwIfEmptyArray(
                                     'paragraphs',
