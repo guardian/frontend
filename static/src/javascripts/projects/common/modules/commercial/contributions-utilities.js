@@ -82,11 +82,16 @@ const replaceArticlesRead = (text: string, days: number = 30): string =>
 const replaceCountryName = (text: string): string => {
     const countryName = countryNames[geolocationGetSync()];
     if (countryName) {
-        return text.replace(/%%COUNTRY_NAME%%/g, countryName)
-    } else {
-        return text;
+        return text.replace(/%%COUNTRY_NAME%%/g, countryName);
     }
+    return text;
 };
+
+// If copy contains COUNTRY_NAME then ensure user is in the set of valid countries
+const countryNameIsValid = (copy: ?AcquisitionsEpicTemplateCopy): boolean =>
+    copy && copy.heading && copy.heading.includes('%%COUNTRY_NAME%%')
+        ? countryNames[geolocationGetSync()]
+        : true;
 
 // How many times the user can see the Epic,
 // e.g. 6 times within 7 days with minimum of 1 day in between views.
@@ -312,18 +317,13 @@ const makeEpicABTestVariant = (
                 this.excludedSections
             );
 
-            // If copy contains COUNTRY_NAME then ensure user is in the set of valid countries
-            const countryNameIsValid =
-                this.copy && this.copy.heading && this.copy.heading.includes('%%COUNTRY_NAME%%') ?
-                    countryNames[geolocationGetSync()] : true;
-
             return (
                 meetsMaxViewsConditions &&
                 matchesCountryGroups &&
                 matchesTagsOrSections &&
                 noExcludedTags &&
                 notExcludedSection &&
-                countryNameIsValid
+                countryNameIsValid(this.copy)
             );
         },
 
@@ -623,7 +623,10 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                             copy: {
                                 heading: replaceCountryName(
                                     replaceArticlesRead(
-                                        throwIfEmptyString('heading', row.heading)
+                                        throwIfEmptyString(
+                                            'heading',
+                                            row.heading
+                                        )
                                     )
                                 ),
                                 paragraphs: throwIfEmptyArray(
