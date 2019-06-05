@@ -58,7 +58,7 @@ class PaFeed(wsClient: WSClient, actorSystem: ActorSystem, materializer: Materia
     val fixtures = getTeamMatches(team, "fixtures", LocalDate.now, LocalDate.now)
 
     // Get results for England over the last year.
-    val results = getTeamMatches(team, "results", LocalDate.now.minusYears(1), LocalDate.now)
+    val results = getTeamMatches(team, "results", LocalDate.now.minusMonths(2), LocalDate.now)
 
     Future.sequence(Seq(fixtures, results)).map(_.flatten)
   }
