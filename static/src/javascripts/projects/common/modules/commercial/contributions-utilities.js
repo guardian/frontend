@@ -462,7 +462,8 @@ const makeEpicABTest = ({
         // to disable contributions asks for a particular piece of content
         showForSensitive: true,
         canRun() {
-            const countryNameIsOk = !hasCountryName || countryNames[geolocationGetSync()];
+            const countryNameIsOk =
+                !hasCountryName || countryNames[geolocationGetSync()];
             return countryNameIsOk && shouldShowEpic(this);
         },
         componentType: 'ACQUISITIONS_EPIC',
@@ -498,10 +499,7 @@ const makeEpicABTest = ({
 
 const buildEpicCopy = (row: any, hasCountryName: boolean) => {
     const heading = replaceArticlesRead(
-        throwIfEmptyString(
-            'heading',
-            row.heading
-        )
+        throwIfEmptyString('heading', row.heading)
     );
 
     const paragraphs = throwIfEmptyArray(
@@ -510,16 +508,20 @@ const buildEpicCopy = (row: any, hasCountryName: boolean) => {
     );
 
     return {
-        heading: heading && hasCountryName ? replaceCountryName(heading) : heading,
-        paragraphs: paragraphs && hasCountryName ? paragraphs.map(replaceCountryName) : paragraphs,
+        heading:
+            heading && hasCountryName ? replaceCountryName(heading) : heading,
+        paragraphs:
+            paragraphs && hasCountryName
+                ? paragraphs.map(replaceCountryName)
+                : paragraphs,
         highlightedText: row.highlightedText
             ? row.highlightedText.replace(
-                /%%CURRENCY_SYMBOL%%/g,
-                getLocalCurrencySymbol()
-            )
+                  /%%CURRENCY_SYMBOL%%/g,
+                  getLocalCurrencySymbol()
+              )
             : undefined,
         footer: optionalSplitAndTrim(row.footer, '\n'),
-    }
+    };
 };
 
 export const getEpicTestsFromGoogleDoc = (): Promise<
@@ -564,7 +566,9 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                         ? rowWithUserCohort.userCohort
                         : 'OnlyNonSupporters';
 
-                    const hasCountryName = rows.some(row => optionalStringToBoolean(row.hasCountryName));
+                    const hasCountryName = rows.some(row =>
+                        optionalStringToBoolean(row.hasCountryName)
+                    );
 
                     return makeEpicABTest({
                         id: testName,
@@ -599,7 +603,7 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                                   useLocalViewLog: true,
                               }
                             : {}),
-                        hasCountryName: hasCountryName,
+                        hasCountryName,
                         variants: rows.map(row => ({
                             id: row.name.toLowerCase().trim(),
                             ...(isLiveBlog
