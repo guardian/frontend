@@ -408,6 +408,7 @@ const extendedCurrencySymbol = {
 const getLocalCurrencySymbol = (): string =>
     extendedCurrencySymbol[countryCodeToCountryGroupId(getSync())] || '£';
 
+// A limited set of country names for the test to add country name in the epic copy
 const countryNames = {
     GB: 'the United Kingdom',
     US: 'the United States',
