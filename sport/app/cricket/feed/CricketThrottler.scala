@@ -36,7 +36,8 @@ class CricketThrottler(actorSystem: ActorSystem, materializer: Materializer) {
   private val cricketThrottlerActor: ActorRef = actorSystem.actorOf(Props(new CricketThrottlerActor()(materializer)))
 
   def throttle[T](task: () => Future[T])(implicit ec: ExecutionContext, tag: ClassTag[T]): Future[T] = {
-    implicit val timeout: Timeout = Timeout(30, TimeUnit.SECONDS)
+    // we have a long timeout to allow for the large number of requests to be made when the app starts up, at 1s/request
+    implicit val timeout: Timeout = Timeout(120, TimeUnit.SECONDS)
     (cricketThrottlerActor ? CricketThrottledTask(task)).mapTo[T]
   }
 }
