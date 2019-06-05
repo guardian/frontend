@@ -80,11 +80,8 @@ const replaceArticlesRead = (text: string, days: number = 30): string =>
     text.replace(/%%ARTICLES_READ%%/g, `${getArticleViewCount(days)}`);
 
 const replaceCountryName = (text: string): string => {
-    const countryName = countryNames[geolocationGetSync()];
-    if (countryName) {
-        return text.replace(/%%COUNTRY_NAME%%/g, countryName);
-    }
-    return text;
+    const countryName = countryNames[geolocationGetSync()] || 'the United Kingdom';
+    return text.replace(/%%COUNTRY_NAME%%/g, countryName);
 };
 
 // If copy contains COUNTRY_NAME then ensure user is in the set of valid countries
