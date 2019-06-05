@@ -115,10 +115,18 @@ const show = (): Promise<boolean> => {
     trackFirstPvConsent();
     return getEngagementBannerTestToRun()
         .then(deriveEngagementBannerParams)
-        .then(params => ({
-            params,
-            html: engagementBannerParamsToHtml(params),
-        }))
+        .then(params => {
+            // A/B test information is still preserved in the dedicated abTest field
+            // But we can identify the double banner via campaignCode/componentId
+            const paramsWithCustomCampaignCode = {
+                ...params,
+                campaignCode: 'double_banner'
+            };
+            return {
+                paramsWithCustomCampaignCode,
+                html: engagementBannerParamsToHtml(paramsWithCustomCampaignCode),
+            };
+        })
         .then(paramsAndEngagementBannerHtml =>
             fastdom.write(() => {
                 const modifierClass = paramsAndEngagementBannerHtml.params
