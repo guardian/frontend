@@ -123,7 +123,7 @@ const show = (): Promise<boolean> => {
                 campaignCode: 'double_banner',
             };
             return {
-                paramsWithCustomCampaignCode,
+                params: paramsWithCustomCampaignCode,
                 html: engagementBannerParamsToHtml(
                     paramsWithCustomCampaignCode
                 ),
