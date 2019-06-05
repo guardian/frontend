@@ -50,7 +50,7 @@ object Badges {
   val cambridgeAnalytica = Badge("news/series/cambridge-analytica-files", Static("images/badges/calock.svg"))
   val specialReport = SpecialBadge("06966783c5b5413394df723f2ca58030953", "feb78187bd4de427603a164d0a69f19f", Static("images/badges/56738_Badge.svg"))
   val nhs70 = Badge("society/series/nhs-at-70", Static("images/badges/nhs-70.svg"))
-  val cricketWorldCup = Badge("football/womens-world-cup-2019", Static("images/badges/cricket-world-cup.svg"))
+  val cricketWorldCup = Badge("football/womens-world-cup-2019", Static("images/badges/football-world-cup.svg"))
   val womensWorldCup = Badge("sport/womens-world-cup-2019", Static("images/badges/womens-world-cup.svg"))
   val ausElection = Badge("australia-news/australian-election-2019", Static("images/badges/australian-election-2019.svg"))
   val midterm = Badge("us-news/us-midterm-elections-2018", Static("images/badges/midterm.svg"))
