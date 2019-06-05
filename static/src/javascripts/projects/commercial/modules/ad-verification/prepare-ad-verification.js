@@ -1,8 +1,6 @@
 // @flow strict
 import config from 'lib/config';
 import { loadScript } from 'lib/load-script';
-import { commercialAdVerification } from 'common/modules/experiments/tests/commercial-ad-verification.js';
-import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 
 const errorHandler = (error: Error) => {
     // Looks like some plugins block ad-verification
@@ -15,10 +13,7 @@ export const init = (start: () => void): Promise<void> => {
 
     start();
 
-    if (
-        config.get('switches.confiantAdVerification') ||
-        isInVariantSynchronous(commercialAdVerification, 'variant')
-    ) {
+    if (config.get('switches.confiantAdVerification')) {
         return loadScript(
             `//${host}/7oDgiTsq88US4rrBG0_Nxpafkrg/gpt_and_prebid/config.js`,
             { async: true }
