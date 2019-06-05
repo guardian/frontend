@@ -409,14 +409,14 @@ const getLocalCurrencySymbol = (): string =>
     extendedCurrencySymbol[countryCodeToCountryGroupId(getSync())] || '£';
 
 const countryNames = {
-    GB: 'The United Kingdom',
-    US: 'The United States',
+    GB: 'the United Kingdom',
+    US: 'the United States',
     AU: 'Australia',
     CA: 'Canada',
     DE: 'Germany',
     NZ: 'New Zealand',
     FR: 'France',
-    NL: 'The Netherlands',
+    NL: 'the Netherlands',
     IE: 'Ireland',
     SE: 'Sweden',
     CH: 'Switzerland',
@@ -432,7 +432,7 @@ const countryNames = {
     HK: 'Hong Kong',
     LU: 'Luxembourg',
     PT: 'Portugal',
-    AE: 'The United Arab Emirates',
+    AE: 'the United Arab Emirates',
     MX: 'Mexico',
     BR: 'Brazil',
 };
