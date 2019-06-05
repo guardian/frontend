@@ -120,11 +120,13 @@ const show = (): Promise<boolean> => {
             // But we can identify the double banner via campaignCode/componentId
             const paramsWithCustomCampaignCode = {
                 ...params,
-                campaignCode: 'double_banner'
+                campaignCode: 'double_banner',
             };
             return {
                 paramsWithCustomCampaignCode,
-                html: engagementBannerParamsToHtml(paramsWithCustomCampaignCode),
+                html: engagementBannerParamsToHtml(
+                    paramsWithCustomCampaignCode
+                ),
             };
         })
         .then(paramsAndEngagementBannerHtml =>
