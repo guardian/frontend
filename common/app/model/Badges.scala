@@ -50,14 +50,15 @@ object Badges {
   val cambridgeAnalytica = Badge("news/series/cambridge-analytica-files", Static("images/badges/calock.svg"))
   val specialReport = SpecialBadge("06966783c5b5413394df723f2ca58030953", "feb78187bd4de427603a164d0a69f19f", Static("images/badges/56738_Badge.svg"))
   val nhs70 = Badge("society/series/nhs-at-70", Static("images/badges/nhs-70.svg"))
-  val cricketWorldCup = Badge("sport/cricket-world-cup-2019", Static("images/badges/cricket-world-cup.svg"))
+  val cricketWorldCup = Badge("football/womens-world-cup-2019", Static("images/badges/cricket-world-cup.svg"))
+  val womensWorldCup = Badge("sport/womens-world-cup-2019", Static("images/badges/womens-world-cup.svg"))
   val ausElection = Badge("australia-news/australian-election-2019", Static("images/badges/australian-election-2019.svg"))
   val midterm = Badge("us-news/us-midterm-elections-2018", Static("images/badges/midterm.svg"))
   val theNewPopulism = Badge("world/series/the-new-populism", Static("images/badges/the-new-populism.svg"))
   val theImplantFiles = Badge("society/series/the-implant-files", Static("images/badges/the-implant-files.svg"))
 
   val allBadges = Seq(newArrivals, brexitGamble, roadToTheVote, brexitFrontline, brexitDividedGenerations,
-    brexitHowItCameToThis, londonVersus, beyondTheBlade, euElection, paradisePapers, cambridgeAnalytica, specialReport, nhs70, cricketWorldCup, ausElection,
+    brexitHowItCameToThis, londonVersus, beyondTheBlade, euElection, paradisePapers, cambridgeAnalytica, specialReport, nhs70, cricketWorldCup, womensWorldCup, ausElection,
     midterm, theNewPopulism, theImplantFiles)
 
   def badgeFor(c: ContentType): Option[Badge] = {
