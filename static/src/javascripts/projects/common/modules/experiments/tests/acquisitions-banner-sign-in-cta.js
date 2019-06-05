@@ -8,7 +8,9 @@ import { constructQuery } from 'lib/url';
 
 // Only display on desktop since we want to validate test hypothesis as quickly as possible.
 // Running on tablet and mobile would require more design since banner already takes up maximum space allowed on these devices.
-const canRun: () => boolean = () => isBreakpoint({ min: 'desktop' }) && !isUserLoggedIn();
+// Only show to users that aren't signed in, since the non-control variant has a CTA to sign in.
+const canRun: () => boolean = () =>
+    isBreakpoint({ min: 'desktop' }) && !isUserLoggedIn();
 
 const signInUrl: () => string = () => {
     const signInQueryParams = {
