@@ -626,9 +626,11 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                                         )
                                     )
                                 ),
-                                paragraphs: throwIfEmptyArray(
-                                    'paragraphs',
-                                    splitAndTrim(row.paragraphs, '\n')
+                                paragraphs: replaceCountryName(
+                                    throwIfEmptyArray(
+                                        'paragraphs',
+                                        splitAndTrim(row.paragraphs, '\n')
+                                    )
                                 ),
                                 highlightedText: row.highlightedText
                                     ? row.highlightedText.replace(
