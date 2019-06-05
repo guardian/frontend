@@ -80,15 +80,10 @@ const replaceArticlesRead = (text: string, days: number = 30): string =>
     text.replace(/%%ARTICLES_READ%%/g, `${getArticleViewCount(days)}`);
 
 const replaceCountryName = (text: string): string => {
-    const countryName = countryNames[geolocationGetSync()] || 'the United Kingdom';
+    const countryName =
+        countryNames[geolocationGetSync()] || 'the United Kingdom';
     return text.replace(/%%COUNTRY_NAME%%/g, countryName);
 };
-
-// If copy contains COUNTRY_NAME then ensure user is in the set of valid countries
-const countryNameIsValid = (copy: ?AcquisitionsEpicTemplateCopy): boolean =>
-    copy && copy.heading && copy.heading.includes('%%COUNTRY_NAME%%')
-        ? countryNames[geolocationGetSync()]
-        : true;
 
 // How many times the user can see the Epic,
 // e.g. 6 times within 7 days with minimum of 1 day in between views.
@@ -319,8 +314,7 @@ const makeEpicABTestVariant = (
                 matchesCountryGroups &&
                 matchesTagsOrSections &&
                 noExcludedTags &&
-                notExcludedSection &&
-                countryNameIsValid(this.copy)
+                notExcludedSection
             );
         },
 
@@ -459,6 +453,7 @@ const makeEpicABTest = ({
     useLocalViewLog = false,
     useTargetingTool = false,
     userCohort = 'OnlyNonSupporters',
+    hasCountryName = false,
     pageCheck = isCompatibleWithArticleEpic,
     template = controlTemplate,
 }: InitEpicABTest): EpicABTest => {
@@ -467,7 +462,8 @@ const makeEpicABTest = ({
         // to disable contributions asks for a particular piece of content
         showForSensitive: true,
         canRun() {
-            return shouldShowEpic(this);
+            const countryNameIsOk = !hasCountryName || countryNames[geolocationGetSync()];
+            return countryNameIsOk && shouldShowEpic(this);
         },
         componentType: 'ACQUISITIONS_EPIC',
         insertEvent: makeEvent(id, 'insert'),
@@ -498,6 +494,32 @@ const makeEpicABTest = ({
     );
 
     return test;
+};
+
+const buildEpicCopy = (row: any, hasCountryName: boolean) => {
+    const heading = replaceArticlesRead(
+        throwIfEmptyString(
+            'heading',
+            row.heading
+        )
+    );
+
+    const paragraphs = throwIfEmptyArray(
+        'paragraphs',
+        splitAndTrim(row.paragraphs, '\n')
+    );
+
+    return {
+        heading: heading && hasCountryName ? replaceCountryName(heading) : heading,
+        paragraphs: paragraphs && hasCountryName ? paragraphs.map(replaceCountryName) : paragraphs,
+        highlightedText: row.highlightedText
+            ? row.highlightedText.replace(
+                /%%CURRENCY_SYMBOL%%/g,
+                getLocalCurrencySymbol()
+            )
+            : undefined,
+        footer: optionalSplitAndTrim(row.footer, '\n'),
+    }
 };
 
 export const getEpicTestsFromGoogleDoc = (): Promise<
@@ -542,6 +564,8 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                         ? rowWithUserCohort.userCohort
                         : 'OnlyNonSupporters';
 
+                    const hasCountryName = rows.some(row => optionalStringToBoolean(row.hasCountryName));
+
                     return makeEpicABTest({
                         id: testName,
                         campaignId: testName,
@@ -575,6 +599,7 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                                   useLocalViewLog: true,
                               }
                             : {}),
+                        hasCountryName: hasCountryName,
                         variants: rows.map(row => ({
                             id: row.name.toLowerCase().trim(),
                             ...(isLiveBlog
@@ -617,29 +642,7 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                                 row.excludedSections,
                                 ','
                             ),
-                            copy: {
-                                heading: replaceCountryName(
-                                    replaceArticlesRead(
-                                        throwIfEmptyString(
-                                            'heading',
-                                            row.heading
-                                        )
-                                    )
-                                ),
-                                paragraphs: replaceCountryName(
-                                    throwIfEmptyArray(
-                                        'paragraphs',
-                                        splitAndTrim(row.paragraphs, '\n')
-                                    )
-                                ),
-                                highlightedText: row.highlightedText
-                                    ? row.highlightedText.replace(
-                                          /%%CURRENCY_SYMBOL%%/g,
-                                          getLocalCurrencySymbol()
-                                      )
-                                    : undefined,
-                                footer: optionalSplitAndTrim(row.footer, '\n'),
-                            },
+                            copy: buildEpicCopy(row, hasCountryName),
                             showTicker: optionalStringToBoolean(row.showTicker),
                             supportBaseURL: row.supportBaseURL,
                             backgroundImageUrl: filterEmptyString(

@@ -80,6 +80,7 @@ declare type EpicABTest = AcquisitionsABTest & {
     useTargetingTool: boolean,
     insertEvent: string,
     viewEvent: string,
+    hasCountryName?: boolean,
 };
 
 declare type InitEpicABTestVariant = {
@@ -127,6 +128,7 @@ declare type InitEpicABTest = {
     pageCheck?: (page: Object) => boolean,
     template?: EpicTemplate,
     deploymentRules?: DeploymentRules,
+    hasCountryName?: boolean,
 }
 
 declare type Interaction = {
