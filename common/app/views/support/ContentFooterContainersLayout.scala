@@ -5,6 +5,8 @@ import play.twirl.api.{Html, HtmlFormat}
 
 import scala.collection.immutable.Seq
 
+import common.commercial.{DiscountCodeLinks, DiscountCodeMerchantLink}
+
 object ContentFooterContainersLayout {
 
   def apply(content: Content, isPaidContent: Boolean)
@@ -17,8 +19,6 @@ object ContentFooterContainersLayout {
            (discountCodeWidget: => Html): Html = {
 
     def optional(p: => Boolean, htmlBlock: => Html): Option[Html] = if (p) Some(htmlBlock) else None
-    println(content.metadata.sectionId)
-
 
     val htmlBlocks = if (isPaidContent) {
 
@@ -37,7 +37,7 @@ object ContentFooterContainersLayout {
         optional(content.trail.isCommentable, commentsPlaceholder),
         Some(mostPopularPlaceholder),
         optional(!content.shouldHideAdverts, standardCommercialComponent),
-        optional(content.metadata.sectionId == "lifeandstyle" && !content.shouldHideAdverts, discountCodeWidget),
+        optional(!content.shouldHideAdverts&& DiscountCodeLinks.shouldShowWidget(content.metadata.id) , discountCodeWidget ),
       ).flatten
 
     }
