@@ -12,9 +12,7 @@ import play.api.mvc.RequestHeader
 object AMPPageChecks extends Logging {
 
   def isBasicArticle(page: PageWithStoryPackage): Boolean = {
-    page.isInstanceOf[ArticlePage] &&
-      !page.item.isLiveBlog &&
-      !page.item.isPhotoEssay
+    page.isInstanceOf[ArticlePage] && !page.item.isPhotoEssay
   }
 
   def hasOnlySupportedElements(blocks: APIBlocks): Boolean = {
@@ -67,7 +65,11 @@ object AMPPicker {
     val isSupported = features.forall({ case (test, isMet) => isMet})
     val isEnabled = conf.switches.Switches.DotcomRenderingAMP.isSwitchedOn
 
-    val tier = if ((isSupported && isEnabled && !request.guuiOptOut) || request.isGuui) RemoteRenderAMP else LocalRender
+    val tier = if ((isSupported && isEnabled && !request.guuiOptOut) || request.isGuui) {
+      RemoteRenderAMP
+    } else {
+      LocalRender
+    }
 
     tier match {
       case RemoteRenderAMP => logRequest(s"path executing in dotcomponents AMP", features, page)
