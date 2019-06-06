@@ -25,6 +25,7 @@ case class PullquoteBlockElement(html: Option[String], role: Role) extends PageE
 case class ImageBlockElement(media: ImageMedia, data: Map[String, String], displayCredit: Option[Boolean], role: Role, imageSources: Seq[ImageSource]) extends PageElement
 case class ImageSource(weighting: String, srcSet: Seq[SrcSet])
 case class AudioBlockElement(assets: Seq[AudioAsset]) extends PageElement
+case class AudioAtomBlockElement(id: String, kicker: String, coverUrl: String, trackUrl: String, duration: Int, contentId: String) extends PageElement
 case class GuVideoBlockElement(assets: Seq[VideoAsset], imageMedia: ImageMedia, caption:String, url:String, originalUrl:String, role: Role) extends PageElement
 case class VideoBlockElement(caption:String, url:String, originalUrl:String, height:Int, width:Int, role: Role) extends PageElement
 case class VideoYoutubeBlockElement(caption:String, url:String, originalUrl:String, height:Int, width:Int, role: Role) extends PageElement
@@ -34,14 +35,15 @@ case class EmbedBlockElement(html: String, safe: Option[Boolean], alt: Option[St
 case class SoundcloudBlockElement(html: String, id: String, isTrack: Boolean, isMandatory: Boolean) extends PageElement
 case class ContentAtomBlockElement(atomId: String) extends PageElement
 case class YoutubeBlockElement(id: String, assetId: String, channelId: Option[String], mediaTitle: String) extends PageElement
-case class InteractiveBlockElement(html: Option[String], role: Role, isMandatory: Option[Boolean]) extends PageElement
+case class InteractiveUrlBlockElement(url: String) extends PageElement
+case class InteractiveMarkupBlockElement(html: Option[String], css: Option[String], js: Option[String]) extends PageElement
 case class CommentBlockElement(body: String, avatarURL: String, profileURL: String, profileName: String, permalink: String, dateTime: String) extends PageElement
 case class TableBlockElement(html: Option[String], role: Role, isMandatory: Option[Boolean]) extends PageElement
 case class WitnessBlockElement(html: Option[String]) extends PageElement
 case class DocumentBlockElement(html: Option[String], role: Role, isMandatory: Option[Boolean]) extends PageElement
 case class InstagramBlockElement(url: String, html: Option[String], hasCaption: Boolean) extends PageElement
 case class VineBlockElement(html: Option[String]) extends PageElement
-case class MapBlockElement(html: Option[String],  role: Role, isMandatory: Option[Boolean]) extends PageElement
+case class MapBlockElement(url: String, originalUrl: String, source: String, caption: String, title: String) extends PageElement
 case class UnknownBlockElement(html: Option[String]) extends PageElement
 case class DisclaimerBlockElement(html: String) extends PageElement
 
@@ -64,7 +66,7 @@ case class TimelineBlockElement(id: String, title: String, description: Option[S
 
 case class QABlockElement(id: String, title: String, img: Option[String], html: String, credit: String) extends PageElement
 case class GuideBlockElement(id: String, title: String, img: Option[String], html: String, credit: String) extends PageElement
-case class ProfileBlockElement(id: String, title: String, img: Option[String], html: String, credit: String) extends PageElement
+case class ProfileBlockElement(id: String, label: String, title: String, img: Option[String], html: String, credit: String) extends PageElement
 
 case class MembershipBlockElement(
   originalUrl: Option[String],
@@ -171,6 +173,7 @@ object PageElement {
 
       case Audio => extractAudio(element).toList
 
+
       case Video =>
         if (element.assets.nonEmpty) {
           List(GuVideoBlockElement(
@@ -248,6 +251,7 @@ object PageElement {
           case Some(guide: GuideAtom) => {
             Some(ProfileBlockElement(
               id = guide.id,
+              label = guide.data.typeLabel.getOrElse("Quick Guide") ,
               title = guide.atom.title.getOrElse(""),
               img = guide.image.flatMap(ImgSrc.getAmpImageUrl),
               html = guide.data.items.map(_.body).mkString(""),
@@ -258,6 +262,7 @@ object PageElement {
           case Some(profile: ProfileAtom) => {
             Some(ProfileBlockElement(
               id = profile.id,
+              label = profile.data.typeLabel.getOrElse("Profile"),
               title = profile.atom.title.getOrElse(""),
               img = profile.image.flatMap(ImgSrc.getAmpImageUrl),
               html = profile.data.items.map(_.body).mkString(""),
@@ -279,23 +284,52 @@ object PageElement {
             ))
           }
 
-          case Some(atom) =>
-            Some(ContentAtomBlockElement(atom.id))
+          case Some(interactive: InteractiveAtom) => {
+            Some(InteractiveMarkupBlockElement(
+              html = Some(interactive.html),
+              css = Some(interactive.css),
+              js = interactive.mainJS
+            ))
+          }
+
+          case Some(audio: AudioAtom) => {
+            Some(AudioAtomBlockElement(audio.id, audio.data.kicker, audio.data.coverUrl, audio.data.trackUrl, audio.data.duration, audio.data.contentId))
+          }
+
+          case Some(atom) => Some(ContentAtomBlockElement(atom.id))
+
           case _ => None
         }).toList
 
+      case ElementType.Map => {
+        for {
+          mapElem <- element.mapTypeData
+          originalUrl <- mapElem.originalUrl
+          source <- mapElem.source
+          html <- mapElem.html
+          src <- getIframeSrc(html)
+
+          caption = mapElem.caption.getOrElse("")
+          title = mapElem.title.getOrElse("")
+        } yield MapBlockElement(src, originalUrl, source, caption, title)
+      }.toList
+
       case Pullquote => element.pullquoteTypeData.map(d => PullquoteBlockElement(d.html, Role(None))).toList
-      case Interactive => element.interactiveTypeData.map(d => InteractiveBlockElement(d.html, Role(d.role), d.isMandatory)).toList
+      case Interactive => element.interactiveTypeData.flatMap(_.iframeUrl).map(url => InteractiveUrlBlockElement(url)).toList
       case Table => element.tableTypeData.map(d => TableBlockElement(d.html, Role(d.role), d.isMandatory)).toList
       case Witness => element.witnessTypeData.map(d => WitnessBlockElement(d.html)).toList
       case Document => element.documentTypeData.map(d => DocumentBlockElement(d.html, Role(d.role), d.isMandatory)).toList
       case Instagram => element.instagramTypeData.map(d => InstagramBlockElement(d.originalUrl, d.html, d.caption.isDefined)).toList
       case Vine => element.vineTypeData.map(d => VineBlockElement(d.html)).toList
-      case ElementType.Map => element.mapTypeData.map(d => MapBlockElement(d.html, Role(d.role), d.isMandatory)).toList
       case Code => List(CodeBlockElement(None))
       case Form => List(FormBlockElement(None))
       case EnumUnknownElementType(f) => List(UnknownBlockElement(None))
     }
+  }
+
+  private[this] def getIframeSrc(html: String): Option[String] = {
+    val doc = Jsoup.parseBodyFragment(html)
+    doc.getElementsByTag("iframe").asScala.headOption.map(_.attr("src"))
   }
 
   private def extractAudio(element: ApiBlockElement) = {
@@ -319,12 +353,10 @@ object PageElement {
   }
 
   private def extractSoundcloud(html: String, isMandatory: Boolean): Option[SoundcloudBlockElement] = {
+    val src = getIframeSrc(html)
 
-    val doc = Jsoup.parseBodyFragment(html)
-    doc.getElementsByTag("iframe").asScala.headOption.flatMap {
-      iframe =>
-        val src = iframe.attr("src")
-        (AmpSoundcloud.getTrackIdFromUrl(src), AmpSoundcloud.getPlaylistIdFromUrl(src)) match {
+    src.flatMap { s =>
+        (AmpSoundcloud.getTrackIdFromUrl(s), AmpSoundcloud.getPlaylistIdFromUrl(s)) match {
           case (Some(track), _) => Some(SoundcloudBlockElement(html, track, isTrack = true, isMandatory))
           case (_, Some(playlist)) => Some(SoundcloudBlockElement(html, playlist, isTrack = false, isMandatory))
           case _ => None
@@ -361,7 +393,6 @@ object PageElement {
       }
     }
 
-
   }
 
   implicit val ImageWeightingWrites: Writes[ImageSource] = Json.writes[ImageSource]
@@ -369,6 +400,7 @@ object PageElement {
   implicit val SubheadingBlockElementWrites: Writes[SubheadingBlockElement] = Json.writes[SubheadingBlockElement]
   implicit val ImageBlockElementWrites: Writes[ImageBlockElement] = Json.writes[ImageBlockElement]
   implicit val AudioBlockElementWrites: Writes[AudioBlockElement] = Json.writes[AudioBlockElement]
+  implicit val AudioAtomBlockElementWrites: Writes[AudioAtomBlockElement] = Json.writes[AudioAtomBlockElement]
   implicit val GuVideoBlockElementWrites: Writes[GuVideoBlockElement] = Json.writes[GuVideoBlockElement]
   implicit val VideoBlockElementWrites: Writes[VideoBlockElement] = Json.writes[VideoBlockElement]
   implicit val VideoYouTubeElementWrites: Writes[VideoYoutubeBlockElement] = Json.writes[VideoYoutubeBlockElement]
@@ -380,7 +412,8 @@ object PageElement {
   implicit val ContentAtomBlockElementWrites: Writes[ContentAtomBlockElement] = Json.writes[ContentAtomBlockElement]
   implicit val YoutubeBlockElementWrites: Writes[YoutubeBlockElement] = Json.writes[YoutubeBlockElement]
   implicit val PullquoteBlockElementWrites: Writes[PullquoteBlockElement] = Json.writes[PullquoteBlockElement]
-  implicit val InteractiveBlockElementWrites: Writes[InteractiveBlockElement] = Json.writes[InteractiveBlockElement]
+  implicit val InteractiveBlockElementWrites: Writes[InteractiveMarkupBlockElement] = Json.writes[InteractiveMarkupBlockElement]
+  implicit val InteractiveIframeElementWrites: Writes[InteractiveUrlBlockElement] = Json.writes[InteractiveUrlBlockElement]
   implicit val CommentBlockElementWrites: Writes[CommentBlockElement] = Json.writes[CommentBlockElement]
   implicit val TableBlockElementWrites: Writes[TableBlockElement] = Json.writes[TableBlockElement]
   implicit val WitnessBlockElementWrites: Writes[WitnessBlockElement] = Json.writes[WitnessBlockElement]
@@ -392,14 +425,14 @@ object PageElement {
   implicit val MembershipBlockElementWrites: Writes[MembershipBlockElement] = Json.writes[MembershipBlockElement]
   implicit val FormBlockElementWrites: Writes[FormBlockElement] = Json.writes[FormBlockElement]
   implicit val UnknownBlockElementWrites: Writes[UnknownBlockElement] = Json.writes[UnknownBlockElement]
-  implicit val DiscalimerBlockElementWrites: Writes[DisclaimerBlockElement] = Json.writes[DisclaimerBlockElement]
+  implicit val DisclaimerBlockElementWrites: Writes[DisclaimerBlockElement] = Json.writes[DisclaimerBlockElement]
   implicit val HTMLBlockElementWrites: Writes[HTMLFallbackBlockElement] = Json.writes[HTMLFallbackBlockElement]
 
   // atoms
   implicit val TimelineEventWrites = Json.writes[TimelineEvent]
   implicit val TimelineBlockElementWrites = Json.writes[TimelineBlockElement]
   implicit val QABlockElementWrites = Json.writes[QABlockElement]
-  implicit val GuideBlocklementWrites = Json.writes[GuideBlockElement]
+  implicit val GuideBlockElementWrites = Json.writes[GuideBlockElement]
   implicit val ProfileBlockElementWrites = Json.writes[ProfileBlockElement]
 
   implicit val SponsorshipWrites: Writes[Sponsorship] = new Writes[Sponsorship] {

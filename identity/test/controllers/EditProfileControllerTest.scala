@@ -70,7 +70,7 @@ import scala.concurrent.Future
     when(idRequest.trackingData) thenReturn trackingData
     when(idRequest.returnUrl) thenReturn None
 
-    when(api.userEmails(MockitoMatchers.anyString(), MockitoMatchers.any[TrackingData])) thenReturn Future.successful(Right(Subscriber("Text", List(EmailList("37")))))
+    when(api.userEmails(MockitoMatchers.anyString(), MockitoMatchers.any[TrackingData])) thenReturn Future.successful(Right(Subscriber("Text", List(EmailList("37")), "subscribed")))
 
     lazy val controller = new EditProfileController(
       idUrlBuilder,
@@ -414,7 +414,7 @@ import scala.concurrent.Future
 
         val userEmailSubscriptions = List(EmailList(EmailNewsletters.guardianTodayUk.listId.toString))
         when(api.userEmails(MockitoMatchers.anyString(), MockitoMatchers.any[TrackingData]))
-          .thenReturn(Future.successful(Right(Subscriber("HTML", userEmailSubscriptions))))
+          .thenReturn(Future.successful(Right(Subscriber("HTML", userEmailSubscriptions, "subscribed"))))
 
         val result = controller.displayEmailPrefsForm(false, None).apply(FakeCSRFRequest(csrfAddToken))
         status(result) should be(200)

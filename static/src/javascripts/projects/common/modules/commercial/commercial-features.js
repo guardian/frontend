@@ -65,7 +65,8 @@ class CommercialFeatures {
             (switches.commercial &&
                 externalAdvertising &&
                 !sensitiveContent &&
-                !isIdentityPage);
+                !isIdentityPage &&
+                !this.adFree);
 
         this.stickyTopBannerAd =
             !this.adFree &&
@@ -99,7 +100,10 @@ class CommercialFeatures {
             !newRecipeDesign;
 
         this.thirdPartyTags =
-            externalAdvertising && !isIdentityPage && !isSecureContact;
+            !this.adFree &&
+            externalAdvertising &&
+            !isIdentityPage &&
+            !isSecureContact;
 
         this.outbrain =
             this.dfpAdvertising &&

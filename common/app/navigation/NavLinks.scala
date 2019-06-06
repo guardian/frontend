@@ -1,6 +1,7 @@
 package navigation
 
-object NavLinks {
+private object NavLinks {
+
   /* NEWS */
   val science = NavLink("Science", "/science")
   val tech = NavLink("Tech", "/technology")
@@ -64,7 +65,6 @@ object NavLinks {
   val ukBusiness = NavLink("Business", "/business", children = List(economics, banking, money, markets, projectSyndicate, businessToBusiness))
   val usBusiness = ukBusiness.copy(children = List(economics, sustainableBusiness, diversityEquality, smallBusiness))
   val auBusiness = ukBusiness.copy(children = List(markets, money, projectSyndicate))
-  val usPenAward = NavLink("PEN World Voices Festival", "/books/pen-world-voices-festival")
 
   /* OPINION */
   val columnists = NavLink("Columnists", "/index/contributors")
@@ -245,8 +245,7 @@ object NavLinks {
       usPolitics,
       usBusiness,
       tech,
-      science,
-      usPenAward
+      science
     )
   )
   val intNewsPillar = ukNewsPillar.copy(
@@ -306,8 +305,8 @@ object NavLinks {
   val ukSportPillar = NavLink("Sport", "/sport", longTitle = "Sport home", iconName = "home",
     List(
       football,
-      rugbyUnion,
       cricket,
+      rugbyUnion,
       tennis,
       cycling,
       formulaOne,
@@ -326,7 +325,9 @@ object NavLinks {
       aLeague,
       cricket,
       rugbyUnion,
-      tennis
+      tennis,
+      cycling,
+      formulaOne,
     )
   )
   val usSportPillar = ukSportPillar.copy(
@@ -343,8 +344,8 @@ object NavLinks {
   val intSportPillar = ukSportPillar.copy(
     children = List(
       football,
-      rugbyUnion,
       cricket,
+      rugbyUnion,
       tennis,
       cycling,
       formulaOne,
@@ -634,4 +635,62 @@ object NavLinks {
     "commentisfree/commentisfree",
     "education/education"
   )
+
 }
+
+case class EditionNavLinks(
+  newsPillar: NavLink,
+  opinionPillar: NavLink,
+  sportPillar: NavLink,
+  culturePillar: NavLink,
+  lifestylePillar: NavLink,
+  otherLinks: List[NavLink],
+  brandExtensions: List[NavLink]
+)
+
+case class NavigationData (
+
+  uk: EditionNavLinks = EditionNavLinks(
+    NavLinks.ukNewsPillar,
+    NavLinks.ukOpinionPillar,
+    NavLinks.ukSportPillar,
+    NavLinks.ukCulturePillar,
+    NavLinks.ukLifestylePillar,
+    NavLinks.ukOtherLinks,
+    NavLinks.ukBrandExtensions,
+  ),
+
+  us: EditionNavLinks = EditionNavLinks(
+    NavLinks.usNewsPillar,
+    NavLinks.usOpinionPillar,
+    NavLinks.usSportPillar,
+    NavLinks.usCulturePillar,
+    NavLinks.usLifestylePillar,
+    NavLinks.usOtherLinks,
+    NavLinks.usBrandExtensions,
+  ),
+
+  au: EditionNavLinks = EditionNavLinks(
+    NavLinks.auNewsPillar,
+    NavLinks.auOpinionPillar,
+    NavLinks.auSportPillar,
+    NavLinks.auCulturePillar,
+    NavLinks.auLifestylePillar,
+    NavLinks.auOtherLinks,
+    NavLinks.auBrandExtensions,
+  ),
+
+  international: EditionNavLinks = EditionNavLinks(
+    NavLinks.intNewsPillar,
+    NavLinks.intOpinionPillar,
+    NavLinks.intSportPillar,
+    NavLinks.intCulturePillar,
+    NavLinks.intLifestylePillar,
+    NavLinks.intOtherLinks,
+    NavLinks.intBrandExtensions,
+  ),
+
+  tagPages: List[String] = NavLinks.tagPages
+
+)
+

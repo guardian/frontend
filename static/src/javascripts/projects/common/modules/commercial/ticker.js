@@ -2,111 +2,153 @@
 import { getLocalCurrencySymbol } from 'lib/geolocation';
 import fetchJSON from 'lib/fetch-json';
 
+type TickerType = 'unlimited' | 'hardstop';
+
 const count = {};
 let goal;
 let total;
 
-const percentageTotalAsNegative = (end: number) => {
-    let percentage = (total / end) * 100 - 100;
-    if (percentage > 0) {
-        percentage = 0;
-    }
-    return percentage;
+const goalReached = () => total >= goal;
+
+/**
+ * The filled bar begins 100% to the left, and is animated rightwards.
+ */
+const percentageToTranslate = (end: number) => {
+    const percentage = (total / end) * 100 - 100;
+
+    return percentage >= 0 ? 0 : percentage;
 };
 
-const animateBar = (parentElement: HTMLElement) => {
+const animateBar = (parentElement: HTMLElement, tickerType: TickerType) => {
     const progressBarElement = parentElement.querySelector(
         '.js-ticker-filled-progress'
     );
 
     if (progressBarElement && progressBarElement instanceof HTMLElement) {
-        const barTranslate = percentageTotalAsNegative(goal);
-        progressBarElement.style.transform = `translateX(${barTranslate}%)`;
+        // If we've exceeded the goal then extend the bar 15% beyond the total
+        const end =
+            tickerType === 'unlimited' && total > goal
+                ? total + total * 0.15
+                : goal;
 
-        if (total >= goal) {
-            const labelElement = parentElement.querySelector(
-                '.epic-ticker__count-label'
+        const barTranslate = percentageToTranslate(end);
+        progressBarElement.style.transform = `translate3d(${barTranslate}%, 0, 0)`;
+
+        if (end > goal) {
+            // Show a marker for the goal that has been exceeded
+            const marker = parentElement.querySelector(
+                '.js-ticker-goal-marker'
             );
-            if (labelElement) {
-                labelElement.innerHTML = `contributed of a ${getLocalCurrencySymbol()}${goal.toLocaleString()} goal`;
+            if (marker) {
+                marker.classList.remove('is-hidden');
+                const markerTranslate = (goal / end) * 100 - 100;
+                marker.style.transform = `translate3d(${markerTranslate}%, 0, 0)`;
             }
         }
     }
 };
 
 const increaseCounter = (
-    parentElement: HTMLElement,
     parentElementSelector: string,
-    tickerElementSelector: string
+    counterElement: HTMLElement
 ) => {
     // Count is local to the parent element
     count[parentElementSelector] += Math.floor(total / 100);
 
+    counterElement.innerHTML = `${getLocalCurrencySymbol()}${count[
+        parentElementSelector
+    ].toLocaleString()}`;
+    if (count[parentElementSelector] >= total) {
+        counterElement.innerHTML = `${getLocalCurrencySymbol()}${total.toLocaleString()}`;
+    } else {
+        window.requestAnimationFrame(() =>
+            increaseCounter(parentElementSelector, counterElement)
+        );
+    }
+};
+
+const populateStatusSoFar = (
+    parentElementSelector: string,
+    parentElement: HTMLElement,
+    tickerType: TickerType
+) => {
     const counterElement = parentElement.querySelector(
-        `${tickerElementSelector} .js-ticker-count`
+        `.js-ticker-amounts .js-ticker-count`
     );
 
-    if (counterElement && counterElement instanceof HTMLElement) {
-        counterElement.innerHTML = `${getLocalCurrencySymbol()}${count[
-            parentElementSelector
-        ].toLocaleString()}`;
-        if (count[parentElementSelector] >= total) {
-            counterElement.innerHTML = `${getLocalCurrencySymbol()}${total.toLocaleString()}`;
+    const labelElement = parentElement.querySelector(
+        `.js-ticker-amounts .js-ticker-label`
+    );
+
+    if (counterElement && labelElement) {
+        if (goalReached()) {
+            counterElement.innerHTML = `We’ve met our goal — thank you`;
+            if (tickerType === 'unlimited') {
+                labelElement.innerHTML = `Contributions are still being accepted`;
+                labelElement.classList.remove('is-hidden');
+            }
         } else {
-            window.requestAnimationFrame(() =>
-                increaseCounter(
-                    parentElement,
-                    parentElementSelector,
-                    tickerElementSelector
-                )
-            );
+            labelElement.classList.remove('is-hidden');
+            increaseCounter(parentElementSelector, counterElement);
         }
     }
 };
 
-const populateGoal = (parentElement: HTMLElement) => {
+const populateGoal = (parentElement: HTMLElement, tickerType: TickerType) => {
     const goalElement = parentElement.querySelector('.js-ticker-goal');
 
     if (goalElement) {
         const countElement = goalElement.querySelector('.js-ticker-count');
-        if (countElement) {
-            goalElement.classList.remove('is-hidden');
-            countElement.innerHTML = `${getLocalCurrencySymbol()}${goal.toLocaleString()}`;
+        const labelElement = goalElement.querySelector('.js-ticker-label');
+
+        if (countElement && labelElement) {
+            const amount =
+                goalReached() && tickerType === 'unlimited' ? total : goal;
+            countElement.innerHTML = `${getLocalCurrencySymbol()}${amount.toLocaleString()}`;
+
+            if (goalReached()) {
+                labelElement.innerHTML = 'contributed';
+            }
         }
     }
 };
 
-const animate = (parentElementSelector: string) => {
+const animate = (parentElementSelector: string, tickerType: TickerType) => {
     const parentElement = document.querySelector(parentElementSelector);
 
-    const tickerElementSelector = '.js-ticker-amounts';
-
     if (parentElement && parentElement instanceof HTMLElement) {
-        if (total < goal) {
-            populateGoal(parentElement);
+        if (goalReached()) {
+            parentElement.classList.add('epic-ticker__goal-reached');
         }
+
+        populateGoal(parentElement, tickerType);
 
         window.setTimeout(() => {
             count[parentElementSelector] = 0;
             window.requestAnimationFrame(() =>
-                increaseCounter(
-                    parentElement,
+                populateStatusSoFar(
                     parentElementSelector,
-                    tickerElementSelector
+                    parentElement,
+                    tickerType
                 )
             );
-            animateBar(parentElement);
+            animateBar(parentElement, tickerType);
         }, 500);
 
+        parentElement.classList.add(`epic-ticker__${tickerType}`);
         parentElement.classList.remove('is-hidden');
     }
 };
 
-const dataSuccessfullyFetched = () => total && goal;
+const dataSuccessfullyFetched = () =>
+    !(Number.isNaN(Number(total)) || Number.isNaN(Number(goal)));
 
-const fetchDataAndAnimate = (parentElementSelector: string) => {
+const fetchDataAndAnimate = (
+    parentElementSelector: string,
+    tickerType: TickerType
+) => {
     if (dataSuccessfullyFetched()) {
-        animate(parentElementSelector);
+        animate(parentElementSelector, tickerType);
     } else {
         fetchJSON('https://support.theguardian.com/ticker.json', {
             mode: 'cors',
@@ -115,12 +157,15 @@ const fetchDataAndAnimate = (parentElementSelector: string) => {
             goal = parseInt(data.goal, 10);
 
             if (dataSuccessfullyFetched()) {
-                animate(parentElementSelector);
+                animate(parentElementSelector, tickerType);
             }
         });
     }
 };
 
-export const initTicker = (parentElementSelector: string) => {
-    fetchDataAndAnimate(parentElementSelector);
+export const initTicker = (
+    parentElementSelector: string,
+    tickerType?: TickerType
+) => {
+    fetchDataAndAnimate(parentElementSelector, tickerType || 'unlimited');
 };

@@ -15,7 +15,6 @@ import { krux } from 'common/modules/commercial/krux';
 import { ias } from 'commercial/modules/third-party-tags/ias';
 import { inizio } from 'commercial/modules/third-party-tags/inizio';
 import { initOutbrain } from 'commercial/modules/third-party-tags/outbrain';
-import { doubleClickAdFree } from 'commercial/modules/third-party-tags/doubleclick-ad-free';
 import { plista } from 'commercial/modules/third-party-tags/plista';
 import { fbPixel } from 'commercial/modules/third-party-tags/facebook-pixel';
 
@@ -85,7 +84,6 @@ const loadOther = (): void => {
         krux,
         ias,
         inizio,
-        doubleClickAdFree,
         fbPixel(),
     ].filter(_ => _.shouldRun);
 
@@ -101,6 +99,9 @@ const init = (): Promise<boolean> => {
 
     // Outbrain/Plista needs to be loaded before the first ad as it is checking
     // for the presence of high relevance component on page
+    // I'm leaving this to check adFree state because while the thirdPartyTags
+    // check above is now sensitive to ad-free, it could be changed independently
+    // in the future - even by accident.  Justin.
     if (!commercialFeatures.adFree) {
         loadExternalContentWidget();
     }

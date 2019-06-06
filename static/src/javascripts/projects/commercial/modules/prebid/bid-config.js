@@ -377,7 +377,12 @@ const ozoneClientSideBidder: PrebidBidder = {
                 publisherId: 'OZONEGMG0001',
                 siteId: '4204204209',
                 placementId: '0420420500',
-                customData: PAGE_TARGETING,
+                customData: [
+                    {
+                        settings: {},
+                        targeting: PAGE_TARGETING,
+                    },
+                ],
                 ozoneData: {}, // TODO: confirm if we need to send any
             }))(),
             window.OzoneLotameData ? { lotameData: window.OzoneLotameData } : {}

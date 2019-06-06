@@ -48,18 +48,18 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-commercial-prebid-safeframe",
-    "Test the impact of serving prebid ads in safeframes",
-    owners = Seq(Owner.withGithub("jeteve")),
-    safeState = Off,
-    sellByDate = new LocalDate(2019, 9, 30),
+    "ab-acquisitions-banner-sign-in-cta",
+    "test whether having a sign-in CTA negatively impacts acquisitions",
+    owners = Owner.group(SwitchGroup.Identity),
+    safeState = On,
+    sellByDate = new LocalDate(2019, 6, 11),
     exposeClientSide = true
   )
 
   Switch(
     ABTests,
-    "ab-commercial-ad-verification",
-    "Test the impact of verifiyng ads",
+    "ab-commercial-prebid-safeframe",
+    "Test the impact of serving prebid ads in safeframes",
     owners = Seq(Owner.withGithub("jeteve")),
     safeState = Off,
     sellByDate = new LocalDate(2019, 9, 30),
@@ -78,11 +78,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-commercial-consent-global-banner",
-    "Test whether changes to Consent Banner increases proportion of non-EU users who interact with it",
+    "ab-commercial-consent-modal-banner",
+    "Test whether presenting a modal Consent Banner increases proportion of US users who interact with it",
     owners = Owner.group(Commercial),
     safeState = Off,
-    sellByDate = new LocalDate(2019, 5, 31),
+    sellByDate = new LocalDate(2019, 6, 28),
     exposeClientSide = true
   )
 }

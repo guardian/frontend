@@ -5,7 +5,7 @@ import common.Logging
 import controllers.ArticlePage
 import implicits.Requests._
 import model.PageWithStoryPackage
-import com.gu.contentapi.client.model.v1.ElementType.{Map => _, _} // prevent overriding normal Map type
+import com.gu.contentapi.client.model.v1.ElementType.{Map => MapElement, _} // prevent overriding normal Map type
 import play.api.mvc.RequestHeader
 
 
@@ -15,10 +15,6 @@ object AMPPageChecks extends Logging {
     page.isInstanceOf[ArticlePage] &&
       !page.item.isLiveBlog &&
       !page.item.isPhotoEssay
-  }
-
-  def isNotPaidContent(page: PageWithStoryPackage): Boolean = {
-    !page.article.tags.isPaidContent
   }
 
   def hasOnlySupportedElements(blocks: APIBlocks): Boolean = {
@@ -37,6 +33,8 @@ object AMPPageChecks extends Logging {
       case Video => true
       case Contentatom => true
       case Audio => true
+      case Interactive => true
+      case MapElement => true
       case _: ElementType => false
     }
 
@@ -59,7 +57,6 @@ object AMPPicker {
     Map(
       ("isBasicArticle", AMPPageChecks.isBasicArticle(page)),
       ("hasOnlySupportedElements", AMPPageChecks.hasOnlySupportedElements(blocks)),
-      ("isNotPaidContent", AMPPageChecks.isNotPaidContent(page)),
     )
   }
 

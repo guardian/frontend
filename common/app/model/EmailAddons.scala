@@ -354,6 +354,11 @@ case object GreenLight extends FrontEmailMetadata {
   override val banner = Some("green-light.png")
 }
 
+case object GunsAndLiesInAmerica extends FrontEmailMetadata {
+  val name = "Guns And Lies In America"
+  override val banner = Some("guns_and_lies.png")
+}
+
 object EmailAddons {
   val unsubscribePlaceholder = "%%unsub_center_url%%"
 
@@ -422,7 +427,8 @@ object EmailAddons {
     PoliticsAu,
     SportAu,
     FirstDogOnTheMoon,
-    GreenLight
+    GreenLight,
+    GunsAndLiesInAmerica
   )
 
   implicit class EmailContentType(p: Page) {

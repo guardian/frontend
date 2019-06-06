@@ -7,27 +7,36 @@ const buildFooter = (footer: string[]): string =>
         ${footer.map(line => `<h2>${line}</h2>`).join('')}
     </div>`;
 
+const buildImage = (url: string): string =>
+    `<div class="contributions__epic-image">
+        <img src="${url}" alt="Image for Guardian contributions message"/>
+    </div>`;
+
 export const acquisitionsEpicControlTemplate = ({
     copy: { heading = '', paragraphs, highlightedText, footer },
     componentName,
-    epicClassNames = [],
     buttonTemplate,
     wrapperClass = '',
     showTicker = false,
+    backgroundImageUrl,
 }: {
     copy: AcquisitionsEpicTemplateCopy,
     componentName: string,
-    epicClassNames: string[],
     buttonTemplate?: string,
     wrapperClass?: string,
     showTicker: boolean,
-}) =>
-    `<div class="contributions__epic ${epicClassNames.join(
-        ' '
-    )}" data-component="${componentName}" data-link-name="epic">
+    backgroundImageUrl?: string,
+}) => {
+    const extraClasses = backgroundImageUrl
+        ? 'contributions__epic--with-image'
+        : '';
+
+    return `<div class="contributions__epic ${extraClasses}" data-component="${componentName}" data-link-name="epic">
         <div class="${wrapperClass}">
             <div>
                 ${showTicker ? acquisitionsEpicTickerTemplate : ''}
+                
+                ${backgroundImageUrl ? buildImage(backgroundImageUrl) : ''}
 
                 <h2 class="contributions__title">
                     ${heading}
@@ -47,3 +56,4 @@ export const acquisitionsEpicControlTemplate = ({
             ${footer ? buildFooter(footer) : ''}
         </div>
     </div>`;
+};

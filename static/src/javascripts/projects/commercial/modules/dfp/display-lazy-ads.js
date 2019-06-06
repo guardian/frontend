@@ -25,12 +25,7 @@ const displayLazyAds = (): void => {
 
     dfpEnv.advertsToLoad.forEach(
         (advert: Advert): void => {
-            if (dfpEnv.lazyLoadObserve) {
-                enableLazyLoad(advert);
-            } else {
-                console.log('unable to lazy-load!');
-                loadAdvert(advert);
-            }
+            enableLazyLoad(advert);
         }
     );
 };
