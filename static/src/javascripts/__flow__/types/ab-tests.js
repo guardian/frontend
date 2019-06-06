@@ -80,7 +80,6 @@ declare type EpicABTest = AcquisitionsABTest & {
     useTargetingTool: boolean,
     insertEvent: string,
     viewEvent: string,
-    hasCountryName?: boolean,
 };
 
 declare type InitEpicABTestVariant = {
