@@ -26,7 +26,7 @@ const doubleBannerHtml = (
     engagementBannerHtml: string,
     customClass: string
 ): string => `
-    <div class="site-message js-site-message js-double-site-message site-message--banner site-message--double-banner" tabindex="-1" role="dialog" aria-label="welcome" aria-describedby="site-message__message" data-component="AcquisitionsEngagementBannerStylingTweaks_control">
+    <div class="site-message js-site-message js-double-site-message site-message--banner site-message--double-banner" tabindex="-1" role="dialog" aria-label="welcome" aria-describedby="site-message__message" data-component="AcquisitionsEngagementBannerStylingTweaks_control" aria-live="polite">
         <div class="js-engagement-banner-site-message ${customClass} site-message--engagement-banner">
             <div class="gs-container">
                 <div class="site-message__inner js-site-message-inner">

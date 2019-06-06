@@ -96,7 +96,7 @@
 .engagement-banner__button {
     display: inline-block;
     vertical-align: middle;
-
+    overflow: hidden;
     height: 36px;
     padding: 0 ($gs-gutter / 3) 0 18px;
     margin-right: $gs-gutter / 4;
@@ -125,6 +125,11 @@
     @include mq(tablet) {
         display: block;
         margin-bottom: 8px;
+    }
+
+    &:focus {
+        outline: auto;
+        outline-color: $brightness-7;
     }
 }
 
@@ -192,6 +197,10 @@
     &:focus,
     &:active {
         background: rgba($brightness-7,  .05);
+    }
+
+    &:focus {
+        outline: auto;
     }
 }
 

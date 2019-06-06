@@ -13,8 +13,8 @@ export const acquisitionsBannerSignInCtaTemplate = (
             <div class="engagement-banner__roundel">
                 ${marque36icon.markup}
             </div>
-            <button class="button engagement-banner__close-button js-site-message-close js-engagement-banner-close-button" data-link-name="hide release message">
-                <span class="u-h">Close</span>
+            <button tabindex="5" class="button engagement-banner__close-button js-site-message-close js-engagement-banner-close-button" data-link-name="hide release message">
+                <span class="u-h">Close the support banner</span>
                 ${closeCentralIcon.markup}
             </button>
         </div>
@@ -25,11 +25,11 @@ export const acquisitionsBannerSignInCtaTemplate = (
             </div>
             <div class="engagement-banner__cta">
                 <div class="engagement-banner__payment-cta">
-                    <button class="button engagement-banner__button engagement-banner__button--before-logos" href="${
+                    <a tabindex="3"     class="button engagement-banner__button engagement-banner__button--before-logos" href="${
                         params.linkUrl
                     }">
                         ${params.buttonCaption}${arrowWhiteRight.markup}
-                    </button>
+                    </a>
                     <div class="engagement-banner__payment-logos">
                         <img
                             src="${config.get(
@@ -39,20 +39,21 @@ export const acquisitionsBannerSignInCtaTemplate = (
                             alt="Accepted payment methods: Visa, Mastercard, American Express and Paypal"
                         >
                     </div>
-                    <button class="button engagement-banner__button engagement-banner__button--after-logos" href="${
+                    <a tabindex="3" class="button engagement-banner__button engagement-banner__button--after-logos" href="${
                         params.linkUrl
                     }">
                         ${params.buttonCaption}${arrowWhiteRight.markup}
-                    </button>
+                    </a>
                 </div>
                 <div class="engagement-banner__sign-in-cta">
-                    <a class="engagement-banner__sign-in-cta-link u-underline js-engagement-banner-close-button" href="${
+                    <a tabindex="4" class="engagement-banner__sign-in-cta-link u-underline js-engagement-banner-close-button" href="${
                         params.signInUrl ? params.signInUrl : ''
                     }">Already a supporter? Sign in</a>
                 </div>
             </div>
         </div>
         <a
+            aria-hidden="true"
             class="u-faux-block-link__overlay"
             target="_blank"
             href="${params.linkUrl}"

@@ -13,8 +13,8 @@ export const acquisitionsBannerMobileDesignTestTemplate = (
     const applePayLogo = applePayApiAvailable ? applyPayMark.markup : '';
     return `
         <div class="engagement-banner__close">
-            <button class="button engagement-banner__close-button js-site-message-close js-engagement-banner-close-button" data-link-name="hide release message">
-                <span class="u-h">Close</span>
+            <button tabindex="4" class="button engagement-banner__close-button js-site-message-close js-engagement-banner-close-button" data-link-name="hide release message">
+                <span class="u-h">Close the support banner</span>
                 ${closeCentralIcon.markup}
             </button>
         </div>
@@ -27,7 +27,7 @@ export const acquisitionsBannerMobileDesignTestTemplate = (
                 ${params.hasTicker ? acquisitionsBannerTickerTemplate : ''}
             </div>
             <div class="engagement-banner__cta">
-                <button class="button engagement-banner__button" href="${
+                <a tabindex="3" class="button engagement-banner__button" href="${
                     params.linkUrl
                 }">
                     <span class="engagement-banner__button-caption hide-until-tablet">${
@@ -35,7 +35,7 @@ export const acquisitionsBannerMobileDesignTestTemplate = (
                     }</span>
                     <span class="engagement-banner__button-caption hide-from-tablet">Support us</span>
                     ${arrowWhiteRight.markup}
-                </button>
+                </a>
                 <div class="engagement-banner__payment-logos">
                     <img
                         src="${config.get(
@@ -49,6 +49,7 @@ export const acquisitionsBannerMobileDesignTestTemplate = (
             </div>
         </div>
         <a
+            aria-hidden="true"
             class="u-faux-block-link__overlay"
             target="_blank"
             href="${params.linkUrl}"
