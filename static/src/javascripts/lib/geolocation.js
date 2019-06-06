@@ -410,8 +410,8 @@ const getLocalCurrencySymbol = (): string =>
 
 // A limited set of country names for the test to add country name in the epic copy
 const countryNames = {
-    GB: 'the United Kingdom',
-    US: 'the United States',
+    GB: 'the UK',
+    US: 'the US',
     AU: 'Australia',
     CA: 'Canada',
     DE: 'Germany',
@@ -433,7 +433,7 @@ const countryNames = {
     HK: 'Hong Kong',
     LU: 'Luxembourg',
     PT: 'Portugal',
-    AE: 'the United Arab Emirates',
+    AE: 'the UAE',
     MX: 'Mexico',
     BR: 'Brazil',
 };
