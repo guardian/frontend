@@ -25,6 +25,7 @@ case class PullquoteBlockElement(html: Option[String], role: Role) extends PageE
 case class ImageBlockElement(media: ImageMedia, data: Map[String, String], displayCredit: Option[Boolean], role: Role, imageSources: Seq[ImageSource]) extends PageElement
 case class ImageSource(weighting: String, srcSet: Seq[SrcSet])
 case class AudioBlockElement(assets: Seq[AudioAsset]) extends PageElement
+case class AudioAtomBlockElement(id: String, kicker: String, coverUrl: String, trackUrl: String, duration: Int, contentId: String) extends PageElement
 case class GuVideoBlockElement(assets: Seq[VideoAsset], imageMedia: ImageMedia, caption:String, url:String, originalUrl:String, role: Role) extends PageElement
 case class VideoBlockElement(caption:String, url:String, originalUrl:String, height:Int, width:Int, role: Role) extends PageElement
 case class VideoYoutubeBlockElement(caption:String, url:String, originalUrl:String, height:Int, width:Int, role: Role) extends PageElement
@@ -172,6 +173,7 @@ object PageElement {
 
       case Audio => extractAudio(element).toList
 
+
       case Video =>
         if (element.assets.nonEmpty) {
           List(GuVideoBlockElement(
@@ -290,8 +292,12 @@ object PageElement {
             ))
           }
 
-          case Some(atom) =>
-            Some(ContentAtomBlockElement(atom.id))
+          case Some(audio: AudioAtom) => {
+            Some(AudioAtomBlockElement(audio.id, audio.data.kicker, audio.data.coverUrl, audio.data.trackUrl, audio.data.duration, audio.data.contentId))
+          }
+
+          case Some(atom) => Some(ContentAtomBlockElement(atom.id))
+
           case _ => None
         }).toList
 
@@ -387,7 +393,6 @@ object PageElement {
       }
     }
 
-
   }
 
   implicit val ImageWeightingWrites: Writes[ImageSource] = Json.writes[ImageSource]
@@ -395,6 +400,7 @@ object PageElement {
   implicit val SubheadingBlockElementWrites: Writes[SubheadingBlockElement] = Json.writes[SubheadingBlockElement]
   implicit val ImageBlockElementWrites: Writes[ImageBlockElement] = Json.writes[ImageBlockElement]
   implicit val AudioBlockElementWrites: Writes[AudioBlockElement] = Json.writes[AudioBlockElement]
+  implicit val AudioAtomBlockElementWrites: Writes[AudioAtomBlockElement] = Json.writes[AudioAtomBlockElement]
   implicit val GuVideoBlockElementWrites: Writes[GuVideoBlockElement] = Json.writes[GuVideoBlockElement]
   implicit val VideoBlockElementWrites: Writes[VideoBlockElement] = Json.writes[VideoBlockElement]
   implicit val VideoYouTubeElementWrites: Writes[VideoYoutubeBlockElement] = Json.writes[VideoYoutubeBlockElement]
