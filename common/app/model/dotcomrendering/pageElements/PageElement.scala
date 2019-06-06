@@ -425,14 +425,14 @@ object PageElement {
   implicit val MembershipBlockElementWrites: Writes[MembershipBlockElement] = Json.writes[MembershipBlockElement]
   implicit val FormBlockElementWrites: Writes[FormBlockElement] = Json.writes[FormBlockElement]
   implicit val UnknownBlockElementWrites: Writes[UnknownBlockElement] = Json.writes[UnknownBlockElement]
-  implicit val DiscalimerBlockElementWrites: Writes[DisclaimerBlockElement] = Json.writes[DisclaimerBlockElement]
+  implicit val DisclaimerBlockElementWrites: Writes[DisclaimerBlockElement] = Json.writes[DisclaimerBlockElement]
   implicit val HTMLBlockElementWrites: Writes[HTMLFallbackBlockElement] = Json.writes[HTMLFallbackBlockElement]
 
   // atoms
   implicit val TimelineEventWrites = Json.writes[TimelineEvent]
   implicit val TimelineBlockElementWrites = Json.writes[TimelineBlockElement]
   implicit val QABlockElementWrites = Json.writes[QABlockElement]
-  implicit val GuideBlocklementWrites = Json.writes[GuideBlockElement]
+  implicit val GuideBlockElementWrites = Json.writes[GuideBlockElement]
   implicit val ProfileBlockElementWrites = Json.writes[ProfileBlockElement]
 
   implicit val SponsorshipWrites: Writes[Sponsorship] = new Writes[Sponsorship] {
