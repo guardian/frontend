@@ -36,7 +36,7 @@ export const acquisitionsBannerSignInCtaTemplate = (
                                 'images.acquisitions.payment-methods',
                                 ''
                             )}"
-                            alt="Accepted paym  ent methods: Visa, Mastercard, American Express and Paypal"
+                            alt="Accepted payment methods: Visa, Mastercard, American Express and Paypal"
                         >
                     </div>
                     <a tabindex="3" class="button engagement-banner__button engagement-banner__button--after-logos" href="${
