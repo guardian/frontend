@@ -3,7 +3,6 @@ package navigation
 
 import _root_.model.{NavItem, Page, Tags}
 import common.{Edition, editions}
-import navigation.NavLinks._
 import play.api.libs.json.{Json, Writes}
 
 import scala.annotation.tailrec
@@ -40,6 +39,8 @@ case class NavMenu(
 )
 
 object NavMenu {
+
+  val navigationData = NavigationData()
 
   implicit val navlinkWrites = Json.writes[NavLink]
   implicit val flatSubnavWrites = Json.writes[FlatSubnav]
@@ -124,17 +125,31 @@ object NavMenu {
         None
       } else if (pillars.contains(parent)) {
         currentParent
-      } else findParent(parent, edition, pillars, otherLinks).orElse(Some(ukNewsPillar))
+      } else findParent(parent, edition, pillars, otherLinks).orElse(Some(navigationData.uk.newsPillar))
     )
   }
 
   private[navigation] def navRoot(edition: Edition): NavRoot = {
-    edition match {
-      case editions.Uk => NavRoot(Seq(ukNewsPillar, ukOpinionPillar, ukSportPillar, ukCulturePillar, ukLifestylePillar), ukOtherLinks, ukBrandExtensions)
-      case editions.Us => NavRoot(Seq(usNewsPillar, usOpinionPillar, usSportPillar, usCulturePillar, usLifestylePillar), usOtherLinks, usBrandExtensions)
-      case editions.Au => NavRoot(Seq(auNewsPillar, auOpinionPillar, auSportPillar, auCulturePillar, auLifestylePillar), auOtherLinks, auBrandExtensions)
-      case editions.International => NavRoot(Seq(intNewsPillar, intOpinionPillar, intSportPillar, intCulturePillar, intLifestylePillar), intOtherLinks, intBrandExtensions)
+
+    val editionLinks: EditionNavLinks = edition match {
+      case editions.Uk => navigationData.uk
+      case editions.Us => navigationData.us
+      case editions.Au => navigationData.au
+      case editions.International => navigationData.international
     }
+
+    NavRoot(
+      Seq(
+        editionLinks.newsPillar,
+        editionLinks.opinionPillar,
+        editionLinks.sportPillar,
+        editionLinks.culturePillar,
+        editionLinks.lifestylePillar
+      ),
+      editionLinks.otherLinks,
+      editionLinks.brandExtensions
+    )
+
   }
 
   private[navigation] def getTagsFromPage(page: Page): Tags = {
@@ -155,8 +170,8 @@ object NavMenu {
     )
     val networkFronts = Seq("uk", "us", "au", "international")
     val tags = getTagsFromPage(page)
-    val commonKeywords = tags.keywordIds.intersect(tagPages).sortWith(tags.keywordIds.indexOf(_) < tags.keywordIds.indexOf(_))
-    val isTagPage = (page.metadata.isFront || frontLikePages.contains(page.metadata.id)) && tagPages.contains(page.metadata.id)
+    val commonKeywords = tags.keywordIds.intersect(navigationData.tagPages).sortWith(tags.keywordIds.indexOf(_) < tags.keywordIds.indexOf(_))
+    val isTagPage = (page.metadata.isFront || frontLikePages.contains(page.metadata.id)) && navigationData.tagPages.contains(page.metadata.id)
     val isArticleInTagPageSection = commonKeywords.nonEmpty
 
     val id = if (networkFronts.contains(page.metadata.sectionId)) {
