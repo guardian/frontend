@@ -486,6 +486,7 @@ const makeEpicABTest = ({
         campaignPrefix,
         useLocalViewLog,
         userCohort,
+        hasCountryName,
         pageCheck,
         useTargetingTool,
     };
