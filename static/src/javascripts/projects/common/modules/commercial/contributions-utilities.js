@@ -79,11 +79,8 @@ const getVisitCount = (): number => local.get('gu.alreadyVisited') || 0;
 const replaceArticlesRead = (text: string, days: number = 30): string =>
     text.replace(/%%ARTICLES_READ%%/g, `${getArticleViewCount(days)}`);
 
-const replaceCountryName = (text: string): string => {
-    const countryName =
-        countryNames[geolocationGetSync()] || 'the United Kingdom';
-    return text.replace(/%%COUNTRY_NAME%%/g, countryName);
-};
+const replaceCountryName = (text: string, countryName: string): string =>
+    text.replace(/%%COUNTRY_NAME%%/g, countryName);
 
 // How many times the user can see the Epic,
 // e.g. 6 times within 7 days with minimum of 1 day in between views.
@@ -507,12 +504,18 @@ const buildEpicCopy = (row: any, hasCountryName: boolean) => {
         splitAndTrim(row.paragraphs, '\n')
     );
 
+    const countryName: ?string = hasCountryName
+        ? countryNames[geolocationGetSync()]
+        : undefined;
+
     return {
         heading:
-            heading && hasCountryName ? replaceCountryName(heading) : heading,
+            heading && countryName
+                ? replaceCountryName(heading, countryName)
+                : heading,
         paragraphs:
-            paragraphs && hasCountryName
-                ? paragraphs.map(replaceCountryName)
+            paragraphs && countryName
+                ? paragraphs.map(para => replaceCountryName(para, countryName))
                 : paragraphs,
         highlightedText: row.highlightedText
             ? row.highlightedText.replace(
@@ -566,6 +569,8 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                         ? rowWithUserCohort.userCohort
                         : 'OnlyNonSupporters';
 
+                    // If hasCountryName is true but a country name is not available for this user then
+                    // they will be excluded from this test
                     const hasCountryName = rows.some(row =>
                         optionalStringToBoolean(row.hasCountryName)
                     );
