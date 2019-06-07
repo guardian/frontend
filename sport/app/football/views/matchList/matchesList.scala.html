@@ -11,6 +11,7 @@
 @import views.support.RenderClasses
 @import views.MatchStatus
 @import conf.Configuration
+@import model.CompetitionDisplayHelpers.correctTeamName
 
 <table class="table table--football football-matches@if(responsiveFont){ table--responsive-font}">
     <thead hidden>
@@ -52,14 +53,14 @@
                     <a @(theMatch.smartUrl.map(url => s"href=${LinkTo(url)}").getOrElse("")) class="u-unstyled football-teams u-cf" data-link-name="match-redirect">
                         <div class="football-match__team football-match__team--home football-team">
                             <div class="football-team__name team-name" data-abbr="@pa.TeamCodes.codeFor(theMatch.homeTeam)">
-                                <span class="team-name__long">@model.CompetitionDisplayHelpers.correctTeamName(theMatch.homeTeam.name)</span>
+                                <span class="team-name__long">@correctTeamName(theMatch.homeTeam.name)</span>
                             </div>
                             <div class="football-team__score">@theMatch.homeTeam.score</div>
                         </div>
 
                         <div class="football-match__team football-match__team--away football-team">
                             <div class="football-team__name team-name" data-abbr="@pa.TeamCodes.codeFor(theMatch.awayTeam)">
-                                <span class="team-name__long">@model.CompetitionDisplayHelpers.correctTeamName(theMatch.awayTeam.name)</span>
+                                <span class="team-name__long">@correctTeamName(theMatch.awayTeam.name)</span>
                             </div>
                             <div class="football-team__score">@theMatch.awayTeam.score</div>
                         </div>
