@@ -594,12 +594,12 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                     const rowWithArticleViews = rows.find(
                         row => row.minArticleViews && row.articleCountDays
                     );
-                    const minArticleViews = rowWithArticleViews
+                    const minArticleViews: ?number = rowWithArticleViews
                         ? optionalStringToNumber(
                               rowWithArticleViews.minArticleViews
                           )
                         : undefined;
-                    const articleCountDays = rowWithArticleViews
+                    const articleCountDays: ?number = rowWithArticleViews
                         ? optionalStringToNumber(
                               rowWithArticleViews.articleCountDays
                           )
@@ -619,7 +619,7 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                         audienceCriteria: 'All',
                         audience,
                         audienceOffset,
-                        useLocalViewLog: rows.find(row =>
+                        useLocalViewLog: rows.some(row =>
                             optionalStringToBoolean(row.useLocalViewLog)
                         ),
                         userCohort,
