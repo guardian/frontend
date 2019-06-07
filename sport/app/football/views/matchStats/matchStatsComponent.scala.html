@@ -3,7 +3,7 @@
 @import views.support.RenderClasses
 @import views.{NudgePercent, PercentMaker}
 @import pa.LineUpPlayer
-@import model.CompetitionDisplayHelpers.correctTeamName
+@import model.CompetitionDisplayHelpers.cleanTeamName
 
 @(page: MatchPage)(implicit request: RequestHeader)
 
@@ -75,14 +75,14 @@
             <h4 class="match-stats__caption">Goal attempts</h4>
             <dl class="match-stats__stat goal-attempts u-cf">
                 <dd class="goal-attempts__off-target goal-attempts__off-target--home" style="background-color: @teamColours.home;">@home.shotsOff</dd>
-                <dt class="goal-attempts__label goal-attempts__label--off-target-home"><span class="u-h">@correctTeamName(home.name) </span>Off target</dt>
+                <dt class="goal-attempts__label goal-attempts__label--off-target-home"><span class="u-h">@cleanTeamName(home.name) </span>Off target</dt>
                 <dd class="goal-attempts__off-target goal-attempts__off-target--away" style="background-color: @teamColours.away;">@away.shotsOff</dd>
-                <dt class="goal-attempts__label goal-attempts__label--off-target-away"><span class="u-h">@correctTeamName(away.name) </span></dt>
+                <dt class="goal-attempts__label goal-attempts__label--off-target-away"><span class="u-h">@cleanTeamName(away.name) </span></dt>
 
                 <dd class="goal-attempts__on-target goal-attempts__on-target--home" style="background-color: @teamColours.home;">@home.shotsOn</dd>
-                <dt class="goal-attempts__label goal-attempts__label--on-target-home"><span class="u-h">@correctTeamName(home.name) </span>On target</dt>
+                <dt class="goal-attempts__label goal-attempts__label--on-target-home"><span class="u-h">@cleanTeamName(home.name) </span>On target</dt>
                 <dd class="goal-attempts__on-target goal-attempts__on-target--away" style="background-color: @teamColours.away;">@away.shotsOn</dd>
-                <dt class="goal-attempts__label goal-attempts__label--on-target-away"><span class="u-h">@correctTeamName(away.name) </span></dt>
+                <dt class="goal-attempts__label goal-attempts__label--on-target-away"><span class="u-h">@cleanTeamName(away.name) </span></dt>
             </dl>
 
             <dl class="u-cf match-stats__stat bar-fight">
@@ -103,7 +103,7 @@
             <h3 class="match-stats__heading">Lineups</h3>
 
             <div class="match-stats__lineup match-stats__lineup--home">
-                <h4 class="match-stats__caption">@correctTeamName(home.name)</h4>
+                <h4 class="match-stats__caption">@cleanTeamName(home.name)</h4>
                 @team(page.lineUp.homeTeam.players.filterNot {
                     _.substitute
                 })
@@ -113,7 +113,7 @@
                 })
             </div>
             <div class="match-stats__lineup match-stats__lineup--away">
-                <h4 class="match-stats__caption">@correctTeamName(away.name)</h4>
+                <h4 class="match-stats__caption">@cleanTeamName(away.name)</h4>
                 @team(page.lineUp.awayTeam.players.filterNot {
                     _.substitute
                 })
