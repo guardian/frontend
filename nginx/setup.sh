@@ -11,7 +11,6 @@ SOURCE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 dev-nginx setup-cert ${DOMAIN}
 dev-nginx link-config ${SOURCE_DIR}/frontend.conf
-dev-nginx add-to-hosts-file ${DOMAIN}
 dev-nginx restart-nginx
 
 echo -e "💯 Done! You can now run frontend locally on https://${DOMAIN}"
