@@ -4,6 +4,7 @@
 @import pa.FootballMatch
 @import views.support.RenderClasses
 @import conf.Configuration
+@import model.CompetitionDisplayHelpers.correctTeamName
 
 @(theMatch: FootballMatch, competition: Option[Competition] = None, responsive: Boolean = false, link: Boolean = false)(implicit request: RequestHeader)
 
@@ -16,15 +17,15 @@
         "match-summary--responsive" -> responsive
     ))" data-match-id="@theMatch.id">
     @if(theMatch.isLive || theMatch.isResult){
-        <h1 class="u-h">@model.CompetitionDisplayHelpers.correctTeamName(homeTeam.name) @homeTeam.score - @awayTeam.score @model.CompetitionDisplayHelpers.correctTeamName(awayTeam.name)</h1>
+        <h1 class="u-h">@correctTeamName(homeTeam.name) @homeTeam.score - @awayTeam.score @correctTeamName(awayTeam.name)</h1>
     }else{
-        <h1 class="u-h">@model.CompetitionDisplayHelpers.correctTeamName(homeTeam.name) v @model.CompetitionDisplayHelpers.correctTeamName(awayTeam.name)</h1>
+        <h1 class="u-h">@correctTeamName(homeTeam.name) v @correctTeamName(awayTeam.name)</h1>
     }
 
     <div class="match-summary__teams">
         <div class="match-summary__team match-summary__team--home">
             <h2 class="team__name" data-abbr="@pa.TeamCodes.codeFor(homeTeam)">
-                @model.CompetitionDisplayHelpers.correctTeamName(homeTeam.name)
+                @correctTeamName(homeTeam.name)
             </h2>
 
             <dl class="team__scorers u-unstyled">
@@ -43,7 +44,7 @@
 
         <div class="match-summary__team match-summary__team--away">
             <h2 class="team__name" data-abbr="@pa.TeamCodes.codeFor(awayTeam)">
-                @model.CompetitionDisplayHelpers.correctTeamName(awayTeam.name)
+                @correctTeamName(awayTeam.name)
             </h2>
 
             <dl class="team__scorers u-unstyled">
