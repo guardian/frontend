@@ -408,6 +408,36 @@ const extendedCurrencySymbol = {
 const getLocalCurrencySymbol = (): string =>
     extendedCurrencySymbol[countryCodeToCountryGroupId(getSync())] || '£';
 
+// A limited set of country names for the test to add country name in the epic copy
+const countryNames = {
+    GB: 'the UK',
+    US: 'the US',
+    AU: 'Australia',
+    CA: 'Canada',
+    DE: 'Germany',
+    NZ: 'New Zealand',
+    FR: 'France',
+    NL: 'the Netherlands',
+    IE: 'Ireland',
+    SE: 'Sweden',
+    CH: 'Switzerland',
+    NO: 'Norway',
+    BE: 'Belgium',
+    IT: 'Italy',
+    IN: 'India',
+    ES: 'Spain',
+    DK: 'Denmark',
+    SG: 'Singapore',
+    AT: 'Austria',
+    FI: 'Finland',
+    HK: 'Hong Kong',
+    LU: 'Luxembourg',
+    PT: 'Portugal',
+    AE: 'the UAE',
+    MX: 'Mexico',
+    BR: 'Brazil',
+};
+
 export {
     get,
     countryCodeToCountryGroupId,
@@ -418,4 +448,5 @@ export {
     init,
     setGeolocation,
     extendedCurrencySymbol,
+    countryNames,
 };

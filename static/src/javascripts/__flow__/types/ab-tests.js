@@ -127,6 +127,7 @@ declare type InitEpicABTest = {
     pageCheck?: (page: Object) => boolean,
     template?: EpicTemplate,
     deploymentRules?: DeploymentRules,
+    hasCountryName?: boolean,
 }
 
 declare type Interaction = {
