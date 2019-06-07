@@ -3,6 +3,7 @@
 @import model.TeamUrl
 @import views.support.`package`.Seq2zipWithRowInfo
 @import play.twirl.api.HtmlFormat
+@import model.CompetitionDisplayHelpers.correctTeamName
 
 @(pageModel: TablesPage, comps: Seq[model.Competition])(implicit request: RequestHeader)
 <div class="l-side-margins">
@@ -14,9 +15,9 @@
                 <ul class="nav nav--columns nav--no-horizontal-spacing u-cf">
                     @comp.teams.map{ team =>
                     <li class="nav__item" data-team-id="@team.id">
-                        @TeamUrl(team).map{ url => <a href="@LinkTo{@url}" class="nav__link" data-link-name="@team.name">
-                            @team.name
-                        </a> }.getOrElse{ <span class="nav__link">@team.name</span> }
+                        @TeamUrl(team).map{ url => <a href="@LinkTo{@url}" class="nav__link" data-link-name="@correctTeamName(team.name)">
+                            @correctTeamName(team.name)
+                        </a> }.getOrElse{ <span class="nav__link">@correctTeamName(team.name)</span> }
 
                     </li>
                     }
