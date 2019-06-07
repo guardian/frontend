@@ -590,7 +590,14 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                         optionalStringToBoolean(row.hasCountryName)
                     );
 
-                    // Expect minArticleViews and articleCountDays to appear together or not at all
+                    /**
+                     * Expect minArticleViews and articleCountDays to appear together or not at all.
+                     *
+                     * The user must have viewed minArticleViews articles in the last articleCountDays.
+                     *
+                     * The placeholder %%ARTICLES_READ%% is replaced with a value based on articleCountDays
+                     * and their gu.history.dailyArticleCount state.
+                     */
                     const rowWithArticleViews = rows.find(
                         row => row.minArticleViews && row.articleCountDays
                     );
