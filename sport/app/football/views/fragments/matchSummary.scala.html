@@ -16,15 +16,15 @@
         "match-summary--responsive" -> responsive
     ))" data-match-id="@theMatch.id">
     @if(theMatch.isLive || theMatch.isResult){
-        <h1 class="u-h">@homeTeam.name @homeTeam.score - @awayTeam.score @awayTeam.name</h1>
+        <h1 class="u-h">@model.CompetitionDisplayHelpers.correctTeamName(homeTeam.name) @homeTeam.score - @awayTeam.score @model.CompetitionDisplayHelpers.correctTeamName(awayTeam.name)</h1>
     }else{
-        <h1 class="u-h">@homeTeam.name v @awayTeam.name</h1>
+        <h1 class="u-h">@model.CompetitionDisplayHelpers.correctTeamName(homeTeam.name) v @model.CompetitionDisplayHelpers.correctTeamName(awayTeam.name)</h1>
     }
 
     <div class="match-summary__teams">
         <div class="match-summary__team match-summary__team--home">
             <h2 class="team__name" data-abbr="@pa.TeamCodes.codeFor(homeTeam)">
-                @homeTeam.name
+                @model.CompetitionDisplayHelpers.correctTeamName(homeTeam.name)
             </h2>
 
             <dl class="team__scorers u-unstyled">
@@ -43,7 +43,7 @@
 
         <div class="match-summary__team match-summary__team--away">
             <h2 class="team__name" data-abbr="@pa.TeamCodes.codeFor(awayTeam)">
-                @awayTeam.name
+                @model.CompetitionDisplayHelpers.correctTeamName(awayTeam.name)
             </h2>
 
             <dl class="team__scorers u-unstyled">
