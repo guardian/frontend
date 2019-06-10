@@ -33,6 +33,7 @@ jest.mock('lib/cookies', () => ({
     getCookie: jest.fn(),
 }));
 jest.mock('lib/detect', () => ({
+    getViewport: jest.fn(),
     getBreakpoint: jest.fn(),
     getReferrer: jest.fn(),
     hasPushStateSupport: jest.fn(),
@@ -216,6 +217,7 @@ describe('Build Page Targeting', () => {
             ab: ['MtMaster-variantName'],
             pv: '123456',
             fr: '0',
+            inskin: 'f',
             cc: 'US',
             pr: 'dotcom-platform',
         });

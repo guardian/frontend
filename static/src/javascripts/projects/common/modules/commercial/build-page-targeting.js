@@ -43,9 +43,8 @@ const findBreakpoint = (): string => {
 };
 
 const inskinTargetting = (): string => {
-    // eslint-disable-next-line no-console
-    console.log('WIDTH', getViewport().width);
-    if (getViewport().width >= 1560) return 't';
+    const vp = getViewport();
+    if (vp && vp.width >= 1560) return 't';
     return 'f';
 };
 
