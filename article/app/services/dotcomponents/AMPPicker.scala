@@ -1,11 +1,10 @@
 package services.dotcomponents
 
-import com.gu.contentapi.client.model.v1.{ElementType, Blocks => APIBlocks}
+import com.gu.contentapi.client.model.v1.{Blocks => APIBlocks}
 import common.Logging
 import controllers.ArticlePage
 import implicits.Requests._
 import model.PageWithStoryPackage
-import com.gu.contentapi.client.model.v1.ElementType.{Map => MapElement, _} // prevent overriding normal Map type
 import play.api.mvc.RequestHeader
 
 
@@ -13,34 +12,6 @@ object AMPPageChecks extends Logging {
 
   def isBasicArticle(page: PageWithStoryPackage): Boolean = {
     page.isInstanceOf[ArticlePage] && !page.item.isPhotoEssay
-  }
-
-  def hasOnlySupportedElements(blocks: APIBlocks): Boolean = {
-    // See: https://github.com/guardian/dotcom-rendering/blob/master/packages/frontend/amp/components/lib/Elements.tsx
-    // And also PageElement.scala here.
-    // It is necessary to look at both to check that we handle the relevant element type here and also handle the
-    // resulting PageElement model in DCR.
-    def supported(element: ElementType): Boolean = element match {
-      case Text => true
-      case Image => true
-      case Instagram => true
-      case Tweet => true
-      case RichLink => true
-      case Comment => true
-      case Pullquote => true
-      case Video => true
-      case Contentatom => true
-      case Audio => true
-      case Interactive => true
-      case MapElement => true
-      case Embed => true
-      case _: ElementType => false
-    }
-
-    blocks.body
-      .getOrElse(Nil)
-      .flatMap(_.elements)
-      .forall(element => supported(element.`type`))
   }
 }
 
@@ -52,16 +23,15 @@ object AMPPicker {
     logger.withRequestHeaders(request).results(msg, results, page)
   }
 
-  private[this] def ampFeatureWhitelist(page: PageWithStoryPackage, request: RequestHeader, blocks: APIBlocks): Map[String, Boolean] = {
+  private[this] def ampFeatureWhitelist(page: PageWithStoryPackage): Map[String, Boolean] = {
     Map(
-      ("isBasicArticle", AMPPageChecks.isBasicArticle(page)),
-      ("hasOnlySupportedElements", AMPPageChecks.hasOnlySupportedElements(blocks)),
+      ("isBasicArticle", AMPPageChecks.isBasicArticle(page))
     )
   }
 
   def getTier(page: PageWithStoryPackage, blocks: APIBlocks)(implicit request: RequestHeader): RenderType = {
 
-    val features = ampFeatureWhitelist(page, request, blocks)
+    val features = ampFeatureWhitelist(page)
     val isSupported = features.forall({ case (test, isMet) => isMet})
     val isEnabled = conf.switches.Switches.DotcomRenderingAMP.isSwitchedOn
 
