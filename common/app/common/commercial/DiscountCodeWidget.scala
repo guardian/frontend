@@ -38,7 +38,7 @@ object DiscountCodeLinks {
     widgetPaths.contains(path)
   }
 
-  val widgetPaths = Set(
+ private val widgetPaths = Set(
     "food/2018/oct/20/miguel-barclay-one-pound-meals-budget-friendly-lunch-dinner-recipes",
     "lifeandstyle/2017/nov/03/if-you-buy-a-ready-made-lunch-every-day-youre-throwing-away-1288-a-year",
     "money/2017/sep/29/how-to-save-money-on-going-out",
