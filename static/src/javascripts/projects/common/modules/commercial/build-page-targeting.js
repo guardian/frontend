@@ -1,7 +1,11 @@
 // @flow strict
 import config from 'lib/config';
 import { getCookie } from 'lib/cookies';
-import { getReferrer as detectGetReferrer, getBreakpoint } from 'lib/detect';
+import {
+    getReferrer as detectGetReferrer,
+    getBreakpoint,
+    getViewport,
+} from 'lib/detect';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
 import { local } from 'lib/storage';
 import { getUrlVars } from 'lib/url';
@@ -36,6 +40,13 @@ const findBreakpoint = (): string => {
         default:
             return 'mobile';
     }
+};
+
+const inskinTargetting = (): string => {
+    // eslint-disable-next-line no-console
+    console.log('WIDTH', getViewport().width);
+    if (getViewport().width >= 1560) return 't';
+    return 'f';
 };
 
 const format = (keyword: string): string =>
@@ -223,6 +234,7 @@ const buildPageTargeting = once(
                 cc: geolocationGetSync(),
                 s: page.section, // for reference in a macro, so cannot be extracted from ad unit
                 pr: 'dotcom-platform', // rendering platform
+                inskin: inskinTargetting(),
             },
             page.sharedAdTargeting,
             paTargeting,
