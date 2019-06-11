@@ -144,7 +144,7 @@ final case class Content(
   // read this before modifying: https://developers.facebook.com/docs/opengraph/howtos/maximizing-distribution-media-content#images
   lazy val openGraphImageProfile: ElementProfile = {
     val category = shareImageCategory
-    OpenGraphImage.forCategory(category, FacebookShareImageLogoOverlay.isSwitchedOn)
+    OpenGraphImage.forCategory(category, shouldIncludeOverlay = FacebookShareImageLogoOverlay.isSwitchedOn, shouldUpscale = true)
   }
 
   lazy val openGraphImage: String = ImgSrc(openGraphImageOrFallbackUrl, openGraphImageProfile)
