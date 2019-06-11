@@ -48,7 +48,8 @@ case class Block(
     createdOn: Option[Long],
     createdOnDisplay: Option[String],
     lastUpdatedDisplay: Option[String],
-    publishedOnDisplay: Option[String],
+    firstPublished: Option[Long],
+    firstPublishedDisplay: Option[String],
     title: Option[String],
 )
 
@@ -245,7 +246,8 @@ object DotcomponentsDataModel {
       val createdOn = block.createdDate.map(_.dateTime)
       val createdOnDisplay = createdOn.map(dt => format(dt, edition))
       val lastUpdatedDisplay = block.lastModifiedDate.map(dt => format(dt.dateTime, edition))
-      val publishedOnDisplay = block.publishedDate.map(dt => format(dt.dateTime, edition))
+      val firstPublished = block.firstPublishedDate.orElse(block.createdDate).map(_.dateTime)
+      val firstPublishedDisplay = firstPublished.map(dt => format(dt, edition))
 
       Block(
         id = block.id,
@@ -255,7 +257,8 @@ object DotcomponentsDataModel {
         createdOnDisplay = createdOnDisplay,
         lastUpdatedDisplay = lastUpdatedDisplay,
         title = block.title,
-        publishedOnDisplay = publishedOnDisplay,
+        firstPublished = firstPublished,
+        firstPublishedDisplay = firstPublishedDisplay,
       )
     }
 
