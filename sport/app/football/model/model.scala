@@ -156,6 +156,6 @@ object CompetitionDisplayHelpers {
   // It should be without effects for men competitions. For women competitions it
   // rewrite, for instance, "Norway Ladies" into "Norway Women".
   def cleanTeamName(teamName: String): String = {
-    teamName.replace("Ladies", "Women")
+    teamName.replace("Ladies", "")
   }
 }
