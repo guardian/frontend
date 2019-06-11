@@ -35,6 +35,7 @@ object AMPPageChecks extends Logging {
       case Audio => true
       case Interactive => true
       case MapElement => true
+      case Embed => true
       case _: ElementType => false
     }
 
