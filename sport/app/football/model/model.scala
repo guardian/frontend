@@ -154,8 +154,8 @@ object CompetitionDisplayHelpers {
 
   // This function is applied to team names during the making of matches lists.
   // It should be without effects for men competitions. For women competitions it
-  // rewrite, for instance, "Norway Ladies" into "Norway Women".
+  // removes the term from the PA data we receive.
   def cleanTeamName(teamName: String): String = {
-    teamName.replace("Ladies", "Women")
+    teamName.replace("Ladies", "")
   }
 }
