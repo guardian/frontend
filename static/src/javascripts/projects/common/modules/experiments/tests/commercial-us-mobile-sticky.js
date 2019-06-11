@@ -1,4 +1,4 @@
-// @flow
+// @flow strict
 import { getCookie } from 'lib/cookies';
 import { isBreakpoint } from 'lib/detect';
 

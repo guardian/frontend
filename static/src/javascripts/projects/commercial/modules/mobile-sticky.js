@@ -1,4 +1,4 @@
-// @flow
+// @flow strict
 import config from 'lib/config';
 import fastdom from 'lib/fastdom-promise';
 import { getCookie } from 'lib/cookies';
