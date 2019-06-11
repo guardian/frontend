@@ -110,7 +110,7 @@ const adSlotDefinitions = {
             mobile: [adSizes.fluid],
         },
     },
-    mobilesticky: {
+    'mobile-sticky': {
         label: true,
         refresh: true,
         name: 'mobile-sticky',

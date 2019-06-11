@@ -11,7 +11,7 @@ import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 const createAdWrapper = (): HTMLDivElement => {
     const wrapper: HTMLDivElement = document.createElement('div');
     wrapper.className = 'mobilesticky-container';
-    const adSlot = createSlots('mobilesticky', {})[0];
+    const adSlot = createSlots('mobile-sticky', {})[0];
     wrapper.appendChild(adSlot);
     return wrapper;
 };
