@@ -48,6 +48,7 @@ case class Block(
     createdOn: Option[Long],
     createdOnDisplay: Option[String],
     lastUpdatedDisplay: Option[String],
+    publishedOnDisplay: Option[String],
     title: Option[String],
 )
 
@@ -237,10 +238,15 @@ object DotcomponentsDataModel {
     )
 
     def toBlock(block: APIBlock, shouldAddAffiliateLinks: Boolean, edition: Edition): Block = {
+      def format(instant: Long, edition: Edition): String = {
+        GUDateTimeFormat.dateTimeToLiveBlogDisplay(new DateTime(instant), edition.timezone)
+      }
+
       val createdOn = block.createdDate.map(_.dateTime)
-      val createdOnDisplay = createdOn.map(datetime => GUDateTimeFormat.dateTimeToLiveBlogDisplay(new DateTime(datetime), edition.timezone))
-      val lastUpdated = block.lastModifiedDate.map(_.dateTime)
-      val lastUpdatedDisplay = lastUpdated.map(datetime => GUDateTimeFormat.dateTimeToLiveBlogDisplay(new DateTime(datetime), edition.timezone))
+      val createdOnDisplay = createdOn.map(dt => format(dt, edition))
+      val lastUpdatedDisplay = block.lastModifiedDate.map(dt => format(dt.dateTime, edition))
+      val publishedOnDisplay = block.publishedDate.map(dt => format(dt.dateTime, edition))
+
       Block(
         id = block.id,
         bodyHtml = block.bodyHtml,
@@ -249,6 +255,7 @@ object DotcomponentsDataModel {
         createdOnDisplay = createdOnDisplay,
         lastUpdatedDisplay = lastUpdatedDisplay,
         title = block.title,
+        publishedOnDisplay = publishedOnDisplay,
       )
     }
 
@@ -310,7 +317,9 @@ object DotcomponentsDataModel {
       case article => blocks.body.getOrElse(Nil)
     }
 
-    val bodyBlocks = bodyBlocksRaw.map(block => toBlock(block, shouldAddAffiliateLinks, Edition(request))).toList
+    val bodyBlocks = bodyBlocksRaw
+      .filter(_.published)
+      .map(block => toBlock(block, shouldAddAffiliateLinks, Edition(request))).toList
 
     val pagination = articlePage match {
       case liveblog: LiveBlogPage => liveblog.currentPage.pagination.map(paginationInfo => {
