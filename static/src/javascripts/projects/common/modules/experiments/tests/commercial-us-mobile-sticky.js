@@ -4,7 +4,7 @@ import { isBreakpoint } from 'lib/detect';
 
 export const commercialUsMobileSticky: ABTest = {
     id: 'CommercialUsMobileSticky',
-    start: '2019-06-23',
+    start: '2019-06-11',
     expiry: '2019-09-30',
     author: 'Ricardo Costa',
     description: 'This test runs the new US mobile sticky ad slot',
