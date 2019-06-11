@@ -31,7 +31,7 @@ case class VideoBlockElement(caption:String, url:String, originalUrl:String, hei
 case class VideoYoutubeBlockElement(caption:String, url:String, originalUrl:String, height:Int, width:Int, role: Role) extends PageElement
 case class VideoVimeoBlockElement(caption:String, url:String, originalUrl:String, height:Int, width:Int, role: Role) extends PageElement
 case class VideoFacebookBlockElement(caption:String, url:String, originalUrl:String, height:Int, width:Int, role: Role) extends PageElement
-case class EmbedBlockElement(html: String, safe: Option[Boolean], alt: Option[String], isMandatory: Boolean, pageUrl: String) extends PageElement
+case class EmbedBlockElement(html: String, safe: Option[Boolean], alt: Option[String], isMandatory: Boolean) extends PageElement
 case class SoundcloudBlockElement(html: String, id: String, isTrack: Boolean, isMandatory: Boolean) extends PageElement
 case class ContentAtomBlockElement(atomId: String) extends PageElement
 case class YoutubeBlockElement(id: String, assetId: String, channelId: Option[String], mediaTitle: String) extends PageElement
@@ -172,7 +172,8 @@ object PageElement {
         ))
 
       case Audio => extractAudio(element).toList
-        
+
+
       case Video =>
         if (element.assets.nonEmpty) {
           List(GuVideoBlockElement(
@@ -214,7 +215,7 @@ object PageElement {
         )
       }).toList
 
-      case Embed => extractEmbed(element, pageUrl).toList
+      case Embed => extractEmbed(element).toList
 
       case Contentatom =>
         (extractAtom match {
@@ -341,13 +342,13 @@ object PageElement {
     }
   }
 
-  private def extractEmbed(element: ApiBlockElement, pageUrl: String): Option[PageElement] = {
+  private def extractEmbed(element: ApiBlockElement): Option[PageElement] = {
     for {
       d <- element.embedTypeData
       html <- d.html
       mandatory = d.isMandatory.getOrElse(false)
     } yield {
-      extractSoundcloud(html, mandatory) getOrElse EmbedBlockElement(html, d.safeEmbedCode, d.alt, mandatory, pageUrl)
+      extractSoundcloud(html, mandatory) getOrElse EmbedBlockElement(html, d.safeEmbedCode, d.alt, mandatory)
     }
   }
 
