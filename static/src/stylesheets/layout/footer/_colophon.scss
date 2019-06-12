@@ -1,7 +1,10 @@
 .colophon {
-    @include content-gutter();
-    padding-bottom: $gs-baseline * 2;
     border-bottom: 1px solid $brand-pastel;
+    padding: 0 9px ($gs-baseline * 2);
+
+    @include mq(mobileLandscape) {
+        padding: 0 19px ($gs-baseline * 2);
+    }
 
     @include mq(tablet) {
         padding-bottom: $gs-baseline / 2;

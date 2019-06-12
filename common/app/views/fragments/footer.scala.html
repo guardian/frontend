@@ -24,8 +24,26 @@
     </div>
 
     <div class="l-footer__secondary js-footer__secondary @if(EmailInlineInFooterSwitch.isSwitchedOff) {l-footer__secondary--no-email} gs-container" role="contentinfo">
-        <div class="colophon u-cf">
+        <div class="footer__pillars u-cf">
+            @defining(NavMenu(page, Edition(request))) { navMenu: NavMenu =>
+                <ul class="pillars pillars--footer">
+                    @navMenu.pillars.map { link =>
+                        <li class="pillars__item">
+                            <a class="@RenderClasses(Map(
+                                "pillar-link--current-section" -> ((link.title == navMenu.currentPillar.map(_.title).getOrElse("")))
+                                ), "pillar-link", s"pillar-link--${link.title}")"
+                            href="@LinkTo(link.url)"
+                            data-link-name="nav2 : primary : @link.title">
 
+                            @link.title
+                            </a>
+                        </li>
+                    }
+            }
+        </div>
+
+
+        <div class="colophon u-cf">
             @defining(Edition(request)) { currentEdition =>
                 @if(EmailInlineInFooterSwitch.isSwitchedOn && !isAmp && !page.metadata.isFoundation) {
                     <div class="footer__email-container js-footer__email-container">

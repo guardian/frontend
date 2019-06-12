@@ -7,3 +7,8 @@
     @include fs-textSans(1);
     box-sizing: border-box;
 }
+
+.footer__pillars {
+    border: 1px solid $brand-pastel;
+    border-top: 0;
+}
