@@ -23,6 +23,7 @@ jest.mock('ophan/ng', () => null);
 jest.mock('common/modules/analytics/beacon', () => {});
 jest.mock('lib/detect', () => ({
     hasCrossedBreakpoint: jest.fn(),
+    isBreakpoint: jest.fn(),
     getBreakpoint: jest.fn(),
     getViewport: jest.fn(),
     hasPushStateSupport: jest.fn(),

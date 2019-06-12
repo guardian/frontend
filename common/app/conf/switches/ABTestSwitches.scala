@@ -85,4 +85,14 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2019, 6, 28),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-commercial-us-mobile-sticky",
+    "Test the behaviour of the new mobile sticky ad slot",
+    owners = Seq(Owner.withGithub("ripecosta")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 9, 30),
+    exposeClientSide = true
+  )
 }

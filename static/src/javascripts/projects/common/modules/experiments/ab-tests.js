@@ -8,6 +8,7 @@ import { acquisitionsEpicAlwaysAskIfTagged } from 'common/modules/experiments/te
 import { adblockTest } from 'common/modules/experiments/tests/adblock-ask';
 import { contributionsGlobalMobileBannerDesign } from 'common/modules/experiments/tests/contribs-global-mobile-banner-design';
 import { acquisitionsBannerSignInCta } from 'common/modules/experiments/tests/acquisitions-banner-sign-in-cta';
+import { commercialUsMobileSticky } from 'common/modules/experiments/tests/commercial-us-mobile-sticky';
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialPrebidSafeframe,
@@ -15,6 +16,7 @@ export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialOutbrainTesting,
     adblockTest,
     commercialConsentModalBanner,
+    commercialUsMobileSticky,
 ];
 
 export const epicTests: $ReadOnlyArray<EpicABTest> = [
