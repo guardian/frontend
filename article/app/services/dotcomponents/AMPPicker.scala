@@ -1,19 +1,10 @@
 package services.dotcomponents
 
 import com.gu.contentapi.client.model.v1.{Blocks => APIBlocks}
-import common.Logging
 import controllers.ArticlePage
 import implicits.Requests._
 import model.PageWithStoryPackage
 import play.api.mvc.RequestHeader
-
-
-object AMPPageChecks extends Logging {
-
-  def isBasicArticle(page: PageWithStoryPackage): Boolean = {
-    page.isInstanceOf[ArticlePage] && !page.item.isPhotoEssay
-  }
-}
 
 object AMPPicker {
 
@@ -24,8 +15,12 @@ object AMPPicker {
   }
 
   private[this] def ampFeatureWhitelist(page: PageWithStoryPackage): Map[String, Boolean] = {
+    def isBasicArticle(page: PageWithStoryPackage): Boolean = {
+      page.isInstanceOf[ArticlePage] && !page.item.isPhotoEssay
+    }
+
     Map(
-      ("isBasicArticle", AMPPageChecks.isBasicArticle(page))
+      ("isBasicArticle", isBasicArticle(page))
     )
   }
 
