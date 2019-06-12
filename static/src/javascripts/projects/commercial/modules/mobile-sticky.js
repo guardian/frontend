@@ -21,9 +21,9 @@ const isInNA = (): boolean =>
 
 export const init = (): Promise<void> => {
     if (
-        isInNA() &&
-        isBreakpoint({ min: 'mobile', max: 'mobileLandscape' }) &&
-        config.get('page.contentType') === 'Article' &&
+        isInNA() && // User is in North America
+        isBreakpoint({ min: 'mobile', max: 'mobileLandscape' }) && // User is using a mobile device
+        config.get('page.contentType') === 'Article' && // User is accessing an article
         isInVariantSynchronous(commercialUsMobileSticky, 'variant')
     ) {
         const mobileStickyWrapper = createAdWrapper();
