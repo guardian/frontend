@@ -2,6 +2,18 @@
 @import common.{LinkTo, CanonicalLink}
 @import views.support.EmailHelpers.Images.footerG
 <head>
+    @*
+    * Outlook doesn't scale images properly when DPI scaling is enabled.
+    * More info about the fix can be found here: https://litmus.com/community/snippets/112-outlook-2013-120dpi-make-images-scale-properly
+    *@
+    <!--[if gte mso 9]>
+    <xml>
+        <o:OfficeDocumentSettings>
+            <o:AllowPNG/>
+            <o:PixelsPerInch>96</o:PixelsPerInch>
+        </o:OfficeDocumentSettings>
+    </xml>
+    <![endif]-->
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width"/>
     <meta name="robots" content="noindex">
