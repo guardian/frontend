@@ -14,20 +14,8 @@ object AMPPicker {
     logger.withRequestHeaders(request).results(msg, results, page)
   }
 
-  private[this] def ampFeatureWhitelist(page: PageWithStoryPackage): Map[String, Boolean] = {
-    def isBasicArticle(page: PageWithStoryPackage): Boolean = {
-      page.isInstanceOf[ArticlePage] && !page.item.isPhotoEssay
-    }
-
-    Map(
-      ("isBasicArticle", isBasicArticle(page))
-    )
-  }
-
   def getTier(page: PageWithStoryPackage, blocks: APIBlocks)(implicit request: RequestHeader): RenderType = {
-
-    val features = ampFeatureWhitelist(page)
-    val isSupported = features.forall({ case (test, isMet) => isMet})
+    val isSupported = page.article.content.shouldAmplify
     val isEnabled = conf.switches.Switches.DotcomRenderingAMP.isSwitchedOn
 
     val tier = if ((isSupported && isEnabled && !request.guuiOptOut) || request.isGuui) {
@@ -37,8 +25,8 @@ object AMPPicker {
     }
 
     tier match {
-      case RemoteRenderAMP => logRequest(s"path executing in dotcomponents AMP", features, page)
-      case _ => logRequest(s"path executing in web AMP", features, page)
+      case RemoteRenderAMP => logRequest(s"path executing in dotcomponents AMP", Map.empty, page)
+      case _ => logRequest(s"path executing in web AMP", Map.empty, page)
     }
 
     tier
