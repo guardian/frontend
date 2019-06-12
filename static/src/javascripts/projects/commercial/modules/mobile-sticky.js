@@ -28,7 +28,7 @@ export const init = (): Promise<void> => {
     ) {
         const mobileStickyWrapper = createAdWrapper();
 
-        fastdom
+        return fastdom
             .write(() => {
                 if (document.body)
                     document.body.appendChild(mobileStickyWrapper);
