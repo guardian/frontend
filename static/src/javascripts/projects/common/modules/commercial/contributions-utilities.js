@@ -76,9 +76,6 @@ const getReaderRevenueRegion = (geolocation: string): ReaderRevenueRegion => {
 
 const getVisitCount = (): number => local.get('gu.alreadyVisited') || 0;
 
-const replaceArticlesRead = (text: string, days: number = 30): string =>
-    text.replace(/%%ARTICLES_READ%%/g, `${getArticleViewCount(days)}`);
-
 const replaceCountryName = (text: string, countryName: string): string =>
     text.replace(/%%COUNTRY_NAME%%/g, countryName);
 
@@ -496,9 +493,7 @@ const makeEpicABTest = ({
 };
 
 const buildEpicCopy = (row: any, hasCountryName: boolean) => {
-    const heading = replaceArticlesRead(
-        throwIfEmptyString('heading', row.heading)
-    );
+    const heading = throwIfEmptyString('heading', row.heading);
 
     const paragraphs = throwIfEmptyArray(
         'paragraphs',
