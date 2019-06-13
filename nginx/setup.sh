@@ -29,6 +29,7 @@ ln -sf ${KEY_FILE} ${NGINX_HOME}/${DOMAIN}.key
 ln -sf ${CERT_FILE} ${NGINX_HOME}/${DOMAIN}.crt
 
 echo -e "🔗 Symlinking nginx config file"
+[ -d ${NGINX_HOME}/servers ] || mkdir ${NGINX_HOME}/servers
 ln -sf ${SOURCE_DIR}/frontend.conf ${NGINX_HOME}/servers/frontend.conf
 
 echo -e "🚀 ${YELLOW}Restarting nginx, Requires sudo - enter password when prompted.${NC}"
