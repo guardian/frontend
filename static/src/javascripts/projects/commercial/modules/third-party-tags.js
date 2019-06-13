@@ -44,11 +44,11 @@ const loadExternalContentWidget = (): void => {
             .then(init);
     };
 
-    const shouldServePlista: boolean =
+    const shouldServePlistaOrOutbrain: boolean =
         config.get('switches.plistaForOutbrainAu') &&
         config.get('page.edition', '').toLowerCase() === 'au';
 
-    if (shouldServePlista) {
+    if (shouldServePlistaOrOutbrain) {
         const possibleWidgets = ['plista', 'outbrain'];
         const randomWidget =
             possibleWidgets[Math.floor(Math.random() * possibleWidgets.length)];
