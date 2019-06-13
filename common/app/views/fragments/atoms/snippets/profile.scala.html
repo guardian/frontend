@@ -1,4 +1,4 @@
-@(profile: model.content.ProfileAtom, isAmp: Boolean)(implicit request: RequestHeader)
+@(profile: model.content.ProfileAtom)(implicit request: RequestHeader)
 
 @import views.html.fragments.image
 
@@ -6,8 +6,7 @@
   className = "profile",
   label = profile.data.typeLabel.getOrElse("Profile"),
   headline = profile.atom.title.getOrElse(""),
-  profile.id,
-  isAmp
+  profile.id
 ){
   @for(img <- profile.image ) {
     <div class="explainer-snippet__image">
