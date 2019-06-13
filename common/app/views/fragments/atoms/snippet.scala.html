@@ -1,4 +1,4 @@
-@(className: String, label: String, headline: String, id: String, isAmp: Boolean)(body: Html)(implicit request: RequestHeader)
+@(className: String, label: String, headline: String, id: String)(body: Html)(implicit request: RequestHeader)
 <div data-snippet-id="@id" data-snippet-type="@className" class="clean explainer-snippet explainer-snippet--new explainer-snippet--light explainer-snippet--@className">
 
     <div class="explainer-snippet__header" on="tap:body-@{id}.toggleVisibility,show-@{id}.toggleVisibility,hide-@{id}.toggleVisibility" tabindex="0" role="header">
