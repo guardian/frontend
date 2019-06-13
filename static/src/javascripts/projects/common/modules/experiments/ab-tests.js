@@ -20,9 +20,7 @@ export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialUsMobileSticky,
 ];
 
-export const priorityEpicTests: $ReadOnlyArray<EpicABTest> = [
-    articlesViewed
-];
+export const priorityEpicTests: $ReadOnlyArray<EpicABTest> = [articlesViewed];
 
 export const epicTests: $ReadOnlyArray<EpicABTest> = [
     askFourEarning,

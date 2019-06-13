@@ -53,7 +53,6 @@ import {
 } from 'common/modules/commercial/epic/epic-exclusion-rules';
 import { getControlEpicCopy } from 'common/modules/commercial/acquisitions-copy';
 import { initTicker } from 'common/modules/commercial/ticker';
-import { getArticleViewCount } from 'common/modules/onward/history';
 
 export type ReaderRevenueRegion =
     | 'united-kingdom'
