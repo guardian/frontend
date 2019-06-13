@@ -90,9 +90,7 @@ describe('third party tags', () => {
             init()
                 .then((enabled: boolean) => {
                     expect(enabled).toBe(true);
-                    done();
                 })
-            //expect(mockFunc).toBeCalled();
         });
     });
 
