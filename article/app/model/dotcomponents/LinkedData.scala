@@ -1,6 +1,9 @@
 package model.dotcomponents
 
+import java.net.URI
+
 import com.gu.contentapi.client.model.v1.{Block => CAPIBlock}
+import conf.Configuration
 import model.{Article, LiveBlogPage}
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
@@ -8,6 +11,8 @@ import play.api.libs.functional.syntax._
 import play.api.libs.json.Reads._
 import play.api.libs.json._
 import views.support.{FourByThree, ImgSrc, Item1200, OneByOne}
+
+import scala.util.Try
 
 object LinkedData {
 
@@ -119,23 +124,18 @@ object LinkedData {
     }
   }
 
- private[this] def getImages(article: Article, fallbackLogo: String): List[String] = {
-    val mainImageURL = {
-      val main = for {
-        elem <- article.trail.trailPicture
-        master <- elem.masterImage
-        url <- master.url
-      } yield url
-
-      main.getOrElse(fallbackLogo)
+  private[this] def getImages(article: Article, fallbackLogo: String): List[String] = {
+    def usesImageServiceHost(url: String): Boolean = {
+      Try(new URI(url.trim)).toOption.exists(_.getHost == Configuration.images.host)
     }
 
-    List(
-      article.content.openGraphImage,
-      ImgSrc(mainImageURL, OneByOne),
-      ImgSrc(mainImageURL, FourByThree),
-      ImgSrc(mainImageURL, Item1200),
-    )
+    // Check if not image service, as if so then we can't guarantee it is big enough
+    // for SEO validation purposes so we use a fallback
+    if (usesImageServiceHost(article.content.openGraphImage)) {
+      List(article.content.openGraphImage)
+    } else {
+      List(ImgSrc(fallbackLogo, Item1200))
+    }
   }
 
   def getAuthors(article: Article): List[Person] = {
