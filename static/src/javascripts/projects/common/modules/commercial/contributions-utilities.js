@@ -693,6 +693,14 @@ export const canShowBannerSync = (
     );
 };
 
+const buildBannerCopy = (text: String, hasCountryName: boolean): string => {
+    const countryName: ?string = hasCountryName
+        ? countryNames[geolocationGetSync()]
+        : undefined;
+
+    return countryName ? replaceCountryName(text, countryName) : text;
+};
+
 export const getEngagementBannerTestsFromGoogleDoc = (): Promise<
     $ReadOnlyArray<AcquisitionsABTest>
 > =>
@@ -709,6 +717,13 @@ export const getEngagementBannerTestsFromGoogleDoc = (): Promise<
                 .map(name => {
                     const rows = sheets[name];
                     const testName = name.split('__ON')[0];
+
+                    // If hasCountryName is true but a country name is not available for this user then
+                    // they will be excluded from this test
+                    const hasCountryName = rows.some(row =>
+                        optionalStringToBoolean(row.hasCountryName)
+                    );
+
                     return {
                         id: testName,
                         campaignId: testName,
@@ -725,7 +740,7 @@ export const getEngagementBannerTestsFromGoogleDoc = (): Promise<
                         audience: 1,
                         audienceOffset: 0,
 
-                        canRun: () => true,
+                        canRun: () => !hasCountryName || countryNames[geolocationGetSync()],
 
                         variants: rows.map(row => ({
                             id: row.name.trim().toLowerCase(),
@@ -733,7 +748,7 @@ export const getEngagementBannerTestsFromGoogleDoc = (): Promise<
                             test: () => {},
 
                             engagementBannerParams: {
-                                messageText: row.messageText.trim(),
+                                messageText: buildBannerCopy(row.messageText.trim(), hasCountryName),
                                 ctaText: `<span class="engagement-banner__highlight"> ${row.ctaText.replace(
                                     /%%CURRENCY_SYMBOL%%/g,
                                     getLocalCurrencySymbol()
