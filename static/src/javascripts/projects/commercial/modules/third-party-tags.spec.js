@@ -93,7 +93,6 @@ describe('third party tags', () => {
         });
     });
 
-
     describe('loadOther', () => {
         it('should call insert scripts', () => {
             loadOther();
