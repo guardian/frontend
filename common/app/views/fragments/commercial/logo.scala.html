@@ -22,22 +22,12 @@
   @branding.logo.label
 </div>
 <a class="badge__link" href="@branding.logo.link" data-sponsor="@branding.sponsorName.toLowerCase" rel="nofollow">
-    @if(request.isAmp) {
-        @if(onDarkBackground && branding.logoForDarkBackground.nonEmpty) {
-            @for(highContrastLogo <- branding.logoForDarkBackground) {
-                @ampLogo(highContrastLogo)
-            }
-        } else {
-            @ampLogo(branding.logo)
+    @if(onDarkBackground && branding.logoForDarkBackground.nonEmpty) {
+        @for(highContrastLogo <- branding.logoForDarkBackground) {
+            @standardLogo(highContrastLogo)
         }
     } else {
-        @if(onDarkBackground && branding.logoForDarkBackground.nonEmpty) {
-            @for(highContrastLogo <- branding.logoForDarkBackground) {
-                @standardLogo(highContrastLogo)
-            }
-        } else {
-            @standardLogo(branding.logo)
-        }
+        @standardLogo(branding.logo)
     }
 </a>
 @if(!branding.isPaid) {
