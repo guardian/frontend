@@ -8,8 +8,8 @@ export const commercialUsMobileSticky: ABTest = {
     expiry: '2019-09-30',
     author: 'Ricardo Costa',
     description: 'This test runs the new US mobile sticky ad slot',
-    audience: 0.0,
-    audienceOffset: 0.0,
+    audience: 0.2,
+    audienceOffset: 0.8, // Offsetting this just because I'm a rebel
     successMeasure: 'How good it runs and looks to the user.',
     audienceCriteria: 'n/a',
     dataLinkNames: 'n/a',
