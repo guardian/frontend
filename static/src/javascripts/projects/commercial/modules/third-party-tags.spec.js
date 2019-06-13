@@ -87,10 +87,9 @@ describe('third party tags', () => {
         }));
 
         it('should return outbrain for all editions except AUS', () => {
-            init()
-                .then((enabled: boolean) => {
-                    expect(enabled).toBe(true);
-                })
+            init().then((enabled: boolean) => {
+                expect(enabled).toBe(true);
+            });
         });
     });
 

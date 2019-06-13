@@ -50,7 +50,7 @@ const loadExternalContentWidget = (): void => {
 
     if (shouldServePlista) {
         const possibleWidgets = ['plista', 'outbrain'];
-        let randomWidget = possibleWidgets[Math.floor(Math.random() * possibleWidgets.length)];
+        const randomWidget = possibleWidgets[Math.floor(Math.random() * possibleWidgets.length)];
         if (randomWidget === 'plista') {
             renderWidget('plista', plista.init);
         } else {
