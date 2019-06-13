@@ -1,14 +1,5 @@
-@(page: common.commercial.hosted.HostedPage, onAmp: Boolean = false)
+@(page: common.commercial.hosted.HostedPage)
 
 <a href="@page.logo.link" data-sponsor="@page.owner.toLowerCase" target="_blank">
-@if(onAmp) {
-    <amp-img layout="responsive"
-             width="@page.logo.dimensions.map(_.width)"
-             height="@page.logo.dimensions.map(_.height)"
-             class="hostedbadge__logo"
-             src="@page.logo.src"
-             alt="@page.owner"></amp-img>
-} else {
     <img class="hostedbadge__logo" src="@page.logo.src" alt="@page.owner"/>
-}
 </a>
