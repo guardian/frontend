@@ -466,7 +466,7 @@ const countryNames = {
     RU: 'Russia',
     EE: 'Estonia',
     CR: 'Costa Rica',
-    PA: 'Panama'
+    PA: 'Panama',
 };
 
 export {
