@@ -49,7 +49,13 @@ const loadExternalContentWidget = (): void => {
         config.get('page.edition', '').toLowerCase() === 'au';
 
     if (shouldServePlista) {
-        renderWidget('plista', plista.init);
+        const possibleWidgets = ['plista', 'outbrain'];
+        let randomWidget = possibleWidgets[Math.floor(Math.random() * possibleWidgets.length)];
+        if (randomWidget === 'plista') {
+            renderWidget('plista', plista.init);
+        } else {
+            renderWidget('outbrain', initOutbrain);
+        }
     } else {
         renderWidget('outbrain', initOutbrain);
     }

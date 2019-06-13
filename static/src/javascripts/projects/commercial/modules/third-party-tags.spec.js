@@ -74,6 +74,29 @@ describe('third party tags', () => {
             expect(document.scripts.length).toBe(2);
         });
     });
+
+    describe('loadExternalContentWidget', () => {
+        jest.mock('common/modules/commercial/commercial-features', () => ({
+            commercialFeatures: {
+                adFree: false,
+            },
+        }));
+
+        jest.mock('lib/config', () => ({
+            get: jest.fn().mockReturnValue('UK'),
+        }));
+
+        it('should return outbrain for all editions except AUS', () => {
+            init()
+                .then((enabled: boolean) => {
+                    expect(enabled).toBe(true);
+                    done();
+                })
+            //expect(mockFunc).toBeCalled();
+        });
+    });
+
+
     describe('loadOther', () => {
         it('should call insert scripts', () => {
             loadOther();
