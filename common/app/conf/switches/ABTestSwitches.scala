@@ -28,6 +28,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-contributions-epic-articles-viewed",
+    "States how many articles a user has viewed in the epic",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = Off,
+    sellByDate = new LocalDate(2020, 1, 27),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-contributions-global-mobile-banner-design",
     "testing mobile-only design changes",
     owners = Seq(Owner.withGithub("jlieb10")),

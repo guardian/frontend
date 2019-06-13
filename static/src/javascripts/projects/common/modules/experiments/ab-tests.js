@@ -4,6 +4,7 @@ import { commercialCmpCustomise } from 'common/modules/experiments/tests/commerc
 import { commercialOutbrainTesting } from 'common/modules/experiments/tests/commercial-outbrain-testing.js';
 import { commercialConsentModalBanner } from 'common/modules/experiments/tests/commercial-consent-modal-banner';
 import { askFourEarning } from 'common/modules/experiments/tests/contributions-epic-ask-four-earning';
+import { articlesViewed } from 'common/modules/experiments/tests/contributions-epic-articles-viewed';
 import { acquisitionsEpicAlwaysAskIfTagged } from 'common/modules/experiments/tests/acquisitions-epic-always-ask-if-tagged';
 import { adblockTest } from 'common/modules/experiments/tests/adblock-ask';
 import { contributionsGlobalMobileBannerDesign } from 'common/modules/experiments/tests/contribs-global-mobile-banner-design';
@@ -17,6 +18,10 @@ export const concurrentTests: $ReadOnlyArray<ABTest> = [
     adblockTest,
     commercialConsentModalBanner,
     commercialUsMobileSticky,
+];
+
+export const priorityEpicTests: $ReadOnlyArray<EpicABTest> = [
+    articlesViewed
 ];
 
 export const epicTests: $ReadOnlyArray<EpicABTest> = [

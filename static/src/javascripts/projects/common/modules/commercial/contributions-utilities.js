@@ -453,6 +453,7 @@ const makeEpicABTest = ({
     hasCountryName = false,
     pageCheck = isCompatibleWithArticleEpic,
     template = controlTemplate,
+    canRun = () => true,
 }: InitEpicABTest): EpicABTest => {
     const test = {
         // this is true because we use the reader revenue flag rather than sensitive
@@ -461,7 +462,7 @@ const makeEpicABTest = ({
         canRun() {
             const countryNameIsOk =
                 !hasCountryName || countryNames[geolocationGetSync()];
-            return countryNameIsOk && shouldShowEpic(this);
+            return canRun() && countryNameIsOk && shouldShowEpic(this);
         },
         componentType: 'ACQUISITIONS_EPIC',
         insertEvent: makeEvent(id, 'insert'),

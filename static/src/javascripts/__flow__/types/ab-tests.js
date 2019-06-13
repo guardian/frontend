@@ -118,6 +118,7 @@ declare type InitEpicABTest = {
     audienceCriteria: string,
     idealOutcome: string,
     campaignId: string,
+    canRun?: () => boolean,
     variants: $ReadOnlyArray<InitEpicABTestVariant>,
 
     campaignPrefix?: string,
