@@ -11,16 +11,12 @@
 ){
   @for(img <- qa.image ) {
     <div class="explainer-snippet__image">
-      @if(isAmp) {
-        @fragments.amp.ampImage(img, "Q&amp;A")
-      } else {
-        @image(
-          picture = img,
-          classes = Nil,
-          imageAltText = "Q&amp;A",
-          isImmersiveMainMedia = true
-        )
-      }
+    @image(
+        picture = img,
+        classes = Nil,
+        imageAltText = "Q&amp;A",
+        isImmersiveMainMedia = true
+    )
     </div>
   }
 
@@ -28,7 +24,7 @@
 
   @qa.credit.map { credit =>
     <div class="explainer-snippet__credit">
-      @fragments.inlineSvg("information", "icon") 
+      @fragments.inlineSvg("information", "icon")
       @credit
     </div>
   }
