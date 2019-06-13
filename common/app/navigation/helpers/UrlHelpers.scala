@@ -57,8 +57,8 @@ object UrlHelpers {
   )
 
   private val uriEncoder = UriConfig.default.copy(
-    // The default encoder is not enough for json in URL query strings
-    queryEncoder = PercentEncoder(PercentEncoder.QUERY_CHARS_TO_ENCODE ++ Set('"', ':', ',') )
+    // The default encoder does not encode double quotes in the querystring
+    queryEncoder = PercentEncoder(PercentEncoder.QUERY_CHARS_TO_ENCODE + '"')
   )
 
   def getReaderRevenueUrl(destination: ReaderRevenueSite, position: Position)(implicit request: RequestHeader): String = {
