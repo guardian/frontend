@@ -11,12 +11,16 @@
 ){
   @for(img <- profile.image ) {
     <div class="explainer-snippet__image">
-    @image(
-        picture = img,
-        classes = Nil,
-        imageAltText = "Profile",
-        isImmersiveMainMedia = true
-    )
+      @if(isAmp) {
+        @fragments.amp.ampImage(img, "Profile")
+      } else {
+        @image(
+          picture = img,
+          classes = Nil,
+          imageAltText = "Profile",
+          isImmersiveMainMedia = true
+        )
+      }
     </div>
   }
 
@@ -31,7 +35,7 @@
 
   @profile.credit.map { credit =>
     <div class="explainer-snippet__credit">
-      @fragments.inlineSvg("information", "icon")
+      @fragments.inlineSvg("information", "icon") 
       @credit
     </div>
   }

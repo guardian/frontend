@@ -16,9 +16,11 @@
 <footer class="l-footer u-cf" data-link-name="footer" data-component="footer">
 
     <div class="footer__primary">
-    @defining(NavMenu(page, Edition(request))) { navMenu: NavMenu =>
-        @fragments.nav.subNav(navMenu, page.metadata.designType, isFooter = true)
-    }
+        @if(!isAmp) {
+            @defining(NavMenu(page, Edition(request))) { navMenu: NavMenu =>
+                @fragments.nav.subNav(navMenu, page.metadata.designType, isFooter = true)
+            }
+        }
     </div>
 
     <div class="l-footer__secondary js-footer__secondary @if(EmailInlineInFooterSwitch.isSwitchedOff) {l-footer__secondary--no-email} gs-container" role="contentinfo">
