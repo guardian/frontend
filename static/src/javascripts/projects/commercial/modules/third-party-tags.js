@@ -1,12 +1,8 @@
 // @flow strict
 /* A regionalised container for all the commercial tags. */
 
-import $ from 'lib/$';
 import config from 'lib/config';
-import fastdom from 'lib/fastdom-promise';
-import template from 'lodash/template';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
-import externalContentContainerStr from 'raw-loader!common/views/commercial/external-content.html';
 import { imrWorldwide } from 'commercial/modules/third-party-tags/imr-worldwide';
 import { imrWorldwideLegacy } from 'commercial/modules/third-party-tags/imr-worldwide-legacy';
 import { remarketing } from 'commercial/modules/third-party-tags/remarketing';
@@ -14,54 +10,9 @@ import { simpleReach } from 'commercial/modules/third-party-tags/simple-reach';
 import { krux } from 'common/modules/commercial/krux';
 import { ias } from 'commercial/modules/third-party-tags/ias';
 import { inizio } from 'commercial/modules/third-party-tags/inizio';
-import { initOutbrain } from 'commercial/modules/third-party-tags/outbrain';
-import { plista } from 'commercial/modules/third-party-tags/plista';
 import { fbPixel } from 'commercial/modules/third-party-tags/facebook-pixel';
+import { PlistaOutbrainRenderer } from "commercial/modules/third-party-tags/plista-outbrain-renderer";
 
-const loadExternalContentWidget = (): void => {
-    const externalTpl = template(externalContentContainerStr);
-
-    const findAnchor = (): Promise<HTMLElement | null> => {
-        const selector = !(
-            config.get('page.seriesId') || config.get('page.blogIds')
-        )
-            ? '.js-related, .js-outbrain-anchor'
-            : '.js-outbrain-anchor';
-        return Promise.resolve(document.querySelector(selector));
-    };
-
-    const renderWidget = (widgetType, init): void => {
-        findAnchor()
-            .then(anchorNode =>
-                fastdom.write(() => {
-                    $(anchorNode).after(
-                        externalTpl({
-                            widgetType,
-                        })
-                    );
-                })
-            )
-            .then(init);
-    };
-
-    const shouldServePlistaOrOutbrain: boolean =
-        config.get('switches.plistaForOutbrainAu') &&
-        config.get('page.edition', '').toLowerCase() === 'au';
-
-    if (shouldServePlistaOrOutbrain) {
-        const possibleWidgets = ['plista', 'outbrain'];
-        const randomWidget =
-            possibleWidgets[Math.floor(Math.random() * possibleWidgets.length)];
-
-        if (randomWidget === 'plista') {
-            renderWidget('plista', plista.init);
-        } else {
-            renderWidget('outbrain', initOutbrain);
-        }
-    } else {
-        renderWidget('outbrain', initOutbrain);
-    }
-};
 
 const insertScripts = (services: Array<ThirdPartyTag>): void => {
     const ref = document.scripts[0];
@@ -111,7 +62,9 @@ const init = (): Promise<boolean> => {
     // check above is now sensitive to ad-free, it could be changed independently
     // in the future - even by accident.  Justin.
     if (!commercialFeatures.adFree) {
-        loadExternalContentWidget();
+        const edition = config.get('page.edition', '').toLowerCase();
+        let renderer = new PlistaOutbrainRenderer(edition);
+        renderer.render();
     }
 
     loadOther();
