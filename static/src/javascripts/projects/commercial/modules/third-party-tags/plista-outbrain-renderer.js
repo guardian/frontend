@@ -26,7 +26,7 @@ export class PlistaOutbrainRenderer {
         return Promise.resolve(document.querySelector(selector));
     };
 
-    renderWidget (widgetType: string, init: any): void  {
+    renderWidget(widgetType: string, init: any): void {
         const externalTpl = template(externalContentContainerStr);
 
         this.findAnchor()
@@ -58,7 +58,6 @@ export class PlistaOutbrainRenderer {
                 this.renderWidget('outbrain', initOutbrain);
             }
         } else {
-            console.log("outbrain else case");
             this.renderWidget('outbrain', initOutbrain);
         }
     }
