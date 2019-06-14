@@ -1,4 +1,4 @@
-@(showNav: Boolean = true, isAmp: Boolean = false)(implicit page: model.Page, request: RequestHeader)
+@(showNav: Boolean = true)(implicit page: model.Page, request: RequestHeader)
 
 @import org.joda.time.DateTime
 @import common.Edition
@@ -43,7 +43,7 @@
 
         <div class="colophon u-cf">
             @defining(Edition(request)) { currentEdition =>
-                @if(EmailInlineInFooterSwitch.isSwitchedOn && !isAmp && !page.metadata.isFoundation) {
+                @if(EmailInlineInFooterSwitch.isSwitchedOn && !page.metadata.isFoundation) {
                     <div class="footer__email-container js-footer__email-container">
                     @currentEdition match {
                         case Uk => {
@@ -90,7 +90,7 @@
                                     <li class="colophon__item"><a data-link-name="cookie" href="@LinkTo {/info/cookies}">
                                         Cookie policy</a>
                                     </li>
-                                    @adPreference(isAmp)
+                                    @adPreference(false)
                                     <li class="colophon__item"><a data-link-name="terms" href="@LinkTo {/help/terms-of-service}">
                                         Terms &amp; conditions</a>
                                     </li>
@@ -167,7 +167,7 @@
                                     <li class="colophon__item"><a data-link-name="cookie" href="@LinkTo {/info/cookies}">
                                         Cookie policy</a>
                                     </li>
-                                    @adPreference(isAmp)
+                                    @adPreference(false)
                                     <li class="colophon__item"><a data-link-name="terms" href="@LinkTo {/help/terms-of-service}">
                                         Terms &amp; conditions</a>
                                     </li>
@@ -240,7 +240,7 @@
                                     <li class="colophon__item"><a data-link-name="cookie" href="@LinkTo {/info/cookies}">
                                         Cookie policy</a>
                                     </li>
-                                    @adPreference(isAmp)
+                                    @adPreference(false)
                                     <li class="colophon__item"><a data-link-name="terms" href="@LinkTo {/help/terms-of-service}">
                                         Terms &amp; conditions</a>
                                     </li>
@@ -313,7 +313,7 @@
                                     <li class="colophon__item"><a data-link-name="cookie" href="@LinkTo {/info/cookies}">
                                         Cookie policy</a>
                                     </li>
-                                    @adPreference(isAmp)
+                                    @adPreference(false)
                                     <li class="colophon__item"><a data-link-name="terms" href="@LinkTo {/help/terms-of-service}">
                                         Terms &amp; conditions</a>
                                     </li>
@@ -388,7 +388,7 @@
                                     Cookie policy
                                 </a>
                             </li>
-                            @adPreference(isAmp)
+                            @adPreference(false)
                             <li class="colophon__item">
                                 <a data-link-name="foundation : footer : terms" href="@LinkTo {/help/terms-of-service}">
                                     Terms &amp; conditions
@@ -446,7 +446,7 @@
         <a class="cta-bar__cta js-change-become-member-link js-acquisition-link"
             data-link-name="footer : contribute-cta"
             data-edition="@{editionId}"
-            href="@getReaderRevenueUrl(SupportContribute, if (isAmp) AmpFooter else Footer)">
+            href="@getReaderRevenueUrl(SupportContribute, Footer)">
             Contribute
             @fragments.inlineSvg("arrow-right", "icon")
         </a>
@@ -454,7 +454,7 @@
         <a class="cta-bar__cta js-subscribe js-acquisition-link"
             data-link-name="footer : subscribe-cta"
             data-edition="@{editionId}"
-            href="@getReaderRevenueUrl(SupportSubscribe, if (isAmp) AmpFooter else Footer)">
+            href="@getReaderRevenueUrl(SupportSubscribe, Footer)">
             Subscribe
             @fragments.inlineSvg("arrow-right", "icon")
         </a>

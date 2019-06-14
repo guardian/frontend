@@ -89,7 +89,7 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
         case JsonFormat => common.renderJson(getJson(article), article)
         case EmailFormat => common.renderEmail(ArticleEmailHtmlPage.html(article), article)
         case HtmlFormat => common.renderHtml(ArticleHtmlPage.html(article), article)
-        case AmpFormat => common.renderHtml(views.html.articleAMP(article), article)
+        case AmpFormat => NotFound
       }
     }
   }

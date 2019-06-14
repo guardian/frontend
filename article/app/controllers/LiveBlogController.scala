@@ -111,9 +111,6 @@ class LiveBlogController(
         case (blog: LiveBlogPage, JsonFormat) => common.renderJson( views.html.liveblog.liveBlogBody(blog), blog)
         case (blog: LiveBlogPage, EmailFormat) => common.renderEmail(LiveBlogHtmlPage.html(blog), blog)
         case (blog: LiveBlogPage, HtmlFormat) => common.renderHtml(LiveBlogHtmlPage.html(blog), blog)
-        case (blog: LiveBlogPage, AmpFormat) if request.isGuui => common.renderHtml(views.html.liveBlogAMP(blog), blog)
-        case (blog: LiveBlogPage, AmpFormat) => common.renderHtml(views.html.liveBlogAMP(blog), blog)
-
         case _ => NotFound
       }
     }
