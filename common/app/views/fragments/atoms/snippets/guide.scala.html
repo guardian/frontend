@@ -1,4 +1,4 @@
-@(guide: model.content.GuideAtom)(implicit request: RequestHeader)
+@(guide: model.content.GuideAtom, isAmp: Boolean)(implicit request: RequestHeader)
 
 @import views.html.fragments.image
 
@@ -6,7 +6,8 @@
   className = "guide",
   label = guide.data.typeLabel.getOrElse("Quick Guide"),
   headline = guide.atom.title.getOrElse(""),
-  guide.id
+  guide.id,
+  isAmp
 ){
   @for(img <- guide.image ) {
     <div class="explainer-snippet__image">
