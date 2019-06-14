@@ -527,6 +527,14 @@ const buildEpicCopy = (row: any, hasCountryName: boolean) => {
     };
 };
 
+const buildBannerCopy = (text: String, hasCountryName: boolean): string => {
+    const countryName: ?string = hasCountryName
+        ? countryNames[geolocationGetSync()]
+        : undefined;
+
+    return countryName ? replaceCountryName(text, countryName) : text;
+};
+
 export const getEpicTestsFromGoogleDoc = (): Promise<
     $ReadOnlyArray<EpicABTest>
 > =>
@@ -693,14 +701,6 @@ export const canShowBannerSync = (
     );
 };
 
-const buildBannerCopy = (text: String, hasCountryName: boolean): string => {
-    const countryName: ?string = hasCountryName
-        ? countryNames[geolocationGetSync()]
-        : undefined;
-
-    return countryName ? replaceCountryName(text, countryName) : text;
-};
-
 export const getEngagementBannerTestsFromGoogleDoc = (): Promise<
     $ReadOnlyArray<AcquisitionsABTest>
 > =>
@@ -740,7 +740,9 @@ export const getEngagementBannerTestsFromGoogleDoc = (): Promise<
                         audience: 1,
                         audienceOffset: 0,
 
-                        canRun: () => !hasCountryName || countryNames[geolocationGetSync()],
+                        canRun: () =>
+                            !hasCountryName ||
+                            countryNames[geolocationGetSync()],
 
                         variants: rows.map(row => ({
                             id: row.name.trim().toLowerCase(),
@@ -748,7 +750,10 @@ export const getEngagementBannerTestsFromGoogleDoc = (): Promise<
                             test: () => {},
 
                             engagementBannerParams: {
-                                messageText: buildBannerCopy(row.messageText.trim(), hasCountryName),
+                                messageText: buildBannerCopy(
+                                    row.messageText.trim(),
+                                    hasCountryName
+                                ),
                                 ctaText: `<span class="engagement-banner__highlight"> ${row.ctaText.replace(
                                     /%%CURRENCY_SYMBOL%%/g,
                                     getLocalCurrencySymbol()
