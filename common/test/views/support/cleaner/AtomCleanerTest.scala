@@ -84,13 +84,6 @@ class AtomCleanerTest extends FlatSpec
     result.select("figcaption").html should include("Bird")
   }
 
-  "AtomsCleaner" should "use amp-youtube markup if amp is true" in {
-    Switches.UseAtomsSwitch.switchOn()
-    val result: Document = clean(doc, amp = true)
-    result.select("amp-youtube").attr("data-videoid") should be("nQuN9CUsdVg")
-    result.select("amp-youtube").attr("id") should be("gu-video-youtube-887fb7b4-b31d-4a38-9d1f-26df5878cf9c")
-  }
-
   "Youtube template" should "include endslate path" in {
     val html = views.html.fragments.atoms.youtube(media = youTubeAtom.map(_.media.head).get, displayEndSlate = true, displayCaption = false, mediaWrapper = None)(TestRequest())
     val doc = Jsoup.parse(html.toString())
