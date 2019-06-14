@@ -527,7 +527,7 @@ const buildEpicCopy = (row: any, hasCountryName: boolean) => {
     };
 };
 
-const buildBannerCopy = (text: String, hasCountryName: boolean): string => {
+const buildBannerCopy = (text: string, hasCountryName: boolean): string => {
     const countryName: ?string = hasCountryName
         ? countryNames[geolocationGetSync()]
         : undefined;
