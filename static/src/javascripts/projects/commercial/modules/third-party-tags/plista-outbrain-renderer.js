@@ -26,7 +26,7 @@ export class PlistaOutbrainRenderer {
         return Promise.resolve(document.querySelector(selector));
     };
 
-    renderWidget (widgetType, init): void  {
+    renderWidget (widgetType: string, init: any): void  {
         const externalTpl = template(externalContentContainerStr);
 
         this.findAnchor()
