@@ -6,6 +6,7 @@
     model: Atom,
     config: ArticleConfiguration,
     shouldFence: Boolean,
+    amp: Boolean,
     mediaWrapper: Option[MediaWrapper],
     posterImageOverride: Option[ImageMedia]
 )(implicit request: RequestHeader, context: ApplicationContext)
@@ -17,21 +18,27 @@
         case quiz: Quiz => views.html.fragments.atoms.quiz(quiz, maybeResults = None, showResults = false, sharelinks = quiz.shareLinks)
         case media: MediaAtom => views.html.fragments.atoms.media(
             media = media,
+            amp = amp,
             displayCaption = true,
             displayEndSlate = true,
             mediaWrapper = mediaWrapper,
             posterImageOverride = posterImageOverride
         )
         case interactive: InteractiveAtom => views.html.fragments.atoms.interactive(interactive, shouldFence)
-        case storyquestions: StoryQuestionsAtom => Html(ArticleAtomRenderer.getHTML(storyquestions.atom, config))
-        case qanda: QandaAtom => Html(ArticleAtomRenderer.getHTML(qanda.atom, config))
-        case timeline: TimelineAtom => Html(ArticleAtomRenderer.getHTML(timeline.atom, config))
-        case guide: GuideAtom => Html(ArticleAtomRenderer.getHTML(guide.atom, config))
-        case profile: ProfileAtom => Html(ArticleAtomRenderer.getHTML(profile.atom, config))
-        case explainer: ExplainerAtom => Html(ArticleAtomRenderer.getHTML(explainer.atom, config))
-        case commonsdivision: CommonsDivisionAtom => Html(ArticleAtomRenderer.getHTML(commonsdivision.atom, config))
-        case audio: AudioAtom => Html(ArticleAtomRenderer.getHTML(audio.atom, config))
-        case chart: ChartAtom => Html(ArticleAtomRenderer.getHTML(chart.atom, config))
+        case storyquestions: StoryQuestionsAtom if !amp => Html(ArticleAtomRenderer.getHTML(storyquestions.atom, config))
+        case storyquestions: StoryQuestionsAtom => views.html.fragments.atoms.storyquestions(storyquestions, isAmp = amp, inApp = false)
+        case qanda: QandaAtom if !amp => Html(ArticleAtomRenderer.getHTML(qanda.atom, config))
+        case qanda: QandaAtom => views.html.fragments.atoms.snippets.qanda(qanda, isAmp = amp)
+        case timeline: TimelineAtom if !amp => Html(ArticleAtomRenderer.getHTML(timeline.atom, config))
+        case timeline: TimelineAtom => views.html.fragments.atoms.snippets.timeline(timeline, isAmp = amp)
+        case guide: GuideAtom if !amp => Html(ArticleAtomRenderer.getHTML(guide.atom, config))
+        case guide: GuideAtom => views.html.fragments.atoms.snippets.guide(guide, isAmp = amp)
+        case profile: ProfileAtom if !amp => Html(ArticleAtomRenderer.getHTML(profile.atom, config))
+        case profile: ProfileAtom => views.html.fragments.atoms.snippets.profile(profile, isAmp = amp)
+        case explainer: ExplainerAtom if !amp => Html(ArticleAtomRenderer.getHTML(explainer.atom, config))
+        case commonsdivision: CommonsDivisionAtom if !amp => Html(ArticleAtomRenderer.getHTML(commonsdivision.atom, config))
+        case audio: AudioAtom if !amp => Html(ArticleAtomRenderer.getHTML(audio.atom, config))
+        case chart: ChartAtom if !amp => Html(ArticleAtomRenderer.getHTML(chart.atom, config))
         case _ =>
     }
 }

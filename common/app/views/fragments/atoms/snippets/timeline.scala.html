@@ -1,4 +1,4 @@
-@(timeline: model.content.TimelineAtom)(implicit request: RequestHeader)
+@(timeline: model.content.TimelineAtom, isAmp: Boolean)(implicit request: RequestHeader)
 
 @import org.joda.time.DateTime
 @import model.content.TimelineAtom
@@ -7,7 +7,8 @@
     className = "timeline",
     label = timeline.data.typeLabel.getOrElse("Timeline"),
     headline = timeline.atom.title.getOrElse(""),
-    timeline.id
+    timeline.id,
+    isAmp
 ){
     @for(description <- timeline.data.description) {
       <div class="explainer-snippet__description">@Html(description)</div>
