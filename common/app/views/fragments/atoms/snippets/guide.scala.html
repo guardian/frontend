@@ -11,12 +11,16 @@
 ){
   @for(img <- guide.image ) {
     <div class="explainer-snippet__image">
-    @image(
-        picture = img,
-        classes = Nil,
-        imageAltText = "Guide",
-        isImmersiveMainMedia = true
-    )
+      @if(isAmp) {
+        @fragments.amp.ampImage(img, "Guide")
+      } else {
+        @image(
+          picture = img,
+          classes = Nil,
+          imageAltText = "Guide",
+          isImmersiveMainMedia = true
+        )
+      }
     </div>
   }
 
@@ -28,10 +32,10 @@
       @Html(item.body)
     </div>
   }
-
+  
   @guide.credit.map { credit =>
     <div class="explainer-snippet__credit">
-      @fragments.inlineSvg("information", "icon")
+      @fragments.inlineSvg("information", "icon") 
       @credit
     </div>
   }

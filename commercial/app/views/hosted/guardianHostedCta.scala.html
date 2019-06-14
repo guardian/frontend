@@ -2,10 +2,14 @@
 @import common.commercial.hosted.HostedCallToAction
 @(page: HostedPage, cta: HostedCallToAction, isAMP: Boolean)
     <section class="host hosted__container--full">
-        <div class="hosted__banner" style="background-image: url(@{cta.image});">
+        <div class="hosted__banner" @if(!isAMP) {style="background-image: url(@{cta.image});"}>
             <a href="@{cta.url}" rel="nofollow" class="hosted__cta-link" data-link-name="@{cta.trackingCode}" target="_blank">
                 <div class="hostedbadge hostedbadge--pushdown">
-                    <img class="hostedbadge__logo" src="@{page.logo.src}" alt="logo @{page.owner}">
+                    @if(isAMP) {
+                        <amp-img layout="responsive" width="@{page.logo.dimensions.map(_.width)}" height="@{page.logo.dimensions.map(_.height)}" class="hostedbadge__logo" src="@{page.logo.src}" alt="logo @{page.owner}"></amp-img>
+                    } else {
+                        <img class="hostedbadge__logo" src="@{page.logo.src}" alt="logo @{page.owner}">
+                    }
                 </div>
                 @if(cta.btnText.isEmpty) {
                     <div class="hosted__cta-wrapper content__hosted-body">

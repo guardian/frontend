@@ -7,10 +7,42 @@
             <p class="hostedbadge__info">Advertiser content</p>
             @hostedLogo(page, onAmp = isAMP)
         </div>
-        <div class="paidfor-label paidfor-meta__more hosted__label has-popup">
-            <button class="u-button-reset paidfor-label__btn popup__toggle hosted__label-btn js-hosted-about" data-link-name="about-advertiser-content">
-                About</button>
-        </div>
+        @if(isAMP) {
+            <div class="hosted__label content__hosted-body">
+                <button on="tap:hosted-about-lightbox" class="hosted__tooltip-label">About</button>
+
+                <amp-lightbox id="hosted-about-lightbox" layout="nodisplay">
+                    <div class="hosted__lightbox">
+                        <div class="survey-container" data-link-name="hosted page about overlay" role="dialog" aria-label="about hosted content">
+                            <h3 class="survey-text__header">
+                                Advertiser content
+                                <div class="survey-close">
+                                    <button class="hosted__lightbox-close-btn" data-link-name="hide about hosted message" on="tap:hosted-about-lightbox.close">
+                                        @fragments.inlineSvg("cross", "icon", List("inline-cross hosted__lightbox-close"))
+                                    </button>
+                                </div>
+                            </h3>
+                            <div class="survey-icon">
+                                @fragments.inlineSvg("paid-content", "commercial", List("hosted__lightbox-image"))
+                            </div>
+                            <div class="survey-text">
+                                <p class="survey-text__paragraph">
+                                    Advertiser content. This article was paid for, produced and controlled by the
+                                    advertiser rather than the publisher. It is subject to regulation by the Advertising
+                                    Standards Authority. This content is produced by the advertiser with no involvement
+                                    from Guardian News and Media staff.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </amp-lightbox>
+            </div>
+        } else {
+            <div class="paidfor-label paidfor-meta__more hosted__label has-popup">
+                <button class="u-button-reset paidfor-label__btn popup__toggle hosted__label-btn js-hosted-about" data-link-name="about-advertiser-content">
+                    About</button>
+            </div>
+        }
         <div class="hosted-header__spacer"></div>
         <a href="http://www.theguardian.com" class="hosted__glogo">
             <p class="hosted__glogotext">Hosted by</p>
