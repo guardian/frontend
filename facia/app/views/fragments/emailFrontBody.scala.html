@@ -322,7 +322,10 @@
     </table>
 }
 
-@layout.CollectionEmail.fromPressedPage(page).collections.zipWithIndex.map {
+@layout.CollectionEmail.fromPressedPage(page).collections.filterNot(collection => collection match {
+    case c: EmailContentContainer => FlagshipEmailContainer.isFlagshipContainer(c.containerId) && !FlagshipEmailContainer.displayFlagshipContainer()
+    case _ => false
+}).zipWithIndex.map {
     case (collection: EmailContentContainer, index) if FlagshipEmailContainer.isFlagshipContainer(collection.containerId) => { @renderFlagshipContainer(collection, index) }
     case (collection: EmailContentContainer, index) => { @renderContentContainer(collection, index) }
     case (marquee: LiveIntentMarquee, _) => { @renderMarquee(marquee) }

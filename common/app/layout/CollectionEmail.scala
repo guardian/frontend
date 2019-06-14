@@ -57,11 +57,7 @@ object CollectionEmail {
 
 case class CollectionEmail(id: String, contentCollections: List[EmailContentContainer]) {
   def collections: List[EmailContainer] = {
-    val contentCollectionsWithoutUndisplayableFlagshipContainers = contentCollections.filterNot(container =>
-      FlagshipEmailContainer.isFlagshipContainer(container.containerId) && !FlagshipEmailContainer.displayFlagshipContainer()
-    )
-
-    val (start, end) = contentCollectionsWithoutUndisplayableFlagshipContainers.splitAt(3)
+    val (start, end) = contentCollections.splitAt(3)
     List(
       start,
       mpu.get(id).toList,
