@@ -1,10 +1,10 @@
 // @flow
 
+import externalContentContainerStr from 'raw-loader!common/views/commercial/external-content.html';
+import { plista } from 'commercial/modules/third-party-tags/plista';
+import { initOutbrain } from 'commercial/modules/third-party-tags/outbrain';
 import template from 'lodash/template';
 import config from '../../../../lib/config';
-import externalContentContainerStr from 'raw-loader!common/views/commercial/external-content.html';
-import {plista} from 'commercial/modules/third-party-tags/plista';
-import {initOutbrain} from 'commercial/modules/third-party-tags/outbrain';
 import fastdom from '../../../../lib/fastdom-promise';
 import $ from '../../../../lib/$';
 
