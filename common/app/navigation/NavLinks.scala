@@ -72,7 +72,7 @@ private object NavLinks {
   val auColumnists = NavLink("Columnists", "/au/index/contributors")
   val theGuardianView = NavLink("The Guardian view", "/profile/editorial")
   val cartoons = NavLink("Cartoons", "/cartoons/archive")
-  val inMyOpinion = NavLink("Opinion videos", "/commentisfree/series/comment-is-free-weekly")
+  val opinionVideos = NavLink("Opinion videos", "/type/video+tone/comment")
   val letters = NavLink("Letters", "/tone/letters")
 
   /* SPORT */
@@ -271,7 +271,7 @@ private object NavLinks {
       theGuardianView,
       columnists,
       cartoons,
-      inMyOpinion,
+      opinionVideos,
       letters
     )
   )
@@ -289,7 +289,7 @@ private object NavLinks {
       theGuardianView,
       columnists,
       letters,
-      inMyOpinion,
+      opinionVideos,
       cartoons
     )
   )
@@ -298,7 +298,7 @@ private object NavLinks {
       theGuardianView,
       columnists,
       cartoons,
-      inMyOpinion,
+      opinionVideos,
       letters
     )
   )
