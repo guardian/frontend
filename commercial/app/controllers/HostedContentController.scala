@@ -32,18 +32,15 @@ class HostedContentController(
     hostedPage map {
       case Some(page: HostedVideoPage) =>
         cached {
-          if (request.isAmp) guardianAmpHostedVideo(page)
-          else guardianHostedVideo(page)
+          guardianHostedVideo(page)
         }
       case Some(page: HostedGalleryPage) =>
         cached {
-          if (request.isAmp) guardianAmpHostedGallery(page)
-          else guardianHostedGallery(page)
+          guardianHostedGallery(page)
         }
       case Some(page: HostedArticlePage) =>
         cached {
-          if (request.isAmp) guardianAmpHostedArticle(page)
-          else guardianHostedArticle(page)
+          guardianHostedArticle(page)
         }
       case _ => NoCache(NotFound)
     } recover {
@@ -83,41 +80,11 @@ class HostedContentController(
     implicit request =>
 
       def onwardView(trails: Seq[HostedPage], defaultRowCount: Int, maxRowCount: Int): RevalidatableResult = {
-        if (request.isAmp) {
-          def toJson(trail: HostedPage) = Json.obj(
-            "title" -> trail.title,
-            "url" -> trail.url,
-            "imageUrl" -> trail.thumbnailUrl
-          )
-          JsonComponent {
-            "items" -> JsArray(Seq(Json.obj(
-              "owner" -> trails.headOption.map(_.owner),
-              "trails" -> JsArray(trails.take(defaultRowCount).map(toJson))
-            )))
-          }
-        } else {
-          JsonComponent(hostedOnwardJourney(trails, maxRowCount))
-        }
+        JsonComponent(hostedOnwardJourney(trails, maxRowCount))
       }
 
       def galleryOnwardView(trails: Seq[HostedPage]): RevalidatableResult = {
-        if (request.isAmp) {
-          def toJson(trail: HostedPage) = Json.obj(
-            "url" -> trail.url,
-            "imageUrl" -> trail.thumbnailUrl
-          )
-          JsonComponent {
-            val cta = trails.headOption.map(_.cta)
-            "items" -> JsArray(Seq(Json.obj(
-              "ctaText" -> cta.map(_.label),
-              "ctaLink" -> cta.map(_.url),
-              "buttonText" -> cta.map(_.btnText),
-              "trails" -> JsArray(trails.map(toJson))
-            )))
-          }
-        } else {
-          JsonComponent(hostedGalleryOnward(trails))
-        }
+        JsonComponent(hostedGalleryOnward(trails))
       }
 
       val capiResponse = {
