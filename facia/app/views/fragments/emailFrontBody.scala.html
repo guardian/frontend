@@ -186,7 +186,7 @@
 }
 
 @renderContentContainer(collection: EmailContentContainer, collectionIndex: Int) = {
-    @brazePlaceholder(s"Support Ask - Above Collection ${collectionIndex + 1}")
+    @brazePlaceholder(s"Above Collection ${collectionIndex + 1}")
     @containerTitle((if(collectionIndex > 0) Seq("ct--not-top") else Nil) ++ (if (collection.branding.isDefined) Seq("ct-branded") else Nil)) {
 
         @collection.href.map { href =>
@@ -212,9 +212,9 @@
     }
 }
 
-@renderFlagshipContainer(collection: EmailContentContainer) = {
+@renderFlagshipContainer(collection: EmailContentContainer, collectionIndex: Int) = {
     @if(FlagshipEmailContainer.displayFlagshipContainer()) {
-        @brazePlaceholder(s"Support Ask - Above Flagship Container")
+        @brazePlaceholder(s"Above Collection ${collectionIndex + 1}")
         @containerTitle(Seq("ct--not-top")) {
             @collection.href.map { href =>
                 <a class="ct-link" href="@LinkTo {/@Html(href)}">@collection.displayName</a>
@@ -323,7 +323,7 @@
 }
 
 @layout.CollectionEmail.fromPressedPage(page).collections.zipWithIndex.map {
-    case (collection: EmailContentContainer, index) if FlagshipEmailContainer.isFlagshipContainer(collection.containerId) => { @renderFlagshipContainer(collection) }
+    case (collection: EmailContentContainer, index) if FlagshipEmailContainer.isFlagshipContainer(collection.containerId) => { @renderFlagshipContainer(collection, index) }
     case (collection: EmailContentContainer, index) => { @renderContentContainer(collection, index) }
     case (marquee: LiveIntentMarquee, _) => { @renderMarquee(marquee) }
     case (mpu: LiveIntentMPU, _) => { @renderMPU(mpu) }
