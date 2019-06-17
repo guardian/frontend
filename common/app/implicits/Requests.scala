@@ -39,8 +39,6 @@ trait Requests {
 
     lazy val isGuui: Boolean = r.getQueryString("guui").isDefined && !r.getQueryString("guui").contains("false")
 
-    lazy val guuiOptOut: Boolean = r.getQueryString("guui").contains("false")
-
     lazy val isLazyLoad: Boolean = r.getQueryString("lazy-load").isDefined && !r.getQueryString("lazy-load").contains("false")
 
     lazy val isRss: Boolean = r.path.endsWith("/rss")
