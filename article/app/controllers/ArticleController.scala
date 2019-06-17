@@ -38,13 +38,9 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
 
   def renderArticle(path: String): Action[AnyContent] = {
     Action.async { implicit request =>
-      mapModel(path, ArticleBlocks)( (article, blocks) => {
-        renderingTierPicker.getTier(article, blocks) match {
-          case RemoteRender => remoteRenderer.getArticle(ws, path, article, blocks)
-          case RemoteRenderAMP => remoteRenderer.getAMPArticle(ws, path, article, blocks)
-          case LocalRender => render(path, article, blocks)
-        }
-      })
+      mapModel(path, ArticleBlocks) {
+        (article, blocks) => render(path, article, blocks)
+      }
     }
   }
 
@@ -83,14 +79,17 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
     DotcomponentsDataModel.toJsonString(DotcomponentsDataModel.fromArticle(article, request, blocks))
 
   private def render(path: String, article: ArticlePage, blocks: Blocks)(implicit request: RequestHeader): Future[Result] = {
-    Future {
-      request.getRequestFormat match {
-        case JsonFormat if request.isGuui => common.renderJson(getGuuiJson(article, blocks), article).as("application/json")
-        case JsonFormat => common.renderJson(getJson(article), article)
-        case EmailFormat => common.renderEmail(ArticleEmailHtmlPage.html(article), article)
-        case HtmlFormat => common.renderHtml(ArticleHtmlPage.html(article), article)
-        case AmpFormat => common.renderHtml(views.html.articleAMP(article), article)
-      }
+    def asFuture[A](block: => A): Future[A] = Future.successful(block)
+
+    val isRemoteRender = ArticlePicker.getTier(article) == RemoteRender
+
+    request.getRequestFormat match {
+      case JsonFormat if request.isGuui => asFuture(common.renderJson(getGuuiJson(article, blocks), article).as("application/json"))
+      case JsonFormat => asFuture(common.renderJson(getJson(article), article))
+      case EmailFormat => asFuture(common.renderEmail(ArticleEmailHtmlPage.html(article), article))
+      case HtmlFormat if isRemoteRender => remoteRenderer.getArticle(ws, path, article, blocks)
+      case HtmlFormat => asFuture(common.renderHtml(ArticleHtmlPage.html(article), article))
+      case AmpFormat => remoteRenderer.getAMPArticle(ws, path, article, blocks)
     }
   }
 
