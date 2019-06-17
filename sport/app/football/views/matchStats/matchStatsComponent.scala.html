@@ -3,7 +3,7 @@
 @import views.support.RenderClasses
 @import views.{NudgePercent, PercentMaker}
 @import pa.LineUpPlayer
-@import model.CompetitionDisplayHelpers.cleanTeamName
+@import model.CompetitionDisplayHelpers.{cleanTeamName, cleanTeamCode}
 
 @(page: MatchPage)(implicit request: RequestHeader)
 
@@ -47,8 +47,8 @@
                        data-chart-show-values="true">
                     <thead hidden>
                         <tr>
-                            <th>@pa.TeamCodes.codeFor(away)</th>
-                            <th>@pa.TeamCodes.codeFor(home)</th>
+                            <th>@cleanTeamCode(pa.TeamCodes.codeFor(away))</th>
+                            <th>@cleanTeamCode(pa.TeamCodes.codeFor(home))</th>
                         </tr>
                     </thead>
                     <tbody>
