@@ -21,7 +21,7 @@ object AMPPicker {
     val tier = if ((isSupported && isEnabled && !request.guuiOptOut) || request.isGuui) {
       RemoteRenderAMP
     } else {
-      LocalRender
+      LocalRenderArticle
     }
 
     tier match {

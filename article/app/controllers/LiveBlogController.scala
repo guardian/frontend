@@ -17,7 +17,7 @@ import implicits.{AmpFormat, EmailFormat, HtmlFormat, JsonFormat}
 import model.dotcomponents.DotcomponentsDataModel
 import play.api.libs.json.Json
 import renderers.RemoteRenderer
-import services.dotcomponents.{LocalRender, RemoteRender, RemoteRenderAMP, RenderingTierPicker}
+import services.dotcomponents._
 
 import scala.concurrent.Future
 
@@ -61,7 +61,8 @@ class LiveBlogController(
           renderingTierPicker.getTier(page, blocks) match {
             case RemoteRender => remoteRenderer.getArticle(ws, path, page, blocks)
             case RemoteRenderAMP => remoteRenderer.getAMPArticle(ws, path, page, blocks)
-            case LocalRender => render(path, page, blocks)
+            case LocalRenderArticle => render(path, page, blocks)
+            case LocalRenderAmp => Future.successful(NotFound)
           }
         })
       }
@@ -106,13 +107,10 @@ class LiveBlogController(
         case (minute: MinutePage, JsonFormat) => common.renderJson(views.html.fragments.minuteBody(minute), minute)
         case (minute: MinutePage, EmailFormat) => common.renderEmail(ArticleEmailHtmlPage.html(minute), minute)
         case (minute: MinutePage, HtmlFormat) => common.renderHtml(MinuteHtmlPage.html(minute), minute)
-
-        case (blog: LiveBlogPage, JsonFormat) if request.isGuui => renderGuuiJson(path, blog, blocks)
         case (blog: LiveBlogPage, JsonFormat) => common.renderJson( views.html.liveblog.liveBlogBody(blog), blog)
         case (blog: LiveBlogPage, EmailFormat) => common.renderEmail(LiveBlogHtmlPage.html(blog), blog)
         case (blog: LiveBlogPage, HtmlFormat) => common.renderHtml(LiveBlogHtmlPage.html(blog), blog)
-        case (blog: LiveBlogPage, AmpFormat) if request.isGuui => common.renderHtml(views.html.liveBlogAMP(blog), blog)
-        case (blog: LiveBlogPage, AmpFormat) => common.renderHtml(views.html.liveBlogAMP(blog), blog)
+        case (blog: LiveBlogPage, AmpFormat) => common.renderHtml(LiveBlogHtmlPage.html(blog), blog)
 
         case _ => NotFound
       }

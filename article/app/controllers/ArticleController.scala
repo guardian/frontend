@@ -42,7 +42,8 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
         renderingTierPicker.getTier(article, blocks) match {
           case RemoteRender => remoteRenderer.getArticle(ws, path, article, blocks)
           case RemoteRenderAMP => remoteRenderer.getAMPArticle(ws, path, article, blocks)
-          case LocalRender => render(path, article, blocks)
+          case LocalRenderArticle => render(path, article, blocks)
+          case LocalRenderAmp => Future.successful(NotFound)
         }
       })
     }
@@ -89,7 +90,7 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
         case JsonFormat => common.renderJson(getJson(article), article)
         case EmailFormat => common.renderEmail(ArticleEmailHtmlPage.html(article), article)
         case HtmlFormat => common.renderHtml(ArticleHtmlPage.html(article), article)
-        case AmpFormat => common.renderHtml(views.html.articleAMP(article), article)
+        case AmpFormat => common.renderHtml(ArticleHtmlPage.html(article), article)
       }
     }
   }

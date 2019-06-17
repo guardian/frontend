@@ -7,17 +7,13 @@ import play.api.mvc.RequestHeader
 
 
 class RenderingTierPicker {
-
   def getTier(page: PageWithStoryPackage, blocks: APIBlocks)(implicit request: RequestHeader): RenderType = {
-
     if(request.isAmp) {
       AMPPicker.getTier(page, blocks)
     } else {
       ArticlePicker.getTier(page)
     }
-
   }
-
 }
 
 object RenderingTierPicker {
