@@ -158,4 +158,8 @@ object CompetitionDisplayHelpers {
   def cleanTeamName(teamName: String): String = {
     teamName.replace("Ladies", "")
   }
+
+  def cleanTeamCode(teamCode: String): String = {
+    teamCode.replace("JAP", "JPN")
+  }
 }
