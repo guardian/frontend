@@ -1,5 +1,7 @@
 // @flow
-import { PlistaOutbrainRenderer } from 'commercial/modules/third-party-tags/plista-outbrain-renderer';
+import { init as initPlistaOutbrainRenderer } from 'commercial/modules/third-party-tags/plista-outbrain-renderer';
+import { initOutbrain as _initOutbrain} from 'commercial/modules/third-party-tags/outbrain';
+import { plista as _plista } from 'commercial/modules/third-party-tags/plista';
 import config from 'lib/config';
 
 jest.mock('commercial/modules/dfp/track-ad-render', () => ({
@@ -22,37 +24,51 @@ jest.mock('common/modules/experiments/ab', () => ({
 jest.mock('lib/load-script', () => ({ loadScript: jest.fn() }));
 jest.mock('./outbrain-load', () => ({ load: jest.fn() }));
 
-describe('Plista Outbrain renderer', () => {
-    it('should display Outbrain for UK, US and International Edition', () => {
-        const outbrainEditions = ['uk', 'us', 'int'];
+const plista = _plista;
+const initOutbrain = _initOutbrain;
 
-        outbrainEditions.forEach(edition => {
+jest.mock('commercial/modules/third-party-tags/plista', () => (
+    { plista : {
+        init: jest.fn(),
+    } }
+));
+
+jest.mock('commercial/modules/third-party-tags/outbrain', () => (
+    { initOutbrain : jest.fn()}
+));
+
+
+describe('Plista Outbrain renderer', () => {
+    it('should display Outbrain for UK, US and International Edition', (done) => {
+        ['uk', 'us', 'int'].map((edition, index) => {
             config.set('switches.plistaForOutbrainAu', true);
             config.set('page.edition', edition);
-            const renderer = new PlistaOutbrainRenderer();
-            const spy = jest.spyOn(renderer, 'renderWidget');
-            renderer.render();
-            expect(spy).toHaveBeenCalledWith('outbrain', expect.any(Function));
+            initPlistaOutbrainRenderer().then(()=>{
+                expect(initOutbrain).toHaveBeenCalled();
+                if (index === 2) {
+                    done();
+                }
+            });
         });
     });
 
-    it('should pick Outbrain for AU', () => {
+    it('should pick Outbrain for AU', (done) => {
         global.Math.random = () => 1;
         config.set('switches.plistaForOutbrainAu', true);
         config.set('page.edition', 'AU');
-        const renderer = new PlistaOutbrainRenderer();
-        const spy = jest.spyOn(renderer, 'renderWidget');
-        renderer.render();
-        expect(spy).toHaveBeenCalledWith('outbrain', expect.any(Function));
+        initPlistaOutbrainRenderer().then(()=>{
+            expect(initOutbrain).toHaveBeenCalled();
+            done();
+        });
     });
 
-    it('should pick Plista for AU', () => {
+    it('should pick Plista for AU', (done) => {
         global.Math.random = () => 0;
         config.set('switches.plistaForOutbrainAu', true);
         config.set('page.edition', 'AU');
-        const renderer = new PlistaOutbrainRenderer();
-        const spy = jest.spyOn(renderer, 'renderWidget');
-        renderer.render();
-        expect(spy).toHaveBeenCalledWith('plista', expect.any(Function));
+        initPlistaOutbrainRenderer().then(()=>{
+            expect(plista.init).toHaveBeenCalled();
+            done();
+        });
     });
 });

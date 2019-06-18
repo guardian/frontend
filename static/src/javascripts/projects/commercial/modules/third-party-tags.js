@@ -10,7 +10,7 @@ import { krux } from 'common/modules/commercial/krux';
 import { ias } from 'commercial/modules/third-party-tags/ias';
 import { inizio } from 'commercial/modules/third-party-tags/inizio';
 import { fbPixel } from 'commercial/modules/third-party-tags/facebook-pixel';
-import { PlistaOutbrainRenderer } from 'commercial/modules/third-party-tags/plista-outbrain-renderer';
+import { init as initPlistaOutbrainRenderer } from 'commercial/modules/third-party-tags/plista-outbrain-renderer';
 
 const insertScripts = (services: Array<ThirdPartyTag>): void => {
     const ref = document.scripts[0];
@@ -60,8 +60,7 @@ const init = (): Promise<boolean> => {
     // check above is now sensitive to ad-free, it could be changed independently
     // in the future - even by accident.  Justin.
     if (!commercialFeatures.adFree) {
-        const renderer = new PlistaOutbrainRenderer();
-        renderer.render();
+        initPlistaOutbrainRenderer();
     }
 
     loadOther();

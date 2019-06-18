@@ -8,57 +8,49 @@ import config from 'lib/config';
 import fastdom from 'lib/fastdom-promise';
 import $ from 'lib/$';
 
-export class PlistaOutbrainRenderer {
-    edition: string;
-    isSwitchOn: boolean;
 
-    constructor() {
-        this.edition = config.get('page.edition', '').toLowerCase();
-        this.isSwitchOn = config.get('switches.plistaForOutbrainAu');
-    }
+const findAnchor = () : Promise<HTMLElement | null> => {
+    const selector = !(
+        config.get('page.seriesId') || config.get('page.blogIds')
+    )
+        ? '.js-related, .js-outbrain-anchor'
+        : '.js-outbrain-anchor';
+    return document.querySelector(selector);
+};
 
-    findAnchor = (): Promise<HTMLElement | null> => {
-        const selector = !(
-            config.get('page.seriesId') || config.get('page.blogIds')
-        )
-            ? '.js-related, .js-outbrain-anchor'
-            : '.js-outbrain-anchor';
-        return Promise.resolve(document.querySelector(selector));
-    };
+const renderWidget = (widgetType: string, init: any): Promise<void> => {
+    const externalTpl = template(externalContentContainerStr);
 
-    renderWidget(widgetType: string, init: any): void {
-        const externalTpl = template(externalContentContainerStr);
+    const anchorNode = findAnchor();
+    return fastdom.write(() => {
+                $(anchorNode).after(
+                    externalTpl({
+                        widgetType,
+                    })
+                );
+            }).then(init);
+};
 
-        this.findAnchor()
-            .then(anchorNode =>
-                fastdom.write(() => {
-                    $(anchorNode).after(
-                        externalTpl({
-                            widgetType,
-                        })
-                    );
-                })
-            )
-            .then(init);
-    }
-
-    render(): void {
-        const shouldServePlistaOrOutbrain: boolean =
-            this.isSwitchOn && this.edition === 'au';
-        if (shouldServePlistaOrOutbrain) {
-            const possibleWidgets = ['plista', 'outbrain'];
-            const randomWidget =
-                possibleWidgets[
-                    Math.floor(Math.random() * possibleWidgets.length)
+const init = () : Promise<void> => {
+    const edition = config.get('page.edition', '').toLowerCase();
+    const isSwitchOn = config.get('switches.plistaForOutbrainAu');
+    const shouldServePlistaOrOutbrain: boolean =
+        isSwitchOn && edition === 'au';
+    if (shouldServePlistaOrOutbrain) {
+        const possibleWidgets = ['plista', 'outbrain'];
+        const randomWidget =
+            possibleWidgets[
+                Math.floor(Math.random() * possibleWidgets.length)
                 ];
 
-            if (randomWidget === 'plista') {
-                this.renderWidget('plista', plista.init);
-            } else {
-                this.renderWidget('outbrain', initOutbrain);
-            }
+        if (randomWidget === 'plista') {
+            return renderWidget('plista', plista.init);
         } else {
-            this.renderWidget('outbrain', initOutbrain);
+            return renderWidget('outbrain', initOutbrain);
         }
+    } else {
+        return renderWidget('outbrain', initOutbrain);
     }
-}
+};
+
+export { init };
