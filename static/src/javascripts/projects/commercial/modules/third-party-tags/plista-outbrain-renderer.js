@@ -4,16 +4,16 @@ import externalContentContainerStr from 'raw-loader!common/views/commercial/exte
 import { plista } from 'commercial/modules/third-party-tags/plista';
 import { initOutbrain } from 'commercial/modules/third-party-tags/outbrain';
 import template from 'lodash/template';
-import config from '../../../../lib/config';
-import fastdom from '../../../../lib/fastdom-promise';
-import $ from '../../../../lib/$';
+import config from 'lib/config';
+import fastdom from 'lib/fastdom-promise';
+import $ from 'lib/$';
 
 export class PlistaOutbrainRenderer {
     edition: string;
     isSwitchOn: boolean;
 
-    constructor(edition: string) {
-        this.edition = edition;
+    constructor() {
+        this.edition = config.get('page.edition', '').toLowerCase();
         this.isSwitchOn = config.get('switches.plistaForOutbrainAu');
     }
 

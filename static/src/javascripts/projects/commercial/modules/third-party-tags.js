@@ -1,7 +1,6 @@
 // @flow strict
 /* A regionalised container for all the commercial tags. */
 
-import config from 'lib/config';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { imrWorldwide } from 'commercial/modules/third-party-tags/imr-worldwide';
 import { imrWorldwideLegacy } from 'commercial/modules/third-party-tags/imr-worldwide-legacy';
@@ -61,8 +60,7 @@ const init = (): Promise<boolean> => {
     // check above is now sensitive to ad-free, it could be changed independently
     // in the future - even by accident.  Justin.
     if (!commercialFeatures.adFree) {
-        const edition = config.get('page.edition', '').toLowerCase();
-        const renderer = new PlistaOutbrainRenderer(edition);
+        const renderer = new PlistaOutbrainRenderer();
         renderer.render();
     }
 
