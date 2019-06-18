@@ -17,7 +17,7 @@ object AMPPicker {
   def getTier(page: PageWithStoryPackage, blocks: APIBlocks)(implicit request: RequestHeader): RenderType = {
     val isSupported = page.article.content.shouldAmplify
 
-    val tier = if (isSupported || request.isGuui) {
+    val tier = if (isSupported) {
       RemoteRenderAMP
     } else {
       LocalRenderArticle

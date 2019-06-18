@@ -111,7 +111,6 @@ class LiveBlogController(
         case (blog: LiveBlogPage, EmailFormat) => common.renderEmail(LiveBlogHtmlPage.html(blog), blog)
         case (blog: LiveBlogPage, HtmlFormat) => common.renderHtml(LiveBlogHtmlPage.html(blog), blog)
         case (blog: LiveBlogPage, AmpFormat) => common.renderHtml(LiveBlogHtmlPage.html(blog), blog)
-
         case _ => NotFound
       }
     }

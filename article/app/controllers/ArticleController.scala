@@ -13,7 +13,7 @@ import play.api.libs.ws.WSClient
 import play.api.mvc._
 import renderers.RemoteRenderer
 import services.CAPILookup
-import services.dotcomponents._
+import services.dotcomponents.{ArticlePicker, _}
 import views.support._
 
 import scala.concurrent.Future
@@ -79,14 +79,15 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
     DotcomponentsDataModel.toJsonString(DotcomponentsDataModel.fromArticle(article, request, blocks))
 
   private def render(path: String, article: ArticlePage, blocks: Blocks)(implicit request: RequestHeader): Future[Result] = {
-    val tier = renderingTierPicker.getTier(article, blocks)
+    val tier = ArticlePicker.getTier(article)
+    val isAmpSupported = article.article.content.shouldAmplify
     request.getRequestFormat match {
       case JsonFormat if request.isGuui => Future.successful(common.renderJson(getGuuiJson(article, blocks), article).as("application/json"))
       case JsonFormat => Future.successful(common.renderJson(getJson(article), article))
       case EmailFormat => Future.successful(common.renderEmail(ArticleEmailHtmlPage.html(article), article))
       case HtmlFormat if tier == RemoteRender => remoteRenderer.getArticle(ws, path, article, blocks)
       case HtmlFormat => Future.successful(common.renderHtml(ArticleHtmlPage.html(article), article))
-      case AmpFormat if tier == RemoteRenderAMP => Future.successful(common.renderHtml(ArticleHtmlPage.html(article), article))
+      case AmpFormat if isAmpSupported => Future.successful(common.renderHtml(ArticleHtmlPage.html(article), article))
       case AmpFormat => Future.successful(common.renderHtml(ArticleHtmlPage.html(article), article))
     }
   }
