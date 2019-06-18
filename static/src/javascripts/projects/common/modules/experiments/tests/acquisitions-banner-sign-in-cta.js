@@ -26,7 +26,7 @@ export const acquisitionsBannerSignInCta: AcquisitionsABTest = {
     id: 'AcquisitionsBannerSignInCta',
     campaignId: '2019-05-29_acquisitions_banner_sign_in_cta',
     start: '2019-06-04',
-    expiry: '2019-06-18',
+    expiry: '2019-06-25',
     author: 'Guy Dawson',
     description:
         'test whether having a sign-in CTA negatively impacts acquisitions',

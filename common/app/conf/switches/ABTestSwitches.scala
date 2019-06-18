@@ -52,7 +52,7 @@ trait ABTestSwitches {
     "test whether having a sign-in CTA negatively impacts acquisitions",
     owners = Owner.group(SwitchGroup.Identity),
     safeState = On,
-    sellByDate = new LocalDate(2019, 6, 18),
+    sellByDate = new LocalDate(2019, 6, 25),
     exposeClientSide = true
   )
 
