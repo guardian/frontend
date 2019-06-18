@@ -17,7 +17,7 @@ import implicits.{AmpFormat, EmailFormat, HtmlFormat, JsonFormat}
 import model.dotcomponents.DotcomponentsDataModel
 import play.api.libs.json.Json
 import renderers.RemoteRenderer
-import services.dotcomponents.{LocalRender, RemoteRender, RemoteRenderAMP, RenderingTierPicker}
+import services.dotcomponents._
 
 import scala.concurrent.Future
 
@@ -27,8 +27,7 @@ class LiveBlogController(
   contentApiClient: ContentApiClient,
   val controllerComponents: ControllerComponents,
   ws: WSClient,
-  remoteRenderer: renderers.RemoteRenderer = RemoteRenderer(),
-  renderingTierPicker: RenderingTierPicker = RenderingTierPicker()
+  remoteRenderer: renderers.RemoteRenderer = RemoteRenderer()
 )(implicit context: ApplicationContext)
   extends BaseController with
     RendersItemResponse with
@@ -57,13 +56,9 @@ class LiveBlogController(
   def renderArticle(path: String, page: Option[String] = None, format: Option[String] = None): Action[AnyContent] = {
     Action.async { implicit request =>
       def renderWithRange(range: BlockRange): Future[Result] = {
-        mapModel(path, range)((page, blocks) => {
-          renderingTierPicker.getTier(page, blocks) match {
-            case RemoteRender => remoteRenderer.getArticle(ws, path, page, blocks)
-            case RemoteRenderAMP => remoteRenderer.getAMPArticle(ws, path, page, blocks)
-            case LocalRender => render(path, page, blocks)
-          }
-        })
+        mapModel(path, range){
+          (page, blocks) => render(path, page, blocks)
+        }
       }
 
       page.map(ParseBlockId.fromPageParam) match {
@@ -99,23 +94,17 @@ class LiveBlogController(
     page: PageWithStoryPackage,
     blocks: Blocks
   )(implicit request: RequestHeader): Future[Result] = {
-    val isMinute = page.isInstanceOf[MinutePage]
-
-    Future.successful {
-      (page, request.getRequestFormat) match {
-        case (minute: MinutePage, JsonFormat) => common.renderJson(views.html.fragments.minuteBody(minute), minute)
-        case (minute: MinutePage, EmailFormat) => common.renderEmail(ArticleEmailHtmlPage.html(minute), minute)
-        case (minute: MinutePage, HtmlFormat) => common.renderHtml(MinuteHtmlPage.html(minute), minute)
-
-        case (blog: LiveBlogPage, JsonFormat) if request.isGuui => renderGuuiJson(path, blog, blocks)
-        case (blog: LiveBlogPage, JsonFormat) => common.renderJson( views.html.liveblog.liveBlogBody(blog), blog)
-        case (blog: LiveBlogPage, EmailFormat) => common.renderEmail(LiveBlogHtmlPage.html(blog), blog)
-        case (blog: LiveBlogPage, HtmlFormat) => common.renderHtml(LiveBlogHtmlPage.html(blog), blog)
-        case (blog: LiveBlogPage, AmpFormat) if request.isGuui => common.renderHtml(views.html.liveBlogAMP(blog), blog)
-        case (blog: LiveBlogPage, AmpFormat) => common.renderHtml(views.html.liveBlogAMP(blog), blog)
-
-        case _ => NotFound
-      }
+    val isAmpSupported = page.article.content.shouldAmplify
+    (page, request.getRequestFormat) match {
+      case (minute: MinutePage, JsonFormat) => Future.successful(common.renderJson(views.html.fragments.minuteBody(minute), minute))
+      case (minute: MinutePage, EmailFormat) => Future.successful(common.renderEmail(ArticleEmailHtmlPage.html(minute), minute))
+      case (minute: MinutePage, HtmlFormat) => Future.successful(common.renderHtml(MinuteHtmlPage.html(minute), minute))
+      case (blog: LiveBlogPage, JsonFormat) => Future.successful(common.renderJson( views.html.liveblog.liveBlogBody(blog), blog))
+      case (blog: LiveBlogPage, EmailFormat) => Future.successful(common.renderEmail(LiveBlogHtmlPage.html(blog), blog))
+      case (blog: LiveBlogPage, HtmlFormat) => Future.successful(common.renderHtml(LiveBlogHtmlPage.html(blog), blog))
+      case (blog: LiveBlogPage, AmpFormat) if isAmpSupported => remoteRenderer.getAMPArticle(ws, path, page, blocks)
+      case (blog: LiveBlogPage, AmpFormat) => Future.successful(common.renderHtml(LiveBlogHtmlPage.html(blog), blog))
+      case _ => Future.successful(NotFound)
     }
   }
 

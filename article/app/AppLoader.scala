@@ -19,7 +19,6 @@ import play.api.http.{HttpErrorHandler, HttpRequestHandler}
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router
 import router.Routes
-import services.dotcomponents.RenderingTierPicker
 import services.ophan.SurgingContentAgentLifecycle
 import services.{NewspaperBooksAndSectionsAutoRefresh, OphanApi, SkimLinksCacheLifeCycle}
 import jobs.StoreNavigationLifecycleComponent
@@ -39,7 +38,6 @@ trait AppComponents extends FrontendComponents with ArticleControllers {
   lazy val logbackOperationsPool = wire[LogbackOperationsPool]
 
   lazy val remoteRender = wire[renderers.RemoteRenderer]
-  lazy val renderingTierPicker = wire[RenderingTierPicker]
 
   override lazy val lifecycleComponents = List(
     wire[LogstashLifecycle],

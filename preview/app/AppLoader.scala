@@ -28,7 +28,6 @@ import play.api.{BuiltInComponents, BuiltInComponentsFromContext}
 import router.Routes
 import rugby.conf.RugbyLifecycle
 import rugby.controllers.RugbyControllers
-import services.dotcomponents.RenderingTierPicker
 import services.{ConfigAgentLifecycle, OphanApi, SkimLinksCacheLifeCycle}
 
 trait PreviewLifecycleComponents extends SportServices with CommercialServices with FapiServices with OnwardServices {
@@ -93,7 +92,6 @@ trait AppComponents
   override lazy val ophanApi = wire[OphanApi]
 
   lazy val remoteRender = wire[renderers.RemoteRenderer]
-  lazy val renderingTierPicker = wire[RenderingTierPicker]
 
   override lazy val appMetrics = ApplicationMetrics(
     ContentApiMetrics.HttpLatencyTimingMetric,

@@ -13,14 +13,14 @@ import play.api.libs.ws.WSClient
 import play.api.mvc._
 import renderers.RemoteRenderer
 import services.CAPILookup
-import services.dotcomponents._
+import services.dotcomponents.{ArticlePicker, _}
 import views.support._
 
 import scala.concurrent.Future
 
 case class ArticlePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
 
-class ArticleController(contentApiClient: ContentApiClient, val controllerComponents: ControllerComponents, ws: WSClient, remoteRenderer: renderers.RemoteRenderer = RemoteRenderer(), renderingTierPicker: RenderingTierPicker = RenderingTierPicker())(implicit context: ApplicationContext) extends BaseController with RendersItemResponse with Logging with ImplicitControllerExecutionContext {
+class ArticleController(contentApiClient: ContentApiClient, val controllerComponents: ControllerComponents, ws: WSClient, remoteRenderer: renderers.RemoteRenderer = RemoteRenderer())(implicit context: ApplicationContext) extends BaseController with RendersItemResponse with Logging with ImplicitControllerExecutionContext {
 
   val capiLookup: CAPILookup = new CAPILookup(contentApiClient)
 
@@ -38,13 +38,9 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
 
   def renderArticle(path: String): Action[AnyContent] = {
     Action.async { implicit request =>
-      mapModel(path, ArticleBlocks)( (article, blocks) => {
-        renderingTierPicker.getTier(article, blocks) match {
-          case RemoteRender => remoteRenderer.getArticle(ws, path, article, blocks)
-          case RemoteRenderAMP => remoteRenderer.getAMPArticle(ws, path, article, blocks)
-          case LocalRender => render(path, article, blocks)
-        }
-      })
+      mapModel(path, ArticleBlocks) {
+        (article, blocks) => render(path, article, blocks)
+      }
     }
   }
 
@@ -83,14 +79,16 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
     DotcomponentsDataModel.toJsonString(DotcomponentsDataModel.fromArticle(article, request, blocks))
 
   private def render(path: String, article: ArticlePage, blocks: Blocks)(implicit request: RequestHeader): Future[Result] = {
-    Future {
-      request.getRequestFormat match {
-        case JsonFormat if request.isGuui => common.renderJson(getGuuiJson(article, blocks), article).as("application/json")
-        case JsonFormat => common.renderJson(getJson(article), article)
-        case EmailFormat => common.renderEmail(ArticleEmailHtmlPage.html(article), article)
-        case HtmlFormat => common.renderHtml(ArticleHtmlPage.html(article), article)
-        case AmpFormat => common.renderHtml(views.html.articleAMP(article), article)
-      }
+    val tier = ArticlePicker.getTier(article)
+    val isAmpSupported = article.article.content.shouldAmplify
+    request.getRequestFormat match {
+      case JsonFormat if request.isGuui => Future.successful(common.renderJson(getGuuiJson(article, blocks), article).as("application/json"))
+      case JsonFormat => Future.successful(common.renderJson(getJson(article), article))
+      case EmailFormat => Future.successful(common.renderEmail(ArticleEmailHtmlPage.html(article), article))
+      case HtmlFormat if tier == RemoteRender => remoteRenderer.getArticle(ws, path, article, blocks)
+      case HtmlFormat => Future.successful(common.renderHtml(ArticleHtmlPage.html(article), article))
+      case AmpFormat if isAmpSupported => remoteRenderer.getAMPArticle(ws, path, article, blocks)
+      case AmpFormat => Future.successful(common.renderHtml(ArticleHtmlPage.html(article), article))
     }
   }
 
