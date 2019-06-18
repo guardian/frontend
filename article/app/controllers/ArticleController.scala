@@ -20,7 +20,7 @@ import scala.concurrent.Future
 
 case class ArticlePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
 
-class ArticleController(contentApiClient: ContentApiClient, val controllerComponents: ControllerComponents, ws: WSClient, remoteRenderer: renderers.RemoteRenderer = RemoteRenderer(), renderingTierPicker: RenderingTierPicker = RenderingTierPicker())(implicit context: ApplicationContext) extends BaseController with RendersItemResponse with Logging with ImplicitControllerExecutionContext {
+class ArticleController(contentApiClient: ContentApiClient, val controllerComponents: ControllerComponents, ws: WSClient, remoteRenderer: renderers.RemoteRenderer = RemoteRenderer())(implicit context: ApplicationContext) extends BaseController with RendersItemResponse with Logging with ImplicitControllerExecutionContext {
 
   val capiLookup: CAPILookup = new CAPILookup(contentApiClient)
 

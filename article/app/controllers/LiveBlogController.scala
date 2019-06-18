@@ -27,8 +27,7 @@ class LiveBlogController(
   contentApiClient: ContentApiClient,
   val controllerComponents: ControllerComponents,
   ws: WSClient,
-  remoteRenderer: renderers.RemoteRenderer = RemoteRenderer(),
-  renderingTierPicker: RenderingTierPicker = RenderingTierPicker()
+  remoteRenderer: renderers.RemoteRenderer = RemoteRenderer()
 )(implicit context: ApplicationContext)
   extends BaseController with
     RendersItemResponse with
