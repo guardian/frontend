@@ -87,7 +87,7 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
       case HtmlFormat if tier == RemoteRender => remoteRenderer.getArticle(ws, path, article, blocks)
       case HtmlFormat => Future.successful(common.renderHtml(ArticleHtmlPage.html(article), article))
       case AmpFormat if tier == RemoteRenderAMP => Future.successful(common.renderHtml(ArticleHtmlPage.html(article), article))
-      case AmpFormat => Future.successful(NotFound)
+      case AmpFormat => Future.successful(common.renderHtml(ArticleHtmlPage.html(article), article))
     }
   }
 
