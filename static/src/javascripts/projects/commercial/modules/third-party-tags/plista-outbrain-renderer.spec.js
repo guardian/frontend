@@ -29,7 +29,7 @@ describe('Plista Outbrain renderer', () => {
         outbrainEditions.forEach(edition => {
             config.set('switches.plistaForOutbrainAu', true);
             config.set('page.edition', edition);
-            const renderer = new PlistaOutbrainRenderer(edition);
+            const renderer = new PlistaOutbrainRenderer();
             const spy = jest.spyOn(renderer, 'renderWidget');
             renderer.render();
             expect(spy).toHaveBeenCalledWith('outbrain', expect.any(Function));
@@ -50,7 +50,7 @@ describe('Plista Outbrain renderer', () => {
         global.Math.random = () => 0;
         config.set('switches.plistaForOutbrainAu', true);
         config.set('page.edition', 'AU');
-        const renderer = new PlistaOutbrainRenderer('au');
+        const renderer = new PlistaOutbrainRenderer();
         const spy = jest.spyOn(renderer, 'renderWidget');
         renderer.render();
         expect(spy).toHaveBeenCalledWith('plista', expect.any(Function));
