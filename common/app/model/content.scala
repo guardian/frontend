@@ -92,8 +92,9 @@ final case class Content(
     val shouldAmplifyArticles = isAmpSupportedArticleType && AmpArticleSwitch.isSwitchedOn
     val shouldAmplifyLiveBlogs = tags.isLiveBlog && AmpLiveBlogSwitch.isSwitchedOn
     val containsFormStacks: Boolean = fields.body.contains("guardiannewsandmedia.formstack.com")
+    val hasBodyBlocks: Boolean = fields.blocks.exists(b => b.body.nonEmpty)
 
-    (shouldAmplifyArticles || shouldAmplifyLiveBlogs) && !containsFormStacks
+    (shouldAmplifyArticles || shouldAmplifyLiveBlogs) && !containsFormStacks && hasBodyBlocks
   }
 
   lazy val hasSingleContributor: Boolean = {
