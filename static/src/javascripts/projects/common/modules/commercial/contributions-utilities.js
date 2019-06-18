@@ -724,6 +724,14 @@ export const getEngagementBannerTestsFromGoogleDoc = (): Promise<
                         optionalStringToBoolean(row.hasCountryName)
                     );
 
+                    const rowWithLocations = rows.find(
+                        row =>
+                            row.locations !== undefined && row.locations !== ''
+                    );
+                    const countryGroups = rowWithLocations
+                        ? optionalSplitAndTrim(rowWithLocations.locations, ',')
+                        : [];
+
                     return {
                         id: testName,
                         campaignId: testName,
@@ -740,9 +748,16 @@ export const getEngagementBannerTestsFromGoogleDoc = (): Promise<
                         audience: 1,
                         audienceOffset: 0,
 
-                        canRun: () =>
-                            !hasCountryName ||
-                            countryNames[geolocationGetSync()],
+                        canRun: () => {
+                            const countryNameOk =
+                                !hasCountryName ||
+                                countryNames[geolocationGetSync()];
+                            const matchesCountryGroups =
+                                countryGroups.length === 0 ||
+                                userMatchesCountryGroups(countryGroups);
+
+                            return countryNameOk && matchesCountryGroups;
+                        },
 
                         variants: rows.map(row => ({
                             id: row.name.trim().toLowerCase(),
