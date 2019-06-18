@@ -102,7 +102,7 @@ class LiveBlogController(
       case (blog: LiveBlogPage, JsonFormat) => Future.successful(common.renderJson( views.html.liveblog.liveBlogBody(blog), blog))
       case (blog: LiveBlogPage, EmailFormat) => Future.successful(common.renderEmail(LiveBlogHtmlPage.html(blog), blog))
       case (blog: LiveBlogPage, HtmlFormat) => Future.successful(common.renderHtml(LiveBlogHtmlPage.html(blog), blog))
-      case (blog: LiveBlogPage, AmpFormat) if isAmpSupported => remoteRenderer.getArticle(ws, path, page, blocks)
+      case (blog: LiveBlogPage, AmpFormat) if isAmpSupported => remoteRenderer.getAMPArticle(ws, path, page, blocks)
       case (blog: LiveBlogPage, AmpFormat) => Future.successful(common.renderHtml(LiveBlogHtmlPage.html(blog), blog))
       case _ => Future.successful(NotFound)
     }
