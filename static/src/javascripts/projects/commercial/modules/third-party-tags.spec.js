@@ -63,6 +63,19 @@ describe('third party tags', () => {
             });
     });
 
+    it('should run if commercial enabled', done => {
+        commercialFeatures.thirdPartyTags = true;
+        commercialFeatures.adFree = false;
+        init()
+            .then((enabled: boolean) => {
+                expect(enabled).toBe(true);
+                done();
+            })
+            .catch(() => {
+                done.fail('init failed');
+            });
+    });
+
     describe('insertScripts', () => {
         const fakeThirdPartyTag: ThirdPartyTag = {
             shouldRun: true,
