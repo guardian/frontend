@@ -99,6 +99,7 @@ class LiveBlogController(
       case (minute: MinutePage, JsonFormat) => Future.successful(common.renderJson(views.html.fragments.minuteBody(minute), minute))
       case (minute: MinutePage, EmailFormat) => Future.successful(common.renderEmail(ArticleEmailHtmlPage.html(minute), minute))
       case (minute: MinutePage, HtmlFormat) => Future.successful(common.renderHtml(MinuteHtmlPage.html(minute), minute))
+      case (blog: LiveBlogPage, JsonFormat) if request.isGuui => Future.successful(renderGuuiJson(path, blog, blocks))
       case (blog: LiveBlogPage, JsonFormat) => Future.successful(common.renderJson( views.html.liveblog.liveBlogBody(blog), blog))
       case (blog: LiveBlogPage, EmailFormat) => Future.successful(common.renderEmail(LiveBlogHtmlPage.html(blog), blog))
       case (blog: LiveBlogPage, HtmlFormat) => Future.successful(common.renderHtml(LiveBlogHtmlPage.html(blog), blog))
