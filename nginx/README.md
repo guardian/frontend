@@ -11,12 +11,11 @@ __Mac:__ [Install Homebrew:](http://brew.sh/#install)
 __Other operating systems:__
 You need to install:
 - nginx
-- [mkcert](https://github.com/FiloSottile/mkcert)
+- [dev-nginx](https://github.com/guardian/dev-nginx)
 
 
 ## Configure Nginx with SSL
 
-1. Ensure you have the correct [hosts](hosts) included in `/etc/hosts` file on your machine
-1. Run `sudo nginx/setup.sh`
+1. Run `nginx/setup.sh`
 1. To setup Dotcom Identity Fronted follow [identity-platform README](https://github.com/guardian/identity-platform)
 

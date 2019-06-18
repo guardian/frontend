@@ -1,3 +1,2 @@
-brew "nginx"
-brew "mkcert"
-brew "nss"
+tap "guardian/devtools"
+brew "guardian/devtools/dev-nginx"
