@@ -1,6 +1,6 @@
 // @flow
 import { init as initPlistaOutbrainRenderer } from 'commercial/modules/third-party-tags/plista-outbrain-renderer';
-import { initOutbrain as _initOutbrain} from 'commercial/modules/third-party-tags/outbrain';
+import { initOutbrain as _initOutbrain } from 'commercial/modules/third-party-tags/outbrain';
 import { plista as _plista } from 'commercial/modules/third-party-tags/plista';
 import config from 'lib/config';
 
@@ -27,23 +27,22 @@ jest.mock('./outbrain-load', () => ({ load: jest.fn() }));
 const plista = _plista;
 const initOutbrain = _initOutbrain;
 
-jest.mock('commercial/modules/third-party-tags/plista', () => (
-    { plista : {
+jest.mock('commercial/modules/third-party-tags/plista', () => ({
+    plista: {
         init: jest.fn(),
-    } }
-));
+    },
+}));
 
-jest.mock('commercial/modules/third-party-tags/outbrain', () => (
-    { initOutbrain : jest.fn()}
-));
-
+jest.mock('commercial/modules/third-party-tags/outbrain', () => ({
+    initOutbrain: jest.fn(),
+}));
 
 describe('Plista Outbrain renderer', () => {
-    it('should display Outbrain for UK, US and International Edition', (done) => {
-        ['uk', 'us', 'int'].map((edition, index) => {
+    it('should display Outbrain for UK, US and International Edition', done => {
+        ['uk', 'us', 'int'].forEach((edition, index) => {
             config.set('switches.plistaForOutbrainAu', true);
             config.set('page.edition', edition);
-            initPlistaOutbrainRenderer().then(()=>{
+            initPlistaOutbrainRenderer().then(() => {
                 expect(initOutbrain).toHaveBeenCalled();
                 if (index === 2) {
                     done();
@@ -52,21 +51,21 @@ describe('Plista Outbrain renderer', () => {
         });
     });
 
-    it('should pick Outbrain for AU', (done) => {
+    it('should pick Outbrain for AU', done => {
         global.Math.random = () => 1;
         config.set('switches.plistaForOutbrainAu', true);
         config.set('page.edition', 'AU');
-        initPlistaOutbrainRenderer().then(()=>{
+        initPlistaOutbrainRenderer().then(() => {
             expect(initOutbrain).toHaveBeenCalled();
             done();
         });
     });
 
-    it('should pick Plista for AU', (done) => {
+    it('should pick Plista for AU', done => {
         global.Math.random = () => 0;
         config.set('switches.plistaForOutbrainAu', true);
         config.set('page.edition', 'AU');
-        initPlistaOutbrainRenderer().then(()=>{
+        initPlistaOutbrainRenderer().then(() => {
             expect(plista.init).toHaveBeenCalled();
             done();
         });
