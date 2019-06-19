@@ -7,9 +7,9 @@ import cricketModel.Match
 import org.joda.time.{DateTimeZone, Days, LocalDate}
 import org.joda.time.format.DateTimeFormat
 
-import scala.concurrent.ExecutionContext
+import scala.concurrent.{ExecutionContext, Future}
 
-class CricketStatsJob(paFeed: PaFeed) extends Logging {
+class CricketStatsJob(val paFeed: PaFeed) extends Logging {
 
   private val cricketStatsAgents = CricketTeams.teams.map(Team => (Team, Box[Map[String, Match]](Map.empty)))
 
@@ -32,7 +32,7 @@ class CricketStatsJob(paFeed: PaFeed) extends Logging {
     matchObjects.flatten.headOption
   }
 
-  def run()(implicit executionContext: ExecutionContext): Unit = {
+  def run(getMatchIds: CricketTeam => Future[Seq[String]])(implicit executionContext: ExecutionContext): Unit = {
 
     cricketStatsAgents.foreach { case (team, agent) =>
 
@@ -42,7 +42,7 @@ class CricketStatsJob(paFeed: PaFeed) extends Logging {
         Days.daysBetween(cricketMatch.gameDate.toLocalDate, LocalDate.now).getDays > 5
       ).map(_.matchId).toSeq
 
-      paFeed.getMatchIds(team).map { matchIds =>
+      getMatchIds(team).map { matchIds =>
 
         val matches = matchIds.diff(loadedMatches).take(10)
 

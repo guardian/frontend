@@ -4,7 +4,7 @@ import akka.actor.ActorSystem
 import akka.stream.Materializer
 import common.Logging
 import cricket.feed.CricketThrottler
-import org.joda.time.LocalDate
+import org.joda.time.{DateTime, LocalDate}
 import org.joda.time.format.{DateTimeFormat, DateTimeFormatter}
 import play.api.libs.ws.WSClient
 
@@ -52,38 +52,36 @@ class PaFeed(wsClient: WSClient, actorSystem: ActorSystem, materializer: Materia
     }
   }
 
-  def getMatchIds(team: CricketTeam)(implicit executionContext: ExecutionContext): Future[Seq[String]] = {
-
-    // Get fixtures for England for today.
-    val fixtures = getTeamMatches(team, "fixtures", LocalDate.now, LocalDate.now)
-
-    // Get results for England over the last year.
-    val results = getTeamMatches(team, "results", LocalDate.now.minusMonths(2), LocalDate.now)
-
-    Future.sequence(Seq(fixtures, results)).map(_.flatten)
+  def getCurrentMatchIds(team:CricketTeam)(implicit executionContext: ExecutionContext): Future[Seq[String]] = {
+    getTeamMatches(team, "fixtures", LocalDate.now, LocalDate.now)
   }
 
-  private def getTeamMatches(team: CricketTeam, matchType: String, startDate: LocalDate, endDate: LocalDate)(implicit executionContext: ExecutionContext): Future[Seq[String]] =
-    credentials.map ( header => throttler.throttle { () =>
+  def getHistoricalMatchIds(team: CricketTeam)(implicit executionContext: ExecutionContext): Future[Seq[String]] = {
+    getTeamMatches(team, "results", LocalDate.now.minusMonths(2), LocalDate.now)
+  }
+
+  private def getTeamMatches(team: CricketTeam, matchType: String, startDate: LocalDate, endDate: LocalDate)(implicit executionContext: ExecutionContext): Future[Seq[String]] = {
+
+    credentials.map(header => throttler.throttle { () =>
       val start = PaFeed.dateFormat.print(startDate)
       val end = PaFeed.dateFormat.print(endDate)
       val endpoint = s"$paEndpoint/team/${team.paId}/$matchType"
 
       wsClient.url(endpoint)
         .withHttpHeaders(header, xmlContentType)
-        .withQueryStringParameters(("startDate", start),("endDate", end))
+        .withQueryStringParameters(("startDate", start), ("endDate", end))
         .get
         .map { response =>
 
-        response.status match {
-          case 200 => XML.loadString(response.body) \\ "match" map (content =>
-            (content \ "@id").text )
+          response.status match {
+            case 200 => XML.loadString(response.body) \\ "match" map (content =>
+              (content \ "@id").text)
 
-          case 204 => Nil // No content for this date range.
+            case 204 => Nil // No content for this date range.
 
-          case _ => throw CricketFeedException(s"PA endpoint returned: ${response.status} $start $end $endpoint")
+            case _ => throw CricketFeedException(s"PA endpoint returned: ${response.status} $start $end $endpoint")
+          }
         }
-      }
     }).getOrElse(Future.failed(CricketFeedException("No cricket api key found")))
-
+  }
 }
