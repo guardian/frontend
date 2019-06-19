@@ -153,6 +153,8 @@ object PageElement {
       ))
 
       case Image =>
+        def ensureHTTPS(src: String): String = src.replace("http:", "https:")
+
         val signedAssets = element.assets.zipWithIndex
           .map { case (a, i) => ImageAsset.make(a, i) }
         val imageSources: Seq[ImageSource] = BodyMedia.all.map {
@@ -160,7 +162,10 @@ object PageElement {
             val srcSet = widths.breakpoints.flatMap { b =>
               ImgSrc.srcsetForBreakpoint(b, BodyMedia.inline.breakpoints, maybeImageMedia = Some(ImageMedia(signedAssets)))
             }
-            ImageSource(weighting, srcSet)
+
+            // A few very old articles use non-https hosts, which won't render
+            val httpsSrcSet = srcSet.map(set => set.copy(src = ensureHTTPS(set.src)))
+            ImageSource(weighting, httpsSrcSet)
         }.toSeq
 
         List(ImageBlockElement(
