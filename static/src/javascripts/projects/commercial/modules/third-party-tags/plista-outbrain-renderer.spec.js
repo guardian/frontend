@@ -37,6 +37,10 @@ jest.mock('commercial/modules/third-party-tags/outbrain', () => ({
     initOutbrain: jest.fn(),
 }));
 
+afterAll(() => {
+    jest.resetAllMocks();
+});
+
 describe('Plista Outbrain renderer', () => {
     it('should display Outbrain for UK, US and International Edition', done => {
         ['uk', 'us', 'int'].forEach((edition, index) => {
