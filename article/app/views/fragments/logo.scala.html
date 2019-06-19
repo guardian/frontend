@@ -1,12 +1,9 @@
 @import conf.Configuration
-@(amp: Boolean = false)
+@()
 
-    <div itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
-        <meta itemprop="url" content="https://uploads.guim.co.uk/2018/01/31/TheGuardian_AMP.png">
-        <meta itemprop="width" content="190">
-        <meta itemprop="height" content="60">
-    </div>
-    @if(!amp) {
-        @* AMP doesn't support sameAs *@
-    <link itemprop="sameAs" href="@Configuration.site.host">
-}
+<div itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
+    <meta itemprop="url" content="https://uploads.guim.co.uk/2018/01/31/TheGuardian_AMP.png">
+    <meta itemprop="width" content="190">
+    <meta itemprop="height" content="60">
+</div>
+
