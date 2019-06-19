@@ -110,21 +110,14 @@
                         <div class="js-components-container"></div>
                     </div>
 
-                    @if(amp) {
-                        @views.html.liveblog.liveBlogBodyContentAMP(model)
-                        @fragments.submeta(article, amp)
-                        <div class="after-article js-after-article"></div>
-                        <div class="js-bottom-marker"></div>
-                    } else {
-                        <div class="js-liveblog-body-content">
-                            @fragments.dropdown("Live feed", Some("live-feed"), true) {
-                                @views.html.liveblog.liveBlogBodyContent(model)
-                                @fragments.submeta(article)
-                                <div class="after-article js-after-article"></div>
-                                <div class="js-bottom-marker"></div>
-                            }
-                        </div>
-                    }
+                    <div class="js-liveblog-body-content">
+                        @fragments.dropdown("Live feed", Some("live-feed"), true) {
+                            @views.html.liveblog.liveBlogBodyContent(model)
+                            @fragments.submeta(article)
+                            <div class="after-article js-after-article"></div>
+                            <div class="js-bottom-marker"></div>
+                        }
+                    </div>
                 </div>
 
                 <div class="content__secondary-column js-secondary-column" aria-hidden="true">
