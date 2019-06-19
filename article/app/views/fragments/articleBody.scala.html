@@ -1,4 +1,4 @@
-@(model: ArticlePage, amp: Boolean = false)(implicit request: RequestHeader, context: _root_.model.ApplicationContext)
+@(model: ArticlePage)(implicit request: RequestHeader, context: _root_.model.ApplicationContext)
 
 @import views.html.fragments.langAttributes
 @import common.LinkTo
@@ -35,16 +35,16 @@
             <meta itemprop="mainEntityOfPage" content="@LinkTo(article.metadata.url)">
             <div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
                 <meta itemprop="name" content="The Guardian">
-                @fragments.logo(amp)
+                @fragments.logo(false)
             </div>
 
             @if(isPaidContent) {
                 @fragments.guBand()
             }
 
-            @fragments.mainMedia(article, amp)
+            @fragments.mainMedia(article, false)
 
-            @fragments.headTonal(article, model, isPaidContent, amp = amp)
+            @fragments.headTonal(article, model, isPaidContent, amp = false)
 
             <div class="content__main tonal__main tonal__main--@toneClass(article)">
                 <div class="gs-container">
@@ -52,7 +52,7 @@
                         <div class="js-score"></div>
                         <div class="js-sport-tabs football-tabs content__mobile-full-width"></div>
 
-                        @fragments.contentMeta(article, model, amp = amp)
+                        @fragments.contentMeta(article, model, amp = false)
 
                         @if(article.tags.isNews && !article.elements.hasMainEmbed && (article.elements.elements("main") && article.elements.elements("main").isEmpty)) {
                             <hr class="content__hr hide-until-leftcol" />
@@ -60,21 +60,10 @@
 
                         <div class="content__article-body from-content-api js-article__body" itemprop="@bodyType(model)"
                             data-test-id="article-review-body" @langAttributes(article.content)>
-                            @BodyCleaner(article, amp = amp)
-
-                            @* A value for the image field is required for AMP article
-                            WORKAROUND: if the article doesn't contain any image we insert the metadata of the fallback logo,
-                            so the amp page passes validation but no image is visible by the user *@
-                            @if(amp && article.content.elements.images.isEmpty) {
-                                <div itemprop="image" itemscope itemtype="http://schema.org/ImageObject">
-                                    <meta itemprop="url" content="https://assets.guim.co.uk/images/2170b16eb045a34f8c79761b203627b4/fallback-logo.png">
-                                    <meta itemprop="width" content="1200">
-                                    <meta itemprop="height" content="630">
-                                </div>
-                            }
+                            @BodyCleaner(article, amp = false)
                         </div>
 
-                        @fragments.submeta(article, amp)
+                        @fragments.submeta(article, false)
 
                         <div class="after-article js-after-article"></div>
                     </div>
@@ -95,10 +84,7 @@
             </div>
         </article>
 
-        @* Currently AMP documents don't support most of what we do in the footer *@
-        @if(!amp) {
-            @fragments.contentFooter(article, model.related, isPaidContent = isPaidContent)
-        }
+        @fragments.contentFooter(article, model.related, isPaidContent = isPaidContent)
 
     </div>
   }
