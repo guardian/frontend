@@ -1,4 +1,4 @@
-@(model: ArticlePage, amp: Boolean = false)(implicit request: RequestHeader, context: _root_.model.ApplicationContext)
+@(model: ArticlePage)(implicit request: RequestHeader, context: _root_.model.ApplicationContext)
 
 @import views.html.fragments.langAttributes
 @import common.LinkTo
@@ -51,12 +51,12 @@
             <meta itemprop="mainEntityOfPage" content="@LinkTo(article.metadata.url)">
             <div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
                 <meta itemprop="name" content="The Guardian">
-                @fragments.logo(amp)
+                @fragments.logo(false)
             </div>
 
             @if(isPaidContent) {
                 @fragments.guBand()
-                @fragments.articleHeaderPaidGarnett(article, model, amp = amp)
+                @fragments.articleHeaderPaidGarnett(article, model, amp = false)
             }
 
             @if(article.tags.isReview) {
@@ -70,12 +70,12 @@
 
                         @if(!isPaidContent) {
                             @if(article.content.isSplash) {
-                                @fragments.articleHeaderColumn(article, model, amp = amp)
+                                @fragments.articleHeaderColumn(article, model, amp = false)
                             } else if(article.metadata.designType.nameOrDefault == "comment" ||
                                     article.metadata.designType.nameOrDefault == "guardianview") {
-                                @fragments.articleHeaderCommentGarnett(article, model, amp = amp)
+                                @fragments.articleHeaderCommentGarnett(article, model, amp = false)
                             } else {
-                                @fragments.articleHeaderGarnett(article, model, amp = amp)
+                                @fragments.articleHeaderGarnett(article, model, amp = false)
                             }
                         }
 
@@ -84,19 +84,19 @@
 
 
                             @if(isPaidContent){
-                                @fragments.contentMeta(article, model, amp = amp)
-                                @fragments.mainMedia(article, amp)
+                                @fragments.contentMeta(article, model, amp = false)
+                                @fragments.mainMedia(article, false)
                             }
 
                             @if(article.content.isSplash){
-                                @fragments.contentMeta(article, model, amp = amp)
+                                @fragments.contentMeta(article, model, amp = false)
                             }
 
-                            @BodyCleaner(article, amp = amp)
+                            @BodyCleaner(article, amp = false)
 
                             <div class="after-article js-after-article"></div>
 
-                            @fragments.submeta(article, amp)
+                            @fragments.submeta(article, false)
                         </div>
                     </div>
 
