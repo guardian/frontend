@@ -2,7 +2,7 @@
 @import model.Badges.badgeFor
 @import model.{KeyEventData, LiveBlogPage}
 
-@(model: LiveBlogPage, amp: Boolean = false)(implicit request: RequestHeader, context: _root_.model.ApplicationContext)
+@(model: LiveBlogPage)(implicit request: RequestHeader, context: _root_.model.ApplicationContext)
 
 @import common.{Edition, LinkTo}
 @import conf.switches.Switches._
@@ -27,7 +27,7 @@
         <meta itemprop="url" content="@LinkTo(article.metadata.url)">
         <div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
             <meta itemprop="name" content="The Guardian">
-            @fragments.logo(amp)
+            @fragments.logo(false)
         </div>
 
         <header class="content__head tonal__head tonal__head--@toneClass(article)
@@ -39,9 +39,7 @@
             <div class="content__header tonal__header u-cf">
                 <div class="gs-container">
                     <div class="content__main-column content__main-column--liveblog">
-                        @if(!amp) {
-                            @fragments.meta.metaInline(article)
-                        }
+                        @fragments.meta.metaInline(article)
                         <h1 itemprop="headline" class="content__headline js-score">@Html(article.trail.headline)</h1>
                     </div>
                 </div>
@@ -51,15 +49,12 @@
                 <div class="gs-container">
                     <div class="content__main-column content__main-column--liveblog">
                         @fragments.standfirst(article)
-
-                        @if(!amp) {
                             <div class="content__updated-container content__updated-container--liveblog">
                                 @if(article.fields.isLive) {
                                     <span class="blog__live live-pulse-icon flashing-image">LIVE</span>
                                 }
                                 Updated <time class="js-timestamp" datetime="@article.fields.lastModified" data-relativeformat="med"></time>
                             </div>
-                        }
                     </div>
                 </div>
             </div>
@@ -70,11 +65,11 @@
                     <div class="js-sport-tabs js-football-meta football-tabs content__mobile-full-width"></div>
                     <div class="js-cricket-score"></div>
 
-                    @fragments.mainMedia(article, amp)
+                    @fragments.mainMedia(article, false)
 
                     <div class="blog__left-col">
 
-                        @fragments.contentMeta(article, model, amp = amp)
+                        @fragments.contentMeta(article, model, amp = false)
 
                         <div class="js-top-marker"></div>
                         <div class="js-live-blog__sticky-components">
@@ -82,25 +77,11 @@
                                 @if(article.hasKeyEvents) {
                                     <div class="modern-visible js-updates-desktop">
                                         <div data-component="timeline">
-                                            @if(amp) {
-                                                <amp-accordion class="timeline">
-                                                    <section>
-                                                        <h2 class="timeline__header">
-                                                            Key events
-                                                            @fragments.inlineSvg("dropdown-mask", "icon", List("control", "modern-visible"))
-                                                        </h2>
-                                                        <ul class="timeline__items">
-                                                            @views.html.liveblog.keyEvents(LinkTo{"/" + article.metadata.id}, KeyEventData(article.content.fields.blocks, timezone))
-                                                        </ul>
-                                                    </section>
-                                                </amp-accordion>
-                                            } else {
                                                 @fragments.dropdown("Key events", Some("key-events"), true) {
                                                     <ul class="timeline js-live-blog__timeline u-unstyled">
                                                     @views.html.liveblog.keyEvents("/" + article.metadata.id, KeyEventData(article.content.fields.blocks, timezone))
                                                     </ul>
                                                 }
-                                            }
                                         </div>
                                     </div>
                                 }
@@ -124,7 +105,7 @@
 
                     @fragments.articleAsideSlot(shouldShowAds(model), articleAsideOptionalSizes(false))
 
-                    @if(model.related.hasStoryPackage && !amp) {
+                    @if(model.related.hasStoryPackage) {
                         <aside role="complementary" class="blog__related">
                             <h3 class="blog__related__head">More on this story</h3>
                             <ul class="u-unstyled fc-slice fc-slice--single-col">
@@ -149,9 +130,7 @@
         </div>
     </article>
 
-    @if(!amp) {
-        @fragments.contentFooter(article, model.related, isPaidContent = isPaidContent(model))
-    }
+    @fragments.contentFooter(article, model.related, isPaidContent = isPaidContent(model))
 
 </div>
 }
