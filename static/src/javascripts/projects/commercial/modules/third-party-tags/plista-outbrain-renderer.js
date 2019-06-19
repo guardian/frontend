@@ -44,7 +44,6 @@ const init = (): Promise<void> => {
         if (randomWidget === 'plista') {
             return renderWidget('plista', plista.init);
         }
-        return renderWidget('outbrain', initOutbrain);
     }
     return renderWidget('outbrain', initOutbrain);
 };
