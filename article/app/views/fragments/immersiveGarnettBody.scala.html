@@ -59,7 +59,7 @@
                             case None => { }
                         }
 
-                        @fragments.contentMeta(article, model, amp = false)
+                        @fragments.contentMeta(article, model)
 
                         @if(article.tags.isNews && !article.elements.hasMainEmbed && article.elements.elements("main").isEmpty) {
                             <hr class="content__hr hide-until-leftcol" />

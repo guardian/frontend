@@ -126,7 +126,7 @@
             }
         </div>
     </div>
-    @fragments.contentMeta(article, page, amp = false)
+    @fragments.contentMeta(article, page)
     @if(article.elements.hasShowcaseMainElement && article.content.starRating.isDefined) {
     <div class="media-primary media-content  media-primary--showcase  ">
         @article.content.starRating.map { rating =>
