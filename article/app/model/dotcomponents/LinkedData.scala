@@ -130,8 +130,18 @@ object LinkedData {
       main.getOrElse(fallbackLogo)
     }
 
+   // If gif, use fallback. This is because Fastly does not support upscaling on
+   // gif images so we can't guarantee they will be large enough to pass Google
+   // structured data requirements (1200px). This should affect very few
+   // articles in practice.
+   val openGraphImage = {
+     val preferred = article.content.openGraphImage
+     if (preferred.endsWith(".gif")) ImgSrc(fallbackLogo, Item1200)
+     else preferred
+   }
+
     List(
-      article.content.openGraphImage,
+      openGraphImage,
       ImgSrc(mainImageURL, OneByOne),
       ImgSrc(mainImageURL, FourByThree),
       ImgSrc(mainImageURL, Item1200),
