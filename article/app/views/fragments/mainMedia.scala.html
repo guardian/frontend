@@ -8,7 +8,7 @@
 
 @if(article.elements.hasMainEmbed || article.elements.elements("main").isEmpty) {
     <div class="media-primary">
-        @MainCleaner(article, false)
+        @MainCleaner(article)
     </div>
 } else {
     @if(!article.hasVideoAtTop) {
