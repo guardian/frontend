@@ -73,7 +73,7 @@
                                 @fragments.articleHeaderColumn(article, model)
                             } else if(article.metadata.designType.nameOrDefault == "comment" ||
                                     article.metadata.designType.nameOrDefault == "guardianview") {
-                                @fragments.articleHeaderCommentGarnett(article, model, amp = false)
+                                @fragments.articleHeaderCommentGarnett(article, model)
                             } else {
                                 @fragments.articleHeaderGarnett(article, model, amp = false)
                             }
