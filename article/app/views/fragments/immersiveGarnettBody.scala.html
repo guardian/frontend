@@ -1,4 +1,4 @@
-@(amp: Boolean = false)(implicit model: ArticlePage, request: RequestHeader, context: _root_.model.ApplicationContext)
+@()(implicit model: ArticlePage, request: RequestHeader, context: _root_.model.ApplicationContext)
 
 @import views.html.fragments.langAttributes
 @import common.LinkTo
@@ -59,7 +59,7 @@
                             case None => { }
                         }
 
-                        @fragments.contentMeta(article, model, amp = amp)
+                        @fragments.contentMeta(article, model, amp = false)
 
                         @if(article.tags.isNews && !article.elements.hasMainEmbed && article.elements.elements("main").isEmpty) {
                             <hr class="content__hr hide-until-leftcol" />
@@ -68,7 +68,7 @@
                         <div class="content__article-body from-content-api js-article__body"
                              itemprop="@if(article.tags.isReview){reviewBody} else {articleBody}"
                              data-test-id="article-review-body" @langAttributes(article.content)>
-                            @BodyCleaner(article, amp = amp)
+                            @BodyCleaner(article, amp = false)
                             @fragments.submeta(article)
 
                         </div>
