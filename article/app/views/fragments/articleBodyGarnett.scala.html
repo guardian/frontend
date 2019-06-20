@@ -84,12 +84,12 @@
 
 
                             @if(isPaidContent){
-                                @fragments.contentMeta(article, model, amp = false)
+                                @fragments.contentMeta(article, model)
                                 @fragments.mainMedia(article, false)
                             }
 
                             @if(article.content.isSplash){
-                                @fragments.contentMeta(article, model, amp = false)
+                                @fragments.contentMeta(article, model)
                             }
 
                             @BodyCleaner(article, amp = false)

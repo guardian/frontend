@@ -1,4 +1,4 @@
-@(item: model.ContentType, page: model.Page, showExtras: Boolean = true, amp: Boolean = false)(implicit request: RequestHeader)
+@(item: model.ContentType, page: model.Page, showExtras: Boolean = true)(implicit request: RequestHeader)
 @import model._
 @import views.support.Commercial.isPaidContent
 @import _root_.model.ContentDesignType.RichContentDesignType
@@ -33,10 +33,10 @@
         @item.content.contributorBio.map { bio => <p class="meta__bio" data-link-name="byline" data-component="meta-byline">@bio</p> }
 
         @if(item.content.tags.contributors.length == 1) {
-            @if(!amp && item.content.hasTonalHeaderByline && (item.tags.contributors.headOption.exists(_.properties.twitterHandle.nonEmpty) || item.tags.contributors.headOption.exists(_.properties.emailAddress.nonEmpty))) {
+            @if(item.content.hasTonalHeaderByline && (item.tags.contributors.headOption.exists(_.properties.twitterHandle.nonEmpty) || item.tags.contributors.headOption.exists(_.properties.emailAddress.nonEmpty))) {
                 <p class="meta__contact-header">Contact author</p>
             }
-            @fragments.meta.contactAuthor(item.tags, amp)
+            @fragments.meta.contactAuthor(item.tags, false)
         }
 
         @if(!(item.trail.shouldHidePublicationDate || item.content.isGallery)) {
@@ -54,10 +54,8 @@
     @if(showExtras) {
         <div class="meta__extras">
             <div class="meta__social" data-component="share">
-                @fragments.social(item.sharelinks.pageShares, "top", iconModifier = iconModifier, amp = amp)
+                @fragments.social(item.sharelinks.pageShares, "top", iconModifier = iconModifier, amp = false)
             </div>
-
-            @if(!amp) {
                 <div class="meta__numbers">
                     <div class="u-h meta__number js-sharecount">
                     </div>
@@ -66,7 +64,6 @@
                     }">
                     </div>
                 </div>
-            }
         </div>
     }
 }
