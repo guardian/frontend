@@ -32,7 +32,7 @@ class CricketStatsJob(paFeed: PaFeed) extends Logging {
     matchObjects.flatten.headOption
   }
 
-  def run(includeHistorical: Boolean, matchesToFetch: Int)(implicit executionContext: ExecutionContext): Unit = {
+  def run(fromDate: LocalDate, matchesToFetch: Int)(implicit executionContext: ExecutionContext): Unit = {
 
     cricketStatsAgents.foreach { case (team, agent) =>
 
@@ -42,9 +42,7 @@ class CricketStatsJob(paFeed: PaFeed) extends Logging {
         Days.daysBetween(cricketMatch.gameDate.toLocalDate, LocalDate.now).getDays > 5
       ).map(_.matchId).toSeq
 
-      val matchIds = if (includeHistorical) paFeed.getHistoricalMatchIds(team) else paFeed.getCurrentMatchIds(team)
-
-      matchIds.map { matchIds =>
+        paFeed.getMatchIds(team, fromDate).map { matchIds =>
 
         // never fetch more than 10 matches
         val matches = matchIds.diff(loadedMatches).take(Math.min(matchesToFetch, 10))

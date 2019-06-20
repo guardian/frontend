@@ -1,12 +1,13 @@
 package cricket.conf
 
 import app.LifecycleComponent
-import common.{JobScheduler, AkkaAsync}
+import common.{AkkaAsync, JobScheduler}
 import jobs.CricketStatsJob
+import org.joda.time.LocalDate
 import play.api.inject.ApplicationLifecycle
-import scala.concurrent.duration._
 
-import scala.concurrent.{Future, ExecutionContext}
+import scala.concurrent.duration._
+import scala.concurrent.{ExecutionContext, Future}
 
 class CricketLifecycle(
   appLifeCycle: ApplicationLifecycle,
@@ -21,10 +22,10 @@ class CricketLifecycle(
 
   private def scheduleJobs() {
     jobs.scheduleEvery("CricketAgentRefreshCurrentMatches", 15.seconds) {
-      Future(cricketStatsJob.run(includeHistorical = false, matchesToFetch = 1))
+      Future(cricketStatsJob.run(fromDate = LocalDate.now, matchesToFetch = 1))
     }
     jobs.scheduleEvery("CricketAgentRefreshHistoricalMatches", 10.minutes) {
-      Future(cricketStatsJob.run(includeHistorical = true, matchesToFetch = 10))
+      Future(cricketStatsJob.run(fromDate = LocalDate.now.minusMonths(2), matchesToFetch = 10))
     }
   }
 
@@ -39,7 +40,7 @@ class CricketLifecycle(
 
     // ensure that we populate the cricket stats cache immediately
     akkaAsync.after1s {
-      cricketStatsJob.run(includeHistorical = true, matchesToFetch = 10)
+      cricketStatsJob.run(fromDate = LocalDate.now.minusMonths(2), matchesToFetch = 10)
     }
   }
 }

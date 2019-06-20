@@ -52,12 +52,11 @@ class PaFeed(wsClient: WSClient, actorSystem: ActorSystem, materializer: Materia
     }
   }
 
-  def getCurrentMatchIds(team:CricketTeam)(implicit executionContext: ExecutionContext): Future[Seq[String]] = {
-    getTeamMatches(team, "fixtures", LocalDate.now, LocalDate.now)
-  }
-
-  def getHistoricalMatchIds(team: CricketTeam)(implicit executionContext: ExecutionContext): Future[Seq[String]] = {
-    getTeamMatches(team, "results", LocalDate.now.minusMonths(2), LocalDate.now)
+  def getMatchIds(team:CricketTeam, fromDate: LocalDate)(implicit executionContext: ExecutionContext): Future[Seq[String]] = {
+    Future.sequence(Seq(
+      getTeamMatches(team, "fixtures", fromDate, LocalDate.now),
+      getTeamMatches(team, "results", fromDate, LocalDate.now)
+    )).map(_.flatten)
   }
 
   private def getTeamMatches(team: CricketTeam, matchType: String, startDate: LocalDate, endDate: LocalDate)(implicit executionContext: ExecutionContext): Future[Seq[String]] = {
