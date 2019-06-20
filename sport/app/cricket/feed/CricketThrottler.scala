@@ -21,7 +21,7 @@ class CricketThrottlerActor()(implicit materializer: Materializer) extends Actor
   private case class TaskWithSender[+T](sender: ActorRef, task: () => Future[T])
 
   val throttler: ActorRef = Source.actorRef[CricketThrottledTask[Nothing]](bufferSize = 1024, OverflowStrategy.dropNew)
-    .throttle(1, 1.second, 1, ThrottleMode.Shaping)
+    .throttle(1, 500.millisecond, 1, ThrottleMode.Shaping)
     .to(Sink.actorRef(self, NotUsed))
     .run()
 
