@@ -3,7 +3,7 @@
 @import model.liveblog.{LiveBlogDate,BodyBlock}
 @import views.BodyCleaner
 @import model.DotcomContentType
-@(blocks: Seq[BodyBlock], article: Article, timezone: DateTimeZone, amp: Boolean = false)(implicit request: RequestHeader, context: model.ApplicationContext)
+@(blocks: Seq[BodyBlock], article: Article, timezone: DateTimeZone)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @import common.LinkTo
 
@@ -33,15 +33,9 @@
         </span>
 
         <p class="block-time published-time">
-            @if(amp){
-                <a href="@LinkTo{/@article.metadata.id?page=with:block-@block.id#block-@block.id}" itemprop="url" class="block-time__link">
-                    @views.html.liveblog.dateBlock(block.publishedCreatedDate(timezone))
-                </a>
-            } else {
                 <a href="/@article.metadata.id?page=with:block-@block.id#block-@block.id" itemprop="url" class="block-time__link">
                     @views.html.liveblog.dateBlock(block.publishedCreatedDate(timezone))
                 </a>
-            }
         </p>
 
         @block.title.map { title =>
@@ -55,7 +49,7 @@
         }
 
         <div class="block-elements@if(block.contributors.isEmpty){ block-elements--no-byline}" itemprop="articleBody">
-        @BodyCleaner(article, block.bodyHtml, amp)
+        @BodyCleaner(article, block.bodyHtml)
         </div>
         @block.republishedDate(timezone).map { case LiveBlogDate(republishedDate, _, ampm, gmt) =>
         <p class="block-time updated-time">Updated
@@ -66,7 +60,7 @@
             s"block-${block.id}",
             article.sharelinks.elementShares(s"block-${block.id}", None),
             article.metadata.contentType.getOrElse(DotcomContentType.Unknown),
-            amp
+            false
         )
 
     </div>

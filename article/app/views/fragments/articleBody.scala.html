@@ -44,7 +44,7 @@
 
             @fragments.mainMedia(article)
 
-            @fragments.headTonal(article, model, isPaidContent, amp = false)
+            @fragments.headTonal(article, model, isPaidContent)
 
             <div class="content__main tonal__main tonal__main--@toneClass(article)">
                 <div class="gs-container">
@@ -60,7 +60,7 @@
 
                         <div class="content__article-body from-content-api js-article__body" itemprop="@bodyType(model)"
                             data-test-id="article-review-body" @langAttributes(article.content)>
-                            @BodyCleaner(article, amp = false)
+                            @BodyCleaner(article)
                         </div>
 
                         @fragments.submeta(article, false)
