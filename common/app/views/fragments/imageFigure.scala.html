@@ -11,7 +11,6 @@
     widthsByBreakpoint: layout.WidthsByBreakpoint = MainMedia.inline,
     image_figureClasses: Option[(model.ImageAsset, String)] = None,
     shareInfo: Option[(Seq[model.ShareLink], DotcomContentType)] = None,
-    amp: Boolean = false,
     doCaption: Boolean = true
 )(implicit request: RequestHeader)
 
@@ -53,9 +52,6 @@
             }
         ) { classes =>
             @lightbox {
-                @if(amp) {
-                    @fragments.amp.ampImage(picture, imageOption.flatMap(_.altText).getOrElse(""))
-                } else {
                     @fragments.image(
                         picture,
                         classes,
@@ -63,7 +59,6 @@
                         imageOption.flatMap(_.altText).getOrElse(""),
                         isShowcase
                     )
-                }
             }
         }
         @if(doCaption) {
@@ -80,9 +75,6 @@
 }
 
 @lightbox(imageHtml: => Html) =  {
-    @if(amp) {
-        @imageHtml
-    } else {
         @lightboxIndex.map { index =>
         <a href="#img-@index" class="article__img-container js-gallerythumbs" data-link-name="Launch Article Lightbox" data-is-ajax>
             @imageHtml
@@ -95,7 +87,6 @@
         }.getOrElse {
             @imageHtml
         }
-    }
 }
 
 @caption(picture: model.ImageMedia, imageOption: Option[ImageAsset], isMain: Boolean) = {
@@ -110,9 +101,7 @@
                     </label>
 
                     <figcaption class="caption caption--main caption--img" itemprop="description">
-                        @if(!amp) {
-                            @fragments.inlineSvg("triangle", "icon", List("hide-until-tablet"))
-                        }
+                        @fragments.inlineSvg("triangle", "icon", List("hide-until-tablet"))
                         @img.caption.map(Html(_))
                         @if(img.displayCredit && !img.creditEndsWithCaption) {
                             @img.credit.map(Html(_))

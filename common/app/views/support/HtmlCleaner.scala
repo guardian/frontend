@@ -112,7 +112,7 @@ case class RecipeBodyImage(isRecipeArticle: Boolean) extends HtmlCleaner {
   }
 }
 
-case class PictureCleaner(article: Article, amp: Boolean)(implicit request: RequestHeader) extends HtmlCleaner with implicits.Numbers {
+case class PictureCleaner(article: Article)(implicit request: RequestHeader) extends HtmlCleaner with implicits.Numbers {
 
   def clean(body: Document): Document = {
     for {
@@ -167,8 +167,7 @@ case class PictureCleaner(article: Article, amp: Boolean)(implicit request: Requ
             article.sharelinks.elementShares(s"img-$index", crop.url),
             article.metadata.contentType.getOrElse(DotcomContentType.Unknown)
           )
-        },
-        amp = amp
+        }
       ).toString()
 
       figure.replaceWith(Jsoup.parseBodyFragment(html).body().child(0))
