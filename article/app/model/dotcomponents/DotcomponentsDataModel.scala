@@ -463,6 +463,11 @@ object DotcomponentsDataModel {
       article.metadata.commercial,
     )
 
+    val author = article.tags.contributors.map(_.name) match {
+      case Nil => "Guardian staff reporter"
+      case contributors => contributors.mkString(","),
+    }
+
     val content = DCPage(
       Content(
         article.trail.headline,
@@ -475,7 +480,7 @@ object DotcomponentsDataModel {
       ),
       tags,
       pagination = pagination,
-      article.tags.contributors.map(_.name).mkString(","),
+      author,
       article.metadata.id,
       article.metadata.pillar.map(_.toString),
       article.trail.webPublicationDate.getMillis,
