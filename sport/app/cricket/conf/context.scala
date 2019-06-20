@@ -21,10 +21,10 @@ class CricketLifecycle(
 
   private def scheduleJobs() {
     jobs.scheduleEvery("CricketAgentRefreshCurrentMatches", 15.seconds) {
-      Future(cricketStatsJob.run(cricketStatsJob.paFeed.getCurrentMatchIds))
+      Future(cricketStatsJob.run(includeHistorical = false, matchesToFetch = 1))
     }
     jobs.scheduleEvery("CricketAgentRefreshHistoricalMatches", 10.minutes) {
-      Future(cricketStatsJob.run(cricketStatsJob.paFeed.getHistoricalMatchIds))
+      Future(cricketStatsJob.run(includeHistorical = true, matchesToFetch = 10))
     }
   }
 
@@ -39,7 +39,7 @@ class CricketLifecycle(
 
     // ensure that we populate the cricket stats cache immediately
     akkaAsync.after1s {
-      cricketStatsJob.run(cricketStatsJob.paFeed.getHistoricalMatchIds)
+      cricketStatsJob.run(includeHistorical = true, matchesToFetch = 10)
     }
   }
 }

@@ -9,7 +9,7 @@ import org.joda.time.format.DateTimeFormat
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class CricketStatsJob(val paFeed: PaFeed) extends Logging {
+class CricketStatsJob(paFeed: PaFeed) extends Logging {
 
   private val cricketStatsAgents = CricketTeams.teams.map(Team => (Team, Box[Map[String, Match]](Map.empty)))
 
@@ -32,7 +32,7 @@ class CricketStatsJob(val paFeed: PaFeed) extends Logging {
     matchObjects.flatten.headOption
   }
 
-  def run(getMatchIds: CricketTeam => Future[Seq[String]])(implicit executionContext: ExecutionContext): Unit = {
+  def run(includeHistorical: Boolean, matchesToFetch: Int)(implicit executionContext: ExecutionContext): Unit = {
 
     cricketStatsAgents.foreach { case (team, agent) =>
 
@@ -42,9 +42,12 @@ class CricketStatsJob(val paFeed: PaFeed) extends Logging {
         Days.daysBetween(cricketMatch.gameDate.toLocalDate, LocalDate.now).getDays > 5
       ).map(_.matchId).toSeq
 
-      getMatchIds(team).map { matchIds =>
+      val matchIds = if (includeHistorical) paFeed.getHistoricalMatchIds(team) else paFeed.getCurrentMatchIds(team)
 
-        val matches = matchIds.diff(loadedMatches).take(10)
+      matchIds.map { matchIds =>
+
+        // never fetch more than 10 matches
+        val matches = matchIds.diff(loadedMatches).take(Math.min(matchesToFetch, 10))
 
         matches.map { matchId =>
 
