@@ -180,6 +180,7 @@
         figcaption {
             @include mq(tablet) {
                 max-width: gs-span(7) - 20;
+                min-height: $gs-baseline * 2;
             }
         }
 
