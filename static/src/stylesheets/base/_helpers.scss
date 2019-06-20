@@ -26,6 +26,12 @@
     }
 }
 
+.hide-until-phablet {
+    @include mq($until: phablet) {
+        display: none !important;
+    }
+}
+
 .hide-until-leftcol {
     @include mq($until: leftCol) {
         display: none !important;

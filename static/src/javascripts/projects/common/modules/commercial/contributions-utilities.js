@@ -763,6 +763,7 @@ export const getEngagementBannerTestsFromGoogleDoc = (): Promise<
                             test: () => {},
 
                             engagementBannerParams: {
+                                leadSentence: row.leadSentence,
                                 messageText: buildBannerCopy(
                                     row.messageText.trim(),
                                     hasCountryName
