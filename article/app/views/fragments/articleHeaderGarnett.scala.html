@@ -1,4 +1,4 @@
-@(article: model.Article, page: model.Page, amp: Boolean = false)(implicit request: RequestHeader, context: model.ApplicationContext)
+@(article: model.Article, page: model.Page)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @import views.html.fragments.langAttributes
 @import views.support.ContributorLinks
@@ -48,7 +48,7 @@
     </div>
 }
 
-    @fragments.meta.metaInline(article, amp)
+    @fragments.meta.metaInline(article, false)
 
     <div class="content__headline-standfirst-wrapper">
         <div class="content__header tonal__header">
@@ -126,7 +126,7 @@
             }
         </div>
     </div>
-    @fragments.contentMeta(article, page, amp = amp)
+    @fragments.contentMeta(article, page, amp = false)
     @if(article.elements.hasShowcaseMainElement && article.content.starRating.isDefined) {
     <div class="media-primary media-content  media-primary--showcase  ">
         @article.content.starRating.map { rating =>
@@ -139,7 +139,7 @@
         @fragments.items.elements.starRating(rating)
         }
     }
-    @fragments.mainMedia(article, amp)
+    @fragments.mainMedia(article, false)
     @if(article.elements.hasShowcaseMainElement && article.content.starRating.isDefined) {
     </div>
     }

@@ -56,7 +56,7 @@
 
             @if(isPaidContent) {
                 @fragments.guBand()
-                @fragments.articleHeaderPaidGarnett(article, model, amp = false)
+                @fragments.articleHeaderPaidGarnett(article, model)
             }
 
             @if(article.tags.isReview) {
@@ -70,12 +70,12 @@
 
                         @if(!isPaidContent) {
                             @if(article.content.isSplash) {
-                                @fragments.articleHeaderColumn(article, model, amp = false)
+                                @fragments.articleHeaderColumn(article, model)
                             } else if(article.metadata.designType.nameOrDefault == "comment" ||
                                     article.metadata.designType.nameOrDefault == "guardianview") {
-                                @fragments.articleHeaderCommentGarnett(article, model, amp = false)
+                                @fragments.articleHeaderCommentGarnett(article, model)
                             } else {
-                                @fragments.articleHeaderGarnett(article, model, amp = false)
+                                @fragments.articleHeaderGarnett(article, model)
                             }
                         }
 
