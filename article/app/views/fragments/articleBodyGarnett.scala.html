@@ -70,7 +70,7 @@
 
                         @if(!isPaidContent) {
                             @if(article.content.isSplash) {
-                                @fragments.articleHeaderColumn(article, model, amp = false)
+                                @fragments.articleHeaderColumn(article, model)
                             } else if(article.metadata.designType.nameOrDefault == "comment" ||
                                     article.metadata.designType.nameOrDefault == "guardianview") {
                                 @fragments.articleHeaderCommentGarnett(article, model, amp = false)
