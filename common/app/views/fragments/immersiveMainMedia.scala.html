@@ -54,7 +54,7 @@
                     </div>
                     @page.item match {
                         case article: model.Article => {
-                            @ImmersiveMainCleaner(article, article.fields.main, amp=false)
+                            @ImmersiveMainCleaner(article, article.fields.main)
                         }
                         case content => {
                             @Html(content.fields.main)
