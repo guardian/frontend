@@ -22,9 +22,12 @@ if (!isGoogleProxy()) {
 }
 
 const setupPrebid: () => Promise<void> = () =>
+    console.log('dfpEnv.externalDemand in Prebid');
+    console.log(dfpEnv.externalDemand);
+    const isSwitchOn = dfpEnv.externalDemand === 'prebid' || dfpEnv.externalDemand === 'all';
     moduleLoadResult.then(() => {
         if (
-            dfpEnv.externalDemand === 'prebid' &&
+            isSwitchOn &&
             commercialFeatures.dfpAdvertising &&
             !commercialFeatures.adFree &&
             !config.get('page.hasPageSkin') &&

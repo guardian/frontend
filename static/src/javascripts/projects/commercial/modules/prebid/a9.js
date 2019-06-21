@@ -3,6 +3,8 @@
 import config from 'lib/config';
 import { Advert } from 'commercial/modules/dfp/Advert';
 import { slots } from 'commercial/modules/prebid/slot-config';
+import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
+
 import type {
     PrebidSize,
     PrebidSlot,
@@ -49,9 +51,9 @@ const requestBids = (
     }
 
     const effectiveSlotFlatMap = slotFlatMap || (s => [s]); // default to identity
-    /*if (dfpEnv.externalDemand !== 'a9') {
+    if (dfpEnv.externalDemand !== 'a9' && dfpEnv.externalDemand !== 'all') {
         return requestQueue;
-    }*/
+    }
 
     const adUnits: Array<A9AdUnit> = slots(
         advert.id,

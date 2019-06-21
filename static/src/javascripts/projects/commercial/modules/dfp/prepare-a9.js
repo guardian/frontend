@@ -5,6 +5,8 @@ import { commercialFeatures } from 'common/modules/commercial/commercial-feature
 import { buildPageTargeting } from 'common/modules/commercial/build-page-targeting';
 import once from 'lodash/once';
 import a9 from 'commercial/modules/prebid/a9';
+import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
+import utils from 'commercial/modules/prebid/utils';
 
 const isGoogleProxy: () => boolean = () =>
     !!(
@@ -26,8 +28,13 @@ if (!isGoogleProxy()) {
 
 const setupA9: () => Promise<void> = () =>
     moduleLoadResult.then(() => {
+        console.log('dfpEnv.externalDemand in A9');
+        console.log(dfpEnv.externalDemand);
+        const isSwitchOn = dfpEnv.externalDemand === 'a9' || dfpEnv.externalDemand === 'all';
         if (
-            //dfpEnv.externalDemand === 'a9' &&
+            //TODO Only In US
+            //utils.isInUsRegion() &&
+            isSwitchOn &&
             commercialFeatures.dfpAdvertising &&
             !commercialFeatures.adFree &&
             !config.get('page.hasPageSkin') &&

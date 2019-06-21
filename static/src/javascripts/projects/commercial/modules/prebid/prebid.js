@@ -233,7 +233,7 @@ const requestBids = (
     }
 
     const effectiveSlotFlatMap = slotFlatMap || (s => [s]); // default to identity
-    if (dfpEnv.externalDemand !== 'prebid') {
+    if (dfpEnv.externalDemand !== 'prebid' && dfpEnv.externalDemand !== 'all') {
         return requestQueue;
     }
 
