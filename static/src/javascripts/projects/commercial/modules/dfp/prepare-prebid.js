@@ -14,6 +14,8 @@ if (!isGoogleProxy()) {
     moduleLoadResult = import(/* webpackChunkName: "Prebid.js" */ 'prebid.js/build/dist/prebid');
 }
 
+const isSwitchOn = dfpEnv.externalDemand === 'prebid' || dfpEnv.externalDemand === 'all';
+
 const setupPrebid: () => Promise<void> = () =>
     moduleLoadResult.then(() => {
         if (
