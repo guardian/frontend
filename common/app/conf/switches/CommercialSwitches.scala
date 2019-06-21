@@ -387,6 +387,17 @@ trait CommercialSwitches {
     sellByDate = never,
     exposeClientSide = true
   )
+
+  val a9Switch: Switch = Switch(
+    group = CommercialPrebid,
+    name = "a9-header-bidding",
+    description = "Turn on A9 header bidding",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+
 }
 
 trait PrebidSwitches {
