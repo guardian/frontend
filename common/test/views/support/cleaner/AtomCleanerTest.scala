@@ -64,8 +64,8 @@ class AtomCleanerTest extends FlatSpec
                                </figure>""")
 
 
- private def clean(document: Document, amp: Boolean): Document = {
-    val cleaner = AtomsCleaner(youTubeAtom, amp = amp)(TestRequest(), testApplicationContext)
+ private def clean(document: Document): Document = {
+    val cleaner = AtomsCleaner(youTubeAtom, amp = false)(TestRequest(), testApplicationContext)
     cleaner.clean(document)
     document
   }
@@ -79,16 +79,9 @@ class AtomCleanerTest extends FlatSpec
 
   "AtomsCleaner" should "create YouTube template" in {
     Switches.UseAtomsSwitch.switchOn()
-    val result: Document = clean(doc, amp = false)
+    val result: Document = clean(doc)
     result.select("div").attr("id") shouldBe "youtube-nQuN9CUsdVg"
     result.select("figcaption").html should include("Bird")
-  }
-
-  "AtomsCleaner" should "use amp-youtube markup if amp is true" in {
-    Switches.UseAtomsSwitch.switchOn()
-    val result: Document = clean(doc, amp = true)
-    result.select("amp-youtube").attr("data-videoid") should be("nQuN9CUsdVg")
-    result.select("amp-youtube").attr("id") should be("gu-video-youtube-887fb7b4-b31d-4a38-9d1f-26df5878cf9c")
   }
 
   "Youtube template" should "include endslate path" in {
