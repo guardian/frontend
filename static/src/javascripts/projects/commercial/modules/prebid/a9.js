@@ -37,6 +37,8 @@ const initialise = (): void => {
     });
 };
 
+// slotFlatMap allows you to dynamically interfere with the PrebidSlot definition
+// for this given request for bids.
 const requestBids = (
     advert: Advert,
     slotFlatMap?: PrebidSlot => PrebidSlot[]
