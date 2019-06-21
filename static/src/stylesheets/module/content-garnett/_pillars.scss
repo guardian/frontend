@@ -311,32 +311,24 @@
 // - or is it easier to just override everything in a separate module scoped with .paid-content?
 
 .content--pillar-opinion:not(.paid-content),
-.content--type-comment:not(.paid-content),
-.content--type-guardianview:not(.paid-content) {
+.content--pillar-news.content--type-comment:not(.paid-content),
+.content--pillar-news.content--type-guardianview:not(.paid-content) {
     @include colorPalatte($opinion-main, $opinion-main, $opinion-bright);
 }
 
-.content--pillar-arts.content--type-comment:not(.paid-content),
-.content--pillar-arts.content--type-guardianview:not(.paid-content),
 .content--pillar-arts:not(.paid-content) {
     @include colorPalatte($culture-main, $culture-dark, $culture-bright);
 }
 
-.content--pillar-lifestyle.content--type-comment:not(.paid-content),
-.content--pillar-lifestyle.content--type-guardianview:not(.paid-content),
 .content--pillar-lifestyle:not(.paid-content),
 .content__head--crossword {
     @include colorPalatte($lifestyle-main, $lifestyle-dark, $lifestyle-bright);
 }
 
-.content--pillar-sport.content--type-comment:not(.paid-content),
-.content--pillar-sport.content--type-guardianview:not(.paid-content),
 .content--pillar-sport:not(.paid-content) {
     @include colorPalatte($sport-main, $sport-dark, $sport-bright);
 }
 
-.content--pillar-special-report.content--type-comment:not(.paid-content),
-.content--pillar-special-report.content--type-guardianview:not(.paid-content),
 .content--pillar-special-report:not(.paid-content) {
     @include colorPalatte($special-report-dark, $special-report-dark, $highlight-main);
 
