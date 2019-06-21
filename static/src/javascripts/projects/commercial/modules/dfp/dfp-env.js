@@ -25,7 +25,7 @@ export const dfpEnv: DfpEnv = {
     /* adSlotSelector: string. A CSS selector to query ad slots in the DOM */
     adSlotSelector: '.js-ad-slot',
 
-    /* externalDemand: string. Set to 'prebid' for header-bidding connections, or 'none'. */
+    /* externalDemand: string. Set to 'prebid' or 'a9' for header-bidding connections, or 'none' or 'all'. */
     externalDemand: config.get('page.hbImpl'),
 
     /* lazyLoadEnabled: boolean. Set to true when adverts are lazy-loaded */
