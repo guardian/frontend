@@ -242,6 +242,11 @@ class GuardianConfiguration extends Logging {
     lazy val jsLocation = configuration.getStringProperty("googletag.js.location").getOrElse("//www.googletagservices.com/tag/js/gpt.js")
   }
 
+  object apstag {
+    lazy val key = configuration.getStringProperty("apstag.api.key").getOrElse("3332")
+    lazy val host = configuration.getStringProperty("apstag.api.host").getOrElse("//c.amazon-adsystem.com/aax2/apstag.js")
+  }
+
   object google {
     lazy val subscribeWithGoogleApiUrl = configuration.getStringProperty("google.subscribeWithGoogleApiUrl").getOrElse("https://swg.theguardian.com")
   }
@@ -503,7 +508,9 @@ class GuardianConfiguration extends Logging {
       ("membershipUrl", id.membershipUrl),
       ("supportUrl", id.supportUrl),
       ("stripePublicToken", id.stripePublicToken),
-      ("optimizeEpicUrl", id.optimizeEpicUrl)
+      ("optimizeEpicUrl", id.optimizeEpicUrl),
+      ("a9PublisherId", apstag.key),
+      ("a9Host", apstag.host)
     )
 
     lazy val pageData: Map[String, String] = {
