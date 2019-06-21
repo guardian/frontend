@@ -695,7 +695,6 @@ object MembershipEventCleaner extends HtmlCleaner {
 case class AtomsCleaner(
   atoms: Option[Atoms],
   shouldFence: Boolean = true,
-  amp: Boolean = false,
   mediaWrapper: Option[MediaWrapper] = None,
   posterImageOverride: Option[ImageMedia] = None
 )(implicit val request: RequestHeader, context: ApplicationContext) extends HtmlCleaner {
@@ -733,7 +732,7 @@ case class AtomsCleaner(
               atomData,
               articleConfig,
               shouldFence,
-              amp,
+              false,
               mediaWrapper,
               posterImageOverride
             ).toString()

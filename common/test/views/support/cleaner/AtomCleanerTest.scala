@@ -65,7 +65,7 @@ class AtomCleanerTest extends FlatSpec
 
 
  private def clean(document: Document): Document = {
-    val cleaner = AtomsCleaner(youTubeAtom, amp = false)(TestRequest(), testApplicationContext)
+    val cleaner = AtomsCleaner(youTubeAtom)(TestRequest(), testApplicationContext)
     cleaner.clean(document)
     document
   }

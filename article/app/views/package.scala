@@ -33,7 +33,6 @@ object MainCleaner {
         MainFigCaptionCleaner,
         AtomsCleaner(
           atoms = article.content.atoms,
-          amp = false,
           mediaWrapper = Some(MediaWrapper.MainMedia),
           posterImageOverride = article.elements.thumbnail.map(_.images)
         )
@@ -51,7 +50,7 @@ object BodyCleaner {
 
     List(
       InBodyElementCleaner,
-      AtomsCleaner(atoms = article.content.atoms, shouldFence = true, amp = false),
+      AtomsCleaner(atoms = article.content.atoms, shouldFence = true),
       InBodyLinkCleaner("in body link", false),
       BlockNumberCleaner,
       new TweetCleaner(article.content, false),
