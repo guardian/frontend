@@ -16,6 +16,7 @@ import { trackConsent as trackCmpConsent } from 'commercial/modules/cmp/consent-
 import { init as prepareAdVerification } from 'commercial/modules/ad-verification/prepare-ad-verification';
 import { init as prepareGoogletag } from 'commercial/modules/dfp/prepare-googletag';
 import { init as preparePrebid } from 'commercial/modules/dfp/prepare-prebid';
+import { init as prepareA9 } from 'commercial/modules/dfp/prepare-a9';
 import { init as initLiveblogAdverts } from 'commercial/modules/liveblog-adverts';
 import { init as initStickyTopBanner } from 'commercial/modules/sticky-top-banner';
 import { init as initThirdPartyTags } from 'commercial/modules/third-party-tags';
@@ -40,6 +41,7 @@ if (!commercialFeatures.adFree) {
     commercialModules.push(
         ['cm-prepare-prebid', preparePrebid],
         ['cm-prepare-googletag', prepareGoogletag],
+        ['cm-prepare-a9', prepareA9],
         ['cm-thirdPartyTags', initThirdPartyTags],
         ['cm-prepare-adverification', prepareAdVerification],
         ['cm-mobileSticky', initMobileSticky],
