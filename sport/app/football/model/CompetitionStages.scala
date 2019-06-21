@@ -125,25 +125,26 @@ object KnockoutSpider {
    ),
     // women world cup 2019
    "870" -> List(
-     new DateTime(2019, 6,22, 16, 30, DateTimeZone.forID("Europe/London")), // Round of 16
-     new DateTime(2019, 6,22, 20, 0, DateTimeZone.forID("Europe/London")), // Round of 16
+     new DateTime(2019, 6,22, 20, 0, DateTimeZone.forID("Europe/London")),  // Round of 16
      new DateTime(2019, 6,23, 16, 30, DateTimeZone.forID("Europe/London")), // Round of 16
-     new DateTime(2019, 6,23, 20, 0, DateTimeZone.forID("Europe/London")), // Round of 16
-     new DateTime(2019, 6,24, 18, 0, DateTimeZone.forID("Europe/London")), // Round of 16
-     new DateTime(2019, 6,24, 20, 0, DateTimeZone.forID("Europe/London")), // Round of 16
-     new DateTime(2019, 6,25, 17, 0, DateTimeZone.forID("Europe/London")), // Round of 16
-     new DateTime(2019, 6,25, 20, 0, DateTimeZone.forID("Europe/London")), // Round of 16
+     new DateTime(2019, 6,23, 20, 0, DateTimeZone.forID("Europe/London")),  // Round of 16
+     new DateTime(2019, 6,24, 18, 0, DateTimeZone.forID("Europe/London")),  // Round of 16
 
-     new DateTime(2019, 6,27, 20, 0, DateTimeZone.forID("Europe/London")), // Quarter Final
-     new DateTime(2019, 6,28, 20, 0, DateTimeZone.forID("Europe/London")), // Quarter Final
-     new DateTime(2019, 6,29, 14, 0, DateTimeZone.forID("Europe/London")), // Quarter Final
+     new DateTime(2019, 6,25, 17, 0, DateTimeZone.forID("Europe/London")),  // Round of 16
+     new DateTime(2019, 6,25, 20, 0, DateTimeZone.forID("Europe/London")),  // Round of 16
+     new DateTime(2019, 6,22, 16, 30, DateTimeZone.forID("Europe/London")), // Round of 16
+     new DateTime(2019, 6,24, 20, 0, DateTimeZone.forID("Europe/London")),  // Round of 16
+
+     new DateTime(2019, 6,27, 20, 0, DateTimeZone.forID("Europe/London")),  // Quarter Final
+     new DateTime(2019, 6,28, 20, 0, DateTimeZone.forID("Europe/London")),  // Quarter Final
+     new DateTime(2019, 6,29, 14, 0, DateTimeZone.forID("Europe/London")),  // Quarter Final
      new DateTime(2019, 6,29, 17, 30, DateTimeZone.forID("Europe/London")), // Quarter Final
 
-     new DateTime(2019, 7, 2, 20, 0, DateTimeZone.forID("Europe/London")), // Semi-Final
-     new DateTime(2019, 7, 3, 20, 0, DateTimeZone.forID("Europe/London")), // Semi-Final
+     new DateTime(2019, 7, 2, 20, 0, DateTimeZone.forID("Europe/London")),  // Semi-Final
+     new DateTime(2019, 7, 3, 20, 0, DateTimeZone.forID("Europe/London")),  // Semi-Final
 
-     new DateTime(2019, 7, 6, 16, 0, DateTimeZone.forID("Europe/London")), // 3rd/4th Play-Offs
-     new DateTime(2019, 7, 7, 16, 0, DateTimeZone.forID("Europe/London"))  // Final
+     new DateTime(2019, 7, 6, 16, 0, DateTimeZone.forID("Europe/London")),  // 3rd/4th Play-Offs
+     new DateTime(2019, 7, 7, 16, 0, DateTimeZone.forID("Europe/London"))   // Final
    )
   )
 
