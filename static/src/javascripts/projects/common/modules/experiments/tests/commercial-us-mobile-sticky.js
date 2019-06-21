@@ -9,7 +9,7 @@ export const commercialUsMobileSticky: ABTest = {
     author: 'Ricardo Costa',
     description: 'This test runs the new US mobile sticky ad slot',
     audience: 0.2,
-    audienceOffset: 0.8, // Offsetting this just because I'm a rebel
+    audienceOffset: 0.8, // To avoid clashes with other tests and the results on this AB test are already very sensitive to outside factors
     successMeasure: 'How good it runs and looks to the user.',
     audienceCriteria: 'n/a',
     dataLinkNames: 'n/a',
