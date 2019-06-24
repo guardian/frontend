@@ -20,7 +20,10 @@ export const loadAdvert = (advert: Advert): void => {
                 console.log('Load Advert A9 result ', values[1]);
             });
         })
-        .then(() => window.googletag.display(advert.id));
+        .then(() => {
+            console.log(' *** LOAD ADVERT CALL DFP ');
+            window.googletag.display(advert.id);
+        });
 };
 
 export const refreshAdvert = (advert: Advert): void => {
@@ -78,6 +81,7 @@ export const refreshAdvert = (advert: Advert): void => {
                     advert.slot.defineSizeMapping([[[0, 0], [advert.size]]]);
                 }
             }
+            console.log(' *** REFRESH ADVERT CALL DFP ');
             window.googletag.pubads().refresh([advert.slot]);
         });
 };
