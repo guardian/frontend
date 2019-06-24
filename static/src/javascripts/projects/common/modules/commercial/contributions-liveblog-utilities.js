@@ -116,7 +116,7 @@ const addEpicToBlocks = (
 
             const $epic = $.create(epicHtml);
             $epic.insertAfter(el);
-            mediator.emit(variant.insertEvent);
+            mediator.emit(parentTest.insertEvent);
             $(el).removeClass(INSERT_EPIC_AFTER_CLASS);
             setEpicLiveblogEntryTimeData($epic[0], timeData);
             setupViewTracking(el, variant, parentTest);
