@@ -5,10 +5,7 @@ import { Advert } from 'commercial/modules/dfp/Advert';
 import { slots } from 'commercial/modules/prebid/slot-config';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 
-import type {
-    PrebidSize,
-    PrebidSlot,
-} from 'commercial/modules/prebid/types';
+import type { PrebidSize, PrebidSlot } from 'commercial/modules/prebid/types';
 
 class A9AdUnit {
     slotID: ?string;
@@ -29,19 +26,16 @@ class A9AdUnit {
 let requestQueue: Promise<void> = Promise.resolve();
 let initialised: boolean = false;
 
-const initialise = (window): void => {
+const initialise = (): void => {
     initialised = true;
 
-    //Initialize the Library
     window.apstag.init({
         pubID: '3332',
         adServer: 'googletag',
-        bidTimeout: 2e3
+        bidTimeout: 2e3,
     });
 };
 
-// slotFlatMap allows you to dynamically interfere with the PrebidSlot definition
-// for this given request for bids.
 const requestBids = (
     advert: Advert,
     slotFlatMap?: PrebidSlot => PrebidSlot[]
@@ -64,7 +58,7 @@ const requestBids = (
         .map(slot => new A9AdUnit(advert, slot))
         .filter(adUnit => !adUnit.isEmpty());
 
-    console.log("A9 AD UNITS", adUnits);
+    console.log('A9 AD UNITS', adUnits);
 
     if (adUnits.length === 0) {
         return requestQueue;
@@ -74,10 +68,10 @@ const requestBids = (
         .then(
             () =>
                 new Promise(resolve => {
-                    console.log("A9 CALL FETCH BIDS", {slots: adUnits});
-                    window.apstag.fetchBids({slots: adUnits}, function(bids) {
-                        console.log("A9 BIDS received", bids);
-                        window.googletag.cmd.push(function(){
+                    console.log('A9 CALL FETCH BIDS', { slots: adUnits });
+                    window.apstag.fetchBids({ slots: adUnits }, bids => {
+                        console.log('A9 BIDS received', bids);
+                        window.googletag.cmd.push(() => {
                             window.apstag.setDisplayBids();
                             resolve();
                         });
