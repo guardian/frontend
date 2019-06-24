@@ -7,8 +7,8 @@ import org.joda.time.LocalDate
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] = Set(
     OldTLSSupportDeprecation,
-    LazyLoadImages
   )
+
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
 
@@ -19,12 +19,4 @@ object OldTLSSupportDeprecation extends Experiment(
   sellByDate = new LocalDate(2019, 7, 18),
   // Custom group based on header set in Fastly
   participationGroup = TLSSupport
-)
-
-object LazyLoadImages extends Experiment(
-  name = "lazy-load-images",
-  description = "Lazy-loaded non-main images for participants on fronts as images approach the viewport",
-  owners = Seq(Owner.withGithub("nicl")),
-  sellByDate = new LocalDate(2019, 7, 3),
-  participationGroup = Perc0A
 )
