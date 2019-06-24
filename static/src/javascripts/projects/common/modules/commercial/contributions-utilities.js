@@ -494,7 +494,7 @@ const makeEpicABTest = ({
 const buildEpicCopy = (row: any, hasCountryName: boolean) => {
     const heading = throwIfEmptyString('heading', row.heading);
 
-    const paragraphs = throwIfEmptyArray(
+    const paragraphs: string[] = throwIfEmptyArray(
         'paragraphs',
         splitAndTrim(row.paragraphs, '\n')
     );
@@ -510,7 +510,7 @@ const buildEpicCopy = (row: any, hasCountryName: boolean) => {
                 : heading,
         paragraphs:
             paragraphs && countryName
-                ? paragraphs.map(para => replaceCountryName(para, countryName))
+                ? paragraphs.map<string>(para => replaceCountryName(para, countryName))
                 : paragraphs,
         highlightedText: row.highlightedText
             ? row.highlightedText.replace(

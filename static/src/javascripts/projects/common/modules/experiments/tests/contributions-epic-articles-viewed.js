@@ -60,6 +60,7 @@ export const articlesViewed: EpicABTest = makeEpicABTest({
         {
             id: 'control',
             buttonTemplate: defaultButtonTemplate,
+            products: [],
             copy: buildEpicCopy(
                 isUSUK ? USUKControlCopy : ROWControlCopy,
                 !isUSUK
@@ -68,6 +69,7 @@ export const articlesViewed: EpicABTest = makeEpicABTest({
         {
             id: 'variant',
             buttonTemplate: defaultButtonTemplate,
+            products: [],
             copy: buildEpicCopy(
                 {
                     heading: `You’ve read ${articleViewCount} articles...`,
