@@ -53,7 +53,7 @@ object BodyCleaner {
       AtomsCleaner(atoms = article.content.atoms, shouldFence = true),
       InBodyLinkCleaner("in body link"),
       BlockNumberCleaner,
-      new TweetCleaner(article.content, false),
+      new TweetCleaner(article.content),
       WitnessCleaner,
       TableEmbedComplimentaryToP,
       R2VideoCleaner,
