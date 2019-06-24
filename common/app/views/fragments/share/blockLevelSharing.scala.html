@@ -1,5 +1,5 @@
 @import model.DotcomContentType
-@(id: String, shareItems: Seq[model.ShareLink], contentType: DotcomContentType, isNewGallery: Boolean = false, amp: Boolean = false)
+@(id: String, shareItems: Seq[model.ShareLink], contentType: DotcomContentType, isNewGallery: Boolean = false)
 
 <div class="block-share block-share--@contentType.name.toLowerCase @if(!isNewGallery) { hide-on-mobile }" data-link-name="block share">
     @shareItems.map { item: model.ShareLink =>
