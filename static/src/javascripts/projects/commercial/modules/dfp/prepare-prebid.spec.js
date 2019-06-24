@@ -1,12 +1,13 @@
 // @flow
 
 import config from 'lib/config';
+import { isGoogleProxy } from 'lib/detect';
 import prebid from 'commercial/modules/prebid/prebid';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { _ } from './prepare-prebid';
 
-const { isGoogleProxy, setupPrebid } = _;
+const { setupPrebid } = _;
 
 jest.mock('common/modules/commercial/commercial-features', () => ({
     commercialFeatures: {},

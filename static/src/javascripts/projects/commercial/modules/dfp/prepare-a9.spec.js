@@ -1,12 +1,13 @@
 // @flow
 
 import config from 'lib/config';
+import { isGoogleProxy } from 'lib/detect';
 import a9 from 'commercial/modules/prebid/a9';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { _ } from './prepare-a9';
 
-const { isGoogleProxy, setupA9 } = _;
+const { setupA9 } = _;
 
 jest.mock('common/modules/commercial/commercial-features', () => ({
     commercialFeatures: {},

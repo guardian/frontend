@@ -354,6 +354,14 @@ const getUserAgent = ((): string | { browser: string, version: string } => {
     };
 })();
 
+const isGoogleProxy: () => boolean = () =>
+    !!(
+        navigator &&
+        navigator.userAgent &&
+        (navigator.userAgent.indexOf('Google Web Preview') > -1 ||
+            navigator.userAgent.indexOf('googleweblight') > -1)
+    );
+
 initBreakpoints();
 
 export {
@@ -373,4 +381,5 @@ export {
     isEnhanced,
     adblockInUse,
     getReferrer,
+    isGoogleProxy,
 };

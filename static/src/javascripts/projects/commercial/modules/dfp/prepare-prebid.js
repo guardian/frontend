@@ -6,14 +6,7 @@ import { getPageTargeting } from 'common/modules/commercial/build-page-targeting
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import once from 'lodash/once';
 import prebid from 'commercial/modules/prebid/prebid';
-
-const isGoogleProxy: () => boolean = () =>
-    !!(
-        navigator &&
-        navigator.userAgent &&
-        (navigator.userAgent.indexOf('Google Web Preview') > -1 ||
-            navigator.userAgent.indexOf('googleweblight') > -1)
-    );
+import { isGoogleProxy } from 'lib/detect';
 
 let moduleLoadResult = Promise.resolve();
 
@@ -45,6 +38,5 @@ export const init = (): Promise<void> => {
 };
 
 export const _ = {
-    isGoogleProxy,
     setupPrebid,
 };
