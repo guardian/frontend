@@ -476,7 +476,7 @@ case class ProfileAtomPage(
   override val withVerticalScrollbar: Boolean
 )(implicit request: RequestHeader) extends AtomPage {
   override val atomType = "profile"
-  override val body = views.html.fragments.atoms.snippets.profile(atom, isAmp = false)
+  override val body = views.html.fragments.atoms.snippets.profile(atom)
   override val javascriptModule = "snippet"
   override val metadata = MetaData.make(
     id = atom.id,

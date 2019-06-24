@@ -1,4 +1,4 @@
-@(profile: model.content.ProfileAtom, isAmp: Boolean)(implicit request: RequestHeader)
+@(profile: model.content.ProfileAtom)(implicit request: RequestHeader)
 
 @import views.html.fragments.image
 
@@ -7,20 +7,16 @@
   label = profile.data.typeLabel.getOrElse("Profile"),
   headline = profile.atom.title.getOrElse(""),
   profile.id,
-  isAmp
+  false
 ){
   @for(img <- profile.image ) {
     <div class="explainer-snippet__image">
-      @if(isAmp) {
-        @fragments.amp.ampImage(img, "Profile")
-      } else {
         @image(
           picture = img,
           classes = Nil,
           imageAltText = "Profile",
           isImmersiveMainMedia = true
         )
-      }
     </div>
   }
 
