@@ -491,7 +491,7 @@ override val withJavaScript: Boolean,
 override val withVerticalScrollbar: Boolean
 )(implicit request: RequestHeader) extends AtomPage {
   override val atomType = "qanda"
-  override val body = views.html.fragments.atoms.snippets.qanda(atom, isAmp = false)
+  override val body = views.html.fragments.atoms.snippets.qanda(atom)
   override val javascriptModule = "snippet"
   override val metadata = MetaData.make(
     id = atom.id,

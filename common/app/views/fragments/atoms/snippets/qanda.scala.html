@@ -1,4 +1,4 @@
-@(qa: model.content.QandaAtom, isAmp: Boolean)(implicit request: RequestHeader)
+@(qa: model.content.QandaAtom)(implicit request: RequestHeader)
 
 @import views.html.fragments.image
 
@@ -7,20 +7,16 @@
   label = qa.data.typeLabel.getOrElse("Q&amp;A"),
   headline = qa.atom.title.getOrElse(""),
   qa.id,
-  isAmp
+  false
 ){
   @for(img <- qa.image ) {
     <div class="explainer-snippet__image">
-      @if(isAmp) {
-        @fragments.amp.ampImage(img, "Q&amp;A")
-      } else {
         @image(
           picture = img,
           classes = Nil,
           imageAltText = "Q&amp;A",
           isImmersiveMainMedia = true
         )
-      }
     </div>
   }
 
