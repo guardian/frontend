@@ -1,7 +1,7 @@
 // @flow
 
 import a9 from 'commercial/modules/prebid/a9';
-import _a9lib from 'lib/a9';
+import _a9lib from 'static/src/javascripts/lib/apstag';
 
 jest.mock('lib/raven');
 jest.mock('lib/a9', () => ({
