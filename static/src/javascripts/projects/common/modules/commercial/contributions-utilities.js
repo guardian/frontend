@@ -510,7 +510,9 @@ const buildEpicCopy = (row: any, hasCountryName: boolean) => {
                 : heading,
         paragraphs:
             paragraphs && countryName
-                ? paragraphs.map<string>(para => replaceCountryName(para, countryName))
+                ? paragraphs.map<string>(para =>
+                      replaceCountryName(para, countryName)
+                  )
                 : paragraphs,
         highlightedText: row.highlightedText
             ? row.highlightedText.replace(
