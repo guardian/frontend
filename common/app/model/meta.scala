@@ -506,7 +506,7 @@ override val withJavaScript: Boolean,
 override val withVerticalScrollbar: Boolean
 )(implicit request: RequestHeader) extends AtomPage {
   override val atomType = "timeline"
-  override val body = views.html.fragments.atoms.snippets.timeline(atom, isAmp = false)
+  override val body = views.html.fragments.atoms.snippets.timeline(atom)
   override val javascriptModule = "snippet"
   override val metadata = MetaData.make(
     id = atom.id,
