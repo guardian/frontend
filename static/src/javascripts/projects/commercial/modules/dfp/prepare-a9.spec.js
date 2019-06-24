@@ -21,7 +21,7 @@ jest.mock('commercial/modules/dfp/Advert', () =>
     jest.fn().mockImplementation(() => ({ advert: jest.fn() }))
 );
 
-jest.mock('lib/a9', () => jest.fn());
+jest.mock('lib/apstag', () => jest.fn());
 
 jest.mock('common/modules/commercial/build-page-targeting', () => ({
     buildPageTargeting: jest.fn(),
