@@ -461,7 +461,7 @@ case class GuideAtomPage(
   override val withVerticalScrollbar: Boolean
 )(implicit request: RequestHeader) extends AtomPage {
   override val atomType = "guide"
-  override val body = views.html.fragments.atoms.snippets.guide(atom, isAmp = false)
+  override val body = views.html.fragments.atoms.snippets.guide(atom)
   override val javascriptModule = "snippet"
   override val metadata = MetaData.make(
     id = atom.id,
