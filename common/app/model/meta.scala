@@ -447,7 +447,7 @@ case class StoryQuestionsAtomPage(
   val inApp: Boolean
 )(implicit request: RequestHeader) extends AtomPage {
   override val atomType = "storyquestions"
-  override val body = views.html.fragments.atoms.storyquestions(atom, isAmp = false, inApp = inApp)
+  override val body = views.html.fragments.atoms.storyquestions(atom, inApp = inApp)
   override val metadata = MetaData.make(
     id = atom.id,
     webTitle = atom.atom.title.getOrElse("Story questions"),

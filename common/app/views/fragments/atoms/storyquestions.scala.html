@@ -1,4 +1,4 @@
-@(storyquestions: model.content.StoryQuestionsAtom, isAmp: Boolean, inApp: Boolean)(implicit request: RequestHeader)
+@(storyquestions: model.content.StoryQuestionsAtom, inApp: Boolean)(implicit request: RequestHeader)
 
 @import model.content.StoryQuestionsAtom
 
@@ -10,7 +10,6 @@
     }
 }
 
-@if(!isAmp) {
     <div class="js-view-tracking-component submeta user__question">
         <span class="js-storyquestion-atom-id is-hidden" id="@storyquestions.id"></span>
 
@@ -61,7 +60,5 @@
                     }
                 </p>
             }
+        }
     </div>
-}
-
-}
