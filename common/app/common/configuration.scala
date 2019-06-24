@@ -244,7 +244,6 @@ class GuardianConfiguration extends Logging {
 
   object apstag {
     lazy val key = configuration.getStringProperty("apstag.api.key").getOrElse("3332")
-    lazy val host = configuration.getStringProperty("apstag.api.host").getOrElse("//c.amazon-adsystem.com/aax2/apstag.js")
   }
 
   object google {
@@ -509,8 +508,7 @@ class GuardianConfiguration extends Logging {
       ("supportUrl", id.supportUrl),
       ("stripePublicToken", id.stripePublicToken),
       ("optimizeEpicUrl", id.optimizeEpicUrl),
-      ("a9PublisherId", apstag.key),
-      ("a9Host", apstag.host)
+      ("a9PublisherId", apstag.key)
     )
 
     lazy val pageData: Map[String, String] = {

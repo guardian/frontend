@@ -60,6 +60,7 @@ jest.mock('lib/detect', () => ({
             width: 1300,
         },
     ],
+    isGoogleProxy: jest.fn(() => false),
 }));
 jest.mock('common/modules/analytics/google', () => () => {});
 jest.mock('commercial/modules/dfp/display-lazy-ads', () => ({
