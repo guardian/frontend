@@ -11,7 +11,7 @@ import { isInUsRegion } from 'commercial/modules/prebid/utils';
 
 let moduleLoadResult = Promise.resolve();
 if (!isGoogleProxy()) {
-    moduleLoadResult = import('lib/a9.js');
+    moduleLoadResult = import('lib/apstag.js');
 }
 
 const setupA9: () => Promise<void> = () =>
