@@ -4,7 +4,6 @@
 
 @(
     media: model.content.MediaAtom,
-    amp: Boolean = false,
     displayCaption: Boolean,
     displayEndSlate: Boolean = false,
     mediaWrapper: Option[MediaWrapper],
@@ -14,10 +13,9 @@
 @{
     media match {
         case posterOnly if media.assets.isEmpty && media.posterImage.isDefined  =>
-            views.html.fragments.atoms.posterImage(mediaWrapper, amp, media.posterImage.get, media.title)
+            views.html.fragments.atoms.posterImage(mediaWrapper, false, media.posterImage.get, media.title)
         case youtube if media.assets.headOption.filter(_.platform == MediaAssetPlatform.Youtube) =>
-            if(amp) views.html.fragments.atoms.ampYoutube(media, displayCaption, mediaWrapper)
-            else views.html.fragments.atoms.youtube(
+            views.html.fragments.atoms.youtube(
                 media,
                 displayCaption,
                 displayDuration = true,
@@ -25,7 +23,7 @@
                 mediaWrapper = mediaWrapper,
                 posterImageOverride = posterImageOverride
             )
-        case genericAsset if media.assets.nonEmpty => views.html.fragments.atoms.genericMedia(media, displayCaption, amp)
+        case genericAsset if media.assets.nonEmpty => views.html.fragments.atoms.genericMedia(media, displayCaption, false)
         case _ =>
     }
 }
