@@ -224,7 +224,7 @@ object AmpSrcCleaner extends HttpsUrl {
   }
 }
 
-case class InBodyLinkCleaner(dataLinkName: String, amp: Boolean = false)(implicit val edition: Edition, implicit val request: RequestHeader) extends HtmlCleaner {
+case class InBodyLinkCleaner(dataLinkName: String)(implicit val edition: Edition, implicit val request: RequestHeader) extends HtmlCleaner {
   def clean(body: Document): Document = {
     val links = body.getElementsByAttribute("href")
 
@@ -234,10 +234,6 @@ case class InBodyLinkCleaner(dataLinkName: String, amp: Boolean = false)(implici
         link.attr("data-link-name", dataLinkName)
         link.addClass("u-underline")
       }
-      if (amp && link.hasAttr("style")) {
-        link.removeAttr("style")
-      }
-
       if (ReaderRevenueSite.isReaderRevenueSiteUrl(link.attr("href"))) {
         link.addClass("js-acquisition-link")
       }

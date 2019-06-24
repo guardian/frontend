@@ -51,7 +51,7 @@ object BodyCleaner {
     List(
       InBodyElementCleaner,
       AtomsCleaner(atoms = article.content.atoms, shouldFence = true),
-      InBodyLinkCleaner("in body link", false),
+      InBodyLinkCleaner("in body link"),
       BlockNumberCleaner,
       new TweetCleaner(article.content, false),
       WitnessCleaner,
