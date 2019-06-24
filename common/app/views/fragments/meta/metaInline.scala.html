@@ -1,4 +1,4 @@
-@(item: model.ContentType, amp: Boolean = false)(implicit request: RequestHeader)
+@(item: model.ContentType)(implicit request: RequestHeader)
 
 @import common.{LinkTo, Localisation}
 @import model.Badges.badgeFor
@@ -14,7 +14,6 @@
         "content__labels--flagship"  -> item.tags.isAudio
     ), "content__labels")
 ">
-    @if(!amp) {
         @badgeFor(item).map { badge =>
             <div class="badge-slot">
                 <a href="@LinkTo {/@badge.seriesTag}">
@@ -22,7 +21,6 @@
                 </a>
             </div>
         }
-    }
 
     @item.content.blogOrSeriesTag.map { series =>
         <div class="@RenderClasses(Map(
@@ -38,7 +36,7 @@
             </a>
         </div>
 
-        @if(item.content.isSplash && !amp) {
+        @if(item.content.isSplash) {
             <div class="content__series-cta">
                     @fragments.inlineSvg("arrow-right", "icon", List("content__series-cta__icon", "rounded-icon centered-icon"))
                     <span class="content__series-cta__text hide-until-leftcol">
@@ -58,7 +56,6 @@
         }
     }
 
-    @if(!amp) {
         @if(item.content.isPaidContent && item.content.isImmersive) {
           <div class="content__section-label--advertisement">
               <a class="content__label__link content__section-label__link--advertisement" href="@LinkTo {/@item.content.sectionLabelLink}">
@@ -78,5 +75,4 @@
               </div>
           }
         }
-    }
 </div>
