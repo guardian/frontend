@@ -26,6 +26,6 @@
     }
     <!--[if IE 9]></video><![endif]-->
     @maybeImageMedia.map(ImgSrc.getFallbackUrl(_)).orElse(maybeSrc).orElse(maybePath).map { src =>
-        <img class="@RenderClasses(classes: _*)" alt="" src="@src"/>
+        <img loading="lazy" class="@RenderClasses(classes: _*)" alt="" src="@src"/>
     }
 </picture>
