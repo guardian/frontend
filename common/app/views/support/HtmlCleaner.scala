@@ -635,7 +635,7 @@ object MainFigCaptionCleaner extends HtmlCleaner {
   }
 }
 
-case class RichLinkCleaner(amp: Boolean = false)(implicit val request: RequestHeader) extends HtmlCleaner {
+case class RichLinkCleaner()(implicit val request: RequestHeader) extends HtmlCleaner {
   override def clean(document: Document): Document = {
 
     val richLinks = document.getElementsByClass("element-rich-link")
@@ -645,16 +645,14 @@ case class RichLinkCleaner(amp: Boolean = false)(implicit val request: RequestHe
       .attr("data-component", "rich-link").asScala
       .zipWithIndex.map{ case (el, index) => el.attr("data-link-name", s"rich-link-${richLinks.asScala.length} | ${index+1}") }
 
-    if (!amp) {
-      richLinks.asScala
-        .map( richLink => {
-            val link = richLink.getElementsByTag("a").first()
-            val href = link.attr("href")
-            val html = views.html.fragments.richLinkDefault(link.text(), href).toString()
-            richLink.empty().prepend(html)
-        }
-        )
-    }
+    richLinks.asScala
+      .map( richLink => {
+        val link = richLink.getElementsByTag("a").first()
+        val href = link.attr("href")
+        val html = views.html.fragments.richLinkDefault(link.text(), href).toString()
+        richLink.empty().prepend(html)
+      }
+      )
     document
   }
 }

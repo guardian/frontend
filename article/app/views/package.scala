@@ -62,7 +62,7 @@ object BodyCleaner {
       TagLinker(article),
       ImmersiveHeaders(article.isImmersive),
       FigCaptionCleaner,
-      RichLinkCleaner(false),
+      RichLinkCleaner(),
       MembershipEventCleaner,
       BlockquoteCleaner,
       PullquoteCleaner,
