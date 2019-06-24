@@ -447,7 +447,7 @@ case class StoryQuestionsAtomPage(
   val inApp: Boolean
 )(implicit request: RequestHeader) extends AtomPage {
   override val atomType = "storyquestions"
-  override val body = views.html.fragments.atoms.storyquestions(atom, isAmp = false, inApp = inApp)
+  override val body = views.html.fragments.atoms.storyquestions(atom, inApp = inApp)
   override val metadata = MetaData.make(
     id = atom.id,
     webTitle = atom.atom.title.getOrElse("Story questions"),
@@ -461,7 +461,7 @@ case class GuideAtomPage(
   override val withVerticalScrollbar: Boolean
 )(implicit request: RequestHeader) extends AtomPage {
   override val atomType = "guide"
-  override val body = views.html.fragments.atoms.snippets.guide(atom, isAmp = false)
+  override val body = views.html.fragments.atoms.snippets.guide(atom)
   override val javascriptModule = "snippet"
   override val metadata = MetaData.make(
     id = atom.id,
@@ -476,7 +476,7 @@ case class ProfileAtomPage(
   override val withVerticalScrollbar: Boolean
 )(implicit request: RequestHeader) extends AtomPage {
   override val atomType = "profile"
-  override val body = views.html.fragments.atoms.snippets.profile(atom, isAmp = false)
+  override val body = views.html.fragments.atoms.snippets.profile(atom)
   override val javascriptModule = "snippet"
   override val metadata = MetaData.make(
     id = atom.id,
@@ -491,7 +491,7 @@ override val withJavaScript: Boolean,
 override val withVerticalScrollbar: Boolean
 )(implicit request: RequestHeader) extends AtomPage {
   override val atomType = "qanda"
-  override val body = views.html.fragments.atoms.snippets.qanda(atom, isAmp = false)
+  override val body = views.html.fragments.atoms.snippets.qanda(atom)
   override val javascriptModule = "snippet"
   override val metadata = MetaData.make(
     id = atom.id,
@@ -506,7 +506,7 @@ override val withJavaScript: Boolean,
 override val withVerticalScrollbar: Boolean
 )(implicit request: RequestHeader) extends AtomPage {
   override val atomType = "timeline"
-  override val body = views.html.fragments.atoms.snippets.timeline(atom, isAmp = false)
+  override val body = views.html.fragments.atoms.snippets.timeline(atom)
   override val javascriptModule = "snippet"
   override val metadata = MetaData.make(
     id = atom.id,

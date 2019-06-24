@@ -30,7 +30,7 @@
                                 path = article.content.mainVideoCanonicalPath
                             )
                         ) { player =>
-                            @fragments.media.video(player, enhance = true, amp = false)
+                            @fragments.media.video(player, enhance = true)
                             <meta itemprop="name" content="@player.title">
                             <meta itemprop="image" content="@player.poster">
                             <meta itemprop="thumbnail" content="@player.poster">

@@ -224,7 +224,7 @@ object AmpSrcCleaner extends HttpsUrl {
   }
 }
 
-case class InBodyLinkCleaner(dataLinkName: String, amp: Boolean = false)(implicit val edition: Edition, implicit val request: RequestHeader) extends HtmlCleaner {
+case class InBodyLinkCleaner(dataLinkName: String)(implicit val edition: Edition, implicit val request: RequestHeader) extends HtmlCleaner {
   def clean(body: Document): Document = {
     val links = body.getElementsByAttribute("href")
 
@@ -234,10 +234,6 @@ case class InBodyLinkCleaner(dataLinkName: String, amp: Boolean = false)(implici
         link.attr("data-link-name", dataLinkName)
         link.addClass("u-underline")
       }
-      if (amp && link.hasAttr("style")) {
-        link.removeAttr("style")
-      }
-
       if (ReaderRevenueSite.isReaderRevenueSiteUrl(link.attr("href"))) {
         link.addClass("js-acquisition-link")
       }
@@ -285,7 +281,7 @@ case class TruncateCleaner(limit: Int)(implicit val edition: Edition, implicit v
   }
 }
 
-class TweetCleaner(content: Content, amp: Boolean) extends HtmlCleaner {
+class TweetCleaner(content: Content) extends HtmlCleaner {
 
   override def clean(document: Document): Document = {
 
@@ -301,49 +297,32 @@ class TweetCleaner(content: Content, amp: Boolean) extends HtmlCleaner {
 
       tweet.getElementsByClass("twitter-tweet").asScala.foreach { element =>
 
-        if (amp) {
-          tweetData.foreach { elem =>
-            element.empty()
-            element.tagName("amp-twitter")
-            element.attr("data-tweetId", elem.id)
-            element.attr("layout", "responsive")
-            element.attr("width", "486")
-            element.attr("data-conversation","none")
-            // temporary fix to give tweets with an image a larger height
-            if (elem.firstImage.isDefined) {
-              element.attr("height", "437")
-            } else {
-              element.attr("height", "179")
-            }
+        val el = element.clone()
+
+        if (el.children.size > 1) {
+          val body = el.child(0).attr("class", "tweet-body")
+          val date = el.child(1).attr("class", "tweet-date")
+          val user = el.ownText().replaceFirst("— ", "").split("""(?=\(@)""") // Remove the '-' and split at the '(@' username but keep delimiter
+
+          val userName = user.headOption.getOrElse("")
+          val userId = user.lift(1).getOrElse("")
+
+          val userNameEl = document.createElement("span").attr("class", "tweet__user-name").text(userName)
+          val userIdEl = document.createElement("span").attr("class", "tweet__user-id").text(userId)
+          val link = document.createElement("a").attr("href", date.attr("href")).attr("style", "display: none;")
+
+          element.empty().removeClass("twitter-tweet").addClass("js-tweet tweet")
+
+          tweetImage.foreach { image =>
+            val img = document.createElement("img")
+            img.attr("src", image)
+            img.attr("alt", "")
+            img.attr("rel", "nofollow")
+            img.addClass("js-tweet-main-image tweet-main-image")
+            element.appendChild(img)
           }
-        } else {
-          val el = element.clone()
 
-          if (el.children.size > 1) {
-            val body = el.child(0).attr("class", "tweet-body")
-            val date = el.child(1).attr("class", "tweet-date")
-            val user = el.ownText().replaceFirst("— ", "").split("""(?=\(@)""") // Remove the '-' and split at the '(@' username but keep delimiter
-
-            val userName = user.headOption.getOrElse("")
-            val userId = user.lift(1).getOrElse("")
-
-            val userNameEl = document.createElement("span").attr("class", "tweet__user-name").text(userName)
-            val userIdEl = document.createElement("span").attr("class", "tweet__user-id").text(userId)
-            val link = document.createElement("a").attr("href", date.attr("href")).attr("style", "display: none;")
-
-            element.empty().removeClass("twitter-tweet").addClass("js-tweet tweet")
-
-            tweetImage.foreach { image =>
-              val img = document.createElement("img")
-              img.attr("src", image)
-              img.attr("alt", "")
-              img.attr("rel", "nofollow")
-              img.addClass("js-tweet-main-image tweet-main-image")
-              element.appendChild(img)
-            }
-
-            List(userNameEl, userIdEl, body, link, date).map(element.appendChild)
-          }
+          List(userNameEl, userIdEl, body, link, date).map(element.appendChild)
         }
       }
     }
@@ -656,7 +635,7 @@ object MainFigCaptionCleaner extends HtmlCleaner {
   }
 }
 
-case class RichLinkCleaner(amp: Boolean = false)(implicit val request: RequestHeader) extends HtmlCleaner {
+case class RichLinkCleaner()(implicit val request: RequestHeader) extends HtmlCleaner {
   override def clean(document: Document): Document = {
 
     val richLinks = document.getElementsByClass("element-rich-link")
@@ -666,16 +645,14 @@ case class RichLinkCleaner(amp: Boolean = false)(implicit val request: RequestHe
       .attr("data-component", "rich-link").asScala
       .zipWithIndex.map{ case (el, index) => el.attr("data-link-name", s"rich-link-${richLinks.asScala.length} | ${index+1}") }
 
-    if (!amp) {
-      richLinks.asScala
-        .map( richLink => {
-            val link = richLink.getElementsByTag("a").first()
-            val href = link.attr("href")
-            val html = views.html.fragments.richLinkDefault(link.text(), href).toString()
-            richLink.empty().prepend(html)
-        }
-        )
-    }
+    richLinks.asScala
+      .map( richLink => {
+        val link = richLink.getElementsByTag("a").first()
+        val href = link.attr("href")
+        val html = views.html.fragments.richLinkDefault(link.text(), href).toString()
+        richLink.empty().prepend(html)
+      }
+      )
     document
   }
 }

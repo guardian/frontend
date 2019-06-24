@@ -1,5 +1,4 @@
-@(className: String, label: String, headline: String, id: String, isAmp: Boolean)(body: Html)(implicit request: RequestHeader)
-@if(!isAmp) {
+@(className: String, label: String, headline: String, id: String)(body: Html)(implicit request: RequestHeader)
 <details data-snippet-id="@id" data-snippet-type="@className" class="clean explainer-snippet explainer-snippet--new explainer-snippet--light explainer-snippet--@className">
   <summary class="explainer-snippet__header">
     <span class="explainer-snippet__label">@label</span>
@@ -13,28 +12,4 @@
     @body
   </div>
 </details>
-} else {
-<div data-snippet-id="@id" data-snippet-type="@className" class="clean explainer-snippet explainer-snippet--new explainer-snippet--light explainer-snippet--@className">
-
-  <div class="explainer-snippet__header" on="tap:body-@{id}.toggleVisibility,show-@{id}.toggleVisibility,hide-@{id}.toggleVisibility" tabindex="0" role="header">
-    <span class="explainer-snippet__label">@label</span>
-    <h4 class="explainer-snippet__headline">@headline</h4>
-
-    <button class="explainer-button explainer-snippet__handle" aria-hidden="true" on="tap:body-@{id}.toggleVisibility,show-@{id}.toggleVisibility,hide-@{id}.toggleVisibility" tabindex="0" role="header">
-      <span id="show-@id">
-        @fragments.inlineSvg("plus", "icon")
-        Show
-      </span>
-      <span hidden="" id="hide-@id">
-        @fragments.inlineSvg("minus", "icon")
-        Hide
-      </span>
-    </button>
-  </div>
-  <div hidden="" id="body-@id" class="explainer-snippet__body">
-  @body
-  </div>
-
-</div>
-}
 
