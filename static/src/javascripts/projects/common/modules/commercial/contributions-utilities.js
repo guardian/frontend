@@ -801,4 +801,5 @@ export {
     getReaderRevenueRegion,
     userIsInCorrectCohort,
     getVisitCount,
+    buildEpicCopy,
 };

@@ -2,19 +2,47 @@
 import {
     makeEpicABTest,
     defaultButtonTemplate,
+    buildEpicCopy,
 } from 'common/modules/commercial/contributions-utilities';
 import { getArticleViewCount } from 'common/modules/onward/history';
+import { getSync as geolocationGetSync } from 'lib/geolocation';
 
-const minArticleViews = 10;
-const articleCountDays = 7;
+// Use must have read at least 5 articles in last 14 days
+const minArticleViews = 5;
+const articleCountDays = 14;
 
 const articleViewCount = getArticleViewCount(articleCountDays);
+
+const highlightedText =
+    'Support The Guardian from as little as %%CURRENCY_SYMBOL%%1 – and it only takes a minute. Thank you.';
+
+const USUKControlCopy = {
+    heading: 'Since you’re here…',
+    paragraphs:
+        '… we have a small favour to ask. More people are reading and supporting The Guardian’s independent, investigative journalism than ever before. And unlike many new organisations, we have chosen an approach that allows us to keep our journalism accessible to all, regardless of where they live or what they can afford. But we need your ongoing support to keep working as we do.\n' +
+        'The Guardian will engage with the most critical issues of our time – from the escalating climate catastrophe to widespread inequality to the influence of big tech on our lives. At a time when factual information is a necessity, we believe that each of us, around the world, deserves access to accurate reporting with integrity at its heart.\n' +
+        'Our editorial independence means we set our own agenda and voice our own opinions. Guardian journalism is free from commercial and political bias and not influenced by billionaire owners or shareholders. This means we can give a voice to those less heard, explore where others turn away, and rigorously challenge those in power.\n' +
+        'We need your support to keep delivering quality journalism, to maintain our openness and to protect our precious independence. Every reader contribution, big or small, is so valuable. \n',
+    highlightedText,
+};
+
+const ROWControlCopy = {
+    heading: 'More people in %%COUNTRY_NAME%%...',
+    paragraphs:
+        '... like you, are reading and supporting The Guardian’s independent, investigative journalism than ever before. And unlike many new organisations, we have chosen an approach that allows us to keep our journalism accessible to all, regardless of where they live or what they can afford. But we need your ongoing support to keep working as we do.\n' +
+        'The Guardian will engage with the most critical issues of our time – from the escalating climate catastrophe to widespread inequality to the influence of big tech on our lives. At a time when factual information is a necessity, we believe that each of us, around the world, deserves access to accurate reporting with integrity at its heart.\n' +
+        'Our editorial independence means we set our own agenda and voice our own opinions. Guardian journalism is free from commercial and political bias and not influenced by billionaire owners or shareholders. This means we can give a voice to those less heard, explore where others turn away, and rigorously challenge those in power.\n' +
+        'We need your support to keep delivering quality journalism, to maintain our openness and to protect our precious independence. Every reader contribution, big or small, is so valuable.\n',
+    highlightedText,
+};
+
+const isUSUK = ['GB', 'US'].includes(geolocationGetSync());
 
 export const articlesViewed: EpicABTest = makeEpicABTest({
     id: 'ContributionsEpicArticlesViewed',
     campaignId: 'epic_articles_viewed',
 
-    start: '2017-01-24',
+    start: '2019-06-24',
     expiry: '2020-01-27',
 
     author: 'Tom Forbes',
@@ -31,18 +59,27 @@ export const articlesViewed: EpicABTest = makeEpicABTest({
     variants: [
         {
             id: 'control',
-            products: ['CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
             buttonTemplate: defaultButtonTemplate,
-            copy: {
-                heading: `You've read ${articleViewCount} articles this week...`,
-                paragraphs: [
-                    '… we have a small favour to ask. More people are reading and supporting our independent, investigative reporting than ever before. And unlike many news organisations, we have chosen an approach that allows us to keep our journalism accessible to all, regardless of where they live or what they can afford.\n',
-                    'The Guardian is editorially independent, meaning we set our own agenda. Our journalism is free from commercial bias and not influenced by billionaire owners, politicians or shareholders. No one edits our editor. No one steers our opinion. This is important as it enables us to give a voice to those less heard, challenge the powerful and hold them to account. It’s what makes us different to so many others in the media, at a time when factual, honest reporting is critical.',
-                    'Every contribution we receive from readers like you, big or small, goes directly into funding our journalism. This support enables us to keep working as we do – but we must maintain and build on it for every year to come.',
-                ],
-                highlightedText:
-                    'Support The Guardian from as little as %%CURRENCY_SYMBOL%%1 – and it only takes a minute. Thank you.',
-            },
+            copy: buildEpicCopy(
+                isUSUK ? USUKControlCopy : ROWControlCopy,
+                !isUSUK
+            ),
+        },
+        {
+            id: 'variant',
+            buttonTemplate: defaultButtonTemplate,
+            copy: buildEpicCopy(
+                {
+                    heading: `You’ve read ${articleViewCount} articles...`,
+                    paragraphs:
+                        '… in the last two weeks. If you’ve enjoyed reading, we hope you will consider supporting our independent, investigative journalism today. More people around the world are reading and supporting The Guardian than ever before. And unlike many new organisations, we have chosen an approach that allows us to keep our journalism accessible to all, regardless of where they live or what they can afford. But we need your ongoing support to keep working as we do.\n' +
+                        'The Guardian will engage with the most critical issues of our time – from the escalating climate catastrophe to widespread inequality to the influence of big tech on our lives. At a time when factual information is a necessity, we believe that each of us, around the world, deserves access to accurate reporting with integrity at its heart.\n' +
+                        'Our editorial independence means we set our own agenda and voice our own opinions. Guardian journalism is free from commercial and political bias and not influenced by billionaire owners or shareholders. This means we can give a voice to those less heard, explore where others turn away, and rigorously challenge those in power.\n' +
+                        'We need your support to keep delivering quality journalism, to maintain our openness and to protect our precious independence. Every reader contribution, big or small, is so valuable. \n',
+                    highlightedText,
+                },
+                false
+            ),
         },
     ],
 });
