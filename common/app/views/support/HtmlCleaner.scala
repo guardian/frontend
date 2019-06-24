@@ -732,7 +732,6 @@ case class AtomsCleaner(
               atomData,
               articleConfig,
               shouldFence,
-              false,
               mediaWrapper,
               posterImageOverride
             ).toString()
