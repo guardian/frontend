@@ -185,14 +185,4 @@ trait PerformanceSwitches {
     sellByDate = never,
     exposeClientSide = true
   )
-
-  val LazyLoadImagesSwitch = Switch(
-    SwitchGroup.Performance,
-    "lazy-load-images",
-    "If this is switched on, non-main images will be lazy-loaded as the user scrolls down the page",
-    owners = Seq(Owner.withGithub("nicl")),
-    safeState = On,
-    sellByDate = never,
-    exposeClientSide = true,
-  )
 }
