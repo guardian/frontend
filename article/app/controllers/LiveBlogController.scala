@@ -182,6 +182,10 @@ class LiveBlogController(
         Left(MinutePage(liveBlog, StoryPackages(liveBlog.metadata.id, response)), blocks)
       case liveBlog: Article if liveBlog.isLiveBlog =>
         createLiveBlogModel(liveBlog, response, range).left.map(_ -> blocks)
+      case unknown => {
+        log.error(s"Requested non-liveblog: ${unknown.metadata.id}")
+        Right(InternalServerError)
+      }
     }
 
     content
