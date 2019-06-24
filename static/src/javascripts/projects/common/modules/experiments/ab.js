@@ -24,7 +24,6 @@ import {
     concurrentTests,
     engagementBannerTests,
     epicTests,
-    priorityEpicTests,
 } from 'common/modules/experiments/ab-tests';
 import {
     getEngagementBannerTestsFromGoogleDoc,
@@ -39,7 +38,6 @@ export const getEpicTestToRun = memoize(
                     config.set(`switches.ab${test.id}`, true)
                 );
                 return firstRunnableTest<EpicABTest>([
-                    ...priorityEpicTests,
                     ...asyncEpicTests,
                     ...epicTests,
                 ]);
