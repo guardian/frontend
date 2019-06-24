@@ -79,19 +79,30 @@ const setEpicLiveblogEntryTimeData = (
     }
 };
 
-const setupViewTracking = (el: HTMLElement, test: EpicABTest): void => {
+const setupViewTracking = (
+    el: HTMLElement,
+    variant: EpicVariant,
+    parentTest: EpicABTest
+): void => {
     // top offset of 18 ensures view only counts when half of element is on screen
     const inView = elementInView(el, window, {
         top: 18,
     });
 
     inView.on('firstview', () => {
-        logView(test.id);
-        mediator.emit(test.viewEvent);
+        logView(variant.id);
+        mediator.emit(parentTest.viewEvent, {
+            componentType: parentTest.componentType,
+            campaignCode: variant.campaignCode,
+        });
     });
 };
 
-const addEpicToBlocks = (epicHtml: string, test: EpicABTest): Promise<void> => {
+const addEpicToBlocks = (
+    epicHtml: string,
+    variant: EpicVariant,
+    parentTest: EpicABTest
+): Promise<void> => {
     const elementsWithTimeData = getBlocksToInsertEpicAfter().map(el => [
         el,
         getLiveblogEntryTimeData(el),
@@ -105,23 +116,24 @@ const addEpicToBlocks = (epicHtml: string, test: EpicABTest): Promise<void> => {
 
             const $epic = $.create(epicHtml);
             $epic.insertAfter(el);
-            mediator.emit(test.insertEvent);
+            mediator.emit(variant.insertEvent);
             $(el).removeClass(INSERT_EPIC_AFTER_CLASS);
             setEpicLiveblogEntryTimeData($epic[0], timeData);
-            setupViewTracking(el, test);
+            setupViewTracking(el, variant, parentTest);
         });
     });
 };
 
 export const setupEpicInLiveblog = (
     epicHtml: string,
-    test: EpicABTest
+    variant: EpicVariant,
+    parentTest: EpicABTest
 ): void => {
-    addEpicToBlocks(epicHtml, test);
+    addEpicToBlocks(epicHtml, variant, parentTest);
 
     if (!isAutoUpdateHandlerBound) {
         mediator.on('modules:autoupdate:updates', () => {
-            addEpicToBlocks(epicHtml, test);
+            addEpicToBlocks(epicHtml, variant, parentTest);
         });
         isAutoUpdateHandlerBound = true;
     }

@@ -326,7 +326,8 @@ const makeEpicABTestVariant = (
                 )
                 .then(renderedTemplate => {
                     if (initVariant.test) {
-                        initVariant.test(renderedTemplate, this);
+                        const parent = parentTest;
+                        initVariant.test(renderedTemplate, this, parent);
                     } else {
                         // Standard epic insertion. TODO - this could do with a refactor
                         const component = $.create(renderedTemplate);
