@@ -65,8 +65,7 @@
                      "shortVendorDataUrl": "/commercial/cmp/shortvendorlist.json"
             },
             "facebookAccountId": "@FBPixel.account",
-            "a9PublisherId": "@{Configuration.javascript.config("a9PublisherId")}",
-            "a9Host": "@{Configuration.javascript.config("a9Host")}"
+            "a9PublisherId": "@{Configuration.javascript.config("a9PublisherId")}"
         }
     }
 }
