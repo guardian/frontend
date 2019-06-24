@@ -6,8 +6,7 @@
   className = "guide",
   label = guide.data.typeLabel.getOrElse("Quick Guide"),
   headline = guide.atom.title.getOrElse(""),
-  guide.id,
-  false
+  guide.id
 ){
   @for(img <- guide.image ) {
     <div class="explainer-snippet__image">

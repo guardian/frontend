@@ -6,8 +6,7 @@
   className = "profile",
   label = profile.data.typeLabel.getOrElse("Profile"),
   headline = profile.atom.title.getOrElse(""),
-  profile.id,
-  false
+  profile.id
 ){
   @for(img <- profile.image ) {
     <div class="explainer-snippet__image">
