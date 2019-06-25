@@ -10,7 +10,7 @@
 <html AMP>
     <head>
         @* "utf-8" meta tag needs to be first according to AMP spec *@
-        @fragments.hostedContentsMetaData(amp = true)(page, request, context)
+        @fragments.hostedContentsAMPMetaData(amp = true)(page, request, context)
     <title>@views.support.Title(page)</title>
         @fragments.amp.customStyles(page, mainPicture = "", page.cta.image, page.fontColour.hexCode)
     <script custom-element="amp-font" src="https://cdn.ampproject.org/v0/amp-font-0.1.js" async></script>
