@@ -53,7 +53,6 @@ import {
 } from 'common/modules/commercial/epic/epic-exclusion-rules';
 import { getControlEpicCopy } from 'common/modules/commercial/acquisitions-copy';
 import { initTicker } from 'common/modules/commercial/ticker';
-import { getArticleViewCount } from 'common/modules/onward/history';
 
 export type ReaderRevenueRegion =
     | 'united-kingdom'
@@ -75,9 +74,6 @@ const getReaderRevenueRegion = (geolocation: string): ReaderRevenueRegion => {
 };
 
 const getVisitCount = (): number => local.get('gu.alreadyVisited') || 0;
-
-const replaceArticlesRead = (text: string, days: number = 30): string =>
-    text.replace(/%%ARTICLES_READ%%/g, `${getArticleViewCount(days)}`);
 
 const replaceCountryName = (text: string, countryName: string): string =>
     text.replace(/%%COUNTRY_NAME%%/g, countryName);
@@ -454,6 +450,7 @@ const makeEpicABTest = ({
     hasCountryName = false,
     pageCheck = isCompatibleWithArticleEpic,
     template = controlTemplate,
+    canRun = () => true,
 }: InitEpicABTest): EpicABTest => {
     const test = {
         // this is true because we use the reader revenue flag rather than sensitive
@@ -462,7 +459,7 @@ const makeEpicABTest = ({
         canRun() {
             const countryNameIsOk =
                 !hasCountryName || countryNames[geolocationGetSync()];
-            return countryNameIsOk && shouldShowEpic(this);
+            return canRun() && countryNameIsOk && shouldShowEpic(this);
         },
         componentType: 'ACQUISITIONS_EPIC',
         insertEvent: makeEvent(id, 'insert'),
@@ -496,11 +493,9 @@ const makeEpicABTest = ({
 };
 
 const buildEpicCopy = (row: any, hasCountryName: boolean) => {
-    const heading = replaceArticlesRead(
-        throwIfEmptyString('heading', row.heading)
-    );
+    const heading = throwIfEmptyString('heading', row.heading);
 
-    const paragraphs = throwIfEmptyArray(
+    const paragraphs: string[] = throwIfEmptyArray(
         'paragraphs',
         splitAndTrim(row.paragraphs, '\n')
     );
@@ -516,7 +511,9 @@ const buildEpicCopy = (row: any, hasCountryName: boolean) => {
                 : heading,
         paragraphs:
             paragraphs && countryName
-                ? paragraphs.map(para => replaceCountryName(para, countryName))
+                ? paragraphs.map<string>(para =>
+                      replaceCountryName(para, countryName)
+                  )
                 : paragraphs,
         highlightedText: row.highlightedText
             ? row.highlightedText.replace(
@@ -807,4 +804,5 @@ export {
     getReaderRevenueRegion,
     userIsInCorrectCohort,
     getVisitCount,
+    buildEpicCopy,
 };
