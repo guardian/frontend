@@ -30,7 +30,7 @@ trait ABTestSwitches {
     ABTests,
     "ab-contributions-epic-articles-viewed",
     "States how many articles a user has viewed in the epic",
-    owners = Seq(Owner.withGithub("jranks123")),
+    owners = Seq(Owner.withGithub("tomrf1")),
     safeState = Off,
     sellByDate = new LocalDate(2020, 1, 27),
     exposeClientSide = true
@@ -40,7 +40,7 @@ trait ABTestSwitches {
     ABTests,
     "ab-contributions-epic-country-name",
     "Displays country name in the epic",
-    owners = Seq(Owner.withGithub("jranks123")),
+    owners = Seq(Owner.withGithub("tomrf1")),
     safeState = Off,
     sellByDate = new LocalDate(2020, 1, 27),
     exposeClientSide = true
