@@ -133,7 +133,7 @@
                 @navMenu.brandExtensions.map { item =>
                     <li class="menu-item hide-from-desktop"
                         role="none">
-                        <a class="menu-item__title"
+                        <a class="@{"menu-item__title " ++ item.classList.mkString(" ")}"
                            href="@LinkTo { @item.url }"
                            role="menuitem"
                            data-link-name="nav2 : @item.title">
