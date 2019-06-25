@@ -9,6 +9,9 @@ jest.mock('lib/apstag', () => ({
     fetchBids: () => {},
     setDisplayBids: () => {},
 }));
+jest.mock('common/modules/experiments/ab', () => ({
+    isInVariantSynchronous: jest.fn(),
+}));
 
 const a9lib = _a9lib;
 

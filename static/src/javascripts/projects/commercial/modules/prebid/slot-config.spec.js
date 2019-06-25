@@ -210,7 +210,7 @@ describe('getPrebidAdSlots', () => {
 
     test('should return the correct top-above-nav slot at breakpoint D', () => {
         getBreakpointKey.mockReturnValue('D');
-        expect(getPrebidAdSlots(buildAdvert('top-above-nav'), '')).toEqual([
+        expect(getPrebidAdSlots(buildAdvert('top-above-nav'))).toEqual([
             {
                 key: 'top-above-nav',
                 sizes: [[970, 250], [728, 90]],
@@ -226,7 +226,7 @@ describe('getPrebidAdSlots', () => {
             'js-ad-slot ad-slot ad-slot--banner-ad ad-slot--banner-ad-desktop ad-slot--rendered'
         );
 
-        const slotReturned = getPrebidAdSlots(dfpAdvert, '')[0];
+        const slotReturned = getPrebidAdSlots(dfpAdvert)[0];
         expect(slotReturned).toBeDefined();
         expect(slotReturned).toMatchObject({
             key: 'banner',
@@ -235,7 +235,7 @@ describe('getPrebidAdSlots', () => {
 
     test('should return the correct top-above-nav slot at breakpoint T', () => {
         getBreakpointKey.mockReturnValue('T');
-        expect(getPrebidAdSlots(buildAdvert('top-above-nav'), '')).toEqual([
+        expect(getPrebidAdSlots(buildAdvert('top-above-nav'))).toEqual([
             {
                 key: 'top-above-nav',
                 sizes: [[728, 90]],
@@ -245,7 +245,7 @@ describe('getPrebidAdSlots', () => {
 
     test('should return the correct top-above-nav slot at breakpoint M', () => {
         getBreakpointKey.mockReturnValue('M');
-        expect(getPrebidAdSlots(buildAdvert('top-above-nav'), '')).toEqual([
+        expect(getPrebidAdSlots(buildAdvert('top-above-nav'))).toEqual([
             {
                 key: 'top-above-nav',
                 sizes: [[300, 250]],

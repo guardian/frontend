@@ -131,7 +131,17 @@ const getSlots = (contentType: string): Array<PrebidSlot> => {
 
 export const getPrebidAdSlots = (
     ad: Advert,
-    contentType: string
-): Array<PrebidSlot> => filterByAdvert(ad, getSlots(contentType));
+    contentType: string,
+    slotFlatMap?: PrebidSlot => PrebidSlot[]
+): Array<PrebidSlot> => {
+    const effectiveSlotFlatMap = slotFlatMap || (s => [s]); // default to identity
+    const adSlots = filterByAdvert(ad, getSlots(contentType));
+    return (
+        adSlots
+            .map(effectiveSlotFlatMap)
+            // $FlowFixMe
+            .reduce((acc, elt) => acc.concat(elt), [])
+    ); // the "flat" in "flatMap"
+};
 
 export const _ = { getSlots };

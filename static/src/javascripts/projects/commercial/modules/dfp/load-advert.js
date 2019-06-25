@@ -4,6 +4,18 @@ import prebid from 'commercial/modules/prebid/prebid';
 import { markTime } from 'lib/user-timing';
 import a9 from 'commercial/modules/prebid/a9';
 
+const slotsWithSizes = (advert, prebidSlot) => {
+    if (Array.isArray(advert.size)) {
+        return [
+            Object.assign({}, prebidSlot, {
+                sizes: [[advert.size[0], advert.size[1]]],
+            }),
+        ];
+    }
+    // No point having this a9Slot, as advert.size is not an array
+    return [];
+};
+
 export const loadAdvert = (advert: Advert): void => {
     advert.whenSlotReady
         .catch(() => {
@@ -42,28 +54,12 @@ export const refreshAdvert = (advert: Advert): void => {
                     // possible (mobile/tablet). See prebid/slot-config.js
                     return [prebidSlot];
                 }
-                // Prebid slots only support array sizes (no string literals).
-                if (Array.isArray(advert.size)) {
-                    return [
-                        Object.assign({}, prebidSlot, {
-                            sizes: [[advert.size[0], advert.size[1]]],
-                        }),
-                    ];
-                }
-                // No point having this prebidSlot, as advert.size is not an array
-                return [];
+                return slotsWithSizes(advert, prebidSlot);
             });
-            const a9Promise = a9.requestBids(advert, prebidSlot => {
-                if (Array.isArray(advert.size)) {
-                    return [
-                        Object.assign({}, prebidSlot, {
-                            sizes: [[advert.size[0], advert.size[1]]],
-                        }),
-                    ];
-                }
-                // No point having this a9Slot, as advert.size is not an array
-                return [];
-            });
+
+            const a9Promise = a9.requestBids(advert, prebidSlot =>
+                slotsWithSizes(advert, prebidSlot)
+            );
             return Promise.all([
                 prepidPromise.catch(e => e),
                 a9Promise.catch(e => e),

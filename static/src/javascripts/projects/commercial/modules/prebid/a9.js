@@ -2,7 +2,7 @@
 
 import config from 'lib/config';
 import { Advert } from 'commercial/modules/dfp/Advert';
-import { slots } from 'commercial/modules/prebid/slot-config';
+import { getPrebidAdSlots } from 'commercial/modules/prebid/slot-config';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 
 import type { PrebidSize, PrebidSlot } from 'commercial/modules/prebid/types';
@@ -44,17 +44,11 @@ const requestBids = (
         return requestQueue;
     }
 
-    const effectiveSlotFlatMap = slotFlatMap || (s => [s]); // default to identity
     if (dfpEnv.externalDemand !== 'a9' && dfpEnv.externalDemand !== 'all') {
         return requestQueue;
     }
 
-    const adUnits: Array<A9AdUnit> = slots(
-        advert.id,
-        config.get('page.contentType', '')
-    )
-        .map(effectiveSlotFlatMap)
-        .reduce((acc, elt) => acc.concat(elt), []) // the "flat" in "flatMap"
+    const adUnits: Array<A9AdUnit> = getPrebidAdSlots(advert.id, slotFlatMap)
         .map(slot => new A9AdUnit(advert, slot))
         .filter(adUnit => !adUnit.isEmpty());
 
