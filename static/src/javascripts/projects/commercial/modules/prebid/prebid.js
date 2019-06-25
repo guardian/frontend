@@ -232,17 +232,11 @@ const requestBids = (
         return requestQueue;
     }
 
-    const effectiveSlotFlatMap = slotFlatMap || (s => [s]); // default to identity
     if (dfpEnv.externalDemand !== 'prebid' && dfpEnv.externalDemand !== 'all') {
         return requestQueue;
     }
 
-    const adUnits: Array<PrebidAdUnit> = getPrebidAdSlots(
-        advert,
-        config.get('page.contentType', '')
-    )
-        .map(effectiveSlotFlatMap)
-        .reduce((acc, elt) => acc.concat(elt), []) // the "flat" in "flatMap"
+    const adUnits: Array<PrebidAdUnit> = getPrebidAdSlots(advert, slotFlatMap)
         .map(slot => new PrebidAdUnit(advert, slot))
         .filter(adUnit => !adUnit.isEmpty());
 
