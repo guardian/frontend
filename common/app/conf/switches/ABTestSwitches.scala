@@ -68,16 +68,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-acquisitions-banner-sign-in-cta",
-    "test whether having a sign-in CTA negatively impacts acquisitions",
-    owners = Owner.group(SwitchGroup.Identity),
-    safeState = On,
-    sellByDate = new LocalDate(2019, 6, 25),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-commercial-prebid-safeframe",
     "Test the impact of serving prebid ads in safeframes",
     owners = Seq(Owner.withGithub("jeteve")),
