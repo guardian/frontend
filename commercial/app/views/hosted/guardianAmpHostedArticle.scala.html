@@ -9,7 +9,7 @@
 <!doctype html>
 <html AMP>
     <head>
-        @fragments.metaData(amp = true)(page, request, context)
+        @fragments.hostedContentsAMPMetaData(page, request, context)
         <title>@views.support.Title(page)</title>
         @fragments.amp.customStyles(page, page.mainPicture, page.cta.image, page.fontColour.hexCode)
         <script custom-element="amp-font" src="https://cdn.ampproject.org/v0/amp-font-0.1.js" async></script>
