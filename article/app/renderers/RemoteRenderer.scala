@@ -1,18 +1,17 @@
 package renderers
 
 import akka.actor.ActorSystem
-import akka.pattern.CircuitBreaker
 import com.eclipsesource.schema._
 import com.eclipsesource.schema.drafts.Version7
 import com.eclipsesource.schema.drafts.Version7._
 import com.gu.contentapi.client.model.v1.Blocks
 import com.osinka.i18n.Lang
-import common.Logging
+import concurrent.CircuitBreakerRegistry
 import conf.Configuration
-import controllers.ArticlePage
-import model.{Cached, PageWithStoryPackage}
+import conf.switches.Switches.CircuitBreakerSwitch
 import model.Cached.RevalidatableResult
 import model.dotcomponents.DotcomponentsDataModel
+import model.{Cached, PageWithStoryPackage}
 import play.api.libs.json._
 import play.api.libs.ws.WSClient
 import play.api.mvc.{RequestHeader, Result}
@@ -22,49 +21,16 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.concurrent.duration._
 import scala.io.Source
-import conf.switches.Switches.CircuitBreakerSwitch
-
-object CircuitBreakerRegistry extends Logging {
-  // Warning this is a very expensive method, as it creates an actor system
-  def withConfig(
-    prefix: String,
-    maxFailures: Int,
-    callTimeout: FiniteDuration,
-    resetTimeout: FiniteDuration,
-  ): CircuitBreaker = {
-    val system = ActorSystem(s"$prefix-circuit-breaker")
-
-    val cb = new CircuitBreaker(
-      scheduler = system.scheduler,
-      maxFailures = 10,
-      callTimeout = callTimeout,
-      resetTimeout = resetTimeout,
-    )
-
-    cb.onOpen(
-      log.error(s"$prefix circuit breaker: reached error threshold ($maxFailures}). Breaker is OPEN!")
-    )
-
-    cb.onHalfOpen(
-      log.info(s"$prefix circuit breaker: Reset timeout (${resetTimeout}) finished. Entered half open state.")
-    )
-
-    cb.onClose(
-      log.info(s"$prefix circuit breaker: Content API Client looks healthy again, circuit breaker is closed.")
-    )
-
-    cb
-  }
-}
 
 class RemoteRenderer {
 
   private[this] val SCHEMA = "schema/dotcomponentsDataModelV2.jsonschema"
 
   private[this] val circuitBreaker = CircuitBreakerRegistry.withConfig(
-    prefix = "dotcom-rendering-client",
+    name = "dotcom-rendering-client",
+    system = ActorSystem("dotcom-rendering-client-circuit-breaker"),
     maxFailures = Configuration.rendering.circuitBreakerMaxFailures,
-    callTimeout = Configuration.rendering.timeout.plus(400.millis),
+    callTimeout = Configuration.rendering.timeout.plus(200.millis),
     resetTimeout = Configuration.rendering.timeout * 4,
   )
 
