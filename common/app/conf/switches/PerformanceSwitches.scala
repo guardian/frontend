@@ -1,6 +1,7 @@
 package conf.switches
 
 import conf.switches.Expiry.never
+import org.joda.time.LocalDate
 
 trait PerformanceSwitches {
 
@@ -184,5 +185,15 @@ trait PerformanceSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = true
+  )
+
+  val LazyLoadImages = Switch(
+    SwitchGroup.Performance,
+    "blink-lazy-load-images",
+    "If switched on, explicitly request lazy loading of images on supporting browsers.",
+    owners = Seq(Owner.withGithub("nicl")),
+    safeState = On,
+    sellByDate = new LocalDate(2029, 9, 3),
+    exposeClientSide = false,
   )
 }

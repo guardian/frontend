@@ -2,7 +2,7 @@
 @import model.ImageMedia
 @import views.support.{ImgSrc, RenderClasses, SrcSet}
 @import implicits.Requests._
-
+@import conf.switches.Switches
 @import experiments.{ActiveExperiments}
 
 @(
@@ -26,6 +26,6 @@
     }
     <!--[if IE 9]></video><![endif]-->
     @maybeImageMedia.map(ImgSrc.getFallbackUrl(_)).orElse(maybeSrc).orElse(maybePath).map { src =>
-        <img loading="lazy" class="@RenderClasses(classes: _*)" alt="" src="@src"/>
+        <img loading="@{ if (Switches.LazyLoadImages.isSwitchedOn) "lazy" else "auto"}" class="@RenderClasses(classes: _*)" alt="" src="@src"/>
     }
 </picture>
