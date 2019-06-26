@@ -27,7 +27,7 @@ export const countryName: EpicABTest = makeEpicABTest({
         return (
             geolocation !== 'US' &&
             geolocation !== 'GB' &&
-            countryNames[geolocationGetSync()]
+            countryNames[geolocation]
         );
     },
 
