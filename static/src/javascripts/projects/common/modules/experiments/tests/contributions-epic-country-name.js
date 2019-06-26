@@ -4,7 +4,7 @@ import {
     defaultButtonTemplate,
     buildEpicCopy,
 } from 'common/modules/commercial/contributions-utilities';
-import { getSync as geolocationGetSync } from 'lib/geolocation';
+import { countryNames, getSync as geolocationGetSync } from 'lib/geolocation';
 
 export const countryName: EpicABTest = makeEpicABTest({
     id: 'ContributionsEpicCountryName',
@@ -24,7 +24,11 @@ export const countryName: EpicABTest = makeEpicABTest({
 
     canRun: () => {
         const geolocation = geolocationGetSync();
-        return geolocation !== 'US' && geolocation !== 'GB';
+        return (
+            geolocation !== 'US' &&
+            geolocation !== 'GB' &&
+            countryNames[geolocationGetSync()]
+        );
     },
 
     variants: [
