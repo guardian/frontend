@@ -43,7 +43,6 @@ case class Tag(
 
 case class Block(
     id: String,
-    bodyHtml: String,
     elements: List[PageElement],
     createdOn: Option[Long],
     createdOnDisplay: Option[String],
@@ -105,7 +104,6 @@ case class Content(
   headline: String,
   standfirst: Option[String],
   main: String,
-  body: String,
   blocks: Blocks,
   byline: String,
   trailText: String
@@ -251,7 +249,6 @@ object DotcomponentsDataModel {
 
       Block(
         id = block.id,
-        bodyHtml = block.bodyHtml,
         elements = blocksToPageElements(block.elements, shouldAddAffiliateLinks),
         createdOn = createdOn,
         createdOnDisplay = createdOnDisplay,
@@ -465,7 +462,7 @@ object DotcomponentsDataModel {
 
     val author = article.tags.contributors.map(_.name) match {
       case Nil => "Guardian staff reporter"
-      case contributors => contributors.mkString(","),
+      case contributors => contributors.mkString(",")
     }
 
     val content = DCPage(
@@ -473,7 +470,6 @@ object DotcomponentsDataModel {
         article.trail.headline,
         article.fields.standfirst,
         article.fields.main,
-        article.fields.body,
         dcBlocks,
         article.trail.byline.getOrElse(""),
         trailText = article.trail.fields.trailText.getOrElse("")
