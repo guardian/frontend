@@ -151,6 +151,8 @@ class GuardianConfiguration extends Logging {
     lazy val AMPArticleEndpoint = configuration.getMandatoryStringProperty("rendering.AMPArticleEndpoint")
     lazy val sentryHost = configuration.getMandatoryStringProperty("rendering.sentryHost")
     lazy val sentryPublicApiKey = configuration.getMandatoryStringProperty("rendering.sentryPublicApiKey")
+    lazy val timeout = 2.seconds
+    lazy val circuitBreakerMaxFailures = 10 // we should increase this as DCR sees increasing usage
   }
 
   object weather {
