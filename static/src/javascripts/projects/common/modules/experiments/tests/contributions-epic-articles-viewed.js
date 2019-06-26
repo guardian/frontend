@@ -5,7 +5,7 @@ import {
     buildEpicCopy,
 } from 'common/modules/commercial/contributions-utilities';
 import { getArticleViewCount } from 'common/modules/onward/history';
-import { getSync as geolocationGetSync } from 'lib/geolocation';
+import { countryNames, getSync as geolocationGetSync } from 'lib/geolocation';
 
 // Use must have read at least 5 articles in last 14 days
 const minArticleViews = 5;
@@ -36,7 +36,8 @@ const ROWControlCopy = {
     highlightedText,
 };
 
-const isUSUK = ['GB', 'US'].includes(geolocationGetSync());
+const geolocation = geolocationGetSync();
+const isUSUK = ['GB', 'US'].includes(geolocation);
 
 export const articlesViewed: EpicABTest = makeEpicABTest({
     id: 'ContributionsEpicArticlesViewed',
@@ -54,7 +55,8 @@ export const articlesViewed: EpicABTest = makeEpicABTest({
     audience: 1,
     audienceOffset: 0,
 
-    canRun: () => articleViewCount >= minArticleViews,
+    canRun: () =>
+        articleViewCount >= minArticleViews && countryNames[geolocation],
 
     variants: [
         {
