@@ -4,7 +4,19 @@ import prebid from 'commercial/modules/prebid/prebid';
 import { markTime } from 'lib/user-timing';
 import a9 from 'commercial/modules/prebid/a9';
 
-const slotsWithSizes = (advert, prebidSlot) => {
+const slotFlatMap = (advert, prebidSlot) => {
+    // We only fiddle with top-above-nav prebidSlot(s)
+    if (prebidSlot.key !== 'top-above-nav') {
+        return [prebidSlot];
+    }
+    // For top-above-nav slots, we force the refreshed
+    // to be the same size as the first display
+    if (prebidSlot.sizes.length === 1) {
+        // No point forcing a size, as there is already only one
+        // possible (mobile/tablet). See prebid/slot-config.js
+        return [prebidSlot];
+    }
+
     if (Array.isArray(advert.size)) {
         return [
             Object.assign({}, prebidSlot, {
@@ -25,12 +37,9 @@ export const loadAdvert = (advert: Advert): void => {
             markTime(`Commercial: Slot Ready: ${advert.id}`);
             advert.startLoading();
             return Promise.all([
-                prebid.requestBids(advert).catch(e => e),
-                a9.requestBids(advert).catch(e => e),
-            ]).then(values => {
-                console.log('Load Advert Prebid result ', values[0]);
-                console.log('Load Advert A9 result ', values[1]);
-            });
+                prebid.requestBids(advert),
+                a9.requestBids(advert),
+            ]);
         })
         .then(() => {
             console.log(' *** LOAD ADVERT CALL DFP ');
@@ -42,31 +51,14 @@ export const refreshAdvert = (advert: Advert): void => {
     // advert.size contains the effective size being displayed prior to refreshing
     advert.whenSlotReady
         .then(() => {
-            const prepidPromise = prebid.requestBids(advert, prebidSlot => {
-                // We only fiddle with top-above-nav prebidSlot(s)
-                if (prebidSlot.key !== 'top-above-nav') {
-                    return [prebidSlot];
-                }
-                // For top-above-nav slots, we force the refreshed
-                // to be the same size as the first display
-                if (prebidSlot.sizes.length === 1) {
-                    // No point forcing a size, as there is already only one
-                    // possible (mobile/tablet). See prebid/slot-config.js
-                    return [prebidSlot];
-                }
-                return slotsWithSizes(advert, prebidSlot);
-            });
+            const prepidPromise = prebid.requestBids(advert, prebidSlot =>
+                slotFlatMap(advert, prebidSlot)
+            );
 
             const a9Promise = a9.requestBids(advert, prebidSlot =>
-                slotsWithSizes(advert, prebidSlot)
+                slotFlatMap(advert, prebidSlot)
             );
-            return Promise.all([
-                prepidPromise.catch(e => e),
-                a9Promise.catch(e => e),
-            ]).then(values => {
-                console.log('Refresh Advert Prebid result ', values[0]);
-                console.log('Refresh Advert A9 result ', values[1]);
-            });
+            return Promise.all([prepidPromise, a9Promise]);
         })
         .then(() => {
             advert.slot.setTargeting('refreshed', 'true');
