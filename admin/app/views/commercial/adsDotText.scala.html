@@ -1,15 +1,15 @@
 @import controllers.admin.commercial.AdsTextSellers
 @import helper._
 
-@(sellersForm: Form[AdsTextSellers])(
+@(name: String, saveRoute: Call, sellersForm: Form[AdsTextSellers])(
   implicit messages: Messages,
   request: RequestHeader,
   context: model.ApplicationContext
 )
 @admin_main("ads.txt editor", isAuthed = true) {
     <link rel="stylesheet" type="text/css" href="@controllers.admin.routes.UncachedAssets.at("css/commercial.css")">
-    <h1>ads.txt editor</h1>
-    @form(action = controllers.admin.commercial.routes.AdsDotTextEditController.postAdsDotText()) {
+    <h1>@{name} editor</h1>
+    @form(action = saveRoute) {
         @if(sellersForm.hasGlobalErrors) {
             <ul>
             @for(error <- sellersForm.globalErrors) {
