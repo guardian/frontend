@@ -22,7 +22,7 @@ export const acquisitionsBannerControlTemplate = (
                 ${closeCentralIcon.markup}
             </button>
         </div>
-        <div class="engagement-banner__container testing">
+        <div class="engagement-banner__container">
             <div class="engagement-banner__text">
                 ${
                     params.leadSentence
