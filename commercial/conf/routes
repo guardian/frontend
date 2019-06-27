@@ -39,8 +39,9 @@ GET         /advertiser-content/:campaignName/:pageName/:cType/onward.json  comm
 GET         /advertiser-content/:campaignName/:pageName/autoplay.json       commercial.controllers.HostedContentController.renderAutoplayComponent(campaignName, pageName)
 
 
-# ADS.TXT Standard
+# ADS.TXT + APP-ADS.txt Standard
 GET         /ads.txt                                                        commercial.controllers.AdsDotTextViewController.renderTextFile()
+GET         /app-ads.txt                                                    commercial.controllers.AdsDotTextViewController.renderAppTextFile()
 
 # Analytics
 POST        /commercial/api/hb                                              commercial.controllers.PrebidAnalyticsController.insert()
