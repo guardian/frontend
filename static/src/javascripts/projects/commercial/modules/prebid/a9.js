@@ -52,8 +52,6 @@ const requestBids = (
         .map(slot => new A9AdUnit(advert, slot))
         .filter(adUnit => !adUnit.isEmpty());
 
-    console.log('A9 AD UNITS', adUnits);
-
     if (adUnits.length === 0) {
         return requestQueue;
     }
