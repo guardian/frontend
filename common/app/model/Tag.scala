@@ -7,6 +7,7 @@ import conf.Configuration
 import contentapi.SectionTagLookUp
 import play.api.libs.json._
 import views.support.{Contributor, ImgSrc, Item140}
+import navigation.GuardianFoundationHelper
 
 object Tag {
 
@@ -55,7 +56,7 @@ object Tag {
       opengraphPropertiesOverrides = openGraphPropertiesOverrides,
       twitterPropertiesOverrides = Map("twitter:card" -> "summary"),
       commercial = tag.commercial,
-      isFoundation = isGuardianFoundation(tag.sectionId)
+      isFoundation = GuardianFoundationHelper.sectionIdIsGuardianFoundation(tag.sectionId)
     )
   }
 

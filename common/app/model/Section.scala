@@ -3,6 +3,7 @@ package model
 import com.gu.contentapi.client.model.v1.{Section => ApiSection}
 import common.Pagination
 import common.commercial.CommercialProperties
+import navigation.GuardianFoundationHelper
 import play.api.libs.json.{JsBoolean, JsString, JsValue, Json}
 
 object Section {
@@ -37,23 +38,13 @@ object Section {
       },
       javascriptConfigOverrides = javascriptConfigOverrides,
       commercial = Some(CommercialProperties.fromSection(section)),
-      isFoundation = sectionIdIsGuardianFoundation(id: String)
+      isFoundation = GuardianFoundationHelper.sectionIdIsGuardianFoundation(id: String)
     )
 
     Section(
       metadata,
       isEditionalised = section.editions.length > 1
     )
-  }
-
-  val foundationSectionIds = List(
-    "the-guardian-foundation",
-    "newswise",
-    "gnmeducationcentre"
-  )
-
-  private def sectionIdIsGuardianFoundation(id: String): Boolean = {
-    foundationSectionIds.contains(id)
   }
 
 }
