@@ -20,6 +20,7 @@ import play.api.libs.json._
 import play.api.libs.json.JodaWrites.JodaDateTimeWrites
 import play.api.mvc.RequestHeader
 import play.twirl.api.Html
+import navigation.GuardianFoundationHelper
 
 import scala.util.matching.Regex
 
@@ -764,7 +765,7 @@ final case class Tags(
   lazy val isCrossword: Boolean = types.exists(_.id == Tags.Crossword)
   lazy val isMatchReport: Boolean = tones.exists(_.id == Tags.MatchReports)
   lazy val isQuiz: Boolean = tones.exists(_.id == Tags.quizzes)
-  lazy val isFoundation: Boolean = tags.exists(t => Tags.foundationMappings.contains(t.id))
+  lazy val isFoundation: Boolean = tags.exists(t => GuardianFoundationHelper.tagIdIsGuardianFoundation(t.id))
 
   lazy val isArticle: Boolean = tags.exists { _.id == Tags.Article }
   lazy val isSudoku: Boolean = tags.exists { _.id == Tags.Sudoku } || tags.exists(t => t.id == "lifeandstyle/series/sudoku")
@@ -855,14 +856,6 @@ object Tags {
     "tone/albumreview",
     "tone/livereview",
     "tone/childrens-user-reviews"
-  )
-
-  val foundationMappings = Seq(
-    "the-guardian-foundation/the-guardian-foundation",
-    "gnmeducationcentre/gnmeducationcentre",
-    "newswise/newswise",
-    "gnm-archive/gnm-archive",
-    "the-guardian-foundation/series/guardian-exhibitions"
   )
 
   val interviewMappings = Seq(

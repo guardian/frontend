@@ -7,6 +7,7 @@ import conf.Configuration
 import contentapi.SectionTagLookUp
 import play.api.libs.json._
 import views.support.{Contributor, ImgSrc, Item140}
+import navigation.GuardianFoundationHelper
 
 object Tag {
 
@@ -50,17 +51,16 @@ object Tag {
       javascriptConfigOverrides = javascriptConfigOverrides,
       opengraphPropertiesOverrides = openGraphPropertiesOverrides,
       twitterPropertiesOverrides = Map("twitter:card" -> "summary"),
-      commercial = tag.commercial
+      commercial = tag.commercial,
+      isFoundation = GuardianFoundationHelper.sectionIdIsGuardianFoundation(tag.sectionId)
     )
   }
 
   def make(tag: ApiTag, pagination: Option[Pagination] = None): Tag = {
-
     val richLinkId = tag.references.find(_.`type` == "rich-link")
       .map(_.id.stripPrefix("rich-link/"))
       .filter(_.matches( """https?://www\.theguardian\.com/.*"""))
       .map(_.stripPrefix("https://www.theguardian.com"))
-
 
     Tag(
       properties = TagProperties.make(tag),
@@ -68,6 +68,7 @@ object Tag {
       richLinkId = richLinkId
     )
   }
+
   implicit val tagWrites: Writes[Tag] = Json.writes[Tag]
 }
 

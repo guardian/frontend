@@ -32,12 +32,11 @@ object IndexHtml {
     override def IE9CriticalCss: Html = stylesheetLink(s"stylesheets/ie9.$ContentCSSFile.css")
   }
 
-  def html( page: IndexPage)(
+  def html(page: IndexPage)(
     headContent: Html = Html(""),
     bodyContent: Html = Html("")
   )(implicit request: RequestHeader, applicationContext: ApplicationContext): Html = {
     implicit val p: IndexPage = page
-
     htmlTag(
       headTag(
         weAreHiring() when WeAreHiring.isSwitchedOn,

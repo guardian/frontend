@@ -148,8 +148,7 @@ trait Index extends ConciergeRepository with Collections {
     val latestContent = response.results.getOrElse(Nil).filterNot(c => editorsPicksIds contains c.id)
     val trails = (editorsPicks ++ latestContent).map(IndexPageItem(_))
     val commercial = Commercial.empty
-
-    IndexPage(page = section, contents = trails, tags = Tags(Nil), date = DateTime.now, tzOverride = None, commercial)
+    IndexPage(page = section, contents = trails, tags = Tags(Nil), date = DateTime.now, tzOverride = None, commercial = commercial)
   }
 
   private def tag(response: ItemResponse, page: Int): Option[IndexPage] = {
@@ -164,6 +163,7 @@ trait Index extends ConciergeRepository with Collections {
 
     val latest: Seq[IndexPageItem] = response.results.getOrElse(Nil).map(IndexPageItem(_)).filterNot(c => leadContentIds.contains(c.item.metadata.id))
     val allTrails = (leadContent ++ editorsPicks ++ latest).distinctBy(_.item.metadata.id)
+
     tag map { tag =>
       IndexPage(page = tag, contents = allTrails, tags = Tags(List(tag)), date = DateTime.now, tzOverride = None)
     }

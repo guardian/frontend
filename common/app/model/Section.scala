@@ -3,6 +3,7 @@ package model
 import com.gu.contentapi.client.model.v1.{Section => ApiSection}
 import common.Pagination
 import common.commercial.CommercialProperties
+import navigation.GuardianFoundationHelper
 import play.api.libs.json.{JsBoolean, JsString, JsValue, Json}
 
 object Section {
@@ -36,7 +37,8 @@ object Section {
         case _ => Some("front")
       },
       javascriptConfigOverrides = javascriptConfigOverrides,
-      commercial = Some(CommercialProperties.fromSection(section))
+      commercial = Some(CommercialProperties.fromSection(section)),
+      isFoundation = GuardianFoundationHelper.sectionIdIsGuardianFoundation(id: String)
     )
 
     Section(
@@ -44,9 +46,10 @@ object Section {
       isEditionalised = section.editions.length > 1
     )
   }
+
 }
 
-case class Section private(
+case class Section private (
   override val metadata: MetaData,
   isEditionalised: Boolean
 ) extends StandalonePage
