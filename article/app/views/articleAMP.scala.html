@@ -1,7 +1,0 @@
-@(model: ArticlePage)(implicit request: RequestHeader, context: _root_.model.ApplicationContext)
-
-@mainAMPLegacy(model, model.related, model.article.content){
-
-}{
-    @fragments.articleBody(model, amp = true)
-}

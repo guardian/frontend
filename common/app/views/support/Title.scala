@@ -38,12 +38,20 @@ object Title {
     case _ => sectionId
   }
 
-  private def getSectionConsideringWebtitle(webTitle: String, section: Option[String]): String =
+  private def guCapitalization(str: String): String = {
+    str match {
+      case "uk-news" => "UK news"
+      case "us-news" => "US news"
+      case _ => str.capitalize
+    }
+  }
+
+  private def getSectionConsideringWebtitle(webTitle: String, section: Option[String]): String = {
     section.filter(_.nonEmpty)
       .filterNot(_.toLowerCase == webTitle.toLowerCase)
       .filterNot(SectionsToIgnore.contains)
       .map(titleFromSectionId)
-      .fold("") { s => s" | ${s.capitalize}"}
+      .fold("") { s => s" | ${guCapitalization(s)}" }}
 
   private def pagination(page: Page) = page.metadata.pagination.filterNot(_.isFirstPage).map{ pagination =>
     s" | Page ${pagination.currentPage} of ${pagination.lastPage}"

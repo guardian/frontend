@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.2.0",
-    "@guardian/atom-renderer": "1.0.2",
+    "@guardian/atom-renderer": "1.0.3",
     "@guardian/dotcom-rendering": "git://github.com/guardian/dotcom-rendering.git#version-1-alpha",
     "bean": "~1.0.14",
     "bonzo": "~2.0.0",
@@ -29,7 +29,7 @@
     "ophan-tracker-js": "1.3.13",
     "preact": "^8.2.9",
     "preact-compat": "^3.18.4",
-    "prebid.js": "https://github.com/guardian/Prebid.js.git#0e4ee56",
+    "prebid.js": "https://github.com/guardian/Prebid.js.git#7f8f4a6",
     "qwery": "3.4.2",
     "rangefix": "^0.2.5",
     "raven-js": "^3.19.1",
@@ -128,7 +128,7 @@
     "uglify-js": "^2.7.4",
     "uglifyjs-webpack-plugin": "^1.2.5",
     "webpack": "^4.29.5",
-    "webpack-bundle-analyzer": "^3.0.4",
+    "webpack-bundle-analyzer": "^3.3.2",
     "webpack-merge": "^4.1.0",
     "webpack-visualizer-plugin": "^0.1.11",
     "yargs": "^11.0.0"

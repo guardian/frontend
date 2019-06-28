@@ -17,8 +17,8 @@ export const acquisitionsBannerControlTemplate = (
             <div class="engagement-banner__roundel">
                 ${marque36icon.markup}
             </div>
-            <button class="button engagement-banner__close-button js-site-message-close js-engagement-banner-close-button" data-link-name="hide release message">
-                <span class="u-h">Close</span>
+            <button tabindex="4" class="button engagement-banner__close-button js-site-message-close js-engagement-banner-close-button" data-link-name="hide release message">
+                <span class="u-h">Close the support banner</span>
                 ${closeCentralIcon.markup}
             </button>
         </div>
@@ -28,11 +28,11 @@ export const acquisitionsBannerControlTemplate = (
                 ${params.hasTicker ? acquisitionsBannerTickerTemplate : ''}
             </div>
             <div class="engagement-banner__cta">
-                <button class="button engagement-banner__button" href="${
+                <a tabindex="3" class="button engagement-banner__button" href="${
                     params.linkUrl
                 }">
                     ${params.buttonCaption}${arrowWhiteRight.markup}
-                </button>
+                </a>
                 <div class="engagement-banner__payment-logos">
                     <img
                         src="${config.get(
@@ -46,6 +46,7 @@ export const acquisitionsBannerControlTemplate = (
             </div>
         </div>
         <a
+            aria-hidden="true"
             class="u-faux-block-link__overlay"
             target="_blank"
             href="${params.linkUrl}"

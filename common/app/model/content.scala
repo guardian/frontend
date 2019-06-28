@@ -92,8 +92,9 @@ final case class Content(
     val shouldAmplifyArticles = isAmpSupportedArticleType && AmpArticleSwitch.isSwitchedOn
     val shouldAmplifyLiveBlogs = tags.isLiveBlog && AmpLiveBlogSwitch.isSwitchedOn
     val containsFormStacks: Boolean = fields.body.contains("guardiannewsandmedia.formstack.com")
+    val hasBodyBlocks: Boolean = fields.blocks.exists(b => b.body.nonEmpty)
 
-    (shouldAmplifyArticles || shouldAmplifyLiveBlogs) && !containsFormStacks
+    ((shouldAmplifyArticles && hasBodyBlocks) || shouldAmplifyLiveBlogs) && !containsFormStacks
   }
 
   lazy val hasSingleContributor: Boolean = {
@@ -123,35 +124,29 @@ final case class Content(
       .flatMap(_.url)
       .getOrElse(Configuration.images.fallbackLogo)
 
-  // read this before modifying: https://developers.facebook.com/docs/opengraph/howtos/maximizing-distribution-media-content#images
-  private lazy val openGraphImageProfile: ElementProfile =
-    if(isPaidContent && FacebookShareImageLogoOverlay.isSwitchedOn) Item700
-    else if(isFromTheObserver && tags.isComment) FacebookOpenGraphImage.opinionsObserver
-    else if(tags.isComment) FacebookOpenGraphImage.opinions
-    else if(tags.isLiveBlog) FacebookOpenGraphImage.live
-    else if(
-      tags.tags.exists(_.id == "tone/news") &&
+  def shareImageCategory: ShareImageCategory = {
+    val isOldNews = tags.tags.exists(_.id == "tone/news") &&
       trail.webPublicationDate.isBefore(DateTime.now().minusYears(1))
-    ) {
-      if(isFromTheObserver) {
-        TwitterImage.contentAgeNoticeObserver(trail.webPublicationDate.getYear)
-      } else {
-        TwitterImage.contentAgeNotice(trail.webPublicationDate.getYear)
-      }
+
+    () match {
+      case paid if isPaidContent => Paid
+      case commentObserver if tags.isComment && isFromTheObserver => ObserverOpinion
+      case comment if tags.isComment => GuardianOpinion
+      case live if tags.isLiveBlog => Live
+      case oldObserver if isOldNews && isFromTheObserver => ObserverOldContent(trail.webPublicationDate.getYear)
+      case old if isOldNews => GuardianOldContent(trail.webPublicationDate.getYear)
+      case ratingObserver if starRating.isDefined && isFromTheObserver => ObserverStarRating(starRating.get)
+      case rating if starRating.isDefined => GuardianStarRating(starRating.get)
+      case observerDefault if isFromTheObserver => ObserverDefault
+      case default => GuardianDefault
     }
-    else starRating.map(rating =>
-        if(isFromTheObserver) {
-            FacebookOpenGraphImage.starRatingObserver(rating)
-        } else {
-            FacebookOpenGraphImage.starRating(rating)
-        }
-    ).getOrElse(
-        if(isFromTheObserver) {
-            FacebookOpenGraphImage.defaultObserver
-        } else {
-            FacebookOpenGraphImage.default
-        }
-    )
+  }
+
+  // read this before modifying: https://developers.facebook.com/docs/opengraph/howtos/maximizing-distribution-media-content#images
+  lazy val openGraphImageProfile: ElementProfile = {
+    val category = shareImageCategory
+    OpenGraphImage.forCategory(category, shouldIncludeOverlay = FacebookShareImageLogoOverlay.isSwitchedOn, shouldUpscale = true)
+  }
 
   lazy val openGraphImage: String = ImgSrc(openGraphImageOrFallbackUrl, openGraphImageProfile)
   // These dimensions are just an educated guess (e.g. we don't take into account image-resizer being turned off)
@@ -163,35 +158,9 @@ final case class Content(
     } yield Math.round(width / img.ratioDouble).toInt // Assume image resizing maintains aspect ratio to calculate height
 
   // URL of image to use in the twitter card. Image must be less than 1MB in size: https://dev.twitter.com/cards/overview
-  lazy val twitterCardImage: String = {
-    val image = if (isPaidContent && TwitterShareImageLogoOverlay.isSwitchedOn) Item700
-    else if(isFromTheObserver && tags.isComment) TwitterImage.opinionsObserver
-    else if(tags.isComment) TwitterImage.opinions
-    else if(tags.isLiveBlog) TwitterImage.live
-    else if(
-        tags.tags.exists(_.id == "tone/news") &&
-        trail.webPublicationDate.isBefore(DateTime.now().minusYears(1))
-    ) {
-      if(isFromTheObserver) {
-        TwitterImage.contentAgeNoticeObserver(trail.webPublicationDate.getYear)
-      } else {
-        TwitterImage.contentAgeNotice(trail.webPublicationDate.getYear)
-      }
-    }
-    else starRating.map(rating =>
-        if(isFromTheObserver) {
-            TwitterImage.starRatingObserver(rating)
-        } else {
-            TwitterImage.starRating(rating)
-        }
-    ).getOrElse(
-        if(isFromTheObserver) {
-            TwitterImage.defaultObserver
-        } else {
-            TwitterImage.default
-        }
-    )
-    ImgSrc(openGraphImageOrFallbackUrl, image)
+  lazy val twitterCardImage = {
+    val profile = OpenGraphImage.forCategory(shareImageCategory, TwitterShareImageLogoOverlay.isSwitchedOn)
+    ImgSrc(openGraphImageOrFallbackUrl, profile)
   }
 
   lazy val syndicationType: String = {
@@ -805,7 +774,15 @@ case class GalleryLightbox(
 ){
   def imageContainer(index: Int): ImageElement = galleryImages(index)
 
-  private val facebookImage: ShareImage = if(tags.isComment) FacebookOpenGraphImage.opinions else if(tags.isLiveBlog) FacebookOpenGraphImage.live else FacebookOpenGraphImage.default
+  private val facebookImage: ElementProfile = {
+    val category =
+      if (tags.isComment) GuardianOpinion
+      else if (tags.isLiveBlog) Live
+      else GuardianDefault
+
+    OpenGraphImage.forCategory(category, FacebookShareImageLogoOverlay.isSwitchedOn)
+  }
+
   val galleryImages: Seq[ImageElement] = elements.images.filter(_.properties.isGallery)
   val largestCrops: Seq[ImageAsset] = galleryImages.flatMap(_.images.largestImage)
   val openGraphImages: Seq[String] = largestCrops.flatMap(_.url).map(ImgSrc(_, facebookImage))

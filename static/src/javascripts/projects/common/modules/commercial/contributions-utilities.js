@@ -21,12 +21,14 @@ import {
     getLocalCurrencySymbol,
     getSync as geolocationGetSync,
     countryCodeToCountryGroupId,
+    countryNames,
 } from 'lib/geolocation';
 import {
     splitAndTrim,
     optionalSplitAndTrim,
     optionalStringToBoolean,
     throwIfEmptyString,
+    filterEmptyString,
 } from 'lib/string-utils';
 import { throwIfEmptyArray } from 'lib/array-utils';
 import { epicButtonsTemplate } from 'common/modules/commercial/templates/acquisitions-epic-buttons';
@@ -73,6 +75,9 @@ const getReaderRevenueRegion = (geolocation: string): ReaderRevenueRegion => {
 
 const getVisitCount = (): number => local.get('gu.alreadyVisited') || 0;
 
+const replaceCountryName = (text: string, countryName: string): string =>
+    text.replace(/%%COUNTRY_NAME%%/g, countryName);
+
 // How many times the user can see the Epic,
 // e.g. 6 times within 7 days with minimum of 1 day in between views.
 const defaultMaxViews: MaxViews = {
@@ -81,8 +86,10 @@ const defaultMaxViews: MaxViews = {
     minDaysBetweenViews: 0,
 };
 
-const defaultButtonTemplate: CtaUrls => string = (url: CtaUrls) =>
-    epicButtonsTemplate(url);
+const defaultButtonTemplate: (CtaUrls, ctaText?: string) => string = (
+    url: CtaUrls,
+    ctaText?: string
+) => epicButtonsTemplate(url, ctaText);
 
 const controlTemplate: EpicTemplate = (
     variant: EpicVariant,
@@ -92,13 +99,16 @@ const controlTemplate: EpicTemplate = (
         copy,
         componentName: variant.componentName,
         buttonTemplate: variant.buttonTemplate
-            ? variant.buttonTemplate({
-                  supportUrl: variant.supportURL,
-                  subscribeUrl: variant.subscribeURL,
-              })
+            ? variant.buttonTemplate(
+                  {
+                      supportUrl: variant.supportURL,
+                      subscribeUrl: variant.subscribeURL,
+                  },
+                  variant.ctaText
+              )
             : undefined,
-        epicClassNames: variant.classNames,
         showTicker: variant.showTicker,
+        backgroundImageUrl: variant.backgroundImageUrl,
     });
 
 const liveBlogTemplate: EpicTemplate = (
@@ -243,9 +253,10 @@ const makeEpicABTestVariant = (
         }),
         template,
         buttonTemplate: initVariant.buttonTemplate,
+        ctaText: initVariant.ctaText,
         copy: initVariant.copy,
-        classNames: initVariant.classNames || [],
         showTicker: initVariant.showTicker || false,
+        backgroundImageUrl: initVariant.backgroundImageUrl,
 
         countryGroups: initVariant.countryGroups || [],
         tagIds: initVariant.tagIds || [],
@@ -311,7 +322,8 @@ const makeEpicABTestVariant = (
                 )
                 .then(renderedTemplate => {
                     if (initVariant.test) {
-                        initVariant.test(renderedTemplate, this);
+                        const parent = parentTest;
+                        initVariant.test(renderedTemplate, this, parent);
                     } else {
                         // Standard epic insertion. TODO - this could do with a refactor
                         const component = $.create(renderedTemplate);
@@ -435,15 +447,19 @@ const makeEpicABTest = ({
     useLocalViewLog = false,
     useTargetingTool = false,
     userCohort = 'OnlyNonSupporters',
+    hasCountryName = false,
     pageCheck = isCompatibleWithArticleEpic,
     template = controlTemplate,
+    canRun = () => true,
 }: InitEpicABTest): EpicABTest => {
     const test = {
         // this is true because we use the reader revenue flag rather than sensitive
         // to disable contributions asks for a particular piece of content
         showForSensitive: true,
         canRun() {
-            return shouldShowEpic(this);
+            const countryNameIsOk =
+                !hasCountryName || countryNames[geolocationGetSync()];
+            return canRun() && countryNameIsOk && shouldShowEpic(this);
         },
         componentType: 'ACQUISITIONS_EPIC',
         insertEvent: makeEvent(id, 'insert'),
@@ -474,6 +490,47 @@ const makeEpicABTest = ({
     );
 
     return test;
+};
+
+const buildEpicCopy = (row: any, hasCountryName: boolean) => {
+    const heading = throwIfEmptyString('heading', row.heading);
+
+    const paragraphs: string[] = throwIfEmptyArray(
+        'paragraphs',
+        splitAndTrim(row.paragraphs, '\n')
+    );
+
+    const countryName: ?string = hasCountryName
+        ? countryNames[geolocationGetSync()]
+        : undefined;
+
+    return {
+        heading:
+            heading && countryName
+                ? replaceCountryName(heading, countryName)
+                : heading,
+        paragraphs:
+            paragraphs && countryName
+                ? paragraphs.map<string>(para =>
+                      replaceCountryName(para, countryName)
+                  )
+                : paragraphs,
+        highlightedText: row.highlightedText
+            ? row.highlightedText.replace(
+                  /%%CURRENCY_SYMBOL%%/g,
+                  getLocalCurrencySymbol()
+              )
+            : undefined,
+        footer: optionalSplitAndTrim(row.footer, '\n'),
+    };
+};
+
+const buildBannerCopy = (text: string, hasCountryName: boolean): string => {
+    const countryName: ?string = hasCountryName
+        ? countryNames[geolocationGetSync()]
+        : undefined;
+
+    return countryName ? replaceCountryName(text, countryName) : text;
 };
 
 export const getEpicTestsFromGoogleDoc = (): Promise<
@@ -518,6 +575,12 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                         ? rowWithUserCohort.userCohort
                         : 'OnlyNonSupporters';
 
+                    // If hasCountryName is true but a country name is not available for this user then
+                    // they will be excluded from this test
+                    const hasCountryName = rows.some(row =>
+                        optionalStringToBoolean(row.hasCountryName)
+                    );
+
                     return makeEpicABTest({
                         id: testName,
                         campaignId: testName,
@@ -551,6 +614,7 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                                   useLocalViewLog: true,
                               }
                             : {}),
+                        hasCountryName,
                         variants: rows.map(row => ({
                             id: row.name.toLowerCase().trim(),
                             ...(isLiveBlog
@@ -578,6 +642,7 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                             buttonTemplate: isThankYou
                                 ? undefined
                                 : defaultButtonTemplate,
+                            ctaText: filterEmptyString(row.ctaText),
                             countryGroups: optionalSplitAndTrim(
                                 row.locations,
                                 ','
@@ -592,29 +657,12 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                                 row.excludedSections,
                                 ','
                             ),
-                            copy: {
-                                heading: throwIfEmptyString(
-                                    'heading',
-                                    row.heading
-                                ),
-                                paragraphs: throwIfEmptyArray(
-                                    'paragraphs',
-                                    splitAndTrim(row.paragraphs, '\n')
-                                ),
-                                highlightedText: row.highlightedText
-                                    ? row.highlightedText.replace(
-                                          /%%CURRENCY_SYMBOL%%/g,
-                                          getLocalCurrencySymbol()
-                                      )
-                                    : undefined,
-                                footer: optionalSplitAndTrim(row.footer, '\n'),
-                            },
-                            classNames: optionalSplitAndTrim(
-                                row.classNames,
-                                ','
-                            ),
+                            copy: buildEpicCopy(row, hasCountryName),
                             showTicker: optionalStringToBoolean(row.showTicker),
                             supportBaseURL: row.supportBaseURL,
+                            backgroundImageUrl: filterEmptyString(
+                                row.backgroundImageUrl
+                            ),
                         })),
                     });
                 });
@@ -667,6 +715,21 @@ export const getEngagementBannerTestsFromGoogleDoc = (): Promise<
                 .map(name => {
                     const rows = sheets[name];
                     const testName = name.split('__ON')[0];
+
+                    // If hasCountryName is true but a country name is not available for this user then
+                    // they will be excluded from this test
+                    const hasCountryName = rows.some(row =>
+                        optionalStringToBoolean(row.hasCountryName)
+                    );
+
+                    const rowWithLocations = rows.find(
+                        row =>
+                            row.locations !== undefined && row.locations !== ''
+                    );
+                    const countryGroups = rowWithLocations
+                        ? optionalSplitAndTrim(rowWithLocations.locations, ',')
+                        : [];
+
                     return {
                         id: testName,
                         campaignId: testName,
@@ -683,7 +746,16 @@ export const getEngagementBannerTestsFromGoogleDoc = (): Promise<
                         audience: 1,
                         audienceOffset: 0,
 
-                        canRun: () => true,
+                        canRun: () => {
+                            const countryNameOk =
+                                !hasCountryName ||
+                                countryNames[geolocationGetSync()];
+                            const matchesCountryGroups =
+                                countryGroups.length === 0 ||
+                                userMatchesCountryGroups(countryGroups);
+
+                            return countryNameOk && matchesCountryGroups;
+                        },
 
                         variants: rows.map(row => ({
                             id: row.name.trim().toLowerCase(),
@@ -691,7 +763,10 @@ export const getEngagementBannerTestsFromGoogleDoc = (): Promise<
                             test: () => {},
 
                             engagementBannerParams: {
-                                messageText: row.messageText.trim(),
+                                messageText: buildBannerCopy(
+                                    row.messageText.trim(),
+                                    hasCountryName
+                                ),
                                 ctaText: `<span class="engagement-banner__highlight"> ${row.ctaText.replace(
                                     /%%CURRENCY_SYMBOL%%/g,
                                     getLocalCurrencySymbol()
@@ -729,4 +804,5 @@ export {
     getReaderRevenueRegion,
     userIsInCorrectCohort,
     getVisitCount,
+    buildEpicCopy,
 };

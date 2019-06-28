@@ -29,11 +29,12 @@ declare type EpicVariant = Variant & {
     subscribeURL: string,
     componentName: string,
     template: EpicTemplate,
-    classNames: string[],
     showTicker: boolean,
 
-    buttonTemplate?: CtaUrls => string,
+    buttonTemplate?: (CtaUrls, ctaText?: string) => string,
+    ctaText?: string,
     copy?: AcquisitionsEpicTemplateCopy,
+    backgroundImageUrl?: string,
 }
 
 declare type ABTest = {
@@ -84,18 +85,19 @@ declare type EpicABTest = AcquisitionsABTest & {
 declare type InitEpicABTestVariant = {
     id: string,
     products: $ReadOnlyArray<OphanProduct>,
-    test?: (html: string, abTest: ABTest) => void,
+    test?: (html: string, variant: EpicVariant, parentTest: ABTest) => void,
     deploymentRules?: DeploymentRules,
     countryGroups?: string[],
     tagIds?: string[],
     sections?: string[],
     excludedTagIds?: string[],
     excludedSections?: string[],
-    buttonTemplate?: CtaUrls => string,
+    buttonTemplate?: (CtaUrls, ctaText?: string) => string,
+    ctaText?: string,
     copy?: AcquisitionsEpicTemplateCopy,
-    classNames?: string[],
     showTicker?: boolean,
     supportBaseURL?: string,
+    backgroundImageUrl?: string,
 };
 
 declare type InitBannerABTestVariant = {
@@ -116,6 +118,7 @@ declare type InitEpicABTest = {
     audienceCriteria: string,
     idealOutcome: string,
     campaignId: string,
+    canRun?: () => boolean,
     variants: $ReadOnlyArray<InitEpicABTestVariant>,
 
     campaignPrefix?: string,
@@ -125,6 +128,7 @@ declare type InitEpicABTest = {
     pageCheck?: (page: Object) => boolean,
     template?: EpicTemplate,
     deploymentRules?: DeploymentRules,
+    hasCountryName?: boolean,
 }
 
 declare type Interaction = {

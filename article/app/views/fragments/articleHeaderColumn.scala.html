@@ -1,4 +1,4 @@
-@(article: model.Article, page: model.Page, amp: Boolean = false)(implicit request: RequestHeader, context: model.ApplicationContext)
+@(article: model.Article, page: model.Page)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @import views.html.fragments.langAttributes
 @import views.support.ContributorLinks
@@ -8,9 +8,9 @@
 
 <header class="content__head content__head--splash content__head--article tonal__head tonal__head--@toneClass(article)
 @if(article.content.hasTonalHeaderByline && article.tags.hasLargeContributorImage && article.metadata.designType.nameOrDefault != "analysis") { content__head--byline-pic}">
-    @fragments.mainMedia(article, amp)
+    @fragments.mainMedia(article)
 
-    @fragments.meta.metaInline(article, amp)
+    @fragments.meta.metaInline(article)
 
     <div class="content__headline-splash-wrapper">
         <div class="content__header tonal__header u-cf">

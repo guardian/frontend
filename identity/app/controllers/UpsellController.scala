@@ -48,7 +48,7 @@ class UpsellController(
 
   import UpsellController._
 
-  def confirmEmailThankYou(returnUrl: Option[String]): Action[AnyContent] = if (IdentityEnableUpsellJourneysSwitch.isSwitchedOn) csrfAddToken {
+  def confirmEmailThankYou(returnUrl: Option[String]): Action[AnyContent] = csrfAddToken {
     authenticatedActions.consentAuthWithIdapiUserWithEmailValidation.async { implicit request =>
       val returnUrl = returnUrlVerifier.getVerifiedReturnUrl(request)
       val email = request.user.primaryEmailAddress
@@ -65,8 +65,6 @@ class UpsellController(
         )
       )
     }
-  } else {
-    Action(NotFound(views.html.errors._404()))
   }
 }
 

@@ -143,29 +143,10 @@ $header-image-size-desktop: 100px;
         }
     }
 
-    &:after {
-        content: '';
-        display: none;
-        position: absolute;
-        height: $gs-gutter * 1.5;
-        width: 1px;
-        background-color: $brightness-86;
-        // Offset by 1px to the right so that it coincides
-        // with the rule in the body of articles
-        right: -$gs-gutter / 2 - 1;
-        top: -$gs-baseline / 2;
-
-        @include mq($from: leftCol) {
-            display: block;
-        }
-    }
-
     a {
         color: inherit;
 
         &:hover {
-            color: $news-main;
-            text-decoration: none;
             border-bottom: 1px solid $news-main;
 
             & .inline-icon {
@@ -181,6 +162,40 @@ $header-image-size-desktop: 100px;
         }
     }
 }
+
+.fc-container__header__title {
+    &:after {
+        content: '';
+        display: none;
+        position: absolute;
+        height: $gs-gutter * 1.5;
+        width: 1px;
+        background-color: $brightness-86;
+
+        // Offset by 1px to the right so that it coincides
+        // with the rule in the body of articles
+        right: -$gs-gutter / 2 - 1;
+        top: -$gs-baseline / 2;
+
+        @include mq($from: leftCol) {
+            display: block;
+        }
+    }
+
+    .has-page-skin:after {
+        display: none;
+    }
+}
+
+.fc-container__title__text {
+    &:after {
+        @include mq($from: leftCol) {
+            display: none; // override to fix display issue on containers
+        }
+    }
+}
+
+
 
 .fc-container__header__title--sticky {
     display: block;

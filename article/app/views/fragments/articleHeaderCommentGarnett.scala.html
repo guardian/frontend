@@ -1,4 +1,4 @@
-@(article: model.Article, page: model.Page, amp: Boolean = false)(implicit request: RequestHeader, context: model.ApplicationContext)
+@(article: model.Article, page: model.Page)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @import views.html.fragments.langAttributes
 @import views.support.ContributorLinks
@@ -7,7 +7,7 @@
 <header class="content__head content__head--article tonal__head tonal__head--@toneClass(article)
     @if(article.content.hasTonalHeaderByline && article.tags.hasLargeContributorImage) { content__head--byline-pic}">
 
-    @fragments.meta.metaInline(article, amp)
+    @fragments.meta.metaInline(article)
 
     <div class="content__header tonal__header">
         <div class="u-cf">
@@ -40,7 +40,7 @@
             }
 
             @article.content.imdb.map { imdbId =>
-                <div articleprop="articleReviewed" articlescope articletype="http://schema.org/Movie">
+                <div articleprop="itemReviewed" articlescope articletype="http://schema.org/Movie">
                     <link articleprop="sameAs" href="http://www.imdb.com/title/@imdbId/">
                     @defining(article.content.primaryKeyWordTag.map(_.name).getOrElse(".")) { tag =>
                         @* we're not the authority on the film name, but just to keep google validator happy
@@ -50,7 +50,7 @@
             }
 
             @article.content.isbn.map { isbn =>
-                <div articleprop="articleReviewed" articlescope articletype="http://schema.org/Book">
+                <div articleprop="itemReviewed" articlescope articletype="http://schema.org/Book">
                     <meta articleprop="isbn" content="@isbn">
                     <div articleprop="author" articlescope articletype="http://schema.org/Person">
                         <meta articleprop="sameAs" content="http://schema.org/Person@* we can't know *@">
@@ -68,6 +68,6 @@
         }
     </div>
 
-    @fragments.contentMeta(article, page, amp = amp)
-    @fragments.mainMedia(article, amp)
+    @fragments.contentMeta(article, page)
+    @fragments.mainMedia(article)
 </header>

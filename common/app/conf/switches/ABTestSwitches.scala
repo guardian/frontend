@@ -28,19 +28,29 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-february-moment-banner-copy-more-people",
-    "switch on to test the some moment copy on the fiv engagement banner",
-    owners = Seq(Owner.withGithub("jlieb10")),
+    "ab-contributions-epic-articles-viewed",
+    "States how many articles a user has viewed in the epic",
+    owners = Seq(Owner.withGithub("tomrf1")),
     safeState = Off,
-    sellByDate = new LocalDate(2019, 9, 30),
+    sellByDate = new LocalDate(2020, 1, 27),
     exposeClientSide = true
   )
 
   Switch(
     ABTests,
-    "ab-february-moment-banner-thank-you",
-    "switch on to enable the moment thank you engagement banner worldwide",
-    owners = Seq(Owner.withGithub("johnduffell")),
+    "ab-contributions-epic-country-name",
+    "Displays country name in the epic",
+    owners = Seq(Owner.withGithub("tomrf1")),
+    safeState = Off,
+    sellByDate = new LocalDate(2020, 1, 27),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-contributions-global-mobile-banner-design",
+    "testing mobile-only design changes",
+    owners = Seq(Owner.withGithub("jlieb10")),
     safeState = Off,
     sellByDate = new LocalDate(2019, 9, 30),
     exposeClientSide = true
@@ -68,16 +78,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-commercial-ad-verification",
-    "Test the impact of verifiyng ads",
-    owners = Seq(Owner.withGithub("jeteve")),
-    safeState = Off,
-    sellByDate = new LocalDate(2019, 9, 30),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-commercial-outbrain-testing",
     "Test the outbrain widget",
     owners = Seq(Owner.withGithub("frankie297")),
@@ -88,12 +88,21 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-commercial-consent-global",
-    "Test the consent banner globally",
+    "ab-commercial-consent-modal-banner",
+    "Test whether presenting a modal Consent Banner increases proportion of US users who interact with it",
     owners = Owner.group(Commercial),
     safeState = Off,
-    sellByDate = new LocalDate(2019, 5, 16),
+    sellByDate = new LocalDate(2019, 6, 28),
     exposeClientSide = true
   )
 
+  Switch(
+    ABTests,
+    "ab-commercial-us-mobile-sticky",
+    "Test the behaviour of the new mobile sticky ad slot",
+    owners = Seq(Owner.withGithub("ripecosta")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 9, 30),
+    exposeClientSide = true
+  )
 }

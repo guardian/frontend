@@ -10,7 +10,7 @@ const displayAd = (adSlot: HTMLElement, forceDisplay: boolean) => {
     const advert: Advert = new Advert(adSlot);
 
     dfpEnv.advertIds[advert.id] = dfpEnv.adverts.push(advert) - 1;
-    if (dfpEnv.shouldLazyLoad() && !forceDisplay && dfpEnv.lazyLoadObserve) {
+    if (dfpEnv.shouldLazyLoad() && !forceDisplay) {
         queueAdvert(advert);
         enableLazyLoad(advert);
     } else {

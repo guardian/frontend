@@ -1,3 +1,5 @@
+@import model.CompetitionDisplayHelpers.cleanTeamName
+
 @(teamId: String, competition: model.Competition)
 
 <div class="team__results">
@@ -5,31 +7,31 @@
     @if(result.won) {
         <span
             class="team-result team-result--won"
-            data-foe="@result.foe.name"
+            data-foe="@cleanTeamName(result.foe.name)"
             data-score="@result.self.score.get"
             data-score-foe="@result.foe.score.get"
-            title="Won @result.self.score.get-@result.foe.score.get against @result.foe.name">
-            <span class="u-h">Won against @result.foe.name</span>
+            title="Won @result.self.score.get-@result.foe.score.get against @cleanTeamName(result.foe.name)">
+            <span class="u-h">Won against @cleanTeamName(result.foe.name)</span>
         </span>
     }
     @if(result.drew) {
         <span
             class="team-result team-result--drew"
-            data-foe="@result.foe.name"
+            data-foe="@cleanTeamName(result.foe.name)"
             data-score="@result.self.score.get"
             data-score-foe="@result.foe.score.get"
-            title="Drew @result.self.score.get-@result.foe.score.get with @result.foe.name">
-            <span class="u-h">Drew with @result.foe.name</span>
+            title="Drew @result.self.score.get-@result.foe.score.get with @cleanTeamName(result.foe.name)">
+            <span class="u-h">Drew with @cleanTeamName(result.foe.name)</span>
         </span>
     }
     @if(result.lost) {
         <span
             class="team-result team-result--lost"
-            data-foe="@result.foe.name"
+            data-foe="@cleanTeamName(result.foe.name)"
             data-score="@result.self.score.get"
             data-score-foe="@result.foe.score.get"
-            title="Lost @result.self.score.get-@result.foe.score.get to @result.foe.name">
-            <span class="u-h">Lost to @result.foe.name</span>
+            title="Lost @result.self.score.get-@result.foe.score.get to @cleanTeamName(result.foe.name)">
+            <span class="u-h">Lost to @cleanTeamName(result.foe.name)</span>
         </span>
     }
 }

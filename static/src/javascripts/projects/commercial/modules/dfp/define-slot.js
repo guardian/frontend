@@ -168,14 +168,21 @@ const defineSlot = (adSlotNode: Element, sizes: Object): Object => {
 
             // brand safety is on a page level
             Object.keys(targeting.brandSafety).forEach(key =>
-                slot.setTargeting(key, targeting.brandSafety[key])
+                window.googletag
+                    .pubads()
+                    .setTargeting(key, targeting.brandSafety[key])
             );
             if (targeting.fr) {
-                slot.setTargeting('fra', targeting.fr);
+                window.googletag.pubads().setTargeting('fra', targeting.fr);
+            }
+            if (targeting.custom && targeting.custom.kw) {
+                window.googletag
+                    .pubads()
+                    .setTargeting('kw', targeting.custom.kw);
             }
 
             // viewability targeting is on a slot level
-            const ignoredKeys = ['id', 'pub'];
+            const ignoredKeys = ['pub'];
             Object.keys(targeting.slots[id])
                 .filter(x => !ignoredKeys.includes(x))
                 .forEach(key =>

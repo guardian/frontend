@@ -118,16 +118,6 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-  val DoubleClickYouTubeAdFree = Switch(
-    Commercial,
-    "doubleclick-youtube-ad-free",
-    "Enable DoubleClick Segment for YouTube for Ad Free Users",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
   val RemarketingSwitch = Switch(
     Commercial,
     "remarketing",
@@ -362,6 +352,16 @@ trait CommercialSwitches {
     group = Commercial,
     name = "facebook-tracking-pixel",
     description = "Facebook's PageView tracking to improve ad targeting",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
+  val confiantAdVerification: Switch = Switch(
+    group = Commercial,
+    name = "confiant-ad-verification",
+    description = "Enable Confiant ad verification",
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,

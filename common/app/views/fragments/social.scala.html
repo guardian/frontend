@@ -1,4 +1,4 @@
-@(sharelinks: model.ShareLinkMeta, position: String = "bottom", iconModifier: List[String] = Nil, amp: Boolean = false)
+@(sharelinks: model.ShareLinkMeta, position: String = "bottom", iconModifier: List[String] = Nil)
 
 <ul class="social social--@position js-social--@position u-unstyled u-cf" data-component="social">
     @sharelinks.visible.map { link => @ShareLink(Nil, link) }

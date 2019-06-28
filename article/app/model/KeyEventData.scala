@@ -19,7 +19,7 @@ object KeyEventData {
     val TimelineMaxEntries = 7
     val latestSummary = blocks.find(_.eventType == SummaryEvent)
     val keyEvents = blocks.filter(_.eventType == KeyEvent)
-    val bodyBlocks = (latestSummary.toSeq ++ keyEvents).sortBy(_.lastModifiedDate.getOrElse(new DateTime(0)).toInstant.getMillis).reverse.take(TimelineMaxEntries)
+    val bodyBlocks = (latestSummary.toSeq ++ keyEvents).sortBy(_.publishedCreatedTimestamp).reverse.take(TimelineMaxEntries)
 
     bodyBlocks.map { bodyBlock =>
       KeyEventData(bodyBlock.id, bodyBlock.publishedCreatedDate(timezone), bodyBlock.title)

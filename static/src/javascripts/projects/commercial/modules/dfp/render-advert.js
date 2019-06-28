@@ -1,7 +1,7 @@
 // @flow
 
 import qwery from 'qwery';
-import raven from 'lib/raven';
+import reportError from 'lib/report-error';
 import fastdom from 'lib/fastdom-promise';
 import { Advert } from 'commercial/modules/dfp/Advert';
 import { adSizes } from 'commercial/modules/ad-sizes';
@@ -193,9 +193,17 @@ export const renderAdvert = (
             const callSizeCallback = () => {
                 if (advert.size) {
                     let size = advert.size.toString();
+
                     if (size === '0,0') {
                         size = 'fluid';
                     }
+
+                    /**
+                     * we reset hasPrebidSize to the default
+                     * value of false for subsequent ad refreshes
+                     * as they may not be prebid ads.
+                     * */
+                    advert.hasPrebidSize = false;
 
                     return Promise.resolve(
                         sizeCallbacks[size]
@@ -220,5 +228,15 @@ export const renderAdvert = (
                 .then(addRenderedClass)
                 .then(() => isRendered);
         })
-        .catch(raven.captureException);
+        .catch(err => {
+            reportError(
+                err,
+                {
+                    feature: 'commercial',
+                },
+                false
+            );
+
+            return Promise.resolve(false);
+        });
 };

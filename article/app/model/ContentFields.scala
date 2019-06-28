@@ -7,8 +7,8 @@ import views.{BodyCleaner, MainCleaner}
 
 case class ContentFields(fields: Fields, cleanedMainBlockHtml: String, cleanedBodyHtml: String)
 object ContentFields {
-  def apply(article: Article, isAmp: Boolean = false)(implicit request: RequestHeader, context: ApplicationContext): ContentFields =
-    new ContentFields(article.fields, MainCleaner.apply(article, amp = isAmp).body, BodyCleaner.apply(article, amp = isAmp).body)
+  def apply(article: Article)(implicit request: RequestHeader, context: ApplicationContext): ContentFields =
+    new ContentFields(article.fields, MainCleaner.apply(article).body, BodyCleaner.apply(article).body)
 
   implicit val contentFieldsWrites: Writes[ContentFields] = Json.writes[ContentFields]
 }

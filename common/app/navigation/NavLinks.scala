@@ -1,6 +1,7 @@
 package navigation
 
-object NavLinks {
+private object NavLinks {
+
   /* NEWS */
   val science = NavLink("Science", "/science")
   val tech = NavLink("Tech", "/technology")
@@ -15,6 +16,7 @@ object NavLinks {
   val indigenousAustraliaOpinion = NavLink("Indigenous", "/commentisfree/series/indigenousx")
   val usNews = NavLink("US", "/us-news", longTitle = "US news")
   val usPolitics = NavLink("US Politics", "/us-news/us-politics", longTitle = "US politics")
+  val usElections2020 = NavLink("Elections 2020", "/us-news/us-elections-2020", longTitle = "Elections 2020")
 
   val education = {
     val teachers = NavLink("Teachers", "/teacher-network")
@@ -70,7 +72,7 @@ object NavLinks {
   val auColumnists = NavLink("Columnists", "/au/index/contributors")
   val theGuardianView = NavLink("The Guardian view", "/profile/editorial")
   val cartoons = NavLink("Cartoons", "/cartoons/archive")
-  val inMyOpinion = NavLink("Opinion videos", "/commentisfree/series/comment-is-free-weekly")
+  val opinionVideos = NavLink("Opinion videos", "/type/video+tone/comment")
   val letters = NavLink("Letters", "/tone/letters")
 
   /* SPORT */
@@ -182,7 +184,7 @@ object NavLinks {
   val podcasts = NavLink("Podcasts", "/podcasts")
   val pictures = NavLink("Pictures", "/inpictures")
   val newsletters = NavLink("Newsletters", "/email-newsletters")
-  val jobs = NavLink("Search jobs", "https://jobs.theguardian.com")
+  val jobs = NavLink("Search jobs", "https://jobs.theguardian.com/jobs")
   val dating = NavLink("Dating", "https://soulmates.theguardian.com")
   val apps = NavLink("The Guardian app", "https://www.theguardian.com/mobile/2014/may/29/the-guardian-for-mobile-and-tablet")
   val ukMasterClasses = NavLink("Masterclasses", "/guardian-masterclasses")
@@ -190,7 +192,7 @@ object NavLinks {
   val auEvents = NavLink("Events", "/guardian-live-australia")
   val holidays = NavLink("Holidays", "https://holidays.theguardian.com")
   val ukPatrons = NavLink("Patrons", "https://patrons.theguardian.com/?INTCMP=header_patrons")
-  val discountCodes = NavLink("Discount Codes", s"https://discountcode.theguardian.com")
+  val discountCodes = NavLink("Discount Codes", s"https://discountcode.theguardian.com", classList = Seq("js-discount-code-link")) // this gets manipulated client side in navigation.js
   val guardianMasterClasses = NavLink("Guardian Masterclasses", "/guardian-masterclasses",
     children = List(
       NavLink("Journalism", "/guardian-masterclasses/journalism"),
@@ -238,6 +240,7 @@ object NavLinks {
   )
   val usNewsPillar = ukNewsPillar.copy(children = List(
       usNews,
+      usElections2020,
       world,
       ukEnvironment,
       soccer,
@@ -268,7 +271,7 @@ object NavLinks {
       theGuardianView,
       columnists,
       cartoons,
-      inMyOpinion,
+      opinionVideos,
       letters
     )
   )
@@ -286,7 +289,7 @@ object NavLinks {
       theGuardianView,
       columnists,
       letters,
-      inMyOpinion,
+      opinionVideos,
       cartoons
     )
   )
@@ -295,7 +298,7 @@ object NavLinks {
       theGuardianView,
       columnists,
       cartoons,
-      inMyOpinion,
+      opinionVideos,
       letters
     )
   )
@@ -304,8 +307,8 @@ object NavLinks {
   val ukSportPillar = NavLink("Sport", "/sport", longTitle = "Sport home", iconName = "home",
     List(
       football,
-      rugbyUnion,
       cricket,
+      rugbyUnion,
       tennis,
       cycling,
       formulaOne,
@@ -324,7 +327,9 @@ object NavLinks {
       aLeague,
       cricket,
       rugbyUnion,
-      tennis
+      tennis,
+      cycling,
+      formulaOne,
     )
   )
   val usSportPillar = ukSportPillar.copy(
@@ -341,8 +346,8 @@ object NavLinks {
   val intSportPillar = ukSportPillar.copy(
     children = List(
       football,
-      rugbyUnion,
       cricket,
+      rugbyUnion,
       tennis,
       cycling,
       formulaOne,
@@ -632,4 +637,62 @@ object NavLinks {
     "commentisfree/commentisfree",
     "education/education"
   )
+
 }
+
+case class EditionNavLinks(
+  newsPillar: NavLink,
+  opinionPillar: NavLink,
+  sportPillar: NavLink,
+  culturePillar: NavLink,
+  lifestylePillar: NavLink,
+  otherLinks: List[NavLink],
+  brandExtensions: List[NavLink]
+)
+
+case class NavigationData (
+
+  uk: EditionNavLinks = EditionNavLinks(
+    NavLinks.ukNewsPillar,
+    NavLinks.ukOpinionPillar,
+    NavLinks.ukSportPillar,
+    NavLinks.ukCulturePillar,
+    NavLinks.ukLifestylePillar,
+    NavLinks.ukOtherLinks,
+    NavLinks.ukBrandExtensions,
+  ),
+
+  us: EditionNavLinks = EditionNavLinks(
+    NavLinks.usNewsPillar,
+    NavLinks.usOpinionPillar,
+    NavLinks.usSportPillar,
+    NavLinks.usCulturePillar,
+    NavLinks.usLifestylePillar,
+    NavLinks.usOtherLinks,
+    NavLinks.usBrandExtensions,
+  ),
+
+  au: EditionNavLinks = EditionNavLinks(
+    NavLinks.auNewsPillar,
+    NavLinks.auOpinionPillar,
+    NavLinks.auSportPillar,
+    NavLinks.auCulturePillar,
+    NavLinks.auLifestylePillar,
+    NavLinks.auOtherLinks,
+    NavLinks.auBrandExtensions,
+  ),
+
+  international: EditionNavLinks = EditionNavLinks(
+    NavLinks.intNewsPillar,
+    NavLinks.intOpinionPillar,
+    NavLinks.intSportPillar,
+    NavLinks.intCulturePillar,
+    NavLinks.intLifestylePillar,
+    NavLinks.intOtherLinks,
+    NavLinks.intBrandExtensions,
+  ),
+
+  tagPages: List[String] = NavLinks.tagPages
+
+)
+

@@ -34,12 +34,12 @@ trait Requests {
 
     lazy val isEmailTxt: Boolean = r.path.endsWith(EMAIL_TXT_SUFFIX)
 
+    lazy val isGuui: Boolean = r.getQueryString("guui").isDefined && !r.getQueryString("guui").contains("false")
+
     // parameters for moon/guui new rendering layer project.
     lazy val isGuuiJson: Boolean = isJson && isGuui
 
-    lazy val isGuui: Boolean = r.getQueryString("guui").isDefined && !r.getQueryString("guui").contains("false")
-
-    lazy val guuiOptOut: Boolean = r.getQueryString("guui").contains("false")
+    lazy val isLazyLoad: Boolean = r.getQueryString("lazy-load").isDefined && !r.getQueryString("lazy-load").contains("false")
 
     lazy val isRss: Boolean = r.path.endsWith("/rss")
 

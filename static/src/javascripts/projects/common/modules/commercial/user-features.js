@@ -192,6 +192,30 @@ const getLastOneOffContributionDate = (): number | null => {
     return null;
 };
 
+const getLastRecurringContributionDate = (): number | null => {
+    // Check for cookies, ensure that cookies parse, and ensure parsed results are integers
+    const monthlyCookie = getCookie(
+        SUPPORT_RECURRING_CONTRIBUTOR_MONTHLY_COOKIE
+    );
+    const annualCookie = getCookie(SUPPORT_RECURRING_CONTRIBUTOR_ANNUAL_COOKIE);
+    const monthlyTime = monthlyCookie ? parseInt(monthlyCookie, 10) : null;
+    const annualTime = annualCookie ? parseInt(annualCookie, 10) : null;
+    const monthlyMS =
+        monthlyTime && Number.isInteger(monthlyTime) ? monthlyTime : null;
+    const annualMS =
+        annualTime && Number.isInteger(annualTime) ? annualTime : null;
+
+    if (!monthlyMS && !annualMS) {
+        return null;
+    }
+
+    if (monthlyMS && annualMS) {
+        return Math.max(monthlyMS, annualMS);
+    }
+
+    return monthlyMS || annualMS || null;
+};
+
 const getDaysSinceLastOneOffContribution = (): number | null => {
     const lastContributionDate = getLastOneOffContributionDate();
     if (lastContributionDate === null) {
@@ -229,8 +253,6 @@ const shouldNotBeShownSupportMessaging = (): boolean =>
 */
 
 const shouldHideSupportMessaging = (): boolean =>
-    isPayingMember() || // TODO: remove
-    isDigitalSubscriber() || // TODO: remove
     shouldNotBeShownSupportMessaging() ||
     isRecentOneOffContributor() || // because members-data-api is unaware of one-off contributions so relies on cookie
     isRecurringContributor(); // guest checkout means that members-data-api isn't aware of all recurring contributions so relies on cookie
@@ -264,6 +286,7 @@ export {
     refresh,
     deleteOldData,
     getLastOneOffContributionDate,
+    getLastRecurringContributionDate,
     getDaysSinceLastOneOffContribution,
     readerRevenueRelevantCookies,
     fakeOneOffContributor,

@@ -31,6 +31,7 @@ import { removeCookie, addCookie } from 'lib/cookies';
 import { getUrlVars } from 'lib/url';
 import { catchErrorsWithContext } from 'lib/robust';
 import { markTime } from 'lib/user-timing';
+import { isBreakpoint } from 'lib/detect';
 import config from 'lib/config';
 import { newHeaderInit } from 'common/modules/navigation/new-header';
 import { fixSecondaryColumn } from 'common/modules/fix-secondary-column';
@@ -262,7 +263,10 @@ const bootStandard = (): void => {
 
     newHeaderInit();
 
-    if (config.get('page.hasShowcaseMainElement')) {
+    const isAtLeastLeftCol: boolean = isBreakpoint({ min: 'leftCol' });
+
+    // we only need to fix the secondary column from leftCol breakpoint up
+    if (config.get('page.hasShowcaseMainElement') && isAtLeastLeftCol) {
         fixSecondaryColumn();
     }
 

@@ -1,4 +1,4 @@
-@(model: ArticlePage, amp: Boolean = false)(implicit request: RequestHeader, context: _root_.model.ApplicationContext)
+@(model: ArticlePage)(implicit request: RequestHeader, context: _root_.model.ApplicationContext)
 
 @import views.html.fragments.langAttributes
 @import common.LinkTo
@@ -13,6 +13,14 @@
 @bodyType(page: ArticlePage) = @{
     if (page.article.tags.isReview) "reviewBody" else "articleBody"
 }
+
+@author(name: String, sameAs: String) = {
+    <div itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="sameAs" content="@sameAs">
+        <meta itemprop="name" content="@name">
+    </div>
+}
+
 
 @defining(model.article) { article =>
   @defining(isPaidContent(model)) { isPaidContent =>
@@ -43,12 +51,16 @@
             <meta itemprop="mainEntityOfPage" content="@LinkTo(article.metadata.url)">
             <div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
                 <meta itemprop="name" content="The Guardian">
-                @fragments.logo(amp)
+                @fragments.logo()
             </div>
 
             @if(isPaidContent) {
                 @fragments.guBand()
-                @fragments.articleHeaderPaidGarnett(article, model, amp = amp)
+                @fragments.articleHeaderPaidGarnett(article, model)
+            }
+
+            @if(article.tags.isReview) {
+                @article.tags.contributors.map(contributor => author(contributor.name, contributor.metadata.webUrl))
             }
 
             <div class="content__main tonal__main tonal__main--@toneClass(article)">
@@ -58,12 +70,12 @@
 
                         @if(!isPaidContent) {
                             @if(article.content.isSplash) {
-                                @fragments.articleHeaderColumn(article, model, amp = amp)
+                                @fragments.articleHeaderColumn(article, model)
                             } else if(article.metadata.designType.nameOrDefault == "comment" ||
                                     article.metadata.designType.nameOrDefault == "guardianview") {
-                                @fragments.articleHeaderCommentGarnett(article, model, amp = amp)
+                                @fragments.articleHeaderCommentGarnett(article, model)
                             } else {
-                                @fragments.articleHeaderGarnett(article, model, amp = amp)
+                                @fragments.articleHeaderGarnett(article, model)
                             }
                         }
 
@@ -72,19 +84,19 @@
 
 
                             @if(isPaidContent){
-                                @fragments.contentMeta(article, model, amp = amp)
-                                @fragments.mainMedia(article, amp)
+                                @fragments.contentMeta(article, model)
+                                @fragments.mainMedia(article)
                             }
 
                             @if(article.content.isSplash){
-                                @fragments.contentMeta(article, model, amp = amp)
+                                @fragments.contentMeta(article, model)
                             }
 
-                            @BodyCleaner(article, amp = amp)
+                            @BodyCleaner(article)
 
                             <div class="after-article js-after-article"></div>
 
-                            @fragments.submeta(article, amp)
+                            @fragments.submeta(article)
                         </div>
                     </div>
 

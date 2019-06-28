@@ -54,7 +54,12 @@ const checksToDispatch = {
 
     hasHighPriorityAdLoaded(): Promise<boolean> {
         // if thirdPartyTags false no external ads are loaded
-        if (commercialFeatures.thirdPartyTags && commercialFeatures.highMerch) {
+        // is irrelevant for ad-free users (independently of thirdPartyTags)
+        if (
+            commercialFeatures.thirdPartyTags &&
+            commercialFeatures.highMerch &&
+            !commercialFeatures.adFree
+        ) {
             return Promise.resolve(trackAdRender('dfp-ad--merchandising-high'));
         }
         return Promise.resolve(false);
@@ -62,7 +67,8 @@ const checksToDispatch = {
 
     hasLowPriorityAdLoaded(): Promise<boolean> {
         // if thirdPartyTags false no external ads are loaded
-        if (commercialFeatures.thirdPartyTags) {
+        // is irrelevant for ad-free users (independently of thirdPartyTags)
+        if (commercialFeatures.thirdPartyTags && !commercialFeatures.adFree) {
             return waitForCheck('hasHighPriorityAdLoaded').then(
                 highPriorityAdLoaded => {
                     if (highPriorityAdLoaded) {

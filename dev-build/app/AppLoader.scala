@@ -32,7 +32,6 @@ import services._
 import _root_.commercial.targeting.TargetingLifecycle
 import akka.actor.ActorSystem
 import concurrent.BlockingOperations
-import services.dotcomponents.RenderingTierPicker
 
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents = new BuiltInComponentsFromContext(context) with AppComponents
@@ -79,7 +78,6 @@ trait AppComponents
   lazy val logbackOperationsPool = wire[LogbackOperationsPool]
 
   lazy val remoteRender = wire[renderers.RemoteRenderer]
-  lazy val renderingTierPicker = wire[RenderingTierPicker]
 
   def actorSystem: ActorSystem
   override def router: Router = wire[Routes]

@@ -149,3 +149,17 @@ case class TeamColours(homeTeam: LineUpTeam, awayTeam: LineUpTeam) {
     "#%02x%02x%02x".format(darker.getRed, darker.getGreen, darker.getBlue)
   }
 }
+
+object CompetitionDisplayHelpers {
+
+  // This function is applied to team names during the making of matches lists.
+  // It should be without effects for men competitions. For women competitions it
+  // removes the term from the PA data we receive.
+  def cleanTeamName(teamName: String): String = {
+    teamName.replace("Ladies", "")
+  }
+
+  def cleanTeamCode(teamCode: String): String = {
+    teamCode.replace("JAP", "JPN")
+  }
+}

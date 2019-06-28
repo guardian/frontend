@@ -1,13 +1,14 @@
 package views.support
 
 import java.text.DecimalFormat
+import java.util.Locale
 
 import common._
 import model.Cached.WithoutRevalidationResult
 import model._
 import model.pressed.PressedContent
 import org.apache.commons.lang.StringEscapeUtils
-import org.joda.time.format.DateTimeFormat
+import org.joda.time.format.{DateTimeFormat, ISODateTimeFormat}
 import org.joda.time.{DateTime, DateTimeZone, LocalDate}
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
@@ -116,7 +117,12 @@ object `package` {
 
 object GUDateTimeFormat {
   def formatDateTimeForDisplay(date: DateTime, request: RequestHeader): String = {
-    s"${formatDateForDisplay(date, request)} ${formatTimeForDisplay(date, request)}"
+    val edition = Edition(request)
+    formatDateTimeForDisplayGivenEdition(date: DateTime, edition: Edition)
+  }
+  def formatDateTimeForDisplayGivenEdition(date: DateTime, edition: Edition): String = {
+    val timezone = edition.timezone
+    date.toString(DateTimeFormat.forPattern("E d MMM yyyy HH.mm").withZone(timezone)) + " " + timezone.getShortName(date.getMillis)
   }
   def formatDateForDisplay(date: DateTime, request: RequestHeader): String = {
     date.toString("E d MMM yyyy")
@@ -128,6 +134,11 @@ object GUDateTimeFormat {
       case "AU" => date.toString(DateTimeFormat.forPattern("HH.mm").withZone(timezone)) + " " + timezone.getShortName(date.getMillis)
       case _ => date.toString(DateTimeFormat.forPattern("HH.mm z").withZone(timezone))
     }
+  }
+  def dateTimeToLiveBlogDisplay(dateTime: DateTime, timezone: DateTimeZone): String = {
+    // The reason for .toLowerCase is that I could not find the code for lowercase half day marker: am or pm
+    // So we "4.59 PM".toLowerCase
+    dateTime.toString(DateTimeFormat.forPattern("h.mm a").withZone(timezone)).toLowerCase
   }
 }
 

@@ -45,7 +45,7 @@ class TemplatesTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
 
   "PictureCleaner" should "correctly format inline pictures" in {
     implicit val request: RequestHeader = TestRequest()
-    val body = Jsoup.parse(withJsoup(bodyTextWithInlineElements)(PictureCleaner(testContent, amp = false)).body)
+    val body = Jsoup.parse(withJsoup(bodyTextWithInlineElements)(PictureCleaner(testContent)).body)
 
     val figures = body.getElementsByTag("figure")
 

@@ -25,15 +25,14 @@ object MainMediaWidths {
 }
 
 object MainCleaner {
- def apply(article: Article, amp: Boolean)(implicit request: RequestHeader, context: ApplicationContext): Html = {
+ def apply(article: Article)(implicit request: RequestHeader, context: ApplicationContext): Html = {
       implicit val edition: Edition = Edition(request)
       withJsoup(BulletCleaner(article.fields.main))(
-        if (amp) AmpEmbedCleaner(article) else VideoEmbedCleaner(article),
-        PictureCleaner(article, amp),
+        VideoEmbedCleaner(article),
+        PictureCleaner(article),
         MainFigCaptionCleaner,
         AtomsCleaner(
           atoms = article.content.atoms,
-          amp = amp,
           mediaWrapper = Some(MediaWrapper.MainMedia),
           posterImageOverride = article.elements.thumbnail.map(_.images)
         )
@@ -43,7 +42,7 @@ object MainCleaner {
 
 object BodyCleaner {
 
-  def cleaners(article: Article, amp: Boolean)(implicit request: RequestHeader, context: ApplicationContext): List[HtmlCleaner] = {
+  def cleaners(article: Article)(implicit request: RequestHeader, context: ApplicationContext): List[HtmlCleaner] = {
     implicit val edition: Edition = Edition(request)
 
     val shouldShowAds = !article.content.shouldHideAdverts && article.metadata.sectionId != "childrens-books-site"
@@ -51,19 +50,19 @@ object BodyCleaner {
 
     List(
       InBodyElementCleaner,
-      AtomsCleaner(atoms = article.content.atoms, shouldFence = true, amp = amp),
-      InBodyLinkCleaner("in body link", amp),
+      AtomsCleaner(atoms = article.content.atoms, shouldFence = true),
+      InBodyLinkCleaner("in body link"),
       BlockNumberCleaner,
-      new TweetCleaner(article.content, amp),
+      new TweetCleaner(article.content),
       WitnessCleaner,
       TableEmbedComplimentaryToP,
       R2VideoCleaner,
-      PictureCleaner(article, amp),
+      PictureCleaner(article),
       DropCaps(article.tags.isComment || article.tags.isFeature, article.isImmersive),
       TagLinker(article),
       ImmersiveHeaders(article.isImmersive),
       FigCaptionCleaner,
-      RichLinkCleaner(amp),
+      RichLinkCleaner(),
       MembershipEventCleaner,
       BlockquoteCleaner,
       PullquoteCleaner,
@@ -80,19 +79,16 @@ object BodyCleaner {
       GarnettQuoteCleaner,
       AffiliateLinksCleaner(request.uri, article.content.metadata.sectionId, article.content.fields.showAffiliateLinks, "article", tags = article.content.tags.tags.map(_.id))
     ) ++
-      ListIf(!amp)(VideoEmbedCleaner(article)) ++
-      ListIf(amp)(AmpEmbedCleaner(article)) ++
-      ListIf(amp)(AttributeCleaner("style")) ++ // The inline 'style' attribute is not allowed in AMP documents
-      ListIf(amp && shouldShowAds && !article.isLiveBlog)(AmpAdCleaner(edition, request.uri, article))
+      ListIf(true)(VideoEmbedCleaner(article))
   }
 
-  def apply(article: Article, amp: Boolean)(implicit request: RequestHeader, context: ApplicationContext): Html = {
+  def apply(article: Article)(implicit request: RequestHeader, context: ApplicationContext): Html = {
 
-    withJsoup(BulletCleaner(article.fields.body))(cleaners(article, amp) :_*)
+    withJsoup(BulletCleaner(article.fields.body))(cleaners(article) :_*)
   }
 
-  def apply(article: Article, html: String, amp: Boolean)(implicit request: RequestHeader, context: ApplicationContext): Html = {
+  def apply(article: Article, html: String)(implicit request: RequestHeader, context: ApplicationContext): Html = {
 
-    withJsoup(BulletCleaner(html))(cleaners(article, amp) :_*)
+    withJsoup(BulletCleaner(html))(cleaners(article) :_*)
   }
 }

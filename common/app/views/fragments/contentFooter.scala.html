@@ -11,13 +11,12 @@
     ))">
     @fragments.discussionFooter(content.content, content.trail.isCommentable, content.trail.isClosedForComments, content.content.shortUrlId)
 
-    @ContentFooterContainersLayout(content.content, isPaidContent) {
+    @ContentFooterContainersLayout(content.content, isPaidContent){
         @fragments.storyPackagePlaceholder(content, related, isPaidContent)
     } {
         @if(!(Commercial.isAdFree(request) && isPaidContent)) {
             @fragments.onwardPlaceholder(isPaidContent)
         }
-
     } {
         <div class="js-repositioned-comments content__repositioned-comments"></div>
     } {
@@ -28,6 +27,9 @@
          *@
     } {
         <div class="fc-container fc-container--commercial js-container--commercial">@fragments.commercial.commercialComponent()</div>
+    } {
+        @fragments.commercial.discountCodeWidget()
     }
+
 
 </div>

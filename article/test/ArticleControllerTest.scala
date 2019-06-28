@@ -12,7 +12,7 @@ import play.api.mvc.{RequestHeader, Result}
 import play.api.test.Helpers._
 import play.api.test._
 import play.twirl.api.Html
-import services.dotcomponents.{RemoteRender, RenderType, RenderingTierPicker}
+import services.dotcomponents.{RemoteRender, RenderType}
 
 import scala.collection.JavaConverters._
 import scala.concurrent.{ExecutionContext, Future}
@@ -20,14 +20,8 @@ import scala.concurrent.{ExecutionContext, Future}
 // I had trouble getting Mockito to play nicely with how scala is using implicits and consts so I've introduced
 // these
 
-class FakePicker extends RenderingTierPicker {
-  override def getTier(page: PageWithStoryPackage)(implicit request: RequestHeader): RenderType = {
-    RemoteRender
-  }
-}
-
 class FakeRemoteRender(implicit context: ApplicationContext) extends renderers.RemoteRenderer {
-  override def getArticle(ws:WSClient, path: String, article: ArticlePage, blocks: Blocks)(implicit request: RequestHeader): Future[Result] = {
+  override def getArticle(ws:WSClient, path: String, article: PageWithStoryPackage, blocks: Blocks)(implicit request: RequestHeader): Future[Result] = {
     implicit val ec = ExecutionContext.global
     Future(Cached(article)(RevalidatableResult.Ok(Html("OK"))))
   }
@@ -60,8 +54,7 @@ class FakeRemoteRender(implicit context: ApplicationContext) extends renderers.R
     testContentApiClient,
     play.api.test.Helpers.stubControllerComponents(),
     wsClient,
-    new FakeRemoteRender(),
-    new FakePicker()
+    new FakeRemoteRender()
   )
 
   "Article Controller" should "200 when content type is article" in {

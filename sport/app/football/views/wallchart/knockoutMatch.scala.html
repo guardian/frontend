@@ -2,6 +2,7 @@
 
 @import implicits.Football._
 @import conf.Configuration
+@import model.CompetitionDisplayHelpers.cleanTeamName
 
 <div class="football-match" id="football-match-@fm.id">
     <div class="football-match__container">
@@ -9,7 +10,7 @@
             @if(!fm.homeTeam.isGhostTeam){
                 <img class="team-crest knockout--crest" alt="" src="@Configuration.staticSport.path/football/crests/120/@{fm.homeTeam.id}.png" />
             }
-            @fm.homeTeam.knockoutName
+            @cleanTeamName(fm.homeTeam.knockoutName)
             @if(fm.hasStarted){
                 <span class="football-match__score">@fm.homeTeam.score</span>
             }
@@ -36,7 +37,7 @@
             @if(!fm.awayTeam.isGhostTeam){
                 <img class="team-crest knockout--crest" alt="" src="@Configuration.staticSport.path/football/crests/120/@{fm.awayTeam.id}.png" />
             }
-            @fm.awayTeam.knockoutName
+            @cleanTeamName(fm.awayTeam.knockoutName)
             @if(fm.hasStarted){
                 <span class="football-match__score">@fm.awayTeam.score</span>
             }

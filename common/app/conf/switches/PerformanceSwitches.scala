@@ -1,6 +1,7 @@
 package conf.switches
 
 import conf.switches.Expiry.never
+import org.joda.time.LocalDate
 
 trait PerformanceSwitches {
 
@@ -120,8 +121,18 @@ trait PerformanceSwitches {
     SwitchGroup.Performance,
     "polyfill-io",
     "If this switch is on we will attempt to load polyfills from polyfill.io. If it is off, only our (full, larger) fullback will be loaded.",
-    owners = Seq(Owner.withGithub("sndrs")),
+    owners = Seq(Owner.withGithub("gtrufitt")),
     safeState = On,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+
+  val PolyfillIOFallbackMin = Switch(
+    SwitchGroup.Performance,
+    "polyfill-io-fallback-min",
+    "If this switch is on we will load intersectionObserver and URL (UrlSearchParams) fallback polyfills from our own servers",
+    owners = Seq(Owner.withGithub("gtrufitt")),
+    safeState = Off,
     sellByDate = never,
     exposeClientSide = false
   )
@@ -174,5 +185,15 @@ trait PerformanceSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = true
+  )
+
+  val LazyLoadImages = Switch(
+    SwitchGroup.Performance,
+    "blink-lazy-load-images",
+    "If switched on, explicitly request lazy loading of images on supporting browsers.",
+    owners = Seq(Owner.withGithub("nicl")),
+    safeState = On,
+    sellByDate = new LocalDate(2029, 9, 3),
+    exposeClientSide = false,
   )
 }

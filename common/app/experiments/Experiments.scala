@@ -6,8 +6,9 @@ import org.joda.time.LocalDate
 
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] = Set(
-    OldTLSSupportDeprecation
+    OldTLSSupportDeprecation,
   )
+
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
 

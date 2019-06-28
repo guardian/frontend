@@ -49,7 +49,7 @@ class AuthenticationService(
   private def hasRecentlyAuthenticated(user: User, cookie: Option[Cookie]): Boolean = {
     cookie.exists(scGuLa =>
       cookieDecoder.userHasRecentScGuLaCookie(
-        user,
+        user.id,
         scGuLa.value,
         Hours.hours(1).toStandardDuration))
   }

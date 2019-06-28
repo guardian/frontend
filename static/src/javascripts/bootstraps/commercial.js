@@ -6,6 +6,7 @@ import reportError from 'lib/report-error';
 import { init as initHighMerch } from 'commercial/modules/high-merch';
 import { init as initArticleAsideAdverts } from 'commercial/modules/article-aside-adverts';
 import { init as initArticleBodyAdverts } from 'commercial/modules/article-body-adverts';
+import { init as initMobileSticky } from 'commercial/modules/mobile-sticky';
 import { closeDisabledSlots } from 'commercial/modules/close-disabled-slots';
 import { adFreeSlotRemove } from 'commercial/modules/ad-free-slot-remove';
 import { init as initCmpService } from 'commercial/modules/cmp/cmp';
@@ -37,9 +38,6 @@ const commercialModules: Array<Array<any>> = [
     ['cm-closeDisabledSlots', closeDisabledSlots],
     ['cm-prepare-cmp', initCmpService],
     ['cm-track-cmp-consent', trackCmpConsent],
-    ['cm-thirdPartyTags', initThirdPartyTags],
-    ['cm-prepare-prebid', preparePrebid, true],
-    ['cm-prepare-googletag', prepareGoogletag, true],
     ['cm-checkDispatcher', initCheckDispatcher],
     ['cm-lotame-cmp', initLotameCmp],
     ['cm-lotame-data-extract', initLotameDataExtract, true],
@@ -47,7 +45,11 @@ const commercialModules: Array<Array<any>> = [
 
 if (!commercialFeatures.adFree) {
     commercialModules.push(
+        ['cm-prepare-prebid', preparePrebid, true],
+        ['cm-prepare-googletag', prepareGoogletag, true],
+        ['cm-thirdPartyTags', initThirdPartyTags],
         ['cm-prepare-adverification', prepareAdVerification, true],
+        ['cm-mobileSticky', initMobileSticky],
         ['cm-highMerch', initHighMerch],
         ['cm-articleAsideAdverts', initArticleAsideAdverts, true],
         ['cm-articleBodyAdverts', initArticleBodyAdverts, true],
@@ -107,21 +109,26 @@ const loadModules = (): Promise<void> => {
         const moduleInit: () => void = module[1];
         const moduleDefer: boolean = module[2];
 
-        catchErrorsWithContext([
+        catchErrorsWithContext(
             [
-                moduleName,
-                function pushAfterComplete(): void {
-                    // These modules all have async init procedures which don't block, and return a promise purely for
-                    // perf logging, to time when their async work is done. The command buffer guarantees execution order,
-                    // so we don't use the returned promise to order the bootstrap's module invocations.
-                    const wrapped = moduleDefer
-                        ? defer(moduleName, moduleInit)
-                        : wrap(moduleName, moduleInit);
-                    const result = wrapped();
-                    modulePromises.push(result);
-                },
+                [
+                    moduleName,
+                    function pushAfterComplete(): void {
+                        // These modules all have async init procedures which don't block, and return a promise purely for
+                        // perf logging, to time when their async work is done. The command buffer guarantees execution order,
+                        // so we don't use the returned promise to order the bootstrap's module invocations.
+                        const wrapped = moduleDefer
+                            ? defer(moduleName, moduleInit)
+                            : wrap(moduleName, moduleInit);
+                        const result = wrapped();
+                        modulePromises.push(result);
+                    },
+                ],
             ],
-        ]);
+            {
+                feature: 'commercial',
+            }
+        );
     });
     return Promise.all(modulePromises).then(
         (): void => {
@@ -132,18 +139,23 @@ const loadModules = (): Promise<void> => {
 
 export const bootCommercial = (): Promise<void> => {
     markTime('commercial start');
-    catchErrorsWithContext([
+    catchErrorsWithContext(
         [
-            'ga-user-timing-commercial-start',
-            function runTrackPerformance(): void {
-                trackPerformance(
-                    'Javascript Load',
-                    'commercialStart',
-                    'Commercial start parse time'
-                );
-            },
+            [
+                'ga-user-timing-commercial-start',
+                function runTrackPerformance(): void {
+                    trackPerformance(
+                        'Javascript Load',
+                        'commercialStart',
+                        'Commercial start parse time'
+                    );
+                },
+            ],
         ],
-    ]);
+        {
+            feature: 'commercial',
+        }
+    );
 
     // Stub the command queue
     window.googletag = {
@@ -154,24 +166,32 @@ export const bootCommercial = (): Promise<void> => {
         .then(loadModules)
         .then(() => {
             markTime('commercial end');
-            catchErrorsWithContext([
+            catchErrorsWithContext(
                 [
-                    'ga-user-timing-commercial-end',
-                    function runTrackPerformance(): void {
-                        trackPerformance(
-                            'Javascript Load',
-                            'commercialEnd',
-                            'Commercial end parse time'
-                        );
-                    },
+                    [
+                        'ga-user-timing-commercial-end',
+                        function runTrackPerformance(): void {
+                            trackPerformance(
+                                'Javascript Load',
+                                'commercialEnd',
+                                'Commercial end parse time'
+                            );
+                        },
+                    ],
                 ],
-            ]);
+                {
+                    feature: 'commercial',
+                }
+            );
         })
         .catch(err => {
-            // Just in case something goes wrong, we don't want it to
-            // prevent enhanced from loading
-            reportError(err, {
-                feature: 'commercial',
-            });
+            // report async errors in bootCommercial to Sentry with the commercial feature tag
+            reportError(
+                err,
+                {
+                    feature: 'commercial',
+                },
+                false
+            );
         });
 };

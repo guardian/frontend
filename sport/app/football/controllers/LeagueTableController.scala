@@ -20,7 +20,9 @@ class LeagueTableController(
   val controllerComponents: ControllerComponents
 )(implicit context: ApplicationContext) extends BaseController with Logging with CompetitionTableFilters with ImplicitControllerExecutionContext {
 
-    val tableOrder = Seq(
+  // Competitions must be added to this list to show up at /football/tables
+    val tableOrder: Seq[String] = Seq(
+        "Women's World Cup 2019",
         "Premier League",
         "Women's Super League",
         "La Liga",
@@ -37,6 +39,9 @@ class LeagueTableController(
         "Scottish League One",
         "Scottish League Two",
         "Scottish League Cup",
+        "Nations League",
+        "Copa America",
+        "Africa Cup of Nations",
         "Euro 2016",
         "Euro 2016 qualifying",
         "Champions League qualifying",

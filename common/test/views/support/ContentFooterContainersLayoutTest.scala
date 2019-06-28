@@ -48,6 +48,8 @@ class ContentFooterContainersLayoutTest extends FlatSpec with Matchers {
       Html("highRelevanceCommercialHtml ")
     } {
       Html("standardCommercialHtml ")
+    } {
+      Html("discountCodeWidget ")
     }
   }
 

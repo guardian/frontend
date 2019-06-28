@@ -27,7 +27,6 @@ class WallchartController(
         .stagesFromCompetition(competition, KnockoutSpider.orderings)
 
       val nextMatch = WallchartController.nextMatch(competition.matches, DateTime.now())
-
       Cached(60) {
         if(embed) RevalidatableResult.Ok(football.views.html.wallchart.embed(page, competition, competitionStages, nextMatch))
         else RevalidatableResult.Ok(football.views.html.wallchart.page(page, competition, competitionStages, nextMatch))

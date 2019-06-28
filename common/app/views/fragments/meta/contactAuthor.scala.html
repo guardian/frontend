@@ -1,4 +1,4 @@
-@(tags: model.Tags, amp: Boolean = false)(implicit header: RequestHeader)
+@(tags: model.Tags)(implicit header: RequestHeader)
 @import views.support.RenderClasses
 
 @tags.contributors.headOption.map { profile =>

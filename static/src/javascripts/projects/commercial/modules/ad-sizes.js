@@ -20,6 +20,7 @@ const adSizes: Object = {
     halfPage: getAdSize(300, 600),
     portrait: getAdSize(300, 1050),
     skyscraper: getAdSize(160, 600),
+    mobilesticky: getAdSize(320, 50),
 
     // dfp proprietary ad sizes
     fluid: getAdSize(0, 0),

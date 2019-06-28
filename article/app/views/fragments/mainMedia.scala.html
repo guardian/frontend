@@ -1,5 +1,5 @@
 @import views.MainMediaWidths
-@(article: model.Article, amp: Boolean = false)(implicit request: RequestHeader, context: model.ApplicationContext)
+@(article: model.Article)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @import model.EndSlateComponents
 @import model.{VideoPlayer}
@@ -8,7 +8,7 @@
 
 @if(article.elements.hasMainEmbed || article.elements.elements("main").isEmpty) {
     <div class="media-primary">
-        @MainCleaner(article, amp)
+        @MainCleaner(article)
     </div>
 } else {
     @if(!article.hasVideoAtTop) {
@@ -30,7 +30,7 @@
                                 path = article.content.mainVideoCanonicalPath
                             )
                         ) { player =>
-                            @fragments.media.video(player, enhance = true, amp = amp)
+                            @fragments.media.video(player, enhance = true)
                             <meta itemprop="name" content="@player.title">
                             <meta itemprop="image" content="@player.poster">
                             <meta itemprop="thumbnail" content="@player.poster">
@@ -58,8 +58,7 @@
                     article.elements.hasShowcaseMainElement,
                     article.tags.isFeature,
                     article.content.isSplash,
-                    MainMediaWidths(article),
-                    amp = amp
+                    MainMediaWidths(article)
                 )
             }
         }

@@ -24,8 +24,26 @@
     </div>
 
     <div class="l-footer__secondary js-footer__secondary @if(EmailInlineInFooterSwitch.isSwitchedOff) {l-footer__secondary--no-email} gs-container" role="contentinfo">
-        <div class="colophon u-cf">
+        <div class="footer__pillars u-cf">
+            @defining(NavMenu(page, Edition(request))) { navMenu: NavMenu =>
+                <ul class="pillars pillars--footer">
+                    @navMenu.pillars.map { link =>
+                        <li class="pillars__item">
+                            <a class="@RenderClasses(Map(
+                                "pillar-link--current-section" -> ((link.title == navMenu.currentPillar.map(_.title).getOrElse("")))
+                                ), "pillar-link", s"pillar-link--${link.title}")"
+                            href="@LinkTo(link.url)"
+                            data-link-name="footer : primary : @link.title">
 
+                            @link.title
+                            </a>
+                        </li>
+                    }
+            }
+        </div>
+
+
+        <div class="colophon u-cf">
             @defining(Edition(request)) { currentEdition =>
                 @if(EmailInlineInFooterSwitch.isSwitchedOn && !isAmp && !page.metadata.isFoundation) {
                     <div class="footer__email-container js-footer__email-container">
@@ -111,7 +129,7 @@
                                     <li class="colophon__item"><a data-link-name="uk : footer : guardian labs" href="@LinkTo {/guardian-labs}">
                                         Guardian Labs</a>
                                     </li>
-                                    <li class="colophon__item"><a data-link-name="uk : footer : jobs" href="https://jobs.theguardian.com/?INTCMP=NGW_FOOTER_UK_GU_JOBS">
+                                    <li class="colophon__item"><a data-link-name="uk : footer : jobs" href="https://jobs.theguardian.com/jobs?INTCMP=NGW_FOOTER_UK_GU_JOBS">
                                         Search jobs</a>
                                     </li>
                                     <li class="colophon__item"><a data-link-name="uk : footer : soulmates" href="https://soulmates.theguardian.com/?INTCMP=NGW_FOOTER_UK_GU_SOULMATES">
@@ -120,7 +138,7 @@
                                     <li class="colophon__item"><a data-link-name="uk : footer : patrons" href="https://patrons.theguardian.com/?INTCMP=footer_patrons">
                                         Patrons</a>
                                     </li>
-                                    <li class="colophon__item"><a data-link-name="uk : footer : discount code" href="https://discountcode.theguardian.com/">
+                                    <li class="colophon__item"><a class="js-discount-code-link" data-link-name="uk : footer : discount code" href="https://discountcode.theguardian.com/">
                                         Discount Codes</a>
                                     </li>
                                 </ul>
@@ -187,12 +205,12 @@
                                     <li class="colophon__item"><a data-link-name="us : footer : guardian labs" href="@LinkTo {/guardian-labs-us}">
                                         Guardian Labs</a>
                                     </li>
-                                    <li class="colophon__item"><a data-link-name="us : footer : jobs" href="https://jobs.theguardian.com/?INTCMP=NGW_FOOTER_US_GU_JOBS">
+                                    <li class="colophon__item"><a data-link-name="us : footer : jobs" href="https://jobs.theguardian.com/jobs?INTCMP=NGW_FOOTER_US_GU_JOBS">
                                         Search jobs</a>
                                     </li>
                                     <li class="colophon__item"><a data-link-name="us : footer : soulmates" href="https://soulmates.theguardian.com/?INTCMP=soulmates_us_web_footer">
                                         Dating</a>
-                                    <li class="colophon__item"><a data-link-name="us : footer : discount code" href="https://discountcode.theguardian.com/">
+                                    <li class="colophon__item"><a class="js-discount-code-link" data-link-name="us : footer : discount code" href="https://discountcode.theguardian.com/">
                                         Discount Codes</a>
                                     </li>
                                 </ul>
@@ -264,12 +282,12 @@
                                     <li class="colophon__item"><a data-link-name="au : footer : advertise with us" href="https://advertising.theguardian.com">
                                         Advertise with us</a>
                                     </li>
-                                    <li class="colophon__item"><a data-link-name="au : footer : uk-jobs" href="https://jobs.theguardian.com/?INTCMP=NGW_FOOTER_AU_GU_JOBS">
+                                    <li class="colophon__item"><a data-link-name="au : footer : uk-jobs" href="https://jobs.theguardian.com/jobs?INTCMP=NGW_FOOTER_AU_GU_JOBS">
                                         Search UK jobs</a>
                                     </li>
                                     <li class="colophon__item"><a data-link-name="au : footer : soulmates" href="https://soulmates.theguardian.com/?INTCMP=soulmates_au_web_footer">
                                         Dating</a>
-                                    <li class="colophon__item"><a data-link-name="au : footer : discount code" href="https://discountcode.theguardian.com/">
+                                    <li class="colophon__item"><a class="js-discount-code-link" data-link-name="au : footer : discount code" href="https://discountcode.theguardian.com/">
                                         Discount Codes</a>
                                     </li>
                                 </ul>
@@ -328,12 +346,12 @@
                                     <li class="colophon__item"><a data-link-name="international : footer : advertise with us" href="https://advertising.theguardian.com">
                                         Advertise with us</a>
                                     </li>
-                                    <li class="colophon__item"><a data-link-name="international : footer : uk-jobs" href="https://jobs.theguardian.com/?INTCMP=NGW_FOOTER_INT_GU_JOBS">
+                                    <li class="colophon__item"><a data-link-name="international : footer : uk-jobs" href="https://jobs.theguardian.com/jobs?INTCMP=NGW_FOOTER_INT_GU_JOBS">
                                         Search UK jobs</a>
                                     </li>
                                     <li class="colophon__item"><a data-link-name="international : footer : soulmates" href="https://soulmates.theguardian.com/?INTCMP=soulmates_int_web_footer">
                                         Dating</a>
-                                    <li class="colophon__item"><a data-link-name="international : footer : discount code" href="https://discountcode.theguardian.com">
+                                    <li class="colophon__item js-discount-code-link"><a data-link-name="international : footer : discount code" href="https://discountcode.theguardian.com">
                                         Discount Codes</a>
                                     </li>
                                 </ul>

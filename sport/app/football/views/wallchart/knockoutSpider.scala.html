@@ -50,7 +50,7 @@
                                 football-round--@matches.length-matches
                                 football-round--final
                                 @if(knockoutStage.isActiveRound(round)){football-round--active}
-                                @round.name.filter(n => n == "3rd/4th Play-Offs").map{ name => football-round--playoff}">
+                                @round.name.filter(n => n == "3rd/4th Play-Offs" || n == "3rd/4th Place Play-Off").map{ name => football-round--playoff}">
                         <div class="football-round__name">@round.name.getOrElse("")</div>
                         <div class="football-round__matches">
                             @matches.map{ m =>

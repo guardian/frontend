@@ -1,12 +1,7 @@
 // @flow strict
 /* A regionalised container for all the commercial tags. */
 
-import $ from 'lib/$';
-import config from 'lib/config';
-import fastdom from 'lib/fastdom-promise';
-import template from 'lodash/template';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
-import externalContentContainerStr from 'raw-loader!common/views/commercial/external-content.html';
 import { imrWorldwide } from 'commercial/modules/third-party-tags/imr-worldwide';
 import { imrWorldwideLegacy } from 'commercial/modules/third-party-tags/imr-worldwide-legacy';
 import { remarketing } from 'commercial/modules/third-party-tags/remarketing';
@@ -14,47 +9,8 @@ import { simpleReach } from 'commercial/modules/third-party-tags/simple-reach';
 import { krux } from 'common/modules/commercial/krux';
 import { ias } from 'commercial/modules/third-party-tags/ias';
 import { inizio } from 'commercial/modules/third-party-tags/inizio';
-import { initOutbrain } from 'commercial/modules/third-party-tags/outbrain';
-import { doubleClickAdFree } from 'commercial/modules/third-party-tags/doubleclick-ad-free';
-import { plista } from 'commercial/modules/third-party-tags/plista';
 import { fbPixel } from 'commercial/modules/third-party-tags/facebook-pixel';
-
-const loadExternalContentWidget = (): void => {
-    const externalTpl = template(externalContentContainerStr);
-
-    const findAnchor = (): Promise<HTMLElement | null> => {
-        const selector = !(
-            config.get('page.seriesId') || config.get('page.blogIds')
-        )
-            ? '.js-related, .js-outbrain-anchor'
-            : '.js-outbrain-anchor';
-        return Promise.resolve(document.querySelector(selector));
-    };
-
-    const renderWidget = (widgetType, init): void => {
-        findAnchor()
-            .then(anchorNode =>
-                fastdom.write(() => {
-                    $(anchorNode).after(
-                        externalTpl({
-                            widgetType,
-                        })
-                    );
-                })
-            )
-            .then(init);
-    };
-
-    const shouldServePlista: boolean =
-        config.get('switches.plistaForOutbrainAu') &&
-        config.get('page.edition', '').toLowerCase() === 'au';
-
-    if (shouldServePlista) {
-        renderWidget('plista', plista.init);
-    } else {
-        renderWidget('outbrain', initOutbrain);
-    }
-};
+import { init as initPlistaOutbrainRenderer } from 'commercial/modules/third-party-tags/plista-outbrain-renderer';
 
 const insertScripts = (services: Array<ThirdPartyTag>): void => {
     const ref = document.scripts[0];
@@ -85,7 +41,6 @@ const loadOther = (): void => {
         krux,
         ias,
         inizio,
-        doubleClickAdFree,
         fbPixel(),
     ].filter(_ => _.shouldRun);
 
@@ -101,8 +56,11 @@ const init = (): Promise<boolean> => {
 
     // Outbrain/Plista needs to be loaded before the first ad as it is checking
     // for the presence of high relevance component on page
+    // I'm leaving this to check adFree state because while the thirdPartyTags
+    // check above is now sensitive to ad-free, it could be changed independently
+    // in the future - even by accident.  Justin.
     if (!commercialFeatures.adFree) {
-        loadExternalContentWidget();
+        initPlistaOutbrainRenderer();
     }
 
     loadOther();

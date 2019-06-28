@@ -15,6 +15,7 @@ import {
     getDaysSinceLastOneOffContribution,
     isRecentOneOffContributor,
     shouldNotBeShownSupportMessaging,
+    getLastRecurringContributionDate,
 } from './user-features.js';
 
 jest.mock('lib/raven');
@@ -35,6 +36,10 @@ const PERSISTENCE_KEYS = {
     DIGITAL_SUBSCRIBER_COOKIE: 'gu_digital_subscriber',
     SUPPORT_ONE_OFF_CONTRIBUTION_COOKIE: 'gu.contributions.contrib-timestamp',
     HIDE_SUPPORT_MESSAGING_COOKIE: 'gu_hide_support_messaging',
+    SUPPORT_MONTHLY_CONTRIBUTION_COOKIE:
+        'gu.contributions.recurring.contrib-timestamp.Monthly',
+    SUPPORT_ANNUAL_CONTRIBUTION_COOKIE:
+        'gu.contributions.recurring.contrib-timestamp.Annual',
 };
 
 const setAllFeaturesData = opts => {
@@ -457,6 +462,60 @@ describe('getting the last one-off contribution date of a user', () => {
     it('returns null if the cookie has been set with an invalid value', () => {
         setOneOffContributionCookie('invalid value');
         expect(getLastOneOffContributionDate()).toBe(null);
+    });
+});
+
+const setMonthlyContributionCookie = (value: any): void =>
+    addCookie(PERSISTENCE_KEYS.SUPPORT_MONTHLY_CONTRIBUTION_COOKIE, value);
+
+const setAnnualContributionCookie = (value: any): void =>
+    addCookie(PERSISTENCE_KEYS.SUPPORT_ANNUAL_CONTRIBUTION_COOKIE, value);
+
+const removeMonthlyContributionCookie = (): void =>
+    removeCookie(PERSISTENCE_KEYS.SUPPORT_MONTHLY_CONTRIBUTION_COOKIE);
+
+const removeAnnualContributionCookie = (): void =>
+    removeCookie(PERSISTENCE_KEYS.SUPPORT_ANNUAL_CONTRIBUTION_COOKIE);
+
+describe('getting the last recurring contribution date of a user', () => {
+    beforeEach(() => {
+        removeMonthlyContributionCookie();
+        removeAnnualContributionCookie();
+    });
+
+    const monthlyContributionTimestamp = 1556124724;
+    const annualContributionTimestamp = 1556125286;
+
+    it("returns null if the user isn't a recurring contributor", () => {
+        expect(getLastRecurringContributionDate()).toBe(null);
+    });
+
+    it('return the correct date if the user is a monthly recurring contributor', () => {
+        setMonthlyContributionCookie(monthlyContributionTimestamp.toString());
+        expect(getLastRecurringContributionDate()).toBe(
+            monthlyContributionTimestamp
+        );
+    });
+
+    it('return the correct date if the user is a annual recurring contributor', () => {
+        setAnnualContributionCookie(annualContributionTimestamp.toString());
+        expect(getLastRecurringContributionDate()).toBe(
+            annualContributionTimestamp
+        );
+    });
+
+    it('return the correct date if the user is both annual and monthly recurring contributor', () => {
+        setAnnualContributionCookie(annualContributionTimestamp.toString());
+        setMonthlyContributionCookie(monthlyContributionTimestamp.toString());
+        expect(getLastRecurringContributionDate()).toBe(
+            annualContributionTimestamp
+        );
+    });
+
+    it('returns null if the cookie has been set with an invalid value', () => {
+        setAnnualContributionCookie('not a date string one');
+        setMonthlyContributionCookie('not a date string two');
+        expect(getLastRecurringContributionDate()).toBe(null);
     });
 });
 
