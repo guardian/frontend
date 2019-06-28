@@ -38,7 +38,7 @@ object Section {
       },
       javascriptConfigOverrides = javascriptConfigOverrides,
       commercial = Some(CommercialProperties.fromSection(section)),
-      isFoundation = GuardianFoundationHelper.sectionIdIsGuardianFoundation(id: String)
+      isFoundation = GuardianFoundationHelper.urlIsGuardianFoundation(section.webUrl) || GuardianFoundationHelper.sectionIdIsGuardianFoundation(id: String)
     )
 
     Section(
