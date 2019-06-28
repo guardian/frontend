@@ -203,11 +203,11 @@
     }
 }
 
-// For Mobile Design test:
 .engagement-banner__header {
+    font-weight: 700;
+
     @include mq($until: phablet) {
         @include fs-headline(2);
-        font-weight: 700;
         margin: 0 -10px $gs-gutter / 4;
         padding: 0 10px $gs-gutter / 4;
         border-bottom: 1px solid rgba($brightness-7, .3);
@@ -216,6 +216,5 @@
 
     @include mq(phablet) {
         display: inline;
-        font-weight: 700;
     }
 }
