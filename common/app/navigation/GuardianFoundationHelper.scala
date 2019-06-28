@@ -17,5 +17,5 @@ object GuardianFoundationHelper {
     foundationSectionIds.contains(id.split('/').headOption.getOrElse(""))
 
   }
-  
+
 }

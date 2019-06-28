@@ -30,10 +30,6 @@ object Tag {
       optionalMapEntry("og:description", openGraphDescription) ++
         optionalMapEntry("og:image", openGraphImage)
 
-    def isGuardianFoundation(sectionId: String): Boolean = {
-      tag.sectionId.startsWith("the-guardian-foundation")
-    }
-
     MetaData(
       id = tag.id,
       webUrl = tag.webUrl,
