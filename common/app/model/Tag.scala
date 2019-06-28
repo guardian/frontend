@@ -29,6 +29,10 @@ object Tag {
       optionalMapEntry("og:description", openGraphDescription) ++
         optionalMapEntry("og:image", openGraphImage)
 
+    def isGuardianFoundation(sectionId: String): Boolean = {
+      tag.sectionId.startsWith("the-guardian-foundation")
+    }
+
     MetaData(
       id = tag.id,
       webUrl = tag.webUrl,
@@ -50,17 +54,16 @@ object Tag {
       javascriptConfigOverrides = javascriptConfigOverrides,
       opengraphPropertiesOverrides = openGraphPropertiesOverrides,
       twitterPropertiesOverrides = Map("twitter:card" -> "summary"),
-      commercial = tag.commercial
+      commercial = tag.commercial,
+      isFoundation = isGuardianFoundation(tag.sectionId)
     )
   }
 
   def make(tag: ApiTag, pagination: Option[Pagination] = None): Tag = {
-
     val richLinkId = tag.references.find(_.`type` == "rich-link")
       .map(_.id.stripPrefix("rich-link/"))
       .filter(_.matches( """https?://www\.theguardian\.com/.*"""))
       .map(_.stripPrefix("https://www.theguardian.com"))
-
 
     Tag(
       properties = TagProperties.make(tag),
@@ -68,6 +71,7 @@ object Tag {
       richLinkId = richLinkId
     )
   }
+
   implicit val tagWrites: Writes[Tag] = Json.writes[Tag]
 }
 

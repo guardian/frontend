@@ -37,7 +37,7 @@ object Section {
       },
       javascriptConfigOverrides = javascriptConfigOverrides,
       commercial = Some(CommercialProperties.fromSection(section)),
-      isFoundation = sectionIdIsFoundation(id: String)
+      isFoundation = sectionIdIsGuardianFoundation(id: String)
     )
 
     Section(
@@ -46,9 +46,13 @@ object Section {
     )
   }
 
-  val foundationSectionIds = List("the-guardian-foundation")
+  val foundationSectionIds = List(
+    "the-guardian-foundation",
+    "newswise",
+    "gnmeducationcentre"
+  )
 
-  private def sectionIdIsFoundation(id: String): Boolean = {
+  private def sectionIdIsGuardianFoundation(id: String): Boolean = {
     foundationSectionIds.contains(id)
   }
 

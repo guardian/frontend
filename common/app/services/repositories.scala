@@ -163,6 +163,7 @@ trait Index extends ConciergeRepository with Collections {
 
     val latest: Seq[IndexPageItem] = response.results.getOrElse(Nil).map(IndexPageItem(_)).filterNot(c => leadContentIds.contains(c.item.metadata.id))
     val allTrails = (leadContent ++ editorsPicks ++ latest).distinctBy(_.item.metadata.id)
+
     tag map { tag =>
       IndexPage(page = tag, contents = allTrails, tags = Tags(List(tag)), date = DateTime.now, tzOverride = None)
     }
