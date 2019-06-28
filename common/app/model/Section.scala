@@ -36,7 +36,8 @@ object Section {
         case _ => Some("front")
       },
       javascriptConfigOverrides = javascriptConfigOverrides,
-      commercial = Some(CommercialProperties.fromSection(section))
+      commercial = Some(CommercialProperties.fromSection(section)),
+      isFoundation = sectionIdIsFoundation(id: String)
     )
 
     Section(
@@ -44,9 +45,16 @@ object Section {
       isEditionalised = section.editions.length > 1
     )
   }
+
+  val foundationSectionIds = List("the-guardian-foundation")
+
+  private def sectionIdIsFoundation(id: String): Boolean = {
+    foundationSectionIds.contains(id)
+  }
+
 }
 
-case class Section private(
+case class Section private (
   override val metadata: MetaData,
   isEditionalised: Boolean
 ) extends StandalonePage
