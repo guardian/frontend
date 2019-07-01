@@ -5,8 +5,6 @@ import { getCookie } from 'lib/cookies';
 import { isBreakpoint } from 'lib/detect';
 import { addSlot } from 'commercial/modules/dfp/add-slot';
 import { createSlots } from 'commercial/modules/dfp/create-slots';
-import { commercialUsMobileSticky } from 'common/modules/experiments/tests/commercial-us-mobile-sticky';
-import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 
 const createAdWrapper = (): HTMLDivElement => {
     const wrapper: HTMLDivElement = document.createElement('div');
@@ -23,8 +21,7 @@ export const init = (): Promise<void> => {
     if (
         isInNA() && // User is in North America
         isBreakpoint({ min: 'mobile', max: 'mobileLandscape' }) && // User is using a mobile device
-        config.get('page.contentType') === 'Article' && // User is accessing an article
-        isInVariantSynchronous(commercialUsMobileSticky, 'variant')
+        config.get('page.contentType') === 'Article' // User is accessing an article
     ) {
         const mobileStickyWrapper = createAdWrapper();
 
