@@ -15,6 +15,7 @@ import conf.switches.Switches.CircuitBreakerSwitch
 import model.{Content, Trail}
 import org.joda.time.DateTime
 import com.github.nscala_time.time.Implicits._
+import concurrent.CircuitBreakerRegistry
 import okhttp3.{ConnectionPool, OkHttpClient}
 
 import scala.concurrent.duration.{Duration, MILLISECONDS}
@@ -121,26 +122,12 @@ final case class CircuitBreakingContentApiClient(
 )(implicit executionContext: ExecutionContext)
   extends MonitoredContentApiClientLogic {
 
-  private val circuitBreakerActorSystem = ActorSystem("content-api-client-circuit-breaker")
-
-  // http://doc.akka.io/docs/akka/snapshot/common/circuitbreaker.html
-  private val circuitBreaker = new CircuitBreaker(
-    scheduler = circuitBreakerActorSystem.scheduler,
+  private[this] val circuitBreaker = CircuitBreakerRegistry.withConfig(
+    name = "content-api-client",
+    system = ActorSystem("content-api-client-circuit-breaker"),
     maxFailures = contentApi.circuitBreakerErrorThreshold,
     callTimeout = contentApi.timeout + Duration.create(400, MILLISECONDS), // +400 to differentiate between circuit breaker and capi timeouts
-    resetTimeout = contentApi.circuitBreakerResetTimeout
-  )
-
-  circuitBreaker.onOpen(
-    log.error(s"CAPI circuit breaker: reached error threshold (${contentApi.circuitBreakerErrorThreshold}). Breaker is OPEN!")
-  )
-
-  circuitBreaker.onHalfOpen(
-    log.info(s"CAPI circuit breaker: Reset timeout (${contentApi.circuitBreakerResetTimeout}) finished. Entered half open state.")
-  )
-
-  circuitBreaker.onClose(
-    log.info("CAPI circuit breaker: Content API Client looks healthy again, circuit breaker is closed.")
+    resetTimeout = contentApi.circuitBreakerResetTimeout,
   )
 
   override def get(url: String, headers: Map[String, String])(implicit executionContext: ExecutionContext): Future[HttpResponse] = {

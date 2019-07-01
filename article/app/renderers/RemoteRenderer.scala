@@ -1,15 +1,17 @@
 package renderers
 
+import akka.actor.ActorSystem
 import com.eclipsesource.schema._
 import com.eclipsesource.schema.drafts.Version7
 import com.eclipsesource.schema.drafts.Version7._
 import com.gu.contentapi.client.model.v1.Blocks
 import com.osinka.i18n.Lang
+import concurrent.CircuitBreakerRegistry
 import conf.Configuration
-import controllers.ArticlePage
-import model.{Cached, PageWithStoryPackage}
+import conf.switches.Switches.CircuitBreakerSwitch
 import model.Cached.RevalidatableResult
 import model.dotcomponents.DotcomponentsDataModel
+import model.{Cached, PageWithStoryPackage}
 import play.api.libs.json._
 import play.api.libs.ws.WSClient
 import play.api.mvc.{RequestHeader, Result}
@@ -24,36 +26,59 @@ class RemoteRenderer {
 
   private[this] val SCHEMA = "schema/dotcomponentsDataModelV2.jsonschema"
 
-  private[this] def validate(model: DotcomponentsDataModel) = {
+  private[this] val circuitBreaker = CircuitBreakerRegistry.withConfig(
+    name = "dotcom-rendering-client",
+    system = ActorSystem("dotcom-rendering-client-circuit-breaker"),
+    maxFailures = Configuration.rendering.circuitBreakerMaxFailures,
+    callTimeout = Configuration.rendering.timeout.plus(200.millis),
+    resetTimeout = Configuration.rendering.timeout * 4,
+  )
+
+  private[this] def validate(model: DotcomponentsDataModel): JsResult[JsValue] = {
     val rawschema: String = Source.fromResource(SCHEMA).getLines.mkString("\n")
     val schema = Json.fromJson[SchemaType](Json.parse(rawschema)).get
     val validator = new SchemaValidator(Some(Version7))(Lang.Default)
+
     validator.validate(schema, DotcomponentsDataModel.toJson(model))
   }
 
   private[this] def get(
-    ws:WSClient,
+    ws: WSClient,
     payload: String,
     article: PageWithStoryPackage,
     endpoint: String
   )(implicit request: RequestHeader): Future[Result] = {
 
-    ws.url(endpoint)
-      .withRequestTimeout(2000.millis)
-      .addHttpHeaders("Content-Type" -> "application/json")
-      .post(payload)
-      .map(response => {
-        response.status match {
-          case 200 =>
-            Cached(article)(RevalidatableResult.OkDotcomponents(Html(response.body)))
-          case _ =>
-            throw new Exception(response.body)
-        }
-      })
+    def get(): Future[Result] = {
+      ws.url(endpoint)
+        .withRequestTimeout(Configuration.rendering.timeout)
+        .addHttpHeaders("Content-Type" -> "application/json")
+        .post(payload)
+        .map(response => {
+          response.status match {
+            case 200 =>
+              Cached(article)(RevalidatableResult.OkDotcomponents(Html(response.body)))
+            case _ =>
+              throw new Exception(response.body)
+          }
+        })
+    }
+
+
+    if (CircuitBreakerSwitch.isSwitchedOn) {
+      circuitBreaker.withCircuitBreaker(get())
+    } else {
+      get()
+    }
   }
 
+  def getAMPArticle(
+    ws: WSClient,
+    payload: String,
+    page: PageWithStoryPackage,
+    blocks: Blocks
+  )(implicit request: RequestHeader): Future[Result] = {
 
-  def getAMPArticle(ws: WSClient, payload: String, page: PageWithStoryPackage, blocks: Blocks)(implicit request: RequestHeader): Future[Result] = {
     val dataModel: DotcomponentsDataModel = DotcomponentsDataModel.fromArticle(page, request, blocks)
     val dataString: String = DotcomponentsDataModel.toJsonString(dataModel)
 
@@ -64,7 +89,13 @@ class RemoteRenderer {
 
   }
 
-  def getArticle(ws:WSClient, path: String, page: PageWithStoryPackage,  blocks: Blocks)(implicit request: RequestHeader): Future[Result] = {
+  def getArticle(
+    ws:WSClient,
+    path: String,
+    page: PageWithStoryPackage,
+    blocks: Blocks
+  )(implicit request: RequestHeader): Future[Result] = {
+
     val dataModel: DotcomponentsDataModel = DotcomponentsDataModel.fromArticle(page, request, blocks)
     val dataString: String = DotcomponentsDataModel.toJsonString(dataModel)
 
@@ -73,7 +104,6 @@ class RemoteRenderer {
       case JsError(e) => Future.failed(new Exception(Json.prettyPrint(JsError.toJson(e))))
     }
   }
-
 }
 
 object RemoteRenderer {
