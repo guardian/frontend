@@ -7,6 +7,7 @@ import conf.Configuration
 import contentapi.Paths
 import model.facia.PressedCollection
 import model.pressed.PressedContent
+import navigation.GuardianFoundationHelper
 import play.api.libs.json.{JsBoolean, JsString, JsValue}
 
 import scala.language.postfixOps
@@ -53,7 +54,8 @@ object PressedPage {
       javascriptConfigOverrides = faciaPageMetaData,
       opengraphPropertiesOverrides = openGraph,
       twitterPropertiesOverrides = twitterProperties,
-      commercial = frontProperties.commercial
+      commercial = frontProperties.commercial,
+      isFoundation = GuardianFoundationHelper.sectionIdIsGuardianFoundation(id)
     )
   }
 }
