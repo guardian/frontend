@@ -14,7 +14,7 @@ export const acquisitionsBannerControlTemplate = (
     const applePayLogo = applePayApiAvailable ? applyPayMark.markup : '';
     return `
         <div class="engagement-banner__close">
-            <div class="engagement-banner__roundel">
+            <div class="engagement-banner__roundel hide-until-phablet">
                 ${marque36icon.markup}
             </div>
             <button tabindex="4" class="button engagement-banner__close-button js-site-message-close js-engagement-banner-close-button" data-link-name="hide release message">
@@ -24,6 +24,13 @@ export const acquisitionsBannerControlTemplate = (
         </div>
         <div class="engagement-banner__container">
             <div class="engagement-banner__text">
+                ${
+                    params.leadSentence
+                        ? `<div class="engagement-banner__header">
+                        ${params.leadSentence}
+                    </div>`
+                        : ''
+                }
                 ${params.messageText}${params.ctaText}
                 ${params.hasTicker ? acquisitionsBannerTickerTemplate : ''}
             </div>

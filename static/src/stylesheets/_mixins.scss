@@ -294,7 +294,7 @@
 }
 
 @mixin banner-copy-alignment {
-    @include mq(tablet) {
+    @include mq(phablet) {
         width: gs-span(7) + $gs-gutter;
     }
 
