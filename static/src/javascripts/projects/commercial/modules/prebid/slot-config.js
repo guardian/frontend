@@ -77,6 +77,7 @@ const getSlots = (contentType: string): Array<PrebidSlot> => {
         },
     ];
 
+    // TODO: add mobile sticky only in us
     const mobileSlots: Array<PrebidSlot> = [
         {
             key: 'top-above-nav',
@@ -89,7 +90,8 @@ const getSlots = (contentType: string): Array<PrebidSlot> => {
         {
             key: 'mostpop',
             sizes: [[300, 250]],
-        },{
+        },
+        {
             key: 'mobile-sticky',
             sizes: [[320, 50]],
         },
