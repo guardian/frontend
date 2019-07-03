@@ -89,6 +89,9 @@ const getSlots = (contentType: string): Array<PrebidSlot> => {
         {
             key: 'mostpop',
             sizes: [[300, 250]],
+        },{
+            key: 'mobile-sticky',
+            sizes: [[320, 50]],
         },
     ];
 
