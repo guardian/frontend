@@ -32,6 +32,10 @@ export type PrebidTrustXParams = {
     uid: string,
 };
 
+export type PrebidTripleLiftParams = {
+    inventoryCode: string,
+};
+
 export type PrebidImproveParams = {
     placementId: number,
     size: {
@@ -85,6 +89,7 @@ export type PrebidBidder = {
         | PrebidSonobiParams
         | PrebidIndexExchangeParams
         | PrebidTrustXParams
+        | PrebidTripleLiftParams
         | PrebidImproveParams
         | PrebidXaxisParams
         | PrebidAppNexusParams
@@ -100,6 +105,7 @@ export type PrebidBid = {
         | PrebidSonobiParams
         | PrebidIndexExchangeParams
         | PrebidTrustXParams
+        | PrebidTripleLiftParams
         | PrebidImproveParams
         | PrebidXaxisParams
         | PrebidAppNexusParams
