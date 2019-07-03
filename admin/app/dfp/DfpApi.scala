@@ -1,5 +1,7 @@
 package dfp
 
+// StatementBuilder query language is PQL defined here:
+// https://developers.google.com/ad-manager/api/pqlreference
 import com.google.api.ads.admanager.axis.utils.v201902.StatementBuilder
 import com.google.api.ads.admanager.axis.v201902._
 import common.Logging
@@ -11,15 +13,18 @@ case class DfpLineItems(validItems: Seq[GuLineItem], invalidItems: Seq[GuLineIte
 class DfpApi(dataMapper: DataMapper, dataValidation: DataValidation) extends Logging {
   import dfp.DfpApi._
 
-  private def readLineItems(stmtBuilder: StatementBuilder): DfpLineItems = {
+  private def readLineItems(stmtBuilder: StatementBuilder,
+                            postFilter: LineItem => Boolean = _ => true ): DfpLineItems = {
 
     val lineItems = withDfpSession( session => {
-      session.lineItems(stmtBuilder)
-        .map( dfpLineItem => {
-          dataMapper.toGuLineItem(session)(dfpLineItem) -> dfpLineItem
+      session.lineItems(stmtBuilder).filter(postFilter).map( dfpLineItem => {
+          (dataMapper.toGuLineItem(session)(dfpLineItem), dfpLineItem)
         })
     })
 
+
+    // Note that this will call getTargeting on each
+    // item, potentially making one API call per lineitem.
     val validatedLineItems = lineItems
       .groupBy(Function.tupled(dataValidation.isGuLineItemValid))
       .mapValues(_.map(_._1))
@@ -72,7 +77,17 @@ class DfpApi(dataMapper: DataMapper, dataValidation: DataValidation) extends Log
       .withBindVariableValue("sponsorshipType", LineItemType.SPONSORSHIP.toString)
       .orderBy("id ASC")
 
-    val lineItems = readLineItems(stmtBuilder)
+    // Lets avoid Prebid lineitems
+    val IsPrebid = "(?i).*?prebid.*".r
+
+    val lineItems = readLineItems(stmtBuilder,
+                                  lineItem => {
+                                      lineItem.getName match{
+                                        case IsPrebid() => false
+                                        case _ => true
+                                      }
+                                    }
+                                  )
     (lineItems.validItems.map(_.id) ++ lineItems.invalidItems.map(_.id)).sorted
   }
 
