@@ -501,6 +501,16 @@ trait PrebidSwitches {
     exposeClientSide = true
   )
 
+  val prebidTripleLift: Switch = Switch(
+    group = CommercialPrebid,
+    name = "prebid-triplelift",
+    description = "Include Triple Lift adapter in Prebid auctions",
+    owners = group(Commercial),
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
   val prebidImproveDigital: Switch = Switch(
     group = CommercialPrebid,
     name = "prebid-improve-digital",

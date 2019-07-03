@@ -22,8 +22,9 @@ import type {
     PrebidPubmaticParams,
     PrebidSize,
     PrebidSonobiParams,
+    PrebidTripleLiftParams,
     PrebidTrustXParams,
-    PrebidXaxisParams,
+    PrebidXaxisParams
 } from './types';
 import {
     containsBillboard,
@@ -44,6 +45,7 @@ import {
     shouldIncludeOzone,
     shouldIncludeSonobi,
     shouldIncludeTrustX,
+    shouldIncludeTripleLift,
     shouldIncludeXaxis,
     shouldUseOzoneAdaptor,
     stripDfpAdPrefixFrom,
@@ -436,6 +438,14 @@ const trustXBidder: PrebidBidder = {
     }),
 };
 
+const tripleLiftBidder: PrebidBidder = {
+    name: 'triplelift',
+    switchName: 'prebidTriplelift',
+    bidParams: (): PrebidTripleLiftParams => ({
+        uid: 'IMPLEMENT ME',
+    }),
+};
+
 const improveDigitalBidder: PrebidBidder = {
     name: 'improvedigital',
     switchName: 'prebidImproveDigital',
@@ -579,6 +589,7 @@ const currentBidders: (PrebidSize[]) => PrebidBidder[] = slotSizes => {
     const otherBidders: PrebidBidder[] = [
         ...(inPbTestOr(shouldIncludeSonobi()) ? [sonobiBidder] : []),
         ...(inPbTestOr(shouldIncludeTrustX()) ? [trustXBidder] : []),
+        ...(inPbTestOr(shouldIncludeTripleLift()) ? [tripleLiftBidder] : []),
         ...(inPbTestOr(shouldIncludeAppNexus()) ? [appNexusBidder] : []),
         ...(inPbTestOr(shouldIncludeImproveDigital())
             ? [improveDigitalBidder]
