@@ -92,7 +92,7 @@ trait ABTestSwitches {
     "Test whether presenting a modal Consent Banner increases proportion of US users who interact with it",
     owners = Owner.group(Commercial),
     safeState = Off,
-    sellByDate = new LocalDate(2019, 7, 4),
+    sellByDate = new LocalDate(2019, 7, 31),
     exposeClientSide = true
   )
 }
