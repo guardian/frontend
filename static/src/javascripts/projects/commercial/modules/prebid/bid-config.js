@@ -24,7 +24,7 @@ import type {
     PrebidSonobiParams,
     PrebidTripleLiftParams,
     PrebidTrustXParams,
-    PrebidXaxisParams,
+    PrebidXaxisParams
 } from './types';
 import {
     containsBillboard,
