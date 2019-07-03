@@ -24,7 +24,7 @@ import type {
     PrebidSonobiParams,
     PrebidTripleLiftParams,
     PrebidTrustXParams,
-    PrebidXaxisParams
+    PrebidXaxisParams,
 } from './types';
 import {
     containsBillboard,
@@ -468,11 +468,16 @@ const trustXBidder: PrebidBidder = {
 const tripleLiftBidder: PrebidBidder = {
     name: 'triplelift',
     switchName: 'prebidTriplelift',
+<<<<<<< HEAD
     bidParams: (
         slotId: string,
         sizes: PrebidSize[]
     ): PrebidTripleLiftParams => ({
         inventoryCode: getTripleLiftInventoryCode(slotId, sizes),
+=======
+    bidParams: (): PrebidTripleLiftParams => ({
+        inventoryCode: 'IMPLEMENT ME',
+>>>>>>> Rename to Inventory code
     }),
 };
 
