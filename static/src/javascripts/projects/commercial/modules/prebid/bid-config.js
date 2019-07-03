@@ -24,7 +24,7 @@ import type {
     PrebidSonobiParams,
     PrebidTripleLiftParams,
     PrebidTrustXParams,
-    PrebidXaxisParams
+    PrebidXaxisParams,
 } from './types';
 import {
     containsBillboard,
@@ -442,7 +442,7 @@ const tripleLiftBidder: PrebidBidder = {
     name: 'triplelift',
     switchName: 'prebidTriplelift',
     bidParams: (): PrebidTripleLiftParams => ({
-        uid: 'IMPLEMENT ME',
+        inventoryCode: 'IMPLEMENT ME',
     }),
 };
 
