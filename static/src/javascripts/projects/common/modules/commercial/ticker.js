@@ -55,7 +55,10 @@ const increaseCounter = (
     // Count is local to the parent element
     const newCount = count[parentElementSelector] + Math.floor(total / 100);
 
-    if (newCount >= total || newCount <= count[parentElementSelector]) {
+    const finishedCounting =
+        newCount <= count[parentElementSelector] || newCount >= total; // either we've reached the total or the count isn't going up because total is too small
+
+    if (finishedCounting) {
         counterElement.innerHTML = `${getLocalCurrencySymbol()}${total.toLocaleString()}`;
     } else {
         count[parentElementSelector] = newCount;
