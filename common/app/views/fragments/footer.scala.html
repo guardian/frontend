@@ -1,4 +1,4 @@
-@(showNav: Boolean = true, isAmp: Boolean = false)(implicit page: model.Page, request: RequestHeader)
+@(showNav: Boolean = true)(implicit page: model.Page, request: RequestHeader)
 
 @import org.joda.time.DateTime
 @import common.Edition
@@ -16,11 +16,9 @@
 <footer class="l-footer u-cf" data-link-name="footer" data-component="footer">
 
     <div class="footer__primary">
-        @if(!isAmp) {
             @defining(NavMenu(page, Edition(request))) { navMenu: NavMenu =>
                 @fragments.nav.subNav(navMenu, page.metadata.designType, isFooter = true)
             }
-        }
     </div>
 
     <div class="l-footer__secondary js-footer__secondary @if(EmailInlineInFooterSwitch.isSwitchedOff) {l-footer__secondary--no-email} gs-container" role="contentinfo">
@@ -45,7 +43,7 @@
 
         <div class="colophon u-cf">
             @defining(Edition(request)) { currentEdition =>
-                @if(EmailInlineInFooterSwitch.isSwitchedOn && !isAmp && !page.metadata.isFoundation) {
+                @if(EmailInlineInFooterSwitch.isSwitchedOn && !page.metadata.isFoundation) {
                     <div class="footer__email-container js-footer__email-container">
                     @currentEdition match {
                         case Uk => {
@@ -92,7 +90,6 @@
                                     <li class="colophon__item"><a data-link-name="cookie" href="@LinkTo {/info/cookies}">
                                         Cookie policy</a>
                                     </li>
-                                    @adPreference(isAmp)
                                     <li class="colophon__item"><a data-link-name="terms" href="@LinkTo {/help/terms-of-service}">
                                         Terms &amp; conditions</a>
                                     </li>
@@ -169,7 +166,6 @@
                                     <li class="colophon__item"><a data-link-name="cookie" href="@LinkTo {/info/cookies}">
                                         Cookie policy</a>
                                     </li>
-                                    @adPreference(isAmp)
                                     <li class="colophon__item"><a data-link-name="terms" href="@LinkTo {/help/terms-of-service}">
                                         Terms &amp; conditions</a>
                                     </li>
@@ -242,7 +238,6 @@
                                     <li class="colophon__item"><a data-link-name="cookie" href="@LinkTo {/info/cookies}">
                                         Cookie policy</a>
                                     </li>
-                                    @adPreference(isAmp)
                                     <li class="colophon__item"><a data-link-name="terms" href="@LinkTo {/help/terms-of-service}">
                                         Terms &amp; conditions</a>
                                     </li>
@@ -315,7 +310,6 @@
                                     <li class="colophon__item"><a data-link-name="cookie" href="@LinkTo {/info/cookies}">
                                         Cookie policy</a>
                                     </li>
-                                    @adPreference(isAmp)
                                     <li class="colophon__item"><a data-link-name="terms" href="@LinkTo {/help/terms-of-service}">
                                         Terms &amp; conditions</a>
                                     </li>
@@ -390,7 +384,6 @@
                                     Cookie policy
                                 </a>
                             </li>
-                            @adPreference(isAmp)
                             <li class="colophon__item">
                                 <a data-link-name="foundation : footer : terms" href="@LinkTo {/help/terms-of-service}">
                                     Terms &amp; conditions
@@ -426,14 +419,6 @@
     </div>
 </footer>
 
-@adPreference(isAmp: Boolean) = {
-    @if(isAmp){
-        <li class="colophon__item"><a class="adconsent-preference" data-link-name="adpreference" on="tap:the-adconsent-element.prompt">
-            Your privacy</a>
-        </li>
-    }
-}
-
 @readerRevenueLinks(editionId: String) =  {
     <div class="colophon__list">
         <div class="cta-bar__text">
@@ -448,7 +433,7 @@
         <a class="cta-bar__cta js-change-become-member-link js-acquisition-link"
             data-link-name="footer : contribute-cta"
             data-edition="@{editionId}"
-            href="@getReaderRevenueUrl(SupportContribute, if (isAmp) AmpFooter else Footer)">
+            href="@getReaderRevenueUrl(SupportContribute, Footer)">
             Contribute
             @fragments.inlineSvg("arrow-right", "icon")
         </a>
@@ -456,7 +441,7 @@
         <a class="cta-bar__cta js-subscribe js-acquisition-link"
             data-link-name="footer : subscribe-cta"
             data-edition="@{editionId}"
-            href="@getReaderRevenueUrl(SupportSubscribe, if (isAmp) AmpFooter else Footer)">
+            href="@getReaderRevenueUrl(SupportSubscribe, Footer)">
             Subscribe
             @fragments.inlineSvg("arrow-right", "icon")
         </a>
