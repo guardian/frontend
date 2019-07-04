@@ -13,7 +13,7 @@
 @{
     media match {
         case posterOnly if media.assets.isEmpty && media.posterImage.isDefined  =>
-            views.html.fragments.atoms.posterImage(mediaWrapper, false, media.posterImage.get, media.title)
+            views.html.fragments.atoms.posterImage(mediaWrapper, media.posterImage.get, media.title)
         case youtube if media.assets.headOption.filter(_.platform == MediaAssetPlatform.Youtube) =>
             views.html.fragments.atoms.youtube(
                 media,
