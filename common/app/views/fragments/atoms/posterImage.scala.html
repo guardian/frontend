@@ -1,6 +1,6 @@
 @import model.content.MediaWrapper
 @import layout.ContentWidths.MainMedia
-@(mediaWrapper: Option[MediaWrapper], amp: Boolean, picture: model.ImageMedia, caption: String)(implicit request: RequestHeader)
+@(mediaWrapper: Option[MediaWrapper], picture: model.ImageMedia, caption: String)(implicit request: RequestHeader)
 
     @defining(
         if(mediaWrapper.contains(MediaWrapper.MainMedia)) {
@@ -9,10 +9,6 @@
             Seq("gu-image")
         }
     ) { classes =>
-
-        @if(amp) {
-            @fragments.amp.ampImage(picture, caption)
-        } else {
             @fragments.image(
                 picture,
                 classes,
@@ -21,7 +17,6 @@
                 isFeatureAndShowcase = false,
                 isImmersiveMainMedia = false
             )
-        }
     }
     @fragments.atoms.mediaAtomCaption(caption, mainMedia = mediaWrapper.contains(MediaWrapper.MainMedia))
 
