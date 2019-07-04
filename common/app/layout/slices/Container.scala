@@ -69,7 +69,7 @@ object Container extends Logging {
   }
 
   def showToggle(container: Container): Boolean = container match {
-    case NavList | NavMediaList | Video => false
+    case NavList | NavMediaList => false
     case _ => true
   }
 
