@@ -10,12 +10,13 @@ $video-width-desktop: 700px;
 
     .fc-container__inner {
         border-top: 0;
-        @include mq(leftCol) {
-            display: none;
+    }
 
-            .has-page-skin & {
-                display: block;
-            }
+    .fc-container__toggle {
+        color: $brightness-86;
+
+        &:hover, &:focus {
+            color: $brightness-100;
         }
     }
 
@@ -99,6 +100,10 @@ $video-width-desktop: 700px;
     color: #ffffff;
     display: block;
     margin-bottom: $gs-baseline;
+
+    &:after {
+        content: none;
+    }
 
     a:hover {
         color: #ffffff;

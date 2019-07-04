@@ -13,12 +13,14 @@
 @(containerDefinition: layout.FaciaContainer, frontProperties: model.FrontProperties)(implicit requestHeader: RequestHeader)
 
 <div class="fc-container__inner">
-    <h2 class="video-title fc-container__header__title">
-        <a href="@containerDefinition.href" data-link-name="video-container-title @containerDefinition.displayName">@containerDefinition.displayName</a>
-    </h2>
+    <header class="fc-container__header js-container__header">
+            <h2 class="video-title fc-container__header__title">
+                <a href="@containerDefinition.href" data-link-name="video-container-title @containerDefinition.displayName">@containerDefinition.displayName</a>
+            </h2>
+    </header>
 </div>
 
-<div class="video-playlist video-playlist--start js-video-playlist"
+<div class="video-playlist video-playlist--start js-video-playlist fc-container--rolled-up-hide"
      data-number-of-videos="@(containerDefinition.collectionEssentials.items.zipWithIndex.length - 1)"
      data-component="video-playlist">
     <a
@@ -32,11 +34,8 @@
         @fragments.inlineSvg("chevron-left", "icon", Seq("video-playlist__icon"))
     </a>
 
-    <ul class="u-unstyled video-playlist__inner js-video-playlist-inner">
+    <ul class="u-unstyled video-playlist__inner js-video-playlist-inner ">
         <li class="video-playlist__item video-title video-title--leftcol fc-container__header__title">
-            <a class="video-title__link" href="@containerDefinition.href" data-link-name="video-container-title @containerDefinition.displayName">
-                @containerDefinition.displayName
-            </a>
             @treats(containerDefinition, frontProperties)
         </li>
 
