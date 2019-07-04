@@ -90,7 +90,6 @@
                                     <li class="colophon__item"><a data-link-name="cookie" href="@LinkTo {/info/cookies}">
                                         Cookie policy</a>
                                     </li>
-                                    @adPreference(false)
                                     <li class="colophon__item"><a data-link-name="terms" href="@LinkTo {/help/terms-of-service}">
                                         Terms &amp; conditions</a>
                                     </li>
@@ -167,7 +166,6 @@
                                     <li class="colophon__item"><a data-link-name="cookie" href="@LinkTo {/info/cookies}">
                                         Cookie policy</a>
                                     </li>
-                                    @adPreference(false)
                                     <li class="colophon__item"><a data-link-name="terms" href="@LinkTo {/help/terms-of-service}">
                                         Terms &amp; conditions</a>
                                     </li>
@@ -240,7 +238,6 @@
                                     <li class="colophon__item"><a data-link-name="cookie" href="@LinkTo {/info/cookies}">
                                         Cookie policy</a>
                                     </li>
-                                    @adPreference(false)
                                     <li class="colophon__item"><a data-link-name="terms" href="@LinkTo {/help/terms-of-service}">
                                         Terms &amp; conditions</a>
                                     </li>
@@ -313,7 +310,6 @@
                                     <li class="colophon__item"><a data-link-name="cookie" href="@LinkTo {/info/cookies}">
                                         Cookie policy</a>
                                     </li>
-                                    @adPreference(false)
                                     <li class="colophon__item"><a data-link-name="terms" href="@LinkTo {/help/terms-of-service}">
                                         Terms &amp; conditions</a>
                                     </li>
@@ -388,7 +384,6 @@
                                     Cookie policy
                                 </a>
                             </li>
-                            @adPreference(false)
                             <li class="colophon__item">
                                 <a data-link-name="foundation : footer : terms" href="@LinkTo {/help/terms-of-service}">
                                     Terms &amp; conditions
@@ -423,14 +418,6 @@
         </div>
     </div>
 </footer>
-
-@adPreference(isAmp: Boolean) = {
-    @if(isAmp){
-        <li class="colophon__item"><a class="adconsent-preference" data-link-name="adpreference" on="tap:the-adconsent-element.prompt">
-            Your privacy</a>
-        </li>
-    }
-}
 
 @readerRevenueLinks(editionId: String) =  {
     <div class="colophon__list">
