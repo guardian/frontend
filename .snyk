@@ -1,0 +1,30 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.13.5
+ignore: {}
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  SNYK-JS-LODASH-450202:
+    - emotion > babel-plugin-emotion > @babel/helper-module-imports > @babel/types > lodash:
+        patched: '2019-07-04T00:03:00.498Z'
+    - lodash:
+        patched: '2019-07-04T00:03:00.498Z'
+    - '@guardian/atom-renderer > css-loader > lodash':
+        patched: '2019-07-04T00:03:00.498Z'
+    - '@guardian/atom-renderer > @babel/preset-env > @babel/plugin-transform-block-scoping > lodash':
+        patched: '2019-07-04T00:03:00.498Z'
+    - '@guardian/atom-renderer > @babel/preset-env > @babel/helper-module-imports > @babel/types > lodash':
+        patched: '2019-07-04T00:03:00.498Z'
+    - react-emotion > babel-plugin-emotion > @babel/helper-module-imports > @babel/types > lodash:
+        patched: '2019-07-04T00:03:00.498Z'
+    - '@guardian/dotcom-rendering > inquirer > lodash':
+        patched: '2019-07-04T00:03:00.498Z'
+    - '@guardian/atom-renderer > @babel/preset-env > @babel/plugin-proposal-async-generator-functions > @babel/helper-remap-async-to-generator > @babel/traverse > lodash':
+        patched: '2019-07-04T00:03:00.498Z'
+    - '@guardian/atom-renderer > @babel/preset-env > @babel/plugin-transform-modules-amd > @babel/helper-module-transforms > @babel/helper-split-export-declaration > @babel/types > lodash':
+        patched: '2019-07-04T00:03:00.498Z'
+    - '@guardian/atom-renderer > @babel/preset-env > @babel/plugin-transform-async-to-generator > @babel/helper-remap-async-to-generator > @babel/helper-wrap-function > @babel/helper-function-name > @babel/types > lodash':
+        patched: '2019-07-04T00:03:00.498Z'
+    - '@guardian/atom-renderer > @babel/preset-env > @babel/plugin-transform-async-to-generator > @babel/helper-remap-async-to-generator > @babel/helper-wrap-function > @babel/traverse > @babel/helper-split-export-declaration > @babel/types > lodash':
+        patched: '2019-07-04T00:03:00.498Z'
+    - '@guardian/atom-renderer > @babel/preset-env > @babel/plugin-proposal-async-generator-functions > @babel/helper-remap-async-to-generator > @babel/helper-wrap-function > @babel/traverse > @babel/helper-function-name > @babel/helper-get-function-arity > @babel/types > lodash':
+        patched: '2019-07-04T00:03:00.498Z'
