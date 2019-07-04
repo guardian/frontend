@@ -156,10 +156,14 @@ object CompetitionDisplayHelpers {
   // It should be without effects for men competitions. For women competitions it
   // removes the term from the PA data we receive.
   def cleanTeamName(teamName: String): String = {
-    teamName.replace("Ladies", "")
+    teamName
+      .replace("Ladies", "")
+      .replace("Holland", "The Netherlands")
   }
 
   def cleanTeamCode(teamCode: String): String = {
-    teamCode.replace("JAP", "JPN")
+    teamCode
+      .replace("JAP", "JPN")
+      .replace("HOL", "NED")
   }
 }
