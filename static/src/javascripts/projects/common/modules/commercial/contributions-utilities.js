@@ -75,8 +75,12 @@ const getReaderRevenueRegion = (geolocation: string): ReaderRevenueRegion => {
 
 const getVisitCount = (): number => local.get('gu.alreadyVisited') || 0;
 
-const replaceCountryName = (text: string, countryName: string): string =>
-    text.replace(/%%COUNTRY_NAME%%/g, countryName);
+const replaceCountryName = (text: string, countryName: ?string): ?string => {
+    if (!countryName) {
+        if (text.includes("%%COUNTRY_NAME%%")) throw new Error("Missing country name");
+        else return text;
+    } else return text.replace(/%%COUNTRY_NAME%%/g, countryName);
+};
 
 // How many times the user can see the Epic,
 // e.g. 6 times within 7 days with minimum of 1 day in between views.
@@ -492,7 +496,7 @@ const makeEpicABTest = ({
     return test;
 };
 
-const buildEpicCopy = (row: any, hasCountryName: boolean) => {
+const buildEpicCopy = (row: any): ?AcquisitionsEpicTemplateCopy => {
     const heading = throwIfEmptyString('heading', row.heading);
 
     const paragraphs: string[] = throwIfEmptyArray(
@@ -500,37 +504,42 @@ const buildEpicCopy = (row: any, hasCountryName: boolean) => {
         splitAndTrim(row.paragraphs, '\n')
     );
 
-    const countryName: ?string = hasCountryName
-        ? countryNames[geolocationGetSync()]
-        : undefined;
+    const countryName: ?string = countryNames[geolocationGetSync()];
 
-    return {
-        heading:
-            heading && countryName
-                ? replaceCountryName(heading, countryName)
-                : heading,
-        paragraphs:
-            paragraphs && countryName
-                ? paragraphs.map<string>(para =>
-                      replaceCountryName(para, countryName)
-                  )
-                : paragraphs,
-        highlightedText: row.highlightedText
-            ? row.highlightedText.replace(
-                  /%%CURRENCY_SYMBOL%%/g,
-                  getLocalCurrencySymbol()
-              )
-            : undefined,
-        footer: optionalSplitAndTrim(row.footer, '\n'),
-    };
+    // In case replaceCountryName throws an error
+    try {
+        return {
+            heading:
+                heading
+                    ? replaceCountryName(heading, countryName)
+                    : heading,
+            paragraphs:
+                paragraphs
+                    ? paragraphs.map<string>(para =>
+                        replaceCountryName(para, countryName)
+                    )
+                    : paragraphs,
+            highlightedText: row.highlightedText
+                ? row.highlightedText.replace(
+                    /%%CURRENCY_SYMBOL%%/g,
+                    getLocalCurrencySymbol()
+                )
+                : undefined,
+            footer: optionalSplitAndTrim(row.footer, '\n'),
+        };
+    } catch(e) {
+        return undefined;
+    }
 };
 
-const buildBannerCopy = (text: string, hasCountryName: boolean): string => {
-    const countryName: ?string = hasCountryName
-        ? countryNames[geolocationGetSync()]
-        : undefined;
+const buildBannerCopy = (text: string): ?string => {
+    const countryName: ?string = countryNames[geolocationGetSync()];
 
-    return countryName ? replaceCountryName(text, countryName) : text;
+    try {
+        return replaceCountryName(text, countryName);
+    } catch(e) {
+        return undefined;
+    }
 };
 
 export const getEpicTestsFromGoogleDoc = (): Promise<
@@ -765,13 +774,11 @@ export const getEngagementBannerTestsFromGoogleDoc = (): Promise<
                             engagementBannerParams: {
                                 leadSentence: row.leadSentence
                                     ? buildBannerCopy(
-                                          row.leadSentence.trim(),
-                                          hasCountryName
+                                          row.leadSentence.trim()
                                       )
                                     : undefined,
                                 messageText: buildBannerCopy(
-                                    row.messageText.trim(),
-                                    hasCountryName
+                                    row.messageText.trim()
                                 ),
                                 ctaText: `<span class="engagement-banner__highlight"> ${row.ctaText.replace(
                                     /%%CURRENCY_SYMBOL%%/g,

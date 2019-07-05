@@ -46,8 +46,7 @@ export const countryName: EpicABTest = makeEpicABTest({
                         'We need your support to keep delivering quality journalism, to maintain our openness and to protect our precious independence. Every reader contribution, big or small, is so valuable.\n',
                     highlightedText:
                         'Support The Guardian from as little as %%CURRENCY_SYMBOL%%1 – and it only takes a minute. Thank you.',
-                },
-                true
+                }
             ),
         },
     ],

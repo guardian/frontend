@@ -64,8 +64,7 @@ export const articlesViewed: EpicABTest = makeEpicABTest({
             buttonTemplate: defaultButtonTemplate,
             products: [],
             copy: buildEpicCopy(
-                isUSUK ? USUKControlCopy : ROWControlCopy,
-                !isUSUK
+                isUSUK ? USUKControlCopy : ROWControlCopy
             ),
         },
         {
@@ -81,8 +80,7 @@ export const articlesViewed: EpicABTest = makeEpicABTest({
                         'Our editorial independence means we set our own agenda and voice our own opinions. Guardian journalism is free from commercial and political bias and not influenced by billionaire owners or shareholders. This means we can give a voice to those less heard, explore where others turn away, and rigorously challenge those in power.\n' +
                         'We need your support to keep delivering quality journalism, to maintain our openness and to protect our precious independence. Every reader contribution, big or small, is so valuable. \n',
                     highlightedText,
-                },
-                false
+                }
             ),
         },
     ],
