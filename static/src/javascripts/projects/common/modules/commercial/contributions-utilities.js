@@ -531,14 +531,10 @@ const buildEpicCopy = (row: any): ?AcquisitionsEpicTemplateCopy => {
     }
 };
 
-const buildBannerCopy = (text: string): ?string => {
+const buildBannerCopy = (text: string): string => {
     const countryName: ?string = countryNames[geolocationGetSync()];
 
-    try {
-        return replaceCountryName(text, countryName);
-    } catch (e) {
-        return undefined;
-    }
+    return replaceCountryName(text, countryName);
 };
 
 export const getEpicTestsFromGoogleDoc = (): Promise<
