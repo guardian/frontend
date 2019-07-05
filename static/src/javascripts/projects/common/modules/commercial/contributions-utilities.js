@@ -75,7 +75,7 @@ const getReaderRevenueRegion = (geolocation: string): ReaderRevenueRegion => {
 
 const getVisitCount = (): number => local.get('gu.alreadyVisited') || 0;
 
-const replaceCountryName = (text: string, countryName: ?string): ?string => {
+const replaceCountryName = (text: string, countryName: ?string): string => {
     if (!countryName) {
         if (text.includes('%%COUNTRY_NAME%%'))
             throw new Error('Missing country name');
@@ -665,7 +665,7 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                                 row.excludedSections,
                                 ','
                             ),
-                            copy: buildEpicCopy(row, hasCountryName),
+                            copy: buildEpicCopy(row),
                             showTicker: optionalStringToBoolean(row.showTicker),
                             supportBaseURL: row.supportBaseURL,
                             backgroundImageUrl: filterEmptyString(
