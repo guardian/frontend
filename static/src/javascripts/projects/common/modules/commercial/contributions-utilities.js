@@ -77,7 +77,8 @@ const getVisitCount = (): number => local.get('gu.alreadyVisited') || 0;
 
 const replaceCountryName = (text: string, countryName: ?string): ?string => {
     if (!countryName) {
-        if (text.includes("%%COUNTRY_NAME%%")) throw new Error("Missing country name");
+        if (text.includes('%%COUNTRY_NAME%%'))
+            throw new Error('Missing country name');
         else return text;
     } else return text.replace(/%%COUNTRY_NAME%%/g, countryName);
 };
@@ -509,25 +510,23 @@ const buildEpicCopy = (row: any): ?AcquisitionsEpicTemplateCopy => {
     // In case replaceCountryName throws an error
     try {
         return {
-            heading:
-                heading
-                    ? replaceCountryName(heading, countryName)
-                    : heading,
-            paragraphs:
-                paragraphs
-                    ? paragraphs.map<string>(para =>
-                        replaceCountryName(para, countryName)
-                    )
-                    : paragraphs,
+            heading: heading
+                ? replaceCountryName(heading, countryName)
+                : heading,
+            paragraphs: paragraphs
+                ? paragraphs.map<string>(para =>
+                      replaceCountryName(para, countryName)
+                  )
+                : paragraphs,
             highlightedText: row.highlightedText
                 ? row.highlightedText.replace(
-                    /%%CURRENCY_SYMBOL%%/g,
-                    getLocalCurrencySymbol()
-                )
+                      /%%CURRENCY_SYMBOL%%/g,
+                      getLocalCurrencySymbol()
+                  )
                 : undefined,
             footer: optionalSplitAndTrim(row.footer, '\n'),
         };
-    } catch(e) {
+    } catch (e) {
         return undefined;
     }
 };
@@ -537,7 +536,7 @@ const buildBannerCopy = (text: string): ?string => {
 
     try {
         return replaceCountryName(text, countryName);
-    } catch(e) {
+    } catch (e) {
         return undefined;
     }
 };
@@ -773,9 +772,7 @@ export const getEngagementBannerTestsFromGoogleDoc = (): Promise<
 
                             engagementBannerParams: {
                                 leadSentence: row.leadSentence
-                                    ? buildBannerCopy(
-                                          row.leadSentence.trim()
-                                      )
+                                    ? buildBannerCopy(row.leadSentence.trim())
                                     : undefined,
                                 messageText: buildBannerCopy(
                                     row.messageText.trim()
