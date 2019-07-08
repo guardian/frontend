@@ -1,12 +1,14 @@
 // @flow
 
 import config from 'lib/config';
+import { getCookie as getCookie_ } from 'lib/cookies';
 import { slots, _ } from './slot-config';
 import { getBreakpointKey as getBreakpointKey_ } from './utils';
 
 const { getSlots } = _;
 
 const getBreakpointKey: any = getBreakpointKey_;
+const getCookie: any = getCookie_;
 
 jest.mock('./utils', () => {
     // $FlowFixMe property requireActual is actually not missing Flow.
@@ -16,6 +18,10 @@ jest.mock('./utils', () => {
         getBreakpointKey: jest.fn(),
     };
 });
+
+jest.mock('lib/cookies', () => ({
+    getCookie: jest.fn(),
+}));
 
 /* eslint-disable guardian-frontend/no-direct-access-config */
 describe('getSlots', () => {
@@ -29,6 +35,34 @@ describe('getSlots', () => {
 
     test('should return the correct slots at breakpoint M', () => {
         getBreakpointKey.mockReturnValue('M');
+        getCookie.mockReturnValue('UK');
+        expect(getSlots('Article')).toEqual([
+            {
+                key: 'right',
+                sizes: [[300, 600], [300, 250]],
+            },
+            {
+                key: 'inline1',
+                sizes: [[300, 250]],
+            },
+            {
+                key: 'top-above-nav',
+                sizes: [[300, 250]],
+            },
+            {
+                key: 'inline',
+                sizes: [[300, 250]],
+            },
+            {
+                key: 'mostpop',
+                sizes: [[300, 250]],
+            },
+        ]);
+    });
+
+    test('should return the correct slots at breakpoint M for US including mobile sticky slot', () => {
+        getBreakpointKey.mockReturnValue('M');
+        getCookie.mockReturnValue('NA');
         expect(getSlots('Article')).toEqual([
             {
                 key: 'right',
@@ -156,6 +190,7 @@ describe('slots', () => {
 
     test('should return the correct mobile-sticky slot at breakpoint M', () => {
         getBreakpointKey.mockReturnValue('M');
+        getCookie.mockReturnValue('NA');
         expect(slots('mobile-sticky', '')).toEqual([
             {
                 key: 'mobile-sticky',
