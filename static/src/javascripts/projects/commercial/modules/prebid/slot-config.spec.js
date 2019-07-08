@@ -50,6 +50,10 @@ describe('getSlots', () => {
                 key: 'mostpop',
                 sizes: [[300, 250]],
             },
+            {
+                key: 'mobile-sticky',
+                sizes: [[320, 50]],
+            },
         ]);
     });
 
@@ -146,6 +150,16 @@ describe('slots', () => {
             {
                 key: 'top-above-nav',
                 sizes: [[300, 250]],
+            },
+        ]);
+    });
+
+    test('should return the correct mobile-sticky slot at breakpoint M', () => {
+        getBreakpointKey.mockReturnValue('M');
+        expect(slots('mobile-sticky', '')).toEqual([
+            {
+                key: 'mobile-sticky',
+                sizes: [[320, 50]],
             },
         ]);
     });
