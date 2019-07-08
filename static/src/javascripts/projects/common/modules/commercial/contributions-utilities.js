@@ -206,7 +206,7 @@ const pageMatchesSections = (sectionIds: string[]): boolean =>
     sectionIds.some(section => config.get('page.section') === section);
 
 const copyHasVariables = (text: ?string): boolean =>
-    text && text.includes('%%');
+    !!text && text.includes('%%');
 
 const makeEpicABTestVariant = (
     initVariant: InitEpicABTestVariant,
