@@ -526,7 +526,17 @@ const buildEpicCopy = (row: any): ?AcquisitionsEpicTemplateCopy => {
                 : undefined,
             footer: optionalSplitAndTrim(row.footer, '\n'),
         };
-    } catch (e) {
+    } catch (err) {
+        reportError(
+            new Error(
+                `Error building epic copy. ${err.message}. Stack: ${err.stack}`
+            ),
+            {
+                feature: 'epic',
+            },
+            false
+        );
+
         return undefined;
     }
 };
@@ -534,7 +544,21 @@ const buildEpicCopy = (row: any): ?AcquisitionsEpicTemplateCopy => {
 const buildBannerCopy = (text: string): string => {
     const countryName: ?string = countryNames[geolocationGetSync()];
 
-    return replaceCountryName(text, countryName);
+    try {
+        return replaceCountryName(text, countryName);
+    } catch (err) {
+        reportError(
+            new Error(
+                `Error building banner copy. ${err.message}. Stack: ${
+                    err.stack
+                }`
+            ),
+            {
+                feature: 'epic',
+            },
+            true
+        );
+    }
 };
 
 export const getEpicTestsFromGoogleDoc = (): Promise<
