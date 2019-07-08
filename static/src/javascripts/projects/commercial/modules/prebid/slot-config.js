@@ -8,6 +8,7 @@ import {
 import config from 'lib/config';
 
 import type { PrebidSlot } from 'commercial/modules/prebid/types';
+import { getCookie } from 'lib/cookies';
 
 const filterByAdvertId = (
     advertId: string,
@@ -20,6 +21,9 @@ const filterByAdvertId = (
     );
     return adUnits;
 };
+
+const isInNA = (): boolean =>
+    (getCookie('GU_geo_continent') || 'OTHER').toUpperCase() === 'NA';
 
 const getSlots = (contentType: string): Array<PrebidSlot> => {
     const isArticle = contentType === 'Article';
@@ -77,7 +81,6 @@ const getSlots = (contentType: string): Array<PrebidSlot> => {
         },
     ];
 
-    // TODO: add mobile sticky only in us
     const mobileSlots: Array<PrebidSlot> = [
         {
             key: 'top-above-nav',
@@ -91,15 +94,18 @@ const getSlots = (contentType: string): Array<PrebidSlot> => {
             key: 'mostpop',
             sizes: [[300, 250]],
         },
-        {
-            key: 'mobile-sticky',
-            sizes: [[320, 50]],
-        },
     ];
+
+    const mobileStickySlot: PrebidSlot = {
+        key: 'mobile-sticky',
+        sizes: [[320, 50]],
+    };
 
     switch (getBreakpointKey()) {
         case 'M':
-            return commonSlots.concat(mobileSlots);
+            return isInNA()
+                ? commonSlots.concat([...mobileSlots, mobileStickySlot])
+                : commonSlots.concat(mobileSlots);
         case 'T':
             return commonSlots.concat(tabletSlots);
         default:
