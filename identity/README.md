@@ -30,7 +30,6 @@ The former is encouraged, in case we ever need to change the port.
 So the required steps are:
 
 * configure and run nginx (see `/nginx`)
-* update your hosts file (also described in `/nginx`)
 * run the Identity subproject on port 9009
 
 With these in place, you'll be able to browse Identity on
