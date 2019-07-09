@@ -211,6 +211,12 @@ const pageMatchesSections = (sectionIds: string[]): boolean =>
 const copyHasVariables = (text: ?string): boolean =>
     !!text && text.includes('%%');
 
+const countryNameIsOk = (
+    testHasCountryName: boolean,
+    geolocation: ?string
+): boolean => (testHasCountryName ? !!getCountryName(geolocation) : true);
+
+
 const makeEpicABTestVariant = (
     initVariant: InitEpicABTestVariant,
     template: EpicTemplate,
@@ -475,9 +481,11 @@ const makeEpicABTest = ({
         showForSensitive: true,
         geolocation,
         canRun() {
-            const countryNameIsOk =
-                !testHasCountryName || !!getCountryName(geolocation);
-            return canRun() && countryNameIsOk && shouldShowEpic(this);
+            return (
+                canRun() &&
+                countryNameIsOk(testHasCountryName, geolocation) &&
+                shouldShowEpic(this)
+            );
         },
         componentType: 'ACQUISITIONS_EPIC',
         insertEvent: makeEvent(id, 'insert'),
@@ -783,9 +791,6 @@ export const getEngagementBannerTestsFromGoogleDoc = (): Promise<
 
                         geolocation,
                         canRun: () => {
-                            const countryNameOk =
-                                !testHasCountryName ||
-                                !!getCountryName(geolocation);
                             const matchesCountryGroups =
                                 countryGroups.length === 0 ||
                                 userMatchesCountryGroups(
@@ -793,7 +798,12 @@ export const getEngagementBannerTestsFromGoogleDoc = (): Promise<
                                     geolocation
                                 );
 
-                            return countryNameOk && matchesCountryGroups;
+                            return (
+                                countryNameIsOk(
+                                    testHasCountryName,
+                                    geolocation
+                                ) && matchesCountryGroups
+                            );
                         },
 
                         variants: rows.map(row => {
