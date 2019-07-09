@@ -112,7 +112,7 @@ case class Content(
 case class Commercial(
   editionCommercialProperties: Map[String, EditionCommercialProperties],
   prebidIndexSites: List[PrebidIndexSite],
-  commercialProperties: Option[CommercialProperties], //DEPRECATED TO DELETE
+  commercialProperties: Option[CommercialProperties]
 )
 
 // top-level structures
