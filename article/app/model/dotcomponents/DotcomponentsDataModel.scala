@@ -109,10 +109,21 @@ case class Content(
   trailText: String
 )
 
+case class CommercialConfiguration(
+  hasShowcaseMainElement: Boolean,
+  isFront: Boolean,
+  isLiveblog: Boolean,
+  isMinuteArticle: Boolean,
+  isPaidContent: Boolean,
+  isPreview: Boolean,
+  isSensitive: Boolean
+)
+
 case class Commercial(
   editionCommercialProperties: Map[String, EditionCommercialProperties],
   prebidIndexSites: List[PrebidIndexSite],
-  commercialProperties: Option[CommercialProperties]
+  commercialProperties: Option[CommercialProperties],
+  commercialConfiguration: CommercialConfiguration
 )
 
 // top-level structures
@@ -166,6 +177,10 @@ case class DotcomponentsDataModel(
 object Block {
   implicit val blockElementWrites: Writes[PageElement] = Json.writes[PageElement]
   implicit val writes = Json.writes[Block]
+}
+
+object CommercialConfiguration {
+  implicit val writes = Json.writes[CommercialConfiguration]
 }
 
 object Commercial {
@@ -449,6 +464,8 @@ object DotcomponentsDataModel {
       allTags
     )
 
+    val commercialConfig = CommercialConfiguration(false, false, false, false, false, false, false)
+
     val commercial = Commercial(
       editionCommercialProperties =
         article.metadata.commercial.map{_.perEdition.mapKeys(_.id)}
@@ -458,6 +475,7 @@ object DotcomponentsDataModel {
         sites <- commercial.prebidIndexSites
       } yield sites.toList).getOrElse(List()),
       article.metadata.commercial,
+      commercialConfig
     )
 
     val author = article.tags.contributors.map(_.name) match {
