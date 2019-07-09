@@ -540,7 +540,7 @@ const buildEpicCopy = (
         highlightedText: row.highlightedText
             ? row.highlightedText.replace(
                   /%%CURRENCY_SYMBOL%%/g,
-                  getLocalCurrencySymbol()
+                    getLocalCurrencySymbol(geolocation)
               )
             : undefined,
         footer: optionalSplitAndTrim(row.footer, '\n'),
@@ -604,7 +604,7 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                     // If testHasCountryName is true but a country name is not available for this user then
                     // they will be excluded from this test
                     const testHasCountryName = rows.some(row =>
-                        optionalStringToBoolean(row.testHasCountryName)
+                        optionalStringToBoolean(row.hasCountryName)
                     );
 
                     const geolocation = geolocationGetSync();
@@ -752,7 +752,7 @@ export const getEngagementBannerTestsFromGoogleDoc = (): Promise<
                     // If testHasCountryName is true but a country name is not available for this user then
                     // they will be excluded from this test
                     const testHasCountryName = rows.some(row =>
-                        optionalStringToBoolean(row.testHasCountryName)
+                        optionalStringToBoolean(row.hasCountryName)
                     );
 
                     const rowWithLocations = rows.find(
@@ -813,7 +813,7 @@ export const getEngagementBannerTestsFromGoogleDoc = (): Promise<
 
                             const ctaText = `<span class="engagement-banner__highlight"> ${row.ctaText.replace(
                                 /%%CURRENCY_SYMBOL%%/g,
-                                getLocalCurrencySymbol()
+                                getLocalCurrencySymbol(geolocation)
                             )}</span>`;
 
                             return {
