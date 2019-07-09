@@ -268,10 +268,11 @@ const makeEpicABTestVariant = (
         excludedSections: initVariant.excludedSections || [],
 
         canRun() {
-            const isValidCopy =
-                !copyHasVariables(this.copy.heading) &&
-                !this.copy.paragraphs.some(copyHasVariables) &&
-                !copyHasVariables(this.copy.highlightedText);
+            const copyIsValid = () =>
+                !this.copy ||
+                (!copyHasVariables(this.copy.heading) &&
+                    !this.copy.paragraphs.some(copyHasVariables) &&
+                    !copyHasVariables(this.copy.highlightedText));
 
             const checkMaxViews = (maxViews: MaxViews) => {
                 const {
@@ -311,12 +312,12 @@ const makeEpicABTestVariant = (
             );
 
             return (
-                isValidCopy &&
                 meetsMaxViewsConditions &&
                 matchesCountryGroups &&
                 matchesTagsOrSections &&
                 noExcludedTags &&
-                notExcludedSection
+                notExcludedSection &&
+                copyIsValid()
             );
         },
 
@@ -798,12 +799,12 @@ export const getEngagementBannerTestsFromGoogleDoc = (): Promise<
                                     hasTicker: false,
                                 },
                                 canRun: () => {
-                                    const copyIsValid =
+                                    const copyIsValid = () =>
                                         !copyHasVariables(leadSentence) &&
                                         !copyHasVariables(messageText) &&
                                         !copyHasVariables(ctaText);
 
-                                    return copyIsValid && canShowBannerSync();
+                                    return canShowBannerSync() && copyIsValid();
                                 },
                             };
                         }),
