@@ -48,7 +48,7 @@ export const countryName: EpicABTest = makeEpicABTest({
                         'Support The Guardian from as little as %%CURRENCY_SYMBOL%%1 – and it only takes a minute. Thank you.',
                 },
                 true,
-                geolocation,
+                geolocation
             ),
         },
     ],
