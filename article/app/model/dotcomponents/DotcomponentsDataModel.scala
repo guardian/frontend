@@ -17,7 +17,7 @@ import navigation.UrlHelpers._
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
 import views.html.fragments.affiliateLinksDisclaimer
-import views.support.{AffiliateLinksCleaner, CamelCase, GUDateTimeFormat, ImgSrc, Item300}
+import views.support.{AffiliateLinksCleaner, CamelCase, GUDateTimeFormat, ImgSrc, Item300, JavaScriptPage}
 import ai.x.play.json.implicits.optionWithNull
 import controllers.ArticlePage
 import org.joda.time.{DateTime, DateTimeZone}
@@ -235,7 +235,7 @@ object DotcomponentsDataModel {
 
   val VERSION = 2
 
-  def fromArticle(articlePage: PageWithStoryPackage, request: RequestHeader, blocks: APIBlocks): DotcomponentsDataModel = {
+  def fromArticle(articlePage: PageWithStoryPackage, request: RequestHeader, blocks: APIBlocks, context: model.ApplicationContext): DotcomponentsDataModel = {
 
     val article = articlePage.article
     val atoms: Iterable[Atom] = article.content.atoms.map(_.all).getOrElse(Seq())
@@ -464,7 +464,14 @@ object DotcomponentsDataModel {
       allTags
     )
 
-    val commercialConfig = CommercialConfiguration(false, false, false, false, false, false, false)
+    val commercialConfig = CommercialConfiguration(
+      JavaScriptPage.getMap(articlePage, Edition(request), false).getOrElse("hasShowcaseMainElement", JsBoolean(false)).as[Boolean],
+      JavaScriptPage.getMap(articlePage, Edition(request), false).getOrElse("isFront", JsBoolean(false)).as[Boolean],
+      JavaScriptPage.getMap(articlePage, Edition(request), false).getOrElse("isLiveBlog", JsBoolean(false)).as[Boolean],
+      JavaScriptPage.getMap(articlePage, Edition(request), false).getOrElse("isMinuteArticle", JsBoolean(false)).as[Boolean],
+      JavaScriptPage.getMap(articlePage, Edition(request), false).getOrElse("isPaidContent", JsBoolean(false)).as[Boolean],
+      context.isPreview,
+      JavaScriptPage.getMap(articlePage, Edition(request), false).getOrElse("isSensitive", JsBoolean(false)).as[Boolean])
 
     val commercial = Commercial(
       editionCommercialProperties =

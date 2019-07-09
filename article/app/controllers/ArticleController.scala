@@ -85,7 +85,7 @@ class ArticleController(
   }
 
   private def getGuuiJson(article: ArticlePage, blocks: Blocks)(implicit request: RequestHeader): String =
-    DotcomponentsDataModel.toJsonString(DotcomponentsDataModel.fromArticle(article, request, blocks))
+    DotcomponentsDataModel.toJsonString(DotcomponentsDataModel.fromArticle(article, request, blocks, context))
 
   private def render(path: String, article: ArticlePage, blocks: Blocks)(implicit request: RequestHeader): Future[Result] = {
     val tier = ArticlePicker.getTier(article)
@@ -94,9 +94,9 @@ class ArticleController(
       case JsonFormat if request.isGuui => Future.successful(common.renderJson(getGuuiJson(article, blocks), article).as("application/json"))
       case JsonFormat => Future.successful(common.renderJson(getJson(article), article))
       case EmailFormat => Future.successful(common.renderEmail(ArticleEmailHtmlPage.html(article), article))
-      case HtmlFormat if tier == RemoteRender => remoteRenderer.getArticle(ws, path, article, blocks)
+      case HtmlFormat if tier == RemoteRender => remoteRenderer.getArticle(ws, path, article, blocks, context)
       case HtmlFormat => Future.successful(common.renderHtml(ArticleHtmlPage.html(article), article))
-      case AmpFormat if isAmpSupported => remoteRenderer.getAMPArticle(ws, path, article, blocks)
+      case AmpFormat if isAmpSupported => remoteRenderer.getAMPArticle(ws, path, article, blocks, context)
       case AmpFormat => Future.successful(common.renderHtml(ArticleHtmlPage.html(article), article))
     }
   }

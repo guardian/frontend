@@ -11,7 +11,7 @@ import conf.Configuration
 import conf.switches.Switches.CircuitBreakerSwitch
 import model.Cached.RevalidatableResult
 import model.dotcomponents.DotcomponentsDataModel
-import model.{Cached, PageWithStoryPackage}
+import model.{Cached, PageWithStoryPackage, ApplicationContext}
 import play.api.libs.json._
 import play.api.libs.ws.WSClient
 import play.api.mvc.{RequestHeader, Result}
@@ -76,10 +76,11 @@ class RemoteRenderer {
     ws: WSClient,
     payload: String,
     page: PageWithStoryPackage,
-    blocks: Blocks
+    blocks: Blocks,
+    context: ApplicationContext
   )(implicit request: RequestHeader): Future[Result] = {
 
-    val dataModel: DotcomponentsDataModel = DotcomponentsDataModel.fromArticle(page, request, blocks)
+    val dataModel: DotcomponentsDataModel = DotcomponentsDataModel.fromArticle(page, request, blocks, context)
     val dataString: String = DotcomponentsDataModel.toJsonString(dataModel)
 
     validate(dataModel) match {
@@ -93,10 +94,11 @@ class RemoteRenderer {
     ws:WSClient,
     path: String,
     page: PageWithStoryPackage,
-    blocks: Blocks
+    blocks: Blocks,
+    context: ApplicationContext
   )(implicit request: RequestHeader): Future[Result] = {
 
-    val dataModel: DotcomponentsDataModel = DotcomponentsDataModel.fromArticle(page, request, blocks)
+    val dataModel: DotcomponentsDataModel = DotcomponentsDataModel.fromArticle(page, request, blocks, context)
     val dataString: String = DotcomponentsDataModel.toJsonString(dataModel)
 
     validate(dataModel) match {
