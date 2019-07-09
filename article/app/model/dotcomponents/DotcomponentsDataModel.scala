@@ -20,7 +20,7 @@ import org.joda.time.DateTime
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
 import views.html.fragments.affiliateLinksDisclaimer
-import views.support.{AffiliateLinksCleaner, CamelCase, GUDateTimeFormat, ImgSrc, Item300}
+import views.support.{AffiliateLinksCleaner, CamelCase, ContentLayout, GUDateTimeFormat, ImgSrc, Item300}
 import controllers.ArticlePage
 import org.joda.time.{DateTime}
 
@@ -204,7 +204,8 @@ case class DataModelV3(
   starRating: Option[Int],
   trailText: String,
   nav: Nav,
-  designType: String
+  designType: String,
+  showBottomSocialButtons: Boolean
 )
 
 object DataModelV3 {
@@ -566,7 +567,8 @@ object DotcomponentsDataModel {
       starRating = article.content.starRating,
       trailText = article.trail.fields.trailText.getOrElse(""),
       nav = nav,
-      designType = article.metadata.designType.map(_.toString).getOrElse("Article")
+      designType = article.metadata.designType.map(_.toString).getOrElse("Article"),
+      showBottomSocialButtons = ContentLayout.showBottomSocialButtons(article)
     )
   }
 }
