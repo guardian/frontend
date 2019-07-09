@@ -17,11 +17,10 @@ import navigation.UrlHelpers._
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
 import views.html.fragments.affiliateLinksDisclaimer
-import views.support.{AffiliateLinksCleaner, CamelCase, GUDateTimeFormat, ImgSrc, Item300, JavaScriptPage}
+import views.support.{AffiliateLinksCleaner, CamelCase, GUDateTimeFormat, ImgSrc, Item300}
 import ai.x.play.json.implicits.optionWithNull
 import controllers.ArticlePage
 import org.joda.time.{DateTime, DateTimeZone}
-
 
 // We have introduced our own set of objects for serializing data to the DotComponents API,
 // because we don't want people changing the core frontend models and as a side effect,
@@ -109,16 +108,6 @@ case class Content(
   trailText: String
 )
 
-case class CommercialConfiguration(
-  hasShowcaseMainElement: Boolean,
-  isFront: Boolean,
-  isLiveblog: Boolean,
-  isMinuteArticle: Boolean,
-  isPaidContent: Boolean,
-  isPreview: Boolean,
-  isSensitive: Boolean
-)
-
 case class Commercial(
   editionCommercialProperties: Map[String, EditionCommercialProperties],
   prebidIndexSites: List[PrebidIndexSite],
@@ -177,10 +166,6 @@ case class DotcomponentsDataModel(
 object Block {
   implicit val blockElementWrites: Writes[PageElement] = Json.writes[PageElement]
   implicit val writes = Json.writes[Block]
-}
-
-object CommercialConfiguration {
-  implicit val writes = Json.writes[CommercialConfiguration]
 }
 
 object Commercial {
@@ -464,14 +449,7 @@ object DotcomponentsDataModel {
       allTags
     )
 
-    val commercialConfig = CommercialConfiguration(
-      JavaScriptPage.getMap(articlePage, Edition(request), false).getOrElse("hasShowcaseMainElement", JsBoolean(false)).as[Boolean],
-      JavaScriptPage.getMap(articlePage, Edition(request), false).getOrElse("isFront", JsBoolean(false)).as[Boolean],
-      JavaScriptPage.getMap(articlePage, Edition(request), false).getOrElse("isLiveBlog", JsBoolean(false)).as[Boolean],
-      JavaScriptPage.getMap(articlePage, Edition(request), false).getOrElse("isMinuteArticle", JsBoolean(false)).as[Boolean],
-      JavaScriptPage.getMap(articlePage, Edition(request), false).getOrElse("isPaidContent", JsBoolean(false)).as[Boolean],
-      context.isPreview,
-      JavaScriptPage.getMap(articlePage, Edition(request), false).getOrElse("isSensitive", JsBoolean(false)).as[Boolean])
+    val commercialConfig = CommercialHelper.makeCommercialConfiguration(articlePage, request, context)
 
     val commercial = Commercial(
       editionCommercialProperties =
