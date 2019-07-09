@@ -55,7 +55,7 @@
 
     <!--[if IE 9]></video><![endif]-->
 
-    <img class="@RenderClasses(classes: _*)"
+    <img class="@RenderClasses(classes: _*) @picture.position.className"
         itemprop="contentUrl"
         alt="@imageAltText"
         src="@ImgSrc.getFallbackUrl(picture)" />

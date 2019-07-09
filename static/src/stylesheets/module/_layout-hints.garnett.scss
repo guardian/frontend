@@ -177,3 +177,13 @@ figure {
 
 
 }
+
+.position--tl { object-position: left    top;    }
+.position--tc { object-position: center  top;    }
+.position--tr { object-position: right   top;    }
+.position--cl { object-position: left    center; }
+.position--cc { object-position: center  center; }
+.position--cr { object-position: right   center; }
+.position--bl { object-position: left    bottom; }
+.position--bc { object-position: center  bottom; }
+.position--br { object-position: right   bottom; }

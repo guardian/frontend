@@ -2,9 +2,9 @@ package model
 
 import com.gu.contentapi.client.model.v1.AssetType
 import org.joda.time.Duration
-import com.gu.contentapi.client.model.v1.{AssetType, ElementType, Element => ApiElement}
+import com.gu.contentapi.client.model.v1.{AssetType, ElementType, Element => ApiElement, BlockElement => ApiBlockElement}
 import org.apache.commons.math3.fraction.Fraction
-import play.api.libs.json.{Json, Writes}
+import play.api.libs.json.{Json, Writes, JsString}
 
 object ElementProperties {
   def make(capiElement: ApiElement, index: Int): ElementProperties = {
@@ -49,14 +49,16 @@ sealed trait Element {
 
 object ImageMedia {
   def make(capiElement: ApiElement, properties: ElementProperties): ImageMedia = ImageMedia(
+    position = ObjectPosition.make(capiElement),
     allImages = capiElement.assets.filter(_.`type` == AssetType.Image).map(ImageAsset.make(_,properties.index)).sortBy(-_.width)
   )
   def make(crops: Seq[ImageAsset]): ImageMedia = ImageMedia(
+    ObjectPosition.default,
     allImages = crops
   )
   implicit val imageMediaWrites: Writes[ImageMedia] = Json.writes[ImageMedia]
 }
-final case class ImageMedia(allImages: Seq[ImageAsset]) {
+final case class ImageMedia(position: ObjectPosition, allImages: Seq[ImageAsset]) {
 
   lazy val imageCrops: Seq[ImageAsset] = allImages.filterNot(_.isMaster)
   lazy val masterImage: Option[ImageAsset] = allImages.find(_.isMaster)
@@ -78,6 +80,40 @@ final case class ImageMedia(allImages: Seq[ImageAsset]) {
       largestImage
     }
   }
+}
+
+sealed abstract class ObjectPosition extends Product with Serializable { self =>
+  def className: String = self match {
+    case ObjectPosition.TL => "position--tl"
+    case ObjectPosition.TC => "position--tc"
+    case ObjectPosition.TR => "position--tr"
+    case ObjectPosition.CL => "position--cl"
+    case ObjectPosition.CC => "position--cc"
+    case ObjectPosition.CR => "position--cr"
+    case ObjectPosition.BL => "position--bl"
+    case ObjectPosition.BC => "position--bc"
+    case ObjectPosition.BR => "position--br"
+  }
+}
+
+object ObjectPosition extends Serializable {
+  case object TL extends ObjectPosition
+  case object TC extends ObjectPosition
+  case object TR extends ObjectPosition
+  case object CL extends ObjectPosition
+  case object CC extends ObjectPosition
+  case object CR extends ObjectPosition
+  case object BL extends ObjectPosition
+  case object BC extends ObjectPosition
+  case object BR extends ObjectPosition
+
+  implicit val writes: Writes[ObjectPosition] = Writes[ObjectPosition](o => JsString(o.toString))
+
+  val default: ObjectPosition = CC
+
+  def make(capiElement: ApiElement): ObjectPosition = ???
+
+  def make(capiBlockElement: ApiBlockElement): ObjectPosition = ???
 }
 
 object VideoMedia {

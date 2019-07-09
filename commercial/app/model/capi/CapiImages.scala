@@ -12,7 +12,7 @@ object CapiImages {
   def buildImageDataFromUrl(imageUrl: String, noImages: Int = 1): ImageInfo = {
     val asset: Asset = Asset(AssetType.Image, Some("image/jpeg"), Some(imageUrl))
     val imageAsset: ImageAsset = ImageAsset.make(asset, 0)
-    val image: ImageMedia = ImageMedia(List(imageAsset))
+    val image: ImageMedia = ImageMedia.make(List(imageAsset))
     buildImageData(Some(image))
   }
 

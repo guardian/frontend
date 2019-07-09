@@ -30,8 +30,8 @@ object ContentUtils {
       val assets = elements.zipWithIndex flatMap {
         case (element, i) => ModelElement(element, i).images.allImages
       }
-      ImageMedia(assets)
-    } getOrElse ImageMedia(Nil)
+      ImageMedia.make(assets)
+    } getOrElse ImageMedia.make(Nil)
 
   def thumbnailUrl(item: Content): String =
     Item300.bestSrcFor(imageMedia(item)) getOrElse ""

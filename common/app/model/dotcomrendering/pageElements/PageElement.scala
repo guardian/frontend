@@ -4,7 +4,7 @@ import com.gu.contentapi.client.model.v1.ElementType.{Map => _, _}
 import com.gu.contentapi.client.model.v1.{ElementType, SponsorshipType, BlockElement => ApiBlockElement, Sponsorship => ApiSponsorship}
 import layout.ContentWidths.BodyMedia
 import model.content._
-import model.{AudioAsset, ImageAsset, ImageMedia, VideoAsset}
+import model.{AudioAsset, ImageAsset, ImageMedia, VideoAsset, ObjectPosition}
 import org.jsoup.Jsoup
 import play.api.libs.json._
 import views.support.cleaner.AmpSoundcloud
@@ -160,7 +160,7 @@ object PageElement {
         val imageSources: Seq[ImageSource] = BodyMedia.all.map {
           case (weighting, widths) =>
             val srcSet = widths.breakpoints.flatMap { b =>
-              ImgSrc.srcsetForBreakpoint(b, BodyMedia.inline.breakpoints, maybeImageMedia = Some(ImageMedia(signedAssets)))
+              ImgSrc.srcsetForBreakpoint(b, BodyMedia.inline.breakpoints, maybeImageMedia = Some(ImageMedia.make(signedAssets)))
             }
 
             // A few very old articles use non-https hosts, which won't render
@@ -169,7 +169,7 @@ object PageElement {
         }.toSeq
 
         List(ImageBlockElement(
-          ImageMedia(signedAssets),
+          ImageMedia(ObjectPosition.make(element), signedAssets),
           imageDataFor(element),
           element.imageTypeData.flatMap(_.displayCredit),
           Role(element.imageTypeData.flatMap(_.role)),
@@ -183,7 +183,7 @@ object PageElement {
         if (element.assets.nonEmpty) {
           List(GuVideoBlockElement(
             element.assets.map(VideoAsset.make),
-            ImageMedia(element.assets.filter(_.mimeType.exists(_.startsWith("image"))).zipWithIndex.map {
+            ImageMedia.make(element.assets.filter(_.mimeType.exists(_.startsWith("image"))).zipWithIndex.map {
               case (a, i) => ImageAsset.make(a, i)
             }),
             element.videoTypeData.flatMap(_.caption).getOrElse(""),

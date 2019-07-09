@@ -330,7 +330,7 @@ object Atoms extends common.Logging {
       }
     }
 
-    ImageMedia(imageAssets)
+    ImageMedia.make(imageAssets)
   }
 }
 
@@ -366,7 +366,7 @@ object MediaAtom extends common.Logging {
   }
 
   def imageMediaMake(capiImage: AtomApiImage, caption: String): ImageMedia = {
-    ImageMedia(capiImage.assets.map(mediaImageAssetMake(_, caption)))
+    ImageMedia.make(capiImage.assets.map(mediaImageAssetMake(_, caption)))
   }
 
   def mediaAssetMake(mediaAsset: AtomApiMediaAsset): MediaAsset = {
@@ -413,7 +413,7 @@ object Quiz extends common.Logging {
           mimeType = plainAsset.mimeType,
           url = plainAsset.secureUrl.orElse(plainAsset.url))
         }
-        if (assets.nonEmpty) Some(QuizImageMedia(ImageMedia(allImages = assets))) else None
+        if (assets.nonEmpty) Some(QuizImageMedia(ImageMedia.make(assets))) else None
       case error: JsError =>
         log.warn("Quiz atoms: asset json read errors: " + JsError.toFlatForm(error).toString())
         None

@@ -185,6 +185,23 @@ object PressedContentFormat {
     }
   }
 
+  implicit val objectPositionFormat: Format[ObjectPosition] = new Format[ObjectPosition] {
+    def reads(json: JsValue): JsResult[ObjectPosition] = json match {
+      case JsString("TL") => JsSuccess(ObjectPosition.TL)
+      case JsString("TC") => JsSuccess(ObjectPosition.TC)
+      case JsString("TR") => JsSuccess(ObjectPosition.TR)
+      case JsString("CL") => JsSuccess(ObjectPosition.CL)
+      case JsString("CC") => JsSuccess(ObjectPosition.CC)
+      case JsString("CR") => JsSuccess(ObjectPosition.CR)
+      case JsString("BL") => JsSuccess(ObjectPosition.BL)
+      case JsString("BC") => JsSuccess(ObjectPosition.BC)
+      case JsString("BR") => JsSuccess(ObjectPosition.BR)
+      case _ => JsError(s"Unknow object position: '$json'")
+    }
+
+    def writes(o: ObjectPosition): JsValue = JsString(o.toString)
+  }
+
   implicit val pillarFormat = Json.format[Pillar]
   implicit val dateToTimestampWrites = play.api.libs.json.JodaWrites.JodaDateTimeNumberWrites
   implicit val paginationFormat = Json.format[Pagination]

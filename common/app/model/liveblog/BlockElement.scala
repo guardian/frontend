@@ -84,7 +84,7 @@ object BlockElement {
       ))
 
       case Image => Some(ImageBlockElement(
-        ImageMedia(element.assets.zipWithIndex.map { case (a, i) => ImageAsset.make(a, i) }),
+        ImageMedia.make(element.assets.zipWithIndex.map { case (a, i) => ImageAsset.make(a, i) }),
         imageDataFor(element),
         element.imageTypeData.flatMap(_.displayCredit)
       ))
@@ -95,7 +95,7 @@ object BlockElement {
         if (element.assets.nonEmpty) {
           Some(GuVideoBlockElement(
             element.assets.map(VideoAsset.make),
-            ImageMedia(element.assets.filter(_.mimeType.exists(_.startsWith("image"))).zipWithIndex.map {
+            ImageMedia.make(element.assets.filter(_.mimeType.exists(_.startsWith("image"))).zipWithIndex.map {
               case (a, i) => ImageAsset.make(a, i)
             }),
             videoDataFor(element))
