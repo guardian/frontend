@@ -216,7 +216,6 @@ const countryNameIsOk = (
     geolocation: ?string
 ): boolean => (testHasCountryName ? !!getCountryName(geolocation) : true);
 
-
 const makeEpicABTestVariant = (
     initVariant: InitEpicABTestVariant,
     template: EpicTemplate,
