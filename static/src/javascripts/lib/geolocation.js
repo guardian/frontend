@@ -50,7 +50,7 @@ const init = (): void => {
 const editionToGeolocation = (editionKey: string = 'UK'): string =>
     editionToGeolocationMap[editionKey];
 
-const getSync = (): ?string => {
+const getSync = (): string => {
     const geolocationFromStorage = getFromStorage();
     return (
         geolocationFromStorage ||
@@ -469,6 +469,9 @@ const countryNames = {
     PA: 'Panama',
 };
 
+const getCountryName = (geolocation: ?string): ?string =>
+    geolocation ? countryNames[geolocation] : undefined;
+
 export {
     get,
     countryCodeToCountryGroupId,
@@ -479,5 +482,5 @@ export {
     init,
     setGeolocation,
     extendedCurrencySymbol,
-    countryNames,
+    getCountryName,
 };

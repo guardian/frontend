@@ -21,7 +21,7 @@ import {
     getLocalCurrencySymbol,
     getSync as geolocationGetSync,
     countryCodeToCountryGroupId,
-    countryNames,
+    getCountryName,
 } from 'lib/geolocation';
 import {
     splitAndTrim,
@@ -197,9 +197,9 @@ const userMatchesCountryGroups = (
     countryGroups: string[],
     geolocation: ?string
 ) => {
-    const userCountryGroupId = countryCodeToCountryGroupId(
-        geolocation
-    ).toUpperCase();
+    const userCountryGroupId = geolocation
+        ? countryCodeToCountryGroupId(geolocation).toUpperCase()
+        : undefined;
     return countryGroups.some(
         countryGroup => userCountryGroupId === countryGroup.toUpperCase()
     );
@@ -476,7 +476,7 @@ const makeEpicABTest = ({
         geolocation,
         canRun() {
             const countryNameIsOk =
-                !testHasCountryName || countryNames[geolocation];
+                !testHasCountryName || !!getCountryName(geolocation);
             return canRun() && countryNameIsOk && shouldShowEpic(this);
         },
         componentType: 'ACQUISITIONS_EPIC',
@@ -523,7 +523,7 @@ const buildEpicCopy = (
     );
 
     const countryName: ?string = testHasCountryName
-        ? countryNames[geolocation]
+        ? getCountryName(geolocation)
         : undefined;
 
     return {
@@ -547,9 +547,13 @@ const buildEpicCopy = (
     };
 };
 
-const buildBannerCopy = (text: string, testHasCountryName: boolean): string => {
+const buildBannerCopy = (
+    text: string,
+    testHasCountryName: boolean,
+    geolocation: ?string
+): string => {
     const countryName: ?string = testHasCountryName
-        ? countryNames[geolocationGetSync()]
+        ? getCountryName(geolocation)
         : undefined;
 
     return countryName ? replaceCountryName(text, countryName) : text;
@@ -781,7 +785,7 @@ export const getEngagementBannerTestsFromGoogleDoc = (): Promise<
                         canRun: () => {
                             const countryNameOk =
                                 !testHasCountryName ||
-                                countryNames[geolocation];
+                                !!getCountryName(geolocation);
                             const matchesCountryGroups =
                                 countryGroups.length === 0 ||
                                 userMatchesCountryGroups(
@@ -796,13 +800,15 @@ export const getEngagementBannerTestsFromGoogleDoc = (): Promise<
                             const leadSentence = row.leadSentence
                                 ? buildBannerCopy(
                                       row.leadSentence.trim(),
-                                      testHasCountryName
+                                      testHasCountryName,
+                                      geolocation
                                   )
                                 : undefined;
 
                             const messageText = buildBannerCopy(
                                 row.messageText.trim(),
-                                testHasCountryName
+                                testHasCountryName,
+                                geolocation
                             );
 
                             const ctaText = `<span class="engagement-banner__highlight"> ${row.ctaText.replace(
