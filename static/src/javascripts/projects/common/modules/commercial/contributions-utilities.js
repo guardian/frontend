@@ -205,6 +205,9 @@ const userMatchesCountryGroups = (countryGroups: string[]) => {
 const pageMatchesSections = (sectionIds: string[]): boolean =>
     sectionIds.some(section => config.get('page.section') === section);
 
+const copyHasVariables = (text: ?string): boolean =>
+    !!text && text.includes('%%');
+
 const makeEpicABTestVariant = (
     initVariant: InitEpicABTestVariant,
     template: EpicTemplate,
@@ -265,6 +268,12 @@ const makeEpicABTestVariant = (
         excludedSections: initVariant.excludedSections || [],
 
         canRun() {
+            const copyIsValid = () =>
+                !this.copy ||
+                (!copyHasVariables(this.copy.heading) &&
+                    !this.copy.paragraphs.some(copyHasVariables) &&
+                    !copyHasVariables(this.copy.highlightedText));
+
             const checkMaxViews = (maxViews: MaxViews) => {
                 const {
                     count: maxViewCount,
@@ -307,7 +316,8 @@ const makeEpicABTestVariant = (
                 matchesCountryGroups &&
                 matchesTagsOrSections &&
                 noExcludedTags &&
-                notExcludedSection
+                notExcludedSection &&
+                copyIsValid()
             );
         },
 
@@ -757,32 +767,47 @@ export const getEngagementBannerTestsFromGoogleDoc = (): Promise<
                             return countryNameOk && matchesCountryGroups;
                         },
 
-                        variants: rows.map(row => ({
-                            id: row.name.trim().toLowerCase(),
-                            products: [],
-                            test: () => {},
+                        variants: rows.map(row => {
+                            const leadSentence = row.leadSentence
+                                ? buildBannerCopy(
+                                      row.leadSentence.trim(),
+                                      hasCountryName
+                                  )
+                                : undefined;
 
-                            engagementBannerParams: {
-                                leadSentence: row.leadSentence
-                                    ? buildBannerCopy(
-                                          row.leadSentence.trim(),
-                                          hasCountryName
-                                      )
-                                    : undefined,
-                                messageText: buildBannerCopy(
-                                    row.messageText.trim(),
-                                    hasCountryName
-                                ),
-                                ctaText: `<span class="engagement-banner__highlight"> ${row.ctaText.replace(
-                                    /%%CURRENCY_SYMBOL%%/g,
-                                    getLocalCurrencySymbol()
-                                )}</span>`,
-                                buttonCaption: row.buttonCaption.trim(),
-                                linkUrl: row.linkUrl.trim(),
-                                hasTicker: false,
-                            },
-                            canRun: () => canShowBannerSync(),
-                        })),
+                            const messageText = buildBannerCopy(
+                                row.messageText.trim(),
+                                hasCountryName
+                            );
+
+                            const ctaText = `<span class="engagement-banner__highlight"> ${row.ctaText.replace(
+                                /%%CURRENCY_SYMBOL%%/g,
+                                getLocalCurrencySymbol()
+                            )}</span>`;
+
+                            return {
+                                id: row.name.trim().toLowerCase(),
+                                products: [],
+                                test: () => {},
+
+                                engagementBannerParams: {
+                                    leadSentence,
+                                    messageText,
+                                    ctaText,
+                                    buttonCaption: row.buttonCaption.trim(),
+                                    linkUrl: row.linkUrl.trim(),
+                                    hasTicker: false,
+                                },
+                                canRun: () => {
+                                    const copyIsValid = () =>
+                                        !copyHasVariables(leadSentence) &&
+                                        !copyHasVariables(messageText) &&
+                                        !copyHasVariables(ctaText);
+
+                                    return canShowBannerSync() && copyIsValid();
+                                },
+                            };
+                        }),
                     };
                 });
         })
