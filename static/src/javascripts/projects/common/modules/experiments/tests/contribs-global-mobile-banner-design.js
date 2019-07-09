@@ -3,6 +3,7 @@
 import { isBreakpoint } from 'lib/detect';
 import { acquisitionsBannerControlTemplate } from 'common/modules/commercial/templates/acquisitions-banner-control';
 import { acquisitionsBannerMobileDesignTestTemplate } from 'common/modules/commercial/templates/acquisitions-banner-mobile-design-test';
+import {getSync as geolocationGetSync} from "lib/geolocation";
 
 const mobileHeader: string = `We chose a different approach.<br/>Will you support it?`;
 const mobileBody: string = `Unlike many news organisations, we made a choice to keep all of our independent, investigative reporting free and available for everyone. We believe that each of us, around the world, deserves access to accurate information with integrity at its heart. At a time when factual reporting is critical, support from our readers is essential in safeguarding The Guardian’s editorial independence. This is our model for open, independent journalism.`;
@@ -25,6 +26,7 @@ export const contributionsGlobalMobileBannerDesign: AcquisitionsABTest = {
         }),
     showForSensitive: true,
     componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
+    geolocation: geolocationGetSync(),
     variants: [
         {
             id: 'control',

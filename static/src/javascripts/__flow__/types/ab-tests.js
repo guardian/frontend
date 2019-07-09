@@ -53,7 +53,6 @@ declare type ABTest = {
     variants: $ReadOnlyArray<Variant>,
     canRun: () => boolean,
     notInTest?: () => void,
-    geolocation: ?string,
 };
 
 declare type Runnable<T: ABTest> = T & {
@@ -63,6 +62,7 @@ declare type Runnable<T: ABTest> = T & {
 declare type AcquisitionsABTest = ABTest & {
     campaignId: string,
     componentType: OphanComponentType,
+    geolocation: ?string,
 };
 
 declare type MaxViews = {
