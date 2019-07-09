@@ -57,7 +57,7 @@ class LiveBlogController(
             (page, request.getRequestFormat) match {
               case (minute: MinutePage, HtmlFormat) => Future.successful(common.renderHtml(MinuteHtmlPage.html(minute), minute))
               case (blog: LiveBlogPage, HtmlFormat) => Future.successful(common.renderHtml(LiveBlogHtmlPage.html(blog), blog))
-              case (blog: LiveBlogPage, AmpFormat) if isAmpSupported => remoteRenderer.getAMPArticle(ws, path, page, blocks, context)
+              case (blog: LiveBlogPage, AmpFormat) if isAmpSupported => remoteRenderer.getAMPArticle(ws, path, page, blocks, ApplicationContext.contextCommercialConfigurationFragmentForDotcomRendering(context))
               case (blog: LiveBlogPage, AmpFormat) => Future.successful(common.renderHtml(LiveBlogHtmlPage.html(blog), blog))
               case _ => Future.successful(NotFound)
             }
@@ -153,7 +153,7 @@ class LiveBlogController(
     blog: LiveBlogPage,
     blocks: Blocks
   )(implicit request: RequestHeader): Result = {
-    val model = DotcomponentsDataModel.fromArticle(blog, request, blocks, context)
+    val model = DotcomponentsDataModel.fromArticle(blog, request, blocks, ApplicationContext.contextCommercialConfigurationFragmentForDotcomRendering(context))
     val json = DotcomponentsDataModel.toJsonString(model)
 
     common.renderJson(json, blog).as("application/json")

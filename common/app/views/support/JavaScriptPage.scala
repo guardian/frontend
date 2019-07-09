@@ -12,7 +12,7 @@ import play.api.libs.json._
 import play.api.mvc.RequestHeader
 import model.PageWithStoryPackage
 
-case class dcrJavaScriptPageConfigurationFragment(
+case class DCRJavaScriptPageCommercialConfigurationFragment(
   hasShowcaseMainElement: Boolean,
   isFront: Boolean,
   isLiveblog: Boolean,
@@ -96,8 +96,8 @@ object JavaScriptPage {
     )
   }
 
-  def commercialConfigurationFragmentForDotcomRendering(articlePage: PageWithStoryPackage, request: RequestHeader): dcrJavaScriptPageConfigurationFragment = {
-    dcrJavaScriptPageConfigurationFragment(
+  def javascriptPageCommercialConfigurationFragmentForDotcomRendering(articlePage: PageWithStoryPackage, request: RequestHeader): DCRJavaScriptPageCommercialConfigurationFragment = {
+    DCRJavaScriptPageCommercialConfigurationFragment(
       getMap(articlePage, Edition(request), false).getOrElse("hasShowcaseMainElement", JsBoolean(false)).as[Boolean],
       getMap(articlePage, Edition(request), false).getOrElse("isFront", JsBoolean(false)).as[Boolean],
       getMap(articlePage, Edition(request), false).getOrElse("isLiveBlog", JsBoolean(false)).as[Boolean],

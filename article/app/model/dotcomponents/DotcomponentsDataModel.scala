@@ -10,14 +10,14 @@ import conf.switches.Switches
 import conf.{Configuration, Static}
 import model.content.Atom
 import model.dotcomrendering.pageElements.{DisclaimerBlockElement, PageElement}
-import model.{Article, Canonical, LiveBlogPage, PageWithStoryPackage, SubMetaLinks}
+import model.{Article, Canonical, DCRContextCommercialConfigurationFragment, LiveBlogPage, PageWithStoryPackage, SubMetaLinks}
 import navigation.NavMenu
 import navigation.ReaderRevenueSite.{Support, SupportContribute, SupportSubscribe}
 import navigation.UrlHelpers._
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
 import views.html.fragments.affiliateLinksDisclaimer
-import views.support.{AffiliateLinksCleaner, CamelCase, GUDateTimeFormat, ImgSrc, Item300}
+import views.support.{AffiliateLinksCleaner, CamelCase, GUDateTimeFormat, ImgSrc, Item300, JavaScriptPage}
 import ai.x.play.json.implicits.optionWithNull
 import controllers.ArticlePage
 import org.joda.time.{DateTime, DateTimeZone}
@@ -220,7 +220,7 @@ object DotcomponentsDataModel {
 
   val VERSION = 2
 
-  def fromArticle(articlePage: PageWithStoryPackage, request: RequestHeader, blocks: APIBlocks, context: model.ApplicationContext): DotcomponentsDataModel = {
+  def fromArticle(articlePage: PageWithStoryPackage, request: RequestHeader, blocks: APIBlocks, contextCommercialConfig: DCRContextCommercialConfigurationFragment): DotcomponentsDataModel = {
 
     val article = articlePage.article
     val atoms: Iterable[Atom] = article.content.atoms.map(_.all).getOrElse(Seq())
@@ -449,7 +449,7 @@ object DotcomponentsDataModel {
       allTags
     )
 
-    val commercialConfig = DotcomponentsCommercialHelper.makeCommercialConfiguration(articlePage, request, context)
+    val commercialConfig = DotcomponentsCommercialHelper.makeCommercialConfiguration(JavaScriptPage.javascriptPageCommercialConfigurationFragmentForDotcomRendering(articlePage, request), contextCommercialConfig)
 
     val commercial = Commercial(
       editionCommercialProperties =

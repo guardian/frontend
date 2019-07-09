@@ -1,9 +1,9 @@
 package model.dotcomponents
 
-import model.PageWithStoryPackage
+import model.{PageWithStoryPackage, DCRContextCommercialConfigurationFragment}
 import play.api.libs.json.Json
 import play.api.mvc.RequestHeader
-import views.support.JavaScriptPage
+import views.support.{JavaScriptPage, DCRJavaScriptPageCommercialConfigurationFragment}
 
 case class CommercialConfiguration(
   hasShowcaseMainElement: Boolean,
@@ -21,18 +21,15 @@ object CommercialConfiguration {
 
 object DotcomponentsCommercialHelper {
 
-
-
-  def makeCommercialConfiguration(articlePage: PageWithStoryPackage, request: RequestHeader, context: model.ApplicationContext): CommercialConfiguration = {
-    val dcrJavaScriptPageConfigurationFragment = JavaScriptPage.commercialConfigurationFragmentForDotcomRendering(articlePage, request)
+  def makeCommercialConfiguration(javaScriptPageConfigurationFragment: DCRJavaScriptPageCommercialConfigurationFragment, contextConfigurationFragment: DCRContextCommercialConfigurationFragment): CommercialConfiguration = {
     CommercialConfiguration(
-      dcrJavaScriptPageConfigurationFragment.hasShowcaseMainElement,
-      dcrJavaScriptPageConfigurationFragment.isFront,
-      dcrJavaScriptPageConfigurationFragment.isLiveblog,
-      dcrJavaScriptPageConfigurationFragment.isMinuteArticle,
-      dcrJavaScriptPageConfigurationFragment.isPaidContent,
-      context.isPreview,
-      dcrJavaScriptPageConfigurationFragment.isSensitive
+      javaScriptPageConfigurationFragment.hasShowcaseMainElement,
+      javaScriptPageConfigurationFragment.isFront,
+      javaScriptPageConfigurationFragment.isLiveblog,
+      javaScriptPageConfigurationFragment.isMinuteArticle,
+      javaScriptPageConfigurationFragment.isPaidContent,
+      contextConfigurationFragment.isPreview,
+      javaScriptPageConfigurationFragment.isSensitive
     )
   }
 }

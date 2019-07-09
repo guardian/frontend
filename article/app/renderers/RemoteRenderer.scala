@@ -22,6 +22,8 @@ import scala.concurrent.Future
 import scala.concurrent.duration._
 import scala.io.Source
 
+import model.DCRContextCommercialConfigurationFragment
+
 class RemoteRenderer {
 
   private[this] val SCHEMA = "schema/dotcomponentsDataModelV2.jsonschema"
@@ -77,10 +79,10 @@ class RemoteRenderer {
     payload: String,
     page: PageWithStoryPackage,
     blocks: Blocks,
-    context: ApplicationContext
+    contextConfigFragment: DCRContextCommercialConfigurationFragment
   )(implicit request: RequestHeader): Future[Result] = {
 
-    val dataModel: DotcomponentsDataModel = DotcomponentsDataModel.fromArticle(page, request, blocks, context)
+    val dataModel: DotcomponentsDataModel = DotcomponentsDataModel.fromArticle(page, request, blocks, contextConfigFragment)
     val dataString: String = DotcomponentsDataModel.toJsonString(dataModel)
 
     validate(dataModel) match {
@@ -95,10 +97,10 @@ class RemoteRenderer {
     path: String,
     page: PageWithStoryPackage,
     blocks: Blocks,
-    context: ApplicationContext
+    contextConfigFragment: DCRContextCommercialConfigurationFragment
   )(implicit request: RequestHeader): Future[Result] = {
 
-    val dataModel: DotcomponentsDataModel = DotcomponentsDataModel.fromArticle(page, request, blocks, context)
+    val dataModel: DotcomponentsDataModel = DotcomponentsDataModel.fromArticle(page, request, blocks, contextConfigFragment)
     val dataString: String = DotcomponentsDataModel.toJsonString(dataModel)
 
     validate(dataModel) match {
