@@ -53,6 +53,7 @@ declare type ABTest = {
     variants: $ReadOnlyArray<Variant>,
     canRun: () => boolean,
     notInTest?: () => void,
+    geolocation?: ?string,
 };
 
 declare type Runnable<T: ABTest> = T & {
@@ -128,7 +129,8 @@ declare type InitEpicABTest = {
     pageCheck?: (page: Object) => boolean,
     template?: EpicTemplate,
     deploymentRules?: DeploymentRules,
-    hasCountryName?: boolean,
+    testHasCountryName?: boolean,
+    geolocation?: ?string,
 }
 
 declare type Interaction = {

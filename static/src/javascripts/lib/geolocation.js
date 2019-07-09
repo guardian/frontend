@@ -50,7 +50,7 @@ const init = (): void => {
 const editionToGeolocation = (editionKey: string = 'UK'): string =>
     editionToGeolocationMap[editionKey];
 
-const getSync = (): string => {
+const getSync = (): ?string => {
     const geolocationFromStorage = getFromStorage();
     return (
         geolocationFromStorage ||

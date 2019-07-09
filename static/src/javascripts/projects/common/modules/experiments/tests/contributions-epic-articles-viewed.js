@@ -55,6 +55,8 @@ export const articlesViewed: EpicABTest = makeEpicABTest({
     audience: 1,
     audienceOffset: 0,
 
+    geolocation,
+
     canRun: () =>
         articleViewCount >= minArticleViews && countryNames[geolocation],
 
@@ -65,7 +67,8 @@ export const articlesViewed: EpicABTest = makeEpicABTest({
             products: [],
             copy: buildEpicCopy(
                 isUSUK ? USUKControlCopy : ROWControlCopy,
-                !isUSUK
+                !isUSUK,
+                geolocation
             ),
         },
         {
@@ -82,7 +85,8 @@ export const articlesViewed: EpicABTest = makeEpicABTest({
                         'We need your support to keep delivering quality journalism, to maintain our openness and to protect our precious independence. Every reader contribution, big or small, is so valuable. \n',
                     highlightedText,
                 },
-                false
+                false,
+                geolocation
             ),
         },
     ],

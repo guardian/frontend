@@ -6,6 +6,8 @@ import {
 } from 'common/modules/commercial/contributions-utilities';
 import { countryNames, getSync as geolocationGetSync } from 'lib/geolocation';
 
+const geolocation = geolocationGetSync();
+
 export const countryName: EpicABTest = makeEpicABTest({
     id: 'ContributionsEpicCountryName',
     campaignId: 'epic_country_name',
@@ -22,14 +24,12 @@ export const countryName: EpicABTest = makeEpicABTest({
     audience: 1,
     audienceOffset: 0,
 
-    canRun: () => {
-        const geolocation = geolocationGetSync();
-        return (
-            geolocation !== 'US' &&
-            geolocation !== 'GB' &&
-            countryNames[geolocation]
-        );
-    },
+    geolocation,
+
+    canRun: () =>
+        geolocation !== 'US' &&
+        geolocation !== 'GB' &&
+        countryNames[geolocation],
 
     variants: [
         {
