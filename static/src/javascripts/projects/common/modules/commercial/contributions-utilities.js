@@ -540,7 +540,7 @@ const buildEpicCopy = (
         highlightedText: row.highlightedText
             ? row.highlightedText.replace(
                   /%%CURRENCY_SYMBOL%%/g,
-                    getLocalCurrencySymbol(geolocation)
+                  getLocalCurrencySymbol(geolocation)
               )
             : undefined,
         footer: optionalSplitAndTrim(row.footer, '\n'),

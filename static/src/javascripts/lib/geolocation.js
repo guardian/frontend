@@ -408,11 +408,14 @@ const extendedCurrencySymbol = {
 const defaultCurrencySymbol = '£';
 
 const getLocalCurrencySymbolSync = (): string =>
-    extendedCurrencySymbol[countryCodeToCountryGroupId(getSync())] || defaultCurrencySymbol;
+    extendedCurrencySymbol[countryCodeToCountryGroupId(getSync())] ||
+    defaultCurrencySymbol;
 
-const getLocalCurrencySymbol = (geolocation: ?string): string => {
-    return geolocation ? extendedCurrencySymbol[countryCodeToCountryGroupId(geolocation)] || defaultCurrencySymbol : defaultCurrencySymbol;
-};
+const getLocalCurrencySymbol = (geolocation: ?string): string =>
+    geolocation
+        ? extendedCurrencySymbol[countryCodeToCountryGroupId(geolocation)] ||
+          defaultCurrencySymbol
+        : defaultCurrencySymbol;
 
 // A limited set of country names for the test to add country name in the epic copy
 const countryNames = {
