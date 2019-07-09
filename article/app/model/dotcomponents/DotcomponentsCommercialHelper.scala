@@ -19,7 +19,10 @@ object CommercialConfiguration {
   implicit val writes = Json.writes[CommercialConfiguration]
 }
 
-object CommercialHelper {
+object DotcomponentsCommercialHelper {
+
+
+
   def makeCommercialConfiguration(articlePage: PageWithStoryPackage, request: RequestHeader, context: model.ApplicationContext): CommercialConfiguration = {
     val dcrJavaScriptPageConfigurationFragment = JavaScriptPage.commercialConfigurationFragmentForDotcomRendering(articlePage, request)
     CommercialConfiguration(

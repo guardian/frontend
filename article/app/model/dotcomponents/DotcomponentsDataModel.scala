@@ -449,7 +449,7 @@ object DotcomponentsDataModel {
       allTags
     )
 
-    val commercialConfig = CommercialHelper.makeCommercialConfiguration(articlePage, request, context)
+    val commercialConfig = DotcomponentsCommercialHelper.makeCommercialConfiguration(articlePage, request, context)
 
     val commercial = Commercial(
       editionCommercialProperties =
