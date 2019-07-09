@@ -3,10 +3,13 @@ import {
     makeEpicABTest,
     defaultButtonTemplate,
 } from 'common/modules/commercial/contributions-utilities';
+import {getSync as geolocationGetSync} from "lib/geolocation";
 
 export const askFourEarning: EpicABTest = makeEpicABTest({
     id: 'ContributionsEpicAskFourEarning',
     campaignId: 'kr1_epic_ask_four_earning',
+
+    geolocation: geolocationGetSync(),
 
     start: '2017-01-24',
     expiry: '2020-01-27',
