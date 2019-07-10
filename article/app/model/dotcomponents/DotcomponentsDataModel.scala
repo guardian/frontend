@@ -11,7 +11,7 @@ import conf.{Configuration, Static}
 import controllers.ArticlePage
 import model.content.Atom
 import model.dotcomrendering.pageElements.{DisclaimerBlockElement, PageElement}
-import model.{Canonical, LiveBlogPage, PageWithStoryPackage}
+import model.{Canonical, LiveBlogPage, PageWithStoryPackage, Pillar}
 import navigation.ReaderRevenueSite.{Support, SupportContribute, SupportSubscribe}
 import navigation.UrlHelpers._
 import navigation.{FlatSubnav, NavLink, NavMenu, ParentSubnav, Subnav}
@@ -354,6 +354,14 @@ object DotcomponentsDataModel {
       relevantBlocks.filter(block => ids(block.id))
     }
 
+    def findPillar(pillar: Pillar, tags: List[Tag]): String = {
+      val isPaidContent = tags.exists(tag => tag.`type` == "Tone" && tag.id == "tone/advertisement-features")
+
+      if (isPaidContent) "labs"
+      else if (pillar.toString.toLowerCase == "arts") "culture"
+      else pillar.toString.toLowerCase()
+    }
+
     val bodyBlocksRaw = articlePage match {
       case lb: LiveBlogPage => blocksForLiveblogPage(lb, blocks)
       case article => blocks.body.getOrElse(Nil)
@@ -528,7 +536,7 @@ object DotcomponentsDataModel {
       editionId = Edition(request).id,
       pageId = article.metadata.id,
       tags = allTags,
-      pillar = article.metadata.pillar.map(_.toString.toLowerCase).getOrElse("news"),
+      pillar = article.metadata.pillar.map(pillar => findPillar(pillar, allTags)).getOrElse("news"),
       isImmersive = article.isImmersive,
       sectionLabel = article.content.sectionLabelName,
       sectionUrl = article.content.sectionLabelLink,
