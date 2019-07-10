@@ -1,9 +1,10 @@
 package model.dotcomponents
 
-import model.{PageWithStoryPackage, DCRContextCommercialConfigurationFragment}
-import play.api.libs.json.Json
+import common.Edition
+import model.{ApplicationContext, PageWithStoryPackage}
+import play.api.libs.json.{JsBoolean, Json}
 import play.api.mvc.RequestHeader
-import views.support.{JavaScriptPage, DCRJavaScriptPageCommercialConfigurationFragment}
+import views.support.JavaScriptPage.getMap
 
 case class CommercialConfiguration(
   hasShowcaseMainElement: Boolean,
@@ -17,19 +18,16 @@ case class CommercialConfiguration(
 
 object CommercialConfiguration {
   implicit val writes = Json.writes[CommercialConfiguration]
-}
 
-object DotcomponentsCommercialHelper {
-
-  def makeCommercialConfiguration(javaScriptPageConfigurationFragment: DCRJavaScriptPageCommercialConfigurationFragment, contextConfigurationFragment: DCRContextCommercialConfigurationFragment): CommercialConfiguration = {
+  def apply(articlePage: PageWithStoryPackage, request: RequestHeader, context: ApplicationContext): CommercialConfiguration = {
     CommercialConfiguration(
-      javaScriptPageConfigurationFragment.hasShowcaseMainElement,
-      javaScriptPageConfigurationFragment.isFront,
-      javaScriptPageConfigurationFragment.isLiveblog,
-      javaScriptPageConfigurationFragment.isMinuteArticle,
-      javaScriptPageConfigurationFragment.isPaidContent,
-      contextConfigurationFragment.isPreview,
-      javaScriptPageConfigurationFragment.isSensitive
+      getMap(articlePage, Edition(request), false).getOrElse("hasShowcaseMainElement", JsBoolean(false)).as[Boolean],
+      getMap(articlePage, Edition(request), false).getOrElse("isFront", JsBoolean(false)).as[Boolean],
+      getMap(articlePage, Edition(request), false).getOrElse("isLiveBlog", JsBoolean(false)).as[Boolean],
+      getMap(articlePage, Edition(request), false).getOrElse("isMinuteArticle", JsBoolean(false)).as[Boolean],
+      getMap(articlePage, Edition(request), false).getOrElse("isPaidContent", JsBoolean(false)).as[Boolean],
+      context.isPreview,
+      getMap(articlePage, Edition(request), false).getOrElse("isSensitive", JsBoolean(false)).as[Boolean]
     )
   }
 }

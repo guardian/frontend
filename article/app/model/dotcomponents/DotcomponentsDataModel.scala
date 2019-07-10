@@ -10,17 +10,16 @@ import conf.switches.Switches
 import conf.{Configuration, Static}
 import model.content.Atom
 import model.dotcomrendering.pageElements.{DisclaimerBlockElement, PageElement}
-import model.{Article, Canonical, DCRContextCommercialConfigurationFragment, LiveBlogPage, PageWithStoryPackage, SubMetaLinks}
+import model.{Canonical, LiveBlogPage, PageWithStoryPackage, SubMetaLinks}
 import navigation.NavMenu
 import navigation.ReaderRevenueSite.{Support, SupportContribute, SupportSubscribe}
 import navigation.UrlHelpers._
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
 import views.html.fragments.affiliateLinksDisclaimer
-import views.support.{AffiliateLinksCleaner, CamelCase, GUDateTimeFormat, ImgSrc, Item300, JavaScriptPage}
-import ai.x.play.json.implicits.optionWithNull
+import views.support.{AffiliateLinksCleaner, CamelCase, GUDateTimeFormat, ImgSrc, Item300}
 import controllers.ArticlePage
-import org.joda.time.{DateTime, DateTimeZone}
+import org.joda.time.{DateTime}
 
 // We have introduced our own set of objects for serializing data to the DotComponents API,
 // because we don't want people changing the core frontend models and as a side effect,
@@ -220,7 +219,7 @@ object DotcomponentsDataModel {
 
   val VERSION = 2
 
-  def fromArticle(articlePage: PageWithStoryPackage, request: RequestHeader, blocks: APIBlocks, contextCommercialConfig: DCRContextCommercialConfigurationFragment): DotcomponentsDataModel = {
+  def fromArticle(articlePage: PageWithStoryPackage, request: RequestHeader, blocks: APIBlocks, commercialConfiguration: CommercialConfiguration): DotcomponentsDataModel = {
 
     val article = articlePage.article
     val atoms: Iterable[Atom] = article.content.atoms.map(_.all).getOrElse(Seq())
@@ -449,8 +448,6 @@ object DotcomponentsDataModel {
       allTags
     )
 
-    val commercialConfig = DotcomponentsCommercialHelper.makeCommercialConfiguration(JavaScriptPage.javascriptPageCommercialConfigurationFragmentForDotcomRendering(articlePage, request), contextCommercialConfig)
-
     val commercial = Commercial(
       editionCommercialProperties =
         article.metadata.commercial.map{_.perEdition.mapKeys(_.id)}
@@ -460,7 +457,7 @@ object DotcomponentsDataModel {
         sites <- commercial.prebidIndexSites
       } yield sites.toList).getOrElse(List()),
       article.metadata.commercial,
-      commercialConfig
+      commercialConfiguration
     )
 
     val author = article.tags.contributors.map(_.name) match {

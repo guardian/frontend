@@ -11,7 +11,7 @@ import conf.Configuration
 import conf.switches.Switches.CircuitBreakerSwitch
 import model.Cached.RevalidatableResult
 import model.dotcomponents.DotcomponentsDataModel
-import model.{Cached, PageWithStoryPackage, ApplicationContext}
+import model.{Cached, PageWithStoryPackage}
 import play.api.libs.json._
 import play.api.libs.ws.WSClient
 import play.api.mvc.{RequestHeader, Result}
@@ -22,7 +22,7 @@ import scala.concurrent.Future
 import scala.concurrent.duration._
 import scala.io.Source
 
-import model.DCRContextCommercialConfigurationFragment
+import model.dotcomponents.CommercialConfiguration
 
 class RemoteRenderer {
 
@@ -79,10 +79,10 @@ class RemoteRenderer {
     payload: String,
     page: PageWithStoryPackage,
     blocks: Blocks,
-    contextConfigFragment: DCRContextCommercialConfigurationFragment
+    commercialConfiguration: CommercialConfiguration
   )(implicit request: RequestHeader): Future[Result] = {
 
-    val dataModel: DotcomponentsDataModel = DotcomponentsDataModel.fromArticle(page, request, blocks, contextConfigFragment)
+    val dataModel: DotcomponentsDataModel = DotcomponentsDataModel.fromArticle(page, request, blocks, commercialConfiguration)
     val dataString: String = DotcomponentsDataModel.toJsonString(dataModel)
 
     validate(dataModel) match {
@@ -97,10 +97,10 @@ class RemoteRenderer {
     path: String,
     page: PageWithStoryPackage,
     blocks: Blocks,
-    contextConfigFragment: DCRContextCommercialConfigurationFragment
+    commercialConfiguration: CommercialConfiguration
   )(implicit request: RequestHeader): Future[Result] = {
 
-    val dataModel: DotcomponentsDataModel = DotcomponentsDataModel.fromArticle(page, request, blocks, contextConfigFragment)
+    val dataModel: DotcomponentsDataModel = DotcomponentsDataModel.fromArticle(page, request, blocks, commercialConfiguration)
     val dataString: String = DotcomponentsDataModel.toJsonString(dataModel)
 
     validate(dataModel) match {

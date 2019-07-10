@@ -9,17 +9,6 @@ import conf.switches.Switches.prebidSwitch
 import conf.{Configuration, DiscussionAsset}
 import model._
 import play.api.libs.json._
-import play.api.mvc.RequestHeader
-import model.PageWithStoryPackage
-
-case class DCRJavaScriptPageCommercialConfigurationFragment(
-  hasShowcaseMainElement: Boolean,
-  isFront: Boolean,
-  isLiveblog: Boolean,
-  isMinuteArticle: Boolean,
-  isPaidContent: Boolean,
-  isSensitive: Boolean
-)
 
 object JavaScriptPage {
 
@@ -95,16 +84,4 @@ object JavaScriptPage {
       ("discussionFrontendUrl", JsString(DiscussionAsset("discussion-frontend.preact.iife")))
     )
   }
-
-  def javascriptPageCommercialConfigurationFragmentForDotcomRendering(articlePage: PageWithStoryPackage, request: RequestHeader): DCRJavaScriptPageCommercialConfigurationFragment = {
-    DCRJavaScriptPageCommercialConfigurationFragment(
-      getMap(articlePage, Edition(request), false).getOrElse("hasShowcaseMainElement", JsBoolean(false)).as[Boolean],
-      getMap(articlePage, Edition(request), false).getOrElse("isFront", JsBoolean(false)).as[Boolean],
-      getMap(articlePage, Edition(request), false).getOrElse("isLiveBlog", JsBoolean(false)).as[Boolean],
-      getMap(articlePage, Edition(request), false).getOrElse("isMinuteArticle", JsBoolean(false)).as[Boolean],
-      getMap(articlePage, Edition(request), false).getOrElse("isPaidContent", JsBoolean(false)).as[Boolean],
-      getMap(articlePage, Edition(request), false).getOrElse("isSensitive", JsBoolean(false)).as[Boolean]
-    )
-  }
-
 }
