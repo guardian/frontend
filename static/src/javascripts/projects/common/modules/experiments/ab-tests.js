@@ -8,7 +8,7 @@ import { articlesViewed } from 'common/modules/experiments/tests/contributions-e
 import { countryName } from 'common/modules/experiments/tests/contributions-epic-country-name';
 import { acquisitionsEpicAlwaysAskIfTagged } from 'common/modules/experiments/tests/acquisitions-epic-always-ask-if-tagged';
 import { adblockTest } from 'common/modules/experiments/tests/adblock-ask';
-import { contributionsGlobalMobileBannerDesign } from 'common/modules/experiments/tests/contribs-global-mobile-banner-design';
+import { articlesViewedBanner } from 'common/modules/experiments/tests/contribs-banner-articles-viewed';
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialPrebidSafeframe,
@@ -26,5 +26,5 @@ export const epicTests: $ReadOnlyArray<EpicABTest> = [
 ];
 
 export const engagementBannerTests: $ReadOnlyArray<AcquisitionsABTest> = [
-    contributionsGlobalMobileBannerDesign,
+    articlesViewedBanner,
 ];

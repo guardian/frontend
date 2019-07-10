@@ -48,9 +48,9 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-global-mobile-banner-design",
-    "testing mobile-only design changes",
-    owners = Seq(Owner.withGithub("jlieb10")),
+    "ab-contributions-banner-articles-viewed",
+    "show number of articles viewed in contributions banner",
+    owners = Seq(Owner.withGithub("tomrf1")),
     safeState = Off,
     sellByDate = new LocalDate(2019, 9, 30),
     exposeClientSide = true
