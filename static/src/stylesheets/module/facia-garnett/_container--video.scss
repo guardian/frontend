@@ -301,6 +301,19 @@ $video-width-desktop: 700px;
     }
 }
 
+.video-playlist__item--paid-for.video-playlist__item .fc-item__kicker,
+.video-playlist__item--paid-for.video-playlist__item .video-overlay__duration {
+    color: $labs-main !important;
+}
+
+.video-playlist__item--paid-for.video-playlist__item .vjs-big-play-button .vjs-control-text {
+    background-color: $labs-main !important;
+}
+
+.video-playlist__item--paid-for.video-playlist__item .video-overlay{
+    border-top-color: $labs-main !important;
+}
+
 .vjs-big-play-button .vjs-control-text,
 .youtube-media-atom__play-button.vjs-control-text {
     // Sets a base play button/icon size for all video players

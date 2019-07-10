@@ -11,7 +11,8 @@
 @import conf.switches.Switches.YouTubeRelatedVideos
 @import model.VideoFaciaProperties
 @import views.html.fragments.items.elements.facia_cards.title
-
+@import layout.PaidCard
+@import model.pressed.PressedContent
 @(
     media: model.content.MediaAtom,
     displayCaption: Boolean,
@@ -21,7 +22,9 @@
     posterImageOverride: Option[ImageMedia] = None,
     cardStyle: Option[CardStyle] = None,
     mediaWrapper: Option[MediaWrapper] = None,
-    faciaHeaderProperties: Option[VideoFaciaProperties] = None
+    faciaHeaderProperties: Option[VideoFaciaProperties] = None,
+    isPaidFor: Boolean = false,
+    pressedContent: Option[PressedContent] = None
 )(implicit request: RequestHeader)
 
 @videoJsError() = @{
@@ -65,6 +68,10 @@
                     <div class="video-overlay__headline">
 
                     @for(f <- faciaHeaderProperties) {
+                        @*//TODO Add kicker inside f.header.kicker*@
+                        @if(isPaidFor) {
+                            <div class="fc-item__kicker">Advertiser Content</div>
+                        }
                         @title(f.header, 0, 0)
                         @if(f.showByline) {
                             <div class="fc-item__byline">@f.byline</div>
@@ -104,7 +111,20 @@
                             </div>
                         </div>
                     } else {
-                        <div class="youtube-media-atom__play-button vjs-control-text">Play Video @fragments.inlineSvg("play", "icon")</div>
+                        @if(isPaidFor) {
+                            <div class="youtube-media-atom--sponsored-container"></div>
+                            <span class="youtube-media-atom__sponsored-label">
+                                Advertiser Content
+                            </span>
+                            @*TODO: use map to catch all cases *@
+                            <div class="youtube-media-atom__sponsored-logo-container">
+                                <img border="0"
+                                src="@PaidCard.fromPressedContent(pressedContent.get).image.get.allImages.toStream.head.url">
+                            </div>
+                        }
+                        <div class="youtube-media-atom__play-button vjs-control-text">
+                            Play Video @fragments.inlineSvg("play", "icon")
+                        </div>
                         @for(duration <- media.formattedDuration.filter(_ => displayDuration)) {
                             @if(duration != "0:00") {
                                 <div class="youtube-media-atom__bottom-bar">

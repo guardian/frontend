@@ -54,6 +54,34 @@
     position: relative;
 }
 
+.youtube-media-atom--sponsored-container {
+    background-color: white;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    height: 85px;
+    opacity: 0.5;
+}
+
+.youtube-media-atom__sponsored-label {
+    position: absolute;
+    bottom: 2.00rem;
+    right: 4.00rem;
+    display: block;
+    width: 12.5rem;
+    height: 3.125rem;
+    font-size: 16px;
+    color: black;
+}
+
+.youtube-media-atom__sponsored-logo-container {
+    position: absolute;
+    width: 85px;
+    height: 85px;
+    bottom: 0;
+    right: 0;
+}
+
 .youtube-media-atom__iframe,
 .youtube-media-atom__overlay {
     height: 100%;
@@ -133,6 +161,7 @@ youtube-media-atom:not(.youtube-related-videos) .youtube-media-atom__iframe.yout
     overflow: hidden !important;
     display: inline-block;
     z-index: 2;
+    opacity: 1;
 }
 
 .no-player .youtube-media-atom__play-button.vjs-control-text {
