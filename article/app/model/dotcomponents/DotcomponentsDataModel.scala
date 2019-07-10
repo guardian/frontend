@@ -12,9 +12,9 @@ import controllers.ArticlePage
 import model.content.Atom
 import model.dotcomrendering.pageElements.{DisclaimerBlockElement, PageElement}
 import model.{Canonical, LiveBlogPage, PageWithStoryPackage}
-import navigation.NavMenu
 import navigation.ReaderRevenueSite.{Support, SupportContribute, SupportSubscribe}
 import navigation.UrlHelpers._
+import navigation.{FlatSubnav, NavLink, NavMenu, ParentSubnav, Subnav}
 import org.joda.time.DateTime
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
@@ -35,7 +35,7 @@ case class Tag(
   twitterHandle: Option[String],
   bylineImageUrl: Option[String]
 )
-//
+
 case class Block(
     id: String,
     elements: List[PageElement],
@@ -55,7 +55,7 @@ case class Pagination(
   oldest: Option[String],
   older: Option[String],
 )
-//
+
 case class ReaderRevenueLink(
   contribute: String,
   subscribe: String,
@@ -96,7 +96,7 @@ object ReaderRevenueLink {
 object ReaderRevenueLinks {
   implicit val writes = Json.writes[ReaderRevenueLinks]
 }
-//
+
 object Pagination {
   implicit val writes = Json.writes[Pagination]
 }
@@ -139,6 +139,29 @@ object Author {
   implicit val writes = Json.writes[Author]
 }
 
+case class Nav(
+  currentUrl: String,
+  pillars: Seq[NavLink],
+  otherLinks: Seq[NavLink],
+  brandExtensions: Seq[NavLink],
+  currentNavLink: Option[NavLink],
+  currentParent: Option[NavLink],
+  currentPillar: Option[NavLink],
+  subNavSections: Option[Subnav],
+  readerRevenueLinks: ReaderRevenueLinks,
+)
+
+object Nav {
+  implicit val navlinkWrites = Json.writes[NavLink]
+  implicit val flatSubnavWrites = Json.writes[FlatSubnav]
+  implicit val parentSubnavWrites = Json.writes[ParentSubnav]
+  implicit val subnavWrites = Writes[Subnav]{
+    case nav: FlatSubnav => flatSubnavWrites.writes(nav)
+    case nav: ParentSubnav => parentSubnavWrites.writes(nav)
+  }
+  implicit val writes = Json.writes[Nav]
+}
+
 case class DataModelV3(
   version: Int,
   headline: String,
@@ -176,7 +199,7 @@ case class DataModelV3(
   commercialProperties: Map[String, EditionCommercialProperties],
   starRating: Option[Int],
   trailText: String,
-  nav: NavMenu,
+  nav: Nav,
 )
 
 object DataModelV3 {
@@ -405,8 +428,6 @@ object DotcomponentsDataModel {
       )
     )
 
-    val navMenu = NavMenu(articlePage, Edition(request))
-
     val headerReaderRevenueLink: ReaderRevenueLink = ReaderRevenueLink(
       getReaderRevenueUrl(SupportContribute, Header)(request),
       getReaderRevenueUrl(SupportSubscribe, Header)(request),
@@ -444,6 +465,21 @@ object DotcomponentsDataModel {
       ampHeaderReaderRevenueLink,
       ampFooterReaderRevenueLink
     )
+
+    val nav = {
+      val navMenu = NavMenu(articlePage, Edition(request))
+      Nav(
+        currentUrl = navMenu.currentUrl,
+        pillars = navMenu.pillars,
+        otherLinks = navMenu.otherLinks,
+        brandExtensions = navMenu.brandExtensions,
+        currentNavLink = navMenu.currentNavLink,
+        currentParent = navMenu.currentParent,
+        currentPillar = navMenu.currentPillar,
+        subNavSections = navMenu.subNavSections,
+        readerRevenueLinks = readerRevenueLinks,
+      )
+    }
 
     val commercial = Commercial(
       editionCommercialProperties =
@@ -512,7 +548,7 @@ object DotcomponentsDataModel {
       commercialProperties = commercial.editionCommercialProperties,
       starRating = article.content.starRating,
       trailText = article.trail.fields.trailText.getOrElse(""),
-      nav = navMenu,
+      nav = nav,
     )
   }
 }
