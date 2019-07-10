@@ -55,23 +55,23 @@
 }
 
 .youtube-media-atom--sponsored-container {
-    background-color: white;
+    background-color: #ffffff;
     width: 100%;
     position: absolute;
     bottom: 0;
     height: 85px;
-    opacity: 0.5;
+    opacity: .5;
 }
 
 .youtube-media-atom__sponsored-label {
     position: absolute;
-    bottom: 2.00rem;
-    right: 4.00rem;
+    bottom: 2rem;
+    right: 4rem;
     display: block;
     width: 12.5rem;
     height: 3.125rem;
     font-size: 16px;
-    color: black;
+    color: #000000;
 }
 
 .youtube-media-atom__sponsored-logo-container {
