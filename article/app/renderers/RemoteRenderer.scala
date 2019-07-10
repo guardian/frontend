@@ -1,13 +1,18 @@
 package renderers
 
 import akka.actor.ActorSystem
+import com.eclipsesource.schema._
+import com.eclipsesource.schema.drafts.Version7
+import com.eclipsesource.schema.drafts.Version7._
 import com.gu.contentapi.client.model.v1.Blocks
+import com.osinka.i18n.Lang
 import concurrent.CircuitBreakerRegistry
 import conf.Configuration
 import conf.switches.Switches.CircuitBreakerSwitch
 import model.Cached.RevalidatableResult
-import model.dotcomponents.{DataModelV3, DotcomponentsDataModel}
+import model.dotcomponents.DotcomponentsDataModel
 import model.{Cached, PageWithStoryPackage}
+import play.api.libs.json._
 import play.api.libs.ws.WSClient
 import play.api.mvc.{RequestHeader, Result}
 import play.twirl.api.Html
@@ -15,8 +20,11 @@ import play.twirl.api.Html
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.concurrent.duration._
+import scala.io.Source
 
 class RemoteRenderer {
+
+  private[this] val SCHEMA = "schema/dotcomponentsDataModelV2.jsonschema"
 
   private[this] val circuitBreaker = CircuitBreakerRegistry.withConfig(
     name = "dotcom-rendering-client",
@@ -25,6 +33,14 @@ class RemoteRenderer {
     callTimeout = Configuration.rendering.timeout.plus(200.millis),
     resetTimeout = Configuration.rendering.timeout * 4,
   )
+
+  private[this] def validate(model: DotcomponentsDataModel): JsResult[JsValue] = {
+    val rawschema: String = Source.fromResource(SCHEMA).getLines.mkString("\n")
+    val schema = Json.fromJson[SchemaType](Json.parse(rawschema)).get
+    val validator = new SchemaValidator(Some(Version7))(Lang.Default)
+
+    validator.validate(schema, DotcomponentsDataModel.toJson(model))
+  }
 
   private[this] def get(
     ws: WSClient,
@@ -63,9 +79,14 @@ class RemoteRenderer {
     blocks: Blocks
   )(implicit request: RequestHeader): Future[Result] = {
 
-    val dataModel = DotcomponentsDataModel.fromArticle(page, request, blocks)
-    val json = DataModelV3.toJson(dataModel)
-    get(ws, json, page, Configuration.rendering.AMPArticleEndpoint)
+    val dataModel: DotcomponentsDataModel = DotcomponentsDataModel.fromArticle(page, request, blocks)
+    val dataString: String = DotcomponentsDataModel.toJsonString(dataModel)
+
+    validate(dataModel) match {
+      case JsSuccess(_,_) => get(ws, dataString, page, Configuration.rendering.AMPArticleEndpoint)
+      case JsError(e) => Future.failed(new Exception(Json.prettyPrint(JsError.toJson(e))))
+    }
+
   }
 
   def getArticle(
@@ -75,9 +96,13 @@ class RemoteRenderer {
     blocks: Blocks
   )(implicit request: RequestHeader): Future[Result] = {
 
-    val dataModel = DotcomponentsDataModel.fromArticle(page, request, blocks)
-    val json = DataModelV3.toJson(dataModel)
-    get(ws, json, page, Configuration.rendering.renderingEndpoint)
+    val dataModel: DotcomponentsDataModel = DotcomponentsDataModel.fromArticle(page, request, blocks)
+    val dataString: String = DotcomponentsDataModel.toJsonString(dataModel)
+
+    validate(dataModel) match {
+      case JsSuccess(_,_) => get(ws, dataString, page, Configuration.rendering.renderingEndpoint)
+      case JsError(e) => Future.failed(new Exception(Json.prettyPrint(JsError.toJson(e))))
+    }
   }
 }
 
