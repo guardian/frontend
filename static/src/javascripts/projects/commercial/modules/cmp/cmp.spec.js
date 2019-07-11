@@ -145,7 +145,7 @@ describe('cmp', () => {
         cmp.processCommand('getVendorConsents', null, result => {
             expect(result).toEqual({
                 metadata: undefined,
-                gdprApplies: false,
+                gdprApplies: true,
                 hasGlobalScope: false,
             });
         });
@@ -162,7 +162,7 @@ describe('cmp', () => {
         cmp.processCommand('getConsentData', null, result => {
             expect(result).toEqual({
                 consentData: undefined,
-                gdprApplies: false,
+                gdprApplies: true,
                 hasGlobalScope: false,
             });
         });
