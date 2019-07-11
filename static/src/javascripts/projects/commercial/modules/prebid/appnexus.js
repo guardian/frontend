@@ -33,7 +33,7 @@ const getAppNexusInvCode = (sizes: Array<PrebidSize>): ?string => {
 };
 
 export const getAppNexusPlacementId = (sizes: PrebidSize[]): string => {
-    const defaultPlacementId: string = '13915593';
+    const defaultPlacementId: string = '16435982';
     if (isInUsRegion() || isInAuRegion()) {
         return defaultPlacementId;
     }
@@ -48,7 +48,7 @@ export const getAppNexusPlacementId = (sizes: PrebidSize[]): string => {
             return defaultPlacementId;
         case 'M':
             if (containsMpu(sizes)) {
-                return '13366904';
+                return '16435982';
             }
             return defaultPlacementId;
         case 'T':
