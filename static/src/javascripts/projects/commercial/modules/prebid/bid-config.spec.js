@@ -135,7 +135,7 @@ describe('getDummyServerSideBidders', () => {
             customParams: 'someAppNexusTargetingObject',
         });
         expect(appNexusParams).toEqual({
-            placementId: '13915593',
+            placementId: '16435982',
             keywords: 'someAppNexusTargetingObject',
             lotame: { some: 'lotamedata' },
         });

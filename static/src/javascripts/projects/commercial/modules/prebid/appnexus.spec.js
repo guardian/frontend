@@ -180,7 +180,7 @@ describe('getAppNexusPlacementId', () => {
             '13366606',
             '13366615',
             '13366615',
-            '13915593',
+            '16435982',
         ]);
     });
 
@@ -188,21 +188,21 @@ describe('getAppNexusPlacementId', () => {
         getBreakpointKey.mockReturnValue('T');
         expect(generateTestIds()).toEqual([
             '13366913',
-            '13915593',
-            '13915593',
+            '16435982',
+            '16435982',
             '13366916',
-            '13915593',
+            '16435982',
         ]);
     });
 
     test('should return the expected values when on mobile device', () => {
         getBreakpointKey.mockReturnValue('M');
         expect(generateTestIds()).toEqual([
-            '13366904',
-            '13915593',
-            '13915593',
-            '13915593',
-            '13915593',
+            '16435982',
+            '16435982',
+            '16435982',
+            '16435982',
+            '16435982',
         ]);
     });
 
@@ -210,9 +210,9 @@ describe('getAppNexusPlacementId', () => {
         getBreakpointKey.mockReturnValue('D');
         isInAuRegion.mockReturnValueOnce(true);
         isInUsRegion.mockReturnValueOnce(true);
-        expect(getAppNexusPlacementId([[300, 250]])).toEqual('13915593');
-        expect(getAppNexusPlacementId([[970, 250]])).toEqual('13915593');
-        expect(getAppNexusPlacementId([[1, 2]])).toEqual('13915593');
+        expect(getAppNexusPlacementId([[300, 250]])).toEqual('16435982');
+        expect(getAppNexusPlacementId([[970, 250]])).toEqual('16435982');
+        expect(getAppNexusPlacementId([[1, 2]])).toEqual('16435982');
     });
 });
 
@@ -232,7 +232,7 @@ describe('getAppNexusServerSideBidParams', () => {
         window.OzoneLotameData = { some: 'lotamedata' };
         expect(getAppNexusServerSideBidParams([[300, 250]])).toEqual({
             keywords: { edition: 'UK', sens: 'f', url: 'gu.com' },
-            placementId: '13366904',
+            placementId: '16435982',
             lotame: { some: 'lotamedata' },
         });
     });
@@ -241,7 +241,7 @@ describe('getAppNexusServerSideBidParams', () => {
         getBreakpointKey.mockReturnValue('M');
         expect(getAppNexusServerSideBidParams([[300, 250]])).toEqual({
             keywords: { edition: 'UK', sens: 'f', url: 'gu.com' },
-            placementId: '13366904',
+            placementId: '16435982',
         });
     });
 });
