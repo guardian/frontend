@@ -307,7 +307,7 @@ object DotcomponentsDataModel {
         addAffiliateLinks = affiliateLinks,
         pageUrl = request.uri,
         atoms = atoms
-      ))
+      )).filter(PageElement.isSupported)
 
       addDisclaimer(elems, capiElems, affiliateLinks)
     }
