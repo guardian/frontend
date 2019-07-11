@@ -9,7 +9,6 @@ import conf.switches.Switches.prebidSwitch
 import conf.{Configuration, DiscussionAsset}
 import model._
 import play.api.libs.json._
-import play.api.mvc.RequestHeader
 
 object JavaScriptPage {
 

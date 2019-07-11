@@ -28,8 +28,8 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-epic-articles-viewed",
-    "States how many articles a user has viewed in the epic",
+    "ab-contributions-epic-articles-viewed-month",
+    "States how many articles a user has viewed in the epic in a month",
     owners = Seq(Owner.withGithub("tomrf1")),
     safeState = Off,
     sellByDate = new LocalDate(2020, 1, 27),
