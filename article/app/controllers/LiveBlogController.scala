@@ -14,7 +14,7 @@ import play.api.mvc._
 import services.CAPILookup
 import views.support.RenderOtherStatus
 import implicits.{AmpFormat, HtmlFormat}
-import model.dotcomponents.DotcomponentsDataModel
+import model.dotcomponents.{DataModelV3, DotcomponentsDataModel}
 import renderers.RemoteRenderer
 
 import scala.concurrent.Future
@@ -158,7 +158,7 @@ class LiveBlogController(
   )(implicit request: RequestHeader): Result = {
     val commercialConfiguration: CommercialConfiguration = CommercialConfiguration(blog, request, context)
     val model = DotcomponentsDataModel.fromArticle(blog, request, blocks, commercialConfiguration)
-    val json = DotcomponentsDataModel.toJsonString(model)
+    val json = DataModelV3.toJson(model)
     common.renderJson(json, blog).as("application/json")
   }
 

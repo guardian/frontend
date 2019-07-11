@@ -5,7 +5,7 @@ import common._
 import contentapi.ContentApiClient
 import implicits.{AmpFormat, EmailFormat, HtmlFormat, JsonFormat}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
-import model.dotcomponents.{CommercialConfiguration, DotcomponentsDataModel}
+import model.dotcomponents.{DataModelV3, DotcomponentsDataModel, CommercialConfiguration}
 import model.{ContentType, PageWithStoryPackage, _}
 import pages.{ArticleEmailHtmlPage, ArticleHtmlPage}
 import play.api.libs.json.Json
@@ -86,9 +86,8 @@ class ArticleController(
 
   private def getGuuiJson(article: ArticlePage, blocks: Blocks)(implicit request: RequestHeader): String = {
     val commercialConfiguration: CommercialConfiguration = CommercialConfiguration(article, request, context)
-    DotcomponentsDataModel.toJsonString(DotcomponentsDataModel.fromArticle(article, request, blocks, commercialConfiguration))
+    DataModelV3.toJson(DotcomponentsDataModel.fromArticle(article, request, blocks, commercialConfiguration))
   }
-
 
   private def render(path: String, article: ArticlePage, blocks: Blocks)(implicit request: RequestHeader): Future[Result] = {
     val tier = ArticlePicker.getTier(article)
