@@ -2,6 +2,7 @@ package renderers
 
 import akka.actor.ActorSystem
 import com.gu.contentapi.client.model.v1.Blocks
+import common.Logging
 import concurrent.CircuitBreakerRegistry
 import conf.Configuration
 import conf.switches.Switches.CircuitBreakerSwitch
@@ -15,10 +16,9 @@ import play.twirl.api.Html
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.concurrent.duration._
-
 import model.dotcomponents.CommercialConfiguration
 
-class RemoteRenderer {
+class RemoteRenderer extends Logging {
 
   private[this] val circuitBreaker = CircuitBreakerRegistry.withConfig(
     name = "dotcom-rendering-client",
@@ -44,6 +44,9 @@ class RemoteRenderer {
           response.status match {
             case 200 =>
               Cached(article)(RevalidatableResult.OkDotcomponents(Html(response.body)))
+            case 400 =>
+              log.error("Remote renderer validation error: " + response.body)
+              throw new Exception(response.body)
             case _ =>
               throw new Exception(response.body)
           }
