@@ -114,6 +114,44 @@ object Sponsorship {
 object PageElement {
   val dotComponentsImageProfiles = List(Item1200, Item700, Item640, Item300, Item140, Item120)
 
+  def isSupported(element: PageElement): Boolean = {
+    // remove unsupported elements. Cross-reference with dotcom-rendering supported elements.
+    element match {
+      case _: TextBlockElement => true
+      case _: SubheadingBlockElement => true
+      case _: ImageBlockElement => true
+      case _: YoutubeBlockElement => true
+      case _: VideoYoutubeBlockElement => true
+      case _: VideoVimeoBlockElement => true
+      case _: VideoFacebookBlockElement => true
+      case _: GuVideoBlockElement => true
+      case _: InstagramBlockElement => true
+      case _: TweetBlockElement => true
+      case _: RichLinkBlockElement => true
+      case _: CommentBlockElement => true
+      case _: SoundcloudBlockElement => true
+      case _: EmbedBlockElement => true
+      case _: DisclaimerBlockElement => true
+      case _: PullquoteBlockElement => true
+      case _: QABlockElement => true
+      case _: GuideBlockElement => true
+      case _: ProfileBlockElement => true
+      case _: TimelineBlockElement => true
+      case _: InteractiveUrlBlockElement => true
+      case _: InteractiveMarkupBlockElement => true
+      case _: MapBlockElement => true
+      case _: AudioBlockElement => true
+      case _: AudioAtomBlockElement => true
+      case _: VideoBlockElement => true
+
+      // TODO we should quick fail here for these rather than pointlessly go to DCR
+      case table: TableBlockElement if table.isMandatory.exists(identity) => true
+      case doc: DocumentBlockElement if doc.isMandatory.exists(identity) => true
+
+      case _ => false
+    }
+  }
+
   def make(element: ApiBlockElement, addAffiliateLinks: Boolean, pageUrl: String, atoms: Iterable[Atom]): List[PageElement] = {
     def extractAtom: Option[Atom] = for {
       contentAtom <- element.contentAtomTypeData
