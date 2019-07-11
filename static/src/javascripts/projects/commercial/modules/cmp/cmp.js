@@ -2,7 +2,6 @@
 
 import config from 'lib/config';
 import { getCookie } from 'lib/cookies';
-import { getFromStorage } from 'lib/geolocation';
 import { getUrlVars } from 'lib/url';
 import fetchJSON from 'lib/fetch-json';
 
@@ -90,16 +89,10 @@ const isInCommercialConsentModalBannerTest = (): boolean =>
         'nonDismissableVariant'
     );
 
-const isInEU = (): boolean =>
-    (getCookie('GU_geo_continent') || 'OTHER').toUpperCase() === 'EU';
+const isInNA = (): boolean =>
+    (getCookie('GU_geo_continent') || 'OTHER').toUpperCase() === 'NA';
 
-const isInAU = (): boolean => {
-    const countryCode = (getFromStorage() || 'OTHER').toUpperCase();
-
-    return countryCode === 'AU' || countryCode === 'NZ';
-};
-
-const gdprApplies = (): boolean => isInEU() || isInAU();
+const gdprApplies = (): boolean => !isInNA();
 
 class CmpService {
     isLoaded: boolean;
