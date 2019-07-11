@@ -632,7 +632,13 @@ object Video {
       "videoDuration" -> elements.videos.find(_.properties.isMain).map{ v => JsNumber(v.videos.duration)}.getOrElse(JsNull)) ++ AtomProperties(content.atoms)
 
 
-    val optionalOpengraphProperties = if(content.metadata.webUrl.startsWith("https://")) Map("og:video:secure_url" -> content.metadata.webUrl) else Nil
+    val optionalOpengraphProperties =
+      if(content.metadata.webUrl.startsWith("https://"))
+        Map(
+          "og:video:url" -> content.metadata.webUrl,
+          "og:video:secure_url" -> content.metadata.webUrl
+        )
+      else Nil
     val opengraphProperties = Map(
       // Not using the og:video properties here because we want end-users to visit the guardian website
       // when they click the thumbnail in the FB feed rather than playing the video "in-place"
