@@ -196,7 +196,7 @@ object PressedContentFormat {
       case JsString("BL") => JsSuccess(ObjectPosition.BL)
       case JsString("BC") => JsSuccess(ObjectPosition.BC)
       case JsString("BR") => JsSuccess(ObjectPosition.BR)
-      case _ => JsError(s"Unknow object position: '$json'")
+      case _ => JsSuccess(ObjectPosition.default)
     }
 
     def writes(o: ObjectPosition): JsValue = JsString(o.toString)

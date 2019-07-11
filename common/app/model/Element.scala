@@ -83,7 +83,7 @@ final case class ImageMedia(position: ObjectPosition, allImages: Seq[ImageAsset]
 }
 
 sealed abstract class ObjectPosition extends Product with Serializable { self =>
-  def className: String = self match {
+  final val className: String = self match {
     case ObjectPosition.TL => "position--tl"
     case ObjectPosition.TC => "position--tc"
     case ObjectPosition.TR => "position--tr"

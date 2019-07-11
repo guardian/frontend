@@ -28,7 +28,7 @@
     @maybeImageMedia.map(ImgSrc.getFallbackUrl(_)).orElse(maybeSrc).orElse(maybePath).map { src =>
         <img
             loading="@{ if (Switches.LazyLoadImages.isSwitchedOn) "lazy" else "auto"}"
-            class="@RenderClasses(classes: _*) @maybeImageMedia.map(_.position).getOrElse(ObjectPosition.default)"
+            class="@RenderClasses(classes: _*) @maybeImageMedia.fold(ObjectPosition.default)(_.position)"
             alt=""
             src="@src"/>
     }
