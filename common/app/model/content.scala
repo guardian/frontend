@@ -481,7 +481,7 @@ object Article {
       ("article:tag", tags.keywords.map(_.name).mkString(",")),
       ("article:section", trail.sectionName),
       ("article:publisher", "https://www.facebook.com/theguardian"),
-      ("article:author", author)
+      ("article:author", authorOrPA(author))
     )
 
     content.metadata.copy(
@@ -523,6 +523,11 @@ object Article {
     )
 
     Article(contentOverrides, lightboxProperties)
+  }
+
+  private def authorOrPA: String => String = {
+    case "Press Association" => "https://www.facebook.com/PAMediaGroupUK/"
+    case otherwise => otherwise
   }
 }
 
