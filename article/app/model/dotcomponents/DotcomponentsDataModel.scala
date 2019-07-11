@@ -11,7 +11,8 @@ import conf.{Configuration, Static}
 import controllers.ArticlePage
 import model.content.Atom
 import model.dotcomrendering.pageElements.{DisclaimerBlockElement, PageElement}
-import model.{Canonical, LiveBlogPage, PageWithStoryPackage, Pillar}
+import model.{Canonical, LiveBlogPage, PageWithStoryPackage, Pillar, SubMetaLinks}
+import navigation.NavMenu
 import navigation.ReaderRevenueSite.{Support, SupportContribute, SupportSubscribe}
 import navigation.UrlHelpers._
 import navigation.{FlatSubnav, NavLink, NavMenu, ParentSubnav, Subnav}
@@ -20,7 +21,8 @@ import play.api.libs.json._
 import play.api.mvc.RequestHeader
 import views.html.fragments.affiliateLinksDisclaimer
 import views.support.{AffiliateLinksCleaner, CamelCase, GUDateTimeFormat, ImgSrc, Item300}
-
+import controllers.ArticlePage
+import org.joda.time.{DateTime}
 
 // We have introduced our own set of objects for serializing data to the DotComponents API,
 // because we don't want people changing the core frontend models and as a side effect,
@@ -73,7 +75,8 @@ case class ReaderRevenueLinks(
 case class Commercial(
   editionCommercialProperties: Map[String, EditionCommercialProperties],
   prebidIndexSites: List[PrebidIndexSite],
-  commercialProperties: Option[CommercialProperties], //DEPRECATED TO DELETE
+  commercialProperties: Option[CommercialProperties],
+  commercialConfiguration: CommercialConfiguration
 )
 
 object Block {
@@ -262,7 +265,7 @@ object DotcomponentsDataModel {
 
   val VERSION = 2
 
-  def fromArticle(articlePage: PageWithStoryPackage, request: RequestHeader, blocks: APIBlocks): DataModelV3 = {
+  def fromArticle(articlePage: PageWithStoryPackage, request: RequestHeader, blocks: APIBlocks, commercialConfiguration: CommercialConfiguration): DataModelV3 = {
 
     val article = articlePage.article
     val atoms: Iterable[Atom] = article.content.atoms.map(_.all).getOrElse(Seq())
@@ -498,6 +501,7 @@ object DotcomponentsDataModel {
         sites <- commercial.prebidIndexSites
       } yield sites.toList).getOrElse(List()),
       article.metadata.commercial,
+      commercialConfiguration
     )
 
     val byline = article.tags.contributors.map(_.name) match {

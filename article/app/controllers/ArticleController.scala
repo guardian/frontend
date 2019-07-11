@@ -5,7 +5,7 @@ import common._
 import contentapi.ContentApiClient
 import implicits.{AmpFormat, EmailFormat, HtmlFormat, JsonFormat}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
-import model.dotcomponents.{DataModelV3, DotcomponentsDataModel}
+import model.dotcomponents.{DataModelV3, DotcomponentsDataModel, CommercialConfiguration}
 import model.{ContentType, PageWithStoryPackage, _}
 import pages.{ArticleEmailHtmlPage, ArticleHtmlPage}
 import play.api.libs.json.Json
@@ -84,19 +84,22 @@ class ArticleController(
     List(("html", views.html.fragments.articleBody(article))) ++ contentFieldsJson
   }
 
-  private def getGuuiJson(article: ArticlePage, blocks: Blocks)(implicit request: RequestHeader): String =
-    DataModelV3.toJson(DotcomponentsDataModel.fromArticle(article, request, blocks))
+  private def getGuuiJson(article: ArticlePage, blocks: Blocks)(implicit request: RequestHeader): String = {
+    val commercialConfiguration: CommercialConfiguration = CommercialConfiguration(article, request, context)
+    DataModelV3.toJson(DotcomponentsDataModel.fromArticle(article, request, blocks, commercialConfiguration))
+  }
 
   private def render(path: String, article: ArticlePage, blocks: Blocks)(implicit request: RequestHeader): Future[Result] = {
     val tier = ArticlePicker.getTier(article)
     val isAmpSupported = article.article.content.shouldAmplify
+    val commercialConfiguration: CommercialConfiguration = CommercialConfiguration(article, request, context)
     request.getRequestFormat match {
       case JsonFormat if request.isGuui => Future.successful(common.renderJson(getGuuiJson(article, blocks), article).as("application/json"))
       case JsonFormat => Future.successful(common.renderJson(getJson(article), article))
       case EmailFormat => Future.successful(common.renderEmail(ArticleEmailHtmlPage.html(article), article))
-      case HtmlFormat if tier == RemoteRender => remoteRenderer.getArticle(ws, path, article, blocks)
+      case HtmlFormat if tier == RemoteRender => remoteRenderer.getArticle(ws, path, article, blocks, commercialConfiguration)
       case HtmlFormat => Future.successful(common.renderHtml(ArticleHtmlPage.html(article), article))
-      case AmpFormat if isAmpSupported => remoteRenderer.getAMPArticle(ws, path, article, blocks)
+      case AmpFormat if isAmpSupported => remoteRenderer.getAMPArticle(ws, path, article, blocks, commercialConfiguration)
       case AmpFormat => Future.successful(common.renderHtml(ArticleHtmlPage.html(article), article))
     }
   }

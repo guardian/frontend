@@ -19,6 +19,8 @@ import renderers.RemoteRenderer
 
 import scala.concurrent.Future
 
+import model.dotcomponents.CommercialConfiguration
+
 case class MinutePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
 
 class LiveBlogController(
@@ -54,10 +56,11 @@ class LiveBlogController(
         mapModel(path, range){
           (page, blocks) => {
             val isAmpSupported = page.article.content.shouldAmplify
+            val commercialConfiguration: CommercialConfiguration = CommercialConfiguration(page, request, context)
             (page, request.getRequestFormat) match {
               case (minute: MinutePage, HtmlFormat) => Future.successful(common.renderHtml(MinuteHtmlPage.html(minute), minute))
               case (blog: LiveBlogPage, HtmlFormat) => Future.successful(common.renderHtml(LiveBlogHtmlPage.html(blog), blog))
-              case (blog: LiveBlogPage, AmpFormat) if isAmpSupported => remoteRenderer.getAMPArticle(ws, path, page, blocks)
+              case (blog: LiveBlogPage, AmpFormat) if isAmpSupported => remoteRenderer.getAMPArticle(ws, path, page, blocks, commercialConfiguration)
               case (blog: LiveBlogPage, AmpFormat) => Future.successful(common.renderHtml(LiveBlogHtmlPage.html(blog), blog))
               case _ => Future.successful(NotFound)
             }
@@ -153,9 +156,9 @@ class LiveBlogController(
     blog: LiveBlogPage,
     blocks: Blocks
   )(implicit request: RequestHeader): Result = {
-    val model = DotcomponentsDataModel.fromArticle(blog, request, blocks)
+    val commercialConfiguration: CommercialConfiguration = CommercialConfiguration(blog, request, context)
+    val model = DotcomponentsDataModel.fromArticle(blog, request, blocks, commercialConfiguration)
     val json = DataModelV3.toJson(model)
-
     common.renderJson(json, blog).as("application/json")
   }
 
