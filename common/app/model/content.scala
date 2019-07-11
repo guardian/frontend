@@ -638,7 +638,7 @@ object Video {
           "og:video:url" -> content.metadata.webUrl,
           "og:video:secure_url" -> content.metadata.webUrl
         )
-      else Nil
+      else Map.empty
     val opengraphProperties = Map(
       // Not using the og:video properties here because we want end-users to visit the guardian website
       // when they click the thumbnail in the FB feed rather than playing the video "in-place"
