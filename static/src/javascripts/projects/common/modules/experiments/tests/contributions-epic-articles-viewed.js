@@ -7,7 +7,7 @@ import {
 import { getArticleViewCount } from 'common/modules/onward/history';
 import { getCountryName, getSync as geolocationGetSync } from 'lib/geolocation';
 
-// Use must have read at least 5 articles in last 30 days
+// User must have read at least 5 articles in last 14 days
 const minArticleViews = 5;
 const articleCountDays = 30;
 

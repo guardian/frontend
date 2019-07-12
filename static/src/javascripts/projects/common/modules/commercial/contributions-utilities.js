@@ -876,4 +876,5 @@ export {
     userIsInCorrectCohort,
     getVisitCount,
     buildEpicCopy,
+    buildBannerCopy,
 };

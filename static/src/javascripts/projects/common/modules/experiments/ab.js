@@ -56,8 +56,8 @@ export const getEngagementBannerTestToRun = memoize(
                         config.set(`switches.ab${test.id}`, true)
                     );
                     return firstRunnableTest<AcquisitionsABTest>([
-                        ...asyncEngagementBannerTests,
                         ...engagementBannerTests,
+                        ...asyncEngagementBannerTests,
                     ]);
                 }
             );
