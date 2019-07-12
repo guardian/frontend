@@ -19,8 +19,8 @@ const isInNA = (): boolean =>
 
 export const init = (): Promise<void> => {
     if (
-        isInNA() && // User is in North America
-        isBreakpoint({ min: 'mobile', max: 'mobileLandscape' }) && // User is using a mobile device
+        //isInNA() && // User is in North America
+        //isBreakpoint({ min: 'mobile', max: 'mobileLandscape' }) && // User is using a mobile device
         config.get('page.contentType') === 'Article' // User is accessing an article
     ) {
         const mobileStickyWrapper = createAdWrapper();
@@ -34,7 +34,7 @@ export const init = (): Promise<void> => {
                 const mobileStickyAdSlot = mobileStickyWrapper.querySelector(
                     '#dfp-ad--mobile-sticky'
                 );
-                if (mobileStickyAdSlot) addSlot(mobileStickyAdSlot, false);
+                if (mobileStickyAdSlot) addSlot(mobileStickyAdSlot, true);
             });
     }
 
