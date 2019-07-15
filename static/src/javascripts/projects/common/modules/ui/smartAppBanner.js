@@ -32,7 +32,7 @@ const DATA = {
         SCREENSHOTS:
             'https://assets.guim.co.uk/images/apps/ios-screenshots.jpg',
         LINK:
-            'https://app.adjust.com/642i3r?deep_link=x-gu://www.theguardian.com/?source=adjust',
+            'https://play.google.com/store/apps/details?id=com.guardian',
         STORE: 'in Google Play',
     },
 };
