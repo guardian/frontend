@@ -2,6 +2,7 @@
 
 import config from 'lib/config';
 import { getCookie as getCookie_ } from 'lib/cookies';
+import { isInVariantSynchronous as isInVariantSynchronous_ } from 'common/modules/experiments/ab';
 import { slots, _ } from './slot-config';
 import { getBreakpointKey as getBreakpointKey_ } from './utils';
 
@@ -9,6 +10,7 @@ const { getSlots } = _;
 
 const getBreakpointKey: any = getBreakpointKey_;
 const getCookie: any = getCookie_;
+const isInVariantSynchronous: any = isInVariantSynchronous_;
 
 jest.mock('./utils', () => {
     // $FlowFixMe property requireActual is actually not missing Flow.
@@ -18,6 +20,20 @@ jest.mock('./utils', () => {
         getBreakpointKey: jest.fn(),
     };
 });
+
+jest.mock('common/modules/experiments/ab', () => ({
+    isInVariantSynchronous: jest.fn(
+        (testId, variantId) => variantId === 'variant'
+    ),
+}));
+
+jest.mock('lib/detect', () => ({
+    hasCrossedBreakpoint: jest.fn(),
+    isBreakpoint: jest.fn(),
+    getBreakpoint: jest.fn(),
+    getViewport: jest.fn(),
+    hasPushStateSupport: jest.fn(),
+}));
 
 jest.mock('lib/cookies', () => ({
     getCookie: jest.fn(),
@@ -61,6 +77,7 @@ describe('getSlots', () => {
     });
 
     test('should return the correct slots at breakpoint M for US including mobile sticky slot', () => {
+        isInVariantSynchronous.mockReturnValue(true);
         getBreakpointKey.mockReturnValue('M');
         getCookie.mockReturnValue('NA');
         expect(getSlots('Article')).toEqual([
@@ -191,6 +208,7 @@ describe('slots', () => {
     test('should return the correct mobile-sticky slot at breakpoint M', () => {
         getBreakpointKey.mockReturnValue('M');
         getCookie.mockReturnValue('NA');
+        isInVariantSynchronous.mockReturnValue(true);
         expect(slots('mobile-sticky', '')).toEqual([
             {
                 key: 'mobile-sticky',

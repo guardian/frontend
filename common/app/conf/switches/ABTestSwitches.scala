@@ -95,4 +95,14 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2019, 7, 31),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-prebid-mobile-sticky",
+    "Test asking prebid for mobile sticky slots in US",
+    owners = Owner.group(Commercial),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 9, 30),
+    exposeClientSide = true
+  )
 }
