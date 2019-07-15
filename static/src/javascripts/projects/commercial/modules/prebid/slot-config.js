@@ -8,7 +8,6 @@ import {
 import config from 'lib/config';
 
 import type { PrebidSlot } from 'commercial/modules/prebid/types';
-import { getCookie } from 'lib/cookies';
 import { prebidUsMobileSticky } from 'common/modules/experiments/tests/prebid-us-mobile-sticky';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 
@@ -23,9 +22,6 @@ const filterByAdvertId = (
     );
     return adUnits;
 };
-
-const isInNA = (): boolean =>
-    (getCookie('GU_geo_continent') || 'OTHER').toUpperCase() === 'NA';
 
 const getSlots = (contentType: string): Array<PrebidSlot> => {
     const isArticle = contentType === 'Article';
@@ -105,8 +101,8 @@ const getSlots = (contentType: string): Array<PrebidSlot> => {
 
     switch (getBreakpointKey()) {
         case 'M':
-            return isInNA() &&
-                isInVariantSynchronous(prebidUsMobileSticky, 'variant')
+            // Add Check if location is NA when A/B test gets removed
+            return isInVariantSynchronous(prebidUsMobileSticky, 'variant')
                 ? commonSlots.concat([...mobileSlots, mobileStickySlot])
                 : commonSlots.concat(mobileSlots);
         case 'T':

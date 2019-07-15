@@ -51,6 +51,7 @@ describe('getSlots', () => {
 
     test('should return the correct slots at breakpoint M non NA', () => {
         getBreakpointKey.mockReturnValue('M');
+        isInVariantSynchronous.mockReturnValue(false);
         getCookie.mockReturnValue('EU');
         expect(getSlots('Article')).toEqual([
             {
