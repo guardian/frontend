@@ -553,7 +553,7 @@ object DotcomponentsDataModel {
       webURL = article.metadata.webUrl,
       linkedData = linkedData,
       config = config,
-      guardianBaseURL = Configuration.amp.baseUrl,
+      guardianBaseURL = Configuration.site.host,
       contentType = jsConfig("contentType").getOrElse(""),
       hasRelated = article.content.showInRelated,
       hasStoryPackage = articlePage.related.hasStoryPackage,
