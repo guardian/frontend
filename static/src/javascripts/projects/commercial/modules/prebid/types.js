@@ -70,7 +70,8 @@ export type PrebidSlot = {
         | 'inline1'
         | 'inline'
         | 'mostpop'
-        | 'comments',
+        | 'comments'
+        | 'mobile-sticky',
     sizes: PrebidSize[],
 };
 
