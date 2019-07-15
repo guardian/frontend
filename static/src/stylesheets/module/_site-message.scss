@@ -240,6 +240,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         position: relative;
         padding-top: $gs-baseline/2;
         padding-bottom: $gs-baseline/2;
+        box-sizing: border-box;
     }
 
     .site-message__close {
