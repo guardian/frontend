@@ -98,7 +98,7 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-prebid-mobile-sticky",
+    "ab-prebid-us-mobile-sticky",
     "Test asking prebid for mobile sticky slots in US",
     owners = Owner.group(Commercial),
     safeState = Off,
