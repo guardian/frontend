@@ -49,9 +49,9 @@ describe('getSlots', () => {
         jest.resetAllMocks();
     });
 
-    test('should return the correct slots at breakpoint M', () => {
+    test('should return the correct slots at breakpoint M non NA', () => {
         getBreakpointKey.mockReturnValue('M');
-        getCookie.mockReturnValue('UK');
+        getCookie.mockReturnValue('EU');
         expect(getSlots('Article')).toEqual([
             {
                 key: 'right',
