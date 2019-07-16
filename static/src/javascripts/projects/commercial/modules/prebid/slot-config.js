@@ -11,10 +11,10 @@ import type { PrebidSlot } from 'commercial/modules/prebid/types';
 import { prebidUsMobileSticky } from 'common/modules/experiments/tests/prebid-us-mobile-sticky';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 
-const inMobileStickyPrebidOn = (): boolean =>
+const isMobileStickyPrebidOn = (): boolean =>
     window.location.hash.indexOf('#mobile-sticky-prebid') !== -1;
 const inMobileStickyPrebidTestOr = (liveClause: boolean): boolean =>
-    inMobileStickyPrebidOn() || liveClause;
+    isMobileStickyPrebidOn() || liveClause;
 
 const filterByAdvertId = (
     advertId: string,
