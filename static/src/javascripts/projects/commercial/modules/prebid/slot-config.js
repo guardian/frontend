@@ -106,6 +106,7 @@ const getSlots = (contentType: string): Array<PrebidSlot> => {
 
     switch (getBreakpointKey()) {
         case 'M':
+            // Add Check if location is NA when A/B test gets removed
             return inMobileStickyPrebidTestOr(
                 config.get('switches.mobileStickyLeaderboard') &&
                     isInVariantSynchronous(prebidUsMobileSticky, 'variant')
