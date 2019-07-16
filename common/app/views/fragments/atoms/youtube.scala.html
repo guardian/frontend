@@ -116,11 +116,13 @@
                             <span class="youtube-media-atom__sponsored-label">
                                 Advertiser content
                             </span>
-                            @*TODO: use map to catch all cases *@
-                            <div class="youtube-media-atom__sponsored-logo-container">
-                                <img border="0"
-                                src="@PaidCard.fromPressedContent(pressedContent.get).branding.get.logo.src">
-                            </div>
+                            @pressedContent.map{ pc =>
+                                @PaidCard.fromPressedContent(pc).branding.map{ b =>
+                                    <div class="youtube-media-atom__sponsored-logo-container">
+                                        <img border="0" src="@b.logo.src">
+                                    </div>
+                                }
+                            }
                         }
                         <div class="youtube-media-atom__play-button vjs-control-text">
                             Play Video @fragments.inlineSvg("play", "icon")
