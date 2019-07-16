@@ -19,14 +19,11 @@ const getAllowedSizesForImmersive = (availableSpace: number): string => {
     return '1,1|2,2';
 };
 
-export const init = (start: () => void, stop: () => void): Promise<boolean> => {
-    start();
-
+export const init = (): Promise<boolean> => {
     const $col: bonzo = $('.js-secondary-column');
 
     // article aside ads are added server-side if the container doesn't exist then stop.
     if (!$col.length || $col.css('display') === 'none') {
-        stop();
         return Promise.resolve(false);
     }
 
@@ -35,7 +32,6 @@ export const init = (start: () => void, stop: () => void): Promise<boolean> => {
     const $immersiveEls: bonzo = $('.element--immersive', $mainCol);
 
     if (!$adSlot.length || !$mainCol.length) {
-        stop();
         return Promise.resolve(false);
     }
 
@@ -79,7 +75,6 @@ export const init = (start: () => void, stop: () => void): Promise<boolean> => {
             return $adSlot[0];
         })
         .then((adSlot: Element) => {
-            stop();
             mediator.emit('page:defaultcommercial:right', adSlot);
             return true;
         });

@@ -33,20 +33,20 @@ const commercialModules: Array<Array<any>> = [
     ['cm-track-cmp-consent', trackCmpConsent],
     ['cm-checkDispatcher', initCheckDispatcher],
     ['cm-lotame-cmp', initLotameCmp],
-    ['cm-lotame-data-extract', initLotameDataExtract, true],
+    ['cm-lotame-data-extract', initLotameDataExtract],
 ];
 
 if (!commercialFeatures.adFree) {
     commercialModules.push(
-        ['cm-prepare-prebid', preparePrebid, true],
-        ['cm-prepare-googletag', prepareGoogletag, true],
+        ['cm-prepare-prebid', preparePrebid],
+        ['cm-prepare-googletag', prepareGoogletag],
         ['cm-thirdPartyTags', initThirdPartyTags],
-        ['cm-prepare-adverification', prepareAdVerification, true],
+        ['cm-prepare-adverification', prepareAdVerification],
         ['cm-mobileSticky', initMobileSticky],
         ['cm-highMerch', initHighMerch],
-        ['cm-articleAsideAdverts', initArticleAsideAdverts, true],
-        ['cm-articleBodyAdverts', initArticleBodyAdverts, true],
-        ['cm-liveblogAdverts', initLiveblogAdverts, true],
+        ['cm-articleAsideAdverts', initArticleAsideAdverts],
+        ['cm-articleBodyAdverts', initArticleBodyAdverts],
+        ['cm-liveblogAdverts', initLiveblogAdverts],
         ['cm-stickyTopBanner', initStickyTopBanner],
         ['cm-paidContainers', paidContainers],
         ['cm-paidforBand', initPaidForBand],
@@ -67,16 +67,11 @@ const loadHostedBundle = (): Promise<void> => {
                     const loadOnwardComponent = require('commercial/modules/hosted/onward');
                     commercialModules.push(
                         ['cm-hostedAbout', hostedAbout.init],
-                        [
-                            'cm-hostedVideo',
-                            initHostedVideo.initHostedVideo,
-                            true,
-                        ],
+                        ['cm-hostedVideo', initHostedVideo.initHostedVideo],
                         ['cm-hostedGallery', hostedGallery.init],
                         [
                             'cm-hostedOnward',
                             loadOnwardComponent.loadOnwardComponent,
-                            true,
                         ],
                         [
                             'cm-hostedOJCarousel',

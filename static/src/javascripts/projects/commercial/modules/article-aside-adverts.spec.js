@@ -3,7 +3,6 @@ import qwery from 'qwery';
 import fakeConfig from 'lib/config';
 import fakeMediator from 'lib/mediator';
 import fastdom from 'lib/fastdom-promise';
-import { noop } from 'lib/noop';
 import { init } from 'commercial/modules/article-aside-adverts';
 
 jest.mock('common/modules/commercial/commercial-features', () => ({
@@ -55,7 +54,7 @@ describe('Standard Article Aside Adverts', () => {
             document.body.innerHTML = `<div class="js-content-main-column"></div>`;
         }
 
-        init(noop, noop).then(resolve => {
+        init().then(resolve => {
             expect(resolve).toBe(false);
             done();
         });
@@ -70,7 +69,7 @@ describe('Standard Article Aside Adverts', () => {
             );
             done();
         });
-        init(noop, noop);
+        init();
     });
 
     it('should mutate the ad slot in short articles', done => {
@@ -82,7 +81,7 @@ describe('Standard Article Aside Adverts', () => {
             );
             done();
         });
-        init(noop, noop);
+        init();
     });
 });
 
@@ -122,7 +121,7 @@ describe('Immersive Article Aside Adverts', () => {
             expect(sizes).toContain('fluid');
             done();
         });
-        init(noop, noop);
+        init();
     });
 
     it('should remove sticky and return sizes that will fit when there is limited space', done => {
@@ -140,7 +139,7 @@ describe('Immersive Article Aside Adverts', () => {
             expect(sizes).not.toContain('fluid');
             done();
         });
-        init(noop, noop);
+        init();
     });
 });
 
@@ -167,6 +166,6 @@ describe('Immersive Article (no immersive elements) Aside Adverts', () => {
             );
             done();
         });
-        init(noop, noop);
+        init();
     });
 });
