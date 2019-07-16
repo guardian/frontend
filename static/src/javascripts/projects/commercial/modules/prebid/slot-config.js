@@ -11,6 +11,11 @@ import type { PrebidSlot } from 'commercial/modules/prebid/types';
 import { prebidUsMobileSticky } from 'common/modules/experiments/tests/prebid-us-mobile-sticky';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 
+const inMobileStickyPrebidOn = (): boolean =>
+    window.location.hash.indexOf('#mobile-sticky-prebid') !== -1;
+const inMobileStickyPrebidTestOr = (liveClause: boolean): boolean =>
+    inMobileStickyPrebidOn() || liveClause;
+
 const filterByAdvertId = (
     advertId: string,
     slots: Array<PrebidSlot>
@@ -101,8 +106,10 @@ const getSlots = (contentType: string): Array<PrebidSlot> => {
 
     switch (getBreakpointKey()) {
         case 'M':
-            return (config.get('switches.mobileStickyLeaderboard') &&
-                    isInVariantSynchronous(prebidUsMobileSticky, 'variant'))
+            return inMobileStickyPrebidTestOr(
+                config.get('switches.mobileStickyLeaderboard') &&
+                    isInVariantSynchronous(prebidUsMobileSticky, 'variant')
+            )
                 ? commonSlots.concat([...mobileSlots, mobileStickySlot])
                 : commonSlots.concat(mobileSlots);
         case 'T':
