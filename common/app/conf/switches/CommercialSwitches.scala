@@ -550,4 +550,14 @@ trait PrebidSwitches {
     sellByDate = never,
     exposeClientSide = true
   )
+
+  val mobileStickyLeaderboard: Switch = Switch(
+    group = Commercial,
+    name = "mobile-sticky-leaderboard",
+    description = "Include Mobile Sticky leaderboard banner",
+    owners = group(Commercial),
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = true
+  )
 }
