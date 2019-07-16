@@ -11,7 +11,7 @@ import type { PrebidSlot } from 'commercial/modules/prebid/types';
 import { prebidUsMobileSticky } from 'common/modules/experiments/tests/prebid-us-mobile-sticky';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 
-const inMobileStickyPrebidTestOn = (): boolean =>
+const isMobileStickyPrebidTestOn = (): boolean =>
     window.location.hash.indexOf('#mobile-sticky-prebid') !== -1 ||
     (config.get('switches.mobileStickyLeaderboard') &&
         isInVariantSynchronous(prebidUsMobileSticky, 'variant'));
@@ -107,7 +107,7 @@ const getSlots = (contentType: string): Array<PrebidSlot> => {
     switch (getBreakpointKey()) {
         case 'M':
             // Add Check if location is NA when A/B test gets removed
-            return inMobileStickyPrebidTestOn()
+            return isMobileStickyPrebidTestOn()
                 ? commonSlots.concat([...mobileSlots, mobileStickySlot])
                 : commonSlots.concat(mobileSlots);
         case 'T':
