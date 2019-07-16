@@ -1,5 +1,6 @@
 // @flow
 import reportError from 'lib/report-error';
+import config from 'lib/config';
 
 const ERR_INVALID_COOKIE_NAME = `Cookie must not contain invalid characters (space, tab and the following characters: '()<>@,;"/[]?={}')`;
 
@@ -11,6 +12,11 @@ const getShortDomain = ({
     isCrossSubdomain = false,
 }: { isCrossSubdomain: boolean } = {}): string => {
     const domain = document.domain || '';
+
+    if (config.get('page.isPreview')) {
+        return domain;
+    }
+
     // Trim any possible subdomain (will be shared with supporter, identity, etc)
     if (isCrossSubdomain) {
         return ['', ...domain.split('.').slice(-2)].join('.');
