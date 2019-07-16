@@ -81,6 +81,7 @@ describe('getSlots', () => {
         isInVariantSynchronous.mockReturnValue(true);
         getBreakpointKey.mockReturnValue('M');
         getCookie.mockReturnValue('NA');
+        config.set('switches.mobileStickyLeaderboard', true);
         expect(getSlots('Article')).toEqual([
             {
                 key: 'right',
@@ -209,6 +210,7 @@ describe('slots', () => {
     test('should return the correct mobile-sticky slot at breakpoint M', () => {
         getBreakpointKey.mockReturnValue('M');
         getCookie.mockReturnValue('NA');
+        config.set('switches.mobileStickyLeaderboard', true);
         isInVariantSynchronous.mockReturnValue(true);
         expect(slots('mobile-sticky', '')).toEqual([
             {
