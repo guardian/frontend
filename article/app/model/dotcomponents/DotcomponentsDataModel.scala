@@ -204,6 +204,7 @@ case class DataModelV3(
   starRating: Option[Int],
   trailText: String,
   nav: Nav,
+  designType: String
 )
 
 object DataModelV3 {
@@ -249,6 +250,7 @@ object DataModelV3 {
       "starRating" -> model.starRating,
       "trailText" -> model.trailText,
       "nav" -> model.nav,
+      "designType" -> model.designType
     )
   }
 
@@ -564,6 +566,7 @@ object DotcomponentsDataModel {
       starRating = article.content.starRating,
       trailText = article.trail.fields.trailText.getOrElse(""),
       nav = nav,
+      designType = article.metadata.designType.map(_.toString).getOrElse("Article")
     )
   }
 }
