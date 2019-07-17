@@ -111,6 +111,7 @@ const setPublisherProvidedId = (): void => {
     }
 };
 
+// onFillAdvertsComplete is used by unit tests to wait for fillAdvertSlots
 export const init = (): Promise<void> => {
     const setupAdvertising = (): Promise<void> => {
         // note: fillAdvertSlots isn't synchronous like most buffered cmds, it's a promise. It's put in here to ensure
@@ -138,6 +139,7 @@ export const init = (): Promise<void> => {
         setupAdvertising()
             .then(adFreeSlotRemove)
             .catch(removeAdSlots);
+
         return Promise.resolve();
     }
 
