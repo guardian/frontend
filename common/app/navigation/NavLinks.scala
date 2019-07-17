@@ -84,8 +84,7 @@ private object NavLinks {
       NavLink("Fixtures", "/football/fixtures", "football/fixtures"),
       NavLink("Results", "/football/results", "football/results"),
       NavLink("Competitions", "/football/competitions", "football/competitions"),
-      NavLink("Clubs", "/football/teams", "football/teams"),
-      NavLink("World Cup 2019", "/football/womens-world-cup-2019")
+      NavLink("Clubs", "/football/teams", "football/teams")
     )
   )
   val soccer = football.copy(title = "Soccer")
