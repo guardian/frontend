@@ -15,9 +15,6 @@ import {
 import type { MediaEvent } from 'common/modules/video/ga-helper';
 import ophan from 'ophan/ng';
 
-/* global require */
-declare function Krux(eventType: string, ident: string, data: Object): void;
-
 const isDesktop = isBreakpoint({
     min: 'desktop',
 });
@@ -265,39 +262,10 @@ const bindPrerollEvents = (player: Object) => {
     player.one('adserror', adFailed);
 };
 
-const kruxTracking = (player: Object, event: string) => {
-    const desiredVideos = [
-        'gu-video-457263940',
-        'gu-video-55e4835ae4b00856194f85c2',
-    ];
-    // test videos /artanddesign/video/2015/jun/25/damien-hirst-paintings-john-hoyland-newport-street-gallery-london-video
-    // /music/video/2015/aug/31/vmas-2015-highlights-video
-
-    if (
-        config.get('switches.kruxVideoTracking') &&
-        config.get('switches.krux') &&
-        $(player.el()).attr('data-media-id') &&
-        desiredVideos.indexOf($(player.el()).attr('data-media-id')) !== -1
-    ) {
-        if (event === 'videoPlaying') {
-            // Krux is a global object loaded by krux.js file
-
-            /* eslint-disable */
-            Krux('admEvent', 'KAIQvckS', {});
-            /* eslint-enable */
-        } else if (event === 'videoEnded') {
-            /*eslint-disable */
-            Krux('admEvent', 'KBaTegd5', {});
-            /* eslint-enable */
-        }
-    }
-};
-
 // These events are so that other libraries (e.g. Ophan) can hook into events without
 // needing to know about videojs
 const bindGlobalEvents = (player: Object) => {
     player.on('playing', () => {
-        kruxTracking(player, 'videoPlaying');
         bean.fire(document.body, 'videoPlaying');
     });
     player.on('pause', () => {
@@ -305,7 +273,6 @@ const bindGlobalEvents = (player: Object) => {
     });
     player.on('ended', () => {
         bean.fire(document.body, 'videoEnded');
-        kruxTracking(player, 'videoEnded');
     });
 };
 
