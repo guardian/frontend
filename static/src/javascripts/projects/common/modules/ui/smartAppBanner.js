@@ -21,15 +21,15 @@ const COOKIE_IMPRESSION_KEY = 'GU_SMARTAPPBANNER';
 const DATA = {
     IOS: {
         LOGO: 'https://assets.guim.co.uk/images/apps/app-logo.png',
-        SCREENSHOTS: 
+        SCREENSHOTS:
             'https://assets.guim.co.uk/images/apps/ios-screenshots.jpg',
-        LINK: 
+        LINK:
             'https://app.adjust.com/w97upi?deep_link=gnmguardian://root?contenttype=front&source=adjust',
         STORE: 'on the App Store',
     },
     ANDROID: {
         LOGO: 'https://assets.guim.co.uk/images/apps/app-logo.png',
-        SCREENSHOTS: 
+        SCREENSHOTS:
             'https://assets.guim.co.uk/images/apps/ios-screenshots.jpg',
         LINK: 'https://play.google.com/store/apps/details?id=com.guardian',
         STORE: 'in Google Play',
