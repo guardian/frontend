@@ -4,9 +4,7 @@ import config from 'lib/config';
 import { getCookie } from 'lib/cookies';
 import { getUrlVars } from 'lib/url';
 import fetchJSON from 'lib/fetch-json';
-
 import { commercialCmpCustomise } from 'common/modules/experiments/tests/commercial-cmp-customise';
-import { commercialConsentModalBanner } from 'common/modules/experiments/tests/commercial-consent-modal-banner';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import { log } from './log';
 import { CmpStore } from './store';
@@ -78,17 +76,6 @@ const generateStore = (isInTest: boolean): CmpStore => {
     return store;
 };
 
-const isInCommercialConsentModalBannerTest = (): boolean =>
-    isInVariantSynchronous(commercialConsentModalBanner, 'regularVariant') ||
-    isInVariantSynchronous(
-        commercialConsentModalBanner,
-        'dismissableVariant'
-    ) ||
-    isInVariantSynchronous(
-        commercialConsentModalBanner,
-        'nonDismissableVariant'
-    );
-
 const isInNA = (): boolean =>
     (getCookie('GU_geo_continent') || 'OTHER').toUpperCase() === 'NA';
 
@@ -116,7 +103,7 @@ class CmpService {
             this.cmpConfig.logging = 'debug';
             log.info('Set logging level to DEBUG');
         }
-        if (gdprApplies() || isInCommercialConsentModalBannerTest()) {
+        if (gdprApplies()) {
             this.cmpConfig.gdprApplies = true;
         }
     }
