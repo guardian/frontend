@@ -1,5 +1,4 @@
 // @flow
-// import { noop } from 'lib/noop';
 import { init, _ } from './liveblog-adverts';
 
 const { getSlotName } = _;
