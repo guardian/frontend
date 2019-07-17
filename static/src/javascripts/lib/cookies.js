@@ -13,7 +13,7 @@ const getShortDomain = ({
 }: { isCrossSubdomain: boolean } = {}): string => {
     const domain = document.domain || '';
 
-    if (config.get('page.isPreview')) {
+    if (domain === 'localhost' || config.get('page.isPreview')) {
         return domain;
     }
 
