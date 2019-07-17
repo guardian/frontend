@@ -20,7 +20,7 @@ const COOKIE_IMPRESSION_KEY = 'GU_SMARTAPPBANNER';
 
 const DATA = {
     IOS: {
-        LOGO: 'https://assets.guim.co.uk/images/apps/ios-logo.png',
+        LOGO: 'https://assets.guim.co.uk/images/apps/app-logo.png',
         SCREENSHOTS:
             'https://assets.guim.co.uk/images/apps/ios-screenshots.jpg',
         LINK:
@@ -28,11 +28,10 @@ const DATA = {
         STORE: 'on the App Store',
     },
     ANDROID: {
-        LOGO: 'https://assets.guim.co.uk/images/apps/android-logo-2x.png',
+        LOGO: 'https://assets.guim.co.uk/images/apps/app-logo.png',
         SCREENSHOTS:
             'https://assets.guim.co.uk/images/apps/ios-screenshots.jpg',
-        LINK:
-            'https://app.adjust.com/642i3r?deep_link=x-gu://www.theguardian.com/?source=adjust',
+        LINK: 'https://play.google.com/store/apps/details?id=com.guardian',
         STORE: 'in Google Play',
     },
 };
