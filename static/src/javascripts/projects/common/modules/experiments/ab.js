@@ -32,24 +32,38 @@ import {
 
 export const getEpicTestToRun = memoize(
     (): Promise<?Runnable<EpicABTest>> => {
+        const highPrioritySyncTests = syncEpicTests.filter(
+            test => test.highPriority
+        );
+        const lowPrioritySyncTests = syncEpicTests.filter(
+            test => !test.highPriority
+        );
+
         if (config.get('switches.epicTestsFromGoogleDocs')) {
             return getEpicTestsFromGoogleDoc().then(asyncEpicTests => {
                 asyncEpicTests.forEach(test =>
                     config.set(`switches.ab${test.id}`, true)
                 );
 
+                const highPriorityAsyncTests = asyncEpicTests.filter(
+                    test => test.highPriority
+                );
+                const lowPriorityAsyncTests = asyncEpicTests.filter(
+                    test => !test.highPriority
+                );
+
                 return firstRunnableTest<EpicABTest>([
-                    ...asyncEpicTests.filter(test => test.highPriority),
-                    ...syncEpicTests.filter(test => test.highPriority),
-                    ...asyncEpicTests.filter(test => !test.highPriority),
-                    ...syncEpicTests.filter(test => !test.highPriority),
+                    ...highPriorityAsyncTests,
+                    ...highPrioritySyncTests,
+                    ...lowPriorityAsyncTests,
+                    ...lowPrioritySyncTests,
                 ]);
             });
         }
         return Promise.resolve(
             firstRunnableTest<EpicABTest>([
-                ...syncEpicTests.filter(test => test.highPriority),
-                ...syncEpicTests.filter(test => !test.highPriority),
+                ...highPrioritySyncTests,
+                ...lowPrioritySyncTests,
             ])
         );
     }
