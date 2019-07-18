@@ -15,8 +15,8 @@ import { init as initPlistaOutbrainRenderer } from 'commercial/modules/third-par
 const insertScripts = (services: Array<ThirdPartyTag>): void => {
     const ref = document.scripts[0];
     const frag = document.createDocumentFragment();
-    while (services.length) {
-        const service = services.shift();
+
+    services.forEach(service => {
         // flowlint sketchy-null-bool:warn
         if (service.useImage) {
             new Image().src = service.url;
@@ -26,8 +26,9 @@ const insertScripts = (services: Array<ThirdPartyTag>): void => {
             script.onload = service.onLoad;
             frag.appendChild(script);
         }
-    }
-    if (ref && ref.parentNode) {
+    });
+
+    if (ref && ref.parentNode && frag.querySelectorAll('script').length) {
         ref.parentNode.insertBefore(frag, ref);
     }
 };
@@ -44,9 +45,7 @@ const loadOther = (): void => {
         fbPixel(),
     ].filter(_ => _.shouldRun);
 
-    if (services.length) {
-        insertScripts(services);
-    }
+    insertScripts(services);
 };
 
 const init = (): Promise<boolean> => {
