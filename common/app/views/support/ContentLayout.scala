@@ -4,8 +4,7 @@ import model._
 import org.jsoup.Jsoup
 
 object ContentLayout {
-  implicit class ContentLayout(content: model.ContentType) {
-    def showBottomSocialButtons: Boolean = {
+    def showBottomSocialButtons(content: model.ContentType): Boolean = {
       content match {
         case l: Article if l.isLiveBlog => true
         case a: Article =>
@@ -19,16 +18,4 @@ object ContentLayout {
         case _ => true
       }
     }
-
-    def tagTone: Option[String] = {
-      content match {
-        case l: Article if l.isLiveBlog => Some("live")
-        case _: Audio => Some("media")
-        case _: Video => Some("media")
-        case _: Gallery => Some("media")
-        case _: ImageContent => Some("media")
-        case _ => None
-      }
-    }
-  }
 }

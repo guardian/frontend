@@ -3,7 +3,7 @@
 @import common.{LinkTo, Localisation}
 @import model.ShareLinkMeta
 @import model.Badges.badgeFor
-@import views.support.ContentLayout.ContentLayout
+@import views.support.ContentLayout
 @import views.support.Seq2zipWithRowInfo
 
 <div class="submeta @if(content.content.tags.isAudio){podcast-section}">
@@ -44,7 +44,7 @@
             }
         </ul>
     </div>
-    @if(content.showBottomSocialButtons) {
+    @if(ContentLayout.showBottomSocialButtons(content)) {
         <div data-component="share" class="submeta__share">
             @Social(content.sharelinks.pageShares)
         </div>
