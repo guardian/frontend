@@ -23,7 +23,7 @@ import { getForcedParticipationsFromUrl } from 'common/modules/experiments/ab-ur
 import {
     concurrentTests,
     engagementBannerTests,
-    epicTests as syncEpicTests,
+    epicTests as hardCodedEpicTests,
 } from 'common/modules/experiments/ab-tests';
 import {
     getEngagementBannerTestsFromGoogleDoc,
@@ -32,40 +32,38 @@ import {
 
 export const getEpicTestToRun = memoize(
     (): Promise<?Runnable<EpicABTest>> => {
-        // The syncEpicTests are the hard-coded tests, and asyncEpicTests are fetched from config
-
-        const highPrioritySyncTests = syncEpicTests.filter(
+        const highPriorityHardCodedTests = hardCodedEpicTests.filter(
             test => test.highPriority
         );
-        const lowPrioritySyncTests = syncEpicTests.filter(
+        const lowPriorityHardCodedTests = hardCodedEpicTests.filter(
             test => !test.highPriority
         );
 
         if (config.get('switches.epicTestsFromGoogleDocs')) {
-            return getEpicTestsFromGoogleDoc().then(asyncEpicTests => {
-                asyncEpicTests.forEach(test =>
+            return getEpicTestsFromGoogleDoc().then(configuredEpicTests => {
+                configuredEpicTests.forEach(test =>
                     config.set(`switches.ab${test.id}`, true)
                 );
 
-                const highPriorityAsyncTests = asyncEpicTests.filter(
+                const highPriorityConfiguredTests = configuredEpicTests.filter(
                     test => test.highPriority
                 );
-                const lowPriorityAsyncTests = asyncEpicTests.filter(
+                const lowPriorityConfiguredTests = configuredEpicTests.filter(
                     test => !test.highPriority
                 );
 
                 return firstRunnableTest<EpicABTest>([
-                    ...highPriorityAsyncTests,
-                    ...highPrioritySyncTests,
-                    ...lowPriorityAsyncTests,
-                    ...lowPrioritySyncTests,
+                    ...highPriorityConfiguredTests,
+                    ...highPriorityHardCodedTests,
+                    ...lowPriorityConfiguredTests,
+                    ...lowPriorityHardCodedTests,
                 ]);
             });
         }
         return Promise.resolve(
             firstRunnableTest<EpicABTest>([
-                ...highPrioritySyncTests,
-                ...lowPrioritySyncTests,
+                ...highPriorityHardCodedTests,
+                ...lowPriorityHardCodedTests,
             ])
         );
     }
