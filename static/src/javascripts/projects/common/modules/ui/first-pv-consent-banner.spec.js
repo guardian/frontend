@@ -1,5 +1,4 @@
 // @flow
-import { isInVariantSynchronous as isInVariantSynchronous_ } from 'common/modules/experiments/ab';
 import {
     firstPvConsentBanner as banner,
     _ as test,
@@ -19,7 +18,6 @@ const passingCookies = _ => {
     if (_ === 'GU_country') return 'NO';
     else if (_ === 'GU_geo_continent') return 'EU';
 };
-const isInVariantSynchronous: any = isInVariantSynchronous_;
 
 beforeEach(() => {
     jest.clearAllMocks();
@@ -101,52 +99,6 @@ describe('First PV consents banner', () => {
             return banner.canShow().then(showable => {
                 expect(showable).toBe(false);
             });
-        });
-    });
-
-    describe('With location', () => {
-        it('should render in EU', async () => {
-            getCookie.mockImplementation(_ => {
-                if (_ === 'GU_geo_continent') return 'EU';
-                return null;
-            });
-            return expect(await banner.canShow()).toBe(true);
-        });
-        it('should render in AS', async () => {
-            getCookie.mockImplementation(_ => {
-                if (_ === 'GU_geo_continent') return 'AS';
-                return null;
-            });
-            return expect(await banner.canShow()).toBe(true);
-        });
-        it('should render in OC', async () => {
-            getCookie.mockImplementation(_ => {
-                if (_ === 'GU_geo_continent') return 'OC';
-                return null;
-            });
-            return expect(await banner.canShow()).toBe(true);
-        });
-        it('should render in AF', async () => {
-            getCookie.mockImplementation(_ => {
-                if (_ === 'GU_geo_continent') return 'AF';
-                return null;
-            });
-            return expect(await banner.canShow()).toBe(true);
-        });
-        it('should render in SA', async () => {
-            getCookie.mockImplementation(_ => {
-                if (_ === 'GU_geo_continent') return 'SA';
-                return null;
-            });
-            return expect(await banner.canShow()).toBe(true);
-        });
-        it('should not render in NA', async () => {
-            isInVariantSynchronous.mockImplementation(() => false);
-            getCookie.mockImplementation(_ => {
-                if (_ === 'GU_geo_continent') return 'NA';
-                return null;
-            });
-            return expect(await banner.canShow()).toBe(false);
         });
     });
 
