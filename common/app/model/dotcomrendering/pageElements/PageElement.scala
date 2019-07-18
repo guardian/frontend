@@ -7,7 +7,6 @@ import model.content._
 import model.{AudioAsset, ImageAsset, ImageMedia, VideoAsset}
 import org.jsoup.Jsoup
 import play.api.libs.json._
-import views.support.cleaner.SoundcloudHelper
 import views.support.{AffiliateLinksCleaner, ImgSrc, Item120, Item1200, Item140, Item300, Item640, Item700, SrcSet}
 
 import scala.collection.JavaConverters._

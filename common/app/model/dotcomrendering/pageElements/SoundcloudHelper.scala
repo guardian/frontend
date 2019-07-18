@@ -1,4 +1,4 @@
-package views.support.cleaner
+package model.dotcomrendering.pageElements
 
 import java.net.URLDecoder
 
