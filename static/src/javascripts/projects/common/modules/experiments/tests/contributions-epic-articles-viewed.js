@@ -56,6 +56,7 @@ export const articlesViewed: EpicABTest = makeEpicABTest({
     audienceOffset: 0,
 
     geolocation,
+    highPriority: true,
 
     canRun: () =>
         articleViewCount >= minArticleViews && !!getCountryName(geolocation),

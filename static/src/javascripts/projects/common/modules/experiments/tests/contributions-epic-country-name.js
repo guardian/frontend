@@ -25,6 +25,7 @@ export const countryName: EpicABTest = makeEpicABTest({
     audienceOffset: 0,
 
     geolocation,
+    highPriority: true,
 
     canRun: () =>
         geolocation !== 'US' &&
