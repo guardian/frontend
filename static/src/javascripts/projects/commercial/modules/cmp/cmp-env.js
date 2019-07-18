@@ -80,7 +80,7 @@ export const defaultConfig = {
     storeConsentGlobally: false,
     storePublisherData: false,
     logging: false,
-    gdprApplies: false,
+    gdprApplies: true,
 };
 
 export const vendorVersionList = [vendorVersion];

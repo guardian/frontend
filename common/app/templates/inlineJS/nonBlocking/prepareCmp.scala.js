@@ -59,7 +59,7 @@ try {
                     storeConsentGlobally: false,
                     storePublisherData: false,
                     logging: false,
-                    gdprApplies: false,
+                    gdprApplies: true,
                 }
                 return cmp;
             }());

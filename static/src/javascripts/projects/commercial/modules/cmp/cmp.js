@@ -76,11 +76,6 @@ const generateStore = (isInTest: boolean): CmpStore => {
     return store;
 };
 
-const isInNA = (): boolean =>
-    (getCookie('GU_geo_continent') || 'OTHER').toUpperCase() === 'NA';
-
-const gdprApplies = (): boolean => !isInNA();
-
 class CmpService {
     isLoaded: boolean;
     cmpReady: boolean;
@@ -102,9 +97,6 @@ class CmpService {
         if (getUrlVars().cmpdebug) {
             this.cmpConfig.logging = 'debug';
             log.info('Set logging level to DEBUG');
-        }
-        if (gdprApplies()) {
-            this.cmpConfig.gdprApplies = true;
         }
     }
 
