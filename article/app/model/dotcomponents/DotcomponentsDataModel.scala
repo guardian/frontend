@@ -509,7 +509,7 @@ object DotcomponentsDataModel {
     )
 
     val byline = article.tags.contributors.map(_.name) match {
-      case Nil => "Guardian staff reporter"
+      case Nil => article.trail.byline.getOrElse("Guardian staff reporter")
       case contributors => contributors.mkString(",")
     }
 
