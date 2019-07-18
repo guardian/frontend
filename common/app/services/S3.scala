@@ -21,7 +21,7 @@ import scala.io.{Codec, Source}
 
 trait S3 extends Logging {
 
-  lazy val bucket = Configuration.aws.bucket
+  lazy val bucket = Configuration.aws.frontendStoreBucket
 
   lazy val client: Option[AmazonS3] = Configuration.aws.credentials.map{ credentials =>
     AmazonS3Client
@@ -150,7 +150,7 @@ object S3 extends S3
 
 object S3FrontsApi extends S3 {
 
-  override lazy val bucket = Configuration.aws.bucket
+  override lazy val bucket = Configuration.aws.frontendStoreBucket
   lazy val stage = Configuration.facia.stage.toUpperCase
   val namespace = "frontsapi"
   lazy val location = s"$stage/$namespace"
@@ -167,12 +167,10 @@ object S3Archive extends S3 {
  def getHtml(path: String): Option[String] = get(path)
 }
 
-object S3Infosec extends S3 {
-  override lazy val bucket = "aws-frontend-infosec"
-  val key = "blocked-email-domains.txt"
-  def getBlockedEmailDomains: Option[String] = get(key)
-}
-
 object S3ArchiveOriginals extends S3 {
   override lazy val bucket = if (Configuration.environment.isNonProd) "aws-frontend-archive-code-originals" else "aws-frontend-archive-originals"
+}
+
+object S3Skimlinks extends S3 {
+  override lazy val bucket = Configuration.affiliateLinks.bucket
 }
