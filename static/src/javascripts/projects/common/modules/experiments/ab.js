@@ -23,7 +23,7 @@ import { getForcedParticipationsFromUrl } from 'common/modules/experiments/ab-ur
 import {
     concurrentTests,
     engagementBannerTests,
-    epicTests,
+    epicTests as syncEpicTests,
 } from 'common/modules/experiments/ab-tests';
 import {
     getEngagementBannerTestsFromGoogleDoc,
@@ -37,13 +37,21 @@ export const getEpicTestToRun = memoize(
                 asyncEpicTests.forEach(test =>
                     config.set(`switches.ab${test.id}`, true)
                 );
+
                 return firstRunnableTest<EpicABTest>([
-                    ...asyncEpicTests,
-                    ...epicTests,
+                    ...asyncEpicTests.filter(test => test.highPriority),
+                    ...syncEpicTests.filter(test => test.highPriority),
+                    ...asyncEpicTests.filter(test => !test.highPriority),
+                    ...syncEpicTests.filter(test => !test.highPriority),
                 ]);
             });
         }
-        return Promise.resolve(firstRunnableTest<EpicABTest>(epicTests));
+        return Promise.resolve(
+            firstRunnableTest<EpicABTest>([
+                ...syncEpicTests.filter(test => test.highPriority),
+                ...syncEpicTests.filter(test => !test.highPriority),
+            ])
+        );
     }
 );
 

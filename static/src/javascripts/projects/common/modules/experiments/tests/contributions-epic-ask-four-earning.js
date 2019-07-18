@@ -10,6 +10,7 @@ export const askFourEarning: EpicABTest = makeEpicABTest({
     campaignId: 'kr1_epic_ask_four_earning',
 
     geolocation: geolocationGetSync(),
+    highPriority: false,
 
     start: '2017-01-24',
     expiry: '2020-01-27',

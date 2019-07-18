@@ -462,6 +462,8 @@ const makeEpicABTest = ({
     successMeasure,
     audienceCriteria,
     variants,
+    geolocation,
+    highPriority,
 
     // optional params
     campaignPrefix = 'gdnwb_copts_memco',
@@ -472,13 +474,13 @@ const makeEpicABTest = ({
     pageCheck = isCompatibleWithArticleEpic,
     template = controlTemplate,
     canRun = () => true,
-    geolocation,
 }: InitEpicABTest): EpicABTest => {
     const test = {
         // this is true because we use the reader revenue flag rather than sensitive
         // to disable contributions asks for a particular piece of content
         showForSensitive: true,
         geolocation,
+        highPriority,
         canRun() {
             return (
                 canRun() &&
@@ -616,10 +618,15 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
 
                     const geolocation = geolocationGetSync();
 
+                    const highPriority = rows.some(row =>
+                        optionalStringToBoolean(row.highPriority)
+                    );
+
                     return makeEpicABTest({
                         id: testName,
                         campaignId: testName,
                         geolocation,
+                        highPriority,
 
                         start: '2018-01-01',
                         expiry: '2020-01-01',
