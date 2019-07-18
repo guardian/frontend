@@ -132,15 +132,6 @@ class AtomCleanerTest extends FlatSpec
     renderAndGetId(atom) shouldBe empty
   }
 
-  "AMP Youtube template" should "render nothing if there are no assets" in {
-    val atom = youTubeAtom.get.media.head.copy(assets = Seq.empty)
-
-    val html = views.html.fragments.atoms.ampYoutube(media = atom, displayCaption = false, mediaWrapper = None)(TestRequest())
-    val doc = Jsoup.parse(html.toString())
-
-    doc.getElementsByTag("amp-youtube") shouldBe empty
-  }
-
   "Formatted duration" should "produce the expected format" in {
     youTubeAtom.map(_.media.head).get.copy(duration = Some(61)).formattedDuration should contain("1:01")
     youTubeAtom.map(_.media.head).get.copy(duration = Some(70)).formattedDuration should contain("1:10")
