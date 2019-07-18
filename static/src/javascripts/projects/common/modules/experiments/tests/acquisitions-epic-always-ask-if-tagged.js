@@ -3,10 +3,14 @@ import {
     makeEpicABTest,
     defaultButtonTemplate,
 } from 'common/modules/commercial/contributions-utilities';
+import { getSync as geolocationGetSync } from 'lib/geolocation';
 
 export const acquisitionsEpicAlwaysAskIfTagged = makeEpicABTest({
     id: 'AcquisitionsEpicAlwaysAskIfTagged',
     campaignId: 'epic_always_ask_if_tagged',
+
+    geolocation: geolocationGetSync(),
+    highPriority: false,
 
     start: '2017-05-23',
     expiry: '2020-01-27',

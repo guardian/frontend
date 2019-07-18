@@ -21,7 +21,7 @@
     z-index: $zindex-popover - 1;
 }
 
-.site-message--banner:not(.site-message--first-pv-consent--dismissableVariant):not(.site-message--first-pv-consent--nonDismissableVariant) {
+.site-message--banner {
     width: 100%;
     z-index: $zindex-popover;
     position: fixed;
@@ -240,6 +240,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         position: relative;
         padding-top: $gs-baseline/2;
         padding-bottom: $gs-baseline/2;
+        box-sizing: border-box;
     }
 
     .site-message__close {
@@ -284,7 +285,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 
     .app__logo {
         width: 50px;
-        margin-left: $gs-gutter*.75;
+        margin-left: $gs-gutter*1.25;
         margin-right: $gs-gutter/4;
     }
 

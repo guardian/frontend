@@ -366,7 +366,7 @@ case object GunsAndLiesInAmerica extends FrontEmailMetadata {
 }
 
 case object WordOfMouth extends FrontEmailMetadata {
-  val name = "Word of Mouth"
+  val name = "Word Of Mouth"
   override val banner = Some("word-of-mouth.png")
 }
 

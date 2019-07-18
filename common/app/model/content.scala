@@ -481,7 +481,7 @@ object Article {
       ("article:tag", tags.keywords.map(_.name).mkString(",")),
       ("article:section", trail.sectionName),
       ("article:publisher", "https://www.facebook.com/theguardian"),
-      ("article:author", author)
+      ("article:author", authorOrPA(author))
     )
 
     content.metadata.copy(
@@ -523,6 +523,11 @@ object Article {
     )
 
     Article(contentOverrides, lightboxProperties)
+  }
+
+  private def authorOrPA: String => String = {
+    case "Press Association" => "https://www.facebook.com/PAMediaGroupUK/"
+    case otherwise => otherwise
   }
 }
 
@@ -632,7 +637,13 @@ object Video {
       "videoDuration" -> elements.videos.find(_.properties.isMain).map{ v => JsNumber(v.videos.duration)}.getOrElse(JsNull)) ++ AtomProperties(content.atoms)
 
 
-    val optionalOpengraphProperties = if(content.metadata.webUrl.startsWith("https://")) Map("og:video:secure_url" -> content.metadata.webUrl) else Nil
+    val optionalOpengraphProperties =
+      if(content.metadata.webUrl.startsWith("https://"))
+        Map(
+          "og:video:url" -> content.metadata.webUrl,
+          "og:video:secure_url" -> content.metadata.webUrl
+        )
+      else Map.empty
     val opengraphProperties = Map(
       // Not using the og:video properties here because we want end-users to visit the guardian website
       // when they click the thumbnail in the FB feed rather than playing the video "in-place"

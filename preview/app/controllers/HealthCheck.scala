@@ -7,5 +7,5 @@ import play.api.mvc.ControllerComponents
 import scala.concurrent.ExecutionContext
 
 class HealthCheck(wsClient: WSClient, val controllerComponents: ControllerComponents)(implicit executionContext: ExecutionContext) extends AllGoodCachedHealthCheck(
-  NeverExpiresSingleHealthCheck("/lifeandstyle/2015/aug/30/espigoladors-barcelona-catalan-food-funny-shaped-vegetables-people-need")
+  NeverExpiresSingleHealthCheck("/science/grrlscientist/2012/aug/07/3")
 )(wsClient, executionContext)

@@ -28,8 +28,8 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-epic-articles-viewed",
-    "States how many articles a user has viewed in the epic",
+    "ab-contributions-epic-articles-viewed-month",
+    "States how many articles a user has viewed in the epic in a month",
     owners = Seq(Owner.withGithub("tomrf1")),
     safeState = Off,
     sellByDate = new LocalDate(2020, 1, 27),
@@ -48,9 +48,9 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-global-mobile-banner-design",
-    "testing mobile-only design changes",
-    owners = Seq(Owner.withGithub("jlieb10")),
+    "ab-contributions-banner-articles-viewed",
+    "show number of articles viewed in contributions banner",
+    owners = Seq(Owner.withGithub("tomrf1")),
     safeState = Off,
     sellByDate = new LocalDate(2019, 9, 30),
     exposeClientSide = true
@@ -88,11 +88,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-commercial-consent-modal-banner",
-    "Test whether presenting a modal Consent Banner increases proportion of US users who interact with it",
+    "ab-prebid-us-mobile-sticky",
+    "Test asking prebid for mobile sticky slots in US",
     owners = Owner.group(Commercial),
     safeState = Off,
-    sellByDate = new LocalDate(2019, 7, 31),
+    sellByDate = new LocalDate(2019, 9, 30),
     exposeClientSide = true
   )
 }

@@ -9,6 +9,7 @@
 .contributions__epic {
     border-top: 1px solid $highlight-main;
     background-color: $brightness-97;
+    clear: left;
     margin-top: $gs-baseline * 2;
     padding: ($gs-baseline / 3) ($gs-gutter / 4) $gs-baseline;
 

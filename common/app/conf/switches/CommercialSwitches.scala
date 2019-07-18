@@ -288,16 +288,6 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-  val KruxVideoTracking = Switch(
-    Commercial,
-    "krux-video-tracking",
-    "If this switch is ON, there will be a Krux pixel fired to track particular videos",
-    owners = group(Commercial),
-    safeState = On,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
    val LotameSwitch: Switch = Switch(
      group = Commercial,
      name = "lotame",
@@ -547,6 +537,16 @@ trait PrebidSwitches {
     description = "Include S2S Ozone project adapter in Prebid auctions",
     owners = group(Commercial),
     safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
+  val mobileStickyLeaderboard: Switch = Switch(
+    group = Commercial,
+    name = "mobile-sticky-leaderboard",
+    description = "Include Mobile Sticky leaderboard banner",
+    owners = group(Commercial),
+    safeState = On,
     sellByDate = never,
     exposeClientSide = true
   )

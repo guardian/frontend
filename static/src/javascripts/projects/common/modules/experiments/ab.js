@@ -23,7 +23,7 @@ import { getForcedParticipationsFromUrl } from 'common/modules/experiments/ab-ur
 import {
     concurrentTests,
     engagementBannerTests,
-    epicTests,
+    epicTests as hardCodedEpicTests,
 } from 'common/modules/experiments/ab-tests';
 import {
     getEngagementBannerTestsFromGoogleDoc,
@@ -32,18 +32,40 @@ import {
 
 export const getEpicTestToRun = memoize(
     (): Promise<?Runnable<EpicABTest>> => {
+        const highPriorityHardCodedTests = hardCodedEpicTests.filter(
+            test => test.highPriority
+        );
+        const lowPriorityHardCodedTests = hardCodedEpicTests.filter(
+            test => !test.highPriority
+        );
+
         if (config.get('switches.epicTestsFromGoogleDocs')) {
-            return getEpicTestsFromGoogleDoc().then(asyncEpicTests => {
-                asyncEpicTests.forEach(test =>
+            return getEpicTestsFromGoogleDoc().then(configuredEpicTests => {
+                configuredEpicTests.forEach(test =>
                     config.set(`switches.ab${test.id}`, true)
                 );
+
+                const highPriorityConfiguredTests = configuredEpicTests.filter(
+                    test => test.highPriority
+                );
+                const lowPriorityConfiguredTests = configuredEpicTests.filter(
+                    test => !test.highPriority
+                );
+
                 return firstRunnableTest<EpicABTest>([
-                    ...asyncEpicTests,
-                    ...epicTests,
+                    ...highPriorityConfiguredTests,
+                    ...highPriorityHardCodedTests,
+                    ...lowPriorityConfiguredTests,
+                    ...lowPriorityHardCodedTests,
                 ]);
             });
         }
-        return Promise.resolve(firstRunnableTest<EpicABTest>(epicTests));
+        return Promise.resolve(
+            firstRunnableTest<EpicABTest>([
+                ...highPriorityHardCodedTests,
+                ...lowPriorityHardCodedTests,
+            ])
+        );
     }
 );
 
@@ -56,8 +78,8 @@ export const getEngagementBannerTestToRun = memoize(
                         config.set(`switches.ab${test.id}`, true)
                     );
                     return firstRunnableTest<AcquisitionsABTest>([
-                        ...asyncEngagementBannerTests,
                         ...engagementBannerTests,
+                        ...asyncEngagementBannerTests,
                     ]);
                 }
             );

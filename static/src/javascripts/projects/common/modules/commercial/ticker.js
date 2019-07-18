@@ -1,5 +1,5 @@
 // @flow
-import { getLocalCurrencySymbol } from 'lib/geolocation';
+import { getLocalCurrencySymbolSync } from 'lib/geolocation';
 import fetchJSON from 'lib/fetch-json';
 
 type TickerType = 'unlimited' | 'hardstop';
@@ -59,10 +59,10 @@ const increaseCounter = (
         newCount <= count[parentElementSelector] || newCount >= total; // either we've reached the total or the count isn't going up because total is too small
 
     if (finishedCounting) {
-        counterElement.innerHTML = `${getLocalCurrencySymbol()}${total.toLocaleString()}`;
+        counterElement.innerHTML = `${getLocalCurrencySymbolSync()}${total.toLocaleString()}`;
     } else {
         count[parentElementSelector] = newCount;
-        counterElement.innerHTML = `${getLocalCurrencySymbol()}${count[
+        counterElement.innerHTML = `${getLocalCurrencySymbolSync()}${count[
             parentElementSelector
         ].toLocaleString()}`;
 
@@ -109,7 +109,7 @@ const populateGoal = (parentElement: HTMLElement, tickerType: TickerType) => {
         if (countElement && labelElement) {
             const amount =
                 goalReached() && tickerType === 'unlimited' ? total : goal;
-            countElement.innerHTML = `${getLocalCurrencySymbol()}${amount.toLocaleString()}`;
+            countElement.innerHTML = `${getLocalCurrencySymbolSync()}${amount.toLocaleString()}`;
 
             if (goalReached()) {
                 labelElement.innerHTML = 'contributed';

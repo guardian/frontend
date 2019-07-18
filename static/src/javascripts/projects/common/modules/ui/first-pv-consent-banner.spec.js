@@ -105,54 +105,48 @@ describe('First PV consents banner', () => {
     });
 
     describe('With location', () => {
-        beforeEach(() => {
-            test.clearTestVariants();
-        });
-        it('should render inside the EU', async () => {
+        it('should render in EU', async () => {
             getCookie.mockImplementation(_ => {
                 if (_ === 'GU_geo_continent') return 'EU';
                 return null;
             });
             return expect(await banner.canShow()).toBe(true);
         });
-        it('should not render outside the EU', async () => {
+        it('should render in AS', async () => {
+            getCookie.mockImplementation(_ => {
+                if (_ === 'GU_geo_continent') return 'AS';
+                return null;
+            });
+            return expect(await banner.canShow()).toBe(true);
+        });
+        it('should render in OC', async () => {
+            getCookie.mockImplementation(_ => {
+                if (_ === 'GU_geo_continent') return 'OC';
+                return null;
+            });
+            return expect(await banner.canShow()).toBe(true);
+        });
+        it('should render in AF', async () => {
+            getCookie.mockImplementation(_ => {
+                if (_ === 'GU_geo_continent') return 'AF';
+                return null;
+            });
+            return expect(await banner.canShow()).toBe(true);
+        });
+        it('should render in SA', async () => {
+            getCookie.mockImplementation(_ => {
+                if (_ === 'GU_geo_continent') return 'SA';
+                return null;
+            });
+            return expect(await banner.canShow()).toBe(true);
+        });
+        it('should not render in NA', async () => {
             isInVariantSynchronous.mockImplementation(() => false);
             getCookie.mockImplementation(_ => {
-                if (_ === 'GU_geo_continent') return '??';
+                if (_ === 'GU_geo_continent') return 'NA';
                 return null;
             });
             return expect(await banner.canShow()).toBe(false);
-        });
-        // two temporary tests that can be removed after 31/03/2019
-        it('should render in North America, when commercial consent test participation is "dismissableVariant"', async () => {
-            isInVariantSynchronous.mockImplementation(
-                (testId, variantId) => variantId === 'dismissableVariant'
-            );
-            getCookie.mockImplementation(_ => {
-                if (_ === 'GU_geo_continent') return 'NA';
-                return null;
-            });
-            return expect(await banner.canShow()).toBe(true);
-        });
-        it('should render in North America, when commercial consent test participation is "nonDismissableVariant"', async () => {
-            isInVariantSynchronous.mockImplementation(
-                (testId, variantId) => variantId === 'nonDismissableVariant'
-            );
-            getCookie.mockImplementation(_ => {
-                if (_ === 'GU_geo_continent') return 'NA';
-                return null;
-            });
-            return expect(await banner.canShow()).toBe(true);
-        });
-        it('should render in North America, when commercial consent test participation is "regularVariant"', async () => {
-            isInVariantSynchronous.mockImplementation(
-                (testId, variantId) => variantId === 'regularVariant'
-            );
-            getCookie.mockImplementation(_ => {
-                if (_ === 'GU_geo_continent') return 'NA';
-                return null;
-            });
-            return expect(await banner.canShow()).toBe(true);
         });
     });
 
