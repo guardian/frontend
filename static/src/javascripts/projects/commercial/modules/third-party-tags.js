@@ -15,12 +15,14 @@ import { init as initPlistaOutbrainRenderer } from 'commercial/modules/third-par
 const insertScripts = (services: Array<ThirdPartyTag>): void => {
     const ref = document.scripts[0];
     const frag = document.createDocumentFragment();
+    let insertedScripts = false;
 
     services.forEach(service => {
         // flowlint sketchy-null-bool:warn
         if (service.useImage) {
             new Image().src = service.url;
         } else {
+            insertedScripts = true;
             const script = document.createElement('script');
             script.src = service.url;
             script.onload = service.onLoad;
@@ -28,7 +30,7 @@ const insertScripts = (services: Array<ThirdPartyTag>): void => {
         }
     });
 
-    if (ref && ref.parentNode && frag.querySelectorAll('script').length) {
+    if (insertedScripts && ref && ref.parentNode) {
         ref.parentNode.insertBefore(frag, ref);
     }
 };
