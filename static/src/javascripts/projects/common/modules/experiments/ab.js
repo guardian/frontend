@@ -32,6 +32,8 @@ import {
 
 export const getEpicTestToRun = memoize(
     (): Promise<?Runnable<EpicABTest>> => {
+        // The syncEpicTests are the hard-coded tests, and asyncEpicTests are fetched from config
+
         const highPrioritySyncTests = syncEpicTests.filter(
             test => test.highPriority
         );
