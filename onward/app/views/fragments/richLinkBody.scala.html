@@ -5,6 +5,7 @@
 @import views.support.{BulletCleaner, ImgSrc, Item460, RenderClasses, RichLinkContributor}
 
 @import model.DotcomContentType
+@import model.pressed.Letters
 @(content: ContentType)(implicit request: RequestHeader)
 
 
@@ -29,7 +30,8 @@
     ))">
 
     <div class="rich-link__container">
-        @if(content.content.cardStyle == Media || content.content.cardStyle == Feature || content.content.cardStyle == DefaultCardstyle) {
+        @if(content.content.cardStyle == Media || content.content.cardStyle == Feature ||
+            content.content.cardStyle == DefaultCardstyle || content.content.cardStyle == Letters) {
             @content.trail.trailPicture.map { trailPictureContainer =>
                 @Item460.bestSrcFor(trailPictureContainer).map { imgSrc =>
 
@@ -46,7 +48,10 @@
                     @fragments.inlineSvg("garnett-quote", "icon")
                 }
                 <a class="rich-link__link">
-                    @Html(content.trail.headline)
+                    @{content.content.cardStyle match {
+                        case Letters => Html(content.trail.headline + " | Letters")
+                        case _ => Html(content.trail.headline)
+                        }}
                 </a>
             </h2>
             @if(!content.tags.isMedia && (
