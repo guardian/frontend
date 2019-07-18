@@ -88,16 +88,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-commercial-consent-modal-banner",
-    "Test whether presenting a modal Consent Banner increases proportion of US users who interact with it",
-    owners = Owner.group(Commercial),
-    safeState = Off,
-    sellByDate = new LocalDate(2019, 7, 31),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-prebid-us-mobile-sticky",
     "Test asking prebid for mobile sticky slots in US",
     owners = Owner.group(Commercial),

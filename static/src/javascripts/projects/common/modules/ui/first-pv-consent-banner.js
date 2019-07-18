@@ -3,7 +3,6 @@ import config from 'lib/config';
 import { getCookie } from 'lib/cookies';
 import { Message, hasUserAcknowledgedBanner } from 'common/modules/ui/message';
 import checkIcon from 'svgs/icon/tick.svg';
-import closeCentralIcon from 'svgs/icon/close-central.svg';
 import {
     getAdConsentState,
     setAdConsentState,
@@ -14,9 +13,6 @@ import ophan from 'ophan/ng';
 import { upAlertViewCount } from 'common/modules/analytics/send-privacy-prefs';
 import type { AdConsent } from 'common/modules/commercial/ad-prefs.lib';
 import type { Banner } from 'common/modules/ui/bannerPicker';
-import { commercialConsentModalBanner } from 'common/modules/experiments/tests/commercial-consent-modal-banner';
-import { isInVariantSynchronous } from 'common/modules/experiments/ab';
-import fastdom from 'lib/fastdom-promise';
 
 type Template = {
     heading: string,
@@ -62,61 +58,10 @@ const bindableClassNames: BindableClassNames = {
     agree: 'js-first-pv-consent-agree',
 };
 
-let inModalTestRegularVariant;
-const isInModalTestRegularVariant = (): boolean => {
-    if (inModalTestRegularVariant === undefined) {
-        inModalTestRegularVariant = isInVariantSynchronous(
-            commercialConsentModalBanner,
-            'regularVariant'
-        );
-    }
-
-    return inModalTestRegularVariant;
-};
-
-let inModalTestDismissableVariant;
-const isInModalTestDismissableVariant = (): boolean => {
-    if (inModalTestDismissableVariant === undefined) {
-        inModalTestDismissableVariant = isInVariantSynchronous(
-            commercialConsentModalBanner,
-            'dismissableVariant'
-        );
-    }
-
-    return inModalTestDismissableVariant;
-};
-
-let inModalTestNonDismissableVariant;
-const isInModalTestNonDismissableVariant = (): boolean => {
-    if (inModalTestNonDismissableVariant === undefined) {
-        inModalTestNonDismissableVariant = isInVariantSynchronous(
-            commercialConsentModalBanner,
-            'nonDismissableVariant'
-        );
-    }
-
-    return inModalTestNonDismissableVariant;
-};
-
-const isInCommercialConsentModalBannerTest = (): boolean =>
-    isInModalTestRegularVariant() ||
-    isInModalTestDismissableVariant() ||
-    isInModalTestNonDismissableVariant();
-
 const makeHtml = (): string => `
     <div class="site-message--first-pv-consent__block site-message--first-pv-consent__block--head ">${
         template.heading
     }</div>
-    ${
-        isInModalTestDismissableVariant()
-            ? `<div class="first-pv-consent-banner__close">
-            <button tabindex="3" class="button site-message--first-pv-consent__close-button js-site-message-close js-first-pv-consent-banner-close-button" data-link-name="hide consent banner">
-                <span class="u-h">Close</span>
-                ${closeCentralIcon.markup}
-            </button>
-        </div>`
-            : ''
-    }
     <div class="site-message--first-pv-consent__block site-message--first-pv-consent__block--intro">${template.consentText
         .map(_ => `<p>${_}</p>`)
         .join('')}
@@ -127,13 +72,11 @@ const makeHtml = (): string => `
             class="site-message--first-pv-consent__button site-message--first-pv-consent__button--main ${
                 bindableClassNames.agree
             }"
-            tabindex="1"
         >${checkIcon.markup}<span>${template.agreeButton}</span></button>
         <a
             href="${template.linkToPreferences}"
             data-link-name="first-pv-consent : to-prefs"
             class="site-message--first-pv-consent__link u-underline"
-            tabindex="2"
         >${template.choicesButton}</a>
     </div>
 `;
@@ -151,12 +94,6 @@ const onAgree = (msg: Message): void => {
         setAdConsentState(_, true);
     });
     msg.hide();
-    if (isInModalTestNonDismissableVariant) {
-        // enable scrolling on body
-        if (document.body) {
-            document.body.classList.remove('no-scroll');
-        }
-    }
 };
 
 const trackInteraction = (interaction: string): void => {
@@ -171,7 +108,7 @@ const trackInteraction = (interaction: string): void => {
 const canShow = (): Promise<boolean> =>
     Promise.resolve(
         hasUnsetAdChoices() &&
-            (gdprApplies() || isInCommercialConsentModalBannerTest()) &&
+            gdprApplies() &&
             !hasUserAcknowledgedBanner(messageCode)
     );
 
@@ -188,52 +125,10 @@ const bindClickHandlers = (msg: Message): void => {
     });
 };
 
-const bindModalCloseHandlers = (msg: Message): void => {
-    fastdom
-        .read(() =>
-            document.querySelector('.js-first-pv-consent-banner-close-button')
-        )
-        .then(closeButton => {
-            if (closeButton) {
-                closeButton.addEventListener('click', () => {
-                    msg.hide();
-                    // enable scrolling on body
-                    if (document.body) {
-                        document.body.classList.remove('no-scroll');
-                    }
-                });
-            }
-        });
-};
-
 const show = (): Promise<boolean> => {
     track();
 
     const opts = {};
-
-    const getTestVariant = (): ?string => {
-        if (isInModalTestDismissableVariant()) {
-            return 'dismissableVariant';
-        }
-
-        if (isInModalTestNonDismissableVariant()) {
-            return 'nonDismissableVariant';
-        }
-    };
-
-    const getTestModifierClass = (): ?string => {
-        const testVariant = getTestVariant();
-
-        if (testVariant) {
-            return `first-pv-consent--${testVariant}`;
-        }
-    };
-
-    const modifierClass = getTestModifierClass();
-
-    if (modifierClass) {
-        opts.cssModifierClass = modifierClass;
-    }
 
     const msg = new Message(
         messageCode,
@@ -244,20 +139,6 @@ const show = (): Promise<boolean> => {
                 permanent: true,
                 customJs: () => {
                     bindClickHandlers(msg);
-
-                    if (
-                        (isInModalTestDismissableVariant() ||
-                            isInModalTestNonDismissableVariant()) &&
-                        document.body
-                    ) {
-                        // prevent body scrolling beneath overlay
-                        document.body.classList.add('no-scroll');
-                    }
-
-                    // if isInModalTestDismissableVariant bind close button handlers
-                    if (isInModalTestDismissableVariant()) {
-                        bindModalCloseHandlers(msg);
-                    }
                 },
             },
             opts
@@ -273,16 +154,9 @@ const firstPvConsentBanner: Banner = {
     show,
 };
 
-const clearTestVariants = (): void => {
-    inModalTestRegularVariant = undefined;
-    inModalTestDismissableVariant = undefined;
-    inModalTestNonDismissableVariant = undefined;
-};
-
 export const _ = {
     onAgree,
     bindableClassNames,
-    clearTestVariants,
 };
 
 export {
