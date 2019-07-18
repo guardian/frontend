@@ -19,7 +19,7 @@ const isInNA = (): boolean =>
 
 export const init = (): Promise<void> => {
     if (
-        window.location.hash.indexOf('#mobile-sticky-prebid') !== -1 ||
+        window.location.hash.indexOf('#mobile-sticky') !== -1 ||
         (config.get('switches.mobileStickyLeaderboard') &&
         isInNA() && // User is in North America
         isBreakpoint({ min: 'mobile', max: 'mobileLandscape' }) && // User is using a mobile device

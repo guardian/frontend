@@ -12,7 +12,7 @@ import { prebidUsMobileSticky } from 'common/modules/experiments/tests/prebid-us
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 
 const isMobileStickyPrebidTestOn = (): boolean =>
-    window.location.hash.indexOf('#mobile-sticky-prebid') !== -1 ||
+    window.location.hash.indexOf('#mobile-sticky') !== -1 ||
     (config.get('switches.mobileStickyLeaderboard') &&
         isInVariantSynchronous(prebidUsMobileSticky, 'variant'));
 
