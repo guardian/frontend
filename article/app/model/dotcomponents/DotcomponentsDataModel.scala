@@ -2,6 +2,7 @@ package model.dotcomponents
 
 import com.gu.contentapi.client.model.v1.ElementType.Text
 import com.gu.contentapi.client.model.v1.{Block => APIBlock, BlockElement => ClientBlockElement, Blocks => APIBlocks}
+import com.gu.contentapi.client.utils.DesignType
 import common.Edition
 import common.Maps.RichMap
 import common.commercial.{CommercialProperties, EditionCommercialProperties, PrebidIndexSite}
@@ -22,7 +23,7 @@ import play.api.mvc.RequestHeader
 import views.html.fragments.affiliateLinksDisclaimer
 import views.support.{AffiliateLinksCleaner, CamelCase, ContentLayout, GUDateTimeFormat, ImgSrc, Item300}
 import controllers.ArticlePage
-import org.joda.time.{DateTime}
+import org.joda.time.DateTime
 
 // We have introduced our own set of objects for serializing data to the DotComponents API,
 // because we don't want people changing the core frontend models and as a side effect,
@@ -362,13 +363,21 @@ object DotcomponentsDataModel {
       relevantBlocks.filter(block => ids(block.id))
     }
 
-    def findPillar(pillar: Pillar, tags: List[Tag]): String = {
-      val isPaidContent = tags.exists(tag => tag.`type` == "Tone" && tag.id == "tone/advertisement-features")
+    def isPaidContent(tags: List[Tag]): Boolean = tags.exists(tag => tag.`type` == "Tone" && tag.id == "tone/advertisement-features")
 
-      if (isPaidContent) "labs"
+    def findPillar(pillar: Pillar, tags: List[Tag]): String = {
+      if (isPaidContent(tags)) "labs"
       else if (pillar.toString.toLowerCase == "arts") "culture"
       else pillar.toString.toLowerCase()
     }
+
+    def findDesignType(designType: Option[DesignType], tags: List[Tag]): String = {
+      // TODO Remove this when changes can be moved to https://github.com/guardian/content-api-scala-client/blob/master/client/src/main/scala/com.gu.contentapi.client/utils/CapiModelEnrichment.scala
+      if (isPaidContent(tags)) "AdvertisementFeature"
+      else designType.map(_.toString).getOrElse("Article")
+    }
+
+    article.metadata.designType.map(_.toString).getOrElse("Article")
 
     val bodyBlocksRaw = articlePage match {
       case lb: LiveBlogPage => blocksForLiveblogPage(lb, blocks)
@@ -564,8 +573,8 @@ object DotcomponentsDataModel {
       starRating = article.content.starRating,
       trailText = article.trail.fields.trailText.getOrElse(""),
       nav = nav,
-      designType = article.metadata.designType.map(_.toString).getOrElse("Article"),
-      showBottomSocialButtons = ContentLayout.showBottomSocialButtons(article)
+      showBottomSocialButtons = ContentLayout.showBottomSocialButtons(article),
+      designType = findDesignType(article.metadata.designType, allTags)
     )
   }
 }
