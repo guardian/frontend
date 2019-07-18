@@ -8,7 +8,6 @@ import {
     getBreakpoint as getBreakpoint_,
     isBreakpoint as isBreakpoint_,
 } from 'lib/detect';
-import { noop } from 'lib/noop';
 
 const getViewport: any = getViewport_;
 const getBreakpoint: any = getBreakpoint_;
@@ -58,7 +57,7 @@ describe('Article Body Adverts', () => {
 
     it('should exit if commercial feature disabled', () => {
         commercialFeatures.articleBodyAdverts = false;
-        return init(noop, noop).then(() => {
+        return init().then(() => {
             expect(spaceFillerStub).not.toHaveBeenCalled();
         });
     });

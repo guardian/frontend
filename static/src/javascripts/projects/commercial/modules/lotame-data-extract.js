@@ -19,8 +19,7 @@ const shouldLoadLotame = (): boolean => {
 
 // Fetches Lotame Data for the Ozone project
 // and stores in in window.OzoneLotameData
-const init = (start: () => void): Promise<void> => {
-    start();
+const init = (): Promise<void> => {
     if (!shouldLoadLotame) {
         return Promise.resolve();
     }

@@ -125,11 +125,8 @@ const onUpdate = () => {
     Promise.resolve(getSpaceFillerRules(WINDOWHEIGHT, true)).then(fill);
 };
 
-export const init = (start: () => void, stop: () => void): Promise<void> => {
-    start();
-
+export const init = (): Promise<void> => {
     if (!commercialFeatures.liveblogAdverts) {
-        stop();
         return Promise.resolve();
     }
 
@@ -139,8 +136,7 @@ export const init = (start: () => void, stop: () => void): Promise<void> => {
             return WINDOWHEIGHT;
         })
         .then(getSpaceFillerRules)
-        .then(fill)
-        .then(stop);
+        .then(fill);
 
     return Promise.resolve();
 };

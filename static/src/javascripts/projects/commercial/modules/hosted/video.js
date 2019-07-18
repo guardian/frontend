@@ -140,18 +140,12 @@ const setupVideo = (
     });
 };
 
-export const initHostedVideo = (
-    start: () => void,
-    stop: () => void
-): Promise<void> => {
-    start();
-
+export const initHostedVideo = (): Promise<void> => {
     const videoEl = document.querySelectorAll('.vjs-hosted__video');
     const youtubeIframe = document.querySelectorAll('.js-hosted-youtube-video');
 
     if (!youtubeIframe.length && !videoEl.length) {
         // Halt execution if there are no video containers on the page.
-        stop();
         return Promise.resolve();
     }
 
@@ -165,15 +159,13 @@ export const initHostedVideo = (
             },
             'media-player'
         );
-    })
-        .then(videojsInstance => {
-            Array.from(videoEl).forEach(el => {
-                setupVideo(el, videojsInstance);
-            });
+    }).then(videojsInstance => {
+        Array.from(videoEl).forEach(el => {
+            setupVideo(el, videojsInstance);
+        });
 
-            Array.from(youtubeIframe).forEach(initHostedYoutube);
-        })
-        .then(stop, stop);
+        Array.from(youtubeIframe).forEach(initHostedYoutube);
+    });
 
     return Promise.resolve();
 };
