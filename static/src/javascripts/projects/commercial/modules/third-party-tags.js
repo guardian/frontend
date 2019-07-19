@@ -1,6 +1,7 @@
 // @flow strict
 /* A regionalised container for all the commercial tags. */
 
+import fastdom from 'lib/fastdom-promise';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { imrWorldwide } from 'commercial/modules/third-party-tags/imr-worldwide';
 import { imrWorldwideLegacy } from 'commercial/modules/third-party-tags/imr-worldwide-legacy';
@@ -30,9 +31,11 @@ const insertScripts = (services: Array<ThirdPartyTag>): void => {
         }
     });
 
-    if (insertedScripts && ref && ref.parentNode) {
-        ref.parentNode.insertBefore(frag, ref);
-    }
+    fastdom.write(() => {
+        if (insertedScripts && ref && ref.parentNode) {
+            ref.parentNode.insertBefore(frag, ref);
+        }
+    });
 };
 
 const loadOther = (): void => {
