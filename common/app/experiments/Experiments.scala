@@ -16,7 +16,7 @@ object OldTLSSupportDeprecation extends Experiment(
   name = "old-tls-support-deprecation",
   description = "This will turn on a deprecation notice to any user who is accessing our site using TLS v1.0 or v1.1",
   owners = Seq(Owner.withGithub("siadcock")),
-  sellByDate = new LLocalDate(2020, 1,18),
+  sellByDate = new LocalDate(2020, 1,18),
   // Custom group based on header set in Fastly
   participationGroup = TLSSupport
 )
