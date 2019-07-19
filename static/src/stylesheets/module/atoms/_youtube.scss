@@ -54,7 +54,7 @@
     position: relative;
 }
 
-.youtube-media-atom--sponsored-container {
+.youtube-media-atom__paid-for-container {
     background-color: #ffffff;
     width: 100%;
     position: absolute;
@@ -63,7 +63,7 @@
     opacity: .5;
 }
 
-.youtube-media-atom__sponsored-label {
+.youtube-media-atom__paid-for-label {
     position: absolute;
     bottom: 2rem;
     right: 8rem;
@@ -77,7 +77,7 @@
     }
 }
 
-.youtube-media-atom__sponsored-logo-container {
+.youtube-media-atom__paid-for-logo-container {
     position: absolute;
     width: 130px;
     height: 85px;
