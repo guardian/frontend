@@ -110,8 +110,7 @@ case class Config(
   sentryHost: String,
   switches: Map[String, Boolean],
   dfpAccountId: String,
-  commercialBundleUrl: String,
-  commercialUrl: String,
+  commercialBundleUrl: String
 )
 
 object Config {
@@ -521,8 +520,7 @@ object DotcomponentsDataModel {
       sentryHost = jsPageData.get("sentryHost").getOrElse(""),
       switches = switches,
       dfpAccountId = "", // TODO
-      commercialBundleUrl = buildFullCommercialUrl("javascripts/graun.dotcom-rendering-commercial.js"),
-      commercialUrl = buildFullCommercialUrl("javascripts/graun.dotcom-rendering-commercial.js")
+      commercialBundleUrl = buildFullCommercialUrl("javascripts/graun.dotcom-rendering-commercial.js")
     )
 
     val author = Author(
