@@ -72,6 +72,9 @@
     height: 3.125rem;
     font-size: 16px;
     color: #000000;
+    @include mq($until: 590px) {
+        display: none;
+    }
 }
 
 .youtube-media-atom__sponsored-logo-container {
