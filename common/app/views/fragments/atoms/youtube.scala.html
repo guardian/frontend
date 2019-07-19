@@ -112,13 +112,15 @@
                     } else {
                         @if(isPaidFor) {
                             <div class="youtube-media-atom__paid-for-container"></div>
-                            <span class="youtube-media-atom__paid-for-label">
-                                Advertiser content
-                            </span>
                             @pressedContent.map{ pc =>
                                 @PaidCard.fromPressedContent(pc).branding.map{ b =>
                                     <div class="youtube-media-atom__paid-for-logo-container">
-                                        <img border="0" src="@b.logo.src">
+                                        <span class="youtube-media-atom__paid-for-label">
+                                            Advertiser content
+                                        </span>
+                                        <div>
+                                            <img class="youtube-media-atom__paid-for-logo" border="0" src="@b.logo.src">
+                                        </div>
                                     </div>
                                 }
                             }

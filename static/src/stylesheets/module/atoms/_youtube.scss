@@ -64,25 +64,28 @@
 }
 
 .youtube-media-atom__paid-for-label {
-    position: absolute;
-    bottom: 2rem;
-    right: 8rem;
-    display: block;
-    width: 11.5rem;
-    height: 3.125rem;
     font-size: 16px;
     color: #000000;
+    margin: 5px 10px 0 0;
     @include mq($until: 590px) {
         display: none;
     }
 }
 
 .youtube-media-atom__paid-for-logo-container {
+    display: flex;
     position: absolute;
-    width: 130px;
-    height: 85px;
-    bottom: 0;
+    bottom: 0 ;
     right: 0;
+    width: auto;
+}
+
+.youtube-media-atom__paid-for-logo {
+    width: auto !important;
+    height: 86px !important;
+    position: relative !important;
+    bottom: 0 !important;
+    right: 0 !important;
     margin-right: 10px;
 }
 
