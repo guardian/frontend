@@ -1,6 +1,5 @@
 // @flow
 import config from 'lib/config';
-import { getCookie } from 'lib/cookies';
 import { Message, hasUserAcknowledgedBanner } from 'common/modules/ui/message';
 import checkIcon from 'svgs/icon/tick.svg';
 import {
@@ -81,11 +80,6 @@ const makeHtml = (): string => `
     </div>
 `;
 
-const isInNA = (): boolean =>
-    (getCookie('GU_geo_continent') || 'OTHER').toUpperCase() === 'NA';
-
-const gdprApplies = (): boolean => !isInNA();
-
 const hasUnsetAdChoices = (): boolean =>
     allAdConsents.some((_: AdConsent) => getAdConsentState(_) === null);
 
@@ -107,9 +101,7 @@ const trackInteraction = (interaction: string): void => {
 
 const canShow = (): Promise<boolean> =>
     Promise.resolve(
-        hasUnsetAdChoices() &&
-            gdprApplies() &&
-            !hasUserAcknowledgedBanner(messageCode)
+        hasUnsetAdChoices() && !hasUserAcknowledgedBanner(messageCode)
     );
 
 const track = (): void => {

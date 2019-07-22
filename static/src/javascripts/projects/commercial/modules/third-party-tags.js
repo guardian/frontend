@@ -1,6 +1,7 @@
 // @flow strict
 /* A regionalised container for all the commercial tags. */
 
+import fastdom from 'lib/fastdom-promise';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { imrWorldwide } from 'commercial/modules/third-party-tags/imr-worldwide';
 import { imrWorldwideLegacy } from 'commercial/modules/third-party-tags/imr-worldwide-legacy';
@@ -15,21 +16,26 @@ import { init as initPlistaOutbrainRenderer } from 'commercial/modules/third-par
 const insertScripts = (services: Array<ThirdPartyTag>): void => {
     const ref = document.scripts[0];
     const frag = document.createDocumentFragment();
-    while (services.length) {
-        const service = services.shift();
+    let insertedScripts = false;
+
+    services.forEach(service => {
         // flowlint sketchy-null-bool:warn
         if (service.useImage) {
             new Image().src = service.url;
         } else {
+            insertedScripts = true;
             const script = document.createElement('script');
             script.src = service.url;
             script.onload = service.onLoad;
             frag.appendChild(script);
         }
-    }
-    if (ref && ref.parentNode) {
-        ref.parentNode.insertBefore(frag, ref);
-    }
+    });
+
+    fastdom.write(() => {
+        if (insertedScripts && ref && ref.parentNode) {
+            ref.parentNode.insertBefore(frag, ref);
+        }
+    });
 };
 
 const loadOther = (): void => {
@@ -44,9 +50,7 @@ const loadOther = (): void => {
         fbPixel(),
     ].filter(_ => _.shouldRun);
 
-    if (services.length) {
-        insertScripts(services);
-    }
+    insertScripts(services);
 };
 
 const init = (): Promise<boolean> => {

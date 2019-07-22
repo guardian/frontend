@@ -1,7 +1,12 @@
 // @flow
+import fetchJson_ from 'lib/fetch-json';
 import { loadOnwardComponent, _ } from './onward.js';
 
 const { insertHTMLfromPlaceholders, generateUrlFromConfig } = _;
+
+const fetchJson: any = fetchJson_;
+
+jest.mock('lib/fetch-json', () => jest.fn());
 
 describe('URL generator', () => {
     it('generates correct URL from valid config', () => {
@@ -33,11 +38,12 @@ describe('Insert onward HTML', () => {
 });
 
 describe('Loading onward component', () => {
-    it('calls stop if placeholder length is 0', () => {
-        const fakeStart = jest.fn();
-        const fakeStop = jest.fn();
+    afterEach(() => {
+        fetchJson.mockReset();
+    });
 
-        loadOnwardComponent(fakeStart, fakeStop);
-        expect(fakeStop).toHaveBeenCalledTimes(1);
+    it('Does not fetch onwards if placeholder length is 0', () => {
+        loadOnwardComponent();
+        expect(fetchJson).not.toHaveBeenCalled();
     });
 });

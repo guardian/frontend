@@ -242,10 +242,8 @@ const attemptToAddInlineMerchAd = (): Promise<boolean> => {
     );
 };
 
-export const init = (start: () => void, stop: () => void): Promise<boolean> => {
-    start();
+export const init = (): Promise<boolean> => {
     if (!commercialFeatures.articleBodyAdverts) {
-        stop();
         return Promise.resolve(false);
     }
 
@@ -256,8 +254,7 @@ export const init = (start: () => void, stop: () => void): Promise<boolean> => {
         inlineMerchAdded ? trackAdRender('dfp-ad--im') : Promise.resolve()
     )
         .then(initCarrot)
-        .then(addInlineAds)
-        .then(stop);
+        .then(addInlineAds);
 
     return im;
 };

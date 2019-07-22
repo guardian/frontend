@@ -111,10 +111,8 @@ const setPublisherProvidedId = (): void => {
     }
 };
 
-export const init = (start: () => void, stop: () => void): Promise<void> => {
+export const init = (): Promise<void> => {
     const setupAdvertising = (): Promise<void> => {
-        start();
-
         // note: fillAdvertSlots isn't synchronous like most buffered cmds, it's a promise. It's put in here to ensure
         // it strictly follows preceding prepare-googletag work (and the module itself ensures dependencies are
         // fulfilled), but don't assume fillAdvertSlots is complete when queueing subsequent work using cmd.push
@@ -125,7 +123,7 @@ export const init = (start: () => void, stop: () => void): Promise<void> => {
             setPublisherProvidedId,
             refreshOnResize,
             () => {
-                fillAdvertSlots().then(stop);
+                fillAdvertSlots();
             }
         );
 
@@ -140,7 +138,9 @@ export const init = (start: () => void, stop: () => void): Promise<void> => {
         setupAdvertising()
             .then(adFreeSlotRemove)
             .catch(removeAdSlots);
+
         return Promise.resolve();
     }
-    return removeAdSlots().then(stop);
+
+    return removeAdSlots();
 };

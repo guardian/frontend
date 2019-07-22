@@ -8,10 +8,8 @@ const errorHandler = (error: Error) => {
     console.log('Failed to load Confiant:', error);
 };
 
-export const init = (start: () => void): Promise<void> => {
+export const init = (): Promise<void> => {
     const host = 'confiant-integrations.global.ssl.fastly.net';
-
-    start();
 
     if (config.get('switches.confiantAdVerification')) {
         return loadScript(
@@ -19,5 +17,6 @@ export const init = (start: () => void): Promise<void> => {
             { async: true }
         ).catch(errorHandler);
     }
+
     return Promise.resolve();
 };

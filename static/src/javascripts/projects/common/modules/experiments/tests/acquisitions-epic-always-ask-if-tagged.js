@@ -10,6 +10,7 @@ export const acquisitionsEpicAlwaysAskIfTagged = makeEpicABTest({
     campaignId: 'epic_always_ask_if_tagged',
 
     geolocation: geolocationGetSync(),
+    highPriority: false,
 
     start: '2017-05-23',
     expiry: '2020-01-27',

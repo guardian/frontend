@@ -34,15 +34,11 @@ const insertHTMLfromPlaceholders = (
 };
 
 export const loadOnwardComponent = (
-    start: () => void,
-    stop: () => void,
     insertHtmlFn: (
         json: { html: string },
         placeholders: Array<HTMLElement>
     ) => void = insertHTMLfromPlaceholders
 ): Promise<any> => {
-    start();
-
     const placeholders: Array<HTMLElement> = getPlaceholderFromDom();
     const jsonUrl: string = generateUrlFromConfig();
 
@@ -55,11 +51,9 @@ export const loadOnwardComponent = (
             )
             .then(() => {
                 initHostedCarousel();
-            })
-            .then(stop);
-    } else {
-        stop();
+            });
     }
+
     return Promise.resolve();
 };
 

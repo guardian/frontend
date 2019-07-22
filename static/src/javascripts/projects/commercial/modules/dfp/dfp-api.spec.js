@@ -1,6 +1,5 @@
 // @flow
 import $ from 'lib/$';
-import { noop } from 'lib/noop';
 import { getBreakpoint as getBreakpoint_ } from 'lib/detect';
 import config from 'lib/config';
 
@@ -10,9 +9,19 @@ import { getCreativeIDs } from 'commercial/modules/dfp/get-creative-ids';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { loadAdvert } from 'commercial/modules/dfp/load-advert';
+import { fillAdvertSlots as fillAdvertSlots_ } from 'commercial/modules/dfp/fill-advert-slots';
+
+// $FlowFixMe property requireActual is actually not missing Flow.
+const { fillAdvertSlots: actualFillAdvertSlots } = jest.requireActual(
+    'commercial/modules/dfp/fill-advert-slots'
+);
 
 const getBreakpoint: any = getBreakpoint_;
+const fillAdvertSlots: any = fillAdvertSlots_;
 
+jest.mock('commercial/modules/dfp/fill-advert-slots', () => ({
+    fillAdvertSlots: jest.fn(),
+}));
 jest.mock('lib/raven');
 jest.mock('common/modules/identity/api', () => ({
     isUserLoggedIn: () => true,
@@ -101,6 +110,7 @@ const reset = () => {
     dfpEnv.adverts = [];
     dfpEnv.advertsToRefresh = [];
     dfpEnv.advertsToLoad = [];
+    fillAdvertSlots.mockReset();
 };
 
 describe('DFP', () => {
@@ -208,29 +218,35 @@ describe('DFP', () => {
 
     it('hides all ad slots when all DFP advertising is disabled', () => {
         commercialFeatures.dfpAdvertising = false;
-        return new Promise(resolve => {
-            prepareGoogletag(noop, resolve);
-        }).then(() => {
+
+        return prepareGoogletag().then(() => {
             const remainingAdSlots = document.querySelectorAll('.js-ad-slot');
             expect(remainingAdSlots.length).toBe(0);
         });
     });
 
-    it('should get the slots', () => {
-        config.set('page.hasPageSkin', true);
-        return new Promise(resolve => {
-            prepareGoogletag(noop, resolve);
+    it('should get the slots', () =>
+        new Promise(resolve => {
+            fillAdvertSlots.mockImplementation(() => {
+                actualFillAdvertSlots().then(resolve);
+            });
+
+            prepareGoogletag();
         }).then(() => {
             expect(Object.keys(getAdverts(true)).length).toBe(4);
-        });
-    });
+        }));
 
     it('should not get hidden ad slots', () => {
         $('.js-ad-slot')
             .first()
             .css('display', 'none');
+
         return new Promise(resolve => {
-            prepareGoogletag(noop, resolve);
+            fillAdvertSlots.mockImplementation(() => {
+                actualFillAdvertSlots().then(resolve);
+            });
+
+            prepareGoogletag();
         }).then(() => {
             const slots = getAdverts(true);
             expect(Object.keys(slots).length).toBe(3);
@@ -242,9 +258,7 @@ describe('DFP', () => {
     });
 
     it('should set listeners', () =>
-        new Promise(resolve => {
-            prepareGoogletag(noop, resolve);
-        }).then(() => {
+        prepareGoogletag().then(() => {
             expect(
                 window.googletag.pubads().addEventListener
             ).toHaveBeenCalledWith('slotRenderEnded', expect.anything());
@@ -252,7 +266,11 @@ describe('DFP', () => {
 
     it('should define slots', () =>
         new Promise(resolve => {
-            prepareGoogletag(noop, resolve);
+            fillAdvertSlots.mockImplementation(() => {
+                actualFillAdvertSlots().then(resolve);
+            });
+
+            prepareGoogletag();
         }).then(() => {
             [
                 [
@@ -310,8 +328,13 @@ describe('DFP', () => {
     it('should display ads', () => {
         config.set('page.hasPageSkin', true);
         getBreakpoint.mockReturnValue('wide');
+
         return new Promise(resolve => {
-            prepareGoogletag(noop, resolve);
+            fillAdvertSlots.mockImplementation(() => {
+                actualFillAdvertSlots().then(resolve);
+            });
+
+            prepareGoogletag();
         }).then(() => {
             expect(
                 window.googletag.pubads().enableSingleRequest
@@ -328,8 +351,13 @@ describe('DFP', () => {
         $('.js-ad-slot')
             .first()
             .attr('data-out-of-page', true);
+
         return new Promise(resolve => {
-            prepareGoogletag(noop, resolve);
+            fillAdvertSlots.mockImplementation(() => {
+                actualFillAdvertSlots().then(resolve);
+            });
+
+            prepareGoogletag();
         }).then(() => {
             expect(window.googletag.defineOutOfPageSlot).toHaveBeenCalled();
         });
@@ -340,7 +368,11 @@ describe('DFP', () => {
         const fakeEventTwo = makeFakeEvent('2', 'dfp-ad-script-slot');
 
         return new Promise(resolve => {
-            prepareGoogletag(noop, resolve);
+            fillAdvertSlots.mockImplementation(() => {
+                actualFillAdvertSlots().then(resolve);
+            });
+
+            prepareGoogletag();
         }).then(() => {
             window.googletag.pubads().listeners.slotRenderEnded(fakeEventOne);
             window.googletag.pubads().listeners.slotRenderEnded(fakeEventTwo);
@@ -367,9 +399,7 @@ describe('DFP', () => {
 
     describe('keyword targeting', () => {
         it('should send page level keywords', () =>
-            new Promise(resolve => {
-                prepareGoogletag(noop, resolve);
-            }).then(() => {
+            prepareGoogletag().then(() => {
                 expect(
                     window.googletag.pubads().setTargeting
                 ).toHaveBeenCalledWith('k', ['korea', 'ukraine']);
