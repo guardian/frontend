@@ -17,7 +17,7 @@ const isGoogleProxy: () => boolean = () =>
 
 let moduleLoadResult = Promise.resolve();
 
-if (!isGoogleProxy()) {
+if (!isGoogleProxy() && !config.get('isDotcomRendering', false)) {
     moduleLoadResult = import(/* webpackChunkName: "Prebid.js" */ 'prebid.js/build/dist/prebid');
 }
 
