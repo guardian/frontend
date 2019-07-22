@@ -175,7 +175,7 @@ const onPlayerEnded = (atomId: string): void => {
 
     killProgressTracker(atomId);
 
-    trackYoutubeEvent('end', player.trackingId);
+    trackYoutubeEvent('end', player.atomId);
 
     player.pendingTrackingCalls = [25, 50, 75];
 
