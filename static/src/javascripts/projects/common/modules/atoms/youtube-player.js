@@ -18,9 +18,7 @@ const promise = new Promise(resolve => {
     }
 });
 
-const loadYoutubeJs = () => {
-    loadScript(scriptSrc, {});
-};
+const loadYoutubeJs = () => loadScript(scriptSrc, {});
 
 const addVideoStartedClass = (el: ?HTMLElement) => {
     if (el) {
@@ -148,7 +146,8 @@ export const initYoutubePlayer = (
         };
 
         const onPlayerError = event => {
-            console.error(`YOUTUBE: ${event}`);
+            console.error(`YOUTUBE: ${event.data}`);
+            console.dir(event)
         };
 
         return setupPlayer(
