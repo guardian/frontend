@@ -1,6 +1,4 @@
 // @flow
-
-// import { _ as robust } from 'lib/robust';
 import fastdom from 'lib/fastdom-promise';
 import { catchErrorsWithContext } from 'lib/robust';
 /* TODO:Improve type checking here */
