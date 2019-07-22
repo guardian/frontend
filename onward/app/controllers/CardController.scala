@@ -37,6 +37,7 @@ class CardController(
       "www.dailymotion.com",
       "youtube.com",
       "www.youtube.com",
+      "www.youtube-nocookie.com",
       "gov.uk")
 
     host match {
