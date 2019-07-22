@@ -5,6 +5,7 @@ import { getBreakpoint } from 'lib/detect';
 import { pbTestNameMap } from 'lib/url';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
 import config from 'lib/config';
+import { getCookie } from 'lib/cookies';
 import type { PrebidSize } from './types';
 
 const stripSuffix = (s: string, suffix: string): string => {
@@ -13,6 +14,9 @@ const stripSuffix = (s: string, suffix: string): string => {
 };
 
 const currentGeoLocation = once((): string => geolocationGetSync());
+const locationFromCookie = once(
+    (): string => getCookie('GU_geo_continent') || 'OTHER'
+);
 
 const contains = (sizes: PrebidSize[], size: PrebidSize): boolean =>
     Boolean(sizes.find(s => s[0] === size[0] && s[1] === size[1]));
@@ -45,6 +49,9 @@ export const isInAuRegion = (): boolean =>
 
 export const isInRowRegion = (): boolean =>
     !isInUkRegion() && !isInUsRegion() && !isInAuRegion();
+
+export const isInNA = (): boolean =>
+    locationFromCookie().toUpperCase() === 'NA';
 
 export const containsMpu = (sizes: PrebidSize[]): boolean =>
     contains(sizes, [300, 250]);
@@ -129,6 +136,12 @@ export const shouldIncludeXaxis = (): boolean =>
 
 export const shouldIncludeImproveDigital = (): boolean =>
     isInUkRegion() || isInRowRegion();
+
+export const shouldIncludeMobileSticky = (): boolean =>
+    window.location.hash.indexOf('#mobile-sticky') !== -1 ||
+    (config.get('switches.mobileStickyLeaderboard') &&
+    isInNA() && // User is in North America
+        config.get('page.contentType') === 'Article'); // User is accessing an article
 
 export const stripMobileSuffix = (s: string): string =>
     stripSuffix(s, '--mobile');

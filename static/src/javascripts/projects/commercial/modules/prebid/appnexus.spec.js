@@ -8,7 +8,6 @@ import {
 } from './appnexus';
 
 import type { PrebidSize } from './types';
-
 import {
     getBreakpointKey as getBreakpointKey_,
     isInAuRegion as isInAuRegion_,
@@ -35,6 +34,16 @@ jest.mock('./utils', () => {
         isInUsRegion: jest.fn(),
     };
 });
+
+jest.mock('common/modules/experiments/ab', () => ({
+    isInVariantSynchronous: jest.fn(
+        (testId, variantId) => variantId === 'notintest'
+    ),
+}));
+
+jest.mock('lib/cookies', () => ({
+    getCookie: jest.fn(),
+}));
 
 const {
     getAppNexusPlacementId,

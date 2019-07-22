@@ -2,6 +2,7 @@
 import { getSync as getSync_ } from 'lib/geolocation';
 import { getBreakpoint as getBreakpoint_ } from 'lib/detect';
 import config from 'lib/config';
+import { getCookie as getCookie_ } from 'lib/cookies';
 import {
     getLargestSize,
     getBreakpointKey,
@@ -19,15 +20,21 @@ import {
     stripTrailingNumbersAbove1,
     stripDfpAdPrefixFrom,
     removeFalseyValues,
+    shouldIncludeMobileSticky,
 } from './utils';
 
 const getSync: any = getSync_;
 const getBreakpoint: any = getBreakpoint_;
+const getCookie: any = getCookie_;
 
 jest.mock('lodash/once', () => a => a);
 
 jest.mock('lib/geolocation', () => ({
     getSync: jest.fn(() => 'GB'),
+}));
+
+jest.mock('lib/cookies', () => ({
+    getCookie: jest.fn(),
 }));
 
 jest.mock('lib/detect', () => ({
@@ -344,5 +351,41 @@ describe('Utils', () => {
             getSync.mockReturnValue(testGeos[i]);
             expect(isInRowRegion()).toBe(true);
         }
+    });
+
+    test('shouldIncludeMobileSticky should be true if location cookie is NA, switch is ON and content is Article ', () => {
+        config.set('page.contentType', 'Article');
+        config.set('switches.mobileStickyLeaderboard', true);
+        getCookie.mockReturnValue('NA');
+        expect(shouldIncludeMobileSticky()).toBe(true);
+    });
+
+    test('shouldIncludeMobileSticky should be false if location cookie is NA, switch is ON and content is Network Front ', () => {
+        config.set('page.contentType', 'Network Front');
+        config.set('switches.mobileStickyLeaderboard', true);
+        getCookie.mockReturnValue('NA');
+        expect(shouldIncludeMobileSticky()).toBe(false);
+    });
+
+    test('shouldIncludeMobileSticky should be false if location cookie is NA, switch is Off and content is Article ', () => {
+        config.set('page.contentType', 'Article');
+        config.set('switches.mobileStickyLeaderboard', false);
+        getCookie.mockReturnValue('NA');
+        expect(shouldIncludeMobileSticky()).toBe(false);
+    });
+
+    test('shouldIncludeMobileSticky should be false if location cookie is EU, switch is ON and content is Article ', () => {
+        config.set('page.contentType', 'Article');
+        config.set('switches.mobileStickyLeaderboard', true);
+        getCookie.mockReturnValue('EU');
+        expect(shouldIncludeMobileSticky()).toBe(false);
+    });
+
+    test('shouldIncludeMobileSticky should be true if test param exists irrespective of other conditions', () => {
+        config.set('page.contentType', 'Network Front');
+        config.set('switches.mobileStickyLeaderboard', false);
+        getCookie.mockReturnValue('EU');
+        window.location.hash = '#mobile-sticky';
+        expect(shouldIncludeMobileSticky()).toBe(true);
     });
 });
