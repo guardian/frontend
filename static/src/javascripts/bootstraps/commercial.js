@@ -99,8 +99,6 @@ const loadModules = (): Promise<any> => {
         modulePromises.push(result);
     });
 
-    console.log('loadModules --->', modulePromises);
-
     return Promise.all(modulePromises);
 };
 

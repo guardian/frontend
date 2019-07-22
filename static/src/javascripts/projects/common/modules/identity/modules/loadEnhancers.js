@@ -1,8 +1,8 @@
 // @flow
 
-import { _ as robust } from 'lib/robust';
+// import { _ as robust } from 'lib/robust';
 import fastdom from 'lib/fastdom-promise';
-
+import { catchErrorsWithContext } from 'lib/robust';
 /* TODO:Improve type checking here */
 
 const loadEnhancers = (loaders: Array<Array<any>>): void => {
@@ -13,9 +13,14 @@ const loadEnhancers = (loaders: Array<Array<any>>): void => {
             .read(() => Array.from(document.querySelectorAll(classname)))
             .then(elements =>
                 elements.forEach((element: HTMLElement) => {
-                    robust.catchAndLogError(classname, () => {
-                        action(element);
-                    });
+                    catchErrorsWithContext([
+                        [
+                            classname,
+                            () => {
+                                action(element);
+                            },
+                        ],
+                    ]);
                 })
             );
     });
