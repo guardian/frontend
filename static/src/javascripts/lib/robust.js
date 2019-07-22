@@ -58,7 +58,8 @@ const catchErrorsWithContext = (
     /*
      * The modules array can contain sync and async functions.
      * Returning a Promise.all means we can wait for all the sync
-     * functions to have returned and all the async functions to have resolved.
+     * functions to have returned and all the async functions to have
+     * resolved before catchErrorsWithContext resolves.
      */
     return Promise.all(pendingModules).then(results => {
         const flattenedResults = [].concat(...results);
