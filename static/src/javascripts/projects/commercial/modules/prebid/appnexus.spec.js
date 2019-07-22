@@ -35,12 +35,6 @@ jest.mock('./utils', () => {
     };
 });
 
-jest.mock('common/modules/experiments/ab', () => ({
-    isInVariantSynchronous: jest.fn(
-        (testId, variantId) => variantId === 'notintest'
-    ),
-}));
-
 jest.mock('lib/cookies', () => ({
     getCookie: jest.fn(),
 }));
