@@ -108,7 +108,7 @@
                         </div>
                     } else {
                         @if(isPaidFor) {
-                            <div class="youtube-media-atom__paid-for-container"></div>
+                            <div class="youtube-media-atom__paid-for-overlay"></div>
                             @pressedContent.map{ pc =>
                                 @PaidCard.fromPressedContent(pc).branding.map{ b =>
                                     <div class="youtube-media-atom__paid-for-logo-container">
