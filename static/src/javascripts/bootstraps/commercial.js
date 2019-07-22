@@ -93,22 +93,13 @@ const loadModules = (): Promise<any> => {
     commercialModules.forEach(module => {
         const moduleName: string = module[0];
         const moduleInit: () => void = module[1];
-
-        catchErrorsWithContext(
-            [
-                [
-                    moduleName,
-                    function pushAfterComplete(): void {
-                        const result = moduleInit();
-                        modulePromises.push(result);
-                    },
-                ],
-            ],
-            {
-                feature: 'commercial',
-            }
-        );
+        const result = catchErrorsWithContext([[moduleName, moduleInit]], {
+            feature: 'commercial',
+        });
+        modulePromises.push(result);
     });
+
+    console.log('loadModules --->', modulePromises);
 
     return Promise.all(modulePromises);
 };
