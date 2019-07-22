@@ -68,10 +68,7 @@
                     <div class="video-overlay__headline">
 
                     @for(f <- faciaHeaderProperties) {
-                        @if(isPaidFor) {
-                            <div class="fc-item__kicker">Advertiser content</div>
-                        }
-                        @title(f.header, 0, 0)
+                        @title(f.header, 0, 0, "u-faux-block-link__cta", None, isPaidFor)
                         @if(f.showByline) {
                             <div class="fc-item__byline">@f.byline</div>
                         }

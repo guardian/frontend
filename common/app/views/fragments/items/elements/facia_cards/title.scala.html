@@ -1,4 +1,4 @@
-@(header: layout.FaciaCardHeader, itemIndex: Int, containerIndex: Int, labelCssClasses: String = "u-faux-block-link__cta", snapType: Option[layout.SnapType] = None)(implicit request: RequestHeader)
+@(header: layout.FaciaCardHeader, itemIndex: Int, containerIndex: Int, labelCssClasses: String = "u-faux-block-link__cta", snapType: Option[layout.SnapType] = None, isPaidFor: Boolean = false)(implicit request: RequestHeader)
 
 @import views.html.fragments.items.elements.facia_cards.itemHeader
 @import views.support._
@@ -17,12 +17,16 @@
 @articleLink(html: Html) = {<a href="@header.url.get(request)" class="fc-item__link" data-link-name="article">@html</a>}
 
 @itemHeader(containerIndex == 0 && itemIndex == 0, header.quoted) {
-    @header.kicker match {
-        case Some(kicker) => {
-            @articleLink{<span class="@kicker.linkClasses.mkString(" ")">@Html(kicker.kickerHtml)</span> @headline()}
-        }
-        case _ => {
-            @articleLink{@headline()}
+    @if(isPaidFor) {
+        @articleLink{<div class="fc-item__kicker">Advertiser content</div> @headline()}
+    } else {
+        @header.kicker match {
+            case Some(kicker) => {
+                @articleLink{<span class="@kicker.linkClasses.mkString(" ")">@Html(kicker.kickerHtml)</span> @headline()}
+            }
+            case _ => {
+                @articleLink{@headline()}
+            }
         }
     }
 }
