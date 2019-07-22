@@ -88,7 +88,7 @@ describe('robust', () => {
 
             const testModules = [...modules, ['my-test-1', asyncFunc]];
 
-            return catchErrorsWithContext(testModules).then(res => {
+            return catchErrorsWithContext(testModules).then(() => {
                 expect(runner).toHaveBeenCalledTimes(modules.length);
                 expect(asyncFunc).toHaveBeenCalledTimes(1);
                 expect(reportError).not.toHaveBeenCalled();
