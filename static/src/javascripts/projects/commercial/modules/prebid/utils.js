@@ -1,7 +1,7 @@
 // @flow strict
 
 import once from 'lodash/once';
-import { getBreakpoint } from 'lib/detect';
+import { getBreakpoint, isBreakpoint } from 'lib/detect';
 import { pbTestNameMap } from 'lib/url';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
 import config from 'lib/config';
@@ -137,11 +137,14 @@ export const shouldIncludeXaxis = (): boolean =>
 export const shouldIncludeImproveDigital = (): boolean =>
     isInUkRegion() || isInRowRegion();
 
-export const shouldIncludeMobileSticky = (): boolean =>
-    window.location.hash.indexOf('#mobile-sticky') !== -1 ||
-    (config.get('switches.mobileStickyLeaderboard') &&
-    isInNA() && // User is in North America
-        config.get('page.contentType') === 'Article'); // User is accessing an article
+export const shouldIncludeMobileSticky = once(
+    (): boolean =>
+        window.location.hash.indexOf('#mobile-sticky') !== -1 ||
+        (config.get('switches.mobileStickyLeaderboard') &&
+            isBreakpoint({ min: 'mobile', max: 'mobileLandscape' }) &&
+            isInNA() &&
+            config.get('page.contentType') === 'Article')
+);
 
 export const stripMobileSuffix = (s: string): string =>
     stripSuffix(s, '--mobile');

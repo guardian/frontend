@@ -1,6 +1,5 @@
 // @flow strict
 import fastdom from 'lib/fastdom-promise';
-import { isBreakpoint } from 'lib/detect';
 import { addSlot } from 'commercial/modules/dfp/add-slot';
 import { createSlots } from 'commercial/modules/dfp/create-slots';
 import { shouldIncludeMobileSticky } from 'commercial/modules/prebid/utils';
@@ -14,10 +13,7 @@ const createAdWrapper = (): HTMLDivElement => {
 };
 
 export const init = (): Promise<void> => {
-    if (
-        shouldIncludeMobileSticky() &&
-        isBreakpoint({ min: 'mobile', max: 'mobileLandscape' })
-    ) {
+    if (shouldIncludeMobileSticky()) {
         const mobileStickyWrapper = createAdWrapper();
 
         return fastdom
