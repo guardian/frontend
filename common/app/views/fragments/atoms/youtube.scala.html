@@ -58,7 +58,7 @@
 
         @for(asset <- activeAsset if playable && !expired) {
 
-            <div id="youtube-@asset.id" data-asset-id="@asset.id" class="youtube-media-atom__iframe"></div>
+            <iframe id="youtube-@asset.id" data-asset-id="@asset.id" class="youtube-media-atom__iframe" src="https://www.youtube-nocookie.com/embed/@{asset.id}?enablejsapi=1"></iframe>
 
             @if(mediaWrapper.contains(MediaWrapper.VideoContainer)){
                 <div class="video-overlay">
