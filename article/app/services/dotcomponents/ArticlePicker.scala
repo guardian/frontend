@@ -56,6 +56,9 @@ object ArticlePageChecks {
 
   def isNotPaidContent(page: PageWithStoryPackage): Boolean = ! page.article.tags.isPaidContent
 
+  def isNewsTone(page: PageWithStoryPackage): Boolean = {
+    page.article.tags.tones.headOption.exists(_.id == "tone/news") || page.article.tags.tones.isEmpty
+  }
 }
 
 object ArticlePicker {
@@ -124,6 +127,7 @@ object ArticlePicker {
       ("isNotAMP", ArticlePageChecks.isNotAMP(request)),
       ("isNotOpinionP", ArticlePageChecks.isNotOpinion(page)),
       ("isNotPaidContent", ArticlePageChecks.isNotPaidContent(page)),
+      ("isNewsTone", ArticlePageChecks.isNewsTone(page))
     )
   }
 
