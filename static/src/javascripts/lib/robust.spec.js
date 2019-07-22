@@ -1,10 +1,8 @@
 // @flow
 import reportError_ from 'lib/report-error';
-import { catchErrorsWithContext } from './robust';
+import { catchErrorsWithContext, logError } from './robust';
 
 const reportError: any = reportError_;
-
-// const { catchAndLogError } = _;
 
 jest.mock('lib/report-error', () => jest.fn());
 
@@ -97,7 +95,7 @@ describe('robust', () => {
             });
         });
 
-        it('catches async unhandled async errors and resolves', () => {
+        it('catches unhandled async errors and resolves', () => {
             const asyncFunc = jest.fn(
                 () =>
                     new Promise(() => {
@@ -119,27 +117,35 @@ describe('robust', () => {
         });
     });
 
-    describe('logError', () => {});
+    describe('logError', () => {
+        it('calls report error if tags provided', () => {
+            const testId = 'my-test-1';
 
-    // const META = { module: 'test' };
-    // const noError = () => true;
-    // test('catchAndLogError()', () => {
-    //     expect(() => {
-    //         catchAndLogError('test', noError);
-    //     }).not.toThrowError();
+            logError(testId, ERROR, {
+                module: testId,
+            });
 
-    //     expect(() => {
-    //         catchAndLogError('test', throwError);
-    //     }).toThrowError(ERROR);
+            expect(window.console.warn).toHaveBeenCalledTimes(1);
+            expect(reportError).toHaveBeenCalledWith(
+                ERROR,
+                { module: testId },
+                false
+            );
+        });
 
-    //     expect(window.console.warn).toHaveBeenCalledTimes(1);
-    // });
-    // test('catchAndLogError() - default reporter', () => {
-    //     reportErrorMock.mockClear();
-    //     catchAndLogError('test', noError);
-    //     expect(reportErrorMock).not.toHaveBeenCalled();
-    //     reportErrorMock.mockClear();
-    //     catchAndLogError('test', throwError);
-    //     expect(reportErrorMock).toHaveBeenCalledWith(ERROR, META, false);
-    // });
+        it('does not call report error if tags provided', () => {
+            const testId = 'my-test-1';
+
+            logError(testId, ERROR, {
+                module: testId,
+            });
+
+            expect(window.console.warn).toHaveBeenCalledTimes(1);
+            expect(reportError).toHaveBeenCalledWith(
+                ERROR,
+                { module: testId },
+                false
+            );
+        });
+    });
 });

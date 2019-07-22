@@ -16,6 +16,8 @@ const logError = (
         window.console.warn('Caught error.', error.stack);
     }
 
+    console.log('logError --->', tags);
+
     if (tags) {
         reportError(error, Object.assign({ module }, tags), false);
     } else {
@@ -68,4 +70,3 @@ const catchErrorsWithContext = (
 };
 
 export { catchErrorsWithContext, logError };
-export const _ = { catchAndLogError };
