@@ -1,6 +1,8 @@
 // @flow
 import fastdom from 'lib/fastdom-promise';
 import bonzo from 'bonzo';
+import fetchJson from 'lib/fetch-json';
+import reportError from 'lib/report-error';
 import { initYoutubePlayer } from 'common/modules/atoms/youtube-player';
 import {
     trackYoutubeEvent,
@@ -12,6 +14,7 @@ import config from 'lib/config';
 import { isIOS, isAndroid, isBreakpoint } from 'lib/detect';
 import debounce from 'lodash/debounce';
 import { isOn as accessibilityIsOn } from 'common/modules/accessibility/main';
+import { getUrlVars } from 'lib/url';
 
 declare class YoutubePlayer extends EventTarget {
     playVideo: () => void;
@@ -30,6 +33,7 @@ declare class YoutubePlayerEvent {
 interface AtomPlayer {
     iframe: HTMLIFrameElement;
     atomId: string;
+    youtubeId: string;
     youtubePlayer: YoutubePlayer;
     pendingTrackingCalls: Array<number>;
     paused: boolean;
@@ -145,6 +149,19 @@ const handlePlay = (uniqueAtomId: string, player: AtomPlayer): void => {
     }
 };
 
+const getYoutubeIdFromUrl = (url: string): string => {
+    const youtubeIdKey = 'v';
+    const splitUrl = url.split('?');
+
+    if (splitUrl.length === 1) {
+        return '';
+    }
+
+    const queryParams = getUrlVars(splitUrl[1]);
+
+    return queryParams[youtubeIdKey] || '';
+};
+
 const onPlayerPlaying = (uniqueAtomId: string): void => {
     const player = players[uniqueAtomId];
 
@@ -152,14 +169,46 @@ const onPlayerPlaying = (uniqueAtomId: string): void => {
         return;
     }
 
-    const { youtubePlayer, atomId } = players[uniqueAtomId];
+    const { youtubePlayer, youtubeId } = players[uniqueAtomId];
 
-    player.duration = youtubePlayer.getDuration();
+    /**
+     * Get the youtube video id from the video currently playing.
+     * We want to compare with the youtube ID in memory. If they differ
+     * a related video has begun playing, so we need to get the atom ID
+     * for tracking.
+     */
+    const latestYoutubeId = getYoutubeIdFromUrl(youtubePlayer.getVideoUrl());
 
-    // Listen for events with new tracking ID (activeAtomId)
-    initYoutubeEvents(atomId);
+    if (latestYoutubeId !== youtubeId) {
+        fetchJson(`/atom/youtube/${latestYoutubeId}.json`)
+            .then(resp => {
+                const activeAtomId = resp.atomId;
 
-    handlePlay(uniqueAtomId, player);
+                if (!activeAtomId) {
+                    return;
+                }
+                // Update trackingId, youtubeId and duration for new youtube video.
+                player.atomId = activeAtomId;
+                player.youtubeId = latestYoutubeId;
+                player.duration = youtubePlayer.getDuration();
+
+                // Listen for events with new tracking ID (activeAtomId)
+                initYoutubeEvents(activeAtomId);
+
+                handlePlay(uniqueAtomId, player);
+            })
+            .catch(err => {
+                reportError(
+                    Error(
+                        `Failed to get atom ID for youtube ID ${latestYoutubeId}. ${err}`
+                    ),
+                    { feature: 'youtube' },
+                    false
+                );
+            });
+    } else {
+        handlePlay(uniqueAtomId, player);
+    }
 };
 
 const onPlayerPaused = (atomId: string): void => {
@@ -281,11 +330,13 @@ const onPlayerReady = (
     iframes.push(iframe);
 
     const youtubePlayer = event.target;
+    const youtubeId = getYoutubeIdFromUrl(youtubePlayer.getVideoUrl());
     const duration = youtubePlayer.getDuration();
 
     players[uniqueAtomId] = {
         iframe,
         atomId,
+        youtubeId,
         duration,
         youtubePlayer,
         paused: false,
