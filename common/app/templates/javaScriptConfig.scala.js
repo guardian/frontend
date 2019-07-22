@@ -9,6 +9,7 @@
 
 @defining(Edition(request)) { edition =>
     {
+        "isDotcomRendering": false,
         "page": @JavaScript(StringEncodings.jsonToJS(Json.stringify(JavaScriptPage.get(item, Edition(request), context.isPreview)))),
         "nav": @JavaScript(Json.stringify(Json.toJson(NavMenu(item, edition)))),
         "switches" : { @{JavaScript(conf.switches.Switches.all.filter(_.exposeClientSide).map{ switch =>
