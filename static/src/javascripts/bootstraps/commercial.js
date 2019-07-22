@@ -87,20 +87,10 @@ const loadHostedBundle = (): Promise<void> => {
     return Promise.resolve();
 };
 
-const loadModules = (): Promise<any> => {
-    const modulePromises = [];
-
-    commercialModules.forEach(module => {
-        const moduleName: string = module[0];
-        const moduleInit: () => void = module[1];
-        const result = catchErrorsWithContext([[moduleName, moduleInit]], {
-            feature: 'commercial',
-        });
-        modulePromises.push(result);
+const loadModules = (): Promise<any> =>
+    catchErrorsWithContext(commercialModules, {
+        feature: 'commercial',
     });
-
-    return Promise.all(modulePromises);
-};
 
 export const bootCommercial = (): Promise<void> => {
     markTime('commercial start');
