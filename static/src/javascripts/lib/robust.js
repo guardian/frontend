@@ -39,7 +39,7 @@ const catchAndLogError = (
             logError(name, error, tags);
         });
     } catch (error) {
-        // sync errors end up here - catch and log them
+        // uncaught sync errors end up here - catch and log them
         logError(name, error, tags);
         return Promise.resolve();
     }
