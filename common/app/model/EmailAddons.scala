@@ -403,7 +403,8 @@ object EmailAddons {
     TheUpsideWeeklyReport,
     AnimalsFarmed,
     USMorningBriefing,
-    ObserverPictureArchive)
+    ObserverPictureArchive,
+    GunsAndLiesInAmerica)
   private val frontEmails = Seq(
     SocialCareNetwork,
     GuardianUniversities,
@@ -441,7 +442,6 @@ object EmailAddons {
     SportAu,
     FirstDogOnTheMoon,
     GreenLight,
-    GunsAndLiesInAmerica,
     WordOfMouth
   )
 
