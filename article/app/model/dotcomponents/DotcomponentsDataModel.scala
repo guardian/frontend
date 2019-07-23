@@ -509,10 +509,7 @@ object DotcomponentsDataModel {
       commercialConfiguration
     )
 
-    val byline = article.tags.contributors.map(_.name) match {
-      case Nil => article.trail.byline.getOrElse("Guardian staff reporter")
-      case contributors => contributors.mkString(",")
-    }
+    val byline = article.trail.byline.getOrElse("Guardian staff reporter")
 
     val config = Config(
       ajaxUrl = Configuration.ajax.url,
