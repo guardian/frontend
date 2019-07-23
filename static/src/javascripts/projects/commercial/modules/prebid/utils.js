@@ -134,12 +134,14 @@ export const shouldIncludeXaxis = (): boolean =>
 export const shouldIncludeImproveDigital = (): boolean =>
     isInUkRegion() || isInRowRegion();
 
-export const shouldIncludeMobileSticky = (): boolean =>
-    window.location.hash.indexOf('#mobile-sticky') !== -1 ||
-    (config.get('switches.mobileStickyLeaderboard', false) &&
-        isBreakpoint({ min: 'mobile', max: 'mobileLandscape' }) &&
-        isInNA() &&
-        config.get('page.contentType') === 'Article');
+export const shouldIncludeMobileSticky = once(
+    (): boolean =>
+        window.location.hash.indexOf('#mobile-sticky') !== -1 ||
+        (config.get('switches.mobileStickyLeaderboard') &&
+            isBreakpoint({ min: 'mobile', max: 'mobileLandscape' }) &&
+            isInNA() &&
+            config.get('page.contentType') === 'Article')
+);
 
 export const stripMobileSuffix = (s: string): string =>
     stripSuffix(s, '--mobile');
