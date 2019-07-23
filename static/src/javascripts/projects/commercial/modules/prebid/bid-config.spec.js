@@ -76,6 +76,10 @@ jest.mock('common/modules/experiments/ab', () => ({
     isInVariantSynchronous: jest.fn(),
 }));
 
+jest.mock('lib/cookies', () => ({
+    getCookie: jest.fn(),
+}));
+
 /* eslint-disable guardian-frontend/no-direct-access-config */
 const resetConfig = () => {
     config.set('switches.prebidAppnexus', true);

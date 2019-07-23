@@ -1,7 +1,11 @@
 // @flow
 import { getSync as getSync_ } from 'lib/geolocation';
-import { getBreakpoint as getBreakpoint_ } from 'lib/detect';
+import {
+    getBreakpoint as getBreakpoint_,
+    isBreakpoint as isBreakpoint_,
+} from 'lib/detect';
 import config from 'lib/config';
+import { getCookie as getCookie_ } from 'lib/cookies';
 import {
     getLargestSize,
     getBreakpointKey,
@@ -19,10 +23,13 @@ import {
     stripTrailingNumbersAbove1,
     stripDfpAdPrefixFrom,
     removeFalseyValues,
+    shouldIncludeMobileSticky,
 } from './utils';
 
 const getSync: any = getSync_;
 const getBreakpoint: any = getBreakpoint_;
+const isBreakpoint: any = isBreakpoint_;
+const getCookie: any = getCookie_;
 
 jest.mock('lodash/once', () => a => a);
 
@@ -30,9 +37,14 @@ jest.mock('lib/geolocation', () => ({
     getSync: jest.fn(() => 'GB'),
 }));
 
+jest.mock('lib/cookies', () => ({
+    getCookie: jest.fn(),
+}));
+
 jest.mock('lib/detect', () => ({
     getBreakpoint: jest.fn(() => 'mobile'),
     hasPushStateSupport: jest.fn(() => true),
+    isBreakpoint: jest.fn(),
 }));
 
 jest.mock('common/modules/experiments/ab-tests');
@@ -344,5 +356,54 @@ describe('Utils', () => {
             getSync.mockReturnValue(testGeos[i]);
             expect(isInRowRegion()).toBe(true);
         }
+    });
+
+    test('shouldIncludeMobileSticky should be true if location cookie is NA, switch is ON and content is Article on mobiles ', () => {
+        config.set('page.contentType', 'Article');
+        config.set('switches.mobileStickyLeaderboard', true);
+        getCookie.mockReturnValue('NA');
+        isBreakpoint.mockReturnValue(true);
+        expect(shouldIncludeMobileSticky()).toBe(true);
+    });
+
+    test('shouldIncludeMobileSticky should be false if all conditions true except content type ', () => {
+        config.set('page.contentType', 'Network Front');
+        config.set('switches.mobileStickyLeaderboard', true);
+        isBreakpoint.mockReturnValue(true);
+        getCookie.mockReturnValue('NA');
+        expect(shouldIncludeMobileSticky()).toBe(false);
+    });
+
+    test('shouldIncludeMobileSticky should be false if all conditions true except switch', () => {
+        config.set('page.contentType', 'Article');
+        isBreakpoint.mockReturnValue(true);
+        config.set('switches.mobileStickyLeaderboard', false);
+        getCookie.mockReturnValue('NA');
+        expect(shouldIncludeMobileSticky()).toBe(false);
+    });
+
+    test('shouldIncludeMobileSticky should be false if all conditions true except continent', () => {
+        config.set('page.contentType', 'Article');
+        config.set('switches.mobileStickyLeaderboard', true);
+        isBreakpoint.mockReturnValue(true);
+        getCookie.mockReturnValue('EU');
+        expect(shouldIncludeMobileSticky()).toBe(false);
+    });
+
+    test('shouldIncludeMobileSticky should be false if all conditions true except mobile', () => {
+        config.set('page.contentType', 'Article');
+        config.set('switches.mobileStickyLeaderboard', true);
+        isBreakpoint.mockReturnValue(false);
+        getCookie.mockReturnValue('EU');
+        expect(shouldIncludeMobileSticky()).toBe(false);
+    });
+
+    test('shouldIncludeMobileSticky should be true if test param exists irrespective of other conditions', () => {
+        config.set('page.contentType', 'Network Front');
+        config.set('switches.mobileStickyLeaderboard', false);
+        isBreakpoint.mockReturnValue(false);
+        getCookie.mockReturnValue('EU');
+        window.location.hash = '#mobile-sticky';
+        expect(shouldIncludeMobileSticky()).toBe(true);
     });
 });

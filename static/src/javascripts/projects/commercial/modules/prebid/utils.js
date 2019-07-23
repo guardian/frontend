@@ -1,10 +1,11 @@
 // @flow strict
 
 import once from 'lodash/once';
-import { getBreakpoint } from 'lib/detect';
+import { getBreakpoint, isBreakpoint } from 'lib/detect';
 import { pbTestNameMap } from 'lib/url';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
 import config from 'lib/config';
+import { getCookie } from 'lib/cookies';
 import type { PrebidSize } from './types';
 
 const stripSuffix = (s: string, suffix: string): string => {
@@ -45,6 +46,9 @@ export const isInAuRegion = (): boolean =>
 
 export const isInRowRegion = (): boolean =>
     !isInUkRegion() && !isInUsRegion() && !isInAuRegion();
+
+export const isInNA = (): boolean =>
+    (getCookie('GU_geo_continent') || 'OTHER').toUpperCase() === 'NA';
 
 export const containsMpu = (sizes: PrebidSize[]): boolean =>
     contains(sizes, [300, 250]);
@@ -129,6 +133,15 @@ export const shouldIncludeXaxis = (): boolean =>
 
 export const shouldIncludeImproveDigital = (): boolean =>
     isInUkRegion() || isInRowRegion();
+
+export const shouldIncludeMobileSticky = once(
+    (): boolean =>
+        window.location.hash.indexOf('#mobile-sticky') !== -1 ||
+        (config.get('switches.mobileStickyLeaderboard') &&
+            isBreakpoint({ min: 'mobile', max: 'mobileLandscape' }) &&
+            isInNA() &&
+            config.get('page.contentType') === 'Article')
+);
 
 export const stripMobileSuffix = (s: string): string =>
     stripSuffix(s, '--mobile');

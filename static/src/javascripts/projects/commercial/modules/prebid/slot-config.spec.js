@@ -1,16 +1,15 @@
 // @flow
 
 import config from 'lib/config';
-import { getCookie as getCookie_ } from 'lib/cookies';
-import { isInVariantSynchronous as isInVariantSynchronous_ } from 'common/modules/experiments/ab';
 import { slots, _ } from './slot-config';
-import { getBreakpointKey as getBreakpointKey_ } from './utils';
+import {
+    getBreakpointKey as getBreakpointKey_,
+    shouldIncludeMobileSticky as shouldIncludeMobileSticky_,
+} from './utils';
 
 const { getSlots } = _;
-
 const getBreakpointKey: any = getBreakpointKey_;
-const getCookie: any = getCookie_;
-const isInVariantSynchronous: any = isInVariantSynchronous_;
+const shouldIncludeMobileSticky: any = shouldIncludeMobileSticky_;
 
 jest.mock('./utils', () => {
     // $FlowFixMe property requireActual is actually not missing Flow.
@@ -18,6 +17,7 @@ jest.mock('./utils', () => {
     return {
         ...original,
         getBreakpointKey: jest.fn(),
+        shouldIncludeMobileSticky: jest.fn(),
     };
 });
 
@@ -49,10 +49,9 @@ describe('getSlots', () => {
         jest.resetAllMocks();
     });
 
-    test('should return the correct slots at breakpoint M non NA', () => {
+    test('should return the correct slots at breakpoint M without mobile sticky', () => {
+        shouldIncludeMobileSticky.mockReturnValue(false);
         getBreakpointKey.mockReturnValue('M');
-        isInVariantSynchronous.mockReturnValue(false);
-        getCookie.mockReturnValue('EU');
         expect(getSlots('Article')).toEqual([
             {
                 key: 'right',
@@ -78,10 +77,8 @@ describe('getSlots', () => {
     });
 
     test('should return the correct slots at breakpoint M for US including mobile sticky slot', () => {
-        isInVariantSynchronous.mockReturnValue(true);
         getBreakpointKey.mockReturnValue('M');
-        getCookie.mockReturnValue('NA');
-        config.set('switches.mobileStickyLeaderboard', true);
+        shouldIncludeMobileSticky.mockReturnValue(true);
         expect(getSlots('Article')).toEqual([
             {
                 key: 'right',
@@ -209,9 +206,7 @@ describe('slots', () => {
 
     test('should return the correct mobile-sticky slot at breakpoint M', () => {
         getBreakpointKey.mockReturnValue('M');
-        getCookie.mockReturnValue('NA');
-        config.set('switches.mobileStickyLeaderboard', true);
-        isInVariantSynchronous.mockReturnValue(true);
+        shouldIncludeMobileSticky.mockReturnValue(true);
         expect(slots('mobile-sticky', '')).toEqual([
             {
                 key: 'mobile-sticky',
