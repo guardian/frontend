@@ -190,6 +190,12 @@ case object ObserverPictureArchive extends ArticleEmailMetadata {
   def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "theobserver/series/observer-picture-archive")
 }
 
+case object GunsAndLiesInAmerica extends ArticleEmailMetadata {
+  val name = "Guns And Lies In America"
+  override val banner = Some("guns_and_lies.png")
+   def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "us-news/series/guns-and-lies-in-america-newsletter")
+}
+
 case object TheFlyer extends FrontEmailMetadata {
   val name = "The Flyer"
   override val banner = Some("the-flyer.png")
@@ -358,11 +364,6 @@ case object FirstDogOnTheMoon extends FrontEmailMetadata {
 case object GreenLight extends FrontEmailMetadata {
   val name = "Green Light"
   override val banner = Some("green-light.png")
-}
-
-case object GunsAndLiesInAmerica extends FrontEmailMetadata {
-  val name = "Guns And Lies In America"
-  override val banner = Some("guns_and_lies.png")
 }
 
 case object WordOfMouth extends FrontEmailMetadata {
