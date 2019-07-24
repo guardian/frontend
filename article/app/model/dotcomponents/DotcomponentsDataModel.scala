@@ -252,7 +252,8 @@ object DataModelV3 {
       "starRating" -> model.starRating,
       "trailText" -> model.trailText,
       "nav" -> model.nav,
-      "designType" -> model.designType
+      "designType" -> model.designType,
+      "showBottomSocialButtons" -> model.showBottomSocialButtons
     )
   }
 
