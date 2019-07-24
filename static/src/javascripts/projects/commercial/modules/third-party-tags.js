@@ -12,28 +12,35 @@ import { ias } from 'commercial/modules/third-party-tags/ias';
 import { inizio } from 'commercial/modules/third-party-tags/inizio';
 import { fbPixel } from 'commercial/modules/third-party-tags/facebook-pixel';
 import { init as initPlistaOutbrainRenderer } from 'commercial/modules/third-party-tags/plista-outbrain-renderer';
+import { onConsentNotification } from 'lib/cmp';
+
+let isInitialised: boolean = false;
 
 const insertScripts = (services: Array<ThirdPartyTag>): void => {
-    const ref = document.scripts[0];
-    const frag = document.createDocumentFragment();
-    let insertedScripts = false;
+    onConsentNotification('advertisement', state => {
+        if (!isInitialised && (state === true || state === null)) {
+            isInitialised = true;
+            const ref = document.scripts[0];
+            const frag = document.createDocumentFragment();
+            let insertedScripts = false;
 
-    services.forEach(service => {
-        // flowlint sketchy-null-bool:warn
-        if (service.useImage) {
-            new Image().src = service.url;
-        } else {
-            insertedScripts = true;
-            const script = document.createElement('script');
-            script.src = service.url;
-            script.onload = service.onLoad;
-            frag.appendChild(script);
-        }
-    });
+            services.forEach(service => {
+                if (service.useImage === true) {
+                    new Image().src = service.url;
+                } else {
+                    insertedScripts = true;
+                    const script = document.createElement('script');
+                    script.src = service.url;
+                    script.onload = service.onLoad;
+                    frag.appendChild(script);
+                }
+            });
 
-    fastdom.write(() => {
-        if (insertedScripts && ref && ref.parentNode) {
-            ref.parentNode.insertBefore(frag, ref);
+            fastdom.write(() => {
+                if (insertedScripts && ref && ref.parentNode) {
+                    ref.parentNode.insertBefore(frag, ref);
+                }
+            });
         }
     });
 };
