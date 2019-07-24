@@ -43,6 +43,9 @@ export const onConsentNotification = (
     purpose.callbacks.push(callback);
 };
 
+export const consent = (purposeName: PurposeEvent): boolean | null =>
+    purposes[purposeName].state;
+
 export const init = () => {
     purposes.functional.state = true;
     purposes.performance.state = true;
