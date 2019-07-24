@@ -4,10 +4,6 @@ import { getCookie } from 'lib/cookies';
 import reportError from 'lib/report-error';
 import { local } from 'lib/storage';
 import { consent } from 'lib/cmp';
-import {
-    getAdConsentState,
-    thirdPartyTrackingAdConsent,
-} from 'common/modules/commercial/ad-prefs.lib';
 
 let numRetries = 0;
 
