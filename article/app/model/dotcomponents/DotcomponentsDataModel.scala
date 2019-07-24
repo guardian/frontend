@@ -6,6 +6,7 @@ import com.gu.contentapi.client.utils.DesignType
 import common.Edition
 import common.Maps.RichMap
 import common.commercial.{CommercialProperties, EditionCommercialProperties, PrebidIndexSite}
+import common.ManifestData
 import conf.Configuration.affiliatelinks
 import conf.switches.Switches
 import conf.{Configuration, Static}
@@ -111,7 +112,8 @@ case class Config(
   sentryHost: String,
   switches: Map[String, Boolean],
   dfpAccountId: String,
-  commercialBundleUrl: String
+  commercialBundleUrl: String,
+  revisionNumber: String,
 )
 
 object Config {
@@ -525,7 +527,8 @@ object DotcomponentsDataModel {
       sentryHost = jsPageData.get("sentryHost").getOrElse(""),
       switches = switches,
       dfpAccountId = "", // TODO
-      commercialBundleUrl = buildFullCommercialUrl("javascripts/graun.dotcom-rendering-commercial.js")
+      commercialBundleUrl = buildFullCommercialUrl("javascripts/graun.dotcom-rendering-commercial.js"),
+      revisionNumber = ManifestData.revision.toString,
     )
 
     val author = Author(
