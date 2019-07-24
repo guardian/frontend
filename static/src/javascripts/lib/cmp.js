@@ -1,4 +1,8 @@
 // @flow
+import {
+    getAdConsentState,
+    thirdPartyTrackingAdConsent,
+} from 'common/modules/commercial/ad-prefs.lib';
 
 type PurposeEvent = 'functional' | 'performance' | 'advertisement';
 
@@ -42,7 +46,9 @@ export const onConsentNotification = (
 export const init = () => {
     purposes.functional.state = true;
     purposes.performance.state = true;
-    purposes.advertisement.state = true;
+    purposes.advertisement.state = getAdConsentState(
+        thirdPartyTrackingAdConsent
+    );
 
     cmpIsReady = true;
 
