@@ -51,7 +51,7 @@ export const triggerConsentNotification = () => {
     });
 };
 
-export const consent = (purposeName: PurposeEvent): boolean | null =>
+export const consentState = (purposeName: PurposeEvent): boolean | null =>
     purposes[purposeName].state;
 
 export const init = () => {

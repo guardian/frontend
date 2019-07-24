@@ -1,13 +1,10 @@
 // @flow
 import config from 'lib/config';
 import fetch from 'lib/fetch';
-import {
-    getAdConsentState,
-    thirdPartyTrackingAdConsent,
-} from 'common/modules/commercial/ad-prefs.lib';
 import { CMP_GLOBAL_NAME } from 'commercial/modules/cmp/cmp-env';
 import type { ConsentDataResponse } from 'commercial/modules/cmp/types';
 import { getRandomIntInclusive } from 'commercial/modules/prebid/utils';
+import { consentState } from 'lib/cmp';
 
 declare type ConsentPayload = {
     pv: string, // page view ID
@@ -30,7 +27,7 @@ const buildPayload = (
 ): ConsentPayload => ({
     pv: pageViewId,
     cs: consent.consentData,
-    cc: getAdConsentState(thirdPartyTrackingAdConsent),
+    cc: consentState('advertisement'),
 });
 
 const postConsent = (payload: ConsentPayload): void => {
