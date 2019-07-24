@@ -20,7 +20,6 @@ const reportError = (
     shouldThrow?: boolean = true
 ): void => {
     raven.captureException(err, { tags });
-
     if (shouldThrow) {
         // Flag to ensure it is not reported to Sentry again via global handlers
         const error = err;
