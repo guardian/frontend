@@ -9,7 +9,7 @@ import reportError from 'lib/report-error';
 // import { init as initMobileSticky } from 'commercial/modules/mobile-sticky';
 import { closeDisabledSlots } from 'commercial/modules/close-disabled-slots';
 import { adFreeSlotRemove } from 'commercial/modules/ad-free-slot-remove';
-// import { init as initCmpService } from 'commercial/modules/cmp/cmp';
+import { init as initCmpService } from 'commercial/modules/cmp/cmp';
 // import { init as initLotameCmp } from 'commercial/modules/cmp/lotame-cmp';
 // import { init as initLotameDataExtract } from 'commercial/modules/lotame-data-extract';
 // import { trackConsent as trackCmpConsent } from 'commercial/modules/cmp/consent-tracker';
@@ -29,7 +29,7 @@ import { commercialFeatures } from 'common/modules/commercial/commercial-feature
 const commercialModules: Array<Array<any>> = [
     ['cm-adFreeSlotRemove', adFreeSlotRemove],
     ['cm-closeDisabledSlots', closeDisabledSlots],
-    // ['cm-prepare-cmp', initCmpService],
+    ['cm-prepare-cmp', initCmpService],
     // ['cm-track-cmp-consent', trackCmpConsent],
     // ['cm-checkDispatcher', initCheckDispatcher],
     // ['cm-lotame-cmp', initLotameCmp],
