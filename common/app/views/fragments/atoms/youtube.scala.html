@@ -45,7 +45,7 @@
                 ""
             }){channelId: String =>
             <div data-media-atom-id="@media.id" class="@RenderClasses(Map(
-                ("u-responsive-ratio", true),
+                ("u-responsive-ratio", !isPaidFor),
                 ("u-responsive-ratio--hd", sixteenByNine),
                 ("youtube-media-atom", true),
                 ("no-player", !playable || expired ),
