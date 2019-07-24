@@ -1,7 +1,7 @@
 // @flow
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
-import { init, _ } from './third-party-tags';
 import { triggerConsentNotification } from 'lib/cmp';
+import { init, _ } from './third-party-tags';
 
 const { insertScripts, loadOther } = _;
 
