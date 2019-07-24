@@ -43,6 +43,14 @@ export const onConsentNotification = (
     purpose.callbacks.push(callback);
 };
 
+// Exporting for testing purposes only
+export const triggerConsentNotification = () => {
+    Object.keys(purposes).forEach(key => {
+        const purpose = purposes[key];
+        purpose.callbacks.forEach(callback => callback(purpose.state));
+    });
+};
+
 export const consent = (purposeName: PurposeEvent): boolean | null =>
     purposes[purposeName].state;
 
@@ -55,8 +63,5 @@ export const init = () => {
 
     cmpIsReady = true;
 
-    Object.keys(purposes).forEach(key => {
-        const purpose = purposes[key];
-        purpose.callbacks.forEach(callback => callback(purpose.state));
-    });
+    triggerConsentNotification();
 };

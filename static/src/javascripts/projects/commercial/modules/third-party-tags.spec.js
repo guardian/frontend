@@ -1,6 +1,7 @@
 // @flow
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { init, _ } from './third-party-tags';
+import { triggerConsentNotification } from 'lib/cmp';
 
 const { insertScripts, loadOther } = _;
 
@@ -84,12 +85,7 @@ describe('third party tags', () => {
         };
         it('should add a script to the document', () => {
             insertScripts([fakeThirdPartyTag]);
-            expect(document.scripts.length).toBe(2);
-        });
-    });
-    describe('loadOther', () => {
-        it('should call insert scripts', () => {
-            loadOther();
+            triggerConsentNotification();
             expect(document.scripts.length).toBe(2);
         });
     });
