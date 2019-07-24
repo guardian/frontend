@@ -25,6 +25,10 @@ const init = (): Promise<void> => {
     }
     return loadScript('//ad.crwdcntrl.net/5/c=13271/pe=y/var=OzoneLotameData')
         .then(() => {
+            if (config.get('isDotcomRendering', false)) {
+                // We do not need the LOTCC initialization for dotcom-rendering Ad Free
+                return Promise.resolve();
+            }
             if ('LOTCC' in window && 'bcp' in window.LOTCC) {
                 Promise.resolve(window.LOTCC.bcp());
             } else {
