@@ -377,8 +377,6 @@ object DotcomponentsDataModel {
       else designType.map(_.toString).getOrElse("Article")
     }
 
-    article.metadata.designType.map(_.toString).getOrElse("Article")
-
     val bodyBlocksRaw = articlePage match {
       case lb: LiveBlogPage => blocksForLiveblogPage(lb, blocks)
       case article => blocks.body.getOrElse(Nil)
