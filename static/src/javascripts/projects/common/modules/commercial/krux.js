@@ -3,6 +3,7 @@ import config from 'lib/config';
 import { getCookie } from 'lib/cookies';
 import reportError from 'lib/report-error';
 import { local } from 'lib/storage';
+import { consent } from 'lib/cmp';
 import {
     getAdConsentState,
     thirdPartyTrackingAdConsent,
@@ -60,8 +61,7 @@ const retrieve = (n: string): string => {
 };
 
 export const getKruxSegments = (): Array<string> => {
-    const wantPersonalisedAds: boolean =
-        getAdConsentState(thirdPartyTrackingAdConsent) !== false;
+    const wantPersonalisedAds: boolean = consent('advertisement') !== false;
     const segments: string = wantPersonalisedAds ? retrieve('segs') : '';
     return segments ? segments.split(',') : [];
 };
