@@ -5,7 +5,7 @@ import { getAdConsentState as _getAdConsentState } from 'common/modules/commerci
 const getAdConsentState: any = _getAdConsentState;
 
 jest.mock('common/modules/commercial/ad-prefs.lib', () => ({
-    getAdConsentState: jest.fn(() => true),
+    getAdConsentState: jest.fn(),
     thirdPartyTrackingAdConsent: jest.fn(),
 }));
 
