@@ -104,14 +104,14 @@ export const init = (): Promise<void> => {
 
         onConsentNotification('advertisement', state => {
             if (state === true) {
-                window.googletag.cmd.push(
-                    window.googletag.pubads().setRequestNonPersonalizedAds(0)
-                );
+                window.googletag.cmd.push(() => {
+                    window.googletag.pubads().setRequestNonPersonalizedAds(0);
+                });
             }
             if (state === false) {
-                window.googletag.cmd.push(
-                    window.googletag.pubads().setRequestNonPersonalizedAds(1)
-                );
+                window.googletag.cmd.push(() => {
+                    window.googletag.pubads().setRequestNonPersonalizedAds(1);
+                });
             }
         });
 
