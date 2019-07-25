@@ -1,5 +1,5 @@
 // @flow
-import { init, onConsentNotification, _ } from 'lib/cmp';
+import { init, onConsentNotification, consentState, _ } from 'lib/cmp';
 import { getAdConsentState as _getAdConsentState } from 'common/modules/commercial/ad-prefs.lib';
 
 const getAdConsentState: any = _getAdConsentState;
@@ -15,6 +15,36 @@ describe('cmp', () => {
         getAdConsentState.mockReset();
     });
 
+    describe('consentState', () => {
+        it('returns functional consent state', () => {
+            init();
+
+            expect(consentState('functional')).toBe(true);
+        });
+
+        it('returns performance consent state', () => {
+            init();
+
+            expect(consentState('performance')).toBe(true);
+        });
+
+        it('returns advertisement consent state with true if getAdConsentState true', () => {
+            getAdConsentState.mockReturnValue(true);
+
+            init();
+
+            expect(consentState('advertisement')).toBe(true);
+        });
+
+        it('returns advertisement consent state with false if getAdConsentState true', () => {
+            getAdConsentState.mockReturnValue(false);
+
+            init();
+
+            expect(consentState('advertisement')).toBe(false);
+        });
+    });
+
     describe('onConsentNotification', () => {
         it('executes functional callback', () => {
             const myCallBack = jest.fn();
@@ -23,7 +53,7 @@ describe('cmp', () => {
 
             onConsentNotification('functional', myCallBack);
 
-            expect(myCallBack).toBeCalledTimes(1);
+            expect(myCallBack).toHaveBeenCalledTimes(1);
             expect(myCallBack).toBeCalledWith(true);
         });
 
@@ -34,7 +64,7 @@ describe('cmp', () => {
 
             onConsentNotification('performance', myCallBack);
 
-            expect(myCallBack).toBeCalledTimes(1);
+            expect(myCallBack).toHaveBeenCalledTimes(1);
             expect(myCallBack).toBeCalledWith(true);
         });
 
@@ -47,7 +77,7 @@ describe('cmp', () => {
 
             onConsentNotification('advertisement', myCallBack);
 
-            expect(myCallBack).toBeCalledTimes(1);
+            expect(myCallBack).toHaveBeenCalledTimes(1);
             expect(myCallBack).toBeCalledWith(true);
         });
 
@@ -60,7 +90,7 @@ describe('cmp', () => {
 
             onConsentNotification('advertisement', myCallBack);
 
-            expect(myCallBack).toBeCalledTimes(1);
+            expect(myCallBack).toHaveBeenCalledTimes(1);
             expect(myCallBack).toBeCalledWith(false);
         });
 
@@ -75,7 +105,7 @@ describe('cmp', () => {
 
             _.triggerConsentNotification();
 
-            expect(myCallBack).toBeCalledTimes(2);
+            expect(myCallBack).toHaveBeenCalledTimes(2);
             expect(myCallBack.mock.calls).toEqual([
                 [true], // First call
                 [true], // Second call
