@@ -3,10 +3,7 @@ import fastdom from 'fastdom';
 
 import config from 'lib/config';
 import { loadScript } from 'lib/load-script';
-import {
-    getAdConsentState,
-    thirdPartyTrackingAdConsent,
-} from 'common/modules/commercial/ad-prefs.lib';
+import { consentState } from 'lib/cmp';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 
 const scriptSrc = 'https://www.youtube.com/iframe_api';
@@ -89,7 +86,7 @@ const setupPlayer = (
     onError
 ) => {
     const wantPersonalisedAds: boolean =
-        getAdConsentState(thirdPartyTrackingAdConsent) !== false;
+        consentState('advertisement') !== false;
     const disableRelatedVideos = !config.get('switches.youtubeRelatedVideos');
     // relatedChannels needs to be an array, as per YouTube's IFrame Embed Config API
     const relatedChannels = [];
