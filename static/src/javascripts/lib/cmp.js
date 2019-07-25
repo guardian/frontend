@@ -73,7 +73,12 @@ export const init = (): void => {
 // Exposed for testing purposes
 export const _ = {
     triggerConsentNotification,
-    resetCmpIsReady: (): void => {
+    resetCmp: (): void => {
         cmpIsReady = false;
+        Object.keys(purposes).forEach(key => {
+            const purpose = purposes[key];
+            purpose.state = null;
+            purpose.callbacks = [];
+        });
     },
 };

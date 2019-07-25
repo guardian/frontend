@@ -11,11 +11,31 @@ jest.mock('common/modules/commercial/ad-prefs.lib', () => ({
 
 describe('cmp', () => {
     beforeEach(() => {
-        _.resetCmpIsReady();
+        _.resetCmp();
         getAdConsentState.mockReset();
     });
 
+    it('does not re-trigger consent notifications if init called multiple times', () => {
+        const myCallBack = jest.fn();
+
+        init();
+
+        onConsentNotification('functional', myCallBack);
+
+        expect(myCallBack).toHaveBeenCalledTimes(1);
+
+        init();
+
+        expect(myCallBack).toHaveBeenCalledTimes(1);
+    });
+
     describe('consentState', () => {
+        it('returns null state if cmp lib has not been initialised', () => {
+            expect(consentState('functional')).toBeNull();
+            expect(consentState('performance')).toBeNull();
+            expect(consentState('advertisement')).toBeNull();
+        });
+
         it('returns functional consent state', () => {
             init();
 
@@ -46,70 +66,150 @@ describe('cmp', () => {
     });
 
     describe('onConsentNotification', () => {
-        it('executes functional callback', () => {
-            const myCallBack = jest.fn();
+        describe('if cmpIsReady is TRUE when onConsentNotification called', () => {
+            it('executes functional callback', () => {
+                const myCallBack = jest.fn();
 
-            init();
+                init();
 
-            onConsentNotification('functional', myCallBack);
+                onConsentNotification('functional', myCallBack);
 
-            expect(myCallBack).toHaveBeenCalledTimes(1);
-            expect(myCallBack).toBeCalledWith(true);
+                expect(myCallBack).toHaveBeenCalledTimes(1);
+                expect(myCallBack).toBeCalledWith(true);
+            });
+
+            it('executes performance callback', () => {
+                const myCallBack = jest.fn();
+
+                init();
+
+                onConsentNotification('performance', myCallBack);
+
+                expect(myCallBack).toHaveBeenCalledTimes(1);
+                expect(myCallBack).toBeCalledWith(true);
+            });
+
+            it('executes advertisement callback with true if getAdConsentState true', () => {
+                getAdConsentState.mockReturnValue(true);
+
+                const myCallBack = jest.fn();
+
+                init();
+
+                onConsentNotification('advertisement', myCallBack);
+
+                expect(myCallBack).toHaveBeenCalledTimes(1);
+                expect(myCallBack).toBeCalledWith(true);
+            });
+
+            it('executes advertisement callback with true if getAdConsentState false', () => {
+                getAdConsentState.mockReturnValue(false);
+
+                const myCallBack = jest.fn();
+
+                init();
+
+                onConsentNotification('advertisement', myCallBack);
+
+                expect(myCallBack).toHaveBeenCalledTimes(1);
+                expect(myCallBack).toBeCalledWith(false);
+            });
+
+            it('executes advertisement callback each time consent nofication triggered', () => {
+                getAdConsentState.mockReturnValue(true);
+
+                const myCallBack = jest.fn();
+
+                init();
+
+                onConsentNotification('advertisement', myCallBack);
+
+                _.triggerConsentNotification();
+
+                expect(myCallBack).toHaveBeenCalledTimes(2);
+                expect(myCallBack.mock.calls).toEqual([
+                    [true], // First call
+                    [true], // Second call
+                ]);
+            });
         });
 
-        it('executes performance callback', () => {
-            const myCallBack = jest.fn();
+        describe('if cmpIsReady is FALSE when onConsentNotification called waits to', () => {
+            it('execute functional callback', () => {
+                const myCallBack = jest.fn();
 
-            init();
+                onConsentNotification('functional', myCallBack);
 
-            onConsentNotification('performance', myCallBack);
+                expect(myCallBack).not.toBeCalled();
 
-            expect(myCallBack).toHaveBeenCalledTimes(1);
-            expect(myCallBack).toBeCalledWith(true);
-        });
+                init();
 
-        it('executes advertisement callback with true if getAdConsentState true', () => {
-            getAdConsentState.mockReturnValue(true);
+                expect(myCallBack).toHaveBeenCalledTimes(1);
+                expect(myCallBack).toBeCalledWith(true);
+            });
 
-            const myCallBack = jest.fn();
+            it('execute performance callback', () => {
+                const myCallBack = jest.fn();
 
-            init();
+                onConsentNotification('performance', myCallBack);
 
-            onConsentNotification('advertisement', myCallBack);
+                expect(myCallBack).not.toBeCalled();
 
-            expect(myCallBack).toHaveBeenCalledTimes(1);
-            expect(myCallBack).toBeCalledWith(true);
-        });
+                init();
 
-        it('executes advertisement callback with true if getAdConsentState false', () => {
-            getAdConsentState.mockReturnValue(false);
+                expect(myCallBack).toHaveBeenCalledTimes(1);
+                expect(myCallBack).toBeCalledWith(true);
+            });
 
-            const myCallBack = jest.fn();
+            it('execute advertisement callback with true if getAdConsentState true', () => {
+                getAdConsentState.mockReturnValue(true);
 
-            init();
+                const myCallBack = jest.fn();
 
-            onConsentNotification('advertisement', myCallBack);
+                onConsentNotification('advertisement', myCallBack);
 
-            expect(myCallBack).toHaveBeenCalledTimes(1);
-            expect(myCallBack).toBeCalledWith(false);
-        });
+                expect(myCallBack).not.toBeCalled();
 
-        it('executes advertisement callback each time consent nofication triggered', () => {
-            getAdConsentState.mockReturnValue(true);
+                init();
 
-            const myCallBack = jest.fn();
+                expect(myCallBack).toHaveBeenCalledTimes(1);
+                expect(myCallBack).toBeCalledWith(true);
+            });
 
-            init();
+            it('execute advertisement callback with true if getAdConsentState false', () => {
+                getAdConsentState.mockReturnValue(false);
 
-            onConsentNotification('advertisement', myCallBack);
+                const myCallBack = jest.fn();
 
-            _.triggerConsentNotification();
+                onConsentNotification('advertisement', myCallBack);
 
-            expect(myCallBack).toHaveBeenCalledTimes(2);
-            expect(myCallBack.mock.calls).toEqual([
-                [true], // First call
-                [true], // Second call
-            ]);
+                expect(myCallBack).not.toBeCalled();
+
+                init();
+
+                expect(myCallBack).toHaveBeenCalledTimes(1);
+                expect(myCallBack).toBeCalledWith(false);
+            });
+
+            it('execute advertisement callback each time consent nofication triggered', () => {
+                getAdConsentState.mockReturnValue(true);
+
+                const myCallBack = jest.fn();
+
+                onConsentNotification('advertisement', myCallBack);
+
+                expect(myCallBack).not.toBeCalled();
+
+                init();
+
+                _.triggerConsentNotification();
+
+                expect(myCallBack).toHaveBeenCalledTimes(2);
+                expect(myCallBack.mock.calls).toEqual([
+                    [true], // First call
+                    [true], // Second call
+                ]);
+            });
         });
     });
 });
