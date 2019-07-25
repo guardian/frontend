@@ -7,7 +7,7 @@ import model.content._
 import model.{AudioAsset, ImageAsset, ImageMedia, VideoAsset}
 import org.jsoup.Jsoup
 import play.api.libs.json._
-import views.support.cleaner.AmpSoundcloud
+import views.support.cleaner.SoundcloudHelper
 import views.support.{AffiliateLinksCleaner, ImgSrc, Item120, Item1200, Item140, Item300, Item640, Item700, SrcSet}
 
 import scala.collection.JavaConverters._
@@ -399,7 +399,7 @@ object PageElement {
     val src = getIframeSrc(html)
 
     src.flatMap { s =>
-        (AmpSoundcloud.getTrackIdFromUrl(s), AmpSoundcloud.getPlaylistIdFromUrl(s)) match {
+        (SoundcloudHelper.getTrackIdFromUrl(s), SoundcloudHelper.getPlaylistIdFromUrl(s)) match {
           case (Some(track), _) => Some(SoundcloudBlockElement(html, track, isTrack = true, isMandatory))
           case (_, Some(playlist)) => Some(SoundcloudBlockElement(html, playlist, isTrack = false, isMandatory))
           case _ => None

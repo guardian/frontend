@@ -7,7 +7,7 @@ import org.jsoup.nodes.{Document, Element}
 
 // There are two element types that have been found to contain Soundcloud embeds.
 // These are: element-audio and element-embed
-object AmpSoundcloud {
+object SoundcloudHelper {
   def createElementFromTrack(document: Document, trackId: String): Element = {
     val soundcloud = document.createElement("amp-soundcloud")
     soundcloud.attr("data-trackid", trackId)
@@ -41,12 +41,12 @@ object AmpSoundcloud {
   }
 
   def getSoundCloudElement(document: Document, iframeElement: Element): Option[Element] = {
-    val trackId = AmpSoundcloud.getTrackIdFromUrl(iframeElement.attr("src"))
-    val playlistId = AmpSoundcloud.getPlaylistIdFromUrl(iframeElement.attr("src"))
+    val trackId = SoundcloudHelper.getTrackIdFromUrl(iframeElement.attr("src"))
+    val playlistId = SoundcloudHelper.getPlaylistIdFromUrl(iframeElement.attr("src"))
 
     (trackId, playlistId) match {
-      case (Some(id),_) => Some(AmpSoundcloud.createElementFromTrack(document, id))
-      case (_,Some(id)) => Some(AmpSoundcloud.createElementFromPlaylist(document, id))
+      case (Some(id),_) => Some(SoundcloudHelper.createElementFromTrack(document, id))
+      case (_,Some(id)) => Some(SoundcloudHelper.createElementFromPlaylist(document, id))
       case _ => None
     }
   }
