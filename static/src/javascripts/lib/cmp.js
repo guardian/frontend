@@ -30,7 +30,7 @@ const purposes: { [PurposeEvent]: Purpose } = {
     },
 };
 
-const triggerConsentNotification = () => {
+const triggerConsentNotification = (): void => {
     Object.keys(purposes).forEach(key => {
         const purpose = purposes[key];
         purpose.callbacks.forEach(callback => callback(purpose.state));
@@ -40,7 +40,7 @@ const triggerConsentNotification = () => {
 export const onConsentNotification = (
     purposeName: PurposeEvent,
     callback: PurposeCallback
-) => {
+): void => {
     const purpose = purposes[purposeName];
 
     if (cmpIsReady) {
@@ -53,7 +53,12 @@ export const onConsentNotification = (
 export const consentState = (purposeName: PurposeEvent): boolean | null =>
     purposes[purposeName].state;
 
-export const init = () => {
+export const init = (): void => {
+    // do nothing if init has already been called
+    if (cmpIsReady) {
+        return;
+    }
+
     purposes.functional.state = true;
     purposes.performance.state = true;
     purposes.advertisement.state = getAdConsentState(
@@ -65,6 +70,10 @@ export const init = () => {
     triggerConsentNotification();
 };
 
+// Exposed for testing purposes
 export const _ = {
     triggerConsentNotification,
+    resetCmpIsReady: (): void => {
+        cmpIsReady = false;
+    },
 };

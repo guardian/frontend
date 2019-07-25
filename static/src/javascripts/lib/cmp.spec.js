@@ -1,0 +1,85 @@
+// @flow
+import { init, onConsentNotification, _ } from 'lib/cmp';
+import { getAdConsentState as _getAdConsentState } from 'common/modules/commercial/ad-prefs.lib';
+
+const getAdConsentState: any = _getAdConsentState;
+
+jest.mock('common/modules/commercial/ad-prefs.lib', () => ({
+    getAdConsentState: jest.fn(() => true),
+    thirdPartyTrackingAdConsent: jest.fn(),
+}));
+
+describe('cmp', () => {
+    beforeEach(() => {
+        _.resetCmpIsReady();
+        getAdConsentState.mockReset();
+    });
+
+    describe('onConsentNotification', () => {
+        it('executes functional callback', () => {
+            const myCallBack = jest.fn();
+
+            init();
+
+            onConsentNotification('functional', myCallBack);
+
+            expect(myCallBack).toBeCalledTimes(1);
+            expect(myCallBack).toBeCalledWith(true);
+        });
+
+        it('executes performance callback', () => {
+            const myCallBack = jest.fn();
+
+            init();
+
+            onConsentNotification('performance', myCallBack);
+
+            expect(myCallBack).toBeCalledTimes(1);
+            expect(myCallBack).toBeCalledWith(true);
+        });
+
+        it('executes advertisement callback with true if getAdConsentState true', () => {
+            getAdConsentState.mockReturnValue(true);
+
+            const myCallBack = jest.fn();
+
+            init();
+
+            onConsentNotification('advertisement', myCallBack);
+
+            expect(myCallBack).toBeCalledTimes(1);
+            expect(myCallBack).toBeCalledWith(true);
+        });
+
+        it('executes advertisement callback with true if getAdConsentState false', () => {
+            getAdConsentState.mockReturnValue(false);
+
+            const myCallBack = jest.fn();
+
+            init();
+
+            onConsentNotification('advertisement', myCallBack);
+
+            expect(myCallBack).toBeCalledTimes(1);
+            expect(myCallBack).toBeCalledWith(false);
+        });
+
+        it('executes advertisement callback each time consent nofication triggered', () => {
+            getAdConsentState.mockReturnValue(true);
+
+            const myCallBack = jest.fn();
+
+            init();
+
+            onConsentNotification('advertisement', myCallBack);
+
+            _.triggerConsentNotification();
+
+            expect(myCallBack).toBeCalledTimes(2);
+            expect(myCallBack.mock.calls).toEqual([
+                [true], // First call
+                [true], // Second call
+            ]);
+        });
+    });
+});
