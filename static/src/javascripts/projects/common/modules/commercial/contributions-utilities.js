@@ -147,7 +147,8 @@ const isCompatibleWithLiveBlogEpic = (page: Object): boolean =>
     isArticleWorthAnEpicImpression(page, defaultExclusionRules);
 
 const pageShouldHideReaderRevenue = () =>
-    config.get('page.shouldHideReaderRevenue');
+    config.get('page.shouldHideReaderRevenue') ||
+    config.get('page.sponsorshipType') === 'paid-content';
 
 const userIsInCorrectCohort = (
     userCohort: AcquisitionsComponentUserCohort
