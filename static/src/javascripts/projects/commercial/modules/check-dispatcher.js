@@ -7,6 +7,7 @@ import { commercialFeatures } from 'common/modules/commercial/commercial-feature
 import { checks } from 'common/modules/check-mediator-checks';
 import { resolveCheck, waitForCheck } from 'common/modules/check-mediator';
 import { getEpicTestToRun } from 'common/modules/experiments/ab';
+import reportError from 'lib/report-error';
 
 const someCheckPassed = (results): boolean => results.includes(true);
 
@@ -30,9 +31,12 @@ const checksToDispatch = {
     },
 
     isUserNotInContributionsAbTest(): Promise<boolean> {
-        return waitForCheck('isUserInContributionsAbTest').then(
-            userInContributionsAbTest => !userInContributionsAbTest
-        );
+        return waitForCheck('isUserInContributionsAbTest')
+            .then(userInContributionsAbTest => !userInContributionsAbTest)
+            .catch(error => {
+                reportError(error, [], false);
+                return Promise.resolve(false);
+            });
     },
 
     emailCanRunPreCheck(): Promise<boolean> {
@@ -69,24 +73,30 @@ const checksToDispatch = {
         // if thirdPartyTags false no external ads are loaded
         // is irrelevant for ad-free users (independently of thirdPartyTags)
         if (commercialFeatures.thirdPartyTags && !commercialFeatures.adFree) {
-            return waitForCheck('hasHighPriorityAdLoaded').then(
-                highPriorityAdLoaded => {
+            return waitForCheck('hasHighPriorityAdLoaded')
+                .then(highPriorityAdLoaded => {
                     if (highPriorityAdLoaded) {
                         return Promise.resolve(
                             trackAdRender('dfp-ad--merchandising')
                         );
                     }
                     return Promise.resolve(true);
-                }
-            );
+                })
+                .catch(error => {
+                    reportError(error, [], false);
+                    return Promise.resolve(false);
+                });
         }
         return Promise.resolve(false);
     },
 
     hasLowPriorityAdNotLoaded(): Promise<boolean> {
-        return waitForCheck('hasLowPriorityAdLoaded').then(
-            lowPriorityAdLoaded => !lowPriorityAdLoaded
-        );
+        return waitForCheck('hasLowPriorityAdLoaded')
+            .then(lowPriorityAdLoaded => !lowPriorityAdLoaded)
+            .catch(error => {
+                reportError(error, [], false);
+                return Promise.resolve(true);
+            });
     },
 
     isStoryQuestionsOnPage(): Promise<boolean> {
@@ -97,8 +107,14 @@ const checksToDispatch = {
 
     isOutbrainBlockedByAds(): Promise<boolean> {
         const dependentChecks = [
-            waitForCheck('hasHighPriorityAdLoaded'),
-            waitForCheck('hasLowPriorityAdLoaded'),
+            waitForCheck('hasHighPriorityAdLoaded').catch(error => {
+                reportError(error, [], false);
+                return Promise.resolve(false);
+            }),
+            waitForCheck('hasLowPriorityAdLoaded').catch(error => {
+                reportError(error, [], false);
+                return Promise.resolve(false);
+            }),
         ];
 
         return Promise.all(dependentChecks).then(results =>
@@ -108,8 +124,14 @@ const checksToDispatch = {
 
     isOutbrainMerchandiseCompliant(): Promise<boolean> {
         const dependentChecks = [
-            waitForCheck('hasHighPriorityAdLoaded'),
-            waitForCheck('hasLowPriorityAdNotLoaded'),
+            waitForCheck('hasHighPriorityAdLoaded').catch(error => {
+                reportError(error, [], false);
+                return Promise.resolve(false);
+            }),
+            waitForCheck('hasLowPriorityAdNotLoaded').catch(error => {
+                reportError(error, [], false);
+                return Promise.resolve(false);
+            }),
         ];
 
         return Promise.all(dependentChecks).then(results =>
@@ -119,8 +141,14 @@ const checksToDispatch = {
 
     isOutbrainMerchandiseCompliantOrBlockedByAds(): Promise<boolean> {
         const dependentChecks = [
-            waitForCheck('isOutbrainMerchandiseCompliant'),
-            waitForCheck('isOutbrainBlockedByAds'),
+            waitForCheck('isOutbrainMerchandiseCompliant').catch(error => {
+                reportError(error, [], false);
+                return Promise.resolve(false);
+            }),
+            waitForCheck('isOutbrainBlockedByAds').catch(error => {
+                reportError(error, [], false);
+                return Promise.resolve(false);
+            }),
         ];
 
         return Promise.all(dependentChecks).then(results =>
@@ -130,10 +158,22 @@ const checksToDispatch = {
 
     emailCanRun(): Promise<boolean> {
         const dependentChecks = [
-            waitForCheck('emailCanRunPreCheck'),
-            waitForCheck('listCanRun'),
-            waitForCheck('emailInArticleOutbrainEnabled'),
-            waitForCheck('isUserNotInContributionsAbTest'),
+            waitForCheck('emailCanRunPreCheck').catch(error => {
+                reportError(error, [], false);
+                return Promise.resolve(false);
+            }),
+            waitForCheck('listCanRun').catch(error => {
+                reportError(error, [], false);
+                return Promise.resolve(false);
+            }),
+            waitForCheck('emailInArticleOutbrainEnabled').catch(error => {
+                reportError(error, [], false);
+                return Promise.resolve(false);
+            }),
+            waitForCheck('isUserNotInContributionsAbTest').catch(error => {
+                reportError(error, [], false);
+                return Promise.resolve(false);
+            }),
         ];
 
         return Promise.all(dependentChecks).then(results =>
@@ -143,10 +183,24 @@ const checksToDispatch = {
 
     emailCanRunPostCheck(): Promise<boolean> {
         const dependentChecks = [
-            waitForCheck('isUserInEmailAbTest'),
-            waitForCheck('isOutbrainMerchandiseCompliantOrBlockedByAds'),
-            waitForCheck('isOutbrainDisabled'),
-            waitForCheck('isStoryQuestionsOnPage'),
+            waitForCheck('isUserInEmailAbTest').catch(error => {
+                reportError(error, [], false);
+                return Promise.resolve(false);
+            }),
+            waitForCheck('isOutbrainMerchandiseCompliantOrBlockedByAds').catch(
+                error => {
+                    reportError(error, [], false);
+                    return Promise.resolve(false);
+                }
+            ),
+            waitForCheck('isOutbrainDisabled').catch(error => {
+                reportError(error, [], false);
+                return Promise.resolve(false);
+            }),
+            waitForCheck('isStoryQuestionsOnPage').catch(error => {
+                reportError(error, [], false);
+                return Promise.resolve(false);
+            }),
         ];
 
         return Promise.all(dependentChecks).then(results =>
