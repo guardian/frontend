@@ -14,21 +14,22 @@ import { fbPixel } from 'commercial/modules/third-party-tags/facebook-pixel';
 import { init as initPlistaOutbrainRenderer } from 'commercial/modules/third-party-tags/plista-outbrain-renderer';
 import { onConsentNotification } from 'lib/cmp';
 
-let isInitialised: boolean = false;
+let scriptsInserted: boolean = false;
 
 const insertScripts = (services: Array<ThirdPartyTag>): void => {
     onConsentNotification('advertisement', state => {
-        if (!isInitialised && (state === true || state === null)) {
-            isInitialised = true;
+        if (!scriptsInserted && (state === true || state === null)) {
+            scriptsInserted = true;
+
             const ref = document.scripts[0];
             const frag = document.createDocumentFragment();
-            let insertedScripts = false;
+            let hasScriptsToInsert = false;
 
             services.forEach(service => {
                 if (service.useImage === true) {
                     new Image().src = service.url;
                 } else {
-                    insertedScripts = true;
+                    hasScriptsToInsert = true;
                     const script = document.createElement('script');
                     script.src = service.url;
                     script.onload = service.onLoad;
@@ -36,11 +37,13 @@ const insertScripts = (services: Array<ThirdPartyTag>): void => {
                 }
             });
 
-            fastdom.write(() => {
-                if (insertedScripts && ref && ref.parentNode) {
-                    ref.parentNode.insertBefore(frag, ref);
-                }
-            });
+            if (hasScriptsToInsert) {
+                fastdom.write(() => {
+                    if (ref && ref.parentNode) {
+                        ref.parentNode.insertBefore(frag, ref);
+                    }
+                });
+            }
         }
     });
 };

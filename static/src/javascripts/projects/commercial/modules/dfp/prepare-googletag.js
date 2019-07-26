@@ -107,8 +107,7 @@ export const init = (): Promise<void> => {
                 window.googletag.cmd.push(() => {
                     window.googletag.pubads().setRequestNonPersonalizedAds(0);
                 });
-            }
-            if (state === false) {
+            } else if (state === false) {
                 window.googletag.cmd.push(() => {
                     window.googletag.pubads().setRequestNonPersonalizedAds(1);
                 });

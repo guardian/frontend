@@ -11,9 +11,9 @@ const configureSegments = () => {
     if (window.Krux) {
         // For flag values, see https://konsole.zendesk.com/hc/en-us/articles/360000754674-JavaScript-Consent-Tag-Spec
         const consentFlags = {
-            dc: false,
-            al: false,
-            tg: false,
+            dc: true,
+            al: true,
+            tg: true,
             cd: false,
             sh: false,
             re: false,
