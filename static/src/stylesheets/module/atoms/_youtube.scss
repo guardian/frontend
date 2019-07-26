@@ -67,7 +67,7 @@
     font-size: 16px;
     color: #000000;
     margin: 5px 10px 0 0;
-    @include mq($until: 590px) {
+    @include mq($until: phablet) {
         display: none;
     }
 }
