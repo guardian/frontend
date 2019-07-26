@@ -12,10 +12,7 @@ import { getUrlVars } from 'lib/url';
 import { getKruxSegments } from 'common/modules/commercial/krux';
 import { isUserLoggedIn } from 'common/modules/identity/api';
 import { getUserSegments } from 'common/modules/commercial/user-ad-targeting';
-import {
-    getAdConsentState,
-    thirdPartyTrackingAdConsent,
-} from 'common/modules/commercial/ad-prefs.lib';
+import { onConsentNotification } from 'lib/cmp';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { getSynchronousParticipations } from 'common/modules/experiments/ab';
 import { removeFalseyValues } from 'commercial/modules/prebid/utils';
@@ -23,6 +20,26 @@ import flattenDeep from 'lodash/flattenDeep';
 import once from 'lodash/once';
 import pick from 'lodash/pick';
 import pickBy from 'lodash/pickBy';
+
+type PageTargeting = {
+    sens: string,
+    url: string,
+    edition: string,
+    ct: string,
+    p: string,
+    k: string,
+    su: string,
+    bp: string,
+    x: string,
+    gdncrm: string,
+    pv: string,
+    co: string,
+    tn: string,
+    slot: string,
+};
+
+let myPageTargetting: {} = {};
+let latestConsentState;
 
 const findBreakpoint = (): string => {
     switch (getBreakpoint(true)) {
@@ -155,23 +172,6 @@ const formatAppNexusTargeting = (obj: { [string]: string }): string =>
             })
     ).join(',');
 
-type PageTargeting = {
-    sens: string,
-    url: string,
-    edition: string,
-    ct: string,
-    p: string,
-    k: string,
-    su: string,
-    bp: string,
-    x: string,
-    gdncrm: string,
-    pv: string,
-    co: string,
-    tn: string,
-    slot: string,
-};
-
 const buildAppNexusTargetingObject = once(
     (pageTargeting: PageTargeting): {} =>
         removeFalseyValues({
@@ -199,68 +199,73 @@ const buildAppNexusTargeting = once(
         formatAppNexusTargeting(buildAppNexusTargetingObject(pageTargeting))
 );
 
-const buildPageTargeting = once(
-    (): {} => {
-        const page = config.get('page');
-        //
-        const adConsentState: boolean | null = getAdConsentState(
-            thirdPartyTrackingAdConsent
-        );
+const buildPageTargetting = (adConsentState: boolean | null): {} => {
+    const page = config.get('page');
+    console.log('*** consent state', adConsentState);
+    // personalised ads targeting
+    const paTargeting: {} =
+        adConsentState !== null ? { pa: adConsentState ? 't' : 'f' } : {};
+    const adFreeTargeting: {} = commercialFeatures.adFree ? { af: 't' } : {};
+    const pageTargets: PageTargeting = Object.assign(
+        {
+            sens: page.isSensitive ? 't' : 'f',
+            x: getKruxSegments(),
+            pv: config.get('ophan.pageViewId'),
+            bp: findBreakpoint(),
+            at: getCookie('adtest') || undefined,
+            si: isUserLoggedIn() ? 't' : 'f',
+            gdncrm: getUserSegments(),
+            ab: abParam(),
+            ref: getReferrer(),
+            ms: formatTarget(page.source),
+            fr: getVisitedValue(),
+            // round video duration up to nearest 30 multiple
+            vl: page.videoDuration
+                ? (Math.ceil(page.videoDuration / 30.0) * 30).toString()
+                : undefined,
+            cc: geolocationGetSync(),
+            s: page.section, // for reference in a macro, so cannot be extracted from ad unit
+            pr: 'dotcom-platform', // rendering platform
+            inskin: inskinTargetting(),
+        },
+        page.sharedAdTargeting,
+        paTargeting,
+        adFreeTargeting,
+        getWhitelistedQueryParams()
+    );
 
-        // personalised ads targeting
-        const paTargeting: {} =
-            adConsentState !== null ? { pa: adConsentState ? 't' : 'f' } : {};
-        const adFreeTargeting: {} = commercialFeatures.adFree
-            ? { af: 't' }
-            : {};
-        const pageTargets: PageTargeting = Object.assign(
-            {
-                sens: page.isSensitive ? 't' : 'f',
-                x: getKruxSegments(),
-                pv: config.get('ophan.pageViewId'),
-                bp: findBreakpoint(),
-                at: getCookie('adtest') || undefined,
-                si: isUserLoggedIn() ? 't' : 'f',
-                gdncrm: getUserSegments(),
-                ab: abParam(),
-                ref: getReferrer(),
-                ms: formatTarget(page.source),
-                fr: getVisitedValue(),
-                // round video duration up to nearest 30 multiple
-                vl: page.videoDuration
-                    ? (Math.ceil(page.videoDuration / 30.0) * 30).toString()
-                    : undefined,
-                cc: geolocationGetSync(),
-                s: page.section, // for reference in a macro, so cannot be extracted from ad unit
-                pr: 'dotcom-platform', // rendering platform
-                inskin: inskinTargetting(),
-            },
-            page.sharedAdTargeting,
-            paTargeting,
-            adFreeTargeting,
-            getWhitelistedQueryParams()
-        );
+    // filter out empty values
+    const pageTargeting: PageTargeting = pickBy(pageTargets, target => {
+        if (Array.isArray(target)) {
+            return target.length > 0;
+        }
+        return target;
+    });
 
-        // filter out empty values
-        const pageTargeting: {} = pickBy(pageTargets, target => {
-            if (Array.isArray(target)) {
-                return target.length > 0;
-            }
-            return target;
-        });
+    // third-parties wish to access our page targeting, before the googletag script is loaded.
+    page.appNexusPageTargeting = buildAppNexusTargeting(pageTargeting);
 
-        // third-parties wish to access our page targeting, before the googletag script is loaded.
-        page.appNexusPageTargeting = buildAppNexusTargeting(pageTargeting);
+    // This can be removed once we get sign-off from third parties who prefer to use appNexusPageTargeting.
+    page.pageAdTargeting = pageTargeting;
 
-        // This can be removed once we get sign-off from third parties who prefer to use appNexusPageTargeting.
-        page.pageAdTargeting = pageTargeting;
+    return pageTargeting;
+};
 
-        return pageTargeting;
-    }
-);
+const getPageTargeting = (): {} => {
+    if (Object.keys(myPageTargetting).length !== 0) return myPageTargetting;
+
+    onConsentNotification('advertisement', state => {
+        if (state !== latestConsentState) {
+            myPageTargetting = buildPageTargetting(state);
+            latestConsentState = state;
+        }
+    });
+
+    return myPageTargetting;
+};
 
 export {
-    buildPageTargeting,
+    getPageTargeting,
     buildAppNexusTargeting,
     buildAppNexusTargetingObject,
 };

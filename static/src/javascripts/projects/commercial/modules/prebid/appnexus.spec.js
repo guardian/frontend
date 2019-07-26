@@ -21,7 +21,7 @@ jest.mock('common/modules/commercial/build-page-targeting', () => ({
         sens: 'f',
         edition: 'UK',
     }),
-    buildPageTargeting: () => 'pageTargeting',
+    getPageTargeting: () => 'pageTargeting',
 }));
 
 jest.mock('./utils', () => {

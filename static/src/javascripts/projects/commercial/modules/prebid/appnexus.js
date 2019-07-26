@@ -2,7 +2,7 @@
 
 import config from 'lib/config';
 import {
-    buildPageTargeting,
+    getPageTargeting,
     buildAppNexusTargetingObject,
 } from 'common/modules/commercial/build-page-targeting';
 
@@ -113,14 +113,14 @@ export const getAppNexusDirectBidParams = (
                 member: '7012',
                 keywords: {
                     invc: [invCode],
-                    ...buildAppNexusTargetingObject(buildPageTargeting()),
+                    ...buildAppNexusTargetingObject(getPageTargeting()),
                 },
             };
         }
     }
     return {
         placementId: getAppNexusDirectPlacementId(sizes, isAuRegion),
-        keywords: buildAppNexusTargetingObject(buildPageTargeting()),
+        keywords: buildAppNexusTargetingObject(getPageTargeting()),
     };
 };
 
@@ -131,7 +131,7 @@ export const getAppNexusServerSideBidParams = (
         {},
         {
             placementId: getAppNexusPlacementId(sizes),
-            keywords: buildAppNexusTargetingObject(buildPageTargeting()), // Ok to duplicate call. Lodash 'once' is used.
+            keywords: buildAppNexusTargetingObject(getPageTargeting()), // Ok to duplicate call. Lodash 'once' is used.
         },
         window.OzoneLotameData ? { lotame: window.OzoneLotameData } : {}
     );
