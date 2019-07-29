@@ -201,7 +201,6 @@ const buildAppNexusTargeting = once(
 
 const buildPageTargetting = (adConsentState: boolean | null): {} => {
     const page = config.get('page');
-    console.log('*** consent state', adConsentState);
     // personalised ads targeting
     const paTargeting: {} =
         adConsentState !== null ? { pa: adConsentState ? 't' : 'f' } : {};

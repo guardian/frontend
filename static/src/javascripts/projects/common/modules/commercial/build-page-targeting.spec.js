@@ -16,10 +16,7 @@ import { isUserLoggedIn as isUserLoggedIn_ } from 'common/modules/identity/api';
 import { getUserSegments as getUserSegments_ } from 'common/modules/commercial/user-ad-targeting';
 import { getSynchronousParticipations as getSynchronousParticipations_ } from 'common/modules/experiments/ab';
 import { getKruxSegments as getKruxSegments_ } from 'common/modules/commercial/krux';
-import {
-    onConsentNotification as onConsentNotification_,
-    consentState as consentState_,
-} from 'lib/cmp';
+import { onConsentNotification as onConsentNotification_ } from 'lib/cmp';
 
 const getCookie: any = getCookie_;
 const getUserSegments: any = getUserSegments_;
@@ -30,7 +27,6 @@ const getBreakpoint: any = getBreakpoint_;
 const isUserLoggedIn: any = isUserLoggedIn_;
 const getSync: any = getSync_;
 const onConsentNotification: any = onConsentNotification_;
-const consentState: any = consentState_;
 
 jest.mock('lib/storage');
 jest.mock('lib/config');
@@ -66,20 +62,12 @@ jest.mock('common/modules/commercial/commercial-features', () => ({
 
 jest.mock('lib/cmp', () => ({
     onConsentNotification: jest.fn(),
-    consentState: jest.fn(),
+    consentState: jest.fn(() => null),
 }));
 
-const trueConsentMock = (purpose, callback): void => {
-    callback(true);
-};
-
-const falseConsentMock = (purpose, callback): void => {
-    callback(false);
-};
-
-const nullConsentMock = (purpose, callback): void => {
-    callback(null);
-};
+const trueConsentMock = (purpose, callback): void => callback(true);
+const falseConsentMock = (purpose, callback): void => callback(false);
+const nullConsentMock = (purpose, callback): void => callback(null);
 
 describe('Build Page Targeting', () => {
     beforeEach(() => {
