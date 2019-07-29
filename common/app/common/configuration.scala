@@ -247,7 +247,7 @@ class GuardianConfiguration extends Logging {
   }
 
   object affiliateLinks {
-    lazy val bucket = configuration.getMandatoryStringProperty("skimlinks.bucket")
+    lazy val bucket: Option[String] = configuration.getStringProperty("skimlinks.bucket")
     lazy val domainsKey = "skimlinks/skimlinks-domains.csv"
     lazy val skimlinksId = configuration.getMandatoryStringProperty("skimlinks.id")
     lazy val affiliateLinkSections: Set[String] = configuration.getStringProperty("affiliatelinks.sections").getOrElse("").split(",").toSet

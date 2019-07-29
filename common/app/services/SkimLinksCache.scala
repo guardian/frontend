@@ -17,7 +17,7 @@ object SkimLinksCache extends Logging {
   def populateSkimLinkDomains(): Unit = {
     log.info("Fetching and caching skimlinks")
     val domains = S3Skimlinks.get(affiliateLinks.domainsKey).getOrElse {
-      log.error(s"Failed to fetch skimlinks from S3: ${affiliateLinks.bucket}/${affiliateLinks.domainsKey}")
+      log.error(s"Failed to fetch skimlinks from S3: ${S3Skimlinks.bucket}/${affiliateLinks.domainsKey}")
       ""
     }
     skimLinkDomains.set(domains.split(",").toSet)
