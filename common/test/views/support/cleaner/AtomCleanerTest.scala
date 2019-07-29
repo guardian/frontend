@@ -80,7 +80,7 @@ class AtomCleanerTest extends FlatSpec
   "AtomsCleaner" should "create YouTube template" in {
     Switches.UseAtomsSwitch.switchOn()
     val result: Document = clean(doc)
-    result.select("iframe").attr("id") shouldBe "youtube-nQuN9CUsdVg"
+    result.select("div").attr("id") shouldBe "youtube-nQuN9CUsdVg"
     result.select("figcaption").html should include("Bird")
   }
 
