@@ -50,8 +50,8 @@ import {
     shouldUseOzoneAdaptor,
     stripDfpAdPrefixFrom,
     stripMobileSuffix,
-    stripTrailingNumbersAbove1,
-} from './utils';
+    stripTrailingNumbersAbove1, getLargestSize
+} from "./utils";
 import { getAppNexusDirectBidParams, getAppNexusPlacementId } from './appnexus';
 
 const PAGE_TARGETING: {} = buildAppNexusTargetingObject(buildPageTargeting());
@@ -59,8 +59,10 @@ const PAGE_TARGETING: {} = buildAppNexusTargetingObject(buildPageTargeting());
 const isInSafeframeTestVariant = (): boolean =>
     isInVariantSynchronous(commercialPrebidSafeframe, 'variant');
 
+const isArticle = config.get('page.contentType') === 'Article';
+
 const isDesktopAndArticle =
-    getBreakpointKey() === 'D' && config.get('page.contentType') === 'Article';
+    getBreakpointKey() === 'D' && isArticle;
 
 const getTrustXAdUnitId = (
     slotId: string,
@@ -325,6 +327,27 @@ const getPangaeaPlacementId = (sizes: PrebidSize[]): number => {
     return 13892409; // Other Section MPU as fallback
 };
 
+const getTripleLiftInventoryCode = (slotId: string, sizes: PrebidSize[]) : string => {
+    const largestSlotSize: PrebidSize = getLargestSize(sizes) || '';
+        const largestSizeName =`${largestSlotSize.join('x')}`;
+        console.log("TRIPLE LIFT SLOT SIZE NAME: ", largestSizeName);
+        switch (largestSizeName) {
+            case '728x90':
+                return 'theguardian_topbanner_728x90_header';
+            case '300x250':
+                return isArticle ? 'theguardian_article_300x250_header' : 'theguardian_sectionfront_300x250_header';
+            case '300x600':
+                return isArticle ? 'theguardian_article_300x600_header' : '';
+            case '320x50':
+                return 'theguardian_320x50_HDX';
+            default:
+                console.log(
+                    `PREBID: Failed to get TripleLift ad unit for slot ${slotId}.`
+                );
+                return '';
+        }
+};
+
 // Is pbtest being used?
 const isPbTestOn = (): boolean => !isEmpty(pbTestNameMap());
 // Helper for conditions
@@ -441,8 +464,8 @@ const trustXBidder: PrebidBidder = {
 const tripleLiftBidder: PrebidBidder = {
     name: 'triplelift',
     switchName: 'prebidTriplelift',
-    bidParams: (): PrebidTripleLiftParams => ({
-        inventoryCode: 'IMPLEMENT ME',
+    bidParams: (slotId:string, sizes: PrebidSize[]): PrebidTripleLiftParams => ({
+        inventoryCode: getTripleLiftInventoryCode(slotId, sizes),
     }),
 };
 
@@ -624,6 +647,7 @@ export const _ = {
     getDummyServerSideBidders,
     getIndexSiteId,
     getImprovePlacementId,
+    getTripleLiftInventoryCode,
     getTrustXAdUnitId,
     indexExchangeBidders,
 };
