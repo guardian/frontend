@@ -18,7 +18,7 @@
 
 @itemHeader(containerIndex == 0 && itemIndex == 0, header.quoted) {
     @if(isPaidFor) {
-        @articleLink{<span class="fc-item__kicker fc-item__kicker--video-paid-for">Advertiser content</span> @headline()}
+        @articleLink{<span class="fc-item__kicker">Advertiser content</span> @headline()}
     } else {
         @header.kicker match {
             case Some(kicker) => {

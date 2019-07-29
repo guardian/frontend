@@ -301,16 +301,16 @@ $video-width-desktop: 700px;
     }
 }
 
-.fc-item--pillar-news.video-playlist__item .fc-item__kicker.fc-item__kicker--video-paid-for,
-.fc-item--pillar-news.video-playlist__item .video-overlay__duration.video-overlay__duration--paid-for {
+.fc-item--pillar-news.video-playlist__item.video-playlist__item--paid-for .fc-item__kicker,
+.fc-item--pillar-news.video-playlist__item.video-playlist__item--paid-for .video-overlay__duration{
     color: $labs-main;
 }
 
-.fc-item--pillar-news .vjs-big-play-button .vjs-control-text.vjs-control-text__item--paid-for {
+.fc-item--pillar-news.video-playlist__item.video-playlist__item--paid-for .vjs-big-play-button .vjs-control-text {
     background-color: $labs-main;
 }
 
-.fc-item--pillar-news.video-playlist__item .video-overlay.video-overlay--paid-for {
+.fc-item--pillar-news.video-playlist__item.video-playlist__item--paid-for .video-overlay {
     border-top-color: $labs-main;
 }
 
