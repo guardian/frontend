@@ -1,4 +1,4 @@
-// @flow strict
+// @flow
 import config from 'lib/config';
 import { getCookie } from 'lib/cookies';
 import {
@@ -12,7 +12,7 @@ import { getUrlVars } from 'lib/url';
 import { getKruxSegments } from 'common/modules/commercial/krux';
 import { isUserLoggedIn } from 'common/modules/identity/api';
 import { getUserSegments } from 'common/modules/commercial/user-ad-targeting';
-import { onConsentNotification, consentState } from 'lib/cmp';
+import { onConsentNotification } from 'lib/cmp';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { getSynchronousParticipations } from 'common/modules/experiments/ab';
 import { removeFalseyValues } from 'commercial/modules/prebid/utils';
@@ -199,7 +199,7 @@ const buildAppNexusTargeting = once(
         formatAppNexusTargeting(buildAppNexusTargetingObject(pageTargeting))
 );
 
-const buildPageTargetting = (adConsentState: boolean | null): {} => {
+const buildPageTargetting = (adConsentState: boolean | null): Object => {
     const page = config.get('page');
     // personalised ads targeting
     const paTargeting: {} =
@@ -250,7 +250,7 @@ const buildPageTargetting = (adConsentState: boolean | null): {} => {
     return pageTargeting;
 };
 
-const getPageTargeting = (): {} => {
+const getPageTargeting = (): Object => {
     if (Object.keys(myPageTargetting).length !== 0) return myPageTargetting;
 
     onConsentNotification('advertisement', state => {
