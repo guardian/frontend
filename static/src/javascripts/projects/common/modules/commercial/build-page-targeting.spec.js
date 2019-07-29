@@ -1,9 +1,12 @@
 // @flow
 import { local } from 'lib/storage';
-
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
-import { getPageTargeting } from 'common/modules/commercial/build-page-targeting';
+import {
+    getPageTargeting,
+    _,
+} from 'common/modules/commercial/build-page-targeting';
 import config from 'lib/config';
+import { getCookie as getCookie_ } from 'lib/cookies';
 import {
     getReferrer as getReferrer_,
     getBreakpoint as getBreakpoint_,
@@ -13,11 +16,12 @@ import { isUserLoggedIn as isUserLoggedIn_ } from 'common/modules/identity/api';
 import { getUserSegments as getUserSegments_ } from 'common/modules/commercial/user-ad-targeting';
 import { getSynchronousParticipations as getSynchronousParticipations_ } from 'common/modules/experiments/ab';
 import { getKruxSegments as getKruxSegments_ } from 'common/modules/commercial/krux';
+import {
+    onConsentNotification as onConsentNotification_,
+    consentState as consentState_,
+} from 'lib/cmp';
 
-import { getAdConsentState as getAdConsentState_ } from 'common/modules/commercial/ad-prefs.lib';
-import { onConsentNotification as onConsentNotification_ } from 'lib/cmp';
-
-const getAdConsentState: any = getAdConsentState_;
+const getCookie: any = getCookie_;
 const getUserSegments: any = getUserSegments_;
 const getSynchronousParticipations: any = getSynchronousParticipations_;
 const getKruxSegments: any = getKruxSegments_;
@@ -26,6 +30,7 @@ const getBreakpoint: any = getBreakpoint_;
 const isUserLoggedIn: any = isUserLoggedIn_;
 const getSync: any = getSync_;
 const onConsentNotification: any = onConsentNotification_;
+const consentState: any = consentState_;
 
 jest.mock('lib/storage');
 jest.mock('lib/config');
@@ -55,17 +60,26 @@ jest.mock('common/modules/commercial/krux', () => ({
 }));
 jest.mock('lodash/once', () => fn => fn);
 
-jest.mock('common/modules/commercial/ad-prefs.lib', () => ({
-    getAdConsentState: jest.fn(),
-}));
-
 jest.mock('common/modules/commercial/commercial-features', () => ({
     commercialFeatures() {},
 }));
 
 jest.mock('lib/cmp', () => ({
     onConsentNotification: jest.fn(),
+    consentState: jest.fn(),
 }));
+
+const trueConsentMock = (purpose, callback): void => {
+    callback(true);
+};
+
+const falseConsentMock = (purpose, callback): void => {
+    callback(false);
+};
+
+const nullConsentMock = (purpose, callback): void => {
+    callback(null);
+};
 
 describe('Build Page Targeting', () => {
     beforeEach(() => {
@@ -103,6 +117,11 @@ describe('Build Page Targeting', () => {
 
         commercialFeatures.adFree = false;
 
+        // Reset mocking to default values.
+        getCookie.mockReturnValue('ng101');
+        _.resetPageTargeting();
+        onConsentNotification.mockImplementation(nullConsentMock);
+
         getBreakpoint.mockReturnValue('mobile');
         getReferrer.mockReturnValue('');
 
@@ -133,10 +152,6 @@ describe('Build Page Targeting', () => {
     });
 
     it('should build correct page targeting', () => {
-        onConsentNotification.mockImplementation((purpose, callback) => {
-            callback(null);
-        });
-
         const pageTargeting = getPageTargeting();
 
         expect(pageTargeting.sens).toBe('f');
@@ -160,10 +175,11 @@ describe('Build Page Targeting', () => {
     });
 
     it('should set correct personalized ad (pa) param', () => {
-        getAdConsentState.mockReturnValueOnce(true);
+        onConsentNotification.mockImplementation(trueConsentMock);
         expect(getPageTargeting().pa).toBe('t');
 
-        getAdConsentState.mockReturnValueOnce(false);
+        _.resetPageTargeting();
+        onConsentNotification.mockImplementation(falseConsentMock);
         expect(getPageTargeting().pa).toBe('f');
     });
 

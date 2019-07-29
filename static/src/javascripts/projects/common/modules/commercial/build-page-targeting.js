@@ -12,7 +12,7 @@ import { getUrlVars } from 'lib/url';
 import { getKruxSegments } from 'common/modules/commercial/krux';
 import { isUserLoggedIn } from 'common/modules/identity/api';
 import { getUserSegments } from 'common/modules/commercial/user-ad-targeting';
-import { onConsentNotification } from 'lib/cmp';
+import { onConsentNotification, consentState } from 'lib/cmp';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { getSynchronousParticipations } from 'common/modules/experiments/ab';
 import { removeFalseyValues } from 'commercial/modules/prebid/utils';
@@ -264,8 +264,17 @@ const getPageTargeting = (): {} => {
     return myPageTargetting;
 };
 
+const resetPageTargeting = (): void => {
+    myPageTargetting = {};
+    latestConsentState = undefined;
+};
+
 export {
     getPageTargeting,
     buildAppNexusTargeting,
     buildAppNexusTargetingObject,
+};
+
+export const _ = {
+    resetPageTargeting,
 };
