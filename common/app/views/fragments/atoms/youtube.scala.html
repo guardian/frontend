@@ -8,7 +8,6 @@
 @import model.content.MediaWrapper._
 @import model.content.MediaWrapper
 @import model.content.MediaAsset
-@import conf.switches.Switches.YouTubeRelatedVideos
 @import model.VideoFaciaProperties
 @import views.html.fragments.items.elements.facia_cards.title
 
@@ -35,24 +34,14 @@
 @defining(media.activeAssets.headOption) { activeAsset: Option[MediaAsset] =>
 @defining(media.expired.getOrElse(false)){expired: Boolean =>
     @defining(playable){sixteenByNine: Boolean =>
-        @defining(
-            if (YouTubeRelatedVideos.isSwitchedOn) {
-                media.channelId.getOrElse("")
-            } else {
-                ""
-            }){channelId: String =>
+        @defining(media.channelId.getOrElse("")){ channelId: String =>
             <div data-media-atom-id="@media.id" class="@RenderClasses(Map(
                 ("u-responsive-ratio", true),
                 ("u-responsive-ratio--hd", sixteenByNine),
                 ("youtube-media-atom", true),
                 ("no-player", !playable || expired ),
-                ("youtube-related-videos", YouTubeRelatedVideos.isSwitchedOn)
-            ))"
-            @for(endSlatePath <- media.endSlatePath if displayEndSlate && YouTubeRelatedVideos.isSwitchedOff)  {
-              data-end-slate="@endSlatePath"
-            }
-                data-channel-id="@channelId"
-            >
+                ("youtube-related-videos", true)
+            ))" data-channel-id="@channelId">
         }
     }
 

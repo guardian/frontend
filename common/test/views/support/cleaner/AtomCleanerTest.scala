@@ -84,12 +84,6 @@ class AtomCleanerTest extends FlatSpec
     result.select("figcaption").html should include("Bird")
   }
 
-  "Youtube template" should "include endslate path" in {
-    val html = views.html.fragments.atoms.youtube(media = youTubeAtom.map(_.media.head).get, displayEndSlate = true, displayCaption = false, mediaWrapper = None)(TestRequest())
-    val doc = Jsoup.parse(html.toString())
-    doc.select("div.youtube-media-atom").first().attr("data-end-slate") should be("/video/end-slate/section/football.json?shortUrl=https://gu.com/p/6vf9z")
-  }
-
   "Youtube template" should "include main media caption" in {
     val html = views.html.fragments.atoms.youtube(media = youTubeAtom.map(_.media.head).get, displayEndSlate = true, displayCaption = true, mediaWrapper = Some(MediaWrapper.MainMedia))(TestRequest())
     val doc = Jsoup.parse(html.toString())
