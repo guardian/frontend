@@ -57,6 +57,7 @@ const {
     getIndexSiteId,
     getImprovePlacementId,
     getTrustXAdUnitId,
+    getTripleLiftInventoryCode,
     indexExchangeBidders,
 } = _;
 
@@ -615,5 +616,65 @@ describe('bids', () => {
         config.set('switches.prebidPangaea', false);
         shouldIncludeOzone.mockReturnValue(true);
         expect(bidders()).toEqual(['ix', 'adyoulike', 'openx', 'appnexus']);
+    });
+});
+
+
+describe('getTripleLiftInventoryCode', () => {
+    beforeEach(() => {
+        resetConfig();
+    });
+
+    afterEach(() => {
+        jest.resetAllMocks();
+    });
+
+    test('should return a Triplelift inventory code for', () => {
+        const slotSizes: Array<PrebidSize> = [[300, 250], [300, 600]];
+        const bidders: Array<PrebidBidder> = indexExchangeBidders(slotSizes);
+        expect(bidders).toEqual([
+            expect.objectContaining({
+                name: 'ix',
+                bidParams: expect.any(Function),
+            }),
+            expect.objectContaining({
+                name: 'ix',
+                bidParams: expect.any(Function),
+            }),
+        ]);
+    });
+
+    test('should include methods in the response that generate the correct bid params', () => {
+        const slotSizes: Array<PrebidSize> = [[300, 250], [300, 600]];
+        const bidders: Array<PrebidBidder> = indexExchangeBidders(slotSizes);
+        expect(bidders[0].bidParams('type', [[1, 2]])).toEqual({
+            siteId: '123456',
+            size: [300, 250],
+        });
+        expect(bidders[1].bidParams('type', [[1, 2]])).toEqual({
+            siteId: '123456',
+            size: [300, 600],
+        });
+    });
+});
+
+describe('getTrustXAdUnitId', () => {
+    beforeEach(() => {
+        getBreakpointKey.mockReturnValue('D');
+        stripMobileSuffix.mockImplementation(str => str);
+    });
+
+    afterEach(() => {
+        jest.resetAllMocks();
+        resetConfig();
+    });
+
+    test('should return the expected value for mpu article', () => {
+        //const slotSizes: Array<PrebidSize> = [[300, 250], [300, 600]];
+        config.set('page.contentType', 'Article');
+        expect(getTripleLiftInventoryCode('dfp-ad--inline', [[300, 250]])).toBe('theguardian_article_300x250_header');
+
+        /*config.set('page.contentType', 'Network Front');
+        expect(getTripleLiftInventoryCode('dfp-ad--inline', [[300, 250]])).toBe('theguardian_sectionfront_300x250_header');*/
     });
 });
