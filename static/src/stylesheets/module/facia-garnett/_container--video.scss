@@ -301,17 +301,17 @@ $video-width-desktop: 700px;
     }
 }
 
-.video-playlist__item--paid-for.video-playlist__item .fc-item__kicker,
-.video-playlist__item--paid-for.video-playlist__item .video-overlay__duration {
-    color: $labs-main !important;
+.fc-item--pillar-news.video-playlist__item .fc-item__kicker.fc-item__kicker--video-paid-for,
+.fc-item--pillar-news.video-playlist__item .video-overlay__duration.video-overlay__duration--paid-for {
+    color: $labs-main;
 }
 
-.video-playlist__item--paid-for.video-playlist__item .vjs-big-play-button .vjs-control-text {
-    background-color: $labs-main !important;
+.fc-item--pillar-news .vjs-big-play-button .vjs-control-text.vjs-control-text__item--paid-for {
+    background-color: $labs-main;
 }
 
-.video-playlist__item--paid-for.video-playlist__item .video-overlay {
-    border-top-color: $labs-main !important;
+.fc-item--pillar-news.video-playlist__item .video-overlay.video-overlay--paid-for {
+    border-top-color: $labs-main;
 }
 
 .vjs-big-play-button .vjs-control-text,

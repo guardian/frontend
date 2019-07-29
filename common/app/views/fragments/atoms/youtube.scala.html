@@ -64,7 +64,7 @@
             <div id="youtube-@asset.id" data-asset-id="@asset.id" class="youtube-media-atom__iframe"></div>
 
             @if(mediaWrapper.contains(MediaWrapper.VideoContainer)){
-                <div class="video-overlay">
+                <div class="video-overlay @if(isPaidFor) { video-overlay--paid-for }">
                     <div class="video-overlay__headline">
 
                     @for(f <- faciaHeaderProperties) {
@@ -75,7 +75,7 @@
 
                     </div>
                         @if(media.formattedDuration.getOrElse("0:00") != "0:00") {
-                            <span class="video-overlay__duration">
+                            <span class="video-overlay__duration @if(isPaidFor) { video-overlay__duration--paid-for }">
                                 @media.formattedDuration
                             </span>
                         }
@@ -98,7 +98,7 @@
                         <div class='gs-container'>
                             <div class='content__main-column'>
                                 <div class='youtube-media-atom__immersive-interface'>
-                                    <div class="youtube-media-atom__play-button vjs-control-text">
+                                    <div class="youtube-media-atom__play-button vjs-control-text @if(isPaidFor) { vjs-control-text__item--paid-for }">
                                         Play Video
                                         @fragments.inlineSvg("play", "icon")
                                     </div>
@@ -120,7 +120,7 @@
                                 }
                             }
                         }
-                        <div class="youtube-media-atom__play-button vjs-control-text">
+                        <div class="youtube-media-atom__play-button vjs-control-text @if(isPaidFor) { vjs-control-text__item--paid-for }">
                             Play Video @fragments.inlineSvg("play", "icon")
                         </div>
                         @for(duration <- media.formattedDuration.filter(_ => displayDuration)) {
