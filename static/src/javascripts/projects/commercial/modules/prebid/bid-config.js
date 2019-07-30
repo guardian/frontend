@@ -332,9 +332,7 @@ const getTripleLiftInventoryCode = (
     sizes: PrebidSize[]
 ): string => {
     const largestSlotSize: PrebidSize | null = getLargestSize(sizes);
-    const largestSizeName: String = largestSlotSize
-        ? `${largestSlotSize.join('x')}`
-        : '';
+    const largestSizeName = largestSlotSize ? largestSlotSize.join('x') : '';
     switch (largestSizeName) {
         case '728x90':
             return 'theguardian_topbanner_728x90_header';
