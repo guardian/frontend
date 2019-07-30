@@ -1,11 +1,12 @@
 // @flow
 import { local } from 'lib/storage';
 import { getUserFromCookie, getUserFromApi } from 'common/modules/identity/api';
+import { consentState } from 'lib/cmp';
 
 const userSegmentsKey = 'gu.ads.userSegmentsData';
 
-const getUserSegments = function(): Array<any> {
-    if (local.isAvailable()) {
+const getUserSegments = (): Array<any> => {
+    if (local.isAvailable() && consentState('advertisement') !== false) {
         let userCookieData;
         const userSegmentsData = local.get(userSegmentsKey);
 
@@ -25,11 +26,12 @@ const getUserSegments = function(): Array<any> {
     return [];
 };
 
-const requestUserSegmentsFromId = function(): void {
+const requestUserSegmentsFromId = (): void => {
     if (
         local.isAvailable() &&
         local.get(userSegmentsKey) === null &&
-        getUserFromCookie()
+        getUserFromCookie() &&
+        consentState('advertisement') !== false
     ) {
         getUserFromApi(user => {
             if (user && user.adData) {

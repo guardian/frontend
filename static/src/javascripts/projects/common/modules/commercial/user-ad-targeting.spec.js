@@ -8,15 +8,22 @@ import {
     getUserSegments,
     requestUserSegmentsFromId,
 } from 'common/modules/commercial/user-ad-targeting';
+import { consentState as consentState_ } from 'lib/cmp';
 
 const getUserFromApi: any = getUserFromApi_;
 const getUserFromCookie: any = getUserFromCookie_;
+const consentState: any = consentState_;
 
 jest.mock('lib/storage');
 jest.mock('common/modules/identity/api', () => ({
     getUserFromCookie: jest.fn(),
     getUserFromApi: jest.fn(),
 }));
+
+jest.mock('lib/cmp', () => ({
+    consentState: jest.fn(),
+}));
+
 const userSegmentsKey = 'gu.ads.userSegmentsData';
 
 describe('User Ad Targeting', () => {
@@ -30,7 +37,26 @@ describe('User Ad Targeting', () => {
         expect(requestUserSegmentsFromId).toBeDefined();
     });
 
-    it('should return user segments data from local storage', () => {
+    it('should return an empty array if consent is false even if segments are set', () => {
+        local.set(userSegmentsKey, {
+            userHash: 123,
+            segments: 'something',
+        });
+        consentState.mockImplementation(() => false);
+        expect(getUserSegments().length).toBe(0);
+    });
+
+    it('should return user segments data from local storage when consent is true', () => {
+        consentState.mockImplementation(() => true);
+        local.set(userSegmentsKey, {
+            userHash: 123,
+            segments: 'something',
+        });
+        expect(getUserSegments()).toBe('something');
+    });
+
+    it('should return user segments data from local storage when consent is null', () => {
+        consentState.mockImplementation(() => null);
         local.set(userSegmentsKey, {
             userHash: 123,
             segments: 'something',
@@ -39,6 +65,7 @@ describe('User Ad Targeting', () => {
     });
 
     it('should remove user segments belonging to another user from local storage', () => {
+        consentState.mockImplementation(() => true);
         local.set(userSegmentsKey, {
             userHash: 456,
             segments: 'anything',
@@ -48,6 +75,7 @@ describe('User Ad Targeting', () => {
     });
 
     it('should request user data from API and populate local storage', () => {
+        consentState.mockImplementation(() => true);
         getUserFromApi.mockImplementation(fn =>
             fn({
                 id: 999900789,
