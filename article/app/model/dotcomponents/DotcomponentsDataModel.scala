@@ -45,6 +45,7 @@ case class Block(
     elements: List[PageElement],
     createdOn: Option[Long],
     createdOnDisplay: Option[String],
+    lastUpdated: Option[Long],
     lastUpdatedDisplay: Option[String],
     firstPublished: Option[Long],
     firstPublishedDisplay: Option[String],
@@ -297,6 +298,7 @@ object DotcomponentsDataModel {
 
       val createdOn = block.createdDate.map(_.dateTime)
       val createdOnDisplay = createdOn.map(dt => format(dt, edition))
+      val lastUpdated = block.lastModifiedDate.map(_.dateTime)
       val lastUpdatedDisplay = block.lastModifiedDate.map(dt => format(dt.dateTime, edition))
       val firstPublished = block.firstPublishedDate.orElse(block.createdDate).map(_.dateTime)
       val firstPublishedDisplay = firstPublished.map(dt => format(dt, edition))
@@ -306,6 +308,7 @@ object DotcomponentsDataModel {
         elements = blocksToPageElements(block.elements, shouldAddAffiliateLinks),
         createdOn = createdOn,
         createdOnDisplay = createdOnDisplay,
+        lastUpdated = lastUpdated,
         lastUpdatedDisplay = lastUpdatedDisplay,
         title = block.title,
         firstPublished = firstPublished,
