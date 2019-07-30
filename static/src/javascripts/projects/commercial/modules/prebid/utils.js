@@ -111,7 +111,7 @@ export const shouldIncludeOpenx = (): boolean => !isInUsRegion();
 
 export const shouldIncludeTrustX = (): boolean => isInUsRegion();
 
-export const shouldIncludeTripleLift = (): boolean => true;
+export const shouldIncludeTripleLift = (): boolean => isInUsRegion();
 
 export const shouldIncludeAdYouLike = (slotSizes: PrebidSize[]): boolean =>
     containsMpu(slotSizes);
