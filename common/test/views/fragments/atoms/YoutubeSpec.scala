@@ -25,7 +25,6 @@ class YoutubeSpec extends MixedPlaySpec {
         duration = None,
         source = None,
         posterImage = None,
-        endSlatePath = None,
         expired = None,
         activeVersion = None,
         channelId = None

@@ -5,7 +5,6 @@
 @(
     media: model.content.MediaAtom,
     displayCaption: Boolean,
-    displayEndSlate: Boolean = false,
     mediaWrapper: Option[MediaWrapper],
     posterImageOverride: Option[ImageMedia] = None
 )(implicit request: RequestHeader)
@@ -19,7 +18,6 @@
                 media,
                 displayCaption,
                 displayDuration = true,
-                displayEndSlate,
                 mediaWrapper = mediaWrapper,
                 posterImageOverride = posterImageOverride
             )

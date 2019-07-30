@@ -110,8 +110,6 @@ GET            /video/in-series/*series.json                                    
 GET            /audio/most-viewed.json                                                                                           controllers.MostViewedAudioController.renderMostViewed()
 GET            /podcast/most-viewed.json                                                                                         controllers.MostViewedAudioController.renderMostViewedPodcast()
 GET            /gallery/most-viewed.json                                                                                         controllers.MostViewedGalleryController.renderMostViewed()
-GET            /video/end-slate/series/*seriesId.json                                                                            controllers.VideoEndSlateController.renderSeries(seriesId)
-GET            /video/end-slate/section/*sectionId.json                                                                          controllers.VideoEndSlateController.renderSection(sectionId)
 GET            /embed/card/*path.json                                                                                            controllers.RichLinkController.render(path)
 GET            /embed/card/*path                                                                                                 controllers.RichLinkController.renderHtml(path)
 GET            /embed/contentcard/*path.json                                                                                     controllers.RecommendedContentCardController.render(path)

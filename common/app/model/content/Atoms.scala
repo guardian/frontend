@@ -1,21 +1,19 @@
 package model.content
 
-import com.gu.contentapi.client.model.v1.TagType
 import com.gu.contentapi.client.model.{v1 => contentapi}
 import com.gu.contentatom.renderer.{ArticleConfiguration, AudioSettings}
 import com.gu.contentatom.thrift.atom.media.{Asset => AtomApiMediaAsset, MediaAtom => AtomApiMediaAtom}
 import com.gu.contentatom.thrift.atom.timeline.{TimelineItem => TimelineApiItem}
 import com.gu.contentatom.thrift.{AtomData, Atom => AtomApiAtom, Image => AtomApiImage, ImageAsset => AtomApiImageAsset, atom => atomapi}
+import conf.Configuration
 import enumeratum._
-import model.{Content, EndSlateComponents, ImageAsset, ImageMedia, ShareLinkMeta}
+import model.{ImageAsset, ImageMedia, ShareLinkMeta}
 import org.apache.commons.lang3.time.DurationFormatUtils
+import org.joda.time.format.DateTimeFormat
 import org.joda.time.{DateTime, DateTimeZone, Duration}
 import play.api.libs.json.{JsError, JsSuccess, Json}
 import quiz._
-import views.support.{GoogleStructuredData, ImgSrc}
-import conf.switches.Switches
-import conf.Configuration
-import org.joda.time.format.DateTimeFormat
+import views.support.GoogleStructuredData
 
 final case class Atoms(
   quizzes: Seq[Quiz],
@@ -60,7 +58,6 @@ final case class MediaAtom(
   duration: Option[Long],
   source: Option[String],
   posterImage: Option[ImageMedia],
-  endSlatePath: Option[String],
   expired: Option[Boolean],
   activeVersion: Option[Long],
   channelId: Option[String]
@@ -264,12 +261,7 @@ object Atoms extends common.Logging {
       val quizzes = extract(atoms.quizzes, atom => { Quiz.make(content.id, atom, pageShares) })
 
       val media = extract(atoms.media, atom => {
-        val endSlatePath = EndSlateComponents(
-          sectionId = content.sectionId.getOrElse(""),
-          shortUrl = content.fields.flatMap(_.shortUrl).getOrElse(""),
-          seriesId = content.tags.find(_.`type` == TagType.Series).map(_.id))
-          .toUriPath
-        MediaAtom.make(atom, Some(endSlatePath))
+        MediaAtom.make(atom)
       })
 
       val interactives = extract(atoms.interactives, atom => { InteractiveAtom.make(atom) })
@@ -337,14 +329,14 @@ object Atoms extends common.Logging {
 
 object MediaAtom extends common.Logging {
 
-  def make(atom: AtomApiAtom, endSlatePath: Option[String]): MediaAtom = {
+  def make(atom: AtomApiAtom): MediaAtom = {
     val id = atom.id
     val defaultHtml = atom.defaultHtml
     val mediaAtom = atom.data.asInstanceOf[AtomData.Media].media
-    MediaAtom.mediaAtomMake(id, defaultHtml, mediaAtom, endSlatePath)
+    MediaAtom.mediaAtomMake(id, defaultHtml, mediaAtom)
   }
 
-  def mediaAtomMake(id: String, defaultHtml: String, mediaAtom: AtomApiMediaAtom, endSlatePath: Option[String]): MediaAtom = {
+  def mediaAtomMake(id: String, defaultHtml: String, mediaAtom: AtomApiMediaAtom): MediaAtom = {
     val expired: Option[Boolean] = for {
       metadata <- mediaAtom.metadata
       expiryDate <- metadata.expiryDate
@@ -358,7 +350,6 @@ object MediaAtom extends common.Logging {
       duration = mediaAtom.duration,
       source = mediaAtom.source,
       posterImage = mediaAtom.posterImage.map(imageMediaMake(_, mediaAtom.title)),
-      endSlatePath = endSlatePath,
       expired = expired,
       activeVersion = mediaAtom.activeVersion,
       channelId = mediaAtom.metadata.flatMap(_.channelId)
