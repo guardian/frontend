@@ -106,6 +106,7 @@ const setupPlayer = (
         : { nonPersonalizedAd: !wantPersonalisedAds };
 
     return new window.YT.Player(eltId, {
+        host: 'https://www.youtube-nocookie.com',
         videoId,
         width: '100%',
         height: '100%',
@@ -148,7 +149,8 @@ export const initYoutubePlayer = (
         };
 
         const onPlayerError = event => {
-            console.error(`YOUTUBE: ${event}`);
+            console.error(`YOUTUBE: ${event.data}`);
+            console.dir(event);
         };
 
         return setupPlayer(

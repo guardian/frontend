@@ -19,7 +19,8 @@ class YoutubeSpec extends MixedPlaySpec {
             version = 0,
             platform = Youtube,
             mimeType = None
-          )),
+          )
+        ),
         title = "",
         duration = None,
         source = None,
@@ -30,7 +31,8 @@ class YoutubeSpec extends MixedPlaySpec {
         channelId = None
       )
       val displayCaption = false
-      val view           = views.html.fragments.atoms.youtube(mediaAtom, displayCaption)(FakeRequest())
+      val view = views.html.fragments.atoms
+        .youtube(mediaAtom, displayCaption)(FakeRequest())
       contentAsString(view) must include(
         """<div id="youtube-assetId" data-asset-id="assetId" class="youtube-media-atom__iframe"></div>"""
       )
