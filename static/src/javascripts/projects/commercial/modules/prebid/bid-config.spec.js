@@ -27,6 +27,7 @@ import {
     shouldIncludeXaxis as shouldIncludeXaxis_,
     shouldIncludeSonobi as shouldIncludeSonobi_,
     stripMobileSuffix as stripMobileSuffix_,
+    shouldIncludeTripleLift as shouldIncludeTripleLift_,
 } from './utils';
 
 const getLargestSize: any = getLargestSize_;
@@ -44,6 +45,7 @@ const shouldIncludeOzone: any = shouldIncludeOzone_;
 const shouldIncludeTrustX: any = shouldIncludeTrustX_;
 const shouldIncludeXaxis: any = shouldIncludeXaxis_;
 const shouldIncludeSonobi: any = shouldIncludeSonobi_;
+const shouldIncludeTripleLift: any = shouldIncludeTripleLift_;
 const stripMobileSuffix: any = stripMobileSuffix_;
 const getBreakpointKey: any = getBreakpointKey_;
 const isInAuRegion: any = isInAuRegion_;
@@ -52,12 +54,14 @@ const isInUkRegion: any = isInUkRegion_;
 const isInUsRegion: any = isInUsRegion_;
 const isInVariantSynchronous: any = isInVariantSynchronous_;
 
+const getBidders = () =>
+    bids('dfp-ad--top-above-nav', [[728, 90]]).map(bid => bid.bidder);
+
 const {
     getDummyServerSideBidders,
     getIndexSiteId,
     getImprovePlacementId,
     getTrustXAdUnitId,
-    getTripleLiftInventoryCode,
     indexExchangeBidders,
 } = _;
 
@@ -94,6 +98,7 @@ const resetConfig = () => {
     config.set('switches.prebidAdYouLike', true);
     config.set('switches.prebidS2sozone', true);
     config.set('switches.prebidPangaea', true);
+    config.set('switches.prebidTriplelift', true);
     config.set('ophan', { pageViewId: 'pvid' });
     config.set('page.contentType', 'Article');
     config.set('page.section', 'Magic');
@@ -491,14 +496,11 @@ describe('bids', () => {
         });
     };
 
-    const bidders = () =>
-        bids('dfp-ad--top-above-nav', [[728, 90]]).map(bid => bid.bidder);
-
     test('should only include bidders that are switched on if no bidders being tested', () => {
         config.set('switches.prebidXaxis', false);
         shouldIncludeOzone.mockReturnValueOnce(true);
         shouldIncludeImproveDigital.mockReturnValueOnce(true);
-        expect(bidders()).toEqual([
+        expect(getBidders()).toEqual([
             'ix',
             'improvedigital',
             'adyoulike',
@@ -510,27 +512,27 @@ describe('bids', () => {
 
     test('should not include ix bidders when switched off', () => {
         config.set('switches.prebidIndexExchange', false);
-        expect(bidders()).toEqual(['adyoulike']);
+        expect(getBidders()).toEqual(['adyoulike']);
     });
 
     test('should include Sonobi if in target geolocation', () => {
         shouldIncludeSonobi.mockReturnValue(true);
-        expect(bidders()).toEqual(['ix', 'sonobi', 'adyoulike']);
+        expect(getBidders()).toEqual(['ix', 'sonobi', 'adyoulike']);
     });
 
     test('should include AppNexus directly if in target geolocation', () => {
         shouldIncludeAppNexus.mockReturnValue(true);
-        expect(bidders()).toEqual(['ix', 'and', 'adyoulike']);
+        expect(getBidders()).toEqual(['ix', 'and', 'adyoulike']);
     });
 
     test('should include OpenX directly if in target geolocation', () => {
         shouldIncludeOpenx.mockReturnValue(true);
-        expect(bidders()).toEqual(['ix', 'adyoulike', 'oxd']);
+        expect(getBidders()).toEqual(['ix', 'adyoulike', 'oxd']);
     });
 
     test('should include TrustX if in target geolocation', () => {
         shouldIncludeTrustX.mockReturnValue(true);
-        expect(bidders()).toEqual(['ix', 'trustx', 'adyoulike']);
+        expect(getBidders()).toEqual(['ix', 'trustx', 'adyoulike']);
     });
 
     test('should include ix bidder for each size that slot can take', () => {
@@ -541,31 +543,31 @@ describe('bids', () => {
 
     test('should only include bidder being tested', () => {
         setQueryString('pbtest=xhb');
-        expect(bidders()).toEqual(['xhb']);
+        expect(getBidders()).toEqual(['xhb']);
     });
 
     test('should only include bidder being tested, even when its switch is off', () => {
         setQueryString('pbtest=xhb');
         config.set('switches.prebidXaxis', false);
-        expect(bidders()).toEqual(['xhb']);
+        expect(getBidders()).toEqual(['xhb']);
     });
 
     test('should only include bidder being tested, even when it should not be included', () => {
         setQueryString('pbtest=xhb');
         shouldIncludeXaxis.mockReturnValue(false);
-        expect(bidders()).toEqual(['xhb']);
+        expect(getBidders()).toEqual(['xhb']);
     });
 
     test('should only include multiple bidders being tested, even when their switches are off', () => {
         setQueryString('pbtest=xhb&pbtest=sonobi');
         config.set('switches.prebidXaxis', false);
         config.set('switches.prebidSonobi', false);
-        expect(bidders()).toEqual(['sonobi', 'xhb']);
+        expect(getBidders()).toEqual(['sonobi', 'xhb']);
     });
 
     test('should ignore bidder that does not exist', () => {
         setQueryString('pbtest=nonexistentbidder&pbtest=xhb');
-        expect(bidders()).toEqual(['xhb']);
+        expect(getBidders()).toEqual(['xhb']);
     });
 
     test('should use correct parameters in OpenX bids geolocated in UK', () => {
@@ -615,66 +617,59 @@ describe('bids', () => {
     test('should not include Pangaea when switched off', () => {
         config.set('switches.prebidPangaea', false);
         shouldIncludeOzone.mockReturnValue(true);
-        expect(bidders()).toEqual(['ix', 'adyoulike', 'openx', 'appnexus']);
+        expect(getBidders()).toEqual(['ix', 'adyoulike', 'openx', 'appnexus']);
     });
 });
 
-
-describe('getTripleLiftInventoryCode', () => {
+describe('triplelift adapter', () => {
     beforeEach(() => {
         resetConfig();
-    });
-
-    afterEach(() => {
-        jest.resetAllMocks();
-    });
-
-    test('should return a Triplelift inventory code for', () => {
-        const slotSizes: Array<PrebidSize> = [[300, 250], [300, 600]];
-        const bidders: Array<PrebidBidder> = indexExchangeBidders(slotSizes);
-        expect(bidders).toEqual([
-            expect.objectContaining({
-                name: 'ix',
-                bidParams: expect.any(Function),
-            }),
-            expect.objectContaining({
-                name: 'ix',
-                bidParams: expect.any(Function),
-            }),
-        ]);
-    });
-
-    test('should include methods in the response that generate the correct bid params', () => {
-        const slotSizes: Array<PrebidSize> = [[300, 250], [300, 600]];
-        const bidders: Array<PrebidBidder> = indexExchangeBidders(slotSizes);
-        expect(bidders[0].bidParams('type', [[1, 2]])).toEqual({
-            siteId: '123456',
-            size: [300, 250],
-        });
-        expect(bidders[1].bidParams('type', [[1, 2]])).toEqual({
-            siteId: '123456',
-            size: [300, 600],
-        });
-    });
-});
-
-describe('getTrustXAdUnitId', () => {
-    beforeEach(() => {
-        getBreakpointKey.mockReturnValue('D');
-        stripMobileSuffix.mockImplementation(str => str);
-    });
-
-    afterEach(() => {
-        jest.resetAllMocks();
-        resetConfig();
-    });
-
-    test('should return the expected value for mpu article', () => {
-        //const slotSizes: Array<PrebidSize> = [[300, 250], [300, 600]];
         config.set('page.contentType', 'Article');
-        expect(getTripleLiftInventoryCode('dfp-ad--inline', [[300, 250]])).toBe('theguardian_article_300x250_header');
+        shouldIncludeTripleLift.mockReturnValue(true);
+    });
 
-        /*config.set('page.contentType', 'Network Front');
-        expect(getTripleLiftInventoryCode('dfp-ad--inline', [[300, 250]])).toBe('theguardian_sectionfront_300x250_header');*/
+    afterEach(() => {
+        jest.resetAllMocks();
+        jsdom.reconfigure({
+            url: 'https://some.domain/path',
+        });
+    });
+
+    test('should include triplelift adapter if condition is true ', () => {
+        expect(getBidders()).toEqual(['ix', 'triplelift']);
+    });
+
+    test('should return correct triplelift adapter params for each supported slots sizes', () => {
+        const tripleliftTests = [
+            {
+                size: [728, 90],
+                slotId: 'dfp-ad--top-above-nav',
+                expectedInventoryCode: 'theguardian_topbanner_728x90_header',
+            },
+            {
+                size: [300, 250],
+                slotId: 'dfp-ad--inline1',
+                expectedInventoryCode:
+                    'theguardian_sectionfront_300x250_header',
+            },
+            {
+                size: [300, 600],
+                slotId: 'dfp-right',
+                expectedInventoryCode: 'theguardian_article_300x600_header',
+            },
+            {
+                size: [320, 50],
+                slotId: 'dfp-ad--mobile-sticky',
+                expectedInventoryCode: 'theguardian_320x50_HDX',
+            },
+        ];
+
+        tripleliftTests.forEach(test => {
+            getLargestSize.mockReturnValue(test.size);
+            const tripleLiftBids = bids(test.slotId, [test.size])[1].params;
+            expect(tripleLiftBids).toEqual({
+                inventoryCode: test.expectedInventoryCode,
+            });
+        });
     });
 });
