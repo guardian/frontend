@@ -22,9 +22,7 @@ class LeagueTableController(
 
   // Competitions must be added to this list to show up at /football/tables
     val tableOrder: Seq[String] = Seq(
-        "Women's World Cup 2019",
         "Premier League",
-        "Women's Super League",
         "La Liga",
         "Serie A",
         "Bundesliga",
@@ -39,13 +37,9 @@ class LeagueTableController(
         "Scottish League One",
         "Scottish League Two",
         "Scottish League Cup",
+        "Women's Super League",
         "Nations League",
-        "Copa America",
-        "Africa Cup of Nations",
-        "Euro 2016",
-        "Euro 2016 qualifying",
         "Champions League qualifying",
-        "Women's Euro 2017",
         "FA Cup",
         "Carabao Cup",
         "Community Shield",
