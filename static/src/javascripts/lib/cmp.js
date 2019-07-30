@@ -59,6 +59,11 @@ export const init = (): void => {
         return;
     }
 
+    /**
+     * These state assignments are temporary
+     * and will eventually be replaced by values
+     * read from the CMP cookie.
+     * */
     purposes.functional.state = true;
     purposes.performance.state = true;
     purposes.advertisement.state = getAdConsentState(
