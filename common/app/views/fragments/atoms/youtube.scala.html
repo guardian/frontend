@@ -10,7 +10,8 @@
 @import model.content.MediaAsset
 @import model.VideoFaciaProperties
 @import views.html.fragments.items.elements.facia_cards.title
-
+@import layout.PaidCard
+@import model.pressed.PressedContent
 @(
     media: model.content.MediaAtom,
     displayCaption: Boolean,
@@ -20,7 +21,9 @@
     posterImageOverride: Option[ImageMedia] = None,
     cardStyle: Option[CardStyle] = None,
     mediaWrapper: Option[MediaWrapper] = None,
-    faciaHeaderProperties: Option[VideoFaciaProperties] = None
+    faciaHeaderProperties: Option[VideoFaciaProperties] = None,
+    isPaidFor: Boolean = false,
+    pressedContent: Option[PressedContent] = None
 )(implicit request: RequestHeader)
 
 @videoJsError() = @{
@@ -36,7 +39,7 @@
     @defining(playable){sixteenByNine: Boolean =>
         @defining(media.channelId.getOrElse("")){ channelId: String =>
             <div data-media-atom-id="@media.id" class="@RenderClasses(Map(
-                ("u-responsive-ratio", true),
+                ("u-responsive-ratio", !isPaidFor),
                 ("u-responsive-ratio--hd", sixteenByNine),
                 ("youtube-media-atom", true),
                 ("no-player", !playable || expired ),
@@ -54,7 +57,7 @@
                     <div class="video-overlay__headline">
 
                     @for(f <- faciaHeaderProperties) {
-                        @title(f.header, 0, 0)
+                        @title(f.header, 0, 0, "u-faux-block-link__cta", None, isPaidFor)
                         @if(f.showByline) {
                             <div class="fc-item__byline">@f.byline</div>
                         }
@@ -93,7 +96,22 @@
                             </div>
                         </div>
                     } else {
-                        <div class="youtube-media-atom__play-button vjs-control-text">Play Video @fragments.inlineSvg("play", "icon")</div>
+                        @if(isPaidFor) {
+                            <div class="youtube-media-atom__paid-for-overlay"></div>
+                            @pressedContent.map{ pc =>
+                                @PaidCard.fromPressedContent(pc).branding.map{ b =>
+                                    <div class="youtube-media-atom__paid-for-logo-container">
+                                        <span class="youtube-media-atom__paid-for-label">
+                                            Advertiser content
+                                        </span>
+                                        <img class="youtube-media-atom__paid-for-logo" border="0" src="@b.logo.src">
+                                    </div>
+                                }
+                            }
+                        }
+                        <div class="youtube-media-atom__play-button vjs-control-text">
+                            Play Video @fragments.inlineSvg("play", "icon")
+                        </div>
                         @for(duration <- media.formattedDuration.filter(_ => displayDuration)) {
                             @if(duration != "0:00") {
                                 <div class="youtube-media-atom__bottom-bar">
