@@ -6,11 +6,11 @@ import { isInVariantSynchronous as isInVariantSynchronous_ } from 'common/module
 import { _, bids } from './bid-config';
 import type { PrebidBidder, PrebidSize } from './types';
 import {
-    getLargestSize as getLargestSize_,
     containsBillboard as containsBillboard_,
     containsDmpu as containsDmpu_,
     containsLeaderboard as containsLeaderboard_,
     containsLeaderboardOrBillboard as containsLeaderboardOrBillboard_,
+    containsMobileSticky as containsMobileSticky_,
     containsMpu as containsMpu_,
     containsMpuOrDmpu as containsMpuOrDmpu_,
     getBreakpointKey as getBreakpointKey_,
@@ -30,11 +30,11 @@ import {
     shouldIncludeTripleLift as shouldIncludeTripleLift_,
 } from './utils';
 
-const getLargestSize: any = getLargestSize_;
 const containsBillboard: any = containsBillboard_;
 const containsDmpu: any = containsDmpu_;
 const containsLeaderboard: any = containsLeaderboard_;
 const containsLeaderboardOrBillboard: any = containsLeaderboardOrBillboard_;
+const containsMobileSticky: any = containsMobileSticky_;
 const containsMpu: any = containsMpu_;
 const containsMpuOrDmpu: any = containsMpuOrDmpu_;
 const shouldIncludeAdYouLike: any = shouldIncludeAdYouLike_;
@@ -477,10 +477,6 @@ describe('bids', () => {
         shouldIncludeAppNexus.mockReturnValue(false);
         shouldIncludeTrustX.mockReturnValue(false);
         stripMobileSuffix.mockImplementation(str => str);
-
-        [[300, 250], [300, 600], [970, 250], [728, 90]].map(
-            getLargestSize.mockReturnValueOnce
-        );
     });
 
     afterEach(() => {
@@ -639,37 +635,53 @@ describe('triplelift adapter', () => {
         expect(getBidders()).toEqual(['ix', 'triplelift']);
     });
 
-    test('should return correct triplelift adapter params for each supported slots sizes', () => {
-        const tripleliftTests = [
-            {
-                size: [728, 90],
-                slotId: 'dfp-ad--top-above-nav',
-                expectedInventoryCode: 'theguardian_topbanner_728x90_prebid',
-            },
-            {
-                size: [300, 250],
-                slotId: 'dfp-ad--inline1',
-                expectedInventoryCode:
-                    'theguardian_sectionfront_300x250_prebid',
-            },
-            {
-                size: [300, 600],
-                slotId: 'dfp-right',
-                expectedInventoryCode: 'theguardian_article_300x600_prebid',
-            },
-            {
-                size: [320, 50],
-                slotId: 'dfp-ad--mobile-sticky',
-                expectedInventoryCode: 'theguardian_320x50_HDX',
-            },
-        ];
+    test('should return correct triplelift adapter params for leaderboard', () => {
+        containsLeaderboard.mockReturnValueOnce(true);
+        containsMpu.mockReturnValueOnce(false);
+        containsDmpu.mockReturnValueOnce(false);
+        containsMobileSticky.mockReturnValueOnce(false);
 
-        tripleliftTests.forEach(test => {
-            getLargestSize.mockReturnValue(test.size);
-            const tripleLiftBids = bids(test.slotId, [test.size])[1].params;
-            expect(tripleLiftBids).toEqual({
-                inventoryCode: test.expectedInventoryCode,
-            });
+        const tripleLiftBids = bids('dfp-ad--top-above-nav', [[728, 90]])[1]
+            .params;
+        expect(tripleLiftBids).toEqual({
+            inventoryCode: 'theguardian_topbanner_728x90_prebid',
+        });
+    });
+
+    test('should return correct triplelift adapter params for mbu', () => {
+        containsLeaderboard.mockReturnValueOnce(false);
+        containsMpu.mockReturnValueOnce(true);
+        containsDmpu.mockReturnValueOnce(true);
+        containsMobileSticky.mockReturnValueOnce(false);
+
+        const tripleLiftBids = bids('dfp-ad--inline1', [[300, 250]])[1].params;
+        expect(tripleLiftBids).toEqual({
+            inventoryCode: 'theguardian_sectionfront_300x250_prebid',
+        });
+    });
+
+    test('should return correct triplelift adapter params for leaderboard', () => {
+        containsLeaderboard.mockReturnValueOnce(false);
+        containsMpu.mockReturnValueOnce(false);
+        containsDmpu.mockReturnValueOnce(true);
+        containsMobileSticky.mockReturnValueOnce(false);
+
+        const tripleLiftBids = bids('dfp-right', [[300, 600]])[1].params;
+        expect(tripleLiftBids).toEqual({
+            inventoryCode: 'theguardian_article_300x600_prebid',
+        });
+    });
+
+    test('should return correct triplelift adapter params for mobile sticky', () => {
+        containsLeaderboard.mockReturnValueOnce(false);
+        containsMpu.mockReturnValueOnce(false);
+        containsDmpu.mockReturnValueOnce(false);
+        containsMobileSticky.mockReturnValueOnce(true);
+
+        const tripleLiftBids = bids('dfp-ad--top-above-nav', [[320, 50]])[1]
+            .params;
+        expect(tripleLiftBids).toEqual({
+            inventoryCode: 'theguardian_320x50_HDX',
         });
     });
 });
