@@ -620,15 +620,11 @@ describe('bids', () => {
 describe('triplelift adapter', () => {
     beforeEach(() => {
         resetConfig();
-        config.set('page.contentType', 'Article');
         shouldIncludeTripleLift.mockReturnValue(true);
     });
 
     afterEach(() => {
         jest.resetAllMocks();
-        jsdom.reconfigure({
-            url: 'https://some.domain/path',
-        });
     });
 
     test('should include triplelift adapter if condition is true ', () => {
@@ -651,7 +647,7 @@ describe('triplelift adapter', () => {
     test('should return correct triplelift adapter params for mbu', () => {
         containsLeaderboard.mockReturnValueOnce(false);
         containsMpu.mockReturnValueOnce(true);
-        containsDmpu.mockReturnValueOnce(true);
+        containsDmpu.mockReturnValueOnce(false);
         containsMobileSticky.mockReturnValueOnce(false);
 
         const tripleLiftBids = bids('dfp-ad--inline1', [[300, 250]])[1].params;
