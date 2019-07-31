@@ -33,6 +33,7 @@ import {
     containsLeaderboardOrBillboard,
     containsMpu,
     containsMpuOrDmpu,
+    containsMobileSticky,
     getBreakpointKey,
     isInAuRegion,
     isInRowRegion,
@@ -51,7 +52,6 @@ import {
     stripDfpAdPrefixFrom,
     stripMobileSuffix,
     stripTrailingNumbersAbove1,
-    getLargestSize,
 } from './utils';
 import { getAppNexusDirectBidParams, getAppNexusPlacementId } from './appnexus';
 
@@ -331,25 +331,20 @@ const getTripleLiftInventoryCode = (
     slotId: string,
     sizes: PrebidSize[]
 ): string => {
-    const largestSlotSize: PrebidSize | null = getLargestSize(sizes);
-    const largestSizeName = largestSlotSize ? largestSlotSize.join('x') : '';
-    switch (largestSizeName) {
-        case '728x90':
-            return 'theguardian_topbanner_728x90_prebid';
-        case '300x250':
-            return isArticle
-                ? 'theguardian_article_300x250_prebid'
-                : 'theguardian_sectionfront_300x250_prebid';
-        case '300x600':
-            return 'theguardian_article_300x600_prebid';
-        case '320x50':
-            return 'theguardian_320x50_HDX';
-        default:
-            console.log(
-                `PREBID: Failed to get TripleLift ad unit for slot ${slotId}.`
-            );
-            return '';
-    }
+    if (containsLeaderboard(sizes))
+        return 'theguardian_topbanner_728x90_prebid';
+
+    if (containsMpu(sizes))
+        return isArticle
+            ? 'theguardian_article_300x250_prebid'
+            : 'theguardian_sectionfront_300x250_prebid';
+
+    if (containsDmpu(sizes)) return 'theguardian_article_300x600_prebid';
+
+    if (containsMobileSticky(sizes)) return 'theguardian_320x50_HDX';
+
+    console.log(`PREBID: Failed to get TripleLift ad unit for slot ${slotId}.`);
+    return '';
 };
 
 // Is pbtest being used?

@@ -67,6 +67,9 @@ export const containsBillboard = (sizes: PrebidSize[]): boolean =>
 export const containsMpuOrDmpu = (sizes: PrebidSize[]): boolean =>
     containsMpu(sizes) || containsDmpu(sizes);
 
+export const containsMobileSticky = (sizes: PrebidSize[]): boolean =>
+    contains(sizes, [320, 250]);
+
 export const containsLeaderboardOrBillboard = (sizes: PrebidSize[]): boolean =>
     containsLeaderboard(sizes) || containsBillboard(sizes);
 
