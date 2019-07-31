@@ -335,13 +335,13 @@ const getTripleLiftInventoryCode = (
     const largestSizeName = largestSlotSize ? largestSlotSize.join('x') : '';
     switch (largestSizeName) {
         case '728x90':
-            return 'theguardian_topbanner_728x90_header';
+            return 'theguardian_topbanner_728x90_prebid';
         case '300x250':
             return isArticle
-                ? 'theguardian_article_300x250_header'
-                : 'theguardian_sectionfront_300x250_header';
+                ? 'theguardian_article_300x250_prebid'
+                : 'theguardian_sectionfront_300x250_prebid';
         case '300x600':
-            return 'theguardian_article_300x600_header';
+            return 'theguardian_article_300x600_prebid';
         case '320x50':
             return 'theguardian_320x50_HDX';
         default:

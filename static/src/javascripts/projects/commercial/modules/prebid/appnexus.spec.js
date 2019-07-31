@@ -39,6 +39,12 @@ jest.mock('lib/cookies', () => ({
     getCookie: jest.fn(),
 }));
 
+jest.mock('common/modules/experiments/ab', () => ({
+    isInVariantSynchronous: jest.fn(
+        (testId, variantId) => variantId === 'variant'
+    ),
+}));
+
 const {
     getAppNexusPlacementId,
     getAppNexusInvCode,
