@@ -3,6 +3,8 @@ import fastdom from 'fastdom';
 
 import config from 'lib/config';
 import { loadScript } from 'lib/load-script';
+import { constructQuery } from 'lib/url';
+import { buildPageTargeting } from 'common/modules/commercial/build-page-targeting';
 import {
     getAdConsentState,
     thirdPartyTrackingAdConsent,
@@ -103,7 +105,12 @@ const setupPlayer = (
 
     const adsConfig = commercialFeatures.adFree
         ? { disableAds: true }
-        : { nonPersonalizedAd: !wantPersonalisedAds };
+        : { nonPersonalizedAd: !wantPersonalisedAds,
+            adTagParameters: {
+                iu: config.get('page.adUnit'),
+                cust_params: encodeURIComponent(constructQuery(buildPageTargeting()))
+            }
+          };
 
     return new window.YT.Player(eltId, {
         host: 'https://www.youtube-nocookie.com',
