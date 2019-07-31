@@ -644,18 +644,18 @@ describe('triplelift adapter', () => {
             {
                 size: [728, 90],
                 slotId: 'dfp-ad--top-above-nav',
-                expectedInventoryCode: 'theguardian_topbanner_728x90_header',
+                expectedInventoryCode: 'theguardian_topbanner_728x90_prebid',
             },
             {
                 size: [300, 250],
                 slotId: 'dfp-ad--inline1',
                 expectedInventoryCode:
-                    'theguardian_sectionfront_300x250_header',
+                    'theguardian_sectionfront_300x250_prebid',
             },
             {
                 size: [300, 600],
                 slotId: 'dfp-right',
-                expectedInventoryCode: 'theguardian_article_300x600_header',
+                expectedInventoryCode: 'theguardian_article_300x600_prebid',
             },
             {
                 size: [320, 50],
