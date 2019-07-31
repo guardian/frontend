@@ -7,11 +7,10 @@ const userSegmentsKey = 'gu.ads.userSegmentsData';
 
 const getUserSegments = (): Array<any> => {
     if (local.isAvailable() && consentState('advertisement') !== false) {
-        let userCookieData;
         const userSegmentsData = local.get(userSegmentsKey);
 
         if (userSegmentsData) {
-            userCookieData = getUserFromCookie();
+            const userCookieData = getUserFromCookie();
 
             if (
                 userCookieData &&

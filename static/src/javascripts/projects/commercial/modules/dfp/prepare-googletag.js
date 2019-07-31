@@ -103,13 +103,11 @@ export const init = (): Promise<void> => {
         );
 
         onConsentNotification('advertisement', state => {
-            if (state === true) {
+            if (state !== null) {
                 window.googletag.cmd.push(() => {
-                    window.googletag.pubads().setRequestNonPersonalizedAds(0);
-                });
-            } else if (state === false) {
-                window.googletag.cmd.push(() => {
-                    window.googletag.pubads().setRequestNonPersonalizedAds(1);
+                    window.googletag
+                        .pubads()
+                        .setRequestNonPersonalizedAds(state ? 1 : 0);
                 });
             }
         });
