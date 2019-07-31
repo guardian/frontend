@@ -192,7 +192,7 @@ private object NavLinks {
   val holidays = NavLink("Holidays", "https://holidays.theguardian.com")
   val ukPatrons = NavLink("Patrons", "https://patrons.theguardian.com/?INTCMP=header_patrons")
   val discountCodes = NavLink("Discount Codes", s"https://discountcode.theguardian.com", classList = Seq("js-discount-code-link")) // this gets manipulated client side in navigation.js
-  val discountCoupons = NavLink("Discount Coupons", s"https://discountcode.theguardian.com", classList = Seq("js-discount-code-link")) // this gets manipulated client side in navigation.js
+  val discountCoupons = NavLink("Coupons", s"https://discountcode.theguardian.com", classList = Seq("js-discount-code-link")) // this gets manipulated client side in navigation.js
   val guardianMasterClasses = NavLink("Guardian Masterclasses", "/guardian-masterclasses",
     children = List(
       NavLink("Journalism", "/guardian-masterclasses/journalism"),
