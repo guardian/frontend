@@ -42,8 +42,7 @@ describe('User Ad Targeting', () => {
             userHash: 123,
             segments: 'something',
         });
-        consentState.mockImplementation(() => false);
-        expect(getUserSegments().length).toBe(0);
+        expect(getUserSegments(false).length).toBe(0);
     });
 
     it('should return user segments data from local storage when consent is true', () => {
@@ -52,7 +51,7 @@ describe('User Ad Targeting', () => {
             userHash: 123,
             segments: 'something',
         });
-        expect(getUserSegments()).toBe('something');
+        expect(getUserSegments(true)).toBe('something');
     });
 
     it('should return user segments data from local storage when consent is null', () => {
@@ -61,7 +60,7 @@ describe('User Ad Targeting', () => {
             userHash: 123,
             segments: 'something',
         });
-        expect(getUserSegments()).toBe('something');
+        expect(getUserSegments(null)).toBe('something');
     });
 
     it('should remove user segments belonging to another user from local storage', () => {
@@ -70,7 +69,7 @@ describe('User Ad Targeting', () => {
             userHash: 456,
             segments: 'anything',
         });
-        expect(getUserSegments().length).toBe(0);
+        expect(getUserSegments(true).length).toBe(0);
         expect(local.get(userSegmentsKey)).toBeFalsy();
     });
 

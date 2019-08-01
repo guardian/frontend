@@ -3,7 +3,6 @@ import config from 'lib/config';
 import { getCookie } from 'lib/cookies';
 import reportError from 'lib/report-error';
 import { local } from 'lib/storage';
-import { consentState } from 'lib/cmp';
 
 let numRetries = 0;
 
@@ -56,10 +55,10 @@ const retrieve = (n: string): string => {
     return local.getRaw(k) || getCookie(`${k}=([^;]*)`) || '';
 };
 
-export const getKruxSegments = (): Array<string> => {
-    const wantPersonalisedAds: boolean =
-        consentState('advertisement') !== false;
-    const segments: string = wantPersonalisedAds ? retrieve('segs') : '';
+export const getKruxSegments = (
+    adConsentState: boolean | null
+): Array<string> => {
+    const segments: string = adConsentState !== false ? retrieve('segs') : '';
     return segments ? segments.split(',') : [];
 };
 

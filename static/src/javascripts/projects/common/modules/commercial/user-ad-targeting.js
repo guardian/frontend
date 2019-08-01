@@ -5,8 +5,8 @@ import { consentState } from 'lib/cmp';
 
 const userSegmentsKey = 'gu.ads.userSegmentsData';
 
-const getUserSegments = (): Array<any> => {
-    if (local.isAvailable() && consentState('advertisement') !== false) {
+const getUserSegments = (adConsentState: boolean | null): Array<any> => {
+    if (local.isAvailable() && adConsentState !== false) {
         const userSegmentsData = local.get(userSegmentsKey);
 
         if (userSegmentsData) {

@@ -208,12 +208,12 @@ const buildPageTargetting = (adConsentState: boolean | null): Object => {
     const pageTargets: PageTargeting = Object.assign(
         {
             sens: page.isSensitive ? 't' : 'f',
-            x: getKruxSegments(),
+            x: getKruxSegments(adConsentState),
             pv: config.get('ophan.pageViewId'),
             bp: findBreakpoint(),
             at: getCookie('adtest') || undefined,
             si: isUserLoggedIn() ? 't' : 'f',
-            gdncrm: getUserSegments(),
+            gdncrm: getUserSegments(adConsentState),
             ab: abParam(),
             ref: getReferrer(),
             ms: formatTarget(page.source),
