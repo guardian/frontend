@@ -1,7 +1,7 @@
 // @flow
 
 import config from 'lib/config';
-import { getLocalCurrencySymbolSync } from 'lib/geolocation';
+import { getLocalCurrencySymbol } from 'lib/geolocation';
 import { constructQuery as constructURLQuery } from 'lib/url';
 
 import {
@@ -119,7 +119,7 @@ const addEpicDataToUrl = (url: string): string => {
         pvid: config.get('ophan.pageViewId'),
         url: window.location.href.split('?')[0],
         // use to display pricing in local currency
-        lcs: getLocalCurrencySymbolSync(),
+        lcs: getLocalCurrencySymbol(),
     });
     return `${url}?${params}`;
 };

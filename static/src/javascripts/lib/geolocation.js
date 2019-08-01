@@ -405,17 +405,8 @@ const extendedCurrencySymbol = {
     International: '$',
 };
 
-const defaultCurrencySymbol = '£';
-
-const getLocalCurrencySymbolSync = (): string =>
-    extendedCurrencySymbol[countryCodeToCountryGroupId(getSync())] ||
-    defaultCurrencySymbol;
-
-const getLocalCurrencySymbol = (geolocation: ?string): string =>
-    geolocation
-        ? extendedCurrencySymbol[countryCodeToCountryGroupId(geolocation)] ||
-          defaultCurrencySymbol
-        : defaultCurrencySymbol;
+const getLocalCurrencySymbol = (): string =>
+    extendedCurrencySymbol[countryCodeToCountryGroupId(getSync())] || '£';
 
 // A limited set of country names for the test to add country name in the epic copy
 const countryNames = {
@@ -478,19 +469,15 @@ const countryNames = {
     PA: 'Panama',
 };
 
-const getCountryName = (geolocation: ?string): ?string =>
-    geolocation ? countryNames[geolocation] : undefined;
-
 export {
     get,
     countryCodeToCountryGroupId,
     countryCodeToSupportInternationalisationId,
     getFromStorage,
     getSync,
-    getLocalCurrencySymbolSync,
     getLocalCurrencySymbol,
     init,
     setGeolocation,
     extendedCurrencySymbol,
-    getCountryName,
+    countryNames,
 };
