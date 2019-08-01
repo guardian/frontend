@@ -468,7 +468,6 @@ const makeEpicABTest = ({
         // this is true because we use the reader revenue flag rather than sensitive
         // to disable contributions asks for a particular piece of content
         showForSensitive: true,
-        geolocation,
         highPriority,
         canRun() {
             const countryNameIsOk =
