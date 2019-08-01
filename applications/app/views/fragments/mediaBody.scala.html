@@ -76,7 +76,7 @@
                                             }
 
                                             @video.mediaAtom.map { mediaAtom =>
-                                                @fragments.atoms.media(mediaAtom, displayCaption = displayCaption, displayEndSlate = true, mediaWrapper = None, posterImageOverride = None)
+                                                @fragments.atoms.media(mediaAtom, displayCaption = displayCaption, mediaWrapper = None, posterImageOverride = None)
                                             }
 
                                             @video.elements.mainVideo.map { videoElement =>
@@ -87,7 +87,6 @@
                                                         video.trail.headline,
                                                         autoPlay = true,
                                                         showControlsAtStart = true,
-                                                        endSlatePath = video.endSlatePath,
                                                         path = Some(video.metadata.id),
                                                         overrideIsRatioHd = None
                                                     ), enhance = true
@@ -114,7 +113,6 @@
                                 </div>
                             </div>
                         </div>
-
                         @media match {
                             case v: Video if !isPaidContent => {
                                 <div class="content__secondary-column content__secondary-column--media content__secondary-column--video hide-on-childrens-books-site"

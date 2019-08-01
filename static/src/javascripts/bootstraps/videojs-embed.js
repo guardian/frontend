@@ -7,7 +7,6 @@ import $ from 'lib/$';
 import config from 'lib/config';
 import deferToAnalytics from 'lib/defer-to-analytics';
 import template from 'lodash/template';
-import { Component } from 'common/modules/component';
 import events from 'common/modules/video/events';
 import { fullscreener } from 'common/modules/media/videojs-plugins/fullscreener';
 import { inlineSvg } from 'common/views/svgs';
@@ -36,29 +35,6 @@ const addTitleBar = (): void => {
         icon: inlineSvg('marque36icon'),
     };
     $('.vjs-control-bar').after(template(titlebarTmpl)(data));
-};
-
-const initEndSlate = (player: any): void => {
-    const endSlate = new Component();
-    const endState = 'vjs-has-ended';
-
-    endSlate.endpoint = $('.js-gu-media--enhance')
-        .first()
-        .attr('data-end-slate');
-
-    endSlate.fetch(player.el(), 'html').then(() => {
-        $('.end-slate-container .fc-item__action').each(e => {
-            e.href += '?CMP=embed_endslate';
-        });
-    });
-
-    player.on('ended', () => {
-        bonzo(player.el()).addClass(endState);
-    });
-
-    player.on('playing', () => {
-        bonzo(player.el()).removeClass(endState);
-    });
 };
 
 const initPlayer = (): void => {
@@ -100,7 +76,6 @@ const initPlayer = (): void => {
         player.ready(() => {
             initLoadingSpinner(player);
             addTitleBar();
-            initEndSlate(player);
 
             events.bindGlobalEvents(player);
 

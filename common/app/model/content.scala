@@ -699,7 +699,6 @@ final case class Video (
         " - video interviews"," – video interviews" )
     suffixVariations.fold(trail.headline.trim) { (str, suffix) => str.stripSuffix(suffix) }
   }
-  def endSlatePath: String = EndSlateComponents.fromContent(content).toUriPath
 
   def sixteenByNineMetaImage: Option[String] = for {
     imageMedia <- mediaAtom.flatMap(_.posterImage) orElse content.elements.thumbnail.map(_.images)

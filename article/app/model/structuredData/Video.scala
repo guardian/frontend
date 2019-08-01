@@ -1,6 +1,6 @@
 package model.structuredData
 
-import model.{Article, EndSlateComponents, VideoElement, VideoPlayer}
+import model.{Article, VideoElement, VideoPlayer}
 import play.api.libs.json.{JsValue, Json}
 import play.twirl.api.Html
 import views.support.Video640
@@ -15,7 +15,6 @@ object Video {
       blog.trail.headline,
       autoPlay = false,
       showControlsAtStart = true,
-      endSlatePath = EndSlateComponents.fromContent(blog.content).toUriPath,
       overrideIsRatioHd = None,
       embedPath = blog.content.mainVideoCanonicalPath,
       path = blog.content.mainVideoCanonicalPath

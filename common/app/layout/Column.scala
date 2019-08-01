@@ -22,7 +22,6 @@ case class ItemClasses(mobile: CardType, tablet: CardType, desktop: Option[CardT
   def showVideoPlayer: Boolean = allTypes.exists(_.videoPlayer.show)
   def showVideoEndSlate: Boolean = allTypes.exists(_.videoPlayer.showEndSlate)
   def showYouTubeMediaAtomPlayer: Boolean = allTypes.exists(_.youTubeMediaAtomPlayer.show)
-  def showYouTubeMediaAtomEndSlate: Boolean = allTypes.exists(_.youTubeMediaAtomPlayer.showEndSlate)
   def showCutOut: Boolean = allTypes.exists(_.showCutOut)
   def canShowSlideshow: Boolean = allTypes.exists(_.canShowSlideshow)
 }

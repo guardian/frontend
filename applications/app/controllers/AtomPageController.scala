@@ -108,7 +108,7 @@ class AtomPageController(contentApiClient: ContentApiClient, wsClient: WSClient,
   }
 
   def makeAtom(apiAtom: ItemResponse): Option[Atom] = {
-    apiAtom.media.map(atom => MediaAtom.make(atom = atom, endSlatePath = None)) orElse
+    apiAtom.media.map(atom => MediaAtom.make(atom = atom)) orElse
     apiAtom.storyquestions.map(atom => StoryQuestionsAtom.make(atom))           orElse
     apiAtom.guide.map(atom => GuideAtom.make(atom))                             orElse
     apiAtom.profile.map(atom => ProfileAtom.make(atom))                         orElse

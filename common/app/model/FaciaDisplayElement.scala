@@ -14,7 +14,6 @@ object FaciaDisplayElement {
         Some(InlineVideo(
           videoElement,
           faciaContent.properties.webTitle,
-          EndSlateComponents.fromFaciaContent(faciaContent).toUriPath,
           InlineImage.fromFaciaContent(faciaContent)
         ))
       case _ if faciaContent.properties.isCrossword && Switches.CrosswordSvgThumbnailsSwitch.isSwitchedOn =>
@@ -33,7 +32,6 @@ sealed trait FaciaDisplayElement
 case class InlineVideo(
   videoElement: VideoElement,
   title: String,
-  endSlatePath: String,
   fallBack: Option[InlineImage]
 ) extends FaciaDisplayElement
 

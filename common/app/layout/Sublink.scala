@@ -320,12 +320,12 @@ case class ContentCard(
   def setKicker(kicker: Option[ItemKicker]): ContentCard = copy(header = header.copy(kicker = kicker))
 
   def isVideo: Boolean = displayElement match {
-    case Some(InlineVideo(_, _, _, _)) => true
+    case Some(InlineVideo(_, _, _)) => true
     case _ => false
   }
 
   def hasImage: Boolean = displayElement match {
-    case Some(InlineVideo(_, _, _, Some(_))) => true
+    case Some(InlineVideo(_, _, Some(_))) => true
     case Some(InlineYouTubeMediaAtom(_, _)) => true
     case Some(InlineImage(_)) => true
     case Some(InlineSlideshow(_)) => true

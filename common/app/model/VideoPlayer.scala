@@ -16,8 +16,6 @@ case class VideoPlayer(
   title: String,
   autoPlay: Boolean,
   showControlsAtStart: Boolean,
-  // TODO make Option[String] as relies on section being set
-  endSlatePath: String,
   // TODO make `String` once `path` is available on main media on fronts
   path: Option[String],
   overrideIsRatioHd: Option[Boolean] = None,
@@ -29,8 +27,6 @@ case class VideoPlayer(
 
   /** Width is always defined for video profile, so this is OK. */
   def width: Int = profile.width.get
-
-  def showEndSlate: Boolean = width >= Video640.width.get
 
   def isRatioHd: Boolean = overrideIsRatioHd getOrElse true
 
@@ -51,7 +47,6 @@ object VideoPlayer {
     content.header.headline,
     autoPlay,
     showControlsAtStart,
-    endSlatePath = SupportedUrl.fromFaciaContent(content),
     path,
     hasFaciaHeader = true,
     faciaHeaderProperties = Some(VideoFaciaProperties(
