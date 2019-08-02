@@ -3,9 +3,10 @@ import {
     makeEpicABTest,
     defaultButtonTemplate,
     buildEpicCopy,
+    currentGeoLocation,
 } from 'common/modules/commercial/contributions-utilities';
 import { getArticleViewCount } from 'common/modules/onward/history';
-import { getCountryName, getSync as geolocationGetSync } from 'lib/geolocation';
+import { getCountryName } from 'lib/geolocation';
 
 // User must have read at least 5 articles in last 14 days
 const minArticleViews = 5;
@@ -36,8 +37,7 @@ const ROWControlCopy = {
     highlightedText,
 };
 
-const geolocation = geolocationGetSync();
-const isUSUK = ['GB', 'US'].includes(geolocation);
+const isUSUK = ['GB', 'US'].includes(currentGeoLocation());
 
 export const articlesViewed: EpicABTest = makeEpicABTest({
     id: 'ContributionsEpicArticlesViewedMonth',
@@ -55,11 +55,11 @@ export const articlesViewed: EpicABTest = makeEpicABTest({
     audience: 1,
     audienceOffset: 0,
 
-    geolocation,
     highPriority: true,
 
     canRun: () =>
-        articleViewCount >= minArticleViews && !!getCountryName(geolocation),
+        articleViewCount >= minArticleViews &&
+        !!getCountryName(currentGeoLocation()),
 
     variants: [
         {
@@ -69,7 +69,7 @@ export const articlesViewed: EpicABTest = makeEpicABTest({
             copy: buildEpicCopy(
                 isUSUK ? USUKControlCopy : ROWControlCopy,
                 !isUSUK,
-                geolocation
+                currentGeoLocation()
             ),
         },
         {
@@ -87,7 +87,7 @@ export const articlesViewed: EpicABTest = makeEpicABTest({
                     highlightedText,
                 },
                 false,
-                geolocation
+                currentGeoLocation()
             ),
         },
     ],
