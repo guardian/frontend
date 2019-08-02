@@ -53,8 +53,7 @@ class ReauthenticationController(
     signInService.getCookies(futureCookies, rememberMe = false).map {
       case Right(cookies) =>
         Right(SeeOther(returnUrl)
-          .withCookies(cookies: _*)
-          .discardingCookies(discardingCookieForRootDomain("GU_SIGNIN_EMAIL")))
+          .withCookies(cookies: _*))
       case Left(errors) => Left(errors)
     }
   }
