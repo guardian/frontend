@@ -4,10 +4,9 @@ import { acquisitionsBannerControlTemplate } from 'common/modules/commercial/tem
 import {
     getCountryName,
     getLocalCurrencySymbol,
-    getSync as geolocationGetSync,
 } from 'lib/geolocation';
 import { getArticleViewCount } from 'common/modules/onward/history';
-import { buildBannerCopy } from 'common/modules/commercial/contributions-utilities';
+import { buildBannerCopy, currentGeoLocation } from 'common/modules/commercial/contributions-utilities';
 
 // User must have read at least 5 articles in last 30 days
 const minArticleViews = 5;
@@ -15,13 +14,12 @@ const articleCountDays = 30;
 
 const articleViewCount = getArticleViewCount(articleCountDays);
 
-const geolocation = geolocationGetSync();
-const isUSUKAU = ['GB', 'US', 'AU'].includes(geolocation);
+const isUSUKAU = ['GB', 'US', 'AU'].includes(currentGeoLocation());
 
 const messageText =
     'Unlike many news organisations, we made a choice to keep our journalism free and available for all. At a time when factual information is a necessity, we believe that each of us, around the world, deserves access to accurate reporting with integrity at its heart. Every contribution, big or small, is so valuable – it is essential in protecting our editorial independence.';
 const ctaText = `<span class="engagement-banner__highlight"> Support The Guardian from as little as ${getLocalCurrencySymbol(
-    geolocation
+    currentGeoLocation()
 )}1</span>`;
 const USUKAUControlLeadSentence =
     'We chose a different approach. Will you support it?';
@@ -41,10 +39,9 @@ export const articlesViewedBanner: AcquisitionsABTest = {
     audienceCriteria: 'All',
     idealOutcome: 'variant design performs at least as well as control',
     canRun: () =>
-        articleViewCount >= minArticleViews && !!getCountryName(geolocation),
+        articleViewCount >= minArticleViews && !!getCountryName(currentGeoLocation()),
     showForSensitive: true,
     componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
-    geolocation,
     variants: [
         {
             id: 'control',
@@ -55,7 +52,7 @@ export const articlesViewedBanner: AcquisitionsABTest = {
                         ? USUKAUControlLeadSentence
                         : ROWControlLeadSentence,
                     !isUSUKAU,
-                    geolocation
+                    currentGeoLocation()
                 ),
                 messageText,
                 ctaText,
