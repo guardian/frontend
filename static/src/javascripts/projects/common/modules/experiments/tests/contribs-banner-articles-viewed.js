@@ -1,12 +1,12 @@
 // @flow
 
 import { acquisitionsBannerControlTemplate } from 'common/modules/commercial/templates/acquisitions-banner-control';
-import {
-    getCountryName,
-    getLocalCurrencySymbol,
-} from 'lib/geolocation';
+import { getCountryName, getLocalCurrencySymbol } from 'lib/geolocation';
 import { getArticleViewCount } from 'common/modules/onward/history';
-import { buildBannerCopy, currentGeoLocation } from 'common/modules/commercial/contributions-utilities';
+import {
+    buildBannerCopy,
+    currentGeoLocation,
+} from 'common/modules/commercial/contributions-utilities';
 
 // User must have read at least 5 articles in last 30 days
 const minArticleViews = 5;
@@ -39,7 +39,8 @@ export const articlesViewedBanner: AcquisitionsABTest = {
     audienceCriteria: 'All',
     idealOutcome: 'variant design performs at least as well as control',
     canRun: () =>
-        articleViewCount >= minArticleViews && !!getCountryName(currentGeoLocation()),
+        articleViewCount >= minArticleViews &&
+        !!getCountryName(currentGeoLocation()),
     showForSensitive: true,
     componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
     variants: [

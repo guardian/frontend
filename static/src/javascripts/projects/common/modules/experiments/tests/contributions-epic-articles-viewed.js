@@ -6,6 +6,7 @@ import {
     currentGeoLocation,
 } from 'common/modules/commercial/contributions-utilities';
 import { getArticleViewCount } from 'common/modules/onward/history';
+import { getCountryName } from 'lib/geolocation';
 
 // User must have read at least 5 articles in last 14 days
 const minArticleViews = 5;
@@ -57,7 +58,8 @@ export const articlesViewed: EpicABTest = makeEpicABTest({
     highPriority: true,
 
     canRun: () =>
-        articleViewCount >= minArticleViews && !!getCountryName(currentGeoLocation()),
+        articleViewCount >= minArticleViews &&
+        !!getCountryName(currentGeoLocation()),
 
     variants: [
         {

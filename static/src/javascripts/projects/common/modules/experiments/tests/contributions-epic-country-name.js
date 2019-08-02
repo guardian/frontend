@@ -5,6 +5,7 @@ import {
     buildEpicCopy,
     currentGeoLocation,
 } from 'common/modules/commercial/contributions-utilities';
+import { getCountryName } from 'lib/geolocation';
 
 export const countryName: EpicABTest = makeEpicABTest({
     id: 'ContributionsEpicCountryName',
@@ -22,7 +23,6 @@ export const countryName: EpicABTest = makeEpicABTest({
     audience: 1,
     audienceOffset: 0,
 
-    geolocation,
     highPriority: true,
 
     canRun: () =>

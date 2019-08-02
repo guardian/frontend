@@ -55,7 +55,7 @@ import { getControlEpicCopy } from 'common/modules/commercial/acquisitions-copy'
 import { initTicker } from 'common/modules/commercial/ticker';
 import once from 'lodash/once';
 
-export const currentGeoLocation = once((): string => geolocationGetSync());
+const currentGeoLocation = once((): string => geolocationGetSync());
 
 export type ReaderRevenueRegion =
     | 'united-kingdom'
@@ -775,7 +775,7 @@ export const getEngagementBannerTestsFromGoogleDoc = (): Promise<
                     const countryGroups = rowWithLocations
                         ? optionalSplitAndTrim(rowWithLocations.locations, ',')
                         : [];
-                    
+
                     return {
                         id: testName,
                         campaignId: testName,
@@ -813,7 +813,7 @@ export const getEngagementBannerTestsFromGoogleDoc = (): Promise<
                                 ? buildBannerCopy(
                                       row.leadSentence.trim(),
                                       testHasCountryName,
-                                    currentGeoLocation()
+                                      currentGeoLocation()
                                   )
                                 : undefined;
 
@@ -880,4 +880,5 @@ export {
     getVisitCount,
     buildEpicCopy,
     buildBannerCopy,
+    currentGeoLocation,
 };
