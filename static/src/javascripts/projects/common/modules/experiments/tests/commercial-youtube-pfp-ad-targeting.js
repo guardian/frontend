@@ -11,7 +11,8 @@ export const commercialYoutubePfpAdTargeting: ABTest = {
     successMeasure: 'Commercial perform manual verification of ad targeting',
     audienceCriteria: 'internal',
     dataLinkNames: '',
-    idealOutcome: 'Validate the work commercial have done to setup PfP ad targeting',
+    idealOutcome:
+        'Validate the work commercial have done to setup PfP ad targeting',
     canRun: () => true,
     variants: [
         {

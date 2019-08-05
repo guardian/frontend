@@ -84,20 +84,25 @@ const onPlayerReadyEvent = (event, handlers: Handlers, el: ?HTMLElement) => {
     }
 };
 
-const createAdsConfig = (adFree: boolean, wantPersonalisedAds: boolean, inPfpAdTargetingVariant: boolean) => {
-  if (adFree) {
-      return { disableAds: true };
-  } else if (inPfpAdTargetingVariant) {
-      return {
-          nonPersonalizedAd: !wantPersonalisedAds,
-          adTagParameters: {
-              iu: config.get('page.adUnit'),
-              cust_params: encodeURIComponent(constructQuery(buildPageTargeting()))
-          }
-      };
-  } else {
-      return { nonPersonalizedAd: !wantPersonalisedAds };
-  }
+const createAdsConfig = (
+    adFree: boolean,
+    wantPersonalisedAds: boolean,
+    inPfpAdTargetingVariant: boolean
+) => {
+    if (adFree) {
+        return { disableAds: true };
+    } else if (inPfpAdTargetingVariant) {
+        return {
+            nonPersonalizedAd: !wantPersonalisedAds,
+            adTagParameters: {
+                iu: config.get('page.adUnit'),
+                cust_params: encodeURIComponent(
+                    constructQuery(buildPageTargeting())
+                ),
+            },
+        };
+    }
+    return { nonPersonalizedAd: !wantPersonalisedAds };
 };
 
 const setupPlayer = (
@@ -110,8 +115,10 @@ const setupPlayer = (
 ) => {
     const wantPersonalisedAds: boolean =
         getAdConsentState(thirdPartyTrackingAdConsent) !== false;
-    const inPfpAdTargetingVariant: boolean =
-        isInVariantSynchronous(commercialYoutubePfpAdTargeting, 'variant');
+    const inPfpAdTargetingVariant: boolean = isInVariantSynchronous(
+        commercialYoutubePfpAdTargeting,
+        'variant'
+    );
     const disableRelatedVideos = !config.get('switches.youtubeRelatedVideos');
     // relatedChannels needs to be an array, as per YouTube's IFrame Embed Config API
     const relatedChannels = [];
@@ -123,7 +130,11 @@ const setupPlayer = (
      */
     // const relatedChannels = !disableRelatedVideos && channelId ? [channelId] : [];
 
-    const adsConfig = createAdsConfig(commercialFeatures.adFree, wantPersonalisedAds, inPfpAdTargetingVariant);
+    const adsConfig = createAdsConfig(
+        commercialFeatures.adFree,
+        wantPersonalisedAds,
+        inPfpAdTargetingVariant
+    );
 
     return new window.YT.Player(eltId, {
         host: 'https://www.youtube-nocookie.com',
