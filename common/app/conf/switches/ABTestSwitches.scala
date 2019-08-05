@@ -91,7 +91,7 @@ trait ABTestSwitches {
     "ab-commercial-prebid-triple-lift-adapter",
     "Test the triple lift adapter in prebid",
     owners = Seq(Owner.withGithub("ioanna0")),
-    safeState = Off,
+    safeState = On,
     sellByDate = new LocalDate(2020, 7, 30),
     exposeClientSide = true
   )
