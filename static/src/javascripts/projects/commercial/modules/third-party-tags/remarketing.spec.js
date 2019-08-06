@@ -1,33 +1,26 @@
 // @flow
-
+import { getAdConsentState as _getAdConsentState } from 'common/modules/commercial/ad-prefs.lib';
 import { remarketing } from 'commercial/modules/third-party-tags/remarketing';
+import config from 'lib/config';
 
-const { shouldRun, url } = remarketing;
-const onLoad: any = remarketing.onLoad;
+const getAdConsentState: any = _getAdConsentState;
 
-/**
- * we have to mock config like this because
- * loading remarketing has side affects
- * that are dependent on config.
- * */
-jest.mock('lib/config', () => {
-    const defaultConfig = {
-        switches: {
-            remarketing: true,
-        },
-    };
-
-    return Object.assign({}, defaultConfig, {
-        get: (path: string = '', defaultValue: any) =>
-            path
-                .replace(/\[(.+?)\]/g, '.$1')
-                .split('.')
-                .reduce((o, key) => o[key], defaultConfig) || defaultValue,
-    });
-});
+jest.mock('common/modules/commercial/ad-prefs.lib', () => ({
+    getAdConsentState: jest.fn(),
+}));
 
 describe('Remarketing', () => {
+    beforeAll(() => {
+        config.set('switches.remarketing', true);
+    });
+    beforeEach(() => {
+        jest.resetAllMocks();
+    });
+
     it('should exist', () => {
+        getAdConsentState.mockReturnValue(true);
+        const { shouldRun, url, onLoad } = remarketing();
+
         expect(shouldRun).toEqual(true);
         expect(url).toEqual(
             expect.stringContaining('www.googleadservices.com')
@@ -35,10 +28,24 @@ describe('Remarketing', () => {
         expect(onLoad).toBeDefined();
     });
 
+    it('shouldRun returns false only if consent has been denied', () => {
+        getAdConsentState.mockReturnValueOnce(null);
+        getAdConsentState.mockReturnValueOnce(true);
+        getAdConsentState.mockReturnValueOnce(false);
+        const shouldRunNull = remarketing().shouldRun;
+        const shouldRunTrue = remarketing().shouldRun;
+        const shouldRunFalse = remarketing().shouldRun;
+
+        expect(shouldRunNull).toEqual(true);
+        expect(shouldRunTrue).toEqual(true);
+        expect(shouldRunFalse).toEqual(false);
+    });
+
     it('should call google_trackConversion', () => {
+        const { onLoad } = remarketing();
         window.google_trackConversion = jest.fn();
         window.google_tag_params = 'google_tag_params__test';
-        onLoad();
+        if (onLoad) onLoad();
         expect(window.google_trackConversion).toHaveBeenCalledWith({
             google_conversion_id: 971225648,
             google_custom_params: 'google_tag_params__test',
