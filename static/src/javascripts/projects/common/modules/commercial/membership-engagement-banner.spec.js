@@ -24,7 +24,7 @@ jest.mock('lib/url', () => ({
 }));
 jest.mock('lib/geolocation', () => ({
     getSync: jest.fn(() => 'GB'),
-    getLocalCurrencySymbol: () => '£',
+    getLocalCurrencySymbolSync: () => '£',
 }));
 jest.mock('common/modules/experiments/ab', () => ({
     getEngagementBannerTestToRun: jest.fn(() => {

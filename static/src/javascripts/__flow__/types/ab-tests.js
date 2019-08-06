@@ -62,6 +62,7 @@ declare type Runnable<T: ABTest> = T & {
 declare type AcquisitionsABTest = ABTest & {
     campaignId: string,
     componentType: OphanComponentType,
+    geolocation: ?string,
 };
 
 declare type MaxViews = {
@@ -129,7 +130,8 @@ declare type InitEpicABTest = {
     pageCheck?: (page: Object) => boolean,
     template?: EpicTemplate,
     deploymentRules?: DeploymentRules,
-    hasCountryName?: boolean,
+    testHasCountryName?: boolean,
+    geolocation: ?string,
     highPriority: boolean,
 }
 
