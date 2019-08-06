@@ -88,7 +88,7 @@ const createAdsConfig = (
     adFree: boolean,
     wantPersonalisedAds: boolean,
     inPfpAdTargetingVariant: boolean
-) => {
+): Object => {
     if (adFree) {
         return { disableAds: true };
     } else if (inPfpAdTargetingVariant) {
@@ -194,3 +194,5 @@ export const initYoutubePlayer = (
         );
     });
 };
+
+export const _ = { createAdsConfig };
