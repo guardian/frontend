@@ -7,8 +7,10 @@ import {
 
 const onLoad = () => {
     // Insert Twitter Pixel ID and Standard Event data below
-    window.twq('init', 'nyl43');
-    window.twq('track', 'PageView');
+    if (window.twq) {
+        window.twq('init', 'nyl43');
+        window.twq('track', 'PageView');
+    }
 };
 
 // Twitter universal website tag code
