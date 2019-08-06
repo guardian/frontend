@@ -53,9 +53,6 @@ import {
 } from 'common/modules/commercial/epic/epic-exclusion-rules';
 import { getControlEpicCopy } from 'common/modules/commercial/acquisitions-copy';
 import { initTicker } from 'common/modules/commercial/ticker';
-import once from 'lodash/once';
-
-const currentGeoLocation = once((): string => geolocationGetSync());
 
 export type ReaderRevenueRegion =
     | 'united-kingdom'
@@ -313,7 +310,7 @@ const makeEpicABTestVariant = (
                 this.countryGroups.length === 0 ||
                 userMatchesCountryGroups(
                     this.countryGroups,
-                    currentGeoLocation()
+                    parentTest.geolocation
                 );
 
             const matchesTagsOrSections =
@@ -466,6 +463,7 @@ const makeEpicABTest = ({
     successMeasure,
     audienceCriteria,
     variants,
+    geolocation,
     highPriority,
 
     // optional params
@@ -482,11 +480,12 @@ const makeEpicABTest = ({
         // this is true because we use the reader revenue flag rather than sensitive
         // to disable contributions asks for a particular piece of content
         showForSensitive: true,
+        geolocation,
         highPriority,
         canRun() {
             return (
                 canRun() &&
-                countryNameIsOk(testHasCountryName, currentGeoLocation()) &&
+                countryNameIsOk(testHasCountryName, geolocation) &&
                 shouldShowEpic(this)
             );
         },
@@ -618,6 +617,8 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                         optionalStringToBoolean(row.hasCountryName)
                     );
 
+                    const geolocation = geolocationGetSync();
+
                     const highPriority = rows.some(row =>
                         optionalStringToBoolean(row.highPriority)
                     );
@@ -625,6 +626,7 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                     return makeEpicABTest({
                         id: testName,
                         campaignId: testName,
+                        geolocation,
                         highPriority,
 
                         start: '2018-01-01',
@@ -702,7 +704,7 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                             copy: buildEpicCopy(
                                 row,
                                 testHasCountryName,
-                                currentGeoLocation()
+                                geolocation
                             ),
                             showTicker: optionalStringToBoolean(row.showTicker),
                             supportBaseURL: row.supportBaseURL,
@@ -776,6 +778,8 @@ export const getEngagementBannerTestsFromGoogleDoc = (): Promise<
                         ? optionalSplitAndTrim(rowWithLocations.locations, ',')
                         : [];
 
+                    const geolocation = geolocationGetSync();
+
                     return {
                         id: testName,
                         campaignId: testName,
@@ -792,18 +796,19 @@ export const getEngagementBannerTestsFromGoogleDoc = (): Promise<
                         audience: 1,
                         audienceOffset: 0,
 
+                        geolocation,
                         canRun: () => {
                             const matchesCountryGroups =
                                 countryGroups.length === 0 ||
                                 userMatchesCountryGroups(
                                     countryGroups,
-                                    currentGeoLocation()
+                                    geolocation
                                 );
 
                             return (
                                 countryNameIsOk(
                                     testHasCountryName,
-                                    currentGeoLocation()
+                                    geolocation
                                 ) && matchesCountryGroups
                             );
                         },
@@ -813,19 +818,19 @@ export const getEngagementBannerTestsFromGoogleDoc = (): Promise<
                                 ? buildBannerCopy(
                                       row.leadSentence.trim(),
                                       testHasCountryName,
-                                      currentGeoLocation()
+                                      geolocation
                                   )
                                 : undefined;
 
                             const messageText = buildBannerCopy(
                                 row.messageText.trim(),
                                 testHasCountryName,
-                                currentGeoLocation()
+                                geolocation
                             );
 
                             const ctaText = `<span class="engagement-banner__highlight"> ${row.ctaText.replace(
                                 /%%CURRENCY_SYMBOL%%/g,
-                                getLocalCurrencySymbol(currentGeoLocation())
+                                getLocalCurrencySymbol(geolocation)
                             )}</span>`;
 
                             return {
@@ -880,5 +885,4 @@ export {
     getVisitCount,
     buildEpicCopy,
     buildBannerCopy,
-    currentGeoLocation,
 };
