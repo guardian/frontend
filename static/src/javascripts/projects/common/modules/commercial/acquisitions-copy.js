@@ -1,5 +1,5 @@
 // @flow
-import { getLocalCurrencySymbolSync } from 'lib/geolocation';
+import { getLocalCurrencySymbol } from 'lib/geolocation';
 import reportError from 'lib/report-error';
 import { getEpicControlFromGoogleDoc } from 'common/modules/commercial/contributions-google-docs';
 
@@ -20,7 +20,7 @@ const fallbackCopy = {
         controlCopyParagraphTwo,
         controlCopyParagraphThree,
     ],
-    highlightedText: `For as little as ${getLocalCurrencySymbolSync()}1, you can support the Guardian &ndash; and it only takes a minute. Thank you.`,
+    highlightedText: `For as little as ${getLocalCurrencySymbol()}1, you can support the Guardian &ndash; and it only takes a minute. Thank you.`,
 };
 
 const getEpicParams = (
@@ -48,7 +48,7 @@ const getEpicParams = (
         paragraphs: rowsFromGoogleDoc.map(row => row.paragraphs),
         highlightedText: firstRow.highlightedText.replace(
             /%%CURRENCY_SYMBOL%%/g,
-            getLocalCurrencySymbolSync()
+            getLocalCurrencySymbol()
         ),
     };
 };

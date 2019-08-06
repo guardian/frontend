@@ -5,7 +5,7 @@ import {
     buildEpicCopy,
 } from 'common/modules/commercial/contributions-utilities';
 import { getArticleViewCount } from 'common/modules/onward/history';
-import { getCountryName, getSync as geolocationGetSync } from 'lib/geolocation';
+import { countryNames, getSync as geolocationGetSync } from 'lib/geolocation';
 
 // User must have read at least 5 articles in last 14 days
 const minArticleViews = 5;
@@ -55,11 +55,10 @@ export const articlesViewed: EpicABTest = makeEpicABTest({
     audience: 1,
     audienceOffset: 0,
 
-    geolocation,
     highPriority: true,
 
     canRun: () =>
-        articleViewCount >= minArticleViews && !!getCountryName(geolocation),
+        articleViewCount >= minArticleViews && countryNames[geolocation],
 
     variants: [
         {
@@ -68,8 +67,7 @@ export const articlesViewed: EpicABTest = makeEpicABTest({
             products: [],
             copy: buildEpicCopy(
                 isUSUK ? USUKControlCopy : ROWControlCopy,
-                !isUSUK,
-                geolocation
+                !isUSUK
             ),
         },
         {
@@ -86,8 +84,7 @@ export const articlesViewed: EpicABTest = makeEpicABTest({
                         'We need your support to keep delivering quality journalism, to maintain our openness and to protect our precious independence. Every reader contribution, big or small, is so valuable. \n',
                     highlightedText,
                 },
-                false,
-                geolocation
+                false
             ),
         },
     ],

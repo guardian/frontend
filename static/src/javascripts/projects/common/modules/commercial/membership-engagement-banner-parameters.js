@@ -3,7 +3,7 @@ import { acquisitionsBannerControlTemplate } from 'common/modules/commercial/tem
 import { getEngagementBannerControlFromGoogleDoc } from 'common/modules/commercial/contributions-google-docs';
 import config from 'lib/config';
 import reportError from 'lib/report-error';
-import { getLocalCurrencySymbolSync } from 'lib/geolocation';
+import { getLocalCurrencySymbol } from 'lib/geolocation';
 import {
     supportContributeURL,
     addCountryGroupToSupportLink,
@@ -36,7 +36,7 @@ const getAcquisitionsBannerParams = (
 
     const ctaText = `<span class="engagement-banner__highlight"> ${firstRow.ctaText.replace(
         /%%CURRENCY_SYMBOL%%/g,
-        getLocalCurrencySymbolSync()
+        getLocalCurrencySymbol()
     )}</span>`;
 
     return {
@@ -73,7 +73,7 @@ export const getControlEngagementBannerParams = (): Promise<EngagementBannerPara
 
             return {
                 messageText: fallbackCopy,
-                ctaText: `<span class="engagement-banner__highlight"> Support The Guardian from as little as ${getLocalCurrencySymbolSync()}1</span>`,
+                ctaText: `<span class="engagement-banner__highlight"> Support The Guardian from as little as ${getLocalCurrencySymbol()}1</span>`,
                 buttonCaption: 'Support The Guardian',
                 linkUrl: supportContributeURL(),
                 hasTicker: false,
