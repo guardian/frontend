@@ -100,7 +100,7 @@ trait CommercialSwitches {
 
   val TwitterUwtSwitch = Switch(
     Commercial,
-    "twitterUwt",
+    "twitter-uwt",
     "Include the Twitter universal website tag code.",
     owners = group(Commercial),
     safeState = Off,
