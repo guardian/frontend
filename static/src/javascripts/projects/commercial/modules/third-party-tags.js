@@ -12,6 +12,7 @@ import { ias } from 'commercial/modules/third-party-tags/ias';
 import { inizio } from 'commercial/modules/third-party-tags/inizio';
 import { fbPixel } from 'commercial/modules/third-party-tags/facebook-pixel';
 import { init as initPlistaOutbrainRenderer } from 'commercial/modules/third-party-tags/plista-outbrain-renderer';
+import { twitterUwt } from 'commercial/modules/third-party-tags/twitter-uwt';
 
 const insertScripts = (services: Array<ThirdPartyTag>): void => {
     const ref = document.scripts[0];
@@ -48,6 +49,7 @@ const loadOther = (): void => {
         ias,
         inizio,
         fbPixel(),
+        twitterUwt(),
     ].filter(_ => _.shouldRun);
 
     insertScripts(services);
