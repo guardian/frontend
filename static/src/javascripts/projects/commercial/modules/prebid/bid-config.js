@@ -49,6 +49,7 @@ import {
     stripDfpAdPrefixFrom,
     stripMobileSuffix,
     stripTrailingNumbersAbove1,
+    containsWS,
 } from './utils';
 import { getAppNexusDirectBidParams, getAppNexusPlacementId } from './appnexus';
 
@@ -232,10 +233,21 @@ const getImproveSizeParam = (slotId: string): { w?: number, h?: number } => {
 };
 
 const getXaxisPlacementId = (sizes: PrebidSize[]): number => {
-    if (containsDmpu(sizes)) return 13663297;
-    if (containsMpu(sizes)) return 13663304;
-    if (containsBillboard(sizes)) return 13663284;
-    return 13663304;
+    // TODO check whether to return -1 or 13663304
+    switch (getBreakpointKey()) {
+        case 'D':
+            if (containsDmpu(sizes)) return 13663297;
+            if (containsMpu(sizes)) return 15900184;
+            if (containsBillboard(sizes)) return 13663284;
+            if (containsLeaderboard(sizes)) return 15900187;
+            if (containsWS(sizes)) return 16279905;
+            return -1;
+        case 'M':
+            if (containsMpu(sizes)) return 13663304;
+            return -1;
+        default:
+            return 13663304;
+    }
 };
 
 const getPangaeaPlacementId = (sizes: PrebidSize[]): number => {
