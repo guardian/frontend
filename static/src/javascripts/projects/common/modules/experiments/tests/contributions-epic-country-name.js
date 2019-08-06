@@ -3,9 +3,10 @@ import {
     makeEpicABTest,
     defaultButtonTemplate,
     buildEpicCopy,
-    currentGeoLocation,
 } from 'common/modules/commercial/contributions-utilities';
-import { getCountryName } from 'lib/geolocation';
+import { getCountryName, getSync as geolocationGetSync } from 'lib/geolocation';
+
+const geolocation = geolocationGetSync();
 
 export const countryName: EpicABTest = makeEpicABTest({
     id: 'ContributionsEpicCountryName',
@@ -23,12 +24,13 @@ export const countryName: EpicABTest = makeEpicABTest({
     audience: 1,
     audienceOffset: 0,
 
+    geolocation,
     highPriority: true,
 
     canRun: () =>
-        currentGeoLocation() !== 'US' &&
-        currentGeoLocation() !== 'GB' &&
-        !!getCountryName(currentGeoLocation()),
+        geolocation !== 'US' &&
+        geolocation !== 'GB' &&
+        !!getCountryName(geolocation),
 
     variants: [
         {
@@ -47,7 +49,7 @@ export const countryName: EpicABTest = makeEpicABTest({
                         'Support The Guardian from as little as %%CURRENCY_SYMBOL%%1 – and it only takes a minute. Thank you.',
                 },
                 true,
-                currentGeoLocation()
+                geolocation
             ),
         },
     ],
