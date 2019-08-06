@@ -334,7 +334,8 @@ const getTripleLiftInventoryCode = (
     if (containsLeaderboard(sizes))
         return 'theguardian_topbanner_728x90_prebid';
 
-    if (containsDmpu(sizes)) return 'theguardian_article_300x600_prebid';
+    if (containsDmpu(sizes) && isArticle)
+        return 'theguardian_article_300x600_prebid';
 
     if (containsMpu(sizes))
         return isArticle

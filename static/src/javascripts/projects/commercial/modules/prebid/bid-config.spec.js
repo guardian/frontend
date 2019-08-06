@@ -620,6 +620,7 @@ describe('bids', () => {
 describe('triplelift adapter', () => {
     beforeEach(() => {
         resetConfig();
+        config.set('page.contentType', 'Article');
         shouldIncludeTripleLift.mockReturnValue(true);
     });
 
@@ -653,18 +654,6 @@ describe('triplelift adapter', () => {
         const tripleLiftBids = bids('dfp-ad--inline1', [[300, 250]])[1].params;
         expect(tripleLiftBids).toEqual({
             inventoryCode: 'theguardian_sectionfront_300x250_prebid',
-        });
-    });
-
-    test('should return correct triplelift adapter params for leaderboard', () => {
-        containsLeaderboard.mockReturnValueOnce(false);
-        containsMpu.mockReturnValueOnce(false);
-        containsDmpu.mockReturnValueOnce(true);
-        containsMobileSticky.mockReturnValueOnce(false);
-
-        const tripleLiftBids = bids('dfp-right', [[300, 600]])[1].params;
-        expect(tripleLiftBids).toEqual({
-            inventoryCode: 'theguardian_article_300x600_prebid',
         });
     });
 
