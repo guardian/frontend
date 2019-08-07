@@ -22,6 +22,7 @@ import type {
     PrebidPubmaticParams,
     PrebidSize,
     PrebidSonobiParams,
+    PrebidTripleLiftParams,
     PrebidTrustXParams,
     PrebidXaxisParams,
 } from './types';
@@ -32,6 +33,7 @@ import {
     containsLeaderboardOrBillboard,
     containsMpu,
     containsMpuOrDmpu,
+    containsMobileSticky,
     getBreakpointKey,
     isInAuRegion,
     isInRowRegion,
@@ -44,6 +46,7 @@ import {
     shouldIncludeOzone,
     shouldIncludeSonobi,
     shouldIncludeTrustX,
+    shouldIncludeTripleLift,
     shouldIncludeXaxis,
     shouldUseOzoneAdaptor,
     stripDfpAdPrefixFrom,
@@ -57,8 +60,9 @@ const PAGE_TARGETING: {} = buildAppNexusTargetingObject(buildPageTargeting());
 const isInSafeframeTestVariant = (): boolean =>
     isInVariantSynchronous(commercialPrebidSafeframe, 'variant');
 
-const isDesktopAndArticle =
-    getBreakpointKey() === 'D' && config.get('page.contentType') === 'Article';
+const isArticle = config.get('page.contentType') === 'Article';
+
+const isDesktopAndArticle = getBreakpointKey() === 'D' && isArticle;
 
 const getTrustXAdUnitId = (
     slotId: string,
@@ -323,6 +327,27 @@ const getPangaeaPlacementId = (sizes: PrebidSize[]): number => {
     return 13892409; // Other Section MPU as fallback
 };
 
+const getTripleLiftInventoryCode = (
+    slotId: string,
+    sizes: PrebidSize[]
+): string => {
+    if (containsLeaderboard(sizes))
+        return 'theguardian_topbanner_728x90_prebid';
+
+    if (containsDmpu(sizes) && isArticle)
+        return 'theguardian_article_300x600_prebid';
+
+    if (containsMpu(sizes))
+        return isArticle
+            ? 'theguardian_article_300x250_prebid'
+            : 'theguardian_sectionfront_300x250_prebid';
+
+    if (containsMobileSticky(sizes)) return 'theguardian_320x50_HDX';
+
+    console.log(`PREBID: Failed to get TripleLift ad unit for slot ${slotId}.`);
+    return '';
+};
+
 // Is pbtest being used?
 const isPbTestOn = (): boolean => !isEmpty(pbTestNameMap());
 // Helper for conditions
@@ -433,6 +458,17 @@ const trustXBidder: PrebidBidder = {
     switchName: 'prebidTrustx',
     bidParams: (slotId: string): PrebidTrustXParams => ({
         uid: getTrustXAdUnitId(slotId, isDesktopAndArticle),
+    }),
+};
+
+const tripleLiftBidder: PrebidBidder = {
+    name: 'triplelift',
+    switchName: 'prebidTriplelift',
+    bidParams: (
+        slotId: string,
+        sizes: PrebidSize[]
+    ): PrebidTripleLiftParams => ({
+        inventoryCode: getTripleLiftInventoryCode(slotId, sizes),
     }),
 };
 
@@ -579,6 +615,7 @@ const currentBidders: (PrebidSize[]) => PrebidBidder[] = slotSizes => {
     const otherBidders: PrebidBidder[] = [
         ...(inPbTestOr(shouldIncludeSonobi()) ? [sonobiBidder] : []),
         ...(inPbTestOr(shouldIncludeTrustX()) ? [trustXBidder] : []),
+        ...(inPbTestOr(shouldIncludeTripleLift()) ? [tripleLiftBidder] : []),
         ...(inPbTestOr(shouldIncludeAppNexus()) ? [appNexusBidder] : []),
         ...(inPbTestOr(shouldIncludeImproveDigital())
             ? [improveDigitalBidder]

@@ -47,6 +47,12 @@ jest.mock('lib/detect', () => ({
     isBreakpoint: jest.fn(),
 }));
 
+jest.mock('common/modules/experiments/ab', () => ({
+    isInVariantSynchronous: jest.fn(
+        (testId, variantId) => variantId === 'variant'
+    ),
+}));
+
 jest.mock('common/modules/experiments/ab-tests');
 
 /* eslint-disable guardian-frontend/no-direct-access-config */

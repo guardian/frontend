@@ -6,6 +6,8 @@ import { pbTestNameMap } from 'lib/url';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
 import config from 'lib/config';
 import { getCookie } from 'lib/cookies';
+import { isInVariantSynchronous } from 'common/modules/experiments/ab';
+import { prebidTripleLiftAdapter } from 'common/modules/experiments/tests/prebid-triple-lift-adapter';
 import type { PrebidSize } from './types';
 
 const stripSuffix = (s: string, suffix: string): string => {
@@ -65,6 +67,9 @@ export const containsBillboard = (sizes: PrebidSize[]): boolean =>
 export const containsMpuOrDmpu = (sizes: PrebidSize[]): boolean =>
     containsMpu(sizes) || containsDmpu(sizes);
 
+export const containsMobileSticky = (sizes: PrebidSize[]): boolean =>
+    contains(sizes, [320, 50]);
+
 export const containsLeaderboardOrBillboard = (sizes: PrebidSize[]): boolean =>
     containsLeaderboard(sizes) || containsBillboard(sizes);
 
@@ -110,6 +115,9 @@ export const shouldIncludeSonobi = (): boolean => isInUsRegion();
 export const shouldIncludeOpenx = (): boolean => !isInUsRegion();
 
 export const shouldIncludeTrustX = (): boolean => isInUsRegion();
+
+export const shouldIncludeTripleLift = (): boolean =>
+    isInVariantSynchronous(prebidTripleLiftAdapter, 'variant');
 
 export const shouldIncludeAdYouLike = (slotSizes: PrebidSize[]): boolean =>
     containsMpu(slotSizes);
