@@ -8,26 +8,7 @@ jest.mock('common/modules/commercial/ad-prefs.lib', () => ({
     getAdConsentState: jest.fn(),
 }));
 
-/**
- * we have to mock config like this because
- * loading twitterUwt has side affects
- * that are dependent on config.
- * */
-jest.mock('lib/config', () => {
-    const defaultConfig = {
-        switches: {
-            twitterUwt: true,
-        },
-    };
-
-    return Object.assign({}, defaultConfig, {
-        get: (path: string = '', defaultValue: any) =>
-            path
-                .replace(/\[(.+?)\]/g, '.$1')
-                .split('.')
-                .reduce((o, key) => o[key], defaultConfig) || defaultValue,
-    });
-});
+jest.mock('lib/config', () => ({ get: () => true }));
 
 describe('twitterUwt', () => {
     afterEach(() => {
@@ -44,7 +25,17 @@ describe('twitterUwt', () => {
         expect(onLoad).toBeDefined();
     });
 
-    it('shouldRun to be false if ad consent not granted', () => {
+    it('shouldRun to be false if ad consent not granted or denied', () => {
+        getAdConsentState.mockReturnValueOnce(null);
+
+        const { shouldRun, url, onLoad } = twitterUwt();
+
+        expect(shouldRun).toEqual(false);
+        expect(url).toEqual('//static.ads-twitter.com/uwt.js');
+        expect(onLoad).toBeDefined();
+    });
+
+    it('shouldRun to be false if ad consent denied', () => {
         getAdConsentState.mockReturnValueOnce(false);
 
         const { shouldRun, url, onLoad } = twitterUwt();
