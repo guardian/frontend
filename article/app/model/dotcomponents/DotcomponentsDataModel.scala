@@ -115,6 +115,7 @@ case class Config(
   dfpAccountId: String,
   commercialBundleUrl: String,
   revisionNumber: String,
+  googletagUrl: String,
 )
 
 object Config {
@@ -532,6 +533,7 @@ object DotcomponentsDataModel {
       dfpAccountId = "", // TODO
       commercialBundleUrl = buildFullCommercialUrl("javascripts/graun.dotcom-rendering-commercial.js"),
       revisionNumber = ManifestData.revision.toString,
+      googletagUrl = Configuration.googletag.jsLocation,
     )
 
     val author = Author(
