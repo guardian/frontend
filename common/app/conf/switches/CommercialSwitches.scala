@@ -88,10 +88,20 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-    val InizioSwitch = Switch(
+  val InizioSwitch = Switch(
     Commercial,
     "inizio",
     "Include the Inizio script on page so that creatives can show a survey.",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
+  val TwitterUwtSwitch = Switch(
+    Commercial,
+    "twitter-uwt",
+    "Include the Twitter universal website tag code.",
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
