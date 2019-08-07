@@ -88,6 +88,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-commercial-prebid-triple-lift-adapter",
+    "Test the triple lift adapter in prebid",
+    owners = Seq(Owner.withGithub("ioanna0")),
+    safeState = On,
+    sellByDate = new LocalDate(2020, 7, 30),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-commercial-youtube-pfp-ad-targeting",
     "Test YouTube's PfP ad targeting parameters",
     owners = Owner.group(Commercial),

@@ -41,7 +41,7 @@ data-test-id="facia-card"
     <div class="fc-item__meta-wrapper">
         @if(item.contentType.name.toLowerCase == "video") {
             @item.displayElement match {
-                case Some(InlineVideo(videoElement, _, _, _)) => {
+                case Some(InlineVideo(videoElement, _, _)) => {
                     <div class="fc-item__media-meta">
                         @inlineSvg("video-icon", "icon")
                         @if(videoElement.videos.formattedDuration != "0:00") {
@@ -90,14 +90,13 @@ data-test-id="facia-card"
 @container(item: layout.ContentCard) = {
     <div class="fc-item__container">
         @item.displayElement.filter(const(item.showDisplayElement)) match {
-            case Some(InlineVideo(videoElement, title, endSlatePath, fallback)) if item.cardTypes.showVideoPlayer => {
+            case Some(InlineVideo(videoElement, title, fallback)) if item.cardTypes.showVideoPlayer => {
                 @defining(VideoPlayer(
                     videoElement,
                     Video640,
                     title,
                     autoPlay = false,
                     showControlsAtStart = false,
-                    endSlatePath,
                     overrideIsRatioHd = Some(false),
                     // We only pass in the ID if this is a video or audio block, as if it's a mainMedia video, the
                     // ID is actually pointing to the article, which is wrong. It would be nice to have the ID on the
@@ -140,7 +139,6 @@ data-test-id="facia-card"
                         media = media.youTubeAtom,
                         displayCaption = false,
                         displayDuration = false,
-                        displayEndSlate = item.cardTypes.showYouTubeMediaAtomEndSlate,
                         playable = item.cardTypes.showYouTubeMediaAtomPlayer,
                         posterImageOverride = media.posterImageOverride,
                         cardStyle = Some(item.cardStyle))
@@ -148,7 +146,7 @@ data-test-id="facia-card"
                 </div>
             }
 
-            case Some(InlineVideo(_, _, _, Some(fallbackImage))) => {
+            case Some(InlineVideo(_, _, Some(fallbackImage))) => {
                 <div class="fc-item__media-wrapper">
                     @itemImage(
                         fallbackImage.imageMedia,

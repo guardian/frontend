@@ -18,11 +18,9 @@
                 ("js-gu-media--enhance", enhance)
             ))" data-title="@player.title"
                 data-auto-play="@player.autoPlay"
-                data-show-end-slate="@(player.showEndSlate && showEndSlate)"
                 @if(showPoster) { poster="@player.poster" }
                 data-duration="@player.video.videos.duration.toString()"
                 data-media-id="@player.video.properties.id"
-                data-end-slate="@player.endSlatePath"
                 data-block-video-ads="@player.blockVideoAds"
                 data-embeddable="@player.video.videos.embeddable"
                 @player.embedPath.map{ p => data-embed-path="@p" }

@@ -175,10 +175,10 @@ const defineSlot = (adSlotNode: Element, sizes: Object): Object => {
             if (targeting.fr) {
                 window.googletag.pubads().setTargeting('fra', targeting.fr);
             }
-            if (targeting.custom && targeting.custom.kw) {
+            if (targeting.custom && targeting.custom['ias-kw']) {
                 window.googletag
                     .pubads()
-                    .setTargeting('kw', targeting.custom.kw);
+                    .setTargeting('ias-kw', targeting.custom['ias-kw']);
             }
 
             // viewability targeting is on a slot level

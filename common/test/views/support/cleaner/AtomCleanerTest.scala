@@ -36,7 +36,6 @@ class AtomCleanerTest extends FlatSpec
       duration = Some(36),
       source = None,
       posterImage = Some(image),
-      endSlatePath = Some("/video/end-slate/section/football.json?shortUrl=https://gu.com/p/6vf9z"),
       expired = None,
       activeVersion = None,
       channelId = None)
@@ -85,7 +84,7 @@ class AtomCleanerTest extends FlatSpec
   }
 
   "Youtube template" should "include main media caption" in {
-    val html = views.html.fragments.atoms.youtube(media = youTubeAtom.map(_.media.head).get, displayEndSlate = true, displayCaption = true, mediaWrapper = Some(MediaWrapper.MainMedia))(TestRequest())
+    val html = views.html.fragments.atoms.youtube(media = youTubeAtom.map(_.media.head).get, displayCaption = true, mediaWrapper = Some(MediaWrapper.MainMedia))(TestRequest())
     val doc = Jsoup.parse(html.toString())
     doc.select("figcaption").hasClass("caption--main") should be(true)
   }

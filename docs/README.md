@@ -21,7 +21,7 @@
 
 ## [Dev howtos](03-dev-howtos/)
 - [How to setup and run A/B tests](03-dev-howtos/01-ab-testing.md)
-- [What to do when a deployment breaks](03-dev-howtos/02-deployment-errors.md)
+- [Deployment](03-dev-howtos/02-deployment.md)
 - [Guardian embeds](03-dev-howtos/03-embeds.md)
 - [Inline SVGs](03-dev-howtos/04-inline-svgs.md)
 - [Interactives](03-dev-howtos/05-interactives.md)
@@ -41,6 +41,8 @@
 - [Tracking components in the Data Lake](03-dev-howtos/19-tracking-components-in-the-data-lake.md)
 - [Updating Social Media Overlay Images](03-dev-howtos/20-update-overlay-images.md)
 - [Testing Reader Revenue Components](03-dev-howtos/21-test-reader-revenue-components.md)
+- [Access Preview Locally](03-dev-howtos/22-access-preview-locally.md)
+- [Sport Tournaments](03-dev-howtos/23-sport-tournaments.md)
 
 ## [Quality](04-quality/)
 - [Browsers support](04-quality/01-browser-support.md)
@@ -55,6 +57,7 @@
 ## [Features and components](06-features-and-components/)
 - [SteadyPage JS utility](06-features-and-components/01-steadypage-js-utility.md)
 - [How are trail pictures picked in Frontend?](06-features-and-components/02-trail-images.md)
+- [theguardian.com/font-loader](06-features-and-components/03-font-loader-route.md)
 
 ## [Performance](07-performance/)
 - [Performance reading list](07-performance/01-performance-reading.md)
