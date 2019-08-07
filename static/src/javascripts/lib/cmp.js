@@ -30,14 +30,11 @@ const purposes: { [PurposeEvent]: Purpose } = {
     },
 };
 
-const triggerConsentNotification = (): void => {
-    Object.keys(purposes).forEach(key => {
-        const purpose = purposes[key];
-        purpose.callbacks.forEach(callback => callback(purpose.state));
-    });
-};
-
 const init = (): void => {
+    if (cmpIsReady) {
+        return;
+    }
+
     /**
      * These state assignments are temporary
      * and will eventually be replaced by values
@@ -52,28 +49,44 @@ const init = (): void => {
     cmpIsReady = true;
 };
 
-export const onConsentNotification = (
-    purposeName: PurposeEvent,
-    callback: PurposeCallback
-): void => {
-    const purpose = purposes[purposeName];
+type genericCmpFunction = <T>(...T: Array<any>) => any;
 
-    if (!cmpIsReady) {
-        init();
-    }
-
-    callback(purpose.state);
-
-    purpose.callbacks.push(callback);
+/**
+ *  Takes function fn and returns new
+ *  function that calls init everytime
+ *  before returning fn call.
+ * */
+const makeCmpRobust = (fn: genericCmpFunction): genericCmpFunction => (
+    ...args: Array<any>
+) => {
+    init();
+    return fn(...args);
 };
 
-export const consentState = (purposeName: PurposeEvent): boolean | null => {
-    if (!cmpIsReady) {
-        init();
+const triggerConsentNotification = makeCmpRobust(
+    (): void => {
+        Object.keys(purposes).forEach(key => {
+            const purpose = purposes[key];
+            purpose.callbacks.forEach(callback => callback(purpose.state));
+        });
     }
+);
 
-    return purposes[purposeName].state;
-};
+const onConsentNotification = makeCmpRobust(
+    (purposeName: PurposeEvent, callback: PurposeCallback): void => {
+        const purpose = purposes[purposeName];
+
+        callback(purpose.state);
+
+        purpose.callbacks.push(callback);
+    }
+);
+
+const consentState = makeCmpRobust(
+    (purposeName: PurposeEvent): boolean | null => purposes[purposeName].state
+);
+
+export { onConsentNotification, consentState };
 
 // Exposed for testing purposes
 export const _ = {
