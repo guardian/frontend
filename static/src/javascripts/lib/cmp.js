@@ -30,7 +30,7 @@ const purposes: { [PurposeEvent]: Purpose } = {
     },
 };
 
-const init = (): void => {
+const checkCmpReady = (): void => {
     if (cmpIsReady) {
         return;
     }
@@ -49,42 +49,33 @@ const init = (): void => {
     cmpIsReady = true;
 };
 
-type genericCmpFunction = <T>(...T: Array<any>) => any;
+const triggerConsentNotification = (): void => {
+    checkCmpReady();
 
-/**
- *  Takes function fn and returns new
- *  function that calls init everytime
- *  before returning fn call.
- * */
-const makeCmpRobust = (fn: genericCmpFunction): genericCmpFunction => (
-    ...args: Array<any>
-) => {
-    init();
-    return fn(...args);
+    Object.keys(purposes).forEach(key => {
+        const purpose = purposes[key];
+        purpose.callbacks.forEach(callback => callback(purpose.state));
+    });
 };
 
-const triggerConsentNotification = makeCmpRobust(
-    (): void => {
-        Object.keys(purposes).forEach(key => {
-            const purpose = purposes[key];
-            purpose.callbacks.forEach(callback => callback(purpose.state));
-        });
-    }
-);
+const onConsentNotification = (
+    purposeName: PurposeEvent,
+    callback: PurposeCallback
+): void => {
+    checkCmpReady();
 
-const onConsentNotification = makeCmpRobust(
-    (purposeName: PurposeEvent, callback: PurposeCallback): void => {
-        const purpose = purposes[purposeName];
+    const purpose = purposes[purposeName];
 
-        callback(purpose.state);
+    callback(purpose.state);
 
-        purpose.callbacks.push(callback);
-    }
-);
+    purpose.callbacks.push(callback);
+};
 
-const consentState = makeCmpRobust(
-    (purposeName: PurposeEvent): boolean | null => purposes[purposeName].state
-);
+const consentState = (purposeName: PurposeEvent): boolean | null => {
+    checkCmpReady();
+
+    return purposes[purposeName].state;
+};
 
 export { onConsentNotification, consentState };
 
