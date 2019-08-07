@@ -7,6 +7,13 @@ import scala.util.Try
 
 case class CityRef(city: String, region: String, country: String)
 
+object CityRef{
+  // see https://docs.fastly.com/vcl/geolocation/ - city and region should be lowercase, country is uppercase
+  // lets enforce this here for more reliable location lookup
+  def apply(city: String, region: String, country: String): CityRef =
+    CityRef(city.toLowerCase(), region.toLowerCase(), country)
+}
+
 object CitiesCsvLine {
   implicit class RichString(s: String) {
     def withoutQuotes: String = s.stripPrefix("\"").stripSuffix("\"")
@@ -71,7 +78,8 @@ object CitiesLookUp extends ResourcesHelper {
     getCsvLines.filter({ csvLine =>
       !csvLine.country.isEmpty && !csvLine.city.isEmpty
     }).map({ csvLine =>
-      CityRef(csvLine.city, csvLine.region, csvLine.country) -> LatitudeLongitude(csvLine.latitude, csvLine.longitude)
+      // see https://docs.fastly.com/vcl/geolocation/ - city and region should be lowercase, country is uppercase
+      CityRef(csvLine.city.toLowerCase(), csvLine.region.toLowerCase(), csvLine.country.toUpperCase()) -> LatitudeLongitude(csvLine.latitude, csvLine.longitude)
     }).foldLeft(Map.empty[CityRef, LatitudeLongitude]) {
       case (acc, kv) => acc + kv
     }

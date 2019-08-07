@@ -36,7 +36,7 @@ class LocationsController(weatherApi: WeatherApi, val controllerComponents: Cont
 
     (maybeCity, maybeRegion, maybeCountry) match {
       case (Some(city), Some(region), Some(country)) =>
-        CitiesLookUp.getLatitudeLongitude(CityRef(city, region, country)) match {
+        CitiesLookUp.getLatitudeLongitude(CityRef(city.toLowerCase(), region.toLowerCase(), country)) match {
           case Some(latitudeLongitude) =>
             log.info(s"Matched $city, $region, $country to $latitudeLongitude")
 
