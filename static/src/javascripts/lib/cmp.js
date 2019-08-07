@@ -37,28 +37,7 @@ const triggerConsentNotification = (): void => {
     });
 };
 
-export const onConsentNotification = (
-    purposeName: PurposeEvent,
-    callback: PurposeCallback
-): void => {
-    const purpose = purposes[purposeName];
-
-    if (cmpIsReady) {
-        callback(purpose.state);
-    }
-
-    purpose.callbacks.push(callback);
-};
-
-export const consentState = (purposeName: PurposeEvent): boolean | null =>
-    purposes[purposeName].state;
-
-export const init = (): void => {
-    // do nothing if init has already been called
-    if (cmpIsReady) {
-        return;
-    }
-
+const init = (): void => {
     /**
      * These state assignments are temporary
      * and will eventually be replaced by values
@@ -71,8 +50,29 @@ export const init = (): void => {
     );
 
     cmpIsReady = true;
+};
 
-    triggerConsentNotification();
+export const onConsentNotification = (
+    purposeName: PurposeEvent,
+    callback: PurposeCallback
+): void => {
+    const purpose = purposes[purposeName];
+
+    if (!cmpIsReady) {
+        init();
+    }
+
+    callback(purpose.state);
+
+    purpose.callbacks.push(callback);
+};
+
+export const consentState = (purposeName: PurposeEvent): boolean | null => {
+    if (!cmpIsReady) {
+        init();
+    }
+
+    return purposes[purposeName].state;
 };
 
 // Exposed for testing purposes
