@@ -233,20 +233,20 @@ const getImproveSizeParam = (slotId: string): { w?: number, h?: number } => {
 };
 
 const getXaxisPlacementId = (sizes: PrebidSize[]): number => {
-    // TODO check whether to return -1 or 13663304
+    const NO_MATCH_ID = 15900184;
     switch (getBreakpointKey()) {
         case 'D':
             if (containsDmpu(sizes)) return 13663297;
             if (containsMpu(sizes)) return 15900184;
+            if (containsWS(sizes)) return 16279905;
             if (containsBillboard(sizes)) return 13663284;
             if (containsLeaderboard(sizes)) return 15900187;
-            if (containsWS(sizes)) return 16279905;
-            return -1;
+            return NO_MATCH_ID;
         case 'M':
             if (containsMpu(sizes)) return 13663304;
-            return -1;
+            return NO_MATCH_ID;
         default:
-            return 13663304;
+            return NO_MATCH_ID;
     }
 };
 
