@@ -96,16 +96,27 @@ describe('cmp', () => {
                 getAdConsentState.mockReturnValue(true);
 
                 const myCallBack = jest.fn();
+                const expectedArguments = [[true]];
 
                 onConsentNotification('advertisement', myCallBack);
 
-                _.triggerConsentNotification();
+                const triggerCount = 5;
 
-                expect(myCallBack).toHaveBeenCalledTimes(2);
-                expect(myCallBack.mock.calls).toEqual([
-                    [true], // First call
-                    [true], // Second call
-                ]);
+                /**
+                 * TODO: Once the module under test handles
+                 * updates to state we should update this test
+                 * to handle 5 updates to state (with differing values)
+                 * rather than triggering consent notifications manually
+                 * so we can test the callback is receiving the correct
+                 * latest state.
+                 */
+                for (let i = 0; i < triggerCount; i += 1) {
+                    _.triggerConsentNotification();
+                    expectedArguments.push([true]);
+                }
+
+                expect(myCallBack).toHaveBeenCalledTimes(triggerCount + 1);
+                expect(myCallBack.mock.calls).toEqual(expectedArguments);
             });
         });
     });
