@@ -15,7 +15,6 @@ const onLoad = () => {
 
 export const remarketing: () => ThirdPartyTag = () => {
     const consent = getAdConsentState(thirdPartyTrackingAdConsent);
-    console.log('*** consent:', consent, config.get('switches.remarketing'));
 
     return {
         shouldRun:
