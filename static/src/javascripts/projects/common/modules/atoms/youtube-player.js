@@ -5,13 +5,10 @@ import config from 'lib/config';
 import { loadScript } from 'lib/load-script';
 import { constructQuery } from 'lib/url';
 import { buildPageTargeting } from 'common/modules/commercial/build-page-targeting';
-import {
-    getAdConsentState,
-    thirdPartyTrackingAdConsent,
-} from 'common/modules/commercial/ad-prefs.lib';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { commercialYoutubePfpAdTargeting } from 'common/modules/experiments/tests/commercial-youtube-pfp-ad-targeting';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
+import { onConsentNotification } from 'lib/cmp';
 
 const scriptSrc = 'https://www.youtube.com/iframe_api';
 const promise = new Promise(resolve => {
@@ -36,6 +33,12 @@ type Handlers = {
     onPlayerReady: (event: Object) => void,
     onPlayerStateChange: (event: Object) => void,
 };
+
+let consentState = null;
+
+onConsentNotification('advertisement', state => {
+    consentState = state;
+});
 
 const onPlayerStateChangeEvent = (
     event,
@@ -113,8 +116,7 @@ const setupPlayer = (
     onStateChange,
     onError
 ) => {
-    const wantPersonalisedAds: boolean =
-        getAdConsentState(thirdPartyTrackingAdConsent) !== false;
+    const wantPersonalisedAds: boolean = consentState !== false;
     const inPfpAdTargetingVariant: boolean = isInVariantSynchronous(
         commercialYoutubePfpAdTargeting,
         'variant'
