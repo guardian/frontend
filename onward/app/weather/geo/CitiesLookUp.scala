@@ -7,6 +7,11 @@ import scala.util.Try
 
 case class CityRef(city: String, region: String, country: String)
 
+object CityRef {
+  def makeFixedCase(city: String, region: String, country: String): CityRef =
+    CityRef(city.toUpperCase(), region.toUpperCase(), country.toUpperCase())
+}
+
 object CitiesCsvLine {
   implicit class RichString(s: String) {
     def withoutQuotes: String = s.stripPrefix("\"").stripSuffix("\"")
@@ -71,7 +76,8 @@ object CitiesLookUp extends ResourcesHelper {
     getCsvLines.filter({ csvLine =>
       !csvLine.country.isEmpty && !csvLine.city.isEmpty
     }).map({ csvLine =>
-      CityRef(csvLine.city, csvLine.region, csvLine.country) -> LatitudeLongitude(csvLine.latitude, csvLine.longitude)
+
+      CityRef.makeFixedCase(csvLine.city, csvLine.region, csvLine.country) -> LatitudeLongitude(csvLine.latitude, csvLine.longitude)
     }).foldLeft(Map.empty[CityRef, LatitudeLongitude]) {
       case (acc, kv) => acc + kv
     }
