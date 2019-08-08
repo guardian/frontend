@@ -1,5 +1,5 @@
 // @flow
-import { onConsentNotification, consentState, _ } from 'lib/cmp';
+import { onConsentNotification, _ } from 'lib/cmp';
 import { getAdConsentState as _getAdConsentState } from 'common/modules/commercial/ad-prefs.lib';
 
 const getAdConsentState: any = _getAdConsentState;
@@ -13,23 +13,6 @@ describe('cmp', () => {
     beforeEach(() => {
         _.resetCmp();
         getAdConsentState.mockReset();
-    });
-
-    describe('consentState', () => {
-        it('returns initial functional consent state', () => {
-            expect(consentState('functional')).toBe(true);
-        });
-        it('returns initial performance consent state', () => {
-            expect(consentState('performance')).toBe(true);
-        });
-        it('returns initial advertisement consent state as true if getAdConsentState true', () => {
-            getAdConsentState.mockReturnValue(true);
-            expect(consentState('advertisement')).toBe(true);
-        });
-        it('returns initial advertisement consent state as false if getAdConsentState true', () => {
-            getAdConsentState.mockReturnValue(false);
-            expect(consentState('advertisement')).toBe(false);
-        });
     });
 
     describe('onConsentNotification', () => {

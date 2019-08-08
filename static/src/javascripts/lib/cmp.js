@@ -58,7 +58,7 @@ const triggerConsentNotification = (): void => {
     });
 };
 
-const onConsentNotification = (
+export const onConsentNotification = (
     purposeName: PurposeEvent,
     callback: PurposeCallback
 ): void => {
@@ -70,14 +70,6 @@ const onConsentNotification = (
 
     purpose.callbacks.push(callback);
 };
-
-const consentState = (purposeName: PurposeEvent): boolean | null => {
-    checkCmpReady();
-
-    return purposes[purposeName].state;
-};
-
-export { onConsentNotification, consentState };
 
 // Exposed for testing purposes
 export const _ = {
