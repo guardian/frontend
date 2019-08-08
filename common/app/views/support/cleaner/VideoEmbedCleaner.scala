@@ -113,7 +113,11 @@ case class VideoEmbedCleaner(article: Article, maxEmbedHeight: Int = 812) extend
         val someIframe = Option(element.select("iframe").first())
 
         someIframe match {
-          case Some(iframe) => wrapIframe(child, iframe)
+          case Some(iframe) =>
+            if (canonicalUrl.startsWith("https://player.vimeo.com")) {
+              addVimeoDntFlag(iframe)
+            }
+            wrapIframe(child, iframe)
           case None         => wrapHD(child)
         }
       }
@@ -126,6 +130,11 @@ case class VideoEmbedCleaner(article: Article, maxEmbedHeight: Int = 812) extend
     }
 
     document
+  }
+
+  private def addVimeoDntFlag(iframe: Element) {
+    val src = iframe.attr("src")
+    iframe.attr("src", src ++ (if (src.contains("?")) "&" else "?") ++ "dnt=true")
   }
 
   private def wrapIframe(container: Element, iframe: Element) {
