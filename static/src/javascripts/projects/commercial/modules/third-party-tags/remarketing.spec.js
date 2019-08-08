@@ -29,16 +29,17 @@ describe('Remarketing', () => {
     });
 
     it('shouldRun returns false only if consent has been denied', () => {
-        getAdConsentState.mockReturnValueOnce(null);
         getAdConsentState.mockReturnValueOnce(true);
         getAdConsentState.mockReturnValueOnce(false);
-        const shouldRunNull = remarketing().shouldRun;
+        getAdConsentState.mockReturnValueOnce(null);
+
         const shouldRunTrue = remarketing().shouldRun;
         const shouldRunFalse = remarketing().shouldRun;
+        const shouldRunNull = remarketing().shouldRun;
 
-        expect(shouldRunNull).toEqual(true);
         expect(shouldRunTrue).toEqual(true);
         expect(shouldRunFalse).toEqual(false);
+        expect(shouldRunNull).toEqual(false);
     });
 
     it('should call google_trackConversion', () => {

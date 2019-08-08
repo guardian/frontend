@@ -13,13 +13,10 @@ const onLoad = () => {
     });
 };
 
-export const remarketing: () => ThirdPartyTag = () => {
-    const consent = getAdConsentState(thirdPartyTrackingAdConsent);
-
-    return {
-        shouldRun:
-            config.get('switches.remarketing') && (consent || consent == null),
-        url: '//www.googleadservices.com/pagead/conversion_async.js',
-        onLoad,
-    };
-};
+export const remarketing: () => ThirdPartyTag = () => ({
+    shouldRun:
+        config.get('switches.remarketing') &&
+        !!getAdConsentState(thirdPartyTrackingAdConsent),
+    url: '//www.googleadservices.com/pagead/conversion_async.js',
+    onLoad,
+});
