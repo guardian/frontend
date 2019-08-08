@@ -530,7 +530,7 @@ object DotcomponentsDataModel {
       sentryPublicApiKey = jsPageData.get("sentryPublicApiKey").getOrElse(""),
       sentryHost = jsPageData.get("sentryHost").getOrElse(""),
       switches = switches,
-      dfpAccountId = "", // TODO
+      dfpAccountId = Configuration.commercial.dfpAccountId,
       commercialBundleUrl = buildFullCommercialUrl("javascripts/graun.dotcom-rendering-commercial.js"),
       revisionNumber = ManifestData.revision.toString,
       googletagUrl = Configuration.googletag.jsLocation,
