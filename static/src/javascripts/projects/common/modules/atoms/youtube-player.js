@@ -34,8 +34,7 @@ type Handlers = {
     onPlayerStateChange: (event: Object) => void,
 };
 
-let consentState = null;
-
+let consentState = '';
 onConsentNotification('advertisement', state => {
     consentState = state;
 });
