@@ -43,7 +43,7 @@ const loadOther = (): void => {
     const services: Array<ThirdPartyTag> = [
         imrWorldwide,
         imrWorldwideLegacy,
-        remarketing,
+        remarketing(),
         simpleReach,
         krux,
         ias,
