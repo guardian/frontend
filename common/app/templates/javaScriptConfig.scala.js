@@ -60,7 +60,7 @@
         },
         "libs": {
             "googletag": "@{Configuration.javascript.config("googletagJsUrl")}",
-            "cmp": { "fullVendorDataUrl": "@Static("data/vendor/cmp_vendorlist.json")" },
+            "cmp": { "fullVendorDataUrl": "/commercial/cmp/vendorlist.json" },
             "facebookAccountId": "@FBPixel.account"
         }
     }
