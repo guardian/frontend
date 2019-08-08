@@ -6,7 +6,8 @@
 @import views.html.fragments.items.elements.facia_cards._
 @import views.html.fragments.items.facia_cards.meta
 @import views.html.fragments.inlineSvg
-@import views.support.{CutOut, GetClasses, RemoveOuterParaHtml, RenderClasses}
+@import views.html.fragments.contentAgeNotice
+@import views.support.{CutOut, GetClasses, RemoveOuterParaHtml, RenderClasses, ContentOldAgeDescriber}
 
 @import Function.const
 
@@ -29,6 +30,13 @@ data-item-visibility="@visibilityDataAttribute"
         @RemoveOuterParaHtml(item.header.headline)
         @item.bylineText.map { byline =>
             <span class="fc-item__byline">@byline</span>
+        }
+        @item.properties.map { properties =>
+            @properties.maybeContent.map { content =>
+                @if(content.tags.tags.exists(_.id == "tone/news")) {
+                    @fragments.contentAgeNotice(ContentOldAgeDescriber(content))
+                }
+            }
         }
     </div>
 
