@@ -1,13 +1,17 @@
 const path = require('path');
 const fs = require('fs');
 
-const { vendor, src } = require('../../config').paths;
+const { vendor, src, target } = require('../../config').paths;
 
 const vendorlistJson = path.join(vendor, 'data/cmp_vendorlist.json');
+
 const vendorlistJs = path.join(
     src,
     'javascripts/projects/commercial/modules/cmp/vendorlist.js'
 );
+
+const shortVendorListJSON = path.join(path.resolve(target, 'data', 'vendor'),
+				      'cmp_shortvendorlist.json');
 
 module.exports = {
     description: 'Transforming data files',
@@ -41,17 +45,21 @@ module.exports = {
                 });
                 return shortVendors;
             })
-            .then(shortVendors => {
-                const vendorListJsCode =
+        .then(shortVendors => {
+	    const shortJSON = JSON.stringify(shortVendors);
+            const vendorListJsCode =
                     `// @flow\n` +
                     `/* eslint-disable */\n` +
                     `/* DO NOT EDIT THIS.\n` +
                     ` Regenerate by doing make compile-dev or make watch.\n` +
                     ` See tools/__tasks__/compile/data/transform.js  */\n` +
-                    `export const shortVendorList = \n${JSON.stringify(
-                        shortVendors
-                    )};\n`;
+                    `export const shortVendorList = \n${shortJSON};\n`;
                 fs.writeFileSync(vendorlistJs, vendorListJsCode);
-                return true;
-            }),
+                return shortJSON;
+            })
+        .then( shortJSON =>{
+	    fs.writeFileSync(shortVendorListJSON, shortJSON);
+	    return true;
+	})
+    ,
 };
