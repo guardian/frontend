@@ -18,7 +18,7 @@ abstract class OnwardContentCardController(contentApiClient: ContentApiClient, v
 
   protected def lookup(path: String, fields: String)(implicit request: RequestHeader): Future[ItemResponse] = {
     val edition = Edition(request)
-    log.info(s"Fetching article: $path for edition: ${edition.id}:")
+    log.debug(s"Fetching article: $path for edition: ${edition.id}:")
 
     contentApiClient.getResponse(
       contentApiClient.item(path, edition)

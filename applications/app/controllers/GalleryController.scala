@@ -39,7 +39,7 @@ class GalleryController(contentApiClient: ContentApiClient, val controllerCompon
   private def lookup(path: String, index: Int, isTrail: Boolean)
                     (implicit request: RequestHeader) = {
     val edition = Edition(request)
-    log.info(s"Fetching gallery: $path for edition $edition")
+    log.debug(s"Fetching gallery: $path for edition $edition")
     contentApiClient.getResponse(contentApiClient.item(path, edition)
       .showFields("all")
     ).map { response =>

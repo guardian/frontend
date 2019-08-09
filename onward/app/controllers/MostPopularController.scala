@@ -160,7 +160,7 @@ class MostPopularController(contentApiClient: ContentApiClient,
   private def mostCards(): Map[String, Option[ContentCard]] = mostPopularAgent.mostSingleCards.get().mapValues(ContentCard.fromApiContent(_))
 
   private def lookup(edition: Edition, path: String)(implicit request: RequestHeader): Future[Option[MostPopular]] = {
-    log.info(s"Fetching most popular: $path for edition $edition")
+    log.debug(s"Fetching most popular: $path for edition $edition")
     val capiItem = contentApiClient.item(path, edition)
       .tag(None)
       .showMostViewed(true)

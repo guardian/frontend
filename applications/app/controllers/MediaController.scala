@@ -34,7 +34,7 @@ class MediaController(contentApiClient: ContentApiClient, val controllerComponen
   private def lookup(path: String)(implicit request: RequestHeader) = {
     val edition = Edition(request)
 
-    log.info(s"Fetching media: $path for edition $edition")
+    log.debug(s"Fetching media: $path for edition $edition")
     val response: Future[ItemResponse] = contentApiClient.getResponse(
       contentApiClient.item(path, edition)
         .showFields("all").showAtoms("media")

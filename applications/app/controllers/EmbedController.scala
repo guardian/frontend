@@ -20,7 +20,7 @@ class EmbedController(contentApiClient: ContentApiClient, val controllerComponen
   private def lookup(path: String)(implicit request: RequestHeader): Future[Either[Video, Result]] = {
     val edition = Edition(request)
 
-    log.info(s"Fetching video: $path for edition $edition")
+    log.debug(s"Fetching video: $path for edition $edition")
 
     val response: Future[ItemResponse] = contentApiClient.getResponse(contentApiClient.item(path, edition)
       .showFields("all")
