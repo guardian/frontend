@@ -1,18 +1,16 @@
 // @flow
 import config from 'lib/config';
-
 import {
     _,
     getAppNexusDirectBidParams,
     getAppNexusServerSideBidParams,
 } from './appnexus';
-
-import type { PrebidSize } from './types';
 import {
     getBreakpointKey as getBreakpointKey_,
     isInAuRegion as isInAuRegion_,
     isInUsRegion as isInUsRegion_,
 } from './utils';
+import type { PrebidSize } from './types';
 
 jest.mock('common/modules/commercial/build-page-targeting', () => ({
     buildAppNexusTargeting: () => 'someTestAppNexusTargeting',
@@ -21,7 +19,7 @@ jest.mock('common/modules/commercial/build-page-targeting', () => ({
         sens: 'f',
         edition: 'UK',
     }),
-    buildPageTargeting: () => 'pageTargeting',
+    getPageTargeting: () => 'pageTargeting',
 }));
 
 jest.mock('./utils', () => {
