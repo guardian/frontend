@@ -1,16 +1,23 @@
 const path = require('path');
 const fs = require('fs');
+const cpy = require('cpy');
 
 const { vendor, src, target } = require('../../config').paths;
 
-const vendorlistJson = path.join(vendor, 'data/cmp_vendorlist.json');
+// Sources
+const currentVendorListJSON = path.join(vendor, 'data/cmp_vendorlist.json');
 
-const vendorlistJs = path.join(
+// Destinations
+
+// The backed-in shortlist
+const vendorListJsCode = path.join(
     src,
     'javascripts/projects/commercial/modules/cmp/vendorlist.js'
 );
 
-const shortVendorListJSON = path.join(
+// The static assets
+const fullVendorListJSONStaticDir = path.resolve(target, 'data', 'vendor');
+const shortVendorListJSONStatic = path.join(
     path.resolve(target, 'data', 'vendor'),
     'cmp_shortvendorlist.json'
 );
@@ -19,8 +26,9 @@ module.exports = {
     description: 'Transforming data files',
     task: () =>
         new Promise(resolve => {
+            // Import the original vendor list.
             // flowlint-next-line import/no-dynamic-require:off
-            const rawdata = fs.readFileSync(vendorlistJson);
+            const rawdata = fs.readFileSync(currentVendorListJSON);
             const vendorList = JSON.parse(rawdata);
             return resolve(vendorList);
         })
@@ -48,19 +56,22 @@ module.exports = {
                 return shortVendors;
             })
             .then(shortVendors => {
+                // Write the files
                 const shortJSON = JSON.stringify(shortVendors);
-                const vendorListJsCode =
+                const jsCode =
                     `// @flow\n` +
                     `/* eslint-disable */\n` +
                     `/* DO NOT EDIT THIS.\n` +
                     ` Regenerate by doing make compile-dev or make watch.\n` +
                     ` See tools/__tasks__/compile/data/transform.js  */\n` +
                     `export const shortVendorList = \n${shortJSON};\n`;
-                fs.writeFileSync(vendorlistJs, vendorListJsCode);
-                return shortJSON;
-            })
-            .then(shortJSON => {
-                fs.writeFileSync(shortVendorListJSON, shortJSON);
-                return true;
+                fs.writeFileSync(vendorListJsCode, jsCode);
+
+                return cpy(currentVendorListJSON, fullVendorListJSONStaticDir, {
+                    parents: false,
+                    nodir: false,
+                }).then(() => {
+                    fs.writeFileSync(shortVendorListJSONStatic, shortJSON);
+                });
             }),
 };
