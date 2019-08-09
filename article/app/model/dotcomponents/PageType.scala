@@ -6,7 +6,7 @@ import play.api.libs.json.{JsBoolean, Json}
 import play.api.mvc.RequestHeader
 import views.support.JavaScriptPage.getMap
 
-case class CommercialConfiguration(
+case class PageType (
   hasShowcaseMainElement: Boolean,
   isFront: Boolean,
   isLiveblog: Boolean,
@@ -16,11 +16,11 @@ case class CommercialConfiguration(
   isSensitive: Boolean
 )
 
-object CommercialConfiguration {
-  implicit val writes = Json.writes[CommercialConfiguration]
+object PageType {
+  implicit val writes = Json.writes[PageType]
 
-  def apply(articlePage: PageWithStoryPackage, request: RequestHeader, context: ApplicationContext): CommercialConfiguration = {
-    CommercialConfiguration(
+  def apply(articlePage: PageWithStoryPackage, request: RequestHeader, context: ApplicationContext): PageType = {
+    PageType(
       getMap(articlePage, Edition(request), false).getOrElse("hasShowcaseMainElement", JsBoolean(false)).as[Boolean],
       getMap(articlePage, Edition(request), false).getOrElse("isFront", JsBoolean(false)).as[Boolean],
       getMap(articlePage, Edition(request), false).getOrElse("isLiveBlog", JsBoolean(false)).as[Boolean],

@@ -79,7 +79,7 @@ case class Commercial(
   editionCommercialProperties: Map[String, EditionCommercialProperties],
   prebidIndexSites: List[PrebidIndexSite],
   commercialProperties: Option[CommercialProperties],
-  commercialConfiguration: CommercialConfiguration
+  pageType: PageType
 )
 
 object Block {
@@ -205,7 +205,7 @@ case class DataModelV3(
   beaconURL: String,
   isCommentable: Boolean,
   commercialProperties: Map[String, EditionCommercialProperties],
-  commercialConfiguration: CommercialConfiguration,
+  pageType: PageType,
   starRating: Option[Int],
   trailText: String,
   nav: Nav,
@@ -252,7 +252,7 @@ object DataModelV3 {
       "beaconURL" -> model.beaconURL,
       "isCommentable" -> model.isCommentable,
       "commercialProperties" -> model.commercialProperties,
-      "commercialConfiguration" -> model.commercialConfiguration,
+      "pageType" -> model.pageType,
       "starRating" -> model.starRating,
       "trailText" -> model.trailText,
       "nav" -> model.nav,
@@ -276,7 +276,7 @@ object DotcomponentsDataModel {
 
   val VERSION = 2
 
-  def fromArticle(articlePage: PageWithStoryPackage, request: RequestHeader, blocks: APIBlocks, commercialConfiguration: CommercialConfiguration): DataModelV3 = {
+  def fromArticle(articlePage: PageWithStoryPackage, request: RequestHeader, blocks: APIBlocks, pageType: PageType): DataModelV3 = {
 
     val article = articlePage.article
     val atoms: Iterable[Atom] = article.content.atoms.map(_.all).getOrElse(Seq())
@@ -520,7 +520,7 @@ object DotcomponentsDataModel {
         sites <- commercial.prebidIndexSites
       } yield sites.toList).getOrElse(List()),
       article.metadata.commercial,
-      commercialConfiguration
+      pageType
     )
 
     val byline = article.trail.byline.getOrElse("Guardian staff reporter")
@@ -576,7 +576,7 @@ object DotcomponentsDataModel {
       beaconURL = Configuration.debug.beaconUrl,
       isCommentable = article.trail.isCommentable,
       commercialProperties = commercial.editionCommercialProperties,
-      commercialConfiguration = commercialConfiguration,
+      pageType = pageType,
       starRating = article.content.starRating,
       trailText = article.trail.fields.trailText.getOrElse(""),
       nav = nav,
