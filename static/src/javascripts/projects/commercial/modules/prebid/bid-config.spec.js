@@ -68,7 +68,7 @@ const {
 jest.mock('common/modules/commercial/build-page-targeting', () => ({
     buildAppNexusTargeting: () => 'someTestAppNexusTargeting',
     buildAppNexusTargetingObject: () => 'someAppNexusTargetingObject',
-    buildPageTargeting: () => 'bla',
+    getPageTargeting: () => 'bla',
 }));
 
 jest.mock('common/modules/commercial/ad-prefs.lib', () => ({
