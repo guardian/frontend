@@ -6,7 +6,7 @@ import isEmpty from 'lodash/isEmpty';
 import {
     buildAppNexusTargeting,
     buildAppNexusTargetingObject,
-    buildPageTargeting,
+    getPageTargeting,
 } from 'common/modules/commercial/build-page-targeting';
 import { commercialPrebidSafeframe } from 'common/modules/experiments/tests/commercial-prebid-safeframe';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
@@ -55,7 +55,7 @@ import {
 } from './utils';
 import { getAppNexusDirectBidParams, getAppNexusPlacementId } from './appnexus';
 
-const PAGE_TARGETING: {} = buildAppNexusTargetingObject(buildPageTargeting());
+const PAGE_TARGETING: {} = buildAppNexusTargetingObject(getPageTargeting());
 
 const isInSafeframeTestVariant = (): boolean =>
     isInVariantSynchronous(commercialPrebidSafeframe, 'variant');
@@ -366,25 +366,21 @@ const openxClientSideBidder: PrebidBidder = {
             return {
                 delDomain: 'guardian-us-d.openx.net',
                 unit: '540279544',
-                customParams: buildAppNexusTargetingObject(
-                    buildPageTargeting()
-                ),
+                customParams: buildAppNexusTargetingObject(getPageTargeting()),
             };
         }
         if (isInAuRegion()) {
             return {
                 delDomain: 'guardian-aus-d.openx.net',
                 unit: '540279542',
-                customParams: buildAppNexusTargetingObject(
-                    buildPageTargeting()
-                ),
+                customParams: buildAppNexusTargetingObject(getPageTargeting()),
             };
         }
         // UK and ROW
         return {
             delDomain: 'guardian-d.openx.net',
             unit: '540279541',
-            customParams: buildAppNexusTargetingObject(buildPageTargeting()),
+            customParams: buildAppNexusTargetingObject(getPageTargeting()),
         };
     },
 };
@@ -420,7 +416,7 @@ const sonobiBidder: PrebidBidder = {
             {
                 ad_unit: config.get('page.adUnit'),
                 dom_id: slotId,
-                appNexusTargeting: buildAppNexusTargeting(buildPageTargeting()),
+                appNexusTargeting: buildAppNexusTargeting(getPageTargeting()),
                 pageViewId: config.get('ophan.pageViewId'),
             },
             isInSafeframeTestVariant() ? { render: 'safeframe' } : {}
@@ -527,9 +523,7 @@ const getDummyServerSideBidders = (): Array<PrebidBidder> => {
                 {},
                 {
                     placementId: getAppNexusPlacementId(sizes),
-                    keywords: buildAppNexusTargetingObject(
-                        buildPageTargeting()
-                    ), // Ok to duplicate call. Lodash 'once' is used.
+                    keywords: buildAppNexusTargetingObject(getPageTargeting()), // Ok to duplicate call. Lodash 'once' is used.
                 },
                 window.OzoneLotameData ? { lotame: window.OzoneLotameData } : {}
             ),
@@ -545,7 +539,7 @@ const getDummyServerSideBidders = (): Array<PrebidBidder> => {
                     delDomain: 'guardian-d.openx.net',
                     unit: '539997090',
                     customParams: buildAppNexusTargetingObject(
-                        buildPageTargeting()
+                        getPageTargeting()
                     ),
                 }))(),
                 window.OzoneLotameData ? { lotame: window.OzoneLotameData } : {}
@@ -563,9 +557,7 @@ const getDummyServerSideBidders = (): Array<PrebidBidder> => {
                 {},
                 {
                     placementId: getPangaeaPlacementId(sizes).toString(),
-                    keywords: buildAppNexusTargetingObject(
-                        buildPageTargeting()
-                    ), // Ok to duplicate call. Lodash 'once' is used.
+                    keywords: buildAppNexusTargetingObject(getPageTargeting()), // Ok to duplicate call. Lodash 'once' is used.
                 },
                 window.OzoneLotameData ? { lotame: window.OzoneLotameData } : {}
             ),

@@ -11,7 +11,7 @@ import {
     getAdConsentState,
     thirdPartyTrackingAdConsent,
 } from 'common/modules/commercial/ad-prefs.lib';
-import { buildPageTargeting } from 'common/modules/commercial/build-page-targeting';
+import { getPageTargeting } from 'common/modules/commercial/build-page-targeting';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { adFreeSlotRemove } from 'commercial/modules/ad-free-slot-remove';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
@@ -26,7 +26,7 @@ import { init as initMessenger } from 'commercial/modules/messenger';
 import { init as background } from 'commercial/modules/messenger/background';
 import { init as sendClick } from 'commercial/modules/messenger/click';
 import { init as disableRefresh } from 'commercial/modules/messenger/disable-refresh';
-import { init as getPageTargeting } from 'commercial/modules/messenger/get-page-targeting';
+import { init as initGetPageTargeting } from 'commercial/modules/messenger/get-page-targeting';
 import { init as getStyles } from 'commercial/modules/messenger/get-stylesheet';
 import { init as hide } from 'commercial/modules/messenger/hide';
 import { init as resize } from 'commercial/modules/messenger/resize';
@@ -37,7 +37,7 @@ import { init as viewport } from 'commercial/modules/messenger/viewport';
 initMessenger(
     type,
     getStyles,
-    getPageTargeting,
+    initGetPageTargeting,
     resize,
     hide,
     scroll,
@@ -83,7 +83,7 @@ const setPersonalisedAds = (): void => {
 const setPageTargeting = (): void => {
     const pubads = window.googletag.pubads();
     // because commercialFeatures may export itself as {} in the event of an exception during construction
-    const targeting = buildPageTargeting();
+    const targeting = getPageTargeting();
     Object.keys(targeting).forEach(key => {
         pubads.setTargeting(key, targeting[key]);
     });

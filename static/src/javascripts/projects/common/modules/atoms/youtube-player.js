@@ -4,7 +4,7 @@ import fastdom from 'fastdom';
 import config from 'lib/config';
 import { loadScript } from 'lib/load-script';
 import { constructQuery } from 'lib/url';
-import { buildPageTargeting } from 'common/modules/commercial/build-page-targeting';
+import { getPageTargeting } from 'common/modules/commercial/build-page-targeting';
 import {
     getAdConsentState,
     thirdPartyTrackingAdConsent,
@@ -97,7 +97,7 @@ const createAdsConfig = (
             adTagParameters: {
                 iu: config.get('page.adUnit'),
                 cust_params: encodeURIComponent(
-                    constructQuery(buildPageTargeting())
+                    constructQuery(getPageTargeting())
                 ),
             },
         };

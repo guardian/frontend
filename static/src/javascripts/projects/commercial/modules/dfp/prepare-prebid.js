@@ -2,7 +2,7 @@
 
 import config from 'lib/config';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
-import { buildPageTargeting } from 'common/modules/commercial/build-page-targeting';
+import { getPageTargeting } from 'common/modules/commercial/build-page-targeting';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import once from 'lodash/once';
 import prebid from 'commercial/modules/prebid/prebid';
@@ -30,7 +30,7 @@ const setupPrebid: () => Promise<void> = () =>
             !config.get('page.hasPageSkin') &&
             !isGoogleProxy()
         ) {
-            buildPageTargeting();
+            getPageTargeting();
             prebid.initialise(window);
         }
         return Promise.resolve();
