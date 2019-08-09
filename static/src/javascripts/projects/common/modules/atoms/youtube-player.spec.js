@@ -2,7 +2,7 @@
 import { _ as youtubePlayer } from 'common/modules/atoms/youtube-player';
 
 jest.mock('common/modules/commercial/build-page-targeting', () => ({
-    buildPageTargeting: jest.fn(() => ({ key: 'value' })),
+    getPageTargeting: jest.fn(() => ({ key: 'value' })),
 }));
 
 jest.mock('lib/config', () => ({
