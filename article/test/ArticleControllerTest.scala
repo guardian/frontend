@@ -3,7 +3,7 @@ package test
 import com.gu.contentapi.client.model.v1.Blocks
 import controllers.{ArticleController, ArticlePage}
 import model.Cached.RevalidatableResult
-import model.dotcomponents.CommercialConfiguration
+import model.dotcomponents.PageType
 import model.{ApplicationContext, Cached, PageWithStoryPackage}
 import org.apache.commons.codec.digest.DigestUtils
 import org.scalatest.mockito.MockitoSugar
@@ -22,7 +22,7 @@ import scala.concurrent.{ExecutionContext, Future}
 // these
 
 class FakeRemoteRender(implicit context: ApplicationContext) extends renderers.RemoteRenderer {
-  override def getArticle(ws:WSClient, path: String, article: PageWithStoryPackage, blocks: Blocks, commercialConfiguration: CommercialConfiguration)(implicit request: RequestHeader): Future[Result] = {
+  override def getArticle(ws:WSClient, path: String, article: PageWithStoryPackage, blocks: Blocks, pageType: PageType)(implicit request: RequestHeader): Future[Result] = {
     implicit val ec = ExecutionContext.global
     Future(Cached(article)(RevalidatableResult.Ok(Html("OK"))))
   }

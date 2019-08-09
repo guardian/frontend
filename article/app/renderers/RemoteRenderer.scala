@@ -16,7 +16,7 @@ import play.twirl.api.Html
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.concurrent.duration._
-import model.dotcomponents.CommercialConfiguration
+import model.dotcomponents.PageType
 
 class RemoteRenderer extends Logging {
 
@@ -66,9 +66,9 @@ class RemoteRenderer extends Logging {
     payload: String,
     page: PageWithStoryPackage,
     blocks: Blocks,
-    commercialConfiguration: CommercialConfiguration
+    pageType: PageType
   )(implicit request: RequestHeader): Future[Result] = {
-    val dataModel = DotcomponentsDataModel.fromArticle(page, request, blocks, commercialConfiguration)
+    val dataModel = DotcomponentsDataModel.fromArticle(page, request, blocks, pageType)
     val json = DataModelV3.toJson(dataModel)
     get(ws, json, page, Configuration.rendering.AMPArticleEndpoint)
   }
@@ -78,9 +78,9 @@ class RemoteRenderer extends Logging {
     path: String,
     page: PageWithStoryPackage,
     blocks: Blocks,
-    commercialConfiguration: CommercialConfiguration
+    pageType: PageType
   )(implicit request: RequestHeader): Future[Result] = {
-    val dataModel = DotcomponentsDataModel.fromArticle(page, request, blocks, commercialConfiguration)
+    val dataModel = DotcomponentsDataModel.fromArticle(page, request, blocks, pageType)
     val json = DataModelV3.toJson(dataModel)
     get(ws, json, page, Configuration.rendering.renderingEndpoint)
   }
