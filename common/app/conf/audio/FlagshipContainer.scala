@@ -1,21 +1,22 @@
 package conf.audio
 import conf.switches.Switch
-import org.joda.time.DateTime
-import org.joda.time.DateTimeConstants.{SATURDAY, SUNDAY}
-import org.joda.time.format.DateTimeFormat
 
 import scala.concurrent.duration._
+import java.time.{ Duration,  ZonedDateTime, ZoneId, ZoneOffset, DayOfWeek }
 
 trait FlagshipContainer {
 
-  private val GoLiveDateTime = DateTimeFormat.forPattern("yyyy/MM/dd HH:mm").parseDateTime("2018/11/01 03:15")
+  val londonTimezone = ZoneId.of("Europe/London")
+
+  // Aug 17 at 3am
+  private val tifOnHolsStart = ZonedDateTime.of(2019, 8, 17, 3, 15, 0, 0, londonTimezone)
+  // Sep 2 at 2am
+  private val tifOnHolsEnd = ZonedDateTime.of(2019, 9, 2, 3, 15, 0, 0, londonTimezone)
 
   //The container should appear at 03:15 on Monday, and disappear at 03:15 on Saturday
-  private val threeHoursFifteenMinutes: Long = (3.hours + 15.minutes).toMillis
-  private def isWeekend(dateTime: DateTime): Boolean = {
-    val day = dateTime.minus(threeHoursFifteenMinutes).getDayOfWeek
-    day == SATURDAY || day == SUNDAY
-  }
+  private val threeHoursFifteenMinutes = Duration.ofHours(3) plus Duration.ofMinutes(15)
+  private val weekend = Set(DayOfWeek.SATURDAY, DayOfWeek.SUNDAY)
+  private def isWeekend(dateTime: ZonedDateTime): Boolean = weekend(dateTime.minus(threeHoursFifteenMinutes).getDayOfWeek())
 
   protected val switch: Switch
 
@@ -23,8 +24,8 @@ trait FlagshipContainer {
 
   def isFlagshipContainer(id: String): Boolean = containerIds.contains(id)
 
-  def displayFlagshipContainer(now: DateTime = DateTime.now): Boolean =
+  def displayFlagshipContainer(now: ZonedDateTime = ZonedDateTime.now(londonTimezone)): Boolean =
     switch.isSwitchedOn &&
-      now.isAfter(GoLiveDateTime) &&
+      (now.isBefore(tifOnHolsStart) || now.isAfter(tifOnHolsEnd)) &&
       !isWeekend(now)
 }
