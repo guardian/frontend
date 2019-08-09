@@ -13,7 +13,7 @@ trait FlagshipContainer {
   // Sep 2 at 2am
   private val tifOnHolsEnd = ZonedDateTime.of(2019, 9, 2, 3, 15, 0, 0, londonTimezone)
 
-  //The container should appear at 02:00 on Monday, and disappear at 03:00 on Saturday
+  //The container should appear at 03:15 on Monday, and disappear at 03:15 on Saturday
   private val threeHoursFifteenMinutes = Duration.ofHours(3) plus Duration.ofMinutes(15)
   private val weekend = Set(DayOfWeek.SATURDAY, DayOfWeek.SUNDAY)
   private def isWeekend(dateTime: ZonedDateTime): Boolean = weekend(dateTime.minus(threeHoursFifteenMinutes).getDayOfWeek())
