@@ -12,22 +12,22 @@ class FlagshipFrontContainerSpec extends FlatSpec with Matchers with BeforeAndAf
   }
 
   it should "return true if the team is on not holiday yet" in {
-    val dateTime = ZonedDateTime.parse("2019/08/17 02:59", formatter)
+    val dateTime = ZonedDateTime.parse("2019/08/17 03:14", formatter)
     FlagshipFrontContainer.displayFlagshipContainer(dateTime) should be(true)
   }
 
   it should "return false if the team is on holiday" in {
-    val dateTime = ZonedDateTime.parse("2019/08/17 03:00", formatter)
+    val dateTime = ZonedDateTime.parse("2019/08/17 03:15", formatter)
     FlagshipFrontContainer.displayFlagshipContainer(dateTime) should be(false)
   }
 
   it should "return false if the team is still on holiday" in {
-    val dateTime = ZonedDateTime.parse("2019/09/02 02:00", formatter)
+    val dateTime = ZonedDateTime.parse("2019/09/02 03:15", formatter)
     FlagshipFrontContainer.displayFlagshipContainer(dateTime) should be(false)
   }
 
   it should "return true if the team is not on holiday anymore" in {
-    val dateTime = ZonedDateTime.parse("2019/09/02 02:01", formatter)
+    val dateTime = ZonedDateTime.parse("2019/09/02 03:16", formatter)
     FlagshipFrontContainer.displayFlagshipContainer(dateTime) should be(true)
   }
 
@@ -43,14 +43,14 @@ class FlagshipFrontContainerSpec extends FlatSpec with Matchers with BeforeAndAf
     FlagshipFrontContainer.displayFlagshipContainer(dateTime) should be(false)
   }
 
-  it should "return true if Saturday and before 03:00" in {
-    val dateTime = ZonedDateTime.parse("2018/11/10 02:59", formatter)
+  it should "return true if Saturday and before 03:15" in {
+    val dateTime = ZonedDateTime.parse("2018/11/10 03:14", formatter)
     dateTime.getDayOfWeek should be(DayOfWeek.SATURDAY)
     FlagshipFrontContainer.displayFlagshipContainer(dateTime) should be(true)
   }
 
-  it should "return false if Saturday at 03:00" in {
-    val dateTime = ZonedDateTime.parse("2018/11/10 03:00", formatter)
+  it should "return false if Saturday at 03:15" in {
+    val dateTime = ZonedDateTime.parse("2018/11/10 03:15", formatter)
     dateTime.getDayOfWeek should be(DayOfWeek.SATURDAY)
     FlagshipFrontContainer.displayFlagshipContainer(dateTime) should be(false)
   }
@@ -61,14 +61,14 @@ class FlagshipFrontContainerSpec extends FlatSpec with Matchers with BeforeAndAf
     FlagshipFrontContainer.displayFlagshipContainer(dateTime) should be(true)
   }
 
-  it should "return false if Monday and before 02:00" in {
-    val dateTime = ZonedDateTime.parse("2018/11/05 01:59", formatter)
+  it should "return false if Monday and before 03:15" in {
+    val dateTime = ZonedDateTime.parse("2018/11/05 02:14", formatter)
     dateTime.getDayOfWeek should be(DayOfWeek.MONDAY)
     FlagshipFrontContainer.displayFlagshipContainer(dateTime) should be(false)
   }
 
-  it should "return true if Monday at 02:00" in {
-    val dateTime = ZonedDateTime.parse("2018/11/05 02:00", formatter)
+  it should "return true if Monday at 03:15" in {
+    val dateTime = ZonedDateTime.parse("2018/11/05 03:15", formatter)
     dateTime.getDayOfWeek should be(DayOfWeek.MONDAY)
     FlagshipFrontContainer.displayFlagshipContainer(dateTime) should be(true)
   }
