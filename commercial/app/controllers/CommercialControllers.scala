@@ -32,6 +32,7 @@ trait CommercialControllers {
   lazy val travelOffersController = wire[TravelOffersController]
   lazy val trafficDriverController = wire[TrafficDriverController]
   lazy val piggybackPixelController = wire[PiggybackPixelController]
+  lazy val cmpDataController = wire[CmpDataController]
   lazy val adsDotTextFileController = wire[AdsDotTextViewController]
   lazy val prebidAnalyticsController = wire[PrebidAnalyticsController]
   lazy val pageViewAnalyticsController = wire[PageViewAnalyticsController]
