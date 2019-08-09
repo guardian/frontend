@@ -10,8 +10,10 @@ const vendorlistJs = path.join(
     'javascripts/projects/commercial/modules/cmp/vendorlist.js'
 );
 
-const shortVendorListJSON = path.join(path.resolve(target, 'data', 'vendor'),
-				      'cmp_shortvendorlist.json');
+const shortVendorListJSON = path.join(
+    path.resolve(target, 'data', 'vendor'),
+    'cmp_shortvendorlist.json'
+);
 
 module.exports = {
     description: 'Transforming data files',
@@ -45,9 +47,9 @@ module.exports = {
                 });
                 return shortVendors;
             })
-        .then(shortVendors => {
-	    const shortJSON = JSON.stringify(shortVendors);
-            const vendorListJsCode =
+            .then(shortVendors => {
+                const shortJSON = JSON.stringify(shortVendors);
+                const vendorListJsCode =
                     `// @flow\n` +
                     `/* eslint-disable */\n` +
                     `/* DO NOT EDIT THIS.\n` +
@@ -57,9 +59,8 @@ module.exports = {
                 fs.writeFileSync(vendorlistJs, vendorListJsCode);
                 return shortJSON;
             })
-        .then( shortJSON =>{
-	    fs.writeFileSync(shortVendorListJSON, shortJSON);
-	    return true;
-	})
-    ,
+            .then(shortJSON => {
+                fs.writeFileSync(shortVendorListJSON, shortJSON);
+                return true;
+            }),
 };

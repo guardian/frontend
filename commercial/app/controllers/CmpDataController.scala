@@ -12,4 +12,10 @@ class CmpDataController (val controllerComponents: ControllerComponents)(implici
     implicit request =>
       Redirect(Static("data/vendor/cmp_vendorlist.json" ))
   }
+
+  def renderShortVendorlist(): Action[AnyContent] = Action {
+    implicit request =>
+      Redirect(Static("data/vendor/cmp_shortvendorlist.json" ))
+  }
+
 }

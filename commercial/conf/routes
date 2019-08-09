@@ -40,6 +40,7 @@ GET         /advertiser-content/:campaignName/:pageName/autoplay.json       comm
 
 # AIB / CMP / TCF vendorlist.json
 GET         /commercial/cmp/vendorlist.json                                            commercial.controllers.CmpDataController.renderVendorlist()
+GET         /commercial/cmp/shortvendorlist.json                                      commercial.controllers.CmpDataController.renderShortVendorlist()
 
 # ADS.TXT + APP-ADS.txt Standard
 GET         /ads.txt                                                        commercial.controllers.AdsDotTextViewController.renderTextFile()
