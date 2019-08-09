@@ -14,28 +14,38 @@ import { inizio } from 'commercial/modules/third-party-tags/inizio';
 import { fbPixel } from 'commercial/modules/third-party-tags/facebook-pixel';
 import { init as initPlistaOutbrainRenderer } from 'commercial/modules/third-party-tags/plista-outbrain-renderer';
 import { twitterUwt } from 'commercial/modules/third-party-tags/twitter-uwt';
+import { onConsentNotification } from 'lib/cmp';
+
+let scriptsInserted: boolean = false;
 
 const insertScripts = (services: Array<ThirdPartyTag>): void => {
-    const ref = document.scripts[0];
-    const frag = document.createDocumentFragment();
-    let insertedScripts = false;
+    onConsentNotification('advertisement', state => {
+        if (!scriptsInserted && (state === true || state === null)) {
+            scriptsInserted = true;
 
-    services.forEach(service => {
-        // flowlint sketchy-null-bool:warn
-        if (service.useImage) {
-            new Image().src = service.url;
-        } else {
-            insertedScripts = true;
-            const script = document.createElement('script');
-            script.src = service.url;
-            script.onload = service.onLoad;
-            frag.appendChild(script);
-        }
-    });
+            const ref = document.scripts[0];
+            const frag = document.createDocumentFragment();
+            let hasScriptsToInsert = false;
 
-    fastdom.write(() => {
-        if (insertedScripts && ref && ref.parentNode) {
-            ref.parentNode.insertBefore(frag, ref);
+            services.forEach(service => {
+                if (service.useImage === true) {
+                    new Image().src = service.url;
+                } else {
+                    hasScriptsToInsert = true;
+                    const script = document.createElement('script');
+                    script.src = service.url;
+                    script.onload = service.onLoad;
+                    frag.appendChild(script);
+                }
+            });
+
+            if (hasScriptsToInsert) {
+                fastdom.write(() => {
+                    if (ref && ref.parentNode) {
+                        ref.parentNode.insertBefore(frag, ref);
+                    }
+                });
+            }
         }
     });
 };
