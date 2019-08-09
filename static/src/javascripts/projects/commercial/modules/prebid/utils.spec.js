@@ -367,7 +367,7 @@ describe('Utils', () => {
     test('shouldIncludeMobileSticky should be true if location cookie is NA, switch is ON and content is Article on mobiles ', () => {
         config.set('page.contentType', 'Article');
         config.set('switches.mobileStickyLeaderboard', true);
-        getCookie.mockReturnValue('NA');
+        getSync.mockReturnValue('US');
         isBreakpoint.mockReturnValue(true);
         expect(shouldIncludeMobileSticky()).toBe(true);
     });
