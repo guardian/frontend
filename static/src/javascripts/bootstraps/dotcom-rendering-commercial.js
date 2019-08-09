@@ -3,28 +3,28 @@ import config from 'lib/config';
 import { catchErrorsWithContext } from 'lib/robust';
 import { markTime } from 'lib/user-timing';
 import reportError from 'lib/report-error';
-// import { init as initHighMerch } from 'commercial/modules/high-merch';
-// import { init as initArticleAsideAdverts } from 'commercial/modules/article-aside-adverts';
-// import { init as initArticleBodyAdverts } from 'commercial/modules/article-body-adverts';
-// import { init as initMobileSticky } from 'commercial/modules/mobile-sticky';
+import { init as initHighMerch } from 'commercial/modules/high-merch';
+import { init as initArticleAsideAdverts } from 'commercial/modules/article-aside-adverts';
+import { init as initArticleBodyAdverts } from 'commercial/modules/article-body-adverts';
+import { init as initMobileSticky } from 'commercial/modules/mobile-sticky';
 import { closeDisabledSlots } from 'commercial/modules/close-disabled-slots';
 import { adFreeSlotRemove } from 'commercial/modules/ad-free-slot-remove';
 import { init as initCmpService } from 'commercial/modules/cmp/cmp';
 import { init as initLotameCmp } from 'commercial/modules/cmp/lotame-cmp';
 import { init as initLotameDataExtract } from 'commercial/modules/lotame-data-extract';
 import { trackConsent as trackCmpConsent } from 'commercial/modules/cmp/consent-tracker';
-// import { init as prepareAdVerification } from 'commercial/modules/ad-verification/prepare-ad-verification';
-// import { init as prepareGoogletag } from 'commercial/modules/dfp/prepare-googletag';
-// import { init as preparePrebid } from 'commercial/modules/dfp/prepare-prebid';
-// import { init as initLiveblogAdverts } from 'commercial/modules/liveblog-adverts';
-// import { init as initStickyTopBanner } from 'commercial/modules/sticky-top-banner';
-// import { init as initThirdPartyTags } from 'commercial/modules/third-party-tags';
-// import { init as initPaidForBand } from 'commercial/modules/paidfor-band';
-// import { paidContainers } from 'commercial/modules/paid-containers';
+import { init as prepareAdVerification } from 'commercial/modules/ad-verification/prepare-ad-verification';
+import { init as prepareGoogletag } from 'commercial/modules/dfp/prepare-googletag';
+import { init as preparePrebid } from 'commercial/modules/dfp/prepare-prebid';
+import { init as initLiveblogAdverts } from 'commercial/modules/liveblog-adverts';
+import { init as initStickyTopBanner } from 'commercial/modules/sticky-top-banner';
+import { init as initThirdPartyTags } from 'commercial/modules/third-party-tags';
+import { init as initPaidForBand } from 'commercial/modules/paidfor-band';
+import { paidContainers } from 'commercial/modules/paid-containers';
 import { trackPerformance } from 'common/modules/analytics/google';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 // import { initCheckDispatcher } from 'commercial/modules/check-dispatcher';
-// import { initCommentAdverts } from 'commercial/modules/comment-adverts';
+import { initCommentAdverts } from 'commercial/modules/comment-adverts';
 
 const commercialModules: Array<Array<any>> = [
     ['cm-adFreeSlotRemove', adFreeSlotRemove],
@@ -36,23 +36,22 @@ const commercialModules: Array<Array<any>> = [
     ['cm-lotame-data-extract', initLotameDataExtract, true], // Comes with a isDotcomRendering check
 ];
 
-if (!commercialFeatures.adFree) {
-    commercialModules
-        .push
-        // ['cm-prepare-prebid', preparePrebid],
-        // ['cm-prepare-googletag', prepareGoogletag],
-        // ['cm-thirdPartyTags', initThirdPartyTags],
-        // ['cm-prepare-adverification', prepareAdVerification],
-        // ['cm-mobileSticky', initMobileSticky],
-        // ['cm-highMerch', initHighMerch],
-        // ['cm-articleAsideAdverts', initArticleAsideAdverts],
-        // ['cm-articleBodyAdverts', initArticleBodyAdverts],
-        // ['cm-liveblogAdverts', initLiveblogAdverts],
-        // ['cm-stickyTopBanner', initStickyTopBanner],
-        // ['cm-paidContainers', paidContainers],
-        // ['cm-paidforBand', initPaidForBand],
-        // ['cm-commentAdverts', initCommentAdverts]
-        ();
+if (false && !commercialFeatures.adFree) {
+    commercialModules.push(
+        ['cm-prepare-prebid', preparePrebid],
+        ['cm-prepare-googletag', prepareGoogletag],
+        ['cm-thirdPartyTags', initThirdPartyTags],
+        ['cm-prepare-adverification', prepareAdVerification],
+        ['cm-mobileSticky', initMobileSticky],
+        ['cm-highMerch', initHighMerch],
+        ['cm-articleAsideAdverts', initArticleAsideAdverts],
+        ['cm-articleBodyAdverts', initArticleBodyAdverts],
+        ['cm-liveblogAdverts', initLiveblogAdverts],
+        ['cm-stickyTopBanner', initStickyTopBanner],
+        ['cm-paidContainers', paidContainers],
+        ['cm-paidforBand', initPaidForBand],
+        ['cm-commentAdverts', initCommentAdverts]
+    );
 }
 
 const loadHostedBundle = (): Promise<void> => {

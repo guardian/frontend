@@ -1,6 +1,7 @@
 // @flow strict
 /* A regionalised container for all the commercial tags. */
 
+import config from 'lib/config';
 import fastdom from 'lib/fastdom-promise';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { imrWorldwide } from 'commercial/modules/third-party-tags/imr-worldwide';
@@ -60,12 +61,17 @@ const init = (): Promise<boolean> => {
         return Promise.resolve(false);
     }
 
+    // Section 1
     // Outbrain/Plista needs to be loaded before the first ad as it is checking
     // for the presence of high relevance component on page
     // I'm leaving this to check adFree state because while the thirdPartyTags
     // check above is now sensitive to ad-free, it could be changed independently
     // in the future - even by accident.  Justin.
-    if (!commercialFeatures.adFree) {
+
+    // Section 2
+    // For the moment, we are not attemtping to run Outbrain in dotcom-rendering
+    // But we want the other third party tags. Pascal.
+    if (!config.get('isDotcomRendering', false) && !commercialFeatures.adFree) {
         initPlistaOutbrainRenderer();
     }
 
