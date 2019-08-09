@@ -13,7 +13,10 @@ import interactionTracking from 'common/modules/analytics/interaction-tracking';
 import { initAnalyticsRegister } from 'common/modules/analytics/register';
 import { ScrollDepth } from 'common/modules/analytics/scrollDepth';
 import { requestUserSegmentsFromId } from 'common/modules/commercial/user-ad-targeting';
-import { refresh as refreshUserFeatures } from 'common/modules/commercial/user-features';
+import {
+    refresh as refreshUserFeatures,
+    extendContribsCookieExpiry,
+} from 'common/modules/commercial/user-features';
 import { initCommentCount } from 'common/modules/discussion/comment-count';
 import { init as initCookieRefresh } from 'common/modules/identity/cookierefresh';
 import { initNavigation } from 'common/modules/navigation/navigation';
@@ -340,6 +343,7 @@ const init = (): void => {
         ['c-history-nav', showHistoryInMegaNav],
         ['c-start-register', startRegister],
         ['c-cookies', cleanupCookies],
+        ['c-extend-contribs-expiry', extendContribsCookieExpiry],
         ['c-localStorage', cleanupLocalStorage],
         ['c-overlay', initOpenOverlayOnClick],
         ['c-public-api', initPublicApi],
