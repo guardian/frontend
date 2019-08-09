@@ -61,7 +61,6 @@ jest.mock('common/modules/commercial/commercial-features', () => ({
 }));
 jest.mock('lib/cmp', () => ({
     onConsentNotification: jest.fn(),
-    consentState: jest.fn(() => null),
 }));
 
 const trueConsentMock = (purpose, callback): void => callback(true);
