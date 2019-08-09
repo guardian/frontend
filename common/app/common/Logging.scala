@@ -30,6 +30,10 @@ trait Logging {
     log.logger.error(customFieldMarkers(customFields), message, error)
   }
 
+  def logDebugWithCustomFields(message: String, customFields: List[LogField]): Unit = {
+    log.logger.debug(customFieldMarkers(customFields), message)
+  }
+
   // Transparent error logging on exceptions: log context and exception on error, and pass on the exception
   def errorLoggingF[A](context: String)(task: => Future[A])(implicit ec: ExecutionContext): Future[A] = {
     Try(task) match {
