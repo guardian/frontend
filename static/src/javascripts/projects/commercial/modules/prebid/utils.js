@@ -5,7 +5,6 @@ import { getBreakpoint, isBreakpoint } from 'lib/detect';
 import { pbTestNameMap } from 'lib/url';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
 import config from 'lib/config';
-import { getCookie } from 'lib/cookies';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import { prebidTripleLiftAdapter } from 'common/modules/experiments/tests/prebid-triple-lift-adapter';
 import type { PrebidSize } from './types';
@@ -48,9 +47,6 @@ export const isInAuRegion = (): boolean =>
 
 export const isInRowRegion = (): boolean =>
     !isInUkRegion() && !isInUsRegion() && !isInAuRegion();
-
-export const isInNA = (): boolean =>
-    (getCookie('GU_geo_continent') || 'OTHER').toUpperCase() === 'NA';
 
 export const containsMpu = (sizes: PrebidSize[]): boolean =>
     contains(sizes, [300, 250]);
@@ -147,7 +143,7 @@ export const shouldIncludeMobileSticky = once(
         window.location.hash.indexOf('#mobile-sticky') !== -1 ||
         (config.get('switches.mobileStickyLeaderboard') &&
             isBreakpoint({ min: 'mobile', max: 'mobileLandscape' }) &&
-            isInNA() &&
+            isInUsRegion() &&
             config.get('page.contentType') === 'Article')
 );
 

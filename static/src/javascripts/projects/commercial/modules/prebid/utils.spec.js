@@ -5,7 +5,6 @@ import {
     isBreakpoint as isBreakpoint_,
 } from 'lib/detect';
 import config from 'lib/config';
-import { getCookie as getCookie_ } from 'lib/cookies';
 import {
     getLargestSize,
     getBreakpointKey,
@@ -29,16 +28,11 @@ import {
 const getSync: any = getSync_;
 const getBreakpoint: any = getBreakpoint_;
 const isBreakpoint: any = isBreakpoint_;
-const getCookie: any = getCookie_;
 
 jest.mock('lodash/once', () => a => a);
 
 jest.mock('lib/geolocation', () => ({
     getSync: jest.fn(() => 'GB'),
-}));
-
-jest.mock('lib/cookies', () => ({
-    getCookie: jest.fn(),
 }));
 
 jest.mock('lib/detect', () => ({
@@ -367,7 +361,7 @@ describe('Utils', () => {
     test('shouldIncludeMobileSticky should be true if location cookie is NA, switch is ON and content is Article on mobiles ', () => {
         config.set('page.contentType', 'Article');
         config.set('switches.mobileStickyLeaderboard', true);
-        getCookie.mockReturnValue('NA');
+        getSync.mockReturnValue('US');
         isBreakpoint.mockReturnValue(true);
         expect(shouldIncludeMobileSticky()).toBe(true);
     });
@@ -376,7 +370,7 @@ describe('Utils', () => {
         config.set('page.contentType', 'Network Front');
         config.set('switches.mobileStickyLeaderboard', true);
         isBreakpoint.mockReturnValue(true);
-        getCookie.mockReturnValue('NA');
+        getSync.mockReturnValue('US');
         expect(shouldIncludeMobileSticky()).toBe(false);
     });
 
@@ -384,7 +378,7 @@ describe('Utils', () => {
         config.set('page.contentType', 'Article');
         isBreakpoint.mockReturnValue(true);
         config.set('switches.mobileStickyLeaderboard', false);
-        getCookie.mockReturnValue('NA');
+        getSync.mockReturnValue('US');
         expect(shouldIncludeMobileSticky()).toBe(false);
     });
 
@@ -392,7 +386,7 @@ describe('Utils', () => {
         config.set('page.contentType', 'Article');
         config.set('switches.mobileStickyLeaderboard', true);
         isBreakpoint.mockReturnValue(true);
-        getCookie.mockReturnValue('EU');
+        getSync.mockReturnValue('GB');
         expect(shouldIncludeMobileSticky()).toBe(false);
     });
 
@@ -400,7 +394,7 @@ describe('Utils', () => {
         config.set('page.contentType', 'Article');
         config.set('switches.mobileStickyLeaderboard', true);
         isBreakpoint.mockReturnValue(false);
-        getCookie.mockReturnValue('EU');
+        getSync.mockReturnValue('US');
         expect(shouldIncludeMobileSticky()).toBe(false);
     });
 
@@ -408,7 +402,7 @@ describe('Utils', () => {
         config.set('page.contentType', 'Network Front');
         config.set('switches.mobileStickyLeaderboard', false);
         isBreakpoint.mockReturnValue(false);
-        getCookie.mockReturnValue('EU');
+        getSync.mockReturnValue('US');
         window.location.hash = '#mobile-sticky';
         expect(shouldIncludeMobileSticky()).toBe(true);
     });
