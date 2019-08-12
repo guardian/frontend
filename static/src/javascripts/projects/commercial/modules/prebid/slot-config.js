@@ -100,7 +100,8 @@ const getSlots = (contentType: string): Array<PrebidSlot> => {
 
     switch (getBreakpointKey()) {
         case 'M':
-            return shouldIncludeMobileSticky()
+            return shouldIncludeMobileSticky() &&
+                config.get('switches.mobileStickyPrebid')
                 ? commonSlots.concat([...mobileSlots, mobileStickySlot])
                 : commonSlots.concat(mobileSlots);
         case 'T':

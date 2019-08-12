@@ -78,6 +78,7 @@ describe('getSlots', () => {
 
     test('should return the correct slots at breakpoint M for US including mobile sticky slot', () => {
         getBreakpointKey.mockReturnValue('M');
+        config.set('switches.mobileStickyPrebid', true);
         shouldIncludeMobileSticky.mockReturnValue(true);
         expect(getSlots('Article')).toEqual([
             {
@@ -206,6 +207,7 @@ describe('slots', () => {
 
     test('should return the correct mobile-sticky slot at breakpoint M', () => {
         getBreakpointKey.mockReturnValue('M');
+        config.set('switches.mobileStickyPrebid', true);
         shouldIncludeMobileSticky.mockReturnValue(true);
         expect(slots('mobile-sticky', '')).toEqual([
             {
