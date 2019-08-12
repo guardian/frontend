@@ -275,14 +275,18 @@ const fakeOneOffContributor = (): void => {
 const isAdFreeUser = (): boolean =>
     isDigitalSubscriber() || (adFreeDataIsPresent() && !adFreeDataIsOld());
 
-//Extend the expiry of the contributions cookie by 1 year beyond the date of the contribution
+// Extend the expiry of the contributions cookie by 1 year beyond the date of the contribution
 const extendContribsCookieExpiry = (): void => {
     const cookie = getCookie(SUPPORT_ONE_OFF_CONTRIBUTION_COOKIE);
     if (cookie) {
         const contributionDate = parseInt(cookie, 10);
         if (Number.isInteger(contributionDate)) {
             const newExpiry = 365 - dateDiffDays(contributionDate, Date.now());
-            addCookie(SUPPORT_ONE_OFF_CONTRIBUTION_COOKIE, contributionDate, newExpiry)
+            addCookie(
+                SUPPORT_ONE_OFF_CONTRIBUTION_COOKIE,
+                contributionDate,
+                newExpiry
+            );
         }
     }
 };
