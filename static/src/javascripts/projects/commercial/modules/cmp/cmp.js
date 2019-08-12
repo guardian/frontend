@@ -9,7 +9,9 @@ import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import { log } from './log';
 import { CmpStore } from './store';
 import { encodeVendorConsentData } from './cookie';
-import { shortVendorList as shortVendorListData } from './vendorlist';
+
+// $FlowFixMe
+import { shortVendorList as shortVendorListData } from './vendorlist'; // eslint-disable-line import/no-unresolved
 
 import {
     defaultConfig,

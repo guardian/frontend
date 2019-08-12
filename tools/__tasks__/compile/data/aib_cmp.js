@@ -62,8 +62,8 @@ module.exports = {
                     `// @flow\n` +
                     `/* eslint-disable */\n` +
                     `/* DO NOT EDIT THIS.\n` +
-                    ` Regenerate by doing make compile-dev or make watch.\n` +
-                    ` See tools/__tasks__/compile/data/transform.js  */\n` +
+                    ` Regenerate by doing 'make compile', 'make compile-dev' or 'make watch'.\n` +
+                    ` See tools/__tasks__/compile/data/aib_cmp.js  */\n` +
                     `export const shortVendorList = \n${shortJSON};\n`;
                 fs.writeFileSync(vendorListJsCode, jsCode);
 
