@@ -4,7 +4,7 @@ import config from 'lib/config';
 import { getCookie } from 'lib/cookies';
 import { getUrlVars } from 'lib/url';
 import fetchJSON from 'lib/fetch-json';
-import { commercialCmpCustomise } from 'common/modules/experiments/tests/commercial-cmp-customise';
+import { commercialIabCompliant } from 'common/modules/experiments/tests/commercial-iab-compliant';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import { log } from './log';
 import { CmpStore } from './store';
@@ -62,7 +62,7 @@ const readConsentCookie = (cookieName: string): boolean | null => {
 };
 
 const isInCmpCustomiseTest = (): boolean =>
-    isInVariantSynchronous(commercialCmpCustomise, 'variant');
+    isInVariantSynchronous(commercialIabCompliant, 'variant');
 
 const generateStore = (isInTest: boolean): CmpStore => {
     const store = new CmpStore(
