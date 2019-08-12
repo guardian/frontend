@@ -284,7 +284,7 @@ const extendContribsCookieExpiry = (): void => {
             const newExpiry = 365 - dateDiffDays(contributionDate, Date.now());
             addCookie(
                 SUPPORT_ONE_OFF_CONTRIBUTION_COOKIE,
-                contributionDate,
+                contributionDate.toString(),
                 newExpiry
             );
         }
