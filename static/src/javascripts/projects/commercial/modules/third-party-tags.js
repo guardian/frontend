@@ -91,4 +91,10 @@ const init = (): Promise<boolean> => {
 };
 
 export { init };
-export const _ = { insertScripts, loadOther };
+export const _ = {
+    insertScripts,
+    loadOther,
+    reset: () => {
+        scriptsInserted = false;
+    },
+};

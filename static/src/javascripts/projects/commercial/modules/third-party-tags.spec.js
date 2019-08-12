@@ -83,13 +83,9 @@ describe('third party tags', () => {
             onLoad: jest.fn(),
         };
         it('should add a script to the document', () => {
+            _.reset();
             insertScripts([fakeThirdPartyTag]);
-            expect(document.scripts.length).toBe(2);
-        });
-    });
-    describe('loadOther', () => {
-        it('should call insert scripts', () => {
-            loadOther();
+
             expect(document.scripts.length).toBe(2);
         });
     });
