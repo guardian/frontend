@@ -17,7 +17,7 @@ trait ExperimentsDefinition {
 
   def getJavascriptConfig(implicit request: RequestHeader): String = {
     allExperiments
-      .filter(e => isParticipating(e) || isControl(e))
+    .filter(e => isParticipating(e) || isControl(e))
       .toSeq.sortBy(_.name)
       .map { e =>
         val value = e.value

@@ -1,9 +1,10 @@
 package services.dotcomponents
 
 import controllers.ArticlePage
+import experiments.{ActiveExperiments, DotcomRenderingBeta}
 import model.PageWithStoryPackage
 import implicits.Requests._
-import model.liveblog.{BlockElement, TextBlockElement, ImageBlockElement}
+import model.liveblog.{BlockElement, ImageBlockElement, TextBlockElement}
 import play.api.mvc.RequestHeader
 import views.support.Commercial
 
@@ -83,7 +84,10 @@ object ArticlePicker {
       ("isNotAMP", ArticlePageChecks.isNotAMP(request)),
       ("isNotOpinionP", ArticlePageChecks.isNotOpinion(page)),
       ("isNotPaidContent", ArticlePageChecks.isNotPaidContent(page)),
-      ("isNewsTone", ArticlePageChecks.isNewsTone(page))
+      ("isNewsTone", ArticlePageChecks.isNewsTone(page)),
+
+      // A/B testing, not a page feature as such but useful to include here to benefit from logging
+      ("isBetaUser", ActiveExperiments.isParticipating(DotcomRenderingBeta)(request))
     )
   }
 
@@ -93,7 +97,7 @@ object ArticlePicker {
     val isSupported = features.forall({ case (test, isMet) => isMet})
     val isEnabled = conf.switches.Switches.DotcomRendering.isSwitchedOn
 
-    val tier = if ((isSupported  && isEnabled) || request.isGuui) RemoteRender else LocalRenderArticle
+    val tier = if ((isSupported && isEnabled) || request.isGuui) RemoteRender else LocalRenderArticle
 
     if (tier == RemoteRender) {
       logRequest(s"path executing in dotcomponents", features, page)
@@ -102,7 +106,5 @@ object ArticlePicker {
     }
 
     tier
-
   }
-
 }
