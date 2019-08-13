@@ -9,7 +9,12 @@ import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import { log } from './log';
 import { CmpStore } from './store';
 import { encodeVendorConsentData } from './cookie';
-import { shortVendorList as shortVendorListData } from './vendorlist';
+
+// Avoid Flow and eslint to complain about this import not being available
+// in a fresh checkout.
+// See tools/tools/__tasks__/compile/data/aib_cmp.js to understand
+// $FlowFixMe
+import { shortVendorList as shortVendorListData } from './vendorlist'; // eslint-disable-line import/no-unresolved
 
 import {
     defaultConfig,

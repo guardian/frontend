@@ -1,4 +1,4 @@
 module.exports = {
-    description: 'Compile Data assets (watch)',
-    task: [require('./clean'), require('./copy'), require('./transform')],
+    description: 'Clean, download and build data assets (watch)',
+    task: [require('./clean'), require('./download'), require('./aib_cmp')],
 };
