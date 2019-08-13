@@ -18,6 +18,7 @@ import navigation.NavMenu
 import navigation.ReaderRevenueSite.{Support, SupportContribute, SupportSubscribe}
 import navigation.UrlHelpers._
 import navigation.{FlatSubnav, NavLink, NavMenu, ParentSubnav, Subnav}
+import navigation.{FooterLink, FooterLinks}
 import org.joda.time.DateTime
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
@@ -170,6 +171,26 @@ object Nav {
   implicit val writes = Json.writes[Nav]
 }
 
+case class PageFooter(
+   ukListOne: Seq[FooterLink],
+   ukListTwo: Seq[FooterLink],
+   ukListThree: Seq[FooterLink],
+   usListOne: Seq[FooterLink],
+   usListTwo: Seq[FooterLink],
+   usListThree: Seq[FooterLink],
+   auListOne: Seq[FooterLink],
+   auListTwo: Seq[FooterLink],
+   auListThree: Seq[FooterLink],
+   intListOne: Seq[FooterLink],
+   intListTwo: Seq[FooterLink],
+   intListThree: Seq[FooterLink]
+)
+
+object PageFooter {
+  implicit val footerLinkWrites: Writes[FooterLink] = Json.writes[FooterLink]
+  implicit val writes = Json.writes[PageFooter]
+}
+
 case class DataModelV3(
   version: Int,
   headline: String,
@@ -210,7 +231,8 @@ case class DataModelV3(
   trailText: String,
   nav: Nav,
   designType: String,
-  showBottomSocialButtons: Boolean
+  showBottomSocialButtons: Boolean,
+  pageFooter: PageFooter
 )
 
 object DataModelV3 {
@@ -257,7 +279,8 @@ object DataModelV3 {
       "trailText" -> model.trailText,
       "nav" -> model.nav,
       "designType" -> model.designType,
-      "showBottomSocialButtons" -> model.showBottomSocialButtons
+      "showBottomSocialButtons" -> model.showBottomSocialButtons,
+      "pageFooter" -> model.pageFooter
     )
   }
 
@@ -541,6 +564,21 @@ object DotcomponentsDataModel {
       twitterHandle = article.tags.contributors.headOption.flatMap(_.properties.twitterHandle)
     )
 
+    val pageFooter = PageFooter(
+      ukListOne =  FooterLinks.ukListOne,
+      ukListTwo =  FooterLinks.ukListTwo,
+      ukListThree = FooterLinks.ukListThree,
+      usListOne = FooterLinks.usListOne,
+      usListTwo = FooterLinks.usListTwo,
+      usListThree = FooterLinks.usListThree,
+      auListOne = FooterLinks.auListOne,
+      auListTwo = FooterLinks.auListTwo,
+      auListThree = FooterLinks.auListThree,
+      intListOne = FooterLinks.intListOne,
+      intListTwo = FooterLinks.intListTwo,
+      intListThree = FooterLinks.intListThree
+    )
+
     DataModelV3(
       version = 3,
       headline = article.trail.headline,
@@ -581,7 +619,8 @@ object DotcomponentsDataModel {
       trailText = article.trail.fields.trailText.getOrElse(""),
       nav = nav,
       showBottomSocialButtons = ContentLayout.showBottomSocialButtons(article),
-      designType = findDesignType(article.metadata.designType, allTags)
+      designType = findDesignType(article.metadata.designType, allTags),
+      pageFooter = pageFooter
     )
   }
 }
