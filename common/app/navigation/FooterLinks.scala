@@ -131,7 +131,6 @@ object FooterLinks {
   )
 
   val auListThree = List(
-    FooterLink("Advertising", "/advertising/guardian-australia-advertising", "au : footer : advertising"),
     FooterLink("Guardian Labs", "/guardian-labs-australia", "au : footer : guardian labs"),
     FooterLink("Advertise with us", "https://advertising.theguardian.com/", "au : footer : advertise with us"),
     FooterLink("Search UK jobs", "https://jobs.theguardian.com/jobs?INTCMP=NGW_FOOTER_AU_GU_JOBS", "au : footer : uk-jobs"),
