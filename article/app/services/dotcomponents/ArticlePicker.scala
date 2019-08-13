@@ -85,19 +85,22 @@ object ArticlePicker {
       ("isNotOpinionP", ArticlePageChecks.isNotOpinion(page)),
       ("isNotPaidContent", ArticlePageChecks.isNotPaidContent(page)),
       ("isNewsTone", ArticlePageChecks.isNewsTone(page)),
-
-      // A/B testing, not a page feature as such but useful to include here to benefit from logging
-      ("isBetaUser", ActiveExperiments.isParticipating(DotcomRenderingBeta)(request))
     )
   }
 
+
+
   def getTier(page: PageWithStoryPackage)(implicit request: RequestHeader): RenderType = {
 
-    val features = featureWhitelist(page, request)
-    val isSupported = features.forall({ case (test, isMet) => isMet})
+    val whitelistFeatures = featureWhitelist(page, request)
+    val isSupported = whitelistFeatures.forall({ case (test, isMet) => isMet})
     val isEnabled = conf.switches.Switches.DotcomRendering.isSwitchedOn
+    val isBetaUser = ActiveExperiments.isParticipating(DotcomRenderingBeta)
 
-    val tier = if ((isSupported && isEnabled) || request.isGuui) RemoteRender else LocalRenderArticle
+    val tier = if ((isSupported && isEnabled && isBetaUser) || request.isGuui) RemoteRender else LocalRenderArticle
+
+    // include features that we wish to log but not whitelist against
+    val features = whitelistFeatures + ("isBetaUser" -> isBetaUser)
 
     if (tier == RemoteRender) {
       logRequest(s"path executing in dotcomponents", features, page)
