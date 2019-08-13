@@ -16,10 +16,6 @@ trait ExperimentsDefinition {
   implicit val canCheckExperiment: CanCheckExperiment
 
   def getJsMap(implicit request: RequestHeader): Map[String, String] = {
-   allExperiments.foreach(exp => {
-     println(s"name:${exp.name} switch:${exp.switch.isSwitchedOn} value:${exp.value}")
-   })
-
     allExperiments
       .filter(e => isParticipating(e) || isControl(e))
       .toSeq.sortBy(_.name)
