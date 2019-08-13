@@ -1,4 +1,5 @@
 // @flow strict
+import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { loadScript } from 'lib/load-script';
 import config from 'lib/config';
 
@@ -20,7 +21,7 @@ const shouldLoadLotame = (): boolean => {
 // Fetches Lotame Data for the Ozone project
 // and stores in in window.OzoneLotameData
 const init = (): Promise<void> => {
-    if (!shouldLoadLotame) {
+    if (!shouldLoadLotame || commercialFeatures.shouldBlockAnalytics) {
         return Promise.resolve();
     }
     return loadScript('//ad.crwdcntrl.net/5/c=13271/pe=y/var=OzoneLotameData')
