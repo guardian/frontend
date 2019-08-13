@@ -18,10 +18,7 @@ GET     /_cdn_healthcheck           controllers.HealthCheck.healthCheck()
 #  e.g. /theguardian/2015/nov/04/g2/features
 # single-part tag
 #  e.g. /theguardian/2015/nov/03/mainsection
-
-# do not match anything with /email in the last section as this should be processed by email endpoints in ArticleController
-# regex for this inspired by https://stackoverflow.com/questions/406230/regular-expression-to-match-a-line-that-doesnt-contain-a-word
-GET     /$publication<(theguardian|theobserver)>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/$tail<^((?!\/email).)*$>                 controllers.PublicationController.publishedOn(publication, year, month, day, tail)
+GET     /$publication<(theguardian|theobserver)>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/$tail<.+>                 controllers.PublicationController.publishedOn(publication, year, month, day, tail)
 
 # liveblogs, minutes. 
 # NOTE: if updating the .json endpoint below, you must also update the fastly cache purger path used
