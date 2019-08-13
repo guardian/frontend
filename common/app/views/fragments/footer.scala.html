@@ -334,17 +334,8 @@
                                 </ul>
 
                                 <ul class="colophon__list">
-                                    <li class="colophon__item"><a data-link-name="international : footer : advertise with us" href="https://advertising.theguardian.com">
-                                        Advertise with us</a>
-                                    </li>
-                                    <li class="colophon__item"><a data-link-name="international : footer : uk-jobs" href="https://jobs.theguardian.com/jobs?INTCMP=NGW_FOOTER_INT_GU_JOBS">
-                                        Search UK jobs</a>
-                                    </li>
-                                    <li class="colophon__item"><a data-link-name="international : footer : soulmates" href="https://soulmates.theguardian.com/?INTCMP=soulmates_int_web_footer">
-                                        Dating</a>
-                                    <li class="colophon__item js-discount-code-link"><a data-link-name="international : footer : discount code" href="https://discountcode.theguardian.com">
-                                        Discount Codes</a>
-                                    </li>
+                                @FooterLinks.intListThree.map { link: FooterLink => @footerListItem(link) }
+
                                 </ul>
 
                                 @readerRevenueLinks(Edition(request).id.toLowerCase())
