@@ -21,7 +21,7 @@ jest.mock('commercial/modules/dfp/Advert', () =>
 );
 
 jest.mock('common/modules/commercial/build-page-targeting', () => ({
-    buildPageTargeting: jest.fn(),
+    getPageTargeting: jest.fn(),
 }));
 
 jest.mock('commercial/modules/prebid/bid-config', () => ({

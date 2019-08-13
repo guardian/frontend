@@ -4,13 +4,12 @@ import { getUserFromCookie, getUserFromApi } from 'common/modules/identity/api';
 
 const userSegmentsKey = 'gu.ads.userSegmentsData';
 
-const getUserSegments = function(): Array<any> {
-    if (local.isAvailable()) {
-        let userCookieData;
+const getUserSegments = (adConsentState: boolean | null): Array<any> => {
+    if (local.isAvailable() && adConsentState !== false) {
         const userSegmentsData = local.get(userSegmentsKey);
 
         if (userSegmentsData) {
-            userCookieData = getUserFromCookie();
+            const userCookieData = getUserFromCookie();
 
             if (
                 userCookieData &&
@@ -25,7 +24,7 @@ const getUserSegments = function(): Array<any> {
     return [];
 };
 
-const requestUserSegmentsFromId = function(): void {
+const requestUserSegmentsFromId = (): void => {
     if (
         local.isAvailable() &&
         local.get(userSegmentsKey) === null &&

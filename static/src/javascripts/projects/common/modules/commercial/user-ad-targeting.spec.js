@@ -30,12 +30,22 @@ describe('User Ad Targeting', () => {
         expect(requestUserSegmentsFromId).toBeDefined();
     });
 
+    it('should only return segments when consent is true or null', () => {
+        local.set(userSegmentsKey, {
+            userHash: 123,
+            segments: 'something',
+        });
+        expect(getUserSegments(null)).toBe('something');
+        expect(getUserSegments(true)).toBe('something');
+        expect(getUserSegments(false).length).toBe(0);
+    });
+
     it('should return user segments data from local storage', () => {
         local.set(userSegmentsKey, {
             userHash: 123,
             segments: 'something',
         });
-        expect(getUserSegments()).toBe('something');
+        expect(getUserSegments(true)).toBe('something');
     });
 
     it('should remove user segments belonging to another user from local storage', () => {
@@ -43,7 +53,7 @@ describe('User Ad Targeting', () => {
             userHash: 456,
             segments: 'anything',
         });
-        expect(getUserSegments().length).toBe(0);
+        expect(getUserSegments(true).length).toBe(0);
         expect(local.get(userSegmentsKey)).toBeFalsy();
     });
 

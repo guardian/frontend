@@ -2,7 +2,6 @@
 import $ from 'lib/$';
 import { getBreakpoint as getBreakpoint_ } from 'lib/detect';
 import config from 'lib/config';
-
 import { init as prepareGoogletag } from 'commercial/modules/dfp/prepare-googletag';
 import { getAdverts } from 'commercial/modules/dfp/get-adverts';
 import { getCreativeIDs } from 'commercial/modules/dfp/get-creative-ids';
@@ -10,6 +9,7 @@ import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { loadAdvert } from 'commercial/modules/dfp/load-advert';
 import { fillAdvertSlots as fillAdvertSlots_ } from 'commercial/modules/dfp/fill-advert-slots';
+import { onConsentNotification as onConsentNotification_ } from 'lib/cmp';
 
 // $FlowFixMe property requireActual is actually not missing Flow.
 const { fillAdvertSlots: actualFillAdvertSlots } = jest.requireActual(
@@ -18,6 +18,7 @@ const { fillAdvertSlots: actualFillAdvertSlots } = jest.requireActual(
 
 const getBreakpoint: any = getBreakpoint_;
 const fillAdvertSlots: any = fillAdvertSlots_;
+const onConsentNotification: any = onConsentNotification_;
 
 jest.mock('commercial/modules/dfp/fill-advert-slots', () => ({
     fillAdvertSlots: jest.fn(),
@@ -92,6 +93,9 @@ jest.mock('commercial/modules/third-party-tags/outbrain', () => ({
 }));
 jest.mock('commercial/modules/dfp/load-advert', () => ({
     loadAdvert: jest.fn(),
+}));
+jest.mock('lib/cmp', () => ({
+    onConsentNotification: jest.fn(),
 }));
 
 let $style;
@@ -398,11 +402,15 @@ describe('DFP', () => {
     });
 
     describe('keyword targeting', () => {
-        it('should send page level keywords', () =>
+        it('should send page level keywords', () => {
+            onConsentNotification.mockImplementation((purpose, callback) =>
+                callback(null)
+            );
             prepareGoogletag().then(() => {
                 expect(
                     window.googletag.pubads().setTargeting
                 ).toHaveBeenCalledWith('k', ['korea', 'ukraine']);
-            }));
+            });
+        });
     });
 });

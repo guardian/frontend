@@ -2,7 +2,10 @@
 import { local } from 'lib/storage';
 
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
-import { buildPageTargeting } from 'common/modules/commercial/build-page-targeting';
+import {
+    getPageTargeting,
+    _,
+} from 'common/modules/commercial/build-page-targeting';
 import config from 'lib/config';
 import { getCookie as getCookie_ } from 'lib/cookies';
 import {
@@ -14,10 +17,8 @@ import { isUserLoggedIn as isUserLoggedIn_ } from 'common/modules/identity/api';
 import { getUserSegments as getUserSegments_ } from 'common/modules/commercial/user-ad-targeting';
 import { getSynchronousParticipations as getSynchronousParticipations_ } from 'common/modules/experiments/ab';
 import { getKruxSegments as getKruxSegments_ } from 'common/modules/commercial/krux';
+import { onConsentNotification as onConsentNotification_ } from 'lib/cmp';
 
-import { getAdConsentState as getAdConsentState_ } from 'common/modules/commercial/ad-prefs.lib';
-
-const getAdConsentState: any = getAdConsentState_;
 const getCookie: any = getCookie_;
 const getUserSegments: any = getUserSegments_;
 const getSynchronousParticipations: any = getSynchronousParticipations_;
@@ -26,6 +27,7 @@ const getReferrer: any = getReferrer_;
 const getBreakpoint: any = getBreakpoint_;
 const isUserLoggedIn: any = isUserLoggedIn_;
 const getSync: any = getSync_;
+const onConsentNotification: any = onConsentNotification_;
 
 jest.mock('lib/storage');
 jest.mock('lib/config');
@@ -54,14 +56,16 @@ jest.mock('common/modules/commercial/krux', () => ({
     getKruxSegments: jest.fn(),
 }));
 jest.mock('lodash/once', () => fn => fn);
-
-jest.mock('common/modules/commercial/ad-prefs.lib', () => ({
-    getAdConsentState: jest.fn(),
-}));
-
 jest.mock('common/modules/commercial/commercial-features', () => ({
     commercialFeatures() {},
 }));
+jest.mock('lib/cmp', () => ({
+    onConsentNotification: jest.fn(),
+}));
+
+const trueConsentMock = (purpose, callback): void => callback(true);
+const falseConsentMock = (purpose, callback): void => callback(false);
+const nullConsentMock = (purpose, callback): void => callback(null);
 
 describe('Build Page Targeting', () => {
     beforeEach(() => {
@@ -100,8 +104,9 @@ describe('Build Page Targeting', () => {
         commercialFeatures.adFree = false;
 
         // Reset mocking to default values.
-        getAdConsentState.mockReturnValue(null);
         getCookie.mockReturnValue('ng101');
+        _.resetPageTargeting();
+        onConsentNotification.mockImplementation(nullConsentMock);
 
         getBreakpoint.mockReturnValue('mobile');
         getReferrer.mockReturnValue('');
@@ -129,11 +134,11 @@ describe('Build Page Targeting', () => {
     });
 
     it('should exist', () => {
-        expect(buildPageTargeting).toBeDefined();
+        expect(getPageTargeting).toBeDefined();
     });
 
     it('should build correct page targeting', () => {
-        const pageTargeting = buildPageTargeting();
+        const pageTargeting = getPageTargeting();
 
         expect(pageTargeting.sens).toBe('f');
         expect(pageTargeting.edition).toBe('us');
@@ -156,23 +161,24 @@ describe('Build Page Targeting', () => {
     });
 
     it('should set correct personalized ad (pa) param', () => {
-        getAdConsentState.mockReturnValueOnce(true);
-        expect(buildPageTargeting().pa).toBe('t');
+        onConsentNotification.mockImplementation(trueConsentMock);
+        expect(getPageTargeting().pa).toBe('t');
 
-        getAdConsentState.mockReturnValueOnce(false);
-        expect(buildPageTargeting().pa).toBe('f');
+        _.resetPageTargeting();
+        onConsentNotification.mockImplementation(falseConsentMock);
+        expect(getPageTargeting().pa).toBe('f');
     });
 
     it('should set correct edition param', () => {
-        expect(buildPageTargeting().edition).toBe('us');
+        expect(getPageTargeting().edition).toBe('us');
     });
 
     it('should set correct se param', () => {
-        expect(buildPageTargeting().se).toEqual(['filmweekly']);
+        expect(getPageTargeting().se).toEqual(['filmweekly']);
     });
 
     it('should set correct k param', () => {
-        expect(buildPageTargeting().k).toEqual([
+        expect(getPageTargeting().k).toEqual([
             'prince-charles-letters',
             'uk/uk',
             'prince-charles',
@@ -180,27 +186,23 @@ describe('Build Page Targeting', () => {
     });
 
     it('should set correct ab param', () => {
-        expect(buildPageTargeting().ab).toEqual(['MtMaster-variantName']);
+        expect(getPageTargeting().ab).toEqual(['MtMaster-variantName']);
     });
 
     it('should set correct krux params', () => {
-        expect(buildPageTargeting().x).toEqual([
-            'E012712',
-            'E012390',
-            'E012478',
-        ]);
+        expect(getPageTargeting().x).toEqual(['E012712', 'E012390', 'E012478']);
     });
 
     it('should set Observer flag for Observer content', () => {
-        expect(buildPageTargeting().ob).toEqual('t');
+        expect(getPageTargeting().ob).toEqual('t');
     });
 
     it('should set correct branding param for paid content', () => {
-        expect(buildPageTargeting().br).toEqual('p');
+        expect(getPageTargeting().br).toEqual('p');
     });
 
     it('should not contain an ad-free targeting value', () => {
-        expect(buildPageTargeting().af).toBeUndefined();
+        expect(getPageTargeting().af).toBeUndefined();
     });
 
     it('should remove empty values', () => {
@@ -209,7 +211,7 @@ describe('Build Page Targeting', () => {
         getUserSegments.mockReturnValue([]);
         getKruxSegments.mockReturnValue([]);
 
-        expect(buildPageTargeting()).toEqual({
+        expect(getPageTargeting()).toEqual({
             sens: 'f',
             bp: 'mobile',
             at: 'ng101',
@@ -226,71 +228,71 @@ describe('Build Page Targeting', () => {
     describe('Breakpoint targeting', () => {
         it('should set correct breakpoint targeting for a mobile device', () => {
             getBreakpoint.mockReturnValue('mobile');
-            expect(buildPageTargeting().bp).toEqual('mobile');
+            expect(getPageTargeting().bp).toEqual('mobile');
         });
 
         it('should set correct breakpoint targeting for a medium mobile device', () => {
             getBreakpoint.mockReturnValue('mobileMedium');
-            expect(buildPageTargeting().bp).toEqual('mobile');
+            expect(getPageTargeting().bp).toEqual('mobile');
         });
 
         it('should set correct breakpoint targeting for a mobile device in landscape mode', () => {
             getBreakpoint.mockReturnValue('mobileLandscape');
-            expect(buildPageTargeting().bp).toEqual('mobile');
+            expect(getPageTargeting().bp).toEqual('mobile');
         });
 
         it('should set correct breakpoint targeting for a phablet device', () => {
             getBreakpoint.mockReturnValue('phablet');
-            expect(buildPageTargeting().bp).toEqual('tablet');
+            expect(getPageTargeting().bp).toEqual('tablet');
         });
 
         it('should set correct breakpoint targeting for a tablet device', () => {
             getBreakpoint.mockReturnValue('tablet');
-            expect(buildPageTargeting().bp).toEqual('tablet');
+            expect(getPageTargeting().bp).toEqual('tablet');
         });
 
         it('should set correct breakpoint targeting for a desktop device', () => {
             getBreakpoint.mockReturnValue('desktop');
-            expect(buildPageTargeting().bp).toEqual('desktop');
+            expect(getPageTargeting().bp).toEqual('desktop');
         });
 
         it('should set correct breakpoint targeting for a leftCol device', () => {
             getBreakpoint.mockReturnValue('leftCol');
-            expect(buildPageTargeting().bp).toEqual('desktop');
+            expect(getPageTargeting().bp).toEqual('desktop');
         });
 
         it('should set correct breakpoint targeting for a wide device', () => {
             getBreakpoint.mockReturnValue('wide');
-            expect(buildPageTargeting().bp).toEqual('desktop');
+            expect(getPageTargeting().bp).toEqual('desktop');
         });
     });
 
     describe('Build Page Targeting (ad-free)', () => {
         it('should set the ad-free param to t when enabled', () => {
             commercialFeatures.adFree = true;
-            expect(buildPageTargeting().af).toBe('t');
+            expect(getPageTargeting().af).toBe('t');
         });
     });
 
     describe('Already visited frequency', () => {
         it('can pass a value of five or less', () => {
             local.set('gu.alreadyVisited', 5);
-            expect(buildPageTargeting().fr).toEqual('5');
+            expect(getPageTargeting().fr).toEqual('5');
         });
 
         it('between five and thirty, includes it in a bucket in the form "x-y"', () => {
             local.set('gu.alreadyVisited', 18);
-            expect(buildPageTargeting().fr).toEqual('16-19');
+            expect(getPageTargeting().fr).toEqual('16-19');
         });
 
         it('over thirty, includes it in the bucket "30plus"', () => {
             local.set('gu.alreadyVisited', 300);
-            expect(buildPageTargeting().fr).toEqual('30plus');
+            expect(getPageTargeting().fr).toEqual('30plus');
         });
 
         it('passes a value of 0 if the value is not stored', () => {
             local.remove('gu.alreadyVisited');
-            expect(buildPageTargeting().fr).toEqual('0');
+            expect(getPageTargeting().fr).toEqual('0');
         });
     });
 
@@ -299,33 +301,33 @@ describe('Build Page Targeting', () => {
             getReferrer.mockReturnValue(
                 'https://www.facebook.com/feel-the-force'
             );
-            expect(buildPageTargeting().ref).toEqual('facebook');
+            expect(getPageTargeting().ref).toEqual('facebook');
         });
 
         it('should set ref to Twitter', () => {
             getReferrer.mockReturnValue(
                 'https://www.t.co/you-must-unlearn-what-you-have-learned'
             );
-            expect(buildPageTargeting().ref).toEqual('twitter');
+            expect(getPageTargeting().ref).toEqual('twitter');
         });
 
         it('should set ref to reddit', () => {
             getReferrer.mockReturnValue(
                 'https://www.reddit.com/its-not-my-fault'
             );
-            expect(buildPageTargeting().ref).toEqual('reddit');
+            expect(getPageTargeting().ref).toEqual('reddit');
         });
 
         it('should set ref to google', () => {
             getReferrer.mockReturnValue(
                 'https://www.google.com/i-find-your-lack-of-faith-distrubing'
             );
-            expect(buildPageTargeting().ref).toEqual('google');
+            expect(getPageTargeting().ref).toEqual('google');
         });
 
         it('should set ref empty string if referrer does not match', () => {
             getReferrer.mockReturnValue('https://theguardian.com');
-            expect(buildPageTargeting().ref).toEqual(undefined);
+            expect(getPageTargeting().ref).toEqual(undefined);
         });
     });
 });

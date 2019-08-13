@@ -32,20 +32,8 @@ describe('Facebook tracking pixel', () => {
         expect(result.shouldRun).toBe(false);
     });
 
-    it('should not load if consent has been denied', () => {
-        setup({ consent: false, switchedOn: true });
-        const result = fbPixel();
-        expect(result.shouldRun).toBe(false);
-    });
-
-    it('should load if consent is available and the switch enabled', () => {
+    it('should load if the switch enabled', () => {
         setup({ consent: true, switchedOn: true });
-        const result = fbPixel();
-        expect(result.shouldRun).toBe(true);
-    });
-
-    it('if the switch is enabled and consent is null, treat consent as true', () => {
-        setup({ consent: null, switchedOn: true });
         const result = fbPixel();
         expect(result.shouldRun).toBe(true);
     });

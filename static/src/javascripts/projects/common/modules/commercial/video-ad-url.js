@@ -1,13 +1,13 @@
 // @flow
 import config from 'lib/config';
 import { constructQuery } from 'lib/url';
-import { buildPageTargeting } from 'common/modules/commercial/build-page-targeting';
+import { getPageTargeting } from 'common/modules/commercial/build-page-targeting';
 
 const videoAdUrl = (): string => {
     const queryParams = {
         ad_rule: 1,
         correlator: new Date().getTime(),
-        cust_params: encodeURIComponent(constructQuery(buildPageTargeting())),
+        cust_params: encodeURIComponent(constructQuery(getPageTargeting())),
         env: 'vp',
         gdfp_req: 1,
         impl: 's',
