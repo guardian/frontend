@@ -7,6 +7,7 @@ import org.joda.time.LocalDate
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] = Set(
     OldTLSSupportDeprecation,
+    DotcomRenderingBeta,
   )
 
   implicit val canCheckExperiment = new CanCheckExperiment(this)
@@ -19,4 +20,12 @@ object OldTLSSupportDeprecation extends Experiment(
   sellByDate = new LocalDate(2020, 1, 20),
   // Custom group based on header set in Fastly
   participationGroup = TLSSupport
+)
+
+object DotcomRenderingBeta extends Experiment(
+  name = "dotcom-rendering-beta",
+  description = "Beta test for dotcom rendering version of site",
+  owners = Seq(Owner.withGithub("nicl")),
+  sellByDate = new LocalDate(2020, 12, 1),
+  participationGroup = Perc50 // see ArticlePicker.scala - our main filter mechanism is by page features
 )

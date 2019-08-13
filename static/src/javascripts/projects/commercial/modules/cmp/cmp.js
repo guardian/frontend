@@ -4,12 +4,17 @@ import config from 'lib/config';
 import { getCookie } from 'lib/cookies';
 import { getUrlVars } from 'lib/url';
 import fetchJSON from 'lib/fetch-json';
-import { commercialCmpCustomise } from 'common/modules/experiments/tests/commercial-cmp-customise';
+import { commercialIabCompliant } from 'common/modules/experiments/tests/commercial-iab-compliant';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import { log } from './log';
 import { CmpStore } from './store';
 import { encodeVendorConsentData } from './cookie';
-import { shortVendorList as shortVendorListData } from './vendorlist';
+
+// Avoid Flow and eslint to complain about this import not being available
+// in a fresh checkout.
+// See tools/tools/__tasks__/compile/data/aib_cmp.js to understand
+// $FlowFixMe
+import { shortVendorList as shortVendorListData } from './vendorlist'; // eslint-disable-line import/no-unresolved
 
 import {
     defaultConfig,
@@ -62,7 +67,7 @@ const readConsentCookie = (cookieName: string): boolean | null => {
 };
 
 const isInCmpCustomiseTest = (): boolean =>
-    isInVariantSynchronous(commercialCmpCustomise, 'variant');
+    isInVariantSynchronous(commercialIabCompliant, 'variant');
 
 const generateStore = (isInTest: boolean): CmpStore => {
     const store = new CmpStore(

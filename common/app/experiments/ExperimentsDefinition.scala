@@ -15,15 +15,27 @@ trait ExperimentsDefinition {
   val allExperiments: Set[Experiment]
   implicit val canCheckExperiment: CanCheckExperiment
 
-  def getJavascriptConfig(implicit request: RequestHeader): String = {
+  def getJsMap(implicit request: RequestHeader): Map[String, String] = {
+   allExperiments.foreach(exp => {
+     println(s"name:${exp.name} switch:${exp.switch.isSwitchedOn} value:${exp.value}")
+   })
+
     allExperiments
       .filter(e => isParticipating(e) || isControl(e))
       .toSeq.sortBy(_.name)
       .map { e =>
         val value = e.value
         val nameWithValue = s"${e.name}-${value}" // Each experiment variant needs to have a unique name for Ophan
-        s""""${CamelCase.fromHyphenated(nameWithValue)}":"${value}""""
+        CamelCase.fromHyphenated(nameWithValue) -> value
       }
+      .toMap
+  }
+
+
+  def getJavascriptConfig(implicit request: RequestHeader): String = {
+    getJsMap
+      .toList
+      .map({case (key, value) => s""""${CamelCase.fromHyphenated(key)}":"${value}""""})
       .mkString(",")
   }
 

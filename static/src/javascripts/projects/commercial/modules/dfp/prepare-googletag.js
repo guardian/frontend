@@ -7,11 +7,8 @@ import { loadScript } from 'lib/load-script';
 import raven from 'lib/raven';
 import sha1 from 'lib/sha1';
 import { session } from 'lib/storage';
-import {
-    getAdConsentState,
-    thirdPartyTrackingAdConsent,
-} from 'common/modules/commercial/ad-prefs.lib';
 import { getPageTargeting } from 'common/modules/commercial/build-page-targeting';
+import { onConsentNotification } from 'lib/cmp';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { adFreeSlotRemove } from 'commercial/modules/ad-free-slot-remove';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
@@ -61,25 +58,6 @@ const setDfpListeners = (): void => {
     }
 };
 
-const setPersonalisedAds = (): void => {
-    const wantPersonalisedAds: ?boolean = getAdConsentState(
-        thirdPartyTrackingAdConsent
-    );
-    switch (wantPersonalisedAds) {
-        // personalised ads have been explicitly accepted
-        case true:
-            window.googletag.pubads().setRequestNonPersonalizedAds(0);
-            break;
-        // personalised ads have been explicitly rejected
-        case false:
-            window.googletag.pubads().setRequestNonPersonalizedAds(1);
-            break;
-        // no preference has been specified
-        default:
-            window.googletag.pubads();
-    }
-};
-
 const setPageTargeting = (): void => {
     const pubads = window.googletag.pubads();
     // because commercialFeatures may export itself as {} in the event of an exception during construction
@@ -116,7 +94,6 @@ export const init = (): Promise<void> => {
         // fulfilled), but don't assume fillAdvertSlots is complete when queueing subsequent work using cmd.push
         window.googletag.cmd.push(
             setDfpListeners,
-            setPersonalisedAds,
             setPageTargeting,
             setPublisherProvidedId,
             refreshOnResize,
@@ -124,6 +101,16 @@ export const init = (): Promise<void> => {
                 fillAdvertSlots();
             }
         );
+
+        onConsentNotification('advertisement', state => {
+            if (state !== null) {
+                window.googletag.cmd.push(() => {
+                    window.googletag
+                        .pubads()
+                        .setRequestNonPersonalizedAds(state ? 0 : 1);
+                });
+            }
+        });
 
         // Just load googletag. Prebid will already be loaded, and googletag is already added to the window by Prebid.
         return loadScript(config.get('libs.googletag'), { async: false });

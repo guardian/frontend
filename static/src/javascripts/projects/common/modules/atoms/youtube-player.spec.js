@@ -16,9 +16,8 @@ jest.mock('lib/config', () => ({
     }),
 }));
 
-jest.mock('common/modules/commercial/ad-prefs.lib', () => ({
-    getAdConsentState: jest.fn(),
-    thirdPartyTrackingAdConsent: jest.fn(),
+jest.mock('lib/cmp', () => ({
+    onConsentNotification: jest.fn((purposeName, callback) => callback(true)),
 }));
 
 jest.mock('common/modules/commercial/commercial-features', () => ({
