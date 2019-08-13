@@ -24,6 +24,7 @@ import play.api.mvc.RequestHeader
 import views.html.fragments.affiliateLinksDisclaimer
 import views.support.{AffiliateLinksCleaner, CamelCase, ContentLayout, GUDateTimeFormat, ImgSrc, Item300}
 import controllers.ArticlePage
+import experiments.ActiveExperiments
 import org.joda.time.DateTime
 
 // We have introduced our own set of objects for serializing data to the DotComponents API,
@@ -112,6 +113,7 @@ case class Config(
   sentryPublicApiKey: String,
   sentryHost: String,
   switches: Map[String, Boolean],
+  abTests: Map[String, String],
   dfpAccountId: String,
   commercialBundleUrl: String,
   revisionNumber: String,
@@ -531,6 +533,7 @@ object DotcomponentsDataModel {
       sentryHost = jsPageData.get("sentryHost").getOrElse(""),
       switches = switches,
       dfpAccountId = Configuration.commercial.dfpAccountId,
+      abTests = ActiveExperiments.getJsMap(request),
       commercialBundleUrl = buildFullCommercialUrl("javascripts/graun.dotcom-rendering-commercial.js"),
       revisionNumber = ManifestData.revision.toString,
       googletagUrl = Configuration.googletag.jsLocation,
