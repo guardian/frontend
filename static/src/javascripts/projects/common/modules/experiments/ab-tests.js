@@ -1,6 +1,6 @@
 // @flow
 import { commercialPrebidSafeframe } from 'common/modules/experiments/tests/commercial-prebid-safeframe.js';
-import { commercialCmpCustomise } from 'common/modules/experiments/tests/commercial-cmp-customise.js';
+import { commercialIabCompliant } from 'common/modules/experiments/tests/commercial-iab-compliant';
 import { commercialOutbrainTesting } from 'common/modules/experiments/tests/commercial-outbrain-testing.js';
 import { commercialYoutubePfpAdTargeting } from 'common/modules/experiments/tests/commercial-youtube-pfp-ad-targeting.js';
 import { askFourEarning } from 'common/modules/experiments/tests/contributions-epic-ask-four-earning';
@@ -13,7 +13,7 @@ import { prebidTripleLiftAdapter } from 'common/modules/experiments/tests/prebid
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialPrebidSafeframe,
-    commercialCmpCustomise,
+    commercialIabCompliant,
     commercialOutbrainTesting,
     commercialYoutubePfpAdTargeting,
     adblockTest,
