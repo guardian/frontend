@@ -61,6 +61,9 @@
     bottom: 0;
     height: 85px;
     opacity: .5;
+    @include mq($until: mobileLandscape) {
+        display: none;
+    }
 }
 
 .youtube-media-atom__paid-for-label {
@@ -78,6 +81,9 @@
     bottom: 0 ;
     right: 0;
     width: auto;
+    @include mq($until: mobileLandscape) {
+        display: none;
+    }
 }
 
 .youtube-media-atom__paid-for-logo {
@@ -87,6 +93,9 @@
     bottom: 0;
     right: 0;
     margin-right: 10px;
+    @include mq($until: mobileLandscape) {
+        display: none;
+    }
 }
 
 .youtube-media-atom__iframe,
