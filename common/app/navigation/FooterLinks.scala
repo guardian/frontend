@@ -95,7 +95,7 @@ object FooterLinks {
   val auListTwo = List(
     allTopics("au"),
     allWriters("au"),
-    FooterLink("Events", "/guardian-masterclasses/guardian-masterclasses-australia", "au : footer : masterclasses")
+    FooterLink("Events", "/guardian-masterclasses/guardian-masterclasses-australia", "au : footer : masterclasses"),
     digitalNewspaperArchive,
     facebook("au"),
     twitter("au")
@@ -139,7 +139,7 @@ object FooterLinks {
     discountCodes("au")
   )
 
-  val internationalListThree = List(
+  val intListThree = List(
     FooterLink("Advertise with us", "https://advertising.theguardian.com", "international : footer : advertise with us"),
     FooterLink("Search UK jobs", "https://jobs.theguardian.com/jobs?INTCMP=NGW_FOOTER_INT_GU_JOBS", "international : footer : uk-jobs"),
     FooterLink("Dating", "https://soulmates.theguardian.com/?INTCMP=soulmates_int_web_footer", "international : footer : soulmates"),
