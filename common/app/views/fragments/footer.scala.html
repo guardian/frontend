@@ -4,6 +4,7 @@
 @import common.Edition
 @import common.LinkTo
 @import navigation.NavMenu
+@import navigation.{FooterLinks, FooterLink}
 @import navigation.ReaderRevenueSite.{Support, SupportSubscribe, SupportContribute}
 @import navigation.UrlHelpers.{getReaderRevenueUrl, Footer, AmpFooter}
 @import common.editions.{Au, Uk, Us, International}
@@ -12,6 +13,20 @@
 @import com.gu.identity.model.EmailNewsletters
 @import model.NoCache
 @import views.support.{RenderClasses}
+
+
+
+@footerListItem(link: FooterLink) = {
+    <li class="colophon__item">
+        <a
+        data-link-name="@link.dataLinkName"
+        href="@if(link.url.startsWith("/")) {@LinkTo{@link.url}} else {@link.url}"
+        class="@link.extraClasses"
+        >
+        @Html(link.text)
+        </a>
+    </li>
+}
 
 <footer class="l-footer u-cf" data-link-name="footer" data-component="footer">
 
@@ -65,79 +80,20 @@
                 <div class="@RenderClasses(Map(
                     "colophon__lists-container--foundation" ->  page.metadata.isFoundation,
                 ), "colophon__lists-container")">
+
                     @if(!page.metadata.isFoundation) {
                         @currentEdition match {
                             case Uk => {
                                 <ul class="colophon__list">
-                                    <li class="colophon__item"><a data-link-name="uk : footer : about us" href="@LinkTo {/about}">
-                                        About us</a>
-                                    </li>
-                                    <li class="colophon__item"><a data-link-name="uk : footer : contact us" href="@LinkTo {/help/contact-us}">
-                                        Contact us</a>
-                                    </li>
-                                    <li class="colophon__item"><a data-link-name="complaints" href="@LinkTo {/info/complaints-and-corrections}">
-                                        Complaints &amp; corrections</a>
-                                    </li>
-                                    <li class="colophon__item"><a data-link-name="securedrop" href="https://www.theguardian.com/securedrop">
-                                        SecureDrop</a>
-                                    </li>
-                                    <li class="colophon__item"><a data-link-name="uk : footer : work for us" href="https://workforus.theguardian.com">
-                                        Work for us</a>
-                                    </li>
-                                    <li class="colophon__item"><a data-link-name="privacy" href="@LinkTo {/info/privacy}">
-                                        Privacy policy</a>
-                                    </li>
-                                    <li class="colophon__item"><a data-link-name="cookie" href="@LinkTo {/info/cookies}">
-                                        Cookie policy</a>
-                                    </li>
-                                    <li class="colophon__item"><a data-link-name="terms" href="@LinkTo {/help/terms-of-service}">
-                                        Terms &amp; conditions</a>
-                                    </li>
-                                    <li class="colophon__item"><a data-link-name="uk : footer : tech feedback" class="js-tech-feedback-report" href="@LinkTo {/help}">
-                                        Help</a>
-                                    </li>
+                                    @FooterLinks.ukListOne.map { link: FooterLink => @footerListItem(link) }
                                 </ul>
 
                                 <ul class="colophon__list">
-                                    <li class="colophon__item"><a data-link-name="uk : footer : all topics" href="@LinkTo {/index/subjects/a}">
-                                        All topics</a>
-                                    </li>
-                                    <li class="colophon__item"><a data-link-name="uk : footer : all contributors" href="@LinkTo {/index/contributors}">
-                                        All writers</a>
-                                    </li>
-                                    <li class="colophon__item"><a data-link-name="uk : footer : modern slavery act statement" href="@LinkTo {/info/2016/jul/27/modern-slavery-and-our-supply-chains?INTCMP=NGW_FOOTER_UK_GU_MODERN_SLAVERY_ACT}">
-                                        Modern Slavery Act</a>
-                                    </li>
-                                    <li class="colophon__item"><a data-link-name="digital newspaper archive" href="https://theguardian.newspapers.com">
-                                        Digital newspaper archive</a>
-                                    </li>
-                                    <li class="colophon__item"><a data-link-name="uk : footer : facebook" href="https://www.facebook.com/theguardian">
-                                        Facebook</a>
-                                    </li>
-                                    <li class="colophon__item"><a data-link-name="uk : footer : twitter" href="https://twitter.com/guardian">
-                                        Twitter</a>
-                                    </li>
+                                    @FooterLinks.ukListTwo.map { link: FooterLink => @footerListItem(link)}
                                 </ul>
 
                                 <ul class="colophon__list">
-                                    <li class="colophon__item"><a data-link-name="uk : footer : advertise with us" href="https://advertising.theguardian.com">
-                                        Advertise with us</a>
-                                    </li>
-                                    <li class="colophon__item"><a data-link-name="uk : footer : guardian labs" href="@LinkTo {/guardian-labs}">
-                                        Guardian Labs</a>
-                                    </li>
-                                    <li class="colophon__item"><a data-link-name="uk : footer : jobs" href="https://jobs.theguardian.com/jobs?INTCMP=NGW_FOOTER_UK_GU_JOBS">
-                                        Search jobs</a>
-                                    </li>
-                                    <li class="colophon__item"><a data-link-name="uk : footer : soulmates" href="https://soulmates.theguardian.com/?INTCMP=NGW_FOOTER_UK_GU_SOULMATES">
-                                        Dating</a>
-                                    </li>
-                                    <li class="colophon__item"><a data-link-name="uk : footer : patrons" href="https://patrons.theguardian.com/?INTCMP=footer_patrons">
-                                        Patrons</a>
-                                    </li>
-                                    <li class="colophon__item"><a class="js-discount-code-link" data-link-name="uk : footer : discount code" href="https://discountcode.theguardian.com/">
-                                        Discount Codes</a>
-                                    </li>
+                                    @FooterLinks.ukListThree.map { link: FooterLink => @footerListItem(link) }
                                 </ul>
 
                                 @readerRevenueLinks(Edition(request).id.toLowerCase())
@@ -145,70 +101,18 @@
 
                             case Us => {
                                 <ul class="colophon__list">
-                                    <li class="colophon__item"><a data-link-name="us : footer : about us" href="@LinkTo {/info/about-guardian-us}">
-                                        About us</a>
-                                    </li>
-                                    <li class="colophon__item"><a data-link-name="us : footer : contact us" href="@LinkTo {/info/about-guardian-us/contact}">
-                                        Contact us</a>
-                                    </li>
-                                    <li class="colophon__item"><a data-link-name="complaints" href="@LinkTo {/info/complaints-and-corrections}">
-                                        Complaints &amp; corrections</a>
-                                    </li>
-                                    <li class="colophon__item"><a data-link-name="securedrop" href="https://www.theguardian.com/securedrop">
-                                        SecureDrop</a>
-                                    </li>
-                                    <li class="colophon__item"><a data-link-name="us : footer : work for us" href="https://workforus.theguardian.com/">
-                                        Work for us</a>
-                                    </li>
-                                    <li class="colophon__item"><a data-link-name="privacy" href="@LinkTo {/info/privacy}">
-                                        Privacy policy</a>
-                                    </li>
-                                    <li class="colophon__item"><a data-link-name="cookie" href="@LinkTo {/info/cookies}">
-                                        Cookie policy</a>
-                                    </li>
-                                    <li class="colophon__item"><a data-link-name="terms" href="@LinkTo {/help/terms-of-service}">
-                                        Terms &amp; conditions</a>
-                                    </li>
-                                    <li class="colophon__item"><a data-link-name="us : footer : tech feedback" class="js-tech-feedback-report" href="@LinkTo {/help}">
-                                        Help</a>
-                                    </li>
+                                    @FooterLinks.usListOne.map { link: FooterLink => @footerListItem(link) }
                                 </ul>
 
 
                                 <ul class="colophon__list">
-                                    <li class="colophon__item"><a data-link-name="us : footer : all topics" href="@LinkTo {/index/subjects/a}">
-                                        All topics</a>
-                                    </li>
-                                    <li class="colophon__item"><a data-link-name="us : footer : all contributors" href="@LinkTo {/index/contributors}">
-                                        All writers</a>
-                                    </li>
-                                    <li class="colophon__item"><a data-link-name="digital newspaper archive" href="https://theguardian.newspapers.com">
-                                        Digital newspaper archive</a>
-                                    </li>
-                                    <li class="colophon__item"><a data-link-name="us : footer : facebook" href="https://www.facebook.com/GuardianUs">
-                                        Facebook</a>
-                                    </li>
-                                    <li class="colophon__item"><a data-link-name="us : footer : twitter" href="https://twitter.com/GuardianUs">
-                                        Twitter</a>
-                                    </li>
+                                    @FooterLinks.usListTwo.map { link: FooterLink => @footerListItem(link) }
                                 </ul>
 
 
                                 <ul class="colophon__list">
-                                    <li class="colophon__item"><a data-link-name="us : footer : advertise with us" href="https://advertising.theguardian.com/us/advertising">
-                                        Advertise with us</a>
-                                    </li>
-                                    <li class="colophon__item"><a data-link-name="us : footer : guardian labs" href="@LinkTo {/guardian-labs-us}">
-                                        Guardian Labs</a>
-                                    </li>
-                                    <li class="colophon__item"><a data-link-name="us : footer : jobs" href="https://jobs.theguardian.com/jobs?INTCMP=NGW_FOOTER_US_GU_JOBS">
-                                        Search jobs</a>
-                                    </li>
-                                    <li class="colophon__item"><a data-link-name="us : footer : soulmates" href="https://soulmates.theguardian.com/?INTCMP=soulmates_us_web_footer">
-                                        Dating</a>
-                                    <li class="colophon__item"><a class="js-discount-code-link" data-link-name="us : footer : discount code" href="https://discountcode.theguardian.com/">
-                                        Coupons</a>
-                                    </li>
+
+                                    @FooterLinks.usListThree.map { link: FooterLink => @footerListItem(link) }
                                 </ul>
 
                                 @readerRevenueLinks(Edition(request).id.toLowerCase())
@@ -217,71 +121,16 @@
 
                             case Au => {
                                 <ul class="colophon__list">
-                                    <li class="colophon__item"><a data-link-name="au : footer : about us" href="@LinkTo {/info/about-guardian-australia}">
-                                        About us</a>
-                                    </li>
-                                    <li class="colophon__item"><a data-link-name="au : footer : information" href="@LinkTo {/info}">
-                                        Information</a>
-                                    </li>
-                                    <li class="colophon__item"><a data-link-name="au : footer : contact us" href="@LinkTo {/info/2013/may/26/contact-guardian-australia}">
-                                        Contact us</a>
-                                    </li>
-                                    <li class="colophon__item"><a data-link-name="securedrop" href="https://www.theguardian.com/securedrop">
-                                        SecureDrop</a>
-                                    </li>
-                                    <li class="colophon__item"><a data-link-name="au : footer : vacancies" href="https://www.theguardian.com/info/2015/aug/04/guardian-australia-job-vacancies">
-                                        Vacancies</a>
-                                    </li>
-                                    <li class="colophon__item"><a data-link-name="privacy" href="@LinkTo {/info/privacy}">
-                                        Privacy policy</a>
-                                    </li>
-                                    <li class="colophon__item"><a data-link-name="cookie" href="@LinkTo {/info/cookies}">
-                                        Cookie policy</a>
-                                    </li>
-                                    <li class="colophon__item"><a data-link-name="terms" href="@LinkTo {/help/terms-of-service}">
-                                        Terms &amp; conditions</a>
-                                    </li>
-                                    <li class="colophon__item"><a data-link-name="au : footer : tech feedback" class="js-tech-feedback-report" href="@LinkTo {/help}">
-                                        Help</a>
-                                    </li>
+                                    @FooterLinks.auListOne.map { link: FooterLink => @footerListItem(link) }
                                 </ul>
 
                                 <ul class="colophon__list">
-                                    <li class="colophon__item"><a data-link-name="au : footer : all topics" href="@LinkTo {/index/subjects/a}">
-                                        All topics</a>
-                                    </li>
-                                    <li class="colophon__item"><a data-link-name="au : footer : all contributors" href="@LinkTo {/index/contributors}">
-                                        All writers</a>
-                                    </li>
-                                    <li class="colophon__item"><a data-link-name="au : footer : masterclasses" href="@LinkTo {/guardian-masterclasses/guardian-masterclasses-australia}">
-                                        Events</a>
-                                    </li>
-                                    <li class="colophon__item"><a data-link-name="digital newspaper archive" href="https://theguardian.newspapers.com">
-                                        Digital newspaper archive</a>
-                                    </li>
-                                    <li class="colophon__item"><a data-link-name="au : footer : facebook" href="https://www.facebook.com/theguardianaustralia">
-                                        Facebook</a>
-                                    </li>
-                                    <li class="colophon__item"><a data-link-name="au : footer : twitter" href="https://twitter.com/GuardianAus">
-                                        Twitter</a>
-                                    </li>
+                                    @FooterLinks.auListTwo.map { link: FooterLink => @footerListItem(link) }
                                 </ul>
 
                                 <ul class="colophon__list">
-                                    <li class="colophon__item"><a data-link-name="au : footer : guardian labs" href="@LinkTo {/guardian-labs-australia}">
-                                        Guardian Labs</a>
-                                    </li>
-                                    <li class="colophon__item"><a data-link-name="au : footer : advertise with us" href="https://advertising.theguardian.com">
-                                        Advertise with us</a>
-                                    </li>
-                                    <li class="colophon__item"><a data-link-name="au : footer : uk-jobs" href="https://jobs.theguardian.com/jobs?INTCMP=NGW_FOOTER_AU_GU_JOBS">
-                                        Search UK jobs</a>
-                                    </li>
-                                    <li class="colophon__item"><a data-link-name="au : footer : soulmates" href="https://soulmates.theguardian.com/?INTCMP=soulmates_au_web_footer">
-                                        Dating</a>
-                                    <li class="colophon__item"><a class="js-discount-code-link" data-link-name="au : footer : discount code" href="https://discountcode.theguardian.com/">
-                                        Discount Codes</a>
-                                    </li>
+
+                                    @FooterLinks.auListThree.map { link: FooterLink => @footerListItem(link) }
                                 </ul>
 
                                 @readerRevenueLinks(Edition(request).id.toLowerCase())
@@ -289,48 +138,11 @@
 
                             case International => {
                                 <ul class="colophon__list">
-                                    <li class="colophon__item"><a data-link-name="international : footer : contact us" href="@LinkTo {/help/contact-us}">
-                                        Contact us</a>
-                                    </li>
-                                    <li class="colophon__item"><a data-link-name="complaints" href="@LinkTo {/info/complaints-and-corrections}">
-                                        Complaints &amp; corrections</a>
-                                    </li>
-                                    <li class="colophon__item"><a data-link-name="securedrop" href="https://www.theguardian.com/securedrop">
-                                        SecureDrop</a>
-                                    </li>
-                                    <li class="colophon__item"><a data-link-name="international : footer : work for us" href="https://workforus.theguardian.com">
-                                        Work for us</a>
-                                    </li>
-                                    <li class="colophon__item"><a data-link-name="privacy" href="@LinkTo {/info/privacy}">
-                                        Privacy policy</a>
-                                    </li>
-                                    <li class="colophon__item"><a data-link-name="cookie" href="@LinkTo {/info/cookies}">
-                                        Cookie policy</a>
-                                    </li>
-                                    <li class="colophon__item"><a data-link-name="terms" href="@LinkTo {/help/terms-of-service}">
-                                        Terms &amp; conditions</a>
-                                    </li>
-                                    <li class="colophon__item"><a data-link-name="tech feedback" class="international : footer : js-tech-feedback-report" href="@LinkTo {/help}">
-                                        Help</a>
-                                    </li>
+                                @FooterLinks.intListOne.map { link: FooterLink => @footerListItem(link) }
                                 </ul>
 
                                 <ul class="colophon__list">
-                                    <li class="colophon__item"><a data-link-name="international : footer : all topics" href="@LinkTo {/index/subjects/a}">
-                                        All topics</a>
-                                    </li>
-                                    <li class="colophon__item"><a data-link-name="international : footer : all contributors" href="@LinkTo {/index/contributors}">
-                                        All writers</a>
-                                    </li>
-                                    <li class="colophon__item"><a data-link-name="digital newspaper archive" href="https://theguardian.newspapers.com">
-                                        Digital newspaper archive</a>
-                                    </li>
-                                    <li class="colophon__item"><a data-link-name="international : footer : facebook" href="https://www.facebook.com/theguardian">
-                                        Facebook</a>
-                                    </li>
-                                    <li class="colophon__item"><a data-link-name="international : footer : twitter" href="https://twitter.com/guardian">
-                                        Twitter</a>
-                                    </li>
+                                @FooterLinks.intListTwo.map { link: FooterLink => @footerListItem(link) }
                                 </ul>
 
                                 <ul class="colophon__list">
