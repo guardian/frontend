@@ -26,11 +26,11 @@ declare type EngagementBannerTemplateParams = {
  * AllExistingSupporters - all recurring, all one-offs in last 6 months
  * AllNonSupporters - no recurring, no one-offs in last 6 months
  * Everyone
- * PostHolidayOneOffContributors - people who made a contribution between 6-7 months ago
+ * PostHolidaySingleContributors - people who made a contribution between 6-7 months ago
  *
- * Note - PostHolidayOneOffContributors is a subset of AllNonSupporters, so priority ordering of these tests is important
+ * Note - PostHolidaySingleContributors is a subset of AllNonSupporters, so priority ordering of these tests is important
  */
-declare type AcquisitionsComponentUserCohort = 'AllExistingSupporters' | 'AllNonSupporters' | 'Everyone' | 'PostHolidayOneOffContributors';
+declare type AcquisitionsComponentUserCohort = 'AllExistingSupporters' | 'AllNonSupporters' | 'Everyone' | 'PostHolidaySingleContributors';
 
 declare type EngagementBannerParams = EngagementBannerTemplateParams & {
     campaignCode: string,

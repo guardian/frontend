@@ -157,7 +157,7 @@ const userIsInCorrectCohort = (
     userCohort: AcquisitionsComponentUserCohort
 ): boolean => {
     switch (userCohort) {
-        case 'PostHolidayOneOffContributors':
+        case 'PostHolidaySingleContributors':
             return isPostHolidayOneOffContributor();
         case 'AllExistingSupporters':
             return shouldHideSupportMessaging();
@@ -174,7 +174,7 @@ const isValidCohort = (cohort: string): boolean =>
         'AllExistingSupporters',
         'AllNonSupporters',
         'Everyone',
-        'PostHolidayOneOffContributors',
+        'PostHolidaySingleContributors',
     ].includes(cohort);
 
 const shouldShowEpic = (test: EpicABTest): boolean => {
