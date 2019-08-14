@@ -281,11 +281,11 @@ const extendContribsCookieExpiry = (): void => {
     if (cookie) {
         const contributionDate = parseInt(cookie, 10);
         if (Number.isInteger(contributionDate)) {
-            const newExpiry = 365 - dateDiffDays(contributionDate, Date.now());
+            const daysToLive = 365 - dateDiffDays(contributionDate, Date.now());
             addCookie(
                 SUPPORT_ONE_OFF_CONTRIBUTION_COOKIE,
                 contributionDate.toString(),
-                newExpiry
+                daysToLive
             );
         }
     }
