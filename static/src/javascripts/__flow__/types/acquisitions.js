@@ -22,7 +22,13 @@ declare type EngagementBannerTemplateParams = {
     signInUrl?: string,
 };
 
-declare type AcquisitionsComponentUserCohort = 'OnlyExistingSupporters' | 'OnlyNonSupporters' | 'Everyone';
+/**
+ * AllExistingSupporters - all recurring, all one-offs in last 6 months
+ * AllNonSupporters - no recurring, no one-offs in last 6 months
+ * Everyone
+ * PostHolidayOneOffContributors - people who made a contribution between 6-7 months ago
+ */
+declare type AcquisitionsComponentUserCohort = 'AllExistingSupporters' | 'AllNonSupporters' | 'Everyone' | 'PostHolidayOneOffContributors';
 
 declare type EngagementBannerParams = EngagementBannerTemplateParams & {
     campaignCode: string,

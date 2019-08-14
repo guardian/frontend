@@ -224,13 +224,25 @@ const getDaysSinceLastOneOffContribution = (): number | null => {
     return dateDiffDays(lastContributionDate, Date.now());
 };
 
-// in last six months
-const isRecentOneOffContributor = (): boolean => {
+// defaults to last six months
+const isRecentOneOffContributor = (holidayDays: number = 180): boolean => {
     const daysSinceLastContribution = getDaysSinceLastOneOffContribution();
     if (daysSinceLastContribution === null) {
         return false;
     }
-    return daysSinceLastContribution <= 180;
+    return daysSinceLastContribution <= holidayDays;
+};
+
+// true if the user is in the first month after ask-free holiday
+const isPostHolidayOneOffContributor = (holidayDays: number = 180): boolean => {
+    const daysSinceLastContribution = getDaysSinceLastOneOffContribution();
+    if (daysSinceLastContribution === null) {
+        return false;
+    }
+    return (
+        daysSinceLastContribution > holidayDays &&
+        daysSinceLastContribution < holidayDays + 30
+    );
 };
 
 const isRecurringContributor = (): boolean =>
@@ -288,6 +300,7 @@ export {
     getLastOneOffContributionDate,
     getLastRecurringContributionDate,
     getDaysSinceLastOneOffContribution,
+    isPostHolidayOneOffContributor,
     readerRevenueRelevantCookies,
     fakeOneOffContributor,
     shouldNotBeShownSupportMessaging,
