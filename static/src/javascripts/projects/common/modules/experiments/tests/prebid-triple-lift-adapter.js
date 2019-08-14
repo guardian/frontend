@@ -7,7 +7,7 @@ export const prebidTripleLiftAdapter: ABTest = {
     expiry: '2020-07-30',
     author: 'Ioanna Kyprianou',
     description: 'This is to test triplelift adapter in prebid',
-    audience: 0.0,
+    audience: 0.01,
     audienceOffset: 0.0,
     successMeasure: 'We can see triplelift bids in prebid',
     audienceCriteria: 'n/a',
