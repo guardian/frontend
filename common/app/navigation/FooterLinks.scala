@@ -1,5 +1,8 @@
 package navigation
 
+import common.{Edition, editions}
+
+
 case class FooterLink(
   text: String,
   url: String,
@@ -145,4 +148,14 @@ object FooterLinks {
     discountCodes("international")
   )
 
+  def getFooterByEdition(edition: Edition): Seq[Seq[FooterLink]] = edition match {
+    case editions.Uk => Seq(ukListOne, ukListTwo, ukListThree)
+    case editions.Us => Seq(usListOne, usListTwo, usListThree)
+    case editions.Au => Seq(auListOne, auListTwo, auListThree)
+    case editions.International => Seq(intListOne, intListTwo, intListThree)
+    case _ => Seq(intListOne, intListTwo, intListThree)
+  }
+
 }
+
+

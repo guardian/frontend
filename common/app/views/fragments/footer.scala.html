@@ -82,77 +82,15 @@
                 ), "colophon__lists-container")">
 
                     @if(!page.metadata.isFoundation) {
-                        @currentEdition match {
-                            case Uk => {
-                                <ul class="colophon__list">
-                                    @FooterLinks.ukListOne.map { link: FooterLink => @footerListItem(link) }
-                                </ul>
 
-                                <ul class="colophon__list">
-                                    @FooterLinks.ukListTwo.map { link: FooterLink => @footerListItem(link)}
-                                </ul>
-
-                                <ul class="colophon__list">
-                                    @FooterLinks.ukListThree.map { link: FooterLink => @footerListItem(link) }
-                                </ul>
-
-                                @readerRevenueLinks(Edition(request).id.toLowerCase())
-                            }
-
-                            case Us => {
-                                <ul class="colophon__list">
-                                    @FooterLinks.usListOne.map { link: FooterLink => @footerListItem(link) }
-                                </ul>
-
-
-                                <ul class="colophon__list">
-                                    @FooterLinks.usListTwo.map { link: FooterLink => @footerListItem(link) }
-                                </ul>
-
-
-                                <ul class="colophon__list">
-
-                                    @FooterLinks.usListThree.map { link: FooterLink => @footerListItem(link) }
-                                </ul>
-
-                                @readerRevenueLinks(Edition(request).id.toLowerCase())
-
-                            }
-
-                            case Au => {
-                                <ul class="colophon__list">
-                                    @FooterLinks.auListOne.map { link: FooterLink => @footerListItem(link) }
-                                </ul>
-
-                                <ul class="colophon__list">
-                                    @FooterLinks.auListTwo.map { link: FooterLink => @footerListItem(link) }
-                                </ul>
-
-                                <ul class="colophon__list">
-
-                                    @FooterLinks.auListThree.map { link: FooterLink => @footerListItem(link) }
-                                </ul>
-
-                                @readerRevenueLinks(Edition(request).id.toLowerCase())
+                        @FooterLinks.getFooterByEdition(currentEdition).map { linkGroup =>
+                            <ul class="colophon__list">
+                                @linkGroup.map { link: FooterLink => @footerListItem(link)}
+                            </ul>
                         }
 
-                            case International => {
-                                <ul class="colophon__list">
-                                @FooterLinks.intListOne.map { link: FooterLink => @footerListItem(link) }
-                                </ul>
+                        @readerRevenueLinks(Edition(request).id.toLowerCase())
 
-                                <ul class="colophon__list">
-                                @FooterLinks.intListTwo.map { link: FooterLink => @footerListItem(link) }
-                                </ul>
-
-                                <ul class="colophon__list">
-                                @FooterLinks.intListThree.map { link: FooterLink => @footerListItem(link) }
-
-                                </ul>
-
-                                @readerRevenueLinks(Edition(request).id.toLowerCase())
-                            }
-                        }
                     } else {
                         <div class="colophon__list">
                             @fragments.inlineSvg("guardian-foundation", "logo")
