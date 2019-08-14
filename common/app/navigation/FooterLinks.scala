@@ -11,11 +11,11 @@ object FooterLinks {
 
   // Footer column one
 
-  val complaintsAndCorrections = FooterLink("Complaints &amp; corrections", "/info/complaints-and-corrections", "complaints")
+  val complaintsAndCorrections = FooterLink("Complaints & corrections", "/info/complaints-and-corrections", "complaints")
   val secureDrop = FooterLink("SecureDrop", "https://www.theguardian.com/securedrop", "securedrop")
   val privacyPolicy = FooterLink("Privacy policy", "/info/privacy", "privacy")
   val cookiePolicy = FooterLink("Cookie policy", "/info/cookies", "cookie")
-  val termsAndConditions = FooterLink("Terms &amp; conditions", "/help/terms-of-service", "terms")
+  val termsAndConditions = FooterLink("Terms & conditions", "/help/terms-of-service", "terms")
 
   def help(edition: String): FooterLink = FooterLink("Help", "/help", s"${edition} : footer : tech feedback", "js-tech-feedback-report")
   def workForUs(edition: String): FooterLink = FooterLink("Work for us", "https://workforus.theguardian.com", s"${edition} : footer : work for us")
