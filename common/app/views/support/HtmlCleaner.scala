@@ -749,6 +749,9 @@ case class CommercialMPUForFronts()(implicit val request: RequestHeader) extends
     def hasAdjacentThrasher(element: Element): Boolean =
       Option(element.nextElementSibling()).exists(_.hasClass("fc-container--thrasher"))
 
+    def isMostViewedContainer(element: Element): Boolean =
+      Option(element.id()).contains("most-viewed")
+
     val sliceSlot = views.html.fragments.items.facia_cards.sliceSlot
 
     val containers: List[Element] = document.getElementsByClass("fc-container").asScala.toList
@@ -758,7 +761,7 @@ case class CommercialMPUForFronts()(implicit val request: RequestHeader) extends
     // we also exclude any containers that are directly before a thrasher
     // then we take every other container, up to a maximum of 10, for targeting MPU insertion
     val containersForCommercialMPUs = containers.zipWithIndex.collect {
-      case (x, i) if !hasFirstContainerThrasher(x, i) && !hasAdjacentCommercialContainer(x) && !hasAdjacentThrasher(x) => x
+      case (x, i) if !hasFirstContainerThrasher(x, i) && !hasAdjacentCommercialContainer(x) && !hasAdjacentThrasher(x) && !isMostViewedContainer(x) => x
     }.zipWithIndex.collect {
       case (x, i) if i % 2 == 0 => x
     }.take(10)
