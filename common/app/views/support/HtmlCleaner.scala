@@ -518,10 +518,12 @@ case class ImmersiveHeaders(isImmersive: Boolean) extends HtmlCleaner {
 
 case class DropCaps(isFeature: Boolean, isImmersive: Boolean, isRecipeArticle: Boolean = false) extends HtmlCleaner {
   private def setDropCap(p: Element): String = {
-    p.text.replaceFirst(
-      "^([\"'“‘]*[a-zA-Z])(.{199,})",
-      """<span class="drop-cap"><span class="drop-cap__inner">$1</span></span>$2"""
-    )
+    if (p.text.length > 199) {
+      p.html.replaceFirst(
+        "^([\"'“‘]*[a-zA-Z])(.{199,})",
+        """<span class="drop-cap"><span class="drop-cap__inner">$1</span></span>$2"""
+      )
+    } else p.html
   }
 
   override def clean(document: Document): Document = {

@@ -108,7 +108,7 @@ class TemplatesTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
     body should include ("""<span class="drop-cap__inner">""")
   }
 
-  it should "not add the dropcap span when the paragraph is does not begin with a letter" in {
+  it should "not add the dropcap span when the paragraph does not begin with a letter" in {
     val body = withJsoup(bodyWithMarkup)(DropCaps(true, false)).body.trim
     body should not include """<span class="drop-cap__inner">"""
   }
