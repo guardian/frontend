@@ -225,25 +225,25 @@ const getDaysSinceLastOneOffContribution = (): number | null => {
 };
 
 // defaults to last six months
-const isRecentOneOffContributor = (holidayDays: number = 180): boolean => {
+const isRecentOneOffContributor = (askPauseDays: number = 180): boolean => {
     const daysSinceLastContribution = getDaysSinceLastOneOffContribution();
     if (daysSinceLastContribution === null) {
         return false;
     }
-    return daysSinceLastContribution <= holidayDays;
+    return daysSinceLastContribution <= askPauseDays;
 };
 
-// true if the user is in the first month after ask-free holiday
+// true if the user is in the first month after ask-free period
 const isPostAskPauseOneOffContributor = (
-    holidayDays: number = 180
+    askPauseDays: number = 180
 ): boolean => {
     const daysSinceLastContribution = getDaysSinceLastOneOffContribution();
     if (daysSinceLastContribution === null) {
         return false;
     }
     return (
-        daysSinceLastContribution > holidayDays &&
-        daysSinceLastContribution < holidayDays + 30
+        daysSinceLastContribution > askPauseDays &&
+        daysSinceLastContribution < askPauseDays + 30
     );
 };
 
