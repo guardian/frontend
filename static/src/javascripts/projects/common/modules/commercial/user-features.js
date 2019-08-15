@@ -234,7 +234,9 @@ const isRecentOneOffContributor = (holidayDays: number = 180): boolean => {
 };
 
 // true if the user is in the first month after ask-free holiday
-const isPostAskPauseOneOffContributor = (holidayDays: number = 180): boolean => {
+const isPostAskPauseOneOffContributor = (
+    holidayDays: number = 180
+): boolean => {
     const daysSinceLastContribution = getDaysSinceLastOneOffContribution();
     if (daysSinceLastContribution === null) {
         return false;
