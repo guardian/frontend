@@ -172,18 +172,7 @@ object Nav {
 }
 
 case class PageFooter(
-   ukListOne: Seq[FooterLink],
-   ukListTwo: Seq[FooterLink],
-   ukListThree: Seq[FooterLink],
-   usListOne: Seq[FooterLink],
-   usListTwo: Seq[FooterLink],
-   usListThree: Seq[FooterLink],
-   auListOne: Seq[FooterLink],
-   auListTwo: Seq[FooterLink],
-   auListThree: Seq[FooterLink],
-   intListOne: Seq[FooterLink],
-   intListTwo: Seq[FooterLink],
-   intListThree: Seq[FooterLink]
+  footerLinks: Seq[Seq[FooterLink]]
 )
 
 object PageFooter {
@@ -565,18 +554,7 @@ object DotcomponentsDataModel {
     )
 
     val pageFooter = PageFooter(
-      ukListOne =  FooterLinks.ukListOne,
-      ukListTwo =  FooterLinks.ukListTwo,
-      ukListThree = FooterLinks.ukListThree,
-      usListOne = FooterLinks.usListOne,
-      usListTwo = FooterLinks.usListTwo,
-      usListThree = FooterLinks.usListThree,
-      auListOne = FooterLinks.auListOne,
-      auListTwo = FooterLinks.auListTwo,
-      auListThree = FooterLinks.auListThree,
-      intListOne = FooterLinks.intListOne,
-      intListTwo = FooterLinks.intListTwo,
-      intListThree = FooterLinks.intListThree
+      FooterLinks.getFooterByEdition(Edition(request))
     )
 
     DataModelV3(
