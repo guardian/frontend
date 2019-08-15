@@ -138,7 +138,9 @@ const setupPlayer = (
     );
 
     return new window.YT.Player(eltId, {
-        host: 'https://www.youtube-nocookie.com',
+        host: !wantPersonalisedAds
+            ? 'https://www.youtube-nocookie.com'
+            : 'https://www.youtube.com',
         videoId,
         width: '100%',
         height: '100%',
