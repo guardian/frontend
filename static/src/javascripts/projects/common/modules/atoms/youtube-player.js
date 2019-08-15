@@ -108,7 +108,7 @@ const createAdsConfig = (
 };
 
 const setupPlayer = (
-    eltId: string,
+    elt: HTMLElement,
     videoId: string,
     channelId?: string,
     onReady,
@@ -137,10 +137,12 @@ const setupPlayer = (
         inPfpAdTargetingVariant
     );
 
-    return new window.YT.Player(eltId, {
-        host: !wantPersonalisedAds
-            ? 'https://www.youtube-nocookie.com'
-            : 'https://www.youtube.com',
+    return new window.YT.Player(elt.id, {
+        host:
+            commercialFeatures.adFree ||
+            elt.classList.contains('youtube-media-atom__iframe')
+                ? 'https://www.youtube-nocookie.com'
+                : 'https://www.youtube.com',
         videoId,
         width: '100%',
         height: '100%',
@@ -188,7 +190,7 @@ export const initYoutubePlayer = (
         };
 
         return setupPlayer(
-            el.id,
+            el,
             videoId,
             channelId,
             onPlayerReady,
