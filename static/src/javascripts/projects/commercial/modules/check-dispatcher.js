@@ -143,7 +143,6 @@ const checksToDispatch = {
 
     emailCanRunPostCheck(): Promise<boolean> {
         const dependentChecks = [
-            waitForCheck('isUserInEmailAbTest'),
             waitForCheck('isOutbrainMerchandiseCompliantOrBlockedByAds'),
             waitForCheck('isOutbrainDisabled'),
             waitForCheck('isStoryQuestionsOnPage'),
