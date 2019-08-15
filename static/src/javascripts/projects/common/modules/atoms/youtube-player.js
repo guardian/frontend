@@ -140,7 +140,7 @@ const setupPlayer = (
     return new window.YT.Player(elt.id, {
         host:
             commercialFeatures.adFree ||
-            elt.classList.contains('youtube-media-atom__iframe')
+            !elt.classList.contains('youtube-media-atom__iframe')
                 ? 'https://www.youtube-nocookie.com'
                 : 'https://www.youtube.com',
         videoId,
