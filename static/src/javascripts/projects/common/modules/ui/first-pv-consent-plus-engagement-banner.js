@@ -7,6 +7,7 @@ import {
     hideBanner as hideEngagementBanner,
     deriveBannerParams as deriveEngagementBannerParams,
     bannerParamsToHtml as engagementBannerParamsToHtml,
+    trackBanner,
 } from 'common/modules/commercial/membership-engagement-banner';
 import {
     track as trackFirstPvConsent,
@@ -147,6 +148,8 @@ const show = (): Promise<boolean> => {
                 }
                 bindFirstPvConsentClickHandlers(firstPvConsentMessage);
                 engagementMessage.bindCloseHandler(hideEngagementBanner);
+
+                trackBanner(paramsAndEngagementBannerHtml.params);
 
                 if (paramsAndEngagementBannerHtml.params.bannerShownCallback) {
                     paramsAndEngagementBannerHtml.params.bannerShownCallback();
