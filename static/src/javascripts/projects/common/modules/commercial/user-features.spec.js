@@ -16,7 +16,7 @@ import {
     isRecentOneOffContributor,
     shouldNotBeShownSupportMessaging,
     getLastRecurringContributionDate,
-    isPostHolidayOneOffContributor,
+    isPostAskPauseOneOffContributor,
 } from './user-features.js';
 
 jest.mock('lib/raven');
@@ -568,7 +568,7 @@ describe('isRecentOneOffContributor', () => {
     });
 });
 
-describe('isPostHolidayOneOffContributor', () => {
+describe('isPostAskPauseOneOffContributor', () => {
     beforeEach(() => {
         removeOneOffContributionCookie();
     });
@@ -576,24 +576,24 @@ describe('isPostHolidayOneOffContributor', () => {
     const contributionDateTimeEpoch = Date.parse('2018-08-01T12:00:30Z');
 
     it('returns false if there is no one-off contribution cookie', () => {
-        expect(isPostHolidayOneOffContributor()).toBe(false);
+        expect(isPostAskPauseOneOffContributor()).toBe(false);
     });
 
     it('returns false if there are 5 days between the last contribution date and now', () => {
         global.Date.now = jest.fn(() => Date.parse('2018-08-07T10:50:34'));
         setOneOffContributionCookie(contributionDateTimeEpoch);
-        expect(isPostHolidayOneOffContributor()).toBe(false);
+        expect(isPostAskPauseOneOffContributor()).toBe(false);
     });
 
     it('returns false if the one-off contribution was more than 7 months ago', () => {
         global.Date.now = jest.fn(() => Date.parse('2019-08-01T13:00:30'));
         setOneOffContributionCookie(contributionDateTimeEpoch);
-        expect(isPostHolidayOneOffContributor()).toBe(false);
+        expect(isPostAskPauseOneOffContributor()).toBe(false);
     });
 
     it('returns true if the one-off contribution was between 6 and 7 months ago', () => {
         global.Date.now = jest.fn(() => Date.parse('2019-02-01T13:00:30'));
         setOneOffContributionCookie(contributionDateTimeEpoch);
-        expect(isPostHolidayOneOffContributor()).toBe(true);
+        expect(isPostAskPauseOneOffContributor()).toBe(true);
     });
 });

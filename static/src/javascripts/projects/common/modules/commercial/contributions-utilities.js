@@ -36,7 +36,7 @@ import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templ
 import { epicLiveBlogTemplate } from 'common/modules/commercial/templates/acquisitions-epic-liveblog';
 import {
     shouldHideSupportMessaging,
-    isPostHolidayOneOffContributor,
+    isPostAskPauseOneOffContributor,
 } from 'common/modules/commercial/user-features';
 import {
     supportContributeURL,
@@ -158,7 +158,7 @@ const userIsInCorrectCohort = (
 ): boolean => {
     switch (userCohort) {
         case 'PostAskPauseSingleContributors':
-            return isPostHolidayOneOffContributor();
+            return isPostAskPauseOneOffContributor();
         case 'AllExistingSupporters':
             return shouldHideSupportMessaging();
         case 'AllNonSupporters':
