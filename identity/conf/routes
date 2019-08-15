@@ -56,7 +56,7 @@ GET         /membership/edit                        controllers.editprofile.Edit
 GET         /contribution/recurring/edit            controllers.editprofile.EditProfileController.redirectToManageContributions
 GET         /digitalpack/edit                       controllers.editprofile.EditProfileController.redirectToManageSubscriptions
 
-GET         /email-prefs                            controllers.editprofile.EditProfileController.displayEmailPrefsForm(consentsUpdated: Boolean ?= false, consentHint: Option[String])
+GET         /email-prefs                            controllers.editprofile.EditProfileController.redirectToEmailPrefs
 
 ########################################################################################################################
 # PUBLIC EDIT PROFILE
@@ -81,4 +81,4 @@ GET         /complete-consents                      controllers.editprofile.Edit
 # Old routes
 ########################################################################################################################
 GET         /consents/staywithus                    controllers.editprofile.EditProfileController.redirectToConsentsJourney()
-GET         /privacy/edit                           controllers.editprofile.EditProfileController.displayPrivacyFormRedirect(consentsUpdated: Boolean ?= false, consentHint: Option[String])
+GET         /privacy/edit                           controllers.editprofile.EditProfileController.redirectToEmailPrefs
