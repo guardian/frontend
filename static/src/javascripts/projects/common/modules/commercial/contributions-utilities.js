@@ -34,7 +34,10 @@ import { throwIfEmptyArray } from 'lib/array-utils';
 import { epicButtonsTemplate } from 'common/modules/commercial/templates/acquisitions-epic-buttons';
 import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templates/acquisitions-epic-control';
 import { epicLiveBlogTemplate } from 'common/modules/commercial/templates/acquisitions-epic-liveblog';
-import { shouldHideSupportMessaging } from 'common/modules/commercial/user-features';
+import {
+    shouldHideSupportMessaging,
+    isPostAskPauseOneOffContributor,
+} from 'common/modules/commercial/user-features';
 import {
     supportContributeURL,
     supportSubscribeGeoRedirectURL,
@@ -154,9 +157,11 @@ const userIsInCorrectCohort = (
     userCohort: AcquisitionsComponentUserCohort
 ): boolean => {
     switch (userCohort) {
-        case 'OnlyExistingSupporters':
+        case 'PostAskPauseSingleContributors':
+            return isPostAskPauseOneOffContributor();
+        case 'AllExistingSupporters':
             return shouldHideSupportMessaging();
-        case 'OnlyNonSupporters':
+        case 'AllNonSupporters':
             return !shouldHideSupportMessaging();
         case 'Everyone':
         default:
@@ -165,9 +170,12 @@ const userIsInCorrectCohort = (
 };
 
 const isValidCohort = (cohort: string): boolean =>
-    ['OnlyExistingSupporters', 'OnlyNonSupporters', 'Everyone'].includes(
-        cohort
-    );
+    [
+        'AllExistingSupporters',
+        'AllNonSupporters',
+        'Everyone',
+        'PostAskPauseSingleContributors',
+    ].includes(cohort);
 
 const shouldShowEpic = (test: EpicABTest): boolean => {
     const onCompatiblePage = test.pageCheck(config.get('page'));
@@ -470,7 +478,7 @@ const makeEpicABTest = ({
     campaignPrefix = 'gdnwb_copts_memco',
     useLocalViewLog = false,
     useTargetingTool = false,
-    userCohort = 'OnlyNonSupporters',
+    userCohort = 'AllNonSupporters',
     testHasCountryName = false,
     pageCheck = isCompatibleWithArticleEpic,
     template = controlTemplate,
@@ -609,7 +617,7 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                     );
                     const userCohort = rowWithUserCohort
                         ? rowWithUserCohort.userCohort
-                        : 'OnlyNonSupporters';
+                        : 'AllNonSupporters';
 
                     // If testHasCountryName is true but a country name is not available for this user then
                     // they will be excluded from this test
@@ -654,7 +662,7 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
                               }),
                         ...(isThankYou
                             ? {
-                                  userCohort: 'OnlyExistingSupporters',
+                                  userCohort: 'AllExistingSupporters',
                                   useLocalViewLog: true,
                               }
                             : {}),
@@ -734,7 +742,7 @@ export const getEpicTestsFromGoogleDoc = (): Promise<
 // TODO - banner testing needs a refactor, as currently both canRun and canShow need to call this
 export const canShowBannerSync = (
     minArticlesBeforeShowingBanner: number = 3,
-    userCohort: AcquisitionsComponentUserCohort = 'OnlyNonSupporters'
+    userCohort: AcquisitionsComponentUserCohort = 'AllNonSupporters'
 ): boolean => {
     const userHasSeenEnoughArticles: boolean =
         getVisitCount() >= minArticlesBeforeShowingBanner;

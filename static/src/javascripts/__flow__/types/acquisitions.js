@@ -22,7 +22,15 @@ declare type EngagementBannerTemplateParams = {
     signInUrl?: string,
 };
 
-declare type AcquisitionsComponentUserCohort = 'OnlyExistingSupporters' | 'OnlyNonSupporters' | 'Everyone';
+/**
+ * AllExistingSupporters - all recurring, all one-offs in last 6 months
+ * AllNonSupporters - no recurring, no one-offs in last 6 months
+ * Everyone
+ * PostAskPauseSingleContributors - people who made a contribution between 6-7 months ago
+ *
+ * Note - PostAskPauseSingleContributors is a subset of AllNonSupporters, so priority ordering of these tests is important
+ */
+declare type AcquisitionsComponentUserCohort = 'AllExistingSupporters' | 'AllNonSupporters' | 'Everyone' | 'PostAskPauseSingleContributors';
 
 declare type EngagementBannerParams = EngagementBannerTemplateParams & {
     campaignCode: string,

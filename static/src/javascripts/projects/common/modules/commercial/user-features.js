@@ -224,13 +224,27 @@ const getDaysSinceLastOneOffContribution = (): number | null => {
     return dateDiffDays(lastContributionDate, Date.now());
 };
 
-// in last six months
-const isRecentOneOffContributor = (): boolean => {
+// defaults to last six months
+const isRecentOneOffContributor = (askPauseDays: number = 180): boolean => {
     const daysSinceLastContribution = getDaysSinceLastOneOffContribution();
     if (daysSinceLastContribution === null) {
         return false;
     }
-    return daysSinceLastContribution <= 180;
+    return daysSinceLastContribution <= askPauseDays;
+};
+
+// true if the user is in the first month after ask-free period
+const isPostAskPauseOneOffContributor = (
+    askPauseDays: number = 180
+): boolean => {
+    const daysSinceLastContribution = getDaysSinceLastOneOffContribution();
+    if (daysSinceLastContribution === null) {
+        return false;
+    }
+    return (
+        daysSinceLastContribution > askPauseDays &&
+        daysSinceLastContribution < askPauseDays + 30
+    );
 };
 
 const isRecurringContributor = (): boolean =>
@@ -304,6 +318,7 @@ export {
     getLastOneOffContributionDate,
     getLastRecurringContributionDate,
     getDaysSinceLastOneOffContribution,
+    isPostAskPauseOneOffContributor,
     readerRevenueRelevantCookies,
     fakeOneOffContributor,
     shouldNotBeShownSupportMessaging,

@@ -51,7 +51,7 @@ const getAcquisitionsBannerParams = (
         isHardcodedFallback: false,
         template: acquisitionsBannerControlTemplate,
         minArticlesBeforeShowingBanner: 3,
-        userCohort: 'OnlyNonSupporters',
+        userCohort: 'AllNonSupporters',
     };
 };
 
@@ -83,6 +83,6 @@ export const getControlEngagementBannerParams = (): Promise<EngagementBannerPara
                 isHardcodedFallback: true,
                 template: acquisitionsBannerControlTemplate,
                 minArticlesBeforeShowingBanner: 3,
-                userCohort: 'OnlyNonSupporters',
+                userCohort: 'AllNonSupporters',
             };
         });
