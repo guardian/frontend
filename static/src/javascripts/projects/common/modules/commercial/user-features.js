@@ -23,6 +23,8 @@ const SUPPORT_RECURRING_CONTRIBUTOR_MONTHLY_COOKIE =
 const SUPPORT_RECURRING_CONTRIBUTOR_ANNUAL_COOKIE =
     'gu.contributions.recurring.contrib-timestamp.Annual';
 
+// This cookie is dropped by support frontend, but also set based
+// on the user attributes API if the user is signed in + verified
 const SUPPORT_ONE_OFF_CONTRIBUTION_COOKIE =
     'gu.contributions.contrib-timestamp';
 
@@ -71,6 +73,15 @@ const persistResponse = (JsonResponse: () => void) => {
         HIDE_SUPPORT_MESSAGING_COOKIE,
         !JsonResponse.showSupportMessaging
     );
+    if (JsonResponse.oneOffContributionDate) {
+        const date = Date.parse(JsonResponse.oneOffContributionDate);
+        if (!Number.isNaN(date)) {
+            addCookie(
+                SUPPORT_ONE_OFF_CONTRIBUTION_COOKIE,
+                Date.parse(JsonResponse.oneOffContributionDate).toString()
+            );
+        }
+    }
 
     removeCookie(ACTION_REQUIRED_FOR_COOKIE);
     if ('alertAvailableFor' in JsonResponse) {
