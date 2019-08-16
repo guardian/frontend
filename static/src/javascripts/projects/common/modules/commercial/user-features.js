@@ -76,10 +76,7 @@ const persistResponse = (JsonResponse: () => void) => {
     if (JsonResponse.oneOffContributionDate) {
         const date = Date.parse(JsonResponse.oneOffContributionDate);
         if (!Number.isNaN(date)) {
-            addCookie(
-                SUPPORT_ONE_OFF_CONTRIBUTION_COOKIE,
-                Date.parse(JsonResponse.oneOffContributionDate).toString()
-            );
+            addCookie(SUPPORT_ONE_OFF_CONTRIBUTION_COOKIE, date.toString());
         }
     }
 
