@@ -13,8 +13,9 @@ const ACTION_REQUIRED_FOR_COOKIE = 'gu_action_required_for';
 const DIGITAL_SUBSCRIBER_COOKIE = 'gu_digital_subscriber';
 const HIDE_SUPPORT_MESSAGING_COOKIE = 'gu_hide_support_messaging';
 
-// This cookie comes from the user attributes API
+// These cookies come from the user attributes API
 const RECURRING_CONTRIBUTOR_COOKIE = 'gu_recurring_contributor';
+const ONE_OFF_CONTRIBUTION_DATE_COOKIE = 'gu_one_off_contribution_date';
 
 // These cookies are dropped by support frontend at the point of making
 // a recurring contribution
@@ -22,9 +23,6 @@ const SUPPORT_RECURRING_CONTRIBUTOR_MONTHLY_COOKIE =
     'gu.contributions.recurring.contrib-timestamp.Monthly';
 const SUPPORT_RECURRING_CONTRIBUTOR_ANNUAL_COOKIE =
     'gu.contributions.recurring.contrib-timestamp.Annual';
-
-// This cookie is dropped by support frontend, but also set based
-// on the user attributes API if the user is signed in + verified
 const SUPPORT_ONE_OFF_CONTRIBUTION_COOKIE =
     'gu.contributions.contrib-timestamp';
 
@@ -38,6 +36,7 @@ const userHasData = (): boolean => {
         getCookie(USER_FEATURES_EXPIRY_COOKIE) ||
         getCookie(PAYING_MEMBER_COOKIE) ||
         getCookie(RECURRING_CONTRIBUTOR_COOKIE) ||
+        getCookie(ONE_OFF_CONTRIBUTION_DATE_COOKIE) ||
         getCookie(AD_FREE_USER_COOKIE) ||
         getCookie(DIGITAL_SUBSCRIBER_COOKIE) ||
         getCookie(HIDE_SUPPORT_MESSAGING_COOKIE);
@@ -74,10 +73,10 @@ const persistResponse = (JsonResponse: () => void) => {
         !JsonResponse.showSupportMessaging
     );
     if (JsonResponse.oneOffContributionDate) {
-        const date = Date.parse(JsonResponse.oneOffContributionDate);
-        if (!Number.isNaN(date)) {
-            addCookie(SUPPORT_ONE_OFF_CONTRIBUTION_COOKIE, date.toString());
-        }
+        addCookie(
+            ONE_OFF_CONTRIBUTION_DATE_COOKIE,
+            JsonResponse.oneOffContributionDate
+        );
     }
 
     removeCookie(ACTION_REQUIRED_FOR_COOKIE);
@@ -107,6 +106,7 @@ const deleteOldData = (): void => {
     removeCookie(ACTION_REQUIRED_FOR_COOKIE);
     removeCookie(DIGITAL_SUBSCRIBER_COOKIE);
     removeCookie(HIDE_SUPPORT_MESSAGING_COOKIE);
+    removeCookie(ONE_OFF_CONTRIBUTION_DATE_COOKIE);
 };
 
 const requestNewData = (): Promise<void> =>
@@ -170,35 +170,35 @@ const isPayingMember = (): boolean =>
     // If the user is logged in, but has no cookie yet, play it safe and assume they're a paying user
     isUserLoggedIn() && getCookie(PAYING_MEMBER_COOKIE) !== 'false';
 
-// number returned is Epoch time in milliseconds.
-// null value signifies no last contribution date.
-const getLastOneOffContributionDate = (): number | null => {
-    const cookie = getCookie(SUPPORT_ONE_OFF_CONTRIBUTION_COOKIE);
+const getSupportFrontendOneOffContributionDate = (): number | null => {
+    const supportFrontendCookie = getCookie(
+        SUPPORT_ONE_OFF_CONTRIBUTION_COOKIE
+    );
 
-    if (!cookie) {
-        return null;
-    }
-
-    // Contributions frontend set date time of last contribution using ISO 8601 format.
-    // Support frontend set date time of last contribution in Epoch milliseconds.
-    // If we first attempted to parse cookie in Epoch milliseconds format (parseInt()),
-    // then a value in ISO 8601 format would parse (incorrectly) e.g. 2018-08-17T16:11:10Z => 2018
-    // So first attempt to parse cookie in ISO 8601 format.
-
-    let ms;
-
-    ms = Date.parse(cookie);
-    if (Number.isInteger(ms)) {
-        return ms;
-    }
-
-    ms = parseInt(cookie, 10);
-    if (Number.isInteger(ms)) {
-        return ms;
+    if (supportFrontendCookie) {
+        const ms = parseInt(supportFrontendCookie, 10);
+        if (Number.isInteger(ms)) return ms;
     }
 
     return null;
 };
+
+const getAttributesOneOffContributionDate = (): number | null => {
+    const attributesCookie = getCookie(ONE_OFF_CONTRIBUTION_DATE_COOKIE);
+
+    if (attributesCookie) {
+        const ms = Date.parse(attributesCookie);
+        if (Number.isInteger(ms)) return ms;
+    }
+
+    return null;
+};
+
+// number returned is Epoch time in milliseconds.
+// null value signifies no last contribution date.
+const getLastOneOffContributionDate = (): number | null =>
+    getSupportFrontendOneOffContributionDate() ||
+    getAttributesOneOffContributionDate();
 
 const getLastRecurringContributionDate = (): number | null => {
     // Check for cookies, ensure that cookies parse, and ensure parsed results are integers

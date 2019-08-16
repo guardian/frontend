@@ -36,6 +36,7 @@ const PERSISTENCE_KEYS = {
     ACTION_REQUIRED_FOR_COOKIE: 'gu_action_required_for',
     DIGITAL_SUBSCRIBER_COOKIE: 'gu_digital_subscriber',
     SUPPORT_ONE_OFF_CONTRIBUTION_COOKIE: 'gu.contributions.contrib-timestamp',
+    ONE_OFF_CONTRIBUTION_DATE_COOKIE: 'gu_one_off_contribution_date',
     HIDE_SUPPORT_MESSAGING_COOKIE: 'gu_hide_support_messaging',
     SUPPORT_MONTHLY_CONTRIBUTION_COOKIE:
         'gu.contributions.recurring.contrib-timestamp.Monthly',
@@ -432,37 +433,42 @@ describe('Storing new feature data', () => {
         }));
 });
 
-const setOneOffContributionCookie = (value: any): void =>
+const setSupportFrontendOneOffContributionCookie = (value: any): void =>
     addCookie(PERSISTENCE_KEYS.SUPPORT_ONE_OFF_CONTRIBUTION_COOKIE, value);
 
-const removeOneOffContributionCookie = (): void =>
+const removeSupportFrontendOneOffContributionCookie = (): void =>
     removeCookie(PERSISTENCE_KEYS.SUPPORT_ONE_OFF_CONTRIBUTION_COOKIE);
+
+const setAttributesOneOffContributionCookie = (value: any): void =>
+    addCookie(PERSISTENCE_KEYS.ONE_OFF_CONTRIBUTION_DATE_COOKIE, value);
 
 describe('getting the last one-off contribution date of a user', () => {
     beforeEach(() => {
-        removeOneOffContributionCookie();
+        removeSupportFrontendOneOffContributionCookie();
     });
 
-    const contributionDateTimeISO8601 = '2018-01-06T09:30:14Z';
-    const contributionDateTimeEpoch = Date.parse(contributionDateTimeISO8601);
+    const contributionDate = '2018-01-06';
+    const contributionDateTimeEpoch = Date.parse(contributionDate);
 
     it("returns null if the user hasn't previously contributed", () => {
         expect(getLastOneOffContributionDate()).toBe(null);
     });
 
-    it('returns the correct date if the user last contributed on contributions frontend', () => {
-        setOneOffContributionCookie(contributionDateTimeISO8601);
-        expect(getLastOneOffContributionDate()).toBe(contributionDateTimeEpoch);
-    });
-
-    it('return the correct date if the user last contributed on support frontend', () => {
-        setOneOffContributionCookie(contributionDateTimeEpoch.toString());
+    it('return the correct date if the user support-frontend contribution cookie is set', () => {
+        setSupportFrontendOneOffContributionCookie(
+            contributionDateTimeEpoch.toString()
+        );
         expect(getLastOneOffContributionDate()).toBe(contributionDateTimeEpoch);
     });
 
     it('returns null if the cookie has been set with an invalid value', () => {
-        setOneOffContributionCookie('invalid value');
+        setSupportFrontendOneOffContributionCookie('invalid value');
         expect(getLastOneOffContributionDate()).toBe(null);
+    });
+
+    it('returns the correct date if cookie from attributes is set', () => {
+        setAttributesOneOffContributionCookie(contributionDate.toString());
+        expect(getLastOneOffContributionDate()).toBe(contributionDateTimeEpoch);
     });
 });
 
@@ -522,7 +528,7 @@ describe('getting the last recurring contribution date of a user', () => {
 
 describe('getting the days since last contribution', () => {
     beforeEach(() => {
-        removeOneOffContributionCookie();
+        removeSupportFrontendOneOffContributionCookie();
     });
 
     const contributionDateTimeEpoch = Date.parse('2018-08-01T12:00:30Z');
@@ -533,14 +539,14 @@ describe('getting the days since last contribution', () => {
 
     it('returns the difference in days between the last contribution date and now if the last contribution date is set', () => {
         global.Date.now = jest.fn(() => Date.parse('2018-08-07T10:50:34'));
-        setOneOffContributionCookie(contributionDateTimeEpoch);
+        setSupportFrontendOneOffContributionCookie(contributionDateTimeEpoch);
         expect(getDaysSinceLastOneOffContribution()).toBe(5);
     });
 });
 
 describe('isRecentOneOffContributor', () => {
     beforeEach(() => {
-        removeOneOffContributionCookie();
+        removeSupportFrontendOneOffContributionCookie();
     });
 
     const contributionDateTimeEpoch = Date.parse('2018-08-01T12:00:30Z');
@@ -551,26 +557,26 @@ describe('isRecentOneOffContributor', () => {
 
     it('returns true if there are 5 days between the last contribution date and now', () => {
         global.Date.now = jest.fn(() => Date.parse('2018-08-07T10:50:34'));
-        setOneOffContributionCookie(contributionDateTimeEpoch);
+        setSupportFrontendOneOffContributionCookie(contributionDateTimeEpoch);
         expect(isRecentOneOffContributor()).toBe(true);
     });
 
     it('returns true if there are 0 days between the last contribution date and now', () => {
         global.Date.now = jest.fn(() => Date.parse('2018-08-01T13:00:30'));
-        setOneOffContributionCookie(contributionDateTimeEpoch);
+        setSupportFrontendOneOffContributionCookie(contributionDateTimeEpoch);
         expect(isRecentOneOffContributor()).toBe(true);
     });
 
     it('returns false if the one-off contribution was more than 6 months ago', () => {
         global.Date.now = jest.fn(() => Date.parse('2019-08-01T13:00:30'));
-        setOneOffContributionCookie(contributionDateTimeEpoch);
+        setSupportFrontendOneOffContributionCookie(contributionDateTimeEpoch);
         expect(isRecentOneOffContributor()).toBe(false);
     });
 });
 
 describe('isPostAskPauseOneOffContributor', () => {
     beforeEach(() => {
-        removeOneOffContributionCookie();
+        removeSupportFrontendOneOffContributionCookie();
     });
 
     const contributionDateTimeEpoch = Date.parse('2018-08-01T12:00:30Z');
@@ -581,19 +587,19 @@ describe('isPostAskPauseOneOffContributor', () => {
 
     it('returns false if there are 5 days between the last contribution date and now', () => {
         global.Date.now = jest.fn(() => Date.parse('2018-08-07T10:50:34'));
-        setOneOffContributionCookie(contributionDateTimeEpoch);
+        setSupportFrontendOneOffContributionCookie(contributionDateTimeEpoch);
         expect(isPostAskPauseOneOffContributor()).toBe(false);
     });
 
     it('returns false if the one-off contribution was more than 7 months ago', () => {
         global.Date.now = jest.fn(() => Date.parse('2019-08-01T13:00:30'));
-        setOneOffContributionCookie(contributionDateTimeEpoch);
+        setSupportFrontendOneOffContributionCookie(contributionDateTimeEpoch);
         expect(isPostAskPauseOneOffContributor()).toBe(false);
     });
 
     it('returns true if the one-off contribution was between 6 and 7 months ago', () => {
         global.Date.now = jest.fn(() => Date.parse('2019-02-01T13:00:30'));
-        setOneOffContributionCookie(contributionDateTimeEpoch);
+        setSupportFrontendOneOffContributionCookie(contributionDateTimeEpoch);
         expect(isPostAskPauseOneOffContributor()).toBe(true);
     });
 });
