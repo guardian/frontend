@@ -33,7 +33,7 @@ const commercialModules: Array<Array<any>> = [
     ['cm-track-cmp-consent', trackCmpConsent],
     // ['cm-checkDispatcher', initCheckDispatcher],
     ['cm-lotame-cmp', initLotameCmp],
-    ['cm-lotame-data-extract', initLotameDataExtract, true], // Comes with a isDotcomRendering check
+    ['cm-lotame-data-extract', initLotameDataExtract],
 ];
 
 if (false && !commercialFeatures.adFree) {
