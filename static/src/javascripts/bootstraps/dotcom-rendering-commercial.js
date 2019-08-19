@@ -23,6 +23,7 @@ import { init as initPaidForBand } from 'commercial/modules/paidfor-band';
 import { paidContainers } from 'commercial/modules/paid-containers';
 import { trackPerformance } from 'common/modules/analytics/google';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
+import { initCheckMediator } from 'common/modules/check-mediator';
 // import { initCheckDispatcher } from 'commercial/modules/check-dispatcher';
 import { initCommentAdverts } from 'commercial/modules/comment-adverts';
 
@@ -171,5 +172,11 @@ const bootCommercial = (): Promise<void> => {
             );
         });
 };
+
+// The function initCheckMediator() must run before the commercial modules are loaded,
+// notably before ['cm-checkDispatcher', initCheckDispatcher]
+// otherwise registeredChecks in check-mediator.js remains empty leading to pathological behaviors.
+// This is due to us inheriting the original split between main.js and commercial.js in frontend.
+initCheckMediator();
 
 bootCommercial();
