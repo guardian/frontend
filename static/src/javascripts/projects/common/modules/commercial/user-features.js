@@ -170,6 +170,7 @@ const isPayingMember = (): boolean =>
     // If the user is logged in, but has no cookie yet, play it safe and assume they're a paying user
     isUserLoggedIn() && getCookie(PAYING_MEMBER_COOKIE) !== 'false';
 
+// Expects milliseconds since epoch
 const getSupportFrontendOneOffContributionDate = (): number | null => {
     const supportFrontendCookie = getCookie(
         SUPPORT_ONE_OFF_CONTRIBUTION_COOKIE
@@ -183,6 +184,7 @@ const getSupportFrontendOneOffContributionDate = (): number | null => {
     return null;
 };
 
+// Expects YYYY-MM-DD format
 const getAttributesOneOffContributionDate = (): number | null => {
     const attributesCookie = getCookie(ONE_OFF_CONTRIBUTION_DATE_COOKIE);
 
