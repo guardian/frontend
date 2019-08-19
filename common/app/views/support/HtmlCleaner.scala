@@ -5,7 +5,7 @@ import java.util.regex.{Matcher, Pattern}
 
 import com.gu.contentatom.renderer.ArticleConfiguration
 import common.{Edition, LinkTo, Logging}
-import conf.Configuration.affiliatelinks._
+import conf.Configuration.affiliateLinks._
 import conf.Configuration.site.host
 import conf.switches.Switches
 import conf.switches.Switches._

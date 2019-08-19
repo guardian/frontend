@@ -5,6 +5,7 @@ import java.util.concurrent.atomic.AtomicReference
 
 import app.LifecycleComponent
 import common.Logging
+import conf.Configuration.affiliateLinks
 
 import scala.concurrent.ExecutionContext
 import scala.util.Try
@@ -15,8 +16,8 @@ object SkimLinksCache extends Logging {
 
   def populateSkimLinkDomains(): Unit = {
     log.info("Fetching and caching skimlinks")
-    val domains = S3.get("skimlinks/skimlinks-domains.csv").getOrElse{
-      log.error("Failed to fetch skimlinks from S3")
+    val domains = S3Skimlinks.get(affiliateLinks.domainsKey).getOrElse {
+      log.error(s"Failed to fetch skimlinks from S3: ${S3Skimlinks.bucket}/${affiliateLinks.domainsKey}")
       ""
     }
     skimLinkDomains.set(domains.split(",").toSet)

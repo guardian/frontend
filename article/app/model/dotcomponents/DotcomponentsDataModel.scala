@@ -7,7 +7,7 @@ import common.Edition
 import common.Maps.RichMap
 import common.commercial.{CommercialProperties, EditionCommercialProperties, PrebidIndexSite}
 import common.ManifestData
-import conf.Configuration.affiliatelinks
+import conf.Configuration.affiliateLinks
 import conf.switches.Switches
 import conf.{Configuration, Static}
 import controllers.ArticlePage
@@ -300,9 +300,9 @@ object DotcomponentsDataModel {
       switchedOn = Switches.AffiliateLinks.isSwitchedOn,
       section = article.metadata.sectionId,
       showAffiliateLinks =  article.content.fields.showAffiliateLinks,
-      supportedSections = affiliatelinks.affiliateLinkSections,
-      defaultOffTags = affiliatelinks.defaultOffTags,
-      alwaysOffTags = affiliatelinks.alwaysOffTags,
+      supportedSections = affiliateLinks.affiliateLinkSections,
+      defaultOffTags = affiliateLinks.defaultOffTags,
+      alwaysOffTags = affiliateLinks.alwaysOffTags,
       tagPaths = article.content.tags.tags.map(_.id)
     )
 

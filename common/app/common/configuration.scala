@@ -246,7 +246,9 @@ class GuardianConfiguration extends Logging {
     lazy val subscribeWithGoogleApiUrl = configuration.getStringProperty("google.subscribeWithGoogleApiUrl").getOrElse("https://swg.theguardian.com")
   }
 
-  object affiliatelinks {
+  object affiliateLinks {
+    lazy val bucket: Option[String] = configuration.getStringProperty("skimlinks.bucket")
+    lazy val domainsKey = "skimlinks/skimlinks-domains.csv"
     lazy val skimlinksId = configuration.getMandatoryStringProperty("skimlinks.id")
     lazy val affiliateLinkSections: Set[String] = configuration.getStringProperty("affiliatelinks.sections").getOrElse("").split(",").toSet
     lazy val defaultOffTags: Set[String] = configuration.getStringProperty("affiliatelinks.default.off.tags").getOrElse("").split(",").toSet
@@ -578,7 +580,7 @@ class GuardianConfiguration extends Logging {
   object aws {
 
     lazy val region = configuration.getMandatoryStringProperty("aws.region")
-    lazy val bucket = configuration.getMandatoryStringProperty("aws.bucket")
+    lazy val frontendStoreBucket = configuration.getMandatoryStringProperty("aws.bucket")
     lazy val notificationSns: String = configuration.getMandatoryStringProperty("sns.notification.topic.arn")
     lazy val videoEncodingsSns: String = configuration.getMandatoryStringProperty("sns.missing_video_encodings.topic.arn")
     lazy val frontPressSns: Option[String] = configuration.getStringProperty("frontpress.sns.topic")
