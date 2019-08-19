@@ -442,9 +442,13 @@ const removeSupportFrontendOneOffContributionCookie = (): void =>
 const setAttributesOneOffContributionCookie = (value: any): void =>
     addCookie(PERSISTENCE_KEYS.ONE_OFF_CONTRIBUTION_DATE_COOKIE, value);
 
+const removeAttributesOneOffContributionCookie = (): void =>
+    removeCookie(PERSISTENCE_KEYS.ONE_OFF_CONTRIBUTION_DATE_COOKIE);
+
 describe('getting the last one-off contribution date of a user', () => {
     beforeEach(() => {
         removeSupportFrontendOneOffContributionCookie();
+        removeAttributesOneOffContributionCookie();
     });
 
     const contributionDate = '2018-01-06';
@@ -529,6 +533,7 @@ describe('getting the last recurring contribution date of a user', () => {
 describe('getting the days since last contribution', () => {
     beforeEach(() => {
         removeSupportFrontendOneOffContributionCookie();
+        removeAttributesOneOffContributionCookie();
     });
 
     const contributionDateTimeEpoch = Date.parse('2018-08-01T12:00:30Z');
@@ -547,6 +552,7 @@ describe('getting the days since last contribution', () => {
 describe('isRecentOneOffContributor', () => {
     beforeEach(() => {
         removeSupportFrontendOneOffContributionCookie();
+        removeAttributesOneOffContributionCookie();
     });
 
     const contributionDateTimeEpoch = Date.parse('2018-08-01T12:00:30Z');
@@ -577,6 +583,7 @@ describe('isRecentOneOffContributor', () => {
 describe('isPostAskPauseOneOffContributor', () => {
     beforeEach(() => {
         removeSupportFrontendOneOffContributionCookie();
+        removeAttributesOneOffContributionCookie();
     });
 
     const contributionDateTimeEpoch = Date.parse('2018-08-01T12:00:30Z');
