@@ -55,7 +55,7 @@ class MostPopularController(contentApiClient: ContentApiClient,
 
       mostPopular match {
         case Nil => NotFound
-        case popular if request.isGuui => jsonResponse(popular)
+        case popular if request.forceDCR => jsonResponse(popular)
         case popular if !request.isJson => Cached(900) {
           RevalidatableResult.Ok(views.html.mostPopular(page, popular))
         }
@@ -86,7 +86,7 @@ class MostPopularController(contentApiClient: ContentApiClient,
     val countryCode = headers.getOrElse("X-GU-GeoLocation","country:row").replace("country:","")
     val countryPopular = MostPopular("Across The&nbsp;Guardian", "", geoMostPopularAgent.mostPopular(countryCode).map(_.faciaContent))
 
-    if (request.isGuui) {
+    if (request.forceDCR) {
       jsonResponse(countryPopular, countryCode)
     } else {
       Cached(900) {

@@ -26,18 +26,13 @@ trait Requests {
 
     def getBooleanParameter(name: String): Option[Boolean] = getParameter(name).map(_.toBoolean)
 
-    def getRequestFormat: RequestFormat = if(isJson) JsonFormat else if (isEmail) EmailFormat else if(isAmp) AmpFormat else HtmlFormat
+    def getRequestFormat: RequestFormat = if (isJson) JsonFormat else if (isEmail) EmailFormat else if (isAmp) AmpFormat else HtmlFormat
 
     lazy val isJson: Boolean = r.getQueryString("callback").isDefined || r.path.endsWith(".json")
 
     lazy val isEmailJson: Boolean = r.path.endsWith(EMAIL_JSON_SUFFIX)
 
     lazy val isEmailTxt: Boolean = r.path.endsWith(EMAIL_TXT_SUFFIX)
-
-    lazy val isGuui: Boolean = r.getQueryString("guui").isDefined && !r.getQueryString("guui").contains("false")
-
-    // parameters for moon/guui new rendering layer project.
-    lazy val isGuuiJson: Boolean = isJson && isGuui
 
     lazy val isLazyLoad: Boolean = r.getQueryString("lazy-load").isDefined && !r.getQueryString("lazy-load").contains("false")
 
@@ -53,7 +48,7 @@ trait Requests {
 
     lazy val pathWithoutModifiers: String =
       if (isEmail) r.path.stripSuffix(EMAIL_SUFFIX)
-      else         r.path.stripSuffix("/all")
+      else r.path.stripSuffix("/all")
 
     lazy val hasParameters: Boolean = r.queryString.nonEmpty
 
@@ -71,7 +66,13 @@ trait Requests {
     lazy val isAdFree: Boolean = r.headers.keys.exists(_ equalsIgnoreCase "X-Gu-Commercial-Ad-Free")
 
     lazy val referrer: Option[String] = r.headers.get("referer")
+
+    // dotcom-rendering (DCR) parameters
+    lazy val forceDCR: Boolean = r.getQueryString("dcr").contains("true")
+    lazy val forceDCROff: Boolean = r.getQueryString("dcr").contains("false")
+
   }
+
 }
 
 object Requests extends Requests

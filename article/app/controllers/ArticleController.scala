@@ -78,7 +78,7 @@ class ArticleController(
   }
 
   private def getJson(article: ArticlePage)(implicit request: RequestHeader): List[(String, Object)] = {
-    val contentFieldsJson = if (request.isGuuiJson) List(
+    val contentFieldsJson = if (request.forceDCR) List(
       "contentFields" -> Json.toJson(ContentFields(article.article)),
       "tags" -> Json.toJson(article.article.tags)) else List()
     List(("html", views.html.fragments.articleBody(article))) ++ contentFieldsJson
@@ -94,7 +94,7 @@ class ArticleController(
     val isAmpSupported = article.article.content.shouldAmplify
     val pageType: PageType = PageType(article, request, context)
     request.getRequestFormat match {
-      case JsonFormat if request.isGuui => Future.successful(common.renderJson(getGuuiJson(article, blocks), article).as("application/json"))
+      case JsonFormat if request.forceDCR => Future.successful(common.renderJson(getGuuiJson(article, blocks), article).as("application/json"))
       case JsonFormat => Future.successful(common.renderJson(getJson(article), article))
       case EmailFormat => Future.successful(common.renderEmail(ArticleEmailHtmlPage.html(article), article))
       case HtmlFormat if tier == RemoteRender => remoteRenderer.getArticle(ws, path, article, blocks, pageType)

@@ -88,7 +88,7 @@ class LiveBlogController(
 
       mapModel(path, range) {
         case (blog: LiveBlogPage, blocks) if rendered.contains(false) => getJsonForFronts(blog)
-        case (blog: LiveBlogPage, blocks) if request.isGuui => Future.successful(renderGuuiJson(path, blog, blocks))
+        case (blog: LiveBlogPage, blocks) if request.forceDCR => Future.successful(renderGuuiJson(path, blog, blocks))
         case (blog: LiveBlogPage, blocks) => getJson(path, blog, range, isLivePage, blocks)
         case (minute: MinutePage, blocks) => Future.successful(common.renderJson(views.html.fragments.minuteBody(minute), minute))
         case _ => Future { Cached(600)(WithoutRevalidationResult(NotFound)) }

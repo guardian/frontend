@@ -45,7 +45,7 @@ class RelatedController(
   private def renderRelated(trails: Seq[RelatedContentItem], containerTitle: String)(implicit request: RequestHeader): Result = Cached(30.minutes) {
     val relatedTrails = trails take 8
 
-    if (request.isGuui) {
+    if (request.forceDCR) {
       val data = OnwardCollectionResponse(
         heading = containerTitle,
         trails = trailsToItems(trails.map(_.faciaContent))

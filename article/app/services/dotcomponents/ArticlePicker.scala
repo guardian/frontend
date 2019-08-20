@@ -97,7 +97,7 @@ object ArticlePicker {
     val isEnabled = conf.switches.Switches.DotcomRendering.isSwitchedOn
     val isBetaUser = ActiveExperiments.isParticipating(DotcomRenderingBeta)
 
-    val tier = if ((isSupported && isEnabled && isBetaUser) || request.isGuui) RemoteRender else LocalRenderArticle
+    val tier = if ((isSupported && isEnabled && isBetaUser && !request.forceDCROff) || request.forceDCR) RemoteRender else LocalRenderArticle
 
     // include features that we wish to log but not whitelist against
     val features = whitelistFeatures + ("isBetaUser" -> isBetaUser)
