@@ -68,8 +68,8 @@ trait Requests {
     lazy val referrer: Option[String] = r.headers.get("referer")
 
     // dotcom-rendering (DCR) parameters
-    lazy val forceDCR: Boolean = r.getQueryString("dcr").contains("true")
     lazy val forceDCROff: Boolean = r.getQueryString("dcr").contains("false")
+    lazy val forceDCR: Boolean = r.getQueryString("dcr").isDefined && !forceDCROff // don't check for .contains(true) so people can be lazy
 
   }
 
