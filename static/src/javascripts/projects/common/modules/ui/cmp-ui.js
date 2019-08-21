@@ -3,11 +3,19 @@
 // TODO: this should be derived from config
 const CMP_DOMAIN = 'https://manage.theguardian.com';
 const CMP_URL = `${CMP_DOMAIN}/consent`;
+const CMP_CLOSE_MSG = 'closeCmp';
 
 let container: ?HTMLElement;
 
 const receiveMessage = (event: MessageEvent) => {
-    if (event.origin === CMP_DOMAIN && container && container.parentNode) {
+    const { origin, data } = event;
+
+    if (
+        origin === CMP_DOMAIN &&
+        data === CMP_CLOSE_MSG &&
+        container &&
+        container.parentNode
+    ) {
         container.remove();
     }
 };
