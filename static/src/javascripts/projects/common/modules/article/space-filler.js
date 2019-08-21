@@ -10,11 +10,7 @@ const onError = (e: Error): boolean => {
 };
 
 class SpaceFiller {
-    queue: Promise<any>;
-
-    constructor() {
-        this.queue = Promise.resolve();
-    }
+    queue: Promise<any> = Promise.resolve();
 
     /**
      * A safer way of using spacefinder.
@@ -46,6 +42,6 @@ class SpaceFiller {
     }
 }
 
-const spaceFiller = new SpaceFiller();
+const spaceFiller: SpaceFiller = new SpaceFiller();
 
 export { spaceFiller };
