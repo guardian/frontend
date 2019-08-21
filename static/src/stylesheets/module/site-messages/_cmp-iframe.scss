@@ -16,7 +16,12 @@
     bottom: 0;
     top: 0;
     height: 100%;
-    width: 30%;
+    width: 100%;
     z-index: 9999;
     border: 0;
+
+    @include mq(phablet) {
+        min-width: 576px;
+        width: 30%;
+    }
 }
