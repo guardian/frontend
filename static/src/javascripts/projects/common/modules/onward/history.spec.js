@@ -71,6 +71,7 @@ describe('history', () => {
     let mockContains;
     let mockSummary;
     let mockDailyArticleCount;
+    let mockWeeklyArticleCount;
 
     beforeEach(() => {
         mockContains = contains;
@@ -82,6 +83,8 @@ describe('history', () => {
                 return mockSummary;
             } else if (key === 'gu.history.dailyArticleCount') {
                 return mockDailyArticleCount;
+            } else if (key === 'gu.history.weeklyArticleCount') {
+                return mockWeeklyArticleCount;
             }
         });
 
@@ -92,6 +95,8 @@ describe('history', () => {
                 mockSummary = data;
             } else if (key === 'gu.history.dailyArticleCount') {
                 mockDailyArticleCount = data;
+            } else if (key === 'gu.history.weeklyArticleCount') {
+                mockWeeklyArticleCount = data;
             }
         });
     });
@@ -390,7 +395,7 @@ describe('history', () => {
         expect(getArticleViewCountForDays(1)).toEqual(2);
     });
 
-    it('removes old history while incrementing the article count', () => {
+    it('removes old daily history while incrementing the article count', () => {
         const counts = [{ day: today - 40, count: 9 }];
         localStorageStub.set('gu.history.dailyArticleCount', counts);
 
@@ -422,7 +427,7 @@ describe('history', () => {
         expect(getArticleViewCountForWeeks(2)).toEqual(2);
     });
 
-    it('increments the daily article count', () => {
+    it('increments the weekly article count', () => {
         const counts = [{ week: startOfThisWeek, count: 1 }];
         localStorageStub.set('gu.history.weeklyArticleCount', counts);
 
@@ -431,14 +436,14 @@ describe('history', () => {
         expect(getArticleViewCountForWeeks(1)).toEqual(2);
     });
 
-    it('removes old history while incrementing the article count', () => {
-        const counts = [{ day: today - 400, count: 9 }];
+    it('removes old weekly history while incrementing the article count', () => {
+        const counts = [{ week: startOfThisWeek - 400, count: 9 }];
         localStorageStub.set('gu.history.weeklyArticleCount', counts);
 
         incrementWeeklyArticleCount(pageConfig);
 
         expect(localStorageStub.get('gu.history.weeklyArticleCount')).toEqual([
-            { day: today, count: 1 },
+            { week: startOfThisWeek, count: 1 },
         ]);
     });
 });

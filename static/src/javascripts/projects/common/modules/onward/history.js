@@ -517,7 +517,7 @@ const incrementWeeklyArticleCount = (pageConfig: Object): void => {
             });
 
             // Remove any weeks older than a year
-            const cutOff = weeklyArticleCount - 365;
+            const cutOff = startOfThisWeek - 365;
             const firstOldWeekIndex = weeklyArticleCount.findIndex(
                 c => c.week && c.week < cutOff
             );
