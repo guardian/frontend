@@ -54,14 +54,25 @@ const buckets = [
     },
 ];
 
+const getMondayFromDate = (date: Date) => {
+    const day = date.getDay() || 7;
+    // Do not set date to Monday if it is already Monday
+    if (day !== 1) {
+        date.setHours(-24 * (day - 1));
+    }
+    return Math.floor(date.getTime() / 86400000);
+};
+
 const summaryPeriodDays = 90;
 const forgetUniquesAfter = 10;
 const historySize = 50;
 const storageKeyHistory = 'gu.history';
 const storageKeySummary = 'gu.history.summary';
 const storageKeyDailyArticleCount = 'gu.history.dailyArticleCount'; // Array containing an article count for each day
+const storageKeyWeeklyArticleCount = 'gu.history.weeklyArticleCount';
 
 const today = Math.floor(Date.now() / 86400000); // 1 day in ms
+const startOfThisWeek = getMondayFromDate(new Date());
 
 let historyCache: ?Array<Array<any>>;
 let summaryCache: ?Object;
@@ -488,7 +499,38 @@ const incrementDailyArticleCount = (pageConfig: Object): void => {
     }
 };
 
-const getArticleViewCount = (days: number): number => {
+const incrementWeeklyArticleCount = (pageConfig: Object): void => {
+    if (!pageConfig.isFront) {
+        const weeklyArticleCount =
+            local.get(storageKeyWeeklyArticleCount) || [];
+        if (
+            weeklyArticleCount[0] &&
+            weeklyArticleCount[0].week &&
+            weeklyArticleCount[0].week === startOfThisWeek
+        ) {
+            weeklyArticleCount[0].count += 1;
+        } else {
+            // New day
+            weeklyArticleCount.unshift({
+                week: startOfThisWeek,
+                count: 1,
+            });
+
+            // Remove any weeks older than a year
+            const cutOff = weeklyArticleCount - 365;
+            const firstOldWeekIndex = weeklyArticleCount.findIndex(
+                c => c.week && c.week < cutOff
+            );
+            if (firstOldWeekIndex > 0) {
+                weeklyArticleCount.splice(firstOldWeekIndex);
+            }
+        }
+
+        local.set(storageKeyWeeklyArticleCount, weeklyArticleCount);
+    }
+};
+
+const getArticleViewCountForDays = (days: number): number => {
     const dailyCount = local.get(storageKeyDailyArticleCount) || [];
     const cutOff = today - days;
 
@@ -501,6 +543,21 @@ const getArticleViewCount = (days: number): number => {
             : dailyCount;
 
     return dailyCountWindow.reduce((acc, current) => current.count + acc, 0);
+};
+
+const getArticleViewCountForWeeks = (weeks: number): number => {
+    const weeklyCount = local.get(storageKeyWeeklyArticleCount) || [];
+    const cutOff = startOfThisWeek - weeks * 7;
+
+    const firstOldWeekIndex = weeklyCount.findIndex(
+        c => c.week && c.week <= cutOff
+    );
+    const weeklyCountWindow =
+        firstOldWeekIndex >= 0
+            ? weeklyCount.slice(0, firstOldWeekIndex)
+            : weeklyCount;
+
+    return weeklyCountWindow.reduce((acc, current) => current.count + acc, 0);
 };
 
 export {
@@ -518,7 +575,10 @@ export {
     seriesSummary,
     mostViewedSeries,
     incrementDailyArticleCount,
-    getArticleViewCount,
+    incrementWeeklyArticleCount,
+    getArticleViewCountForDays,
+    getArticleViewCountForWeeks,
+    getMondayFromDate,
 };
 
 export const _ = {
