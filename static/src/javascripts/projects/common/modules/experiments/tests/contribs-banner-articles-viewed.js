@@ -6,14 +6,14 @@ import {
     getLocalCurrencySymbol,
     getSync as geolocationGetSync,
 } from 'lib/geolocation';
-import { getArticleViewCount } from 'common/modules/onward/history';
+import { getArticleViewCountForDays } from 'common/modules/onward/history';
 import { buildBannerCopy } from 'common/modules/commercial/contributions-utilities';
 
 // User must have read at least 5 articles in last 30 days
 const minArticleViews = 5;
 const articleCountDays = 30;
 
-const articleViewCount = getArticleViewCount(articleCountDays);
+const articleViewCount = getArticleViewCountForDays(articleCountDays);
 
 const geolocation = geolocationGetSync();
 const isUSUKAU = ['GB', 'US', 'AU'].includes(geolocation);

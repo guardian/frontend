@@ -32,6 +32,7 @@ import {
     logSummary,
     showInMegaNav,
     incrementDailyArticleCount,
+    incrementWeeklyArticleCount,
 } from 'common/modules/onward/history';
 import { initTechFeedback } from 'common/modules/onward/tech-feedback';
 import { initAccessibilityPreferences } from 'common/modules/ui/accessibility-prefs';
@@ -158,11 +159,12 @@ const updateHistory = (): void => {
     }
 };
 
-const updateDailyArticleCount = (): void => {
+const updateArticleCounts = (): void => {
     const page = config.get('page');
 
     if (page) {
         incrementDailyArticleCount(page);
+        incrementWeeklyArticleCount(page);
     }
 };
 
@@ -363,7 +365,7 @@ const init = (): void => {
         ['c-user-features', refreshUserFeatures],
         ['c-membership', initMembership],
         ['c-banner-picker', initialiseBanner],
-        ['c-increment-daily-count', updateDailyArticleCount],
+        ['c-increment-article-counts', updateArticleCounts],
         ['c-reader-revenue-dev-utils', initReaderRevenueDevUtils],
     ]);
 };

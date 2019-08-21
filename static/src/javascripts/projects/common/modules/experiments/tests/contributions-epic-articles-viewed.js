@@ -4,14 +4,14 @@ import {
     defaultButtonTemplate,
     buildEpicCopy,
 } from 'common/modules/commercial/contributions-utilities';
-import { getArticleViewCount } from 'common/modules/onward/history';
+import { getArticleViewCountForDays } from 'common/modules/onward/history';
 import { getCountryName, getSync as geolocationGetSync } from 'lib/geolocation';
 
 // User must have read at least 5 articles in last 14 days
 const minArticleViews = 5;
 const articleCountDays = 30;
 
-const articleViewCount = getArticleViewCount(articleCountDays);
+const articleViewCount = getArticleViewCountForDays(articleCountDays);
 
 const highlightedText =
     'Support The Guardian from as little as %%CURRENCY_SYMBOL%%1 – and it only takes a minute. Thank you.';
