@@ -31,7 +31,8 @@ import {
     logHistory,
     logSummary,
     showInMegaNav,
-    incrementDailyArticleCount, incrementWeeklyArticleCount,
+    incrementDailyArticleCount,
+    incrementWeeklyArticleCount,
 } from 'common/modules/onward/history';
 import { initTechFeedback } from 'common/modules/onward/tech-feedback';
 import { initAccessibilityPreferences } from 'common/modules/ui/accessibility-prefs';

@@ -12,7 +12,10 @@ import {
     mostViewedSeries,
     getArticleViewCountForDays,
     _,
-    incrementDailyArticleCount, getMondayFromDate, getArticleViewCountForWeeks, incrementWeeklyArticleCount,
+    incrementDailyArticleCount,
+    getMondayFromDate,
+    getArticleViewCountForWeeks,
+    incrementWeeklyArticleCount,
 } from 'common/modules/onward/history';
 import { local as localStorageStub } from 'lib/storage';
 
