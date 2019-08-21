@@ -1,5 +1,6 @@
 package controllers.editprofile.tabs
 
+import conf.Configuration
 import controllers.editprofile._
 import play.api.mvc.{Action, AnyContent}
 
@@ -11,19 +12,15 @@ trait EmailsTab
 
   val emailFilter = emailValidationFilter
 
+  private def redirectToManage(path: String): Action[AnyContent] = Action { implicit request =>
+    Redirect(
+      url = s"${Configuration.id.mmaUrl}/${path}",
+      MOVED_PERMANENTLY)
+  }
+
   /** GET /email-prefs */
-  def displayEmailPrefsForm(consentsUpdated: Boolean, consentHint: Option[String]): Action[AnyContent] =
-    displayForm(EmailPrefsProfilePage, consentsUpdated, consentHint, emailValidationRequired = true)
+  def redirectToEmailPrefs: Action[AnyContent] = redirectToManage("email-prefs")
 
   /** GET /privacy/edit */
-  def displayPrivacyFormRedirect(
-    consentsUpdated: Boolean,
-    consentHint: Option[String]): Action[AnyContent] =
-    csrfAddToken {
-      recentFullAuthWithIdapiUserAction { implicit request =>
-        Redirect(
-          routes.EditProfileController.displayEmailPrefsForm(consentsUpdated, consentHint),
-          MOVED_PERMANENTLY)
-      }
-    }
+  def displayPrivacyFormRedirect: Action[AnyContent] = redirectToManage("email-prefs")
 }

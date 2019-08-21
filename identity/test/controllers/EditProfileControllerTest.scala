@@ -403,24 +403,5 @@ import scala.concurrent.Future
         userUpdate.privateFields.value.telephoneNumber.value should equal(TelephoneNumber(Some(telephoneNumberCountryCode), Some(telephoneNumberLocalNumber)))
       }
     }
-
-    "displayEmailPrefsForm method" should {
-      "display Guardian Today UK newsletter" in new EditProfileFixture {
-        override val user = User("test@example.com", userId, statusFields = StatusFields(userEmailValidated = Some(true), hasRepermissioned = Some(true)))
-        override val testAuth = ScGuU("abc", GuUCookieData(user, 0, None))
-        override val authenticatedUser = AuthenticatedUser(user, testAuth, true)
-        when(authService.fullyAuthenticatedUser(MockitoMatchers.any[RequestHeader])) thenReturn Some(authenticatedUser)
-        when(api.me(testAuth)) thenReturn Future.successful(Right(user))
-
-        val userEmailSubscriptions = List(EmailList(EmailNewsletters.guardianTodayUk.listId.toString))
-        when(api.userEmails(MockitoMatchers.anyString(), MockitoMatchers.any[TrackingData]))
-          .thenReturn(Future.successful(Right(Subscriber("HTML", userEmailSubscriptions, "subscribed"))))
-
-        val result = controller.displayEmailPrefsForm(false, None).apply(FakeCSRFRequest(csrfAddToken))
-        status(result) should be(200)
-        contentAsString(result) should include (EmailNewsletters.guardianTodayUk.name)
-        contentAsString(result) should include ("Unsubscribe")
-      }
-    }
   }
 }
