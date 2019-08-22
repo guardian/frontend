@@ -1,3 +1,8 @@
+import {
+    isASixMonthsOrOlderSingleContributor,
+    isAThreeMonthsOrOlderSingleContributor
+} from 'common/modules/commercial/user-features';
+
 declare type AcquisitionsEpicTestimonialCopy = {
     text: string,
     name: string
@@ -30,8 +35,7 @@ declare type EngagementBannerTemplateParams = {
  *
  * Note - PostAskPauseSingleContributors is a subset of AllNonSupporters, so priority ordering of these tests is important
  */
-declare type AcquisitionsComponentUserCohort = 'AllExistingSupporters' | 'AllNonSupporters' | 'Everyone' | 'PostAskPauseSingleContributors';
-
+declare type AcquisitionsComponentUserCohort = 'AllExistingSupporters' | 'AllNonSupporters' | 'Everyone' | 'PostAskPauseSingleContributors' | 'SixMonthsOrOlderSingleContributor' |'ThreeMonthsOrOlderSingleContributor';
 declare type EngagementBannerParams = EngagementBannerTemplateParams & {
     campaignCode: string,
     pageviewId: string,

@@ -36,7 +36,9 @@ import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templ
 import { epicLiveBlogTemplate } from 'common/modules/commercial/templates/acquisitions-epic-liveblog';
 import {
     shouldHideSupportMessaging,
-    isPostAskPauseOneOffContributor,
+    isPostAskPauseSingleContributor,
+    isASixMonthsOrOlderSingleContributor,
+    isAThreeMonthsOrOlderSingleContributor,
 } from 'common/modules/commercial/user-features';
 import {
     supportContributeURL,
@@ -157,8 +159,12 @@ const userIsInCorrectCohort = (
     userCohort: AcquisitionsComponentUserCohort
 ): boolean => {
     switch (userCohort) {
+        case 'SixMonthsOrOlderSingleContributor':
+            return isASixMonthsOrOlderSingleContributor();
+        case 'ThreeMonthsOrOlderSingleContributor':
+            return isAThreeMonthsOrOlderSingleContributor();
         case 'PostAskPauseSingleContributors':
-            return isPostAskPauseOneOffContributor();
+            return isPostAskPauseSingleContributor();
         case 'AllExistingSupporters':
             return shouldHideSupportMessaging();
         case 'AllNonSupporters':
