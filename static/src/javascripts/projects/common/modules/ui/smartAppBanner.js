@@ -24,7 +24,7 @@ const DATA = {
         SCREENSHOTS:
             'https://assets.guim.co.uk/images/apps/ios-screenshots.jpg',
         LINK:
-            'https://apps.apple.com/gb/app/the-guardian-live-world-news/id409128287',
+            'https://itunes.apple.com/gb/app/the-guardian/id409128287?mt=8',
         STORE: 'on the App Store',
     },
     ANDROID: {
