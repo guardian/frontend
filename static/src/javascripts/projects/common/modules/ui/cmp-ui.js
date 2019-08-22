@@ -1,7 +1,7 @@
 // @flow
 
 // TODO: this should be derived from config
-const CMP_DOMAIN = 'https://manage.theguardian.com';
+const CMP_DOMAIN = 'https://manage.thegulocal.com';
 const CMP_URL = `${CMP_DOMAIN}/consent`;
 const CMP_CLOSE_MSG = 'closeCmp';
 
@@ -45,7 +45,7 @@ const addPrivacySettingsLink = (): void => {
 
             newPrivacyLink.dataset.linkName = 'privacy-settings';
             newPrivacyLink.removeAttribute('href');
-            newPrivacyLink.innerText = 'Privacy Settings';
+            newPrivacyLink.innerText = 'Privacy settings';
 
             const newPrivacyLinkListItem: Element = privacyLinkListItem.cloneNode(
                 false
