@@ -26,7 +26,7 @@ const addContainerToPage = (): void => {
     }
 };
 
-const handlePrivacySettingsClick = (evt: Event) => {
+const handlePrivacySettingsClick = (evt: Event): void => {
     evt.preventDefault();
 
     addContainerToPage();
