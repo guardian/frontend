@@ -1,11 +1,9 @@
 // @flow
 
-import { isAThreeMonthsOrOlderSingleContributor } from 'common/modules/commercial/user-features';
 import { addCookie, removeCookie, getCookie } from 'lib/cookies';
 import fetchJson from 'lib/fetch-json';
 import { isUserLoggedIn as isUserLoggedIn_ } from 'common/modules/identity/api';
 import config from 'lib/config';
-import { isASixMonthsOrOlderSingleContributor } from './user-features';
 import {
     refresh,
     isAdFreeUser,
@@ -19,6 +17,8 @@ import {
     shouldNotBeShownSupportMessaging,
     getLastRecurringContributionDate,
     isPostAskPauseSingleContributor,
+    isASixMonthsOrOlderSingleContributor,
+    isAThreeMonthsOrOlderSingleContributor,
 } from './user-features.js';
 
 jest.mock('lib/raven');
@@ -618,7 +618,6 @@ describe('isASixMonthsOrOlderContributor', () => {
         expect(isASixMonthsOrOlderSingleContributor()).toBe(true);
     });
 });
-
 
 describe('isAThreeMonthsOrOlderContributor', () => {
     beforeEach(() => {

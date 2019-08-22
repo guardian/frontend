@@ -270,7 +270,7 @@ const isAThreeMonthsOrOlderSingleContributor = (): boolean => {
     if (daysSinceLastContribution === null) {
         return false;
     }
-    return daysSinceLastContribution > 90
+    return daysSinceLastContribution > 90;
 };
 
 const isRecurringContributor = (): boolean =>
