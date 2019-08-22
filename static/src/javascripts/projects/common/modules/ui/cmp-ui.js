@@ -1,7 +1,7 @@
 // @flow
 
 // TODO: this should be derived from config
-const CMP_DOMAIN = 'https://manage.theguardian.com';
+const CMP_DOMAIN = 'https://manage.thegulocal.com';
 const CMP_URL = `${CMP_DOMAIN}/consent`;
 const CMP_CLOSE_MSG = 'closeCmp';
 
@@ -20,6 +20,52 @@ const receiveMessage = (event: MessageEvent) => {
     }
 };
 
+const addContainerToPage = (): void => {
+    if (document.body && container && !container.parentElement) {
+        document.body.appendChild(container);
+    }
+};
+
+const handlePrivacySettingsClick = (evt: Event) => {
+    evt.preventDefault();
+
+    addContainerToPage();
+};
+
+const addPrivacySettingsLink = (): void => {
+    const privacyLink: ?HTMLElement = document.querySelector(
+        'a[data-link-name=privacy]'
+    );
+
+    if (privacyLink) {
+        const privacyLinkListItem: ?Element = privacyLink.parentElement;
+
+        if (privacyLinkListItem) {
+            const newPrivacyLink: HTMLElement = privacyLink.cloneNode(false);
+
+            newPrivacyLink.dataset.linkName = 'privacy-settings';
+            newPrivacyLink.removeAttribute('href');
+            newPrivacyLink.innerText = 'Privacy Settings';
+
+            const newPrivacyLinkListItem: Element = privacyLinkListItem.cloneNode(
+                false
+            );
+
+            newPrivacyLinkListItem.appendChild(newPrivacyLink);
+
+            privacyLinkListItem.insertAdjacentElement(
+                'afterend',
+                newPrivacyLinkListItem
+            );
+
+            newPrivacyLink.addEventListener(
+                'click',
+                handlePrivacySettingsClick
+            );
+        }
+    }
+};
+
 export const init = (): void => {
     container = document.createElement('div');
     container.className = 'cmp-overlay';
@@ -30,9 +76,13 @@ export const init = (): void => {
 
     container.appendChild(iframe);
 
-    if (document.body) {
-        document.body.appendChild(container);
-    }
+    addContainerToPage();
+
+    /**
+     * Temporarily add a Privacy Settings
+     * link in the footer for resurfacing the CMP UI.
+     * */
+    addPrivacySettingsLink();
 
     window.addEventListener('message', receiveMessage, false);
 };
