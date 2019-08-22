@@ -1,7 +1,7 @@
 // @flow
 
 // TODO: this should be derived from config
-const CMP_DOMAIN = 'https://manage.thegulocal.com';
+const CMP_DOMAIN = 'https://manage.theguardian.com';
 const CMP_URL = `${CMP_DOMAIN}/consent`;
 const CMP_CLOSE_MSG = 'closeCmp';
 
