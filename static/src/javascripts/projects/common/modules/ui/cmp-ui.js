@@ -1,24 +1,37 @@
 // @flow
 import { getCookie } from 'lib/cookies';
 
-// TODO: this should be derived from config
-const CMP_DOMAIN = 'https://manage.theguardian.com';
+// TODO: this should be derived from config or imported from new lib
+const CMP_DOMAIN = 'https://manage.thegulocal.com';
 const CMP_URL = `${CMP_DOMAIN}/consent`;
+const CMP_READY_MSG = 'readyCmp';
 const CMP_CLOSE_MSG = 'closeCmp';
 const IAB_COOKIE_NAME = 'euconsent';
+const CMP_READY_CLASS = 'cmp-iframe-ready';
 
 let container: ?HTMLElement;
 
 const receiveMessage = (event: MessageEvent) => {
     const { origin, data } = event;
 
-    if (
-        origin === CMP_DOMAIN &&
-        data === CMP_CLOSE_MSG &&
-        container &&
-        container.parentNode
-    ) {
-        container.remove();
+    if (origin !== CMP_DOMAIN) {
+        return;
+    }
+
+    switch (data) {
+        case CMP_READY_MSG:
+            if (container && container.parentNode) {
+                container.classList.add(CMP_READY_CLASS);
+            }
+            break;
+        case CMP_CLOSE_MSG:
+            if (container && container.parentNode) {
+                container.classList.remove(CMP_READY_CLASS);
+                container.remove();
+            }
+            break;
+        default:
+            break;
     }
 };
 
