@@ -4,6 +4,9 @@ import {
     thirdPartyTrackingAdConsent,
 } from 'common/modules/commercial/ad-prefs.lib';
 
+const CMP_DOMAIN = 'https://manage.theguardian.com';
+const CMP_SAVED_MSG = 'savedCmp';
+
 type PurposeEvent = 'functional' | 'performance' | 'advertisement';
 
 type PurposeCallback = (state: boolean | null) => void;
@@ -30,6 +33,22 @@ const purposes: { [PurposeEvent]: Purpose } = {
     },
 };
 
+const triggerConsentNotification = (): void => {
+    Object.keys(purposes).forEach(key => {
+        const purpose = purposes[key];
+        purpose.callbacks.forEach(callback => callback(purpose.state));
+    });
+};
+
+const receiveMessage = (event: MessageEvent) => {
+    const { origin, data } = event;
+
+    // triggerConsentNotification when CMP_SAVED_MSG emitted from CMP_DOMAIN
+    if (origin === CMP_DOMAIN && data === CMP_SAVED_MSG) {
+        triggerConsentNotification();
+    }
+};
+
 const checkCmpReady = (): void => {
     if (cmpIsReady) {
         return;
@@ -46,16 +65,10 @@ const checkCmpReady = (): void => {
         thirdPartyTrackingAdConsent
     );
 
+    // listen for postMessage events from CMP UI
+    window.addEventListener('message', receiveMessage, false);
+
     cmpIsReady = true;
-};
-
-const triggerConsentNotification = (): void => {
-    checkCmpReady();
-
-    Object.keys(purposes).forEach(key => {
-        const purpose = purposes[key];
-        purpose.callbacks.forEach(callback => callback(purpose.state));
-    });
 };
 
 export const onConsentNotification = (
