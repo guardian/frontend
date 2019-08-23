@@ -26,7 +26,7 @@ declare type EngagementBannerTemplateParams = {
  * AllExistingSupporters - all recurring, all one-offs in last 6 months
  * AllNonSupporters - no recurring, no one-offs in last 6 months
  * Everyone
- * PostAskPauseSingleContributors - people who made a contribution between 6 and 12 months ago
+ * PostAskPauseSingleContributors - people who made a contribution more than 6 months ago
  *
  * Note - PostAskPauseSingleContributors is a subset of AllNonSupporters, so priority ordering of these tests is important
  */
