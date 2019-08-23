@@ -243,7 +243,7 @@ const isRecentOneOffContributor = (askPauseDays: number = 180): boolean => {
     return daysSinceLastContribution <= askPauseDays;
 };
 
-// true if the user is in the first month after ask-free period
+// true if the user has completed their ask-free period
 const isPostAskPauseOneOffContributor = (
     askPauseDays: number = 180
 ): boolean => {
@@ -251,10 +251,7 @@ const isPostAskPauseOneOffContributor = (
     if (daysSinceLastContribution === null) {
         return false;
     }
-    return (
-        daysSinceLastContribution > askPauseDays &&
-        daysSinceLastContribution < askPauseDays + 30
-    );
+    return daysSinceLastContribution > askPauseDays;
 };
 
 const isRecurringContributor = (): boolean =>
