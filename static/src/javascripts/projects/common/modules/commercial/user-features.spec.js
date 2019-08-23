@@ -598,6 +598,12 @@ describe('isPostAskPauseOneOffContributor', () => {
         expect(isPostAskPauseOneOffContributor()).toBe(false);
     });
 
+    it('returns false if the one-off contribution was more than 12 months ago', () => {
+        global.Date.now = jest.fn(() => Date.parse('2019-08-01T13:00:30'));
+        setSupportFrontendOneOffContributionCookie(contributionDateTimeEpoch);
+        expect(isPostAskPauseOneOffContributor()).toBe(false);
+    });
+
     it('returns true if the one-off contribution was between 6 and 7 months ago', () => {
         global.Date.now = jest.fn(() => Date.parse('2019-02-01T13:00:30'));
         setSupportFrontendOneOffContributionCookie(contributionDateTimeEpoch);
