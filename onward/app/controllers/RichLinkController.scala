@@ -16,15 +16,15 @@ class RichLinkController(contentApiClient: ContentApiClient, controllerComponent
     contentType(path) map {
         case Some(content) if request.forceDCR =>
           val richLink = RichLink(
-            content.tags.tags.map(Tag.withoutCommercial), // throw away commercial data as we don't use it
-            content.content.cardStyle.toneString,
-            content.trail.trailPicture.flatMap(tp => Item460.bestSrcFor(tp)),
-            content.trail.headline,
-            content.metadata.contentType,
-            content.content.starRating,
-            content.metadata.commercial.flatMap(_.branding(Edition(request))).map(_.sponsorName),
-            content.tags.contributors.headOption.flatMap(_.properties.contributorLargeImagePath.map(ImgSrc(_, RichLinkContributor))),
-            content.metadata.url
+            tags = content.tags.tags.map(Tag.withoutCommercial), // throw away commercial data as we don't use it
+            cardStyle = content.content.cardStyle.toneString,
+            thumbnailUrl = content.trail.trailPicture.flatMap(tp => Item460.bestSrcFor(tp)),
+            headline = content.trail.headline,
+            contentType = content.metadata.contentType,
+            starRating = content.content.starRating,
+            sponsorName = content.metadata.commercial.flatMap(_.branding(Edition(request))).map(_.sponsorName),
+            contributorImage = content.tags.contributors.headOption.flatMap(_.properties.contributorLargeImagePath.map(ImgSrc(_, RichLinkContributor))),
+            url = content.metadata.url
           )
           Cached(900)(JsonComponent(richLink)(request, RichLink.writes))
         case Some(content) => renderContent(richLinkHtml(content), richLinkBodyHtml(content))
