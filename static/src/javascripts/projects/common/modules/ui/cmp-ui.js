@@ -2,7 +2,7 @@
 import { getCookie } from 'lib/cookies';
 
 // TODO: this should be derived from config or imported from new lib
-const CMP_DOMAIN = 'https://manage.thegulocal.com';
+const CMP_DOMAIN = 'https://manage.theguardian.com';
 const CMP_URL = `${CMP_DOMAIN}/consent`;
 const CMP_READY_MSG = 'readyCmp';
 const CMP_CLOSE_MSG = 'closeCmp';
