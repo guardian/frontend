@@ -396,7 +396,7 @@ describe('history', () => {
     });
 
     it('removes old daily history while incrementing the article count', () => {
-        const counts = [{ day: today - 40, count: 9 }];
+        const counts = [{ day: today - 70, count: 9 }];
         localStorageStub.set('gu.history.dailyArticleCount', counts);
 
         incrementDailyArticleCount(pageConfig);
