@@ -43,11 +43,6 @@ export const adblockTest: ABTest = {
     audienceCriteria: '',
     showForSensitive: true,
     canRun() {
-        console.log('can run', (
-            !shouldHideSupportMessaging() &&
-            !pageShouldHideReaderRevenue() &&
-            !config.get('page.hasShowcaseMainElement')
-        ));
         return (
             !shouldHideSupportMessaging() &&
             !pageShouldHideReaderRevenue() &&
@@ -59,7 +54,6 @@ export const adblockTest: ABTest = {
         {
             id: 'control',
             test: (): void => {
-                console.log('hello');
                 const slot = document.querySelector('.js-aside-slot-container');
                 if (slot) {
                     slot.innerHTML += askHtml;
