@@ -1,10 +1,10 @@
 // @flow
 import { shouldHideSupportMessaging } from 'common/modules/commercial/user-features';
 import { pageShouldHideReaderRevenue } from 'common/modules/commercial/contributions-utilities';
-import { supportContributeURL } from 'common/modules/commercial/support-utilities';
+import { supportSubscribeURL } from 'common/modules/commercial/support-utilities';
 import config from 'lib/config';
 
-const supportUrl = `${supportContributeURL()}?acquisitionData=%7B%22componentType%22%3A%22ACQUISITIONS_OTHER%22%2C%22source%22%3A%22GUARDIAN_WEB%22%2C%22campaignCode%22%3A%22shady_pie_open_2019%22%2C%22componentId%22%3A%22shady_pie_open_2019%22%7D&INTCMP=shady_pie_open_2019`;
+const supportUrl = `${supportSubscribeURL()}?acquisitionData=%7B%22componentType%22%3A%22ACQUISITIONS_OTHER%22%2C%22source%22%3A%22GUARDIAN_WEB%22%2C%22campaignCode%22%3A%22shady_pie_open_2019%22%2C%22componentId%22%3A%22shady_pie_open_2019%22%7D&INTCMP=shady_pie_open_2019`;
 
 const askHtml = `
 <div class="contributions__adblock">
@@ -43,6 +43,11 @@ export const adblockTest: ABTest = {
     audienceCriteria: '',
     showForSensitive: true,
     canRun() {
+        console.log('can run', (
+            !shouldHideSupportMessaging() &&
+            !pageShouldHideReaderRevenue() &&
+            !config.get('page.hasShowcaseMainElement')
+        ));
         return (
             !shouldHideSupportMessaging() &&
             !pageShouldHideReaderRevenue() &&
@@ -54,6 +59,7 @@ export const adblockTest: ABTest = {
         {
             id: 'control',
             test: (): void => {
+                console.log('hello');
                 const slot = document.querySelector('.js-aside-slot-container');
                 if (slot) {
                     slot.innerHTML += askHtml;
