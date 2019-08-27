@@ -4,9 +4,6 @@ export const checks = [
     'isOutbrainDisabled',
     'isUserInContributionsAbTest',
     'isUserNotInContributionsAbTest',
-    'emailCanRunPreCheck',
-    'listCanRun',
-    'emailInArticleOutbrainEnabled',
     'hasHighPriorityAdLoaded',
     'hasLowPriorityAdLoaded',
     'hasLowPriorityAdNotLoaded',
@@ -14,6 +11,4 @@ export const checks = [
     'isOutbrainBlockedByAds',
     'isOutbrainMerchandiseCompliant',
     'isOutbrainMerchandiseCompliantOrBlockedByAds',
-    'emailCanRun',
-    'emailCanRunPostCheck',
 ];

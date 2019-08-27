@@ -48,7 +48,6 @@ import { Toggles } from 'common/modules/ui/toggles';
 import { initPinterest } from 'common/modules/social/pinterest';
 import { membershipEngagementBanner } from 'common/modules/commercial/membership-engagement-banner';
 import { initEmail } from 'common/modules/email/email';
-import { init as initEmailArticle } from 'common/modules/email/email-article';
 import { init as initIdentity } from 'bootstraps/enhanced/identity-common';
 import { init as initBannerPicker } from 'common/modules/ui/bannerPicker';
 import { breakingNews } from 'common/modules/onward/breaking-news';
@@ -279,11 +278,6 @@ const startPinterest = (): void => {
 const initialiseEmail = (): void => {
     // Initalise email embedded in page
     initEmail();
-
-    // Initalise email insertion into articles
-    if (config.get('switches.emailInArticle')) {
-        initEmailArticle();
-    }
 
     // Initalise email forms in iframes
     Array.from(document.getElementsByClassName('js-email-sub__iframe')).forEach(
