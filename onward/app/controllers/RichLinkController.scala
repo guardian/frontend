@@ -1,18 +1,32 @@
 package controllers
 
-import common.{ImplicitControllerExecutionContext, Logging}
+import common.{Edition, ImplicitControllerExecutionContext, JsonComponent, Logging}
 import contentapi.ContentApiClient
 import implicits.Requests
-import model.{ApplicationContext, Content, ContentType}
+import model.{ApplicationContext, Cached, Content, ContentType, Tag}
+import models.dotcomponents.RichLink
 import play.api.mvc.{Action, AnyContent, ControllerComponents, RequestHeader}
 import play.twirl.api.Html
+import views.support.{ImgSrc, Item460, RichLinkContributor}
 
 import scala.concurrent.Future
 
 class RichLinkController(contentApiClient: ContentApiClient, controllerComponents: ControllerComponents)(implicit context: ApplicationContext) extends OnwardContentCardController(contentApiClient, controllerComponents) with Paging with Logging with ImplicitControllerExecutionContext with Requests   {
-
   def render(path: String): Action[AnyContent] = Action.async { implicit request =>
     contentType(path) map {
+        case Some(content) if request.forceDCR =>
+          val richLink = RichLink(
+            tags = content.tags.tags.map(Tag.withoutCommercial), // throw away commercial data as we don't use it
+            cardStyle = content.content.cardStyle.toneString,
+            thumbnailUrl = content.trail.trailPicture.flatMap(tp => Item460.bestSrcFor(tp)),
+            headline = content.trail.headline,
+            contentType = content.metadata.contentType,
+            starRating = content.content.starRating,
+            sponsorName = content.metadata.commercial.flatMap(_.branding(Edition(request))).map(_.sponsorName),
+            contributorImage = content.tags.contributors.headOption.flatMap(_.properties.contributorLargeImagePath.map(ImgSrc(_, RichLinkContributor))),
+            url = content.metadata.url
+          )
+          Cached(900)(JsonComponent(richLink)(request, RichLink.writes))
         case Some(content) => renderContent(richLinkHtml(content), richLinkBodyHtml(content))
         case None => NotFound
     }
