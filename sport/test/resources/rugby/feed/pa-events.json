@@ -1,0 +1,1277 @@
+{
+  "offset": 0,
+  "limit": 20,
+  "hasNext": false,
+  "hasPrevious": false,
+  "items": [
+    {
+      "id": 3000315,
+      "name": "Wellington-Counties Manukau",
+      "status": "Finished",
+      "date": "2019-08-29T07:35:00Z",
+      "updated": "2019-08-29T11:43:41Z",
+      "entrants": [
+        {
+          "id": 10406409,
+          "number": 1,
+          "participant": {
+            "id": 468560,
+            "name": "Wellington",
+            "gender": "male",
+            "type": "team",
+            "country": {
+              "id": 93,
+              "name": "New Zealand"
+            },
+            "participants": [
+              {
+                "id": 959217,
+                "name": "Xavier Numia",
+                "firstName": "Xavier",
+                "lastName": "Numia",
+                "gender": "male",
+                "type": "athlete",
+                "country": {
+                  "id": 93,
+                  "name": "New Zealand"
+                },
+                "meta": {
+                  "lineup-type": {
+                    "code": "participant:lineup-type",
+                    "name": "Lineup Type",
+                    "value": "Starter"
+                  },
+                  "shirt-number": {
+                    "code": "participant:shirt-number",
+                    "name": "Shirt Number",
+                    "value": "1"
+                  }
+                }
+              },
+              {
+                "id": 782747,
+                "name": "Asafo Aumua",
+                "firstName": "Asafo",
+                "lastName": "Aumua",
+                "gender": "male",
+                "type": "athlete",
+                "country": {
+                  "id": 93,
+                  "name": "New Zealand"
+                },
+                "meta": {
+                  "lineup-type": {
+                    "code": "participant:lineup-type",
+                    "name": "Lineup Type",
+                    "value": "Starter"
+                  },
+                  "shirt-number": {
+                    "code": "participant:shirt-number",
+                    "name": "Shirt Number",
+                    "value": "2"
+                  }
+                }
+              },
+              {
+                "id": 782750,
+                "name": "Alex Fidow",
+                "firstName": "Alex",
+                "lastName": "Fidow",
+                "gender": "male",
+                "type": "athlete",
+                "country": {
+                  "id": 93,
+                  "name": "New Zealand"
+                },
+                "meta": {
+                  "lineup-type": {
+                    "code": "participant:lineup-type",
+                    "name": "Lineup Type",
+                    "value": "Starter"
+                  },
+                  "shirt-number": {
+                    "code": "participant:shirt-number",
+                    "name": "Shirt Number",
+                    "value": "3"
+                  }
+                }
+              },
+              {
+                "id": 311037,
+                "name": "Joshua Furno",
+                "firstName": "Joshua",
+                "lastName": "Furno",
+                "gender": "male",
+                "type": "athlete",
+                "country": {
+                  "id": 4,
+                  "name": "Italy"
+                },
+                "meta": {
+                  "lineup-type": {
+                    "code": "participant:lineup-type",
+                    "name": "Lineup Type",
+                    "value": "Starter"
+                  },
+                  "shirt-number": {
+                    "code": "participant:shirt-number",
+                    "name": "Shirt Number",
+                    "value": "4"
+                  }
+                }
+              },
+              {
+                "id": 735900,
+                "name": "James Blackwell",
+                "firstName": "James",
+                "lastName": "Blackwell",
+                "gender": "male",
+                "type": "athlete",
+                "country": {
+                  "id": 93,
+                  "name": "New Zealand"
+                },
+                "meta": {
+                  "lineup-type": {
+                    "code": "participant:lineup-type",
+                    "name": "Lineup Type",
+                    "value": "Starter"
+                  },
+                  "shirt-number": {
+                    "code": "participant:shirt-number",
+                    "name": "Shirt Number",
+                    "value": "5"
+                  }
+                }
+              },
+              {
+                "id": 881038,
+                "name": "Mateaki Kafatolu",
+                "firstName": "Mateaki",
+                "lastName": "Kafatolu",
+                "gender": "male",
+                "type": "athlete",
+                "country": {
+                  "id": 93,
+                  "name": "New Zealand"
+                },
+                "meta": {
+                  "lineup-type": {
+                    "code": "participant:lineup-type",
+                    "name": "Lineup Type",
+                    "value": "Starter"
+                  },
+                  "shirt-number": {
+                    "code": "participant:shirt-number",
+                    "name": "Shirt Number",
+                    "value": "6"
+                  }
+                }
+              },
+              {
+                "id": 873960,
+                "name": "Du'Plessis Kirifi",
+                "firstName": "Du'Plessis",
+                "lastName": "Kirifi",
+                "gender": "male",
+                "type": "athlete",
+                "country": {
+                  "id": 93,
+                  "name": "New Zealand"
+                },
+                "meta": {
+                  "lineup-type": {
+                    "code": "participant:lineup-type",
+                    "name": "Lineup Type",
+                    "value": "Starter"
+                  },
+                  "shirt-number": {
+                    "code": "participant:shirt-number",
+                    "name": "Shirt Number",
+                    "value": "7"
+                  }
+                }
+              },
+              {
+                "id": 800023,
+                "name": "Teariki Ben-Nicholas",
+                "firstName": "Teariki",
+                "lastName": "Ben-Nicholas",
+                "gender": "male",
+                "type": "athlete",
+                "country": {
+                  "id": 93,
+                  "name": "New Zealand"
+                },
+                "meta": {
+                  "lineup-type": {
+                    "code": "participant:lineup-type",
+                    "name": "Lineup Type",
+                    "value": "Starter"
+                  },
+                  "shirt-number": {
+                    "code": "participant:shirt-number",
+                    "name": "Shirt Number",
+                    "value": "8"
+                  }
+                }
+              },
+              {
+                "id": 857625,
+                "name": "Kemara Hauiti-Parapara",
+                "firstName": "Kemara",
+                "lastName": "Hauiti-Parapara",
+                "gender": "male",
+                "type": "athlete",
+                "country": {
+                  "id": 93,
+                  "name": "New Zealand"
+                },
+                "meta": {
+                  "lineup-type": {
+                    "code": "participant:lineup-type",
+                    "name": "Lineup Type",
+                    "value": "Starter"
+                  },
+                  "shirt-number": {
+                    "code": "participant:shirt-number",
+                    "name": "Shirt Number",
+                    "value": "9"
+                  }
+                }
+              },
+              {
+                "id": 782754,
+                "name": "Jackson Garden-Bachop",
+                "firstName": "Jackson",
+                "lastName": "Garden-Bachop",
+                "gender": "male",
+                "type": "athlete",
+                "country": {
+                  "id": 93,
+                  "name": "New Zealand"
+                },
+                "meta": {
+                  "lineup-type": {
+                    "code": "participant:lineup-type",
+                    "name": "Lineup Type",
+                    "value": "Starter"
+                  },
+                  "shirt-number": {
+                    "code": "participant:shirt-number",
+                    "name": "Shirt Number",
+                    "value": "10"
+                  }
+                }
+              },
+              {
+                "id": 960385,
+                "name": "Pepesana Patafilo",
+                "firstName": "Pepesana",
+                "lastName": "Patafilo",
+                "gender": "male",
+                "type": "athlete",
+                "country": {
+                  "id": 93,
+                  "name": "New Zealand"
+                },
+                "meta": {
+                  "lineup-type": {
+                    "code": "participant:lineup-type",
+                    "name": "Lineup Type",
+                    "value": "Starter"
+                  },
+                  "shirt-number": {
+                    "code": "participant:shirt-number",
+                    "name": "Shirt Number",
+                    "value": "11"
+                  }
+                }
+              },
+              {
+                "id": 782783,
+                "name": "Peter Umaga-Jensen",
+                "firstName": "Peter",
+                "lastName": "Umaga-Jensen",
+                "gender": "male",
+                "type": "athlete",
+                "country": {
+                  "id": 93,
+                  "name": "New Zealand"
+                },
+                "meta": {
+                  "lineup-type": {
+                    "code": "participant:lineup-type",
+                    "name": "Lineup Type",
+                    "value": "Starter"
+                  },
+                  "shirt-number": {
+                    "code": "participant:shirt-number",
+                    "name": "Shirt Number",
+                    "value": "12"
+                  }
+                }
+              },
+              {
+                "id": 727779,
+                "name": "Vince Aso",
+                "firstName": "Vince",
+                "lastName": "Aso",
+                "gender": "male",
+                "type": "athlete",
+                "country": {
+                  "id": 93,
+                  "name": "New Zealand"
+                },
+                "meta": {
+                  "lineup-type": {
+                    "code": "participant:lineup-type",
+                    "name": "Lineup Type",
+                    "value": "Starter"
+                  },
+                  "shirt-number": {
+                    "code": "participant:shirt-number",
+                    "name": "Shirt Number",
+                    "value": "13"
+                  }
+                }
+              },
+              {
+                "id": 726119,
+                "name": "Wes Goosen",
+                "firstName": "Wes",
+                "lastName": "Goosen",
+                "gender": "male",
+                "type": "athlete",
+                "country": {
+                  "id": 93,
+                  "name": "New Zealand"
+                },
+                "meta": {
+                  "lineup-type": {
+                    "code": "participant:lineup-type",
+                    "name": "Lineup Type",
+                    "value": "Starter"
+                  },
+                  "shirt-number": {
+                    "code": "participant:shirt-number",
+                    "name": "Shirt Number",
+                    "value": "14"
+                  }
+                }
+              },
+              {
+                "id": 883648,
+                "name": "Billy Proctor",
+                "firstName": "Billy",
+                "lastName": "Proctor",
+                "gender": "male",
+                "type": "athlete",
+                "country": {
+                  "id": 93,
+                  "name": "New Zealand"
+                },
+                "meta": {
+                  "lineup-type": {
+                    "code": "participant:lineup-type",
+                    "name": "Lineup Type",
+                    "value": "Starter"
+                  },
+                  "shirt-number": {
+                    "code": "participant:shirt-number",
+                    "name": "Shirt Number",
+                    "value": "15"
+                  }
+                }
+              },
+              {
+                "id": 784623,
+                "name": "James O'Reilly",
+                "firstName": "James",
+                "lastName": "O'Reilly",
+                "gender": "male",
+                "type": "athlete",
+                "country": {
+                  "id": 93,
+                  "name": "New Zealand"
+                },
+                "meta": {
+                  "lineup-type": {
+                    "code": "participant:lineup-type",
+                    "name": "Lineup Type",
+                    "value": "Substitute player"
+                  },
+                  "shirt-number": {
+                    "code": "participant:shirt-number",
+                    "name": "Shirt Number",
+                    "value": "16"
+                  }
+                }
+              },
+              {
+                "id": 1079782,
+                "name": "Morgan Poi",
+                "firstName": "Morgan",
+                "lastName": "Poi",
+                "gender": "male",
+                "type": "athlete",
+                "country": {
+                  "id": 93,
+                  "name": "New Zealand"
+                },
+                "meta": {
+                  "lineup-type": {
+                    "code": "participant:lineup-type",
+                    "name": "Lineup Type",
+                    "value": "Substitute player"
+                  },
+                  "shirt-number": {
+                    "code": "participant:shirt-number",
+                    "name": "Shirt Number",
+                    "value": "17"
+                  }
+                }
+              },
+              {
+                "id": 957053,
+                "name": "Kaliopasi Uluilakepa",
+                "firstName": "Kaliopasi",
+                "lastName": "Uluilakepa",
+                "gender": "male",
+                "type": "athlete",
+                "country": {
+                  "id": 93,
+                  "name": "New Zealand"
+                },
+                "meta": {
+                  "lineup-type": {
+                    "code": "participant:lineup-type",
+                    "name": "Lineup Type",
+                    "value": "Substitute player"
+                  },
+                  "shirt-number": {
+                    "code": "participant:shirt-number",
+                    "name": "Shirt Number",
+                    "value": "18"
+                  }
+                }
+              },
+              {
+                "id": 1079780,
+                "name": "Naitoa Ah Kuoi",
+                "firstName": "Naitoa",
+                "lastName": "Ah Kuoi",
+                "gender": "male",
+                "type": "athlete",
+                "country": {
+                  "id": 93,
+                  "name": "New Zealand"
+                },
+                "meta": {
+                  "lineup-type": {
+                    "code": "participant:lineup-type",
+                    "name": "Lineup Type",
+                    "value": "Substitute player"
+                  },
+                  "shirt-number": {
+                    "code": "participant:shirt-number",
+                    "name": "Shirt Number",
+                    "value": "19"
+                  }
+                }
+              },
+              {
+                "id": 1082309,
+                "name": "Luke Tau'alupe",
+                "firstName": "Luke",
+                "lastName": "Tau'alupe",
+                "gender": "male",
+                "type": "athlete",
+                "country": {
+                  "id": 93,
+                  "name": "New Zealand"
+                },
+                "meta": {
+                  "lineup-type": {
+                    "code": "participant:lineup-type",
+                    "name": "Lineup Type",
+                    "value": "Substitute player"
+                  },
+                  "shirt-number": {
+                    "code": "participant:shirt-number",
+                    "name": "Shirt Number",
+                    "value": "20"
+                  }
+                }
+              },
+              {
+                "id": 956687,
+                "name": "Connor Collins",
+                "firstName": "Connor",
+                "lastName": "Collins",
+                "gender": "male",
+                "type": "athlete",
+                "country": {
+                  "id": 93,
+                  "name": "New Zealand"
+                },
+                "meta": {
+                  "lineup-type": {
+                    "code": "participant:lineup-type",
+                    "name": "Lineup Type",
+                    "value": "Substitute player"
+                  },
+                  "shirt-number": {
+                    "code": "participant:shirt-number",
+                    "name": "Shirt Number",
+                    "value": "21"
+                  }
+                }
+              },
+              {
+                "id": 780781,
+                "name": "Trent Renata",
+                "firstName": "Trent",
+                "lastName": "Renata",
+                "gender": "male",
+                "type": "athlete",
+                "country": {
+                  "id": 93,
+                  "name": "New Zealand"
+                },
+                "meta": {
+                  "lineup-type": {
+                    "code": "participant:lineup-type",
+                    "name": "Lineup Type",
+                    "value": "Substitute player"
+                  },
+                  "shirt-number": {
+                    "code": "participant:shirt-number",
+                    "name": "Shirt Number",
+                    "value": "22"
+                  }
+                }
+              },
+              {
+                "id": 723742,
+                "name": "Ben Lam",
+                "firstName": "Ben",
+                "lastName": "Lam",
+                "gender": "male",
+                "type": "athlete",
+                "country": {
+                  "id": 93,
+                  "name": "New Zealand"
+                },
+                "meta": {
+                  "lineup-type": {
+                    "code": "participant:lineup-type",
+                    "name": "Lineup Type",
+                    "value": "Substitute player"
+                  },
+                  "shirt-number": {
+                    "code": "participant:shirt-number",
+                    "name": "Shirt Number",
+                    "value": "23"
+                  }
+                }
+              }
+            ]
+          },
+          "results": {
+            "final-result": {
+              "code": "result:final-result",
+              "name": "Final Result",
+              "value": "29"
+            },
+            "halftime": {
+              "code": "result:halftime",
+              "name": "Halftime",
+              "value": "7"
+            },
+            "ordinary-time": {
+              "code": "result:ordinary-time",
+              "name": "Ordinary Time",
+              "value": "29"
+            },
+            "running-score": {
+              "code": "result:running-score",
+              "name": "Running Score",
+              "value": "29"
+            },
+            "tries": {
+              "code": "result:tries",
+              "name": "Tries",
+              "value": "4"
+            }
+          }
+        },
+        {
+          "id": 10406410,
+          "number": 2,
+          "participant": {
+            "id": 742019,
+            "name": "Counties Manukau",
+            "gender": "male",
+            "type": "team",
+            "country": {
+              "id": 93,
+              "name": "New Zealand"
+            },
+            "participants": [
+              {
+                "id": 784150,
+                "name": "Sean Bagshaw",
+                "firstName": "Sean",
+                "lastName": "Bagshaw",
+                "gender": "male",
+                "type": "athlete",
+                "country": {
+                  "id": 93,
+                  "name": "New Zealand"
+                },
+                "meta": {
+                  "lineup-type": {
+                    "code": "participant:lineup-type",
+                    "name": "Lineup Type",
+                    "value": "Starter"
+                  },
+                  "shirt-number": {
+                    "code": "participant:shirt-number",
+                    "name": "Shirt Number",
+                    "value": "1"
+                  }
+                }
+              },
+              {
+                "id": 597509,
+                "name": "Joel Royal",
+                "firstName": "Joel",
+                "lastName": "Royal",
+                "gender": "male",
+                "type": "athlete",
+                "country": {
+                  "id": 93,
+                  "name": "New Zealand"
+                },
+                "meta": {
+                  "lineup-type": {
+                    "code": "participant:lineup-type",
+                    "name": "Lineup Type",
+                    "value": "Starter"
+                  },
+                  "shirt-number": {
+                    "code": "participant:shirt-number",
+                    "name": "Shirt Number",
+                    "value": "2"
+                  }
+                }
+              },
+              {
+                "id": 735437,
+                "name": "Tim Metcher",
+                "firstName": "Tim",
+                "lastName": "Metcher",
+                "gender": "male",
+                "type": "athlete",
+                "country": {
+                  "id": 93,
+                  "name": "New Zealand"
+                },
+                "meta": {
+                  "lineup-type": {
+                    "code": "participant:lineup-type",
+                    "name": "Lineup Type",
+                    "value": "Starter"
+                  },
+                  "shirt-number": {
+                    "code": "participant:shirt-number",
+                    "name": "Shirt Number",
+                    "value": "3"
+                  }
+                }
+              },
+              {
+                "id": 784164,
+                "name": "Viliame Rarasea",
+                "firstName": "Viliame",
+                "lastName": "Rarasea",
+                "gender": "male",
+                "type": "athlete",
+                "country": {
+                  "id": 94,
+                  "name": "Fiji"
+                },
+                "meta": {
+                  "lineup-type": {
+                    "code": "participant:lineup-type",
+                    "name": "Lineup Type",
+                    "value": "Starter"
+                  },
+                  "shirt-number": {
+                    "code": "participant:shirt-number",
+                    "name": "Shirt Number",
+                    "value": "4"
+                  }
+                }
+              },
+              {
+                "id": 873738,
+                "name": "Daymon Leasuasu",
+                "firstName": "Daymon",
+                "lastName": "Leasuasu",
+                "gender": "male",
+                "type": "athlete",
+                "country": {
+                  "id": 93,
+                  "name": "New Zealand"
+                },
+                "meta": {
+                  "lineup-type": {
+                    "code": "participant:lineup-type",
+                    "name": "Lineup Type",
+                    "value": "Starter"
+                  },
+                  "shirt-number": {
+                    "code": "participant:shirt-number",
+                    "name": "Shirt Number",
+                    "value": "5"
+                  }
+                }
+              },
+              {
+                "id": 851844,
+                "name": "Sikeli Nabou",
+                "firstName": "Sikeli",
+                "lastName": "Nabou",
+                "gender": "male",
+                "type": "athlete",
+                "country": {
+                  "id": 94,
+                  "name": "Fiji"
+                },
+                "meta": {
+                  "lineup-type": {
+                    "code": "participant:lineup-type",
+                    "name": "Lineup Type",
+                    "value": "Starter"
+                  },
+                  "shirt-number": {
+                    "code": "participant:shirt-number",
+                    "name": "Shirt Number",
+                    "value": "6"
+                  }
+                }
+              },
+              {
+                "id": 727916,
+                "name": "Sam Henwood",
+                "firstName": "Sam",
+                "lastName": "Henwood",
+                "gender": "male",
+                "type": "athlete",
+                "country": {
+                  "id": 93,
+                  "name": "New Zealand"
+                },
+                "meta": {
+                  "lineup-type": {
+                    "code": "participant:lineup-type",
+                    "name": "Lineup Type",
+                    "value": "Starter"
+                  },
+                  "shirt-number": {
+                    "code": "participant:shirt-number",
+                    "name": "Shirt Number",
+                    "value": "7"
+                  }
+                }
+              },
+              {
+                "id": 806510,
+                "name": "Malgene Ilaua",
+                "firstName": "Malgene",
+                "lastName": "Ilaua",
+                "gender": "male",
+                "type": "athlete",
+                "country": {
+                  "id": 25,
+                  "name": "Japan"
+                },
+                "meta": {
+                  "lineup-type": {
+                    "code": "participant:lineup-type",
+                    "name": "Lineup Type",
+                    "value": "Starter"
+                  },
+                  "shirt-number": {
+                    "code": "participant:shirt-number",
+                    "name": "Shirt Number",
+                    "value": "8"
+                  }
+                }
+              },
+              {
+                "id": 784169,
+                "name": "Jonathan Taumateine",
+                "firstName": "Jonathan",
+                "lastName": "Taumateine",
+                "gender": "male",
+                "type": "athlete",
+                "country": {
+                  "id": 93,
+                  "name": "New Zealand"
+                },
+                "meta": {
+                  "lineup-type": {
+                    "code": "participant:lineup-type",
+                    "name": "Lineup Type",
+                    "value": "Starter"
+                  },
+                  "shirt-number": {
+                    "code": "participant:shirt-number",
+                    "name": "Shirt Number",
+                    "value": "9"
+                  }
+                }
+              },
+              {
+                "id": 1079789,
+                "name": "Riley Hohepa",
+                "firstName": "Riley",
+                "lastName": "Hohepa",
+                "gender": "male",
+                "type": "athlete",
+                "country": {
+                  "id": 93,
+                  "name": "New Zealand"
+                },
+                "meta": {
+                  "lineup-type": {
+                    "code": "participant:lineup-type",
+                    "name": "Lineup Type",
+                    "value": "Starter"
+                  },
+                  "shirt-number": {
+                    "code": "participant:shirt-number",
+                    "name": "Shirt Number",
+                    "value": "10"
+                  }
+                }
+              },
+              {
+                "id": 784766,
+                "name": "Kali Hala",
+                "firstName": "Kali",
+                "lastName": "Hala",
+                "gender": "male",
+                "type": "athlete",
+                "country": {
+                  "id": 171,
+                  "name": "Tonga"
+                },
+                "meta": {
+                  "lineup-type": {
+                    "code": "participant:lineup-type",
+                    "name": "Lineup Type",
+                    "value": "Starter"
+                  },
+                  "shirt-number": {
+                    "code": "participant:shirt-number",
+                    "name": "Shirt Number",
+                    "value": "11"
+                  }
+                }
+              },
+              {
+                "id": 784159,
+                "name": "Orbyn Leger",
+                "firstName": "Orbyn",
+                "lastName": "Leger",
+                "gender": "male",
+                "type": "athlete",
+                "country": {
+                  "id": 93,
+                  "name": "New Zealand"
+                },
+                "meta": {
+                  "lineup-type": {
+                    "code": "participant:lineup-type",
+                    "name": "Lineup Type",
+                    "value": "Starter"
+                  },
+                  "shirt-number": {
+                    "code": "participant:shirt-number",
+                    "name": "Shirt Number",
+                    "value": "12"
+                  }
+                }
+              },
+              {
+                "id": 777091,
+                "name": "Nathaniel Apa",
+                "firstName": "Nathaniel",
+                "lastName": "Apa",
+                "gender": "male",
+                "type": "athlete",
+                "country": {
+                  "id": 93,
+                  "name": "New Zealand"
+                },
+                "meta": {
+                  "lineup-type": {
+                    "code": "participant:lineup-type",
+                    "name": "Lineup Type",
+                    "value": "Starter"
+                  },
+                  "shirt-number": {
+                    "code": "participant:shirt-number",
+                    "name": "Shirt Number",
+                    "value": "13"
+                  }
+                }
+              },
+              {
+                "id": 735847,
+                "name": "Chris Kuridrani",
+                "firstName": "Chris",
+                "lastName": "Kuridrani",
+                "gender": "male",
+                "type": "athlete",
+                "country": {
+                  "id": 39,
+                  "name": "Australia"
+                },
+                "meta": {
+                  "lineup-type": {
+                    "code": "participant:lineup-type",
+                    "name": "Lineup Type",
+                    "value": "Starter"
+                  },
+                  "shirt-number": {
+                    "code": "participant:shirt-number",
+                    "name": "Shirt Number",
+                    "value": "14"
+                  }
+                }
+              },
+              {
+                "id": 735818,
+                "name": "Andrew Kellaway",
+                "firstName": "Andrew",
+                "lastName": "Kellaway",
+                "gender": "male",
+                "type": "athlete",
+                "country": {
+                  "id": 39,
+                  "name": "Australia"
+                },
+                "meta": {
+                  "lineup-type": {
+                    "code": "participant:lineup-type",
+                    "name": "Lineup Type",
+                    "value": "Starter"
+                  },
+                  "shirt-number": {
+                    "code": "participant:shirt-number",
+                    "name": "Shirt Number",
+                    "value": "15"
+                  }
+                }
+              },
+              {
+                "id": 873700,
+                "name": "Donald Maka",
+                "firstName": "Donald",
+                "lastName": "Maka",
+                "gender": "male",
+                "type": "athlete",
+                "country": {
+                  "id": 93,
+                  "name": "New Zealand"
+                },
+                "meta": {
+                  "lineup-type": {
+                    "code": "participant:lineup-type",
+                    "name": "Lineup Type",
+                    "value": "Substitute player"
+                  },
+                  "shirt-number": {
+                    "code": "participant:shirt-number",
+                    "name": "Shirt Number",
+                    "value": "16"
+                  }
+                }
+              },
+              {
+                "id": 873364,
+                "name": "Mark Royal",
+                "firstName": "Mark",
+                "lastName": "Royal",
+                "gender": "male",
+                "type": "athlete",
+                "country": {
+                  "id": 93,
+                  "name": "New Zealand"
+                },
+                "meta": {
+                  "lineup-type": {
+                    "code": "participant:lineup-type",
+                    "name": "Lineup Type",
+                    "value": "Substitute player"
+                  },
+                  "shirt-number": {
+                    "code": "participant:shirt-number",
+                    "name": "Shirt Number",
+                    "value": "17"
+                  }
+                }
+              },
+              {
+                "id": 710874,
+                "name": "Conan O'Donnell",
+                "firstName": "Conan",
+                "lastName": "O'Donnell",
+                "gender": "male",
+                "type": "athlete",
+                "country": {
+                  "id": 45,
+                  "name": "Ireland"
+                },
+                "meta": {
+                  "lineup-type": {
+                    "code": "participant:lineup-type",
+                    "name": "Lineup Type",
+                    "value": "Substitute player"
+                  },
+                  "shirt-number": {
+                    "code": "participant:shirt-number",
+                    "name": "Shirt Number",
+                    "value": "18"
+                  }
+                }
+              },
+              {
+                "id": 879010,
+                "name": "Jonathan Kawau",
+                "firstName": "Jonathan",
+                "lastName": "Kawau",
+                "gender": "male",
+                "type": "athlete",
+                "country": {
+                  "id": 93,
+                  "name": "New Zealand"
+                },
+                "meta": {
+                  "lineup-type": {
+                    "code": "participant:lineup-type",
+                    "name": "Lineup Type",
+                    "value": "Substitute player"
+                  },
+                  "shirt-number": {
+                    "code": "participant:shirt-number",
+                    "name": "Shirt Number",
+                    "value": "19"
+                  }
+                }
+              },
+              {
+                "id": 959767,
+                "name": "Dan Hyatt",
+                "firstName": "Dan",
+                "lastName": "Hyatt",
+                "gender": "male",
+                "type": "athlete",
+                "country": {
+                  "id": 93,
+                  "name": "New Zealand"
+                },
+                "meta": {
+                  "lineup-type": {
+                    "code": "participant:lineup-type",
+                    "name": "Lineup Type",
+                    "value": "Substitute player"
+                  },
+                  "shirt-number": {
+                    "code": "participant:shirt-number",
+                    "name": "Shirt Number",
+                    "value": "20"
+                  }
+                }
+              },
+              {
+                "id": 880213,
+                "name": "Liam Daniela",
+                "firstName": "Liam",
+                "lastName": "Daniela",
+                "gender": "male",
+                "type": "athlete",
+                "country": {
+                  "id": 93,
+                  "name": "New Zealand"
+                },
+                "meta": {
+                  "lineup-type": {
+                    "code": "participant:lineup-type",
+                    "name": "Lineup Type",
+                    "value": "Substitute player"
+                  },
+                  "shirt-number": {
+                    "code": "participant:shirt-number",
+                    "name": "Shirt Number",
+                    "value": "21"
+                  }
+                }
+              },
+              {
+                "id": 1082294,
+                "name": "Nikolai Foliaki",
+                "firstName": "Nikolai",
+                "lastName": "Foliaki",
+                "gender": "male",
+                "type": "athlete",
+                "country": {
+                  "id": 2,
+                  "name": "England"
+                },
+                "meta": {
+                  "lineup-type": {
+                    "code": "participant:lineup-type",
+                    "name": "Lineup Type",
+                    "value": "Substitute player"
+                  },
+                  "shirt-number": {
+                    "code": "participant:shirt-number",
+                    "name": "Shirt Number",
+                    "value": "22"
+                  }
+                }
+              },
+              {
+                "id": 1082295,
+                "name": "Liam Fitzsimons",
+                "firstName": "Liam",
+                "lastName": "Fitzsimons",
+                "gender": "male",
+                "type": "athlete",
+                "country": {
+                  "id": 2,
+                  "name": "England"
+                },
+                "meta": {
+                  "lineup-type": {
+                    "code": "participant:lineup-type",
+                    "name": "Lineup Type",
+                    "value": "Substitute player"
+                  },
+                  "shirt-number": {
+                    "code": "participant:shirt-number",
+                    "name": "Shirt Number",
+                    "value": "23"
+                  }
+                }
+              }
+            ]
+          },
+          "results": {
+            "final-result": {
+              "code": "result:final-result",
+              "name": "Final Result",
+              "value": "22"
+            },
+            "halftime": {
+              "code": "result:halftime",
+              "name": "Halftime",
+              "value": "12"
+            },
+            "ordinary-time": {
+              "code": "result:ordinary-time",
+              "name": "Ordinary Time",
+              "value": "22"
+            },
+            "running-score": {
+              "code": "result:running-score",
+              "name": "Running Score",
+              "value": "22"
+            },
+            "tries": {
+              "code": "result:tries",
+              "name": "Tries",
+              "value": "4"
+            }
+          }
+        }
+      ],
+      "stage": {
+        "id": 860050,
+        "name": "Mitre 10 Cup",
+        "gender": "male",
+        "start": "2019-08-07",
+        "end": "2019-10-13",
+        "country": {
+          "id": 93,
+          "name": "New Zealand"
+        }
+      },
+      "season": {
+        "id": 13681,
+        "name": "2019"
+      },
+      "tournament": {
+        "id": 9564,
+        "name": "New Zealand Mitre 10 Cup",
+        "gender": "male"
+      },
+      "sport": {
+        "id": 29,
+        "name": "Rugby Union"
+      },
+      "venue": {
+        "id": 6994,
+        "name": "Westpac Stadium",
+        "type": "Stadium",
+        "country": {
+          "id": 93,
+          "name": "New Zealand"
+        }
+      },
+      "meta": {
+        "game-ended": {
+          "code": "event:game-ended",
+          "name": "Game Ended",
+          "value": "2019-08-29T13:32:07Z"
+        },
+        "live": {
+          "code": "event:live",
+          "name": "Live",
+          "value": "no"
+        },
+        "round": {
+          "code": "event:round",
+          "name": "Round",
+          "value": "4"
+        },
+        "venue-name": {
+          "code": "event:venue-name",
+          "name": "Venue Name",
+          "value": "Westpac Stadium"
+        },
+        "verified": {
+          "code": "event:verified",
+          "name": "Verified",
+          "value": "yes"
+        }
+      },
+      "links": [
+        {
+          "rel": "self",
+          "href": "http://sport.api.press.net/v1/event/3000315"
+        },
+        {
+          "rel": "event-actions",
+          "href": "http://sport.api.press.net/v1/event/3000315/actions"
+        }
+      ]
+    }
+  ]
+}

@@ -18,9 +18,16 @@ case object WorldCup2015 extends OptaEvent {
   override def hasGroupTable(stage: Stage.Value): Boolean = stage == Stage.Group
 }
 
+case object WorldCup2019 extends OptaEvent {
+  override val competition = "482"
+  override val season = "2019"
+  override def hasGroupTable(stage: Stage.Value): Boolean = stage == Stage.Group
+}
+
+
 case class RugbyOptaFeedException(message: String) extends RuntimeException(message)
 
-class OptaFeed(wsClient: WSClient) extends Logging {
+class OptaFeed(wsClient: WSClient) extends RugbyFeed with Logging {
 
   private def events = List(WorldCup2015)
 

@@ -1,7 +1,7 @@
 @import model.Page
 @import rugby.model.{Match, ScoreEvent}
 
-@(page: Page, theMatch: Match, homeTeamScorers: Seq[ScoreEvent], awayTeamScorers: Seq[ScoreEvent])(implicit request: RequestHeader, context: model.ApplicationContext)
+@(page: Page, theMatch: Match)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @mainLegacy(page, Some("football")) { } {
     <div class="l-side-margins">

@@ -26,31 +26,21 @@ class MatchesController(
   def score(year: String, month: String, day: String, team1: String, team2: String): Action[AnyContent] = Action { implicit request =>
 
     val matchOpt = rugbyStatsJob.getFixturesAndResultScore(year, month, day, team1, team2)
-
     val currentPage = request.getParameter("page")
 
     matchOpt.map { aMatch =>
       val matchNav = rugbyStatsJob.getMatchNavContent(aMatch).map(rugby.views.html.fragments.matchNav(_, currentPage).toString)
-
-      val scoreEvents = rugbyStatsJob.getScoreEvents(aMatch)
-      val (homeTeamScorers, awayTeamScorers) =  scoreEvents.partition(_.player.team.id == aMatch.homeTeam.id)
-
-      val matchStat = rugbyStatsJob.getMatchStat(aMatch)
-      val table = rugbyStatsJob.getGroupTable(aMatch)
 
       val page = MatchPage(aMatch)
       Cached(60){
         if (request.isJson)
           JsonComponent(
             "matchSummary" -> rugby.views.html.fragments.matchSummary(page, aMatch).toString,
-            "scoreEvents" -> rugby.views.html.fragments.scoreEvents(aMatch, homeTeamScorers, awayTeamScorers).toString,
             "dropdown" -> views.html.fragments.dropdown("", isClientSideTemplate = true)(Html("")),
-            "nav" -> matchNav.getOrElse(""),
-            "matchStat" -> rugby.views.html.fragments.matchStats(aMatch, matchStat),
-            "groupTable" -> rugby.views.html.fragments.groupTable(aMatch, table)
+            "nav" -> matchNav.getOrElse("")
           )
         else
-          RevalidatableResult.Ok(rugby.views.html.matchSummary(page, aMatch, homeTeamScorers, awayTeamScorers))
+          RevalidatableResult.Ok(rugby.views.html.matchSummary(page, aMatch))
       }
 
     }.getOrElse(NotFound)

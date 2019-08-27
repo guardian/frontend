@@ -1,34 +1,34 @@
 import akka.actor.ActorSystem
 import akka.stream.Materializer
-import http.{CommonFilters, CorsHttpErrorHandler}
 import app.{FrontendApplicationLoader, FrontendComponents}
 import com.softwaremill.macwire._
-import common._
 import common.Logback.{LogbackOperationsPool, LogstashLifecycle}
+import common._
+import conf.cricketPa.PaFeed
 import conf.switches.SwitchboardLifecycle
 import conf.{CachedHealthCheckLifeCycle, FootballClient, FootballLifecycle}
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
 import cricket.conf.CricketLifecycle
 import cricket.controllers.CricketControllers
-import conf.cricketPa.PaFeed
 import dev.{DevAssetsController, DevParametersHttpRequestHandler}
 import feed.{CompetitionsProvider, CompetitionsService}
 import football.controllers.{FootballControllers, HealthCheck}
+import http.{CommonFilters, CorsHttpErrorHandler}
 import jobs.CricketStatsJob
 import model.ApplicationIdentity
-import services.ophan.SurgingContentAgentLifecycle
 import play.api.ApplicationLoader.Context
 import play.api.BuiltInComponentsFromContext
 import play.api.http.{HttpErrorHandler, HttpRequestHandler}
-import play.api.mvc.{ControllerComponents, EssentialFilter}
-import play.api.routing.Router
 import play.api.libs.ws.WSClient
-import rugby.conf.RugbyLifecycle
+import play.api.mvc.EssentialFilter
+import play.api.routing.Router
 import router.Routes
+import rugby.conf.RugbyLifecycle
 import rugby.controllers.RugbyControllers
-import rugby.feed.{CapiFeed, OptaFeed}
+import rugby.feed.{CapiFeed, PARugbyClient, PARugbyFeed}
 import rugby.jobs.RugbyStatsJob
 import services.OphanApi
+import services.ophan.SurgingContentAgentLifecycle
 
 import scala.concurrent.ExecutionContext
 
@@ -49,7 +49,8 @@ trait SportServices {
   lazy val competitionsService = wire[CompetitionsService]
   lazy val cricketPaFeed = wire[PaFeed]
   lazy val cricketStatsJob = wire[CricketStatsJob]
-  lazy val rugbyFeed = wire[OptaFeed]
+  lazy val rugbyClient = wire[PARugbyClient]
+  lazy val rugbyFeed = wire[PARugbyFeed]
   lazy val rugbyStatsJob = wire[RugbyStatsJob]
   lazy val capiFeed = wire[CapiFeed]
   lazy val ophanApi = wire[OphanApi]

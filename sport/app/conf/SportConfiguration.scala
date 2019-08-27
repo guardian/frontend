@@ -11,6 +11,8 @@ object SportConfiguration {
     lazy val footballHost = "https://football-api.guardianapis.com/v1.5"
     lazy val footballKey = configuration.getMandatoryStringProperty("pa.api.key")
     lazy val cricketKey = configuration.getStringProperty("pa.cricket.api.key")
+    lazy val rugbyKey = configuration.getStringProperty("pa.rugby.api.key")
+    lazy val rugbyEndpoint = configuration.getStringProperty("pa.rugby.api.endpoint")
   }
 
   object optaRugby {
