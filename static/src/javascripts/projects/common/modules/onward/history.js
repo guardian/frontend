@@ -485,8 +485,8 @@ const incrementDailyArticleCount = (pageConfig: Object): void => {
             // New day
             dailyCount.unshift({ day: today, count: 1 });
 
-            // Remove any days older than 30
-            const cutOff = today - 30;
+            // Remove any days older than 60
+            const cutOff = today - 60;
             const firstOldDayIndex = dailyCount.findIndex(
                 c => c.day && c.day < cutOff
             );
