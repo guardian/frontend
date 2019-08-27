@@ -20,6 +20,9 @@ class RugbyLifecycle(
   protected val initializationTimeout: FiniteDuration = 10.seconds
 
   override def start(): Unit = {
+    rugbyStatsJob.fetchFixturesAndResults()
+    rugbyStatsJob.fetchGroupTables()
+
     jobs.deschedule("FixturesAndResults")
     jobs.schedule("FixturesAndResults", "5 0/30 * * * ?") {
       rugbyStatsJob.fetchFixturesAndResults()

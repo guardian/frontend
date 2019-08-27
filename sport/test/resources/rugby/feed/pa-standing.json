@@ -1,0 +1,843 @@
+{
+    "id": 235174,
+    "name": "League Table",
+    "type": "Standard League Table 1",
+    "sport": {
+        "id": 29,
+        "name": "Rugby Union"
+    },
+    "tournament": {
+        "id": 482,
+        "name": "World Cup",
+        "gender": "male"
+    },
+    "season": {
+        "id": 11421,
+        "name": "2019"
+    },
+    "stage": {
+        "id": 849622,
+        "name": "World Cup Pool A",
+        "gender": "male",
+        "start": "2019-09-19",
+        "end": "2019-10-13",
+        "country": {
+            "id": 11,
+            "name": "International"
+        }
+    },
+    "updated": "2018-08-17T11:13:28Z",
+    "entries": [
+        {
+            "id": 2679928,
+            "rank": 1,
+            "participant": {
+                "id": 73734,
+                "name": "Ireland",
+                "gender": "male",
+                "type": "team",
+                "country": {
+                    "id": 45,
+                    "name": "Ireland"
+                }
+            },
+            "standings": {
+                "triesforaway": {
+                    "code": "result:triesforaway",
+                    "name": "Triesforaway",
+                    "value": "0"
+                },
+                "pointsfor": {
+                    "code": "result:pointsfor",
+                    "name": "Points For",
+                    "value": "0"
+                },
+                "triesagainstaway": {
+                    "code": "result:triesagainstaway",
+                    "name": "Triesagainstaway",
+                    "value": "0"
+                },
+                "pointshome": {
+                    "code": "result:pointshome",
+                    "name": "Points Home",
+                    "value": "0"
+                },
+                "pointsforaway": {
+                    "code": "result:pointsforaway",
+                    "name": "Away Points For",
+                    "value": "0"
+                },
+                "drawsaway": {
+                    "code": "result:drawsaway",
+                    "name": "Away Draws",
+                    "value": "0"
+                },
+                "points": {
+                    "code": "result:points",
+                    "name": "Points",
+                    "value": "0"
+                },
+                "triesfor": {
+                    "code": "result:triesfor",
+                    "name": "Triesfor",
+                    "value": "0"
+                },
+                "winsaway": {
+                    "code": "result:winsaway",
+                    "name": "Away Win",
+                    "value": "0"
+                },
+                "triesforhome": {
+                    "code": "result:triesforhome",
+                    "name": "Triesforhome",
+                    "value": "0"
+                },
+                "defeitshome": {
+                    "code": "result:defeitshome",
+                    "name": "Home Lost",
+                    "value": "0"
+                },
+                "pointsagainst": {
+                    "code": "result:pointsagainst",
+                    "name": "Points Against",
+                    "value": "0"
+                },
+                "rank": {
+                    "code": "result:rank",
+                    "name": "Rank",
+                    "value": "1"
+                },
+                "draws": {
+                    "code": "result:draws",
+                    "name": "Draw",
+                    "value": "0"
+                },
+                "pointsaway": {
+                    "code": "result:pointsaway",
+                    "name": "Points Away",
+                    "value": "0"
+                },
+                "drawshome": {
+                    "code": "result:drawshome",
+                    "name": "Home Draws",
+                    "value": "0"
+                },
+                "defeitsaway": {
+                    "code": "result:defeitsaway",
+                    "name": "Away Lost",
+                    "value": "0"
+                },
+                "playedhome": {
+                    "code": "result:playedhome",
+                    "name": "Home Played",
+                    "value": "0"
+                },
+                "pointsforhome": {
+                    "code": "result:pointsforhome",
+                    "name": "Home Points For",
+                    "value": "0"
+                },
+                "pointsagainsthome": {
+                    "code": "result:pointsagainsthome",
+                    "name": "Home Points Against",
+                    "value": "0"
+                },
+                "wins": {
+                    "code": "result:wins",
+                    "name": "Won",
+                    "value": "0"
+                },
+                "winshome": {
+                    "code": "result:winshome",
+                    "name": "Home Win",
+                    "value": "0"
+                },
+                "triesagainsthome": {
+                    "code": "result:triesagainsthome",
+                    "name": "Triesagainsthome",
+                    "value": "0"
+                },
+                "triesagainst": {
+                    "code": "result:triesagainst",
+                    "name": "Triesagainst",
+                    "value": "0"
+                },
+                "pointsagainstaway": {
+                    "code": "result:pointsagainstaway",
+                    "name": "Away Points Against",
+                    "value": "0"
+                },
+                "playedaway": {
+                    "code": "result:playedaway",
+                    "name": "Away Played",
+                    "value": "0"
+                },
+                "played": {
+                    "code": "result:played",
+                    "name": "Games Played",
+                    "value": "0"
+                },
+                "defeits": {
+                    "code": "result:defeits",
+                    "name": "Lost",
+                    "value": "0"
+                },
+                "pointsbonus": {
+                    "code": "result:pointsbonus",
+                    "name": "Bonus Points",
+                    "value": "0"
+                }
+            }
+        },
+        {
+            "id": 2679929,
+            "rank": 2,
+            "participant": {
+                "id": 73710,
+                "name": "Japan",
+                "gender": "male",
+                "type": "team",
+                "country": {
+                    "id": 25,
+                    "name": "Japan"
+                }
+            },
+            "standings": {
+                "triesforaway": {
+                    "code": "result:triesforaway",
+                    "name": "Triesforaway",
+                    "value": "0"
+                },
+                "pointsfor": {
+                    "code": "result:pointsfor",
+                    "name": "Points For",
+                    "value": "0"
+                },
+                "triesagainstaway": {
+                    "code": "result:triesagainstaway",
+                    "name": "Triesagainstaway",
+                    "value": "0"
+                },
+                "pointshome": {
+                    "code": "result:pointshome",
+                    "name": "Points Home",
+                    "value": "0"
+                },
+                "pointsforaway": {
+                    "code": "result:pointsforaway",
+                    "name": "Away Points For",
+                    "value": "0"
+                },
+                "drawsaway": {
+                    "code": "result:drawsaway",
+                    "name": "Away Draws",
+                    "value": "0"
+                },
+                "points": {
+                    "code": "result:points",
+                    "name": "Points",
+                    "value": "0"
+                },
+                "triesfor": {
+                    "code": "result:triesfor",
+                    "name": "Triesfor",
+                    "value": "0"
+                },
+                "winsaway": {
+                    "code": "result:winsaway",
+                    "name": "Away Win",
+                    "value": "0"
+                },
+                "triesforhome": {
+                    "code": "result:triesforhome",
+                    "name": "Triesforhome",
+                    "value": "0"
+                },
+                "defeitshome": {
+                    "code": "result:defeitshome",
+                    "name": "Home Lost",
+                    "value": "0"
+                },
+                "pointsagainst": {
+                    "code": "result:pointsagainst",
+                    "name": "Points Against",
+                    "value": "0"
+                },
+                "rank": {
+                    "code": "result:rank",
+                    "name": "Rank",
+                    "value": "2"
+                },
+                "draws": {
+                    "code": "result:draws",
+                    "name": "Draw",
+                    "value": "0"
+                },
+                "pointsaway": {
+                    "code": "result:pointsaway",
+                    "name": "Points Away",
+                    "value": "0"
+                },
+                "drawshome": {
+                    "code": "result:drawshome",
+                    "name": "Home Draws",
+                    "value": "0"
+                },
+                "defeitsaway": {
+                    "code": "result:defeitsaway",
+                    "name": "Away Lost",
+                    "value": "0"
+                },
+                "playedhome": {
+                    "code": "result:playedhome",
+                    "name": "Home Played",
+                    "value": "0"
+                },
+                "pointsforhome": {
+                    "code": "result:pointsforhome",
+                    "name": "Home Points For",
+                    "value": "0"
+                },
+                "pointsagainsthome": {
+                    "code": "result:pointsagainsthome",
+                    "name": "Home Points Against",
+                    "value": "0"
+                },
+                "wins": {
+                    "code": "result:wins",
+                    "name": "Won",
+                    "value": "0"
+                },
+                "winshome": {
+                    "code": "result:winshome",
+                    "name": "Home Win",
+                    "value": "0"
+                },
+                "triesagainsthome": {
+                    "code": "result:triesagainsthome",
+                    "name": "Triesagainsthome",
+                    "value": "0"
+                },
+                "triesagainst": {
+                    "code": "result:triesagainst",
+                    "name": "Triesagainst",
+                    "value": "0"
+                },
+                "pointsagainstaway": {
+                    "code": "result:pointsagainstaway",
+                    "name": "Away Points Against",
+                    "value": "0"
+                },
+                "playedaway": {
+                    "code": "result:playedaway",
+                    "name": "Away Played",
+                    "value": "0"
+                },
+                "played": {
+                    "code": "result:played",
+                    "name": "Games Played",
+                    "value": "0"
+                },
+                "defeits": {
+                    "code": "result:defeits",
+                    "name": "Lost",
+                    "value": "0"
+                },
+                "pointsbonus": {
+                    "code": "result:pointsbonus",
+                    "name": "Bonus Points",
+                    "value": "0"
+                }
+            }
+        },
+        {
+            "id": 2896787,
+            "rank": 3,
+            "participant": {
+                "id": 204077,
+                "name": "Russia",
+                "gender": "male",
+                "type": "team",
+                "country": {
+                    "id": 22,
+                    "name": "Russia"
+                }
+            },
+            "standings": {
+                "triesforaway": {
+                    "code": "result:triesforaway",
+                    "name": "Triesforaway",
+                    "value": "0"
+                },
+                "pointsfor": {
+                    "code": "result:pointsfor",
+                    "name": "Points For",
+                    "value": "0"
+                },
+                "triesagainstaway": {
+                    "code": "result:triesagainstaway",
+                    "name": "Triesagainstaway",
+                    "value": "0"
+                },
+                "pointshome": {
+                    "code": "result:pointshome",
+                    "name": "Points Home",
+                    "value": "0"
+                },
+                "pointsforaway": {
+                    "code": "result:pointsforaway",
+                    "name": "Away Points For",
+                    "value": "0"
+                },
+                "drawsaway": {
+                    "code": "result:drawsaway",
+                    "name": "Away Draws",
+                    "value": "0"
+                },
+                "points": {
+                    "code": "result:points",
+                    "name": "Points",
+                    "value": "0"
+                },
+                "triesfor": {
+                    "code": "result:triesfor",
+                    "name": "Triesfor",
+                    "value": "0"
+                },
+                "winsaway": {
+                    "code": "result:winsaway",
+                    "name": "Away Win",
+                    "value": "0"
+                },
+                "triesforhome": {
+                    "code": "result:triesforhome",
+                    "name": "Triesforhome",
+                    "value": "0"
+                },
+                "defeitshome": {
+                    "code": "result:defeitshome",
+                    "name": "Home Lost",
+                    "value": "0"
+                },
+                "pointsagainst": {
+                    "code": "result:pointsagainst",
+                    "name": "Points Against",
+                    "value": "0"
+                },
+                "rank": {
+                    "code": "result:rank",
+                    "name": "Rank",
+                    "value": "3"
+                },
+                "draws": {
+                    "code": "result:draws",
+                    "name": "Draw",
+                    "value": "0"
+                },
+                "pointsaway": {
+                    "code": "result:pointsaway",
+                    "name": "Points Away",
+                    "value": "0"
+                },
+                "drawshome": {
+                    "code": "result:drawshome",
+                    "name": "Home Draws",
+                    "value": "0"
+                },
+                "defeitsaway": {
+                    "code": "result:defeitsaway",
+                    "name": "Away Lost",
+                    "value": "0"
+                },
+                "playedhome": {
+                    "code": "result:playedhome",
+                    "name": "Home Played",
+                    "value": "0"
+                },
+                "pointsforhome": {
+                    "code": "result:pointsforhome",
+                    "name": "Home Points For",
+                    "value": "0"
+                },
+                "pointsagainsthome": {
+                    "code": "result:pointsagainsthome",
+                    "name": "Home Points Against",
+                    "value": "0"
+                },
+                "wins": {
+                    "code": "result:wins",
+                    "name": "Won",
+                    "value": "0"
+                },
+                "winshome": {
+                    "code": "result:winshome",
+                    "name": "Home Win",
+                    "value": "0"
+                },
+                "triesagainsthome": {
+                    "code": "result:triesagainsthome",
+                    "name": "Triesagainsthome",
+                    "value": "0"
+                },
+                "triesagainst": {
+                    "code": "result:triesagainst",
+                    "name": "Triesagainst",
+                    "value": "0"
+                },
+                "pointsagainstaway": {
+                    "code": "result:pointsagainstaway",
+                    "name": "Away Points Against",
+                    "value": "0"
+                },
+                "playedaway": {
+                    "code": "result:playedaway",
+                    "name": "Away Played",
+                    "value": "0"
+                },
+                "played": {
+                    "code": "result:played",
+                    "name": "Games Played",
+                    "value": "0"
+                },
+                "defeits": {
+                    "code": "result:defeits",
+                    "name": "Lost",
+                    "value": "0"
+                },
+                "pointsbonus": {
+                    "code": "result:pointsbonus",
+                    "name": "Bonus Points",
+                    "value": "0"
+                }
+            }
+        },
+        {
+            "id": 2969705,
+            "rank": 4,
+            "participant": {
+                "id": 73711,
+                "name": "Samoa",
+                "gender": "male",
+                "type": "team",
+                "country": {
+                    "id": 224,
+                    "name": "Samoa"
+                }
+            },
+            "standings": {
+                "triesforaway": {
+                    "code": "result:triesforaway",
+                    "name": "Triesforaway",
+                    "value": "0"
+                },
+                "pointsfor": {
+                    "code": "result:pointsfor",
+                    "name": "Points For",
+                    "value": "0"
+                },
+                "triesagainstaway": {
+                    "code": "result:triesagainstaway",
+                    "name": "Triesagainstaway",
+                    "value": "0"
+                },
+                "pointshome": {
+                    "code": "result:pointshome",
+                    "name": "Points Home",
+                    "value": "0"
+                },
+                "pointsforaway": {
+                    "code": "result:pointsforaway",
+                    "name": "Away Points For",
+                    "value": "0"
+                },
+                "drawsaway": {
+                    "code": "result:drawsaway",
+                    "name": "Away Draws",
+                    "value": "0"
+                },
+                "points": {
+                    "code": "result:points",
+                    "name": "Points",
+                    "value": "0"
+                },
+                "triesfor": {
+                    "code": "result:triesfor",
+                    "name": "Triesfor",
+                    "value": "0"
+                },
+                "winsaway": {
+                    "code": "result:winsaway",
+                    "name": "Away Win",
+                    "value": "0"
+                },
+                "triesforhome": {
+                    "code": "result:triesforhome",
+                    "name": "Triesforhome",
+                    "value": "0"
+                },
+                "defeitshome": {
+                    "code": "result:defeitshome",
+                    "name": "Home Lost",
+                    "value": "0"
+                },
+                "pointsagainst": {
+                    "code": "result:pointsagainst",
+                    "name": "Points Against",
+                    "value": "0"
+                },
+                "rank": {
+                    "code": "result:rank",
+                    "name": "Rank",
+                    "value": "4"
+                },
+                "draws": {
+                    "code": "result:draws",
+                    "name": "Draw",
+                    "value": "0"
+                },
+                "pointsaway": {
+                    "code": "result:pointsaway",
+                    "name": "Points Away",
+                    "value": "0"
+                },
+                "drawshome": {
+                    "code": "result:drawshome",
+                    "name": "Home Draws",
+                    "value": "0"
+                },
+                "defeitsaway": {
+                    "code": "result:defeitsaway",
+                    "name": "Away Lost",
+                    "value": "0"
+                },
+                "playedhome": {
+                    "code": "result:playedhome",
+                    "name": "Home Played",
+                    "value": "0"
+                },
+                "pointsforhome": {
+                    "code": "result:pointsforhome",
+                    "name": "Home Points For",
+                    "value": "0"
+                },
+                "pointsagainsthome": {
+                    "code": "result:pointsagainsthome",
+                    "name": "Home Points Against",
+                    "value": "0"
+                },
+                "wins": {
+                    "code": "result:wins",
+                    "name": "Won",
+                    "value": "0"
+                },
+                "winshome": {
+                    "code": "result:winshome",
+                    "name": "Home Win",
+                    "value": "0"
+                },
+                "triesagainsthome": {
+                    "code": "result:triesagainsthome",
+                    "name": "Triesagainsthome",
+                    "value": "0"
+                },
+                "triesagainst": {
+                    "code": "result:triesagainst",
+                    "name": "Triesagainst",
+                    "value": "0"
+                },
+                "pointsagainstaway": {
+                    "code": "result:pointsagainstaway",
+                    "name": "Away Points Against",
+                    "value": "0"
+                },
+                "playedaway": {
+                    "code": "result:playedaway",
+                    "name": "Away Played",
+                    "value": "0"
+                },
+                "played": {
+                    "code": "result:played",
+                    "name": "Games Played",
+                    "value": "0"
+                },
+                "defeits": {
+                    "code": "result:defeits",
+                    "name": "Lost",
+                    "value": "0"
+                },
+                "pointsbonus": {
+                    "code": "result:pointsbonus",
+                    "name": "Bonus Points",
+                    "value": "0"
+                }
+            }
+        },
+        {
+            "id": 2679931,
+            "rank": 5,
+            "participant": {
+                "id": 73732,
+                "name": "Scotland",
+                "gender": "male",
+                "type": "team",
+                "country": {
+                    "id": 15,
+                    "name": "Scotland"
+                }
+            },
+            "standings": {
+                "triesforaway": {
+                    "code": "result:triesforaway",
+                    "name": "Triesforaway",
+                    "value": "0"
+                },
+                "pointsfor": {
+                    "code": "result:pointsfor",
+                    "name": "Points For",
+                    "value": "0"
+                },
+                "triesagainstaway": {
+                    "code": "result:triesagainstaway",
+                    "name": "Triesagainstaway",
+                    "value": "0"
+                },
+                "pointshome": {
+                    "code": "result:pointshome",
+                    "name": "Points Home",
+                    "value": "0"
+                },
+                "pointsforaway": {
+                    "code": "result:pointsforaway",
+                    "name": "Away Points For",
+                    "value": "0"
+                },
+                "drawsaway": {
+                    "code": "result:drawsaway",
+                    "name": "Away Draws",
+                    "value": "0"
+                },
+                "points": {
+                    "code": "result:points",
+                    "name": "Points",
+                    "value": "0"
+                },
+                "triesfor": {
+                    "code": "result:triesfor",
+                    "name": "Triesfor",
+                    "value": "0"
+                },
+                "winsaway": {
+                    "code": "result:winsaway",
+                    "name": "Away Win",
+                    "value": "0"
+                },
+                "triesforhome": {
+                    "code": "result:triesforhome",
+                    "name": "Triesforhome",
+                    "value": "0"
+                },
+                "defeitshome": {
+                    "code": "result:defeitshome",
+                    "name": "Home Lost",
+                    "value": "0"
+                },
+                "pointsagainst": {
+                    "code": "result:pointsagainst",
+                    "name": "Points Against",
+                    "value": "0"
+                },
+                "rank": {
+                    "code": "result:rank",
+                    "name": "Rank",
+                    "value": "5"
+                },
+                "draws": {
+                    "code": "result:draws",
+                    "name": "Draw",
+                    "value": "0"
+                },
+                "pointsaway": {
+                    "code": "result:pointsaway",
+                    "name": "Points Away",
+                    "value": "0"
+                },
+                "drawshome": {
+                    "code": "result:drawshome",
+                    "name": "Home Draws",
+                    "value": "0"
+                },
+                "defeitsaway": {
+                    "code": "result:defeitsaway",
+                    "name": "Away Lost",
+                    "value": "0"
+                },
+                "playedhome": {
+                    "code": "result:playedhome",
+                    "name": "Home Played",
+                    "value": "0"
+                },
+                "pointsforhome": {
+                    "code": "result:pointsforhome",
+                    "name": "Home Points For",
+                    "value": "0"
+                },
+                "pointsagainsthome": {
+                    "code": "result:pointsagainsthome",
+                    "name": "Home Points Against",
+                    "value": "0"
+                },
+                "wins": {
+                    "code": "result:wins",
+                    "name": "Won",
+                    "value": "0"
+                },
+                "winshome": {
+                    "code": "result:winshome",
+                    "name": "Home Win",
+                    "value": "0"
+                },
+                "triesagainsthome": {
+                    "code": "result:triesagainsthome",
+                    "name": "Triesagainsthome",
+                    "value": "0"
+                },
+                "triesagainst": {
+                    "code": "result:triesagainst",
+                    "name": "Triesagainst",
+                    "value": "0"
+                },
+                "pointsagainstaway": {
+                    "code": "result:pointsagainstaway",
+                    "name": "Away Points Against",
+                    "value": "0"
+                },
+                "playedaway": {
+                    "code": "result:playedaway",
+                    "name": "Away Played",
+                    "value": "0"
+                },
+                "played": {
+                    "code": "result:played",
+                    "name": "Games Played",
+                    "value": "0"
+                },
+                "defeits": {
+                    "code": "result:defeits",
+                    "name": "Lost",
+                    "value": "0"
+                },
+                "pointsbonus": {
+                    "code": "result:pointsbonus",
+                    "name": "Bonus Points",
+                    "value": "0"
+                }
+            }
+        }
+    ],
+    "links": [
+        {
+            "rel": "self",
+            "href": "http://sport.api.press.net/v1/standing/235174"
+        }
+    ]
+}

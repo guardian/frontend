@@ -1,0 +1,112 @@
+package rugby.feed
+
+import org.joda.time.DateTime
+import org.scalatest.{AsyncFlatSpec, Matchers}
+import rugby.model.{Match, Stage, Status, Team}
+
+import scala.concurrent.{ExecutionContext, Future}
+import scala.io.Source
+import scala.util.{Failure, Success, Try}
+
+class PAFeedTest extends AsyncFlatSpec with Matchers {
+
+  behavior of "PA rugby feed"
+
+  val feed = new PARugbyFeed(rugbyClient = StubClient)
+
+  val exampleMatch = Match(
+    date = DateTime.parse("2019-08-29T07:35:00Z"),
+    id = "3000315",
+    homeTeam = Team(
+      id = "10406409",
+      name = "Wellington"
+    ),
+    awayTeam = Team(
+      id = "10406409",
+      name = "Wellington"
+    ),
+    venue = None,
+    competitionName = "New Zealand Mitre 10 Cup",
+    status = Status.Result,
+    event = WorldCup2019,
+    stage = Stage.Group
+  )
+
+  // Note, this is lightweight; detailed testing of deserialisation
+  // happens in PAMMatchParserTest.
+
+  it should "get live scores" in {
+    val liveGames = feed.getLiveScores()
+    liveGames.map(matches => matches.size shouldBe 0)
+  }
+
+  it should "get fixtures and results" in {
+    val games = feed.getFixturesAndResults()
+    games.map(matches => matches.size shouldBe 1)
+  }
+
+  it should "get score events" in {
+    val scoreEvents = feed.getScoreEvents(exampleMatch)
+    scoreEvents.map(goals => goals.size shouldBe 12)
+  }
+
+  it should "get match stats" ignore _
+
+  it should "get group tables" in {
+    val tables = feed.getGroupTables()
+    tables.map(tables => tables(WorldCup2019).size shouldBe 4)
+  }
+}
+
+object StubClient extends RugbyClient {
+
+  private[this] def loadJSON(path: String): String = {
+    Source
+      .fromInputStream(getClass.getClassLoader.getResourceAsStream(path))
+      .mkString
+  }
+
+  private[this] val store = Map(
+    "actions/3000315" -> loadJSON("rugby/feed/pa-event-actions.json"),
+    s"events/${WorldCupPAIDs.worldCup2019SeasonID}" -> loadJSON("rugby/feed/pa-events.json")
+  ) ++ WorldCupPAIDs.worldCup2019GroupIDs
+    .map(id => s"standing/$id" -> loadJSON("rugby/feed/pa-standing.json")).toMap
+
+  private[this] def toFut[A](t: Try[A]): Future[A] = t match {
+    case Success(value) => Future.successful(value)
+    case Failure(exception) => Future.failed(exception)
+  }
+
+  override def getEvents(seasonID: Int)
+    (implicit executionContext: ExecutionContext): Future[PAMatchesResponse] = {
+
+    store.get(s"events/$seasonID") match {
+      case Some(json) =>
+        toFut(PAMatchesResponse.fromJSON(json))
+      case None =>
+        Future.failed(new Exception("Item not found"))
+    }
+  }
+
+  override def getStanding(standingID: Int)
+    (implicit executionContext: ExecutionContext): Future[PATableResponse] = {
+
+    store.get(s"standing/$standingID") match {
+      case Some(json) =>
+        toFut(PATableResponse.fromJSON(json))
+      case None =>
+        Future.failed(new Exception("Item not found"))
+    }
+  }
+
+  override def getEventActions(eventID: Int)
+    (implicit executionContext: ExecutionContext): Future[Seq[PAEvent]] = {
+
+    store.get(s"actions/$eventID") match {
+      case Some(json) =>
+        toFut(PAEvent.fromJSONList(json))
+      case None =>
+        Future.failed(new Exception("Item not found"))
+    }
+  }
+}

@@ -13,7 +13,7 @@ case class Match(
   venue: Option[String],
   competitionName: String,
   status: Status,
-  event: OptaEvent,
+  event: OptaEvent, // TODO rename to just RugbyEvent (as will soon be PA)
   stage: Stage.Value
 ) {
   def hasTeam(teamId: String): Boolean = homeTeam.id == teamId || awayTeam.id == teamId

@@ -26,7 +26,7 @@ import play.api.libs.ws.WSClient
 import rugby.conf.RugbyLifecycle
 import router.Routes
 import rugby.controllers.RugbyControllers
-import rugby.feed.{CapiFeed, OptaFeed}
+import rugby.feed.{CapiFeed, OptaFeed, PARugbyClient, PARugbyFeed}
 import rugby.jobs.RugbyStatsJob
 import services.OphanApi
 
@@ -49,7 +49,8 @@ trait SportServices {
   lazy val competitionsService = wire[CompetitionsService]
   lazy val cricketPaFeed = wire[PaFeed]
   lazy val cricketStatsJob = wire[CricketStatsJob]
-  lazy val rugbyFeed = wire[OptaFeed]
+  lazy val rugbyClient = wire[PARugbyClient]
+  lazy val rugbyFeed = wire[PARugbyFeed]
   lazy val rugbyStatsJob = wire[RugbyStatsJob]
   lazy val capiFeed = wire[CapiFeed]
   lazy val ophanApi = wire[OphanApi]
