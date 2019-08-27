@@ -43,6 +43,18 @@ object ArticlePageChecks {
     !page.article.blocks.exists(_.body.exists(_.elements.exists(unsupportedElement)))
   }
 
+  def hasOnlySupportedMainElements(page: PageWithStoryPackage): Boolean = {
+    // See: https://github.com/guardian/dotcom-rendering/blob/master/packages/frontend/web/components/lib/ArticleRenderer.tsx
+    def unsupportedElement(blockElement: BlockElement) = blockElement match {
+      case _: TextBlockElement => false
+      case _: ImageBlockElement => false
+      case _ => true
+    }
+
+    !page.article.blocks.exists(_.main.exists(_.elements.exists(unsupportedElement)))
+  }
+
+
   def isNotImmersive(page: PageWithStoryPackage): Boolean = ! page.item.isImmersive
 
   def isNotLiveBlog(page:PageWithStoryPackage): Boolean = ! page.item.isLiveBlog
@@ -75,6 +87,7 @@ object ArticlePicker {
       ("isSupportedType", ArticlePageChecks.isSupportedType(page)),
       ("hasBlocks", ArticlePageChecks.hasBlocks(page)),
       ("hasOnlySupportedElements", ArticlePageChecks.hasOnlySupportedElements(page)),
+      ("hasOnlySupportedMainElements", ArticlePageChecks.hasOnlySupportedMainElements(page)),
       ("isDiscussionDisabled", ArticlePageChecks.isDiscussionDisabled(page)),
       ("isAdFree", ArticlePageChecks.isAdFree(page, request)),
       ("isNotImmersive", ArticlePageChecks.isNotImmersive(page)),
@@ -87,8 +100,6 @@ object ArticlePicker {
       ("isNewsTone", ArticlePageChecks.isNewsTone(page)),
     )
   }
-
-
 
   def getTier(page: PageWithStoryPackage)(implicit request: RequestHeader): RenderType = {
 
