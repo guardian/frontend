@@ -142,7 +142,7 @@ object SubMetaLink {
 }
 
 case class Author(
-  byline: String,
+  byline: Option[String],
   twitterHandle: Option[String],
 )
 
@@ -537,7 +537,7 @@ object DotcomponentsDataModel {
       pageType
     )
 
-    val byline = article.trail.byline.getOrElse("Guardian staff reporter")
+    val byline = article.trail.byline
 
     val config = Config(
       ajaxUrl = Configuration.ajax.url,
