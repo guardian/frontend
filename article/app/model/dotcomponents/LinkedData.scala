@@ -40,19 +40,13 @@ object LinkedData {
     )
 
     val article = liveblog.article
-
-    val authors = article.tags.contributors.map(contributor => {
-      Person(
-        name = contributor.name,
-        sameAs = contributor.metadata.webUrl,
-      )
-    })
+    val authors = getAuthors(article)
 
     List(
       LiveBlogPosting(
         `@id` = baseURL + article.metadata.id,
         image = getImages(article, fallbackLogo),
-        author = authors,
+        author = getAuthors(article),
         datePublished = article.trail.webPublicationDate.toString(),
         dateModified = article.fields.lastModified.toString(),
         headline = article.trail.headline,
@@ -149,12 +143,17 @@ object LinkedData {
   }
 
   def getAuthors(article: Article): List[Person] = {
-    article.tags.contributors.map(contributor => {
+    val authors = article.tags.contributors.map(contributor => {
       Person(
         name = contributor.name,
-        sameAs = contributor.metadata.webUrl,
+        sameAs = Some(contributor.metadata.webUrl),
       )
     })
+
+    authors match {
+      case Nil => List(Person(name = "Guardian staff reporter", sameAs = None))
+      case _ => authors
+    }
   }
 }
 
@@ -247,7 +246,7 @@ object ListItem {
 case class Person(
   `@type`: String = "Person",
   name: String,
-  sameAs: String,
+  sameAs: Option[String],
 )
 
 object Person {
