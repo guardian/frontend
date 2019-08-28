@@ -368,60 +368,6 @@ trait FeatureSwitches {
     exposeClientSide = false
   )
 
-  val EmailInArticleSwitch = Switch(
-    SwitchGroup.Feature,
-    "email-in-article",
-    "When ON, the email sign-up form will show on articles matching the email lists utilising the email module",
-    owners = Seq(Owner.withGithub("gtrufitt")),
-    safeState = On,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
-  // Owner: Dotcom loyalty
-  val EmailInArticleGtodaySwitch = Switch(
-    SwitchGroup.Feature,
-    "email-in-article-gtoday",
-    "When ON, the email sign-up form will show the Guardian today email sign-up on articles",
-    owners = Seq(Owner.withGithub("gtrufitt")),
-    safeState = On,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
-  // Owner: Dotcom loyalty
-  val EmailInArticleOutbrainSwitch = Switch(
-    SwitchGroup.Feature,
-    "email-in-article-outbrain",
-    "When ON, we will check whether email sign-up will be shown and, if so, the outbrain non-compliant merchandising widget will be shown",
-    owners = Seq(Owner.withGithub("gtrufitt")),
-    safeState = On,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
-  // Owner: Dotcom habitual / Gareth
-  val EmailSignupLabNotes = Switch(
-    SwitchGroup.Feature,
-    "email-signup-lab-notes",
-    "When ON, insert the lab-notes email sign-up into Science section articles",
-    owners = Seq(Owner.withGithub("NathanielBennett")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
-  // Owner: Dotcom habitual / Gareth
-  val emailSignupEuRef = Switch(
-    SwitchGroup.Feature,
-    "email-signup-eu-ref",
-    "When ON, insert the EU ref email sign-up into articles with the EU ref tag",
-    owners = Seq(Owner.withGithub("gtrufitt")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
   // Owner: Maria Livia Chiorean
   val SmartAppBanner = Switch(
     SwitchGroup.Feature,

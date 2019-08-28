@@ -20,18 +20,6 @@ When the form is submitted, the email address will be passed through [Identity](
 
 N.B. For email sign ups to work, the listID must be set up in ExactTarget by Editorial
 
-## Dynamic email sign up forms
-
-These are injected by JavaScript into all articles within a tag, so long as the [global run checks](https://docs.google.com/document/d/1RkNCBg_ekfocuHsQOozW_jy21JDGH_BZnIKOE3mX95s/edit) are true.
-
-1) Add a new list config in [**email-article.js**](https://github.com/guardian/frontend/blob/master/static/src/javascripts/projects/common/modules/email/email-article.js). The lists are in order of priority, so you probably want to add yours before the Guardian Today.
-
-2) Add a [run-check](https://github.com/guardian/frontend/blob/master/static/src/javascripts/projects/common/modules/email/run-checks.js#L96) for your email sign up in the `canRunList`.
-
-3) Add the section to the [blanket blacklist](https://github.com/guardian/frontend/blob/master/static/src/javascripts/projects/common/modules/email/run-checks.js#L37) to ensure that the Guardian Today never runs on the section you're adding the dynamic sign up to. (Optional)
-
-N.B. When testing, the sign-up will only show if it passes all the global run checks which includes only showing an email sign-up once per session, so you will probably need to clear out your session storage each time you test (or flip that to always pass).
-
 ## The email preferences centre and the newsletters page
 
 The [email preferences centre](https://profile.theguardian.com/email-prefs) and the [email newsletters page](https://www.theguardian.com/email-newsletters) both pull data from [**EmailSubscriptions.scala**](https://github.com/guardian/frontend/blob/master/common/app/model/EmailSubscriptions.scala)

@@ -1,7 +1,4 @@
 // @flow
-import config from 'lib/config';
-import { allEmailCanRun, listCanRun } from 'common/modules/email/run-checks';
-import { getListConfigs } from 'common/modules/email/email-article';
 import { trackAdRender } from 'commercial/modules/dfp/track-ad-render';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { checks } from 'common/modules/check-mediator-checks';
@@ -33,23 +30,6 @@ const checksToDispatch = {
         return waitForCheck('isUserInContributionsAbTest').then(
             userInContributionsAbTest => !userInContributionsAbTest
         );
-    },
-
-    emailCanRunPreCheck(): Promise<boolean> {
-        return Promise.resolve(allEmailCanRun());
-    },
-
-    listCanRun(): Promise<boolean> {
-        const listConfigs = getListConfigs();
-        const canRun = !!Object.keys(listConfigs).find(key =>
-            listCanRun(listConfigs[key])
-        );
-
-        return Promise.resolve(canRun);
-    },
-
-    emailInArticleOutbrainEnabled(): Promise<boolean> {
-        return Promise.resolve(config.get('switches.emailInArticleOutbrain'));
     },
 
     hasHighPriorityAdLoaded(): Promise<boolean> {
@@ -121,31 +101,6 @@ const checksToDispatch = {
         const dependentChecks = [
             waitForCheck('isOutbrainMerchandiseCompliant'),
             waitForCheck('isOutbrainBlockedByAds'),
-        ];
-
-        return Promise.all(dependentChecks).then(results =>
-            someCheckPassed(results)
-        );
-    },
-
-    emailCanRun(): Promise<boolean> {
-        const dependentChecks = [
-            waitForCheck('emailCanRunPreCheck'),
-            waitForCheck('listCanRun'),
-            waitForCheck('emailInArticleOutbrainEnabled'),
-            waitForCheck('isUserNotInContributionsAbTest'),
-        ];
-
-        return Promise.all(dependentChecks).then(results =>
-            everyCheckPassed(results)
-        );
-    },
-
-    emailCanRunPostCheck(): Promise<boolean> {
-        const dependentChecks = [
-            waitForCheck('isOutbrainMerchandiseCompliantOrBlockedByAds'),
-            waitForCheck('isOutbrainDisabled'),
-            waitForCheck('isStoryQuestionsOnPage'),
         ];
 
         return Promise.all(dependentChecks).then(results =>
