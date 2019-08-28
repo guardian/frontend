@@ -63,7 +63,9 @@ const isOff = (
     { type }: StorageOptions = defaultOptions
 ): boolean => storage[type].get(`${storagePrefix}switch.${name}`) === false;
 
-const isNumeric = (str: string): boolean => !Number.isNaN(str);
+// Note 'false' !== Number.isNaN so we have to type coerce
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/isNaN
+const isNumeric = (str: string): boolean => !Number.isNaN(Number(str));
 
 const isBoolean = (str: string): boolean => str === 'true' || str === 'false';
 
