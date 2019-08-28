@@ -25,4 +25,5 @@ trait IdentityServices extends IdentityConfigurationComponents with IdApiCompone
   lazy val authenticationService = wire[AuthenticationService]
   lazy val torNodeLoggingIdRequestParser = wire[TorNodeLoggingIdRequestParser]
   lazy val emailService = wire[NewsletterService]
+  lazy val mdapiService = wire[MembersDataApiService]
 }
