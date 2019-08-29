@@ -23,8 +23,7 @@ const DATA = {
         LOGO: 'https://assets.guim.co.uk/images/apps/app-logo.png',
         SCREENSHOTS:
             'https://assets.guim.co.uk/images/apps/ios-screenshots.jpg',
-        LINK:
-            'https://app.adjust.com/w97upi?deep_link=gnmguardian://root?contenttype=front&source=adjust',
+        LINK: 'https://itunes.apple.com/gb/app/the-guardian/id409128287?mt=8',
         STORE: 'on the App Store',
     },
     ANDROID: {
