@@ -17,6 +17,9 @@ const normalise = (length: string): string => {
     return matches[1] + (matches[2] === undefined ? defaultUnit : matches[2]);
 };
 
+const isLiveBlogInlineAdSlot = (adSlot: ?HTMLElement): boolean =>
+    !!adSlot && adSlot.classList.contains('ad-slot--liveblog-inline');
+
 const resize = (
     specs: Specs,
     iframe: HTMLElement,
@@ -34,7 +37,7 @@ const resize = (
 
     const styles = {};
 
-    if (specs.width) {
+    if (specs.width && !isLiveBlogInlineAdSlot(adSlot)) {
         styles.width = normalise(specs.width);
     }
 
@@ -65,6 +68,7 @@ const init = (register: RegisterListeners) => {
     register('resize', (specs, ret, iframe) => {
         if (iframe && specs) {
             const adSlot = iframe && iframe.closest('.js-ad-slot');
+
             if (
                 adSlot &&
                 (adSlot.classList.contains('ad-slot--mostpop') ||
