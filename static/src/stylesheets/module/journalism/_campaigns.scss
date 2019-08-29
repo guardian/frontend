@@ -283,10 +283,8 @@
 }
 
 .campaign__button {
-    display: -webkit-inline-box;
-    display: -ms-inline-flexbox;
+    cursor: pointer;
     display: inline-flex;
-    -webkit-box-align: center;
     align-items: center;
     border: 0;
     margin: 0 0 0 10px;

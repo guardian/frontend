@@ -15,7 +15,7 @@
                 <p class="success-message">Thank you for your contribution</p>
             </div>
         </div>
-        <button class="campaign__button campaign__button--large campaign__button--rounded campaign--snippet__handle" aria-hidden="true">
+        <span class="campaign__button campaign__button--large campaign__button--rounded campaign--snippet__handle" aria-hidden="true">
             <span class="is-off">
                 <svg class="icon icon--plus " viewBox="0 0 18 18">
                     <path d="M8.2 0h1.6l.4 7.8 7.8.4v1.6l-7.8.4-.4 7.8H8.2l-.4-7.8L0 9.8V8.2l7.8-.4.4-7.8z"></path>
@@ -28,7 +28,7 @@
                 </svg>
                   Hide
             </span>
-        </button>
+        </span>
     </summary>
 
 
@@ -58,7 +58,6 @@
                        value="<%=option.value%>"
                        id="<%=option.label%>"
                        name="field_<%=field.id%>"
-                    <% if (field.required == "1") { %> required <% } %>
                     />
                     <label for="<%=option.label%>">
                         <%=option.value%>
