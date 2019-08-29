@@ -1,6 +1,8 @@
 @import com.gu.commercial.branding.Branding
 @(branding: Branding, isStandardSizeCard: Boolean, onDarkBackground: Boolean = false)(implicit request: RequestHeader)
 
-<div class="badge @if(isStandardSizeCard){badge--branded}">
-    @logo(branding, onDarkBackground)
-</div>
+@if (branding.sponsorName != "No Sponsor") {
+    <div class="badge @if(isStandardSizeCard){badge--branded}">
+        @logo(branding, onDarkBackground)
+    </div>
+}
