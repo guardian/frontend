@@ -54,6 +54,9 @@ object ArticlePageChecks {
     !page.article.blocks.exists(_.main.exists(_.elements.exists(unsupportedElement)))
   }
 
+  private[this] val tagsBlacklist: Set[String] = Set(
+    "info/about-guardian-australia"
+  )
 
   def isNotImmersive(page: PageWithStoryPackage): Boolean = ! page.item.isImmersive
 
@@ -72,6 +75,11 @@ object ArticlePageChecks {
   def isNewsTone(page: PageWithStoryPackage): Boolean = {
     page.article.tags.tones.headOption.exists(_.id == "tone/news") || page.article.tags.tones.isEmpty
   }
+
+  def isNotBlackListed(page: PageWithStoryPackage): Boolean = {
+    !page.item.tags.tags.exists(s=>tagsBlacklist(s.id))
+  }
+
 }
 
 object ArticlePicker {
@@ -98,6 +106,7 @@ object ArticlePicker {
       ("isNotOpinionP", ArticlePageChecks.isNotOpinion(page)),
       ("isNotPaidContent", ArticlePageChecks.isNotPaidContent(page)),
       ("isNewsTone", ArticlePageChecks.isNewsTone(page)),
+      ("isNotBlackListed", ArticlePageChecks.isNotBlackListed(page)),
     )
   }
 
