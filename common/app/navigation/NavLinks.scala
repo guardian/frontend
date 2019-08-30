@@ -510,8 +510,8 @@ private object NavLinks {
   )
 
   val ukBrandExtensions = List(
-    jobs.copy(url = jobs.url + "?INTCMP=jobs_uk_web_newheader"),
-    dating.copy(url = dating.url + "?INTCMP=soulmates_uk_web_newheader"),
+    jobs.copy(url = jobs.url + "?INTCMP=jobs_uk_web_newheader_dropdown"),
+    dating.copy(url = dating.url + "?INTCMP=soulmates_uk_web_newheader_dropdown"),
     holidays.copy(url = holidays.url + "?INTCMP=holidays_uk_web_newheader"),
     ukMasterClasses,
     digitalNewspaperArchive,
@@ -525,13 +525,13 @@ private object NavLinks {
     discountCodes
   )
   val usBrandExtensions= List(
-    jobs.copy(url = jobs.url + "?INTCMP=jobs_us_web_newheader"),
+    jobs.copy(url = jobs.url + "?INTCMP=jobs_us_web_newheader_dropdown"),
     digitalNewspaperArchive,
     discountCoupons
   )
   val intBrandExtensions = List(
-    jobs.copy(url = jobs.url + "?INTCMP=jobs_int_web_newheader"),
-    dating.copy(url = dating.url + "?INTCMP=soulmates_int_web_newheader"),
+    jobs.copy(url = jobs.url + "?INTCMP=jobs_int_web_newheader_dropdown"),
+    dating.copy(url = dating.url + "?INTCMP=soulmates_int_web_newheader_dropdown"),
     holidays.copy(url = holidays.url + "?INTCMP=holidays_int_web_newheader"),
     digitalNewspaperArchive,
     discountCodes
