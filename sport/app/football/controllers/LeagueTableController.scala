@@ -45,7 +45,8 @@ class LeagueTableController(
         "Community Shield",
         "Scottish Cup",
         "International friendlies",
-        "Women's FA Cup"
+        "Women's FA Cup",
+        "Euro 2020 qualifying"
     )
 
   def sortedCompetitions:Seq[Competition] = tableOrder.flatMap(leagueName => competitionsService.competitions.find(_.fullName == leagueName))
