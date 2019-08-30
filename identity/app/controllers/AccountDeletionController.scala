@@ -1,6 +1,6 @@
 package controllers
 
-import common.ImplicitControllerExecutionContext
+import common.{HttpStatusException, ImplicitControllerExecutionContext}
 import model.{ApplicationContext, IdentityPage, NoCache}
 import play.api.mvc._
 import services._
@@ -28,6 +28,7 @@ class AccountDeletionController(
   csrfCheck: CSRFCheck,
   csrfAddToken: CSRFAddToken,
   signInService : PlaySigninService,
+  mdapiService: MembersDataApiService,
   conf: IdentityConfiguration,
   val controllerComponents: ControllerComponents,
   val httpConfiguration: HttpConfiguration
@@ -43,21 +44,41 @@ class AccountDeletionController(
   import views.html.profile.deletion._
 
   val page = IdentityPage("/deletion", "Account Deletion")
+  val pageForm = IdentityPage("/deletion/form", "Account Deletion Form")
   val pageConfirm = IdentityPage("/deletion/confirm", "Account Deletion Confirmation")
 
   val accountDeletionForm = Form(
     tuple(
       "password" -> text.verifying(Constraints.nonEmpty),
       "reason" -> optional(text)
-  ))
+    ))
+
+  def processAccountDeletionRequest: Action[AnyContent] = csrfAddToken {
+    fullAuthWithIdapiUserAction.async { implicit request =>
+
+      mdapiService.getUserContentAccess(request.cookies).flatMap {
+        case contentAccess: ContentAccess => {
+          if (contentAccess.canProceedWithAutoDeletion) {
+            Future(SeeOther(routes.AccountDeletionController.renderAccountDeletionForm().url))
+          } else {
+            Future(NoCache(Ok(
+              IdentityHtmlPage.html(accountDeletion(page, idRequestParser(request), idUrlBuilder, Nil, request.user, contentAccess))(page, request, context)
+            )))
+          }
+        }
+        // TODO how to best handle httpStatusException case?
+        case _ =>
+          logger.error(s"MDAPI getUserContentAccessData request failed for user ${request.user.user.id}")
+          Future(NoCache(InternalServerError("We are experiencing technical difficulties. Please try again later or contact Userhelp.")))
+      }
+    }
+  }
 
   def renderAccountDeletionForm: Action[AnyContent] = csrfAddToken {
     fullAuthWithIdapiUserAction.async { implicit request =>
       val form = accountDeletionForm.bindFromFlash.getOrElse(accountDeletionForm)
       Future(NoCache(Ok(
-        IdentityHtmlPage.html(
-          views.html.profile.deletion.accountDeletion(page, idRequestParser(request), idUrlBuilder, form, Nil, request.user)
-        )(page, request, context)
+        IdentityHtmlPage.html(views.html.profile.deletion.accountDeletionForm(page, idRequestParser(request), idUrlBuilder, form, Nil, request.user))(pageForm, request, context)
       )))
     }
   }
