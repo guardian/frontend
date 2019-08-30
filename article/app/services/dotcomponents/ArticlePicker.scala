@@ -55,7 +55,7 @@ object ArticlePageChecks {
   }
 
   private[this] val tagsBlacklist: Set[String] = Set(
-    "info/about-guardian-australia"
+    "tracking/platformfunctional/dcrblacklist"
   )
 
   def isNotImmersive(page: PageWithStoryPackage): Boolean = ! page.item.isImmersive
