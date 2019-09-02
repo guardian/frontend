@@ -38,7 +38,8 @@ const commercialModules: Array<Array<any>> = [
 ];
 
 if (
-    config.get('tests.dotcomRenderingAdvertisementsVariant', false) === 'variant' &&
+    config.get('tests.dotcomRenderingAdvertisementsVariant', false) ===
+        'variant' &&
     !commercialFeatures.adFree
 ) {
     commercialModules.push(
