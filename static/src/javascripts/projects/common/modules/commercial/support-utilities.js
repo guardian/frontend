@@ -30,11 +30,14 @@ const supportContributeURL = (): string =>
     addCountryGroupToSupportLink(supportContributeGeoRedirectURL);
 const supportSubscribeURL = (): string =>
     addCountryGroupToSupportLink(supportSubscribeGeoRedirectURL);
+const supportSubscribeDigitalURL = (): string =>
+    `${supportSubscribeURL()}/digital`;
 
 export {
     supportContributeGeoRedirectURL,
     supportSubscribeGeoRedirectURL,
     supportContributeURL,
     supportSubscribeURL,
+    supportSubscribeDigitalURL,
     addCountryGroupToSupportLink,
 };

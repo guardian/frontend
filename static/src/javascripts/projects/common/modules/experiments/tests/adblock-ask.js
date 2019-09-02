@@ -1,10 +1,10 @@
 // @flow
 import { shouldHideSupportMessaging } from 'common/modules/commercial/user-features';
 import { pageShouldHideReaderRevenue } from 'common/modules/commercial/contributions-utilities';
-import { supportContributeURL } from 'common/modules/commercial/support-utilities';
+import { supportSubscribeDigitalURL } from 'common/modules/commercial/support-utilities';
 import config from 'lib/config';
 
-const supportUrl = `${supportContributeURL()}?acquisitionData=%7B%22componentType%22%3A%22ACQUISITIONS_OTHER%22%2C%22source%22%3A%22GUARDIAN_WEB%22%2C%22campaignCode%22%3A%22shady_pie_open_2019%22%2C%22componentId%22%3A%22shady_pie_open_2019%22%7D&INTCMP=shady_pie_open_2019`;
+const supportUrl = `${supportSubscribeDigitalURL()}?acquisitionData=%7B%22componentType%22%3A%22ACQUISITIONS_OTHER%22%2C%22source%22%3A%22GUARDIAN_WEB%22%2C%22campaignCode%22%3A%22shady_pie_open_2019%22%2C%22componentId%22%3A%22shady_pie_open_2019%22%7D&INTCMP=shady_pie_open_2019`;
 
 const askHtml = `
 <div class="contributions__adblock">
@@ -21,7 +21,7 @@ const askHtml = `
             will you support it?
         </div>
         <a class="contributions__adblock-button" href="${supportUrl}">
-            <span class="component-button__content">Support The Guardian</span>
+            <span class="component-button__content">Find out more</span>
             <svg class="svg-arrow-right-straight" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 17.89" preserveAspectRatio="xMinYMid">
                 <path d="M20 9.35l-9.08 8.54-.86-.81 6.54-7.31H0V8.12h16.6L10.06.81l.86-.81L20 8.51v.84z"></path>
             </svg>
