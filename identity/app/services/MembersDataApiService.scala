@@ -7,7 +7,7 @@ import play.api.libs.functional.syntax._
 import play.api.libs.json._
 import scala.concurrent.{ExecutionContext, Future}
 
-// Modeled on members-data-api Attributes - ConsentAccess
+// Modeled on members-data-api Attributes - ContentAccess
 // https://github.com/guardian/members-data-api/blob/master/membership-attribute-service/app/models/Attributes.scala
 case class ContentAccess(
   isMember: Boolean, // TODO a friend membership should not prevent auto-account deletion but currently does
@@ -19,6 +19,7 @@ case class ContentAccess(
 ) {
   def canProceedWithAutoDeletion: Boolean = !(isMember || isPaidMember || isRecurringContributor || hasDigitalPack || isPaperSubscriber || isGuardianWeeklySubscriber)
   def hasPaidProducts: Boolean = isPaidMember || isRecurringContributor || hasDigitalPack || isPaperSubscriber || isGuardianWeeklySubscriber
+  def hasSubscription: Boolean = hasDigitalPack || isPaperSubscriber || isGuardianWeeklySubscriber
 }
 
 object ContentAccess {
