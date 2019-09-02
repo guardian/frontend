@@ -37,7 +37,11 @@ const commercialModules: Array<Array<any>> = [
     ['cm-lotame-data-extract', initLotameDataExtract],
 ];
 
-if (false && !commercialFeatures.adFree) {
+if (
+    config.get('tests.dotcomRenderingAdvertisementsVariant', false) ===
+        'variant' &&
+    !commercialFeatures.adFree
+) {
     commercialModules.push(
         ['cm-prepare-prebid', preparePrebid],
         ['cm-prepare-googletag', prepareGoogletag],
