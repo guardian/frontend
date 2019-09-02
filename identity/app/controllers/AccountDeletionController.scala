@@ -57,15 +57,14 @@ class AccountDeletionController(
     fullAuthWithIdapiUserAction.async { implicit request =>
 
       mdapiService.getUserContentAccess(request.cookies).flatMap {
-        case contentAccess: ContentAccess => {
+        case contentAccess: ContentAccess =>
           if (contentAccess.canProceedWithAutoDeletion) {
             Future(SeeOther(routes.AccountDeletionController.renderAccountDeletionForm().url))
           } else {
             Future(NoCache(Ok(
-              IdentityHtmlPage.html(accountDeletion(page, idRequestParser(request), idUrlBuilder, Nil, request.user, contentAccess))(page, request, context)
+              IdentityHtmlPage.html(accountDeletionBlock(page, idRequestParser(request), idUrlBuilder, Nil, request.user, contentAccess))(page, request, context)
             )))
           }
-        }
         // TODO how to best handle httpStatusException case?
         case _ =>
           logger.error(s"MDAPI getUserContentAccessData request failed for user ${request.user.user.id}")

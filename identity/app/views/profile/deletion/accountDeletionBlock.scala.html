@@ -1,0 +1,85 @@
+@import idapiclient.responses.Error
+@import model.{IdentityUserhelp, MembershipUserhelp, DigitalPackUserhelp} // TODO how can I use this in templates?
+
+@(
+    page: model.Page,
+    idRequest: services.IdentityRequest,
+    idUrlBuilder: services.IdentityUrlBuilder,
+    errors: List[Error],
+    user: com.gu.identity.model.User,
+    userContentAccess: services.ContentAccess
+)(implicit
+    request: RequestHeader,
+    messages: play.api.i18n.Messages,
+    context: model.ApplicationContext,
+)
+
+@import views.html.fragments.registrationFooter
+
+@emailIsValidated = @{
+    user.statusFields.userEmailValidated.fold(false)(identity)
+}
+
+
+<div class="identity-wrapper monocolumn-wrapper">
+
+    @if(emailIsValidated) {
+        <div class="identity-section">
+            <p class="identity-section__text">
+                We've noticed you have an active membership, recurring contribution or subscription with the Guardian, so you won't be able to automatically delete your account online. Please follow the instructions below first and try again if you would still like delete your account.
+            </p>
+
+            </br>
+            <h4>How to delete your account if...</h4>
+
+            </br>
+            @if(userContentAccess.isMember || userContentAccess.isPaidMember) {
+                <h4>
+                    You have an active membership</h4>
+                <p class="identity-section__text">
+                    You must first cancel your membership before you can delete your account online. To cancel your membership
+                    please <a class="u-underline" href="https://membership.theguardian.com/tier/cancel">
+                    click here.</a>
+                </p>
+            }
+
+            </br>
+            @if(userContentAccess.isRecurringContributor) {
+                <h4>
+                    You have a recurring contribution</h4>
+                <p class="identity-section__text">
+                    You must first cancel your recurring contribution before you can delete your account online. To cancel this please <a class="u-underline" href="https://manage.theguardian.com/cancel/contributions">
+                    click here.</a>
+                </p>
+            }
+
+            </br>
+            @if(userContentAccess.hasSubscription) {
+                @if(userContentAccess.hasDigitalPack) {<h4>You have an active Digital Pack subscription</h4>}
+                @if(userContentAccess.isPaperSubscriber) {<h4>You have an active print subscription to one of our newspapers</h4>}
+                @if(userContentAccess.isGuardianWeeklySubscriber) {<h4>You have an active print subscription to the Guardian Weekly</h4>}
+                <p class="identity-section__text">
+                    You cannot delete your account while you have an active Digital Pack subscription. If you would like to cancel your subscription,
+                    please email the Subscriptions Team at <a class="u-underline" href="mailto:customer.help@@theguardian.com">
+                    customer.help@@theguardian.com</a>
+                </p>
+            }
+        </div>
+
+    } else {
+        <div class="identity-section">
+            <p class="identity-section__text">
+                Before you can delete your account you need to validate your email address.
+                Once you have validated, please reload this page and you will be able to delete
+                your account.
+            </p>
+            <a class="u-underline js-id-send-validation-email" data-link-name="Resend verification email">
+                Send validation email
+            </a>
+        </div>
+
+    }
+
+    @registrationFooter(idRequest, idUrlBuilder)
+</div>
+
