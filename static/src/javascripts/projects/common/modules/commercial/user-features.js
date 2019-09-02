@@ -234,8 +234,8 @@ const getDaysSinceLastOneOffContribution = (): number | null => {
     return dateDiffDays(lastContributionDate, Date.now());
 };
 
-// defaults to last six months
-const isRecentOneOffContributor = (askPauseDays: number = 180): boolean => {
+// defaults to last three months
+const isRecentOneOffContributor = (askPauseDays: number = 90): boolean => {
     const daysSinceLastContribution = getDaysSinceLastOneOffContribution();
     if (daysSinceLastContribution === null) {
         return false;
@@ -245,7 +245,7 @@ const isRecentOneOffContributor = (askPauseDays: number = 180): boolean => {
 
 // true if the user has completed their ask-free period
 const isPostAskPauseOneOffContributor = (
-    askPauseDays: number = 180
+    askPauseDays: number = 90
 ): boolean => {
     const daysSinceLastContribution = getDaysSinceLastOneOffContribution();
     if (daysSinceLastContribution === null) {
