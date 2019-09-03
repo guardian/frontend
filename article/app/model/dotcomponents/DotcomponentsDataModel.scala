@@ -27,6 +27,7 @@ import views.support.{AffiliateLinksCleaner, CamelCase, ContentLayout, GUDateTim
 import controllers.ArticlePage
 import experiments.ActiveExperiments
 import org.joda.time.DateTime
+import common.Environment.stage
 
 // We have introduced our own set of objects for serializing data to the DotComponents API,
 // because we don't want people changing the core frontend models and as a side effect,
@@ -119,6 +120,7 @@ case class Config(
   commercialBundleUrl: String,
   revisionNumber: String,
   googletagUrl: String,
+  stage: String,
 )
 
 object Config {
@@ -549,6 +551,7 @@ object DotcomponentsDataModel {
       commercialBundleUrl = buildFullCommercialUrl("javascripts/graun.dotcom-rendering-commercial.js"),
       revisionNumber = ManifestData.revision.toString,
       googletagUrl = Configuration.googletag.jsLocation,
+      stage = common.Environment.stage,
     )
 
     val author = Author(
