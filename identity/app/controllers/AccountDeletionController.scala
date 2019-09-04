@@ -1,6 +1,6 @@
 package controllers
 
-import common.{HttpStatusException, ImplicitControllerExecutionContext}
+import common.ImplicitControllerExecutionContext
 import model.{ApplicationContext, IdentityPage, NoCache}
 import play.api.mvc._
 import services._
