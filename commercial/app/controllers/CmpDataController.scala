@@ -9,7 +9,7 @@ import conf.Static
 class CmpDataController (val controllerComponents: ControllerComponents) (implicit context: ApplicationContext)
   extends BaseController with I18nSupport {
 
-  val cmpWhitelist = Seq("localhost", ".thegulocal.com", ".dev-theguardian.com", ".theguardian.com")
+  val cmpWhitelist = Seq("localhost", "thegulocal.com", "dev-theguardian.com", "theguardian.com")
 
   def renderVendorlist(): Action[AnyContent] = Action {
     implicit request =>
