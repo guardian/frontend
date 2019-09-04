@@ -72,13 +72,21 @@ const filterNearbyCandidates = (maximumAdHeight: number) => (
     return false;
 };
 
+const getBodySelector = (): string =>
+    !config.get('isDotcomRendering', false)
+        ? '.js-article__body'
+        : '.article-body-03f883b8';
+
+const getSlotSelector = (): string =>
+    !config.get('isDotcomRendering', false) ? ' > p' : ' > span';
+
 const addDesktopInlineAds = (isInline1: boolean): Promise<number> => {
     const isImmersive = config.get('page.isImmersive');
 
     // For inline1
     const defaultRules = {
-        bodySelector: '.js-article__body',
-        slotSelector: ' > p',
+        bodySelector: getBodySelector(),
+        slotSelector: getSlotSelector(),
         minAbove: isImmersive ? 700 : 300,
         minBelow: 700,
         selectors: {
@@ -101,8 +109,8 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<number> => {
 
     // For any other inline
     const relaxedRules = {
-        bodySelector: '.js-article__body',
-        slotSelector: ' > p',
+        bodySelector: getBodySelector(),
+        slotSelector: getSlotSelector(),
         minAbove: isPaidContent ? 1600 : 1000,
         minBelow: 800,
         selectors: {
@@ -146,8 +154,8 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<number> => {
 
 const addMobileInlineAds = (): Promise<number> => {
     const rules = {
-        bodySelector: '.js-article__body',
-        slotSelector: ' > p',
+        bodySelector: getBodySelector(),
+        slotSelector: getSlotSelector(),
         minAbove: 200,
         minBelow: 200,
         selectors: {
@@ -202,8 +210,8 @@ const addInlineAds = (): Promise<number> => {
 
 const attemptToAddInlineMerchAd = (): Promise<boolean> => {
     const rules = {
-        bodySelector: '.js-article__body',
-        slotSelector: ' > p',
+        bodySelector: getBodySelector(),
+        slotSelector: getSlotSelector(),
         minAbove: 300,
         minBelow: 0,
         selectors: {
