@@ -55,20 +55,21 @@ class AccountDeletionController(
 
   def processAccountDeletionRequest: Action[AnyContent] = csrfAddToken {
     fullAuthWithIdapiUserAction.async { implicit request =>
-
-      mdapiService.getUserContentAccess(request.cookies).flatMap {
-        case contentAccess: ContentAccess =>
+      mdapiService.getUserContentAccess(request.cookies) map {
+        case Right(contentAccess) =>
           if (contentAccess.canProceedWithAutoDeletion) {
-            Future(SeeOther(routes.AccountDeletionController.renderAccountDeletionForm().url))
+            SeeOther(routes.AccountDeletionController.renderAccountDeletionForm().url)
           } else {
-            Future(NoCache(Ok(
+            NoCache(Ok(
               IdentityHtmlPage.html(accountDeletionBlock(page, idRequestParser(request), idUrlBuilder, Nil, request.user, contentAccess))(page, request, context)
-            )))
+            ))
           }
-        // TODO how to best handle httpStatusException case?
-        case _ =>
-          logger.error(s"MDAPI getUserContentAccessData request failed for user ${request.user.user.id}")
-          Future(NoCache(InternalServerError("We are experiencing technical difficulties. Please try again later or contact Userhelp.")))
+        case Left(error) => {
+          logger.error(s"Unable to retrieve MDAPI content access for user ${request.user.user.id}: ${error.message}")
+          NoCache(Ok(
+            IdentityHtmlPage.html(views.html.profile.deletion.error(page))(page, request, context)
+          ))
+        }
       }
     }
   }
