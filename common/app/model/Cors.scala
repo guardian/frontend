@@ -1,5 +1,6 @@
 package model
 
+import java.net.URI
 import conf.Configuration.ajax
 import play.api.mvc.{RequestHeader, Results}
 import play.api.mvc.Result
@@ -8,11 +9,14 @@ object Cors extends Results with implicits.Requests {
 
   private val defaultAllowHeaders = List("X-Requested-With","Origin","Accept","Content-Type")
 
-  def apply(result: Result, allowedMethods: Option[String] = None, fallbackAllowOrigin: Option[String] = None, extraWhitelist: List[String] = Nil) (implicit request: RequestHeader): Result = {
+  def apply(result: Result, allowedMethods: Option[String] = None, fallbackAllowOrigin: Option[String] = None, extraWhitelist: Seq[String] = Nil) (implicit request: RequestHeader): Result = {
 
     val responseHeaders = (defaultAllowHeaders ++ request.headers.get("Access-Control-Request-Headers").toList) mkString ","
 
-    def isWhitelisted(origin: String): Boolean = ajax.corsOrigins.contains(origin) || extraWhitelist.contains(origin)
+    def isWhitelisted(origin: String): Boolean = {
+      val originUri = new URI(origin)
+      ajax.corsOrigins.contains(origin) || extraWhitelist.exists(originUri.getHost().endsWith(_))
+    }
 
     request.headers.get("Origin")
       .filter(isWhitelisted)

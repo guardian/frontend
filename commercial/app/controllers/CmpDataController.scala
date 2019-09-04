@@ -6,10 +6,10 @@ import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 
 import conf.Static
 
-class CmpDataController (val controllerComponents: ControllerComponents)(implicit context: ApplicationContext)
+class CmpDataController (val controllerComponents: ControllerComponents) (implicit context: ApplicationContext)
   extends BaseController with I18nSupport {
 
-  val cmpWhitelist = List("http://localhost:3000", "http://localhost:9000", "https://www.thegulocal.com", "https://manage.thegulocal.com", "https://manage.theguardian.com")
+  val cmpWhitelist = Seq("localhost", ".thegulocal.com", ".dev-theguardian.com", ".theguardian.com")
 
   def renderVendorlist(): Action[AnyContent] = Action {
     implicit request =>
