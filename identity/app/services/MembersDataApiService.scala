@@ -1,6 +1,6 @@
 package services
 
-import common.{HttpStatusException, Logging}
+import common.Logging
 import play.api.libs.ws.{DefaultWSCookie, WSClient, WSCookie}
 import play.api.mvc.{Cookie, Cookies}
 import play.api.libs.functional.syntax._
@@ -10,7 +10,7 @@ import scala.concurrent.{ExecutionContext, Future}
 // Modeled on members-data-api Attributes - ContentAccess
 // https://github.com/guardian/members-data-api/blob/master/membership-attribute-service/app/models/Attributes.scala
 case class ContentAccess(
-  isMember: Boolean, // TODO a friend membership should not prevent auto-account deletion but currently does
+  isMember: Boolean,
   isPaidMember: Boolean,
   isRecurringContributor: Boolean,
   hasDigitalPack: Boolean,
@@ -18,7 +18,6 @@ case class ContentAccess(
   isGuardianWeeklySubscriber: Boolean
 ) {
   def canProceedWithAutoDeletion: Boolean = !(isMember || isPaidMember || isRecurringContributor || hasDigitalPack || isPaperSubscriber || isGuardianWeeklySubscriber)
-  def hasPaidProducts: Boolean = isPaidMember || isRecurringContributor || hasDigitalPack || isPaperSubscriber || isGuardianWeeklySubscriber
   def hasSubscription: Boolean = hasDigitalPack || isPaperSubscriber || isGuardianWeeklySubscriber
 }
 
@@ -33,9 +32,9 @@ object ContentAccess {
     ) (ContentAccess.apply _)
 }
 
-class MembersDataApiService(wsClient: WSClient, config: conf.IdentityConfiguration)(implicit executionContext: ExecutionContext) extends Logging {
+case class MdapiServiceException(message: String) extends Throwable
 
-  // TODO is there an alternative to converting to WSCookie?
+class MembersDataApiService(wsClient: WSClient, config: conf.IdentityConfiguration)(implicit executionContext: ExecutionContext) extends Logging {
   private def toWSCookie(c: Cookie): WSCookie = {
     DefaultWSCookie(
       name = c.name,
@@ -48,16 +47,15 @@ class MembersDataApiService(wsClient: WSClient, config: conf.IdentityConfigurati
     )
   }
 
-  def getUserContentAccess(cookies: Cookies): Future[ContentAccess] = {
+  def getUserContentAccess(cookies: Cookies): Future[Either[MdapiServiceException, ContentAccess]] = {
     val root = config.membersDataApiUrl
     val path = "/user-attributes/me"
-    wsClient.url(s"$root$path").withCookies(cookies.map(c => toWSCookie(c)).toSeq: _*).get() flatMap { response =>
-      response.status match {
-        case 200 =>
-          val contentAccess = response.json \ "contentAccess"
-          Future.successful(contentAccess.as[ContentAccess])
-        case _ => Future.failed(HttpStatusException(response.status, response.statusText))
-      }
-    }
+    for {
+      response <- wsClient.url(s"$root$path").withCookies(cookies.map(c => toWSCookie(c)).toSeq: _*).get()
+      contentAccessResult <- Future((response.json \ "contentAccess").validate[ContentAccess])
+    } yield contentAccessResult.fold(
+      error => Left(MdapiServiceException(error.toString())),
+      contentAccess => Right(contentAccess)
+    )
   }
 }
