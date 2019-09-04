@@ -1,0 +1,16 @@
+@import common.LinkTo
+@import views.html.fragments.registrationFooter
+
+@(page: model.Page)(implicit request: RequestHeader, context: model.ApplicationContext)
+
+<div id="accountDeletionError" class="identity-wrapper monocolumn-wrapper">
+    <div class="identity-section identity-section__text center-text">
+        <p >Sorry, we seem to be experiencing some technical difficulties.</p>
+        <p>Please reload the page to try deleting your account again.</p>
+        <a class="manage-account__button manage-account__button--center manage-account__button--clear-float" href="@LinkTo {/delete}" onclick="window.location.reload();
+        return false;">Try again</a>
+
+    </div>
+</div>
+
+
