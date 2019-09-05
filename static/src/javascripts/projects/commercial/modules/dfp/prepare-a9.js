@@ -2,7 +2,6 @@
 
 import config from 'lib/config';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
-import { buildPageTargeting } from 'common/modules/commercial/build-page-targeting';
 import once from 'lodash/once';
 import a9 from 'commercial/modules/prebid/a9';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
@@ -25,7 +24,6 @@ const setupA9: () => Promise<void> = () =>
             !config.get('page.hasPageSkin') &&
             !isGoogleProxy()
         ) {
-            buildPageTargeting();
             a9.initialise();
         }
         return Promise.resolve();
