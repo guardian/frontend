@@ -44,7 +44,6 @@ class AccountDeletionController(
   import views.html.profile.deletion._
 
   val page = IdentityPage("/deletion", "Account Deletion")
-  val pageForm = IdentityPage("/deletion/form", "Account Deletion Form")
   val pageConfirm = IdentityPage("/deletion/confirm", "Account Deletion Confirmation")
 
   val accountDeletionForm = Form(
@@ -53,33 +52,25 @@ class AccountDeletionController(
       "reason" -> optional(text)
     ))
 
-  def processAccountDeletionRequest: Action[AnyContent] = csrfAddToken {
+  def renderAccountDeletionForm: Action[AnyContent] = csrfAddToken {
     fullAuthWithIdapiUserAction.async { implicit request =>
       mdapiService.getUserContentAccess(request.cookies) map {
         case Right(contentAccess) =>
           if (contentAccess.canProceedWithAutoDeletion) {
-            SeeOther(routes.AccountDeletionController.renderAccountDeletionForm().url)
+            val form = accountDeletionForm.bindFromFlash.getOrElse(accountDeletionForm)
+            NoCache(Ok(
+              IdentityHtmlPage.html(views.html.profile.deletion.accountDeletionForm(page, idRequestParser(request), idUrlBuilder, form, Nil, request.user))(page, request, context)
+            ))
           } else {
             NoCache(Ok(
               IdentityHtmlPage.html(accountDeletionBlock(page, idRequestParser(request), idUrlBuilder, Nil, request.user, contentAccess))(page, request, context)
             ))
           }
-        case Left(error) => {
-          logger.error(s"Unable to retrieve MDAPI content access for user ${request.user.user.id}: ${error.message}")
+        case Left(_) =>
           NoCache(Ok(
             IdentityHtmlPage.html(views.html.profile.deletion.error(page))(page, request, context)
           ))
-        }
       }
-    }
-  }
-
-  def renderAccountDeletionForm: Action[AnyContent] = csrfAddToken {
-    fullAuthWithIdapiUserAction.async { implicit request =>
-      val form = accountDeletionForm.bindFromFlash.getOrElse(accountDeletionForm)
-      Future(NoCache(Ok(
-        IdentityHtmlPage.html(views.html.profile.deletion.accountDeletionForm(page, idRequestParser(request), idUrlBuilder, form, Nil, request.user))(pageForm, request, context)
-      )))
     }
   }
 

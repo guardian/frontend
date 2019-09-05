@@ -39,8 +39,7 @@ POST       /email                                                               
 OPTIONS    /email                                                               controllers.EmailSignupController.options()
 
 # Account deletion
-GET         /delete                                 controllers.AccountDeletionController.processAccountDeletionRequest
-GET         /delete/form                            controllers.AccountDeletionController.renderAccountDeletionForm
+GET         /delete                                 controllers.AccountDeletionController.renderAccountDeletionForm
 POST        /delete                                 controllers.AccountDeletionController.processAccountDeletionForm
 GET         /delete/confirm                         controllers.AccountDeletionController.renderAccountDeletionConfirmation(autoDeletion: Boolean)
 
