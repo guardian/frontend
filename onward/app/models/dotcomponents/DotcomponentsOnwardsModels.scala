@@ -12,7 +12,9 @@ case class RichLink(
   starRating: Option[Int],
   sponsorName: Option[String],
   contributorImage: Option[String],
-  url: String)
+  url: String,
+  pillar: String
+)
 
 object RichLink {
   implicit val writes = Json.writes[RichLink]
