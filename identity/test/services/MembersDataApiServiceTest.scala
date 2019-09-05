@@ -31,10 +31,6 @@ class MembersDataApiServiceTest
     """
       |{
       |"userId": "10000001",
-      |"membershipJoinDate": "2020-12-11",
-      |"guardianWeeklyExpiryDate": "2020-12-12",
-      |"digitalSubscriptionExpiryDate": "2020-12-12",
-      |"showSupportMessaging": false,
       |"contentAccess": {
       |"member": true,
       |"paidMember": true,
@@ -46,10 +42,25 @@ class MembersDataApiServiceTest
       |}
     """.stripMargin
 
+  val invalidMdapiResponseJsonString =
+    """
+      |{
+      |"userId": "10000001",
+      |"contentAccess": {
+      |"member": true,
+      |"paidMember": true,
+      |"digitalPack": true,
+      |"paperSubscriber": false,
+      |"guardianWeeklySubscriber": true
+      |}
+      |}
+    """.stripMargin
+
+
   private val config = mock[IdentityConfiguration]
   private val cookies = Cookies(Seq(Cookie("Cookie1", "hash", None, "/", None, false, true, None), Cookie("Cookie2", "hash", None, "/", None, false, true, None)))
 
-  private val wsThrow = mock[Throwable]
+  private val wsThrow = mock[NullPointerException]
   private val wsMock = mock[WSClient]
   private val wsRequestMock = mock[WSRequest]
   private val wsResponseMock = mock[WSResponse]
@@ -71,9 +82,9 @@ class MembersDataApiServiceTest
         result.fold(l => println(s"left error:${l.message}"), r => (println(s"right: $r")))
         result.isRight shouldBe true
     }
+    futureResult map { result => result.right.get shouldEqual ContentAccess(true,true,false,true,false,true)}
   }
 
-  // returns json validation error
   it should "return MdapiServiceException if service returns 404 status" in {
     when(wsRequestMock.get()).thenReturn(Future.successful(wsResponseMock))
     when(wsResponseMock.json).thenReturn(Json.parse(valid404ResponseJsonString))
@@ -99,9 +110,19 @@ class MembersDataApiServiceTest
     }
   }
 
-  //    it should  "return MdapiServiceException if unable to extract ContentAccess from json response" in {
-  //      ???
-  //    }
+  it should "return MdapiServiceException if unable to extract ContentAccess from json response" in {
+    when(wsRequestMock.get()).thenReturn(Future.successful(wsResponseMock))
+    when(wsResponseMock.json).thenReturn(Json.parse(invalidMdapiResponseJsonString))
+    when(wsResponseMock.status).thenReturn(200)
+
+    val futureResult = MdapiService.getUserContentAccess(cookies)
+    futureResult map {
+      result =>
+        result.fold(l => println(s"left error:${l.message}"), r => (println(s"right: $r")))
+        result.isLeft shouldBe true
+    }
+  }
+
   //    it should "??? if user does not have valid cookies" in {
   //      ???
   //    }
