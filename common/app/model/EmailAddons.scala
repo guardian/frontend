@@ -196,7 +196,7 @@ case object GunsAndLiesInAmerica extends ArticleEmailMetadata {
    def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "us-news/series/guns-and-lies-in-america-newsletter")
 }
 
-case object GunsAndLiesInAmerica extends ArticleEmailMetadata {
+case object TheSnap extends ArticleEmailMetadata {
   val name = "The Snap"
   override val banner = Some("the-snap.png")
    def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "politics/series/the-snap")
