@@ -258,7 +258,7 @@ describe('getPrebidAdSlots', () => {
         config.set('switches.mobileStickyPrebid', true);
         shouldIncludeMobileSticky.mockReturnValue(true);
         expect(
-            getPrebidAdSlots(buildAdvert('dfp-ad-mobile-sticky'), '')
+            getPrebidAdSlots(buildAdvert('dfp-ad-mobile-sticky'))
         ).toEqual([
             {
                 key: 'mobile-sticky',
