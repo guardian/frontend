@@ -209,7 +209,7 @@ describe('slots', () => {
         getBreakpointKey.mockReturnValue('M');
         config.set('switches.mobileStickyPrebid', true);
         shouldIncludeMobileSticky.mockReturnValue(true);
-        expect(slots('mobile-sticky', '')).toEqual([
+        expect(slots('mobile-sticky')).toEqual([
             {
                 key: 'mobile-sticky',
                 sizes: [[320, 50]],
