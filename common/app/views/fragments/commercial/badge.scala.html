@@ -4,7 +4,7 @@
 @import views.support.Commercial.{isPaidContent, isOnDarkBackground}
 
 @for(commercial <- page.metadata.commercial; branding <- commercial.branding(Edition(request))) {
-    @if(branding.sponsorName != "No Sponsor") {
+    @if(!branding.isUnsponsored) {
         @pageLogo(branding,
             content.tags.isInteractive,
             isOnDarkBackground(content, isPaidContent(page))
