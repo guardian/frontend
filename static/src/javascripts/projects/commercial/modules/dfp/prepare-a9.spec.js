@@ -5,9 +5,11 @@ import { isGoogleProxy } from 'lib/detect';
 import a9 from 'commercial/modules/prebid/a9';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
+import { isInVariantSynchronous as isInVariantSynchronous_ } from 'common/modules/experiments/ab';
 import { _ } from './prepare-a9';
 
 const { setupA9 } = _;
+const isInVariantSynchronous: any = isInVariantSynchronous_;
 
 jest.mock('common/modules/commercial/commercial-features', () => ({
     commercialFeatures: {},
@@ -39,6 +41,10 @@ jest.mock('lib/load-script', () => ({
     loadScript: () => Promise.resolve(),
 }));
 
+jest.mock('common/modules/experiments/ab', () => ({
+    isInVariantSynchronous: jest.fn(),
+}));
+
 const fakeUserAgent = (userAgent: string): void => {
     const userAgentObject = {};
     userAgentObject.get = () => userAgent;
@@ -52,6 +58,9 @@ describe('init', () => {
     beforeEach(() => {
         jest.clearAllMocks();
         fakeUserAgent(originalUA);
+        isInVariantSynchronous.mockImplementation(
+            (testId, variantId) => variantId === 'variant'
+        );
     });
 
     afterAll(() => {
@@ -62,6 +71,9 @@ describe('init', () => {
         dfpEnv.externalDemand = 'a9';
         commercialFeatures.dfpAdvertising = true;
         commercialFeatures.adFree = false;
+        isInVariantSynchronous.mockImplementation(
+            (testId, variantId) => variantId === 'variant'
+        );
         await setupA9();
         expect(a9.initialise).toBeCalled();
     });
