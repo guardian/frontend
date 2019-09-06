@@ -48,33 +48,24 @@ class MembersDataApiService(wsClient: WSClient, config: conf.IdentityConfigurati
     )
   }
 
-  private def handleMdapiResponse(response: WSResponse, contentAccessResult: JsResult[ContentAccess]) = {
-    if(response.status != 200) {
-      val errorMsg = s"Network Error retrieving MDAPI content access: ${response.status} ${response.statusText} - ${response.json}"
-      logger.error(errorMsg)
-      Left(MdapiServiceException(errorMsg, "user?ID")) // get id from cookie
-    } else {
-      contentAccessResult.fold(
-        error => {
-          val errorMsg = s"Parsing Error retrieving MDAPI content access: ${error.toString()}"
-          logger.error(errorMsg)
-          Left(MdapiServiceException(errorMsg, "user?ID")) // get id from cookie
-        },
-        contentAccess => Right(contentAccess)
-      )
-    }
-  }
-
   def getUserContentAccess(cookies: Cookies): Future[Either[MdapiServiceException, ContentAccess]] = {
-    val root = config.membersDataApiUrl
-    val path = "/user-attributes/me"
-    (for {
-      response <- wsClient.url(s"$root$path").withCookies(cookies.map(c => toWSCookie(c)).toSeq: _*).get()
-      contentAccessResult <- Future((response.json \ "contentAccess").validate[ContentAccess])
-    } yield {
-      handleMdapiResponse(response, contentAccessResult)
-    }) recover {
-      case f => Left(MdapiServiceException(s"Failed Future: $f", "user?id"))  // get id from cookie // Appropriate Error Message??
-    }
+
+    wsClient
+      .url(s"${config.membersDataApiUrl}/user-attributes/me")
+      .withCookies(cookies.map(toWSCookie).toSeq: _*)
+      .get()
+      .map { response =>
+        response.status match {
+          case 200 =>
+            (response.json \ "contentAccess").validate[ContentAccess] match {
+              case JsSuccess(contentAccess, _) => Right(contentAccess)
+              case error => Left(MdapiServiceException(s"Parsing error: $error", "user?id"))
+            }
+          case _ =>
+            val errorMsg = s"Failed to getUserContentAccess: $response"
+            logger.error(errorMsg)
+            Left(MdapiServiceException(errorMsg, "user?ID")) // get id from cookie
+        }
+      }
   }
 }
