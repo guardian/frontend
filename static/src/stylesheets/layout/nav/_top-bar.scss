@@ -1,6 +1,7 @@
 .new-header__top-bar {
     position: absolute;
     left: $gs-gutter / 2;
+    top: 0;
 
     @include mq(mobileLandscape) {
         left: $gs-gutter;
