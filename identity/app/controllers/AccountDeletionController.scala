@@ -16,9 +16,7 @@ import play.api.data.Form
 import play.api.data.Forms._
 import play.api.http.HttpConfiguration
 import play.api.i18n.I18nSupport
-
 import scala.concurrent.Future
-import scala.util.{Failure, Success}
 
 class AccountDeletionController(
   idApiClient: IdApiClient,
@@ -53,51 +51,34 @@ class AccountDeletionController(
       "reason" -> optional(text)
     ))
 
-
-  //  case Right(contentAccess) =>
-  //  if (contentAccess.canProceedWithAutoDeletion) {
-  //    val form = accountDeletionForm.bindFromFlash.getOrElse(accountDeletionForm)
-  //    NoCache(Ok(
-  //      IdentityHtmlPage.html(views.html.profile.deletion.accountDeletionForm(page, idRequestParser(request), idUrlBuilder, form, Nil, request.user))(page, request, context)
-  //    ))
-  //  } else {
-  //    NoCache(Ok(
-  //      IdentityHtmlPage.html(accountDeletionBlock(page, idRequestParser(request), idUrlBuilder, Nil, request.user, contentAccess))(page, request, context)
-  //    ))
-  //  }
-  //  case Left(_) =>
-  //  NoCache(Ok(
-  //    IdentityHtmlPage.html(views.html.profile.deletion.error(page))(page, request, context)
-  //  ))
-
+  private def handleMdapiServiceResponse[A](result: Either[MdapiServiceException, ContentAccess])(implicit request: AuthenticatedActions.AuthRequest[A]): Future[Result] = {
+    result match {
+      case Right(contentAccess) =>
+        if (contentAccess.canProceedWithAutoDeletion) {
+          val form = accountDeletionForm.bindFromFlash.getOrElse(accountDeletionForm)
+          Future(NoCache(Ok(
+            IdentityHtmlPage.html(views.html.profile.deletion.accountDeletionForm(page, idRequestParser(request), idUrlBuilder, form, Nil, request.user))(page, request, context)
+          )))
+        } else {
+          Future(NoCache(Ok(
+            IdentityHtmlPage.html(accountDeletionBlock(page, idRequestParser(request), idUrlBuilder, Nil, request.user, contentAccess))(page, request, context)
+          )))
+        }
+      case Left(_) =>
+        Future(NoCache(Ok(
+          IdentityHtmlPage.html(views.html.profile.deletion.error(page))(page, request, context)
+        )))
+    }
+  }
 
   def renderAccountDeletionForm: Action[AnyContent] = csrfAddToken {
     fullAuthWithIdapiUserAction.async { implicit request =>
-      mdapiService.getUserContentAccess(request.cookies) onComplete {
-        case Success(result) => {
-          result.map {
-            case Right(contentAccess) =>
-              if (contentAccess) {
-                val form = accountDeletionForm.bindFromFlash.getOrElse(accountDeletionForm)
-                NoCache(Ok(
-                  IdentityHtmlPage.html(views.html.profile.deletion.accountDeletionForm(page, idRequestParser(request), idUrlBuilder, form, Nil, request.user))(page, request, context)
-                ))
-              } else {
-                NoCache(Ok(
-                  IdentityHtmlPage.html(accountDeletionBlock(page, idRequestParser(request), idUrlBuilder, Nil, request.user, contentAccess))(page, request, context)
-                ))
-              }
-            case Left(_) =>
-              NoCache(Ok(
-                IdentityHtmlPage.html(views.html.profile.deletion.error(page))(page, request, context)
-              ))
-          }
-        }
-        case Failure(error) => {
-          NoCache(Ok(
-            IdentityHtmlPage.html(views.html.profile.deletion.error(page))(page, request, context)
-          ))
-        }
+      mdapiService.getUserContentAccess(request.cookies) flatMap {
+        response => handleMdapiServiceResponse(response)(request)
+      } recoverWith {
+        case t: Throwable =>
+          logger.error(s"Future failed when calling MDAPI", t)
+          Future(NoCache(Ok(IdentityHtmlPage.html(views.html.profile.deletion.error(page))(page, request, context))))
       }
     }
   }
