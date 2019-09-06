@@ -581,4 +581,14 @@ trait PrebidSwitches {
     exposeClientSide = true
   )
 
+  val youtubePfpAdTargeting: Switch = Switch(
+    group = Commercial,
+    name = "commercial-youtube-pfp-ad-targeting",
+    description = "YouTube's PfP ad targeting parameters",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 10, 1),
+    exposeClientSide = true
+  )
+
 }

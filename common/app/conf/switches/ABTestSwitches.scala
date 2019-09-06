@@ -95,14 +95,4 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2020, 7, 30),
     exposeClientSide = true
   )
-
-  Switch(
-    ABTests,
-    "ab-commercial-youtube-pfp-ad-targeting",
-    "Test YouTube's PfP ad targeting parameters",
-    owners = Owner.group(Commercial),
-    safeState = Off,
-    sellByDate = new LocalDate(2019, 10, 1),
-    exposeClientSide = true
-  )
 }
