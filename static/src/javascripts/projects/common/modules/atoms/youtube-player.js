@@ -6,8 +6,6 @@ import { loadScript } from 'lib/load-script';
 import { constructQuery } from 'lib/url';
 import { getPageTargeting } from 'common/modules/commercial/build-page-targeting';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
-import { commercialYoutubePfpAdTargeting } from 'common/modules/experiments/tests/commercial-youtube-pfp-ad-targeting';
-import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import { onConsentNotification } from 'lib/cmp';
 
 const scriptSrc = 'https://www.youtube.com/iframe_api';
@@ -89,11 +87,11 @@ const onPlayerReadyEvent = (event, handlers: Handlers, el: ?HTMLElement) => {
 const createAdsConfig = (
     adFree: boolean,
     wantPersonalisedAds: boolean,
-    inPfpAdTargetingVariant: boolean
+    isPfpAdTargetingSwitchedOn: boolean
 ): Object => {
     if (adFree) {
         return { disableAds: true };
-    } else if (inPfpAdTargetingVariant) {
+    } else if (isPfpAdTargetingSwitchedOn) {
         return {
             nonPersonalizedAd: !wantPersonalisedAds,
             adTagParameters: {
@@ -116,9 +114,9 @@ const setupPlayer = (
     onError
 ) => {
     const wantPersonalisedAds: boolean = consentState !== false;
-    const inPfpAdTargetingVariant: boolean = isInVariantSynchronous(
-        commercialYoutubePfpAdTargeting,
-        'variant'
+    const isPfpAdTargetingSwitchedOn: boolean = config.get(
+        'switches.commercialYoutubePfpAdTargeting',
+        false
     );
     const disableRelatedVideos = !config.get('switches.youtubeRelatedVideos');
     // relatedChannels needs to be an array, as per YouTube's IFrame Embed Config API
@@ -134,7 +132,7 @@ const setupPlayer = (
     const adsConfig = createAdsConfig(
         commercialFeatures.adFree,
         wantPersonalisedAds,
-        inPfpAdTargetingVariant
+        isPfpAdTargetingSwitchedOn
     );
 
     return new window.YT.Player(elt.id, {
