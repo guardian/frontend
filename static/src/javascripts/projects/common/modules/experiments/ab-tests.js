@@ -15,11 +15,13 @@ import { contributionsBannerUsEoyOneDayCasuals } from 'common/modules/experiment
 import { contributionsBannerUsEoyOneDayRegulars } from 'common/modules/experiments/tests/contribs-banner-us-eoy/contribs-banner-us-eoy-one-day-regulars';
 import { contributionsBannerUsEoyNewYearCasuals } from 'common/modules/experiments/tests/contribs-banner-us-eoy/contribs-banner-us-eoy-new-year-casuals';
 import { contributionsBannerUsEoyNewYearRegulars } from 'common/modules/experiments/tests/contribs-banner-us-eoy/contribs-banner-us-eoy-new-year-regulars';
+import { amazonA9Test } from 'common/modules/experiments/tests/amazon-a9';
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialPrebidSafeframe,
     commercialCmpUiIab,
     adblockTest,
+    amazonA9Test,
     xaxisAdapterTest,
     appnexusUSAdapter,
     pangaeaAdapterTest,
