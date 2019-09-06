@@ -14,12 +14,14 @@ import {
     environmentMomentBannerSupporters,
 } from 'common/modules/experiments/tests/contributions-moment-banner-environment';
 import { xaxisAdapterTest } from 'common/modules/experiments/tests/commercial-xaxis-adapter';
+import { amazonA9Test } from 'common/modules/experiments/tests/amazon-a9';
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialPrebidSafeframe,
     commercialIabCompliant,
     adblockTest,
     prebidTripleLiftAdapter,
+    amazonA9Test,
     xaxisAdapterTest,
 ];
 
