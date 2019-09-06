@@ -4,7 +4,7 @@ import { getSync as geolocationGetSync } from 'lib/geolocation';
 export const amazonA9Test: ABTest = {
     id: 'CommercialA9',
     start: '2019-05-09',
-    expiry: '2020-05-09',
+    expiry: '2020-04-09',
     author: 'Ioanna Kyprianou',
     description: 'This is to test amazon a9 header bidding',
     audience: 0.0,
