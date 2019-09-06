@@ -63,13 +63,12 @@ class MembersDataApiServiceTest
   private val config = mock[IdentityConfiguration]
   private val cookies = Cookies(Seq(Cookie("Cookie1", "hash", None, "/", None, false, true, None), Cookie("Cookie2", "hash", None, "/", None, false, true, None)))
 
-  private val wsThrow = mock[NullPointerException]
   private val wsMock = mock[WSClient]
   private val wsRequestMock = mock[WSRequest]
   private val wsResponseMock = mock[WSResponse]
   private val MdapiService = new MembersDataApiService(wsMock, config)
 
-  when(wsMock.url(anyString())).thenReturn(wsRequestMock)
+  when(wsMock.url(any[String])).thenReturn(wsRequestMock)
   when(wsRequestMock.withCookies(any())).thenReturn(wsRequestMock)
 
   "getUserContentAccess" should
@@ -79,13 +78,19 @@ class MembersDataApiServiceTest
     when(wsResponseMock.status).thenReturn(200)
     when(wsResponseMock.statusText).thenReturn("OK")
 
-    val futureResult = MdapiService.getUserContentAccess(cookies)
-    futureResult map {
-      result =>
-        result.fold(l => println(s"left error:${l.message}"), r => (println(s"right: $r")))
-        result.isRight shouldBe true
-    }
-    futureResult map { result => result.right.get shouldEqual ContentAccess(true,true,false,true,false,true)}
+    val futureEither = MdapiService.getUserContentAccess(cookies)
+    futureEither map { either => either.isRight shouldBe true }
+    futureEither map { either => either.right.value shouldEqual ContentAccess(true,true,false,true,false,true) }
+  }
+
+  it should "return MdapiServiceException if unable to extract ContentAccess from json response" in {
+    when(wsRequestMock.get()).thenReturn(Future.successful(wsResponseMock))
+    when(wsResponseMock.json).thenReturn(Json.parse(invalidMdapiResponseJsonString))
+    when(wsResponseMock.status).thenReturn(200)
+
+    val futureEither = MdapiService.getUserContentAccess(cookies)
+    futureEither map { either => either.isLeft shouldBe true }
+    futureEither map { either => either.left.value.message should include ("Failed to parse MDAPI response")}
   }
 
   it should "return MdapiServiceException if service returns 404 status" in {
@@ -94,12 +99,9 @@ class MembersDataApiServiceTest
     when(wsResponseMock.status).thenReturn(404)
     when(wsResponseMock.statusText).thenReturn("Not Found")
 
-    val futureResult = MdapiService.getUserContentAccess(cookies)
-    futureResult map {
-      result =>
-        result.fold(l => println(s"left error:${l.message}"), r => (println(s"right: $r")))
-        result.isLeft shouldBe true
-    }
+    val futureEither = MdapiService.getUserContentAccess(cookies)
+    futureEither map { either => either.isLeft shouldBe true }
+    futureEither map { either => either.left.value.message should include ("Failed to getUserContentAccess")}
   }
 
   "ContentAccess.canProceedWithAutoDeletion" should

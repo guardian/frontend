@@ -43,22 +43,24 @@ class MembersDataApiService(wsClient: WSClient, config: conf.IdentityConfigurati
   }
 
   def getUserContentAccess(cookies: Cookies): Future[Either[MdapiServiceException, ContentAccess]] = {
-
     wsClient
       .url(s"${config.membersDataApiUrl}/user-attributes/me")
-      .withCookies(cookies.map(toWSCookie).toSeq: _*)
+      .withCookies(cookies.map(c => toWSCookie(c)).toSeq: _*)
       .get()
       .map { response =>
         response.status match {
           case 200 =>
             (response.json \ "contentAccess").validate[ContentAccess] match {
               case JsSuccess(contentAccess, _) => Right(contentAccess)
-              case error => Left(MdapiServiceException(s"Parsing error: $error", "user?id"))
+              case error =>
+                val errorMsg = s"Failed to parse MDAPI response: $error"
+                logger.error(errorMsg)
+                Left(MdapiServiceException(errorMsg))
             }
           case _ =>
             val errorMsg = s"Failed to getUserContentAccess: $response"
             logger.error(errorMsg)
-            Left(MdapiServiceException(errorMsg, "user?ID")) // get id from cookie
+            Left(MdapiServiceException(errorMsg))
         }
       }
   }
