@@ -16,11 +16,13 @@ import { commercialCmpUiNoOverlay } from 'common/modules/experiments/tests/comme
 import { commercialConsentOptionsButton } from 'common/modules/experiments/tests/commercial-consent-options-button';
 import { contributionsBannerUsEoyGivingTuesdayCasuals } from 'common/modules/experiments/tests/contribs-banner-us-eoy-giving-tuesday-casuals';
 import { contributionsBannerUsEoyGivingTuesdayRegulars } from 'common/modules/experiments/tests/contribs-banner-us-eoy-giving-tuesday-regulars';
+import { amazonA9Test } from 'common/modules/experiments/tests/amazon-a9';
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialPrebidSafeframe,
     commercialCmpUiIab,
     adblockTest,
+    amazonA9Test,
     xaxisAdapterTest,
     appnexusUSAdapter,
     pangaeaAdapterTest,
