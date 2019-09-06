@@ -22,16 +22,16 @@ class LeagueTableController(
 
   // Competitions must be added to this list to show up at /football/tables
     val tableOrder: Seq[String] = Seq(
-        "Champions League",
         "Premier League",
         "Bundesliga",
         "Serie A",
         "La Liga",
         "Ligue 1",
+        "Women's Super League",
+        "Champions League",
         "Euro 2020 qualifying",
         "Europa League",
         "Carabao Cup",
-        "Women's Super League",
         "International friendlies",
         "FA Cup",
         "Championship",
