@@ -243,7 +243,7 @@ class GuardianConfiguration extends Logging {
   }
 
   object apstag {
-    lazy val key = configuration.getStringProperty("apstag.api.key").getOrElse("3332")
+    lazy val key = configuration.getStringProperty("apstag.api.key").getOrElse("")
   }
 
   object google {
