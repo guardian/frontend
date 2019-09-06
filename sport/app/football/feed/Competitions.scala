@@ -97,13 +97,19 @@ object Competitions {
 
 object CompetitionsProvider {
   val allCompetitions: Seq[Competition] = Seq(
-    Competition("500", "/football/championsleague", "Champions League", "Champions League", "European", tableDividers = List(2, 6, 21)),
+
     Competition("100", "/football/premierleague", "Premier League", "Premier League", "English", showInTeamsList = true, tableDividers = List(4, 5, 17)),
-    Competition("300", "/football/fa-cup", "FA Cup", "FA Cup", "English"),
-    Competition("650", "/football/laligafootball", "La Liga", "La Liga", "European", showInTeamsList = true, tableDividers = List(4, 6, 17)),
     Competition("625", "/football/bundesligafootball", "Bundesliga", "Bundesliga", "European", showInTeamsList = true, tableDividers = List(3, 4, 6, 15, 16)),
     Competition("635", "/football/serieafootball", "Serie A", "Serie A", "European", showInTeamsList = true, tableDividers = List(3, 5, 17)),
+    Competition("650", "/football/laligafootball", "La Liga", "La Liga", "European", showInTeamsList = true, tableDividers = List(4, 6, 17)),
     Competition("620", "/football/ligue1football", "Ligue 1", "Ligue 1", "European", showInTeamsList = true, tableDividers = List(3, 4, 17)),
+    Competition("961", "/football/womens-super-league", "Women's Super League",  "Women's Super League", "English"),
+    Competition("500", "/football/championsleague", "Champions League", "Champions League", "European", tableDividers = List(2, 6, 21)),
+    Competition("751", "/football/euro-2020-qualifiers", "Euro 2020 qualifying", "Euro 2020 qual.", "Internationals"),
+    Competition("510", "/football/uefa-europa-league", "Europa League", "Europa League", "European", tableDividers = List(2)),
+    Competition("301", "/football/carabao-cup", "Carabao Cup", "Carabao Cup", "English"),
+    Competition("721", "/football/friendlies", "International friendlies", "Friendlies", "Internationals"),
+    Competition("300", "/football/fa-cup", "FA Cup", "FA Cup", "English"),
     Competition("101", "/football/championship", "Championship", "Championship", "English", showInTeamsList = true, tableDividers = List(2, 6, 21)),
     Competition("120", "/football/scottish-premiership", "Scottish Premiership", "Scottish Premiership", "Scottish", showInTeamsList = true, tableDividers = List(1, 3, 6, 11)),
     Competition("102", "/football/leagueonefootball", "League One", "League One", "English", showInTeamsList = true, tableDividers = List(2, 6, 20)),
@@ -111,25 +117,16 @@ object CompetitionsProvider {
     Competition("121", "/football/scottish-championship", "Scottish Championship", "Scottish Championship", "Scottish", showInTeamsList = true, tableDividers = List(1, 8, 9)),
     Competition("122", "/football/scottish-league-one", "Scottish League One", "Scottish League One", "Scottish", showInTeamsList = true, tableDividers = List(1, 4, 8, 9)),
     Competition("123", "/football/scottish-league-two", "Scottish League Two", "Scottish League Two", "Scottish", showInTeamsList = true, tableDividers = List(1, 4)),
-    Competition("750", "/football/euro-2016", "Euro 2016", "Euro", "Internationals"),
-    Competition("751", "/football/euro-2020-qualifiers", "Euro 2020 qualifying", "Euro 2020 qual.", "Internationals"),
     Competition("501", "/football/champions-league-qualifying", "Champions League qualifying", "Champions League qual.", "European"),
-    Competition("510", "/football/uefa-europa-league", "Europa League", "Europa League", "European", tableDividers = List(2)),
-    Competition("301", "/football/carabao-cup", "Carabao Cup", "Carabao Cup", "English"),
     Competition("400", "/football/community-shield", "Community Shield", "Community Shield", "English", showInTeamsList = true),
     Competition("320", "/football/scottishcup", "Scottish Cup", "Scottish Cup", "Scottish"),
     Competition("321", "/football/cis-insurance-cup", "Scottish League Cup", "Scottish League Cup", "Scottish"),
-    Competition("721", "/football/friendlies", "International friendlies", "Friendlies", "Internationals"),
-    Competition("700", "/football/world-cup-2018", "World Cup 2018", "World Cup 2018", "Internationals", showInTeamsList = true, tableDividers = List(2), startDate = Some(new LocalDate(2018, 6, 1))),
-    Competition("701", "/football/world-cup-2018-qualifiers", "World Cup 2018 Qualifiers", "World Cup 2018 qual.", "Internationals", showInTeamsList = true, tableDividers = List(2)),
     Competition("994", "/football/nations-league", "Nations League", "Nations League", "Internationals", showInTeamsList = true),
     Competition("713", "/football/africannationscup", "Africa Cup of Nations", "Africa Cup of Nations", "Internationals", showInTeamsList = true, tableDividers = Seq(2, 3)),
     Competition("714", "/football/copa-america", "Copa America", "Copa America", "Internationals", showInTeamsList = true, tableDividers = Seq(2, 3)),
-    Competition("870", "/football/womens-world-cup-2019", "Women's World Cup 2019", "Women's World Cup", "Internationals", showInTeamsList = true, tableDividers = List(2), startDate =Some(new LocalDate(2019, 6, 7)) ),
-    Competition("423", "/football/women-euro-2017", "Women's Euro 2017", "Women's Euro", "Internationals", showInTeamsList = true, tableDividers = List(2)),
     Competition("970", "/football/women-s-champions-league", "Women's Champions League", "Women's Champions League", "European"),
-    Competition("333", "/football/womens-fa-cup", "Women's FA Cup", "Women's FA Cup", "English"),
-    Competition("961", "/football/womens-super-league", "Women's Super League",  "Women's Super League", "English")
+    Competition("333", "/football/womens-fa-cup", "Women's FA Cup", "Women's FA Cup", "English")
+
   )
 }
 

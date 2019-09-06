@@ -23,30 +23,30 @@ class LeagueTableController(
   // Competitions must be added to this list to show up at /football/tables
     val tableOrder: Seq[String] = Seq(
         "Premier League",
-        "La Liga",
-        "Serie A",
         "Bundesliga",
+        "Serie A",
+        "La Liga",
         "Ligue 1",
+        "Women's Super League",
         "Champions League",
+        "Euro 2020 qualifying",
         "Europa League",
-        "Scottish Premiership",
+        "Carabao Cup",
+        "International friendlies",
+        "FA Cup",
         "Championship",
+        "Scottish Premiership",
         "League One",
         "League Two",
         "Scottish Championship",
         "Scottish League One",
         "Scottish League Two",
-        "Scottish League Cup",
-        "Women's Super League",
-        "Nations League",
         "Champions League qualifying",
-        "FA Cup",
-        "Carabao Cup",
         "Community Shield",
         "Scottish Cup",
-        "International friendlies",
-        "Women's FA Cup",
-        "Euro 2020 qualifying"
+        "Scottish League Cup",
+        "Nations League",
+        "Women's FA Cup"
     )
 
   def sortedCompetitions:Seq[Competition] = tableOrder.flatMap(leagueName => competitionsService.competitions.find(_.fullName == leagueName))
