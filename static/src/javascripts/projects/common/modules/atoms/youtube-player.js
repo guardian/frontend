@@ -115,7 +115,8 @@ const setupPlayer = (
 ) => {
     const wantPersonalisedAds: boolean = consentState !== false;
     const isPfpAdTargetingSwitchedOn: boolean = config.get(
-        'switches.commercialYoutubePfpAdTargeting'
+        'switches.commercialYoutubePfpAdTargeting',
+        false
     );
     const disableRelatedVideos = !config.get('switches.youtubeRelatedVideos');
     // relatedChannels needs to be an array, as per YouTube's IFrame Embed Config API
