@@ -1,8 +1,7 @@
 package services
 
-import play.api.libs.ws.{DefaultWSCookie, WSClient, WSCookie, WSResponse}
+import play.api.libs.ws.{DefaultWSCookie, WSClient, WSCookie}
 import play.api.mvc.{Cookie, Cookies}
-import play.api.libs.functional.syntax._
 import play.api.libs.json._
 import utils.SafeLogging
 import scala.concurrent.{ExecutionContext, Future}
@@ -10,30 +9,25 @@ import scala.concurrent.{ExecutionContext, Future}
 // Modeled on members-data-api Attributes - ContentAccess
 // https://github.com/guardian/members-data-api/blob/master/membership-attribute-service/app/models/Attributes.scala
 case class ContentAccess(
-  isMember: Boolean,
-  isPaidMember: Boolean,
-  isRecurringContributor: Boolean,
-  hasDigitalPack: Boolean,
-  isPaperSubscriber: Boolean,
-  isGuardianWeeklySubscriber: Boolean
+  member: Boolean,
+  paidMember: Boolean,
+  recurringContributor: Boolean,
+  digitalPack: Boolean,
+  paperSubscriber: Boolean,
+  guardianWeeklySubscriber: Boolean
 ) {
-  def canProceedWithAutoDeletion: Boolean = !(isMember || isPaidMember || isRecurringContributor || hasDigitalPack || isPaperSubscriber || isGuardianWeeklySubscriber)
-  def hasSubscription: Boolean = hasDigitalPack || isPaperSubscriber || isGuardianWeeklySubscriber
+
+  // If any content access values are TRUE, then user cannot proceed with an automatic account deletion and will be blocked
+  def canProceedWithAutoDeletion: Boolean = !(member || paidMember || recurringContributor || digitalPack || paperSubscriber || guardianWeeklySubscriber)
+  // Returns true if user has any one subscription or more
+  def hasSubscription: Boolean = digitalPack || paperSubscriber || guardianWeeklySubscriber
 }
 
 object ContentAccess {
-  implicit val jsRead: Reads[ContentAccess] = (
-    (JsPath \ "member").read[Boolean] and
-      (JsPath \ "paidMember").read[Boolean] and
-      (JsPath \ "recurringContributor").read[Boolean] and
-      (JsPath \ "digitalPack").read[Boolean] and
-      (JsPath \ "paperSubscriber").read[Boolean] and
-      (JsPath \ "guardianWeeklySubscriber").read[Boolean]
-    ) (ContentAccess.apply _)
+  implicit val format: Format[ContentAccess] = Json.format[ContentAccess]
 }
 
-// TODO trait and network vs parsing errors
-case class MdapiServiceException(message: String, userId: String) extends Throwable
+case class MdapiServiceException(message: String) extends Throwable
 
 class MembersDataApiService(wsClient: WSClient, config: conf.IdentityConfiguration)(implicit executionContext: ExecutionContext) extends SafeLogging {
   private def toWSCookie(c: Cookie): WSCookie = {
