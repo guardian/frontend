@@ -25,13 +25,15 @@ class A9AdUnit {
 
 let requestQueue: Promise<void> = Promise.resolve();
 let initialised: boolean = false;
+const bidderTimeout: number = 1500;
+
 const initialise = (): void => {
     initialised = true;
 
     window.apstag.init({
         pubID: config.get('libs.a9PublisherId'),
         adServer: 'googletag',
-        bidTimeout: 2e3,
+        bidTimeout: bidderTimeout,
     });
 };
 
