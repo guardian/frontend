@@ -61,6 +61,8 @@ object ContentHtmlPage extends HtmlPage[Page] {
       case unsupported => throw new RuntimeException(s"Type of content '${unsupported.getClass.getName}' is not supported by ${this.getClass.getName}")
     }
 
+    val shouldAddMerchSlot: Boolean = page.metadata.sectionId == "todayspaper" || page.metadata.sectionId == "theobserver"
+
     htmlTag(
       headTag(
         weAreHiring() when WeAreHiring.isSwitchedOn,
@@ -77,7 +79,7 @@ object ContentHtmlPage extends HtmlPage[Page] {
         guardianHeaderHtml(),
         mainContent(),
         breakingNewsDiv(),
-        if (page.metadata.url == "/theguardian") cleanedFrontBody(content, page) else content,
+        if (shouldAddMerchSlot) cleanedFrontBody(content, page) else content,
         footer(),
         message(),
         inlineJSNonBlocking(),
