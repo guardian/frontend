@@ -21,12 +21,12 @@ class CricketLifecycle(
   }}
 
   private def scheduleJobs() {
-    jobs.scheduleEvery("CricketAgentRefreshCurrentMatches", 15.seconds) {
-      Future(cricketStatsJob.run(fromDate = LocalDate.now, matchesToFetch = 1))
-    }
-    jobs.scheduleEvery("CricketAgentRefreshHistoricalMatches", 10.minutes) {
-      Future(cricketStatsJob.run(fromDate = LocalDate.now.minusMonths(2), matchesToFetch = 10))
-    }
+//    jobs.scheduleEvery("CricketAgentRefreshCurrentMatches", 15.seconds) {
+//      Future(cricketStatsJob.run(fromDate = LocalDate.now, matchesToFetch = 1))
+//    }
+//    jobs.scheduleEvery("CricketAgentRefreshHistoricalMatches", 10.minutes) {
+//      Future(cricketStatsJob.run(fromDate = LocalDate.now.minusMonths(2), matchesToFetch = 10))
+//    }
   }
 
   private def descheduleJobs() {

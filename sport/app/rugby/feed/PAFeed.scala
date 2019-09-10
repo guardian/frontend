@@ -1,10 +1,15 @@
 package rugby.feed
 
+import java.util.concurrent.{ConcurrentLinkedDeque, ConcurrentLinkedQueue}
+import java.util.{Timer, TimerTask}
+import java.util.concurrent.atomic.AtomicBoolean
+
 import common.Logging
 import play.api.libs.ws.WSClient
 import rugby.model._
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.{ExecutionContext, Future, Promise}
+import scala.util.Success
 
 trait RugbyFeed {
   def getLiveScores()(implicit executionContext: ExecutionContext): Future[Seq[Match]]
@@ -35,11 +40,16 @@ case class PARugbyAPIException(msg: String) extends RuntimeException(msg)
 object WorldCupPAIDs {
   val rugbyID = 29
   val worldCupTournamentID = 482 // ...which has 'seasons' for each competition year...
+
   val worldCup2019SeasonID = 11421
+  val worldCup2015SeasonID = 8131
+  val worldCupSeasonID = worldCup2015SeasonID
 
   // http://sport.api.press.net/v1/stage?season=11421, then e.g.
   // http://sport.api.press.net/v1/standing?stage=849625 for each.
   val worldCup2019GroupIDs = List(235175, 235176, 235178, 235180)
+  val worldCup2015GroupIDs = List(151079, 151081, 151083, 151085)
+  val worldCupGroupIDs = worldCup2015GroupIDs
 }
 
 class PARugbyFeed(rugbyClient: RugbyClient) extends RugbyFeed with Logging {
@@ -53,7 +63,7 @@ class PARugbyFeed(rugbyClient: RugbyClient) extends RugbyFeed with Logging {
   }
 
   def getFixturesAndResults()(implicit executionContext: ExecutionContext): Future[Seq[Match]] = {
-    rugbyClient.getEvents(worldCup2019SeasonID)
+    rugbyClient.getEvents(worldCupSeasonID)
       .map(games => games.items.map(PAMatch.toMatch))
   }
 
@@ -72,7 +82,7 @@ class PARugbyFeed(rugbyClient: RugbyClient) extends RugbyFeed with Logging {
   }
 
   def getGroupTables()(implicit executionContext: ExecutionContext): Future[Map[OptaEvent, Seq[GroupTable]]] = {
-    val tables = worldCup2019GroupIDs.map(id => rugbyClient.getStanding(id))
+    val tables = worldCupGroupIDs.map(id => rugbyClient.getStanding(id))
 
     for {
       tables <- Future.sequence(tables)
@@ -88,8 +98,8 @@ class PARugbyClient(wsClient: WSClient) extends RugbyClient {
   override def getEvents(seasonID: Int)
     (implicit executionContext: ExecutionContext): Future[PAMatchesResponse] = {
 
-    val resp = request(wsClient, s"/event?season=$seasonID", Map.empty)
-    resp.map(json => PAMatchesResponse.fromJSON(json).get) // TODO fix .gets
+    val resp = requestMatches(wsClient, s"/event?season=$seasonID", Map.empty)
+    resp.map(items => PAMatchesResponse(hasNext = false, items = items)) // TODO fix .gets
   }
 
   override def getStanding(standingID: Int)
@@ -117,10 +127,11 @@ class PARugbyClient(wsClient: WSClient) extends RugbyClient {
   )(implicit executionContext: ExecutionContext): Future[String] = {
     val headers = Map("apikey" -> apiKey, "Accept" -> "application/json")
 
-    client.url(basePath + path)
+    val request = client.url(basePath + path)
       .addHttpHeaders(headers.toSeq: _*)
       .addQueryStringParameters(params.toSeq: _*)
-      .get()
+
+    SimpleThrottler.run(() => request.get())
       .map(resp => {
         resp.status match {
           case 200 => resp.body
@@ -162,4 +173,44 @@ class PARugbyClient(wsClient: WSClient) extends RugbyClient {
 
     cycle(getPage, Future.successful(Nil), 1)
   }
+}
+
+// A simple throttler that leverages some Java components.
+// The timer runs on its own background thread so shouldn't block things.
+// Note, the queue is unbounded so it is possible for things to
+// grow and grow and grow...
+object SimpleThrottler {
+
+  private[this] val timer = new Timer()
+  private[this] val queue = new ConcurrentLinkedQueue[Promise[Unit]]()
+
+  def start(period: Long): Unit = {
+    val task = new TimerTask {
+      override def run(): Unit = {
+        val p = Option(queue.poll())
+        p.foreach(_.complete(Success(())))
+      }
+    }
+
+    timer.schedule(task, 0, period)
+  }
+
+  def run[A](task: () => Future[A])(implicit executionContext: ExecutionContext): Future[A] = {
+    val p: Promise[Unit] = Promise()
+
+    if (queue.size > 20) {
+      Future.failed(new RuntimeException("Simple throttler has exceeded capacity, failing fast."))
+    } else {
+      queue.add(p)
+
+      for {
+        _ <- p.future
+        res <- task()
+      } yield res
+    }
+  }
+
+  def stop(): Unit = timer.cancel()
+
+  start(1000)
 }

@@ -258,7 +258,7 @@ final case class Content(
 
   // Dynamic Meta Data may appear on the page for some content. This should be used for conditional metadata.
   def conditionalConfig: Map[String, JsValue] = {
-    val rugbyMeta = if (tags.isRugbyMatch && conf.switches.Switches.RugbyScoresSwitch.isSwitchedOn) {
+    val rugbyMeta = if (tags.isRugbyMatch) {
       val teamIds = tags.keywords.map(_.id).collect(RugbyContent.teamNameIds)
       val (team1, team2) = (teamIds.headOption.getOrElse(""), teamIds.lift(1).getOrElse(""))
       val date = RugbyContent.timeFormatter.withZoneUTC().print(trail.webPublicationDate)

@@ -23,28 +23,28 @@ class FootballLifecycle(
   }}
 
   private def scheduleJobs() {
-    competitionsService.competitionIds.zipWithIndex foreach { case (id, index) =>
-      //stagger fixtures and results refreshes to avoid timeouts
-      val seconds = index * 5 % 60
-      val minutes = index * 5 / 60 % 5
-      val cron = s"$seconds $minutes/5 * * * ?"
-
-      jobs.schedule(s"CompetitionAgentRefreshJob_$id", cron) {
-        competitionsService.refreshCompetitionAgent(id)
-      }
-    }
-
-    jobs.schedule("MatchDayAgentRefreshJob", "0 0/5 * * * ?") {
-      competitionsService.refreshMatchDay()
-    }
-
-    jobs.schedule("CompetitionRefreshJob", "0 0/10 * * * ?") {
-      competitionsService.refreshCompetitionData()
-    }
-
-    jobs.schedule("TeamMapRefreshJob", "0 0/10 * * * ?") {
-      TeamMap.refresh()(contentApiClient, ec)
-    }
+//    competitionsService.competitionIds.zipWithIndex foreach { case (id, index) =>
+//      //stagger fixtures and results refreshes to avoid timeouts
+//      val seconds = index * 5 % 60
+//      val minutes = index * 5 / 60 % 5
+//      val cron = s"$seconds $minutes/5 * * * ?"
+//
+//      jobs.schedule(s"CompetitionAgentRefreshJob_$id", cron) {
+//        competitionsService.refreshCompetitionAgent(id)
+//      }
+//    }
+//
+//    jobs.schedule("MatchDayAgentRefreshJob", "0 0/5 * * * ?") {
+//      competitionsService.refreshMatchDay()
+//    }
+//
+//    jobs.schedule("CompetitionRefreshJob", "0 0/10 * * * ?") {
+//      competitionsService.refreshCompetitionData()
+//    }
+//
+//    jobs.schedule("TeamMapRefreshJob", "0 0/10 * * * ?") {
+//      TeamMap.refresh()(contentApiClient, ec)
+//    }
   }
 
   private def descheduleJobs() {

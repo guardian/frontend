@@ -27,6 +27,8 @@ class MatchesController(
 
     val matchOpt = rugbyStatsJob.getFixturesAndResultScore(year, month, day, team1, team2)
 
+    log.info(s"RUGBY - match opt is: ${matchOpt}")
+
     val currentPage = request.getParameter("page")
 
     matchOpt.map { aMatch =>

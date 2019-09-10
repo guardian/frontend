@@ -65,29 +65,29 @@ class RugbyStatsJob(feed: RugbyFeed) extends Logging {
     scoresEventsForMatchesFuture.map(_.toMap)
   }
 
-  def fetchPastMatchesStat()(implicit executionContext: ExecutionContext): Unit = {
-    val pastMatches = fixturesAndResultsMatches.get().values.filter(_.date.isBeforeNow).toList
-
-    fetchMatchesStat(pastMatches).map { statForMatches =>
-      statForMatches.foreach { case (aMatch, stat) =>
-        pastMatchesStat.alter { _ + (aMatch.key -> stat)}
-      }
-    }
-  }
-
-  private def fetchMatchesStat(matches: List[Match])(implicit executionContext: ExecutionContext): Future[Map[Match, MatchStat]] = {
-    val statForMatchesFuture = Future.sequence {
-      matches.map(rugbyMatch =>
-        feed.getMatchStat(rugbyMatch).map(matchStat => rugbyMatch -> matchStat)
-      )
-    }
-    statForMatchesFuture.onComplete {
-      case Success(result) => //do nothing
-      case Failure(t) => log.warn(s"Failed to fetch match stat with error: ${t.getMessage}", t)
-    }
-
-    statForMatchesFuture.map(_.toMap)
-  }
+//  def fetchPastMatchesStat()(implicit executionContext: ExecutionContext): Unit = {
+//    val pastMatches = fixturesAndResultsMatches.get().values.filter(_.date.isBeforeNow).toList
+//
+//    fetchMatchesStat(pastMatches).map { statForMatches =>
+//      statForMatches.foreach { case (aMatch, stat) =>
+//        pastMatchesStat.alter { _ + (aMatch.key -> stat)}
+//      }
+//    }
+//  }
+//
+//  private def fetchMatchesStat(matches: List[Match])(implicit executionContext: ExecutionContext): Future[Map[Match, MatchStat]] = {
+//    val statForMatchesFuture = Future.sequence {
+//      matches.map(rugbyMatch =>
+//        feed.getMatchStat(rugbyMatch).map(matchStat => rugbyMatch -> matchStat)
+//      )
+//    }
+//    statForMatchesFuture.onComplete {
+//      case Success(result) => //do nothing
+//      case Failure(t) => log.warn(s"Failed to fetch match stat with error: ${t.getMessage}", t)
+//    }
+//
+//    statForMatchesFuture.map(_.toMap)
+//  }
 
   def sendMatchArticles(navigationArticles: Future[Map[String, MatchNavigation]])(implicit executionContext: ExecutionContext): Future[immutable.Iterable[Map[String, MatchNavigation]]] = {
     navigationArticles.flatMap { matches =>
@@ -98,6 +98,8 @@ class RugbyStatsJob(feed: RugbyFeed) extends Logging {
   }
 
   def getFixturesAndResultScore(year: String, month: String, day: String, homeTeamId: String, awayTeamId: String): Option[Match] = {
+    log.info(s"RUGBY fixtures and results are ${fixturesAndResultsMatches.get}")
+
     fixturesAndResultsMatches.get.values.find { rugbyMatch =>
       isValidMatch(year, month, day, homeTeamId, awayTeamId, rugbyMatch)
     }
