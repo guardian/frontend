@@ -158,7 +158,10 @@ const userIsInCorrectCohort = (
 ): boolean => {
     switch (userCohort) {
         case 'PostAskPauseSingleContributors':
-            return isPostAskPauseOneOffContributor();
+            return (
+                isPostAskPauseOneOffContributor() &&
+                !shouldHideSupportMessaging()
+            );
         case 'AllExistingSupporters':
             return shouldHideSupportMessaging();
         case 'AllNonSupporters':
