@@ -386,12 +386,14 @@ object DotcomponentsDataModel {
       relevantBlocks.filter(block => ids(block.id))
     }
 
+    // note: these two functions are duplicated in the onward service (DotcomponentsOnwardsModels - if duplicating again consider moving to common!)
     def isPaidContent(tags: List[Tag]): Boolean = tags.exists(tag => tag.`type` == "Tone" && tag.id == "tone/advertisement-features")
-
-    def findPillar(pillar: Pillar, tags: List[Tag]): String = {
-      if (isPaidContent(tags)) "labs"
-      else if (pillar.toString.toLowerCase == "arts") "culture"
-      else pillar.toString.toLowerCase()
+    def findPillar(pillar: Option[Pillar], tags: List[Tag]): String = {
+      pillar.map { pillar =>
+        if (isPaidContent(tags)) "labs"
+        else if (pillar.toString.toLowerCase == "arts") "culture"
+        else pillar.toString.toLowerCase()
+      }.getOrElse("news")
     }
 
     def findDesignType(designType: Option[DesignType], tags: List[Tag]): String = {
@@ -580,7 +582,7 @@ object DotcomponentsDataModel {
       editionId = Edition(request).id,
       pageId = article.metadata.id,
       tags = allTags,
-      pillar = article.metadata.pillar.map(pillar => findPillar(pillar, allTags)).getOrElse("news"),
+      pillar = findPillar(article.metadata.pillar, allTags),
       isImmersive = article.isImmersive,
       sectionLabel = article.content.sectionLabelName,
       sectionUrl = article.content.sectionLabelLink,

@@ -25,7 +25,7 @@ class RichLinkController(contentApiClient: ContentApiClient, controllerComponent
             sponsorName = content.metadata.commercial.flatMap(_.branding(Edition(request))).map(_.sponsorName),
             contributorImage = content.tags.contributors.headOption.flatMap(_.properties.contributorLargeImagePath.map(ImgSrc(_, RichLinkContributor))),
             url = content.metadata.url,
-            pillar = content.metadata.pillar.nameOrDefault
+            pillar = RichLink.findPillar(content.metadata.pillar, content.tags.tags),
           )
           Cached(900)(JsonComponent(richLink)(request, RichLink.writes))
         case Some(content) => renderContent(richLinkHtml(content), richLinkBodyHtml(content))
