@@ -37,7 +37,6 @@ import { epicLiveBlogTemplate } from 'common/modules/commercial/templates/acquis
 import {
     shouldHideSupportMessaging,
     isPostAskPauseOneOffContributor,
-    isRecurringContributor,
 } from 'common/modules/commercial/user-features';
 import {
     supportContributeURL,
@@ -160,7 +159,8 @@ const userIsInCorrectCohort = (
     switch (userCohort) {
         case 'PostAskPauseSingleContributors':
             return (
-                isPostAskPauseOneOffContributor() && !isRecurringContributor()
+                isPostAskPauseOneOffContributor() &&
+                !shouldHideSupportMessaging()
             );
         case 'AllExistingSupporters':
             return shouldHideSupportMessaging();
