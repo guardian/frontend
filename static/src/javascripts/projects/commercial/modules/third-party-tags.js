@@ -13,13 +13,18 @@ import { inizio } from 'commercial/modules/third-party-tags/inizio';
 import { fbPixel } from 'commercial/modules/third-party-tags/facebook-pixel';
 import { init as initPlistaOutbrainRenderer } from 'commercial/modules/third-party-tags/plista-outbrain-renderer';
 import { twitterUwt } from 'commercial/modules/third-party-tags/twitter-uwt';
-import { onConsentNotification } from 'lib/cmp';
+import { onIabConsentNotification } from '@guardian/consent-management-platform';
 
 let scriptsInserted: boolean = false;
 
 const insertScripts = (services: Array<ThirdPartyTag>): void => {
-    onConsentNotification('advertisement', state => {
-        if (!scriptsInserted && (state === true || state === null)) {
+    onIabConsentNotification(state => {
+        const consentState = state[1];
+
+        if (
+            !scriptsInserted &&
+            (consentState === true || consentState === null)
+        ) {
             scriptsInserted = true;
 
             const ref = document.scripts[0];

@@ -17,7 +17,7 @@ import { isUserLoggedIn as isUserLoggedIn_ } from 'common/modules/identity/api';
 import { getUserSegments as getUserSegments_ } from 'common/modules/commercial/user-ad-targeting';
 import { getSynchronousParticipations as getSynchronousParticipations_ } from 'common/modules/experiments/ab';
 import { getKruxSegments as getKruxSegments_ } from 'common/modules/commercial/krux';
-import { onConsentNotification as onConsentNotification_ } from 'lib/cmp';
+import { onIabConsentNotification as onIabConsentNotification_ } from '@guardian/consent-management-platform';
 
 const getCookie: any = getCookie_;
 const getUserSegments: any = getUserSegments_;
@@ -27,7 +27,7 @@ const getReferrer: any = getReferrer_;
 const getBreakpoint: any = getBreakpoint_;
 const isUserLoggedIn: any = isUserLoggedIn_;
 const getSync: any = getSync_;
-const onConsentNotification: any = onConsentNotification_;
+const onIabConsentNotification: any = onIabConsentNotification_;
 
 jest.mock('lib/storage');
 jest.mock('lib/config');
@@ -59,13 +59,13 @@ jest.mock('lodash/once', () => fn => fn);
 jest.mock('common/modules/commercial/commercial-features', () => ({
     commercialFeatures() {},
 }));
-jest.mock('lib/cmp', () => ({
-    onConsentNotification: jest.fn(),
+jest.mock('@guardian/consent-management-platform', () => ({
+    onIabConsentNotification: jest.fn(),
 }));
 
-const trueConsentMock = (purpose, callback): void => callback(true);
-const falseConsentMock = (purpose, callback): void => callback(false);
-const nullConsentMock = (purpose, callback): void => callback(null);
+const trueConsentMock = (callback): void => callback({ '1': true });
+const falseConsentMock = (callback): void => callback({ '1': false });
+const nullConsentMock = (callback): void => callback({ '1': null });
 
 describe('Build Page Targeting', () => {
     beforeEach(() => {
@@ -106,7 +106,7 @@ describe('Build Page Targeting', () => {
         // Reset mocking to default values.
         getCookie.mockReturnValue('ng101');
         _.resetPageTargeting();
-        onConsentNotification.mockImplementation(nullConsentMock);
+        onIabConsentNotification.mockImplementation(nullConsentMock);
 
         getBreakpoint.mockReturnValue('mobile');
         getReferrer.mockReturnValue('');
@@ -161,11 +161,11 @@ describe('Build Page Targeting', () => {
     });
 
     it('should set correct personalized ad (pa) param', () => {
-        onConsentNotification.mockImplementation(trueConsentMock);
+        onIabConsentNotification.mockImplementation(trueConsentMock);
         expect(getPageTargeting().pa).toBe('t');
 
         _.resetPageTargeting();
-        onConsentNotification.mockImplementation(falseConsentMock);
+        onIabConsentNotification.mockImplementation(falseConsentMock);
         expect(getPageTargeting().pa).toBe('f');
     });
 

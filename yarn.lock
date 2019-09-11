@@ -1082,6 +1082,13 @@
     style-loader "0.23.1"
     webpack "^4.2.0"
 
+"@guardian/consent-management-platform@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-0.2.0.tgz#360dc3e9c602cc8421e2c5563d5b5bf238319430"
+  integrity sha512-NnzU8b1mP+FAyEfxzZulUQEA3xz+asgP7xgoO7rZIeo+QNgpm0dpGMh0QA6dA9sKn/+tXXoWj2/D5oT45UdnQA==
+  dependencies:
+    js-cookie "^2.2.1"
+
 "@guardian/dotcom-rendering@git://github.com/guardian/dotcom-rendering.git#version-1-alpha":
   version "0.1.0-alpha"
   resolved "git://github.com/guardian/dotcom-rendering.git#6b85c6a34764ab47604caed08387cc504106690b"
@@ -6261,6 +6268,11 @@ jmespath@0.15.0:
 js-base64@^2.1.8, js-base64@^2.1.9:
   version "2.1.9"
   resolved "https://registry.yarnpkg.com/js-base64/-/js-base64-2.1.9.tgz#f0e80ae039a4bd654b5f281fc93f04a914a7fcce"
+
+js-cookie@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/js-cookie/-/js-cookie-2.2.1.tgz#69e106dc5d5806894562902aa5baec3744e9b2b8"
+  integrity sha512-HvdH2LzI/EAZcUwA8+0nKNtWHqS+ZmijLA30RwZA0bo7ToCckjK5MkGhjED9KoRcXO6BaGI3I9UIzSA1FKFPOQ==
 
 js-levenshtein@^1.1.3:
   version "1.1.4"

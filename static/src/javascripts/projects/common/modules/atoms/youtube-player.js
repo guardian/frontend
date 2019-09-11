@@ -6,7 +6,7 @@ import { loadScript } from 'lib/load-script';
 import { constructQuery } from 'lib/url';
 import { getPageTargeting } from 'common/modules/commercial/build-page-targeting';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
-import { onConsentNotification } from 'lib/cmp';
+import { onIabConsentNotification } from '@guardian/consent-management-platform';
 
 const scriptSrc = 'https://www.youtube.com/iframe_api';
 const promise = new Promise(resolve => {
@@ -33,8 +33,8 @@ type Handlers = {
 };
 
 let consentState;
-onConsentNotification('advertisement', state => {
-    consentState = state;
+onIabConsentNotification(state => {
+    consentState = state[1];
 });
 
 const onPlayerStateChangeEvent = (
