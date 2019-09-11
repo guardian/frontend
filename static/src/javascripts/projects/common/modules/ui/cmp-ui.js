@@ -1,30 +1,27 @@
 // @flow
 import { getCookie } from 'lib/cookies';
+import { cmpConfig } from '@guardian/consent-management-platform';
 
-// TODO: this should be derived from config or imported from new lib
-const CMP_DOMAIN = 'https://manage.theguardian.com';
-const CMP_URL = `${CMP_DOMAIN}/consent`;
-const CMP_READY_MSG = 'readyCmp';
-const CMP_CLOSE_MSG = 'closeCmp';
 const IAB_COOKIE_NAME = 'euconsent';
 const CMP_READY_CLASS = 'cmp-iframe-ready';
+const CMP_URL = 'https://manage.theguardian.com'; // TODO: Import from cmpConfig
 
 let container: ?HTMLElement;
 
 const receiveMessage = (event: MessageEvent) => {
     const { origin, data } = event;
 
-    if (origin !== CMP_DOMAIN) {
+    if (origin !== CMP_URL) {
         return;
     }
 
     switch (data) {
-        case CMP_READY_MSG:
+        case cmpConfig.CMP_READY_MSG:
             if (container && container.parentNode) {
                 container.classList.add(CMP_READY_CLASS);
             }
             break;
-        case CMP_CLOSE_MSG:
+        case cmpConfig.CMP_CLOSE_MSG:
             if (container && container.parentNode) {
                 container.classList.remove(CMP_READY_CLASS);
                 container.remove();
@@ -90,7 +87,7 @@ export const init = (): void => {
     container.className = 'cmp-overlay';
 
     const iframe = document.createElement('iframe');
-    iframe.src = CMP_URL;
+    iframe.src = cmpConfig.CMP_URL;
     iframe.className = 'cmp-iframe';
 
     container.appendChild(iframe);

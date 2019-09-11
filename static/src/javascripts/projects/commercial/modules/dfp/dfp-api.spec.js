@@ -9,7 +9,7 @@ import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { loadAdvert } from 'commercial/modules/dfp/load-advert';
 import { fillAdvertSlots as fillAdvertSlots_ } from 'commercial/modules/dfp/fill-advert-slots';
-import { onConsentNotification as onConsentNotification_ } from 'lib/cmp';
+import { onIabConsentNotification as onIabConsentNotification_ } from '@guardian/consent-management-platform';
 
 // $FlowFixMe property requireActual is actually not missing Flow.
 const { fillAdvertSlots: actualFillAdvertSlots } = jest.requireActual(
@@ -18,7 +18,7 @@ const { fillAdvertSlots: actualFillAdvertSlots } = jest.requireActual(
 
 const getBreakpoint: any = getBreakpoint_;
 const fillAdvertSlots: any = fillAdvertSlots_;
-const onConsentNotification: any = onConsentNotification_;
+const onIabConsentNotification: any = onIabConsentNotification_;
 
 jest.mock('commercial/modules/dfp/fill-advert-slots', () => ({
     fillAdvertSlots: jest.fn(),
@@ -94,8 +94,8 @@ jest.mock('commercial/modules/third-party-tags/outbrain', () => ({
 jest.mock('commercial/modules/dfp/load-advert', () => ({
     loadAdvert: jest.fn(),
 }));
-jest.mock('lib/cmp', () => ({
-    onConsentNotification: jest.fn(),
+jest.mock('@guardian/consent-management-platform', () => ({
+    onIabConsentNotification: jest.fn(),
 }));
 
 let $style;
@@ -403,8 +403,8 @@ describe('DFP', () => {
 
     describe('keyword targeting', () => {
         it('should send page level keywords', () => {
-            onConsentNotification.mockImplementation((purpose, callback) =>
-                callback(null)
+            onIabConsentNotification.mockImplementation(callback =>
+                callback({ '1': null })
             );
             prepareGoogletag().then(() => {
                 expect(

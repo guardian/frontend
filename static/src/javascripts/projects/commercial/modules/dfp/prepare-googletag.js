@@ -8,7 +8,7 @@ import raven from 'lib/raven';
 import sha1 from 'lib/sha1';
 import { session } from 'lib/storage';
 import { getPageTargeting } from 'common/modules/commercial/build-page-targeting';
-import { onConsentNotification } from 'lib/cmp';
+import { onIabConsentNotification } from '@guardian/consent-management-platform';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { adFreeSlotRemove } from 'commercial/modules/ad-free-slot-remove';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
@@ -102,12 +102,14 @@ export const init = (): Promise<void> => {
             }
         );
 
-        onConsentNotification('advertisement', state => {
-            if (state !== null) {
+        onIabConsentNotification(state => {
+            const consentState = state[1];
+
+            if (consentState !== null) {
                 window.googletag.cmd.push(() => {
                     window.googletag
                         .pubads()
-                        .setRequestNonPersonalizedAds(state ? 0 : 1);
+                        .setRequestNonPersonalizedAds(consentState ? 0 : 1);
                 });
             }
         });

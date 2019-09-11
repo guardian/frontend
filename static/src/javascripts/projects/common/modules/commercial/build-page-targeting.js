@@ -12,7 +12,7 @@ import { getUrlVars } from 'lib/url';
 import { getKruxSegments } from 'common/modules/commercial/krux';
 import { isUserLoggedIn } from 'common/modules/identity/api';
 import { getUserSegments } from 'common/modules/commercial/user-ad-targeting';
-import { onConsentNotification } from 'lib/cmp';
+import { onIabConsentNotification } from '@guardian/consent-management-platform';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { getSynchronousParticipations } from 'common/modules/experiments/ab';
 import { removeFalseyValues } from 'commercial/modules/prebid/utils';
@@ -255,10 +255,12 @@ const buildPageTargetting = (
 const getPageTargeting = (): { [key: string]: mixed } => {
     if (Object.keys(myPageTargetting).length !== 0) return myPageTargetting;
 
-    onConsentNotification('advertisement', state => {
-        if (state !== latestConsentState) {
-            myPageTargetting = buildPageTargetting(state);
-            latestConsentState = state;
+    onIabConsentNotification(state => {
+        const consentState = state[1];
+
+        if (consentState !== latestConsentState) {
+            myPageTargetting = buildPageTargetting(consentState);
+            latestConsentState = consentState;
         }
     });
 

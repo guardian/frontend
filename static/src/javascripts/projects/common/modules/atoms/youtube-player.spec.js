@@ -16,8 +16,8 @@ jest.mock('lib/config', () => ({
     }),
 }));
 
-jest.mock('lib/cmp', () => ({
-    onConsentNotification: jest.fn((purposeName, callback) => callback(true)),
+jest.mock('@guardian/consent-management-platform', () => ({
+    onIabConsentNotification: jest.fn(callback => callback({ '1': true })),
 }));
 
 jest.mock('common/modules/commercial/commercial-features', () => ({
