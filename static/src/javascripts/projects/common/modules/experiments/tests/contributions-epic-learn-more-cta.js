@@ -2,7 +2,8 @@
 import {
     makeEpicABTest,
     defaultButtonTemplate,
-    learnMoreButtonTemplate, buildEpicCopy,
+    learnMoreButtonTemplate,
+    buildEpicCopy,
 } from 'common/modules/commercial/contributions-utilities';
 import { getArticleViewCountForDays } from 'common/modules/onward/history';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
@@ -37,7 +38,8 @@ export const learnMore: EpicABTest = makeEpicABTest({
     author: 'Joshua Lieberman',
     description: 'Encourages users ',
     successMeasure: 'AV & CTA click-through rate',
-    idealOutcome: 'Acquires many Supporters and audience demonstrating engagement',
+    idealOutcome:
+        'Acquires many Supporters and audience demonstrating engagement',
 
     audienceCriteria: 'All',
     audience: 1,
