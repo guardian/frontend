@@ -43,7 +43,7 @@ const insertAdAtPara = (
         .write(() =>
             ads.forEach(ad => {
                 if (para.parentNode) {
-                    para.parentNode.insertBefore(ad, para);
+                    para.parentNode.insertBefore(ad, para.nextSibling);
                 }
             })
         )
@@ -77,6 +77,9 @@ const getBodySelector = (): string =>
         ? '.js-article__body'
         : '.article-body-03f883b8';
 
+//1. if 620x320 AND has h2
+//2. put it at the bottom of the paragraph!
+
 const getSlotSelector = (): string =>
     !config.get('isDotcomRendering', false) ? ' > p' : ' > span';
 
@@ -87,12 +90,12 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<number> => {
     const defaultRules = {
         bodySelector: getBodySelector(),
         slotSelector: getSlotSelector(),
-        minAbove: isImmersive ? 700 : 300,
+        minAbove: 400,
         minBelow: 700,
         selectors: {
             ' > h2': {
                 minAbove: 0,
-                minBelow: 250,
+                minBelow: 0,
             },
             ' .ad-slot': adSlotClassSelectorSizes,
             ' > :not(p):not(h2):not(.ad-slot)': {
