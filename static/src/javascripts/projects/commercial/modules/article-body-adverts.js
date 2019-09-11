@@ -10,6 +10,11 @@ import { trackAdRender } from 'commercial/modules/dfp/track-ad-render';
 import { createSlots } from 'commercial/modules/dfp/create-slots';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { initCarrot } from 'commercial/modules/carrot-traffic-driver';
+import { isInVariantSynchronous } from 'common/modules/experiments/ab';
+import { commercialInline1BeforeHeadings } from 'common/modules/experiments/tests/commercial-inline1-before-headings';
+
+const commercialInline1BeforeHeadings = (): boolean =>
+    isInVariantSynchronous(commercialInline1BeforeHeadings, 'variant');
 
 type AdSize = {
     width: number,
@@ -89,13 +94,13 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<number> => {
     // For inline1
     const defaultRules = {
         bodySelector: getBodySelector(),
-        slotSelector: getSlotSelector(),
-        minAbove: 400,
-        minBelow: 700,
-        selectors: {
+        slotSelector: getSlotSelector(), //candidates = bodySelector + slotSelector
+        minAbove: isImmersive ? 700 : 400, //candidate should be farEnoughFromTopOfBody
+        minBelow: 700, //candidate should be farEnoughFromBottomOfBody
+        selectors: {  // test each selector against each candidate
             ' > h2': {
                 minAbove: 0,
-                minBelow: 0,
+                minBelow: 250,
             },
             ' .ad-slot': adSlotClassSelectorSizes,
             ' > :not(p):not(h2):not(.ad-slot)': {

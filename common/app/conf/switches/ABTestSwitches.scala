@@ -105,4 +105,14 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2020, 7, 30),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-commercial-inline1-before-headings",
+    "Test inline1 ads to be placed above headings",
+    owners = Seq(Owner.withGithub("ioanna0")),
+    safeState = On,
+    sellByDate = new LocalDate(2020, 7, 30),
+    exposeClientSide = true
+  )
 }
