@@ -4,14 +4,14 @@ import { cmpConfig } from '@guardian/consent-management-platform';
 
 const IAB_COOKIE_NAME = 'euconsent';
 const CMP_READY_CLASS = 'cmp-iframe-ready';
-const CMP_URL = 'https://manage.theguardian.com'; // TODO: Import from cmpConfig
+const CMP_DOMAIN = 'https://manage.theguardian.com'; // TODO: Import from cmpConfig
 
 let container: ?HTMLElement;
 
 const receiveMessage = (event: MessageEvent) => {
     const { origin, data } = event;
 
-    if (origin !== CMP_URL) {
+    if (origin !== CMP_DOMAIN) {
         return;
     }
 
