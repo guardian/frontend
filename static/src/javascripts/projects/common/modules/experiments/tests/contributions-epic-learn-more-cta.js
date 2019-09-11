@@ -53,13 +53,13 @@ export const learnMore: EpicABTest = makeEpicABTest({
             id: 'control',
             buttonTemplate: defaultButtonTemplate,
             products: [],
-            copy: buildEpicCopy(copy),
+            copy: buildEpicCopy(copy, false, geolocation),
         },
         {
             id: 'variant',
             buttonTemplate: learnMoreButtonTemplate,
             products: [],
-            copy: buildEpicCopy(copy),
+            copy: buildEpicCopy(copy, false, geolocation),
         },
     ],
 });
