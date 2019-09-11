@@ -3,7 +3,7 @@ import config from 'lib/config';
 import { applePayApiAvailable } from 'lib/detect';
 import applyPayMark from 'svgs/acquisitions/apple-pay-mark.svg';
 
-export const epicButtonsTemplate = (
+export const epicButtonsLearnMoreTemplate = (
     { supportUrl = '' }: CtaUrls,
     ctaText?: string = 'Support The Guardian'
 ) => {
