@@ -32,7 +32,6 @@ import {
 } from 'lib/string-utils';
 import { throwIfEmptyArray } from 'lib/array-utils';
 import { epicButtonsTemplate } from 'common/modules/commercial/templates/acquisitions-epic-buttons';
-import { epicButtonsLearnMoreTemplate } from 'common/modules/commercial/templates/acquisitions-epic-buttons-learn-more';
 import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templates/acquisitions-epic-control';
 import { epicLiveBlogTemplate } from 'common/modules/commercial/templates/acquisitions-epic-liveblog';
 import {
