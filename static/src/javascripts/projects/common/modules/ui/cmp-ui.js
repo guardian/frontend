@@ -120,6 +120,9 @@ export const _ = {
         }
         uiPrepared = false;
     },
+    CMP_READY_CLASS,
     OVERLAY_CLASS,
     IFRAME_CLASS,
+    onReadyCmp,
+    onCloseCmp,
 };

@@ -97,6 +97,48 @@ describe('cmp-ui', () => {
                 );
                 expect(cmpUi.setupMessageHandlers).toHaveBeenCalledTimes(1);
             });
+
+            it('onReadyCmp adds the ready class to the container', () => {
+                consentManagementPlatformUi.show();
+
+                const container = document.querySelectorAll(overlaySelector)[0];
+
+                expect(container).toBeTruthy();
+
+                if (container) {
+                    expect(
+                        container.classList.contains(_.CMP_READY_CLASS)
+                    ).toBe(false);
+
+                    _.onReadyCmp();
+
+                    expect(
+                        container.classList.contains(_.CMP_READY_CLASS)
+                    ).toBe(true);
+                }
+            });
+
+            it('onCloseCmp removes the ready class from the container and the container from the page', () => {
+                consentManagementPlatformUi.show();
+
+                const container = document.querySelectorAll(overlaySelector)[0];
+
+                if (container) {
+                    _.onReadyCmp();
+
+                    expect(
+                        container.classList.contains(_.CMP_READY_CLASS)
+                    ).toBe(true);
+                    expect(container.parentNode).toBeTruthy();
+
+                    _.onCloseCmp();
+
+                    expect(
+                        container.classList.contains(_.CMP_READY_CLASS)
+                    ).toBe(false);
+                    expect(container.parentNode).toBeFalsy();
+                }
+            });
         });
     });
 });
