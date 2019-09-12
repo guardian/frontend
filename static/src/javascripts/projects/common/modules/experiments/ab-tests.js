@@ -9,6 +9,7 @@ import { acquisitionsEpicAlwaysAskIfTagged } from 'common/modules/experiments/te
 import { adblockTest } from 'common/modules/experiments/tests/adblock-ask';
 import { articlesViewedBanner } from 'common/modules/experiments/tests/contribs-banner-articles-viewed';
 import { prebidTripleLiftAdapter } from 'common/modules/experiments/tests/prebid-triple-lift-adapter';
+import { learnMore } from 'common/modules/experiments/tests/contributions-epic-learn-more-cta';
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialPrebidSafeframe,
@@ -20,6 +21,7 @@ export const concurrentTests: $ReadOnlyArray<ABTest> = [
 
 export const epicTests: $ReadOnlyArray<EpicABTest> = [
     articlesViewed,
+    learnMore,
     countryName,
     askFourEarning,
     acquisitionsEpicAlwaysAskIfTagged,
