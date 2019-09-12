@@ -21,7 +21,7 @@ import views.html.stacked
 
 object ContentHtmlPage extends HtmlPage[Page] {
 
-  def addMerchHighSLot(html: Html, page: Page)(implicit request: RequestHeader, context: ApplicationContext): Html = {
+  def addMerchHighSlot(html: Html, page: Page)(implicit request: RequestHeader, context: ApplicationContext): Html = {
     import views.support.`package`.withJsoup
     import views.support.{BulletCleaner, CommercialComponentHigh}
     val edition = Edition(request)
@@ -79,7 +79,7 @@ object ContentHtmlPage extends HtmlPage[Page] {
         guardianHeaderHtml(),
         mainContent(),
         breakingNewsDiv(),
-        if (shouldAddMerchSlot) addMerchHighSLot(content, page) else content,
+        if (shouldAddMerchSlot) addMerchHighSlot(content, page) else content,
         footer(),
         message(),
         inlineJSNonBlocking(),
