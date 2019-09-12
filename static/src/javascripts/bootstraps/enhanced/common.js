@@ -302,6 +302,7 @@ const initialiseEmail = (): void => {
 };
 
 const initialiseBanner = (): void => {
+    // ordered by priority
     const bannerList = [
         consentManagementPlatformUi,
         firstPvConsentPlusEngagementBanner,
