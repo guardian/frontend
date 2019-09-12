@@ -8,6 +8,8 @@ import {
 } from '../../../../../../../../consent-management-platform';
 
 const CMP_READY_CLASS = 'cmp-iframe-ready';
+const OVERLAY_CLASS = 'cmp-overlay';
+const IFRAME_CLASS = 'cmp-iframe';
 let container: ?HTMLElement;
 let uiPrepared: boolean = false;
 
@@ -30,11 +32,11 @@ const prepareUi = () => {
     }
 
     container = document.createElement('div');
-    container.className = 'cmp-overlay';
+    container.className = OVERLAY_CLASS;
 
     const iframe = document.createElement('iframe');
     iframe.src = cmpConfig.CMP_URL;
-    iframe.className = 'cmp-iframe';
+    iframe.className = IFRAME_CLASS;
 
     container.appendChild(iframe);
 
@@ -105,4 +107,19 @@ export const consentManagementPlatformUi = {
         return Promise.resolve(false);
     },
     show,
+};
+
+// Exposed for testing purposes only
+export const _ = {
+    reset: () => {
+        if (container) {
+            if (container.parentNode) {
+                container.remove();
+            }
+            container = undefined;
+        }
+        uiPrepared = false;
+    },
+    OVERLAY_CLASS,
+    IFRAME_CLASS,
 };

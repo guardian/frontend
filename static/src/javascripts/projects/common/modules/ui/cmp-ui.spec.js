@@ -1,13 +1,23 @@
 // @flow
-import { consentManagementPlatformUi } from './cmp-ui';
-import { cmpUi as cmpUi_ } from '../../../../../../../../consent-management-platform';
+import { consentManagementPlatformUi, _ } from './cmp-ui';
+import {
+    cmpUi as cmpUi_,
+    cmpConfig,
+} from '../../../../../../../../consent-management-platform';
 import { isInVariantSynchronous as isInVariantSynchronous_ } from 'common/modules/experiments/ab';
 
 const cmpUi: any = cmpUi_;
 const isInVariantSynchronous: any = isInVariantSynchronous_;
 
 jest.mock('../../../../../../../../consent-management-platform', () => ({
-    cmpUi: { canShow: jest.fn() },
+    cmpUi: {
+        canShow: jest.fn(),
+        setupMessageHandlers: jest.fn(),
+    },
+    // $FlowFixMe property requireActual is actually not missing Flow.
+    cmpConfig: jest.requireActual(
+        '../../../../../../../../consent-management-platform'
+    ).cmpConfig,
 }));
 
 jest.mock('common/modules/experiments/ab', () => ({
@@ -46,6 +56,46 @@ describe('cmp-ui', () => {
                 return consentManagementPlatformUi.canShow().then(show => {
                     expect(show).toBe(false);
                 });
+            });
+        });
+
+        describe('show', () => {
+            const overlaySelector = `.${_.OVERLAY_CLASS}`;
+            const iframeSelector = `.${_.IFRAME_CLASS}`;
+
+            beforeEach(() => {
+                expect(document.querySelectorAll(overlaySelector).length).toBe(
+                    0
+                );
+            });
+
+            afterEach(() => {
+                _.reset();
+            });
+
+            it('runs prepareUi when called once', () => {
+                consentManagementPlatformUi.show();
+
+                expect(document.querySelectorAll(overlaySelector).length).toBe(
+                    1
+                );
+                expect(document.querySelectorAll(iframeSelector).length).toBe(
+                    1
+                );
+                expect(cmpUi.setupMessageHandlers).toHaveBeenCalledTimes(1);
+            });
+
+            it('does not run prepareUi multiple times when called more than once', () => {
+                consentManagementPlatformUi.show();
+                consentManagementPlatformUi.show();
+
+                expect(document.querySelectorAll(overlaySelector).length).toBe(
+                    1
+                );
+                expect(document.querySelectorAll(iframeSelector).length).toBe(
+                    1
+                );
+                expect(cmpUi.setupMessageHandlers).toHaveBeenCalledTimes(1);
             });
         });
     });
