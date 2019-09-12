@@ -21,6 +21,15 @@ import views.html.stacked
 
 object ContentHtmlPage extends HtmlPage[Page] {
 
+  def cleanedFrontBody(html: Html, page: Page)(implicit request: RequestHeader, context: ApplicationContext): Html = {
+    import views.support.`package`.withJsoup
+    import views.support.{BulletCleaner, CommercialComponentHigh}
+    val edition = Edition(request)
+    withJsoup(BulletCleaner(html.toString))(
+      CommercialComponentHigh(isPaidContent = false, isNetworkFront = false, hasPageSkin = page.metadata.hasPageSkin(edition)),
+    )
+  }
+
   def allStyles(implicit applicationContext: ApplicationContext, request: RequestHeader): Styles = new Styles {
     override def criticalCssLink: Html = criticalStyleLink(ContentCSSFile)
     override def criticalCssInline: Html = criticalStyleInline(Html(common.Assets.css.head(None)))
@@ -52,6 +61,8 @@ object ContentHtmlPage extends HtmlPage[Page] {
       case unsupported => throw new RuntimeException(s"Type of content '${unsupported.getClass.getName}' is not supported by ${this.getClass.getName}")
     }
 
+    val shouldAddMerchSlot: Boolean = page.metadata.sectionId == "todayspaper" || page.metadata.sectionId == "theobserver"
+
     htmlTag(
       headTag(
         weAreHiring() when WeAreHiring.isSwitchedOn,
@@ -68,7 +79,7 @@ object ContentHtmlPage extends HtmlPage[Page] {
         guardianHeaderHtml(),
         mainContent(),
         breakingNewsDiv(),
-        content,
+        if (shouldAddMerchSlot) cleanedFrontBody(content, page) else content,
         footer(),
         message(),
         inlineJSNonBlocking(),
