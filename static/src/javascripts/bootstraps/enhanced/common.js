@@ -56,8 +56,6 @@ import { getAllAdConsentsWithState } from 'common/modules/commercial/ad-prefs.li
 import ophan from 'ophan/ng';
 import { adFreeBanner } from 'common/modules/commercial/ad-free-banner';
 import { init as initReaderRevenueDevUtils } from 'common/modules/commercial/reader-revenue-dev-utils';
-// import { isInVariantSynchronous } from 'common/modules/experiments/ab';
-// import { commercialIabCompliant } from 'common/modules/experiments/tests/commercial-iab-compliant';
 import {
     consentManagementPlatformUi,
     addPrivacySettingsLink,
