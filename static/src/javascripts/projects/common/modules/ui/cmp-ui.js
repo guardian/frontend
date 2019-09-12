@@ -1,11 +1,7 @@
 // @flow
-// import { cmpConfig, cmpUi } from '@guardian/consent-management-platform';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import { commercialIabCompliant } from 'common/modules/experiments/tests/commercial-iab-compliant';
-import {
-    cmpConfig,
-    cmpUi,
-} from '../../../../../../../../consent-management-platform';
+import { cmpConfig, cmpUi } from '@guardian/consent-management-platform';
 
 const CMP_READY_CLASS = 'cmp-iframe-ready';
 const OVERLAY_CLASS = 'cmp-overlay';
@@ -13,20 +9,20 @@ const IFRAME_CLASS = 'cmp-iframe';
 let container: ?HTMLElement;
 let uiPrepared: boolean = false;
 
-const onReadyCmp = () => {
+const onReadyCmp = (): void => {
     if (container && container.parentNode) {
         container.classList.add(CMP_READY_CLASS);
     }
 };
 
-const onCloseCmp = () => {
+const onCloseCmp = (): void => {
     if (container && container.parentNode) {
         container.classList.remove(CMP_READY_CLASS);
         container.remove();
     }
 };
 
-const prepareUi = () => {
+const prepareUi = (): void => {
     if (uiPrepared) {
         return;
     }
@@ -45,12 +41,14 @@ const prepareUi = () => {
     uiPrepared = true;
 };
 
-const show = () => {
+const show = (): Promise<boolean> => {
     prepareUi();
 
     if (document.body && container && !container.parentElement) {
         document.body.appendChild(container);
     }
+
+    return Promise.resolve(true);
 };
 
 const handlePrivacySettingsClick = (evt: Event): void => {
@@ -99,7 +97,7 @@ export const addPrivacySettingsLink = (): void => {
 
 export const consentManagementPlatformUi = {
     id: 'cmpUi',
-    canShow: () => {
+    canShow: (): Promise<boolean> => {
         if (isInVariantSynchronous(commercialIabCompliant, 'variant')) {
             return Promise.resolve(cmpUi.canShow());
         }
@@ -111,7 +109,7 @@ export const consentManagementPlatformUi = {
 
 // Exposed for testing purposes only
 export const _ = {
-    reset: () => {
+    reset: (): void => {
         if (container) {
             if (container.parentNode) {
                 container.remove();

@@ -1,23 +1,19 @@
 // @flow
-import { consentManagementPlatformUi, _ } from './cmp-ui';
-import {
-    cmpUi as cmpUi_,
-    cmpConfig,
-} from '../../../../../../../../consent-management-platform';
+import { cmpUi as cmpUi_ } from '@guardian/consent-management-platform';
 import { isInVariantSynchronous as isInVariantSynchronous_ } from 'common/modules/experiments/ab';
+import { consentManagementPlatformUi, _ } from './cmp-ui';
 
 const cmpUi: any = cmpUi_;
 const isInVariantSynchronous: any = isInVariantSynchronous_;
 
-jest.mock('../../../../../../../../consent-management-platform', () => ({
+jest.mock('@guardian/consent-management-platform', () => ({
     cmpUi: {
         canShow: jest.fn(),
         setupMessageHandlers: jest.fn(),
     },
     // $FlowFixMe property requireActual is actually not missing Flow.
-    cmpConfig: jest.requireActual(
-        '../../../../../../../../consent-management-platform'
-    ).cmpConfig,
+    cmpConfig: jest.requireActual('@guardian/consent-management-platform')
+        .cmpConfig,
 }));
 
 jest.mock('common/modules/experiments/ab', () => ({
