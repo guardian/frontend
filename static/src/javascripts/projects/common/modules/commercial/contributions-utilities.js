@@ -95,11 +95,6 @@ const defaultButtonTemplate: (CtaUrls, ctaText?: string) => string = (
     ctaText?: string
 ) => epicButtonsTemplate(url, ctaText);
 
-const learnMoreButtonTemplate: (CtaUrls, ctaText?: string) => string = (
-    url: CtaUrls,
-    ctaText?: string
-) => epicButtonsLearnMoreTemplate(url, ctaText);
-
 const controlTemplate: EpicTemplate = (
     variant: EpicVariant,
     copy: AcquisitionsEpicTemplateCopy
@@ -896,7 +891,6 @@ export {
     shouldShowEpic,
     makeEpicABTest,
     defaultButtonTemplate,
-    learnMoreButtonTemplate,
     defaultMaxViews,
     getReaderRevenueRegion,
     userIsInCorrectCohort,

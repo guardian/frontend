@@ -2,11 +2,11 @@
 import {
     makeEpicABTest,
     defaultButtonTemplate,
-    learnMoreButtonTemplate,
     buildEpicCopy,
 } from 'common/modules/commercial/contributions-utilities';
 import { getArticleViewCountForDays } from 'common/modules/onward/history';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
+import { epicButtonsLearnMoreTemplate } from 'common/modules/commercial/templates/acquisitions-epic-buttons-learn-more';
 
 // User must not have read fewer than 5 articles in the last 30 days
 const maxArticleViews = 5;
@@ -27,6 +27,11 @@ const copy = {
         'We need your support to keep delivering quality journalism, to maintain our openness and to protect our precious independence. Every reader contribution, big or small, is so valuable. \n',
     highlightedText,
 };
+
+const learnMoreButtonTemplate: (CtaUrls, ctaText?: string) => string = (
+    url: CtaUrls,
+    ctaText?: string
+) => epicButtonsLearnMoreTemplate(url, ctaText);
 
 export const learnMore: EpicABTest = makeEpicABTest({
     id: 'ContributionsEpicLearnMoreCta',
