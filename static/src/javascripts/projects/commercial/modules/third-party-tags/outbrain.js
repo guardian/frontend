@@ -9,7 +9,6 @@ type OutbrainPageConditions = {
     outbrainEnabled: boolean,
     noMerchSlotsExpected: boolean,
     contributionsTestVisible: boolean,
-    emailTestVisible: boolean,
     storyQuestionsVisible: boolean,
 };
 
@@ -35,15 +34,12 @@ const getOutbrainPageConditions = (): Promise<OutbrainPageConditions> =>
         noMerchSlotsExpected(),
         waitForCheck('isUserInContributionsAbTest'),
         waitForCheck('isStoryQuestionsOnPage'),
-    ]).then(
-        ([outbrainDisabled, noMerchSlots, contributions, email, story]) => ({
-            outbrainEnabled: !outbrainDisabled,
-            noMerchSlotsExpected: noMerchSlots,
-            contributionsTestVisible: contributions,
-            emailTestVisible: email,
-            storyQuestionsVisible: story,
-        })
-    );
+    ]).then(([outbrainDisabled, noMerchSlots, contributions, story]) => ({
+        outbrainEnabled: !outbrainDisabled,
+        noMerchSlotsExpected: noMerchSlots,
+        contributionsTestVisible: contributions,
+        storyQuestionsVisible: story,
+    }));
 
 const getOutbrainDfpConditions = (): Promise<OutbrainDfpConditions> =>
     Promise.all([
@@ -60,7 +56,6 @@ export const getOutbrainComplianceTargeting = (): Promise<
     getOutbrainPageConditions().then(pageConditions => {
         if (
             pageConditions.contributionsTestVisible ||
-            pageConditions.emailTestVisible ||
             pageConditions.storyQuestionsVisible ||
             !pageConditions.outbrainEnabled
         ) {
@@ -106,9 +101,7 @@ export const initOutbrain = (): Promise<void> =>
 
         const contributionVisible = pageConditions.contributionsTestVisible;
         const editorialTests =
-            contributionVisible ||
-            pageConditions.emailTestVisible ||
-            pageConditions.storyQuestionsVisible;
+            contributionVisible || pageConditions.storyQuestionsVisible;
 
         if (pageConditions.noMerchSlotsExpected) {
             if (editorialTests) {
