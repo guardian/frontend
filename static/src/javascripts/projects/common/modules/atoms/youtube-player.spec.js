@@ -10,6 +10,9 @@ jest.mock('lib/config', () => ({
         if (key === 'page.adUnit') {
             return 'adunit';
         }
+        if (key === 'isDotcomRendering') {
+            return false;
+        }
         throw new Error(
             `Unexpected config lookup '${key}', check the mock is still correct`
         );
