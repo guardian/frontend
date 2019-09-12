@@ -29,7 +29,7 @@ const copy = {
 };
 
 export const learnMore: EpicABTest = makeEpicABTest({
-    id: 'ContributionsEpicLearnMoreCTA',
+    id: 'ContributionsEpicLearnMoreCta',
     campaignId: 'epic_learn_more_cta',
 
     start: '2019-06-24',

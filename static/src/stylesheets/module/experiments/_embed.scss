@@ -84,7 +84,8 @@
     svg, img { height: 100%; width: auto; }
 }
 
-.contributions__contribute {
+.contributions__contribute,
+.contributions__learn-more {
     background-color: $sport-dark;
     color: #ffffff;
     font-weight: bold;
@@ -93,6 +94,7 @@
     padding-left: $gs-gutter * (3 / 4);;
     padding-right: 0;
     margin-left: 0;
+
     &:hover {
         background-color: darken($sport-dark, 5%);
         text-decoration: none;
@@ -100,7 +102,6 @@
 
     &:after {
         content: '';
-
         display: inline-block;
         background-repeat: no-repeat;
         width: 30px;
@@ -113,6 +114,7 @@
 
 // Specificity needed to override an inline rule in _pillars.scss that's messing with the epic link colour.
 a[href].contributions__contribute.contributions__contribute--epic,
+a[href].contributions__learn-more.contributions__learn-more--epic,
 .contributions__adblock-button a {
     margin-top: 0;
     background-color: $highlight-main;
@@ -130,6 +132,25 @@ a[href].contributions__contribute.contributions__contribute--epic,
     &:after {
         background-image: svg-url('<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><path fill="$black" stroke="$black" d="M22.8 14.6L15.2 7l-.7.7 5.5 6.6H6v1.5h14l-5.5 6.6.7.7 7.6-7.6v-.9"/></svg>');
     }
+}
+
+a[href].contributions__learn-more.contributions__learn-more--epic {
+    margin-top: $gs-baseline / 2;
+    background-color: $brightness-93;
+
+    &:hover {
+        background-color: $brightness-86;
+    }
+
+    @include mq($from: mobileLandscape) {
+        margin-top: 0;
+    }
+}
+
+.contributions__learn-more + .contributions__payment-logos {
+    width: 100%;
+    margin-top: $gs-baseline / 2;
+    margin-left: $gs-baseline / 2;
 }
 
 .contributions__contribute--epic-member {
