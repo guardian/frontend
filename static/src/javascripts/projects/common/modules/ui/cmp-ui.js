@@ -1,38 +1,51 @@
 // @flow
-import { getCookie } from 'lib/cookies';
-import { cmpConfig } from '@guardian/consent-management-platform';
+// import { cmpConfig, cmpUi } from '@guardian/consent-management-platform';
+import { isInVariantSynchronous } from 'common/modules/experiments/ab';
+import { commercialIabCompliant } from 'common/modules/experiments/tests/commercial-iab-compliant';
+import {
+    cmpConfig,
+    cmpUi,
+} from '../../../../../../../../consent-management-platform';
 
-const IAB_COOKIE_NAME = 'euconsent';
 const CMP_READY_CLASS = 'cmp-iframe-ready';
-const CMP_DOMAIN = 'https://manage.theguardian.com'; // TODO: Import from cmpConfig
-
 let container: ?HTMLElement;
+let uiPrepared: boolean = false;
 
-const receiveMessage = (event: MessageEvent) => {
-    const { origin, data } = event;
-
-    if (origin !== CMP_DOMAIN) {
-        return;
-    }
-
-    switch (data) {
-        case cmpConfig.CMP_READY_MSG:
-            if (container && container.parentNode) {
-                container.classList.add(CMP_READY_CLASS);
-            }
-            break;
-        case cmpConfig.CMP_CLOSE_MSG:
-            if (container && container.parentNode) {
-                container.classList.remove(CMP_READY_CLASS);
-                container.remove();
-            }
-            break;
-        default:
-            break;
+const onReadyCmp = () => {
+    if (container && container.parentNode) {
+        container.classList.add(CMP_READY_CLASS);
     }
 };
 
-const addContainerToPage = (): void => {
+const onCloseCmp = () => {
+    if (container && container.parentNode) {
+        container.classList.remove(CMP_READY_CLASS);
+        container.remove();
+    }
+};
+
+const prepareUi = () => {
+    if (uiPrepared) {
+        return;
+    }
+
+    container = document.createElement('div');
+    container.className = 'cmp-overlay';
+
+    const iframe = document.createElement('iframe');
+    iframe.src = cmpConfig.CMP_URL;
+    iframe.className = 'cmp-iframe';
+
+    container.appendChild(iframe);
+
+    cmpUi.setupMessageHandlers(onReadyCmp, onCloseCmp);
+
+    uiPrepared = true;
+};
+
+const show = () => {
+    prepareUi();
+
     if (document.body && container && !container.parentElement) {
         document.body.appendChild(container);
     }
@@ -41,10 +54,14 @@ const addContainerToPage = (): void => {
 const handlePrivacySettingsClick = (evt: Event): void => {
     evt.preventDefault();
 
-    addContainerToPage();
+    show();
 };
 
-const addPrivacySettingsLink = (): void => {
+export const addPrivacySettingsLink = (): void => {
+    if (!isInVariantSynchronous(commercialIabCompliant, 'variant')) {
+        return;
+    }
+
     const privacyLink: ?HTMLElement = document.querySelector(
         'a[data-link-name=privacy]'
     );
@@ -78,27 +95,14 @@ const addPrivacySettingsLink = (): void => {
     }
 };
 
-export const init = (): void => {
-    if (getCookie(IAB_COOKIE_NAME)) {
-        return;
-    }
+export const consentManagementPlatformUi = {
+    id: 'cmpUi',
+    canShow: () => {
+        if (isInVariantSynchronous(commercialIabCompliant, 'variant')) {
+            return Promise.resolve(cmpUi.canShow());
+        }
 
-    container = document.createElement('div');
-    container.className = 'cmp-overlay';
-
-    const iframe = document.createElement('iframe');
-    iframe.src = cmpConfig.CMP_URL;
-    iframe.className = 'cmp-iframe';
-
-    container.appendChild(iframe);
-
-    addContainerToPage();
-
-    /**
-     * Temporarily add a Privacy Settings
-     * link in the footer for resurfacing the CMP UI.
-     * */
-    addPrivacySettingsLink();
-
-    window.addEventListener('message', receiveMessage, false);
+        return Promise.resolve(false);
+    },
+    show,
 };
