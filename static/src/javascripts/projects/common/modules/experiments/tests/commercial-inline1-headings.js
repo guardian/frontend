@@ -2,7 +2,7 @@
 
 export const commercialInline1Headings: ABTest = {
     id: 'CommercialInline1Headings',
-    start: '2019-07-30',
+    start: '2019-09-13',
     expiry: '2020-07-30',
     author: 'Ioanna Kyprianou',
     description: 'Test inline1 ads to not be placed right after h2 headings',
