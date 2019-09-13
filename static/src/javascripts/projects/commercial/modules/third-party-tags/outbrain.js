@@ -1,6 +1,4 @@
 // @flow strict
-import { isInVariantSynchronous } from 'common/modules/experiments/ab';
-import { commercialOutbrainTesting } from 'common/modules/experiments/tests/commercial-outbrain-testing.js';
 import { adblockInUse } from 'lib/detect';
 import { waitForCheck } from 'common/modules/check-mediator';
 import { load } from './outbrain-load';
@@ -88,14 +86,7 @@ export const getOutbrainComplianceTargeting = (): Promise<
 
 export const initOutbrain = (): Promise<void> =>
     getOutbrainPageConditions().then(pageConditions => {
-        // temporary addition based on a zero participation AB test
-        // Remove after 19-03-25 as testing will be complete.
-        const shouldTestOutbrainWidget: boolean = isInVariantSynchronous(
-            commercialOutbrainTesting,
-            'variant'
-        );
-
-        if (!pageConditions.outbrainEnabled && !shouldTestOutbrainWidget) {
+        if (!pageConditions.outbrainEnabled) {
             return;
         }
 
@@ -112,7 +103,7 @@ export const initOutbrain = (): Promise<void> =>
         } else {
             // only wait for dfp conditions if we really have to.
             return getOutbrainDfpConditions().then(dfpConditions => {
-                if (dfpConditions.blockedByAds && !shouldTestOutbrainWidget) {
+                if (dfpConditions.blockedByAds) {
                     return;
                 }
 
