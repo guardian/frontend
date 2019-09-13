@@ -8,8 +8,7 @@ export const commercialInline1Headings: ABTest = {
     description: 'Test inline1 ads to not be placed right after h2 headings',
     audience: 0.01,
     audienceOffset: 0.0,
-    successMeasure:
-        'We can see inline1 ads in desktop between paragraphs',
+    successMeasure: 'We can see inline1 ads in desktop between paragraphs',
     audienceCriteria: 'n/a',
     dataLinkNames: 'n/a',
     idealOutcome:
