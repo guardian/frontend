@@ -33,13 +33,23 @@ const renderWidget = (widgetType: string, init: any): Promise<void> => {
 };
 
 const init = (): Promise<void> => {
+    /*
+        The `config.set` instances in this function are injecting debuging information into window.guardian.config.debug
+        This will be used for investigations
+    */
+
     const edition = config.get('page.edition', '').toLowerCase();
     const isSwitchOn = config.get('switches.plistaForOutbrainAu');
-    const shouldServePlistaOrOutbrain: boolean = isSwitchOn && edition === 'au';
-    if (shouldServePlistaOrOutbrain) {
+    const shouldUseRandomWidget: boolean = isSwitchOn && edition === 'au';
+
+    config.set('debug.outbrain.shouldUseRandomWidget', shouldUseRandomWidget);
+
+    if (shouldUseRandomWidget) {
         const possibleWidgets = ['plista', 'outbrain'];
         const randomWidget =
             possibleWidgets[Math.floor(Math.random() * possibleWidgets.length)];
+
+        config.set('debug.outbrain.randomWidget', randomWidget);
 
         if (randomWidget === 'plista') {
             return renderWidget('plista', plista.init);

@@ -1,6 +1,7 @@
 // @flow strict
 import { adblockInUse } from 'lib/detect';
 import { waitForCheck } from 'common/modules/check-mediator';
+import config from 'lib/config';
 import { load } from './outbrain-load';
 
 type OutbrainPageConditions = {
@@ -86,13 +87,38 @@ export const getOutbrainComplianceTargeting = (): Promise<
 
 export const initOutbrain = (): Promise<void> =>
     getOutbrainPageConditions().then(pageConditions => {
+        /*
+            The `config.set` instances in this function are injecting debuging information into window.guardian.config.debug
+            This will be used for investigations
+        */
+
+        config.set(
+            'debug.outbrain.pageConditions.outbrainEnabled',
+            pageConditions.outbrainEnabled
+        );
+
         if (!pageConditions.outbrainEnabled) {
             return;
         }
 
+        config.set(
+            'debug.outbrain.pageConditions.contributionsTestVisible',
+            pageConditions.contributionsTestVisible
+        );
+        config.set(
+            'debug.outbrain.pageConditions.storyQuestionsVisible',
+            pageConditions.storyQuestionsVisible
+        );
+
         const contributionVisible = pageConditions.contributionsTestVisible;
         const editorialTests =
             contributionVisible || pageConditions.storyQuestionsVisible;
+
+        config.set('debug.outbrain.editorialTests', editorialTests);
+        config.set(
+            'debug.outbrain.pageConditions.noMerchSlotsExpected',
+            pageConditions.noMerchSlotsExpected
+        );
 
         if (pageConditions.noMerchSlotsExpected) {
             if (editorialTests) {
@@ -103,9 +129,19 @@ export const initOutbrain = (): Promise<void> =>
         } else {
             // only wait for dfp conditions if we really have to.
             return getOutbrainDfpConditions().then(dfpConditions => {
+                config.set(
+                    'debug.outbrain.dfpConditions.blockedByAds',
+                    dfpConditions.blockedByAds
+                );
+
                 if (dfpConditions.blockedByAds) {
                     return;
                 }
+
+                config.set(
+                    'debug.outbrain.dfpConditions.useMerchandiseAdSlot',
+                    dfpConditions.useMerchandiseAdSlot
+                );
 
                 if (dfpConditions.useMerchandiseAdSlot) {
                     load('merchandising');
