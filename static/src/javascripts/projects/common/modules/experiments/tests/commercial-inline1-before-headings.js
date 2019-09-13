@@ -8,7 +8,8 @@ export const commercialInline1BeforeHeadings: ABTest = {
     description: 'Test inline1 ads to be placed above h2 headings',
     audience: 0.01,
     audienceOffset: 0.0,
-    successMeasure: 'We can see inline1 ads in desktop and top-above-nav in mobiles, before headings',
+    successMeasure:
+        'We can see inline1 ads in desktop and top-above-nav in mobiles, before headings',
     audienceCriteria: 'n/a',
     dataLinkNames: 'n/a',
     idealOutcome:
