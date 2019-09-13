@@ -56,9 +56,10 @@ import { getAllAdConsentsWithState } from 'common/modules/commercial/ad-prefs.li
 import ophan from 'ophan/ng';
 import { adFreeBanner } from 'common/modules/commercial/ad-free-banner';
 import { init as initReaderRevenueDevUtils } from 'common/modules/commercial/reader-revenue-dev-utils';
-import { isInVariantSynchronous } from 'common/modules/experiments/ab';
-import { commercialIabCompliant } from 'common/modules/experiments/tests/commercial-iab-compliant';
-import { init as initCmpUi } from 'common/modules/ui/cmp-ui';
+import {
+    consentManagementPlatformUi,
+    addPrivacySettingsLink,
+} from 'common/modules/ui/cmp-ui';
 
 const initialiseTopNavItems = (): void => {
     const header: ?HTMLElement = document.getElementById('header');
@@ -301,23 +302,20 @@ const initialiseEmail = (): void => {
 };
 
 const initialiseBanner = (): void => {
-    if (!isInVariantSynchronous(commercialIabCompliant, 'variant')) {
-        // ordered by priority
-        const bannerList = [
-            firstPvConsentPlusEngagementBanner,
-            firstPvConsentBanner,
-            breakingNews,
-            membershipBanner,
-            membershipEngagementBanner,
-            smartAppBanner,
-            adFreeBanner,
-            emailSignInBanner,
-        ];
+    // ordered by priority
+    const bannerList = [
+        consentManagementPlatformUi,
+        firstPvConsentPlusEngagementBanner,
+        firstPvConsentBanner,
+        breakingNews,
+        membershipBanner,
+        membershipEngagementBanner,
+        smartAppBanner,
+        adFreeBanner,
+        emailSignInBanner,
+    ];
 
-        initBannerPicker(bannerList);
-    } else {
-        initCmpUi();
-    }
+    initBannerPicker(bannerList);
 };
 
 const initialiseConsentCookieTracking = (): void =>
@@ -361,6 +359,7 @@ const init = (): void => {
         ['c-banner-picker', initialiseBanner],
         ['c-increment-article-counts', updateArticleCounts],
         ['c-reader-revenue-dev-utils', initReaderRevenueDevUtils],
+        ['c-add-privacy-settings-link', addPrivacySettingsLink],
     ]);
 };
 
