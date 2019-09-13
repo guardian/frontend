@@ -1,7 +1,6 @@
 // @flow
 import { commercialPrebidSafeframe } from 'common/modules/experiments/tests/commercial-prebid-safeframe.js';
 import { commercialIabCompliant } from 'common/modules/experiments/tests/commercial-iab-compliant';
-import { commercialOutbrainTesting } from 'common/modules/experiments/tests/commercial-outbrain-testing.js';
 import { askFourEarning } from 'common/modules/experiments/tests/contributions-epic-ask-four-earning';
 import { articlesViewed } from 'common/modules/experiments/tests/contributions-epic-articles-viewed';
 import { countryName } from 'common/modules/experiments/tests/contributions-epic-country-name';
@@ -14,7 +13,6 @@ import { learnMore } from 'common/modules/experiments/tests/contributions-epic-l
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialPrebidSafeframe,
     commercialIabCompliant,
-    commercialOutbrainTesting,
     adblockTest,
     prebidTripleLiftAdapter,
 ];
