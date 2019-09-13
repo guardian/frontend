@@ -92,7 +92,7 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<number> => {
     const defaultRules = {
         bodySelector: getBodySelector(),
         slotSelector: getSlotSelector(),
-        minAbove: isImmersive ? 700 : 400,
+        minAbove: isImmersive ? 700 : 300,
         minBelow: 700,
         selectors: {
             ' > h2': {
