@@ -9,12 +9,14 @@ import { adblockTest } from 'common/modules/experiments/tests/adblock-ask';
 import { articlesViewedBanner } from 'common/modules/experiments/tests/contribs-banner-articles-viewed';
 import { prebidTripleLiftAdapter } from 'common/modules/experiments/tests/prebid-triple-lift-adapter';
 import { learnMore } from 'common/modules/experiments/tests/contributions-epic-learn-more-cta';
+import { commercialInline1Headings } from 'common/modules/experiments/tests/commercial-inline1-headings';
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialPrebidSafeframe,
     commercialIabCompliant,
     adblockTest,
     prebidTripleLiftAdapter,
+    commercialInline1Headings,
 ];
 
 export const epicTests: $ReadOnlyArray<EpicABTest> = [
