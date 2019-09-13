@@ -13,7 +13,7 @@ import { initCarrot } from 'commercial/modules/carrot-traffic-driver';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import { commercialInline1BeforeHeadings } from 'common/modules/experiments/tests/commercial-inline1-before-headings';
 
-const commercialInline1BeforeHeadings = (): boolean =>
+const isInInlineBeforeHeadingsABTest = (): boolean =>
     isInVariantSynchronous(commercialInline1BeforeHeadings, 'variant');
 
 type AdSize = {
@@ -48,7 +48,7 @@ const insertAdAtPara = (
         .write(() =>
             ads.forEach(ad => {
                 if (para.parentNode) {
-                    para.parentNode.insertBefore(ad, para.nextSibling);
+                    para.parentNode.insertBefore(ad, para);
                 }
             })
         )
@@ -82,9 +82,6 @@ const getBodySelector = (): string =>
         ? '.js-article__body'
         : '.article-body-03f883b8';
 
-//1. if 620x320 AND has h2
-//2. put it at the bottom of the paragraph!
-
 const getSlotSelector = (): string =>
     !config.get('isDotcomRendering', false) ? ' > p' : ' > span';
 
@@ -94,13 +91,13 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<number> => {
     // For inline1
     const defaultRules = {
         bodySelector: getBodySelector(),
-        slotSelector: getSlotSelector(), //candidates = bodySelector + slotSelector
-        minAbove: isImmersive ? 700 : 400, //candidate should be farEnoughFromTopOfBody
-        minBelow: 700, //candidate should be farEnoughFromBottomOfBody
-        selectors: {  // test each selector against each candidate
+        slotSelector: getSlotSelector(),
+        minAbove: isImmersive ? 700 : 400,
+        minBelow: 700,
+        selectors: {
             ' > h2': {
-                minAbove: 0,
-                minBelow: 250,
+                minAbove: isInInlineBeforeHeadingsABTest ? 5 : 0,
+                minBelow: isInInlineBeforeHeadingsABTest ? 190 : 250,
             },
             ' .ad-slot': adSlotClassSelectorSizes,
             ' > :not(p):not(h2):not(.ad-slot)': {
