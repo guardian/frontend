@@ -268,8 +268,8 @@ export const init = (): Promise<boolean> => {
     im.then((inlineMerchAdded: boolean) =>
         inlineMerchAdded ? trackAdRender('dfp-ad--im') : Promise.resolve()
     )
-        .then(addInlineAds)
-        .then(initCarrot);
+        .then(isInInlineAdABTest ? addInlineAds : initCarrot)
+        .then(isInInlineAdABTest ? initCarrot : addInlineAds);
 
     return im;
 };
