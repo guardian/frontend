@@ -51,7 +51,7 @@ export const learnMore: EpicABTest = makeEpicABTest({
     audienceOffset: 0,
 
     geolocation,
-    highPriority: true,
+    highPriority: false,
 
     canRun: () => articleViewCount < maxArticleViews,
 
