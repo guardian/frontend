@@ -13,8 +13,10 @@ import { initCarrot } from 'commercial/modules/carrot-traffic-driver';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import { commercialInline1Headings } from 'common/modules/experiments/tests/commercial-inline1-headings';
 
-const isInInlineAdABTest: boolean =
-    isInVariantSynchronous(commercialInline1Headings, 'variant');
+const isInInlineAdABTest: boolean = isInVariantSynchronous(
+    commercialInline1Headings,
+    'variant'
+);
 
 type AdSize = {
     width: number,
