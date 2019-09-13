@@ -108,8 +108,8 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-commercial-inline1-before-headings",
-    "Test inline1 ads to be placed above headings",
+    "ab-commercial-inline1-headings",
+    "Test inline1 ads to not be placed right after h2 headings",
     owners = Seq(Owner.withGithub("ioanna0")),
     safeState = On,
     sellByDate = new LocalDate(2020, 7, 30),
