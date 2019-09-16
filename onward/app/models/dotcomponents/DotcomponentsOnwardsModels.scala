@@ -4,7 +4,7 @@ import model.{DotcomContentType, Pillar, Tag, Tags}
 import play.api.libs.json.Json
 
 case class RichLink(
-  tags: List[Tag],
+  tags: List[RichLinkTagTag],
   cardStyle: String,
   thumbnailUrl: Option[String],
   headline: String,
@@ -30,3 +30,10 @@ object RichLink {
     }.getOrElse("news")
   }
 }
+
+// duplicated in dotcomponentsdatamodel
+case class RichLinkTagTag(
+  id: String,
+  `type`: String,
+  title: String,
+)

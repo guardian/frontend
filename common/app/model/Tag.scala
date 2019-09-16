@@ -11,8 +11,6 @@ import navigation.GuardianFoundationHelper
 
 object Tag {
 
-  def withoutCommercial(tag: Tag): Tag = tag.copy(properties = tag.properties.copy(commercial = None))
-
   def makeMetadata(tag: TagProperties, pagination: Option[Pagination]): MetaData = {
 
     val javascriptConfigOverrides: Map[String, JsValue] = Map(
