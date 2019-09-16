@@ -200,7 +200,7 @@ object PageElement {
           .map { case (a, i) => ImageAsset.make(a, i) }
         val imageSources: Seq[ImageSource] = BodyMedia.all.map {
           case (weighting, widths) =>
-            val srcSet = widths.breakpoints.flatMap { b =>
+            val srcSet: Seq[SrcSet] = widths.breakpoints.flatMap { b =>
               Seq(
                 ImgSrc.srcsetForBreakpoint(b, BodyMedia.inline.breakpoints, maybeImageMedia = Some(ImageMedia(signedAssets))),
                 ImgSrc.srcsetForBreakpoint(b, BodyMedia.inline.breakpoints, maybeImageMedia = Some(ImageMedia(signedAssets)), hidpi = true)
