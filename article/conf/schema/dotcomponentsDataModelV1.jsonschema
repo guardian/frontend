@@ -138,6 +138,9 @@
                 },
                 "commissioningDesks": {
                     "type": "string"
+                },
+                "publication": {
+                    "type": "string"
                 }
             },
             "required": [
