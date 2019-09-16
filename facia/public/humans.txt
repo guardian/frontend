@@ -318,3 +318,8 @@ Developer: Anne Byrne
 Twitter: @aycenne
 From: Cork, Ireland
 Location: London, UK
+
+SETI (Tools & Infra): Stephen Geller
+GitHub: stephengeller
+Twitter: _stephengeller
+Location: London, UK
