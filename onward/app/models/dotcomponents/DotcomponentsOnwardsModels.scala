@@ -4,7 +4,7 @@ import model.{DotcomContentType, Pillar, Tag, Tags}
 import play.api.libs.json.Json
 
 case class RichLink(
-  tags: List[RichLinkTagTag],
+  tags: List[RichLinkTag],
   cardStyle: String,
   thumbnailUrl: Option[String],
   headline: String,
@@ -32,8 +32,12 @@ object RichLink {
 }
 
 // duplicated in dotcomponentsdatamodel
-case class RichLinkTagTag(
+case class RichLinkTag(
   id: String,
   `type`: String,
   title: String,
 )
+
+object RichLinkTag {
+  implicit val writes = Json.writes[RichLinkTag]
+}
