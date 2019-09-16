@@ -53,7 +53,7 @@ export const learnMore: EpicABTest = makeEpicABTest({
     geolocation,
     highPriority: false,
 
-    canRun: () => articleViewCount < maxArticleViews,
+    canRun: () => articleViewCount < maxArticleViews && geolocation !== 'AU',
 
     variants: [
         {
