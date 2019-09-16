@@ -3,13 +3,11 @@ package rugby.jobs
 import com.gu.Box
 import common.Logging
 import org.joda.time.format.{DateTimeFormat, DateTimeFormatter}
+import rugby.feed.{MatchNavigation, OptaEvent, RugbyFeed, RugbyOptaFeedException}
 import rugby.model._
-import rugby.feed.{MatchNavigation, OptaEvent, OptaFeed, RugbyFeed, RugbyOptaFeedException}
 
 import scala.collection.immutable
 import scala.concurrent.{ExecutionContext, Future}
-import scala.util.Failure
-import scala.util.Success
 
 
 class RugbyStatsJob(feed: RugbyFeed) extends Logging {
@@ -32,63 +30,6 @@ class RugbyStatsJob(feed: RugbyFeed) extends Logging {
     }
   }
 
-  def fetchGroupTables()(implicit executionContext: ExecutionContext): Future[Any] = {
-    feed.getGroupTables().map { data =>
-      groupTables.alter { data }
-    }.recover {
-      case optaFeedException: RugbyOptaFeedException => log.warn(s"RugbyStatsJob encountered errors: ${optaFeedException.message}")
-      case error: Exception => log.warn(error.getMessage, error)
-    }
-  }
-
-  def fetchPastScoreEvents()(implicit executionContext: ExecutionContext): Unit = {
-    val pastMatches = fixturesAndResultsMatches.get().values.filter(_.date.isBeforeNow).toList
-
-    fetchScoreEvents(pastMatches).map { scoreEventsForMatchesMap =>
-      scoreEventsForMatchesMap.foreach { case (aMatch, events) =>
-        pastScoreEvents.alter { _ + (aMatch.key -> events)}
-      }
-    }
-  }
-
-  private def fetchScoreEvents(matches: List[Match])(implicit executionContext: ExecutionContext): Future[Map[Match, List[ScoreEvent]]] = {
-    val scoresEventsForMatchesFuture: Future[List[(Match, List[ScoreEvent])]] = Future.sequence {
-      matches.map(rugbyMatch =>
-        feed.getScoreEvents(rugbyMatch).map(scoreEvents => rugbyMatch -> scoreEvents.toList)
-      )
-    }
-    scoresEventsForMatchesFuture.onComplete {
-      case Success(result) => //do nothing
-      case Failure(t) => log.warn(s"Failed to fetch event score result with error: ${t.getMessage}" , t)
-    }
-
-    scoresEventsForMatchesFuture.map(_.toMap)
-  }
-
-//  def fetchPastMatchesStat()(implicit executionContext: ExecutionContext): Unit = {
-//    val pastMatches = fixturesAndResultsMatches.get().values.filter(_.date.isBeforeNow).toList
-//
-//    fetchMatchesStat(pastMatches).map { statForMatches =>
-//      statForMatches.foreach { case (aMatch, stat) =>
-//        pastMatchesStat.alter { _ + (aMatch.key -> stat)}
-//      }
-//    }
-//  }
-//
-//  private def fetchMatchesStat(matches: List[Match])(implicit executionContext: ExecutionContext): Future[Map[Match, MatchStat]] = {
-//    val statForMatchesFuture = Future.sequence {
-//      matches.map(rugbyMatch =>
-//        feed.getMatchStat(rugbyMatch).map(matchStat => rugbyMatch -> matchStat)
-//      )
-//    }
-//    statForMatchesFuture.onComplete {
-//      case Success(result) => //do nothing
-//      case Failure(t) => log.warn(s"Failed to fetch match stat with error: ${t.getMessage}", t)
-//    }
-//
-//    statForMatchesFuture.map(_.toMap)
-//  }
-
   def sendMatchArticles(navigationArticles: Future[Map[String, MatchNavigation]])(implicit executionContext: ExecutionContext): Future[immutable.Iterable[Map[String, MatchNavigation]]] = {
     navigationArticles.flatMap { matches =>
       Future.sequence(matches.map { matchItem =>
@@ -105,23 +46,7 @@ class RugbyStatsJob(feed: RugbyFeed) extends Logging {
     }
   }
 
-  def getGroupTable(rugbyMatch: Match): Option[GroupTable] = {
-    if (rugbyMatch.hasGroupTable) {
-      groupTables.get.get(rugbyMatch.event).flatMap { tables =>
-        tables.find { groupTable =>
-          groupTable.teams.exists(_.id == rugbyMatch.homeTeam.id)
-        }
-      }
-    } else {
-      None
-    }
-  }
-
   def getAllResults(): Seq[Match] = fixturesAndResultsMatches.get.values.toList.filter(_.status == Status.Result)
-
-  def getScoreEvents(rugbyMatch: Match): Seq[ScoreEvent] = pastScoreEvents.get().getOrElse(rugbyMatch.key, Seq.empty)
-
-  def getMatchStat(rugbyMatch: Match): Option[MatchStat] = pastMatchesStat.get().get(rugbyMatch.key)
 
   def getMatchNavContent(rugbyMatch: Match): Option[MatchNavigation] = {
     matchNavContent.get.get(rugbyMatch.key)

@@ -21,29 +21,11 @@ class RugbyLifecycle(
 
   override def start(): Unit = {
     rugbyStatsJob.fetchFixturesAndResults()
-//    rugbyStatsJob.fetchGroupTables()
 
     jobs.deschedule("FixturesAndResults")
     jobs.schedule("FixturesAndResults", "30 * * * * ?") {
       rugbyStatsJob.fetchFixturesAndResults()
     }
-
-//    jobs.deschedule("GroupTables")
-//    jobs.schedule("GroupTables", "10 0/30 * * * ?") {
-//      rugbyStatsJob.fetchGroupTables()
-//    }
-//
-//
-//    jobs.deschedule("PastEventScores")
-//    jobs.schedule("PastEventScores", "20 0/30 * * * ?") {
-//      rugbyStatsJob.fetchPastScoreEvents()
-//    }
-
-//    jobs.deschedule("PastMatchesStat")
-//    jobs.schedule("PastMatchesStat", "30 0/30 * * * ?") {
-//      rugbyStatsJob.fetchPastMatchesStat()
-//    }
-
 
     jobs.deschedule("MatchNavArticles")
     jobs.schedule("MatchNavArticles", "35 0/30 * * * ?") {
@@ -53,14 +35,10 @@ class RugbyLifecycle(
 
     akkaAsync.after1s {
       rugbyStatsJob.fetchFixturesAndResults()
-      rugbyStatsJob.fetchGroupTables()
     }
 
     //delay to allow previous jobs to complete
     akkaAsync.after(initializationTimeout) {
-      rugbyStatsJob.fetchPastScoreEvents()
-//      rugbyStatsJob.fetchPastMatchesStat()
-
       val refreshedNavContent = capiFeed.getMatchArticles(rugbyStatsJob.getAllResults())
       rugbyStatsJob.sendMatchArticles(refreshedNavContent)
     }

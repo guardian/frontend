@@ -27,9 +27,6 @@ object PAReads {
   implicit val tournamentReads = Json.reads[Tournament]
   implicit val matchReads = Json.reads[PAMatch]
   implicit val matchesReads = Json.reads[PAMatchesResponse]
-  implicit val tableRowReads = Json.reads[PATableRow]
-  implicit val tableReads = Json.reads[PATableResponse]
-  implicit val reads = Json.reads[PAEvent]
 }
 
 case class PAPlayer(
@@ -104,12 +101,12 @@ object PAMatch {
       date = item.date,
       id = item.id.toString,
       homeTeam = rugby.model.Team(
-        id = homeTeam.id.toString,
+        id = homeTeam.participant.id.toString,
         name = homeTeam.participant.name,
         score = homeTeam.results.get("final-result").map(_.value.toInt)
       ),
       awayTeam = rugby.model.Team(
-        id = awayTeam.id.toString,
+        id = awayTeam.participant.id.toString,
         name = awayTeam.participant.name,
         score = awayTeam.results.get("final-result").map(_.value.toInt)
       ),
@@ -133,105 +130,6 @@ object PAMatchesResponse extends Logging {
     val jsvalue = Json.parse(json)
     val read = Json.fromJson[PAMatchesResponse](jsvalue)
     PAUtils.asTry(read)
-  }
-}
-
-case class PATableRow(
-  rank: Int,
-  participant: Participant,
-  standings: Map[String, PAResult]
-)
-
-case class PATableResponse(
-  tournament: Tournament,
-  entries: List[PATableRow]
-)
-
-object PATableResponse extends Logging {
-
-  // TODO put JSON elsewhere to re-use error behaviour etc.
-  def fromJSON(json: String): Try[PATableResponse] = {
-    val jsvalue = Json.parse(json)
-    val res = Json.fromJson[PATableResponse](jsvalue)
-    PAUtils.asTry(res)
-  }
-
-  def toGroupTable(table: PATableResponse): GroupTable = {
-    val ranks = table.entries.map(entry => {
-      TeamRank(
-        id = entry.participant.id.toString,
-        name = entry.participant.name,
-        rank = entry.rank,
-        played = entry.standings("played").value.toInt,
-        won = entry.standings("wins").value.toInt,
-        drawn = entry.standings("draws").value.toInt,
-        lost = entry.standings("defeits").value.toInt,
-        pointsdiff = 0, // TODO fixme or remove
-        points = entry.standings("points").value.toInt,
-      )
-    })
-
-    GroupTable(
-      table.tournament.name,
-      teams = ranks
-    )
-  }
-}
-
-case class PAEvent(
-  id: Int,
-  code: String,
-  `type`: String,
-  meta: Map[String, PAResult],
-  elapsed: Int,
-  participants: List[NestedParticipant],
-)
-
-object PAEvent extends Logging {
-
-  def fromJSON(json: String): Try[PAEvent] = {
-    val jsvalue = Json.parse(json)
-    val event = Json.fromJson[PAEvent](jsvalue)
-    PAUtils.asTry(event)
-  }
-
-  def fromJSONList(json: String): Try[List[PAEvent]] = {
-    val jsvalue = Json.parse(json)
-    val events = Json.fromJson[List[PAEvent]](jsvalue)
-    PAUtils.asTry(events)
-  }
-
-  def toScoreEvent(event: PAEvent): Option[ScoreEvent] = {
-    val scorers = event.participants.head.participants.headOption.flatMap(_.headOption)
-    val team = event.participants.headOption
-
-    // Filter to goal events with a team and scorer
-    for {
-      scorer <- scorers
-      team <- team
-      if event.code == "goal"
-    } yield {
-      val eventType = event.`type` match {
-        case "Try" => ScoreType.`Try`
-        case "Penalty Try" => ScoreType.PenaltyTry
-        case "Penalty" => ScoreType.Penalty
-        case "Conversion" => ScoreType.Conversion
-        case "Dropkick" => ScoreType.DropGoal
-        case _ =>
-          log.info(s"Unexpected action type (${event.`type`}.")
-          ScoreType.`Try`
-      }
-
-      ScoreEvent(
-        player = Player(
-          id = scorer.id.toString,
-          name = scorer.name,
-          team = Team(team.id.toString, team.name, None)
-        ),
-        minute = (event.elapsed / 60).toString, // TODO check
-        `type` = eventType
-      )
-    }
   }
 }
 

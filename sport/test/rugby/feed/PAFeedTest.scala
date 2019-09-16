@@ -44,18 +44,6 @@ class PAFeedTest extends AsyncFlatSpec with Matchers {
     val games = feed.getFixturesAndResults()
     games.map(matches => matches.size shouldBe 1)
   }
-
-  it should "get score events" in {
-    val scoreEvents = feed.getScoreEvents(exampleMatch)
-    scoreEvents.map(goals => goals.size shouldBe 12)
-  }
-
-  it should "get match stats" ignore _
-
-  it should "get group tables" in {
-    val tables = feed.getGroupTables()
-    tables.map(tables => tables(WorldCup2019).size shouldBe 4)
-  }
 }
 
 object StubClient extends RugbyClient {
@@ -83,28 +71,6 @@ object StubClient extends RugbyClient {
     store.get(s"events/$seasonID") match {
       case Some(json) =>
         toFut(PAMatchesResponse.fromJSON(json))
-      case None =>
-        Future.failed(new Exception("Item not found"))
-    }
-  }
-
-  override def getStanding(standingID: Int)
-    (implicit executionContext: ExecutionContext): Future[PATableResponse] = {
-
-    store.get(s"standing/$standingID") match {
-      case Some(json) =>
-        toFut(PATableResponse.fromJSON(json))
-      case None =>
-        Future.failed(new Exception("Item not found"))
-    }
-  }
-
-  override def getEventActions(eventID: Int)
-    (implicit executionContext: ExecutionContext): Future[Seq[PAEvent]] = {
-
-    store.get(s"actions/$eventID") match {
-      case Some(json) =>
-        toFut(PAEvent.fromJSONList(json))
       case None =>
         Future.failed(new Exception("Item not found"))
     }
