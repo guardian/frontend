@@ -201,8 +201,11 @@ object PageElement {
         val imageSources: Seq[ImageSource] = BodyMedia.all.map {
           case (weighting, widths) =>
             val srcSet = widths.breakpoints.flatMap { b =>
-              ImgSrc.srcsetForBreakpoint(b, BodyMedia.inline.breakpoints, maybeImageMedia = Some(ImageMedia(signedAssets)))
-            }
+              Seq(
+                ImgSrc.srcsetForBreakpoint(b, BodyMedia.inline.breakpoints, maybeImageMedia = Some(ImageMedia(signedAssets))),
+                ImgSrc.srcsetForBreakpoint(b, BodyMedia.inline.breakpoints, maybeImageMedia = Some(ImageMedia(signedAssets)), hidpi = true)
+              )
+            }.flatten
 
             // A few very old articles use non-https hosts, which won't render
             val httpsSrcSet = srcSet.map(set => set.copy(src = ensureHTTPS(set.src)))
