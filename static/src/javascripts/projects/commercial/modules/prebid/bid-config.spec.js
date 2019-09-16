@@ -359,6 +359,10 @@ describe('getTrustXAdUnitId', () => {
         expect(getTrustXAdUnitId('dfp-ad--inline10', true)).toBe('3840');
         expect(getTrustXAdUnitId('dfp-ad--inline10', false)).toBe('3841');
     });
+
+    test('should return the expected values for dfp-ad--mobile-sticky', () => {
+        expect(getTrustXAdUnitId('dfp-ad--mobile-sticky', true)).toBe('8519');
+    });
 });
 
 describe('indexExchangeBidders', () => {
