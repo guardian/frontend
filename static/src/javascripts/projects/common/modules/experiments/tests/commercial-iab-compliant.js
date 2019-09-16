@@ -12,6 +12,7 @@ export const commercialIabCompliant: ABTest = {
     audienceCriteria: 'n/a',
     dataLinkNames: 'n/a',
     idealOutcome: 'CMP is compliant',
+    showForSensitive: true,
     canRun: () => true,
     variants: [
         {
