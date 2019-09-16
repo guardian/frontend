@@ -13,6 +13,7 @@ export const commercialInline1Headings: ABTest = {
     dataLinkNames: 'n/a',
     idealOutcome:
         'No significant impact to performance as well as higher ad yield',
+    showForSensitive: true,
     canRun: () => true,
     variants: [
         {
