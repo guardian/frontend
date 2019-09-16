@@ -46,7 +46,11 @@
     // Please email Dotcom Platform before changing this value
     function getExperienceValue() {
         // return 'none' if you're not testing anything
-        return 'none';
+        if (guardian.config.page.dcrCouldRender) {
+            return 'dcrCouldRender';
+        } else {
+            return 'none';
+        }
     }
 
     var identityId = null;

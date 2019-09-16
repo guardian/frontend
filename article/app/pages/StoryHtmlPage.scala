@@ -5,7 +5,7 @@ import conf.switches.Switches._
 import experiments.{ActiveExperiments, OldTLSSupportDeprecation}
 import html.HtmlPageHelpers._
 import html.Styles
-import model.{ApplicationContext, Page}
+import model.{ApplicationContext, Page, PageWithStoryPackage}
 import play.api.mvc.RequestHeader
 import play.twirl.api.Html
 import views.html.fragments._
@@ -16,6 +16,7 @@ import views.html.fragments.page.head.stylesheets.{criticalStyleInline, critical
 import views.html.fragments.page.head._
 import html.HtmlPageHelpers.{ContentCSSFile}
 import views.html.stacked
+import services.dotcomponents.ArticlePicker.dcrCouldRender
 
 object StoryHtmlPage {
 
@@ -29,11 +30,16 @@ object StoryHtmlPage {
     override def IE9CriticalCss: Html = stylesheetLink(s"stylesheets/ie9.$ContentCSSFile.css")
   }
 
+  def htmlDcrCouldRender(implicit pageWithStoryPackage: PageWithStoryPackage, request: RequestHeader): Html = {
+    val thisDcrCouldRender: Boolean = dcrCouldRender(pageWithStoryPackage, request)
+    Html(s"<script>window.guardian.config.page.dcrCouldRender = $thisDcrCouldRender</script>")
+  }
+
   def html(
     header: Html,
     content: Html,
     maybeHeadContent: Option[Html] = None
-  )(implicit page: Page, request: RequestHeader, applicationContext: ApplicationContext): Html = {
+  )(implicit page: Page, request: RequestHeader, applicationContext: ApplicationContext, pageWithStoryPackage: PageWithStoryPackage): Html = {
 
     val head: Html = maybeHeadContent.getOrElse(Html(""))
     val bodyClasses: Map[String, Boolean] = defaultBodyClasses() ++ Map(
@@ -48,7 +54,8 @@ object StoryHtmlPage {
         head,
         styles(allStyles),
         fixIEReferenceErrors(),
-        inlineJSBlocking()
+        inlineJSBlocking(),
+        htmlDcrCouldRender(pageWithStoryPackage, request)
       ),
       bodyTag(classes = bodyClasses)(
         tlsWarning() when ActiveExperiments.isParticipating(OldTLSSupportDeprecation),
