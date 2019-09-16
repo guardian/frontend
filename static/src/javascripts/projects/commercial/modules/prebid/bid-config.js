@@ -103,6 +103,8 @@ const getTrustXAdUnitId = (
             return '2963';
         case 'dfp-ad--comments':
             return '3840';
+        case 'dfp-ad--mobile-sticky':
+            return '8519';
         default:
             // for inline10 and onwards just use same IDs as inline9
             if (slotId.startsWith('dfp-ad--inline')) {
