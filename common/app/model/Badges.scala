@@ -61,11 +61,12 @@ object Badges {
   val theRealBorisJohnson = Badge("politics/series/the-real-boris-johnson ", Static("images/badges/the-real-boris-johnson.svg"))
   val johnsonsPromises = Badge("uk-news/series/johnsons-promises", Static("images/badges/johnsons-promises.svg"))
   val rugbyWorldCup = Badge("sport/rugby-world-cup-2019", Static("images/badges/rugby-world-cup.svg"))
+  val behindTheLines = Badge("uk-news/series/behind-the-lines", Static("images/badges/behind-the-lines.svg"))
 
 
   val allBadges = Seq(newArrivals, brexitGamble, roadToTheVote, brexitFrontline, brexitDividedGenerations,
     brexitHowItCameToThis, londonVersus, beyondTheBlade, euElection, paradisePapers, cambridgeAnalytica, specialReport, nhs70, cricketWorldCup, womensWorldCup, greenBlood, usElections2020, ausElection,
-    midterm, theNewPopulism, theImplantFiles, theRealBorisJohnson, johnsonsPromises, rugbyWorldCup)
+    midterm, theNewPopulism, theImplantFiles, theRealBorisJohnson, johnsonsPromises, rugbyWorldCup, behindTheLines)
 
   def badgeFor(c: ContentType): Option[Badge] = {
     badgeForTags(c.tags.tags.map(_.id))
