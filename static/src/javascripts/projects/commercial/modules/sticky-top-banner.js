@@ -8,6 +8,8 @@ import { trackAdRender } from 'commercial/modules/dfp/track-ad-render';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { getAdvertById } from 'commercial/modules/dfp/get-advert-by-id';
 import { register, unregister } from 'commercial/modules/messenger';
+import { markTime } from 'lib/user-timing';
+import { trackPerformance } from 'common/modules/analytics/google';
 
 const topSlotId = 'dfp-ad--top-above-nav';
 let updateQueued = false;
@@ -129,6 +131,13 @@ const onFirstRender = (): void => {
             const advert = getAdvertById(topSlotId);
             const adSize0 = getAdvertSizeByIndex(advert, 0);
             const adSize1 = getAdvertSizeByIndex(advert, 1);
+
+            markTime('Commercial: Top Slot First Render');
+            trackPerformance(
+                'Javascript Load',
+                'commercialTopSlotFirstRender',
+                'Commercial top slot first render'
+            );
 
             if (
                 // skip for Fabric creatives
