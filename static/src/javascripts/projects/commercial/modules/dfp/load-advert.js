@@ -4,27 +4,27 @@ import prebid from 'commercial/modules/prebid/prebid';
 import { markTime } from 'lib/user-timing';
 import a9 from 'commercial/modules/prebid/a9';
 
-const slotFlatMap = (advert, prebidSlot) => {
-    // We only fiddle with top-above-nav prebidSlot(s)
-    if (prebidSlot.key !== 'top-above-nav') {
-        return [prebidSlot];
+const slotFlatMap = (advert, hbSlot) => {
+    // We only fiddle with top-above-nav hbSlot(s)
+    if (hbSlot.key !== 'top-above-nav') {
+        return [hbSlot];
     }
     // For top-above-nav slots, we force the refreshed
     // to be the same size as the first display
-    if (prebidSlot.sizes.length === 1) {
+    if (hbSlot.sizes.length === 1) {
         // No point forcing a size, as there is already only one
         // possible (mobile/tablet). See prebid/slot-config.js
-        return [prebidSlot];
+        return [hbSlot];
     }
 
     if (Array.isArray(advert.size)) {
         return [
-            Object.assign({}, prebidSlot, {
+            Object.assign({}, hbSlot, {
                 sizes: [[advert.size[0], advert.size[1]]],
             }),
         ];
     }
-    // No point having this a9Slot, as advert.size is not an array
+    // No point having this hbSlot, as advert.size is not an array
     return [];
 };
 
@@ -55,8 +55,8 @@ export const refreshAdvert = (advert: Advert): void => {
                 slotFlatMap(advert, prebidSlot)
             );
 
-            const a9Promise = a9.requestBids(advert, prebidSlot =>
-                slotFlatMap(advert, prebidSlot)
+            const a9Promise = a9.requestBids(advert, a9Slot =>
+                slotFlatMap(advert, a9Slot)
             );
             return Promise.all([prepidPromise, a9Promise]);
         })
