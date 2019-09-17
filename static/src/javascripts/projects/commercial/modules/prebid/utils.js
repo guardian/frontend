@@ -164,3 +164,6 @@ export const stripTrailingNumbersAbove1 = (s: string): string =>
 
 export const containsWS = (sizes: PrebidSize[]): boolean =>
     contains(sizes, [160, 600]);
+
+export const shouldIncludeOnlyA9 =
+    window.location.hash.indexOf('#only-a9') !== -1;

@@ -7,6 +7,7 @@ import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import once from 'lodash/once';
 import prebid from 'commercial/modules/prebid/prebid';
 import { isGoogleProxy } from 'lib/detect';
+import { shouldIncludeOnlyA9 } from 'commercial/modules/prebid/utils';
 
 let moduleLoadResult = Promise.resolve();
 
@@ -22,7 +23,8 @@ const setupPrebid: () => Promise<void> = () =>
             commercialFeatures.dfpAdvertising &&
             !commercialFeatures.adFree &&
             !config.get('page.hasPageSkin') &&
-            !isGoogleProxy()
+            !isGoogleProxy() &&
+            !shouldIncludeOnlyA9
         ) {
             getPageTargeting();
             prebid.initialise(window);
