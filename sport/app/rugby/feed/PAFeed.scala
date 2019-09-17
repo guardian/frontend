@@ -26,6 +26,18 @@ trait RugbyClient {
 case class JsonParseException(msg: String) extends RuntimeException(msg)
 case class PARugbyAPIException(msg: String) extends RuntimeException(msg)
 
+sealed trait Event {
+  def competition: String
+  def season: String
+  def hasGroupTable(stage: Stage.Value): Boolean
+}
+
+case object WorldCup2019 extends Event {
+  override val competition = "482"
+  override val season = "2019"
+  override def hasGroupTable(stage: Stage.Value): Boolean = stage == Stage.Group
+}
+
 object WorldCupPAIDs {
   val rugbyID = 29
   val worldCupTournamentID = 482 // ...which has 'seasons' for each competition year...

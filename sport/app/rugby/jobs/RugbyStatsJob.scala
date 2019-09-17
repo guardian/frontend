@@ -3,7 +3,7 @@ package rugby.jobs
 import com.gu.Box
 import common.Logging
 import org.joda.time.format.{DateTimeFormat, DateTimeFormatter}
-import rugby.feed.{MatchNavigation, OptaEvent, RugbyFeed, RugbyOptaFeedException}
+import rugby.feed.{Event, MatchNavigation, PARugbyAPIException, RugbyFeed}
 import rugby.model._
 
 import scala.collection.immutable
@@ -15,7 +15,7 @@ class RugbyStatsJob(feed: RugbyFeed) extends Logging {
   protected val matchNavContent = Box[Map[String, MatchNavigation]](Map.empty)
   protected val pastScoreEvents = Box[Map[String, Seq[ScoreEvent]]](Map.empty)
   protected val pastMatchesStat = Box[Map[String, MatchStat]](Map.empty)
-  protected val groupTables =  Box[Map[OptaEvent, Seq[GroupTable]]](Map.empty)
+  protected val groupTables =  Box[Map[Event, Seq[GroupTable]]](Map.empty)
 
   val dateFormat: DateTimeFormatter = DateTimeFormat.forPattern("yyyy/MM/dd")
 
@@ -25,7 +25,7 @@ class RugbyStatsJob(feed: RugbyFeed) extends Logging {
         fixturesAndResultsMatches.alter {_ +  (aMatch.key -> aMatch)}
       })
     }.recover {
-      case optaFeedException: RugbyOptaFeedException => log.warn(s"RugbyStatsJob encountered errors: ${optaFeedException.message}")
+      case paException: PARugbyAPIException => log.warn(s"RugbyStatsJob encountered errors: ${paException.msg}")
       case error: Exception => log.warn(error.getMessage, error)
     }
   }
