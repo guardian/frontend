@@ -46,14 +46,14 @@ export const learnMore: EpicABTest = makeEpicABTest({
     idealOutcome:
         'Acquires many Supporters and audience demonstrating engagement',
 
-    audienceCriteria: 'All',
+    audienceCriteria: 'Not Australia',
     audience: 1,
     audienceOffset: 0,
 
     geolocation,
     highPriority: false,
 
-    canRun: () => articleViewCount < maxArticleViews,
+    canRun: () => articleViewCount < maxArticleViews && geolocation !== 'AU',
 
     variants: [
         {
