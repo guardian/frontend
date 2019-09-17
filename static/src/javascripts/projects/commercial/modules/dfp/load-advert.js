@@ -9,11 +9,11 @@ export const loadAdvert = (advert: Advert): void => {
             // The display needs to be called, even in the event of an error.
         })
         .then(() => {
+            markTime(`Commercial: Slot Ready: ${advert.id}`);
             advert.startLoading();
             return prebid.requestBids(advert);
         })
         .then(() => {
-            markTime(`Commercial: Ad loaded: ${advert.id}`);
             return window.googletag.display(advert.id);
         });
 };
