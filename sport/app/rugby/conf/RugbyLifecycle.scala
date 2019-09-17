@@ -23,9 +23,9 @@ class RugbyLifecycle(
     rugbyStatsJob.fetchFixturesAndResults()
 
     jobs.deschedule("FixturesAndResults")
-    jobs.schedule("FixturesAndResults", "30 * * * * ?") {
-      rugbyStatsJob.fetchFixturesAndResults()
-    }
+//    jobs.schedule("FixturesAndResults", "30 * * * * ?") {
+//      rugbyStatsJob.fetchFixturesAndResults()
+//    }
 
     jobs.deschedule("MatchNavArticles")
     jobs.schedule("MatchNavArticles", "35 0/30 * * * ?") {

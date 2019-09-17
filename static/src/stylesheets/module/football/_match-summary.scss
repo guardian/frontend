@@ -127,6 +127,21 @@
         height: $garnett-x-large-button-size;
     }
 
+    // Technically this is not football-related but for rugby
+    .team__score__number {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto;
+        height: 51px;
+        font-size: 30px;
+        display: block;
+        text-align: center;
+        font-weight: bold;
+    }
+
     svg {
         position: absolute;
         top: 0;

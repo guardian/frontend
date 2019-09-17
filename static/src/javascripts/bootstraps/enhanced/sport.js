@@ -81,6 +81,12 @@ const rugby = (): void => {
         // $FlowFixMe
         scoreBoard.fetched = (resp: Object): void => {
             fastdom
+                .read(() => document.querySelector('article'))
+                .then(liveblog => {
+                    liveblog.classList.add('content--has-scores');
+                });
+
+            fastdom
                 .read(() => document.querySelector('.content--liveblog'))
                 .then(liveblog => {
                     liveblog.classList.add('content--liveblog--rugby');
