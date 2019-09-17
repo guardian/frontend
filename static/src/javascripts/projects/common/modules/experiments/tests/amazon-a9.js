@@ -12,8 +12,7 @@ export const amazonA9Test: ABTest = {
     successMeasure: 'We can see amazon a9 bids ',
     audienceCriteria: 'n/a',
     dataLinkNames: 'n/a',
-    idealOutcome:
-        'No significant impact to performance as well as higher ad yield',
+    idealOutcome: 'Amazon a9 successfully run in parallel with prebid',
     canRun: () => ['US', 'CA'].includes(geolocationGetSync()),
     variants: [
         {

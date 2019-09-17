@@ -6,7 +6,10 @@ import once from 'lodash/once';
 import a9 from 'commercial/modules/prebid/a9';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import { isGoogleProxy } from 'lib/detect';
-import { isInUsRegion } from 'commercial/modules/prebid/utils';
+import {
+    isInUsRegion,
+    shouldIncludeOnlyA9,
+} from 'commercial/modules/prebid/utils';
 import { amazonA9Test } from 'common/modules/experiments/tests/amazon-a9';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 
@@ -18,14 +21,15 @@ if (!isGoogleProxy()) {
 const setupA9: () => Promise<void> = () =>
     moduleLoadResult.then(() => {
         if (
-            isInUsRegion() &&
-            (dfpEnv.externalDemand === 'a9' ||
-                dfpEnv.externalDemand === 'all') &&
-            isInVariantSynchronous(amazonA9Test, 'variant') &&
-            commercialFeatures.dfpAdvertising &&
-            !commercialFeatures.adFree &&
-            !config.get('page.hasPageSkin') &&
-            !isGoogleProxy()
+            shouldIncludeOnlyA9 ||
+            (isInUsRegion() &&
+                (dfpEnv.externalDemand === 'a9' ||
+                    dfpEnv.externalDemand === 'all') &&
+                isInVariantSynchronous(amazonA9Test, 'variant') &&
+                commercialFeatures.dfpAdvertising &&
+                !commercialFeatures.adFree &&
+                !config.get('page.hasPageSkin') &&
+                !isGoogleProxy())
         ) {
             a9.initialise();
         }

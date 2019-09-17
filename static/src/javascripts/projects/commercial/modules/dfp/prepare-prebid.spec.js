@@ -29,6 +29,10 @@ jest.mock('commercial/modules/prebid/bid-config', () => ({
     isInVariant: jest.fn(),
 }));
 
+jest.mock('commercial/modules/prebid/utils', () => ({
+    shouldIncludeOnlyA9: false,
+}));
+
 const fakeUserAgent = (userAgent: string): void => {
     const userAgentObject = {};
     userAgentObject.get = () => userAgent;
