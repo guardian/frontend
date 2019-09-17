@@ -13,9 +13,7 @@ export const loadAdvert = (advert: Advert): void => {
             advert.startLoading();
             return prebid.requestBids(advert);
         })
-        .then(() => {
-            return window.googletag.display(advert.id);
-        });
+        .then(() => window.googletag.display(advert.id));
 };
 
 export const refreshAdvert = (advert: Advert): void => {

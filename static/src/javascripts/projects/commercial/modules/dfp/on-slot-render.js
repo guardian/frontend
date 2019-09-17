@@ -14,8 +14,8 @@ import config from 'lib/config';
 import { adSizes } from 'commercial/modules/ad-sizes';
 import { markTime } from 'lib/user-timing';
 
-const recordFirstAdRendered = once((slotElementId) => {
-    markTime('Commercial: First Ad Rendered')
+const recordFirstAdRendered = once(() => {
+    markTime('Commercial: First Ad Rendered');
     fire('/count/ad-render.gif');
 });
 
@@ -55,10 +55,9 @@ const outstreamSizes = [
 ];
 
 export const onSlotRender = (event: SlotRenderEndedEvent): void => {
-    const slotId = event.slot.getSlotElementId();
-    recordFirstAdRendered(slotId);
+    recordFirstAdRendered();
 
-    const advert: ?Advert = getAdvertById(slotId);
+    const advert: ?Advert = getAdvertById(event.slot.getSlotElementId());
     if (!advert) {
         return;
     }
