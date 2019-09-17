@@ -5,6 +5,8 @@ import config from 'lib/config';
 import fastdom from 'lib/fastdom-promise';
 import { getBreakpoint } from 'lib/detect';
 import { loadScript } from 'lib/load-script';
+import { markTime } from 'lib/user-timing';
+import { trackPerformance } from 'common/modules/analytics/google';
 
 import { getCode } from './outbrain-codes';
 import { getCode as getNewCode } from './outbrain-codes-new';
@@ -107,6 +109,12 @@ const load = (
                     widgetId: widgetCodes.code || widgetCodes.image,
                 });
                 loadScript(outbrainUrl);
+                markTime('Commercial: Outbrain loaded');
+                trackPerformance(
+                    'Javascript Load',
+                    'commercialOutbrainLoaded',
+                    'Commercial outbrain loaded'
+                );
             });
     }
     return Promise.resolve();

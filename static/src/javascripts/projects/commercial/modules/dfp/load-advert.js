@@ -1,6 +1,7 @@
 // @flow
 import { Advert } from 'commercial/modules/dfp/Advert';
 import prebid from 'commercial/modules/prebid/prebid';
+import { markTime } from 'lib/user-timing';
 
 export const loadAdvert = (advert: Advert): void => {
     advert.whenSlotReady
@@ -8,6 +9,7 @@ export const loadAdvert = (advert: Advert): void => {
             // The display needs to be called, even in the event of an error.
         })
         .then(() => {
+            markTime(`Commercial: Slot Ready: ${advert.id}`);
             advert.startLoading();
             return prebid.requestBids(advert);
         })
