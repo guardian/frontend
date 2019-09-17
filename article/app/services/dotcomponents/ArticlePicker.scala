@@ -4,7 +4,7 @@ import controllers.ArticlePage
 import experiments.{ActiveExperiments, DotcomRenderingBeta}
 import model.PageWithStoryPackage
 import implicits.Requests._
-import model.liveblog.{BlockElement, ImageBlockElement, TextBlockElement}
+import model.liveblog.{BlockElement, ImageBlockElement, TextBlockElement, TweetBlockElement}
 import play.api.mvc.RequestHeader
 import views.support.Commercial
 
