@@ -12,8 +12,10 @@ import { emptyAdvert } from 'commercial/modules/dfp/empty-advert';
 import { getAdvertById } from 'commercial/modules/dfp/get-advert-by-id';
 import config from 'lib/config';
 import { adSizes } from 'commercial/modules/ad-sizes';
+import { markTime } from 'lib/user-timing';
 
-const recordFirstAdRendered = once(() => {
+const recordFirstAdRendered = once((slotElementId) => {
+    markTime('Commercial: First Ad Rendered')
     fire('/count/ad-render.gif');
 });
 
@@ -53,9 +55,10 @@ const outstreamSizes = [
 ];
 
 export const onSlotRender = (event: SlotRenderEndedEvent): void => {
-    recordFirstAdRendered();
+    const slotId = event.slot.getSlotElementId();
+    recordFirstAdRendered(slotId);
 
-    const advert: ?Advert = getAdvertById(event.slot.getSlotElementId());
+    const advert: ?Advert = getAdvertById(slotId);
     if (!advert) {
         return;
     }
