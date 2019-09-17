@@ -9,7 +9,6 @@ import { displayAds } from 'commercial/modules/dfp/display-ads';
 import { setupPrebidOnce } from 'commercial/modules/dfp/prepare-prebid';
 import { closeDisabledSlots } from 'commercial/modules/close-disabled-slots';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
-import { markTime } from 'lib/user-timing';
 
 // Pre-rendered ad slots that were rendered on the page by the server are collected here.
 // For dynamic ad slots that are created at js-runtime, see:
@@ -47,8 +46,6 @@ const fillAdvertSlots = (): Promise<void> => {
         } else {
             displayAds();
         }
-
-        markTime('Commercial: DFP advert slots filled');
     });
 };
 
