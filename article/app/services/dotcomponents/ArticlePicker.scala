@@ -37,6 +37,7 @@ object ArticlePageChecks {
     def unsupportedElement(blockElement: BlockElement) = blockElement match {
       case _: TextBlockElement => false
       case _: ImageBlockElement => false
+      case _: TweetBlockElement => false
       case _ => true
     }
 
