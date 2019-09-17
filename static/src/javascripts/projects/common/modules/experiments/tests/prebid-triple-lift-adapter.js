@@ -14,6 +14,7 @@ export const prebidTripleLiftAdapter: ABTest = {
     dataLinkNames: 'n/a',
     idealOutcome:
         'No significant impact to performance as well as higher ad yield',
+    showForSensitive: true,
     canRun: () => ['US', 'CA'].includes(geolocationGetSync()),
     variants: [
         {
