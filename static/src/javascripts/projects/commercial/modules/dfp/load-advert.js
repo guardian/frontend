@@ -1,6 +1,7 @@
 // @flow
 import { Advert } from 'commercial/modules/dfp/Advert';
 import prebid from 'commercial/modules/prebid/prebid';
+import { markTime } from 'lib/user-timing';
 
 export const loadAdvert = (advert: Advert): void => {
     advert.whenSlotReady
@@ -11,7 +12,10 @@ export const loadAdvert = (advert: Advert): void => {
             advert.startLoading();
             return prebid.requestBids(advert);
         })
-        .then(() => window.googletag.display(advert.id));
+        .then(() => {
+            markTime(`Commercial: Ad loaded: ${advert.id}`);
+            return window.googletag.display(advert.id);
+        });
 };
 
 export const refreshAdvert = (advert: Advert): void => {
