@@ -225,7 +225,8 @@ case class DataModelV3(
   nav: Nav,
   designType: String,
   showBottomSocialButtons: Boolean,
-  pageFooter: PageFooter
+  pageFooter: PageFooter,
+  publication: String
 )
 
 object DataModelV3 {
@@ -273,7 +274,8 @@ object DataModelV3 {
       "nav" -> model.nav,
       "designType" -> model.designType,
       "showBottomSocialButtons" -> model.showBottomSocialButtons,
-      "pageFooter" -> model.pageFooter
+      "pageFooter" -> model.pageFooter,
+      "publication" -> model.publication
     )
   }
 
@@ -545,8 +547,8 @@ object DotcomponentsDataModel {
 
     val config = Config(
       ajaxUrl = Configuration.ajax.url,
-      sentryPublicApiKey = jsPageData.get("sentryPublicApiKey").getOrElse(""),
-      sentryHost = jsPageData.get("sentryHost").getOrElse(""),
+      sentryPublicApiKey = jsPageData.getOrElse("sentryPublicApiKey", ""),
+      sentryHost = jsPageData.getOrElse("sentryHost", ""),
       switches = switches,
       dfpAccountId = Configuration.commercial.dfpAccountId,
       abTests = ActiveExperiments.getJsMap(request),
@@ -606,7 +608,8 @@ object DotcomponentsDataModel {
       nav = nav,
       showBottomSocialButtons = ContentLayout.showBottomSocialButtons(article),
       designType = findDesignType(article.metadata.designType, allTags),
-      pageFooter = pageFooter
+      pageFooter = pageFooter,
+      publication = article.content.publication
     )
   }
 }
