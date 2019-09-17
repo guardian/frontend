@@ -16,7 +16,7 @@ trait RugbyClient {
   // Each tournament is associated with one or more 'seasons'
   // (e.g. World Cup has seasons for 2019, 2015, etc.).
   // 'Events' are matches.
-  def getEvents(seasonID: Int)(implicit executionContext: ExecutionContext): Future[PAMatchesResponse]
+  def getEvents(seasonID: Int)(implicit executionContext: ExecutionContext): Future[List[PAMatch]]
 }
 
 case class JsonParseException(msg: String) extends RuntimeException(msg)
@@ -41,15 +41,14 @@ class PARugbyFeed(rugbyClient: RugbyClient) extends RugbyFeed with Logging {
 
   import WorldCupPAIDs._
 
-  def getLiveScores()(implicit executionContext: ExecutionContext): Future[Seq[Match]] = {
+  override def getLiveScores()(implicit executionContext: ExecutionContext): Future[Seq[Match]] = {
     val x = getFixturesAndResults().map(_.filter(_.isLive))
     x.onComplete(foo => log.info("RUGBY " + foo.toString))
     x
   }
 
-  def getFixturesAndResults()(implicit executionContext: ExecutionContext): Future[Seq[Match]] = {
-    rugbyClient.getEvents(worldCupSeasonID)
-      .map(games => games.items.map(PAMatch.toMatch))
+  override def getFixturesAndResults()(implicit executionContext: ExecutionContext): Future[Seq[Match]] = {
+    rugbyClient.getEvents(worldCupSeasonID).map(_.map(PAMatch.toMatch))
   }
 }
 
@@ -59,17 +58,20 @@ class PARugbyClient(wsClient: WSClient) extends RugbyClient with Logging {
   val basePath = "https://sport.api.press.net/v1"
 
   override def getEvents(seasonID: Int)
-    (implicit executionContext: ExecutionContext): Future[PAMatchesResponse] = {
+    (implicit executionContext: ExecutionContext): Future[List[PAMatch]] = {
 
     val resp = request(wsClient, s"/event?season=$seasonID", Map.empty)
-    resp.map(json => PAMatchesResponse.fromJSON(json).get) // TODO fix .get
+    val matches = resp.map(jsons => jsons.map(json => PAMatchesResponse.fromJSON(json).get))
+    val combined = matches.map(_.foldLeft(List.empty[PAMatch])((acc, next) => acc ::: next.items))
+    combined
   }
 
-  def request(
+  private[this] def request(
     client: WSClient,
     path: String,
     params: Map[String, String]
   )(implicit executionContext: ExecutionContext): Future[List[String]] = {
+    val limit = 20
     val headers = Map("apikey" -> apiKey, "Accept" -> "application/json")
 
     val request = client.url(basePath + path)
@@ -78,16 +80,17 @@ class PARugbyClient(wsClient: WSClient) extends RugbyClient with Logging {
 
     def hasNext(json: String): Boolean = (Json.parse(json) \ "hasNext").getOrElse(JsBoolean(false)) == JsBoolean(true)
 
-    def req(page: Int): Future[(Boolean, String)] = {
+    def req(offset: Int): Future[(Boolean, String)] = {
+      val pageParams = params + ("offset" -> offset.toString) + ("limit" -> limit.toString)
       val request = client.url(basePath + path)
         .addHttpHeaders(headers.toSeq: _*)
-        .addQueryStringParameters(params.toSeq: _*, "page" -> page.toString)
+        .addQueryStringParameters(pageParams.toSeq: _*)
 
       val resp = request.get()
         .map(resp => {
           resp.status match {
             case 200 => {
-              log.info(s"GET $path")
+              log.info(s"GET $path OFFSET $offset")
               resp.body
             }
             case _ => {
@@ -100,17 +103,18 @@ class PARugbyClient(wsClient: WSClient) extends RugbyClient with Logging {
       resp.map(body => (hasNext(body), body))
     }
 
-    cycle(1, Nil, req)
+    cycle(0, limit, Nil, req)
   }
 
-  def cycle[A](
-    page: Int,
+  private[this] def cycle[A](
+    offset: Int,
+    limit: Int,
     acc: List[A],
     req: (Int) => Future[(Boolean, A)]
   )(implicit executionContext: ExecutionContext): Future[List[A]] = {
 
-    req().flatMap({
-      case (hasNext, res) => cycle(page + 1, res :: acc, req)
+    req(offset).flatMap({
+      case (hasNext, res) if hasNext => cycle(offset + limit, limit, res :: acc, req)
       case (_, res) => Future.successful(res :: acc)
     })
   }

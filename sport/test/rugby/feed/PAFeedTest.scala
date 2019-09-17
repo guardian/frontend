@@ -66,11 +66,11 @@ object StubClient extends RugbyClient {
   }
 
   override def getEvents(seasonID: Int)
-    (implicit executionContext: ExecutionContext): Future[PAMatchesResponse] = {
+    (implicit executionContext: ExecutionContext): Future[List[PAMatch]] = {
 
     store.get(s"events/$seasonID") match {
       case Some(json) =>
-        toFut(PAMatchesResponse.fromJSON(json))
+        toFut(PAMatchesResponse.fromJSON(json)).map(_.items)
       case None =>
         Future.failed(new Exception("Item not found"))
     }

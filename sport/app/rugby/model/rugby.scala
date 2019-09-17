@@ -52,7 +52,7 @@ object Stage extends Enumeration(1) {
 }
 
 object Match {
-  val dateFormat: DateTimeFormatter = DateTimeFormat.forPattern("yyyy/MM/dd")
+  val dateFormat: DateTimeFormatter = DateTimeFormat.forPattern("yyyy/MM/dd").withZoneUTC()
 }
 
 case class Team(

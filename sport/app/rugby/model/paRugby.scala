@@ -98,7 +98,7 @@ object PAMatch {
     val stage = getStage(item)
 
     Match(
-      date = item.date,
+      date = item.date.toDateTimeISO,
       id = item.id.toString,
       homeTeam = rugby.model.Team(
         id = homeTeam.participant.id.toString,
