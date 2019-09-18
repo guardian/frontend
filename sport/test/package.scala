@@ -33,7 +33,6 @@ class SportTestSuite extends Suites (
   new LiveMatchesFeatureTest,
   new MatchFeatureTest,
   new ResultsFeatureTest,
-  new rugby.model.MatchParserTest,
   new FixturesAndResultsTest
 ) with SingleServerSuite {
   override lazy val port: Int = 19013

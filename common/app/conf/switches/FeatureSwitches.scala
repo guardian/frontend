@@ -293,7 +293,7 @@ trait FeatureSwitches {
     "rugby-world-cup",
     "If this switch is on rugby world cup scores will be loaded in to rugby match reports and liveblogs",
     owners = Seq(Owner.withName("health team")),
-    safeState = Off,
+    safeState = On,
     sellByDate = never,
     exposeClientSide = false
   )
