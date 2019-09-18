@@ -1,4 +1,6 @@
 // @flow
+
+import 'lib/dotcom-rendering/public-path';
 import config from 'lib/config';
 import { catchErrorsWithContext } from 'lib/robust';
 import { markTime } from 'lib/user-timing';
@@ -94,7 +96,6 @@ const loadModules = (): Promise<any> => {
     commercialModules.forEach(module => {
         const moduleName: string = module[0];
         const moduleInit: () => void = module[1];
-
         catchErrorsWithContext(
             [
                 [
