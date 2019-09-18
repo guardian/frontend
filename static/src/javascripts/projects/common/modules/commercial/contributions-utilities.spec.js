@@ -46,10 +46,11 @@ describe('buildConfiguredEpicTestFromJson', () => {
         expect(variant.id).toBe('Control');
         expect(variant.countryGroups).toEqual(['UnitedStates', 'Australia']);
         expect(variant.tagIds).toEqual(['football/football']);
-        expect(variant.copy.heading).toBe('This was made using the new tool!');
-        expect(variant.copy.paragraphs).toEqual([
-            'testing testing',
-            'this is a test',
-        ]);
+        expect(variant.copy).toEqual({
+            heading: 'This was made using the new tool!',
+            paragraphs: ['testing testing', 'this is a test'],
+            footer: [],
+            highlightedText: 'Some highlighted text',
+        });
     });
 });
