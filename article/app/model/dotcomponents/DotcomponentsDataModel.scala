@@ -121,6 +121,7 @@ case class Config(
   revisionNumber: String,
   googletagUrl: String,
   stage: String,
+  frontendAssetsFullURL: String,
 )
 
 object Config {
@@ -556,6 +557,7 @@ object DotcomponentsDataModel {
       revisionNumber = ManifestData.revision.toString,
       googletagUrl = Configuration.googletag.jsLocation,
       stage = common.Environment.stage,
+      frontendAssetsFullURL = s"${Configuration.site.host}${Configuration.assets.path}",
     )
 
     val author = Author(
