@@ -1,6 +1,5 @@
 // @flow
 
-
 import 'lib/dotcom-rendering/public-path';
 import config from 'lib/config';
 import { catchErrorsWithContext } from 'lib/robust';
