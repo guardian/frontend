@@ -352,6 +352,14 @@ class GuardianConfiguration extends Logging {
     lazy val useHashedBundles =  configuration.getStringProperty("assets.useHashedBundles")
       .map(_.toBoolean)
       .getOrElse(environment.isNonDev)
+
+    def fullURL(stage: String): String = {
+      if(stage != "DEV") {
+        path
+      }else{
+        s"${Configuration.site.host}${path}"
+      }
+    }
   }
 
   object staticSport {

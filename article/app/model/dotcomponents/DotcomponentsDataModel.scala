@@ -557,7 +557,7 @@ object DotcomponentsDataModel {
       revisionNumber = ManifestData.revision.toString,
       googletagUrl = Configuration.googletag.jsLocation,
       stage = common.Environment.stage,
-      frontendAssetsFullURL = s"${Configuration.site.host}${Configuration.assets.path}",
+      frontendAssetsFullURL = Configuration.assets.fullURL(common.Environment.stage),
     )
 
     val author = Author(
