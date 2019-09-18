@@ -657,9 +657,7 @@ export const buildConfiguredEpicTestFromJson = (test: Object): EpicABTest => {
     });
 };
 
-export const getConfigueredEpicTests = (): Promise<
-    $ReadOnlyArray<EpicABTest>
-> =>
+export const getConfiguredEpicTests = (): Promise<$ReadOnlyArray<EpicABTest>> =>
     getEpicTestData()
         .then(epicTestData => {
             if (epicTestData.tests) {
@@ -672,7 +670,7 @@ export const getConfigueredEpicTests = (): Promise<
         .catch((err: Error) => {
             reportError(
                 new Error(
-                    `Error getting multiple configuered epic tests. ${
+                    `Error getting multiple configured epic tests. ${
                         err.message
                     }. Stack: ${err.stack}`
                 ),
