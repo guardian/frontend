@@ -531,6 +531,7 @@ const makeEpicABTest = ({
     return test;
 };
 
+// TODO - migrate hardcoded tests
 const buildEpicCopy = (
     row: any,
     testHasCountryName: boolean,
@@ -617,107 +618,92 @@ const buildBannerCopy = (
     return countryName ? replaceCountryName(text, countryName) : text;
 };
 
+export const buildConfiguredEpicTestFromJson = (test: Object): EpicABTest => {
+    const geolocation = geolocationGetSync();
+
+    const countryGroups = test.locations;
+    const tagIds = test.tagIds;
+    const sections = test.sections;
+    const excludedTagIds = test.excludedTagIds;
+    const excludedSections = test.excludedSections;
+
+    const deploymentRules = test.alwaysAsk
+        ? 'AlwaysAsk'
+        : ({
+              days: parseInt(test.maxViewsDays, 10) || defaultMaxViews.days,
+              count: parseInt(test.maxViewsCount, 10) || defaultMaxViews.count,
+              minDaysBetweenViews:
+                  parseInt(test.minDaysBetweenViews, 10) ||
+                  defaultMaxViews.minDaysBetweenViews,
+          }: MaxViews);
+
+    return makeEpicABTest({
+        id: test.name,
+        campaignId: test.name,
+        geolocation,
+        highPriority: test.highPriority,
+
+        start: '2018-01-01',
+        expiry: '2020-01-01',
+
+        author: 'Epic test tool',
+        description: 'Epic test tool',
+        successMeasure: 'AV2.0',
+        idealOutcome: 'Epic test tool',
+        audienceCriteria: 'All',
+        audience: parseFloat(test.audience) ? test.audience : 1,
+        audienceOffset: parseFloat(test.audienceOffset)
+            ? test.audienceOffset
+            : 0,
+        useLocalViewLog: test.useLocalViewLog,
+        userCohort:
+            test.userCohort && isValidCohort(test.userCohort)
+                ? test.userCohort
+                : 'AllNonSupporters',
+        ...(test.isLiveBlog
+            ? {
+                  template: liveBlogTemplate,
+                  pageCheck: isCompatibleWithLiveBlogEpic,
+              }
+            : {
+                  template: controlTemplate,
+                  pageCheck: isCompatibleWithArticleEpic,
+              }),
+        // If testHasCountryName is true but a country name is not available for this user then
+        // they will be excluded from this test
+        testHasCountryName: test.hasCountryName,
+
+        variants: test.variants.map(variant => ({
+            id: variant.name,
+            ...(test.isLiveBlog ? { test: setupEpicInLiveblog } : {}),
+            ...(variant.cta
+                ? {
+                      buttonTemplate: defaultButtonTemplate,
+                      ctaText: variant.cta.text,
+                      supportBaseURL: variant.cta.baseURL,
+                  }
+                : {}),
+            copy: buildEpicCopyNew(variant, test.hasCountryName, geolocation),
+            showTicker: optionalStringToBoolean(variant.showTicker),
+            backgroundImageUrl: filterEmptyString(variant.backgroundImageUrl),
+            // TODO - why are these fields at the variant level?
+            deploymentRules,
+            countryGroups,
+            tagIds,
+            sections,
+            excludedTagIds,
+            excludedSections,
+        })),
+    });
+};
+
 export const getEpicTestsFromTool = (): Promise<$ReadOnlyArray<EpicABTest>> =>
     getEpicTestData()
         .then(epicTestData => {
             if (epicTestData.tests) {
                 return epicTestData.tests
                     .filter(test => test.isOn)
-                    .map(test => {
-                        const geolocation = geolocationGetSync();
-
-                        const countryGroups = test.locations;
-                        const tagIds = test.tagIds;
-                        const sections = test.sections;
-                        const excludedTagIds = test.excludedTagIds;
-                        const excludedSections = test.excludedSections;
-
-                        const deploymentRules = test.alwaysAsk
-                            ? 'AlwaysAsk'
-                            : ({
-                                  days:
-                                      parseInt(test.maxViewsDays, 10) ||
-                                      defaultMaxViews.days,
-                                  count:
-                                      parseInt(test.maxViewsCount, 10) ||
-                                      defaultMaxViews.count,
-                                  minDaysBetweenViews:
-                                      parseInt(test.minDaysBetweenViews, 10) ||
-                                      defaultMaxViews.minDaysBetweenViews,
-                              }: MaxViews);
-
-                        return makeEpicABTest({
-                            id: test.name,
-                            campaignId: test.name,
-                            geolocation,
-                            highPriority: test.highPriority,
-
-                            start: '2018-01-01',
-                            expiry: '2020-01-01',
-
-                            author: 'Epic test tool',
-                            description: 'Epic test tool',
-                            successMeasure: 'AV2.0',
-                            idealOutcome: 'Epic test tool',
-                            audienceCriteria: 'All',
-                            audience: parseFloat(test.audience)
-                                ? test.audience
-                                : 1,
-                            audienceOffset: parseFloat(test.audienceOffset)
-                                ? test.audienceOffset
-                                : 0,
-                            useLocalViewLog: test.useLocalViewLog,
-                            userCohort:
-                                test.userCohort &&
-                                isValidCohort(test.userCohort)
-                                    ? test.userCohort
-                                    : 'AllNonSupporters',
-                            ...(test.isLiveBlog
-                                ? {
-                                      template: liveBlogTemplate,
-                                      pageCheck: isCompatibleWithLiveBlogEpic,
-                                  }
-                                : {
-                                      template: controlTemplate,
-                                      pageCheck: isCompatibleWithArticleEpic,
-                                  }),
-                            // If testHasCountryName is true but a country name is not available for this user then
-                            // they will be excluded from this test
-                            testHasCountryName: test.hasCountryName,
-
-                            variants: test.variants.map(variant => ({
-                                id: variant.name,
-                                ...(test.isLiveBlog
-                                    ? { test: setupEpicInLiveblog }
-                                    : {}),
-                                ...(variant.cta
-                                    ? {
-                                          buttonTemplate: defaultButtonTemplate,
-                                          ctaText: variant.cta.text,
-                                          supportBaseURL: variant.cta.baseURL,
-                                      }
-                                    : {}),
-                                copy: buildEpicCopyNew(
-                                    variant,
-                                    test.hasCountryName,
-                                    geolocation
-                                ),
-                                showTicker: optionalStringToBoolean(
-                                    variant.showTicker
-                                ),
-                                backgroundImageUrl: filterEmptyString(
-                                    variant.backgroundImageUrl
-                                ),
-                                // TODO - why are these fields at the variant level?
-                                deploymentRules,
-                                countryGroups,
-                                tagIds,
-                                sections,
-                                excludedTagIds,
-                                excludedSections,
-                            })),
-                        });
-                    });
+                    .map(buildConfiguredEpicTestFromJson);
             }
             return [];
         })
