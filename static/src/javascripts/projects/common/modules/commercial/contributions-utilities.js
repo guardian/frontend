@@ -47,9 +47,9 @@ import { awaitEpicButtonClicked } from 'common/modules/commercial/epic/epic-util
 import { setupEpicInLiveblog } from 'common/modules/commercial/contributions-liveblog-utilities';
 import {
     bannerMultipleTestsGoogleDocUrl,
-    epicMultipleTestsGoogleDocUrl,
     getGoogleDoc,
 } from 'common/modules/commercial/contributions-google-docs';
+import { getEpicTestData } from 'common/modules/commercial/contributions-epic-test-data';
 import {
     defaultExclusionRules,
     isArticleWorthAnEpicImpression,
@@ -568,6 +568,43 @@ const buildEpicCopy = (
     };
 };
 
+const buildEpicCopyNew = (
+    row: any,
+    testHasCountryName: boolean,
+    geolocation: ?string
+) => {
+    const heading = row.heading;
+
+    const paragraphs: string[] = throwIfEmptyArray(
+        'paragraphs',
+        row.paragraphs
+    );
+
+    const countryName: ?string = testHasCountryName
+        ? getCountryName(geolocation)
+        : undefined;
+
+    return {
+        heading:
+            heading && countryName
+                ? replaceCountryName(heading, countryName)
+                : heading,
+        paragraphs:
+            paragraphs && countryName
+                ? paragraphs.map<string>(para =>
+                      replaceCountryName(para, countryName)
+                  )
+                : paragraphs,
+        highlightedText: row.highlightedText
+            ? row.highlightedText.replace(
+                  /%%CURRENCY_SYMBOL%%/g,
+                  getLocalCurrencySymbol(geolocation)
+              )
+            : undefined,
+        footer: optionalSplitAndTrim(row.footer, '\n'),
+    };
+};
+
 const buildBannerCopy = (
     text: string,
     testHasCountryName: boolean,
@@ -580,156 +617,114 @@ const buildBannerCopy = (
     return countryName ? replaceCountryName(text, countryName) : text;
 };
 
-export const getEpicTestsFromGoogleDoc = (): Promise<
-    $ReadOnlyArray<EpicABTest>
-> =>
-    getGoogleDoc(epicMultipleTestsGoogleDocUrl)
-        .then(googleDocJson => {
-            const sheets = googleDocJson && googleDocJson.sheets;
+export const getEpicTestsFromTool = (): Promise<$ReadOnlyArray<EpicABTest>> =>
+    getEpicTestData()
+        .then(epicTestData => {
+            if (epicTestData.tests) {
+                return epicTestData.tests
+                    .filter(test => test.isOn)
+                    .map(test => {
+                        const geolocation = geolocationGetSync();
 
-            if (!sheets) {
-                return [];
-            }
+                        const countryGroups = test.locations;
+                        const tagIds = test.tagIds;
+                        const sections = test.sections;
+                        const excludedTagIds = test.excludedTagIds;
+                        const excludedSections = test.excludedSections;
 
-            return Object.keys(sheets)
-                .filter(testName => testName.endsWith('__ON'))
-                .map(name => {
-                    const isThankYou = name.includes('__thank_you');
-                    const isLiveBlog = name.includes('__liveblog');
+                        const deploymentRules = test.alwaysAsk
+                            ? 'AlwaysAsk'
+                            : ({
+                                  days:
+                                      parseInt(test.maxViewsDays, 10) ||
+                                      defaultMaxViews.days,
+                                  count:
+                                      parseInt(test.maxViewsCount, 10) ||
+                                      defaultMaxViews.count,
+                                  minDaysBetweenViews:
+                                      parseInt(test.minDaysBetweenViews, 10) ||
+                                      defaultMaxViews.minDaysBetweenViews,
+                              }: MaxViews);
 
-                    const rows = sheets[name];
-                    const testName = name.split('__ON')[0];
+                        return makeEpicABTest({
+                            id: test.name,
+                            campaignId: test.name,
+                            geolocation,
+                            highPriority: test.highPriority,
 
-                    // The sheet does not easily allow test-level params, so get audience/audienceOffset from the first variant where they are defined
-                    const rowWithAudience = rows.find(
-                        row =>
-                            !(
-                                Number.isNaN(parseFloat(row.audience)) ||
-                                Number.isNaN(parseFloat(row.audienceOffset))
-                            )
-                    );
-                    const audience = rowWithAudience
-                        ? rowWithAudience.audience
-                        : 1;
-                    const audienceOffset = rowWithAudience
-                        ? rowWithAudience.audienceOffset
-                        : 0;
+                            start: '2018-01-01',
+                            expiry: '2020-01-01',
 
-                    const rowWithUserCohort = rows.find(
-                        row => row.userCohort && isValidCohort(row.userCohort)
-                    );
-                    const userCohort = rowWithUserCohort
-                        ? rowWithUserCohort.userCohort
-                        : 'AllNonSupporters';
+                            author: 'Epic test tool',
+                            description: 'Epic test tool',
+                            successMeasure: 'AV2.0',
+                            idealOutcome: 'Epic test tool',
+                            audienceCriteria: 'All',
+                            audience: parseFloat(test.audience)
+                                ? test.audience
+                                : 1,
+                            audienceOffset: parseFloat(test.audienceOffset)
+                                ? test.audienceOffset
+                                : 0,
+                            useLocalViewLog: test.useLocalViewLog,
+                            userCohort:
+                                test.userCohort &&
+                                isValidCohort(test.userCohort)
+                                    ? test.userCohort
+                                    : 'AllNonSupporters',
+                            ...(test.isLiveBlog
+                                ? {
+                                      template: liveBlogTemplate,
+                                      pageCheck: isCompatibleWithLiveBlogEpic,
+                                  }
+                                : {
+                                      template: controlTemplate,
+                                      pageCheck: isCompatibleWithArticleEpic,
+                                  }),
+                            // If testHasCountryName is true but a country name is not available for this user then
+                            // they will be excluded from this test
+                            testHasCountryName: test.hasCountryName,
 
-                    // If testHasCountryName is true but a country name is not available for this user then
-                    // they will be excluded from this test
-                    const testHasCountryName = rows.some(row =>
-                        optionalStringToBoolean(row.hasCountryName)
-                    );
-
-                    const geolocation = geolocationGetSync();
-
-                    const highPriority = rows.some(row =>
-                        optionalStringToBoolean(row.highPriority)
-                    );
-
-                    return makeEpicABTest({
-                        id: testName,
-                        campaignId: testName,
-                        geolocation,
-                        highPriority,
-
-                        start: '2018-01-01',
-                        expiry: '2020-01-01',
-
-                        author: 'Google Docs',
-                        description: 'Google Docs',
-                        successMeasure: 'AV2.0',
-                        idealOutcome: 'Google Docs',
-                        audienceCriteria: 'All',
-                        audience,
-                        audienceOffset,
-                        useLocalViewLog: rows.some(row =>
-                            optionalStringToBoolean(row.useLocalViewLog)
-                        ),
-                        userCohort,
-                        ...(isLiveBlog
-                            ? {
-                                  template: liveBlogTemplate,
-                                  pageCheck: isCompatibleWithLiveBlogEpic,
-                              }
-                            : {
-                                  template: controlTemplate,
-                                  pageCheck: isCompatibleWithArticleEpic,
-                              }),
-                        ...(isThankYou
-                            ? {
-                                  userCohort: 'AllExistingSupporters',
-                                  useLocalViewLog: true,
-                              }
-                            : {}),
-                        testHasCountryName,
-                        variants: rows.map(row => ({
-                            id: row.name.toLowerCase().trim(),
-                            ...(isLiveBlog
-                                ? { test: setupEpicInLiveblog }
-                                : {}),
-                            deploymentRules: optionalStringToBoolean(
-                                row.alwaysAsk
-                            )
-                                ? 'AlwaysAsk'
-                                : ({
-                                      days:
-                                          parseInt(row.maxViewsDays, 10) ||
-                                          defaultMaxViews.days,
-                                      count:
-                                          parseInt(row.maxViewsCount, 10) ||
-                                          defaultMaxViews.count,
-                                      minDaysBetweenViews:
-                                          parseInt(
-                                              row.minDaysBetweenViews,
-                                              10
-                                          ) ||
-                                          defaultMaxViews.minDaysBetweenViews,
-                                  }: MaxViews),
-
-                            buttonTemplate: isThankYou
-                                ? undefined
-                                : defaultButtonTemplate,
-                            ctaText: filterEmptyString(row.ctaText),
-                            countryGroups: optionalSplitAndTrim(
-                                row.locations,
-                                ','
-                            ),
-                            tagIds: optionalSplitAndTrim(row.tagIds, ','),
-                            sections: optionalSplitAndTrim(row.sections, ','),
-                            excludedTagIds: optionalSplitAndTrim(
-                                row.excludedTagIds,
-                                ','
-                            ),
-                            excludedSections: optionalSplitAndTrim(
-                                row.excludedSections,
-                                ','
-                            ),
-                            copy: buildEpicCopy(
-                                row,
-                                testHasCountryName,
-                                geolocation
-                            ),
-                            showTicker: optionalStringToBoolean(row.showTicker),
-                            supportBaseURL: row.supportBaseURL,
-                            backgroundImageUrl: filterEmptyString(
-                                row.backgroundImageUrl
-                            ),
-                        })),
+                            variants: test.variants.map(variant => ({
+                                id: variant.name,
+                                ...(test.isLiveBlog
+                                    ? { test: setupEpicInLiveblog }
+                                    : {}),
+                                ...(variant.cta
+                                    ? {
+                                          buttonTemplate: defaultButtonTemplate,
+                                          ctaText: variant.cta.text,
+                                          supportBaseURL: variant.cta.baseURL,
+                                      }
+                                    : {}),
+                                copy: buildEpicCopyNew(
+                                    variant,
+                                    test.hasCountryName,
+                                    geolocation
+                                ),
+                                showTicker: optionalStringToBoolean(
+                                    variant.showTicker
+                                ),
+                                backgroundImageUrl: filterEmptyString(
+                                    variant.backgroundImageUrl
+                                ),
+                                // TODO - why are these fields at the variant level?
+                                deploymentRules,
+                                countryGroups,
+                                tagIds,
+                                sections,
+                                excludedTagIds,
+                                excludedSections,
+                            })),
+                        });
                     });
-                });
+            }
+            return [];
         })
         .catch((err: Error) => {
             reportError(
                 new Error(
-                    `Error getting multiple epic tests from Google Docs. ${
+                    `Error getting multiple configuered epic tests. ${
                         err.message
                     }. Stack: ${err.stack}`
                 ),

@@ -18,9 +18,9 @@ import {
 } from 'common/modules/experiments/ab-tests';
 import { NOT_IN_TEST } from 'common/modules/experiments/ab-constants';
 import { runnableTestsToParticipations } from 'common/modules/experiments/ab-utils';
-import { getEpicTestsFromGoogleDoc as getEpicTestsFromGoogleDoc_ } from 'common/modules/commercial/contributions-utilities';
+import { getEpicTestsFromTool as getEpicTestsFromTool_ } from 'common/modules/commercial/contributions-utilities';
 
-const getEpicTestsFromGoogleDoc: any = getEpicTestsFromGoogleDoc_;
+const getEpicTestsFromTool: any = getEpicTestsFromTool_;
 
 jest.mock('common/modules/analytics/mvt-cookie');
 jest.mock('common/modules/experiments/ab-tests');
@@ -31,7 +31,7 @@ jest.mock('common/modules/experiments/ab-ophan', () => ({
     buildOphanPayload: () => {},
 }));
 jest.mock('common/modules/commercial/contributions-utilities', () => ({
-    getEpicTestsFromGoogleDoc: jest.fn(),
+    getEpicTestsFromTool: jest.fn(),
 }));
 
 jest.mock('lodash/memoize', () => f => f);
@@ -51,7 +51,7 @@ describe('A/B', () => {
         overwriteMvtCookie(1234);
         window.location.hash = '';
         setParticipationsInLocalStorage({});
-        getEpicTestsFromGoogleDoc.mockReturnValue(Promise.resolve(null));
+        getEpicTestsFromTool.mockReturnValue(Promise.resolve(null));
     });
 
     afterEach(() => {
