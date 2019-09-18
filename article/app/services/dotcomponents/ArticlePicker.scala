@@ -111,14 +111,19 @@ object ArticlePicker {
     )
   }
 
-  def getTier(page: PageWithStoryPackage)(implicit request: RequestHeader): RenderType = {
-
+  def dcrCouldRender(page: PageWithStoryPackage, request: RequestHeader): Boolean = {
     val whitelistFeatures = featureWhitelist(page, request)
     val isSupported = whitelistFeatures.forall({ case (test, isMet) => isMet})
+
+    isSupported
+  }
+
+  def getTier(page: PageWithStoryPackage)(implicit request: RequestHeader): RenderType = {
+    val whitelistFeatures = featureWhitelist(page, request)
     val isEnabled = conf.switches.Switches.DotcomRendering.isSwitchedOn
     val isBetaUser = ActiveExperiments.isParticipating(DotcomRenderingBeta)
 
-    val tier = if ((isSupported && isEnabled && isBetaUser && !request.forceDCROff) || request.forceDCR) RemoteRender else LocalRenderArticle
+    val tier = if ((dcrCouldRender(page, request) && isEnabled && isBetaUser && !request.forceDCROff) || request.forceDCR) RemoteRender else LocalRenderArticle
 
     // include features that we wish to log but not whitelist against
     val features = whitelistFeatures + ("isBetaUser" -> isBetaUser)
