@@ -65,6 +65,11 @@ $identity-header-height: 48px;
     }
 }
 
+.identity-title__sub {
+    font-weight: 700;
+    margin-top: $gs-baseline * 2;
+}
+
 .identity-title--page-title {
     margin-bottom: $gs-baseline * 2;
 }
@@ -520,8 +525,9 @@ $identity-header-height: 48px;
     vertical-align: middle;
 }
 
-
-
+.center-text {
+    text-align: center;
+}
 
 
 /* AS Overrides
