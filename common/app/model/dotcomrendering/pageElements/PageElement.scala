@@ -21,7 +21,7 @@ sealed trait PageElement
 case class TextBlockElement(html: String) extends PageElement
 case class SubheadingBlockElement(html: String) extends PageElement
 case class TweetBlockElement(html: String, url: String, id: String, hasMedia: Boolean, role: Role) extends PageElement
-case class PullquoteBlockElement(html: Option[String], role: Role) extends PageElement
+case class PullquoteBlockElement(html: Option[String], role: Role, attribution: Option[String]) extends PageElement
 case class ImageBlockElement(media: ImageMedia, data: Map[String, String], displayCredit: Option[Boolean], role: Role, imageSources: Seq[ImageSource]) extends PageElement
 case class ImageSource(weighting: String, srcSet: Seq[SrcSet])
 case class AudioBlockElement(assets: Seq[AudioAsset]) extends PageElement
@@ -357,7 +357,7 @@ object PageElement {
         } yield MapBlockElement(src, originalUrl, source, caption, title)
       }.toList
 
-      case Pullquote => element.pullquoteTypeData.map(d => PullquoteBlockElement(d.html, Role(None))).toList
+      case Pullquote => element.pullquoteTypeData.map(d => PullquoteBlockElement(d.html, Role(None), d.attribution)).toList
       case Interactive => element.interactiveTypeData.flatMap(_.iframeUrl).map(url => InteractiveUrlBlockElement(url)).toList
       case Table => element.tableTypeData.map(d => TableBlockElement(d.html, Role(d.role), d.isMandatory)).toList
       case Witness => element.witnessTypeData.map(d => WitnessBlockElement(d.html)).toList
