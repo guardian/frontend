@@ -18,7 +18,7 @@ import {
 } from 'common/modules/experiments/ab-tests';
 import { NOT_IN_TEST } from 'common/modules/experiments/ab-constants';
 import { runnableTestsToParticipations } from 'common/modules/experiments/ab-utils';
-import { getEpicTestsFromTool as getEpicTestsFromTool_ } from 'common/modules/commercial/contributions-utilities';
+import { getConfigueredEpicTests as getEpicTestsFromTool_ } from 'common/modules/commercial/contributions-utilities';
 
 const getEpicTestsFromTool: any = getEpicTestsFromTool_;
 

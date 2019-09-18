@@ -18,7 +18,7 @@ import {
 } from 'common/modules/experiments/ab-local-storage';
 import {
     getEngagementBannerTestsFromGoogleDoc,
-    getEpicTestsFromTool,
+    getConfigueredEpicTests,
 } from 'common/modules/commercial/contributions-utilities';
 
 const selectRadios = () => {
@@ -85,7 +85,7 @@ const appendOverlay = (): Promise<void> => {
         isExpired: isExpired(expiry),
     });
     return Promise.all([
-        getEpicTestsFromTool(),
+        getConfigueredEpicTests(),
         getEngagementBannerTestsFromGoogleDoc(),
     ]).then(([asyncEpicTests, asyncBannerTests]) => {
         const data = {

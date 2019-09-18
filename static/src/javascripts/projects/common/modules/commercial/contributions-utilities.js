@@ -657,7 +657,9 @@ export const buildConfiguredEpicTestFromJson = (test: Object): EpicABTest => {
     });
 };
 
-export const getEpicTestsFromTool = (): Promise<$ReadOnlyArray<EpicABTest>> =>
+export const getConfigueredEpicTests = (): Promise<
+    $ReadOnlyArray<EpicABTest>
+> =>
     getEpicTestData()
         .then(epicTestData => {
             if (epicTestData.tests) {
