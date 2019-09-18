@@ -604,7 +604,7 @@ export const buildConfiguredEpicTestFromJson = (test: Object): EpicABTest => {
         highPriority: test.highPriority,
 
         start: '2018-01-01',
-        expiry: '2020-01-01',
+        expiry: '2025-01-01',
 
         author: 'Epic test tool',
         description: 'Epic test tool',
