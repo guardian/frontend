@@ -24,10 +24,8 @@ import {
     getCountryName,
 } from 'lib/geolocation';
 import {
-    splitAndTrim,
     optionalSplitAndTrim,
     optionalStringToBoolean,
-    throwIfEmptyString,
     filterEmptyString,
 } from 'lib/string-utils';
 import { throwIfEmptyArray } from 'lib/array-utils';
@@ -531,45 +529,7 @@ const makeEpicABTest = ({
     return test;
 };
 
-// TODO - migrate hardcoded tests
 const buildEpicCopy = (
-    row: any,
-    testHasCountryName: boolean,
-    geolocation: ?string
-) => {
-    const heading = throwIfEmptyString('heading', row.heading);
-
-    const paragraphs: string[] = throwIfEmptyArray(
-        'paragraphs',
-        splitAndTrim(row.paragraphs, '\n')
-    );
-
-    const countryName: ?string = testHasCountryName
-        ? getCountryName(geolocation)
-        : undefined;
-
-    return {
-        heading:
-            heading && countryName
-                ? replaceCountryName(heading, countryName)
-                : heading,
-        paragraphs:
-            paragraphs && countryName
-                ? paragraphs.map<string>(para =>
-                      replaceCountryName(para, countryName)
-                  )
-                : paragraphs,
-        highlightedText: row.highlightedText
-            ? row.highlightedText.replace(
-                  /%%CURRENCY_SYMBOL%%/g,
-                  getLocalCurrencySymbol(geolocation)
-              )
-            : undefined,
-        footer: optionalSplitAndTrim(row.footer, '\n'),
-    };
-};
-
-const buildEpicCopyNew = (
     row: any,
     testHasCountryName: boolean,
     geolocation: ?string
@@ -683,7 +643,7 @@ export const buildConfiguredEpicTestFromJson = (test: Object): EpicABTest => {
                       supportBaseURL: variant.cta.baseURL,
                   }
                 : {}),
-            copy: buildEpicCopyNew(variant, test.hasCountryName, geolocation),
+            copy: buildEpicCopy(variant, test.hasCountryName, geolocation),
             showTicker: optionalStringToBoolean(variant.showTicker),
             backgroundImageUrl: filterEmptyString(variant.backgroundImageUrl),
             // TODO - why are these fields at the variant level?
