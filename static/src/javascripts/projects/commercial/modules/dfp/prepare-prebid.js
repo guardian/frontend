@@ -17,14 +17,14 @@ const isGoogleProxy: () => boolean = () =>
 
 let moduleLoadResult = Promise.resolve();
 
-if (!isGoogleProxy() && !config.get('isDotcomRendering', false)) {
+if (!isGoogleProxy()) {
     moduleLoadResult = import(/* webpackChunkName: "Prebid.js" */ 'prebid.js/build/dist/prebid');
 }
 
 const setupPrebid: () => Promise<void> = () =>
     moduleLoadResult.then(() => {
         if (
-            dfpEnv.externalDemand === 'prebid' &&
+            (config.get('isDotcomRendering', false) || dfpEnv.externalDemand === 'prebid') &&
             commercialFeatures.dfpAdvertising &&
             !commercialFeatures.adFree &&
             !config.get('page.hasPageSkin') &&
