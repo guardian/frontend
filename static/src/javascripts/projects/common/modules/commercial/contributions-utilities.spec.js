@@ -40,8 +40,9 @@ describe('buildConfiguredEpicTestFromJson', () => {
         expect(test.useLocalViewLog).toBe(false);
         expect(test.userCohort).toBe('AllNonSupporters');
 
-        // $ExpectError
-        const variant = (test.variants[0]: EpicVariant); // have to cast because type is `Variant`
+        // Have to cast here because type is `Variant`
+        // $FlowFixMe
+        const variant = (test.variants[0]: EpicVariant);
         expect(variant.id).toBe('Control');
         expect(variant.countryGroups).toEqual(['UnitedStates', 'Australia']);
         expect(variant.tagIds).toEqual(['football/football']);
