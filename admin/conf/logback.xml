@@ -6,7 +6,7 @@
         <file>logs/frontend-admin.log</file>
 
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>logs/frontend-admin.log.%d{yyyy-MM-dd}.gz</fileNamePattern>
+            <fileNamePattern>logs/frontend-admin.log.%d{yyyy-MM-dd}.%i.gz</fileNamePattern>
             <maxHistory>7</maxHistory><totalSizeCap>512MB</totalSizeCap><maxFileSize>256MB</maxFileSize>
         </rollingPolicy>
 
