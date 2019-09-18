@@ -1,0 +1,10 @@
+.site-message--moment-banner {
+    min-height: 320px;
+    background-color: $sport-bright;
+    border: none;
+}
+
+// Color of the "G" inside the small logo
+.site-message--engagement-banner .inline-marque-36 path:nth-child(2) {
+    fill: $sport-bright;
+}

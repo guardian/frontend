@@ -10,6 +10,10 @@ import { articlesViewedBanner } from 'common/modules/experiments/tests/contribs-
 import { prebidTripleLiftAdapter } from 'common/modules/experiments/tests/prebid-triple-lift-adapter';
 import { learnMore } from 'common/modules/experiments/tests/contributions-epic-learn-more-cta';
 import { commercialInline1Headings } from 'common/modules/experiments/tests/commercial-inline1-headings';
+import {
+    environmentMomentBannerNonSupporters,
+    environmentMomentBannerSupporters,
+} from 'common/modules/experiments/tests/contributions-moment-banner-environment';
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialPrebidSafeframe,
@@ -28,5 +32,7 @@ export const epicTests: $ReadOnlyArray<EpicABTest> = [
 ];
 
 export const engagementBannerTests: $ReadOnlyArray<AcquisitionsABTest> = [
+    environmentMomentBannerNonSupporters,
+    environmentMomentBannerSupporters,
     articlesViewedBanner,
 ];
