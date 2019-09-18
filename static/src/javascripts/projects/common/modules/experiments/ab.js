@@ -39,7 +39,7 @@ export const getEpicTestToRun = memoize(
             test => !test.highPriority
         );
 
-        if (config.get('switches.epicTestsFromGoogleDocs')) {
+        if (config.get('switches.useConfiguredEpicTests')) {
             return getConfigueredEpicTests().then(configuredEpicTests => {
                 configuredEpicTests.forEach(test =>
                     config.set(`switches.ab${test.id}`, true)
