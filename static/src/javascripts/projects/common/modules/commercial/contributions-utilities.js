@@ -660,9 +660,10 @@ export const buildConfiguredEpicTestFromJson = (test: Object): EpicABTest => {
 export const getConfiguredEpicTests = (): Promise<$ReadOnlyArray<EpicABTest>> =>
     getEpicTestData()
         .then(epicTestData => {
+            const showDrafts = window.location.hash === '#show-draft-epics';
             if (epicTestData.tests) {
                 return epicTestData.tests
-                    .filter(test => test.isOn)
+                    .filter(test => test.isOn || showDrafts)
                     .map(buildConfiguredEpicTestFromJson);
             }
             return [];
