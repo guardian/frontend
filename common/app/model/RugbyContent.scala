@@ -10,7 +10,7 @@ object RugbyContent {
 
   val teamNameIds = Map (
     ("sport/japanrugby", "73710"),
-    ("sport/russiarugby", "204077"), // TEST as new
+    ("sport/russia-rugby-union-team", "204077"),
     ("sport/australia-rugby-union-team", "73752"),
     ("sport/fiji-rugby-union-team", "73735"),
     ("sport/france-rugby-union-team", "73743"),
