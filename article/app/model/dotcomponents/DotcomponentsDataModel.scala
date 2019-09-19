@@ -28,6 +28,7 @@ import controllers.ArticlePage
 import experiments.ActiveExperiments
 import org.joda.time.DateTime
 import common.Environment.stage
+import views.support.JavaScriptPage
 
 // We have introduced our own set of objects for serializing data to the DotComponents API,
 // because we don't want people changing the core frontend models and as a side effect,
@@ -111,17 +112,13 @@ object Pagination {
 }
 
 case class Config(
-  ajaxUrl: String,
-  sentryPublicApiKey: String,
-  sentryHost: String,
   switches: Map[String, Boolean],
   abTests: Map[String, String],
-  dfpAccountId: String,
   commercialBundleUrl: String,
-  revisionNumber: String,
   googletagUrl: String,
   stage: String,
   frontendAssetsFullURL: String,
+
 )
 
 object Config {
@@ -227,7 +224,8 @@ case class DataModelV3(
   designType: String,
   showBottomSocialButtons: Boolean,
   pageFooter: PageFooter,
-  publication: String
+  publication: String,
+  jsPageConfig: Map[String, JsValue]
 )
 
 object DataModelV3 {
@@ -276,7 +274,8 @@ object DataModelV3 {
       "designType" -> model.designType,
       "showBottomSocialButtons" -> model.showBottomSocialButtons,
       "pageFooter" -> model.pageFooter,
-      "publication" -> model.publication
+      "publication" -> model.publication,
+      "jsPageConfig" -> model.jsPageConfig
     )
   }
 
@@ -547,17 +546,12 @@ object DotcomponentsDataModel {
     val byline = article.trail.byline
 
     val config = Config(
-      ajaxUrl = Configuration.ajax.url,
-      sentryPublicApiKey = jsPageData.getOrElse("sentryPublicApiKey", ""),
-      sentryHost = jsPageData.getOrElse("sentryHost", ""),
       switches = switches,
-      dfpAccountId = Configuration.commercial.dfpAccountId,
       abTests = ActiveExperiments.getJsMap(request),
       commercialBundleUrl = buildFullCommercialUrl("javascripts/graun.dotcom-rendering-commercial.js"),
-      revisionNumber = ManifestData.revision.toString,
       googletagUrl = Configuration.googletag.jsLocation,
       stage = common.Environment.stage,
-      frontendAssetsFullURL = Configuration.assets.fullURL(common.Environment.stage),
+      frontendAssetsFullURL = Configuration.assets.fullURL(common.Environment.stage)
     )
 
     val author = Author(
@@ -611,7 +605,8 @@ object DotcomponentsDataModel {
       showBottomSocialButtons = ContentLayout.showBottomSocialButtons(article),
       designType = findDesignType(article.metadata.designType, allTags),
       pageFooter = pageFooter,
-      publication = article.content.publication
+      publication = article.content.publication,
+      jsPageConfig = JavaScriptPage.getMap(articlePage, Edition(request), false)
     )
   }
 }
