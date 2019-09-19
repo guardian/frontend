@@ -357,7 +357,7 @@ object PageElement {
         } yield MapBlockElement(src, originalUrl, source, caption, title)
       }.toList
 
-      case Pullquote => element.pullquoteTypeData.map(d => PullquoteBlockElement(d.html, Role(None), d.attribution)).toList
+      case Pullquote => element.pullquoteTypeData.map(d => PullquoteBlockElement(d.html, Role(d.role), d.attribution)).toList
       case Interactive => element.interactiveTypeData.flatMap(_.iframeUrl).map(url => InteractiveUrlBlockElement(url)).toList
       case Table => element.tableTypeData.map(d => TableBlockElement(d.html, Role(d.role), d.isMandatory)).toList
       case Witness => element.witnessTypeData.map(d => WitnessBlockElement(d.html)).toList
