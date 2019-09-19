@@ -28,6 +28,7 @@ import controllers.ArticlePage
 import experiments.ActiveExperiments
 import org.joda.time.DateTime
 import common.Environment.stage
+import views.support.JavaScriptPage
 
 // We have introduced our own set of objects for serializing data to the DotComponents API,
 // because we don't want people changing the core frontend models and as a side effect,
@@ -111,17 +112,13 @@ object Pagination {
 }
 
 case class Config(
-  ajaxUrl: String,
-  sentryPublicApiKey: String,
-  sentryHost: String,
   switches: Map[String, Boolean],
   abTests: Map[String, String],
-  dfpAccountId: String,
   commercialBundleUrl: String,
-  revisionNumber: String,
   googletagUrl: String,
   stage: String,
   frontendAssetsFullURL: String,
+
 )
 
 object Config {
@@ -212,7 +209,7 @@ case class DataModelV3(
   shouldHideAds: Boolean,
   webURL: String,
   linkedData: List[LinkedData],
-  config: Config,
+  config: JsObject,
   guardianBaseURL: String,
   contentType: String,
   hasRelated: Boolean,
@@ -547,18 +544,16 @@ object DotcomponentsDataModel {
     val byline = article.trail.byline
 
     val config = Config(
-      ajaxUrl = Configuration.ajax.url,
-      sentryPublicApiKey = jsPageData.getOrElse("sentryPublicApiKey", ""),
-      sentryHost = jsPageData.getOrElse("sentryHost", ""),
       switches = switches,
-      dfpAccountId = Configuration.commercial.dfpAccountId,
       abTests = ActiveExperiments.getJsMap(request),
       commercialBundleUrl = buildFullCommercialUrl("javascripts/graun.dotcom-rendering-commercial.js"),
-      revisionNumber = ManifestData.revision.toString,
       googletagUrl = Configuration.googletag.jsLocation,
       stage = common.Environment.stage,
-      frontendAssetsFullURL = Configuration.assets.fullURL(common.Environment.stage),
+      frontendAssetsFullURL = Configuration.assets.fullURL(common.Environment.stage)
     )
+
+    val jsPageConfig = JavaScriptPage.getMap(articlePage, Edition(request), false)
+    val combinedConfig = Json.toJsObject(config).deepMerge(JsObject(jsPageConfig))
 
     val author = Author(
       byline = byline,
@@ -596,7 +591,7 @@ object DotcomponentsDataModel {
       shouldHideAds = article.content.shouldHideAdverts,
       webURL = article.metadata.webUrl,
       linkedData = linkedData,
-      config = config,
+      config = combinedConfig,
       guardianBaseURL = Configuration.site.host,
       contentType = jsConfig("contentType").getOrElse(""),
       hasRelated = article.content.showInRelated,
@@ -611,7 +606,7 @@ object DotcomponentsDataModel {
       showBottomSocialButtons = ContentLayout.showBottomSocialButtons(article),
       designType = findDesignType(article.metadata.designType, allTags),
       pageFooter = pageFooter,
-      publication = article.content.publication
+      publication = article.content.publication,
     )
   }
 }
