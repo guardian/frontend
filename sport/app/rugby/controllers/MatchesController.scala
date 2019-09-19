@@ -24,7 +24,6 @@ class MatchesController(
   def scoreJson(year: String, month: String, day: String, homeTeamId: String, awayTeamId: String): Action[AnyContent] = score(year, month, day, homeTeamId, awayTeamId)
 
   def score(year: String, month: String, day: String, team1: String, team2: String): Action[AnyContent] = Action { implicit request =>
-
     val matchOpt = rugbyStatsJob.getFixturesAndResultScore(year, month, day, team1, team2)
     val currentPage = request.getParameter("page")
 
@@ -43,6 +42,13 @@ class MatchesController(
           RevalidatableResult.Ok(rugby.views.html.matchSummary(page, aMatch))
       }
 
-    }.getOrElse(NotFound)
+    }.getOrElse {
+      if (year == "2019") {
+        log.error(s"Match for ($year $month $day $team1 $team2) did not exist in ${rugbyStatsJob.getAllResults()}")
+      }
+
+
+      NotFound
+    }
   }
 }
