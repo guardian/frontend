@@ -82,16 +82,17 @@ const filterNearbyCandidates = (maximumAdHeight: number) => (
 const getBodySelector = (): string =>
     !config.get('isDotcomRendering', false)
         ? '.js-article__body'
-        : '.article-body-03f883b8';
+        : '.article-body-commercial-selector';
 
-const getSlotSelector = (): string =>
-    !config.get('isDotcomRendering', false) ? ' > p' : ' > span';
+const addDesktopInlineAds = (isInline1: boolean): Promise<number> => {
+    const isImmersive = config.get('page.isImmersive');
 
-const getDefaultRulesSelectorsForDesktopInlineAds = (
-    isDotcomRendering: boolean
-): {} => {
-    if (!isDotcomRendering) {
-        return {
+    const defaultRules = {
+        bodySelector: getBodySelector(),
+        slotSelector: ' > p',
+        minAbove: isImmersive ? 700 : 300,
+        minBelow: 700,
+        selectors: {
             ' > h2': {
                 minAbove: isInInlineAdABTest ? 5 : 0,
                 minBelow: isInInlineAdABTest ? 190 : 250,
@@ -105,43 +106,14 @@ const getDefaultRulesSelectorsForDesktopInlineAds = (
                 minAbove: 0,
                 minBelow: 600,
             },
-        };
-    }
-    return {
-        ' > h2': {
-            minAbove: isInInlineAdABTest ? 5 : 0,
-            minBelow: isInInlineAdABTest ? 190 : 250,
         },
-        ' .ad-slot': adSlotClassSelectorSizes,
-        ' > :not(span):not(h2):not(.ad-slot)': {
-            minAbove: 35,
-            minBelow: 400,
-        },
-        ' figure.element--immersive': {
-            minAbove: 0,
-            minBelow: 600,
-        },
-    };
-};
-
-const addDesktopInlineAds = (isInline1: boolean): Promise<number> => {
-    const isImmersive = config.get('page.isImmersive');
-
-    const defaultRules = {
-        bodySelector: getBodySelector(),
-        slotSelector: getSlotSelector(),
-        minAbove: isImmersive ? 700 : 300,
-        minBelow: 700,
-        selectors: getDefaultRulesSelectorsForDesktopInlineAds(
-            config.get('isDotcomRendering', false)
-        ),
         filter: filterNearbyCandidates(adSizes.mpu.height),
     };
 
     // For any other inline
     const relaxedRules = {
         bodySelector: getBodySelector(),
-        slotSelector: getSlotSelector(),
+        slotSelector: ' > p',
         minAbove: isPaidContent ? 1600 : 1000,
         minBelow: 800,
         selectors: {
@@ -186,7 +158,7 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<number> => {
 const addMobileInlineAds = (): Promise<number> => {
     const rules = {
         bodySelector: getBodySelector(),
-        slotSelector: getSlotSelector(),
+        slotSelector: ' > p',
         minAbove: 200,
         minBelow: 200,
         selectors: {
@@ -242,7 +214,7 @@ const addInlineAds = (): Promise<number> => {
 const attemptToAddInlineMerchAd = (): Promise<boolean> => {
     const rules = {
         bodySelector: getBodySelector(),
-        slotSelector: getSlotSelector(),
+        slotSelector: ' > p',
         minAbove: 300,
         minBelow: 0,
         selectors: {
