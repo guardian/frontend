@@ -4,7 +4,7 @@ import common.{Edition, ImplicitControllerExecutionContext, JsonComponent, Loggi
 import contentapi.ContentApiClient
 import implicits.Requests
 import model.{ApplicationContext, Cached, Content, ContentType, Tag}
-import models.dotcomponents.RichLink
+import models.dotcomponents.{RichLink, RichLinkTag}
 import play.api.mvc.{Action, AnyContent, ControllerComponents, RequestHeader}
 import play.twirl.api.Html
 import views.support.{ImgSrc, Item460, RichLinkContributor}
@@ -16,7 +16,7 @@ class RichLinkController(contentApiClient: ContentApiClient, controllerComponent
     contentType(path) map {
         case Some(content) if request.forceDCR =>
           val richLink = RichLink(
-            tags = content.tags.tags.map(Tag.withoutCommercial), // throw away commercial data as we don't use it
+            tags = content.tags.tags.map(t => RichLinkTag(t.properties.id, t.properties.tagType, t.properties.webTitle)),
             cardStyle = content.content.cardStyle.toneString,
             thumbnailUrl = content.trail.trailPicture.flatMap(tp => Item460.bestSrcFor(tp)),
             headline = content.trail.headline,
