@@ -209,7 +209,7 @@ case class DataModelV3(
   shouldHideAds: Boolean,
   webURL: String,
   linkedData: List[LinkedData],
-  config: Config,
+  config: JsObject,
   guardianBaseURL: String,
   contentType: String,
   hasRelated: Boolean,
@@ -224,8 +224,7 @@ case class DataModelV3(
   designType: String,
   showBottomSocialButtons: Boolean,
   pageFooter: PageFooter,
-  publication: String,
-  jsPageConfig: Map[String, JsValue]
+  publication: String
 )
 
 object DataModelV3 {
@@ -274,8 +273,7 @@ object DataModelV3 {
       "designType" -> model.designType,
       "showBottomSocialButtons" -> model.showBottomSocialButtons,
       "pageFooter" -> model.pageFooter,
-      "publication" -> model.publication,
-      "jsPageConfig" -> model.jsPageConfig
+      "publication" -> model.publication
     )
   }
 
@@ -554,6 +552,9 @@ object DotcomponentsDataModel {
       frontendAssetsFullURL = Configuration.assets.fullURL(common.Environment.stage)
     )
 
+    val jsPageConfig = JavaScriptPage.getMap(articlePage, Edition(request), false)
+    val combinedConfig = Json.toJsObject(config).deepMerge(JsObject(jsPageConfig))
+
     val author = Author(
       byline = byline,
       twitterHandle = article.tags.contributors.headOption.flatMap(_.properties.twitterHandle)
@@ -590,7 +591,7 @@ object DotcomponentsDataModel {
       shouldHideAds = article.content.shouldHideAdverts,
       webURL = article.metadata.webUrl,
       linkedData = linkedData,
-      config = config,
+      config = combinedConfig,
       guardianBaseURL = Configuration.site.host,
       contentType = jsConfig("contentType").getOrElse(""),
       hasRelated = article.content.showInRelated,
@@ -606,7 +607,6 @@ object DotcomponentsDataModel {
       designType = findDesignType(article.metadata.designType, allTags),
       pageFooter = pageFooter,
       publication = article.content.publication,
-      jsPageConfig = JavaScriptPage.getMap(articlePage, Edition(request), false)
     )
   }
 }
