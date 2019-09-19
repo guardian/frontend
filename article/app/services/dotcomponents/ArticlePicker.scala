@@ -4,7 +4,7 @@ import controllers.ArticlePage
 import experiments.{ActiveExperiments, DotcomRenderingBeta}
 import model.PageWithStoryPackage
 import implicits.Requests._
-import model.liveblog.{BlockElement, ImageBlockElement, TextBlockElement, TweetBlockElement}
+import model.liveblog.{BlockElement, ImageBlockElement, TextBlockElement, TweetBlockElement, PullquoteBlockElement}
 import play.api.mvc.RequestHeader
 import views.support.Commercial
 
@@ -38,6 +38,7 @@ object ArticlePageChecks {
       case _: TextBlockElement => false
       case _: ImageBlockElement => false
       case _: TweetBlockElement => false
+      case _: PullquoteBlockElement => false
       case _ => true
     }
 
