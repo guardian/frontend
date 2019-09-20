@@ -129,42 +129,44 @@ const rugby = (): void => {
             }
 
             $('.js-match-stats').remove();
+            if (resp.matchStat) {
+                $.create(
+                    `<div class="match-stats__container js-match-stats">${
+                        resp.matchStat
+                    }</div>`
+                ).each(container => {
+                    $('.js-chart', container).each(el => {
+                        new TableDoughnut().render(el);
+                    });
 
-            $.create(
-                `<div class="match-stats__container js-match-stats">${
-                    resp.matchStat
-                }</div>`
-            ).each(container => {
-                $('.js-chart', container).each(el => {
-                    new TableDoughnut().render(el);
+                    renderExtras([
+                        {
+                            name: 'Match stats',
+                            importance: 3,
+                            content: container,
+                            ready: true,
+                        },
+                    ]);
                 });
-
-                renderExtras([
-                    {
-                        name: 'Match stats',
-                        importance: 3,
-                        content: container,
-                        ready: true,
-                    },
-                ]);
-            });
+            }
 
             $('.js-football-table').remove();
-
-            $.create(
-                `<div class="js-football-table" data-link-name="football-table-embed">${
-                    resp.groupTable
-                }</div>`
-            ).each(container => {
-                renderExtras([
-                    {
-                        name: 'Table',
-                        importance: 3,
-                        content: container,
-                        ready: true,
-                    },
-                ]);
-            });
+            if (resp.groupTable) {
+                $.create(
+                    `<div class="js-football-table" data-link-name="football-table-embed">${
+                        resp.groupTable
+                    }</div>`
+                ).each(container => {
+                    renderExtras([
+                        {
+                            name: 'Table',
+                            importance: 3,
+                            content: container,
+                            ready: true,
+                        },
+                    ]);
+                });
+            }
         };
 
         scoreBoard.load();
