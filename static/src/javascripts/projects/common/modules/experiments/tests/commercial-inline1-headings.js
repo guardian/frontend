@@ -1,4 +1,5 @@
 // @flow strict
+import { isBreakpoint } from 'lib/detect';
 
 export const commercialInline1Headings: ABTest = {
     id: 'CommercialInline1Headings',
@@ -14,7 +15,7 @@ export const commercialInline1Headings: ABTest = {
     idealOutcome:
         'No significant impact to performance as well as higher ad yield',
     showForSensitive: true,
-    canRun: () => true,
+    canRun: () => isBreakpoint({ min: 'desktop' }),
     variants: [
         {
             id: 'control',
