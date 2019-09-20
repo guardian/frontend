@@ -97,18 +97,23 @@ object PAMatch {
     val awayTeam = item.entrants(1)
     val stage = getStage(item)
 
+    val scoreToUse = getStatus(item) match {
+      case Status.Result => "final-result"
+      case _ => "running-score"
+    }
+
     Match(
       date = item.date.toDateTimeISO,
       id = item.id.toString,
       homeTeam = rugby.model.Team(
         id = homeTeam.participant.id.toString,
         name = homeTeam.participant.name,
-        score = homeTeam.results.get("running-score").map(_.value.toInt)
+        score = homeTeam.results.get(scoreToUse).map(_.value.toInt)
       ),
       awayTeam = rugby.model.Team(
         id = awayTeam.participant.id.toString,
         name = awayTeam.participant.name,
-        score = awayTeam.results.get("running-score").map(_.value.toInt)
+        score = awayTeam.results.get(scoreToUse).map(_.value.toInt)
       ),
       venue = item.venue.map(_.name),
       competitionName = item.tournament.name,
