@@ -103,12 +103,12 @@ object PAMatch {
       homeTeam = rugby.model.Team(
         id = homeTeam.participant.id.toString,
         name = homeTeam.participant.name,
-        score = homeTeam.results.get("final-result").map(_.value.toInt)
+        score = homeTeam.results.get("running-score").map(_.value.toInt)
       ),
       awayTeam = rugby.model.Team(
         id = awayTeam.participant.id.toString,
         name = awayTeam.participant.name,
-        score = awayTeam.results.get("final-result").map(_.value.toInt)
+        score = awayTeam.results.get("running-score").map(_.value.toInt)
       ),
       venue = item.venue.map(_.name),
       competitionName = item.tournament.name,
