@@ -30,7 +30,7 @@
     "ophan-tracker-js": "1.3.18",
     "preact": "^8.2.9",
     "preact-compat": "^3.18.4",
-    "prebid.js": "https://github.com/guardian/Prebid.js.git#39315755eae33fd08585e40dac7923e545919b71",
+    "prebid.js": "https://github.com/guardian/Prebid.js.git#71da9f1e6eac0f406df1d1d0d1d43a0a5cb67b3b",
     "qwery": "3.4.2",
     "rangefix": "^0.2.5",
     "raven-js": "^3.19.1",
