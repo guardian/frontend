@@ -46,8 +46,7 @@ GET         /delete/confirm                         controllers.AccountDeletionC
 ########################################################################################################################
 # EDIT PROFILE
 ########################################################################################################################
-GET         /public/edit                            controllers.editprofile.EditProfileController.displayPublicProfileForm
-POST        /public/edit                            controllers.editprofile.EditProfileController.submitPublicProfileForm
+GET         /public/edit                            controllers.editprofile.EditProfileController.redirectToPublicSettings
 
 GET         /account/edit                           controllers.editprofile.EditProfileController.displayAccountForm
 POST        /account/edit                           controllers.editprofile.EditProfileController.submitAccountForm
