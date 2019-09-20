@@ -15,8 +15,7 @@ export const commercialInline1Headings: ABTest = {
     idealOutcome:
         'No significant impact to performance as well as higher ad yield',
     showForSensitive: true,
-    canRun: () =>
-        isBreakpoint({ min: 'desktop' }),
+    canRun: () => isBreakpoint({ min: 'desktop' }),
     variants: [
         {
             id: 'control',
