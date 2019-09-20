@@ -24,8 +24,7 @@ if (!isGoogleProxy()) {
 const setupPrebid: () => Promise<void> = () =>
     moduleLoadResult.then(() => {
         if (
-            (config.get('isDotcomRendering', false) ||
-                dfpEnv.externalDemand === 'prebid') &&
+            dfpEnv.externalDemand === 'prebid' &&
             commercialFeatures.dfpAdvertising &&
             !commercialFeatures.adFree &&
             !config.get('page.hasPageSkin') &&
