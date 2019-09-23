@@ -23,8 +23,6 @@ const thankYouClosingSentence =
     'Thank you for supporting The Guardian – readers from around the world, like you, make this work possible.';
 const thankYouCTA = 'Support us again';
 
-
-
 // These test params must be set on engagementBannerParams *and* passed into canShowBannerSync
 // TODO - we need to rethink how banner tests are selected/displayed
 const userCohortParam = {

@@ -29,8 +29,20 @@ export const acquisitionsBannerMomentTemplate = (
         
         <div class="moment-banner__text-container"> 
             <div class="moment-banner__titles">
-                ${ params.titles && params.titles[0] ? `<h2 class="moment-banner__title-one">${params.titles[0]}</h2>` : '' }
-                ${ params.titles && params.titles[1] ? `<h2 class="moment-banner__title-two">${params.titles[1]}</h2>` : '' }
+                ${
+                    params.titles && params.titles[0]
+                        ? `<h2 class="moment-banner__title-one">${
+                              params.titles[0]
+                          }</h2>`
+                        : ''
+                }
+                ${
+                    params.titles && params.titles[1]
+                        ? `<h2 class="moment-banner__title-two">${
+                              params.titles[1]
+                          }</h2>`
+                        : ''
+                }
             </div>
             
             <div class="moment-banner__copy">
