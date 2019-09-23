@@ -1,10 +1,16 @@
 // @flow
+import { onIabConsentNotification as onIabConsentNotification_ } from '@guardian/consent-management-platform';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { init, _ } from './third-party-tags';
+
+const onIabConsentNotification: any = onIabConsentNotification_;
 
 const { insertScripts, loadOther } = _;
 
 jest.mock('lib/raven');
+jest.mock('@guardian/consent-management-platform', () => ({
+    onIabConsentNotification: jest.fn(),
+}));
 
 beforeEach(() => {
     const firstScript = document.createElement('script');
@@ -84,8 +90,18 @@ describe('third party tags', () => {
         };
         it('should add a script to the document', () => {
             _.reset();
+            onIabConsentNotification.mockImplementation(callback =>
+                callback({
+                    '1': true,
+                    '2': true,
+                    '3': true,
+                    '4': true,
+                    '5': true,
+                })
+            );
+            console.log('*** before: ', document.scripts);
             insertScripts([fakeThirdPartyTag]);
-
+            console.log('*** after: ', document.scripts);
             expect(document.scripts.length).toBe(2);
         });
     });

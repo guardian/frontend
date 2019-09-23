@@ -86,13 +86,14 @@ const onPlayerReadyEvent = (event, handlers: Handlers, el: ?HTMLElement) => {
 
 const createAdsConfig = (
     adFree: boolean,
+    wantPersonalisedAds: boolean,
     isPfpAdTargetingSwitchedOn: boolean
 ): Object => {
     if (adFree) {
         return { disableAds: true };
     } else if (isPfpAdTargetingSwitchedOn) {
         return {
-            nonPersonalizedAd: !consentState,
+            nonPersonalizedAd: !wantPersonalisedAds,
             adTagParameters: {
                 iu: config.get('page.adUnit'),
                 cust_params: encodeURIComponent(
@@ -101,7 +102,7 @@ const createAdsConfig = (
             },
         };
     }
-    return { nonPersonalizedAd: !consentState };
+    return { nonPersonalizedAd: !wantPersonalisedAds };
 };
 
 const setupPlayer = (
@@ -129,6 +130,7 @@ const setupPlayer = (
 
     const adsConfig = createAdsConfig(
         commercialFeatures.adFree,
+        !!consentState,
         isPfpAdTargetingSwitchedOn
     );
 
