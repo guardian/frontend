@@ -34,7 +34,7 @@ type Handlers = {
 
 let consentState;
 onIabConsentNotification(state => {
-    consentState = state[1];
+    consentState = state[1] && state[2] && state[3] && state[4] && state[5];
 });
 
 const onPlayerStateChangeEvent = (
@@ -86,14 +86,13 @@ const onPlayerReadyEvent = (event, handlers: Handlers, el: ?HTMLElement) => {
 
 const createAdsConfig = (
     adFree: boolean,
-    wantPersonalisedAds: boolean,
     isPfpAdTargetingSwitchedOn: boolean
 ): Object => {
     if (adFree) {
         return { disableAds: true };
     } else if (isPfpAdTargetingSwitchedOn) {
         return {
-            nonPersonalizedAd: !wantPersonalisedAds,
+            nonPersonalizedAd: !consentState,
             adTagParameters: {
                 iu: config.get('page.adUnit'),
                 cust_params: encodeURIComponent(
@@ -102,7 +101,7 @@ const createAdsConfig = (
             },
         };
     }
-    return { nonPersonalizedAd: !wantPersonalisedAds };
+    return { nonPersonalizedAd: !consentState };
 };
 
 const setupPlayer = (
@@ -113,7 +112,6 @@ const setupPlayer = (
     onStateChange,
     onError
 ) => {
-    const wantPersonalisedAds: boolean = consentState !== false;
     const isPfpAdTargetingSwitchedOn: boolean = config.get(
         'switches.commercialYoutubePfpAdTargeting',
         false
@@ -131,7 +129,6 @@ const setupPlayer = (
 
     const adsConfig = createAdsConfig(
         commercialFeatures.adFree,
-        wantPersonalisedAds,
         isPfpAdTargetingSwitchedOn
     );
 

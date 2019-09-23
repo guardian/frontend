@@ -103,15 +103,14 @@ export const init = (): Promise<void> => {
         );
 
         onIabConsentNotification(state => {
-            const consentState = state[1];
+            const consentState =
+                state[1] && state[2] && state[3] && state[4] && state[5];
 
-            if (consentState !== null) {
-                window.googletag.cmd.push(() => {
-                    window.googletag
-                        .pubads()
-                        .setRequestNonPersonalizedAds(consentState ? 0 : 1);
-                });
-            }
+            window.googletag.cmd.push(() => {
+                window.googletag
+                    .pubads()
+                    .setRequestNonPersonalizedAds(consentState ? 0 : 1);
+            });
         });
 
         // Just load googletag. Prebid will already be loaded, and googletag is already added to the window by Prebid.

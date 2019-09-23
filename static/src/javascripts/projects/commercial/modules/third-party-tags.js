@@ -19,12 +19,10 @@ let scriptsInserted: boolean = false;
 
 const insertScripts = (services: Array<ThirdPartyTag>): void => {
     onIabConsentNotification(state => {
-        const consentState = state[1];
+        const consentState =
+            state[1] && state[2] && state[3] && state[4] && state[5];
 
-        if (
-            !scriptsInserted &&
-            (consentState === true || consentState === null)
-        ) {
+        if (!scriptsInserted && consentState) {
             scriptsInserted = true;
 
             const ref = document.scripts[0];
