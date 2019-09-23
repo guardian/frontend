@@ -656,7 +656,7 @@ export const bids: (string, PrebidSize[]) => PrebidBid[] = (
         asPrebidBid(bidder, slotId, slotSizes)
     );
 
-    //To allow different placementIds per ad slot size
+    // To allow different placementIds per ad slot size
     const xaxisBids = inPbTestOr(shouldIncludeXaxis())
         ? slotSizes.map(size => asPrebidBid(xaxisBidder, slotId, [size]))
         : [];
