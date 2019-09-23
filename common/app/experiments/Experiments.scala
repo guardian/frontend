@@ -28,7 +28,7 @@ object DotcomRenderingBeta extends Experiment(
   description = "Beta test for dotcom rendering version of site",
   owners = Seq(Owner.withGithub("nicl")),
   sellByDate = new LocalDate(2020, 12, 1),
-  participationGroup = Perc50 // see ArticlePicker.scala - our main filter mechanism is by page features
+  participationGroup = Perc1A // see ArticlePicker.scala - our main filter mechanism is by page features
 )
 
 object DotcomRenderingAdvertisements extends Experiment(
