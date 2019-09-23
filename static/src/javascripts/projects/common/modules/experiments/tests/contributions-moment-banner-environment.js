@@ -4,24 +4,28 @@
 import { acquisitionsBannerMomentTemplate } from 'common/modules/commercial/templates/acquisitions-banner-moment.js';
 import { canShowBannerSync } from 'common/modules/commercial/contributions-utilities';
 
-const defaultBold =
-    'This is The\xa0Guardian’s model for open, independent journalism';
+const defaultLeadSentence =
+    'The climate emergency is the defining issue of our times. ';
 const defaultCopy =
-    'Our mission is to keep independent journalism accessible to everyone, regardless of where they live or what they can afford. Funding from our readers safeguards our editorial independence. It also powers our work and maintains this openness. It means more people, across the world, can access accurate information with integrity at its heart.';
+    'This is The Guardian’s pledge: we will be truthful, resolute and undeterred in pursuing our journalism on the environment. We will give global heating, wildlife extinction and pollution the urgent attention they demand. Our independence means we can interrogate inaction by those in power. It means our reporting will always be grounded in scientific facts, never in commercial or political interests. Support from our readers makes this work possible.';
+const defaultMobileCopy =
+    'This is The Guardian’s pledge: we will be truthful, resolute and undeterred in pursuing our journalism on the environment. Support from our readers makes this work possible.';
 
-const thankYouBold =
-    'Thank you for supporting The\xa0Guardian’s model for open, independent journalism';
 const thankYouCopy =
-    'Our mission is to keep independent journalism accessible to everyone, regardless of where they live or what they can afford. Funding from readers like you safeguards our editorial independence, powers our work, and maintains this openness. It means more people, across the world, can access accurate information with integrity at its heart.';
+    'The climate emergency is the defining issue of our times. This is The Guardian’s pledge: we will be truthful, resolute and undeterred in pursuing our journalism on the environment. We will give global heating, wildlife extinction and pollution the urgent attention they demand. Our independence means we can interrogate inaction by those in power. ';
+const thankYouMobileCopy =
+    'The climate emergency is the defining issue of our times. This is The Guardian’s pledge: we will be truthful, resolute and undeterred in pursuing our journalism on the environment. ';
+const thankYouClosingSentence =
+    'Thank you for supporting The Guardian – readers from around the world, like you, make this work possible.';
+const thankYouCTA = 'Support us again';
 
 const campaignId = 'environment_campaign';
 
 // These test params must be set on engagementBannerParams *and* passed into canShowBannerSync
 // TODO - we need to rethink how banner tests are selected/displayed
 const userCohortParam = {
-    momentBannerNonUk: 'OnlyNonSupporters',
-    momentBannerUk: 'OnlyNonSupporters',
-    momentBannerThankYou: 'OnlyExistingSupporters',
+    momentBannerDefault: 'AllNonSupporters',
+    momentBannerThankYou: 'AllExistingSupporters',
 };
 const minArticlesBeforeShowingBanner = 0;
 
@@ -45,22 +49,19 @@ export const environmentMomentBannerNonSupporters: AcquisitionsABTest = {
             id: 'control',
             test: (): void => {}, // banner tests look at the bucket and vary the copy themselves
             engagementBannerParams: {
-                leadSentence: defaultBold,
+                leadSentence: defaultLeadSentence,
                 messageText: defaultCopy,
-                // buttonCaption?: string, TO be decided with non engineers
+                mobileMessageText: defaultMobileCopy,
                 template: acquisitionsBannerMomentTemplate,
                 bannerModifierClass: 'moment-banner',
                 minArticlesBeforeShowingBanner,
-                userCohort: userCohortParam.momentBannerNonUk,
-                titles: [
-                    "Free for those who can't afford it",
-                    'Supported by those who can',
-                ],
+                userCohort: userCohortParam.momentBannerDefault,
+                titles: ['We will not be quiet ', 'on the climate crisis'],
             },
             canRun: () =>
                 canShowBannerSync(
                     minArticlesBeforeShowingBanner,
-                    userCohortParam.momentBannerNonUk
+                    userCohortParam.momentBannerDefault
                 ),
         },
     ],
@@ -86,16 +87,15 @@ export const environmentMomentBannerSupporters: AcquisitionsABTest = {
             id: 'control',
             test: (): void => {}, // banner tests look at the bucket and vary the copy themselves
             engagementBannerParams: {
-                leadSentence: thankYouBold,
                 messageText: thankYouCopy,
+                closingSentence: thankYouClosingSentence,
+                mobileMessageText: thankYouMobileCopy,
+                buttonCaption: thankYouCTA,
                 template: acquisitionsBannerMomentTemplate,
                 bannerModifierClass: 'moment-banner moment-banner-thank-you',
                 minArticlesBeforeShowingBanner,
                 userCohort: userCohortParam.momentBannerThankYou,
-                titles: [
-                    'Thanks to your support',
-                    "We're available to everyone",
-                ],
+                titles: ['We will not be quiet ', 'on the climate crisis'],
             },
             canRun: () =>
                 canShowBannerSync(

@@ -32,7 +32,7 @@ export const epicTests: $ReadOnlyArray<EpicABTest> = [
 ];
 
 export const engagementBannerTests: $ReadOnlyArray<AcquisitionsABTest> = [
+    articlesViewedBanner,
     environmentMomentBannerNonSupporters,
     environmentMomentBannerSupporters,
-    articlesViewedBanner,
 ];

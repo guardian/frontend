@@ -2,16 +2,11 @@
 
 import marque36icon from 'svgs/icon/marque-36.svg';
 import closeCentralIcon from 'svgs/icon/close-central.svg';
-import { applePayApiAvailable } from 'lib/detect';
-import applyPayMark from 'svgs/acquisitions/apple-pay-mark.svg';
 import arrowWhiteRight from 'svgs/icon/arrow-white-right.svg';
-import config from 'lib/config';
 
 export const acquisitionsBannerMomentTemplate = (
     params: EngagementBannerTemplateParams
-): string => {
-    const applePayLogo = applePayApiAvailable ? applyPayMark.markup : '';
-    return `
+): string => `
     <div class="engagement-banner__close">
         <div class="engagement-banner__roundel hide-until-phablet">
             ${marque36icon.markup}
@@ -22,35 +17,73 @@ export const acquisitionsBannerMomentTemplate = (
         </button>
     </div>
     
-    <div class="fiv-banner__container">
-        <div class="fiv-banner__graphic">
+    <div class="moment-banner__container">
+        <div class="moment-banner__graphic-container">
+            <img class="moment-banner__graphic"
+                srcset="https://media.guim.co.uk/ae6379efd4343894529e3b03672549a3206f2ea5/0_0_289_420/289.png, 
+                https://media.guim.co.uk/8fe60bf9d30df8481fcbccb91816a3c995279007/0_0_577_840/577.png 2x" 
+                src="https://media.guim.co.uk/ae6379efd4343894529e3b03672549a3206f2ea5/0_0_289_420/289.png" 
+                alt="Support the Guardian" 
+            />
         </div>
         
-        <div class="fiv-banner__titles">
-            <h2>${params.titles[0]}</h2>
-            <h2>${params.titles[1]}</h2>
-        </div>
-        
-        <div class="fiv-banner__copy">
-            <span>${params.leadSentence}</span>
-            <span>${params.messageText}</span>
-        </div>
-        
-        <div class="fiv-banner__buttons">
-<div class="engagement-banner__cta">
-<a tabindex="3" class="button engagement-banner__button" href="${
-        params.linkUrl
-    }">
-${params.buttonCaption}${arrowWhiteRight.markup}
-</a>
-<div class="engagement-banner__payment-logos">
-<img src="${config.get('images.acquisitions.payment-methods', '')}"
-alt="Accepted payment methods: Visa, Mastercard, American Express and Paypal"
->
-${applePayLogo}
+        <div class="moment-banner__text-container"> 
+            <div class="moment-banner__titles">
+                <h2 class="moment-banner__title-one">${params.titles[0]}</h2>
+                <h2 class="moment-banner__title-two">${params.titles[1]}</h2>
+            </div>
+            
+            <div class="moment-banner__copy">
+                <!-- Render bold lead sentence if it exists -->
+                ${
+                    params.leadSentence
+                        ? `<span class="moment-banner__copy-in-bold">${
+                              params.leadSentence
+                          }</span>`
+                        : ''
+                }
+                
+                <!-- Render main message text -->
+                <span class="hide-until-tablet">${params.messageText}</span>
+                
+                <!-- Render mobile text if it exists, else render main text -->
+                ${
+                    params.mobileMessageText
+                        ? `<span class="hide-from-tablet">${
+                              params.mobileMessageText
+                          }</span>`
+                        : `<span class="hide-from-tablet">${
+                              params.messageText
+                          }</span>`
+                }
+                
+                <!-- Render bold closing sentence if it exists-->
+                ${
+                    params.closingSentence
+                        ? `<span class="moment-banner__copy-in-bold">${
+                              params.closingSentence
+                          }</span>`
+                        : ''
+                }
+            </div>
+
+            <div class="moment-banner__buttons">
+                <div class="engagement-banner__cta">
+                    <a tabindex="3" class="button  engagement-banner__button  engagement-banner__button--moment-link" href="${
+                        params.linkUrl
+                    }">
+                        Read our pledge
+                    </a>
+                </div>
+                
+                <div class="engagement-banner__cta">
+                    <a tabindex="3" class="button engagement-banner__button" href="${
+                        params.linkUrl
+                    }">
+                    ${params.buttonCaption}${arrowWhiteRight.markup}
+                    </a>
                 </div>
             </div>
         </div>
     </div>
     `;
-};
