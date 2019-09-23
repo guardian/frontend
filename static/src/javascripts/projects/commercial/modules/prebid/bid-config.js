@@ -653,34 +653,39 @@ const currentBidders: (PrebidSize[]) => PrebidBidder[] = slotSizes => {
         : biddersSwitchedOn(allBidders);
 };
 
+const asPrebidBid: (PrebidBidder, string, PrebidSize[]) => PrebidBid = (
+    bidder: PrebidBidder,
+    slotId,
+    slotSizes
+) => ({
+    bidder: bidder.name,
+    params: bidder.bidParams(slotId, slotSizes),
+});
+
+const getXaxisBids: (string, PrebidSize[]) => PrebidBid[] = (
+    slotId,
+    slotSizes
+) => {
+    const includeXaxis = inPbTestOr(shouldIncludeXaxis());
+    if (includeXaxis && slotSizes.length === 2) {
+        return [
+            asPrebidBid(xaxisBidder, slotId, [slotSizes[0]]),
+            asPrebidBid(xaxisBidder2, slotId, [slotSizes[1]]),
+        ];
+    }
+
+    return includeXaxis ? [asPrebidBid(xaxisBidder, slotId, slotSizes)] : [];
+};
+
 export const bids: (string, PrebidSize[]) => PrebidBid[] = (
     slotId,
     slotSizes
 ) => {
-    const cb = currentBidders(slotSizes).map((bidder: PrebidBidder) => ({
-        bidder: bidder.name,
-        params: bidder.bidParams(slotId, slotSizes),
-    }));
+    const currentBids = currentBidders(slotSizes).map((bidder: PrebidBidder) =>
+        asPrebidBid(bidder, slotId, slotSizes)
+    );
 
-    if (inPbTestOr(shouldIncludeXaxis())) {
-        if (slotSizes.length === 2) {
-            cb.push({
-                bidder: xaxisBidder.name,
-                params: xaxisBidder.bidParams(slotId, [slotSizes[0]]),
-            });
-            cb.push({
-                bidder: xaxisBidder2.name,
-                params: xaxisBidder2.bidParams(slotId, [slotSizes[1]]),
-            });
-        } else {
-            cb.push({
-                bidder: xaxisBidder.name,
-                params: xaxisBidder.bidParams(slotId, slotSizes),
-            });
-        }
-    }
-
-    return cb;
+    return currentBids.concat(getXaxisBids(slotId, slotSizes));
 };
 
 export const _ = {
