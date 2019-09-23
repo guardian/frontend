@@ -278,6 +278,7 @@ const makeEpicABTestVariant = (
         copy: initVariant.copy,
         showTicker: initVariant.showTicker || false,
         backgroundImageUrl: initVariant.backgroundImageUrl,
+        deploymentRules,
 
         countryGroups: initVariant.countryGroups || [],
         tagIds: initVariant.tagIds || [],
@@ -587,15 +588,16 @@ export const buildConfiguredEpicTestFromJson = (test: Object): EpicABTest => {
     const excludedTagIds = test.excludedTagIds;
     const excludedSections = test.excludedSections;
 
-    const deploymentRules = test.alwaysAsk
-        ? 'AlwaysAsk'
-        : ({
-              days: parseInt(test.maxViewsDays, 10) || defaultMaxViews.days,
-              count: parseInt(test.maxViewsCount, 10) || defaultMaxViews.count,
-              minDaysBetweenViews:
-                  parseInt(test.minDaysBetweenViews, 10) ||
-                  defaultMaxViews.minDaysBetweenViews,
-          }: MaxViews);
+    const parseMaxViews = (): MaxViews =>
+        test.maxViews
+            ? ({
+                  days: test.maxViewsDays,
+                  count: test.maxViewsCount,
+                  minDaysBetweenViews: test.minDaysBetweenViews,
+              }: MaxViews)
+            : defaultMaxViews;
+
+    const deploymentRules = test.alwaysAsk ? 'AlwaysAsk' : parseMaxViews();
 
     return makeEpicABTest({
         id: test.name,

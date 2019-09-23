@@ -13,7 +13,7 @@ const rawTest = {
     sections: [],
     excludedTagIds: [],
     excludedSections: [],
-    alwaysAsk: true,
+    alwaysAsk: false,
     isLiveBlog: false,
     hasCountryName: false,
     variants: [
@@ -25,17 +25,20 @@ const rawTest = {
             footer: '',
             showTicker: false,
             backgroundImageUrl: '',
+            maxViews: {
+                maxViewsDays: 30,
+                maxViewsCount: 4,
+                minDaysBetweenViews: 0,
+            },
         },
     ],
     highPriority: false,
-    maxViewsCount: 4,
     useLocalViewLog: false,
 };
 
 describe('buildConfiguredEpicTestFromJson', () => {
     it('Parses and constructs an epic test', () => {
         const test = buildConfiguredEpicTestFromJson(rawTest);
-        console.log(test);
         expect(test.id).toBe('My test');
         expect(test.useLocalViewLog).toBe(false);
         expect(test.userCohort).toBe('AllNonSupporters');
@@ -51,6 +54,12 @@ describe('buildConfiguredEpicTestFromJson', () => {
             paragraphs: ['testing testing', 'this is a test'],
             footer: [],
             highlightedText: 'Some highlighted text',
+        });
+
+        expect(variant.deploymentRules).toEqual({
+            days: 30,
+            count: 4,
+            minDaysBetweenViews: 0,
         });
     });
 });
