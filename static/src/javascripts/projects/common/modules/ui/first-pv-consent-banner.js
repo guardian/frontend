@@ -12,6 +12,8 @@ import ophan from 'ophan/ng';
 import { upAlertViewCount } from 'common/modules/analytics/send-privacy-prefs';
 import type { AdConsent } from 'common/modules/commercial/ad-prefs.lib';
 import type { Banner } from 'common/modules/ui/bannerPicker';
+import { isInVariantSynchronous } from 'common/modules/experiments/ab';
+import { commercialIabCompliant } from 'common/modules/experiments/tests/commercial-iab-compliant';
 
 type Template = {
     heading: string,
@@ -101,7 +103,9 @@ const trackInteraction = (interaction: string): void => {
 
 const canShow = (): Promise<boolean> =>
     Promise.resolve(
-        hasUnsetAdChoices() && !hasUserAcknowledgedBanner(messageCode)
+        hasUnsetAdChoices() &&
+            !hasUserAcknowledgedBanner(messageCode) &&
+            !isInVariantSynchronous(commercialIabCompliant, 'variant')
     );
 
 const track = (): void => {
