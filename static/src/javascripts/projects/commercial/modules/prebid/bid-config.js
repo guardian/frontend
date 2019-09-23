@@ -242,19 +242,13 @@ const getXaxisPlacementId = (sizes: PrebidSize[]): number => {
     const NO_MATCH_ID = 15900184;
     switch (getBreakpointKey()) {
         case 'D':
-            // 300x250
             if (containsMpu(sizes)) return 15900184;
-            // 300x600
             if (containsDmpu(sizes)) return 13663297;
-            // 160, 600
             if (containsWS(sizes)) return 16279905;
-            // 970, 250
             if (containsBillboard(sizes)) return 13663284;
-            // 728, 90
             if (containsLeaderboard(sizes)) return 15900187;
             return NO_MATCH_ID;
         case 'M':
-            // 300x250
             if (containsMpu(sizes)) return 13663304;
             return NO_MATCH_ID;
         default:
@@ -502,14 +496,6 @@ const xaxisBidder: PrebidBidder = {
     }),
 };
 
-const xaxisBidder2: PrebidBidder = {
-    name: 'xhb2',
-    switchName: 'prebidXaxis',
-    bidParams: (slotId: string, sizes: PrebidSize[]): PrebidXaxisParams => ({
-        placementId: getXaxisPlacementId(sizes),
-    }),
-};
-
 const adYouLikeBidder: PrebidBidder = {
     name: 'adyoulike',
     switchName: 'prebidAdYouLike',
@@ -662,21 +648,6 @@ const asPrebidBid: (PrebidBidder, string, PrebidSize[]) => PrebidBid = (
     params: bidder.bidParams(slotId, slotSizes),
 });
 
-const getXaxisBids: (string, PrebidSize[]) => PrebidBid[] = (
-    slotId,
-    slotSizes
-) => {
-    const includeXaxis = inPbTestOr(shouldIncludeXaxis());
-    if (includeXaxis && slotSizes.length === 2) {
-        return [
-            asPrebidBid(xaxisBidder, slotId, [slotSizes[0]]),
-            asPrebidBid(xaxisBidder2, slotId, [slotSizes[1]]),
-        ];
-    }
-
-    return includeXaxis ? [asPrebidBid(xaxisBidder, slotId, slotSizes)] : [];
-};
-
 export const bids: (string, PrebidSize[]) => PrebidBid[] = (
     slotId,
     slotSizes
@@ -685,7 +656,12 @@ export const bids: (string, PrebidSize[]) => PrebidBid[] = (
         asPrebidBid(bidder, slotId, slotSizes)
     );
 
-    return currentBids.concat(getXaxisBids(slotId, slotSizes));
+    //To allow different placementIds per ad slot size
+    const xaxisBids = inPbTestOr(shouldIncludeXaxis())
+        ? slotSizes.map(size => asPrebidBid(xaxisBidder, slotId, [size]))
+        : [];
+
+    return currentBids.concat(xaxisBids);
 };
 
 export const _ = {

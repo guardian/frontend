@@ -250,10 +250,6 @@ const requestBids = (
         return requestQueue;
     }
 
-    console.log('Ad Units');
-
-    console.log(adUnits);
-
     requestQueue = requestQueue
         .then(
             () =>
