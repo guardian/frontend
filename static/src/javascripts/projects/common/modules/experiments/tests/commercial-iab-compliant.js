@@ -3,7 +3,7 @@
 export const commercialIabCompliant: ABTest = {
     id: 'CommercialIabCompliant',
     start: '2018-08-13',
-    expiry: '2019-09-30',
+    expiry: '2019-10-30',
     author: 'Ricardo Costa',
     description: '0% participation AB test for the IAB compliant CMP',
     audience: 0,
