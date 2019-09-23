@@ -152,3 +152,6 @@ export const stripMobileSuffix = (s: string): string =>
 
 export const stripTrailingNumbersAbove1 = (s: string): string =>
     stripSuffix(s, '([2-9]|\\d{2,})');
+
+export const containsWS = (sizes: PrebidSize[]): boolean =>
+    contains(sizes, [160, 600]);

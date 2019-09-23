@@ -34,6 +34,7 @@ import {
     containsMpu,
     containsMpuOrDmpu,
     containsMobileSticky,
+    containsWS,
     getBreakpointKey,
     isInAuRegion,
     isInRowRegion,
@@ -238,10 +239,27 @@ const getImproveSizeParam = (slotId: string): { w?: number, h?: number } => {
 };
 
 const getXaxisPlacementId = (sizes: PrebidSize[]): number => {
-    if (containsDmpu(sizes)) return 13663297;
-    if (containsMpu(sizes)) return 13663304;
-    if (containsBillboard(sizes)) return 13663284;
-    return 13663304;
+    const NO_MATCH_ID = 15900184;
+    switch (getBreakpointKey()) {
+        case 'D':
+            // 300x250
+            if (containsMpu(sizes)) return 15900184;
+            // 300x600
+            if (containsDmpu(sizes)) return 13663297;
+            // 160, 600
+            if (containsWS(sizes)) return 16279905;
+            // 970, 250
+            if (containsBillboard(sizes)) return 13663284;
+            // 728, 90
+            if (containsLeaderboard(sizes)) return 15900187;
+            return NO_MATCH_ID;
+        case 'M':
+            // 300x250
+            if (containsMpu(sizes)) return 13663304;
+            return NO_MATCH_ID;
+        default:
+            return NO_MATCH_ID;
+    }
 };
 
 const getPangaeaPlacementId = (sizes: PrebidSize[]): number => {
@@ -484,6 +502,14 @@ const xaxisBidder: PrebidBidder = {
     }),
 };
 
+const xaxisBidder2: PrebidBidder = {
+    name: 'xhb2',
+    switchName: 'prebidXaxis',
+    bidParams: (slotId: string, sizes: PrebidSize[]): PrebidXaxisParams => ({
+        placementId: getXaxisPlacementId(sizes),
+    }),
+};
+
 const adYouLikeBidder: PrebidBidder = {
     name: 'adyoulike',
     switchName: 'prebidAdYouLike',
@@ -611,7 +637,6 @@ const currentBidders: (PrebidSize[]) => PrebidBidder[] = slotSizes => {
         ...(inPbTestOr(shouldIncludeImproveDigital())
             ? [improveDigitalBidder]
             : []),
-        ...(inPbTestOr(shouldIncludeXaxis()) ? [xaxisBidder] : []),
         pubmaticBidder,
         ...(inPbTestOr(shouldIncludeAdYouLike(slotSizes))
             ? [adYouLikeBidder]
@@ -631,11 +656,32 @@ const currentBidders: (PrebidSize[]) => PrebidBidder[] = slotSizes => {
 export const bids: (string, PrebidSize[]) => PrebidBid[] = (
     slotId,
     slotSizes
-) =>
-    currentBidders(slotSizes).map((bidder: PrebidBidder) => ({
+) => {
+    const cb = currentBidders(slotSizes).map((bidder: PrebidBidder) => ({
         bidder: bidder.name,
         params: bidder.bidParams(slotId, slotSizes),
     }));
+
+    if (inPbTestOr(shouldIncludeXaxis())) {
+        if (slotSizes.length === 2) {
+            cb.push({
+                bidder: xaxisBidder.name,
+                params: xaxisBidder.bidParams(slotId, [slotSizes[0]]),
+            });
+            cb.push({
+                bidder: xaxisBidder2.name,
+                params: xaxisBidder2.bidParams(slotId, [slotSizes[1]]),
+            });
+        } else {
+            cb.push({
+                bidder: xaxisBidder.name,
+                params: xaxisBidder.bidParams(slotId, slotSizes),
+            });
+        }
+    }
+
+    return cb;
+};
 
 export const _ = {
     getDummyServerSideBidders,
