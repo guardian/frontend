@@ -3,6 +3,10 @@
 // import { getSync } from 'lib/geolocation';
 import { acquisitionsBannerMomentTemplate } from 'common/modules/commercial/templates/acquisitions-banner-moment.js';
 import { canShowBannerSync } from 'common/modules/commercial/contributions-utilities';
+import { getSync as geolocationGetSync } from 'lib/geolocation';
+
+const geolocation = geolocationGetSync();
+const campaignId = 'environment_campaign';
 
 const defaultLeadSentence =
     'The climate emergency is the defining issue of our times. ';
@@ -19,7 +23,7 @@ const thankYouClosingSentence =
     'Thank you for supporting The Guardian – readers from around the world, like you, make this work possible.';
 const thankYouCTA = 'Support us again';
 
-const campaignId = 'environment_campaign';
+
 
 // These test params must be set on engagementBannerParams *and* passed into canShowBannerSync
 // TODO - we need to rethink how banner tests are selected/displayed
@@ -44,6 +48,7 @@ export const environmentMomentBannerNonSupporters: AcquisitionsABTest = {
     showForSensitive: true,
     campaignId,
     componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
+    geolocation,
     variants: [
         {
             id: 'control',
@@ -82,6 +87,7 @@ export const environmentMomentBannerSupporters: AcquisitionsABTest = {
     showForSensitive: true,
     campaignId,
     componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
+    geolocation,
     variants: [
         {
             id: 'control',
