@@ -723,9 +723,7 @@ describe('xaxis adapter', () => {
         containsDmpu.mockReturnValueOnce(false);
         containsMobileSticky.mockReturnValueOnce(false);
 
-        const xaxisBids = bids('dfp-ad--top-above-nav', [
-            [123, 123],
-        ]);
+        const xaxisBids = bids('dfp-ad--top-above-nav', [[123, 123]]);
 
         expect(xaxisBids[1].params).toEqual({
             placementId: 15900184,
