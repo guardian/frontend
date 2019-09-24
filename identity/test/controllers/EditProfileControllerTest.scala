@@ -90,48 +90,6 @@ import scala.concurrent.Future
   }
 
   "EditProfileController" when {
-    "submitPublicProfileForm method is called with a valid CSRF request" should {
-      val location = "Test location"
-      val aboutMe = "Interesting"
-      val interests = "Other interesting things"
-      val username = "usernametest1"
-
-      "save the user through the ID API" in new EditProfileFixture {
-
-        val fakeRequest = FakeCSRFRequest(csrfAddToken)
-          .withFormUrlEncodedBody(
-            "location" -> location,
-            "aboutMe" -> aboutMe,
-            "interests" -> interests,
-            "username" -> username
-          )
-
-        val updatedUser = user.copy(
-          publicFields = PublicFields(
-            location = Some(location),
-            aboutMe = Some(aboutMe),
-            interests = Some(interests),
-            username = Some(username),
-            displayName = Some(username)
-          )
-        )
-        when(api.saveUser(MockitoMatchers.any[String], MockitoMatchers.any[UserUpdateDTO], MockitoMatchers.any[Auth]))
-          .thenReturn(Future.successful(Right(updatedUser)))
-
-        val result = controller.submitPublicProfileForm().apply(fakeRequest)
-
-        status(result) should be(200)
-
-        val userUpdateCapture = ArgumentCaptor.forClass(classOf[UserUpdateDTO])
-        verify(api).saveUser(MockitoMatchers.eq(userId), userUpdateCapture.capture(), MockitoMatchers.eq(testAuth))
-        val userUpdate = userUpdateCapture.getValue
-
-        userUpdate.publicFields.value.location.value should equal(location)
-        userUpdate.publicFields.value.aboutMe.value should equal(aboutMe)
-        userUpdate.publicFields.value.interests.value should equal(interests)
-      }
-    }
-
     "The submitAccountForm method" should {
       object FakeRequestAccountData {
         val primaryEmailAddress = "john.smith@bobmail.com"
