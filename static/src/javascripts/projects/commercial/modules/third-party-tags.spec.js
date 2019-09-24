@@ -99,9 +99,7 @@ describe('third party tags', () => {
                     '5': true,
                 })
             );
-            console.log('*** before: ', document.scripts);
             insertScripts([fakeThirdPartyTag]);
-            console.log('*** after: ', document.scripts);
             expect(document.scripts.length).toBe(2);
         });
     });
