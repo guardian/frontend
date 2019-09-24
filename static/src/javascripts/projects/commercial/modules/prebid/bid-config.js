@@ -9,6 +9,7 @@ import {
     getPageTargeting,
 } from 'common/modules/commercial/build-page-targeting';
 import { commercialPrebidSafeframe } from 'common/modules/experiments/tests/commercial-prebid-safeframe';
+import { xaxisAdapterTest } from 'common/modules/experiments/tests/commercial-xaxis-adapter';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import type {
     PrebidAdYouLikeParams,
@@ -34,6 +35,7 @@ import {
     containsMpu,
     containsMpuOrDmpu,
     containsMobileSticky,
+    containsWS,
     getBreakpointKey,
     isInAuRegion,
     isInRowRegion,
@@ -59,6 +61,9 @@ const PAGE_TARGETING: {} = buildAppNexusTargetingObject(getPageTargeting());
 
 const isInSafeframeTestVariant = (): boolean =>
     isInVariantSynchronous(commercialPrebidSafeframe, 'variant');
+
+const isInXaxisAdapterTestVariant = (): boolean =>
+    isInVariantSynchronous(xaxisAdapterTest, 'variant');
 
 const isArticle = config.get('page.contentType') === 'Article';
 
@@ -237,11 +242,29 @@ const getImproveSizeParam = (slotId: string): { w?: number, h?: number } => {
         : {};
 };
 
-const getXaxisPlacementId = (sizes: PrebidSize[]): number => {
+const getXhbPlacementId = (sizes: PrebidSize[]): number => {
     if (containsDmpu(sizes)) return 13663297;
     if (containsMpu(sizes)) return 13663304;
     if (containsBillboard(sizes)) return 13663284;
     return 13663304;
+};
+
+const getXaxisPlacementId = (sizes: PrebidSize[]): number => {
+    const NO_MATCH_ID = 15900184;
+    switch (getBreakpointKey()) {
+        case 'D':
+            if (containsMpu(sizes)) return 15900184;
+            if (containsDmpu(sizes)) return 13663297;
+            if (containsWS(sizes)) return 16279905;
+            if (containsBillboard(sizes)) return 13663284;
+            if (containsLeaderboard(sizes)) return 15900187;
+            return NO_MATCH_ID;
+        case 'M':
+            if (containsMpu(sizes)) return 13663304;
+            return NO_MATCH_ID;
+        default:
+            return NO_MATCH_ID;
+    }
 };
 
 const getPangaeaPlacementId = (sizes: PrebidSize[]): number => {
@@ -476,11 +499,21 @@ const improveDigitalBidder: PrebidBidder = {
     }),
 };
 
+// Create multiple bids for each slot size
+const xaxisBidders: (PrebidSize[]) => PrebidBidder[] = slotSizes =>
+    slotSizes.map(size => ({
+        name: 'xhb',
+        switchName: 'prebidXaxis',
+        bidParams: (): PrebidXaxisParams => ({
+            placementId: getXaxisPlacementId([size]),
+        }),
+    }));
+
 const xaxisBidder: PrebidBidder = {
     name: 'xhb',
     switchName: 'prebidXaxis',
     bidParams: (slotId: string, sizes: PrebidSize[]): PrebidXaxisParams => ({
-        placementId: getXaxisPlacementId(sizes),
+        placementId: getXhbPlacementId(sizes),
     }),
 };
 
@@ -611,8 +644,10 @@ const currentBidders: (PrebidSize[]) => PrebidBidder[] = slotSizes => {
         ...(inPbTestOr(shouldIncludeImproveDigital())
             ? [improveDigitalBidder]
             : []),
-        ...(inPbTestOr(shouldIncludeXaxis()) ? [xaxisBidder] : []),
         pubmaticBidder,
+        ...(!isInXaxisAdapterTestVariant() && inPbTestOr(shouldIncludeXaxis())
+            ? [xaxisBidder]
+            : []),
         ...(inPbTestOr(shouldIncludeAdYouLike(slotSizes))
             ? [adYouLikeBidder]
             : []),
@@ -620,7 +655,13 @@ const currentBidders: (PrebidSize[]) => PrebidBidder[] = slotSizes => {
         ...(shouldIncludeOpenx() ? [openxClientSideBidder] : []),
     ];
 
+    const xhbBidders =
+        isInXaxisAdapterTestVariant() && inPbTestOr(shouldIncludeXaxis())
+            ? xaxisBidders(slotSizes)
+            : [];
+
     const allBidders = indexExchangeBidders(slotSizes)
+        .concat(xhbBidders)
         .concat(otherBidders)
         .concat(getDummyServerSideBidders());
     return isPbTestOn()
