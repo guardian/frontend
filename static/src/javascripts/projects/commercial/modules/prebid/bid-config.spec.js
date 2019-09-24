@@ -562,7 +562,7 @@ describe('bids', () => {
         setQueryString('pbtest=xhb&pbtest=sonobi');
         config.set('switches.prebidXaxis', false);
         config.set('switches.prebidSonobi', false);
-        expect(getBidders()).toEqual(['sonobi', 'xhb']);
+        expect(getBidders()).toEqual(['xhb', 'sonobi']);
     });
 
     test('should ignore bidder that does not exist', () => {
@@ -671,6 +671,42 @@ describe('triplelift adapter', () => {
             .params;
         expect(tripleLiftBids).toEqual({
             inventoryCode: 'theguardian_320x50_HDX',
+        });
+    });
+});
+
+describe('xaxis adapter', () => {
+    beforeEach(() => {
+        resetConfig();
+        config.set('page.contentType', 'Article');
+        config.set('switches.prebidXaxis', true);
+        shouldIncludeXaxis.mockReturnValue(true);
+    });
+
+    afterEach(() => {
+        jest.resetAllMocks();
+    });
+
+    test('should include xaxis adapter if condition is true ', () => {
+        expect(getBidders()).toEqual(['ix', 'xhb']);
+    });
+
+    test('should return correct xaxis adapter params for top-above-nav', () => {
+        containsLeaderboard.mockReturnValueOnce(true);
+        containsMpu.mockReturnValueOnce(false);
+        containsDmpu.mockReturnValueOnce(false);
+        containsMobileSticky.mockReturnValueOnce(false);
+        getBreakpointKey.mockReturnValue('D');
+
+        const xaxisBids = bids('dfp-ad--top-above-nav', [
+            [728, 90],
+            [970, 250],
+        ]);
+        expect(xaxisBids[2].params).toEqual({
+            placementId: 15900187,
+        });
+        expect(xaxisBids[3].params).toEqual({
+            placementId: 15900184,
         });
     });
 });

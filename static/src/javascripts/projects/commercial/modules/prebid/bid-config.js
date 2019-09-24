@@ -488,13 +488,15 @@ const improveDigitalBidder: PrebidBidder = {
     }),
 };
 
-const xaxisBidder: PrebidBidder = {
-    name: 'xhb',
-    switchName: 'prebidXaxis',
-    bidParams: (slotId: string, sizes: PrebidSize[]): PrebidXaxisParams => ({
-        placementId: getXaxisPlacementId(sizes),
-    }),
-};
+// Create multiple bids for each slot size
+const xaxisBidders: (PrebidSize[]) => PrebidBidder[] = slotSizes =>
+    slotSizes.map(size => ({
+        name: 'xhb',
+        switchName: 'prebidXaxis',
+        bidParams: (): PrebidXaxisParams => ({
+            placementId: getXaxisPlacementId([size]),
+        }),
+    }));
 
 const adYouLikeBidder: PrebidBidder = {
     name: 'adyoulike',
@@ -631,7 +633,12 @@ const currentBidders: (PrebidSize[]) => PrebidBidder[] = slotSizes => {
         ...(shouldIncludeOpenx() ? [openxClientSideBidder] : []),
     ];
 
+    const xBidders = inPbTestOr(shouldIncludeXaxis())
+        ? xaxisBidders(slotSizes)
+        : [];
+
     const allBidders = indexExchangeBidders(slotSizes)
+        .concat(xBidders)
         .concat(otherBidders)
         .concat(getDummyServerSideBidders());
     return isPbTestOn()
@@ -639,30 +646,14 @@ const currentBidders: (PrebidSize[]) => PrebidBidder[] = slotSizes => {
         : biddersSwitchedOn(allBidders);
 };
 
-const asPrebidBid: (PrebidBidder, string, PrebidSize[]) => PrebidBid = (
-    bidder: PrebidBidder,
-    slotId,
-    slotSizes
-) => ({
-    bidder: bidder.name,
-    params: bidder.bidParams(slotId, slotSizes),
-});
-
 export const bids: (string, PrebidSize[]) => PrebidBid[] = (
     slotId,
     slotSizes
-) => {
-    const currentBids = currentBidders(slotSizes).map((bidder: PrebidBidder) =>
-        asPrebidBid(bidder, slotId, slotSizes)
-    );
-
-    // To allow different placementIds per ad slot size
-    const xaxisBids = inPbTestOr(shouldIncludeXaxis())
-        ? slotSizes.map(size => asPrebidBid(xaxisBidder, slotId, [size]))
-        : [];
-
-    return currentBids.concat(xaxisBids);
-};
+) =>
+    currentBidders(slotSizes).map((bidder: PrebidBidder) => ({
+        bidder: bidder.name,
+        params: bidder.bidParams(slotId, slotSizes),
+    }));
 
 export const _ = {
     getDummyServerSideBidders,
