@@ -560,6 +560,9 @@ describe('bids', () => {
 
     test('should only include multiple bidders being tested, even when their switches are off', () => {
         setQueryString('pbtest=xhb&pbtest=sonobi');
+        isInVariantSynchronous.mockImplementation(
+            (testId, variantId) => variantId === 'variant'
+        );
         config.set('switches.prebidXaxis', false);
         config.set('switches.prebidSonobi', false);
         expect(getBidders()).toEqual(['xhb', 'sonobi']);
@@ -680,6 +683,9 @@ describe('xaxis adapter', () => {
         resetConfig();
         config.set('page.contentType', 'Article');
         shouldIncludeXaxis.mockReturnValue(true);
+        isInVariantSynchronous.mockImplementation(
+            (testId, variantId) => variantId === 'variant'
+        );
     });
 
     afterEach(() => {

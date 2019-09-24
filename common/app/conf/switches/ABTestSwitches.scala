@@ -135,4 +135,14 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2020, 7, 30),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-commercial-xaxis-adapter",
+    "Test new implementation of xaxis adapter with multiple placement ids",
+    owners = Seq(Owner.withGithub("ioanna0")),
+    safeState = On,
+    sellByDate = new LocalDate(2020, 7, 30),
+    exposeClientSide = true
+  )
 }

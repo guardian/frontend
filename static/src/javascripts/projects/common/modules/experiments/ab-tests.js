@@ -14,6 +14,7 @@ import {
     environmentMomentBannerNonSupporters,
     environmentMomentBannerSupporters,
 } from 'common/modules/experiments/tests/contributions-moment-banner-environment';
+import { xaxisAdapterTest } from 'common/modules/experiments/tests/commercial-xaxis-adapter';
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialPrebidSafeframe,
@@ -21,6 +22,7 @@ export const concurrentTests: $ReadOnlyArray<ABTest> = [
     adblockTest,
     prebidTripleLiftAdapter,
     commercialInline1Headings,
+    xaxisAdapterTest,
 ];
 
 export const epicTests: $ReadOnlyArray<EpicABTest> = [

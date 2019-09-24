@@ -9,6 +9,7 @@ import {
     getPageTargeting,
 } from 'common/modules/commercial/build-page-targeting';
 import { commercialPrebidSafeframe } from 'common/modules/experiments/tests/commercial-prebid-safeframe';
+import { xaxisAdapterTest } from 'common/modules/experiments/tests/commercial-xaxis-adapter';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import type {
     PrebidAdYouLikeParams,
@@ -60,6 +61,9 @@ const PAGE_TARGETING: {} = buildAppNexusTargetingObject(getPageTargeting());
 
 const isInSafeframeTestVariant = (): boolean =>
     isInVariantSynchronous(commercialPrebidSafeframe, 'variant');
+
+const isInXaxisAdapterTestVariant = (): boolean =>
+    isInVariantSynchronous(xaxisAdapterTest, 'variant');
 
 const isArticle = config.get('page.contentType') === 'Article';
 
@@ -236,6 +240,13 @@ const getImproveSizeParam = (slotId: string): { w?: number, h?: number } => {
             (key.endsWith('inline') && !isDesktopAndArticle))
         ? { w: 300, h: 250 }
         : {};
+};
+
+const getXhbPlacementId = (sizes: PrebidSize[]): number => {
+    if (containsDmpu(sizes)) return 13663297;
+    if (containsMpu(sizes)) return 13663304;
+    if (containsBillboard(sizes)) return 13663284;
+    return 13663304;
 };
 
 const getXaxisPlacementId = (sizes: PrebidSize[]): number => {
@@ -498,6 +509,14 @@ const xaxisBidders: (PrebidSize[]) => PrebidBidder[] = slotSizes =>
         }),
     }));
 
+const xaxisBidder: PrebidBidder = {
+    name: 'xhb',
+    switchName: 'prebidXaxis',
+    bidParams: (slotId: string, sizes: PrebidSize[]): PrebidXaxisParams => ({
+        placementId: getXhbPlacementId(sizes),
+    }),
+};
+
 const adYouLikeBidder: PrebidBidder = {
     name: 'adyoulike',
     switchName: 'prebidAdYouLike',
@@ -626,6 +645,9 @@ const currentBidders: (PrebidSize[]) => PrebidBidder[] = slotSizes => {
             ? [improveDigitalBidder]
             : []),
         pubmaticBidder,
+        ...(!isInXaxisAdapterTestVariant() && inPbTestOr(shouldIncludeXaxis())
+            ? [xaxisBidder]
+            : []),
         ...(inPbTestOr(shouldIncludeAdYouLike(slotSizes))
             ? [adYouLikeBidder]
             : []),
@@ -633,9 +655,10 @@ const currentBidders: (PrebidSize[]) => PrebidBidder[] = slotSizes => {
         ...(shouldIncludeOpenx() ? [openxClientSideBidder] : []),
     ];
 
-    const xhbBidders = inPbTestOr(shouldIncludeXaxis())
-        ? xaxisBidders(slotSizes)
-        : [];
+    const xhbBidders =
+        isInXaxisAdapterTestVariant() && inPbTestOr(shouldIncludeXaxis())
+            ? xaxisBidders(slotSizes)
+            : [];
 
     const allBidders = indexExchangeBidders(slotSizes)
         .concat(xhbBidders)
