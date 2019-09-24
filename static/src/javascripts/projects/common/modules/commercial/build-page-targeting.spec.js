@@ -69,6 +69,8 @@ const falseConsentMock = (callback): void =>
     callback({ '1': false, '2': false, '3': false, '4': false, '5': false });
 const nullConsentMock = (callback): void =>
     callback({ '1': null, '2': null, '3': null, '4': null, '5': null });
+const mixedConsentMock = (callback): void =>
+    callback({ '1': false, '2': true, '3': true, '4': false, '5': true });
 
 describe('Build Page Targeting', () => {
     beforeEach(() => {
@@ -169,6 +171,14 @@ describe('Build Page Targeting', () => {
 
         _.resetPageTargeting();
         onIabConsentNotification.mockImplementation(falseConsentMock);
+        expect(getPageTargeting().pa).toBe('f');
+
+        _.resetPageTargeting();
+        onIabConsentNotification.mockImplementation(nullConsentMock);
+        expect(getPageTargeting().pa).toBe('f');
+
+        _.resetPageTargeting();
+        onIabConsentNotification.mockImplementation(mixedConsentMock);
         expect(getPageTargeting().pa).toBe('f');
     });
 
