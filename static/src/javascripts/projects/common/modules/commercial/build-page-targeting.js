@@ -204,8 +204,8 @@ const buildPageTargetting = (
 ): { [key: string]: mixed } => {
     const page = config.get('page');
     // personalised ads targeting
-    const paTargeting: {} =
-        adConsentState !== null ? { pa: adConsentState ? 't' : 'f' } : {};
+    // flowlint-next-line sketchy-null-bool:off
+    const paTargeting: {} = { pa: adConsentState ? 't' : 'f' };
     const adFreeTargeting: {} = commercialFeatures.adFree ? { af: 't' } : {};
     const pageTargets: PageTargeting = Object.assign(
         {
@@ -256,7 +256,8 @@ const getPageTargeting = (): { [key: string]: mixed } => {
     if (Object.keys(myPageTargetting).length !== 0) return myPageTargetting;
 
     onIabConsentNotification(state => {
-        const consentState = state[1];
+        const consentState =
+            state[1] && state[2] && state[3] && state[4] && state[5];
 
         if (consentState !== latestConsentState) {
             myPageTargetting = buildPageTargetting(consentState);

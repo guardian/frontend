@@ -63,9 +63,14 @@ jest.mock('@guardian/consent-management-platform', () => ({
     onIabConsentNotification: jest.fn(),
 }));
 
-const trueConsentMock = (callback): void => callback({ '1': true });
-const falseConsentMock = (callback): void => callback({ '1': false });
-const nullConsentMock = (callback): void => callback({ '1': null });
+const trueConsentMock = (callback): void =>
+    callback({ '1': true, '2': true, '3': true, '4': true, '5': true });
+const falseConsentMock = (callback): void =>
+    callback({ '1': false, '2': false, '3': false, '4': false, '5': false });
+const nullConsentMock = (callback): void =>
+    callback({ '1': null, '2': null, '3': null, '4': null, '5': null });
+const mixedConsentMock = (callback): void =>
+    callback({ '1': false, '2': true, '3': true, '4': false, '5': true });
 
 describe('Build Page Targeting', () => {
     beforeEach(() => {
@@ -155,7 +160,7 @@ describe('Build Page Targeting', () => {
         expect(pageTargeting.tn).toEqual(['news']);
         expect(pageTargeting.vl).toEqual('90');
         expect(pageTargeting.pv).toEqual('presetOphanPageViewId');
-        expect(pageTargeting.pa).toEqual(undefined);
+        expect(pageTargeting.pa).toEqual('f');
         expect(pageTargeting.cc).toEqual('US');
         expect(pageTargeting.pr).toEqual('dotcom-platform');
     });
@@ -166,6 +171,14 @@ describe('Build Page Targeting', () => {
 
         _.resetPageTargeting();
         onIabConsentNotification.mockImplementation(falseConsentMock);
+        expect(getPageTargeting().pa).toBe('f');
+
+        _.resetPageTargeting();
+        onIabConsentNotification.mockImplementation(nullConsentMock);
+        expect(getPageTargeting().pa).toBe('f');
+
+        _.resetPageTargeting();
+        onIabConsentNotification.mockImplementation(mixedConsentMock);
         expect(getPageTargeting().pa).toBe('f');
     });
 
@@ -220,6 +233,7 @@ describe('Build Page Targeting', () => {
             pv: '123456',
             fr: '0',
             inskin: 'f',
+            pa: 'f',
             cc: 'US',
             pr: 'dotcom-platform',
         });

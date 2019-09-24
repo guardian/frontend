@@ -165,6 +165,7 @@ describe('DFP', () => {
             enableSingleRequest: jest.fn(),
             collapseEmptyDivs: jest.fn(),
             refresh: jest.fn(),
+            setRequestNonPersonalizedAds: jest.fn(),
         };
         const sizeMapping = {
             sizes: [],
@@ -404,7 +405,13 @@ describe('DFP', () => {
     describe('keyword targeting', () => {
         it('should send page level keywords', () => {
             onIabConsentNotification.mockImplementation(callback =>
-                callback({ '1': null })
+                callback({
+                    '1': true,
+                    '2': true,
+                    '3': true,
+                    '4': true,
+                    '5': true,
+                })
             );
             prepareGoogletag().then(() => {
                 expect(

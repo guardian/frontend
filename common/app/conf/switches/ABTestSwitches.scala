@@ -12,7 +12,7 @@ trait ABTestSwitches {
     "Test the IAB compliant version of our CMP",
     owners = Seq(Owner.withGithub("ripecosta")),
     safeState = Off,
-    sellByDate = new LocalDate(2019, 9, 30),
+    sellByDate = new LocalDate(2019, 10, 30),
     exposeClientSide = true
   )
 
