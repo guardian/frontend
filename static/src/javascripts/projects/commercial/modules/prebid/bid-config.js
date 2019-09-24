@@ -633,12 +633,12 @@ const currentBidders: (PrebidSize[]) => PrebidBidder[] = slotSizes => {
         ...(shouldIncludeOpenx() ? [openxClientSideBidder] : []),
     ];
 
-    const xBidders = inPbTestOr(shouldIncludeXaxis())
+    const xhbBidders = inPbTestOr(shouldIncludeXaxis())
         ? xaxisBidders(slotSizes)
         : [];
 
     const allBidders = indexExchangeBidders(slotSizes)
-        .concat(xBidders)
+        .concat(xhbBidders)
         .concat(otherBidders)
         .concat(getDummyServerSideBidders());
     return isPbTestOn()
