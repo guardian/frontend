@@ -7,7 +7,7 @@ export const commercialInline1Headings: ABTest = {
     expiry: '2020-07-30',
     author: 'Ioanna Kyprianou',
     description: 'Test inline1 ads to not be placed right after h2 headings',
-    audience: 0.01,
+    audience: 0.1,
     audienceOffset: 0.0,
     successMeasure: 'We can see inline1 ads in desktop between paragraphs',
     audienceCriteria: 'n/a',
