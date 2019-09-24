@@ -137,26 +137,26 @@ $title: 'Guardian Titlepiece', Georgia, serif !default;
     }
 }
 
-    .site-message--moment-banner .site-message__roundel {
-        display: none;
-    }
+.site-message--moment-banner .site-message__roundel {
+    display: none;
+}
 
-    .site-message--moment-banner .engagement-banner__roundel.hide-until-phablet {
+.site-message--moment-banner .engagement-banner__roundel.hide-until-phablet {
+    display: inline-block;
+    margin-right: 8px;
+}
+
+.site-message--moment-banner .engagement-banner__cta {
+    @include mq($from: tablet) {
         display: inline-block;
-        margin-right: 8px;
     }
+}
 
-    .site-message--moment-banner .engagement-banner__cta {
-        @include mq($from: tablet) {
-            display: inline-block;
-        }
+.site-message--moment-banner .engagement-banner__close-button {
+    background: $brightness-7;
+
+    svg {
+        fill: $brightness-97;
     }
-
-    .site-message--moment-banner .engagement-banner__close-button {
-        background: $brightness-7;
-
-        svg {
-            fill: $brightness-97;
-        }
-    }
+}
 
