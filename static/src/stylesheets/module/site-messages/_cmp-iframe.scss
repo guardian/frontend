@@ -38,3 +38,11 @@
         transform: translateX(calc(100vw - 100%));
     }
 }
+
+// Prevent body scrolling behind overlay
+body.no-scroll {
+    overflow: hidden;
+    position: fixed;
+    left: 0;
+    right: 0;
+}

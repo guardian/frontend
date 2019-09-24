@@ -13,13 +13,9 @@ let uiPrepared: boolean = false;
 
 const onReadyCmp = (): void => {
     if (container && container.parentNode) {
-        fastdom
-            .write(() => {
-                if (container && container.parentNode) {
-                    container.classList.add(CMP_READY_CLASS);
-                }
-            })
-            .then(() => {
+        fastdom.write(() => {
+            if (container && container.parentNode) {
+                container.classList.add(CMP_READY_CLASS);
                 /**
                  * Adding CMP_READY_CLASS changes display: none to display: block
                  * on the overlay. You can't update this display property and transition
@@ -32,13 +28,22 @@ const onReadyCmp = (): void => {
                         container.classList.add(CMP_ANIMATE_CLASS);
                     }
                 }, 0);
-            });
+                // disable scrolling on body beneath overlay
+                if (document.body) {
+                    document.body.classList.add('no-scroll');
+                }
+            }
+        });
     }
 };
 
 const onCloseCmp = (): void => {
     fastdom.write(() => {
         if (container && container.parentNode) {
+            // enable scrolling on body beneath overlay
+            if (document.body) {
+                document.body.classList.remove('no-scroll');
+            }
             container.classList.remove(CMP_READY_CLASS);
             container.classList.remove(CMP_ANIMATE_CLASS);
             container.remove();
