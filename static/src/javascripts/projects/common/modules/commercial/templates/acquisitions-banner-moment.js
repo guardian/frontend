@@ -20,9 +20,9 @@ export const acquisitionsBannerMomentTemplate = (
     <div class="moment-banner__container">
         <div class="moment-banner__graphic-container">
             <img class="moment-banner__graphic"
-                srcset="https://media.guim.co.uk/ae6379efd4343894529e3b03672549a3206f2ea5/0_0_289_420/289.png, 
-                https://media.guim.co.uk/8fe60bf9d30df8481fcbccb91816a3c995279007/0_0_577_840/577.png 2x" 
-                src="https://media.guim.co.uk/ae6379efd4343894529e3b03672549a3206f2ea5/0_0_289_420/289.png" 
+                srcset="https://media.guim.co.uk/7c8c1babaaaf1003eccec9edf53a6b9a06e1ce5d/0_0_279_420/279.png, 
+                https://media.guim.co.uk/0e1afbf2f142b1eb9a686dc389236702740834b6/0_0_558_840/558.png 2x" 
+                src="https://media.guim.co.uk/7c8c1babaaaf1003eccec9edf53a6b9a06e1ce5d/0_0_279_420/279.png" 
                 alt="Support the Guardian" 
             />
         </div>
