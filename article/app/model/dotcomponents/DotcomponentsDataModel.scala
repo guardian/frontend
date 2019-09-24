@@ -257,7 +257,7 @@ object DataModelV3 {
       "subMetaSectionLinks" -> model.subMetaSectionLinks,
       "subMetaKeywordLinks" -> model.subMetaKeywordLinks,
       "shouldHideAds" -> model.shouldHideAds,
-      "isAdFreeUser" -> model.shouldHideAds,
+      "isAdFreeUser" -> model.isAdFreeUser,
       "webURL" -> model.webURL,
       "linkedData" -> model.linkedData,
       "config" -> model.config,
