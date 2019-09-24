@@ -27,7 +27,7 @@ import {
 } from 'common/modules/experiments/ab-tests';
 import {
     getEngagementBannerTestsFromGoogleDoc,
-    getEpicTestsFromGoogleDoc,
+    getConfiguredEpicTests,
 } from 'common/modules/commercial/contributions-utilities';
 
 export const getEpicTestToRun = memoize(
@@ -39,8 +39,8 @@ export const getEpicTestToRun = memoize(
             test => !test.highPriority
         );
 
-        if (config.get('switches.epicTestsFromGoogleDocs')) {
-            return getEpicTestsFromGoogleDoc().then(configuredEpicTests => {
+        if (config.get('switches.useConfiguredEpicTests')) {
+            return getConfiguredEpicTests().then(configuredEpicTests => {
                 configuredEpicTests.forEach(test =>
                     config.set(`switches.ab${test.id}`, true)
                 );
