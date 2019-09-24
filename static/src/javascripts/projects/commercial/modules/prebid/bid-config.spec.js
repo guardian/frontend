@@ -679,7 +679,6 @@ describe('xaxis adapter', () => {
     beforeEach(() => {
         resetConfig();
         config.set('page.contentType', 'Article');
-        config.set('switches.prebidXaxis', true);
         shouldIncludeXaxis.mockReturnValue(true);
     });
 
@@ -688,10 +687,17 @@ describe('xaxis adapter', () => {
     });
 
     test('should include xaxis adapter if condition is true ', () => {
+        config.set('switches.prebidXaxis', true);
         expect(getBidders()).toEqual(['ix', 'xhb']);
     });
 
+    test('should include xaxis adapter if condition is true ', () => {
+        config.set('switches.prebidXaxis', false);
+        expect(getBidders()).toEqual(['ix']);
+    });
+
     test('should return correct xaxis adapter params for top-above-nav', () => {
+        config.set('switches.prebidXaxis', true);
         containsLeaderboard.mockReturnValueOnce(true);
         containsMpu.mockReturnValueOnce(false);
         containsDmpu.mockReturnValueOnce(false);
@@ -706,6 +712,22 @@ describe('xaxis adapter', () => {
             placementId: 15900187,
         });
         expect(xaxisBids[3].params).toEqual({
+            placementId: 15900184,
+        });
+    });
+
+    test('should return not match param if size not matching', () => {
+        config.set('switches.prebidXaxis', true);
+        containsLeaderboard.mockReturnValueOnce(true);
+        containsMpu.mockReturnValueOnce(false);
+        containsDmpu.mockReturnValueOnce(false);
+        containsMobileSticky.mockReturnValueOnce(false);
+
+        const xaxisBids = bids('dfp-ad--top-above-nav', [
+            [123, 123],
+        ]);
+
+        expect(xaxisBids[1].params).toEqual({
             placementId: 15900184,
         });
     });
