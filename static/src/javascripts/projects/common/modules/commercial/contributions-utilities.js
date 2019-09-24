@@ -591,9 +591,9 @@ export const buildConfiguredEpicTestFromJson = (test: Object): EpicABTest => {
     const parseMaxViews = (): MaxViews =>
         test.maxViews
             ? ({
-                  days: test.maxViewsDays,
-                  count: test.maxViewsCount,
-                  minDaysBetweenViews: test.minDaysBetweenViews,
+                  days: test.maxViews.maxViewsDays,
+                  count: test.maxViews.maxViewsCount,
+                  minDaysBetweenViews: test.maxViews.minDaysBetweenViews,
               }: MaxViews)
             : defaultMaxViews;
 
