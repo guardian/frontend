@@ -69,20 +69,20 @@ trait ABTestSwitches {
   Switch(
     ABTests,
     "ab-contributions-banner-environment-moment-supporters",
-    "new moment lorem ipsum",
+    "moment banner to be seen by current supporters",
     owners = Seq(Owner.withGithub("jlieb10")),
     safeState = Off,
-    sellByDate = new LocalDate(2019, 9, 30),
+    sellByDate = new LocalDate(2020, 9, 30),
     exposeClientSide = true
   )
 
   Switch(
     ABTests,
     "ab-contributions-banner-environment-moment-non-supporters",
-    "new moment lorem ipsum",
+    "moment banner to be seen by general audience",
     owners = Seq(Owner.withGithub("jlieb10")),
     safeState = Off,
-    sellByDate = new LocalDate(2019, 9, 30),
+    sellByDate = new LocalDate(2020, 9, 30),
     exposeClientSide = true
   )
 
