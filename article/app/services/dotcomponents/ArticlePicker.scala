@@ -1,10 +1,10 @@
 package services.dotcomponents
 
 import controllers.ArticlePage
-import experiments.{ActiveExperiments, DotcomRenderingBeta}
+import experiments.{ActiveExperiments, DotcomRenderingAdvertisements}
 import model.PageWithStoryPackage
 import implicits.Requests._
-import model.liveblog.{BlockElement, ImageBlockElement, TextBlockElement, TweetBlockElement, PullquoteBlockElement}
+import model.liveblog.{BlockElement, ImageBlockElement, PullquoteBlockElement, TextBlockElement, TweetBlockElement}
 import play.api.mvc.RequestHeader
 import views.support.Commercial
 
@@ -99,7 +99,6 @@ object ArticlePicker {
       ("hasOnlySupportedElements", ArticlePageChecks.hasOnlySupportedElements(page)),
       ("hasOnlySupportedMainElements", ArticlePageChecks.hasOnlySupportedMainElements(page)),
       ("isDiscussionDisabled", ArticlePageChecks.isDiscussionDisabled(page)),
-      ("isAdFree", ArticlePageChecks.isAdFree(page, request)),
       ("isNotImmersive", ArticlePageChecks.isNotImmersive(page)),
       ("isNotLiveBlog", ArticlePageChecks.isNotLiveBlog(page)),
       ("isNotAReview", ArticlePageChecks.isNotAReview(page)),
@@ -120,14 +119,19 @@ object ArticlePicker {
   }
 
   def getTier(page: PageWithStoryPackage)(implicit request: RequestHeader): RenderType = {
+
     val whitelistFeatures = featureWhitelist(page, request)
     val isEnabled = conf.switches.Switches.DotcomRendering.isSwitchedOn
-    val isBetaUser = ActiveExperiments.isParticipating(DotcomRenderingBeta)
+    val isAdFree = ArticlePageChecks.isAdFree(page, request)
+    val isCommercialBetaUser = ActiveExperiments.isParticipating(DotcomRenderingAdvertisements)
 
-    val tier = if ((dcrCouldRender(page, request) && isEnabled && isBetaUser && !request.forceDCROff) || request.forceDCR) RemoteRender else LocalRenderArticle
+    // add free pages always go through DCR provided it's turned on and we support its article features.
+    // pages with commercial aspects require the request to go through the DotcomRenderingAdvertisements abtest
+
+    val tier = if ((dcrCouldRender(page, request) && isEnabled && (isAdFree || isCommercialBetaUser) && !request.forceDCROff) || request.forceDCR) RemoteRender else LocalRenderArticle
 
     // include features that we wish to log but not whitelist against
-    val features = whitelistFeatures + ("isBetaUser" -> isBetaUser)
+    val features = whitelistFeatures + ("isCommercialBetaUser" -> isCommercialBetaUser)
 
     if (tier == RemoteRender) {
       logRequest(s"path executing in dotcomponents", features, page)
