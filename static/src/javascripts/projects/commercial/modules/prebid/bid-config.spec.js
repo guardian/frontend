@@ -691,7 +691,7 @@ describe('xaxis adapter', () => {
         expect(getBidders()).toEqual(['ix', 'xhb']);
     });
 
-    test('should include xaxis adapter if condition is true ', () => {
+    test('should not include xaxis adapter if condition is false ', () => {
         config.set('switches.prebidXaxis', false);
         expect(getBidders()).toEqual(['ix']);
     });
