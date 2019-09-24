@@ -1,0 +1,150 @@
+@font-face {
+    font-family: 'Guardian Titlepiece';
+    src:
+    url('https://interactive.guim.co.uk/fonts/garnett/GTGuardianTitlepiece-Bold.woff2') format('woff2'),
+    url('https://interactive.guim.co.uk/fonts/garnett/GTGuardianTitlepiece-Bold.woff') format('woff'),
+    url('https://interactive.guim.co.uk/fonts/garnett/GTGuardianTitlepiece-Bold.ttf') format('truetype');
+    font-style: normal;
+}
+
+$title: 'Guardian Titlepiece', Georgia, serif !default;
+
+.site-message--moment-banner {
+    overflow: visible;
+    border: 0;
+    position: relative;
+    background-color: $highlight-main;
+}
+
+.moment-banner__container {
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+.moment-banner__graphic-container,
+.moment-banner__text-container {
+    float: left;
+    color: $brightness-7;
+}
+
+.moment-banner__graphic-container {
+    display: none;
+
+    @include mq($from: desktop) {
+        display: block;
+        flex: 0 0 gs-span(4);
+        position: relative;
+    }
+}
+
+.moment-banner__graphic {
+    display: none;
+
+    @include mq($from: desktop) {
+        display: block;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        mix-blend-mode: multiply;
+        max-height: 405px;
+        width: auto;
+    }
+}
+
+.moment-banner__text-container {
+    flex: 1 1 0;
+
+    @include mq($from: desktop) {
+        padding-left: $gs-gutter;
+    }
+}
+
+.moment-banner__titles {
+    margin-bottom: $gs-baseline;
+    // Magic number to get desired line breaks on mobile
+    width: 270px;
+
+    @include mq($from: tablet) {
+        width: initial;
+    }
+}
+
+.moment-banner__title-one,
+.moment-banner__title-two {
+    font-size: 42px;
+    font-family: $title;
+    line-height: 40px;
+
+    @include mq($from: tablet) {
+        display: block;
+        line-height: 40px;
+    }
+}
+
+.moment-banner__title-two {
+    color: $sport-main;
+}
+
+.moment-banner__copy {
+    @include fs-textSans(4);
+    font-size: 17px;
+    line-height: 21px;
+    margin-bottom: $gs-baseline;
+}
+
+.moment-banner__title-two,
+.moment-banner__copy,
+.moment-banner__buttons {
+    @include mq($from: desktop) {
+        margin-left: gs-span(1);
+        max-width: gs-span(8);
+        padding-left: $gs-gutter;
+    }
+}
+
+.moment-banner__copy-in-bold {
+    font-weight: 700;
+}
+
+.engagement-banner__button--moment-link {
+    color: $brightness-7;
+    background-color: $brightness-97;
+    border-color: $brightness-97;
+    padding-right: 18px;
+}
+
+
+// Color of the "G" inside the roundel logo
+.site-message--moment-banner .inline-marque-36 {
+    path:nth-child(1) {
+        fill: $brightness-97;
+    }
+
+    path:nth-child(2) {
+        fill: $brightness-7;
+    }
+}
+
+.site-message--moment-banner .site-message__roundel {
+    display: none;
+}
+
+.site-message--moment-banner .engagement-banner__roundel.hide-until-phablet {
+    display: inline-block;
+    margin-right: 8px;
+}
+
+.site-message--moment-banner .engagement-banner__cta {
+    @include mq($from: tablet) {
+        display: inline-block;
+    }
+}
+
+.site-message--moment-banner .engagement-banner__close-button {
+    background: $brightness-7;
+
+    svg {
+        fill: $brightness-97;
+    }
+}
+

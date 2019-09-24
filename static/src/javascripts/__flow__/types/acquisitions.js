@@ -14,7 +14,9 @@ declare type AcquisitionsEpicTemplateCopy = {
 declare type EngagementBannerTemplateParams = {
     titles?: Array<string>,
     leadSentence?: string,
+    closingSentence?: string,
     messageText: string,
+    mobileMessageText?: string,
     ctaText: string,
     buttonCaption: string,
     linkUrl: string,

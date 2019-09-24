@@ -114,6 +114,8 @@ const bannerParamsToHtml = (params: EngagementBannerParams): string => {
         titles: params.titles,
         leadSentence,
         messageText,
+        mobileMessageText: params.mobileMessageText,
+        closingSentence: params.closingSentence,
         ctaText,
         linkUrl,
         buttonCaption,
