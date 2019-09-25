@@ -162,7 +162,7 @@ describe('Build Page Targeting', () => {
         expect(pageTargeting.pv).toEqual('presetOphanPageViewId');
         expect(pageTargeting.pa).toEqual('f');
         expect(pageTargeting.cc).toEqual('US');
-        expect(pageTargeting.pr).toEqual('dotcom-platform');
+        expect(pageTargeting.rp).toEqual('dotcom-platform');
     });
 
     it('should set correct personalized ad (pa) param', () => {
@@ -235,7 +235,7 @@ describe('Build Page Targeting', () => {
             inskin: 'f',
             pa: 'f',
             cc: 'US',
-            pr: 'dotcom-platform',
+            rp: 'dotcom-platform',
         });
     });
 
