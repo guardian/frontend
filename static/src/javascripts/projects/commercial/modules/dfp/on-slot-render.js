@@ -52,6 +52,7 @@ const reportEmptyResponse = (
 const outstreamSizes = [
     adSizes.outstreamDesktop.toString(),
     adSizes.outstreamMobile.toString(),
+    adSizes.outstreamGoogleDesktop.toString()
 ];
 
 export const onSlotRender = (event: SlotRenderEndedEvent): void => {
@@ -89,8 +90,12 @@ export const onSlotRender = (event: SlotRenderEndedEvent): void => {
         }
         // Set refresh field based on the outcome of the slot render.
         const sizeString = advert.size && advert.size.toString();
+        console.log("SIZE STRING");
+        console.log(sizeString);
         const isNotFluid = sizeString !== '0,0';
         const isOutstream = outstreamSizes.includes(sizeString);
+        console.log("isOutstream");
+        console.log(isOutstream);
         const isNonRefreshableLineItem =
             event.lineItemId &&
             config
