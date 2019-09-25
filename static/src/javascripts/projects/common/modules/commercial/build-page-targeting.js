@@ -226,7 +226,9 @@ const buildPageTargetting = (
                 : undefined,
             cc: geolocationGetSync(),
             s: page.section, // for reference in a macro, so cannot be extracted from ad unit
-            pr: 'dotcom-platform', // rendering platform
+            rp: config.get('isDotcomRendering', false)
+                ? 'dotcom-rendering'
+                : 'dotcom-platform', // rendering platform
             inskin: inskinTargetting(),
         },
         page.sharedAdTargeting,
