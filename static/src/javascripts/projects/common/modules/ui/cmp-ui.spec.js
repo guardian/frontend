@@ -106,11 +106,31 @@ describe('cmp-ui', () => {
                         container.classList.contains(_.CMP_READY_CLASS)
                     ).toBe(false);
 
-                    _.onReadyCmp();
+                    return _.onReadyCmp().then(() => {
+                        expect(
+                            container.classList.contains(_.CMP_READY_CLASS)
+                        ).toBe(true);
+                    });
+                }
+            });
 
+            it('onReadyCmp adds the animate class to the container', () => {
+                consentManagementPlatformUi.show();
+
+                const container = document.querySelectorAll(overlaySelector)[0];
+
+                expect(container).toBeTruthy();
+
+                if (container) {
                     expect(
-                        container.classList.contains(_.CMP_READY_CLASS)
-                    ).toBe(true);
+                        container.classList.contains(_.CMP_ANIMATE_CLASS)
+                    ).toBe(false);
+
+                    return _.onReadyCmp().then(() => {
+                        expect(
+                            container.classList.contains(_.CMP_ANIMATE_CLASS)
+                        ).toBe(true);
+                    });
                 }
             });
 
@@ -120,19 +140,23 @@ describe('cmp-ui', () => {
                 const container = document.querySelectorAll(overlaySelector)[0];
 
                 if (container) {
-                    _.onReadyCmp();
+                    return _.onReadyCmp()
+                        .then(() => {
+                            expect(
+                                container.classList.contains(_.CMP_READY_CLASS)
+                            ).toBe(true);
 
-                    expect(
-                        container.classList.contains(_.CMP_READY_CLASS)
-                    ).toBe(true);
-                    expect(container.parentNode).toBeTruthy();
+                            expect(container.parentNode).toBeTruthy();
 
-                    _.onCloseCmp();
+                            return _.onCloseCmp();
+                        })
+                        .then(() => {
+                            expect(
+                                container.classList.contains(_.CMP_READY_CLASS)
+                            ).toBe(false);
 
-                    expect(
-                        container.classList.contains(_.CMP_READY_CLASS)
-                    ).toBe(false);
-                    expect(container.parentNode).toBeFalsy();
+                            expect(container.parentNode).toBeFalsy();
+                        });
                 }
             });
         });

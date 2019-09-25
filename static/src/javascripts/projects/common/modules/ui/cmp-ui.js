@@ -2,25 +2,61 @@
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import { commercialIabCompliant } from 'common/modules/experiments/tests/commercial-iab-compliant';
 import { cmpConfig, cmpUi } from '@guardian/consent-management-platform';
+import fastdom from 'lib/fastdom-promise';
 
 const CMP_READY_CLASS = 'cmp-iframe-ready';
+const CMP_ANIMATE_CLASS = 'cmp-iframe-animate';
 const OVERLAY_CLASS = 'cmp-overlay';
 const IFRAME_CLASS = 'cmp-iframe';
 let container: ?HTMLElement;
 let uiPrepared: boolean = false;
 
-const onReadyCmp = (): void => {
-    if (container && container.parentNode) {
-        container.classList.add(CMP_READY_CLASS);
-    }
-};
+const animateCmp = (): Promise<void> =>
+    new Promise(resolve => {
+        /**
+         * Adding CMP_READY_CLASS changes display: none to display: block
+         * on the overlay. You can't update this display property and transition
+         * other properties of the container or the iframe in a single step because the display
+         * property overrides the transitions. We therefore have this short setTimeout
+         * before adding CMP_ANIMATE_CLASS to transition the overlay opacity and the iframe position.
+         */
+        setTimeout(() => {
+            fastdom.write(() => {
+                if (container && container.parentNode) {
+                    container.classList.add(CMP_ANIMATE_CLASS);
 
-const onCloseCmp = (): void => {
-    if (container && container.parentNode) {
-        container.classList.remove(CMP_READY_CLASS);
-        container.remove();
-    }
-};
+                    // disable scrolling on body beneath overlay
+                    if (document.body) {
+                        document.body.classList.add('no-scroll');
+                    }
+
+                    resolve();
+                }
+            });
+        }, 0);
+    });
+
+const onReadyCmp = (): Promise<void> =>
+    fastdom
+        .write(() => {
+            if (container && container.parentNode) {
+                container.classList.add(CMP_READY_CLASS);
+            }
+        })
+        .then(animateCmp);
+
+const onCloseCmp = (): Promise<void> =>
+    fastdom.write(() => {
+        if (container && container.parentNode) {
+            // enable scrolling on body beneath overlay
+            if (document.body) {
+                document.body.classList.remove('no-scroll');
+            }
+            container.classList.remove(CMP_READY_CLASS);
+            container.classList.remove(CMP_ANIMATE_CLASS);
+            container.remove();
+        }
+    });
 
 const prepareUi = (): void => {
     if (uiPrepared) {
@@ -119,6 +155,7 @@ export const _ = {
         uiPrepared = false;
     },
     CMP_READY_CLASS,
+    CMP_ANIMATE_CLASS,
     OVERLAY_CLASS,
     IFRAME_CLASS,
     onReadyCmp,
