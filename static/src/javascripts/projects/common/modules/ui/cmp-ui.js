@@ -47,17 +47,19 @@ const onReadyCmp = (): Promise<void> =>
 
 const removeCmp = (): Promise<void> =>
     /**
-     *  Wait for trtansition duration (500ms)
+     *  Wait for transition duration (500ms)
      *  to end before removing container
      */
     new Promise(resolve => {
         setTimeout(() => {
-            if (container && container.parentNode) {
-                container.remove();
-                container.classList.remove(CMP_READY_CLASS);
-            }
-
-            resolve();
+            fastdom
+                .write(() => {
+                    if (container && container.parentNode) {
+                        container.remove();
+                        container.classList.remove(CMP_READY_CLASS);
+                    }
+                })
+                .then(resolve);
         }, 500);
     });
 
