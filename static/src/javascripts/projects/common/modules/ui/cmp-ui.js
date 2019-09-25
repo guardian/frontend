@@ -45,18 +45,35 @@ const onReadyCmp = (): Promise<void> =>
         })
         .then(animateCmp);
 
-const onCloseCmp = (): Promise<void> =>
-    fastdom.write(() => {
-        if (container && container.parentNode) {
-            // enable scrolling on body beneath overlay
-            if (document.body) {
-                document.body.classList.remove('no-scroll');
+const removeCmp = (): Promise<void> =>
+    /**
+     *  Wait for trtansition duration (500ms)
+     *  to end before removing container
+     */
+    new Promise(resolve => {
+        setTimeout(() => {
+            if (container && container.parentNode) {
+                container.remove();
+                container.classList.remove(CMP_READY_CLASS);
             }
-            container.classList.remove(CMP_READY_CLASS);
-            container.classList.remove(CMP_ANIMATE_CLASS);
-            container.remove();
-        }
+
+            resolve();
+        }, 500);
     });
+
+const onCloseCmp = (): Promise<void> =>
+    fastdom
+        .write(() => {
+            if (container && container.parentNode) {
+                // enable scrolling on body beneath overlay
+                if (document.body) {
+                    document.body.classList.remove('no-scroll');
+                }
+
+                container.classList.remove(CMP_ANIMATE_CLASS);
+            }
+        })
+        .then(removeCmp);
 
 const prepareUi = (): void => {
     if (uiPrepared) {
