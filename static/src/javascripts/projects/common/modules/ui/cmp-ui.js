@@ -88,6 +88,7 @@ const prepareUi = (): void => {
     const iframe = document.createElement('iframe');
     iframe.src = cmpConfig.CMP_URL;
     iframe.className = IFRAME_CLASS;
+    iframe.tabIndex = 1;
 
     container.appendChild(iframe);
 
