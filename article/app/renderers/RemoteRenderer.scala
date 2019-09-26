@@ -48,10 +48,10 @@ class RemoteRenderer extends Logging {
                 .withHeaders("X-GU-Dotcomponents" -> "true")
             case 400 =>
               // if DCR returns a 400 it's because *we* failed, so frontend should return a 500
-              NoCache(play.api.mvc.Results.InternalServerError("Remote renderer validation error"))
+              NoCache(play.api.mvc.Results.InternalServerError("Remote renderer validation error (400)"))
                 .withHeaders("X-GU-Dotcomponents" -> "true")
             case _ =>
-              NoCache(play.api.mvc.Results.InternalServerError("Remote renderer error"))
+              NoCache(play.api.mvc.Results.InternalServerError("Remote renderer error (500)"))
                 .withHeaders("X-GU-Dotcomponents" -> "true")
           }
         })
