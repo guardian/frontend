@@ -28,6 +28,7 @@ object RugbyContent {
     ("sport/romaniarugbyunionteam", "73742"),
     ("sport/samoa-rugby-union-team", "73711"),
     ("sport/uruguay-rugby-union-team", "73737"),
-    ("sport/canadarugby", "73753")
+    ("sport/canadarugby", "73753"),
+    ("sport/usarugby", "73733")
   )
 }
