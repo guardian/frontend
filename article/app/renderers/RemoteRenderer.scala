@@ -8,7 +8,7 @@ import conf.Configuration
 import conf.switches.Switches.CircuitBreakerSwitch
 import model.Cached.RevalidatableResult
 import model.dotcomponents.{DataModelV3, DotcomponentsDataModel}
-import model.{Cached, PageWithStoryPackage}
+import model.{Cached, PageWithStoryPackage, NoCache}
 import play.api.libs.ws.WSClient
 import play.api.mvc.{RequestHeader, Result}
 import play.twirl.api.Html
@@ -36,6 +36,7 @@ class RemoteRenderer extends Logging {
   )(implicit request: RequestHeader): Future[Result] = {
 
     def get(): Future[Result] = {
+
       ws.url(endpoint)
         .withRequestTimeout(Configuration.rendering.timeout)
         .addHttpHeaders("Content-Type" -> "application/json")
@@ -43,12 +44,15 @@ class RemoteRenderer extends Logging {
         .map(response => {
           response.status match {
             case 200 =>
-              Cached(article)(RevalidatableResult.OkDotcomponents(Html(response.body)))
+              Cached(article)(RevalidatableResult.Ok(Html(response.body)))
+                .withHeaders("X-GU-Dotcomponents" -> "true")
             case 400 =>
-              log.error("Remote renderer validation error: " + response.body)
-              throw new Exception(response.body)
+              // if DCR returns a 400 it's because *we* failed, so frontend should return a 500
+              NoCache(play.api.mvc.Results.InternalServerError("Remote renderer validation error (400)"))
+                .withHeaders("X-GU-Dotcomponents" -> "true")
             case _ =>
-              throw new Exception(response.body)
+              NoCache(play.api.mvc.Results.InternalServerError("Remote renderer error (500)"))
+                .withHeaders("X-GU-Dotcomponents" -> "true")
           }
         })
     }

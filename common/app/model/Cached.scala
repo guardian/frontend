@@ -60,9 +60,6 @@ object Cached extends implicits.Dates {
       apply(Results.Ok(content), content)
     }
 
-    def OkDotcomponents[C](content: C)(implicit writeable: Writeable[C]): RevalidatableResult = {
-      apply(Results.Ok(content).withHeaders("X-GU-Dotcomponents" -> "true"), content)
-    }
   }
 
 
