@@ -122,16 +122,16 @@ describe('Utils', () => {
         expect(shouldIncludeAppNexus()).toBe(true);
     });
 
-    test('shouldIncludeAppNexus should return false if geolocation is US', () => {
+    test('shouldIncludeAppNexus should return true if geolocation is US', () => {
         config.switches.prebidAppnexusUkRow = true;
         getSync.mockReturnValue('US');
-        expect(shouldIncludeAppNexus()).toBe(false);
+        expect(shouldIncludeAppNexus()).toBe(true);
     });
 
-    test('shouldIncludeAppNexus should return false if geolocation is CA', () => {
+    test('shouldIncludeAppNexus should return true if geolocation is CA', () => {
         config.switches.prebidAppnexusUkRow = true;
         getSync.mockReturnValue('CA');
-        expect(shouldIncludeAppNexus()).toBe(false);
+        expect(shouldIncludeAppNexus()).toBe(true);
     });
 
     test('shouldIncludeAppNexus should return true if geolocation is GB', () => {
