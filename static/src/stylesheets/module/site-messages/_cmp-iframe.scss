@@ -10,6 +10,8 @@
     display: none;
     transition: background-color;
     transition-delay: .5s;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
 
     &.cmp-iframe-ready {
         display: block;
