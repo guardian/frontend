@@ -269,7 +269,7 @@ describe('getAppNexusDirectBidParams', () => {
     test('should include placementId for AU region when invCode switch is off', () => {
         getBreakpointKey.mockReturnValue('M');
         isInAuRegion.mockReturnValue(true);
-        expect(getAppNexusDirectBidParams([[300, 250]], true)).toEqual({
+        expect(getAppNexusDirectBidParams([[300, 250]])).toEqual({
             keywords: { edition: 'UK', sens: 'f', url: 'gu.com' },
             placementId: '11016434',
         });
@@ -279,7 +279,7 @@ describe('getAppNexusDirectBidParams', () => {
         config.set('switches.prebidAppnexusInvcode', true);
         getBreakpointKey.mockReturnValue('M');
         isInAuRegion.mockReturnValueOnce(true);
-        expect(getAppNexusDirectBidParams([[300, 250]], true)).toEqual({
+        expect(getAppNexusDirectBidParams([[300, 250]])).toEqual({
             keywords: {
                 edition: 'UK',
                 sens: 'f',
@@ -294,7 +294,7 @@ describe('getAppNexusDirectBidParams', () => {
     test('should include placementId and not include invCode if outside AU region', () => {
         config.set('switches.prebidAppnexusInvcode', true);
         getBreakpointKey.mockReturnValue('M');
-        expect(getAppNexusDirectBidParams([[300, 250]], false)).toEqual({
+        expect(getAppNexusDirectBidParams([[300, 250]])).toEqual({
             keywords: { edition: 'UK', sens: 'f', url: 'gu.com' },
             placementId: '4298191',
         });
