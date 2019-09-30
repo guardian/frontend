@@ -141,6 +141,13 @@ describe('getAppNexusDirectPlacementId', () => {
         ).toEqual(['11016434', '11016434', '11016434', '11016434', '11016434']);
     });
 
+    test('should return the expected values when in US  and desktop device', () => {
+        isInUsRegion.mockReturnValue(true);
+        expect(
+            prebidSizes.map(size => getAppNexusDirectPlacementId(size))
+        ).toEqual(['4848330', '4848330', '4848330', '4848330', '4848330']);
+    });
+
     test('should return the expected values for ROW when on desktop device', () => {
         isInAuRegion.mockReturnValue(false);
         getBreakpointKey.mockReturnValue('D');
