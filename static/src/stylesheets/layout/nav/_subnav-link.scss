@@ -1,13 +1,18 @@
 .subnav-link {
-    @include fs-textSans(5);
+    @include fs-textSans(2);
     color: $brightness-7;
     display: block;
     height: $pillar-height - $gs-baseline / 2;
     line-height: $pillar-height - $gs-baseline / 2;
-    padding: 0 ($gs-gutter / 4);
+    padding: 0 4px;
     position: relative;
 
+    @include mq(mobileMedium) {
+        font-size: 14px;
+    }
+
     @include mq(tablet) {
+        @include fs-textSans(5, true);
         height: $pillar-height;
         line-height: $pillar-height;
     }
