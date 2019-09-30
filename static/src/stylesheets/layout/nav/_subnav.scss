@@ -11,9 +11,12 @@
     .gs-container {
         @include clearfix();
         box-sizing: border-box;
-        border: 1px solid $brightness-86;
-        border-top: 0;
-        border-bottom: 0;
+
+        @include mq(tablet) {
+            border: 1px solid $brightness-86;
+            border-top: 0;
+            border-bottom: 0;
+        }
 
         .footer__primary & {
             border-top: 1px solid $brightness-86;
