@@ -10,13 +10,6 @@ import { trackAdRender } from 'commercial/modules/dfp/track-ad-render';
 import { createSlots } from 'commercial/modules/dfp/create-slots';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { initCarrot } from 'commercial/modules/carrot-traffic-driver';
-import { isInVariantSynchronous } from 'common/modules/experiments/ab';
-import { commercialInline1Headings } from 'common/modules/experiments/tests/commercial-inline1-headings';
-
-const isInInlineAdABTest: boolean = isInVariantSynchronous(
-    commercialInline1Headings,
-    'variant'
-);
 
 type AdSize = {
     width: number,
@@ -94,8 +87,8 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<number> => {
         minBelow: 700,
         selectors: {
             ' > h2': {
-                minAbove: isInInlineAdABTest ? 5 : 0,
-                minBelow: isInInlineAdABTest ? 190 : 250,
+                minAbove: 5,
+                minBelow: 190,
             },
             ' .ad-slot': adSlotClassSelectorSizes,
             ' > :not(p):not(h2):not(.ad-slot)': {
@@ -264,8 +257,8 @@ export const init = (): Promise<boolean> => {
     im.then((inlineMerchAdded: boolean) =>
         inlineMerchAdded ? trackAdRender('dfp-ad--im') : Promise.resolve()
     )
-        .then(isInInlineAdABTest ? addInlineAds : initCarrot)
-        .then(isInInlineAdABTest ? initCarrot : addInlineAds);
+        .then(addInlineAds)
+        .then(initCarrot);
 
     return im;
 };
