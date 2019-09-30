@@ -1,5 +1,5 @@
 .subnav-link {
-    @include fs-textSans(2);
+    @include fs-textSans(1);
     color: $brightness-7;
     display: block;
     height: $pillar-height - $gs-baseline / 2;
