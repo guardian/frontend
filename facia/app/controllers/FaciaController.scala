@@ -120,20 +120,35 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
 
   private def nonHtmlEmail(request: RequestHeader) = (request.isEmail && request.isHeadlineText) || request.isEmailJson || request.isEmailTxt
 
+  def filterCollections(faciaPage: PressedPage, id: String): PressedPage = {
+    faciaPage.copy(collections = faciaPage.collections.filter(c => c.id != id))
+  }
+
+  private def removeSpecialRegionContainers(path: String, faciaPage: PressedPage, isEU27: Boolean, isNewZealand: Boolean): PressedPage = {
+    if (path == "international") {
+      val euFiltered = if (!isEU27) {
+        filterCollections(faciaPage, "22167321-f8cf-4f4a-b646-165e5b1e9a30")
+      } else faciaPage
+      val nzFiltered = if (!isNewZealand) {
+        filterCollections(euFiltered, "22167321-f8cf-4f4a-b646-165e5e9a30")
+      } else euFiltered
+      nzFiltered
+    } else faciaPage
+  }
+
   import PressedPage.pressedPageFormat
   private[controllers] def renderFrontPressResult(path: String)(implicit request: RequestHeader) = {
-    val futureFaciaPage: Future[Option[PressedPage]] = frontJsonFapi.get(path, liteRequestType).flatMap { frontJson =>
-      frontJson match {
+    val futureFaciaPage: Future[Option[PressedPage]] = frontJsonFapi.get(path, liteRequestType).flatMap {
         case Some(faciaPage: PressedPage) =>
+          val pageWithRegionalContainersRemoved = removeSpecialRegionContainers(path, faciaPage, request.isEU27, request.isNewZealand)
           if (conf.Configuration.environment.stage == "CODE") {
             logInfoWithCustomFields(s"Rendering front $path, frontjson: ${Json.stringify(Json.toJson(faciaPage)(pressedPageFormat))}", List())
           }
           if(faciaPage.collections.isEmpty && liteRequestType == LiteAdFreeType) {
             frontJsonFapi.get(path, LiteType)
           }
-          else Future.successful(Some(faciaPage))
+          else Future.successful(Some(pageWithRegionalContainersRemoved))
         case None => Future.successful(None)
-      }
     }
 
     val futureResult = futureFaciaPage.flatMap {
@@ -157,7 +172,10 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
       case None => successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))}
 
     futureResult.failed.foreach { t: Throwable => log.error(s"Failed rendering $path with $t", t)}
-    futureResult
+    // if international front, Vary based off regional header
+    if (path == "international") {
+      futureResult.map(_.withHeaders(("Vary", "X-GU-GeoRegion")))
+    } else futureResult
   }
 
   private def renderEmail(faciaPage: PressedPage)(implicit request: RequestHeader) = {

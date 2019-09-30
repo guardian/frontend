@@ -67,6 +67,9 @@ trait Requests {
 
     lazy val referrer: Option[String] = r.headers.get("referer")
 
+    lazy val isEU27: Boolean = r.headers.get("X-GU-GeoRegion").contains("EU-27")
+    lazy val isNewZealand: Boolean = r.headers.get("X-GU-GeoRegion").contains("NZ")
+
     // dotcom-rendering (DCR) parameters
     lazy val forceDCROff: Boolean = r.getQueryString("dcr").contains("false")
     lazy val forceDCR: Boolean = r.getQueryString("dcr").isDefined && !forceDCROff // don't check for .contains(true) so people can be lazy
