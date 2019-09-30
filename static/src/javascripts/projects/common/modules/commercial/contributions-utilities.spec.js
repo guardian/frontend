@@ -30,6 +30,7 @@ const rawTest = {
                 maxViewsCount: 4,
                 minDaysBetweenViews: 0,
             },
+            classNames: ['test-class'],
         },
     ],
     highPriority: false,
@@ -49,6 +50,7 @@ describe('buildConfiguredEpicTestFromJson', () => {
         expect(variant.id).toBe('Control');
         expect(variant.countryGroups).toEqual(['UnitedStates', 'Australia']);
         expect(variant.tagIds).toEqual(['football/football']);
+        expect(variant.classNames).toEqual(['test-class']);
         expect(variant.copy).toEqual({
             heading: 'This was made using the new tool!',
             paragraphs: ['testing testing', 'this is a test'],

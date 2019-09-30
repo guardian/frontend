@@ -108,6 +108,7 @@ const controlTemplate: EpicTemplate = (
                   variant.ctaText
               )
             : undefined,
+        epicClassNames: variant.classNames,
         showTicker: variant.showTicker,
         backgroundImageUrl: variant.backgroundImageUrl,
     });
@@ -276,6 +277,7 @@ const makeEpicABTestVariant = (
         buttonTemplate: initVariant.buttonTemplate,
         ctaText: initVariant.ctaText,
         copy: initVariant.copy,
+        classNames: initVariant.classNames || [],
         showTicker: initVariant.showTicker || false,
         backgroundImageUrl: initVariant.backgroundImageUrl,
         deploymentRules,
@@ -646,6 +648,7 @@ export const buildConfiguredEpicTestFromJson = (test: Object): EpicABTest => {
                   }
                 : {}),
             copy: buildEpicCopy(variant, test.hasCountryName, geolocation),
+            classNames: variant.classNames,
             showTicker: optionalStringToBoolean(variant.showTicker),
             backgroundImageUrl: filterEmptyString(variant.backgroundImageUrl),
             // TODO - why are these fields at the variant level?
