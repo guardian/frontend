@@ -24,7 +24,7 @@ class AdvertsManager(
   with Mappings
   with Forms {
 
-  val page = IdentityPage("/privacy-settings", "Cookies and advertising settings", usesGuardianHeader = true)
+  val page = IdentityPage("/privacy-settings", "Cookies and advertising settings", isFlow = true)
 
   def renderAdvertsManager(returnUrl: Option[String]): Action[AnyContent] = Action { implicit request =>
 
