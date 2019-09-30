@@ -29,9 +29,10 @@ export const acquisitionsEpicControlTemplate = ({
     showTicker: boolean,
     backgroundImageUrl?: string,
 }) => {
-    const extraClasses = epicClassNames
-        .concat([backgroundImageUrl ? 'contributions__epic--with-image' : ''])
-        .join(' ');
+    const extraClasses = (backgroundImageUrl
+        ? epicClassNames.concat(['contributions__epic--with-image'])
+        : epicClassNames
+    ).join(' ');
 
     return `<div class="contributions__epic ${extraClasses}" data-component="${componentName}" data-link-name="epic">
         <div class="${wrapperClass}">
