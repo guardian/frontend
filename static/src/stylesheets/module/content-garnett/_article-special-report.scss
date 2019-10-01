@@ -36,7 +36,8 @@
     .content__labels {
         background-color: $highlight-main;
 
-        .content__series-label__link {
+        .content__series-label__link,
+        .content__label__link {
             color: $brightness-7;
         }
     }
