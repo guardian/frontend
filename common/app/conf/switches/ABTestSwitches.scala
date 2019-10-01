@@ -62,7 +62,7 @@ trait ABTestSwitches {
     "show number of articles viewed in contributions banner",
     owners = Seq(Owner.withGithub("tomrf1")),
     safeState = Off,
-    sellByDate = new LocalDate(2019, 9, 30),
+    sellByDate = new LocalDate(2020, 9, 30),
     exposeClientSide = true
   )
 
@@ -102,7 +102,7 @@ trait ABTestSwitches {
     "Test the impact of serving prebid ads in safeframes",
     owners = Seq(Owner.withGithub("jeteve")),
     safeState = Off,
-    sellByDate = new LocalDate(2019, 9, 30),
+    sellByDate = new LocalDate(2019, 10, 18),
     exposeClientSide = true
   )
 
