@@ -21,7 +21,6 @@ export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialIabCompliant,
     adblockTest,
     prebidTripleLiftAdapter,
-    commercialInline1Headings,
     amazonA9Test,
     xaxisAdapterTest,
 ];
