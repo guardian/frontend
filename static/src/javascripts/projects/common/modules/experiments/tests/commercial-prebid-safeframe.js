@@ -3,7 +3,7 @@
 export const commercialPrebidSafeframe: ABTest = {
     id: 'CommercialPrebidSafeframe',
     start: '2018-06-29',
-    expiry: '2019-09-30',
+    expiry: '2019-10-18',
     author: 'Jerome Eteve',
     description: 'This test will serve prebid ads via safeframe line items',
     audience: 0.01,
