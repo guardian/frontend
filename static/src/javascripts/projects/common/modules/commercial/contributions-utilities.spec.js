@@ -6,7 +6,7 @@ jest.mock('lib/raven');
 jest.mock('ophan/ng', () => null);
 
 const rawTest = {
-    name: 'My test',
+    name: 'my_test',
     isOn: true,
     locations: ['UnitedStates', 'Australia'],
     tagIds: ['football/football'],
@@ -30,7 +30,6 @@ const rawTest = {
                 maxViewsCount: 4,
                 minDaysBetweenViews: 0,
             },
-            classNames: ['test-class'],
         },
     ],
     highPriority: false,
@@ -40,7 +39,7 @@ const rawTest = {
 describe('buildConfiguredEpicTestFromJson', () => {
     it('Parses and constructs an epic test', () => {
         const test = buildConfiguredEpicTestFromJson(rawTest);
-        expect(test.id).toBe('My test');
+        expect(test.id).toBe('my_test');
         expect(test.useLocalViewLog).toBe(false);
         expect(test.userCohort).toBe('AllNonSupporters');
 
@@ -50,7 +49,10 @@ describe('buildConfiguredEpicTestFromJson', () => {
         expect(variant.id).toBe('Control');
         expect(variant.countryGroups).toEqual(['UnitedStates', 'Australia']);
         expect(variant.tagIds).toEqual(['football/football']);
-        expect(variant.classNames).toEqual(['test-class']);
+        expect(variant.classNames).toEqual([
+            'contributions__epic--my_test',
+            'contributions__epic--my_test-Control',
+        ]);
         expect(variant.copy).toEqual({
             heading: 'This was made using the new tool!',
             paragraphs: ['testing testing', 'this is a test'],
