@@ -32,7 +32,7 @@ export const articlesViewedBanner: AcquisitionsABTest = {
     id: 'ContributionsBannerArticlesViewed',
     campaignId: 'contributions_banner_articles_viewed',
     start: '2019-07-10',
-    expiry: '2019-10-30',
+    expiry: '2020-10-30',
     author: 'Tom Forbes',
     description: 'show number of articles viewed in contributions banner',
     audience: 1,
