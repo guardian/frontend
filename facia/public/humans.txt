@@ -150,6 +150,9 @@ Twitter:@twistedsweeter
 From: Narobi, Kenya
 Location: London, UK
 
+Engineer: Oliver Lloyd
+From: London, UK
+
 
 /* FORMER MEMBERS */
 
@@ -323,6 +326,3 @@ SETI (Tools & Infra): Stephen Geller
 GitHub: stephengeller
 Twitter: _stephengeller
 Location: London, UK
-
-Engineer: Oliver Lloyd
-From: London, UK
