@@ -22,6 +22,7 @@ class LocationsController(weatherApi: WeatherApi, val controllerComponents: Cont
   val CityHeader: String = "X-GU-GeoCity"
   val RegionHeader: String = "X-GU-GeoRegion"
   val CountryHeader: String = "X-GU-GeoCountry"
+  val LatLongHeader: String = "X-GU-GeoLatLong"
 
   def whatIsMyCity(): Action[AnyContent] = Action.async { implicit request =>
 
@@ -33,9 +34,9 @@ class LocationsController(weatherApi: WeatherApi, val controllerComponents: Cont
     val maybeCity = getEncodedHeader(CityHeader).filter(_.nonEmpty)
     val maybeRegion = getEncodedHeader(RegionHeader).filter(_.nonEmpty)
     val maybeCountry = getEncodedHeader(CountryHeader).filter(_.nonEmpty)
-
-    (maybeCity, maybeRegion, maybeCountry) match {
-      case (Some(city), Some(region), Some(country)) =>
+    val maybeLatLong = getEncodedHeader(LatLongHeader).filter(_.nonEmpty).flatMap(LatitudeLongitude.fromStringAnonymised)
+    (maybeCity, maybeRegion, maybeCountry, maybeLatLong) match {
+      case (Some(city), Some(region), Some(country), Some(latLong)) =>
         CitiesLookUp.getLatitudeLongitude(CityRef.makeFixedCase(city, region, country)) match {
           case Some(latitudeLongitude) =>
             log.info(s"Matched $city, $region, $country to $latitudeLongitude")
@@ -49,19 +50,17 @@ class LocationsController(weatherApi: WeatherApi, val controllerComponents: Cont
             }
 
           case None =>
-            log.warn(s"Could not find $city, $region, $country in database, trying text search")
-            weatherApi.searchForLocations(city) map { locations =>
-              val cities = CityResponse.fromLocationResponses(locations.filter(_.Country.ID == country).toList)
-
-              cities.headOption.fold {
-                Cached(CacheTime.NotFound)(JsonNotFound())
-              } { weatherCity =>
-                Cached(1 hour)(JsonComponent(weatherCity))
-              }
+            log.warn(s"Could not find $city, $region, $country in database, using fastly lat/long ($latLong)")
+            weatherApi.getNearestCity(latLong) map { location =>
+              Cached(1 hour)(JsonComponent(CityResponse.fromLocationResponse(location).copy(
+                // Prefer the city name from Fastly - the one Accuweather returns is a bit more granular than we'd like,
+                // given how fuzzy geolocation by IP is.
+                city = city
+              )))
             }
         }
 
-      case (_, _, _) =>
+      case (_, _, _, _) =>
         Future.successful(
           cityFromRequestEdition.fold {
             Cached(CacheTime.NotFound)(JsonNotFound())
