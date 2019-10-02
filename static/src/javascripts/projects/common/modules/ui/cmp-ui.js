@@ -5,10 +5,11 @@ import { cmpConfig, cmpUi } from '@guardian/consent-management-platform';
 import fastdom from 'lib/fastdom-promise';
 
 const CMP_READY_CLASS = 'cmp-iframe-ready';
-const CMP_ANIMATE_CLASS = 'cmp-iframe-animate';
+const CMP_ANIMATE_CLASS = 'cmp-animate';
 const OVERLAY_CLASS = 'cmp-overlay';
 const IFRAME_CLASS = 'cmp-iframe';
-let container: ?HTMLElement;
+const CONTAINER_CLASS = 'cmp-container';
+let overlay: ?HTMLElement;
 let uiPrepared: boolean = false;
 
 const animateCmp = (): Promise<void> =>
@@ -16,14 +17,14 @@ const animateCmp = (): Promise<void> =>
         /**
          * Adding CMP_READY_CLASS changes display: none to display: block
          * on the overlay. You can't update this display property and transition
-         * other properties of the container or the iframe in a single step because the display
+         * other properties of the overlay or the iframe in a single step because the display
          * property overrides the transitions. We therefore have this short setTimeout
          * before adding CMP_ANIMATE_CLASS to transition the overlay opacity and the iframe position.
          */
         setTimeout(() => {
             fastdom.write(() => {
-                if (container && container.parentNode) {
-                    container.classList.add(CMP_ANIMATE_CLASS);
+                if (overlay && overlay.parentNode) {
+                    overlay.classList.add(CMP_ANIMATE_CLASS);
 
                     // disable scrolling on body beneath overlay
                     if (document.body) {
@@ -39,40 +40,40 @@ const animateCmp = (): Promise<void> =>
 const onReadyCmp = (): Promise<void> =>
     fastdom
         .write(() => {
-            if (container && container.parentNode) {
-                container.classList.add(CMP_READY_CLASS);
+            if (overlay && overlay.parentNode) {
+                overlay.classList.add(CMP_READY_CLASS);
             }
         })
         .then(animateCmp);
 
 const removeCmp = (): Promise<void> =>
     /**
-     *  Wait for transition duration (500ms)
-     *  to end before removing container
+     *  Wait for transition duration (600ms)
+     *  to end before removing overlay
      */
     new Promise(resolve => {
         setTimeout(() => {
             fastdom
                 .write(() => {
-                    if (container && container.parentNode) {
-                        container.remove();
-                        container.classList.remove(CMP_READY_CLASS);
+                    if (overlay && overlay.parentNode) {
+                        overlay.remove();
+                        overlay.classList.remove(CMP_READY_CLASS);
                     }
                 })
                 .then(resolve);
-        }, 500);
+        }, 600);
     });
 
 const onCloseCmp = (): Promise<void> =>
     fastdom
         .write(() => {
-            if (container && container.parentNode) {
+            if (overlay && overlay.parentNode) {
                 // enable scrolling on body beneath overlay
                 if (document.body) {
                     document.body.classList.remove('no-scroll');
                 }
 
-                container.classList.remove(CMP_ANIMATE_CLASS);
+                overlay.classList.remove(CMP_ANIMATE_CLASS);
             }
         })
         .then(removeCmp);
@@ -82,15 +83,12 @@ const prepareUi = (): void => {
         return;
     }
 
-    container = document.createElement('div');
-    container.className = OVERLAY_CLASS;
+    overlay = document.createElement('div');
+    overlay.className = OVERLAY_CLASS;
 
-    const iframe = document.createElement('iframe');
-    iframe.src = cmpConfig.CMP_URL;
-    iframe.className = IFRAME_CLASS;
-    iframe.tabIndex = 1;
-
-    container.appendChild(iframe);
+    overlay.innerHTML = `<div class="${CONTAINER_CLASS}"><iframe src="${
+        cmpConfig.CMP_URL
+    }" class="${IFRAME_CLASS}" tabIndex="1"></iframe></div>`;
 
     cmpUi.setupMessageHandlers(onReadyCmp, onCloseCmp);
 
@@ -100,8 +98,8 @@ const prepareUi = (): void => {
 const show = (): Promise<boolean> => {
     prepareUi();
 
-    if (document.body && container && !container.parentElement) {
-        document.body.appendChild(container);
+    if (document.body && overlay && !overlay.parentElement) {
+        document.body.appendChild(overlay);
     }
 
     return Promise.resolve(true);
@@ -166,11 +164,11 @@ export const consentManagementPlatformUi = {
 // Exposed for testing purposes only
 export const _ = {
     reset: (): void => {
-        if (container) {
-            if (container.parentNode) {
-                container.remove();
+        if (overlay) {
+            if (overlay.parentNode) {
+                overlay.remove();
             }
-            container = undefined;
+            overlay = undefined;
         }
         uiPrepared = false;
     },
