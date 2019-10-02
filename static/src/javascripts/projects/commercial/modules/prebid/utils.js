@@ -143,7 +143,7 @@ export const shouldIncludeMobileSticky = once(
         window.location.hash.indexOf('#mobile-sticky') !== -1 ||
         (config.get('switches.mobileStickyLeaderboard') &&
             isBreakpoint({ min: 'mobile', max: 'mobileLandscape' }) &&
-            (isInUsRegion() || isInAuRegion()) &&
+            isInUsRegion() &&
             config.get('page.contentType') === 'Article')
 );
 
