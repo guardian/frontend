@@ -9,37 +9,44 @@
     z-index: 9999;
     display: none;
     transition: background-color;
-    transition-delay: .5s;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    -webkit-overflow-scrolling: touch;
+    transition-delay: .6s;
+    will-change: background-color;
 
     &.cmp-iframe-ready {
         display: block;
     }
 
-    &.cmp-iframe-animate {
+    &.cmp-animate {
         background-color: rgba(#000000, .5);
     }
 }
 
-.cmp-iframe {
+.cmp-container {
     z-index: 9999;
     border: 0;
     height: 100%;
     width: 100%;
     max-width: 576px;
     transform: translateX(100vw);
-    transition: transform .5s ease-in;
+    transition: transform .6s ease-in;
+    will-change: transform;
+    position: relative;
 
     @include mq(mobileLandscape) {
         width: 30%;
         min-width: 480px;
     }
 
-    .cmp-iframe-animate & {
+    .cmp-animate & {
         transform: translateX(calc(100vw - 100%));
     }
+}
+
+.cmp-iframe {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    border: 0;
 }
 
 // Prevent body scrolling behind overlay
