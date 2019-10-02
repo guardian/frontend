@@ -22,6 +22,7 @@ class TechFeedbackController(ws: WSClient, val controllerComponents: ControllerC
     val feedbackForm = Form(
       tuple(
         "category" -> text,
+        "subject" -> text,
         "body" -> text,
         "user" -> text,
         "extra" -> text,
@@ -29,19 +30,22 @@ class TechFeedbackController(ws: WSClient, val controllerComponents: ControllerC
       )
     )
 
-    val (category, body, user, extra, name) = feedbackForm.bindFromRequest.get
+    val (category, subject, body, user, extra, name) = feedbackForm.bindFromRequest.get
 
     log.info(s"feedback submitted for category: $category")
 
+    val payload = Json.obj(
+      "category" -> java.net.URLEncoder.encode(category, "UTF-8"),
+      "subject" -> java.net.URLEncoder.encode(subject, "UTF-8"),
+      "body" -> java.net.URLEncoder.encode(body, "UTF-8"),
+      "user" -> java.net.URLEncoder.encode(user, "UTF-8"),
+      "extra" -> java.net.URLEncoder.encode(extra, "UTF-8"),
+      "name" -> java.net.URLEncoder.encode(name, "UTF-8")
+    )
+
     ws.url(Configuration.feedback.feedpipeEndpoint)
       .withRequestTimeout(6000.millis)
-      .post(Json.obj(
-        "category" -> java.net.URLEncoder.encode(category, "UTF-8"),
-        "body" -> java.net.URLEncoder.encode(body, "UTF-8"),
-        "user" -> java.net.URLEncoder.encode(user, "UTF-8"),
-        "extra" -> java.net.URLEncoder.encode(extra, "UTF-8"),
-        "name" -> java.net.URLEncoder.encode(name, "UTF-8")
-      ))
+      .post(payload)
 
     val page = model.SimplePage(MetaData.make(
       request.path,
