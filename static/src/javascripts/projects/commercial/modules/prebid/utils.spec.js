@@ -358,7 +358,7 @@ describe('Utils', () => {
         }
     });
 
-    test('shouldIncludeMobileSticky should be true if location cookie is NA, switch is ON and content is Article on mobiles ', () => {
+    test('shouldIncludeMobileSticky should be true if geolocation is NA, switch is ON and content is Article on mobiles ', () => {
         config.set('page.contentType', 'Article');
         config.set('switches.mobileStickyLeaderboard', true);
         getSync.mockReturnValue('US');
@@ -366,7 +366,7 @@ describe('Utils', () => {
         expect(shouldIncludeMobileSticky()).toBe(true);
     });
 
-    test('should include mobile sticky if location cookie is AUS, switch is ON and content is Article on mobiles ', () => {
+    test('should include mobile sticky if geolocation is AUS, switch is ON and content is Article on mobiles ', () => {
         config.set('page.contentType', 'Article');
         config.set('switches.mobileStickyLeaderboard', true);
         getSync.mockReturnValue('AU');
@@ -374,7 +374,7 @@ describe('Utils', () => {
         expect(shouldIncludeMobileSticky()).toBe(true);
     });
 
-    test('should include mobile sticky if location cookie is NZ, switch is ON and content is Article on mobiles ', () => {
+    test('should include mobile sticky if geolocation is NZ, switch is ON and content is Article on mobiles ', () => {
         config.set('page.contentType', 'Article');
         config.set('switches.mobileStickyLeaderboard', true);
         getSync.mockReturnValue('NZ');
