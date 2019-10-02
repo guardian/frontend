@@ -366,6 +366,22 @@ describe('Utils', () => {
         expect(shouldIncludeMobileSticky()).toBe(true);
     });
 
+    test('should include mobile sticky if location cookie is AUS, switch is ON and content is Article on mobiles ', () => {
+        config.set('page.contentType', 'Article');
+        config.set('switches.mobileStickyLeaderboard', true);
+        getSync.mockReturnValue('AU');
+        isBreakpoint.mockReturnValue(true);
+        expect(shouldIncludeMobileSticky()).toBe(true);
+    });
+
+    test('should include mobile sticky if location cookie is NZ, switch is ON and content is Article on mobiles ', () => {
+        config.set('page.contentType', 'Article');
+        config.set('switches.mobileStickyLeaderboard', true);
+        getSync.mockReturnValue('NZ');
+        isBreakpoint.mockReturnValue(true);
+        expect(shouldIncludeMobileSticky()).toBe(true);
+    });
+
     test('shouldIncludeMobileSticky should be false if all conditions true except content type ', () => {
         config.set('page.contentType', 'Network Front');
         config.set('switches.mobileStickyLeaderboard', true);
