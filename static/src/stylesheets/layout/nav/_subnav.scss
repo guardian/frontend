@@ -11,12 +11,9 @@
     .gs-container {
         @include clearfix();
         box-sizing: border-box;
-
-        @include mq(tablet) {
-            border: 1px solid $brightness-86;
-            border-top: 0;
-            border-bottom: 0;
-        }
+        border: 1px solid $brightness-86;
+        border-top: 0;
+        border-bottom: 0;
 
         .footer__primary & {
             border-top: 1px solid $brightness-86;
@@ -78,12 +75,9 @@
         content: '';
         display: block;
         height: 13px;
-        
-        @include mq(tablet) {
-            border: 1px solid $brightness-86;
-            border-top: 0;
-            border-bottom: 0;
-        }
+        border: 1px solid $brightness-86;
+        border-top: 0;
+        border-bottom: 0;
     }
 }
 
