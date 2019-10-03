@@ -212,8 +212,8 @@ private object NavLinks {
       world,
       ukBusiness,
       football,
-      politics,
       ukEnvironment,
+      politics,
       education,
       society,
       science,
@@ -254,13 +254,13 @@ private object NavLinks {
     children = List(
       world,
       ukNews,
+      ukEnvironment,
       science,
       cities,
       globalDevelopment,
       football,
       tech,
       ukBusiness,
-      ukEnvironment,
       obituaries
     )
   )
