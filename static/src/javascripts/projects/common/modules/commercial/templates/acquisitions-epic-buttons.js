@@ -11,7 +11,7 @@ export const epicButtonsTemplate = (
 
     const supportButtonSupport = `
         <div>
-            <a class="contributions__option-button contributions__contribute contributions__contribute--epic contributions__contribute--epic-member"
+            <a class="component-button contributions__contribute--epic-member"
               href="${supportUrl}"
               target="_blank">
               ${ctaText}
