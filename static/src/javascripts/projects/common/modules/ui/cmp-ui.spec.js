@@ -20,6 +20,8 @@ jest.mock('common/modules/experiments/ab', () => ({
     isInVariantSynchronous: jest.fn(),
 }));
 
+jest.mock('lib/report-error', () => jest.fn());
+
 describe('cmp-ui', () => {
     afterEach(() => {
         jest.resetAllMocks();
