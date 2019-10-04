@@ -28,7 +28,7 @@ import {
     shouldIncludeSonobi as shouldIncludeSonobi_,
     stripMobileSuffix as stripMobileSuffix_,
     shouldIncludeTripleLift as shouldIncludeTripleLift_,
-    shouldIncludePangaea,
+    shouldIncludePangaea as shouldIncludePangaea_,
 } from './utils';
 
 const containsBillboard: any = containsBillboard_;
@@ -46,6 +46,7 @@ const shouldIncludeOzone: any = shouldIncludeOzone_;
 const shouldIncludeTrustX: any = shouldIncludeTrustX_;
 const shouldIncludeXaxis: any = shouldIncludeXaxis_;
 const shouldIncludeSonobi: any = shouldIncludeSonobi_;
+const shouldIncludePangaea: any = shouldIncludePangaea_;
 const shouldIncludeTripleLift: any = shouldIncludeTripleLift_;
 const stripMobileSuffix: any = stripMobileSuffix_;
 const getBreakpointKey: any = getBreakpointKey_;
@@ -767,7 +768,7 @@ describe('pangaea adapter', () => {
         ]);
         expect(pangaeaBids[2].params).toEqual({
             keywords: 'someAppNexusTargetingObject',
-            placementId: 13892369,
+            placementId: '13892369',
         });
     });
 });

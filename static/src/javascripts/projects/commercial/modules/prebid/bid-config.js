@@ -551,7 +551,7 @@ const pangaeaUSBidder: PrebidBidder = {
         Object.assign(
             {},
             {
-                placementId: 13892369, // currently only US placement ID supported
+                placementId: '13892369', // currently only US placement ID supported
                 keywords: buildAppNexusTargetingObject(getPageTargeting()),
             }
         ),
