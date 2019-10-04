@@ -28,6 +28,7 @@ import {
     shouldIncludeSonobi as shouldIncludeSonobi_,
     stripMobileSuffix as stripMobileSuffix_,
     shouldIncludeTripleLift as shouldIncludeTripleLift_,
+    shouldIncludePangaea,
 } from './utils';
 
 const containsBillboard: any = containsBillboard_;
@@ -733,6 +734,40 @@ describe('xaxis adapter', () => {
 
         expect(xaxisBids[1].params).toEqual({
             placementId: 15900184,
+        });
+    });
+});
+
+describe('pangaea adapter', () => {
+    beforeEach(() => {
+        resetConfig();
+        shouldIncludePangaea.mockReturnValue(true);
+    });
+
+    afterEach(() => {
+        jest.resetAllMocks();
+    });
+
+    test('should include pangaea adapter if condition is true ', () => {
+        config.set('switches.prebidPangaeaUs', true);
+        expect(getBidders()).toEqual(['ix', 'pangaea']);
+    });
+
+    test('should not include pangaea adapter if condition is false ', () => {
+        config.set('switches.prebidPangaeaUs', false);
+        expect(getBidders()).toEqual(['ix']);
+    });
+
+    test('should return correct pangaea adapter params for US', () => {
+        config.set('switches.prebidPangaeaUs', true);
+
+        const pangaeaBids = bids('dfp-ad--top-above-nav', [
+            [728, 90],
+            [970, 250],
+        ]);
+        expect(pangaeaBids[2].params).toEqual({
+            keywords: 'someAppNexusTargetingObject',
+            placementId: 13892369,
         });
     });
 });

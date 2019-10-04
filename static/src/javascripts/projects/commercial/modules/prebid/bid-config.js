@@ -51,6 +51,7 @@ import {
     shouldIncludeTripleLift,
     shouldIncludeXaxis,
     shouldUseOzoneAdaptor,
+    shouldIncludePangaea,
     stripDfpAdPrefixFrom,
     stripMobileSuffix,
     stripTrailingNumbersAbove1,
@@ -543,6 +544,19 @@ const adYouLikeBidder: PrebidBidder = {
     },
 };
 
+const pangaeaUSBidder: PrebidBidder = {
+    name: 'pangaea',
+    switchName: 'prebidPangaeaUs',
+    bidParams: (): PrebidAppNexusParams =>
+        Object.assign(
+            {},
+            {
+                placementId: 13892369, // currently only US placement ID supported
+                keywords: buildAppNexusTargetingObject(getPageTargeting()),
+            }
+        ),
+};
+
 // Dummy bidders for the whitehorse project (https://trello.com/c/KbeBLyYZ)
 const getDummyServerSideBidders = (): Array<PrebidBidder> => {
     const dummyServerSideBidders: Array<PrebidBidder> = [];
@@ -639,6 +653,7 @@ const currentBidders: (PrebidSize[]) => PrebidBidder[] = slotSizes => {
     const otherBidders: PrebidBidder[] = [
         ...(inPbTestOr(shouldIncludeSonobi()) ? [sonobiBidder] : []),
         ...(inPbTestOr(shouldIncludeTrustX()) ? [trustXBidder] : []),
+        ...(inPbTestOr(shouldIncludePangaea()) ? [pangaeaUSBidder] : []),
         ...(inPbTestOr(shouldIncludeTripleLift()) ? [tripleLiftBidder] : []),
         ...(inPbTestOr(shouldIncludeAppNexus()) ? [appNexusBidder] : []),
         ...(inPbTestOr(shouldIncludeImproveDigital())

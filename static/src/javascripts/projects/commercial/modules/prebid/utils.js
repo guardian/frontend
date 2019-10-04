@@ -112,6 +112,8 @@ export const shouldIncludeOpenx = (): boolean => !isInUsRegion();
 
 export const shouldIncludeTrustX = (): boolean => isInUsRegion();
 
+export const shouldIncludePangaea = (): boolean => isInUsRegion();
+
 export const shouldIncludeTripleLift = (): boolean =>
     isInVariantSynchronous(prebidTripleLiftAdapter, 'variant');
 
