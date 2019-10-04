@@ -1082,11 +1082,12 @@
     style-loader "0.23.1"
     webpack "^4.2.0"
 
-"@guardian/consent-management-platform@^0.3.1":
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-0.3.1.tgz#146eb41982d6637e8884712db429ecc7bc5d0771"
-  integrity sha512-CE9QvnrXK8obbS9W6n/gwusuAu3++JTE4Pyit7BEwpFY9GOHKNIiLM1hDIKj3Y9yT5AHzEemO1iSkfK4Wzyamw==
+"@guardian/consent-management-platform@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-1.0.0.tgz#0d2e763a1aa5887cdb4644033dfcfbb53799c697"
+  integrity sha512-U6d/ve7WZzhWtPx6nNc4XkI0P8Z1hvFTR9bEKZ2F/ykVNtiKWKNMwxiTVKGCcvwXJkQHqVpCpFVsa3kTEMVYYA==
   dependencies:
+    consent-string "^1.5.1"
     js-cookie "^2.2.1"
 
 "@guardian/dotcom-rendering@git://github.com/guardian/dotcom-rendering.git#version-1-alpha":
@@ -2055,6 +2056,11 @@ balanced-match@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.0.tgz#89b4d199ab2bee49de164ea02b89ce462d71b767"
 
+base-64@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/base-64/-/base-64-0.1.0.tgz#780a99c84e7d600260361511c4877613bf24f6bb"
+  integrity sha1-eAqZyE59YAJgNhURxId2E78k9rs=
+
 base62@^1.1.0:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/base62/-/base62-1.1.2.tgz#22ced6a49913565bc0b8d9a11563a465c084124c"
@@ -2966,6 +2972,13 @@ connect@3.6.6:
     finalhandler "1.1.0"
     parseurl "~1.3.2"
     utils-merge "1.0.1"
+
+consent-string@^1.5.1:
+  version "1.5.2"
+  resolved "https://registry.yarnpkg.com/consent-string/-/consent-string-1.5.2.tgz#cd3615f406a1d7649ebc9722960b5e451cf6a685"
+  integrity sha512-xzfHnFzHQSupiamNY93UGn8FggPajHYExI45pzadhVpXVaj3ztnhnA7lYjKXl09pKRQKCT4hvjytt+2eoH7Jaw==
+  dependencies:
+    base-64 "^0.1.0"
 
 console-browserify@^1.1.0:
   version "1.1.0"
