@@ -6,7 +6,8 @@ $gu-cta-height: 42px;
     display: inline-flex;
     align-items: center;
     text-decoration: none;
-    font-weight: bold;
+    font-weight: 700;
+    font-size: 17px;
     height: $gu-cta-height;
     min-height: $gu-cta-height;
     padding: 0 ($gu-cta-height / 2);
@@ -26,6 +27,11 @@ $gu-cta-height: 42px;
     &[data-disabled] {
         pointer-events: none;
     }
+
+    &:hover,
+    &:focus {
+        text-decoration: none;
+    }
 }
 .component-button--non-interactive {
     pointer-events: none;
@@ -33,9 +39,9 @@ $gu-cta-height: 42px;
 
 .component-button--primary {
     background-color: $highlight-main;
-    color: $brightness-7;
+    color: $brightness-7 !important;
     &:hover, &:focus {
-        background-color: $highlight-main;
+        background-color: $highlight-dark;
     }
 }
 
@@ -66,10 +72,18 @@ $gu-cta-height: 42px;
 }
 
 .component-button--greyHollow {
-    color: $brightness-7;
+    color: $brightness-7 !important;
     border: 1px solid $brightness-86;
     &:hover, &:focus {
         background: $brightness-97;
+    }
+}
+
+.component-button--greyHollow--for-epic {
+    background-color: $brightness-93;
+
+    &:hover {
+        background-color: $brightness-86;
     }
 }
 

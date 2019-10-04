@@ -84,8 +84,7 @@
     svg, img { height: 100%; width: auto; }
 }
 
-.contributions__contribute,
-.contributions__learn-more {
+.contributions__contribute {
     background-color: $sport-dark;
     color: #ffffff;
     font-weight: bold;
@@ -114,7 +113,6 @@
 
 // Specificity needed to override an inline rule in _pillars.scss that's messing with the epic link colour.
 a[href].contributions__contribute.contributions__contribute--epic,
-a[href].contributions__learn-more.contributions__learn-more--epic,
 .contributions__adblock-button a {
     margin-top: 0;
     background-color: $highlight-main;
@@ -136,11 +134,6 @@ a[href].contributions__learn-more.contributions__learn-more--epic,
 
 a[href].contributions__learn-more.contributions__learn-more--epic {
     margin-top: $gs-baseline / 2;
-    background-color: $brightness-93;
-
-    &:hover {
-        background-color: $brightness-86;
-    }
 
     @include mq($from: mobileLandscape) {
         margin-top: 0;
