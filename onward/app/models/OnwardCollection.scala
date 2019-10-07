@@ -6,6 +6,7 @@ import play.api.mvc.RequestHeader
 import views.support.{ContentOldAgeDescriber, ImgSrc, RemoveOuterParaHtml}
 import play.api.libs.json._
 import implicits.FaciaContentFrontendHelpers._
+import models.dotcomponents.OnwardsUtils.findPillar
 
 case class OnwardItem(
   url: String,
@@ -14,7 +15,8 @@ case class OnwardItem(
   byline: Option[String],
   image: Option[String],
   ageWarning: Option[String],
-  isLiveBlog: Boolean
+  isLiveBlog: Boolean,
+  pillar: String
 )
 
 case class MostPopularGeoResponse(
@@ -50,7 +52,8 @@ object OnwardCollection {
         byline = content.properties.byline,
         image = content.trailPicture.flatMap(ImgSrc.getFallbackUrl),
         ageWarning = ageWarning(content),
-        isLiveBlog = content.properties.isLiveBlog
+        isLiveBlog = content.properties.isLiveBlog,
+        pillar = findPillar(content.maybePillar, content.frontendTags.toList)
       )
     )
   }
