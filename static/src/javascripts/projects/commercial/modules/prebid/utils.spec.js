@@ -1,5 +1,6 @@
 // @flow
 import { getSync as getSync_ } from 'lib/geolocation';
+import { isInVariantSynchronous as isInVariantSynchronous_ } from 'common/modules/experiments/ab';
 import {
     getBreakpoint as getBreakpoint_,
     isBreakpoint as isBreakpoint_,
@@ -28,6 +29,7 @@ import {
 const getSync: any = getSync_;
 const getBreakpoint: any = getBreakpoint_;
 const isBreakpoint: any = isBreakpoint_;
+const isInVariantSynchronous: any = isInVariantSynchronous_;
 
 jest.mock('lodash/once', () => a => a);
 
@@ -110,13 +112,33 @@ describe('Utils', () => {
         expect(results).toEqual(['M', 'T', 'T', 'D', 'D']);
     });
 
-    ['AU', 'NZ', 'US', 'CA', 'GB'].forEach(region => {
-        test(`houldIncludeAppNexus should return true if geolocation is ${region}`, () => {
+    ['AU', 'NZ', 'GB'].forEach(region => {
+        test(`shouldIncludeAppNexus should return true if geolocation is ${region}`, () => {
             config.switches.prebidAppnexusUkRow = true;
             getSync.mockReturnValue(region);
             expect(shouldIncludeAppNexus()).toBe(true);
         });
     });
+
+    ['US', 'CA'].forEach(region => {
+        test(`shouldIncludeAppNexus should return false if geolocation is ${region} and not in variant`, () => {
+            config.switches.prebidAppnexusUkRow = true;
+            getSync.mockReturnValue(region);
+            expect(shouldIncludeAppNexus()).toBe(false);
+        });
+    });
+
+    ['US', 'CA'].forEach(region => {
+        test(`shouldIncludeAppNexus should return true if geolocation is ${region} and in variant`, () => {
+            config.switches.prebidAppnexusUkRow = true;
+            isInVariantSynchronous.mockImplementationOnce(
+                (testId, variantId) => variantId === 'variant'
+            );
+            getSync.mockReturnValue(region);
+            expect(shouldIncludeAppNexus()).toBe(true);
+        });
+    });
+
 
     test('shouldIncludeAppNexus should otherwise return false', () => {
         config.switches.prebidAppnexusUkRow = true;

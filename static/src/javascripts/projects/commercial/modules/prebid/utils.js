@@ -136,8 +136,8 @@ export const shouldUseOzoneAdaptor = (): boolean =>
 export const shouldIncludeAppNexus = (): boolean =>
     isInAuRegion() ||
     (isInUsRegion() && isInAppnexusUSAdapterTestVariant()) ||
-    (config.get('switches.prebidAppnexusUkRow') && !isInUsRegion()) ||
-    !!pbTestNameMap().and;
+    ((config.get('switches.prebidAppnexusUkRow') && !isInUsRegion()) ||
+        !!pbTestNameMap().and);
 
 export const shouldIncludeXaxis = (): boolean =>
     // 10% of UK page views
