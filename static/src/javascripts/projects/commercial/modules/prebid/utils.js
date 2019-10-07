@@ -7,8 +7,12 @@ import { getSync as geolocationGetSync } from 'lib/geolocation';
 import config from 'lib/config';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import { prebidTripleLiftAdapter } from 'common/modules/experiments/tests/prebid-triple-lift-adapter';
+import { appnexusUSAdapter } from 'common/modules/experiments/tests/commercial-appnexus-us-adapter';
 import { pangaeaAdapterTest } from 'common/modules/experiments/tests/commercial-pangaea-adapter';
 import type { PrebidSize } from './types';
+
+const isInAppnexusUSAdapterTestVariant = (): boolean =>
+    isInVariantSynchronous(appnexusUSAdapter, 'variant');
 
 const stripSuffix = (s: string, suffix: string): string => {
     const re = new RegExp(`${suffix}$`);
@@ -131,8 +135,9 @@ export const shouldUseOzoneAdaptor = (): boolean =>
 
 export const shouldIncludeAppNexus = (): boolean =>
     isInAuRegion() ||
-    isInUsRegion() ||
-    (config.get('switches.prebidAppnexusUkRow') || !!pbTestNameMap().and);
+    (isInUsRegion() && isInAppnexusUSAdapterTestVariant()) ||
+    (config.get('switches.prebidAppnexusUkRow') && !isInUsRegion()) ||
+    !!pbTestNameMap().and;
 
 export const shouldIncludeXaxis = (): boolean =>
     // 10% of UK page views

@@ -110,34 +110,12 @@ describe('Utils', () => {
         expect(results).toEqual(['M', 'T', 'T', 'D', 'D']);
     });
 
-    test('shouldIncludeAppNexus should return true if geolocation is AU', () => {
-        config.switches.prebidAppnexusUkRow = true;
-        getSync.mockReturnValue('AU');
-        expect(shouldIncludeAppNexus()).toBe(true);
-    });
-
-    test('shouldIncludeAppNexus should return true if geolocation is NZ', () => {
-        config.switches.prebidAppnexusUkRow = true;
-        getSync.mockReturnValue('NZ');
-        expect(shouldIncludeAppNexus()).toBe(true);
-    });
-
-    test('shouldIncludeAppNexus should return true if geolocation is US', () => {
-        config.switches.prebidAppnexusUkRow = true;
-        getSync.mockReturnValue('US');
-        expect(shouldIncludeAppNexus()).toBe(true);
-    });
-
-    test('shouldIncludeAppNexus should return true if geolocation is CA', () => {
-        config.switches.prebidAppnexusUkRow = true;
-        getSync.mockReturnValue('CA');
-        expect(shouldIncludeAppNexus()).toBe(true);
-    });
-
-    test('shouldIncludeAppNexus should return true if geolocation is GB', () => {
-        config.switches.prebidAppnexusUkRow = true;
-        getSync.mockReturnValue('GB');
-        expect(shouldIncludeAppNexus()).toBe(true);
+    ['AU', 'NZ', 'US', 'CA', 'GB'].forEach(region => {
+        test(`houldIncludeAppNexus should return true if geolocation is ${region}`, () => {
+            config.switches.prebidAppnexusUkRow = true;
+            getSync.mockReturnValue(region);
+            expect(shouldIncludeAppNexus()).toBe(true);
+        });
     });
 
     test('shouldIncludeAppNexus should otherwise return false', () => {

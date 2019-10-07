@@ -1,6 +1,5 @@
 // @flow
 import config from 'lib/config';
-import { isInVariantSynchronous as isInVariantSynchronous_ } from 'common/modules/experiments/ab';
 import {
     _,
     getAppNexusDirectBidParams,
@@ -53,7 +52,6 @@ const {
 const getBreakpointKey: any = getBreakpointKey_;
 const isInAuRegion: any = isInAuRegion_;
 const isInUsRegion: any = isInUsRegion_;
-const isInVariantSynchronous: any = isInVariantSynchronous_;
 
 /* eslint-disable guardian-frontend/no-direct-access-config */
 const resetConfig = () => {
@@ -145,9 +143,6 @@ describe('getAppNexusDirectPlacementId', () => {
 
     test('should return the expected values when in US  and desktop device', () => {
         isInUsRegion.mockReturnValue(true);
-        isInVariantSynchronous.mockImplementation(
-            (testId, variantId) => variantId === 'variant'
-        );
         expect(
             prebidSizes.map(size => getAppNexusDirectPlacementId(size))
         ).toEqual(['4848330', '4848330', '4848330', '4848330', '4848330']);
