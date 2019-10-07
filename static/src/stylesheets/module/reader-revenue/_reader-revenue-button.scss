@@ -1,0 +1,139 @@
+$gu-transition: .3s ease-in-out;
+$gu-cta-height: 42px;
+
+.component-button {
+    @include fs-textSans(5);
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 17px;
+    height: $gu-cta-height;
+    min-height: $gu-cta-height;
+    padding: 0 ($gu-cta-height / 2);
+    border: 0;
+    border-radius: $gu-cta-height / 2;
+    box-sizing: border-box;
+    background: transparent;
+    cursor: pointer;
+    transition: $gu-transition;
+    justify-content: space-between;
+    position: relative;
+
+    &:hover, &:focus {
+        outline: 0;
+    }
+
+    &[data-disabled] {
+        pointer-events: none;
+    }
+
+    &:hover,
+    &:focus {
+        text-decoration: none;
+    }
+}
+.component-button--non-interactive {
+    pointer-events: none;
+}
+
+.component-button--primary {
+    background-color: $highlight-main;
+    color: $brightness-7 !important;
+    &:hover, &:focus {
+        background-color: $highlight-dark;
+    }
+}
+
+.component-button--secondary {
+    color: $brightness-97;
+    background-color: $brightness-20;
+
+    &:hover, &:focus {
+        background-color: $brightness-7;
+    }
+}
+
+.component-button--green {
+    color: $brightness-97;
+    background-color: $green-bold;
+
+    &:hover, &:focus {
+        background-color: $green-dark;
+    }
+}
+
+.component-button--greenHollow {
+    color: $green-bold;
+    border: 1px solid $brightness-86;
+    &:hover, &:focus {
+        background: $brightness-97;
+    }
+}
+
+.component-button--greyHollow {
+    color: $brightness-7 !important;
+    border: 1px solid $brightness-86;
+    &:hover, &:focus {
+        background: $brightness-97;
+    }
+}
+
+.component-button--greyHollow--for-epic {
+    background-color: $brightness-93;
+
+    &:hover {
+        background-color: $brightness-86;
+    }
+}
+
+.component-button--disabled,
+.component-button[disabled],
+.component-button[data-disabled] {
+    color: $brightness-60;
+    background-color: $brightness-93;
+    border: 1px solid $brightness-86;
+    cursor: not-allowed;
+}
+
+.component-button__content,
+.component-button svg {
+    flex: 0 0 auto;
+    display: block;
+}
+
+.component-button svg {
+    fill: currentColor;
+    position: relative;
+    width: $gu-cta-height / 2;
+    height: auto;
+}
+
+.component-button--hasicon-left {
+    flex-direction: row-reverse;
+
+    svg {
+        margin: 0 ($gu-cta-height / 4) 0 (-$gu-cta-height / 8);
+    }
+}
+
+.component-button--hasicon-right {
+    svg {
+        margin: 0 (-$gu-cta-height / 8) 0 ($gu-cta-height / 4);
+    }
+}
+
+/* icon-specific animations & transitions */
+.component-button {
+    .svg-arrow-right-straight {
+        transition: $gu-transition transform;
+        will-change: transform;
+    }
+    &:hover .svg-arrow-right-straight, &:focus .svg-arrow-right-straight {
+        transform: translateX(20%);
+    }
+}
+
+.component-button--visited-white-text:visited {
+    color: $brightness-97;
+}
