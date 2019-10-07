@@ -139,7 +139,6 @@ describe('Utils', () => {
         });
     });
 
-
     test('shouldIncludeAppNexus should otherwise return false', () => {
         config.switches.prebidAppnexusUkRow = true;
         const testGeos = ['FK', 'GI', 'GG', 'IM', 'JE', 'SH'];
