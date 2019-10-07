@@ -5,6 +5,8 @@ import {
     getPageTargeting,
     buildAppNexusTargetingObject,
 } from 'common/modules/commercial/build-page-targeting';
+import { appnexusUSAdapter } from 'common/modules/experiments/tests/commercial-appnexus-us-adapter';
+import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 
 import {
     getLargestSize,
@@ -18,6 +20,9 @@ import {
 } from './utils';
 
 import type { PrebidAppNexusParams, PrebidSize } from './types';
+
+const isInAppnexusUSAdapterTestVariant = (): boolean =>
+    isInVariantSynchronous(appnexusUSAdapter, 'variant');
 
 const getAppNexusInvCode = (sizes: Array<PrebidSize>): ?string => {
     const device: string = getBreakpointKey() === 'M' ? 'M' : 'D';
@@ -69,7 +74,7 @@ export const getAppNexusDirectPlacementId = (sizes: PrebidSize[]): string => {
         return '11016434';
     }
 
-    if (isInUsRegion()) {
+    if (isInUsRegion() && isInAppnexusUSAdapterTestVariant()) {
         return '4848330';
     }
 
