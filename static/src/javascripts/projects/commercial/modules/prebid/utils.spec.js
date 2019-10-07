@@ -53,7 +53,6 @@ jest.mock('common/modules/experiments/ab-tests');
 
 /* eslint-disable guardian-frontend/no-direct-access-config */
 const resetConfig = () => {
-    config.set('switches.prebidAppnexusUkRow', undefined);
     config.set('switches.prebidAppnexus', true);
     config.set('switches.prebidAppnexusInvcode', false);
     config.set('switches.prebidOpenx', true);
@@ -114,7 +113,6 @@ describe('Utils', () => {
 
     ['AU', 'NZ', 'GB'].forEach(region => {
         test(`shouldIncludeAppNexus should return true if geolocation is ${region}`, () => {
-            config.switches.prebidAppnexusUkRow = true;
             getSync.mockReturnValue(region);
             expect(shouldIncludeAppNexus()).toBe(true);
         });
@@ -122,7 +120,6 @@ describe('Utils', () => {
 
     ['US', 'CA'].forEach(region => {
         test(`shouldIncludeAppNexus should return false if geolocation is ${region} and not in variant`, () => {
-            config.switches.prebidAppnexusUkRow = true;
             getSync.mockReturnValue(region);
             expect(shouldIncludeAppNexus()).toBe(false);
         });
@@ -130,7 +127,6 @@ describe('Utils', () => {
 
     ['US', 'CA'].forEach(region => {
         test(`shouldIncludeAppNexus should return true if geolocation is ${region} and in variant`, () => {
-            config.switches.prebidAppnexusUkRow = true;
             isInVariantSynchronous.mockImplementationOnce(
                 (testId, variantId) => variantId === 'variant'
             );
@@ -140,39 +136,11 @@ describe('Utils', () => {
     });
 
     test('shouldIncludeAppNexus should otherwise return false', () => {
-        config.switches.prebidAppnexusUkRow = true;
         const testGeos = ['FK', 'GI', 'GG', 'IM', 'JE', 'SH'];
         for (let i = 0; i < testGeos.length; i += 1) {
             getSync.mockReturnValue(testGeos[i]);
             expect(shouldIncludeAppNexus()).toBe(true);
         }
-    });
-
-    test('shouldIncludeAppNexus should return false for UK region if UK switched off', () => {
-        config.switches.prebidAppnexusUkRow = false;
-        getSync.mockReturnValue('GB');
-        expect(shouldIncludeAppNexus()).toBe(false);
-    });
-
-    test('shouldIncludeAppNexus should return false for UK region if UK switched off', () => {
-        config.switches.prebidAppnexusUkRow = false;
-        const testGeos = ['FK', 'GI', 'GG', 'IM', 'JE', 'SH'];
-        for (let i = 0; i < testGeos.length; i += 1) {
-            getSync.mockReturnValue(testGeos[i]);
-            expect(shouldIncludeAppNexus()).toBe(false);
-        }
-    });
-
-    test('shouldIncludeAppNexus should return true for AU region if UK region is switched off', () => {
-        config.switches.prebidAppnexusUkRow = false;
-        getSync.mockReturnValue('AU');
-        expect(shouldIncludeAppNexus()).toBe(true);
-    });
-
-    test('shouldIncludeAppNexus should return true for NZ region if UK region is switched off', () => {
-        config.switches.prebidAppnexusUkRow = false;
-        getSync.mockReturnValue('NZ');
-        expect(shouldIncludeAppNexus()).toBe(true);
     });
 
     test('shouldIncludeOpenx should return true if geolocation is GB', () => {

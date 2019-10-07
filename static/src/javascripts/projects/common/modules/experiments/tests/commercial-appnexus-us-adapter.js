@@ -1,4 +1,8 @@
 // @flow strict
+import { getSync as geolocationGetSync } from 'lib/geolocation';
+import once from 'lodash/once';
+
+const currentGeoLocation = once((): string => geolocationGetSync());
 
 export const appnexusUSAdapter: ABTest = {
     id: 'CommercialAppnexusUsAdapter',
@@ -13,7 +17,7 @@ export const appnexusUSAdapter: ABTest = {
     dataLinkNames: 'n/a',
     idealOutcome: 'Appnexus adapter delivers in US',
     showForSensitive: true,
-    canRun: () => true,
+    canRun: () => ['US', 'CA'].includes(currentGeoLocation()),
     variants: [
         {
             id: 'control',
