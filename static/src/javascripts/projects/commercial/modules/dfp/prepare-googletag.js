@@ -103,8 +103,6 @@ export const init = (): Promise<void> => {
         );
 
         onIabConsentNotification(state => {
-            console.log('onIabConsentNotification --->', state);
-
             const consentState =
                 state[1] && state[2] && state[3] && state[4] && state[5];
 
