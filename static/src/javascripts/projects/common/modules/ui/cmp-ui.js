@@ -3,6 +3,7 @@ import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import { commercialIabCompliant } from 'common/modules/experiments/tests/commercial-iab-compliant';
 import { cmpConfig, cmpUi } from '@guardian/consent-management-platform';
 import fastdom from 'lib/fastdom-promise';
+import reportError from 'lib/report-error';
 
 const CMP_READY_CLASS = 'cmp-iframe-ready';
 const CMP_ANIMATE_CLASS = 'cmp-animate';
@@ -78,6 +79,16 @@ const onCloseCmp = (): Promise<void> =>
         })
         .then(removeCmp);
 
+const onErrorCmp = (error: Error): void => {
+    reportError(
+        error,
+        {
+            feature: 'cmp',
+        },
+        false
+    );
+};
+
 const prepareUi = (): void => {
     if (uiPrepared) {
         return;
@@ -90,7 +101,7 @@ const prepareUi = (): void => {
         cmpConfig.CMP_URL
     }" class="${IFRAME_CLASS}" tabIndex="1"></iframe></div>`;
 
-    cmpUi.setupMessageHandlers(onReadyCmp, onCloseCmp);
+    cmpUi.setupMessageHandlers(onReadyCmp, onCloseCmp, onErrorCmp);
 
     uiPrepared = true;
 };
