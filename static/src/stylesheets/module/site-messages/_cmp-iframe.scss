@@ -27,10 +27,12 @@
     height: 100%;
     width: 100%;
     max-width: 576px;
-    transform: translateX(100vw);
+    position: absolute;
+    top: 0;
+    left: 100%;
+    transform: translateX(0);
     transition: transform .6s ease-in;
     will-change: transform;
-    position: relative;
 
     @include mq(mobileLandscape) {
         width: 30%;
@@ -38,7 +40,7 @@
     }
 
     .cmp-animate & {
-        transform: translateX(calc(100vw - 100%));
+        transform: translateX(-100%);
     }
 }
 
@@ -51,8 +53,10 @@
 
 // Prevent body scrolling behind overlay
 body.no-scroll {
-    overflow: hidden;
-    position: fixed;
-    left: 0;
-    right: 0;
+    @include mq(mobileLandscape) {
+        overflow: hidden;
+        position: fixed;
+        left: 0;
+        right: 0;
+    }
 }
