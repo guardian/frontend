@@ -749,12 +749,12 @@ describe('pangaea adapter', () => {
         jest.resetAllMocks();
     });
 
-    test('should include pangaea adapter if condition is true ', () => {
+    test('should include pangaea adapter if switch is true ', () => {
         config.set('switches.prebidPangaeaUs', true);
         expect(getBidders()).toEqual(['ix', 'pangaea']);
     });
 
-    test('should not include pangaea adapter if condition is false ', () => {
+    test('should not include pangaea adapter if switch is false ', () => {
         config.set('switches.prebidPangaeaUs', false);
         expect(getBidders()).toEqual(['ix']);
     });
