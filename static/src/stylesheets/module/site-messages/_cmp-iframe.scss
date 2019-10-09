@@ -58,10 +58,8 @@
 
 // Prevent body scrolling behind overlay
 body.no-scroll {
-    @include mq(mobileLandscape) {
-        overflow: hidden;
-        position: fixed;
-        left: 0;
-        right: 0;
-    }
+    overflow: hidden;
+    position: fixed;
+    left: 0;
+    right: 0;
 }
