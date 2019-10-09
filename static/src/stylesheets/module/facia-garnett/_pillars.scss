@@ -79,7 +79,7 @@ $pillars: (
         commentCount: $brightness-60,
         headlineIcon: $highlight-main,
         metaText: $brightness-60,
-        cutoutBackground: $highlight-main,  
+        cutoutBackground: $highlight-main,
         invertedKicker: $highlight-main,
         liveColour: #ffffff
     )
@@ -105,6 +105,14 @@ $pillars: (
         .fc-item__timestamp,
         .fc-trail__count--commentcount {
             background-color: darken($opinion-faded, 3%);
+        }
+
+        &.fc-item--pillar-special-report {
+            .fc-item__timestamp,
+            .fc-trail__count--commentcount {
+                background-color: $special-report-dark;
+                color: $brightness-86;
+            }
         }
     }
 
@@ -356,7 +364,7 @@ $pillars: (
         }
 
         .fc-item__kicker {
-            color: $special-report-dark;
+            color: $highlight-main;
         }
     }
 
