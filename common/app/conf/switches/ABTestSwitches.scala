@@ -135,4 +135,14 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2020, 7, 30),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-commercial-pangaea-adapter",
+    "Test adding pangaea in prebid for US",
+    owners = Seq(Owner.withGithub("ioanna0")),
+    safeState = On,
+    sellByDate = new LocalDate(2020, 7, 30),
+    exposeClientSide = true
+  )
 }
