@@ -7,7 +7,7 @@ import { load } from './outbrain-load';
 type OutbrainPageConditions = {
     outbrainEnabled: boolean,
     noMerchSlotsExpected: boolean,
-    contributionsTestVisible: boolean
+    contributionsTestVisible: boolean,
 };
 
 type OutbrainDfpConditions = {
