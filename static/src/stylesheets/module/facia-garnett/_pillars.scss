@@ -77,9 +77,9 @@ $pillars: (
         featureHeadline: #ffffff,
         byline: $special-report-dark,
         commentCount: $brightness-60,
-        headlineIcon: $special-report-dark,
+        headlineIcon: $highlight-main,
         metaText: $brightness-60,
-        cutoutBackground: $highlight-main,
+        cutoutBackground: $highlight-main,  
         invertedKicker: $highlight-main,
         liveColour: #ffffff
     )
@@ -267,7 +267,7 @@ $pillars: (
         background-color: map-get($palette, kicker);
     }
 
-    &.fc-item--type-comment {
+    &.fc-item--type-comment:not(.fc-item--pillar-special-report) {
         &.fc-item--pillar-news,
         &.fc-item--pillar-opinion,
         &.fc-item--pillar-sport,
@@ -275,6 +275,7 @@ $pillars: (
         &.fc-item--pillar-lifestyle {
             background-color: $opinion-faded;
         }
+
 
         .fc-item__container.u-faux-block-link--hover {
             background-color: darken($opinion-faded, 2%);
@@ -348,15 +349,10 @@ $pillars: (
     }
 
     &.fc-item--type-comment {
-        .fc-item__headline,
-        .fc-item__standfirst {
-            color: $special-report-dark;
-        }
 
         .fc-item__byline {
-            color: $special-report-dark;
-            background-color: $highlight-main;
             display: inline;
+            color: $highlight-main;
         }
 
         .fc-item__kicker {
