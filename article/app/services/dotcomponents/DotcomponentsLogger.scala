@@ -4,6 +4,7 @@ import common.Logging
 import common.LoggingField._
 import model.PageWithStoryPackage
 import play.api.mvc.RequestHeader
+import implicits.Requests._
 
 import scala.util.Random
 
@@ -15,7 +16,8 @@ case class DotcomponentsLoggerFields(request: Option[RequestHeader]) {
       List[LogField](
         "req.method" -> r.method,
         "req.url" -> r.uri,
-        "req.id" -> Random.nextInt(Integer.MAX_VALUE).toString
+        "req.id" -> Random.nextInt(Integer.MAX_VALUE).toString,
+        "req.isAmp" -> r.isAmp
       )
     }.getOrElse(Nil)
 
