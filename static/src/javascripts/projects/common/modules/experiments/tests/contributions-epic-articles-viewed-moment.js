@@ -46,7 +46,7 @@ const geolocation = geolocationGetSync();
 
 export const articlesViewedMoment: EpicABTest = makeEpicABTest({
     id: 'ContributionsEpicArticlesViewedMonthMoment',
-    campaignId: '2019-10-14_moment_climate_pledge_2019_article_count',
+    campaignId: '2019-10-14_moment_climate_pledge_article_count',
 
     start: '2019-06-24',
     expiry: '2020-01-27',
@@ -72,12 +72,18 @@ export const articlesViewedMoment: EpicABTest = makeEpicABTest({
             buttonTemplate: defaultButtonTemplate,
             products: [],
             copy: buildEpicCopy(controlCopy, false, geolocation),
+            classNames: [
+                'contributions__epic--2019-10-14_moment_climate_pledge',
+            ],
         },
         {
             id: 'variant',
             buttonTemplate: defaultButtonTemplate,
             products: [],
             copy: buildEpicCopy(variantCopy, false, geolocation),
+            classNames: [
+                'contributions__epic--2019-10-14_moment_climate_pledge',
+            ],
         },
     ],
 });
