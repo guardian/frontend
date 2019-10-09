@@ -7,6 +7,7 @@ import { getSync as geolocationGetSync } from 'lib/geolocation';
 import config from 'lib/config';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import { prebidTripleLiftAdapter } from 'common/modules/experiments/tests/prebid-triple-lift-adapter';
+import { pangaeaAdapterTest } from 'common/modules/experiments/tests/commercial-pangaea-adapter';
 import type { PrebidSize } from './types';
 
 const stripSuffix = (s: string, suffix: string): string => {
@@ -111,6 +112,9 @@ export const shouldIncludeSonobi = (): boolean => isInUsRegion();
 export const shouldIncludeOpenx = (): boolean => !isInUsRegion();
 
 export const shouldIncludeTrustX = (): boolean => isInUsRegion();
+
+export const shouldIncludePangaea = (): boolean =>
+    isInVariantSynchronous(pangaeaAdapterTest, 'variant');
 
 export const shouldIncludeTripleLift = (): boolean =>
     isInVariantSynchronous(prebidTripleLiftAdapter, 'variant');

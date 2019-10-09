@@ -638,8 +638,9 @@
         }
     }
 
-    .content__label__link {
+    &:not(.content--pillar-special-report) .content__label__link {
         color: #ffffff;
+
     }
 
     .immersive-main-media__headline-container {
