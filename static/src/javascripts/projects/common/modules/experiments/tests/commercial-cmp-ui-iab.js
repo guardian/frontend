@@ -6,7 +6,7 @@ export const commercialCmpUiIab: ABTest = {
     expiry: '2019-10-18',
     author: 'George Haberis',
     description: '1% participation AB test for the new CMP UI',
-    audience: 0.01,
+    audience: 0, // TODO: bump to 0.01 when ready
     audienceOffset: 0.5,
     successMeasure: 'Our new CMP UI obtains target consent rates',
     audienceCriteria: 'n/a',
