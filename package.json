@@ -7,11 +7,11 @@
     "tools/amp-validation"
   ],
   "engines": {
-    "yarn": "1.19.0"
+    "yarn": ">=1.19.0"
   },
   "dependencies": {
     "@babel/runtime": "^7.2.0",
-    "@guardian/atom-renderer": "1.0.4",
+    "@guardian/atom-renderer": "1.1.0",
     "@guardian/consent-management-platform": "^0.3.1",
     "@guardian/dotcom-rendering": "git://github.com/guardian/dotcom-rendering.git#version-1-alpha",
     "bean": "~1.0.14",

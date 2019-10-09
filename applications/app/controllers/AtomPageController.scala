@@ -79,8 +79,6 @@ class AtomPageController(contentApiClient: ContentApiClient, wsClient: WSClient,
     lookup(s"atom/$atomType/$id") map {
       case Left(model: MediaAtom) =>
         renderAtom(MediaAtomPage(model, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar))
-      case Left(model: StoryQuestionsAtom) =>
-        renderAtom(StoryQuestionsAtomPage(model, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar, inApp = inApp))
       case Left(model: GuideAtom) =>
         renderAtom(GuideAtomPage(model, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar))
       case Left(model: ProfileAtom) =>
@@ -109,7 +107,6 @@ class AtomPageController(contentApiClient: ContentApiClient, wsClient: WSClient,
 
   def makeAtom(apiAtom: ItemResponse): Option[Atom] = {
     apiAtom.media.map(atom => MediaAtom.make(atom = atom)) orElse
-    apiAtom.storyquestions.map(atom => StoryQuestionsAtom.make(atom))           orElse
     apiAtom.guide.map(atom => GuideAtom.make(atom))                             orElse
     apiAtom.profile.map(atom => ProfileAtom.make(atom))                         orElse
     apiAtom.qanda.map(atom => QandaAtom.make(atom))                             orElse

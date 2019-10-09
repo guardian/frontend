@@ -69,12 +69,6 @@ const checksToDispatch = {
         );
     },
 
-    isStoryQuestionsOnPage(): Promise<boolean> {
-        return Promise.resolve(
-            document.querySelectorAll('.js-ask-question-link').length > 0
-        );
-    },
-
     isOutbrainBlockedByAds(): Promise<boolean> {
         const dependentChecks = [
             waitForCheck('hasHighPriorityAdLoaded'),

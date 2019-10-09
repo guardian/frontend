@@ -7,8 +7,7 @@ import { load } from './outbrain-load';
 type OutbrainPageConditions = {
     outbrainEnabled: boolean,
     noMerchSlotsExpected: boolean,
-    contributionsTestVisible: boolean,
-    storyQuestionsVisible: boolean,
+    contributionsTestVisible: boolean
 };
 
 type OutbrainDfpConditions = {
@@ -32,12 +31,10 @@ const getOutbrainPageConditions = (): Promise<OutbrainPageConditions> =>
         waitForCheck('isOutbrainDisabled'),
         noMerchSlotsExpected(),
         waitForCheck('isUserInContributionsAbTest'),
-        waitForCheck('isStoryQuestionsOnPage'),
-    ]).then(([outbrainDisabled, noMerchSlots, contributions, story]) => ({
+    ]).then(([outbrainDisabled, noMerchSlots, contributions]) => ({
         outbrainEnabled: !outbrainDisabled,
         noMerchSlotsExpected: noMerchSlots,
         contributionsTestVisible: contributions,
-        storyQuestionsVisible: story,
     }));
 
 const getOutbrainDfpConditions = (): Promise<OutbrainDfpConditions> =>
@@ -55,7 +52,6 @@ export const getOutbrainComplianceTargeting = (): Promise<
     getOutbrainPageConditions().then(pageConditions => {
         if (
             pageConditions.contributionsTestVisible ||
-            pageConditions.storyQuestionsVisible ||
             !pageConditions.outbrainEnabled
         ) {
             // This key value should be read as "the outbrain load cannot be compliant"
@@ -105,14 +101,9 @@ export const initOutbrain = (): Promise<void> =>
             'debug.outbrain.pageConditions.contributionsTestVisible',
             pageConditions.contributionsTestVisible
         );
-        config.set(
-            'debug.outbrain.pageConditions.storyQuestionsVisible',
-            pageConditions.storyQuestionsVisible
-        );
 
         const contributionVisible = pageConditions.contributionsTestVisible;
-        const editorialTests =
-            contributionVisible || pageConditions.storyQuestionsVisible;
+        const editorialTests = contributionVisible;
 
         config.set('debug.outbrain.editorialTests', editorialTests);
         config.set(
