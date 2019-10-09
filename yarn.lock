@@ -1063,10 +1063,10 @@
   version "0.8.2"
   resolved "https://registry.yarnpkg.com/@emotion/utils/-/utils-0.8.2.tgz#576ff7fb1230185b619a75d258cbc98f0867a8dc"
 
-"@guardian/atom-renderer@1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@guardian/atom-renderer/-/atom-renderer-1.1.0.tgz#c76be05ef63edf95b36960a004810f390d297854"
-  integrity sha512-dscWNJLjJlHCqc3xyHl0rsgR2Wq+84dwIXqSb8NG9MqwTeFenpkUHaaGVvJxmlUylz2myQEtVo22OlNgTeIR1Q==
+"@guardian/atom-renderer@1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@guardian/atom-renderer/-/atom-renderer-1.1.1.tgz#edb06e443327c1716f04e3204fa03ec72ffc7c98"
+  integrity sha512-W0Hj9JfwoiJgzyljngnCy9W1G7NicGTqp7KNh3aS9Sy9dm4WildUZi3q3tL3SvJtdt/KooneAe8AlkSc6s3etw==
   dependencies:
     "@babel/preset-env" "^7.3.1"
     "@babel/preset-flow" "^7.0.0"
