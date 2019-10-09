@@ -1,6 +1,6 @@
 // @flow
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
-import { commercialIabCompliant } from 'common/modules/experiments/tests/commercial-iab-compliant';
+import { commercialCmpUiIab } from 'common/modules/experiments/tests/commercial-cmp-ui-iab';
 import { cmpConfig, cmpUi } from '@guardian/consent-management-platform';
 import fastdom from 'lib/fastdom-promise';
 import reportError from 'lib/report-error';
@@ -142,7 +142,7 @@ const handlePrivacySettingsClick = (evt: Event): void => {
 };
 
 export const addPrivacySettingsLink = (): void => {
-    if (!isInVariantSynchronous(commercialIabCompliant, 'variant')) {
+    if (!isInVariantSynchronous(commercialCmpUiIab, 'variant')) {
         return;
     }
 
@@ -182,7 +182,7 @@ export const addPrivacySettingsLink = (): void => {
 export const consentManagementPlatformUi = {
     id: 'cmpUi',
     canShow: (): Promise<boolean> => {
-        if (isInVariantSynchronous(commercialIabCompliant, 'variant')) {
+        if (isInVariantSynchronous(commercialCmpUiIab, 'variant')) {
             return Promise.resolve(cmpUi.canShow());
         }
 

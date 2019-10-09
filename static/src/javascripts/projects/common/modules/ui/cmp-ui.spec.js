@@ -29,7 +29,7 @@ describe('cmp-ui', () => {
 
     describe('consentManagementPlatformUi', () => {
         describe('canShow', () => {
-            it('returns true if cmpUi.canShow true and in commercialIabCompliant test', () => {
+            it('returns true if cmpUi.canShow true and in commercialCmpUiIab test', () => {
                 cmpUi.canShow.mockReturnValue(true);
                 isInVariantSynchronous.mockReturnValue(true);
 
@@ -47,7 +47,7 @@ describe('cmp-ui', () => {
                 });
             });
 
-            it('returns false if not in commercialIabCompliant test', () => {
+            it('returns false if not in commercialCmpUiIab test', () => {
                 cmpUi.canShow.mockReturnValue(true);
                 isInVariantSynchronous.mockReturnValue(false);
 
