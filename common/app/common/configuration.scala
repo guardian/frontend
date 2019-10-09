@@ -196,13 +196,11 @@ class GuardianConfiguration extends Logging {
   case class Auth(user: String, password: String)
 
   object contentApi {
-    // val contentApiHost: String = configuration.getMandatoryStringProperty("content.api.host")
-    val contentApiHost: String = "https://content.code.dev-guardianapis.com"
+    val contentApiHost: String = configuration.getMandatoryStringProperty("content.api.host")
 
     val previewHost: Option[String] = configuration.getStringProperty("content.api.preview.iam.host")
 
-    // lazy val key: Option[String] = configuration.getStringProperty("content.api.key")
-    lazy val key: Option[String] = Some("test")
+    lazy val key: Option[String] = configuration.getStringProperty("content.api.key")
     lazy val timeout: FiniteDuration = Duration.create(configuration.getIntegerProperty("content.api.timeout.millis").getOrElse(2000), MILLISECONDS)
 
     lazy val circuitBreakerErrorThreshold: Int = configuration.getIntegerProperty("content.api.circuit_breaker.max_failures").getOrElse(30)
