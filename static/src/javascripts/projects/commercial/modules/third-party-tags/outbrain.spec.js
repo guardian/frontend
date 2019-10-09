@@ -150,20 +150,6 @@ describe('Outbrain', () => {
             });
         });
 
-        it('should load a non compliant component if story questions on page', () => {
-            // isOutbrainDisabled check
-            resolveCheck('isOutbrainDisabled', false);
-            // isOutbrainBlockedByAds and isOutbrainMerchandiseCompliant checks
-            resolveCheck('isOutbrainBlockedByAds', false);
-            resolveCheck('isOutbrainMerchandiseCompliant', false);
-            // editorial tests
-            resolveCheck('isUserInContributionsAbTest', false);
-
-            return initOutbrain().then(() => {
-                expect(load).toHaveBeenCalledWith('nonCompliant', false);
-            });
-        });
-
         it('should load a compliant component', () => {
             // isOutbrainDisabled check
             resolveCheck('isOutbrainDisabled', false);
