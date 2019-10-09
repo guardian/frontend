@@ -750,25 +750,53 @@ describe('pangaea adapter', () => {
     });
 
     test('should include pangaea adapter if switch is true ', () => {
-        config.set('switches.prebidPangaeaUs', true);
+        config.set('switches.prebidPangaeaUsAu', true);
         expect(getBidders()).toEqual(['ix', 'pangaea']);
     });
 
     test('should not include pangaea adapter if switch is false ', () => {
-        config.set('switches.prebidPangaeaUs', false);
+        config.set('switches.prebidPangaeaUsAu', false);
         expect(getBidders()).toEqual(['ix']);
     });
 
-    test('should return correct pangaea adapter params for US', () => {
-        config.set('switches.prebidPangaeaUs', true);
+    const regionalTests = [
+        {
+            name: 'US',
+            expectedPlacementId: '13892369',
+            mockFn: isInUsRegion,
+            mockReturn: true,
+        },
+        {
+            name: 'AU',
+            expectedPlacementId: '13892409',
+            mockFn: isInAuRegion,
+            mockReturn: true,
+        },
+        {
+            name: 'GB',
+            expectedPlacementId: undefined,
+            mockFn: isInUsRegion,
+            mockReturn: false,
+        },
+    ];
 
-        const pangaeaBids = bids('dfp-ad--top-above-nav', [
-            [728, 90],
-            [970, 250],
-        ]);
-        expect(pangaeaBids[2].params).toEqual({
-            keywords: 'someAppNexusTargetingObject',
-            placementId: '13892369',
+    regionalTests.forEach(regionalTest => {
+        test(`should return correct pangaea adapter params for ${
+            regionalTest.region
+        } regions`, () => {
+            config.set('switches.prebidPangaeaUsAu', true);
+
+            regionalTest.mockFn.mockReturnValue(regionalTest.mockReturn);
+
+            const pangaeaBids = bids('dfp-ad--top-above-nav', [
+                [728, 90],
+                [970, 250],
+            ]);
+
+            expect(pangaeaBids[2].params).toEqual({
+                keywords: 'someAppNexusTargetingObject',
+                placementId: regionalTest.expectedPlacementId,
+            });
         });
     });
 });
