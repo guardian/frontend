@@ -774,7 +774,7 @@ describe('pangaea adapter', () => {
         },
         {
             name: 'GB',
-            expectedPlacementId: undefined,
+            expectedPlacementId: '',
             mockFn: isInUsRegion,
             mockReturn: false,
         },
@@ -782,7 +782,7 @@ describe('pangaea adapter', () => {
 
     regionalTests.forEach(regionalTest => {
         test(`should return correct pangaea adapter params for ${
-            regionalTest.region
+            regionalTest.name
         } regions`, () => {
             config.set('switches.prebidPangaeaUsAu', true);
 

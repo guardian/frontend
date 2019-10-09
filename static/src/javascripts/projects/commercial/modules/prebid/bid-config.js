@@ -250,10 +250,10 @@ const getXhbPlacementId = (sizes: PrebidSize[]): number => {
     return 13663304;
 };
 
-const getPangaeaPlacementIdForUsAndAu = (): string | undefined => {
+const getPangaeaPlacementIdForUsAndAu = (): string => {
     if (isInUsRegion()) return '13892369';
     if (isInAuRegion()) return '13892409';
-    return undefined;
+    return '';
 };
 
 const getXaxisPlacementId = (sizes: PrebidSize[]): number => {
