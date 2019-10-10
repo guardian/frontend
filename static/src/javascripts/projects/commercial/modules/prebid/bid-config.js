@@ -250,6 +250,12 @@ const getXhbPlacementId = (sizes: PrebidSize[]): number => {
     return 13663304;
 };
 
+const getPangaeaPlacementIdForUsAndAu = (): string => {
+    if (isInUsRegion()) return '13892369';
+    if (isInAuRegion()) return '13892409';
+    return '';
+};
+
 const getXaxisPlacementId = (sizes: PrebidSize[]): number => {
     const NO_MATCH_ID = 15900184;
     switch (getBreakpointKey()) {
@@ -381,7 +387,7 @@ const appNexusBidder: PrebidBidder = {
     name: 'and',
     switchName: 'prebidAppnexus',
     bidParams: (slotId: string, sizes: PrebidSize[]): PrebidAppNexusParams =>
-        getAppNexusDirectBidParams(sizes, isInAuRegion()),
+        getAppNexusDirectBidParams(sizes),
 };
 
 const openxClientSideBidder: PrebidBidder = {
@@ -544,14 +550,14 @@ const adYouLikeBidder: PrebidBidder = {
     },
 };
 
-const pangaeaUSBidder: PrebidBidder = {
+const pangaeaBidder: PrebidBidder = {
     name: 'pangaea',
-    switchName: 'prebidPangaeaUs',
+    switchName: 'prebidPangaeaUsAu',
     bidParams: (): PrebidAppNexusParams =>
         Object.assign(
             {},
             {
-                placementId: '13892369', // currently only US placement ID supported
+                placementId: getPangaeaPlacementIdForUsAndAu(),
                 keywords: buildAppNexusTargetingObject(getPageTargeting()),
             }
         ),
@@ -653,7 +659,7 @@ const currentBidders: (PrebidSize[]) => PrebidBidder[] = slotSizes => {
     const otherBidders: PrebidBidder[] = [
         ...(inPbTestOr(shouldIncludeSonobi()) ? [sonobiBidder] : []),
         ...(inPbTestOr(shouldIncludeTrustX()) ? [trustXBidder] : []),
-        ...(inPbTestOr(shouldIncludePangaea()) ? [pangaeaUSBidder] : []),
+        ...(inPbTestOr(shouldIncludePangaea()) ? [pangaeaBidder] : []),
         ...(inPbTestOr(shouldIncludeTripleLift()) ? [tripleLiftBidder] : []),
         ...(inPbTestOr(shouldIncludeAppNexus()) ? [appNexusBidder] : []),
         ...(inPbTestOr(shouldIncludeImproveDigital())

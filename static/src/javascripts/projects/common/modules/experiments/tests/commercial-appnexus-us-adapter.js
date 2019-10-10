@@ -4,20 +4,20 @@ import once from 'lodash/once';
 
 const currentGeoLocation = once((): string => geolocationGetSync());
 
-export const pangaeaAdapterTest: ABTest = {
-    id: 'CommercialPangaeaAdapter',
-    start: '2019-10-08',
+export const appnexusUSAdapter: ABTest = {
+    id: 'CommercialAppnexusUsAdapter',
+    start: '2019-10-7',
     expiry: '2020-07-30',
     author: 'Ioanna Kyprianou',
-    description: 'Test adding pangaea in prebid in US & AU regions',
+    description: 'Test new us placement id for appnexus in US',
     audience: 0.0,
     audienceOffset: 0.0,
-    successMeasure: 'Pangaea adapter works in prebid for US & AU regions',
+    successMeasure: 'Appnexus adapter works in US',
     audienceCriteria: 'n/a',
     dataLinkNames: 'n/a',
-    idealOutcome: 'Pangaea adapter delivers in prebid for US & AU regions',
+    idealOutcome: 'Appnexus adapter delivers in US',
     showForSensitive: true,
-    canRun: () => ['US', 'CA', 'AU', 'NZ'].includes(currentGeoLocation()),
+    canRun: () => ['US', 'CA'].includes(currentGeoLocation()),
     variants: [
         {
             id: 'control',

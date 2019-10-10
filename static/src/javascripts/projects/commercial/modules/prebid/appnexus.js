@@ -64,12 +64,13 @@ export const getAppNexusPlacementId = (sizes: PrebidSize[]): string => {
     }
 };
 
-export const getAppNexusDirectPlacementId = (
-    sizes: PrebidSize[],
-    isAuRegion: boolean
-): string => {
-    if (isAuRegion) {
+export const getAppNexusDirectPlacementId = (sizes: PrebidSize[]): string => {
+    if (isInAuRegion()) {
         return '11016434';
+    }
+
+    if (isInUsRegion()) {
+        return '4848330';
     }
 
     const defaultPlacementId: string = '9251752';
@@ -101,10 +102,9 @@ export const getAppNexusDirectPlacementId = (
 };
 
 export const getAppNexusDirectBidParams = (
-    sizes: PrebidSize[],
-    isAuRegion: boolean
+    sizes: PrebidSize[]
 ): PrebidAppNexusParams => {
-    if (isAuRegion && config.get('switches.prebidAppnexusInvcode')) {
+    if (isInAuRegion() && config.get('switches.prebidAppnexusInvcode')) {
         const invCode = getAppNexusInvCode(sizes);
         // flowlint sketchy-null-string:warn
         if (invCode) {
@@ -119,7 +119,7 @@ export const getAppNexusDirectBidParams = (
         }
     }
     return {
-        placementId: getAppNexusDirectPlacementId(sizes, isAuRegion),
+        placementId: getAppNexusDirectPlacementId(sizes),
         keywords: buildAppNexusTargetingObject(getPageTargeting()),
     };
 };

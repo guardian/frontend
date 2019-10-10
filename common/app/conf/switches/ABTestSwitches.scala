@@ -139,7 +139,17 @@ trait ABTestSwitches {
   Switch(
     ABTests,
     "ab-commercial-pangaea-adapter",
-    "Test adding pangaea in prebid for US",
+    "Test adding pangaea in prebid in US & AU regions",
+    owners = Seq(Owner.withGithub("ioanna0")),
+    safeState = On,
+    sellByDate = new LocalDate(2020, 7, 30),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-commercial-appnexus-us-adapter",
+    "Test new us placement id for appnexus in US",
     owners = Seq(Owner.withGithub("ioanna0")),
     safeState = On,
     sellByDate = new LocalDate(2020, 7, 30),

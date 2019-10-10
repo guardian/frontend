@@ -14,6 +14,7 @@ import {
     environmentMomentBannerSupporters,
 } from 'common/modules/experiments/tests/contributions-moment-banner-environment';
 import { xaxisAdapterTest } from 'common/modules/experiments/tests/commercial-xaxis-adapter';
+import { appnexusUSAdapter } from 'common/modules/experiments/tests/commercial-appnexus-us-adapter';
 import { pangaeaAdapterTest } from 'common/modules/experiments/tests/commercial-pangaea-adapter';
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
@@ -22,6 +23,7 @@ export const concurrentTests: $ReadOnlyArray<ABTest> = [
     adblockTest,
     prebidTripleLiftAdapter,
     xaxisAdapterTest,
+    appnexusUSAdapter,
     pangaeaAdapterTest,
 ];
 
