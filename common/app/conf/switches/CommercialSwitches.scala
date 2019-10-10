@@ -591,12 +591,12 @@ trait PrebidSwitches {
     exposeClientSide = true
   )
 
-  val pangaeaUSBidder: Switch = Switch(
+  val pangaeaUsAuBidder: Switch = Switch(
     group = CommercialPrebid,
-    name = "prebid-pangaea-us",
-    description = "Include Pangaea adapter to US",
+    name = "prebid-pangaea-us-au",
+    description = "Include Pangaea adapter to US & AU regions",
     owners = group(Commercial),
-    safeState = Off,
+    safeState = On,
     sellByDate = never,
     exposeClientSide = true
   )
