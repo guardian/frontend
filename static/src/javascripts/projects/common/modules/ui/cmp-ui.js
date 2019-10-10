@@ -89,11 +89,18 @@ const prepareUi = (): void => {
     const container: HTMLElement = document.createElement('div');
     container.className = CONTAINER_CLASS;
 
+    /**
+     * We found a bug where scrolling was
+     * sometimes not picked up on the iframe once it had animated in.
+     * Only forcing a reflow would correct this, so now when
+     * on the container transitionend we force a reflow.
+     */
     container.addEventListener('transitionend', () => {
-        if (overlay && overlay.parentNode) {
-            console.log('*** FORCE REFLOW ***');
-            overlay.style.width = '100%';
-        }
+        fastdom.write(() => {
+            if (overlay && overlay.parentNode) {
+                overlay.style.width = '100%';
+            }
+        });
     });
 
     overlay.appendChild(container);
