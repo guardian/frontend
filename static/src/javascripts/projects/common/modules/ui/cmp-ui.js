@@ -39,7 +39,11 @@ const onReadyCmp = (): Promise<void> =>
                 overlay.classList.add(CMP_READY_CLASS);
             }
         })
-        .then(animateCmp);
+        .then(animateCmp)
+        .then(() => {
+            console.log('*** FORCE REFLOW ***');
+            overlay.style.width = '100%';
+        });
 
 const removeCmp = (): Promise<void> =>
     /**
