@@ -2,13 +2,16 @@
 
 import once from 'lodash/once';
 import { getBreakpoint, isBreakpoint } from 'lib/detect';
-import { pbTestNameMap } from 'lib/url';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
 import config from 'lib/config';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import { prebidTripleLiftAdapter } from 'common/modules/experiments/tests/prebid-triple-lift-adapter';
+import { appnexusUSAdapter } from 'common/modules/experiments/tests/commercial-appnexus-us-adapter';
 import { pangaeaAdapterTest } from 'common/modules/experiments/tests/commercial-pangaea-adapter';
 import type { PrebidSize } from './types';
+
+const isInAppnexusUSAdapterTestVariant = (): boolean =>
+    isInVariantSynchronous(appnexusUSAdapter, 'variant');
 
 const stripSuffix = (s: string, suffix: string): string => {
     const re = new RegExp(`${suffix}$`);
@@ -130,9 +133,7 @@ export const shouldUseOzoneAdaptor = (): boolean =>
     !isInUsRegion() && !isInAuRegion() && config.get('switches.prebidOzone');
 
 export const shouldIncludeAppNexus = (): boolean =>
-    isInAuRegion() ||
-    ((config.get('switches.prebidAppnexusUkRow') && !isInUsRegion()) ||
-        !!pbTestNameMap().and);
+    isInAppnexusUSAdapterTestVariant() || !isInUsRegion();
 
 export const shouldIncludeXaxis = (): boolean =>
     // 10% of UK page views

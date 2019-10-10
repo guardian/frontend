@@ -387,7 +387,7 @@ const appNexusBidder: PrebidBidder = {
     name: 'and',
     switchName: 'prebidAppnexus',
     bidParams: (slotId: string, sizes: PrebidSize[]): PrebidAppNexusParams =>
-        getAppNexusDirectBidParams(sizes, isInAuRegion()),
+        getAppNexusDirectBidParams(sizes),
 };
 
 const openxClientSideBidder: PrebidBidder = {
