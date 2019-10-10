@@ -210,7 +210,6 @@ case class DataModelV3(
   isAdFreeUser: Boolean,
   webURL: String,
   linkedData: List[LinkedData],
-  openGraphData: Map[String, String],
   config: JsObject,
   guardianBaseURL: String,
   contentType: String,
@@ -261,7 +260,6 @@ object DataModelV3 {
       "isAdFreeUser" -> model.isAdFreeUser,
       "webURL" -> model.webURL,
       "linkedData" -> model.linkedData,
-      "openGraphData" -> model.openGraphData,
       "config" -> model.config,
       "guardianBaseURL" -> model.guardianBaseURL,
       "contentType" -> model.contentType,
@@ -470,8 +468,6 @@ object DotcomponentsDataModel {
       }
     }
 
-    val openGraphData: Map[String, String] = articlePage.getOpenGraphProperties;
-
     val allTags = article.tags.tags.map(
       t => Tag(
         t.id,
@@ -598,7 +594,6 @@ object DotcomponentsDataModel {
       isAdFreeUser = views.support.Commercial.isAdFree(request),
       webURL = article.metadata.webUrl,
       linkedData = linkedData,
-      openGraphData = openGraphData,
       config = combinedConfig,
       guardianBaseURL = Configuration.site.host,
       contentType = jsConfig("contentType").getOrElse(""),
