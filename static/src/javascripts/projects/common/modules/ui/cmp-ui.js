@@ -41,8 +41,10 @@ const onReadyCmp = (): Promise<void> =>
         })
         .then(animateCmp)
         .then(() => {
-            console.log('*** FORCE REFLOW ***');
-            overlay.style.width = '100%';
+            if (overlay && overlay.parentNode) {
+                console.log('*** FORCE REFLOW ***');
+                overlay.style.width = '100%';
+            }
         });
 
 const removeCmp = (): Promise<void> =>
