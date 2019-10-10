@@ -39,13 +39,7 @@ const onReadyCmp = (): Promise<void> =>
                 overlay.classList.add(CMP_READY_CLASS);
             }
         })
-        .then(animateCmp)
-        .then(() => {
-            if (overlay && overlay.parentNode) {
-                console.log('*** FORCE REFLOW ***');
-                overlay.style.width = '100%';
-            }
-        });
+        .then(animateCmp);
 
 const removeCmp = (): Promise<void> =>
     /**
@@ -93,8 +87,14 @@ const prepareUi = (): void => {
     overlay.className = OVERLAY_CLASS;
 
     const container: HTMLElement = document.createElement('div');
-
     container.className = CONTAINER_CLASS;
+
+    container.addEventListener('transitionend', () => {
+        if (overlay && overlay.parentNode) {
+            console.log('*** FORCE REFLOW ***');
+            overlay.style.width = '100%';
+        }
+    });
 
     overlay.appendChild(container);
 
