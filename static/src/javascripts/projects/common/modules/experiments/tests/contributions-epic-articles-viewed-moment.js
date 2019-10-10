@@ -63,6 +63,7 @@ export const articlesViewedMoment: EpicABTest = makeEpicABTest({
 
     geolocation,
     highPriority: true,
+    useLocalViewLog: true,
 
     canRun: () => articleViewCount >= minArticleViews,
 
