@@ -21,7 +21,7 @@
 
     &.cmp-animate {
         @include mq(mobileLandscape) {
-            background-color: rgba(#000000, .5);
+            background-color: rgba(#000000, .6);
         }
     }
 }
