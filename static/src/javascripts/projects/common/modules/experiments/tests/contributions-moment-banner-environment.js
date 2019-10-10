@@ -6,21 +6,21 @@ import { canShowBannerSync } from 'common/modules/commercial/contributions-utili
 import { getSync as geolocationGetSync } from 'lib/geolocation';
 
 const geolocation = geolocationGetSync();
-const campaignId = 'environment_campaign';
+const campaignId = 'climate_pledge_2019';
 
 const defaultLeadSentence =
     'The climate emergency is the defining issue of our times. ';
 const defaultCopy =
-    'This is The Guardian’s pledge: we will be truthful, resolute and undeterred in pursuing our journalism on the environment. We will give global heating, wildlife extinction and pollution the urgent attention they demand. Our independence means we can interrogate inaction by those in power. It means our reporting will always be grounded in scientific facts, never in commercial or political interests. Support from our readers makes this work possible.';
+    'This is the Guardian’s pledge: we will be truthful, resolute and undeterred in pursuing Guardian journalism on the environment. We will give global heating, wildlife extinction and pollution the urgent attention they demand. Our independence means we can interrogate inaction by those in power. It means Guardian reporting will always be driven by scientific facts, never by commercial or political interests. Support from our readers makes this work possible.';
 const defaultMobileCopy =
-    'This is The Guardian’s pledge: we will be truthful, resolute and undeterred in pursuing our journalism on the environment. Support from our readers makes this work possible.';
+    'This is the Guardian’s pledge: we will be truthful, resolute and undeterred in pursuing our journalism on the environment. Support from our readers makes this work possible.';
 
 const thankYouCopy =
-    'The climate emergency is the defining issue of our times. This is The Guardian’s pledge: we will be truthful, resolute and undeterred in pursuing our journalism on the environment. We will give global heating, wildlife extinction and pollution the urgent attention they demand. Our independence means we can interrogate inaction by those in power. ';
+    'The climate emergency is the defining issue of our times. This is the Guardian’s pledge: we will be truthful, resolute and undeterred in pursuing Guardian journalism on the environment. We will give global heating, wildlife extinction and pollution the urgent attention they demand. Our independence means we can interrogate inaction by those in power. ';
 const thankYouMobileCopy =
-    'The climate emergency is the defining issue of our times. This is The Guardian’s pledge: we will be truthful, resolute and undeterred in pursuing our journalism on the environment. ';
+    'The climate emergency is the defining issue of our times. This is the Guardian’s pledge: we will be truthful, resolute and undeterred in pursuing Guardian journalism on the environment. ';
 const thankYouClosingSentence =
-    'Thank you for supporting The Guardian – readers from around the world, like you, make this work possible.';
+    'Thank you for supporting the Guardian – readers from around the world, like you, make this work possible.';
 const thankYouCTA = 'Support us again';
 
 // These test params must be set on engagementBannerParams *and* passed into canShowBannerSync
@@ -30,6 +30,9 @@ const userCohortParam = {
     momentBannerThankYou: 'AllExistingSupporters',
 };
 const minArticlesBeforeShowingBanner = 0;
+
+const linkUrl =
+    'https://support.theguardian.com/contribute/climate-pledge-2019';
 
 export const environmentMomentBannerNonSupporters: AcquisitionsABTest = {
     id: 'ContributionsBannerEnvironmentMomentNonSupporters',
@@ -60,6 +63,7 @@ export const environmentMomentBannerNonSupporters: AcquisitionsABTest = {
                 minArticlesBeforeShowingBanner,
                 userCohort: userCohortParam.momentBannerDefault,
                 titles: ['We will not be quiet ', 'on the climate crisis'],
+                linkUrl,
             },
             canRun: () =>
                 canShowBannerSync(
@@ -100,6 +104,7 @@ export const environmentMomentBannerSupporters: AcquisitionsABTest = {
                 minArticlesBeforeShowingBanner,
                 userCohort: userCohortParam.momentBannerThankYou,
                 titles: ['We will not be quiet ', 'on the climate crisis'],
+                linkUrl,
             },
             canRun: () =>
                 canShowBannerSync(
