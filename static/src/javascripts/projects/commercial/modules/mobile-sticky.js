@@ -7,7 +7,7 @@ import config from 'lib/config';
 
 const createAdWrapperClassic = () => {
     const wrapper: HTMLElement = document.createElement('div');
-    wrapper.className = 'mobilesticky-container`';
+    wrapper.className = 'mobilesticky-container';
     const adSlot = createSlots('mobile-sticky', {})[0];
     wrapper.appendChild(adSlot);
     return wrapper;
