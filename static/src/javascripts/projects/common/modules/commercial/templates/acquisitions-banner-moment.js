@@ -16,18 +16,18 @@ export const acquisitionsBannerMomentTemplate = (
             ${closeCentralIcon.markup}
         </button>
     </div>
-    
+
     <div class="moment-banner__container">
         <div class="moment-banner__graphic-container">
             <img class="moment-banner__graphic"
-                srcset="https://media.guim.co.uk/7c8c1babaaaf1003eccec9edf53a6b9a06e1ce5d/0_0_279_420/279.png, 
-                https://media.guim.co.uk/0e1afbf2f142b1eb9a686dc389236702740834b6/0_0_558_840/558.png 2x" 
-                src="https://media.guim.co.uk/7c8c1babaaaf1003eccec9edf53a6b9a06e1ce5d/0_0_279_420/279.png" 
-                alt="Support the Guardian" 
+                srcset="https://media.guim.co.uk/7c8c1babaaaf1003eccec9edf53a6b9a06e1ce5d/0_0_279_420/279.png,
+                https://media.guim.co.uk/0e1afbf2f142b1eb9a686dc389236702740834b6/0_0_558_840/558.png 2x"
+                src="https://media.guim.co.uk/7c8c1babaaaf1003eccec9edf53a6b9a06e1ce5d/0_0_279_420/279.png"
+                alt="Support the Guardian"
             />
         </div>
-        
-        <div class="moment-banner__text-container"> 
+
+        <div class="moment-banner__text-container">
             <div class="moment-banner__titles">
                 ${
                     params.titles && params.titles[0]
@@ -44,7 +44,7 @@ export const acquisitionsBannerMomentTemplate = (
                         : ''
                 }
             </div>
-            
+
             <div class="moment-banner__copy">
                 <!-- Render bold lead sentence if it exists -->
                 ${
@@ -54,10 +54,10 @@ export const acquisitionsBannerMomentTemplate = (
                           }</span>`
                         : ''
                 }
-                
+
                 <!-- Render main message text -->
                 <span class="hide-until-tablet">${params.messageText}</span>
-                
+
                 <!-- Render mobile text if it exists, else render main text -->
                 ${
                     params.mobileMessageText
@@ -68,7 +68,7 @@ export const acquisitionsBannerMomentTemplate = (
                               params.messageText
                           }</span>`
                 }
-                
+
                 <!-- Render bold closing sentence if it exists-->
                 ${
                     params.closingSentence
@@ -81,13 +81,11 @@ export const acquisitionsBannerMomentTemplate = (
 
             <div class="moment-banner__buttons">
                 <div class="engagement-banner__cta">
-                    <a tabindex="3" class="button  engagement-banner__button  engagement-banner__button--moment-link" href="${
-                        params.linkUrl
-                    }">
+                    <a tabindex="3" class="button  engagement-banner__button  engagement-banner__button--moment-link" href="https://www.theguardian.com/p/cfm63">
                         Read our pledge
                     </a>
                 </div>
-                
+
                 <div class="engagement-banner__cta">
                     <a tabindex="3" class="button engagement-banner__button" href="${
                         params.linkUrl
