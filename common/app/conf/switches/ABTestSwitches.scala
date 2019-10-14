@@ -8,11 +8,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-commercial-iab-compliant",
-    "Test the IAB compliant version of our CMP",
-    owners = Seq(Owner.withGithub("ripecosta")),
+    "ab-commercial-cmp-ui-iab",
+    "Test whether our new CMP UI obtains target consent rates",
+    owners = Seq(Owner.withGithub("ghaberis")),
     safeState = Off,
-    sellByDate = new LocalDate(2019, 10, 30),
+    sellByDate = new LocalDate(2019, 12, 3),
     exposeClientSide = true
   )
 
