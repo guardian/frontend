@@ -4,7 +4,7 @@ import controllers.ArticlePage
 import experiments.{ActiveExperiments, DotcomRenderingAdvertisements}
 import model.PageWithStoryPackage
 import implicits.Requests._
-import model.liveblog.{BlockElement, ImageBlockElement, PullquoteBlockElement, TextBlockElement, TweetBlockElement, RichLinkBlockElement}
+import model.liveblog._
 import play.api.mvc.RequestHeader
 import views.support.Commercial
 
@@ -56,6 +56,41 @@ object ArticlePageChecks {
 
     !page.article.blocks.exists(_.main.exists(_.elements.exists(unsupportedElement)))
   }
+
+  def hasNoScriptTags(page: PageWithStoryPackage): Boolean = {
+
+    // introduced this check because of a bug where the dotcomponents data model is put as a json string
+    // onto the page html, and if that happens to contain a closing script tag, it will cause the page
+    // to render incorrectly because of a lack of proper escaping.
+    //
+    // this method is super ugly so I'd ideally like to find a way to do this differently. We will eventually
+    // have to support script tags anyway.
+
+    def hasScriptTag = (s: Option[String]) => s.exists(_.contains("<script"))
+
+    def elementHasScriptTagInHTML(blockElement: BlockElement) = blockElement match {
+      case TextBlockElement(html) => hasScriptTag(html)
+      case TweetBlockElement(html) => hasScriptTag(html)
+      case PullquoteBlockElement(html) => hasScriptTag(html)
+      case EmbedBlockElement(html, safe, alt) => hasScriptTag(html)
+      case InteractiveBlockElement(html) => hasScriptTag(html)
+      case CommentBlockElement(html) => hasScriptTag(html)
+      case TableBlockElement(html) => hasScriptTag(html)
+      case WitnessBlockElement(html) => hasScriptTag(html)
+      case DocumentBlockElement(html) => hasScriptTag(html)
+      case InstagramBlockElement(html) => hasScriptTag(html)
+      case VineBlockElement(html) => hasScriptTag(html)
+      case MapBlockElement(html) => hasScriptTag(html)
+      case UnknownBlockElement(html) => hasScriptTag(html)
+      case CodeBlockElement(html) => hasScriptTag(html)
+      case FormBlockElement(html) => hasScriptTag(html)
+      case _ => false
+    }
+
+    !page.article.blocks.exists(_.main.exists(_.elements.exists(elementHasScriptTagInHTML)))
+
+  }
+
 
   private[this] val tagsBlacklist: Set[String] = Set(
     "tracking/platformfunctional/dcrblacklist"
@@ -109,6 +144,7 @@ object ArticlePicker {
       ("isNotPaidContent", ArticlePageChecks.isNotPaidContent(page)),
       ("isNewsTone", ArticlePageChecks.isNewsTone(page)),
       ("isNotBlackListed", ArticlePageChecks.isNotBlackListed(page)),
+      ("hasNoScriptTags", ArticlePageChecks.hasNoScriptTags(page)),
     )
   }
 
