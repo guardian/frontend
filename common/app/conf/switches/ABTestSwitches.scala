@@ -12,7 +12,7 @@ trait ABTestSwitches {
     "Test whether our new CMP UI obtains target consent rates",
     owners = Seq(Owner.withGithub("ghaberis")),
     safeState = Off,
-    sellByDate = new LocalDate(2019, 12, 03),
+    sellByDate = new LocalDate(2019, 12, 3),
     exposeClientSide = true
   )
 
