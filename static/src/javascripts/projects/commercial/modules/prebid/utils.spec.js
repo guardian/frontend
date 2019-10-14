@@ -325,12 +325,14 @@ describe('Utils', () => {
         }
     });
 
-    test('shouldIncludeMobileSticky should be true if location cookie is NA, switch is ON and content is Article on mobiles ', () => {
-        config.set('page.contentType', 'Article');
-        config.set('switches.mobileStickyLeaderboard', true);
-        getSync.mockReturnValue('US');
-        isBreakpoint.mockReturnValue(true);
-        expect(shouldIncludeMobileSticky()).toBe(true);
+    ['US', 'CA', 'AU', 'NZ'].forEach(region => {
+        test(`should include mobile sticky if geolocation is ${region}, switch is ON and content is Article on mobiles`, () => {
+            config.set('page.contentType', 'Article');
+            config.set('switches.mobileStickyLeaderboard', true);
+            getSync.mockReturnValue(region);
+            isBreakpoint.mockReturnValue(true);
+            expect(shouldIncludeMobileSticky()).toBe(true);
+        });
     });
 
     test('shouldIncludeMobileSticky should be false if all conditions true except content type ', () => {
