@@ -81,7 +81,7 @@ export const acquisitionsBannerMomentTemplate = (
 
             <div class="moment-banner__buttons">
                 <div class="engagement-banner__cta">
-                    <a tabindex="3" class="button  engagement-banner__button  engagement-banner__button--moment-link" href="https://www.theguardian.com/p/cfm63">
+                    <a tabindex="3" class="button  engagement-banner__button  engagement-banner__button--moment-link" href="https://www.theguardian.com/global/ng-interactive/2019/oct/15/the-guardians-climate-pledge-2019?acquisitionData=%7B%22source%22%3A%22GUARDIAN_WEB%22%2C%22componentType%22%3A%22ACQUISITIONS_EDITORIAL_LINK%22%2C%22campaignCode%22%3A%22climate_pledge_2019%22%2C%22componentId%22%3A%22climate_pledge_2019_banner%22%7D&INTCMP=climate_pledge_2019">
                         Read our pledge
                     </a>
                 </div>
