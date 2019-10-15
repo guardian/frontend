@@ -345,6 +345,7 @@ const onPlayerReady = (
         duration,
         youtubePlayer,
         paused: false,
+        playing: false,
         pendingTrackingCalls: [25, 50, 75],
     };
 
@@ -380,8 +381,18 @@ const onPlayerReady = (
     }
 };
 
-const isAnyPlayerPlaying = (): boolean =>{
-    return Object.values(players).filter(_=>_.playing).length>0;
+const isAnyPlayerPlaying = (): boolean =>
+    Object.values(players).filter(_ => _.playing).length > 0;
+
+const triggerVideoStateEvent = (isPlaying: boolean): void => {
+    if (isPlaying) {
+        const videoPlaying = new Event('videoPlaying');
+        document.body.dispatchEvent(videoPlaying);
+    } else {
+        // Use videoEnded until tracker-js updated to videoStopped.
+        const videoStopped = new Event('videoEnded');
+        document.body.dispatchEvent(videoStopped);
+    }
 };
 
 const onPlayerStateChange = (
@@ -396,6 +407,7 @@ const onPlayerStateChange = (
 
     if (stateKey) {
         STATES[stateKey](atomId);
+        triggerVideoStateEvent(isAnyPlayerPlaying());
     }
 };
 
