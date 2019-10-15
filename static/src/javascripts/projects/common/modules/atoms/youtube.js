@@ -37,6 +37,9 @@ interface AtomPlayer {
     youtubePlayer: YoutubePlayer;
     pendingTrackingCalls: Array<number>;
     paused: boolean;
+    // Media that has ended is neither playing nor paused. For the Ophan
+    // attention time metric we only care if it is playing or not.
+    playing: boolean;
     overlay?: HTMLElement;
     endSlate?: Component;
     duration?: number;
@@ -126,7 +129,7 @@ const handlePlay = (uniqueAtomId: string, player: AtomPlayer): void => {
 
     killProgressTracker(uniqueAtomId);
     setProgressTracker(uniqueAtomId);
-
+    player.playing = true;
     // don't track play if resumed from a paused state
     if (paused) {
         player.paused = false;
@@ -214,6 +217,7 @@ const onPlayerPlaying = (uniqueAtomId: string): void => {
 const onPlayerPaused = (atomId: string): void => {
     const player = players[atomId];
 
+    player.playing = false;
     player.paused = true;
 
     killProgressTracker(atomId);
@@ -222,6 +226,7 @@ const onPlayerPaused = (atomId: string): void => {
 const onPlayerEnded = (atomId: string): void => {
     const player = players[atomId];
 
+    player.playing = false;
     killProgressTracker(atomId);
 
     trackYoutubeEvent('end', player.atomId);
@@ -373,6 +378,10 @@ const onPlayerReady = (
             debounce(updateImmersiveButtonPos.bind(null), 200)
         );
     }
+};
+
+const isAnyPlayerPlaying = (): boolean =>{
+    return Object.values(players).filter(_=>_.playing).length>0;
 };
 
 const onPlayerStateChange = (
