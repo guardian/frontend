@@ -211,6 +211,7 @@ case class DataModelV3(
   webURL: String,
   linkedData: List[LinkedData],
   openGraphData: Map[String, String],
+  twitterData: Map[String, String],
   config: JsObject,
   guardianBaseURL: String,
   contentType: String,
@@ -262,6 +263,7 @@ object DataModelV3 {
       "webURL" -> model.webURL,
       "linkedData" -> model.linkedData,
       "openGraphData" -> model.openGraphData,
+      "twitterData" -> model.twitterData,
       "config" -> model.config,
       "guardianBaseURL" -> model.guardianBaseURL,
       "contentType" -> model.contentType,
@@ -471,6 +473,7 @@ object DotcomponentsDataModel {
     }
 
     val openGraphData: Map[String, String] = articlePage.getOpenGraphProperties;
+    val twitterData: Map[String, String] = articlePage.getTwitterProperties
 
     val allTags = article.tags.tags.map(
       t => Tag(
@@ -599,6 +602,7 @@ object DotcomponentsDataModel {
       webURL = article.metadata.webUrl,
       linkedData = linkedData,
       openGraphData = openGraphData,
+      twitterData = twitterData,
       config = combinedConfig,
       guardianBaseURL = Configuration.site.host,
       contentType = jsConfig("contentType").getOrElse(""),
