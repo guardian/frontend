@@ -18,7 +18,7 @@ const defaultMobileCopy =
 const thankYouCopy =
     'The climate emergency is the defining issue of our times. This is the Guardian’s pledge: we will be truthful, resolute and undeterred in pursuing Guardian journalism on the environment. We will give global heating, wildlife extinction and pollution the urgent attention they demand. Our independence means we can interrogate inaction by those in power. ';
 const thankYouMobileCopy =
-    'The climate emergency is the defining issue of our times. This is the Guardian’s pledge: we will be truthful, resolute and undeterred in pursuing Guardian journalism on the environment. ';
+    'The climate emergency is the defining issue of our times. This is the Guardian’s pledge: we will be truthful, resolute and undeterred in pursuing our journalism on the environment. ';
 const thankYouClosingSentence =
     'Thank you for supporting the Guardian – readers from around the world, like you, make this work possible.';
 const thankYouCTA = 'Support us again';
@@ -62,7 +62,7 @@ export const environmentMomentBannerNonSupporters: AcquisitionsABTest = {
                 bannerModifierClass: 'moment-banner',
                 minArticlesBeforeShowingBanner,
                 userCohort: userCohortParam.momentBannerDefault,
-                titles: ['We will not be quiet ', 'on the climate crisis'],
+                titles: ['We will not stay quiet ', 'on the climate crisis'],
                 linkUrl,
             },
             canRun: () =>
@@ -103,7 +103,7 @@ export const environmentMomentBannerSupporters: AcquisitionsABTest = {
                 bannerModifierClass: 'moment-banner moment-banner-thank-you',
                 minArticlesBeforeShowingBanner,
                 userCohort: userCohortParam.momentBannerThankYou,
-                titles: ['We will not be quiet ', 'on the climate crisis'],
+                titles: ['We will not stay quiet ', 'on the climate crisis'],
                 linkUrl,
             },
             canRun: () =>
