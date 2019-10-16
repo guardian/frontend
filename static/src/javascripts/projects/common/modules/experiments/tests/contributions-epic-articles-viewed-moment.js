@@ -18,7 +18,7 @@ const heading = 'As the climate crisis escalates...';
 const highlightedText =
     'Support us from as little as %%CURRENCY_SYMBOL%%1 – and it only takes a minute. Thank you.';
 
-const controlCopy = {
+const variantCopy = {
     heading,
     paragraphs: [
         '... the Guardian will not stay quiet. This is our pledge: we will continue to give global heating, wildlife extinction and pollution the urgent attention and prominence they demand. The Guardian recognises the climate emergency as the defining issue of our times.',
@@ -59,10 +59,10 @@ export const articlesViewedMoment: EpicABTest = makeEpicABTest({
 
     variants: [
         {
-            id: 'control',
+            id: 'variant',
             buttonTemplate: defaultButtonTemplate,
             products: [],
-            copy: buildEpicCopy(controlCopy, false, geolocation),
+            copy: buildEpicCopy(variantCopy, false, geolocation),
             classNames: [
                 'contributions__epic--2019-10-14_moment_climate_pledge',
             ],
