@@ -382,16 +382,18 @@ const onPlayerReady = (
 };
 
 const isAnyPlayerPlaying = (): boolean =>
-    Object.values(players).filter(_ => _.playing).length > 0;
+    Object.keys(players)
+        .map(key => players[key])
+        .filter((p: AtomPlayer): boolean => p.playing).length > 0;
 
 const triggerVideoStateEvent = (isPlaying: boolean): void => {
     if (isPlaying) {
         const videoPlaying = new Event('videoPlaying');
-        document.body.dispatchEvent(videoPlaying);
+        document.dispatchEvent(videoPlaying);
     } else {
         // Use videoEnded until tracker-js updated to videoStopped.
         const videoStopped = new Event('videoEnded');
-        document.body.dispatchEvent(videoStopped);
+        document.dispatchEvent(videoStopped);
     }
 };
 
