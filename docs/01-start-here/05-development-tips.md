@@ -52,6 +52,21 @@ based on the Remote default.
 Ensure the Transport is Socket, the Debugger mode is Attach, and the port is set to 1044.
 Start a new Debug session, and your breakpoints should be active.
 
+### Developing in IntelliJ
+ 
+To use the sbt shell, you should use the same configuration for the JVM as in the [custom sbt script](../../sbt).
+As an example of how to achieve this, the picture below demonstrates increasing the maximum heap size to 8000 and 
+providing the `APP_SECRET` as a Java system property.
+
+![sbt_options](https://user-images.githubusercontent.com/4085817/67011346-4ce99980-f0e7-11e9-81fd-f1208e672800.png)
+
+Being able to use sbt shell has a number of advantages:
+- IntelliJ can be [configured to use sbt shell for build and import](https://intellij-support.jetbrains.com/hc/en-us/community/posts/115000117230-Sbt-shell-for-build-an-import);
+- and (perhaps more pertinently), by clicking on the debug icon (pictured below) you can debug the Scala application(s) 
+without having to configure the debugger yourself:
+
+  ![debug_icon](https://user-images.githubusercontent.com/4085817/67011976-7bb43f80-f0e8-11e9-93fd-052ede190e34.png)
+
 ### Viewing AMP Pages
 
 When running frontend locally, the AMP version of pages can be viewed by adding the `?amp` querystring to the end of the URL. For example:
