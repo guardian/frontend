@@ -12,9 +12,10 @@ import play.api.data.validation.Constraints
 import play.api.http.HttpConfiguration
 import play.api.i18n.{Messages, MessagesProvider}
 import play.api.mvc._
-import services.{IdRequestParser, IdentityUrlBuilder, PlaySigninService, ReturnUrlVerifier}
+import services._
 import utils.SafeLogging
 import pages.IdentityHtmlPage
+
 import scala.concurrent.Future
 
 class ReauthenticationController(
@@ -24,6 +25,7 @@ class ReauthenticationController(
     idUrlBuilder: IdentityUrlBuilder,
     authenticatedActions: AuthenticatedActions,
     signInService : PlaySigninService,
+    identityCookieService: IdentityCookieService,
     val controllerComponents: ControllerComponents,
     val httpConfiguration: HttpConfiguration)
     (implicit context: ApplicationContext)
@@ -125,14 +127,13 @@ class ReauthenticationController(
     def onSuccess(password: String): Future[Result] = {
         logger.trace("reauthenticating with ID API")
 
-        // Previously derived from the data within the GU_U cookie.
-        // However, the functionality of verifying the GU_U cookie
-        // and decoding data from within it has been deprecated
-        // (with the change to authentication in identity).
-        // Instead determine whether the cookie should be a session cookie
-        // by looking at whether the current SC_GU_U is a session cookie.
-        // From the Play docs: if maxAge is `None` then the cookie is transient.
-        val persistent = request.cookies.get("SC_GU_U").fold(false)(_.maxAge.isDefined)
+        val persistent = request.user.auth match {
+          case _: ScGuU =>
+            request.cookies.get("GU_U").fold(false) { guUCookie =>
+              !identityCookieService.isSession(request.user.id, guUCookie.value)
+            }
+          case _ => false
+        }
 
         val auth = EmailPassword(request.user.primaryEmailAddress, password, idRequest.clientIp)
         val authResponse = api.authBrowser(auth, idRequest.trackingData, Some(persistent))

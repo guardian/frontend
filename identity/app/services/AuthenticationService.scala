@@ -15,6 +15,9 @@ class IdentityCookieService {
   def hasAuthenticatedWithin(duration: Duration, identityId: String, scGuLaCookie: String): Boolean = ???
 
   def getUserDataForGuRp(cookie: String): Option[User] = ???
+
+  // TODO: better name !?
+  def isSession(identityId: String, guUCookie: String): Boolean = ???
 }
 
 object AuthenticatedUser {
