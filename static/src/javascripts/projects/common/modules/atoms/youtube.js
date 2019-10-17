@@ -37,6 +37,9 @@ interface AtomPlayer {
     youtubePlayer: YoutubePlayer;
     pendingTrackingCalls: Array<number>;
     paused: boolean;
+    // Media that has ended is neither playing nor paused. For the Ophan
+    // attention time metric we only care if it is playing or not.
+    playing: boolean;
     overlay?: HTMLElement;
     endSlate?: Component;
     duration?: number;
@@ -126,7 +129,7 @@ const handlePlay = (uniqueAtomId: string, player: AtomPlayer): void => {
 
     killProgressTracker(uniqueAtomId);
     setProgressTracker(uniqueAtomId);
-
+    player.playing = true;
     // don't track play if resumed from a paused state
     if (paused) {
         player.paused = false;
@@ -214,6 +217,7 @@ const onPlayerPlaying = (uniqueAtomId: string): void => {
 const onPlayerPaused = (atomId: string): void => {
     const player = players[atomId];
 
+    player.playing = false;
     player.paused = true;
 
     killProgressTracker(atomId);
@@ -222,6 +226,7 @@ const onPlayerPaused = (atomId: string): void => {
 const onPlayerEnded = (atomId: string): void => {
     const player = players[atomId];
 
+    player.playing = false;
     killProgressTracker(atomId);
 
     trackYoutubeEvent('end', player.atomId);
@@ -340,6 +345,7 @@ const onPlayerReady = (
         duration,
         youtubePlayer,
         paused: false,
+        playing: false,
         pendingTrackingCalls: [25, 50, 75],
     };
 
@@ -375,6 +381,22 @@ const onPlayerReady = (
     }
 };
 
+const isAnyPlayerPlaying = (): boolean =>
+    Object.keys(players)
+        .map(key => players[key])
+        .filter((p: AtomPlayer): boolean => p.playing).length > 0;
+
+const triggerVideoStateEvent = (isPlaying: boolean): void => {
+    if (isPlaying) {
+        const videoPlaying = new Event('videoPlaying');
+        document.dispatchEvent(videoPlaying);
+    } else {
+        // Use videoEnded until tracker-js updated to videoStopped.
+        const videoStopped = new Event('videoEnded');
+        document.dispatchEvent(videoStopped);
+    }
+};
+
 const onPlayerStateChange = (
     atomId: string,
     event: YoutubePlayerEvent
@@ -387,6 +409,7 @@ const onPlayerStateChange = (
 
     if (stateKey) {
         STATES[stateKey](atomId);
+        triggerVideoStateEvent(isAnyPlayerPlaying());
     }
 };
 
