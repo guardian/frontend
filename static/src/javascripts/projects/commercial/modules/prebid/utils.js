@@ -5,7 +5,6 @@ import { getBreakpoint, isBreakpoint } from 'lib/detect';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
 import config from 'lib/config';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
-import { prebidTripleLiftAdapter } from 'common/modules/experiments/tests/prebid-triple-lift-adapter';
 import { appnexusUSAdapter } from 'common/modules/experiments/tests/commercial-appnexus-us-adapter';
 import { pangaeaAdapterTest } from 'common/modules/experiments/tests/commercial-pangaea-adapter';
 import type { PrebidSize } from './types';
@@ -119,8 +118,7 @@ export const shouldIncludeTrustX = (): boolean => isInUsRegion();
 export const shouldIncludePangaea = (): boolean =>
     isInVariantSynchronous(pangaeaAdapterTest, 'variant');
 
-export const shouldIncludeTripleLift = (): boolean =>
-    isInVariantSynchronous(prebidTripleLiftAdapter, 'variant');
+export const shouldIncludeTripleLift = (): boolean => isInUsRegion();
 
 export const shouldIncludeAdYouLike = (slotSizes: PrebidSize[]): boolean =>
     containsMpu(slotSizes);
