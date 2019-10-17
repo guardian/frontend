@@ -1,5 +1,6 @@
 package services
 
+import com.gu.identity.play.IdentityPlayAuthService
 import com.softwaremill.macwire._
 import conf.IdentityConfigurationComponents
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
@@ -22,6 +23,8 @@ trait IdentityServices extends IdentityConfigurationComponents with IdApiCompone
   lazy val idRequestParser = wire[IdRequestParser]
   lazy val identityUrlBuilder = wire[IdentityUrlBuilder]
   lazy val playSigninService = wire[PlaySigninService]
+  lazy val identityAuthService: IdentityPlayAuthService = ???
+  lazy val identityCookieService: IdentityCookieService = ???
   lazy val authenticationService = wire[AuthenticationService]
   lazy val torNodeLoggingIdRequestParser = wire[TorNodeLoggingIdRequestParser]
   lazy val emailService = wire[NewsletterService]
