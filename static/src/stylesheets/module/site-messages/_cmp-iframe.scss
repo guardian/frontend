@@ -21,7 +21,7 @@
 
     &.cmp-animate {
         @include mq(mobileLandscape) {
-            background-color: rgba(#000000, .5);
+            background-color: rgba(#000000, .7);
         }
     }
 }
@@ -54,12 +54,4 @@
     height: 100%;
     width: 100%;
     border: 0;
-}
-
-// Prevent body scrolling behind overlay
-body.no-scroll {
-    overflow: hidden;
-    position: fixed;
-    left: 0;
-    right: 0;
 }

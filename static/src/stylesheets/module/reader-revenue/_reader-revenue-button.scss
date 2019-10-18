@@ -19,6 +19,7 @@ $gu-cta-height: 42px;
     transition: $gu-transition;
     justify-content: space-between;
     position: relative;
+    white-space: nowrap;
 
     &:hover, &:focus {
         outline: 0;

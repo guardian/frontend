@@ -431,16 +431,6 @@ trait PrebidSwitches {
     exposeClientSide = true
   )
 
-  val prebidAppNexusUKROW: Switch = Switch(
-    group = CommercialPrebid,
-    name = "prebid-appnexus-uk-row",
-    description = "Include AppNexus adapter in Prebid auctions in UK/ROW",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
   val prebidAppNexusInvcode: Switch = Switch(
     group = CommercialPrebid,
     name = "prebid-appnexus-invcode",
@@ -587,7 +577,7 @@ trait PrebidSwitches {
     description = "YouTube's PfP ad targeting parameters",
     owners = group(Commercial),
     safeState = Off,
-    sellByDate = new LocalDate(2019, 10, 16),
+    sellByDate = new LocalDate(2019, 12, 16),
     exposeClientSide = true
   )
 

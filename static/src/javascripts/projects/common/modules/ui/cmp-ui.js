@@ -1,6 +1,6 @@
 // @flow
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
-import { commercialIabCompliant } from 'common/modules/experiments/tests/commercial-iab-compliant';
+import { commercialCmpUiIab } from 'common/modules/experiments/tests/commercial-cmp-ui-iab';
 import { cmpConfig, cmpUi } from '@guardian/consent-management-platform';
 import fastdom from 'lib/fastdom-promise';
 import reportError from 'lib/report-error';
@@ -26,12 +26,6 @@ const animateCmp = (): Promise<void> =>
             fastdom.write(() => {
                 if (overlay && overlay.parentNode) {
                     overlay.classList.add(CMP_ANIMATE_CLASS);
-
-                    // disable scrolling on body beneath overlay
-                    if (document.body) {
-                        document.body.classList.add('no-scroll');
-                    }
-
                     resolve();
                 }
             });
@@ -69,11 +63,6 @@ const onCloseCmp = (): Promise<void> =>
     fastdom
         .write(() => {
             if (overlay && overlay.parentNode) {
-                // enable scrolling on body beneath overlay
-                if (document.body) {
-                    document.body.classList.remove('no-scroll');
-                }
-
                 overlay.classList.remove(CMP_ANIMATE_CLASS);
             }
         })
@@ -97,9 +86,39 @@ const prepareUi = (): void => {
     overlay = document.createElement('div');
     overlay.className = OVERLAY_CLASS;
 
-    overlay.innerHTML = `<div class="${CONTAINER_CLASS}"><iframe src="${
-        cmpConfig.CMP_URL
-    }" class="${IFRAME_CLASS}" tabIndex="1"></iframe></div>`;
+    const container: HTMLElement = document.createElement('div');
+    container.className = CONTAINER_CLASS;
+
+    /**
+     * We found a bug where scrolling was
+     * sometimes not picked up on the iframe once it had animated in.
+     * Only forcing a reflow would correct this, so now when
+     * on the container transitionend we force a reflow.
+     */
+    container.addEventListener('transitionend', () => {
+        fastdom.write(() => {
+            if (overlay && overlay.parentNode) {
+                overlay.style.width = '100%';
+            }
+        });
+    });
+
+    overlay.appendChild(container);
+
+    const iframe: HTMLIFrameElement = document.createElement('iframe');
+
+    iframe.className = IFRAME_CLASS;
+    iframe.src = cmpConfig.CMP_URL;
+    iframe.tabIndex = 1;
+    iframe.addEventListener(
+        'touchmove',
+        (evt: Event) => {
+            evt.preventDefault();
+        },
+        false
+    );
+
+    container.appendChild(iframe);
 
     cmpUi.setupMessageHandlers(onReadyCmp, onCloseCmp, onErrorCmp);
 
@@ -123,7 +142,7 @@ const handlePrivacySettingsClick = (evt: Event): void => {
 };
 
 export const addPrivacySettingsLink = (): void => {
-    if (!isInVariantSynchronous(commercialIabCompliant, 'variant')) {
+    if (!isInVariantSynchronous(commercialCmpUiIab, 'variant')) {
         return;
     }
 
@@ -163,7 +182,7 @@ export const addPrivacySettingsLink = (): void => {
 export const consentManagementPlatformUi = {
     id: 'cmpUi',
     canShow: (): Promise<boolean> => {
-        if (isInVariantSynchronous(commercialIabCompliant, 'variant')) {
+        if (isInVariantSynchronous(commercialCmpUiIab, 'variant')) {
             return Promise.resolve(cmpUi.canShow());
         }
 

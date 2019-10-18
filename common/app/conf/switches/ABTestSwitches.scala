@@ -8,11 +8,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-commercial-iab-compliant",
-    "Test the IAB compliant version of our CMP",
-    owners = Seq(Owner.withGithub("ripecosta")),
+    "ab-commercial-cmp-ui-iab",
+    "Test whether our new CMP UI obtains target consent rates",
+    owners = Seq(Owner.withGithub("ghaberis")),
     safeState = Off,
-    sellByDate = new LocalDate(2019, 10, 30),
+    sellByDate = new LocalDate(2019, 12, 3),
     exposeClientSide = true
   )
 
@@ -30,6 +30,26 @@ trait ABTestSwitches {
     ABTests,
     "ab-contributions-epic-articles-viewed-month",
     "States how many articles a user has viewed in the epic in a month",
+    owners = Seq(Owner.withGithub("tomrf1")),
+    safeState = Off,
+    sellByDate = new LocalDate(2020, 1, 27),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-contributions-epic-articles-viewed-month-moment-variant",
+    "Moment epic which also states how many articles a user has viewed",
+    owners = Seq(Owner.withGithub("tomrf1")),
+    safeState = Off,
+    sellByDate = new LocalDate(2020, 1, 27),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-contributions-epic-articles-viewed-month-moment-60-days",
+    "Moment epic which also states how many articles a user has viewed",
     owners = Seq(Owner.withGithub("tomrf1")),
     safeState = Off,
     sellByDate = new LocalDate(2020, 1, 27),
@@ -102,7 +122,7 @@ trait ABTestSwitches {
     "Test the impact of serving prebid ads in safeframes",
     owners = Seq(Owner.withGithub("jeteve")),
     safeState = Off,
-    sellByDate = new LocalDate(2019, 10, 18),
+    sellByDate = new LocalDate(2019, 11, 18),
     exposeClientSide = true
   )
 
@@ -113,16 +133,6 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("frankie297")),
     safeState = Off,
     sellByDate = new LocalDate(2020, 4, 22),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-commercial-prebid-triple-lift-adapter",
-    "Test the triple lift adapter in prebid",
-    owners = Seq(Owner.withGithub("ioanna0")),
-    safeState = On,
-    sellByDate = new LocalDate(2020, 7, 30),
     exposeClientSide = true
   )
 
@@ -140,6 +150,16 @@ trait ABTestSwitches {
     ABTests,
     "ab-commercial-pangaea-adapter",
     "Test adding pangaea in prebid in US & AU regions",
+    owners = Seq(Owner.withGithub("ioanna0")),
+    safeState = On,
+    sellByDate = new LocalDate(2020, 7, 30),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-commercial-appnexus-us-adapter",
+    "Test new us placement id for appnexus in US",
     owners = Seq(Owner.withGithub("ioanna0")),
     safeState = On,
     sellByDate = new LocalDate(2020, 7, 30),
