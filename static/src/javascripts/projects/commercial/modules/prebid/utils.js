@@ -2,13 +2,15 @@
 
 import once from 'lodash/once';
 import { getBreakpoint, isBreakpoint } from 'lib/detect';
-import { pbTestNameMap } from 'lib/url';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
 import config from 'lib/config';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
-import { prebidTripleLiftAdapter } from 'common/modules/experiments/tests/prebid-triple-lift-adapter';
+import { appnexusUSAdapter } from 'common/modules/experiments/tests/commercial-appnexus-us-adapter';
 import { pangaeaAdapterTest } from 'common/modules/experiments/tests/commercial-pangaea-adapter';
 import type { PrebidSize } from './types';
+
+const isInAppnexusUSAdapterTestVariant = (): boolean =>
+    isInVariantSynchronous(appnexusUSAdapter, 'variant');
 
 const stripSuffix = (s: string, suffix: string): string => {
     const re = new RegExp(`${suffix}$`);
@@ -116,8 +118,7 @@ export const shouldIncludeTrustX = (): boolean => isInUsRegion();
 export const shouldIncludePangaea = (): boolean =>
     isInVariantSynchronous(pangaeaAdapterTest, 'variant');
 
-export const shouldIncludeTripleLift = (): boolean =>
-    isInVariantSynchronous(prebidTripleLiftAdapter, 'variant');
+export const shouldIncludeTripleLift = (): boolean => isInUsRegion();
 
 export const shouldIncludeAdYouLike = (slotSizes: PrebidSize[]): boolean =>
     containsMpu(slotSizes);
@@ -130,9 +131,7 @@ export const shouldUseOzoneAdaptor = (): boolean =>
     !isInUsRegion() && !isInAuRegion() && config.get('switches.prebidOzone');
 
 export const shouldIncludeAppNexus = (): boolean =>
-    isInAuRegion() ||
-    ((config.get('switches.prebidAppnexusUkRow') && !isInUsRegion()) ||
-        !!pbTestNameMap().and);
+    isInAppnexusUSAdapterTestVariant() || !isInUsRegion();
 
 export const shouldIncludeXaxis = (): boolean =>
     // 10% of UK page views
@@ -147,7 +146,7 @@ export const shouldIncludeMobileSticky = once(
         window.location.hash.indexOf('#mobile-sticky') !== -1 ||
         (config.get('switches.mobileStickyLeaderboard') &&
             isBreakpoint({ min: 'mobile', max: 'mobileLandscape' }) &&
-            isInUsRegion() &&
+            (isInUsRegion() || isInAuRegion()) &&
             config.get('page.contentType') === 'Article')
 );
 

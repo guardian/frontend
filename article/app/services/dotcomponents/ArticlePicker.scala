@@ -75,6 +75,8 @@ object ArticlePageChecks {
 
   def isNotPaidContent(page: PageWithStoryPackage): Boolean = ! page.article.tags.isPaidContent
 
+  def mainMediaIsNotShowcase(page: PageWithStoryPackage): Boolean = ! page.article.elements.mainPicture.flatMap(_.images.masterImage.flatMap(_.role)).contains("showcase")
+
   def isNewsTone(page: PageWithStoryPackage): Boolean = {
     page.article.tags.tones.headOption.exists(_.id == "tone/news") || page.article.tags.tones.isEmpty
   }
@@ -109,6 +111,7 @@ object ArticlePicker {
       ("isNotPaidContent", ArticlePageChecks.isNotPaidContent(page)),
       ("isNewsTone", ArticlePageChecks.isNewsTone(page)),
       ("isNotBlackListed", ArticlePageChecks.isNotBlackListed(page)),
+      ("mainMediaIsNotShowcase", ArticlePageChecks.mainMediaIsNotShowcase(page))
     )
   }
 

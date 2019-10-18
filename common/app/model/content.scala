@@ -330,7 +330,7 @@ final case class Content(
   }
 
   val opengraphProperties: Map[String, String] = Map(
-    "og:title" -> metadata.webTitle,
+    "og:title" -> StripHtmlTagsAndUnescapeEntities(metadata.webTitle),
     "og:description" -> fields.trailText.map(StripHtmlTagsAndUnescapeEntities(_)).getOrElse(""),
     "og:image" -> openGraphImage
   ) ++ openGraphImageWidth.map("og:image:width" -> _.toString).toMap ++

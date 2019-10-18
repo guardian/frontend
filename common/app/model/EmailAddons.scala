@@ -377,6 +377,11 @@ case object WordOfMouth extends FrontEmailMetadata {
   override val banner = Some("word-of-mouth.png")
 }
 
+case object SavedForLater extends FrontEmailMetadata {
+  val name = "Saved For Later"
+  override val banner = Some("saved-for-later.png")
+}
+
 object EmailAddons {
   val unsubscribePlaceholder = "%%unsub_center_url%%"
 
@@ -449,7 +454,8 @@ object EmailAddons {
     SportAu,
     FirstDogOnTheMoon,
     GreenLight,
-    WordOfMouth
+    WordOfMouth,
+    SavedForLater
   )
 
   implicit class EmailContentType(p: Page) {

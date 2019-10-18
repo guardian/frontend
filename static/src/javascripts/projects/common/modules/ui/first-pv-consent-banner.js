@@ -13,7 +13,7 @@ import { upAlertViewCount } from 'common/modules/analytics/send-privacy-prefs';
 import type { AdConsent } from 'common/modules/commercial/ad-prefs.lib';
 import type { Banner } from 'common/modules/ui/bannerPicker';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
-import { commercialIabCompliant } from 'common/modules/experiments/tests/commercial-iab-compliant';
+import { commercialCmpUiIab } from 'common/modules/experiments/tests/commercial-cmp-ui-iab';
 
 type Template = {
     heading: string,
@@ -105,7 +105,7 @@ const canShow = (): Promise<boolean> =>
     Promise.resolve(
         hasUnsetAdChoices() &&
             !hasUserAcknowledgedBanner(messageCode) &&
-            !isInVariantSynchronous(commercialIabCompliant, 'variant')
+            !isInVariantSynchronous(commercialCmpUiIab, 'variant')
     );
 
 const track = (): void => {
