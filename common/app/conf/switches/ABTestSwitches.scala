@@ -48,7 +48,7 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-epic-articles-viewed-month-moment-60-days",
+    "ab-contributions-epic-articles-viewed-month-moment-60-days-variant",
     "Moment epic which also states how many articles a user has viewed",
     owners = Seq(Owner.withGithub("tomrf1")),
     safeState = Off,

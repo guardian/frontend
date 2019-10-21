@@ -4,7 +4,7 @@ import { commercialCmpUiIab } from 'common/modules/experiments/tests/commercial-
 import { askFourEarning } from 'common/modules/experiments/tests/contributions-epic-ask-four-earning';
 import { articlesViewed } from 'common/modules/experiments/tests/contributions-epic-articles-viewed';
 import { articlesViewedMoment } from 'common/modules/experiments/tests/contributions-epic-articles-viewed-moment-position';
-import { articlesViewedMoment60Days } from 'common/modules/experiments/tests/contributions-epic-articles-viewed-moment-60-days';
+import { articlesViewedMoment60DaysVariant } from 'common/modules/experiments/tests/contributions-epic-articles-viewed-moment-60-days';
 import { countryName } from 'common/modules/experiments/tests/contributions-epic-country-name';
 import { acquisitionsEpicAlwaysAskIfTagged } from 'common/modules/experiments/tests/acquisitions-epic-always-ask-if-tagged';
 import { adblockTest } from 'common/modules/experiments/tests/adblock-ask';
@@ -29,7 +29,7 @@ export const concurrentTests: $ReadOnlyArray<ABTest> = [
 
 export const epicTests: $ReadOnlyArray<EpicABTest> = [
     articlesViewedMoment,
-    articlesViewedMoment60Days,
+    articlesViewedMoment60DaysVariant,
     articlesViewed,
     learnMore,
     countryName,
