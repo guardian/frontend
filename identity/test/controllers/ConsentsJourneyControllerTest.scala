@@ -47,7 +47,7 @@ import scala.concurrent.Future
 
     val userId: String = "123"
     val user = User("test@example.com", userId, statusFields = StatusFields(userEmailValidated = Some(true)))
-    val testAuth = ScGuU("abc", GuUCookieData(user, 0, None))
+    val testAuth = ScGuU("abc")
     val authenticatedUser = AuthenticatedUser(user, testAuth, true)
     val phoneNumbers = PhoneNumbers
 
@@ -127,7 +127,7 @@ import scala.concurrent.Future
 
       "not show an alert modal for rp'd users" in new ConsentsJourneyFixture {
         override val user = User("test@example.com", userId, statusFields = StatusFields(userEmailValidated = Some(true), hasRepermissioned = Some(true)))
-        override val testAuth = ScGuU("abc", GuUCookieData(user, 0, None))
+        override val testAuth = ScGuU("abc")
         override val authenticatedUser = AuthenticatedUser(user, testAuth, true)
         when(authService.fullyAuthenticatedUser(MockitoMatchers.any[RequestHeader])) thenReturn Some(authenticatedUser)
         when(api.me(testAuth)) thenReturn Future.successful(Right(user))

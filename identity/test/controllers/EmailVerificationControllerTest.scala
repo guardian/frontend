@@ -42,7 +42,7 @@ class EmailVerificationControllerTest extends path.FreeSpec
 
   val userId: String = "123"
   val user = User("test@example.com", userId, statusFields = StatusFields(userEmailValidated = Some(true)))
-  val testAuth = ScGuU("abc", GuUCookieData(user, 0, None))
+  val testAuth = ScGuU("abc")
   val authenticatedUser = AuthenticatedUser(user, testAuth, true)
   val phoneNumbers = PhoneNumbers
 

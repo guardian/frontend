@@ -44,7 +44,7 @@ class FormstackControllerTest extends path.FreeSpec
   val user = User("test@example.com", userId)
   val authenticatedActions = new AuthenticatedActions(authService, mock[IdApiClient], mock[IdentityUrlBuilder], controllerComponents, newsletterService, requestParser)
 
-  when(authService.fullyAuthenticatedUser(MockitoMatchers.any[RequestHeader])) thenReturn Some(AuthenticatedUser(user, ScGuU("abc", GuUCookieData(user, 0, None))))
+  when(authService.fullyAuthenticatedUser(MockitoMatchers.any[RequestHeader])) thenReturn Some(AuthenticatedUser(user, ScGuU("abc")))
 
   when(requestParser.apply(MockitoMatchers.any[RequestHeader])) thenReturn idRequest
   when(idRequest.trackingData) thenReturn trackingData
