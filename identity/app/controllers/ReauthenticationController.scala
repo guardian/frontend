@@ -1,6 +1,7 @@
 package controllers
 
 import actions.AuthenticatedActions
+import com.gu.identity.cookie.IdentityCookieService
 import common.ImplicitControllerExecutionContext
 import form.Mappings
 import idapiclient.{EmailPassword, IdApiClient, Response, ScGuU}
@@ -130,7 +131,7 @@ class ReauthenticationController(
         val persistent = request.user.auth match {
           case _: ScGuU =>
             request.cookies.get("GU_U").fold(false) { guUCookie =>
-              !identityCookieService.isSession(request.user.id, guUCookie.value)
+              identityCookieService.isGUUCookiePersistent(guUCookie.value)
             }
           case _ => false
         }

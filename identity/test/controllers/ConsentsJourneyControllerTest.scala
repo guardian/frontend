@@ -15,12 +15,11 @@ import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.mockito.MockitoSugar
 import org.scalatest._
 import org.scalatestplus.play.ConfiguredServer
-import play.api.http.HttpConfiguration
-import play.api.mvc._
-import play.api.test.Helpers._
+import _root_.play.api.http.HttpConfiguration
+import _root_.play.api.mvc._
+import _root_.play.api.test.Helpers._
 import services._
 import test._
-
 
 import scala.concurrent.Future
 

@@ -122,7 +122,7 @@ val faciaPress = application("facia-press").dependsOn(commonWithTests).settings(
 val identity = application("identity").dependsOn(commonWithTests).aggregate(common).settings(
   libraryDependencies ++= Seq(
     filters,
-    "com.gu.identity" %% "identity-auth-play" % "3.187-SNAPSHOT",
+    identityAuthPlay,
     liftJson,
     slf4jExt,
     libPhoneNumber,
