@@ -129,9 +129,10 @@
     }
 }
 
-@freeTextWithImage(card: ContentCard) = {
+@freeTextWithImage(card: ContentCard, collectionName: String) = {
     @faciaCard(classesForCard(card)) {
-        @row(Seq("no-pad")){@imgFromCard(card)}
+@*        here we override the alt text as 'headline' (normal alt text) may contain HTML*@
+        @row(Seq("no-pad")){@imgFromCard(card,altTextOverride = Some(collectionName))}
         @row(Seq("free-text"))(Html(card.header.headline))
     }
 }
@@ -140,14 +141,14 @@
     @fullRow(Seq("free-text"))(Html(text))
 }
 
-@renderCard(card: ContentCard, cardStyle: EmailCardStyle, isBranded: Boolean) = {
+@renderCard(card: ContentCard, cardStyle: EmailCardStyle, isBranded: Boolean, collectionName: String) = {
     @cardStyle match {
         case EmailHidden => { }
         case EmailFreeText if card.displayElement.isEmpty => {
             @freeText(card.header.headline)
         }
         case EmailFreeText => {
-            @freeTextWithImage(card)
+            @freeTextWithImage(card, collectionName)
         }
         case layoutStyle: EmailFaciaCard => {
             @card.cardStyle match {
@@ -205,9 +206,9 @@
 
     @collection.cards.zipWithIndex.map { case (card, cardIndex) =>
         @if(cardIndex == 0) {
-            @renderCard(card, EmailLayouts.layoutByName(collection.collectionType).firstCard, collection.branding.isDefined)
+            @renderCard(card, EmailLayouts.layoutByName(collection.collectionType).firstCard, collection.branding.isDefined, collection.displayName)
         } else {
-            @renderCard(card, EmailLayouts.layoutByName(collection.collectionType).otherCards, collection.branding.isDefined)
+            @renderCard(card, EmailLayouts.layoutByName(collection.collectionType).otherCards, collection.branding.isDefined, collection.displayName)
         }
     }
 }
