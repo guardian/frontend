@@ -108,7 +108,8 @@ trait FaciaTestData extends ModelHelper {
         showDateHeader = false,
         showLatestUpdate = false,
         config = CollectionConfig.empty,
-        hasMore = false
+        hasMore = false,
+        targetedTerritory = None
       )
     )
   )
@@ -136,7 +137,8 @@ trait FaciaTestData extends ModelHelper {
         showDateHeader = false,
         showLatestUpdate = false,
         config = CollectionConfig.empty,
-        hasMore = false
+        hasMore = false,
+        targetedTerritory = None
       )
     )
   )
@@ -164,7 +166,8 @@ trait FaciaTestData extends ModelHelper {
         showDateHeader = false,
         showLatestUpdate = false,
         config = CollectionConfig.empty,
-        hasMore = false
+        hasMore = false,
+        targetedTerritory = None
       )
     )
   )
@@ -192,7 +195,8 @@ trait FaciaTestData extends ModelHelper {
         showDateHeader = false,
         showLatestUpdate = false,
         config = CollectionConfig.empty,
-        hasMore = false
+        hasMore = false,
+        targetedTerritory = None
       )
     )
   )
@@ -220,7 +224,8 @@ trait FaciaTestData extends ModelHelper {
         showDateHeader = false,
         showLatestUpdate = false,
         config = CollectionConfig.empty,
-        hasMore = false
+        hasMore = false,
+        targetedTerritory = None
       )
     )
   )
@@ -248,7 +253,8 @@ trait FaciaTestData extends ModelHelper {
         showDateHeader = false,
         showLatestUpdate = false,
         config = CollectionConfig.empty,
-        hasMore = false
+        hasMore = false,
+        targetedTerritory = None
       )
     )
   )

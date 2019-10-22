@@ -1,5 +1,6 @@
 package implicits
 
+import com.gu.facia.client.models.{EU27Territory, NZTerritory, TargetedTerritory, USEastCoastTerritory}
 import conf.Configuration
 import play.api.mvc.RequestHeader
 
@@ -8,6 +9,7 @@ case object HtmlFormat extends RequestFormat
 case object JsonFormat extends RequestFormat
 case object EmailFormat extends RequestFormat
 case object AmpFormat extends RequestFormat
+case class TerritoryHeader(territory: TargetedTerritory, headerString: String)
 
 trait Requests {
 
@@ -15,6 +17,10 @@ trait Requests {
   val HEADLINE_SUFFIX = "/headline.txt"
   val EMAIL_JSON_SUFFIX = ".emailjson"
   val EMAIL_TXT_SUFFIX = ".emailtxt"
+  val territoryHeaders: List[TerritoryHeader] = List(
+    TerritoryHeader(EU27Territory, "EU-27"),
+    TerritoryHeader(NZTerritory, "NZ"),
+    TerritoryHeader(USEastCoastTerritory, "US-East"))
 
   implicit class RichRequestHeader(r: RequestHeader) {
 
@@ -67,8 +73,11 @@ trait Requests {
 
     lazy val referrer: Option[String] = r.headers.get("referer")
 
-    lazy val isEU27: Boolean = r.headers.get("X-GU-GeoRegion").contains("EU-27")
-    lazy val isNewZealand: Boolean = r.headers.get("X-GU-GeoRegion").contains("NZ")
+    lazy val territories: List[TargetedTerritory] = r.headers.get("X-GU-GeoRegion").map { r =>
+      territoryHeaders.filter(th => th.headerString == r).map(_.territory)
+    }.getOrElse(List())
+    println("terr", territories)
+
 
     // dotcom-rendering (DCR) parameters
     lazy val forceDCROff: Boolean = r.getQueryString("dcr").contains("false")

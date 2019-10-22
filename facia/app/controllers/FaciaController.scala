@@ -2,6 +2,7 @@ package controllers
 
 import common._
 import _root_.html.{BrazeEmailFormatter, HtmlTextExtractor}
+import com.gu.facia.client.models.TargetedTerritory
 import controllers.front._
 import layout.{CollectionEssentials, ContentCard, FaciaCard, FaciaCardAndIndex, FaciaContainer, Front}
 import model.Cached.{CacheableResult, RevalidatableResult, WithoutRevalidationResult}
@@ -120,19 +121,17 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
 
   private def nonHtmlEmail(request: RequestHeader) = (request.isEmail && request.isHeadlineText) || request.isEmailJson || request.isEmailTxt
 
-  def filterCollections(faciaPage: PressedPage, id: String): PressedPage = {
-    faciaPage.copy(collections = faciaPage.collections.filter(c => c.id != id))
+  // remove all collections with a targeted territory that is not allowed
+  def filterCollections(faciaPage: PressedPage, allowedTerritories: List[TargetedTerritory]): PressedPage = {
+    faciaPage.copy(collections = faciaPage.collections.filter{c =>
+      c.targetedTerritory.forall(t => allowedTerritories.contains(t))
+    })
   }
 
-  private def removeSpecialRegionContainers(path: String, faciaPage: PressedPage, isEU27: Boolean, isNewZealand: Boolean): PressedPage = {
+  private def removeSpecialRegionContainers(path: String, faciaPage: PressedPage, allowedContainerTerritories: List[TargetedTerritory]): PressedPage = {
+    // right now we only have special region containers on the international front so exit early otherwise
     if (path == "international") {
-      val euFiltered = if (!isEU27) {
-        filterCollections(faciaPage, "22167321-f8cf-4f4a-b646-165e5b1e9a30")
-      } else faciaPage
-      val nzFiltered = if (!isNewZealand) {
-        filterCollections(euFiltered, "22167321-f8cf-4f4a-b646-165e5e9a30")
-      } else euFiltered
-      nzFiltered
+      filterCollections(faciaPage, allowedContainerTerritories)
     } else faciaPage
   }
 
@@ -140,7 +139,7 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
   private[controllers] def renderFrontPressResult(path: String)(implicit request: RequestHeader) = {
     val futureFaciaPage: Future[Option[PressedPage]] = frontJsonFapi.get(path, liteRequestType).flatMap {
         case Some(faciaPage: PressedPage) =>
-          val pageWithRegionalContainersRemoved = removeSpecialRegionContainers(path, faciaPage, request.isEU27, request.isNewZealand)
+          val pageWithRegionalContainersRemoved = removeSpecialRegionContainers(path, faciaPage, request.territories)
           if (conf.Configuration.environment.stage == "CODE") {
             logInfoWithCustomFields(s"Rendering front $path, frontjson: ${Json.stringify(Json.toJson(faciaPage)(pressedPageFormat))}", List())
           }

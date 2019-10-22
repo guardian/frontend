@@ -27,7 +27,8 @@ object FixtureBuilder {
       showDateHeader = false,
       showLatestUpdate = false,
       config = CollectionConfig.empty.copy(displayHints = maxItemsToDisplay.map(m => DisplayHints(Some(m)))),
-      hasMore = false
+      hasMore = false,
+      targetedTerritory = None
     )
   }
 
