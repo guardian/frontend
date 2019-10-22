@@ -3,12 +3,12 @@ import { commercialPrebidSafeframe } from 'common/modules/experiments/tests/comm
 import { commercialCmpUiIab } from 'common/modules/experiments/tests/commercial-cmp-ui-iab';
 import { askFourEarning } from 'common/modules/experiments/tests/contributions-epic-ask-four-earning';
 import { articlesViewed } from 'common/modules/experiments/tests/contributions-epic-articles-viewed';
-import { articlesViewedMoment } from 'common/modules/experiments/tests/contributions-epic-articles-viewed-moment';
+import { articlesViewedMoment } from 'common/modules/experiments/tests/contributions-epic-articles-viewed-moment-position';
+import { articlesViewedMoment60DaysVariant } from 'common/modules/experiments/tests/contributions-epic-articles-viewed-moment-60-days';
 import { countryName } from 'common/modules/experiments/tests/contributions-epic-country-name';
 import { acquisitionsEpicAlwaysAskIfTagged } from 'common/modules/experiments/tests/acquisitions-epic-always-ask-if-tagged';
 import { adblockTest } from 'common/modules/experiments/tests/adblock-ask';
 import { articlesViewedBanner } from 'common/modules/experiments/tests/contribs-banner-articles-viewed';
-import { prebidTripleLiftAdapter } from 'common/modules/experiments/tests/prebid-triple-lift-adapter';
 import { learnMore } from 'common/modules/experiments/tests/contributions-epic-learn-more-cta';
 import {
     environmentMomentBannerNonSupporters,
@@ -22,7 +22,6 @@ export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialPrebidSafeframe,
     commercialCmpUiIab,
     adblockTest,
-    prebidTripleLiftAdapter,
     xaxisAdapterTest,
     appnexusUSAdapter,
     pangaeaAdapterTest,
@@ -30,6 +29,7 @@ export const concurrentTests: $ReadOnlyArray<ABTest> = [
 
 export const epicTests: $ReadOnlyArray<EpicABTest> = [
     articlesViewedMoment,
+    articlesViewedMoment60DaysVariant,
     articlesViewed,
     learnMore,
     countryName,
