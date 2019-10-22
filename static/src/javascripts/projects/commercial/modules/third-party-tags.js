@@ -104,6 +104,6 @@ export const _ = {
     insertScripts,
     loadOther,
     reset: () => {
-        scriptsInserted = false;
+        adScriptsInserted = false;
     },
 };
