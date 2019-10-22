@@ -228,14 +228,10 @@ a[href].contributions__learn-more.contributions__learn-more--epic {
 
 .contributions__adblock {
     position: absolute;
-    top: 0;
+    top: 5px;
     padding-top: $gs-baseline/2;
-    width: 100%;
-
-    .contributions__adblock-content {
-        border-top: 5px solid $highlight-main;
-        margin-right: 20px;
-    }
+    width: 94%;
+    background-color: $highlight-main;
 
     .contributions__adblock-header {
         padding-left: 10px;
@@ -244,6 +240,8 @@ a[href].contributions__learn-more.contributions__learn-more--epic {
         h2 {
             @include fs-headline(6);
             font-weight: 700;
+            font-size: 28px;
+            line-height: 30px;
         }
     }
 
@@ -253,10 +251,9 @@ a[href].contributions__learn-more.contributions__learn-more--epic {
     }
 
     .contributions__adblock-button {
-        margin-top: 10px;
-        margin-left: 5px;
-        background-color: $highlight-main;
-        color: $brightness-7 !important;
+        margin: 25px 0 80px 10px;
+        background-color: $brightness-7 !important;
+        color: $brightness-100 !important;
         font-size: 16px;
         line-height: 22px;
         font-family: $f-sans-serif-text;
@@ -285,19 +282,13 @@ a[href].contributions__learn-more.contributions__learn-more--epic {
             flex: 0 0 auto;
             display: block;
         }
+    }
 
-        svg {
-            flex: 0 0 auto;
-            display: block;
-
-            transition: .3s ease-in-out transform;
-            will-change: transform;
-            margin: 0 -5px 0 10px;
-            fill: currentColor;
-            position: relative;
-            width: 21px;
-            height: auto;
-        }
+    .contributions__adblock-image {
+        height: 150px;
+        position: absolute;
+        bottom: 0;
+        right: 0;
     }
 }
 
