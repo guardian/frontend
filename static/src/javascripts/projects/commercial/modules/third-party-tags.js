@@ -13,9 +13,13 @@ import { inizio } from 'commercial/modules/third-party-tags/inizio';
 import { fbPixel } from 'commercial/modules/third-party-tags/facebook-pixel';
 import { init as initPlistaOutbrainRenderer } from 'commercial/modules/third-party-tags/plista-outbrain-renderer';
 import { twitterUwt } from 'commercial/modules/third-party-tags/twitter-uwt';
-import { onIabConsentNotification } from '@guardian/consent-management-platform';
+import {
+    onIabConsentNotification,
+    onGuConsentNotification,
+} from '@guardian/consent-management-platform';
 
-let adScriptsInserted: boolean = false;
+let advertisingScriptsInserted: boolean = false;
+let performanceScriptsInserted: boolean = false;
 
 const addScripts = (services: Array<ThirdPartyTag>): void => {
     const ref = document.scripts[0];
@@ -44,24 +48,29 @@ const addScripts = (services: Array<ThirdPartyTag>): void => {
 };
 
 const insertScripts = (
-    adServices: Array<ThirdPartyTag>,
-    nonAdServices: Array<ThirdPartyTag>
+    advertisingServices: Array<ThirdPartyTag>,
+    performanceServices: Array<ThirdPartyTag>
 ): void => {
-    addScripts(nonAdServices);
+    onGuConsentNotification('performance', state => {
+        if (!performanceScriptsInserted && state) {
+            addScripts(performanceServices);
+            performanceScriptsInserted = true;
+        }
+    });
 
     onIabConsentNotification(state => {
         const consentState =
             state[1] && state[2] && state[3] && state[4] && state[5];
 
-        if (!adScriptsInserted && consentState) {
-            addScripts(adServices);
-            adScriptsInserted = true;
+        if (!advertisingScriptsInserted && consentState) {
+            addScripts(advertisingServices);
+            advertisingScriptsInserted = true;
         }
     });
 };
 
 const loadOther = (): void => {
-    const adServices: Array<ThirdPartyTag> = [
+    const advertisingServices: Array<ThirdPartyTag> = [
         remarketing(),
         simpleReach,
         krux,
@@ -71,12 +80,12 @@ const loadOther = (): void => {
         twitterUwt(),
     ].filter(_ => _.shouldRun);
 
-    const nonAdServices: Array<ThirdPartyTag> = [
+    const performanceServices: Array<ThirdPartyTag> = [
         imrWorldwide,
         imrWorldwideLegacy,
     ].filter(_ => _.shouldRun);
 
-    insertScripts(adServices, nonAdServices);
+    insertScripts(advertisingServices, performanceServices);
 };
 
 const init = (): Promise<boolean> => {
@@ -104,6 +113,7 @@ export const _ = {
     insertScripts,
     loadOther,
     reset: () => {
-        adScriptsInserted = false;
+        advertisingScriptsInserted = false;
+        performanceScriptsInserted = false;
     },
 };
