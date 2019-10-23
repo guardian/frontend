@@ -1,20 +1,15 @@
 // @flow
-import {
-    onIabConsentNotification as onIabConsentNotification_,
-    onGuConsentNotification as onGuConsentNotification_,
-} from '@guardian/consent-management-platform';
+import { onIabConsentNotification as onIabConsentNotification_ } from '@guardian/consent-management-platform';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { init, _ } from './third-party-tags';
 
 const onIabConsentNotification: any = onIabConsentNotification_;
-const onGuConsentNotification: any = onGuConsentNotification_;
 
 const { insertScripts, loadOther } = _;
 
 jest.mock('lib/raven');
 jest.mock('@guardian/consent-management-platform', () => ({
     onIabConsentNotification: jest.fn(),
-    onGuConsentNotification: jest.fn(),
 }));
 
 beforeEach(() => {
@@ -88,17 +83,12 @@ describe('third party tags', () => {
     });
 
     describe('insertScripts', () => {
-        const fakeThirdPartyAdvertisingTag: ThirdPartyTag = {
+        const fakeThirdPartyTag: ThirdPartyTag = {
             shouldRun: true,
-            url: '//fakeThirdPartyAdvertisingTag.js',
+            url: '//fakeThirdPartyTag.js',
             onLoad: jest.fn(),
         };
-        const fakeThirdPartyPerformanceTag: ThirdPartyTag = {
-            shouldRun: true,
-            url: '//fakeThirdPartyPerformanceTag.js',
-            onLoad: jest.fn(),
-        };
-        it('should add scripts to the document', () => {
+        it('should add a script to the document', () => {
             _.reset();
             onIabConsentNotification.mockImplementation(callback =>
                 callback({
@@ -109,34 +99,8 @@ describe('third party tags', () => {
                     '5': true,
                 })
             );
-            onGuConsentNotification.mockImplementation((state, callback) =>
-                callback(true)
-            );
-            insertScripts(
-                [fakeThirdPartyAdvertisingTag],
-                [fakeThirdPartyPerformanceTag]
-            );
-            expect(document.scripts.length).toBe(3);
-        });
-        it('should not add scripts to the document', () => {
-            _.reset();
-            onIabConsentNotification.mockImplementation(callback =>
-                callback({
-                    '1': false,
-                    '2': false,
-                    '3': false,
-                    '4': false,
-                    '5': false,
-                })
-            );
-            onGuConsentNotification.mockImplementation((state, callback) =>
-                callback(false)
-            );
-            insertScripts(
-                [fakeThirdPartyAdvertisingTag],
-                [fakeThirdPartyPerformanceTag]
-            );
-            expect(document.scripts.length).toBe(1);
+            insertScripts([fakeThirdPartyTag]);
+            expect(document.scripts.length).toBe(2);
         });
     });
 });
