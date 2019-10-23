@@ -36,7 +36,7 @@ const linkUrl =
 
 const secondaryLinkUrl =
     geolocation === 'US'
-        ? 'https://www.theguardian.com/environment/2019/oct/16/climate-crisis-america-guardian-editor-john-mulholland'
+        ? 'https://www.theguardian.com/environment/2019/oct/16/climate-crisis-america-guardian-editor-john-mulholland?acquisitionData=%7B%22source%22%3A%22GUARDIAN_WEB%22%2C%22componentType%22%3A%22ACQUISITIONS_EDITORIAL_LINK%22%2C%22campaignCode%22%3A%22climate_pledge_2019%22%2C%22componentId%22%3A%22climate_pledge_2019_banner%22%7D&INTCMP=climate_pledge_2019'
         : 'https://www.theguardian.com/environment/ng-interactive/2019/oct/16/the-guardians-climate-pledge-2019?acquisitionData=%7B%22source%22%3A%22GUARDIAN_WEB%22%2C%22componentType%22%3A%22ACQUISITIONS_EDITORIAL_LINK%22%2C%22campaignCode%22%3A%22climate_pledge_2019%22%2C%22componentId%22%3A%22climate_pledge_2019_banner%22%7D&INTCMP=climate_pledge_2019';
 
 const secondaryLinkLabel =

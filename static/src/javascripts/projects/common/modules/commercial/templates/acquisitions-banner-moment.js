@@ -79,14 +79,19 @@ export const acquisitionsBannerMomentTemplate = (
                 }
             </div>
 
-            <div class="moment-banner__buttons">
+                <!-- Render secondary link if it exists -->
+                ${
+                    params.secondaryLinkUrl && params.secondaryLinkLabel
+                        ? `<div class="moment-banner__buttons">
                 <div class="engagement-banner__cta">
                     <a tabindex="3" class="button  engagement-banner__button  engagement-banner__button--moment-link" href=${
                         params.secondaryLinkUrl
                     }>
                         ${params.secondaryLinkLabel}
                     </a>
-                </div>
+                </div>`
+                        : ``
+                }
 
                 <div class="engagement-banner__cta">
                     <a tabindex="3" class="button engagement-banner__button" href="${
