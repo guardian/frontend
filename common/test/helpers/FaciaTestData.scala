@@ -4,6 +4,7 @@ import java.time.ZoneOffset
 
 import com.gu.contentapi.client.model.v1.{ContentFields, Content => ApiContent}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichOffsetDateTime
+import com.gu.facia.client.models.{EU27Territory, NZTerritory}
 import common.Edition
 import common.editions.{Au, Uk, Us}
 import implicits.Dates.jodaToJavaInstant
@@ -237,6 +238,77 @@ trait FaciaTestData extends ModelHelper {
     collections = List(
       PressedCollection(
         id = "au/culture/regular-stories",
+        displayName = "",
+        curated = cultureFrontTrails.toList,
+        backfill = Nil,
+        treats = Nil,
+        lastUpdated = None,
+        href = None,
+        description = None,
+        collectionType = "",
+        groups = None,
+        uneditable = false,
+        showTags = false,
+        showSections = false,
+        hideKickers = false,
+        showDateHeader = false,
+        showLatestUpdate = false,
+        config = CollectionConfig.empty,
+        hasMore = false,
+        targetedTerritory = None
+      )
+    )
+  )
+
+  val internationalFaciaPageWithTargetedTerritories: PressedPage = PressedPage(
+    id = "international",
+    SeoData.fromPath("international"),
+    FrontProperties.empty,
+    collections = List(
+      PressedCollection(
+        id = "international/nz",
+        displayName = "",
+        curated = cultureFrontTrails.toList,
+        backfill = Nil,
+        treats = Nil,
+        lastUpdated = None,
+        href = None,
+        description = None,
+        collectionType = "",
+        groups = None,
+        uneditable = false,
+        showTags = false,
+        showSections = false,
+        hideKickers = false,
+        showDateHeader = false,
+        showLatestUpdate = false,
+        config = CollectionConfig.empty,
+        hasMore = false,
+        targetedTerritory = Some(NZTerritory)
+      ),
+      PressedCollection(
+        id = "international/eu",
+        displayName = "",
+        curated = cultureFrontTrails.toList,
+        backfill = Nil,
+        treats = Nil,
+        lastUpdated = None,
+        href = None,
+        description = None,
+        collectionType = "",
+        groups = None,
+        uneditable = false,
+        showTags = false,
+        showSections = false,
+        hideKickers = false,
+        showDateHeader = false,
+        showLatestUpdate = false,
+        config = CollectionConfig.empty,
+        hasMore = false,
+        targetedTerritory = Some(EU27Territory)
+      ),
+      PressedCollection(
+        id = "international/normal",
         displayName = "",
         curated = cultureFrontTrails.toList,
         backfill = Nil,

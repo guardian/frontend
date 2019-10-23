@@ -73,11 +73,11 @@ trait Requests {
 
     lazy val referrer: Option[String] = r.headers.get("referer")
 
+    // the X-GU-GeoRegion header is used by the facia app to determine whether or not to render containers
+    // targeted only at a specific region e.g. a new zealand-only container
     lazy val territories: List[TargetedTerritory] = r.headers.get("X-GU-GeoRegion").map { r =>
       territoryHeaders.filter(th => th.headerString == r).map(_.territory)
     }.getOrElse(List())
-    println("terr", territories)
-
 
     // dotcom-rendering (DCR) parameters
     lazy val forceDCROff: Boolean = r.getQueryString("dcr").contains("false")

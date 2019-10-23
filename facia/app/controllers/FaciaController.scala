@@ -18,6 +18,7 @@ import views.html.fragments.containers.facia_cards.container
 import views.support.FaciaToMicroFormat2Helpers.getCollection
 import conf.switches.Switches.InlineEmailStyles
 import pages.{FrontEmailHtmlPage, FrontHtmlPage}
+import utils.FrontUtils
 
 import scala.concurrent.Future
 import scala.concurrent.Future.successful
@@ -121,25 +122,11 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
 
   private def nonHtmlEmail(request: RequestHeader) = (request.isEmail && request.isHeadlineText) || request.isEmailJson || request.isEmailTxt
 
-  // remove all collections with a targeted territory that is not allowed
-  def filterCollections(faciaPage: PressedPage, allowedTerritories: List[TargetedTerritory]): PressedPage = {
-    faciaPage.copy(collections = faciaPage.collections.filter{c =>
-      c.targetedTerritory.forall(t => allowedTerritories.contains(t))
-    })
-  }
-
-  private def removeSpecialRegionContainers(path: String, faciaPage: PressedPage, allowedContainerTerritories: List[TargetedTerritory]): PressedPage = {
-    // right now we only have special region containers on the international front so exit early otherwise
-    if (path == "international") {
-      filterCollections(faciaPage, allowedContainerTerritories)
-    } else faciaPage
-  }
-
   import PressedPage.pressedPageFormat
   private[controllers] def renderFrontPressResult(path: String)(implicit request: RequestHeader) = {
     val futureFaciaPage: Future[Option[PressedPage]] = frontJsonFapi.get(path, liteRequestType).flatMap {
         case Some(faciaPage: PressedPage) =>
-          val pageWithRegionalContainersRemoved = removeSpecialRegionContainers(path, faciaPage, request.territories)
+          val pageWithRegionalContainersRemoved = FrontUtils.removeSpecialRegionContainers(faciaPage, request.territories)
           if (conf.Configuration.environment.stage == "CODE") {
             logInfoWithCustomFields(s"Rendering front $path, frontjson: ${Json.stringify(Json.toJson(faciaPage)(pressedPageFormat))}", List())
           }
