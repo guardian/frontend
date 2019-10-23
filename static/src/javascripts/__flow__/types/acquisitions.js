@@ -22,6 +22,8 @@ declare type EngagementBannerTemplateParams = {
     linkUrl: string,
     hasTicker: boolean,
     signInUrl?: string,
+    secondaryLinkUrl?: string,
+    secondaryLinkLabel?: string,
 };
 
 /**

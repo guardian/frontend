@@ -34,6 +34,14 @@ const minArticlesBeforeShowingBanner = 0;
 const linkUrl =
     'https://support.theguardian.com/contribute/climate-pledge-2019';
 
+const secondaryLinkUrl =
+    geolocation === 'US'
+        ? 'https://www.theguardian.com/environment/2019/oct/16/climate-crisis-america-guardian-editor-john-mulholland?INTCMP=climate_pledge_2019'
+        : 'https://www.theguardian.com/environment/ng-interactive/2019/oct/16/the-guardians-climate-pledge-2019?INTCMP=climate_pledge_2019';
+
+const secondaryLinkLabel =
+    geolocation === 'US' ? 'Hear from our editor' : 'Read our pledge';
+
 export const environmentMomentBannerNonSupporters: AcquisitionsABTest = {
     id: 'ContributionsBannerEnvironmentMomentNonSupporters',
     start: '2019-01-01',
@@ -64,6 +72,8 @@ export const environmentMomentBannerNonSupporters: AcquisitionsABTest = {
                 userCohort: userCohortParam.momentBannerDefault,
                 titles: ['We will not stay quiet ', 'on the climate crisis'],
                 linkUrl,
+                secondaryLinkUrl,
+                secondaryLinkLabel,
             },
             canRun: () =>
                 canShowBannerSync(
@@ -105,6 +115,8 @@ export const environmentMomentBannerSupporters: AcquisitionsABTest = {
                 userCohort: userCohortParam.momentBannerThankYou,
                 titles: ['We will not stay quiet ', 'on the climate crisis'],
                 linkUrl,
+                secondaryLinkUrl,
+                secondaryLinkLabel,
             },
             canRun: () =>
                 canShowBannerSync(
