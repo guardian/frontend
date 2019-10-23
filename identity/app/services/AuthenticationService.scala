@@ -1,5 +1,6 @@
 package services
 
+import com.gu.identity.auth.UserCredentials
 import idapiclient.{Auth, ScGuRp, ScGuU}
 import com.gu.identity.model.User
 import com.gu.identity.cookie.IdentityCookieService
@@ -43,10 +44,16 @@ class AuthenticationService(
   /** User has SC_GU_U and GU_U cookies */
   def fullyAuthenticatedUser[A](request: RequestHeader): Option[AuthenticatedUser] = {
     identityAuthService.getUserFromRequest(request)
-      .map { case (scGuUCookie, user) =>
+      .map { case (credentials, user) =>
+        // have to explicitly match the retrieved credentials to UserCredentials to see if it's an SCGUUCookie or CryptoAccessToken
+        // in this case we're only looking for the SCGUUCookie, so return the value of that
+        val cookie = credentials match {
+          case UserCredentials.SCGUUCookie(value) => value
+          case UserCredentials.CryptoAccessToken(_, _) => ""
+        }
         AuthenticatedUser(
           user = user,
-          auth = ScGuU(scGuUCookie.toString),
+          auth = ScGuU(cookie),
           hasRecentlyAuthenticated = hasRecentlyAuthenticate(user.id, request)
         )
       }
