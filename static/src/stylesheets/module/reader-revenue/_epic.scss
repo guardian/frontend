@@ -228,9 +228,9 @@ a[href].contributions__learn-more.contributions__learn-more--epic {
 
 .contributions__adblock {
     position: absolute;
-    top: 5px;
+    top: 6px;
     padding-top: $gs-baseline/2;
-    width: 94%;
+    width: 93%;
     background-color: $highlight-main;
 
     .contributions__adblock-header {
@@ -251,7 +251,7 @@ a[href].contributions__learn-more.contributions__learn-more--epic {
     }
 
     .contributions__adblock-button {
-        margin: 25px 0 80px 10px;
+        margin: 25px 0 78px 10px;
         background-color: $brightness-7 !important;
         color: $brightness-100 !important;
         font-size: 16px;
