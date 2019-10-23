@@ -14,6 +14,7 @@ import play.api.mvc._
 import renderers.RemoteRenderer
 import services.CAPILookup
 import services.dotcomponents.{ArticlePicker, _}
+import services.S3
 import views.support._
 
 import scala.concurrent.Future
@@ -118,13 +119,20 @@ class ArticleController(
   private def responseToModelOrResult(response: ItemResponse)(implicit request: RequestHeader): Either[(ArticlePage, Blocks), Result] = {
     val supportedContent: Option[ContentType] = response.content.filter(isSupported).map(Content(_))
     val blocks = response.content.flatMap(_.blocks).getOrElse(Blocks())
-
     ModelOrResult(supportedContent, response) match {
       case Left(article:Article) => Left((ArticlePage(article, StoryPackages(article.metadata.id, response)), blocks))
       case Right(r) => Right(r)
       case _ => Right(NotFound)
     }
+  }
 
+  def emailTest1(path: Option[String] = None): Action[AnyContent] = {
+    Action.async { implicit request => {
+      val fileContents = S3.get("DEV/email-test/film-today.html").getOrElse("")
+      // TODO: if there is no file return a 404 (not important, this is just a test)
+      // TODO: The file is currently in aws-frontend-store/DEV/email-test , once it is ready it should be put in aws-frontend-store/PROD/email-test
+      Future.successful(Ok(fileContents).as("text/html; charset=iso-8859-1"))
+    }}
   }
 
 }
