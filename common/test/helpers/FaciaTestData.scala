@@ -267,7 +267,7 @@ trait FaciaTestData extends ModelHelper {
     collections = List(
       PressedCollection(
         id = "international/nz",
-        displayName = "",
+        displayName = "One",
         curated = cultureFrontTrails.toList,
         backfill = Nil,
         treats = Nil,
@@ -288,7 +288,7 @@ trait FaciaTestData extends ModelHelper {
       ),
       PressedCollection(
         id = "international/eu",
-        displayName = "",
+        displayName = "Two",
         curated = cultureFrontTrails.toList,
         backfill = Nil,
         treats = Nil,
@@ -309,7 +309,7 @@ trait FaciaTestData extends ModelHelper {
       ),
       PressedCollection(
         id = "international/normal",
-        displayName = "",
+        displayName = "Three",
         curated = cultureFrontTrails.toList,
         backfill = Nil,
         treats = Nil,

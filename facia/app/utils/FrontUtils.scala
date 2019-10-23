@@ -1,0 +1,41 @@
+package utils
+
+import com.gu.facia.client.models.{EU27Territory, NZTerritory, TargetedTerritory, USEastCoastTerritory}
+import model.PressedPage
+import model.facia.PressedCollection
+
+object FrontUtils {
+  // remove all collections with a targeted territory that is not allowed
+  def filterCollections(faciaPage: PressedPage, allowedTerritories: List[TargetedTerritory]): PressedPage = {
+    faciaPage.copy(collections = faciaPage.collections.filter{c =>
+      c.targetedTerritory.forall(t => allowedTerritories.contains(t))
+    })
+  }
+
+  val prettyTerritoryLookup: Map[TargetedTerritory, String] = Map(
+    NZTerritory -> "New Zealand",
+    EU27Territory -> "EU-27 Countries",
+    USEastCoastTerritory -> "US East Coast"
+  )
+
+  def markDisplayName(collection: PressedCollection): PressedCollection = {
+    collection.targetedTerritory.map { t =>
+      collection.copy(displayName = s"${collection.displayName} (${prettyTerritoryLookup(t)} ONLY)" )
+    }.getOrElse(collection)
+  }
+
+  def markCollections(faciaPage: PressedPage): PressedPage = {
+    faciaPage.copy(collections = faciaPage.collections.map(markDisplayName))
+  }
+
+  def processSpecialRegionContainers(faciaPage: PressedPage, allowedContainerTerritories: List[TargetedTerritory], isPreview: Boolean): PressedPage = {
+    // don't bother checking for containers to remove if there are no targeted containers
+    if (faciaPage.collections.exists(c => c.targetedTerritory.isDefined)) {
+      if(isPreview) {
+        markCollections(faciaPage)
+      } else {
+        filterCollections(faciaPage, allowedContainerTerritories)
+      }
+    } else faciaPage
+  }
+}
