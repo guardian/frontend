@@ -1,5 +1,7 @@
 // @flow strict
 
+const signinUrl = 'blah';
+
 const askHtml = `
 <div class="signin-gate">
     <div class="signin-gate-content">
@@ -16,9 +18,14 @@ const askHtml = `
                 <strong>It's quick, easy and <u>free</u> to sign in</strong>
             </li>
             <li>
-                <strong>It's quick, easy and <u>free</u> to sign in</strong>
+                <strong>Fighting for a better world together</strong>
+                Knowing more about our readers means we can improve the journalism and experience
             </li>
         </ul>
+        <a class="signin-gate-signin-button" href="${signinUrl}">
+            <span class="signin-gate-signin-button__content">Sign in free</span>
+        </a>
+        <a class="signin-gate-dismiss">No thanks</a>
     </div>
 </div>
 `;
