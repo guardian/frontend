@@ -131,7 +131,7 @@ class ArticleController(
       val fileContents = S3.get("DEV/email-test/film-today.html").getOrElse("")
       // TODO: if there is no file return a 404 (not important, this is just a test)
       // TODO: The file is currently in aws-frontend-store/DEV/email-test , once it is ready it should be put in aws-frontend-store/PROD/email-test
-      Future.successful(Ok(fileContents).as("text/html; charset=iso-8859-1"))
+      Future.successful(Ok(fileContents).as("text/html; charset=utf-8"))
     }}
   }
 
