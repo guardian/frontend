@@ -18,7 +18,7 @@ import views.html.fragments.containers.facia_cards.container
 import views.support.FaciaToMicroFormat2Helpers.getCollection
 import conf.switches.Switches.InlineEmailStyles
 import pages.{FrontEmailHtmlPage, FrontHtmlPage}
-import utils.RegionalContainers
+import utils.TargetedCollections
 
 import scala.concurrent.Future
 import scala.concurrent.Future.successful
@@ -126,7 +126,7 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
   private[controllers] def renderFrontPressResult(path: String)(implicit request: RequestHeader) = {
     val futureFaciaPage: Future[Option[PressedPage]] = frontJsonFapi.get(path, liteRequestType).flatMap {
         case Some(faciaPage: PressedPage) =>
-          val regionalFaciaPage = RegionalContainers.processSpecialRegionContainers(faciaPage, request.territories, context.isPreview)
+          val regionalFaciaPage = TargetedCollections.processTargetedCollections(faciaPage, request.territories, context.isPreview)
           if (conf.Configuration.environment.stage == "CODE") {
             logInfoWithCustomFields(s"Rendering front $path, frontjson: ${Json.stringify(Json.toJson(faciaPage)(pressedPageFormat))}", List())
           }
@@ -141,7 +141,7 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
       case Some(faciaPage) if nonHtmlEmail(request) =>
         successful(Cached(CacheTime.RecentlyUpdated)(renderEmail(faciaPage)))
       case Some(faciaPage: PressedPage) =>
-        successful(Cached(CacheTime.Facia)(
+        val result = successful(Cached(CacheTime.Facia)(
           if (request.isRss) {
             val body = TrailsToRss.fromPressedPage(faciaPage)
             RevalidatableResult(Ok(body).as("text/xml; charset=utf-8"), body)
@@ -155,13 +155,14 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
             RevalidatableResult.Ok(FrontHtmlPage.html(faciaPage))
           }
         ))
+        // setting Vary header can be expensive (https://www.fastly.com/blog/best-practices-using-vary-header)
+        // only set it for fronts with targeted collections
+        if (TargetedCollections.pageContainsTargetedCollections(faciaPage)) {
+          result.map(_.withHeaders(("Vary", "X-GU-GeoRegion")))
+        } else result
       case None => successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))}
 
     futureResult.failed.foreach { t: Throwable => log.error(s"Failed rendering $path with $t", t)}
-    // if international front, Vary based off regional header
-    if (path == "international") {
-      futureResult.map(_.withHeaders(("Vary", "X-GU-GeoRegion")))
-    } else futureResult
   }
 
   private def renderEmail(faciaPage: PressedPage)(implicit request: RequestHeader) = {

@@ -5,7 +5,7 @@ import model.PressedPage
 import model.facia.PressedCollection
 import model.pressed.CollectionConfig
 
-object RegionalContainers {
+object TargetedCollections {
   // remove all collections with a targeted territory that is not allowed
   def filterCollections(faciaPage: PressedPage, allowedTerritories: List[TargetedTerritory]): PressedPage = {
     faciaPage.copy(collections = faciaPage.collections.filter{c =>
@@ -31,10 +31,12 @@ object RegionalContainers {
     faciaPage.copy(collections = faciaPage.collections.map(markDisplayName))
   }
 
-  def processSpecialRegionContainers(faciaPage: PressedPage, allowedContainerTerritories: List[TargetedTerritory], isPreview: Boolean): PressedPage = {
-    // don't bother checking for containers to remove if there are no targeted containers
-    if (faciaPage.collections.exists(c => c.targetedTerritory.isDefined)) {
-      if(isPreview) {
+  def pageContainsTargetedCollections(faciaPage: PressedPage): Boolean =
+    faciaPage.collections.exists(c => c.targetedTerritory.isDefined)
+
+  def processTargetedCollections(faciaPage: PressedPage, allowedContainerTerritories: List[TargetedTerritory], isPreview: Boolean): PressedPage = {
+    if (pageContainsTargetedCollections(faciaPage)) {
+      if (isPreview) {
         markCollections(faciaPage)
       } else {
         filterCollections(faciaPage, allowedContainerTerritories)
