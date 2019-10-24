@@ -3,6 +3,7 @@ package utils
 import com.gu.facia.client.models.{EU27Territory, NZTerritory, TargetedTerritory, USEastCoastTerritory}
 import model.PressedPage
 import model.facia.PressedCollection
+import model.pressed.CollectionConfig
 
 object FrontUtils {
   // remove all collections with a targeted territory that is not allowed
@@ -20,7 +21,9 @@ object FrontUtils {
 
   def markDisplayName(collection: PressedCollection): PressedCollection = {
     collection.targetedTerritory.map { t =>
-      collection.copy(displayName = s"${collection.displayName} (${prettyTerritoryLookup(t)} ONLY)" )
+      collection.copy(
+        displayName = s"${collection.displayName} (${prettyTerritoryLookup(t)} ONLY)",
+        config = collection.config.copy(displayName = collection.config.displayName.map(dn => s"$dn (${prettyTerritoryLookup(t)} ONLY)")))
     }.getOrElse(collection)
   }
 
