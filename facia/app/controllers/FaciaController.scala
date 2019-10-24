@@ -17,6 +17,7 @@ import layout.slices._
 import views.html.fragments.containers.facia_cards.container
 import views.support.FaciaToMicroFormat2Helpers.getCollection
 import conf.switches.Switches.InlineEmailStyles
+import implicits.GUHeaders
 import pages.{FrontEmailHtmlPage, FrontHtmlPage}
 import utils.TargetedCollections
 
@@ -158,11 +159,12 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
         // setting Vary header can be expensive (https://www.fastly.com/blog/best-practices-using-vary-header)
         // only set it for fronts with targeted collections
         if (TargetedCollections.pageContainsTargetedCollections(faciaPage)) {
-          result.map(_.withHeaders(("Vary", "X-GU-GeoRegion")))
+          result.map(_.withHeaders(("Vary", GUHeaders.TERRITORY_HEADER)))
         } else result
       case None => successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))}
 
     futureResult.failed.foreach { t: Throwable => log.error(s"Failed rendering $path with $t", t)}
+    futureResult
   }
 
   private def renderEmail(faciaPage: PressedPage)(implicit request: RequestHeader) = {

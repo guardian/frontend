@@ -11,6 +11,10 @@ case object EmailFormat extends RequestFormat
 case object AmpFormat extends RequestFormat
 case class TerritoryHeader(territory: TargetedTerritory, headerString: String)
 
+object GUHeaders {
+  val TERRITORY_HEADER = "X-GU-Territory"
+}
+
 trait Requests {
 
   val EMAIL_SUFFIX = "/email"
@@ -73,9 +77,9 @@ trait Requests {
 
     lazy val referrer: Option[String] = r.headers.get("referer")
 
-    // the X-GU-GeoRegion header is used by the facia app to determine whether or not to render containers
+    // the X-GU-Territory header is used by the facia app to determine whether or not to render containers
     // targeted only at a specific region e.g. a new zealand-only container
-    lazy val territories: List[TargetedTerritory] = r.headers.get("X-GU-GeoRegion").map { r =>
+    lazy val territories: List[TargetedTerritory] = r.headers.get(GUHeaders.TERRITORY_HEADER).map { r =>
       territoryHeaders.filter(th => th.headerString == r).map(_.territory)
     }.getOrElse(List())
 
