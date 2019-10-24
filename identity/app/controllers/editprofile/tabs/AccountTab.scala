@@ -1,5 +1,6 @@
 package controllers.editprofile.tabs
 
+import conf.Configuration
 import controllers.editprofile.{AccountEditProfilePage, EditProfileControllerComponents, EditProfileFormHandling}
 import play.api.mvc.{Action, AnyContent}
 
@@ -7,10 +8,13 @@ trait AccountTab
     extends EditProfileControllerComponents
     with EditProfileFormHandling {
 
-  /** GET /account/edit */
-  def displayAccountForm: Action[AnyContent] = displayForm(AccountEditProfilePage)
+  private def redirectToManage(path: String): Action[AnyContent] = Action { implicit request =>
+    Redirect(
+      url = s"${Configuration.id.mmaUrl}/${path}",
+      MOVED_PERMANENTLY)
+  }
 
-  /** POST /account/edit */
-  def submitAccountForm(): Action[AnyContent] = submitForm(AccountEditProfilePage)
+  /** GET /account/edit */
+  def redirectToAccountDetails: Action[AnyContent] = redirectToManage("account-details")
 
 }
