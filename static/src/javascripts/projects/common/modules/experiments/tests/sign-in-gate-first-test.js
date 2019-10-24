@@ -1,5 +1,28 @@
 // @flow strict
 
+const askHtml = `
+<div class="signin-gate">
+    <div class="signin-gate-content">
+        <div class="signin-gate-header">
+            <h2>Sign in to The Guardian</h2>
+        </div>
+        <ul class="signin-gate-benefits">
+            <li>
+                <strong>Help keep our independent journalism free</strong>
+                <br/>
+                The Guardian benefits from its users being signed in
+            </li>
+            <li>
+                <strong>It's quick, easy and <u>free</u> to sign in</strong>
+            </li>
+            <li>
+                <strong>It's quick, easy and <u>free</u> to sign in</strong>
+            </li>
+        </ul>
+    </div>
+</div>
+`;
+
 export const signInGateFirstTest: ABTest = {
     id: 'SignInGateFirstTest',
     start: '2019-11-18',
@@ -23,7 +46,12 @@ export const signInGateFirstTest: ABTest = {
         },
         {
             id: 'variant',
-            test: (): void => {},
+            test: (): void => {
+                const slot = document.querySelector('.js-article__body');
+                if (slot) {
+                    slot.innerHTML += askHtml;
+                }
+            },
         },
     ],
 };
