@@ -126,14 +126,14 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
   private[controllers] def renderFrontPressResult(path: String)(implicit request: RequestHeader) = {
     val futureFaciaPage: Future[Option[PressedPage]] = frontJsonFapi.get(path, liteRequestType).flatMap {
         case Some(faciaPage: PressedPage) =>
-          val pageWithRegionalContainersRemoved = RegionalContainers.processSpecialRegionContainers(faciaPage, request.territories, context.isPreview)
+          val regionalFaciaPage = RegionalContainers.processSpecialRegionContainers(faciaPage, request.territories, context.isPreview)
           if (conf.Configuration.environment.stage == "CODE") {
             logInfoWithCustomFields(s"Rendering front $path, frontjson: ${Json.stringify(Json.toJson(faciaPage)(pressedPageFormat))}", List())
           }
           if(faciaPage.collections.isEmpty && liteRequestType == LiteAdFreeType) {
             frontJsonFapi.get(path, LiteType)
           }
-          else Future.successful(Some(pageWithRegionalContainersRemoved))
+          else Future.successful(Some(regionalFaciaPage))
         case None => Future.successful(None)
     }
 
