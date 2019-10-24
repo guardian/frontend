@@ -11,17 +11,6 @@ import utils.SafeLogging
 
 import scala.language.implicitConversions
 
-// This is a place holder for the cookie service that will be provided by identity-cookie.
-//class IdentityCookieService {
-//
-//  def hasAuthenticatedWithin(duration: Duration, identityId: String, scGuLaCookie: String): Boolean = ???
-//
-//  def getUserDataForGuRp(cookie: String): Option[User] = ???
-//
-//  // TODO: better name !?
-//  def isSession(identityId: String, guUCookie: String): Boolean = ???
-//}
-
 object AuthenticatedUser {
   implicit def authUserToUser(authUser: AuthenticatedUser): User = authUser.user
 }
