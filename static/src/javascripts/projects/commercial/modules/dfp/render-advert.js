@@ -116,6 +116,11 @@ sizeCallbacks[adSizes.outstreamDesktop] = (_, advert) =>
         advert.updateExtraSlotClasses('ad-slot--outstream');
     });
 
+sizeCallbacks[adSizes.outstreamGoogleDesktop] = (_, advert) =>
+    fastdom.write(() => {
+        advert.updateExtraSlotClasses('ad-slot--outstream');
+    });
+
 sizeCallbacks[adSizes.outstreamMobile] = (_, advert) =>
     fastdom.write(() => {
         advert.updateExtraSlotClasses('ad-slot--outstream');
