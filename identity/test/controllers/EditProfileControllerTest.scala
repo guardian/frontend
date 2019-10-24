@@ -18,10 +18,10 @@ import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.{DoNotDiscover, Matchers, OptionValues, WordSpec}
 import org.scalatest.mockito.MockitoSugar
 import org.scalatestplus.play.ConfiguredServer
-import play.api.http.HttpConfiguration
-import play.api.mvc._
-import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import _root_.play.api.http.HttpConfiguration
+import _root_.play.api.mvc._
+import _root_.play.api.test.FakeRequest
+import _root_.play.api.test.Helpers._
 import services._
 import test._
 import scala.concurrent.Future
@@ -38,7 +38,7 @@ import scala.concurrent.Future
 
   trait EditProfileFixture {
 
-    val controllerComponent: ControllerComponents = play.api.test.Helpers.stubControllerComponents()
+    val controllerComponent: ControllerComponents = _root_.play.api.test.Helpers.stubControllerComponents()
     val idUrlBuilder = mock[IdentityUrlBuilder]
     val api = mock[IdApiClient]
     val idRequestParser = mock[IdRequestParser]
@@ -51,7 +51,7 @@ import scala.concurrent.Future
 
     val userId: String = "123"
     val user = User("test@example.com", userId, statusFields = StatusFields(userEmailValidated = Some(true)))
-    val testAuth = ScGuU("abc", GuUCookieData(user, 0, None))
+    val testAuth = ScGuU("abc")
     val authenticatedUser = AuthenticatedUser(user, testAuth, true)
     val phoneNumbers = PhoneNumbers
 

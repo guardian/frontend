@@ -1,6 +1,7 @@
 package controllers
 
 import actions.AuthenticatedActions
+import com.gu.identity.cookie.IdentityCookieService
 import common.ImplicitControllerExecutionContext
 import form.Mappings
 import idapiclient.{EmailPassword, IdApiClient, Response, ScGuU}
@@ -12,9 +13,10 @@ import play.api.data.validation.Constraints
 import play.api.http.HttpConfiguration
 import play.api.i18n.{Messages, MessagesProvider}
 import play.api.mvc._
-import services.{IdRequestParser, IdentityUrlBuilder, PlaySigninService, ReturnUrlVerifier}
+import services._
 import utils.SafeLogging
 import pages.IdentityHtmlPage
+
 import scala.concurrent.Future
 
 class ReauthenticationController(
@@ -24,6 +26,7 @@ class ReauthenticationController(
     idUrlBuilder: IdentityUrlBuilder,
     authenticatedActions: AuthenticatedActions,
     signInService : PlaySigninService,
+    identityCookieService: IdentityCookieService,
     val controllerComponents: ControllerComponents,
     val httpConfiguration: HttpConfiguration)
     (implicit context: ApplicationContext)
@@ -124,10 +127,15 @@ class ReauthenticationController(
 
     def onSuccess(password: String): Future[Result] = {
         logger.trace("reauthenticating with ID API")
+
         val persistent = request.user.auth match {
-          case ScGuU(_, v) => v.isPersistent
+          case _: ScGuU =>
+            request.cookies.get("GU_U").fold(false) { guUCookie =>
+              identityCookieService.isGUUCookiePersistent(guUCookie.value)
+            }
           case _ => false
         }
+
         val auth = EmailPassword(request.user.primaryEmailAddress, password, idRequest.clientIp)
         val authResponse = api.authBrowser(auth, idRequest.trackingData, Some(persistent))
 

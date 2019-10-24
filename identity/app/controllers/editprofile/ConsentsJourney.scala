@@ -1,7 +1,7 @@
 package controllers.editprofile
 
 import actions.AuthenticatedActions._
-import com.gu.identity.model._
+import com.gu.identity.model.{Consent, EmailNewsletters, StatusFields, User}
 import com.typesafe.play.cachecontrol.CacheDirectives
 import idapiclient.UserUpdateDTO
 import model.{IdentityPage, NoCache}

@@ -1,8 +1,5 @@
 package idapiclient
 
-import com.gu.identity.cookie.GuUCookieData
-
-
 trait Auth {
   def parameters: Parameters = Iterable.empty
   def headers: Parameters = Iterable.empty
@@ -27,7 +24,7 @@ case class ClientAuth(clientAccessToken: String) extends Auth {
   override def headers: Parameters = List("X-GU-ID-Client-Access-Token" -> s"Bearer $clientAccessToken")
 }
 
-case class ScGuU(scGuUValue: String, data: GuUCookieData) extends Auth {
+case class ScGuU(scGuUValue: String) extends Auth {
   override def headers: Parameters = Iterable("X-GU-ID-FOWARDED-SC-GU-U" -> scGuUValue)
 }
 
