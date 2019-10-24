@@ -5,7 +5,7 @@ import model.PressedPage
 import model.facia.PressedCollection
 import model.pressed.CollectionConfig
 
-object FrontUtils {
+object RegionalContainers {
   // remove all collections with a targeted territory that is not allowed
   def filterCollections(faciaPage: PressedPage, allowedTerritories: List[TargetedTerritory]): PressedPage = {
     faciaPage.copy(collections = faciaPage.collections.filter{c =>
