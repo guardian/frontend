@@ -1,0 +1,50 @@
+.signin-gate {
+    border: 1px solid $brightness-86;
+    background-color: $brightness-100;
+    clear: left;
+    margin-top: $gs-baseline * 2;
+    margin-bottom: $gs-baseline * 2;
+    padding: $gs-baseline;
+}
+
+.signin-gate__header {
+    @include fs-header(3);
+    margin-bottom: $gs-baseline * 2;
+}
+
+.signin-gate__buttons {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    margin-top: $gs-baseline * 2;
+
+    // Horizontal alignment
+    align-items: flex-start;
+
+    @include mq($from: mobileLandscape) {
+        flex-direction: row;
+
+        // Now vertical alignment, because the flex-direction is row
+        align-items: center;
+    }
+}
+
+ul.signin-gate__benefits {
+    list-style-type: none;
+    list-style-position: outside;
+
+    li {
+        margin-bottom: $gs-baseline;
+    }
+}
+
+.signin-gate__button {
+    margin: $gs-baseline/3 $gs-gutter/2 $gs-baseline/3 0;
+}
+
+.signin-gate__dismiss {
+    color: $brightness-7 !important;
+    text-decoration: underline;
+    font-size: 9pt;
+    font-weight: bold;
+}
