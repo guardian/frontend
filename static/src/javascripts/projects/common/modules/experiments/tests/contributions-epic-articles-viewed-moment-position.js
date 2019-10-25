@@ -40,9 +40,10 @@ const url = 'http://support.theguardian.com/contribute/climate-pledge-2019';
 
 const geolocation = geolocationGetSync();
 
-export const articlesViewedMoment: EpicABTest = makeEpicABTest({
-    id: 'ContributionsEpicArticlesViewedMonthMomentPosition',
-    campaignId: '2019-10-14_moment_climate_pledge_article_count_position',
+export const articlesViewedMomentVariant: EpicABTest = makeEpicABTest({
+    id: 'ContributionsEpicArticlesViewedMonthMomentPositionVariant',
+    campaignId:
+        '2019-10-14_moment_climate_pledge_article_count_position_variant',
 
     start: '2019-06-24',
     expiry: '2020-01-27',
