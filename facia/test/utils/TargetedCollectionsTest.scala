@@ -21,7 +21,7 @@ class TargetedCollectionsTest extends FlatSpec with FaciaTestData {
     val pressedPage = internationalFaciaPageWithTargetedTerritories
     val filteredPage = TargetedCollections.markCollections(pressedPage)
     filteredPage.collections.length should be (3)
-    filteredPage.collections.map(_.displayName) should contain inOrderOnly ("One (New Zealand ONLY)", "Two (EU-27 Countries ONLY)", "Three")
+    filteredPage.collections.map(_.displayName) should contain inOrderOnly ("One (New Zealand only)", "Two (EU-27 Countries only)", "Three")
   }
 
 }

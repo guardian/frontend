@@ -22,8 +22,8 @@ object TargetedCollections {
   def markDisplayName(collection: PressedCollection): PressedCollection = {
     collection.targetedTerritory.map { t =>
       collection.copy(
-        displayName = s"${collection.displayName} (${prettyTerritoryLookup(t)} ONLY)",
-        config = collection.config.copy(displayName = collection.config.displayName.map(dn => s"$dn (${prettyTerritoryLookup(t)} ONLY)")))
+        displayName = s"${collection.displayName} (${prettyTerritoryLookup(t)} only)",
+        config = collection.config.copy(displayName = collection.config.displayName.map(dn => s"$dn (${prettyTerritoryLookup(t)} only)")))
     }.getOrElse(collection)
   }
 

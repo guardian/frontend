@@ -80,7 +80,7 @@ trait Requests {
     // the X-GU-Territory header is used by the facia app to determine whether or not to render containers
     // targeted only at a specific region e.g. a new zealand-only container
     lazy val territories: List[TargetedTerritory] = r.headers.get(GUHeaders.TERRITORY_HEADER).map { r =>
-      territoryHeaders.filter(th => th.headerString == r).map(_.territory)
+      territoryHeaders.filter(th => r.contains(th.headerString)).map(_.territory)
     }.getOrElse(List())
 
     // dotcom-rendering (DCR) parameters
