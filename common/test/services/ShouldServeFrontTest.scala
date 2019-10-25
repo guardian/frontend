@@ -72,7 +72,8 @@ class ShouldServeFrontTest
         displayHints = None,
         platform = None,
         frontsToolSettings = None,
-        userVisibility = None
+        userVisibility = None,
+        targetedTerritory = None
       )
     )
   )

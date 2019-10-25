@@ -1,5 +1,6 @@
 package implicits
 
+import com.gu.facia.client.models.{EU27Territory, NZTerritory, TargetedTerritory, USEastCoastTerritory}
 import conf.Configuration
 import play.api.mvc.RequestHeader
 
@@ -8,6 +9,11 @@ case object HtmlFormat extends RequestFormat
 case object JsonFormat extends RequestFormat
 case object EmailFormat extends RequestFormat
 case object AmpFormat extends RequestFormat
+case class TerritoryHeader(territory: TargetedTerritory, headerString: String)
+
+object GUHeaders {
+  val TERRITORY_HEADER = "X-GU-Territory"
+}
 
 trait Requests {
 
@@ -15,6 +21,10 @@ trait Requests {
   val HEADLINE_SUFFIX = "/headline.txt"
   val EMAIL_JSON_SUFFIX = ".emailjson"
   val EMAIL_TXT_SUFFIX = ".emailtxt"
+  val territoryHeaders: List[TerritoryHeader] = List(
+    TerritoryHeader(EU27Territory, "EU-27"),
+    TerritoryHeader(NZTerritory, "NZ"),
+    TerritoryHeader(USEastCoastTerritory, "US-East"))
 
   implicit class RichRequestHeader(r: RequestHeader) {
 
@@ -66,6 +76,12 @@ trait Requests {
     lazy val isAdFree: Boolean = r.headers.keys.exists(_ equalsIgnoreCase "X-Gu-Commercial-Ad-Free")
 
     lazy val referrer: Option[String] = r.headers.get("referer")
+
+    // the X-GU-Territory header is used by the facia app to determine whether or not to render containers
+    // targeted only at a specific region e.g. a new zealand-only container
+    lazy val territories: List[TargetedTerritory] = r.headers.get(GUHeaders.TERRITORY_HEADER).map { r =>
+      territoryHeaders.filter(th => r.contains(th.headerString)).map(_.territory)
+    }.getOrElse(List())
 
     // dotcom-rendering (DCR) parameters
     lazy val forceDCROff: Boolean = r.getQueryString("dcr").contains("false")

@@ -3,7 +3,7 @@ package model.facia
 import com.gu.commercial.branding.ContainerBranding
 import com.gu.facia.api.{models => fapi}
 import com.gu.facia.api.utils.ContainerBrandingFinder
-import com.gu.facia.client.models.Branded
+import com.gu.facia.client.models.{Branded, TargetedTerritory}
 import common.Edition
 import implicits.CollectionsOps._
 import model.pressed._
@@ -28,7 +28,8 @@ case class PressedCollection(
   showDateHeader: Boolean,
   showLatestUpdate: Boolean,
   config: CollectionConfig,
-  hasMore: Boolean
+  hasMore: Boolean,
+  targetedTerritory: Option[TargetedTerritory]
 ) {
 
   lazy val isEmpty: Boolean = curated.isEmpty && backfill.isEmpty && treats.isEmpty
@@ -103,6 +104,7 @@ object PressedCollection {
       collection.collectionConfig.showDateHeader,
       collection.collectionConfig.showLatestUpdate,
       CollectionConfig.make(collection.collectionConfig),
-      hasMore = false
+      hasMore = false,
+      collection.collectionConfig.targetedTerritory
     )
 }
